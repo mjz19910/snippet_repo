@@ -38,7 +38,7 @@ window.inject_api=inject_api;
 
 // #region saved
 inject_api.saved_function_objects=[];
-/** @param {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
+/** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
 function add_function(function_obj) {
 	if(!inject_api.saved_function_objects) return;
 	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
@@ -54,7 +54,7 @@ function add_array(ids_dec) {
 inject_api.add_array=add_array;
 
 inject_api.saved_instances=[];
-/** @param {string} name @arg {{}} object */
+/** @arg {string} name @arg {{}} object */
 function add_object_with_name(name,object) {
 	if(!inject_api.saved_instances) return;
 	/** @type {MetaTagForPrototypeOf} */
@@ -71,7 +71,7 @@ function add_object_with_name(name,object) {
 	inject_api.saved_instances?.push(instance_item);
 }
 inject_api.add_object_with_name=add_object_with_name;
-/** @template {{}} U @template {new (...args: any) => U} T @param {T} constructor_ @arg {U} object */
+/** @template {{}} U @template {new (...args: any) => U} T @arg {T} constructor_ @arg {U} object */
 function add_object(constructor_,object) {
 	if(!inject_api.saved_instances) return;
 	const name=constructor_.name;
@@ -267,7 +267,7 @@ const s_single_char_tokens=new HashMap();
 }
 
 class ECMA262Base {
-	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
+	/** @arg {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
 			state.type=type;
@@ -702,7 +702,7 @@ class NamesAndKeywords extends ECMA262Base {
 }
 
 class PunctuatorsData extends ECMA262Base {
-	/** @param {ecma_root} parent */
+	/** @arg {ecma_root} parent */
 	constructor(parent) {
 		super(parent);
 	}
@@ -1232,7 +1232,7 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-HexDigits
-	/** @returns {LexReturnTyShort} @param {{sep:boolean}} grammar_params @param {number} i*/
+	/** @returns {LexReturnTyShort} @arg {{sep:boolean}} grammar_params @arg {number} i*/
 	HexDigits(grammar_params,i) {
 		if(grammar_params.sep) {
 			this.len=0;
@@ -2147,7 +2147,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 class ecma_root {
 	/** @type {string} */
 	str;
-	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
+	/** @arg {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
 			state.type=type;
@@ -2278,7 +2278,7 @@ class ecma_root {
 		}
 		return [true,out_state.item,out_state.length];
 	}
-	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
+	/** @arg {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
 	describe_token(token_value) {
 		if(!token_value) return ["undefined"];
 		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
@@ -2319,8 +2319,8 @@ class ecma_root {
 		return null;
 	}
 	/**
-	 * @param {string} source_code
-	 * @param {number} start_index
+	 * @arg {string} source_code
+	 * @arg {number} start_index
 	 */
 	constructor(source_code,start_index) {
 		this.source_code=source_code;
@@ -2365,13 +2365,13 @@ class js_token_generator {
 	static EOF_TOKEN=Symbol();
 	/** @type {ecma_root} */
 	root;
-	/** @param {string} str */
+	/** @arg {string} str */
 	constructor(str) {
 		this.root=new ecma_root(str,0);
 	}
 }
 
-/** @param {string} code_str */
+/** @arg {string} code_str */
 function parse_javascript_str(code_str) {
 	if("code" in window&&typeof window.code==="string") {
 		code_str=window.code;
@@ -2420,15 +2420,15 @@ inject_api.LoggingEventTarget=LoggingEventTarget;
 
 class ApiProxyManager {
 	/**
-	 * @param {LoggingEventTarget} event_handler
+	 * @arg {LoggingEventTarget} event_handler
 	 */
 	constructor(event_handler) {
 		this.event_handler=event_handler;
 	}
 	/**
 	 * @template {(...x:any[])=>any} T
-	 * @param {string} message_to_send
-	 * @param {T} function_value
+	 * @arg {string} message_to_send
+	 * @arg {T} function_value
 	 * @returns {T}
 	 */
 	create_proxy_for_function(message_to_send,function_value) {
@@ -2463,8 +2463,8 @@ class ReversePrototypeChain {
 	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
 	/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
 	/**
-	 * @param {{}} base
-	 * @param {{}[]} targets
+	 * @arg {{}} base
+	 * @arg {{}[]} targets
 	 */
 	constructor(base,targets) {
 		this.window_list=[];
@@ -2534,7 +2534,7 @@ class ReversePrototypeChain {
 		}
 		return "cache_id::"+index;
 	}
-	/** @param {string} cache_key @param {{} | null} prototype */
+	/** @arg {string} cache_key @arg {{} | null} prototype */
 	cache_prototype(cache_key,prototype) {
 		this.destination[cache_key]??={
 			__proto__: null,
@@ -2547,7 +2547,7 @@ class ReversePrototypeChain {
 			}
 		};
 	}
-	/** @param {{} | undefined} prototype @param {{} | undefined} next_proto @param {number} index */
+	/** @arg {{} | undefined} prototype @arg {{} | undefined} next_proto @arg {number} index */
 	add_one(prototype,next_proto,index) {
 		if(!this.list)
 			throw new Error("No prototype list");
@@ -2567,7 +2567,7 @@ class ReversePrototypeChain {
 		let ret=this.destination[cache_key];
 		return ret;
 	}
-	/** @param {string} key @param {{}} value */
+	/** @arg {string} key @arg {{}} value */
 	add_prototype_value(key,value) {
 		let prototypes=this.destination[key].child.prototypes;
 		let index=prototypes.findIndex(e => e.prototype===value);
@@ -2594,7 +2594,7 @@ class ReversePrototypeChain {
 			prototypes.push(sub_value);
 		}
 	}
-	/** @param {{}} target */
+	/** @arg {{}} target */
 	process_target(target) {
 		let proto=target;
 		/** @type {{}[]} */
@@ -2623,7 +2623,7 @@ class ReversePrototypeChain {
 			values.push(x);
 		}
 	}
-	/** @param {{}} target */
+	/** @arg {{}} target */
 	add_target(target) {
 		let prototype=Object.getPrototypeOf(target);
 		p: {
@@ -2646,7 +2646,7 @@ class ReversePrototypeChain {
 }
 ReversePrototypeChain.attach_to_api();
 
-/** @param {{}} obj @param {PropertyKey} key @param {{}} value */
+/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
 function define_normal_value(obj,key,value) {
 	Object.defineProperty(obj,key,{
 		configurable: true,
@@ -2656,7 +2656,7 @@ function define_normal_value(obj,key,value) {
 	});
 }
 
-/** @param {AddEventListenerExtension} obj */
+/** @arg {AddEventListenerExtension} obj */
 function overwrite_addEventListener(obj) {
 	/** @type {arg_list_item_type[][]} */
 	let arg_list=[];
@@ -2711,7 +2711,7 @@ function overwrite_addEventListener(obj) {
 	define_normal_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
 }
 
-/** @param {EventListenerOrEventListenerObject} handler */
+/** @arg {EventListenerOrEventListenerObject} handler */
 function do_message_handler_overwrite(handler) {
 	/** @this {{}} */
 	return function(/** @type {Event} */ event) {
@@ -2797,7 +2797,7 @@ class AddEventListenerExtension {
 	get_target_prototype() {
 		return this.target_prototype;
 	}
-	/** @param {EventListenersT} handler */
+	/** @arg {EventListenersT} handler */
 	elevate_handler(handler) {
 		this.elevated_event_handlers.push(handler);
 	}
@@ -2813,12 +2813,12 @@ class AddEventListenerExtension {
 		real_value[key]=`weak_id:${val[this.namespace_key]}:${index}`;
 		return;
 	}
-	/** @private @param {{}} val */
+	/** @private @arg {{}} val */
 	add_object_id(val) {
 		if(!(this.namespace_key in val)) throw new Error("Invalid");
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
-	/** @private @returns {void} @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
+	/** @private @returns {void} @arg {[unknown,number,unknown,...unknown[]]} real_value @arg {number} key @arg {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
@@ -2864,7 +2864,7 @@ class AddEventListenerExtension {
 		real_value[key]="cleared_out:"+this.clear_count++;
 		return;
 	}
-	/** @private @param {[unknown, unknown, unknown[]]} list */
+	/** @private @arg {[unknown, unknown, unknown[]]} list */
 	add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
 		/**@type {[unknown,number,unknown,...unknown[]]} */
@@ -2877,16 +2877,16 @@ class AddEventListenerExtension {
 			}
 		}
 	}
-	/** @private @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
+	/** @private @arg {unknown[]} real_value @arg {number} key @arg {{}|CallableFunction} val @arg {string} namespace */
 	convert_to_id_key(real_value,key,val,namespace) {
 		define_normal_value(val,this.namespace_key,namespace);
 		this.convert_to_namespaced_string(real_value,val,key,this.add_object_id(val));
 	}
-	/** @private @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
+	/** @private @template {CallableFunction} T @arg {unknown[]} real_value @arg {number} key @arg {T} val */
 	args_iter_on_function(real_value,key,val) {
 		this.convert_to_id_key(real_value,key,val,"function");
 	}
-	/** @private @param {[any, any, any[]]} list */
+	/** @private @arg {[any, any, any[]]} list */
 	add_to_call_list(list) {
 		if(!api_debug_enabled) return;
 		if(this.failed_obj) return;
@@ -2896,7 +2896,7 @@ class AddEventListenerExtension {
 			console.log("err in add to call list",e);
 		}
 	}
-	/** @private @param {Node} val */
+	/** @private @arg {Node} val */
 	generate_node_id(val) {
 		if(val.__id_holder) {
 			return val.__id_holder.value;
@@ -2917,7 +2917,7 @@ class AddEventListenerExtension {
 		this.node_list=new WeakRef(list);
 		return node_id;
 	}
-	/** @private @param {Extract<keyof EventTarget,string>} target */
+	/** @private @arg {Extract<keyof EventTarget,string>} target */
 	init_overwrite(target) {
 		let t=this;
 		switch(target) {
@@ -2948,9 +2948,9 @@ class AddEventListenerExtension {
 	/**
 	 * @typedef {EventListenerOrEventListenerObject} InterceptFuncType
 	 * @typedef {[string, InterceptFuncType, any?]} InterceptThis
-	 * @param {InterceptThis[1]} arg_function
-	 * @param {InterceptThis} arg_this
-	 * @param {[evt: Event]} args
+	 * @arg {InterceptThis[1]} arg_function
+	 * @arg {InterceptThis} arg_this
+	 * @arg {[evt: Event]} args
 	 * @private
 	 */
 	eventFireInterceptor(arg_function,arg_this,args) {
@@ -3000,7 +3000,7 @@ class IterExtensions {
 }
 IterExtensions.attach_to_api();
 
-/** @param {boolean} include_uninteresting */
+/** @arg {boolean} include_uninteresting */
 function getPlaybackRateMap(include_uninteresting) {
 	let progress_map=new Map;
 	if(include_uninteresting) {
@@ -3039,7 +3039,7 @@ class CreateObjURLCache {
 		this.update_scope(this.originalScope);
 	}
 	/**
-	 * @param {CreateObjURLCache.originalScope} scope
+	 * @arg {CreateObjURLCache.originalScope} scope
 	 */
 	static update_scope(scope) {
 		URL.createObjectURL=scope.createObjectURL;
@@ -3051,7 +3051,7 @@ class CreateObjURLCache {
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
 		/**
-		 * @param {[Blob | MediaSource]} args
+		 * @arg {[Blob | MediaSource]} args
 		 */
 		function createObjectURL(...args) {
 			let ret=base.createObjectURL(...args);
@@ -3059,7 +3059,7 @@ class CreateObjURLCache {
 			return ret;
 		}
 		/**
-		 * @param {[string]} args
+		 * @arg {[string]} args
 		 */
 		function revokeObjectURL(...args) {
 			let key=args[0];
@@ -3136,26 +3136,26 @@ class RepeatImpl_0 {
 
 inject_api.Repeat=RepeatImpl_0;
 class CompressRepeated {
-	/** @template T @param {T[]} src @param {(T|RepeatImpl_0<T>)[]} dst */
+	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
-	/** @template T @param {T[]} src @param {(T|RepeatImpl_0<T>)[]} dst */
+	/** @template T @arg {T[]} src @arg {(T|RepeatImpl_0<T>)[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @param {string[]} src @param {(string|RepeatImpl_0<string>)[]} dst @returns {[boolean, (string|RepeatImpl_0<string>)[]]} */
+	/** @arg {string[]} src @arg {(string|RepeatImpl_0<string>)[]} dst @returns {[boolean, (string|RepeatImpl_0<string>)[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
-	/** @param {(string | RepeatImpl_0<string>)[]} src @param {string[]} dst @returns {[boolean, string[]]} */
+	/** @arg {(string | RepeatImpl_0<string>)[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
 	decompress_result(src,dst) {
 		if(this.did_decompress(src,dst)) return [true,dst];
 		return [false,dst];
 	}
 	/**
-	 * @param {string | any[]} arr
+	 * @arg {string | any[]} arr
 	 */
 	static can_compress_items(arr) {
 		for(let i=0;i<arr.length;i++) {
@@ -3165,7 +3165,7 @@ class CompressRepeated {
 		}
 		return true;
 	}
-	/** @param {string[]} arr */
+	/** @arg {string[]} arr */
 	try_compress(arr) {
 		/**@type {(string|RepeatImpl_0<string>)[]} */
 		let ret=[];
@@ -3185,7 +3185,7 @@ class CompressRepeated {
 		}
 		return this.compress_result(arr,ret);
 	}
-	/** @param {(string | RepeatImpl_0<string>)[]} arr */
+	/** @arg {(string | RepeatImpl_0<string>)[]} arr */
 	try_decompress(arr) {
 		/**@type {string[]} */
 		let ret=[];
@@ -3201,7 +3201,7 @@ class CompressRepeated {
 		}
 		return this.decompress_result(arr,ret);
 	}
-	/** @param {string[]} arr */
+	/** @arg {string[]} arr */
 	compress_array(arr) {
 		let success,res;
 		[success,res]=this.try_decompress(arr);
@@ -3240,7 +3240,7 @@ function to_tuple_arr(keys,values) {
 }
 inject_api.to_tuple_arr=to_tuple_arr;
 
-/** @param {any[]} arr @param {number} index @param {number} value */
+/** @arg {any[]} arr @arg {number} index @arg {number} value */
 function range_matches(arr,value,index) {
 	for(let i=index;i<arr.length;i++) {
 		if(arr[i]!==value) return false;
@@ -3306,7 +3306,7 @@ class CompressStateBase {
 class CompressState extends CompressStateBase {
 	/** @type {T|null} */
 	item;
-	/** @param {T[]} arr */
+	/** @arg {T[]} arr */
 	constructor(arr) {
 		super(0,arr,[]);
 		this.item=null;
@@ -3315,7 +3315,7 @@ class CompressState extends CompressStateBase {
 
 class MulCompression extends BaseCompression {
 	/**
-	 * @param {{i:number,arr:string[],ret:string[]}} state
+	 * @arg {{i:number,arr:string[],ret:string[]}} state
 	 * @arg {string} item
 	 */
 	compress_rle(state,item) {
@@ -3328,7 +3328,7 @@ class MulCompression extends BaseCompression {
 		return true;
 	}
 	/**
-	 * @param {{i:number,arr:number[],ret:(number|RepeatImpl_0<number>)[]}} state
+	 * @arg {{i:number,arr:number[],ret:(number|RepeatImpl_0<number>)[]}} state
 	 * @arg {number} item
 	 */
 	compress_rle_number(state,item) {
@@ -3446,8 +3446,8 @@ inject_api.DisabledMulCompression=DisabledMulCompression;
 
 
 /**
- * @param {(key:"apply"|"bind"|"call")=>void} bound_function
- * @param {("apply"|"bind"|"call"|symbol)[]} keys
+ * @arg {(key:"apply"|"bind"|"call")=>void} bound_function
+ * @arg {("apply"|"bind"|"call"|symbol)[]} keys
  */
 function do_iter(bound_function,keys) {
 	for(let key of keys) {
@@ -3461,7 +3461,7 @@ function do_iter(bound_function,keys) {
 }
 add_function(do_iter);
 
-/** @param {any} a @param {any} c @param {any} m_require */
+/** @arg {any} a @arg {any} c @arg {any} m_require */
 function found_modules(a,c,m_require) {
 	void a,c,m_require;
 };
@@ -3487,7 +3487,7 @@ function resolve_function_constructor() {
 	return content_window.Function;
 }
 
-/** @param {number} id @param {number[]} arr */
+/** @arg {number} id @arg {number[]} arr */
 function wasm_encode_section(id,arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
@@ -3498,7 +3498,7 @@ function wasm_encode_section(id,arr) {
 add_function(wasm_encode_section);
 
 // Looked at .zz impl for https://github.com/little-core-labs/varint-wasm
-/** @param {number[]} arr */
+/** @arg {number[]} arr */
 function wasm_encode_string(arr) {
 	let out=[];
 	let n=arr.length;
@@ -3519,7 +3519,7 @@ add_function(not_null);
 
 /** @template {any[]} T @template U */
 class VoidCallback {
-	/** @param {(...arg0:T)=>U} callback @arg {T} params */
+	/** @arg {(...arg0:T)=>U} callback @arg {T} params */
 	constructor(callback,params) {
 		this.m_callback=callback;
 		this.m_params=params;
@@ -3563,7 +3563,7 @@ async function remove_awaited(arr,item) {
 
 class DataFetcher {
 	timeout_id=-1;
-	/** @param {string} url */
+	/** @arg {string} url */
 	constructor(url) {
 		this.target_url=url;
 		this.aborted=false;
@@ -3788,8 +3788,8 @@ function run_modules_plugin() {
 	};
 	/**
 	 * @this {()=>void}
-	 * @param {any} tv
-	 * @param {any} r
+	 * @arg {any} tv
+	 * @arg {any} r
 	 */
 	function function_prototype_apply_inject(tv,r) {
 		if(!inject_api.function_as_string_vec) throw 1;
@@ -3816,13 +3816,13 @@ class CompressionStatsCalculator {
 	calc_for_stats_index(stats_arr,arr,index) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
-	/** @param {number} index */
+	/** @arg {number} index */
 	add_hit(index) {
 		if(!this.hit_counts[index]) {
 			this.hit_counts[index]=1;
 		} else this.hit_counts[index]++;
 	}
-	/** @param {string} key */
+	/** @arg {string} key */
 	add_item(key) {
 		let index=this.cache.indexOf(key);
 		if(index==-1) {
@@ -3840,7 +3840,7 @@ class CompressionStatsCalculator {
 	map_keys() {
 		return this.cache;
 	}
-	/** @param {string[]} arr @param {number} win_size */
+	/** @arg {string[]} arr @arg {number} win_size */
 	calc_compression_stats(arr,win_size) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
@@ -3893,14 +3893,14 @@ let stats_calculator_info={
 
 inject_api.range_matches=range_matches;
 let compressionStatsCalc=stats_calculator_info.stats_calculator;
-/** @param {[unknown, number][]} stats */
+/** @arg {[unknown, number][]} stats */
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]));
 }
 add_function(log_stats);
 /**
- * @param {string[]} arr
- * @param {number} calc_win
+ * @arg {string[]} arr
+ * @arg {number} calc_win
  */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
@@ -3908,8 +3908,8 @@ function sorted_comp_stats(arr,calc_win) {
 	return ret;
 }
 /**
- * @param {any[]} arr
- * @param {number} start
+ * @arg {any[]} arr
+ * @arg {number} start
  */
 function next_chunk(arr,start) {
 	let s_arr=null;
@@ -3936,7 +3936,7 @@ function next_chunk(arr,start) {
 add_function(next_chunk);
 /** @type {{value:string[]}} */
 let ids={value: []};
-/** @param {string} value */
+/** @arg {string} value */
 function get_ids(value) {
 	return ids.value.indexOf(value);
 }
@@ -3958,7 +3958,7 @@ function sorted_comp_stats(this_,obj) {
 	}
 }
 
-/** @arg {CompressionStatsCalculator} stats @param {IDValueImpl_0} obj */
+/** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj */
 function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)
 		return;
@@ -4105,8 +4105,8 @@ class DoCalc {
 		return null;
 	}
 	/**
-	 * @param {CompressionStatsCalculator} stats
-	 * @param {IDValueImpl_0} obj
+	 * @arg {CompressionStatsCalculator} stats
+	 * @arg {IDValueImpl_0} obj
 	 */
 	constructor(stats,obj) {
 		this.stats=stats;
@@ -4197,9 +4197,9 @@ class CompressDual {
 
 
 /**
- * @param {CompressionStatsCalculator} stats
- * @param {IDValueImpl_0} obj
- * @param {number} max_id
+ * @arg {CompressionStatsCalculator} stats
+ * @arg {IDValueImpl_0} obj
+ * @arg {number} max_id
  */
 function calc_next(stats,obj,max_id) {
 	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
@@ -4238,8 +4238,8 @@ function calc_next(stats,obj,max_id) {
 }
 
 /**
- * @param {IDValueImpl_0} value
- * @param {IDValueImpl_0} next
+ * @arg {IDValueImpl_0} value
+ * @arg {IDValueImpl_0} next
  */
 function assign_next(value,next) {
 	value.next=next;
@@ -4253,7 +4253,7 @@ class Value {
 	arr_dual_x=[];
 	/** @type {AnyOrRepeat_0<string>[]} */
 	arr_rep_str=[];
-	/** @param {number} id */
+	/** @arg {number} id */
 	constructor(id) {
 		this.id=id;
 	}
@@ -4283,14 +4283,14 @@ class Value {
 add_function(Value);
 
 let max_id={value: 0};
-/** @param {IDValueImpl_0} obj @param {CompressionStatsCalculator} stats */
+/** @arg {IDValueImpl_0} obj @arg {CompressionStatsCalculator} stats */
 function run_calc(stats,obj) {
 	let calc_value=new DoCalc(stats,obj);
 	let res=calc_value.get_result();
 	if(!res) return [false,null];
 	return [true,res];
 }
-/** @param {IDValueImpl_0} obj */
+/** @arg {IDValueImpl_0} obj */
 function flat_obj(obj) {
 	let ret=[];
 	while(obj.next) {
@@ -4306,7 +4306,7 @@ function flat_obj(obj) {
  */
 let g_obj_arr={value: []};
 
-/** @param {number|string} val @param {unknown} e */
+/** @arg {number|string} val @arg {unknown} e */
 function find_matching_value(val,e) {
 	if(typeof val==='string') {
 		console.log("TODO: find matching string",e,val);
@@ -4319,7 +4319,7 @@ function find_matching_value(val,e) {
 	}
 }
 
-/** @param {string | number} val */
+/** @arg {string | number} val */
 function key_not_found(val) {
 	console.log('not found',val);
 }
@@ -4327,7 +4327,7 @@ function key_not_found(val) {
 /** @type {number[]} */
 let id_map_one=[];
 
-/** @param {string | number} val */
+/** @arg {string | number} val */
 function do_decode(val) {
 	let fv=g_obj_arr.value.slice(1).find(e => find_matching_value(val,e));
 	if(!fv) return key_not_found(val);
@@ -4364,7 +4364,7 @@ let id_map_num=[];
 /** @type {number[]} */
 let ids_dec_rep=[];
 
-/** @param {string | number | RepeatImpl_0<number>} e @returns {['dr_map_num', any]|['id_map_num',any]|['dr_map_rep', any]|['ids_dec_rep',any]|['ids_dec_num',any]|null} */
+/** @arg {string | number | RepeatImpl_0<number>} e @returns {['dr_map_num', any]|['id_map_num',any]|['dr_map_rep', any]|['ids_dec_rep',any]|['ids_dec_num',any]|null} */
 function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map_num[e]) {
@@ -4427,7 +4427,7 @@ class JsonNullBox {
 
 class JsonValueBox {
 	value;
-	/** @param {JsonNullBox|JsonArrayBox} value */
+	/** @arg {JsonNullBox|JsonArrayBox} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -4443,13 +4443,13 @@ class JsonArrayBox {
 }
 
 class SafeJsonParser {
-	/** @param {string} e */
+	/** @arg {string} e */
 	parse(e) {
 		/** @type {unknown} */
 		let res_unk=JSON.parse(e);
 		return this.convert(res_unk);
 	}
-	/** @param {unknown} obj */
+	/** @arg {unknown} obj */
 	convert(obj) {
 		if(obj===null) {
 			return new JsonValueBox(new JsonNullBox);
@@ -4472,7 +4472,7 @@ function init_decode() {
 	let parser=new SafeJsonParser;
 	ids_dec=ids.value.map(e => parser.parse(e));
 }
-/** @param {string|number} value @returns {string|number} */
+/** @arg {string|number} value @returns {string|number} */
 function decode_map(value) {
 	if(!id_map)
 		init_decode();
@@ -4518,7 +4518,7 @@ function deep_eq(obj_1,obj_2) {
 }
 add_function(deep_eq);
 
-/** @arg {string[][]} arr_2d @arg {number} key @param {string} value */
+/** @arg {string[][]} arr_2d @arg {number} key @arg {string} value */
 function make_group_from_item(arr_2d,key,value) {
 	arr_2d[key]??=[];
 	let arr=arr_2d[key];
@@ -4542,7 +4542,7 @@ let id_groups={value: []};
 /** @type {{value:number[]}} */
 let el_ids={value: []};
 
-/** @param {CompressionStatsCalculator} stats */
+/** @arg {CompressionStatsCalculator} stats */
 function compress_main(stats) {
 	compress_init();
 	if(g_auto_buy) {
@@ -4601,7 +4601,7 @@ class HexRandomDataGenerator {
 		this.used_bits=0;
 	}
 	/**
-	 * @param {number} bit_count
+	 * @arg {number} bit_count
 	 */
 	next(bit_count) {
 		let random_size=1<<bit_count;
@@ -4615,7 +4615,7 @@ class HexRandomDataGenerator {
 		this.cur_part=null;
 	}
 	/**
-	 * @param {number} bit_count
+	 * @arg {number} bit_count
 	 */
 	next_part(bit_count) {
 		let cur_num=this.next(bit_count);
@@ -4655,8 +4655,8 @@ const random_data_generator=new HexRandomDataGenerator;
 
 class EventListenerValue {
 	/**
-	 * @param {EventListenerOrEventListenerObject|null} callback
-	 * @param {boolean | EventListenerOptions} options
+	 * @arg {EventListenerOrEventListenerObject|null} callback
+	 * @arg {boolean | EventListenerOptions} options
 	 */
 	constructor(callback,options) {
 		/**@type {EventListenerOrEventListenerObject|null} */
@@ -4670,7 +4670,7 @@ inject_api.EventListenerValue=EventListenerValue;
 class GenericEvent {
 	#default_prevented=false;
 	type='unknown';
-	/**@param {string} type */
+	/**@arg {string} type */
 	constructor(type) {
 		if(type) {
 			this.type=type;
@@ -4687,8 +4687,8 @@ inject_api.GenericEvent=GenericEvent;
 
 class GenericDataEvent extends GenericEvent {
 	/**
-	 * @param {string} type
-	 * @param {any} data
+	 * @arg {string} type
+	 * @arg {any} data
 	 */
 	constructor(type,data) {
 		super(type);
@@ -4728,7 +4728,7 @@ function is_record_with_T(x,k) {
 //#endregion
 
 //#region cast_monad
-/** @template T @param {T} x @returns {CM<T>} */
+/** @template T @arg {T} x @returns {CM<T>} */
 function new_cast_monad(x) {
 	return {tag: "cast_tag",data: x};
 }
@@ -4842,11 +4842,11 @@ class TCPMessage {
 	/** @readonly */
 	type="tcp";
 	/**
-	 * @param {ConnectFlag} flags
-	 * @param {number} client_id
-	 * @param {number} seq
-	 * @param {number|null} ack
-	 * @param {ConnectionMessage['data']} data
+	 * @arg {ConnectFlag} flags
+	 * @arg {number} client_id
+	 * @arg {number} seq
+	 * @arg {number|null} ack
+	 * @arg {ConnectionMessage['data']} data
 	 */
 	constructor(flags,client_id,seq,ack,data) {
 		this.flags=flags;
@@ -4857,7 +4857,7 @@ class TCPMessage {
 		this.data=data;
 	}
 	/**
-	 * @param {number} client_id
+	 * @arg {number} client_id
 	 * @returns {ConnectionMessage}
 	 */
 	static make_syn(client_id) {
@@ -4868,7 +4868,7 @@ class TCPMessage {
 		return new TCPMessage(tcp_syn,client_id,seq,null,null);
 	}
 	/**
-	 * @param {number} client_id
+	 * @arg {number} client_id
 	 * @arg {ConnectionMessage['data']} data
 	 * @arg {number} seq
 	 * @arg {number} ack
@@ -4931,7 +4931,7 @@ class Socket {
 		this.m_port.start();
 		elevate_event_handler(this);
 	}
-	/** @param {[MessagePort]} ports */
+	/** @arg {[MessagePort]} ports */
 	send_syn(ports) {
 		if(testing_tcp) {// <group syn>
 			console.group("syn");
@@ -4939,7 +4939,7 @@ class Socket {
 		this.init_handler();
 		this.send_init_request(TCPMessage.make_syn(this.m_client_id),ports);
 	}
-	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
+	/** @arg {ConnectionMessage} data @arg {[MessagePort]} ports */
 	send_init_request(data,ports) {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
@@ -4954,7 +4954,7 @@ class Socket {
 		}
 		this.post_wrapped(data,ports);
 	}
-	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
+	/** @arg {ConnectionMessage} data @arg {[MessagePort]} ports */
 	post_wrapped(data,ports) {
 		/** @type {WrappedMessage<ConnectionMessage>} */
 		let msg={
@@ -4979,13 +4979,13 @@ class Socket {
 			this.m_port.postMessage(data);
 		}
 	}
-	/** @param {ConnectionMessage} message */
+	/** @arg {ConnectionMessage} message */
 	client_connect(message) {
 		if(testing_tcp) {
 			console.log('on_client_connect',message,this.m_event_source);
 		}
 	}
-	/** @param {MessageEvent<ConnectionMessage>} event */
+	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(Socket.prototype===this) return;
 		let data=event.data;
@@ -5058,7 +5058,7 @@ class Socket {
 			throw new Error("No remote port to communicate with");
 		}
 	}
-	/** @param {ConnectionMessage} message */
+	/** @arg {ConnectionMessage} message */
 	client_disconnect(message) {
 		if(testing_tcp) {
 			console.log('on_client_disconnect',message);
@@ -5077,7 +5077,7 @@ class OriginState {
 	m_top=window.top;
 	/** @private @readonly @type {Window|null} */
 	m_opener=window.opener;
-	/** @param {ConnectionFlags} flags */
+	/** @arg {ConnectionFlags} flags */
 	get_connect_target(flags) {
 		if(this.m_opener) {
 			flags.does_proxy_to_opener=true;
@@ -5115,7 +5115,7 @@ class ListenSocket {
 	m_client_id;
 	/** @private @type {MessageEventSource} */
 	m_event_source;
-	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
+	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @arg {MessageEventSource} event_source */
 	constructor(flags,connection_port,client_id,event_source) {
 		this.m_flags=flags;
 		this.m_client_id=client_id;
@@ -5182,7 +5182,7 @@ class ListenSocket {
 		},1,1));
 	}
 	/**
-	 * @param {boolean} can_reconnect
+	 * @arg {boolean} can_reconnect
 	 */
 	will_disconnect(can_reconnect) {
 		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
@@ -5352,7 +5352,7 @@ class CrossOriginConnection {
 		if(!is_record_with_T(data.data,"data")) return false;
 		return true;
 	}
-	/** @param {ConnectionMessage} message */
+	/** @arg {ConnectionMessage} message */
 	push_tcp_message(message) {
 		if(!this.m_local_handler) {
 			throw new Error("send tcp message to non-existent connection");
@@ -5397,7 +5397,7 @@ CrossOriginConnection.connect_to_api();
 
 const html_parsing_div_element=document.createElement("div");
 /**
- * @param {string} html
+ * @arg {string} html
  */
 function parse_html_to_binary_arr(html) {
 	html_parsing_div_element.innerHTML=html;
@@ -5447,7 +5447,7 @@ class DebugApi {
 		return this.data_store.delete(key);
 	}
 	/**
-	 * @param {any} element
+	 * @arg {any} element
 	 * @returns {{[x: string]: EventListenerInternal[]}}
 	 */
 	getEventListeners(element) {
@@ -5456,18 +5456,18 @@ class DebugApi {
 		return this.get_getEventListeners('getEventListeners')(element);
 	}
 	/**
-	 * @param {I_debug} debug
-	 * @param {I_undebug} undebug
-	 * @param {Constructor} func
+	 * @arg {I_debug} debug
+	 * @arg {I_undebug} undebug
+	 * @arg {Constructor} func
 	 * @arg {string} name
 	 * @returns {dbg_result}
 	 */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
 		/**
-		 * @param {Constructor} func
-		 * @param {any} f_this
-		 * @param {any[]} c_args
+		 * @arg {Constructor} func
+		 * @arg {any} f_this
+		 * @arg {any[]} c_args
 		 */
 		function do_activate(func,f_this,c_args) {
 			try {
@@ -5488,9 +5488,9 @@ class DebugApi {
 		});
 	}
 	/**
-	 * @param {any} debug
-	 * @param {any} undebug
-	 * @param {null} getEventListeners @returns {this}
+	 * @arg {any} debug
+	 * @arg {any} undebug
+	 * @arg {null} getEventListeners @returns {this}
 	 */
 	attach(debug,undebug,getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
@@ -5505,16 +5505,16 @@ class DebugApi {
 		return this;
 	}
 	/**
-	 * @param {new (...arg0: any[]) => any} class_value
-	 * @param {any[]} arg_vec @returns {boolean}
+	 * @arg {new (...arg0: any[]) => any} class_value
+	 * @arg {any[]} arg_vec @returns {boolean}
 	 */
 	activateClass(class_value,arg_vec) {
 		return new class_value(...arg_vec);
 	}
 	/**
-	 * @param {any} function_value
-	 * @param {any} target_obj
-	 * @param {any} arg_vec @returns {boolean}
+	 * @arg {any} function_value
+	 * @arg {any} target_obj
+	 * @arg {any} arg_vec @returns {boolean}
 	 */
 	activateApply(function_value,target_obj,arg_vec) {
 		return Reflect.apply(function_value,target_obj,arg_vec);
@@ -5566,7 +5566,7 @@ class DebugApi {
 		return function_code;
 	}
 	/**
-	 * @param {IDebugBreakpointArgs} breakpoint_arguments
+	 * @arg {IDebugBreakpointArgs} breakpoint_arguments
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray_a(breakpoint_arguments) {
@@ -5647,9 +5647,9 @@ class DebugApi {
 		};
 	}
 	/**
-	 * @param {Constructor} class_value
-	 * @param {[any,any[]]} activate_args
-	 * @param {string} var_match
+	 * @arg {Constructor} class_value
+	 * @arg {[any,any[]]} activate_args
+	 * @arg {string} var_match
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray_c(class_value,activate_args,var_match) {
@@ -5662,9 +5662,9 @@ class DebugApi {
 		});
 	}
 	/**
-	 * @param {(...x: any[]) => void} function_value
-	 * @param {[any, any[]]} activate_args
-	 * @param {string} var_match
+	 * @arg {(...x: any[]) => void} function_value
+	 * @arg {[any, any[]]} activate_args
+	 * @arg {string} var_match
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray(function_value,activate_args,var_match) {
@@ -5677,7 +5677,7 @@ class DebugApi {
 		});
 	}
 	/**
-	 * @param {IDebugBreakpointArgs} breakpoint_arguments
+	 * @arg {IDebugBreakpointArgs} breakpoint_arguments
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_a(breakpoint_arguments) {
@@ -5735,9 +5735,9 @@ class DebugApi {
 		};
 	}
 	/**
-	 * @param {Constructor} class_value
-	 * @param {any[]} activate_args
-	 * @param {string} var_name
+	 * @arg {Constructor} class_value
+	 * @arg {any[]} activate_args
+	 * @arg {string} var_name
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_c(class_value,activate_args,var_name) {
@@ -5750,9 +5750,9 @@ class DebugApi {
 		});
 	}
 	/**
-	 * @param {(...x: any[]) => void} function_value
-	 * @param {[any, any[]]} activate_vec
-	 * @param {string} var_name
+	 * @arg {(...x: any[]) => void} function_value
+	 * @arg {[any, any[]]} activate_vec
+	 * @arg {string} var_name
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVar(function_value,activate_vec,var_name) {
