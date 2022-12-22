@@ -4000,6 +4000,60 @@ function get_next({next}) {
 	return next;
 }
 
+class IDValue_0 {
+	/** @template {{}} T @arg {T[]} arr */
+	set_arr_T(arr) {
+		if(arr.length===0)
+			throw new Error("Unable to use zero length array");
+		let item=arr[0];
+		console.log('new_proto_keys',Object.keys(item));
+		console.log('new_proto',Object.getPrototypeOf(item));
+	}
+	/** @type {number} */
+	id;
+	/** @type {IDValue_0|null} */
+	next;
+	/** @type {AltPair<string,number>[]} */
+	arr_dual;
+	/** @type {AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[]} */
+	arr_dual_x;
+	/** @type {AnyOrRepeat_0<string>[]} */
+	arr_rep_str;
+	/** @type {AnyOrRepeat_0<number>[]} */
+	arr_rep_num;
+	/** @type {} */
+	arr_str;
+	/** @type {number[]} */
+	arr_num;
+	/** @type {AnyOrRepeat2_0<string,number>[]} */
+	arr_dual_compressed;
+	/** @type {[number,'=',number]|null} */
+	value;
+	/** @type {number[]} */
+	arr_rep;
+	/** @type {[number,'=',string,number]|null} */
+	log_val;
+	/** @type {[string,number][]} */
+	stats;
+	stats_win=0;
+	/** @arg {number} id @arg {IDValue_0|null} next */
+	constructor(id,next) {
+		this.id=id;
+		this.next=next;
+		this.arr_dual=[];
+		this.arr_dual_x=[];
+		this.arr_rep_str=[];
+		this.arr_rep_num=[];
+		this.arr_str=[];
+		this.arr_num=[];
+		this.arr_dual_compressed=[];
+		this.value=null;
+		this.arr_rep=[];
+		this.log_val=null;
+		this.stats=[];
+	}
+}
+
 class DoCalc {
 	get_result() {
 		return this.m_return_value;
