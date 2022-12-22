@@ -19,6 +19,13 @@ declare global {
 	}
 }
 
+// saved_objects
+declare global {
+	interface InjectAPI {
+		saved_objects?: [string,{name: string;}][];
+	}
+}
+
 // ModuleLoadDbg
 declare global {
 	interface InjectAPI {
@@ -66,13 +73,6 @@ declare global {
 	interface InjectAPI {
 		ProxyTargetMap?: {};
 		proxyTargetMap?: {};
-	}
-}
-
-// saved_objects
-declare global {
-	interface InjectAPI {
-		saved_objects?: [string,{name: string;}][];
 	}
 }
 
