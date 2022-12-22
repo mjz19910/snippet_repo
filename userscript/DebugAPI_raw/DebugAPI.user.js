@@ -38,7 +38,6 @@ inject_api.saved_function_objects=[];
  * @param {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj
  */
 function add_function(function_obj) {
-	if(!inject_api) return;
 	if(!inject_api.saved_function_objects) return;
 	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
 }
