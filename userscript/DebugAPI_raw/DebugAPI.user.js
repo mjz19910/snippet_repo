@@ -23,13 +23,13 @@ const DebugApiHolders={
 	Repeat_0: Symbol.for("Repeat_0"),
 };
 /** @type {import("./__global.js")} */
-// #pragma section InjectAPI
+// #pragma section InjectApi
 /** @readonly */
-const InjectAPIStr="inject_api";
+const InjectApiStr="inject_api";
 /** @type {Exclude<typeof window.inject_api,undefined>} */
 let inject_api={};
 window.inject_api=inject_api;
-// #pragma end InjectAPI
+// #pragma end InjectApi
 
 
 // #pragma section saved
@@ -2775,7 +2775,7 @@ class AddEventListenerExtension {
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids=[];
 	/** @private @readonly @type {`__${InjectAPIStr}_${commit_id_sha_1}_namespace`} */
-	namespace_key=`__${InjectAPIStr}_${commit_id_sha_1}_namespace`;
+	namespace_key=`__${InjectApiStr}_${commit_id_sha_1}_namespace`;
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
 	/** @private */
@@ -5405,12 +5405,12 @@ function parse_html_to_binary_arr(html) {
 }
 inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 
-class DebugAPI {
+class DebugApi {
 	next_remote_id=0;
 	data_store=new Map;
-	/**@type {DebugAPI|null} */
+	/**@type {DebugApi|null} */
 	static m_the=null;
-	/**@returns {DebugAPI} */
+	/**@returns {DebugApi} */
 	static the() {
 		if(!this.m_the) {
 			this.m_the=new this;
@@ -5775,7 +5775,7 @@ class DebugAPI {
 		};
 	}
 }
-inject_api.DebugAPI=DebugAPI;
+inject_api.DebugAPI=DebugApi;
 
 function get_exports() {
 	return exports;
@@ -5792,9 +5792,9 @@ if(typeof exports==='object') {
 	exports.CompressState=CompressState;
 	exports.CompressStateBase=CompressStateBase;
 	exports.CrossOriginConnection=CrossOriginConnection;
-	exports.DebugAPI=DebugAPI;
+	exports.DebugApi=DebugApi;
 	exports.inject_api=inject_api;
-	exports.InjectAPIStr=InjectAPIStr;
+	exports.InjectApiStr=InjectApiStr;
 	exports.MulCompression=MulCompression;
 	exports.post_message_connect_message_type=post_message_connect_message_type;
 	exports.random_data_generator=random_data_generator;

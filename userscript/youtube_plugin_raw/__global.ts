@@ -1,4 +1,4 @@
-import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
+import {InjectApiStr as InjectApiStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 // YtdPageManagerElement
 declare global {
@@ -95,11 +95,6 @@ declare global {
 	}|{
 		richSectionRenderer: RichSectionRenderer;
 	};
-}
-
-// InjectApiStr
-declare global {
-	const InjectAPIStr: typeof InjectAPIStr_;
 }
 
 // ResState
