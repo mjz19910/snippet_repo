@@ -34,8 +34,6 @@ const InjectApiStr="inject_api";
 let inject_api={};
 window.inject_api=inject_api;
 // #endregion InjectApi
-
-
 // #region saved
 inject_api.saved_function_objects=[];
 /** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
@@ -90,12 +88,9 @@ function add_object(constructor_,object) {
 }
 add_function(add_object);
 // #endregion saved
-
-
 // #region sha1_hash
 const commit_id_sha1=/* @sha1 */"ce87fbfd";
 // #endregion sha1_hash
-
 // #region parse_javascript_str_support
 /** @template K,V */
 class HashMap {
@@ -2405,7 +2400,6 @@ function parse_javascript_str(code_str) {
 }
 inject_api.parse_javascript_str=parse_javascript_str;
 // #endregion
-
 
 var api_debug_enabled=false;
 
