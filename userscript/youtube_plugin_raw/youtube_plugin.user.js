@@ -1739,7 +1739,7 @@ async function async_plugin_init(event) {
 			on_ytd_app(target_element);
 		}
 		// END(ytd-app)
-		// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
+		// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager"});
 		x: {
 			if(ytd_page_manager) break x;
 			const target_element=get_html_elements(document,"ytd-page-manager")[0];
@@ -1748,7 +1748,7 @@ async function async_plugin_init(event) {
 			on_ytd_page_manager(target_element);
 		}
 		// END(ytd-page-manager)
-		// BEGIN(yt-playlist-manager)
+		// BEGIN(yt-playlist-manager): obj.dispatchEvent({type: "find-yt-playlist-manager"});
 		x: {
 			if(yt_playlist_manager) break x;
 			const target_element=get_html_elements(document,"yt-playlist-manager")[0];
@@ -1756,7 +1756,7 @@ async function async_plugin_init(event) {
 			found_element_count++;
 			on_yt_playlist_manager(target_element);
 		}
-		// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
+		// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy"});
 		x: {
 			if(ytd_watch_flexy) break x;
 			if(!ytd_page_manager) break x;
@@ -1782,8 +1782,8 @@ async function async_plugin_init(event) {
 			found_element_count++;
 			on_ytd_watch_flexy(current_page_element);
 		}
-		// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
-		// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player",detail,port});
+		// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy"});
+		// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player"});
 		x: {
 			if(ytd_player) break x;
 			if(!ytd_watch_flexy) break x;
@@ -1792,8 +1792,8 @@ async function async_plugin_init(event) {
 			found_element_count++;
 			on_ytd_player(target_element);
 		}
-		// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
-		// BEGIN(video)
+		// END(ytd-player): obj.dispatchEvent({type: "ytd-player"});
+		// BEGIN(video): obj.dispatchEvent({type: "find-video"});
 		x: {
 			const element_list=get_html_elements(document,"video");
 			if(element_list.length<=0) break x;
