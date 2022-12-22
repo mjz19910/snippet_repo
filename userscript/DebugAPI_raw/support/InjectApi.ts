@@ -2,6 +2,7 @@ import {
 	CompressionStatsCalculator,
 	DebugAPI,
 } from "../DebugAPI.user";
+import {VoidCallbackWith} from "./VoidCallbackWith";
 
 export const Holder=Symbol.for("InjectApi");
 
@@ -273,20 +274,3 @@ declare global {
 // 	}
 // }
 
-// export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
-
-// /** @template {any[]} U @template C */
-// export class VoidCallback<U extends any[],C> {
-// 	/** @type {(...args: U)=>C} */
-// 	m_callback: ((...args: U) => C);
-// 	/** @arg {(...args: U)=>C} callback */
-// 	constructor(callback: (...args: U) => C) {
-// 		this.m_callback=callback;
-// 	}
-// 	/** @param {U} args */
-// 	execute(...args: U) {
-// 		return this.m_callback(...args);
-// 	}
-// }
-
-// export {};
