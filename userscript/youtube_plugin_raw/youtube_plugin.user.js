@@ -775,6 +775,8 @@ class HandleRendererContentItemArray {
 				return true;
 			} else if("continuationItemRenderer" in content_item) {
 				return true;
+			} else if("commentsHeaderRenderer" in content_item) {
+				return true;
 			} else if("richItemRenderer" in content_item) {
 				if(!content_item.richItemRenderer) return true;
 				check_item_keys(path,".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
