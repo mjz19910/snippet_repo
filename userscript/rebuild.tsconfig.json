@@ -1,0 +1,42 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"lib": [
+			"ESNext",
+			"DOM"
+		],
+		"module": "ESNext",
+		"moduleResolution": "NodeNext",
+		"outDir": "./build/_rebuild",
+		"allowJs": true,
+		"checkJs": true,
+		"declaration": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
+		"isolatedModules": true,
+		"noErrorTruncation": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"sourceMap": true,
+		"strict": true,
+		"useUnknownInCatchVariables": true
+	},
+	"ts-node": {
+		"esm": true
+	},
+	"include": [
+		"./build/**/*"
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./build/_rebuild"
+	]
+}
