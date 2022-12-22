@@ -5692,6 +5692,7 @@ function get_exports() {
 if(typeof exports==='object') {
 	let exports=get_exports();
 	exports.inject_api=inject_api;
+	exports.add_function=add_function;
 	exports.DebugAPI=DebugAPI;
 	exports.post_message_connect_message_type=post_message_connect_message_type;
 	exports.CrossOriginConnection=CrossOriginConnection;

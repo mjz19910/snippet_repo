@@ -1,4 +1,5 @@
 import {
+	add_function,
 	CompressionStatsCalculator,
 } from "../DebugAPI.user";
 import {DebugApiType} from "./DebugApiType";
@@ -33,7 +34,7 @@ declare global {
 // saved_objects
 declare global {
 	interface InjectAPI {
-		add_function?: (callable: ()=>any) => void;
+		add_function?: typeof add_function;
 	}
 }
 
