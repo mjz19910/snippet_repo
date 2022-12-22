@@ -180,26 +180,59 @@ declare global {
 	}
 }
 
-// declare global {
-// 	class ICrossOriginConnection {
-// 		push_tcp_message(msg: any): void;
-// 	}
-// }
+// HexRandomDataGenerator
+declare global {
+	interface InjectAPI {
+		HexRandomDataGenerator?: {};
+	}
+}
 
-// // CrossOriginConnection
-// declare global {
-// 	interface InjectAPI {
-// 		CrossOriginConnection?: {};
-// 		remote_origin?: ICrossOriginConnection;
-// 	}
-// }
+// EventListenerValue
+declare global {
+	interface InjectAPI {
+		EventListenerValue?: {};
+	}
+}
 
-// // LocalHandler
-// declare global {
-// 	interface InjectAPI {
-// 		Socket?: {};
-// 	}
-// }
+// GenericEvent
+declare global {
+	interface InjectAPI {
+		GenericEvent?: {};
+	}
+}
+
+// GenericDataEvent
+declare global {
+	interface InjectAPI {
+		GenericDataEvent?: {};
+	}
+}
+
+// Socket
+declare global {
+	interface InjectAPI {
+		Socket?: {};
+	}
+}
+
+// OriginState
+declare global {
+	interface InjectAPI {
+		OriginState?: {};
+	}
+}
+
+// CrossOriginConnection
+declare global {
+	interface InjectAPI {
+		CrossOriginConnection?: {};
+		remote_origin?: ICrossOriginConnection;
+	}
+}
+
+interface ICrossOriginConnection {
+	push_tcp_message(msg: any): void;
+}
 
 // // parse_javascript_str
 // declare global {
@@ -222,46 +255,11 @@ declare global {
 // 	}
 // }
 
-// // HexRandomDataGenerator
-// declare global {
-// 	interface InjectAPI {
-// 		HexRandomDataGenerator?: {};
-// 	}
-// }
-
-// // EventListenerValue
-// declare global {
-// 	interface InjectAPI {
-// 		EventListenerValue?: {};
-// 	}
-// }
-
-// // GenericEvent
-// declare global {
-// 	interface InjectAPI {
-// 		GenericEvent?: {};
-// 	}
-// }
-
-// // GenericDataEvent
-// declare global {
-// 	interface InjectAPI {
-// 		GenericDataEvent?: {};
-// 	}
-// }
-
 // // RustSimpleTokenizer
 // declare global {
 // 	interface InjectAPI {
 // 		RustSimpleTokenizer?: {};
 // 		RustSimpleParser?: {};
-// 	}
-// }
-
-// // OriginState
-// declare global {
-// 	interface InjectAPI {
-// 		OriginState?: {};
 // 	}
 // }
 
