@@ -1829,7 +1829,7 @@ async function async_plugin_init(event) {
 				console.log("found video elements");
 			}
 		}
-		// END(video)
+		// END(video): obj.dispatchEvent({type: "video"});
 		await obj.wait_for_port(event.port,cur_count);
 		if(found_element_count>=expected_element_count) {
 			obj.dispatchEvent({...event,type: "plugin-activate"});
