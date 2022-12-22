@@ -9,7 +9,7 @@ import {SavedInstanceType} from "./SavedInstanceType";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
-export const InjectApiHolder=Symbol.for("InjectApi");
+export {InjectApiHolder} from "../DebugAPI.user.js";
 
 // saved_instances
 declare global {

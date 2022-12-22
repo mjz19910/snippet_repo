@@ -1,4 +1,4 @@
-export const RepeatHolder=Symbol.for("Repeat_0");
+export {RepeatHolder} from "../DebugAPI.user.js";
 /** @template T */
 export class RepeatL_0<T> {
 	value: T;

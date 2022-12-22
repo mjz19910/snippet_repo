@@ -279,10 +279,13 @@ declare global {
 	}
 }
 
-export type DebugApiHolders=[
-	typeof InjectApiHolder,
-	typeof RepeatHolder,
-];
+export {type DebugApiHoldersType};
+declare global {
+	type DebugApiHoldersType=[
+		typeof InjectApiHolder,
+		typeof RepeatHolder,
+	];
+}
 
 // WeakRef
 declare global {

@@ -16,6 +16,13 @@
 /* eslint-disable no-undef */
 
 // Use module
+const InjectApiHolder=Symbol.for("InjectApi");
+const RepeatHolder=Symbol.for("Repeat_0");
+/** @type {import("./__global.js").DebugApiHoldersType} */
+const DebugApiHolders=[
+	InjectApiHolder,
+	RepeatHolder,
+];
 /** @type {import("./__global.js")} */
 // #pragma section InjectAPI
 /** @readonly */
@@ -5734,4 +5741,7 @@ if(typeof exports==='object') {
 	exports.CompressStateBase=CompressStateBase;
 	exports.MulCompression=MulCompression;
 	exports.CompressState=CompressState;
+	exports._DebugApiHolders=DebugApiHolders;
+	exports.InjectApiHolder=InjectApiHolder;
+	exports.RepeatHolder=RepeatHolder;
 }
