@@ -940,26 +940,25 @@ class FilterHandlers extends IterateApiResultBase {
 		if(this.handleAppendContinuationItemsAction(path,command)) return;
 		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
 	}
-	whitelist_item_sections=[
-		"shelfRenderer",
-		"commentsEntryPointHeaderRenderer",
-		"shelfRenderer",
-		"commentsEntryPointHeaderRenderer",
-		"continuationItemRenderer",
-		"compactVideoRenderer",
-		"compactRadioRenderer",
-		"compactPlaylistRenderer",
-		"videoRenderer",
-		"radioRenderer",
-		"reelShelfRenderer",
-		"playlistRenderer",
-		"channelRenderer",
-	];
-	blacklist_item_sections=[
-		"promotedSparklesWebRenderer",
-		"compactPromotedVideoRenderer",
-		"searchPyvRenderer",
-	];
+	blacklist_item_sections=new Map([
+		["channelRenderer",false],
+		["commentsEntryPointHeaderRenderer",false],
+		["commentsEntryPointHeaderRenderer",false],
+		["compactPlaylistRenderer",false],
+		["compactRadioRenderer",false],
+		["compactVideoRenderer",false],
+		["continuationItemRenderer",false],
+		["gridRenderer",false],
+		["playlistRenderer",false],
+		["radioRenderer",false],
+		["reelShelfRenderer",false],
+		["shelfRenderer",false],
+		["shelfRenderer",false],
+		["videoRenderer",false],
+		["compactPromotedVideoRenderer",true],
+		["promotedSparklesWebRenderer",true],
+		["searchPyvRenderer",true],
+	]);
 	/**
 	 * @param {string} path
 	 * @param {{ contents: {}[]; }} renderer
@@ -970,8 +969,8 @@ class FilterHandlers extends IterateApiResultBase {
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
 			for(let key of keys) {
-				if(this.whitelist_item_sections.includes(key)) return true;
-				if(this.blacklist_item_sections.includes(key)) return false;
+				let is_blacklisted=this.blacklist_item_sections.get(key);
+				if(is_blacklisted!==void 0) return !is_blacklisted;
 				console.log("filter_handlers: new item section from .contents[].%o",key);
 			}
 			return true;
