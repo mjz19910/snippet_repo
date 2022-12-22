@@ -727,11 +727,12 @@ function check_item_keys(real_path,path,keys) {
 		case ".contents[]": {
 			for(let key of keys) {
 				switch(key) {
+					case "commentsHeaderRenderer": continue;
+					case "commentThreadRenderer": continue;
+					case "compactVideoRenderer": continue;
 					case "continuationItemRenderer": continue;
 					case "itemSectionRenderer": continue;
 					case "richItemRenderer": continue;
-					case "commentThreadRenderer": continue;
-					case "commentsHeaderRenderer": continue;
 				}
 				console.log("item_keys_tag [ci_3_40_] "+real_path+": iter content key",path,key);
 			}
