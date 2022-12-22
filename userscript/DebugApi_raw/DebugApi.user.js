@@ -59,7 +59,7 @@ function add_object_with_name(name,object) {
 	if(!inject_api.saved_instances) return;
 	/** @type {MetaTagForPrototypeOf} */
 	const instance_meta={
-		/**@type {"meta_for_prototype_of"}*/
+		/** @type {"meta_for_prototype_of"}*/
 		_tag: "meta_for_prototype_of",
 		name,
 		prototype_meta: Object.getPrototypeOf(object),
@@ -77,7 +77,7 @@ function add_object(constructor_,object) {
 	const name=constructor_.name;
 	/** @type {MetaTagForConstructor} */
 	const instance_meta={
-		/**@type {"for_constructor"}*/
+		/** @type {"for_constructor"}*/
 		_tag: "for_constructor",
 		name,
 		constructor_meta: constructor_,
@@ -93,7 +93,7 @@ add_function(add_object);
 
 
 // #region sha1_hash
-const commit_id_sha1=/*@sha1*/"ce87fbfd";
+const commit_id_sha1=/* @sha1 */"ce87fbfd";
 // #endregion sha1_hash
 
 /** @template K,V */
@@ -2433,7 +2433,7 @@ class ApiProxyManager {
 	 */
 	create_proxy_for_function(message_to_send,function_value) {
 		let t=this.event_handler;
-		/**@arg {[target: T, thisArg: any, argArray: any[]]} post_message_proxy_spread */
+		/** @arg {[target: T, thisArg: any, argArray: any[]]} post_message_proxy_spread */
 		function do_apply(...post_message_proxy_spread) {
 			t.dispatchEvent({
 				type: message_to_send,
@@ -2867,7 +2867,7 @@ class AddEventListenerExtension {
 	/** @private @arg {[unknown, unknown, unknown[]]} list */
 	add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
-		/**@type {[unknown,number,unknown,...unknown[]]} */
+		/** @type {[unknown,number,unknown,...unknown[]]} */
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
@@ -3007,7 +3007,7 @@ function getPlaybackRateMap(include_uninteresting) {
 		let elem_list=document.querySelectorAll("ytd-compact-video-renderer:has(#overlays:not(* > #progress))");
 		elem_list.length>0&&progress_map.set("none",[...elem_list]);
 	}
-	let sel=(/**@type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
+	let sel=(/** @type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
 	for(let i=0;i<=100;i++) {
 		if(!include_uninteresting&&i===100) continue;
 		let elem=document.querySelectorAll(sel(i.toString()));
@@ -3030,7 +3030,7 @@ class CreateObjURLCache {
 	 * @type {[(Blob | MediaSource)[], string, boolean][]}
 	 */
 	static expired=[];
-	/**@type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
+	/** @type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
 	static cache=new Map;
 	static enable() {
 		this.update_scope(this.getScope());
@@ -3047,7 +3047,7 @@ class CreateObjURLCache {
 	}
 	static getScope() {
 		let base=this.originalScope;
-		/**@type {CreateObjURLCache.originalScope} */
+		/** @type {CreateObjURLCache.originalScope} */
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
 		/**
@@ -3078,11 +3078,11 @@ CreateObjURLCache.enable();
 
 /** @template T @implements {Repeat_0<T>} */
 class RepeatImpl_0 {
-	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
+	/** @type {Map<string,Map<number,Repeat_0<string>>>} */
 	static map=new Map;
-	/**@type {Map<number,Map<number,Repeat_0<number>>>} */
+	/** @type {Map<number,Map<number,Repeat_0<number>>>} */
 	static map_num=new Map;
-	/**@arg {string} value @arg {number} times */
+	/** @arg {string} value @arg {number} times */
 	static get(value,times) {
 		if(!this.map.has(value)) {
 			this.map.set(value,new Map);
@@ -3101,7 +3101,7 @@ class RepeatImpl_0 {
 			return rep;
 		}
 	}
-	/**@arg {number} value @arg {number} times */
+	/** @arg {number} value @arg {number} times */
 	static get_num(value,times) {
 		if(!this.map_num.has(value)) {
 			this.map_num.set(value,new Map);
@@ -3167,7 +3167,7 @@ class CompressRepeated {
 	}
 	/** @arg {string[]} arr */
 	try_compress(arr) {
-		/**@type {(string|RepeatImpl_0<string>)[]} */
+		/** @type {(string|RepeatImpl_0<string>)[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -3187,7 +3187,7 @@ class CompressRepeated {
 	}
 	/** @arg {(string | RepeatImpl_0<string>)[]} arr */
 	try_decompress(arr) {
-		/**@type {string[]} */
+		/** @type {string[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -3216,23 +3216,23 @@ class CompressRepeated {
 }
 inject_api.CompressRepeated=CompressRepeated;
 
-/**@template T */
+/** @template T */
 class W {
-	/**@arg {T} val */
+	/** @arg {T} val */
 	constructor(val) {
 		this.val=val;
 	}
 }
 add_function(W);
 
-/**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
+/** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
-	/**@type {[typeof keys[0], typeof values[0]][]} */
+	/** @type {[typeof keys[0], typeof values[0]][]} */
 	let ret=[];
 	for(let i=0;i<keys.length;i++) {
 		let k=keys[i];
 		let v=values[i];
-		/**@type {[typeof k, typeof v]} */
+		/** @type {[typeof k, typeof v]} */
 		let item=[k,v];
 		ret.push(item);
 	}
@@ -3266,7 +3266,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/**@template T,U @arg {CompressStateBase<T, U>} state*/
+	/** @template T,U @arg {CompressStateBase<T, U>} state*/
 	compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}
@@ -3286,7 +3286,7 @@ class BaseCompression {
 	}
 }
 
-/**@template T @template U */
+/** @template T @template U */
 class CompressStateBase {
 	/** @type {number} */
 	i;
@@ -3302,7 +3302,7 @@ class CompressStateBase {
 	}
 }
 
-/**@template T @template U @extends {CompressStateBase<T,U>} */
+/** @template T @template U @extends {CompressStateBase<T,U>} */
 class CompressState extends CompressStateBase {
 	/** @type {T|null} */
 	item;
@@ -3342,7 +3342,7 @@ class MulCompression extends BaseCompression {
 	}
 	/** @arg {string[]} arr */
 	try_compress(arr) {
-		/**@type {CompressState<string, string>} */
+		/** @type {CompressState<string, string>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -3354,7 +3354,7 @@ class MulCompression extends BaseCompression {
 	}
 	/** @arg {number[]} arr */
 	try_compress_number(arr) {
-		/**@type {CompressState<number, number>} */
+		/** @type {CompressState<number, number>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -3364,7 +3364,7 @@ class MulCompression extends BaseCompression {
 		}
 		return this.compress_result_state(state);
 	}
-	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
+	/** @arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
 	try_decompress(arr) {
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
@@ -3381,7 +3381,7 @@ class MulCompression extends BaseCompression {
 		}
 		return this.decompress_result(arr,ret);
 	}
-	/**@arg {string[]} arr @returns {string[]} */
+	/** @arg {string[]} arr @returns {string[]} */
 	compress_array(arr) {
 		let success,res;
 		[success,res]=this.try_decompress(arr);
@@ -3405,7 +3405,7 @@ class DisabledMulCompression extends MulCompression {
 	 * @arg {T[]} arr
 	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
-		/**@type {CompressState<T,AnyOrRepeat_0<T>>} */
+		/** @type {CompressState<T,AnyOrRepeat_0<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -3666,7 +3666,7 @@ async function decode_wasm_data() {
 }
 add_function(decode_wasm_data);
 
-/**@arg {SafeFunctionPrototype} safe_function_prototype */
+/** @arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
 	/** @type {["apply","bind","call"]}*/
 	let keys=["apply","bind","call"];
@@ -3690,7 +3690,7 @@ function gen_function_prototype_use(safe_function_prototype) {
 }
 
 class ModuleLoadDbg {
-	/**@arg {any} thisArg @arg {[any,any,any]} argArray */
+	/** @arg {any} thisArg @arg {[any,any,any]} argArray */
 	evaluate_len_3(thisArg,argArray) {
 		if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
 			var ars=Object.entries(argArray[1]).filter(([,e]) => e instanceof Array);
@@ -3717,25 +3717,25 @@ function run_modules_plugin() {
 	let function_prototype_apply=function_prototype.apply;
 	let function_prototype_bind=function_prototype.bind;
 
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_call=function_prototype_call.bind(function_prototype_call);
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_apply=function_prototype_call.bind(function_prototype_apply);
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_bind=function_prototype_call.bind(function_prototype_bind);
 
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_call=function_prototype_bind.bind(function_prototype_call);
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_apply=function_prototype_bind.bind(function_prototype_apply);
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_bind=function_prototype_bind.bind(function_prototype_bind);
 
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_apply_call=function_prototype_apply.bind(function_prototype_call);
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>any} */
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>any} */
 	let bound_apply_apply=function_prototype_apply.bind(function_prototype_apply);
-	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
+	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
 	let bound_apply_bind=function_prototype_apply.bind(function_prototype_bind);
 
 	let safe_function_prototype={
@@ -3761,7 +3761,7 @@ function run_modules_plugin() {
 	];
 	console.log(bound_function_prototype_vec);
 	Function.prototype.call=function_prototype_call_inject;
-	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
+	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
 		if(!inject_api.function_as_string_vec) throw 1;
 		let ret;
@@ -3809,10 +3809,10 @@ class CompressionStatsCalculator {
 		this.hit_counts=[];
 		/** @type {string[]} */
 		this.cache=[];
-		/**@type {MulCompression} */
+		/** @type {MulCompression} */
 		this.compressor=new MulCompression;
 	}
-	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
+	/** @arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
 	calc_for_stats_index(stats_arr,arr,index) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
@@ -3861,7 +3861,7 @@ class CompressionStatsCalculator {
 	 * @returns {(["T", T]|["U", U])[]}
 	 * */
 	replace_range(arr,range,replacement) {
-		/**@type {(["T", T]|["U", U])[]} */
+		/** @type {(["T", T]|["U", U])[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			if(range_matches(arr,range,i)) {
@@ -3887,7 +3887,7 @@ inject_api.CompressionStatsCalculator=CompressionStatsCalculator;
 
 let stats_calculator_info={
 	stats_calculator: new CompressionStatsCalculator,
-	/**@type {[string, number][][]} */
+	/** @type {[string, number][][]} */
 	compression_stats: [],
 };
 
@@ -3941,10 +3941,10 @@ function get_ids(value) {
 	return ids.value.indexOf(value);
 }
 
-/**@arg {CompressionStatsCalculator} this_ @arg {IDValueImpl_0} obj */
+/** @arg {CompressionStatsCalculator} this_ @arg {IDValueImpl_0} obj */
 function sorted_comp_stats(this_,obj) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
-		/**@type {[string,number][]} */
+		/** @type {[string,number][]} */
 		let ret=[];
 		let types=this_.calc_compression_stats(obj.arr_str,obj.stats_win);
 		let t=types[0];
@@ -3966,7 +3966,7 @@ function calc_cur(stats,obj) {
 }
 
 class IDValueImpl {
-	/**@arg {number} id @arg {IDValueImpl_0|null} next */
+	/** @arg {number} id @arg {IDValueImpl_0|null} next */
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
@@ -3980,11 +3980,11 @@ class IDValueImpl {
 		this.arr_str=[];
 		/** @type {number[]} */
 		this.arr_num=[];
-		/**@type {[number,'=',number]|null} */
+		/** @type {[number,'=',number]|null} */
 		this.value=null;
 		/** @type {number[]} */
 		this.arr_rep=[];
-		/**@type {[number,'=',string,number]|null} */
+		/** @type {[number,'=',string,number]|null} */
 		this.log_val=null;
 		/** @type {[string, number][]} */
 		this.stats=[];
@@ -3993,7 +3993,7 @@ class IDValueImpl {
 }
 add_function(IDValueImpl);
 
-/**@arg {IDValueImpl_0} next */
+/** @arg {IDValueImpl_0} next */
 function get_next({next}) {
 	if(next===null)
 		throw new Error("Unexpected type");
@@ -4159,14 +4159,14 @@ class DoCalc {
 inject_api.DoCalc=DoCalc;
 
 class CompressDual {
-	/**@type {number} */
+	/** @type {number} */
 	i;
-	/**@type {AltPair<string,number>[]} */
+	/** @type {AltPair<string,number>[]} */
 	arr=[];
-	/**@type {AnyOrRepeat2_0<string,number>[]} */
+	/** @type {AnyOrRepeat2_0<string,number>[]} */
 	ret=[];
 	m_base=new BaseCompression;
-	/**@returns {DualR_0} */
+	/** @returns {DualR_0} */
 	try_compress_dual() {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
@@ -4177,7 +4177,7 @@ class CompressDual {
 		}
 		return this.m_base.compress_result_state_dual(this);
 	}
-	/**@arg {AltPair<string,number>} item */
+	/** @arg {AltPair<string,number>} item */
 	compress_rle_TU_to_TX(item) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
@@ -4187,7 +4187,7 @@ class CompressDual {
 		this.i+=off-1;
 		return true;
 	}
-	/**@arg {AltPair<string,number>[]} arr */
+	/** @arg {AltPair<string,number>[]} arr */
 	constructor(arr) {
 		this.i=0;
 		this.arr=arr;
@@ -4210,7 +4210,7 @@ function calc_next(stats,obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {IDValueImpl_0} */
+	/** @type {IDValueImpl_0} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];
@@ -4227,7 +4227,7 @@ function calc_next(stats,obj,max_id) {
 	if(next.arr_str)
 		return null;
 	let com=new CompressDual(next.arr_dual);
-	/**@type {DualR_0} */
+	/** @type {DualR_0} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
 		next.arr_dual=compress_result[1];
@@ -4246,7 +4246,7 @@ function assign_next(value,next) {
 	return next;
 }
 add_function(assign_next);
-/**@implements {IDValueImpl_0} */
+/** @implements {IDValueImpl_0} */
 class Value {
 	set_arr_T() {}
 	/** @type {AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[]} */
@@ -4371,7 +4371,7 @@ function try_decode(e,deep=true) {
 			return ['dr_map_num',dr_map_num[e]];
 		}
 		if(id_map_num[e]) {
-			/**@type {(string | number)[]} */
+			/** @type {(string | number)[]} */
 			let res=id_map_num[e];
 			if(!deep)
 				return ['id_map_num',res];
@@ -4392,7 +4392,7 @@ function try_decode(e,deep=true) {
 			return ['dr_map_rep',dr_map[e.value]];
 		}
 		if(id_map_rep[e.value]) {
-			/**@type {(string | number)[]} */
+			/** @type {(string | number)[]} */
 			let res=id_map_rep[e.value];
 			let dec_res=[];
 			for(let i=0;i<res.length;i++) {
@@ -4414,7 +4414,7 @@ function try_decode(e,deep=true) {
 let id_map=[];
 /** @type {Map<string, number>} */
 let id_map_str=new Map;
-/**@type {JsonValueBox[]} */
+/** @type {JsonValueBox[]} */
 let ids_dec=[];
 /** @type {(RepeatImpl_0<string | number>|RepeatImpl_0<(string | number)[]>|(string | number)[])[]} */
 let dr_map=[];
@@ -4436,7 +4436,7 @@ class JsonValueBox {
 class JsonArrayBox {
 	type="array";
 	value;
-	/**@arg {JsonValueBox[]} value */
+	/** @arg {JsonValueBox[]} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -4455,7 +4455,7 @@ class SafeJsonParser {
 			return new JsonValueBox(new JsonNullBox);
 		}
 		if(obj instanceof Array) {
-			/**@type {JsonValueBox[]} */
+			/** @type {JsonValueBox[]} */
 			let new_arr=[];
 			for(let [k,v] of obj.entries()) {
 				let res=this.convert(v);
@@ -4590,7 +4590,7 @@ class HexRandomDataGenerator {
 	constructor() {
 		this.random_num=Math.random();
 		this.used_bits=0;
-		/**@type {{value:number,bit_count:number}|null} */
+		/** @type {{value:number,bit_count:number}|null} */
 		this.cur_part={
 			value: 0,
 			bit_count: 0,
@@ -4659,9 +4659,9 @@ class EventListenerValue {
 	 * @arg {boolean | EventListenerOptions} options
 	 */
 	constructor(callback,options) {
-		/**@type {EventListenerOrEventListenerObject|null} */
+		/** @type {EventListenerOrEventListenerObject|null} */
 		this.callback=callback;
-		/**@type {boolean | EventListenerOptions} */
+		/** @type {boolean | EventListenerOptions} */
 		this.options=options;
 	}
 }
@@ -4670,7 +4670,7 @@ inject_api.EventListenerValue=EventListenerValue;
 class GenericEvent {
 	#default_prevented=false;
 	type='unknown';
-	/**@arg {string} type */
+	/** @arg {string} type */
 	constructor(type) {
 		if(type) {
 			this.type=type;
@@ -5408,9 +5408,9 @@ inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 class DebugApi {
 	next_remote_id=0;
 	data_store=new Map;
-	/**@type {DebugApi|null} */
+	/** @type {DebugApi|null} */
 	static m_the=null;
-	/**@returns {DebugApi} */
+	/** @returns {DebugApi} */
 	static the() {
 		if(!this.m_the) {
 			this.m_the=new this;
@@ -5600,7 +5600,7 @@ class DebugApi {
 		let vars_arr=sr.map(e => String.fromCharCode(e));
 		this.current_function_value=function_value;
 		let tmp_key="__k";
-		/**@type {dbg_get_ty} */
+		/** @type {dbg_get_ty} */
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
 		let debug=this.get_d();
@@ -5688,7 +5688,7 @@ class DebugApi {
 		let tmp_key='__k';
 		class DebugInfoValue {
 			valid=false;
-			/**@arg {string} __v @returns {{type: 'hidden-var',var: string}|{type: 'var',data: [string,any]}|{type: 'no-var', data: null}|null} */
+			/** @arg {string} __v @returns {{type: 'hidden-var',var: string}|{type: 'var',data: [string,any]}|{type: 'no-var', data: null}|null} */
 			get(__v) {
 				return null;
 			}
