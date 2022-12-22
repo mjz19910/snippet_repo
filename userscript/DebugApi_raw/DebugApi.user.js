@@ -2372,7 +2372,6 @@ class js_token_generator {
 	}
 }
 // #endregion
-
 // #region parse_javascript_str
 /** @arg {string} code_str */
 function parse_javascript_str(code_str) {
