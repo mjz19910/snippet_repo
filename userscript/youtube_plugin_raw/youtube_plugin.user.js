@@ -687,34 +687,24 @@ function check_item_keys(real_path,path,keys) {
 		default: console.log("item_keys_tag [ci_2_10] "+real_path+": new path=%o",path); break;
 	}
 	switch(path) {
-		case "reloadContinuationItemsCommand": {
-			for(let key of keys) {
-				switch(key) {
-					case "continuationItems": break;
-					case 'slot': break;
-					case "targetId": break;
-					default: console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
-				}
-			}
+		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
+			case "continuationItems": break;
+			case 'slot': break;
+			case "targetId": break;
+			default: console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
 		} break;
-		case "appendContinuationItemsAction": {
-			for(let key of keys) {
-				switch(key) {
-					case "continuationItems": break;
-					case "targetId": break;
-					default: console.log("item_keys_tag [ci_3_20_] "+real_path+": iter content key",path,key);
-				}
-			}
+		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
+			case "continuationItems": break;
+			case "targetId": break;
+			default: console.log("item_keys_tag [ci_3_20_] "+real_path+": iter content key",path,key);
 		} break;
-		case "tabRenderer.content.richGridRenderer": {
-			for(let key of keys) switch(key) {
-				case "contents": break;
-				case "trackingParams": break;
-				case "header": break;
-				case "targetId": break;
-				case "reflowOptions": break;
-				default: console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
-			}
+		case "tabRenderer.content.richGridRenderer": for(let key of keys) switch(key) {
+			case "contents": break;
+			case "trackingParams": break;
+			case "header": break;
+			case "targetId": break;
+			case "reflowOptions": break;
+			default: console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
 		} break;
 		case ".contents[]": for(let key of keys) switch(key) {
 			case "commentsHeaderRenderer": break;
