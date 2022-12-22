@@ -14,7 +14,7 @@ import {RustTokenTreeParser} from "../src/debug_api/RustTokenTreeParser.js";
 import {WeakValueRef} from "../src/WeakValueRef.js";
 import {CSSCascade} from "../src/CSSCascade.js";
 import {OriginState} from "../src/OriginState.js";
-import {APIProxyManager} from "../src/debug_api/APIProxyManager.js";
+import {ApiProxyManager} from "../src/debug_api/ApiProxyManager.js";
 import {LoggingEventTarget} from "../src/debug_api/LoggingEventTarget.js";
 import {DebugApi} from "../src/debug_api/DebugApi.js";
 import {GenericEventTarget} from "../src/GenericEventTarget.js";
@@ -39,7 +39,7 @@ declare global {
 		HTMLMediaElementGainController?: {};
 		plugin_overlay_element?: PluginOverlayElement;
 		gain_controller?: {};
-		any_api_logger?: APIProxyManager;
+		any_api_logger?: ApiProxyManager;
 		parse_html_to_binary_arr?: (html: string) => unknown[];
 		run_modules_plugin?: VoidCallbackWith<() => void>;
 		run_wasm_plugin?: VoidCallbackWith<() => void>;
@@ -65,7 +65,7 @@ declare global {
 		CSSCascade?: typeof CSSCascade;
 		OriginState?: typeof OriginState;
 		ConnectToRemoteOrigin?: typeof RemoteOriginConnection;
-		APIProxyManager?: typeof APIProxyManager;
+		ApiProxyManager?: typeof ApiProxyManager;
 		LoggingEventTarget?: typeof LoggingEventTarget;
 		DebugApi?: typeof DebugApi;
 	}

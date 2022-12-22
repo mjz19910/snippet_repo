@@ -55,10 +55,10 @@ declare global {
 	}
 }
 
-// APIProxyManager
+// ApiProxyManager
 declare global {
 	interface InjectApi {
-		APIProxyManager?: {};
+		ApiProxyManager?: {};
 		any_api_logger?: {};
 	}
 }

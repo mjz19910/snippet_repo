@@ -14,12 +14,12 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
-import {APIProxyManager} from "./debug_api/APIProxyManager";
+import {ApiProxyManager} from "./debug_api/ApiProxyManager.js";
 import {CompressRepeated} from "./CompressRepeated";
 import {compress_main} from "./compress_main";
 import {CreateObjURLCache} from "./CreateObjURLCache";
 import {CSSCascade} from "./CSSCascade";
-import {DebugApi} from "./debug_api/DebugApi";
+import {DebugApi} from "./debug_api/DebugApi.js";
 import {Dumper} from "./Dumper";
 import {EventListenerValue} from "./EventListenerValue";
 import {GenericDataEvent} from "./GenericDataEvent";
@@ -72,8 +72,8 @@ export function main() {
 	g_api.OriginState=OriginState;
 	RemoteOriginConnection.connect_to_api();
 	g_api.ConnectToRemoteOrigin=RemoteOriginConnection;
-	g_api.APIProxyManager=APIProxyManager;
-	g_api.any_api_logger=new APIProxyManager(new LoggingEventTarget);
+	g_api.ApiProxyManager=ApiProxyManager;
+	g_api.any_api_logger=new ApiProxyManager(new LoggingEventTarget);
 	g_api.LoggingEventTarget=LoggingEventTarget;
 	g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 	g_api.DebugApi=DebugApi;
