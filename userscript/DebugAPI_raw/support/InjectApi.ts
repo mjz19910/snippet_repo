@@ -13,21 +13,21 @@ export const InjectApiHolder=Symbol.for("InjectApi");
 
 // saved_instances
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		saved_instances?: SavedInstanceType[];
 	}
 }
 
 // saved_object_arrays
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		saved_object_arrays?: {}[][];
 	}
 }
 
 // add_function
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		add_function?: typeof add_function;
 		saved_function_objects?: [string,{name: string;}][];
 	}
@@ -35,28 +35,28 @@ declare global {
 
 // add_array
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		add_array?: {};
 	}
 }
 
 // add_object_with_name
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		add_object_with_name?: {};
 	}
 }
 
 // LoggingEventTarget
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		LoggingEventTarget?: {};
 	}
 }
 
 // APIProxyManager
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		APIProxyManager?: {};
 		any_api_logger?: {};
 	}
@@ -64,7 +64,7 @@ declare global {
 
 // ReversePrototypeChain
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		ReversePrototypeChain?: {};
 		reversePrototypeChain?: {};
 	}
@@ -72,7 +72,7 @@ declare global {
 
 // ProxyTargetMap
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		ProxyTargetMap?: {};
 		proxyTargetMap?: {};
 	}
@@ -80,14 +80,14 @@ declare global {
 
 // elevate_event_handlers
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		elevate_event_handlers?: {}[];
 	}
 }
 
 // AddEventListenerExtension
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		AddEventListenerExtension?: {};
 		addEventListenerExtension?: IAddEventListenerExtension;
 	}
@@ -95,56 +95,56 @@ declare global {
 
 // IterExtensions
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		IterExtensions?: {};
 	}
 }
 
 // getPlaybackRateMap
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		getPlaybackRateMap?: {};
 	}
 }
 
 // CreateObjURLCache
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		CreateObjURLCache?: {};
 	}
 }
 
 // Repeat
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		Repeat?: {};
 	}
 }
 
 // CompressRepeated
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		CompressRepeated?: {};
 	}
 }
 
 // to_tuple_arr
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		to_tuple_arr?: {};
 	}
 }
 
 // DisabledMulCompression
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		DisabledMulCompression?: {};
 	}
 }
 
 // run_wasm_plugin
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		run_modules_plugin?: VoidCallbackWith<() => void>;
 		run_wasm_plugin?: VoidCallbackWith<() => void>;
 	}
@@ -152,91 +152,91 @@ declare global {
 
 // ModuleLoadDbg
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		ModuleLoadDbg?: {};
 	}
 }
 
 // function_as_string_vec
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		function_as_string_vec?: string[];
 	}
 }
 
 // CompressionStatsCalculator
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		CompressionStatsCalculator?: {};
 	}
 }
 
 // range_matches
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		range_matches?: {};
 	}
 }
 
 // DoCalc
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		DoCalc?: {};
 	}
 }
 
 // compress_main
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
 	}
 }
 
 // HexRandomDataGenerator
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		HexRandomDataGenerator?: {};
 	}
 }
 
 // EventListenerValue
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		EventListenerValue?: {};
 	}
 }
 
 // GenericEvent
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		GenericEvent?: {};
 	}
 }
 
 // GenericDataEvent
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		GenericDataEvent?: {};
 	}
 }
 
 // Socket
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		Socket?: {};
 	}
 }
 
 // OriginState
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		OriginState?: {};
 	}
 }
 
 // CrossOriginConnection
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		CrossOriginConnection?: {};
 		remote_origin?: ICrossOriginConnection;
 	}
@@ -244,21 +244,23 @@ declare global {
 
 // parse_javascript_str
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		parse_javascript_str?: ((str: string) => void);
 	}
 }
 
 // parse_html_to_binary_arr
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		parse_html_to_binary_arr?: (html: string) => unknown[];
 	}
 }
 
 // DebugAPI
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		DebugAPI?: DebugApiType;
 	}
 }
+
+export {type InjectApi};

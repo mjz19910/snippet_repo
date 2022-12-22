@@ -50,7 +50,7 @@ declare global {
 
 // InjectAPI['saved_maps']
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		saved_maps?: Map<string,Map<string,{}>>;
 	}
 }
@@ -114,28 +114,28 @@ export {};
 
 // Seen
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		Seen?: {};
 	}
 }
 
 // port_state
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		port_state?: {};
 	}
 }
 
 // plugin_overlay_element
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		plugin_overlay_element?: {};
 	}
 }
 
 // HTMLMediaElementGainController
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		HTMLMediaElementGainController?: {};
 		audio_gain_controller?: {};
 	}
@@ -183,7 +183,7 @@ declare global {
 
 // dom_observer
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		dom_observer?: {};
 	}
 }
@@ -191,28 +191,28 @@ declare global {
 
 // YTFilterHandlers
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		yt_handlers?: {};
 	}
 }
 
 // URL.createObjectURL Proxy
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		blob_create_args_arr?: {};
 	}
 }
 
 // YTIterateAllBase.update_state
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		yt_state_map?: {};
 	}
 }
 
 // export
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		PropertyHandler?: {};
 	}
 }

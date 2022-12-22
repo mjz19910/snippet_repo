@@ -85,12 +85,12 @@ declare global {
 declare global {
 	type SavedArrayItemType<T>=[string, T];
 	interface Window {
-		inject_api?: InjectAPI;
+		inject_api?: InjectApi;
 	}
 }
 
 function test_inject_api() {
-	let inject_api: InjectAPI={};
+	let inject_api: InjectApi={};
 	inject_api;
 }
 test_inject_api();
