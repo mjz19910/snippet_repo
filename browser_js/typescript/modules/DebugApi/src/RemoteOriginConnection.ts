@@ -31,7 +31,7 @@ export class RemoteOriginConnection {
 	unhandled_child_events: RemoteOriginMessage[]=[];
 	m_local_handler: LocalHandler;
 	constructor() {
-		this.m_local_handler=new LocalHandler(30000,this);
+		this.m_local_handler=new LocalHandler(this,30000);
 		let s=this.state;
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
