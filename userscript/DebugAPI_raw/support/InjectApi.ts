@@ -15,7 +15,7 @@ declare global {
 	type SavedInstancePrototype={};
 	type SavedInstanceObject={};
 	type SavedInstanceMetaType={
-		name: SavedInstanceItemType[0];
+		name: string;
 		prototype: SavedInstancePrototype;
 	};
 	type SavedInstanceType=[SavedInstanceMetaType,SavedInstanceObject];
