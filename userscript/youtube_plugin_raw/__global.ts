@@ -1,5 +1,15 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
+// YtdPageManagerElement
+declare global {
+	class YtdPageManagerElement extends HTMLElement {
+		getCurrentPage(): YtCurrentPage;
+	}
+	class YtCurrentPage extends HTMLElement {
+		getPlayer(): YTDPlayerElement;
+	}
+}
+
 // ReloadContinuationItemsCommand
 declare global {
 	type SectionItem={
@@ -29,11 +39,11 @@ declare global {
 	type WatchNextItem={
 		compactVideoRenderer: CompactVideoRenderer;
 	}|{
-		continuationItemRenderer: ContinuationItemRenderer
+		continuationItemRenderer: ContinuationItemRenderer;
 	};
 	class WatchNextContinuationAction {
-		targetId:"watch-next-feed";
-		continuationItems:WatchNextItem[];
+		targetId: "watch-next-feed";
+		continuationItems: WatchNextItem[];
 	}
 }
 

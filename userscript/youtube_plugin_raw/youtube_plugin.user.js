@@ -87,20 +87,6 @@ class YtdAppElement extends HTMLElement {
 	__shady_children=new ShadyChildrenOfYtdApp;
 }
 
-class YtCurrentPage extends HTMLElement {
-	/**@return {YTDPlayerElement} */
-	getPlayer() {
-		return new YTDPlayerElement;
-	}
-}
-
-class YtdPageManagerElement extends HTMLElement {
-	/**@return {YtCurrentPage} */
-	getCurrentPage() {
-		return new YtCurrentPage;
-	}
-}
-
 class Seen {
 	static debug=false;
 	/**
@@ -1765,7 +1751,10 @@ async function async_plugin_init(event) {
 			if(!ytd_page_manager) break x;
 			let current_page_element=ytd_page_manager.getCurrentPage();
 			if(!current_page_element) break x;
-			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+			if('__has_theater_handler_plugin' in current_page_element) {} else {
+				current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+				current_page_element.__has_theater_handler_plugin=true;
+			}
 			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
 			// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 			if(current_page_element.tagName!="YTD-WATCH-FLEXY") {
