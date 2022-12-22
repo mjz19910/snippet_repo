@@ -21,7 +21,7 @@ declare global {
 	type SavedInstanceType=[SavedInstanceMetaType,SavedInstanceObject];
 	type SavedInstanceItemType=SavedArrayItemType<SavedInstanceType>;
 	interface InjectAPI {
-		saved_instances?: SavedArrayOf<SavedInstanceType>;
+		saved_instances?: SavedInstanceItemType[];
 	}
 }
 
