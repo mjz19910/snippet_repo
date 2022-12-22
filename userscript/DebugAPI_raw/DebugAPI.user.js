@@ -49,7 +49,6 @@ inject_api.add_array=add_array;
 inject_api.saved_instances=[];
 /** @param {string} name @arg {{}} object */
 function add_object_with_name(name,object) {
-	/** @type {SavedInstanceMetaType} */
 	const instance_meta={
 		/**@type {"any_from_prototype_of"}*/
 		_tag: "any_from_prototype_of",
@@ -66,7 +65,6 @@ inject_api.add_object_with_name=add_object_with_name;
 /** @template {{}} U @template {new (...args: any) => U} T @param {T} constructor_ @arg {U} object */
 function add_object(constructor_,object) {
 	const name=constructor_.name;
-	/** @type {SavedInstanceMetaType} */
 	const instance_meta={
 		/**@type {"constructor"}*/
 		_tag: "constructor",

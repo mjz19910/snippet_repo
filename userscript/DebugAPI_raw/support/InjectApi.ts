@@ -5,6 +5,7 @@ import {
 import {DebugApiType} from "./DebugApiType";
 import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
 import {ICrossOriginConnection} from "./ICrossOriginConnection";
+import {SavedInstanceType} from "./SavedInstanceType";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
@@ -12,19 +13,6 @@ export const InjectApiHolder=Symbol.for("InjectApi");
 
 // saved_instances
 declare global {
-	type SavedInstancePrototype={};
-	type SavedInstanceObject={};
-	type SavedInstanceMetaType={
-		_tag:"any_from_prototype_of";
-		name: string;
-		prototype_meta:SavedInstancePrototype;
-	}|{
-		_tag:"constructor";
-		name: string;
-		constructor_meta: new ()=>SavedInstanceObject;
-	};
-	type SavedInstanceSubType=[SavedInstanceMetaType,SavedInstanceObject];
-	type SavedInstanceType=SavedArrayItemType<SavedInstanceSubType>;
 	interface InjectAPI {
 		saved_instances?: SavedInstanceType[];
 	}
