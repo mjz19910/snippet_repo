@@ -48,6 +48,7 @@ declare global {
 declare global {
 	interface InjectAPI {
 		APIProxyManager?: {};
+		any_api_logger?: {};
 	}
 }
 
@@ -251,18 +252,3 @@ declare global {
 		DebugAPI?: DebugApiType;
 	}
 }
-
-// // any_api_logger
-// declare global {
-// 	interface InjectAPI {
-// 		any_api_logger?: {};
-// 	}
-// }
-
-// // RustSimpleTokenizer
-// declare global {
-// 	interface InjectAPI {
-// 		RustSimpleTokenizer?: {};
-// 		RustSimpleParser?: {};
-// 	}
-// }

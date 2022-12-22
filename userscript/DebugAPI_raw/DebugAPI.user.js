@@ -2411,15 +2411,16 @@ class APIProxyManager {
 		if(!api_debug_enabled) return;
 		window.postMessage=this.create_proxy_for_function('postMessage_sent',window.postMessage);
 	}
+	static do_postMessage_logging=true;
+	static attach_api() {
+		inject_api.APIProxyManager=this;
+		let any_api_logger=new this(new LoggingEventTarget);
+		inject_api.any_api_logger=any_api_logger;
+		if(!this.do_postMessage_logging) return;
+		any_api_logger.start_postMessage_proxy();
+	}
 }
-inject_api.APIProxyManager=APIProxyManager;
-
-let any_api_logger=new APIProxyManager(new LoggingEventTarget);
-
-let do_postMessage_logging=true;
-if(do_postMessage_logging) {
-	any_api_logger.start_postMessage_proxy();
-}
+APIProxyManager.attach_api();
 
 class ReversePrototypeChain {
 	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
