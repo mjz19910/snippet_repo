@@ -3442,23 +3442,6 @@ class DisabledMulCompression extends MulCompression {
 }
 inject_api.DisabledMulCompression=DisabledMulCompression;
 
-/** @typedef {"apply"|"bind"|"call"} DI0 */
-/**
- * @arg {(key:DI0)=>void} bound_function
- * @arg {DI0[]} keys
- */
-function do_iter(bound_function,keys) {
-	for(let key of keys) {
-		switch(key) {
-			case 'apply': bound_function(key); break;
-			case 'bind': bound_function(key); break;
-			case 'call': bound_function(key); break;
-			default: break;
-		}
-	}
-}
-add_function(do_iter);
-
 /** @arg {any} a @arg {any} c @arg {any} m_require */
 function found_modules(a,c,m_require) {
 	void a,c,m_require;
@@ -3758,24 +3741,14 @@ function run_modules_plugin() {
 		[function_prototype_bind,function_prototype_bind,bound_bind_bind],
 	];
 	console.log(bound_function_prototype_vec);
+	let module_load_dbg=new ModuleLoadDbg;
 	Function.prototype.call=function_prototype_call_inject;
 	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
 		if(!inject_api.function_as_string_vec) throw 1;
 		let ret;
 		switch(argArray.length) {
-			case 2: if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-				var ars=Object.entries(argArray[1]).filter(([,e]) => e instanceof Array);
-				var ars_i=ars[0][1].indexOf(this);
-				if(ars[0][1].indexOf(this)>-1) {
-					console.log("found module array:","require."+ars[0][0]);
-					var mods=Object.entries(argArray[1]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
-					if(mods.length>0) {
-						console.log("found module cache:","require."+mods[0][0]);
-						found_modules(ars[0][1],mods[0][1],argArray[2]);
-					}
-				}
-			} break;
+			case 3:let [a,b,c]=argArray; module_load_dbg.evaluate_len_3(thisArg,[a,b,c]); break;
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
