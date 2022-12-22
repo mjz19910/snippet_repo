@@ -693,8 +693,8 @@ function check_item_keys(real_path,path,keys) {
 					case "continuationItems": break;
 					case 'slot': break;
 					case "targetId": break;
+					default: console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
 				}
-				console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case "appendContinuationItemsAction": {
@@ -702,8 +702,8 @@ function check_item_keys(real_path,path,keys) {
 				switch(key) {
 					case "continuationItems": break;
 					case "targetId": break;
+					default: console.log("item_keys_tag [ci_3_20_] "+real_path+": iter content key",path,key);
 				}
-				console.log("item_keys_tag [ci_3_20_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case "tabRenderer.content.richGridRenderer": {
@@ -714,8 +714,8 @@ function check_item_keys(real_path,path,keys) {
 					case "header": break;
 					case "targetId": break;
 					case "reflowOptions": break;
+					default: console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
 				}
-				console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[]": {
@@ -729,27 +729,27 @@ function check_item_keys(real_path,path,keys) {
 					case "continuationItemRenderer": break;
 					case "itemSectionRenderer": break;
 					case "richItemRenderer": break;
+					default: console.log("item_keys_tag [ci_3_40_] "+real_path+": iter content key",path,key);
 				}
-				console.log("item_keys_tag [ci_3_40_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer": {
 			for(let key of keys) {
 				switch(key) {
-					case "content": continue;
-					case "trackingParams": continue;
+					case "content": break;
+					case "trackingParams": break;
+					default: console.log("item_keys_tag [ci_3_41_] "+real_path+": iter content key",path,key);
 				}
-				console.log("item_keys_tag [ci_3_41_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer.content": {
 			for(let key of keys) {
 				switch(key) {
-					case "adSlotRenderer": continue;
-					case "radioRenderer": continue;
-					case "videoRenderer": continue;
+					case "adSlotRenderer": break;
+					case "radioRenderer": break;
+					case "videoRenderer": break;
+					default: console.log("item_keys_tag [ci_3_42_] "+real_path+": iter content key",path,key); break;
 				}
-				console.log("item_keys_tag [ci_3_42_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		default: console.log("item_keys_tag [ci_4_10_] "+real_path+": content path",path); break;
