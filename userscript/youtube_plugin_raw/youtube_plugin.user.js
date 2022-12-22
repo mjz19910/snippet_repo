@@ -1757,7 +1757,7 @@ async function async_plugin_init(event) {
 			if(!ytd_page_manager) break x;
 			let current_page_element=ytd_page_manager.getCurrentPage();
 			if(!current_page_element) break x;
-			if(current_page_element.__has_theater_handler_plugin) {} else {
+			if(!current_page_element.__has_theater_handler_plugin) {
 				current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 				current_page_element.__has_theater_handler_plugin=true;
 			}
