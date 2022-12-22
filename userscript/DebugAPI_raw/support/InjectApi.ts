@@ -26,260 +26,267 @@ declare global {
 	}
 }
 
-// ModuleLoadDbg
+// saved_objects
 declare global {
 	interface InjectAPI {
-		ModuleLoadDbg?: {};
+		add_function?: (callable: {name: string;}) => void;
 	}
 }
 
-// DisabledMulCompression
-declare global {
-	interface InjectAPI {
-		DisabledMulCompression?: {};
-	}
-}
+// // ModuleLoadDbg
+// declare global {
+// 	interface InjectAPI {
+// 		ModuleLoadDbg?: {};
+// 	}
+// }
 
-declare global {
-	class ICrossOriginConnection {
-		push_tcp_message(msg: any): void;
-	}
-}
+// // DisabledMulCompression
+// declare global {
+// 	interface InjectAPI {
+// 		DisabledMulCompression?: {};
+// 	}
+// }
 
-// CrossOriginConnection
-declare global {
-	interface InjectAPI {
-		CrossOriginConnection?: {};
-		remote_origin?: ICrossOriginConnection;
-	}
-}
+// declare global {
+// 	class ICrossOriginConnection {
+// 		push_tcp_message(msg: any): void;
+// 	}
+// }
 
-// LocalHandler
-declare global {
-	interface InjectAPI {
-		Socket?: {};
-	}
-}
+// // CrossOriginConnection
+// declare global {
+// 	interface InjectAPI {
+// 		CrossOriginConnection?: {};
+// 		remote_origin?: ICrossOriginConnection;
+// 	}
+// }
 
-// elevate_event_handlers
-declare global {
-	interface InjectAPI {
-		elevate_event_handlers?: {}[];
-	}
-}
+// // LocalHandler
+// declare global {
+// 	interface InjectAPI {
+// 		Socket?: {};
+// 	}
+// }
 
-// ProxyTargetMap
-declare global {
-	interface InjectAPI {
-		ProxyTargetMap?: {};
-		proxyTargetMap?: {};
-	}
-}
+// // elevate_event_handlers
+// declare global {
+// 	interface InjectAPI {
+// 		elevate_event_handlers?: {}[];
+// 	}
+// }
 
-// parse_javascript_str
-declare global {
-	interface InjectAPI {
-		parse_javascript_str?: ((str: string) => void);
-	}
-}
+// // ProxyTargetMap
+// declare global {
+// 	interface InjectAPI {
+// 		ProxyTargetMap?: {};
+// 		proxyTargetMap?: {};
+// 	}
+// }
 
-// DoCalc
-declare global {
-	interface InjectAPI {
-		DoCalc?: {};
-	}
-}
+// // parse_javascript_str
+// declare global {
+// 	interface InjectAPI {
+// 		parse_javascript_str?: ((str: string) => void);
+// 	}
+// }
 
-// ReversePrototypeChain
-declare global {
-	interface InjectAPI {
-		ReversePrototypeChain?: {};
-		reversePrototypeChain?: {};
-	}
-}
+// // DoCalc
+// declare global {
+// 	interface InjectAPI {
+// 		DoCalc?: {};
+// 	}
+// }
 
-// any_api_logger
-declare global {
-	interface InjectAPI {
-		any_api_logger?: {};
-	}
-}
+// // ReversePrototypeChain
+// declare global {
+// 	interface InjectAPI {
+// 		ReversePrototypeChain?: {};
+// 		reversePrototypeChain?: {};
+// 	}
+// }
 
-// parse_html_to_binary_arr
-declare global {
-	interface InjectAPI {
-		parse_html_to_binary_arr?: (html: string) => unknown[];
-	}
-}
+// // any_api_logger
+// declare global {
+// 	interface InjectAPI {
+// 		any_api_logger?: {};
+// 	}
+// }
 
-// run_wasm_plugin
-declare global {
-	interface InjectAPI {
-		run_modules_plugin?: VoidCallbackWith<() => void>;
-		run_wasm_plugin?: VoidCallbackWith<() => void>;
-	}
-}
+// // parse_html_to_binary_arr
+// declare global {
+// 	interface InjectAPI {
+// 		parse_html_to_binary_arr?: (html: string) => unknown[];
+// 	}
+// }
 
-// compress_main
-declare global {
-	interface InjectAPI {
-		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
-	}
-}
+// // run_wasm_plugin
+// declare global {
+// 	interface InjectAPI {
+// 		run_modules_plugin?: VoidCallbackWith<() => void>;
+// 		run_wasm_plugin?: VoidCallbackWith<() => void>;
+// 	}
+// }
 
-// IterExtensions
-declare global {
-	interface InjectAPI {
-		IterExtensions?: {};
-	}
-}
+// // compress_main
+// declare global {
+// 	interface InjectAPI {
+// 		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
+// 	}
+// }
 
-// getPlaybackRateMap
-declare global {
-	interface InjectAPI {
-		getPlaybackRateMap?: {};
-	}
-}
+// // IterExtensions
+// declare global {
+// 	interface InjectAPI {
+// 		IterExtensions?: {};
+// 	}
+// }
 
-// CreateObjURLCache
-declare global {
-	interface InjectAPI {
-		CreateObjURLCache?: {};
-	}
-}
+// // getPlaybackRateMap
+// declare global {
+// 	interface InjectAPI {
+// 		getPlaybackRateMap?: {};
+// 	}
+// }
 
-// Repeat
-declare global {
-	interface InjectAPI {
-		Repeat?: {};
-	}
-}
+// // CreateObjURLCache
+// declare global {
+// 	interface InjectAPI {
+// 		CreateObjURLCache?: {};
+// 	}
+// }
 
-// CompressRepeated
-declare global {
-	interface InjectAPI {
-		CompressRepeated?: {};
-	}
-}
+// // Repeat
+// declare global {
+// 	interface InjectAPI {
+// 		Repeat?: {};
+// 	}
+// }
 
-// to_tuple_arr
-declare global {
-	interface InjectAPI {
-		to_tuple_arr?: {};
-	}
-}
+// // CompressRepeated
+// declare global {
+// 	interface InjectAPI {
+// 		CompressRepeated?: {};
+// 	}
+// }
 
-// range_matches
-declare global {
-	interface InjectAPI {
-		range_matches?: {};
-	}
-}
+// // to_tuple_arr
+// declare global {
+// 	interface InjectAPI {
+// 		to_tuple_arr?: {};
+// 	}
+// }
 
-// function_as_string_vec
-declare global {
-	interface InjectAPI {
-		function_as_string_vec?: string[];
-	}
-}
+// // range_matches
+// declare global {
+// 	interface InjectAPI {
+// 		range_matches?: {};
+// 	}
+// }
 
-// CompressionStatsCalculator
-declare global {
-	interface InjectAPI {
-		CompressionStatsCalculator?: {};
-	}
-}
+// // function_as_string_vec
+// declare global {
+// 	interface InjectAPI {
+// 		function_as_string_vec?: string[];
+// 	}
+// }
 
-// HexRandomDataGenerator
-declare global {
-	interface InjectAPI {
-		HexRandomDataGenerator?: {};
-	}
-}
+// // CompressionStatsCalculator
+// declare global {
+// 	interface InjectAPI {
+// 		CompressionStatsCalculator?: {};
+// 	}
+// }
 
-// EventListenerValue
-declare global {
-	interface InjectAPI {
-		EventListenerValue?: {};
-	}
-}
+// // HexRandomDataGenerator
+// declare global {
+// 	interface InjectAPI {
+// 		HexRandomDataGenerator?: {};
+// 	}
+// }
 
-// GenericEvent
-declare global {
-	interface InjectAPI {
-		GenericEvent?: {};
-	}
-}
+// // EventListenerValue
+// declare global {
+// 	interface InjectAPI {
+// 		EventListenerValue?: {};
+// 	}
+// }
 
-// GenericDataEvent
-declare global {
-	interface InjectAPI {
-		GenericDataEvent?: {};
-	}
-}
+// // GenericEvent
+// declare global {
+// 	interface InjectAPI {
+// 		GenericEvent?: {};
+// 	}
+// }
 
-// RustSimpleTokenizer
-declare global {
-	interface InjectAPI {
-		RustSimpleTokenizer?: {};
-		RustSimpleParser?: {};
-	}
-}
+// // GenericDataEvent
+// declare global {
+// 	interface InjectAPI {
+// 		GenericDataEvent?: {};
+// 	}
+// }
 
-// OriginState
-declare global {
-	interface InjectAPI {
-		OriginState?: {};
-	}
-}
+// // RustSimpleTokenizer
+// declare global {
+// 	interface InjectAPI {
+// 		RustSimpleTokenizer?: {};
+// 		RustSimpleParser?: {};
+// 	}
+// }
 
-// APIProxyManager
-declare global {
-	interface InjectAPI {
-		APIProxyManager?: {};
-	}
-}
+// // OriginState
+// declare global {
+// 	interface InjectAPI {
+// 		OriginState?: {};
+// 	}
+// }
 
-// LoggingEventTarget
-declare global {
-	interface InjectAPI {
-		LoggingEventTarget?: {};
-	}
-}
+// // APIProxyManager
+// declare global {
+// 	interface InjectAPI {
+// 		APIProxyManager?: {};
+// 	}
+// }
 
-// AddEventListenerExtension
-export interface IAddEventListenerExtension {
-	elevate_handler(x: any): void;
-}
+// // LoggingEventTarget
+// declare global {
+// 	interface InjectAPI {
+// 		LoggingEventTarget?: {};
+// 	}
+// }
 
-declare global {
-	interface InjectAPI {
-		AddEventListenerExtension?: {};
-		addEventListenerExtension?: IAddEventListenerExtension;
-	}
-}
+// // AddEventListenerExtension
+// export interface IAddEventListenerExtension {
+// 	elevate_handler(x: any): void;
+// }
 
-// DebugAPI
-declare global {
-	interface InjectAPI {
-		DebugAPI?: typeof DebugAPI;
-	}
-}
+// declare global {
+// 	interface InjectAPI {
+// 		AddEventListenerExtension?: {};
+// 		addEventListenerExtension?: IAddEventListenerExtension;
+// 	}
+// }
 
-export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
+// // DebugAPI
+// declare global {
+// 	interface InjectAPI {
+// 		DebugAPI?: typeof DebugAPI;
+// 	}
+// }
 
-/** @template {any[]} U @template C */
-export class VoidCallback<U extends any[],C> {
-	/** @type {(...args: U)=>C} */
-	m_callback: ((...args: U) => C);
-	/** @arg {(...args: U)=>C} callback */
-	constructor(callback: (...args: U) => C) {
-		this.m_callback=callback;
-	}
-	/** @param {U} args */
-	execute(...args: U) {
-		return this.m_callback(...args);
-	}
-}
+// export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
 
-export {};
+// /** @template {any[]} U @template C */
+// export class VoidCallback<U extends any[],C> {
+// 	/** @type {(...args: U)=>C} */
+// 	m_callback: ((...args: U) => C);
+// 	/** @arg {(...args: U)=>C} callback */
+// 	constructor(callback: (...args: U) => C) {
+// 		this.m_callback=callback;
+// 	}
+// 	/** @param {U} args */
+// 	execute(...args: U) {
+// 		return this.m_callback(...args);
+// 	}
+// }
+
+// export {};
