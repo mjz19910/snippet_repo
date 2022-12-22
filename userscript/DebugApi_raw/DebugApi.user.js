@@ -2402,13 +2402,14 @@ inject_api.parse_javascript_str=parse_javascript_str;
 // #endregion
 
 var api_debug_enabled=false;
-
+// #region console
 const base_console=window.console;
 add_object_with_name("Console",base_console);
 
 /** @type {Console} */
 var console={...window.console};
 console.log=console.log.bind(window.console);
+// #endregion
 
 class LoggingEventTarget {
 	dispatchEvent=console.log.bind(console);
