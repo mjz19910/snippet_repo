@@ -88,11 +88,15 @@ declare global {
 		adSlotRenderer: AdSlotRenderer;
 	};
 	type RichItemRendererContent=AdSlotRendererHolder|{
-		videoRenderer: {}
+		videoRenderer: {};
+	}|{
+		radioRenderer: {};
 	};
 	interface RichItemRenderer {
 		content: RichItemRendererContent;
-		trackingParams?: string;
+		trackingParams: string;
+		rowIndex?: number;
+		colIndex?: number;
 	}
 	type RichItemRendererHolder={
 		richItemRenderer: RichItemRenderer;
