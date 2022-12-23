@@ -2417,6 +2417,7 @@ inject_api.HTMLMediaElementGainController=AudioGainController;
 let audio_gain_controller=null;
 
 class HistoryStateManager {
+	debug=false;
 	/** @type {{}|null} */
 	cur_state;
 	tmp_map=new Map;
@@ -2426,7 +2427,7 @@ class HistoryStateManager {
 	constructor() {
 		let t=this;
 		this.cur_state=this.getHistoryState();
-		console.log("initial history state",this.cur_state);
+		if(this.debug) console.log("initial history state",this.cur_state);
 		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
 			let prev_state=this.cur_state;
