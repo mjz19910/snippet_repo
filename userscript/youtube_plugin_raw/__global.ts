@@ -184,6 +184,10 @@ type OnCreateListCommand={
 type AddToPlaylistCommand={
 	listType: string;
 	onCreateListCommand: OnCreateListCommand;
+	openListPanel: boolean;
+	openMiniplayer: boolean;
+	videoId: string;
+	videoIds: string[];
 };
 type OpenPopupAction={};
 type ServiceEndpointAction={
