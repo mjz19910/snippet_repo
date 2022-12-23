@@ -80,7 +80,193 @@ declare global {
 	type ContinuationItem=RendererContentItem;
 }
 
+type AdSlotRenderer={};
+
+// RichItemRenderer
+declare global {
+	type AdSlotRenderers={
+		adSlotRenderer: AdSlotRenderer;
+	};
+	type RichItemRendererContent=AdSlotRenderers;
+	interface RichItemRenderer {
+		content: AdSlotRenderers;
+	}
+	type RichItemRendererItem={
+		richItemRenderer: RichItemRenderer;
+	};
+}
+
+// RichSectionRendererItem
+declare global {
+	type RichSectionRendererItem={
+		richSectionRenderer: RichSectionRenderer;
+	};
+}
+
+
+interface RichShelfRenderer {
+	icon: {
+		iconType: string;
+	}|null;
+	title: {
+		runs?: {
+			text: string;
+		}[];
+	};
+}
+interface RichSectionRenderer {
+	content: {
+		richShelfRenderer: RichShelfRenderer;
+	};
+}
+
+type CommentsHeaderRenderer={};
+type CommentThreadRenderer={};
+type ContentItemCommentsHeaderRenderer={
+	commentsHeaderRenderer: CommentsHeaderRenderer;
+};
+type ContentItemCommentThreadRenderer={
+	commentThreadRenderer: CommentThreadRenderer;
+};
+type CommandToken={
+	token: string;
+};
+type ContinuationCommand=CommandToken&{
+	request: string;
+};
+type WebCommandMetadata0={
+	sendPost: boolean;
+	apiUrl: string;
+};
+type WebCommandMetadata1={
+	apiUrl: string;
+	rootVe: number;
+	url: string;
+	webPageType: string;
+};
+type WebCommandMetadata2={
+	rootVe: number;
+	url: string;
+	webPageType: string;
+};
+type WebCommandMetadata=WebCommandMetadata0|WebCommandMetadata1|WebCommandMetadata2;
+type CommandMetadata={
+	webCommandMetadata: WebCommandMetadata;
+};
+type ContinuationEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	continuationCommand: ContinuationCommand;
+};
+type GhostGridRenderer={
+	rows: number;
+};
+type GhostCards={
+	ghostGridRenderer: GhostGridRenderer;
+};
+type ContinuationItemRenderer={
+	trigger: string;
+	continuationEndpoint: ContinuationEndpoint;
+	ghostCards: GhostCards;
+};
+type ContinuationItemRenderers={
+	continuationItemRenderer: ContinuationItemRenderer;
+};
+type MenuRenderer={
+	accessibility: Accessibility;
+	items: TODO[];
+	targetId: string;
+	trackingParams: string;
+};
+type MenuRenderers={
+	menuRenderer: MenuRenderer;
+};
+type BrowseEndpoint={
+	browseId: string;
+	canonicalBaseUrl: string;
+};
+type CommonConfig={
+	url: string;
+};
+type PlaybackOnesieConfig={
+	commonConfig: CommonConfig;
+};
+type WatchEndpointConfig={
+	html5PlaybackOnesieConfig: PlaybackOnesieConfig;
+};
+type WatchEndpoint={
+	nofollow: boolean;
+	videoId: string;
+	watchEndpointSupportedOnesieConfig: WatchEndpointConfig;
+};
+type NavigationEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	watchEndpoint: WatchEndpoint;
+};
+type TODO={};
+type TextRun={
+	navigationEndpoint: NavigationEndpoint;
+	text: string;
+};
+type TextDataRuns={
+	runs: TextRun[];
+};
+type AccessibilityData={
+	label: string;
+};
+type Accessibility={
+	accessibilityData: AccessibilityData;
+};
+type MetadataBadgeRenderer={
+	label: string;
+	style: string;
+	trackingParams: string;
+};
+type MetadataBadgeRenderers={
+	metadataBadgeRenderer: MetadataBadgeRenderer;
+}
+type ThumbnailsHolder={};
+type SimpleText={
+	accessibility?: Accessibility;
+	simpleText: string;
+};
+
+type CompactVideoRenderer={
+	accessibility: Accessibility;
+	badges: MetadataBadgeRenderers[];
+	channelThumbnail: ThumbnailsHolder;
+	lengthText: SimpleText;
+	longBylineText: TextDataRuns;
+	menu: MenuRenderers;
+	navigationEndpoint: NavigationEndpoint;
+	publishedTimeText: {simpleText: string;};
+	richThumbnail: TODO;
+	shortBylineText: TextDataRuns;
+	shortViewCountText: {accessibility: TODO,simpleText: string;};
+	thumbnail: {thumbnails: TODO[];};
+	thumbnailOverlays: TODO[];
+	title: {accessibility: TODO,simpleText: string;};
+	videoId: string;
+	viewCountText: {simpleText: string;};
+};
+type CompactVideoRenderers={
+	compactVideoRenderer: CompactVideoRenderer;
+};
+
 // RendererContentItem
+declare global {
+	type RendererContentItem=
+		RichItemRendererItem|
+		RichSectionRendererItem|
+		ContentItemCommentsHeaderRenderer|
+		ContentItemCommentThreadRenderer|
+		ContinuationItemRenderers|
+		CompactVideoRenderers|
+		never;
+}
+
+// RichGridRenderer
 declare global {
 	interface RichGridRenderer {
 		masthead: {
@@ -89,182 +275,6 @@ declare global {
 		};
 		contents: RendererContentItem[];
 	}
-	interface RichShelfRenderer {
-		icon: {
-			iconType: string;
-		}|null;
-		title: {
-			runs?: {
-				text: string;
-			}[];
-		};
-	}
-	interface RichSectionRenderer {
-		content: {
-			richShelfRenderer: RichShelfRenderer;
-		};
-	}
-
-	interface RichItemRenderer {
-		content: {
-			adSlotRenderer?: {};
-		};
-	}
-	type RichItemRendererItem={
-		richItemRenderer: RichItemRenderer;
-	};
-	type RichSectionRendererItem={
-		richSectionRenderer: RichSectionRenderer;
-	};
-	type CommentsHeaderRenderer={};
-	type CommentThreadRenderer={};
-	type ContentItemCommentsHeaderRenderer={
-		commentsHeaderRenderer: CommentsHeaderRenderer;
-	};
-	type ContentItemCommentThreadRenderer={
-		commentThreadRenderer: CommentThreadRenderer;
-	};
-	type YtClickTracked={
-		clickTrackingParams: string;
-	};
-	type CommandToken={
-		token: string;
-	};
-	type ContinuationCommand=CommandToken&{
-		request: string;
-	};
-	type WebCommandMetadata0={
-		sendPost: boolean;
-		apiUrl: string;
-	};
-	type WebCommandMetadata1={
-		apiUrl: string;
-		rootVe: number;
-		url: string;
-		webPageType: string;
-	};
-	type WebCommandMetadata2={
-		rootVe: number;
-		url: string;
-		webPageType: string;
-	};
-	type WebCommandMetadata=WebCommandMetadata0|WebCommandMetadata1|WebCommandMetadata2;
-	type CommandMetadata={
-		webCommandMetadata: WebCommandMetadata;
-	};
-	type YtEndpoint={
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-	};
-	type ContinuationEndpoint={
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		continuationCommand: ContinuationCommand;
-	};
-	type GhostGridRenderer={
-		rows: number;
-	};
-	type GhostCards={
-		ghostGridRenderer: GhostGridRenderer;
-	};
-	type ContinuationItemRenderer={
-		trigger: string;
-		continuationEndpoint: ContinuationEndpoint;
-		ghostCards: GhostCards;
-	};
-	type ContinuationItemRenderers={
-		continuationItemRenderer: ContinuationItemRenderer;
-	};
-	type MenuRenderer={
-		accessibility: Accessibility;
-		items: TODO[];
-		targetId: string;
-		trackingParams: string;
-	};
-	type MenuRenderers={
-		menuRenderer: MenuRenderer;
-	};
-	type BrowseEndpoint={
-		browseId: string;
-		canonicalBaseUrl: string;
-	};
-	type CommonConfig={
-		url: string;
-	};
-	type PlaybackOnesieConfig={
-		commonConfig: CommonConfig;
-	};
-	type WatchEndpointConfig={
-		html5PlaybackOnesieConfig: PlaybackOnesieConfig;
-	};
-	type WatchEndpoint={
-		nofollow: boolean;
-		videoId: string;
-		watchEndpointSupportedOnesieConfig: WatchEndpointConfig;
-	};
-	type NavigationEndpoint={
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		watchEndpoint: WatchEndpoint;
-	};
-	type TODO={};
-	type TextRun={
-		navigationEndpoint: NavigationEndpoint;
-		text: string;
-	};
-	type TextDataRuns={
-		runs: TextRun[];
-	};
-	type AccessibilityData={
-		label: string;
-	};
-	type Accessibility={
-		accessibilityData: {};
-	};
-	type MetadataBadgeRenderer={
-		label: string;
-		style: string;
-		trackingParams: string;
-	};
-	type MetadataBadgeRenderers={
-		metadataBadgeRenderer: MetadataBadgeRenderer;
-	}
-	type ThumbnailsHolder={};
-	type SimpleText={
-		accessibility: Accessibility;
-		simpleText: string;
-	};
-
-	type CompactVideoRenderer={
-		accessibility: Accessibility;
-		badges: MetadataBadgeRenderers[];
-		channelThumbnail: ThumbnailsHolder;
-		lengthText: SimpleText;
-		longBylineText: TextDataRuns;
-		menu: MenuRenderers;
-		navigationEndpoint: NavigationEndpoint;
-		publishedTimeText: {simpleText: string;};
-		richThumbnail: TODO;
-		shortBylineText: TextDataRuns;
-		shortViewCountText: {accessibility: TODO,simpleText: string;};
-		thumbnail: {thumbnails: TODO[];};
-		thumbnailOverlays: TODO[];
-		title: {accessibility: TODO,simpleText: string;};
-
-		videoId: string;
-
-		viewCountText: {simpleText: "15,435 views";};
-	};
-	type CompactVideoRenderers={
-		compactVideoRenderer: CompactVideoRenderer;
-	};
-	type RendererContentItem=
-		RichItemRendererItem|
-		RichSectionRendererItem|
-		ContentItemCommentsHeaderRenderer|
-		ContentItemCommentThreadRenderer|
-		ContinuationItemRenderers|
-		never;
 }
 
 // ResState
