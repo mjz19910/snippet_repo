@@ -1003,7 +1003,7 @@ class FilterHandlers extends IterateApiResultBase {
 			for(let key of keys) {
 				let is_blacklisted=this.blacklisted_item_sections.get(key);
 				if(is_blacklisted!==void 0) return !is_blacklisted;
-				console.log("filter_handlers: new item section:",path+".contents[]",key);
+				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
 			}
 			return true;
 		});
