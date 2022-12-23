@@ -108,6 +108,29 @@ type DialogPopupTag={
 	"popupType": "DIALOG";
 };
 
+type ImpressionEndpoint={
+	clickTrackingParams: string;
+	"loggingUrls": [
+		{
+			"baseUrl": "https://www.youtube.com/pagead/adview?ai=CR9DJiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoEyAFP0EC2FSEYx70zuAUppUfEkYi_mOxY9ayL2TsEqmuwqQ2uR52X5F8mREDx148616YrlzJGcdfwasaotiQufJZQh_1P-F5EUxNcTrvVkGAoIHM-E6HcARQOzmMpiHURkEuWhENDfN2plBxHA5lui-nCj1tpA07TYASPOdBjxm-rT6PJyNg5mzjomgxxcY4JpG3rnZbC1TQ_an4StPQ5YOx-FCxGyY58dQA2TCk1vQwtBzqiGbOgOwWxy0tPKdPvQ51LcGX2i_nxJ8AEyNr865sEiAWjkqTnR5IFCQgTaAF47fX5BqAGboAHncjYB4gHAZAHAqgHgqqxAqgHhAioB6jSG6gHtgeoB-DPG6gH6dQbqAeMzRuoB7HcG6gHpJqxAqgHkZ-xAqgHsJuxAqgH36GxAqgHpqqxAqgHgcYbqAerxRuoB-PZG6gHt6mxAqgH6auxApIIC0FBQUFBQUFBQUFB0ggYCIDAgEAQAhgAMgSBgoAOOgeAgICAgIEEyAkAugs-CAIQBRgWIAgoATADQAFIAFABWCVgAGgAcAGIAQCYAQGiARIKAggBKAH4AQGQAgKoAgXAAgLYAQGAAgGIAgW4E____________wGwFALAFYGAgECKFwoIAxgBKAEwATgBoBcBqReJBEg1yjlletIXDhIK7E7vTqtctFyTaRhu&sigh=f6Ah-ilTPVs&cid=CAESD-D2saJYt_ikQ_sicNcKDQ";
+		}
+	];
+	"pingingEndpoint": {
+		"hack": true;
+	};
+};
+
+type UrlEndpoint={
+	url: string;
+	target: "TARGET_NEW_WINDOW";
+};
+
+type ClickCommand={
+	clickTrackingParams: string;
+	"commandMetadata": CommandMetadata;
+	"urlEndpoint": UrlEndpoint;
+};
+
 type RenderingContent={
 	"displayAdRenderer": {
 		trackingParams: string;
@@ -162,33 +185,8 @@ type RenderingContent={
 				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
 			};
 		};
-		"impressionEndpoints": [
-			{
-				clickTrackingParams: string;
-				"loggingUrls": [
-					{
-						"baseUrl": "https://www.youtube.com/pagead/adview?ai=CR9DJiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoEyAFP0EC2FSEYx70zuAUppUfEkYi_mOxY9ayL2TsEqmuwqQ2uR52X5F8mREDx148616YrlzJGcdfwasaotiQufJZQh_1P-F5EUxNcTrvVkGAoIHM-E6HcARQOzmMpiHURkEuWhENDfN2plBxHA5lui-nCj1tpA07TYASPOdBjxm-rT6PJyNg5mzjomgxxcY4JpG3rnZbC1TQ_an4StPQ5YOx-FCxGyY58dQA2TCk1vQwtBzqiGbOgOwWxy0tPKdPvQ51LcGX2i_nxJ8AEyNr865sEiAWjkqTnR5IFCQgTaAF47fX5BqAGboAHncjYB4gHAZAHAqgHgqqxAqgHhAioB6jSG6gHtgeoB-DPG6gH6dQbqAeMzRuoB7HcG6gHpJqxAqgHkZ-xAqgHsJuxAqgH36GxAqgHpqqxAqgHgcYbqAerxRuoB-PZG6gHt6mxAqgH6auxApIIC0FBQUFBQUFBQUFB0ggYCIDAgEAQAhgAMgSBgoAOOgeAgICAgIEEyAkAugs-CAIQBRgWIAgoATADQAFIAFABWCVgAGgAcAGIAQCYAQGiARIKAggBKAH4AQGQAgKoAgXAAgLYAQGAAgGIAgW4E____________wGwFALAFYGAgECKFwoIAxgBKAEwATgBoBcBqReJBEg1yjlletIXDhIK7E7vTqtctFyTaRhu&sigh=f6Ah-ilTPVs&cid=CAESD-D2saJYt_ikQ_sicNcKDQ";
-					}
-				];
-				"pingingEndpoint": {
-					"hack": true;
-				};
-			}
-		];
-		"clickCommand": {
-			clickTrackingParams: string;
-			"commandMetadata": {
-				"webCommandMetadata": {
-					"url": "https://www.googleadservices.com/pagead/aclk?sa=L&ai=CmdwiiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoExAFP0EC2FSEYx73BcfPINKDnC73RmOtR79HQjGZc9wGNtkS3Uo6--0JoH0n-yYg43-gErQUFZ87KW-q29C4zCIFLvPFK-BZYeEYSQabSkElwaG88Erb1WllZiDRp5nUNklWUj1xBfl-Gq1IeRIel5ZPBjU4iVELJeavsS5Z03XICdJuOy9s-xnuowA9zZMVeqHfyaPamO1Vcz_yDQ_mEdcR6ai9ycHebkixHv-Ld11syvOhnE0Qc6zLpRujHylzlME-C9rYEkgUJCBNoAXjt9fkGoAZugAedyNgHiAcBkAcCqAeCqrECqAeECKgHqNIbqAe2B6gH4M8bqAfp1BuoB4zNG6gHsdwbqAekmrECqAeRn7ECqAewm7ECqAffobECqAemqrECqAeBxhuoB6vFG6gH5p2xAqgHyJ-xAqgHt6GxAqgH1amxAtIIGAiAwIBAEAIYADIEgYKADjoHgICAgICBBLEJwc2ZHM6xvHHICQCYCwG6Cz4IAhAFGBYgCCgBMANAAUgAUAFYJWAAaABwAYgBAJgBAaIBEgoCCAEoAfgBAZACAqgCBcACAtgBAYACAYgCBdALErgMAZoNARK4E____________wGwFALAFYGAgEDQFQHYFQGYFgHiFgIIAYAXAYoXCggDGAEoATABOAGgFwGpF4kESDXKOWV6&num=1&cid=CAESD-D2saJYt_ikQ_sicNcKDQ&sig=AOD64_1kkyMicRNl2HFJyNnOS5bkXsBLIg&adurl=https://learn.linqto.com/en-us/a-gift-that-last-forever-ga%3Fmatchtype%3D%26keyword%3D%26cid%3D19282370359%26agid%3D%26device%3Dc%26placement%3D%26creative%3D%26target%3D%26adposition%3D%26devicemodel%3D%26GA_loc_physical_ms%3D1001889%26aceid%3D%26network%3D%26utm_term%3D%26utm_campaign%3DHoliday%2B2022%2BTraffic%2BPerformance%2BMax%26utm_source%3Dadwords%26utm_medium%3Dppc%26hsa_acc%3D7219273531%26hsa_cam%3D19282370359%26hsa_grp%3D%26hsa_ad%3D%26hsa_src%3D%26hsa_tgt%3D%26hsa_kw%3D%26hsa_mt%3D%26hsa_net%3Dadwords%26hsa_ver%3D3&ms=[CLICK_MS]&nb=[NB]&nx=[NX]&ny=[NY]&dim=[DIM]";
-					"webPageType": "WEB_PAGE_TYPE_UNKNOWN";
-					"rootVe": 83769;
-				};
-			};
-			"urlEndpoint": {
-				"url": "https://www.googleadservices.com/pagead/aclk?sa=L&ai=CmdwiiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoExAFP0EC2FSEYx73BcfPINKDnC73RmOtR79HQjGZc9wGNtkS3Uo6--0JoH0n-yYg43-gErQUFZ87KW-q29C4zCIFLvPFK-BZYeEYSQabSkElwaG88Erb1WllZiDRp5nUNklWUj1xBfl-Gq1IeRIel5ZPBjU4iVELJeavsS5Z03XICdJuOy9s-xnuowA9zZMVeqHfyaPamO1Vcz_yDQ_mEdcR6ai9ycHebkixHv-Ld11syvOhnE0Qc6zLpRujHylzlME-C9rYEkgUJCBNoAXjt9fkGoAZugAedyNgHiAcBkAcCqAeCqrECqAeECKgHqNIbqAe2B6gH4M8bqAfp1BuoB4zNG6gHsdwbqAekmrECqAeRn7ECqAewm7ECqAffobECqAemqrECqAeBxhuoB6vFG6gH5p2xAqgHyJ-xAqgHt6GxAqgH1amxAtIIGAiAwIBAEAIYADIEgYKADjoHgICAgICBBLEJwc2ZHM6xvHHICQCYCwG6Cz4IAhAFGBYgCCgBMANAAUgAUAFYJWAAaABwAYgBAJgBAaIBEgoCCAEoAfgBAZACAqgCBcACAtgBAYACAYgCBdALErgMAZoNARK4E____________wGwFALAFYGAgEDQFQHYFQGYFgHiFgIIAYAXAYoXCggDGAEoATABOAGgFwGpF4kESDXKOWV6&num=1&cid=CAESD-D2saJYt_ikQ_sicNcKDQ&sig=AOD64_1kkyMicRNl2HFJyNnOS5bkXsBLIg&adurl=https://learn.linqto.com/en-us/a-gift-that-last-forever-ga%3Fmatchtype%3D%26keyword%3D%26cid%3D19282370359%26agid%3D%26device%3Dc%26placement%3D%26creative%3D%26target%3D%26adposition%3D%26devicemodel%3D%26GA_loc_physical_ms%3D1001889%26aceid%3D%26network%3D%26utm_term%3D%26utm_campaign%3DHoliday%2B2022%2BTraffic%2BPerformance%2BMax%26utm_source%3Dadwords%26utm_medium%3Dppc%26hsa_acc%3D7219273531%26hsa_cam%3D19282370359%26hsa_grp%3D%26hsa_ad%3D%26hsa_src%3D%26hsa_tgt%3D%26hsa_kw%3D%26hsa_mt%3D%26hsa_net%3Dadwords%26hsa_ver%3D3&ms=[CLICK_MS]&nb=[NB]&nx=[NX]&ny=[NY]&dim=[DIM]";
-				"target": "TARGET_NEW_WINDOW";
-			};
-		};
+		impressionEndpoints: ImpressionEndpoint[];
+		"clickCommand": ClickCommand;
 		"mediaHoverOverlay": {
 			"buttonRenderer": {
 				"style": "STYLE_LIGHT_TEXT";
