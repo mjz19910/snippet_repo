@@ -2205,6 +2205,8 @@ function activate_nav() {
 	log_current_video_data();
 	get_ytd_page_manager().addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
+		// might have a new video element from page type change
+		do_find_video();
 		if(get_ytd_page_manager().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
 			ytd_player.is_watch_page_active=false;
 			plugin_overlay_element&&plugin_overlay_element.remove();
