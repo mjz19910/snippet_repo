@@ -895,7 +895,7 @@ function filter_on_initial_data(cls,apply_args) {
 						console.assert(false);
 					}
 				} else {
-					console.log(cls.class_name+": initial page info",ret.page);
+					console.log(cls.class_name+": initial_data.page:",ret.page);
 					cls.handle_page_type(ret.response,window.ytPageType,"response");
 					cls.handle_page_type(ret.playerResponse,window.ytPageType,"playerResponse");
 				}
