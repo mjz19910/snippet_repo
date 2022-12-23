@@ -670,7 +670,7 @@ class IterateApiResultBase {
  */
 function check_item_keys(real_path,path,keys) {
 	let path_arr=real_path.split(".");
-	let dyn_path_arr={get arr(){return path_arr}};
+	let dyn_path_arr={get arr() {return path_arr;} };
 	path=path.replace("continuationItems[]","contents[]");
 	switch(path) {
 		case "appendContinuationItemsAction": break;
@@ -1893,15 +1893,13 @@ function do_find_video() {
 		box_map.set("video-list",list);
 	}
 	let new_elements=get_new_video_element_list(element_list,list);
-	if(new_elements.length>0) {
-		audio_gain_controller.attach_element_list(new_elements);
-	}
-	if(!first_run&&new_elements.length>0) {
-		console.log("found extra video elements",new_elements);
-	}
+	if(new_elements.length<=0) return;
+	audio_gain_controller.attach_element_list(new_elements);
 	if(first_run) {
 		found_element_count++;
 		console.log("found video elements");
+	} else {
+		console.log("found extra video elements",new_elements);
 	}
 }
 
