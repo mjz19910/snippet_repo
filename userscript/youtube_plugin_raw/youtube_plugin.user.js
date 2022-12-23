@@ -992,6 +992,7 @@ class FilterHandlers extends IterateApiResultBase {
 		["gridRenderer",false],
 		["messageRenderer",false],
 		["playlistRenderer",false],
+		["playlistVideoListRenderer",false],
 		["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
 		["radioRenderer",false],
 		["recognitionShelfRenderer",false],
