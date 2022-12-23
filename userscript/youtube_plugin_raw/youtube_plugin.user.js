@@ -717,19 +717,29 @@ function check_item_keys(real_path,path,keys) {
 			case "richItemRenderer": break;
 			default: console.log("item_keys_tag [ci_2_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
-		case "richItemRenderer":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": for(let key of keys) switch(key) {
 			case "content": break;
 			case "trackingParams": break;
 			default: console.log("item_keys_tag [ci_2_13_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
-		case "richItemRenderer.content":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
 			case "reelItemRenderer": break;
 			default: console.log("item_keys_tag [ci_2_14_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+		} break;
+		case "richItemRenderer.content": for(let key of keys) switch(key) {
+			case "adSlotRenderer": break;
+			case "radioRenderer": break;
+			case "videoRenderer": break;
+			case "reelItemRenderer": break;
+			default: console.log("item_keys_tag [ci_2_14_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+		} break;
+		case "richItemRenderer": for(let key of keys) switch(key) {
+			case "content": break;
+			case "trackingParams": break;
+			default: console.log("item_keys_tag [ci_2_13_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "content.richGridRenderer.masthead": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
@@ -802,9 +812,6 @@ class HandleRendererContentItemArray {
 	 * @param {"continuationItems"|"contents"} key
 	 */
 	static replace_array(base,path,obj,key) {
-		if(path.includes("tabRenderer")) {
-			path=path.slice(path.indexOf("tabRenderer"));
-		}
 		let arr=obj[key];
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
@@ -867,7 +874,6 @@ class HandleRendererContentItemArray {
 			}
 			return true;
 		});
-		// don't remove every item
 		if(filtered.length>0) {
 			obj[key]=filtered;
 		}
@@ -885,15 +891,10 @@ class HandleRichGridRenderer {
 	 * @param {RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
-		let path_parts=path.split(".");
-		let sub_path=path_parts.slice(-3).join(".");
-		if(path_parts.includes("tabRenderer")) {
-			sub_path=path_parts.slice(path_parts.indexOf("tabRenderer")).join(".");
-		}
-		check_item_keys(path,sub_path,Object.keys(renderer));
-		if(this.debug) console.log("run handler",sub_path);
+		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
+		if(this.debug) console.log("run handler richGridRenderer");
 		if(renderer.masthead) {
-			check_item_keys(path,sub_path+".masthead",Object.keys(renderer.masthead));
+			check_item_keys(path,"richGridRenderer.masthead",Object.keys(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				console.log("masthead",masthead);
@@ -902,7 +903,7 @@ class HandleRichGridRenderer {
 		}
 		if(renderer.contents) {
 			if(this.debug) console.log("on_contents",path);
-			HandleRendererContentItemArray.replace_array(this,path+".contents",renderer,"contents");
+			HandleRendererContentItemArray.replace_array(this,"richGridRenderer.contents",renderer,"contents");
 		}
 	}
 }
