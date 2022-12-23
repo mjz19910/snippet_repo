@@ -759,6 +759,7 @@ function check_item_keys(real_path,path,keys) {
 		case "reloadContinuationItemsCommand.contents[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_140_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 			case "richItemRenderer": break;
+			case "richSectionRenderer": break;
 		} break;
 		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
 			case "continuationItems": break;
@@ -807,6 +808,7 @@ class HandleRendererContentItemArray {
 					case "continuationItemRenderer": break;
 					case "itemSectionRenderer": return_=true; break;
 					case "richItemRenderer": break;
+					case "richSectionRenderer": break;
 					default: console.log("RendererContentItem: new item type",content_item); break;
 				}
 			}
@@ -1107,7 +1109,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		saved_data.any_data={...saved_data.any_data,[path]:data};
+		saved_data.any_data={...saved_data.any_data,[path]: data};
 		this.default_iter(path,data);
 	}
 	/**
