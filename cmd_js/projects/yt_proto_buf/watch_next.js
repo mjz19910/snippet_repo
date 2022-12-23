@@ -3,11 +3,11 @@ CCgSJRILOHppbEVnX2ZlWkEyAMgBAOABA6ICDSj___________8BQAAYACqnDDJzNkw2d3lXQ1FxVENR
 `;
 let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
 const text=atob(base64_enc);
-export const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
+const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 // const string_decoder=new TextDecoder('utf-8');
-import * as pkg from 'protobufjs';
-const {load} = pkg;
-let root=await load("yt_token.proto");
+var protobuf=require('protobufjs');
+let root=await protobuf.load("yt_token.proto");
 var A=root.lookupType("A");
 let message=A.decode(token_binary);
 console.log(message);
+exports.token_binary=token_binary;
