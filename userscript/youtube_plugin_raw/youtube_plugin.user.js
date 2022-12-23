@@ -805,6 +805,18 @@ function check_item_keys(real_path,path,keys) {
 
 class HandleRendererContentItemArray {
 	static debug=false;
+	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {{richItemRenderer: RichItemRenderer;}} content_item */
+	static filter_for_rich_item_renderer(path,base,content_item) {
+		let renderer=content_item.richItemRenderer;
+		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
+		console.assert(renderer.content!=void 0,"richItemRenderer has content");
+		check_item_keys(path,"richItemRenderer.content",Object.keys(renderer.content));
+		if(renderer.content.adSlotRenderer) {
+			if(base.debug) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
+			return false;
+		}
+		return true;
+	}
 	/**
 	 * @param {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
@@ -834,15 +846,7 @@ class HandleRendererContentItemArray {
 			}
 			if(return_!==null) return true;
 			if("richItemRenderer" in content_item) {
-				let renderer=content_item.richItemRenderer;
-				check_item_keys(path,"richItemRenderer",Object.keys(renderer));
-				console.assert(renderer.content!=void 0,"richItemRenderer has content");
-				check_item_keys(path,"richItemRenderer.content",Object.keys(renderer.content));
-				if(renderer.content.adSlotRenderer) {
-					if(base.debug) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
-					return false;
-				}
-				return true;
+				this.filter_for_rich_item_renderer(path,base,content_item);
 			}
 			if("richSectionRenderer" in content_item) {
 				let renderer=content_item.richSectionRenderer;
