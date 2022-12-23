@@ -80,13 +80,213 @@ declare global {
 	type ContinuationItem=RendererContentItem;
 }
 
-type AdSlotRenderer={
-	adSlotMetadata: {
-		"slotId": `${number}:${number}:${number}:${number}`,
-		"slotType": "SLOT_TYPE_IN_FEED",
-		"slotPhysicalPosition": number
+type AdLayoutLoggingData={
+	"serializedAdServingDataEntry": string;
+};
+
+type AdLayoutMetadata={
+	"layoutId": string;
+	"layoutType": "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE";
+	"adLayoutLoggingData": AdLayoutLoggingData;
+};
+
+type RenderingContent={
+	"displayAdRenderer": {
+		trackingParams: string;
+		"layout": "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
+		"titleText": {
+			"simpleText": "Create Lasting Wealth";
+		};
+		"image": {
+			"thumbnail": {
+				"thumbnails": [
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w128-h67-s-nd";
+						"width": 128;
+						"height": 67;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w256-h134-s-nd";
+						"width": 256;
+						"height": 134;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w384-h201-s-nd";
+						"width": 384;
+						"height": 201;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w512-h268-s-nd";
+						"width": 512;
+						"height": 268;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w640-h335-s-nd";
+						"width": 640;
+						"height": 335;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w768-h402-s-nd";
+						"width": 768;
+						"height": 402;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w896-h469-s-nd";
+						"width": 896;
+						"height": 469;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w1024-h536-s-nd";
+						"width": 1024;
+						"height": 536;
+					},
+					{
+						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w1152-h603-s-nd";
+						"width": 1152;
+						"height": 603;
+					}
+				];
+			};
+			trackingParams: string;
+		};
+		// spell:ignore Linqto
+		"bodyText": {
+			"simpleText": "Sign up on the Linqto platform and verify your accreditation status";
+		};
+		"secondaryText": {
+			"simpleText": "Linqto";
+		};
+		"badge": {
+			"metadataBadgeRenderer": {
+				"style": "BADGE_STYLE_TYPE_AD";
+				"label": "Ad";
+				trackingParams: string;
+			};
+		};
+		"menu": {
+			"menuRenderer": {
+				"items": [
+					{
+						"menuNavigationItemRenderer": {
+							"text": {
+								"runs": [
+									{
+										"text": "My Ad Centre";
+									}
+								];
+							};
+							"icon": {
+								"iconType": "INFO";
+							};
+							"navigationEndpoint": {
+								clickTrackingParams: string;
+								"openPopupAction": {
+									"popup": {
+										"aboutThisAdRenderer": {
+											"url": {
+												"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue": "https://www.youtube.com/aboutthisad?pf=web&reasons=AZLCTSrE9jiGvWLntZx4DLfm54Mnlv--spHXFypF9v-_frPnhn36-wC64RcHcBcUrOvyK8oeP_nU_0WpKPvfO0eUUgaY2b_XAbP7vaixI3MbJevsMiVywyf7Z01C9nGGTC9NiwQbH41KfAjo0JYkzG-3ed0Tgf4zIfwKDc80CkNWgHfTaa9LErcltUS_39Qj3cV2kOmbUslTTkQcSHz7_CDOAnzTLA9kt_Wmnz58YDOnSsWx57SUwfEiChowp4K81l1_0x7_ik_VSE7_QO99WALl6gtJlYo-_QRacam8f20eUEWnWhtMndRdWe6ll3xCmuty8oOKUkTDDb6Cjr99Sy3iZLVdnu-W9XcrQqcDFjZ8J2aMutn1FuyVecWpaiR61p9jGaLk0X263EfKVpzng2iDoOYLcc9eAkNeNRbzZ0VvkVKkNneJgla8vxGkjJxvoLCbi9JcNseUD6Xms5i1j98QKoZSXuUrJHZ5cjhoWDMjq1C8SPwQxRIn9PAeCTocGChgFuiXMkWH-QfCvkikzR8H1kB-ERoqZLd95x9M7tCv5_uboy_OUifZ06Kr9rE2CJz5mDKDHNBL4u8GLRVbwr4boio5tQlYLnHIypPZHiIrc_J2oBqZtOcnhuHY1KHXLNaxS5QyA1Jyxj3Phhoad33GWolsLkNs-kvnaKWg_MiXguwCaJvQ0iAxVEjhVKnyxhQ0WUnN8UqzjLIWZ8x6pSBvmle945hye0DCLKF8FXHMdOAf90K256_pz5tag7U3K_lW_cgMTMaymcrt01KZRGUJGn5U28djCXMSdHVetErOTr3H2VdLrZZHsg7drQxBDJDYOc1uSVtryWoEhwMGyTyhijcjeeXMxKQfw71605zSdqrPjEr9WIqDc2vw9a8GchTamrJO4RRTkR9P3B2dM-Vxs8BIENQHflhNBdf8QVdvrEDG1eVCJPElBu9FZZlFdVCJr1F9sHhqvDxGAFMW2SjzY0Lqo_mcNkcmDAlX2RK8rpdLBN6g5oX4rFg84qqaOmd6GjLVmkmrZYOmcHjAWvyrUMiwNQCIK7hDA3_-DnZ1xQVwUw4JZ471wCj5_7ulVyw_mvqpasGvm3TEd3PyExA4Hwc4JQg_aztheMAMiFGPjtXPmntQCa56AcLOGVs62dgqV7kc7I0WqtL952nl48UJFQ4QZwsFoheKrpOPtrY_gKZYeCcXnwoe50AoqYuCSZBqS3VJ2h9nq5wf2TNMoGDqhHnsR7_t5-0n4sdXkcVLaJtiSCdTixnFr6I-PhLbHJBuemUIJnROtpVaFunPVaW2FTNE&hl=en&origin=https://www.youtube.com/&ata_theme=dark";
+											};
+											trackingParams: string;
+										};
+									};
+									"popupType": "DIALOG";
+								};
+							};
+							trackingParams: string;
+						};
+					}
+				];
+				trackingParams: string;
+				"accessibility": {
+					"accessibilityData": {
+						"label": "Action menu";
+					};
+				};
+			};
+		};
+		"ctaButton": {
+			"buttonRenderer": {
+				"style": "STYLE_PRIMARY";
+				"text": {
+					"simpleText": "Visit site";
+				};
+				"icon": {
+					"iconType": "EXTERNAL_LINK";
+				};
+				trackingParams: string;
+				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
+			};
+		};
+		"impressionEndpoints": [
+			{
+				clickTrackingParams: string;
+				"loggingUrls": [
+					{
+						"baseUrl": "https://www.youtube.com/pagead/adview?ai=CR9DJiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoEyAFP0EC2FSEYx70zuAUppUfEkYi_mOxY9ayL2TsEqmuwqQ2uR52X5F8mREDx148616YrlzJGcdfwasaotiQufJZQh_1P-F5EUxNcTrvVkGAoIHM-E6HcARQOzmMpiHURkEuWhENDfN2plBxHA5lui-nCj1tpA07TYASPOdBjxm-rT6PJyNg5mzjomgxxcY4JpG3rnZbC1TQ_an4StPQ5YOx-FCxGyY58dQA2TCk1vQwtBzqiGbOgOwWxy0tPKdPvQ51LcGX2i_nxJ8AEyNr865sEiAWjkqTnR5IFCQgTaAF47fX5BqAGboAHncjYB4gHAZAHAqgHgqqxAqgHhAioB6jSG6gHtgeoB-DPG6gH6dQbqAeMzRuoB7HcG6gHpJqxAqgHkZ-xAqgHsJuxAqgH36GxAqgHpqqxAqgHgcYbqAerxRuoB-PZG6gHt6mxAqgH6auxApIIC0FBQUFBQUFBQUFB0ggYCIDAgEAQAhgAMgSBgoAOOgeAgICAgIEEyAkAugs-CAIQBRgWIAgoATADQAFIAFABWCVgAGgAcAGIAQCYAQGiARIKAggBKAH4AQGQAgKoAgXAAgLYAQGAAgGIAgW4E____________wGwFALAFYGAgECKFwoIAxgBKAEwATgBoBcBqReJBEg1yjlletIXDhIK7E7vTqtctFyTaRhu&sigh=f6Ah-ilTPVs&cid=CAESD-D2saJYt_ikQ_sicNcKDQ";
+					}
+				];
+				"pingingEndpoint": {
+					"hack": true;
+				};
+			}
+		];
+		"clickCommand": {
+			clickTrackingParams: string;
+			"commandMetadata": {
+				"webCommandMetadata": {
+					"url": "https://www.googleadservices.com/pagead/aclk?sa=L&ai=CmdwiiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoExAFP0EC2FSEYx73BcfPINKDnC73RmOtR79HQjGZc9wGNtkS3Uo6--0JoH0n-yYg43-gErQUFZ87KW-q29C4zCIFLvPFK-BZYeEYSQabSkElwaG88Erb1WllZiDRp5nUNklWUj1xBfl-Gq1IeRIel5ZPBjU4iVELJeavsS5Z03XICdJuOy9s-xnuowA9zZMVeqHfyaPamO1Vcz_yDQ_mEdcR6ai9ycHebkixHv-Ld11syvOhnE0Qc6zLpRujHylzlME-C9rYEkgUJCBNoAXjt9fkGoAZugAedyNgHiAcBkAcCqAeCqrECqAeECKgHqNIbqAe2B6gH4M8bqAfp1BuoB4zNG6gHsdwbqAekmrECqAeRn7ECqAewm7ECqAffobECqAemqrECqAeBxhuoB6vFG6gH5p2xAqgHyJ-xAqgHt6GxAqgH1amxAtIIGAiAwIBAEAIYADIEgYKADjoHgICAgICBBLEJwc2ZHM6xvHHICQCYCwG6Cz4IAhAFGBYgCCgBMANAAUgAUAFYJWAAaABwAYgBAJgBAaIBEgoCCAEoAfgBAZACAqgCBcACAtgBAYACAYgCBdALErgMAZoNARK4E____________wGwFALAFYGAgEDQFQHYFQGYFgHiFgIIAYAXAYoXCggDGAEoATABOAGgFwGpF4kESDXKOWV6&num=1&cid=CAESD-D2saJYt_ikQ_sicNcKDQ&sig=AOD64_1kkyMicRNl2HFJyNnOS5bkXsBLIg&adurl=https://learn.linqto.com/en-us/a-gift-that-last-forever-ga%3Fmatchtype%3D%26keyword%3D%26cid%3D19282370359%26agid%3D%26device%3Dc%26placement%3D%26creative%3D%26target%3D%26adposition%3D%26devicemodel%3D%26GA_loc_physical_ms%3D1001889%26aceid%3D%26network%3D%26utm_term%3D%26utm_campaign%3DHoliday%2B2022%2BTraffic%2BPerformance%2BMax%26utm_source%3Dadwords%26utm_medium%3Dppc%26hsa_acc%3D7219273531%26hsa_cam%3D19282370359%26hsa_grp%3D%26hsa_ad%3D%26hsa_src%3D%26hsa_tgt%3D%26hsa_kw%3D%26hsa_mt%3D%26hsa_net%3Dadwords%26hsa_ver%3D3&ms=[CLICK_MS]&nb=[NB]&nx=[NX]&ny=[NY]&dim=[DIM]";
+					"webPageType": "WEB_PAGE_TYPE_UNKNOWN";
+					"rootVe": 83769;
+				};
+			};
+			"urlEndpoint": {
+				"url": "https://www.googleadservices.com/pagead/aclk?sa=L&ai=CmdwiiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoExAFP0EC2FSEYx73BcfPINKDnC73RmOtR79HQjGZc9wGNtkS3Uo6--0JoH0n-yYg43-gErQUFZ87KW-q29C4zCIFLvPFK-BZYeEYSQabSkElwaG88Erb1WllZiDRp5nUNklWUj1xBfl-Gq1IeRIel5ZPBjU4iVELJeavsS5Z03XICdJuOy9s-xnuowA9zZMVeqHfyaPamO1Vcz_yDQ_mEdcR6ai9ycHebkixHv-Ld11syvOhnE0Qc6zLpRujHylzlME-C9rYEkgUJCBNoAXjt9fkGoAZugAedyNgHiAcBkAcCqAeCqrECqAeECKgHqNIbqAe2B6gH4M8bqAfp1BuoB4zNG6gHsdwbqAekmrECqAeRn7ECqAewm7ECqAffobECqAemqrECqAeBxhuoB6vFG6gH5p2xAqgHyJ-xAqgHt6GxAqgH1amxAtIIGAiAwIBAEAIYADIEgYKADjoHgICAgICBBLEJwc2ZHM6xvHHICQCYCwG6Cz4IAhAFGBYgCCgBMANAAUgAUAFYJWAAaABwAYgBAJgBAaIBEgoCCAEoAfgBAZACAqgCBcACAtgBAYACAYgCBdALErgMAZoNARK4E____________wGwFALAFYGAgEDQFQHYFQGYFgHiFgIIAYAXAYoXCggDGAEoATABOAGgFwGpF4kESDXKOWV6&num=1&cid=CAESD-D2saJYt_ikQ_sicNcKDQ&sig=AOD64_1kkyMicRNl2HFJyNnOS5bkXsBLIg&adurl=https://learn.linqto.com/en-us/a-gift-that-last-forever-ga%3Fmatchtype%3D%26keyword%3D%26cid%3D19282370359%26agid%3D%26device%3Dc%26placement%3D%26creative%3D%26target%3D%26adposition%3D%26devicemodel%3D%26GA_loc_physical_ms%3D1001889%26aceid%3D%26network%3D%26utm_term%3D%26utm_campaign%3DHoliday%2B2022%2BTraffic%2BPerformance%2BMax%26utm_source%3Dadwords%26utm_medium%3Dppc%26hsa_acc%3D7219273531%26hsa_cam%3D19282370359%26hsa_grp%3D%26hsa_ad%3D%26hsa_src%3D%26hsa_tgt%3D%26hsa_kw%3D%26hsa_mt%3D%26hsa_net%3Dadwords%26hsa_ver%3D3&ms=[CLICK_MS]&nb=[NB]&nx=[NX]&ny=[NY]&dim=[DIM]";
+				"target": "TARGET_NEW_WINDOW";
+			};
+		};
+		"mediaHoverOverlay": {
+			"buttonRenderer": {
+				"style": "STYLE_LIGHT_TEXT";
+				"text": {
+					"simpleText": "Visit site";
+				};
+				"icon": {
+					"iconType": "EXTERNAL_LINK";
+				};
+				trackingParams: string;
+				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
+			};
+		};
+		"mediaBadge": {
+			"metadataBadgeRenderer": {
+				"icon": {
+					"iconType": "EXTERNAL_LINK";
+				};
+				"style": "BADGE_STYLE_TYPE_BLACK";
+				trackingParams: string;
+			};
+		};
 	};
-	fulfillmentContent: {};
+};
+
+type InFeedAdLayoutRenderer={
+	"adLayoutMetadata": AdLayoutMetadata,
+	"renderingContent": RenderingContent;
+};
+
+type AdSlotMetadata={
+	"slotId": `${number}:${number}:${number}:${number}`;
+	"slotType": "SLOT_TYPE_IN_FEED";
+	"slotPhysicalPosition": number;
+};
+
+type AdSlotRenderer={
+	adSlotMetadata: AdSlotMetadata;
+	fulfillmentContent: {
+		fulfilledLayout: {
+			inFeedAdLayoutRenderer: InFeedAdLayoutRenderer;
+		};
+	};
 	enablePacfLoggingWeb: boolean;
 };
 type VideoRenderer={};
@@ -184,7 +384,7 @@ type ContinuationItemRenderer={
 			"size": "SIZE_DEFAULT",
 			"isDisabled": false,
 			"text": TextRuns;
-			"trackingParams": string,
+			trackingParams: string;
 			"command": {
 				"clickTrackingParams": string;
 				"commandMetadata": CommandMetadata;
