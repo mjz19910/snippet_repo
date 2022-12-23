@@ -1583,7 +1583,7 @@ let ytd_watch_flexy=null;
  */
 function on_ytd_watch_flexy(element) {
 	const element_id="ytd-watch-flexy";
-	console.log(`on ${element_id}`);
+	if(yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	ytd_watch_flexy=any_c(element,YtdWatchFlexyElement);
 	window.ytd_watch_flexy=element;
@@ -1628,7 +1628,7 @@ let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
 	const element_id="ytd-player";
-	console.log(`on ${element_id}`);
+	if(yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
@@ -1727,20 +1727,13 @@ function ui_css_toggle_click_handler() {
 		ui_plugin_css_enabled=true;
 	}
 }
-/** @template {"ytd_app"} T @arg {string} element_id @arg {T} save_key @arg {HTMLElement} with_element */
-function with_element(element_id,save_key,with_element) {
-	console.log(`on ${element_id}`);
-	element_map.set(element_id,with_element);
-	if(save_key==="ytd_app") {
-		window.ytd_app=with_element;
-	}
-}
-/**
- * @param {HTMLElement} element
- */
+
+/** @arg {HTMLElement} element */
 function on_ytd_app(element) {
 	const element_id="ytd-app";
-	with_element(element_id,"ytd_app",element);
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		// might have a new video element from page type change
