@@ -188,11 +188,6 @@ declare global {
 		browseId: string;
 		canonicalBaseUrl: string;
 	};
-	type NavigationEndpointsData={
-		watchEndpoint: TODO;
-	}|{
-		browseEndpoint: BrowseEndpoint;
-	};
 	type CommonConfig={
 		url: string;
 	};
