@@ -221,6 +221,14 @@ declare global {
 	type Accessibility={
 		accessibilityData: {};
 	};
+	type MetadataBadgeRenderer={
+		label: string;
+		style: string;
+		trackingParams: string;
+	};
+	type MetadataBadgeRenderers={
+		metadataBadgeRenderer: MetadataBadgeRenderer;
+	}
 	type CompactVideoRenderer={
 		accessibility: Accessibility;
 		badges: TODO[];
