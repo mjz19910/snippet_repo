@@ -783,6 +783,7 @@ function check_item_keys(real_path,path,keys) {
 }
 
 class HandleRendererContentItemArray {
+	static debug=false;
 	/**
 	 * @param {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
@@ -840,14 +841,14 @@ class HandleRendererContentItemArray {
 					return true;
 				}
 				if(!rich_shelf.title.runs) {
-					console.log("rich shelf title",rich_shelf.title);
+					if(this.debug) console.log("rich shelf title",rich_shelf.title);
 					return true;
 				}
 				if(rich_shelf.title.runs[0]) {
 					if(rich_shelf.title.runs[0].text==="Breaking news") {
 						return false;
 					}
-					console.log("rich shelf title",rich_shelf.title.runs[0]);
+					if(this.debug) console.log("rich shelf title",rich_shelf.title.runs[0]);
 					return true;
 				}
 				console.log("rich shelf",rich_shelf);
