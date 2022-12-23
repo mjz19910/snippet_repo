@@ -184,9 +184,6 @@ declare global {
 	type MenuRenderers={
 		menuRenderer: MenuRenderer;
 	};
-	type TrackingParams={
-		trackingParams: string;
-	};
 	type BrowseEndpoint={
 		browseId: string;
 		canonicalBaseUrl: string;
