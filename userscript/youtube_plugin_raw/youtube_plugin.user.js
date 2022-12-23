@@ -747,6 +747,7 @@ function check_item_keys(real_path,path,keys) {
 			case "promotedSparklesWebRenderer": break;
 			case "reelShelfRenderer": break;
 			case "shelfRenderer": break;
+			case "videoRenderer": break;
 		} break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
