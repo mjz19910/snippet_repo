@@ -229,11 +229,17 @@ declare global {
 	type MetadataBadgeRenderers={
 		metadataBadgeRenderer: MetadataBadgeRenderer;
 	}
+	type ThumbnailsHolder={};
+	type YtAnyText={
+		accessibility: Accessibility;
+		simpleText: string;
+	};
+
 	type CompactVideoRenderer={
 		accessibility: Accessibility;
-		badges: TODO[];
-		channelThumbnail: TODO;
-		lengthText: {accessibility: TODO,simpleText: string;};
+		badges: MetadataBadgeRenderers[];
+		channelThumbnail: ThumbnailsHolder;
+		lengthText: YtAnyText;
 		longBylineText: TextData;
 		menu: MenuRenderers;
 		navigationEndpoint: NavigationEndpoint;
