@@ -50,7 +50,6 @@ declare global {
 }
 // WatchNextContinuationAction
 declare global {
-	type CompactVideoRenderer={};
 	type WatchNextItem={
 		compactVideoRenderer: CompactVideoRenderer;
 	}|{
@@ -158,6 +157,10 @@ declare global {
 	};
 	type ContentItemContinuationItemRenderer={
 		continuationItemRenderer: ContinuationItemRenderer;
+	};
+	type CompactVideoRenderer={};
+	type ContentItemCompactVideoRenderer={
+		compactVideoRenderer: CompactVideoRenderer;
 	};
 	type RendererContentItem=
 		RichItemRendererItem|
