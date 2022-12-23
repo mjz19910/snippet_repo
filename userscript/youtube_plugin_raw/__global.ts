@@ -175,7 +175,15 @@ declare global {
 	type ContinuationItemRenderers={
 		continuationItemRenderer: ContinuationItemRenderer;
 	};
-	type MenuRenderers={menuRenderer: {};};
+	type MenuRenderer={
+		accessibility: Accessibility;
+		items: TODO[];
+		targetId: string;
+		trackingParams: string;
+	};
+	type MenuRenderers={
+		menuRenderer: MenuRenderer;
+	};
 	type TrackingParams={
 		trackingParams: string;
 	};
