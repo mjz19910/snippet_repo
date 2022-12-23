@@ -181,10 +181,6 @@ type MenuRenderer={
 type MenuRenderers={
 	menuRenderer: MenuRenderer;
 };
-type BrowseEndpoint={
-	browseId: string;
-	canonicalBaseUrl: string;
-};
 type CommonConfig={
 	url: string;
 };
@@ -240,15 +236,15 @@ type CompactVideoRenderer={
 	longBylineText: TextDataRuns;
 	menu: MenuRenderers;
 	navigationEndpoint: NavigationEndpoint;
-	publishedTimeText: {simpleText: string;};
+	publishedTimeText: SimpleText;
 	richThumbnail: TODO;
 	shortBylineText: TextDataRuns;
-	shortViewCountText: {accessibility: TODO,simpleText: string;};
+	shortViewCountText: SimpleText;
 	thumbnail: {thumbnails: TODO[];};
 	thumbnailOverlays: TODO[];
-	title: {accessibility: TODO,simpleText: string;};
+	title: SimpleText;
 	videoId: string;
-	viewCountText: {simpleText: string;};
+	viewCountText: SimpleText;
 };
 type CompactVideoRenderers={
 	compactVideoRenderer: CompactVideoRenderer;
