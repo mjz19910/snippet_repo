@@ -307,6 +307,7 @@ type CompactVideoRenderer={
 	thumbnail: {thumbnails: TODO[];};
 	thumbnailOverlays: TODO[];
 	title: SimpleText;
+	trackingParams: string;
 	videoId: string;
 	viewCountText: SimpleText;
 };
@@ -316,7 +317,7 @@ type CompactVideoRenderers={
 
 // spell:disable
 export const CompactVideoRenderers_Test: CompactVideoRenderers={
-	"compactVideoRenderer": {
+	compactVideoRenderer: {
 		"videoId": "OAIqCpqszVw",
 		"thumbnail": {
 			"thumbnails": [
