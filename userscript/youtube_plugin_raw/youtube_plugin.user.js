@@ -688,6 +688,7 @@ function check_item_keys(real_path,path,keys) {
 		case "reloadContinuationItemsCommand.contents[]": break;
 		case "reloadContinuationItemsCommand": break;
 		case "richGridRenderer.masthead": break;
+		case "richGridRenderer": break;
 		case "richItemRenderer.content": break;
 		case "richItemRenderer": break;
 	}
