@@ -90,6 +90,24 @@ type AdLayoutMetadata={
 	"adLayoutLoggingData": AdLayoutLoggingData;
 };
 
+type UrlWrappedValue={
+	"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue": string;
+};
+
+type AboutThisAdRenderer={
+	"url": UrlWrappedValue;
+	trackingParams: string;
+};
+
+type AboutThisAdRendererHolder={
+	"aboutThisAdRenderer": AboutThisAdRenderer;
+};
+
+type DIALOG_Popup={
+	"popup": AboutThisAdRendererHolder;
+	"popupType": "DIALOG";
+};
+
 type RenderingContent={
 	"displayAdRenderer": {
 		trackingParams: string;
@@ -180,17 +198,7 @@ type RenderingContent={
 							};
 							"navigationEndpoint": {
 								clickTrackingParams: string;
-								"openPopupAction": {
-									"popup": {
-										"aboutThisAdRenderer": {
-											"url": {
-												"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue": string;
-											};
-											trackingParams: string;
-										};
-									};
-									"popupType": "DIALOG";
-								};
+								"openPopupAction": DIALOG_Popup;
 							};
 							trackingParams: string;
 						};
@@ -440,7 +448,7 @@ type ServiceEndpointAction={
 }&({
 	addToPlaylistCommand: AddToPlaylistCommand;
 }|{
-	openPopupAction: OpenPopupAction;
+	openPopupAction: DIALOG_Popup;
 });
 type SignalServiceEndpoint={
 	signal: "CLIENT_SIGNAL";
