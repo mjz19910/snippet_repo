@@ -734,6 +734,7 @@ function check_item_keys(real_path,path,keys) {
 			case "backstagePostThreadRenderer": break;
 			case "channelAboutFullMetadataRenderer": break;
 			case "channelFeaturedContentRenderer": break;
+			case "commentsEntryPointHeaderRenderer": break;
 			case "continuationItemRenderer": break;
 			case "gridRenderer": break;
 			case "messageRenderer": break;
