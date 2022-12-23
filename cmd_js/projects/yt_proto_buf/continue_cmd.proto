@@ -6,3 +6,6 @@ message Token {
 	required string token=3;
 	required string more=35;
 }
+message Int32 {
+	optional int32 a1 = 1;
+}
