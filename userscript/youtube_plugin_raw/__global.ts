@@ -100,7 +100,7 @@ type AboutThisAdRenderer={
 };
 
 type DialogPopup={
-	"aboutThisAdRenderer": AboutThisAdRenderer;
+	aboutThisAdRenderer: AboutThisAdRenderer;
 };
 
 type DialogPopupTag={
