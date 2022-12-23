@@ -1,0 +1,8 @@
+message CommandToken {
+	required Token a0=0;
+}
+message Token {
+	required string a=2;
+	required string token=3;
+	required string more=35;
+}
