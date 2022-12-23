@@ -309,7 +309,7 @@ type PlaylistEditEndpoint={
 };
 
 type ThumbnailOverlayToggleButtonRenderer={
-	"isToggled": false;
+	isToggled?: false;
 	"untoggledIcon": Icon;
 	"toggledIcon": Icon;
 	"untoggledTooltip": string;
@@ -320,7 +320,7 @@ type ThumbnailOverlayToggleButtonRenderer={
 		playlistEditEndpoint?: PlaylistEditEndpoint;
 		signalServiceEndpoint?: SignalServiceEndpoint;
 	};
-	"toggledServiceEndpoint": {
+	toggledServiceEndpoint?: {
 		"clickTrackingParams": "CPwBEPnnAxgDIhMIy9r7_bWP_AIV9E1MCB3ggAxe";
 		"commandMetadata": CommandMetadata;
 		"playlistEditEndpoint": {
@@ -354,6 +354,10 @@ type ThumbnailOverlayResumePlaybackRenderer={
 	percentDurationWatched: number;
 };
 
+type ThumbnailOverlayNowPlayingRenderer={
+	text: TextRuns;
+};
+
 type ThumbnailOverlay={
 	_tag: "Never";
 }|{
@@ -362,6 +366,8 @@ type ThumbnailOverlay={
 	thumbnailOverlayTimeStatusRenderer: ThumbnailOverlayTimeStatusRenderer;
 }|{
 	thumbnailOverlayToggleButtonRenderer: ThumbnailOverlayToggleButtonRenderer;
+}|{
+	"thumbnailOverlayNowPlayingRenderer": ThumbnailOverlayNowPlayingRenderer
 };
 interface MovingThumbnailDetails extends ThumbnailHolder {
 	logAsMovingThumbnail: boolean;
