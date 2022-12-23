@@ -1,9 +1,9 @@
-import {CompactVideoRenderers} from "./__global";
+import {CompactVideoRendererHolder} from "./__global";
 
 // spell:disable
 
 export function do_test() {
-	const CompactVideoRenderers_Test: CompactVideoRenderers={
+	const CompactVideoRenderers_Test: CompactVideoRendererHolder={
 		compactVideoRenderer: {
 			"videoId": "OAIqCpqszVw",
 			"thumbnail": {
