@@ -1,0 +1,25 @@
+message A {
+	optional B a1 = 430726379;
+}
+message B {
+	optional C a1 = 1;
+}
+message C {
+	repeated D a1 = 1;
+	repeated int32 a2 = 2;
+	repeated E a3 = 3;
+	repeated int32 a5 = 5;
+}
+message D {
+	optional int32 a0 = 1000;
+	optional B_0 a2 = 1002;
+	optional _O a6 = 1006;
+}
+message E {
+	required int32 a = 1;
+	required int32 b = 2;
+}
+message B_0 {
+	required string a = 1;
+}
+message _O {}
