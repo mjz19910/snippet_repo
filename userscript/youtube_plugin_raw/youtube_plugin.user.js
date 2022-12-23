@@ -58,6 +58,7 @@ function any_o(value,copy) {
 }
 
 class YtdMastheadContainerChildren {
+	/** @type {Element|undefined} */
 	center=new Element;
 }
 
@@ -2459,9 +2460,7 @@ let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 
 class VolumeRange {
 	static enabled=true;
-	static attached=false;
 	static create_if_needed() {
-		if(this.attached) return;
 		if(!this.enabled) return;
 		if(!ytd_app) return;
 		if(!ytd_app.__shady_children.masthead) return;
@@ -2472,26 +2471,24 @@ class VolumeRange {
 			document.head.append(volume_plugin_style_element);
 			ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 			let container_dom_parent=player_masthead.$.container.children.center;
-			let use_container=true;
-			if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent);
-			else ytd_app.volume_range.attach_to_element(ytd_app);
-			this.attached=true;
+			if(!container_dom_parent) {
+				throw new Error("Missing masthead container center");
+			}
+			ytd_app.volume_range.attach_to_element(container_dom_parent);
 		}
-	}
-	static attach_to_page() {
 	}
 	/**
 	 * @param {number} min
 	 * @param {number} max
 	 * @param {number} overdrive
-	 * @param {AudioGainController} obj
+	 * @param {AudioGainController} gain_controller
 	 */
-	constructor(min,max,overdrive,obj) {
+	constructor(min,max,overdrive,gain_controller) {
 		this.use_cache=true;
 		this.max=max;
 		this.min=min;
 		this.overdrive=overdrive;
-		this.gain_controller=obj;
+		this.gain_controller=gain_controller;
 	}
 	/**
 	 * @param {number} gain
