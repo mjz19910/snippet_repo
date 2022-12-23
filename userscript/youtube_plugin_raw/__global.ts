@@ -181,9 +181,36 @@ type MenuRenderer={
 type Icon={
 	iconType: string;
 };
+type CreatePlaylistServiceEndpoint={
+	params: string;
+	videoIds: string[];
+};
+type OnCreateListCommand={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	createPlaylistServiceEndpoint: CreatePlaylistServiceEndpoint;
+};
+type AddToPlaylistCommand={
+	listType: string;
+	onCreateListCommand: OnCreateListCommand;
+};
+type OpenPopupAction={};
+type ServiceEndpointAction={
+	clickTrackingParams: string;
+}&({
+	addToPlaylistCommand: AddToPlaylistCommand
+}|{
+	openPopupAction: OpenPopupAction;
+});
+type SignalServiceEndpoint={
+	actions: ServiceEndpointAction[];
+};
+type ServiceEndpoint={
+	signalServiceEndpoint: SignalServiceEndpoint;
+};
 type MenuServiceItemRenderer={
 	icon: Icon;
-	serviceEndpoint: {};
+	serviceEndpoint: ServiceEndpoint;
 	text: TextRuns;
 };
 type MenuServiceItem={
