@@ -212,7 +212,7 @@ declare global {
 		navigationEndpoint: NavigationEndpoint;
 		text: string;
 	};
-	type TextData={
+	type TextDataRuns={
 		runs: TextRun[];
 	};
 	type AccessibilityData={
@@ -230,7 +230,7 @@ declare global {
 		metadataBadgeRenderer: MetadataBadgeRenderer;
 	}
 	type ThumbnailsHolder={};
-	type YtAnyText={
+	type SimpleText={
 		accessibility: Accessibility;
 		simpleText: string;
 	};
@@ -239,13 +239,13 @@ declare global {
 		accessibility: Accessibility;
 		badges: MetadataBadgeRenderers[];
 		channelThumbnail: ThumbnailsHolder;
-		lengthText: YtAnyText;
-		longBylineText: TextData;
+		lengthText: SimpleText;
+		longBylineText: TextDataRuns;
 		menu: MenuRenderers;
 		navigationEndpoint: NavigationEndpoint;
 		publishedTimeText: {simpleText: string;};
 		richThumbnail: TODO;
-		shortBylineText: TextData;
+		shortBylineText: TextDataRuns;
 		shortViewCountText: {accessibility: TODO,simpleText: string;};
 		thumbnail: {thumbnails: TODO[];};
 		thumbnailOverlays: TODO[];
