@@ -84,12 +84,13 @@ type AdSlotRenderer={};
 
 // RichItemRenderer
 declare global {
-	type AdSlotRenderers={
+	type AdSlotRendererHolder={
 		adSlotRenderer: AdSlotRenderer;
 	};
-	type RichItemRendererContent=AdSlotRenderers;
+	type RichItemRendererContent=AdSlotRendererHolder;
 	interface RichItemRenderer {
-		content: AdSlotRenderers;
+		content: AdSlotRendererHolder;
+		trackingParams?: string;
 	}
 	type RichItemRendererHolder={
 		richItemRenderer: RichItemRenderer;
