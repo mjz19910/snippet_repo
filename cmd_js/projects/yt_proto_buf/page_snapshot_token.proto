@@ -4,31 +4,30 @@ message A {
 	required RegionInfo region_info=11;
 	required D a12=12;
 	optional I32 b1=318126543;
- }
- message I32 {
- required int32 a1=1;
- }
- message B {
+}
+message I32 {
+required int32 a1=1;
+}
+message B {
 	required uint64 a1=1;
- }
- message RegionInfo {
+}
+message RegionInfo {
 	required E a1=1;
- }
- message D {
+}
+message D {
 	required int32 a1=1;
 	required string a2=2;
 	required DateTime timestamp=3;
 	required DateTime timestamp_alt=4;
- }
- message E {
+}
+message E {
 	required string a1=1;
 	required string a2=2;
 	required string a3=3;
- }
- message DateTime {
+}
+message DateTime {
 	required uint64 a1=1;
 	required fixed32 a2=2;
 	required fixed32 a3=3;
- }
- message _O {}
- 
+}
+message _O {}
