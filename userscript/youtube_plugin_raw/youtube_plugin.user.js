@@ -849,6 +849,7 @@ class HandleRendererContentItemArray {
 			}
 			if("commentThreadRenderer" in content_item) return true;
 			if("commentsHeaderRenderer" in content_item) return true;
+			if("continuationItemRenderer" in content_item) return true;
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
 				return true;
