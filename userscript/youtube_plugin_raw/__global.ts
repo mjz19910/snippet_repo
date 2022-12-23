@@ -82,15 +82,19 @@ declare global {
 
 type AdSlotRenderer={};
 
+type VideoRenderer={};
+
+type RadioRenderer={};
+
 // RichItemRenderer
 declare global {
 	type AdSlotRendererHolder={
 		adSlotRenderer: AdSlotRenderer;
 	};
 	type RichItemRendererContent=AdSlotRendererHolder|{
-		videoRenderer: {};
+		videoRenderer: VideoRenderer;
 	}|{
-		radioRenderer: {};
+		radioRenderer: RadioRenderer;
 	};
 	interface RichItemRenderer {
 		content: RichItemRendererContent;
