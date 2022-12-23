@@ -958,6 +958,7 @@ class FilterHandlers extends IterateApiResultBase {
 		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
 	}
 	blacklisted_item_sections=new Map([
+		["channelFeaturedContentRenderer",false],
 		["channelRenderer",false],
 		["commentsEntryPointHeaderRenderer",false],
 		["commentsEntryPointHeaderRenderer",false],
@@ -1715,7 +1716,7 @@ function on_ytd_app(element) {
 	ytd_app=YtdAppElement.cast(element);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		// might have a new video element from page type change
-		setTimeout(function(){
+		setTimeout(function() {
 			do_find_video();
 		},80);
 		let real_event=YTNavigateFinishEvent.cast(event);
@@ -2235,7 +2236,7 @@ function activate_nav() {
 	log_current_video_data();
 	get_ytd_page_manager().addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
-		setTimeout(function(){
+		setTimeout(function() {
 			do_find_video();
 		},80);
 		if(get_ytd_page_manager().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
