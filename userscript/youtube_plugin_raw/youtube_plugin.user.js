@@ -683,21 +683,18 @@ function check_item_keys(real_path,path,keys) {
 		default: console.log("item_keys_tag [ci_1_10]: new path=%o",path,dyn_path_arr); break;
 		case "appendContinuationItemsAction.contents[]": break;
 		case "appendContinuationItemsAction": break;
-		case "content.richGridRenderer.masthead": break;
+		case "richGridRenderer.masthead": break;
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand.contents[]": break;
 		case "reloadContinuationItemsCommand": break;
 		case "richItemRenderer.content": break;
 		case "richItemRenderer": break;
-		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": break;
-		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": break;
-		case "tabRenderer.content.richGridRenderer.contents[]": break;
-		case "tabRenderer.content.richGridRenderer": break;
 	}
 	switch(path) {
 		case "appendContinuationItemsAction.contents[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			case "continuationItemRenderer": break;
 			case "compactPlaylistRenderer": break;
 			case "compactVideoRenderer": break;
 		} break;
