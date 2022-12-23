@@ -1735,6 +1735,10 @@ async function async_plugin_init(event) {
 			await new Promise((soon) => setTimeout(soon,40));
 			cur_count=0;
 		}
+		if(!audio_gain_controller) {
+			audio_gain_controller=new AudioGainController;
+			AudioGainController.attach_instance();
+		}
 		VolumeRange.create_if_needed();
 		cur_count++;
 		// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
@@ -1829,8 +1833,7 @@ async function async_plugin_init(event) {
 			}
 			let new_elements=get_new_video_element_list(element_list,list);
 			if(new_elements.length>0) {
-				let controller=AudioGainController.get_instance();
-				controller.attach_element_list(new_elements);
+				audio_gain_controller.attach_element_list(new_elements);
 			}
 			if(!first_run&&new_elements.length>0) {
 				console.log("found extra video elements",new_elements);
@@ -2345,12 +2348,10 @@ class AudioGainController {
 			this.media_element_source_list.push(media_element_source);
 		}
 	}
-	static get_instance() {
+	static attach_instance() {
 		if(!window.inject_api) throw new Error("Missing inject_api");
-		if(audio_gain_controller) return audio_gain_controller;
-		audio_gain_controller=new AudioGainController;
+		if(!audio_gain_controller) throw new Error("Missing instance");
 		window.inject_api.audio_gain_controller=audio_gain_controller;
-		return audio_gain_controller;
 	}
 }
 inject_api.HTMLMediaElementGainController=AudioGainController;
