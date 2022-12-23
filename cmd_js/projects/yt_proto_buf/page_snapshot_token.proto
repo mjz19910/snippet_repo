@@ -6,7 +6,7 @@ message A {
 	optional I32 b1=318126543;
 }
 message I32 {
-required int32 a1=1;
+	required int32 a1=1;
 }
 message B {
 	required uint64 a1=1;
