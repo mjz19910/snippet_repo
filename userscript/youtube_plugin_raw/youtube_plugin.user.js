@@ -690,6 +690,7 @@ function check_item_keys(real_path,path,keys) {
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand.continuationItems[]": break;
 		case "reloadContinuationItemsCommand": break;
+		case "richGridRenderer.contents[]": break;
 		case "richGridRenderer.masthead": break;
 		case "richGridRenderer": break;
 		case "richItemRenderer.content": break;
@@ -720,21 +721,14 @@ function check_item_keys(real_path,path,keys) {
 			case "content": break;
 			case "trackingParams": break;
 		} break;
+		case "richGridRenderer.contents[]": for(let key of keys) switch(key) {
+			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+		} break;
 		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_5_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-		} break;
-		case "richGridRenderer.contents[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "contents": break;
-			case "trackingParams": break;
-			case "header": break;
-			case "targetId": break;
-			case "reflowOptions": break;
-			case "style": break;
-			case "masthead": break;
 		} break;
 		case "richGridRenderer": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_7_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
