@@ -188,10 +188,24 @@ declare global {
 	}|{
 		browseEndpoint: BrowseEndpoint;
 	};
+	type CommonConfig={
+		url: string;
+	};
+	type PlaybackOnesieConfig={
+		commonConfig: CommonConfig;
+	};
+	type WatchEndpointConfig={
+		html5PlaybackOnesieConfig: PlaybackOnesieConfig;
+	};
+	type WatchEndpoint={
+		nofollow: boolean;
+		videoId: string;
+		watchEndpointSupportedOnesieConfig: WatchEndpointConfig;
+	};
 	type NavigationEndpoint={
 		clickTrackingParams: string;
 		commandMetadata: CommandMetadata;
-		watchEndpoint: TODO;
+		watchEndpoint: WatchEndpoint;
 	};
 	type TODO={};
 	type TextRun={
