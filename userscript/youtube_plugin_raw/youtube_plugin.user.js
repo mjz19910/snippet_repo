@@ -803,7 +803,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {RichSectionRendererItem} content_item */
+	/** @arg {RichSectionRendererHolder} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
