@@ -4719,7 +4719,7 @@ function cast_to_record_with_string_type(x) {
 /** @template T @arg {CM<MessageEvent<T>>|null} x @returns {x is CM<MessageEvent<T&{}>>} */
 function is_object_msg(x) {
 	if(!x?.data) return false;
-	if(typeof x.data!=='object') return false;
+	if(typeof x.data.data!=='object') return false;
 	return true;
 }
 
