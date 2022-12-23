@@ -753,6 +753,7 @@ function check_item_keys(real_path,path,keys) {
 			case "playlistVideoListRenderer": break;
 			case "promotedSparklesWebRenderer": break;
 			case "reelShelfRenderer": break;
+			case "searchPyvRenderer": break;
 			case "shelfRenderer": break;
 			case "videoRenderer": break;
 		} break;
