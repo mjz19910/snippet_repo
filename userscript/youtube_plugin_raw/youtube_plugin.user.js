@@ -885,7 +885,7 @@ class InitialDataType {
 function filter_on_initial_data(cls,apply_args) {
 	let ret=Reflect.apply(...apply_args);
 	if(ret.response) {
-		console.log(cls.class_name+": initial page info:",ret);
+		console.log(cls.class_name+": initial_data:",ret);
 		try {
 			if(window.ytPageType) {
 				if(ret.page==="browse") {
@@ -895,7 +895,7 @@ function filter_on_initial_data(cls,apply_args) {
 						console.assert(false);
 					}
 				} else {
-					console.log(cls.class_name+": page info ret type",ret.page);
+					console.log(cls.class_name+": initial page info",ret.page);
 					cls.handle_page_type(ret.response,window.ytPageType,"response");
 					cls.handle_page_type(ret.playerResponse,window.ytPageType,"playerResponse");
 				}
