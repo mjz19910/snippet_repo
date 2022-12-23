@@ -731,6 +731,7 @@ function check_item_keys(real_path,path,keys) {
 			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
+			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 			case "backstagePostThreadRenderer": break;
 			case "channelAboutFullMetadataRenderer": break;
 			case "channelFeaturedContentRenderer": break;
@@ -743,7 +744,6 @@ function check_item_keys(real_path,path,keys) {
 			case "playlistVideoListRenderer": break;
 			case "reelShelfRenderer": break;
 			case "shelfRenderer": break;
-			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
