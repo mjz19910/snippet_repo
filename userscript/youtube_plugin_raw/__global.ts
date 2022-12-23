@@ -184,7 +184,7 @@ type RenderingContent={
 									"popup": {
 										"aboutThisAdRenderer": {
 											"url": {
-												"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue": "https://www.youtube.com/aboutthisad?pf=web&reasons=AZLCTSrE9jiGvWLntZx4DLfm54Mnlv--spHXFypF9v-_frPnhn36-wC64RcHcBcUrOvyK8oeP_nU_0WpKPvfO0eUUgaY2b_XAbP7vaixI3MbJevsMiVywyf7Z01C9nGGTC9NiwQbH41KfAjo0JYkzG-3ed0Tgf4zIfwKDc80CkNWgHfTaa9LErcltUS_39Qj3cV2kOmbUslTTkQcSHz7_CDOAnzTLA9kt_Wmnz58YDOnSsWx57SUwfEiChowp4K81l1_0x7_ik_VSE7_QO99WALl6gtJlYo-_QRacam8f20eUEWnWhtMndRdWe6ll3xCmuty8oOKUkTDDb6Cjr99Sy3iZLVdnu-W9XcrQqcDFjZ8J2aMutn1FuyVecWpaiR61p9jGaLk0X263EfKVpzng2iDoOYLcc9eAkNeNRbzZ0VvkVKkNneJgla8vxGkjJxvoLCbi9JcNseUD6Xms5i1j98QKoZSXuUrJHZ5cjhoWDMjq1C8SPwQxRIn9PAeCTocGChgFuiXMkWH-QfCvkikzR8H1kB-ERoqZLd95x9M7tCv5_uboy_OUifZ06Kr9rE2CJz5mDKDHNBL4u8GLRVbwr4boio5tQlYLnHIypPZHiIrc_J2oBqZtOcnhuHY1KHXLNaxS5QyA1Jyxj3Phhoad33GWolsLkNs-kvnaKWg_MiXguwCaJvQ0iAxVEjhVKnyxhQ0WUnN8UqzjLIWZ8x6pSBvmle945hye0DCLKF8FXHMdOAf90K256_pz5tag7U3K_lW_cgMTMaymcrt01KZRGUJGn5U28djCXMSdHVetErOTr3H2VdLrZZHsg7drQxBDJDYOc1uSVtryWoEhwMGyTyhijcjeeXMxKQfw71605zSdqrPjEr9WIqDc2vw9a8GchTamrJO4RRTkR9P3B2dM-Vxs8BIENQHflhNBdf8QVdvrEDG1eVCJPElBu9FZZlFdVCJr1F9sHhqvDxGAFMW2SjzY0Lqo_mcNkcmDAlX2RK8rpdLBN6g5oX4rFg84qqaOmd6GjLVmkmrZYOmcHjAWvyrUMiwNQCIK7hDA3_-DnZ1xQVwUw4JZ471wCj5_7ulVyw_mvqpasGvm3TEd3PyExA4Hwc4JQg_aztheMAMiFGPjtXPmntQCa56AcLOGVs62dgqV7kc7I0WqtL952nl48UJFQ4QZwsFoheKrpOPtrY_gKZYeCcXnwoe50AoqYuCSZBqS3VJ2h9nq5wf2TNMoGDqhHnsR7_t5-0n4sdXkcVLaJtiSCdTixnFr6I-PhLbHJBuemUIJnROtpVaFunPVaW2FTNE&hl=en&origin=https://www.youtube.com/&ata_theme=dark";
+												"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue": string;
 											};
 											trackingParams: string;
 										};
