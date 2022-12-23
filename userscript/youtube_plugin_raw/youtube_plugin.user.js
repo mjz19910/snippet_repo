@@ -846,7 +846,7 @@ class HandleRendererContentItemArray {
 			}
 			if(return_!==null) return true;
 			if("richItemRenderer" in content_item) {
-				this.filter_for_rich_item_renderer(path,base,content_item);
+				return this.filter_for_rich_item_renderer(path,base,content_item);
 			}
 			if("richSectionRenderer" in content_item) {
 				let renderer=content_item.richSectionRenderer;
