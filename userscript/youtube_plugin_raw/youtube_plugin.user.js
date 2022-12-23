@@ -914,7 +914,7 @@ class InitialDataType {
 function filter_on_initial_data(cls,apply_args) {
 	let ret=Reflect.apply(...apply_args);
 	if(ret.response) {
-		console.log(cls.class_name+": initial_data:",ret);
+		if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
 		try {
 			if(window.ytPageType) {
 				if(ret.page==="browse") {
@@ -924,7 +924,7 @@ function filter_on_initial_data(cls,apply_args) {
 						console.assert(false);
 					}
 				} else {
-					console.log(cls.class_name+": initial_data.page:",ret.page);
+					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
 					cls.handle_page_type(ret.response,window.ytPageType,"response");
 					cls.handle_page_type(ret.playerResponse,window.ytPageType,"playerResponse");
 				}
