@@ -1688,11 +1688,11 @@ on_yt_navigate_finish.push(log_page_type_change);
 /** @arg {YTNavigateFinishEvent['detail']} detail */
 function on_page_type_changed(detail) {
 	if(last_page_type!==detail.pageType) {
+		last_page_type=detail.pageType;
 		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
 		let nav_load_str=`page_type_change: {current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 		page_type_changes.push(nav_load_str);
 		console.log(nav_load_str);
-		last_page_type=detail.pageType;
 	}
 }
 
