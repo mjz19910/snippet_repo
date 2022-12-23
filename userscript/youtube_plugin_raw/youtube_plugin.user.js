@@ -1701,7 +1701,9 @@ function on_ytd_app(element) {
 	ytd_app=YtdAppElement.cast(element);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		// might have a new video element from page type change
-		do_find_video();
+		setTimeout(function(){
+			do_find_video();
+		},80);
 		let real_event=YTNavigateFinishEvent.cast(event);
 		for(let handler of on_yt_navigate_finish) {
 			handler(real_event);
@@ -1834,23 +1836,24 @@ async function async_plugin_init(event) {
 }
 dom_observer.addEventListener("async-plugin-init",async_plugin_init);
 
+/** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
+function get_new_video_element_list(element_list,list_box) {
+	let new_video_elements=[];
+	for(let i=0;i<element_list.length;i++) {
+		let item=element_list[i];
+		if(!(item instanceof HTMLVideoElement)) continue;
+		if(!list_box.value.includes(item)) {
+			new_video_elements.push(item);
+			list_box.value.push(item);
+		}
+	}
+	return new_video_elements;
+}
+
 function do_find_video() {
 	if(!audio_gain_controller) return;
 	const element_list=get_html_elements(document,"video");
 	if(element_list.length<=0) return;
-	/** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
-	function get_new_video_element_list(element_list,list_box) {
-		let new_video_elements=[];
-		for(let i=0;i<element_list.length;i++) {
-			let item=element_list[i];
-			if(!(item instanceof HTMLVideoElement)) continue;
-			if(!list_box.value.includes(item)) {
-				new_video_elements.push(item);
-				list_box.value.push(item);
-			}
-		}
-		return new_video_elements;
-	}
 	let list=box_map.get("video-list");
 	/** @type {boolean} */
 	let first_run;
@@ -2218,6 +2221,9 @@ function activate_nav() {
 	log_current_video_data();
 	get_ytd_page_manager().addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
+		setTimeout(function(){
+			do_find_video();
+		},80);
 		if(get_ytd_page_manager().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
 			ytd_player.is_watch_page_active=false;
 			plugin_overlay_element&&plugin_overlay_element.remove();
