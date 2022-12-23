@@ -143,7 +143,12 @@ declare global {
 		url: string;
 		webPageType: string;
 	};
-	type WebCommandMetadata=WebCommandMetadata0|WebCommandMetadata1;
+	type WebCommandMetadata2={
+		rootVe: number;
+		url: string;
+		webPageType: string;
+	};
+	type WebCommandMetadata=WebCommandMetadata0|WebCommandMetadata1|WebCommandMetadata2;
 	type CommandMetadata={
 		webCommandMetadata: WebCommandMetadata;
 	};
