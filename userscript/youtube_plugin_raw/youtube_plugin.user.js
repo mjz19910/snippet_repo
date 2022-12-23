@@ -669,6 +669,7 @@ class IterateApiResultBase {
  * @log item_keys_tag
  */
 function check_item_keys(real_path,path,keys) {
+	let path_arr=real_path.split(".");
 	path=path.replace("continuationItems[]","contents[]");
 	switch(path) {
 		case ".contents[].richItemRenderer.content": break;
@@ -680,7 +681,7 @@ function check_item_keys(real_path,path,keys) {
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand": break;
 		case "tabRenderer.content.richGridRenderer": break;
-		default: console.log("item_keys_tag [ci_1_10] "+real_path+": new path=%o",path); break;
+		default: console.log("item_keys_tag [ci_1_10]: new path=%o",path,{get arr(){return path_arr}}); break;
 	}
 	switch(path) {
 		case ".contents[]": for(let key of keys) switch(key) {
@@ -692,45 +693,45 @@ function check_item_keys(real_path,path,keys) {
 			case "continuationItemRenderer": break;
 			case "itemSectionRenderer": break;
 			case "richItemRenderer": break;
-			default: console.log("item_keys_tag [ci_2_10_] "+real_path+": iter content key",path,key);
+			default: console.log("item_keys_tag [ci_2_10_]: iter content key",path,key);
 		} break;
 		case ".contents[].richItemRenderer": for(let key of keys) switch(key) {
 			case "content": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_2_11_] "+real_path+": iter content key",path,key);
+			default: console.log("item_keys_tag [ci_2_11_]: iter content key",path,key);
 		} break;
 		case ".contents[].richItemRenderer.content": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-			default: console.log("item_keys_tag [ci_2_12_] "+real_path+": iter content key",path,key); break;
+			default: console.log("item_keys_tag [ci_2_12_]: iter content key",path,key); break;
 		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
 			case "continuationItems": break;
 			case "targetId": break;
-			default: console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
+			default: console.log("item_keys_tag [ci_3_10_]: iter content key",path,key);
 		} break;
 		case "content.richGridRenderer.masthead": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-			default: console.log("item_keys_tag [ci_3_11_] "+real_path+": iter content key",path,key); break;
+			default: console.log("item_keys_tag [ci_3_11_]: iter content key",path,key); break;
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
 			case "channelFeaturedContentRenderer": break;
 			case "shelfRenderer": break;
-			default: console.log("item_keys_tag [ci_3_12_] "+real_path+": iter content key",path,key); break;
+			default: console.log("item_keys_tag [ci_3_12_]: iter content key",path,key); break;
 		} break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_3_13_] "+real_path+": iter content key",path,key); break;
+			default: console.log("item_keys_tag [ci_3_13_]: iter content key",path,key); break;
 		} break;
 		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
 			case "continuationItems": break;
 			case "slot": break;
 			case "targetId": break;
-			default: console.log("item_keys_tag [ci_3_14_] "+real_path+": iter content key",path,key);
+			default: console.log("item_keys_tag [ci_3_14_]: iter content key",path,key);
 		} break;
 		case "tabRenderer.content.richGridRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
@@ -740,9 +741,9 @@ function check_item_keys(real_path,path,keys) {
 			case "reflowOptions": break;
 			case "style": break;
 			case "masthead": break;
-			default: console.log("item_keys_tag [ci_3_15_] "+real_path+": iter content key",path,key);
+			default: console.log("item_keys_tag [ci_3_15_]: iter content key",path,key);
 		} break;
-		default: console.log("item_keys_tag [ci_4_10_] "+real_path+": content path",path); break;
+		default: console.log("item_keys_tag [ci_4_10_]: content path",path); break;
 	}
 }
 
