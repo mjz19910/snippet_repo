@@ -678,7 +678,8 @@ function check_item_keys(real_path,path,keys) {
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand": break;
-		case "richItemRenderer":
+		case "richItemRenderer.content":
+		case "richItemRenderer": break;
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": break;
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": break;
 		case "tabRenderer.content.richGridRenderer.contents[]": break;
@@ -703,6 +704,7 @@ function check_item_keys(real_path,path,keys) {
 			case "trackingParams": break;
 			default: console.log("item_keys_tag [ci_2_11_]: iter content key",path,key,dyn_path_arr);
 		} break;
+		case "richItemRenderer.content":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
