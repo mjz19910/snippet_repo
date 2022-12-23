@@ -108,11 +108,13 @@ declare global {
 			adSlotRenderer?: {};
 		};
 	}
-	type RendererContentItem={
+	type RichItemRendererItem={
 		richItemRenderer: RichItemRenderer;
-	}|{
+	};
+	type RichSectionRendererItem={
 		richSectionRenderer: RichSectionRenderer;
 	};
+	type RendererContentItem=RichItemRendererItem|RichSectionRendererItem;
 }
 
 // ResState
