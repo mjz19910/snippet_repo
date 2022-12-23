@@ -6,16 +6,16 @@ message A {
  optional C a6 = 6;
 }
 message B {
- optional string a = 2;
+ optional string a2 = 2;
 }
 message C {
- optional string _a=1;
- optional D a=4;
- optional int32 b=5;
- optional string c = 8;
+ optional string a1 = 1;
+ optional D a4 = 4;
+ optional int32 a5 = 5;
+ optional string a8 = 8;
 }
 message D {
- optional string a=4;
- optional int32 b=6;
- optional int32 c=15;
+ optional string a4 = 4;
+ optional int32 a6 = 6;
+ optional int32 a15 = 15;
 }
