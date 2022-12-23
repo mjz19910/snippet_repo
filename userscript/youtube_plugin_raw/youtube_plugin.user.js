@@ -1685,16 +1685,14 @@ let on_yt_navigate_finish=[];
 function log_page_type_change(event) {
 	let {detail}=event;
 	if(!detail) return;
-	if(has_ytd_page_mgr()) {
-		if(last_page_type!==detail.pageType) {
-			let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
-			let nav_load_str=`last_page_type_change={current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
-			page_type_changes.push(nav_load_str);
-			console.log(nav_load_str);
-			last_page_type=detail.pageType;
-		}
-		return;
+	if(last_page_type!==detail.pageType) {
+		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
+		let nav_load_str=`last_page_type_change={current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+		page_type_changes.push(nav_load_str);
+		console.log(nav_load_str);
+		last_page_type=detail.pageType;
 	}
+	if(has_ytd_page_mgr()) return;
 	function found_handler() {
 		log_page_type_change(event);
 		let index=on_ytd_page_mgr_found.indexOf(found_handler);
