@@ -697,6 +697,7 @@ function check_item_keys(real_path,path,keys) {
 			case "header": break;
 			case "targetId": break;
 			case "reflowOptions": break;
+			case "style": break;
 			default: console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
 		} break;
 		case ".contents[]": for(let key of keys) switch(key) {
@@ -946,6 +947,7 @@ class FilterHandlers extends IterateApiResultBase {
 		["playlistRenderer",false],
 		["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
 		["radioRenderer",false],
+		["recognitionShelfRenderer",false],
 		["reelShelfRenderer",false],
 		["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
 		["shelfRenderer",false],
@@ -964,7 +966,7 @@ class FilterHandlers extends IterateApiResultBase {
 			for(let key of keys) {
 				let is_blacklisted=this.blacklisted_item_sections.get(key);
 				if(is_blacklisted!==void 0) return !is_blacklisted;
-				console.log("filter_handlers: new item section from .contents[].%o",key);
+				console.log("filter_handlers: new item section in .contents[] %o",key);
 			}
 			return true;
 		});
