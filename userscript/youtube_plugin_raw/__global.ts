@@ -110,11 +110,13 @@ declare global {
 	type RichSectionRendererItem={
 		richSectionRenderer: RichSectionRenderer;
 	};
+	type CommentsHeaderRenderer={};
+	type CommentThreadRenderer={};
 	type ContentItem0={
-		commentsHeaderRenderer: {};
+		commentsHeaderRenderer: CommentsHeaderRenderer;
 	};
 	type ContentItem1={
-		commentThreadRenderer: {};
+		commentThreadRenderer: CommentThreadRenderer;
 	};
 	type RendererContentItem=
 		RichItemRendererItem|
