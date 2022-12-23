@@ -189,7 +189,18 @@ type AddToPlaylistCommand={
 	videoId: string;
 	videoIds: string[];
 };
-type OpenPopupAction={};
+type NotificationActionRenderer={
+	responseText: SimpleText;
+	trackingParams: string;
+};
+type ToastPopup={
+	notificationActionRenderer: NotificationActionRenderer
+};
+type ToastPopupTag={
+	popup: ToastPopup;
+	popupType: "TOAST";
+}
+type OpenPopupAction=ToastPopupTag;
 type ServiceEndpointAction={
 	clickTrackingParams: string;
 }&({
