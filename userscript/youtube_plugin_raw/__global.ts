@@ -174,9 +174,20 @@ type ContinuationItemRenderers={
 };
 type MenuRenderer={
 	accessibility: Accessibility;
-	items: TODO[];
+	items: MenuServiceItem[];
 	targetId: string;
 	trackingParams: string;
+};
+type Icon={
+	iconType: string;
+};
+type MenuServiceItemRenderer={
+	icon: Icon;
+	serviceEndpoint: {};
+	text: TextRuns;
+};
+type MenuServiceItem={
+	menuServiceItemRenderer: MenuServiceItemRenderer;
 };
 type MenuRenderers={
 	menuRenderer: MenuRenderer;
@@ -205,7 +216,7 @@ type TextRun={
 	navigationEndpoint: NavigationEndpoint;
 	text: string;
 };
-type TextDataRuns={
+type TextRuns={
 	runs: TextRun[];
 };
 type AccessibilityData={
@@ -233,12 +244,12 @@ type CompactVideoRenderer={
 	badges: MetadataBadgeRenderers[];
 	channelThumbnail: ThumbnailsHolder;
 	lengthText: SimpleText;
-	longBylineText: TextDataRuns;
+	longBylineText: TextRuns;
 	menu: MenuRenderers;
 	navigationEndpoint: NavigationEndpoint;
 	publishedTimeText: SimpleText;
 	richThumbnail: TODO;
-	shortBylineText: TextDataRuns;
+	shortBylineText: TextRuns;
 	shortViewCountText: SimpleText;
 	thumbnail: {thumbnails: TODO[];};
 	thumbnailOverlays: TODO[];
