@@ -14203,7 +14203,7 @@ export function do_test() {
 			}
 		}
 	];
-	let CompactVideoRenderers_Test_arr_2: CompactVideoRendererHolder[]=[
+	let CompactVideoRenderers_Test_arr_2: RendererContentItem[]=[
 		{
 			"richItemRenderer": {
 				"content": {
