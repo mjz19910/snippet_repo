@@ -92,7 +92,7 @@ declare global {
 			iconType: string;
 		}|null;
 		title: {
-			runs: {
+			runs?: {
 				text: string;
 			}[];
 		};

@@ -838,6 +838,10 @@ class HandleRendererContentItemArray {
 					console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
 					return true;
 				}
+				if(!rich_shelf.title.runs) {
+					console.log("rich shelf title",rich_shelf.title);
+					return true;
+				}
 				if(rich_shelf.title.runs[0]) {
 					if(rich_shelf.title.runs[0].text==="Breaking news") {
 						return false;
