@@ -381,7 +381,7 @@ type CompactVideoRenderer={
 	menu: MenuRenderers;
 	navigationEndpoint: NavigationEndpoint;
 	publishedTimeText: SimpleText;
-	richThumbnail: RichThumbnail;
+	richThumbnail?: RichThumbnail;
 	shortBylineText: TextRuns;
 	shortViewCountText: SimpleText;
 	thumbnail: ThumbnailHolder;

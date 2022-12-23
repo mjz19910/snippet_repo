@@ -1,4 +1,4 @@
-import {CompactVideoRenderers, RichThumbnail} from "./__global";
+import {CompactVideoRenderers} from "./__global";
 
 // spell:disable
 
