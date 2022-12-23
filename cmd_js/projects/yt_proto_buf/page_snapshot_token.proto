@@ -3,7 +3,7 @@ message A {
 	required B a6=6;
 	required RegionInfo region_info=11;
 	required D a12=12;
-	optional I32 b=318126543;
+	optional I32 b1=318126543;
  }
  message I32 {
  required int32 a1=1;
@@ -17,8 +17,8 @@ message A {
  message D {
 	required int32 a1=1;
 	required string a2=2;
-	required DateTime a3=3;
-	required DateTime a4=4;
+	required DateTime timestamp=3;
+	required DateTime timestamp_alt=4;
  }
  message E {
 	required string a1=1;
