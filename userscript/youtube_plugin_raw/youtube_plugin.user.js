@@ -879,7 +879,7 @@ class HandleRendererContentItemArray {
 			}
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item", content_item);
-				return true
+				return true;
 			};
 			return this.handle_rich_section_renderer(content_item);
 		});
