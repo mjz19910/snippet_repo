@@ -5,7 +5,9 @@ let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-",
 const text=atob(base64_enc);
 const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 // const string_decoder=new TextDecoder('utf-8');
-var protobuf=require('protobufjs');
+/** @type {import("protobufjs")} */
+var protobuf;
+protobuf=require('protobufjs');
 async function run() {
 let root=await protobuf.load("yt_token.proto");
 var A=root.lookupType("A");
@@ -14,5 +16,7 @@ let message=A.decode(token_binary);
 let obj=A.toObject(message);
 console.log(obj);
 }
-exports.token_binary=token_binary;
+if(typeof exports==="object") {
+	exports.token_binary=token_binary;
+}
 run();
