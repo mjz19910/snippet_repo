@@ -116,70 +116,14 @@ type RenderingContent={
 			"simpleText": "Create Lasting Wealth";
 		};
 		"image": {
-			"thumbnail": {
-				"thumbnails": [
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w128-h67-s-nd";
-						"width": 128;
-						"height": 67;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w256-h134-s-nd";
-						"width": 256;
-						"height": 134;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w384-h201-s-nd";
-						"width": 384;
-						"height": 201;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w512-h268-s-nd";
-						"width": 512;
-						"height": 268;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w640-h335-s-nd";
-						"width": 640;
-						"height": 335;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w768-h402-s-nd";
-						"width": 768;
-						"height": 402;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w896-h469-s-nd";
-						"width": 896;
-						"height": 469;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w1024-h536-s-nd";
-						"width": 1024;
-						"height": 536;
-					},
-					{
-						"url": "https://lh4.googleusercontent.com/proxy/FQCMpbNr-8qw0VuvSsTfAJC_JjiS_5unxjqFKXTbey5DqAy09Yb4ZEoO6Ry4p_DpGLm9_WnRUe4s3GkX8aZpufWwrb5v1GMzOPl86O1Gx0u2ec9RSNAvRyWQmnd7VahWgzr1i7LfqUBx=w1152-h603-s-nd";
-						"width": 1152;
-						"height": 603;
-					}
-				];
-			};
+			thumbnail: ThumbnailHolder;
 			trackingParams: string;
 		};
 		// spell:ignore Linqto
-		"bodyText": {
-			"simpleText": "Sign up on the Linqto platform and verify your accreditation status";
-		};
-		"secondaryText": {
-			"simpleText": "Linqto";
-		};
+		"bodyText": SimpleText;
+		"secondaryText": SimpleText;
 		"badge": {
-			"metadataBadgeRenderer": {
-				"style": "BADGE_STYLE_TYPE_AD";
-				"label": "Ad";
-				trackingParams: string;
-			};
+			"metadataBadgeRenderer": MetadataBadgeRenderer;
 		};
 		"menu": {
 			"menuRenderer": {
@@ -212,12 +156,8 @@ type RenderingContent={
 		"ctaButton": {
 			"buttonRenderer": {
 				"style": "STYLE_PRIMARY";
-				"text": {
-					"simpleText": "Visit site";
-				};
-				"icon": {
-					"iconType": "EXTERNAL_LINK";
-				};
+				"text": SimpleText;
+				"icon": Icon;
 				trackingParams: string;
 				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
 			};
