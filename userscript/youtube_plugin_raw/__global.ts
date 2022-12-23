@@ -143,7 +143,6 @@ declare global {
 	type GhostCards={
 		ghostGridRenderer: GhostGridRenderer;
 	};
-
 	type ContinuationItemRenderer={
 		trigger: string;
 		continuationEndpoint: YtEndpoint;
