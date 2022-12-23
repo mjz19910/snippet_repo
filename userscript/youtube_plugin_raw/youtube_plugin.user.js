@@ -758,6 +758,7 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "reloadContinuationItemsCommand.contents[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_140_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			case "continuationItemRenderer": break;
 			case "richItemRenderer": break;
 			case "richSectionRenderer": break;
 		} break;
