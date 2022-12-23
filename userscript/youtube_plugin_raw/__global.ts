@@ -137,9 +137,17 @@ declare global {
 		commandMetadata: CommandMetadata;
 		continuationCommand: YtCommand;
 	}
+	type GhostGridRenderer={
+		rows: number;
+	};
+	type GhostCards={
+		ghostGridRenderer: GhostGridRenderer;
+	};
+
 	type ContinuationItemRenderer={
 		trigger: string;
 		continuationEndpoint: YtEndpoint;
+		ghostCards: GhostCards;
 	};
 	type ContentItemContinuationItemRenderer={
 		continuationItemRenderer: ContinuationItemRenderer;
