@@ -1827,6 +1827,10 @@ async function async_plugin_init(event) {
 				box_map.set("video-list",list);
 			}
 			let new_elements=get_new_video_element_list(element_list,list);
+			if(new_elements.length>0) {
+				let controller=AudioGainController.create_if_needed();
+				controller.attach_element_list(new_elements);
+			}
 			if(!first_run&&new_elements.length>0) {
 				console.log("found extra video elements",new_elements);
 			}
@@ -2328,7 +2332,7 @@ class AudioGainController {
 		this.gain_node.gain.value=gain;
 	}
 	/**
-	 * @param {NodeListOf<HTMLMediaElement>} media_node_list
+	 * @param {HTMLMediaElement[]} media_node_list
 	 */
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
@@ -2341,11 +2345,12 @@ class AudioGainController {
 			this.media_element_source_list.push(media_element_source);
 		}
 	}
-	static create() {
-		if(!window.inject_api) return;
-		if(audio_gain_controller) return;
+	static create_if_needed() {
+		if(!window.inject_api) throw new Error("Missing inject_api");
+		if(audio_gain_controller) return audio_gain_controller;
 		audio_gain_controller=new AudioGainController;
 		window.inject_api.audio_gain_controller=audio_gain_controller;
+		return audio_gain_controller;
 	}
 }
 inject_api.HTMLMediaElementGainController=AudioGainController;
@@ -2460,12 +2465,6 @@ class VolumeRange {
 		if(this.attached) return;
 		if(!this.enabled) return;
 		if(yt_debug_enabled) console.log("create VolumeRange");
-		if(!audio_gain_controller) {
-			AudioGainController.create();
-		}
-		if(audio_gain_controller) {
-			audio_gain_controller.attach_element_list(document.querySelectorAll("video"));
-		}
 		this.attach_to_page();
 	}
 	static attach_to_page() {
