@@ -32,7 +32,7 @@
 		"esm": true,
 	},
 	"include": [
-		"**/*",
+		"**/*", "../cmd_js/projects/yt_proto_buf/proto_buf",
 	],
 	"exclude": [
 		"node_modules",
