@@ -596,13 +596,8 @@ type CompactVideoRenderer={
 	videoId: string;
 	viewCountText: SimpleText;
 };
-export type CompactVideoRendererHolder={
+export type CompactVideoRenderers={
 	compactVideoRenderer: CompactVideoRenderer;
-};
-
-type CompactPlaylistRenderer={};
-type CompactPlaylistRendererHolder={
-	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
 
 // RendererContentItem
