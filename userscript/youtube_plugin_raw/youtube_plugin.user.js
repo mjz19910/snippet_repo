@@ -709,6 +709,7 @@ function check_item_keys(real_path,path,keys) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
+			case "reelItemRenderer": break;
 			default: console.log("item_keys_tag [ci_2_12_]: iter content key"+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
