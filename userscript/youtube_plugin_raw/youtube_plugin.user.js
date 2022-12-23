@@ -2318,6 +2318,70 @@ function get_html_elements(node,child_node_tag_name) {
  * @type {((event:{})=>void)[]}
  */
 var on_yt_navigate=[];
+// spell:words monospace
+let player_overlay_style_str=`
+		position: absolute;
+		top: 80px;
+		left: 68px;
+		font-size: 1.7rem;
+		font-weight: 100;
+		font-family: monospace;
+		color: var(--c2);
+		z-index: 1;
+		mix-blend-mode: difference;
+		background-blend-mode: normal;
+		--p0: 100%;
+		--p1: 100%;
+		--s0: 0 0 0.8px;
+		--s1: 0 0 0.8px;
+		--c0: rgb(255 255 255 / var(--p0));
+		--c1: rgb(20 20 20 / var(--p1));
+		--c2: white;
+		--sc0: var(--s0) var(--c0);
+		--sc1: var(--s1) var(--c1);
+		--f0: drop-shadow(var(--sc0));
+		--f1: drop-shadow(var(--sc1));
+		filter: var(--f0) var(--f1);
+		border: 0px solid black;
+		-webkit-mask-clip: text;
+		user-select: none;
+		width: 10px;
+	`;
+let waiting_for_ytd_player=false;
+/** @type {NodeJS.Timeout|number|null} */
+let current_timeout=null;
+function init_ui_plugin() {
+	if(waiting_for_ytd_player) return;
+	if(current_timeout===null)
+		return;
+	if(typeof current_timeout==="number") {
+		if(current_timeout>0) {
+			clearTimeout(current_timeout);
+			current_timeout=null;
+		}
+	} else if("hasRef" in current_timeout) {
+		clearTimeout(current_timeout);
+		current_timeout=null;
+	}
+	if(!ytd_player||!ytd_player.player_) {
+		console.log("wait for player");
+		waiting_for_ytd_player=true;
+		wait_for_yt_player().then(function() {
+			waiting_for_ytd_player=false;
+			init_ui_plugin();
+		});
+		return;
+	}
+	if(!ytd_player.player_.getVideoData) {
+		current_timeout=setTimeout(init_ui_plugin,0);
+		return;
+	}
+	if(ytd_player.active_nav) {
+		console.log("ytd-player:active_nav = true");
+		return;
+	}
+	current_timeout=setTimeout(activate_nav,0);
+}
 async function wait_for_yt_player() {
 	if(!ytd_player) {
 		throw new Error("No ytd_player to await");
