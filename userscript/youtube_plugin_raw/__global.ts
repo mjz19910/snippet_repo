@@ -297,7 +297,66 @@ type Thumbnail={
 interface ThumbnailHolder {
 	thumbnails: Thumbnail[];
 };
-type ThumbnailOverlay={};
+type ACTION_ADD_VIDEO={
+	"addedVideoId": string;
+	"action": "ACTION_ADD_VIDEO";
+};
+type _ACTIONS=ACTION_ADD_VIDEO;
+
+type PlaylistEditEndpoint={
+	playlistId: string;
+	"actions": _ACTIONS[];
+};
+
+type ThumbnailOverlay={
+	_tag: "Never";
+}|{
+	"thumbnailOverlayResumePlaybackRenderer": {
+		"percentDurationWatched": 100;
+	};
+}|{
+	"thumbnailOverlayTimeStatusRenderer": {
+		"text": {
+			"accessibility": {
+				"accessibilityData": {
+					"label": "2 hours, 49 minutes, 27 seconds";
+				};
+			},
+			"simpleText": "2:49:27";
+		},
+		"style": "DEFAULT";
+	};
+}|{
+	"thumbnailOverlayToggleButtonRenderer": {
+		"isToggled": false,
+		"untoggledIcon": Icon,
+		"toggledIcon": Icon,
+		"untoggledTooltip": string,
+		"toggledTooltip": string,
+		untoggledServiceEndpoint: {
+			clickTrackingParams: string,
+			commandMetadata: CommandMetadata,
+			playlistEditEndpoint?: PlaylistEditEndpoint;
+			signalServiceEndpoint?: SignalServiceEndpoint;
+		},
+		"toggledServiceEndpoint": {
+			"clickTrackingParams": "CPwBEPnnAxgDIhMIy9r7_bWP_AIV9E1MCB3ggAxe",
+			"commandMetadata": CommandMetadata;
+			"playlistEditEndpoint": {
+				"playlistId": "WL",
+				"actions": [
+					{
+						"action": "ACTION_REMOVE_VIDEO_BY_VIDEO_ID",
+						"removedVideoId": string;
+					}
+				];
+			};
+		},
+		"untoggledAccessibility": Accessibility,
+		"toggledAccessibility": Accessibility,
+		"trackingParams": string;
+	};
+};
 interface MovingThumbnailDetails extends ThumbnailHolder {
 	logAsMovingThumbnail: boolean;
 };
