@@ -4,3 +4,5 @@ CCgSJRILOHppbEVnX2ZlWkEyAMgBAOABA6ICDSj___________8BQAAYACqnDDJzNkw2d3lXQ1FxVENR
 const text=atob(decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+"));
 export const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 const string_decoder=new TextDecoder('utf-8');
+var protobuf = require("protobufjs");
+let proto=await protobuf.load("yt_token.proto");
