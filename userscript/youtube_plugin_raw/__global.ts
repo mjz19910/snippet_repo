@@ -170,7 +170,7 @@ type ContinuationItemRenderers={
 type MenuRenderer={
 	accessibility: Accessibility;
 	items: MenuServiceItem[];
-	targetId: string;
+	targetId?: string;
 	trackingParams: string;
 };
 type Icon={
@@ -255,6 +255,8 @@ type WatchEndpointConfig={
 type WatchEndpoint={
 	nofollow: boolean;
 	videoId: string;
+	params?: string;
+	startTimeSeconds?: number;
 	watchEndpointSupportedOnesieConfig: WatchEndpointConfig;
 };
 type NavigationEndpoint={
@@ -281,9 +283,12 @@ type Accessibility={
 	accessibilityData: AccessibilityData;
 };
 type MetadataBadgeRenderer={
-	label: string;
+	icon?: Icon;
+	label?: string;
 	style: string;
+	tooltip?: string;
 	trackingParams: string;
+	accessibilityData?: AccessibilityData;
 };
 type MetadataBadgeRenderers={
 	metadataBadgeRenderer: MetadataBadgeRenderer;
@@ -364,16 +369,16 @@ interface MovingThumbnailDetails extends ThumbnailHolder {
 	logAsMovingThumbnail: boolean;
 };
 type MovingThumbnailRenderer={
-	movingThumbnailDetails: MovingThumbnailDetails;
+	movingThumbnailDetails?: MovingThumbnailDetails;
 	enableHoveredLogging: true,
 	enableOverlay: true;
 };
-type RichThumbnail={
+export type RichThumbnail={
 	movingThumbnailRenderer: MovingThumbnailRenderer;
 };
 type CompactVideoRenderer={
 	accessibility: Accessibility;
-	badges: MetadataBadgeRenderers[];
+	badges?: MetadataBadgeRenderers[];
 	channelThumbnail: ThumbnailsHolder;
 	lengthText: SimpleText;
 	longBylineText: TextRuns;
@@ -386,6 +391,7 @@ type CompactVideoRenderer={
 	thumbnail: ThumbnailHolder;
 	thumbnailOverlays: ThumbnailOverlay[];
 	title: SimpleText;
+	ownerBadges?: MetadataBadgeRenderers[];
 	trackingParams: string;
 	videoId: string;
 	viewCountText: SimpleText;
