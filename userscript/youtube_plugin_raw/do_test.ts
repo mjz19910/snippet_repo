@@ -704,8 +704,8 @@ export function do_test() {
 			}
 		}
 	};
-	let CompactVideoRenderers_Test_arr: CompactVideoRendererHolder[]=[
-		{
+	let CompactVideoRenderers_Test_arr: RendererContentItem[]=[
+		/* {
 			"compactVideoRenderer": {
 				"videoId": "tGn0mQF0804",
 				"thumbnail": {
@@ -13183,23 +13183,12 @@ export function do_test() {
 					}
 				}
 			}
-		},
+		}, */
 		{
 			"compactVideoRenderer": {
 				"videoId": "_7X6Yeydgyg",
 				"thumbnail": {
-					"thumbnails": [
-						{
-							"url": "https://i.ytimg.com/vi/_7X6Yeydgyg/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDh3G3kKUugpbf6G-AUVe6TZK4qmg",
-							"width": 168,
-							"height": 94
-						},
-						{
-							"url": "https://i.ytimg.com/vi/_7X6Yeydgyg/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDvjKV_1kAUv36qPplrRuDpEGinLg",
-							"width": 336,
-							"height": 188
-						}
-					]
+					"thumbnails": []
 				},
 				"title": {
 					"accessibility": {
@@ -13210,26 +13199,7 @@ export function do_test() {
 					"simpleText": "POLYBIUS - The Video Game That Doesn't Exist"
 				},
 				"longBylineText": {
-					"runs": [
-						{
-							"text": "Ahoy",
-							"navigationEndpoint": {
-								"clickTrackingParams": "CAYQpDAYFCITCP_K4fTMj_wCFXpJTAgd_tsMETIHcmVsYXRlZA==",
-								"commandMetadata": {
-									"webCommandMetadata": {
-										"url": "/@XboxAhoy",
-										"webPageType": "WEB_PAGE_TYPE_CHANNEL",
-										"rootVe": 3611,
-										"apiUrl": "/youtubei/v1/browse"
-									}
-								},
-								"browseEndpoint": {
-									"browseId": "UCE1jXbVAGJQEORz9nZqb5bQ",
-									"canonicalBaseUrl": "/@XboxAhoy"
-								}
-							}
-						}
-					]
+					"runs": []
 				},
 				"publishedTimeText": {
 					"simpleText": "5 years ago"
