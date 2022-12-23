@@ -183,7 +183,11 @@ declare global {
 	}|{
 		browseEndpoint: BrowseEndpoint;
 	};
-	type NavigationEndpoint={};
+	type NavigationEndpoint={
+		clickTrackingParams: string;
+		commandMetadata: CommandMetadata;
+		watchEndpoint: TODO;
+	};
 	type TODO={};
 	type TextRun={
 		navigationEndpoint: NavigationEndpoint;
@@ -200,9 +204,7 @@ declare global {
 		lengthText: {accessibility: TODO,simpleText: string;};
 		longBylineText: TextData;
 		menu: MenuRenderers;
-		navigationEndpoint: YtEndpoint&{
-			watchEndpoint: TODO;
-		};
+		navigationEndpoint: NavigationEndpoint;
 		publishedTimeText: {simpleText: string;};
 		richThumbnail: TODO;
 		shortBylineText: TextData;
