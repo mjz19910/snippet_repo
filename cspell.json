@@ -237,5 +237,8 @@
       "ZWNJ"
    ],
    "ignoreWords": [],
-   "import": []
+   "import": [],
+   "enableFiletypes": [
+      "!json"
+   ]
 }

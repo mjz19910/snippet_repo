@@ -11,6 +11,6 @@ message Int32 {
 }
 message Dec_A {
 	required int32 a1 = 1;
-	required string a2 = 15;
+	required string page_snapshot_token = 15;
 }
 message _O {}
