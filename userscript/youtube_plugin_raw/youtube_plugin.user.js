@@ -696,6 +696,7 @@ function check_item_keys(real_path,path,keys) {
 			case "richItemRenderer": break;
 			default: console.log("item_keys_tag [ci_2_10_]: iter content key",path,key,dyn_path_arr);
 		} break;
+		case "richItemRenderer":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": for(let key of keys) switch(key) {
 			case "content": break;
 			case "trackingParams": break;
