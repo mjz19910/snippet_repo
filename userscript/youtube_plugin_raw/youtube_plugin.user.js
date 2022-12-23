@@ -725,6 +725,7 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
 			case "channelFeaturedContentRenderer": break;
+			case "continuationItemRenderer": break;
 			case "messageRenderer": break;
 			case "reelShelfRenderer": break;
 			case "shelfRenderer": break;
@@ -732,6 +733,9 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
+			case "header": break;
+			case "sectionIdentifier": break;
+			case "targetId": break;
 			case "trackingParams": break;
 			default: console.log("item_keys_tag [ci_3_13_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
@@ -970,6 +974,7 @@ class FilterHandlers extends IterateApiResultBase {
 		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
 	}
 	blacklisted_item_sections=new Map([
+		["backstagePostThreadRenderer",false],
 		["channelFeaturedContentRenderer",false],
 		["channelRenderer",false],
 		["commentsEntryPointHeaderRenderer",false],
