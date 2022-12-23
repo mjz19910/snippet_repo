@@ -675,6 +675,7 @@ function check_item_keys(real_path,path,keys) {
 		case ".contents[]": break;
 		case ".contents[].richItemRenderer": break;
 		case ".contents[].richItemRenderer.content": break;
+		case "content.richGridRenderer.masthead": break;
 		case "appendContinuationItemsAction": break;
 		case "reloadContinuationItemsCommand": break;
 		default: console.log("item_keys_tag [ci_2_10] "+real_path+": new path=%o",path); break;
@@ -698,7 +699,14 @@ function check_item_keys(real_path,path,keys) {
 			case "targetId": break;
 			case "reflowOptions": break;
 			case "style": break;
+			case "masthead": break;
 			default: console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
+		} break;
+		case "content.richGridRenderer.masthead": for(let key of keys) switch(key) {
+			case "adSlotRenderer": break;
+			case "radioRenderer": break;
+			case "videoRenderer": break;
+			default: console.log("item_keys_tag [ci_3_31_] "+real_path+": iter content key",path,key); break;
 		} break;
 		case ".contents[]": for(let key of keys) switch(key) {
 			case "commentsHeaderRenderer": break;
@@ -811,6 +819,9 @@ class HandleRichGridRenderer {
 	richGridRenderer(path,renderer) {
 		let path_parts=path.split(".");
 		let sub_path=path_parts.slice(-3).join(".");
+		if(path_parts.includes("tabRenderer")) {
+			sub_path=path_parts.slice(path_parts.indexOf("tabRenderer")).join(".");
+		}
 		check_item_keys(path,sub_path,Object.keys(renderer));
 		if(this.debug) console.log("run handler",sub_path);
 		if(renderer.masthead) {
