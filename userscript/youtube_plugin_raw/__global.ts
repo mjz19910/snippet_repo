@@ -259,7 +259,7 @@ type NavigationEndpoint={
 	watchEndpoint?: WatchEndpoint;
 	browseEndpoint?: BrowseEndpoint;
 };
-type TODO={};
+type TODO={}&never;
 type BrowseEndpoint={
 	browseId: string;
 	canonicalBaseUrl: string;
@@ -296,8 +296,20 @@ type Thumbnail={
 	width: number;
 	height: number;
 };
-type ThumbnailHolder={
-	thumbnails: Thumbnail[];
+class ThumbnailHolder {
+	constructor(
+		public thumbnails: Thumbnail[]
+	) {};
+};
+type ThumbnailOverlay={};
+class MovingThumbnailDetails extends ThumbnailHolder {};
+type MovingThumbnailRenderer={
+	"movingThumbnailDetails": MovingThumbnailDetails;
+	"enableHoveredLogging": true,
+	"enableOverlay": true;
+};
+type RichThumbnail={
+	movingThumbnailRenderer: MovingThumbnailRenderer;
 };
 type CompactVideoRenderer={
 	accessibility: Accessibility;
@@ -308,11 +320,11 @@ type CompactVideoRenderer={
 	menu: MenuRenderers;
 	navigationEndpoint: NavigationEndpoint;
 	publishedTimeText: SimpleText;
-	richThumbnail: TODO;
+	richThumbnail: RichThumbnail;
 	shortBylineText: TextRuns;
 	shortViewCountText: SimpleText;
 	thumbnail: ThumbnailHolder;
-	thumbnailOverlays: TODO[];
+	thumbnailOverlays: ThumbnailOverlay[];
 	title: SimpleText;
 	trackingParams: string;
 	videoId: string;
