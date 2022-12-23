@@ -1617,7 +1617,11 @@ function on_ytd_player(element) {
 	const element_id="ytd-player";
 	console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	ytd_player=any_o(element,ytd_player);
+	/** @type {any} */
+	let element_any=element;
+	/** @type {YTDPlayerElement} */
+	let element_type=element_any;
+	ytd_player=element_type;
 	window.ytd_player=element;
 }
 
