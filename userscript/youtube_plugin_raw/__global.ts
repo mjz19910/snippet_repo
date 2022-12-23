@@ -168,19 +168,19 @@ declare global {
 		accessibility: {accessibilityData: {};};
 		badges: {}[];
 		channelThumbnail: {thumbnails: {}[]};
-		lengthText: {accessibility: {},simpleText: "2:49:27";};
+		lengthText: {accessibility: {},simpleText: string;};
 		longBylineText: {runs: {}[]};
 		menu: MenuRenderers;
 		navigationEndpoint: YtEndpoint&{
 			watchEndpoint: {};
 		};
-		publishedTimeText: {simpleText: "2 days ago";};
+		publishedTimeText: {simpleText:  string;};
 		richThumbnail: {movingThumbnailRenderer: {};};
-		shortBylineText: {runs: (1)[]};
-		shortViewCountText: {accessibility: {},simpleText: "15K views";};
-		thumbnail: {thumbnails: (2)[]};
+		shortBylineText: {runs: {}[]};
+		shortViewCountText: {accessibility: {},simpleText: string;};
+		thumbnail: {thumbnails: {}[]};
 		thumbnailOverlays: {}[];
-		title: {accessibility: {},simpleText: "Programming Language Q&A, December 2022";};
+		title: {accessibility: {},simpleText:  string;};
 
 		videoId: string;
 
