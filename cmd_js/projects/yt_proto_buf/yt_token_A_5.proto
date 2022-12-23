@@ -12,7 +12,7 @@ message C {
 }
 message D {
 	optional int32 a0 = 1000;
-	optional D2 a2 = 1002 {};
+	optional D2 a2 = 1002;
 	optional _O a6 = 1006;
 }
 message E {
