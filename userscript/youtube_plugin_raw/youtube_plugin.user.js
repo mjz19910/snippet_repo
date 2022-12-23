@@ -1559,9 +1559,6 @@ class YtdPageManagerElement extends HTMLElement {
 	getCurrentPage() {throw 1;}
 }
 
-/** @type {(()=>void)[]}*/
-let on_ytd_page_mgr_found=[];
-
 /**
  * @param {HTMLElement} element
  */
@@ -1571,9 +1568,6 @@ function on_ytd_page_manager(element) {
 	element_map.set(element_id,element);
 	ytd_page_manager=any_c(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
-	for(let handler of on_ytd_page_mgr_found) {
-		handler();
-	}
 }
 class YtdWatchFlexyElement extends HTMLElement {
 	static sel() {
@@ -1692,13 +1686,6 @@ function log_page_type_change(event) {
 		console.log(nav_load_str);
 		last_page_type=detail.pageType;
 	}
-	if(has_ytd_page_mgr()) return;
-	function found_handler() {
-		log_page_type_change(event);
-		let index=on_ytd_page_mgr_found.indexOf(found_handler);
-		on_ytd_page_mgr_found.splice(index,1);
-	}
-	on_ytd_page_mgr_found.push(found_handler);
 }
 on_yt_navigate_finish.push(log_page_type_change);
 
