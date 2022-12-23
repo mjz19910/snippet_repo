@@ -359,8 +359,6 @@ type ThumbnailOverlayNowPlayingRenderer={
 };
 
 type ThumbnailOverlay={
-	_tag: "Never";
-}|{
 	thumbnailOverlayResumePlaybackRenderer: ThumbnailOverlayResumePlaybackRenderer;
 }|{
 	thumbnailOverlayTimeStatusRenderer: ThumbnailOverlayTimeStatusRenderer;
