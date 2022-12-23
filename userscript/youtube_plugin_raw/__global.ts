@@ -96,7 +96,6 @@ type RadioRendererHolder={
 
 // RichItemRenderer
 declare global {
-
 	type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
 	interface RichItemRenderer {
 		content: RichItemRendererContent;
