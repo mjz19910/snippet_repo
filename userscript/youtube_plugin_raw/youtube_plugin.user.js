@@ -736,6 +736,7 @@ function check_item_keys(real_path,path,keys) {
 			case "channelAboutFullMetadataRenderer": break;
 			case "channelFeaturedContentRenderer": break;
 			case "commentsEntryPointHeaderRenderer": break;
+			case "compactPlaylistRenderer": break;
 			case "compactRadioRenderer": break;
 			case "compactVideoRenderer": break;
 			case "continuationItemRenderer": break;
@@ -1620,7 +1621,7 @@ function on_ytd_player(element) {
 	const element_id="ytd-player";
 	console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	ytd_player=any_c(element,YTDPlayerElement);
+	ytd_player=any_o(element,ytd_player);
 	window.ytd_player=element;
 }
 
