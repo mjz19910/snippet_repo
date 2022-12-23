@@ -1097,7 +1097,8 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @arg {{[str:string]:{}}} data
 	 */
 	handle_any_data(path,data) {
-		saved_data.any_data=data;
+		saved_data.any_data??={};
+		saved_data.any_data={...saved_data.any_data,[path]:data};
 		this.default_iter(path,data);
 	}
 	/**
