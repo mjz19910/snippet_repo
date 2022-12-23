@@ -717,6 +717,8 @@ function check_item_keys(real_path,path,keys) {
 			default: console.log("item_keys_tag [ci_3_11_] "+real_path+": iter content key",path,key); break;
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
+			case "channelFeaturedContentRenderer": break;
+			case "shelfRenderer": break;
 			default: console.log("item_keys_tag [ci_3_12_] "+real_path+": iter content key",path,key); break;
 		} break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
