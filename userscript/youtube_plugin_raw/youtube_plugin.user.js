@@ -696,10 +696,13 @@ function check_item_keys(real_path,path,keys) {
 		case "tabRenderer.content.richGridRenderer": break;
 	}
 	switch(path) {
+		case "appendContinuationItemsAction.contents[]": for(let key of keys) switch(key) {
+			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
+		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
 			case "continuationItems": break;
 			case "targetId": break;
-			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
+			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "tabRenderer.content.richGridRenderer.contents[]": for(let key of keys) switch(key) {
 			case "commentsHeaderRenderer": break;
@@ -710,13 +713,13 @@ function check_item_keys(real_path,path,keys) {
 			case "continuationItemRenderer": break;
 			case "itemSectionRenderer": break;
 			case "richItemRenderer": break;
-			default: console.log("item_keys_tag [ci_2_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
+			default: console.log("item_keys_tag [ci_2_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "richItemRenderer":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": for(let key of keys) switch(key) {
 			case "content": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_2_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
+			default: console.log("item_keys_tag [ci_2_13_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "richItemRenderer.content":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": for(let key of keys) switch(key) {
@@ -724,16 +727,16 @@ function check_item_keys(real_path,path,keys) {
 			case "radioRenderer": break;
 			case "videoRenderer": break;
 			case "reelItemRenderer": break;
-			default: console.log("item_keys_tag [ci_2_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_2_14_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "content.richGridRenderer.masthead": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 			case "backstagePostThreadRenderer": break;
 			case "channelAboutFullMetadataRenderer": break;
 			case "channelFeaturedContentRenderer": break;
@@ -758,10 +761,10 @@ function check_item_keys(real_path,path,keys) {
 			case "sectionIdentifier": break;
 			case "targetId": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_3_13_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "reloadContinuationItemsCommand.contents[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_14_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_13_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 			case "continuationItemRenderer": break;
 			case "commentThreadRenderer": break;
 			case "richItemRenderer": break;
@@ -771,7 +774,7 @@ function check_item_keys(real_path,path,keys) {
 			case "continuationItems": break;
 			case "slot": break;
 			case "targetId": break;
-			default: console.log("item_keys_tag [ci_3_15_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_14_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "tabRenderer.content.richGridRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
@@ -781,7 +784,7 @@ function check_item_keys(real_path,path,keys) {
 			case "reflowOptions": break;
 			case "style": break;
 			case "masthead": break;
-			default: console.log("item_keys_tag [ci_3_16_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
+			default: console.log("item_keys_tag [ci_3_15_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		default: console.log("item_keys_tag [ci_4_10_]: content path",path,dyn_path_arr); break;
 	}
