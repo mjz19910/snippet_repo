@@ -724,7 +724,7 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
 			case "continuationItems": break;
-			case 'slot': break;
+			case "slot": break;
 			case "targetId": break;
 			default: console.log("item_keys_tag [ci_3_14_] "+real_path+": iter content key",path,key);
 		} break;
