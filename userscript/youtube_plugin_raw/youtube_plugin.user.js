@@ -2054,7 +2054,7 @@ let player_overlay_style_str=`
 		width: 10px;
 	`;
 let waiting_for_ytd_player=false;
-/** @type {NodeJS.Timeout|number|null} */
+/** @type {number|null} */
 let current_timeout=null;
 function init_ui_plugin() {
 	if(waiting_for_ytd_player) return;
