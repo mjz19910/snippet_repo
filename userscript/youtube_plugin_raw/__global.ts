@@ -111,10 +111,10 @@ declare global {
 	};
 	type CommentsHeaderRenderer={};
 	type CommentThreadRenderer={};
-	type ContentItem0={
+	type ContentItemCommentsHeaderRenderer={
 		commentsHeaderRenderer: CommentsHeaderRenderer;
 	};
-	type ContentItem1={
+	type ContentItemCommentThreadRenderer={
 		commentThreadRenderer: CommentThreadRenderer;
 	};
 	interface TrackedEndpoint {
@@ -147,8 +147,8 @@ declare global {
 	type RendererContentItem=
 		RichItemRendererItem|
 		RichSectionRendererItem|
-		ContentItem0|
-		ContentItem1|
+		ContentItemCommentsHeaderRenderer|
+		ContentItemCommentThreadRenderer|
 		ContentItemContinuationItemRenderer|
 		never;
 }
