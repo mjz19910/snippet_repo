@@ -91,9 +91,11 @@ declare global {
 	type AdSlotRendererHolder={
 		adSlotRenderer: AdSlotRenderer;
 	};
-	type RichItemRendererContent=AdSlotRendererHolder;
+	type RichItemRendererContent=AdSlotRendererHolder|{
+		videoRenderer: {}
+	};
 	interface RichItemRenderer {
-		content: AdSlotRendererHolder;
+		content: RichItemRendererContent;
 		trackingParams?: string;
 	}
 	type RichItemRendererHolder={
