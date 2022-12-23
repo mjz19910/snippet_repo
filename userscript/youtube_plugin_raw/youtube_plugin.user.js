@@ -995,7 +995,7 @@ class FilterHandlers extends IterateApiResultBase {
 	appendContinuationItemsAction(path,action) {
 		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
 		if(this.handleAppendContinuationItemsAction(path,action)) return;
-		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",action,"continuationItems");
+		HandleRendererContentItemArray.replace_array(this,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
 	}
 	/**
 	 * @param {string} path
