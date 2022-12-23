@@ -37,7 +37,7 @@ declare global {
 	type BrowseFeedAction={
 		targetId: "browse-feedFEwhat_to_watch";
 		continuationItems: BrowseFeedItem[];
-	}
+	};
 }
 
 // CommentsSectionContinuationAction
@@ -140,8 +140,10 @@ declare global {
 	type CommandMetadata={
 		webCommandMetadata: WebCommandMetadata;
 	};
-	interface ContinuationEndpoint extends YtClickTracked {
+	type YtEndpoint=YtClickTracked&{
 		commandMetadata: CommandMetadata;
+	}
+	type ContinuationEndpoint=YtEndpoint&{
 		continuationCommand: YtCommand;
 	}
 	type GhostGridRenderer={
@@ -159,9 +161,30 @@ declare global {
 		continuationItemRenderer: ContinuationItemRenderer;
 	};
 	type MenuRenderers={menuRenderer: {};};
+	type TrackingParams={
+		trackingParams: string;
+	};
 	type CompactVideoRenderer={
-		videoId: string;
+		accessibility: {accessibilityData: {};};
+		badges: {}[];
+		channelThumbnail: {thumbnails: {}[]};
+		lengthText: {accessibility: {},simpleText: "2:49:27";};
+		longBylineText: {runs: {}[]};
 		menu: MenuRenderers;
+		navigationEndpoint: YtEndpoint&{
+			watchEndpoint: {};
+		};
+		publishedTimeText: {simpleText: "2 days ago";};
+		richThumbnail: {movingThumbnailRenderer: {};};
+		shortBylineText: {runs: (1)[]};
+		shortViewCountText: {accessibility: {},simpleText: "15K views";};
+		thumbnail: {thumbnails: (2)[]};
+		thumbnailOverlays: {}[];
+		title: {accessibility: {},simpleText: "Programming Language Q&A, December 2022";};
+
+		videoId: string;
+
+		viewCountText: {simpleText: "15,435 views";};
 	};
 	type CompactVideoRenderers={
 		compactVideoRenderer: CompactVideoRenderer;
