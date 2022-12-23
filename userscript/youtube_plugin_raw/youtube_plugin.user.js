@@ -673,9 +673,9 @@ function check_item_keys(real_path,path,keys) {
 	let dyn_path_arr={get arr(){return path_arr}};
 	path=path.replace("continuationItems[]","contents[]");
 	switch(path) {
-		case ".contents[].richItemRenderer.content": break;
-		case ".contents[].richItemRenderer": break;
-		case ".contents[]": break;
+		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": break;
+		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": break;
+		case "tabRenderer.content.richGridRenderer.contents[]": break;
 		case "appendContinuationItemsAction": break;
 		case "content.richGridRenderer.masthead": break;
 		case "itemSectionRenderer.contents[]": break;
@@ -685,7 +685,7 @@ function check_item_keys(real_path,path,keys) {
 		default: console.log("item_keys_tag [ci_1_10]: new path=%o",path,dyn_path_arr); break;
 	}
 	switch(path) {
-		case ".contents[]": for(let key of keys) switch(key) {
+		case "tabRenderer.content.richGridRenderer.contents[]": for(let key of keys) switch(key) {
 			case "commentsHeaderRenderer": break;
 			case "commentThreadRenderer": break;
 			case "compactPlaylistRenderer": break;
@@ -696,12 +696,12 @@ function check_item_keys(real_path,path,keys) {
 			case "richItemRenderer": break;
 			default: console.log("item_keys_tag [ci_2_10_]: iter content key",path,key,dyn_path_arr);
 		} break;
-		case ".contents[].richItemRenderer": for(let key of keys) switch(key) {
+		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": for(let key of keys) switch(key) {
 			case "content": break;
 			case "trackingParams": break;
 			default: console.log("item_keys_tag [ci_2_11_]: iter content key",path,key,dyn_path_arr);
 		} break;
-		case ".contents[].richItemRenderer.content": for(let key of keys) switch(key) {
+		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
