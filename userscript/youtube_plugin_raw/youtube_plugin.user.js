@@ -684,7 +684,7 @@ function check_item_keys(real_path,path,keys) {
 	};
 	switch(path) {
 		default: console.log("item_keys_tag [ci_1_1_]: new path=%o",path,real_path_arr_dyn); break;
-		case "appendContinuationItemsAction.contents[]": break;
+		case "appendContinuationItemsAction.continuationItems[]": break;
 		case "appendContinuationItemsAction": break;
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
