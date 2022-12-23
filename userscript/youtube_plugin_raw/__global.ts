@@ -124,7 +124,7 @@ declare global {
 	type ContentItemCommentThreadRenderer={
 		commentThreadRenderer: CommentThreadRenderer;
 	};
-	interface TrackedEndpoint {
+	interface ClickTracked {
 		clickTrackingParams: string;
 	}
 	interface CommandToken {
@@ -140,7 +140,7 @@ declare global {
 	type CommandMetadata={
 		webCommandMetadata: WebCommandMetadata;
 	};
-	interface ContinuationEndpoint extends TrackedEndpoint {
+	interface ContinuationEndpoint extends ClickTracked {
 		commandMetadata: CommandMetadata;
 		continuationCommand: YtCommand;
 	}
