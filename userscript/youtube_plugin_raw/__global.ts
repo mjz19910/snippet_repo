@@ -222,12 +222,16 @@ type SignalServiceEndpoints={
 };
 type ServiceEndpoint=
 	ServiceEndpointBase<SignalServiceEndpoints>|
-	ServiceEndpointBase<{playlistEditEndpoint: {};}>;
+	ServiceEndpointBase<{playlistEditEndpoint: {};}>|
+	ServiceEndpointBase<{addToPlaylistServiceEndpoint: {}}>|
+	ServiceEndpointBase<{feedbackEndpoint: {};}>|
+	ServiceEndpointBase<{getReportFormEndpoint: {}}>;
 type MenuServiceItemRenderer={
 	icon: Icon;
 	serviceEndpoint: ServiceEndpoint;
 	text: TextRuns;
 	trackingParams?: string;
+	hasSeparator?: boolean;
 };
 type MenuServiceItem={
 	menuServiceItemRenderer: MenuServiceItemRenderer;
@@ -310,7 +314,8 @@ type CompactVideoRenderers={
 	compactVideoRenderer: CompactVideoRenderer;
 };
 
-const TCvr: CompactVideoRenderers={
+// spell:disable
+export const CompactVideoRenderers_Test: CompactVideoRenderers={
 	"compactVideoRenderer": {
 		"videoId": "OAIqCpqszVw",
 		"thumbnail": {
@@ -1011,6 +1016,7 @@ const TCvr: CompactVideoRenderers={
 		}
 	}
 };
+// spell:enable
 
 // RendererContentItem
 declare global {
