@@ -696,47 +696,48 @@ function check_item_keys(real_path,path,keys) {
 			case "continuationItemRenderer": break;
 			case "itemSectionRenderer": break;
 			case "richItemRenderer": break;
-			default: console.log("item_keys_tag [ci_2_10_]: iter content key",path,key,dyn_path_arr);
+			default: console.log("item_keys_tag [ci_2_10_]: iter content key"+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "richItemRenderer":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": for(let key of keys) switch(key) {
 			case "content": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_2_11_]: iter content key",path,key,dyn_path_arr);
+			default: console.log("item_keys_tag [ci_2_11_]: iter content key"+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "richItemRenderer.content":
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-			default: console.log("item_keys_tag [ci_2_12_]: iter content key",path,key,dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_2_12_]: iter content key"+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
 			case "continuationItems": break;
 			case "targetId": break;
-			default: console.log("item_keys_tag [ci_3_10_]: iter content key",path,key,dyn_path_arr);
+			default: console.log("item_keys_tag [ci_3_10_]: iter content key"+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "content.richGridRenderer.masthead": for(let key of keys) switch(key) {
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-			default: console.log("item_keys_tag [ci_3_11_]: iter content key",path,key,dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_11_]: iter content key"+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
 			case "channelFeaturedContentRenderer": break;
+			case "reelShelfRenderer": break;
 			case "shelfRenderer": break;
-			default: console.log("item_keys_tag [ci_3_12_]: iter content key",path,key,dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_3_13_]: iter content key",path,key,dyn_path_arr); break;
+			default: console.log("item_keys_tag [ci_3_13_]: iter content key"+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
 			case "continuationItems": break;
 			case "slot": break;
 			case "targetId": break;
-			default: console.log("item_keys_tag [ci_3_14_]: iter content key",path,key,dyn_path_arr);
+			default: console.log("item_keys_tag [ci_3_14_]: iter content key"+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		case "tabRenderer.content.richGridRenderer": for(let key of keys) switch(key) {
 			case "contents": break;
@@ -746,7 +747,7 @@ function check_item_keys(real_path,path,keys) {
 			case "reflowOptions": break;
 			case "style": break;
 			case "masthead": break;
-			default: console.log("item_keys_tag [ci_3_15_]: iter content key",path,key,dyn_path_arr);
+			default: console.log("item_keys_tag [ci_3_15_]: iter content key"+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		default: console.log("item_keys_tag [ci_4_10_]: content path",path,dyn_path_arr); break;
 	}
