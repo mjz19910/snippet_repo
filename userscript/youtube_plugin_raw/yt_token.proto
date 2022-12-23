@@ -1,21 +1,32 @@
 message A {
- optional int32 a1 = 1;
- optional B a2 = 2;
- optional int32 a3 = 3;
- optional string a = 5;
- optional C a6 = 6;
-}
-message B {
- optional string a2 = 2;
-}
-message C {
- optional string a1 = 1;
- optional D a4 = 4;
- optional int32 a5 = 5;
- optional string a8 = 8;
-}
-message D {
- optional string a4 = 4;
- optional int32 a6 = 6;
- optional int32 a15 = 15;
-}
+	optional int32 a1 = 1;
+	optional B a2 = 2;
+	optional int32 a3 = 3;
+	optional string a = 5;
+	optional C a6 = 6;
+	optional string a13 = 13;
+	optional _O a14=14;
+ }
+ message B {
+	optional string a = 2;
+	optional _O b = 6;
+	optional int32 a3=25;
+	optional int32 a4=28;
+	optional B0 a5=36;
+ }
+ message B0 {
+	optional int64 a1=5;
+	optional int32 a2=8;
+ }
+ message C {
+	optional string _a=1;
+	optional D a=4;
+	optional int32 b=5;
+	optional string c = 8;
+ }
+ message D {
+	optional string a=4;
+	optional int32 b=6;
+	optional int32 c=15;
+ }
+ message _O {}
