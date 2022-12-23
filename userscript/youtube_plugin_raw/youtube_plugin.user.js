@@ -725,6 +725,7 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
 			case "channelFeaturedContentRenderer": break;
+			case "messageRenderer": break;
 			case "reelShelfRenderer": break;
 			case "shelfRenderer": break;
 			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
@@ -983,6 +984,7 @@ class FilterHandlers extends IterateApiResultBase {
 		["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
 		["radioRenderer",false],
 		["recognitionShelfRenderer",false],
+		["messageRenderer",false],
 		["reelShelfRenderer",false],
 		["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
 		["shelfRenderer",false],
