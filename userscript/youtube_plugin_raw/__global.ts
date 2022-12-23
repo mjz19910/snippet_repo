@@ -247,12 +247,13 @@ type RadioRendererHolder={
 
 // RichItemRenderer
 declare global {
-	type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
+	type AdSlotRendererHolder={
+		adSlotRenderer: AdSlotRenderer;
+	};
+	type RichItemRendererContent=AdSlotRendererHolder;
 	interface RichItemRenderer {
-		content: RichItemRendererContent;
-		trackingParams: string;
-		rowIndex?: number;
-		colIndex?: number;
+		content: AdSlotRendererHolder;
+		trackingParams?: string;
 	}
 	type RichItemRendererHolder={
 		richItemRenderer: RichItemRenderer;
