@@ -671,13 +671,15 @@ class IterateApiResultBase {
 function check_item_keys(real_path,path,keys) {
 	path=path.replace("continuationItems[]","contents[]");
 	switch(path) {
-		case "tabRenderer.content.richGridRenderer": break;
-		case ".contents[]": break;
-		case ".contents[].richItemRenderer": break;
 		case ".contents[].richItemRenderer.content": break;
-		case "content.richGridRenderer.masthead": break;
+		case ".contents[].richItemRenderer": break;
+		case ".contents[]": break;
 		case "appendContinuationItemsAction": break;
+		case "content.richGridRenderer.masthead": break;
+		case "itemSectionRenderer.contents[]": break;
+		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand": break;
+		case "tabRenderer.content.richGridRenderer": break;
 		default: console.log("item_keys_tag [ci_2_10] "+real_path+": new path=%o",path); break;
 	}
 	switch(path) {
