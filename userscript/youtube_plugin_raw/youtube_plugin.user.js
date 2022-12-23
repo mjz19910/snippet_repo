@@ -942,6 +942,10 @@ function is_watch_next_feed_target(o) {
 function is_comments_section_next(o) {
 	return o.targetId==="comments-section";
 }
+/** @arg {AppendContinuationItemsAction} o @returns {o is BrowseFeedAction} */
+function is_what_to_watch_section(o) {
+	return o.targetId==="browse-feedFEwhat_to_watch";
+}
 
 class FilterHandlers extends IterateApiResultBase {
 	debug=false;
@@ -974,6 +978,13 @@ class FilterHandlers extends IterateApiResultBase {
 			// /** @type {CommentsSectionContinuationAction} */
 			// let action_t=action;
 			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// return true;
+			return false;
+		}
+		if(is_what_to_watch_section(action)) {
+			/** @type {BrowseFeedAction} */
+			let action_t=action;
+			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			// return true;
 			return false;
 		}

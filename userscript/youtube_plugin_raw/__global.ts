@@ -32,6 +32,14 @@ declare global {
 	};
 }
 
+declare global {
+	type BrowseFeedItem={};
+	type BrowseFeedAction={
+		targetId: "browse-feedFEwhat_to_watch";
+		continuationItems: BrowseFeedItem[];
+	}
+}
+
 // CommentsSectionContinuationAction
 declare global {
 	type CommentsSectionItem={};
