@@ -99,12 +99,12 @@ type AboutThisAdRenderer={
 	trackingParams: string;
 };
 
-type AboutThisAdRendererHolder={
+type DialogPopup={
 	"aboutThisAdRenderer": AboutThisAdRenderer;
 };
 
-type DIALOG_Popup={
-	"popup": AboutThisAdRendererHolder;
+type DialogPopupTag={
+	"popup": DialogPopup;
 	"popupType": "DIALOG";
 };
 
@@ -196,10 +196,7 @@ type RenderingContent={
 							"icon": {
 								"iconType": "INFO";
 							};
-							"navigationEndpoint": {
-								clickTrackingParams: string;
-								"openPopupAction": DIALOG_Popup;
-							};
+							navigationEndpoint: NavigationEndpoint;
 							trackingParams: string;
 						};
 					}
@@ -442,14 +439,16 @@ type ToastPopupTag={
 	popup: ToastPopup;
 	popupType: "TOAST";
 };
-type OpenPopupAction=ToastPopupTag;
+type OpenPopupAction=ToastPopupTag|DialogPopupTag;
+type OpenPopupActionHolder={
+	openPopupAction: OpenPopupAction;
+};
+
 type ServiceEndpointAction={
 	clickTrackingParams: string;
 }&({
 	addToPlaylistCommand: AddToPlaylistCommand;
-}|{
-	openPopupAction: DIALOG_Popup;
-});
+}|OpenPopupActionHolder);
 type SignalServiceEndpoint={
 	signal: "CLIENT_SIGNAL";
 	actions: ServiceEndpointAction[];
@@ -500,8 +499,12 @@ type WatchEndpoint={
 type NavigationEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
-	watchEndpoint?: WatchEndpoint;
-	browseEndpoint?: BrowseEndpoint;
+}|{
+	openPopupAction: OpenPopupAction;
+}|{
+	watchEndpoint: WatchEndpoint;
+}|{
+	browseEndpoint: BrowseEndpoint;
 };
 type BrowseEndpoint={
 	browseId: string;
