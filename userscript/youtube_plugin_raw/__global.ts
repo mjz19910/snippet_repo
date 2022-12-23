@@ -141,7 +141,9 @@ declare global {
 		trigger: string;
 		continuationEndpoint: YtEndpoint;
 	};
-	type _ContinuationItemRenderer={continuationItemRenderer:ContinuationItemRenderer};
+	type _ContinuationItemRenderer={
+		continuationItemRenderer: ContinuationItemRenderer;
+	};
 	type RendererContentItem=
 		RichItemRendererItem|
 		RichSectionRendererItem|
