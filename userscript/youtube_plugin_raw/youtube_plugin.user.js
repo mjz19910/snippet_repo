@@ -804,9 +804,9 @@ function check_item_keys(real_path,path,keys) {
 }
 
 class HandleRendererContentItemArray {
-	static debug=false;
+	debug=false;
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {{richItemRenderer: RichItemRenderer;}} content_item */
-	static filter_for_rich_item_renderer(path,base,content_item) {
+	filter_for_rich_item_renderer(path,base,content_item) {
 		let renderer=content_item.richItemRenderer;
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
@@ -817,13 +817,41 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
+	handle_rich_section_renderer(content_item) {
+		let renderer=content_item.richSectionRenderer;
+		if(!("richShelfRenderer" in renderer.content)) {
+			console.log("rich section content",renderer.content);
+			return true;
+		}
+		let rich_shelf=renderer.content.richShelfRenderer;
+		if(rich_shelf.icon) {
+			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
+				return false;
+			}
+			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
+			return true;
+		}
+		if(!rich_shelf.title.runs) {
+			if(this.debug) console.log("rich shelf title",rich_shelf.title);
+			return true;
+		}
+		if(rich_shelf.title.runs[0]) {
+			if(rich_shelf.title.runs[0].text==="Breaking news") {
+				return false;
+			}
+			if(this.debug) console.log("rich shelf title",rich_shelf.title.runs[0]);
+			return true;
+		}
+		console.log("rich shelf",rich_shelf);
+		return true;
+	}
 	/**
 	 * @param {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
 	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
 	 * @param {"continuationItems"|"contents"} key
 	 */
-	static replace_array(base,path,obj,key) {
+	replace_array(base,path,obj,key) {
 		let arr=obj[key];
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
@@ -849,32 +877,6 @@ class HandleRendererContentItemArray {
 				return this.filter_for_rich_item_renderer(path,base,content_item);
 			}
 			if("richSectionRenderer" in content_item) {
-				let renderer=content_item.richSectionRenderer;
-				if(!("richShelfRenderer" in renderer.content)) {
-					console.log("rich section content",renderer.content);
-					return true;
-				}
-				let rich_shelf=renderer.content.richShelfRenderer;
-				if(rich_shelf.icon) {
-					if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
-						return false;
-					}
-					console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
-					return true;
-				}
-				if(!rich_shelf.title.runs) {
-					if(this.debug) console.log("rich shelf title",rich_shelf.title);
-					return true;
-				}
-				if(rich_shelf.title.runs[0]) {
-					if(rich_shelf.title.runs[0].text==="Breaking news") {
-						return false;
-					}
-					if(this.debug) console.log("rich shelf title",rich_shelf.title.runs[0]);
-					return true;
-				}
-				console.log("rich shelf",rich_shelf);
-				return true;
 			}
 			return true;
 		});
@@ -890,6 +892,7 @@ class HandleRichGridRenderer {
 	class_name="HandleRichGridRenderer";
 	/**@readonly*/
 	entry="richGridRenderer";
+	rendererContentItemArray=new HandleRendererContentItemArray;
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
@@ -907,7 +910,7 @@ class HandleRichGridRenderer {
 		}
 		if(renderer.contents) {
 			if(this.debug) console.log("on_contents",path);
-			HandleRendererContentItemArray.replace_array(this,"richGridRenderer.contents",renderer,"contents");
+			this.rendererContentItemArray.replace_array(this,"richGridRenderer.contents",renderer,"contents");
 		}
 	}
 }
@@ -970,6 +973,7 @@ class FilterHandlers extends IterateApiResultBase {
 	class_name="FilterHandlers";
 	handlers={
 		rich_grid: new HandleRichGridRenderer,
+		renderer_content_item_array: new HandleRendererContentItemArray,
 	};
 	/**
 	 * @param {string} path
@@ -1007,7 +1011,7 @@ class FilterHandlers extends IterateApiResultBase {
 	appendContinuationItemsAction(path,action) {
 		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
 		if(this.handleAppendContinuationItemsAction(path,action)) return;
-		HandleRendererContentItemArray.replace_array(this,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
+		this.handlers.renderer_content_item_array.replace_array(this,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
 	}
 	/**
 	 * @param {string} path
@@ -1016,7 +1020,7 @@ class FilterHandlers extends IterateApiResultBase {
 	reloadContinuationItemsCommand(path,command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
 		if(this.handleAppendContinuationItemsAction(path,command)) return;
-		HandleRendererContentItemArray.replace_array(this,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
+		this.handlers.renderer_content_item_array.replace_array(this,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
 	}
 	blacklisted_item_sections=new Map([
 		["backstagePostThreadRenderer",false],
