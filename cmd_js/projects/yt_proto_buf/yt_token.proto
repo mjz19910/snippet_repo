@@ -15,7 +15,7 @@ message A {
 	optional B0 a36 = 36;
  }
  message B0 {
-	optional int64 a5 = 5;
+	optional int32 a5 = 5;
 	optional int32 a8 = 8;
  }
  message C {
