@@ -970,17 +970,12 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {{ contents: {}[]; }} renderer
 	 */
 	itemSectionRenderer(path,renderer) {
-		let path_parts=path.split(".");
-		let sub_path=path_parts.slice(-3).join(".");
-		if(path_parts.includes("tabRenderer")) {
-			sub_path=path_parts.slice(path_parts.indexOf("tabRenderer")).join(".");
-		}
-		check_item_keys(path,sub_path,Object.keys(renderer));
+		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
 		this.default_iter(path,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
-			check_item_keys(path,sub_path+".contents[]",keys);
+			check_item_keys(path,"itemSectionRenderer.contents[]",keys);
 			for(let key of keys) {
 				let is_blacklisted=this.blacklisted_item_sections.get(key);
 				if(is_blacklisted!==void 0) return !is_blacklisted;
