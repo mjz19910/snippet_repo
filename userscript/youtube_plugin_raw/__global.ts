@@ -81,21 +81,23 @@ declare global {
 }
 
 type AdSlotRenderer={};
-
 type VideoRenderer={};
-
 type RadioRenderer={};
+type AdSlotRendererHolder={
+	adSlotRenderer: AdSlotRenderer;
+};
+type VideoRendererHolder={
+	videoRenderer: VideoRenderer;
+};
+
+type RadioRendererHolder={
+	radioRenderer: RadioRenderer;
+};
 
 // RichItemRenderer
 declare global {
-	type AdSlotRendererHolder={
-		adSlotRenderer: AdSlotRenderer;
-	};
-	type RichItemRendererContent=AdSlotRendererHolder|{
-		videoRenderer: VideoRenderer;
-	}|{
-		radioRenderer: RadioRenderer;
-	};
+
+	type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
 	interface RichItemRenderer {
 		content: RichItemRendererContent;
 		trackingParams: string;
