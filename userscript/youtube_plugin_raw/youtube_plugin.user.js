@@ -1871,6 +1871,7 @@ async function async_plugin_init(event) {
 	}
 }
 dom_observer.addEventListener("async-plugin-init",async_plugin_init);
+async_plugin_init.__debug=false;
 
 /** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 function get_new_video_element_list(element_list,list_box) {
@@ -1905,9 +1906,9 @@ function do_find_video() {
 	audio_gain_controller.attach_element_list(new_elements);
 	if(first_run) {
 		found_element_count++;
-		console.log("found video elements");
+		if(async_plugin_init.__debug) console.log("found video elements");
 	} else {
-		console.log("found extra video elements",new_elements);
+		if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
 	}
 }
 
