@@ -724,6 +724,7 @@ function check_item_keys(real_path,path,keys) {
 			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
+			case "backstagePostThreadRenderer": break;
 			case "channelFeaturedContentRenderer": break;
 			case "continuationItemRenderer": break;
 			case "messageRenderer": break;
