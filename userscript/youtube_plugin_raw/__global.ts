@@ -28,7 +28,7 @@ declare global {
 
 // ReloadContinuationItemsCommand
 declare global {
-	type SectionItem=RichItemRendererItem|RichSectionRendererItem;
+	type SectionItem=RichItemRendererHolder|RichSectionRendererHolder;
 	type ReloadContinuationItemsCommand={
 		slot: "RELOAD_CONTINUATION_SLOT_BODY";
 		targetId: "browse-feedFEwhat_to_watch";
@@ -95,14 +95,14 @@ declare global {
 	interface RichItemRenderer {
 		content: AdSlotRenderers;
 	}
-	type RichItemRendererItem={
+	type RichItemRendererHolder={
 		richItemRenderer: RichItemRenderer;
 	};
 }
 
 // RichSectionRendererItem
 declare global {
-	type RichSectionRendererItem={
+	type RichSectionRendererHolder={
 		richSectionRenderer: RichSectionRenderer;
 	};
 }
@@ -126,10 +126,10 @@ interface RichSectionRenderer {
 
 type CommentsHeaderRenderer={};
 type CommentThreadRenderer={};
-type ContentItemCommentsHeaderRenderer={
+type CommentsHeaderRendererHolder={
 	commentsHeaderRenderer: CommentsHeaderRenderer;
 };
-type ContentItemCommentThreadRenderer={
+type CommentThreadRendererHolder={
 	commentThreadRenderer: CommentThreadRenderer;
 };
 type CommandToken={
@@ -164,7 +164,7 @@ type ContinuationItemRenderer={
 	continuationEndpoint: ContinuationEndpoint;
 	ghostCards: GhostCards;
 };
-type ContinuationItemRenderers={
+type ContinuationItemRendererHolder={
 	continuationItemRenderer: ContinuationItemRenderer;
 };
 type MenuRenderer={
@@ -396,19 +396,25 @@ type CompactVideoRenderer={
 	videoId: string;
 	viewCountText: SimpleText;
 };
-export type CompactVideoRenderers={
+export type CompactVideoRendererHolder={
 	compactVideoRenderer: CompactVideoRenderer;
+};
+
+type CompactPlaylistRenderer={_tag:""};
+type CompactPlaylistRendererHolder={
+	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
 
 // RendererContentItem
 declare global {
 	type RendererContentItem=
-		RichItemRendererItem|
-		RichSectionRendererItem|
-		ContentItemCommentsHeaderRenderer|
-		ContentItemCommentThreadRenderer|
-		ContinuationItemRenderers|
-		CompactVideoRenderers|
+		RichItemRendererHolder|
+		RichSectionRendererHolder|
+		CommentsHeaderRendererHolder|
+		CommentThreadRendererHolder|
+		ContinuationItemRendererHolder|
+		CompactVideoRendererHolder|
+		CompactPlaylistRendererHolder|
 		never;
 }
 

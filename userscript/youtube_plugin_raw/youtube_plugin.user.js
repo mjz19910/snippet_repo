@@ -1269,7 +1269,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {import("./support/yt_api/_abc/_rich/RichSectionRendererH.js").RichSectionRendererH} content_item */
+	/** @arg {RichSectionRendererHolder} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
