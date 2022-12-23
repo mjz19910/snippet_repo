@@ -683,11 +683,11 @@ function check_item_keys(real_path,path,keys) {
 		default: console.log("item_keys_tag [ci_1_10]: new path=%o",path,dyn_path_arr); break;
 		case "appendContinuationItemsAction.contents[]": break;
 		case "appendContinuationItemsAction": break;
-		case "richGridRenderer.masthead": break;
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand.contents[]": break;
 		case "reloadContinuationItemsCommand": break;
+		case "richGridRenderer.masthead": break;
 		case "richItemRenderer.content": break;
 		case "richItemRenderer": break;
 	}
