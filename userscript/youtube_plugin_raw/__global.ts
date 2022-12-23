@@ -80,7 +80,11 @@ declare global {
 	type ContinuationItem=RendererContentItem;
 }
 
-type AdSlotRenderer={};
+type AdSlotRenderer={
+	adSlotMetadata: {};
+	fulfillmentContent: {};
+	enablePacfLoggingWeb: boolean;
+};
 type VideoRenderer={};
 type RadioRenderer={};
 type AdSlotRendererHolder={
