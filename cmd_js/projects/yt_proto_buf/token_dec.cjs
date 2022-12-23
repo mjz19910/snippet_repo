@@ -9,10 +9,10 @@ async function run() {
 	console.log(as_uint[0]);
 	var protobuf=require('protobufjs');
 	let root=await protobuf.load("continue_cmd.proto");
-	var Type=root.lookupType("CommandToken");
+	var Type=root.lookupType("Dec_A");
 	console.log(new Uint32Array(token_binary.slice(0,4).buffer));
 	/** @type {protobuf.Message<YtTokenProtoMessage>} */
-	let message=Type.decode(token_binary.subarray(4));
+	let message=Type.decode(token_binary);
 	let obj=Type.toObject(message);
 	console.log(obj);
 }
