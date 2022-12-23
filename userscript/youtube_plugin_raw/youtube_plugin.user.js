@@ -688,7 +688,7 @@ function check_item_keys(real_path,path,keys) {
 		case "appendContinuationItemsAction": break;
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
-		case "reloadContinuationItemsCommand.contents[]": break;
+		case "reloadContinuationItemsCommand.continuationItems[]": break;
 		case "reloadContinuationItemsCommand": break;
 		case "richGridRenderer.masthead": break;
 		case "richGridRenderer": break;
@@ -696,7 +696,7 @@ function check_item_keys(real_path,path,keys) {
 		case "richItemRenderer": break;
 	}
 	switch(path) {
-		case "appendContinuationItemsAction.contents[]": for(let key of keys) switch(key) {
+		case "appendContinuationItemsAction.continuationItems[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "continuationItemRenderer": break;
 			case "compactPlaylistRenderer": break;
@@ -763,7 +763,7 @@ function check_item_keys(real_path,path,keys) {
 			case "trackingParams": break;
 			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 		} break;
-		case "reloadContinuationItemsCommand.contents[]": for(let key of keys) switch(key) {
+		case "reloadContinuationItemsCommand.continuationItems[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_13_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "commentsHeaderRenderer": break;
 			case "commentThreadRenderer": break;
