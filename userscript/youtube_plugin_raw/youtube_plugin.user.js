@@ -1533,7 +1533,7 @@ let on_ytd_page_mgr_found=[];
  */
 function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
-	console.log(`on ${element_id}`);
+	if(yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	ytd_page_manager=any_c(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
@@ -1830,7 +1830,7 @@ async function async_plugin_init(event) {
 				current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 				current_page_element.__has_theater_handler_plugin=true;
 			}
-			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
+			if(yt_debug_enabled) console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
 			if(current_page_element.tagName!="YTD-WATCH-FLEXY") {
 				/** @type {Promise<void>} */
 				let promise=new Promise((accept) => {
@@ -1920,7 +1920,7 @@ let yt_playlist_manager=null;
  */
 function on_yt_playlist_manager(element) {
 	const element_id="yt-playlist-manager";
-	console.log(`on ${element_id}`);
+	if(yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	yt_playlist_manager=element;
 	window.yt_playlist_manager=element;
