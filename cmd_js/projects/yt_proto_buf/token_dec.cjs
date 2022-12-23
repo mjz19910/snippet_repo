@@ -17,7 +17,8 @@ async function run() {
 	let base64_enc_2=obj.pageSnapshotToken.replaceAll("_","/").replaceAll("-","+");
 	const text_2=atob(base64_enc_2);
 	let token_binary_2=new Uint8Array([...text_2].map(e => e.charCodeAt(0)));
-	let Type_2=root.lookupType("Int32");
+	root=await protobuf.load("page_snapshot_token.proto");
+	let Type_2=root.lookupType("A");
 	message=Type_2.decode(token_binary_2);
 	let obj_2=Type.toObject(message);
 	console.log(obj);
