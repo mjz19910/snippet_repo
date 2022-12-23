@@ -20,7 +20,9 @@ async function run() {
 	root=await protobuf.load("page_snapshot_token.proto");
 	let Type_2=root.lookupType("A");
 	message=Type_2.decode(token_binary_2);
-	let obj_2=Type_2.toObject(message);
+	let obj_2=Type_2.toObject(message,{
+		longs: Number,
+	});
 	console.log(obj);
 	console.log(obj_2);
 }
