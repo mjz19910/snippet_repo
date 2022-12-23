@@ -825,7 +825,7 @@ class HandleRichGridRenderer {
 		check_item_keys(path,sub_path,Object.keys(renderer));
 		if(this.debug) console.log("run handler",sub_path);
 		if(renderer.masthead) {
-			check_item_keys(path,path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead));
+			check_item_keys(path,sub_path+".masthead",Object.keys(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				console.log("masthead",masthead);
