@@ -371,9 +371,9 @@ interface MovingThumbnailDetails extends ThumbnailHolder {
 	logAsMovingThumbnail: boolean;
 };
 type MovingThumbnailRenderer={
-	"movingThumbnailDetails": MovingThumbnailDetails;
-	"enableHoveredLogging": true,
-	"enableOverlay": true;
+	movingThumbnailDetails: MovingThumbnailDetails;
+	enableHoveredLogging: true,
+	enableOverlay: true;
 };
 type RichThumbnail={
 	movingThumbnailRenderer: MovingThumbnailRenderer;
