@@ -134,22 +134,13 @@ type CommandToken={
 type ContinuationCommand=CommandToken&{
 	request: string;
 };
-type WebCommandMetadata0={
-	sendPost: boolean;
-	apiUrl: string;
+type WebCommandMetadata={
+	sendPost?: boolean;
+	apiUrl?: string;
+	rootVe?: number;
+	url?: string;
+	webPageType?: string;
 };
-type WebCommandMetadata1={
-	apiUrl: string;
-	rootVe: number;
-	url: string;
-	webPageType: string;
-};
-type WebCommandMetadata2={
-	rootVe: number;
-	url: string;
-	webPageType: string;
-};
-type WebCommandMetadata=WebCommandMetadata0|WebCommandMetadata1|WebCommandMetadata2;
 type CommandMetadata={
 	webCommandMetadata: WebCommandMetadata;
 };
