@@ -678,7 +678,7 @@ function check_item_keys(real_path,path,keys) {
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand": break;
-		case "richItemRenderer.content":
+		case "richItemRenderer.content": break;
 		case "richItemRenderer": break;
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": break;
 		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": break;
