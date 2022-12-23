@@ -1549,8 +1549,6 @@ function as_node(value) {
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!has_ytd_page_mgr()) return;
-	// might have a new video element from page type change
-	do_find_video();
 	plugin_overlay_element.onupdate();
 	get_ytd_page_manager().getCurrentPage().append(as_node(plugin_overlay_element));
 }
@@ -1702,6 +1700,8 @@ function on_ytd_app(element) {
 	with_element(element_id,"ytd_app",element);
 	ytd_app=YtdAppElement.cast(element);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
+		// might have a new video element from page type change
+		do_find_video();
 		let real_event=YTNavigateFinishEvent.cast(event);
 		for(let handler of on_yt_navigate_finish) {
 			handler(real_event);
