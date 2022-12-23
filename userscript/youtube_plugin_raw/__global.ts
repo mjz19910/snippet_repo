@@ -164,23 +164,29 @@ declare global {
 	type TrackingParams={
 		trackingParams: string;
 	};
+	type TODO={};
+	type TextRun={};
+	type TextData={
+		runs: TextRun[];
+	};
+
 	type CompactVideoRenderer={
-		accessibility: {accessibilityData: {};};
-		badges: {}[];
-		channelThumbnail: {thumbnails: {}[]};
-		lengthText: {accessibility: {},simpleText: string;};
-		longBylineText: {runs: {}[]};
+		accessibility: TODO;
+		badges: TODO[];
+		channelThumbnail: TODO;
+		lengthText: {accessibility: TODO,simpleText: string;};
+		longBylineText: TextData;
 		menu: MenuRenderers;
 		navigationEndpoint: YtEndpoint&{
-			watchEndpoint: {};
+			watchEndpoint: TODO;
 		};
 		publishedTimeText: {simpleText:  string;};
-		richThumbnail: {movingThumbnailRenderer: {};};
-		shortBylineText: {runs: {}[]};
-		shortViewCountText: {accessibility: {},simpleText: string;};
-		thumbnail: {thumbnails: {}[]};
-		thumbnailOverlays: {}[];
-		title: {accessibility: {},simpleText:  string;};
+		richThumbnail: TODO;
+		shortBylineText: TextData;
+		shortViewCountText: {accessibility: TODO,simpleText: string;};
+		thumbnail: {thumbnails: TODO[]};
+		thumbnailOverlays: TODO[];
+		title: {accessibility: TODO,simpleText:  string;};
 
 		videoId: string;
 
