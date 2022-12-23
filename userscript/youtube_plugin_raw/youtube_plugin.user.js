@@ -2185,7 +2185,6 @@ window.addEventListener("resize",function() {
 });
 function activate_nav() {
 	if(yt_debug_enabled) console.log("activate_nav:fire");
-	VolumeRange.create_if_needed();
 	if(!ytd_player) return;
 	if(!has_ytd_page_mgr()) return;
 	if(ytd_player.active_nav) return;
@@ -2464,15 +2463,12 @@ class VolumeRange {
 	static create_if_needed() {
 		if(this.attached) return;
 		if(!this.enabled) return;
-		if(yt_debug_enabled) console.log("create VolumeRange");
-		this.attach_to_page();
-	}
-	static attach_to_page() {
 		if(!ytd_app) return;
 		if(!ytd_app.__shady_children.masthead) return;
 		let player_masthead=ytd_app.__shady_children.masthead;
 		if(!player_masthead.$) return;
 		if(!ytd_app.volume_range&&audio_gain_controller) {
+			if(yt_debug_enabled) console.log("create VolumeRange");
 			document.head.append(volume_plugin_style_element);
 			ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 			let container_dom_parent=player_masthead.$.container.children.center;
@@ -2481,6 +2477,8 @@ class VolumeRange {
 			else ytd_app.volume_range.attach_to_element(ytd_app);
 			this.attached=true;
 		}
+	}
+	static attach_to_page() {
 	}
 	/**
 	 * @param {number} min
