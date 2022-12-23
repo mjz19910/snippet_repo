@@ -740,9 +740,11 @@ function check_item_keys(real_path,path,keys) {
 			case "compactPlaylistRenderer": break;
 			case "compactRadioRenderer": break;
 			case "compactVideoRenderer": break;
+			case "connectedAppRenderer": break;
 			case "continuationItemRenderer": break;
 			case "gridRenderer": break;
 			case "messageRenderer": break;
+			case "pageIntroductionRenderer": break;
 			case "playlistVideoListRenderer": break;
 			case "promotedSparklesWebRenderer": break;
 			case "reelShelfRenderer": break;
