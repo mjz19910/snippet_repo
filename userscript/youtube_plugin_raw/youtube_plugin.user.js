@@ -877,10 +877,11 @@ class HandleRendererContentItemArray {
 			if("richItemRenderer" in content_item) {
 				return this.filter_for_rich_item_renderer(path,base,content_item);
 			}
-			if("richSectionRenderer" in content_item) {
-				return this.handle_rich_section_renderer(content_item);
-			}
-			return true;
+			if(!("richSectionRenderer" in content_item)) {
+				console.log("extra content_item", content_item);
+				return true
+			};
+			return this.handle_rich_section_renderer(content_item);
 		});
 		if(filtered.length>0) {
 			obj[key]=filtered;
