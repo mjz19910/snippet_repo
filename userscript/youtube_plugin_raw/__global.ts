@@ -155,11 +155,15 @@ declare global {
 		continuationEndpoint: YtEndpoint;
 		ghostCards: GhostCards;
 	};
-	type ContentItemContinuationItemRenderer={
+	type ContinuationItemRenderers={
 		continuationItemRenderer: ContinuationItemRenderer;
 	};
-	type CompactVideoRenderer={};
-	type ContentItemCompactVideoRenderer={
+	type MenuRenderers={menuRenderer: {};};
+	type CompactVideoRenderer={
+		videoId: string;
+		menu: MenuRenderers;
+	};
+	type CompactVideoRenderers={
 		compactVideoRenderer: CompactVideoRenderer;
 	};
 	type RendererContentItem=
@@ -167,7 +171,7 @@ declare global {
 		RichSectionRendererItem|
 		ContentItemCommentsHeaderRenderer|
 		ContentItemCommentThreadRenderer|
-		ContentItemContinuationItemRenderer|
+		ContinuationItemRenderers|
 		never;
 }
 
