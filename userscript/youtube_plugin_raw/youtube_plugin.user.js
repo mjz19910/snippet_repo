@@ -723,6 +723,8 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "richGridRenderer.contents[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			case "continuationItemRenderer": break;
+			case "richItemRenderer": break;
 		} break;
 		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_5_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;

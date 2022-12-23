@@ -43,7 +43,6 @@ declare global {
 // WatchNextContinuationAction
 declare global {
 	type CompactVideoRenderer={};
-	type ContinuationItemRenderer={};
 	type WatchNextItem={
 		compactVideoRenderer: CompactVideoRenderer;
 	}|{
@@ -118,6 +117,31 @@ declare global {
 	type ContentItem1={
 		commentThreadRenderer: CommentThreadRenderer;
 	};
+	interface TrackedEndpoint {
+		clickTrackingParams: string;
+	}
+	interface CommandToken {
+		token: string;
+	}
+	interface YtCommand extends CommandToken {
+		request: string;
+	}
+	type WebCommandMetadata={
+		sendPost: boolean;
+		apiUrl: string;
+	};
+	type CommandMetadata={
+		webCommandMetadata: WebCommandMetadata;
+	};
+	interface YtEndpoint extends TrackedEndpoint {
+		commandMetadata: CommandMetadata;
+		continuationCommand: YtCommand;
+	}
+	type ContinuationItemRenderer={
+		trigger: string;
+		continuationEndpoint: YtEndpoint;
+	};
+	type _ContinuationItemRenderer={continuationItemRenderer:ContinuationItemRenderer};
 	type RendererContentItem=
 		RichItemRendererItem|
 		RichSectionRendererItem|
