@@ -858,22 +858,6 @@ class HandleRendererContentItemArray {
 		let filtered=arr.filter((content_item) => {
 			let keys=Object.keys(content_item);
 			check_item_keys(path,`${path}[]`,keys);
-			let return_=null;
-			for(let key of keys) {
-				switch(key) {
-					case "commentsHeaderRenderer": break;
-					case "commentThreadRenderer": return_=true; break;
-					case "compactPlaylistRenderer": continue;
-					case "compactRadioRenderer": continue;
-					case "compactVideoRenderer": break;
-					case "continuationItemRenderer": break;
-					case "itemSectionRenderer": return_=true; break;
-					case "richItemRenderer": break;
-					case "richSectionRenderer": break;
-					default: console.log("RendererContentItem: new item type",content_item); break;
-				}
-			}
-			if(return_!==null) return true;
 			if("richItemRenderer" in content_item) {
 				return this.filter_for_rich_item_renderer(path,base,content_item);
 			}
