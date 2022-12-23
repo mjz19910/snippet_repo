@@ -223,9 +223,9 @@ type SignalServiceEndpoints={
 type ServiceEndpoint=
 	ServiceEndpointBase<SignalServiceEndpoints>|
 	ServiceEndpointBase<{playlistEditEndpoint: {};}>|
-	ServiceEndpointBase<{addToPlaylistServiceEndpoint: {}}>|
+	ServiceEndpointBase<{addToPlaylistServiceEndpoint: {};}>|
 	ServiceEndpointBase<{feedbackEndpoint: {};}>|
-	ServiceEndpointBase<{getReportFormEndpoint: {}}>;
+	ServiceEndpointBase<{getReportFormEndpoint: {};}>;
 type MenuServiceItemRenderer={
 	icon: Icon;
 	serviceEndpoint: ServiceEndpoint;
@@ -291,7 +291,14 @@ type SimpleText={
 	accessibility?: Accessibility;
 	simpleText: string;
 };
-
+type Thumbnail={
+	url: string;
+	width: number;
+	height: number;
+};
+type ThumbnailHolder={
+	thumbnails: Thumbnail[];
+};
 type CompactVideoRenderer={
 	accessibility: Accessibility;
 	badges: MetadataBadgeRenderers[];
@@ -304,7 +311,7 @@ type CompactVideoRenderer={
 	richThumbnail: TODO;
 	shortBylineText: TextRuns;
 	shortViewCountText: SimpleText;
-	thumbnail: {thumbnails: TODO[];};
+	thumbnail: ThumbnailHolder;
 	thumbnailOverlays: TODO[];
 	title: SimpleText;
 	trackingParams: string;
