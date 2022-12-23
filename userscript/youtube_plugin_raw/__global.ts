@@ -294,13 +294,13 @@ type Thumbnail={
 	width: number;
 	height: number;
 };
-class ThumbnailHolder {
-	constructor(
-		public thumbnails: Thumbnail[]
-	) {};
+interface ThumbnailHolder {
+	thumbnails: Thumbnail[];
 };
 type ThumbnailOverlay={};
-class MovingThumbnailDetails extends ThumbnailHolder {};
+interface MovingThumbnailDetails extends ThumbnailHolder {
+	logAsMovingThumbnail: boolean;
+};
 type MovingThumbnailRenderer={
 	"movingThumbnailDetails": MovingThumbnailDetails;
 	"enableHoveredLogging": true,
