@@ -817,6 +817,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
+	/** @arg {RichSectionRendererItem} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
@@ -877,6 +878,7 @@ class HandleRendererContentItemArray {
 				return this.filter_for_rich_item_renderer(path,base,content_item);
 			}
 			if("richSectionRenderer" in content_item) {
+				return this.handle_rich_section_renderer(content_item);
 			}
 			return true;
 		});
