@@ -673,14 +673,15 @@ function check_item_keys(real_path,path,keys) {
 	let dyn_path_arr={get arr(){return path_arr}};
 	path=path.replace("continuationItems[]","contents[]");
 	switch(path) {
-		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": break;
-		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": break;
-		case "tabRenderer.content.richGridRenderer.contents[]": break;
 		case "appendContinuationItemsAction": break;
 		case "content.richGridRenderer.masthead": break;
 		case "itemSectionRenderer.contents[]": break;
 		case "itemSectionRenderer": break;
 		case "reloadContinuationItemsCommand": break;
+		case "richItemRenderer":
+		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer.content": break;
+		case "tabRenderer.content.richGridRenderer.contents[].richItemRenderer": break;
+		case "tabRenderer.content.richGridRenderer.contents[]": break;
 		case "tabRenderer.content.richGridRenderer": break;
 		default: console.log("item_keys_tag [ci_1_10]: new path=%o",path,dyn_path_arr); break;
 	}
