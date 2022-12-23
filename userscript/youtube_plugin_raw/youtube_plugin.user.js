@@ -1828,7 +1828,7 @@ async function async_plugin_init(event) {
 			}
 			let new_elements=get_new_video_element_list(element_list,list);
 			if(new_elements.length>0) {
-				let controller=AudioGainController.create_if_needed();
+				let controller=AudioGainController.get_instance();
 				controller.attach_element_list(new_elements);
 			}
 			if(!first_run&&new_elements.length>0) {
@@ -2345,7 +2345,7 @@ class AudioGainController {
 			this.media_element_source_list.push(media_element_source);
 		}
 	}
-	static create_if_needed() {
+	static get_instance() {
 		if(!window.inject_api) throw new Error("Missing inject_api");
 		if(audio_gain_controller) return audio_gain_controller;
 		audio_gain_controller=new AudioGainController;
