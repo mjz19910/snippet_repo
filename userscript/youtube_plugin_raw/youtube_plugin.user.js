@@ -797,7 +797,7 @@ class HandleRendererContentItemArray {
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
 		check_item_keys(path,"richItemRenderer.content",Object.keys(renderer.content));
-		if(renderer.content.adSlotRenderer) {
+		if('adSlotRenderer' in renderer.content) {
 			if(base.debug) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
 		}
