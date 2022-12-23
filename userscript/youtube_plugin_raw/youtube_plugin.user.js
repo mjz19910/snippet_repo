@@ -698,6 +698,7 @@ function check_item_keys(real_path,path,keys) {
 	switch(path) {
 		case "appendContinuationItemsAction.contents[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
+			case "compactPlaylistRenderer": break;
 			case "compactVideoRenderer": break;
 		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
