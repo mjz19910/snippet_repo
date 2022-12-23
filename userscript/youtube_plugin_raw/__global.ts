@@ -7,7 +7,7 @@ declare global {
 	}
 	interface YTDPlayerElement extends HTMLElement {
 		active_nav: boolean;
-		player_:{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null;
+		player_: {getVideoData(): {video_id: string; eventId: undefined; title: any; author: any;}; getPlayerState(): {};}|null;
 		playerResolver_: {
 			promise: Promise<void>;
 		};
@@ -110,7 +110,18 @@ declare global {
 	type RichSectionRendererItem={
 		richSectionRenderer: RichSectionRenderer;
 	};
-	type RendererContentItem=RichItemRendererItem|RichSectionRendererItem;
+	type ContentItem0={
+		commentsHeaderRenderer: {};
+	};
+	type ContentItem1={
+		commentThreadRenderer: {};
+	};
+	type RendererContentItem=
+		RichItemRendererItem|
+		RichSectionRendererItem|
+		ContentItem0|
+		ContentItem1|
+		never;
 }
 
 // ResState
