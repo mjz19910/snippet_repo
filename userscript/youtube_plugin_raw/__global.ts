@@ -84,7 +84,23 @@ declare global {
 	type ContinuationItem=RendererContentItem;
 }
 
-type AdSlotRenderer={};
+type AdSlotRenderer={
+	adSlotMetadata: {};
+	fulfillmentContent: {};
+	enablePacfLoggingWeb: boolean;
+};
+type VideoRenderer={};
+type RadioRenderer={};
+type AdSlotRendererHolder={
+	adSlotRenderer: AdSlotRenderer;
+};
+type VideoRendererHolder={
+	videoRenderer: VideoRenderer;
+};
+
+type RadioRendererHolder={
+	radioRenderer: RadioRenderer;
+};
 
 // RichItemRenderer
 declare global {
