@@ -365,7 +365,7 @@ type ThumbnailOverlay={
 }|{
 	thumbnailOverlayToggleButtonRenderer: ThumbnailOverlayToggleButtonRenderer;
 }|{
-	"thumbnailOverlayNowPlayingRenderer": ThumbnailOverlayNowPlayingRenderer
+	thumbnailOverlayNowPlayingRenderer: ThumbnailOverlayNowPlayingRenderer
 };
 interface MovingThumbnailDetails extends ThumbnailHolder {
 	logAsMovingThumbnail: boolean;
