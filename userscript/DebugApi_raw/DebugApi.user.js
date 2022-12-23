@@ -4720,6 +4720,7 @@ function cast_to_record_with_string_type(x) {
 function is_object_msg(x) {
 	if(!x?.data) return false;
 	if(typeof x.data.data!=='object') return false;
+	if(x.data.data===null) return false;
 	return true;
 }
 
