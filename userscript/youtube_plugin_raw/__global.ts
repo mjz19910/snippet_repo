@@ -259,12 +259,10 @@ type NavigationEndpoint={
 	watchEndpoint?: WatchEndpoint;
 	browseEndpoint?: BrowseEndpoint;
 };
-type TODO={}&never;
 type BrowseEndpoint={
 	browseId: string;
 	canonicalBaseUrl: string;
 };
-
 type TextRun={
 	text: string;
 	navigationEndpoint?: NavigationEndpoint;
