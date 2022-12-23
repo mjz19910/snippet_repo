@@ -133,10 +133,17 @@ declare global {
 	type ContinuationCommand =CommandToken&{
 		request: string;
 	}
-	type WebCommandMetadata={
+	type WebCommandMetadata0={
 		sendPost: boolean;
 		apiUrl: string;
 	};
+	type WebCommandMetadata1={
+		apiUrl: string;
+		rootVe: number;
+		url: string;
+		webPageType: string;
+	};
+	type WebCommandMetadata=WebCommandMetadata0|WebCommandMetadata1;
 	type CommandMetadata={
 		webCommandMetadata: WebCommandMetadata;
 	};
@@ -164,8 +171,21 @@ declare global {
 	type TrackingParams={
 		trackingParams: string;
 	};
+	type BrowseEndpoint={
+		browseId: string;
+		canonicalBaseUrl: string;
+	}
+	type NavigationEndpointsData={
+		watchEndpoint: TODO;
+	}|{
+		browseEndpoint: BrowseEndpoint;
+	};
+	type NavigationEndpoint={};
 	type TODO={};
-	type TextRun={};
+	type TextRun={
+		navigationEndpoint: NavigationEndpoint;
+		text: string;
+	};
 	type TextData={
 		runs: TextRun[];
 	};
