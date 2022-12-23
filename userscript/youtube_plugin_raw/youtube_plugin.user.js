@@ -1731,7 +1731,7 @@ function ui_css_toggle_click_handler() {
 /** @arg {HTMLElement} element */
 function on_ytd_app(element) {
 	const element_id="ytd-app";
-	console.log(`on ${element_id}`);
+	if(yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
