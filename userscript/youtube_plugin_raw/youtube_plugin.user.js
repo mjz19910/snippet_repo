@@ -977,6 +977,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	blacklisted_item_sections=new Map([
 		["backstagePostThreadRenderer",false],
+		["channelAboutFullMetadataRenderer",false],
 		["channelFeaturedContentRenderer",false],
 		["channelRenderer",false],
 		["commentsEntryPointHeaderRenderer",false],
