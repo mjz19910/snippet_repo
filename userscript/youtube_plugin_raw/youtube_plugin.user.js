@@ -756,11 +756,14 @@ class HandleRendererContentItemArray {
 	 * @param {"continuationItems"|"contents"} key
 	 */
 	static replace_array(base,path,obj,key) {
+		if(path.includes("tabRenderer")) {
+			path=path.slice(path.indexOf("tabRenderer"));
+		}
 		let arr=obj[key];
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
 			let keys=Object.keys(content_item);
-			check_item_keys(path,`${path}.${key}[]`,keys);
+			check_item_keys(path,`${path}[]`,keys);
 			let return_=null;
 			for(let key of keys) {
 				switch(key) {
