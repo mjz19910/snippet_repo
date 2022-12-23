@@ -156,6 +156,7 @@
       "primordials",
       "printf",
       "probj",
+      "protobuf",
       "protos",
       "proxied",
       "punct",
