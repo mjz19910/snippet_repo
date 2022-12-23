@@ -698,33 +698,33 @@ function check_item_keys(real_path,path,keys) {
 	switch(path) {
 		default: console.log("item_keys_tag [ci_4_10_]: content path",path,real_path_arr_dyn); break;
 		case "appendContinuationItemsAction.continuationItems[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_2_10_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "continuationItemRenderer": break;
 			case "compactPlaylistRenderer": break;
 			case "compactVideoRenderer": break;
 		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_2_11_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "continuationItems": break;
 			case "targetId": break;
 		} break;
 		case "richItemRenderer.content": for(let key of keys) switch(key) {
+			default: console.log("item_keys_tag [ci_2_14_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
 			case "reelItemRenderer": break;
-			default: console.log("item_keys_tag [ci_2_14_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 		} break;
 		case "richItemRenderer": for(let key of keys) switch(key) {
+			default: console.log("item_keys_tag [ci_2_13_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "content": break;
 			case "trackingParams": break;
-			default: console.log("item_keys_tag [ci_2_13_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 		} break;
 		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
+			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
-			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 		} break;
 		case "richGridRenderer": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_15_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
