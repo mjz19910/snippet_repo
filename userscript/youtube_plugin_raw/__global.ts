@@ -3,6 +3,17 @@ declare global {
 	interface YtdPageManagerElementInterface extends HTMLElement {
 		getCurrentPage(): YtCurrentPage;
 	}
+	class YTDPlayerElement extends HTMLElement {
+		active_nav: boolean;
+		player_:{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null;
+		playerResolver_: {
+			promise: Promise<void>;
+		};
+		init_nav: boolean;
+		is_watch_page_active: boolean;
+		pause(): void;
+		play(): void;
+	}
 	interface YtCurrentPage extends HTMLElement {
 		getPlayer(): YTDPlayerElement;
 		__has_theater_handler_plugin: boolean|undefined;

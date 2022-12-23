@@ -31,6 +31,10 @@ function save_new_map(key,map) {
 	inject_api.saved_maps.set(key,map);
 }
 
+class SavedObjects {}
+
+inject_api.saved_objects=new SavedObjects;
+
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
@@ -1086,6 +1090,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @arg {{[str:string]:{}}} data
 	 */
 	handle_any_data(path,data) {
+		inject_api.saved_maps;
 		this.default_iter(path,data);
 	}
 	/**
@@ -1598,23 +1603,6 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-class YTDPlayerElement extends HTMLElement {
-	static element_selector="ytd-player";
-	/** @param {Document|Element} n */
-	static sel(n) {
-		return get_html_elements(n,this.element_selector);
-	}
-	active_nav=false;
-	/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
-	player_=null;
-	playerResolver_={
-		promise: Promise.resolve()
-	};
-	init_nav=false;
-	is_watch_page_active=false;
-	pause() {}
-	play() {}
-}
 /**
  * @type {YTDPlayerElement | null}
  */
@@ -1854,7 +1842,7 @@ async function async_plugin_init(event) {
 		x: {
 			if(ytd_player) break x;
 			if(!ytd_watch_flexy) break x;
-			const target_element=YTDPlayerElement.sel(ytd_watch_flexy)[0];
+			const target_element=get_html_elements(ytd_watch_flexy,"ytd-player");
 			if(!target_element) break x;
 			found_element_count++;
 			on_ytd_player(target_element);
@@ -2650,3 +2638,11 @@ function main() {
 }
 main();
 
+function get_exports() {
+	return exports;
+}
+
+if(typeof exports==='object') {
+	let exports=get_exports();
+	exports.SavedObjects=SavedObjects;
+}
