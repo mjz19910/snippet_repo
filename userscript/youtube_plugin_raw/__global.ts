@@ -124,13 +124,13 @@ declare global {
 	type ContentItemCommentThreadRenderer={
 		commentThreadRenderer: CommentThreadRenderer;
 	};
-	interface YtClickTracked {
+	type YtClickTracked={
 		clickTrackingParams: string;
 	}
-	interface CommandToken {
+	type CommandToken={
 		token: string;
 	}
-	interface YtCommand extends CommandToken {
+	type ContinuationCommand =CommandToken&{
 		request: string;
 	}
 	type WebCommandMetadata={
@@ -144,7 +144,7 @@ declare global {
 		commandMetadata: CommandMetadata;
 	}
 	type ContinuationEndpoint=YtEndpoint&{
-		continuationCommand: YtCommand;
+		continuationCommand: ContinuationCommand;
 	}
 	type GhostGridRenderer={
 		rows: number;
