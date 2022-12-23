@@ -1,3 +1,5 @@
+import {SavedObjects} from "./youtube_plugin.user";
+
 // YtdPageManagerElement
 declare global {
 	interface YtdPageManagerElementInterface extends HTMLElement {
@@ -57,10 +59,17 @@ declare global {
 	}
 }
 
-// InjectApi['saved_maps']
+// saved_maps
 declare global {
 	interface InjectApi {
 		saved_maps?: Map<string,Map<string,{}>>;
+	}
+}
+
+// saved_objects
+declare global {
+	interface InjectApi {
+		saved_objects?: SavedObjects;
 	}
 }
 
