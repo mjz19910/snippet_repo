@@ -1,4 +1,4 @@
-import {SavedObjects} from "./youtube_plugin.user";
+import {SavedData} from "./youtube_plugin.user";
 
 // YtdPageManagerElement
 declare global {
@@ -69,7 +69,7 @@ declare global {
 // saved_objects
 declare global {
 	interface InjectApi {
-		saved_objects?: SavedObjects;
+		saved_data?: SavedData;
 	}
 }
 

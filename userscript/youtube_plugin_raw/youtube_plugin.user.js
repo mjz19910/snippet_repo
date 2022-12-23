@@ -31,12 +31,12 @@ function save_new_map(key,map) {
 	inject_api.saved_maps.set(key,map);
 }
 
-class SavedObjects {
+class SavedData {
 	any_data={};
 }
 
-let saved_objects=new SavedObjects;
-inject_api.saved_objects=saved_objects;
+let saved_data=new SavedData;
+inject_api.saved_data=saved_data;
 
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
@@ -1093,7 +1093,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @arg {{[str:string]:{}}} data
 	 */
 	handle_any_data(path,data) {
-		saved_objects.any_data=data;
+		saved_data.any_data=data;
 		this.default_iter(path,data);
 	}
 	/**
@@ -2647,5 +2647,5 @@ function get_exports() {
 
 if(typeof exports==='object') {
 	let exports=get_exports();
-	exports.SavedObjects=SavedObjects;
+	exports.SavedData=SavedData;
 }
