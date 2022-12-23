@@ -9,3 +9,7 @@ message Token {
 message Int32 {
 	optional int32 a1 = 1;
 }
+message Dec_A {
+	repeated int32 a1 = 1;
+}
+message _O {}
