@@ -1610,13 +1610,9 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-/**
- * @type {YTDPlayerElement | null}
- */
+/** @type {YTDPlayerElement | null} */
 let ytd_player=null;
-/**
- * @param {HTMLElement} element
- */
+/** @arg {HTMLElement} element */
 function on_ytd_player(element) {
 	const element_id="ytd-player";
 	console.log(`on ${element_id}`);
