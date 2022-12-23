@@ -986,7 +986,7 @@ class FilterHandlers extends IterateApiResultBase {
 	reloadContinuationItemsCommand(path,command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
 		if(this.handleAppendContinuationItemsAction(path,command)) return;
-		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
+		HandleRendererContentItemArray.replace_array(this,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
 	}
 	blacklisted_item_sections=new Map([
 		["backstagePostThreadRenderer",false],
