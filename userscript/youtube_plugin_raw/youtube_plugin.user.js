@@ -728,7 +728,9 @@ function check_item_keys(real_path,path,keys) {
 			case "channelAboutFullMetadataRenderer": break;
 			case "channelFeaturedContentRenderer": break;
 			case "continuationItemRenderer": break;
+			case "gridRenderer": break;
 			case "messageRenderer": break;
+			case "playlistVideoListRenderer": break;
 			case "reelShelfRenderer": break;
 			case "shelfRenderer": break;
 			default: console.log("item_keys_tag [ci_3_12_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
