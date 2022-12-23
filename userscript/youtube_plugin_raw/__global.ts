@@ -298,22 +298,26 @@ interface ThumbnailHolder {
 	thumbnails: Thumbnail[];
 };
 type ACTION_ADD_VIDEO={
-	"addedVideoId": string;
-	"action": "ACTION_ADD_VIDEO";
+	addedVideoId: string;
+	action: "ACTION_ADD_VIDEO";
 };
-type _ACTIONS=ACTION_ADD_VIDEO;
+type ACTION_REMOVE_VIDEO_BY_VIDEO_ID={
+	action: "ACTION_REMOVE_VIDEO_BY_VIDEO_ID";
+	removedVideoId: string;
+}
+type _ACTIONS=ACTION_ADD_VIDEO|ACTION_REMOVE_VIDEO_BY_VIDEO_ID;
 
 type PlaylistEditEndpoint={
 	playlistId: string;
-	"actions": _ACTIONS[];
+	actions: _ACTIONS[];
 };
 
 type ThumbnailOverlayToggleButtonRenderer={
-	isToggled?: false;
-	"untoggledIcon": Icon;
-	"toggledIcon": Icon;
-	"untoggledTooltip": string;
-	"toggledTooltip": string;
+	isToggled?: boolean;
+	untoggledIcon: Icon;
+	toggledIcon: Icon;
+	untoggledTooltip: string;
+	toggledTooltip: string;
 	untoggledServiceEndpoint: {
 		clickTrackingParams: string;
 		commandMetadata: CommandMetadata;
@@ -321,33 +325,18 @@ type ThumbnailOverlayToggleButtonRenderer={
 		signalServiceEndpoint?: SignalServiceEndpoint;
 	};
 	toggledServiceEndpoint?: {
-		"clickTrackingParams": "CPwBEPnnAxgDIhMIy9r7_bWP_AIV9E1MCB3ggAxe";
-		"commandMetadata": CommandMetadata;
-		"playlistEditEndpoint": {
-			"playlistId": "WL";
-			"actions": [
-				{
-					"action": "ACTION_REMOVE_VIDEO_BY_VIDEO_ID";
-					"removedVideoId": string;
-				}
-			];
-		};
+		clickTrackingParams: string;
+		commandMetadata: CommandMetadata;
+		playlistEditEndpoint: PlaylistEditEndpoint;
 	};
-	"untoggledAccessibility": Accessibility;
-	"toggledAccessibility": Accessibility;
-	"trackingParams": string;
+	untoggledAccessibility: Accessibility;
+	toggledAccessibility: Accessibility;
+	trackingParams: string;
 };
 
 type ThumbnailOverlayTimeStatusRenderer={
-	"text": {
-		"accessibility": {
-			"accessibilityData": {
-				"label": "2 hours, 49 minutes, 27 seconds";
-			};
-		};
-		"simpleText": "2:49:27";
-	};
-	"style": "DEFAULT";
+	text: SimpleText;
+	style: "DEFAULT";
 };
 
 type ThumbnailOverlayResumePlaybackRenderer={
