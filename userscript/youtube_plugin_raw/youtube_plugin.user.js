@@ -1842,7 +1842,7 @@ async function async_plugin_init(event) {
 		x: {
 			if(ytd_player) break x;
 			if(!ytd_watch_flexy) break x;
-			const target_element=get_html_elements(ytd_watch_flexy,"ytd-player");
+			const target_element=get_html_elements(ytd_watch_flexy,"ytd-player")[0];
 			if(!target_element) break x;
 			found_element_count++;
 			on_ytd_player(target_element);
