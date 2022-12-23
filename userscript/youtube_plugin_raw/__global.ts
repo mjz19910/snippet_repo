@@ -126,13 +126,13 @@ declare global {
 	};
 	type YtClickTracked={
 		clickTrackingParams: string;
-	}
+	};
 	type CommandToken={
 		token: string;
-	}
-	type ContinuationCommand =CommandToken&{
+	};
+	type ContinuationCommand=CommandToken&{
 		request: string;
-	}
+	};
 	type WebCommandMetadata0={
 		sendPost: boolean;
 		apiUrl: string;
@@ -147,12 +147,15 @@ declare global {
 	type CommandMetadata={
 		webCommandMetadata: WebCommandMetadata;
 	};
-	type YtEndpoint=YtClickTracked&{
+	type YtEndpoint={
+		clickTrackingParams: string;
 		commandMetadata: CommandMetadata;
-	}
-	type ContinuationEndpoint=YtEndpoint&{
+	};
+	type ContinuationEndpoint={
+		clickTrackingParams: string;
+		commandMetadata: CommandMetadata;
 		continuationCommand: ContinuationCommand;
-	}
+	};
 	type GhostGridRenderer={
 		rows: number;
 	};
@@ -174,7 +177,7 @@ declare global {
 	type BrowseEndpoint={
 		browseId: string;
 		canonicalBaseUrl: string;
-	}
+	};
 	type NavigationEndpointsData={
 		watchEndpoint: TODO;
 	}|{
@@ -200,13 +203,13 @@ declare global {
 		navigationEndpoint: YtEndpoint&{
 			watchEndpoint: TODO;
 		};
-		publishedTimeText: {simpleText:  string;};
+		publishedTimeText: {simpleText: string;};
 		richThumbnail: TODO;
 		shortBylineText: TextData;
 		shortViewCountText: {accessibility: TODO,simpleText: string;};
-		thumbnail: {thumbnails: TODO[]};
+		thumbnail: {thumbnails: TODO[];};
 		thumbnailOverlays: TODO[];
-		title: {accessibility: TODO,simpleText:  string;};
+		title: {accessibility: TODO,simpleText: string;};
 
 		videoId: string;
 
