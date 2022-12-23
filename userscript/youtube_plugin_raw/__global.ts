@@ -140,7 +140,7 @@ declare global {
 	type CommandMetadata={
 		webCommandMetadata: WebCommandMetadata;
 	};
-	interface YtEndpoint extends TrackedEndpoint {
+	interface ContinuationEndpoint extends TrackedEndpoint {
 		commandMetadata: CommandMetadata;
 		continuationCommand: YtCommand;
 	}
@@ -152,7 +152,7 @@ declare global {
 	};
 	type ContinuationItemRenderer={
 		trigger: string;
-		continuationEndpoint: YtEndpoint;
+		continuationEndpoint: ContinuationEndpoint;
 		ghostCards: GhostCards;
 	};
 	type ContinuationItemRenderers={
