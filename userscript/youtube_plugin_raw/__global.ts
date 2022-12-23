@@ -215,9 +215,14 @@ declare global {
 	type TextData={
 		runs: TextRun[];
 	};
-
+	type AccessibilityData={
+		label: string;
+	};
+	type Accessibility={
+		accessibilityData: {};
+	};
 	type CompactVideoRenderer={
-		accessibility: TODO;
+		accessibility: Accessibility;
 		badges: TODO[];
 		channelThumbnail: TODO;
 		lengthText: {accessibility: TODO,simpleText: string;};
