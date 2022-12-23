@@ -721,6 +721,16 @@ function check_item_keys(real_path,path,keys) {
 			case "videoRenderer": break;
 			default: console.log("item_keys_tag [ci_3_10_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 		} break;
+		case "richGridRenderer": for(let key of keys) switch(key) {
+			case "contents": break;
+			case "trackingParams": break;
+			case "header": break;
+			case "targetId": break;
+			case "reflowOptions": break;
+			case "style": break;
+			case "masthead": break;
+			default: console.log("item_keys_tag [ci_3_15_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
+		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_11_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
 			case "backstagePostThreadRenderer": break;
@@ -762,16 +772,6 @@ function check_item_keys(real_path,path,keys) {
 			case "slot": break;
 			case "targetId": break;
 			default: console.log("item_keys_tag [ci_3_14_]: iter content key "+path+" ["+key+"]",dyn_path_arr); break;
-		} break;
-		case "richGridRenderer": for(let key of keys) switch(key) {
-			case "contents": break;
-			case "trackingParams": break;
-			case "header": break;
-			case "targetId": break;
-			case "reflowOptions": break;
-			case "style": break;
-			case "masthead": break;
-			default: console.log("item_keys_tag [ci_3_15_]: iter content key "+path+" ["+key+"]",dyn_path_arr);
 		} break;
 		default: console.log("item_keys_tag [ci_4_10_]: content path",path,dyn_path_arr); break;
 	}
