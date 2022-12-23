@@ -13,12 +13,12 @@ const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 var protobuf;
 protobuf=require('protobufjs');
 async function run() {
-let root=await protobuf.load("yt_token.proto");
-var A=root.lookupType("A");
-/** @type {protobuf.Message<YtTokenProtoMessage>} */
-let message=A.decode(token_binary);
-let obj=A.toObject(message);
-console.log(obj);
+	let root=await protobuf.load("yt_token.proto");
+	var A=root.lookupType("A");
+	/** @type {protobuf.Message<YtTokenProtoMessage>} */
+	let message=A.decode(token_binary);
+	let obj=A.toObject(message);
+	console.log(obj);
 }
 if(typeof exports==="object") {
 	exports.token_binary=token_binary;
