@@ -396,7 +396,7 @@ export type CompactVideoRendererHolder={
 	compactVideoRenderer: CompactVideoRenderer;
 };
 
-type CompactPlaylistRenderer={_tag:""};
+type CompactPlaylistRenderer={};
 type CompactPlaylistRendererHolder={
 	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
