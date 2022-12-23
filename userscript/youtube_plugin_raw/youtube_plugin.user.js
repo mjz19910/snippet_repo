@@ -1679,6 +1679,14 @@ let on_yt_navigate_finish=[];
 function log_page_type_change(event) {
 	let {detail}=event;
 	if(!detail) return;
+	setTimeout(() => {
+		on_page_type_changed(detail);
+	});
+}
+on_yt_navigate_finish.push(log_page_type_change);
+
+/** @arg {YTNavigateFinishEvent['detail']} detail */
+function on_page_type_changed(detail) {
 	if(last_page_type!==detail.pageType) {
 		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
 		let nav_load_str=`last_page_type_change={current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
@@ -1687,13 +1695,10 @@ function log_page_type_change(event) {
 		last_page_type=detail.pageType;
 	}
 }
-on_yt_navigate_finish.push(log_page_type_change);
 
-/**
- * @type {YtdAppElement | null}
- */
-// yt display app
+/** @type {YtdAppElement|null} */
 let ytd_app=null;
+
 let vis_imm=false;
 let css_str=`
 	ytd-watch-next-secondary-results-renderer {
