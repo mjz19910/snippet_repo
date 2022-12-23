@@ -725,6 +725,7 @@ function check_item_keys(real_path,path,keys) {
 		} break;
 		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
 			case "backstagePostThreadRenderer": break;
+			case "channelAboutFullMetadataRenderer": break;
 			case "channelFeaturedContentRenderer": break;
 			case "continuationItemRenderer": break;
 			case "messageRenderer": break;
