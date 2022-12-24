@@ -1,7 +1,9 @@
 import {readFileSync, writeFileSync} from 'fs';
 import {resolve} from 'path';
 import {dirname} from 'path';
+import {Root} from 'protobufjs';
 import {fileURLToPath} from 'url';
+import {ProtoBufTypeA} from './ProtoBufTypeA';
 
 const __dirname=dirname(fileURLToPath(import.meta.url));
 
@@ -15,30 +17,14 @@ const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 async function run() {
 	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
 	let root=await protobuf.load(r("../protobuf/bin0.proto"));
+	parse_types(root);
+}
+run();
+function parse_types(root: Root): void {
 	var Type=root.lookupType("A");
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('A.typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
 	let message=Type.decode(token_binary.subarray(4));
-	type ProtoBufTypeC={
-		type: number;
-		data: Uint8Array;
-	};
-
-	type ProtoBufTypeA={
-		videoId: string;
-		playlistId:string;
-		location: string;
-		token1: string;
-		token2: string;
-		type_C: ProtoBufTypeC;
-		a3: number;
-		a7: number;
-		a14: number;
-		a24: string;
-		a25: number;
-		a28: number;
-		a47: number;
-	};
 	function into_type<T,U>(obj:T|U): U {
 		return obj as U;
 	}
@@ -62,8 +48,8 @@ async function run() {
 	id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('base64(A.token1).typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
 	id_arr=new Uint8Array(token_binary.slice(4,7).buffer);
-	console.log('base64(A.token1).extra=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
-	function decode_as(message_type: string,data: Uint8Array) {
+	console.log('base64(A.token1).extra',id_arr);
+	function decode_as(message_type: string|string[],data: Uint8Array) {
 		let type=root.lookupType(message_type);
 		let message=type.decode(data);
 		let obj=type.toObject(message,{
@@ -72,7 +58,7 @@ async function run() {
 		return obj;
 	}
 	let tmp_data=decode_as("D",token_binary_2.slice(4));
-	console.log(tmp_data);
+	console.log('as D',tmp_data.data);
 	let message_2=Type_2.decode(token_binary_2.slice(7));
 	let obj_2=Type_2.toObject(message_2,{
 		longs: Number,
@@ -101,4 +87,3 @@ async function run() {
 	let items=extract_items(description);
 	console.log(items[0]);
 }
-run();
