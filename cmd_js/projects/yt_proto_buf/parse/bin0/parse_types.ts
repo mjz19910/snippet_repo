@@ -9,7 +9,7 @@ export async function parse_types(imp:Bin0Imports): Promise<void> {
 	let root=await protobuf.load(r("protobuf/bin0.proto"));
 	let proto_A_type=root.lookupType("A");
 	let obj=await useTypeA(proto_A_type);
-	useTypeD(root,obj);
+	useTypeT1A(root,obj);
 }
 
 // use types
@@ -83,18 +83,18 @@ import {DesType} from './DesType.js';
 import {extract_items} from './extract_items.js';
 import {get_token_data} from './get_token_data.js';
 
-export type ProtoBufTypeD={
+export type ProtoBufTypeT1A={
 	data: {
 		description: DesType;
 	};
 };
 
-export function useTypeD(root: Root,obj: ProtoBufTypeA) {
+export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let token_binary=get_token_data(obj.token1);
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	let typeid=as_base64_typeid(id_arr,0);
 	console.log('typeid=%o for base64(A.token1)',typeid);
-	let tmp_data=decode_as_type<ProtoBufTypeD>(root,"t1_A",token_binary.slice(4));
+	let tmp_data=decode_as_type<ProtoBufTypeT1A>(root,"t1_A",token_binary.slice(4));
 	let description: DesType=tmp_data.data.description;
 	let items=extract_items(description);
 	console.log(items[0]);
