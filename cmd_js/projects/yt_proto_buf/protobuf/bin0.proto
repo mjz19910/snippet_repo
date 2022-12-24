@@ -18,7 +18,7 @@ message C {
 	required int32 type=5;
 	required bytes data=8;
 }
-message D {
+message t1_A {
 	optional t1_B data = 1;
 }
 message t1_B {
