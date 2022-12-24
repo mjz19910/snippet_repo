@@ -1,4 +1,4 @@
-import {ProtoBufTypeC} from './ProtoBufTypeC';
+import {ProtoBufTypeC} from './ProtoBufTypeC.js';
 
 export type ProtoBufTypeA={
 	videoId: string;

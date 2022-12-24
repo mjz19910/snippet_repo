@@ -1,52 +1,40 @@
-import {readFileSync, writeFileSync} from 'fs';
+import {readFile} from 'fs/promises';
 import {resolve} from 'path';
 import {dirname} from 'path';
 import {Root} from 'protobufjs';
 import {fileURLToPath} from 'url';
-import {into_type} from './into_type';
-import {ProtoBufTypeA} from './ProtoBufTypeA';
+import {get_token_data} from './get_token_data.js';
+import {ProtoBufTypeA} from './ProtoBufTypeA.js';
+import {useTypeA} from './useTypeA.js';
 
 const __dirname=dirname(fileURLToPath(import.meta.url));
 
-let token_enc=readFileSync(resolve(__dirname,"../binary/bin0.txt")).toString();
-function r(path: string) {
-	return resolve(__dirname,path);
+export function r(path: string) {
+	return resolve(__dirname,"..","..",path);
 }
-let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
-const text=atob(base64_enc);
-const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 async function run() {
 	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
-	let root=await protobuf.load(r("../protobuf/bin0.proto"));
-	parse_types(root);
+	let root=await protobuf.load(r("protobuf/bin0.proto"));
+	return parse_types(root);
 }
 run();
-function parse_types(root: Root): void {
-	var Type=root.lookupType("A");
-	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
-	console.log('A.typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
-	let message=Type.decode(token_binary.subarray(4));
-	let untyped_obj=Type.toObject(message,{
-		longs: Number,
-		arrays: true,
-	});
-	let obj: ProtoBufTypeA=into_type<typeof untyped_obj,ProtoBufTypeA>(untyped_obj);
-	let {
-		videoId,playlistId,token1,token2,location,
-		type_C,
-		a3,a7,a14,a24,a25,a28,a47,
-		...obj_other
-	}=obj;
-	console.assert(Object.keys(obj_other).length===0, "no extra keys",obj_other);
-	let base64_enc_2=obj.token1.replaceAll("_","/").replaceAll("-","+");
-	writeFileSync(r("../binary/bin0_token1.txt"),base64_enc_2);
-	const text_2=atob(base64_enc_2);
-	let token_binary_2=new Uint8Array([...text_2].map(e => e.charCodeAt(0)));
+async function parse_types(root: Root): Promise<void> {
+	let file=await readFile(r("binary/bin0.txt"));
+	let token_enc=file.toString();
+	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
+	const text=atob(base64_enc);
+	const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
+	let {obj,id_arr}: {
+		obj: ProtoBufTypeA;
+		id_arr: Uint8Array;
+	}=useTypeA(root,token_binary);
+	let token_binary_2=get_token_data(obj.token1);
 	let Type_2=root.lookupType("A_token1");
 	id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('base64(A.token1).typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
 	id_arr=new Uint8Array(token_binary.slice(4,7).buffer);
 	console.log('base64(A.token1).extra',id_arr);
+
 	function decode_as(message_type: string|string[],data: Uint8Array) {
 		let type=root.lookupType(message_type);
 		let message=type.decode(data);
@@ -85,3 +73,4 @@ function parse_types(root: Root): void {
 	let items=extract_items(description);
 	console.log(items[0]);
 }
+
