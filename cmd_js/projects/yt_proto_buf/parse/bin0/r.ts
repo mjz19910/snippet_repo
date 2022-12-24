@@ -1,8 +1,7 @@
-import {dirname, resolve} from 'path';
-import {fileURLToPath} from 'url';
+import {resolve} from 'path';
+import {__dirname} from './index';
 
-export const __dirname=dirname(fileURLToPath(import.meta.url));
 
 export function r(path: string) {
-	return resolve(__dirname,"../..",path);
+	return resolve(__dirname,"..","..",path);
 }

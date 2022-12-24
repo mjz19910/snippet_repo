@@ -1,5 +1,4 @@
 import {readFile} from 'fs/promises';
-import {resolve} from 'path';
 import {dirname} from 'path';
 import {Root} from 'protobufjs';
 import {fileURLToPath} from 'url';
@@ -7,14 +6,16 @@ import {decode_as_type} from './decode_as_type';
 import {DesType} from './DesType.js';
 import {extract_items} from './extract_items';
 import {get_token_data} from './get_token_data.js';
-import {ProtoBufTypeA} from './ProtoBufTypeA.js';
-import {ProtoBufTypeD} from './ProtoBufTypeD';
+import {ProtoBufTypeD} from './ProtoBufTypeD.js';
+import {r} from './r.js';
 import {useTypeA} from './useTypeA.js';
 
-function run() {
-	parse_types().catch(e => {
-			console.log("promise error",e);
-		});
+export const __dirname=dirname(fileURLToPath(import.meta.url));
+
+async function run() {
+	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
+	let root=await protobuf.load(r("protobuf/bin0.proto"));
+	return parse_types(root);
 }
 run();
 
