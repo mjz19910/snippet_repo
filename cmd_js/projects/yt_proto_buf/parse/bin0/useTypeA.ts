@@ -17,5 +17,5 @@ export function useTypeA(root: Root,token_binary: Uint8Array) {
 		videoId,playlistId,token1,token2,location,type_C,a3,a7,a14,a24,a25,a28,a47,...obj_other
 	}=obj;
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
-	return {obj,id_arr};
+	return obj;
 }
