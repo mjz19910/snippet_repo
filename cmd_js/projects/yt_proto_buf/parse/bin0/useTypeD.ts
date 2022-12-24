@@ -11,9 +11,14 @@ import {r} from './r.js';
 export function useTypeD(root: Root,obj: ProtoBufTypeA) {
 	let token_binary=get_token_data(obj.token1,r);
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
-	console.log('typeid=%o for base64(A.token1)',as_base64_typeid(id_arr));
+	let typeid=as_base64_typeid(id_arr,0);
+	console.log('typeid=%o for base64(A.token1)',typeid);
 	id_arr=new Uint8Array(token_binary.slice(4,7).buffer);
-	console.log("extra=%o for base64(A.token1)",as_base64_typeid(id_arr));
+	let id_arr_js=Array.from(id_arr);
+	let ext_id_arr=[0].concat(id_arr_js);
+	let id_arr_2=new Uint8Array(ext_id_arr);
+	typeid=as_base64_typeid(id_arr_2,1);
+	console.log("extra=%o for base64(A.token1)",typeid);
 	let tmp_data=decode_as_type<ProtoBufTypeD>(root,"D",token_binary.slice(4));
 	let description: DesType=tmp_data.data.description;
 	let items=extract_items(description);
