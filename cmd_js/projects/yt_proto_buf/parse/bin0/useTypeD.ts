@@ -7,7 +7,7 @@ import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {ProtoBufTypeD} from './ProtoBufTypeD.js';
 import {r} from './r.js';
 
-export function useTypeD(obj: ProtoBufTypeA,root: Root) {
+export function useTypeD(root: Root,obj: ProtoBufTypeA) {
 	let token_binary=get_token_data(obj.token1,r);
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('typeid=%o for base64(A.token1)',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
