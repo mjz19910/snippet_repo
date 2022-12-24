@@ -34,7 +34,7 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	pad+="  ";
 	console.log(`${pad}videoId=%o`,videoId);
 	console.log(`${pad}playlistId=%o`,playlistId);
-	console.log(`${pad}token1=%o... %c%s`,token1.slice(0,10));
+	console.log(`${pad}token1=%o...`,token1.slice(0,10));
 	console.log(`${pad}token2=%o`,token2);
 	pad=pad.slice(0,-2);
 	console.log(`}`);
