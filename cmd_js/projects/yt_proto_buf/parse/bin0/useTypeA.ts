@@ -1,4 +1,4 @@
-import {readFile, writeFile} from 'fs/promises';
+import {readFile,writeFile} from 'fs/promises';
 import {Root} from 'protobufjs';
 import {as_base64_typeid} from './as_base64_typeid.js';
 import {Bin0Imports} from './Bin0Imports.js';
@@ -6,7 +6,7 @@ import {into_type} from './into_type.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {r} from './r.js';
 
-export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: ProtoBufTypeA)=>void) {
+export async function useTypeA(imp: Bin0Imports,then_fn: (root: Root,buf_type: ProtoBufTypeA) => void) {
 	const {
 		protobuf,
 	}=imp;
@@ -26,7 +26,10 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	});
 	let obj: ProtoBufTypeA=into_type<typeof untyped_obj,ProtoBufTypeA>(untyped_obj);
 	let {
-		videoId,playlistId,token1,token2,location,type_C,a3,a7,a14,a24,a25,a28,a47,...obj_other
+		videoId,playlistId,token1,token2,location,
+		type_C,
+		a3,a7,a14,a24,a25,a28,a47,
+		...obj_other
 	}=obj;
 	console.log("saved A.token1 as binary/bin0_token1.txt");
 	let pad="";
