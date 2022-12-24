@@ -3,6 +3,7 @@ import {resolve} from 'path';
 import {dirname} from 'path';
 import {Root} from 'protobufjs';
 import {fileURLToPath} from 'url';
+import {into_type} from './into_type';
 import {ProtoBufTypeA} from './ProtoBufTypeA';
 
 const __dirname=dirname(fileURLToPath(import.meta.url));
@@ -25,9 +26,6 @@ function parse_types(root: Root): void {
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('A.typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
 	let message=Type.decode(token_binary.subarray(4));
-	function into_type<T,U>(obj:T|U): U {
-		return obj as U;
-	}
 	let untyped_obj=Type.toObject(message,{
 		longs: Number,
 		arrays: true,
