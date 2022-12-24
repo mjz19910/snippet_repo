@@ -1,13 +1,6 @@
-import {ItemType} from "./ItemType.js";
-
-type OccupiedValue={
-	key: number;
-	value: number;
-};
-
 export type DesType={
-	items: (ItemType)[];
+	items: ({})[];
 	keys: number[];
 	keysAlt: number[];
-	valueMap: OccupiedValue[];
+	valueMap: {key: number; value: number;}[];
 };
