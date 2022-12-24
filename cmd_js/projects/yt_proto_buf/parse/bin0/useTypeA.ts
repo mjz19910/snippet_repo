@@ -28,7 +28,6 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	let {
 		videoId,playlistId,token1,token2,location,type_C,a3,a7,a14,a24,a25,a28,a47,...obj_other
 	}=obj;
-	await writeFile(r("binary/bin0_token1.txt"),token1);
 	console.log("saved A.token1 as binary/bin0_token1.txt");
 	let pad="";
 	console.log(`${pad}{`);
@@ -38,7 +37,9 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	console.log(`${pad}token1=%o... %c%s`,token1.slice(0,10));
 	console.log(`${pad}token2=%o`,token2);
 	pad=pad.slice(0,-2);
-	console.log(`${pad}}`);
+	console.log(`}`);
+	console.assert(pad=="");
+	await writeFile(r("binary/bin0_token1.txt"),token1);
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
 	then_fn(root,obj);
 }
