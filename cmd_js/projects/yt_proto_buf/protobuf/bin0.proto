@@ -19,9 +19,9 @@ message C {
 	required bytes data=8;
 }
 message D {
-	optional A_token1 data = 1;
+	optional t1_B data = 1;
 }
-message A_token1 {
+message t1_B {
 	optional t1_C description = 1;
 }
 message t1_C {
