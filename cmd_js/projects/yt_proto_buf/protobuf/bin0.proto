@@ -34,7 +34,7 @@ message t1_D {
 	oneof oneof_0 {
 		VideoId video_id = 1000;
 		Playlist playlist = 1002;
-		string str = 1006;
+		int32 _r = 1006;
 	}
 }
 message VideoId {
