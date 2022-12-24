@@ -60,16 +60,6 @@ export async function useTypeA(proto_A_type: Type) {
 		a3,a7,a14,a24,a25,a28,a47,
 		...obj_other
 	}=obj;
-	let pad="";
-	console.log(`${pad}{`);
-	pad+="  ";
-	console.log(`${pad}videoId=%o`,videoId);
-	console.log(`${pad}playlistId=%o`,playlistId);
-	console.log(`${pad}token1=%o...`,token1.slice(0,10));
-	console.log(`${pad}token2=%o`,token2);
-	pad=pad.slice(0,-2);
-	console.log(`}`);
-	console.assert(pad=="");
 	await writeFile(r("binary/bin0_token1.txt"),token1);
 	console.log("saved A.token1 as binary/bin0_token1.txt");
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
