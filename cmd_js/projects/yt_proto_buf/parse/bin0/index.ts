@@ -3,7 +3,9 @@ import {resolve} from 'path';
 import {dirname} from 'path';
 import {Root} from 'protobufjs';
 import {fileURLToPath} from 'url';
+import {DesType} from './DesType.js';
 import {get_token_data} from './get_token_data.js';
+import {into_type} from './into_type.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {useTypeA} from './useTypeA.js';
 
@@ -18,6 +20,7 @@ async function run() {
 	return parse_types(root);
 }
 run();
+
 async function parse_types(root: Root): Promise<void> {
 	let file=await readFile(r("binary/bin0.txt"));
 	let token_enc=file.toString();
@@ -43,18 +46,16 @@ async function parse_types(root: Root): Promise<void> {
 		});
 		return obj;
 	}
-	let tmp_data=decode_as("D",token_binary_2.slice(4));
+	function decode_as_type<T>(type: string,data: Uint8Array) {
+		let obj=decode_as(type,data);
+		return into_type<{},T>(obj);
+	}
+	let tmp_data=decode_as_type<{data: {description:DesType}}>("D",token_binary_2.slice(4));
 	console.log('as D',tmp_data.data);
 	let message_2=Type_2.decode(token_binary_2.slice(7));
 	let obj_2=Type_2.toObject(message_2,{
 		longs: Number,
 	});
-	type DesType={
-		items: ({})[];
-		keys: number[];
-		keysAlt: number[];
-		valueMap: {key:number;value:number}[]
-	};
 	let description:DesType=obj_2.description;
 	function extract_items(description: DesType) {
 		let items=[];
