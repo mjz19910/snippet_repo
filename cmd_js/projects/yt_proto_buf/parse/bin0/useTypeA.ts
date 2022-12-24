@@ -1,12 +1,13 @@
 import {readFile,writeFile} from 'fs/promises';
-import {Root} from 'protobufjs';
+import {Type} from 'protobufjs';
 import {as_base64_typeid} from './as_base64_typeid.js';
 import {Bin0Imports} from './Bin0Imports.js';
 import {into_type} from './into_type.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {r} from './r.js';
+import {useTypeD} from './useTypeD.js';
 
-export async function useTypeA(imp: Bin0Imports,then_fn: (root: Root,buf_type: ProtoBufTypeA) => void) {
+export async function useTypeA(imp: Bin0Imports,proto_A_type: Type) {
 	const {
 		protobuf,
 	}=imp;
@@ -16,11 +17,10 @@ export async function useTypeA(imp: Bin0Imports,then_fn: (root: Root,buf_type: P
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
 	const text=atob(base64_enc);
 	const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
-	var Type=root.lookupType("A");
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('typeid=%o for A',as_base64_typeid(id_arr,0));
-	let message=Type.decode(token_binary.subarray(4));
-	let untyped_obj=Type.toObject(message,{
+	let message=proto_A_type.decode(token_binary.subarray(4));
+	let untyped_obj=proto_A_type.toObject(message,{
 		longs: Number,
 		arrays: true,
 	});
@@ -44,5 +44,5 @@ export async function useTypeA(imp: Bin0Imports,then_fn: (root: Root,buf_type: P
 	console.assert(pad=="");
 	await writeFile(r("binary/bin0_token1.txt"),token1);
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
-	then_fn(root,obj);
+	useTypeD(root,obj);
 }
