@@ -12,7 +12,7 @@
 		],
 		"declaration": true,
 		"module": "ESNext",
-		"moduleResolution": "Node",
+		"moduleResolution": "NodeNext",
 		"sourceMap": true,
 		"outDir": "./build",
 		"strict": true,
@@ -32,9 +32,7 @@
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
 		"isolatedModules": true,
-		// todo
 		"noPropertyAccessFromIndexSignature": false,
-		// windows needs this
 		"forceConsistentCasingInFileNames": true,
 	},
 	"ts-node": {
