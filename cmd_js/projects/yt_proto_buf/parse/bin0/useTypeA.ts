@@ -1,9 +1,18 @@
+import {readFile} from 'fs/promises';
 import {Root} from 'protobufjs';
 import {as_base64_typeid} from './as_base64_typeid.js';
+import {Bin0Imports} from './Bin0Imports.js';
 import {into_type} from './into_type.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
+import {r} from './r.js';
 
-export function useTypeA(root: Root,token_enc: string) {
+export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: ProtoBufTypeA)=>void) {
+	const {
+		protobuf,
+	}=imp;
+	let root=await protobuf.load(r("protobuf/bin0.proto"));
+	let bin_file=await readFile(r("binary/bin0.txt"));
+	let token_enc=bin_file.toString();
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
 	const text=atob(base64_enc);
 	const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
@@ -20,5 +29,5 @@ export function useTypeA(root: Root,token_enc: string) {
 		videoId,playlistId,token1,token2,location,type_C,a3,a7,a14,a24,a25,a28,a47,...obj_other
 	}=obj;
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
-	return obj;
+	then_fn(root,obj);
 }
