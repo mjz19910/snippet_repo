@@ -32,7 +32,7 @@ message t1_C {
 }
 message t1_D {
 	oneof oneof_0 {
-		VideoId video_id = 1000;
+		VideoId video = 1000;
 		Playlist playlist = 1002;
 		int32 _r = 1006;
 	}
