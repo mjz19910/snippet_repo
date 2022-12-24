@@ -241,3 +241,17 @@ The code for this challenge is d6d695b4-6862-411c-abd9-8ddfefd3a0b9.
 
 The next challenge can be found at https://pastebin.com/a1N1ixJd
 
+```js
+// spell:ignore 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
+From_Base58('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',true)
+Rotate_right(2,false)
+From_Base85('0-9a-zA-Z.\\-:+=^!/*?&<>()[]{}@%$#',true)
+```
+
+Congratulations, you have completed CyberChef challenge #21!
+
+This challenge explored Base58 and Base85 encoding. To learn more, visit wikipedia.org/wiki/Base58 and wikipedia.org/wiki/Ascii85.
+
+The code for this challenge is 3bedfa5d-325c-4013-98fd-ff5281af9099.
+
+The next challenge can be found at https://pastebin.com/W6WFQM12.
