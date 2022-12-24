@@ -11,12 +11,37 @@ message A {
 	optional string a24 = 24;
 	required int32 a25 = 25;
 	required int32 a28 = 28;
-	required C a36 = 36;
+	required C type_C = 36;
 	required int32 a47=47;
 }
 message C {
 	required int32 type=5;
 	required bytes data=8;
 }
-message A_token1 {}
+message A_token1 {
+	optional t1_C description = 1;
+}
+message t1_C {
+	repeated t1_D items = 1;
+	repeated int32 keys = 2;
+	repeated I32Map value_map = 3;
+	repeated int32 keys_alt = 5;
+}
+message t1_D {
+	oneof oneof_0 {
+		VideoId video_id = 1000;
+		Playlist playlist = 1002;
+		string str = 1006;
+	}
+}
+message VideoId {
+	required uint64 video_id=1;
+}
+message Playlist {
+	required string playlist_id = 1;
+}
+message I32Map {
+	required int32 key = 1;
+	required int32 value = 2;
+}
 message _O {}
