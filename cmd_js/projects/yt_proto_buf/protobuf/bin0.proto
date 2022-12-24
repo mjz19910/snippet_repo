@@ -18,6 +18,9 @@ message C {
 	required int32 type=5;
 	required bytes data=8;
 }
+message D {
+	optional _O data = 1;
+}
 message A_token1 {
 	optional t1_C description = 1;
 }
