@@ -3,12 +3,11 @@ import {resolve} from 'path';
 import {dirname} from 'path';
 import {Root} from 'protobufjs';
 import {fileURLToPath} from 'url';
-import {decode_as_type} from './decode_as_type';
+import {decode_as_type} from './decode_as_type.js';
 import {DesType} from './DesType.js';
-import {extract_items} from './extract_items';
+import {extract_items} from './extract_items.js';
 import {get_token_data} from './get_token_data.js';
-import {ProtoBufTypeA} from './ProtoBufTypeA.js';
-import {ProtoBufTypeD} from './ProtoBufTypeD';
+import {ProtoBufTypeD} from './ProtoBufTypeD.js';
 import {useTypeA} from './useTypeA.js';
 
 const __dirname=dirname(fileURLToPath(import.meta.url));
