@@ -28,6 +28,12 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	let {
 		videoId,playlistId,token1,token2,location,type_C,a3,a7,a14,a24,a25,a28,a47,...obj_other
 	}=obj;
+	console.log({
+		videoId,
+		playlistId,
+		token2,
+	});
+	console.log("token1=%o...",token1.slice(0,10));
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
 	then_fn(root,obj);
 }
