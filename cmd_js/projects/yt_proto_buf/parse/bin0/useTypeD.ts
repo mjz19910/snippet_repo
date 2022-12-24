@@ -6,10 +6,9 @@ import {extract_items} from './extract_items.js';
 import {get_token_data} from './get_token_data.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {ProtoBufTypeD} from './ProtoBufTypeD.js';
-import {r} from './r.js';
 
 export function useTypeD(root: Root,obj: ProtoBufTypeA) {
-	let token_binary=get_token_data(obj.token1,r);
+	let token_binary=get_token_data(obj.token1);
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	let typeid=as_base64_typeid(id_arr,0);
 	console.log('typeid=%o for base64(A.token1)',typeid);

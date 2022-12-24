@@ -1,4 +1,4 @@
-import {readFile} from 'fs/promises';
+import {readFile, writeFile} from 'fs/promises';
 import {Root} from 'protobufjs';
 import {as_base64_typeid} from './as_base64_typeid.js';
 import {Bin0Imports} from './Bin0Imports.js';
@@ -28,12 +28,14 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	let {
 		videoId,playlistId,token1,token2,location,type_C,a3,a7,a14,a24,a25,a28,a47,...obj_other
 	}=obj;
+	await writeFile(r("binary/bin0_token1.txt"),token1);
+	console.log("saved A.token1 as binary/bin0_token1.txt");
 	let pad="";
 	console.log(`${pad}{`);
 	pad+="  ";
 	console.log(`${pad}videoId=%o`,videoId);
 	console.log(`${pad}playlistId=%o`,playlistId);
-	console.log(`${pad}token1=%o...`,token1.slice(0,10));
+	console.log(`${pad}token1=%o... %c%s`,token1.slice(0,10));
 	console.log(`${pad}token2=%o`,token2);
 	pad=pad.slice(0,-2);
 	console.log(`${pad}}`);
