@@ -17,7 +17,7 @@ export async function parse_types(protobuf: typeof import("protobufjs")): Promis
 	let obj=useTypeA(root,token_binary);
 	let token_binary_2=get_token_data(obj.token1,r);
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
-	console.log('base64(A.token1).typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
+	console.log('typeid=%o for base64(A.token1)',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
 	id_arr=new Uint8Array(token_binary.slice(4,7).buffer);
 	console.log('base64(A.token1).extra',id_arr);
 	let tmp_data=decode_as_type<ProtoBufTypeD>(root,"D",token_binary_2.slice(4));
