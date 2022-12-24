@@ -1,17 +1,11 @@
 import {readFile,writeFile} from 'fs/promises';
 import {Type} from 'protobufjs';
 import {as_base64_typeid} from './as_base64_typeid.js';
-import {Bin0Imports} from './Bin0Imports.js';
 import {into_type} from './into_type.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {r} from './r.js';
-import {useTypeD} from './useTypeD.js';
 
-export async function useTypeA(imp: Bin0Imports,proto_A_type: Type) {
-	const {
-		protobuf,
-	}=imp;
-	let root=await protobuf.load(r("protobuf/bin0.proto"));
+export async function useTypeA(proto_A_type: Type) {
 	let bin_file=await readFile(r("binary/bin0.txt"));
 	let token_enc=bin_file.toString();
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
@@ -44,5 +38,5 @@ export async function useTypeA(imp: Bin0Imports,proto_A_type: Type) {
 	console.assert(pad=="");
 	await writeFile(r("binary/bin0_token1.txt"),token1);
 	console.assert(Object.keys(obj_other).length===0,"no extra keys",obj_other);
-	useTypeD(root,obj);
+	return obj;
 }
