@@ -18,7 +18,7 @@ export async function useTypeA(imp:Bin0Imports,then_fn: (root:Root,buf_type: Pro
 	const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 	var Type=root.lookupType("A");
 	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
-	console.log('typeid=%o for A',as_base64_typeid(id_arr));
+	console.log('typeid=%o for A',as_base64_typeid(id_arr,0));
 	let message=Type.decode(token_binary.subarray(4));
 	let untyped_obj=Type.toObject(message,{
 		longs: Number,
