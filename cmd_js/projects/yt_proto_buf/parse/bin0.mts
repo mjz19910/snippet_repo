@@ -1,4 +1,4 @@
-import {readFileSync} from 'fs';
+import {readFileSync, writeFileSync} from 'fs';
 import {resolve} from 'path';
 import {dirname} from 'path';
 import {fileURLToPath} from 'url';
@@ -13,12 +13,11 @@ let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-",
 const text=atob(base64_enc);
 const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 async function run() {
-	let as_uint=new Uint32Array(token_binary.slice(0,4).buffer);
-	console.log(as_uint[0]);
 	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
 	let root=await protobuf.load(r("../protobuf/bin0.proto"));
 	var Type=root.lookupType("A");
-	console.log(new Uint32Array(token_binary.slice(0,4).buffer));
+	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
+	console.log('A.typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
 	let message=Type.decode(token_binary.subarray(4));
 	type ProtoBufTypeC={
 		type: number;
@@ -31,7 +30,14 @@ async function run() {
 		location: string;
 		token1: string;
 		token2: string;
-		type_C: ProtoBufTypeC
+		type_C: ProtoBufTypeC;
+		a3: number;
+		a7: number;
+		a14: number;
+		a24: string;
+		a25: number;
+		a28: number;
+		a47: number;
 	};
 	function into_type<T,U>(obj:T|U): U {
 		return obj as U;
@@ -41,15 +47,32 @@ async function run() {
 		arrays: true,
 	});
 	let obj: ProtoBufTypeA=into_type<typeof untyped_obj,ProtoBufTypeA>(untyped_obj);
-	let {videoId,playlistId,token1,token2,location,...obj_other}=obj;
-	console.log({token1,token2},Object.keys(obj_other));
-	console.log(obj_other);
+	let {
+		videoId,playlistId,token1,token2,location,
+		type_C,
+		a3,a7,a14,a24,a25,a28,a47,
+		...obj_other
+	}=obj;
+	console.assert(Object.keys(obj_other).length===0, "no extra keys",obj_other);
 	let base64_enc_2=obj.token1.replaceAll("_","/").replaceAll("-","+");
+	writeFileSync(r("../binary/bin0_token1.txt"),base64_enc_2);
 	const text_2=atob(base64_enc_2);
 	let token_binary_2=new Uint8Array([...text_2].map(e => e.charCodeAt(0)));
 	let Type_2=root.lookupType("A_token1");
-	let id_arr=new Uint8Array(token_binary.slice(0,7).buffer);
-	console.log('typeid',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
+	id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
+	console.log('base64(A.token1).typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
+	id_arr=new Uint8Array(token_binary.slice(4,7).buffer);
+	console.log('base64(A.token1).extra=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
+	function decode_as(message_type: string,data: Uint8Array) {
+		let type=root.lookupType(message_type);
+		let message=type.decode(data);
+		let obj=type.toObject(message,{
+			longs: Number,
+		});
+		return obj;
+	}
+	let tmp_data=decode_as("D",token_binary_2.slice(4));
+	console.log(tmp_data);
 	let message_2=Type_2.decode(token_binary_2.slice(7));
 	let obj_2=Type_2.toObject(message_2,{
 		longs: Number,
