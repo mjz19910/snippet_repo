@@ -235,3 +235,9 @@ Unzip('',false)
 Encode_text('UTF-16LE (1200)')
 
 
+Congratulations, you have completed CyberChef challenge #20!
+
+The code for this challenge is d6d695b4-6862-411c-abd9-8ddfefd3a0b9.
+
+The next challenge can be found at https://pastebin.com/a1N1ixJd
+
