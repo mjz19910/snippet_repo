@@ -9,8 +9,8 @@ import {useTypeA} from './useTypeA.js';
 
 export async function parse_types(protobuf: typeof import("protobufjs")): Promise<void> {
 	let root=await protobuf.load(r("protobuf/bin0.proto"));
-	let file=await readFile(r("binary/bin0.txt"));
-	let token_enc=file.toString();
+	let bin_file=await readFile(r("binary/bin0.txt"));
+	let token_enc=bin_file.toString();
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
 	const text=atob(base64_enc);
 	const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
