@@ -1,6 +1,12 @@
+import {load_imports} from './load_imports.js';
 import {parse_types} from './parse_types.js';
-async function run() {
-	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
-	return parse_types(protobuf);
+
+function run() {
+	import('protobufjs')
+		.then(load_imports)
+		.then(parse_types)
+		.catch(e => {
+			console.log("promise error",e);
+		});
 }
 run();
