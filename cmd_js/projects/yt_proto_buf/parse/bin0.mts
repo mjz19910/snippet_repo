@@ -15,15 +15,25 @@ const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 async function run() {
 	let as_uint=new Uint32Array(token_binary.slice(0,4).buffer);
 	console.log(as_uint[0]);
-	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs")}).default;
+	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
 	let root=await protobuf.load(r("../protobuf/bin0.proto"));
 	var Type=root.lookupType("A");
 	console.log(new Uint32Array(token_binary.slice(0,4).buffer));
 	let message=Type.decode(token_binary.subarray(4));
-	let obj=Type.toObject(message,{
+	type ProtoTypeBin0A={
+		token1?: string;
+		token2?: string;
+	};
+	console.log(message);
+	let obj: ProtoTypeBin0A=Type.toObject(message,{
 		longs: Number,
+		arrays: true,
 	});
-	console.log(obj);
+	if(!obj.token1) throw new Error("Invalid result");
+	if(!obj.token2) throw new Error("Invalid result");
+	let {token1,token2,...obj_other}=obj;
+	console.log({token1,token2},Object.keys(obj_other));
+	console.log(obj_other);
 	let base64_enc_2=obj.token1.replaceAll("_","/").replaceAll("-","+");
 	const text_2=atob(base64_enc_2);
 	let token_binary_2=new Uint8Array([...text_2].map(e => e.charCodeAt(0)));

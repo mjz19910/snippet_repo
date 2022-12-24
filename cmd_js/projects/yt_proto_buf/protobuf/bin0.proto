@@ -1,22 +1,22 @@
 
 message A {
-	required string a2 = 2;
+	required string video_id = 2;
 	required int32 a3 = 3;
-	required string a4 = 4;
+	required string playlist_id = 4;
 	required string token1 = 5;
 	required string token2 = 6;
 	required int32 a7 = 7;
-	required string a13 = 13;
+	required string location = 13;
 	required int32 a14 = 14;
-	optional _O a24 = 24;
+	optional string a24 = 24;
 	required int32 a25 = 25;
 	required int32 a28 = 28;
 	required C a36 = 36;
 	required int32 a47=47;
 }
 message C {
-	required int64 a=5;
-	required int64 b=8;
+	required int32 type=5;
+	required bytes data=8;
 }
 message A_token1 {}
 message _O {}
