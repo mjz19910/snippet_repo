@@ -9,9 +9,6 @@ import {get_token_data} from './get_token_data.js';
 import {ProtoBufTypeD} from './ProtoBufTypeD.js';
 import {r} from './r.js';
 import {useTypeA} from './useTypeA.js';
-
-export const __dirname=dirname(fileURLToPath(import.meta.url));
-
 async function run() {
 	var protobuf=(await import('protobufjs') as any as {default: typeof import("protobufjs");}).default;
 	let root=await protobuf.load(r("protobuf/bin0.proto"));
