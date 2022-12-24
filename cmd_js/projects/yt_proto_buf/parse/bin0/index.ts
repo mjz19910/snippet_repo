@@ -28,7 +28,7 @@ async function parse_types(root: Root): Promise<void> {
 		obj: ProtoBufTypeA;
 		id_arr: Uint8Array;
 	}=useTypeA(root,token_binary);
-	let token_binary_2=get_token_data(obj.token1);
+	let token_binary_2=get_token_data(obj.token1,r);
 	let Type_2=root.lookupType("A_token1");
 	id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('base64(A.token1).typeid=%o',btoa(String.fromCharCode.apply("",Array.from(id_arr))).replaceAll("=",""));
