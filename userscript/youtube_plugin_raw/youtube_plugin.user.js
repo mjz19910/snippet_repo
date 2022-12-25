@@ -13,8 +13,23 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-console=window.console;
+console=typeof window==='undefined'?console:(()=>window.console)();
+if(typeof window==='undefined') {
+	/** @type {any} */
+	let t_=this;
+	{
+		/** @type {{[U in keyof any]:any}} */
+		let window=t_;
+		class HTMLElement {}
+		window.HTMLElement=HTMLElement;
+		class Image {}
+		window.Image=Image;
+	}
+	window=t_;
+	navigator={};
+}
 
+HTMLElement=window.HTMLElement;
 
 // #section Use module types
 /** @type {import("./__global.js")} */
