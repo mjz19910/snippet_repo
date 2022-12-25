@@ -5,6 +5,7 @@ import {SectionItemDef} from "./support/yt_api/SectionItemDef";
 import {WatchEndpoint} from "./support/yt_api/WatchEndpoint.js";
 import {OpenPopupActionH} from "./support/yt_api/OpenPopupActionH.js";
 import {MenuRendererH} from "./support/yt_api/MenuRendererH.js";
+import {DialogPopupTag, RichItemRendererContentDef} from "./support/yt_api/__global.js";
 
 // YtdPageManagerElement
 declare global {
@@ -86,32 +87,9 @@ declare global {
 	type ContinuationItem=RendererContentItem;
 }
 
-type AdSlotRenderer={
-	adSlotMetadata: {};
-	fulfillmentContent: {};
-	enablePacfLoggingWeb: boolean;
-};
-type VideoRenderer={};
-type RadioRenderer={};
-type AdSlotRendererHolder={
-	adSlotRenderer: AdSlotRenderer;
-};
-type VideoRendererHolder={
-	videoRenderer: VideoRenderer;
-};
-
-type RadioRendererHolder={
-	radioRenderer: RadioRenderer;
-};
-
 // RichItemRenderer
 declare global {
-	type AdSlotRendererHolder={
-		adSlotRenderer: AdSlotRenderer;
-	};
-	type RichItemRendererContent=AdSlotRendererHolder|{
-		videoRenderer: {}
-	};
+	type RichItemRendererContent=RichItemRendererContentDef;
 	interface RichItemRenderer {
 		content: RichItemRendererContent;
 		trackingParams?: string;

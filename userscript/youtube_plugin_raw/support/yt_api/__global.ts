@@ -4,29 +4,6 @@ import {OpenPopupActionH} from "./OpenPopupActionH";
 import {RendererContentItem} from "./RendererContentItem";
 import {WatchEndpoint} from "./WatchEndpoint";
 
-// YtdPageManagerElement
-declare global {
-	interface YtdPageManagerElementInterface extends HTMLElement {
-		getCurrentPage(): YtCurrentPage;
-	}
-	interface YTDPlayerElement extends HTMLElement {
-		active_nav: boolean;
-		player_: {getVideoData(): {video_id: string; eventId: undefined; title: any; author: any;}; getPlayerState(): {};}|null;
-		playerResolver_: {
-			promise: Promise<void>;
-		};
-		init_nav: boolean;
-		is_watch_page_active: boolean;
-		pause(): void;
-		play(): void;
-	}
-	interface YtCurrentPage extends HTMLElement {
-		getPlayer(): YTDPlayerElement;
-		__has_theater_handler_plugin: boolean|undefined;
-	}
-}
-
-
 type SectionItem=RichItemRendererHolder|RichSectionRendererHolder;
 
 export type ReloadContinuationItemsCommand={
@@ -84,7 +61,7 @@ type DialogPopup={
 	aboutThisAdRenderer: AboutThisAdRenderer;
 };
 
-type DialogPopupTag={
+export type DialogPopupTag={
 	"popup": DialogPopup;
 	"popupType": "DIALOG";
 };
@@ -215,21 +192,21 @@ type AdSlotRenderer={
 };
 type VideoRenderer={};
 type RadioRenderer={};
-type AdSlotRendererHolder={
+export type AdSlotRendererHolder={
 	adSlotRenderer: AdSlotRenderer;
 };
-type VideoRendererHolder={
+export type VideoRendererHolder={
 	videoRenderer: VideoRenderer;
 };
 
-type RadioRendererHolder={
+export type RadioRendererHolder={
 	radioRenderer: RadioRenderer;
 };
 
 
-type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
+export type RichItemRendererContentDef=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
 interface RichItemRenderer {
-	content: RichItemRendererContent;
+	content: RichItemRendererContentDef;
 	trackingParams: string;
 	rowIndex?: number;
 	colIndex?: number;
