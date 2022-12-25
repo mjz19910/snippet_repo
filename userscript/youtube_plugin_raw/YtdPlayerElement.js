@@ -1,4 +1,4 @@
-export interface YTDPlayerElement extends HTMLElement {
+export interface YtdPlayerElement extends HTMLElement {
 	active_nav: boolean;
 	player_: {getVideoData(): {video_id: string; eventId: undefined; title: any; author: any;}; getPlayerState(): {};}|null;
 	playerResolver_: {
