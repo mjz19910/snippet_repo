@@ -2436,6 +2436,12 @@ class HistoryStateManager {
 		let t=this;
 		this.cur_state=this.getHistoryState();
 		if(this.debug) console.log("initial history state",this.cur_state);
+		/**
+		 * @param {{}} obj
+		 */
+		function remove_yt_data(obj) {
+			return obj.__ia_excludeKeysS("");
+		}
 		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
 			let prev_state=this.cur_state;
@@ -2458,14 +2464,18 @@ class HistoryStateManager {
 		});
 		History.prototype.pushState=new Proxy(History.prototype.pushState,{
 			apply(target,thisArg,argArray) {
-				console.log("pushState",...argArray);
+				console.log("pushState",remove_yt_data(argArray[0]),argArray.length);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
 		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
-				console.log(structuredClone(new_state),structuredClone(t.cur_state));
+				if(t.cur_state) {
+					console.log('new state',remove_yt_data(new_state),remove_yt_data(t.cur_state));
+				} else {
+					console.log('beg state',remove_yt_data(new_state),t.cur_state);
+				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
 					/** @type {{[x: string]: {}}|null} */
@@ -2478,7 +2488,7 @@ class HistoryStateManager {
 							}
 						}
 					}
-					console.log("replaceState",...argArray);
+					console.log("replaceState",remove_yt_data(argArray[0]),argArray.length);
 				}
 				t.cur_state=new_state;
 				return Reflect.apply(target,thisArg,argArray);
@@ -2733,7 +2743,7 @@ function main() {
 main();
 
 /**
- * @template {string} T @template {{}} U 
+ * @template {string} T @template {{}} U
  * @template {Split<T,",">} C
  * @arg {U} this @arg {Split<T,","> extends any[]?T:never} ex_keys_str
  * @returns {{[I in Exclude<keyof U,C[number]>]: U[I]}}
