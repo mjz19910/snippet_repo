@@ -12,7 +12,7 @@ export async function useTypeA(proto_A_type: Type) {
 	let token_enc=bin_file.toString();
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
 	const token_binary=get_token_data(base64_enc);
-	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
+	let id_arr=new Uint8Array(token_binary.subarray(0,4));
 	console.log('typeid=%o for A',as_base64_typeid(id_arr,0));
 	let message=proto_A_type.decode(token_binary.subarray(4));
 	let untyped_obj=proto_A_type.toObject(message,{
