@@ -62,10 +62,6 @@ class MyConsole {
 	}
 }
 
-type MyState={
-	my_console: MyConsole;
-};
-
 class MyReader extends protobufjs.Reader {
 	unk_type: MyUnkType;
 	my_console: MyConsole;
