@@ -1,4 +1,7 @@
+import {RendererContentItemDef} from "./support/yt_api/RendererContentItemDef";
+import {MenuServiceItem} from "./support/yt_api/MenuServiceItem.js";
 import {SavedData} from "./youtube_plugin.user.js";
+import {SectionItemDef} from "./support/yt_api/SectionItemDef";
 
 // YtdPageManagerElement
 declare global {
@@ -24,7 +27,7 @@ declare global {
 
 // ReloadContinuationItemsCommand
 declare global {
-	type SectionItem=RichItemRendererHolder|RichSectionRendererHolder;
+	type SectionItem=SectionItemDef;
 	type ReloadContinuationItemsCommand={
 		slot: "RELOAD_CONTINUATION_SLOT_BODY";
 		targetId: "browse-feedFEwhat_to_watch";
@@ -285,10 +288,10 @@ interface RichSectionRenderer {
 
 type CommentsHeaderRenderer={};
 type CommentThreadRenderer={};
-type CommentsHeaderRendererHolder={
+export type CommentsHeaderRendererHolder={
 	commentsHeaderRenderer: CommentsHeaderRenderer;
 };
-type CommentThreadRendererHolder={
+export type CommentThreadRendererHolder={
 	commentThreadRenderer: CommentThreadRenderer;
 };
 type CommandToken={
@@ -337,7 +340,7 @@ type ContinuationItemRenderer={
 	};
 	ghostCards?: GhostCards;
 };
-type ContinuationItemRendererHolder={
+export type ContinuationItemRendererHolder={
 	continuationItemRenderer: ContinuationItemRenderer;
 };
 export type MenuRenderer={
@@ -569,21 +572,13 @@ export type CompactVideoRendererHolder={
 };
 
 type CompactPlaylistRenderer={};
-type CompactPlaylistRendererHolder={
+export type CompactPlaylistRendererHolder={
 	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
 
 // RendererContentItem
 declare global {
-	type RendererContentItem=
-		RichItemRendererHolder|
-		RichSectionRendererHolder|
-		CommentsHeaderRendererHolder|
-		CommentThreadRendererHolder|
-		ContinuationItemRendererHolder|
-		CompactVideoRendererHolder|
-		CompactPlaylistRendererHolder|
-		never;
+	type RendererContentItem=RendererContentItemDef;
 }
 
 // RichGridRenderer
