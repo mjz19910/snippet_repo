@@ -1,11 +1,11 @@
-import {Runner} from "../../support/Runner.js";
+import {Runner} from "../support/Runner.js";
 
 /* spell:words konggames
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
-	/** @type {import("../__global.js")} */
+	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 	let cur=new Runner;
