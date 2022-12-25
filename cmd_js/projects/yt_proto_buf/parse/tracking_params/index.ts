@@ -71,18 +71,6 @@ class MyConsole {
 	}
 }
 
-export class MyReader {
-	reader: protobufjs.Reader;
-	unk_type: MyUnkType;
-	constructor(buffer: Uint8Array,unk_type:MyUnkType) {
-		this.reader=new protobufjs.Reader(buffer);
-		this.unk_type=unk_type;
-	}
-	static create(buffer: Uint8Array,unk_type:MyUnkType) {
-		return new MyReader(buffer,unk_type);
-	}
-}
-
 class MyUnkType extends protobufjs.Type {
 	constructor(v: string,opt?: {[k: string]: any;}) {
 		super(v,opt);
