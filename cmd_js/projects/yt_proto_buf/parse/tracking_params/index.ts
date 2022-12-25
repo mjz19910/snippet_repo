@@ -105,10 +105,10 @@ export class MyReader {
 				break;
 			case 2:
 				let size=this.uint32();
-				console.pad_log("\"field %o: L-delim (len=%o)\": ?",fieldId,size);
 				let has_error=false;
 				if(size>0) {
 					let pad_start=pad;
+					let prev_dis=console.disabled;
 					try {
 						console.disabled=true;
 						pad+=pad_with;
@@ -117,17 +117,19 @@ export class MyReader {
 						has_error=true;
 					} finally {
 						pad=pad_start;
-						console.disabled=false;
+						console.disabled=prev_dis;
 					}
 				}
 				if(has_error) {
 					let arr=this.reader.buf.subarray(this.reader.pos,this.reader.pos+size);
 					console.pad_log("\"field %o: L-delim (len=%o)\": %o",fieldId,size,arr.toString());
 				} else if(size>0) {
+					console.pad_log("\"field %o: L-delim (len=%o)\": {",fieldId,size);
 					let pad_start=pad;
 					pad+=pad_with;
 					this.unk_type.decodeEx(MyReader.create(this.reader.buf.subarray(this.reader.pos),this.unk_type),size);
 					pad=pad_start;
+					console.pad_log("}");
 				}
 				this.skip(size);
 				break;
