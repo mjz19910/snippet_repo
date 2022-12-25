@@ -416,10 +416,9 @@ export async function parse_types(): Promise<void> {
 		my_console.pad_log("message Type.U {");
 		let reset=increase_padding();
 		const token_buffer=get_token_data(myArgs[1]);
-		let reader=MyReader.create(new Uint8Array(token_buffer),unk_type);
-		let ss=reader.uint32();
+		let reader=MyReader.create(token_buffer,unk_type);
+		let ss=MyReader.create(token_buffer,unk_type).uint32();
 		my_console.pad_log("%o",ss);
-		reader.reader.pos=0;
 		unk_type.decodeEx(reader);
 		reset();
 		my_console.pad_log("}");
