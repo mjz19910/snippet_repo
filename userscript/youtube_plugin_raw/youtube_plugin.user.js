@@ -24,12 +24,86 @@ if(typeof window==='undefined') {
 		window.HTMLElement=HTMLElement;
 		class Image {}
 		window.Image=Image;
+		class Document {
+			/**
+			 * @param {string} tagName
+			 */
+			createElement(tagName) {
+				let element=new Element;
+				element._setup(tagName);
+				return element;
+			}
+		}
+		class Element {
+			get style() {
+				return {};
+			}
+			/**
+			 * @param {string} tn
+			 */
+			_setup(tn) {
+				this.tagName=tn;
+			}
+			/**
+			 * @type {any[]}
+			 */
+			children=[];
+			/**
+			 * @param {any} other_ele
+			 */
+			append(other_ele) {
+				this.children.push(other_ele);
+			}
+		}
+		window.document=new Document;
 	}
 	window=t_;
-	navigator={};
+	/** @type {any} */
+	let na={};
+	navigator=na;
+	class Storage {
+		map=new Map;
+		/**
+		 * @type {{ [x: string]: any; }}
+		 */
+		index_arr=[];
+		/** @param {string} str */
+		getItem(str) {
+			return this.map.get(str);
+		}
+		get length() {
+			return this.map.size;
+		}
+		/**
+		 * @param {any} key
+		 * @param {any} value
+		 */
+		setItem(key,value) {
+			this.map.set(key,value);
+		}
+		/**
+		 * @param {any} key
+		 */
+		removeItem(key) {
+			this.map.delete(key);
+		}
+		/**
+		 * @param {string | number} index
+		 */
+		key(index) {
+			return this.index_arr[index];
+		};
+		clear() {
+			this.map.clear();
+		}
+	}
+	window.localStorage=new Storage;
 }
 
 HTMLElement=window.HTMLElement;
+Image=window.Image;
+document=window.document;
+localStorage=window.localStorage;
 
 // #section Use module types
 /** @type {import("./__global.js")} */
