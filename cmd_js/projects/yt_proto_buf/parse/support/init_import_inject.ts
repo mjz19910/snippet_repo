@@ -61,7 +61,12 @@ class MyConsole {
 		}
 	}
 	clear_cache() {
-		this.cache.length=0;
+		let scope=this.start_stack.at(-1);
+		if(scope) {
+
+		} else {
+			this.cache.length=0;
+		}
 	}
 }
 export const my_console=new MyConsole;
