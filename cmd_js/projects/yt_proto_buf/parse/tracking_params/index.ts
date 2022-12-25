@@ -17,11 +17,10 @@ export async function parse_types(proto_name: string): Promise<void> {
 	let root=await protobufjs.load(r(`protobuf/${proto_name}.proto`));
 	await useTypeA(root,proto_name);
 }
-async function useTypeA(root: Root,proto_name: string) {
-	const token_buffer=await get_token_data_from_file(r(`binary/${proto_name}.bin`));
-	let proto_A_type=root.lookupType("A");
-	let message=proto_A_type.decode(token_buffer);
-	let u_obj=proto_A_type.toObject(message,{
+async function useTypeA(root: Root,token_buffer: Buffer) {
+	let buf_type=root.lookupType("A");
+	let message=buf_type.decode(token_buffer);
+	let u_obj=buf_type.toObject(message,{
 		longs: Number,
 		arrays: true,
 	});

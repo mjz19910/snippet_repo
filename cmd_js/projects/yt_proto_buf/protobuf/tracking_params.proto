@@ -1,3 +1,8 @@
+import "ns/DateTime.proto";
+
 message A {
-	optional bytes sub_message = 1;
+	required int32 field_01 = 1;
+	required int32 field_02 = 2;
+	reserved 3;
+	required DateTime datetime = 4;
 }
