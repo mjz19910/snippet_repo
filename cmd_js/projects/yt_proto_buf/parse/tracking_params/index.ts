@@ -82,7 +82,7 @@ class MyReader extends protobufjs.Reader {
 		return this.createEx(buffer,other.unk_type,other.my_console);
 	}
 	fieldId: number|null=null;
-	skipTypeEx(wireType: number) {
+	override skipType(wireType: number) {
 		let console=this.my_console;
 		let prev_pad;
 		switch(wireType) {
@@ -103,7 +103,7 @@ class MyReader extends protobufjs.Reader {
 					try {
 						console.disabled=true;
 						pad+=pad_with;
-						this.unk_type.decodeEx(MyReader.createFrom(this.buf.subarray(this.pos),this),size);
+						this.unk_type.decode(MyReader.createFrom(this.buf.subarray(this.pos),this),size);
 					} catch {
 						has_error=true;
 					} finally {
@@ -118,7 +118,7 @@ class MyReader extends protobufjs.Reader {
 					console.pad_log("L-delim: \"field %o: (len=%o)\": {",this.fieldId,size);
 					let pad_start=pad;
 					pad+=pad_with;
-					this.unk_type.decodeEx(MyReader.createFrom(this.buf.subarray(this.pos),this));
+					this.unk_type.decode(MyReader.createFrom(this.buf.subarray(this.pos),this));
 					pad=pad_start;
 					console.pad_log("}");
 				}
@@ -131,7 +131,7 @@ class MyReader extends protobufjs.Reader {
 				let raw_wire_type;
 				while((wireType=(raw_wire_type=this.uint32())&7)!==4) {
 					this.fieldId=raw_wire_type>>3;
-					this.skipTypeEx(wireType);
+					this.skipType(wireType);
 				}
 				pad=prev_pad;
 				console.pad_log("}");
@@ -145,6 +145,7 @@ class MyReader extends protobufjs.Reader {
 			default:
 				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
 		}
+		return this;
 	}
 }
 
