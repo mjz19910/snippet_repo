@@ -115,11 +115,27 @@ if(typeof window==='undefined') {
 		class HTMLDivElement extends HTMLElement {}
 		window.HTMLDivElement=HTMLDivElement;
 		class History {
-			pushState() {
+			/** @type {{}|null} */
+			_state=null;
+			/** @type {({}|null)[]} */
+			history_list=[];
+			get state() {
+				return this._state;
+			}
+			/**
+			 * @param {{} | null} state
+			 */
+			pushState(state) {
+				this.history_list.push(this._state)
+				this._state=state;
 				console.log("history push state base");
 			}
-			replaceState() {
+			/**
+			 * @param {{} | null} state
+			 */
+			replaceState(state) {
 				console.log("history replace state base");
+				this.history_list[this.history_list.length-1]=state;
 			}
 		}
 		window.history=new History;
@@ -2766,7 +2782,7 @@ let audio_gain_controller=null;
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
  * @type {import("./__global.js").__ia_excludeKeysS}
  */
-Object.__ia_excludeKeysS=function(target,ex_keys_str) {
+Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
 	/** @type {C} */
