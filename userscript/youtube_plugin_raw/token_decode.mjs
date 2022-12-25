@@ -161,7 +161,6 @@ export function do_token_decode(binary) {
 	/** @type {[[number],Uint8Array][]} */
 	let parts=[];
 	x: for(let i=0;;) {
-		reader.bytes();
 		let xx=reader.uint32();
 		console.log('pp',xx);
 		switch(xx) {
