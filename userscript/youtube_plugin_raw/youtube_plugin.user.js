@@ -310,7 +310,7 @@ class NewBrowserHistory {
 	 * @param {string | URL | null | undefined} [c]
 	 */
 	saveAndReplace(a,b,c) {
-		a;b;c;
+		a; b; c;
 	}
 }
 
@@ -375,15 +375,22 @@ class YtdAppElement extends YtdAppElementBase {
 		}
 		function u5() {
 			if(!cache.desktop_history) {
-			cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+			}
+			return cache.desktop_history;
 		}
-		return cache.desktop_history;
+		function t5() {
+			return true;
+		}
+		function use_Ck(key,fb) {
+			// let Ak=get_Ak();
+			// return a in Ak ?Ak[a]:b;
 		}
 		this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
 			if(!cache.desktop_history) {
 				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
 			}
-			true? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
+			t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
 		};
 	}
 }
