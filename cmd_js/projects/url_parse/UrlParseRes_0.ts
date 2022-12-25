@@ -23,7 +23,4 @@ export type UrlParseRes_0<
 	Host extends string,
 	Protocol extends string,
 	Search extends string,
-	Pathname extends string>=UrlParseRes_1<T,Host,Protocol,Search,Pathname>&{
-		// Only set in the browser
-		path: Pathname;
-	}|UrlParseRes_1<T,Host,Protocol,Search,Pathname>;
+	Pathname extends string>=UrlParseRes_1<T,Host,Protocol,Search,Pathname>;
