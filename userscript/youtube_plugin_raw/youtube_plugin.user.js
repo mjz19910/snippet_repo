@@ -17,7 +17,11 @@ console=typeof window==='undefined'?console:(()=>window.console)();
 if(typeof window==='undefined') {
 	/** @type {any} */
 	let t_=new EventTarget;
+	t_;
 	window=t_;
+	/** @type {any} */
+	let na={};
+	navigator=na;
 	class Storage {
 		map=new Map;
 		/**
@@ -96,11 +100,12 @@ if(typeof window==='undefined') {
 		window.document=new Document;
 		class HTMLDivElement extends HTMLElement {}
 		window.HTMLDivElement=HTMLDivElement;
+		class History {}
+		window.history=new History;
+		history=window.history;
+		window.History=History;
 	}
-	window=t_;
-	/** @type {any} */
-	let na={};
-	navigator=na;
+	History=window.History;
 	HTMLElement=window.HTMLElement;
 	Image=window.Image;
 	document=window.document;
