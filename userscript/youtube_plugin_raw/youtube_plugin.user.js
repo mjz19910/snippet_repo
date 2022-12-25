@@ -2465,7 +2465,7 @@ class HistoryStateManager {
 		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
-				console.log(new_state,t.cur_state);
+				console.log(structuredClone(new_state),structuredClone(t.cur_state));
 				x: {
 					if(t.is_replacing_custom_state) {
 						t.cur_state=new_state;
