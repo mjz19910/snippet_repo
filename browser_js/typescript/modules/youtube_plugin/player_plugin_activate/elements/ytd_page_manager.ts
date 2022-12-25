@@ -1,3 +1,8 @@
-import {YtdPageManagerElement} from "./interfaces/YtdPageManagerElement.js"
+import {YtCurrentPage} from "./interfaces/YtCurrentPage.js";
 
-export const ytd_page_manager: {value:YtdPageManagerElement|null}={value:null}
+export interface YtdPageManagerElementInterface extends HTMLElement {
+	getCurrentPage(): YtCurrentPage;
+}
+
+
+export const ytd_page_manager: {value:YtdPageManagerElementInterface|null}={value:null}
