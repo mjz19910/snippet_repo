@@ -155,14 +155,14 @@ class MyUnkType extends protobufjs.Type {
 		this.state=state;
 	}
 	_fieldsArray!: protobufjs.Field[];
-	decodeEx(r: MyReader,l?: number) {
+	override decode(r: MyReader,l?: number) {
 		var c=l===undefined? r.len:r.pos+l,m=(new this.ctor) as protobufjs.Message<{}>;
 		while(r.pos<c) {
 			var t=r.uint32();
 			switch(t>>>3) {
 				default:
 					r.fieldId=t>>3;
-					r.skipTypeEx(t&7);
+					r.skipType(t&7);
 					break;
 			}
 		}
