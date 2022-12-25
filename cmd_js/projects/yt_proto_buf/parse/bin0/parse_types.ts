@@ -81,10 +81,10 @@ export type ProtoBufTypeT1A={
 
 export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let token_binary=get_token_data(obj.token1);
-	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
+	let id_arr=new Uint8Array(token_binary.subarray(0,4));
 	let typeid=as_base64_typeid(id_arr,0);
 	console.log('typeid=%o for base64(A.token1)',typeid);
-	let tmp_data=decode_as_type<ProtoBufTypeT1A>(root,"t1_A",token_binary.slice(4));
+	let tmp_data=decode_as_type<ProtoBufTypeT1A>(root,"t1_A",token_binary.subarray(4));
 	let description: DesType=tmp_data.data.description;
 	let items=extract_items(description);
 	console.log(items);
