@@ -2979,7 +2979,7 @@ class HistoryStateManager {
 			"configurable": true,
 			"enumerable": true,
 			"get": function() {
-				console.log('hist get',new Error);
+				console.log('hist get',new Error().stack?.split("\n").slice(0,5).join("\n"));
 				return hist_state_getter.call(this);
 			}
 		});
