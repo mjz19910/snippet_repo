@@ -5,7 +5,7 @@ Eg0SCzh6aWxFZ19mZVpBGAYyrgoKgwpnZXRfcmFua2VkX3N0cmVhbXMtLUN1d0dDSUFFRlJlMzBUZ2E0
 Eg0SCzh6aWxFZ19mZVpBGAYyJSIRIgs4emlsRWdfZmVaQTAAeAJCEGNvbW1lbnRzLXNlY3Rpb24%3D
 --
 Eg0SCzh6aWxFZ19mZVpBGAYypAcK-gZnZXRfcmFua2VkX3N0cmVhbXMtLUNzY0VDSUFFRlJlMzBUZ2F2QVFLdHdRSTJGOFFnQVFZQnlLc0JBTTJJdGRWREM4WVRPSmNIeGJQdF8yOWJlV2t2Tm45aHpRd1B1b1otMl9EbXQzNnhYWk9fcnZ5cGQxUnAxLVdCVzE0V1pXa1BfM0RINFg3anljemJzY2s5NUlFajByeS1YWlpTZThhNVMxdm1tNzh4ekNNN21ieVhrLXlmbW42dlBUZGRUS2FoMThLSmZyS2gwRHRzaFk3MkpZNER6VHZab1dMQzIxU2lzZ1VIRS1yS1BXcFBzWlJaSnRMakVwU2ZrMmtiVTlTMmwzbEg3Snlta2pscHYyNl9qWDUxTVl3dlV4X2RDZTVUa09mUmpFbmtUbGY2cVczdWZWajhhSEdvMG44NTJINVJscEsyZUtYU2MzRGR0bm9jaW1YNFRCcHdXbGZNdW13U05odzBmd1FhZTVuN3k2RlZybnAxbFZhX3ZqZl9sZnNiMlloUG9TY3BqOHRueFlYaVNIN05PSEYzLVZSZXJMXy13MVI4cm5GdkxUX1F4Ty00M0pldnNyVzdJWWZwcGpMVWM5dExOT1o3NjMxSjNtTEpQazg0REJQMW1xVjdfRTdzX0o0aWVSR1c5N3hQdVhoSFBWeWVIVGNjeHhOWHJZMTl4dTJMdF9xZWhpX3NIdzh0NlZISG5pM0g5SVh3WnNzdVF3X0VCSEwyVFJQOXNYcDRGdXFyaF9XRVA1dmY4SFZoZVZCWTJHMWFaLWJUUG95eUtJekh0OWlhMjRaYVdjOUhxeldvLW54NWJCdEw5LTctbkJCUVRMMFVESDBYOVhxNEoyWWxmVExjSmpLNmFTekw4OUxMU0ZNcDYzdlZlcUNPNDdreEdsZjRtZEtFUy1OYVZCaHFmeEVZMWdhUHZvZGJ3ZWVmb2l2T1NRNV85TjN4TG1GTkxOMzI1cTQxU1hxOENXSTBKWHR0MnpaTFlud05rcDlIcnRjWmhUVzRVb0JaN3FRZnhzeEhSdHJEQ0tuMV9zdkZ5eXg2U3MtWEFBUWVCSUhDSVVnRUhnWUFSSUhDSjhnRUFBWUFCSUZDSWtnR0FBU0J3aUVJQkF0R0FFU0JRaUlJQmdBRWdVSWh5QVlBQklGQ0lZZ0dBQVNCd2lYSUJCakdBRVlBUSIRIgs4emlsRWdfZmVaQTAAeAEoeEIQY29tbWVudHMtc2VjdGlvbg%3D%3D
-`.split("--").at(-1)?.trim() ?? "";
+`.split("--").at(-1)?.trim()??"";
 const text=atob(decodeURIComponent(token).replaceAll("_","/").replaceAll("-","+"));
 export const binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 const string_decoder=new TextDecoder('utf-8');
@@ -47,16 +47,134 @@ export function dec_uint32(binary,idx) {
  * @param {Uint8Array} binary
  */
 export function do_token_decode(binary) {
+	/* istanbul ignore next */
+	/**
+	 * @param {Reader} reader
+	 * @param {number} [writeLength]
+	 */
+	function indexOutOfRange(reader,writeLength) {
+		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
+	}
+	/**
+	 * Constructs a new reader instance using the specified buffer.
+	 * @classdesc Wire format reader using `Uint8Array` if available, otherwise `Array`.
+	 * @constructor
+	 * @param {Uint8Array} buffer Buffer to read from
+	 */
+	function Reader(buffer) {
+		/** @type {Uint8Array} */
+		this.buf=buffer;
+		/** @type {number} */
+		this.pos=0;
+		/** @type {number} */
+		this.len=buffer.length;
+	}
+	/**
+ * Reads a varint as an unsigned 32 bit value.
+ * @function
+ * @returns {number} Value read
+ */
+	Reader.prototype.uint32=(function read_uint32_setup() {
+		var value=4294967295;
+		/** @type {(this: Reader)=>number} */
+		return function read_uint32() {
+			value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
+
+			/* istanbul ignore if */
+			if((this.pos+=5)>this.len) {
+				this.pos=this.len;
+				throw indexOutOfRange(this,10);
+			}
+			return value;
+		};
+	})();
+	Reader.prototype.bytes=function read_bytes() {
+		var length=this.uint32(),
+			start=this.pos,
+			end=this.pos+length;
+
+		/* istanbul ignore if */
+		if(end>this.len)
+			throw indexOutOfRange(this,length);
+
+		this.pos+=length;
+		if(Array.isArray(this.buf)) // plain array
+			return this.buf.slice(start,end);
+		return start===end? new Uint8Array(0):this.buf.slice(start,end);
+	};
+	/**
+ * Skips the specified number of bytes if specified, otherwise skips a varint.
+ * @param {number} [length] Length if known, otherwise a varint is assumed
+ * @returns {Reader} `this`
+ */
+	Reader.prototype.skip=function skip(length) {
+		if(typeof length==="number") {
+			/* istanbul ignore if */
+			if(this.pos+length>this.len)
+				throw indexOutOfRange(this,length);
+			this.pos+=length;
+		} else {
+			do {
+				/* istanbul ignore if */
+				if(this.pos>=this.len)
+					throw indexOutOfRange(this);
+			} while(this.buf[this.pos++]&128);
+		}
+		return this;
+	};
+	let reader=new Reader(binary);
 	/** @type {[[number],Uint8Array][]} */
 	let parts=[];
 	x: for(let i=0;;) {
-		switch(binary[i]) {
+		reader.bytes();
+		let xx=reader.uint32();
+		console.log('pp',xx);
+		switch(xx) {
 			default: if(binary[i]>128) {
-				console.log('varint bigger', binary[i],binary[i+1]);
+				console.log('varint bigger',binary[i],binary[i+1]);
 			};
-			let pkt_hdr=binary[i]>>>3;
-			console.log(pkt_hdr.toString(16),"0x"+binary[i].toString(16),binary.subarray(i,i+32));
-			break x;
+				let wireType=xx>>>3;
+				console.log('wt',wireType,xx>>3);
+				switch(wireType) {
+					case 0:
+						let [dec,len]=dec_uint32(binary,i);
+						console.log('type0',dec);
+						i+=len;
+						continue;
+					case 1:
+						reader.skip(8);
+						break;
+					case 2:
+						let ds=dec_uint32(binary,i);
+						i+=ds[1];
+						console.log('type2',ds[0]);
+						let size=ds[0];
+						i+=size;
+						break;
+					case 3:
+						while((wireType=reader.uint32()&7)!==4) {
+							reader.skipType(wireType);
+						}
+						break;
+					case 5:
+						reader.skip(4);
+						break;
+
+					/* istanbul ignore next */
+					default:
+						throw Error("invalid wire type "+wireType+" at offset "+reader.pos);
+				}
+				i++;
+				// goto skipTypeEx;
+				if(binary[i]>128) {
+					console.log('varint bigger',binary[i],binary[i+1]);
+				}
+				console.log("t=0x"+wireType.toString(16),"f=0x"+binary[0].toString(16));
+				break x;
 		}
 		break x;
 	}
@@ -64,7 +182,7 @@ export function do_token_decode(binary) {
 	for(let i=0;i<parts.length;i++) {
 		let part=parts[i];
 		switch(part[0][0]) {
-			case 0x12: console.log('part_type',0x12, decode_str_tlv(parts[i][1])); continue;
+			case 0x12: console.log('part_type',0x12,decode_str_tlv(parts[i][1])); continue;
 		}
 		console.log("part type",parts[i][0][0],parts[i][1]);
 	}
