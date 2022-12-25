@@ -38,7 +38,7 @@ if(typeof window==='undefined') {
 	}
 }
 // #section Use module types
-/** @type {import("./support/yt_api/__global.js")} */
+/** @type {import("./__global.js")} */
 // #section end
 
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
@@ -1269,7 +1269,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {RichSectionRendererHolder} content_item */
+	/** @arg {import("./support/yt_api/RichSectionRendererHolder.js").RichSectionRendererHolder} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
