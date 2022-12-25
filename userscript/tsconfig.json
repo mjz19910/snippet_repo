@@ -13,7 +13,7 @@
 		"declaration": true,
 		"experimentalDecorators": true,
 		"forceConsistentCasingInFileNames": true,
-		"incremental": false,
+		"incremental": true,
 		"isolatedModules": false,
 		"noErrorTruncation": true,
 		"noFallthroughCasesInSwitch": true,

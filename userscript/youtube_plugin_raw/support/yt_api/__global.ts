@@ -1,4 +1,7 @@
-import {SavedData} from "./youtube_plugin.user.js";
+import {MenuRenderers} from "./MenuRenderers";
+import {MenuServiceItem} from "./MenuServiceItem";
+import {OpenPopupActionH} from "./OpenPopupActionH";
+import {WatchEndpoint} from "./WatchEndpoint";
 
 // YtdPageManagerElement
 declare global {
@@ -80,9 +83,156 @@ declare global {
 	type ContinuationItem=RendererContentItem;
 }
 
+type AdLayoutLoggingData={
+	"serializedAdServingDataEntry": string;
+};
+
+type AdLayoutMetadata={
+	"layoutId": string;
+	"layoutType": "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE";
+	"adLayoutLoggingData": AdLayoutLoggingData;
+};
+
+type UrlWrappedValue={
+	"privateDoNotAccessOrElseTrustedResourceUrlWrappedValue": string;
+};
+
+type AboutThisAdRenderer={
+	"url": UrlWrappedValue;
+	trackingParams: string;
+};
+
+type DialogPopup={
+	aboutThisAdRenderer: AboutThisAdRenderer;
+};
+
+type DialogPopupTag={
+	"popup": DialogPopup;
+	"popupType": "DIALOG";
+};
+
+type ImpressionEndpoint={
+	clickTrackingParams: string;
+	"loggingUrls": [
+		{
+			"baseUrl": "https://www.youtube.com/pagead/adview?ai=CR9DJiI6lY62vDMm7n88Pnre6kAngxfL9bfCOlrycEWQQASAAYP2Q9oDMA4IBF2NhLXB1Yi02MjE5ODExNzQ3MDQ5MzcxoAHLt6f4A6gDBMgDCqoEyAFP0EC2FSEYx70zuAUppUfEkYi_mOxY9ayL2TsEqmuwqQ2uR52X5F8mREDx148616YrlzJGcdfwasaotiQufJZQh_1P-F5EUxNcTrvVkGAoIHM-E6HcARQOzmMpiHURkEuWhENDfN2plBxHA5lui-nCj1tpA07TYASPOdBjxm-rT6PJyNg5mzjomgxxcY4JpG3rnZbC1TQ_an4StPQ5YOx-FCxGyY58dQA2TCk1vQwtBzqiGbOgOwWxy0tPKdPvQ51LcGX2i_nxJ8AEyNr865sEiAWjkqTnR5IFCQgTaAF47fX5BqAGboAHncjYB4gHAZAHAqgHgqqxAqgHhAioB6jSG6gHtgeoB-DPG6gH6dQbqAeMzRuoB7HcG6gHpJqxAqgHkZ-xAqgHsJuxAqgH36GxAqgHpqqxAqgHgcYbqAerxRuoB-PZG6gHt6mxAqgH6auxApIIC0FBQUFBQUFBQUFB0ggYCIDAgEAQAhgAMgSBgoAOOgeAgICAgIEEyAkAugs-CAIQBRgWIAgoATADQAFIAFABWCVgAGgAcAGIAQCYAQGiARIKAggBKAH4AQGQAgKoAgXAAgLYAQGAAgGIAgW4E____________wGwFALAFYGAgECKFwoIAxgBKAEwATgBoBcBqReJBEg1yjlletIXDhIK7E7vTqtctFyTaRhu&sigh=f6Ah-ilTPVs&cid=CAESD-D2saJYt_ikQ_sicNcKDQ";
+		}
+	];
+	"pingingEndpoint": {
+		"hack": true;
+	};
+};
+
+type UrlEndpoint={
+	url: string;
+	target: "TARGET_NEW_WINDOW";
+};
+
+type ClickCommand={
+	clickTrackingParams: string;
+	"commandMetadata": CommandMetadata;
+	"urlEndpoint": UrlEndpoint;
+};
+
+type RenderingContent={
+	"displayAdRenderer": {
+		trackingParams: string;
+		"layout": "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
+		"titleText": {
+			"simpleText": "Create Lasting Wealth";
+		};
+		"image": {
+			thumbnail: ThumbnailHolder;
+			trackingParams: string;
+		};
+		// spell:ignore Linqto
+		"bodyText": SimpleText;
+		"secondaryText": SimpleText;
+		"badge": {
+			"metadataBadgeRenderer": MetadataBadgeRenderer;
+		};
+		"menu": {
+			"menuRenderer": {
+				"items": [
+					{
+						"menuNavigationItemRenderer": {
+							"text": {
+								"runs": [
+									{
+										"text": "My Ad Centre";
+									}
+								];
+							};
+							"icon": {
+								"iconType": "INFO";
+							};
+							navigationEndpoint: NavigationEndpoint;
+							trackingParams: string;
+						};
+					}
+				];
+				trackingParams: string;
+				"accessibility": {
+					"accessibilityData": {
+						"label": "Action menu";
+					};
+				};
+			};
+		};
+		"ctaButton": {
+			"buttonRenderer": {
+				"style": "STYLE_PRIMARY";
+				"text": SimpleText;
+				"icon": Icon;
+				trackingParams: string;
+				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
+			};
+		};
+		impressionEndpoints: ImpressionEndpoint[];
+		"clickCommand": ClickCommand;
+		"mediaHoverOverlay": {
+			"buttonRenderer": {
+				"style": "STYLE_LIGHT_TEXT";
+				"text": {
+					"simpleText": "Visit site";
+				};
+				"icon": {
+					"iconType": "EXTERNAL_LINK";
+				};
+				trackingParams: string;
+				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
+			};
+		};
+		"mediaBadge": {
+			"metadataBadgeRenderer": {
+				"icon": {
+					"iconType": "EXTERNAL_LINK";
+				};
+				"style": "BADGE_STYLE_TYPE_BLACK";
+				trackingParams: string;
+			};
+		};
+	};
+};
+
+type InFeedAdLayoutRenderer={
+	"adLayoutMetadata": AdLayoutMetadata,
+	"renderingContent": RenderingContent;
+};
+
+type AdSlotMetadata={
+	"slotId": `${number}:${number}:${number}:${number}`;
+	"slotType": "SLOT_TYPE_IN_FEED";
+	"slotPhysicalPosition": number;
+};
+
 type AdSlotRenderer={
-	adSlotMetadata: {};
-	fulfillmentContent: {};
+	adSlotMetadata: AdSlotMetadata;
+	fulfillmentContent: {
+		fulfilledLayout: {
+			inFeedAdLayoutRenderer: InFeedAdLayoutRenderer;
+		};
+	};
 	enablePacfLoggingWeb: boolean;
 };
 type VideoRenderer={};
@@ -100,27 +250,21 @@ type RadioRendererHolder={
 
 // RichItemRenderer
 declare global {
-	type AdSlotRendererHolder={
-		adSlotRenderer: AdSlotRenderer;
-	};
-	type RichItemRendererContent=AdSlotRendererHolder|{
-		videoRenderer: {}
-	};
+	type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
 	interface RichItemRenderer {
 		content: RichItemRendererContent;
-		trackingParams?: string;
+		trackingParams: string;
+		rowIndex?: number;
+		colIndex?: number;
 	}
 	type RichItemRendererHolder={
 		richItemRenderer: RichItemRenderer;
 	};
 }
 
-// RichSectionRendererItem
-declare global {
-	type RichSectionRendererHolder={
-		richSectionRenderer: RichSectionRenderer;
-	};
-}
+type RichSectionRendererHolder={
+	richSectionRenderer: RichSectionRenderer;
+};
 
 
 interface RichShelfRenderer {
@@ -182,30 +326,16 @@ type ContinuationItemRenderer={
 			"style": "STYLE_SUGGESTIVE",
 			"size": "SIZE_DEFAULT",
 			"isDisabled": false,
-			"text": {
-				"runs": [
-					{
-						"text": "Show more";
-					}
-				];
-			},
-			"trackingParams": string,
+			"text": TextRuns;
+			trackingParams: string;
 			"command": {
 				"clickTrackingParams": string;
-				"commandMetadata": {
-					"webCommandMetadata": {
-						"sendPost": true,
-						"apiUrl": "/youtubei/v1/next";
-					};
-				},
-				"continuationCommand": {
-					"token": "CDwSTxILRFlPbFNoUWVQalkiAldMMiZFQUVZQVRnQllndHNkbmxzYm1GeFFqazJWV2dDMmdFQ0NBRSUzRDgDwAEAyAEA4AEDogIFKLEjQAD4AgAYACrDEjJzNkw2d3pyRFFyb0RRb0Q4ajRBQ2c3Q1Bnc0l3LTZSeUpqYTM2clRBUW9EOGo0QUNpZlNQaVFLSWxCTWNXSlROMEZXVmtWeVJtbFhSRTlCVm5KUWREZGhXVzF1ZFhWUFRGbDJUMkVLQV9JLUFBb053ajRLQ0llQXFOQ0VodERaZUFvRDhqNEFDZzdDUGdzSTZLYjBsZGp1dzVMZkFRb0Q4ajRBQ2c3Q1Bnc0lydFBjbzczRl84UDBBUW9EOGo0QUNnM0NQZ29JdHRqSG5JT0R0LXNYQ2dQeVBnQUtEc0ktQ3dpaG1fLWRwbzJ1M01NQkNnUHlQZ0FLRGNJLUNnaTA2N2lKbllfTnpFb0tBX0ktQUFvTndqNEtDS1R4bmJmS3hkN2xRUW9EOGo0QUNnN0NQZ3NJOTVqV2lOV1d3cjZ0QVFvRDhqNEFDZzNDUGdvSTFzVzNoSXFnNXRzUUNnUHlQZ0FLRGNJLUNnam5tSkh3aV9la2dYa0tBX0ktQUFvT3dqNExDT21ZNExDeGdhbWRnQUVLQV9JLUFBb053ajRLQ0ltRGxMeXc1Y0toU1FvRDhqNEFDZzdDUGdzSTY3UEU2S3EzaDRqRUFRb0Q4ajRBQ2czQ1Bnb0l0Sl9HOGFTWTJzQjJDZ1B5UGdBS0RzSS1Dd2lmNE1Edml1bUw5WUVCQ2dQeVBnQUtEc0ktQ3dqY3dhTHp6TWlxNUtRQkNnUHlQZ0FLRHNJLUN3aWprSlhzNGYzdWpZQUJDZ1B5UGdBS0RjSS1DZ2pQOElQYTc5ZlBod2NLQV9JLUFBb053ajRLQ055YXM5V3B3WXFCT0FvRDhqNEFDZzdDUGdzSWpidUpnNl9UbGFDX0FRb0Q4ajRBQ2c3Q1Bnc0l4ZDZuaE9HSmxybW5BUW9EOGo0QUNnM0NQZ29JOTVQS25kUGFfNThwQ2dQeVBnQUtEY0ktQ2dqZGp2V3dndm5HLTM0S0FfSS1BQW9Pd2o0TENKUFEtN2FqNlA3S3BnRUtBX0ktQUFvTndqNEtDSU83dWJ5UjVydU1UZ29EOGo0QUNnN0NQZ3NJX2RYbGtKakE0ZUw1QVFvRDhqNEFDZzNDUGdvSW9LLWg2b2ZBMnJ3TkNnUHlQZ0FLRGNJLUNnakdnY2FNd3VQMnh3UUtBX0ktQUFvTndqNEtDTGF1dEtXeThvQ09SUW9EOGo0QUNnN0NQZ3NJczhYTjZjSGp4ckdHQVFvRDhqNEFDZzNDUGdvSXFmWHFxdGVTeWVKbUNnUHlQZ0FLRHNJLUN3amtsSjJucU12NjhhVUJDZ1B5UGdBS0RzSS1Dd2pQdnJpX250V2p2Nm9CQ2dQeVBnQUtEc0ktQ3dqeXQ0ZnZtX2ZRaWZnQkNnUHlQZ0FLRHNJLUN3alc3UExHa3NfbDRLd0JDZ1B5UGdBS0RjSS1DZ2lVcTRlaDVzeUNzaTRLQV9JLUFBb093ajRMQ092MXhJZWV2dG5ob2dFS0FfSS1BQW9Od2o0S0NOQ2IyNkRmM3JhY2J3b0Q4ajRBQ2c3Q1Bnc0l6dWJUaTVDVF9iUzBBUW9EOGo0QUNnN0NQZ3NJMjl2ejBkdnI4X21PQVFvRDhqNEFDZzdDUGdzSXRjTE1xWkNSbWF2VkFRb0Q4ajRBQ2czQ1Bnb0l1LUd4b3U2OG52NXlDZ1B5UGdBS0RjSS1DZ2lfeC1qb3JNYXR4MEVLQV9JLUFBb053ajRLQ08yT25wN1UzT1RFYndvRDhqNEFDZzdDUGdzSXNhbjM5ZnpSc082MEFRb0Q4ajRBQ2c3Q1Bnc0k4SVNwdk5uVXU5V2NBUW9EOGo0QUNnM0NQZ29JdS1lQm9kVEZ2N29PQ2dQeVBnQUtEY0ktQ2dpbHE4TFpzdl9hdWhzS0FfSS1BQW9Pd2o0TENKRzR1TW5vdUwzQjNnRUtBX0ktQUFvT3dqNExDT2JfNUlYZmctRHczUUVLQV9JLUFBb093ajRMQ0l6UjNmeVA3dXp6eUFFS0FfSS1BQW9Pd2o0TENOdko5dlhDbnJUR3lnRUtBX0ktQUFvT3dqNExDSXJyMklLdjlhN1pfQUVLQV9JLUFBb093ajRMQ09POHlaT3lnWm5DaHdFS0FfSS1BQW9Od2o0S0NLbUJ0Sl9Ea2Z2ak5Bb0Q4ajRBQ2czQ1Bnb0kxWnFLeThtanRNRXpDZ1B5UGdBS0RzSS1Dd2lvaHZia25zei0ydjhCQ2dQeVBnQUtKOUktSkFvaVVFdzBhelkwVjJWdGNtOUhiazlwYVVWQlZHSm5RMnczV25OYWQxRkJYM2hDWVJJOEFBSUVCZ2dLREE0UUVoUVdHQm9jSGlBaUpDWW9LaXd1TURJME5qZzZQRDVBUWtSR1NFcE1UbEJTVkZaWVdseGVZR0prWm1ocWJHNXdjblIyR2dRSUFCQUJHZ1FJQWhBREdnUUlCQkFGR2dRSUJoQUhHZ1FJQ0JBSkdnUUlDaEFMR2dRSURCQU5HZ1FJRGhBUEdnUUlFQkFSR2dRSUVoQVRHZ1FJRkJBVkdnUUlGaEFYR2dRSUdCQVpHZ1FJR2hBYkdnUUlIQkFkR2dRSUhoQWZHZ1FJSUJBaEdnUUlJaEFqR2dRSUpCQWxHZ1FJSmhBbkdnUUlLQkFwR2dRSUtoQXJHZ1FJTEJBdEdnUUlMaEF2R2dRSU1CQXhHZ1FJTWhBekdnUUlOQkExR2dRSU5oQTNHZ1FJT0JBNUdnUUlPaEE3R2dRSVBCQTlHZ1FJUGhBX0dnUUlRQkJCR2dRSVFoQkRHZ1FJUkJCRkdnUUlSaEJIR2dRSVNCQkpHZ1FJU2hCTEdnUUlUQkJOR2dRSVRoQlBHZ1FJVUJCUkdnUUlVaEJUR2dRSVZCQlZHZ1FJVmhCWEdnUUlXQkJaR2dRSVdoQmJHZ1FJWEJCZEdnUUlYaEJmR2dRSVlCQmhHZ1FJWWhCakdnUUlaQkJsR2dRSVpoQm5HZ1FJYUJCcEdnUUlhaEJyR2dRSWJCQnRHZ1FJYmhCdkdnUUljQkJ4R2dRSWNoQnpHZ1FJZEJCMUdnUUlkaEIzS2p3QUFnUUdDQW9NRGhBU0ZCWVlHaHdlSUNJa0ppZ3FMQzR3TWpRMk9EbzhQa0JDUkVaSVNreE9VRkpVVmxoYVhGNWdZbVJtYUdwc2JuQnlkSFlqD3dhdGNoLW5leHQtZmVlZHIA",
-					"request": "CONTINUATION_REQUEST_TYPE_WATCH_NEXT";
-				};
-			};
+				"commandMetadata": CommandMetadata;
+				continuationCommand?: ContinuationCommand;
+			},
 		};
 	};
-	ghostCards: GhostCards;
+	ghostCards?: GhostCards;
 };
 type ContinuationItemRendererHolder={
 	continuationItemRenderer: ContinuationItemRenderer;
@@ -269,7 +399,7 @@ export type TrackedServiceEndpointGeneral={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 	trackingParams: string;
-}
+};
 
 export interface SignalServiceEndpoints extends ServiceEndpointGeneral {
 	signalServiceEndpoint: SignalServiceEndpoint;
@@ -438,42 +568,35 @@ export type CompactVideoRendererHolder={
 	compactVideoRenderer: CompactVideoRenderer;
 };
 
-type CompactPlaylistRenderer={_tag:""};
+type CompactPlaylistRenderer={};
 type CompactPlaylistRendererHolder={
 	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
 
-// RendererContentItem
-declare global {
-	type RendererContentItem=
-		RichItemRendererHolder|
-		RichSectionRendererHolder|
-		CommentsHeaderRendererHolder|
-		CommentThreadRendererHolder|
-		ContinuationItemRendererHolder|
-		CompactVideoRendererHolder|
-		CompactPlaylistRendererHolder|
-		never;
-}
+export type RendererContentItem=
+	RichItemRendererHolder|
+	RichSectionRendererHolder|
+	CommentsHeaderRendererHolder|
+	CommentThreadRendererHolder|
+	ContinuationItemRendererHolder|
+	CompactVideoRendererHolder|
+	CompactPlaylistRendererHolder|
+	never;
 
-// RichGridRenderer
-declare global {
-	interface RichGridRenderer {
-		masthead: {
-			[str: string]: {}|undefined;
-			videoMastheadAdV3Renderer?: {};
-		};
-		contents: RendererContentItem[];
-	}
-}
 
-// ResState
-declare global {
-	type ResState={
-		active: boolean;
-		resolver: () => void;
+export interface RichGridRenderer {
+	masthead: {
+		[str: string]: {}|undefined;
+		videoMastheadAdV3Renderer?: {};
 	};
+	contents: RendererContentItem[];
 }
+
+
+export type ResState={
+	active: boolean;
+	resolver: () => void;
+};
 
 export {};
 
@@ -581,5 +704,3 @@ declare global {
 		PropertyHandler?: {};
 	}
 }
-
-export {};

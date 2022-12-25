@@ -38,7 +38,7 @@ if(typeof window==='undefined') {
 	}
 }
 // #section Use module types
-/** @type {import("./__global.js")} */
+/** @type {import("./support/yt_api/__global.js")} */
 // #section end
 
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
