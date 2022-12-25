@@ -108,7 +108,7 @@ export class MyReader {
 				break;
 			case 2:
 				let size=this.uint32();
-				console.log("FF %o",size);
+				console.pad_log("\"field %o: L-delim\": ?",fieldId);
 				this.skip(size);
 				break;
 			case 3:
