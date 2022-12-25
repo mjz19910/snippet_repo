@@ -5,6 +5,19 @@ import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererConte
 import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
 import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder.js";
 
+declare global {
+	type YtConfigAk={[U in string]: any};
+}
+declare global {
+	interface Window {
+		yt?: {
+			config_: YtConfigAk
+		}
+		ytcfg?: {
+			data_: YtConfigAk;
+		};
+	}
+}
 class HistoryManager {
 	replaceState(a: any,b: any,c: any) {
 		a;b;c;
