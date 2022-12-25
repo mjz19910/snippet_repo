@@ -14,6 +14,30 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 console=typeof window==='undefined'? console:(() => window.console)();
+/** @template U @arg {any} x @arg {U} u @returns {x is U} */
+function is_other(x,u) {
+	x; u;
+	return true;
+}
+/** @template T @template U @arg {T|U} x @arg {U} u @returns {U} */
+function any(x,u) {
+	if(!is_other(x,u)) throw 1;
+	return x;
+}
+
+if(typeof YtdAppElementBase==='undefined') {
+	/** @typedef {import("./__global.js").YtdAppElementBase_['$']} $d */
+	/** @type {(x:$d|{})=>x is $d} */
+	let c_any=(x) => {x; return true;};
+	/** @type {$d|{}} */
+	let xx={};
+	if(!c_any(xx)) throw 1;
+	/** @type {$d} */
+	let xb=xx;
+	YtdAppElementBase=class extends HTMLElement {
+		$=xb;
+	};
+}
 if(typeof window==='undefined') {
 	/** @type {any} */
 	let t_=new EventTarget;
@@ -268,20 +292,30 @@ class ShadyChildrenOfYtdApp {
 	masthead=new YtdMasthead;
 }
 
+class NewBrowserHistory {
+	getState() {
+		return history.state;
+	}
+	/**
+	 * @param {any} a
+	 * @param {string} b
+	 * @param {string | URL | null | undefined} [c]
+	 */
+	replaceState(a,b,c) {
+		history.replaceState(a,b,c);
+	}
+	/**
+	 * @param {any} a
+	 * @param {string} b
+	 * @param {string | URL | null | undefined} [c]
+	 */
+	saveAndReplace(a,b,c) {
+		a;b;c;
+	}
+}
+
 class ProvideWithDesktopHistoryManagerToken {
-	browserHistory={
-		getState() {
-			return history.state;
-		},
-		/**
-		 * @param {any} a
-		 * @param {string} b
-		 * @param {string | URL | null | undefined} [c]
-		 */
-		replaceState(a,b,c) {
-			history.replaceState(a,b,c);
-		}
-	};
+	browserHistory=new NewBrowserHistory;
 	/** @arg {string} url */
 	replaceUrl(url) {
 		var b=this.browserHistory.getState();
@@ -292,15 +326,15 @@ class ProvideWithDesktopHistoryManagerToken {
 	replaceState(b,url) {
 		{
 			let c=b;
-			if(0 <= Number(null == c ? void 0 : c.entryTime)) {
-				this.historyEntryTime = c.entryTime;
+			if(0<=Number(null==c? void 0:c.entryTime)) {
+				this.historyEntryTime=c.entryTime;
 			}
 		}
 		this.browserHistory.replaceState(b,url);
 	}
 }
 
-class YtdAppElement extends HTMLElement {
+class YtdAppElement extends YtdAppElementBase {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
 	/**@type {VolumeRange|undefined}*/
@@ -309,6 +343,7 @@ class YtdAppElement extends HTMLElement {
 	app_is_visible;
 	/**@type {ReturnType<typeof setInterval>|undefined} */
 	ytp_click_cint;
+	$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
 	/**@arg {HTMLElement} element @return {YtdAppElement} */
 	static cast(element) {
 		return any_c(element,YtdAppElement);
@@ -317,7 +352,7 @@ class YtdAppElement extends HTMLElement {
 	init_inject() {
 		let cache={
 			/** @type {ProvideWithDesktopHistoryManagerToken|null} */
-			desktop_history:null,
+			desktop_history: null,
 		};
 		/** @arg {string} url @arg {never[]} ex_args */
 		this.replaceUrl=function replaceUrl(url,...ex_args) {
@@ -334,6 +369,22 @@ class YtdAppElement extends HTMLElement {
 		pd.configurable=false;
 		pd.writable=false;
 		Object.defineProperty(this,"replaceUrl",pd);
+		/** @arg {YtdAppElement} a */
+		function v5(a) {
+			return a.$.historyManager;
+		}
+		function u5() {
+			if(!cache.desktop_history) {
+			cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+		}
+		return cache.desktop_history;
+		}
+		this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
+			if(!cache.desktop_history) {
+				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+			}
+			true? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
+		};
 	}
 }
 
@@ -2120,7 +2171,7 @@ async function async_plugin_init(event) {
 			if(ytd_page_manager===null) continue;
 			obj.dispatchEvent({...event,type: "plugin-activate"});
 		}
-	} catch (e) {
+	} catch(e) {
 		console.log("had error in async init",e);
 	}
 }
@@ -2686,7 +2737,7 @@ Object.__ia_excludeKeysS=function(target,ex_keys_str) {
 	/** @type {C[number]} */
 	var key;
 	var rest,i=0,
-			obj=Object.fromEntries(Object.entries(target));
+		obj=Object.fromEntries(Object.entries(target));
 	for(;i<ex_keys.length;i++) {
 		{
 			key=ex_keys[i];

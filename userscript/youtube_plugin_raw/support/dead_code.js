@@ -1,5 +1,5 @@
-/** @type {<T, U>(v1:T, v2: T|U)=>NonNullable<T>} */
-function default_from(v1,v2) {
+	/** @type {<T, U>(v1:T, v2: T|U)=>NonNullable<T>} */
+export function default_from(v1,v2) {
 	if(v1) {
 		return v1;
 	}
@@ -9,7 +9,7 @@ function default_from(v1,v2) {
 }
 
 /** @template T @arg {T} e @returns {T} */
-function any(e) {
+export function any(e) {
 	return e;
 }
 
@@ -17,7 +17,7 @@ function any(e) {
  * @param {(arg0: [target: any, thisArg: any, argArray: any[]]) => void} callback
  * @param {any} value
  */
-function create_proxy(value,callback) {
+export function create_proxy(value,callback) {
 	return new Proxy(value,{
 		apply(...arr) {
 			return callback(arr);
@@ -32,9 +32,10 @@ const LOGGING_LEVEL=1;
  * @param {string} logger_format
  * @param {any[]} logger_args
  */
-function log_if_level(logging_level,logger_format,...logger_args) {
+export function log_if_level(logging_level,logger_format,...logger_args) {
 	if(logging_level>LOGGING_LEVEL) {
 		console.log(logger_format,...logger_args);
 	}
 }
 
+export {};
