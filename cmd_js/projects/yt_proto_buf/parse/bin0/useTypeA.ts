@@ -3,7 +3,7 @@ import {as_base64_typeid} from './as_base64_typeid.js';
 import {readFile,writeFile} from 'fs/promises';
 import {Type} from 'protobufjs';
 import {into_type} from './into_type.js';
-import {ProtoBufTypeA} from './parse_types';
+import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 
 
 export async function useTypeA(proto_A_type: Type) {
