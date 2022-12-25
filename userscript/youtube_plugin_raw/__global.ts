@@ -6,6 +6,7 @@ import {MenuRendererH} from "./support/yt_api/MenuRendererH.js";
 import {DialogPopupTag} from "./support/yt_api/DialogPopupTag";
 import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererContentDef";
 import {NavigationEndpoint} from "./support/yt_api/NavigationEndpoint.js";
+import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
 
 // YtdPageManagerElement
 declare global {
@@ -57,11 +58,7 @@ declare global {
 }
 // WatchNextContinuationAction
 declare global {
-	type WatchNextItem={
-		compactVideoRenderer: CompactVideoRenderer;
-	}|{
-		continuationItemRenderer: ContinuationItemRenderer;
-	};
+	type WatchNextItem=CompactVideoRendererHolder|ContinuationItemRendererHolder;
 	interface WatchNextContinuationAction {
 		targetId: "watch-next-feed";
 		continuationItems: WatchNextItem[];
@@ -160,28 +157,6 @@ type GhostGridRenderer={
 type GhostCards={
 	ghostGridRenderer: GhostGridRenderer;
 };
-type ContinuationItemRenderer={
-	trigger: string;
-	continuationEndpoint: ContinuationEndpoint;
-	button?: {
-		"buttonRenderer": {
-			"style": "STYLE_SUGGESTIVE",
-			"size": "SIZE_DEFAULT",
-			"isDisabled": false,
-			"text": TextRuns;
-			trackingParams: string;
-			"command": {
-				"clickTrackingParams": string;
-				"commandMetadata": CommandMetadata;
-				continuationCommand?: ContinuationCommand;
-			},
-		};
-	};
-	ghostCards?: GhostCards;
-};
-export type ContinuationItemRendererHolder={
-	continuationItemRenderer: ContinuationItemRenderer;
-};
 export type MenuRenderer={
 	accessibility: Accessibility;
 	items: MenuServiceItem[];
@@ -252,15 +227,6 @@ export interface PlaylistEditEndpointH {
 
 export interface AddToPlaylistServiceEndpointH {
 	addToPlaylistServiceEndpoint: {};
-};
-
-
-type TextRun={
-	text: string;
-	navigationEndpoint?: NavigationEndpoint;
-};
-export type TextRuns={
-	runs: TextRun[];
 };
 type AccessibilityData={
 	label: string;
