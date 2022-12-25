@@ -8,4 +8,12 @@ message A {
 		uint64 field_08 = 8;
 	}
 	required DateTime datetime = 4;
+	optional string field_06 = 6;
+	optional string field_11 = 11;
+	optional B field_19 = 19;
+}
+
+message B {
+	required int32 field_02 = 2;
+	required int32 field_03 = 3;
 }
