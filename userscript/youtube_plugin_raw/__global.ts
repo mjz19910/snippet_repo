@@ -5,6 +5,12 @@ import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererConte
 import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
 import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder.js";
 
+declare global {
+	interface Object {
+		__ia_excludeKeysS(ex_keys_str: string): {[k: string]: any;};
+	}
+}
+
 // YtdPageManagerElement
 declare global {
 	interface YtdPageManagerElementInterface extends HTMLElement {
