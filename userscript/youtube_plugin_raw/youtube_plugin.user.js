@@ -25,19 +25,6 @@ function any(x,u) {
 	return x;
 }
 
-if(typeof YtdAppElementBase==='undefined') {
-	/** @typedef {import("./__global.js").YtdAppElementBase_['$']} $d */
-	/** @type {(x:$d|{})=>x is $d} */
-	let c_any=(x) => {x; return true;};
-	/** @type {$d|{}} */
-	let xx={};
-	if(!c_any(xx)) throw 1;
-	/** @type {$d} */
-	let xb=xx;
-	YtdAppElementBase=class extends HTMLElement {
-		$=xb;
-	};
-}
 if(typeof window==='undefined') {
 	/** @type {any} */
 	let t_=new EventTarget;
@@ -219,6 +206,19 @@ if(typeof window==='undefined') {
 		window.AudioContext=AudioContext;
 	}
 	AudioContext=window.AudioContext;
+}
+if(typeof YtdAppElementBase==='undefined') {
+	/** @typedef {import("./__global.js").YtdAppElementBase_['$']} $d */
+	/** @type {(x:$d|{})=>x is $d} */
+	let c_any=(x) => {x; return true;};
+	/** @type {$d|{}} */
+	let xx={};
+	if(!c_any(xx)) throw 1;
+	/** @type {$d} */
+	let xb=xx;
+	YtdAppElementBase=class extends HTMLElement {
+		$=xb;
+	};
 }
 
 
