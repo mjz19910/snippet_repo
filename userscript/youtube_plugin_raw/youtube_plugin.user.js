@@ -2741,7 +2741,7 @@ class HistoryStateManager {
 		 * @param {{}} obj
 		 */
 		function remove_yt_data(obj) {
-			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint,savedComponentState");
+			return obj.__ia_excludeKeysS("");
 		}
 		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
@@ -2772,12 +2772,13 @@ class HistoryStateManager {
 		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
-				console.log(new_state,t.cur_state);
-				x:{
-					if(t.is_replacing_custom_state) {
-						t.cur_state=new_state;
-						break x;
-					}
+				if(t.cur_state) {
+					console.log('new state',remove_yt_data(new_state),remove_yt_data(t.cur_state));
+				} else {
+					console.log('beg state',remove_yt_data(new_state),t.cur_state);
+				}
+				x: {
+					if(t.is_replacing_custom_state) break x;
 					/** @type {{[x: string]: {}}|null} */
 					let prev_state=t.cur_state;
 					if(prev_state) {
@@ -2788,8 +2789,7 @@ class HistoryStateManager {
 							}
 						}
 					}
-					t.cur_state=new_state;
-					console.log("replaceState",...argArray);
+					console.log("replaceState",remove_yt_data(argArray[0]),argArray.length);
 				}
 				return Reflect.apply(target,thisArg,argArray);
 			}
@@ -2968,7 +2968,7 @@ function main() {
 main();
 
 /**
- * @template {string} T @template {{}} U 
+ * @template {string} T @template {{}} U
  * @template {Split<T,",">} C
  * @arg {U} this @arg {Split<T,","> extends any[]?T:never} ex_keys_str
  * @returns {{[I in Exclude<keyof U,C[number]>]: U[I]}}
