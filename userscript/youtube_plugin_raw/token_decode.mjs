@@ -126,6 +126,37 @@ export function do_token_decode(binary) {
 		}
 		return this;
 	};
+	/**
+ * Skips the next element of the specified wire type.
+ * @param {number} wireType Wire type received
+ * @returns {Reader} `this`
+ */
+	Reader.prototype.skipType=function(wireType) {
+		switch(wireType) {
+			case 0:
+				this.skip();
+				break;
+			case 1:
+				this.skip(8);
+				break;
+			case 2:
+				this.skip(this.uint32());
+				break;
+			case 3:
+				while((wireType=this.uint32()&7)!==4) {
+					this.skipType(wireType);
+				}
+				break;
+			case 5:
+				this.skip(4);
+				break;
+
+			/* istanbul ignore next */
+			default:
+				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
+		}
+		return this;
+	};
 	let reader=new Reader(binary);
 	/** @type {[[number],Uint8Array][]} */
 	let parts=[];
