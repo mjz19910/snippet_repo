@@ -380,11 +380,42 @@ class YtdAppElement extends YtdAppElementBase {
 			return cache.desktop_history;
 		}
 		function t5() {
-			return true;
+			return B("desktop_use_new_history_manager");
 		}
-		function use_Ck(key,fb) {
-			// let Ak=get_Ak();
-			// return a in Ak ?Ak[a]:b;
+		/**
+		 * @param {string} a
+		 * @param {{}} b
+		 */
+		function Ck(a,b) {
+			return use_Ck(a,b);
+		}
+		/**
+		 * @param {string | number} a
+		 */
+		function Mma(a) {
+			var b=Ck("EXPERIMENTS_FORCED_FLAGS",{})||{};
+			return void 0!==b[a]? b[a]:Ck("EXPERIMENT_FLAGS",{})[a];
+		}
+		/**
+		 * @param {string} a
+		 */
+		function B(a) {
+			a=Mma(a);
+			return "string"===typeof a&&"false"===a? !1:!!a;
+		}
+		// {
+		// var Jma=window,Kma,Lma;
+		// /** @type {YtConfigAk} */
+		// let Ak=(null==Jma?void 0:null==(Kma=Jma.yt)?void 0:Kma.config_)||(null==Jma?void 0:null==(Lma=Jma.ytcfg)?void 0:Lma.data_)||{};
+		// }
+		function get_Ak() {
+			if(!window.ytcfg) throw 1;
+			return window.ytcfg.data_;
+		};
+		/** @param {string} a @param {any} b */
+		function use_Ck(a,b) {
+			let Ak=get_Ak();
+			return a in Ak? Ak[a]:b;
 		}
 		this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
 			if(!cache.desktop_history) {
