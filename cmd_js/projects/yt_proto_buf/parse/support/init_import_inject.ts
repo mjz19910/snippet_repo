@@ -34,6 +34,7 @@ class MyConsole {
 	start_stack=new Array<[number,number]>;
 	pause() {
 		let scope_id=this.scope_id_max++;
+		let enter_len=this.start_stack.length;
 		let start_pause_length=this.cache.length;
 		this.start_stack.push([scope_id,start_pause_length]);
 		this.paused=true;
@@ -46,7 +47,9 @@ class MyConsole {
 					break x;
 				}
 				this.cache.length=scope[1];
-				this.start_stack.length-=1;
+				if(this.start_stack.length>enter_len) {
+					this.start_stack.length=enter_len;
+				}
 			} else {
 				this.cache.length=start_pause_length;
 			}
