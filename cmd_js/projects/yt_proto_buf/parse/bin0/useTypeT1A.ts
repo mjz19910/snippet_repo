@@ -7,7 +7,6 @@ import {get_token_data} from './get_token_data.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {ProtoBufTypeT1A} from './ProtoBufTypeT1A.js';
 
-
 export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let token_binary=get_token_data(obj.token1);
 	let id_arr=new Uint8Array(token_binary.subarray(0,4));
