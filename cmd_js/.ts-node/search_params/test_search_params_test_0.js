@@ -22,5 +22,6 @@ export function test_search_params_test_0() {
     }
     console.log(vv.pathname, res);
 }
+(typeof window !== 'undefined' ? window : (global.exports = { meta_imp: [import.meta, typeof this] })).meta_imp = [import.meta, this];
 test_search_params_test_0();
 //# sourceMappingURL=test_search_params_test_0.js.map
