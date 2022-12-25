@@ -1,8 +1,8 @@
-import {
-	CommentsHeaderRendererHolder,CommentThreadRendererHolder,
-	CompactPlaylistRendererHolder,CompactVideoRendererHolder,
-	ContinuationItemRendererHolder
-} from "./__global.js";
+import {CompactPlaylistRendererHolder} from "./CompactPlaylistRendererHolder";
+import {CompactVideoRendererHolder} from "./CompactVideoRendererHolder";
+import {ContinuationItemRendererHolder} from "./ContinuationItemRendererHolder";
+import {CommentThreadRendererHolder} from "./CommentThreadRendererHolder";
+import {CommentsHeaderRendererHolder} from "./CommentsHeaderRendererHolder";
 
 export type RendererContentItemDef=
 	RichItemRendererHolder|
