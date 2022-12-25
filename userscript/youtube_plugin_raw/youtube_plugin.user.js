@@ -2651,7 +2651,7 @@ class VolumeRange {
 
 /**
  * @param {{ [x: string]: any; }} cur
- * @param {string | string[]} key_names
+ * @param {string[]} key_names
  * @param {any[]} acc
  * @param {string[]} path
  */
@@ -2687,10 +2687,11 @@ function all_of_key_rec(cur,key_names,acc,path) {
 /**
  * @param {{ [x: string]: any; }} cur
  * @param {string[]} key_names
- * @arg {any[]|undefined} acc
  */
-function all_of_key(cur,key_names,acc=[],path=["."]) {
-	all_of_key_rec(cur,key_names,acc,path);
+function all_of_key(cur,key_names) {
+	/** @type {any[]} */
+	let acc=[];
+	all_of_key_rec(cur,key_names,acc,["."]);
 	return acc;
 }
 
