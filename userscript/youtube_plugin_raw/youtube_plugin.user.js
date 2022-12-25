@@ -2772,14 +2772,12 @@ class HistoryStateManager {
 		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
-				if(t.cur_state) {
-					console.log('new state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
-					console.log("old_state: []",remove_yt_data(t.cur_state));
-				} else {
-					console.log('beg_state: []',remove_yt_data(new_state),t.cur_state);
-				}
-				x: {
-					if(t.is_replacing_custom_state) break x;
+				console.log(new_state,t.cur_state);
+				x:{
+					if(t.is_replacing_custom_state) {
+						t.cur_state=new_state;
+						break x;
+					}
 					/** @type {{[x: string]: {}}|null} */
 					let prev_state=t.cur_state;
 					if(prev_state) {
@@ -2790,9 +2788,9 @@ class HistoryStateManager {
 							}
 						}
 					}
-					console.log("after_rep: []",remove_yt_data(argArray[0]),argArray.length);
+					t.cur_state=new_state;
+					console.log("replaceState",...argArray);
 				}
-				t.cur_state=new_state;
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
