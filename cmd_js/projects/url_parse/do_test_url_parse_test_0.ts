@@ -27,11 +27,11 @@ export function do_test_url_parse_test_0() {
 	};
 	let rt_u: rt=vv;
 	rt_u;
-	console.log(vv.search);
 	type ru=Decay<ParseUrlParams<rt['search']>>;
 	let ru_v: ru={};
 	ru_v;
-	console.log('rs',get_url_params(vv.search,"rs"));
+	console.log("rs",get_url_params(vv.search,"rs"));
+	console.log("sqp",get_url_params(vv.search,"sqp"))
 }
 
 do_test_url_parse_test_0();
