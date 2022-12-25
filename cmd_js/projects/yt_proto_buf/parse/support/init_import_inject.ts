@@ -13,7 +13,7 @@ export function increase_padding() {
 
 class MyConsole {
 	paused=false;
-	cache: [string,...any[]][]=[];
+	cache: [string,string,any[]][]=[];
 	log(...data: any[]) {
 		console.log(...data);
 	}
@@ -28,7 +28,7 @@ class MyConsole {
 	}
 	pad_log(message: string,...data: any[]) {
 		if(this.paused) {
-			this.cache.push([message,...data]);
+			this.cache.push([pad,message,data]);
 			return;
 		}
 		console.log(pad+message,...data);
@@ -72,7 +72,8 @@ class MyConsole {
 	}
 	on_resume() {
 		for(let msg of this.cache) {
-			this.pad_log(...msg);
+			let [pad,message,data]=msg;
+			this.pad_log(pad+message,...data);
 		}
 	}
 	clear_cache() {
@@ -100,9 +101,7 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 			}
 			if(!has_error) {
 				let prev_pad=pad;
-				console.unpause(() => {
-					console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
-				});
+				console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
 				pad+=pad_with;
 				resume();
 				pad=prev_pad;
