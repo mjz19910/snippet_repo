@@ -1,5 +1,5 @@
-import {ThumbnailHolder} from "./ThumbnailHolder";
+import {ThumbnailH} from "./ThumbnailHolder";
 
-export interface MovingThumbnailDetails extends ThumbnailHolder {
+export interface MovingThumbnailDetails extends ThumbnailH {
 	logAsMovingThumbnail: boolean;
 }

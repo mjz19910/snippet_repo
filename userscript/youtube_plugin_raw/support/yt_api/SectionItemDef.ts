@@ -1,3 +1,3 @@
-import {RichSectionRendererHolder} from "./RichSectionRendererHolder.js";
+import {RichSectionRendererH} from "./RichSectionRendererHolder.js";
 
-export type SectionItemDef=RichItemRendererHolder|RichSectionRendererHolder;
+export type SectionItemDef=RichItemRendererHolder|RichSectionRendererH;

@@ -1,9 +1,9 @@
 import {post_message_connect_message_type} from "./DebugApi.user.js";
 import {IDValue_0 as IDValue_0_import} from "./support/IDValueI_0.js";
-import {InjectApiHolder,InjectApi} from "./support/InjectApi.js";
+import {InjectApiH_o,InjectApi} from "./support/InjectApi.js";
 import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
-import {RepeatHolder} from "./support/Repeat_0.js";
+import {Repeat_0_H} from "./support/Repeat_0.js";
 
 declare global {
 	type IDValue_0=IDValue_0_import;
@@ -271,11 +271,11 @@ declare global {
 	}
 }
 
-export {type DebugApiHoldersType};
+export {type DebugApiH_Type as DebugApiH_Type};
 declare global {
-	type DebugApiHoldersType={
-		InjectApi: typeof InjectApiHolder,
-		Repeat_0: typeof RepeatHolder,
+	type DebugApiH_Type={
+		InjectApi: typeof InjectApiH_o,
+		Repeat_0: typeof Repeat_0_H,
 	};
 }
 

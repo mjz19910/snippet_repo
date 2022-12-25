@@ -297,7 +297,7 @@ class JaiExecuteCall {
 	}
 }
 let Simple_Package=new _SimplePackageModule
-class NullValueHolder {
+class NullValueHb {
 	/**
 	 * @param {any} value
 	 */
@@ -305,7 +305,7 @@ class NullValueHolder {
 		this.value=value
 	}
 }
-class NullEntryHolder {
+class NullEntryHb {
 	/**
 	 * @param {any} name
 	 * @param {JaiStructMember} value
@@ -315,9 +315,9 @@ class NullEntryHolder {
 		this.value=value
 	}
 }
-class JaiStructMember extends NullValueHolder {
+class JaiStructMember extends NullValueHb {
 }
-class JaiStructMemberEntry extends NullEntryHolder {
+class JaiStructMemberEntry extends NullEntryHb {
 }
 class JaiStruct {
 	constructor() {
@@ -372,7 +372,7 @@ class JaiStructBuilder {
 		return new_struct
 	}
 }
-class JaiDynamicArrayTag extends NullValueHolder {
+class JaiDynamicArrayTag extends NullValueHb {
 }
 class JaiDynamicArray {
 	/**

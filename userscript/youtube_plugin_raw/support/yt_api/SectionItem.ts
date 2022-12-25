@@ -1,4 +1,4 @@
-import {RichItemRendererHolder} from "./RichItemRendererHolder";
-import {RichSectionRendererHolder} from "./RichSectionRendererHolder";
+import {RichItemRendererH} from "./RichItemRendererHolder";
+import {RichSectionRendererH} from "./RichSectionRendererHolder";
 
-export type SectionItem=RichItemRendererHolder|RichSectionRendererHolder;
+export type SectionItem=RichItemRendererH|RichSectionRendererH;

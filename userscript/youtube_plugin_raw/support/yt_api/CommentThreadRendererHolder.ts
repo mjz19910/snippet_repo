@@ -1,6 +1,6 @@
 import {CommentThreadRenderer} from "./CommentThreadRenderer";
 
 
-export type CommentThreadRendererHolder={
+export type CommentThreadRendererH={
 	commentThreadRenderer: CommentThreadRenderer;
 };
