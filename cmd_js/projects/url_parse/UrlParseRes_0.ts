@@ -10,7 +10,7 @@ export type UrlParseRes_0<
 		href: `${Protocol}//${Host}${Pathname}?${Search}`;
 		origin: `${Protocol}//${Host}`;
 		password: "";
-		path: Pathname;
+		path?: Pathname;
 		pathname: Pathname;
 		port: "";
 		protocol: Protocol;
