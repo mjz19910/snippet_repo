@@ -1,6 +1,7 @@
 import {create_from_parse} from "./create_from_parse.js";
 import {Decay} from "./Decay.js";
 import {ParseUrlParams} from "../search_params/ParseUrlParams.js";
+import {get_url_params} from "./get_url_params.js";
 
 export function do_test_url_parse_test_0() {
 	let pagead=new class {
@@ -28,10 +29,6 @@ export function do_test_url_parse_test_0() {
 	rt_u;
 	console.log(vv.search);
 	type ru=Decay<ParseUrlParams<rt['search']>>;
-	function get_url_params<T extends string,K extends Extract<keyof ParseUrlParams<T>,string>>(v: T,k: K): ParseUrlParams<T>[K]|null {
-		let res=new URLSearchParams(v).get(k) as ParseUrlParams<T>[K]|null;
-		return res;
-	}
 	let ru_v: ru={};
 	ru_v;
 	console.log('rs',get_url_params(vv.search,"rs"));
