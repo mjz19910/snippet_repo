@@ -2968,17 +2968,18 @@ function main() {
 main();
 
 /**
- * @template {string} T @template {{}} U
- * @template {Split<T,",">} C
- * @arg {U} this @arg {Split<T,","> extends any[]?T:never} ex_keys_str
- * @returns {{[I in Exclude<keyof U,C[number]>]: U[I]}}
+ * @template {string} T
+ * @template {{}} U
+ * @template {Split<T, ",">} C
+ * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
+ * @type {import("./__global.js").__ia_excludeKeysS}
  */
-Object.prototype.__ia_excludeKeysS = function(this,ex_keys_str) {
+Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
 	/** @type {any} */
   let ex_keys_any=ex_keys_str.split(",");
-	/** @type {Split<T, ",">} */
+	/** @type {C} */
 	let ex_keys=ex_keys_any;
-	/** @type {Split<T, ",">[number]} */
+	/** @type {C[number]} */
 	var key;
   var rest, i = 0,
     obj = Object.fromEntries(Object.entries(this));
@@ -2995,7 +2996,7 @@ Object.prototype.__ia_excludeKeysS = function(this,ex_keys_str) {
   };
 	/** @type {any} */
 	let res_any=obj;
-	/** @type {{[I in Exclude<keyof U,Split<T, ",">[number]>]: U[I]}} */
+	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
 	let res=res_any;
   return res;
 };
