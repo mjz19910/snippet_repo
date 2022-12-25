@@ -163,12 +163,6 @@ class MyUnkType extends protobufjs.Type {
 		this.state=state;
 	}
 	_fieldsArray!: protobufjs.Field[];
-	override setup() {
-		let types: (protobufjs.Type|protobufjs.Enum|null)[]=[];
-		for(var i=0;i< /* initializes */ this.fieldsArray.length;++i)
-			types.push(this._fieldsArray[i].resolve().resolvedType);
-		return this;
-	}
 	decodeEx(r: MyReader,l?: number) {
 		var c=l===undefined? r.reader.len:r.reader.pos+l,m=(new this.ctor) as protobufjs.Message<{}>;
 		while(r.reader.pos<c) {
@@ -185,23 +179,24 @@ class MyUnkType extends protobufjs.Type {
 
 
 export async function parse_types(): Promise<void> {
-	const my_console=new MyConsole;
 	const myArgs=process.argv.slice(2);
-	const my_state={my_console};
-	let unk_type=new MyUnkType("SkipUnknown",void 0,my_state);
+	const loaded_types=await load_types();
+	let root=loaded_types.root;
 	if(myArgs[0]==="--input") {
-		my_console.pad_log("message Type.U {");
-		let reset=increase_padding();
 		const token_buffer=get_token_data(myArgs[1]);
-		let reader=MyReader.create(token_buffer,unk_type);
-		unk_type.decodeEx(reader);
-		reset();
-		my_console.pad_log("}");
+		let buf_type=root.lookupType("A");
+		let message=buf_type.decode(token_buffer);
+		let u_obj=buf_type.toObject(message,{
+			longs: Number,
+			arrays: true,
+		});
+		let obj=into_type<typeof u_obj,{}>(u_obj);
+		console.log(obj);
 		return;
 	}
-	const loaded_types=await load_types();
 	await useTypeA(loaded_types);
 }
+
 async function load_types() {
 	let root=await protobufjs.load(r(`protobuf/tracking_params.proto`));
 	const token_buffer=await get_token_data_from_file(r(`binary/tracking_params.bin`));
