@@ -13,7 +13,7 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 	Reader.prototype.skipType=function(wireType: number) {
 		switch(wireType) {
 			case 0:
-				my_console.pad_log("wireType=%o",wireType);
+				my_console.pad_log("wireType=%o for varint",wireType);
 				this.skip();
 				break;
 			case 1:

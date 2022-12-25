@@ -225,6 +225,7 @@
       "Userland",
       "userscript",
       "varg",
+      "varint",
       "verifymethod",
       "vnode",
       "watchEndpointSupportedOnesieConfig",
