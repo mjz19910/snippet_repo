@@ -7,18 +7,18 @@ import {into_type} from "../support/into_type.js";
 import {r} from "./r.js";
 
 function run() {
-	parse_types("tracking_params").catch(e => {
+	parse_types().catch(e => {
 		console.log("error",e);
 	});
 }
 run();
 
-export async function parse_types(proto_name: string): Promise<void> {
-	let root=await protobufjs.load(r(`protobuf/${proto_name}.proto`));
-	await useTypeA(root,proto_name);
+export async function parse_types(): Promise<void> {
+	let root=await protobufjs.load(r(`protobuf/tracking_params.proto`));
+	const token_buffer=await get_token_data_from_file(r(`binary/tracking_params.bin`));
+	await useTypeA(root,token_buffer);
 }
-async function useTypeA(root: Root,proto_name: string) {
-	const token_buffer=await get_token_data_from_file(r(`binary/${proto_name}.bin`));
+async function useTypeA(root: Root,token_buffer: Buffer) {
 	let buf_type=root.lookupType("A");
 	let message=buf_type.decode(token_buffer.subarray(2));
 	let u_obj=buf_type.toObject(message,{
