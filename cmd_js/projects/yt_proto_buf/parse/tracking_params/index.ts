@@ -1,9 +1,6 @@
 import {readFile} from "fs/promises";
 import {
-	Codegen,
 	default as protobufjs,
-	Field,
-	type Root,
 } from "protobufjs";
 import {into_type} from "../support/into_type.js";
 import {r} from "./r.js";
@@ -133,136 +130,7 @@ export class MyReader {
 		}
 	}
 }
-export namespace codegen_ex {
-	const util=protobufjs.util;
-	const Enum=protobufjs.Enum;
-	const Type=protobufjs.Type; Type;
-	const types=protobufjs.types;
 
-	function missing(field: {name: string;}) {
-		return "missing required '"+field.name+"'";
-	}
-	/**
-	 * Generates a decoder specific to the specified message type.
-	 * @param {Type} mtype Message type
-	 * @returns {Codegen} Codegen instance
-	 */
-	export function decoder(mtype: MyUnkType): Codegen {
-		/* eslint-disable no-unexpected-multiline */
-		var gen=util.codegen(["r","l"],mtype.name+"$decode")
-			("if(!(r instanceof Reader))")
-			("r=Reader.create(r)")
-			("var c=l===undefined?r.len:r.pos+l,m=new this.ctor"+(mtype.fieldsArray.filter(function(field) {return field.map;}).length? ",k,value":""))
-			("while(r.pos<c){")
-			("var t=r.uint32()");
-		if((mtype as {} as {group: {}|null;}).group) gen
-			("if((t&7)===4)")
-			("break");
-		gen
-			("switch(t>>>3){");
-
-		var i=0;
-		for(;i< /* initializes */ mtype.fieldsArray.length;++i) {
-			var field=mtype._fieldsArray[i].resolve() as Field&{keyType: "int64";},
-				type=(field.resolvedType instanceof Enum? "int32":field.type) as "int32",
-				ref="m"+util.safeProp(field.name); gen
-					("case %i: {",field.id);
-
-			// Map fields
-			if(field.map) {
-				gen
-					("if(%s===util.emptyObject)",ref)
-					("%s={}",ref)
-					("var c2 = r.uint32()+r.pos");
-
-				if(types.defaults[field.keyType]!==undefined) gen
-					("k=%j",types.defaults[field.keyType]);
-				else gen
-					("k=null");
-
-				if(types.defaults[type]!==undefined) gen
-					("value=%j",types.defaults[type]);
-				else gen
-					("value=null");
-
-				gen
-					("while(r.pos<c2){")
-					("var tag2=r.uint32()")
-					("switch(tag2>>>3){")
-					("case 1: k=r.%s(); break",field.keyType)
-					("case 2:");
-
-				if(types.basic[type]===undefined) gen
-					("value=types[%i].decode(r,r.uint32())",i); // can't be groups
-				else gen
-					("value=r.%s()",type);
-
-				gen
-					("break")
-					("default:")
-					("r.skipTypeEx(tag2&7)")
-					("break")
-					("}")
-					("}");
-
-				if(types.long[field.keyType]!==undefined) gen
-					("%s[typeof k===\"object\"?util.longToHash(k):k]=value",ref);
-				else gen
-					("%s[k]=value",ref);
-
-				// Repeated fields
-			} else if(field.repeated) {
-				gen
-
-					("if(!(%s&&%s.length))",ref,ref)
-					("%s=[]",ref);
-
-				// Packable (always check for forward and backward compatibility)
-				if(types.packed[type]!==undefined) gen
-					("if((t&7)===2){")
-					("var c2=r.uint32()+r.pos")
-					("while(r.pos<c2)")
-					("%s.push(r.%s())",ref,type)
-					("}else");
-
-				// Non-packed
-				if(types.basic[type]===undefined) gen((field.resolvedType! as {} as {group: {}|null;}).group
-					? "%s.push(types[%i].decode(r))"
-					:"%s.push(types[%i].decode(r,r.uint32()))",ref,i);
-				else gen
-					("%s.push(r.%s())",ref,type);
-
-				// Non-repeated
-			} else if(types.basic[type]===undefined) gen((field.resolvedType! as {} as {group: {}|null;}).group
-				? "%s=types[%i].decode(r)"
-				:"%s=types[%i].decode(r,r.uint32())",ref,i);
-			else gen
-				("%s=r.%s()",ref,type);
-			gen
-				("break")
-				("}");
-			// Unknown fields
-		} gen
-			("default:")
-			("r.skipTypeEx(t&7)")
-			("break")
-
-			("}")
-			("}");
-
-		// Field presence
-		for(i=0;i<mtype._fieldsArray.length;++i) {
-			var rfield=mtype._fieldsArray[i];
-			if(rfield.required) gen
-				("if(!m.hasOwnProperty(%j))",rfield.name)
-				("throw util.ProtocolError(%j,{instance:m})",missing(rfield));
-		}
-
-		return gen
-			("return m");
-		/* eslint-enable no-unexpected-multiline */
-	}
-}
 class MyUnkType extends protobufjs.Type {
 	state: any;
 	constructor(v: string,opt: {[k: string]: any;}|undefined,state: MyState) {
@@ -316,7 +184,7 @@ async function load_types() {
 	const token_buffer=await get_token_data_from_file(r(`binary/tracking_params.bin`));
 	return {root,token_buffer};
 }
-async function useTypeA({root,token_buffer}: {root: Root,token_buffer: Buffer;}) {
+async function useTypeA({root,token_buffer}: {root: protobufjs.Root,token_buffer: Buffer;}) {
 	let buf_type=root.lookupType("A");
 	let message=buf_type.decode(token_buffer);
 	let u_obj=buf_type.toObject(message,{
