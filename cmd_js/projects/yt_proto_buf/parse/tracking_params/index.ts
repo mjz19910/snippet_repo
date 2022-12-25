@@ -4,9 +4,11 @@ import {
 	Root,
 } from "protobufjs";
 import {into_type} from "../support/into_type.js";
+import {init_import_inject} from "./init_import_inject";
 import {r} from "./r.js";
 
 function run() {
+	init_import_inject({protobufjs});
 	parse_types().catch(e => {
 		console.log("error",e);
 	});
