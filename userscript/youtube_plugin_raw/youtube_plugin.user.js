@@ -329,6 +329,11 @@ class YtdAppElement extends HTMLElement {
 			}
 			cache.desktop_history.replaceUrl(url);
 		};
+		let pd=Object.getOwnPropertyDescriptor(this,"replaceUrl");
+		if(!pd) throw 1;
+		pd.configurable=false;
+		pd.writable=false;
+		Object.defineProperty(this,"replaceUrl",pd);
 	}
 }
 
