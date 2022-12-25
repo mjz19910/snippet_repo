@@ -1,5 +1,7 @@
+import {ItemType} from "./ItemType.js";
+
 export type DesType={
-	items: ({})[];
+	items: (ItemType)[];
 	keys: number[];
 	keysAlt: number[];
 	valueMap: {key: number; value: number;}[];
