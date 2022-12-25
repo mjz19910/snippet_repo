@@ -2259,7 +2259,7 @@ async function async_plugin_init(event) {
 				if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
 					/** @type {Promise<void>} */
 					let promise=new Promise((accept,reject) => {
-						if(!ytd_page_manager) return reject("missing data");
+						if(!ytd_page_manager) return reject(new Error("missing data"));
 						ytd_page_manager.addEventListener(
 							"yt-page-type-changed",
 							() => accept(),
