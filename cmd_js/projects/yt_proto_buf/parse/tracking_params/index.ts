@@ -33,6 +33,7 @@ async function load_types() {
 	const token_buffer=await get_token_data_from_file(r(`binary/tracking_params.bin`));
 	return {root,token_buffer};
 }
+
 async function useTypeA({root,token_buffer}: {root: protobufjs.Root,token_buffer: Buffer;}) {
 	let buf_type=root.lookupType("A");
 	let message=buf_type.decode(token_buffer);
