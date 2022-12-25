@@ -2726,7 +2726,7 @@ inject_api.iterate_tracking_params=iterate_tracking_params;
 
 function main() {
 	if(!window.inject_api) {
-		throw new Error("Loaded before DebugApi");
+		window.inject_api=inject_api;
 	}
 	start_message_channel_loop();
 }
