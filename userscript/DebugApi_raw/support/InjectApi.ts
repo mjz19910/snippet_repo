@@ -14,7 +14,6 @@ export const InjectApiH_o=_DebugApiH_o['InjectApi'];
 
 declare global {
 	interface InjectApi {
-		modules?: Map<string,{}>;
 		iterate_tracking_params?: () => void;
 		saved_instances?: SavedInstanceType[];
 		saved_object_arrays?: {}[][];
