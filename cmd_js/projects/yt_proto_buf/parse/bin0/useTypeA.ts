@@ -2,7 +2,7 @@ import {r} from './r.js';
 import {as_base64_typeid} from './as_base64_typeid.js';
 import {readFile,writeFile} from 'fs/promises';
 import {Type} from 'protobufjs';
-import {into_type} from './into_type.js';
+import {into_type} from '../support/into_type.js';
 import {ProtoBufTypeA} from './ProtoBufTypeA.js';
 import {get_token_data} from './get_token_data.js';
 
