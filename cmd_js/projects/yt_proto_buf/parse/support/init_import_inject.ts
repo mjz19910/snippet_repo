@@ -46,6 +46,7 @@ class MyConsole {
 					break x;
 				}
 				this.cache.length=scope[1];
+				this.start_stack.length-=1;
 			} else {
 				this.cache.length=start_pause_length;
 			}
