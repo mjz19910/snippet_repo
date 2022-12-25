@@ -77,7 +77,7 @@ class MyConsole {
 	}
 }
 
-function debug_l_delim_message(state: {my_console: MyConsole},reader: Reader,unk_type: Type,field_id: number,size: number) {
+function debug_l_delim_message(state: {my_console: MyConsole;},reader: Reader,unk_type: Type,field_id: number,size: number) {
 	let console=state.my_console;
 	let o=reader;
 	if(size>0) {
@@ -106,7 +106,7 @@ function debug_l_delim_message(state: {my_console: MyConsole},reader: Reader,unk
 }
 
 export class MyReader extends protobufjs.Reader {
-	skipTypeEx(state:{my_console: MyConsole},fieldId: number,wireType: number) {
+	skipTypeEx(state: {my_console: MyConsole;},fieldId: number,wireType: number) {
 		let console=state.my_console;
 		let prev_pad;
 		switch(wireType) {
