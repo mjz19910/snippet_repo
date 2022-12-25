@@ -54,7 +54,8 @@ export function do_token_decode(binary) {
 			default: if(binary[i]>128) {
 				console.log('varint bigger', binary[i],binary[i+1]);
 			};
-			console.log("0x"+binary[i].toString(16),binary.subarray(i,i+32));
+			let pkt_hdr=binary[i]>>>3;
+			console.log(pkt_hdr.toString(16),"0x"+binary[i].toString(16),binary.subarray(i,i+32));
 			break x;
 		}
 		break x;
