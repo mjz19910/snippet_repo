@@ -122,7 +122,7 @@ if(typeof window==='undefined') {
 	localStorage=window.localStorage;
 	HTMLDivElement=window.HTMLDivElement;
 	top=window;
-	let r_window=window;
+	let r_window=window;r_window;
 	{
 		/** @type {{[U in keyof any]:any}} */
 		let window=t_;
@@ -176,6 +176,9 @@ if(typeof window==='undefined') {
 			}
 		}
 		class Gain extends AudioNode {
+			/**
+			 * @param {AudioContext} ctx
+			 */
 			constructor(ctx) {
 				super();
 				this.ctx=ctx;
@@ -3005,7 +3008,7 @@ let audio_gain_controller=null;
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
  * @type {import("./__global.js").__ia_excludeKeysS}
  */
-Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
+Object.__ia_excludeKeysS = function(target,ex_keys_str) {
 	/** @type {any} */
   let ex_keys_any=ex_keys_str.split(",");
 	/** @type {C} */
@@ -3013,7 +3016,7 @@ Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
 	/** @type {C[number]} */
 	var key;
   var rest, i = 0,
-    obj = Object.fromEntries(Object.entries(this));
+    obj = Object.fromEntries(Object.entries(target));
   for (; i < ex_keys.length; i++) {
     {
       key = ex_keys[i];
@@ -3048,7 +3051,7 @@ class HistoryStateManager {
 		 * @param {{}} obj
 		 */
 		function remove_yt_data(obj) {
-			return obj.__ia_excludeKeysS("");
+			return Object.__ia_excludeKeysS(obj,"");
 		}
 		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
@@ -3274,7 +3277,7 @@ function main() {
 }
 main();
 
-let __res_ia_eks=({a:4,test:3,b:1}).__ia_excludeKeysS("test,a,b");
+let __res_ia_eks=Object.__ia_excludeKeysS({a:4,test:3,b:1},"test,a,b");
 /** @type {{}} */
 let __eks_eo=__res_ia_eks;
 __eks_eo;
