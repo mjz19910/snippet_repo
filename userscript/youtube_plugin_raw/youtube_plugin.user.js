@@ -2467,9 +2467,7 @@ class HistoryStateManager {
 				let new_state=argArray[0];
 				console.log(structuredClone(new_state),structuredClone(t.cur_state));
 				x: {
-					if(t.is_replacing_custom_state) {
-						break x;
-					}
+					if(t.is_replacing_custom_state) break x;
 					/** @type {{[x: string]: {}}|null} */
 					let prev_state=t.cur_state;
 					if(prev_state) {
