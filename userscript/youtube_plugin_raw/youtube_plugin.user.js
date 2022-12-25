@@ -2465,21 +2465,25 @@ class HistoryStateManager {
 		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
-				t.cur_state=new_state;
-				if(t.is_replacing_custom_state) {
-					return Reflect.apply(target,thisArg,argArray);
-				}
-				/** @type {{[x: string]: {}}|null} */
-				let prev_state=t.cur_state;
-				if(prev_state) {
-					for(let i=0;i<t.tmp_keys.length;i++) {
-						let cur_key=t.tmp_keys[i];
-						if(prev_state[cur_key]!==void 0) {
-							new_state[cur_key]=prev_state[cur_key];
+				console.log(new_state,t.cur_state);
+				x:{
+					if(t.is_replacing_custom_state) {
+						t.cur_state=new_state;
+						break x;
+					}
+					/** @type {{[x: string]: {}}|null} */
+					let prev_state=t.cur_state;
+					if(prev_state) {
+						for(let i=0;i<t.tmp_keys.length;i++) {
+							let cur_key=t.tmp_keys[i];
+							if(prev_state[cur_key]!==void 0) {
+								new_state[cur_key]=prev_state[cur_key];
+							}
 						}
 					}
+					t.cur_state=new_state;
+					console.log("replaceState",...argArray);
 				}
-				console.log("replaceState",...argArray);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
