@@ -14,10 +14,12 @@ export function increase_padding() {
 class MyConsole {
 	paused=false;
 	cache: [string,string,any[]][]=[];
+	disabled=false;
 	log(...data: any[]) {
 		console.log(...data);
 	}
 	pad_log(message: string,...data: any[]) {
+		if(this.disabled) return;
 		if(this.paused) {
 			this.cache.push([pad,message,data]);
 			return;
@@ -64,13 +66,14 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 	let console=my_console;
 	let o=reader;
 	if(size>0) {
-		console.pad_log("\"field %o: L-delim message(length=%o)\":",field_id,size);
 		let has_error=false;
 		console.pause(() => {
 			let prev_pad=pad;
 			try {
 				pad+=pad_with;
+				console.disabled=true;
 				unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
+				console.disabled=false;
 			} catch {
 				has_error=true;
 			} finally {
@@ -80,6 +83,8 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 		if(has_error) {
 			console.pad_log("\"field %o: L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
 		} else {
+			console.pad_log("\"field %o: L-delim message(length=%o)\":",field_id,size);
+			unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
 			console.pad_log("}");
 		}
 	} else {
