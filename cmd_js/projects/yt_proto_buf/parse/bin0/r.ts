@@ -4,5 +4,5 @@ import {fileURLToPath} from 'url';
 export const __dirname=dirname(fileURLToPath(import.meta.url));
 
 export function r(path: string) {
-	return resolve(__dirname,"..","..",path);
+	return resolve(__dirname,"../..",path);
 }
