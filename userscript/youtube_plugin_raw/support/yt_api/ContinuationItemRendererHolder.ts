@@ -1,6 +1,6 @@
 import {ContinuationItemRenderer} from "./ContinuationItemRenderer";
 
 
-export type ContinuationItemRendererHolder={
+export type ContinuationItemRendererH={
 	continuationItemRenderer: ContinuationItemRenderer;
 };

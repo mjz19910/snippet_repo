@@ -1,1 +1,1 @@
-export type ThumbnailsHolder={};
+export type ThumbnailsH={};

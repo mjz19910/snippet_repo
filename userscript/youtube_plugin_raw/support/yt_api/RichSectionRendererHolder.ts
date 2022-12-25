@@ -1,6 +1,6 @@
 import {RichSectionRenderer} from "./RichSectionRenderer";
 
 
-export type RichSectionRendererHolder={
+export type RichSectionRendererH={
 	richSectionRenderer: RichSectionRenderer;
 };

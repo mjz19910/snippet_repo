@@ -1,6 +1,6 @@
 import {CompactVideoRenderer} from "./CompactVideoRenderer";
 
 
-export type CompactVideoRendererHolder={
+export type CompactVideoRendererH={
 	compactVideoRenderer: CompactVideoRenderer;
 };

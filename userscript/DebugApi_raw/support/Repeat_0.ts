@@ -1,6 +1,6 @@
-import {_DebugApiHolders} from "../DebugApi.user.js";
+import {DebugApiH_o} from "../DebugApi.user.js";
 
-export const RepeatHolder=_DebugApiHolders['Repeat_0'];
+export const Repeat_0_H=DebugApiH_o['Repeat_0'];
 
 /** @template T */
 export class Repeat_0<T> {

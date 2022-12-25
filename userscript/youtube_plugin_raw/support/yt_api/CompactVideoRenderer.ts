@@ -5,14 +5,14 @@ import {NavigationEndpoint} from "./NavigationEndpoint";
 import {RichThumbnail} from "./RichThumbnail";
 import {SimpleText} from "./SimpleText";
 import {TextRuns} from "./TextRuns";
-import {ThumbnailHolder} from "./ThumbnailHolder";
+import {ThumbnailH} from "./ThumbnailHolder";
 import {ThumbnailOverlay} from "./ThumbnailOverlay";
-import {ThumbnailsHolder} from "./ThumbnailsHolder";
+import {ThumbnailsH} from "./ThumbnailsHolder";
 
 export type CompactVideoRenderer={
 	accessibility: Accessibility;
 	badges?: MetadataBadgeRenderers[];
-	channelThumbnail: ThumbnailsHolder;
+	channelThumbnail: ThumbnailsH;
 	lengthText: SimpleText;
 	longBylineText: TextRuns;
 	menu: MenuRendererH;
@@ -21,7 +21,7 @@ export type CompactVideoRenderer={
 	richThumbnail?: RichThumbnail;
 	shortBylineText: TextRuns;
 	shortViewCountText: SimpleText;
-	thumbnail: ThumbnailHolder;
+	thumbnail: ThumbnailH;
 	thumbnailOverlays: ThumbnailOverlay[];
 	title: SimpleText;
 	ownerBadges?: MetadataBadgeRenderers[];
