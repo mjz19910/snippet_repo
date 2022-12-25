@@ -339,6 +339,19 @@ class NewBrowserHistory {
 	}
 }
 
+
+/**
+ * @template {{}} T
+ * @param {T} func
+ * @param {{}} value
+ */
+function with_prev(func,value) {
+	/** @type {{old?: {}}} */
+	let x=func;
+	x.old=value;
+	return func;
+}
+
 class YtdAppElement extends YtdAppElementBase {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
@@ -429,7 +442,7 @@ class YtdAppElement extends YtdAppElementBase {
 			desktop_history: null,
 		};
 		/** @arg {string} url @arg {never[]} ex_args */
-		this.replaceUrl=function replaceUrl(url,...ex_args) {
+		this.replaceUrl=with_prev(function replaceUrl(/** @type {string} */ url,/** @type {any[]} */ ...ex_args) {
 			if(!cache.desktop_history) {
 				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
 			}
@@ -437,7 +450,7 @@ class YtdAppElement extends YtdAppElementBase {
 				console.log("replaceUrl api not followed",ex_args);
 			}
 			cache.desktop_history.replaceUrl(url);
-		};
+		},this.replaceUrl);
 		let pd=Object.getOwnPropertyDescriptor(this,"replaceUrl");
 		if(!pd) throw 1;
 		pd.configurable=false;
@@ -496,6 +509,23 @@ class YtdAppElement extends YtdAppElementBase {
 				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
 			}
 			t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
+		};
+		this.onYtNavigateStart=function onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
+			this.cancelPendingTasks();
+			b.noProgressBar||(a=Jn().resolve(In(EHc)))&&a.start();
+			a=this.hasPendingNavigation? null:this.data;
+			this.hasError=!1;
+			var c=Jn().resolve(Wt),
+				d,
+				f,
+				h;
+			B('kevlar_use_vimio_behavior')&&!(null==(d=b.endpoint)? 0:null==(f=d.commandMetadata)? 0:null==(h=f.webCommandMetadata)? 0:h.ignoreNavigation)&&(d=c.getCurrentPage())&&d.disconnectVisibilityRoot();
+			c.prepareForNavigation(b.pageType,b.endpoint);
+			B('kevlar_remove_page_dom_on_switch')||(this.pagePreparer=new GJ(1,'pcl'),HJ(this.pagePreparer,c.preparePage.bind(c,b.pageType,b.endpoint)));
+			d=this.getPageOffset();
+			this.initHistoryManager(d);
+			b.reload||this.hasPendingNavigation? this.replaceState(b.endpoint,a,d):'watch'===a.page&&'watch'===b.pageType&&B('kevlar_replace_watch_to_watch_history_state')? this.replaceState(b.endpoint,a,d):'shorts'===a.page&&'shorts'===b.pageType&&B('kevlar_replace_short_to_short_history_state')? this.replaceState(b.endpoint,a,0):'navigate-back'!=b.type&&'navigate-forward'!=b.type&&this.saveAndPush(b.url,b.endpoint,a,d);
+			this.hasPendingNavigation=!0;
 		};
 	}
 }
@@ -2923,11 +2953,24 @@ class HistoryStateManager {
 		if(!xx) throw 1;
 		if(!xx.get) throw 1;
 		let hist_state_getter=xx.get;
+		/** @returns {{captureStackTrace(obj: {}):void}} */
+		function cap_Error() {
+			/** @type {any} */
+			let e=Error;
+			return e;
+		}
 		Object.defineProperty(History.prototype,"state",{
 			"configurable": true,
 			"enumerable": true,
 			"get": function() {
-				console.log('hist get',new Error().stack?.split("\n").slice(0,5).join("\n"));
+				let m_err=new Error();
+				let err_stack=m_err.stack;
+				if(!err_stack) throw 1;
+				/** @type {{stack: string}} */
+				let err={stack: err_stack};
+				err.stack=err.stack?.split("\n").slice(0,5).join("\n");
+				Object.setPrototypeOf(err,Error.prototype);
+				console.log('hist get',err,m_err);
 				return hist_state_getter.call(this);
 			}
 		});
