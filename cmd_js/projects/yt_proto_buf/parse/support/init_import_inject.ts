@@ -43,7 +43,7 @@ class MyConsole {
 			if(scope) {
 				this.paused=scope[2];
 			}
-			this.on_resume();
+			if(!this.paused) this.on_resume();
 			x: if(scope) {
 				if(scope[0]!==scope_id) {
 					break x;
