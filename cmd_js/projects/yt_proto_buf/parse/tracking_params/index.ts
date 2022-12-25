@@ -194,8 +194,6 @@ export async function parse_types(): Promise<void> {
 		let reset=increase_padding();
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(token_buffer,unk_type);
-		let ss=MyReader.create(token_buffer,unk_type).uint32();
-		my_console.pad_log("%o",ss);
 		unk_type.decodeEx(reader);
 		reset();
 		my_console.pad_log("}");
