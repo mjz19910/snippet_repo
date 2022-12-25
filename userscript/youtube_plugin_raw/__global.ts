@@ -2,6 +2,9 @@ import {RendererContentItemDef} from "./support/yt_api/RendererContentItemDef";
 import {MenuServiceItem} from "./support/yt_api/MenuServiceItem.js";
 import {SavedData} from "./youtube_plugin.user.js";
 import {SectionItemDef} from "./support/yt_api/SectionItemDef";
+import {WatchEndpoint} from "./support/yt_api/WatchEndpoint.js";
+import {OpenPopupActionH} from "./support/yt_api/OpenPopupActionH.js";
+import {MenuRendererH} from "./support/yt_api/MenuRendererH.js";
 
 // YtdPageManagerElement
 declare global {
@@ -553,7 +556,7 @@ type CompactVideoRenderer={
 	channelThumbnail: ThumbnailsHolder;
 	lengthText: SimpleText;
 	longBylineText: TextRuns;
-	menu: MenuRenderers;
+	menu: MenuRendererH;
 	navigationEndpoint: NavigationEndpoint;
 	publishedTimeText: SimpleText;
 	richThumbnail?: RichThumbnail;

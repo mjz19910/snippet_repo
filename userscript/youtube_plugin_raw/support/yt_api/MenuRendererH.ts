@@ -1,5 +1,5 @@
 import {MenuRenderer} from "./__global";
 
-export type MenuRenderers={
+export type MenuRendererH={
 	menuRenderer: MenuRenderer;
 };
