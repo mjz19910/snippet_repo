@@ -16,7 +16,7 @@
 console=typeof window==='undefined'?console:(()=>window.console)();
 if(typeof window==='undefined') {
 	/** @type {any} */
-	let t_=this;
+	let t_=new EventTarget;
 	{
 		/** @type {{[U in keyof any]:any}} */
 		let window=t_;
@@ -24,7 +24,7 @@ if(typeof window==='undefined') {
 		window.HTMLElement=HTMLElement;
 		class Image {}
 		window.Image=Image;
-		class Document {
+		class Document extends EventTarget {
 			/**
 			 * @param {string} tagName
 			 */
@@ -56,6 +56,8 @@ if(typeof window==='undefined') {
 			}
 		}
 		window.document=new Document;
+		class HTMLDivElement extends HTMLElement {}
+		window.HTMLDivElement=HTMLDivElement;
 	}
 	window=t_;
 	/** @type {any} */
@@ -98,12 +100,13 @@ if(typeof window==='undefined') {
 		}
 	}
 	window.localStorage=new Storage;
+	HTMLElement=window.HTMLElement;
+	Image=window.Image;
+	document=window.document;
+	localStorage=window.localStorage;
+	HTMLDivElement=window.HTMLDivElement;
 }
 
-HTMLElement=window.HTMLElement;
-Image=window.Image;
-document=window.document;
-localStorage=window.localStorage;
 
 // #section Use module types
 /** @type {import("./__global.js")} */
