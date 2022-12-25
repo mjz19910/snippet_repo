@@ -78,11 +78,24 @@ export function url_parse_0() {
 		"port": "",
 		"protocol": "https:",
 		"search": "?sqp=-oaymwE1CKgBEF5IVfKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGB8gZShWMA8=&rs=AOn4CLCpqrflce1_k2te4K_5kNbCpjCm6Q",
-		"searchParams": {}
+		"searchParams": URLSearchParams;
 	};
 	let rt_u: rt=vv;
 	rt_u;
-	console.log(clone_urlparse(vv));
+	console.log(vv.search);
+	type ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`?{[V in U]:C}:T;
+	type ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`?
+		ParseUrlValue<U>&ParseUrlItems<Z>:T extends `${infer U}`? ParseUrlValue<U>: never;
+	type ParseUrlParams<T extends string>=T extends `?${infer V}`? ParseUrlItems<V>:[T];
+	type Decay<T>={[U in keyof T]:T[U]}|{};
+	type ru=Decay<ParseUrlParams<rt['search']>>;
+	function get_url_params<T extends string,K extends Extract<keyof ParseUrlParams<T>,string>>(v:T,k:K):ParseUrlParams<T>[K]|null {
+		let res=new URLSearchParams(v).get(k) as ParseUrlParams<T>[K]|null;
+		return res;
+	}
+	let ru_v:ru={};
+	ru_v;
+	console.log('rs',get_url_params(vv.search,"rs"));
 }
 
 url_parse_0();
