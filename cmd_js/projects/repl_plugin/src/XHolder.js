@@ -1,6 +1,6 @@
 /**@template T */
 
-export class XHolder {
+export class Holder_XZ {
 	/**@type {T} */
 	X;
 	/**

@@ -1,9 +1,9 @@
-import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder";
+import {CompactVideoRendererH} from "./support/yt_api/CompactVideoRendererHolder.js";
 
 // spell:disable
 
 export function do_test() {
-	const CompactVideoRenderers_Test: CompactVideoRendererHolder={
+	const CompactVideoRenderers_Test: CompactVideoRendererH={
 		compactVideoRenderer: {
 			"videoId": "OAIqCpqszVw",
 			"thumbnail": {

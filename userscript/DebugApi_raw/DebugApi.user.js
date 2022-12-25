@@ -18,7 +18,7 @@
 
 // #region Use module
 // Use module constants
-const DebugApiHolders={
+const DebugApiH_o={
 	/** @type {unique symbol} */
 	InjectApi: Symbol.for("InjectApi"),
 	/** @type {unique symbol} */
@@ -5755,7 +5755,7 @@ function get_exports() {
 
 if(typeof exports==='object') {
 	let exports=get_exports();
-	exports._DebugApiHolders=DebugApiHolders;
+	exports._DebugApiH_obj=DebugApiH_o;
 	exports.add_function=add_function;
 	exports.AddEventListenerExtension=AddEventListenerExtension;
 	exports.BaseCompression=BaseCompression;
