@@ -2247,8 +2247,9 @@ async function async_plugin_init(event) {
 				if(yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
 				if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
 					/** @type {Promise<void>} */
-					let promise=new Promise((accept) => {
-						get_ytd_page_manager().addEventListener(
+					let promise=new Promise((accept,reject) => {
+						if(!ytd_page_manager) return reject("missing data");
+						ytd_page_manager.addEventListener(
 							"yt-page-type-changed",
 							() => accept(),
 							{once: true}
