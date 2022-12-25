@@ -2693,16 +2693,16 @@ window.addEventListener("resize",function() {
 function activate_nav() {
 	if(yt_debug_enabled) console.log("activate_nav:fire");
 	if(!ytd_player) return;
-	if(!has_ytd_page_mgr()) return;
+	if(!ytd_page_manager) return;
 	if(ytd_player.active_nav) return;
 	if(!plugin_overlay_element) return;
 	ytd_player.active_nav=true;
 	plugin_overlay_element.setAttribute("style",player_overlay_style_str);
 	plugin_overlay_element.onupdate();
-	let page_elem=get_ytd_page_manager().getCurrentPage();
+	let page_elem=ytd_page_manager.getCurrentPage();
 	page_elem.append(plugin_overlay_element);
 	log_current_video_data();
-	get_ytd_page_manager().addEventListener("yt-page-type-changed",function() {
+	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
 		let page_elem=get_ytd_page_manager().getCurrentPage();
 		setTimeout(function() {

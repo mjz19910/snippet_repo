@@ -26,28 +26,21 @@ export function decode_tlv(binary) {
 }
 /** @param {Uint8Array} binary */
 export function do_token_decode(binary) {
+	/** @type {[[number],Uint8Array][]} */
 	let parts=[];
 	x: for(let i=0;;) {
 		switch(binary[i]) {
-			case 0x18: {
-				let part_len=binary[i+1];
-				let part_off=i+2;
-				parts.push([binary.subarray(i,part_off),binary.subarray(part_off,part_off+part_len)]);
-				i=part_off+part_len;
-			} break x;
-			case 0x08:
-			case 0x12: {
-				let part_len=binary[i+1];
-				let part_off=i+2;
-				parts.push([binary.subarray(i,part_off),binary.subarray(part_off,part_off+part_len)]);
-				i=part_off+part_len;
-			} break;
-			default: console.log("0x"+binary[i].toString(16),binary.subarray(i,i+32)); break x;
+			default: if(binary[i]>128) {
+				console.log('varint bigger', binary[i],binary[i+1]);
+			};
+			console.log("0x"+binary[i].toString(16),binary.subarray(i,i+32));
+			break x;
 		}
 	}
 	// console.log('decode run',result,[[[rest]]],encodeURIComponent(text.slice(0,rest.byteOffset)),encodeURIComponent(text.slice(rest.byteOffset)));
 	for(let i=0;i<parts.length;i++) {
-		switch(parts[i][0][0]) {
+		let part=parts[i];
+		switch(part[0][0]) {
 			case 0x12: console.log('part_type',0x12, decode_str_tlv(parts[i][1])); continue;
 		}
 		console.log("part type",parts[i][0][0],parts[i][1]);
