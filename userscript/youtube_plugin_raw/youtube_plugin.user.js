@@ -17,6 +17,44 @@ console=typeof window==='undefined'?console:(()=>window.console)();
 if(typeof window==='undefined') {
 	/** @type {any} */
 	let t_=new EventTarget;
+	window=t_;
+	class Storage {
+		map=new Map;
+		/**
+		 * @type {{ [x: string]: any; }}
+		 */
+		index_arr=[];
+		/** @param {string} str */
+		getItem(str) {
+			return this.map.get(str);
+		}
+		get length() {
+			return this.map.size;
+		}
+		/**
+		 * @param {any} key
+		 * @param {any} value
+		 */
+		setItem(key,value) {
+			this.map.set(key,value);
+		}
+		/**
+		 * @param {any} key
+		 */
+		removeItem(key) {
+			this.map.delete(key);
+		}
+		/**
+		 * @param {string | number} index
+		 */
+		key(index) {
+			return this.index_arr[index];
+		};
+		clear() {
+			this.map.clear();
+		}
+	}
+	window.localStorage=new Storage;
 	{
 		/** @type {{[U in keyof any]:any}} */
 		let window=t_;
@@ -63,43 +101,6 @@ if(typeof window==='undefined') {
 	/** @type {any} */
 	let na={};
 	navigator=na;
-	class Storage {
-		map=new Map;
-		/**
-		 * @type {{ [x: string]: any; }}
-		 */
-		index_arr=[];
-		/** @param {string} str */
-		getItem(str) {
-			return this.map.get(str);
-		}
-		get length() {
-			return this.map.size;
-		}
-		/**
-		 * @param {any} key
-		 * @param {any} value
-		 */
-		setItem(key,value) {
-			this.map.set(key,value);
-		}
-		/**
-		 * @param {any} key
-		 */
-		removeItem(key) {
-			this.map.delete(key);
-		}
-		/**
-		 * @param {string | number} index
-		 */
-		key(index) {
-			return this.index_arr[index];
-		};
-		clear() {
-			this.map.clear();
-		}
-	}
-	window.localStorage=new Storage;
 	HTMLElement=window.HTMLElement;
 	Image=window.Image;
 	document=window.document;
