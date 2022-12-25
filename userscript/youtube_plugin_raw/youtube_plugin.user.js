@@ -3083,7 +3083,8 @@ class HistoryStateManager {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('new state',remove_yt_data(new_state),remove_yt_data(t.cur_state));
+					console.log('new state cs=%o', t.is_replacing_custom_state, remove_yt_data(new_state));
+					console.log("old state", remove_yt_data(t.cur_state));
 				} else {
 					console.log('beg state',remove_yt_data(new_state),t.cur_state);
 				}
