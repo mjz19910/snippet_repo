@@ -66,7 +66,7 @@ type MyState={
 	my_console: MyConsole;
 };
 
-export class MyReader {
+class MyReader {
 	reader: protobufjs.Reader;
 	unk_type: MyUnkType;
 	constructor(buffer: Uint8Array,unk_type: MyUnkType) {
