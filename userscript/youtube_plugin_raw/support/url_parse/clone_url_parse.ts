@@ -7,9 +7,6 @@ export function clone_url_parse<T extends string extends (infer U extends string
 	if('_tag' in c) {
 		throw new Error("Failed");
 	}
-	if(c.hash==="") {
-		return;
-	};
 	let {
 		hash,host,hostname,href,origin,password,path,pathname,port,protocol,search,searchParams,
 	}=c;
