@@ -1,4 +1,4 @@
-import {default as protobufjs} from "protobufjs";
+import {default as protobufjs, Reader, Type} from "protobufjs";
 
 const pad_with="   ";
 let pad="";
@@ -14,6 +14,9 @@ export function increase_padding() {
 class MyConsole {
 	paused=false;
 	cache: [string,...any[]][]=[];
+	log(...data: any[]) {
+		console.log(...data);
+	}
 	unpause(scope: () => void) {
 		if(!this.paused) {
 			scope();
@@ -32,31 +35,40 @@ class MyConsole {
 	}
 	scope_id_max=1;
 	start_stack=new Array<[number,number,boolean]>;
-	pause(scope: (resume: ()=>void) => void) {
+	pause(scope: (resume: () => void) => void) {
 		let scope_id=this.scope_id_max++;
 		let enter_len=this.start_stack.length;
 		let start_pause_length=this.cache.length;
 		this.start_stack.push([scope_id,start_pause_length,this.paused]);
 		this.paused=true;
-		scope(() => {
-			let scope=this.start_stack.at(-1);
-			if(scope) {
-				this.paused=scope[2];
+		let resumed=false;
+		let do_resume=() => {
+			if(!resumed) {
+				resumed=true;
+				this.resume(scope_id,enter_len,start_pause_length);
 			}
-			if(!this.paused) this.on_resume();
-			x: if(scope) {
-				if(scope[0]!==scope_id) {
-					break x;
-				}
-				this.cache.length=scope[1];
-				if(this.start_stack.length>enter_len) {
-					this.start_stack.length=enter_len;
-				}
-			} else {
-				this.paused==false;
-				this.cache.length=start_pause_length;
+		};
+		scope(do_resume);
+		do_resume();
+	}
+	resume(scope_id: number, enter_len: number, start_pause_length: number) {
+		let scope=this.start_stack.at(-1);
+		if(scope) {
+			this.paused=scope[2];
+		}
+		if(!this.paused) this.on_resume();
+		x: if(scope) {
+			if(scope[0]!==scope_id) {
+				break x;
 			}
-		});
+			this.cache.length=scope[1];
+			if(this.start_stack.length>enter_len) {
+				this.start_stack.length=enter_len;
+			}
+		} else {
+			this.paused=false;
+			this.cache.length=start_pause_length;
+		}
 	}
 	on_resume() {
 		for(let msg of this.cache) {
@@ -74,8 +86,34 @@ class MyConsole {
 }
 export const my_console=new MyConsole;
 
-function debug_l_delim_message() {
-
+function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,size: number) {
+	let console=my_console;
+	let o=reader;
+	if(size>0) {
+		console.log
+		console.pause((resume) => {
+			let has_error=false;
+			try {
+				unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
+			} catch {
+				has_error=true;
+			}
+			if(!has_error) {
+				let prev_pad=pad;
+				console.unpause(() => {
+					console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
+				});
+				pad+=pad_with;
+				resume();
+				pad=prev_pad;
+				console.pad_log("}");
+			} else if(has_error) {
+				console.pad_log("\"field %o L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
+			}
+		});
+	} else {
+		console.pad_log("\"field %o L-delim string\": %o",field_id,"");
+	}
 }
 
 export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
@@ -98,31 +136,7 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 				break;
 			case 2:
 				let size=this.uint32();
-				if(size>0) {
-					console.pause((resume)=>{
-					let has_error=false;
-					try {
-						unk_type.decode(this.buf.subarray(this.pos,this.pos+size));
-					} catch {
-						has_error=true;
-					}
-					if(!has_error) {
-					prev_pad=pad;
-					console.unpause(() => {
-						console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
-					});
-					pad+=pad_with;
-					resume();
-					pad=prev_pad;
-					console.pad_log("}");
-					} else if(has_error) {
-						console.pad_log("\"field %o L-delim string\": %o",field_id,this.buf.subarray(this.pos,this.pos+size).toString());
-					}
-
-					});
-				} else {
-					console.pad_log("\"field %o L-delim string\": %o",field_id,"");
-				}
+				debug_l_delim_message(this,unk_type,field_id,size);
 				this.skip(size);
 				break;
 			case 3:
