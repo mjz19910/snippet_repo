@@ -2466,7 +2466,7 @@ class HistoryStateManager {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				console.log(new_state,t.cur_state);
-				x:{
+				x: {
 					if(t.is_replacing_custom_state) {
 						t.cur_state=new_state;
 						break x;
