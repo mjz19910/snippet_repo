@@ -3239,6 +3239,11 @@ if(typeof exports==='object') {
 
 function destroy_env() {
 	window.inject_api=void 0;
+	message_channel.port1.close();
+	message_channel.port2.close();
+	message_channel.port1.onmessage=null;
+	message_channel.port2.onmessage=null;
+	console.log(dom_observer);
 	eval(`()=>{
 		delete window;
 		delete navigator;
