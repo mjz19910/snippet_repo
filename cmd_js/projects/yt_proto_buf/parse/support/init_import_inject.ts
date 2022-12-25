@@ -63,7 +63,7 @@ class MyConsole {
 	clear_cache() {
 		let scope=this.start_stack.at(-1);
 		if(scope) {
-
+			this.cache.length=scope[1];
 		} else {
 			this.cache.length=0;
 		}
@@ -91,23 +91,25 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 				break;
 			case 2:
 				let size=this.uint32();
-				let has_error=false;
-				let resume=console.pause();
-				try {
-					unk_type.decode(this.buf.subarray(this.pos,this.pos+size));
-				} catch {
-					has_error=true;
-				}
-				prev_pad=pad;
-				console.unpause(() => {
-					console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
-				});
-				pad+=pad_with;
-				resume();
-				pad=prev_pad;
-				console.pad_log("}");
-				if(has_error) {
-					console.pad_log("\"field %o L-delim string\": %o",field_id,this.buf.subarray(this.pos,this.pos+size).toString());
+				if(size>0) {
+					let has_error=false;
+					let resume=console.pause();
+					try {
+						unk_type.decode(this.buf.subarray(this.pos,this.pos+size));
+					} catch {
+						has_error=true;
+					}
+					prev_pad=pad;
+					console.unpause(() => {
+						console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
+					});
+					pad+=pad_with;
+					resume();
+					pad=prev_pad;
+					console.pad_log("}");
+					if(has_error) {
+						console.pad_log("\"field %o L-delim string\": %o",field_id,this.buf.subarray(this.pos,this.pos+size).toString());
+					}
 				}
 				this.skip(size);
 				break;
