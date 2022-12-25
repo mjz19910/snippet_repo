@@ -64,7 +64,7 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 	let console=my_console;
 	let o=reader;
 	if(size>0) {
-		console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
+		console.pad_log("\"field %o: L-delim message(length=%o)\":",field_id,size);
 		let has_error=false;
 		console.pause(() => {
 			let prev_pad=pad;
