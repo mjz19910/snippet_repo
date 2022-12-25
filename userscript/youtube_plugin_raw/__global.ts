@@ -399,7 +399,7 @@ export type TrackedServiceEndpointGeneral={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 	trackingParams: string;
-}
+};
 
 interface SignalServiceEndpoints extends ServiceEndpointGeneral {
 	signalServiceEndpoint: SignalServiceEndpoint;
