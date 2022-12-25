@@ -5,7 +5,7 @@ v4 (cur): snippet_repo/javascript/final/items/item3_v4.js
 v5 (new): snippet_repo/javascript/group1/sub_a/item-_3.js
 */
 {
-	/** @type {import("./__global.js").Holder} */
+	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 	let ele=document.querySelector("#getPit");

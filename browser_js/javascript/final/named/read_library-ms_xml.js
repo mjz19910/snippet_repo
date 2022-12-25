@@ -7,7 +7,7 @@
  * that tag into an array
  */
 async function x() {
-	/** @type {import("./__global.js").Holder} */
+	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 	let r;

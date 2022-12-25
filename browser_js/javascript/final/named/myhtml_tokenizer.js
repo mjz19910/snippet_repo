@@ -3,7 +3,7 @@
 v1 (cur): snippet_repo/javascript/final/myhtml_tokenizer.js
 */
 {
-	/** @type {import("./__global.js").Holder} */
+	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 }

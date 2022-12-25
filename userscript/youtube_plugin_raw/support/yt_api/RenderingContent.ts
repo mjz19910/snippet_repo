@@ -1,6 +1,6 @@
 import {SimpleText} from "./SimpleText";
 import {ImpressionEndpoint} from "./ImpressionEndpoint";
-import {ThumbnailH} from "./ThumbnailHolder.js";
+import {ThumbnailH} from "./ThumbnailH.js";
 import {MetadataBadgeRenderer} from "./MetadataBadgeRenderer";
 import {NavigationEndpoint} from "./NavigationEndpoint";
 import {Icon} from "./Icon";

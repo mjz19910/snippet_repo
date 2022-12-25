@@ -130,7 +130,7 @@ declare global {
 	type SRefBase=getSet|Refs|S_or;
 }
 
-export {type Holder} from "./Holder.js";
+export {} from "./Holder.js";
 export {};
 
 declare global {
