@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-console=typeof window==='undefined'?console:(()=>window.console)();
+console=typeof window==='undefined'? console:(() => window.console)();
 if(typeof window==='undefined') {
 	/** @type {any} */
 	let t_=new EventTarget;
@@ -122,7 +122,7 @@ if(typeof window==='undefined') {
 	localStorage=window.localStorage;
 	HTMLDivElement=window.HTMLDivElement;
 	top=window;
-	let r_window=window;r_window;
+	let r_window=window; r_window;
 	{
 		/** @type {{[U in keyof any]:any}} */
 		let window=t_;
@@ -131,7 +131,7 @@ if(typeof window==='undefined') {
 			destinations=[];
 			//  connect(destinationNode: AudioNode, output?: number, input?: number): AudioNode;
 			/** @arg {AudioNode} destinationNode @arg {number} [output] @arg {number} [input] */
-			connect(destinationNode, output, input) {
+			connect(destinationNode,output,input) {
 				this.destinations.push([destinationNode,output,input]);
 			}
 		}
@@ -272,467 +272,67 @@ class ShadyChildrenOfYtdApp {
 	masthead=new YtdMasthead;
 }
 
-
-
-
-/** @type {unique symbol} */
-const Gn=Symbol("injectionDeps");
-
-class PagePreparer {
-	cancel() {
-		throw new Error("Only types");
+class ProvideWithDesktopHistoryManagerToken {
+	browserHistory={
+		getState() {
+			return history.state;
+		},
+		/**
+		 * @param {any} a
+		 * @param {string} b
+		 * @param {string | URL | null | undefined} [c]
+		 */
+		replaceState(a,b,c) {
+			history.replaceState(a,b,c);
+		}
+	};
+	/** @arg {string} url */
+	replaceUrl(url) {
+		var b=this.browserHistory.getState();
+		console.log("rep url",url);
+		this.replaceState(b,url);
+	}
+	/** @arg {any} b @arg {string} url */
+	replaceState(b,url) {
+		{
+			let c=b;
+			if(0 <= Number(null == c ? void 0 : c.entryTime)) {
+				this.historyEntryTime = c.entryTime;
+			}
+		}
+		this.browserHistory.replaceState(b,url);
 	}
 }
-// spell:words monospace
-let player_overlay_style_str=`
-position: absolute;
-top: 80px;
-left: 68px;
-font-size: 1.7rem;
-font-weight: 100;
-font-family: monospace;
-color: var(--c2);
-z-index: 1;
-mix-blend-mode: difference;
-background-blend-mode: normal;
---p0: 100%;
---p1: 100%;
---s0: 0 0 0.8px;
---s1: 0 0 0.8px;
---c0: rgb(255 255 255 / var(--p0));
---c1: rgb(20 20 20 / var(--p1));
---c2: white;
---sc0: var(--s0) var(--c0);
---sc1: var(--s1) var(--c1);
---f0: drop-shadow(var(--sc0));
---f1: drop-shadow(var(--sc1));
-filter: var(--f0) var(--f1);
-border: 0px solid black;
--webkit-mask-clip: text;
-user-select: none;
-width: 10px;
-`;
-function with_ytd_scope() {
-	/** @type {InstanceType<typeof YtdAppElement>|undefined} */
-	let ytd_app=void 0;
-	let found_element_count=0;
-	let expected_element_count=6;
 
-	let waiting_for_ytd_player=false;
-	/** @type {number|null} */
-	let current_timeout=null;
-
-	function yt_watch_page_loaded_handler() {
-		if(!is_watch_page_active()) {
-			return;
-		}
-		if(!has_ytd_page_mgr()) {
-			console.log("no ytd-page-manager");
-			return;
-		}
-		title_text_overlay_update();
-		init_ui_plugin();
-		if(!ytd_player) return;
-		ytd_player.active_nav=false;
-		ytd_player.init_nav=true;
+class YtdAppElement extends HTMLElement {
+	/**@type {HTMLStyleElement|undefined}*/
+	ui_plugin_style_element;
+	/**@type {VolumeRange|undefined}*/
+	volume_range;
+	/**@type {number|undefined} */
+	app_is_visible;
+	/**@type {ReturnType<typeof setInterval>|undefined} */
+	ytp_click_cint;
+	/**@arg {HTMLElement} element @return {YtdAppElement} */
+	static cast(element) {
+		return any_c(element,YtdAppElement);
 	}
-	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
-	function init_ui_plugin() {
-		if(waiting_for_ytd_player) return;
-		if(current_timeout===null)
-			return;
-		if(typeof current_timeout==="number") {
-			if(current_timeout>0) {
-				clearTimeout(current_timeout);
-				current_timeout=null;
+	__shady_children=new ShadyChildrenOfYtdApp;
+	init_inject() {
+		let cache={
+			/** @type {ProvideWithDesktopHistoryManagerToken|null} */
+			desktop_history:null,
+		};
+		/** @arg {string} url @arg {never[]} ex_args */
+		this.replaceUrl=function replaceUrl(url,...ex_args) {
+			if(!cache.desktop_history) {
+				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
 			}
-		} else if("hasRef" in current_timeout) {
-			clearTimeout(current_timeout);
-			current_timeout=null;
-		}
-		if(!ytd_player||!ytd_player.player_) {
-			console.log("wait for player");
-			waiting_for_ytd_player=true;
-			wait_for_yt_player().then(function() {
-				waiting_for_ytd_player=false;
-				init_ui_plugin();
-			});
-			return;
-		}
-		if(!ytd_player.player_.getVideoData) {
-			current_timeout=setTimeout(init_ui_plugin,0);
-			return;
-		}
-		if(ytd_player.active_nav) {
-			console.log("ytd-player:active_nav = true");
-			return;
-		}
-		current_timeout=setTimeout(activate_nav,0);
-	}
-
-	function activate_nav() {
-		if(yt_debug_enabled) console.log("activate_nav:fire");
-		if(!ytd_player) return;
-		if(!ytd_page_manager) return;
-		if(ytd_player.active_nav) return;
-		if(!plugin_overlay_element) return;
-		ytd_player.active_nav=true;
-		plugin_overlay_element.setAttribute("style",player_overlay_style_str);
-		plugin_overlay_element.onupdate();
-		let page_elem=ytd_page_manager.getCurrentPage();
-		page_elem.append(plugin_overlay_element);
-		log_current_video_data();
-		ytd_page_manager.addEventListener("yt-page-type-changed",function() {
-			if(!ytd_player) return;
-			let page_elem=get_ytd_page_manager().getCurrentPage();
-			setTimeout(function() {
-				do_find_video();
-			},80);
-			if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
-				ytd_player.is_watch_page_active=false;
-				plugin_overlay_element&&plugin_overlay_element.remove();
-				return;
-			} else {
-				ytd_player.is_watch_page_active=true;
+			if(ex_args.length>0) {
+				console.log("replaceUrl api not followed",ex_args);
 			}
-			requestAnimationFrame(page_changed_next_frame);
-		});
-	}
-
-	function do_find_video() {
-		if(!audio_gain_controller) return;
-		const element_list=get_html_elements(document,"video");
-		if(element_list.length<=0) return;
-		let list=box_map.get("video-list");
-		/** @type {boolean} */
-		let first_run;
-		if(list) {
-			first_run=false;
-		} else {
-			first_run=true;
-			list=new HTMLVideoElementArrayBox([]);
-			box_map.set("video-list",list);
-		}
-		let new_elements=get_new_video_element_list(element_list,list);
-		if(new_elements.length<=0) return;
-		audio_gain_controller.attach_element_list(new_elements);
-		if(first_run) {
-			found_element_count++;
-			if(async_plugin_init.__debug) console.log("found video elements");
-		} else {
-			if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
-		}
-	}
-	/** @param {CustomEventType} event */
-	async function async_plugin_init(event) {
-		let cur_count=1;
-		let obj=dom_observer;
-		let iter_count=0;
-		if(is_node_js()) console.log("start async_plugin");
-		try {
-			while(true) {
-				iter_count++;
-				if(cur_count>32) {
-					await new Promise((soon) => setTimeout(soon,0));
-					cur_count=0;
-				}
-				if(!audio_gain_controller) {
-					audio_gain_controller=new AudioGainController;
-					AudioGainController.attach_instance();
-				}
-				VolumeRange.create_if_needed();
-				cur_count++;
-				// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
-				{
-					let found=iterate_ytd_app();
-					if(found) {
-						found_element_count++;
-					}
-				}
-				// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
-				// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
-				x: {
-					if(ytd_page_manager) break x;
-					const target_element=get_html_elements(document,"ytd-page-manager")[0];
-					if(!target_element) break x;
-					found_element_count++;
-					on_ytd_page_manager(target_element);
-				}
-				// END(ytd-page-manager): obj.dispatchEvent({type: "ytd-page-manager",detail,port});
-				// BEGIN(yt-playlist-manager): obj.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
-				x: {
-					if(yt_playlist_manager) break x;
-					const target_element=get_html_elements(document,"yt-playlist-manager")[0];
-					if(!target_element) break x;
-					found_element_count++;
-					on_yt_playlist_manager(target_element);
-				}
-				// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
-				x: {
-					if(ytd_watch_flexy) break x;
-					if(!ytd_page_manager) break x;
-					let page_elem=ytd_page_manager.getCurrentPage();
-					if(!page_elem) break x;
-					if(!page_elem.__has_theater_handler_plugin) {
-						page_elem.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-						page_elem.__has_theater_handler_plugin=true;
-					}
-					if(yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
-					if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
-						console.log("found other current_page at iter=",iter_count);
-						/** @type {Promise<void>} */
-						let promise=new Promise((accept,reject) => {
-							if(!ytd_page_manager) return reject(new Error("missing data"));
-							ytd_page_manager.addEventListener(
-								"yt-page-type-changed",
-								() => accept(),
-								{once: true}
-							);
-						});
-						await promise;
-						break x;
-					}
-					found_element_count++;
-					on_ytd_watch_flexy(page_elem);
-				}
-				// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
-				// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player",detail,port});
-				x: {
-					if(ytd_player) break x;
-					if(!ytd_watch_flexy) break x;
-					const target_element=get_html_elements(ytd_watch_flexy,"ytd-player")[0];
-					if(!target_element) break x;
-					found_element_count++;
-					on_ytd_player(target_element);
-				}
-				// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
-				// BEGIN(video): obj.dispatchEvent({type: "find-video",detail,port});
-				do_find_video();
-				// END(video): obj.dispatchEvent({type: "video",detail,port});
-				await obj.wait_for_port(event.port,cur_count);
-				if(found_element_count>=expected_element_count) {
-					obj.dispatchEvent({...event,type: "plugin-activate"});
-					break;
-				}
-				const max_find_iter=7588;
-				if(is_node_js()&&iter_count>max_find_iter&&found_element_count===0) {
-					console.log("wait for plugin ready timeout");
-					break;
-				}
-				if(!box_map.has("video-list")) continue;
-				if(ytd_page_manager===null) continue;
-				console.log(iter_count);
-				if(iter_count>max_find_iter) {
-					alert("found plugin reqs in iters="+iter_count);
-				}
-				obj.dispatchEvent({...event,type: "plugin-activate"});
-				break;
-			}
-		} catch(e) {
-			console.log("had error in async init",e);
-		}
-		if(is_node_js()) {
-			destroy_env();
-			return;
-		}
-	}
-	async_plugin_init.__debug=false;
-	dom_observer.addEventListener("async-plugin-init",async_plugin_init);
-	const debug_ytd_app=true;
-	/** @arg {HTMLElement} element */
-	function on_ytd_app(element) {
-		const element_id="ytd-app";
-		if(yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
-		element_map.set(element_id,element);
-		window.ytd_app=element;
-		ytd_app=YtdAppElement.cast(element);
-		ytd_app.addEventListener("yt-navigate-finish",function(event) {
-			// might have a new video element from page type change
-			setTimeout(function() {
-				do_find_video();
-			},80);
-			let real_event=YTNavigateFinishEvent.cast(event);
-			for(let handler of on_yt_navigate_finish) {
-				handler(real_event);
-			}
-		});
-		ytd_app.ui_plugin_style_element=ui_plugin_style_element;
-		if(document.visibilityState==="visible") {
-			ytd_app.app_is_visible=true;
-			if(vis_imm) {
-				fire_on_visibility_change_restart_video_playback();
-				vis_imm=false;
-			}
-		} else {
-			ytd_app.app_is_visible=false;
-		}
-		ytd_app.ytp_click_cint=setInterval(() => {
-			if(!is_watch_page_active()||!ytd_app) return;
-			if(!ytd_app.app_is_visible) {
-				vis_imm=true;
-				return;
-			}
-		},15*60*1000);
-		document.addEventListener("visibilitychange",function() {
-			if(!ytd_app) throw new Error("No ytd-app");
-			if(!is_watch_page_active()) return;
-			if(document.visibilityState==="visible") {
-				ytd_app.app_is_visible=true;
-				if(vis_imm) {
-					fire_on_visibility_change_restart_video_playback();
-					vis_imm=false;
-				}
-			} else {
-				ytd_app.app_is_visible=false;
-			}
-		});
-	}
-	class VolumeRange {
-		static enabled=true;
-		static create_if_needed() {
-			if(!this.enabled) return;
-			if(!ytd_app) return;
-			if(!ytd_app.__shady_children.masthead) return;
-			let player_masthead=ytd_app.__shady_children.masthead;
-			if(!player_masthead.$) return;
-			if(!ytd_app.volume_range&&audio_gain_controller) {
-				if(yt_debug_enabled) console.log("create VolumeRange");
-				document.head.append(volume_plugin_style_element);
-				let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
-				let container_dom_parent=player_masthead.$.container.children.center;
-				if(!container_dom_parent) {
-					throw new Error("Missing masthead container center");
-				}
-				volume_range.attach_to_element(container_dom_parent);
-				ytd_app.volume_range=volume_range;
-			}
-		}
-		/**
-		 * @param {number} min
-		 * @param {number} max
-		 * @param {number} overdrive
-		 * @param {AudioGainController} gain_controller
-		 */
-		constructor(min,max,overdrive,gain_controller) {
-			this.use_cache=true;
-			this.max=max;
-			this.min=min;
-			this.overdrive=overdrive;
-			this.gain_controller=gain_controller;
-		}
-		/**
-		 * @param {number} gain
-		 */
-		setGain(gain) {
-			this.gain_controller.setGain(gain);
-			if(!this.use_cache) return;
-			history_state_manager.setCacheValue("filter_gain",gain);
-		}
-		/** @private */
-		getGain() {
-			if(!this.use_cache) return null;
-			return history_state_manager.getCacheValue("filter_gain");
-		}
-		/** @private */
-		calculateGain() {
-			if(!this.use_cache) return this.max;
-			let c_gain=this.getGain();
-			if(!(typeof c_gain==="object"||typeof c_gain==="number")) {
-				this.setGain(1);
-				return this.max;
-			}
-			let c_gain_1=c_gain;
-			if(c_gain_1===null) c_gain_1=1;
-			if(typeof c_gain_1==="object") throw new Error("Unexpected object");
-			return c_gain_1*this.max;
-		}
-		max_compressor_reduction=-0.00011033167538698763;
-		/**
-		 * @param {KeyboardEvent} event
-		 */
-		onKeyDown(event) {
-			if(!this.range_element) return;
-			this.gain_controller.last_event=event;
-			if(event.key=="f") {
-				var compressor_reduction_factor=this.gain_controller.dynamics_compressor.reduction;
-				if(compressor_reduction_factor>0) {
-					console.log("+",compressor_reduction_factor);
-					return;
-				}
-				let new_gain=Math.log((compressor_reduction_factor)*-1);
-				if(new_gain>0) return;
-				new_gain=(new_gain*-1)/(Math.log(this.max_compressor_reduction*-1)*-1/2);
-				console.log("ng",new_gain,compressor_reduction_factor);
-				if(new_gain>this.overdrive) new_gain=this.overdrive;
-				if(new_gain<this.min) new_gain=this.min;
-				this.range_element.value=""+Math.floor(this.max*new_gain);
-				this.setGain(new_gain);
-			}
-		}
-		/**
-		 * @param {Element} view_parent
-		 */
-		attach_to_element(view_parent) {
-			if(!this.view_div) {
-				let element=document.getElementById("rh_css");
-				if(!element) {
-					element=document.createElement("div");
-					element.id="rh_css";
-				}
-				this.view_div=element;
-			}
-			if(!this.range_element) {
-				let element=document.getElementById("i_r_css");
-				if(element instanceof HTMLInputElement) this.range_element=element;
-				if(!this.range_element) {
-					if(element) element.remove();
-					this.range_element=document.createElement("input");
-					this.range_element.type="range";
-					this.range_element.id="i_r_css";
-					let range_style=this.range_element.style;
-					range_style.width="calc(100% + 40px + 8px + 40px)";
-					range_style.marginLeft="0";
-					range_style.marginRight="0";
-				}
-				this.range_element.oninput=() => {
-					if(!this.range_element) return;
-					let range_value=Number.parseInt(this.range_element.value,10);
-					this.setGain(range_value/this.max);
-				};
-				this.range_element.onkeydown=(event) => this.onKeyDown(event);
-				this.range_element.min=""+this.min;
-				this.range_element.max=""+this.overdrive;
-				let new_gain=this.calculateGain();
-				this.range_element.value=""+new_gain;
-				this.setGain(new_gain/this.max);
-				this.view_div.append(this.range_element);
-			}
-			view_parent.insertAdjacentElement("beforebegin",this.view_div);
-		}
-	}
-	function iterate_ytd_app() {
-		if(ytd_app) return false;
-		const target_element=get_html_elements(document,"ytd-app")[0];
-		if(!target_element) return false;
-		on_ytd_app(target_element);
-		return true;
-	}
-	class YtdAppElement extends HTMLElement {
-		/**@type {HTMLStyleElement|undefined}*/
-		ui_plugin_style_element;
-		/**@type {VolumeRange|undefined}*/
-		volume_range;
-		/**@type {boolean|undefined} */
-		app_is_visible;
-		/**@type {ReturnType<typeof setInterval>|undefined} */
-		ytp_click_cint;
-		pagePreparer=new PagePreparer;
-		/**@arg {HTMLElement} element @return {YtdAppElement} */
-		static cast(element) {
-			return any_c(element,YtdAppElement);
-		}
-		__shady_children=new ShadyChildrenOfYtdApp;
-		hasNavigated=false;
+			cache.desktop_history.replaceUrl(url);
+		};
 	}
 }
 
@@ -2379,6 +1979,7 @@ function on_ytd_app(element) {
 	element_map.set(element_id,element);
 	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
+	ytd_app.init_inject=YtdAppElement.prototype.init_inject;
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		// might have a new video element from page type change
 		setTimeout(function() {
@@ -3008,31 +2609,31 @@ let audio_gain_controller=null;
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
  * @type {import("./__global.js").__ia_excludeKeysS}
  */
-Object.__ia_excludeKeysS = function(target,ex_keys_str) {
+Object.__ia_excludeKeysS=function(target,ex_keys_str) {
 	/** @type {any} */
-  let ex_keys_any=ex_keys_str.split(",");
+	let ex_keys_any=ex_keys_str.split(",");
 	/** @type {C} */
 	let ex_keys=ex_keys_any;
 	/** @type {C[number]} */
 	var key;
-  var rest, i = 0,
-    obj = Object.fromEntries(Object.entries(target));
-  for (; i < ex_keys.length; i++) {
-    {
-      key = ex_keys[i];
-      let {
-        [key]: _,
+	var rest,i=0,
+		obj=Object.fromEntries(Object.entries(target));
+	for(;i<ex_keys.length;i++) {
+		{
+			key=ex_keys[i];
+			let {
+				[key]: _,
 				...rest_
-      } = obj;
-      rest = rest_
-    };
-    obj = rest;
-  };
+			}=obj;
+			rest=rest_;
+		};
+		obj=rest;
+	};
 	/** @type {any} */
 	let res_any=obj;
 	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
 	let res=res_any;
-  return res;
+	return res;
 };
 
 class HistoryStateManager {
@@ -3083,8 +2684,8 @@ class HistoryStateManager {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('new state cs=%o', t.is_replacing_custom_state, remove_yt_data(new_state));
-					console.log("old state", remove_yt_data(t.cur_state));
+					console.log('new state cs=%o',t.is_replacing_custom_state,remove_yt_data(new_state));
+					console.log("old state",remove_yt_data(t.cur_state));
 				} else {
 					console.log('beg state',remove_yt_data(new_state),t.cur_state);
 				}
@@ -3110,10 +2711,10 @@ class HistoryStateManager {
 		if(!xx.get) throw 1;
 		let hist_state_getter=xx.get;
 		Object.defineProperty(History.prototype,"state",{
-			"configurable":true,
-			"enumerable":true,
-			"get": function () {
-				console.log('hist get',new Error)
+			"configurable": true,
+			"enumerable": true,
+			"get": function() {
+				console.log('hist get',new Error);
 				return hist_state_getter.call(this);
 			}
 		});
@@ -3278,7 +2879,7 @@ function main() {
 }
 main();
 
-let __res_ia_eks=Object.__ia_excludeKeysS({a:4,test:3,b:1},"test,a,b");
+let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
 /** @type {{}} */
 let __eks_eo=__res_ia_eks;
 __eks_eo;
