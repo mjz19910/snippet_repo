@@ -1,4 +1,5 @@
 import {ClickTrackedAndCommandMetadataWatchEndpointH} from "./support/yt_api/WatchEndpointH.js";
+import {SavedData} from "./youtube_plugin.user.js";
 import {__ia_excludeKeysS} from "./__ia_excludeKeysS";
 
 
