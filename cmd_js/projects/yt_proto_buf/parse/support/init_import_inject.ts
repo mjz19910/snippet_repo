@@ -5,7 +5,8 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 		Reader,
 	}=arg0.protobufjs;
 	Reader.prototype.skipType=function(wireType) {
-		console.log("wire skip", wireType);switch (wireType) {
+		console.log("wire skip", wireType);
+		switch (wireType) {
 			case 0:
 					this.skip();
 					break;
