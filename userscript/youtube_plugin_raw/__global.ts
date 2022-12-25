@@ -379,32 +379,53 @@ type ToastPopupTag={
 };
 type OpenPopupAction=ToastPopupTag|DialogPopupTag;
 type OpenPopupActionHolder={
+	clickTrackingParams: string;
 	openPopupAction: OpenPopupAction;
 };
-
-type ServiceEndpointAction={
+type AddToPlaylistCommandHolder={
 	clickTrackingParams: string;
-}&({
 	addToPlaylistCommand: AddToPlaylistCommand;
-}|OpenPopupActionHolder);
+};
+type ServiceEndpointAction=AddToPlaylistCommandHolder|OpenPopupActionHolder;
 type SignalServiceEndpoint={
 	signal: "CLIENT_SIGNAL";
 	actions: ServiceEndpointAction[];
 };
-type ServiceEndpointBase<T>={
+type ServiceEndpointGeneral={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
-	trackingParams?: string;
-}&T;
-type SignalServiceEndpoints={
+};
+export type TrackedServiceEndpointGeneral={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	trackingParams: string;
+}
+
+interface SignalServiceEndpoints extends ServiceEndpointGeneral {
 	signalServiceEndpoint: SignalServiceEndpoint;
 };
+interface PlaylistEditEndpointH {
+	playlistEditEndpoint: {};
+};
+
+interface AddToPlaylistServiceEndpointH {
+	addToPlaylistServiceEndpoint: {};
+};
+
+interface FeedbackEndpointH {
+	feedbackEndpoint: {};
+};
+
+interface GetReportFormEndpointH {
+	getReportFormEndpoint: {};
+};
+
 type ServiceEndpoint=
-	ServiceEndpointBase<SignalServiceEndpoints>|
-	ServiceEndpointBase<{playlistEditEndpoint: {};}>|
-	ServiceEndpointBase<{addToPlaylistServiceEndpoint: {};}>|
-	ServiceEndpointBase<{feedbackEndpoint: {};}>|
-	ServiceEndpointBase<{getReportFormEndpoint: {};}>;
+	SignalServiceEndpoints|
+	PlaylistEditEndpointH|
+	AddToPlaylistServiceEndpointH|
+	FeedbackEndpointH|
+	GetReportFormEndpointH;
 type MenuServiceItemRenderer={
 	icon: Icon;
 	serviceEndpoint: ServiceEndpoint;

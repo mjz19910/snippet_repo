@@ -2732,6 +2732,25 @@ function main() {
 }
 main();
 
+/** @arg {string} ex_keys_str */
+Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
+  let ex_keys=ex_keys_str.split(",");
+  var key, rest, i = 0,
+    obj = Object.fromEntries(Object.entries(this));
+  for (; i < ex_keys.length; i++) {
+    {
+      key = ex_keys[i];
+      let {
+        [key]: _,
+				...rest_
+      } = obj;
+      rest = rest_
+    };
+    obj = rest;
+  };
+  return obj;
+};
+
 function get_exports() {
 	return exports;
 }
