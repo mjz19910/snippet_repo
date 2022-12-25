@@ -113,10 +113,11 @@ export class MyReader {
 				break;
 			case 3:
 				prev_pad=pad;
-				console.pad_log("oneof: {",wireType);
+				console.pad_log("StartGroup: {");
 				pad+=pad_with;
-				while((wireType=this.uint32()&7)!==4) {
-					this.skipTypeEx(state,fieldId,wireType);
+				let raw_wire_type;
+				while((wireType=(raw_wire_type=this.uint32())&7)!==4) {
+					this.skipTypeEx(state,raw_wire_type>>3,wireType);
 				}
 				pad=prev_pad;
 				console.pad_log("}");
