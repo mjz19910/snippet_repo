@@ -3,6 +3,7 @@ import {CompactVideoRendererHolder} from "./CompactVideoRendererHolder";
 import {ContinuationItemRendererHolder} from "./ContinuationItemRendererHolder";
 import {CommentThreadRendererHolder} from "./CommentThreadRendererHolder";
 import {CommentsHeaderRendererHolder} from "./CommentsHeaderRendererHolder";
+import {RichSectionRendererHolder} from "./RichSectionRendererHolder.js";
 
 export type RendererContentItemDef=
 	RichItemRendererHolder|
