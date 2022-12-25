@@ -5,9 +5,31 @@ import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererConte
 import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
 import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder.js";
 
+declare global {type Split<S extends string, D extends string> =
+    string extends S ? string[] :
+    S extends '' ? [] :
+    S extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] : [S];
+}
+function __ia_excludeKeysS<U extends {},T extends string,C extends Split<T,",">>(this:U,ex_keys_str: Split<T,","> extends any[]?T:never): {[I in Exclude<keyof U,C[number]>]: U[I]} {
+	let ex_keys:C=ex_keys_str.split(",") as C;
+  var key: string, rest, i = 0,
+    obj: {} = Object.fromEntries(Object.entries(this));
+  for (; i < ex_keys.length; i++) {
+    {
+      key = ex_keys[i];
+      let {
+        [key]: _,
+				...rest_
+      } = obj as {[x: string]: any};
+      rest = rest_
+    };
+    obj = rest;
+  };
+  return obj as {[I in Exclude<keyof U,C[number]>]: U[I]};
+}
 declare global {
 	interface Object {
-		__ia_excludeKeysS(ex_keys_str: string): {[k: string]: any;};
+		__ia_excludeKeysS: typeof __ia_excludeKeysS;
 	}
 }
 

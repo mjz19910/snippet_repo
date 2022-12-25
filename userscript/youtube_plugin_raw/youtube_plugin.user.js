@@ -2967,10 +2967,20 @@ function main() {
 }
 main();
 
-/** @arg {string} ex_keys_str */
-Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
-  let ex_keys=ex_keys_str.split(",");
-  var key, rest, i = 0,
+/**
+ * @template {string} T @template {{}} U 
+ * @template {Split<T,",">} C
+ * @arg {U} this @arg {Split<T,","> extends any[]?T:never} ex_keys_str
+ * @returns {{[I in Exclude<keyof U,C[number]>]: U[I]}}
+ */
+Object.prototype.__ia_excludeKeysS = function(this,ex_keys_str) {
+	/** @type {any} */
+  let ex_keys_any=ex_keys_str.split(",");
+	/** @type {Split<T, ",">} */
+	let ex_keys=ex_keys_any;
+	/** @type {Split<T, ",">[number]} */
+	var key;
+  var rest, i = 0,
     obj = Object.fromEntries(Object.entries(this));
   for (; i < ex_keys.length; i++) {
     {
@@ -2983,8 +2993,15 @@ Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
     };
     obj = rest;
   };
-  return obj;
+	/** @type {any} */
+	let res_any=obj;
+	/** @type {{[I in Exclude<keyof U,Split<T, ",">[number]>]: U[I]}} */
+	let res=res_any;
+  return res;
 };
+
+let res=({a:4,test:3,b:1}).__ia_excludeKeysS("test,a");
+res;
 
 function get_exports() {
 	return exports;
