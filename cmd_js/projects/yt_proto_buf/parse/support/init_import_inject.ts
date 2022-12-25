@@ -31,17 +31,19 @@ class MyConsole {
 		console.log(pad+message,...data);
 	}
 	scope_id_max=1;
-	start_stack=new Array<[number,number]>;
-	pause() {
+	start_stack=new Array<[number,number,boolean]>;
+	pause(scope: (resume: ()=>void) => void) {
 		let scope_id=this.scope_id_max++;
 		let enter_len=this.start_stack.length;
 		let start_pause_length=this.cache.length;
-		this.start_stack.push([scope_id,start_pause_length]);
+		this.start_stack.push([scope_id,start_pause_length,this.paused]);
 		this.paused=true;
-		return () => {
-			this.paused=false;
-			this.on_resume();
+		scope(() => {
 			let scope=this.start_stack.at(-1);
+			if(scope) {
+				this.paused=scope[2];
+			}
+			this.on_resume();
 			x: if(scope) {
 				if(scope[0]!==scope_id) {
 					break x;
@@ -51,9 +53,10 @@ class MyConsole {
 					this.start_stack.length=enter_len;
 				}
 			} else {
+				this.paused==false;
 				this.cache.length=start_pause_length;
 			}
-		};
+		});
 	}
 	on_resume() {
 		for(let msg of this.cache) {
@@ -70,6 +73,10 @@ class MyConsole {
 	}
 }
 export const my_console=new MyConsole;
+
+function debug_l_delim_message() {
+
+}
 
 export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 	const {
@@ -92,13 +99,14 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 			case 2:
 				let size=this.uint32();
 				if(size>0) {
+					console.pause((resume)=>{
 					let has_error=false;
-					let resume=console.pause();
 					try {
 						unk_type.decode(this.buf.subarray(this.pos,this.pos+size));
 					} catch {
 						has_error=true;
 					}
+					if(!has_error) {
 					prev_pad=pad;
 					console.unpause(() => {
 						console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
@@ -107,9 +115,13 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 					resume();
 					pad=prev_pad;
 					console.pad_log("}");
-					if(has_error) {
+					} else if(has_error) {
 						console.pad_log("\"field %o L-delim string\": %o",field_id,this.buf.subarray(this.pos,this.pos+size).toString());
 					}
+
+					});
+				} else {
+					console.pad_log("\"field %o L-delim string\": %o",field_id,"");
 				}
 				this.skip(size);
 				break;
