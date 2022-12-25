@@ -13,30 +13,24 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-console=typeof window==='undefined'? console:(() => window.console)();
-var is_node_js=function is_node_js() {
-	return false;
-};
-var destroy_env=() => {};
+console=typeof window==='undefined'?console:(()=>window.console)();
 if(typeof window==='undefined') {
-	is_node_js=() => true;
-	if(typeof require==='function') {
-		let n_env=require("./init_node_env.js");
-		destroy_env=() => {
-			n_env.destroy_env(message_channel);
-		};
-		window=n_env.window;
-		History=window.History;
-		HTMLElement=window.HTMLElement;
-		Image=window.Image;
-		document=window.document;
-		localStorage=window.localStorage;
-		HTMLDivElement=window.HTMLDivElement;
-		top=window;
-	} else {
-		throw new Error("Unable to generate fake window");
+	/** @type {any} */
+	let t_=this;
+	{
+		/** @type {{[U in keyof any]:any}} */
+		let window=t_;
+		class HTMLElement {}
+		window.HTMLElement=HTMLElement;
+		class Image {}
+		window.Image=Image;
 	}
+	window=t_;
+	navigator={};
 }
+
+HTMLElement=window.HTMLElement;
+
 // #section Use module types
 /** @type {import("./__global.js")} */
 // #section end
