@@ -1,7 +1,7 @@
 import {
 	add_function,
 	CompressionStatsCalculator,
-	DebugApiH_o,
+	_DebugApiH_o,
 } from "../DebugApi.user";
 import {DebugApiType} from "./DebugApiType";
 import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
@@ -10,7 +10,7 @@ import {SavedInstanceType} from "./SavedInstanceType";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
-export const InjectApiH_o=DebugApiH_o['InjectApi'];
+export const InjectApiH_o=_DebugApiH_o['InjectApi'];
 
 declare global {
 	interface InjectApi {
