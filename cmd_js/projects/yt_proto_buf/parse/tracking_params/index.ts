@@ -1,25 +1,36 @@
 import {readFile} from "fs/promises";
-import {default as protobufjs} from "protobufjs";
+import {
+	default as protobufjs,
+	Root,
+} from "protobufjs";
+import {into_type} from "../support/into_type.js";
 import {r} from "./r.js";
 
 function run() {
-	parse_types("tracking_params").catch(e=>{
+	parse_types("tracking_params").catch(e => {
 		console.log("error",e);
 	});
 }
 run();
-export async function parse_types(proto_type: string): Promise<void> {
-	let root=await protobufjs.load(r(`protobuf/${proto_type}.proto`));
-	let proto_A_type=root.lookupType("A");
-	await useTypeA(proto_A_type,proto_type);
+
+export async function parse_types(proto_name: string): Promise<void> {
+	let root=await protobufjs.load(r(`protobuf/${proto_name}.proto`));
+	await useTypeA(root,proto_name);
 }
-async function useTypeA(type: {},proto_type: string) {
-	const token_buffer=await get_token_data_from_file(r(`binary/${proto_type}.bin`));
-	console.log(type);
+async function useTypeA(root: Root,proto_name: string) {
+	const token_buffer=await get_token_data_from_file(r(`binary/${proto_name}.bin`));
+	let proto_A_type=root.lookupType("A");
+	let message=proto_A_type.decode(token_buffer);
+	let u_obj=proto_A_type.toObject(message,{
+		longs: Number,
+		arrays: true,
+	});
+	let obj=into_type<typeof u_obj,{}>(u_obj);
+	console.log(type,token_buffer);
 }
 export function get_token_data(token: string) {
 	let base64_enc_2=token.replaceAll("_","/").replaceAll("-","+");
-	return Buffer.from(base64_enc_2, 'base64');
+	return Buffer.from(base64_enc_2,'base64');
 }
 async function get_token_data_from_file(file_path: string) {
 	let bin_file=await readFile(r(file_path));
