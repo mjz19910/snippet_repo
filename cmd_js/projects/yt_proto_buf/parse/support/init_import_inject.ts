@@ -78,12 +78,12 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 			}
 		});
 		if(has_error) {
-			console.pad_log("\"field %o L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
+			console.pad_log("\"field %o: L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
 		} else {
 			console.pad_log("}");
 		}
 	} else {
-		console.pad_log("\"field %o L-delim string\": %o",field_id,"");
+		console.pad_log("\"field %o: L-delim string\": %o",field_id,"");
 	}
 }
 
@@ -102,7 +102,7 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 				this.skip();
 				break;
 			case 1:
-				console.pad_log("\"field %o 64-Bit\": ?",field_id);
+				console.pad_log("\"field %o: 64-Bit\": ?",field_id);
 				this.skip(8);
 				break;
 			case 2:
