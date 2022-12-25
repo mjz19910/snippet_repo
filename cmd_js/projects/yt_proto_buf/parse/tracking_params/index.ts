@@ -22,6 +22,8 @@ export async function parse_types(): Promise<void> {
 }
 async function useTypeA(root: Root,token_buffer: Buffer) {
 	let buf_type=root.lookupType("A");
+	let type=new protobufjs.Type("U");
+	type.decode(token_buffer);
 	let message=buf_type.decode(token_buffer);
 	let u_obj=buf_type.toObject(message,{
 		longs: Number,
