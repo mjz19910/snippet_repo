@@ -3,7 +3,7 @@ export type UrlParseRes_0<
 	Host extends string,
 	Protocol extends string,
 	Search extends string,
-	Pathname extends string>={
+	Pathname extends string> = {
 		hash: "";
 		host: Host;
 		hostname: Host;
