@@ -1,4 +1,4 @@
-import "ns/DateTime.proto";
+import "../../../protobuf/ns/DateTime.proto";
 
 message A {
 	required int32 field_01 = 1;
