@@ -54,8 +54,6 @@ interface GoogleAdList {
 	push(v: number): void;
 }
 
-export interface Holder {}
-
 export {};
 
 // #region begin declare_global_sec
