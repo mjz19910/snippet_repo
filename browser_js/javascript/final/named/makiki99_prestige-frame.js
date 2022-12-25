@@ -6,7 +6,7 @@ import {Runner} from "../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame.js
 */
 function main() {
-	/** @type {import("./__global.js").Holder} */
+	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 	let cur=new Runner;
