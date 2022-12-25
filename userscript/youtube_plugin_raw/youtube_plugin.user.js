@@ -2655,35 +2655,33 @@ class VolumeRange {
  * @param {any[]} acc
  * @param {string[]} path
  */
-function all_of_key_rec(cur, key_names, acc, path) {
-  if (typeof cur !== 'object') return;
-  /**
-	 * @param {any[]} data
-	 */
-  function log_path(...data) {
-      console.log(path[0]+path.slice(1).join("."), ...data);
-  }
-  if(cur instanceof Array) {
-    for (let i in cur) {
-    	path.push("["+i+"]");
-    	all_of_key_rec(cur[i], key_names, acc, path);
-   	 	path.pop();
-    }
-    return;
-  }
-  let kk = Object.keys(cur);
-  for (let i of kk) {
-    if (key_names.includes(i)) {
-      log_path(i,[cur[i]]);
-      acc.push(cur[i]);
-      continue;
-    }
-    log_path(cur);
-    path.push(i);
-    if (i.includes("Params")&&!kk.includes("playerParams")&&!kk.includes("serviceTrackingParams")) console.log(path.join("."), cur);
-    all_of_key_rec(cur[i], key_names, acc, path);
-    path.pop();
-  }
+function all_of_key_rec(cur,key_names,acc,path) {
+	if(typeof cur!=='object') return;
+	/** @param {any[]} data */
+	function log_path(...data) {
+		console.log(path[0]+path.slice(1).join("."),...data);
+	}
+	if(cur instanceof Array) {
+		for(let i in cur) {
+			path.push("["+i+"]");
+			all_of_key_rec(cur[i],key_names,acc,path);
+			path.pop();
+		}
+		return;
+	}
+	let kk=Object.keys(cur);
+	for(let i of kk) {
+		if(key_names.includes(i)) {
+			log_path(i,[cur[i]]);
+			acc.push(cur[i]);
+			continue;
+		}
+		log_path(cur);
+		path.push(i);
+		log_path(cur);
+		all_of_key_rec(cur[i],key_names,acc,path);
+		path.pop();
+	}
 }
 
 /**
@@ -2691,36 +2689,37 @@ function all_of_key_rec(cur, key_names, acc, path) {
  * @param {string[]} key_names
  * @arg {any[]|undefined} acc
  */
-function all_of_key(cur, key_names, acc = [], path = ["."]) {
-  all_of_key_rec(cur, key_names, acc, path);
-  return acc;
+function all_of_key(cur,key_names,acc=[],path=["."]) {
+	all_of_key_rec(cur,key_names,acc,path);
+	return acc;
 }
 
 function iterate_tracking_params() {
 	let ag=saved_data.any_data;
-  let browse = ag.browse;
-  let x = null;
+	let browse=ag.browse;
+	let x=null;
 	if(ag.guide) {
 		if(browse) x=browse;
 		x=ag.guide;
 	} else {
 		return;
 	}
-  var data_arr = all_of_key(x, ["trackingParams","clickTrackingParams"]);
-  console.assert(data_arr.filter(e => e[0] !== "C").length === 0);
-  let ret = data_arr.sort();
-  for (let i of ret) {
-    switch (i.length) {
-      case 36:
-      case 40:
-      case 48:
-      case 52:
-      case 64:
-      case 88:
-        continue;
-    }
-    console.log(i, i.length);
-  }
+	var data_arr=all_of_key(x,["trackingParams","clickTrackingParams"]);
+	console.assert(data_arr.filter(e => e[0]!=="C").length===0);
+	let ret=data_arr.sort();
+	for(let i of ret) {
+		switch(i.length) {
+			case 36:
+			case 40:
+			case 48:
+			case 52:
+			case 64:
+			case 88:
+				continue;
+		}
+		console.log(i,i.length);
+	}
+	return ret;
 }
 inject_api.iterate_tracking_params=iterate_tracking_params;
 
