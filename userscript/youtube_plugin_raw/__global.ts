@@ -53,9 +53,9 @@ declare global {
 		continuationItems: CommentsSectionItem[];
 	};
 }
+type WatchNextItem=CompactVideoRendererHolder|ContinuationItemRendererHolder;
 // WatchNextContinuationAction
 declare global {
-	type WatchNextItem=CompactVideoRendererHolder|ContinuationItemRendererHolder;
 	interface WatchNextContinuationAction {
 		targetId: "watch-next-feed";
 		continuationItems: WatchNextItem[];
