@@ -12,14 +12,6 @@ function run() {
 const pad_with="   ";
 let pad="";
 
-function increase_padding() {
-	let prev=pad;
-	pad+=pad_with;
-	return () => {
-		pad=prev;
-	};
-}
-
 class MyConsole {
 	paused=false;
 	cache: [string,string,any[]][]=[];
