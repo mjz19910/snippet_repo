@@ -4,7 +4,7 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 	const {
 		Reader,
 	}=arg0.protobufjs;
-	let pad="";
+	let pad="\t";
 	const my_console=new class {
 		pad_log(message: string, ...data: any[]) {
 			console.log(pad+message, ...data);
@@ -26,6 +26,7 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 				this.skip(size);
 				break;
 			case 3:
+				let prev_pad=pad;
 				pad+=" ";
 				let enterType=wireType;
 				my_console.pad_log("enter", wireType);
@@ -33,8 +34,10 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 					this.skipType(wireType);
 				}
 				my_console.pad_log("leave", enterType);
+				pad=prev_pad;
 				break;
 			case 5:
+				my_console.pad_log("wireType=%o for %o bytes",wireType,4);
 				this.skip(4);
 				break;
 
