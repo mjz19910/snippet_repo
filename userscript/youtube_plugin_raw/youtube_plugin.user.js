@@ -2717,6 +2717,18 @@ class HistoryStateManager {
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
+		let xx=Object.getOwnPropertyDescriptor(History.prototype,"state");
+		if(!xx) throw 1;
+		if(!xx.get) throw 1;
+		let hist_state_getter=xx.get;
+		Object.defineProperty(History.prototype,"state",{
+			"configurable":true,
+			"enumerable":true,
+			"get": function () {
+				console.log('hist get',new Error)
+				return hist_state_getter.call(this);
+			}
+		});
 	}
 	/** @arg {PopStateEvent} event */
 	historyStateFromEvent(event) {
