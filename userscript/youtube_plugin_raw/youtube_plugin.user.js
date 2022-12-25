@@ -75,6 +75,9 @@ if(typeof window==='undefined') {
 				element._setup(tagName);
 				return element;
 			}
+			getElementsByTagNameNS() {
+				return [];
+			}
 		}
 		class Element {
 			get style() {
@@ -118,7 +121,77 @@ if(typeof window==='undefined') {
 	document=window.document;
 	localStorage=window.localStorage;
 	HTMLDivElement=window.HTMLDivElement;
-	top=null;
+	top=window;
+	let r_window=window;
+	{
+		/** @type {{[U in keyof any]:any}} */
+		let window=t_;
+		class AudioNode {
+			/** @type {[AudioNode,number?,number?][]} */
+			destinations=[];
+			//  connect(destinationNode: AudioNode, output?: number, input?: number): AudioNode;
+			/** @arg {AudioNode} destinationNode @arg {number} [output] @arg {number} [input] */
+			connect(destinationNode, output, input) {
+				this.destinations.push([destinationNode,output,input]);
+			}
+		}
+		class CompressorParams {
+			knee={};
+			release={};
+			attack={};
+			ratio={};
+			threshold={};
+		}
+		class DynamicsCompressorNode extends AudioNode {
+			/** @arg {AudioContext} ctx */
+			constructor(ctx) {
+				super();
+				this.context=ctx;
+				this.p=new CompressorParams;
+			}
+			get knee() {
+				if(this.p.knee) return this.p.knee;
+				this.p.knee={};
+				return this.p.knee;
+			}
+			get attack() {
+				if(this.p.attack) return this.p.attack;
+				this.p.attack={};
+				return this.p.attack;
+			}
+			get release() {
+				if(this.p.release) return this.p.release;
+				this.p.release={};
+				return this.p.release;
+			}
+			get ratio() {
+				if(this.p.ratio) return this.p.ratio;
+				this.p.ratio={};
+				return this.p.ratio;
+			}
+			get threshold() {
+				if(this.p.threshold) return this.p.threshold;
+				this.p.threshold={};
+				return this.p.threshold;
+			}
+		}
+		class Gain extends AudioNode {
+			constructor(ctx) {
+				super();
+				this.ctx=ctx;
+			}
+		}
+		class AudioContext {
+			createGain() {
+				return new Gain(this);
+			}
+			createDynamicsCompressor() {
+				return new DynamicsCompressorNode(this);
+			}
+		}
+		window.AudioContext=AudioContext;
+	}
+	AudioContext=window.AudioContext;
 }
 
 
@@ -1896,7 +1969,9 @@ let expected_element_count=6;
 async function async_plugin_init(event) {
 	let cur_count=1;
 	let obj=dom_observer;
+	let iter_count=0;
 	while(true) {
+		iter_count++;
 		if(cur_count>16) {
 			await new Promise((soon) => setTimeout(soon,40));
 			cur_count=0;
@@ -1976,6 +2051,10 @@ async function async_plugin_init(event) {
 		await obj.wait_for_port(event.port,cur_count);
 		if(found_element_count>=expected_element_count) {
 			obj.dispatchEvent({...event,type: "plugin-activate"});
+			break;
+		}
+		if(iter_count>1024) {
+			console.log("wait for plugin ready timeout");
 			break;
 		}
 		if(!box_map.has("video-list")) continue;
