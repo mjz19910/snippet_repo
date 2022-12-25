@@ -1,8 +1,9 @@
-import {readFile} from "fs/promises";
 import {
 	default as protobufjs,
 } from "protobufjs";
 import {into_type} from "../support/into_type.js";
+import {get_token_data} from "./get_token_data.js";
+import {get_token_data_from_file} from "./get_token_data_from_file.js";
 import {r} from "./r.js";
 
 function run() {
@@ -43,16 +44,6 @@ async function useTypeA({root,token_buffer}: {root: protobufjs.Root,token_buffer
 	});
 	let obj=into_type<typeof u_obj,{}>(u_obj);
 	console.log(obj);
-}
-export function get_token_data(token: string) {
-	let base64_enc_2=token.replaceAll("_","/").replaceAll("-","+");
-	return Buffer.from(base64_enc_2,'base64');
-}
-async function get_token_data_from_file(file_path: string) {
-	let bin_file=await readFile(r(file_path));
-	let token_enc=bin_file.toString();
-	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
-	return get_token_data(base64_enc);
 }
 
 run();
