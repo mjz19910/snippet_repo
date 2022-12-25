@@ -6,9 +6,9 @@ let pad="";
 export function increase_padding() {
 	let prev=pad;
 	pad+=pad_with;
-	return ()=>{
+	return () => {
 		pad=prev;
-	}
+	};
 }
 
 class MyConsole {
@@ -16,7 +16,8 @@ class MyConsole {
 	cache: [string,...any[]][]=[];
 	unpause(scope: () => void) {
 		if(!this.paused) {
-			throw new Error("unpause when not paused");
+			scope();
+			return;
 		}
 		this.paused=false;
 		scope();
@@ -29,18 +30,34 @@ class MyConsole {
 		}
 		console.log(pad+message,...data);
 	}
+	scope_id_max=1;
+	start_stack=new Array<[number,number]>;
 	pause() {
+		let scope_id=this.scope_id_max++;
+		let start_pause_length=this.cache.length;
+		this.start_stack.push([scope_id,start_pause_length]);
 		this.paused=true;
 		return () => {
 			this.paused=false;
 			this.on_resume();
+			let scope=this.start_stack.at(-1);
+			x: if(scope) {
+				if(scope[0]!==scope_id) {
+					break x;
+				}
+				this.cache.length=scope[1];
+			} else {
+				this.cache.length=start_pause_length;
+			}
 		};
 	}
 	on_resume() {
 		for(let msg of this.cache) {
 			this.pad_log(...msg);
 		}
-		this.cache=[];
+	}
+	clear_cache() {
+		this.cache.length=0;
 	}
 }
 export const my_console=new MyConsole;
@@ -73,7 +90,7 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 					has_error=true;
 				}
 				prev_pad=pad;
-				console.unpause(()=>{
+				console.unpause(() => {
 					console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
 				});
 				pad+=pad_with;
