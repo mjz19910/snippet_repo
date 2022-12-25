@@ -1,6 +1,6 @@
 import {AdSlotRenderer} from "./AdSlotRenderer";
 
 
-export type AdSlotRendererHolder={
+export type AdSlotRendererH={
 	adSlotRenderer: AdSlotRenderer;
 };

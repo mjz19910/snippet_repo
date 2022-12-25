@@ -5755,7 +5755,7 @@ function get_exports() {
 
 if(typeof exports==='object') {
 	let exports=get_exports();
-	exports._DebugApiH_o=DebugApiH_o;
+	exports._DebugApiH_obj=DebugApiH_o;
 	exports.add_function=add_function;
 	exports.AddEventListenerExtension=AddEventListenerExtension;
 	exports.BaseCompression=BaseCompression;

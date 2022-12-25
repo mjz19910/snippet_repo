@@ -1,6 +1,6 @@
 import {Thumbnail} from "./Thumbnail";
 
 
-export interface ThumbnailHolder {
+export interface ThumbnailH {
 	thumbnails: Thumbnail[];
 }

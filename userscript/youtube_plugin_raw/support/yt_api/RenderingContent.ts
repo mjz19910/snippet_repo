@@ -1,6 +1,6 @@
 import {SimpleText} from "./SimpleText";
 import {ImpressionEndpoint} from "./ImpressionEndpoint";
-import {ThumbnailHolder} from "./ThumbnailHolder";
+import {ThumbnailH} from "./ThumbnailHolder";
 import {MetadataBadgeRenderer} from "./MetadataBadgeRenderer";
 import {NavigationEndpoint} from "./NavigationEndpoint";
 import {Icon} from "./Icon";
@@ -14,7 +14,7 @@ export type RenderingContent={
 			"simpleText": "Create Lasting Wealth";
 		};
 		"image": {
-			thumbnail: ThumbnailHolder;
+			thumbnail: ThumbnailH;
 			trackingParams: string;
 		};
 		// spell:ignore Linqto

@@ -1,13 +1,15 @@
-import {RendererContentItemDef} from "./support/yt_api/RendererContentItemDef";
 import {SavedData} from "./youtube_plugin.user.js";
-import {SectionItemDef} from "./support/yt_api/SectionItemDef";
-import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererContentDef";
-import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
-import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder.js";
+import {ClickTrackedAndCommandMetadataWatchEndpointH} from "./support/yt_api/WatchEndpointH.js";
+import {__ia_excludeKeysS} from "./__ia_excludeKeysS";
 
-declare global {
-	type YtConfigAk={[U in string]: any};
+
+export type YtWatchPage={
+	/** @readonly */
+	page:"watch";
+	endpoint:ClickTrackedAndCommandMetadataWatchEndpointH;
 }
+
+type YtConfigAk={[U in string]: any};
 declare global {
 	interface Window {
 		yt?: {
@@ -32,148 +34,24 @@ export abstract class YtdAppElementBase_ extends HTMLElement {
 declare global {
 	var YtdAppElementBase: typeof YtdAppElementBase_|undefined;
 }
-declare global {type Split<S extends string, D extends string> =
-    string extends S ? string[] :
-    S extends '' ? [] :
-    S extends `${infer T}${D}${infer U}` ? [T, ...Split<U, D>] : [S];
-}
-export function __ia_excludeKeysS<T extends string,U extends {},C extends Split<T,",">>(target:U,ex_keys_str: Split<T,","> extends any[]?T:never): {[I in Exclude<keyof U,C[number]>]: U[I]} {
-	let ex_keys:C=ex_keys_str.split(",") as C;
-  var key: string, rest, i = 0,
-    obj: {} = Object.fromEntries(Object.entries(target));
-  for (; i < ex_keys.length; i++) {
-    {
-      key = ex_keys[i];
-      let {
-        [key]: _,
-				...rest_
-      } = obj as {[x: string]: any};
-      rest = rest_
-    };
-    obj = rest;
-  };
-  return obj as {[I in Exclude<keyof U,C[number]>]: U[I]};
-}
 declare global {
 	interface Object {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;
 	}
 }
 
-// YtdPageManagerElement
-declare global {
-	interface YtdPageManagerElementInterface extends HTMLElement {
-		getCurrentPage(): YtCurrentPage;
-	}
-	interface YTDPlayerElement extends HTMLElement {
-		active_nav: boolean;
-		player_: {getVideoData(): {video_id: string; eventId: undefined; title: any; author: any;}; getPlayerState(): {};}|null;
-		playerResolver_: {
-			promise: Promise<void>;
-		};
-		init_nav: boolean;
-		is_watch_page_active: boolean;
-		pause(): void;
-		play(): void;
-	}
-	interface YtCurrentPage extends HTMLElement {
-		getPlayer(): YTDPlayerElement;
-		__has_theater_handler_plugin: boolean|undefined;
-	}
-}
-
-// ReloadContinuationItemsCommand
-declare global {
-	type SectionItem=SectionItemDef;
-	type ReloadContinuationItemsCommand={
-		slot: "RELOAD_CONTINUATION_SLOT_BODY";
-		targetId: "browse-feedFEwhat_to_watch";
-		continuationItems: SectionItem[];
-	};
-}
-
-declare global {
-	type BrowseFeedItem={};
-	type BrowseFeedAction={
-		targetId: "browse-feedFEwhat_to_watch";
-		continuationItems: BrowseFeedItem[];
-	};
-}
-
 // CommentsSectionContinuationAction
 declare global {
-	type CommentsSectionItem={};
-	type CommentsSectionContinuationAction={
-		targetId: "comments-section";
-		continuationItems: CommentsSectionItem[];
-	};
 }
-type WatchNextItem=CompactVideoRendererHolder|ContinuationItemRendererHolder;
 // WatchNextContinuationAction
 declare global {
-	interface WatchNextContinuationAction {
-		targetId: "watch-next-feed";
-		continuationItems: WatchNextItem[];
-	}
 }
-
 // saved_maps
 declare global {
 	interface InjectApi {
 		saved_maps?: Map<string,Map<string,{}>>;
-	}
-}
-
-// saved_objects
-declare global {
-	interface InjectApi {
 		saved_data?: SavedData;
 	}
-}
-
-// ContinuationItem
-declare global {
-	type ContinuationItem=RendererContentItem;
-}
-
-// RichItemRenderer
-declare global {
-	type RichItemRendererContent=RichItemRendererContentDef;
-	interface RichItemRenderer {
-		content: RichItemRendererContent;
-		trackingParams?: string;
-	}
-	type RichItemRendererHolder={
-		richItemRenderer: RichItemRenderer;
-	};
-}
-
-// RichSectionRendererItem
-declare global {
-}
-
-// RendererContentItem
-declare global {
-	type RendererContentItem=RendererContentItemDef;
-}
-
-// RichGridRenderer
-declare global {
-	interface RichGridRenderer {
-		masthead: {
-			[str: string]: {}|undefined;
-			videoMastheadAdV3Renderer?: {};
-		};
-		contents: RendererContentItem[];
-	}
-}
-
-// ResState
-declare global {
-	type ResState={
-		active: boolean;
-		resolver: () => void;
-	};
 }
 
 // Seen

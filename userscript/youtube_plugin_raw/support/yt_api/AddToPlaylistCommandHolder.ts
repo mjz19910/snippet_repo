@@ -1,6 +1,6 @@
 import {AddToPlaylistCommand} from "./AddToPlaylistCommand";
 
-export type AddToPlaylistCommandHolder={
+export type AddToPlaylistCommandH={
 	clickTrackingParams: string;
 	addToPlaylistCommand: AddToPlaylistCommand;
 };

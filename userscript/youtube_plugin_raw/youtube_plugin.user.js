@@ -297,6 +297,7 @@ class ShadyChildrenOfYtdApp {
 }
 
 class NewBrowserHistory {
+	/** @returns {import("./HistoryStateContent.js").HistoryStateContent|null} */
 	getState() {
 		return history.state;
 	}
@@ -318,26 +319,6 @@ class NewBrowserHistory {
 	}
 }
 
-class ProvideWithDesktopHistoryManagerToken {
-	browserHistory=new NewBrowserHistory;
-	/** @arg {string} url */
-	replaceUrl(url) {
-		var b=this.browserHistory.getState();
-		console.log("rep url",url);
-		this.replaceState(b,url);
-	}
-	/** @arg {any} b @arg {string} url */
-	replaceState(b,url) {
-		{
-			let c=b;
-			if(0<=Number(null==c? void 0:c.entryTime)) {
-				this.historyEntryTime=c.entryTime;
-			}
-		}
-		this.browserHistory.replaceState(b,url);
-	}
-}
-
 class YtdAppElement extends YtdAppElementBase {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
@@ -354,6 +335,75 @@ class YtdAppElement extends YtdAppElementBase {
 	}
 	__shady_children=new ShadyChildrenOfYtdApp;
 	init_inject() {
+		let L0a=0;
+
+		function M0a() {
+			return window&&window.performance&&window.performance.now? window.performance.now():Date&&Date.now? Date.now():++L0a;
+		}
+
+		class ProvideWithDesktopHistoryManagerToken {
+			browserHistory=new NewBrowserHistory;
+			/** @arg {string} url */
+			replaceUrl(url) {
+				var b=this.browserHistory.getState();
+				console.log("rep url",url);
+				this.replaceState(b,url);
+			}
+			/** @arg {any} b @arg {string} url */
+			replaceState(b,url) {
+				{
+					let c=b;
+					if(0<=Number(null==c? void 0:c.entryTime)) {
+						this.historyEntryTime=c.entryTime;
+					}
+				}
+				this.browserHistory.replaceState(b,url);
+			}
+			/**
+			 * @param {any} c
+			 * @param {any} d
+			 * @param {any} f
+			 */
+			saveAndReplace(c,d,f) {
+				var h=window.location.href;
+				/** @type {{}|undefined} */
+				var l=void 0===l? {}:l;
+				let zz=this.browserHistory.getState();
+				/** @type {number} */
+				var n=(/*n=this.browserHistory.getState()*/zz)&&zz.entryTime? zz.entryTime:M0a();
+				c=this.createNewHistoryEntry(c,l,n);
+				this.saveSnapshot(n,d,f);
+				this.replaceState(c,h||window.location.href);
+			}
+			/** @type {Map<number,{rootData:{};scrollTop:number}>} */
+			historySnapshotCache=new Map;
+		}
+		class G0a {
+			/** @arg {{}} a @arg {number} b */
+			constructor(a,b) {
+				this.rootData=a;
+				this.scrollTop=b;
+			}
+		}
+		class K0a {
+			/** @arg {number} a @arg {ClickTrackedAndCommandMetadataWatchEndpointH} b @arg {{}} [c] */
+			constructor(a,b,c) {
+				this.endpoint=b;
+				this.savedComponentState=void 0===c? null:c;
+				this.entryTime=a;
+			}
+		}
+		/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
+		/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
+		ProvideWithDesktopHistoryManagerToken.prototype.createNewHistoryEntry=function(c,d,f) {
+			f=void 0===f? M0a():f;
+			return new K0a(f,c,d);
+		};
+		/** @arg {number} c @arg {{}} d @arg {number} f */
+		ProvideWithDesktopHistoryManagerToken.prototype.saveSnapshot=function(c,d,f) {
+			this.historySnapshotCache.set(c,new G0a(d,f));
+		};
+
 		let cache={
 			/** @type {ProvideWithDesktopHistoryManagerToken|null} */
 			desktop_history: null,
@@ -1110,9 +1160,10 @@ class HandleRendererContentItemArray {
 	//   return a in Ak ?Ak[a]:b;
 	// }
 	// Ck;
+	// console.log([u5().createNewHistoryEntry,K0a].join("\t\n\t//---\n"));
 	// Jn().resolve(Cv).currentEndpoint;u5().browserHistory;
 	*/
-	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/_abc/_rich/RichItemRendererH.js").RichItemRendererH} content_item */
+	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/RichItemRendererHolder.js").RichItemRendererH} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let renderer=content_item.richItemRenderer;
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
@@ -1124,7 +1175,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {import("./support/yt_api/RichSectionRendererHolder.js").RichSectionRendererHolder} content_item */
+	/** @arg {import("./support/yt_api/RichSectionRendererHolder.js").RichSectionRendererH} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
