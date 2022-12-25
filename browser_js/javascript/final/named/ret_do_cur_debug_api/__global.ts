@@ -1,3 +1,1 @@
-export {type Holder} from "../Holder.js";
-
-declare global {interface Window {}}
+export {} from "../Holder.js";

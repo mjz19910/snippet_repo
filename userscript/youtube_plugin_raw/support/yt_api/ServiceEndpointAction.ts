@@ -1,4 +1,4 @@
-import {OpenPopupActionH} from "./OpenPopupActionHolder.js";
-import {AddToPlaylistCommandH} from "./AddToPlaylistCommandHolder.js";
+import {OpenPopupActionH} from "./OpenPopupActionH.js";
+import {AddToPlaylistCommandH} from "./AddToPlaylistCommandH.js";
 
 export type ServiceEndpointAction=AddToPlaylistCommandH|OpenPopupActionH;

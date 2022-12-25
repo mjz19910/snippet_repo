@@ -6,7 +6,7 @@ import {Runner} from "../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
-	/** @type {import("./__global.js")} */
+	/** @type {import("../__global.js")} */
 	let holder=1;
 	holder;
 	let cur=new Runner;

@@ -179,6 +179,7 @@ declare global {
 	type SRefBase=getSet|Refs|S_or;
 }
 
+export {} from "./Holder.js";
 export {};
 
 declare global {

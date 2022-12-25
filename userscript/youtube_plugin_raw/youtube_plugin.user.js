@@ -1939,6 +1939,13 @@ function get_ytd_page_manager() {
 	}
 	throw new Error("No ytd_page_manager");
 }
+/** @typedef {import("./YtCurrentPage.js").YtCurrentPage} */
+/** @typedef {import("./YtdPageManagerElementInterface.js").YtdPageManagerElementInterface} YtdPageManagerElementInterface */
+/** @implements {YtdPageManagerElementInterface} */
+class YtdPageManagerElement extends HTMLElement {
+	/** @returns {import("./YtCurrentPage.js").YtCurrentPage} */
+	getCurrentPage() {throw 1;}
+}
 
 /**
  * @param {HTMLElement} element
