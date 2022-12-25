@@ -1,5 +1,6 @@
 import {CommandMetadata} from "./CommandMetadata";
 
-export type CommandMetadataH={
+export type ServiceEndpointGeneral={
+	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 };

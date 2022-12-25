@@ -1,5 +1,6 @@
 import {CommandMetadata} from "./CommandMetadata";
 
-export type CommandMetadataH={
+export type TrackedCommandMetadataH={
+	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 };
