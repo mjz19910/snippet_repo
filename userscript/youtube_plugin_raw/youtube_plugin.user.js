@@ -3110,10 +3110,10 @@ class HistoryStateManager {
 		if(!xx.get) throw 1;
 		let hist_state_getter=xx.get;
 		Object.defineProperty(History.prototype,"state",{
-			"configurable": true,
-			"enumerable": true,
-			"get": function() {
-				console.trace('hist get');
+			"configurable":true,
+			"enumerable":true,
+			"get": function () {
+				console.log('hist get',new Error)
 				return hist_state_getter.call(this);
 			}
 		});
