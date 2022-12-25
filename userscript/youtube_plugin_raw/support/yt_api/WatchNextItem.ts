@@ -1,9 +1,4 @@
-import {CompactVideoRenderer} from "./CompactVideoRenderer";
-import {ContinuationItemRenderer} from "./ContinuationItemRenderer";
+import {CompactVideoRendererH} from "./CompactVideoRendererH";
+import {ContinuationItemRendererH} from "./ContinuationItemRendererH";
 
-// WatchNextContinuationAction
-export type WatchNextItem={
-	compactVideoRenderer: CompactVideoRenderer;
-}|{
-	continuationItemRenderer: ContinuationItemRenderer;
-};
+export type WatchNextItem=CompactVideoRendererH|ContinuationItemRendererH;
