@@ -1163,7 +1163,7 @@ class HandleRendererContentItemArray {
 	// console.log([u5().createNewHistoryEntry,K0a].join("\t\n\t//---\n"));
 	// Jn().resolve(Cv).currentEndpoint;u5().browserHistory;
 	*/
-	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/RichItemRendererHolder.js").RichItemRendererH} content_item */
+	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/RichItemRendererH.js").RichItemRendererH} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let renderer=content_item.richItemRenderer;
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
@@ -1175,7 +1175,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {import("./support/yt_api/RichSectionRendererHolder.js").RichSectionRendererH} content_item */
+	/** @arg {import("./support/yt_api/RichSectionRendererH.js").RichSectionRendererH} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
@@ -1243,7 +1243,7 @@ class HandleRichGridRenderer {
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/_rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @param {import("./support/yt_api/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
@@ -1307,15 +1307,15 @@ function filter_on_initial_data(cls,apply_args) {
 }
 
 
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/WatchNextContinuationAction.js").WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
 	return o.targetId==="watch-next-feed";
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/c/CommentsSectionContinuationAction.js").CommentsSectionContinuationAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/CommentsSectionContinuationAction.js").CommentsSectionContinuationAction} */
 function is_comments_section_next(o) {
 	return o.targetId==="comments-section";
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/b/BrowseFeedAction.js").BrowseFeedAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/BrowseFeedAction.js").BrowseFeedAction} */
 function is_what_to_watch_section(o) {
 	return o.targetId==="browse-feedFEwhat_to_watch";
 }
@@ -1330,7 +1330,7 @@ class FilterHandlers extends IterateApiResultBase {
 	};
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/_rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @param {import("./support/yt_api/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		this.handlers.rich_grid.richGridRenderer(path,renderer);
@@ -1355,7 +1355,7 @@ class FilterHandlers extends IterateApiResultBase {
 			return false;
 		}
 		if(is_what_to_watch_section(action)) {
-			/** @type {import("./support/yt_api/_abc/b/BrowseFeedAction.js").BrowseFeedAction} */
+			/** @type {import("./support/yt_api/BrowseFeedAction.js").BrowseFeedAction} */
 			let action_t=action;
 			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			// return true;
@@ -1375,7 +1375,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 * @param {import("./support/yt_api/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand(path,command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
