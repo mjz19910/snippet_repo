@@ -1,4 +1,4 @@
-export const Holder=1;
+export {};
 
 declare global {
 	interface Window {

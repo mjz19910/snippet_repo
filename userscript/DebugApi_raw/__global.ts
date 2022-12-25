@@ -57,9 +57,6 @@ declare global {
 	}
 }
 
-// Holder
-export type Holder=1;
-
 declare global {
 	type msg_ev_01=CM<MessageEvent<{
 		type: string;
