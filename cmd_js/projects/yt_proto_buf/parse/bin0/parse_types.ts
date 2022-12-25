@@ -87,5 +87,5 @@ export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let tmp_data=decode_as_type<ProtoBufTypeT1A>(root,"t1_A",token_binary.slice(4));
 	let description: DesType=tmp_data.data.description;
 	let items=extract_items(description);
-	console.log(items[0]);
+	console.log(items);
 }

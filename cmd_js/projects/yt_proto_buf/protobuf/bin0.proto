@@ -31,14 +31,16 @@ message t1_C {
 	repeated int32 keys_alt = 5;
 }
 message t1_D {
+	optional bytes alt_0 = 1000;
+	optional bytes alt_2 = 1002;
 	oneof oneof_0 {
-		VideoId video = 1000;
-		Playlist playlist = 1002;
-		int32 _r = 1006;
+		// t1_E video = 1000;
+		// Playlist playlist = 1002;
+		// int32 alt_6 = 1006;
 	}
 }
-message VideoId {
-	required uint64 video_id=1;
+message t1_E {
+	required uint64 num=1;
 }
 message Playlist {
 	required string playlist_id = 1;
