@@ -27,5 +27,3 @@ export function test_search_params_test_0() {
 	}
 	console.log(vv.pathname,res);
 }
-
-test_search_params_test_0();
