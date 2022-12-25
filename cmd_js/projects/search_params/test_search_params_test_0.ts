@@ -6,7 +6,8 @@ import {ParseUrlParams} from "./ParseUrlParams.js";
 
 export function test_search_params_test_0() {
 	function black_box<T>(v:T) {return v;}
-	const vv=create_from_parse(url_test_value_ytimg_vi_jpg);
+	const str=url_test_value_ytimg_vi_jpg;
+	const vv=create_from_parse(str);
 	type ru=Decay<ParseUrlParams<typeof vv['search']>>;
 	let res_a=make_search_params(vv.search);
 	let ux:ru=black_box<ru>(res_a);
@@ -20,8 +21,9 @@ export function test_search_params_test_0() {
 	type decay_t=Decay<typeof res_a>;
 	let res_d: {sqp: any;rs: any}=res_a;
 	let res:decay_t=res_d;
+	console.log(new URL(str));
 	if('path' in vv) {
-		console.log('vv path', vv.path);
+		console.log('vv path', vv.path,new URL(str));
 	}
 	console.log(vv.pathname,res);
 }
