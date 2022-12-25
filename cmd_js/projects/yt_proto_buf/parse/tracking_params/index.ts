@@ -1,10 +1,11 @@
+import {resolve} from "path";
 import {
 	default as protobufjs,
 } from "protobufjs";
 import {into_type} from "../support/into_type.js";
 import {get_token_data} from "./get_token_data.js";
 import {get_token_data_from_file} from "./get_token_data_from_file.js";
-import {r} from "./r.js";
+import {r, __dirname} from "./r.js";
 
 function run() {
 	parse_types();
@@ -30,7 +31,7 @@ export async function parse_types(): Promise<void> {
 }
 
 async function load_types() {
-	let root=await protobufjs.load(r(`protobuf/tracking_params.proto`));
+	let root=await protobufjs.load(resolve(__dirname,`protobuf/tracking_params.proto`));
 	const token_buffer=await get_token_data_from_file(r(`binary/tracking_params.bin`));
 	return {root,token_buffer};
 }
