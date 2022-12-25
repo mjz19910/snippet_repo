@@ -4,7 +4,7 @@ import {
 	Root,
 } from "protobufjs";
 import {into_type} from "../support/into_type.js";
-import {init_import_inject} from "./init_import_inject";
+import {init_import_inject} from "../support/init_import_inject.js";
 import {r} from "./r.js";
 
 function run() {
