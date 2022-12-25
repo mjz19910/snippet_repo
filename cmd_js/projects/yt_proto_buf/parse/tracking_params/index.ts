@@ -150,10 +150,8 @@ class MyReader extends protobufjs.Reader {
 }
 
 class MyUnkType extends protobufjs.Type {
-	state: any;
-	constructor(v: string,opt: {[k: string]: any;}|undefined,state: MyState) {
-		super(v,opt);
-		this.state=state;
+	constructor(name: string,options?: {[k: string]: any;}) {
+		super(name,options);
 	}
 	_fieldsArray!: protobufjs.Field[];
 	override decode(r: MyReader,l?: number) {
