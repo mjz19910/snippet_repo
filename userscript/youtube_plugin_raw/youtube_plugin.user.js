@@ -2249,14 +2249,14 @@ async function async_plugin_init(event) {
 			x: {
 				if(ytd_watch_flexy) break x;
 				if(!ytd_page_manager) break x;
-				let current_page_element=ytd_page_manager.getCurrentPage();
-				if(!current_page_element) break x;
-				if(!current_page_element.__has_theater_handler_plugin) {
-					current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-					current_page_element.__has_theater_handler_plugin=true;
+				let page_elem=ytd_page_manager.getCurrentPage();
+				if(!page_elem) break x;
+				if(!page_elem.__has_theater_handler_plugin) {
+					page_elem.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+					page_elem.__has_theater_handler_plugin=true;
 				}
-				if(yt_debug_enabled) console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-				if(current_page_element.tagName.toLowerCase()!="ytd-watch-flexy") {
+				if(yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
+				if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
 					/** @type {Promise<void>} */
 					let promise=new Promise((accept) => {
 						get_ytd_page_manager().addEventListener(
@@ -2269,7 +2269,7 @@ async function async_plugin_init(event) {
 					break x;
 				}
 				found_element_count++;
-				on_ytd_watch_flexy(current_page_element);
+				on_ytd_watch_flexy(page_elem);
 			}
 			// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 			// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player",detail,port});
