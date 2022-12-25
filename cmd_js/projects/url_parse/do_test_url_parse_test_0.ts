@@ -1,6 +1,6 @@
-import {create_from_parse} from "./create_from_parse";
-import {Decay} from "../Decay";
-import {ParseUrlParams} from "../search_params/ParseUrlParams";
+import {create_from_parse} from "./create_from_parse.js";
+import {Decay} from "./Decay.js";
+import {ParseUrlParams} from "../search_params/ParseUrlParams.js";
 
 export function do_test_url_parse_test_0() {
 	let pagead=new class {

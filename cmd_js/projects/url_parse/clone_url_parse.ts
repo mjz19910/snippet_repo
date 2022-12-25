@@ -1,4 +1,4 @@
-import {UrlParseOpt} from "./UrlParse";
+import {UrlParseOpt} from "./UrlParse.js";
 import {UrlParseErr} from "./UrlParseErr.js";
 
 
