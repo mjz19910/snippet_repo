@@ -10,6 +10,5 @@ build/
 javascript_build/
 typescript_build/
 dist/
-.ts-node/
 errors.txt
 *.hidden.*
