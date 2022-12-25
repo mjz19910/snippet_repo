@@ -66,33 +66,32 @@ type MyState={
 	my_console: MyConsole;
 };
 
-class MyReader {
-	reader: protobufjs.Reader;
+class MyReader extends protobufjs.Reader {
 	unk_type: MyUnkType;
-	constructor(buffer: Uint8Array,unk_type: MyUnkType) {
-		this.reader=new protobufjs.Reader(buffer);
+	my_console: MyConsole;
+	constructor(buffer: Uint8Array,unk_type: MyUnkType,my_console: MyConsole) {
+		super(buffer);
 		this.unk_type=unk_type;
+		this.my_console=my_console;
 	}
-	static create(buffer: Uint8Array,unk_type: MyUnkType) {
-		return new MyReader(buffer,unk_type);
+	static createEx(buffer: Uint8Array,unk_type: MyUnkType,my_console: MyConsole) {
+		return new MyReader(buffer,unk_type,my_console);
 	}
-	skip(length?: number) {
-		this.reader.skip(length);
-		return this;
+	
+	static createFrom(buffer: Uint8Array,other: MyReader) {
+		return this.createEx(buffer,other.unk_type,other.my_console);
 	}
-	uint32() {
-		return this.reader.uint32();
-	}
-	skipTypeEx(state: MyState,fieldId: number,wireType: number) {
-		let console=state.my_console;
+	fieldId: number|null=null;
+	skipTypeEx(wireType: number) {
+		let console=this.my_console;
 		let prev_pad;
 		switch(wireType) {
 			case 0:
-				console.pad_log("VarInt: \"field %o\": ?",fieldId);
+				console.pad_log("VarInt: \"field %o\": ?",this.fieldId);
 				this.skip();
 				break;
 			case 1:
-				console.pad_log("Fixed64: \"field %o\": ?",fieldId);
+				console.pad_log("Fixed64: \"field %o\": ?",this.fieldId);
 				this.skip(8);
 				break;
 			case 2:
@@ -104,7 +103,7 @@ class MyReader {
 					try {
 						console.disabled=true;
 						pad+=pad_with;
-						this.unk_type.decodeEx(MyReader.create(this.reader.buf.subarray(this.reader.pos),this.unk_type),size);
+						this.unk_type.decodeEx(MyReader.createFrom(this.buf.subarray(this.pos),this),size);
 					} catch {
 						has_error=true;
 					} finally {
@@ -113,13 +112,13 @@ class MyReader {
 					}
 				}
 				if(has_error) {
-					let arr=this.reader.buf.subarray(this.reader.pos,this.reader.pos+size);
-					console.pad_log("L-delim: \"field %o: (len=%o)\": %o",fieldId,size,arr.toString());
+					let arr=this.buf.subarray(this.pos,this.pos+size);
+					console.pad_log("L-delim: \"field %o: (len=%o)\": %o",this.fieldId,size,arr.toString());
 				} else if(size>0) {
-					console.pad_log("L-delim: \"field %o: (len=%o)\": {",fieldId,size);
+					console.pad_log("L-delim: \"field %o: (len=%o)\": {",this.fieldId,size);
 					let pad_start=pad;
 					pad+=pad_with;
-					this.unk_type.decodeEx(MyReader.create(this.reader.buf.subarray(this.reader.pos),this.unk_type),size);
+					this.unk_type.decodeEx(MyReader.createFrom(this.buf.subarray(this.pos),this));
 					pad=pad_start;
 					console.pad_log("}");
 				}
@@ -131,19 +130,20 @@ class MyReader {
 				pad+=pad_with;
 				let raw_wire_type;
 				while((wireType=(raw_wire_type=this.uint32())&7)!==4) {
-					this.skipTypeEx(state,raw_wire_type>>3,wireType);
+					this.fieldId=raw_wire_type>>3;
+					this.skipTypeEx(wireType);
 				}
 				pad=prev_pad;
 				console.pad_log("}");
 				break;
 			case 5:
-				console.pad_log("\"field %o: 32-Bit\": ?",fieldId);
+				console.pad_log("\"field %o: 32-Bit\": ?",this.fieldId);
 				this.skip(4);
 				break;
 
 			/* istanbul ignore next */
 			default:
-				throw Error("invalid wire type "+wireType+" at offset "+this.reader.pos);
+				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
 		}
 	}
 }
@@ -156,12 +156,13 @@ class MyUnkType extends protobufjs.Type {
 	}
 	_fieldsArray!: protobufjs.Field[];
 	decodeEx(r: MyReader,l?: number) {
-		var c=l===undefined? r.reader.len:r.reader.pos+l,m=(new this.ctor) as protobufjs.Message<{}>;
-		while(r.reader.pos<c) {
+		var c=l===undefined? r.len:r.pos+l,m=(new this.ctor) as protobufjs.Message<{}>;
+		while(r.pos<c) {
 			var t=r.uint32();
 			switch(t>>>3) {
 				default:
-					r.skipTypeEx(this.state,t>>3,t&7);
+					r.fieldId=t>>3;
+					r.skipTypeEx(t&7);
 					break;
 			}
 		}
