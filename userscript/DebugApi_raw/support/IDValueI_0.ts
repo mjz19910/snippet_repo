@@ -1,5 +1,3 @@
-// ts exports to js
-
 export class IDValue_0 {
 	set_arr_T<T extends {}>(arr: T[]) {
 		if(arr.length===0)
@@ -39,5 +37,3 @@ export class IDValue_0 {
 		this.stats_win=0;
 	}
 }
-
-export {type Holder as IDValue_0_H} from "../__global.js";
