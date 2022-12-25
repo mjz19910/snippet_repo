@@ -2,11 +2,10 @@ import {RendererContentItemDef} from "./support/yt_api/RendererContentItemDef";
 import {MenuServiceItem} from "./support/yt_api/MenuServiceItem.js";
 import {SavedData} from "./youtube_plugin.user.js";
 import {SectionItemDef} from "./support/yt_api/SectionItemDef";
-import {WatchEndpoint} from "./support/yt_api/WatchEndpoint.js";
-import {OpenPopupActionH} from "./support/yt_api/OpenPopupActionH.js";
 import {MenuRendererH} from "./support/yt_api/MenuRendererH.js";
 import {DialogPopupTag} from "./support/yt_api/DialogPopupTag";
 import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererContentDef";
+import {NavigationEndpoint} from "./support/yt_api/NavigationEndpoint.js";
 
 // YtdPageManagerElement
 declare global {
@@ -267,31 +266,7 @@ export interface AddToPlaylistServiceEndpointH {
 	addToPlaylistServiceEndpoint: {};
 };
 
-export interface FeedbackEndpointH {
-	feedbackEndpoint: {};
-};
 
-export interface GetReportFormEndpointH {
-	getReportFormEndpoint: {};
-};
-
-type TrackedCommandMetadataH={
-	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
-};
-type WatchEndpointH={
-	watchEndpoint: WatchEndpoint;
-};
-
-type BrowseEndpointH={
-	browseEndpoint: BrowseEndpoint;
-};
-
-type NavigationEndpoint=TrackedCommandMetadataH|OpenPopupActionH|WatchEndpointH|BrowseEndpointH;
-type BrowseEndpoint={
-	browseId: string;
-	canonicalBaseUrl: string;
-};
 type TextRun={
 	text: string;
 	navigationEndpoint?: NavigationEndpoint;
