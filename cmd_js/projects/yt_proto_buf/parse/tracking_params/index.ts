@@ -20,7 +20,7 @@ export async function parse_types(): Promise<void> {
 }
 async function useTypeA(root: Root,token_buffer: Buffer) {
 	let buf_type=root.lookupType("A");
-	let message=buf_type.decode(token_buffer.subarray(2));
+	let message=buf_type.decode(token_buffer);
 	let u_obj=buf_type.toObject(message,{
 		longs: Number,
 		arrays: true,

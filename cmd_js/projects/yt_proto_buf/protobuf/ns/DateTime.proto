@@ -1,0 +1,7 @@
+package date_time;
+
+message DateTime {
+	required uint64 ts=1;
+	required fixed32 field_02=2;
+	required fixed32 field_03=3;
+}
