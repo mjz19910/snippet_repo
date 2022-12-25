@@ -152,12 +152,11 @@ export async function parse_types(): Promise<void> {
 	if(myArgs[0]==="--input") {
 		my_console.pad_log("message Type.U {");
 		let reset=increase_padding();
-		let type=new protobufjs.Type("U");
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=protobufjs.Reader.create(token_buffer);
 		let ss=reader.uint32();
 		my_console.pad_log("%o",ss);
-		type.decode(token_buffer);
+		unk_type.decode(token_buffer);
 		reset();
 		my_console.pad_log("}");
 		return;
