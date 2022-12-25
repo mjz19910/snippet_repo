@@ -2765,8 +2765,10 @@ Object.prototype.__ia_excludeKeysS = function(this,ex_keys_str) {
   return res;
 };
 
-let res=({a:4,test:3,b:1}).__ia_excludeKeysS("test,a");
-res;
+let __res_ia_eks=({a:4,test:3,b:1}).__ia_excludeKeysS("test,a,b");
+/** @type {{}} */
+let __eks_eo=__res_ia_eks;
+__eks_eo;
 
 function get_exports() {
 	return exports;
