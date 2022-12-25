@@ -1985,6 +1985,7 @@ function on_ytd_app(element) {
 	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
 	ytd_app.init_inject=YtdAppElement.prototype.init_inject;
+	ytd_app.init_inject();
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		// might have a new video element from page type change
 		setTimeout(function() {
