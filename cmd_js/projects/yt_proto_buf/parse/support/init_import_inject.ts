@@ -17,15 +17,6 @@ class MyConsole {
 	log(...data: any[]) {
 		console.log(...data);
 	}
-	unpause(scope: () => void) {
-		if(!this.paused) {
-			scope();
-			return;
-		}
-		this.paused=false;
-		scope();
-		this.paused=true;
-	}
 	pad_log(message: string,...data: any[]) {
 		if(this.paused) {
 			this.cache.push([pad,message,data]);
