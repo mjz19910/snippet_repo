@@ -1,4 +1,4 @@
-import {ContinuationItemRendererH} from "./support/yt_api/ContinuationItemRendererHolder.js";
-import {CompactVideoRendererH} from "./support/yt_api/CompactVideoRendererHolder.js";
+import {ContinuationItemRendererH} from "./support/yt_api/ContinuationItemRendererH.js";
+import {CompactVideoRendererH} from "./support/yt_api/CompactVideoRendererH.js";
 
 export type WatchNextItem=CompactVideoRendererH|ContinuationItemRendererH;

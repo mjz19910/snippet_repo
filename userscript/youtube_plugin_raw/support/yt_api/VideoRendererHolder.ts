@@ -1,6 +1,6 @@
 import {VideoRenderer} from "./VideoRenderer";
 
 
-export type VideoRendererHolder={
+export type VideoRendererH={
 	videoRenderer: VideoRenderer;
 };

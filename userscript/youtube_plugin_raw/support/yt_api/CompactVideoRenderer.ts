@@ -5,9 +5,9 @@ import {NavigationEndpoint} from "./NavigationEndpoint";
 import {RichThumbnail} from "./RichThumbnail";
 import {SimpleText} from "./SimpleText";
 import {TextRuns} from "./TextRuns";
-import {ThumbnailH} from "./ThumbnailHolder";
+import {ThumbnailH} from "./ThumbnailHolder.js";
 import {ThumbnailOverlay} from "./ThumbnailOverlay";
-import {ThumbnailsH} from "./ThumbnailsHolder";
+import {ThumbnailsH} from "./ThumbnailsHolder.js";
 
 export type CompactVideoRenderer={
 	accessibility: Accessibility;

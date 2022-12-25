@@ -1,4 +1,5 @@
-import {CompactVideoRendererH} from "./support/yt_api/CompactVideoRendererHolder.js";
+import {RendererContentItem} from "./RendererContentItem.js";
+import {CompactVideoRendererH} from "./support/yt_api/CompactVideoRendererH.js";
 
 // spell:disable
 

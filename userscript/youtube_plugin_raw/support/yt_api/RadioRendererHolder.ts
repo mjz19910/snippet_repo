@@ -1,6 +1,6 @@
 import {RadioRenderer} from "./RadioRenderer";
 
 
-export type RadioRendererHolder={
+export type RadioRendererH={
 	radioRenderer: RadioRenderer;
 };
