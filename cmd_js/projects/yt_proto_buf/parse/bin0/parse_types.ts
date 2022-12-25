@@ -12,4 +12,3 @@ export async function parse_types(imp:Bin0Imports): Promise<void> {
 	let obj=await useTypeA(proto_A_type);
 	useTypeT1A(root,obj);
 }
-
