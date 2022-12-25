@@ -1,5 +1,6 @@
 import {ServiceEndpoint} from "./ServiceEndpoint";
-import {Icon,TextRuns} from "./__global";
+import {TextRuns} from "./TextRuns";
+import {Icon} from "./Icon";
 
 export type MenuServiceItemRenderer={
 	icon: Icon;

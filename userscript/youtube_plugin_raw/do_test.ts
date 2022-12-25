@@ -1,4 +1,4 @@
-import {CompactVideoRendererHolder} from "./support/yt_api/__global";
+import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder";
 
 // spell:disable
 

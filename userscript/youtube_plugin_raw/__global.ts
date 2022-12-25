@@ -5,7 +5,8 @@ import {SectionItemDef} from "./support/yt_api/SectionItemDef";
 import {WatchEndpoint} from "./support/yt_api/WatchEndpoint.js";
 import {OpenPopupActionH} from "./support/yt_api/OpenPopupActionH.js";
 import {MenuRendererH} from "./support/yt_api/MenuRendererH.js";
-import {DialogPopupTag, RichItemRendererContentDef} from "./support/yt_api/__global.js";
+import {DialogPopupTag} from "./support/yt_api/DialogPopupTag";
+import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererContentDef";
 
 // YtdPageManagerElement
 declare global {
