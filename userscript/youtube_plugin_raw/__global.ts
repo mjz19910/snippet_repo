@@ -5,6 +5,20 @@ import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererConte
 import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
 import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder.js";
 
+class HistoryManager {
+	replaceState(a: any,b: any,c: any) {
+		a;b;c;
+	}
+}
+
+export abstract class YtdAppElementBase_ extends HTMLElement {
+	abstract $: {
+		historyManager: HistoryManager
+	}
+}
+declare global {
+	var YtdAppElementBase: typeof YtdAppElementBase_|undefined;
+}
 declare global {type Split<S extends string, D extends string> =
     string extends S ? string[] :
     S extends '' ? [] :
