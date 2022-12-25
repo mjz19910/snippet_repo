@@ -1,4 +1,3 @@
-import captureStackTrace from "../../../typescript/src/capture-stack-trace.js";
 import {Runner} from "../support/Runner.js";
 
 /* spell:words konggames
