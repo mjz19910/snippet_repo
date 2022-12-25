@@ -15,6 +15,7 @@ export const InjectApiHolder=_DebugApiHolders['InjectApi'];
 // saved_instances
 declare global {
 	interface InjectApi {
+		iterate_tracking_params?: () => void;
 		saved_instances?: SavedInstanceType[];
 	}
 }
