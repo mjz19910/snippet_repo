@@ -1,4 +1,4 @@
-import {MenuRenderers} from "./MenuRenderers";
+import {MenuRendererH} from "./MenuRendererH";
 import {MenuServiceItem} from "./MenuServiceItem";
 import {OpenPopupActionH} from "./OpenPopupActionH";
 import {RendererContentItem} from "./RendererContentItem";
@@ -526,7 +526,7 @@ type CompactVideoRenderer={
 	channelThumbnail: ThumbnailsHolder;
 	lengthText: SimpleText;
 	longBylineText: TextRuns;
-	menu: MenuRenderers;
+	menu: MenuRendererH;
 	navigationEndpoint: NavigationEndpoint;
 	publishedTimeText: SimpleText;
 	richThumbnail?: RichThumbnail;
