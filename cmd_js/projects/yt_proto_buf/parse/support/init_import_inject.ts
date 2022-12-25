@@ -67,19 +67,17 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 	let o=reader;
 	if(size>0) {
 		let has_error=false;
-		console.pause(() => {
-			let prev_pad=pad;
-			try {
-				pad+=pad_with;
-				console.disabled=true;
-				unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
-				console.disabled=false;
-			} catch {
-				has_error=true;
-			} finally {
-				pad=prev_pad;
-			}
-		});
+		let prev_pad=pad;
+		try {
+			pad+=pad_with;
+			console.disabled=true;
+			unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
+			console.disabled=false;
+		} catch {
+			has_error=true;
+		} finally {
+			pad=prev_pad;
+		}
 		if(has_error) {
 			console.pad_log("\"field %o: L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
 		} else {
