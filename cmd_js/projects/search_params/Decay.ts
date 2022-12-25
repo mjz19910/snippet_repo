@@ -1,5 +1,3 @@
-export type Decay<T>=Extract<{
+export type Decay<T>={
 	[U in keyof T]: T[U];
-}|{},{
-	[U in keyof T]: T[U];
-}>;
+};
