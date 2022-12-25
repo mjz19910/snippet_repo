@@ -1898,8 +1898,8 @@ class DomObserver extends CustomEventTarget {
 			for(let x of list) {
 				if(x.active) x.resolver();
 			}
-			if(this.port_to_resolvers_map.get(port)?.[0]?.active===false) {
-				this.port_to_resolvers_map.get(port)?.shift();
+			if(list[0].active===false) {
+				list.shift();
 			}
 		};
 	}
