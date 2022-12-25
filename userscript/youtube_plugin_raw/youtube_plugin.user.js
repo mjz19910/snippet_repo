@@ -75,6 +75,9 @@ if(typeof window==='undefined') {
 				element._setup(tagName);
 				return element;
 			}
+			getElementsByTagNameNS() {
+				return [];
+			}
 		}
 		class Element {
 			get style() {
@@ -118,7 +121,77 @@ if(typeof window==='undefined') {
 	document=window.document;
 	localStorage=window.localStorage;
 	HTMLDivElement=window.HTMLDivElement;
-	top=null;
+	top=window;
+	let r_window=window;
+	{
+		/** @type {{[U in keyof any]:any}} */
+		let window=t_;
+		class AudioNode {
+			/** @type {[AudioNode,number?,number?][]} */
+			destinations=[];
+			//  connect(destinationNode: AudioNode, output?: number, input?: number): AudioNode;
+			/** @arg {AudioNode} destinationNode @arg {number} [output] @arg {number} [input] */
+			connect(destinationNode, output, input) {
+				this.destinations.push([destinationNode,output,input]);
+			}
+		}
+		class CompressorParams {
+			knee={};
+			release={};
+			attack={};
+			ratio={};
+			threshold={};
+		}
+		class DynamicsCompressorNode extends AudioNode {
+			/** @arg {AudioContext} ctx */
+			constructor(ctx) {
+				super();
+				this.context=ctx;
+				this.p=new CompressorParams;
+			}
+			get knee() {
+				if(this.p.knee) return this.p.knee;
+				this.p.knee={};
+				return this.p.knee;
+			}
+			get attack() {
+				if(this.p.attack) return this.p.attack;
+				this.p.attack={};
+				return this.p.attack;
+			}
+			get release() {
+				if(this.p.release) return this.p.release;
+				this.p.release={};
+				return this.p.release;
+			}
+			get ratio() {
+				if(this.p.ratio) return this.p.ratio;
+				this.p.ratio={};
+				return this.p.ratio;
+			}
+			get threshold() {
+				if(this.p.threshold) return this.p.threshold;
+				this.p.threshold={};
+				return this.p.threshold;
+			}
+		}
+		class Gain extends AudioNode {
+			constructor(ctx) {
+				super();
+				this.ctx=ctx;
+			}
+		}
+		class AudioContext {
+			createGain() {
+				return new Gain(this);
+			}
+			createDynamicsCompressor() {
+				return new DynamicsCompressorNode(this);
+			}
+		}
+		window.AudioContext=AudioContext;
+	}
+	AudioContext=window.AudioContext;
 }
 
 
@@ -2296,7 +2369,156 @@ function ui_css_toggle_click_handler() {
 	}
 }
 
-with_ytd_scope();
+/** @arg {HTMLElement} element */
+function on_ytd_app(element) {
+	const element_id="ytd-app";
+	if(yt_debug_enabled) console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	window.ytd_app=element;
+	ytd_app=YtdAppElement.cast(element);
+	ytd_app.addEventListener("yt-navigate-finish",function(event) {
+		// might have a new video element from page type change
+		setTimeout(function() {
+			do_find_video();
+		},80);
+		let real_event=YTNavigateFinishEvent.cast(event);
+		for(let handler of on_yt_navigate_finish) {
+			handler(real_event);
+		}
+	});
+	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
+	if(document.visibilityState==="visible") {
+		ytd_app.app_is_visible=1;
+		if(vis_imm) {
+			fire_on_visibility_change_restart_video_playback();
+			vis_imm=false;
+		}
+	} else {
+		ytd_app.app_is_visible=0;
+	}
+	ytd_app.ytp_click_cint=setInterval(() => {
+		if(!is_watch_page_active()||!ytd_app) return;
+		if(!ytd_app.app_is_visible) {
+			vis_imm=true;
+			return;
+		}
+	},15*60*1000);
+	document.addEventListener("visibilitychange",function() {
+		if(!ytd_app) throw new Error("No ytd-app");
+		if(!is_watch_page_active()) return;
+		if(document.visibilityState==="visible") {
+			ytd_app.app_is_visible=1;
+			if(vis_imm) {
+				fire_on_visibility_change_restart_video_playback();
+				vis_imm=false;
+			}
+		} else {
+			ytd_app.app_is_visible=0;
+		}
+	});
+}
+
+let found_element_count=0;
+let expected_element_count=6;
+/** @param {CustomEventType} event */
+async function async_plugin_init(event) {
+	let cur_count=1;
+	let obj=dom_observer;
+	let iter_count=0;
+	while(true) {
+		iter_count++;
+		if(cur_count>16) {
+			await new Promise((soon) => setTimeout(soon,40));
+			cur_count=0;
+		}
+		if(!audio_gain_controller) {
+			audio_gain_controller=new AudioGainController;
+			AudioGainController.attach_instance();
+		}
+		VolumeRange.create_if_needed();
+		cur_count++;
+		// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
+		x: {
+			if(ytd_app) break x;
+			const target_element=get_html_elements(document,"ytd-app")[0];
+			if(!target_element) break x;
+			found_element_count++;
+			on_ytd_app(target_element);
+		}
+		// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
+		// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
+		x: {
+			if(ytd_page_manager) break x;
+			const target_element=get_html_elements(document,"ytd-page-manager")[0];
+			if(!target_element) break x;
+			found_element_count++;
+			on_ytd_page_manager(target_element);
+		}
+		// END(ytd-page-manager): obj.dispatchEvent({type: "ytd-page-manager",detail,port});
+		// BEGIN(yt-playlist-manager): obj.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
+		x: {
+			if(yt_playlist_manager) break x;
+			const target_element=get_html_elements(document,"yt-playlist-manager")[0];
+			if(!target_element) break x;
+			found_element_count++;
+			on_yt_playlist_manager(target_element);
+		}
+		// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
+		x: {
+			if(ytd_watch_flexy) break x;
+			if(!ytd_page_manager) break x;
+			let current_page_element=ytd_page_manager.getCurrentPage();
+			if(!current_page_element) break x;
+			if(!current_page_element.__has_theater_handler_plugin) {
+				current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+				current_page_element.__has_theater_handler_plugin=true;
+			}
+			if(yt_debug_enabled) console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
+			if(current_page_element.tagName!="YTD-WATCH-FLEXY") {
+				/** @type {Promise<void>} */
+				let promise=new Promise((accept) => {
+					get_ytd_page_manager().addEventListener(
+						"yt-page-type-changed",
+						() => accept(),
+						{once: true}
+					);
+				});
+				await promise;
+				break x;
+			}
+			found_element_count++;
+			on_ytd_watch_flexy(current_page_element);
+		}
+		// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
+		// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player",detail,port});
+		x: {
+			if(ytd_player) break x;
+			if(!ytd_watch_flexy) break x;
+			const target_element=get_html_elements(ytd_watch_flexy,"ytd-player")[0];
+			if(!target_element) break x;
+			found_element_count++;
+			on_ytd_player(target_element);
+		}
+		// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
+		// BEGIN(video): obj.dispatchEvent({type: "find-video",detail,port});
+		do_find_video();
+		// END(video): obj.dispatchEvent({type: "video",detail,port});
+		await obj.wait_for_port(event.port,cur_count);
+		if(found_element_count>=expected_element_count) {
+			obj.dispatchEvent({...event,type: "plugin-activate"});
+			break;
+		}
+		if(iter_count>1024) {
+			console.log("wait for plugin ready timeout");
+			break;
+		}
+		if(!box_map.has("video-list")) continue;
+		if(ytd_page_manager===null) continue;
+		obj.dispatchEvent({...event,type: "plugin-activate"});
+	}
+}
+dom_observer.addEventListener("async-plugin-init",async_plugin_init);
+async_plugin_init.__debug=false;
 
 /** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 function get_new_video_element_list(element_list,list_box) {
