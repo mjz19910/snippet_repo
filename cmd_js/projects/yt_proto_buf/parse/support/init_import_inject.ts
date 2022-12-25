@@ -67,14 +67,6 @@ class MyConsole {
 			this.pad_log(pad+message,...data);
 		}
 	}
-	clear_cache() {
-		let scope=this.start_stack.at(-1);
-		if(scope) {
-			this.cache.length=scope[1];
-		} else {
-			this.cache.length=0;
-		}
-	}
 }
 export const my_console=new MyConsole;
 
