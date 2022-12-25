@@ -1935,16 +1935,19 @@ let dom_observer=new DomObserver;
 inject_api_yt.dom_observer=dom_observer;
 
 
-class YtdPageManagerElement extends HTMLElement {
-	/** @returns {import("./support/yt_api/_abc/_yt/YtCurrentPage.js").YtCurrentPage} */
+/** @typedef {import("./YtCurrentPage.js").YtCurrentPage} */
+/** @typedef {import("./YtdPageManagerElementInterface.js").YtdPageManagerElementInterface} YtdPageManagerElementInterface */
+/** @implements {YtdPageManagerElementInterface} */
+class YtdPageManagerElement_x extends HTMLElement {
+	/** @returns {import("./YtCurrentPage.js").YtCurrentPage} */
 	getCurrentPage() {throw 1;}
 }
 
-inject_api_yt.playlist_arr??=[];
+window.playlist_arr??=[];
 /**@type {string[]} */
 let playlist_arr=inject_api_yt.playlist_arr;
 /**
- * @type {YtdPageManagerElement|null}
+ * @type {YtdPageManagerElement_x|null}
  */
 let ytd_page_manager=null;
 
@@ -1952,19 +1955,12 @@ function has_ytd_page_mgr() {
 	return ytd_page_manager!==null;
 }
 
-/** @returns {YtdPageManagerElement}*/
+/** @returns {YtdPageManagerElement_x}*/
 function get_ytd_page_manager() {
 	if(ytd_page_manager!==null) {
 		return ytd_page_manager;
 	}
 	throw new Error("No ytd_page_manager");
-}
-/** @typedef {import("./YtCurrentPage.js").YtCurrentPage} */
-/** @typedef {import("./YtdPageManagerElementInterface.js").YtdPageManagerElementInterface} YtdPageManagerElementInterface */
-/** @implements {YtdPageManagerElementInterface} */
-class YtdPageManagerElement extends HTMLElement {
-	/** @returns {import("./YtCurrentPage.js").YtCurrentPage} */
-	getCurrentPage() {throw 1;}
 }
 
 /**
@@ -1974,7 +1970,7 @@ function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
 	if(yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	ytd_page_manager=any_c(element,YtdPageManagerElement);
+	ytd_page_manager=any_c(element,YtdPageManagerElement_x);
 	window.ytd_page_manager=element;
 }
 class YtdWatchFlexyElement extends HTMLElement {
