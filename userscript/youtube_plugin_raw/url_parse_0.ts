@@ -3,18 +3,24 @@ class ErrType<T> {
 	readonly parse="failed to parse url";
 	constructor(public err_path: T) {}
 }
-type UrlParseRes<T extends string,Host extends string,Protocol extends string,SearchT extends string,PathName extends string>={
+type UrlParseRes<
+	T extends string,
+	Host extends string,
+	Protocol extends string,
+	Search extends string,
+	Pathname extends string
+>={
 	hash: "";
 	host: Host,
 	hostname: Host,
-	href: `${Protocol}//${Host}/${PathName}?${SearchT}`;
+	href: `${Protocol}//${Host}/${Pathname}?${Search}`;
 	origin: `${Protocol}//${Host}`,
 	password: "";
-	path: `/${PathName}`;
-	pathname: `/${PathName}`;
+	path: `/${Pathname}`;
+	pathname: `/${Pathname}`;
 	port: "";
 	protocol: Protocol,
-	search: `?${SearchT}`;
+	search: `?${Search}`;
 	searchParams: URLSearchParams;
 	toJSON(): T;
 	username: "";
