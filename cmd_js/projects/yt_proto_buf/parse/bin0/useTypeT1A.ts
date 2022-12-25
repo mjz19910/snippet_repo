@@ -4,7 +4,8 @@ import {decode_as_type} from './decode_as_type.js';
 import {DesType} from './DesType.js';
 import {extract_items} from './extract_items.js';
 import {get_token_data} from './get_token_data.js';
-import {ProtoBufTypeA,ProtoBufTypeT1A} from './parse_types';
+import {ProtoBufTypeA} from './ProtoBufTypeA.js';
+import {ProtoBufTypeT1A} from './ProtoBufTypeT1A.js';
 
 
 export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
