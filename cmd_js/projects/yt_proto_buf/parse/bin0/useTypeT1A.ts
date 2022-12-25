@@ -4,8 +4,8 @@ import {decode_as_type} from './decode_as_type.js';
 import {DesType} from './DesType.js';
 import {extract_items} from './extract_items.js';
 import {get_token_data} from './get_token_data.js';
-import {ProtoBufTypeA} from './ProtoBufTypeA.js';
-import {ProtoBufTypeT1A} from './ProtoBufTypeT1A.js';
+import {ProtoBufTypeA,ProtoBufTypeT1A} from './parse_types';
+
 
 export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let token_binary=get_token_data(obj.token1);
@@ -16,5 +16,5 @@ export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let description: DesType=tmp_data.data.description;
 	let items=extract_items(description);
 	console.log(items);
-	console.log("placeholder length",description.items[0].alt_6.length);
+	console.log(description.items[0]);
 }

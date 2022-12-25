@@ -2,17 +2,17 @@ import {r} from './r.js';
 import {as_base64_typeid} from './as_base64_typeid.js';
 import {readFile,writeFile} from 'fs/promises';
 import {Type} from 'protobufjs';
-import {into_type} from '../support/into_type.js';
-import {ProtoBufTypeA} from './ProtoBufTypeA.js';
-import {get_token_data} from './get_token_data.js';
+import {into_type} from './into_type.js';
+import {ProtoBufTypeA} from './parse_types';
 
 
 export async function useTypeA(proto_A_type: Type) {
 	let bin_file=await readFile(r("binary/bin0.txt"));
 	let token_enc=bin_file.toString();
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
-	const token_binary=get_token_data(base64_enc);
-	let id_arr=new Uint8Array(token_binary.subarray(0,4));
+	const text=atob(base64_enc);
+	const token_binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
+	let id_arr=new Uint8Array(token_binary.slice(0,4).buffer);
 	console.log('typeid=%o for A',as_base64_typeid(id_arr,0));
 	let message=proto_A_type.decode(token_binary.subarray(4));
 	let untyped_obj=proto_A_type.toObject(message,{
