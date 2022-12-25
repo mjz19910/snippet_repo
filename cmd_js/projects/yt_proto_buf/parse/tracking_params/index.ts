@@ -156,7 +156,7 @@ export async function parse_types(): Promise<void> {
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=protobufjs.Reader.create(token_buffer);
 		let ss=reader.uint32();
-		console.log(ss);
+		my_console.pad_log("%o",ss);
 		type.decode(token_buffer);
 		reset();
 		my_console.pad_log("}");
