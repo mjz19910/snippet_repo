@@ -2,8 +2,8 @@
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/ducdat0507.github.io/ducdat0507.github.io.js
 */
-import {Runner} from "../../support/Runner.js";
-import {CustomInputMatcher} from "../../support/CustomInputMatcher.js";
+import {Runner} from "../support/Runner.js";
+import {CustomInputMatcher} from "../support/CustomInputMatcher.js";
 
 function main() {
 	let cur=new Runner;
