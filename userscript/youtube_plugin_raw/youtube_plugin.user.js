@@ -100,7 +100,14 @@ if(typeof window==='undefined') {
 		window.document=new Document;
 		class HTMLDivElement extends HTMLElement {}
 		window.HTMLDivElement=HTMLDivElement;
-		class History {}
+		class History {
+			pushState() {
+				console.log("history push state base");
+			}
+			replaceState() {
+				console.log("history replace state base");
+			}
+		}
 		window.history=new History;
 		history=window.history;
 		window.History=History;
@@ -111,6 +118,7 @@ if(typeof window==='undefined') {
 	document=window.document;
 	localStorage=window.localStorage;
 	HTMLDivElement=window.HTMLDivElement;
+	top=null;
 }
 
 
