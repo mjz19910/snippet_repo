@@ -1,4 +1,7 @@
-import {SavedData} from "./youtube_plugin.user.js";
+import {MenuRenderers} from "./MenuRenderers";
+import {MenuServiceItem} from "./MenuServiceItem";
+import {OpenPopupActionH} from "./OpenPopupActionH";
+import {WatchEndpoint} from "./WatchEndpoint";
 
 // YtdPageManagerElement
 declare global {
@@ -259,12 +262,9 @@ declare global {
 	};
 }
 
-// RichSectionRendererItem
-declare global {
-	type RichSectionRendererHolder={
-		richSectionRenderer: RichSectionRenderer;
-	};
-}
+type RichSectionRendererHolder={
+	richSectionRenderer: RichSectionRenderer;
+};
 
 
 interface RichShelfRenderer {
@@ -573,37 +573,30 @@ type CompactPlaylistRendererHolder={
 	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
 
-// RendererContentItem
-declare global {
-	type RendererContentItem=
-		RichItemRendererHolder|
-		RichSectionRendererHolder|
-		CommentsHeaderRendererHolder|
-		CommentThreadRendererHolder|
-		ContinuationItemRendererHolder|
-		CompactVideoRendererHolder|
-		CompactPlaylistRendererHolder|
-		never;
-}
+export type RendererContentItem=
+	RichItemRendererHolder|
+	RichSectionRendererHolder|
+	CommentsHeaderRendererHolder|
+	CommentThreadRendererHolder|
+	ContinuationItemRendererHolder|
+	CompactVideoRendererHolder|
+	CompactPlaylistRendererHolder|
+	never;
 
-// RichGridRenderer
-declare global {
-	interface RichGridRenderer {
-		masthead: {
-			[str: string]: {}|undefined;
-			videoMastheadAdV3Renderer?: {};
-		};
-		contents: RendererContentItem[];
-	}
-}
 
-// ResState
-declare global {
-	type ResState={
-		active: boolean;
-		resolver: () => void;
+export interface RichGridRenderer {
+	masthead: {
+		[str: string]: {}|undefined;
+		videoMastheadAdV3Renderer?: {};
 	};
+	contents: RendererContentItem[];
 }
+
+
+export type ResState={
+	active: boolean;
+	resolver: () => void;
+};
 
 export {};
 
@@ -711,5 +704,3 @@ declare global {
 		PropertyHandler?: {};
 	}
 }
-
-export {};
