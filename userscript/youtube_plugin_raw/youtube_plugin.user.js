@@ -26,10 +26,10 @@ function any(x,u) {
 }
 var is_node_js=function is_node_js() {
 	return false;
-}
+};
 
 if(typeof window==='undefined') {
-	is_node_js=()=>true;
+	is_node_js=() => true;
 	/** @type {any} */
 	let t_=new EventTarget;
 	t_;
@@ -130,7 +130,7 @@ if(typeof window==='undefined') {
 			 * @param {{} | null} state
 			 */
 			pushState(state) {
-				this.history_list.push(this._state)
+				this.history_list.push(this._state);
 				this._state=state;
 				console.log("history push state base");
 			}
@@ -1916,7 +1916,11 @@ class DomObserver extends CustomEventTarget {
 				active: true,
 				resolver,
 			};
+			let res=this.port_to_resolvers_map.get(port);
 			if(this.port_to_resolvers_map.has(port)) {
+				if(!this.port_to_resolvers_map.get(port)?.[0].active&&res&&!res[0].active) {
+					this.port_to_resolvers_map.get(port)?.shift();
+				}
 				if(this.port_to_resolvers_map.has(port)) this.port_to_resolvers_map.get(port)?.push(state);
 			} else {
 				this.port_to_resolvers_map.set(port,[state]);
@@ -2302,7 +2306,7 @@ async function async_plugin_init(event) {
 		function dyn_import(x) {
 			return import(x);
 		}
-		let do_node_exit=false
+		let do_node_exit=false;
 		if(do_node_exit) {
 			/** @type {{exit:(v:number)=>void}} */
 			let process=await dyn_import("process");
