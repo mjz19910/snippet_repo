@@ -20,6 +20,9 @@ export function test_search_params_test_0() {
 	type decay_t=Decay<typeof res_a>;
 	let res_d: {sqp: any;rs: any}=res_a;
 	let res:decay_t=res_d;
+	if('path' in vv) {
+		console.log('vv path', vv.path);
+	}
 	console.log(vv.pathname,res);
 }
 
