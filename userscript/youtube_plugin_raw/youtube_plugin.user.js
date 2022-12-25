@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-console=typeof window==='undefined'?console:(()=>window.console)();
+console=typeof window==='undefined'? console:(() => window.console)();
 if(typeof window==='undefined') {
 	/** @type {any} */
 	let t_=new EventTarget;
@@ -122,7 +122,7 @@ if(typeof window==='undefined') {
 	localStorage=window.localStorage;
 	HTMLDivElement=window.HTMLDivElement;
 	top=window;
-	let r_window=window;r_window;
+	let r_window=window; r_window;
 	{
 		/** @type {{[U in keyof any]:any}} */
 		let window=t_;
@@ -131,7 +131,7 @@ if(typeof window==='undefined') {
 			destinations=[];
 			//  connect(destinationNode: AudioNode, output?: number, input?: number): AudioNode;
 			/** @arg {AudioNode} destinationNode @arg {number} [output] @arg {number} [input] */
-			connect(destinationNode, output, input) {
+			connect(destinationNode,output,input) {
 				this.destinations.push([destinationNode,output,input]);
 			}
 		}
@@ -268,6 +268,38 @@ class ShadyChildrenOfYtdApp {
 	masthead=new YtdMasthead;
 }
 
+class ProvideWithDesktopHistoryManagerToken {
+	browserHistory={
+		getState() {
+			return history.state;
+		},
+		/**
+		 * @param {any} a
+		 * @param {string} b
+		 * @param {string | URL | null | undefined} [c]
+		 */
+		replaceState(a,b,c) {
+			history.replaceState(a,b,c);
+		}
+	};
+	/** @arg {string} url */
+	replaceUrl(url) {
+		var b=this.browserHistory.getState();
+		console.log("rep url",url);
+		this.replaceState(b,url);
+	}
+	/** @arg {any} b @arg {string} url */
+	replaceState(b,url) {
+		{
+			let c=b;
+			if(0 <= Number(null == c ? void 0 : c.entryTime)) {
+				this.historyEntryTime = c.entryTime;
+			}
+		}
+		this.browserHistory.replaceState(b,url);
+	}
+}
+
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
@@ -282,6 +314,22 @@ class YtdAppElement extends HTMLElement {
 		return any_c(element,YtdAppElement);
 	}
 	__shady_children=new ShadyChildrenOfYtdApp;
+	init_inject() {
+		let cache={
+			/** @type {ProvideWithDesktopHistoryManagerToken|null} */
+			desktop_history:null,
+		};
+		/** @arg {string} url @arg {never[]} ex_args */
+		this.replaceUrl=function replaceUrl(url,...ex_args) {
+			if(!cache.desktop_history) {
+				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+			}
+			if(ex_args.length>0) {
+				console.log("replaceUrl api not followed",ex_args);
+			}
+			cache.desktop_history.replaceUrl(url);
+		};
+	}
 }
 
 class Seen {
@@ -1924,6 +1972,7 @@ function on_ytd_app(element) {
 	element_map.set(element_id,element);
 	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
+	ytd_app.init_inject=YtdAppElement.prototype.init_inject;
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		// might have a new video element from page type change
 		setTimeout(function() {
@@ -2619,31 +2668,31 @@ let audio_gain_controller=null;
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
  * @type {import("./__global.js").__ia_excludeKeysS}
  */
-Object.__ia_excludeKeysS = function(target,ex_keys_str) {
+Object.__ia_excludeKeysS=function(target,ex_keys_str) {
 	/** @type {any} */
-  let ex_keys_any=ex_keys_str.split(",");
+	let ex_keys_any=ex_keys_str.split(",");
 	/** @type {C} */
 	let ex_keys=ex_keys_any;
 	/** @type {C[number]} */
 	var key;
-  var rest, i = 0,
-    obj = Object.fromEntries(Object.entries(target));
-  for (; i < ex_keys.length; i++) {
-    {
-      key = ex_keys[i];
-      let {
-        [key]: _,
+	var rest,i=0,
+		obj=Object.fromEntries(Object.entries(target));
+	for(;i<ex_keys.length;i++) {
+		{
+			key=ex_keys[i];
+			let {
+				[key]: _,
 				...rest_
-      } = obj;
-      rest = rest_
-    };
-    obj = rest;
-  };
+			}=obj;
+			rest=rest_;
+		};
+		obj=rest;
+	};
 	/** @type {any} */
 	let res_any=obj;
 	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
 	let res=res_any;
-  return res;
+	return res;
 };
 
 class HistoryStateManager {
@@ -2694,8 +2743,8 @@ class HistoryStateManager {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('new state cs=%o', t.is_replacing_custom_state, remove_yt_data(new_state));
-					console.log("old state", remove_yt_data(t.cur_state));
+					console.log('new state cs=%o',t.is_replacing_custom_state,remove_yt_data(new_state));
+					console.log("old state",remove_yt_data(t.cur_state));
 				} else {
 					console.log('beg state',remove_yt_data(new_state),t.cur_state);
 				}
@@ -2722,10 +2771,10 @@ class HistoryStateManager {
 		if(!xx.get) throw 1;
 		let hist_state_getter=xx.get;
 		Object.defineProperty(History.prototype,"state",{
-			"configurable":true,
-			"enumerable":true,
-			"get": function () {
-				console.log('hist get',new Error)
+			"configurable": true,
+			"enumerable": true,
+			"get": function() {
+				console.log('hist get',new Error);
 				return hist_state_getter.call(this);
 			}
 		});
@@ -2977,7 +3026,7 @@ function main() {
 }
 main();
 
-let __res_ia_eks=Object.__ia_excludeKeysS({a:4,test:3,b:1},"test,a,b");
+let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
 /** @type {{}} */
 let __eks_eo=__res_ia_eks;
 __eks_eo;
