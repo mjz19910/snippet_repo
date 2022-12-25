@@ -2967,10 +2967,24 @@ function main() {
 }
 main();
 
-let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
-/** @type {{}} */
-let __eks_eo=__res_ia_eks;
-__eks_eo;
+/** @arg {string} ex_keys_str */
+Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
+  let ex_keys=ex_keys_str.split(",");
+  var key, rest, i = 0,
+    obj = Object.fromEntries(Object.entries(this));
+  for (; i < ex_keys.length; i++) {
+    {
+      key = ex_keys[i];
+      let {
+        [key]: _,
+				...rest_
+      } = obj;
+      rest = rest_
+    };
+    obj = rest;
+  };
+  return obj;
+};
 
 function get_exports() {
 	return exports;
