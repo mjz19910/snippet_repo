@@ -33,6 +33,7 @@ message t1_C {
 message t1_D {
 	optional bytes alt_0 = 1000;
 	optional bytes alt_2 = 1002;
+	optional bytes alt_6 = 1006;
 	oneof oneof_0 {
 		// t1_E video = 1000;
 		// Playlist playlist = 1002;
