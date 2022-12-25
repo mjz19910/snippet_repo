@@ -96,11 +96,11 @@ export class MyReader {
 		let prev_pad;
 		switch(wireType) {
 			case 0:
-				console.pad_log("\"field %o: VarInt\": ?",fieldId);
+				console.pad_log("VarInt: \"field %o\": ?",fieldId);
 				this.skip();
 				break;
 			case 1:
-				console.pad_log("\"field %o: 64-Bit\": ?",fieldId);
+				console.pad_log("Fixed64: \"field %o\": ?",fieldId);
 				this.skip(8);
 				break;
 			case 2:
@@ -122,9 +122,9 @@ export class MyReader {
 				}
 				if(has_error) {
 					let arr=this.reader.buf.subarray(this.reader.pos,this.reader.pos+size);
-					console.pad_log("\"field %o: L-delim (len=%o)\": %o",fieldId,size,arr.toString());
+					console.pad_log("L-delim: \"field %o: (len=%o)\": %o",fieldId,size,arr.toString());
 				} else if(size>0) {
-					console.pad_log("\"field %o: L-delim (len=%o)\": {",fieldId,size);
+					console.pad_log("L-delim: \"field %o: (len=%o)\": {",fieldId,size);
 					let pad_start=pad;
 					pad+=pad_with;
 					this.unk_type.decodeEx(MyReader.create(this.reader.buf.subarray(this.reader.pos),this.unk_type),size);
