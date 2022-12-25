@@ -1953,7 +1953,7 @@ window.playlist_arr??=[];
 /**@type {string[]} */
 let playlist_arr=window.playlist_arr;
 /**
- * @type {YtdPageManagerElement | null}
+ * @type {YtdPageManagerElement|null}
  */
 let ytd_page_manager=null;
 
