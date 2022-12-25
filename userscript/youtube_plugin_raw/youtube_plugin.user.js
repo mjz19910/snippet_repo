@@ -3243,7 +3243,11 @@ function destroy_env() {
 	message_channel.port2.close();
 	message_channel.port1.onmessage=null;
 	message_channel.port2.onmessage=null;
-	console.log(dom_observer);
+	console.log('events',dom_observer._events);
+	console.log("wait_ports",dom_observer.wait_ports.size);
+	console.log("port_to_resolvers_map",dom_observer.port_to_resolvers_map.size,"{");
+	console.log("  ",[...dom_observer.port_to_resolvers_map.values()]);
+	console.log("}");
 	eval(`()=>{
 		delete window;
 		delete navigator;
