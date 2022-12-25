@@ -47,204 +47,15 @@ export function dec_uint32(binary,idx) {
  * @param {Uint8Array} binary
  */
 export function do_token_decode(binary) {
-	/* istanbul ignore next */
-	/**
-	 * @param {Reader} reader
-	 * @param {number} [writeLength]
-	 */
-	function indexOutOfRange(reader,writeLength) {
-		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
-	}
-	class SimpleType {
-		/**
-		 * @param {any} [p]
-		 */
-		constructor(p) {
-			console.log(p);
-		}
-	}
-	/**
-	 * Constructs a new reader instance using the specified buffer.
-	 * @classdesc Wire format reader using `Uint8Array` if available, otherwise `Array`.
-	 * @constructor
-	 * @param {Uint8Array} buffer Buffer to read from
-	 */
-	class Reader {
-		/** @arg {Uint8Array} buffer */
-		constructor(buffer) {
-			/** @type {Uint8Array} */
-			this.buf=buffer;
-			/** @type {number} */
-			this.pos=0;
-			/** @type {number} */
-			this.len=buffer.length;
-			this.ctor=SimpleType;
-		}
-		bytes() {
-			var length=this.uint32(),start=this.pos,end=this.pos+length;
-
-			/* istanbul ignore if */
-			if(end>this.len)
-				throw indexOutOfRange(this,length);
-
-			this.pos+=length;
-			if(Array.isArray(this.buf)) // plain array
-				return this.buf.slice(start,end);
-			return start===end? new Uint8Array(0):this.buf.slice(start,end);
-		}
-		/**
-		 * Skips the specified number of bytes if specified, otherwise skips a varint.
-		 * @param {number} [length] Length if known, otherwise a varint is assumed
-		 * @returns {Reader} `this`
-		 */
-		skip(length) {
-			if(typeof length==="number") {
-				/* istanbul ignore if */
-				if(this.pos+length>this.len)
-					throw indexOutOfRange(this,length);
-				this.pos+=length;
-			} else {
-				do {
-					/* istanbul ignore if */
-					if(this.pos>=this.len)
-						throw indexOutOfRange(this);
-				} while(this.buf[this.pos++]&128);
-			}
-			return this;
-		}
-		/**
-		 * Skips the next element of the specified wire type.
-		 * @param {number} wireType Wire type received
-		 * @returns {Reader} `this`
-		 */
-		skipType(wireType) {
-			switch(wireType) {
-				case 0:
-					this.skip();
-					break;
-				case 1:
-					this.skip(8);
-					break;
-				case 2:
-					this.skip(this.uint32());
-					break;
-				case 3:
-					while((wireType=this.uint32()&7)!==4) {
-						this.skipType(wireType);
-					}
-					break;
-				case 5:
-					this.skip(4);
-					break;
-
-				/* istanbul ignore next */
-				default:
-					throw Error("invalid wire type "+wireType+" at offset "+this.pos);
-			}
-			return this;
-		}
-		/**
-		 * @param {Uint8Array} r
-		 * @param {undefined} l
-		 */
-		verySimpleObject(r,l) {
-			/** @type {Reader} */
-			let x=new Reader(r);
-			var c=l===undefined? x.len:x.pos+l,m=new this.ctor;
-			while(x.pos<c) {
-				var t=x.uint32();
-				switch(t>>>3) {
-					default:
-						x.skipType(t&7);
-						break;
-				}
-			}
-			return m;
-		}
-	}
-	/**
- * Reads a varint as an unsigned 32 bit value.
- * @function
- * @returns {number} Value read
- */
-	Reader.prototype.uint32=(function read_uint32_setup() {
-		var value=4294967295;
-		/** @type {(this: Reader)=>number} */
-		return function read_uint32() {
-			value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
-
-			/* istanbul ignore if */
-			if((this.pos+=5)>this.len) {
-				this.pos=this.len;
-				throw indexOutOfRange(this,10);
-			}
-			return value;
-		};
-	})();
-
-	/**
-	 * Constructs a new buffer reader instance.
-	 * @classdesc Wire format reader using node buffers.
-	 * @extends Reader
-	 */
-	class BufferReader extends Reader {
-		/** @param {Buffer} buffer */
-		constructor(buffer) {
-			super(buffer);
-			this.buf=buffer;
-		}
-		string() {
-			var len=this.uint32();
-			return this.buf.utf8Slice
-				? this.buf.utf8Slice(this.pos,this.pos=Math.min(this.pos+len,this.len))
-				:this.buf.toString("utf-8",this.pos,this.pos=Math.min(this.pos+len,this.len));
-		}
-	}
-	BufferReader.prototype._slice=Buffer.prototype.slice;
-
-
-
-
-	let reader=new Reader(binary);
 	/** @type {[[number],Uint8Array][]} */
 	let parts=[];
 	x: for(let i=0;;) {
-		let xx=reader.uint32();
-		console.log('pp',xx);
-		let wireType=xx>>>3;
-		console.log('wt',wireType,xx>>3);
-		switch(wireType) {
-			case 0:
-				let [dec,len]=dec_uint32(binary,i);
-				console.log('type0',dec);
-				i+=len;
-				continue;
-			case 1:
-				reader.skip(8);
-				break;
-			case 2:
-				let ds=dec_uint32(binary,i);
-				i+=ds[1];
-				console.log('type2',ds[0]);
-				let size=ds[0];
-				i+=size;
-				break;
-			case 3:
-				while((wireType=reader.uint32()&7)!==4) {
-					reader.skipType(wireType);
-				}
-				break;
-			case 5:
-				reader.skip(4);
-				break;
-
-			/* istanbul ignore next */
-			default:
-				throw Error("invalid wire type "+wireType+" at offset "+reader.pos);
+		switch(binary[i]) {
+			default: if(binary[i]>128) {
+				console.log('varint bigger', binary[i],binary[i+1]);
+			};
+			console.log("0x"+binary[i].toString(16),binary.subarray(i,i+32));
+			break x;
 		}
 		break x;
 	}
@@ -252,7 +63,7 @@ export function do_token_decode(binary) {
 	for(let i=0;i<parts.length;i++) {
 		let part=parts[i];
 		switch(part[0][0]) {
-			case 0x12: console.log('part_type',0x12,decode_str_tlv(parts[i][1])); continue;
+			case 0x12: console.log('part_type',0x12, decode_str_tlv(parts[i][1])); continue;
 		}
 		console.log("part type",parts[i][0][0],parts[i][1]);
 	}
