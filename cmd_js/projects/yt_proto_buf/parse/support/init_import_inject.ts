@@ -26,21 +26,14 @@ class MyConsole {
 	}
 	scope_id_max=1;
 	start_stack=new Array<[number,number,boolean]>;
-	pause(scope: (resume: () => void) => void) {
+	pause(scope: () => void) {
 		let scope_id=this.scope_id_max++;
 		let enter_len=this.start_stack.length;
 		let start_pause_length=this.cache.length;
 		this.start_stack.push([scope_id,start_pause_length,this.paused]);
 		this.paused=true;
-		let resumed=false;
-		let do_resume=() => {
-			if(!resumed) {
-				resumed=true;
-				this.resume(scope_id,enter_len,start_pause_length);
-			}
-		};
-		scope(do_resume);
-		do_resume();
+		scope();
+		this.resume(scope_id,enter_len,start_pause_length);
 	}
 	resume(scope_id: number, enter_len: number, start_pause_length: number) {
 		let scope=this.start_stack.at(-1);
@@ -75,19 +68,19 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 	let o=reader;
 	if(size>0) {
 		console.log
-		console.pause((resume) => {
+		console.pause(() => {
 			let has_error=false;
+			let prev_pad=pad;
 			try {
+				pad+=pad_with;
 				unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
 			} catch {
 				has_error=true;
+			} finally {
+				pad=prev_pad;
 			}
 			if(!has_error) {
-				let prev_pad=pad;
 				console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
-				pad+=pad_with;
-				resume();
-				pad=prev_pad;
 				console.pad_log("}");
 			} else if(has_error) {
 				console.pad_log("\"field %o L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
