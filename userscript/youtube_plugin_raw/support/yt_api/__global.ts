@@ -1,6 +1,7 @@
 import {MenuRenderers} from "./MenuRenderers";
 import {MenuServiceItem} from "./MenuServiceItem";
 import {OpenPopupActionH} from "./OpenPopupActionH";
+import {RendererContentItem} from "./RendererContentItem";
 import {WatchEndpoint} from "./WatchEndpoint";
 
 // YtdPageManagerElement
@@ -25,63 +26,40 @@ declare global {
 	}
 }
 
-// ReloadContinuationItemsCommand
-declare global {
-	type SectionItem=RichItemRendererHolder|RichSectionRendererHolder;
-	type ReloadContinuationItemsCommand={
-		slot: "RELOAD_CONTINUATION_SLOT_BODY";
-		targetId: "browse-feedFEwhat_to_watch";
-		continuationItems: SectionItem[];
-	};
-}
 
-declare global {
-	type BrowseFeedItem={};
-	type BrowseFeedAction={
-		targetId: "browse-feedFEwhat_to_watch";
-		continuationItems: BrowseFeedItem[];
-	};
-}
+type SectionItem=RichItemRendererHolder|RichSectionRendererHolder;
 
-// CommentsSectionContinuationAction
-declare global {
-	type CommentsSectionItem={};
-	type CommentsSectionContinuationAction={
-		targetId: "comments-section";
-		continuationItems: CommentsSectionItem[];
-	};
-}
+export type ReloadContinuationItemsCommand={
+	slot: "RELOAD_CONTINUATION_SLOT_BODY";
+	targetId: "browse-feedFEwhat_to_watch";
+	continuationItems: SectionItem[];
+};
+
+type BrowseFeedItem={};
+export type BrowseFeedAction={
+	targetId: "browse-feedFEwhat_to_watch";
+	continuationItems: BrowseFeedItem[];
+};
+
+
+type CommentsSectionItem={};
+export type CommentsSectionContinuationAction={
+	targetId: "comments-section";
+	continuationItems: CommentsSectionItem[];
+};
 // WatchNextContinuationAction
-declare global {
-	type WatchNextItem={
-		compactVideoRenderer: CompactVideoRenderer;
-	}|{
-		continuationItemRenderer: ContinuationItemRenderer;
-	};
-	interface WatchNextContinuationAction {
-		targetId: "watch-next-feed";
-		continuationItems: WatchNextItem[];
-	}
+type WatchNextItem={
+	compactVideoRenderer: CompactVideoRenderer;
+}|{
+	continuationItemRenderer: ContinuationItemRenderer;
+};
+export interface WatchNextContinuationAction {
+	targetId: "watch-next-feed";
+	continuationItems: WatchNextItem[];
 }
 
-// saved_maps
-declare global {
-	interface InjectApi {
-		saved_maps?: Map<string,Map<string,{}>>;
-	}
-}
 
-// saved_objects
-declare global {
-	interface InjectApi {
-		saved_data?: SavedData;
-	}
-}
-
-// ContinuationItem
-declare global {
-	type ContinuationItem=RendererContentItem;
-}
+export type ContinuationItem=RendererContentItem;
 
 type AdLayoutLoggingData={
 	"serializedAdServingDataEntry": string;
@@ -248,21 +226,19 @@ type RadioRendererHolder={
 	radioRenderer: RadioRenderer;
 };
 
-// RichItemRenderer
-declare global {
-	type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
-	interface RichItemRenderer {
-		content: RichItemRendererContent;
-		trackingParams: string;
-		rowIndex?: number;
-		colIndex?: number;
-	}
-	type RichItemRendererHolder={
-		richItemRenderer: RichItemRenderer;
-	};
-}
 
-type RichSectionRendererHolder={
+type RichItemRendererContent=AdSlotRendererHolder|VideoRendererHolder|RadioRendererHolder;
+interface RichItemRenderer {
+	content: RichItemRendererContent;
+	trackingParams: string;
+	rowIndex?: number;
+	colIndex?: number;
+}
+type RichItemRendererHolder={
+	richItemRenderer: RichItemRenderer;
+};
+
+export type RichSectionRendererHolder={
 	richSectionRenderer: RichSectionRenderer;
 };
 
@@ -285,10 +261,10 @@ interface RichSectionRenderer {
 
 type CommentsHeaderRenderer={};
 type CommentThreadRenderer={};
-type CommentsHeaderRendererHolder={
+export type CommentsHeaderRendererHolder={
 	commentsHeaderRenderer: CommentsHeaderRenderer;
 };
-type CommentThreadRendererHolder={
+export type CommentThreadRendererHolder={
 	commentThreadRenderer: CommentThreadRenderer;
 };
 type CommandToken={
@@ -337,7 +313,7 @@ type ContinuationItemRenderer={
 	};
 	ghostCards?: GhostCards;
 };
-type ContinuationItemRendererHolder={
+export type ContinuationItemRendererHolder={
 	continuationItemRenderer: ContinuationItemRenderer;
 };
 export type MenuRenderer={
@@ -569,20 +545,9 @@ export type CompactVideoRendererHolder={
 };
 
 type CompactPlaylistRenderer={};
-type CompactPlaylistRendererHolder={
+export type CompactPlaylistRendererHolder={
 	compactPlaylistRenderer: CompactPlaylistRenderer;
 };
-
-export type RendererContentItem=
-	RichItemRendererHolder|
-	RichSectionRendererHolder|
-	CommentsHeaderRendererHolder|
-	CommentThreadRendererHolder|
-	ContinuationItemRendererHolder|
-	CompactVideoRendererHolder|
-	CompactPlaylistRendererHolder|
-	never;
-
 
 export interface RichGridRenderer {
 	masthead: {
@@ -599,108 +564,3 @@ export type ResState={
 };
 
 export {};
-
-// Seen
-declare global {
-	interface InjectApi {
-		Seen?: {};
-	}
-}
-
-// port_state
-declare global {
-	interface InjectApi {
-		port_state?: {};
-	}
-}
-
-// plugin_overlay_element
-declare global {
-	interface InjectApi {
-		plugin_overlay_element?: {};
-	}
-}
-
-// HTMLMediaElementGainController
-declare global {
-	interface InjectApi {
-		HTMLMediaElementGainController?: {};
-		audio_gain_controller?: {};
-	}
-}
-
-// created_blobs
-declare global {
-	interface Window {
-		created_blobs: Map<string,Blob|MediaSource>;
-		active_blob_set: Set<string>;
-	}
-}
-
-// filter_on_initial_data
-declare global {
-	interface Window {
-		ytPageType?: string;
-	}
-}
-
-// log_current_video_data
-declare global {
-	interface Window {
-		playlist_arr?: string[];
-	}
-}
-
-// Elements
-declare global {
-	interface Window {
-		ytd_player?: HTMLElement|null;
-		ytd_page_manager?: HTMLElement|null;
-		ytd_watch_flexy?: HTMLElement|null;
-		yt_playlist_manager?: HTMLElement|null;
-		ytd_app?: HTMLElement|null;
-	}
-}
-
-// log_page_type_change
-declare global {
-	interface Window {
-		page_type_changes?: string[],
-	}
-}
-
-// dom_observer
-declare global {
-	interface InjectApi {
-		dom_observer?: {};
-	}
-}
-
-
-// YTFilterHandlers
-declare global {
-	interface InjectApi {
-		yt_handlers?: {};
-	}
-}
-
-// URL.createObjectURL Proxy
-declare global {
-	interface InjectApi {
-		blob_create_args_arr?: {};
-	}
-}
-
-// YTIterateAllBase.update_state
-declare global {
-	interface InjectApi {
-		yt_state_map?: {};
-	}
-}
-
-// export
-declare global {
-	interface InjectApi {
-		PropertyHandler?: {};
-	}
-}
