@@ -77,42 +77,14 @@ type MyState={
 	my_console: MyConsole;
 };
 
-function debug_l_delim_message(state: MyState,reader: InstanceType<typeof MyReader>,unk_type: MyUnkType,field_id: number,size: number) {
-	let console=state.my_console;
-	let o=reader.reader;
-	if(size>0) {
-		let has_error=false;
-		console.disabled=true;
-		try {
-			unk_type.decodeEx(reader,size);
-		} catch {
-			has_error=true;
-		} finally {
-			console.disabled=false;
-		}
-		if(has_error) {
-			console.pad_log("\"field %o: L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
-		} else {
-			console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
-			let prev_pad=pad;
-			pad+=pad_with;
-			unk_type.decodeEx(reader,size);
-			pad=prev_pad;
-			console.pad_log("}");
-		}
-	} else {
-		console.pad_log("\"field %o: L-delim string\": %o",field_id,"");
-	}
-}
-
 export class MyReader {
 	reader: protobufjs.Reader;
 	unk_type: MyUnkType;
-	constructor(buffer: Uint8Array,unk_type:MyUnkType) {
+	constructor(buffer: Uint8Array,unk_type: MyUnkType) {
 		this.reader=new protobufjs.Reader(buffer);
 		this.unk_type=unk_type;
 	}
-	static create(buffer: Uint8Array,unk_type:MyUnkType) {
+	static create(buffer: Uint8Array,unk_type: MyUnkType) {
 		return new MyReader(buffer,unk_type);
 	}
 	skip(length?: number) {
@@ -136,7 +108,7 @@ export class MyReader {
 				break;
 			case 2:
 				let size=this.uint32();
-				debug_l_delim_message(state,this,this.unk_type,fieldId,size);
+				console.log("FF %o",size);
 				this.skip(size);
 				break;
 			case 3:
@@ -208,8 +180,8 @@ export namespace codegen_ex {
 			if(field.map) {
 				gen
 					("if(%s===util.emptyObject)",ref)
-				("%s={}",ref)
-				("var c2 = r.uint32()+r.pos");
+					("%s={}",ref)
+					("var c2 = r.uint32()+r.pos");
 
 				if(types.defaults[field.keyType]!==undefined) gen
 					("k=%j",types.defaults[field.keyType]);
@@ -251,7 +223,7 @@ export namespace codegen_ex {
 				gen
 
 					("if(!(%s&&%s.length))",ref,ref)
-				("%s=[]",ref);
+					("%s=[]",ref);
 
 				// Packable (always check for forward and backward compatibility)
 				if(types.packed[type]!==undefined) gen
