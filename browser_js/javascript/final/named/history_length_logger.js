@@ -1,4 +1,4 @@
-import {Runner} from "../../support/Runner.js";
+import {Runner} from "../support/Runner.js";
 
 /* spell:words
 --- version_list item 2 ---
