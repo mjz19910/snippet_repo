@@ -13,7 +13,7 @@ function get_game() {
 	return game;
 }
 function main() {
-	/** @type {import("../__global.js").Holder} */
+	/** @type {import("../__global.js")|number} */
 	let holder=1;
 	holder;
 	let cur=new Runner;

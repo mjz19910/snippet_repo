@@ -5,7 +5,7 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/ret_do_cur_debug_api/ret_do_cur_debugApi.js
 */
 function main() {
-	/** @type {import("./__global.js").Holder} */
+	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
 	let cur=new Runner;

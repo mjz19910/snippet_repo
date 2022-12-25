@@ -1,3 +1,5 @@
-interface YtdPageManagerElementInterface extends HTMLElement {
+import {YtCurrentPage} from "./YtCurrentPage";
+
+export interface YtdPageManagerElementInterface extends HTMLElement {
 	getCurrentPage(): YtCurrentPage;
 }
