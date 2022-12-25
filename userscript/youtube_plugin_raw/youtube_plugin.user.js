@@ -2001,9 +2001,11 @@ let page_type_changes=inject_api_yt.page_type_changes;
 let last_page_type=null;
 
 function is_watch_page_active() {
-	return has_ytd_page_mgr()&&
-	get_ytd_page_manager().getCurrentPage()&&
-	get_ytd_page_manager().getCurrentPage().nodeName.toLowerCase()=="ytd-watch-flexy";
+	if(!ytd_page_manager?.getCurrentPage()) {
+		return false;
+	}
+	let page_elem=ytd_page_manager.getCurrentPage();
+	return page_elem.tagName.toLowerCase()=="ytd-watch-flexy";
 }
 
 /**
@@ -3110,12 +3112,12 @@ function destroy_env() {
 	message_channel.port2.close();
 	message_channel.port1.onmessage=null;
 	message_channel.port2.onmessage=null;
-	let ports=[message_channel.port1,message_channel.port2]
+	let ports=[message_channel.port1,message_channel.port2];
 	console.log('events',dom_observer._events);
 	console.log("wait_ports",dom_observer.wait_ports.size);
 	console.log("port_to_resolvers_map",dom_observer.port_to_resolvers_map.size,"{");
 	let all_ent=[...dom_observer.port_to_resolvers_map.entries()];
-	console.log("  ",...all_ent.map(e=>["port"+(ports.indexOf(e[0])+1),e[1]]));
+	console.log("  ",...all_ent.map(e => ["port"+(ports.indexOf(e[0])+1),e[1]]));
 	console.log("}");
 	eval(`()=>{
 		delete window;
