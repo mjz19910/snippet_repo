@@ -1,6 +1,6 @@
 import {OpenPopupAction} from "./OpenPopupAction";
 
-export type OpenPopupActionHolder={
+export type OpenPopupActionH={
 	clickTrackingParams: string;
 	openPopupAction: OpenPopupAction;
 };
