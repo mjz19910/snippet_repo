@@ -65,8 +65,8 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 	let o=reader;
 	if(size>0) {
 		console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
+		let has_error=false;
 		console.pause(() => {
-			let has_error=false;
 			let prev_pad=pad;
 			try {
 				pad+=pad_with;
@@ -76,11 +76,12 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 			} finally {
 				pad=prev_pad;
 			}
-			if(has_error) {
-				console.pad_log("\"field %o L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
-			}
 		});
-		console.pad_log("}");
+		if(has_error) {
+			console.pad_log("\"field %o L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
+		} else {
+			console.pad_log("}");
+		}
 	} else {
 		console.pad_log("\"field %o L-delim string\": %o",field_id,"");
 	}
