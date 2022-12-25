@@ -2468,7 +2468,6 @@ class HistoryStateManager {
 				console.log(structuredClone(new_state),structuredClone(t.cur_state));
 				x: {
 					if(t.is_replacing_custom_state) {
-						t.cur_state=new_state;
 						break x;
 					}
 					/** @type {{[x: string]: {}}|null} */
@@ -2481,9 +2480,9 @@ class HistoryStateManager {
 							}
 						}
 					}
-					t.cur_state=new_state;
 					console.log("replaceState",...argArray);
 				}
+				t.cur_state=new_state;
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
