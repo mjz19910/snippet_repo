@@ -2609,6 +2609,40 @@ inject_api.HTMLMediaElementGainController=AudioGainController;
 /** @type {AudioGainController|null} */
 let audio_gain_controller=null;
 
+/**
+ * @template {string} T
+ * @template {{}} U
+ * @template {Split<T, ",">} C
+ * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
+ * @type {import("./__global.js").__ia_excludeKeysS}
+ */
+Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
+	/** @type {any} */
+  let ex_keys_any=ex_keys_str.split(",");
+	/** @type {C} */
+	let ex_keys=ex_keys_any;
+	/** @type {C[number]} */
+	var key;
+  var rest, i = 0,
+    obj = Object.fromEntries(Object.entries(this));
+  for (; i < ex_keys.length; i++) {
+    {
+      key = ex_keys[i];
+      let {
+        [key]: _,
+				...rest_
+      } = obj;
+      rest = rest_
+    };
+    obj = rest;
+  };
+	/** @type {any} */
+	let res_any=obj;
+	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
+	let res=res_any;
+  return res;
+};
+
 class HistoryStateManager {
 	debug=false;
 	/** @type {{}|null} */
@@ -2926,40 +2960,6 @@ function main() {
 	start_message_channel_loop();
 }
 main();
-
-/**
- * @template {string} T
- * @template {{}} U
- * @template {Split<T, ",">} C
- * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
- * @type {import("./__global.js").__ia_excludeKeysS}
- */
-Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
-	/** @type {any} */
-  let ex_keys_any=ex_keys_str.split(",");
-	/** @type {C} */
-	let ex_keys=ex_keys_any;
-	/** @type {C[number]} */
-	var key;
-  var rest, i = 0,
-    obj = Object.fromEntries(Object.entries(this));
-  for (; i < ex_keys.length; i++) {
-    {
-      key = ex_keys[i];
-      let {
-        [key]: _,
-				...rest_
-      } = obj;
-      rest = rest_
-    };
-    obj = rest;
-  };
-	/** @type {any} */
-	let res_any=obj;
-	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
-	let res=res_any;
-  return res;
-};
 
 let __res_ia_eks=({a:4,test:3,b:1}).__ia_excludeKeysS("test,a,b");
 /** @type {{}} */
