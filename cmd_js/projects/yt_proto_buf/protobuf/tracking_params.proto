@@ -3,7 +3,9 @@ import "ns/DateTime.proto";
 message A {
 	required int32 field_01 = 1;
 	required int32 field_02 = 2;
-	optional int64 field_03 = 3;
+	oneof x {
+		int64 field_03 = 3;
+		uint64 field_08 = 8;
+	}
 	required DateTime datetime = 4;
-	optional uint64 field_08 = 8;
 }
