@@ -132,7 +132,7 @@ export class MyReader extends protobufjs.Reader {
 				console.pad_log("oneof: {",wireType);
 				pad+=pad_with;
 				while((wireType=this.uint32()&7)!==4) {
-					this.skipType(wireType);
+					this.skipTypeEx(state,fieldId,wireType);
 				}
 				pad=prev_pad;
 				console.pad_log("}");
@@ -146,7 +146,6 @@ export class MyReader extends protobufjs.Reader {
 			default:
 				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
 		}
-		return this;
 	}
 }
 
