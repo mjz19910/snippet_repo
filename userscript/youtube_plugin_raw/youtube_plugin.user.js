@@ -24,8 +24,12 @@ function any(x,u) {
 	if(!is_other(x,u)) throw 1;
 	return x;
 }
+var is_node_js=function is_node_js() {
+	return false;
+}
 
 if(typeof window==='undefined') {
+	is_node_js=()=>true;
 	/** @type {any} */
 	let t_=new EventTarget;
 	t_;
@@ -2292,6 +2296,15 @@ async function async_plugin_init(event) {
 		}
 	} catch(e) {
 		console.log("had error in async init",e);
+	}
+	if(is_node_js()) {
+		/** @arg {string} x */
+		function dyn_import(x) {
+			return import(x);
+		}
+		/** @type {{exit:(v:number)=>void}} */
+		let process=await dyn_import("process");
+		process.exit(0);
 	}
 }
 dom_observer.addEventListener("async-plugin-init",async_plugin_init);
