@@ -1,3 +1,5 @@
+import "ns/DateTime.proto";
+
 message A {
 	required int64 a3=3;
 	required B a6=6;
@@ -24,10 +26,5 @@ message E {
 	required string a1=1;
 	required string a2=2;
 	required string a3=3;
-}
-message DateTime {
-	required uint64 a1=1;
-	required fixed32 a2=2;
-	required fixed32 a3=3;
 }
 message _O {}
