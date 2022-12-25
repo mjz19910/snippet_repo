@@ -3001,35 +3001,35 @@ let audio_gain_controller=null;
 /**
  * @template {string} T
  * @template {{}} U
- * @template {import("./support/Split.js").Split<T, ",">} C
+ * @template {Split<T, ",">} C
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
- * @type {import("./support/__ia_excludeKeysS.js").__ia_excludeKeysS}
+ * @type {import("./__global.js").__ia_excludeKeysS}
  */
-Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
+Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
 	/** @type {any} */
-	let ex_keys_any=ex_keys_str.split(",");
+  let ex_keys_any=ex_keys_str.split(",");
 	/** @type {C} */
 	let ex_keys=ex_keys_any;
 	/** @type {C[number]} */
 	var key;
-	var rest,i=0,
-		obj=Object.fromEntries(Object.entries(target));
-	for(;i<ex_keys.length;i++) {
-		{
-			key=ex_keys[i];
-			let {
-				[key]: _,
+  var rest, i = 0,
+    obj = Object.fromEntries(Object.entries(this));
+  for (; i < ex_keys.length; i++) {
+    {
+      key = ex_keys[i];
+      let {
+        [key]: _,
 				...rest_
-			}=obj;
-			rest=rest_;
-		};
-		obj=rest;
-	};
+      } = obj;
+      rest = rest_
+    };
+    obj = rest;
+  };
 	/** @type {any} */
 	let res_any=obj;
 	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
 	let res=res_any;
-	return res;
+  return res;
 };
 
 class HistoryStateManager {
@@ -3273,40 +3273,6 @@ function main() {
 	start_message_channel_loop();
 }
 main();
-
-/**
- * @template {string} T
- * @template {{}} U
- * @template {Split<T, ",">} C
- * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
- * @type {import("./__global.js").__ia_excludeKeysS}
- */
-Object.prototype.__ia_excludeKeysS = function(ex_keys_str) {
-	/** @type {any} */
-  let ex_keys_any=ex_keys_str.split(",");
-	/** @type {C} */
-	let ex_keys=ex_keys_any;
-	/** @type {C[number]} */
-	var key;
-  var rest, i = 0,
-    obj = Object.fromEntries(Object.entries(this));
-  for (; i < ex_keys.length; i++) {
-    {
-      key = ex_keys[i];
-      let {
-        [key]: _,
-				...rest_
-      } = obj;
-      rest = rest_
-    };
-    obj = rest;
-  };
-	/** @type {any} */
-	let res_any=obj;
-	/** @type {{[I in Exclude<keyof U,C[number]>]:U[I]}} */
-	let res=res_any;
-  return res;
-};
 
 let __res_ia_eks=({a:4,test:3,b:1}).__ia_excludeKeysS("test,a,b");
 /** @type {{}} */
