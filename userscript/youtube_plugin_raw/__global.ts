@@ -4,7 +4,6 @@ import {SectionItemDef} from "./support/yt_api/SectionItemDef";
 import {RichItemRendererContentDef} from "./support/yt_api/RichItemRendererContentDef";
 import {ContinuationItemRendererHolder} from "./support/yt_api/ContinuationItemRendererHolder.js";
 import {CompactVideoRendererHolder} from "./support/yt_api/CompactVideoRendererHolder.js";
-import {RichSectionRenderer} from "./support/yt_api/RichSectionRenderer.js";
 
 // YtdPageManagerElement
 declare global {
@@ -98,9 +97,6 @@ declare global {
 
 // RichSectionRendererItem
 declare global {
-	type RichSectionRendererHolder={
-		richSectionRenderer: RichSectionRenderer;
-	};
 }
 
 // RendererContentItem
