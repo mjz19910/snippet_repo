@@ -13,14 +13,13 @@ function run() {
 		console.log("error",e);
 	});
 }
-run();
 
 const unk_type=new protobufjs.Type("SkipUnknown");
 
 const pad_with="   ";
 let pad="";
 
-export function increase_padding() {
+function increase_padding() {
 	let prev=pad;
 	pad+=pad_with;
 	return () => {
@@ -78,10 +77,8 @@ class MyConsole {
 	}
 }
 
-export const my_console=new MyConsole;
-
-function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,size: number) {
-	let console=my_console;
+function debug_l_delim_message(state: {my_console: MyConsole},reader: Reader,unk_type: Type,field_id: number,size: number) {
+	let console=state.my_console;
 	let o=reader;
 	if(size>0) {
 		let has_error=false;
@@ -109,8 +106,8 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 }
 
 export class MyReader extends protobufjs.Reader {
-	skipTypeEx(fieldId: number,wireType: number) {
-		let console=my_console;
+	skipTypeEx(state:{my_console: MyConsole},fieldId: number,wireType: number) {
+		let console=state.my_console;
 		let prev_pad;
 		switch(wireType) {
 			case 0:
@@ -123,7 +120,7 @@ export class MyReader extends protobufjs.Reader {
 				break;
 			case 2:
 				let size=this.uint32();
-				debug_l_delim_message(this,unk_type,fieldId,size);
+				debug_l_delim_message(state,this,unk_type,fieldId,size);
 				this.skip(size);
 				break;
 			case 3:
@@ -150,6 +147,7 @@ export class MyReader extends protobufjs.Reader {
 }
 
 export async function parse_types(): Promise<void> {
+	const my_console=new MyConsole;
 	const myArgs=process.argv.slice(2);
 	if(myArgs[0]==="--input") {
 		my_console.pad_log("message Type.U {");
@@ -192,3 +190,5 @@ async function get_token_data_from_file(file_path: string) {
 	let base64_enc=decodeURIComponent(token_enc).replaceAll("_","/").replaceAll("-","+");
 	return get_token_data(base64_enc);
 }
+
+run();
