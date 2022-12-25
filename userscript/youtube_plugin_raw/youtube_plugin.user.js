@@ -2456,14 +2456,13 @@ class HistoryStateManager {
 			this.is_replacing_custom_state=false;
 			console.log(clone,this.cur_state,prev_state);
 		});
-		let hp=History.prototype;
-		hp.pushState=new Proxy(hp.pushState,{
+		History.prototype.pushState=new Proxy(History.prototype.pushState,{
 			apply(target,thisArg,argArray) {
 				console.log("pushState",...argArray);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
-		hp.replaceState=new Proxy(hp.replaceState,{
+		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				t.cur_state=new_state;
