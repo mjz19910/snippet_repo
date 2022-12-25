@@ -31,21 +31,18 @@ class MyConsole {
 		let enter_len=this.start_stack.length;
 		let start_pause_length=this.cache.length;
 		this.start_stack.push([scope_id,start_pause_length,this.paused]);
-		this.paused=true;
+		this.paused=false;
 		scope();
-		this.resume(scope_id,enter_len,start_pause_length);
-	}
-	resume(scope_id: number, enter_len: number, start_pause_length: number) {
-		let scope=this.start_stack.at(-1);
-		if(scope) {
-			this.paused=scope[2];
+		let scope_val=this.start_stack.at(-1);
+		if(scope_val) {
+			this.paused=scope_val[2];
 		}
 		if(!this.paused) this.on_resume();
-		x: if(scope) {
-			if(scope[0]!==scope_id) {
+		x: if(scope_val) {
+			if(scope_val[0]!==scope_id) {
 				break x;
 			}
-			this.cache.length=scope[1];
+			this.cache.length=scope_val[1];
 			if(this.start_stack.length>enter_len) {
 				this.start_stack.length=enter_len;
 			}
@@ -67,7 +64,7 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 	let console=my_console;
 	let o=reader;
 	if(size>0) {
-		console.log
+		console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
 		console.pause(() => {
 			let has_error=false;
 			let prev_pad=pad;
@@ -79,13 +76,11 @@ function debug_l_delim_message(reader: Reader,unk_type: Type,field_id: number,si
 			} finally {
 				pad=prev_pad;
 			}
-			if(!has_error) {
-				console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
-				console.pad_log("}");
-			} else if(has_error) {
+			if(has_error) {
 				console.pad_log("\"field %o L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
 			}
 		});
+		console.pad_log("}");
 	} else {
 		console.pad_log("\"field %o L-delim string\": %o",field_id,"");
 	}
