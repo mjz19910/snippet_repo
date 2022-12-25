@@ -1913,6 +1913,9 @@ class DomObserver extends CustomEventTarget {
 			for(let x of list) {
 				if(x.active) x.resolver();
 			}
+			if(this.port_to_resolvers_map.get(port)?.[0]?.active===false) {
+				this.port_to_resolvers_map.get(port)?.shift();
+			}
 		};
 	}
 	/** @param {MessagePort} port @param {number} cur_count */
@@ -1928,11 +1931,7 @@ class DomObserver extends CustomEventTarget {
 				active: true,
 				resolver,
 			};
-			let res=this.port_to_resolvers_map.get(port);
 			if(this.port_to_resolvers_map.has(port)) {
-				if(!this.port_to_resolvers_map.get(port)?.[0].active&&res&&!res[0].active) {
-					this.port_to_resolvers_map.get(port)?.shift();
-				}
 				if(this.port_to_resolvers_map.has(port)) this.port_to_resolvers_map.get(port)?.push(state);
 			} else {
 				this.port_to_resolvers_map.set(port,[state]);
@@ -3255,5 +3254,4 @@ function destroy_env() {
 		delete window;
 		delete navigator;
 	}`);
-	debugger;
 }
