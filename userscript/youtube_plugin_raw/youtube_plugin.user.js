@@ -2301,9 +2301,14 @@ async function async_plugin_init(event) {
 		function dyn_import(x) {
 			return import(x);
 		}
-		/** @type {{exit:(v:number)=>void}} */
-		let process=await dyn_import("process");
-		process.exit(0);
+		let do_node_exit=false
+		if(do_node_exit) {
+			/** @type {{exit:(v:number)=>void}} */
+			let process=await dyn_import("process");
+			process.exit(0);
+		}
+		destroy_env();
+		return;
 	}
 }
 dom_observer.addEventListener("async-plugin-init",async_plugin_init);
@@ -3232,3 +3237,11 @@ if(typeof exports==='object') {
 	exports.SavedData=SavedData;
 }
 
+function destroy_env() {
+	window.inject_api=void 0;
+	eval(`()=>{
+		delete window;
+		delete navigator;
+	}`);
+	debugger;
+}
