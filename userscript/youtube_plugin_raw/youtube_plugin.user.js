@@ -2697,9 +2697,8 @@ function all_of_key(cur, key_names, acc = [], path = ["."]) {
 }
 
 function iterate_tracking_params() {
-	if(!inject_api?.saved_data) return;
-	let ag=inject_api.saved_data.any_data;
-  let browse = inject_api.saved_data.any_data.browse;
+	let ag=saved_data.any_data;
+  let browse = ag.browse;
   let x = null;
 	if(ag.guide) {
 		if(browse) x=browse;
