@@ -88,4 +88,5 @@ export function useTypeT1A(root: Root,obj: ProtoBufTypeA) {
 	let description: DesType=tmp_data.data.description;
 	let items=extract_items(description);
 	console.log(items);
+	console.log(description.items[0]);
 }
