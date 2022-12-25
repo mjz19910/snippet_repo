@@ -5,8 +5,13 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 		Reader,
 	}=arg0.protobufjs;
 	let pad="";
-	Reader.prototype.skipType=function(wireType) {
-		console.log("wire skip",wireType);
+	const my_console=new class {
+		pad_log(message: string, ...data: any[]) {
+			console.log(pad+message, ...data);
+		}
+	}
+	Reader.prototype.skipType=function(wireType: number) {
+		my_console.pad_log("wire skip",wireType);
 		switch(wireType) {
 			case 0:
 				this.skip();
@@ -19,9 +24,12 @@ export function init_import_inject(arg0: {protobufjs: typeof protobufjs;}) {
 				break;
 			case 3:
 				pad+=" ";
+				let enterType=wireType;
+				my_console.pad_log("enter", wireType);
 				while((wireType=this.uint32()&7)!==4) {
 					this.skipType(wireType);
 				}
+				my_console.pad_log("leave", enterType);
 				break;
 			case 5:
 				this.skip(4);
