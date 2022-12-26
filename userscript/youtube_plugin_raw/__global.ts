@@ -4,6 +4,7 @@ import {__ia_excludeKeysS} from "./support/__ia_excludeKeysS";
 import {Type_ytcfg} from "./support/yt_api/Type_ytcfg";
 
 declare global {
+	var require: ((x:string)=>any)|undefined;
 	interface Window {
 		yt?: Type_yt;
 		ytcfg?: Type_ytcfg;
