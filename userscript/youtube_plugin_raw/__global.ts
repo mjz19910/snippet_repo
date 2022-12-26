@@ -16,6 +16,7 @@ declare global {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;
 	}
 	interface InjectApiYt {
+		iterate_tracking_params: () => any[]|undefined;
 		storage?: {
 			on_ytd_app: (element: HTMLElement) => void;
 		};
