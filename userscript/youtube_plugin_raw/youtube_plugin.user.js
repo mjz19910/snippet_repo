@@ -249,8 +249,6 @@ if(typeof YtdAppElementBase_==='undefined') {
 	let r=any(ext);
 	YtdAppElementBase_=r;
 }
-
-YtdAppElementBase_
 // #section Use module types
 /** @type {import("./__global.js")} */
 // #section end
@@ -370,7 +368,7 @@ class PagePreparer {
 	}
 }
 function with_ytd_scope() {
-	if(!YtdAppElementBase) throw 1;
+	if(!YtdAppElementBase_) throw 1;
 	/** @template T */
 	class Hn {
 		/** @arg {T} a */
@@ -662,7 +660,7 @@ function with_ytd_scope() {
 	// var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
 	// /** @arg {Hn<string>} a */
 	// function In(a) {return new LBa(a);}
-	class YtdAppElement extends YtdAppElementBase {
+	class YtdAppElement extends YtdAppElementBase_ {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element;
 		/**@type {VolumeRange|undefined}*/
@@ -671,7 +669,7 @@ function with_ytd_scope() {
 		app_is_visible;
 		/**@type {ReturnType<typeof setInterval>|undefined} */
 		ytp_click_cint;
-		$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
+		$=any({},(() => {if(!YtdAppElementBase_) throw 1; return YtdAppElementBase_;})().prototype.$);
 		pagePreparer=new PagePreparer;
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
@@ -2406,6 +2404,7 @@ async function async_plugin_init(event) {
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			x: {
 				if(ytd_app) break x;
+				debugger;
 				if(!inject_api_yt.storage) break x;
 				const target_element=get_html_elements(document,"ytd-app")[0];
 				if(!target_element) break x;
