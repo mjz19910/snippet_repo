@@ -358,6 +358,7 @@ function with_ytd_scope() {
 				}
 				if(!box_map.has("video-list")) continue;
 				if(ytd_page_manager===null) continue;
+				console.log(iter_count);
 				obj.dispatchEvent({...event,type: "plugin-activate"});
 			}
 		} catch(e) {
