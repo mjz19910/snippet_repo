@@ -419,148 +419,6 @@ function with_ytd_scope() {
 			}
 		});
 	}
-<<<<<<< HEAD
-=======
-	/** @arg {number} a */
-	var ov = function(a) {
-		this.maxSize = a;
-		this.timeToDataCache = new Map
-	};
-	class ProvideWithDesktopHistoryManagerToken {
-		constructor() {
-			this.historyEntryTime=0;
-			this.historySnapshotCache=new ov(Ck("HISTORY_CACHE_MAX_SIZE", 100));
-		}
-		/**
-		 * @param {string} a
-		 * @param {{}} b
-		 * @param {{ csn?: any; }} c
-		 * @param {number} d
-		 * @param {{}} [f]
-		 */
-		saveAndPush(a,b,c,d,f) {
-			f=void 0===f? {}:f;
-			c&&(c.csn="UNDEFINED_CSN");
-			/** @type {[typeof a,typeof b,typeof c,typeof d,typeof f]} */
-			let ia=[a,b,c,d,f];
-			{
-				let [c,d,f,h,l]=ia;
-				l=void 0===l? {}:l;
-				this.saveSnapshot(this.historyEntryTime, f, h);
-				{
-					let f = this.historySnapshotCache;
-					h = this.historyEntryTime;
-					var n = f.timeToDataCache.keys();
-				}
-			}
-		}
-		/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
-		createNewHistoryEntry(c,d,f) {
-			f=void 0===f? M0a():f;
-			return new K0a(f,c,d);
-		}
-		browserHistory=new NewBrowserHistory;
-		/** @arg {import("./HistoryStateContent.js").HistoryStateContent} b @arg {string} url */
-		replaceState(b,url) {
-			{
-				let c=b;
-				if(0<=Number(null==c? void 0:c.entryTime)) {
-					this.historyEntryTime=c.entryTime;
-				}
-			}
-			this.browserHistory.replaceState(b,url);
-		}
-		/**
-		 * @param {any} c
-		 * @param {any} d
-		 * @param {any} f
-		 */
-		saveAndReplace(c,d,f) {
-			var h=window.location.href;
-			/** @type {{}|undefined} */
-			var l=void 0===l? {}:l;
-			let zz=this.browserHistory.getState();
-			/** @type {number} */
-			var n=(/*n=this.browserHistory.getState()*/zz)&&zz.entryTime? zz.entryTime:M0a();
-			c=this.createNewHistoryEntry(c,l,n);
-			this.saveSnapshot(n,d,f);
-			this.replaceState(c,h||window.location.href);
-		}
-		/** @arg {number} c @arg {{}} d @arg {number} f */
-		saveSnapshot(c,d,f) {
-			this.historySnapshotCache.set(c,new G0a(d,f));
-		}
-	}
-	let L0a=0;
-	function M0a() {
-		return window&&window.performance&&window.performance.now? window.performance.now():Date&&Date.now? Date.now():++L0a;
-	}
-	class K0a {
-		/** @arg {number} a @arg {ClickTrackedAndCommandMetadataWatchEndpointH} b @arg {{}} [c] */
-		constructor(a,b,c) {
-			this.endpoint=b;
-			this.savedComponentState=void 0===c? null:c;
-			this.entryTime=a;
-		}
-	}
-	/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
-	class G0a {
-		/** @arg {{}} a @arg {number} b */
-		constructor(a,b) {
-			this.rootData=a;
-			this.scrollTop=b;
-		}
-	}
-	let cache={
-		/** @type {ProvideWithDesktopHistoryManagerToken|null} */
-		desktop_history: null,
-	};
-	/** @arg {YtdAppElement} a */
-	function v5(a) {
-		if(!a.$) throw 1;
-		return a.$.historyManager;
-	}
-	function u5() {
-		if(!cache.desktop_history) {
-			cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-		}
-		return cache.desktop_history;
-	}
-	function get_Ak() {
-		if(!window.ytcfg) throw 1;
-		return window.ytcfg.data_;
-	};
-	/** @template T @param {string} a @param {T} b @returns {T} */
-	function use_Ck(a,b) {
-		let Ak=get_Ak();
-		return a in Ak? Ak[a]:b;
-	}
-	/**
-	 * @template T
-	 * @param {string} a
-	 * @param {T} b
-	 */
-	function Ck(a,b) {
-		return use_Ck(a,b);
-	}
-	/**
-	 * @param {string | number} a
-	 */
-	function Mma(a) {
-		var b=Ck("EXPERIMENTS_FORCED_FLAGS",{})||{};
-		return void 0!==b[a]? b[a]:Ck("EXPERIMENT_FLAGS",{})[a];
-	}
-	/**
-	 * @param {string} a
-	 */
-	function B(a) {
-		a=Mma(a);
-		return "string"===typeof a&&"false"===a? !1:!!a;
-	}
-	function t5() {
-		return B("desktop_use_new_history_manager");
-	}
->>>>>>> 9f9ce261 (u)
 	class VolumeRange {
 		static enabled=true;
 		static create_if_needed() {
@@ -707,48 +565,6 @@ function with_ytd_scope() {
 		}
 		__shady_children=new ShadyChildrenOfYtdApp;
 		hasNavigated=false;
-<<<<<<< HEAD
-=======
-		/**
-		 * @param {any} a
-		 * @param {{}} b
-		 * @param {number} c
-		 */
-		replaceState(a,b,c) {
-			if(!cache.desktop_history) {
-				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-			}
-			t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
-		}
-		getPageOffset() {
-			return 0;
-		}
-		/** @arg {string} url */
-		replaceUrl(url) {
-			if(!cache.desktop_history) {
-				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-			}
-			if(arguments.length>1) {
-				console.log("replaceUrl api not followed",[...arguments].slice(1));
-			}
-			var b=cache.desktop_history.browserHistory.getState();
-			cache.desktop_history.replaceState(b,url);
-		}
-		cancelPendingTasks() {
-			this.pagePreparer&&this.pagePreparer.cancel();
-		}
-		/** @arg {string} a @arg {{}} b @arg {{}} c @arg {number} d */
-		saveAndPush(a,b,c,d) {
-			if(!t5()) throw 1;
-			u5().saveAndPush(a,b,c,d);
-		}
-		init_inject() {
-			/** @arg {string} url @arg {never[]} ex_args */
-			this.replaceUrl=YtdAppElement.prototype.replaceUrl;
-			this.saveAndPush=YtdAppElement.prototype.saveAndPush;
-			this.replaceState=YtdAppElement.prototype.replaceState;
-		};
->>>>>>> 9f9ce261 (u)
 	}
 }
 
@@ -1446,11 +1262,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-<<<<<<< HEAD
 	/** @arg {import("./support/yt_api/_abc/_rich/RichSectionRendererH.js").RichSectionRendererH} content_item */
-=======
-	/** @arg {RichSectionRendererHolder} content_item */
->>>>>>> bc237bc0 (u)
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
@@ -2283,11 +2095,7 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-<<<<<<< HEAD
 /** @type {import("./support/yt_api/_abc/_yt/YtdPlayerElement.js").YtdPlayerElement | null} */
-=======
-/** @type {import("./support/yt_api/YtdPlayerElement.js").YtdPlayerElement | null} */
->>>>>>> 984f9f97 (u)
 let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
@@ -2296,11 +2104,7 @@ function on_ytd_player(element) {
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
-<<<<<<< HEAD
 	/** @type {import("./support/yt_api/_abc/_yt/YtdPlayerElement.js").YtdPlayerElement} */
-=======
-	/** @type {import("./support/yt_api/YtdPlayerElement.js").YtdPlayerElement} */
->>>>>>> 984f9f97 (u)
 	let element_type=element_any;
 	ytd_player=element_type;
 	window.ytd_player=element;
@@ -2819,11 +2623,7 @@ let audio_gain_controller=null;
  * @template {{}} U
  * @template {import("./support/Split.js").Split<T, ",">} C
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
-<<<<<<< HEAD
  * @type {import("./support/__ia_excludeKeysS.js").__ia_excludeKeysS}
-=======
- * @type {import("./support/yt_api/__ia_excludeKeysS.js").__ia_excludeKeysS}
->>>>>>> 9f9ce261 (u)
  */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
