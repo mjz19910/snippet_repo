@@ -3,10 +3,10 @@ import {Icon} from "./Icon";
 import {TrackingParams} from "./TrackingParams.js";
 
 
-export type MetadataBadgeRenderer={
-	icon?: Icon;
-	label?: string;
+export interface MetadataBadgeRenderer extends TrackingParams {
+	icon: Icon;
+	label: string;
 	style: string;
-	tooltip?: string;
-	accessibilityData?: AccessibilityData;
-}&TrackingParams;
+	tooltip: string;
+	accessibilityData: AccessibilityData;
+}
