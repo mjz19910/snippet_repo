@@ -1,5 +1,4 @@
-
-export type BrowseEndpoint={
+export interface BrowseEndpoint {
 	browseId: string;
-	canonicalBaseUrl: string;
-};
+}
+
