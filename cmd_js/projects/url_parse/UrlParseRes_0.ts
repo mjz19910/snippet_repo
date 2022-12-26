@@ -14,7 +14,7 @@ Pathname extends string>={
 	port: "";
 	protocol: Protocol;
 	search: `?${Search}`;
-	searchParams: URLSearchParams;
+	/*grep-skip*/searchParams: URLSearchParams;
 	toJSON(): T;
 	username: "";
 };

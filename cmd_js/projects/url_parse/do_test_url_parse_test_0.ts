@@ -23,7 +23,7 @@ export function do_test_url_parse_test_0() {
 		"port": "";
 		"protocol": "https:";
 		"search": "?sqp=-oaymwE1CKgBEF5IVfKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGB8gZShWMA8=&rs=AOn4CLCpqrflce1_k2te4K_5kNbCpjCm6Q",
-		"searchParams": URLSearchParams;
+		/*grep-skip*/searchParams: URLSearchParams;
 	};
 	let rt_u: rt=vv;rt_u;
 	console.log('rt_u.search has_sqp=%o',rt_u.search.includes("sqp")?"yes":"no");

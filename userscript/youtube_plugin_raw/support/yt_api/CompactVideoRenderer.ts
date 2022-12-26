@@ -8,8 +8,9 @@ import {TextRuns} from "./TextRuns";
 import {ThumbnailH} from "./ThumbnailH.js";
 import {ThumbnailOverlay} from "./ThumbnailOverlay";
 import {ThumbnailsH} from "./ThumbnailsH.js";
+import {TrackingParams} from "./TrackingParams.js";
 
-export type CompactVideoRenderer={
+export interface CompactVideoRenderer extends TrackingParams {
 	accessibility: Accessibility;
 	badges?: MetadataBadgeRenderers[];
 	channelThumbnail: ThumbnailsH;
@@ -25,7 +26,6 @@ export type CompactVideoRenderer={
 	thumbnailOverlays: ThumbnailOverlay[];
 	title: SimpleText;
 	ownerBadges?: MetadataBadgeRenderers[];
-	trackingParams: string;
 	videoId: string;
 	viewCountText: SimpleText;
 };
