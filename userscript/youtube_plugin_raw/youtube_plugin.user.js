@@ -726,15 +726,7 @@ function with_ytd_scope() {
 		}
 		init_inject() {
 			/** @arg {string} url @arg {never[]} ex_args */
-			this.replaceUrl=with_prev(function replaceUrl(/** @type {string} */ url,/** @type {any[]} */ ...ex_args) {
-				if(!cache.desktop_history) {
-					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-				}
-				if(ex_args.length>0) {
-					console.log("replaceUrl api not followed",ex_args);
-				}
-				cache.desktop_history.replaceUrl(url);
-			},this.replaceUrl);
+			this.replaceUrl=with_prev(YtdAppElement.prototype.replaceUrl,this.replaceUrl);
 			let pd=Object.getOwnPropertyDescriptor(this,"replaceUrl");
 			if(!pd) throw 1;
 			pd.configurable=false;
