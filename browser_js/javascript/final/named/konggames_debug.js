@@ -1,4 +1,5 @@
 import {Runner} from "../support/Runner.js";
+import captureStackTrace from "./capture-stack-trace.js";
 
 /* spell:words konggames
 --- version_list item 2 ---
@@ -213,7 +214,7 @@ function main() {
 					error=new Error("required argument 'result' is undefined");
 				}
 				if(error) {
-					Error.captureStackTrace(error,this.clear_breakpoint);
+					captureStackTrace(error,this.clear_breakpoint);
 					throw error;
 				}
 				if(this.event_forward_function) {
