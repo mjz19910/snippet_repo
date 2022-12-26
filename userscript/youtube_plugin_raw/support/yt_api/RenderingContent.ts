@@ -5,17 +5,16 @@ import {MetadataBadgeRenderer} from "./MetadataBadgeRenderer";
 import {NavigationEndpoint} from "./NavigationEndpoint";
 import {Icon} from "./Icon";
 import {ClickCommand} from "./ClickCommand";
+import {TrackingParams} from "./TrackingParams.js";
 
 export type RenderingContent={
-	"displayAdRenderer": {
-		trackingParams: string;
+	"displayAdRenderer": TrackingParams&{
 		"layout": "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 		"titleText": {
 			"simpleText": "Create Lasting Wealth";
 		};
-		"image": {
+		"image": TrackingParams&{
 			thumbnail: ThumbnailH;
-			trackingParams: string;
 		};
 		// spell:ignore Linqto
 		"bodyText": SimpleText;
@@ -39,26 +38,23 @@ export type RenderingContent={
 								"iconType": "INFO";
 							};
 							navigationEndpoint: NavigationEndpoint;
-							trackingParams: string;
-						};
+						}&TrackingParams;
 					}
 				];
-				trackingParams: string;
 				"accessibility": {
 					"accessibilityData": {
 						"label": "Action menu";
 					};
 				};
-			};
+			}&TrackingParams;
 		};
 		"ctaButton": {
 			"buttonRenderer": {
 				"style": "STYLE_PRIMARY";
 				"text": SimpleText;
 				"icon": Icon;
-				trackingParams: string;
 				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
-			};
+			}&TrackingParams;
 		};
 		impressionEndpoints: ImpressionEndpoint[];
 		"clickCommand": ClickCommand;
@@ -71,9 +67,8 @@ export type RenderingContent={
 				"icon": {
 					"iconType": "EXTERNAL_LINK";
 				};
-				trackingParams: string;
 				"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
-			};
+			}&TrackingParams;
 		};
 		"mediaBadge": {
 			"metadataBadgeRenderer": {
@@ -81,8 +76,7 @@ export type RenderingContent={
 					"iconType": "EXTERNAL_LINK";
 				};
 				"style": "BADGE_STYLE_TYPE_BLACK";
-				trackingParams: string;
-			};
+			}&TrackingParams;
 		};
 	};
 };
