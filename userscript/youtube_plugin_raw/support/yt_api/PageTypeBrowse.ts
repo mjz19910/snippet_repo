@@ -8,10 +8,6 @@ export interface PageTypeBrowse {
 	pageType: "browse";
 	fromHistory: false;
 	navigationDoneMs: number;
-	endpoint: WatchEndpointH&{
-		['clickTrackingParams']: string;
-		["commandMetadata"]: {};
-		["watchEndpoint"]: {};
-	};
+	endpoint: WatchEndpointH;
 	response: PageResponseBrowse;
 }
