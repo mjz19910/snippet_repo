@@ -363,16 +363,6 @@ function with_ytd_scope() {
 			console.log("had error in async init",e);
 		}
 		if(is_node_js()) {
-			/** @arg {string} x */
-			function dyn_import(x) {
-				return import(x);
-			}
-			let do_node_exit=false;
-			if(do_node_exit) {
-				/** @type {{exit:(v:number)=>void}} */
-				let process=await dyn_import("process");
-				process.exit(0);
-			}
 			destroy_env();
 			return;
 		}
