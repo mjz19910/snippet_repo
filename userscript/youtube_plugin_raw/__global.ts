@@ -1,6 +1,6 @@
 import {Type_yt} from "./support/yt_api/Type_yt";
 import {SavedData} from "./youtube_plugin.user.js";
-import {__ia_excludeKeysS} from "./support/yt_api/__ia_excludeKeysS";
+import {__ia_excludeKeysS} from "./support/__ia_excludeKeysS";
 import {Type_ytcfg} from "./support/yt_api/Type_ytcfg";
 
 declare global {

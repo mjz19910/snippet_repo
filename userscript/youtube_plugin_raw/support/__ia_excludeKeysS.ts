@@ -1,4 +1,4 @@
-import {Split} from "../../Split";
+import {Split} from "./Split";
 
 export function __ia_excludeKeysS<T extends string,U extends {},C extends Split<T,",">>(target: U,ex_keys_str: Split<T,","> extends any[]? T:never): {
 	[I in Exclude<keyof U,C[number]>]: U[I];
