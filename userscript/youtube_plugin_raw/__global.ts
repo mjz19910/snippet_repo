@@ -1,7 +1,7 @@
 import {Type_yt} from "./Type_yt";
 import {Gn, SavedData} from "./youtube_plugin.user.js";
 import {YtConfigAk} from "./YtConfigAk";
-import {__ia_excludeKeysS} from "./__ia_excludeKeysS";
+import {__ia_excludeKeysS} from "./support/yt_api/__ia_excludeKeysS";
 
 declare global {
 	interface Window {
@@ -72,6 +72,10 @@ declare global {
 
 	interface PageTypeWatch {
 		pageType:"watch";
+		fromHistory: false;
+		navigationDoneMs: number;
+		endpoint: {};
+		response: {};
 	}	
 }
 /** @template T */

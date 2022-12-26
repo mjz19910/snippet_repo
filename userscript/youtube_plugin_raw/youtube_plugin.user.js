@@ -759,9 +759,15 @@ function with_ytd_scope() {
 			}
 		});
 	}
+	/** @arg {number} a */
+	var ov = function(a) {
+		this.maxSize = a;
+		this.timeToDataCache = new Map
+	};
 	class ProvideWithDesktopHistoryManagerToken {
 		constructor() {
 			this.historyEntryTime=0;
+			this.historySnapshotCache=new ov(Ck("HISTORY_CACHE_MAX_SIZE", 100));
 		}
 		/**
 		 * @param {string} a
@@ -822,8 +828,6 @@ function with_ytd_scope() {
 		saveSnapshot(c,d,f) {
 			this.historySnapshotCache.set(c,new G0a(d,f));
 		}
-		/** @type {Map<number,{rootData:{};scrollTop:number}>} */
-		historySnapshotCache=new Map;
 	}
 	let L0a=0;
 	function M0a() {
@@ -864,14 +868,15 @@ function with_ytd_scope() {
 		if(!window.ytcfg) throw 1;
 		return window.ytcfg.data_;
 	};
-	/** @param {string} a @param {any} b */
+	/** @template T @param {string} a @param {T} b @returns {T} */
 	function use_Ck(a,b) {
 		let Ak=get_Ak();
 		return a in Ak? Ak[a]:b;
 	}
 	/**
+	 * @template T
 	 * @param {string} a
-	 * @param {{}} b
+	 * @param {T} b
 	 */
 	function Ck(a,b) {
 		return use_Ck(a,b);
@@ -1087,7 +1092,8 @@ function with_ytd_scope() {
 		}
 		/** @arg {string} a @arg {{}} b @arg {{}} c @arg {number} d */
 		saveAndPush(a,b,c,d) {
-			t5()? u5().saveAndPush(a,b,c,d):v5(this).saveAndPush(a,b,c,d);
+			if(!t5()) throw 1;
+			u5().saveAndPush(a,b,c,d);
 		}
 		init_inject() {
 			/** @arg {string} url @arg {never[]} ex_args */
@@ -2661,8 +2667,8 @@ class HTMLVideoElementArrayBox {
 	}
 }
 
-/** @template T @arg {T} e @returns {T} */
-export function any(e) {
+/** @template T @arg {any} e @returns {T} */
+function any(e) {
 	return e;
 }
 
@@ -3156,7 +3162,7 @@ let audio_gain_controller=null;
  * @template {{}} U
  * @template {import("./Split.js").Split<T, ",">} C
  * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
- * @type {import("./__ia_excludeKeysS.js").__ia_excludeKeysS}
+ * @type {import("./support/yt_api/__ia_excludeKeysS.js").__ia_excludeKeysS}
  */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
