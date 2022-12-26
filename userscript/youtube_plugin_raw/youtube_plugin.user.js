@@ -2190,7 +2190,7 @@ inject_api_yt.dom_observer=dom_observer;
 
 
 class YtdPageManagerElement extends HTMLElement {
-	/** @returns {import("./YtCurrentPage.js").YtCurrentPage} */
+	/** @returns {import("./support/yt_api/YtCurrentPage.js").YtCurrentPage} */
 	getCurrentPage() {throw 1;}
 }
 
@@ -2282,7 +2282,7 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-/** @type {import("./YtdPlayerElement.js").YtdPlayerElement | null} */
+/** @type {import("./support/yt_api/YtdPlayerElement.js").YtdPlayerElement | null} */
 let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
@@ -2291,7 +2291,7 @@ function on_ytd_player(element) {
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
-	/** @type {import("./YtdPlayerElement.js").YtdPlayerElement} */
+	/** @type {import("./support/yt_api/YtdPlayerElement.js").YtdPlayerElement} */
 	let element_type=element_any;
 	ytd_player=element_type;
 	window.ytd_player=element;
