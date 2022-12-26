@@ -14,7 +14,7 @@ protobuf=require('protobufjs');
 async function run() {
 	let root=await protobuf.load("yt_token.proto");
 	var A=root.lookupType("A");
-	/** @type {protobuf.Message<YtTokenProtoMessage>} */
+	/** @type {protobuf.Message<import("../YtTokenProtoMessage.js").YtTokenProtoMessage>} */
 	let message=A.decode(token_binary);
 	let obj=A.toObject(message);
 	console.log(obj);
