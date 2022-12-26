@@ -1,5 +1,8 @@
-/** @arg {{stack?:string;}} error */
-function captureStackTrace(error) {
+export type ErrorStack={
+	stack?: string;
+};
+
+function captureStackTrace(error:ErrorStack) {
 	const container = new Error(); // eslint-disable-line unicorn/error-message
 
 	Object.defineProperty(error, 'stack', {
@@ -12,4 +15,4 @@ function captureStackTrace(error) {
 	});
 }
 
-export default Error.captureStackTrace ?? captureStackTrace;
+export default (Error as {captureStackTrace?:(error: ErrorStack)=>void}).captureStackTrace ?? captureStackTrace;
