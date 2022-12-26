@@ -1,3 +1,4 @@
-import {UrlParseRes} from "./UrlParseRes";
+import {UrlParseImpl} from "./UrlParseImpl";
+import {UrlParseErr} from "./UrlParseErr";
 
-export type UrlParse<T extends string>=T extends `${infer Protocol extends `${string}:`}//${infer Host}/${infer Pathname}?${infer Search}`? UrlParseRes<T,Host,Protocol,Search,`/${Pathname}`>:never;
+export type UrlParse<T extends string>=UrlParseImpl<T> extends never? UrlParseErr<T>:UrlParseImpl<T>;
