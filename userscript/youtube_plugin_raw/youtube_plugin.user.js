@@ -267,6 +267,7 @@ function with_ytd_scope() {
 		let cur_count=1;
 		let obj=dom_observer;
 		let iter_count=0;
+		console.log("start async_plugin");
 		try {
 			while(true) {
 				iter_count++;
