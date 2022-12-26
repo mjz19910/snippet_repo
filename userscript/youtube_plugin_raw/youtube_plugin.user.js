@@ -3133,14 +3133,7 @@ class HistoryStateManager {
 			"configurable": true,
 			"enumerable": true,
 			"get": function() {
-				let m_err=new Error();
-				let err_stack=m_err.stack;
-				if(!err_stack) throw 1;
-				/** @type {{stack: string}} */
-				let err={stack: err_stack};
-				err.stack=err.stack?.split("\n").slice(0,5).join("\n");
-				Object.setPrototypeOf(err,Error.prototype);
-				console.log('hist get',err,m_err);
+				console.trace('hist get');
 				return hist_state_getter.call(this);
 			}
 		});
