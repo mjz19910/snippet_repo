@@ -318,6 +318,7 @@ function with_ytd_scope() {
 					}
 					if(yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
 					if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
+						console.log("found other current_page at iter=",iter_count);
 						/** @type {Promise<void>} */
 						let promise=new Promise((accept,reject) => {
 							if(!ytd_page_manager) return reject(new Error("missing data"));
@@ -352,14 +353,19 @@ function with_ytd_scope() {
 					obj.dispatchEvent({...event,type: "plugin-activate"});
 					break;
 				}
-				if(iter_count>1024) {
+				const max_find_iter=7588;
+				if(is_node_js()&&iter_count>max_find_iter&&found_element_count===0) {
 					console.log("wait for plugin ready timeout");
 					break;
 				}
 				if(!box_map.has("video-list")) continue;
 				if(ytd_page_manager===null) continue;
 				console.log(iter_count);
+				if(iter_count>max_find_iter) {
+					alert("found plugin reqs in iters="+iter_count);
+				}
 				obj.dispatchEvent({...event,type: "plugin-activate"});
+				break;
 			}
 		} catch(e) {
 			console.log("had error in async init",e);
@@ -2162,7 +2168,7 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 
-/** @arg {YTNavigateFinishEvent['detail']} detail */
+/** @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").PageTypeWatch<string>} detail */
 function on_page_type_changed(detail) {
 	if(detail.pageType!=="watch") {
 		debugger;
