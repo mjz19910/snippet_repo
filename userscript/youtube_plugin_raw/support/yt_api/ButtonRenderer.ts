@@ -1,17 +1,11 @@
-import {CommandMetadata} from "./CommandMetadata";
-import {ContinuationCommand} from "./ContinuationCommand";
+import {ContinuationCommandH} from "./ContinuationCommandH";
 import {TextRuns} from "./TextRuns";
 
-
 export type ButtonRenderer={
-	"style": "STYLE_SUGGESTIVE";
-	"size": "SIZE_DEFAULT";
-	"isDisabled": false;
-	"text": TextRuns;
+	style: "STYLE_SUGGESTIVE";
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	text: TextRuns;
 	trackingParams: string;
-	"command": {
-		"clickTrackingParams": string;
-		"commandMetadata": CommandMetadata;
-		continuationCommand?: ContinuationCommand;
-	};
+	command: ContinuationCommandH;
 };
