@@ -2946,7 +2946,7 @@ class HistoryStateManager {
 		 * @param {{}} obj
 		 */
 		function remove_yt_data(obj) {
-			return Object.__ia_excludeKeysS(obj,"");
+			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint");
 		}
 		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
