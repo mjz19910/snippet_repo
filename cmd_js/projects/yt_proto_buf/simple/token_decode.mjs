@@ -57,7 +57,7 @@ export function do_token_decode(binary) {
 	}
 	class SimpleType {
 		/**
-		 * @param {any} p
+		 * @param {any} [p]
 		 */
 		constructor(p) {
 			console.log(p);
@@ -195,6 +195,7 @@ export function do_token_decode(binary) {
 		/** @param {Buffer} buffer */
 		constructor(buffer) {
 			super(buffer);
+			this.buf=buffer;
 		}
 		string() {
 			var len=this.uint32();
