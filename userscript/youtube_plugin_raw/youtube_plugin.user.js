@@ -2865,17 +2865,11 @@ main();
 
 function destroy_env() {
 	window.inject_api=void 0;
-	message_channel.port1.close();
-	message_channel.port2.close();
-	message_channel.port1.onmessage=null;
-	message_channel.port2.onmessage=null;
 	let ports=[message_channel.port1,message_channel.port2];
-	console.log('events',dom_observer._events);
-	console.log("wait_ports",dom_observer.wait_ports.size);
-	console.log("port_to_resolvers_map",dom_observer.port_to_resolvers_map.size,"{");
-	let all_ent=[...dom_observer.port_to_resolvers_map.entries()];
-	console.log("  ",...all_ent.map(e => ["port"+(ports.indexOf(e[0])+1),e[1]]));
-	console.log("}");
+	for(let port of ports) {
+		port.close();
+		port.onmessage=null;
+	}
 	eval(`()=>{
 		delete window;
 		delete navigator;
