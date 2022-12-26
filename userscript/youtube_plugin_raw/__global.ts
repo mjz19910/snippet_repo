@@ -16,9 +16,6 @@ declare global {
 	}
 	interface InjectApiYt {
 		iterate_tracking_params: () => any[]|undefined;
-		storage?: {
-			on_ytd_app: (element: HTMLElement) => void;
-		};
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
 		Seen?: {};
