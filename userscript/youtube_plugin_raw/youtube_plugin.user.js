@@ -347,7 +347,7 @@ class NewBrowserHistory {
 /**
  * @template {{}} T
  * @param {T} func
- * @param {{}} value
+ * @param {{}|undefined} value
  */
 function with_prev(func,value) {
 	/** @type {{old?: {}}} */
