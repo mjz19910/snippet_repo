@@ -1275,9 +1275,6 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/**@type {Map<string, {}>}*/
-let yt_state_map=new Map;
-inject_api_yt.yt_state_map=yt_state_map;
 class IterateApiResultBase {
 	/**
 	 * @this {IterateApiResultBase & {[x:string]: any}}
