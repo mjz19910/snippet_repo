@@ -1,11 +1,11 @@
-import {ServiceEndpoint} from "../s/ServiceEndpoint";
-import {TextRuns} from "../t/TextRuns";
-import {Icon} from "../i/Icon";
-import {TrackingParams} from "../t/TrackingParams.js";
-import {Separator} from "../s/Separator";
+import {ServiceEndpoint} from "./ServiceEndpoint";
+import {TextRuns} from "./TextRuns";
+import {Icon} from "./Icon";
+import {TrackingParams} from "./TrackingParams.js";
+import {Separator} from "./Separator";
 
 export type MenuServiceItemRenderer={
-	icon: Icon<never>;
+	icon: Icon;
 	serviceEndpoint: ServiceEndpoint;
 	text: TextRuns;
 };

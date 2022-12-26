@@ -1,20 +1,7 @@
-import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
-import {CommandMetadata} from "../c/CommandMetadata.js";
-import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
+import {CommandMetadata} from "./CommandMetadata.js";
 import {WatchEndpointData} from "./WatchEndpointData";
-type ParentTrackingParams=TrackingParamsForKey<"parentTrackingParams">;
-export type ResolveUrlCommandMetadata=ParentTrackingParams;
 
-export interface WatchEndpoint<VideoId> extends ClickTrackingParams {
+export interface WatchEndpoint {
 	commandMetadata: CommandMetadata;
-	watchEndpoint: WatchEndpointData<VideoId>;
-}
-/*{
-    clickTrackingParams: string,
-    commandMetadata: {
-      webCommandMetadata: {url: `/watch?v=${YtVideoIdStr}`, webPageType: 'WEB_PAGE_TYPE_WATCH', rootVe: 3832},
-      resolveUrlCommandMetadata: ParentTrackingParams;
-    },
-    watchEndpoint: {videoId: 'g2U2-i13970'}
-  }
- */
+	watchEndpoint: WatchEndpointData;
+};
