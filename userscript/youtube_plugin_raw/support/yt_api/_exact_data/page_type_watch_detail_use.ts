@@ -17,5 +17,5 @@ export function page_type_watch_detail_use() {
 		class implements XX {a=json},
 		class implements JR_x {a=json.response},
 		json.response.response.contents,
-	];
+	] as any[];
 }
