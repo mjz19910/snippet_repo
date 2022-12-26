@@ -1,6 +1,6 @@
+import {CT} from "./ClickTrackingParams.js";
 import {CommandMetadata} from "./CommandMetadata";
 
-export type TrackedCommandMetadataH={
-	clickTrackingParams: string;
+export interface TrackedCommandMetadataH extends CT {
 	commandMetadata: CommandMetadata;
 };
