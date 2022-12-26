@@ -1,8 +1,8 @@
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
 import {CommandMetadata} from "../c/CommandMetadata.js";
-import {TrackingParams} from "../t/TrackingParams.js";
+import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
 import {WatchEndpointData} from "./WatchEndpointData";
-type ParentTrackingParams=TrackingParams<"parentTrackingParams">;
+type ParentTrackingParams=TrackingParamsForKey<"parentTrackingParams">;
 export type ResolveUrlCommandMetadata=ParentTrackingParams;
 
 export interface WatchEndpoint<VideoId> extends ClickTrackingParams {

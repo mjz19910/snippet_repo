@@ -1,3 +1,3 @@
-import {TrackingParams} from "../t/TrackingParams.js";
+import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
 
-export type ClickTrackingParams=TrackingParams<"clickTrackingParams">;
+export type ClickTrackingParams=TrackingParamsForKey<"clickTrackingParams">;

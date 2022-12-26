@@ -1,9 +1,9 @@
 import {Accessibility} from "../a/Accessibility";
 import {MenuServiceItem} from "./MenuServiceItem";
-import {TrackingParamsDef} from "../t/TrackingParams.js";
+import {TrackingParams} from "../t/TrackingParams.js";
 
 
-export interface MenuRenderer extends TrackingParamsDef {
+export interface MenuRenderer extends TrackingParams {
 	accessibility: Accessibility;
 	items: MenuServiceItem[];
 	targetId?: string;
