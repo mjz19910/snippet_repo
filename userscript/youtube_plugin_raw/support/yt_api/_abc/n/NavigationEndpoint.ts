@@ -4,4 +4,4 @@ import {TrackedCommandMetadataH} from "../t/TrackedCommandMetadataH";
 import {WatchEndpoint} from "../w/WatchEndpoint";
 
 
-export type NavigationEndpoint=TrackedCommandMetadataH|OpenPopupActionH|WatchEndpoint|BrowseEndpointH;
+export type NavigationEndpoint<T>=TrackedCommandMetadataH|OpenPopupActionH|WatchEndpoint<T>|BrowseEndpointH;
