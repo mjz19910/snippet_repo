@@ -2413,7 +2413,6 @@ async function async_plugin_init(event) {
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			x: {
 				if(ytd_app) break x;
-				debugger;
 				if(!inject_api_yt.storage) break x;
 				const target_element=get_html_elements(document,"ytd-app")[0];
 				if(!target_element) break x;
