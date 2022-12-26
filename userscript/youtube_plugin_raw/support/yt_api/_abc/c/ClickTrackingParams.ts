@@ -1,3 +1,3 @@
-export interface ClickTrackingParams {
-	/*grep-skip*/clickTrackingParams: string;
-}
+import {TrackingParams} from "../t/TrackingParams.js";
+
+export type ClickTrackingParams=TrackingParams<"clickTrackingParams">;
