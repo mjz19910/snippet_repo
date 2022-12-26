@@ -69,6 +69,10 @@ declare global {
 	};
 
 	type MBa_Provider=MBa_1|MBa_2|MBa_3;
+
+	interface PageTypeWatch {
+		pageType:"watch";
+	}	
 }
 /** @template T */
 class Hn<T> {
