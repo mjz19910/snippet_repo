@@ -852,16 +852,6 @@ function with_ytd_scope() {
 		on_ytd_app(target_element);
 		return true;
 	}
-	class HistoryManager {
-		/**
-		 * @param {any} a
-		 * @param {{}} b
-		 * @param {number} c
-		 */
-		replaceState(a,b,c) {
-			a; b; c;
-		}
-	}
 	class YtdAppElement extends HTMLElement {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element;
@@ -871,9 +861,6 @@ function with_ytd_scope() {
 		app_is_visible;
 		/**@type {ReturnType<typeof setInterval>|undefined} */
 		ytp_click_cint;
-		$=new class $Data {
-			historyManager=new HistoryManager;
-		};
 		pagePreparer=new PagePreparer;
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
