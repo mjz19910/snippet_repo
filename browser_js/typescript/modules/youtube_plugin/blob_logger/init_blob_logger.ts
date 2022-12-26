@@ -1,6 +1,5 @@
 import {blob_create_args_arr} from "./blob_create_args_arr.js"
 import {leftover_args} from "./leftover_args.js"
-import {created_blobs} from "./created_blobs.js"
 import {active_blob_set} from "./active_blob_set.js"
 
 export function init_blob_logger() {
@@ -13,7 +12,6 @@ export function init_blob_logger() {
 			}
 			blob_create_args_arr.push(url_source)
 			let ret=Reflect.apply(...arr)
-			created_blobs.set(ret,url_source)
 			active_blob_set.add(ret)
 			return ret
 		}
