@@ -507,13 +507,13 @@ function with_ytd_scope() {
 			if(!ytd_app) throw new Error("No ytd-app");
 			if(!is_watch_page_active()) return;
 			if(document.visibilityState==="visible") {
-				ytd_app.app_is_visible=1;
+				ytd_app.app_is_visible=true;
 				if(vis_imm) {
 					fire_on_visibility_change_restart_video_playback();
 					vis_imm=false;
 				}
 			} else {
-				ytd_app.app_is_visible=0;
+				ytd_app.app_is_visible=false;
 			}
 		});
 	}
