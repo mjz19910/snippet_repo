@@ -13,6 +13,9 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+/** @type {import("./YtdAppElementBase_.js").YtdAppElementBase_} */
+var YtdAppElementBase_;
+
 console=typeof window==='undefined'? console:(() => window.console)();
 /** @template U @arg {any} x @arg {U} u @returns {x is U} */
 function is_other(x,u) {
@@ -30,6 +33,7 @@ var is_node_js=function is_node_js() {
 
 if(typeof window==='undefined') {
 	is_node_js=() => true;
+	YtdAppElementBase_=require("./YtdAppElementBase_.js");
 	/** @type {any} */
 	let t_=new EventTarget;
 	t_;
@@ -348,6 +352,9 @@ function with_prev(func,value) {
 	return func;
 }
 
+/** @type {unique symbol} */
+const Gn=Symbol("injectionDeps");
+
 class PagePreparer {
 	cancel() {
 		throw new Error("Only types");
@@ -366,44 +373,90 @@ function with_ytd_scope() {
 	var ka=function(a) {
 		return a instanceof Array? a:eaa(k(a));
 	};
-	var NBa=function(a,b,c,d) {
-		d=void 0===d? !1:d;
-		if(-1<c.indexOf(b)) throw Error("Deps cycle for: "+b);
-		if(a.cachedValues.has(b)) return a.cachedValues.get(b);
-		if(!a.providers.has(b)) {
-			if(d) return;
-			throw Error("No provider for: "+b);
-		}
-		d=a.providers.get(b);
-		c.push(b);
-		if(d.useValue) var f=d.useValue;
-		else if(d.useFactory) f=d[Gn]? OBa(a,d[Gn],c):[],f=d.useFactory.apply(d,ka(f));
-		else if(d.useClass) {
-			f=d.useClass;
-			var h=f[Gn]? OBa(a,f[Gn],c):[];
-			function as_t2(x) {
-				/** @type {any} */
-				let v=x;
-				/** @type {()=>void} */
-				return v;
+	/** @arg {MBa} a @arg {Hn<string>[]} c */
+	var OBa=function(a,b,c) {
+		return b?b.map(function(d){return d instanceof LBa?NBa(a,d.key,c,!0):NBa(a,d,c)}):[]
+	};
+	/** @arg {MBa} a @arg {Hn<"POPUP_CONTROLLER_TOKEN">} b @arg {Hn<string>[]} c @arg {boolean} [d] */
+	function NBa(a,b,c,d) {
+		{
+			if(-1<c.indexOf(b))
+				throw Error("Deps cycle for: "+b);
+			if(a.cachedValues.has(b))
+				return a.cachedValues.get(b);
+			if(!a.providers.has(b)) {
+				if(void 0===d? !1:d)
+					return;
+				throw Error("No provider for: "+b);
 			}
-			f=new (Function.prototype.bind.apply(as_t2(f),[null].concat(ka(h))));
-		} else throw Error("Could not resolve providers for: "+b);
-		c.pop();
-		d.skipCache||a.cachedValues.set(b,f);
-		return f;
-	};
-	var LBa=function(a) {this.key=a;};
-	var MBa=function() {
-		this.providers=new Map; this.cachedValues=new Map;
-	};
-	MBa.prototype.addProvider=function(a) {
-		this.providers.set(a.provide,a);
-	};
-	MBa.prototype.resolve=function(a) {
-		return a instanceof LBa? NBa(this,a.key,[],!0):NBa(this,a,[]);
-	};
-	var PBa;
+		}
+		{
+			let d=a.providers.get(b);
+			if(!d) throw 1;
+			c.push(b);
+			if(d&&'useValue' in d&&d.useValue)
+				var f=d.useValue;
+			else if(d&&'useFactory' in d&&d.useFactory) {
+				d;
+				// Gn=Symbol("injectionDeps")
+				let f=d[Gn];
+				f? OBa(a,d[Gn],c):[],f=d.useFactory.apply(d,ka(f));
+			} else if('useClass' in d&&d.useClass) {
+				let f=d.useClass;
+				// Gn=Symbol("injectionDeps")
+				var h=f[Gn]? OBa(a,f[Gn],c):[];
+				function as_t2(x) {
+					/** @type {any} */
+					let v=x;
+					/** @type {()=>void} */
+					return v;
+				}
+				f=new (Function.prototype.bind.apply(as_t2(f),[null].concat(ka(h))));
+			} else
+				throw Error("Could not resolve providers for: "+b);
+			c.pop();
+			d.skipCache||a.cachedValues.set(b,f);
+			return f;
+		}
+	}
+	/** @template T */
+	class Hn {
+		/** @arg {T} a */
+		constructor(a) {
+			this.name=a;
+		}
+	}
+	class LBa {
+		/** @arg {Hn<string>} a */
+		constructor(a) {
+			this.key=a;
+		}
+	}
+	class MBa {
+		constructor() {
+			/** @type {Map<Hn<string>,MBa_Provider>} */
+			this.providers=new Map;
+			/** @type {Map<Hn<string>,{}>} */
+			this.cachedValues=new Map;
+		}
+		/**
+		 * @param {MBa_Provider} a
+		 */
+		addProvider(a) {
+			this.providers.set(a.provide,a);
+		}
+		/** @arg {LBa|Hn<string>} a */
+		resolve(a) {
+			if(a instanceof LBa) {
+				console.log('resolve', Object.getPrototypeOf(a).constructor.name,a.key);
+			} else {
+				console.log('resolve', Object.getPrototypeOf(a).constructor.name,a);
+			}
+			return a instanceof LBa? NBa(this,a.key,[],!0):NBa(this,a,[]);
+		}
+	}
+	/** @type {MBa|undefined} */
+	var PBa=void 0;
 	function Jn() {
 		PBa||(PBa=new MBa); return PBa;
 	}
@@ -414,6 +467,7 @@ function with_ytd_scope() {
 		element_map.set(element_id,element);
 		window.ytd_app=element;
 		ytd_app=YtdAppElement.cast(element);
+		if(!ytd_app) throw 1;
 		ytd_app.init_inject=YtdAppElement.prototype.init_inject;
 		ytd_app.init_inject();
 		ytd_app.addEventListener("yt-navigate-finish",function(event) {
@@ -428,13 +482,13 @@ function with_ytd_scope() {
 		});
 		ytd_app.ui_plugin_style_element=ui_plugin_style_element;
 		if(document.visibilityState==="visible") {
-			ytd_app.app_is_visible=1;
+			ytd_app.app_is_visible=true;
 			if(vis_imm) {
 				fire_on_visibility_change_restart_video_playback();
 				vis_imm=false;
 			}
 		} else {
-			ytd_app.app_is_visible=0;
+			ytd_app.app_is_visible=false;
 		}
 		ytd_app.ytp_click_cint=setInterval(() => {
 			if(!is_watch_page_active()||!ytd_app) return;
@@ -469,9 +523,9 @@ function with_ytd_scope() {
 		ytp_click_cint;
 		$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
 		pagePreparer=new PagePreparer;
-		/**@arg {HTMLElement} element @return {YtdAppElement} */
+		/**@arg {HTMLElement} element @return {YtdAppElementBase_} */
 		static cast(element) {
-			return any_c(element,YtdAppElement);
+			return any_c(element,YtdAppElementBase_);
 		}
 		__shady_children=new ShadyChildrenOfYtdApp;
 		hasNavigated=false;
@@ -578,6 +632,7 @@ function with_ytd_scope() {
 			Object.defineProperty(this,"replaceUrl",pd);
 			/** @arg {YtdAppElement} a */
 			function v5(a) {
+				if(!a.$) throw 1;
 				return a.$.historyManager;
 			}
 			function u5() {
@@ -634,6 +689,9 @@ function with_ytd_scope() {
 			this.cancelPendingTasks=function cancelPendingTasks() {
 				this.pagePreparer&&this.pagePreparer.cancel();
 			};
+			var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
+			/** @arg {Hn} a */
+			function In(a) {return new LBa(a);}
 			this.onYtNavigateStart=function onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
 				this.cancelPendingTasks();
 				b.noProgressBar||(a=Jn().resolve(In(EHc)))&&a.start();
@@ -1710,10 +1768,10 @@ inject_api.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
 	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
-	window.created_blobs=created_blobs;
+	inject_api.created_blobs=created_blobs;
 	/** @type {Set<string>}*/
 	let active_blob_set=new Set;
-	window.active_blob_set=active_blob_set;
+	inject_api.active_blob_set=active_blob_set;
 	URL.createObjectURL=new Proxy(URL.createObjectURL,{
 		/**
 		 * @arg {typeof URL["createObjectURL"]} target
@@ -2275,8 +2333,8 @@ function on_page_type_changed(detail) {
 	}
 }
 
-/** @type {YtdAppElement|null} */
-let ytd_app=null;
+/** @type {YtdAppElementBase_|undefined} */
+let ytd_app=void 0;
 
 let vis_imm=false;
 let css_str=`
@@ -3364,6 +3422,7 @@ function get_exports() {
 if(typeof exports==='object') {
 	let exports=get_exports();
 	exports.SavedData=SavedData;
+	exports.Gn=Gn;
 }
 
 function destroy_env() {
