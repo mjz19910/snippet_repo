@@ -1,5 +1,5 @@
-import {ClickTrackingParams} from "../ClickTrackingParams.js";
-import {PingingEndpoint} from "../PingingEndpoint.js";
+import {ClickTrackingParams} from "../_abc/c/ClickTrackingParams.js";
+import {PingingEndpoint} from "../_abc/p/PingingEndpoint.js";
 import {UrlParse} from "../../url_parse/UrlParse";
 import {ParseUrlSearchParams} from "../../search_params_parse/SearchParamsParse";
 
