@@ -18,6 +18,7 @@
 // @grant			none
 // ==/UserScript==
 
+import captureStackTrace from "../../src/capture-stack-trace.js";
 import {CompressDual} from "../DebugApi/types/CompressDual";
 import {CompressStateBase} from "../DebugApi/types/CompressStateBase";
 
@@ -3223,7 +3224,7 @@ class AutoBuy {
 	}
 	next_timeout_async_err_log(msg: string,err: Error) {
 		let stack_trace: {stack: string;}={stack: "Error\n    at <anonymous>"};
-		if(err.stack===void 0) Error.captureStackTrace(stack_trace);
+		if(err.stack===void 0) captureStackTrace(stack_trace);
 		let err_stack_tmp=null;
 		if(err.stack) err_stack_tmp=err.stack;
 		else err_stack_tmp=stack_trace.stack;
