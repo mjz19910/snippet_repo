@@ -543,13 +543,13 @@ function with_ytd_scope() {
 		ui_plugin_style_element;
 		/**@type {VolumeRange|undefined}*/
 		volume_range;
-		/**@type {number|undefined} */
+		/**@type {boolean|undefined} */
 		app_is_visible;
 		/**@type {ReturnType<typeof setInterval>|undefined} */
 		ytp_click_cint;
 		$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
 		pagePreparer=new PagePreparer;
-		/**@arg {HTMLElement} element @return {YtdAppElementBase_} */
+		/**@arg {HTMLElement} element @return {InstanceType<typeof YtdAppElementBase_>} */
 		static cast(element) {
 			return any_c(element,YtdAppElementBase_);
 		}
@@ -2405,9 +2405,11 @@ async function async_plugin_init(event) {
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			x: {
 				if(ytd_app) break x;
+				if(!inject_api_yt.storage) break x;
 				const target_element=get_html_elements(document,"ytd-app")[0];
 				if(!target_element) break x;
 				found_element_count++;
+				let on_ytd_app=inject_api_yt.storage.on_ytd_app;
 				on_ytd_app(target_element);
 			}
 			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
