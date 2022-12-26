@@ -93,31 +93,12 @@ function main() {
 				}
 				continue fl;
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> fab9656f (u)
 			pn=performance.now();
 			console.log(pn-ps);
 			ps=pn;
 			continue wl;
 		} while(do_cont<(s_count-4));
 	}
-<<<<<<< HEAD
-=======
-			continue fl
-		}
-		pn=performance.now()
-		console.log(pn-ps)
-		ps=pn
-		continue wl
-	} while(do_cont<(scount-4))
-}
-// cspell: disable-next-line
-function do_work_tiai_0(dcs) {
->>>>>>> e10fb913 (u)
-=======
->>>>>>> fab9656f (u)
 	// cspell: disable-next-line
 	/**
 	 * @param {number} dcs
@@ -169,16 +150,11 @@ function do_work_tiai_0(dcs) {
 					break;
 				}
 			}
-<<<<<<< HEAD
 			pn=performance.now();
 			console.log(pn-ps);
 			ps=pn;
 			if(do_cont>0) {
 				break;
-=======
-			if(!sb2.classList.contains("green")) {
-				break
->>>>>>> e10fb913 (u)
 			}
 		} while(false);
 	}
@@ -197,21 +173,9 @@ function do_work_tiai_0(dcs) {
 		if(!lsw) return;
 		let pn=performance.now();
 		let ps=pn;
-<<<<<<< HEAD
-<<<<<<< HEAD
 		var chunk_size=15;
 		for(var cj=chunk_size;cj<lim;cj+=chunk_size) {
 			for(var xj=0;xj<chunk_size;xj++) {
-=======
-		var chunksz=15;
-		for(var cj=chunksz;cj<lim;cj+=chunksz) {
-			for(var xj=0;xj<chunksz;xj++) {
->>>>>>> e10fb913 (u)
-=======
-		var chunk_size=15;
-		for(var cj=chunk_size;cj<lim;cj+=chunk_size) {
-			for(var xj=0;xj<chunk_size;xj++) {
->>>>>>> fab9656f (u)
 				let x=a(lsw.children[dim_l].firstElementChild);
 				let el=a(x.nextElementSibling); v(el);
 				el.click();
@@ -223,12 +187,6 @@ function do_work_tiai_0(dcs) {
 			console.log(pn-ps);
 			ps=pn;
 		}
-<<<<<<< HEAD
-=======
-		pn=performance.now()
-		console.log(pn-ps)
-		ps=pn
->>>>>>> e10fb913 (u)
 	}
 	/** @arg {Element} v @returns {asserts v is HTMLInputElement} */
 	function v(v) {
