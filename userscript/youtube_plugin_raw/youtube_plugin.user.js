@@ -2163,7 +2163,9 @@ on_yt_navigate_finish.push(log_page_type_change);
 
 /** @arg {YTNavigateFinishEvent['detail']} detail */
 function on_page_type_changed(detail) {
-	debugger;
+	if(detail.pageType!=="watch") {
+		debugger;
+	}
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
 		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
