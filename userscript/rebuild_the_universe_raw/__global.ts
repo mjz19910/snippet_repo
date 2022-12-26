@@ -42,13 +42,6 @@ declare global {
 	}
 }
 
-class JQueryRes {
-	remove() {}
-}
-
-declare global {
-	var $: (q: string) => JQueryRes;
-}
 interface GoogleAdList {
 	op: any;
 	push(v: number): void;
