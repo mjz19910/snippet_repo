@@ -5,8 +5,7 @@ import {Icon} from "./Icon";
 import {PlaylistEditEndpoint} from "./PlaylistEditEndpoint";
 import {SignalServiceEndpoint} from "./SignalServiceEndpoint";
 
-interface UntoggledServiceEndpoint {
-	clickTrackingParams: string;
+interface UntoggledServiceEndpoint extends CT {
 	commandMetadata: CommandMetadata;
 	playlistEditEndpoint?: PlaylistEditEndpoint;
 	signalServiceEndpoint?: SignalServiceEndpoint;
