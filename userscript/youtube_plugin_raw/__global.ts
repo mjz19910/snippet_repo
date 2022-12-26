@@ -24,11 +24,10 @@ declare global {
 		Seen?: {};
 		port_state?: {};
 		plugin_overlay_element?: {};
-		HTMLMediaElementGainController?: {};
+		AudioGainController?: {};
 		audio_gain_controller?: {};
 		created_blobs: Map<string,Blob|MediaSource>;
 		active_blob_set: Set<string>;
-		ytPageType?: string;
 		playlist_arr?: string[];
 		page_type_changes?: string[],
 		dom_observer?: {};
@@ -44,6 +43,8 @@ declare global {
 		ytd_watch_flexy?: HTMLElement;
 		yt_playlist_manager?: HTMLElement;
 		ytd_app?: HTMLElement;
+		// website environment
+		ytPageType?: string;
 	}
 
 	type MBa_1={

@@ -1,6 +1,6 @@
 import {YtdPageManagerElementInterface} from "./YtdPageManagerElementInterface.js";
 import {HistoryManager} from "./HistoryManager";
-
+import {ShadyChildrenOfYtdApp} from "./ShadyChildrenOfYtdApp";
 
 export abstract class YtdAppElementBase_ extends HTMLElement {
 	abstract $?: {
@@ -10,5 +10,20 @@ export abstract class YtdAppElementBase_ extends HTMLElement {
 	abstract app_is_visible?: boolean;
 	abstract init_inject():void;
 	abstract ui_plugin_style_element?: HTMLStyleElement;
-	abstract ytp_click_cint?: number
+	abstract ytp_click_cint?: number;
+	abstract __shady_children:ShadyChildrenOfYtdApp;
+	abstract volume_range: VolumeRange|undefined;
+}
+abstract class VolumeRange {
+	abstract setGain(gain:number): void;
+	/** @private */
+	abstract getGain(): number;
+	/** @private */
+	abstract calculateGain():number;
+	abstract max_compressor_reduction:number;
+	abstract onKeyDown(event:KeyboardEvent): void;
+	/**
+	 * @param {Element} view_parent
+	 */
+	abstract attach_to_element(view_parent:Element): void;
 }
