@@ -1,6 +1,8 @@
+import {YtPlayerApi} from "./YtPlayerApi";
+
 export interface YtdPlayerElement extends HTMLElement {
 	active_nav: boolean;
-	player_: {getVideoData(): {video_id: string; eventId: undefined; title: any; author: any;}; getPlayerState(): {};}|null;
+	player_: YtPlayerApi|null;
 	playerResolver_: {
 		promise: Promise<void>;
 	};
