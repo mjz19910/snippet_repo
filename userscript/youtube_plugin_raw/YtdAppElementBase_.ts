@@ -8,7 +8,7 @@ export abstract class YtdAppElementBase_ extends HTMLElement {
 		["page-manager"]: YtdPageManagerElementInterface;
 	};
 	abstract app_is_visible?: boolean;
-	abstract init_inject?:()=> void;
+	abstract init_inject():void;
 	abstract ui_plugin_style_element?: HTMLStyleElement;
 	abstract ytp_click_cint?: number
 }
