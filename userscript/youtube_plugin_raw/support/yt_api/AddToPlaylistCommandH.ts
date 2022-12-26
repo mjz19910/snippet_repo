@@ -1,7 +1,7 @@
 import {AddToPlaylistCommand} from "./AddToPlaylistCommand";
-import {TrackClick} from "./TrackClick";
+import {CT} from "./ClickTrackingParams";
 
-export interface AddToPlaylistCommandH extends TrackClick {
+export interface AddToPlaylistCommandH extends CT {
 	addToPlaylistCommand: AddToPlaylistCommand;
 }
 

@@ -1,3 +1,3 @@
-export interface TrackClick {
+export interface CT {
 	clickTrackingParams: string;
 }

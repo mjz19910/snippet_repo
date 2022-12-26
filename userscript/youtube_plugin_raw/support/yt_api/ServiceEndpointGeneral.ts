@@ -1,6 +1,6 @@
+import {CT} from "./ClickTrackingParams.js";
 import {CommandMetadata} from "./CommandMetadata";
 
-export type ServiceEndpointGeneral={
-	clickTrackingParams: string;
+export interface ServiceEndpointGeneral extends CT {
 	commandMetadata: CommandMetadata;
 };
