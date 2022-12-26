@@ -15,7 +15,7 @@ declare global {
 	interface Object {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;
 	}
-	interface InjectApi {
+	interface InjectApiYt {
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
 		Seen?: {};
