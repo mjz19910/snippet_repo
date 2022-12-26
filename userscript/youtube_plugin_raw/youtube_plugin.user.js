@@ -291,8 +291,9 @@ class ShadyChildrenOfYtdApp {
 }
 
 class NewBrowserHistory {
-	/** @returns {import("./HistoryStateContent.js").HistoryStateContent|null} */
+	/** @returns {import("./HistoryStateContent.js").HistoryStateContent} */
 	getState() {
+		if(history.state===null) throw new Error("no data");
 		return history.state;
 	}
 	/**
@@ -760,13 +761,7 @@ function with_ytd_scope() {
 	}
 	class ProvideWithDesktopHistoryManagerToken {
 		browserHistory=new NewBrowserHistory;
-		/** @arg {string} url */
-		replaceUrl(url) {
-			var b=this.browserHistory.getState();
-			console.log("rep url",url);
-			this.replaceState(b,url);
-		}
-		/** @arg {any} b @arg {string} url */
+		/** @arg {import("./HistoryStateContent.js").HistoryStateContent} b @arg {string} url */
 		replaceState(b,url) {
 			{
 				let c=b;
@@ -1052,14 +1047,14 @@ function with_ytd_scope() {
 		}
 		/** @arg {string} url */
 		replaceUrl(url) {
-
 			if(!cache.desktop_history) {
 				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
 			}
 			if(arguments.length>1) {
 				console.log("replaceUrl api not followed",[...arguments].slice(1));
 			}
-			cache.desktop_history.replaceUrl(url);
+			var b=cache.desktop_history.browserHistory.getState();
+			cache.desktop_history.replaceState(b,url);
 		}
 		cancelPendingTasks() {
 			this.pagePreparer&&this.pagePreparer.cancel();
