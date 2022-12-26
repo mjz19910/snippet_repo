@@ -202,6 +202,20 @@ function destroy_env(message_channel) {
 		delete window;
 		delete navigator;
 	}`);
+	do_node_exit(0);
+}
+/** @param {number} exit_status */
+async function do_node_exit(exit_status) {
+	/** @arg {string} x */
+	function dyn_import(x) {
+		return import(x);
+	}
+	let do_node_exit=false;
+	if(do_node_exit) {
+		/** @type {{exit:(v:number)=>void}} */
+		let process=await dyn_import("process");
+		process.exit(exit_status);
+	}
 }
 exports.window=window;
 exports.destroy_env=destroy_env;
