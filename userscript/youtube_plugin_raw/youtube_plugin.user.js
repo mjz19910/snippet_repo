@@ -760,6 +760,11 @@ function with_ytd_scope() {
 		});
 	}
 	class ProvideWithDesktopHistoryManagerToken {
+		/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
+		createNewHistoryEntry(c,d,f) {
+			f=void 0===f? M0a():f;
+			return new K0a(f,c,d);
+		}
 		browserHistory=new NewBrowserHistory;
 		/** @arg {import("./HistoryStateContent.js").HistoryStateContent} b @arg {string} url */
 		replaceState(b,url) {
@@ -787,6 +792,10 @@ function with_ytd_scope() {
 			this.saveSnapshot(n,d,f);
 			this.replaceState(c,h||window.location.href);
 		}
+		/** @arg {number} c @arg {{}} d @arg {number} f */
+		saveSnapshot(c,d,f) {
+			this.historySnapshotCache.set(c,new G0a(d,f));
+		}
 		/** @type {Map<number,{rootData:{};scrollTop:number}>} */
 		historySnapshotCache=new Map;
 	}
@@ -803,11 +812,6 @@ function with_ytd_scope() {
 		}
 	}
 	/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
-	/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
-	ProvideWithDesktopHistoryManagerToken.prototype.createNewHistoryEntry=function(c,d,f) {
-		f=void 0===f? M0a():f;
-		return new K0a(f,c,d);
-	};
 	class G0a {
 		/** @arg {{}} a @arg {number} b */
 		constructor(a,b) {
@@ -815,10 +819,6 @@ function with_ytd_scope() {
 			this.scrollTop=b;
 		}
 	}
-	/** @arg {number} c @arg {{}} d @arg {number} f */
-	ProvideWithDesktopHistoryManagerToken.prototype.saveSnapshot=function(c,d,f) {
-		this.historySnapshotCache.set(c,new G0a(d,f));
-	};
 	let cache={
 		/** @type {ProvideWithDesktopHistoryManagerToken|null} */
 		desktop_history: null,
@@ -828,11 +828,122 @@ function with_ytd_scope() {
 		if(!a.$) throw 1;
 		return a.$.historyManager;
 	}
-	function u5() {
-		if(!cache.desktop_history) {
-			cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+	/** @type {MBa|undefined} */
+	var PBa;
+	function Jn() {
+		PBa||(PBa=new MBa);
+		return PBa;
+	}
+	var gaa=Object.create;
+	var iaa=Object.setPrototypeOf;
+	var na=iaa;
+	/** @arg {{superClass_: {},prototype: {constructor: {}}}} a @arg {{prototype: {}}} b */
+	var m=function(a,b) {
+		a.prototype=gaa(b.prototype);
+		a.prototype.constructor=a;
+		if(na)
+			na(a,b);
+		else
+			for(var c in b)
+				if("prototype"!=c) {
+					var d=Object.getOwnPropertyDescriptor(b,c);
+					d&&Object.defineProperty(a,c,d);
+				}
+		a.superClass_=b.prototype;
+	};
+	var qv=function(a) {
+		var b=function() {
+			var c=a.apply(this,[].concat(ka(za.apply(0,arguments))))||this;
+			c.historyEntryTime=0;
+			c.historySnapshotCache=c.createHistoryCache();
+			return c;
+		};
+		m(b,a);
+		b.prototype.createHistoryCache=function() {
+			return new ov(100);
 		}
-		return cache.desktop_history;
+			;
+		b.prototype.saveAndReplace=function(c,d,f) {
+			var h=window.location.href;
+			var l=void 0===l? {}:l;
+			var n=(n=this.browserHistory.getState())&&n.entryTime? n.entryTime:M0a();
+			c=this.createNewHistoryEntry(c,l,n);
+			this.saveSnapshot(n,d,f);
+			this.replaceState(c,h||window.location.href);
+		}
+			;
+		b.prototype.saveAndPush=function(c,d,f,h,l) {
+			l=void 0===l? {}:l;
+			this.saveSnapshot(this.historyEntryTime,f,h);
+			f=this.historySnapshotCache;
+			h=this.historyEntryTime;
+			var n=f.timeToDataCache.keys();
+			n=k(n);
+			for(var p=n.next();!p.done;p=n.next())
+				p=p.value,
+					p>h&&f.timeToDataCache.delete(p);
+			d=this.createNewHistoryEntry(d,l);
+			this.pushState(d,c);
+		}
+			;
+		b.prototype.saveSnapshot=function(c,d,f) {
+			this.historySnapshotCache.set(c,new G0a(d,f));
+		}
+			;
+		b.prototype.createNewHistoryEntry=function(c,d,f) {
+			f=void 0===f? M0a():f;
+			return new K0a(f,c,d);
+		}
+			;
+		b.prototype.handlePopstate=function(c) {
+			var d=a.prototype.handlePopstate.call(this,c)
+				,f=null
+				,h=null
+				,l=!1
+				,n=null;
+			d&&d.entryTime&&(n=this.historySnapshotCache.get(d.entryTime)||null,
+				l=d.entryTime>this.historyEntryTime,
+				this.historyEntryTime=d.entryTime,
+				f=d.endpoint,
+				h=d.savedComponentState);
+			this.handleHistoryCacheLoad(new F0a(f,l,n,h),c);
+			return d;
+		}
+			;
+		b.prototype.pushState=function(c,d) {
+			0<=Number(null==c? void 0:c.entryTime)&&(this.historyEntryTime=c.entryTime);
+			a.prototype.pushState.call(this,c,d);
+		}
+			;
+		b.prototype.replaceState=function(c,d) {
+			0<=Number(null==c? void 0:c.entryTime)&&(this.historyEntryTime=c.entryTime);
+			a.prototype.replaceState.call(this,c,d);
+		}
+			;
+		b.prototype.handleHistoryCacheLoad=function() {}
+			;
+		return b;
+	}(jv);
+	var O0a=new Hn("DESKTOP_HISTORY_MANAGER_TOKEN");
+	var D0a=function() {
+		return C0a.call(this,window.history)||this;
+	};
+	var N0a=function() {
+		var a=qv.call(this,new D0a)||this;
+		a.dispatchElement=null;
+		a.entryIndex=0;
+		return a;
+	};
+	{
+
+		let b=Jn();
+		b.addProvider({
+			provide: O0a,
+			useClass: N0a
+		});
+	}
+	function u5() {
+		return Jn().resolve(O0a);
 	}
 	function get_Ak() {
 		if(!window.ytcfg) throw 1;
@@ -1059,14 +1170,14 @@ function with_ytd_scope() {
 		cancelPendingTasks() {
 			this.pagePreparer&&this.pagePreparer.cancel();
 		}
+		/** @arg {string} a @arg {{}} b @arg {{}} c @arg {number} d */
+		saveAndPush(a,b,c,d) {
+			t5()? u5().saveAndPush(a,b,c,d):v5(this).saveAndPush(a,b,c,d);
+		}
 		init_inject() {
 			/** @arg {string} url @arg {never[]} ex_args */
-			this.replaceUrl=with_prev(YtdAppElement.prototype.replaceUrl,this.replaceUrl);
-			let pd=Object.getOwnPropertyDescriptor(this,"replaceUrl");
-			if(!pd) throw 1;
-			pd.configurable=false;
-			pd.writable=false;
-			Object.defineProperty(this,"replaceUrl",pd);
+			this.replaceUrl=YtdAppElement.prototype.replaceUrl;
+			this.saveAndPush=YtdAppElement.prototype.saveAndPush;
 			this.replaceState=YtdAppElement.prototype.replaceState;
 		};
 	}
@@ -1755,7 +1866,6 @@ class HandleRendererContentItemArray {
 	//   return a in Ak ?Ak[a]:b;
 	// }
 	// Ck;
-	// console.log([u5().createNewHistoryEntry,K0a].join("\t\n\t//---\n"));
 	// Jn().resolve(Cv).currentEndpoint;u5().browserHistory;
 	*/
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/RichItemRendererH.js").RichItemRendererH} content_item */
@@ -2648,8 +2758,6 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").PageTypeWatch<string>} */
-	detail=any({});
 }
 
 /**
