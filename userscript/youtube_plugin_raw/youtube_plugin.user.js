@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-/** @type {import("./YtdAppElementBase_.js").YtdAppElementBase_} */
+/** @type {typeof import("./YtdAppElementBase_.js").YtdAppElementBase_} */
 var YtdAppElementBase_;
 
 console=typeof window==='undefined'? console:(() => window.console)();
@@ -33,7 +33,7 @@ var is_node_js=function is_node_js() {
 
 if(typeof window==='undefined') {
 	is_node_js=() => true;
-	YtdAppElementBase_=require("./YtdAppElementBase_.js");
+	YtdAppElementBase_=require("./YtdAppElementBase_.js").YtdAppElementBase_;
 	/** @type {any} */
 	let t_=new EventTarget;
 	t_;
@@ -232,7 +232,7 @@ if(typeof window==='undefined') {
 	AudioContext=window.AudioContext;
 }
 if(typeof YtdAppElementBase==='undefined') {
-	/** @typedef {import("./__global.js").YtdAppElementBase_['$']} $d */
+	/** @typedef {import("./YtdAppElementBase_").YtdAppElementBase_['$']} $d */
 	/** @type {(x:$d|{})=>x is $d} */
 	let c_any=(x) => {x; return true;};
 	/** @type {$d|{}} */
@@ -253,12 +253,16 @@ if(typeof YtdAppElementBase==='undefined') {
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
 /** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};
+/** @type {InjectApiYt} */
+let inject_api_yt={};
+inject_api.modules=new Map;
+inject_api.modules.set("yt", inject_api_yt);
 
-inject_api.saved_maps=new Map;
+inject_api_yt.saved_maps=new Map;
 /** @arg {string} key @arg {Map<string, {}>} map */
 function save_new_map(key,map) {
-	if(!inject_api.saved_maps) return;
-	inject_api.saved_maps.set(key,map);
+	if(!inject_api_yt.saved_maps) return;
+	inject_api_yt.saved_maps.set(key,map);
 }
 
 class SavedData {
@@ -267,7 +271,7 @@ class SavedData {
 }
 
 let saved_data=new SavedData;
-inject_api.saved_data=saved_data;
+inject_api_yt.saved_data=saved_data;
 
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
@@ -362,23 +366,35 @@ class PagePreparer {
 }
 function with_ytd_scope() {
 	if(!YtdAppElementBase) throw 1;
-	var k=function(a) {
+	var aaa=function(/** @type {any[]} */ a) {
+		var b=0;
+		return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}
+	};
+	var k=function(/** @type {any[]} */ a) {
 		var b="undefined"!=typeof Symbol&&Symbol.iterator&&a[Symbol.iterator];
 		return b? b.call(a):{next: aaa(a)};
 	};
-	var eaa=function(a) {
+	var eaa=function(/** @type {{ next: () => any; }} */ a) {
 		for(var b,c=[];!(b=a.next()).done;)c.push(b.value);
 		return c;
 	};
-	var ka=function(a) {
+	var ka=function(/** @type {({} | undefined)[]} */ a) {
 		return a instanceof Array? a:eaa(k(a));
 	};
-	/** @arg {MBa} a @arg {Hn<string>[]} c */
+	/** @arg {MBa} a @arg {Hn<string>[]} b @arg {Hn<string>[]} c */
 	var OBa=function(a,b,c) {
-		return b?b.map(function(d){return d instanceof LBa?NBa(a,d.key,c,!0):NBa(a,d,c)}):[]
+		return b?b.map(function(d) {
+			if(d instanceof LBa) {
+				console.log("LBa map OBa", d);
+				return NBa(a,d.key,c,!0);
+			} else {
+				console.log("Hn map OBa", d);
+				return NBa(a,d,c);
+			}
+		}):[]
 	};
-	/** @arg {MBa} a @arg {Hn<"POPUP_CONTROLLER_TOKEN">} b @arg {Hn<string>[]} c @arg {boolean} [d] */
-	function NBa(a,b,c,d) {
+	/** @arg {MBa} a @arg {Hn<"POPUP_CONTROLLER_TOKEN">|Hn<string>} b @arg {Hn<string>[]} c @arg {boolean} [d] */
+	function NBa(a,b,c,d=false) {
 		console.log('dep', a,b,c,d);
 		{
 			if(-1<c.indexOf(b))
@@ -386,8 +402,7 @@ function with_ytd_scope() {
 			if(a.cachedValues.has(b))
 				return a.cachedValues.get(b);
 			if(!a.providers.has(b)) {
-				if(void 0===d? !1:d)
-					return;
+				if(d) return;
 				throw Error("No provider for: "+b);
 			}
 		}
@@ -395,29 +410,34 @@ function with_ytd_scope() {
 			let d=a.providers.get(b);
 			if(!d) throw 1;
 			c.push(b);
-			if(d&&'useValue' in d&&d.useValue)
-				var f=d.useValue;
-			else if(d&&'useFactory' in d&&d.useFactory) {
+			if(d&&'useValue' in d&&d.useValue){
+				let f=d.useValue;
+				c.pop();
+				d.skipCache||a.cachedValues.set(b,f);
+				return f;
+			} else if(d&&'useFactory' in d&&d.useFactory) {
 				d;
 				// Gn=Symbol("injectionDeps")
 				let f=d[Gn];
 				f? OBa(a,d[Gn],c):[],f=d.useFactory.apply(d,ka(f));
+				c.pop();
+				d.skipCache||a.cachedValues.set(b,f);
+				return f;
 			} else if('useClass' in d&&d.useClass) {
 				let f=d.useClass;
 				// Gn=Symbol("injectionDeps")
 				var h=f[Gn]? OBa(a,f[Gn],c):[];
+				/** @arg {any} x */
 				function as_t2(x) {
-					/** @type {any} */
+					/** @type {(...x: any[])=>void} */
 					let v=x;
-					/** @type {()=>void} */
 					return v;
 				}
-				f=new (Function.prototype.bind.apply(as_t2(f),[null].concat(ka(h))));
-			} else
-				throw Error("Could not resolve providers for: "+b);
-			c.pop();
-			d.skipCache||a.cachedValues.set(b,f);
-			return f;
+				f=new (Function.prototype.bind.apply(as_t2(f),[null,...ka(h)]));
+				c.pop();
+				d.skipCache||a.cachedValues.set(b,f);
+				return f;
+			} else throw Error("Could not resolve providers for: "+b);
 		}
 	}
 	/** @template T */
@@ -517,7 +537,7 @@ function with_ytd_scope() {
 			}
 		});
 	}
-	inject_api.storage={on_ytd_app};
+	inject_api_yt.storage={on_ytd_app};
 	class YtdAppElement extends YtdAppElementBase {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element;
@@ -883,7 +903,7 @@ class Seen {
 		return index;
 	}
 }
-inject_api.Seen=Seen;
+inject_api_yt.Seen=Seen;
 
 const realHTMLElement=HTMLElement;
 
@@ -1201,7 +1221,7 @@ class PropertyHandler {
 		}
 	}
 }
-inject_api.PropertyHandler=PropertyHandler;
+inject_api_yt.PropertyHandler=PropertyHandler;
 /**
  * @arg {{}} object
  * @param {PropertyKey} property
@@ -1240,7 +1260,7 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 /**@type {Map<string, {}>}*/
 let yt_state_map=new Map;
-inject_api.yt_state_map=yt_state_map;
+inject_api_yt.yt_state_map=yt_state_map;
 class IterateApiResultBase {
 	/**
 	 * @this {IterateApiResultBase & {[x:string]: any}}
@@ -1768,16 +1788,16 @@ class FilterHandlers extends IterateApiResultBase {
  */
 let blob_create_args_arr=[];
 let leftover_args=[];
-inject_api.blob_create_args_arr=blob_create_args_arr;
+inject_api_yt.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new FilterHandlers;
-inject_api.yt_handlers=yt_handlers;
+inject_api_yt.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
 	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
-	inject_api.created_blobs=created_blobs;
+	inject_api_yt.created_blobs=created_blobs;
 	/** @type {Set<string>}*/
 	let active_blob_set=new Set;
-	inject_api.active_blob_set=active_blob_set;
+	inject_api_yt.active_blob_set=active_blob_set;
 	URL.createObjectURL=new Proxy(URL.createObjectURL,{
 		/**
 		 * @arg {typeof URL["createObjectURL"]} target
@@ -2170,7 +2190,7 @@ class DomObserver extends CustomEventTarget {
 	}
 }
 let dom_observer=new DomObserver;
-inject_api.dom_observer=dom_observer;
+inject_api_yt.dom_observer=dom_observer;
 
 
 class YtdPageManagerElement extends HTMLElement {
@@ -2564,7 +2584,7 @@ class MessagePortState {
 	current_event_type="async-plugin-init";
 }
 let port_state=new MessagePortState;
-inject_api.port_state=port_state;
+inject_api_yt.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
@@ -2771,7 +2791,7 @@ function createPluginOverlay() {
 
 /**@type {PluginOverlayElement} */
 let plugin_overlay_element=createPluginOverlay();
-inject_api.plugin_overlay_element=plugin_overlay_element;
+inject_api_yt.plugin_overlay_element=plugin_overlay_element;
 
 function fix_offset() {
 	if(!ytd_player) return;
@@ -3034,7 +3054,7 @@ class AudioGainController {
 		window.inject_api.audio_gain_controller=audio_gain_controller;
 	}
 }
-inject_api.HTMLMediaElementGainController=AudioGainController;
+inject_api_yt.HTMLMediaElementGainController=AudioGainController;
 /** @type {AudioGainController|null} */
 let audio_gain_controller=null;
 
@@ -3406,11 +3426,11 @@ function iterate_tracking_params() {
 	}
 	return ret;
 }
-inject_api.iterate_tracking_params=iterate_tracking_params;
+inject_api_yt.iterate_tracking_params=iterate_tracking_params;
 
 function main() {
 	if(!window.inject_api) {
-		window.inject_api=inject_api;
+		window.inject_api=inject_api_yt;
 	}
 	start_message_channel_loop();
 }

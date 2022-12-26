@@ -44,19 +44,24 @@ declare global {
 	}
 
 	type MBa_1={
+		skipCache:false;
 		provide: Hn<string>;
 		useValue: {};
 	};
 
 	type MBa_2={
+		skipCache:false;
 		provide: Hn<string>;
-		useClass: {};
+		useClass: {
+			[x: typeof Gn]: Hn<string>[];
+		};
 	};
 
 	type MBa_3={
+		skipCache:false;
 		provide: Hn<string>;
-		useFactory: {};
-		[x: typeof Gn]: {};
+		useFactory: (...x:any[])=>any;
+		[x: typeof Gn]: Hn<string>[];
 	};
 
 	type MBa_Provider=MBa_1|MBa_2|MBa_3;
