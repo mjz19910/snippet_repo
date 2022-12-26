@@ -501,7 +501,6 @@ function with_ytd_scope() {
 		element_map.set(element_id,element);
 		window.ytd_app=element;
 		ytd_app=YtdAppElement.cast(element);
-		if(!ytd_app) throw 1;
 		ytd_app.init_inject=YtdAppElement.prototype.init_inject;
 		ytd_app.init_inject();
 		ytd_app.addEventListener("yt-navigate-finish",function(event) {
