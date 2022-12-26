@@ -1,8 +1,21 @@
 import {Accessibility} from "./Accessibility";
+import {CT} from "./ClickTrackingParams.js";
 import {CommandMetadata} from "./CommandMetadata";
 import {Icon} from "./Icon";
 import {PlaylistEditEndpoint} from "./PlaylistEditEndpoint";
 import {SignalServiceEndpoint} from "./SignalServiceEndpoint";
+
+interface UntoggledServiceEndpoint {
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	playlistEditEndpoint?: PlaylistEditEndpoint;
+	signalServiceEndpoint?: SignalServiceEndpoint;
+};
+
+interface ToggledServiceEndpoint extends CT {
+	commandMetadata: CommandMetadata;
+	playlistEditEndpoint: PlaylistEditEndpoint;
+};
 
 export type ThumbnailOverlayToggleButtonRenderer={
 	isToggled?: boolean;
@@ -10,17 +23,8 @@ export type ThumbnailOverlayToggleButtonRenderer={
 	toggledIcon: Icon;
 	untoggledTooltip: string;
 	toggledTooltip: string;
-	untoggledServiceEndpoint: {
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		playlistEditEndpoint?: PlaylistEditEndpoint;
-		signalServiceEndpoint?: SignalServiceEndpoint;
-	};
-	toggledServiceEndpoint?: {
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		playlistEditEndpoint: PlaylistEditEndpoint;
-	};
+	untoggledServiceEndpoint: UntoggledServiceEndpoint;
+	toggledServiceEndpoint?: ToggledServiceEndpoint;
 	untoggledAccessibility: Accessibility;
 	toggledAccessibility: Accessibility;
 	trackingParams: string;
