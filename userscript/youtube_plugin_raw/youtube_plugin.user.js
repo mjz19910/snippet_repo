@@ -13,8 +13,8 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-/** @type {typeof import("./YtdAppElementBase_.js").YtdAppElementBase_} */
-var YtdAppElementBase_;
+/** @type {typeof import("./YtdAppElementBase_.js").YtdAppElementBase_|undefined} */
+var YtdAppElementBase_=void 0;
 
 console=typeof window==='undefined'? console:(() => window.console)();
 /** @template U @arg {any} x @arg {U} u @returns {x is U} */
@@ -231,7 +231,7 @@ if(typeof window==='undefined') {
 	}
 	AudioContext=window.AudioContext;
 }
-if(typeof YtdAppElementBase==='undefined') {
+if(typeof YtdAppElementBase_==='undefined') {
 	/** @typedef {import("./YtdAppElementBase_").YtdAppElementBase_['$']} $d */
 	/** @type {(x:$d|{})=>x is $d} */
 	let c_any=(x) => {x; return true;};
@@ -240,12 +240,17 @@ if(typeof YtdAppElementBase==='undefined') {
 	if(!c_any(xx)) throw 1;
 	/** @type {$d} */
 	let xb=xx;
-	YtdAppElementBase=class extends HTMLElement {
+	let ext=class extends HTMLElement {
 		$=xb;
 	};
+	/** @arg {any} x */
+	function any(x) {return x;}
+	/** @type {typeof import("./YtdAppElementBase_").YtdAppElementBase_} */
+	let r=any(ext);
+	YtdAppElementBase_=r;
 }
 
-
+YtdAppElementBase_
 // #section Use module types
 /** @type {import("./__global.js")} */
 // #section end
@@ -2202,9 +2207,9 @@ class YtdPageManagerElement extends HTMLElement {
 	getCurrentPage() {throw 1;}
 }
 
-window.playlist_arr??=[];
+inject_api_yt.playlist_arr??=[];
 /**@type {string[]} */
-let playlist_arr=window.playlist_arr;
+let playlist_arr=inject_api_yt.playlist_arr;
 /**
  * @type {YtdPageManagerElement|null}
  */
@@ -2256,8 +2261,8 @@ function on_ytd_watch_flexy(element) {
 		}
 	});
 }
-window.page_type_changes??=[];
-let page_type_changes=window.page_type_changes;
+inject_api_yt.page_type_changes??=[];
+let page_type_changes=inject_api_yt.page_type_changes;
 
 /** @type {string | null}*/
 let last_page_type=null;
@@ -3057,10 +3062,10 @@ class AudioGainController {
 	static attach_instance() {
 		if(!window.inject_api) throw new Error("Missing inject_api");
 		if(!audio_gain_controller) throw new Error("Missing instance");
-		window.inject_api.audio_gain_controller=audio_gain_controller;
+		inject_api_yt.audio_gain_controller=audio_gain_controller;
 	}
 }
-inject_api_yt.HTMLMediaElementGainController=AudioGainController;
+inject_api_yt.AudioGainController=AudioGainController;
 /** @type {AudioGainController|null} */
 let audio_gain_controller=null;
 
