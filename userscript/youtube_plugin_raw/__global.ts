@@ -2,7 +2,6 @@ import {Type_yt} from "./Type_yt";
 import {SavedData} from "./youtube_plugin.user.js";
 import {YtConfigAk} from "./YtConfigAk";
 import {__ia_excludeKeysS} from "./support/yt_api/__ia_excludeKeysS";
-import {WatchEndpointH} from "./support/yt_api/WatchEndpointH.js";
 
 declare global {
 	interface Window {
