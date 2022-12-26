@@ -1,8 +1,8 @@
-import {WatchEndpointH} from "./WatchEndpointH.js";
+import {WatchEndpoint} from "./WatchEndpoint.js";
 
 
 export type YtWatchPage={
 	/** @readonly */
 	page: "watch";
-	endpoint: WatchEndpointH;
+	endpoint: WatchEndpoint;
 };

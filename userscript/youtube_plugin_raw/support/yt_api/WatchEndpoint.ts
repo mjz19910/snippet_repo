@@ -1,9 +1,7 @@
-import {WatchEndpointConfig} from "./WatchEndpointConfig";
+import {CommandMetadata} from "./CommandMetadata.js";
+import {WatchEndpointData} from "./WatchEndpointData";
 
-export type WatchEndpoint={
-	nofollow: boolean;
-	videoId: string;
-	params?: string;
-	startTimeSeconds?: number;
-	watchEndpointSupportedOnesieConfig: WatchEndpointConfig;
+export interface WatchEndpoint {
+	commandMetadata: CommandMetadata;
+	watchEndpoint: WatchEndpointData;
 };
