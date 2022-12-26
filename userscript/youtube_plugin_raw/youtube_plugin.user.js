@@ -2140,7 +2140,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").PageTypeWatch} */
+	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").PageTypeWatch<string>} */
 	detail=any({});
 }
 
