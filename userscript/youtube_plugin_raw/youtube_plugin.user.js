@@ -348,180 +348,247 @@ function with_prev(func,value) {
 	return func;
 }
 
-class YtdAppElement extends YtdAppElementBase {
-	/**@type {HTMLStyleElement|undefined}*/
-	ui_plugin_style_element;
-	/**@type {VolumeRange|undefined}*/
-	volume_range;
-	/**@type {number|undefined} */
-	app_is_visible;
-	/**@type {ReturnType<typeof setInterval>|undefined} */
-	ytp_click_cint;
-	$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
-	/**@arg {HTMLElement} element @return {YtdAppElement} */
-	static cast(element) {
-		return any_c(element,YtdAppElement);
+class PagePreparer {
+	cancel() {
+		throw new Error("Only types");
 	}
-	__shady_children=new ShadyChildrenOfYtdApp;
-	init_inject() {
-		let L0a=0;
-
-		function M0a() {
-			return window&&window.performance&&window.performance.now? window.performance.now():Date&&Date.now? Date.now():++L0a;
+}
+function with_ytd_scope() {
+	if(!YtdAppElementBase) throw 1;
+	var NBa=function(a,b,c,d) {
+		d=void 0===d? !1:d;
+		if(-1<c.indexOf(b)) throw Error("Deps cycle for: "+b);
+		if(a.cachedValues.has(b)) return a.cachedValues.get(b);
+		if(!a.providers.has(b)) {
+			if(d) return;
+			throw Error("No provider for: "+b);
 		}
-
-		class ProvideWithDesktopHistoryManagerToken {
-			browserHistory=new NewBrowserHistory;
-			/** @arg {string} url */
-			replaceUrl(url) {
-				var b=this.browserHistory.getState();
-				console.log("rep url",url);
-				this.replaceState(b,url);
+		d=a.providers.get(b);
+		c.push(b);
+		if(d.useValue) var f=d.useValue;
+		else if(d.useFactory) f=d[Gn]? OBa(a,d[Gn],c):[],f=d.useFactory.apply(d,ka(f));
+		else if(d.useClass) {
+			f=d.useClass;
+			var h=f[Gn]? OBa(a,f[Gn],c):[];
+			function as_t2(x) {
+				/** @type {any} */
+				let v=x;
+				/** @type {()=>void} */
+				return v;
 			}
-			/** @arg {any} b @arg {string} url */
-			replaceState(b,url) {
-				{
-					let c=b;
-					if(0<=Number(null==c? void 0:c.entryTime)) {
-						this.historyEntryTime=c.entryTime;
-					}
+			f=new (Function.prototype.bind.apply(as_t2(f),[null].concat(ka(h))));
+		} else throw Error("Could not resolve providers for: "+b);
+		c.pop();
+		d.skipCache||a.cachedValues.set(b,f);
+		return f;
+	};
+	var LBa=function(a) {this.key=a;};
+	var MBa=function() {
+		this.providers=new Map; this.cachedValues=new Map;
+	};
+	MBa.prototype.addProvider=function(a) {
+		this.providers.set(a.provide,a);
+	};
+	MBa.prototype.resolve=function(a) {
+		return a instanceof LBa? NBa(this,a.key,[],!0):NBa(this,a,[]);
+	};
+	var PBa;
+	function Jn() {
+		PBa||(PBa=new MBa); return PBa;
+	}
+	class YtdAppElement extends YtdAppElementBase {
+		/**@type {HTMLStyleElement|undefined}*/
+		ui_plugin_style_element;
+		/**@type {VolumeRange|undefined}*/
+		volume_range;
+		/**@type {number|undefined} */
+		app_is_visible;
+		/**@type {ReturnType<typeof setInterval>|undefined} */
+		ytp_click_cint;
+		$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
+		pagePreparer=new PagePreparer;
+		/**@arg {HTMLElement} element @return {YtdAppElement} */
+		static cast(element) {
+			return any_c(element,YtdAppElement);
+		}
+		__shady_children=new ShadyChildrenOfYtdApp;
+		hasNavigated=false;
+		replaceState() {}
+		initHistoryManager(/** @type {number} */ a) {
+			if(!this.hasNavigated) {
+				this.hasNavigated=!0;
+				var b=this.$["page-manager"].getCurrentData(); a=isNaN(a)? this.getPageOffset():a;
+				var c=Jn().resolve(Cv).currentEndpoint;
+				this.replaceState(c,b,a);
+			};
+		}
+		cancelPendingTasks() {
+			this.pagePreparer&&this.pagePreparer.cancel();
+		}
+		init_inject() {
+			let L0a=0;
+
+			function M0a() {
+				return window&&window.performance&&window.performance.now? window.performance.now():Date&&Date.now? Date.now():++L0a;
+			}
+
+			class ProvideWithDesktopHistoryManagerToken {
+				browserHistory=new NewBrowserHistory;
+				/** @arg {string} url */
+				replaceUrl(url) {
+					var b=this.browserHistory.getState();
+					console.log("rep url",url);
+					this.replaceState(b,url);
 				}
-				this.browserHistory.replaceState(b,url);
+				/** @arg {any} b @arg {string} url */
+				replaceState(b,url) {
+					{
+						let c=b;
+						if(0<=Number(null==c? void 0:c.entryTime)) {
+							this.historyEntryTime=c.entryTime;
+						}
+					}
+					this.browserHistory.replaceState(b,url);
+				}
+				/**
+				 * @param {any} c
+				 * @param {any} d
+				 * @param {any} f
+				 */
+				saveAndReplace(c,d,f) {
+					var h=window.location.href;
+					/** @type {{}|undefined} */
+					var l=void 0===l? {}:l;
+					let zz=this.browserHistory.getState();
+					/** @type {number} */
+					var n=(/*n=this.browserHistory.getState()*/zz)&&zz.entryTime? zz.entryTime:M0a();
+					c=this.createNewHistoryEntry(c,l,n);
+					this.saveSnapshot(n,d,f);
+					this.replaceState(c,h||window.location.href);
+				}
+				/** @type {Map<number,{rootData:{};scrollTop:number}>} */
+				historySnapshotCache=new Map;
+			}
+			class G0a {
+				/** @arg {{}} a @arg {number} b */
+				constructor(a,b) {
+					this.rootData=a;
+					this.scrollTop=b;
+				}
+			}
+			class K0a {
+				/** @arg {number} a @arg {ClickTrackedAndCommandMetadataWatchEndpointH} b @arg {{}} [c] */
+				constructor(a,b,c) {
+					this.endpoint=b;
+					this.savedComponentState=void 0===c? null:c;
+					this.entryTime=a;
+				}
+			}
+			/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
+			/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
+			ProvideWithDesktopHistoryManagerToken.prototype.createNewHistoryEntry=function(c,d,f) {
+				f=void 0===f? M0a():f;
+				return new K0a(f,c,d);
+			};
+			/** @arg {number} c @arg {{}} d @arg {number} f */
+			ProvideWithDesktopHistoryManagerToken.prototype.saveSnapshot=function(c,d,f) {
+				this.historySnapshotCache.set(c,new G0a(d,f));
+			};
+
+			let cache={
+				/** @type {ProvideWithDesktopHistoryManagerToken|null} */
+				desktop_history: null,
+			};
+			/** @arg {string} url @arg {never[]} ex_args */
+			this.replaceUrl=with_prev(function replaceUrl(/** @type {string} */ url,/** @type {any[]} */ ...ex_args) {
+				if(!cache.desktop_history) {
+					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+				}
+				if(ex_args.length>0) {
+					console.log("replaceUrl api not followed",ex_args);
+				}
+				cache.desktop_history.replaceUrl(url);
+			},this.replaceUrl);
+			let pd=Object.getOwnPropertyDescriptor(this,"replaceUrl");
+			if(!pd) throw 1;
+			pd.configurable=false;
+			pd.writable=false;
+			Object.defineProperty(this,"replaceUrl",pd);
+			/** @arg {YtdAppElement} a */
+			function v5(a) {
+				return a.$.historyManager;
+			}
+			function u5() {
+				if(!cache.desktop_history) {
+					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+				}
+				return cache.desktop_history;
+			}
+			function t5() {
+				return B("desktop_use_new_history_manager");
 			}
 			/**
-			 * @param {any} c
-			 * @param {any} d
-			 * @param {any} f
+			 * @param {string} a
+			 * @param {{}} b
 			 */
-			saveAndReplace(c,d,f) {
-				var h=window.location.href;
-				/** @type {{}|undefined} */
-				var l=void 0===l? {}:l;
-				let zz=this.browserHistory.getState();
-				/** @type {number} */
-				var n=(/*n=this.browserHistory.getState()*/zz)&&zz.entryTime? zz.entryTime:M0a();
-				c=this.createNewHistoryEntry(c,l,n);
-				this.saveSnapshot(n,d,f);
-				this.replaceState(c,h||window.location.href);
+			function Ck(a,b) {
+				return use_Ck(a,b);
 			}
-			/** @type {Map<number,{rootData:{};scrollTop:number}>} */
-			historySnapshotCache=new Map;
-		}
-		class G0a {
-			/** @arg {{}} a @arg {number} b */
-			constructor(a,b) {
-				this.rootData=a;
-				this.scrollTop=b;
+			/**
+			 * @param {string | number} a
+			 */
+			function Mma(a) {
+				var b=Ck("EXPERIMENTS_FORCED_FLAGS",{})||{};
+				return void 0!==b[a]? b[a]:Ck("EXPERIMENT_FLAGS",{})[a];
 			}
-		}
-		class K0a {
-			/** @arg {number} a @arg {ClickTrackedAndCommandMetadataWatchEndpointH} b @arg {{}} [c] */
-			constructor(a,b,c) {
-				this.endpoint=b;
-				this.savedComponentState=void 0===c? null:c;
-				this.entryTime=a;
+			/**
+			 * @param {string} a
+			 */
+			function B(a) {
+				a=Mma(a);
+				return "string"===typeof a&&"false"===a? !1:!!a;
 			}
-		}
-		/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
-		/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
-		ProvideWithDesktopHistoryManagerToken.prototype.createNewHistoryEntry=function(c,d,f) {
-			f=void 0===f? M0a():f;
-			return new K0a(f,c,d);
-		};
-		/** @arg {number} c @arg {{}} d @arg {number} f */
-		ProvideWithDesktopHistoryManagerToken.prototype.saveSnapshot=function(c,d,f) {
-			this.historySnapshotCache.set(c,new G0a(d,f));
-		};
-
-		let cache={
-			/** @type {ProvideWithDesktopHistoryManagerToken|null} */
-			desktop_history: null,
-		};
-		/** @arg {string} url @arg {never[]} ex_args */
-		this.replaceUrl=with_prev(function replaceUrl(/** @type {string} */ url,/** @type {any[]} */ ...ex_args) {
-			if(!cache.desktop_history) {
-				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+			// {
+			// var Jma=window,Kma,Lma;
+			// /** @type {YtConfigAk} */
+			// let Ak=(null==Jma?void 0:null==(Kma=Jma.yt)?void 0:Kma.config_)||(null==Jma?void 0:null==(Lma=Jma.ytcfg)?void 0:Lma.data_)||{};
+			// }
+			function get_Ak() {
+				if(!window.ytcfg) throw 1;
+				return window.ytcfg.data_;
+			};
+			/** @param {string} a @param {any} b */
+			function use_Ck(a,b) {
+				let Ak=get_Ak();
+				return a in Ak? Ak[a]:b;
 			}
-			if(ex_args.length>0) {
-				console.log("replaceUrl api not followed",ex_args);
-			}
-			cache.desktop_history.replaceUrl(url);
-		},this.replaceUrl);
-		let pd=Object.getOwnPropertyDescriptor(this,"replaceUrl");
-		if(!pd) throw 1;
-		pd.configurable=false;
-		pd.writable=false;
-		Object.defineProperty(this,"replaceUrl",pd);
-		/** @arg {YtdAppElement} a */
-		function v5(a) {
-			return a.$.historyManager;
-		}
-		function u5() {
-			if(!cache.desktop_history) {
-				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-			}
-			return cache.desktop_history;
-		}
-		function t5() {
-			return B("desktop_use_new_history_manager");
-		}
-		/**
-		 * @param {string} a
-		 * @param {{}} b
-		 */
-		function Ck(a,b) {
-			return use_Ck(a,b);
-		}
-		/**
-		 * @param {string | number} a
-		 */
-		function Mma(a) {
-			var b=Ck("EXPERIMENTS_FORCED_FLAGS",{})||{};
-			return void 0!==b[a]? b[a]:Ck("EXPERIMENT_FLAGS",{})[a];
-		}
-		/**
-		 * @param {string} a
-		 */
-		function B(a) {
-			a=Mma(a);
-			return "string"===typeof a&&"false"===a? !1:!!a;
-		}
-		// {
-		// var Jma=window,Kma,Lma;
-		// /** @type {YtConfigAk} */
-		// let Ak=(null==Jma?void 0:null==(Kma=Jma.yt)?void 0:Kma.config_)||(null==Jma?void 0:null==(Lma=Jma.ytcfg)?void 0:Lma.data_)||{};
-		// }
-		function get_Ak() {
-			if(!window.ytcfg) throw 1;
-			return window.ytcfg.data_;
-		};
-		/** @param {string} a @param {any} b */
-		function use_Ck(a,b) {
-			let Ak=get_Ak();
-			return a in Ak? Ak[a]:b;
-		}
-		this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
-			if(!cache.desktop_history) {
-				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-			}
-			t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
-		};
-		this.onYtNavigateStart=function onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
-			this.cancelPendingTasks();
-			b.noProgressBar||(a=Jn().resolve(In(EHc)))&&a.start();
-			a=this.hasPendingNavigation? null:this.data;
-			this.hasError=!1;
-			var c=Jn().resolve(Wt),
-				d,
-				f,
-				h;
-			B('kevlar_use_vimio_behavior')&&!(null==(d=b.endpoint)? 0:null==(f=d.commandMetadata)? 0:null==(h=f.webCommandMetadata)? 0:h.ignoreNavigation)&&(d=c.getCurrentPage())&&d.disconnectVisibilityRoot();
-			c.prepareForNavigation(b.pageType,b.endpoint);
-			B('kevlar_remove_page_dom_on_switch')||(this.pagePreparer=new GJ(1,'pcl'),HJ(this.pagePreparer,c.preparePage.bind(c,b.pageType,b.endpoint)));
-			d=this.getPageOffset();
-			this.initHistoryManager(d);
-			b.reload||this.hasPendingNavigation? this.replaceState(b.endpoint,a,d):'watch'===a.page&&'watch'===b.pageType&&B('kevlar_replace_watch_to_watch_history_state')? this.replaceState(b.endpoint,a,d):'shorts'===a.page&&'shorts'===b.pageType&&B('kevlar_replace_short_to_short_history_state')? this.replaceState(b.endpoint,a,0):'navigate-back'!=b.type&&'navigate-forward'!=b.type&&this.saveAndPush(b.url,b.endpoint,a,d);
-			this.hasPendingNavigation=!0;
+			this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
+				if(!cache.desktop_history) {
+					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+				}
+				t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
+			};
+			this.initHistoryManager=YtdAppElement.prototype.initHistoryManager;
+			this.cancelPendingTasks=function cancelPendingTasks() {
+				this.pagePreparer&&this.pagePreparer.cancel();
+			};
+			this.onYtNavigateStart=function onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
+				this.cancelPendingTasks();
+				b.noProgressBar||(a=Jn().resolve(In(EHc)))&&a.start();
+				a=this.hasPendingNavigation? null:this.data;
+				this.hasError=!1;
+				var c=Jn().resolve(Wt),
+					d,
+					f,
+					h;
+				B('kevlar_use_vimio_behavior')&&!(null==(d=b.endpoint)? 0:null==(f=d.commandMetadata)? 0:null==(h=f.webCommandMetadata)? 0:h.ignoreNavigation)&&(d=c.getCurrentPage())&&d.disconnectVisibilityRoot();
+				c.prepareForNavigation(b.pageType,b.endpoint);
+				B('kevlar_remove_page_dom_on_switch')||(this.pagePreparer=new GJ(1,'pcl'),HJ(this.pagePreparer,c.preparePage.bind(c,b.pageType,b.endpoint)));
+				d=this.getPageOffset();
+				this.initHistoryManager(d);
+				b.reload||this.hasPendingNavigation? this.replaceState(b.endpoint,a,d):'watch'===a.page&&'watch'===b.pageType&&B('kevlar_replace_watch_to_watch_history_state')? this.replaceState(b.endpoint,a,d):'shorts'===a.page&&'shorts'===b.pageType&&B('kevlar_replace_short_to_short_history_state')? this.replaceState(b.endpoint,a,0):'navigate-back'!=b.type&&'navigate-forward'!=b.type&&this.saveAndPush(b.url,b.endpoint,a,d);
+				this.hasPendingNavigation=!0;
+			};
 		};
 	}
 }
