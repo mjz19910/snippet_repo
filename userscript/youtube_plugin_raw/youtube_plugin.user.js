@@ -256,7 +256,7 @@ let inject_api=window.inject_api??{};
 /** @type {InjectApiYt} */
 let inject_api_yt={};
 inject_api.modules=new Map;
-inject_api.modules.set("yt", inject_api_yt);
+inject_api.modules.set("yt",inject_api_yt);
 
 inject_api_yt.saved_maps=new Map;
 /** @arg {string} key @arg {Map<string, {}>} map */
@@ -366,9 +366,18 @@ class PagePreparer {
 }
 function with_ytd_scope() {
 	if(!YtdAppElementBase) throw 1;
+	/** @template T */
+	class Hn {
+		/** @arg {T} a */
+		constructor(a) {
+			this.name=a;
+		}
+	}
+	/** @type {Hn<"NAVIGATION_TOKEN">} */
+	const Cv=new Hn("NAVIGATION_TOKEN");
 	var aaa=function(/** @type {any[]} */ a) {
 		var b=0;
-		return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}
+		return function() {return b<a.length? {done: !1,value: a[b++]}:{done: !0};};
 	};
 	var k=function(/** @type {any[]} */ a) {
 		var b="undefined"!=typeof Symbol&&Symbol.iterator&&a[Symbol.iterator];
@@ -383,19 +392,19 @@ function with_ytd_scope() {
 	};
 	/** @arg {MBa} a @arg {Hn<string>[]} b @arg {Hn<string>[]} c */
 	var OBa=function(a,b,c) {
-		return b?b.map(function(d) {
+		return b? b.map(function(d) {
 			if(d instanceof LBa) {
-				console.log("LBa map OBa", d);
+				console.log("LBa map OBa",d);
 				return NBa(a,d.key,c,!0);
 			} else {
-				console.log("Hn map OBa", d);
+				console.log("Hn map OBa",d);
 				return NBa(a,d,c);
 			}
-		}):[]
+		}):[];
 	};
 	/** @arg {MBa} a @arg {Hn<"POPUP_CONTROLLER_TOKEN">|Hn<string>} b @arg {Hn<string>[]} c @arg {boolean} [d] */
 	function NBa(a,b,c,d=false) {
-		console.log('dep', a,b,c,d);
+		console.log('dep',a,b,c,d);
 		{
 			if(-1<c.indexOf(b))
 				throw Error("Deps cycle for: "+b);
@@ -410,7 +419,7 @@ function with_ytd_scope() {
 			let d=a.providers.get(b);
 			if(!d) throw 1;
 			c.push(b);
-			if(d&&'useValue' in d&&d.useValue){
+			if(d&&'useValue' in d&&d.useValue) {
 				let f=d.useValue;
 				c.pop();
 				d.skipCache||a.cachedValues.set(b,f);
@@ -440,13 +449,6 @@ function with_ytd_scope() {
 			} else throw Error("Could not resolve providers for: "+b);
 		}
 	}
-	/** @template T */
-	class Hn {
-		/** @arg {T} a */
-		constructor(a) {
-			this.name=a;
-		}
-	}
 	class LBa {
 		/** @arg {Hn<string>} a */
 		constructor(a) {
@@ -469,12 +471,12 @@ function with_ytd_scope() {
 		/** @arg {LBa|Hn<string>} a */
 		resolve(a) {
 			if(a instanceof LBa) {
-				console.log('resolve', Object.getPrototypeOf(a).constructor.name,a.key);
+				console.log('resolve',Object.getPrototypeOf(a).constructor.name,a.key);
 				/**@type {any} */
 				let x_any=a.key;
 				return NBa(this,x_any,[],!0);
 			} else {
-				console.log('resolve', Object.getPrototypeOf(a).constructor.name,a);
+				console.log('resolve',Object.getPrototypeOf(a).constructor.name,a);
 				/**@type {any} */
 				let x_any=a;
 				return NBa(this,x_any,[]);
@@ -537,6 +539,120 @@ function with_ytd_scope() {
 			}
 		});
 	}
+	class ProvideWithDesktopHistoryManagerToken {
+		browserHistory=new NewBrowserHistory;
+		/** @arg {string} url */
+		replaceUrl(url) {
+			var b=this.browserHistory.getState();
+			console.log("rep url",url);
+			this.replaceState(b,url);
+		}
+		/** @arg {any} b @arg {string} url */
+		replaceState(b,url) {
+			{
+				let c=b;
+				if(0<=Number(null==c? void 0:c.entryTime)) {
+					this.historyEntryTime=c.entryTime;
+				}
+			}
+			this.browserHistory.replaceState(b,url);
+		}
+		/**
+		 * @param {any} c
+		 * @param {any} d
+		 * @param {any} f
+		 */
+		saveAndReplace(c,d,f) {
+			var h=window.location.href;
+			/** @type {{}|undefined} */
+			var l=void 0===l? {}:l;
+			let zz=this.browserHistory.getState();
+			/** @type {number} */
+			var n=(/*n=this.browserHistory.getState()*/zz)&&zz.entryTime? zz.entryTime:M0a();
+			c=this.createNewHistoryEntry(c,l,n);
+			this.saveSnapshot(n,d,f);
+			this.replaceState(c,h||window.location.href);
+		}
+		/** @type {Map<number,{rootData:{};scrollTop:number}>} */
+		historySnapshotCache=new Map;
+	}
+	let L0a=0;
+	function M0a() {
+		return window&&window.performance&&window.performance.now? window.performance.now():Date&&Date.now? Date.now():++L0a;
+	}
+	class K0a {
+		/** @arg {number} a @arg {ClickTrackedAndCommandMetadataWatchEndpointH} b @arg {{}} [c] */
+		constructor(a,b,c) {
+			this.endpoint=b;
+			this.savedComponentState=void 0===c? null:c;
+			this.entryTime=a;
+		}
+	}
+	/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
+	/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
+	ProvideWithDesktopHistoryManagerToken.prototype.createNewHistoryEntry=function(c,d,f) {
+		f=void 0===f? M0a():f;
+		return new K0a(f,c,d);
+	};
+	class G0a {
+		/** @arg {{}} a @arg {number} b */
+		constructor(a,b) {
+			this.rootData=a;
+			this.scrollTop=b;
+		}
+	}
+	/** @arg {number} c @arg {{}} d @arg {number} f */
+	ProvideWithDesktopHistoryManagerToken.prototype.saveSnapshot=function(c,d,f) {
+		this.historySnapshotCache.set(c,new G0a(d,f));
+	};
+	let cache={
+		/** @type {ProvideWithDesktopHistoryManagerToken|null} */
+		desktop_history: null,
+	};
+	/** @arg {YtdAppElement} a */
+	function v5(a) {
+		if(!a.$) throw 1;
+		return a.$.historyManager;
+	}
+	function u5() {
+		if(!cache.desktop_history) {
+			cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+		}
+		return cache.desktop_history;
+	}
+	function get_Ak() {
+		if(!window.ytcfg) throw 1;
+		return window.ytcfg.data_;
+	};
+	/** @param {string} a @param {any} b */
+	function use_Ck(a,b) {
+		let Ak=get_Ak();
+		return a in Ak? Ak[a]:b;
+	}
+	/**
+	 * @param {string} a
+	 * @param {{}} b
+	 */
+	function Ck(a,b) {
+		return use_Ck(a,b);
+	}
+	/**
+	 * @param {string | number} a
+	 */
+	function Mma(a) {
+		var b=Ck("EXPERIMENTS_FORCED_FLAGS",{})||{};
+		return void 0!==b[a]? b[a]:Ck("EXPERIMENT_FLAGS",{})[a];
+	}
+	/**
+	 * @param {string} a
+	 */
+	function B(a) {
+		a=Mma(a);
+		return "string"===typeof a&&"false"===a? !1:!!a;
+	}
+	function t5() {
+		return B("desktop_use_new_history_manager");
+	}
 	inject_api_yt.storage={on_ytd_app};
 	class YtdAppElement extends YtdAppElementBase {
 		/**@type {HTMLStyleElement|undefined}*/
@@ -549,98 +665,54 @@ function with_ytd_scope() {
 		ytp_click_cint;
 		$=any({},(() => {if(!YtdAppElementBase) throw 1; return YtdAppElementBase;})().prototype.$);
 		pagePreparer=new PagePreparer;
-		/**@arg {HTMLElement} element @return {InstanceType<typeof YtdAppElementBase_>} */
+		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
-			return any_c(element,YtdAppElementBase_);
+			return any_c(element,YtdAppElement);
 		}
 		__shady_children=new ShadyChildrenOfYtdApp;
 		hasNavigated=false;
-		replaceState() {}
+		/**
+		 * @param {any} a
+		 * @param {{}} b
+		 * @param {number} c
+		 */
+		replaceState(a,b,c) {
+			if(!cache.desktop_history) {
+				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+			}
+			t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
+		}
+		getPageOffset() {
+			return 0;
+		}
 		initHistoryManager(/** @type {number} */ a) {
+			if(!this.$) throw 1;
+			let res_xx=Jn().resolve(Cv);
+			if(!res_xx) throw 1;
+			if(!('currentEndpoint' in res_xx)) throw 1;
 			if(!this.hasNavigated) {
 				this.hasNavigated=!0;
-				var b=this.$["page-manager"].getCurrentData(); a=isNaN(a)? this.getPageOffset():a;
-				var c=Jn().resolve(Cv).currentEndpoint;
+				var b=this.$["page-manager"].getCurrentData();
+				a=isNaN(a)? this.getPageOffset():a;
+				var c=res_xx.currentEndpoint;
 				this.replaceState(c,b,a);
 			};
+		}
+		/** @arg {string} url */
+		replaceUrl(url) {
+			
+			if(!cache.desktop_history) {
+				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+			}
+			if(arguments.length>1) {
+				console.log("replaceUrl api not followed",[...arguments].slice(1));
+			}
+			cache.desktop_history.replaceUrl(url);
 		}
 		cancelPendingTasks() {
 			this.pagePreparer&&this.pagePreparer.cancel();
 		}
 		init_inject=function init_inject() {
-			let L0a=0;
-
-			function M0a() {
-				return window&&window.performance&&window.performance.now? window.performance.now():Date&&Date.now? Date.now():++L0a;
-			}
-
-			class ProvideWithDesktopHistoryManagerToken {
-				browserHistory=new NewBrowserHistory;
-				/** @arg {string} url */
-				replaceUrl(url) {
-					var b=this.browserHistory.getState();
-					console.log("rep url",url);
-					this.replaceState(b,url);
-				}
-				/** @arg {any} b @arg {string} url */
-				replaceState(b,url) {
-					{
-						let c=b;
-						if(0<=Number(null==c? void 0:c.entryTime)) {
-							this.historyEntryTime=c.entryTime;
-						}
-					}
-					this.browserHistory.replaceState(b,url);
-				}
-				/**
-				 * @param {any} c
-				 * @param {any} d
-				 * @param {any} f
-				 */
-				saveAndReplace(c,d,f) {
-					var h=window.location.href;
-					/** @type {{}|undefined} */
-					var l=void 0===l? {}:l;
-					let zz=this.browserHistory.getState();
-					/** @type {number} */
-					var n=(/*n=this.browserHistory.getState()*/zz)&&zz.entryTime? zz.entryTime:M0a();
-					c=this.createNewHistoryEntry(c,l,n);
-					this.saveSnapshot(n,d,f);
-					this.replaceState(c,h||window.location.href);
-				}
-				/** @type {Map<number,{rootData:{};scrollTop:number}>} */
-				historySnapshotCache=new Map;
-			}
-			class G0a {
-				/** @arg {{}} a @arg {number} b */
-				constructor(a,b) {
-					this.rootData=a;
-					this.scrollTop=b;
-				}
-			}
-			class K0a {
-				/** @arg {number} a @arg {ClickTrackedAndCommandMetadataWatchEndpointH} b @arg {{}} [c] */
-				constructor(a,b,c) {
-					this.endpoint=b;
-					this.savedComponentState=void 0===c? null:c;
-					this.entryTime=a;
-				}
-			}
-			/** @typedef {import("./support/yt_api/WatchEndpointH.js").ClickTrackedAndCommandMetadataWatchEndpointH} ClickTrackedAndCommandMetadataWatchEndpointH */
-			/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
-			ProvideWithDesktopHistoryManagerToken.prototype.createNewHistoryEntry=function(c,d,f) {
-				f=void 0===f? M0a():f;
-				return new K0a(f,c,d);
-			};
-			/** @arg {number} c @arg {{}} d @arg {number} f */
-			ProvideWithDesktopHistoryManagerToken.prototype.saveSnapshot=function(c,d,f) {
-				this.historySnapshotCache.set(c,new G0a(d,f));
-			};
-
-			let cache={
-				/** @type {ProvideWithDesktopHistoryManagerToken|null} */
-				desktop_history: null,
-			};
 			/** @arg {string} url @arg {never[]} ex_args */
 			this.replaceUrl=with_prev(function replaceUrl(/** @type {string} */ url,/** @type {any[]} */ ...ex_args) {
 				if(!cache.desktop_history) {
@@ -656,55 +728,11 @@ function with_ytd_scope() {
 			pd.configurable=false;
 			pd.writable=false;
 			Object.defineProperty(this,"replaceUrl",pd);
-			/** @arg {YtdAppElement} a */
-			function v5(a) {
-				if(!a.$) throw 1;
-				return a.$.historyManager;
-			}
-			function u5() {
-				if(!cache.desktop_history) {
-					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-				}
-				return cache.desktop_history;
-			}
-			function t5() {
-				return B("desktop_use_new_history_manager");
-			}
-			/**
-			 * @param {string} a
-			 * @param {{}} b
-			 */
-			function Ck(a,b) {
-				return use_Ck(a,b);
-			}
-			/**
-			 * @param {string | number} a
-			 */
-			function Mma(a) {
-				var b=Ck("EXPERIMENTS_FORCED_FLAGS",{})||{};
-				return void 0!==b[a]? b[a]:Ck("EXPERIMENT_FLAGS",{})[a];
-			}
-			/**
-			 * @param {string} a
-			 */
-			function B(a) {
-				a=Mma(a);
-				return "string"===typeof a&&"false"===a? !1:!!a;
-			}
 			// {
 			// var Jma=window,Kma,Lma;
 			// /** @type {YtConfigAk} */
 			// let Ak=(null==Jma?void 0:null==(Kma=Jma.yt)?void 0:Kma.config_)||(null==Jma?void 0:null==(Lma=Jma.ytcfg)?void 0:Lma.data_)||{};
 			// }
-			function get_Ak() {
-				if(!window.ytcfg) throw 1;
-				return window.ytcfg.data_;
-			};
-			/** @param {string} a @param {any} b */
-			function use_Ck(a,b) {
-				let Ak=get_Ak();
-				return a in Ak? Ak[a]:b;
-			}
 			this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
 				if(!cache.desktop_history) {
 					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
@@ -2359,7 +2387,7 @@ function on_page_type_changed(detail) {
 	}
 }
 
-/** @type {YtdAppElementBase_|undefined} */
+/** @type {InstanceType<typeof YtdAppElementBase_>|undefined} */
 let ytd_app=void 0;
 
 let vis_imm=false;
