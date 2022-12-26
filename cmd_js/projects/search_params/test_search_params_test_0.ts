@@ -2,13 +2,13 @@ import {url_test_value_ytimg_vi_jpg} from "../raw_data/urls.js";
 import {create_from_parse} from "../url_parse/create_from_parse.js";
 import {Decay} from "./Decay.js";
 import {make_search_params} from "./make_search_params.js";
-import {ParseUrlParams} from "./ParseUrlParams.js";
+import {ParseUrlSearchParams} from "./ParseUrlSearchParams.js";
 
 export function test_search_params_test_0() {
 	function black_box<T>(v:T) {return v;}
 	const str=url_test_value_ytimg_vi_jpg;
 	const vv=create_from_parse(str);
-	type ru=Decay<ParseUrlParams<typeof vv['search']>>;
+	type ru=Decay<ParseUrlSearchParams<typeof vv['search']>>;
 	let res_a=make_search_params(vv.search);
 	let ux:ru=black_box<ru>(res_a);
 	if('rs' in ux) {
