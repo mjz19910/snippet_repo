@@ -18,14 +18,8 @@ declare global {
 	interface InjectApi {
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
-	}
-	interface InjectApi {
 		Seen?: {};
-	}
-	interface InjectApi {
 		port_state?: {};
-	}
-	interface InjectApi {
 		plugin_overlay_element?: {};
 		HTMLMediaElementGainController?: {};
 		audio_gain_controller?: {};
