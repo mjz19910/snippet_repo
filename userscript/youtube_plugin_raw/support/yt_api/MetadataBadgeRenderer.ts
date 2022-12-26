@@ -1,5 +1,6 @@
 import {AccessibilityData} from "./AccessibilityData";
 import {Icon} from "./Icon";
+import {TrackingParams} from "./TrackingParams.js";
 
 
 export type MetadataBadgeRenderer={
@@ -7,6 +8,5 @@ export type MetadataBadgeRenderer={
 	label?: string;
 	style: string;
 	tooltip?: string;
-	trackingParams: string;
 	accessibilityData?: AccessibilityData;
-};
+}&TrackingParams;
