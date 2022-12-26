@@ -460,8 +460,7 @@ function with_ytd_scope() {
 				VolumeRange.create_if_needed();
 				cur_count++;
 				// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
-				x: {
-					if(!inject_api_yt.storage) break x;
+				{
 					let found=iterate_ytd_app();
 					if(found) {
 						found_element_count++;
@@ -846,15 +845,10 @@ function with_ytd_scope() {
 			view_parent.insertAdjacentElement("beforebegin",this.view_div);
 		}
 	}
-	inject_api_yt.storage={
-		on_ytd_app
-	};
 	function iterate_ytd_app() {
 		if(ytd_app) return false;
-		if(!inject_api_yt.storage) return false;
 		const target_element=get_html_elements(document,"ytd-app")[0];
 		if(!target_element) return false;
-		let on_ytd_app=inject_api_yt.storage.on_ytd_app;
 		on_ytd_app(target_element);
 		return true;
 	}
