@@ -4,6 +4,7 @@ import {CommandMetadata} from "./CommandMetadata";
 import {Icon} from "./Icon";
 import {PlaylistEditEndpoint} from "./PlaylistEditEndpoint";
 import {SignalServiceEndpoint} from "./SignalServiceEndpoint";
+import {TrackingParams} from "./TrackingParams.js";
 
 interface UntoggledServiceEndpoint extends CT {
 	commandMetadata: CommandMetadata;
@@ -26,5 +27,4 @@ export type ThumbnailOverlayToggleButtonRenderer={
 	toggledServiceEndpoint?: ToggledServiceEndpoint;
 	untoggledAccessibility: Accessibility;
 	toggledAccessibility: Accessibility;
-	trackingParams: string;
-};
+}&TrackingParams;
