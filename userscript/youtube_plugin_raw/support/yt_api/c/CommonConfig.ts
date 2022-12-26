@@ -1,3 +1,0 @@
-type CommonConfig= = {
-	url: string;
-};

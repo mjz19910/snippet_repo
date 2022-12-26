@@ -1,3 +1,3 @@
-import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
-
-export type ClickTrackingParams=TrackingParamsForKey<"clickTrackingParams">;
+export interface ClickTrackingParams {
+	/*grep-skip*/clickTrackingParams: string;
+}

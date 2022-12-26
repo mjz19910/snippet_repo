@@ -1,6 +1,5 @@
-import {BrowseEndpointData} from "./BrowseEndpointData";
 
-export interface BrowseEndpoint {
-	browseEndpoint: BrowseEndpointData;
-}
-
+export type BrowseEndpoint={
+	browseId: string;
+	canonicalBaseUrl: string;
+};
