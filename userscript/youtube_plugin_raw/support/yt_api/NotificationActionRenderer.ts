@@ -1,6 +1,6 @@
 import {SimpleText} from "./SimpleText";
 import {TrackingParams} from "./TrackingParams.js";
 
-export type NotificationActionRenderer={
+export interface NotificationActionRenderer extends TrackingParams {
 	responseText: SimpleText;
-}&TrackingParams;
+}
