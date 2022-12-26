@@ -718,9 +718,6 @@ function with_ytd_scope() {
 		cancelPendingTasks() {
 			this.pagePreparer&&this.pagePreparer.cancel();
 		}
-		onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
-			console.log('nav start skip',a,b);
-		}
 		init_inject() {
 			/** @arg {string} url @arg {never[]} ex_args */
 			this.replaceUrl=with_prev(YtdAppElement.prototype.replaceUrl,this.replaceUrl);
@@ -732,7 +729,6 @@ function with_ytd_scope() {
 			this.replaceState=YtdAppElement.prototype.replaceState;
 			this.initHistoryManager=YtdAppElement.prototype.initHistoryManager;
 			this.cancelPendingTasks=YtdAppElement.prototype.cancelPendingTasks;
-			this.onYtNavigateStart=YtdAppElement.prototype.onYtNavigateStart;
 		};
 	}
 }
