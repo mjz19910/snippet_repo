@@ -1,5 +1,6 @@
 import {ClickTrackedAndCommandMetadataWatchEndpointH} from "./support/yt_api/WatchEndpointH.js";
 import {SavedData} from "./youtube_plugin.user.js";
+import {YtdPageManagerElementInterface} from "./YtdPageManagerElementInterface.js";
 import {__ia_excludeKeysS} from "./__ia_excludeKeysS";
 
 
@@ -28,7 +29,8 @@ class HistoryManager {
 
 export abstract class YtdAppElementBase_ extends HTMLElement {
 	abstract $: {
-		historyManager: HistoryManager
+		historyManager: HistoryManager;
+		["page-manager"]: YtdPageManagerElementInterface;
 	}
 }
 declare global {
