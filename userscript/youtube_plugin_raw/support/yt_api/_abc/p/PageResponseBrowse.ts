@@ -1,1 +1,4 @@
-export type PageResponseBrowse={};
+export type PageResponseBrowse={
+	page: "browse";
+	endpoint: {};
+};
