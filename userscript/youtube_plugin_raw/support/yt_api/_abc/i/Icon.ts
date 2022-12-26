@@ -1,4 +1,4 @@
 
-export type Icon={
-	iconType: string;
+export type Icon<T>={
+	iconType: T;
 };
