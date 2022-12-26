@@ -48,13 +48,13 @@ declare global {
 	}
 
 	type MBa_1={
-		skipCache:false;
+		skipCache?:false;
 		provide: Hn<string>;
 		useValue: {};
 	};
 
 	type MBa_2={
-		skipCache:false;
+		skipCache?:false;
 		provide: Hn<string>;
 		useClass: {
 			[x: typeof Gn]: Hn<string>[];
@@ -62,7 +62,7 @@ declare global {
 	};
 
 	type MBa_3={
-		skipCache:false;
+		skipCache?:false;
 		provide: Hn<string>;
 		useFactory: (...x:any[])=>any;
 		[x: typeof Gn]: Hn<string>[];
