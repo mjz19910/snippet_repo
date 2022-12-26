@@ -4,7 +4,7 @@ import {ThumbnailH} from "./ThumbnailH.js";
 import {MetadataBadgeRenderer} from "./MetadataBadgeRenderer";
 import {NavigationEndpoint} from "./NavigationEndpoint";
 import {Icon} from "./Icon";
-import {ClickCommand} from "./ClickCommand";
+import {ClickCommand} from "./c/ClickCommand";
 import {TrackingParams} from "./TrackingParams.js";
 
 type MAC={
