@@ -837,7 +837,7 @@ function with_ytd_scope() {
 	var gaa=Object.create;
 	var iaa=Object.setPrototypeOf;
 	var na=iaa;
-	/** @arg {{superClass_: {},prototype: {constructor: {}}}} a @arg {{prototype: {}}} b */
+	/** @arg {{superClass_?: {},prototype: {constructor: {}}}} a @arg {{prototype: {}}} b */
 	var m=function(a,b) {
 		a.prototype=gaa(b.prototype);
 		a.prototype.constructor=a;
