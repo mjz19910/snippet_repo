@@ -1,10 +1,10 @@
-import {Accessibility} from "./Accessibility";
-import {ClickTrackingParams} from "./ClickTrackingParams.js";
-import {CommandMetadata} from "./CommandMetadata";
-import {Icon} from "./Icon";
-import {PlaylistEditEndpoint} from "./PlaylistEditEndpoint";
-import {SignalServiceEndpoint} from "./SignalServiceEndpoint";
-import {TrackingParams} from "./TrackingParams.js";
+import {Accessibility} from "../a/Accessibility";
+import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
+import {CommandMetadata} from "../c/CommandMetadata";
+import {Icon} from "../i/Icon";
+import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
+import {SignalServiceEndpoint} from "../s/SignalServiceEndpoint";
+import {TrackingParamsDef} from "./TrackingParams.js";
 
 interface UntoggledServiceEndpoint extends ClickTrackingParams {
 	commandMetadata: CommandMetadata;
@@ -17,7 +17,7 @@ interface ToggledServiceEndpoint extends ClickTrackingParams {
 	playlistEditEndpoint: PlaylistEditEndpoint;
 };
 
-export interface ThumbnailOverlayToggleButtonRenderer extends TrackingParams {
+export interface ThumbnailOverlayToggleButtonRenderer extends TrackingParamsDef {
 	isToggled?: boolean;
 	untoggledIcon: Icon;
 	toggledIcon: Icon;

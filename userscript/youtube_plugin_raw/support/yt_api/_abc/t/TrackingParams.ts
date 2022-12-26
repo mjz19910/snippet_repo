@@ -2,3 +2,4 @@ export const FindTrackingParamsRegexp=new RegExp('(?<!URLSearch|UrlSearch|/\*gre
 export type TrackingParams<U extends string>={
 	/*grep-skip*/[X in U]: string;
 };
+export type TrackingParamsDef=TrackingParams<"trackingParams">;
