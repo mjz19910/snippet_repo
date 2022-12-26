@@ -383,6 +383,7 @@ function with_ytd_scope() {
 	};
 	/** @arg {MBa} a @arg {Hn<"POPUP_CONTROLLER_TOKEN">} b @arg {Hn<string>[]} c @arg {boolean} [d] */
 	function NBa(a,b,c,d) {
+		console.log('dep', a,b,c,d);
 		{
 			if(-1<c.indexOf(b))
 				throw Error("Deps cycle for: "+b);
@@ -453,10 +454,15 @@ function with_ytd_scope() {
 		resolve(a) {
 			if(a instanceof LBa) {
 				console.log('resolve', Object.getPrototypeOf(a).constructor.name,a.key);
+				/**@type {any} */
+				let x_any=a.key;
+				return NBa(this,x_any,[],!0);
 			} else {
 				console.log('resolve', Object.getPrototypeOf(a).constructor.name,a);
+				/**@type {any} */
+				let x_any=a;
+				return NBa(this,x_any,[]);
 			}
-			return a instanceof LBa? NBa(this,a.key,[],!0):NBa(this,a,[]);
 		}
 	}
 	/** @type {MBa|undefined} */
@@ -545,7 +551,7 @@ function with_ytd_scope() {
 		cancelPendingTasks() {
 			this.pagePreparer&&this.pagePreparer.cancel();
 		}
-		init_inject() {
+		init_inject=function init_inject() {
 			let L0a=0;
 
 			function M0a() {
