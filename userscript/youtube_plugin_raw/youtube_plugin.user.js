@@ -17,10 +17,15 @@ console=typeof window==='undefined'? console:(() => window.console)();
 var is_node_js=function is_node_js() {
 	return false;
 };
+var destroy_env=() => {};
 if(typeof window==='undefined') {
 	is_node_js=() => true;
 	if(typeof require==='function') {
-		window=require("./init_node_env.js").window;
+		let n_env=require("./init_node_env.js");
+		destroy_env=() => {
+			n_env.destroy_env(message_channel);
+		};
+		window=n_env.window;
 		History=window.History;
 		HTMLElement=window.HTMLElement;
 		Image=window.Image;
@@ -2862,19 +2867,6 @@ function main() {
 	start_message_channel_loop();
 }
 main();
-
-function destroy_env() {
-	window.inject_api=void 0;
-	let ports=[message_channel.port1,message_channel.port2];
-	for(let port of ports) {
-		port.close();
-		port.onmessage=null;
-	}
-	eval(`()=>{
-		delete window;
-		delete navigator;
-	}`);
-}
 
 let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
 /** @type {{}} */
