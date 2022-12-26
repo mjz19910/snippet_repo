@@ -2328,7 +2328,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/WatchEndpointH.js").PageTypeWatch} */
+	/** @type {import("./support/yt_api/PageTypeWatch.js").PageTypeWatch} */
 	detail=any({});
 }
 
