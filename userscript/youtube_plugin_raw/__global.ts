@@ -1,14 +1,12 @@
 import {Type_yt} from "./Type_yt";
 import {SavedData} from "./youtube_plugin.user.js";
-import {YtConfigAk} from "./YtConfigAk";
 import {__ia_excludeKeysS} from "./support/yt_api/__ia_excludeKeysS";
+import {Type_ytcfg} from "./Type_ytcfg";
 
 declare global {
 	interface Window {
 		yt?: Type_yt;
-		ytcfg?: {
-			data_: YtConfigAk;
-		};
+		ytcfg?: Type_ytcfg;
 	}
 	interface Object {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;
