@@ -1,12 +1,7 @@
-import {Long} from "protobufjs";
-
 declare global {
-	type ProtoTypeB0={a5: Long};
-	type YtProtoTypeB={
-		a36: ProtoTypeB0
-	};
-	type YtTokenProtoMessage={
-		a2: YtProtoTypeB
-	};
+	interface Buffer {
+		utf8Slice(a:number,end:number): string;
+	}
 }
+
 export {};
