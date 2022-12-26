@@ -1,8 +1,8 @@
-import captureStackTrace from "../capture-stack-trace.js";
+import captureStackTrace from "./capture-stack-trace.js";
 
 export class JSParseError extends Error {
 	constructor(message: string) {
 		super(message);
-		captureStackTrace(this);
+		captureStackTrace(this,this.constructor);
 	}
 }
