@@ -760,6 +760,32 @@ function with_ytd_scope() {
 		});
 	}
 	class ProvideWithDesktopHistoryManagerToken {
+		constructor() {
+			this.historyEntryTime=0;
+		}
+		/**
+		 * @param {string} a
+		 * @param {{}} b
+		 * @param {{ csn?: any; }} c
+		 * @param {number} d
+		 * @param {{}} [f]
+		 */
+		saveAndPush(a,b,c,d,f) {
+			f=void 0===f? {}:f;
+			c&&(c.csn="UNDEFINED_CSN");
+			/** @type {[typeof a,typeof b,typeof c,typeof d,typeof f]} */
+			let ia=[a,b,c,d,f];
+			{
+				let [c,d,f,h,l]=ia;
+				l=void 0===l? {}:l;
+				this.saveSnapshot(this.historyEntryTime, f, h);
+				{
+					let f = this.historySnapshotCache;
+					h = this.historyEntryTime;
+					var n = f.timeToDataCache.keys();
+				}
+			}
+		}
 		/** @arg {ClickTrackedAndCommandMetadataWatchEndpointH} c @arg {{}} d @arg {number} f */
 		createNewHistoryEntry(c,d,f) {
 			f=void 0===f? M0a():f;
@@ -828,122 +854,11 @@ function with_ytd_scope() {
 		if(!a.$) throw 1;
 		return a.$.historyManager;
 	}
-	/** @type {MBa|undefined} */
-	var PBa;
-	function Jn() {
-		PBa||(PBa=new MBa);
-		return PBa;
-	}
-	var gaa=Object.create;
-	var iaa=Object.setPrototypeOf;
-	var na=iaa;
-	/** @arg {{superClass_?: {},prototype: {constructor: {}}}} a @arg {{prototype: {}}} b */
-	var m=function(a,b) {
-		a.prototype=gaa(b.prototype);
-		a.prototype.constructor=a;
-		if(na)
-			na(a,b);
-		else
-			for(var c in b)
-				if("prototype"!=c) {
-					var d=Object.getOwnPropertyDescriptor(b,c);
-					d&&Object.defineProperty(a,c,d);
-				}
-		a.superClass_=b.prototype;
-	};
-	var qv=function(a) {
-		var b=function() {
-			var c=a.apply(this,[].concat(ka(za.apply(0,arguments))))||this;
-			c.historyEntryTime=0;
-			c.historySnapshotCache=c.createHistoryCache();
-			return c;
-		};
-		m(b,a);
-		b.prototype.createHistoryCache=function() {
-			return new ov(100);
-		}
-			;
-		b.prototype.saveAndReplace=function(c,d,f) {
-			var h=window.location.href;
-			var l=void 0===l? {}:l;
-			var n=(n=this.browserHistory.getState())&&n.entryTime? n.entryTime:M0a();
-			c=this.createNewHistoryEntry(c,l,n);
-			this.saveSnapshot(n,d,f);
-			this.replaceState(c,h||window.location.href);
-		}
-			;
-		b.prototype.saveAndPush=function(c,d,f,h,l) {
-			l=void 0===l? {}:l;
-			this.saveSnapshot(this.historyEntryTime,f,h);
-			f=this.historySnapshotCache;
-			h=this.historyEntryTime;
-			var n=f.timeToDataCache.keys();
-			n=k(n);
-			for(var p=n.next();!p.done;p=n.next())
-				p=p.value,
-					p>h&&f.timeToDataCache.delete(p);
-			d=this.createNewHistoryEntry(d,l);
-			this.pushState(d,c);
-		}
-			;
-		b.prototype.saveSnapshot=function(c,d,f) {
-			this.historySnapshotCache.set(c,new G0a(d,f));
-		}
-			;
-		b.prototype.createNewHistoryEntry=function(c,d,f) {
-			f=void 0===f? M0a():f;
-			return new K0a(f,c,d);
-		}
-			;
-		b.prototype.handlePopstate=function(c) {
-			var d=a.prototype.handlePopstate.call(this,c)
-				,f=null
-				,h=null
-				,l=!1
-				,n=null;
-			d&&d.entryTime&&(n=this.historySnapshotCache.get(d.entryTime)||null,
-				l=d.entryTime>this.historyEntryTime,
-				this.historyEntryTime=d.entryTime,
-				f=d.endpoint,
-				h=d.savedComponentState);
-			this.handleHistoryCacheLoad(new F0a(f,l,n,h),c);
-			return d;
-		}
-			;
-		b.prototype.pushState=function(c,d) {
-			0<=Number(null==c? void 0:c.entryTime)&&(this.historyEntryTime=c.entryTime);
-			a.prototype.pushState.call(this,c,d);
-		}
-			;
-		b.prototype.replaceState=function(c,d) {
-			0<=Number(null==c? void 0:c.entryTime)&&(this.historyEntryTime=c.entryTime);
-			a.prototype.replaceState.call(this,c,d);
-		}
-			;
-		b.prototype.handleHistoryCacheLoad=function() {}
-			;
-		return b;
-	}(jv);
-	var O0a=new Hn("DESKTOP_HISTORY_MANAGER_TOKEN");
-	var D0a=function() {
-		return C0a.call(this,window.history)||this;
-	};
-	var N0a=function() {
-		var a=qv.call(this,new D0a)||this;
-		a.dispatchElement=null;
-		a.entryIndex=0;
-		return a;
-	};
-	{
-
-		let b=Jn();
-		b.addProvider({
-			provide: O0a,
-			useClass: N0a
-		});
-	}
 	function u5() {
-		return Jn().resolve(O0a);
+		if(!cache.desktop_history) {
+			cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
+		}
+		return cache.desktop_history;
 	}
 	function get_Ak() {
 		if(!window.ytcfg) throw 1;
@@ -2746,8 +2661,8 @@ class HTMLVideoElementArrayBox {
 	}
 }
 
-/** @template T @arg {any} e @returns {T} */
-function any(e) {
+/** @template T @arg {T} e @returns {T} */
+export function any(e) {
 	return e;
 }
 
@@ -2758,6 +2673,8 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
+	/** @type {PageTypeWatch} */
+	detail=any({});
 }
 
 /**
@@ -2779,9 +2696,7 @@ on_yt_navigate_finish.push(log_page_type_change);
 
 /** @arg {YTNavigateFinishEvent['detail']} detail */
 function on_page_type_changed(detail) {
-	if(detail.pageType!=="watch") {
-		debugger;
-	}
+	debugger;
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
 		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
@@ -3478,21 +3393,6 @@ function main() {
 }
 main();
 
-let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
-/** @type {{}} */
-let __eks_eo=__res_ia_eks;
-__eks_eo;
-
-function get_exports() {
-	return exports;
-}
-
-if(typeof exports==='object') {
-	let exports=get_exports();
-	exports.SavedData=SavedData;
-	exports.Gn=Gn;
-}
-
 function destroy_env() {
 	window.inject_api=void 0;
 	message_channel.port1.close();
@@ -3511,3 +3411,19 @@ function destroy_env() {
 		delete navigator;
 	}`);
 }
+
+let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
+/** @type {{}} */
+let __eks_eo=__res_ia_eks;
+__eks_eo;
+
+function get_exports() {
+	return exports;
+}
+
+if(typeof exports==='object') {
+	let exports=get_exports();
+	exports.SavedData=SavedData;
+	exports.Gn=Gn;
+}
+
