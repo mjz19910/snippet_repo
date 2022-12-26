@@ -18,7 +18,6 @@ declare global {
 		iterate_tracking_params: () => any[]|undefined;
 		storage?: {
 			on_ytd_app: (element: HTMLElement) => void;
-			iterate_ytd_app: ()=>boolean;
 		};
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
