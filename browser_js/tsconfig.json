@@ -40,13 +40,7 @@
 		"esm": true,
 	},
 	"include": [
-		"javascript/**/*",
-		"typescript/src/**/*",
-		"typescript/modules/**/*",
-		"typescript/ns.ts",
-		"web/src/**/*",
 		"**/*",
-		"typescript/ns.ts", "../cmd_js/projects",
 	],
 	"exclude": [
 		"node_modules",
