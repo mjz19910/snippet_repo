@@ -1,4 +1,4 @@
-import {WatchEndpoint} from "./WatchEndpoint.js";
+import {WatchEndpoint} from "../w/WatchEndpoint.js";
 
 
 export type YtWatchPage={
