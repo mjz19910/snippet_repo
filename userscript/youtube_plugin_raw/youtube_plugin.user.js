@@ -3183,7 +3183,7 @@ class HistoryStateManager {
 		 * @param {{}} obj
 		 */
 		function remove_yt_data(obj) {
-			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint");
+			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint,savedComponentState");
 		}
 		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
@@ -3215,10 +3215,10 @@ class HistoryStateManager {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('new state cs=%o',t.is_replacing_custom_state,remove_yt_data(new_state));
-					console.log("old state",remove_yt_data(t.cur_state));
+					console.log('new state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
+					console.log("old_state: []",remove_yt_data(t.cur_state));
 				} else {
-					console.log('beg state',remove_yt_data(new_state),t.cur_state);
+					console.log('beg_state: []',remove_yt_data(new_state),t.cur_state);
 				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
@@ -3232,7 +3232,7 @@ class HistoryStateManager {
 							}
 						}
 					}
-					console.log("replaceState",remove_yt_data(argArray[0]),argArray.length);
+					console.log("after_rep: []",remove_yt_data(argArray[0]),argArray.length);
 				}
 				return Reflect.apply(target,thisArg,argArray);
 			}
