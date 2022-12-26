@@ -17,7 +17,7 @@ interface ToggledServiceEndpoint extends CT {
 	playlistEditEndpoint: PlaylistEditEndpoint;
 };
 
-export type ThumbnailOverlayToggleButtonRenderer={
+export interface ThumbnailOverlayToggleButtonRenderer extends TrackingParams {
 	isToggled?: boolean;
 	untoggledIcon: Icon;
 	toggledIcon: Icon;
@@ -27,4 +27,4 @@ export type ThumbnailOverlayToggleButtonRenderer={
 	toggledServiceEndpoint?: ToggledServiceEndpoint;
 	untoggledAccessibility: Accessibility;
 	toggledAccessibility: Accessibility;
-}&TrackingParams;
+};
