@@ -1,5 +1,5 @@
 import {PageResponseBrowse} from "./PageResponseBrowse";
-import {WatchEndpointH} from "./WatchEndpointH";
+import {WatchEndpoint} from "./WatchEndpoint";
 
 
 
@@ -8,6 +8,6 @@ export interface PageTypeBrowse {
 	pageType: "browse";
 	fromHistory: false;
 	navigationDoneMs: number;
-	endpoint: WatchEndpointH;
+	endpoint: WatchEndpoint;
 	response: PageResponseBrowse;
 }

@@ -1,4 +1,4 @@
-import {WatchEndpointH} from "./WatchEndpointH";
+import {WatchEndpoint} from "./WatchEndpoint";
 
 
 
@@ -7,6 +7,6 @@ export interface PageTypeWatch {
 	pageType: "watch";
 	fromHistory: false;
 	navigationDoneMs: number;
-	endpoint: WatchEndpointH;
+	endpoint: WatchEndpoint;
 	response: {};
 }
