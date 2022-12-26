@@ -8,3 +8,47 @@ export interface ImpressionEndpoint extends ClickTrackingParams {
 	loggingUrls: [LoggingUrl];
 	pingingEndpoint: PingingEndpoint;
 }
+type Decay<T>={
+	[U in keyof T]: T[U];
+};
+type Pu=UrlParseOpt<LoggingUrl['baseUrl']>['search'];
+export type LoggingUrlBaseUrlParseSearchParams=Decay<ParseUrlSearchParams<Pu>>;
+
+type ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? ParseUrlItems<V>:never;
+type ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`? ParseUrlValue<U>&ParseUrlItems<Z>:T extends `${infer U}`? ParseUrlValue<U>:never;
+type ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {
+	[V in U]: C;
+}:T;
+type UrlParse<T extends string>=T extends `${infer Protocol extends `${string}:`}//${infer Host}/${infer Pathname}?${infer Search}`? UrlParseRes_0<T,Host,Protocol,Search,`/${Pathname}`>:never;
+type UrlParseOpt<T extends string>=UrlParse<T> extends never? UrlParseErr<T>:UrlParse<T>;
+class UrlParseErr<T> {
+	readonly _tag="ERROR";
+	readonly parse="failed to parse url";
+	constructor(public err_path: T) {}
+}
+type UrlParseRes_1<
+T extends string,
+Host extends string,
+Protocol extends string,
+Search extends string,
+Pathname extends string>={
+	hash: "";
+	host: Host;
+	hostname: Host;
+	href: `${Protocol}//${Host}${Pathname}?${Search}`;
+	origin: `${Protocol}//${Host}`;
+	password: "";
+	pathname: Pathname;
+	port: "";
+	protocol: Protocol;
+	search: `?${Search}`;
+	/*grep-skip*/searchParams: URLSearchParams;
+	toJSON(): T;
+	username: "";
+};
+type UrlParseRes_0<
+	T extends string,
+	Host extends string,
+	Protocol extends string,
+	Search extends string,
+	Pathname extends string>=UrlParseRes_1<T,Host,Protocol,Search,Pathname>;
