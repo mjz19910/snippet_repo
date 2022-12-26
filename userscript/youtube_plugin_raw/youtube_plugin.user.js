@@ -1330,7 +1330,7 @@ class HandleRichGridRenderer {
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @param {import("./support/yt_api/_abc/_rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
@@ -1416,7 +1416,7 @@ class FilterHandlers extends IterateApiResultBase {
 	};
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @param {import("./support/yt_api/_abc/_rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		this.handlers.rich_grid.richGridRenderer(path,renderer);

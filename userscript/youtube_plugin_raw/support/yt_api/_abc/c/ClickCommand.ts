@@ -1,4 +1,4 @@
-import {UrlEndpoint} from "../UrlEndpoint";
+import {UrlEndpoint} from "../u/UrlEndpoint";
 import {CommandMetadata} from "./CommandMetadata";
 import {ClickTrackingParams} from "./ClickTrackingParams.js";
 

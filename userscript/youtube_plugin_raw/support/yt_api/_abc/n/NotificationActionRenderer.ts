@@ -1,5 +1,5 @@
-import {SimpleText} from "./SimpleText";
-import {TrackingParams} from "./TrackingParams.js";
+import {SimpleText} from "../s/SimpleText";
+import {TrackingParams} from "../t/TrackingParams.js";
 
 export interface NotificationActionRenderer extends TrackingParams {
 	responseText: SimpleText;
