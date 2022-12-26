@@ -14,20 +14,9 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 console=typeof window==='undefined'? console:(() => window.console)();
-/** @template U @arg {any} x @arg {U} u @returns {x is U} */
-function is_other(x,u) {
-	x; u;
-	return true;
-}
-/** @template T @template U @arg {T|U} x @arg {U} u @returns {U} */
-function any(x,u) {
-	if(!is_other(x,u)) throw 1;
-	return x;
-}
 var is_node_js=function is_node_js() {
 	return false;
 };
-
 if(typeof window==='undefined') {
 	is_node_js=() => true;
 	/** @type {any} */
@@ -345,11 +334,146 @@ class PagePreparer {
 		throw new Error("Only types");
 	}
 }
+// spell:words monospace
+let player_overlay_style_str=`
+position: absolute;
+top: 80px;
+left: 68px;
+font-size: 1.7rem;
+font-weight: 100;
+font-family: monospace;
+color: var(--c2);
+z-index: 1;
+mix-blend-mode: difference;
+background-blend-mode: normal;
+--p0: 100%;
+--p1: 100%;
+--s0: 0 0 0.8px;
+--s1: 0 0 0.8px;
+--c0: rgb(255 255 255 / var(--p0));
+--c1: rgb(20 20 20 / var(--p1));
+--c2: white;
+--sc0: var(--s0) var(--c0);
+--sc1: var(--s1) var(--c1);
+--f0: drop-shadow(var(--sc0));
+--f1: drop-shadow(var(--sc1));
+filter: var(--f0) var(--f1);
+border: 0px solid black;
+-webkit-mask-clip: text;
+user-select: none;
+width: 10px;
+`;
 function with_ytd_scope() {
 	/** @type {InstanceType<typeof YtdAppElement>|undefined} */
 	let ytd_app=void 0;
 	let found_element_count=0;
 	let expected_element_count=6;
+
+	let waiting_for_ytd_player=false;
+	/** @type {number|null} */
+	let current_timeout=null;
+
+	function yt_watch_page_loaded_handler() {
+		if(!is_watch_page_active()) {
+			return;
+		}
+		if(!has_ytd_page_mgr()) {
+			console.log("no ytd-page-manager");
+			return;
+		}
+		title_text_overlay_update();
+		init_ui_plugin();
+		if(!ytd_player) return;
+		ytd_player.active_nav=false;
+		ytd_player.init_nav=true;
+	}
+	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
+	function init_ui_plugin() {
+		if(waiting_for_ytd_player) return;
+		if(current_timeout===null)
+			return;
+		if(typeof current_timeout==="number") {
+			if(current_timeout>0) {
+				clearTimeout(current_timeout);
+				current_timeout=null;
+			}
+		} else if("hasRef" in current_timeout) {
+			clearTimeout(current_timeout);
+			current_timeout=null;
+		}
+		if(!ytd_player||!ytd_player.player_) {
+			console.log("wait for player");
+			waiting_for_ytd_player=true;
+			wait_for_yt_player().then(function() {
+				waiting_for_ytd_player=false;
+				init_ui_plugin();
+			});
+			return;
+		}
+		if(!ytd_player.player_.getVideoData) {
+			current_timeout=setTimeout(init_ui_plugin,0);
+			return;
+		}
+		if(ytd_player.active_nav) {
+			console.log("ytd-player:active_nav = true");
+			return;
+		}
+		current_timeout=setTimeout(activate_nav,0);
+	}
+
+	function activate_nav() {
+		if(yt_debug_enabled) console.log("activate_nav:fire");
+		if(!ytd_player) return;
+		if(!ytd_page_manager) return;
+		if(ytd_player.active_nav) return;
+		if(!plugin_overlay_element) return;
+		ytd_player.active_nav=true;
+		plugin_overlay_element.setAttribute("style",player_overlay_style_str);
+		plugin_overlay_element.onupdate();
+		let page_elem=ytd_page_manager.getCurrentPage();
+		page_elem.append(plugin_overlay_element);
+		log_current_video_data();
+		ytd_page_manager.addEventListener("yt-page-type-changed",function() {
+			if(!ytd_player) return;
+			let page_elem=get_ytd_page_manager().getCurrentPage();
+			setTimeout(function() {
+				do_find_video();
+			},80);
+			if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
+				ytd_player.is_watch_page_active=false;
+				plugin_overlay_element&&plugin_overlay_element.remove();
+				return;
+			} else {
+				ytd_player.is_watch_page_active=true;
+			}
+			requestAnimationFrame(page_changed_next_frame);
+		});
+	}
+
+	function do_find_video() {
+		if(!audio_gain_controller) return;
+		const element_list=get_html_elements(document,"video");
+		if(element_list.length<=0) return;
+		let list=box_map.get("video-list");
+		/** @type {boolean} */
+		let first_run;
+		if(list) {
+			first_run=false;
+		} else {
+			first_run=true;
+			list=new HTMLVideoElementArrayBox([]);
+			box_map.set("video-list",list);
+		}
+		let new_elements=get_new_video_element_list(element_list,list);
+		if(new_elements.length<=0) return;
+		audio_gain_controller.attach_element_list(new_elements);
+		if(first_run) {
+			found_element_count++;
+			if(async_plugin_init.__debug) console.log("found video elements");
+		} else {
+			if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
+		}
+	}
 	/** @param {CustomEventType} event */
 	async function async_plugin_init(event) {
 		let cur_count=1;
@@ -466,6 +590,7 @@ function with_ytd_scope() {
 			return;
 		}
 	}
+	async_plugin_init.__debug=false;
 	dom_observer.addEventListener("async-plugin-init",async_plugin_init);
 	/** @template T */
 	class Hn {
@@ -2594,8 +2719,6 @@ function ui_css_toggle_click_handler() {
 
 with_ytd_scope();
 
-async_plugin_init.__debug=false;
-
 /** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 function get_new_video_element_list(element_list,list_box) {
 	let new_video_elements=[];
@@ -2701,70 +2824,6 @@ function get_html_elements(node,child_node_tag_name) {
  * @type {((event:{})=>void)[]}
  */
 var on_yt_navigate=[];
-// spell:words monospace
-let player_overlay_style_str=`
-		position: absolute;
-		top: 80px;
-		left: 68px;
-		font-size: 1.7rem;
-		font-weight: 100;
-		font-family: monospace;
-		color: var(--c2);
-		z-index: 1;
-		mix-blend-mode: difference;
-		background-blend-mode: normal;
-		--p0: 100%;
-		--p1: 100%;
-		--s0: 0 0 0.8px;
-		--s1: 0 0 0.8px;
-		--c0: rgb(255 255 255 / var(--p0));
-		--c1: rgb(20 20 20 / var(--p1));
-		--c2: white;
-		--sc0: var(--s0) var(--c0);
-		--sc1: var(--s1) var(--c1);
-		--f0: drop-shadow(var(--sc0));
-		--f1: drop-shadow(var(--sc1));
-		filter: var(--f0) var(--f1);
-		border: 0px solid black;
-		-webkit-mask-clip: text;
-		user-select: none;
-		width: 10px;
-	`;
-let waiting_for_ytd_player=false;
-/** @type {NodeJS.Timeout|number|null} */
-let current_timeout=null;
-function init_ui_plugin() {
-	if(waiting_for_ytd_player) return;
-	if(current_timeout===null)
-		return;
-	if(typeof current_timeout==="number") {
-		if(current_timeout>0) {
-			clearTimeout(current_timeout);
-			current_timeout=null;
-		}
-	} else if("hasRef" in current_timeout) {
-		clearTimeout(current_timeout);
-		current_timeout=null;
-	}
-	if(!ytd_player||!ytd_player.player_) {
-		console.log("wait for player");
-		waiting_for_ytd_player=true;
-		wait_for_yt_player().then(function() {
-			waiting_for_ytd_player=false;
-			init_ui_plugin();
-		});
-		return;
-	}
-	if(!ytd_player.player_.getVideoData) {
-		current_timeout=setTimeout(init_ui_plugin,0);
-		return;
-	}
-	if(ytd_player.active_nav) {
-		console.log("ytd-player:active_nav = true");
-		return;
-	}
-	current_timeout=setTimeout(activate_nav,0);
-}
 async function wait_for_yt_player() {
 	if(!ytd_player) {
 		throw new Error("No ytd_player to await");
@@ -2926,34 +2985,6 @@ class PluginOverlayElement extends HTMLDivElement {
 window.addEventListener("resize",function() {
 	plugin_overlay_element&&plugin_overlay_element.onupdate();
 });
-function activate_nav() {
-	if(yt_debug_enabled) console.log("activate_nav:fire");
-	if(!ytd_player) return;
-	if(!ytd_page_manager) return;
-	if(ytd_player.active_nav) return;
-	if(!plugin_overlay_element) return;
-	ytd_player.active_nav=true;
-	plugin_overlay_element.setAttribute("style",player_overlay_style_str);
-	plugin_overlay_element.onupdate();
-	let page_elem=ytd_page_manager.getCurrentPage();
-	page_elem.append(plugin_overlay_element);
-	log_current_video_data();
-	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
-		if(!ytd_player) return;
-		let page_elem=get_ytd_page_manager().getCurrentPage();
-		setTimeout(function() {
-			do_find_video();
-		},80);
-		if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
-			ytd_player.is_watch_page_active=false;
-			plugin_overlay_element&&plugin_overlay_element.remove();
-			return;
-		} else {
-			ytd_player.is_watch_page_active=true;
-		}
-		requestAnimationFrame(page_changed_next_frame);
-	});
-}
 let volume_plugin_style_source=`
 	#rh_css {
 		--w: calc(100% - 16px - 264px - 728px - 225px);
@@ -3259,10 +3290,6 @@ class HistoryStateManager {
 let history_state_manager=new HistoryStateManager();
 
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
-
-function get_ytd_app() {
-
-}
 
 /**
  * @param {{ [x: string]: any; }} cur
