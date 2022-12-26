@@ -2283,7 +2283,11 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
+<<<<<<< HEAD
 /** @type {import("./support/yt_api/_abc/_yt/YtdPlayerElement.js").YtdPlayerElement | null} */
+=======
+/** @type {import("./support/yt_api/YtdPlayerElement.js").YtdPlayerElement | null} */
+>>>>>>> 984f9f97 (u)
 let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
@@ -2292,7 +2296,11 @@ function on_ytd_player(element) {
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
+<<<<<<< HEAD
 	/** @type {import("./support/yt_api/_abc/_yt/YtdPlayerElement.js").YtdPlayerElement} */
+=======
+	/** @type {import("./support/yt_api/YtdPlayerElement.js").YtdPlayerElement} */
+>>>>>>> 984f9f97 (u)
 	let element_type=element_any;
 	ytd_player=element_type;
 	window.ytd_player=element;
