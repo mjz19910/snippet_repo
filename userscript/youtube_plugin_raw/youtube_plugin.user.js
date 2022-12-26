@@ -488,10 +488,11 @@ function with_ytd_scope() {
 	function Jn() {
 		PBa||(PBa=new MBa); return PBa;
 	}
+	const debug_ytd_app=true;
 	/** @arg {HTMLElement} element */
 	function on_ytd_app(element) {
 		const element_id="ytd-app";
-		if(yt_debug_enabled) console.log(`on ${element_id}`);
+		if(yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
 		element_map.set(element_id,element);
 		window.ytd_app=element;
 		ytd_app=YtdAppElement.cast(element);
@@ -654,6 +655,9 @@ function with_ytd_scope() {
 		return B("desktop_use_new_history_manager");
 	}
 	inject_api_yt.storage={on_ytd_app};
+	var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
+	/** @arg {Hn<string>} a */
+	function In(a) {return new LBa(a);}
 	class YtdAppElement extends YtdAppElementBase {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element;
@@ -712,7 +716,10 @@ function with_ytd_scope() {
 		cancelPendingTasks() {
 			this.pagePreparer&&this.pagePreparer.cancel();
 		}
-		init_inject=function init_inject() {
+		onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
+			console.log('nav start skip',a,b);
+		}
+		init_inject() {
 			/** @arg {string} url @arg {never[]} ex_args */
 			this.replaceUrl=with_prev(function replaceUrl(/** @type {string} */ url,/** @type {any[]} */ ...ex_args) {
 				if(!cache.desktop_history) {
@@ -728,41 +735,10 @@ function with_ytd_scope() {
 			pd.configurable=false;
 			pd.writable=false;
 			Object.defineProperty(this,"replaceUrl",pd);
-			// {
-			// var Jma=window,Kma,Lma;
-			// /** @type {YtConfigAk} */
-			// let Ak=(null==Jma?void 0:null==(Kma=Jma.yt)?void 0:Kma.config_)||(null==Jma?void 0:null==(Lma=Jma.ytcfg)?void 0:Lma.data_)||{};
-			// }
-			this.replaceState=function replaceState(/** @type {any} */ a,/** @type {any} */ b,/** @type {any} */ c) {
-				if(!cache.desktop_history) {
-					cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
-				}
-				t5()? u5().saveAndReplace(a,b,c):v5(this).replaceState(a,b,c);
-			};
+			this.replaceState=YtdAppElement.prototype.replaceState;
 			this.initHistoryManager=YtdAppElement.prototype.initHistoryManager;
-			this.cancelPendingTasks=function cancelPendingTasks() {
-				this.pagePreparer&&this.pagePreparer.cancel();
-			};
-			var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
-			/** @arg {Hn} a */
-			function In(a) {return new LBa(a);}
-			this.onYtNavigateStart=function onYtNavigateStart(/** @type {{ start: () => any; page: string; }} */ a, /** @type {{ noProgressBar: any; endpoint: any; pageType: string; reload: any; type: string; url: any; }} */ b) {
-				this.cancelPendingTasks();
-				b.noProgressBar||(a=Jn().resolve(In(EHc)))&&a.start();
-				a=this.hasPendingNavigation? null:this.data;
-				this.hasError=!1;
-				var c=Jn().resolve(Wt),
-					d,
-					f,
-					h;
-				B('kevlar_use_vimio_behavior')&&!(null==(d=b.endpoint)? 0:null==(f=d.commandMetadata)? 0:null==(h=f.webCommandMetadata)? 0:h.ignoreNavigation)&&(d=c.getCurrentPage())&&d.disconnectVisibilityRoot();
-				c.prepareForNavigation(b.pageType,b.endpoint);
-				B('kevlar_remove_page_dom_on_switch')||(this.pagePreparer=new GJ(1,'pcl'),HJ(this.pagePreparer,c.preparePage.bind(c,b.pageType,b.endpoint)));
-				d=this.getPageOffset();
-				this.initHistoryManager(d);
-				b.reload||this.hasPendingNavigation? this.replaceState(b.endpoint,a,d):'watch'===a.page&&'watch'===b.pageType&&B('kevlar_replace_watch_to_watch_history_state')? this.replaceState(b.endpoint,a,d):'shorts'===a.page&&'shorts'===b.pageType&&B('kevlar_replace_short_to_short_history_state')? this.replaceState(b.endpoint,a,0):'navigate-back'!=b.type&&'navigate-forward'!=b.type&&this.saveAndPush(b.url,b.endpoint,a,d);
-				this.hasPendingNavigation=!0;
-			};
+			this.cancelPendingTasks=YtdAppElement.prototype.cancelPendingTasks;
+			this.onYtNavigateStart=YtdAppElement.prototype.onYtNavigateStart;
 		};
 	}
 }
