@@ -1,3 +1,3 @@
 export interface CT {
-	clickTrackingParams: string;
+	/*grep-skip*/clickTrackingParams: string;
 }

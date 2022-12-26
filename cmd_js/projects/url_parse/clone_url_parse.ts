@@ -9,16 +9,16 @@ export function clone_url_parse<T extends string extends (infer U extends string
 		return {_tag,err_path,parse};
 	}
 	let {
-		hash,host,hostname,href,origin,password,pathname,port,protocol,search,searchParams,
+		hash,host,hostname,href,origin,password,pathname,port,protocol,search,/*grep-skip*/searchParams,
 	}=c;
 	let path;
 	if('path' in c) {
 		path=c.path;
 		return {
-			hash,host,hostname,href,origin,password,path,pathname,port,protocol,search,searchParams,
+			hash,host,hostname,href,origin,password,path,pathname,port,protocol,search,/*grep-skip*/searchParams,
 		};
 	}
 	return {
-		hash,host,hostname,href,origin,password,pathname,port,protocol,search,searchParams,
+		hash,host,hostname,href,origin,password,pathname,port,protocol,search,/*grep-skip*/searchParams,
 	};
 }

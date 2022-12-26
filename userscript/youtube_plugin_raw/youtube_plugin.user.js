@@ -155,7 +155,7 @@ if(typeof window==='undefined') {
 				this.destinations.push([destinationNode,output,input]);
 			}
 		}
-		class CompressorParams {
+		class DynamicsCompressorParameters {
 			knee={};
 			release={};
 			attack={};
@@ -167,7 +167,7 @@ if(typeof window==='undefined') {
 			constructor(ctx) {
 				super();
 				this.context=ctx;
-				this.p=new CompressorParams;
+				this.p=new DynamicsCompressorParameters;
 			}
 			get knee() {
 				if(this.p.knee) return this.p.knee;
@@ -3022,21 +3022,22 @@ function iterate_tracking_params() {
 	} else {
 		return;
 	}
-  var data_arr = all_of_key(x, ["trackingParams","clickTrackingParams"]);
-  console.assert(data_arr.filter(e => e[0] !== "C").length === 0);
-  let ret = data_arr.sort();
-  for (let i of ret) {
-    switch (i.length) {
-      case 36:
-      case 40:
-      case 48:
-      case 52:
-      case 64:
-      case 88:
-        continue;
-    }
-    console.log(i, i.length);
-  }
+	var data_arr=all_of_key(x,[/*grep-skip*/"trackingParams",/*grep-skip*/"clickTrackingParams"]);
+	console.assert(data_arr.filter(e => e[0]!=="C").length===0);
+	let ret=data_arr.sort();
+	for(let i of ret) {
+		switch(i.length) {
+			case 36:
+			case 40:
+			case 48:
+			case 52:
+			case 64:
+			case 88:
+				continue;
+		}
+		console.log(i,i.length);
+	}
+	return ret;
 }
 inject_api_yt.iterate_tracking_params=iterate_tracking_params;
 
