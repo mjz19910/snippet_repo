@@ -1,4 +1,4 @@
-import {WatchEndpointH} from "./support/yt_api/WatchEndpointH.js";
+import {WatchEndpointH} from "./WatchEndpointH.js";
 
 
 export type YtWatchPage={
