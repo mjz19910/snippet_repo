@@ -16,6 +16,9 @@ declare global {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;
 	}
 	interface InjectApiYt {
+		storage?: {
+			on_ytd_app: (element: HTMLElement) => void;
+		};
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
 		Seen?: {};
