@@ -1,8 +1,8 @@
 import {CommandMetadata} from "./CommandMetadata";
 import {CreatePlaylistServiceEndpoint} from "./CreatePlaylistServiceEndpoint";
-import {CT} from "./ClickTrackingParams.js";
+import {ClickTrackingParams} from "./ClickTrackingParams.js";
 
-export interface OnCreateListCommand extends CT {
+export interface OnCreateListCommand extends ClickTrackingParams {
 	commandMetadata: CommandMetadata;
 	createPlaylistServiceEndpoint: CreatePlaylistServiceEndpoint;
 };

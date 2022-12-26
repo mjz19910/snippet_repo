@@ -1,8 +1,11 @@
-import {LoggingUrl} from "./LoggingUrl";
 import {PingingEndpoint} from "./PingingEndpoint";
-import {CT} from "./ClickTrackingParams.js";
+import {ClickTrackingParams} from "./ClickTrackingParams.js";
 
-export interface ImpressionEndpoint extends CT {
+type LoggingUrl={
+	baseUrl: string;
+};
+
+export interface ImpressionEndpoint extends ClickTrackingParams {
 	loggingUrls: LoggingUrl[];
 	pingingEndpoint: PingingEndpoint;
 }

@@ -1,9 +1,9 @@
 import {UrlEndpoint} from "./UrlEndpoint";
 import {CommandMetadata} from "./CommandMetadata";
-import {CT} from "./ClickTrackingParams.js";
+import {ClickTrackingParams} from "./ClickTrackingParams.js";
 
 
-export interface ClickCommand extends CT {
+export interface ClickCommand extends ClickTrackingParams {
 	commandMetadata: CommandMetadata;
 	urlEndpoint: UrlEndpoint;
 };
