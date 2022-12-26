@@ -12,14 +12,10 @@ export abstract class YtdAppElementBase_ extends HTMLElement {
 	abstract ui_plugin_style_element?: HTMLStyleElement;
 	abstract ytp_click_cint?: number;
 	abstract __shady_children:ShadyChildrenOfYtdApp;
-	abstract volume_range: VolumeRange|undefined;
+	abstract volume_range: AbstractVolumeRange|undefined;
 }
-abstract class VolumeRange {
+abstract class AbstractVolumeRange {
 	abstract setGain(gain:number): void;
-	/** @private */
-	abstract getGain(): number;
-	/** @private */
-	abstract calculateGain():number;
 	abstract max_compressor_reduction:number;
 	abstract onKeyDown(event:KeyboardEvent): void;
 	/**

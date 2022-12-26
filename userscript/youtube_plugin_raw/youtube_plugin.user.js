@@ -660,9 +660,9 @@ function with_ytd_scope() {
 		return B("desktop_use_new_history_manager");
 	}
 	inject_api_yt.storage={on_ytd_app};
-	var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
-	/** @arg {Hn<string>} a */
-	function In(a) {return new LBa(a);}
+	// var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
+	// /** @arg {Hn<string>} a */
+	// function In(a) {return new LBa(a);}
 	class YtdAppElement extends YtdAppElementBase {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element;
@@ -2407,6 +2407,7 @@ async function async_plugin_init(event) {
 	let cur_count=1;
 	let obj=dom_observer;
 	let iter_count=0;
+	with_ytd_scope();
 	try {
 		while(true) {
 			iter_count++;
@@ -3178,12 +3179,6 @@ class HistoryStateManager {
 		if(!xx) throw 1;
 		if(!xx.get) throw 1;
 		let hist_state_getter=xx.get;
-		/** @returns {{captureStackTrace(obj: {}):void}} */
-		function cap_Error() {
-			/** @type {any} */
-			let e=Error;
-			return e;
-		}
 		Object.defineProperty(History.prototype,"state",{
 			"configurable": true,
 			"enumerable": true,
@@ -3245,12 +3240,13 @@ class VolumeRange {
 		if(!ytd_app.volume_range&&audio_gain_controller) {
 			if(yt_debug_enabled) console.log("create VolumeRange");
 			document.head.append(volume_plugin_style_element);
-			ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
+			let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 			let container_dom_parent=player_masthead.$.container.children.center;
 			if(!container_dom_parent) {
 				throw new Error("Missing masthead container center");
 			}
-			ytd_app.volume_range.attach_to_element(container_dom_parent);
+			volume_range.attach_to_element(container_dom_parent);
+			ytd_app.volume_range=volume_range;
 		}
 	}
 	/**
