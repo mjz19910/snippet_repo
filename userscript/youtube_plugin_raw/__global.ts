@@ -1,12 +1,12 @@
 import {Type_yt} from "./Type_yt";
-import {SavedData} from "./youtube_plugin.user.js";
+import {Gn, SavedData} from "./youtube_plugin.user.js";
 import {YtConfigAk} from "./YtConfigAk";
 import {YtdAppElementBase_} from "./YtdAppElementBase_";
 import {__ia_excludeKeysS} from "./__ia_excludeKeysS";
 
 declare global {
 	interface Window {
-		yt?: Type_yt
+		yt?: Type_yt;
 		ytcfg?: {
 			data_: YtConfigAk;
 		};
@@ -27,12 +27,6 @@ declare global {
 		active_blob_set: Set<string>;
 		ytPageType?: string;
 		playlist_arr?: string[];
-		// Elements
-		ytd_player?: HTMLElement|null;
-		ytd_page_manager?: HTMLElement|null;
-		ytd_watch_flexy?: HTMLElement|null;
-		yt_playlist_manager?: HTMLElement|null;
-		ytd_app?: HTMLElement|null;
 		page_type_changes?: string[],
 		dom_observer?: {};
 		yt_handlers?: {};
@@ -40,6 +34,35 @@ declare global {
 		yt_state_map?: {};
 		PropertyHandler?: {};
 	}
-}
+	interface Window {
+		// Elements
+		ytd_player?: HTMLElement;
+		ytd_page_manager?: HTMLElement;
+		ytd_watch_flexy?: HTMLElement;
+		yt_playlist_manager?: HTMLElement;
+		ytd_app?: HTMLElement;
+	}
 
+	type MBa_1={
+		provide: Hn<string>;
+		useValue: {};
+	};
+
+	type MBa_2={
+		provide: Hn<string>;
+		useClass: {};
+	};
+
+	type MBa_3={
+		provide: Hn<string>;
+		useFactory: {};
+		[x: typeof Gn]: {};
+	};
+
+	type MBa_Provider=MBa_1|MBa_2|MBa_3;
+}
+/** @template T */
+class Hn<T> {
+	constructor(public name: T) {}
+}
 export {};
