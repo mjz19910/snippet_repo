@@ -13,9 +13,6 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-/** @type {typeof import("./YtdAppElementBase_.js").YtdAppElementBase_|undefined} */
-var YtdAppElementBase_=void 0;
-
 console=typeof window==='undefined'? console:(() => window.console)();
 /** @template U @arg {any} x @arg {U} u @returns {x is U} */
 function is_other(x,u) {
@@ -33,7 +30,6 @@ var is_node_js=function is_node_js() {
 
 if(typeof window==='undefined') {
 	is_node_js=() => true;
-	YtdAppElementBase_=require("./YtdAppElementBase_.js").YtdAppElementBase_;
 	/** @type {any} */
 	let t_=new EventTarget;
 	t_;
@@ -231,24 +227,6 @@ if(typeof window==='undefined') {
 	}
 	AudioContext=window.AudioContext;
 }
-if(typeof YtdAppElementBase_==='undefined') {
-	/** @typedef {import("./YtdAppElementBase_").YtdAppElementBase_['$']} $d */
-	/** @type {(x:$d|{})=>x is $d} */
-	let c_any=(x) => {x; return true;};
-	/** @type {$d|{}} */
-	let xx={};
-	if(!c_any(xx)) throw 1;
-	/** @type {$d} */
-	let xb=xx;
-	let ext=class extends HTMLElement {
-		$=xb;
-	};
-	/** @arg {any} x */
-	function any(x) {return x;}
-	/** @type {typeof import("./YtdAppElementBase_").YtdAppElementBase_} */
-	let r=any(ext);
-	YtdAppElementBase_=r;
-}
 // #section Use module types
 /** @type {import("./__global.js")} */
 // #section end
@@ -368,7 +346,8 @@ class PagePreparer {
 	}
 }
 function with_ytd_scope() {
-	if(!YtdAppElementBase_) throw 1;
+	/** @type {InstanceType<typeof YtdAppElement>|undefined} */
+	let ytd_app=void 0;
 	/** @template T */
 	class Hn {
 		/** @arg {T} a */
@@ -376,8 +355,6 @@ function with_ytd_scope() {
 			this.name=a;
 		}
 	}
-	/** @type {Hn<"NAVIGATION_TOKEN">} */
-	const Cv=new Hn("NAVIGATION_TOKEN");
 	var aaa=function(/** @type {any[]} */ a) {
 		var b=0;
 		return function() {return b<a.length? {done: !1,value: a[b++]}:{done: !0};};
@@ -485,11 +462,6 @@ function with_ytd_scope() {
 				return NBa(this,x_any,[]);
 			}
 		}
-	}
-	/** @type {MBa|undefined} */
-	var PBa=void 0;
-	function Jn() {
-		PBa||(PBa=new MBa); return PBa;
 	}
 	const debug_ytd_app=true;
 	/** @arg {HTMLElement} element */
@@ -656,11 +628,152 @@ function with_ytd_scope() {
 	function t5() {
 		return B("desktop_use_new_history_manager");
 	}
-	inject_api_yt.storage={on_ytd_app};
-	// var EHc=new Hn("NAVIGATION_PROGRESS_TOKEN");
-	// /** @arg {Hn<string>} a */
-	// function In(a) {return new LBa(a);}
-	class YtdAppElement extends YtdAppElementBase_ {
+	class VolumeRange {
+		static enabled=true;
+		static create_if_needed() {
+			if(!this.enabled) return;
+			if(!ytd_app) return;
+			if(!ytd_app.__shady_children.masthead) return;
+			let player_masthead=ytd_app.__shady_children.masthead;
+			if(!player_masthead.$) return;
+			if(!ytd_app.volume_range&&audio_gain_controller) {
+				if(yt_debug_enabled) console.log("create VolumeRange");
+				document.head.append(volume_plugin_style_element);
+				let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
+				let container_dom_parent=player_masthead.$.container.children.center;
+				if(!container_dom_parent) {
+					throw new Error("Missing masthead container center");
+				}
+				volume_range.attach_to_element(container_dom_parent);
+				ytd_app.volume_range=volume_range;
+			}
+		}
+		/**
+		 * @param {number} min
+		 * @param {number} max
+		 * @param {number} overdrive
+		 * @param {AudioGainController} gain_controller
+		 */
+		constructor(min,max,overdrive,gain_controller) {
+			this.use_cache=true;
+			this.max=max;
+			this.min=min;
+			this.overdrive=overdrive;
+			this.gain_controller=gain_controller;
+		}
+		/**
+		 * @param {number} gain
+		 */
+		setGain(gain) {
+			this.gain_controller.setGain(gain);
+			if(!this.use_cache) return;
+			history_state_manager.setCacheValue("filter_gain",gain);
+		}
+		/** @private */
+		getGain() {
+			if(!this.use_cache) return null;
+			return history_state_manager.getCacheValue("filter_gain");
+		}
+		/** @private */
+		calculateGain() {
+			if(!this.use_cache) return this.max;
+			let c_gain=this.getGain();
+			if(!(typeof c_gain==="object"||typeof c_gain==="number")) {
+				this.setGain(1);
+				return this.max;
+			}
+			let c_gain_1=c_gain;
+			if(c_gain_1===null) c_gain_1=1;
+			if(typeof c_gain_1==="object") throw new Error("Unexpected object");
+			return c_gain_1*this.max;
+		}
+		max_compressor_reduction=-0.00011033167538698763;
+		/**
+		 * @param {KeyboardEvent} event
+		 */
+		onKeyDown(event) {
+			if(!this.range_element) return;
+			this.gain_controller.last_event=event;
+			if(event.key=="f") {
+				var compressor_reduction_factor=this.gain_controller.dynamics_compressor.reduction;
+				if(compressor_reduction_factor>0) {
+					console.log("+",compressor_reduction_factor);
+					return;
+				}
+				let new_gain=Math.log((compressor_reduction_factor)*-1);
+				if(new_gain>0) return;
+				new_gain=(new_gain*-1)/(Math.log(this.max_compressor_reduction*-1)*-1/2);
+				console.log("ng",new_gain,compressor_reduction_factor);
+				if(new_gain>this.overdrive) new_gain=this.overdrive;
+				if(new_gain<this.min) new_gain=this.min;
+				this.range_element.value=""+Math.floor(this.max*new_gain);
+				this.setGain(new_gain);
+			}
+		}
+		/**
+		 * @param {Element} view_parent
+		 */
+		attach_to_element(view_parent) {
+			if(!this.view_div) {
+				let element=document.getElementById("rh_css");
+				if(!element) {
+					element=document.createElement("div");
+					element.id="rh_css";
+				}
+				this.view_div=element;
+			}
+			if(!this.range_element) {
+				let element=document.getElementById("i_r_css");
+				if(element instanceof HTMLInputElement) this.range_element=element;
+				if(!this.range_element) {
+					if(element) element.remove();
+					this.range_element=document.createElement("input");
+					this.range_element.type="range";
+					this.range_element.id="i_r_css";
+					let range_style=this.range_element.style;
+					range_style.width="calc(100% + 40px + 8px + 40px)";
+					range_style.marginLeft="0";
+					range_style.marginRight="0";
+				}
+				this.range_element.oninput=() => {
+					if(!this.range_element) return;
+					let range_value=Number.parseInt(this.range_element.value,10);
+					this.setGain(range_value/this.max);
+				};
+				this.range_element.onkeydown=(event) => this.onKeyDown(event);
+				this.range_element.min=""+this.min;
+				this.range_element.max=""+this.overdrive;
+				let new_gain=this.calculateGain();
+				this.range_element.value=""+new_gain;
+				this.setGain(new_gain/this.max);
+				this.view_div.append(this.range_element);
+			}
+			view_parent.insertAdjacentElement("beforebegin",this.view_div);
+		}
+	}
+	inject_api_yt.storage={
+		on_ytd_app,
+		iterate_ytd_app: function() {
+			if(ytd_app) return false;
+			if(!inject_api_yt.storage) return false;
+			const target_element=get_html_elements(document,"ytd-app")[0];
+			if(!target_element) return false;
+			let on_ytd_app=inject_api_yt.storage.on_ytd_app;
+			on_ytd_app(target_element);
+			return true;
+		},
+	};
+	class HistoryManager {
+		/**
+		 * @param {any} a
+		 * @param {{}} b
+		 * @param {number} c
+		 */
+		replaceState(a,b,c) {
+			a; b; c;
+		}
+	}
+	class YtdAppElement extends HTMLElement {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element;
 		/**@type {VolumeRange|undefined}*/
@@ -669,7 +782,9 @@ function with_ytd_scope() {
 		app_is_visible;
 		/**@type {ReturnType<typeof setInterval>|undefined} */
 		ytp_click_cint;
-		$=any({},(() => {if(!YtdAppElementBase_) throw 1; return YtdAppElementBase_;})().prototype.$);
+		$=new class $Data {
+			historyManager=new HistoryManager;
+		}
 		pagePreparer=new PagePreparer;
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
@@ -691,22 +806,9 @@ function with_ytd_scope() {
 		getPageOffset() {
 			return 0;
 		}
-		initHistoryManager(/** @type {number} */ a) {
-			if(!this.$) throw 1;
-			let res_xx=Jn().resolve(Cv);
-			if(!res_xx) throw 1;
-			if(!('currentEndpoint' in res_xx)) throw 1;
-			if(!this.hasNavigated) {
-				this.hasNavigated=!0;
-				var b=this.$["page-manager"].getCurrentData();
-				a=isNaN(a)? this.getPageOffset():a;
-				var c=res_xx.currentEndpoint;
-				this.replaceState(c,b,a);
-			};
-		}
 		/** @arg {string} url */
 		replaceUrl(url) {
-			
+
 			if(!cache.desktop_history) {
 				cache.desktop_history=new ProvideWithDesktopHistoryManagerToken;
 			}
@@ -727,8 +829,6 @@ function with_ytd_scope() {
 			pd.writable=false;
 			Object.defineProperty(this,"replaceUrl",pd);
 			this.replaceState=YtdAppElement.prototype.replaceState;
-			this.initHistoryManager=YtdAppElement.prototype.initHistoryManager;
-			this.cancelPendingTasks=YtdAppElement.prototype.cancelPendingTasks;
 		};
 	}
 }
@@ -2344,9 +2444,6 @@ function on_page_type_changed(detail) {
 	}
 }
 
-/** @type {InstanceType<typeof YtdAppElementBase_>|undefined} */
-let ytd_app=void 0;
-
 let vis_imm=false;
 let css_str=`
 	ytd-watch-next-secondary-results-renderer {
@@ -2399,13 +2496,11 @@ async function async_plugin_init(event) {
 			cur_count++;
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			x: {
-				if(ytd_app) break x;
 				if(!inject_api_yt.storage) break x;
-				const target_element=get_html_elements(document,"ytd-app")[0];
-				if(!target_element) break x;
-				found_element_count++;
-				let on_ytd_app=inject_api_yt.storage.on_ytd_app;
-				on_ytd_app(target_element);
+				let found=inject_api_yt.storage.iterate_ytd_app();
+				if(found) {
+					found_element_count++;
+				}
 			}
 			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
 			// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
@@ -3164,40 +3259,8 @@ let history_state_manager=new HistoryStateManager();
 
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 
-class VolumeRange {
-	static enabled=true;
-	static create_if_needed() {
-		if(!this.enabled) return;
-		if(!ytd_app) return;
-		if(!ytd_app.__shady_children.masthead) return;
-		let player_masthead=ytd_app.__shady_children.masthead;
-		if(!player_masthead.$) return;
-		if(!ytd_app.volume_range&&audio_gain_controller) {
-			if(yt_debug_enabled) console.log("create VolumeRange");
-			document.head.append(volume_plugin_style_element);
-			let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
-			let container_dom_parent=player_masthead.$.container.children.center;
-			if(!container_dom_parent) {
-				throw new Error("Missing masthead container center");
-			}
-			volume_range.attach_to_element(container_dom_parent);
-			ytd_app.volume_range=volume_range;
-		}
-		return;
-	}
-	let kk=Object.keys(cur);
-	for(let i of kk) {
-		if(key_names.includes(i)) {
-			log_path(i,[cur[i]]);
-			acc.push(cur[i]);
-			continue;
-		}
-		log_path(cur);
-		path.push(i);
-		log_path(cur);
-		all_of_key_rec(cur[i],key_names,acc,path);
-		path.pop();
-	}
+function get_ytd_app() {
+
 }
 
 /**

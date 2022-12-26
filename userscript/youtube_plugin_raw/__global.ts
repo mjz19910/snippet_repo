@@ -1,7 +1,6 @@
 import {Type_yt} from "./Type_yt";
 import {Gn, SavedData} from "./youtube_plugin.user.js";
 import {YtConfigAk} from "./YtConfigAk";
-import {YtdAppElementBase_} from "./YtdAppElementBase_";
 import {__ia_excludeKeysS} from "./__ia_excludeKeysS";
 
 declare global {
@@ -11,7 +10,6 @@ declare global {
 			data_: YtConfigAk;
 		};
 	}
-	var YtdAppElementBase: typeof YtdAppElementBase_|undefined;
 	interface Object {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;
 	}
@@ -19,6 +17,7 @@ declare global {
 		iterate_tracking_params: () => any[]|undefined;
 		storage?: {
 			on_ytd_app: (element: HTMLElement) => void;
+			iterate_ytd_app: ()=>boolean;
 		};
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
