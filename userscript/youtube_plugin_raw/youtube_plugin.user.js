@@ -2168,7 +2168,7 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 
-/** @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").PageTypeWatch<string>} detail */
+/** @arg {YTNavigateFinishEvent['detail']} detail */
 function on_page_type_changed(detail) {
 	if(detail.pageType!=="watch") {
 		debugger;
