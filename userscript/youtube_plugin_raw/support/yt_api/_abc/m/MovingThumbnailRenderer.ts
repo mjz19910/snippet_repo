@@ -1,7 +1,10 @@
 import {MovingThumbnailDetails} from "./MovingThumbnailDetails";
 
-export type MovingThumbnailRenderer={
-	movingThumbnailDetails?: MovingThumbnailDetails;
+export interface MovingThumbnailRenderer {
 	enableHoveredLogging: true;
 	enableOverlay: true;
-};
+}
+
+export interface MovingThumbnailRendererDetail extends MovingThumbnailRenderer {
+	movingThumbnailDetails: MovingThumbnailDetails;
+} 
