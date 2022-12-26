@@ -19,10 +19,8 @@ var is_node_js=function is_node_js() {
 };
 if(typeof window==='undefined') {
 	is_node_js=() => true;
-	/** @type {any} */
-	let gt=globalThis;
-	if(typeof gt.require==='function') {
-		window=gt.require("./init_node_env.js").window;
+	if(typeof require==='function') {
+		window=require("./init_node_env.js").window;
 		History=window.History;
 		HTMLElement=window.HTMLElement;
 		Image=window.Image;
