@@ -462,7 +462,7 @@ function with_ytd_scope() {
 				// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 				x: {
 					if(!inject_api_yt.storage) break x;
-					let found=inject_api_yt.storage.iterate_ytd_app();
+					let found=iterate_ytd_app();
 					if(found) {
 						found_element_count++;
 					}
@@ -847,17 +847,17 @@ function with_ytd_scope() {
 		}
 	}
 	inject_api_yt.storage={
-		on_ytd_app,
-		iterate_ytd_app: function() {
-			if(ytd_app) return false;
-			if(!inject_api_yt.storage) return false;
-			const target_element=get_html_elements(document,"ytd-app")[0];
-			if(!target_element) return false;
-			let on_ytd_app=inject_api_yt.storage.on_ytd_app;
-			on_ytd_app(target_element);
-			return true;
-		},
+		on_ytd_app
 	};
+	function iterate_ytd_app() {
+		if(ytd_app) return false;
+		if(!inject_api_yt.storage) return false;
+		const target_element=get_html_elements(document,"ytd-app")[0];
+		if(!target_element) return false;
+		let on_ytd_app=inject_api_yt.storage.on_ytd_app;
+		on_ytd_app(target_element);
+		return true;
+	}
 	class HistoryManager {
 		/**
 		 * @param {any} a
