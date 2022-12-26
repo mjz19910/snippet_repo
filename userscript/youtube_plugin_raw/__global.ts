@@ -1,5 +1,5 @@
 import {Type_yt} from "./Type_yt";
-import {Gn, SavedData} from "./youtube_plugin.user.js";
+import {SavedData} from "./youtube_plugin.user.js";
 import {YtConfigAk} from "./YtConfigAk";
 import {__ia_excludeKeysS} from "./support/yt_api/__ia_excludeKeysS";
 import {WatchEndpointH} from "./support/yt_api/WatchEndpointH.js";
@@ -44,39 +44,12 @@ declare global {
 		ytPageType?: string;
 	}
 
-	type MBa_1={
-		skipCache?:false;
-		provide: Hn<string>;
-		useValue: {};
-	};
-
-	type MBa_2={
-		skipCache?:false;
-		provide: Hn<string>;
-		useClass: {
-			[x: typeof Gn]: Hn<string>[];
-		};
-	};
-
-	type MBa_3={
-		skipCache?:false;
-		provide: Hn<string>;
-		useFactory: (...x:any[])=>any;
-		[x: typeof Gn]: Hn<string>[];
-	};
-
-	type MBa_Provider=MBa_1|MBa_2|MBa_3;
-
 	interface PageTypeWatch {
-		pageType:"watch";
+		pageType: "watch";
 		fromHistory: false;
 		navigationDoneMs: number;
 		endpoint: WatchEndpointH;
 		response: {};
-	}	
-}
-/** @template T */
-class Hn<T> {
-	constructor(public name: T) {}
+	}
 }
 export {};

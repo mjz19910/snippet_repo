@@ -1275,9 +1275,6 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/**@type {Map<string, {}>}*/
-let yt_state_map=new Map;
-inject_api_yt.yt_state_map=yt_state_map;
 class IterateApiResultBase {
 	/**
 	 * @this {IterateApiResultBase & {[x:string]: any}}
@@ -1289,7 +1286,6 @@ class IterateApiResultBase {
 			return;
 		}
 		if(typeof data==="string") {
-			this.update_state(path,data);
 			return;
 		}
 		if(data instanceof Array) {
@@ -1303,22 +1299,6 @@ class IterateApiResultBase {
 			if(this[key]) {
 				this[key](`${path}.${key}`,value);
 			}
-		}
-	}
-	/**
-	 * @param {string} key
-	 * @param {string} value
-	 */
-	update_state(key,value) {
-		if(yt_state_map.has(key)) {
-			let stored_state=yt_state_map.get(key);
-			if(stored_state instanceof Array) {
-				stored_state.push(value);
-				return;
-			}
-			yt_state_map.set(key,[stored_state,value]);
-		} else {
-			yt_state_map.set(key,[value]);
 		}
 	}
 }
