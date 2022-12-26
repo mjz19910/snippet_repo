@@ -449,8 +449,8 @@ function with_ytd_scope() {
 		try {
 			while(true) {
 				iter_count++;
-				if(cur_count>16) {
-					await new Promise((soon) => setTimeout(soon,40));
+				if(cur_count>32) {
+					await new Promise((soon) => setTimeout(soon,0));
 					cur_count=0;
 				}
 				if(!audio_gain_controller) {
