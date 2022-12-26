@@ -1,12 +1,11 @@
-import {ClickCommand} from "../c/ClickCommand.js";
-import {ImpressionEndpoint} from "../hijk/ImpressionEndpoint.js";
-import {Icon} from "../i/Icon.js";
-import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
-import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
-import {SimpleText} from "../s/SimpleText.js";
-import {ThumbnailH} from "../t/ThumbnailH.js";
-import {TrackingParams} from "../t/TrackingParams.js";
-import {IconExternalLink} from "../i/IconExternalLink";
+import {SimpleText} from "./SimpleText";
+import {ImpressionEndpoint} from "./ImpressionEndpoint";
+import {ThumbnailH} from "./ThumbnailH.js";
+import {MetadataBadgeRenderer} from "./MetadataBadgeRenderer";
+import {NavigationEndpoint} from "./NavigationEndpoint";
+import {Icon} from "./Icon";
+import {ClickCommand} from "./c/ClickCommand";
+import {TrackingParams} from "./TrackingParams.js";
 
 type MAC={
 	"text": "My Ad Centre";
@@ -21,7 +20,7 @@ type InfoIcon={
 interface MNR extends TrackingParams {
 	"text": MNR_T;
 	"icon": InfoIcon;
-	navigationEndpoint: NavigationEndpoint<never>;
+	navigationEndpoint: NavigationEndpoint;
 };
 
 type I1={
@@ -37,7 +36,7 @@ type AM={
 	"accessibility": accessibilityEx<{label: "Action menu"}>;
 };
 
-interface TN extends TrackingParams {
+type TN={
 	thumbnail: ThumbnailH;
 };
 
@@ -45,19 +44,19 @@ type BG={
 	"metadataBadgeRenderer": MetadataBadgeRenderer;
 };
 
-interface MR extends TrackingParams {
-	"menuRenderer": AM;
+type MR={
+	"menuRenderer": AM&TrackingParams;
 };
 
-interface BTN_Ren extends TrackingParams {
+type BTNR={
 	"style": "STYLE_PRIMARY";
 	"text": SimpleText;
-	"icon": Icon<never>;
+	"icon": Icon;
 	"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
 };
 
 type BTN={
-	"buttonRenderer": BTN_Ren;
+	"buttonRenderer": BTNR&TrackingParams;
 };
 
 type AdTitle_0={
@@ -68,7 +67,11 @@ type ST_VS={
 	"simpleText": "Visit site";
 };
 
-interface MHO_BTN extends TrackingParams {
+type IconExternalLink={
+	"iconType": "EXTERNAL_LINK";
+};
+
+type MHO_BTN={
 	"style": "STYLE_LIGHT_TEXT";
 	"text": ST_VS;
 	"icon": IconExternalLink;
@@ -76,22 +79,22 @@ interface MHO_BTN extends TrackingParams {
 };
 
 type MHO={
-	"buttonRenderer": MHO_BTN;
+	"buttonRenderer": MHO_BTN&TrackingParams;
 };
 
-interface MBR extends TrackingParams {
+type MBR={
 	"icon": IconExternalLink;
 	"style": "BADGE_STYLE_TYPE_BLACK";
 };
 
 type MB={
-	"metadataBadgeRenderer": MBR;
+	"metadataBadgeRenderer": MBR&TrackingParams;
 };
 
 interface DAL_TLI extends TrackingParams {
 	"layout": "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	"titleText": AdTitle_0;
-	"image": TN;
+	"image": TrackingParams&TN;
 	// spell:ignore Linqto
 	"bodyText": SimpleText;
 	"secondaryText": SimpleText;
