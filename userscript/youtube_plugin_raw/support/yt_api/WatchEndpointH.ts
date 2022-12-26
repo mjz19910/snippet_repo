@@ -6,12 +6,25 @@ export type WatchEndpointH={
 	commandMetadata: CommandMetadata;
 	watchEndpoint: WatchEndpoint;
 };
-export type ClickTrackedWatchEndpointH={
-	clickTrackingParams: string;
-	watchEndpoint: WatchEndpoint;
+
+
+
+export interface PageTypeWatch {
+	pageType: "watch";
+	fromHistory: false;
+	navigationDoneMs: number;
+	endpoint: WatchEndpointH;
+	response: {};
 }
-export type ClickTrackedAndCommandMetadataWatchEndpointH={
-	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
-	watchEndpoint: WatchEndpoint;
+type PageResponseBrowse={}
+export interface PageTypeBrowse {
+	pageType: "browse";
+	fromHistory: false;
+	navigationDoneMs: number;
+	endpoint: WatchEndpointH&{
+		['clickTrackingParams']: string;
+		["commandMetadata"]: {};
+		["watchEndpoint"]: {};
+	};
+	response: PageResponseBrowse;
 }

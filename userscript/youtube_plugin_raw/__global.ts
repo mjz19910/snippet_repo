@@ -43,13 +43,5 @@ declare global {
 		// website environment
 		ytPageType?: string;
 	}
-
-	interface PageTypeWatch {
-		pageType: "watch";
-		fromHistory: false;
-		navigationDoneMs: number;
-		endpoint: WatchEndpointH;
-		response: {};
-	}
 }
 export {};
