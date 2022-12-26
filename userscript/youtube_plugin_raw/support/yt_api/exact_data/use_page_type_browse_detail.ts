@@ -14,5 +14,6 @@ export function use_page_type_browse_detail() {
 		je_c_2,
 		class implements XX {a=json},
 		class implements JR_x {a=json.response},
+		json.response.response.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.richGridRenderer.contents[0].richItemRenderer
 	];
 }
