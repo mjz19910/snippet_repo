@@ -1,6 +1,6 @@
 import {ClickTrackingParams} from "../ClickTrackingParams.js";
 import {PingingEndpoint} from "../PingingEndpoint.js";
-import {UrlParseOpt} from "../../url_parse/UrlParseOpt";
+import {UrlParse} from "../../url_parse/UrlParse";
 import {ParseUrlSearchParams} from "../../search_params_parse/SearchParamsParse";
 
 export interface LoggingUrl {
@@ -13,5 +13,5 @@ export interface ImpressionEndpoint extends ClickTrackingParams {
 type Decay<T>={
 	[U in keyof T]: T[U];
 };
-type Pu=UrlParseOpt<LoggingUrl['baseUrl']>['search'];
+type Pu=UrlParse<LoggingUrl['baseUrl']>['search'];
 export type LoggingUrlBaseUrlParseSearchParams=Decay<ParseUrlSearchParams<Pu>>;
