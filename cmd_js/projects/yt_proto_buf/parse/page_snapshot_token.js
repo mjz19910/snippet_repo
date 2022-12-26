@@ -11,7 +11,7 @@ async function run() {
 	let root=await protobuf.load("continue_cmd.proto");
 	var Type=root.lookupType("Dec_A");
 	console.log(new Uint32Array(token_binary.slice(0,4).buffer));
-	/** @type {protobuf.Message<YtTokenProtoMessage>} */
+	/** @type {protobuf.Message<import('../YtTokenProtoMessage.js').YtTokenProtoMessage>} */
 	let message=Type.decode(token_binary);
 	let obj=Type.toObject(message);
 	let base64_enc_2=obj.pageSnapshotToken.replaceAll("_","/").replaceAll("-","+");
@@ -27,3 +27,5 @@ async function run() {
 	console.log(obj_2);
 }
 run();
+
+exports={};

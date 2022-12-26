@@ -15,7 +15,7 @@ async function run() {
 	let root=await protobuf.load("continue_cmd.proto");
 	var Type=root.lookupType("CommandToken");
 	console.log(new Uint32Array(token_binary.slice(0,4).buffer));
-	/** @type {protobuf.Message<YtTokenProtoMessage>} */
+	/** @type {protobuf.Message<import('../YtTokenProtoMessage.js').YtTokenProtoMessage>} */
 	let message=Type.decode(token_binary.subarray(4));
 	let obj=Type.toObject(message);
 	console.log(obj);
