@@ -1,0 +1,6 @@
+{
+	"ignorePaths": [
+		"*.json",
+		"*.json.d.ts"
+	]
+}
