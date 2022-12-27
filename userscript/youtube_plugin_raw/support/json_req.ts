@@ -1,6 +1,7 @@
 import {AllServiceTrackingParams} from "./AllServiceTrackingParams";
 import {ParseParamItem} from "./search_params_parse/ParseParamItem.js";
 import {UrlWrappedValue} from "./UrlWrappedValue";
+import {CommentsHeaderRenderer} from "./yt_api/_abc/c/CommentsHeaderRenderer.js";
 import {ReloadContinuationItemsCommand} from "./yt_api/_abc/r/ReloadContinuationItemsCommand.js";
 import {Decay} from "./yt_api/_exact_data/Decay.js";
 
@@ -48,9 +49,26 @@ type U_1={
 	json: AttGetV;
 };
 
+type ReloadContinuationItemsCommandFor<T,U,V extends {continuationItems: any}>={
+	slot: U;
+	targetId: T;
+	continuationItems: V['continuationItems'];
+};
+
 type AllResponseReceivedEndpoints={
 	clickTrackingParams: string;
-	reloadContinuationItemsCommand: ReloadContinuationItemsCommand;
+	reloadContinuationItemsCommand: ReloadContinuationItemsCommandFor<"comments-section","RELOAD_CONTINUATION_SLOT_HEADER",{
+		continuationItems: [{
+			commentsHeaderRenderer: CommentsHeaderRenderer;
+		}];
+	}>;
+}|{
+	clickTrackingParams: string;
+	reloadContinuationItemsCommand: ReloadContinuationItemsCommandFor<"comments-section","RELOAD_CONTINUATION_SLOT_BODY",{
+		continuationItems: {
+
+		}[];
+	}>;
 };
 
 type YtApiNext={
