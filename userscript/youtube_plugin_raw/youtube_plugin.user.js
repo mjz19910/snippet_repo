@@ -2440,14 +2440,19 @@ function random_sometimes_break_1(detail,obj,path) {
 	}
 	/** @type {_XYZ} */
 	const v="browseEndpoint";
-	if(v in obj) {
+	x: if(v in obj) {
 		iter_skips.push("browseEndpoint"); 
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
 		}
-		if(obj.browseEndpoint.browseId==="FEwhat_to_watch")
+		if(Object.keys(obj.commandMetadata).length!==1) {
+			console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
+		} else {
+			console.log("browse web cmd meta",obj.commandMetadata.webCommandMetadata);
+		}
+		if(obj.browseEndpoint.browseId==="FEwhat_to_watch") break x;
+		if(obj.browseEndpoint.browseId==="FEsubscriptions") break x;
 		console.log("obj_browseEndpoint",obj.browseEndpoint);
-		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
 	}
 	if("commandMetadata" in obj) {
 		iter_skips.push("commandMetadata");
