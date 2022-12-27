@@ -1,4 +1,3 @@
-import {WatchEndpoint} from "../_abc/w/WatchEndpoint.js";
 import * as json from "./page_type_watch_detail.json";
 import {use_ecatcher} from "./use_ecatcher";
 import {use_gfeedback} from "./use_gfeedback";
