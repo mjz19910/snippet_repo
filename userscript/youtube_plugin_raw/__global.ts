@@ -16,4 +16,5 @@ declare global {
 			Class: <T>(x: {})=>T;
 		};
 	}
+	var require: ()=>any;
 }
