@@ -2325,6 +2325,9 @@ function random_sometimes_break_0(detail,obj,path) {
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
+	if("clickTrackingParams" in obj) {
+		iter_skips.push("clickTrackingParams");obj;
+	}
 	if("watchEndpoint" in obj) {
 		iter_skips.push("watchEndpoint");obj;
 	}
