@@ -2,8 +2,9 @@ import {use_ecatcher} from "./use_ecatcher";
 import {use_gfeedback} from "./use_gfeedback";
 import {use_guided_help} from "./use_guided_help";
 import {use_service_csi} from "./use_service_csi";
-import {JResponseContext} from "./page_type_watch_detail_use";
-
+import * as json from "./page_type_watch_detail.json";
+type Json=typeof json;
+type JResponseContext=Json['response']['response']['responseContext'];
 export function use_response_context(context: JResponseContext) {
 	const {
 		serviceTrackingParams,
