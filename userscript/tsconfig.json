@@ -33,7 +33,7 @@
 		"esm": true,
 	},
 	"include": [
-		"**/*", "../cmd_js/projects/yt_proto_buf/proto_buf", "../cmd_js/projects/url_parse",
+		"**/*",
 	],
 	"exclude": [
 		"node_modules",
