@@ -2231,6 +2231,9 @@ function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
 	let ok=any(Object.keys(detail));
 	for(let x of ok) {
+		switch(x) {
+			case "response": break;
+		}
 		if(Math.random() <0.3) {
 			console.log('detail.'+x,detail[x]);
 			debugger;
