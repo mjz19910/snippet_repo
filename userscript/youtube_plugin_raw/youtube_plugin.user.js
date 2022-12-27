@@ -2449,6 +2449,9 @@ const gen_not_want=['page','endpoint','response','url'];
 function click_track_do(obj, iter_skips) {
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");
+		if(typeof obj.clickTrackingParams!=='string') {
+			debugger;
+		}
 	}
 }
 /**
@@ -2552,12 +2555,6 @@ function on_command_meta(obj) {
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
-	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");
-		if(typeof obj.clickTrackingParams!=='string') {
-			debugger;
-		}
-	}
 	if("commandMetadata" in obj) {
 		iter_skips.push("commandMetadata");
 		on_command_meta(obj);
