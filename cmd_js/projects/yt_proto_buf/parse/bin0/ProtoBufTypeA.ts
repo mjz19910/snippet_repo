@@ -1,4 +1,4 @@
-import {ProtoBufTypeC} from './parse_types';
+import {ProtoBufTypeC} from './ProtoBufTypeC';
 
 
 export type ProtoBufTypeA={
