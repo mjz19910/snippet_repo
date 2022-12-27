@@ -2312,22 +2312,23 @@ function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>['response']} obj
- * @param {string[]} path
+ * @param {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
-	random_sometimes_break_base_0(detail,obj,path);
+	let iter_skips=[];
+	if("clickTrackingParams" in obj) {
+		iter_skips.push("clickTrackingParams");obj;
+	}
+	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 }
 /**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>['endpoint']} obj
- * @param {["detail","response"]} path
+ * @param {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
-	if("response" === path[1] && "url" in obj) {
-		iter_skips.push("url");obj;
-	}
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");obj;
 	}
