@@ -2339,6 +2339,13 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("url");
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
+	if("response" in obj) {
+		return;
+	}
+	if("endpoint" in obj) {
+		console.log(Object.keys(obj.endpoint));
+		iter_skips.push("playerResponse");
+	}
 }
 /**
  * @template T
@@ -2358,8 +2365,8 @@ function random_sometimes_break_1(detail,obj,path) {
 	/** @type {_XYZ} */
 	const v="browseEndpoint";
 	if(v in obj) {
-		if(Object.keys(obj).length!==1) {
-			debugger;
+		if(Object.keys(obj).length===3) {
+			obj.browseEndpoint;
 		}
 		iter_skips.push("browseEndpoint"); obj;
 	}
