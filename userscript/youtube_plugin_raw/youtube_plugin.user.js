@@ -2321,10 +2321,13 @@ function random_sometimes_break_0(detail,obj,path) {
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>['endpoint']} obj
- * @param {string[]} path
+ * @param {["detail","response"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
+	if("response" === path[1] && "url" in obj) {
+		iter_skips.push("url");obj;
+	}
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");obj;
 	}
