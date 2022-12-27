@@ -1435,17 +1435,26 @@ function filter_on_initial_data(cls,apply_args) {
 	if(ret.response) {
 		if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
 		try {
-			if(window.ytPageType) {
+			let page_type=window.ytPageType;
+			if(page_type) {
 				if(ret.page==="browse") {
-					cls.handle_page_type(ret.response,window.ytPageType,"response");
+					if(page_type==="browse") {
+						cls.handle_page_type(ret.response,page_type,"response");
+					} else {
+						debugger;
+					}
 					if(ret.playerResponse) {
 						console.log(cls.class_name+": playerResponse in ret.page === \"browse\"");
 						console.assert(false);
 					}
 				} else {
 					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
-					cls.handle_page_type(ret.response,window.ytPageType,"response");
-					cls.handle_page_type(ret.playerResponse,window.ytPageType,"playerResponse");
+					if(page_type==="watch") {
+						cls.handle_page_type(ret.response,page_type,"response");
+						cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
+					} else {
+						debugger;
+					}
 				}
 			}
 		} catch(err) {
@@ -1766,7 +1775,7 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 		x: {
 			if(api_path=="att.get") break x;
-			this.handle_any_data(api_path,data);
+			this.handle_any_data(url_type,data);
 		}
 		switch(api_parts[2]) {
 			case "player": this.on_v1_player(api_path,data); break;
@@ -1774,7 +1783,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {string} page_type
+	 * @param {"browse"|"watch"} page_type
 	 * @arg {"response"|"playerResponse"} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
@@ -1785,12 +1794,13 @@ class FilterHandlers extends IterateApiResultBase {
 			case "response": break;
 			case "playerResponse": switch(page_type) {
 				case "watch": this.on_v1_player(page_type,data); break;
+				default: console.log("handle_page_type", page_type); debugger;
 			}
 		}
 	}
 	/**
-	 * @param {string} path
-	 * @arg {{[str:string]:{}}} data
+	 * @param {ReturnType<typeof this.use_template_url>} path
+	 * @arg {{[str: string]:{}}} data
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
