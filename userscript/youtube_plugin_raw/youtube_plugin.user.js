@@ -1618,11 +1618,36 @@ class FilterHandlers extends IterateApiResultBase {
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
-		switch(path_parts[0]) {
-			case "youtubei": this.search_print(res_parse,path_parts); this.with_ty_1(x,path_parts); break;
-			case "getDatasyncIdsEndpoint": this.search_print(res_parse,path_parts); break;
+		this.get_url_type(path_parts,res_parse);
+	}
+	/** @template A,B,C,D,E @typedef {import("./support/url_parse/UrlParseRes.js").UrlParseRes<A,B,C,D,E>} UrlParseRes */
+	/**
+	 * @param {string[]} parts
+	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 */
+	get_url_type(parts,url) {
+		let index=0;
+		switch(parts[index]) {
+			case "youtubei": index++; this.search_print(url,parts); switch(parts[1]) {
+				case "v1": index++; switch(parts[index]) {
+					case "att": switch(parts[index+1]) {
+						case "get": console.log('att.get',url.search); break;
+						default: debugger;
+					} break;
+					case "guide": if(parts.length!==3) debugger; break;
+					case "notification": index++; switch(parts[index]) {
+						case "get_unseen_count": break;
+						case "get_notification_menu": break;
+						default: console.log('no handler for',parts,parts[index]); debugger;
+					} break;
+					default: console.log('no handler for',parts,parts[index]); debugger;
+				} break;
+				default: debugger;
+			} break;
+			case "getDatasyncIdsEndpoint": this.search_print(url,parts); break;
 			default: debugger;
 		}
+
 	}
 	/**
 	 * @param {URL} url
@@ -1630,45 +1655,6 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	search_print(url,parts) {
 		if(url.search!=="") console.log(parts,url.search);
-	}
-	/** 
-	 * @template {string} X
-	 * @template {string} U
-	 * @template {string} V
-	 * @template {`https://${X}/${U}?${V}`} T
-	 * @arg {T} url
-	 * @param {string[]} parts
-	 */
-	with_ty_1(url,parts) {
-		let index=1;
-		switch(parts[1]) {
-			case "v1": index++; switch(parts[index]) {
-				case "att": this.with_type_att(url,parts,index); break;
-				case "guide": if(parts.length!==3) debugger; break;
-				case "notification": index++; switch(parts[index]) {
-					case "get_unseen_count": break;
-					case "get_notification_menu": break;
-					default: console.log('no handler for',parts,parts[index]); debugger;
-				} break;
-				default: console.log('no handler for',parts,parts[index]); debugger;
-			} break;
-			default: debugger;
-		}
-	}
-	/** 
-	 * @template {string} X
-	 * @template {string} U
-	 * @template {string} V
-	 * @template {`https://${X}/${U}?${V}`} T
-	 * @arg {T} url
-	 * @param {string[]} parts
-	 * @arg {number} index
-	 */
-	with_type_att(url,parts,index) {
-		switch(parts[index+1]) {
-			case "get": console.log('att.get',url); break;
-			default: debugger;
-		}
 	}
 	/**
 	 * @arg {{}} data
