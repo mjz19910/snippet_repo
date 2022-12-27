@@ -32,4 +32,5 @@ export type PageResponseWatch<T>={
 		adPlacements: {};
 		frameworkUpdates: {};
 	};
+	url: string;
 };
