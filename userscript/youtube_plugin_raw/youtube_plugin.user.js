@@ -2324,17 +2324,20 @@ function random_sometimes_break_0(detail,obj,path) {
  * @param {string[]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
-	if("commandMetadata" in obj && "browseEndpoint" in obj) {
-		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-		random_sometimes_break_base_0(detail,obj,path,["commandMetadata","browseEndpoint"],[1,1]);
+	let iter_skips=[];
+	if("watchEndpoint" in obj) {
+		iter_skips.push("watchEndpoint");obj;
+	}
+	if("browseEndpoint" in obj) {
+		iter_skips.push("browseEndpoint");obj;
 	}
 	if('commandMetadata' in obj) {
-		obj.commandMetadata;
+		iter_skips.push("commandMetadata");obj;
 		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-		random_sometimes_break_base_0(detail,obj,path,["commandMetadata"],[1,2]);
 	} else {
 		random_sometimes_break_base_0(detail,obj,path,[],[1,3]);
 	}
+	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
 	if("browseEndpoint" in detail.endpoint) {
 		let bid=detail.endpoint.browseEndpoint.browseId;
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
