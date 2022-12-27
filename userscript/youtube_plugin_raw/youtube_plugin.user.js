@@ -2329,13 +2329,19 @@ function random_sometimes_break_0(detail,obj,path) {
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
+	/** @typedef {keyof import("./support/yt_api/_abc/b/BrowseEndpoint.js").BrowseEndpoint} _XYZ */
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");obj;
 	}
 	if("watchEndpoint" in obj) {
 		iter_skips.push("watchEndpoint");obj;
 	}
-	if("browseEndpoint" in obj) {
+	/** @type {_XYZ} */
+	const v="browseEndpoint";
+	if(v in obj) {
+		if(Object.keys(obj).length!==1) {
+			debugger;
+		}
 		iter_skips.push("browseEndpoint");obj;
 	}
 	if('commandMetadata' in obj) {
