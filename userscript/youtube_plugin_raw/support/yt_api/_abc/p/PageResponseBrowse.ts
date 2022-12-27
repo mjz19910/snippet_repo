@@ -21,4 +21,5 @@ export type PageResponseBrowse={
 			trackingParams: string;
 		};
 	}[];
+	previousCsn?: string;
 };

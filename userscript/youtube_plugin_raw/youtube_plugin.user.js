@@ -44,6 +44,7 @@ if(typeof window==='undefined') {
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
 /** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};
+window.inject_api=inject_api;
 /** @type {InjectApiYt} */
 let inject_api_yt={};
 inject_api.modules=new Map;
@@ -1420,15 +1421,9 @@ class AppendContinuationItemsAction {
 	continuationItems=[];
 	targetId="";
 }
-class InitialDataType {
-	/**@type {{}|undefined} */
-	response={};
-	page="";
-	playerResponse="";
-}
 /**
  * @arg {FilterHandlers} cls
- * @param {[()=>InitialDataType, object, []]} apply_args
+ * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
  */
 function filter_on_initial_data(cls,apply_args) {
 	let ret=Reflect.apply(...apply_args);
@@ -1442,10 +1437,6 @@ function filter_on_initial_data(cls,apply_args) {
 						cls.handle_page_type(ret.response,page_type,"response");
 					} else {
 						debugger;
-					}
-					if(ret.playerResponse) {
-						console.log(cls.class_name+": playerResponse in ret.page === \"browse\"");
-						console.assert(false);
 					}
 				} else {
 					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
@@ -1463,6 +1454,7 @@ function filter_on_initial_data(cls,apply_args) {
 		}
 	} else {
 		console.log(cls.class_name+": unhandled return value:",ret);
+		debugger;
 	}
 	return ret;
 }
@@ -1672,6 +1664,7 @@ class FilterHandlers extends IterateApiResultBase {
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			}; break;
 			case "browse": return "browse";
+			case "player": return "player";
 			case "next": return "next";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
@@ -2485,15 +2478,20 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(eq_keys(ok_e,['expirationTime'])) return true;
 		if(eq_keys(ok_e,['playerResponse'])) return true;
 		if(eq_keys(ok_e,['rootVe','expirationTime'])) return true;
+		if(eq_keys(ok_e,['previousCsn', 'expirationTime'])) return true;
 		if(eq_keys(ok_e,['playerResponse','reelWatchSequenceResponse','cachedReelWatchSequenceResponse'])) return true;
 		return false;
 	}
 	click_track_do(obj,iter_skips);
+	if("rootVe" in obj) {
+		console.log("rootVe", obj, obj.rootVe);
+	}
 	if("page" in obj) {
 		if(obj.page==="watch") {
 			iter_skips.push("page");
 		} else if(obj.page==="browse") {
 			iter_skips.push("page");
+			obj.previousCsn;
 		} else if(obj.page==="shorts") {
 			iter_skips.push("page");
 		} else {
@@ -2508,6 +2506,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		}
 		if(!get_is_ok()) {
 			console.log(ok_1);
+			debugger;
 		}
 		iter_skips.push("endpoint");
 	}
@@ -2524,6 +2523,9 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(typeof obj.url!=='string') {
 			debugger;
 		}
+	}
+	if("clickTrackingParams" in obj) {
+		iter_skips.push("clickTrackingParams");
 	}
 	if(!is_this_keys_ok) {
 		console.log(ok_e);
