@@ -1,4 +1,5 @@
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
+import {PageResponseWatch} from "./PageResponseWatch";
 import {PageTypeBrowse} from "./PageTypeBrowse.js";
 
 export interface PageTypeWatch<T> {
@@ -6,7 +7,7 @@ export interface PageTypeWatch<T> {
 	fromHistory: false;
 	navigationDoneMs: number;
 	endpoint: WatchEndpoint<T>;
-	response: {};
+	response: PageResponseWatch;
 }
 
 export type YTNavigateFinishEventDetail=PageTypeWatch<string>|PageTypeBrowse;

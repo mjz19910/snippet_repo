@@ -2225,6 +2225,21 @@ function log_page_type_change(event) {
 	});
 }
 on_yt_navigate_finish.push(log_page_type_change);
+/** @typedef {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} YTNavigateFinishEventDetail */
+/**
+ * @param {YTNavigateFinishEventDetail['response']} obj
+ * @param {string[]} path
+ */
+function random_sometimes_break_0(obj,path) {
+	/** @type {{[x: string]: {}}} */
+	let idx_able=obj;
+	for(let x of Object.keys(obj)) {
+		if(Math.random() <0.3&& x in idx_able) {
+			console.log(path.concat(x).join("."),idx_able[x]);
+			debugger;
+		}
+	}
+}
 
 /** @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
@@ -2232,7 +2247,7 @@ function on_page_type_changed(detail) {
 	let ok=any(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
-			case "response": break;
+			case "response": random_sometimes_break_0(detail[x],['detail']); break;
 		}
 		if(Math.random() <0.3) {
 			console.log('detail.'+x,detail[x]);
