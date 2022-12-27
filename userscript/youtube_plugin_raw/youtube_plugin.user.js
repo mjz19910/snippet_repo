@@ -13,14 +13,14 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-console=typeof window==='undefined'? console:(() => window.console)();
+console=typeof window==="undefined"? console:(() => window.console)();
 var is_node_js=function is_node_js() {
 	return false;
 };
 var destroy_env=() => {};
-if(typeof window==='undefined') {
+if(typeof window==="undefined") {
 	is_node_js=() => true;
-	if(typeof any(globalThis).require==='function') {
+	if(typeof any(globalThis).require==="function") {
 		let n_env=require("./init_node_env.js");
 		destroy_env=() => {
 			n_env.destroy_env(message_channel);
@@ -1322,7 +1322,7 @@ class HandleRendererContentItemArray {
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
 		check_item_keys(path,"richItemRenderer.content",Object.keys(renderer.content));
-		if('adSlotRenderer' in renderer.content) {
+		if("adSlotRenderer" in renderer.content) {
 			if(base.debug) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
 		}
@@ -1612,7 +1612,7 @@ class FilterHandlers extends IterateApiResultBase {
 			return ret;
 		}
 		const res_parse=create_from_parse(x);
-		if('_tag' in res_parse) {
+		if("_tag" in res_parse) {
 			console.log('parse failed (should never happen)',x,res_parse);
 			throw new Error("unreachable");
 		}
@@ -1682,14 +1682,14 @@ class FilterHandlers extends IterateApiResultBase {
 			sp_keys.push(key);
 		});
 		let should_stop=false;
-		should_stop&&=!eq_keys(parts,['youtubei', 'v1', 'notification', 'get_unseen_count']);
+		should_stop&&=!eq_keys(parts,["youtubei", "v1", "notification", "get_unseen_count"]);
 		should_stop&&=parts[0]!=="getDatasyncIdsEndpoint";
-		should_stop&&=!eq_keys(parts,['youtubei', 'v1', 'guide']);
-		should_stop&&=!eq_keys(parts,['youtubei','v1','att','get']);
+		should_stop&&=!eq_keys(parts,["youtubei", "v1", "guide"]);
+		should_stop&&=!eq_keys(parts,["youtubei","v1","att","get"]);
 		if(should_stop) {
 			debugger;
 		}
-		if(eq_keys(sp_keys,['key','prettyPrint'])) return;
+		if(eq_keys(sp_keys,["key","prettyPrint"])) return;
 		if(parts[0]==="getDatasyncIdsEndpoint"&&sp_keys.length===0) return;
 		console.log('past with', url.href,sp_keys);
 		if(url.search!=="") console.log(parts,sp_keys);
@@ -1743,7 +1743,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "browse": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count['json']} */
+				/** @type {notification_get_unseen_count["json"]} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1751,7 +1751,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "guide": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count['json']} */
+				/** @type {notification_get_unseen_count["json"]} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1759,7 +1759,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "notification.get_unseen_count": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count['json']} */
+				/** @type {notification_get_unseen_count["json"]} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1797,7 +1797,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {{[U in typeof path]?: SavedData['any_data'][U]}} */
+		/** @type {{[U in typeof path]?: SavedData["any_data"][U]}} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);
@@ -2393,7 +2393,7 @@ const last_detail_val={value: {}};
 function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
 	last_detail_val.value=detail;
 	ent_ids;
-	if(typeof obj!=='object') return;
+	if(typeof obj!=="object") return;
 	/** @type {{}} */
 	let oo=obj;
 	/** @type {{[x: string]: {}}} */
@@ -2420,14 +2420,37 @@ function eq_keys(src,target) {
 	}
 	return true;
 }
+/**
+ * @param {string[]} keys
+ * @param {string[]} to_remove
+ */
+function filter_out_keys(keys, to_remove) {
+	to_remove=to_remove.slice();
+	/** @type {string[]} */
+	let ok_e=[];
+	for(let i=0;i<keys.length;i++) {
+		if(to_remove.includes(keys[i])) {
+			let rm_i=to_remove.indexOf(keys[i]);
+			to_remove.splice(rm_i,1);
+			continue;
+		}
+		ok_e.push(keys[i]);
+	}
+	if(to_remove.length >0) {
+		console.log("did not remove all target keys", keys, 'missing', to_remove);
+		debugger;
+	}
+	return ok_e;
+}
+const gen_not_want_level_1=["responseContext","contents","trackingParams","topbar"];
 /** @template T @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch<T>} PageResponseWatch */
 /** @typedef {import("./support/yt_api/_abc/p/PageResponseBrowse.js").PageResponseBrowse}  PageResponseBrowse */
-/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {YTNavigateFinishEventDetail<T>['response']} obj */
+/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {YTNavigateFinishEventDetail<T>["response"]} obj */
 function pb_0(detail,obj) {
 	if(obj.page==="watch") {
 		x: {
-			let ok=Object.keys(obj.response);
-			if(eq_keys(ok,['responseContext','contents','currentVideoEndpoint','trackingParams','playerOverlays','onResponseReceivedEndpoints','engagementPanels','topbar','pageVisualEffects','frameworkUpdates'])) break x;
+			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
+			if(eq_keys(ok,["responseContext","contents","currentVideoEndpoint","trackingParams","playerOverlays","onResponseReceivedEndpoints","engagementPanels","topbar","pageVisualEffects","frameworkUpdates"])) break x;
 			debugger;
 		}
 		if(Object.keys(obj.response).length!==10) {
@@ -2436,7 +2459,7 @@ function pb_0(detail,obj) {
 	}
 	if(detail.pageType==="browse") {
 		x: {
-			let ok=Object.keys(obj.response);
+			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
 			if(eq_keys(ok,["responseContext","contents","header","trackingParams","topbar","onResponseReceivedActions"])) break x;
 			debugger;
 		}
@@ -2446,7 +2469,7 @@ function pb_0(detail,obj) {
 		}
 	}
 }
-const gen_not_want=['page','endpoint','response','url'];
+const gen_not_want=["page","endpoint","response","url"];
 /**
  * @param {any} obj
  * @param {string[]} iter_skips
@@ -2454,7 +2477,7 @@ const gen_not_want=['page','endpoint','response','url'];
 function click_track_do(obj, iter_skips) {
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");
-		if(typeof obj.clickTrackingParams!=='string') {
+		if(typeof obj.clickTrackingParams!=="string") {
 			debugger;
 		}
 	}
@@ -2462,7 +2485,7 @@ function click_track_do(obj, iter_skips) {
 /**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
- * @param {YTNavigateFinishEventDetail<T>['response']} obj
+ * @param {YTNavigateFinishEventDetail<T>["response"]} obj
  * @param {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
@@ -2477,11 +2500,11 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 	let is_this_keys_ok=get_is_ok();
 	function get_is_ok() {
-		if(eq_keys(ok_e,['expirationTime'])) return true;
-		if(eq_keys(ok_e,['playerResponse'])) return true;
-		if(eq_keys(ok_e,['rootVe','expirationTime'])) return true;
-		if(eq_keys(ok_e,['previousCsn', 'expirationTime'])) return true;
-		if(eq_keys(ok_e,['playerResponse','reelWatchSequenceResponse','cachedReelWatchSequenceResponse'])) return true;
+		if(eq_keys(ok_e,["expirationTime"])) return true;
+		if(eq_keys(ok_e,["playerResponse"])) return true;
+		if(eq_keys(ok_e,["rootVe","expirationTime"])) return true;
+		if(eq_keys(ok_e,["previousCsn", "expirationTime"])) return true;
+		if(eq_keys(ok_e,["playerResponse","reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
 		return false;
 	}
 	click_track_do(obj,iter_skips);
@@ -2503,7 +2526,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	if("endpoint" in obj) {
 		let ok_1=Object.keys(obj.endpoint);
 		function get_is_ok() {
-			if(eq_keys(ok_1,['clickTrackingParams','commandMetadata','browseEndpoint'])) return true;
+			if(eq_keys(ok_1,["clickTrackingParams","commandMetadata","browseEndpoint"])) return true;
 			return false;
 		}
 		if(!get_is_ok()) {
@@ -2522,7 +2545,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 	if("url" in obj) {
 		iter_skips.push("url");
-		if(typeof obj.url!=='string') {
+		if(typeof obj.url!=="string") {
 			debugger;
 		}
 	}
@@ -2540,7 +2563,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		/** @type {{}} */
 		let c=obj;
 		if("endpoint" in c) {
-			if(typeof c.endpoint=='object'&&c.endpoint!==null) {
+			if(typeof c.endpoint=="object"&&c.endpoint!==null) {
 				console.log(Object.keys(c.endpoint));
 			} else {
 				console.log("playerResponse",obj);
@@ -2564,7 +2587,7 @@ function on_command_meta(obj) {
 /**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
- * @param {YTNavigateFinishEventDetail<T>['endpoint']} obj
+ * @param {YTNavigateFinishEventDetail<T>["endpoint"]} obj
  * @param {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
@@ -2615,11 +2638,11 @@ function on_page_type_changed(detail) {
 	let ok=any(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
-			case "response": random_sometimes_break_0(detail,detail[x],['detail',x]); continue;
-			case "endpoint": random_sometimes_break_1(detail,detail[x],['detail',x]); continue;
-			case "fromHistory": if(typeof detail[x]!=='boolean') {debugger;}; continue;
-			case "navigationDoneMs": if(typeof detail[x]!=='number') {debugger;}; continue;
-			case "pageType": if(typeof detail[x]!=='string') {debugger;}; continue;
+			case "response": random_sometimes_break_0(detail,detail[x],["detail",x]); continue;
+			case "endpoint": random_sometimes_break_1(detail,detail[x],["detail",x]); continue;
+			case "fromHistory": if(typeof detail[x]!=="boolean") {debugger;}; continue;
+			case "navigationDoneMs": if(typeof detail[x]!=="number") {debugger;}; continue;
+			case "pageType": if(typeof detail[x]!=="string") {debugger;}; continue;
 			default:
 				console.log('detail.'+x,detail[x]);
 				debugger;
@@ -3301,7 +3324,7 @@ function get_exports() {
 	return exports;
 }
 
-if(typeof exports==='object') {
+if(typeof exports==="object") {
 	let exports=get_exports();
 	exports.SavedData=SavedData;
 	exports.Gn=Gn;
