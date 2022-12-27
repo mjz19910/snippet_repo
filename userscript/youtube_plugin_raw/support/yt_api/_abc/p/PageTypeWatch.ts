@@ -1,4 +1,6 @@
+import {CommandMetadata} from "../c/CommandMetadata.js";
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
+import {YtVideoIdStr} from "../w/WatchEndpointData.js";
 import {PageResponseWatch} from "./PageResponseWatch";
 import {PageTypeBrowse} from "./PageTypeBrowse.js";
 
@@ -10,4 +12,21 @@ export interface PageTypeWatch<T> {
 	response: PageResponseWatch;
 }
 
-export type YTNavigateFinishEventDetail=PageTypeWatch<string>|PageTypeBrowse;
+interface ReelWatchEndpointData<VideoId> {
+	videoId: YtVideoIdStr<VideoId>;
+}
+
+interface ReelWatchEndpoint<VideoId> {
+	commandMetadata: CommandMetadata;
+	reelWatchEndpoint: ReelWatchEndpointData<VideoId>;
+}
+
+type PageTypeShorts<VideoId>={
+	pageType: "shorts";
+	fromHistory: false;
+	navigationDoneMs: number;
+	endpoint: ReelWatchEndpoint<VideoId>;
+	response: PageResponseWatch;
+};
+
+export type YTNavigateFinishEventDetail<T>=PageTypeWatch<T>|PageTypeBrowse|PageTypeShorts<T>;

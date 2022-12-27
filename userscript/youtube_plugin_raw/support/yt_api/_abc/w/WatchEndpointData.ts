@@ -1,4 +1,4 @@
-import {Split} from "../../../Split.js";
+import {Split} from "../../../make/Split.js";
 import {WatchEndpointConfig} from "./WatchEndpointConfig";
 
 export type YtVideoIdStr<T>=T extends string? Split<T,"">['length'] extends 11? T:never:never;

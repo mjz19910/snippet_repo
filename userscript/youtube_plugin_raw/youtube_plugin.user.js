@@ -2198,24 +2198,26 @@ function any(e) {
 	return e;
 }
 
+/** @template T */
 class YTNavigateFinishEvent {
-	/**@arg {Event} value @return {YTNavigateFinishEvent} */
+	/**@template U @arg {Event} value @return {YTNavigateFinishEvent<U>} */
 	static cast(value) {
 		/**@type {any} */
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} */
+	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} */
 	detail=any({});
 }
 
 /**
- * @type {((event:YTNavigateFinishEvent)=>void)[]}
+ * @type {((event:YTNavigateFinishEvent<string>)=>void)[]}
  */
 let on_yt_navigate_finish=[];
 
 /**
- * @param {YTNavigateFinishEvent} event
+ * @template T
+ * @param {YTNavigateFinishEvent<T>} event
  */
 function log_page_type_change(event) {
 	let {detail}=event;
@@ -2225,12 +2227,15 @@ function log_page_type_change(event) {
 	});
 }
 on_yt_navigate_finish.push(log_page_type_change);
-/** @typedef {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} YTNavigateFinishEventDetail */
+/** @template T @typedef {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} YTNavigateFinishEventDetail */
 /**
- * @param {YTNavigateFinishEventDetail['response']} obj
+ * @template T
+ * @arg {YTNavigateFinishEventDetail<T>} detail
+ * @param {YTNavigateFinishEventDetail<T>['response']} obj
  * @param {string[]} path
  */
-function random_sometimes_break_0(obj,path) {
+function random_sometimes_break_0(detail,obj,path) {
+	detail;
 	/** @type {{[x: string]: {}}} */
 	let idx_able=obj;
 	for(let x of Object.keys(obj)) {
@@ -2243,13 +2248,13 @@ function random_sometimes_break_0(obj,path) {
 
 const random_factor=0.2;
 
-/** @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} detail */
+/** @template T @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
 	let ok=any(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
-			case "response": random_sometimes_break_0(detail[x],['detail',x]); continue;
+			case "response": random_sometimes_break_0(detail,detail[x],['detail',x]); continue;
 		}
 		if(Math.random() <(random_factor/4)) {
 			console.log('detail.'+x,detail[x]);
