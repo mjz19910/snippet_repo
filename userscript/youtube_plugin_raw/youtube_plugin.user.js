@@ -2239,7 +2239,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	/** @type {{[x: string]: {}}} */
 	let idx_able=obj;
 	for(let x of Object.keys(obj)) {
-		if(Math.random() <(random_factor/5)&& x in idx_able) {
+		if(Math.random()<(random_factor/5)&&x in idx_able) {
 			console.log(path.concat(x).join("."),idx_able[x]);
 			debugger;
 		}
@@ -2255,14 +2255,21 @@ function on_page_type_changed(detail) {
 	for(let x of ok) {
 		switch(x) {
 			case "response": random_sometimes_break_0(detail,detail[x],['detail',x]); continue;
+			case "fromHistory": if(detail.fromHistory===false) {
+			} else {
+				debugger;
+			}; continue;
 		}
-		if(Math.random() <(random_factor/4)) {
+		if(Math.random()<(random_factor/4)) {
 			console.log('detail.'+x,detail[x]);
 			debugger;
 		}
 	}
-	if(detail.pageType!=="watch"&&detail.pageType!=="browse") {
-		debugger;
+	switch(detail.pageType) {
+		case "browse": break;
+		case "shorts": break;
+		case "watch": break;
+		default: debugger;
 	}
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
