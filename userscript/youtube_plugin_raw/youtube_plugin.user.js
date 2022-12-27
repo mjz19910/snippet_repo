@@ -2350,20 +2350,36 @@ function pb_0(detail,obj) {
  */
 function random_sometimes_break_0(detail,obj,path) {
 	let iter_skips=[];
+	let is_this_keys_ok=get_is_ok();
+	function get_is_ok() {
+		let ok=Object.keys(obj);
+		if(eq_keys(ok,['page','endpoint','response','url','expirationTime'])) return true;
+		return false;
+	}
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams"); obj;
+		if(!is_this_keys_ok) {
+			debugger;
+		}
 	}
 	if("page" in obj) {
-		if(obj.page==="watch") {
-			iter_skips.push("page"); obj;
+		if(!is_this_keys_ok) {
+			debugger;
 		}
-		if(obj.page==="browse") {
-			iter_skips.push("page"); obj;
+		if(obj.page==="watch") {
+			iter_skips.push("page");
+		} else if(obj.page==="browse") {
+			iter_skips.push("page");
+		} else {
 			debugger;
 		}
 	}
 	if("endpoint" in obj) {
+		console.log(Object.keys(obj.endpoint));
 		iter_skips.push("endpoint"); obj;
+		if(!is_this_keys_ok) {
+			debugger;
+		}
 	}
 	if("response" in obj) {
 		pb_0(detail,obj);
@@ -2372,21 +2388,28 @@ function random_sometimes_break_0(detail,obj,path) {
 	if("playerResponse" in obj) {
 		console.log(Object.keys(obj.playerResponse));
 		iter_skips.push("playerResponse");
+		if(!is_this_keys_ok) {
+			debugger;
+		}
 	}
 	if("url" in obj) {
 		iter_skips.push("url");
+		x: {
+			debugger;
+			break x;
+		}
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 	if("response" in obj) {
 		return;
 	}
+	debugger;
 	if("endpoint" in obj) {
 		if(typeof obj.endpoint=='object'&&obj.endpoint!==null) {
 			console.log(Object.keys(obj.endpoint));
 		} else {
 			console.log("playerResponse",obj);
 		}
-		iter_skips.push("playerResponse");
 	}
 }
 /**
