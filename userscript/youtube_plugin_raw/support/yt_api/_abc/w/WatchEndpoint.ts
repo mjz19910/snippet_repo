@@ -1,5 +1,4 @@
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
-import {CommandMetadata} from "../c/CommandMetadata.js";
 import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
 import {WatchEndpointData} from "./WatchEndpointData";
 type ParentTrackingParams=TrackingParamsForKey<"parentTrackingParams">;
