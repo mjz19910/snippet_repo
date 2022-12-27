@@ -1,13 +1,6 @@
-import {ExtractParamKey} from "./ExtractParamKey";
-import {KVStore} from "./KVStore";
-
-export type PvSP<U extends KVStore,T extends string>=ExtractParamKey<[U],T>;
-export type CsiServiceParams={
-	service: "CSI";
-	params: KVStore[];
-};
-import * as json from "./json/page_type_watch_detail.json";
-export const watch_j_response=json.response.response;
+import {ExtractSingleParamKey} from "./ExtractSingleParamKey";
+import {CsiServiceParams} from "./CsiServiceParams";
+import {watch_j_response} from "./watch_j_response.js";
 export const watch_serviceTrackingParams=watch_j_response.responseContext.serviceTrackingParams;
 export function use_service_csi(service_param: typeof watch_serviceTrackingParams[0]) {
 	const service_param_t: CsiServiceParams=service_param;
@@ -15,7 +8,7 @@ export function use_service_csi(service_param: typeof watch_serviceTrackingParam
 	service_param.service;
 	const sp_0_params=service_param.params;
 	type CsiPt=typeof sp_0_params;
-	type Pxg<T extends number>=PvSP<CsiPt[T],CsiPt[T]['key']>;
+	type Pxg<T extends number>=ExtractSingleParamKey<CsiPt[T],CsiPt[T]['key']>;
 	type CsiV={
 		c: Pxg<0>["c"];
 		cver: Pxg<1>["cver"];
@@ -31,12 +24,8 @@ export function use_service_csi(service_param: typeof watch_serviceTrackingParam
 			for(let i=0;i<sp_0_params.length;i++) {
 				let sp_x=sp_0_params[i];
 				switch(sp_x.key) {
-					case "c": {
-						this[sp_x.key]=sp_x.value;
-					} break;
-					case "cver": {
-						this[sp_x.key]=sp_x.value;
-					} break;
+					case "c": this[sp_x.key]=sp_x.value; break;
+					case "cver": this[sp_x.key]=sp_x.value; break;
 					case "GetWatchNext_rid": this[sp_x.key]=sp_x.value; break;
 					case "yt_li": this[sp_x.key]=sp_x.value; break;
 					default: console.log("new params for",service_param.service);
