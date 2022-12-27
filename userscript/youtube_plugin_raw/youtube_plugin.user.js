@@ -2548,6 +2548,10 @@ function random_sometimes_break_1(detail,obj,path) {
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");
 	}
+	if("commandMetadata" in obj) {
+		iter_skips.push("commandMetadata");
+		on_command_meta(obj);
+	}
 	if("watchEndpoint" in obj) {
 		iter_skips.push("watchEndpoint");
 	}
@@ -2561,10 +2565,6 @@ function random_sometimes_break_1(detail,obj,path) {
 		if(obj.browseEndpoint.browseId==="FEwhat_to_watch") break x;
 		if(obj.browseEndpoint.browseId==="FEsubscriptions") break x;
 		console.log("obj_browseEndpoint",obj.browseEndpoint);
-	}
-	if("commandMetadata" in obj) {
-		iter_skips.push("commandMetadata");
-		on_command_meta(obj);
 	}
 	if("reelWatchEndpoint" in obj) {
 		iter_skips.push("reelWatchEndpoint");
