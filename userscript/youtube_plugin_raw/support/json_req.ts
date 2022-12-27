@@ -28,7 +28,7 @@ export type AttGetV={
 		serviceTrackingParams: AllServiceTrackingParams;
 		webResponseContextExtensionData: {
 			hasDecorated: false;
-		}
+		};
 	};
 	challenge: string;
 	bgChallenge: {
