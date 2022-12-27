@@ -2324,6 +2324,9 @@ function random_sometimes_break_0(detail,obj,path) {
 			iter_skips.push("page"); obj;
 		}
 	}
+	if("endpoint" in obj) {
+		iter_skips.push("endpoint"); obj;
+	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 }
 /**
