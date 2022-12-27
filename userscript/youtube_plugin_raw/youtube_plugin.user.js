@@ -1673,7 +1673,16 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {string[]} parts
 	 */
 	search_print(url,parts) {
-		if(url.search!=="") console.log(parts,url.search);
+		if(eq_keys(parts,['youtubei', 'v1', 'notification', 'get_unseen_count'])) {
+			if(url.search!=="") console.log(parts,url.search);
+			return;
+		}
+		if(eq_keys(parts,['youtubei','v1','att','get'])) {
+			if(url.search!=="") console.log(parts,url.search);
+			return;
+		} else {
+			debugger;
+		}
 	}
 	/**
 	 * @arg {{}} data
@@ -1720,32 +1729,32 @@ class FilterHandlers extends IterateApiResultBase {
 					request,
 					parsed_url: req_parse,
 				}); break;
-				/** @typedef {import("./support/json_req.js").notification_get_unseen_count} notification_get_unseen_count */
-				case "browse": on_json_request({
-					/** @readonly */
-					url_type,
-					/** @type {notification_get_unseen_count['json']} */
-					json: any(data),
-					request,
-					parsed_url: req_parse,
-				}); break;
-				case "guide": on_json_request({
-					/** @readonly */
-					url_type,
-					/** @type {notification_get_unseen_count['json']} */
-					json: any(data),
-					request,
-					parsed_url: req_parse,
-				}); break;
-				case "notification.get_unseen_count": on_json_request({
-					/** @readonly */
-					url_type,
-					/** @type {notification_get_unseen_count['json']} */
-					json: any(data),
-					request,
-					parsed_url: req_parse,
-				}); break;
-				default: console.log(url_type,data); debugger; break;
+			/** @typedef {import("./support/json_req.js").notification_get_unseen_count} notification_get_unseen_count */
+			case "browse": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {notification_get_unseen_count['json']} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
+			case "guide": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {notification_get_unseen_count['json']} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
+			case "notification.get_unseen_count": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {notification_get_unseen_count['json']} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
+			default: console.log(url_type,data); debugger; break;
 		}
 		x: {
 			if(api_path=="att.get") break x;
