@@ -1657,6 +1657,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "next": return "youtube.v1.next";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
+		throw new Error("Missing");
 	}
 	/**
 	 * @param {URL} url
@@ -2400,6 +2401,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	let is_this_keys_ok=get_is_ok();
 	function get_is_ok() {
 		if(eq_keys(ok_e,['expirationTime'])) return true;
+		if(eq_keys(ok_e,['playerResponse'])) return true;
 		if(eq_keys(ok_e,['rootVe','expirationTime'])) return true;
 		if(eq_keys(ok_e,['playerResponse','reelWatchSequenceResponse','cachedReelWatchSequenceResponse'])) return true;
 		return false;
