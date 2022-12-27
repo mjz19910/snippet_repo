@@ -4,9 +4,16 @@ import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
 import {WatchEndpointData} from "./WatchEndpointData";
 type ParentTrackingParams=TrackingParamsForKey<"parentTrackingParams">;
 export type ResolveUrlCommandMetadata=ParentTrackingParams;
-
+type WatchWebCommandMetadata={
+  url: string;
+  webPageType: "WEB_PAGE_TYPE_WATCH";
+  rootVe: 3832;
+};
+type WatchCommandMetadata={
+  webCommandMetadata: WatchWebCommandMetadata;
+}
 export interface WatchEndpoint<VideoId> extends ClickTrackingParams {
-	commandMetadata: CommandMetadata;
+	commandMetadata: WatchCommandMetadata;
 	watchEndpoint: WatchEndpointData<VideoId>;
 }
 /*{

@@ -2270,7 +2270,7 @@ function random_sometimes_break_0(detail,obj,path) {
 function random_sometimes_break_1(detail,obj,path) {
 	if('commandMetadata' in obj) {
 		obj.commandMetadata;
-		obj.commandMetadata.webCommandMetadata;
+		obj.commandMetadata.webCommandMetadata.webPageType;
 		random_sometimes_break_base_0(detail,obj,path,["commandMetadata"]);
 	} else {
 		random_sometimes_break_base_0(detail,obj,path,[]);
