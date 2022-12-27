@@ -2319,6 +2319,9 @@ function random_sometimes_break_0(detail,obj,path) {
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");obj;
 	}
+	if("page" in obj) {
+		if(obj.page==="watch") {}
+	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 }
 /**
