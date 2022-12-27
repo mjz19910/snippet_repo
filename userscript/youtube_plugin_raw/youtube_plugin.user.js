@@ -2307,10 +2307,7 @@ function on_page_type_changed(detail) {
 		switch(x) {
 			case "response": random_sometimes_break_0(detail,detail[x],['detail',x]); continue;
 			case "endpoint": random_sometimes_break_1(detail,detail[x],['detail',x]); continue;
-			case "fromHistory": if(detail.fromHistory===false) {
-			} else {
-				debugger;
-			}; continue;
+			case "fromHistory": if(typeof detail[x]!=='boolean') {debugger;}; continue;
 			case "navigationDoneMs": if(typeof detail[x]!=='number') {debugger;}; continue;
 		}
 		if(Math.random()<(random_factor/4)) {
