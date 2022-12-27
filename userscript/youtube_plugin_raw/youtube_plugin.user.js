@@ -2526,7 +2526,10 @@ const random_factor=0.2;
 
 /** @param {import("./support/json_req.js").json_req} request_info */
 function on_json_request(request_info) {
-	console.log(request_info);
+	switch(request_info.url_type) {
+		case "att.get": console.log(request_info.url_type,request_info.json); break;
+		default: console.log(request_info.url_type,request_info.json); break;
+	}
 }
 
 /** @template T @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} detail */
