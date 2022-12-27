@@ -1655,6 +1655,7 @@ class FilterHandlers extends IterateApiResultBase {
 				case "get_notification_menu": return "youtube.v1.notification.get_notification_menu";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
+			case "browse": return "youtube.v1.browse";
 			case "next": return "youtube.v1.next";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
