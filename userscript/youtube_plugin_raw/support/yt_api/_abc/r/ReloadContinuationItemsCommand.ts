@@ -1,5 +1,4 @@
-import {SectionItem} from "./SectionItem";
-
+import {SectionItem} from "../s/SectionItem";
 
 export type ReloadContinuationItemsCommand={
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";

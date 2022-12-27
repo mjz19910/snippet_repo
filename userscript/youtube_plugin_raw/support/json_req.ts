@@ -1,6 +1,7 @@
 import {AllServiceTrackingParams} from "./AllServiceTrackingParams";
 import {ParseParamItem} from "./search_params_parse/ParseParamItem.js";
 import {UrlWrappedValue} from "./UrlWrappedValue";
+import {ReloadContinuationItemsCommand} from "./yt_api/_abc/r/ReloadContinuationItemsCommand.js";
 import {Decay} from "./yt_api/_exact_data/Decay.js";
 
 type U_0={
@@ -19,17 +20,19 @@ const u: ExampleChallengeVars={
 	"t": "7200",
 }; u;
 
-export type AttGetV={
-	responseContext: {
-		mainAppWebResponseContext: {
-			datasyncId: `${number}||${number}`;
-			loggedOut: boolean;
-		};
-		serviceTrackingParams: AllServiceTrackingParams;
-		webResponseContextExtensionData: {
-			hasDecorated: false;
-		};
+type GeneralContext={
+	mainAppWebResponseContext: {
+		datasyncId: `${number}||${number}`;
+		loggedOut: boolean;
 	};
+	serviceTrackingParams: AllServiceTrackingParams;
+	webResponseContextExtensionData: {
+		hasDecorated: false;
+	};
+};
+
+export type AttGetV={
+	responseContext: GeneralContext;
 	challenge: string;
 	bgChallenge: {
 		interpreterUrl: UrlWrappedValue<string>;
@@ -45,9 +48,20 @@ type U_1={
 	json: AttGetV;
 };
 
+type AllResponseReceivedEndpoints={
+	clickTrackingParams: string;
+	reloadContinuationItemsCommand: ReloadContinuationItemsCommand;
+};
+
+type YtApiNext={
+	onResponseReceivedEndpoints: AllResponseReceivedEndpoints[];
+	responseContext: GeneralContext;
+	trackingParams: string;
+};
+
 type U_2={
 	url_type: "youtube.v1.next";
-	json: {};
+	json: YtApiNext;
 };
 
 type U_3={
