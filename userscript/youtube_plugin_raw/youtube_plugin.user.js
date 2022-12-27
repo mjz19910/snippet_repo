@@ -1636,6 +1636,14 @@ class FilterHandlers extends IterateApiResultBase {
 	/** @param {string[]} parts */
 	with_ty_2(parts) {
 		switch(parts[2]) {
+			case "att": this.with_type_att(parts,2); break;
+			default: debugger;
+		}
+	}
+	/** @param {string[]} parts @arg {number} index */
+	with_type_att(parts,index) {
+		switch(parts[index+1]) {
+			case "get": break;
 			default: debugger;
 		}
 	}
