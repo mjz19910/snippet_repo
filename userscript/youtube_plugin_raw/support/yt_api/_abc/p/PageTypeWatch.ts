@@ -15,9 +15,9 @@ export interface PageTypeWatch<T> {
 interface ReelWatchEndpointData<VideoId> {
 	videoId: YtVideoIdStr<VideoId>;
 }
-
+type ReelWatchCommandMetadata=CommandMetadata;
 interface ReelWatchEndpoint<VideoId> {
-	commandMetadata: CommandMetadata;
+	commandMetadata: ReelWatchCommandMetadata;
 	reelWatchEndpoint: ReelWatchEndpointData<VideoId>;
 }
 

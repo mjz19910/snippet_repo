@@ -1,4 +1,4 @@
-import {WebCommandMetadata} from "./WebCommandMetadata";
+import {WebCommandMetadata} from "../w/WebCommandMetadata";
 
 
 export type CommandMetadata={

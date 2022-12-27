@@ -2235,10 +2235,10 @@ const last_detail_val={value: {}};
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>[keyof YTNavigateFinishEventDetail<T>]} obj
  * @param {string[]} path
+ * @arg {string[]} skip
  */
-function random_sometimes_break_base_0(detail,obj,path,skip=false) {
+function random_sometimes_break_base_0(detail,obj,path,skip=[]) {
 	last_detail_val.value=detail;
-	if(skip) return;
 	if(typeof obj!=='object') return;
 	/** @type {{}} */
 	let oo=obj;
@@ -2246,6 +2246,7 @@ function random_sometimes_break_base_0(detail,obj,path,skip=false) {
 	let idx_able=oo;
 	for(let x of Object.keys(obj)) {
 		if(Math.random()<(random_factor/5)&&x in idx_able) {
+			if(skip.includes(x)) continue;
 			console.log(path.concat(x).join("."),idx_able[x]);
 			debugger;
 		}
@@ -2267,7 +2268,13 @@ function random_sometimes_break_0(detail,obj,path) {
  * @param {string[]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
-	random_sometimes_break_base_0(detail,obj,path);
+	if('commandMetadata' in obj) {
+		obj.commandMetadata;
+		obj.commandMetadata.webCommandMetadata;
+		random_sometimes_break_base_0(detail,obj,path,["commandMetadata"]);
+	} else {
+		random_sometimes_break_base_0(detail,obj,path,[]);
+	}
 	if("browseEndpoint" in detail.endpoint) {
 		let bid=detail.endpoint.browseEndpoint.browseId;
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
