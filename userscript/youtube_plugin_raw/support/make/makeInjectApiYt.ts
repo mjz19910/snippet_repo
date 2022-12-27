@@ -1,8 +1,7 @@
-import {SavedData} from "../youtube_plugin.user.js";
+import {SavedData} from "../../youtube_plugin.user.js";
 
 declare global {
 	interface InjectApiYt {
-		iterate_tracking_params: () => any[]|undefined;
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
 		Seen?: {};
