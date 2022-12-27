@@ -2368,8 +2368,8 @@ function random_sometimes_break_1(detail,obj,path) {
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
 		}
-		console.log("browseEndpoint", obj.browseEndpoint);
-		console.log("browseEndpoint", obj.commandMetadata);
+		console.log("obj_browseEndpoint", obj.browseEndpoint);
+		console.log("browseEndpoint_commandMetadata", obj.commandMetadata);
 		iter_skips.push("browseEndpoint"); obj;
 	}
 	if('commandMetadata' in obj) {
