@@ -2227,7 +2227,7 @@ function log_page_type_change(event) {
 	});
 }
 on_yt_navigate_finish.push(log_page_type_change);
-const last_detail_val={value:{}};
+const last_detail_val={value: {}};
 /** @template T @typedef {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} YTNavigateFinishEventDetail */
 
 /**
@@ -2290,6 +2290,7 @@ function on_page_type_changed(detail) {
 			} else {
 				debugger;
 			}; continue;
+			case "navigationDoneMs": if(typeof detail[x]!=='number') {debugger;}; continue;
 		}
 		if(Math.random()<(random_factor/4)) {
 			console.log('detail.'+x,detail[x]);
