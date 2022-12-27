@@ -418,6 +418,7 @@ function with_ytd_scope() {
 				}
 				if(!box_map.has("video-list")) continue;
 				if(ytd_page_manager===null) continue;
+				if(!ytd_page_manager.getCurrentPage()) continue;
 				console.log(iter_count);
 				if(iter_count>max_find_iter) {
 					alert("found plugin reqs in iters="+iter_count);
