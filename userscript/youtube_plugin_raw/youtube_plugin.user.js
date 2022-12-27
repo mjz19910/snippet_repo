@@ -522,6 +522,7 @@ function with_ytd_scope() {
 		 * @param {number} gain
 		 */
 		setGain(gain) {
+			this.updateRangeElement(gain);
 			this.gain_controller.setGain(gain);
 			if(!this.use_cache) return;
 			history_state_manager.setCacheValue("filter_gain",gain);
@@ -533,16 +534,16 @@ function with_ytd_scope() {
 		}
 		/** @private */
 		calculateGain() {
-			if(!this.use_cache) return this.max;
+			if(!this.use_cache) return 1;
 			let c_gain=this.getGain();
 			if(!(typeof c_gain==="object"||typeof c_gain==="number")) {
 				this.setGain(1);
-				return this.max;
+				return 1;
 			}
 			let c_gain_1=c_gain;
 			if(c_gain_1===null) c_gain_1=1;
 			if(typeof c_gain_1==="object") throw new Error("Unexpected object");
-			return c_gain_1*this.max;
+			return c_gain_1;
 		}
 		max_compressor_reduction=-0.00011033167538698763;
 		/**
@@ -563,9 +564,20 @@ function with_ytd_scope() {
 				console.log("ng",new_gain,compressor_reduction_factor);
 				if(new_gain>this.overdrive) new_gain=this.overdrive;
 				if(new_gain<this.min) new_gain=this.min;
-				this.range_element.value=""+Math.floor(this.max*new_gain);
 				this.setGain(new_gain);
 			}
+		}
+		/** @param {number} new_gain */
+		updateRangeElement(new_gain) {
+			if(!this.range_element) return;
+			this.range_element.value=""+Math.floor(this.max*new_gain);
+		}
+		/**
+		 * @param {CustomEvent<{filter_gain: number}>} event
+		 */
+		onStateChange(event) {
+			this.gain_controller.setGain(event.detail.filter_gain);
+			this.updateRangeElement(event.detail.filter_gain);
 		}
 		/**
 		 * @param {Element} view_parent
@@ -598,11 +610,11 @@ function with_ytd_scope() {
 					this.setGain(range_value/this.max);
 				};
 				this.range_element.onkeydown=(event) => this.onKeyDown(event);
+				history_state_manager.addEventListener('update',this.onStateChange.bind(this));
 				this.range_element.min=""+this.min;
 				this.range_element.max=""+this.overdrive;
 				let new_gain=this.calculateGain();
-				this.range_element.value=""+new_gain;
-				this.setGain(new_gain/this.max);
+				this.setGain(new_gain);
 				this.view_div.append(this.range_element);
 			}
 			view_parent.insertAdjacentElement("beforebegin",this.view_div);
@@ -2799,8 +2811,11 @@ Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<a
 	let res=res_any;
 	return res;
 };
+/** @typedef {import("./support/history/HistoryStateManagerI.js").HistoryStateManagerI} HistoryStateManagerI */
+/** @typedef {import("./support/history/HistoryStateManagerEventMap.js").HistoryStateManagerEventMap} HistoryStateManagerEventMap */
 
-class HistoryStateManager {
+/** @implements {HistoryStateManagerI} */
+class HistoryStateManager extends EventTarget {
 	debug=false;
 	/** @type {{}|null} */
 	cur_state;
@@ -2808,7 +2823,18 @@ class HistoryStateManager {
 	/** @type {string[]} */
 	tmp_keys=[];
 	is_replacing_custom_state=false;
+	/**
+	 * @override
+	 * @template {string} K
+	 * @arg {K} type
+	 * @arg {K extends "update"?((this: HistoryStateManagerI, ev: HistoryStateManagerEventMap[K]) => any):EventListenerOrEventListenerObject} listener
+	 * @arg {boolean | AddEventListenerOptions} [options]
+	 * */
+	addEventListener(type, listener, options) {
+		super.addEventListener(type,listener,options);
+	}
 	constructor() {
+		super();
 		let t=this;
 		this.cur_state=this.getHistoryState();
 		if(this.debug) console.log("initial history state",this.cur_state);
@@ -2889,6 +2915,7 @@ class HistoryStateManager {
 					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
 				}
 				t.cur_state=new_state;
+				t.dispatchEvent(new CustomEvent("update",{detail:t.cur_state}))
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
