@@ -4,7 +4,7 @@ export type CommentsHeaderRenderer={
 	commentsCount: {};
 	customEmojis: {};
 	loggingDirectives: {};
-	showSeperator: true;
+	showSeparator: true;
 	sortMenu: {
 		sortFilterSubMenuRenderer: {};
 	};

@@ -1707,7 +1707,7 @@ class FilterHandlers extends IterateApiResultBase {
 				on_json_request({
 					/** @readonly */
 					url_type,
-					/** @type {import("./support/json_req.js").AttGetV} */
+					/** @type {import("./support/AttGetV.js").AttGetV} */
 					json: any(data),
 					request,
 					parsed_url: req_parse,
