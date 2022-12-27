@@ -2270,7 +2270,7 @@ function random_sometimes_break_1(detail,obj,path) {
 	if("browseEndpoint" in detail.endpoint) {
 		let bid=detail.endpoint.browseEndpoint.browseId;
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
-		if(bid!=="FEsubscriptions") {
+		if(bid!=="FEsubscriptions"&&bid!=="FEwhat_to_watch") {
 			debugger;
 		}
 	}

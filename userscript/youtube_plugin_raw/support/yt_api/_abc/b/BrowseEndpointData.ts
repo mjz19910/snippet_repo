@@ -1,3 +1,3 @@
 export type BrowseEndpointData={
-	browseId: "FEsubscriptions";
+	browseId: "FEsubscriptions"|"FEwhat_to_watch";
 };
