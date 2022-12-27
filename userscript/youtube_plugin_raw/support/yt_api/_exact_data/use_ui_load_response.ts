@@ -1,4 +1,4 @@
-import * as json from "./page_type_watch_detail.json";
+import * as json from "./json/page_type_watch_detail.json";
 import {use_response_context} from "./use_response_context";
 
 type Json=typeof json;

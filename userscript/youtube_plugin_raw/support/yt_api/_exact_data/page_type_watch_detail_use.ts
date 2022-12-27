@@ -1,4 +1,4 @@
-import * as json from "./page_type_watch_detail.json";
+import * as json from "./json/page_type_watch_detail.json";
 import {use_watch_page_message_detail} from "./use_watch_page_message_detail";
 
 export function page_type_watch_detail_use() {

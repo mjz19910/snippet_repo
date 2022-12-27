@@ -1,5 +1,5 @@
 import {BrowseEndpoint} from "../_abc/b/BrowseEndpoint.js";
-import * as json from "./page_type_browse_detail.json";
+import * as json from "./json/page_type_browse_detail.json";
 export function use_page_type_browse_detail() {
 	type Json=typeof json;
 	type json_d=keyof Json;

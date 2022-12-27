@@ -6,7 +6,7 @@ export type CsiServiceParams={
 	service: "CSI";
 	params: KVStore[];
 };
-import * as json from "./page_type_watch_detail.json";
+import * as json from "./json/page_type_watch_detail.json";
 export const watch_j_response=json.response.response;
 export const watch_serviceTrackingParams=watch_j_response.responseContext.serviceTrackingParams;
 export function use_service_csi(service_param: typeof watch_serviceTrackingParams[0]) {
