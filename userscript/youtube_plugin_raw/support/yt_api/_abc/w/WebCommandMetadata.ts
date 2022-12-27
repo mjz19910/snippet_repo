@@ -3,5 +3,5 @@ export type WebCommandMetadata={
 	apiUrl?: string;
 	rootVe?: number;
 	url?: string;
-	webPageType: string;
+	webPageType?: string;
 };

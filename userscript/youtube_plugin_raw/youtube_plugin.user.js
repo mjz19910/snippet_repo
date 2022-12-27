@@ -2357,29 +2357,24 @@ function random_sometimes_break_0(detail,obj,path) {
 		return false;
 	}
 	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams"); obj;
-		if(!is_this_keys_ok) {
-			debugger;
-		}
+		iter_skips.push("clickTrackingParams");
 	}
 	if("page" in obj) {
-		if(!is_this_keys_ok) {
-			debugger;
-		}
 		if(obj.page==="watch") {
 			iter_skips.push("page");
 		} else if(obj.page==="browse") {
 			iter_skips.push("page");
+		} else if(obj.page==="shorts")  {
+			iter_skips.push("page");
 		} else {
 			debugger;
 		}
+	} else {
+		obj.__vid;
 	}
 	if("endpoint" in obj) {
 		console.log(Object.keys(obj.endpoint));
 		iter_skips.push("endpoint"); obj;
-		if(!is_this_keys_ok) {
-			debugger;
-		}
 	}
 	if("response" in obj) {
 		pb_0(detail,obj);
@@ -2388,16 +2383,15 @@ function random_sometimes_break_0(detail,obj,path) {
 	if("playerResponse" in obj) {
 		console.log(Object.keys(obj.playerResponse));
 		iter_skips.push("playerResponse");
-		if(!is_this_keys_ok) {
-			debugger;
-		}
 	}
 	if("url" in obj) {
 		iter_skips.push("url");
-		x: {
+		if(typeof obj.url!=='string') {
 			debugger;
-			break x;
 		}
+	}
+	if(!is_this_keys_ok) {
+		debugger;
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 	if("response" in obj) {
@@ -2437,11 +2431,19 @@ function random_sometimes_break_1(detail,obj,path) {
 		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
 		iter_skips.push("browseEndpoint"); obj;
 	}
-	if('commandMetadata' in obj) {
+	if("commandMetadata" in obj) {
 		iter_skips.push("commandMetadata"); obj;
 		if("webCommandMetadata" in obj.commandMetadata) {
 			console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
 		}
+	}
+	if("reelWatchEndpoint" in obj) {
+		iter_skips.push("reelWatchEndpoint");
+		if("webCommandMetadata" in obj.commandMetadata) {
+			console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
+		}
+		console.log("obj_browseEndpoint",obj.reelWatchEndpoint);
+		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
 	if("browseEndpoint" in detail.endpoint) {
