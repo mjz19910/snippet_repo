@@ -2461,6 +2461,7 @@ function pb_0(detail,obj) {
 		x: {
 			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
 			if(eq_keys(ok,["responseContext","contents","header","trackingParams","topbar","onResponseReceivedActions"])) break x;
+			if(eq_keys(ok,['header', 'observedStateTags'])) break x;
 			debugger;
 		}
 		// [ "responseContext", "contents", "header", "trackingParams", "topbar", "onResponseReceivedActions" ]
