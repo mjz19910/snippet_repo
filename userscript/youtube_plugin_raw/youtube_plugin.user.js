@@ -1628,26 +1628,33 @@ class FilterHandlers extends IterateApiResultBase {
 	get_url_type(parts,url) {
 		let index=0;
 		switch(parts[index]) {
-			case "youtubei": index++; this.search_print(url,parts); switch(parts[1]) {
-				case "v1": index++; switch(parts[index]) {
-					case "att": switch(parts[index+1]) {
-						case "get": console.log('att.get',url.search); break;
-						default: debugger;
-					} break;
-					case "guide": if(parts.length!==3) debugger; break;
-					case "notification": index++; switch(parts[index]) {
-						case "get_unseen_count": break;
-						case "get_notification_menu": break;
-						default: console.log('no handler for',parts,parts[index]); debugger;
-					} break;
-					default: console.log('no handler for',parts,parts[index]); debugger;
-				} break;
-				default: debugger;
-			} break;
+			case "youtubei": index++; this.search_print(url,parts); this.get_yt_url_type(parts,url,index); break;
 			case "getDatasyncIdsEndpoint": this.search_print(url,parts); break;
 			default: debugger;
 		}
-
+	}
+	/**
+	 * @param {string[]} parts
+	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 * @arg {number} index
+	 */
+	get_yt_url_type(parts,url,index) {
+		switch(parts[1]) {
+			case "v1": index++; switch(parts[index]) {
+				case "att": switch(parts[index+1]) {
+					case "get": console.log('att.get',url.search); break;
+					default: debugger;
+				} break;
+				case "guide": if(parts.length!==3) debugger; break;
+				case "notification": index++; switch(parts[index]) {
+					case "get_unseen_count": break;
+					case "get_notification_menu": break;
+					default: console.log('no handler for',parts,parts[index]); debugger;
+				} break;
+				default: console.log('no handler for',parts,parts[index]); debugger;
+			} break;
+			default: debugger;
+		}
 	}
 	/**
 	 * @param {URL} url
