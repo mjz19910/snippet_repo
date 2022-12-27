@@ -1592,6 +1592,20 @@ class FilterHandlers extends IterateApiResultBase {
 			data.adPlacements=[];
 		}
 	}
+	/** @template {`${string}://${string}/${string}?${string}`} T @arg {T} x */
+	use_template_url(x) {
+				/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
+		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
+		function create_from_parse(str) {
+			let s=new URL(str);
+			/** @type {any} */
+			let a=s;
+			/** @type {UrlParse<T>} */
+			let ret=a;
+			return ret;
+		}
+		let res_parse=create_from_parse(x);
+	}
 	/**
 	 * @arg {{}} data
 	 * @param {string|URL|Request} request
@@ -1608,6 +1622,11 @@ class FilterHandlers extends IterateApiResultBase {
 			return {url: to_url(request.url)};
 		}
 		let req_parse=c1().url;
+		/** @type {any} */
+		let req_hr_t=req_parse.href;
+		/** @type {`${string}://${string}/${string}?${string}`} */
+		let href_=req_hr_t;
+		this.use_template_url(href_);
 		let path_url=req_parse.pathname;
 		if(path_url==="/getDatasyncIdsEndpoint") return;
 		let api_parts=req_parse.pathname.slice(1).split("/");
