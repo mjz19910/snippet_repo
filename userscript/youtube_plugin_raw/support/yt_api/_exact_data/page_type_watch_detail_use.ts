@@ -45,12 +45,12 @@ export function page_type_watch_detail_use() {
 }
 function use_ecatcher(service_param: typeof serviceTrackingParams[3]) {
 	const service_param_t: ServiceParams<"ECATCHER">=service_param;
-	throw new Error("Function not implemented.");
+	service_param_t;
 }
 
 function use_guided_help(service_param: typeof serviceTrackingParams[2]) {
 	const service_param_t: ServiceParams<"GUIDED_HELP">=service_param;
-	throw new Error("Function not implemented.");
+	service_param_t;
 }
 function use_gfeedback(service_param_1: typeof serviceTrackingParams[1]) {
 	const service_param_1_t: ServiceParams<"GFEEDBACK">=service_param_1;
