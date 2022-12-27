@@ -2328,7 +2328,9 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("endpoint"); obj;
 	}
 	if("response" in obj) {
-		console.log(Object.keys(obj.response));
+		if(Object.keys(obj.response).length!==6) {
+			debugger;
+		}
 		iter_skips.push("response");
 	}
 	if("playerResponse" in obj) {
