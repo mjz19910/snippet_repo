@@ -1704,7 +1704,7 @@ class FilterHandlers extends IterateApiResultBase {
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		on_json_request({
 			url_type,
-			json: data,
+			json: any(data),
 			request,
 			parsed_url: req_parse,
 		});
