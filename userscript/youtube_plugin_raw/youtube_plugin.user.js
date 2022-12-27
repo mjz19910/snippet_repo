@@ -2227,7 +2227,29 @@ function log_page_type_change(event) {
 	});
 }
 on_yt_navigate_finish.push(log_page_type_change);
+const last_detail_val={value:{}};
 /** @template T @typedef {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} YTNavigateFinishEventDetail */
+
+/**
+ * @template T
+ * @arg {YTNavigateFinishEventDetail<T>} detail
+ * @param {YTNavigateFinishEventDetail<T>[keyof YTNavigateFinishEventDetail<T>]} obj
+ * @param {string[]} path
+ */
+function random_sometimes_break_base_0(detail,obj,path) {
+	last_detail_val.value=detail;
+	if(typeof obj!=='object') return;
+	/** @type {{}} */
+	let oo=obj;
+	/** @type {{[x: string]: {}}} */
+	let idx_able=oo;
+	for(let x of Object.keys(obj)) {
+		if(Math.random()<(random_factor/5)&&x in idx_able) {
+			console.log(path.concat(x).join("."),idx_able[x]);
+			debugger;
+		}
+	}
+}
 /**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
@@ -2235,15 +2257,16 @@ on_yt_navigate_finish.push(log_page_type_change);
  * @param {string[]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
-	detail;
-	/** @type {{[x: string]: {}}} */
-	let idx_able=obj;
-	for(let x of Object.keys(obj)) {
-		if(Math.random()<(random_factor/5)&&x in idx_able) {
-			console.log(path.concat(x).join("."),idx_able[x]);
-			debugger;
-		}
-	}
+	random_sometimes_break_base_0(detail,obj,path);
+}
+/**
+ * @template T
+ * @arg {YTNavigateFinishEventDetail<T>} detail
+ * @param {YTNavigateFinishEventDetail<T>['endpoint']} obj
+ * @param {string[]} path
+ */
+function random_sometimes_break_1(detail,obj,path) {
+	random_sometimes_break_base_0(detail,obj,path);
 }
 
 const random_factor=0.2;
@@ -2255,6 +2278,7 @@ function on_page_type_changed(detail) {
 	for(let x of ok) {
 		switch(x) {
 			case "response": random_sometimes_break_0(detail,detail[x],['detail',x]); continue;
+			case "endpoint": random_sometimes_break_1(detail,detail[x],['detail',x]); continue;
 			case "fromHistory": if(detail.fromHistory===false) {
 			} else {
 				debugger;
