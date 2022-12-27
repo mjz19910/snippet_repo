@@ -1,5 +1,5 @@
 import * as json from "./page_type_watch_detail.json";
-import {use_ui_load_response} from "./page_type_watch_detail_use";
+import {use_ui_load_response} from "./use_ui_load_response";
 
 type Json=typeof json;
 type JResponse=Json['response'];
