@@ -13,7 +13,7 @@ export type Attachments=[
 declare global {
 	interface Window {
 		Polymer: {
-			Class: <T>(x: {})=>T;
+			Class?: <T>(x: {})=>T;
 		};
 	}
 	var require: ()=>any;

@@ -123,16 +123,6 @@ class PagePreparer {
 	}
 }
 
-/** @template {{created?:()=>void;is: string;_legacyForceObservedAttributes?: {};prototype:{_legacyForceObservedAttributes?: {}}}} T @arg {T} a @returns {T} */
-function polymer_register_custom_element(a) {
-	/** @type {T} */
-	var b = "function" === typeof a ? a : window.Polymer.Class(a);
-	a._legacyForceObservedAttributes && (b.prototype._legacyForceObservedAttributes = a._legacyForceObservedAttributes);
-	/** @arg {any} x */
-	function any(x) {return x}
-	customElements.define(b.is, any(b));
-	return b;
-}
 
 const original_document_createElement=document.createElement;
 // @ts-ignore
@@ -143,17 +133,9 @@ class FakeIframeElement {
 		this.__fake_data=new FakeIframeElement.special_base;
 	}
 }
-FakeIframeElement.special_base=class {}
+FakeIframeElement.special_base=class {};
 var XG=function() {};
 // customElements.define('fake-iframe', FakeIframeElement);
-polymer_register_custom_element({
-	is: "fake-iframe",
-	fake_iframe: new FakeIframeElement,
-	created: function() {
-		this.fake_iframe=new FakeIframeElement;
-	},
-	prototype:XG.prototype,
-});
 
 /**
  * @this {Document}
@@ -314,6 +296,7 @@ function with_ytd_scope() {
 	}
 	/** @param {CustomEventType} event */
 	async function async_plugin_init(event) {
+		let plugin_state={};
 		let cur_count=1;
 		let obj=dom_observer;
 		let iter_count=0;
@@ -331,6 +314,31 @@ function with_ytd_scope() {
 				}
 				VolumeRange.create_if_needed();
 				cur_count++;
+				x: {
+					if(plugin_state.polymer_loaded) break x;
+					if(!window.Polymer) break x;
+					if(!window.Polymer.Class) break x;
+					/** @template {{created?:()=>void;is: string;_legacyForceObservedAttributes?: {};prototype:{_legacyForceObservedAttributes?: {}}}} T @arg {T} a @returns {T} */
+					function polymer_register_custom_element(a) {
+						if(!window.Polymer.Class) throw new Error("window.Polymer.Class is not a function");
+						/** @type {T} */
+						var b="function"===typeof a? a:window.Polymer.Class(a);
+						a._legacyForceObservedAttributes&&(b.prototype._legacyForceObservedAttributes=a._legacyForceObservedAttributes);
+						/** @arg {any} x */
+						function any(x) {return x;}
+						customElements.define(b.is,any(b));
+						return b;
+					}
+					polymer_register_custom_element({
+						is: "fake-iframe",
+						fake_iframe: new FakeIframeElement,
+						created: function() {
+							this.fake_iframe=new FakeIframeElement;
+						},
+						prototype: XG.prototype,
+					});
+					plugin_state.polymer_loaded=true;
+				}
 				// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 				{
 					let found=iterate_ytd_app();
