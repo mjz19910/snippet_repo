@@ -1618,13 +1618,18 @@ class FilterHandlers extends IterateApiResultBase {
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
-		console.log(path_parts);
-		console.log(res_parse.search);
 		switch(path_parts[0]) {
-			case "youtubei": this.with_ty_1(x,path_parts); break;
-			case "getDatasyncIdsEndpoint": break;
+			case "youtubei": this.search_print(res_parse,path_parts); this.with_ty_1(x,path_parts); break;
+			case "getDatasyncIdsEndpoint": this.search_print(res_parse,path_parts); break;
 			default: debugger;
 		}
+	}
+	/**
+	 * @param {URL} url
+	 * @param {string[]} parts
+	 */
+	search_print(url,parts) {
+		if(url.search!=="") console.log(parts,url.search);
 	}
 	/** 
 	 * @template {string} X
@@ -1635,22 +1640,17 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {string[]} parts
 	 */
 	with_ty_1(url,parts) {
+		let index=1;
 		switch(parts[1]) {
-			case "v1": this.with_ty_2(url,parts); break;
-			default: debugger;
-		}
-	}
-	/** 
-	 * @template {string} X
-	 * @template {string} U
-	 * @template {string} V
-	 * @template {`https://${X}/${U}?${V}`} T
-	 * @arg {T} url
-	 * @param {string[]} parts
-	 */
-	with_ty_2(url,parts) {
-		switch(parts[2]) {
-			case "att": this.with_type_att(url,parts,2); break;
+			case "v1": index++; switch(parts[index]) {
+				case "att": this.with_type_att(url,parts,index); break;
+				case "guide": if(parts.length!==3) debugger; break;
+				case "notification": index++; switch(parts[index]) {
+					case "get_unseen_count": break;
+					default: console.log('no handler for',parts,parts[index]); debugger;
+				} break;
+				default: console.log('no handler for',parts,parts[index]); debugger;
+			} break;
 			default: debugger;
 		}
 	}
