@@ -1,3 +1,4 @@
+import {AllServiceTrackingParams} from "./AllServiceTrackingParams";
 import {ParseParamItem} from "./search_params_parse/ParseParamItem.js";
 import {UrlWrappedValue} from "./UrlWrappedValue";
 import {Decay} from "./yt_api/_exact_data/Decay.js";
@@ -8,27 +9,37 @@ type U_0={
 };
 
 type ExampleChallengeVars=Decay<ParseParamItem<"a=5&a2=10&c=1672168861&d=1&t=7200&c1a=1&hh=AGgPIr3tBg27zD1qUi5VCCBryM_8oaCCrxDEXUyB9Kg">>;
-const u:ExampleChallengeVars={
+const u: ExampleChallengeVars={
 	"a": "5",
 	"a2": "10",
-	"c":"1672168861",
+	"c": "1672168861",
 	"c1a": "1",
 	"d": "1",
 	"hh": "AGgPIr3tBg27zD1qUi5VCCBryM_8oaCCrxDEXUyB9Kg",
 	"t": "7200",
-};u;
+}; u;
+
+export type AttGetV={
+	responseContext: {
+		mainAppWebResponseContext: {
+			datasyncId: `${number}||${number}`;
+			loggedOut: boolean;
+		};
+		serviceTrackingParams: AllServiceTrackingParams;
+	};
+	challenge: string;
+	bgChallenge: {
+		interpreterUrl: UrlWrappedValue<string>;
+		interpreterHash: string;
+		program: string;
+		globalName: "trayride";
+	};
+};
 
 type U_1={
 	url_type: "att.get";
 	// ['responseContext', 'challenge', 'bgChallenge']
-	json: {
-		responseContext: {};
-		challenge: string;
-		bgChallenge: {
-			interpreterUrl: UrlWrappedValue<string>;
-			program: string;
-		};
-	};
+	json: AttGetV;
 };
 
 type U_2={
@@ -51,7 +62,7 @@ type U_5={
 	json: {};
 };
 
-type YtUrlBase={
+export type YtUrlBase={
 	request: string|URL|Request;
 	parsed_url: URL;
 };

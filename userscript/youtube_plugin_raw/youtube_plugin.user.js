@@ -1702,12 +1702,17 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
-		on_json_request({
-			url_type,
-			json: any(data),
-			request,
-			parsed_url: req_parse,
-		});
+		switch(url_type) {
+			case "att.get":
+				on_json_request({
+					/** @readonly */
+					url_type,
+					/** @type {import("./support/json_req.js").AttGetV} */
+					json: any(data),
+					request,
+					parsed_url: req_parse,
+				}); break;
+		}
 		x: {
 			if(api_path=="att.get") break x;
 			this.handle_any_data(api_path,data);
