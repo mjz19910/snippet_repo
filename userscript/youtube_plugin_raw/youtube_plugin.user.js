@@ -1622,6 +1622,7 @@ class FilterHandlers extends IterateApiResultBase {
 		console.log(res_parse.search);
 		switch(path_parts[0]) {
 			case "youtubei": this.with_ty_1(path_parts); break;
+			case "getDatasyncIdsEndpoint": break;
 			default: debugger;
 		}
 		debugger;
