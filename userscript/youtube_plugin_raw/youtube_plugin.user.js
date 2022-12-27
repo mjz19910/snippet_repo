@@ -938,7 +938,7 @@ function fetch_filter_text_then_data_url(request,response_obj) {
 	}
 }
 /**
- * @param {string|URL|{url:string}} request
+ * @param {string|URL|Request} request
  * @arg {{}|undefined} options
  * @param {((arg0: any) => any)|undefined|null} onfulfilled
  * @param {((arg0: any) => void)|undefined|null} on_rejected
@@ -987,7 +987,7 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
 	return ret;
 }
 /**
- * @param {string|URL|{url:string}} request
+ * @param {string|URL|Request} request
  * @arg {{}|undefined} options
  * @param {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
  * @param {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
