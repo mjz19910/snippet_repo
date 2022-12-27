@@ -2335,6 +2335,9 @@ function random_sometimes_break_0(detail,obj,path) {
 		console.log(Object.keys(obj.playerResponse));
 		iter_skips.push("playerResponse");
 	}
+	if("url" in obj) {
+		iter_skips.push("url");
+	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 }
 /**
