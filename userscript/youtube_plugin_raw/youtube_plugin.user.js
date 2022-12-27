@@ -20,7 +20,7 @@ var is_node_js=function is_node_js() {
 var destroy_env=() => {};
 if(typeof window==='undefined') {
 	is_node_js=() => true;
-	if(typeof require==='function') {
+	if(typeof any(globalThis).require==='function') {
 		let n_env=require("./init_node_env.js");
 		destroy_env=() => {
 			n_env.destroy_env(message_channel);
@@ -1687,7 +1687,7 @@ class FilterHandlers extends IterateApiResultBase {
 		let req_hr_t=req_parse.href;
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
-		this.use_template_url(href_);
+		const url_type=this.use_template_url(href_);
 		let path_url=req_parse.pathname;
 		if(path_url==="/getDatasyncIdsEndpoint") return;
 		let api_parts=req_parse.pathname.slice(1).split("/");
@@ -1703,9 +1703,11 @@ class FilterHandlers extends IterateApiResultBase {
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		on_json_request({
+			url_type,
+			json: data,
 			request,
 			parsed_url: req_parse,
-		},data);
+		});
 		x: {
 			if(api_path=="att.get") break x;
 			this.handle_any_data(api_path,data);
@@ -2522,12 +2524,9 @@ function random_sometimes_break_1(detail,obj,path) {
 
 const random_factor=0.2;
 
-/**
- * @param {{ request: string | URL | Request; parsed_url: URL; }} request_info
- * @param {{}} json_data
- */
-function on_json_request(request_info,json_data) {
-	console.log(request_info,json_data);
+/** @param {import("./support/json_req.js").json_req} request_info */
+function on_json_request(request_info) {
+	console.log(request_info);
 }
 
 /** @template T @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} detail */
