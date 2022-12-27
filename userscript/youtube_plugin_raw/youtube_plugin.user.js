@@ -1592,8 +1592,32 @@ class FilterHandlers extends IterateApiResultBase {
 			data.adPlacements=[];
 		}
 	}
-	/** @template {`${string}://${string}/${string}?${string}`} T @arg {T} x */
+	/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
+	/** @template {`https://${string}/${string}?${string}`|`/${string}?${string}`} T @arg {T} x */
 	use_template_url(x) {
+		/** @type {`https://${string}/${string}?${string}`|`/${string}?${string}`} */
+		let u=x;
+		if(u[0]==="/") {
+			/** @type {any} */
+			const b=u;
+			/** @type {`/${string}?${string}`} */
+			const x=b;
+			/** @template {string} T @returns {import("./parse_url/index.js").UrlParse_ext<T>} @arg {T} x */
+			function create_from_parse_partial(x) {
+				/** @type {any} */
+				const a=x.split("?");
+				/** @type {Split<T,"?">} */
+				const fs=a;
+				return any({
+					whole_url: x,
+					pathname: fs[0],
+					search: `?${fs[1]}`,
+				});
+			}
+			let pp=create_from_parse_partial(x);
+			console.log(pp);
+			debugger;
+		}
 				/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
@@ -1629,7 +1653,7 @@ class FilterHandlers extends IterateApiResultBase {
 		let req_parse=c1().url;
 		/** @type {any} */
 		let req_hr_t=req_parse.href;
-		/** @type {`${string}://${string}/${string}?${string}`} */
+		/** @type {`https://${string}/${string}?${string}`|`/${string}?${string}`} */
 		let href_=req_hr_t;
 		this.use_template_url(href_);
 		let path_url=req_parse.pathname;
@@ -2265,9 +2289,11 @@ const last_detail_val={value: {}};
  * @param {YTNavigateFinishEventDetail<T>[keyof YTNavigateFinishEventDetail<T>]} obj
  * @param {string[]} path
  * @arg {string[]} skip
+ * @arg {number[]} ent_ids
  */
-function random_sometimes_break_base_0(detail,obj,path,skip=[]) {
+function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
 	last_detail_val.value=detail;
+	ent_ids;
 	if(typeof obj!=='object') return;
 	/** @type {{}} */
 	let oo=obj;
@@ -2297,12 +2323,16 @@ function random_sometimes_break_0(detail,obj,path) {
  * @param {string[]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
+	if("commandMetadata" in obj && "browseEndpoint" in obj) {
+		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
+		random_sometimes_break_base_0(detail,obj,path,["commandMetadata","browseEndpoint"],[1,1]);
+	}
 	if('commandMetadata' in obj) {
 		obj.commandMetadata;
 		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-		random_sometimes_break_base_0(detail,obj,path,["commandMetadata"]);
+		random_sometimes_break_base_0(detail,obj,path,["commandMetadata"],[1,2]);
 	} else {
-		random_sometimes_break_base_0(detail,obj,path,[]);
+		random_sometimes_break_base_0(detail,obj,path,[],[1,3]);
 	}
 	if("browseEndpoint" in detail.endpoint) {
 		let bid=detail.endpoint.browseEndpoint.browseId;

@@ -13,7 +13,7 @@ type UrlParseResFor2<
 		search: `?${Search}`;
 	};
 type UrlParseRes_2<T extends string,Search extends string,Pathname extends string>=UrlParseResFor2<T,Search,Pathname>;
-type UrlParse_ext<T extends string>=T extends `${infer Pathname}?${infer Search}`? UrlParseRes_2<T,Search,Pathname>:never;
+export type UrlParse_ext<T extends string>=T extends `${infer Pathname}?${infer Search}`? UrlParseRes_2<T,Search,Pathname>:never;
 function create_from_parse_partial<T extends string>(x: T): UrlParse_ext<T> {
 	type St=Split<T,"?">;
 	const fs: St=x.split("?") as St;
