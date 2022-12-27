@@ -2322,7 +2322,7 @@ function eq_keys(src,target) {
 }
 /** @template T @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch<T>} PageResponseWatch */
 /** @typedef {import("./support/yt_api/_abc/p/PageResponseBrowse.js").PageResponseBrowse}  PageResponseBrowse */
-/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {PageResponseBrowse | PageResponseWatch<T>} obj */
+/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {YTNavigateFinishEventDetail<T>['response']} obj */
 function pb_0(detail,obj) {
 	if(detail.pageType==="watch") {
 		console.log(Object.keys(obj.response));
@@ -2364,13 +2364,11 @@ function random_sometimes_break_0(detail,obj,path) {
 			iter_skips.push("page");
 		} else if(obj.page==="browse") {
 			iter_skips.push("page");
-		} else if(obj.page==="shorts")  {
+		} else if(obj.page==="shorts") {
 			iter_skips.push("page");
 		} else {
 			debugger;
 		}
-	} else {
-		obj.__vid;
 	}
 	if("endpoint" in obj) {
 		console.log(Object.keys(obj.endpoint));
@@ -2396,13 +2394,15 @@ function random_sometimes_break_0(detail,obj,path) {
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 	if("response" in obj) {
 		return;
-	}
-	debugger;
-	if("endpoint" in obj) {
-		if(typeof obj.endpoint=='object'&&obj.endpoint!==null) {
-			console.log(Object.keys(obj.endpoint));
-		} else {
-			console.log("playerResponse",obj);
+	} else {
+		/** @type {{}} */
+		let c=obj;
+		if("endpoint" in c) {
+			if(typeof c.endpoint=='object'&&c.endpoint!==null) {
+				console.log(Object.keys(c.endpoint));
+			} else {
+				console.log("playerResponse",obj);
+			}
 		}
 	}
 }
