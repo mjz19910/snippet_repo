@@ -2236,8 +2236,9 @@ const last_detail_val={value: {}};
  * @param {YTNavigateFinishEventDetail<T>[keyof YTNavigateFinishEventDetail<T>]} obj
  * @param {string[]} path
  */
-function random_sometimes_break_base_0(detail,obj,path) {
+function random_sometimes_break_base_0(detail,obj,path,skip=false) {
 	last_detail_val.value=detail;
+	if(skip) return;
 	if(typeof obj!=='object') return;
 	/** @type {{}} */
 	let oo=obj;
