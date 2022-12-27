@@ -2249,7 +2249,7 @@ function on_page_type_changed(detail) {
 	let ok=any(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
-			case "response": random_sometimes_break_0(detail[x],['detail',x]); break;
+			case "response": random_sometimes_break_0(detail[x],['detail',x]); continue;
 		}
 		if(Math.random() <(random_factor/4)) {
 			console.log('detail.'+x,detail[x]);
