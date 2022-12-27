@@ -2327,6 +2327,10 @@ function random_sometimes_break_0(detail,obj,path) {
 	if("endpoint" in obj) {
 		iter_skips.push("endpoint"); obj;
 	}
+	if("response" in obj) {
+		console.log(Object.keys(obj.response));
+		iter_skips.push("response");
+	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 }
 /**
