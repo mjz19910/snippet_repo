@@ -1645,15 +1645,16 @@ class FilterHandlers extends IterateApiResultBase {
 		index++;
 		switch(parts[index]) {
 			case "att": switch(parts[index+1]) {
-				case "get": console.log('att.get',url.search); break;
+				case "get": console.log('att.get',url.search); return "att.get";
 				default: debugger;
 			} break;
-			case "guide": if(parts.length!==3) debugger; break;
+			case "guide": if(parts.length!==3) debugger; return "youtube.v1.guide";
 			case "notification": index++; switch(parts[index]) {
-				case "get_unseen_count": break;
-				case "get_notification_menu": break;
+				case "get_unseen_count": return "youtube.v1.notification.get_unseen_count";
+				case "get_notification_menu": return "youtube.v1.notification.get_notification_menu";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
+			case "next": return "youtube.v1.next";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 	}
@@ -2346,6 +2347,7 @@ function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
  * @param {string[]} target
  */
 function eq_keys(src,target) {
+	if(src.length!==target.length) return false;
 	for(let i=0;i<src.length;i++) {
 		let a=src[i];
 		let b=target[i];
@@ -2357,9 +2359,13 @@ function eq_keys(src,target) {
 /** @typedef {import("./support/yt_api/_abc/p/PageResponseBrowse.js").PageResponseBrowse}  PageResponseBrowse */
 /** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {YTNavigateFinishEventDetail<T>['response']} obj */
 function pb_0(detail,obj) {
-	if(detail.pageType==="watch") {
-		console.log(Object.keys(obj.response));
-		if(Object.keys(obj.response).length!==6) {
+	if(obj.page==="watch") {
+		x: {
+			let ok=Object.keys(obj.response);
+			if(eq_keys(ok,['responseContext','contents','currentVideoEndpoint','trackingParams','playerOverlays','onResponseReceivedEndpoints','engagementPanels','topbar','pageVisualEffects','frameworkUpdates'])) break x;
+			debugger;
+		}
+		if(Object.keys(obj.response).length!==10) {
 			debugger;
 		}
 	}
