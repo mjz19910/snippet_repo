@@ -2321,7 +2321,8 @@ function eq_keys(src,target) {
 	return true;
 }
 /** @template T @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch<T>} PageResponseWatch */
-/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {PageResponseWatch<T>} obj */
+/** @typedef {import("./support/yt_api/_abc/p/PageResponseBrowse.js").PageResponseBrowse}  PageResponseBrowse */
+/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {PageResponseBrowse | PageResponseWatch<T>} obj */
 function pb_0(detail,obj) {
 	if(detail.pageType==="watch") {
 		console.log(Object.keys(obj.response));
@@ -2356,6 +2357,10 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(obj.page==="watch") {
 			iter_skips.push("page"); obj;
 		}
+		if(obj.page==="browse") {
+			iter_skips.push("page"); obj;
+			debugger;
+		}
 	}
 	if("endpoint" in obj) {
 		iter_skips.push("endpoint"); obj;
@@ -2376,7 +2381,11 @@ function random_sometimes_break_0(detail,obj,path) {
 		return;
 	}
 	if("endpoint" in obj) {
-		console.log(Object.keys(obj.endpoint));
+		if(typeof obj.endpoint=='object'&&obj.endpoint!==null) {
+			console.log(Object.keys(obj.endpoint));
+		} else {
+			console.log("playerResponse",obj);
+		}
 		iter_skips.push("playerResponse");
 	}
 }
