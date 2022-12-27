@@ -2555,9 +2555,7 @@ function random_sometimes_break_1(detail,obj,path) {
 	if("watchEndpoint" in obj) {
 		iter_skips.push("watchEndpoint");
 	}
-	/** @type {_XYZ} */
-	const v="browseEndpoint";
-	x: if(v in obj) {
+	x: if("browseEndpoint" in obj) {
 		iter_skips.push("browseEndpoint");
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
