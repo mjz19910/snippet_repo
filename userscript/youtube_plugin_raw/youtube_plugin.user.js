@@ -2251,7 +2251,7 @@ function on_page_type_changed(detail) {
 		switch(x) {
 			case "response": random_sometimes_break_0(detail[x],['detail',x]); break;
 		}
-		if(Math.random() <(random_factor/3)) {
+		if(Math.random() <(random_factor/4)) {
 			console.log('detail.'+x,detail[x]);
 			debugger;
 		}
