@@ -1639,21 +1639,22 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @arg {number} index
 	 */
 	get_yt_url_type(parts,url,index) {
-		switch(parts[1]) {
-			case "v1": index++; switch(parts[index]) {
-				case "att": switch(parts[index+1]) {
-					case "get": console.log('att.get',url.search); break;
-					default: debugger;
-				} break;
-				case "guide": if(parts.length!==3) debugger; break;
-				case "notification": index++; switch(parts[index]) {
-					case "get_unseen_count": break;
-					case "get_notification_menu": break;
-					default: console.log('no handler for',parts,parts[index]); debugger;
-				} break;
+		if(parts[1]!=="v1") {
+			debugger;
+		}
+		index++;
+		switch(parts[index]) {
+			case "att": switch(parts[index+1]) {
+				case "get": console.log('att.get',url.search); break;
+				default: debugger;
+			} break;
+			case "guide": if(parts.length!==3) debugger; break;
+			case "notification": index++; switch(parts[index]) {
+				case "get_unseen_count": break;
+				case "get_notification_menu": break;
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
-			default: debugger;
+			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 	}
 	/**
