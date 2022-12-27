@@ -1647,6 +1647,7 @@ class FilterHandlers extends IterateApiResultBase {
 				case "guide": if(parts.length!==3) debugger; break;
 				case "notification": index++; switch(parts[index]) {
 					case "get_unseen_count": break;
+					case "get_notification_menu": break;
 					default: console.log('no handler for',parts,parts[index]); debugger;
 				} break;
 				default: console.log('no handler for',parts,parts[index]); debugger;
