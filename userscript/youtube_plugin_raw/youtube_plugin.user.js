@@ -143,7 +143,7 @@ var XG=function() {};
  * @param {ElementCreationOptions} [options]
  */
 function overwrite_createElement(n_type,options) {
-	if(n_type!=="iframe") {
+	if(n_type!=="iframe"&&n_type!=="IFRAME") {
 		return original_document_createElement.call(this,n_type,options);
 	}
 	class UU {
@@ -2799,18 +2799,12 @@ class HistoryStateManager {
 		});
 		History.prototype.pushState=new Proxy(History.prototype.pushState,{
 			apply(target,thisArg,argArray) {
-				console.log("pushState",remove_yt_data(argArray[0]),argArray.length);
-				return Reflect.apply(target,thisArg,argArray);
-			}
-		});
-		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
-			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('new state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
-					console.log("old_state: []",remove_yt_data(t.cur_state));
+					console.log('pushState: h_over_new_state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
+					console.log("pushState: h_over_old_state: []",remove_yt_data(t.cur_state));
 				} else {
-					console.log('beg_state: []',remove_yt_data(new_state),t.cur_state);
+					console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
 				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
@@ -2824,7 +2818,34 @@ class HistoryStateManager {
 							}
 						}
 					}
-					console.log("after_rep: []",remove_yt_data(argArray[0]),argArray.length);
+					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
+				}
+				t.cur_state=new_state;
+				return Reflect.apply(target,thisArg,argArray);
+			}
+		});
+		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
+			apply(target,thisArg,argArray) {
+				let new_state=argArray[0];
+				if(t.cur_state) {
+					console.log('replaceState: h_over_new_state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
+					console.log("replaceState: h_over_old_state: []",remove_yt_data(t.cur_state));
+				} else {
+					console.log('replaceState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
+				}
+				x: {
+					if(t.is_replacing_custom_state) break x;
+					/** @type {{[x: string]: {}}|null} */
+					let prev_state=t.cur_state;
+					if(prev_state) {
+						for(let i=0;i<t.tmp_keys.length;i++) {
+							let cur_key=t.tmp_keys[i];
+							if(prev_state[cur_key]!==void 0) {
+								new_state[cur_key]=prev_state[cur_key];
+							}
+						}
+					}
+					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
 				}
 				t.cur_state=new_state;
 				return Reflect.apply(target,thisArg,argArray);
