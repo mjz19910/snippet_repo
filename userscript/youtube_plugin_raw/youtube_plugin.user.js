@@ -1593,9 +1593,14 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
-	/** @template {`https://${string}/${string}?${string}`|`/${string}?${string}`} T @arg {T} x */
+	/** 
+	 * @template {string} X
+	 * @template {string} U
+	 * @template {string} V
+	 * @template {`https://${X}/${U}?${V}`} T
+	 * @arg {T} x 
+	 * */
 	use_template_url(x) {
-		/** @type {`https://${string}/${string}?${string}`|`/${string}?${string}`} */
 		let u=x;
 		if(u[0]==="/") {
 			/** @type {any} */
@@ -1617,8 +1622,9 @@ class FilterHandlers extends IterateApiResultBase {
 			let pp=create_from_parse_partial(x);
 			console.log(pp);
 			debugger;
+			return;
 		}
-		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
+		/** @template T @typedef {T extends `https://${infer Host}/${infer Pathname}?${infer Search}`?import("./support/url_parse/UrlParseRes.js").UrlParseRes<T,Host,"https",Search,Pathname>:never} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
 			let s=new URL(str);
@@ -1628,12 +1634,19 @@ class FilterHandlers extends IterateApiResultBase {
 			let ret=a;
 			return ret;
 		}
-		let res_parse=create_from_parse(x);
+		/** @type {any} */
+		const b=u;
+		/** @type {`https://${X}/${U}?${V}`} */
+		let q=b;
+		const res_parse=create_from_parse(q);
 		if('_tag' in res_parse) {
 			console.log('parse failed (should never happen)',x,res_parse);
 			return;
 		}
+		console.log(res_parse);
+		res_parse.toJSON();
 		res_parse;
+		debugger;
 	}
 	/**
 	 * @arg {{}} data
@@ -2382,7 +2395,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	if("endpoint" in obj) {
 		let ok_1=Object.keys(obj.endpoint);
 		function get_is_ok() {
-			if(eq_keys(ok_1,['clickTrackingParams', 'commandMetadata', 'browseEndpoint'])) return true;
+			if(eq_keys(ok_1,['clickTrackingParams','commandMetadata','browseEndpoint'])) return true;
 			return false;
 		}
 		if(!get_is_ok()) {
@@ -2441,7 +2454,7 @@ function random_sometimes_break_1(detail,obj,path) {
 	/** @type {_XYZ} */
 	const v="browseEndpoint";
 	x: if(v in obj) {
-		iter_skips.push("browseEndpoint"); 
+		iter_skips.push("browseEndpoint");
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
 		}
@@ -2480,6 +2493,10 @@ function random_sometimes_break_1(detail,obj,path) {
 
 const random_factor=0.2;
 
+function on_json_request(request_info,json_data) {
+
+}
+
 /** @template T @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
@@ -2491,10 +2508,9 @@ function on_page_type_changed(detail) {
 			case "fromHistory": if(typeof detail[x]!=='boolean') {debugger;}; continue;
 			case "navigationDoneMs": if(typeof detail[x]!=='number') {debugger;}; continue;
 			case "pageType": if(typeof detail[x]!=='string') {debugger;}; continue;
-			default: if(Math.random()<(random_factor/4)) {
+			default:
 				console.log('detail.'+x,detail[x]);
 				debugger;
-			}
 		}
 	}
 	switch(detail.pageType) {
