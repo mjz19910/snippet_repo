@@ -2309,6 +2309,39 @@ function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
 	}
 }
 /**
+ * @param {string[]} src
+ * @param {string[]} target
+ */
+function eq_keys(src,target) {
+	for(let i=0;i<src.length;i++) {
+		let a=src[i];
+		let b=target[i];
+		if(a!==b) return false;
+	}
+	return true;
+}
+/** @template T @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch<T>} PageResponseWatch */
+/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {PageResponseWatch<T>} obj */
+function pb_0(detail,obj) {
+	if(detail.pageType==="watch") {
+		console.log(Object.keys(obj.response));
+		if(Object.keys(obj.response).length!==6) {
+			debugger;
+		}
+	}
+	if(detail.pageType==="browse") {
+		x: {
+			let ok=Object.keys(obj.response);
+			if(eq_keys(ok,["responseContext","contents","header","trackingParams","topbar","onResponseReceivedActions"])) break x;
+			debugger;
+		}
+		// [ "responseContext", "contents", "header", "trackingParams", "topbar", "onResponseReceivedActions" ]
+		if(Object.keys(obj.response).length!==6) {
+			debugger;
+		}
+	}
+}
+/**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>['response']} obj
@@ -2328,9 +2361,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("endpoint"); obj;
 	}
 	if("response" in obj) {
-		if(Object.keys(obj.response).length!==6) {
-			debugger;
-		}
+		pb_0(detail,obj);
 		iter_skips.push("response");
 	}
 	if("playerResponse" in obj) {
@@ -2370,8 +2401,8 @@ function random_sometimes_break_1(detail,obj,path) {
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
 		}
-		console.log("obj_browseEndpoint", obj.browseEndpoint);
-		console.log("browseEndpoint_commandMetadata", obj.commandMetadata);
+		console.log("obj_browseEndpoint",obj.browseEndpoint);
+		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
 		iter_skips.push("browseEndpoint"); obj;
 	}
 	if('commandMetadata' in obj) {
