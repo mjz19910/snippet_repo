@@ -1636,17 +1636,17 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @param {string[]} parts
-	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} _url
 	 * @arg {number} index
 	 */
-	get_yt_url_type(parts,url,index) {
+	get_yt_url_type(parts,_url,index) {
 		if(parts[1]!=="v1") {
 			debugger;
 		}
 		index++;
 		switch(parts[index]) {
 			case "att": switch(parts[index+1]) {
-				case "get": console.log('att.get',url.search); return "att.get";
+				case "get": return "att.get";
 				default: debugger;
 			} break;
 			case "guide": if(parts.length!==3) debugger; return "guide";
