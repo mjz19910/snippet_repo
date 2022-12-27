@@ -26,23 +26,28 @@ type U_1={
 };
 
 type U_2={
-	url_type: "youtube.v1.next";
+	url_type: "next";
 	json: YtApiNext;
 };
 
 type U_3={
-	url_type: "youtube.v1.notification.get_notification_menu";
+	url_type: "notification.get_notification_menu";
 	json: {};
 };
 
 type U_4={
-	url_type: "youtube.v1.notification.get_unseen_count";
+	url_type: "notification.get_unseen_count";
 	json: {};
 };
 
 type U_5={
-	url_type: "youtube.v1.guide";
+	url_type: "guide";
 	json: {};
 };
 
-export type json_req=(U_0|U_1|U_2|U_3|U_4|U_5)&YtUrlBase;
+type U_6={
+	url_type: "browse";
+	json: {};
+}
+
+export type json_req=(U_0|U_1|U_2|U_3|U_4|U_5|U_6)&YtUrlBase;

@@ -1649,14 +1649,18 @@ class FilterHandlers extends IterateApiResultBase {
 				case "get": console.log('att.get',url.search); return "att.get";
 				default: debugger;
 			} break;
-			case "guide": if(parts.length!==3) debugger; return "youtube.v1.guide";
+			case "guide": if(parts.length!==3) debugger; return "guide";
 			case "notification": index++; switch(parts[index]) {
-				case "get_unseen_count": return "youtube.v1.notification.get_unseen_count";
-				case "get_notification_menu": return "youtube.v1.notification.get_notification_menu";
+				case "get_unseen_count": return "notification.get_unseen_count";
+				case "get_notification_menu": return "notification.get_notification_menu";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
-			case "browse": return "youtube.v1.browse";
-			case "next": return "youtube.v1.next";
+			case "reel": index++; switch(parts[index]) {
+				case "reel_item_watch": return "reel_item_watch";
+				default: console.log('no handler for',parts,parts[index]); debugger;
+			}; break;
+			case "browse": return "browse";
+			case "next": return "next";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
@@ -1713,6 +1717,21 @@ class FilterHandlers extends IterateApiResultBase {
 					request,
 					parsed_url: req_parse,
 				}); break;
+				case "browse": on_json_request({
+					/** @readonly */
+					url_type,
+					json: any(data),
+					request,
+					parsed_url: req_parse,
+				}); break;
+				case "guide": on_json_request({
+					/** @readonly */
+					url_type,
+					json: any(data),
+					request,
+					parsed_url: req_parse,
+				}); break;
+				default: console.log(url_type,data); debugger; break;
 		}
 		x: {
 			if(api_path=="att.get") break x;
