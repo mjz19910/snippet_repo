@@ -1,6 +1,7 @@
 import {Split} from "../support/make/Split.js";
 import {ParseUrlSearchParams} from "../support/search_params_parse/SearchParamsParse.js";
 import {Decay} from "../support/yt_api/_exact_data/Decay.js";
+import {RemoveFirst} from "./RemoveFirst";
 import {URLSearchParams} from "./URLSearchParams";
 
 type UrlParseResFor2<
@@ -26,7 +27,7 @@ function create_from_parse_partial<T extends string>(x: T): UrlParse_ext<T> {
 const url2="/youtubei/v1/browse?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false";
 export const vv=create_from_parse_partial(url2);
 vv.pathname.split("/");
-type Pt=Split<typeof vv.pathname,"/">;
+type Pt=RemoveFirst<Split<typeof vv.pathname,"/">>;
 export const pt: Pt=vv.pathname.split("/") as Pt;
 export function make_search_params<T extends string>(t: T) {
 	let sp=new URLSearchParams(t);
