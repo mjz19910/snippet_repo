@@ -1647,7 +1647,7 @@ class FilterHandlers extends IterateApiResultBase {
 		switch(parts[index]) {
 			case "att": switch(parts[index+1]) {
 				case "get": return "att.get";
-				default: debugger;
+				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
 			case "guide": index++; switch(parts[index]) {
 				case void 0: return "guide";
