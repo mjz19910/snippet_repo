@@ -20,37 +20,41 @@ type U_0={
 // 	"t": "7200",
 // }; u;
 
-type U_1={
+type yt_response_att_get={
 	url_type: "att.get";
 	// ['responseContext', 'challenge', 'bgChallenge']
 	json: AttGetV;
 };
 
-type U_2={
+export type yt_response__next={
 	url_type: "next";
 	json: YtApiNext;
 };
 
-type U_3={
+export type notification_get_notification_menu={
 	url_type: "notification.get_notification_menu";
 	json: {};
 };
 
-type U_4={
+export type notification_get_unseen_count={
 	url_type: "notification.get_unseen_count";
 	json: {
 		responseContext: GeneralContext;
 	};
 };
 
-type U_5={
+type yt_response_guide={
 	url_type: "guide";
-	json: {};
+	json: {
+		responseContext: GeneralContext;
+	};
 };
 
-type U_6={
+type yt_response_browse={
 	url_type: "browse";
-	json: {};
+	json: {
+		responseContext: GeneralContext;
+	};
 }
 
-export type json_req=(U_0|U_1|U_2|U_3|U_4|U_5|U_6)&YtUrlBase;
+export type json_req=(U_0|yt_response_att_get|yt_response__next|notification_get_notification_menu|notification_get_unseen_count|yt_response_guide|yt_response_browse)&YtUrlBase;

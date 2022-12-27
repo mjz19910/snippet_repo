@@ -1717,9 +1717,11 @@ class FilterHandlers extends IterateApiResultBase {
 					request,
 					parsed_url: req_parse,
 				}); break;
+				/** @typedef {import("./support/json_req.js").notification_get_unseen_count} notification_get_unseen_count */
 				case "browse": on_json_request({
 					/** @readonly */
 					url_type,
+					/** @type {notification_get_unseen_count['json']} */
 					json: any(data),
 					request,
 					parsed_url: req_parse,
@@ -1727,6 +1729,7 @@ class FilterHandlers extends IterateApiResultBase {
 				case "guide": on_json_request({
 					/** @readonly */
 					url_type,
+					/** @type {notification_get_unseen_count['json']} */
 					json: any(data),
 					request,
 					parsed_url: req_parse,
@@ -1734,6 +1737,7 @@ class FilterHandlers extends IterateApiResultBase {
 				case "notification.get_unseen_count": on_json_request({
 					/** @readonly */
 					url_type,
+					/** @type {notification_get_unseen_count['json']} */
 					json: any(data),
 					request,
 					parsed_url: req_parse,
