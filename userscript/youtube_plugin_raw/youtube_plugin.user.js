@@ -2334,8 +2334,6 @@ function random_sometimes_break_1(detail,obj,path) {
 	if('commandMetadata' in obj) {
 		iter_skips.push("commandMetadata");obj;
 		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-	} else {
-		random_sometimes_break_base_0(detail,obj,path,[],[1,3]);
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
 	if("browseEndpoint" in detail.endpoint) {
