@@ -1618,7 +1618,7 @@ class FilterHandlers extends IterateApiResultBase {
 			console.log(pp);
 			debugger;
 		}
-				/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
+		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
 			let s=new URL(str);
@@ -2317,10 +2317,12 @@ function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
 function random_sometimes_break_0(detail,obj,path) {
 	let iter_skips=[];
 	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");obj;
+		iter_skips.push("clickTrackingParams"); obj;
 	}
 	if("page" in obj) {
-		if(obj.page==="watch") {}
+		if(obj.page==="watch") {
+			iter_skips.push("page"); obj;
+		}
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
 }
@@ -2334,10 +2336,10 @@ function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
 	/** @typedef {keyof import("./support/yt_api/_abc/b/BrowseEndpoint.js").BrowseEndpoint} _XYZ */
 	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");obj;
+		iter_skips.push("clickTrackingParams"); obj;
 	}
 	if("watchEndpoint" in obj) {
-		iter_skips.push("watchEndpoint");obj;
+		iter_skips.push("watchEndpoint"); obj;
 	}
 	/** @type {_XYZ} */
 	const v="browseEndpoint";
@@ -2345,10 +2347,10 @@ function random_sometimes_break_1(detail,obj,path) {
 		if(Object.keys(obj).length!==1) {
 			debugger;
 		}
-		iter_skips.push("browseEndpoint");obj;
+		iter_skips.push("browseEndpoint"); obj;
 	}
 	if('commandMetadata' in obj) {
-		iter_skips.push("commandMetadata");obj;
+		iter_skips.push("commandMetadata"); obj;
 		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
@@ -2373,10 +2375,11 @@ function on_page_type_changed(detail) {
 			case "endpoint": random_sometimes_break_1(detail,detail[x],['detail',x]); continue;
 			case "fromHistory": if(typeof detail[x]!=='boolean') {debugger;}; continue;
 			case "navigationDoneMs": if(typeof detail[x]!=='number') {debugger;}; continue;
-		}
-		if(Math.random()<(random_factor/4)) {
-			console.log('detail.'+x,detail[x]);
-			debugger;
+			case "pageType": if(typeof detail[x]!=='string') {debugger;}; continue;
+			default: if(Math.random()<(random_factor/4)) {
+				console.log('detail.'+x,detail[x]);
+				debugger;
+			}
 		}
 	}
 	switch(detail.pageType) {
@@ -2891,7 +2894,7 @@ class HistoryStateManager extends EventTarget {
 	 * @arg {K extends "update"?((this: HistoryStateManagerI, ev: HistoryStateManagerEventMap[K]) => any):EventListenerOrEventListenerObject} listener
 	 * @arg {boolean | AddEventListenerOptions} [options]
 	 * */
-	addEventListener(type, listener, options) {
+	addEventListener(type,listener,options) {
 		super.addEventListener(type,listener,options);
 	}
 	/**
@@ -2899,7 +2902,7 @@ class HistoryStateManager extends EventTarget {
 	 */
 	do_state_update(new_state) {
 		this.cur_state=new_state;
-		this.dispatchEvent(new CustomEvent("update",{detail:this.cur_state}));
+		this.dispatchEvent(new CustomEvent("update",{detail: this.cur_state}));
 	}
 	constructor() {
 		super();
