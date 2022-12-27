@@ -1,3 +1,3 @@
 export type BrowseEndpointData={
-	browseId: string;
+	browseId: "FEsubscriptions";
 };
