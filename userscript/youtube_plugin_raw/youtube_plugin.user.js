@@ -123,17 +123,38 @@ class PagePreparer {
 	}
 }
 
+/** @template {{created?:()=>void;is: string;_legacyForceObservedAttributes?: {};prototype:{_legacyForceObservedAttributes?: {}}}} T @arg {T} a @returns {T} */
+function polymer_register_custom_element(a) {
+	/** @type {T} */
+	var b = "function" === typeof a ? a : window.Polymer.Class(a);
+	a._legacyForceObservedAttributes && (b.prototype._legacyForceObservedAttributes = a._legacyForceObservedAttributes);
+	/** @arg {any} x */
+	function any(x) {return x}
+	customElements.define(b.is, any(b));
+	return b;
+}
+
 const original_document_createElement=document.createElement;
 // @ts-ignore
 document.createElement=overwrite_createElement;
-class FakeIframeElement extends HTMLElement {
+// @ts-ignore
+class FakeIframeElement {
 	constructor() {
-		super();
 		this.__fake_data=new FakeIframeElement.special_base;
 	}
 }
 FakeIframeElement.special_base=class {}
-customElements.define('fake-iframe', FakeIframeElement);
+var XG=function() {};
+// customElements.define('fake-iframe', FakeIframeElement);
+polymer_register_custom_element({
+	is: "fake-iframe",
+	fake_iframe: new FakeIframeElement,
+	created: function() {
+		this.fake_iframe=new FakeIframeElement;
+	},
+	prototype:XG.prototype,
+});
+
 /**
  * @this {Document}
  * @param {string} n_type

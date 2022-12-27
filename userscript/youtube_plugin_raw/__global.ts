@@ -9,3 +9,11 @@ export type Attachments=[
 	GlobalAttachWindow,
 	GlobalAttach_ytcfg,
 ];
+
+declare global {
+	interface Window {
+		Polymer: {
+			Class: <T>(x: {})=>T;
+		};
+	}
+}
