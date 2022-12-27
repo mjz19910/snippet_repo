@@ -10,7 +10,7 @@ export function use_guided_help(service_param: Json['response']['response']['res
 	type Pxg<T extends number,U extends any[]>=ExtractSingleParamKey<U[T],U[T]['key']>;
 	type GuideHelpParamsObj=Pxg<0,GuideHelpParams_>;
 	class ActivateCsi implements GuideHelpParamsObj {
-		logged_in: GuideHelpParams_[0]["value"];
+		logged_in: Pxg<0,GuideHelpParams_>["logged_in"];
 		constructor(params: GuideHelpParams_) {
 			if(params[0].key==="logged_in") {
 				this.logged_in=params[0].value;
