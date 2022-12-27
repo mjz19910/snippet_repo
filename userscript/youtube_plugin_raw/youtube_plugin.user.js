@@ -1600,8 +1600,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @arg {T} x 
 	 * */
 	use_template_url(x) {
-		let u=x;
-		/** @template T @typedef {T extends `https://${infer Host}/${infer Pathname}?${infer Search}`?import("./support/url_parse/UrlParseRes.js").UrlParseRes<T,Host,"https",Search,Pathname>:never} UrlParse */
+		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
 			let s=new URL(str);
@@ -1611,19 +1610,34 @@ class FilterHandlers extends IterateApiResultBase {
 			let ret=a;
 			return ret;
 		}
-		/** @type {any} */
-		const b=u;
-		/** @type {`https://${X}/${U}?${V}`} */
-		let q=b;
-		const res_parse=create_from_parse(q);
+		const res_parse=create_from_parse(x);
 		if('_tag' in res_parse) {
 			console.log('parse failed (should never happen)',x,res_parse);
 			return;
 		}
-		console.log(res_parse);
-		res_parse.toJSON();
-		res_parse;
+		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
+		/** @type {Split<import("./parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
+		let path_parts=res_parse.pathname.slice(1).split("/");
+		console.log(path_parts);
+		console.log(res_parse.search);
+		switch(path_parts[0]) {
+			case "youtubei": this.with_ty_1(path_parts); break;
+			default: debugger;
+		}
 		debugger;
+	}
+	/** @param {string[]} parts */
+	with_ty_1(parts) {
+		switch(parts[1]) {
+			case "v1": this.with_ty_2(parts); break;
+			default: debugger;
+		}
+	}
+	/** @param {string[]} parts */
+	with_ty_2(parts) {
+		switch(parts[2]) {
+			default: debugger;
+		}
 	}
 	/**
 	 * @arg {{}} data

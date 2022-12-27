@@ -3,14 +3,14 @@ export type UrlParseResImpl<
 	Host extends string,
 	Protocol extends string,
 	Search extends string,
-	Pathname extends string>={
+	PathName extends string>={
 		hash: "";
 		host: `${Host}`;
 		hostname: `${Host}`;
-		href: `${Protocol}://${Host}/${Pathname}?${Search}`;
+		href: `${Protocol}://${Host}/${PathName}?${Search}`;
 		origin: `${Protocol}//${Host}`;
 		password: "";
-		pathname: `/${Pathname}`;
+		pathname: `/${PathName}`;
 		port: "";
 		protocol: `${Protocol}`;
 		search: `?${Search}`;
