@@ -1673,16 +1673,24 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {string[]} parts
 	 */
 	search_print(url,parts) {
-		if(eq_keys(parts,['youtubei', 'v1', 'notification', 'get_unseen_count'])) {
-			if(url.search!=="") console.log(parts,url.search);
-			return;
-		}
-		if(eq_keys(parts,['youtubei','v1','att','get'])) {
-			if(url.search!=="") console.log(parts,url.search);
-			return;
-		} else {
+		let sp=new URLSearchParams(url.search);
+		/** @type {string[]} */
+		let sp_keys=[];
+		sp.forEach((_value,key)=>{
+			sp_keys.push(key);
+		});
+		let should_stop=false;
+		should_stop&&=!eq_keys(parts,['youtubei', 'v1', 'notification', 'get_unseen_count']);
+		should_stop&&=parts[0]!=="getDatasyncIdsEndpoint";
+		should_stop&&=!eq_keys(parts,['youtubei', 'v1', 'guide']);
+		should_stop&&=!eq_keys(parts,['youtubei','v1','att','get']);
+		if(should_stop) {
 			debugger;
 		}
+		if(eq_keys(sp_keys,['key','prettyPrint'])) return;
+		if(parts[0]==="getDatasyncIdsEndpoint"&&sp_keys.length===0) return;
+		console.log('past with', url.href,sp_keys);
+		if(url.search!=="") console.log(parts,sp_keys);
 	}
 	/**
 	 * @arg {{}} data
@@ -2516,6 +2524,19 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 }
 /**
+ * @param {{ commandMetadata: { webCommandMetadata?: any; }; }} obj
+ */
+function on_command_meta(obj) {
+	if(Object.keys(obj.commandMetadata).length!==1) {
+		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
+	} else {
+		console.log("browse web cmd meta",obj.commandMetadata.webCommandMetadata);
+	}
+	if("webCommandMetadata" in obj.commandMetadata && obj.commandMetadata.webCommandMetadata.webPageType!==void 0) {
+		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
+	}
+}
+/**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>['endpoint']} obj
@@ -2537,28 +2558,17 @@ function random_sometimes_break_1(detail,obj,path) {
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
 		}
-		if(Object.keys(obj.commandMetadata).length!==1) {
-			console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
-		} else {
-			console.log("browse web cmd meta",obj.commandMetadata.webCommandMetadata);
-		}
 		if(obj.browseEndpoint.browseId==="FEwhat_to_watch") break x;
 		if(obj.browseEndpoint.browseId==="FEsubscriptions") break x;
 		console.log("obj_browseEndpoint",obj.browseEndpoint);
 	}
 	if("commandMetadata" in obj) {
 		iter_skips.push("commandMetadata");
-		if("webCommandMetadata" in obj.commandMetadata) {
-			console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-		}
+		on_command_meta(obj);
 	}
 	if("reelWatchEndpoint" in obj) {
 		iter_skips.push("reelWatchEndpoint");
-		if("webCommandMetadata" in obj.commandMetadata) {
-			console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-		}
-		console.log("obj_browseEndpoint",obj.reelWatchEndpoint);
-		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
+		console.log("obj_reelWatchEndpoint",obj.reelWatchEndpoint);
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
 	if("browseEndpoint" in detail.endpoint) {
