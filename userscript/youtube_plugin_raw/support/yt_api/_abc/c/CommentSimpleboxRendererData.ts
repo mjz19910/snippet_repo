@@ -1,22 +1,10 @@
 // ['submitButton', 'cancelButton', 'authorThumbnail', 'placeholderText', 'trackingParams', 'avatarSize', 
 
-import {ServiceEndpointCreateComment} from "./ServiceEndpointCreateComment";
-import {TextRunsSimple} from "./TextRunsSimple.js";
+import {SubmitButton} from "./SubmitButton";
 
 //  'emojiButton', 'emojiPicker', 'aadcGuidelinesStateEntityKey']
 export type CommentSimpleboxRendererData={
-	submitButton: {
-		buttonRenderer: {
-			style:"STYLE_PRIMARY";
-			size:"SIZE_DEFAULT";
-			text:TextRunsSimple;
-			serviceEndpoint:ServiceEndpointCreateComment;
-			accessibility:{
-				label: "Comment";
-			};
-			trackingParams:string;
-		};
-	};
+	submitButton: SubmitButton;
 	cancelButton:{};
 	authorThumbnail: {};
 	placeholderText: {};
