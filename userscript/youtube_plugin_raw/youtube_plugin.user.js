@@ -2342,6 +2342,7 @@ function pb_0(detail,obj) {
 		}
 	}
 }
+const gen_not_want=['page','endpoint','response','url'];
 /**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
@@ -2350,10 +2351,18 @@ function pb_0(detail,obj) {
  */
 function random_sometimes_break_0(detail,obj,path) {
 	let iter_skips=[];
+	let ok=Object.keys(obj);
+	/** @type {string[]} */
+	let ok_e=[];
+	for(let i=0;i<ok.length;i++) {
+		if(gen_not_want.includes(ok[i])) continue;
+		ok_e.push(ok[i]);
+	}
 	let is_this_keys_ok=get_is_ok();
 	function get_is_ok() {
-		let ok=Object.keys(obj);
-		if(eq_keys(ok,['page','endpoint','response','url','expirationTime'])) return true;
+		if(eq_keys(ok_e,['expirationTime'])) return true;
+		if(eq_keys(ok_e,['rootVe','expirationTime'])) return true;
+		if(eq_keys(ok_e,['playerResponse','reelWatchSequenceResponse','cachedReelWatchSequenceResponse'])) return true;
 		return false;
 	}
 	if("clickTrackingParams" in obj) {
@@ -2371,8 +2380,15 @@ function random_sometimes_break_0(detail,obj,path) {
 		}
 	}
 	if("endpoint" in obj) {
-		console.log(Object.keys(obj.endpoint));
-		iter_skips.push("endpoint"); obj;
+		let ok_1=Object.keys(obj.endpoint);
+		function get_is_ok() {
+			if(eq_keys(ok_1,['clickTrackingParams', 'commandMetadata', 'browseEndpoint'])) return true;
+			return false;
+		}
+		if(!get_is_ok()) {
+			console.log(ok_1);
+		}
+		iter_skips.push("endpoint");
 	}
 	if("response" in obj) {
 		pb_0(detail,obj);
@@ -2389,6 +2405,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		}
 	}
 	if(!is_this_keys_ok) {
+		console.log(ok_e);
 		debugger;
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
@@ -2416,23 +2433,24 @@ function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
 	/** @typedef {keyof import("./support/yt_api/_abc/b/BrowseEndpoint.js").BrowseEndpoint} _XYZ */
 	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams"); obj;
+		iter_skips.push("clickTrackingParams");
 	}
 	if("watchEndpoint" in obj) {
-		iter_skips.push("watchEndpoint"); obj;
+		iter_skips.push("watchEndpoint");
 	}
 	/** @type {_XYZ} */
 	const v="browseEndpoint";
 	if(v in obj) {
+		iter_skips.push("browseEndpoint"); 
 		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
 			debugger;
 		}
+		if(obj.browseEndpoint.browseId==="FEwhat_to_watch")
 		console.log("obj_browseEndpoint",obj.browseEndpoint);
 		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
-		iter_skips.push("browseEndpoint"); obj;
 	}
 	if("commandMetadata" in obj) {
-		iter_skips.push("commandMetadata"); obj;
+		iter_skips.push("commandMetadata");
 		if("webCommandMetadata" in obj.commandMetadata) {
 			console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
 		}
