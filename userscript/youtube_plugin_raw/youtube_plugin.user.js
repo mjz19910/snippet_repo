@@ -58,7 +58,7 @@ function save_new_map(key,map) {
 }
 
 class SavedData {
-	/** @type {{browse?: {};guide?: {}}} */
+	/** @type {import("./AnySavedData.js").AnySavedData} */
 	any_data={};
 }
 
@@ -1782,7 +1782,7 @@ class FilterHandlers extends IterateApiResultBase {
 	handle_page_type(data,page_type,response_type) {
 		const debug=false;
 		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type,response_type);
-		this.handle_any_data(page_type,data);
+		this.handle_any_data(`page_type_${page_type}`,data);
 		switch(response_type) {
 			case "response": break;
 			case "playerResponse": switch(page_type) {
@@ -1792,12 +1792,14 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/**
-	 * @param {ReturnType<typeof this.use_template_url>} path
+	 * @param {ReturnType<typeof this.use_template_url>|"page_type_watch"|"page_type_browse"} path
 	 * @arg {{[str: string]:{}}} data
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		saved_data.any_data={...saved_data.any_data,[path]: data};
+		/** @type {{[U in typeof path]?: SavedData['any_data'][U]}} */
+		let merge_obj={[path]: data};
+		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);
 	}
 	/**
