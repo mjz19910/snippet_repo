@@ -1,5 +1,11 @@
-import {PageTypeBrowse} from "./PageTypeBrowse.js";
-import {PageTypeShorts} from "./PageTypeShorts";
-import {PageTypeWatch} from "./PageTypeWatch.1";
+import {WatchEndpoint} from "../w/WatchEndpoint.js";
+import {PageResponseWatch} from "./PageResponseWatch";
 
-export type YTNavigateFinishEventDetail<T>=PageTypeWatch<T>|PageTypeBrowse|PageTypeShorts<T>;
+
+export interface PageTypeWatch<T> {
+	pageType: "watch";
+	fromHistory: false;
+	navigationDoneMs: number;
+	endpoint: WatchEndpoint<T>;
+	response: PageResponseWatch;
+}

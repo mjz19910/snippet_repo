@@ -2259,7 +2259,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} */
+	/** @type {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} */
 	detail=any({});
 }
 
@@ -2281,7 +2281,7 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 const last_detail_val={value: {}};
-/** @template T @typedef {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} YTNavigateFinishEventDetail */
+/** @template T @typedef {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} YTNavigateFinishEventDetail */
 
 /**
  * @template T
@@ -2363,7 +2363,7 @@ function random_sometimes_break_1(detail,obj,path) {
 
 const random_factor=0.2;
 
-/** @template T @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail<T>} detail */
+/** @template T @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
 	let ok=any(Object.keys(detail));
