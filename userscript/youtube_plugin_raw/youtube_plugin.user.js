@@ -1613,12 +1613,12 @@ class FilterHandlers extends IterateApiResultBase {
 		const res_parse=create_from_parse(x);
 		if('_tag' in res_parse) {
 			console.log('parse failed (should never happen)',x,res_parse);
-			return;
+			throw new Error("unreachable");
 		}
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
-		this.get_url_type(path_parts,res_parse);
+		return this.get_url_type(path_parts,res_parse);
 	}
 	/** @template A,B,C,D,E @typedef {import("./support/url_parse/UrlParseRes.js").UrlParseRes<A,B,C,D,E>} UrlParseRes */
 	/**
@@ -1628,10 +1628,11 @@ class FilterHandlers extends IterateApiResultBase {
 	get_url_type(parts,url) {
 		let index=0;
 		switch(parts[index]) {
-			case "youtubei": index++; this.search_print(url,parts); this.get_yt_url_type(parts,url,index); break;
-			case "getDatasyncIdsEndpoint": this.search_print(url,parts); break;
+			case "youtubei": index++; this.search_print(url,parts); return this.get_yt_url_type(parts,url,index);
+			case "getDatasyncIdsEndpoint": this.search_print(url,parts); return "getDatasyncIdsEndpoint";
 			default: debugger;
 		}
+		throw new Error("Missing");
 	}
 	/**
 	 * @param {string[]} parts
