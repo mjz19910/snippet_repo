@@ -26,6 +26,9 @@ export type AttGetV={
 			loggedOut: boolean;
 		};
 		serviceTrackingParams: AllServiceTrackingParams;
+		webResponseContextExtensionData: {
+			hasDecorated: false;
+		}
 	};
 	challenge: string;
 	bgChallenge: {
