@@ -1592,7 +1592,6 @@ class FilterHandlers extends IterateApiResultBase {
 			data.adPlacements=[];
 		}
 	}
-	/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
 	/** 
 	 * @template {string} X
 	 * @template {string} U
@@ -1602,28 +1601,6 @@ class FilterHandlers extends IterateApiResultBase {
 	 * */
 	use_template_url(x) {
 		let u=x;
-		if(u[0]==="/") {
-			/** @type {any} */
-			const b=u;
-			/** @type {`/${string}?${string}`} */
-			const x=b;
-			/** @template {string} T @returns {import("./parse_url/index.js").UrlParse_ext<T>} @arg {T} x */
-			function create_from_parse_partial(x) {
-				/** @type {any} */
-				const a=x.split("?");
-				/** @type {Split<T,"?">} */
-				const fs=a;
-				return any({
-					whole_url: x,
-					pathname: fs[0],
-					search: `?${fs[1]}`,
-				});
-			}
-			let pp=create_from_parse_partial(x);
-			console.log(pp);
-			debugger;
-			return;
-		}
 		/** @template T @typedef {T extends `https://${infer Host}/${infer Pathname}?${infer Search}`?import("./support/url_parse/UrlParseRes.js").UrlParseRes<T,Host,"https",Search,Pathname>:never} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
@@ -1666,7 +1643,7 @@ class FilterHandlers extends IterateApiResultBase {
 		let req_parse=c1().url;
 		/** @type {any} */
 		let req_hr_t=req_parse.href;
-		/** @type {`https://${string}/${string}?${string}`|`/${string}?${string}`} */
+		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
 		this.use_template_url(href_);
 		let path_url=req_parse.pathname;
@@ -1683,6 +1660,10 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
+		on_json_request({
+			request,
+			parsed_url: req_parse,
+		},data);
 		x: {
 			if(api_path=="att.get") break x;
 			this.handle_any_data(api_path,data);
@@ -2493,8 +2474,12 @@ function random_sometimes_break_1(detail,obj,path) {
 
 const random_factor=0.2;
 
+/**
+ * @param {{ request: string | URL | Request; parsed_url: URL; }} request_info
+ * @param {{}} json_data
+ */
 function on_json_request(request_info,json_data) {
-
+	console.log(request_info,json_data);
 }
 
 /** @template T @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} detail */
