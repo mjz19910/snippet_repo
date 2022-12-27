@@ -3,7 +3,7 @@ import {GeneralContext} from "./GeneralContext.js";
 import {YtApiNext} from "./YtApiNext";
 import {YtUrlBase} from "./YtUrlBase";
 
-type U_0={
+type yt_response_getDatasyncIdsEndpoint={
 	url_type: "getDatasyncIdsEndpoint";
 	json: {};
 };
@@ -20,7 +20,7 @@ type U_0={
 // 	"t": "7200",
 // }; u;
 
-type yt_response_att_get={
+export type yt_response_att_get={
 	url_type: "att.get";
 	// ['responseContext', 'challenge', 'bgChallenge']
 	json: AttGetV;
@@ -43,18 +43,18 @@ export type notification_get_unseen_count={
 	};
 };
 
-type yt_response_guide={
+export type yt_response_guide={
 	url_type: "guide";
 	json: {
 		responseContext: GeneralContext;
 	};
 };
 
-type yt_response_browse={
+export type yt_response_browse={
 	url_type: "browse";
 	json: {
 		responseContext: GeneralContext;
 	};
 }
 
-export type json_req=(U_0|yt_response_att_get|yt_response__next|notification_get_notification_menu|notification_get_unseen_count|yt_response_guide|yt_response_browse)&YtUrlBase;
+export type json_req=(yt_response_getDatasyncIdsEndpoint|yt_response_att_get|yt_response__next|notification_get_notification_menu|notification_get_unseen_count|yt_response_guide|yt_response_browse)&YtUrlBase;
