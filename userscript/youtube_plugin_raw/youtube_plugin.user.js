@@ -1605,6 +1605,11 @@ class FilterHandlers extends IterateApiResultBase {
 			return ret;
 		}
 		let res_parse=create_from_parse(x);
+		if('_tag' in res_parse) {
+			console.log('parse failed (should never happen)',x,res_parse);
+			return;
+		}
+		res_parse;
 	}
 	/**
 	 * @arg {{}} data

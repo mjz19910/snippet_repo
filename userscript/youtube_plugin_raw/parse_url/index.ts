@@ -1,4 +1,7 @@
 import {Split} from "../support/make/Split.js";
+import {ParseUrlSearchParams} from "../support/search_params_parse/SearchParamsParse.js";
+import {Decay} from "../support/yt_api/_exact_data/Decay.js";
+import {URLSearchParams} from "./URLSearchParams";
 
 type UrlParseResFor2<
 	T extends string,
@@ -25,3 +28,16 @@ export const vv=create_from_parse_partial(url2);
 vv.pathname.split("/");
 type Pt=Split<typeof vv.pathname,"/">;
 export const pt: Pt=vv.pathname.split("/") as Pt;
+export function make_search_params<T extends string>(t: T) {
+	let sp=new URLSearchParams(t);
+	return Object.fromEntries(sp.entries()) as ParseUrlSearchParams<T>;
+}
+export type upx=Decay<ParseUrlSearchParams<typeof vv['search']>>
+export let res_a=make_search_params(vv.search);
+type VV={
+	key: typeof res_a.key;
+	prettyPrint: typeof res_a.prettyPrint;
+}
+export let res_b:VV=res_a;
+res_a=res_b;
+res_b=res_a;
