@@ -610,7 +610,7 @@ function with_ytd_scope() {
 					this.setGain(range_value/this.max);
 				};
 				this.range_element.onkeydown=(event) => this.onKeyDown(event);
-				history_state_manager.addEventListener('update',this.onStateChange.bind(this));
+				history_state_manager.addEventListener("update",this.onStateChange.bind(this));
 				this.range_element.min=""+this.min;
 				this.range_element.max=""+this.overdrive;
 				let new_gain=this.calculateGain();
@@ -2833,10 +2833,18 @@ class HistoryStateManager extends EventTarget {
 	addEventListener(type, listener, options) {
 		super.addEventListener(type,listener,options);
 	}
+	/**
+	 * @param {{}|null} new_state
+	 */
+	do_state_update(new_state) {
+		this.cur_state=new_state;
+		this.dispatchEvent(new CustomEvent("update",{detail:this.cur_state}));
+	}
 	constructor() {
 		super();
 		let t=this;
 		this.cur_state=this.getHistoryState();
+		this.do_state_update(this.cur_state);
 		if(this.debug) console.log("initial history state",this.cur_state);
 		/**
 		 * @param {{}} obj
@@ -2858,7 +2866,7 @@ class HistoryStateManager extends EventTarget {
 					}
 				}
 			}
-			this.cur_state=new_state;
+			this.do_state_update(new_state);
 			this.is_replacing_custom_state=true;
 			history.replaceState(new_state,"");
 			this.is_replacing_custom_state=false;
@@ -2887,7 +2895,7 @@ class HistoryStateManager extends EventTarget {
 					}
 					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
 				}
-				t.cur_state=new_state;
+				t.do_state_update(new_state);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
@@ -2914,8 +2922,7 @@ class HistoryStateManager extends EventTarget {
 					}
 					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
 				}
-				t.cur_state=new_state;
-				t.dispatchEvent(new CustomEvent("update",{detail:t.cur_state}))
+				t.do_state_update(new_state);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
