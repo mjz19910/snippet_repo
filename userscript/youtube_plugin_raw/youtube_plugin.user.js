@@ -2443,12 +2443,22 @@ function pb_0(detail,obj) {
 }
 const gen_not_want=['page','endpoint','response','url'];
 /**
+ * @param {any} obj
+ * @param {string[]} iter_skips
+ */
+function click_track_do(obj, iter_skips) {
+	if("clickTrackingParams" in obj) {
+		iter_skips.push("clickTrackingParams");
+	}
+}
+/**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
  * @param {YTNavigateFinishEventDetail<T>['response']} obj
  * @param {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
+	/** @type {string[]} */
 	let iter_skips=[];
 	let ok=Object.keys(obj);
 	/** @type {string[]} */
@@ -2465,9 +2475,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(eq_keys(ok_e,['playerResponse','reelWatchSequenceResponse','cachedReelWatchSequenceResponse'])) return true;
 		return false;
 	}
-	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");
-	}
+	click_track_do(obj,iter_skips);
 	if("page" in obj) {
 		if(obj.page==="watch") {
 			iter_skips.push("page");
@@ -2544,9 +2552,11 @@ function on_command_meta(obj) {
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
-	/** @typedef {keyof import("./support/yt_api/_abc/b/BrowseEndpoint.js").BrowseEndpoint} _XYZ */
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");
+		if(typeof obj.clickTrackingParams!=='string') {
+			debugger;
+		}
 	}
 	if("commandMetadata" in obj) {
 		iter_skips.push("commandMetadata");
@@ -2557,7 +2567,7 @@ function random_sometimes_break_1(detail,obj,path) {
 	}
 	x: if("browseEndpoint" in obj) {
 		iter_skips.push("browseEndpoint");
-		if(Object.keys(obj).length!==3||typeof obj.clickTrackingParams!=='string') {
+		if(Object.keys(obj).length!==3) {
 			debugger;
 		}
 		if(obj.browseEndpoint.browseId==="FEwhat_to_watch") break x;
