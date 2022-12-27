@@ -2300,8 +2300,9 @@ function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
 	/** @type {{[x: string]: {}}} */
 	let idx_able=oo;
 	for(let x of Object.keys(obj)) {
+		if(skip.includes(x)) continue;
+		console.log(path.concat(x).join("."),idx_able[x]);
 		if(Math.random()<(random_factor/5)&&x in idx_able) {
-			if(skip.includes(x)) continue;
 			console.log(path.concat(x).join("."),idx_able[x]);
 			debugger;
 		}
