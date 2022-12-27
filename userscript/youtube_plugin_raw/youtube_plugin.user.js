@@ -2205,7 +2205,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").PageTypeWatch<string>} */
+	/** @type {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} */
 	detail=any({});
 }
 
@@ -2226,9 +2226,17 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 
-/** @arg {YTNavigateFinishEvent['detail']} detail */
+/** @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
-	if(detail.pageType!=="watch") {
+	/** @type {(keyof typeof detail)[]} */
+	let ok=any(Object.keys(detail));
+	for(let x of ok) {
+		if(Math.random() <0.3) {
+			console.log('detail.'+x,detail[x]);
+			debugger;
+		}
+	}
+	if(detail.pageType!=="watch"&&detail.pageType!=="browse") {
 		debugger;
 	}
 	if(last_page_type!==detail.pageType) {
