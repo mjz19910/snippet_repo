@@ -1,7 +1,10 @@
+import {CommentSimpleboxRenderer} from "./CommentSimpleboxRenderer";
+import {TextRunsSimple} from "./TextRunsSimple";
+
 export type CommentsHeaderRenderer={
-	countText: {};
-	createRenderer: {};
-	commentsCount: {};
+	commentsCount: TextRunsSimple;
+	countText: TextRunsSimple;
+	createRenderer: CommentSimpleboxRenderer;
 	customEmojis: {};
 	loggingDirectives: {};
 	showSeparator: true;

@@ -1,4 +1,4 @@
-import {Accessibility} from "./Accessibility";
+import {Accessibility} from "../a/Accessibility";
 
 export type SimpleText={
 	accessibility?: Accessibility;
