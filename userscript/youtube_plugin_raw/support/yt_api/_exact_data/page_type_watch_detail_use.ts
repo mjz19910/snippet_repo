@@ -37,7 +37,6 @@ export function page_type_watch_detail_use() {
 	service_param_0.service;
 	const sp_0_params=service_param_0.params;
 	type CsiPt=typeof sp_0_params;
-	type Csi_c_var=ExtractParamKey<typeof sp_0_params,"c">;
 	type PvSP<U extends KVStore,T extends string>=ExtractParamKey<[U],T>;
 	type Pxg<T extends number>=PvSP<CsiPt[T],CsiPt[T]['key']>;
 	type CsiV={
