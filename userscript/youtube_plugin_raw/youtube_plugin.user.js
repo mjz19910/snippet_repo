@@ -1649,7 +1649,7 @@ class FilterHandlers extends IterateApiResultBase {
 				case "get": return "att.get";
 				default: debugger;
 			} break;
-			case "guide": if(parts.length!==3) debugger; return "guide";
+			case "guide": return "guide";
 			case "notification": index++; switch(parts[index]) {
 				case "get_unseen_count": return "notification.get_unseen_count";
 				case "get_notification_menu": return "notification.get_notification_menu";
