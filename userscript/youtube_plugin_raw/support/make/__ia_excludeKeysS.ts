@@ -1,4 +1,4 @@
-import {Split} from "../../Split";
+import {Split} from "./Split.js";
 
 declare global {
 	interface Object {
