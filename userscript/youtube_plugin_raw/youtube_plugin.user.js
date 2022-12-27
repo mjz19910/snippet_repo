@@ -1731,6 +1731,13 @@ class FilterHandlers extends IterateApiResultBase {
 					request,
 					parsed_url: req_parse,
 				}); break;
+				case "notification.get_unseen_count": on_json_request({
+					/** @readonly */
+					url_type,
+					json: any(data),
+					request,
+					parsed_url: req_parse,
+				}); break;
 				default: console.log(url_type,data); debugger; break;
 		}
 		x: {

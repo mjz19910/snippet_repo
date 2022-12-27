@@ -1,4 +1,5 @@
 import {AttGetV} from "./AttGetV";
+import {GeneralContext} from "./GeneralContext.js";
 import {YtApiNext} from "./YtApiNext";
 import {YtUrlBase} from "./YtUrlBase";
 
@@ -37,7 +38,9 @@ type U_3={
 
 type U_4={
 	url_type: "notification.get_unseen_count";
-	json: {};
+	json: {
+		responseContext: GeneralContext;
+	};
 };
 
 type U_5={
