@@ -953,21 +953,7 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
 			if(yt_debug_enabled) console.log("JSON.parse()");
 			let obj=Reflect.apply(...proxy_args);
 			if(yt_debug_enabled) console.log("request.url");
-			function c1() {
-				if(typeof request=="string") {
-					return {url: to_url(request)};
-				}
-				if(request instanceof URL) {
-					return {url: request};
-				}
-				return request;
-			}
-			let request_1=c1();
-			if(request_1.url) {
-				fetch_filter_text_then_data_url(request_1.url,obj);
-			} else {
-				if(yt_debug_enabled) console.log("handle_json_parse no url",request,obj);
-			}
+			fetch_filter_text_then_data_url(request,obj);
 			return obj;
 		}
 	});
@@ -1612,21 +1598,26 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	on_handle_api(request,data) {
 		const debug=false;
-		if(typeof request==="string") {
-			request=new URL(request);
-		} else if(request instanceof Request) {
-			request=new URL(request.url);
+		function c1() {
+			if(typeof request=="string") {
+				return {url: to_url(request)};
+			}
+			if(request instanceof URL) {
+				return {url: request};
+			}
+			return {url: to_url(request.url)};
 		}
-		let path_url=request.pathname;
+		let req_parse=c1().url;
+		let path_url=req_parse.pathname;
 		if(path_url==="/getDatasyncIdsEndpoint") return;
-		let api_parts=request.pathname.slice(1).split("/");
+		let api_parts=req_parse.pathname.slice(1).split("/");
 		// spell:ignore youtubei
 		if(api_parts[0]!=="youtubei") {
-			console.log(this.class_name+": "+"unknown api path",request.pathname);
+			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
 			return;
 		}
 		if(api_parts[1]!=="v1") {
-			console.log(this.class_name+": "+"unknown api path",request.pathname);
+			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
 			return;
 		}
 		let api_path=api_parts.slice(2).join(".");
