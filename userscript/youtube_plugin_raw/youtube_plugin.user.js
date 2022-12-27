@@ -2234,12 +2234,14 @@ function random_sometimes_break_0(obj,path) {
 	/** @type {{[x: string]: {}}} */
 	let idx_able=obj;
 	for(let x of Object.keys(obj)) {
-		if(Math.random() <0.3&& x in idx_able) {
+		if(Math.random() <(random_factor/5)&& x in idx_able) {
 			console.log(path.concat(x).join("."),idx_able[x]);
 			debugger;
 		}
 	}
 }
+
+const random_factor=0.2;
 
 /** @arg {import("./support/yt_api/_abc/p/PageTypeWatch.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
@@ -2247,9 +2249,9 @@ function on_page_type_changed(detail) {
 	let ok=any(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
-			case "response": random_sometimes_break_0(detail[x],['detail']); break;
+			case "response": random_sometimes_break_0(detail[x],['detail',x]); break;
 		}
-		if(Math.random() <0.3) {
+		if(Math.random() <(random_factor/3)) {
 			console.log('detail.'+x,detail[x]);
 			debugger;
 		}
