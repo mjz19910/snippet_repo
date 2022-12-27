@@ -16,113 +16,8 @@ function run() {
 }
 run();
 
-type LoadedTypes={
-	root: protobufjs.Root;
-	token_buffer: Buffer;
-};
-<<<<<<< HEAD
-=======
-
-
-function use_input_arg(x: LoadedTypes,token_str: string) {
-	let {root}: {
-		root: protobufjs.Root;
-		token_buffer: Buffer;
-	}=x;
-	const token_buffer=get_token_data(token_str);
-	let buf_type=root.lookupType("A");
-	let message=buf_type.decode(token_buffer);
-	let u_obj=buf_type.toObject(message,{
-		longs: Number,
-		arrays: true,
-	});
-	let obj=into_type<typeof u_obj,{}>(u_obj);
-	console.log(obj);
-}
-
-export async function parse_types(): Promise<void> {
-	const loaded_types=await load_types();
-	let myArgs=process.argv.slice(2);
-	let root=loaded_types.root;
-	let input_type=null;
-	if(myArgs[0]==="--input-type") {
-		input_type=myArgs[1];
-		myArgs=myArgs.slice(2);
-	}
-	if(myArgs[0]==="--input") {
-		let token_str=myArgs[1];
-		if(input_type!==null) {
-			const token_buffer=get_token_data(token_str);
-			let buf_type;
-			try {
-				buf_type=root.lookupType(input_type);
-			} catch {
-				buf_type=new protobufjs.Type(input_type);
-			}
-			let message=buf_type.decode(token_buffer);
-			let obj=buf_type.toObject(message,{
-				longs: Number,
-				arrays: true,
-			});
-			console.log(obj);
-			return;
-		}
-		use_input_arg(loaded_types,token_str);
-		return;
-	}
-	await useTypeA(loaded_types);
-}
->>>>>>> refs/heads/synced/master
-
-
-function use_input_arg(x: LoadedTypes,token_str: string) {
-	let {root}: {
-		root: protobufjs.Root;
-		token_buffer: Buffer;
-	}=x;
-	const token_buffer=get_token_data(token_str);
-	let buf_type=root.lookupType("A");
-	let message=buf_type.decode(token_buffer);
-	let u_obj=buf_type.toObject(message,{
-		longs: Number,
-		arrays: true,
-	});
-	let obj=into_type<typeof u_obj,{}>(u_obj);
-	console.log(obj);
-}
-
-export async function parse_types(): Promise<void> {
-	const loaded_types=await load_types();
-	let myArgs=process.argv.slice(2);
-	let root=loaded_types.root;
-	let input_type=null;
-	if(myArgs[0]==="--input-type") {
-		input_type=myArgs[1];
-		myArgs=myArgs.slice(2);
-	}
-	if(myArgs[0]==="--input") {
-		let token_str=myArgs[1];
-		if(input_type!==null) {
-			const token_buffer=get_token_data(token_str);
-			let buf_type;
-			try {
-				buf_type=root.lookupType(input_type);
-			} catch {
-				buf_type=new protobufjs.Type(input_type);
-			}
-			let message=buf_type.decode(token_buffer);
-			let obj=buf_type.toObject(message,{
-				longs: Number,
-				arrays: true,
-			});
-			console.log(obj);
-			return;
-		}
-		use_input_arg(loaded_types,token_str);
-		return;
-	}
-	await useTypeA(loaded_types);
-}
+let pad=""
+let pad_with="  ";
 
 class MyConsole {
 	paused=false;
@@ -488,14 +383,14 @@ export async function parse_types(): Promise<void> {
 	const myArgs=process.argv.slice(2);
 	if(myArgs[0]==="--input") {
 		my_console.pad_log("message Type.U {");
-		let reset=increase_padding();
+		// let reset=increase_padding();
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(new Uint8Array(token_buffer));
 		let ss=reader.uint32();
 		my_console.pad_log("%o",ss);
 		reader.pos=0;
 		unk_type.decode(reader);
-		reset();
+		// reset();
 		my_console.pad_log("}");
 		return;
 	}
@@ -515,7 +410,7 @@ async function useTypeA({root,token_buffer}: {root: Root,token_buffer: Buffer;})
 		arrays: true,
 	});
 	let obj=into_type<typeof u_obj,{}>(u_obj);
-	console.log(type,token_buffer);
+	console.log(obj,token_buffer);
 }
 
 run();

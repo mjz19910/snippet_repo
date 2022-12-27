@@ -12,11 +12,7 @@
 		],
 		"declaration": true,
 		"module": "ESNext",
-<<<<<<< HEAD
 		"moduleResolution": "NodeNext",
-=======
-		"moduleResolution": "Node",
->>>>>>> 19d8bcac (u)
 		"sourceMap": true,
 		"outDir": "./build",
 		"strict": true,
@@ -36,27 +32,14 @@
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
 		"isolatedModules": true,
-<<<<<<< HEAD
 		"noPropertyAccessFromIndexSignature": false,
-=======
-		// todo
-		"noPropertyAccessFromIndexSignature": false,
-		// windows needs this
->>>>>>> 19d8bcac (u)
 		"forceConsistentCasingInFileNames": true,
 	},
 	"ts-node": {
 		"esm": true,
 	},
 	"include": [
-<<<<<<< HEAD
 		"**/*",
-=======
-		"javascript/**/*",
-		"typescript/src/**/*",
-		"typescript/modules/**/*",
-		"typescript/ns.ts",
->>>>>>> 19d8bcac (u)
 	],
 	"exclude": [
 		"node_modules",
