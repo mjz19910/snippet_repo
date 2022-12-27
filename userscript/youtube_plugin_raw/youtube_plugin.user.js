@@ -1621,30 +1621,51 @@ class FilterHandlers extends IterateApiResultBase {
 		console.log(path_parts);
 		console.log(res_parse.search);
 		switch(path_parts[0]) {
-			case "youtubei": this.with_ty_1(path_parts); break;
+			case "youtubei": this.with_ty_1(x,path_parts); break;
 			case "getDatasyncIdsEndpoint": break;
 			default: debugger;
 		}
-		debugger;
 	}
-	/** @param {string[]} parts */
-	with_ty_1(parts) {
+	/** 
+	 * @template {string} X
+	 * @template {string} U
+	 * @template {string} V
+	 * @template {`https://${X}/${U}?${V}`} T
+	 * @arg {T} url
+	 * @param {string[]} parts
+	 */
+	with_ty_1(url,parts) {
 		switch(parts[1]) {
-			case "v1": this.with_ty_2(parts); break;
+			case "v1": this.with_ty_2(url,parts); break;
 			default: debugger;
 		}
 	}
-	/** @param {string[]} parts */
-	with_ty_2(parts) {
+	/** 
+	 * @template {string} X
+	 * @template {string} U
+	 * @template {string} V
+	 * @template {`https://${X}/${U}?${V}`} T
+	 * @arg {T} url
+	 * @param {string[]} parts
+	 */
+	with_ty_2(url,parts) {
 		switch(parts[2]) {
-			case "att": this.with_type_att(parts,2); break;
+			case "att": this.with_type_att(url,parts,2); break;
 			default: debugger;
 		}
 	}
-	/** @param {string[]} parts @arg {number} index */
-	with_type_att(parts,index) {
+	/** 
+	 * @template {string} X
+	 * @template {string} U
+	 * @template {string} V
+	 * @template {`https://${X}/${U}?${V}`} T
+	 * @arg {T} url
+	 * @param {string[]} parts
+	 * @arg {number} index
+	 */
+	with_type_att(url,parts,index) {
 		switch(parts[index+1]) {
-			case "get": break;
+			case "get": console.log('att.get',url); break;
 			default: debugger;
 		}
 	}
