@@ -122,6 +122,35 @@ class PagePreparer {
 		throw new Error("Only types");
 	}
 }
+
+const original_document_createElement=document.createElement;
+// @ts-ignore
+document.createElement=overwrite_createElement;
+class FakeIframeElement extends HTMLElement {
+	constructor() {
+		super();
+		this.__fake_data=new FakeIframeElement.special_base;
+	}
+}
+FakeIframeElement.special_base=class {}
+customElements.define('fake-iframe', FakeIframeElement);
+/**
+ * @this {Document}
+ * @param {string} n_type
+ * @param {ElementCreationOptions} [options]
+ */
+function overwrite_createElement(n_type,options) {
+	if(n_type!=="iframe") {
+		return original_document_createElement.call(this,n_type,options);
+	}
+	class UU {
+		n_type=n_type;
+		n_opts=options;
+	}
+	FakeIframeElement.special_base=UU;
+	return original_document_createElement.call(this,"fake-iframe");
+}
+
 // spell:words monospace
 let player_overlay_style_str=`
 position: absolute;
