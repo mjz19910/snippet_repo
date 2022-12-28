@@ -1,36 +1,43 @@
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
 
+type WatchPagePlayerResponse={
+	responseContext: {};
+	playabilityStatus: {};
+	streamingData: {};
+	playerAds: {};
+	playbackTracking: {};
+	captions: {};
+	videoDetails: {};
+	playerConfig: {};
+	storyboards: {};
+	microformat: {};
+	cards: {};
+	trackingParams: {};
+	attestation: {};
+	videoQualityPromoSupportedRenderers: {};
+	adPlacements: {};
+	frameworkUpdates: {};
+};
+
+type WatchContentResponse={
+	currentVideoEndpoint: {};
+	engagementPanels: {}[];
+	frameworkUpdates: {
+		entityBatchUpdate: {};
+		elementUpdate: {};
+	};
+	onResponseReceivedEndpoints: {}[];
+	pageVisualEffects: {}[];
+	playerOverlays: {};
+	responseContext: {};
+	topbar: {};
+	trackingParams: string;
+};
+
 export type PageResponseWatch<T>={
 	page: "watch";
 	endpoint: WatchEndpoint<T>;
-	response: {
-		currentVideoEndpoint: never/*{}*/;
-		engagementPanels: never; //{}[]
-		frameworkUpdates: {entityBatchUpdate: never/*{}*/,elementUpdate: never/*{}*/;};
-		onResponseReceivedEndpoints: never;//{}[];
-		pageVisualEffects: never;//{}[];
-		playerOverlays: never;//{}
-		responseContext: never;//{}
-		topbar: never;//{}
-		trackingParams: string;
-	};
-	playerResponse: {
-		responseContext: {};
-		playabilityStatus: {};
-		streamingData: {};
-		playerAds: {};
-		playbackTracking: {};
-		captions: {};
-		videoDetails: {};
-		playerConfig: {};
-		storyboards: {};
-		microformat: {};
-		cards: {};
-		trackingParams: {};
-		attestation: {};
-		videoQualityPromoSupportedRenderers: {};
-		adPlacements: {};
-		frameworkUpdates: {};
-	};
+	response: WatchContentResponse;
+	playerResponse: WatchPagePlayerResponse;
 	url: string;
 };
