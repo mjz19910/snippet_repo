@@ -1,4 +1,4 @@
-import {ShortsEndpoint} from "../../../../ShortsEndpoint";
+import {ShortsEndpoint} from "./ShortsEndpoint";
 import {ShortsResponsePlayer} from "./ShortsResponsePlayer";
 import {ShortsResponseContent as ShortsResponseContent} from "./ShortsResponseContent";
 
