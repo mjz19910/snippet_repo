@@ -1302,9 +1302,12 @@ class YtIterateTarget {
 			return true;
 		});
 	}
+	run_mc=true;
 	/** @type {(...x:[ApiIterateState,{}])=>void} */
 	webCommandMetadata(state,metadata) {
+		if(!this.run_mc) return;
 		console.log("webCommandMetadata",state.path,metadata);
+		this.run_mc=false;
 	}
 	/** @type {(...x:[ApiIterateState,{}])=>void} */
 	compactLinkRenderer(state,renderer) {
@@ -1780,8 +1783,8 @@ class FilterHandlers {
 				default: no_handler({...state,parts,index});
 			}
 			case "reel": index++; switch(parts[index]) {
-				case "reel_item_watch": return "reel_item_watch";
-				case "reel_watch_sequence": return "reel_watch_sequence";
+				case "reel_item_watch": return "reel.reel_item_watch";
+				case "reel_watch_sequence": return "reel.reel_watch_sequence";
 				default: no_handler({...state,parts,index});
 			}
 			case "next": return "next";
@@ -1792,7 +1795,6 @@ class FilterHandlers {
 			default: no_handler({...state,parts,index});
 		}
 	}
-	/** @typedef {import("./support/yt_api/yt/yt_response_att_get.js").yt_response_att_get|import("./support/yt_api/yt/yt_response_browse.js").yt_response_browse|import("./support/yt_api/yt/yt_response_live_chat_get_live_chat_replay.js").yt_response_live_chat_get_live_chat_replay} V1 */
 	/** @template {UrlTypes} T @arg {T} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
 	get_res_data(url_type,json) {
 		switch(url_type) {
@@ -1815,7 +1817,7 @@ class FilterHandlers {
 				/** @type {import("./support/yt_api/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
 				json: any(json),
 			};
-			case "reel_item_watch": return {
+			case "reel.reel_item_watch": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
 				json: any(json),
@@ -1907,15 +1909,15 @@ class FilterHandlers {
 			debugger;
 			return any(data);
 		}
-		let res;
-		switch(url_type) {
-			case "att.get": let res=this.get_res_data(url_type,data); this.on_att_get(as_att_get()); break;
-			case "player": this.on_v1_player(api_path,as_player_response()); break;
+		let res=this.get_res_data(url_type,data)
+		switch(res.url_type) {
+			case "att.get": this.on_att_get(as_att_get()); break;
+			case "player": debugger; this.on_v1_player(api_path,res.json); break;
 			default: debugger;
 		}
 	}
 	/**
-	 * @param {{}} data
+	 * @param {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} data
 	 */
 	on_att_get(data) {
 		console.log(data);

@@ -1,6 +1,6 @@
 export type UrlTypes=
-	"att.get"|
 	"account.account_menu"|
+	"att.get"|
 	"browse"|
 	"channel"|
 	"get_transcript"|
@@ -12,8 +12,8 @@ export type UrlTypes=
 	"notification.get_unseen_count"|
 	"player"|
 	"playlist"|
-	"reel_item_watch"|
-	"reel_watch_sequence"|
+	"reel.reel_item_watch"|
+	"reel.reel_watch_sequence"|
 	"settings"|
 	"shorts"|
 	"watch";
