@@ -1,4 +1,4 @@
-import {WebCommandMetadata0} from "./WebCommandMetadata0";
+import {WebCommandMetadata0} from "../w/WebCommandMetadata0";
 
 export type ItemSectionRendererData_0={
 	contents: {

@@ -1,5 +1,5 @@
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
-import {GeneralHistoryState} from "./GeneralHistoryState";
+import {GeneralHistoryState} from "../dfg/GeneralHistoryState";
 import {PageResponseWatch} from "./PageResponseWatch";
 
 export interface PageTypeWatch<VideoId> extends GeneralHistoryState {

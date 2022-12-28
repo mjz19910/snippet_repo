@@ -1,5 +1,5 @@
-import {ShortsEndpoint} from "./ShortsEndpoint";
-import {ShortsPlayerResponse} from "./ShortsPlayerResponse";
+import {ShortsEndpoint} from "../../../../ShortsEndpoint";
+import {ShortsPlayerResponse} from "../../../../ShortsPlayerResponse";
 import {PageResponseShortsContentResponse} from "./PageResponseShortsContentResponse";
 
 export type PageResponseShorts<T>={

@@ -1,4 +1,4 @@
-import {PageResponseShorts} from "./PageResponseShorts";
+import {PageResponseShorts} from "./support/yt_api/_abc/p/PageResponseShorts";
 import {PageResponseBrowse} from "./support/yt_api/_abc/p/PageResponseBrowse.js";
 import {PageResponseWatch} from "./youtube_plugin.user.js";
 

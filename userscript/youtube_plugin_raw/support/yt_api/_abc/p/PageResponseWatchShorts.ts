@@ -1,5 +1,5 @@
-import {EngagementPanelSectionListRendererOpt} from "./EngagementPanelSectionListRendererOpt";
-import {ReelWatchEndpoint} from "./ReelWatchEndpoint";
+import {EngagementPanelSectionListRendererOpt} from "../e/EngagementPanelSectionListRendererOpt";
+import {ReelWatchEndpoint} from "../r/ReelWatchEndpoint";
 
 export type PageResponseWatchShorts<VideoId>={
 	page: "shorts";

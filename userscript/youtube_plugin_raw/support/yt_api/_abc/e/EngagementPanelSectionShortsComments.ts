@@ -1,4 +1,4 @@
-import {SectionListRenderer} from "./SectionListRenderer";
+import {SectionListRenderer} from "../s/SectionListRenderer";
 
 export type EngagementPanelSectionShortsComments={
 	content: SectionListRenderer;

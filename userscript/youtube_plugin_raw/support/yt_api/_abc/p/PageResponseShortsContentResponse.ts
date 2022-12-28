@@ -1,4 +1,4 @@
-import {EngagementPanelItem} from "./EngagementPanelItem";
+import {EngagementPanelItem} from "../e/EngagementPanelItem";
 
 
 export type PageResponseShortsContentResponse={
