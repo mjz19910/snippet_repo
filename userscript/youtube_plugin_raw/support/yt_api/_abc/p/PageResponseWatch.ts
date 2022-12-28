@@ -1,6 +1,6 @@
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
 
-type WatchPagePlayerResponse={
+type WatchPlayerResponse={
 	responseContext: {};
 	playabilityStatus: {};
 	streamingData: {};
@@ -38,6 +38,6 @@ export type PageResponseWatch<T>={
 	page: "watch";
 	endpoint: WatchEndpoint<T>;
 	response: WatchContentResponse;
-	playerResponse: WatchPagePlayerResponse;
+	playerResponse: WatchPlayerResponse;
 	url: string;
 };

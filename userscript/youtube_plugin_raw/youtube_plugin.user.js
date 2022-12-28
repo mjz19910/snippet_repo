@@ -1440,7 +1440,11 @@ function filter_on_initial_data(cls,apply_args) {
 						debugger;
 					}
 				} else if(ret.page==="shorts") {
-
+					if(page_type==="shorts") {
+						cls.handle_page_type(ret.response,page_type,"response");
+					} else {
+						debugger;
+					}
 				} else {
 					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
 					if(page_type==="watch") {
@@ -1812,7 +1816,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {"browse"|"watch"|"playlist"} page_type
+	 * @param {"browse"|"watch"|"playlist"|"shorts"} page_type
 	 * @arg {"response"|"playerResponse"} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
@@ -1828,7 +1832,7 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/**
-	 * @param {ReturnType<typeof this.use_template_url>|"page_type_watch"|"page_type_browse"|"page_type_playlist"} path
+	 * @param {ReturnType<typeof this.use_template_url>|"page_type_watch"|"page_type_browse"|"page_type_playlist"|"page_type_shorts"} path
 	 * @arg {{[str: string]:{}}} data
 	 */
 	handle_any_data(path,data) {
@@ -2583,11 +2587,10 @@ function random_sometimes_break_0(detail,obj,path) {
 		let ok_2=Object.keys(obj.playerResponse);
 		for(let i=0;i<ok_2.length;i++) {
 			let cur=ok_2[i];
-			debugger;
 			if(cur==="responseContext") continue;
 			if(cur==="playabilityStatus") continue;
 			if(cur==="streamingData") continue;
-			if(cur==="playerAds") continue;
+			if(cur==="playerAds") continue; if(obj.page==="watch") {obj.playerResponse.playerAds;debugger;};
 			if(cur==="playbackTracking") continue;
 			if(cur==="videoDetails") continue;
 			if(cur==="playerConfig") continue;
@@ -2599,6 +2602,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			if(cur==="videoQualityPromoSupportedRenderers") continue;
 			if(cur==="adPlacements") continue;
 			if(cur==="frameworkUpdates") continue;
+			if(cur==="captions") continue;obj.playerResponse.captions;
 			debugger;
 		}
 		iter_skips.push("playerResponse");

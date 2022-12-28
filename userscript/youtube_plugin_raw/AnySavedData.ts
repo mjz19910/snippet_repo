@@ -13,4 +13,5 @@ export type AnySavedData={
 	page_type_watch?: {};
 	page_type_browse?: {};
 	page_type_playlist?: {};
+	page_type_shorts?: {};
 };
