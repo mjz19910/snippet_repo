@@ -1221,7 +1221,7 @@ class IterateApiResultBase {
 		}
 	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {{}} data
 	 */
 	default_iter(state,data) {
@@ -1260,10 +1260,10 @@ class IterateApiResultBase {
 		}
 	}
 }
-
+/** @typedef {{t:FilterHandlers;path:string}} ApiIterateState */
 class YtIterateTarget {
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(state,action) {
@@ -1272,7 +1272,7 @@ class YtIterateTarget {
 		state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
 	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand({t: state,path},command) {
@@ -1281,8 +1281,8 @@ class YtIterateTarget {
 		state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
 	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
-	 * @arg {{ contents: {}[]; }} renderer
+	 * @arg {ApiIterateState} state
+	 * @arg {import("./support/yt_api/_abc/ItemSectionRendererData.js").ItemSectionRendererData} renderer
 	 */
 	itemSectionRenderer(state,renderer) {
 		let {t,path}=state;
@@ -1300,15 +1300,16 @@ class YtIterateTarget {
 			return true;
 		});
 	}
-	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
-	 * @arg {{}} metadata
-	 */
+	/** @type {(...x:[ApiIterateState,{}])=>void} */
 	webCommandMetadata(state,metadata) {
 		console.log("webCommandMetadata",state.path,metadata);
 	}
+	/** @type {(...x:[ApiIterateState,{}])=>void} */
+	compactLinkRenderer(state,renderer) {
+		console.log("compactLinkRenderer",state.path,renderer);
+	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer
 	 */
 	richGridRenderer(state,renderer) {
@@ -1317,7 +1318,7 @@ class YtIterateTarget {
 		state.t.iteration.default_iter(state,renderer);
 	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {{}} renderer
 	 */
 	compactVideoRenderer(state,renderer) {
@@ -1325,7 +1326,7 @@ class YtIterateTarget {
 		state.t.iteration.default_iter(state,renderer);
 	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {{}} renderer
 	 */
 	thumbnailOverlayToggleButtonRenderer(state,renderer) {
@@ -1333,7 +1334,7 @@ class YtIterateTarget {
 		state.t.iteration.default_iter(state,renderer);
 	}
 	/**
-	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {ApiIterateState} state
 	 * @arg {{}} renderer
 	 */
 	videoRenderer(state,renderer) {
