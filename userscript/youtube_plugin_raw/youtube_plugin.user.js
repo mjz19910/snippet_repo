@@ -140,8 +140,8 @@ var XG=function() {};
 
 /**
  * @this {Document}
- * @param {string} n_type
- * @param {ElementCreationOptions} [options]
+ * @arg {string} n_type
+ * @arg {ElementCreationOptions} [options]
  */
 function overwrite_createElement(n_type,options) {
 	if(n_type!=="iframe"&&n_type!=="IFRAME") {
@@ -295,7 +295,7 @@ function with_ytd_scope() {
 			if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
 		}
 	}
-	/** @param {CustomEventType} event */
+	/** @arg {CustomEventType} event */
 	async function async_plugin_init(event) {
 		let plugin_state={};
 		let cur_count=1;
@@ -507,10 +507,10 @@ function with_ytd_scope() {
 			}
 		}
 		/**
-		 * @param {number} min
-		 * @param {number} max
-		 * @param {number} overdrive
-		 * @param {AudioGainController} gain_controller
+		 * @arg {number} min
+		 * @arg {number} max
+		 * @arg {number} overdrive
+		 * @arg {AudioGainController} gain_controller
 		 */
 		constructor(min,max,overdrive,gain_controller) {
 			this.use_cache=true;
@@ -520,7 +520,7 @@ function with_ytd_scope() {
 			this.gain_controller=gain_controller;
 		}
 		/**
-		 * @param {number} gain
+		 * @arg {number} gain
 		 */
 		setGain(gain) {
 			this.updateRangeElement(gain);
@@ -548,7 +548,7 @@ function with_ytd_scope() {
 		}
 		max_compressor_reduction=-0.00011033167538698763;
 		/**
-		 * @param {KeyboardEvent} event
+		 * @arg {KeyboardEvent} event
 		 */
 		onKeyDown(event) {
 			if(!this.range_element) return;
@@ -568,13 +568,13 @@ function with_ytd_scope() {
 				this.setGain(new_gain);
 			}
 		}
-		/** @param {number} new_gain */
+		/** @arg {number} new_gain */
 		updateRangeElement(new_gain) {
 			if(!this.range_element) return;
 			this.range_element.value=""+Math.floor(this.max*new_gain);
 		}
 		/**
-		 * @param {CustomEvent<{filter_gain: number|undefined}>} event
+		 * @arg {CustomEvent<{filter_gain: number|undefined}>} event
 		 */
 		onStateChange(event) {
 			if(event.detail.filter_gain==void 0) {
@@ -586,7 +586,7 @@ function with_ytd_scope() {
 			this.updateRangeElement(event.detail.filter_gain);
 		}
 		/**
-		 * @param {Element} view_parent
+		 * @arg {Element} view_parent
 		 */
 		attach_to_element(view_parent) {
 			if(!this.view_div) {
@@ -662,7 +662,7 @@ class Seen {
 	static seen_gen_counter=1;
 	static seen_uid_counter=0;
 	/**
-	 * @param {null} value
+	 * @arg {null} value
 	 */
 	static as_any(value) {
 		let weak_info,ret;
@@ -690,7 +690,7 @@ class Seen {
 		return ret;
 	}
 	/**
-	 * @param {Function|null} value
+	 * @arg {Function|null} value
 	 */
 	static as_callable(value) {
 		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
@@ -714,7 +714,7 @@ class Seen {
 		return ret;
 	}
 	/**
-	 * @param {null} value
+	 * @arg {null} value
 	 */
 	static as_constructor(value) {
 		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
@@ -738,8 +738,8 @@ class Seen {
 		return ret;
 	}
 	/**
-	 * @param {{} | null} instance
-	 * @param {{ constructor_tag: any; prototype_tag: any; }} prototype_info
+	 * @arg {{} | null} instance
+	 * @arg {{ constructor_tag: any; prototype_tag: any; }} prototype_info
 	 */
 	static as_instance(instance,prototype_info) {
 		const [instance_index,instance_gen,ref_obj]=this.see_value(instance);
@@ -764,7 +764,7 @@ class Seen {
 		return ret;
 	}
 	/**
-	 * @param {any} value
+	 * @arg {any} value
 	 */
 	static see_value(value) {
 		let index=this.seen_index_of(value);
@@ -781,7 +781,7 @@ class Seen {
 		return [index,this.seen_gen_counter,ref_obj];
 	}
 	/**
-	 * @param {any} value
+	 * @arg {any} value
 	 */
 	static seen_index_of(value) {
 		let arr=this.all_seen_objs;
@@ -953,10 +953,10 @@ function fetch_filter_text_then_data_url(request,response_obj) {
 	}
 }
 /**
- * @param {string|URL|Request} request
+ * @arg {string|URL|Request} request
  * @arg {{}|undefined} options
- * @param {((arg0: any) => any)|undefined|null} onfulfilled
- * @param {((arg0: any) => void)|undefined|null} on_rejected
+ * @arg {((arg0: any) => any)|undefined|null} onfulfilled
+ * @arg {((arg0: any) => void)|undefined|null} on_rejected
  * @arg {string} response_text
  */
 function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
@@ -988,10 +988,10 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
 	return ret;
 }
 /**
- * @param {string|URL|Request} request
+ * @arg {string|URL|Request} request
  * @arg {{}|undefined} options
- * @param {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
- * @param {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
+ * @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
+ * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
  */
 function bind_promise_handler(request,options,onfulfilled,onrejected) {
 	if(yt_debug_enabled) console.log("handle_json_parse.bind()");
@@ -1058,7 +1058,7 @@ function fetch_promise_handler(request,options,response) {
 	});
 }
 /**
- * @param {Error} rejection
+ * @arg {Error} rejection
  * @returns {Promise<Response>}
  */
 function fetch_rejection_handler(rejection) {
@@ -1105,7 +1105,7 @@ function fetch_inject(url_or_request,options) {
 fetch_inject.__proxy_target__=window.fetch;
 
 /**
- * @param {[()=>InitialDataType, object, []]} apply_args
+ * @arg {[()=>InitialDataType, object, []]} apply_args
  */
 function do_proxy_call_getInitialData(apply_args) {
 	return yt_handlers.on_initial_data(apply_args);
@@ -1117,7 +1117,7 @@ class PropertyHandler {
 	proxy_map=new Map;
 	/** @type {{value: any}} */
 	override_value={value: void 0};
-	/** @param {(args: [any, any, any]) => any} on_target_apply_callback */
+	/** @arg {(args: [any, any, any]) => any} on_target_apply_callback */
 	constructor(on_target_apply_callback) {
 		this.on_target_apply_callback=on_target_apply_callback;
 		PropertyHandler.instances.push(this);
@@ -1126,7 +1126,7 @@ class PropertyHandler {
 		return this.override_value.value;
 	}
 	/**
-	 * @param {any} value
+	 * @arg {any} value
 	 */
 	set(value) {
 		if(value===void 0||value===null) {
@@ -1152,8 +1152,8 @@ class PropertyHandler {
 inject_api_yt.PropertyHandler=PropertyHandler;
 /**
  * @arg {{}} object
- * @param {PropertyKey} property
- * @param {PropertyHandler} property_handler
+ * @arg {PropertyKey} property
+ * @arg {PropertyHandler} property_handler
  */
 function override_prop(object,property,property_handler) {
 	Object.defineProperty(object,property,{
@@ -1176,8 +1176,8 @@ class ObjectInfo {
 		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
 	/**
-	 * @param {{}} object
-	 * @param {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function]
+	 * @arg {{}} object
+	 * @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function]
 	 */
 	keys_of(object,filter_function) {
 		let object_keys=Object.keys(object);
@@ -1194,7 +1194,7 @@ class IterateApiResultBase {
 		this.iterate_target=iterate;
 	}
 	/**
-	 * @param {string} path
+	 * @arg {string} path
 	 * @arg {{[str:string]:{}}} data
 	 */
 	default_iter(path,data) {
@@ -1223,8 +1223,8 @@ class IterateApiResultBase {
 class YtIterateTarget {
 	/**
 	 * @arg {FilterHandlers} state
-	 * @param {string} path
-	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @arg {string} path
+	 * @arg {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(state,path,renderer) {
 		state.handlers.rich_grid.richGridRenderer(path,renderer);
@@ -1233,8 +1233,8 @@ class YtIterateTarget {
 
 /**
  * @arg {string} real_path
- * @param {string[]} keys
- * @param {string} path
+ * @arg {string[]} keys
+ * @arg {string} path
  * @return {void}
  * @log item_keys_tag
  */
@@ -1409,10 +1409,10 @@ class HandleRendererContentItemArray {
 		return true;
 	}
 	/**
-	 * @param {HandleRichGridRenderer|FilterHandlers} base
+	 * @arg {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
-	 * @param {{[U in "continuationItems"|"contents"]?: import("./support/yt_api/_abc/c/ContinuationItem.js").ContinuationItem[]}} obj
-	 * @param {"continuationItems"|"contents"} key
+	 * @arg {{[U in "continuationItems"|"contents"]?: import("./support/yt_api/_abc/c/ContinuationItem.js").ContinuationItem[]}} obj
+	 * @arg {"continuationItems"|"contents"} key
 	 */
 	replace_array(base,path,obj,key) {
 		let arr=obj[key];
@@ -1446,8 +1446,8 @@ class HandleRichGridRenderer {
 	entry="richGridRenderer";
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/**
-	 * @param {string} path
-	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @arg {string} path
+	 * @arg {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
@@ -1496,8 +1496,8 @@ class FilterHandlers {
 	};
 	iteration=new IterateApiResultBase(new YtIterateTarget);
 	/**
-	 * @param {string} path
-	 * @param {AppendContinuationItemsAction} action
+	 * @arg {string} path
+	 * @arg {AppendContinuationItemsAction} action
 	 */
 	handleAppendContinuationItemsAction(path,action) {
 		if(is_watch_next_feed_target(action)) {
@@ -1525,8 +1525,8 @@ class FilterHandlers {
 		return false;
 	}
 	/**
-	 * @param {string} path
-	 * @param {AppendContinuationItemsAction} action
+	 * @arg {string} path
+	 * @arg {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(path,action) {
 		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
@@ -1534,8 +1534,8 @@ class FilterHandlers {
 		this.handlers.renderer_content_item_array.replace_array(this,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
 	}
 	/**
-	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 * @arg {string} path
+	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand(path,command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
@@ -1568,8 +1568,8 @@ class FilterHandlers {
 		["videoRenderer",false],
 	]);
 	/**
-	 * @param {string} path
-	 * @param {{ contents: {}[]; }} renderer
+	 * @arg {string} path
+	 * @arg {{ contents: {}[]; }} renderer
 	 */
 	itemSectionRenderer(path,renderer) {
 		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
@@ -1587,22 +1587,22 @@ class FilterHandlers {
 		});
 	}
 	/**
-	 * @param {string} path
-	 * @param {{}} metadata
+	 * @arg {string} path
+	 * @arg {{}} metadata
 	 */
 	webCommandMetadata(path,metadata) {
 		console.log("webCommandMetadata",path,metadata);
 	}
 	/**
-	 * @param {string} _path
-	 * @param {{}} renderer
+	 * @arg {string} _path
+	 * @arg {{}} renderer
 	 */
 	compactVideoRenderer(_path,renderer) {
 		this.iteration.default_iter("compactVideoRenderer",renderer);
 	}
 	/**
-	 * @param {{playerAds?: any[]; adPlacements?: any[];}} data
-	 * @param {string} path
+	 * @arg {{playerAds?: any[]; adPlacements?: any[];}} data
+	 * @arg {string} path
 	 */
 	on_v1_player(path,data) {
 		if(data.playerAds) {
@@ -1621,9 +1621,10 @@ class FilterHandlers {
 	 * @template {string} U
 	 * @template {string} V
 	 * @template {`https://${X}/${U}?${V}`} T
+	 * @arg {{}} state
 	 * @arg {T} x 
 	 * */
-	use_template_url(x) {
+	use_template_url(state,x) {
 		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
@@ -1642,47 +1643,56 @@ class FilterHandlers {
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./support/parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
-		return this.get_url_type(path_parts,res_parse);
+		return this.get_url_type(state,path_parts,res_parse);
 	}
 	/** @typedef {import("./support/yt_api/_abc/UrlTypes.js").UrlTypes} UrlTypes */
 	/** @template A,B,C,D,E @typedef {import("./support/url_parse/UrlParseRes.js").UrlParseRes<A,B,C,D,E>} UrlParseRes */
 	/**
-	 * @param {string[]} parts
+	 * @arg {{}} state
+	 * @arg {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
 	 * @returns {UrlTypes}
 	 */
-	get_url_type(parts,url) {
+	get_url_type(state,parts,url) {
 		let index=0;
 		switch(parts[index]) {
-			case "youtubei": index++; this.search_print(url,parts); return this.get_yt_url_type(parts,url,index);
+			case "youtubei": index++; this.search_print(url,parts); return this.get_yt_url_type(state,parts,url,index);
 			case "getDatasyncIdsEndpoint": this.search_print(url,parts); return "getDatasyncIdsEndpoint";
 			default: debugger;
 		}
 		throw new Error("Missing");
 	}
 	/**
+	 * @arg {{}} state
 	 * @arg {"live_chat"} base
-	 * @param {string[]} parts
+	 * @arg {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`,string,"https:",string,string>} url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
 	 */
-	get_live_chat_type(base,parts,url,index) {
+	get_live_chat_type(state,base,parts,url,index) {
 		url;
 		let cur_part=parts[index];
 		switch(cur_part) {
 			case "get_live_chat_replay": break;
-			default: console.log('no handler for',parts,parts[index]); debugger; throw new Error("Stop");
+			default: this.no_handler({...state,parts,index});
 		};
 		return `${base}.${cur_part}`;
 	}
+	/** @arg {{parts: string[];index:number}} obj @returns {never} */
+	no_handler({parts,index}) {
+		console.log('no handler for',parts,parts[index]);
+		debugger;
+		throw new Error("Stop");
+	}
 	/**
-	 * @param {string[]} parts
+	 * @arg {{}} state
+	 * @arg {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} _url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
 	 */
-	get_yt_url_type(parts,_url,index) {
+	get_yt_url_type(state,parts,_url,index) {
 		if(parts[1]!=="v1") {
 			debugger;
 		}
@@ -1690,34 +1700,33 @@ class FilterHandlers {
 		switch(parts[index]) {
 			case "att": switch(parts[index+1]) {
 				case "get": return "att.get";
-				default: console.log('no handler for',parts,parts[index]); debugger;
-			} break;
+				default: this.no_handler({...state,parts,index});
+			}
 			case "notification": index++; switch(parts[index]) {
 				case "get_unseen_count": return "notification.get_unseen_count";
 				case "get_notification_menu": return "notification.get_notification_menu";
-				default: console.log('no handler for',parts,parts[index]); debugger;
-			} break;
+				default: this.no_handler({...state,parts,index});
+			}
 			case "browse": return "browse";
 			case "guide": index++; switch(parts[index]) {
 				case void 0: return "guide";
-				default: console.log('no handler for',parts,parts[index]); debugger;
-			} break;
+				default: this.no_handler({...state,parts,index});
+			}
 			case "reel": index++; switch(parts[index]) {
 				case "reel_item_watch": return "reel_item_watch";
 				case "reel_watch_sequence": return "reel_watch_sequence";
-				default: console.log('no handler for',parts,parts[index]); debugger;
-			}; break;
+				default: this.no_handler({...state,parts,index});
+			}
 			case "next": return "next";
 			case "player": return "player";
-			case "live_chat": index++; return this.get_live_chat_type("live_chat",parts,_url,index);
+			case "live_chat": index++; return this.get_live_chat_type(state,"live_chat",parts,_url,index);
 			case "get_transcript": return "get_transcript";
-			default: console.log('no handler for',parts,parts[index]); debugger;
+			default: this.no_handler({...state,parts,index});
 		}
-		throw new Error("Missing");
 	}
 	/**
-	 * @param {URL} url
-	 * @param {string[]} parts
+	 * @arg {URL} url
+	 * @arg {string[]} parts
 	 */
 	search_print(url,parts) {
 		let sp=new URLSearchParams(url.search);
@@ -1806,7 +1815,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {string|URL|Request} request
+	 * @arg {string|URL|Request} request
 	 */
 	on_handle_api(request,data) {
 		const debug=false;
@@ -1824,7 +1833,7 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
-		const url_type=this.use_template_url(href_);
+		const url_type=this.use_template_url({request,data},href_);
 		let path_url=req_parse.pathname;
 		if(path_url==="/getDatasyncIdsEndpoint") return;
 		let api_parts=req_parse.pathname.slice(1).split("/");
@@ -1862,7 +1871,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {UrlTypes|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
+	 * @arg {UrlTypes|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {import("./support/yt_api/_abc/SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
@@ -1874,7 +1883,7 @@ class FilterHandlers {
 	}
 	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
-	 * @param {[()=>InitialDataType, object, []]} apply_args
+	 * @arg {[()=>InitialDataType, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
 		/** @type {InitialDataType} */
@@ -2024,7 +2033,7 @@ class OnWindowProperty {
 		this._events={};
 	}
 	/**
-	 * @param {{ type: any; data?: { type: any; data: any[]; }; }} ev
+	 * @arg {{ type: any; data?: { type: any; data: any[]; }; }} ev
 	 */
 	dispatchEvent(ev) {
 		let evt=this._events[ev.type].slice();
@@ -2037,8 +2046,8 @@ class OnWindowProperty {
 		}
 	}
 	/**
-	 * @param {string | number} ev_name
-	 * @param {any} fn
+	 * @arg {string | number} ev_name
+	 * @arg {any} fn
 	 */
 	removeEventListener(ev_name,fn) {
 		let evt=this._events[ev_name];
@@ -2052,15 +2061,15 @@ class OnWindowProperty {
 		}
 	}
 	/**
-	 * @param {string} ev_name
-	 * @param {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn
+	 * @arg {string} ev_name
+	 * @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn
 	 */
 	addEventListener(ev_name,fn) {
 		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
 	}
 }
 /**
- * @param {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc
+ * @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc
  * @arg {string} ms
  * @arg {{}} obj
  * @arg {string} [mc]
@@ -2092,8 +2101,8 @@ function walk_key_path(cc,ms,obj,mc) {
 }
 let win_watch=new OnWindowProperty;
 /**
- * @param {any} val
- * @param {MKState} cc
+ * @arg {any} val
+ * @arg {MKState} cc
  */
 function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	let ret;
@@ -2107,7 +2116,7 @@ function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	return ret;
 }
 /**
- * @param {MKState} cc
+ * @arg {MKState} cc
  */
 function on_mk_function_property(cc) {
 	/**@this {{}}*/
@@ -2125,11 +2134,11 @@ class WithGhostSymbol {
 class MKState {
 	[ghost_symbol]=true;
 	/**
-	 * @param {{}} value
-	 * @param {PropertyKey} property_key
-	 * @param {object} target
-	 * @param {string} property_path
-	 * @param {boolean} noisy
+	 * @arg {{}} value
+	 * @arg {PropertyKey} property_key
+	 * @arg {object} target
+	 * @arg {string} property_path
+	 * @arg {boolean} noisy
 	 */
 	constructor(value,target,property_key,property_path,noisy) {
 		this.value=value;
@@ -2148,8 +2157,8 @@ class MKState {
 	noisy=false;
 }
 /**
- * @param {MKState} cc
- * @param {{}} obj
+ * @arg {MKState} cc
+ * @arg {{}} obj
  */
 function on_mk_new_property(cc,obj) {
 	if(obj instanceof Function) {
@@ -2168,8 +2177,8 @@ function on_mk_new_property(cc,obj) {
 	}
 }
 /**
- * @param {MKState} cc
- * @param {{}} obj
+ * @arg {MKState} cc
+ * @arg {{}} obj
  */
 function on_mk_property_set(cc,obj) {
 	if(ud_func.has(obj)) cc.value=obj;
@@ -2180,7 +2189,7 @@ function on_mk_property_set(cc,obj) {
 	}
 }
 /**
- * @param {MKState} cc
+ * @arg {MKState} cc
  */
 function mk_run(cc) {
 	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {
@@ -2204,10 +2213,10 @@ function mk_run(cc) {
 	return cc;
 }
 /**
- * @param {object} target
- * @param {PropertyKey} property_key
- * @param {string} property_path
- * @param {boolean} noisy
+ * @arg {object} target
+ * @arg {PropertyKey} property_key
+ * @arg {string} property_path
+ * @arg {boolean} noisy
  */
 function mk(target,property_key,property_path,noisy=false) {
 	return new MKState({},target,property_key,property_path,noisy).run();
@@ -2226,15 +2235,15 @@ class CustomEventTarget {
 	/**@type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
 	/**
-	 * @param {string} type
-	 * @param {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
+	 * @arg {string} type
+	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
 	 */
 	addEventListener(type,handler) {
 		(this._events[type]??=[]).push(handler);
 	}
 	/**
-	 * @param {string} type
-	 * @param {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
+	 * @arg {string} type
+	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
 	 */
 	removeEventListener(type,handler) {
 		let event_arr=this._events[type];
@@ -2247,7 +2256,7 @@ class CustomEventTarget {
 		}
 	}
 	/**
-	 * @param {CustomEventType} event
+	 * @arg {CustomEventType} event
 	 */
 	dispatchEvent(event) {
 		let msg_arr=this._events[event.type];
@@ -2260,13 +2269,13 @@ class CustomEventTarget {
 }
 
 class DomObserver extends CustomEventTarget {
-	/** @param {null} _v */
+	/** @arg {null} _v */
 	notify_fn(_v) {};
 	/** @type {Set<MessagePort>} */
 	wait_ports=new Set;
 	/** @type {Map<MessagePort,ResState[]>} */
 	port_to_resolvers_map=new Map;
-	/** @param {MessagePort} port */
+	/** @arg {MessagePort} port */
 	notify_with_port(port) {
 		if(this.wait_ports.has(port)) {
 			let list=this.port_to_resolvers_map.get(port);
@@ -2282,7 +2291,7 @@ class DomObserver extends CustomEventTarget {
 			}
 		};
 	}
-	/** @param {MessagePort} port @param {number} cur_count */
+	/** @arg {MessagePort} port @arg {number} cur_count */
 	wait_for_port(port,cur_count) {
 		this.next_tick_action(port,cur_count);
 		this.wait_ports.add(port);
@@ -2340,7 +2349,7 @@ function get_ytd_page_manager() {
 }
 
 /**
- * @param {HTMLElement} element
+ * @arg {HTMLElement} element
  */
 function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
@@ -2359,7 +2368,7 @@ class YtdWatchFlexyElement extends HTMLElement {
  */
 let ytd_watch_flexy=null;
 /**
- * @param {HTMLElement} element
+ * @arg {HTMLElement} element
  */
 function on_ytd_watch_flexy(element) {
 	const element_id="ytd-watch-flexy";
@@ -2388,7 +2397,7 @@ function is_watch_page_active() {
 }
 
 /**
- * @param {Node} value
+ * @arg {Node} value
  */
 function as_node(value) {
 	return value;
@@ -2434,7 +2443,7 @@ function fire_on_visibility_change_restart_video_playback() {
 class HTMLVideoElementArrayBox {
 	/**@readonly*/
 	type="HTMLVideoElementArrayBox";
-	/** @param {HTMLVideoElement[]} value */
+	/** @arg {HTMLVideoElement[]} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -2461,7 +2470,7 @@ class YTNavigateFinishEvent {
  */
 let on_yt_navigate_finish=[];
 
-/** @param {YTNavigateFinishEvent} event */
+/** @arg {YTNavigateFinishEvent} event */
 function log_page_type_change(event) {
 	let {detail}=event;
 	if(!detail) return;
@@ -2475,8 +2484,8 @@ const last_detail_val={value: {}};
 
 /**
  * @arg {YTNavigateFinishEventDetail} detail
- * @param {YTNavigateFinishEventDetail[keyof YTNavigateFinishEventDetail]} obj
- * @param {string[]} path
+ * @arg {YTNavigateFinishEventDetail[keyof YTNavigateFinishEventDetail]} obj
+ * @arg {string[]} path
  * @arg {string[]} skip
  * @arg {number[]} ent_ids
  */
@@ -2498,8 +2507,8 @@ function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
 	}
 }
 /**
- * @param {string[]} src
- * @param {string[]} target
+ * @arg {string[]} src
+ * @arg {string[]} target
  */
 function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
@@ -2511,8 +2520,8 @@ function eq_keys(src,target) {
 	return true;
 }
 /**
- * @param {string[]} keys
- * @param {string[]} to_remove
+ * @arg {string[]} keys
+ * @arg {string[]} to_remove
  */
 function filter_out_keys(keys,to_remove) {
 	to_remove=to_remove.slice();
@@ -2558,8 +2567,8 @@ function pb_0(detail,obj) {
 }
 const gen_not_want=["page","endpoint","response","url"];
 /**
- * @param {any} obj
- * @param {string[]} iter_skips
+ * @arg {any} obj
+ * @arg {string[]} iter_skips
  */
 function click_track_do(obj,iter_skips) {
 	if("clickTrackingParams" in obj) {
@@ -2572,8 +2581,8 @@ function click_track_do(obj,iter_skips) {
 const gen_not_want_level_1_endpoint=["clickTrackingParams","commandMetadata"];
 /**
  * @arg {YTNavigateFinishEventDetail} detail
- * @param {YTNavigateFinishEventDetail["response"]} obj
- * @param {["detail","response"]} path
+ * @arg {YTNavigateFinishEventDetail["response"]} obj
+ * @arg {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
 	/** @type {string[]} */
@@ -2711,7 +2720,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 }
 /**
- * @param {{ commandMetadata: { webCommandMetadata?: any; }; }} obj
+ * @arg {{ commandMetadata: { webCommandMetadata?: any; }; }} obj
  */
 function on_command_meta(obj) {
 	if(Object.keys(obj.commandMetadata).length!==1) {
@@ -2725,8 +2734,8 @@ function on_command_meta(obj) {
 }
 /**
  * @arg {YTNavigateFinishEventDetail} detail
- * @param {YTNavigateFinishEventDetail["endpoint"]} obj
- * @param {["detail","endpoint"]} path
+ * @arg {YTNavigateFinishEventDetail["endpoint"]} obj
+ * @arg {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
 	let iter_skips=[];
@@ -2795,7 +2804,7 @@ function random_sometimes_break_1(detail,obj,path) {
 const random_factor=0.2;
 /** @typedef {import("./support/yt_api").YtJsonRequest} YtJsonRequest */
 /** @typedef {import("./support/yt_api").YtJsonUnsupportedRequest} YtJsonUnsupportedRequest */
-/** @param {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
+/** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
 function on_json_request(request_info) {
 	let break_it=false;
 	if(!break_it) return;
@@ -2806,7 +2815,7 @@ function on_json_request(request_info) {
 }
 
 /**
- * @param {YTNavigateFinishEventDetail['pageType']} pageType
+ * @arg {YTNavigateFinishEventDetail['pageType']} pageType
  */
 function page_type_iter(pageType) {
 	switch(pageType) {
@@ -2855,7 +2864,7 @@ let css_str=`
 	/*# sourceURL=yt_css_user */
 `;
 /**
- * @param {string} css_content
+ * @arg {string} css_content
  */
 function createStyleElement(css_content) {
 	let style=document.createElement("style");
@@ -2896,7 +2905,7 @@ function get_new_video_element_list(element_list,list_box) {
  */
 let yt_playlist_manager=null;
 /**
- * @param {HTMLElement} element
+ * @arg {HTMLElement} element
  */
 function on_yt_playlist_manager(element) {
 	const element_id="yt-playlist-manager";
@@ -2928,7 +2937,7 @@ inject_api_yt.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
-/** @param {MessageEvent<number>} event */
+/** @arg {MessageEvent<number>} event */
 function on_port_message(event) {
 	if(yt_debug_enabled) console.log("msg_port:message %o",event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
@@ -2989,7 +2998,7 @@ async function wait_for_yt_player() {
 	await ytd_player.playerResolver_.promise;
 }
 /**
- * @param {HTMLElement} element
+ * @arg {HTMLElement} element
  */
 function sumOffset(element) {
 	let cache={
@@ -3107,7 +3116,7 @@ function is_yt_fullscreen_change_action(detail) {
 	return detail.actionName==="yt-fullscreen-change-action";
 }
 /**
- * @param {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event
+ * @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event
  */
 function on_yt_action(event) {
 	let {detail}=event;
@@ -3252,7 +3261,7 @@ class AudioGainController {
 			node_chain[i].connect(node_chain[i+1]);
 		}
 	}
-	/** @param {DynamicsCompressorNode} node */
+	/** @arg {DynamicsCompressorNode} node */
 	initCompressor(node) {
 		node.knee.value=27;
 		node.attack.value=1;
@@ -3262,13 +3271,13 @@ class AudioGainController {
 		return node;
 	}
 	/**
-	 * @param {number} gain
+	 * @arg {number} gain
 	 */
 	setGain(gain) {
 		this.gain_node.gain.value=gain;
 	}
 	/**
-	 * @param {HTMLMediaElement[]} media_node_list
+	 * @arg {HTMLMediaElement[]} media_node_list
 	 */
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
@@ -3347,7 +3356,7 @@ class HistoryStateManager extends EventTarget {
 		super.addEventListener(type,listener,options);
 	}
 	/**
-	 * @param {{}|null} new_state
+	 * @arg {{}|null} new_state
 	 */
 	do_state_update(new_state) {
 		this.cur_state=new_state;
@@ -3360,7 +3369,7 @@ class HistoryStateManager extends EventTarget {
 		this.do_state_update(this.cur_state);
 		if(this.debug) console.log("initial history state",this.cur_state);
 		/**
-		 * @param {{}} obj
+		 * @arg {{}} obj
 		 */
 		function remove_yt_data(obj) {
 			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint,savedComponentState");
@@ -3457,7 +3466,7 @@ class HistoryStateManager extends EventTarget {
 		let v=event.state;
 		return v;
 	}
-	/** @template {string} T @param {T} key */
+	/** @template {string} T @arg {T} key */
 	getCacheValue(key) {
 		if(typeof this.cur_state=="object"&&this.cur_state!==null) {
 			if(key in this.cur_state) {
@@ -3471,7 +3480,7 @@ class HistoryStateManager extends EventTarget {
 	getHistoryState() {
 		return history.state;
 	}
-	/** @param {string} key  @param {{}} value */
+	/** @arg {string} key  @arg {{}} value */
 	setCacheValue(key,value) {
 		this.is_replacing_custom_state=true;
 		x: if(typeof this.cur_state==="object"&&this.cur_state!==null) {
