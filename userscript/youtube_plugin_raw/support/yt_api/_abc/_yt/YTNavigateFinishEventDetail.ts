@@ -4,6 +4,8 @@ import {PageTypeWatch} from "../p/PageTypeWatch";
 import {PageTypePlaylist} from "./PageTypePlaylist";
 import {WebPageTypeChannel} from "./WebPageTypeChannel";
 
+type PageTypeSettings={};
+
 export type YTNavigateFinishEventDetail=
 	PageTypeWatch|
 	PageTypeBrowse|
