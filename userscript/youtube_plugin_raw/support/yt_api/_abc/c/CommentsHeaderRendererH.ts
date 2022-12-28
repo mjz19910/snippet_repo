@@ -1,6 +1,6 @@
-import {CommentsHeaderRenderer} from "./CommentsHeaderRenderer";
+import {CommentsHeaderRendererData} from "./CommentsHeaderRendererData";
 
 
 export type CommentsHeaderRendererH={
-	commentsHeaderRenderer: CommentsHeaderRenderer;
+	commentsHeaderRenderer: CommentsHeaderRendererData;
 };
