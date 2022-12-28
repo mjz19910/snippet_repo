@@ -1186,9 +1186,12 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {} T @arg {T} obj @returns {(keyof T)[]} */
+/** @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
 function get_keys_of(obj) {
-	return Object.keys(obj);
+	let rq=Object.keys(obj).concat(Object.keys(Object.getPrototypeOf(obj)));
+	/** @type {any} */
+	let ra=rq;
+	return ra;
 }
 class IterateApiResultBase {
 	iterate_target;
@@ -1225,6 +1228,14 @@ class IterateApiResultBase {
 			let wk=data;
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
+			if(rk===void 0&&key in this.iterate_target) {
+				console.log("update keys map new key", key);
+				debugger;
+			}
+			if(rk!==void 0&&this.iterate_target[rk]===void 0) {
+				console.log("update keys map remove", key);
+				debugger;
+			}
 			if(rk!==void 0&&this.iterate_target[rk]) {
 				this.iterate_target[rk](state,`${path}.${key}`,any(value));
 			} else {
