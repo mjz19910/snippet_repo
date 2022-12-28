@@ -2478,13 +2478,10 @@ function pb_0(detail,obj) {
 	if(detail.pageType==="browse") {
 		x: {
 			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
+			if(!ok.length) break x;
 			if(eq_keys(ok,['header','onResponseReceivedActions'])) break x;
 			if(eq_keys(ok,['header','observedStateTags'])) break x;
 			if(eq_keys(ok,['header'])) break x;
-			debugger;
-		}
-		// [ "responseContext", "contents", "header", "trackingParams", "topbar", "onResponseReceivedActions" ]
-		if(Object.keys(obj.response).length!==6) {
 			debugger;
 		}
 	}
@@ -2648,6 +2645,7 @@ function random_sometimes_break_1(detail,obj,path) {
 			if(bid==="FEsubscriptions") break x;
 			if(bid==="FEwhat_to_watch") break x;
 			if(bid==="FElibrary") break x;
+			if(bid==="FEhistory") break x;
 			debugger;
 		}
 	}
