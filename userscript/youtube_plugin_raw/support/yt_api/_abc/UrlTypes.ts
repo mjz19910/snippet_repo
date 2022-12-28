@@ -2,6 +2,7 @@ import {YTNavigateFinishEventDetail} from "../yt/YTNavigateFinishEventDetail.js"
 type LiveChatUrlT="live_chat.get_live_chat_replay";
 export type UrlTypesBase=
 	"att.get"|
+	"get_transcript"|
 	"getDatasyncIdsEndpoint"|
 	"guide"|
 	"next"|

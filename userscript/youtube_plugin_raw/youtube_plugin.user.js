@@ -1702,6 +1702,7 @@ class FilterHandlers {
 			case "next": return "next";
 			case "player": return "player";
 			case "live_chat": index++; return this.get_live_chat_type("live_chat",parts,_url,index);
+			case "get_transcript": return "get_transcript";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
