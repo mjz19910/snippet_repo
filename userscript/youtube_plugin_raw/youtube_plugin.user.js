@@ -1234,7 +1234,7 @@ class IterateApiResultBase {
 		let {t,path}=state;
 		if(data instanceof Array) {
 			for(let [key,value] of data.entries()) {
-				this.default_iter({t,path:`${path}[${key}]`},value);
+				this.default_iter({t,path: `${path}[${key}]`},value);
 			}
 			return;
 		}
@@ -1244,14 +1244,14 @@ class IterateApiResultBase {
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
 			if(rk===void 0&&key in this.iterate_target) {
-				console.log("update keys map new key", key);
+				console.log("update keys map new key",key);
 				debugger;
 			}
 			if(rk!==void 0&&this.iterate_target[rk]===void 0) {
-				console.log("update keys map remove", key);
+				console.log("update keys map remove",key);
 				debugger;
 			}
-			const state={t,path:`${path}.${key}`};
+			const state={t,path: `${path}.${key}`};
 			if(rk!==void 0&&this.iterate_target[rk]) {
 				this.iterate_target[rk](state,any(value));
 			} else {
@@ -1275,7 +1275,7 @@ class YtIterateTarget {
 	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
-	reloadContinuationItemsCommand({t:state,path},command) {
+	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
 		if(state.handleAppendContinuationItemsAction(path,command)) return;
 		state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
@@ -1599,14 +1599,41 @@ function is_what_to_watch_section(o) {
 }
 
 class FilterHandlers {
-	debug=false;
-	/**@readonly*/
-	class_name="FilterHandlers";
-	handlers={
-		rich_grid: new HandleRichGridRenderer,
-		renderer_content_item_array: new HandleRendererContentItemArray,
-	};
-	iteration=new IterateApiResultBase(new YtIterateTarget);
+	constructor() {
+		this.debug=false;
+		/**@readonly*/
+		this.class_name="FilterHandlers";
+		this.handlers={
+			rich_grid: new HandleRichGridRenderer,
+			renderer_content_item_array: new HandleRendererContentItemArray,
+		};
+		this.iteration=new IterateApiResultBase(new YtIterateTarget);
+		this.blacklisted_item_sections=new Map([
+			["backstagePostThreadRenderer",false],
+			["channelAboutFullMetadataRenderer",false],
+			["channelFeaturedContentRenderer",false],
+			["channelRenderer",false],
+			["commentsEntryPointHeaderRenderer",false],
+			["commentsEntryPointHeaderRenderer",false],
+			["compactPlaylistRenderer",false],
+			["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
+			["compactRadioRenderer",false],
+			["compactVideoRenderer",false],
+			["continuationItemRenderer",false],
+			["gridRenderer",false],
+			["messageRenderer",false],
+			["playlistRenderer",false],
+			["playlistVideoListRenderer",false],
+			["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
+			["radioRenderer",false],
+			["recognitionShelfRenderer",false],
+			["reelShelfRenderer",false],
+			["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
+			["shelfRenderer",false],
+			["shelfRenderer",false],
+			["videoRenderer",false],
+		]);
+	}
 	/**
 	 * @arg {string} path
 	 * @arg {AppendContinuationItemsAction} action
@@ -1636,31 +1663,6 @@ class FilterHandlers {
 		console.log("path",path,"continuation action",action.targetId);
 		return false;
 	}
-	blacklisted_item_sections=new Map([
-		["backstagePostThreadRenderer",false],
-		["channelAboutFullMetadataRenderer",false],
-		["channelFeaturedContentRenderer",false],
-		["channelRenderer",false],
-		["commentsEntryPointHeaderRenderer",false],
-		["commentsEntryPointHeaderRenderer",false],
-		["compactPlaylistRenderer",false],
-		["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
-		["compactRadioRenderer",false],
-		["compactVideoRenderer",false],
-		["continuationItemRenderer",false],
-		["gridRenderer",false],
-		["messageRenderer",false],
-		["playlistRenderer",false],
-		["playlistVideoListRenderer",false],
-		["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
-		["radioRenderer",false],
-		["recognitionShelfRenderer",false],
-		["reelShelfRenderer",false],
-		["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
-		["shelfRenderer",false],
-		["shelfRenderer",false],
-		["videoRenderer",false],
-	]);
 	/**
 	 * @arg {{playerAds?: any[]; adPlacements?: any[];}} data
 	 * @arg {string} path
@@ -1711,21 +1713,19 @@ class FilterHandlers {
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./support/parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
-		return this.get_url_type(state,path_parts,res_parse);
+		return this.get_url_type(state,path_parts);
 	}
 	/** @typedef {import("./support/yt_api/_abc/UrlTypes.js").UrlTypes} UrlTypes */
-	/** @template A,B,C,D,E @typedef {import("./support/url_parse/UrlParseRes.js").UrlParseRes<A,B,C,D,E>} UrlParseRes */
 	/**
 	 * @arg {{}} state
 	 * @arg {string[]} parts
-	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
 	 * @returns {UrlTypes}
 	 */
-	get_url_type(state,parts,url) {
+	get_url_type(state,parts) {
 		let index=0;
 		switch(parts[index]) {
-			case "youtubei": index++; this.search_print(url,parts); return this.get_yt_url_type(state,parts,url,index);
-			case "getDatasyncIdsEndpoint": this.search_print(url,parts); return "getDatasyncIdsEndpoint";
+			case "youtubei": index++; return this.get_yt_url_type(state,parts,index);
+			case "getDatasyncIdsEndpoint": return "getDatasyncIdsEndpoint";
 			default: debugger;
 		}
 		throw new Error("Missing");
@@ -1734,87 +1734,56 @@ class FilterHandlers {
 	 * @arg {{}} state
 	 * @arg {"live_chat"} base
 	 * @arg {string[]} parts
-	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`,string,"https:",string,string>} url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
 	 */
-	get_live_chat_type(state,base,parts,url,index) {
-		url;
+	get_live_chat_type(state,base,parts,index) {
 		let cur_part=parts[index];
 		switch(cur_part) {
 			case "get_live_chat_replay": break;
-			default: this.no_handler({...state,parts,index});
+			default: no_handler({...state,parts,index});
 		};
 		return `${base}.${cur_part}`;
-	}
-	/** @arg {{parts: string[];index:number}} obj @returns {never} */
-	no_handler({parts,index}) {
-		console.log('no handler for',parts,parts[index]);
-		debugger;
-		throw new Error("Stop");
 	}
 	/**
 	 * @arg {{}} state
 	 * @arg {string[]} parts
-	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} _url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
 	 */
-	get_yt_url_type(state,parts,_url,index) {
+	get_yt_url_type(state,parts,index) {
 		if(parts[1]!=="v1") {
 			debugger;
 		}
 		index++;
-		switch(parts[index]) {
+		let cur_part=parts[index];
+		switch(cur_part) {
 			case "att": switch(parts[index+1]) {
 				case "get": return "att.get";
-				default: this.no_handler({...state,parts,index});
+				default: no_handler({...state,parts,index});
 			}
 			case "notification": index++; switch(parts[index]) {
 				case "get_unseen_count": return "notification.get_unseen_count";
 				case "get_notification_menu": return "notification.get_notification_menu";
-				default: this.no_handler({...state,parts,index});
+				default: no_handler({...state,parts,index});
 			}
 			case "browse": return "browse";
 			case "guide": index++; switch(parts[index]) {
 				case void 0: return "guide";
-				default: this.no_handler({...state,parts,index});
+				default: no_handler({...state,parts,index});
 			}
 			case "reel": index++; switch(parts[index]) {
 				case "reel_item_watch": return "reel_item_watch";
 				case "reel_watch_sequence": return "reel_watch_sequence";
-				default: this.no_handler({...state,parts,index});
+				default: no_handler({...state,parts,index});
 			}
 			case "next": return "next";
 			case "player": return "player";
-			case "live_chat": index++; return this.get_live_chat_type(state,"live_chat",parts,_url,index);
+			case "live_chat": index++; return this.get_live_chat_type(state,"live_chat",parts,index);
 			case "get_transcript": return "get_transcript";
-			default: this.no_handler({...state,parts,index});
+			case "account": return get_account_type(state,cur_part,parts,index+1);
+			default: no_handler({...state,parts,index});
 		}
-	}
-	/**
-	 * @arg {URL} url
-	 * @arg {string[]} parts
-	 */
-	search_print(url,parts) {
-		let sp=new URLSearchParams(url.search);
-		/** @type {string[]} */
-		let sp_keys=[];
-		sp.forEach((_value,key) => {
-			sp_keys.push(key);
-		});
-		let should_stop=false;
-		should_stop&&=!eq_keys(parts,["youtubei","v1","notification","get_unseen_count"]);
-		should_stop&&=parts[0]!=="getDatasyncIdsEndpoint";
-		should_stop&&=!eq_keys(parts,["youtubei","v1","guide"]);
-		should_stop&&=!eq_keys(parts,["youtubei","v1","att","get"]);
-		if(should_stop) {
-			debugger;
-		}
-		if(eq_keys(sp_keys,["key","prettyPrint"])) return;
-		if(parts[0]==="getDatasyncIdsEndpoint"&&sp_keys.length===0) return;
-		console.log('past with',url.href,sp_keys);
-		if(url.search!=="") console.log(parts,sp_keys);
 	}
 	/** @arg {UrlTypes} url_type @arg {{}} json */
 	get_res_data(url_type,json) {
@@ -1948,7 +1917,7 @@ class FilterHandlers {
 		/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
-		this.iteration.default_iter({t:this,path},data);
+		this.iteration.default_iter({t: this,path},data);
 	}
 	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
@@ -3592,3 +3561,24 @@ if(typeof exports==="object") {
 	exports.Gn=Gn;
 }
 
+/**
+ * @returns {import("./support/yt_api/_abc/UrlTypes").UrlTypes}
+ * @param {{}} state
+ * @param {"account"} base
+ * @param {string[]} parts
+ * @param {number} index
+ */
+function get_account_type(state,base,parts,index) {
+	let cur_part=parts[index];
+	switch(cur_part) {
+		case "account_menu": break;
+		default: no_handler({...state,parts,index});
+	}
+	return `${base}.${cur_part}`;
+}
+/** @arg {{parts: string[];index:number}} obj @returns {never} */
+function no_handler({parts,index}) {
+	console.log('no handler for',parts,parts[index]);
+	debugger;
+	throw new Error("Stop");
+}

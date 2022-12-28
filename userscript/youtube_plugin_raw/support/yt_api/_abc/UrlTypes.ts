@@ -1,5 +1,6 @@
 export type UrlTypes=
 	"att.get"|
+	"account.account_menu"|
 	"browse"|
 	"channel"|
 	"get_transcript"|
