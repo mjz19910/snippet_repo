@@ -4,7 +4,18 @@ type WatchPlayerResponse={
 	responseContext: {};
 	playabilityStatus: {};
 	streamingData: {};
-	playerAds: {};
+	playerAds: {
+		playerLegacyDesktopWatchAdsRenderer: {
+			gutParams: {tag: string};
+			playerAdParams: {
+				enabledEngageTypes: string;
+				showContentThumbnail:boolean;
+			}
+			showCompanion: true;
+			showInstream: true;
+			useGut: true;
+		};
+	}[];
 	playbackTracking: {};
 	captions: {};
 	videoDetails: {};

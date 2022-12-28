@@ -1585,8 +1585,10 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	on_v1_player(path,data) {
 		if(data.playerAds) {
+			let old_ads=data.playerAds;
 			if(this.debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
 			data.playerAds=[];
+			any(data.playerAds).old_store=old_ads;
 		}
 		if(data.adPlacements) {
 			if(this.debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
@@ -2565,7 +2567,12 @@ function random_sometimes_break_0(detail,obj,path) {
 			if(cur==="responseContext") continue;
 			if(cur==="playabilityStatus") continue;
 			if(cur==="streamingData") continue;
-			if(cur==="playerAds") continue; if(obj.page==="watch") {obj.playerResponse.playerAds; debugger;};
+			if(cur==="playerAds") {
+				if(obj.page==="watch") {
+					obj.playerResponse.playerAds; debugger;
+				};
+				continue;
+			}
 			if(cur==="playbackTracking") continue;
 			if(cur==="videoDetails") continue;
 			if(cur==="playerConfig") continue;
