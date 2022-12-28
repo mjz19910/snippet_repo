@@ -1,13 +1,13 @@
-import {yt_response_browse} from "./yt_response_browse";
-import {yt_response_guide} from "./yt_response_guide";
-import {yt_notification_get_unseen_count} from "./yt/yt_notification_get_unseen_count";
-import {notification_get_notification_menu} from "./notification_get_notification_menu";
-import {yt_response_next} from "./yt_response_next";
-import {yt_response_att_get} from "./yt_response_att_get";
-import {yt_response_getDatasyncIdsEndpoint} from "./yt_response_getDatasyncIdsEndpoint";
-import {yt_response_reel_item_watch} from "./yt_response_reel_item_watch";
-import {yt_response_player} from "./yt_response_player";
-import {yt_response_reel_watch_sequence} from "./yt_response_reel_watch_sequence";
+import {notification_get_notification_menu} from "./notification_get_notification_menu.js";
+import {yt_notification_get_unseen_count} from "./yt/yt_notification_get_unseen_count.js";
+import {yt_response_att_get} from "./yt/yt_response_att_get.js";
+import {yt_response_browse} from "./yt/yt_response_browse.js";
+import {yt_response_getDatasyncIdsEndpoint} from "./yt/yt_response_getDatasyncIdsEndpoint.js";
+import {yt_response_guide} from "./yt/yt_response_guide.js";
+import {yt_response_next} from "./yt/yt_response_next.js";
+import {yt_response_player} from "./yt/yt_response_player.js";
+import {yt_response_reel_item_watch} from "./yt/yt_response_reel_item_watch.js";
+import {yt_response_reel_watch_sequence} from "./yt/yt_response_reel_watch_sequence.js";
 
 export type responseTypes=
 	yt_response_getDatasyncIdsEndpoint|

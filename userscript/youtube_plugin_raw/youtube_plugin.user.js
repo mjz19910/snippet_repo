@@ -1730,6 +1730,85 @@ class FilterHandlers {
 		console.log('past with',url.href,sp_keys);
 		if(url.search!=="") console.log(parts,sp_keys);
 	}
+	/** @arg {UrlTypes} url_type @arg {{}} data */
+	get_res_data(url_type,data) {
+		switch(url_type) {
+			case "att.get": return {
+				url_type,
+				/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
+				json: any(data),
+			};
+		}
+		throw new Error("Stop");
+	}
+	/** @arg {UrlTypes} url_type @arg {{}} data @arg {string|URL|Request} request @arg {URL} parsed_url */
+	on_json_type(url_type,data,request,parsed_url) {
+		switch(url_type) {
+			case "att.get": break;
+			case "browse": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_browse.js").yt_response_browse['json']} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			case "guide": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_guide.js").yt_response_guide['json']} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			case "notification.get_unseen_count": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			case "reel_item_watch": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			case "player": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_player.js").yt_response_player['json']} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			case "next": console.log(url_type,data,Object.keys(data)); on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/YtApiNext.js").YtApiNext} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			case "reel_watch_sequence": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
+				json: any(data),
+				request,
+				parsed_url,
+			}); break;
+			default: console.log(url_type,data); debugger; throw new Error("Stop");
+		}
+		on_json_request({
+			...this.get_res_data(url_type,data),
+			request,
+			parsed_url,
+		});
+	}
 	/**
 	 * @arg {{}} data
 	 * @param {string|URL|Request} request
@@ -1765,73 +1844,7 @@ class FilterHandlers {
 		}
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
-		switch(url_type) {
-			case "att.get": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "browse": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_browse.js").yt_response_browse['json']} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "guide": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_guide.js").yt_response_guide['json']} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "notification.get_unseen_count": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "reel_item_watch": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "player": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_player.js").yt_response_player['json']} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "next": console.log(url_type,data,Object.keys(data)); on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/YtApiNext.js").YtApiNext} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			case "reel_watch_sequence": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
-				json: any(data),
-				request,
-				parsed_url: req_parse,
-			}); break;
-			default: console.log(url_type,data); debugger; break;
-		}
+		this.on_json_type(url_type,data,request,req_parse);
 		x: {
 			if(api_path=="att.get") break x;
 			this.handle_any_data(url_type,data);

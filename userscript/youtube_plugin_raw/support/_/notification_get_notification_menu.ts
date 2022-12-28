@@ -1,4 +1,8 @@
+import {GeneralContext} from "../yt_api/_abc/g/GeneralContext.js";
+
 export type notification_get_notification_menu={
 	url_type: "notification.get_notification_menu";
-	json: {};
+	json: {
+		responseContext: GeneralContext;
+	};
 };
