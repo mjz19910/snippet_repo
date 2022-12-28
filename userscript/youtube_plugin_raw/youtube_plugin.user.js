@@ -1654,7 +1654,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @param {string[]} parts
-	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`,string,"https:",string,string>} url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
 	 */
