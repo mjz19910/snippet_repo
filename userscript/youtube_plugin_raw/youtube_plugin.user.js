@@ -1650,13 +1650,14 @@ class FilterHandlers extends IterateApiResultBase {
 				case "get": return "att.get";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
-			case "guide": index++; switch(parts[index]) {
-				case void 0: return "guide";
-				default: console.log('no handler for',parts,parts[index]); debugger;
-			} break;
 			case "notification": index++; switch(parts[index]) {
 				case "get_unseen_count": return "notification.get_unseen_count";
 				case "get_notification_menu": return "notification.get_notification_menu";
+				default: console.log('no handler for',parts,parts[index]); debugger;
+			} break;
+			case "browse": return "browse";
+			case "guide": index++; switch(parts[index]) {
+				case void 0: return "guide";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			} break;
 			case "reel": index++; switch(parts[index]) {
@@ -1664,7 +1665,6 @@ class FilterHandlers extends IterateApiResultBase {
 				case "reel_watch_sequence": return "reel_watch_sequence";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			}; break;
-			case "browse": return "browse";
 			case "next": return "next";
 			case "player": return "player";
 			default: console.log('no handler for',parts,parts[index]); debugger;
