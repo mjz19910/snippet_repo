@@ -1784,20 +1784,16 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/**
-	 * @arg {{}} data
-	 * @param {YTNavigateFinishEventDetail['pageType']} page_type
-	 * @arg {"response"|"playerResponse"} response_type
+	 * @arg {InitialDataType} data
 	 */
-	handle_page_type(data,page_type,response_type) {
+	handle_page_type(data) {
 		const debug=false;
-		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type,response_type);
+		let page_type=data.page;
+		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type);
 		this.handle_any_data(`page_type_${page_type}`,data);
-		switch(response_type) {
-			case "response": break;
-			case "playerResponse": switch(page_type) {
-				case "watch": this.on_v1_player(page_type,data); break;
-				default: console.log("handle_page_type",page_type); debugger;
-			}
+		switch(data.page) {
+			case "watch": this.on_v1_player(page_type,data.playerResponse); break;
+			default: console.log("handle_page_type",page_type); debugger;
 		}
 	}
 	/**
@@ -1811,24 +1807,24 @@ class FilterHandlers extends IterateApiResultBase {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);
 	}
+	/** @typedef {import("./InitialDataType.js").InitialDataType} InitialDataType */
 	/**
-	 * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
+	 * @param {[()=>InitialDataType, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
+		/** @type {InitialDataType} */
 		let ret=Reflect.apply(...apply_args);
 		if(ret.response) {
 			if(yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 			try {
+				this.handle_page_type(ret);
 				let page_type=window.ytPageType;
 				page_type_iter(ret.page);
 				switch(page_type) {
 					case void 0: return;
 					case "settings":
 					case "watch": case "browse": case "shorts": case "channel": case "playlist": {
-						if(ret.page==="watch") {
-							this.handle_page_type(ret.playerResponse,page_type,"playerResponse");
-						}
-						this.handle_page_type(ret.response,page_type,"response");
+						
 					} break;
 					default: debugger;
 				}
@@ -2472,8 +2468,6 @@ function filter_out_keys(keys,to_remove) {
 	return ok_e;
 }
 const gen_not_want_level_1=["responseContext","contents","trackingParams","topbar"];
-/** @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch} PageResponseWatch */
-/** @typedef {import("./support/yt_api/_abc/p/PageResponseBrowse.js").PageResponseBrowse}  PageResponseBrowse */
 /** @arg {YTNavigateFinishEventDetail} detail @arg {YTNavigateFinishEventDetail["response"]} obj */
 function pb_0(detail,obj) {
 	if(obj.page==="watch") {

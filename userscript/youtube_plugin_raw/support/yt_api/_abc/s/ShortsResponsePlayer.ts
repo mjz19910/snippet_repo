@@ -1,13 +1,10 @@
-import {StreamingData} from "./StreamingData";
-import {PlaybackTracking} from "./PlaybackTracking";
-import {VideoDetails} from "./VideoDetails";
-import {FrameworkUpdates} from "./FrameworkUpdates";
+import {StreamingData} from "../../../../StreamingData";
+import {PlaybackTracking} from "../../../../PlaybackTracking";
+import {VideoDetails} from "../../../../VideoDetails";
+import {FrameworkUpdates} from "../../../../FrameworkUpdates";
+import {CaptionsRenderer} from "../p/CaptionsRenderer";
 
-export type CaptionsRenderer={
-	playerCaptionsTracklistRenderer: {};
-};
-
-export type ShortsPlayerResponse={
+export type ShortsResponsePlayer={
 	responseContext: {};
 	playabilityStatus: {};
 	streamingData: StreamingData;

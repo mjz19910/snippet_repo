@@ -1,4 +1,4 @@
-import {TimestampWithNanos} from "./TimestampWithNanos";
+import {TimestampWithNanos} from "../../../../TimestampWithNanos";
 import {EntityMutationItem} from "./EntityMutationItem";
 
 

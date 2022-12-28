@@ -1,4 +1,4 @@
-import {OfflineabilityEntity} from "./OfflineabilityEntity";
+import {OfflineabilityEntity} from "../o/OfflineabilityEntity";
 
 
 export type EntityMutationPayload={

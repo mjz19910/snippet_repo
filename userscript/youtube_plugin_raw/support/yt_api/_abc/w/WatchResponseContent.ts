@@ -1,6 +1,6 @@
-import {FrameworkUpdates} from "./FrameworkUpdates";
+import {FrameworkUpdates} from "../p/FrameworkUpdates";
 
-export type WatchContentResponse={
+export type WatchResponseContent={
 	currentVideoEndpoint: {};
 	engagementPanels: {}[];
 	frameworkUpdates: FrameworkUpdates;

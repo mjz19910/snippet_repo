@@ -1,10 +1,10 @@
-import {CaptionsRenderer} from "../../../../ShortsPlayerResponse.js";
-import {EndscreenRenderer} from "./EndscreenRenderer";
-import {FrameworkUpdates} from "./FrameworkUpdates.js";
-import {PaidContentOverlay} from "./PaidContentOverlay";
-import {PlayerAdItem} from "./PlayerAdItem";
+import {CaptionsRenderer} from "../p/CaptionsRenderer";
+import {EndscreenRenderer} from "../p/EndscreenRenderer";
+import {FrameworkUpdates} from "../p/FrameworkUpdates.js";
+import {PaidContentOverlay} from "../p/PaidContentOverlay";
+import {PlayerAdItem} from "../p/PlayerAdItem";
 
-export type WatchPlayerResponse={
+export type WatchResponsePlayer={
 	responseContext: {};
 	playabilityStatus: {};
 	streamingData: {};

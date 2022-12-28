@@ -1,5 +1,5 @@
 import {BrowseEndpoint} from "../b/BrowseEndpoint.js";
-import {PageResponseBrowse} from "./PageResponseBrowse";
+import {BrowseResponse} from "../b/BrowseResponse";
 
 
 
@@ -9,5 +9,5 @@ export interface PageTypeBrowse {
 	fromHistory: false;
 	navigationDoneMs: number;
 	endpoint: BrowseEndpoint;
-	response: PageResponseBrowse;
+	response: BrowseResponse;
 }

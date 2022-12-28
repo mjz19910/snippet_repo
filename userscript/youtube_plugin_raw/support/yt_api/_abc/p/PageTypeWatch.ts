@@ -1,10 +1,10 @@
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
-import {PageResponseWatch} from "./PageResponseWatch";
+import {WatchResponse} from "../w/WatchResponse";
 
 export interface PageTypeWatch {
 	pageType: "watch";
 	endpoint: WatchEndpoint;
-	response: PageResponseWatch;
+	response: WatchResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 }
