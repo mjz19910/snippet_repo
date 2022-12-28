@@ -1,5 +1,5 @@
-import {RenderingContent} from "./RenderingContent";
-import {AdLayoutMetadata} from "./AdLayoutMetadata";
+import {AdLayoutMetadata} from "../a/AdLayoutMetadata.js";
+import {RenderingContent} from "../r/RenderingContent.js";
 
 export type InFeedAdLayoutRenderer={
 	"adLayoutMetadata": AdLayoutMetadata;

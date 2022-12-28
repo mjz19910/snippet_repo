@@ -1,5 +1,5 @@
 import {ClickCommand} from "../c/ClickCommand.js";
-import {ImpressionEndpoint} from "../hijk/ImpressionEndpoint.js";
+import {ImpressionEndpoint} from "../i/ImpressionEndpoint.js";
 import {Icon} from "../i/Icon.js";
 import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
 import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
@@ -17,11 +17,11 @@ type MNR_T={
 };
 type InfoIcon={
 	"iconType": "INFO";
-}
+};
 interface MNR extends TrackingParams {
 	"text": MNR_T;
 	"icon": InfoIcon;
-	navigationEndpoint: NavigationEndpoint<never>;
+	navigationEndpoint: NavigationEndpoint;
 };
 
 type I1={
@@ -30,11 +30,15 @@ type I1={
 
 export type accessibilityEx<T>={
 	accessibilityData: T;
-}
+};
 
 type AM={
-	"items": I1[];
-	"accessibility": accessibilityEx<{label: "Action menu"}>;
+	items: I1[];
+	accessibility: {
+		accessibilityData: {
+			label: "Action menu";
+		};
+	};
 };
 
 interface TN extends TrackingParams {

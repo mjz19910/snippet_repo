@@ -1,14 +1,14 @@
-import {Accessibility} from "./Accessibility";
-import {MenuRendererH} from "./MenuRendererH";
-import {MetadataBadgeRenderers} from "./MetadataBadgeRenderers";
-import {NavigationEndpoint} from "./NavigationEndpoint";
-import {RichThumbnail} from "./RichThumbnail";
-import {SimpleText} from "./SimpleText";
-import {TextRuns} from "./TextRuns";
-import {ThumbnailH} from "./ThumbnailH.js";
-import {ThumbnailOverlay} from "./ThumbnailOverlay";
-import {ThumbnailsH} from "./ThumbnailsH.js";
-import {TrackingParams} from "./TrackingParams.js";
+import {Accessibility} from "../a/Accessibility.js";
+import {MenuRendererH} from "../m/MenuRendererH.js";
+import {MetadataBadgeRenderers} from "../m/MetadataBadgeRenderers.js";
+import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
+import {SimpleText} from "../s/SimpleText.js";
+import {TextRuns} from "../t/TextRuns.js";
+import {ThumbnailH} from "../t/ThumbnailH.js";
+import {ThumbnailOverlay} from "../t/ThumbnailOverlay.js";
+import {ThumbnailsH} from "../t/ThumbnailsH.js";
+import {TrackingParams} from "../t/TrackingParams.js";
+import {RichThumbnail} from "../_rich/RichThumbnail.js";
 
 export interface CompactVideoRenderer extends TrackingParams {
 	accessibility: Accessibility;
