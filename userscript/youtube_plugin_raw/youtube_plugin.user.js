@@ -1194,8 +1194,9 @@ class IterateApiResultBase {
 		this.iterate_target=iterate;
 	}
 	/**
+	 * @template T
 	 * @arg {string} path
-	 * @arg {{[str:string]:{}}} data
+	 * @arg {{[U in keyof T]:{}}} data
 	 */
 	default_iter(path,data) {
 		if(data===void 0) {
@@ -1210,7 +1211,8 @@ class IterateApiResultBase {
 			}
 			return;
 		}
-		for(let [key,value] of Object.entries(data)) {
+		for(let key in data) {
+			let value=data[key];
 			if(this.iterate_target[key]) {
 				this.iterate_target[key](`${path}.${key}`,value);
 			} else {
@@ -1224,10 +1226,67 @@ class YtIterateTarget {
 	/**
 	 * @arg {FilterHandlers} state
 	 * @arg {string} path
+	 * @arg {AppendContinuationItemsAction} action
+	 */
+	appendContinuationItemsAction(state,path,action) {
+		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
+		if(state.handleAppendContinuationItemsAction(path,action)) return;
+		state.handlers.renderer_content_item_array.replace_array(state,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
+	}
+	/**
+	 * @arg {FilterHandlers} state
+	 * @arg {string} path
+	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 */
+	reloadContinuationItemsCommand(state,path,command) {
+		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
+		if(state.handleAppendContinuationItemsAction(path,command)) return;
+		state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
+	}
+	/**
+	 * @arg {FilterHandlers} state
+	 * @arg {string} path
+	 * @arg {{ contents: {}[]; }} renderer
+	 */
+	itemSectionRenderer(state,path,renderer) {
+		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
+		state.iteration.default_iter(path,renderer);
+		if(renderer.contents===void 0) return;
+		renderer.contents=renderer.contents.filter((item) => {
+			let keys=Object.keys(item);
+			check_item_keys(path,"itemSectionRenderer.contents[]",keys);
+			for(let key of keys) {
+				let is_blacklisted=state.blacklisted_item_sections.get(key);
+				if(is_blacklisted!==void 0) return !is_blacklisted;
+				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
+			}
+			return true;
+		});
+	}
+	/**
+	 * @arg {FilterHandlers} _state
+	 * @arg {string} path
+	 * @arg {{}} metadata
+	 */
+	webCommandMetadata(_state,path,metadata) {
+		console.log("webCommandMetadata",path,metadata);
+	}
+	/**
+	 * @arg {FilterHandlers} state
+	 * @arg {string} path
 	 * @arg {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(state,path,renderer) {
 		state.handlers.rich_grid.richGridRenderer(path,renderer);
+		state.iteration.default_iter("richGridRenderer",renderer);
+	}
+	/**
+	 * @arg {FilterHandlers} state
+	 * @arg {string} _path
+	 * @arg {{}} renderer
+	 */
+	compactVideoRenderer(state,_path,renderer) {
+		state.iteration.default_iter("compactVideoRenderer",renderer);
 	}
 }
 
@@ -1524,24 +1583,6 @@ class FilterHandlers {
 		console.log("path",path,"continuation action",action.targetId);
 		return false;
 	}
-	/**
-	 * @arg {string} path
-	 * @arg {AppendContinuationItemsAction} action
-	 */
-	appendContinuationItemsAction(path,action) {
-		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
-		if(this.handleAppendContinuationItemsAction(path,action)) return;
-		this.handlers.renderer_content_item_array.replace_array(this,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
-	}
-	/**
-	 * @arg {string} path
-	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
-	 */
-	reloadContinuationItemsCommand(path,command) {
-		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
-		if(this.handleAppendContinuationItemsAction(path,command)) return;
-		this.handlers.renderer_content_item_array.replace_array(this,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
-	}
 	blacklisted_item_sections=new Map([
 		["backstagePostThreadRenderer",false],
 		["channelAboutFullMetadataRenderer",false],
@@ -1567,39 +1608,6 @@ class FilterHandlers {
 		["shelfRenderer",false],
 		["videoRenderer",false],
 	]);
-	/**
-	 * @arg {string} path
-	 * @arg {{ contents: {}[]; }} renderer
-	 */
-	itemSectionRenderer(path,renderer) {
-		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
-		this.iteration.default_iter(path,renderer);
-		if(renderer.contents===void 0) return;
-		renderer.contents=renderer.contents.filter((item) => {
-			let keys=Object.keys(item);
-			check_item_keys(path,"itemSectionRenderer.contents[]",keys);
-			for(let key of keys) {
-				let is_blacklisted=this.blacklisted_item_sections.get(key);
-				if(is_blacklisted!==void 0) return !is_blacklisted;
-				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
-			}
-			return true;
-		});
-	}
-	/**
-	 * @arg {string} path
-	 * @arg {{}} metadata
-	 */
-	webCommandMetadata(path,metadata) {
-		console.log("webCommandMetadata",path,metadata);
-	}
-	/**
-	 * @arg {string} _path
-	 * @arg {{}} renderer
-	 */
-	compactVideoRenderer(_path,renderer) {
-		this.iteration.default_iter("compactVideoRenderer",renderer);
-	}
 	/**
 	 * @arg {{playerAds?: any[]; adPlacements?: any[];}} data
 	 * @arg {string} path
