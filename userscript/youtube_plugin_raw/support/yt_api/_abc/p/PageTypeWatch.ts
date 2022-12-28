@@ -1,11 +1,9 @@
 import {WatchEndpoint} from "../w/WatchEndpoint.js";
+import {GeneralHistoryState} from "./GeneralHistoryState";
 import {PageResponseWatch} from "./PageResponseWatch";
 
-
-export interface PageTypeWatch<VideoId> {
+export interface PageTypeWatch<VideoId> extends GeneralHistoryState {
 	pageType: "watch";
-	fromHistory: false;
-	navigationDoneMs: number;
 	endpoint: WatchEndpoint<VideoId>;
 	response: PageResponseWatch<VideoId>;
 }

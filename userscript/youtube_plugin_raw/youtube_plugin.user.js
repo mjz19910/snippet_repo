@@ -2539,6 +2539,8 @@ function random_sometimes_break_0(detail,obj,path) {
 			obj.previousCsn;
 		} else if(obj.page==="shorts") {
 			iter_skips.push("page");
+		} else if(obj.page==="playlist") {
+			iter_skips.push("page");
 		} else {
 			debugger;
 		}

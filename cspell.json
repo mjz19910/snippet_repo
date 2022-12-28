@@ -240,6 +240,7 @@
       "varg",
       "varint",
       "verifymethod",
+      "VLWL",
       "vnode",
       "watchEndpointSupportedOnesieConfig",
       "webassembly",

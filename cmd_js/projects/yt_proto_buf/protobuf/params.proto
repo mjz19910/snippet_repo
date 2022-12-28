@@ -1,4 +1,8 @@
-import "ns/DateTime.proto";
+message DateTime {
+	required uint64 ts=1;
+	required fixed32 field_02=2;
+	required fixed32 field_03=3;
+}
 
 message SequenceParams {
 	optional string video_id=1;
