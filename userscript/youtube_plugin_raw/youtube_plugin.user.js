@@ -1661,10 +1661,12 @@ class FilterHandlers {
 	 */
 	get_live_chat_type(base,parts,url,index) {
 		url;
-		switch(parts[index]) {
-			case "get_live_chat_replay": return `${base}.get_live_chat_replay`;
+		let cur_part=parts[index];
+		switch(cur_part) {
+			case "get_live_chat_replay": break;
 			default: console.log('no handler for',parts,parts[index]); debugger; throw new Error("Stop");
 		};
+		return `${base}.${cur_part}`;
 	}
 	/**
 	 * @param {string[]} parts
