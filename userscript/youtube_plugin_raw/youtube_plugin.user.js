@@ -21,7 +21,7 @@ var destroy_env=() => {};
 if(typeof window==="undefined") {
 	is_node_js=() => true;
 	if(typeof any(globalThis).require==="function") {
-		let n_env=require("./init_node_env.js");
+		let n_env=require("./support/_/init_node_env.js");
 		destroy_env=() => {
 			n_env.destroy_env(message_channel);
 		};
@@ -1088,7 +1088,7 @@ function fetch_inject(url_or_request,options) {
 fetch_inject.__proxy_target__=window.fetch;
 
 /**
- * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
+ * @param {[()=>InitialDataType, object, []]} apply_args
  */
 function do_proxy_call_getInitialData(apply_args) {
 	return yt_handlers.on_initial_data(apply_args);
@@ -1609,11 +1609,12 @@ class FilterHandlers extends IterateApiResultBase {
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(path_parts,res_parse);
 	}
+	/** @typedef {import("./support/yt_api/_abc/UrlTypes.js").UrlTypes} UrlTypes */
 	/** @template A,B,C,D,E @typedef {import("./support/url_parse/UrlParseRes.js").UrlParseRes<A,B,C,D,E>} UrlParseRes */
 	/**
 	 * @param {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
-	 * @returns {import("./UrlTypes.js").UrlTypes}
+	 * @returns {UrlTypes}
 	 */
 	get_url_type(parts,url) {
 		let index=0;
@@ -1628,7 +1629,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} _url
 	 * @arg {number} index
-	 * @returns {import("./UrlTypes.js").UrlTypes}
+	 * @returns {UrlTypes}
 	 */
 	get_yt_url_type(parts,_url,index) {
 		if(parts[1]!=="v1") {
@@ -1724,7 +1725,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "att.get": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/a/AttGetV.js").AttGetV} */
+				/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1732,7 +1733,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "browse": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/yt_response_browse.js").yt_response_browse['json']} */
+				/** @type {import("./support/_/yt/yt_response_browse.js").yt_response_browse['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1740,7 +1741,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "guide": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/yt_response_guide.js").yt_response_guide['json']} */
+				/** @type {import("./support/_/yt/yt_response_guide.js").yt_response_guide['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1756,7 +1757,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "reel_item_watch": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
+				/** @type {import("./support/_/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1764,7 +1765,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "player": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/yt_response_player.js").yt_response_player['json']} */
+				/** @type {import("./support/_/yt/yt_response_player.js").yt_response_player['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1772,7 +1773,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "next": console.log(url_type,data,Object.keys(data)); on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/YtApiNext.js").YtApiNext} */
+				/** @type {import("./support/_/yt/YtApiNext.js").YtApiNext} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1780,7 +1781,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "reel_watch_sequence": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
+				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1810,7 +1811,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @param {ReturnType<typeof this.use_template_url>|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
-	 * @arg {import("./SavedDataItem.js").SavedDataItem} data
+	 * @arg {import("./support/yt_api/_abc/SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
@@ -1819,7 +1820,7 @@ class FilterHandlers extends IterateApiResultBase {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);
 	}
-	/** @typedef {import("./InitialDataType.js").InitialDataType} InitialDataType */
+	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
 	 * @param {[()=>InitialDataType, object, []]} apply_args
 	 */

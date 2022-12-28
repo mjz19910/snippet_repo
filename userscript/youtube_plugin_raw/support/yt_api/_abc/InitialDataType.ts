@@ -1,10 +1,18 @@
-import {BrowseResponse} from "./support/yt_api/_abc/b/BrowseResponse.js";
-import {ShortsResponse} from "./support/yt_api/_abc/s/ShortsResponse.js";
-import {WatchResponse} from "./support/yt_api/_abc/w/WatchResponse.js";
-import {ChannelResponse} from "./support/yt_api/yt/ChannelResponse.js.js.js";
-import {SettingsResponse} from "./support/yt_api/yt/SettingsResponse.js.js.js";
-import {YTNavigateFinishEventDetail} from "./youtube_plugin.user.js";
+import {YTNavigateFinishEventDetail} from "../yt/YTNavigateFinishEventDetail.js";
+import {BrowseResponse} from "./b/BrowseResponse.js";
+import {ChannelResponse} from "./ChannelResponse.js";
+import {PlaylistResponse} from "./p/PlaylistResponse.js";
+import {ShortsResponse} from "./s/ShortsResponse.js";
+import {SettingsResponse} from "./SettingsResponse.js";
+import {WatchResponse} from "./w/WatchResponse.js";
 
-export type ResponseType=ChannelResponse|WatchResponse|BrowseResponse|ShortsResponse|SettingsResponse;
+export type ResponseType=ChannelResponse|WatchResponse|BrowseResponse|ShortsResponse|SettingsResponse|PlaylistResponse;
 
-export type InitialDataType=YTNavigateFinishEventDetail['response'];
+export type InitialDataType=ResponseType;
+function check(data: YTNavigateFinishEventDetail) {
+	const types_assert: ResponseType=data.response;
+	return types_assert;
+}
+export const do_check=function() {
+	check({} as YTNavigateFinishEventDetail);
+};
