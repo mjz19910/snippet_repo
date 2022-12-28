@@ -1665,8 +1665,8 @@ class FilterHandlers extends IterateApiResultBase {
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			}; break;
 			case "browse": return "browse";
-			case "player": return "player";
 			case "next": return "next";
+			case "player": return "player";
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
