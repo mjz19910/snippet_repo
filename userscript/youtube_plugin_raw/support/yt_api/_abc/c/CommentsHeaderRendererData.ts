@@ -1,5 +1,5 @@
 import {CommentSimpleboxRenderer} from "./CommentSimpleboxRenderer";
-import {TextRunsSimple} from "./TextRunsSimple";
+import {TextRunsSimple} from "../t/TextRunsSimple";
 
 export type CommentsHeaderRendererData={
 	commentsCount: TextRunsSimple;

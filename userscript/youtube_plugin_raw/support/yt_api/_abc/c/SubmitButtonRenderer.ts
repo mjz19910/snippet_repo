@@ -1,5 +1,5 @@
 import {ServiceEndpointCreateComment} from "./ServiceEndpointCreateComment";
-import {TextRunsSimple} from "./TextRunsSimple.js";
+import {TextRunsSimple} from "../t/TextRunsSimple.js";
 
 export type SubmitButtonRenderer={
 	style: "STYLE_PRIMARY";
