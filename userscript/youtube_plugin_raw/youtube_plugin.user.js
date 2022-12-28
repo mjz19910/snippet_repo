@@ -1747,7 +1747,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "browse": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/json_req.js").yt_response_browse['json']} */
+				/** @type {import("./support/yt_response_browse.js").yt_response_browse['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1755,7 +1755,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "guide": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/json_req.js").yt_response_guide['json']} */
+				/** @type {import("./support/yt_response_guide.js").yt_response_guide['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1763,7 +1763,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "notification.get_unseen_count": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/json_req.js").yt_notification_get_unseen_count['json']} */
+				/** @type {import("./support/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1771,7 +1771,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "reel_item_watch": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/json_req.js").yt_response_reel_item_watch['json']} */
+				/** @type {import("./support/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1779,7 +1779,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "player": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/json_req.js").yt_response_player['json']} */
+				/** @type {import("./support/yt_response_player.js").yt_response_player['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1795,7 +1795,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "reel_watch_sequence": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/json_req.js").yt_response_reel_watch_sequence["json"]} */
+				/** @type {import("./support/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
