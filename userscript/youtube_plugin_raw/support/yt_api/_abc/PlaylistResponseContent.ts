@@ -1,6 +1,6 @@
-import {twoColumnBrowseResultsRenderer} from "./twoColumnBrowseResultsRenderer";
+import {TwoColumnBrowseResultsRenderer} from "./TwoColumnBrowseResultsRenderer";
 
 export type PlaylistResponseContent={
-	contents: twoColumnBrowseResultsRenderer;
+	contents: TwoColumnBrowseResultsRenderer;
 	trackingParams: string;
 };

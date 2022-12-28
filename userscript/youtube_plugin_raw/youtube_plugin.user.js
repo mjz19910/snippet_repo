@@ -1309,7 +1309,7 @@ class YtIterateTarget {
 	}
 	/**
 	 * @arg {{t:FilterHandlers;path:string}} state
-	 * @arg {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer
 	 */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
@@ -1400,6 +1400,7 @@ function check_item_keys(real_path,path,keys) {
 			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "continuationItemRenderer": break;
 			case "richItemRenderer": break;
+			case "richSectionRenderer": break;
 		} break;
 		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_5_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
@@ -1558,7 +1559,7 @@ class HandleRichGridRenderer {
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/**
 	 * @arg {string} path
-	 * @arg {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
@@ -1939,7 +1940,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @arg {UrlTypes|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
+	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {import("./support/yt_api/_abc/SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
@@ -2529,7 +2530,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {YTNavigateFinishEventDetail} */
+	/** @type {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} */
 	detail=any({});
 }
 
@@ -2548,11 +2549,10 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 const last_detail_val={value: {}};
-/** @typedef {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} YTNavigateFinishEventDetail */
 
 /**
- * @arg {YTNavigateFinishEventDetail} detail
- * @arg {YTNavigateFinishEventDetail[keyof YTNavigateFinishEventDetail]} obj
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
+ * @arg {import("./support/yt_api/_abc/JsonDataEndpointType.js").JsonDataEndpointType} obj
  * @arg {string[]} path
  * @arg {string[]} skip
  * @arg {number[]} ent_ids
@@ -2610,7 +2610,7 @@ function filter_out_keys(keys,to_remove) {
 	return ok_e;
 }
 const gen_not_want_level_1=["responseContext","contents","trackingParams","topbar"];
-/** @arg {YTNavigateFinishEventDetail} detail @arg {YTNavigateFinishEventDetail["response"]} obj */
+/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["response"]} obj */
 function pb_0(detail,obj) {
 	if(obj.page==="watch") {
 		x: {
@@ -2648,8 +2648,8 @@ function click_track_do(obj,iter_skips) {
 }
 const gen_not_want_level_1_endpoint=["clickTrackingParams","commandMetadata"];
 /**
- * @arg {YTNavigateFinishEventDetail} detail
- * @arg {YTNavigateFinishEventDetail["response"]} obj
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["response"]} obj
  * @arg {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
@@ -2804,8 +2804,8 @@ function on_command_meta(obj) {
 	}
 }
 /**
- * @arg {YTNavigateFinishEventDetail} detail
- * @arg {YTNavigateFinishEventDetail["endpoint"]} obj
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["endpoint"]} obj
  * @arg {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
@@ -2886,7 +2886,7 @@ function on_json_request(request_info) {
 }
 
 /**
- * @arg {YTNavigateFinishEventDetail['pageType']} pageType
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']} pageType
  */
 function page_type_iter(pageType) {
 	switch(pageType) {
@@ -2900,7 +2900,7 @@ function page_type_iter(pageType) {
 	}
 }
 
-/** @arg {YTNavigateFinishEventDetail} detail */
+/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
 	let ok=any(Object.keys(detail));

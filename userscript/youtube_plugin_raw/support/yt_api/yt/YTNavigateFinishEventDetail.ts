@@ -5,7 +5,6 @@ import {PageTypePlaylist} from "../_abc/p/PageTypePlaylist.js";
 import {PageTypeSettings} from "../_abc/p/PageTypeSettings.js";
 import {PageTypeChannel} from "../_abc/PageTypeChannel.js";
 
-
 export type YTNavigateFinishEventDetail=
 	PageTypeWatch|
 	PageTypeBrowse|
