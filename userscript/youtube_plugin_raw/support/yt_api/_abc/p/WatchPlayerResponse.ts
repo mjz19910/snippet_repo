@@ -1,21 +1,13 @@
 import {CaptionsRenderer} from "../../../../ShortsPlayerResponse.js";
+import {EndscreenRenderer} from "./EndscreenRenderer";
+import {FrameworkUpdates} from "./FrameworkUpdates.js";
+import {PlayerAdItem} from "./PlayerAdItem";
 
 export type WatchPlayerResponse={
 	responseContext: {};
 	playabilityStatus: {};
 	streamingData: {};
-	playerAds: {
-		playerLegacyDesktopWatchAdsRenderer: {
-			gutParams: {tag: string;};
-			playerAdParams: {
-				enabledEngageTypes: string;
-				showContentThumbnail: boolean;
-			};
-			showCompanion: true;
-			showInstream: true;
-			useGut: true;
-		};
-	}[];
+	playerAds: PlayerAdItem[];
 	playbackTracking: {};
 	captions: CaptionsRenderer;
 	videoDetails: {};
@@ -26,24 +18,7 @@ export type WatchPlayerResponse={
 	trackingParams: {};
 	attestation: {};
 	videoQualityPromoSupportedRenderers: {};
-	adPlacements: {};
-	frameworkUpdates: {};
-	endscreen?: {
-		endscreenRenderer: {
-			elements: [
-				{
-					endscreenElementRenderer: {
-						style: "VIDEO";
-					};
-				},
-				{
-					endscreenElementRenderer: {
-						style: "CHANNEL";
-					};
-				}
-			];
-		};
-		startMs: `${number}`;
-		trackingParams: string;
-	};
+	adPlacements: [];
+	frameworkUpdates: FrameworkUpdates;
+	endscreen?: EndscreenRenderer;
 };

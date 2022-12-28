@@ -1,10 +1,9 @@
+import {FrameworkUpdates} from "./FrameworkUpdates";
+
 export type WatchContentResponse={
 	currentVideoEndpoint: {};
 	engagementPanels: {}[];
-	frameworkUpdates: {
-		entityBatchUpdate: {};
-		elementUpdate: {};
-	};
+	frameworkUpdates: FrameworkUpdates;
 	onResponseReceivedEndpoints: {}[];
 	pageVisualEffects: {}[];
 	playerOverlays: {};

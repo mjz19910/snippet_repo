@@ -2561,6 +2561,11 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("response");
 	}
 	if("playerResponse" in obj) {
+		if("adPlacements" in obj.playerResponse) {
+			if(obj.playerResponse.adPlacements.length>0) {
+				debugger;
+			}
+		}
 		switch(obj.page) {
 			case "watch": {
 				let ok_2=Object.keys(obj.playerResponse);
