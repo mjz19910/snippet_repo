@@ -1439,7 +1439,7 @@ function filter_on_initial_data(cls,apply_args) {
 						debugger;
 					}
 				} else if(ret.page==="shorts") {
-					
+
 				} else {
 					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
 					if(page_type==="watch") {
@@ -1680,20 +1680,20 @@ class FilterHandlers extends IterateApiResultBase {
 		let sp=new URLSearchParams(url.search);
 		/** @type {string[]} */
 		let sp_keys=[];
-		sp.forEach((_value,key)=>{
+		sp.forEach((_value,key) => {
 			sp_keys.push(key);
 		});
 		let should_stop=false;
-		should_stop&&=!eq_keys(parts,["youtubei", "v1", "notification", "get_unseen_count"]);
+		should_stop&&=!eq_keys(parts,["youtubei","v1","notification","get_unseen_count"]);
 		should_stop&&=parts[0]!=="getDatasyncIdsEndpoint";
-		should_stop&&=!eq_keys(parts,["youtubei", "v1", "guide"]);
+		should_stop&&=!eq_keys(parts,["youtubei","v1","guide"]);
 		should_stop&&=!eq_keys(parts,["youtubei","v1","att","get"]);
 		if(should_stop) {
 			debugger;
 		}
 		if(eq_keys(sp_keys,["key","prettyPrint"])) return;
 		if(parts[0]==="getDatasyncIdsEndpoint"&&sp_keys.length===0) return;
-		console.log('past with', url.href,sp_keys);
+		console.log('past with',url.href,sp_keys);
 		if(url.search!=="") console.log(parts,sp_keys);
 	}
 	/**
@@ -1805,7 +1805,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "response": break;
 			case "playerResponse": switch(page_type) {
 				case "watch": this.on_v1_player(page_type,data); break;
-				default: console.log("handle_page_type", page_type); debugger;
+				default: console.log("handle_page_type",page_type); debugger;
 			}
 		}
 	}
@@ -2442,7 +2442,7 @@ function eq_keys(src,target) {
  * @param {string[]} keys
  * @param {string[]} to_remove
  */
-function filter_out_keys(keys, to_remove) {
+function filter_out_keys(keys,to_remove) {
 	to_remove=to_remove.slice();
 	/** @type {string[]} */
 	let ok_e=[];
@@ -2454,8 +2454,8 @@ function filter_out_keys(keys, to_remove) {
 		}
 		ok_e.push(keys[i]);
 	}
-	if(to_remove.length >0) {
-		console.log("did not remove all target keys", keys, 'missing', to_remove);
+	if(to_remove.length>0) {
+		console.log("did not remove all target keys",keys,'missing',to_remove);
 		debugger;
 	}
 	return ok_e;
@@ -2478,8 +2478,8 @@ function pb_0(detail,obj) {
 	if(detail.pageType==="browse") {
 		x: {
 			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
-			if(eq_keys(ok,["responseContext","contents","header","trackingParams","topbar","onResponseReceivedActions"])) break x;
-			if(eq_keys(ok,['header', 'observedStateTags'])) break x;
+			if(eq_keys(ok,['header','onResponseReceivedActions'])) break x;
+			if(eq_keys(ok,['header','observedStateTags'])) break x;
 			debugger;
 		}
 		// [ "responseContext", "contents", "header", "trackingParams", "topbar", "onResponseReceivedActions" ]
@@ -2493,7 +2493,7 @@ const gen_not_want=["page","endpoint","response","url"];
  * @param {any} obj
  * @param {string[]} iter_skips
  */
-function click_track_do(obj, iter_skips) {
+function click_track_do(obj,iter_skips) {
 	if("clickTrackingParams" in obj) {
 		iter_skips.push("clickTrackingParams");
 		if(typeof obj.clickTrackingParams!=="string") {
@@ -2523,13 +2523,13 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(eq_keys(ok_e,["expirationTime"])) return true;
 		if(eq_keys(ok_e,["playerResponse"])) return true;
 		if(eq_keys(ok_e,["rootVe","expirationTime"])) return true;
-		if(eq_keys(ok_e,["previousCsn", "expirationTime"])) return true;
+		if(eq_keys(ok_e,["previousCsn","expirationTime"])) return true;
 		if(eq_keys(ok_e,["playerResponse","reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
 		return false;
 	}
 	click_track_do(obj,iter_skips);
 	if("rootVe" in obj) {
-		console.log("rootVe", obj, obj.rootVe);
+		console.log("rootVe",obj,obj.rootVe);
 	}
 	if("page" in obj) {
 		if(obj.page==="watch") {
@@ -2604,7 +2604,7 @@ function on_command_meta(obj) {
 	} else {
 		console.log("browse web cmd meta",obj.commandMetadata.webCommandMetadata);
 	}
-	if("webCommandMetadata" in obj.commandMetadata && obj.commandMetadata.webCommandMetadata.webPageType!==void 0) {
+	if("webCommandMetadata" in obj.commandMetadata&&obj.commandMetadata.webCommandMetadata.webPageType!==void 0) {
 		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
 	}
 }
