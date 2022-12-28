@@ -2579,7 +2579,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			if(cur==="videoQualityPromoSupportedRenderers") continue;
 			if(cur==="adPlacements") continue;
 			if(cur==="frameworkUpdates") continue;
-			if(cur==="captions") continue; obj.playerResponse.captions;
+			if(cur==="captions") continue;
 			debugger;
 		}
 		iter_skips.push("playerResponse");
