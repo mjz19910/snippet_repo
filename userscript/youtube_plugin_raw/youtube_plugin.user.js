@@ -1662,6 +1662,13 @@ class FilterHandlers {
 			data.adPlacements=[];
 		}
 	}
+	/**
+	 * @arg {string} path
+	 * @arg {{}} data
+	 */
+	on_v1_browse(path,data) {
+		console.log("browse page",path,data);
+	}
 	/** 
 	 * @template {string} X
 	 * @template {string} U
@@ -1913,6 +1920,7 @@ class FilterHandlers {
 		this.handle_any_data(`page_type_${page_type}`,data);
 		switch(data.page) {
 			case "watch": this.on_v1_player(page_type,data.playerResponse); break;
+			case "browse": this.on_v1_browse(page_type,data); break;
 			default: console.log("handle_page_type",page_type); debugger;
 		}
 	}
@@ -2745,6 +2753,9 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 	if("reelWatchSequenceResponse" in obj) {
 		iter_skips.push("reelWatchSequenceResponse");
+	}
+	if("expirationTime" in obj) {
+		iter_skips.push("expirationTime");
 	}
 	if(!is_this_keys_ok) {
 		console.log(ok_e);
