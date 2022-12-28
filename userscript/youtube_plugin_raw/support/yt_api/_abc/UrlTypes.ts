@@ -1,15 +1,18 @@
-import {YTNavigateFinishEventDetail} from "../yt/YTNavigateFinishEventDetail.js";
-type LiveChatUrlT="live_chat.get_live_chat_replay";
-export type UrlTypesBase=
+export type UrlTypes=
 	"att.get"|
+	"browse"|
+	"channel"|
 	"get_transcript"|
 	"getDatasyncIdsEndpoint"|
 	"guide"|
+	"live_chat.get_live_chat_replay"|
 	"next"|
 	"notification.get_notification_menu"|
 	"notification.get_unseen_count"|
 	"player"|
+	"playlist"|
 	"reel_item_watch"|
 	"reel_watch_sequence"|
-	LiveChatUrlT;
-export type UrlTypes=UrlTypesBase|YTNavigateFinishEventDetail['pageType'];
+	"settings"|
+	"shorts"|
+	"watch";
