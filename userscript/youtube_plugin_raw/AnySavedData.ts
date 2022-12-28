@@ -1,18 +1,4 @@
-export type AnySavedData={
-	"att.get"?: {};
-	"notification.get_notification_menu"?: {};
-	"notification.get_unseen_count"?: {};
-	browse?: {};
-	getDatasyncIdsEndpoint?: {};
-	guide?: {};
-	next?: {};
-	page_type_browse?: {};
-	page_type_channel?: {};
-	page_type_playlist?: {};
-	page_type_shorts?: {};
-	page_type_watch?: {};
-	page_type_settings?: {};
-	player?: {};
-	reel_item_watch?: {};
-	reel_watch_sequence?: {};
-};
+import {UrlTypesBase} from "./UrlTypes.js";
+import {YTNavigateFinishEventDetail} from "./youtube_plugin.user.js";
+export type UrlTypes2=`page_type_${YTNavigateFinishEventDetail['pageType']}`|UrlTypesBase;
+export type AnySavedData={[U in UrlTypes2]?: {}};

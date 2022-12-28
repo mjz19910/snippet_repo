@@ -1613,6 +1613,7 @@ class FilterHandlers extends IterateApiResultBase {
 	/**
 	 * @param {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 * @returns {import("./UrlTypes.js").UrlTypes}
 	 */
 	get_url_type(parts,url) {
 		let index=0;
@@ -1627,6 +1628,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} _url
 	 * @arg {number} index
+	 * @returns {import("./UrlTypes.js").UrlTypes}
 	 */
 	get_yt_url_type(parts,_url,index) {
 		if(parts[1]!=="v1") {
