@@ -2729,6 +2729,7 @@ function page_type_iter(pageType) {
 		case "playlist": break;
 		case "shorts": break;
 		case "watch": break;
+		case "settings": break;
 		default: debugger;
 	}
 }
