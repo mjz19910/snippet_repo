@@ -1,4 +1,3 @@
-import {Icon} from "../i/Icon.js";
 import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
 import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {key_simpleText, SimpleText} from "../s/SimpleText.js";
