@@ -1221,11 +1221,11 @@ class IterateApiResultBase {
 		}
 	}
 	/**
-	 * @arg {FilterHandlers} state
-	 * @arg {string} path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {{}} data
 	 */
-	default_iter(state,path,data) {
+	default_iter(state,data) {
+		let {t,path}=state;
 		if(data===void 0) {
 			return;
 		}
@@ -1234,7 +1234,7 @@ class IterateApiResultBase {
 		}
 		if(data instanceof Array) {
 			for(let [key,value] of data.entries()) {
-				this.default_iter(state,`${path}[${key}]`,value);
+				this.default_iter({t,path:`${path}[${key}]`},value);
 			}
 			return;
 		}
@@ -1252,9 +1252,9 @@ class IterateApiResultBase {
 				debugger;
 			}
 			if(rk!==void 0&&this.iterate_target[rk]) {
-				this.iterate_target[rk](state,`${path}.${key}`,any(value));
+				this.iterate_target[rk]({t,path:`${path}[${key}]`},any(value));
 			} else {
-				this.default_iter(state,`${path}.${key}`,value);
+				this.default_iter({t,path:`${path}[${key}]`},value);
 			}
 		}
 	}
@@ -1262,39 +1262,37 @@ class IterateApiResultBase {
 
 class YtIterateTarget {
 	/**
-	 * @arg {FilterHandlers} state
-	 * @arg {string} path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {AppendContinuationItemsAction} action
 	 */
-	appendContinuationItemsAction(state,path,action) {
-		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
-		if(state.handleAppendContinuationItemsAction(path,action)) return;
-		state.handlers.renderer_content_item_array.replace_array(state,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
+	appendContinuationItemsAction(state,action) {
+		check_item_keys(state.path,"appendContinuationItemsAction",Object.keys(action));
+		if(state.t.handleAppendContinuationItemsAction(state.path,action)) return;
+		state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
 	}
 	/**
-	 * @arg {FilterHandlers} state
-	 * @arg {string} path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
-	reloadContinuationItemsCommand(state,path,command) {
+	reloadContinuationItemsCommand({t:state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
 		if(state.handleAppendContinuationItemsAction(path,command)) return;
 		state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
 	}
 	/**
-	 * @arg {FilterHandlers} state
-	 * @arg {string} path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {{ contents: {}[]; }} renderer
 	 */
-	itemSectionRenderer(state,path,renderer) {
+	itemSectionRenderer(state,renderer) {
+		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
-		state.iteration.default_iter(state,path,renderer);
+		t.iteration.default_iter(state,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
 			check_item_keys(path,"itemSectionRenderer.contents[]",keys);
 			for(let key of keys) {
-				let is_blacklisted=state.blacklisted_item_sections.get(key);
+				let is_blacklisted=t.blacklisted_item_sections.get(key);
 				if(is_blacklisted!==void 0) return !is_blacklisted;
 				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
 			}
@@ -1302,29 +1300,44 @@ class YtIterateTarget {
 		});
 	}
 	/**
-	 * @arg {FilterHandlers} _state
-	 * @arg {string} path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {{}} metadata
 	 */
-	webCommandMetadata(_state,path,metadata) {
-		console.log("webCommandMetadata",path,metadata);
+	webCommandMetadata(state,metadata) {
+		console.log("webCommandMetadata",state.path,metadata);
 	}
 	/**
-	 * @arg {FilterHandlers} state
-	 * @arg {string} path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
-	richGridRenderer(state,path,renderer) {
-		state.handlers.rich_grid.richGridRenderer(path,renderer);
-		state.iteration.default_iter(state,"richGridRenderer",renderer);
+	richGridRenderer(state,renderer) {
+		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
+		state.path="richGridRenderer";
+		state.t.iteration.default_iter(state,renderer);
 	}
 	/**
-	 * @arg {FilterHandlers} state
-	 * @arg {string} _path
+	 * @arg {{t:FilterHandlers;path:string}} state
 	 * @arg {{}} renderer
 	 */
-	compactVideoRenderer(state,_path,renderer) {
-		state.iteration.default_iter(state,"compactVideoRenderer",renderer);
+	compactVideoRenderer(state,renderer) {
+		state.path="compactVideoRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/**
+	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {{}} renderer
+	 */
+	thumbnailOverlayToggleButtonRenderer(state,renderer) {
+		state.path="thumbnailOverlayToggleButtonRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/**
+	 * @arg {{t:FilterHandlers;path:string}} state
+	 * @arg {{}} renderer
+	 */
+	videoRenderer(state,renderer) {
+		state.path="videoRenderer";
+		state.t.iteration.default_iter(state,renderer);
 	}
 }
 
@@ -1933,7 +1946,7 @@ class FilterHandlers {
 		/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
-		this.iteration.default_iter(this,path,data);
+		this.iteration.default_iter({t:this,path},data);
 	}
 	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
