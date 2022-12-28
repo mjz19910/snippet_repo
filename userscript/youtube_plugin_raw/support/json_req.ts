@@ -63,6 +63,12 @@ export type yt_response_reel_item_watch={
 		responseContext: GeneralContext;
 	};
 };
+export type yt_response_player={
+	url_type: "player";
+	json: {
+		responseContext: GeneralContext;
+	}
+};
 
 type responseTypes=
 	yt_response_getDatasyncIdsEndpoint|
@@ -72,6 +78,7 @@ type responseTypes=
 	yt_notification_get_unseen_count|
 	yt_response_guide|
 	yt_response_browse|
+	yt_response_player|
 	yt_response_reel_item_watch;
 
 export type json_req=responseTypes&YtUrlBase;

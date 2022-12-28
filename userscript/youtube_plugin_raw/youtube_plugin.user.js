@@ -1774,6 +1774,14 @@ class FilterHandlers extends IterateApiResultBase {
 				request,
 				parsed_url: req_parse,
 			}); break;
+			case "player": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {notification_get_unseen_count["json"]} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
 			default: console.log(url_type,data); debugger; break;
 		}
 		x: {
