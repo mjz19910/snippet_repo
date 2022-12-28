@@ -1,5 +1,5 @@
 import {CsiServiceParams} from "./yt_api/exact_data/CsiServiceParams.js";
-import {ServiceParams} from "./yt_api/_exact_data/ServiceParams.js";
+import {ServiceParams} from "./yt_api/exact_data/ServiceParams.js";
 
 export type AllServiceTrackingParams=[
 	CsiServiceParams,

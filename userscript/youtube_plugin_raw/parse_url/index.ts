@@ -1,6 +1,6 @@
 import {Split} from "../support/make/Split.js";
 import {ParseUrlSearchParams} from "../support/search_params_parse/SearchParamsParse.js";
-import {Decay} from "../support/yt_api/_exact_data/Decay.js";
+import {Decay} from "../support/yt_api/exact_data/Decay.js";
 import {RemoveFirst} from "./RemoveFirst";
 import {URLSearchParams} from "./URLSearchParams";
 

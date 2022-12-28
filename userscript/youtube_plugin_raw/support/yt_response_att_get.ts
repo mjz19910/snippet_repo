@@ -1,6 +1,6 @@
 import {AttGetV} from "./AttGetV";
 
-// import {Decay} from "./yt_api/_exact_data/Decay.js";
+// import {Decay} from "./yt_api/exact_data/Decay.js";
 // type ExampleChallengeVars=Decay<ParseParamItem<"a=5&a2=10&c=1672168861&d=1&t=7200&c1a=1&hh=AGgPIr3tBg27zD1qUi5VCCBryM_8oaCCrxDEXUyB9Kg">>;
 // const u: ExampleChallengeVars={
 // 	"a": "5",
