@@ -1654,6 +1654,18 @@ class FilterHandlers {
 	}
 	/**
 	 * @param {string[]} parts
+	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 * @arg {number} index
+	 * @returns {UrlTypes}
+	 */
+	get_live_chat_type(parts,url,index) {
+		url;
+		switch(parts[index]) {
+			default: console.log('no handler for',parts,parts[index]); debugger; throw new Error("Stop");
+		};
+	}
+	/**
+	 * @param {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} _url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
@@ -1689,18 +1701,6 @@ class FilterHandlers {
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
-	}
-	/**
-	 * @param {string[]} parts
-	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
-	 * @arg {number} index
-	 * @returns {UrlTypes}
-	 */
-	get_live_chat_type(parts,url,index) {
-		url;
-		switch(parts[index]) {
-			default: console.log('no handler for',parts,parts[index]); debugger; throw new Error("Stop");
-		};
 	}
 	/**
 	 * @param {URL} url
