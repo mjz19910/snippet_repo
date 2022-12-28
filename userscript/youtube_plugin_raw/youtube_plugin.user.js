@@ -1580,6 +1580,13 @@ class FilterHandlers extends IterateApiResultBase {
 		});
 	}
 	/**
+	 * @param {string} path
+	 * @param {{}} metadata
+	 */
+	webCommandMetadata(path,metadata) {
+		console.log("webCommandMetadata",path,metadata);
+	}
+	/**
 	 * @param {{playerAds?: any[]; adPlacements?: any[];}} data
 	 * @param {string} path
 	 */
