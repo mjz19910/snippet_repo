@@ -12,6 +12,7 @@ export type AnySavedData={
 	page_type_playlist?: {};
 	page_type_shorts?: {};
 	page_type_watch?: {};
+	page_type_settings?: {};
 	player?: {};
 	reel_item_watch?: {};
 	reel_watch_sequence?: {};
