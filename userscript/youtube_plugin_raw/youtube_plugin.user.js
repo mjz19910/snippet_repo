@@ -1730,79 +1730,55 @@ class FilterHandlers {
 		console.log('past with',url.href,sp_keys);
 		if(url.search!=="") console.log(parts,sp_keys);
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} data */
-	get_res_data(url_type,data) {
+	/** @arg {UrlTypes} url_type @arg {{}} json */
+	get_res_data(url_type,json) {
 		switch(url_type) {
 			case "att.get": return {
 				url_type,
 				/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
-				json: any(data),
+				json: any(json),
 			};
+			case "browse": return {
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_browse.js").yt_response_browse['json']} */
+				json: any(json),
+			}
+			case "guide": return {
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_guide.js").yt_response_guide['json']} */
+				json: any(json),
+			};
+			case "notification.get_unseen_count": return {
+				url_type,
+				/** @type {import("./support/_/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
+				json: any(json),
+			};
+			case "reel_item_watch": return {
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
+				json: any(json),
+			}
+			case "player": return {
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_player.js").yt_response_player['json']} */
+				json: any(json),
+			};
+			case "next": console.log(url_type,json,Object.keys(json)); return {
+				url_type,
+				/** @type {import("./support/_/yt/YtApiNext.js").YtApiNext} */
+				json: any(json),
+			}
+			case "reel_watch_sequence": return {
+				url_type,
+				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
+				json: any(json),
+			};
+			default: console.log(url_type,json); debugger;
 		}
 		throw new Error("Stop");
 	}
 	/** @arg {UrlTypes} url_type @arg {{}} data @arg {string|URL|Request} request @arg {URL} parsed_url */
 	on_json_type(url_type,data,request,parsed_url) {
-		switch(url_type) {
-			case "att.get": break;
-			case "browse": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_browse.js").yt_response_browse['json']} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			case "guide": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_guide.js").yt_response_guide['json']} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			case "notification.get_unseen_count": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			case "reel_item_watch": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			case "player": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_player.js").yt_response_player['json']} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			case "next": console.log(url_type,data,Object.keys(data)); on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/YtApiNext.js").YtApiNext} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			case "reel_watch_sequence": on_json_request({
-				/** @readonly */
-				url_type,
-				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
-				json: any(data),
-				request,
-				parsed_url,
-			}); break;
-			default: console.log(url_type,data); debugger; throw new Error("Stop");
-		}
 		on_json_request({
 			...this.get_res_data(url_type,data),
 			request,
