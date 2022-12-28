@@ -1225,13 +1225,13 @@ class IterateApiResultBase {
 	 * @arg {{}} data
 	 */
 	default_iter(state,data) {
-		let {t,path}=state;
 		if(data===void 0) {
 			return;
 		}
 		if(typeof data==="string") {
 			return;
 		}
+		let {t,path}=state;
 		if(data instanceof Array) {
 			for(let [key,value] of data.entries()) {
 				this.default_iter({t,path:`${path}[${key}]`},value);
@@ -1251,10 +1251,11 @@ class IterateApiResultBase {
 				console.log("update keys map remove", key);
 				debugger;
 			}
+			const state={t,path:`${path}.${key}`};
 			if(rk!==void 0&&this.iterate_target[rk]) {
-				this.iterate_target[rk]({t,path:`${path}[${key}]`},any(value));
+				this.iterate_target[rk](state,any(value));
 			} else {
-				this.default_iter({t,path:`${path}[${key}]`},value);
+				this.default_iter(state,value);
 			}
 		}
 	}
