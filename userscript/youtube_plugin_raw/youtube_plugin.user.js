@@ -2478,7 +2478,7 @@ function pb_0(detail,obj) {
 	if(obj.page==="watch") {
 		x: {
 			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
-			if(eq_keys(ok,["responseContext","contents","currentVideoEndpoint","trackingParams","playerOverlays","onResponseReceivedEndpoints","engagementPanels","topbar","pageVisualEffects","frameworkUpdates"])) break x;
+			if(eq_keys(ok,['currentVideoEndpoint', 'playerOverlays', 'onResponseReceivedEndpoints', 'engagementPanels', 'pageVisualEffects', 'frameworkUpdates'])) break x;
 			debugger;
 		}
 		if(Object.keys(obj.response).length!==10) {
