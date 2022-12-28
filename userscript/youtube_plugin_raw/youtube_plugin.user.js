@@ -1194,11 +1194,12 @@ class IterateApiResultBase {
 		this.iterate_target=iterate;
 	}
 	/**
-	 * @template T
+	 * @template U
+	 * @arg {FilterHandlers} state
 	 * @arg {string} path
-	 * @arg {{[U in keyof T]:{}}} data
+	 * @arg {{[C in keyof U]:{}}} data
 	 */
-	default_iter(path,data) {
+	default_iter(state,path,data) {
 		if(data===void 0) {
 			return;
 		}
@@ -1207,7 +1208,7 @@ class IterateApiResultBase {
 		}
 		if(data instanceof Array) {
 			for(let [key,value] of data.entries()) {
-				this.default_iter(`${path}[${key}]`,value);
+				this.default_iter(state,`${path}[${key}]`,value);
 			}
 			return;
 		}
@@ -1216,7 +1217,7 @@ class IterateApiResultBase {
 			if(this.iterate_target[key]) {
 				this.iterate_target[key](`${path}.${key}`,value);
 			} else {
-				this.default_iter(`${path}.${key}`,value);
+				this.default_iter(state,`${path}.${key}`,value);
 			}
 		}
 	}
@@ -1250,7 +1251,7 @@ class YtIterateTarget {
 	 */
 	itemSectionRenderer(state,path,renderer) {
 		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
-		state.iteration.default_iter(path,renderer);
+		state.iteration.default_iter(state,path,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
@@ -1278,7 +1279,7 @@ class YtIterateTarget {
 	 */
 	richGridRenderer(state,path,renderer) {
 		state.handlers.rich_grid.richGridRenderer(path,renderer);
-		state.iteration.default_iter("richGridRenderer",renderer);
+		state.iteration.default_iter(state,"richGridRenderer",renderer);
 	}
 	/**
 	 * @arg {FilterHandlers} state
@@ -1286,7 +1287,7 @@ class YtIterateTarget {
 	 * @arg {{}} renderer
 	 */
 	compactVideoRenderer(state,_path,renderer) {
-		state.iteration.default_iter("compactVideoRenderer",renderer);
+		state.iteration.default_iter(state,"compactVideoRenderer",renderer);
 	}
 }
 
@@ -1887,7 +1888,7 @@ class FilterHandlers {
 		/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
-		this.iteration.default_iter(path,data);
+		this.iteration.default_iter(this,path,data);
 	}
 	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
