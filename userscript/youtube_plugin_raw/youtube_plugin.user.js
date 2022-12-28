@@ -1169,9 +1169,14 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
+/** @template {{[x:string]: any}} T */
 class IterateApiResultBase {
+	iterate_target;
+	/** @arg {T} iterate */
+	constructor(iterate) {
+		this.iterate_target=iterate;
+	}
 	/**
-	 * @this {IterateApiResultBase & {[x:string]: any}}
 	 * @param {string} path
 	 * @arg {{[str:string]:{}}} data
 	 */
@@ -1189,8 +1194,8 @@ class IterateApiResultBase {
 			return;
 		}
 		for(let [key,value] of Object.entries(data)) {
-			if(this[key]) {
-				this[key](`${path}.${key}`,value);
+			if(this.iterate_target[key]) {
+				this.iterate_target[key](`${path}.${key}`,value);
 			} else {
 				this.default_iter(`${path}.${key}`,value);
 			}
@@ -1453,7 +1458,7 @@ function is_what_to_watch_section(o) {
 	return o.targetId==="browse-feedFEwhat_to_watch";
 }
 
-class FilterHandlers extends IterateApiResultBase {
+class FilterHandlers {
 	debug=false;
 	/**@readonly*/
 	class_name="FilterHandlers";
@@ -1461,6 +1466,7 @@ class FilterHandlers extends IterateApiResultBase {
 		rich_grid: new HandleRichGridRenderer,
 		renderer_content_item_array: new HandleRendererContentItemArray,
 	};
+	iteration=new IterateApiResultBase(this);
 	/**
 	 * @param {string} path
 	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
@@ -1546,7 +1552,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	itemSectionRenderer(path,renderer) {
 		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
-		this.default_iter(path,renderer);
+		this.iteration.default_iter(path,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
@@ -1571,7 +1577,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {{}} renderer
 	 */
 	compactVideoRenderer(_path, renderer) {
-		this.default_iter("compactVideoRenderer",renderer);
+		this.iteration.default_iter("compactVideoRenderer",renderer);
 	}
 	/**
 	 * @param {{playerAds?: any[]; adPlacements?: any[];}} data
@@ -1666,6 +1672,7 @@ class FilterHandlers extends IterateApiResultBase {
 			}; break;
 			case "next": return "next";
 			case "player": return "player";
+			case "live_chat": return this.get_live_chat_type(parts,_url,index);
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
@@ -1826,7 +1833,7 @@ class FilterHandlers extends IterateApiResultBase {
 		/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
-		this.default_iter(path,data);
+		this.iteration.default_iter(path,data);
 	}
 	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
