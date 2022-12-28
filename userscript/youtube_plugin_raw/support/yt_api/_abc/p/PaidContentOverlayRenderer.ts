@@ -1,16 +1,11 @@
 import {Icon} from "../i/Icon.js";
+import {SimpleText} from "../s/SimpleText.js";
+import {PaidContentEndpoint} from "./PaidContentEndpoint";
 
 export type PaidContentOverlayRenderer={
 	durationMs: `${number}`;
 	icon: Icon<"MONEY_HAND">;
-	navigationEndpoint: {
-		clickTrackingParams: string;
-		commandMetadata: {
-			webCommandMetadata: {};
-		};
-		urlEndpoint: {
-			url: string;
-			grwOpenInOverride: "GRW_OPEN_IN_OVERRIDE_USE_PREFERRED_APP_NO_PROMPT";
-		};
-	};
+	navigationEndpoint: PaidContentEndpoint;
+	text: SimpleText;
+	trackingParams: string;
 };
