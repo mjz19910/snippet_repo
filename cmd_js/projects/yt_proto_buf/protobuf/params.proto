@@ -18,6 +18,11 @@ message Params {
 	optional int32 f1 = 6;
 }
 
+message PlaylistParams {
+	optional int32 f0=1;
+	optional int32 f8=8;
+}
+
 message PlayerParams {
 	optional int32 field_00 = 30;
 	optional int32 field_02 = 71;
