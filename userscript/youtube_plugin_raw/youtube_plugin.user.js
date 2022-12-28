@@ -1653,14 +1653,16 @@ class FilterHandlers {
 		throw new Error("Missing");
 	}
 	/**
+	 * @arg {"live_chat"} base
 	 * @param {string[]} parts
 	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`,string,"https:",string,string>} url
 	 * @arg {number} index
 	 * @returns {UrlTypes}
 	 */
-	get_live_chat_type(parts,url,index) {
+	get_live_chat_type(base,parts,url,index) {
 		url;
 		switch(parts[index]) {
+			case "get_live_chat_replay": return `${base}.get_live_chat_replay`;
 			default: console.log('no handler for',parts,parts[index]); debugger; throw new Error("Stop");
 		};
 	}
@@ -1697,7 +1699,7 @@ class FilterHandlers {
 			}; break;
 			case "next": return "next";
 			case "player": return "player";
-			case "live_chat": index++; return this.get_live_chat_type(parts,_url,index);
+			case "live_chat": index++; return this.get_live_chat_type("live_chat",parts,_url,index);
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
