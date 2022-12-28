@@ -2567,12 +2567,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			if(cur==="responseContext") continue;
 			if(cur==="playabilityStatus") continue;
 			if(cur==="streamingData") continue;
-			if(cur==="playerAds") {
-				if(obj.page==="watch") {
-					obj.playerResponse.playerAds; debugger;
-				};
-				continue;
-			}
+			if(cur==="playerAds") continue;
 			if(cur==="playbackTracking") continue;
 			if(cur==="videoDetails") continue;
 			if(cur==="playerConfig") continue;
