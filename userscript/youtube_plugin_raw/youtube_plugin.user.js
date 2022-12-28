@@ -1814,7 +1814,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {{[U in typeof path]?: import("./AnySavedData.js").AnySavedData[U]}} */
+		/** @type {import("./AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);
