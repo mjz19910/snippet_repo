@@ -1,8 +1,5 @@
-import {RichItemRendererContentDef} from "./RichItemRendererContentDef";
-import {TrackingParams} from "../_abc/t/TrackingParams.js";
+import {RichItemRendererData} from "./RichItemRendererData.js";
 
-export interface RichItemRenderer extends TrackingParams {
-	content: RichItemRendererContentDef;
-	rowIndex?: number;
-	colIndex?: number;
-}
+export type RichItemRenderer={
+	richItemRenderer: RichItemRendererData;
+};

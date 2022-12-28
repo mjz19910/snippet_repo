@@ -934,7 +934,8 @@ function to_url(url) {
 		return new URL(url);
 	}
 }
-/**@arg {string|URL|Request} request @arg {{}} response_obj */
+/** @typedef {import("./support/yt_api/_abc/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
+/**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
 		if(top!==null&&window!==top) {
@@ -1267,6 +1268,7 @@ class YtIterateTarget {
 	 * @arg {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(state,action) {
+		debugger;
 		check_item_keys(state.path,"appendContinuationItemsAction",Object.keys(action));
 		if(state.t.handleAppendContinuationItemsAction(state.path,action)) return;
 		state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
@@ -1379,6 +1381,7 @@ function check_item_keys(real_path,path,keys) {
 			case "compactPlaylistRenderer": break;
 			case "compactVideoRenderer": break;
 			case "commentRenderer": break;
+			case "richItemRenderer": break;
 		} break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_2_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
@@ -1480,7 +1483,7 @@ class HandleRendererContentItemArray {
 	// Ck;
 	// Jn().resolve(Cv).currentEndpoint;u5().browserHistory;
 	*/
-	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRendererH.js").RichItemRendererH} content_item */
+	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRenderer.js").RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let renderer=content_item.richItemRenderer;
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
@@ -1580,11 +1583,12 @@ class HandleRichGridRenderer {
 	}
 }
 /** @typedef {import("./support/yt_api/_abc/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
-class AppendContinuationItemsAction {
-	/**@type {ContinuationItem[]} */
-	continuationItems=[];
-	targetId="";
-}
+/** @typedef {import("./support/yt_api/_/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
+// class AppendContinuationItemsAction {
+// 	/**@type {ContinuationItem[]} */
+// 	continuationItems=[];
+// 	targetId="";
+// }
 
 /** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
@@ -1661,11 +1665,12 @@ class FilterHandlers {
 			// return true;
 			return false;
 		}
-		console.log("path",path,"continuation action",action.targetId);
+		console.log("path",path,"continuation action",action);
+		debugger;
 		return false;
 	}
 	/**
-	 * @arg {{playerAds?: any[]; adPlacements?: any[];}} data
+	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 * @arg {string} path
 	 */
 	on_v1_player(path,data) {
@@ -1679,6 +1684,7 @@ class FilterHandlers {
 			if(this.debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
+		debugger;
 	}
 	/**
 	 * @arg {string} path
@@ -1786,14 +1792,14 @@ class FilterHandlers {
 			default: no_handler({...state,parts,index});
 		}
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} json */
+	/** @typedef {import("./support/yt_api/yt/yt_response_att_get.js").yt_response_att_get|import("./support/yt_api/yt/yt_response_browse.js").yt_response_browse|import("./support/yt_api/yt/yt_response_live_chat_get_live_chat_replay.js").yt_response_live_chat_get_live_chat_replay} V1 */
+	/** @template {UrlTypes} T @arg {T} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
 	get_res_data(url_type,json) {
 		switch(url_type) {
-			case "att.get": return {
-				url_type,
-				/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
-				json: any(json),
-			};
+			case "att.get": 
+			/** @type {import("./support/yt_api/yt/yt_response_att_get.js").yt_response_att_get} */
+			let tc={url_type: "att.get",json: any(json)};
+			return tc;
 			case "browse": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_browse.js").yt_response_browse['json']} */
@@ -1856,8 +1862,8 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @arg {{}} data
 	 * @arg {string|URL|Request} request
+	 * @arg {JsonDataResponseType} data
 	 */
 	on_handle_api(request,data) {
 		const debug=false;
@@ -1891,13 +1897,29 @@ class FilterHandlers {
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		this.on_json_type(url_type,data,request,req_parse);
-		x: {
-			if(api_path=="att.get") break x;
-			this.handle_any_data(url_type,data);
+		this.handle_any_data(url_type,data);
+		/** @returns {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
+		function as_player_response() {
+			return any(data);
 		}
-		switch(api_parts[2]) {
-			case "player": this.on_v1_player(api_path,data); break;
+		/** @returns {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
+		function as_att_get() {
+			debugger;
+			return any(data);
 		}
+		let res;
+		switch(url_type) {
+			case "att.get": let res=this.get_res_data(url_type,data); this.on_att_get(as_att_get()); break;
+			case "player": this.on_v1_player(api_path,as_player_response()); break;
+			default: debugger;
+		}
+	}
+	/**
+	 * @param {{}} data
+	 */
+	on_att_get(data) {
+		console.log(data);
+		debugger;
 	}
 	/**
 	 * @arg {InitialDataType} data

@@ -9,3 +9,6 @@ export type WatchResponse={
 	playerResponse: WatchResponsePlayer;
 	url: string;
 };
+export type VideoResponse={
+	responseContext: {};
+};
