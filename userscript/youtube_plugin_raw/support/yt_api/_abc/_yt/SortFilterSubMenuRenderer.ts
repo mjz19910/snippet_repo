@@ -12,7 +12,7 @@ export type SortFilterSubMenuRenderer={
 			"title": "Date added (newest)",
 			"selected": false,
 			"serviceEndpoint": {
-				"clickTrackingParams": "CC4Q48AHGAAiEwjNgbrBjJv8AhXVEH0KHUFmBoE=",
+				"clickTrackingParams": string;
 				"commandMetadata": {
 					"webCommandMetadata": {
 						"sendPost": true,
@@ -27,7 +27,7 @@ export type SortFilterSubMenuRenderer={
 							"playlistVideoOrder": 1
 						}
 					],
-					"params": "CAFAAQ%3D%3D"
+					"params": string;
 				}
 			},
 			"accessibility": {
@@ -35,13 +35,13 @@ export type SortFilterSubMenuRenderer={
 					"label": "Date added (newest)"
 				}
 			},
-			"trackingParams": "CC4Q48AHGAAiEwjNgbrBjJv8AhXVEH0KHUFmBoE="
+			"trackingParams": string;
 		},
 		{
 			"title": "Date added (oldest)",
 			"selected": false,
 			"serviceEndpoint": {
-				"clickTrackingParams": "CC0Q48AHGAEiEwjNgbrBjJv8AhXVEH0KHUFmBoE=",
+				"clickTrackingParams": string;
 				"commandMetadata": {
 					"webCommandMetadata": {
 						"sendPost": true,
@@ -56,7 +56,7 @@ export type SortFilterSubMenuRenderer={
 							"playlistVideoOrder": 2
 						}
 					],
-					"params": "CAFAAQ%3D%3D"
+					"params": string;
 				}
 			},
 			"accessibility": {
@@ -64,13 +64,13 @@ export type SortFilterSubMenuRenderer={
 					"label": "Date added (oldest)"
 				}
 			},
-			"trackingParams": "CC0Q48AHGAEiEwjNgbrBjJv8AhXVEH0KHUFmBoE="
+			"trackingParams": string;
 		},
 		{
 			"title": "Most popular",
 			"selected": false,
 			"serviceEndpoint": {
-				"clickTrackingParams": "CCwQ48AHGAIiEwjNgbrBjJv8AhXVEH0KHUFmBoE=",
+				"clickTrackingParams": string;
 				"commandMetadata": {
 					"webCommandMetadata": {
 						"sendPost": true,
@@ -85,7 +85,7 @@ export type SortFilterSubMenuRenderer={
 							"playlistVideoOrder": 3
 						}
 					],
-					"params": "CAFAAQ%3D%3D"
+					"params": string;
 				}
 			},
 			"accessibility": {
@@ -93,13 +93,13 @@ export type SortFilterSubMenuRenderer={
 					"label": "Most popular"
 				}
 			},
-			"trackingParams": "CCwQ48AHGAIiEwjNgbrBjJv8AhXVEH0KHUFmBoE="
+			"trackingParams": string;
 		},
 		{
 			"title": "Date published (newest)",
 			"selected": false,
 			"serviceEndpoint": {
-				"clickTrackingParams": "CCsQ48AHGAMiEwjNgbrBjJv8AhXVEH0KHUFmBoE=",
+				"clickTrackingParams": string;
 				"commandMetadata": {
 					"webCommandMetadata": {
 						"sendPost": true,
@@ -114,7 +114,7 @@ export type SortFilterSubMenuRenderer={
 							"playlistVideoOrder": 4
 						}
 					],
-					"params": "CAFAAQ%3D%3D"
+					"params": string;
 				}
 			},
 			"accessibility": {
@@ -122,13 +122,13 @@ export type SortFilterSubMenuRenderer={
 					"label": "Date published (newest)"
 				}
 			},
-			"trackingParams": "CCsQ48AHGAMiEwjNgbrBjJv8AhXVEH0KHUFmBoE="
+			"trackingParams": string;
 		},
 		{
 			"title": "Date published (oldest)",
 			"selected": false,
 			"serviceEndpoint": {
-				"clickTrackingParams": "CCoQ48AHGAQiEwjNgbrBjJv8AhXVEH0KHUFmBoE=",
+				"clickTrackingParams": string;
 				"commandMetadata": {
 					"webCommandMetadata": {
 						"sendPost": true,
@@ -143,7 +143,7 @@ export type SortFilterSubMenuRenderer={
 							"playlistVideoOrder": 5
 						}
 					],
-					"params": "CAFAAQ%3D%3D"
+					"params": string;
 				}
 			},
 			"accessibility": {
@@ -151,7 +151,7 @@ export type SortFilterSubMenuRenderer={
 					"label": "Date published (oldest)"
 				}
 			},
-			"trackingParams": "CCoQ48AHGAQiEwjNgbrBjJv8AhXVEH0KHUFmBoE="
+			"trackingParams": string;
 		}
 	];
 	title: "Sort";
