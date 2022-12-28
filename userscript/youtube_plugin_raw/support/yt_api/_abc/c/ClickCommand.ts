@@ -5,5 +5,5 @@ import {ClickTrackingParams} from "./ClickTrackingParams.js";
 
 export interface ClickCommand extends ClickTrackingParams {
 	commandMetadata: CommandMetadata;
-	urlEndpoint: UrlEndpoint;
+	urlEndpoint: UrlEndpoint<never>;
 };

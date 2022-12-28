@@ -52,17 +52,6 @@ export interface MR extends TrackingParams {
 	"menuRenderer": AM;
 };
 
-interface BTN_Ren extends TrackingParams {
-	"style": "STYLE_PRIMARY";
-	"text": SimpleText;
-	"icon": Icon<never>;
-	"iconPosition": "BUTTON_ICON_POSITION_TYPE_RIGHT_OF_TEXT";
-};
-
-export type BTN={
-	"buttonRenderer": BTN_Ren;
-};
-
 export type AdTitle_0={
 	"simpleText": "Create Lasting Wealth";
 };
