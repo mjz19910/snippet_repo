@@ -1,7 +1,7 @@
 import {ChannelEndpoint} from "./c/ChannelEndpoint";
 import {ChannelResponse} from "./ChannelResponse";
 
-export type WebPageTypeChannel={
+export type PageTypeChannel={
 	pageType: "channel";
 	endpoint: ChannelEndpoint;
 	response: ChannelResponse;

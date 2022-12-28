@@ -1,4 +1,4 @@
-import {MovingThumbnailRenderer} from "../m/MovingThumbnailRenderer.js";
+import {MovingThumbnailRenderer} from "../_abc/m/MovingThumbnailRenderer.js";
 
 export type RichThumbnail={
 	movingThumbnailRenderer: MovingThumbnailRenderer;

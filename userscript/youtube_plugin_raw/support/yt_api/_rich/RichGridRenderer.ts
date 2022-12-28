@@ -1,4 +1,4 @@
-import {RendererContentItem} from "../r/RendererContentItem";
+import {RendererContentItem} from "../_abc/r/RendererContentItem";
 
 
 export interface RichGridRenderer {
