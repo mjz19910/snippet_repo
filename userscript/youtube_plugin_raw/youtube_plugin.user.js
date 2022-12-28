@@ -2681,7 +2681,8 @@ function random_sometimes_break_1(detail,obj,path) {
 		}
 		function browse_with_part() {
 			let browse_part=bid.slice(2);
-			console.log("show browse_part", browse_part);
+			let browse_section=bid.slice(0,2);
+			console.log("show browse_section & browse_part", browse_section, browse_part);
 		}
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
 		x: {
@@ -2690,6 +2691,10 @@ function random_sometimes_break_1(detail,obj,path) {
 				break x;
 			}
 			if(bid.startsWith("VL")) {
+				browse_with_part();
+				break x;
+			}
+			if(bid.startsWith("SP")) {
 				browse_with_part();
 				break x;
 			}
