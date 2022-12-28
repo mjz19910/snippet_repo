@@ -1186,12 +1186,27 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
-function get_keys_of(obj) {
-	let rq=Object.keys(obj).concat(Object.keys(Object.getPrototypeOf(obj)));
+/**
+ * @template {{}} T 
+ * @arg {{[P in keyof T]: TypedPropertyDescriptor<T[P]>;}} obj 
+ * @arg {T} _real @returns {(keyof T)[]}
+ */
+function get_keys_of(obj,_real) {
+	let rq=Object.keys(obj);
 	/** @type {any} */
 	let ra=rq;
 	return ra;
+}
+/** @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
+function get_keys_of_ex(obj) {
+	let pd=Object.getOwnPropertyDescriptors(obj);
+	let l1_pk=get_keys_of(pd,obj);
+	/** @type {T} */
+	let obj_proto=Object.getPrototypeOf(obj);
+	let l2_pd=Object.getOwnPropertyDescriptors(obj_proto);
+	let l2_pk=get_keys_of(l2_pd,obj);
+	let rq=l1_pk.concat(l2_pk);
+	return rq;
 }
 class IterateApiResultBase {
 	iterate_target;
@@ -1200,7 +1215,7 @@ class IterateApiResultBase {
 	/** @arg {YtIterateTarget} iterate */
 	constructor(iterate) {
 		this.iterate_target=iterate;
-		let keys=get_keys_of(iterate);
+		let keys=get_keys_of_ex(iterate);
 		for(let i of keys) {
 			this.keys_map.set(i,i);
 		}
