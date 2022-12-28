@@ -1041,7 +1041,7 @@ function fetch_promise_handler(request,options,response) {
 	});
 }
 /**
- * @param {DOMException|Error} rejection
+ * @param {Error} rejection
  * @returns {Promise<Response>}
  */
 function fetch_rejection_handler(rejection) {
@@ -1053,7 +1053,11 @@ function fetch_rejection_handler(rejection) {
 		throw rejection;
 	}
 	if(rejection instanceof TypeError) {
-		console.log(rejection.cause,rejection.message,rejection.name);
+		if('cause' in rejection) {
+			console.log(rejection.message,rejection.name,rejection.cause);
+		} else {
+			console.log(rejection.message,rejection.name);
+		}
 		throw rejection;
 	}
 	console.log("fetch_rejection_handler");
