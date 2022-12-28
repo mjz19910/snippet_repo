@@ -2493,6 +2493,7 @@ function click_track_do(obj, iter_skips) {
 		}
 	}
 }
+const gen_not_want_level_1_endpoint=["clickTrackingParams","commandMetadata"];
 /**
  * @template T
  * @arg {YTNavigateFinishEventDetail<T>} detail
@@ -2535,9 +2536,10 @@ function random_sometimes_break_0(detail,obj,path) {
 		}
 	}
 	if("endpoint" in obj) {
-		let ok_1=Object.keys(obj.endpoint);
+		let ok_1=filter_out_keys(Object.keys(obj.endpoint),gen_not_want_level_1_endpoint);
 		function get_is_ok() {
-			if(eq_keys(ok_1,["clickTrackingParams","commandMetadata","browseEndpoint"])) return true;
+			if(eq_keys(ok_1,["browseEndpoint"])) return true;
+			if(eq_keys(ok_1,["reelWatchEndpoint"])) return true;
 			return false;
 		}
 		if(!get_is_ok()) {
@@ -2622,6 +2624,9 @@ function random_sometimes_break_1(detail,obj,path) {
 	if("reelWatchEndpoint" in obj) {
 		iter_skips.push("reelWatchEndpoint");
 		console.log("obj_reelWatchEndpoint",obj.reelWatchEndpoint);
+	}
+	if("clickTrackingParams" in obj) {
+		iter_skips.push("clickTrackingParams");
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
 	if("browseEndpoint" in detail.endpoint) {
