@@ -1,7 +1,7 @@
 import {BrowseFeedItem} from "./BrowseFeedItem";
-
+import {FeedEntry} from "./FeedEntry";
 
 export type BrowseFeedAction={
-	targetId: "browse-feedFEwhat_to_watch";
+	targetId: `browse-feed${FeedEntry<"what_to_watch">}`;
 	continuationItems: BrowseFeedItem[];
 };
