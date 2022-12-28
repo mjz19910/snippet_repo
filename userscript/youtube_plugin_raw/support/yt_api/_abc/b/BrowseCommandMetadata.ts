@@ -1,5 +1,5 @@
 import {BrowseWebCommandMetadata} from "./BrowseWebCommandMetadata";
 
-export type BrowseCommandMetadata<T>={
-	webCommandMetadata: BrowseWebCommandMetadata<T>;
+export type BrowseCommandMetadata={
+	webCommandMetadata: BrowseWebCommandMetadata;
 };

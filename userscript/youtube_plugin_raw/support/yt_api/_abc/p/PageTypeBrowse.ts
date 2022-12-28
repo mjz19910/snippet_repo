@@ -4,10 +4,10 @@ import {PageResponseBrowse} from "./PageResponseBrowse";
 
 
 
-export interface PageTypeBrowse<T> {
+export interface PageTypeBrowse {
 	pageType: "browse";
 	fromHistory: false;
 	navigationDoneMs: number;
-	endpoint: BrowseEndpoint<T>;
+	endpoint: BrowseEndpoint;
 	response: PageResponseBrowse;
 }

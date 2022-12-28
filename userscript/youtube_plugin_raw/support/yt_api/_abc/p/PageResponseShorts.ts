@@ -2,9 +2,9 @@ import {ShortsEndpoint} from "../../../../ShortsEndpoint";
 import {ShortsPlayerResponse} from "../../../../ShortsPlayerResponse";
 import {PageResponseShortsContentResponse} from "./PageResponseShortsContentResponse";
 
-export type PageResponseShorts<T>={
+export type PageResponseShorts={
 	page: "shorts";
-	endpoint: ShortsEndpoint<T>;
+	endpoint: ShortsEndpoint;
 	response: PageResponseShortsContentResponse;
 	playerResponse: ShortsPlayerResponse;
 	reelWatchSequenceResponse: {
@@ -12,5 +12,5 @@ export type PageResponseShorts<T>={
 		entries: {}[];
 		trackingParams: string;
 	};
-	url: T extends string? `/shorts/${T}`:never;
+	url: `/shorts/${string}`;
 };

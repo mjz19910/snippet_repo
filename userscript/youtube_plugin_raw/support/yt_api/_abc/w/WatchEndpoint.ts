@@ -3,17 +3,17 @@ import {TrackingParamsForKey} from "../t/TrackingParamsForKey";
 import {WatchEndpointData} from "./WatchEndpointData";
 type ParentTrackingParams=TrackingParamsForKey<"parentTrackingParams">;
 export type ResolveUrlCommandMetadata=ParentTrackingParams;
-type WatchWebCommandMetadata<VideoId>={
-  url: VideoId extends string? `/watch?v=${VideoId}`:VideoId;
+type WatchWebCommandMetadata={
+  url: `/watch?v=${string}`;
   webPageType: "WEB_PAGE_TYPE_WATCH";
   rootVe: 3832;
 };
-type WatchCommandMetadata<VideoId>={
-  webCommandMetadata: WatchWebCommandMetadata<VideoId>;
+type WatchCommandMetadata={
+  webCommandMetadata: WatchWebCommandMetadata;
 };
-export interface WatchEndpoint<VideoId> extends ClickTrackingParams {
-  commandMetadata: WatchCommandMetadata<VideoId>;
-  watchEndpoint: WatchEndpointData<VideoId>;
+export interface WatchEndpoint extends ClickTrackingParams {
+  commandMetadata: WatchCommandMetadata;
+  watchEndpoint: WatchEndpointData;
 }
 /*{
     clickTrackingParams: string,

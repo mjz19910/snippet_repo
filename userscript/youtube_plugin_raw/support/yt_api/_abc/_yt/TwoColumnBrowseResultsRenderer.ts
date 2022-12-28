@@ -1,5 +1,5 @@
-import {ResultRenderer} from "./ResultRenderer";
+import {TwoColumnBrowseResultsRendererData as TwoColumnBrowseResultsRendererData} from "./TwoColumnBrowseResultsRendererData";
 
-export interface TwoColumnBrowseResultsRenderer {
-	tabs: ResultRenderer[];
-}
+export type twoColumnBrowseResultsRenderer={
+	twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsRendererData;
+};

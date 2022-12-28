@@ -2394,27 +2394,23 @@ function any(e) {
 	return e;
 }
 
-/** @template T */
 class YTNavigateFinishEvent {
-	/**@template U @arg {Event} value @return {YTNavigateFinishEvent<U>} */
+	/** @arg {Event} value @return {YTNavigateFinishEvent} */
 	static cast(value) {
 		/**@type {any} */
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} */
+	/** @type {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} */
 	detail=any({});
 }
 
 /**
- * @type {((event:YTNavigateFinishEvent<string>)=>void)[]}
+ * @type {((event:YTNavigateFinishEvent)=>void)[]}
  */
 let on_yt_navigate_finish=[];
 
-/**
- * @template T
- * @param {YTNavigateFinishEvent<T>} event
- */
+/** @param {YTNavigateFinishEvent} event */
 function log_page_type_change(event) {
 	let {detail}=event;
 	if(!detail) return;
@@ -2424,12 +2420,11 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 const last_detail_val={value: {}};
-/** @template T @typedef {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} YTNavigateFinishEventDetail */
+/** @typedef {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} YTNavigateFinishEventDetail */
 
 /**
- * @template T
- * @arg {YTNavigateFinishEventDetail<T>} detail
- * @param {YTNavigateFinishEventDetail<T>[keyof YTNavigateFinishEventDetail<T>]} obj
+ * @arg {YTNavigateFinishEventDetail} detail
+ * @param {YTNavigateFinishEventDetail[keyof YTNavigateFinishEventDetail]} obj
  * @param {string[]} path
  * @arg {string[]} skip
  * @arg {number[]} ent_ids
@@ -2487,9 +2482,9 @@ function filter_out_keys(keys,to_remove) {
 	return ok_e;
 }
 const gen_not_want_level_1=["responseContext","contents","trackingParams","topbar"];
-/** @template T @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch<T>} PageResponseWatch */
+/** @typedef {import("./support/yt_api/_abc/p/PageResponseWatch.js").PageResponseWatch} PageResponseWatch */
 /** @typedef {import("./support/yt_api/_abc/p/PageResponseBrowse.js").PageResponseBrowse}  PageResponseBrowse */
-/** @template T @arg {YTNavigateFinishEventDetail<T>} detail @arg {YTNavigateFinishEventDetail<T>["response"]} obj */
+/** @arg {YTNavigateFinishEventDetail} detail @arg {YTNavigateFinishEventDetail["response"]} obj */
 function pb_0(detail,obj) {
 	if(obj.page==="watch") {
 		x: {
@@ -2527,9 +2522,8 @@ function click_track_do(obj,iter_skips) {
 }
 const gen_not_want_level_1_endpoint=["clickTrackingParams","commandMetadata"];
 /**
- * @template T
- * @arg {YTNavigateFinishEventDetail<T>} detail
- * @param {YTNavigateFinishEventDetail<T>["response"]} obj
+ * @arg {YTNavigateFinishEventDetail} detail
+ * @param {YTNavigateFinishEventDetail["response"]} obj
  * @param {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
@@ -2656,9 +2650,8 @@ function on_command_meta(obj) {
 	}
 }
 /**
- * @template T
- * @arg {YTNavigateFinishEventDetail<T>} detail
- * @param {YTNavigateFinishEventDetail<T>["endpoint"]} obj
+ * @arg {YTNavigateFinishEventDetail} detail
+ * @param {YTNavigateFinishEventDetail["endpoint"]} obj
  * @param {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
@@ -2722,7 +2715,7 @@ function on_json_request(request_info) {
 	}
 }
 
-/** @template T @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail<T>} detail */
+/** @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
 	let ok=any(Object.keys(detail));

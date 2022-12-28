@@ -1,9 +1,9 @@
 import {PlaylistCommandMetadata} from "./PlaylistCommandMetadata";
 
-export type PlaylistEndpoint<T extends string>={
+export type PlaylistEndpoint={
 	browseEndpoint: {
-		browseId: "VLWL";
+		browseId: `VL${string}`;
 	};
 	clickTrackingParams: string;
-	commandMetadata: PlaylistCommandMetadata<T>;
+	commandMetadata: PlaylistCommandMetadata;
 };

@@ -1,14 +1,9 @@
 import {PlaylistEndpoint} from "./PlaylistEndpoint";
-import {TwoColumnBrowseResultsRenderer} from "./TwoColumnBrowseResultsRenderer";
+import {PlaylistResponseContent} from "./PlaylistResponseContent";
 
-export type PlaylistResponse<T extends string>={
-	endpoint: PlaylistEndpoint<T>;
+export type PlaylistResponse={
+	endpoint: PlaylistEndpoint;
 	page: "playlist";
-	response: {
-		contents: {
-			twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsRenderer;
-		};
-		trackingParams: string;
-	};
-	url: `/playlist?list=${T}`;
+	response: PlaylistResponseContent;
+	url: `/playlist?list=${string}`;
 };

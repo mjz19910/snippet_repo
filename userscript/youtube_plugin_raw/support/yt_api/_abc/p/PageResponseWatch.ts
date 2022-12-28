@@ -34,9 +34,9 @@ type WatchContentResponse={
 	trackingParams: string;
 };
 
-export type PageResponseWatch<T>={
+export type PageResponseWatch={
 	page: "watch";
-	endpoint: WatchEndpoint<T>;
+	endpoint: WatchEndpoint;
 	response: WatchContentResponse;
 	playerResponse: WatchPlayerResponse;
 	url: string;

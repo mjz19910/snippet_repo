@@ -1,9 +1,9 @@
 import {EngagementPanelSectionListRendererOpt} from "../e/EngagementPanelSectionListRendererOpt";
 import {ReelWatchEndpoint} from "../r/ReelWatchEndpoint";
 
-export type PageResponseWatchShorts<VideoId>={
+export type PageResponseWatchShorts={
 	page: "shorts";
-	endpoint: ReelWatchEndpoint<VideoId>;
+	endpoint: ReelWatchEndpoint;
 	response: {
 		responseContext: {};
 		overlay: {};

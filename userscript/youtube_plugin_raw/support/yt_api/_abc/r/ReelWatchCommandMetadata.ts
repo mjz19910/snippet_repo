@@ -1,9 +1,9 @@
-type ReelWatchWebCommandMetadata<T>={
-	url: T extends string? `/shorts/${T}`:never;
+type ReelWatchWebCommandMetadata={
+	url: `/shorts/${string}`;
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
 
-export type ReelWatchCommandMetadata<T>={
-	webCommandMetadata: ReelWatchWebCommandMetadata<T>;
+export type ReelWatchCommandMetadata={
+	webCommandMetadata: ReelWatchWebCommandMetadata;
 };

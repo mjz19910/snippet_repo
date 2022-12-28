@@ -3,4 +3,34 @@ import {PageTypeShorts} from "../p/PageTypeShorts";
 import {PageTypeWatch} from "../p/PageTypeWatch";
 import {PageTypePlaylist} from "./PageTypePlaylist";
 
-export type YTNavigateFinishEventDetail<T extends string>=PageTypeWatch<T>|PageTypeBrowse<T>|PageTypeShorts<T>|PageTypePlaylist<T>;
+type WebPageTypeChannel={
+	endpoint: {
+		clickTrackingParams: string;
+		browseEndpoint: {
+			browseId: `UC${string}`;
+			canonicalBaseUrl: `/@${string}`;
+		};
+		commandMetadata: {
+			webCommandMetadata: {
+				apiUrl: "/youtubei/v1/browse";
+				rootVe: 3611;
+				url: `/@${string}`;
+				webPageType: "WEB_PAGE_TYPE_CHANNEL";
+			};
+		};
+	};
+	pageType: "channel";
+	fromHistory: boolean;
+	response: {
+		page: "channel";
+		response: {};
+	};
+	navigationDoneMs: number;
+};
+
+export type YTNavigateFinishEventDetail=
+	PageTypeWatch|
+	PageTypeBrowse|
+	PageTypeShorts|
+	WebPageTypeChannel|
+	PageTypePlaylist;

@@ -1,8 +1,8 @@
 import {ReelWatchEndpoint} from "./ReelWatchEndpoint";
 import {ShortsCommandMetadata} from "./ShortsCommandMetadata";
 
-export type ShortsEndpoint<T>={
+export type ShortsEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: ShortsCommandMetadata<T>;
+	commandMetadata: ShortsCommandMetadata;
 	reelWatchEndpoint: ReelWatchEndpoint;
 };
