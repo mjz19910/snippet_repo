@@ -11,4 +11,5 @@ export type AnySavedData={
 	getDatasyncIdsEndpoint?: {};
 	page_type_watch?: {};
 	page_type_browse?: {};
+	page_type_playlist?: {};
 };

@@ -1445,6 +1445,8 @@ function filter_on_initial_data(cls,apply_args) {
 					if(page_type==="watch") {
 						cls.handle_page_type(ret.response,page_type,"response");
 						cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
+					} else if(page_type==="playlist") {
+						cls.handle_page_type(ret.response,page_type,"response");
 					} else {
 						debugger;
 					}
@@ -1794,7 +1796,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {"browse"|"watch"} page_type
+	 * @param {"browse"|"watch"|"playlist"} page_type
 	 * @arg {"response"|"playerResponse"} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
@@ -1810,7 +1812,7 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/**
-	 * @param {ReturnType<typeof this.use_template_url>|"page_type_watch"|"page_type_browse"} path
+	 * @param {ReturnType<typeof this.use_template_url>|"page_type_watch"|"page_type_browse"|"page_type_playlist"} path
 	 * @arg {{[str: string]:{}}} data
 	 */
 	handle_any_data(path,data) {
@@ -2646,6 +2648,8 @@ function random_sometimes_break_1(detail,obj,path) {
 			if(bid==="FEwhat_to_watch") break x;
 			if(bid==="FElibrary") break x;
 			if(bid==="FEhistory") break x;
+			//spell:disable-next-line
+			if(bid==="VLWL") break x;
 			debugger;
 		}
 	}

@@ -1,3 +1,4 @@
 export type BrowseEndpointData={
-	browseId: "FEsubscriptions"|"FEwhat_to_watch"|"FElibrary"|"FEhistory";
+	//spell:disable-next-line
+	browseId: "FEsubscriptions"|"FEwhat_to_watch"|"FElibrary"|"FEhistory"|"VLWL";
 };
