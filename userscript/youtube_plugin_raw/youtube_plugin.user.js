@@ -2480,6 +2480,7 @@ function pb_0(detail,obj) {
 			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
 			if(eq_keys(ok,['header','onResponseReceivedActions'])) break x;
 			if(eq_keys(ok,['header','observedStateTags'])) break x;
+			if(eq_keys(ok,['header'])) break x;
 			debugger;
 		}
 		// [ "responseContext", "contents", "header", "trackingParams", "topbar", "onResponseReceivedActions" ]
@@ -2643,7 +2644,10 @@ function random_sometimes_break_1(detail,obj,path) {
 	if("browseEndpoint" in detail.endpoint) {
 		let bid=detail.endpoint.browseEndpoint.browseId;
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
-		if(bid!=="FEsubscriptions"&&bid!=="FEwhat_to_watch") {
+		x: {
+			if(bid==="FEsubscriptions") break x;
+			if(bid==="FEwhat_to_watch") break x;
+			if(bid==="FElibrary") break x;
 			debugger;
 		}
 	}
