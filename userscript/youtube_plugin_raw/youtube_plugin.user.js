@@ -2520,8 +2520,10 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 	let is_this_keys_ok=get_is_ok();
 	function get_is_ok() {
+		if(!ok_e.length) return true;
 		if(eq_keys(ok_e,["expirationTime"])) return true;
 		if(eq_keys(ok_e,["playerResponse"])) return true;
+		if(eq_keys(ok_e,["rootVe"])) return true;
 		if(eq_keys(ok_e,["rootVe","expirationTime"])) return true;
 		if(eq_keys(ok_e,["previousCsn","expirationTime"])) return true;
 		if(eq_keys(ok_e,["playerResponse","reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
@@ -2644,6 +2646,12 @@ function random_sometimes_break_1(detail,obj,path) {
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
 	if("browseEndpoint" in detail.endpoint) {
 		let bid=detail.endpoint.browseEndpoint.browseId;
+		let wpt=detail.endpoint.commandMetadata.webCommandMetadata.webPageType;
+		x: {
+			if(wpt==="WEB_PAGE_TYPE_PLAYLIST") break x;
+			if(wpt==="WEB_PAGE_TYPE_BROWSE") break x;
+			debugger;
+		}
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
 		x: {
 			if(bid==="FEsubscriptions") break x;
@@ -2652,6 +2660,7 @@ function random_sometimes_break_1(detail,obj,path) {
 			if(bid==="FEhistory") break x;
 			//spell:disable-next-line
 			if(bid==="VLWL") break x;
+			if(detail.endpoint.commandMetadata.webCommandMetadata.webPageType==="WEB_PAGE_TYPE_PLAYLIST") break x;
 			debugger;
 		}
 	}
@@ -2687,6 +2696,7 @@ function on_page_type_changed(detail) {
 		case "browse": break;
 		case "shorts": break;
 		case "watch": break;
+		case "playlist": break;
 		default: debugger;
 	}
 	if(last_page_type!==detail.pageType) {
