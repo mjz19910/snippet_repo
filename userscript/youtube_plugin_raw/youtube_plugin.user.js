@@ -1439,7 +1439,7 @@ function filter_on_initial_data(cls,apply_args) {
 			page_type_iter(ret.page);
 			switch(page_type) {
 				case void 0: return;
-				// "watch" | "browse" | "shorts" | "channel" | "playlist"
+				case "settings":
 				case "watch": case "browse": case "shorts": case "channel": case "playlist": {
 					if(ret.page==="watch") {
 						cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
@@ -2677,6 +2677,7 @@ function random_sometimes_break_1(detail,obj,path) {
 			if(wpt==="WEB_PAGE_TYPE_PLAYLIST") break x;
 			if(wpt==="WEB_PAGE_TYPE_BROWSE") break x;
 			if(wpt==="WEB_PAGE_TYPE_CHANNEL") break x;
+			if(wpt==="WEB_PAGE_TYPE_SETTINGS") break x;
 			debugger;
 		}
 		function browse_with_part() {
