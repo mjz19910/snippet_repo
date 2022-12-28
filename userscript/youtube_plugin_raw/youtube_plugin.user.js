@@ -1041,17 +1041,23 @@ function fetch_promise_handler(request,options,response) {
 	});
 }
 /**
- * @param {{ code: number; }} rejection
+ * @param {DOMException|Error} rejection
  * @returns {Promise<Response>}
  */
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {
-		if(rejection.message==="") {
-			throw rejection;
+		if(rejection.message!=="") {
+			console.log("fetch_rejection_handler",rejection);
+			console.log(rejection);
 		}
+		throw rejection;
 	}
-	console.log("fetch_rejection_handler",rejection);
-	console.log(rejection);
+	if(rejection instanceof TypeError) {
+		console.log(rejection.cause,rejection.message,rejection.name);
+		throw rejection;
+	}
+	console.log("fetch_rejection_handler");
+	console.log("\t",rejection);
 	throw rejection;
 }
 /**
@@ -1824,7 +1830,7 @@ class FilterHandlers extends IterateApiResultBase {
 					case void 0: return;
 					case "settings":
 					case "watch": case "browse": case "shorts": case "channel": case "playlist": {
-						
+
 					} break;
 					default: debugger;
 				}
