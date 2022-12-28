@@ -2538,20 +2538,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		console.log("rootVe",obj,obj.rootVe);
 	}
 	if("page" in obj) {
-		if(obj.page==="watch") {
-			iter_skips.push("page");
-		} else if(obj.page==="browse") {
-			iter_skips.push("page");
-			obj.previousCsn;
-		} else if(obj.page==="shorts") {
-			iter_skips.push("page");
-		} else if(obj.page==="playlist") {
-			iter_skips.push("page");
-		} else if(obj.page==="channel") {
-			iter_skips.push("page");
-		} else {
-			debugger;
-		}
+		iter_skips.push("page");
 	}
 	if("endpoint" in obj) {
 		let ok_1=filter_out_keys(Object.keys(obj.endpoint),gen_not_want_level_1_endpoint);
