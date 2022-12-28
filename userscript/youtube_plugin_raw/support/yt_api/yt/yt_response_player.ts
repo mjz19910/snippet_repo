@@ -1,8 +1,6 @@
-import {GeneralContext} from "../../yt_api/_abc/g/GeneralContext.js";
+import {WatchResponsePlayer} from "../_abc/w/WatchResponsePlayer.js";
 
 export type yt_response_player={
 	url_type: "player";
-	json: {
-		responseContext: GeneralContext;
-	};
+	json: WatchResponsePlayer;
 };

@@ -1302,12 +1302,11 @@ class YtIterateTarget {
 			return true;
 		});
 	}
-	run_mc=true;
 	/** @type {(...x:[ApiIterateState,{}])=>void} */
 	webCommandMetadata(state,metadata) {
-		if(!this.run_mc) return;
+		if(!state.t.run_mc) return;
 		console.log("webCommandMetadata",state.path,metadata);
-		this.run_mc=false;
+		state.t.run_mc=false;
 	}
 	/** @type {(...x:[ApiIterateState,{}])=>void} */
 	compactLinkRenderer(state,renderer) {
@@ -1642,6 +1641,7 @@ class FilterHandlers {
 			["videoRenderer",false],
 		]);
 	}
+	run_mc=false;
 	/**
 	 * @arg {string} path
 	 * @arg {AppendContinuationItemsAction} action
@@ -1851,16 +1851,17 @@ class FilterHandlers {
 		if(url_type==="channel") {}
 		throw new Error("Stop");
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} data @arg {string|URL|Request} request @arg {URL} parsed_url */
-	on_json_type(url_type,data,request,parsed_url) {
+	/** @typedef {import("./support/yt_api/_/r/responseTypes.js").responseTypes} responseTypes */
+	/** @arg {responseTypes} input @arg {string|URL|Request} request @arg {URL} parsed_url */
+	on_json_type(input,request,parsed_url) {
 		try {
 			on_json_request({
-				...this.get_res_data(url_type,data),
+				...input,
 				request,
 				parsed_url,
 			});
 		} catch {
-			console.log("api not handled", url_type);
+			console.log("api not handled", input.url_type);
 		}
 	}
 	/**
@@ -1898,20 +1899,11 @@ class FilterHandlers {
 		}
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
-		this.on_json_type(url_type,data,request,req_parse);
 		this.handle_any_data(url_type,data);
-		/** @returns {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
-		function as_player_response() {
-			return any(data);
-		}
-		/** @returns {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
-		function as_att_get() {
-			debugger;
-			return any(data);
-		}
-		let res=this.get_res_data(url_type,data)
+		let res=this.get_res_data(url_type,data);
+		this.on_json_type(res,request,req_parse);
 		switch(res.url_type) {
-			case "att.get": this.on_att_get(as_att_get()); break;
+			case "att.get": this.on_att_get(res.json); break;
 			case "player": debugger; this.on_v1_player(api_path,res.json); break;
 			default: debugger;
 		}
@@ -2875,8 +2867,8 @@ const random_factor=0.2;
 /** @typedef {import("./support/yt_api").YtJsonUnsupportedRequest} YtJsonUnsupportedRequest */
 /** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
 function on_json_request(request_info) {
-	let break_it=false;
-	if(!break_it) return;
+	let skip_req_check=true;
+	if(skip_req_check) return;
 	switch(request_info.url_type) {
 		case "att.get": console.log(request_info.url_type,request_info.json); break;
 		default: console.log(request_info.url_type,request_info.json); break;
