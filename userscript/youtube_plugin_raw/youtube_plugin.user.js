@@ -577,6 +577,7 @@ function with_ytd_scope() {
 		 * @param {CustomEvent<{filter_gain: number}>} event
 		 */
 		onStateChange(event) {
+			console.log("gain controller state change, new gain is", event.detail.filter_gain);
 			this.gain_controller.setGain(event.detail.filter_gain);
 			this.updateRangeElement(event.detail.filter_gain);
 		}
@@ -2535,7 +2536,9 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(eq_keys(ok_e,["rootVe"])) return true;
 		if(eq_keys(ok_e,["rootVe","expirationTime"])) return true;
 		if(eq_keys(ok_e,["previousCsn","expirationTime"])) return true;
+		if(eq_keys(ok_e,['rootVe', 'preconnect', 'playerResponse'])) return true;
 		if(eq_keys(ok_e,["playerResponse","reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
+		debugger;
 		return false;
 	}
 	click_track_do(obj,iter_skips);
@@ -3319,7 +3322,6 @@ class HistoryStateManager extends EventTarget {
 			"configurable": true,
 			"enumerable": true,
 			"get": function() {
-				console.trace('hist get');
 				return hist_state_getter.call(this);
 			}
 		});
