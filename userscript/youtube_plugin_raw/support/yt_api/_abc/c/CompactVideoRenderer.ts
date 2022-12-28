@@ -8,7 +8,7 @@ import {ThumbnailH} from "../t/ThumbnailH.js";
 import {ThumbnailOverlay} from "../t/ThumbnailOverlay.js";
 import {ThumbnailsList} from "../t/ThumbnailsList.js";
 import {TrackingParams} from "../t/TrackingParams.js";
-import {RichThumbnail} from "../../_rich/RichThumbnail.js";
+import {RichThumbnail} from "../../rich/RichThumbnail.js";
 
 export interface CompactVideoRenderer extends TrackingParams {
 	accessibility: Accessibility;

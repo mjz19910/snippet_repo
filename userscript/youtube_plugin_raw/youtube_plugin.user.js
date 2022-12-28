@@ -1333,7 +1333,7 @@ class HandleRendererContentItemArray {
 	// Ck;
 	// Jn().resolve(Cv).currentEndpoint;u5().browserHistory;
 	*/
-	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/_rich/RichItemRendererH.js").RichItemRendererH} content_item */
+	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRendererH.js").RichItemRendererH} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let renderer=content_item.richItemRenderer;
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
@@ -1345,7 +1345,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {import("./support/yt_api/_rich/RichSectionRendererH.js").RichSectionRendererH} content_item */
+	/** @arg {import("./support/yt_api/rich/RichSectionRendererH.js").RichSectionRendererH} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
@@ -1413,7 +1413,7 @@ class HandleRichGridRenderer {
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
@@ -1462,7 +1462,7 @@ class FilterHandlers extends IterateApiResultBase {
 	};
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
 		this.handlers.rich_grid.richGridRenderer(path,renderer);
@@ -2260,7 +2260,7 @@ inject_api_yt.dom_observer=dom_observer;
 
 
 class YtdPageManagerElement extends HTMLElement {
-	/** @returns {import("./support/yt_api/_yt/YtCurrentPage.js").YtCurrentPage} */
+	/** @returns {import("./support/yt_api/yt/YtCurrentPage.js").YtCurrentPage} */
 	getCurrentPage() {throw 1;}
 }
 
@@ -2352,7 +2352,7 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-/** @type {import("./support/yt_api/_yt/YtdPlayerElement.js").YtdPlayerElement | null} */
+/** @type {import("./support/yt_api/yt/YtdPlayerElement.js").YtdPlayerElement | null} */
 let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
@@ -2361,7 +2361,7 @@ function on_ytd_player(element) {
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
-	/** @type {import("./support/yt_api/_yt/YtdPlayerElement.js").YtdPlayerElement} */
+	/** @type {import("./support/yt_api/yt/YtdPlayerElement.js").YtdPlayerElement} */
 	let element_type=element_any;
 	ytd_player=element_type;
 	window.ytd_player=element;
@@ -2416,7 +2416,7 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 const last_detail_val={value: {}};
-/** @typedef {import("./support/yt_api/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} YTNavigateFinishEventDetail */
+/** @typedef {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} YTNavigateFinishEventDetail */
 
 /**
  * @arg {YTNavigateFinishEventDetail} detail
