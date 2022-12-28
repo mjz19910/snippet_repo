@@ -1,6 +1,7 @@
 import {CaptionsRenderer} from "../../../../ShortsPlayerResponse.js";
 import {EndscreenRenderer} from "./EndscreenRenderer";
 import {FrameworkUpdates} from "./FrameworkUpdates.js";
+import {PaidContentOverlay} from "./PaidContentOverlay";
 import {PlayerAdItem} from "./PlayerAdItem";
 
 export type WatchPlayerResponse={
@@ -21,4 +22,5 @@ export type WatchPlayerResponse={
 	adPlacements: [];
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;
+	paidContentOverlay?: PaidContentOverlay;
 };

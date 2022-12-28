@@ -2588,6 +2588,7 @@ function random_sometimes_break_0(detail,obj,path) {
 					if(cur==="frameworkUpdates") continue;
 					if(cur==="captions") continue;
 					if(cur==="endscreen") continue;
+					if(cur==="paidContentOverlay") continue;
 					debugger;
 				}
 			} break;
