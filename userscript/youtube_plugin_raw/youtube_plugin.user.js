@@ -1436,13 +1436,7 @@ function filter_on_initial_data(cls,apply_args) {
 		if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
 		try {
 			let page_type=window.ytPageType;
-			switch(ret.page) {
-				case "browse": break;
-				case "shorts": break;
-				case "watch": break;
-				case "channel": break;
-				default: debugger;
-			}
+			page_type_iter(ret.page);
 			switch(page_type) {
 				case void 0: return;
 				case "browse": case "shorts": case "watch": case "playlist": {
@@ -2707,6 +2701,20 @@ function on_json_request(request_info) {
 	}
 }
 
+/**
+ * @param {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']} pageType
+ */
+function page_type_iter(pageType) {
+	switch(pageType) {
+		case "browse": break;
+		case "channel": break;
+		case "playlist": break;
+		case "shorts": break;
+		case "watch": break;
+		default: debugger;
+	}
+}
+
 /** @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
@@ -2723,13 +2731,7 @@ function on_page_type_changed(detail) {
 				debugger;
 		}
 	}
-	switch(detail.pageType) {
-		case "browse": break;
-		case "shorts": break;
-		case "watch": break;
-		case "playlist": break;
-		default: debugger;
-	}
+	page_type_iter(detail.pageType);
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
 		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
