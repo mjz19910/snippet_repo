@@ -4,7 +4,7 @@ import {ChannelResponse} from "./ChannelResponse";
 export type WebPageTypeChannel={
 	pageType: "channel";
 	endpoint: ChannelEndpoint;
-	fromHistory: boolean;
 	response: ChannelResponse;
+	fromHistory: boolean;
 	navigationDoneMs: number;
 };
