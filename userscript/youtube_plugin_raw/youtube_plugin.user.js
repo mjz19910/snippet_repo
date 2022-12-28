@@ -1844,11 +1844,15 @@ class FilterHandlers {
 	}
 	/** @arg {UrlTypes} url_type @arg {{}} data @arg {string|URL|Request} request @arg {URL} parsed_url */
 	on_json_type(url_type,data,request,parsed_url) {
-		on_json_request({
-			...this.get_res_data(url_type,data),
-			request,
-			parsed_url,
-		});
+		try {
+			on_json_request({
+				...this.get_res_data(url_type,data),
+				request,
+				parsed_url,
+			});
+		} catch {
+			console.log("api not handled", url_type);
+		}
 	}
 	/**
 	 * @arg {{}} data
