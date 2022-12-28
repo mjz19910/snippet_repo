@@ -4,9 +4,9 @@ import {MetadataBadgeRenderers} from "../m/MetadataBadgeRenderers.js";
 import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {SimpleTextFixmeValueNeeded} from "../s/SimpleText.js";
 import {TextRuns} from "../t/TextRuns.js";
-import {ThumbnailsList} from "../t/ThumbnailsList.js";
-import {ThumbnailOverlay} from "../t/ThumbnailOverlay.js";
 import {ThumbnailH} from "../t/ThumbnailH.js";
+import {ThumbnailOverlay} from "../t/ThumbnailOverlay.js";
+import {ThumbnailsList} from "../t/ThumbnailsList.js";
 import {TrackingParams} from "../t/TrackingParams.js";
 import {RichThumbnail} from "../_rich/RichThumbnail.js";
 

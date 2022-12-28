@@ -1,6 +1,6 @@
+import {IconExternalLink} from "../i/IconExternalLink";
 import {key_simpleText,SimpleText} from "../s/SimpleText.js";
 import {TrackingParams} from "../t/TrackingParams.js";
-import {IconExternalLink} from "../i/IconExternalLink";
 
 
 export interface ButtonRendererData extends TrackingParams {
