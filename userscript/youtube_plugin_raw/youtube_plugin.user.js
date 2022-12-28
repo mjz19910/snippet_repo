@@ -1077,9 +1077,11 @@ function fetch_inject(url_or_request,options) {
 
 fetch_inject.__proxy_target__=window.fetch;
 
-/** @arg {any[]} args */
-function do_proxy_call_getInitialData(args) {
-	return yt_handlers.on_initial_data(args);
+/**
+ * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
+ */
+function do_proxy_call_getInitialData(apply_args) {
+	return yt_handlers.on_initial_data(apply_args);
 }
 class PropertyHandler {
 	/** @type {PropertyHandler[]} */
@@ -1426,39 +1428,6 @@ class AppendContinuationItemsAction {
 	continuationItems=[];
 	targetId="";
 }
-/**
- * @arg {FilterHandlers} cls
- * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
- */
-function filter_on_initial_data(cls,apply_args) {
-	let ret=Reflect.apply(...apply_args);
-	if(ret.response) {
-		if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
-		try {
-			let page_type=window.ytPageType;
-			page_type_iter(ret.page);
-			switch(page_type) {
-				case void 0: return;
-				case "settings":
-				case "watch": case "browse": case "shorts": case "channel": case "playlist": {
-					if(ret.page==="watch") {
-						cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
-					}
-					cls.handle_page_type(ret.response,page_type,"response");
-				} break;
-				default: debugger;
-			}
-		} catch(err) {
-			console.log(cls.class_name+": init filter error");
-			console.log(err);
-		}
-	} else {
-		console.log(cls.class_name+": unhandled return value:",ret);
-		debugger;
-	}
-	return ret;
-}
-
 
 /** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
@@ -1843,10 +1812,36 @@ class FilterHandlers extends IterateApiResultBase {
 		this.default_iter(path,data);
 	}
 	/**
-	 * @param {any} apply_args
+	 * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
-		return filter_on_initial_data(this,apply_args);
+		let cls=this;
+		let ret=Reflect.apply(...apply_args);
+		if(ret.response) {
+			if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
+			try {
+				let page_type=window.ytPageType;
+				page_type_iter(ret.page);
+				switch(page_type) {
+					case void 0: return;
+					case "settings":
+					case "watch": case "browse": case "shorts": case "channel": case "playlist": {
+						if(ret.page==="watch") {
+							cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
+						}
+						cls.handle_page_type(ret.response,page_type,"response");
+					} break;
+					default: debugger;
+				}
+			} catch(err) {
+				console.log(cls.class_name+": init filter error");
+				console.log(err);
+			}
+		} else {
+			console.log(cls.class_name+": unhandled return value:",ret);
+			debugger;
+		}
+		return ret;
 	}
 }
 /**
