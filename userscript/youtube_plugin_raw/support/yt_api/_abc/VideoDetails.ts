@@ -1,4 +1,3 @@
-
 export type VideoDetails={
 	videoId: string;
 	channelId: string;

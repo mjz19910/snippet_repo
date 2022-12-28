@@ -58,7 +58,7 @@ function save_new_map(key,map) {
 }
 
 class SavedData {
-	/** @type {import("./AnySavedData.js").AnySavedData} */
+	/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
 	any_data={};
 }
 
@@ -1605,7 +1605,7 @@ class FilterHandlers extends IterateApiResultBase {
 			throw new Error("unreachable");
 		}
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
-		/** @type {Split<import("./parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
+		/** @type {Split<import("./support/parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(path_parts,res_parse);
 	}
@@ -1748,7 +1748,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "notification.get_unseen_count": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {import("./support/_/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
+				/** @type {import("./support/_/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1814,7 +1814,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {import("./AnySavedData.js").AnySavedData} */
+		/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);

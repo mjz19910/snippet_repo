@@ -1,4 +1,4 @@
-import {ParseUrlSearchParams} from "../support/search_params_parse/SearchParamsParse.js";
+import {ParseUrlSearchParams} from "../search_params_parse/SearchParamsParse.js";
 import {Decay} from "./Decay";
 import {vv} from "./index";
 

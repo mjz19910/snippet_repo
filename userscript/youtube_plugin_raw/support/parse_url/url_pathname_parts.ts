@@ -1,4 +1,4 @@
-import {Split} from "../support/make/Split.js";
+import {Split} from "../make/Split.js";
 import {RemoveFirst} from "./RemoveFirst";
 import {vv} from "./index";
 

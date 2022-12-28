@@ -1,4 +1,4 @@
-import {Split} from "../support/make/Split.js";
+import {Split} from "../make/Split.js";
 import {UrlParse_ext} from "./UrlParse_ext";
 
 export function create_from_parse_partial<T extends string>(x: T): UrlParse_ext<T> {
