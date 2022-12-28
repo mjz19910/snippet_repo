@@ -22,6 +22,12 @@ message PlayerParams {
 message TrackingParams {
 	required int32 field_01 = 1;
 	required int32 field_02 = 2;
+	required DateTime datetime = 4;
+}
+
+message TrackingParamsEx {
+	required int32 field_01 = 1;
+	required int32 field_02 = 2;
 	optional int32 field_03 = 3;
 	required DateTime datetime = 4;
 }
