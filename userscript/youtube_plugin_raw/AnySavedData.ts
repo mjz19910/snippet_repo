@@ -6,6 +6,7 @@ export type AnySavedData={
 	"notification.get_unseen_count"?: {};
 	"notification.get_notification_menu"?: {};
 	reel_item_watch?: {};
+	reel_watch_sequence?: {};
 	player?: {};
 	next?: {};
 	getDatasyncIdsEndpoint?: {};

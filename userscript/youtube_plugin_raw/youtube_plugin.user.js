@@ -1665,6 +1665,7 @@ class FilterHandlers extends IterateApiResultBase {
 			} break;
 			case "reel": index++; switch(parts[index]) {
 				case "reel_item_watch": return "reel_item_watch";
+				case "reel_watch_sequence": return "reel_watch_sequence";
 				default: console.log('no handler for',parts,parts[index]); debugger;
 			}; break;
 			case "browse": return "browse";
@@ -1825,7 +1826,7 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {{[U in typeof path]?: SavedData["any_data"][U]}} */
+		/** @type {{[U in typeof path]?: import("./AnySavedData.js").AnySavedData[U]}} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.default_iter(path,data);
