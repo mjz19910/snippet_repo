@@ -23,7 +23,16 @@ type WebPageTypeChannel={
 	fromHistory: boolean;
 	response: {
 		page: "channel";
-		response: {};
+		response: {
+			responseContext: {};
+			contents: {};
+			header: {};
+			metadata: {};
+			trackingParams: string;
+			topbar: {};
+			microformat: {};
+			onResponseReceivedActions: {}[];
+		};
 	};
 	navigationDoneMs: number;
 };

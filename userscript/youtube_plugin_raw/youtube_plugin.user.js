@@ -1436,30 +1436,22 @@ function filter_on_initial_data(cls,apply_args) {
 		if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
 		try {
 			let page_type=window.ytPageType;
-			if(page_type) {
-				if(ret.page==="browse") {
-					if(page_type==="browse") {
-						cls.handle_page_type(ret.response,page_type,"response");
-					} else {
-						debugger;
-					}
-				} else if(ret.page==="shorts") {
-					if(page_type==="shorts") {
-						cls.handle_page_type(ret.response,page_type,"response");
-					} else {
-						debugger;
-					}
-				} else {
-					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
-					if(page_type==="watch") {
-						cls.handle_page_type(ret.response,page_type,"response");
+			switch(ret.page) {
+				case "browse": break;
+				case "shorts": break;
+				case "watch": break;
+				case "channel": break;
+				default: debugger;
+			}
+			switch(page_type) {
+				case void 0: return;
+				case "browse": case "shorts": case "watch": case "playlist": {
+					if(ret.page==="watch") {
 						cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
-					} else if(page_type==="playlist") {
-						cls.handle_page_type(ret.response,page_type,"response");
-					} else {
-						debugger;
 					}
-				}
+					cls.handle_page_type(ret.response,page_type,"response");
+				} break;
+				default: debugger;
 			}
 		} catch(err) {
 			console.log(cls.class_name+": init filter error");
@@ -2588,7 +2580,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			if(cur==="responseContext") continue;
 			if(cur==="playabilityStatus") continue;
 			if(cur==="streamingData") continue;
-			if(cur==="playerAds") continue; if(obj.page==="watch") {obj.playerResponse.playerAds;debugger;};
+			if(cur==="playerAds") continue; if(obj.page==="watch") {obj.playerResponse.playerAds; debugger;};
 			if(cur==="playbackTracking") continue;
 			if(cur==="videoDetails") continue;
 			if(cur==="playerConfig") continue;
@@ -2600,7 +2592,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			if(cur==="videoQualityPromoSupportedRenderers") continue;
 			if(cur==="adPlacements") continue;
 			if(cur==="frameworkUpdates") continue;
-			if(cur==="captions") continue;obj.playerResponse.captions;
+			if(cur==="captions") continue; obj.playerResponse.captions;
 			debugger;
 		}
 		iter_skips.push("playerResponse");
