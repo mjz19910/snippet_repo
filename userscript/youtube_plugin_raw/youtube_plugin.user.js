@@ -574,10 +574,14 @@ function with_ytd_scope() {
 			this.range_element.value=""+Math.floor(this.max*new_gain);
 		}
 		/**
-		 * @param {CustomEvent<{filter_gain: number}>} event
+		 * @param {CustomEvent<{filter_gain: number|undefined}>} event
 		 */
 		onStateChange(event) {
-			console.log("gain controller state change, new gain is",event.detail.filter_gain);
+			if(event.detail.filter_gain==void 0) {
+				this.gain_controller.setGain(1);
+				this.updateRangeElement(1);
+				return;
+			}
 			this.gain_controller.setGain(event.detail.filter_gain);
 			this.updateRangeElement(event.detail.filter_gain);
 		}
@@ -2689,6 +2693,7 @@ function random_sometimes_break_1(detail,obj,path) {
 		x: {
 			if(wpt==="WEB_PAGE_TYPE_PLAYLIST") break x;
 			if(wpt==="WEB_PAGE_TYPE_BROWSE") break x;
+			if(wpt==="WEB_PAGE_TYPE_CHANNEL") break x;
 			debugger;
 		}
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
@@ -2709,6 +2714,8 @@ const random_factor=0.2;
 
 /** @param {import("./support/json_req.js").json_req} request_info */
 function on_json_request(request_info) {
+	let break_it=false;
+	if(!break_it) return;
 	switch(request_info.url_type) {
 		case "att.get": console.log(request_info.url_type,request_info.json); break;
 		default: console.log(request_info.url_type,request_info.json); break;
