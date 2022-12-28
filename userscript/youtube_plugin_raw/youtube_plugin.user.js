@@ -1037,7 +1037,7 @@ function fetch_promise_handler(request,options,response) {
 		get(_obj,key,_proxy) {
 			for(let i=0;i<handled_keys.length;i++) {
 				if(key in fake_res) {
-					if(key === "text") {
+					if(key==="text") {
 						return fake_res[key];
 					} else {
 						console.log("need new case for new key on fake Response");
@@ -1589,7 +1589,7 @@ class FilterHandlers {
 	 * @param {string} _path
 	 * @param {{}} renderer
 	 */
-	compactVideoRenderer(_path, renderer) {
+	compactVideoRenderer(_path,renderer) {
 		this.iteration.default_iter("compactVideoRenderer",renderer);
 	}
 	/**
@@ -1743,7 +1743,7 @@ class FilterHandlers {
 				url_type,
 				/** @type {import("./support/_/yt/yt_response_browse.js").yt_response_browse['json']} */
 				json: any(json),
-			}
+			};
 			case "guide": return {
 				url_type,
 				/** @type {import("./support/_/yt/yt_response_guide.js").yt_response_guide['json']} */
@@ -1758,7 +1758,7 @@ class FilterHandlers {
 				url_type,
 				/** @type {import("./support/_/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
 				json: any(json),
-			}
+			};
 			case "player": return {
 				url_type,
 				/** @type {import("./support/_/yt/yt_response_player.js").yt_response_player['json']} */
@@ -1768,7 +1768,7 @@ class FilterHandlers {
 				url_type,
 				/** @type {import("./support/_/yt/YtApiNext.js").YtApiNext} */
 				json: any(json),
-			}
+			};
 			case "reel_watch_sequence": return {
 				url_type,
 				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
