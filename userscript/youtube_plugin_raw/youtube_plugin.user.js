@@ -2530,20 +2530,16 @@ function random_sometimes_break_0(detail,obj,path) {
 	let ok=Object.keys(obj);
 	/** @type {string[]} */
 	let ok_e=[];
+	const gen_not_local=["expirationTime","rootVe","playerResponse","previousCsn","preconnect"];
 	for(let i=0;i<ok.length;i++) {
 		if(gen_not_want.includes(ok[i])) continue;
+		if(gen_not_local.includes(ok[i])) continue;
 		ok_e.push(ok[i]);
 	}
 	let is_this_keys_ok=get_is_ok();
 	function get_is_ok() {
 		if(!ok_e.length) return true;
-		if(eq_keys(ok_e,["expirationTime"])) return true;
-		if(eq_keys(ok_e,["playerResponse"])) return true;
-		if(eq_keys(ok_e,["rootVe"])) return true;
-		if(eq_keys(ok_e,["rootVe","expirationTime"])) return true;
-		if(eq_keys(ok_e,["previousCsn","expirationTime"])) return true;
-		if(eq_keys(ok_e,['rootVe','preconnect','playerResponse'])) return true;
-		if(eq_keys(ok_e,["playerResponse","reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
+		if(eq_keys(ok_e,["reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
 		debugger;
 		return false;
 	}

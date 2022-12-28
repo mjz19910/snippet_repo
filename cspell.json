@@ -105,6 +105,7 @@
       "idents",
       "idxoff",
       "ilen",
+      "itag",
       "jqts",
       "jsfilt",
       "jsfout",
