@@ -1,5 +1,5 @@
 import {RichItemRendererContentDef} from "./RichItemRendererContentDef";
-import {TrackingParams} from "./TrackingParams.js";
+import {TrackingParams} from "../t/TrackingParams.js";
 
 export interface RichItemRenderer extends TrackingParams {
 	content: RichItemRendererContentDef;

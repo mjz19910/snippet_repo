@@ -1,6 +1,9 @@
 import {Accessibility} from "../a/Accessibility";
 
-export type SimpleText={
+const key_simpleText:unique symbol=Symbol("simpleText");
+export type key_simpleText=typeof key_simpleText;
+
+export type SimpleText<_U extends key_simpleText,T extends string>={
 	accessibility?: Accessibility;
-	simpleText: string;
+	simpleText: T;
 };
