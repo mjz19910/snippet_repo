@@ -1,8 +1,5 @@
-// ['submitButton', 'cancelButton', 'authorThumbnail', 'placeholderText', 'trackingParams', 'avatarSize', 
-
 import {SubmitButton} from "./SubmitButton";
 
-//  'emojiButton', 'emojiPicker', 'aadcGuidelinesStateEntityKey']
 export type CommentSimpleboxRendererData={
 	submitButton: SubmitButton;
 	cancelButton:{};
