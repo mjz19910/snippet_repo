@@ -1807,7 +1807,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']} page_type
+	 * @param {YTNavigateFinishEventDetail['pageType']} page_type
 	 * @arg {"response"|"playerResponse"} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
@@ -1823,7 +1823,7 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/**
-	 * @param {ReturnType<typeof this.use_template_url>|`page_type_${import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
+	 * @param {ReturnType<typeof this.use_template_url>|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {{[str: string]:{}}} data
 	 */
 	handle_any_data(path,data) {
@@ -2388,7 +2388,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} */
+	/** @type {YTNavigateFinishEventDetail} */
 	detail=any({});
 }
 
@@ -2703,7 +2703,7 @@ function on_json_request(request_info) {
 }
 
 /**
- * @param {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']} pageType
+ * @param {YTNavigateFinishEventDetail['pageType']} pageType
  */
 function page_type_iter(pageType) {
 	switch(pageType) {
@@ -2716,7 +2716,7 @@ function page_type_iter(pageType) {
 	}
 }
 
-/** @arg {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
+/** @arg {YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
 	let ok=any(Object.keys(detail));
