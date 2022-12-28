@@ -939,8 +939,8 @@ function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
 		yt_handlers.on_handle_api(request,response_obj);
 	} catch(err) {
-		console.log("filter error");
-		console.log(err);
+		console.log("on_handle_api failed");
+		console.log("\t",err);
 	}
 }
 /**
@@ -1200,6 +1200,17 @@ class IterateApiResultBase {
 				this.default_iter(`${path}.${key}`,value);
 			}
 		}
+	}
+}
+
+class YtIterateTarget {
+	/**
+	 * @arg {FilterHandlers} state
+	 * @param {string} path
+	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
+	 */
+	richGridRenderer(state,path,renderer) {
+		state.handlers.rich_grid.richGridRenderer(path,renderer);
 	}
 }
 
@@ -1466,14 +1477,7 @@ class FilterHandlers {
 		rich_grid: new HandleRichGridRenderer,
 		renderer_content_item_array: new HandleRendererContentItemArray,
 	};
-	iteration=new IterateApiResultBase(this);
-	/**
-	 * @param {string} path
-	 * @param {import("./support/yt_api/rich/RichGridRenderer.js").RichGridRenderer} renderer
-	 */
-	richGridRenderer(path,renderer) {
-		this.handlers.rich_grid.richGridRenderer(path,renderer);
-	}
+	iteration=new IterateApiResultBase(new YtIterateTarget);
 	/**
 	 * @param {string} path
 	 * @param {AppendContinuationItemsAction} action
@@ -1672,10 +1676,22 @@ class FilterHandlers {
 			}; break;
 			case "next": return "next";
 			case "player": return "player";
-			case "live_chat": return this.get_live_chat_type(parts,_url,index);
+			case "live_chat": index++; return this.get_live_chat_type(parts,_url,index);
 			default: console.log('no handler for',parts,parts[index]); debugger;
 		}
 		throw new Error("Missing");
+	}
+	/**
+	 * @param {string[]} parts
+	 * @arg {UrlParseRes<`https://${string}/${string}?${string}`, string, "https:", string, string>} url
+	 * @arg {number} index
+	 * @returns {UrlTypes}
+	 */
+	get_live_chat_type(parts,url,index) {
+		url;
+		switch(parts[index]) {
+			default: console.log('no handler for',parts,parts[index]); debugger; throw new Error("Stop");
+		};
 	}
 	/**
 	 * @param {URL} url
