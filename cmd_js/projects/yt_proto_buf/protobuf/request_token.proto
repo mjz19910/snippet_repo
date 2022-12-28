@@ -1,0 +1,7 @@
+message RequestToken {
+	optional TokenInfo token_value=0;
+}
+message TokenInfo {
+	optional string v=2;
+	optional string token=3;
+}

@@ -36,7 +36,7 @@ export type notification_get_notification_menu={
 	json: {};
 };
 
-export type notification_get_unseen_count={
+export type yt_notification_get_unseen_count={
 	url_type: "notification.get_unseen_count";
 	json: {
 		responseContext: GeneralContext;
@@ -55,6 +55,23 @@ export type yt_response_browse={
 	json: {
 		responseContext: GeneralContext;
 	};
-}
+};
 
-export type json_req=(yt_response_getDatasyncIdsEndpoint|yt_response_att_get|yt_response__next|notification_get_notification_menu|notification_get_unseen_count|yt_response_guide|yt_response_browse)&YtUrlBase;
+export type yt_response_reel_item_watch={
+	url_type: "reel_item_watch";
+	json: {
+		responseContext: GeneralContext;
+	};
+};
+
+type responseTypes=
+	yt_response_getDatasyncIdsEndpoint|
+	yt_response_att_get|
+	yt_response__next|
+	notification_get_notification_menu|
+	yt_notification_get_unseen_count|
+	yt_response_guide|
+	yt_response_browse|
+	yt_response_reel_item_watch;
+
+export type json_req=responseTypes&YtUrlBase;

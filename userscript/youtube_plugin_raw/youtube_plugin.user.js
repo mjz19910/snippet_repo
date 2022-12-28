@@ -1438,6 +1438,8 @@ function filter_on_initial_data(cls,apply_args) {
 					} else {
 						debugger;
 					}
+				} else if(ret.page==="shorts") {
+					
 				} else {
 					if(yt_debug_enabled) console.log(cls.class_name+": initial_data.page:",ret.page);
 					if(page_type==="watch") {
@@ -1739,7 +1741,7 @@ class FilterHandlers extends IterateApiResultBase {
 					request,
 					parsed_url: req_parse,
 				}); break;
-			/** @typedef {import("./support/json_req.js").notification_get_unseen_count} notification_get_unseen_count */
+			/** @typedef {import("./support/json_req.js").yt_notification_get_unseen_count} notification_get_unseen_count */
 			case "browse": on_json_request({
 				/** @readonly */
 				url_type,
@@ -1757,6 +1759,14 @@ class FilterHandlers extends IterateApiResultBase {
 				parsed_url: req_parse,
 			}); break;
 			case "notification.get_unseen_count": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {notification_get_unseen_count["json"]} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
+			case "reel_item_watch": on_json_request({
 				/** @readonly */
 				url_type,
 				/** @type {notification_get_unseen_count["json"]} */

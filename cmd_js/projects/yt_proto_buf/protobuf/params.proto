@@ -1,0 +1,13 @@
+message SequenceParams {
+	optional string video_id=1;
+	optional B f1=5;
+}
+
+message B {
+	optional int32 f0=3;
+}
+
+message Params {
+	optional int32 f0 = 1;
+	optional int32 f1 = 6;
+}
