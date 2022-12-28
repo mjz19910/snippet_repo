@@ -1022,19 +1022,27 @@ function handle_fetch_response_2(request,options,ov) {
 function fetch_promise_handler(request,options,response) {
 	/** @type {["text"]} */
 	let handled_keys=["text"];
-	class FakeResponse extends Response {
-		/** @override */
+	class FakeResponse {
 		text() {
 			if(yt_debug_enabled) console.log("response.text()");
 			return handle_fetch_response_2(request,options,response.text());
 		}
 	}
 	let fake_res=new FakeResponse;
-	return new Proxy(fake_res,{
-		get(obj,key,_proxy) {
+	/** @type {any} */
+	let any_x=fake_res;
+	/** @type {Response} */
+	let fake_res_t=any_x;
+	return new Proxy(fake_res_t,{
+		get(_obj,key,_proxy) {
 			for(let i=0;i<handled_keys.length;i++) {
-				if(handled_keys[i]===key) {
-					return obj[key];
+				if(key in fake_res) {
+					if(key === "text") {
+						return fake_res[key];
+					} else {
+						console.log("need new case for new key on fake Response");
+						debugger;
+					}
 				}
 			}
 			return Reflect.get(response,key);
