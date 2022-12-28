@@ -7,3 +7,7 @@ export type SimpleText<_U extends key_simpleText,T extends string>={
 	accessibility?: Accessibility;
 	simpleText: T;
 };
+
+export type SimpleTextFixmeValueNeeded={
+	simpleText: string;
+};

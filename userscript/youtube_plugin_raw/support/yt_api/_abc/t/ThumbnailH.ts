@@ -1,6 +1,1 @@
-import {Thumbnail} from "./Thumbnail";
-
-
-export interface ThumbnailH {
-	thumbnails: Thumbnail[];
-}
+export type ThumbnailH={};

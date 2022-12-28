@@ -1,5 +1,5 @@
-import {ThumbnailH} from "../t/ThumbnailH.js";
+import {ThumbnailsList} from "../t/ThumbnailsList.js";
 
-export interface MovingThumbnailDetails extends ThumbnailH {
+export interface MovingThumbnailDetails extends ThumbnailsList {
 	logAsMovingThumbnail: boolean;
 }
