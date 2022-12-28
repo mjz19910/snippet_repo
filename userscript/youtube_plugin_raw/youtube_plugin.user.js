@@ -577,7 +577,7 @@ function with_ytd_scope() {
 		 * @param {CustomEvent<{filter_gain: number}>} event
 		 */
 		onStateChange(event) {
-			console.log("gain controller state change, new gain is", event.detail.filter_gain);
+			console.log("gain controller state change, new gain is",event.detail.filter_gain);
 			this.gain_controller.setGain(event.detail.filter_gain);
 			this.updateRangeElement(event.detail.filter_gain);
 		}
@@ -1736,20 +1736,18 @@ class FilterHandlers extends IterateApiResultBase {
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		switch(url_type) {
-			case "att.get":
-				on_json_request({
-					/** @readonly */
-					url_type,
-					/** @type {import("./support/AttGetV.js").AttGetV} */
-					json: any(data),
-					request,
-					parsed_url: req_parse,
-				}); break;
-			/** @typedef {import("./support/json_req.js").yt_notification_get_unseen_count} notification_get_unseen_count */
+			case "att.get": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/AttGetV.js").AttGetV} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
 			case "browse": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count["json"]} */
+				/** @type {import("./support/json_req.js").yt_response_browse['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1757,7 +1755,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "guide": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count["json"]} */
+				/** @type {import("./support/json_req.js").yt_response_guide['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1765,7 +1763,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "notification.get_unseen_count": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count["json"]} */
+				/** @type {import("./support/json_req.js").yt_notification_get_unseen_count['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1773,7 +1771,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "reel_item_watch": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count["json"]} */
+				/** @type {import("./support/json_req.js").yt_response_reel_item_watch['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1781,7 +1779,7 @@ class FilterHandlers extends IterateApiResultBase {
 			case "player": on_json_request({
 				/** @readonly */
 				url_type,
-				/** @type {notification_get_unseen_count["json"]} */
+				/** @type {import("./support/json_req.js").yt_response_player['json']} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -1790,6 +1788,14 @@ class FilterHandlers extends IterateApiResultBase {
 				/** @readonly */
 				url_type,
 				/** @type {import("./support/YtApiNext.js").YtApiNext} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
+			case "reel_watch_sequence": on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/json_req.js").yt_response_reel_watch_sequence["json"]} */
 				json: any(data),
 				request,
 				parsed_url: req_parse,
@@ -2480,7 +2486,7 @@ function pb_0(detail,obj) {
 	if(obj.page==="watch") {
 		x: {
 			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
-			if(eq_keys(ok,['currentVideoEndpoint', 'playerOverlays', 'onResponseReceivedEndpoints', 'engagementPanels', 'pageVisualEffects', 'frameworkUpdates'])) break x;
+			if(eq_keys(ok,['currentVideoEndpoint','playerOverlays','onResponseReceivedEndpoints','engagementPanels','pageVisualEffects','frameworkUpdates'])) break x;
 			debugger;
 		}
 		if(Object.keys(obj.response).length!==10) {
@@ -2536,7 +2542,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		if(eq_keys(ok_e,["rootVe"])) return true;
 		if(eq_keys(ok_e,["rootVe","expirationTime"])) return true;
 		if(eq_keys(ok_e,["previousCsn","expirationTime"])) return true;
-		if(eq_keys(ok_e,['rootVe', 'preconnect', 'playerResponse'])) return true;
+		if(eq_keys(ok_e,['rootVe','preconnect','playerResponse'])) return true;
 		if(eq_keys(ok_e,["playerResponse","reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
 		debugger;
 		return false;
@@ -2578,7 +2584,27 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("response");
 	}
 	if("playerResponse" in obj) {
-		console.log(Object.keys(obj.playerResponse));
+		let ok_2=Object.keys(obj.playerResponse);
+		for(let i=0;i<ok_2.length;i++) {
+			let cur=ok_2[i];
+			debugger;
+			if(cur==="responseContext") continue;
+			if(cur==="playabilityStatus") continue;
+			if(cur==="streamingData") continue;
+			if(cur==="playerAds") continue;
+			if(cur==="playbackTracking") continue;
+			if(cur==="videoDetails") continue;
+			if(cur==="playerConfig") continue;
+			if(cur==="storyboards") continue;
+			if(cur==="microformat") continue;
+			if(cur==="cards") continue;
+			if(cur==="trackingParams") continue;
+			if(cur==="attestation") continue;
+			if(cur==="videoQualityPromoSupportedRenderers") continue;
+			if(cur==="adPlacements") continue;
+			if(cur==="frameworkUpdates") continue;
+			debugger;
+		}
 		iter_skips.push("playerResponse");
 	}
 	if("url" in obj) {

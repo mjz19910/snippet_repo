@@ -26,7 +26,7 @@ export type yt_response_att_get={
 	json: AttGetV;
 };
 
-export type yt_response__next={
+export type yt_response_next={
 	url_type: "next";
 	json: YtApiNext;
 };
@@ -67,18 +67,25 @@ export type yt_response_player={
 	url_type: "player";
 	json: {
 		responseContext: GeneralContext;
-	}
+	};
+};
+export type yt_response_reel_watch_sequence={
+	url_type: "reel_watch_sequence";
+	json: {
+		responseContext: GeneralContext;
+	};
 };
 
 type responseTypes=
 	yt_response_getDatasyncIdsEndpoint|
 	yt_response_att_get|
-	yt_response__next|
+	yt_response_next|
 	notification_get_notification_menu|
 	yt_notification_get_unseen_count|
 	yt_response_guide|
 	yt_response_browse|
 	yt_response_player|
-	yt_response_reel_item_watch;
+	yt_response_reel_item_watch|
+	yt_response_reel_watch_sequence;
 
 export type json_req=responseTypes&YtUrlBase;
