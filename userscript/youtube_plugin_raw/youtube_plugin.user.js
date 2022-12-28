@@ -2561,26 +2561,53 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("response");
 	}
 	if("playerResponse" in obj) {
-		let ok_2=Object.keys(obj.playerResponse);
-		for(let i=0;i<ok_2.length;i++) {
-			let cur=ok_2[i];
-			if(cur==="responseContext") continue;
-			if(cur==="playabilityStatus") continue;
-			if(cur==="streamingData") continue;
-			if(cur==="playerAds") continue;
-			if(cur==="playbackTracking") continue;
-			if(cur==="videoDetails") continue;
-			if(cur==="playerConfig") continue;
-			if(cur==="storyboards") continue;
-			if(cur==="microformat") continue;
-			if(cur==="cards") continue;
-			if(cur==="trackingParams") continue;
-			if(cur==="attestation") continue;
-			if(cur==="videoQualityPromoSupportedRenderers") continue;
-			if(cur==="adPlacements") continue;
-			if(cur==="frameworkUpdates") continue;
-			if(cur==="captions") continue;
-			debugger;
+		switch(obj.page) {
+			case "watch": {
+				let ok_2=Object.keys(obj.playerResponse);
+				for(let i=0;i<ok_2.length;i++) {
+					let cur=ok_2[i];
+					if(cur==="responseContext") continue;
+					if(cur==="playabilityStatus") continue;
+					if(cur==="streamingData") continue;
+					if(cur==="playerAds") continue;
+					if(cur==="playbackTracking") continue;
+					if(cur==="videoDetails") continue;
+					if(cur==="playerConfig") continue;
+					if(cur==="storyboards") continue;
+					if(cur==="microformat") continue;
+					if(cur==="cards") continue;
+					if(cur==="trackingParams") continue;
+					if(cur==="attestation") continue;
+					if(cur==="videoQualityPromoSupportedRenderers") continue;
+					if(cur==="adPlacements") continue;
+					if(cur==="frameworkUpdates") continue;
+					if(cur==="captions") continue;
+					debugger;
+				}
+			} break;
+			case "shorts": {
+				let ok_2=Object.keys(obj.playerResponse);
+				for(let i=0;i<ok_2.length;i++) {
+					let cur=ok_2[i];
+					if(cur==="responseContext") continue;
+					if(cur==="playabilityStatus") continue;
+					if(cur==="streamingData") continue;
+					if(cur==="playerAds") continue;
+					if(cur==="playbackTracking") continue;
+					if(cur==="videoDetails") continue;
+					if(cur==="playerConfig") continue;
+					if(cur==="storyboards") continue;
+					if(cur==="microformat") continue;
+					if(cur==="cards") continue;
+					if(cur==="trackingParams") continue;
+					if(cur==="attestation") continue;
+					if(cur==="videoQualityPromoSupportedRenderers") continue;
+					if(cur==="adPlacements") continue;
+					if(cur==="frameworkUpdates") continue;
+					if(cur==="captions") continue;
+					debugger;
+				};
+			} break;
 		}
 		iter_skips.push("playerResponse");
 	}
@@ -2672,7 +2699,7 @@ function random_sometimes_break_1(detail,obj,path) {
 		function browse_with_part() {
 			let browse_part=bid.slice(2);
 			let browse_section=bid.slice(0,2);
-			console.log("show browse_section & browse_part", browse_section, browse_part);
+			console.log("show browse_section & browse_part",browse_section,browse_part);
 		}
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
 		x: {
