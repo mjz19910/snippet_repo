@@ -936,7 +936,15 @@ function to_url(url) {
 }
 /**@arg {string|URL|Request} request @arg {{}} response_obj */
 function fetch_filter_text_then_data_url(request,response_obj) {
-	console.log('fetch in context',location.pathname);
+	try {
+		if(top!==null&&window!==top) {
+			console.log('fetch in context with top location',top.location.href,location.pathname);
+		} else {
+			console.log('fetch in context',location.pathname);
+		}
+	} catch {
+		console.log('fetch in context',location.pathname);
+	}
 	try {
 		yt_handlers.on_handle_api(request,response_obj);
 	} catch(err) {
