@@ -1189,9 +1189,10 @@ class IterateApiResultBase {
 			return;
 		}
 		for(let [key,value] of Object.entries(data)) {
-			this.default_iter(`${path}.${key}`,value);
 			if(this[key]) {
 				this[key](`${path}.${key}`,value);
+			} else {
+				this.default_iter(`${path}.${key}`,value);
 			}
 		}
 	}
@@ -1564,6 +1565,13 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	webCommandMetadata(path,metadata) {
 		console.log("webCommandMetadata",path,metadata);
+	}
+	/**
+	 * @param {string} _path
+	 * @param {{}} renderer
+	 */
+	compactVideoRenderer(_path, renderer) {
+		this.default_iter("compactVideoRenderer",renderer);
 	}
 	/**
 	 * @param {{playerAds?: any[]; adPlacements?: any[];}} data
