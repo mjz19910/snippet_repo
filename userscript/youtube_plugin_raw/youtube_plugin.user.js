@@ -1784,6 +1784,14 @@ class FilterHandlers extends IterateApiResultBase {
 				request,
 				parsed_url: req_parse,
 			}); break;
+			case "next": console.log(url_type,data,Object.keys(data)); on_json_request({
+				/** @readonly */
+				url_type,
+				/** @type {import("./support/YtApiNext.js").YtApiNext} */
+				json: any(data),
+				request,
+				parsed_url: req_parse,
+			}); break;
 			default: console.log(url_type,data); debugger; break;
 		}
 		x: {
@@ -2552,6 +2560,7 @@ function random_sometimes_break_0(detail,obj,path) {
 		function get_is_ok() {
 			if(eq_keys(ok_1,["browseEndpoint"])) return true;
 			if(eq_keys(ok_1,["reelWatchEndpoint"])) return true;
+			if(eq_keys(ok_1,["watchEndpoint"])) return true;
 			return false;
 		}
 		if(!get_is_ok()) {
