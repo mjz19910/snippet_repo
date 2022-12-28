@@ -19,7 +19,7 @@ export type WatchResponsePlayer={
 	trackingParams: {};
 	attestation: {};
 	videoQualityPromoSupportedRenderers: {};
-	adPlacements: [];
+	adPlacements?: [];
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;
 	paidContentOverlay?: PaidContentOverlay;

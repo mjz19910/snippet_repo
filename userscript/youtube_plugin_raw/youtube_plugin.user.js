@@ -936,6 +936,7 @@ function to_url(url) {
 }
 /**@arg {string|URL|Request} request @arg {{}} response_obj */
 function fetch_filter_text_then_data_url(request,response_obj) {
+	console.log('fetch in context',location.pathname);
 	try {
 		yt_handlers.on_handle_api(request,response_obj);
 	} catch(err) {
@@ -2600,7 +2601,8 @@ function random_sometimes_break_0(detail,obj,path) {
 		iter_skips.push("response");
 	}
 	if("playerResponse" in obj) {
-		if("adPlacements" in obj.playerResponse) {
+		// UBlockOrigin removes this, so it is now optional
+		if("adPlacements" in obj.playerResponse&&obj.playerResponse.adPlacements!==void 0) {
 			if(obj.playerResponse.adPlacements.length>0) {
 				debugger;
 			}
