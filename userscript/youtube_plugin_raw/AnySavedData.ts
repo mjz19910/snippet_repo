@@ -12,6 +12,7 @@ export type AnySavedData={
 	getDatasyncIdsEndpoint?: {};
 	page_type_watch?: {};
 	page_type_browse?: {};
-	page_type_playlist?: {};
 	page_type_shorts?: {};
+	page_type_channel?: {};
+	page_type_playlist?: {};
 };

@@ -1439,7 +1439,8 @@ function filter_on_initial_data(cls,apply_args) {
 			page_type_iter(ret.page);
 			switch(page_type) {
 				case void 0: return;
-				case "browse": case "shorts": case "watch": case "playlist": {
+				// "watch" | "browse" | "shorts" | "channel" | "playlist"
+				case "watch": case "browse": case "shorts": case "channel": case "playlist": {
 					if(ret.page==="watch") {
 						cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
 					}
@@ -1806,7 +1807,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {"browse"|"watch"|"playlist"|"shorts"} page_type
+	 * @param {import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']} page_type
 	 * @arg {"response"|"playerResponse"} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
@@ -1822,7 +1823,7 @@ class FilterHandlers extends IterateApiResultBase {
 		}
 	}
 	/**
-	 * @param {ReturnType<typeof this.use_template_url>|"page_type_watch"|"page_type_browse"|"page_type_playlist"|"page_type_shorts"} path
+	 * @param {ReturnType<typeof this.use_template_url>|`page_type_${import("./support/yt_api/_abc/_yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {{[str: string]:{}}} data
 	 */
 	handle_any_data(path,data) {
