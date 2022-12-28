@@ -938,12 +938,12 @@ function to_url(url) {
 function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
 		if(top!==null&&window!==top) {
-			console.log('fetch in context with top location',top.location.href,location.pathname);
+			console.log('fetch in context with top location',top.location.pathname,location.pathname);
 		} else {
 			console.log('fetch in context',location.pathname);
 		}
 	} catch {
-		console.log('fetch in context',location.pathname);
+		console.log('fetch in context access blocked to top',location.pathname);
 	}
 	try {
 		yt_handlers.on_handle_api(request,response_obj);
