@@ -1,15 +1,8 @@
+import {ChannelBrowseEndpoint} from "./ChannelBrowseEndpoint";
+import {ChannelCommandMetadata} from "./ChannelCommandMetadata";
+
 export type ChannelEndpoint={
 	clickTrackingParams: string;
-	browseEndpoint: {
-		browseId: `UC${string}`;
-		canonicalBaseUrl: `/@${string}`;
-	};
-	commandMetadata: {
-		webCommandMetadata: {
-			apiUrl: "/youtubei/v1/browse";
-			rootVe: 3611;
-			url: `/@${string}`;
-			webPageType: "WEB_PAGE_TYPE_CHANNEL";
-		};
-	};
+	browseEndpoint: ChannelBrowseEndpoint;
+	commandMetadata: ChannelCommandMetadata;
 };
