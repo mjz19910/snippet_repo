@@ -2534,6 +2534,7 @@ function random_sometimes_break_0(detail,obj,path) {
 	}
 	click_track_do(obj,iter_skips);
 	if("rootVe" in obj) {
+		iter_skips.push("rootVe");
 		console.log("rootVe",obj,obj.rootVe);
 	}
 	if("page" in obj) {
@@ -2545,6 +2546,8 @@ function random_sometimes_break_0(detail,obj,path) {
 		} else if(obj.page==="shorts") {
 			iter_skips.push("page");
 		} else if(obj.page==="playlist") {
+			iter_skips.push("page");
+		} else if(obj.page==="channel") {
 			iter_skips.push("page");
 		} else {
 			debugger;
@@ -2667,24 +2670,33 @@ function random_sometimes_break_1(detail,obj,path) {
 		iter_skips.push("clickTrackingParams");
 	}
 	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
-	if("browseEndpoint" in detail.endpoint) {
-		let bid=detail.endpoint.browseEndpoint.browseId;
-		let wpt=detail.endpoint.commandMetadata.webCommandMetadata.webPageType;
+	if("browseEndpoint" in obj) {
+		let bid=obj.browseEndpoint.browseId;
+		let wpt=obj.commandMetadata.webCommandMetadata.webPageType;
 		x: {
 			if(wpt==="WEB_PAGE_TYPE_PLAYLIST") break x;
 			if(wpt==="WEB_PAGE_TYPE_BROWSE") break x;
 			if(wpt==="WEB_PAGE_TYPE_CHANNEL") break x;
 			debugger;
 		}
+		function browse_with_part() {
+			let browse_part=bid.slice(2);
+			console.log("show browse_part", browse_part);
+		}
 		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
 		x: {
-			if(bid==="FEsubscriptions") break x;
-			if(bid==="FEwhat_to_watch") break x;
-			if(bid==="FElibrary") break x;
-			if(bid==="FEhistory") break x;
-			//spell:disable-next-line
-			if(bid==="VLWL") break x;
-			if(detail.endpoint.commandMetadata.webCommandMetadata.webPageType==="WEB_PAGE_TYPE_PLAYLIST") break x;
+			if(bid.startsWith("FE")) {
+				browse_with_part();
+				break x;
+			}
+			if(bid.startsWith("VL")) {
+				browse_with_part();
+				break x;
+			}
+			if(bid.startsWith("UC")) {
+				if(bid.length===24) break x;
+				console.log('yt_chan_id length',bid.length);
+			}
 			debugger;
 		}
 	}
