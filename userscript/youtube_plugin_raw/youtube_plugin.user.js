@@ -1186,18 +1186,26 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {{[x:string]: any}} T */
+/** @template {} T @arg {T} obj @returns {(keyof T)[]} */
+function get_keys_of(obj) {
+	return Object.keys(obj);
+}
 class IterateApiResultBase {
 	iterate_target;
-	/** @arg {T} iterate */
+	/** @type {Map<string,keyof YtIterateTarget>} */
+	keys_map=new Map;
+	/** @arg {YtIterateTarget} iterate */
 	constructor(iterate) {
 		this.iterate_target=iterate;
+		let keys=get_keys_of(iterate);
+		for(let i of keys) {
+			this.keys_map.set(i,i);
+		}
 	}
 	/**
-	 * @template U
 	 * @arg {FilterHandlers} state
 	 * @arg {string} path
-	 * @arg {{[C in keyof U]:{}}} data
+	 * @arg {{}} data
 	 */
 	default_iter(state,path,data) {
 		if(data===void 0) {
@@ -1213,9 +1221,12 @@ class IterateApiResultBase {
 			return;
 		}
 		for(let key in data) {
-			let value=data[key];
-			if(this.iterate_target[key]) {
-				this.iterate_target[key](`${path}.${key}`,value);
+			/** @type {{[x: string]: {}}} */
+			let wk=data;
+			let value=wk[key];
+			let rk=this.keys_map.get(key);
+			if(rk!==void 0&&this.iterate_target[rk]) {
+				this.iterate_target[rk](state,`${path}.${key}`,any(value));
 			} else {
 				this.default_iter(state,`${path}.${key}`,value);
 			}
