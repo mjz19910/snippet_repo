@@ -1810,7 +1810,7 @@ class FilterHandlers extends IterateApiResultBase {
 	}
 	/**
 	 * @param {ReturnType<typeof this.use_template_url>|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
-	 * @arg {{[str: string]:{}}} data
+	 * @arg {import("./SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
@@ -2740,7 +2740,7 @@ function random_sometimes_break_1(detail,obj,path) {
 
 const random_factor=0.2;
 
-/** @param {import("./support/json_req.js").json_req} request_info */
+/** @param {import("./support/_/json_req.js").json_req} request_info */
 function on_json_request(request_info) {
 	let break_it=false;
 	if(!break_it) return;

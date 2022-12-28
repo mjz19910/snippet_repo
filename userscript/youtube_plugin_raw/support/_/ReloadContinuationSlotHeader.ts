@@ -1,4 +1,4 @@
-import {CommentsHeaderContent} from "./CommentsHeaderContent";
+import {CommentsHeaderContent} from "../yt_api/_abc/c/CommentsHeaderContent";
 import {ReloadContinuationItemsCommandFor} from "./ReloadContinuationItemsCommandFor";
 
 export type ReloadContinuationSlotHeader={

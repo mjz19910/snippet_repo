@@ -1,5 +1,4 @@
-import {AllServiceTrackingParams} from "./AllServiceTrackingParams";
-
+import {AllServiceTrackingParams} from "./a/AllServiceTrackingParams.js";
 
 export type GeneralContext={
 	mainAppWebResponseContext: {

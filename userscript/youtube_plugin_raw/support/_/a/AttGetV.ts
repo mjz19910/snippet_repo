@@ -1,6 +1,5 @@
-import {UrlWrappedValue} from "./UrlWrappedValue";
-import {GeneralContext} from "./GeneralContext";
-
+import {UrlWrappedValue} from "../UrlWrappedValue.js";
+import {GeneralContext} from "../GeneralContext.js";
 
 export type AttGetV={
 	responseContext: GeneralContext;
