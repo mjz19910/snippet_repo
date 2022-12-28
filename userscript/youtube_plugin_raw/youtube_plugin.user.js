@@ -2775,7 +2775,7 @@ function on_page_type_changed(detail) {
 			case "navigationDoneMs": if(typeof detail[x]!=="number") {debugger;}; continue;
 			case "pageType": if(typeof detail[x]!=="string") {debugger;}; continue;
 			default:
-				console.log('detail.'+x,detail[x]);
+				console.log('detail',x,detail[x]);
 				debugger;
 		}
 	}

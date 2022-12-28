@@ -1,6 +1,6 @@
-import {_ACTIONS} from "./_ACTIONS";
+import {ENUM_ACTIONS} from "../e/ENUM_ACTIONS";
 
 export type PlaylistEditEndpoint={
 	playlistId: string;
-	actions: _ACTIONS[];
+	actions: ENUM_ACTIONS[];
 };

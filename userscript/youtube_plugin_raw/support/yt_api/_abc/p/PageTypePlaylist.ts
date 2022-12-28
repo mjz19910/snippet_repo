@@ -1,4 +1,4 @@
-import {GeneralHistoryState} from "../dfg/GeneralHistoryState.js";
+import {GeneralHistoryState} from "../g/GeneralHistoryState.js";
 import {PlaylistEndpoint} from "./PlaylistEndpoint";
 import {PlaylistResponse} from "./PlaylistResponse";
 

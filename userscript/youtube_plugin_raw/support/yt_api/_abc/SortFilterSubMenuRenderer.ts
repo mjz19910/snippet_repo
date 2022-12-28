@@ -1,4 +1,4 @@
-import {ActionSetPlaylistVideoOrder} from "./ActionSetPlaylistVideoOrder";
+import {ActionSetPlaylistVideoOrder} from "./a/ActionSetPlaylistVideoOrder";
 
 export type SortFilterSubMenuRenderer={
 	accessibility: {

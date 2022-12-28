@@ -1,4 +1,4 @@
-import {SettingsResponse} from "./SettingsResponse";
+import {SettingsResponse} from "../SettingsResponse";
 
 export type PageTypeSettings={
 	pageType: "settings";
