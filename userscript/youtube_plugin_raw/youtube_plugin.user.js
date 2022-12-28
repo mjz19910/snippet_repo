@@ -2582,6 +2582,7 @@ function random_sometimes_break_0(detail,obj,path) {
 					if(cur==="adPlacements") continue;
 					if(cur==="frameworkUpdates") continue;
 					if(cur==="captions") continue;
+					if(cur==="endscreen") continue;
 					debugger;
 				}
 			} break;

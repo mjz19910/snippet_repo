@@ -28,4 +28,22 @@ export type WatchPlayerResponse={
 	videoQualityPromoSupportedRenderers: {};
 	adPlacements: {};
 	frameworkUpdates: {};
+	endscreen?: {
+		endscreenRenderer: {
+			elements: [
+				{
+					endscreenElementRenderer: {
+						style: "VIDEO";
+					};
+				},
+				{
+					endscreenElementRenderer: {
+						style: "CHANNEL";
+					};
+				}
+			];
+		};
+		startMs: `${number}`;
+		trackingParams: string;
+	};
 };
