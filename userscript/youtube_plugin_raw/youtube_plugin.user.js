@@ -1815,10 +1815,9 @@ class FilterHandlers extends IterateApiResultBase {
 	 * @param {[()=>import("./InitialDataType.js").InitialDataType, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
-		let cls=this;
 		let ret=Reflect.apply(...apply_args);
 		if(ret.response) {
-			if(yt_debug_enabled) console.log(cls.class_name+": initial_data:",ret);
+			if(yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 			try {
 				let page_type=window.ytPageType;
 				page_type_iter(ret.page);
@@ -1827,18 +1826,18 @@ class FilterHandlers extends IterateApiResultBase {
 					case "settings":
 					case "watch": case "browse": case "shorts": case "channel": case "playlist": {
 						if(ret.page==="watch") {
-							cls.handle_page_type(ret.playerResponse,page_type,"playerResponse");
+							this.handle_page_type(ret.playerResponse,page_type,"playerResponse");
 						}
-						cls.handle_page_type(ret.response,page_type,"response");
+						this.handle_page_type(ret.response,page_type,"response");
 					} break;
 					default: debugger;
 				}
 			} catch(err) {
-				console.log(cls.class_name+": init filter error");
+				console.log(this.class_name+": init filter error");
 				console.log(err);
 			}
 		} else {
-			console.log(cls.class_name+": unhandled return value:",ret);
+			console.log(this.class_name+": unhandled return value:",ret);
 			debugger;
 		}
 		return ret;
