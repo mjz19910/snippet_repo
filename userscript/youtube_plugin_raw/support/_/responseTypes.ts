@@ -1,5 +1,5 @@
 import {notification_get_notification_menu} from "./notification_get_notification_menu.js";
-import {yt_notification_get_unseen_count} from "./yt/yt_notification_get_unseen_count.js";
+import {yt_notification_get_unseen_count} from "../yt_api/yt/yt_notification_get_unseen_count.js";
 import {yt_response_att_get} from "./yt/yt_response_att_get.js";
 import {yt_response_browse} from "./yt/yt_response_browse.js";
 import {yt_response_getDatasyncIdsEndpoint} from "./yt/yt_response_getDatasyncIdsEndpoint.js";

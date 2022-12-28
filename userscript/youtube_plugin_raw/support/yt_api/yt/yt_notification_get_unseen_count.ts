@@ -1,4 +1,4 @@
-import {GeneralContext} from "../../yt_api/_abc/g/GeneralContext.js";
+import {GeneralContext} from "../_abc/g/GeneralContext.js";
 
 export type yt_notification_get_unseen_count={
 	url_type: "notification.get_unseen_count";

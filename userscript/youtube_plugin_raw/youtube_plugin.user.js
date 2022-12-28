@@ -1751,7 +1751,7 @@ class FilterHandlers {
 			};
 			case "notification.get_unseen_count": return {
 				url_type,
-				/** @type {import("./support/_/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
+				/** @type {import("./support/yt_api/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
 				json: any(json),
 			};
 			case "reel_item_watch": return {
@@ -1773,6 +1773,10 @@ class FilterHandlers {
 				url_type,
 				/** @type {import("./support/_/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
 				json: any(json),
+			};
+			case "live_chat.get_live_chat_replay": return {
+				url_type,
+				json,
 			};
 			default: console.log(url_type,json); debugger;
 		}
@@ -1844,7 +1848,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {ReturnType<typeof this.use_template_url>|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
+	 * @param {UrlTypes|`page_type_${YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {import("./support/yt_api/_abc/SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
