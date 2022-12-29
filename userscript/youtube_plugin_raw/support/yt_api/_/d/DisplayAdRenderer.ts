@@ -3,7 +3,7 @@ import {ClickCommand} from "../c/ClickCommand.js";
 import {ImpressionEndpoint} from "../ImpressionEndpoint.js";
 import {MenuRenderer} from "../m/MenuRenderer.js";
 import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
-import {ThumbnailRoot} from "../ThumbnailRoot";
+import {ThumbnailRoot} from "../t/ThumbnailRoot";
 import {AdTitle_0} from "../a/AdTitle_0";
 import {SimpleTextFixmeValueNeeded} from "../s/SimpleText.js";
 import {TrackingParams} from "../TrackingParams.js";

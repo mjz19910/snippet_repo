@@ -1,5 +1,5 @@
-import {BrowseIdType} from "./b/BrowseIdType.js";
-import {ToServiceParamsList} from "./ToServiceParamsList.js";
+import {BrowseIdType} from "../b/BrowseIdType.js";
+import {ToServiceParamsList} from "../t/ToServiceParamsList.js";
 
 export type GFeedbackServiceParams={
 	service: 'GFEEDBACK';

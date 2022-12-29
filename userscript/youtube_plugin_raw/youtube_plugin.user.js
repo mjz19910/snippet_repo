@@ -2390,7 +2390,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
+	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
 	 */
 	on_google_help_service(service) {
 		for(let param of service.params) {
@@ -2458,7 +2458,7 @@ class FilterHandlers {
 		/** @type {string|null} */
 		context: null,
 	};
-	/** @arg {import("./support/yt_api/_/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -2488,7 +2488,7 @@ class FilterHandlers {
 		context: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_/GFeedbackServiceParams.js").GFeedbackServiceParams} service
+	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
 	on_g_feedback_service(service) {
 		for(let param of service.params) {
@@ -2554,7 +2554,7 @@ class FilterHandlers {
 		yt_ad: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_/CsiServiceParams.js").CsiServiceParams} service
+	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
 	 */
 	on_csi_service(service) {
 		for(let param of service.params) {
