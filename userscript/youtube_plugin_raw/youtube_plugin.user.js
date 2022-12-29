@@ -1960,8 +1960,14 @@ class FilterHandlers {
 	csi_service={
 		/** @type {string|null} */
 		GetWatchNext_rid:null,
+		/** @type {string|null} */
+		GetAttestationChallenge_rid: null,
 		/** @type {"WEB"|null} */
 		c: null,
+		/** @type {"2.20221220.09.00"|null} */
+		cver: null,
+		/** @type {"1"|null} */
+		yt_li: null,
 	};
 	/**
 	 * @param {import("./support/yt_api/_abc/a/CsiServiceParams.js").CsiServiceParams} service
@@ -1973,6 +1979,18 @@ class FilterHandlers {
 				case "c":{
 					if(param.value !=="WEB")debugger;
 					this.csi_service[param.key]=param.value;
+				} break;
+				case "cver":{
+					if(param.value !=="2.20221220.09.00")debugger;
+					this.csi_service[param.key]=param.value;
+				} break;
+				case "yt_li": {
+					if(param.value !=="1") debugger;
+					this.csi_service[param.key]=param.value;
+				} break;
+				case "GetAttestationChallenge_rid": {
+					this.csi_service[param.key]=param.value;
+					debugger;
 				} break;
 				default: debugger;
 			}
