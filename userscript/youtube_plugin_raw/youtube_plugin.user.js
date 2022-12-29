@@ -1957,7 +1957,8 @@ class FilterHandlers {
 	/** @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item */
 	on_guide_item(item) {
 		let ok=Object.keys(item);
-		let key=this.guide_item_keys.find(e => e===ok[0]);
+		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
+		let key=any(ok[0]);
 		if(!key) {
 			console.log("on_guide_item",ok);
 		}
@@ -3840,6 +3841,7 @@ function no_handler({parts,index}) {
 	debugger;
 	throw new Error("Stop");
 }
+/** @returns {import("./support/yt_api/yt/GuideItemType").GuideItemKeys[]} */
 function make_guide_item_keys() {
 	/** @arg {number} i @returns {import("./support/yt_api/yt/GuideItemType").GuideItemKeys|null} */
 	function e(i) {
@@ -3853,11 +3855,16 @@ function make_guide_item_keys() {
 	return [...{
 		[Symbol.iterator]() {
 			let i=0;
+			let start_value=e(i);
+			if(!start_value) throw new Error("Invalid");
+			let default_v=start_value;
 			return {
 				next() {
 					let value=e(i);
 					i++;
-					if(!value) return {done: true};
+					if(!value) return {value: default_v,done: true};
+					default_v=value;
+					if(!e(i)) return {value,done: true};
 					return {value,done: false};
 				}
 			};
