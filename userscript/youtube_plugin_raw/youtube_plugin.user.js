@@ -2032,7 +2032,7 @@ class FilterHandlers {
 				case "get_transcript": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t['json']} */
-					json:  as_cast(json),
+					json: as_cast(json),
 				};
 				case "guide": return {
 					url_type: target[0],
