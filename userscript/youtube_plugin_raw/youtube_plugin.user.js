@@ -1600,6 +1600,98 @@ function make_search_params(t) {
 	return as_any;
 }
 
+class HandlerBase {
+	/**
+	 * @param {string} path
+	 * @param {import("./support/yt_api/_abc/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
+	 */
+	endpoint(path,endpoint) {
+		console.log(path,endpoint);
+	}
+	/** @arg {import("./support/yt_api/_abc/p/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
+	endscreenElementRenderer(renderer) {
+		switch(renderer.style) {
+			case "VIDEO": break;
+			case "CHANNEL": break;
+			default: console.log("[endscreen_element]",renderer.style); debugger;
+		}
+		let ok_3=filter_out_keys(Object.keys(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
+		if(has_keys(ok_3,"thumbnailOverlays")) return;
+		if(has_keys(ok_3,"icon,callToAction,dismiss,hovercardButton,isSubscribe")) return;
+		console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
+		debugger;
+	}
+	/**
+	 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRenderer.js").GuideSectionRenderer; }|{key: "guideSubscriptionsSectionRenderer";item: import("./support/yt_api/yt/GuideSubscriptionsSectionRenderer.js").GuideSubscriptionsSectionRenderer}} _todo_desc
+	 */
+	todo(_todo_desc) {
+		console.log("todo",_todo_desc.key,_todo_desc.item);
+	}
+	/**
+	 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData }} desc
+	 */
+	guideSectionRenderer(desc) {
+		let ok=Object.keys(desc.item);
+		/** @type {keyof typeof desc['item']} */
+		let fk=as_cast(ok[0]);
+		let {[fk]: first}=desc.item;
+		if(eq_keys(ok,['items','trackingParams'])) return;
+		if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
+		console.log(desc.key,ok,[fk,first],desc.item);
+	}
+	/**
+	 * @param {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
+	 */
+	guideSubscriptionsSectionRenderer(desc) {
+		let ok=Object.keys(desc.item);
+		/** @type {keyof typeof desc['item']} */
+		let fk=as_cast(ok[0]);
+		let {[fk]: first}=desc.item;
+		if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
+		console.log(desc.key,ok,[fk,first],desc.item);
+	}
+	/**
+	 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
+	 */
+	multiPageMenuRenderer(renderer) {
+		this.header(renderer.header);
+		let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
+		if(eq_keys(ok,[])) return;
+		if(eq_keys(ok,['style'])) return;
+		debugger;
+	}
+	/**
+	 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
+	 */
+	header(header) {
+		this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
+		let ok=Object.keys(header);
+		ok;
+	}
+	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
+	simpleMenuHeaderRenderer(renderer) {
+		for(let button of renderer.buttons) {
+			this.buttonRenderer(button.buttonRenderer);
+		}
+	}
+	/**
+	 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
+	 */
+	buttonRenderer(renderer) {
+		let ok=Object.keys(renderer);
+		console.log("renderer.style",renderer.style);
+		console.log("renderer.size",renderer.size);
+		console.log("renderer.isDisabled",renderer.isDisabled);
+		console.log("renderer.icon",renderer.icon);
+		console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
+		console.log("renderer.tooltip",renderer.tooltip);
+		console.log("renderer.trackingParams",renderer.trackingParams);
+		console.log("renderer.accessibilityData",renderer.accessibilityData);
+		if(eq_keys(ok,['style','size','isDisabled','icon','navigationEndpoint','tooltip','trackingParams','accessibilityData'])) return;
+		console.log(ok);
+		debugger;
+	}
+}
 
 class FilterHandlers {
 	constructor() {
@@ -1766,6 +1858,9 @@ class FilterHandlers {
 	 */
 	on_page_type_browse(path,data) {
 		this.on_page_type_browse_response(`${path}.response`,data.response);
+		this.handle.endpoint(path,data.endpoint);
+		let ok=Object.keys(data);
+		if(has_keys(ok,"page,endpoint,response,url")) return;
 		console.log("[log_page_type_browse]",path,data);
 		debugger;
 	}
@@ -2094,91 +2189,7 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	handle=new class {
-		/** @arg {import("./support/yt_api/_abc/p/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
-		endscreenElementRenderer(renderer) {
-			switch(renderer.style) {
-				case "VIDEO": break;
-				case "CHANNEL": break;
-				default: console.log("[endscreen_element]",renderer.style); debugger;
-			}
-			let ok_3=filter_out_keys(Object.keys(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
-			if(has_keys(ok_3,"thumbnailOverlays")) return;
-			if(has_keys(ok_3,"icon,callToAction,dismiss,hovercardButton,isSubscribe")) return;
-			console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
-			debugger;
-		}
-		/**
-		 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRenderer.js").GuideSectionRenderer; }|{key: "guideSubscriptionsSectionRenderer";item: import("./support/yt_api/yt/GuideSubscriptionsSectionRenderer.js").GuideSubscriptionsSectionRenderer}} _todo_desc
-		 */
-		todo(_todo_desc) {
-			console.log("todo",_todo_desc.key,_todo_desc.item);
-		}
-		/**
-		 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData }} desc
-		 */
-		guideSectionRenderer(desc) {
-			let ok=Object.keys(desc.item);
-			/** @type {keyof typeof desc['item']} */
-			let fk=as_cast(ok[0]);
-			let {[fk]: first}=desc.item;
-			if(eq_keys(ok,['items','trackingParams'])) return;
-			if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
-			console.log(desc.key,ok,[fk,first],desc.item);
-		}
-		/**
-		 * @param {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
-		 */
-		guideSubscriptionsSectionRenderer(desc) {
-			let ok=Object.keys(desc.item);
-			/** @type {keyof typeof desc['item']} */
-			let fk=as_cast(ok[0]);
-			let {[fk]: first}=desc.item;
-			if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
-			console.log(desc.key,ok,[fk,first],desc.item);
-		}
-		/**
-		 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
-		 */
-		multiPageMenuRenderer(renderer) {
-			this.header(renderer.header);
-			let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
-			if(eq_keys(ok,[])) return;
-			if(eq_keys(ok,['style'])) return;
-			debugger;
-		}
-		/**
-		 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
-		 */
-		header(header) {
-			this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
-			let ok=Object.keys(header);
-			ok;
-		}
-		/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
-		simpleMenuHeaderRenderer(renderer) {
-			for(let button of renderer.buttons) {
-				this.buttonRenderer(button.buttonRenderer);
-			}
-		}
-		/**
-		 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
-		 */
-		buttonRenderer(renderer) {
-			let ok=Object.keys(renderer);
-			console.log("renderer.style",renderer.style);
-			console.log("renderer.size",renderer.size);
-			console.log("renderer.isDisabled",renderer.isDisabled);
-			console.log("renderer.icon",renderer.icon);
-			console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
-			console.log("renderer.tooltip",renderer.tooltip);
-			console.log("renderer.trackingParams",renderer.trackingParams);
-			console.log("renderer.accessibilityData",renderer.accessibilityData);
-			if(eq_keys(ok,['style','size','isDisabled','icon','navigationEndpoint','tooltip','trackingParams','accessibilityData'])) return;
-			console.log(ok);
-			debugger;
-		}
-	};
+	handle=new HandlerBase;
 	/**
 	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer<"Notifications">} popup
 	 */
