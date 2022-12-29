@@ -1605,7 +1605,7 @@ function make_search_params(t) {
 
 class HandlerBase {
 	/**
-	 * @param {{}} command
+	 * @param {AdsControlFlowOpportunityReceivedCommandData} command
 	 */
 	adsControlFlowOpportunityReceivedCommand(command) {
 		console.log(command);
