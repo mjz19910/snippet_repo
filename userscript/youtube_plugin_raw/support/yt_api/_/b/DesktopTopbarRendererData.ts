@@ -5,4 +5,10 @@ export type DesktopTopbarRendererData={
 	searchbox: {};
 	trackingParams: string;
 	countryCode: CountryCode;
+	topbarButtons: {}[];
+	hotkeyDialog: {};
+	backButton: {};
+	forwardButton:{};
+	a11ySkipNavigationButton: {};
+	voiceSearchButton: {};
 };
