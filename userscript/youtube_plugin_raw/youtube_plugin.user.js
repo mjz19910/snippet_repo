@@ -4437,10 +4437,15 @@ class HandleTypes {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdateData} obj
+	 * @param {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
 	 */
 	handleEntityBatchUpdate(obj) {
-		console.log(obj);
-		debugger;
+		console.log(obj.entityBatchUpdate);
+		let mut_item=obj.entityBatchUpdate.mutations[0];
+		obj.entityBatchUpdate;
+		switch(mut_item.type) {
+			case "ENTITY_MUTATION_TYPE_REPLACE": break;
+			default: debugger;
+		}
 	}
 }

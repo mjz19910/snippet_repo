@@ -108,6 +108,7 @@
       "idents",
       "idxoff",
       "ilen",
+      "INMEMORY",
       "Instream",
       "ipcc",
       "itag",

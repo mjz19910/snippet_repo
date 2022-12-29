@@ -1,8 +1,4 @@
-import {EntityMutationPayload} from "./EntityMutationPayload";
+import {EntityMutationDelete} from "./EntityMutationDelete";
+import {EntityMutationReplace} from "./EntityMutationReplace";
 
-
-export type EntityMutationItem={
-	entityKey: string;
-	type: "ENTITY_MUTATION_TYPE_REPLACE";
-	payload: EntityMutationPayload;
-};
+export type EntityMutationItem=EntityMutationReplace|EntityMutationDelete;
