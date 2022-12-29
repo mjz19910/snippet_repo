@@ -422,7 +422,7 @@ function with_ytd_scope() {
 				if(!box_map.has("video-list")) continue;
 				if(ytd_page_manager===null) continue;
 				if(!ytd_page_manager.getCurrentPage()) continue;
-				console.log(iter_count);
+				console.log("[iter_count]",iter_count);
 				if(iter_count>max_find_iter) {
 					alert("found plugin reqs in iters="+iter_count);
 				}
@@ -1379,47 +1379,30 @@ function check_item_keys(real_path,path,keys) {
 		case "richItemRenderer.content": break;
 		case "richItemRenderer": break;
 	}
+	let mode=null;
 	switch(path) {
 		default: console.log("item_keys_tag [ci_2_1_]: content path",path,real_path_arr_dyn); break;
-		case "appendContinuationItemsAction.continuationItems[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_1_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "continuationItemRenderer": break;
-			case "compactPlaylistRenderer": break;
-			case "compactVideoRenderer": break;
-			case "commentRenderer": break;
-			case "richItemRenderer": break;
-		} break;
+		case "appendContinuationItemsAction.continuationItems[]": mode="items"; break;
 		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_2_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_3_1_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "continuationItems": break;
 			case "targetId": break;
 		} break;
-		case "richItemRenderer.content": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_3_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "adSlotRenderer": break;
-			case "radioRenderer": break;
-			case "videoRenderer": break;
-			case "reelItemRenderer": break;
-		} break;
+		case "richItemRenderer.content": mode="items"; break;
 		case "richItemRenderer": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_4_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_3_2_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "content": break;
 			case /*grep-skip*/"trackingParams": break;
 		} break;
-		case "richGridRenderer.contents[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "continuationItemRenderer": break;
-			case "richItemRenderer": break;
-			case "richSectionRenderer": break;
-		} break;
+		case "richGridRenderer.contents[]": mode="items"; break;
 		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_5_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_3_3_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "adSlotRenderer": break;
 			case "radioRenderer": break;
 			case "videoRenderer": break;
 		} break;
 		case "richGridRenderer": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_7_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_3_4_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "contents": break;
 			case /*grep-skip*/"trackingParams": break;
 			case "header": break;
@@ -1428,51 +1411,45 @@ function check_item_keys(real_path,path,keys) {
 			case "style": break;
 			case "masthead": break;
 		} break;
-		case "itemSectionRenderer.contents[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_8_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "backstagePostThreadRenderer": break;
-			case "channelAboutFullMetadataRenderer": break;
-			case "channelFeaturedContentRenderer": break;
-			case "channelRenderer": break;
-			case "commentsEntryPointHeaderRenderer": break;
-			case "compactPlaylistRenderer": break;
-			case "compactRadioRenderer": break;
-			case "compactVideoRenderer": break;
-			case "connectedAppRenderer": break;
-			case "continuationItemRenderer": break;
-			case "gridRenderer": break;
-			case "messageRenderer": break;
-			case "pageIntroductionRenderer": break;
-			case "playlistVideoListRenderer": break;
-			case "promotedSparklesWebRenderer": break;
-			case "reelShelfRenderer": break;
-			case "searchPyvRenderer": break;
-			case "settingsOptionsRenderer": break;
-			case "shelfRenderer": break;
-			case "videoRenderer": break;
-		} break;
+		case "itemSectionRenderer.contents[]": mode="items"; break;
 		case "itemSectionRenderer": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_9_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_3_5_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "contents": break;
 			case "header": break;
 			case "sectionIdentifier": break;
 			case "targetId": break;
 			case /*grep-skip*/"trackingParams": break;
 		} break;
-		case "reloadContinuationItemsCommand.continuationItems[]": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_a_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "commentsHeaderRenderer": break;
-			case "commentThreadRenderer": break;
-			case "continuationItemRenderer": break;
-			case "richItemRenderer": break;
-			case "richSectionRenderer": break;
-		} break;
+		case "reloadContinuationItemsCommand.continuationItems[]": mode="items"; break;
 		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_b_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "continuationItems": break;
 			case "slot": break;
 			case "targetId": break;
 		} break;
+	}
+	if(mode==="items") for(let key of keys) switch(key) {
+		default: console.log("item_keys_tag [ci_4_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+		case "backstagePostThreadRenderer": break;
+		case "channelAboutFullMetadataRenderer": break;
+		case "channelFeaturedContentRenderer": break;
+		case "channelRenderer": break;
+		case "commentsEntryPointHeaderRenderer": break;
+		case "compactPlaylistRenderer": break;
+		case "compactRadioRenderer": break;
+		case "compactVideoRenderer": break;
+		case "connectedAppRenderer": break;
+		case "continuationItemRenderer": break;
+		case "gridRenderer": break;
+		case "messageRenderer": break;
+		case "pageIntroductionRenderer": break;
+		case "playlistVideoListRenderer": break;
+		case "promotedSparklesWebRenderer": break;
+		case "reelShelfRenderer": break;
+		case "searchPyvRenderer": break;
+		case "settingsOptionsRenderer": break;
+		case "shelfRenderer": break;
+		case "videoRenderer": break;
 	}
 }
 
@@ -1557,6 +1534,7 @@ class HandleRendererContentItemArray {
 			if("commentThreadRenderer" in content_item) return true;
 			if("commentsHeaderRenderer" in content_item) return true;
 			if("continuationItemRenderer" in content_item) return true;
+			if("compactVideoRenderer" in content_item) return true;
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
 				return true;
@@ -1929,7 +1907,7 @@ class FilterHandlers {
 				/** @type {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
 				json: do_as_cast(json),
 			};
-			case "next": console.log("[get_res_data_next]",url_type,json,Object.keys(json)); return {
+			case "next": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
 				json: do_as_cast(json),
@@ -2106,8 +2084,12 @@ class FilterHandlers {
 		endscreenElementRenderer(renderer) {
 			switch(renderer.style) {
 				case "VIDEO": break;
+				case "CHANNEL": break;
+				default: debugger;
 			}
-			let ok_3=Object.keys(renderer);
+			let ok_3=filter_out_keys(Object.keys(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
+			if(has_keys(ok_3,"thumbnailOverlays")) return;
+			if(has_keys(ok_3,"icon,callToAction,dismiss,hovercardButton,isSubscribe")) return;
 			console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
 			debugger;
 		}
@@ -2145,8 +2127,9 @@ class FilterHandlers {
 		 */
 		multiPageMenuRenderer(renderer) {
 			this.header(renderer.header);
-			let ok=Object.keys(renderer);
-			if(eq_keys(ok,['header','sections','trackingParams'])) return;
+			let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
+			if(eq_keys(ok,[])) return;
+			if(eq_keys(ok,['style'])) return;
 			debugger;
 		}
 		/**
@@ -3212,7 +3195,7 @@ function filter_out_keys(keys,to_remove) {
 	return ok_e;
 }
 const gen_not_want_level_1=["responseContext","contents","trackingParams","topbar"];
-/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["response"]} obj */
+/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail @arg {JsonDataResponseType} obj */
 function pb_0(detail,obj) {
 	if(obj.page==="watch") {
 		x: {
@@ -3251,7 +3234,7 @@ function click_track_do(obj,iter_skips) {
 const gen_not_want_level_1_endpoint=["clickTrackingParams","commandMetadata"];
 /**
  * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["response"]} obj
+ * @arg {JsonDataResponseType} obj
  * @arg {["detail","response"]} path
  */
 function random_sometimes_break_0(detail,obj,path) {
@@ -3399,7 +3382,7 @@ function on_command_meta(obj) {
 }
 /**
  * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["endpoint"]} obj
+ * @arg {import("./support/yt_api/_abc/JsonDataEndpointType.js").JsonDataEndpointType} obj
  * @arg {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
@@ -4254,5 +4237,13 @@ function verify_param(_param) {
 			return true;
 		default: debugger; return false;
 	};
+}
+
+/**
+ * @param {string[]} ok_3
+ * @param {string} arg1
+ */
+function has_keys(ok_3,arg1) {
+	return eq_keys(ok_3,arg1.split(","));
 }
 
