@@ -2100,15 +2100,12 @@ class FilterHandlers {
 		}
 	}
 	csi_service={
+		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
 		rid: {
-			/** @type {`0x${string}`|null} */
-			GetWatchNext_rid: null,
-			/** @type {`0x${string}`|null} */
-			GetAttestationChallenge_rid: null,
-			/** @type {`0x${string}`|null} */
-			GetWebMainAppGuide_rid: null,
-			/** @type {`0x${string}`|null} */
-			GetUnseenNotificationCount_rid: null,
+			GetWatchNext_rid: void 0,
+			GetAttestationChallenge_rid: void 0,
+			GetWebMainAppGuide_rid: void 0,
+			GetUnseenNotificationCount_rid: void 0,
 		},
 		/** @type {"WEB"|null} */
 		c: null,
@@ -2122,29 +2119,27 @@ class FilterHandlers {
 	 */
 	on_csi_service(service) {
 		for(let param of service.params) {
-			if(param.key in this.csi_service.rid) {
-				switch(param.key) {
-					case "GetWatchNext_rid":
-					case "GetAttestationChallenge_rid":
-					case "GetWebMainAppGuide_rid":
-						this.csi_service.rid[param.key]=param.value;
-				}
-				continue;
-			}
 			switch(param.key) {
 				case "c": {
 					if(param.value!=="WEB") debugger;
 					this.csi_service[param.key]=param.value;
-				} break;
+				} continue;
 				case "cver": {
 					if(param.value!=="2.20221220.09.00") debugger;
 					this.csi_service[param.key]=param.value;
-				} break;
+				} continue;
 				case "yt_li": {
 					if(param.value!=="1") debugger;
 					this.csi_service[param.key]=param.value;
-				} break;
+				} continue;
 				default: console.log("new csi param",param); debugger;
+			}
+			if(param.key in this.csi_service.rid) {
+				/** @type {`${string}_rid`} */
+				let rid_key=param.key;
+				this.csi_service.rid[rid_key]=param.value;
+				console.log("rid key",rid_key);
+				continue;
 			}
 		}
 	}
