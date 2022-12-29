@@ -1080,19 +1080,19 @@ function fetch_rejection_handler(rejection) {
  */
 let original_fetch=null;
 /**
- * @arg {string|URL|Request} url_or_request @arg {RequestInit} [request_init]
+ * @arg {string|URL|Request} user_request @arg {RequestInit} [request_init]
  * @returns {Promise<Response>}
 */
-function fetch_inject(url_or_request,request_init) {
+function fetch_inject(user_request,request_init) {
 	if(!original_fetch) throw new Error("No original fetch");
 	if(request_init) {
-		console.log("fetch_log_with_options",url_or_request,request_init);
+		console.log("fetch_log_with_options",user_request,request_init);
 	}
-	if(typeof url_or_request==="string"&&url_or_request.startsWith("https://www.gstatic.com")) {
-		return original_fetch(url_or_request,request_init);
+	if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
+		return original_fetch(user_request,request_init);
 	}
-	let ret=original_fetch(url_or_request,request_init);
-	let ret_1=ret.then(fetch_promise_handler.bind(null,url_or_request,request_init),fetch_rejection_handler);
+	let ret=original_fetch(user_request,request_init);
+	let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 	return ret_1;
 }
 
