@@ -1976,6 +1976,7 @@ class FilterHandlers {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "GetWatchNext_rid": this.csi_service[param.key]=param.value; break;
+				case "GetAttestationChallenge_rid": this.csi_service[param.key]=param.value; break;
 				case "c":{
 					if(param.value !=="WEB")debugger;
 					this.csi_service[param.key]=param.value;
@@ -1987,10 +1988,6 @@ class FilterHandlers {
 				case "yt_li": {
 					if(param.value !=="1") debugger;
 					this.csi_service[param.key]=param.value;
-				} break;
-				case "GetAttestationChallenge_rid": {
-					this.csi_service[param.key]=param.value;
-					debugger;
 				} break;
 				default: debugger;
 			}
