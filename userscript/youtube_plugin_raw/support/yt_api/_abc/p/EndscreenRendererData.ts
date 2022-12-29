@@ -1,8 +1,5 @@
-
+import {EndscreenElementRenderer} from "./EndscreenElementRenderer";
+type EndscreenRendererElement=EndscreenElementRenderer;
 export type EndscreenRendererData={
-	elements: {
-		endscreenElementRenderer: {
-			style: "VIDEO"|"CHANNEL";
-		};
-	}[];
+	elements: EndscreenRendererElement[];
 };

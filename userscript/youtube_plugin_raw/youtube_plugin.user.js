@@ -1722,9 +1722,27 @@ class FilterHandlers {
 			data.adPlacements=[];
 		}
 		if(data.endscreen) {
+			let elements=data.endscreen.endscreenRenderer.elements;
+			for(let element of elements) {
+				let ok_2=Object.keys(element);
+				x: {
+					if(ok_2[0]==="endscreenElementRenderer"&&ok_2.length===1) break x;
+					console.log("[on_page_type_watch_log_element] element ok_2 [%s]",ok_2.join(","));
+				}
+				if("endscreenElementRenderer" in element) {
+					this.handle.endscreenElementRenderer(element.endscreenElementRenderer);
+				} else {
+					debugger;
+				}
+			}
 			let ok_1=Object.keys(data.endscreen);
-			console.log("[on_page_type_watch_log] ok_1 [%s]",ok_1.join(","));
-			console.log(ok_1);
+			if(ok_1.length!==1) {
+				console.log("[on_page_type_watch_log_0] endscreen ok_1 [%s]",ok_1.join(","));
+				debugger;
+			}
+			ok_1=Object.keys(data.endscreen.endscreenRenderer);
+			if(eq_keys(ok_1,["elements","startMs","trackingParams"])) return;
+			console.log("[on_page_type_watch_log_1] endscreenRenderer ok_1 [%s]",ok_1.join(","));
 		}
 		let ok=Object.keys(data);
 		for(let key of ok) {
@@ -1747,7 +1765,7 @@ class FilterHandlers {
 			if(key==="frameworkUpdates") continue;
 			// other
 			if(key==="endscreen") continue;
-			console.log("[on_page_type_watch_log]",key);
+			console.log("[on_page_type_watch_log_iter]",key);
 			debugger;
 		}
 	}
@@ -2084,6 +2102,15 @@ class FilterHandlers {
 		return {req_hr_t,req_parse,debug};
 	}
 	handle=new class {
+		/** @arg {import("./support/yt_api/_abc/p/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
+		endscreenElementRenderer(renderer) {
+			switch(renderer.style) {
+				case "VIDEO": break;
+			}
+			let ok_3=Object.keys(renderer);
+			console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
+			debugger;
+		}
 		/**
 		 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRenderer.js").GuideSectionRenderer; }|{key: "guideSubscriptionsSectionRenderer";item: import("./support/yt_api/yt/GuideSubscriptionsSectionRenderer.js").GuideSubscriptionsSectionRenderer}} _todo_desc
 		 */
@@ -2416,6 +2443,7 @@ class FilterHandlers {
 		yt_fn: null,
 		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
 		rid: {
+			GetPlayer_rid: void 0,
 			GetAccountMenu_rid: void 0,
 			GetWatchNext_rid: void 0,
 			GetAttestationChallenge_rid: void 0,
