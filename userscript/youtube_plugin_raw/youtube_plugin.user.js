@@ -21,7 +21,7 @@ var destroy_env=() => {};
 if(typeof window==="undefined") {
 	is_node_js=() => true;
 	/** @type {{require:()=>any}&typeof globalThis} */
-	let njs_require=any(globalThis);
+	let njs_require=do_as_cast(globalThis);
 	if(typeof njs_require.require==="function") {
 		let n_env=require("./support/_/init_node_env.js");
 		destroy_env=() => {
@@ -1256,7 +1256,7 @@ class IterateApiResultBase {
 			}
 			const state={t,path: `${path}.${key}`};
 			if(rk!==void 0&&this.iterate_target[rk]) {
-				this.iterate_target[rk](state,any(value));
+				this.iterate_target[rk](state,do_as_cast(value));
 			} else {
 				this.default_iter(state,value);
 			}
@@ -1702,7 +1702,7 @@ class FilterHandlers {
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
 			data.playerAds=[];
 			/** @type {{old_store:typeof data['playerAds']}&typeof data['playerAds']} */
-			let with_old_store=any(data.playerAds);
+			let with_old_store=do_as_cast(data.playerAds);
 			with_old_store.old_store=old_ads;
 		}
 		if(data.adPlacements) {
@@ -1824,42 +1824,42 @@ class FilterHandlers {
 		switch(url_type) {
 			case "att.get":
 				/** @type {import("./support/yt_api/yt/yt_response_att_get.js").yt_response_att_get} */
-				let tc={url_type: "att.get",json: any(json)};
+				let tc={url_type: "att.get",json: do_as_cast(json)};
 				return tc;
 			case "browse": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_browse.js").yt_response_browse['json']} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "guide": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_guide.js").yt_response_guide['json']} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "notification.get_unseen_count": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "reel.reel_item_watch": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "player": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_player.js").yt_response_player['json']} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "next": console.log(url_type,json,Object.keys(json)); return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "reel_watch_sequence": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			case "live_chat.get_live_chat_replay": return {
 				url_type,
@@ -1868,7 +1868,7 @@ class FilterHandlers {
 			case "notification.get_notification_menu": return {
 				url_type,
 				/** @type {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu["json"]} */
-				json: any(json),
+				json: do_as_cast(json),
 			};
 			default: console.log(url_type,json); debugger;
 		}
@@ -1962,7 +1962,7 @@ class FilterHandlers {
 	on_guide_item(item) {
 		let ok=Object.keys(item);
 		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
-		let key=any(ok[0]);
+		let key=do_as_cast(ok[0]);
 		if(!key) {
 			console.log("on_guide_item",ok);
 		}
@@ -2045,7 +2045,7 @@ class FilterHandlers {
 		let new_client={};
 		for(let param of service.params) {
 			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
-			let param_parts=any(param.key.split("."));
+			let param_parts=do_as_cast(param.key.split("."));
 			if(param_parts[0]!=='client') debugger;
 			switch(param_parts[1]) {
 				case "version": {
@@ -2750,8 +2750,8 @@ class HTMLVideoElementArrayBox {
 	}
 }
 
-/** @template U @template {U} T @arg {U} e @returns {U extends T?T extends U?T:never:never} */
-function any(e) {
+/** @template U @template {U} T @arg {U} e @returns {T} */
+function do_as_cast(e) {
 	/** @type {any} */
 	let x=e;
 	return x;
@@ -2765,7 +2765,7 @@ class YTNavigateFinishEvent {
 		return ret;
 	}
 	/** @type {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} */
-	detail=any({});
+	detail=do_as_cast({});
 }
 
 /**
@@ -3137,7 +3137,7 @@ function page_type_iter(pageType) {
 /** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
-	let ok=any(Object.keys(detail));
+	let ok=do_as_cast(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
 			case "response": random_sometimes_break_0(detail,detail[x],["detail",x]); continue;
