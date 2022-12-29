@@ -1,9 +1,11 @@
-import {CsiServiceParams} from "../../exact_data/CsiServiceParams.js";
-import {ServiceParams} from "../../exact_data/ServiceParams.js";
+import {CsiServiceParams} from "./CsiServiceParams.js";
+import {ECatcherServiceParams} from "./ECatcherServiceParams";
+import {GFeedbackServiceParams} from "./GFeedbackServiceParams";
+import {GuidedHelpServiceParams} from "./GuidedHelpServiceParams";
 
 export type AllServiceTrackingParams=[
 	CsiServiceParams,
-	ServiceParams<"GFEEDBACK">,
-	ServiceParams<"GUIDED_HELP">,
-	ServiceParams<"ECATCHER">
+	GFeedbackServiceParams,
+	GuidedHelpServiceParams,
+	ECatcherServiceParams
 ];

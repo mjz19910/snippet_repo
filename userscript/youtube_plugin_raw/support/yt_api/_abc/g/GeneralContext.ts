@@ -7,6 +7,6 @@ export type GeneralContext={
 	};
 	serviceTrackingParams: AllServiceTrackingParams;
 	webResponseContextExtensionData: {
-		hasDecorated: false;
+		hasDecorated: boolean;
 	};
 };
