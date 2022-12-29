@@ -1,9 +1,9 @@
 import {BrowseEndpointData} from "../b/BrowseEndpointData.js";
-import {ToServiceParams} from "./ToServiceParams.js";
+import {ToServiceParamsList} from "../t/ToServiceParamsList.js";
 
 export type GFeedbackServiceParams={
 	service: 'GFEEDBACK';
-	params: ToServiceParams<GFeedbackVarMap>[keyof GFeedbackVarMap][];
+	params: ToServiceParamsList<GFeedbackVarMap>
 };
 type GFeedbackVarMap={
 	e: string;

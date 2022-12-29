@@ -1697,7 +1697,7 @@ class FilterHandlers {
 	 * @arg {string} path
 	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 */
-	on_v1_player(path,data) {
+	on_page_type_watch(path,data) {
 		this.on_response_context("on_v1_player",data.responseContext);
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
@@ -1719,7 +1719,7 @@ class FilterHandlers {
 	 * @arg {string} path
 	 * @arg {{}} data
 	 */
-	on_v1_browse(path,data) {
+	on_page_type_browse(path,data) {
 		console.log("browse page",path,data);
 	}
 	/** 
@@ -1979,12 +1979,12 @@ class FilterHandlers {
 	on_handle_api_4(res,api_path) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
-			case "player": this.on_v1_player(api_path,res.json); return true;
+			case "player": this.on_page_type_watch(api_path,res.json); return true;
 			case "guide": this.on_guide(api_path,res.json); return true;
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return false;
-			case "browse": this.on_v1_browse(res.url_type,res.json); return false;
+			case "browse": this.on_page_type_browse(res.url_type,res.json); return false;
 			default: return null;
 		}
 	}
@@ -2054,6 +2054,7 @@ class FilterHandlers {
 			/** @type {keyof typeof desc['item']} */
 			let fk=do_as_cast(ok[0]);
 			let {[fk]: first}=desc.item;
+			if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
 			console.log(desc.key,ok,[fk,first],desc.item);
 		}
 		/**
@@ -2219,7 +2220,7 @@ class FilterHandlers {
 		}
 	}
 	e_catcher_service={
-		/** @type {{fexp:number[]}|null} */
+		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
 		client: null,
 		expected_client_values: {
 			fexp: [
@@ -2233,6 +2234,7 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/_abc/a/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
 	on_e_catcher_service(service) {
+		/** @type {NonNullable<this['e_catcher_service']['client']>} */
 		let new_client={};
 		for(let param of service.params) {
 			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
@@ -2240,10 +2242,10 @@ class FilterHandlers {
 			if(param_parts[0]!=='client') debugger;
 			switch(param_parts[1]) {
 				case "version": {
-					if(param.value==="2.20221220") break;
+					if(param.value!=="2.20221220") {debugger; break;};
 					new_client.version=param.value;
 				} break;
-				case "name": new_client.name=param.value; break;
+				case "name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
 				case "fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
 				default: debugger;
 			}
@@ -2260,12 +2262,18 @@ class FilterHandlers {
 				}
 				new_expected.push(exp);
 			}
-			console.log(prev_client,this.e_catcher_service.client);
+			if(prev_client.name!==this.e_catcher_service.client.name) {
+				console.log({name: prev_client.name},{name: this.e_catcher_service.client.name});
+			}
 			if(new_expected.length>0) console.log("new_fexp",new_expected);
 		} else {
 			this.e_catcher_service.client=new_client;
 		}
 	}
+	guided_help_service={
+		/** @type {string|null} */
+		context: null,
+	};
 	/** @arg {import("./support/yt_api/_abc/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		for(let param of service.params) {
@@ -2275,6 +2283,7 @@ class FilterHandlers {
 					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
+				case "context": this.guided_help_service.context=param.value; console.log("new [help_context]", param.value); break;
 				default: debugger;
 			}
 		}
@@ -2323,8 +2332,12 @@ class FilterHandlers {
 				case "is_viewed_live": break;
 				case "browse_id":
 					let v_2c=param.value.slice(0,2);
+					let v_ac=param.value.slice(2);
 					switch(v_2c) {
 						case "FE": console.log("new [param_value_with_section]",v_2c,param); break;
+						case "VL": ; switch(v_ac) {
+							default: debugger;
+						}  break;
 						default: console.log("new [param_value_needed]",v_2c,param); break;
 					}
 					break;
@@ -2339,6 +2352,7 @@ class FilterHandlers {
 			GetAttestationChallenge_rid: void 0,
 			GetWebMainAppGuide_rid: void 0,
 			GetUnseenNotificationCount_rid: void 0,
+			GetPlaylist_rid: void 0,
 		},
 		/** @type {"WEB"|null} */
 		c: null,
@@ -2373,7 +2387,7 @@ class FilterHandlers {
 				continue;
 			} else if(param.key.endsWith("_rid")) {
 				this.csi_service.rid[param.key]=param.value;
-				console.log("new unknown rid key",param);
+				console.log("new [unknown_rid_key]",param);
 				continue;
 			} else {
 				console.log("new csi param",param);
@@ -2390,10 +2404,39 @@ class FilterHandlers {
 		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type);
 		this.handle_any_data(`page_type_${page_type}`,data);
 		switch(data.page) {
-			case "watch": this.on_v1_player(page_type,data.playerResponse); break;
-			case "browse": this.on_v1_browse(page_type,data); break;
+			case "browse": this.on_page_type_browse(page_type,data); break;
+			case "playlist": this.on_page_type_playlist(data); break;
+			case "settings": this.on_page_type_settings(data); break;
+			case "shorts": this.on_page_type_shorts(data); break;
+			case "watch": this.on_page_type_watch(page_type,data.playerResponse); break;
 			default: console.log("handle_page_type",page_type); debugger;
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_abc/p/PlaylistResponse.js").PlaylistResponse} data
+	 */
+	on_page_type_playlist(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		console.log(data.url);
+	}
+	/**
+	 * @param {import("./support/yt_api/_abc/SettingsResponse.js").SettingsResponse} data
+	 */
+	on_page_type_settings(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		console.log(data.url);
+		data; debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_abc/s/ShortsResponse.js").ShortsResponse} data
+	 */
+	on_page_type_shorts(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		console.log(data.url);
+		data; debugger;
 	}
 	/**
 	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
@@ -3927,10 +3970,10 @@ class HistoryStateManager extends EventTarget {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('pushState: h_over_new_state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
-					console.log("pushState: h_over_old_state: []",remove_yt_data(t.cur_state));
+					if(yt_debug_enabled) console.log('pushState: [h_over_new_state] cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
+					if(yt_debug_enabled) console.log("pushState: h_over_old_state: []",remove_yt_data(t.cur_state));
 				} else {
-					console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
+					if(yt_debug_enabled) console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
 				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
