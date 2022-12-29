@@ -4418,8 +4418,9 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
 	 */
 	DesktopTopbarRenderer(renderer) {
-		renderer.desktopTopbarRenderer;
-		console.log(renderer);
+		let ok=Object.keys(renderer.desktopTopbarRenderer);
+		console.log(renderer.desktopTopbarRenderer);
+		if(has_keys(ok, "logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
 		debugger;
 	}
 	/**
