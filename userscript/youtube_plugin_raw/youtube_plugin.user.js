@@ -2499,7 +2499,7 @@ class FilterHandlers {
 		}
 	}
 	guided_help_service={
-		/** @type {string|null} */
+		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
 	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
@@ -2511,7 +2511,7 @@ class FilterHandlers {
 					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
-				case "context": this.guided_help_service.context=param.value; console.log("new [help_context]",param.value); break;
+				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.guided_help_service.context=param.value; break;
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
@@ -2580,6 +2580,7 @@ class FilterHandlers {
 		yt_fn: null,
 		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
 		rid: {
+			GetHome_rid: void 0,
 			GetPlayer_rid: void 0,
 			GetAccountMenu_rid: void 0,
 			GetWatchNext_rid: void 0,
