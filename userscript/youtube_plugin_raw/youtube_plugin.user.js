@@ -1866,7 +1866,7 @@ class FilterHandlers {
 				index++; let next_part=parts[index]; switch(next_part) {
 					default: no_handler({...state,parts,index});
 				}
-			} return "feedback";
+			} break;
 			default: no_handler({...state,parts,index});
 		}
 		return {name: cur_part};
@@ -2236,7 +2236,7 @@ class FilterHandlers {
 	/** @typedef {import("./support/yt_api/_abc/g/GeneralContext.js").AgeingContext} AgeingContext */
 	/** @typedef { import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
-	 * @arg {keyof FilterHandlers} _from
+	 * @arg {keyof FilterHandlers|"general_context"} _from
 	 * @arg {GeneralContext|AgeingContext} context
 	 */
 	on_response_context(_from,context) {
