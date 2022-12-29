@@ -10,11 +10,13 @@ import {yt_response_player as player_t} from "../../yt/yt_response_player.js";
 import {yt_response_reel_item_watch as reel_reel_item_watch} from "../../yt/yt_response_reel_item_watch.js";
 import {yt_response_reel_watch_sequence as reel_reel_watch_sequence} from "../../yt/yt_response_reel_watch_sequence.js";
 import {account_account_menu_t} from "./account_account_menu_t";
+import {notification_record_interactions} from "./notification_record_interactions";
 
 export type responseTypes=
 	account_account_menu_t|
 	notification_get_notification_menu|
 	notification_get_unseen_count|
+	notification_record_interactions|
 	att_get|
 	browse_t|
 	getDatasyncIdsEndpoint_t|

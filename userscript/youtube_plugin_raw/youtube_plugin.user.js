@@ -1984,8 +1984,24 @@ class FilterHandlers {
 		}
 		return {name: cur_part};
 	}
-	/** @template {UrlTypes} T @arg {T} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
+	/** @arg {UrlTypes} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
 	get_res_data(url_type,json) {
+		/** @type {import("./support/make/Split.js").Split<UrlTypes, ".">} */
+		let target=split_string(url_type,".");
+		switch(target.length) {
+			case 1: break;
+			case 2: break;
+		}
+		switch(target[0]) {
+			case "account": return {
+				url_type: `account.${target[1]}`,
+				/** @type {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} */
+				json: as_cast(json),
+			};
+			case "att": break;
+			case "browse": break;
+			case "feedback": break;
+		}
 		switch(url_type) {
 			case "att.get": return {
 				url_type,
@@ -2022,7 +2038,7 @@ class FilterHandlers {
 				/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
 				json: as_cast(json),
 			};
-			case "reel_watch_sequence": return {
+			case "reel.reel_watch_sequence": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
 				json: as_cast(json),
@@ -2039,6 +2055,11 @@ class FilterHandlers {
 			case "account.account_menu": return {
 				url_type,
 				/** @type {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} */
+				json: as_cast(json),
+			};
+			case "notification.record_interactions": return {
+				url_type,
+				/** @type {import("./support/yt_api/_/r/YtSuccessResponse.js").YtSuccessResponse} */
 				json: as_cast(json),
 			};
 			default: console.log(url_type,json); debugger;
@@ -2118,7 +2139,7 @@ class FilterHandlers {
 		switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
 		switch(res.url_type) {case "reel.reel_item_watch": return false;}
 		switch(res.url_type) {
-			case "reel_watch_sequence": return false;
+			case "reel.reel_watch_sequence": return false;
 			default:
 				console.log("missed api type",res);
 				throw new Error("FIXME");
