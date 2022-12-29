@@ -1912,8 +1912,23 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} data
 	 */
 	on_att_get(data) {
+		this.on_response_context("on_att_get",data.responseContext);
+		let ok=Object.keys(data);
+		if(eq_keys(ok, ['responseContext', 'challenge', 'bgChallenge'])) return;
+		data.bgChallenge;
 		console.log(data);
 		debugger;
+	}
+	/**
+	 * @arg {"on_att_get"} _from
+	 * @arg {import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} context
+	 */
+	on_response_context(_from,context) {
+		for(let service_tracking_param of context.serviceTrackingParams) {
+			switch(service_tracking_param.service) {
+				default: debugger;
+			}
+		}
 	}
 	/**
 	 * @arg {InitialDataType} data
