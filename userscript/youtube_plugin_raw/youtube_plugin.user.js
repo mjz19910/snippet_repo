@@ -1694,6 +1694,7 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 */
 	on_v1_player(path,data) {
+		this.on_response_context("on_v1_player",data.responseContext);
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
@@ -1933,6 +1934,7 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
 	 */
 	on_guide(_path,guide) {
+		this.on_response_context("on_guide",guide.responseContext);
 		let ok=Object.keys(guide);
 		console.log(ok);
 		debugger;
@@ -1963,10 +1965,15 @@ class FilterHandlers {
 		debugger;
 	}
 	/**
-	 * @arg {"on_att_get"} _from
+	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"} _from
 	 * @arg {import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} context
 	 */
 	on_response_context(_from,context) {
+		let ok=Object.keys(context);
+		if(!(
+			eq_keys(ok,['serviceTrackingParams', 'mainAppWebResponseContext', 'webResponseContextExtensionData'])
+			||false
+			)) debugger;
 		for(let service_item of context.serviceTrackingParams) {
 			switch(service_item.service) {
 				case "CSI": this.on_csi_service(service_item); break;
