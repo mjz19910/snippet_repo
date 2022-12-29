@@ -1,8 +1,8 @@
-import {EntityBatchUpdateData} from "../e/EntityBatchUpdate.js";
 import {GeneralContext} from "../GeneralContext.js";
 import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer.js";
 import {AdsControlFlowOpportunityReceivedCommand} from "./AdsControlFlowOpportunityReceivedCommand";
 import {DesktopTopbarRenderer} from "./DesktopTopbarRenderer";
+import {EntityBatchUpdate} from "./EntityBatchUpdate";
 import {FeedTabbedHeaderRenderer} from "./FeedTabbedHeaderRenderer";
 
 export type BrowseResponseContent={
@@ -12,7 +12,5 @@ export type BrowseResponseContent={
 	topbar: DesktopTopbarRenderer;
 	onResponseReceivedActions: AdsControlFlowOpportunityReceivedCommand[];
 	trackingParams: string;
-	frameworkUpdates: {
-		entityBatchUpdate: EntityBatchUpdateData;
-	};
+	frameworkUpdates: EntityBatchUpdate;
 };
