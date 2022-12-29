@@ -1949,6 +1949,31 @@ class FilterHandlers {
 	on_response_context(_from,context) {
 		for(let service_tracking_param of context.serviceTrackingParams) {
 			switch(service_tracking_param.service) {
+				case "CSI": this.on_csi_service(service_tracking_param); break;
+				case "ECATCHER": debugger; break;
+				case "GFEEDBACK": debugger; break;
+				case "GUIDED_HELP":debugger; break;
+				default: debugger;
+			}
+		}
+	}
+	csi_service={
+		/** @type {string|null} */
+		GetWatchNext_rid:null,
+		/** @type {"WEB"|null} */
+		c: null,
+	};
+	/**
+	 * @param {import("./support/yt_api/_abc/a/CsiServiceParams.js").CsiServiceParams} service
+	 */
+	on_csi_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
+				case "GetWatchNext_rid": this.csi_service[param.key]=param.value; break;
+				case "c":{
+					if(param.value !=="WEB")debugger;
+					this.csi_service[param.key]=param.value;
+				} break;
 				default: debugger;
 			}
 		}
