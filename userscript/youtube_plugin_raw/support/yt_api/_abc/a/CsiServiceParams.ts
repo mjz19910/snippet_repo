@@ -1,7 +1,7 @@
 import {CsiVarMap} from "./CsiVarMap";
-import {ToServiceParams} from "../t/ToServiceParams";
+import {ToServiceParamsList} from "../t/ToServiceParamsList.js";
 
 export type CsiServiceParams={
 	service: 'CSI',
-	params: ToServiceParams<CsiVarMap>[keyof CsiVarMap][];
+	params: ToServiceParamsList<CsiVarMap>;
 };

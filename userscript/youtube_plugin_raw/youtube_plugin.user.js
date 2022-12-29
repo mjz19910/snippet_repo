@@ -2360,6 +2360,8 @@ class FilterHandlers {
 		cver: null,
 		/** @type {"1"|null} */
 		yt_li: null,
+		/** @type {"1"|null} */
+		yt_ad: null,
 	};
 	/**
 	 * @param {import("./support/yt_api/_abc/a/CsiServiceParams.js").CsiServiceParams} service
@@ -2379,6 +2381,7 @@ class FilterHandlers {
 					if(param.value!=="1") debugger;
 					this.csi_service[param.key]=param.value;
 				} continue;
+				case "yt_ad": this.csi_service[param.key]=param.value; break;
 			}
 			if(param.key in this.csi_service.rid) {
 				/** @type {`${string}_rid`} */
