@@ -15,4 +15,11 @@ type GFeedbackVarMap={
 	ipcc: "0";
 	is_viewed_live: "false";
 	browse_id: BrowseEndpointData['browseId'];
+	context: "yt_web_unknown_form_factor_kevlar_w2w";
+	route: "channel.featured";
+	is_casual: "false";
+	is_owner: "false";
+	is_monetization_enabled: "true";
+	num_shelves: "1";
+	browse_id_prefix: "";
 };

@@ -1450,6 +1450,11 @@ function check_item_keys(real_path,path,keys) {
 		case "settingsOptionsRenderer": break;
 		case "shelfRenderer": break;
 		case "videoRenderer": break;
+		// richGridRenderer.contents[]
+		case "richItemRenderer": break;
+		// richItemRenderer.content
+		case "adSlotRenderer": break;
+		case "radioRenderer": break;
 	}
 }
 
@@ -2291,6 +2296,17 @@ class FilterHandlers {
 				case "ECATCHER": this.on_e_catcher_service(service_item); break;
 				case "GFEEDBACK": this.on_g_feedback_service(service_item); break;
 				case "GUIDED_HELP": this.on_guided_help_service(service_item); break;
+				case "GOOGLE_HELP": this.on_google_help_service(service_item); break;
+				default: debugger;
+			}
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_abc/a/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
+	 */
+	on_google_help_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
 				default: debugger;
 			}
 		}
@@ -2303,6 +2319,7 @@ class FilterHandlers {
 				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574],
 				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
 				[39323120,39322983,39322873,39323013,39323020,39322863],
+				[39322866,39322870,39322980,39323016,45686551],
 			],
 		},
 	};
@@ -2376,6 +2393,8 @@ class FilterHandlers {
 	g_feedback_service={
 		/** @type {number[]|null} */
 		e: null,
+		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
+		context: null,
 	};
 	/**
 	 * @param {import("./support/yt_api/_abc/a/GFeedbackServiceParams.js").GFeedbackServiceParams} service
@@ -2417,6 +2436,13 @@ class FilterHandlers {
 						default: console.log("new [param_value_needed]",v_2c,param); break;
 					}
 					break;
+				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.g_feedback_service.context=param.value; break;
+				case "route": if(param.value!=="channel.featured") debugger; break;
+				case "is_casual": break;
+				case "is_owner": break;
+				case "is_monetization_enabled": break;
+				case "num_shelves": break;
+				case "browse_id_prefix": if(param.value!=="") debugger; break;
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
@@ -2505,6 +2531,15 @@ class FilterHandlers {
 		console.log(data.response);
 		console.log(data.url);
 		let x=split_string(data.url,"/")[2];
+		if(x.startsWith("UC")) {
+			let v=x.slice(2);
+			if(atob(v).length!==16) {
+				console.log("bad channel length",data.url);
+			}
+		} else {
+			console.log("bad channel",data.url);
+			debugger;
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_abc/p/PlaylistResponse.js").PlaylistResponse} data
