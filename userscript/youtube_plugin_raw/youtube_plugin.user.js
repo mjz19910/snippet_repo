@@ -1799,7 +1799,7 @@ class FilterHandlers {
 		switch(cur_part) {
 			case "youtubei": index++; return this.get_yt_url_type(state,parts,index);
 			case "getDatasyncIdsEndpoint": return {name: cur_part};
-			default: debugger;
+			default: console.log("get_url_type",cur_part); debugger;
 		}
 		throw new Error("Missing");
 	}
@@ -2598,7 +2598,7 @@ class FilterHandlers {
 					case "watch": case "browse": case "shorts": case "channel": case "playlist": {
 
 					} break;
-					default: debugger;
+					default: console.log("on_initial_data",ret); debugger;
 				}
 			} catch(err) {
 				console.log(this.class_name+": init filter error");
@@ -3519,7 +3519,7 @@ function page_type_iter(pageType) {
 		case "shorts": break;
 		case "watch": break;
 		case "settings": break;
-		default: debugger;
+		default: console.log("[%s]",pageType); debugger;
 	}
 }
 
@@ -4272,16 +4272,16 @@ if(typeof exports==="object") {
 	exports.FilterHandlers=FilterHandlers;
 }
 /**
- * @param {{ key: "yt_fn"; value: import("./support/yt_api/_abc/b/BrowseEndpointPages.js").BrowseEndpointPages; }} _param
+ * @param {{ key: "yt_fn"; value: import("./support/yt_api/_abc/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
  */
-function verify_param(_param) {
-	switch(_param.value) {
+function verify_param(param) {
+	switch(param.value) {
 		case "history":
 		case "library":
 		case "subscriptions":
 		case "what_to_watch":
 			return true;
-		default: debugger; return false;
+		default: console.log("[verify_param_bad]",param); debugger; return false;
 	};
 }
 
