@@ -1,4 +1,4 @@
-import {CompactVideoRenderer} from "../b/CompactVideoRenderer";
+import {CompactVideoRenderer} from "../c/CompactVideoRenderer";
 
 export type CompactVideoRendererH={
 	compactVideoRenderer: CompactVideoRenderer;

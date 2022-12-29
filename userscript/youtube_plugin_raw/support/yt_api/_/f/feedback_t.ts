@@ -1,4 +1,4 @@
-import {GeneralContext} from "../../_abc/g/GeneralContext.js";
+import {GeneralContext} from "../GeneralContext.js";
 
 export type feedback_t={
 	url_type: "feedback";

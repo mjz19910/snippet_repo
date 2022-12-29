@@ -1,4 +1,4 @@
-import {ContinuationCommandH} from "../../_abc/c/ContinuationCommandH.js";
+import {ContinuationCommandH} from "../c/ContinuationCommandH.js";
 import {TextRuns} from "../../_abc/t/TextRuns.js";
 import {TrackingParams} from "../../_abc/t/TrackingParams.js";
 

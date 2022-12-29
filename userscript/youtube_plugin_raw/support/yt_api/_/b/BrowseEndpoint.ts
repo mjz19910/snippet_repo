@@ -1,4 +1,4 @@
-import {ClickTrackingParams} from "../../_abc/c/ClickTrackingParams.js";
+import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
 import {BrowseCommandMetadata} from "./BrowseCommandMetadata";
 import {BrowseEndpointData} from "./BrowseEndpointData";
 

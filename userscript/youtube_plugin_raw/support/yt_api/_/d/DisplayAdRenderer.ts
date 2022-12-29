@@ -1,16 +1,17 @@
-import {ClickCommand} from "../../_abc/c/ClickCommand.js";
-import {ImpressionEndpoint} from "../../_abc/i/ImpressionEndpoint.js";
-import {SimpleTextFixmeValueNeeded} from "../../_abc/s/SimpleText";
-import {TrackingParams} from "../../_abc/t/TrackingParams.js";
-import {ButtonRenderer} from "../b/ButtonRenderer_0";
-import {MenuRenderer} from "../m/MenuRenderer_0";
-import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer_0.js";
-import {AdTitle_0,TN} from "../../_abc/r/RenderingContent";
+import {ButtonRenderer} from "../b/ButtonRenderer.js";
+import {ClickCommand} from "../c/ClickCommand.js";
+import {ImpressionEndpoint} from "../ImpressionEndpoint.js";
+import {MenuRenderer} from "../m/MenuRenderer.js";
+import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
+import {ThumbnailRoot} from "../ThumbnailRoot";
+import {AdTitle_0} from "../AdTitle_0";
+import {SimpleTextFixmeValueNeeded} from "../SimpleText.js";
+import {TrackingParams} from "../TrackingParams.js";
 
 export interface DisplayAdRenderer extends TrackingParams {
 	"layout": "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	"titleText": AdTitle_0;
-	"image": TN;
+	image: ThumbnailRoot;
 	// spell:ignore Linqto
 	"bodyText": SimpleTextFixmeValueNeeded;
 	"secondaryText": SimpleTextFixmeValueNeeded;

@@ -1,4 +1,4 @@
-import {HexLen} from "../../_abc/p/HexLen";
+import {HexLen} from "../HexLen";
 
 export type EndscreenElementRendererData={
 	style: "VIDEO"|"CHANNEL";

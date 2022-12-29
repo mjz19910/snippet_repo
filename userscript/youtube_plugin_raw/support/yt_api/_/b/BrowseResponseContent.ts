@@ -1,5 +1,5 @@
 import {EntityBatchUpdate} from "../e/EntityBatchUpdate.js";
-import {GeneralContext} from "../../_abc/g/GeneralContext.js";
+import {GeneralContext} from "../GeneralContext.js";
 import {TwoColumnBrowseResultsRendererData} from "../TwoColumnBrowseResultsRendererData.js";
 
 type FeedTabbedHeaderRenderer={

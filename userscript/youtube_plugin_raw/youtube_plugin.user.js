@@ -60,7 +60,7 @@ function save_new_map(key,map) {
 }
 
 class SavedData {
-	/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
+	/** @type {AnySavedData} */
 	any_data={};
 }
 
@@ -936,7 +936,7 @@ function to_url(url) {
 		return new URL(url);
 	}
 }
-/** @typedef {import("./support/yt_api/_abc/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
+/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
 /**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
@@ -1268,7 +1268,7 @@ class YtIterateTarget {
 	}
 	/**
 	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_abc/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 * @arg {import("./support/yt_api/_/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
@@ -1277,7 +1277,7 @@ class YtIterateTarget {
 	}
 	/**
 	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_abc/ItemSectionRendererData.js").ItemSectionRendererData} renderer
+	 * @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer
 	 */
 	itemSectionRenderer(state,renderer) {
 		let {t,path}=state;
@@ -1517,7 +1517,7 @@ class HandleRendererContentItemArray {
 	/**
 	 * @arg {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
-	 * @arg {{[U in "continuationItems"|"contents"]?: import("./support/yt_api/_abc/c/ContinuationItem.js").ContinuationItem[]}} obj
+	 * @arg {{[U in "continuationItems"|"contents"]?: import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem[]}} obj
 	 * @arg {"continuationItems"|"contents"} key
 	 */
 	replace_array(base,path,obj,key) {
@@ -1573,7 +1573,7 @@ class HandleRichGridRenderer {
 		}
 	}
 }
-/** @typedef {import("./support/yt_api/_abc/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
+/** @typedef {import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
 /** @typedef {import("./support/yt_api/_/a/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
 // class AppendContinuationItemsAction {
 // 	/**@type {ContinuationItem[]} */
@@ -2321,8 +2321,8 @@ class FilterHandlers {
 		console.log(data);
 		debugger;
 	}
-	/** @typedef {import("./support/yt_api/_abc/g/GeneralContext.js").AgeingContext} AgeingContext */
-	/** @typedef { import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} GeneralContext */
+	/** @typedef {import("./support/yt_api/_/GeneralContext.js").AgeingContext} AgeingContext */
+	/** @typedef { import("./support/yt_api/_/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
 	 * @arg {keyof FilterHandlers|"general_context"} _from
 	 * @arg {GeneralContext|AgeingContext} context

@@ -1,4 +1,4 @@
-import {GeneralContext} from "../../_abc/g/GeneralContext.js";
+import {GeneralContext} from "../GeneralContext.js";
 import {CaptionsRenderer} from "../c/CaptionsRenderer";
 import {EndscreenRenderer} from "../e/EndscreenRenderer";
 import {FrameworkUpdates} from "../../_abc/f/FrameworkUpdates.js";

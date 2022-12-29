@@ -1,7 +1,7 @@
+import {InFeedAdLayoutRenderer} from "../InFeedAdLayoutRenderer.js";
 import {AdSlotMetadata} from "./AdSlotMetadata";
-import {InFeedAdLayoutRenderer} from "./InFeedAdLayoutRenderer";
 
-export type AdSlotRenderer={
+export type AdSlotRendererData={
 	adSlotMetadata: AdSlotMetadata;
 	fulfillmentContent: {
 		fulfilledLayout: {
