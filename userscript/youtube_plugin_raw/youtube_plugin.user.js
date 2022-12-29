@@ -2030,7 +2030,29 @@ class FilterHandlers {
 		 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRenderer.js").GuideSectionRenderer; }|{key: "guideSubscriptionsSectionRenderer";item: import("./support/yt_api/yt/GuideSubscriptionsSectionRenderer.js").GuideSubscriptionsSectionRenderer}} _todo_desc
 		 */
 		todo(_todo_desc) {
-			console.log("todo", _todo_desc.key,_todo_desc.item);
+			console.log("todo",_todo_desc.key,_todo_desc.item);
+		}
+		/**
+		 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData }} desc
+		 */
+		guideSectionRenderer(desc) {
+			let ok=Object.keys(desc.item);
+			/** @type {keyof typeof desc['item']} */
+			let fk=do_as_cast(ok[0]);
+			let {[fk]:first}=desc.item;
+			if(eq_keys(ok,['items','trackingParams'])) return;
+			if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
+			console.log(desc.key,ok,[fk,first],desc.item);
+		}
+		/**
+		 * @param {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
+		 */
+		guideSubscriptionsSectionRenderer(desc) {
+			let ok=Object.keys(desc.item);
+			/** @type {keyof typeof desc['item']} */
+			let fk=do_as_cast(ok[0]);
+			let {[fk]:first}=desc.item;
+			console.log(desc.key,ok,[fk,first],desc.item);
 		}
 		/**
 		 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
@@ -2045,7 +2067,7 @@ class FilterHandlers {
 		 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
 		 */
 		header(header) {
-			this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer)
+			this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
 			let ok=Object.keys(header);
 			ok;
 		}
@@ -2062,7 +2084,7 @@ class FilterHandlers {
 			console.log(renderer);
 			debugger;
 		}
-	}
+	};
 	/**
 	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer<"Notifications">} popup
 	 */
@@ -2124,8 +2146,11 @@ class FilterHandlers {
 			console.log("on_guide_item",ok);
 		}
 		switch(key) {
-			case "guideSectionRenderer": if(key in item) this.handle.todo({key,item}); break;
-			case "guideSubscriptionsSectionRenderer": if(key in item) this.handle.todo({key,item}); break;
+			case "guideSectionRenderer": if(key in item) {
+				this.handle.guideSectionRenderer({key,item: item.guideSectionRenderer});
+				item.guideSectionRenderer;
+			} break;
+			case "guideSubscriptionsSectionRenderer": if(key in item) this.handle.guideSubscriptionsSectionRenderer({key,item: item[key]}); break;
 			default: return;
 		}
 	}
@@ -2294,6 +2319,13 @@ class FilterHandlers {
 				case "is_alc_surface": break;
 				case "ipcc": break;
 				case "is_viewed_live": break;
+				case "browse_id":
+					let v_2c=param.value.slice(0,2);
+					switch(v_2c) {
+						case "FE": console.log("new [param_value_with_section]",v_2c,param); break;
+						default: console.log("new [param_value_needed]",v_2c,param); break;
+					}
+					break;
 				default: debugger;
 			}
 		}

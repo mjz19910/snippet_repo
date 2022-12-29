@@ -1,3 +1,4 @@
+import {BrowseEndpointData} from "../b/BrowseEndpointData.js";
 import {ToServiceParams} from "./ToServiceParams.js";
 
 export type GFeedbackServiceParams={
@@ -13,4 +14,5 @@ type GFeedbackVarMap={
 	is_alc_surface: "false";
 	ipcc: "0";
 	is_viewed_live: "false";
+	browse_id: BrowseEndpointData['browseId'];
 };
