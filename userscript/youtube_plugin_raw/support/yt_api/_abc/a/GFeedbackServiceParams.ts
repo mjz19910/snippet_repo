@@ -6,20 +6,20 @@ export type GFeedbackServiceParams={
 	params: ToServiceParamsList<GFeedbackVarMap>
 };
 type GFeedbackVarMap={
-	e: string;
-	logged_in: "0"|"1";
-	premium_membership: "non_member";
-	has_unlimited_entitlement: "False";
-	has_alc_entitlement: "false";
-	is_alc_surface: "false";
-	ipcc: "0";
-	is_viewed_live: "false";
+	browse_id_prefix: "";
 	browse_id: BrowseEndpointData['browseId'];
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
-	route: "channel.featured";
+	e: string;
+	has_alc_entitlement: "false";
+	has_unlimited_entitlement: "False";
+	ipcc: "0";
+	is_alc_surface: "false";
 	is_casual: "false";
-	is_owner: "false";
 	is_monetization_enabled: "true";
+	is_owner: "false";
+	is_viewed_live: "false";
+	logged_in: "0"|"1";
 	num_shelves: "1";
-	browse_id_prefix: "";
+	premium_membership: "non_member";
+	route: "channel.featured";
 };

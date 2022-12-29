@@ -2299,6 +2299,7 @@ class FilterHandlers {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
+				case "browse_id": parse_browse_id(param.value); break;
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
@@ -2418,6 +2419,10 @@ class FilterHandlers {
 				case "ipcc": break;
 				case "is_viewed_live": break;
 				case "browse_id":
+					/**
+					 * @param {{ key: "browse_id"; value: string; }} param
+					 */
+					function parse_browse_id(param) {
 					let v_2c=param.value.slice(0,2);
 					let v_ac=param.value.slice(2);
 					switch(v_2c) {
@@ -2427,6 +2432,8 @@ class FilterHandlers {
 						}  break;
 						default: console.log("new [param_value_needed]",v_2c,param); break;
 					}
+				}
+				parse_browse_id(param);
 					break;
 				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.g_feedback_service.context=param.value; break;
 				case "route": if(param.value!=="channel.featured") debugger; break;
