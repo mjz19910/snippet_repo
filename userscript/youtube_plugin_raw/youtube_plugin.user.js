@@ -1698,7 +1698,7 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 */
 	on_page_type_watch(path,data) {
-		this.on_response_context("on_v1_player",data.responseContext);
+		this.on_response_context("on_page_type_watch",data.responseContext);
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
@@ -1712,8 +1712,27 @@ class FilterHandlers {
 			data.adPlacements=[];
 		}
 		let ok=Object.keys(data);
-		console.log(ok);
-		debugger;
+		for(let key of ok) {
+			if(key==="responseContext") continue;
+			if(key==="playabilityStatus") continue;
+			if(key==="streamingData") continue;
+			if(key==="playerAds") continue;
+			if(key==="playbackTracking") continue;
+			if(key==="captions") continue;
+			if(key==="videoDetails") continue;
+			if(key==="annotations") continue;
+			if(key==="playerConfig") continue;
+			if(key==="storyboards") continue;
+			if(key==="microformat") continue;
+			if(key==="cards") continue;
+			if(key==="trackingParams") continue;
+			if(key==="attestation") continue;
+			if(key==="videoQualityPromoSupportedRenderers") continue;
+			if(key==="adPlacements") continue;
+			if(key==="frameworkUpdates") continue;
+			console.log("[on_page_type_watch_log]",key);
+			debugger;
+		}
 	}
 	/**
 	 * @arg {string} path
@@ -2185,7 +2204,7 @@ class FilterHandlers {
 	/** @typedef {import("./support/yt_api/_abc/g/GeneralContext.js").AgeingContext} AgeingContext */
 	/** @typedef { import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
-	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"|"general_context"|"on_notification_data"} _from
+	 * @arg {"on_att_get"|"on_guide"|"on_page_type_watch"|"general_context"|"on_notification_data"} _from
 	 * @arg {GeneralContext|AgeingContext} context
 	 */
 	on_response_context(_from,context) {
@@ -2283,7 +2302,7 @@ class FilterHandlers {
 					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
-				case "context": this.guided_help_service.context=param.value; console.log("new [help_context]", param.value); break;
+				case "context": this.guided_help_service.context=param.value; console.log("new [help_context]",param.value); break;
 				default: debugger;
 			}
 		}
@@ -2381,7 +2400,7 @@ class FilterHandlers {
 					if(param.value!=="1") debugger;
 					this.csi_service[param.key]=param.value;
 				} continue;
-				case "yt_ad": this.csi_service[param.key]=param.value; break;
+				case "yt_ad": if(param.value!=='1') debugger; this.csi_service[param.key]=param.value; continue;
 			}
 			if(param.key in this.csi_service.rid) {
 				/** @type {`${string}_rid`} */
@@ -3208,54 +3227,46 @@ function random_sometimes_break_0(detail,obj,path) {
 				debugger;
 			}
 		}
+		let ok_2=Object.keys(obj.playerResponse);
+		let missing=[];
+		for(let i=0;i<ok_2.length;i++) {
+			let cur=ok_2[i];
+			// all
+			if(cur==="responseContext") continue;
+			if(cur==="playabilityStatus") continue;
+			if(cur==="streamingData") continue;
+			if(cur==="playerAds") continue;
+			if(cur==="playbackTracking") continue;
+			if(cur==="videoDetails") continue;
+			if(cur==="playerConfig") continue;
+			if(cur==="storyboards") continue;
+			if(cur==="microformat") continue;
+			if(cur==="cards") continue;
+			if(cur==="trackingParams") continue;
+			if(cur==="attestation") continue;
+			if(cur==="videoQualityPromoSupportedRenderers") continue;
+			if(cur==="adPlacements") continue;
+			if(cur==="frameworkUpdates") continue;
+			if(cur==="captions") continue;
+			if(cur==="endscreen") continue;
+			if(cur==="paidContentOverlay") continue;
+			// watch only
+			if(cur==="annotations") continue;
+			// shorts only
+			missing.push(cur);
+		}
 		switch(obj.page) {
 			case "watch": {
-				let ok_2=Object.keys(obj.playerResponse);
-				for(let i=0;i<ok_2.length;i++) {
-					let cur=ok_2[i];
-					if(cur==="responseContext") continue;
-					if(cur==="playabilityStatus") continue;
-					if(cur==="streamingData") continue;
-					if(cur==="playerAds") continue;
-					if(cur==="playbackTracking") continue;
-					if(cur==="videoDetails") continue;
-					if(cur==="playerConfig") continue;
-					if(cur==="storyboards") continue;
-					if(cur==="microformat") continue;
-					if(cur==="cards") continue;
-					if(cur==="trackingParams") continue;
-					if(cur==="attestation") continue;
-					if(cur==="videoQualityPromoSupportedRenderers") continue;
-					if(cur==="adPlacements") continue;
-					if(cur==="frameworkUpdates") continue;
-					if(cur==="captions") continue;
-					if(cur==="endscreen") continue;
-					if(cur==="paidContentOverlay") continue;
+				if(missing.length>0) {
+					console.log("[missing_watch]", missing);
 					debugger;
 				}
 			} break;
 			case "shorts": {
-				let ok_2=Object.keys(obj.playerResponse);
-				for(let i=0;i<ok_2.length;i++) {
-					let cur=ok_2[i];
-					if(cur==="responseContext") continue;
-					if(cur==="playabilityStatus") continue;
-					if(cur==="streamingData") continue;
-					if(cur==="playerAds") continue;
-					if(cur==="playbackTracking") continue;
-					if(cur==="videoDetails") continue;
-					if(cur==="playerConfig") continue;
-					if(cur==="storyboards") continue;
-					if(cur==="microformat") continue;
-					if(cur==="cards") continue;
-					if(cur==="trackingParams") continue;
-					if(cur==="attestation") continue;
-					if(cur==="videoQualityPromoSupportedRenderers") continue;
-					if(cur==="adPlacements") continue;
-					if(cur==="frameworkUpdates") continue;
-					if(cur==="captions") continue;
+				if(missing.length>0) {
+					console.log("[missing_shorts]", missing);
 					debugger;
-				};
+				}
 			} break;
 		}
 		iter_skips.push("playerResponse");
