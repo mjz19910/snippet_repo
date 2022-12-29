@@ -1,8 +1,8 @@
-import {CsiServiceParams} from "./CsiServiceParams.js";
-import {ECatcherServiceParams} from "./ECatcherServiceParams";
-import {GFeedbackServiceParams} from "./GFeedbackServiceParams";
-import {GuidedHelpServiceParams} from "../../_abc/g/GuidedHelpServiceParams";
-import {GOOGLE_HELP_service_params} from "./GOOGLE_HELP_service_params";
+import {CsiServiceParams} from "../c/CsiServiceParams.js";
+import {ECatcherServiceParams} from "../e/ECatcherServiceParams.js";
+import {GFeedbackServiceParams} from "../g/GFeedbackServiceParams.js";
+import {GOOGLE_HELP_service_params} from "../g/GOOGLE_HELP_service_params.js";
+import {GuidedHelpServiceParams} from "../g/GuidedHelpServiceParams.js";
 
 export type AllServiceTrackingParams=
 	CsiServiceParams|

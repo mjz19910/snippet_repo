@@ -2422,16 +2422,26 @@ class FilterHandlers {
 		if(context.mainAppWebResponseContext.loggedOut) {
 			this.general_service_state.logged_in=false;
 		}
-		for(let service_item of context.serviceTrackingParams) {
-			switch(service_item.service) {
-				case "CSI": this.on_csi_service(service_item); break;
-				case "ECATCHER": this.on_e_catcher_service(service_item); break;
-				case "GFEEDBACK": this.on_g_feedback_service(service_item); break;
-				case "GUIDED_HELP": this.on_guided_help_service(service_item); break;
-				case "GOOGLE_HELP": this.on_google_help_service(service_item); break;
+		this.set_service_params(context.serviceTrackingParams);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} service_params_list
+	 */
+	set_service_params(service_params_list) {
+		for(let service_param_list of service_params_list) {
+			switch(service_param_list.service) {
+				case "CSI": this.on_csi_service(service_param_list); break;
+				case "ECATCHER": this.on_e_catcher_service(service_param_list); break;
+				case "GFEEDBACK": this.on_g_feedback_service(service_param_list); break;
+				case "GUIDED_HELP": this.on_guided_help_service(service_param_list); break;
+				case "GOOGLE_HELP": this.on_google_help_service(service_param_list); break;
 				default: debugger;
 			}
 		}
+		this.on_complete_set_service_params();
+	}
+	on_complete_set_service_params() {
+		seen_map.clear();
 	}
 	/**
 	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
@@ -4439,12 +4449,12 @@ function split_string(x,s) {
 	return as_cast(r);
 }
 
+const seen_map=new Set;
 /**
  * @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value
  */
 function parse_browse_id(value) {
 	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
-	/** @typedef {typeof value extends infer V ? import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<V,`${string}`> extends infer Z?Z extends ["FE",...any[]]?Z:never:never:never} U1 */
 	/** @template T,U @typedef {import("./ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */
 	/** @typedef {ExtractAfterStr<typeof value,"FE">} KnownParts */
 	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
@@ -4454,6 +4464,8 @@ function parse_browse_id(value) {
 		case "FE": {
 			/** @type {KnownParts} */
 			let v_ac=as_cast(value.slice(2));
+			if(seen_map.has(v_ac)) break;
+			seen_map.add(v_ac);
 			console.log("new [param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
 		} break;
 		case "VL": let v_4c=value.slice(2,4); switch(v_4c) {
