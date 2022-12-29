@@ -1,5 +1,7 @@
+type ChannelId=`UC${string}`;
 export type ChannelResponse={
 	page: "channel";
+	endpoint: {};
 	response: {
 		responseContext: {};
 		contents: {};
@@ -10,4 +12,5 @@ export type ChannelResponse={
 		microformat: {};
 		onResponseReceivedActions: {}[];
 	};
+	url: `/channel/${ChannelId}`;
 };
