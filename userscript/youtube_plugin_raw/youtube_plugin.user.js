@@ -2090,7 +2090,7 @@ class FilterHandlers {
 			switch(renderer.style) {
 				case "VIDEO": break;
 				case "CHANNEL": break;
-				default: debugger;
+				default: console.log("[endscreen_element]",renderer.style); debugger;
 			}
 			let ok_3=filter_out_keys(Object.keys(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
 			if(has_keys(ok_3,"thumbnailOverlays")) return;
