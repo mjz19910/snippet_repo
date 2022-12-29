@@ -2375,6 +2375,8 @@ class FilterHandlers {
 		}
 	}
 	csi_service={
+		/** @type {import("./support/yt_api/_abc/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
+		yt_fn: null,
 		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
 		rid: {
 			GetWatchNext_rid: void 0,
@@ -2411,7 +2413,7 @@ class FilterHandlers {
 					this.csi_service[param.key]=param.value;
 				} continue;
 				case "yt_ad": if(param.value!=='1') debugger; this.csi_service[param.key]=param.value; continue;
-				case "yt_fn": if(param.value!=='1') debugger; this.csi_service[param.key]=param.value; continue;
+				case "yt_fn": if(!verify_param(param)) debugger; this.csi_service[param.key]=param.value; continue;
 			}
 			if(param.key in this.csi_service.rid) {
 				/** @type {`${string}_rid`} */
@@ -4174,3 +4176,17 @@ function make_guide_item_keys() {
 if(typeof exports==="object") {
 	exports.FilterHandlers=FilterHandlers;
 }
+/**
+ * @param {{ key: "yt_fn"; value: import("./support/yt_api/_abc/b/BrowseEndpointPages.js").BrowseEndpointPages; }} _param
+ */
+function verify_param(_param) {
+	switch(_param.value) {
+		case "history":
+		case "library":
+		case "subscriptions":
+		case "what_to_watch":
+			return true;
+		default: debugger; return false;
+	};
+}
+
