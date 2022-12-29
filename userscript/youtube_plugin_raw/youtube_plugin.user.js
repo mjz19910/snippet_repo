@@ -1953,10 +1953,19 @@ class FilterHandlers {
 		console.log(ok);
 		debugger;
 	}
+	guide_item_keys=make_guide_item_keys();
 	/** @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item */
 	on_guide_item(item) {
 		let ok=Object.keys(item);
-		console.log("on_guide_item",ok);
+		let key=this.guide_item_keys.find(e => e===ok[0]);
+		if(!key) {
+			console.log("on_guide_item",ok);
+		}
+		switch(key) {
+			case "guideSectionRenderer": if(key in item) console.log("on_guide_item",item[key]); break;
+			case "guideSubscriptionsSectionRenderer": if(key in item) console.log("on_guide_item",item[key]); break;
+			default: return;
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} data
@@ -2132,7 +2141,6 @@ class FilterHandlers {
 					if(param.value!=="1") debugger;
 					this.csi_service[param.key]=param.value;
 				} continue;
-				default: console.log("new csi param",param); debugger;
 			}
 			if(param.key in this.csi_service.rid) {
 				/** @type {`${string}_rid`} */
@@ -2141,6 +2149,7 @@ class FilterHandlers {
 				console.log("rid key",rid_key);
 				continue;
 			}
+			console.log("new csi param",param); debugger;
 		}
 	}
 	/**
@@ -3831,3 +3840,28 @@ function no_handler({parts,index}) {
 	debugger;
 	throw new Error("Stop");
 }
+function make_guide_item_keys() {
+	/** @arg {number} i @returns {import("./support/yt_api/yt/GuideItemType").GuideItemKeys|null} */
+	function e(i) {
+		switch(i) {
+			case 0: return "guideSectionRenderer";
+			case 1: return "guideSubscriptionsSectionRenderer";
+			case 2: return null;
+			default: debugger; throw new Error("Bad");
+		}
+	}
+	return [...{
+		[Symbol.iterator]() {
+			let i=0;
+			return {
+				next() {
+					let value=e(i);
+					i++;
+					if(!value) return {done: true};
+					return {value,done: false};
+				}
+			};
+		}
+	}];
+}
+
