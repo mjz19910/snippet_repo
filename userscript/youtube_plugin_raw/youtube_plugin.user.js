@@ -1923,12 +1923,20 @@ class FilterHandlers {
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
 		switch(res.url_type) {
-			case "att.get": this.on_att_get(res.json); break;
-			case "player": this.on_v1_player(api_path,res.json); break;
-			case "guide": this.on_guide(api_path,res.json); break;
-			default: debugger;
+			case "att.get": this.on_att_get(res.json); return;
+			case "player": this.on_v1_player(api_path,res.json); return;
+			case "guide": this.on_guide(api_path,res.json); return;
+			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; break;
+			default: console.log("missed api type",res); debugger; throw new Error("Missing");
+		}
+		if("responseContext" in res.json) {
+			this.on_response_context("general_context",res.json.responseContext);
 		}
 	}
+	notification={
+		/** @type {number|null} */
+		unseenCount: null,
+	};
 	/**
 	 * @param {string} _path
 	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
@@ -1978,7 +1986,7 @@ class FilterHandlers {
 	/** @typedef {import("./support/yt_api/_abc/g/GeneralContext.js").AgeingContext} AgeingContext */
 	/** @typedef { import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
-	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"} _from
+	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"|"general_context"} _from
 	 * @arg {GeneralContext|AgeingContext} context
 	 */
 	on_response_context(_from,context) {
@@ -2099,6 +2107,8 @@ class FilterHandlers {
 			GetAttestationChallenge_rid: null,
 			/** @type {`0x${string}`|null} */
 			GetWebMainAppGuide_rid: null,
+			/** @type {`0x${string}`|null} */
+			GetUnseenNotificationCount_rid: null,
 		},
 		/** @type {"WEB"|null} */
 		c: null,
