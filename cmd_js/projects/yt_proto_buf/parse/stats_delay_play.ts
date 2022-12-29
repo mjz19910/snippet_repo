@@ -35,9 +35,9 @@ export async function delay_play_job() {
 	let DelayPlayVm=root.lookupType("DelayPlayVm");
 	let message=DelayPlayVm.decode(token_binary);
 	let obj=DelayPlayVm.toObject(message);
-	console.log(obj);
 	for(let ent of Object.entries(sp)) {
 		console.log(ent);
 	}
+	console.log(obj);
 }
 await delay_play_job();
