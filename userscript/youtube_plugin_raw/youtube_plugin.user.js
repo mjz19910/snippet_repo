@@ -1487,12 +1487,20 @@ class HandleRendererContentItemArray {
 	*/
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRenderer.js").RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
+		let debug_flag_value=false;
+		if('filter_handler_debug' in base&&base.filter_handler_debug) {
+			debug_flag_value=base.filter_handler_debug;
+		} else if('debug' in base) {
+			debug_flag_value=base.debug;
+		} else {
+			debugger;
+		}
 		let renderer=content_item.richItemRenderer;
 		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
 		check_item_keys(path,"richItemRenderer.content",Object.keys(renderer.content));
 		if("adSlotRenderer" in renderer.content) {
-			if(base.debug) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
+			if(debug_flag_value) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
 		}
 		return true;
@@ -1616,7 +1624,7 @@ function make_search_params(t) {
 
 class FilterHandlers {
 	constructor() {
-		this.debug=false;
+		this.filter_handler_debug=false;
 		/**@readonly*/
 		this.class_name="FilterHandlers";
 		this.handlers={
@@ -1688,12 +1696,12 @@ class FilterHandlers {
 	on_v1_player(path,data) {
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
-			if(this.debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
+			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
 			data.playerAds=[];
 			any(data.playerAds).old_store=old_ads;
 		}
 		if(data.adPlacements) {
-			if(this.debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
+			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
 		debugger;
@@ -1947,12 +1955,56 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} context
 	 */
 	on_response_context(_from,context) {
-		for(let service_tracking_params_item of context.serviceTrackingParams) {
-			switch(service_tracking_params_item.service) {
-				case "CSI": this.on_csi_service(service_tracking_params_item); break;
-				case "ECATCHER": debugger; break;
-				case "GFEEDBACK": this.on_g_feedback_service(service_tracking_params_item); break;
-				case "GUIDED_HELP": debugger; break;
+		for(let service_item of context.serviceTrackingParams) {
+			switch(service_item.service) {
+				case "CSI": this.on_csi_service(service_item); break;
+				case "ECATCHER": this.on_e_catcher_service(service_item); break;
+				case "GFEEDBACK": this.on_g_feedback_service(service_item); break;
+				case "GUIDED_HELP": this.on_guided_help_service(service_item); break;
+				default: debugger;
+			}
+		}
+	}
+	e_catcher_service={
+		/** @type {{}|null} */
+		client: null,
+	}
+	/**
+	 * @param {import("./support/yt_api/_abc/a/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 */
+	on_e_catcher_service(service) {
+		let new_client={};
+		for(let param of service.params) {
+			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
+			let param_parts=any(param.key.split("."));
+			if(param_parts[0]!=='client') debugger;
+			switch(param_parts[1]) {
+				case "version": {
+					if(param.value==="2.20221220") break;
+					new_client.version=param.value;
+				} break;
+				case "name":new_client.name=param.value; break;
+				case "fexp":new_client.fexp=param.value;break; 
+				default: debugger;
+			}
+		}
+		if(this.e_catcher_service.client) {
+			let prev_client=this.e_catcher_service.client;
+			this.e_catcher_service.client={...this.e_catcher_service.client,...new_client};
+			console.log(prev_client,this.e_catcher_service.client);
+		} else {
+			this.e_catcher_service.client=new_client;
+		}
+	}
+	/** @arg {import("./support/yt_api/_abc/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	on_guided_help_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
+				case "logged_in": {
+					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
+					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
+					debugger;
+				} break;
 				default: debugger;
 			}
 		}
@@ -1984,6 +2036,7 @@ class FilterHandlers {
 					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
+				default: debugger;
 			}
 		}
 	}
