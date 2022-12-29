@@ -20,7 +20,9 @@ var is_node_js=function is_node_js() {
 var destroy_env=() => {};
 if(typeof window==="undefined") {
 	is_node_js=() => true;
-	if(typeof any(globalThis).require==="function") {
+	/** @type {{require:()=>any}&typeof globalThis} */
+	let njs_require=any(globalThis);
+	if(typeof njs_require.require==="function") {
 		let n_env=require("./support/_/init_node_env.js");
 		destroy_env=() => {
 			n_env.destroy_env(message_channel);
@@ -1699,7 +1701,9 @@ class FilterHandlers {
 			let old_ads=data.playerAds;
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
 			data.playerAds=[];
-			any(data.playerAds).old_store=old_ads;
+			/** @type {{old_store:typeof data['playerAds']}&typeof data['playerAds']} */
+			let with_old_store=any(data.playerAds);
+			with_old_store.old_store=old_ads;
 		}
 		if(data.adPlacements) {
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
@@ -2746,9 +2750,11 @@ class HTMLVideoElementArrayBox {
 	}
 }
 
-/** @template T @arg {any} e @returns {T} */
+/** @template U @template {U} T @arg {U} e @returns {T} */
 function any(e) {
-	return e;
+	/** @type {any} */
+	let x=e;
+	return x;
 }
 
 class YTNavigateFinishEvent {
