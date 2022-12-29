@@ -1745,10 +1745,14 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {string} path
-	 * @arg {{}} data
+	 * @arg {import("./support/yt_api/_abc/b/BrowseResponse.js").BrowseResponse} data
 	 */
 	on_page_type_browse(path,data) {
+		if("responseContext" in data)  {
+			this.on_response_context("on_page_type_browse",as_cast(data.responseContext));
+		}
 		console.log("browse page",path,data);
+		debugger;
 	}
 	/** 
 	 * @template {string} X
@@ -2022,9 +2026,9 @@ class FilterHandlers {
 			case "guide": this.on_guide(api_path,res.json); return true;
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
-			case "next": this.process_next_response(res.json); return false;
-			case "browse": this.on_page_type_browse(res.url_type,res.json); return false;
-			case "account.account_menu": this.on_account_menu(res.json); return false;
+			case "next": this.process_next_response(res.json); return true;
+			case "browse": this.on_page_type_browse(res.url_type,res.json); return true;
+			case "account.account_menu": this.on_account_menu(res.json); return true;
 			default: return null;
 		}
 	}
@@ -2299,7 +2303,7 @@ class FilterHandlers {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": parse_browse_id(param); break;
+				case "browse_id": parse_browse_id(param.value); break;
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
@@ -3436,7 +3440,9 @@ function random_sometimes_break_1(detail,obj,path) {
 		}
 		if(obj.browseEndpoint.browseId==="FEwhat_to_watch") break x;
 		if(obj.browseEndpoint.browseId==="FEsubscriptions") break x;
-		console.log("obj_browseEndpoint",obj.browseEndpoint);
+		parse_browse_id(obj.browseEndpoint.browseId);
+		let ok_4=Object.keys(obj.browseEndpoint);
+		if(ok_4.length!==1) console.log("obj_browseEndpoint",obj.browseEndpoint);
 	}
 	if("reelWatchEndpoint" in obj) {
 		iter_skips.push("reelWatchEndpoint");
@@ -4294,16 +4300,16 @@ function split_string(x,s) {
 }
 
 /**
- * @param {{ key:"browse_id";value:import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseIdType}} param
+ * @arg {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseIdType} value
  */
-function parse_browse_id(param) {
-	let v_2c=param.value.slice(0,2);
-	let v_ac=param.value.slice(2);
+function parse_browse_id(value) {
+	let v_2c=value.slice(0,2);
+	let v_ac=value.slice(2);
 	switch(v_2c) {
-		case "FE": console.log("new [param_value_with_section]",v_2c,param); break;
+		case "FE": console.log("new [param_value_with_section]",v_2c,value); break;
 		case "VL": switch(v_ac) {
-			default: console.log("new [v_ac]",param); debugger;
+			default: console.log("new with param [v_ac]",value,v_ac); debugger;
 		}  break;
-		default: console.log("new [param_value_needed]",v_2c,param); break;
+		default: console.log("new [param_value_needed]",v_2c,value); break;
 	}
 }
