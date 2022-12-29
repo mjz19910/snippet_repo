@@ -1087,7 +1087,7 @@ function fetch_inject(user_request,request_init) {
 	if(!original_fetch) throw new Error("No original fetch");
 	x: if(request_init) {
 		if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
-		console.log("fetch_log_with_options",user_request,request_init);
+		console.log("[fetch_request_init_data]",user_request,request_init);
 	}
 	if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
 		return original_fetch(user_request,request_init);
@@ -1851,7 +1851,13 @@ class FilterHandlers {
 			debugger;
 		}
 	}
-	handle_t=new HandleTypes;
+	/** @type {HandleTypes|null} */
+	_handle_t=null;
+	/** @type {HandleTypes} */
+	get handle_t() {
+		if(this._handle_t===null) this._handle_t=new HandleTypes;
+		return this._handle_t;
+	}
 	/**
 	 * @arg {string} path
 	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
@@ -4416,10 +4422,16 @@ class HandleTypes {
 		debugger;
 	}
 	/**
-	 * @param {{ feedTabbedHeaderRenderer: {}; }} renderer
+	 * @param {import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer
 	 */
 	FeedTabbedHeaderRenderer(renderer) {
-		console.log(renderer);
+		let ren_data=renderer.feedTabbedHeaderRenderer;
+		if(
+			eq_keys(Object.keys(ren_data),["title"])&&
+			ren_data.title.runs.length===1&&
+			ren_data.title.runs[0].text==="Home"
+		) return;
+		console.log(renderer.feedTabbedHeaderRenderer);
 		debugger;
 	}
 	/**

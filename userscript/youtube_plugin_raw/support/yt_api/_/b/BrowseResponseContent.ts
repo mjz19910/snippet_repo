@@ -1,9 +1,18 @@
 import {EntityBatchUpdate} from "../e/EntityBatchUpdate.js";
 import {GeneralContext} from "../GeneralContext.js";
-import {TwoColumnBrowseResultsRendererData} from "../TwoColumnBrowseResultsRendererData.js";
+import {TwoColumnBrowseResultsRendererData} from "../t/TwoColumnBrowseResultsRendererData.js";
+import {FeedTabbedHeaderRenderer} from "./FeedTabbedHeaderRenderer";
 
-type FeedTabbedHeaderRenderer={
-	feedTabbedHeaderRenderer: {};
+type AdsControlFlowOpportunityReceivedCommandData={
+	opportunityType: "OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED";
+	adSlotAndLayoutMetadata: {}[];
+	isInitialLoad: boolean;
+	enablePacfLoggingWeb: boolean;
+};
+
+type AdsControlFlowOpportunityReceivedCommand={
+	clickTrackingParams: string;
+	adsControlFlowOpportunityReceivedCommand: AdsControlFlowOpportunityReceivedCommandData;
 };
 
 export type BrowseResponseContent={
@@ -15,10 +24,7 @@ export type BrowseResponseContent={
 	topbar: {
 		desktopTopbarRenderer: {};
 	};
-	onResponseReceivedActions: {
-		clickTrackingParams: string;
-		adsControlFlowOpportunityReceivedCommand: {};
-	}[];
+	onResponseReceivedActions: AdsControlFlowOpportunityReceivedCommand[];
 	trackingParams: string;
 	frameworkUpdates: EntityBatchUpdate;
 };
