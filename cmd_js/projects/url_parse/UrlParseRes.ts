@@ -1,4 +1,4 @@
-import {UrlParseResImpl} from "./UrlParseResImpl";
+import {UrlParseResImpl} from "./UrlParseResImpl.js";
 
 export type UrlParseRes<
 	T extends string,
