@@ -4443,8 +4443,12 @@ function split_string(x,s) {
  * @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value
  */
 function parse_browse_id(value) {
-	let v_2c=value.slice(0,2);
-	let v_ac=value.slice(2);
+	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
+	/** @typedef {typeof value extends infer V ? import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<V,`${string}`> extends infer Z?Z extends ["FE",...any[]]?Z:never:never:never} U1 */
+	/** @type {StartPart} */
+	let v_2c=as_cast(value.slice(0,2));
+	/** @type {KnownParts} */
+	let v_ac=as_cast(value.slice(2));
 	switch(v_2c) {
 		case "FE": console.log("new [param_value_with_section]",v_2c,value); break;
 		case "VL":

@@ -2348,9 +2348,8 @@ class ecma_root {
 		this.index_stack=[];
 	}
 }
-/** @template T @typedef {Nullable<T>} N */
 /** @typedef {{str:string;index:number}} IN_STE_T */
-/** @typedef {N<{type:string;item:string}>&{length:number}} OUT_STE_T */
+/** @typedef {Nullable<{type:string;item:string}>&{length:number}} OUT_STE_T */
 class js_token_generator {
 	get index() {
 		return this.root.index;
