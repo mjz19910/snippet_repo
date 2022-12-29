@@ -1446,6 +1446,8 @@ function check_item_keys(real_path,path,keys) {
 		// richItemRenderer.content
 		case "adSlotRenderer": break;
 		case "radioRenderer": break;
+		// comments
+		case "commentThreadRenderer": break;
 	}
 }
 
@@ -1989,27 +1991,38 @@ class FilterHandlers {
 		/** @type {import("./support/make/Split.js").Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
 		switch(target.length) {
-			case 1: url_type=target[0]; switch(url_type) {
+			case 1: switch(target[0]) {
 				case "browse": return {
-					url_type,
-					/** @type {import("./support/yt_api/yt/yt_response_browse.js").browse_t['json']} */
+					url_type: target[0],
+					/** @type {import("./support/yt_api/yt/browse_t.js").browse_t['json']} */
 					json: as_cast(json),
 				};
-				case "feedback": break;
-				case "getDatasyncIdsEndpoint": break;
-				case "get_transcript": break;
+				case "feedback": return {
+					url_type: target[0],
+					/** @type {import("./support/yt_api/_/r/feedback_t.js").feedback_t['json']} */
+					json: as_cast(json),
+				};
+				case "getDatasyncIdsEndpoint": debugger; return {
+					url_type: target[0],
+					json,
+				};
+				case "get_transcript": return {
+					url_type: target[0],
+					/** @type {import("./support/yt_api/_/r/get_transcript_t.js").get_transcript_t['json']} */
+					json:  as_cast(json),
+				};
 				case "guide": return {
-					url_type,
+					url_type: target[0],
 					/** @type {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} */
 					json: as_cast(json),
 				};
 				case "next": return {
-					url_type,
+					url_type: target[0],
 					/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
 					json: as_cast(json),
 				};
 				case "player": return {
-					url_type,
+					url_type: target[0],
 					/** @type {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
 					json: as_cast(json),
 				};
@@ -2044,7 +2057,12 @@ class FilterHandlers {
 						/** @type {import("./support/yt_api/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
 						json: as_cast(json),
 					};
-				} break;
+					case "record_interactions": return {
+						url_type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/yt_api/_/r/YtSuccessResponse.js").YtSuccessResponse} */
+						json: as_cast(json),
+					};
+				}
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
 						url_type: `${target[0]}.${target[1]}`,
@@ -2057,14 +2075,9 @@ class FilterHandlers {
 						json: as_cast(json),
 					};
 				}
-			} break;
+			}
 		}
-		switch(url_type) {
-			case "notification.record_interactions": return {
-				url_type,
-				/** @type {import("./support/yt_api/_/r/YtSuccessResponse.js").YtSuccessResponse} */
-				json: as_cast(json),
-			};
+		switch(target[0]) {
 			default: console.log(url_type,json); debugger;
 		}
 		throw new Error("Stop");
