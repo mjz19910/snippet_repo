@@ -1807,10 +1807,10 @@ class FilterHandlers {
 	/** @template {UrlTypes} T @arg {T} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
 	get_res_data(url_type,json) {
 		switch(url_type) {
-			case "att.get": 
-			/** @type {import("./support/yt_api/yt/yt_response_att_get.js").yt_response_att_get} */
-			let tc={url_type: "att.get",json: any(json)};
-			return tc;
+			case "att.get":
+				/** @type {import("./support/yt_api/yt/yt_response_att_get.js").yt_response_att_get} */
+				let tc={url_type: "att.get",json: any(json)};
+				return tc;
 			case "browse": return {
 				url_type,
 				/** @type {import("./support/yt_api/yt/yt_response_browse.js").yt_response_browse['json']} */
@@ -1870,7 +1870,7 @@ class FilterHandlers {
 				parsed_url,
 			});
 		} catch {
-			console.log("api not handled", input.url_type);
+			console.log("api not handled",input.url_type);
 		}
 	}
 	/**
@@ -1923,7 +1923,7 @@ class FilterHandlers {
 	on_att_get(data) {
 		this.on_response_context("on_att_get",data.responseContext);
 		let ok=Object.keys(data);
-		if(eq_keys(ok, ['responseContext', 'challenge', 'bgChallenge'])) return;
+		if(eq_keys(ok,['responseContext','challenge','bgChallenge'])) return;
 		// spell:disable-next-line
 		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
@@ -1931,8 +1931,8 @@ class FilterHandlers {
 		/** @type {import("./test.js").AttChallengeObj} */
 		let search_param_obj=make_search_params(chal_as_fmt);
 		/** @type {keyof typeof search_param_obj} */
-		let i
-		for(i	in search_param_obj) {
+		let i;
+		for(i in search_param_obj) {
 			switch(i) {
 				case "a": break;
 				default: debugger;
@@ -1947,19 +1947,49 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} context
 	 */
 	on_response_context(_from,context) {
-		for(let service_tracking_param of context.serviceTrackingParams) {
-			switch(service_tracking_param.service) {
-				case "CSI": this.on_csi_service(service_tracking_param); break;
+		for(let service_tracking_params_item of context.serviceTrackingParams) {
+			switch(service_tracking_params_item.service) {
+				case "CSI": this.on_csi_service(service_tracking_params_item); break;
 				case "ECATCHER": debugger; break;
-				case "GFEEDBACK": debugger; break;
-				case "GUIDED_HELP":debugger; break;
+				case "GFEEDBACK": this.on_g_feedback_service(service_tracking_params_item); break;
+				case "GUIDED_HELP": debugger; break;
 				default: debugger;
+			}
+		}
+	}
+	general_service_state={
+		logged_in: false,
+	};
+	g_feedback_service={
+		/** @type {number[]|null} */
+		e: null,
+	};
+	known_enabled_feedback_opts=[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574];
+	/**
+	 * @param {import("./support/yt_api/_abc/a/GFeedbackServiceParams.js").GFeedbackServiceParams} service
+	 */
+	on_g_feedback_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
+				case "e":
+					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
+					this.g_feedback_service.e.forEach(e => {
+						if(this.known_enabled_feedback_opts.includes(e)) return;
+						console.log("new g_feedback flag_id",e);
+						debugger;
+					});
+					break;
+				case "logged_in": {
+					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
+					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
+					debugger;
+				} break;
 			}
 		}
 	}
 	csi_service={
 		/** @type {`0x${string}`|null} */
-		GetWatchNext_rid:null,
+		GetWatchNext_rid: null,
 		/** @type {`0x${string}`|null} */
 		GetAttestationChallenge_rid: null,
 		/** @type {"WEB"|null} */
@@ -1977,16 +2007,16 @@ class FilterHandlers {
 			switch(param.key) {
 				case "GetWatchNext_rid": this.csi_service[param.key]=param.value; break;
 				case "GetAttestationChallenge_rid": this.csi_service[param.key]=param.value; break;
-				case "c":{
-					if(param.value !=="WEB")debugger;
+				case "c": {
+					if(param.value!=="WEB") debugger;
 					this.csi_service[param.key]=param.value;
 				} break;
-				case "cver":{
-					if(param.value !=="2.20221220.09.00")debugger;
+				case "cver": {
+					if(param.value!=="2.20221220.09.00") debugger;
 					this.csi_service[param.key]=param.value;
 				} break;
 				case "yt_li": {
-					if(param.value !=="1") debugger;
+					if(param.value!=="1") debugger;
 					this.csi_service[param.key]=param.value;
 				} break;
 				default: debugger;
