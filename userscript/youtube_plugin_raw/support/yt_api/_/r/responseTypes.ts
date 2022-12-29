@@ -1,7 +1,7 @@
 import {notification_get_notification_menu} from "../../../_/notification_get_notification_menu.js";
 import {yt_notification_get_unseen_count as notification_get_unseen_count} from "../../yt/yt_notification_get_unseen_count.js";
 import {yt_response_att_get as att_get} from "../../yt/yt_response_att_get.js";
-import {yt_response_browse as browse_t} from "../../yt/yt_response_browse.js";
+import {browse_t as browse_t} from "../../yt/yt_response_browse.js";
 import {yt_response_getDatasyncIdsEndpoint as getDatasyncIdsEndpoint_t} from "../../yt/yt_response_getDatasyncIdsEndpoint.js";
 import {yt_response_guide as guide_t} from "../../yt/yt_response_guide.js";
 import {yt_response_live_chat_get_live_chat_replay as live_chat_get_live_chat_replay_t} from "../../yt/yt_response_live_chat_get_live_chat_replay.js";

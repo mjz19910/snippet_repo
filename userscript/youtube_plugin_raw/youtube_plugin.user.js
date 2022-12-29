@@ -1745,13 +1745,20 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {string} path
-	 * @arg {import("./support/yt_api/_abc/b/BrowseResponse.js").BrowseResponse} data
+	 * @arg {import("./support/yt_api/_abc/b/BrowseResponseContent.js").BrowseResponseContent} data
+	 */
+	on_page_type_browse_response(path,data) {
+		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
+		console.log("[browse_page_context]",path,data);
+		debugger;
+	}
+	/**
+	 * @param {string} path
+	 * @param {import("./support/yt_api/_abc/b/BrowseResponse.js").BrowseResponse} data
 	 */
 	on_page_type_browse(path,data) {
-		if("responseContext" in data) {
-			this.on_response_context("on_page_type_browse",as_cast(data.responseContext));
-		}
-		console.log("browse page",path,data);
+		this.on_page_type_browse_response(`${path}.response`,data.response);
+		console.log("[log_page_type_browse]",path,data);
 		debugger;
 	}
 	/** 
@@ -1884,7 +1891,7 @@ class FilterHandlers {
 			};
 			case "browse": return {
 				url_type,
-				/** @type {import("./support/yt_api/yt/yt_response_browse.js").yt_response_browse['json']} */
+				/** @type {import("./support/yt_api/yt/yt_response_browse.js").browse_t['json']} */
 				json: as_cast(json),
 			};
 			case "guide": return {
@@ -2027,7 +2034,7 @@ class FilterHandlers {
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return true;
-			case "browse": this.on_page_type_browse(res.url_type,res.json); return true;
+			case "browse": this.on_page_type_browse_response(res.url_type,res.json); return true;
 			case "account.account_menu": this.on_account_menu(res.json); return true;
 			default: return null;
 		}
@@ -2317,6 +2324,7 @@ class FilterHandlers {
 				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
 				[39323120,39322983,39322873,39323013,39323020,39322863],
 				[39322866,39322870,39322980,39323016,45686551],
+				[39321827,39323023],
 			],
 		},
 	};
@@ -4308,9 +4316,13 @@ function parse_browse_id(value) {
 	let v_ac=value.slice(2);
 	switch(v_2c) {
 		case "FE": console.log("new [param_value_with_section]",v_2c,value); break;
-		case "VL": switch(v_ac) {
-			default: console.log("new with param [v_ac]",value,v_ac); debugger;
-		}  break;
+		case "VL":
+			let v_4c=value.slice(2,4); switch(v_4c) {
+				case "LL": break;
+				case "WL": break;
+				case "PL": break;
+				default: console.log("new with param [v_ac]",value,v_ac); debugger;
+			}  break;
 		default: console.log("new [param_value_needed]",v_2c,value); break;
 	}
 }

@@ -1,10 +1,6 @@
-import {GeneralContext} from "../../yt_api/_abc/g/GeneralContext.js";
-import {BrowseResponse} from "../_abc/b/BrowseResponse.js";
+import {BrowseResponseContent} from "../_abc/b/BrowseResponseContent.js";
 
-
-export type yt_response_browse={
+export type browse_t={
 	url_type: "browse";
-	json: BrowseResponse&{
-		responseContext: GeneralContext;
-	};
+	json: BrowseResponseContent;
 };
