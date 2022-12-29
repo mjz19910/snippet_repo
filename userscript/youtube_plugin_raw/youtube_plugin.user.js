@@ -2266,8 +2266,9 @@ class FilterHandlers {
 				/** @type {`${string}_rid`} */
 				let rid_key=param.key;
 				this.csi_service.rid[rid_key]=param.value;
-				console.log("rid key",rid_key);
 				continue;
+			} else if(param.key.endsWith("_rid")) {
+				console.log("rid key",param);
 			}
 			console.log("new csi param",param); debugger;
 		}
