@@ -4,8 +4,8 @@ import {ImpressionEndpoint} from "../ImpressionEndpoint.js";
 import {MenuRenderer} from "../m/MenuRenderer.js";
 import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
 import {ThumbnailRoot} from "../ThumbnailRoot";
-import {AdTitle_0} from "../AdTitle_0";
-import {SimpleTextFixmeValueNeeded} from "../SimpleText.js";
+import {AdTitle_0} from "../a/AdTitle_0";
+import {SimpleTextFixmeValueNeeded} from "../s/SimpleText.js";
 import {TrackingParams} from "../TrackingParams.js";
 
 export interface DisplayAdRenderer extends TrackingParams {

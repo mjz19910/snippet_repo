@@ -1,4 +1,4 @@
-import {GeneralContext} from "../GeneralContext.js";
+import {GeneralContext} from "../g/GeneralContext.js";
 import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer.js";
 import {AdsControlFlowOpportunityReceivedCommand} from "./AdsControlFlowOpportunityReceivedCommand";
 import {DesktopTopbarRenderer} from "./DesktopTopbarRenderer";

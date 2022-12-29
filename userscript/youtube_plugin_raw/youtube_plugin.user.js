@@ -1269,7 +1269,7 @@ class YtIterateTarget {
 	}
 	/**
 	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
@@ -2351,8 +2351,8 @@ class FilterHandlers {
 		console.log(data);
 		debugger;
 	}
-	/** @typedef {import("./support/yt_api/_/GeneralContext.js").AgeingContext} AgeingContext */
-	/** @typedef { import("./support/yt_api/_/GeneralContext.js").GeneralContext} GeneralContext */
+	/** @typedef {import("./support/yt_api/_/g/GeneralContext.js").AgeingContext} AgeingContext */
+	/** @typedef { import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
 	 * @arg {keyof FilterHandlers|"general_context"} _from
 	 * @arg {GeneralContext|AgeingContext} context
@@ -2415,7 +2415,7 @@ class FilterHandlers {
 		},
 	};
 	/**
-	 * @param {import("./support/yt_api/_/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
 	on_e_catcher_service(service) {
 		/** @type {NonNullable<this['e_catcher_service']['client']>} */
@@ -2631,7 +2631,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/PlaylistResponse.js").PlaylistResponse} data
+	 * @param {import("./support/yt_api/_/p/PlaylistResponse.js").PlaylistResponse} data
 	 */
 	on_page_type_playlist(data) {
 		console.log(data.endpoint);
@@ -2648,7 +2648,7 @@ class FilterHandlers {
 		data; debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/ShortsResponse.js").ShortsResponse} data
+	 * @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} data
 	 */
 	on_page_type_shorts(data) {
 		console.log(data.endpoint);
@@ -4420,7 +4420,7 @@ class HandleTypes {
 	DesktopTopbarRenderer(renderer) {
 		let ok=Object.keys(renderer.desktopTopbarRenderer);
 		console.log(renderer.desktopTopbarRenderer);
-		if(has_keys(ok, "logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
+		if(has_keys(ok,"logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
 		debugger;
 	}
 	/**
@@ -4440,10 +4440,11 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
 	 */
 	handleEntityBatchUpdate(obj) {
-		console.log(obj.entityBatchUpdate);
+		console.log("entity update time",obj.entityBatchUpdate.timestamp);
 		let mut_item=obj.entityBatchUpdate.mutations[0];
 		obj.entityBatchUpdate;
 		switch(mut_item.type) {
+			case "ENTITY_MUTATION_TYPE_DELETE": console.log(mut_item); break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": break;
 			default: debugger;
 		}

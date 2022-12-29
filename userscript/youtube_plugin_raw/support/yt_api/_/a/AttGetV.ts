@@ -1,4 +1,4 @@
-import {GeneralContext} from "../GeneralContext.js";
+import {GeneralContext} from "../g/GeneralContext.js";
 import {Att_bgChallenge} from "./Att_bgChallenge";
 
 export type AttGetV={

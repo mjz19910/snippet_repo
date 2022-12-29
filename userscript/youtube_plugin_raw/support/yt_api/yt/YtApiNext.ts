@@ -1,5 +1,5 @@
 import {AllResponseReceivedEndpoints} from "../_/a/AllResponseReceivedEndpoints";
-import {GeneralContext} from "../_/GeneralContext";
+import {GeneralContext} from "../_/g/GeneralContext";
 
 export type YtApiNext={
 	onResponseReceivedEndpoints: AllResponseReceivedEndpoints[];

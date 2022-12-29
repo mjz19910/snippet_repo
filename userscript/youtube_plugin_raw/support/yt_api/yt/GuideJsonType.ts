@@ -1,4 +1,4 @@
-import {GeneralContext} from "../_/GeneralContext.js";
+import {GeneralContext} from "../_/g/GeneralContext.js";
 import {GuideItemType} from "./GuideItemType";
 
 export type GuideJsonType={

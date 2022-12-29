@@ -1,4 +1,4 @@
-import {NavigationEndpoint} from "./NavigationEndpoint";
+import {NavigationEndpoint} from "../n/NavigationEndpoint";
 
 export type TextRun={
 	text: string;

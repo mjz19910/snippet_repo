@@ -1,5 +1,5 @@
 import {AccessibilityData} from "../a/AccessibilityData";
-import {Icon} from "../Icon";
+import {Icon} from "../i/Icon";
 import {TrackingParams} from "../../_abc/t/TrackingParams.js";
 
 export interface MetadataBadgeRenderer extends TrackingParams {

@@ -1,4 +1,4 @@
-import {SimpleText} from "./SimpleText";
+import {SimpleText} from "./s/SimpleText";
 
 export type ThumbnailOverlayTimeStatusRenderer={
 	text: SimpleText;

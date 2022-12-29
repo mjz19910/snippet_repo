@@ -1,4 +1,4 @@
-import {NavigationEndpoint} from "../NavigationEndpoint.js";
+import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {TrackingParams} from "../../_abc/t/TrackingParams.js";
 import {makeText} from "./makeText";
 import {MakeTextRuns} from "./MakeTextRuns";

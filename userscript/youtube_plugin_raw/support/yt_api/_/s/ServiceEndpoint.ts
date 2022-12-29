@@ -1,12 +1,12 @@
 import {GetReportFormEndpointH} from "./GetReportFormEndpointH";
-import {FeedbackEndpointH} from "./FeedbackEndpointH";
+import {FeedbackEndpointH} from "../f/FeedbackEndpointH";
 import {AddToPlaylistServiceEndpointH} from "./AddToPlaylistServiceEndpointH";
-import {PlaylistEditEndpointH} from "./PlaylistEditEndpointH";
+import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
 import {SignalServiceEndpoints} from "./SignalServiceEndpoints";
 
 export type ServiceEndpoint=
 	SignalServiceEndpoints|
-	PlaylistEditEndpointH|
+	PlaylistEditEndpoint|
 	AddToPlaylistServiceEndpointH|
 	FeedbackEndpointH|
 	GetReportFormEndpointH;

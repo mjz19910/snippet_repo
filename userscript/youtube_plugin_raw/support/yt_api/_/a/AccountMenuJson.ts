@@ -1,4 +1,4 @@
-import {GeneralContext} from "../GeneralContext.js";
+import {GeneralContext} from "../g/GeneralContext.js";
 import {OpenPopupAction} from "../o/OpenPopupAction";
 
 export type AccountMenuJson={

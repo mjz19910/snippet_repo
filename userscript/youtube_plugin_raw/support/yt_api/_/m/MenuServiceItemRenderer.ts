@@ -1,6 +1,6 @@
 import {ServiceEndpoint} from "../../_abc/s/ServiceEndpoint";
 import {TextRuns} from "../../_abc/t/TextRuns";
-import {Icon} from "../Icon";
+import {Icon} from "../i/Icon";
 import {TrackingParams} from "../../_abc/t/TrackingParams.js";
 import {Separator} from "../../_abc/s/Separator";
 
