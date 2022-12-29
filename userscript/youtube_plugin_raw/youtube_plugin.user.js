@@ -1753,13 +1753,13 @@ class FilterHandlers {
 	/**
 	 * @arg {{}} state
 	 * @arg {string[]} parts
-	 * @returns {UrlTypes}
 	 */
 	get_url_type(state,parts) {
 		let index=0;
-		switch(parts[index]) {
+		const cur_part=parts[index];
+		switch(cur_part) {
 			case "youtubei": index++; return this.get_yt_url_type(state,parts,index);
-			case "getDatasyncIdsEndpoint": return "getDatasyncIdsEndpoint";
+			case "getDatasyncIdsEndpoint": return {name: cur_part};
 			default: debugger;
 		}
 		throw new Error("Missing");
@@ -1769,7 +1769,6 @@ class FilterHandlers {
 	 * @arg {"live_chat"} base
 	 * @arg {string[]} parts
 	 * @arg {number} index
-	 * @returns {UrlTypes}
 	 */
 	get_live_chat_type(state,base,parts,index) {
 		let cur_part=parts[index];
@@ -1777,47 +1776,64 @@ class FilterHandlers {
 			case "get_live_chat_replay": break;
 			default: no_handler({...state,parts,index});
 		};
-		return `${base}.${cur_part}`;
+		return {
+			/** @type {`${typeof base}.${typeof cur_part}`} */
+			name:`${base}.${cur_part}`
+		};
 	}
 	/**
 	 * @arg {{}} state
 	 * @arg {string[]} parts
 	 * @arg {number} index
-	 * @returns {UrlTypes}
 	 */
 	get_yt_url_type(state,parts,index) {
 		if(parts[1]!=="v1") {
 			debugger;
 		}
 		index++;
-		let cur_part=parts[index];
+		const cur_part=parts[index];
 		switch(cur_part) {
-			case "att": switch(parts[index+1]) {
-				case "get": return "att.get";
-				default: no_handler({...state,parts,index});
+			case "att": {
+				const next_part=parts[index+1]; switch(next_part) {
+					case "get": return {
+						/** @type {`${typeof cur_part}.${typeof next_part}`} */
+						name: `${cur_part}.${next_part}`
+					};
+					default: no_handler({...state,parts,index});
+				}
 			}
-			case "notification": index++; switch(parts[index]) {
-				case "get_unseen_count": return "notification.get_unseen_count";
-				case "get_notification_menu": return "notification.get_notification_menu";
-				default: no_handler({...state,parts,index});
+			case "notification": {
+				index++; let next_part=parts[index]; switch(next_part) {
+					case "get_unseen_count": break;
+					case "get_notification_menu": break;
+					case "record_interactions": break;
+					default: no_handler({...state,parts,index});
+				} return {
+					/** @type {`${typeof cur_part}.${typeof next_part}`} */
+					name: `${cur_part}.${next_part}`
+				};
 			}
-			case "browse": return "browse";
+			case "browse": break;
 			case "guide": index++; switch(parts[index]) {
-				case void 0: return "guide";
+				case void 0: break;
 				default: no_handler({...state,parts,index});
-			}
-			case "reel": index++; switch(parts[index]) {
-				case "reel_item_watch": return "reel.reel_item_watch";
-				case "reel_watch_sequence": return "reel.reel_watch_sequence";
+			} break;
+			case "reel": index++; let next_part=parts[index]; switch(next_part) {
+				case "reel_item_watch": break;
+				case "reel_watch_sequence": break;
 				default: no_handler({...state,parts,index});
-			}
-			case "next": return "next";
-			case "player": return "player";
+			} return {
+				/** @type {`${typeof cur_part}.${typeof next_part}`} */
+				name: `${cur_part}.${next_part}`
+			};
+			case "next": break;
+			case "player": break;
 			case "live_chat": index++; return this.get_live_chat_type(state,"live_chat",parts,index);
-			case "get_transcript": return "get_transcript";
+			case "get_transcript": break;
 			case "account": return get_account_type(state,cur_part,parts,index+1);
 			default: no_handler({...state,parts,index});
 		}
+		return {name:cur_part};
 	}
 	/** @template {UrlTypes} T @arg {T} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
 	get_res_data(url_type,json) {
@@ -1872,7 +1888,6 @@ class FilterHandlers {
 			};
 			default: console.log(url_type,json); debugger;
 		}
-		if(url_type==="channel") {}
 		throw new Error("Stop");
 	}
 	/** @typedef {import("./support/yt_api/_/r/responseTypes.js").responseTypes} responseTypes */
@@ -1893,6 +1908,108 @@ class FilterHandlers {
 	 * @arg {JsonDataResponseType} data
 	 */
 	on_handle_api(request,data) {
+		var {req_hr_t,req_parse,debug}=this.on_handle_api_0(request);
+		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,req_parse);
+		if(path_url==="/getDatasyncIdsEndpoint") return;
+		let api_parts=req_parse.pathname.slice(1).split("/");
+		// spell:ignore youtubei
+		if(api_parts[0]!=="youtubei") {
+			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
+			return;
+		}
+		if(api_parts[1]!=="v1") {
+			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
+			return;
+		}
+		let {res,api_path}=this.on_handle_api_2(api_parts,debug,url_type,data,request,req_parse);
+		let handled=this.handle_it(res,api_path);
+		if(handled) return;
+		if("responseContext" in res.json) {
+			this.on_response_context("general_context",res.json.responseContext);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
+	 * @param {string} api_path
+	 */
+	handle_it(res,api_path) {
+		let ret=this.on_handle_api_3(res,api_path);
+		if(ret!==null) return ret;
+		debugger;
+		return this.on_handle_api_4(res);
+	};
+	/**
+	 * @param {any[]} api_parts
+	 * @param {boolean} debug
+	 * @param {UrlTypes} url_type
+	 * @param {import("./support/yt_api/_abc/JsonDataResponseType.js").JsonDataResponseType} data
+	 * @param {string | URL | Request} request
+	 * @param {URL} req_parse
+	 */
+	on_handle_api_2(api_parts,debug,url_type,data,request,req_parse) {
+		let api_path=api_parts.slice(2).join(".");
+		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
+		this.handle_any_data(url_type,data);
+		let res=this.get_res_data(url_type,data);
+		this.on_json_type(res,request,req_parse);
+		return {res,api_path};
+	}
+
+	/**
+	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
+	 */
+	on_handle_api_4(res) {
+		switch(res.url_type) {case "browse": return false;}
+		switch(res.url_type) {case "getDatasyncIdsEndpoint": return false;}
+		switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
+		switch(res.url_type) {case "reel.reel_item_watch": return false;}
+		switch(res.url_type) {
+			case "reel_watch_sequence": return false;
+			default:
+				console.log("missed api type",res);
+				throw new Error("FIXME");
+		}
+	}
+
+	/**
+	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
+	 * @param {string} api_path
+	 */
+	on_handle_api_3(res,api_path) {
+		switch(res.url_type) {
+			case "att.get": this.on_att_get(res.json); return true;
+			case "player": this.on_v1_player(api_path,res.json); return true;
+			case "guide": this.on_guide(api_path,res.json); return true;
+			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
+			case "notification.get_notification_menu": this.on_notification_data(res); return false;
+			case "next": this.process_next_response(res.json); return false;
+			default: return null;
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} _json
+	 */
+	process_next_response(_json) {
+		console.log(_json);
+	}
+	/**
+	 * @param {`https://${string}/${string}?${string}`} req_hr_t
+	 * @param {string | URL | Request} request
+	 * @param {import("./support/yt_api/_abc/JsonDataResponseType.js").JsonDataResponseType} data
+	 * @param {URL} req_parse
+	 */
+	on_handle_api_1(req_hr_t,request,data,req_parse) {
+		/** @type {`https://${string}/${string}?${string}`} */
+		let href_=req_hr_t;
+		const url_type=this.use_template_url({request,data},href_).name;
+		let path_url=req_parse.pathname;
+		return {path_url,url_type};
+	}
+
+	/**
+	 * @param {string|URL|Request} request
+	 */
+	on_handle_api_0(request) {
 		const debug=false;
 		function c1() {
 			if(typeof request=="string") {
@@ -1906,52 +2023,16 @@ class FilterHandlers {
 		let req_parse=c1().url;
 		/** @type {any} */
 		let req_hr_t=req_parse.href;
-		/** @type {`https://${string}/${string}?${string}`} */
-		let href_=req_hr_t;
-		const url_type=this.use_template_url({request,data},href_);
-		let path_url=req_parse.pathname;
-		if(path_url==="/getDatasyncIdsEndpoint") return;
-		let api_parts=req_parse.pathname.slice(1).split("/");
-		// spell:ignore youtubei
-		if(api_parts[0]!=="youtubei") {
-			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
-			return;
-		}
-		if(api_parts[1]!=="v1") {
-			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
-			return;
-		}
-		let api_path=api_parts.slice(2).join(".");
-		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
-		this.handle_any_data(url_type,data);
-		let res=this.get_res_data(url_type,data);
-		this.on_json_type(res,request,req_parse);
-		let handle_it=() => {
-			switch(res.url_type) {
-				case "att.get": this.on_att_get(res.json); return true;
-				case "player": this.on_v1_player(api_path,res.json); return true;
-				case "guide": this.on_guide(api_path,res.json); return true;
-				case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
-				case "notification.get_notification_menu": res.json; return false;
-			}
-			debugger;
-			switch(res.url_type) {case "browse": return false;}
-			switch(res.url_type) {case "getDatasyncIdsEndpoint": return false;}
-			switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
-			switch(res.url_type) {case "next": return false;}
-			switch(res.url_type) {case "reel.reel_item_watch": return false;}
-			switch(res.url_type) {
-				case "reel_watch_sequence": return false;
-				default:
-					console.log("missed api type",res);
-					throw new Error("FIXME");
-			}
-		};
-		let handled=handle_it();
-		if(handled) return;
-		if("responseContext" in res.json) {
-			this.on_response_context("general_context",res.json.responseContext);
-		}
+		return {req_hr_t,req_parse,debug};
+	}
+
+	/**
+	 * @param {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu} _res
+	 */
+	on_notification_data(_res) {
+		let ok=Object.keys(_res.json);
+		console.log(ok);
+		debugger;
 	}
 	notification={
 		/** @type {number|null} */
@@ -2051,8 +2132,11 @@ class FilterHandlers {
 		}
 	}
 	e_catcher_service={
-		/** @type {{}|null} */
+		/** @type {{fexp:number[]}|null} */
 		client: null,
+		expected_client_values: {
+			fexp: [24406621, 24429095, 24120820, 24268142, 1714247, 24396645, 24433679, 24166867, 24390675, 24406313, 24170049, 24292955, 24260378, 24415864, 24290971, 24080738, 24001373, 24250324, 24059444, 24255163, 24169501, 24007246, 24283015, 24077241, 23918597, 24135310, 23946420, 24255543, 9405964, 24291857, 24162919, 24004644, 24248091, 23804281, 24219713, 24441244, 24140247, 23966208, 24287604, 23983296, 24416290, 24414718, 24187043, 24187377, 24262346, 24283093, 24439482, 24436009, 24267564, 24164186, 24263796, 24241378, 24437575, 24036947, 23998056, 23934970, 24415866, 39322504, 24108447, 24279196, 24181174, 24211178, 23882502, 24288442, 24437562, 24034168, 24002022, 24404640, 24161116, 24288663, 24219381, 24281896, 24059508, 24002025, 39322574, 23986033, 24255545],
+		},
 	};
 	/**
 	 * @param {import("./support/yt_api/_abc/a/ECatcherServiceParams.js").ECatcherServiceParams} service
@@ -2069,14 +2153,22 @@ class FilterHandlers {
 					new_client.version=param.value;
 				} break;
 				case "name": new_client.name=param.value; break;
-				case "fexp": new_client.fexp=param.value; break;
+				case "fexp": new_client.fexp=param.value.split(",").map(e=>parseInt(e,10)); break;
 				default: debugger;
 			}
 		}
 		if(this.e_catcher_service.client) {
 			let prev_client=this.e_catcher_service.client;
 			this.e_catcher_service.client={...this.e_catcher_service.client,...new_client};
+			let client=this.e_catcher_service.client;
+			let expected=this.e_catcher_service.expected_client_values.fexp;
+			let new_expected=[];
+			for(let exp of client.fexp) {
+				if(expected.includes(exp)) continue;
+				new_expected.push(exp);
+			}
 			console.log(prev_client,this.e_catcher_service.client);
+			if(new_expected.length>0) console.log("new_fexp",new_expected);
 		} else {
 			this.e_catcher_service.client=new_client;
 		}
@@ -3835,7 +3927,6 @@ __eks_eo;
 function get_exports() {
 	return exports;
 }
-
 if(typeof exports==="object") {
 	let exports=get_exports();
 	exports.SavedData=SavedData;
@@ -3843,7 +3934,6 @@ if(typeof exports==="object") {
 }
 
 /**
- * @returns {import("./support/yt_api/_abc/UrlTypes").UrlTypes}
  * @param {{}} state
  * @param {"account"} base
  * @param {string[]} parts
@@ -3855,7 +3945,10 @@ function get_account_type(state,base,parts,index) {
 		case "account_menu": break;
 		default: no_handler({...state,parts,index});
 	}
-	return `${base}.${cur_part}`;
+	return {
+		/** @type {`${typeof base}.${typeof cur_part}`} */
+		name:`${base}.${cur_part}`
+	};
 }
 /** @arg {{parts: string[];index:number}} obj @returns {never} */
 function no_handler({parts,index}) {
@@ -3894,3 +3987,6 @@ function make_guide_item_keys() {
 	}];
 }
 
+if(typeof exports==="object") {
+	exports.FilterHandlers=FilterHandlers;
+}

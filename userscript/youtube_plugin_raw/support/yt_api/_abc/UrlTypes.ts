@@ -1,19 +1,3 @@
-export type UrlTypes=
-	"account.account_menu"|
-	"att.get"|
-	"browse"|
-	"channel"|
-	"get_transcript"|
-	"getDatasyncIdsEndpoint"|
-	"guide"|
-	"live_chat.get_live_chat_replay"|
-	"next"|
-	"notification.get_notification_menu"|
-	"notification.get_unseen_count"|
-	"player"|
-	"playlist"|
-	"reel.reel_item_watch"|
-	"reel.reel_watch_sequence"|
-	"settings"|
-	"shorts"|
-	"watch";
+import {FilterHandlers} from "../../../youtube_plugin.user.js";
+
+export type UrlTypes=ReturnType<FilterHandlers['get_url_type']>['name'];
