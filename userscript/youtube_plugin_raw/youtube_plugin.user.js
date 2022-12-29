@@ -1959,7 +1959,6 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
 	 */
 	on_handle_api_5(res) {
-		switch(res.url_type) {case "browse": return false;}
 		switch(res.url_type) {case "getDatasyncIdsEndpoint": return false;}
 		switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
 		switch(res.url_type) {case "reel.reel_item_watch": return false;}
@@ -1983,6 +1982,7 @@ class FilterHandlers {
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return false;
+			case "browse": this.on_v1_browse(res.url_type,res.json); return false;
 			default: return null;
 		}
 	}
@@ -2025,13 +2025,72 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-
+	handle=new class {
+		/**
+		 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRenderer.js").GuideSectionRenderer; }|{key: "guideSubscriptionsSectionRenderer";item: import("./support/yt_api/yt/GuideSubscriptionsSectionRenderer.js").GuideSubscriptionsSectionRenderer}} _todo_desc
+		 */
+		todo(_todo_desc) {
+			console.log("todo", _todo_desc.key,_todo_desc.item);
+		}
+		/**
+		 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
+		 */
+		multiPageMenuRenderer(renderer) {
+			this.header(renderer.header);
+			let ok=Object.keys(renderer);
+			if(eq_keys(ok,['header','sections','trackingParams'])) return;
+			debugger;
+		}
+		/**
+		 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
+		 */
+		header(header) {
+			this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer)
+			let ok=Object.keys(header);
+			ok;
+		}
+		/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
+		simpleMenuHeaderRenderer(renderer) {
+			for(let button of renderer.buttons) {
+				this.buttonRenderer(button.buttonRenderer);
+			}
+		}
+		/**
+		 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
+		 */
+		buttonRenderer(renderer) {
+			console.log(renderer);
+			debugger;
+		}
+	}
+	/**
+	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer<"Notifications">} popup
+	 */
+	handle_popup(popup) {
+		if("multiPageMenuRenderer" in popup) {
+			this.handle.multiPageMenuRenderer(popup.multiPageMenuRenderer);
+		} else {
+			debugger;
+		}
+	}
 	/**
 	 * @param {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu} res
 	 */
 	on_notification_data(res) {
 		this.on_response_context("on_notification_data",res.json.responseContext);
+		for(let action of res.json.actions) {
+			let ok_1=Object.keys(action);
+			if('openPopupAction' in action) {
+				switch(action.openPopupAction.popupType) {
+					case "DROPDOWN": let popup=action.openPopupAction.popup; this.handle_popup(popup); break;
+					default: console.log("popup type",action.openPopupAction.popupType); debugger;
+				}
+			}
+			if(eq_keys(ok_1,['clickTrackingParams','openPopupAction'])) continue;
+			debugger;
+		}
 		let ok=Object.keys(res.json);
+		if(eq_keys(ok,['responseContext','actions','trackingParams'])) return;
 		console.log(ok);
 		debugger;
 	}
@@ -2065,8 +2124,8 @@ class FilterHandlers {
 			console.log("on_guide_item",ok);
 		}
 		switch(key) {
-			case "guideSectionRenderer": if(key in item) console.log("on_guide_item",item[key]); break;
-			case "guideSubscriptionsSectionRenderer": if(key in item) console.log("on_guide_item",item[key]); break;
+			case "guideSectionRenderer": if(key in item) this.handle.todo({key,item}); break;
+			case "guideSubscriptionsSectionRenderer": if(key in item) this.handle.todo({key,item}); break;
 			default: return;
 		}
 	}
@@ -2118,7 +2177,7 @@ class FilterHandlers {
 				return BigInt(e);
 			})
 		};
-		console.log(this.general_service_state.mainAppWebResponseContext.datasyncId);
+		if(this.filter_handler_debug) console.log(this.general_service_state.mainAppWebResponseContext.datasyncId);
 		if(context.mainAppWebResponseContext.loggedOut) {
 			this.general_service_state.logged_in=false;
 		}
