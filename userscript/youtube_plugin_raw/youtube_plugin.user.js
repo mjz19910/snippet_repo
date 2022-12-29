@@ -4437,9 +4437,10 @@ class HandleTypes {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdate} obj
+	 * @param {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdateData} obj
 	 */
 	handleEntityBatchUpdate(obj) {
 		console.log(obj);
+		debugger;
 	}
 }

@@ -1,4 +1,4 @@
-import {EntityBatchUpdate} from "../e/EntityBatchUpdate.js";
+import {EntityBatchUpdateData} from "../e/EntityBatchUpdate.js";
 import {GeneralContext} from "../GeneralContext.js";
 import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer.js";
 import {AdsControlFlowOpportunityReceivedCommand} from "./AdsControlFlowOpportunityReceivedCommand";
@@ -12,5 +12,7 @@ export type BrowseResponseContent={
 	topbar: DesktopTopbarRenderer;
 	onResponseReceivedActions: AdsControlFlowOpportunityReceivedCommand[];
 	trackingParams: string;
-	frameworkUpdates: EntityBatchUpdate;
+	frameworkUpdates: {
+		entityBatchUpdate: EntityBatchUpdateData;
+	};
 };
