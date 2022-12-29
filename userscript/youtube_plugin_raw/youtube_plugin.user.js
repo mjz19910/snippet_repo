@@ -1926,13 +1926,17 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		switch(res.url_type) {
-			case "att.get": this.on_att_get(res.json); return;
-			case "player": this.on_v1_player(api_path,res.json); return;
-			case "guide": this.on_guide(api_path,res.json); return;
-			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; break;
-			default: console.log("missed api type",res); debugger; throw new Error("Missing");
+		let handle_it=() =>{
+			switch(res.url_type) {
+				case "att.get": this.on_att_get(res.json); return true;
+				case "player": this.on_v1_player(api_path,res.json); return true;
+				case "guide": this.on_guide(api_path,res.json); return true;
+				case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
+				default: console.log("missed api type",res); debugger; throw new Error("Missing");
+			}
 		}
+		let handled=handle_it();
+		if(handled) return;
 		if("responseContext" in res.json) {
 			this.on_response_context("general_context",res.json.responseContext);
 		}
