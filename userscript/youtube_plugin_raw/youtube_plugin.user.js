@@ -1958,9 +1958,9 @@ class FilterHandlers {
 		}
 	}
 	csi_service={
-		/** @type {string|null} */
+		/** @type {`0x${string}`|null} */
 		GetWatchNext_rid:null,
-		/** @type {string|null} */
+		/** @type {`0x${string}`|null} */
 		GetAttestationChallenge_rid: null,
 		/** @type {"WEB"|null} */
 		c: null,
