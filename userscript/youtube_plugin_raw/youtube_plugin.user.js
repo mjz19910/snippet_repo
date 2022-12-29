@@ -1612,10 +1612,53 @@ class HandlerBase {
 		if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRendererData.js").TwoColumnBrowseResultsRendererData} renderer
+	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRenderer.js").PlaylistVideoListRenderer}} renderer
+	 */
+	playlistVideoListRenderer(renderer) {
+		let data=renderer.playlistVideoListRenderer;
+		console.log("playlist",data.playlistId);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
+	 */
+	itemSectionRenderer(renderer) {
+		let data=renderer.itemSectionRenderer;
+		console.log("tp",data.trackingParams);
+		let contents=data.contents;
+		for(let content_item of contents) {
+			if("playlistVideoListRenderer" in content_item) {
+				this.playlistVideoListRenderer(content_item);
+			} else {
+				debugger;
+			}
+		}
+	}
+	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} renderer */
+	sectionListRenderer(renderer) {
+		let data=renderer.sectionListRenderer;
+		console.log("tp",data.trackingParams);
+		let contents=data.contents;
+		for(let content_item of contents) {
+			this.itemSectionRenderer(content_item);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
+	 */
+	tabRenderer(renderer) {
+		console.log("tp",renderer.trackingParams);
+		if("sectionListRenderer" in renderer.content) {
+			this.sectionListRenderer(renderer.content);
+		};
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
 	 */
 	twoColumnBrowseResultsRenderer(renderer) {
-		console.log(renderer);
+		let data=renderer.twoColumnBrowseResultsRenderer;
+		for(let tab of data.tabs) {
+			this.tabRenderer(tab.tabRenderer);
+		}
 	}
 	/**
 	 * @param {string} path
@@ -1863,8 +1906,9 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
 	 */
 	on_page_type_browse_response(path,data) {
+		console.log("tp",data.trackingParams);
 		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
-		this.handle.twoColumnBrowseResultsRenderer(data.contents.twoColumnBrowseResultsRenderer);
+		this.handle.twoColumnBrowseResultsRenderer(data.contents);
 		if(Object.keys(data.contents).length!==1||Object.keys(data.contents)[0]!=='twoColumnBrowseResultsRenderer') {
 			console.log(path,'contents',data.contents);
 		}
@@ -4445,7 +4489,7 @@ class HandleTypes {
 		obj.entityBatchUpdate;
 		switch(mut_item.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": console.log(mut_item); break;
-			case "ENTITY_MUTATION_TYPE_REPLACE": break;
+			case "ENTITY_MUTATION_TYPE_REPLACE": console.log(mut_item); break;
 			default: debugger;
 		}
 	}

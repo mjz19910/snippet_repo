@@ -1,4 +1,4 @@
-import {ItemSectionRenderer} from "./ItemSectionRenderer";
+import {ItemSectionRenderer} from "../i/ItemSectionRenderer.js";
 
 export type SectionListRendererData={
 	contents: ItemSectionRenderer[];
