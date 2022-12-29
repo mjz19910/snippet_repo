@@ -1604,6 +1604,19 @@ function make_search_params(t) {
 
 class HandlerBase {
 	/**
+	 * @param {{}} command
+	 */
+	adsControlFlowOpportunityReceivedCommand(command) {
+		console.log(command);
+		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRendererData.js").TwoColumnBrowseResultsRendererData} renderer
+	 */
+	twoColumnBrowseResultsRenderer(renderer) {
+		console.log(renderer);
+	}
+	/**
 	 * @param {string} path
 	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
 	 */
@@ -1837,21 +1850,32 @@ class FilterHandlers {
 			debugger;
 		}
 	}
+	handle_t=new HandleTypes;
 	/**
 	 * @arg {string} path
 	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
 	 */
 	on_page_type_browse_response(path,data) {
 		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
-		console.log(path,'contents',data.contents);
-		console.log(path,'frameworkUpdates',data.frameworkUpdates);
-		console.log(path,'header',data.header);
+		this.handle.twoColumnBrowseResultsRenderer(data.contents.twoColumnBrowseResultsRenderer);
+		if(Object.keys(data.contents).length!==1||Object.keys(data.contents)[0]!=='twoColumnBrowseResultsRenderer') {
+			console.log(path,'contents',data.contents);
+		}
+		this.handle_t.handleEntityBatchUpdate(data.frameworkUpdates);
+		this.handle_t.FeedTabbedHeaderRenderer(data.header);
+		for(let action of data.onResponseReceivedActions) {
+			if("adsControlFlowOpportunityReceivedCommand" in action) {
+				this.handle.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
+			} else {
+				debugger;
+			}
+		}
 		console.log(path,'onResponseReceivedActions',data.onResponseReceivedActions);
 		console.log(path,'topbar',data.topbar);
 		if(typeof data.trackingParams!=="string") debugger;
 		let ok=Object.keys(data);
 		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
-		console.log("[browse_page_context]",data);
+		console.log("[browse_page_context]",ok.join(","),data);
 		debugger;
 	}
 	/**
@@ -1863,7 +1887,7 @@ class FilterHandlers {
 		this.handle.endpoint(path,data.endpoint);
 		let ok=Object.keys(data);
 		if(has_keys(ok,"page,endpoint,response,url")) return;
-		console.log("[log_page_type_browse]",path,data);
+		console.log("[log_page_type_browse]",ok.join(","),path,data);
 		debugger;
 	}
 	/** 
@@ -4380,5 +4404,21 @@ function parse_browse_id(value) {
 				default: console.log("new with param [v_ac]",value,v_ac); debugger;
 			}  break;
 		default: console.log("new [param_value_needed]",v_2c,value); break;
+	}
+}
+
+class HandleTypes {
+	/**
+	 * @param {{ feedTabbedHeaderRenderer: {}; }} renderer
+	 */
+	FeedTabbedHeaderRenderer(renderer) {
+		console.log(renderer);
+		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdate} obj
+	 */
+	handleEntityBatchUpdate(obj) {
+		console.log(obj);
 	}
 }
