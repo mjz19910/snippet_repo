@@ -1964,16 +1964,33 @@ class FilterHandlers {
 		console.log(data);
 		debugger;
 	}
+	/** @typedef {import("./support/yt_api/_abc/g/GeneralContext.js").AgeingContext} AgeingContext */
+	/** @typedef { import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
 	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"} _from
-	 * @arg {import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} context
+	 * @arg {GeneralContext|AgeingContext} context
 	 */
 	on_response_context(_from,context) {
 		let ok=Object.keys(context);
 		if(!(
 			eq_keys(ok,['serviceTrackingParams','mainAppWebResponseContext','webResponseContextExtensionData'])
+			||eq_keys(ok,['serviceTrackingParams', 'maxAgeSeconds', 'mainAppWebResponseContext', 'webResponseContextExtensionData'])
 			||false
 		)) debugger;
+		if("maxAgeSeconds" in context) {
+			this.general_service_state.maxAgeSeconds=context.maxAgeSeconds;
+		}
+		let data_sync_id=context.mainAppWebResponseContext.datasyncId;
+		this.general_service_state.mainAppWebResponseContext??={
+			datasyncId:data_sync_id.split("|").map(e=>e===""?null:e).map(e=>{
+				if(e===null) return e;
+				return BigInt(e);
+			})
+		};
+		console.log(this.general_service_state.mainAppWebResponseContext.datasyncId);
+		if(context.mainAppWebResponseContext.loggedOut) {
+			this.general_service_state.logged_in=false;
+		}
 		for(let service_item of context.serviceTrackingParams) {
 			switch(service_item.service) {
 				case "CSI": this.on_csi_service(service_item); break;
@@ -2030,6 +2047,10 @@ class FilterHandlers {
 	}
 	general_service_state={
 		logged_in: false,
+		/** @type {{datasyncId: (BigInt|null)[]}|null} */
+		mainAppWebResponseContext: null,
+		/** @type {number|null} */
+		maxAgeSeconds: null,
 	};
 	g_feedback_service={
 		/** @type {number[]|null} */
@@ -2064,6 +2085,8 @@ class FilterHandlers {
 		GetWatchNext_rid: null,
 		/** @type {`0x${string}`|null} */
 		GetAttestationChallenge_rid: null,
+		/** @type {`0x${string}`|null} */
+		GetWebMainAppGuide_rid: null,
 		/** @type {"WEB"|null} */
 		c: null,
 		/** @type {"2.20221220.09.00"|null} */
@@ -2079,6 +2102,7 @@ class FilterHandlers {
 			switch(param.key) {
 				case "GetWatchNext_rid": this.csi_service[param.key]=param.value; break;
 				case "GetAttestationChallenge_rid": this.csi_service[param.key]=param.value; break;
+				case "GetWebMainAppGuide_rid": this.csi_service[param.key]=param.value; break;
 				case "c": {
 					if(param.value!=="WEB") debugger;
 					this.csi_service[param.key]=param.value;
@@ -2091,7 +2115,7 @@ class FilterHandlers {
 					if(param.value!=="1") debugger;
 					this.csi_service[param.key]=param.value;
 				} break;
-				default: debugger;
+				default: console.log("new csi param", param); debugger;
 			}
 		}
 	}

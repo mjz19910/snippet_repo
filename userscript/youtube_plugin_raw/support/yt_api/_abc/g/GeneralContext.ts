@@ -10,3 +10,6 @@ export type GeneralContext={
 		hasDecorated: boolean;
 	};
 };
+export interface AgeingContext extends GeneralContext {
+	maxAgeSeconds: number;
+}
