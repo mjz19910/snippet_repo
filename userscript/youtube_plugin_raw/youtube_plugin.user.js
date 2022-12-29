@@ -940,15 +940,6 @@ function to_url(url) {
 /**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
-		if(top!==null&&window!==top) {
-			console.log('fetch in context with top location',top.location.pathname,location.pathname);
-		} else {
-			console.log('fetch in context',location.pathname);
-		}
-	} catch {
-		console.log('fetch in context access blocked to top',location.pathname);
-	}
-	try {
 		yt_handlers.on_handle_api(request,response_obj);
 	} catch(err) {
 		console.log("on_handle_api failed");
@@ -2256,7 +2247,7 @@ class FilterHandlers {
 		for(i in search_param_obj) {
 			switch(i) {
 				case "a": break;
-				default: debugger;
+				default: console.log("[att_param]",i); debugger;
 			}
 		}
 		data.bgChallenge;
@@ -2530,9 +2521,14 @@ class FilterHandlers {
 	on_page_type_channel(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
-		console.log(data.url);
-		let x=split_string(data.url,"/")[2];
-		if(x.startsWith("UC")) {
+		let up=split_string(data.url,"/");
+		let x=up[2];
+		if(!x) {
+			if(!up[1].startsWith("@")) {
+				console.log(up[1]);
+				debugger;
+			}
+		} else if(x.startsWith("UC")) {
 			let v=x.slice(2);
 			if(atob(v).length!==16) {
 				console.log("bad channel length",data.url);
