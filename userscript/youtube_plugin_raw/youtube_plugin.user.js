@@ -1925,7 +1925,7 @@ class FilterHandlers {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); break;
 			case "player": this.on_v1_player(api_path,res.json); break;
-			case "guide": this.on_guide(api_path,res.json);break;
+			case "guide": this.on_guide(api_path,res.json); break;
 			default: debugger;
 		}
 	}
@@ -1971,9 +1971,9 @@ class FilterHandlers {
 	on_response_context(_from,context) {
 		let ok=Object.keys(context);
 		if(!(
-			eq_keys(ok,['serviceTrackingParams', 'mainAppWebResponseContext', 'webResponseContextExtensionData'])
+			eq_keys(ok,['serviceTrackingParams','mainAppWebResponseContext','webResponseContextExtensionData'])
 			||false
-			)) debugger;
+		)) debugger;
 		for(let service_item of context.serviceTrackingParams) {
 			switch(service_item.service) {
 				case "CSI": this.on_csi_service(service_item); break;
@@ -1987,7 +1987,7 @@ class FilterHandlers {
 	e_catcher_service={
 		/** @type {{}|null} */
 		client: null,
-	}
+	};
 	/**
 	 * @param {import("./support/yt_api/_abc/a/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
@@ -2002,8 +2002,8 @@ class FilterHandlers {
 					if(param.value==="2.20221220") break;
 					new_client.version=param.value;
 				} break;
-				case "name":new_client.name=param.value; break;
-				case "fexp":new_client.fexp=param.value;break; 
+				case "name": new_client.name=param.value; break;
+				case "fexp": new_client.fexp=param.value; break;
 				default: debugger;
 			}
 		}
