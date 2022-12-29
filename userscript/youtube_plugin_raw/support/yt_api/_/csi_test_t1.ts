@@ -1,4 +1,4 @@
-import {Split} from "../../../make/Split.js";
+import {Split} from "../../make/Split.js";
 import {HexByte} from "./HexByte";
 import {HexNib} from "./HexNib";
 

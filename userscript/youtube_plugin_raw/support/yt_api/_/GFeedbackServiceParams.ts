@@ -1,5 +1,5 @@
-import {BrowseEndpointData} from "../b/BrowseEndpointData.js";
-import {ToServiceParamsList} from "../../_abc/t/ToServiceParamsList.js";
+import {BrowseIdType} from "./b/BrowseIdType.js";
+import {ToServiceParamsList} from "./ToServiceParamsList.js";
 
 export type GFeedbackServiceParams={
 	service: 'GFEEDBACK';
@@ -7,7 +7,7 @@ export type GFeedbackServiceParams={
 };
 type GFeedbackVarMap={
 	browse_id_prefix: "";
-	browse_id: BrowseEndpointData['browseId'];
+	browse_id: BrowseIdType;
 	context: "yt_web_unknown_form_factor_kevlar_w2w";
 	e: string;
 	has_alc_entitlement: "false";

@@ -60,7 +60,7 @@ function save_new_map(key,map) {
 }
 
 class SavedData {
-	/** @type {import("./AnySavedData.js").AnySavedData} */
+	/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
 	any_data={};
 }
 
@@ -1585,7 +1585,7 @@ class HandleRichGridRenderer {
 function is_watch_next_feed_target(o) {
 	return o.targetId==="watch-next-feed";
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/c/CommentsSectionContinuationAction.js").CommentsSectionContinuationAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/c/CommentsSectionContinuationAction.js").CommentsSectionContinuationAction} */
 function is_comments_section_next(o) {
 	return o.targetId==="comments-section";
 }
@@ -1895,7 +1895,7 @@ class FilterHandlers {
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(state,path_parts);
 	}
-	/** @typedef {import("./support/yt_api/_abc/UrlTypes.js").UrlTypes} UrlTypes */
+	/** @typedef {import("./support/yt_api/_/u/UrlTypes.js").UrlTypes} UrlTypes */
 	/**
 	 * @arg {{}} state
 	 * @arg {string[]} parts
@@ -2134,7 +2134,7 @@ class FilterHandlers {
 	 * @param {any[]} api_parts
 	 * @param {boolean} debug
 	 * @param {UrlTypes} url_type
-	 * @param {import("./support/yt_api/_abc/JsonDataResponseType.js").JsonDataResponseType} data
+	 * @param {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
 	 * @param {string | URL | Request} request
 	 * @param {URL} req_parse
 	 */
@@ -2196,7 +2196,7 @@ class FilterHandlers {
 	/**
 	 * @param {`https://${string}/${string}?${string}`} req_hr_t
 	 * @param {string | URL | Request} request
-	 * @param {import("./support/yt_api/_abc/JsonDataResponseType.js").JsonDataResponseType} data
+	 * @param {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
 	 * @param {URL} req_parse
 	 */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
@@ -2360,7 +2360,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/a/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
+	 * @param {import("./support/yt_api/_/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
 	 */
 	on_google_help_service(service) {
 		for(let param of service.params) {
@@ -2385,7 +2385,7 @@ class FilterHandlers {
 		},
 	};
 	/**
-	 * @param {import("./support/yt_api/_/a/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 * @param {import("./support/yt_api/_/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
 	on_e_catcher_service(service) {
 		/** @type {NonNullable<this['e_catcher_service']['client']>} */
@@ -2428,7 +2428,7 @@ class FilterHandlers {
 		/** @type {string|null} */
 		context: null,
 	};
-	/** @arg {import("./support/yt_api/_abc/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	/** @arg {import("./support/yt_api/_/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -2458,7 +2458,7 @@ class FilterHandlers {
 		context: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_/a/GFeedbackServiceParams.js").GFeedbackServiceParams} service
+	 * @param {import("./support/yt_api/_/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
 	on_g_feedback_service(service) {
 		for(let param of service.params) {
@@ -2524,7 +2524,7 @@ class FilterHandlers {
 		yt_ad: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_/a/CsiServiceParams.js").CsiServiceParams} service
+	 * @param {import("./support/yt_api/_/CsiServiceParams.js").CsiServiceParams} service
 	 */
 	on_csi_service(service) {
 		for(let param of service.params) {
@@ -2578,7 +2578,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_abc/ChannelResponse.js").ChannelResponse} data
+	 * @param {import("./support/yt_api/_/c/ChannelResponse.js").ChannelResponse} data
 	 */
 	on_page_type_channel(data) {
 		console.log(data.endpoint);
@@ -2601,7 +2601,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_abc/p/PlaylistResponse.js").PlaylistResponse} data
+	 * @param {import("./support/yt_api/_/PlaylistResponse.js").PlaylistResponse} data
 	 */
 	on_page_type_playlist(data) {
 		console.log(data.endpoint);
@@ -2609,7 +2609,7 @@ class FilterHandlers {
 		console.log(data.url);
 	}
 	/**
-	 * @param {import("./support/yt_api/_abc/SettingsResponse.js").SettingsResponse} data
+	 * @param {import("./support/yt_api/_/s/SettingsResponse.js").SettingsResponse} data
 	 */
 	on_page_type_settings(data) {
 		console.log(data.endpoint);
@@ -2618,7 +2618,7 @@ class FilterHandlers {
 		data; debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_abc/s/ShortsResponse.js").ShortsResponse} data
+	 * @param {import("./support/yt_api/_/ShortsResponse.js").ShortsResponse} data
 	 */
 	on_page_type_shorts(data) {
 		console.log(data.endpoint);
@@ -2628,7 +2628,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
-	 * @arg {import("./support/yt_api/_abc/SavedDataItem.js").SavedDataItem} data
+	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
@@ -2637,7 +2637,7 @@ class FilterHandlers {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
 	}
-	/** @typedef {import("./support/yt_api/_abc/InitialDataType.js").InitialDataType} InitialDataType */
+	/** @typedef {import("./support/yt_api/_/i/InitialDataType.js").InitialDataType} InitialDataType */
 	/**
 	 * @arg {[()=>InitialDataType, object, []]} apply_args
 	 */
@@ -3241,7 +3241,7 @@ const last_detail_val={value: {}};
 
 /**
  * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {import("./support/yt_api/_abc/JsonDataEndpointType.js").JsonDataEndpointType} obj
+ * @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} obj
  * @arg {string[]} path
  * @arg {string[]} skip
  * @arg {number[]} ent_ids
@@ -3486,7 +3486,7 @@ function on_command_meta(obj) {
 }
 /**
  * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {import("./support/yt_api/_abc/JsonDataEndpointType.js").JsonDataEndpointType} obj
+ * @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} obj
  * @arg {["detail","endpoint"]} path
  */
 function random_sometimes_break_1(detail,obj,path) {
