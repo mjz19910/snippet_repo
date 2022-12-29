@@ -1690,8 +1690,8 @@ class FilterHandlers {
 		return false;
 	}
 	/**
-	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 * @arg {string} path
+	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 */
 	on_v1_player(path,data) {
 		if(data.playerAds) {
@@ -1704,6 +1704,8 @@ class FilterHandlers {
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
+		let ok=Object.keys(data);
+		console.log(ok);
 		debugger;
 	}
 	/**
@@ -1921,9 +1923,19 @@ class FilterHandlers {
 		this.on_json_type(res,request,req_parse);
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); break;
-			case "player": debugger; this.on_v1_player(api_path,res.json); break;
+			case "player": this.on_v1_player(api_path,res.json); break;
+			case "guide": this.on_guide(api_path,res.json);break;
 			default: debugger;
 		}
+	}
+	/**
+	 * @param {string} _path
+	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
+	 */
+	on_guide(_path,guide) {
+		let ok=Object.keys(guide);
+		console.log(ok);
+		debugger;
 	}
 	/**
 	 * @param {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} data

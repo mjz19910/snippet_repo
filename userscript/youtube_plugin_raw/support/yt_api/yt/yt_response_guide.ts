@@ -1,10 +1,6 @@
-import {GeneralContext} from "../../yt_api/_abc/g/GeneralContext.js";
-
+import {GuideJsonType} from "./GuideJsonType";
 
 export type yt_response_guide={
 	url_type: "guide";
-	json: {
-		items: {}[];
-		responseContext: GeneralContext;
-	};
+	json: GuideJsonType;
 };
