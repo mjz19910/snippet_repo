@@ -1447,6 +1447,7 @@ function check_item_keys(real_path,path,keys) {
 			case "promotedSparklesWebRenderer": break;
 			case "reelShelfRenderer": break;
 			case "searchPyvRenderer": break;
+			case "settingsOptionsRenderer": break;
 			case "shelfRenderer": break;
 			case "videoRenderer": break;
 		} break;
@@ -1661,6 +1662,15 @@ class FilterHandlers {
 			["shelfRenderer",false],
 			["videoRenderer",false],
 		]);
+		let t=this;
+		/** @param {string} value */
+		function whitelist_item(value) {
+			t.blacklisted_item_sections.set(value,false);
+		}
+		whitelist_item("pageIntroductionRenderer");
+		whitelist_item("settingsOptionsRenderer");
+		whitelist_item("pageIntroductionRenderer");
+		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
 	/**
@@ -2401,6 +2411,7 @@ class FilterHandlers {
 					this.csi_service[param.key]=param.value;
 				} continue;
 				case "yt_ad": if(param.value!=='1') debugger; this.csi_service[param.key]=param.value; continue;
+				case "yt_fn": if(param.value!=='1') debugger; this.csi_service[param.key]=param.value; continue;
 			}
 			if(param.key in this.csi_service.rid) {
 				/** @type {`${string}_rid`} */
