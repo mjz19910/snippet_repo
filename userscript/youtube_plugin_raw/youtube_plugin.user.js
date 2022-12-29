@@ -4081,8 +4081,13 @@ class HistoryStateManager extends EventTarget {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					if(yt_debug_enabled) console.log('pushState: [h_over_new_state] cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
-					if(yt_debug_enabled) console.log("pushState: h_over_old_state: []",remove_yt_data(t.cur_state));
+					let new_my_data=remove_yt_data(new_state);
+					let old_my_data=remove_yt_data(t.cur_state);
+					if("filter_gain" in new_my_data&&"filter_gain" in old_my_data&&Object.keys(new_my_data).length===1) {
+						if(yt_debug_enabled) console.log('pushState: [h_over_new_state_one] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
+					} else {
+						if(yt_debug_enabled) console.log('pushState: [h_over_new_state] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
+					}
 				} else {
 					if(yt_debug_enabled) console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
 				}
