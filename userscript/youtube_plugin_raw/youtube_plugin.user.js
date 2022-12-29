@@ -2750,7 +2750,7 @@ class HTMLVideoElementArrayBox {
 	}
 }
 
-/** @template U @template {U} T @arg {U} e @returns {T} */
+/** @template U @template {U} T @arg {U} e @returns {U extends T?T extends U?T:never:never} */
 function any(e) {
 	/** @type {any} */
 	let x=e;
