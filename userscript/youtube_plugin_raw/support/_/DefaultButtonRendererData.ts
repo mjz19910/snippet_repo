@@ -4,4 +4,7 @@ export type DefaultButtonRendererData={
 	isDisabled: boolean;
 	icon: {};
 	navigationEndpoint: {};
+	tooltip: {};
+	trackingParams: string;
+	accessibilityData: {};
 };

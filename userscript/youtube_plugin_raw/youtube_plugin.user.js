@@ -1721,6 +1721,11 @@ class FilterHandlers {
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
+		if(data.endscreen) {
+			let ok_1=Object.keys(data.endscreen);
+			console.log("[on_page_type_watch_log] ok_1 [%s]",ok_1.join(","));
+			console.log(ok_1);
+		}
 		let ok=Object.keys(data);
 		for(let key of ok) {
 			if(key==="responseContext") continue;
@@ -1740,6 +1745,8 @@ class FilterHandlers {
 			if(key==="videoQualityPromoSupportedRenderers") continue;
 			if(key==="adPlacements") continue;
 			if(key==="frameworkUpdates") continue;
+			// other
+			if(key==="endscreen") continue;
 			console.log("[on_page_type_watch_log]",key);
 			debugger;
 		}
@@ -2134,7 +2141,15 @@ class FilterHandlers {
 		 */
 		buttonRenderer(renderer) {
 			let ok=Object.keys(renderer);
-			if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
+			console.log("renderer.style",renderer.style);
+			console.log("renderer.size",renderer.size);
+			console.log("renderer.isDisabled",renderer.isDisabled);
+			console.log("renderer.icon",renderer.icon);
+			console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
+			console.log("renderer.tooltip",renderer.tooltip);
+			console.log("renderer.trackingParams",renderer.trackingParams);
+			console.log("renderer.accessibilityData",renderer.accessibilityData);
+			if(eq_keys(ok,['style','size','isDisabled','icon','navigationEndpoint','tooltip','trackingParams','accessibilityData'])) return;
 			console.log(ok);
 			debugger;
 		}
@@ -2401,6 +2416,7 @@ class FilterHandlers {
 		yt_fn: null,
 		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
 		rid: {
+			GetAccountMenu_rid: void 0,
 			GetWatchNext_rid: void 0,
 			GetAttestationChallenge_rid: void 0,
 			GetWebMainAppGuide_rid: void 0,
@@ -2444,7 +2460,7 @@ class FilterHandlers {
 				continue;
 			} else if(param.key.endsWith("_rid")) {
 				this.csi_service.rid[param.key]=param.value;
-				console.log("new [unknown_rid_key]",param);
+				console.log("new [unknown_rid_key][%s][%s]",param.key,param.value);
 				continue;
 			} else {
 				console.log("new csi param",param);
