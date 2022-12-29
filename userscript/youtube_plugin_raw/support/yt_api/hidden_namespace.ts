@@ -1,5 +1,5 @@
-import {Split} from "../../../Split.js";
-import {YtVideoIdStr} from "./WatchEndpointData";
+import {Split} from "../make/Split.js";
+import {YtVideoIdStr} from "./yt/YtVideoIdStr";
 
 namespace hidden_namespace {
 	type AbcChar=Split<"abcdefghijklmnopqrstuvwxyz","">[number];

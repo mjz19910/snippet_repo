@@ -1,4 +1,4 @@
-import {ServiceEndpointCreateComment} from "../c/ServiceEndpointCreateComment";
+import {ServiceEndpointCreateComment} from "./ServiceEndpointCreateComment";
 import {TextRunsSimple} from "../t/TextRunsSimple.js";
 
 export type SubmitButtonRenderer={

@@ -1610,7 +1610,7 @@ class HandlerBase {
 	endpoint(path,endpoint) {
 		console.log(path,endpoint);
 	}
-	/** @arg {import("./support/yt_api/_abc/p/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
+	/** @arg {import("./support/yt_api/_abc/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
 		switch(renderer.style) {
 			case "VIDEO": break;
