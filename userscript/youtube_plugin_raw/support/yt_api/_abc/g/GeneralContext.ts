@@ -5,7 +5,7 @@ export type GeneralContext={
 		datasyncId: `${number}||${number}`;
 		loggedOut: boolean;
 	};
-	serviceTrackingParams: AllServiceTrackingParams;
+	serviceTrackingParams: AllServiceTrackingParams[];
 	webResponseContextExtensionData: {
 		hasDecorated: boolean;
 	};
