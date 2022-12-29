@@ -12,7 +12,9 @@ export type BrowseResponseContent={
 		twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsRendererData;
 	};
 	header: FeedTabbedHeaderRenderer;
-	topbar: {};
+	topbar: {
+		desktopTopbarRenderer: {};
+	};
 	onResponseReceivedActions: {
 		clickTrackingParams: string;
 		adsControlFlowOpportunityReceivedCommand: {};
