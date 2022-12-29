@@ -1665,8 +1665,19 @@ class HandlerBase {
 	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
 	 */
 	endpoint(path,endpoint) {
-		endpoint.browseEndpoint;
-		console.log(path,endpoint);
+		console.log("ctp",endpoint.clickTrackingParams);
+		this.browseEndpoint(path,endpoint.browseEndpoint);
+		switch(endpoint.commandMetadata.webCommandMetadata.webPageType) {
+			case "WEB_PAGE_TYPE_BROWSE": break;
+			default: debugger;
+		};
+	}
+	/**
+	 * @param {string} path
+	 * @param {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
+	 */
+	browseEndpoint(path,endpoint) {
+		console.log("bid",path,endpoint.browseId);
 	}
 	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
@@ -4512,12 +4523,25 @@ class HandleTypes {
 	 */
 	handleEntityBatchUpdate(obj) {
 		if(yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
-		let mut_item=obj.entityBatchUpdate.mutations[0];
-		obj.entityBatchUpdate;
-		switch(mut_item.type) {
-			case "ENTITY_MUTATION_TYPE_DELETE": console.log(mut_item); break;
-			case "ENTITY_MUTATION_TYPE_REPLACE": console.log(mut_item); break;
-			default: debugger;
+		this.handle_mutations(obj.entityBatchUpdate.mutations);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations
+	 */
+	handle_mutations(mutations) {
+		for(let mut of mutations) {
+			switch(mut.type) {
+				case "ENTITY_MUTATION_TYPE_DELETE":{
+					console.log("[mut_del] ek",mut.entityKey);
+					if(eq_keys(Object.keys(mut.options),["persistenceOption"])) {
+						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
+					} else {
+						debugger;
+					}
+				} break;
+				case "ENTITY_MUTATION_TYPE_REPLACE": console.log("[mut_rep]",mut); break;
+				default: console.log("[mut]",mut); debugger;
+			}
 		}
 	}
 }
