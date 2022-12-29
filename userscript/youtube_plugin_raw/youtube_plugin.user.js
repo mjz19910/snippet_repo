@@ -1778,7 +1778,7 @@ class FilterHandlers {
 		};
 		return {
 			/** @type {`${typeof base}.${typeof cur_part}`} */
-			name:`${base}.${cur_part}`
+			name: `${base}.${cur_part}`
 		};
 	}
 	/**
@@ -1833,7 +1833,7 @@ class FilterHandlers {
 			case "account": return get_account_type(state,cur_part,parts,index+1);
 			default: no_handler({...state,parts,index});
 		}
-		return {name:cur_part};
+		return {name: cur_part};
 	}
 	/** @template {UrlTypes} T @arg {T} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
 	get_res_data(url_type,json) {
@@ -1922,7 +1922,7 @@ class FilterHandlers {
 			return;
 		}
 		let {res,api_path}=this.on_handle_api_2(api_parts,debug,url_type,data,request,req_parse);
-		let handled=this.handle_it(res,api_path);
+		let handled=this.on_handle_api_3(res,api_path);
 		if(handled) return;
 		if("responseContext" in res.json) {
 			this.on_response_context("general_context",res.json.responseContext);
@@ -1932,11 +1932,11 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
 	 * @param {string} api_path
 	 */
-	handle_it(res,api_path) {
-		let ret=this.on_handle_api_3(res,api_path);
+	on_handle_api_3(res,api_path) {
+		let ret=this.on_handle_api_4(res,api_path);
 		if(ret!==null) return ret;
 		debugger;
-		return this.on_handle_api_4(res);
+		return this.on_handle_api_5(res);
 	};
 	/**
 	 * @param {any[]} api_parts
@@ -1958,7 +1958,7 @@ class FilterHandlers {
 	/**
 	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
 	 */
-	on_handle_api_4(res) {
+	on_handle_api_5(res) {
 		switch(res.url_type) {case "browse": return false;}
 		switch(res.url_type) {case "getDatasyncIdsEndpoint": return false;}
 		switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
@@ -1975,7 +1975,7 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
 	 * @param {string} api_path
 	 */
-	on_handle_api_3(res,api_path) {
+	on_handle_api_4(res,api_path) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
 			case "player": this.on_v1_player(api_path,res.json); return true;
@@ -2135,7 +2135,11 @@ class FilterHandlers {
 		/** @type {{fexp:number[]}|null} */
 		client: null,
 		expected_client_values: {
-			fexp: [24406621, 24429095, 24120820, 24268142, 1714247, 24396645, 24433679, 24166867, 24390675, 24406313, 24170049, 24292955, 24260378, 24415864, 24290971, 24080738, 24001373, 24250324, 24059444, 24255163, 24169501, 24007246, 24283015, 24077241, 23918597, 24135310, 23946420, 24255543, 9405964, 24291857, 24162919, 24004644, 24248091, 23804281, 24219713, 24441244, 24140247, 23966208, 24287604, 23983296, 24416290, 24414718, 24187043, 24187377, 24262346, 24283093, 24439482, 24436009, 24267564, 24164186, 24263796, 24241378, 24437575, 24036947, 23998056, 23934970, 24415866, 39322504, 24108447, 24279196, 24181174, 24211178, 23882502, 24288442, 24437562, 24034168, 24002022, 24404640, 24161116, 24288663, 24219381, 24281896, 24059508, 24002025, 39322574, 23986033, 24255545],
+			fexp: [
+				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574],
+				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
+				[39323120,39322983,39322873,39323013,39323020,39322863],
+			],
 		},
 	};
 	/**
@@ -2153,7 +2157,7 @@ class FilterHandlers {
 					new_client.version=param.value;
 				} break;
 				case "name": new_client.name=param.value; break;
-				case "fexp": new_client.fexp=param.value.split(",").map(e=>parseInt(e,10)); break;
+				case "fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
 				default: debugger;
 			}
 		}
@@ -2163,8 +2167,10 @@ class FilterHandlers {
 			let client=this.e_catcher_service.client;
 			let expected=this.e_catcher_service.expected_client_values.fexp;
 			let new_expected=[];
-			for(let exp of client.fexp) {
-				if(expected.includes(exp)) continue;
+			x: for(let exp of client.fexp) {
+				for(let expected_item of expected) {
+					if(expected_item.includes(exp)) continue x;
+				}
 				new_expected.push(exp);
 			}
 			console.log(prev_client,this.e_catcher_service.client);
@@ -2192,15 +2198,13 @@ class FilterHandlers {
 		mainAppWebResponseContext: null,
 		/** @type {number|null} */
 		maxAgeSeconds: null,
+		/** @type {"non_member"|null} */
+		premium_membership: null,
 	};
 	g_feedback_service={
 		/** @type {number[]|null} */
 		e: null,
 	};
-	/** @readonly */
-	known_enabled_feedback_opts=[
-		[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574]
-	];
 	/**
 	 * @param {import("./support/yt_api/_abc/a/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
@@ -2212,7 +2216,7 @@ class FilterHandlers {
 					let new_expected=[];
 					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
 					this.g_feedback_service.e.forEach(e => {
-						for(let known of this.known_enabled_feedback_opts) {
+						for(let known of this.e_catcher_service.expected_client_values.fexp) {
 							if(known.includes(e)) return;
 						}
 						new_expected.push(e);
@@ -2224,6 +2228,12 @@ class FilterHandlers {
 					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
+				case "premium_membership": if(param.value!=="non_member") debugger; this.general_service_state.premium_membership=param.value; break;
+				case "has_unlimited_entitlement": break;
+				case "has_alc_entitlement": break;
+				case "is_alc_surface": break;
+				case "ipcc": break;
+				case "is_viewed_live": break;
 				default: debugger;
 			}
 		}
@@ -2268,7 +2278,11 @@ class FilterHandlers {
 				this.csi_service.rid[rid_key]=param.value;
 				continue;
 			} else if(param.key.endsWith("_rid")) {
-				console.log("rid key",param);
+				this.csi_service.rid[param.key]=param.value;
+				console.log("new unknown rid key",param);
+				continue;
+			} else {
+				console.log("new csi param",param);
 			}
 			console.log("new csi param",param); debugger;
 		}
@@ -3955,7 +3969,7 @@ function get_account_type(state,base,parts,index) {
 	}
 	return {
 		/** @type {`${typeof base}.${typeof cur_part}`} */
-		name:`${base}.${cur_part}`
+		name: `${base}.${cur_part}`
 	};
 }
 /** @arg {{parts: string[];index:number}} obj @returns {never} */
