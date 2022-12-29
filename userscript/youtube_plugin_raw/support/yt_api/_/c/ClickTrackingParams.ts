@@ -1,3 +1,3 @@
-import {TrackingParamsForKey} from "../TrackingParamsForKey";
-
-export type ClickTrackingParams=TrackingParamsForKey<"clickTrackingParams">;
+export type ClickTrackingParams={
+	clickTrackingParams: string;
+};

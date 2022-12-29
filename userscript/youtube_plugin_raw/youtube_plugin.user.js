@@ -1665,6 +1665,7 @@ class HandlerBase {
 	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
 	 */
 	endpoint(path,endpoint) {
+		endpoint.browseEndpoint;
 		console.log(path,endpoint);
 	}
 	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
@@ -4510,7 +4511,7 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
 	 */
 	handleEntityBatchUpdate(obj) {
-		console.log("entity update time",obj.entityBatchUpdate.timestamp);
+		if(yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
 		let mut_item=obj.entityBatchUpdate.mutations[0];
 		obj.entityBatchUpdate;
 		switch(mut_item.type) {
