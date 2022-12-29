@@ -1870,8 +1870,7 @@ class FilterHandlers {
 				debugger;
 			}
 		}
-		console.log(path,'onResponseReceivedActions',data.onResponseReceivedActions);
-		console.log(path,'topbar',data.topbar);
+		this.handle_t.DesktopTopbarRenderer(data.topbar);
 		if(typeof data.trackingParams!=="string") debugger;
 		let ok=Object.keys(data);
 		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
@@ -4408,6 +4407,13 @@ function parse_browse_id(value) {
 }
 
 class HandleTypes {
+	/**
+	 * @param {{ desktopTopbarRenderer: {}; }} renderer
+	 */
+	DesktopTopbarRenderer(renderer) {
+		console.log(renderer);
+		debugger;
+	}
 	/**
 	 * @param {{ feedTabbedHeaderRenderer: {}; }} renderer
 	 */
