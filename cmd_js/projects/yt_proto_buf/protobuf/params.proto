@@ -40,3 +40,12 @@ message TrackingParamsEx {
 	optional int32 field_03 = 3;
 	required DateTime datetime = 4;
 }
+
+message DelayPlayVm {
+	required int32 a = 1;
+	required int32 b = 2;
+	required int32 c = 3;
+	required string f7 = 7;
+	required string f12 = 12;
+	required int32 f13 = 13;
+}

@@ -2197,7 +2197,7 @@ class FilterHandlers {
 		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
 		const chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
-		/** @type {import("./test.js").AttChallengeObj} */
+		/** @type {import("./AttChallengeObj").AttChallengeObj} */
 		let search_param_obj=make_search_params(chal_as_fmt);
 		/** @type {keyof typeof search_param_obj} */
 		let i;

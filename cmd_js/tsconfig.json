@@ -34,6 +34,7 @@
 		"isolatedModules": true,
 		"noPropertyAccessFromIndexSignature": false,
 		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
 	},
 	"ts-node": {
 		"esm": true,
