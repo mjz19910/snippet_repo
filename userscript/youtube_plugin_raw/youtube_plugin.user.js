@@ -1748,7 +1748,7 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_abc/b/BrowseResponse.js").BrowseResponse} data
 	 */
 	on_page_type_browse(path,data) {
-		if("responseContext" in data)  {
+		if("responseContext" in data) {
 			this.on_response_context("on_page_type_browse",as_cast(data.responseContext));
 		}
 		console.log("browse page",path,data);
@@ -2416,22 +2416,20 @@ class FilterHandlers {
 					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
-				case "premium_membership": if(param.value!=="non_member") debugger; this.general_service_state.premium_membership=param.value; break;
-				case "has_unlimited_entitlement": break;
-				case "has_alc_entitlement": break;
-				case "is_alc_surface": break;
-				case "ipcc": break;
-				case "is_viewed_live": break;
-				case "browse_id":
-					parse_browse_id(param);
-					break;
-				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.g_feedback_service.context=param.value; break;
-				case "route": if(param.value!=="channel.featured") debugger; break;
-				case "is_casual": break;
-				case "is_owner": break;
-				case "is_monetization_enabled": break;
-				case "num_shelves": break;
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
+				case "browse_id": parse_browse_id(param.value); break;
+				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.g_feedback_service.context=param.value; break;
+				case "has_alc_entitlement": break;
+				case "has_unlimited_entitlement": break;
+				case "ipcc": break;
+				case "is_alc_surface": break;
+				case "is_casual": break;
+				case "is_monetization_enabled": break;
+				case "is_owner": break;
+				case "is_viewed_live": break;
+				case "num_shelves": break;
+				case "premium_membership": if(param.value!=="non_member") debugger; this.general_service_state.premium_membership=param.value; break;
+				case "route": if(param.value!=="channel.featured") debugger; break;
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
@@ -4300,7 +4298,7 @@ function split_string(x,s) {
 }
 
 /**
- * @arg {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseIdType} value
+ * @arg {import("./support/yt_api/_abc/b/BrowseIdType.js").BrowseIdType} value
  */
 function parse_browse_id(value) {
 	let v_2c=value.slice(0,2);
