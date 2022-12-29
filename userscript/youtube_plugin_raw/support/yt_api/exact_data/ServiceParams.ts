@@ -1,4 +1,4 @@
-import {KVStore as KeyValueStore} from "../_abc/a/KVStore";
+import {KVStore as KeyValueStore} from "../_/a/KVStore";
 
 export type ServiceParams<T>={
 	service: T;

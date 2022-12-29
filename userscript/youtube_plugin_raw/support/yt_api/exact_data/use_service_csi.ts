@@ -1,5 +1,5 @@
 import {ExtractSingleParamKey} from "./ExtractSingleParamKey";
-import {CsiServiceParams} from "../_abc/a/CsiServiceParams";
+import {CsiServiceParams} from "../_/a/CsiServiceParams";
 import {watch_j_response} from "./watch_j_response.js";
 export const watch_serviceTrackingParams=watch_j_response.responseContext.serviceTrackingParams;
 export function use_service_csi(service_param: typeof watch_serviceTrackingParams[0]) {

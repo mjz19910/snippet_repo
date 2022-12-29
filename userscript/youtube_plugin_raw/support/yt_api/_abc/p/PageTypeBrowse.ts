@@ -1,5 +1,5 @@
-import {BrowseEndpoint} from "../b/BrowseEndpoint.js";
-import {BrowseResponse} from "../b/BrowseResponse";
+import {BrowseEndpoint} from "../../_/b/BrowseEndpoint.js";
+import {BrowseResponse} from "../../_/b/BrowseResponse";
 
 
 

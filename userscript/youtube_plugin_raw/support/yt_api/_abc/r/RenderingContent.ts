@@ -1,6 +1,6 @@
 import {ThumbnailsList} from "../t/ThumbnailsList.js";
 import {TrackingParams} from "../t/TrackingParams.js";
-import {DisplayAdRenderer} from "./DisplayAdRenderer";
+import {DisplayAdRenderer} from "../../_/d/DisplayAdRenderer";
 
 export interface TN extends TrackingParams {
 	thumbnail: ThumbnailsList;

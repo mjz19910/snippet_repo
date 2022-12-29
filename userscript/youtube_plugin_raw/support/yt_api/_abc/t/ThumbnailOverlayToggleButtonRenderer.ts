@@ -1,4 +1,4 @@
-import {Accessibility} from "../a/Accessibility";
+import {Accessibility} from "../../_/a/Accessibility";
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
 import {CommandMetadata} from "../c/CommandMetadata";
 import {Icon} from "../i/Icon";

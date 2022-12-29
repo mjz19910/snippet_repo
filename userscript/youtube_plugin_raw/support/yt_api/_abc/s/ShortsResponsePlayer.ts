@@ -2,7 +2,7 @@ import {StreamingData} from "../../../../StreamingData";
 import {PlaybackTracking} from "../../../../PlaybackTracking";
 import {VideoDetails} from "../../../../VideoDetails";
 import {FrameworkUpdates} from "../../../../FrameworkUpdates";
-import {CaptionsRenderer} from "../c/CaptionsRenderer";
+import {CaptionsRenderer} from "../../_/c/CaptionsRenderer";
 
 export type ShortsResponsePlayer={
 	responseContext: {};

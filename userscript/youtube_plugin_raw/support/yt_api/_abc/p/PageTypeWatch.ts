@@ -1,5 +1,5 @@
-import {WatchEndpoint} from "../w/WatchEndpoint.js";
-import {WatchResponse} from "../w/WatchResponse";
+import {WatchEndpoint} from "../../_/w/WatchEndpoint.js";
+import {WatchResponse} from "../../_/w/WatchResponse";
 
 export interface PageTypeWatch {
 	pageType: "watch";

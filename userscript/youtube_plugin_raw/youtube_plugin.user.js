@@ -60,7 +60,7 @@ function save_new_map(key,map) {
 }
 
 class SavedData {
-	/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
+	/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
 	any_data={};
 }
 
@@ -1574,14 +1574,14 @@ class HandleRichGridRenderer {
 	}
 }
 /** @typedef {import("./support/yt_api/_abc/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
-/** @typedef {import("./support/yt_api/_/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
+/** @typedef {import("./support/yt_api/_/a/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
 // class AppendContinuationItemsAction {
 // 	/**@type {ContinuationItem[]} */
 // 	continuationItems=[];
 // 	targetId="";
 // }
 
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
 	return o.targetId==="watch-next-feed";
 }
@@ -1589,7 +1589,7 @@ function is_watch_next_feed_target(o) {
 function is_comments_section_next(o) {
 	return o.targetId==="comments-section";
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_abc/b/BrowseFeedAction.js").BrowseFeedAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/b/BrowseFeedAction.js").BrowseFeedAction} */
 function is_what_to_watch_section(o) {
 	return o.targetId==="browse-feedFEwhat_to_watch";
 }
@@ -1605,12 +1605,12 @@ function make_search_params(t) {
 class HandlerBase {
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
+	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
 	 */
 	endpoint(path,endpoint) {
 		console.log(path,endpoint);
 	}
-	/** @arg {import("./support/yt_api/_abc/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
+	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
 		switch(renderer.style) {
 			case "VIDEO": break;
@@ -1761,7 +1761,7 @@ class FilterHandlers {
 			return false;
 		}
 		if(is_what_to_watch_section(action)) {
-			/** @type {import("./support/yt_api/_abc/b/BrowseFeedAction.js").BrowseFeedAction} */
+			/** @type {import("./support/yt_api/_/b/BrowseFeedAction.js").BrowseFeedAction} */
 			let action_t=action;
 			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			// return true;
@@ -1773,7 +1773,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {string} path
-	 * @arg {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} data
+	 * @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 */
 	on_page_type_watch(path,data) {
 		this.on_response_context("on_page_type_watch",data.responseContext);
@@ -1839,7 +1839,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {string} path
-	 * @arg {import("./support/yt_api/_abc/b/BrowseResponseContent.js").BrowseResponseContent} data
+	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
 	 */
 	on_page_type_browse_response(path,data) {
 		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
@@ -1856,7 +1856,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @param {string} path
-	 * @param {import("./support/yt_api/_abc/b/BrowseResponse.js").BrowseResponse} data
+	 * @param {import("./support/yt_api/_/b/BrowseResponse.js").BrowseResponse} data
 	 */
 	on_page_type_browse(path,data) {
 		this.on_page_type_browse_response(`${path}.response`,data.response);
@@ -1994,12 +1994,12 @@ class FilterHandlers {
 			case 1: switch(target[0]) {
 				case "browse": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/yt/browse_t.js").browse_t['json']} */
+					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t['json']} */
 					json: as_cast(json),
 				};
 				case "feedback": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/_/r/feedback_t.js").feedback_t['json']} */
+					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t['json']} */
 					json: as_cast(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
@@ -2008,7 +2008,7 @@ class FilterHandlers {
 				};
 				case "get_transcript": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/_/r/get_transcript_t.js").get_transcript_t['json']} */
+					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t['json']} */
 					json:  as_cast(json),
 				};
 				case "guide": return {
@@ -2023,7 +2023,7 @@ class FilterHandlers {
 				};
 				case "player": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
+					/** @type {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} */
 					json: as_cast(json),
 				};
 			} break;
@@ -2031,13 +2031,13 @@ class FilterHandlers {
 				case "account": switch(target[1]) {
 					case "account_menu": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} */
+						/** @type {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} */
 						json: as_cast(json),
 					};
 				};
 				case "att": return {
 					url_type: `${target[0]}.${target[1]}`,
-					/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
+					/** @type {import("./support/yt_api/_/a/AttGetV.js").AttGetV} */
 					json: as_cast(json),
 				};
 				case "live_chat": switch(target[1]) {
@@ -2059,7 +2059,7 @@ class FilterHandlers {
 					};
 					case "record_interactions": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/r/YtSuccessResponse.js").YtSuccessResponse} */
+						/** @type {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} */
 						json: as_cast(json),
 					};
 				}
@@ -2180,7 +2180,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} json
+	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
 	 */
 	on_account_menu(json) {
 		this.on_response_context("on_account_menu",json.responseContext);
@@ -2297,7 +2297,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} data
+	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
 	 */
 	on_att_get(data) {
 		this.on_response_context("on_att_get",data.responseContext);
@@ -2360,7 +2360,7 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_abc/a/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
+	 * @param {import("./support/yt_api/_/a/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
 	 */
 	on_google_help_service(service) {
 		for(let param of service.params) {
@@ -2385,7 +2385,7 @@ class FilterHandlers {
 		},
 	};
 	/**
-	 * @param {import("./support/yt_api/_abc/a/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 * @param {import("./support/yt_api/_/a/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
 	on_e_catcher_service(service) {
 		/** @type {NonNullable<this['e_catcher_service']['client']>} */
@@ -2458,7 +2458,7 @@ class FilterHandlers {
 		context: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_abc/a/GFeedbackServiceParams.js").GFeedbackServiceParams} service
+	 * @param {import("./support/yt_api/_/a/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
 	on_g_feedback_service(service) {
 		for(let param of service.params) {
@@ -2502,7 +2502,7 @@ class FilterHandlers {
 		}
 	}
 	csi_service={
-		/** @type {import("./support/yt_api/_abc/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
+		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
 		yt_fn: null,
 		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
 		rid: {
@@ -2524,7 +2524,7 @@ class FilterHandlers {
 		yt_ad: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_abc/a/CsiServiceParams.js").CsiServiceParams} service
+	 * @param {import("./support/yt_api/_/a/CsiServiceParams.js").CsiServiceParams} service
 	 */
 	on_csi_service(service) {
 		for(let param of service.params) {
@@ -2632,7 +2632,7 @@ class FilterHandlers {
 	 */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {import("./support/yt_api/_abc/AnySavedData.js").AnySavedData} */
+		/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
@@ -3532,7 +3532,7 @@ function random_sometimes_break_1(detail,obj,path) {
 			let browse_section=bid.slice(0,2);
 			console.log("show browse_section & browse_part",browse_section,browse_part);
 		}
-		/** @target_type @type {import("./support/yt_api/_abc/b/BrowseEndpointData.js").BrowseEndpointData}  */
+		/** @target_type @type {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData}  */
 		x: {
 			if(bid.startsWith("FE")) {
 				browse_with_part();
@@ -4337,7 +4337,7 @@ if(typeof exports==="object") {
 	exports.FilterHandlers=FilterHandlers;
 }
 /**
- * @param {{ key: "yt_fn"; value: import("./support/yt_api/_abc/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
+ * @param {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
  */
 function verify_param(param) {
 	switch(param.value) {
@@ -4365,7 +4365,7 @@ function split_string(x,s) {
 }
 
 /**
- * @arg {import("./support/yt_api/_abc/b/BrowseIdType.js").BrowseIdType} value
+ * @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value
  */
 function parse_browse_id(value) {
 	let v_2c=value.slice(0,2);

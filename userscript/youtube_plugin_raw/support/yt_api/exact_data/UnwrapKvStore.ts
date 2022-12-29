@@ -1,4 +1,4 @@
-import {KVStore} from "../_abc/a/KVStore";
+import {KVStore} from "../_/a/KVStore";
 
 export type UnwrapKvStore<T extends KVStore[]>={
 	[U in keyof T]: {

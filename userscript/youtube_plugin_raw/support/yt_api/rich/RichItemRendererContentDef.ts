@@ -1,5 +1,5 @@
-import {AdSlotRendererH} from "../_abc/a/AdSlotRendererH.js";
-import {RadioRendererH} from "../_abc/r/RadioRendererH.js";
+import {AdSlotRendererH} from "../_/a/AdSlotRendererH.js";
+import {RadioRenderer} from "../_abc/r/RadioRenderer.js";
 import {VideoRenderer} from "../_abc/v/VideoRenderer.js";
 
-export type RichItemRendererContentDef=AdSlotRendererH|VideoRenderer|RadioRendererH;
+export type RichItemRendererContentDef=AdSlotRendererH|VideoRenderer|RadioRenderer;

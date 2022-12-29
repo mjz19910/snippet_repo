@@ -1,4 +1,4 @@
-import {Accessibility} from "../a/Accessibility";
+import {Accessibility} from "../../_/a/Accessibility";
 
 const key_simpleText:unique symbol=Symbol("simpleText");
 export type key_simpleText=typeof key_simpleText;
