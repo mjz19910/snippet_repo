@@ -1749,7 +1749,15 @@ class FilterHandlers {
 	 */
 	on_page_type_browse_response(path,data) {
 		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
-		console.log("[browse_page_context]",path,data);
+		console.log(path,'contents',data.contents);
+		console.log(path,'frameworkUpdates',data.frameworkUpdates);
+		console.log(path,'header',data.header);
+		console.log(path,'onResponseReceivedActions',data.onResponseReceivedActions);
+		console.log(path,'topbar',data.topbar);
+		if(typeof data.trackingParams!=="string") debugger;
+		let ok=Object.keys(data);
+		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
+		console.log("[browse_page_context]",data);
 		debugger;
 	}
 	/**
