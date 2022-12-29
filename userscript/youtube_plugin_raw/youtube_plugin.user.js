@@ -1085,7 +1085,8 @@ let original_fetch=null;
 */
 function fetch_inject(user_request,request_init) {
 	if(!original_fetch) throw new Error("No original fetch");
-	if(request_init) {
+	x: if(request_init) {
+		if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
 		console.log("fetch_log_with_options",user_request,request_init);
 	}
 	if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
