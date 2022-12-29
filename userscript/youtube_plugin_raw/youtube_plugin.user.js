@@ -2003,23 +2003,42 @@ class FilterHandlers {
 					/** @type {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} */
 					json: as_cast(json),
 				};
-				case "next": break;
-				case "player": break;
+				case "next": return {
+					url_type,
+					/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
+					json: as_cast(json),
+				};
+				case "player": return {
+					url_type,
+					/** @type {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
+					json: as_cast(json),
+				};
 			} break;
 			case 2: switch(target[0]) {
-				case "account": return {
-					url_type: `${target[0]}.${target[1]}`,
-					/** @type {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} */
-					json: as_cast(json),
+				case "account": switch(target[1]) {
+					case "account_menu": return {
+						url_type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} */
+						json: as_cast(json),
+					};
 				};
 				case "att": return {
 					url_type: `${target[0]}.${target[1]}`,
 					/** @type {import("./support/yt_api/_abc/a/AttGetV.js").AttGetV} */
 					json: as_cast(json),
 				};
-				case "live_chat": break;
+				case "live_chat": switch(target[1]) {
+					case "get_live_chat_replay": return {
+						url_type: `${target[0]}.${target[1]}`,
+						json,
+					};
+				}
 				case "notification": switch(target[1]) {
-					case "get_notification_menu": break;
+					case "get_notification_menu": return {
+						url_type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu["json"]} */
+						json: as_cast(json),
+					};
 					case "get_unseen_count": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/yt/yt_notification_get_unseen_count.js").yt_notification_get_unseen_count['json']} */
@@ -2032,50 +2051,15 @@ class FilterHandlers {
 						/** @type {import("./support/yt_api/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
 						json: as_cast(json),
 					};
-					case "reel_watch_sequence": break;
+					case "reel_watch_sequence": return {
+						url_type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/yt_api/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
+						json: as_cast(json),
+					};
 				}
 			} break;
 		}
 		switch(url_type) {
-			case "guide": return {
-				url_type,
-				/** @type {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} */
-				json: as_cast(json),
-			};
-			case "reel.reel_item_watch": return {
-				url_type,
-				/** @type {import("./support/yt_api/yt/yt_response_reel_item_watch.js").yt_response_reel_item_watch['json']} */
-				json: as_cast(json),
-			};
-			case "player": return {
-				url_type,
-				/** @type {import("./support/yt_api/_abc/w/WatchResponsePlayer.js").WatchResponsePlayer} */
-				json: as_cast(json),
-			};
-			case "next": return {
-				url_type,
-				/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
-				json: as_cast(json),
-			};
-			case "reel.reel_watch_sequence": return {
-				url_type,
-				/** @type {import("./support/yt_api/yt/yt_response_reel_watch_sequence.js").yt_response_reel_watch_sequence["json"]} */
-				json: as_cast(json),
-			};
-			case "live_chat.get_live_chat_replay": return {
-				url_type,
-				json,
-			};
-			case "notification.get_notification_menu": return {
-				url_type,
-				/** @type {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu["json"]} */
-				json: as_cast(json),
-			};
-			case "account.account_menu": return {
-				url_type,
-				/** @type {import("./support/yt_api/_/r/AccountMenuJson.js").AccountMenuJson} */
-				json: as_cast(json),
-			};
 			case "notification.record_interactions": return {
 				url_type,
 				/** @type {import("./support/yt_api/_/r/YtSuccessResponse.js").YtSuccessResponse} */
