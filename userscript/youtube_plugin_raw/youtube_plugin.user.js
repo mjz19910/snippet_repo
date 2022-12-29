@@ -1605,11 +1605,11 @@ function make_search_params(t) {
 
 class HandlerBase {
 	/**
-	 * @param {AdsControlFlowOpportunityReceivedCommandData} command
+	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
 	 */
 	adsControlFlowOpportunityReceivedCommand(command) {
 		console.log(command);
-		debugger;
+		if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
 	}
 	/**
 	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRendererData.js").TwoColumnBrowseResultsRendererData} renderer
@@ -4415,9 +4415,10 @@ function parse_browse_id(value) {
 
 class HandleTypes {
 	/**
-	 * @param {{ desktopTopbarRenderer: {}; }} renderer
+	 * @param {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
 	 */
 	DesktopTopbarRenderer(renderer) {
+		renderer.desktopTopbarRenderer;
 		console.log(renderer);
 		debugger;
 	}
