@@ -1312,7 +1312,9 @@ class YtIterateTarget {
 	}
 	/** @type {(...x:[ApiIterateState,{}])=>void} */
 	compactLinkRenderer(state,renderer) {
+		if(!state.t.run_mc) return;
 		console.log("compactLinkRenderer",state.path,renderer);
+		state.t.run_mc=false;
 	}
 	/**
 	 * @arg {ApiIterateState} state
@@ -2039,7 +2041,7 @@ class FilterHandlers {
 			let ok=Object.keys(desc.item);
 			/** @type {keyof typeof desc['item']} */
 			let fk=do_as_cast(ok[0]);
-			let {[fk]:first}=desc.item;
+			let {[fk]: first}=desc.item;
 			if(eq_keys(ok,['items','trackingParams'])) return;
 			if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
 			console.log(desc.key,ok,[fk,first],desc.item);
@@ -2051,7 +2053,7 @@ class FilterHandlers {
 			let ok=Object.keys(desc.item);
 			/** @type {keyof typeof desc['item']} */
 			let fk=do_as_cast(ok[0]);
-			let {[fk]:first}=desc.item;
+			let {[fk]: first}=desc.item;
 			console.log(desc.key,ok,[fk,first],desc.item);
 		}
 		/**
@@ -2306,7 +2308,7 @@ class FilterHandlers {
 						}
 						new_expected.push(e);
 					});
-					console.log("new g_feedback flag_id",new_expected);
+					if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
 					break;
 				case "logged_in": {
 					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
