@@ -2307,7 +2307,8 @@ class FilterHandlers {
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
-				default: debugger;
+				case "browse_id_prefix": if(param.value!=="") debugger; break;
+				default: console.log("new [param_key]",param); debugger;
 			}
 		}
 	}
@@ -2340,7 +2341,7 @@ class FilterHandlers {
 				} break;
 				case "name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
 				case "fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
-				default: debugger;
+				default: console.log("new [param_key]",param); debugger;
 			}
 		}
 		if(this.e_catcher_service.client) {
@@ -2377,7 +2378,7 @@ class FilterHandlers {
 					debugger;
 				} break;
 				case "context": this.guided_help_service.context=param.value; console.log("new [help_context]",param.value); break;
-				default: debugger;
+				default: console.log("new [param_key]",param); debugger;
 			}
 		}
 	}
@@ -2430,8 +2431,8 @@ class FilterHandlers {
 					let v_ac=param.value.slice(2);
 					switch(v_2c) {
 						case "FE": console.log("new [param_value_with_section]",v_2c,param); break;
-						case "VL": ; switch(v_ac) {
-							default: debugger;
+						case "VL": switch(v_ac) {
+							default: console.log("new [param_value_with_section]",param); debugger;
 						}  break;
 						default: console.log("new [param_value_needed]",v_2c,param); break;
 					}
