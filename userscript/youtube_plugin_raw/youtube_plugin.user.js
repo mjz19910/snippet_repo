@@ -1926,15 +1926,27 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		let handle_it=() =>{
+		let handle_it=() => {
 			switch(res.url_type) {
 				case "att.get": this.on_att_get(res.json); return true;
 				case "player": this.on_v1_player(api_path,res.json); return true;
 				case "guide": this.on_guide(api_path,res.json); return true;
 				case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
-				default: console.log("missed api type",res); debugger; throw new Error("Missing");
+				case "notification.get_notification_menu": res.json; return false;
 			}
-		}
+			debugger;
+			switch(res.url_type) {case "browse": return false;}
+			switch(res.url_type) {case "getDatasyncIdsEndpoint": return false;}
+			switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
+			switch(res.url_type) {case "next": return false;}
+			switch(res.url_type) {case "reel.reel_item_watch": return false;}
+			switch(res.url_type) {
+				case "reel_watch_sequence": return false;
+				default:
+					console.log("missed api type",res);
+					throw new Error("FIXME");
+			}
+		};
 		let handled=handle_it();
 		if(handled) return;
 		if("responseContext" in res.json) {
