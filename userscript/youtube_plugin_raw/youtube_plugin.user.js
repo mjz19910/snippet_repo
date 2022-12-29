@@ -2399,7 +2399,13 @@ class FilterHandlers {
 	on_g_feedback_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
-				case "e":
+				case "browse_id_prefix": if(param.value!=="") debugger; break;
+				case "browse_id": parse_browse_id(param.value); break;
+				case "context": {
+					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
+					this.g_feedback_service.context=param.value;
+				} break;
+				case "e": {
 					/** @type {number[]} */
 					let new_expected=[];
 					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
@@ -2410,15 +2416,7 @@ class FilterHandlers {
 						new_expected.push(e);
 					});
 					if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
-					break;
-				case "logged_in": {
-					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
-					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
-					debugger;
 				} break;
-				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": parse_browse_id(param.value); break;
-				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.g_feedback_service.context=param.value; break;
 				case "has_alc_entitlement": break;
 				case "has_unlimited_entitlement": break;
 				case "ipcc": break;
@@ -2427,6 +2425,11 @@ class FilterHandlers {
 				case "is_monetization_enabled": break;
 				case "is_owner": break;
 				case "is_viewed_live": break;
+				case "logged_in": {
+					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
+					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
+					debugger;
+				} break;
 				case "num_shelves": break;
 				case "premium_membership": if(param.value!=="non_member") debugger; this.general_service_state.premium_membership=param.value; break;
 				case "route": if(param.value!=="channel.featured") debugger; break;
