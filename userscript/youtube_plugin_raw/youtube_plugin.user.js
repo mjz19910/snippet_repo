@@ -4445,19 +4445,28 @@ function split_string(x,s) {
 function parse_browse_id(value) {
 	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
 	/** @typedef {typeof value extends infer V ? import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<V,`${string}`> extends infer Z?Z extends ["FE",...any[]]?Z:never:never:never} U1 */
+	/** @template T,U @typedef {import("./ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */
+	/** @typedef {ExtractAfterStr<typeof value,"FE">} KnownParts */
+	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
 	/** @type {StartPart} */
 	let v_2c=as_cast(value.slice(0,2));
-	/** @type {KnownParts} */
-	let v_ac=as_cast(value.slice(2));
 	switch(v_2c) {
-		case "FE": console.log("new [param_value_with_section]",v_2c,value); break;
-		case "VL":
-			let v_4c=value.slice(2,4); switch(v_4c) {
-				case "LL": break;
-				case "WL": break;
-				case "PL": break;
-				default: console.log("new with param [v_ac]",value,v_ac); debugger;
-			}  break;
+		case "FE": {
+			/** @type {KnownParts} */
+			let v_ac=as_cast(value.slice(2));
+			console.log("new [param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
+		} break;
+		case "VL": let v_4c=value.slice(2,4); switch(v_4c) {
+			case "LL": break;
+			case "WL": break;
+			case "PL": break;
+			default:
+				/** @type {KnownParts_VL} */
+				let ve_ac=value.slice(2);
+				console.log("new with param [param_2c_VL]",value,ve_ac);
+				debugger;
+		} break;
+		case "UC": console.log("new with param [param_2c_UC]",value,value.slice(2)); break;
 		default: console.log("new [param_value_needed]",v_2c,value); break;
 	}
 }
