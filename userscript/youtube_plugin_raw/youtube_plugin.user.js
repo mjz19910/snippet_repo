@@ -2432,7 +2432,7 @@ class FilterHandlers {
 					switch(v_2c) {
 						case "FE": console.log("new [param_value_with_section]",v_2c,param); break;
 						case "VL": switch(v_ac) {
-							default: console.log("new [param_value_with_section]",param); debugger;
+							default: console.log("new [v_ac]",param); debugger;
 						}  break;
 						default: console.log("new [param_value_needed]",v_2c,param); break;
 					}
