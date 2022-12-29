@@ -1,9 +1,9 @@
 import {GeneralContext} from "../GeneralContext.js";
 import {CaptionsRenderer} from "../c/CaptionsRenderer";
 import {EndscreenRenderer} from "../e/EndscreenRenderer";
-import {FrameworkUpdates} from "../../_abc/f/FrameworkUpdates.js";
-import {PaidContentOverlay} from "../../_abc/p/PaidContentOverlay";
-import {PlayerAdItem} from "../../_abc/p/PlayerAdItem";
+import {PlayerAdItem} from "../PlayerAdItem.js";
+import {FrameworkUpdates} from "../FrameworkUpdates.js";
+import {PaidContentOverlay} from "../PaidContentOverlay.js";
 
 export type WatchResponsePlayer={
 	responseContext: GeneralContext;

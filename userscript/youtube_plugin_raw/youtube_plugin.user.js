@@ -60,7 +60,7 @@ function save_new_map(key,map) {
 }
 
 class SavedData {
-	/** @type {AnySavedData} */
+	/** @type {import("./AnySavedData.js").AnySavedData} */
 	any_data={};
 }
 
@@ -1574,7 +1574,7 @@ class HandleRichGridRenderer {
 	}
 }
 /** @typedef {import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
-/** @typedef {import("./support/yt_api/_/a/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
+/** @typedef {import("./support/yt_api/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
 // class AppendContinuationItemsAction {
 // 	/**@type {ContinuationItem[]} */
 // 	continuationItems=[];
