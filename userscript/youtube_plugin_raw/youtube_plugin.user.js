@@ -1981,7 +1981,7 @@ class FilterHandlers {
 			case "player": this.on_v1_player(api_path,res.json); return true;
 			case "guide": this.on_guide(api_path,res.json); return true;
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
-			case "notification.get_notification_menu": this.on_notification_data(res); return false;
+			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return false;
 			default: return null;
 		}
@@ -2027,10 +2027,11 @@ class FilterHandlers {
 	}
 
 	/**
-	 * @param {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu} _res
+	 * @param {import("./support/_/notification_get_notification_menu.js").notification_get_notification_menu} res
 	 */
-	on_notification_data(_res) {
-		let ok=Object.keys(_res.json);
+	on_notification_data(res) {
+		this.on_response_context("on_notification_data",res.json.responseContext);
+		let ok=Object.keys(res.json);
 		console.log(ok);
 		debugger;
 	}
@@ -2097,7 +2098,7 @@ class FilterHandlers {
 	/** @typedef {import("./support/yt_api/_abc/g/GeneralContext.js").AgeingContext} AgeingContext */
 	/** @typedef { import("./support/yt_api/_abc/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
-	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"|"general_context"} _from
+	 * @arg {"on_att_get"|"on_guide"|"on_v1_player"|"general_context"|"on_notification_data"} _from
 	 * @arg {GeneralContext|AgeingContext} context
 	 */
 	on_response_context(_from,context) {
