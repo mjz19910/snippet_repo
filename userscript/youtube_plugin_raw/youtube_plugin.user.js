@@ -1605,6 +1605,15 @@ function is_what_to_watch_section(o) {
 	return o.targetId==="browse-feedFEwhat_to_watch";
 }
 
+/** @template {string} T @arg {T} t @returns {import("./support/search_params_parse/SearchParamsParse.js").ParseUrlSearchParams<T>} */
+function make_search_params(t) {
+	let sp=new URLSearchParams(t);
+	/** @type {any} */
+	let as_any=Object.fromEntries(sp.entries());
+	return as_any;
+}
+
+
 class FilterHandlers {
 	constructor() {
 		this.debug=false;
@@ -1915,6 +1924,20 @@ class FilterHandlers {
 		this.on_response_context("on_att_get",data.responseContext);
 		let ok=Object.keys(data);
 		if(eq_keys(ok, ['responseContext', 'challenge', 'bgChallenge'])) return;
+		// spell:disable-next-line
+		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
+		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
+		const chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
+		/** @type {import("./test.js").AttChallengeObj} */
+		let search_param_obj=make_search_params(chal_as_fmt);
+		/** @type {keyof typeof search_param_obj} */
+		let i
+		for(i	in search_param_obj) {
+			switch(i) {
+				case "a": break;
+				default: debugger;
+			}
+		}
 		data.bgChallenge;
 		console.log(data);
 		debugger;
