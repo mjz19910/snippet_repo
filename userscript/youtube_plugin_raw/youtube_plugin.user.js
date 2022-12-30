@@ -1603,6 +1603,48 @@ function make_search_params(t) {
 	return as_any;
 }
 
+class Base64Binary {
+	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	/* will return a  Uint8Array type */
+	/** @arg {string} input */
+	decodeArrayBuffer(input) {
+		var byte_len=(input.length/4)*3;
+		var ab=new ArrayBuffer(byte_len);
+		let byte_arr=new Uint8Array(ab);
+		this.decode(input,byte_arr);
+
+		return byte_arr;
+	}
+	/** @arg {string} input @arg {Uint8Array} binary_arr */
+	decode(input,binary_arr) {
+		var byte_len=(input.length/4)*3|0;
+		var chr1,chr2,chr3;
+		var enc1,enc2,enc3,enc4;
+		var i=0;
+		var j=0;
+
+		input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
+
+		for(i=0;i<byte_len;i+=3) {
+			//get the 3 octets in 4 ascii chars
+			enc1=this._keyStr.indexOf(input.charAt(j++));
+			enc2=this._keyStr.indexOf(input.charAt(j++));
+			enc3=this._keyStr.indexOf(input.charAt(j++));
+			enc4=this._keyStr.indexOf(input.charAt(j++));
+
+			chr1=(enc1<<2)|(enc2>>4);
+			chr2=((enc2&15)<<4)|(enc3>>2);
+			chr3=((enc3&3)<<6)|enc4;
+
+			binary_arr[i]=chr1;
+			if(enc3!=64) binary_arr[i+1]=chr2;
+			if(enc4!=64) binary_arr[i+2]=chr3;
+		}
+
+		return binary_arr;
+	}
+}
+
 class HandlerBase {
 	/**
 	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
@@ -1625,12 +1667,29 @@ class HandlerBase {
 	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
 	 */
 	adLayoutMetadata(metadata) {
+		/**
+		 * @param {string} str
+		 */
+		function decode_b64_proto_obj(str) {
+			let dec=new Base64Binary();
+			let bin=dec.decodeArrayBuffer(str);
+			return decode_protobuf(bin);
+		}
+		/**
+		 * @param {Uint8Array} buffer
+		 */
+		function decode_protobuf(buffer) {
+			console.log(buffer[0]);
+			return {
+				first: buffer[0],
+			};
+		}
 		for(let item of metadata) {
 			switch(item.layoutType) {
 				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
 				default: debugger;
 			}
-			console.log("log data entry [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
+			console.log("log data entry [%o]",decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry));
 		}
 	}
 	/**
@@ -4565,7 +4624,7 @@ class HandleTypes {
 	handle_mutations(mutations) {
 		for(let mut of mutations) {
 			switch(mut.type) {
-				case "ENTITY_MUTATION_TYPE_DELETE":{
+				case "ENTITY_MUTATION_TYPE_DELETE": {
 					console.log("[mut_del] ek",mut.entityKey);
 					if(eq_keys(Object.keys(mut.options),["persistenceOption"])) {
 						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
