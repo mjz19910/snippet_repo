@@ -5,7 +5,7 @@
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
-// @match	https://www.youtube.com/*
+// @match	https://*.youtube.com/*
 // @grant	none
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
@@ -382,6 +382,7 @@ async function async_plugin_init(event) {
 			if(plugin_state.polymer_loaded) {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg");
 				interesting_body_elements;
+				debugger;
 			}
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			{
