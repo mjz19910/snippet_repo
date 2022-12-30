@@ -816,7 +816,7 @@ class YtIterateTarget {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command */
+	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",get_keys_of(command));
 		if(state.ReloadContinuationItemsCommandData(path,command)) return;
@@ -1037,7 +1037,10 @@ class HandleRendererContentItemArray {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @template {AppendContinuationItemsAction['continuationItems']|import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData['continuationItems']} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
+	/** @typedef { import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} ReloadContinuationItemsCommandData */
+	/** @typedef {AppendContinuationItemsAction['continuationItems']} T1 */
+	/** @typedef  {ReloadContinuationItemsCommandData['continuationItems']} T2 */
+	/** @template {T1|T2} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
 	replace_array(base,path,arr) {
 		return cast_as(arr.filter((/**@type {typeof arr[number]}*/content_item) => {
 			let keys=get_keys_of(content_item);
@@ -1430,7 +1433,7 @@ class FilterHandlers {
 		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
-	/** @arg {string} path @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action */
+	/** @arg {string} path @arg  {ReloadContinuationItemsCommandData} action */
 	ReloadContinuationItemsCommandData(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			// /** @type {WatchNextContinuationAction} */
