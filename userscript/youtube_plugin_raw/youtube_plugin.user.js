@@ -2019,7 +2019,7 @@ let leftover_args=[];
 inject_api_yt.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new FilterHandlers;
 inject_api_yt.yt_handlers=yt_handlers;
-function setup_prototype_modify() {
+function modify_global_env() {
 	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
 	inject_api_yt.created_blobs=created_blobs;
@@ -2068,7 +2068,6 @@ function setup_prototype_modify() {
 		return navigator_sendBeacon.call(this,...args);
 	};
 }
-setup_prototype_modify();
 let plr_raw_replace_debug=true;
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 	let raw_plr_rsp=player_config.args.raw_player_response;
@@ -3417,13 +3416,9 @@ Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<a
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 
 function main() {
+	modify_global_env();
 	start_message_channel_loop();
 }
-
-let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
-/** @type {{}} */
-let __eks_eo=__res_ia_eks;
-__eks_eo;
 
 function get_exports() {
 	return exports;
