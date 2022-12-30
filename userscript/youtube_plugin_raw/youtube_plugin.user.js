@@ -2932,14 +2932,20 @@ class ServiceResolver {
 	}
 }
 async function main() {
+	on_yt_navigate_finish.push(log_page_type_change);
 	await Promise.resolve();
-	let service_resolver=new ServiceResolver;
+	const service_resolver=new ServiceResolver;
 	const csi_service=new CsiService(service_resolver);
 	const e_catcher_service=new ECatcherService(service_resolver);
 	const g_feedback_service=new GFeedbackService(service_resolver);
 	const guided_help_service=new GuidedHelpService(service_resolver);
 	const service_tracking=new TrackingServices(service_resolver);
-	let yt_handlers=new FilterHandlers(service_resolver);
+	const yt_handlers=new FilterHandlers(service_resolver);
+	const log_tracking_params=false;
+	const log_click_tracking_params=false;
+	inject_api_yt.yt_handlers=yt_handlers;
+	
+	// init section
 	service_resolver.add_services({
 		csi_service,
 		e_catcher_service,
@@ -2948,13 +2954,12 @@ async function main() {
 		service_tracking,
 		yt_handlers,
 	});
-	const log_tracking_params=false;
-	const log_click_tracking_params=false;
 	service_resolver.set_params({
 		log_tracking_params,
 		log_click_tracking_params,
 	});
-	inject_api_yt.yt_handlers=yt_handlers;
+	
+	// modify global section
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	/**
 	 * @type {typeof fetch | null}
@@ -2962,7 +2967,13 @@ async function main() {
 	let original_fetch=null;
 	fetch_inject.__proxy_target__=window.fetch;
 	modify_global_env();
+
+	// wait for plugin requirements
 	start_message_channel_loop();
+
+	return;
+
+	// hoisted functions below
 	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
 	/**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
@@ -3155,7 +3166,6 @@ async function main() {
 		if(!detail) return;
 		yt_handlers.on_page_type_changed(detail);
 	}
-	on_yt_navigate_finish.push(log_page_type_change);
 }
 
 function get_exports() {
