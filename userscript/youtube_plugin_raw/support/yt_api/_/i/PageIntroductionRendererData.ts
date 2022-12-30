@@ -8,4 +8,8 @@ export type PageIntroductionRendererData={
 	headerText: TextRunsSimple;
 	bodyText: TextRunsSimple;
 	pageTitle: TextRunsSimple;
+}|{
+	headerText: TextRunsSimple;
+	pageTitle: TextRunsSimple;
+	headerIcon: Icon<"ACCOUNT_ADVANCED">;
 };

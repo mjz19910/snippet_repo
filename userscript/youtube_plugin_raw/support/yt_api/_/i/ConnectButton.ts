@@ -1,5 +1,5 @@
-import {AccountLinkButtonRendererData} from "./AccountLinkButtonRendererData";
+import {ButtonRenderer} from "../b/ButtonRenderer.js";
+import {AccountLinkButtonRenderer} from "./AccountLinkButtonRenderer";
 
-export type ConnectButton={
-	accountLinkButtonRenderer: AccountLinkButtonRendererData;
-};
+
+export type ConnectButton=AccountLinkButtonRenderer|ButtonRenderer;

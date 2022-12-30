@@ -3636,14 +3636,47 @@ class HandleTypes extends BaseService {
 	pageIntroductionRenderer(item) {
 		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
 	}
+	/** @template {{}} T @arg {string} name @param {T} obj */
+	ok(name,obj) {
+		let arr=get_keys_of(obj);
+		if(arr.length===0) return;
+		console.log(name+": not ok",arr.join());
+		console.log(name,obj);
+		debugger;
+	}
+	/**
+	 * @template T
+	 * @param {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon
+	 */
+	Icon(icon) {
+		console.log(icon);
+	}
 	/** @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
 	PageIntroductionRendererData(data) {
-		let ok=get_keys_of(data);
-		if(!has_keys(ok,"headerText,bodyText,pageTitle,headerIcon")) {
+		if(!("headerText" in data)) {
 			debugger;
 		}
-		stringify_text_runs(data.headerText);
-		console.log("PageIntroductionRendererData",data);
+		let {headerText,...x}=data;
+		stringify_text_runs(headerText);
+		/** @type {typeof x|{}} */
+		let y=x;
+		if("bodyText" in y) {
+			let {bodyText,pageTitle,...z}=y;
+			stringify_text_runs(bodyText);
+			stringify_text_runs(pageTitle);
+			y=z;
+		}
+		if("pageTitle" in y) {
+			let {pageTitle,...z}=y;
+			stringify_text_runs(pageTitle);
+			y=z;
+		}
+		if("headerIcon" in y) {
+			let {headerIcon,...z}=y;
+			this.Icon(headerIcon);
+			y=z;
+		}
+		this.ok("PageIntroductionRendererData",y);
 	}
 	/** @arg {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer */
 	itemSectionRenderer(renderer) {
@@ -4418,7 +4451,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
 		console.log(data);
 	}
-	/** @arg {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj */
+	/** @arg {import("./support/yt_api/_/i/AccountLinkButtonRenderer.js").AccountLinkButtonRenderer} obj */
 	connectButton(obj) {
 		this.accountLinkButtonRenderer(obj.accountLinkButtonRenderer);
 		if(eq_keys(get_keys_of(obj),["accountLinkButtonRenderer"])) return;
