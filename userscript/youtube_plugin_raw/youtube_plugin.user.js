@@ -21,7 +21,7 @@ var destroy_env=() => {};
 if(typeof window==="undefined") {
 	is_node_js=() => true;
 	/** @type {{require:()=>any}&typeof globalThis} */
-	let njs_require=as_cast(globalThis);
+	let njs_require=cast_as(globalThis);
 	if(typeof njs_require.require==="function") {
 		let n_env=require("./support/_/init_node_env.js");
 		destroy_env=() => {
@@ -140,6 +140,25 @@ FakeIframeElementData.special_base=class {};
 var XG=function() {};
 Object.setPrototypeOf(XG.prototype, HTMLIFrameElement.prototype);
 // customElements.define('fake-iframe', FakeIframeElement);
+/** @type {Map<Node,Node>} */
+let real_element_map=new Map;
+const before_inject_appendChild=Node.prototype.appendChild;
+/** @arg {Node&{b_inject_appendChild: Node['appendChild']}} v */
+function add_inject_backup(v) {
+	return v;
+}
+add_inject_backup(cast_as(Node.prototype)).b_inject_appendChild=before_inject_appendChild;
+Node.prototype.appendChild=inject_appendChild;
+/** @this {Node} @template {Node} T @arg {T} node @returns {T} */
+function inject_appendChild(node) {
+	if(real_element_map.has(node)) {
+		/** @type {T} */
+		let res=cast_as(real_element_map.get(node));
+		if(!res) throw 1;
+		node=res;
+	}
+	return add_inject_backup(cast_as(this)).b_inject_appendChild(node);
+}
 
 /**
  * @this {Document}
@@ -155,12 +174,17 @@ function overwrite_createElement(n_type,options) {
 		n_opts=options;
 	}
 	FakeIframeElementData.special_base=UU;
-	return new Proxy(original_document_createElement.call(this,n_type,options),{
+	let api_ret=original_document_createElement.call(this,n_type,options);
+	let ret=new Proxy(api_ret,{
 		get(...args) {
-			console.log(new Error(),args);
-			return Reflect.get(...args);
+			return Reflect.get(args[0],args[1]);
+		},
+		set(...args) {
+			return Reflect.set(args[0],args[1],args[2]);
 		}
 	});
+	real_element_map.set(ret,api_ret);
+	return ret;
 }
 
 // spell:words monospace
@@ -1254,7 +1278,7 @@ class IterateApiResultBase {
 			}
 			const state={t,path: `${path}.${key}`};
 			if(rk!==void 0&&this.iterate_target[rk]) {
-				this.iterate_target[rk](state,as_cast(value));
+				this.iterate_target[rk](state,cast_as(value));
 			} else {
 				this.default_iter(state,value);
 			}
@@ -2122,12 +2146,12 @@ class FilterHandlers {
 				case "browse": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t['json']} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				case "feedback": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t['json']} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
 					url_type: target[0],
@@ -2136,22 +2160,22 @@ class FilterHandlers {
 				case "get_transcript": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t['json']} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				case "guide": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				case "next": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				case "player": return {
 					url_type: target[0],
 					/** @type {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				default: break;
 			} break;
@@ -2160,13 +2184,13 @@ class FilterHandlers {
 					case "account_menu": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} */
-						json: as_cast(json),
+						json: cast_as(json),
 					};
 				};
 				case "att": return {
 					url_type: `${target[0]}.${target[1]}`,
 					/** @type {import("./support/yt_api/_/a/AttGetV.js").AttGetV} */
-					json: as_cast(json),
+					json: cast_as(json),
 				};
 				case "live_chat": switch(target[1]) {
 					case "get_live_chat_replay": return {
@@ -2178,29 +2202,29 @@ class FilterHandlers {
 					case "get_notification_menu": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/_/GetNotificationMenuJson.js").GetNotificationMenuJson} */
-						json: as_cast(json),
+						json: cast_as(json),
 					};
 					case "get_unseen_count": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/yt/notification_get_unseen_count_t.js").notification_get_unseen_count_t['json']} */
-						json: as_cast(json),
+						json: cast_as(json),
 					};
 					case "record_interactions": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} */
-						json: as_cast(json),
+						json: cast_as(json),
 					};
 				}
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/yt/reel_reel_item_watch_t.js").reel_reel_item_watch_t['json']} */
-						json: as_cast(json),
+						json: cast_as(json),
 					};
 					case "reel_watch_sequence": return {
 						url_type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/yt/reel_reel_watch_sequence_t.js").reel_reel_watch_sequence_t["json"]} */
-						json: as_cast(json),
+						json: cast_as(json),
 					};
 				}
 				default: break;
@@ -2861,7 +2885,7 @@ class HTMLVideoElementArrayBox {
 }
 
 /** @template U @template {U} T @arg {U} e @returns {T} */
-function as_cast(e) {
+function cast_as(e) {
 	/** @type {any} */
 	let x=e;
 	return x;
@@ -2875,7 +2899,7 @@ class YTNavigateFinishEvent {
 		return ret;
 	}
 	/** @type {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} */
-	detail=as_cast({});
+	detail=cast_as({});
 }
 
 /**
@@ -3241,7 +3265,7 @@ function page_type_iter(pageType) {
 /** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	/** @type {(keyof typeof detail)[]} */
-	let ok=as_cast(Object.keys(detail));
+	let ok=cast_as(Object.keys(detail));
 	for(let x of ok) {
 		switch(x) {
 			case "response": random_sometimes_break_0(detail,detail[x],["detail",x]); continue;
@@ -4016,7 +4040,7 @@ function has_keys(ok_3,arg1) {
 /** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/make/Split.js").Split<X,S>} */
 function split_string(x,s) {
 	let r=x.split(s);
-	return as_cast(r);
+	return cast_as(r);
 }
 
 const seen_map=new Set;
@@ -4029,11 +4053,11 @@ function parse_browse_id(value) {
 	/** @typedef {ExtractAfterStr<typeof value,"FE">} KnownParts */
 	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
 	/** @type {StartPart} */
-	let v_2c=as_cast(value.slice(0,2));
+	let v_2c=cast_as(value.slice(0,2));
 	switch(v_2c) {
 		case "FE": {
 			/** @type {KnownParts} */
-			let v_ac=as_cast(value.slice(2));
+			let v_ac=cast_as(value.slice(2));
 			if(seen_map.has(v_ac)) break;
 			seen_map.add(v_ac);
 			console.log("new [param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
@@ -4146,7 +4170,7 @@ class ECatcherService {
 		let new_client={};
 		for(let param of params) {
 			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
-			let param_parts=as_cast(param.key.split("."));
+			let param_parts=cast_as(param.key.split("."));
 			if(param_parts[0]!=='client') debugger;
 			switch(param_parts[1]) {
 				case "version": {
@@ -4330,7 +4354,7 @@ class HandleTypes {
 			if(is_yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
 			data.playerAds=[];
 			/** @type {{old_store:typeof data['playerAds']}&typeof data['playerAds']} */
-			let with_old_store=as_cast(data.playerAds);
+			let with_old_store=cast_as(data.playerAds);
 			with_old_store.old_store=old_ads;
 		}
 		if(data.adPlacements) {
@@ -4688,7 +4712,7 @@ class HandleTypes {
 	guideSubscriptionsSectionRenderer(desc) {
 		let ok=Object.keys(desc.item);
 		/** @type {keyof typeof desc['item']} */
-		let fk=as_cast(ok[0]);
+		let fk=cast_as(ok[0]);
 		let {[fk]: first}=desc.item;
 		if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
 		console.log(desc.key,ok,[fk,first],desc.item);
@@ -4700,7 +4724,7 @@ class HandleTypes {
 	GuideItemType(item) {
 		let ok=Object.keys(item);
 		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
-		let key=as_cast(ok[0]);
+		let key=cast_as(ok[0]);
 		if(!key) {
 			console.log("[log_GuideItemType]",ok);
 		}
@@ -4717,7 +4741,7 @@ class HandleTypes {
 	guideSectionRenderer(box) {
 		let ok=Object.keys(box.value);
 		/** @type {keyof typeof box['value']} */
-		let fk=as_cast(ok[0]);
+		let fk=cast_as(ok[0]);
 		let {[fk]: first}=box.value;
 		if(eq_keys(ok,['items','trackingParams'])) return;
 		if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
