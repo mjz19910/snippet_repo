@@ -3633,7 +3633,7 @@ class HandleTypes extends BaseService {
 		console.log(name,obj);
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/t/TextRuns.js").TextRuns} text */
+	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
 	on_text(text) {
 		if("runs" in text) {
 			/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
@@ -3656,10 +3656,22 @@ class HandleTypes extends BaseService {
 			throw 1;
 		}
 	}
+	/** @template T @typedef {import("./support/yt_api/_/i/Icon.js").Icon<T>} Icon  */
 	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
-		switch(icon.iconType) {
-			case "ACCOUNT_SHARING": break;
+		/** @type {any} */
+		let any_icon=icon;
+		/** @type {Icon<Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>>} */
+		let ict=any_icon;
+		switch(ict.iconType) {
+			case "ACCOUNT": debugger; return;
+			case "ACCOUNT_SHARING": return;
+			case "ACCOUNT_PRIVACY": return;
+		}
+		switch(ict.iconType) {case "ACCOUNT_ADVANCED": return;}
+		switch(ict.iconType) {case "ACCOUNT_BILLING": return;}
+		switch(ict.iconType) {
+			case "ACCOUNT_NOTIFICATIONS": return;
 			default: console.log("[new_icon]",icon); debugger;
 		}
 	}
@@ -3928,24 +3940,15 @@ class HandleTypes extends BaseService {
 			this.on_empty_obj(renderer);
 		}
 	}
-	/** @arg {import("./support/yt_api/_/t/TextRuns.js").TextRuns|import("./support/yt_api/_/s/SimpleText.js").SimpleText} t */
+	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} t */
 	text(t) {
-		if(!t) return;
-		if("runs" in t) {
-			this.on_text(t);
-		} else {
-			this.SimpleText(t);
-		}
+		this.on_text(t);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/s/SimpleText.js").SimpleText} t
-	 */
+	/** @arg {import("./support/yt_api/_/s/SimpleText.js").SimpleText} t */
 	SimpleText(t) {
 		console.log(t);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep
-	 */
+	/** @arg {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep */
 	navigationEndpoint(ep) {
 		if(ep===void 0) return;
 		if("watchEndpoint" in ep) {
@@ -4230,6 +4233,8 @@ class HandleTypes extends BaseService {
 		this.endpoint(data.endpoint);
 		this.SettingsResponseContent(data.response);
 		let split_parts=split_string(data.url,"/");
+		/** @type {Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>} */
+		let xx="ACCOUNT"; xx;
 		switch(split_parts.length) {
 			case 2: let cur_part=split_parts[1]; switch(cur_part) {
 				case "account": break;
