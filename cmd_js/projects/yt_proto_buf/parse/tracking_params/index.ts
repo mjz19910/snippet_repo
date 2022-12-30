@@ -33,39 +33,6 @@ class MyConsole {
 		}
 		console.log(pad+message,...data);
 	}
-	scope_id_max=1;
-	start_stack=new Array<[number,number,boolean]>;
-	pause(scope: () => void) {
-		let scope_id=this.scope_id_max++;
-		let enter_len=this.start_stack.length;
-		let start_pause_length=this.cache.length;
-		this.start_stack.push([scope_id,start_pause_length,this.paused]);
-		this.paused=false;
-		scope();
-		let scope_val=this.start_stack.at(-1);
-		if(scope_val) {
-			this.paused=scope_val[2];
-		}
-		if(!this.paused) this.on_resume();
-		x: if(scope_val) {
-			if(scope_val[0]!==scope_id) {
-				break x;
-			}
-			this.cache.length=scope_val[1];
-			if(this.start_stack.length>enter_len) {
-				this.start_stack.length=enter_len;
-			}
-		} else {
-			this.paused=false;
-			this.cache.length=start_pause_length;
-		}
-	}
-	on_resume() {
-		for(let msg of this.cache) {
-			let [pad,message,data]=msg;
-			this.pad_log(pad+message,...data);
-		}
-	}
 }
 
 type MyState={

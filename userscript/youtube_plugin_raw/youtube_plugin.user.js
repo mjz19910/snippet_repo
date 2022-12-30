@@ -1692,6 +1692,7 @@ class HandlerBase {
 			/** @type {[number,number,number[]][]} */
 			let data=[];
 			let mode="initial";
+			let mode_stack=[];
 			/** @type {[offset: number,length: number][]} */
 			let stack=[[0,buffer.length]];
 			let data_stack=[];
@@ -1736,6 +1737,7 @@ class HandlerBase {
 					break;
 					case 2: if(mode==="initial") {
 						i++;
+						mode_stack.push(mode);
 						mode="uint32";
 						next_mode="DateTime";
 						continue x;
@@ -1743,11 +1745,8 @@ class HandlerBase {
 						console.log("mode 2 and not able to handle it");
 						break x;
 					}
-					// fixed32
-					case 3: for(let u=0;u<4;u++) {
-						i++;
-						first_num.push(buffer[i]);
-					}; break;
+					case 3: i++; break;
+					case 4: i++; let mode_=mode_stack.pop();if(!mode_) throw new Error(); mode=mode_; break;
 					default: break x;
 				}
 				data.push([fieldId,wireType,first_num]);
