@@ -1,4 +1,4 @@
-import {ChannelEndpoint} from "./c/ChannelEndpoint";
+import {ChannelEndpoint} from "../c/ChannelEndpoint";
 import {ChannelResponse} from "../c/ChannelResponse";
 
 export type PageTypeChannel={

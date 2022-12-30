@@ -1674,13 +1674,6 @@ class FilterHandlers {
 		debugger;
 		return false;
 	}
-	/** @type {HandleTypes|null} */
-	_handle_t=null;
-	/** @type {HandleTypes} */
-	get handle_t() {
-		if(this._handle_t===null) this._handle_t=new HandleTypes;
-		return this._handle_t;
-	}
 	/** 
 	 * @template {string} X
 	 * @template {string} U
@@ -1931,7 +1924,7 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		this.handle_t.ResponseTypes(res);
+		handle_types.ResponseTypes(res);
 	}
 	/**
 	 * @param {`https://${string}/${string}?${string}`} req_hr_t
@@ -1990,7 +1983,7 @@ class FilterHandlers {
 			try {
 				page_type_iter(ret.page);
 				this.handle_any_data(`page_type_${ret.page}`,ret);
-				this.handle_t.JsonDataResponseType(ret);
+				handle_types.JsonDataResponseType(ret);
 				let page_type=window.ytPageType;
 				switch(page_type) {
 					case void 0: return;
@@ -2557,32 +2550,7 @@ function log_page_type_change(event) {
 	});
 }
 on_yt_navigate_finish.push(log_page_type_change);
-const last_detail_val={value: {}};
 
-/**
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} obj
- * @arg {string[]} path
- * @arg {string[]} skip
- * @arg {number[]} ent_ids
- */
-function random_sometimes_break_base_0(detail,obj,path,skip=[],ent_ids=[]) {
-	last_detail_val.value=detail;
-	ent_ids;
-	if(typeof obj!=="object") return;
-	/** @type {{}} */
-	let oo=obj;
-	/** @type {{[x: string]: {}}} */
-	let idx_able=oo;
-	for(let x of Object.keys(obj)) {
-		if(skip.includes(x)) continue;
-		console.log(path.concat(x).join("."),idx_able[x]);
-		if(Math.random()<(random_factor/5)&&x in idx_able) {
-			console.log(path.concat(x).join("."),idx_able[x]);
-			debugger;
-		}
-	}
-}
 /**
  * @arg {string[]} src
  * @arg {string[]} target
@@ -2618,266 +2586,7 @@ function filter_out_keys(keys,to_remove) {
 	}
 	return ok_e;
 }
-const gen_not_want_level_1=["responseContext","contents","trackingParams","topbar"];
-/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail @arg {JsonDataResponseType} obj */
-function pb_0(detail,obj) {
-	if(obj.page==="watch") {
-		x: {
-			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
-			if(eq_keys(ok,['currentVideoEndpoint','playerOverlays','onResponseReceivedEndpoints','engagementPanels','pageVisualEffects','frameworkUpdates'])) break x;
-			debugger;
-		}
-		if(Object.keys(obj.response).length!==10) {
-			debugger;
-		}
-	}
-	if(detail.pageType==="browse") {
-		x: {
-			let ok=filter_out_keys(Object.keys(obj.response),gen_not_want_level_1);
-			if(!ok.length) break x;
-			if(eq_keys(ok,['header','onResponseReceivedActions'])) break x;
-			if(eq_keys(ok,['header','observedStateTags'])) break x;
-			if(eq_keys(ok,['header'])) break x;
-			debugger;
-		}
-	}
-}
-const gen_not_want=["page","endpoint","response","url"];
-/**
- * @arg {any} obj
- * @arg {string[]} iter_skips
- */
-function click_track_do(obj,iter_skips) {
-	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");
-		if(typeof obj.clickTrackingParams!=="string") {
-			debugger;
-		}
-	}
-}
-const gen_not_want_level_1_endpoint=["clickTrackingParams","commandMetadata"];
-/**
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {JsonDataResponseType} obj
- * @arg {["detail","response"]} path
- */
-function random_sometimes_break_0(detail,obj,path) {
-	/** @type {string[]} */
-	let iter_skips=[];
-	let ok=Object.keys(obj);
-	/** @type {string[]} */
-	let ok_e=[];
-	const gen_not_local=["expirationTime","rootVe","playerResponse","previousCsn","preconnect"];
-	for(let i=0;i<ok.length;i++) {
-		if(gen_not_want.includes(ok[i])) continue;
-		if(gen_not_local.includes(ok[i])) continue;
-		ok_e.push(ok[i]);
-	}
-	let is_this_keys_ok=get_is_ok();
-	function get_is_ok() {
-		if(!ok_e.length) return true;
-		if(eq_keys(ok_e,["reelWatchSequenceResponse","cachedReelWatchSequenceResponse"])) return true;
-		debugger;
-		return false;
-	}
-	click_track_do(obj,iter_skips);
-	if("rootVe" in obj) {
-		iter_skips.push("rootVe");
-		console.log("rootVe",obj,obj.rootVe);
-	}
-	if("page" in obj) {
-		iter_skips.push("page");
-	}
-	if("endpoint" in obj) {
-		let ok_1=filter_out_keys(Object.keys(obj.endpoint),gen_not_want_level_1_endpoint);
-		function get_is_ok() {
-			if(eq_keys(ok_1,["browseEndpoint"])) return true;
-			if(eq_keys(ok_1,["reelWatchEndpoint"])) return true;
-			if(eq_keys(ok_1,["watchEndpoint"])) return true;
-			return false;
-		}
-		if(!get_is_ok()) {
-			console.log(ok_1);
-			debugger;
-		}
-		iter_skips.push("endpoint");
-	}
-	if("response" in obj) {
-		pb_0(detail,obj);
-		iter_skips.push("response");
-	}
-	if("playerResponse" in obj) {
-		// UBlockOrigin removes this, so it is now optional
-		if("adPlacements" in obj.playerResponse&&obj.playerResponse.adPlacements!==void 0) {
-			if(obj.playerResponse.adPlacements.length>0) {
-				debugger;
-			}
-		}
-		let ok_2=Object.keys(obj.playerResponse);
-		let missing=[];
-		for(let i=0;i<ok_2.length;i++) {
-			let cur=ok_2[i];
-			// all
-			if(cur==="responseContext") continue;
-			if(cur==="playabilityStatus") continue;
-			if(cur==="streamingData") continue;
-			if(cur==="playerAds") continue;
-			if(cur==="playbackTracking") continue;
-			if(cur==="videoDetails") continue;
-			if(cur==="playerConfig") continue;
-			if(cur==="storyboards") continue;
-			if(cur==="microformat") continue;
-			if(cur==="cards") continue;
-			if(cur==="trackingParams") continue;
-			if(cur==="attestation") continue;
-			if(cur==="videoQualityPromoSupportedRenderers") continue;
-			if(cur==="adPlacements") continue;
-			if(cur==="frameworkUpdates") continue;
-			if(cur==="captions") continue;
-			if(cur==="endscreen") continue;
-			if(cur==="paidContentOverlay") continue;
-			// watch only
-			if(cur==="annotations") continue;
-			// shorts only
-			if(cur==="cacheMetadata") continue;
-			missing.push(cur);
-		}
-		switch(obj.page) {
-			case "watch": {
-				if(missing.length>0) {
-					console.log("[missing_watch]",missing);
-					debugger;
-				}
-			} break;
-			case "shorts": {
-				if(missing.length>0) {
-					console.log("[missing_shorts]",missing);
-					obj.playerResponse.cacheMetadata;
-					debugger;
-				}
-			} break;
-		}
-		iter_skips.push("playerResponse");
-	}
-	if("url" in obj) {
-		iter_skips.push("url");
-		if(typeof obj.url!=="string") {
-			debugger;
-		}
-	}
-	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");
-	}
-	if("reelWatchSequenceResponse" in obj) {
-		iter_skips.push("reelWatchSequenceResponse");
-	}
-	if("expirationTime" in obj) {
-		iter_skips.push("expirationTime");
-	}
-	if(!is_this_keys_ok) {
-		console.log(ok_e);
-		debugger;
-	}
-	random_sometimes_break_base_0(detail,obj,path,iter_skips,[0,1]);
-	if("response" in obj) {
-		return;
-	} else {
-		/** @type {{}} */
-		let c=obj;
-		if("endpoint" in c) {
-			if(typeof c.endpoint=="object"&&c.endpoint!==null) {
-				console.log(Object.keys(c.endpoint));
-			} else {
-				console.log("playerResponse",obj);
-			}
-		}
-	}
-}
-/**
- * @arg {{ commandMetadata: { webCommandMetadata?: any; }; }} obj
- */
-function on_command_meta(obj) {
-	if(Object.keys(obj.commandMetadata).length!==1) {
-		console.log("browseEndpoint_commandMetadata",obj.commandMetadata);
-	} else {
-		console.log("browse web cmd meta",obj.commandMetadata.webCommandMetadata);
-	}
-	if("webCommandMetadata" in obj.commandMetadata&&obj.commandMetadata.webCommandMetadata.webPageType!==void 0) {
-		console.log("web_page_type",obj.commandMetadata.webCommandMetadata.webPageType);
-	}
-}
-/**
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail
- * @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} obj
- * @arg {["detail","endpoint"]} path
- */
-function random_sometimes_break_1(detail,obj,path) {
-	let iter_skips=[];
-	if("commandMetadata" in obj) {
-		iter_skips.push("commandMetadata");
-		on_command_meta(obj);
-	}
-	if("watchEndpoint" in obj) {
-		iter_skips.push("watchEndpoint");
-	}
-	x: if("browseEndpoint" in obj) {
-		iter_skips.push("browseEndpoint");
-		if(Object.keys(obj).length!==3) {
-			debugger;
-		}
-		if(obj.browseEndpoint.browseId==="FEwhat_to_watch") break x;
-		if(obj.browseEndpoint.browseId==="FEsubscriptions") break x;
-		parse_browse_id(obj.browseEndpoint.browseId);
-		let ok_4=Object.keys(obj.browseEndpoint);
-		if(ok_4.length!==1) console.log("obj_browseEndpoint",obj.browseEndpoint);
-	}
-	if("reelWatchEndpoint" in obj) {
-		iter_skips.push("reelWatchEndpoint");
-		console.log("obj_reelWatchEndpoint",obj.reelWatchEndpoint);
-	}
-	if("clickTrackingParams" in obj) {
-		iter_skips.push("clickTrackingParams");
-	}
-	random_sometimes_break_base_0(detail,obj,path,iter_skips,[1,1]);
-	if("browseEndpoint" in obj) {
-		let bid=obj.browseEndpoint.browseId;
-		let wpt=obj.commandMetadata.webCommandMetadata.webPageType;
-		x: {
-			if(wpt==="WEB_PAGE_TYPE_PLAYLIST") break x;
-			if(wpt==="WEB_PAGE_TYPE_BROWSE") break x;
-			if(wpt==="WEB_PAGE_TYPE_CHANNEL") break x;
-			if(wpt==="WEB_PAGE_TYPE_SETTINGS") break x;
-			debugger;
-		}
-		function browse_with_part() {
-			let browse_part=bid.slice(2);
-			let browse_section=bid.slice(0,2);
-			console.log("show browse_section & browse_part",browse_section,browse_part);
-		}
-		/** @target_type @type {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData}  */
-		x: {
-			if(bid.startsWith("FE")) {
-				browse_with_part();
-				break x;
-			}
-			if(bid.startsWith("VL")) {
-				browse_with_part();
-				break x;
-			}
-			if(bid.startsWith("SP")) {
-				browse_with_part();
-				break x;
-			}
-			if(bid.startsWith("UC")) {
-				if(bid.length===24) break x;
-				console.log('yt_chan_id length',bid.length);
-			}
-			debugger;
-		}
-	}
-}
 
-const random_factor=0.2;
 /** @typedef {import("./support/yt_api").YtJsonRequest} YtJsonRequest */
 /** @typedef {import("./support/yt_api").YtJsonUnsupportedRequest} YtJsonUnsupportedRequest */
 /** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
@@ -2907,20 +2616,13 @@ function page_type_iter(pageType) {
 
 /** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
-	/** @type {(keyof typeof detail)[]} */
-	let ok=cast_as(Object.keys(detail));
-	for(let x of ok) {
-		switch(x) {
-			case "response": random_sometimes_break_0(detail,detail[x],["detail",x]); continue;
-			case "endpoint": random_sometimes_break_1(detail,detail[x],["detail",x]); continue;
-			case "fromHistory": if(typeof detail[x]!=="boolean") {debugger;}; continue;
-			case "navigationDoneMs": if(typeof detail[x]!=="number") {debugger;}; continue;
-			case "pageType": if(typeof detail[x]!=="string") {debugger;}; continue;
-			default:
-				console.log('detail',x,detail[x]);
-				debugger;
-		}
-	}
+	handle_types.YTNavigateFinishEventDetail(detail);
+	handle_types.response(detail.response);
+	handle_types.endpoint(detail.endpoint);
+	if(typeof detail.pageType!=="string") debugger;
+	if(typeof detail.fromHistory!=="boolean") debugger;
+	if(typeof detail.navigationDoneMs!=="number") debugger;
+	console.log('detail_len',Object.keys(detail).length);
 	page_type_iter(detail.pageType);
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
@@ -4375,7 +4077,7 @@ class HandleTypes {
 		console.log("[shorts_url]",data.url);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/ShortsResponseContent.js").ShortsResponseContent} response
+	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} response
 	 */
 	response(response) {
 		console.log(response);
@@ -4556,6 +4258,12 @@ class HandleTypes {
 	reelWatchSequenceResponse(data) {
 		console.log(data);
 	}
+	/** @param {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
+	YTNavigateFinishEventDetail(detail) {
+		detail;
+	}
 }
+
+const handle_types=new HandleTypes;
 
 main();
