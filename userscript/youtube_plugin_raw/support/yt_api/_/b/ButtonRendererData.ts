@@ -1,5 +1,5 @@
 import {Accessibility} from "../a/Accessibility.js";
-import {ContinuationCommandH} from "../c/ContinuationCommandH.js";
+import {GeneralCommand} from "../g/GeneralCommand.js";
 import {TextRuns} from "../t/TextRuns.js";
 
 export type ButtonRendererData={
@@ -12,6 +12,6 @@ export type ButtonRendererData={
 	tooltip: {};
 	trackingParams: string;
 	accessibilityData: Accessibility;
-	command?: ContinuationCommandH;
+	command?: GeneralCommand;
 	clickTrackingParams: string;
 };

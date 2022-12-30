@@ -3895,18 +3895,40 @@ class HandleTypes extends BaseService {
 			debugger;
 		} else {
 			let {style,command,text,...rest}=rest_;
-			if(command) {
-				this.command(command);
-			}
-			console.log("renderer.command",command);
-			console.log("renderer.text",text);
+			this.GeneralCommand(command);
+			this.TextRuns(text);
 			if(eq_keys(get_keys_of(rest),[])) return;
 			console.log("renderer",rest);
 			debugger;
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/c/ContinuationCommandH.js").ContinuationCommandH} obj
+	 * @param {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand | undefined} cmd
+	 */
+	GeneralCommand(cmd) {
+		if(!cmd) return;
+		console.log(cmd);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TextRuns.js").TextRuns | undefined} text
+	 */
+	TextRuns(text) {
+		if(!text) return;
+		let ok=get_keys_of(text);
+		if(!eq_keys(ok,["runs"])) {
+			debugger;
+		}
+		for(let run of text.runs) {
+			if(run.navigationEndpoint) {
+				debugger;
+			}
+			if(typeof run.text!=='string') {
+				debugger;
+			}
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj
 	 */
 	command(obj) {
 		console.log(obj);
