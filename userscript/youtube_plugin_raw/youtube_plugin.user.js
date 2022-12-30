@@ -2257,13 +2257,6 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
-	 * @param {string} api_path
-	 */
-	on_handle_api_3(res,api_path) {
-		return this.on_handle_api_4(res,api_path);
-	};
-	/**
 	 * @param {any[]} api_parts
 	 * @param {boolean} debug
 	 * @param {UrlTypes} url_type
@@ -2283,7 +2276,7 @@ class FilterHandlers {
 	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
 	 * @param {string} api_path
 	 */
-	on_handle_api_4(res,api_path) {
+	on_handle_api_3(res,api_path) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
 			case "player": this.handle_t.WatchResponsePlayer(api_path,res.json); return true;
