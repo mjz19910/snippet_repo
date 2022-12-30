@@ -7,7 +7,10 @@ export type BrowsePageResponse={
 	endpoint: BrowseEndpoint;
 	response: BrowseResponseContent;
 	url: "/";
+}|{
 	expirationTime: number;
+}|{
+	previousCsn: string;
+}|{
 	graftedVes: GraftedVeItem[];
-	previousCsn?: string;
 };

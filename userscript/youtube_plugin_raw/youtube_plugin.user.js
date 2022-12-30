@@ -1843,6 +1843,9 @@ class FilterHandlers {
 	on_initial_data(apply_args) {
 		/** @type {DataResponsePageType} */
 		let ret=Reflect.apply(...apply_args);
+		if(!("page" in ret)) {
+			return ret;
+		}
 		if(ret.response) {
 			if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 			try {
@@ -2361,8 +2364,10 @@ class YTNavigateFinishEvent {
 let on_yt_navigate_finish=[];
 
 /**
- * @arg {string[]} src
- * @arg {string[]} target
+ * @template {string} U
+ * @template {U[]} T
+ * @arg {T} src
+ * @arg {T} target
  */
 function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
@@ -3252,8 +3257,12 @@ function verify_param(param) {
 }
 
 /**
- * @arg {string[]} ok_3
- * @arg {string} arg1
+ * @template {string} C
+ * @template {string} U
+ * @template {import("./support/make/Split.js").Split<C,",">[number]} _V
+ * @template {_V extends U?U[]:never} T
+ * @arg {T} ok_3
+ * @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1
  */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
@@ -3720,11 +3729,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} context */
 	responseContext(context) {
 		let ok=Object.keys(context);
-		if(!(
-			eq_keys(ok,["serviceTrackingParams","mainAppWebResponseContext","webResponseContextExtensionData"])
-			||eq_keys(ok,["serviceTrackingParams","maxAgeSeconds","mainAppWebResponseContext","webResponseContextExtensionData"])
-			||false
-		)) debugger;
+		for(let key of ok) {key;}
 		if(context.maxAgeSeconds!==void 0) {
 			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
 		}
@@ -4121,21 +4126,54 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	/**
+	 * @param {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem[]} ves
+	 */
+	graftedVes(ves) {
+		for(let ve of ves) {
+			this.GraftedVeItem(ve);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem} item
+	 */
+	GraftedVeItem(item) {
+		console.log("csn",item.csn);
+		this.veData(item.veData);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/VeData.js").VeData} data
+	 */
+	veData(data) {
+		this.trackingParams(data.trackingParams);
+		console.log(data);
+	}
+	/**
 	 * @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data
 	 */
 	BrowsePageResponse(data) {
+		/** @type {import("./support/yt_api/_/b/GetMaybeKeys.js").GetMaybeKeys<typeof data>[]} */
+		let ok=cast_as(filter_out_keys(Object.keys(data),"page,endpoint,response,url".split(",")));
+		switch(ok[0]) {
+			case "graftedVes": break;
+		}
+		if("expirationTime" in data) {
+
+		}
+		if("graftedVes" in data) {
+			this.graftedVes(data.graftedVes);
+		}
+		if(!("page" in data)) return;
 		this.BrowseResponseContent(data.response);
 		this.endpoint(data.endpoint);
-		let ok=Object.keys(data);
-		if(has_keys(ok,"page,endpoint,response,url")) return;
+		if(eq_keys(ok,[])) return;
+		if(has_keys(ok,"expirationTime")) return;
 		console.log("[browse_response_top]",ok.join(","),data);
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} data */
 	DataResponsePageType(data) {
-		const debug=false;
+		if(!("page" in data)) return;
 		let page_type=data.page;
-		debug&&console.log("[handle_page_type] with page_type and response_type",page_type);
 		switch(data.page) {
 			case "browse": this.BrowsePageResponse(data); break;
 			case "playlist": this.PlaylistPageResponse(data); break;
@@ -4143,7 +4181,7 @@ class HandleTypes extends BaseService {
 			case "shorts": this.ShortsPageResponse(data); break;
 			case "watch": this.WatchPageResponse(data); break;
 			case "channel": this.ChannelPageResponse(data); break;
-			default: console.log("handle_page_type",page_type); debugger;
+			default: console.log("[handle_page_type] [%s]",page_type); debugger;
 		}
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} data */
