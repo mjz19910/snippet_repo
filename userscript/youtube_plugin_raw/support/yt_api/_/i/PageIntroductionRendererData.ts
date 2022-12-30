@@ -9,6 +9,5 @@ export type PageIntroductionRendererData={
 	bodyText: TextRunsSimpleT<"Download settings apply to this browser only">;
 	pageTitle: TextRunsSimpleT<"Downloads">;
 }|{
-	headerText: TextRunsSimpleT<"Control your download settings">;
-	pageTitle: TextRunsSimpleT<"Downloads">;
+	headerText: TextRunsSimpleT<"Manage what you share on YouTube">;
 };
