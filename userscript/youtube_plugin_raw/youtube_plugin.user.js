@@ -2458,68 +2458,8 @@ class FilterHandlers {
 	 * @arg {InitialDataType} data
 	 */
 	handle_page_type(data) {
-		const debug=false;
-		let page_type=data.page;
-		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type);
-		this.handle_any_data(`page_type_${page_type}`,data);
-		switch(data.page) {
-			case "browse": this.handle_t.BrowseResponse(data); break;
-			case "playlist": this.on_page_type_playlist(data); break;
-			case "settings": this.on_page_type_settings(data); break;
-			case "shorts": this.on_page_type_shorts(data); break;
-			case "watch": this.handle_t.WatchResponsePlayer(page_type,data.playerResponse); break;
-			case "channel": this.on_page_type_channel(data); break;
-			default: console.log("handle_page_type",page_type); debugger;
-		}
-	}
-	/**
-	 * @param {import("./support/yt_api/_/c/ChannelResponse.js").ChannelResponse} data
-	 */
-	on_page_type_channel(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		let up=split_string(data.url,"/");
-		let x=up[2];
-		if(!x) {
-			if(!up[1].startsWith("@")) {
-				console.log(up[1]);
-				debugger;
-			}
-		} else if(x.startsWith("UC")) {
-			let v=x.slice(2);
-			if(atob(v).length!==16) {
-				console.log("bad channel length",data.url);
-			}
-		} else {
-			console.log("bad channel",data.url);
-			debugger;
-		}
-	}
-	/**
-	 * @param {import("./support/yt_api/_/p/PlaylistResponse.js").PlaylistResponse} data
-	 */
-	on_page_type_playlist(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		console.log(data.url);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/s/SettingsResponse.js").SettingsResponse} data
-	 */
-	on_page_type_settings(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		console.log(data.url);
-		data; debugger;
-	}
-	/**
-	 * @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} data
-	 */
-	on_page_type_shorts(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		console.log(data.url);
-		data; debugger;
+		this.handle_any_data(`page_type_${data.page}`,data);
+		this.handle_t.JsonDataResponseType(data);
 	}
 	/**
 	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
@@ -4991,5 +4931,69 @@ class HandleTypes {
 		if(has_keys(ok,"page,endpoint,response,url")) return;
 		console.log("[browse_response_top]",ok.join(","),data);
 		debugger;
+	}
+	/** @param {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
+	JsonDataResponseType(data) {
+		const debug=false;
+		let page_type=data.page;
+		debug&&console.log("[handle_page_type] with page_type and response_type",page_type);
+		switch(data.page) {
+			case "browse": this.BrowseResponse(data); break;
+			case "playlist": this.on_page_type_playlist(data); break;
+			case "settings": this.on_page_type_settings(data); break;
+			case "shorts": this.on_page_type_shorts(data); break;
+			case "watch": this.WatchResponsePlayer(page_type,data.playerResponse); break;
+			case "channel": this.on_page_type_channel(data); break;
+			default: console.log("handle_page_type",page_type); debugger;
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/p/PlaylistResponse.js").PlaylistResponse} data
+	 */
+	on_page_type_playlist(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		console.log(data.url);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/SettingsResponse.js").SettingsResponse} data
+	 */
+	on_page_type_settings(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		console.log(data.url);
+		data; debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} data
+	 */
+	on_page_type_shorts(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		console.log(data.url);
+		data; debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/c/ChannelResponse.js").ChannelResponse} data
+	 */
+	on_page_type_channel(data) {
+		console.log(data.endpoint);
+		console.log(data.response);
+		let up=split_string(data.url,"/");
+		let x=up[2];
+		if(!x) {
+			if(!up[1].startsWith("@")) {
+				console.log(up[1]);
+				debugger;
+			}
+		} else if(x.startsWith("UC")) {
+			let v=x.slice(2);
+			if(atob(v).length!==16) {
+				console.log("bad channel length",data.url);
+			}
+		} else {
+			console.log("bad channel",data.url);
+			debugger;
+		}
 	}
 }
