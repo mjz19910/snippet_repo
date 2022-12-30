@@ -3866,7 +3866,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
-		let ok=get_keys_of(renderer);
 		console.log("renderer.style",renderer.style);
 		console.log("renderer.size",renderer.size);
 		console.log("renderer.isDisabled",renderer.isDisabled);
@@ -3881,7 +3880,9 @@ class HandleTypes extends BaseService {
 			console.log("renderer.icon",icon);
 			console.log("renderer.navigationEndpoint",navigationEndpoint);
 			console.log("renderer.tooltip",tooltip);
+			if(eq_keys(get_keys_of(rest),[])) return;
 			console.log("renderer",rest);
+			debugger;
 		} else {
 			let {
 				style,size,isDisabled,trackingParams,accessibilityData,
@@ -3890,11 +3891,10 @@ class HandleTypes extends BaseService {
 			}=renderer;
 			console.log("renderer.command",command);
 			console.log("renderer.text",text);
+			if(eq_keys(get_keys_of(rest),[])) return;
 			console.log("renderer",rest);
+			debugger;
 		}
-		if(eq_keys(ok,["style","size","isDisabled","text","trackingParams","accessibilityData","command"])) return;
-		console.log(ok);
-		debugger;
 	}
 	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
 	simpleMenuHeaderRenderer(renderer) {
