@@ -11,13 +11,14 @@ import {TrackingParams} from "../t/TrackingParams.js";
 import {RichThumbnail} from "../../rich/RichThumbnail.js";
 
 export interface CompactVideoRenderer extends TrackingParams {
-	accessibility: Accessibility;
+	accessibility: Accessibility<string>;
 	badges?: MetadataBadgeRenderers[];
 	channelThumbnail: ThumbnailH;
 	lengthText: SimpleTextFixmeValueNeeded;
 	longBylineText: TextRuns;
 	menu: MenuRendererH;
 	navigationEndpoint: NavigationEndpoint;
+	ownerBadges?: MetadataBadgeRenderers[];
 	publishedTimeText: SimpleTextFixmeValueNeeded;
 	richThumbnail?: RichThumbnail;
 	shortBylineText: TextRuns;
@@ -25,7 +26,7 @@ export interface CompactVideoRenderer extends TrackingParams {
 	thumbnail: ThumbnailsList;
 	thumbnailOverlays: ThumbnailOverlay[];
 	title: SimpleTextFixmeValueNeeded;
-	ownerBadges?: MetadataBadgeRenderers[];
+	trackingParams: string;
 	videoId: string;
 	viewCountText: SimpleTextFixmeValueNeeded;
 };

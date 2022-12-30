@@ -3,4 +3,5 @@ import {TrackingParams} from "../t/TrackingParams.js";
 
 export interface NotificationActionRenderer extends TrackingParams {
 	responseText: SimpleTextFixmeValueNeeded;
+	trackingParams: string;
 }

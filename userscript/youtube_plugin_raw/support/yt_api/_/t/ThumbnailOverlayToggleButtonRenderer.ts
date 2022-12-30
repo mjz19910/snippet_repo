@@ -27,4 +27,5 @@ export interface ThumbnailOverlayToggleButtonRenderer extends TrackingParams {
 	toggledServiceEndpoint?: ToggledServiceEndpoint;
 	untoggledAccessibility: Accessibility;
 	toggledAccessibility: Accessibility;
+	trackingParams: string;
 };
