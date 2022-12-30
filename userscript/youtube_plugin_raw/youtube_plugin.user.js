@@ -155,7 +155,12 @@ function overwrite_createElement(n_type,options) {
 		n_opts=options;
 	}
 	FakeIframeElementData.special_base=UU;
-	return original_document_createElement.call(this,"fake-iframe");
+	return new Proxy(original_document_createElement.call(this,n_type,options),{
+		get(...args) {
+			console.log(new Error(),args);
+			return Reflect.get(...args);
+		}
+	});
 }
 
 // spell:words monospace
