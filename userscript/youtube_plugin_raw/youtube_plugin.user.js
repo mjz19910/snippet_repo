@@ -1433,7 +1433,7 @@ function non_null(val) {
 }
 
 class FilterHandlers {
-	/** @arg {ServiceResolver<any,any>} res */
+	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.filter_handler_debug=false;
 		/**@readonly*/
@@ -2925,15 +2925,16 @@ class ServiceResolver {
 		if(!this.params) throw new Error("No service params");
 		return this.params[key];
 	}
-	/** @arg {keyof T} key */
+	/** @template {keyof T} V @arg {V} key @returns {NonNullable<this['services']>[V]} */
 	get(key) {
 		if(!this.services) throw new Error("No services");
 		return this.services[key];
 	}
 }
+/** @typedef {import("./ResolverT.js").ResolverT} ResolverT */
 async function main() {
 	await Promise.resolve();
-	/** @type {ServiceResolver<import("./Services.js").Services,{log_tracking_params:boolean;log_click_tracking_params:boolean;}>} */
+	/** @type {ResolverT} */
 	const service_resolver=new ServiceResolver;
 	const csi_service=new CsiService(service_resolver);
 	const e_catcher_service=new ECatcherService(service_resolver);
@@ -3303,7 +3304,7 @@ const general_service_state={
 	premium_membership: null,
 };
 class CsiService {
-	/** @arg {ServiceResolver<any, any>} resolver */
+	/** @arg {ResolverT} resolver */
 	constructor(resolver) {
 		this.resolver=resolver;
 	}
@@ -3368,7 +3369,7 @@ class CsiService {
 
 class ECatcherService {
 	/**
-	 * @param {ServiceResolver<any,any>} res
+	 * @param {ResolverT} res
 	 */
 	constructor(res) {
 		this.res=res;
@@ -3432,7 +3433,7 @@ class ECatcherService {
 
 class GFeedbackService {
 	/**
-	 * @param {ServiceResolver<any,any>} service_resolver
+	 * @param {ResolverT} service_resolver
 	 */
 	constructor(service_resolver) {
 		this.resolver=service_resolver;
@@ -3489,7 +3490,7 @@ class GFeedbackService {
 
 class GuidedHelpService {
 	/**
-	 * @param {ServiceResolver<any,any>} res
+	 * @param {ResolverT} res
 	 */
 	constructor(res) {
 		this.res=res;
@@ -3519,7 +3520,7 @@ class GuidedHelpService {
 
 class TrackingServices {
 	/**
-	 * @param {ServiceResolver<any,any>} res
+	 * @param {ResolverT} res
 	 */
 	constructor(res) {
 		this.res=res;
@@ -3593,7 +3594,7 @@ if(typeof exports==="object") {
 }
 
 class HandleTypes {
-	/** @arg {ServiceResolver<any,any>} res */
+	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.res=res;
 	}
