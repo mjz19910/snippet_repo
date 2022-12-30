@@ -24,4 +24,5 @@ export type WatchResponsePlayer={
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;
 	paidContentOverlay?: PaidContentOverlay;
+	annotations: {};
 };

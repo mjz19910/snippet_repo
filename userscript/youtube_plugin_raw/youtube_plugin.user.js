@@ -745,7 +745,7 @@ class ObjectInfo {
 	 * @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function]
 	 */
 	keys_of(object,filter_function) {
-		let object_keys=Object.keys(object);
+		let object_keys=get_keys_of(object);
 		if(filter_function) object_keys=object_keys.filter(filter_function);
 		return this.chunk_beg+object_keys.join(this.key_sep)+this.chunk_end;
 	}
@@ -753,10 +753,10 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 /**
  * @template {{}} T 
- * @arg {{[P in keyof T]: TypedPropertyDescriptor<T[P]>;}} obj 
- * @arg {T} _real @returns {(keyof T)[]}
+ * @arg {T} obj 
+ * @returns {(import("./support/yt_api/_/b/GetMaybeKeys.js").GetMaybeKeys<T>)[]}
  */
-function get_keys_of(obj,_real) {
+function get_keys_of(obj) {
 	let rq=Object.keys(obj);
 	/** @type {any} */
 	let ra=rq;
@@ -765,11 +765,11 @@ function get_keys_of(obj,_real) {
 /** @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
 function get_keys_of_ex(obj) {
 	let pd=Object.getOwnPropertyDescriptors(obj);
-	let l1_pk=get_keys_of(pd,obj);
+	let l1_pk=get_keys_of(pd);
 	/** @type {T} */
 	let obj_proto=Object.getPrototypeOf(obj);
 	let l2_pd=Object.getOwnPropertyDescriptors(obj_proto);
-	let l2_pk=get_keys_of(l2_pd,obj);
+	let l2_pk=get_keys_of(l2_pd);
 	let rq=l1_pk.concat(l2_pk);
 	return rq;
 }
@@ -833,18 +833,24 @@ class YtIterateTarget {
 	 */
 	appendContinuationItemsAction(state,action) {
 		debugger;
-		check_item_keys(state.path,"appendContinuationItemsAction",Object.keys(action));
+		check_item_keys(state.path,"appendContinuationItemsAction",get_keys_of(action));
 		if(state.t.AppendContinuationItemsAction(state.path,action)) return;
-		state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
+		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action.continuationItems);
+		if(filtered.length>0) {
+			action.continuationItems=filtered;
+		}
 	}
 	/**
 	 * @arg {ApiIterateState} state
 	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command
 	 */
 	reloadContinuationItemsCommand({t: state,path},command) {
-		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
+		check_item_keys(path,"reloadContinuationItemsCommand",get_keys_of(command));
 		if(state.ReloadContinuationItemsCommandData(path,command)) return;
-		state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
+		let filtered=state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command.continuationItems);
+		if(filtered.length>0) {
+			command.continuationItems=filtered;
+		}
 	}
 	/**
 	 * @arg {ApiIterateState} state
@@ -852,11 +858,11 @@ class YtIterateTarget {
 	 */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
-		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
+		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));
 		t.iteration.default_iter(state,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
-			let keys=Object.keys(item);
+			let keys=get_keys_of(item);
 			check_item_keys(path,"itemSectionRenderer.contents[]",keys);
 			for(let key of keys) {
 				let is_blacklisted=t.blacklisted_item_sections.get(key);
@@ -1035,9 +1041,9 @@ class HandleRendererContentItemArray {
 			debugger;
 		}
 		let renderer=content_item.richItemRenderer;
-		check_item_keys(path,"richItemRenderer",Object.keys(renderer));
+		check_item_keys(path,"richItemRenderer",get_keys_of(renderer));
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
-		check_item_keys(path,"richItemRenderer.content",Object.keys(renderer.content));
+		check_item_keys(path,"richItemRenderer.content",get_keys_of(renderer.content));
 		if("adSlotRenderer" in renderer.content) {
 			if(debug_flag_value) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
@@ -1074,16 +1080,15 @@ class HandleRendererContentItemArray {
 		return true;
 	}
 	/**
+	 * @template {AppendContinuationItemsAction['continuationItems']|import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData['continuationItems']} T
 	 * @arg {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
-	 * @arg {{[U in "continuationItems"|"contents"]?: import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem[]}} obj
-	 * @arg {"continuationItems"|"contents"} key
+	 * @arg {T} arr
+	 * @returns {T}
 	 */
-	replace_array(base,path,obj,key) {
-		let arr=obj[key];
-		if(!arr) return;
-		let filtered=arr.filter((content_item) => {
-			let keys=Object.keys(content_item);
+	replace_array(base,path,arr) {
+		return cast_as(arr.filter((/**@type {typeof arr[number]}*/content_item) => {
+			let keys=get_keys_of(content_item);
 			check_item_keys(path,`${path}[]`,keys);
 			if("richItemRenderer" in content_item) {
 				return this.filter_for_rich_item_renderer(path,base,content_item);
@@ -1097,10 +1102,7 @@ class HandleRendererContentItemArray {
 				return true;
 			};
 			return this.handle_rich_section_renderer(content_item);
-		});
-		if(filtered.length>0) {
-			obj[key]=filtered;
-		}
+		}));
 	}
 }
 
@@ -1116,10 +1118,10 @@ class HandleRichGridRenderer {
 	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer
 	 */
 	richGridRenderer(path,renderer) {
-		check_item_keys(path,"richGridRenderer",Object.keys(renderer));
+		check_item_keys(path,"richGridRenderer",get_keys_of(renderer));
 		if(this.debug) console.log("run handler richGridRenderer");
 		if(renderer.masthead) {
-			check_item_keys(path,"richGridRenderer.masthead",Object.keys(renderer.masthead));
+			check_item_keys(path,"richGridRenderer.masthead",get_keys_of(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				console.log("masthead",masthead);
@@ -1128,7 +1130,10 @@ class HandleRichGridRenderer {
 		}
 		if(renderer.contents) {
 			if(this.debug) console.log("on_contents",path);
-			this.rendererContentItemArray.replace_array(this,"richGridRenderer.contents",renderer,"contents");
+			let filtered=this.rendererContentItemArray.replace_array(this,"richGridRenderer.contents",renderer.contents);
+			if(filtered.length>0) {
+				renderer.contents=filtered;
+			}
 		}
 	}
 }
@@ -3606,7 +3611,7 @@ class HandleTypes extends BaseService {
 		if(data.endscreen) {
 			let elements=data.endscreen.endscreenRenderer.elements;
 			for(let element of elements) {
-				let ok_2=Object.keys(element);
+				let ok_2=get_keys_of(element);
 				x: {
 					if(ok_2[0]==="endscreenElementRenderer"&&ok_2.length===1) break x;
 					console.log("[on_page_type_watch_log_element] element ok_2 [%s]",ok_2.join(","));
@@ -3617,16 +3622,16 @@ class HandleTypes extends BaseService {
 					debugger;
 				}
 			}
-			let ok_1=Object.keys(data.endscreen);
+			let ok_1=get_keys_of(data.endscreen);
 			if(ok_1.length!==1) {
 				console.log("[on_page_type_watch_log_0] endscreen ok_1 [%s]",ok_1.join(","));
 				debugger;
 			}
-			ok_1=Object.keys(data.endscreen.endscreenRenderer);
-			if(eq_keys(ok_1,["elements","startMs","trackingParams"])) return;
-			console.log("[on_page_type_watch_log_1] endscreenRenderer ok_1 [%s]",ok_1.join(","));
+			let ok_2=get_keys_of(data.endscreen.endscreenRenderer);
+			if(eq_keys(ok_2,["elements","startMs","trackingParams"])) return;
+			console.log("[on_page_type_watch_log_1] endscreenRenderer ok_2 [%s]",ok_2.join(","));
 		}
-		let ok=Object.keys(data);
+		let ok=get_keys_of(data);
 		for(let key of ok) {
 			if(key==="responseContext") continue;
 			if(key==="playabilityStatus") continue;
@@ -3655,7 +3660,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
 	 */
 	DesktopTopbarRenderer(renderer) {
-		let ok=Object.keys(renderer.desktopTopbarRenderer);
+		let ok=get_keys_of(renderer.desktopTopbarRenderer);
 		console.log(renderer.desktopTopbarRenderer);
 		if(has_keys(ok,"logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
 		debugger;
@@ -3671,11 +3676,11 @@ class HandleTypes extends BaseService {
 	FeedTabbedHeaderRenderer(renderer) {
 		let data=renderer.feedTabbedHeaderRenderer;
 		if(
-			eq_keys(Object.keys(data),["title"])&&
+			eq_keys(get_keys_of(data),["title"])&&
 			data.title.runs.length===1&&
 			this.valid_titles_for_tabbed_header_renderer.includes(data.title.runs[0].text)
 		) return;
-		if(eq_keys(Object.keys(data),["title"])&&data.title.runs.length===1) {
+		if(eq_keys(get_keys_of(data),["title"])&&data.title.runs.length===1) {
 			console.log("[feed_tabbed_header_new_title]",data.title.runs[0].text);
 		} else {
 			console.log(renderer.feedTabbedHeaderRenderer);
@@ -3686,8 +3691,8 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
 	 */
 	handleEntityBatchUpdate(obj) {
-		if(Object.keys(obj)[0]!=="entityBatchUpdate") {
-			console.log("[entity_batch_invalid]",obj);
+		if(get_keys_of(obj)[0]!=="entityBatchUpdate") {
+			console.log("[entity_batch_invalid]",obj);get_keys_of
 			return;
 		}
 		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
@@ -3701,7 +3706,7 @@ class HandleTypes extends BaseService {
 			switch(mut.type) {
 				case "ENTITY_MUTATION_TYPE_DELETE": {
 					console.log("[mut_del] ek",mut.entityKey);
-					if(eq_keys(Object.keys(mut.options),["persistenceOption"])) {
+					if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
 						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
 					} else {
 						debugger;
@@ -3728,7 +3733,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} context */
 	responseContext(context) {
-		let ok=Object.keys(context);
+		let ok=get_keys_of(context);
 		for(let key of ok) {key;}
 		if(context.maxAgeSeconds!==void 0) {
 			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
@@ -3763,7 +3768,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data
 	 */
 	PageIntroductionRendererData(data) {
-		let ok=Object.keys(data);
+		let ok=get_keys_of(data);
 		if(!has_keys(ok,"headerText,bodyText,pageTitle,headerIcon")) {
 			debugger;
 		}
@@ -3781,7 +3786,7 @@ class HandleTypes extends BaseService {
 		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
-			let ok_first=Object.keys(content_item)[0];
+			let ok_first=get_keys_of(content_item)[0];
 			if("playlistVideoListRenderer" in content_item) {
 				this.playlistVideoListRenderer(content_item);
 			} else if("pageIntroductionRenderer" in content_item) {
@@ -3833,7 +3838,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
 	 */
 	twoColumnBrowseResultsRenderer(renderer) {
-		if(Object.keys(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
+		if(get_keys_of(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
 			console.log("[handler_invalid]",renderer);
 			return;
 		}
@@ -3847,7 +3852,7 @@ class HandleTypes extends BaseService {
 	 */
 	BrowseResponseContentContents(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
-		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=="twoColumnBrowseResultsRenderer") {
+		if(get_keys_of(contents).length!==1||get_keys_of(contents)[0]!=="twoColumnBrowseResultsRenderer") {
 			console.log("[on_browse_response_contents]",contents);
 		}
 	}
@@ -3885,7 +3890,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
 	 */
 	adsControlFlowOpportunityReceivedCommand(command) {
-		let ok=filter_out_keys(Object.keys(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
+		let ok=filter_out_keys(get_keys_of(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
 		if("adSlotAndLayoutMetadata" in command) {
 			for(let item of command.adSlotAndLayoutMetadata) {
 				this.adLayoutMetadata(item.adLayoutMetadata);
@@ -3949,7 +3954,8 @@ class HandleTypes extends BaseService {
 		if(data.observedStateTags) {
 			this.observedStateTags(data.observedStateTags);
 		}
-		let ok=Object.keys(data);
+		let ok=get_keys_of(data);
+		/** @type {string[]} */
 		let ok_miss=[];
 		for(let k of ok) {
 			if(k==="responseContext") continue;
@@ -3961,6 +3967,7 @@ class HandleTypes extends BaseService {
 			if(k==="onResponseReceivedActions") continue;
 			if(k==="frameworkUpdates") continue;
 			if(k==="observedStateTags") continue;
+			assert_is_never(k);
 			ok_miss.push(k);
 		}
 		if(ok_miss.length>0) {
@@ -3972,7 +3979,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
 	 */
 	buttonRenderer(renderer) {
-		let ok=Object.keys(renderer);
+		let ok=get_keys_of(renderer);
 		console.log("renderer.style",renderer.style);
 		console.log("renderer.size",renderer.size);
 		console.log("renderer.isDisabled",renderer.isDisabled);
@@ -4002,7 +4009,7 @@ class HandleTypes extends BaseService {
 		} else {
 			debugger;
 		}
-		let ok=Object.keys(header);
+		let ok=get_keys_of(header);
 		console.log("header keys",ok);
 	}
 	/**
@@ -4010,7 +4017,7 @@ class HandleTypes extends BaseService {
 	 */
 	multiPageMenuRenderer(renderer) {
 		this.header(renderer.header);
-		let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
+		let ok=filter_out_keys(get_keys_of(renderer),"header,sections,trackingParams".split(","));
 		if(eq_keys(ok,[])) return;
 		if(eq_keys(ok,["style"])) return;
 		debugger;
@@ -4019,7 +4026,7 @@ class HandleTypes extends BaseService {
 	 * @arg {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
 	 */
 	guideSubscriptionsSectionRenderer(desc) {
-		let ok=Object.keys(desc.item);
+		let ok=get_keys_of(desc.item);
 		/** @type {keyof typeof desc["item"]} */
 		let fk=cast_as(ok[0]);
 		let {[fk]: first}=desc.item;
@@ -4031,7 +4038,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item
 	 */
 	GuideItemType(item) {
-		let ok=Object.keys(item);
+		let ok=get_keys_of(item);
 		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
 		let key=cast_as(ok[0]);
 		if(!key) {
@@ -4048,7 +4055,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GuideSectionRendererDataBox} box */
 	guideSectionRenderer(box) {
-		let ok=Object.keys(box.value);
+		let ok=get_keys_of(box.value);
 		/** @type {keyof typeof box["value"]} */
 		let fk=cast_as(ok[0]);
 		let {[fk]: first}=box.value;
@@ -4109,8 +4116,8 @@ class HandleTypes extends BaseService {
 		if("params" in endpoint) {
 			console.log("[browse_params] [%s]",endpoint.params);
 		}
-		if(eq_keys(Object.keys(endpoint),["browseId"])) return;
-		if(has_keys(Object.keys(endpoint),"browseId,params")) return;
+		if(eq_keys(get_keys_of(endpoint),["browseId"])) return;
+		if(has_keys(get_keys_of(endpoint),"browseId,params")) return;
 	}
 	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
@@ -4119,7 +4126,7 @@ class HandleTypes extends BaseService {
 			case "CHANNEL": break;
 			default: console.log("[endscreen_element]",renderer.style); debugger;
 		}
-		let ok_3=filter_out_keys(Object.keys(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
+		let ok_3=filter_out_keys(get_keys_of(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
 		if(has_keys(ok_3,"thumbnailOverlays")) return;
 		if(has_keys(ok_3,"icon,callToAction,dismiss,hovercardButton,isSubscribe")) return;
 		console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
@@ -4151,8 +4158,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data
 	 */
 	BrowsePageResponse(data) {
-		/** @type {import("./support/yt_api/_/b/GetMaybeKeys.js").GetMaybeKeys<typeof data>[]} */
-		let ok=cast_as(filter_out_keys(Object.keys(data),"page,endpoint,response,url".split(",")));
+		let ok=cast_as(filter_out_keys(get_keys_of(data),"page,endpoint,response,url".split(",")));
 		switch(ok[0]) {
 			case "graftedVes": break;
 		}
@@ -4224,7 +4230,7 @@ class HandleTypes extends BaseService {
 			} break;
 			default: debugger;
 		}
-		if(Object.keys(data).length!==4) {
+		if(get_keys_of(data).length!==4) {
 			debugger;
 		}
 	}
@@ -4316,7 +4322,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/_/OpenPopupActionItem.js").OpenPopupActionItem} action */
 	OpenPopupActionItem(action) {
-		let ok_1=Object.keys(action);
+		let ok_1=get_keys_of(action);
 		if("openPopupAction" in action) {
 			switch(action.openPopupAction.popupType) {
 				case "DROPDOWN": {
@@ -4340,7 +4346,7 @@ class HandleTypes extends BaseService {
 		for(let action of res.json.actions) {
 			this.OpenPopupActionItem(action);
 		}
-		let ok=Object.keys(res.json);
+		let ok=get_keys_of(res.json);
 		if(eq_keys(ok,["responseContext","actions","trackingParams"])) return;
 		console.log(ok);
 		debugger;
@@ -4349,7 +4355,7 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
 	 */
 	AttGetV(data) {
-		let ok=Object.keys(data);
+		let ok=get_keys_of(data);
 		if(eq_keys(ok,["responseContext","challenge","bgChallenge"])) return;
 		// spell:disable-next-line
 		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
@@ -4376,7 +4382,7 @@ class HandleTypes extends BaseService {
 		for(let item of guide.items) {
 			this.GuideItemType(item);
 		}
-		let ok=Object.keys(guide);
+		let ok=get_keys_of(guide);
 		let ok_res=false;
 		if(eq_keys(ok,["responseContext","items","trackingParams"])) ok_res=true;
 		if(ok_res) return;
@@ -4435,7 +4441,7 @@ class HandleTypes extends BaseService {
 		if(typeof detail.pageType!=="string") debugger;
 		if(typeof detail.fromHistory!=="boolean") debugger;
 		if(typeof detail.navigationDoneMs!=="number") debugger;
-		console.log("detail_len",Object.keys(detail).length);
+		console.log("detail_len",get_keys_of(detail).length);
 		page_type_iter(detail.pageType);
 		if(last_page_type!==detail.pageType) {
 			last_page_type=detail.pageType;
@@ -4469,14 +4475,14 @@ class HandleTypes extends BaseService {
 	 */
 	settingsOptionsRenderer(renderer) {
 		let data=renderer.settingsOptionsRenderer;
-		if(Object.keys(data).length!==2) {
+		if(get_keys_of(data).length!==2) {
 			debugger;
 		}
 		if(data.options) this.options(data.options);
 		let str=stringify_text_runs(data.title);
 		if(typeof str!=="string") debugger;
 		if(this.r.get_param("noisy_logging")) console.log(data);
-		if(Object.keys(renderer).length!==1) {
+		if(get_keys_of(renderer).length!==1) {
 			debugger;
 		}
 	}

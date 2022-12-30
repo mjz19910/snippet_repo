@@ -1,7 +1,7 @@
 import {WatchNextItem} from "./WatchNextItem";
 
 
-export interface WatchNextContinuationAction {
+export type WatchNextContinuationAction={
 	targetId: "watch-next-feed";
 	continuationItems: WatchNextItem[];
-}
+};
