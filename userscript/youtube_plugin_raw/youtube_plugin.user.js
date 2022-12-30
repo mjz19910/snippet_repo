@@ -2232,8 +2232,7 @@ class FilterHandlers {
 		}
 		console.log("[log_get_res_data]",target,json); debugger; throw new Error("Stop");
 	}
-	/** @typedef {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} responseTypes */
-	/** @arg {responseTypes} input @arg {string|URL|Request} request @arg {URL} parsed_url */
+	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} input @arg {string|URL|Request} request @arg {URL} parsed_url */
 	on_json_type(input,request,parsed_url) {
 		try {
 			on_json_request({
@@ -3098,6 +3097,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			// watch only
 			if(cur==="annotations") continue;
 			// shorts only
+			if(cur==="cacheMetadata") continue;
 			missing.push(cur);
 		}
 		switch(obj.page) {
@@ -3110,6 +3110,7 @@ function random_sometimes_break_0(detail,obj,path) {
 			case "shorts": {
 				if(missing.length>0) {
 					console.log("[missing_shorts]",missing);
+					obj.playerResponse.cacheMetadata;
 					debugger;
 				}
 			} break;

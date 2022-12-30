@@ -1,8 +1,8 @@
-import {StreamingData} from "../../../../StreamingData";
-import {PlaybackTracking} from "../../../../PlaybackTracking";
-import {VideoDetails} from "../../../../VideoDetails";
-import {FrameworkUpdates} from "../../../../FrameworkUpdates";
-import {CaptionsRenderer} from "../../_/c/CaptionsRenderer";
+import {CaptionsRenderer} from "../c/CaptionsRenderer.js";
+import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
+import {PlaybackTracking} from "../p/PlaybackTracking.js";
+import {VideoDetails} from "../v/VideoDetails.js";
+import {StreamingData} from "./StreamingData.js";
 
 export type ShortsResponsePlayer={
 	responseContext: {};
@@ -26,4 +26,7 @@ export type ShortsResponsePlayer={
 		videoQualityPromoRenderer: {};
 	};
 	frameworkUpdates: FrameworkUpdates;
+	cacheMetadata: {
+		isCacheHit: boolean;
+	};
 };
