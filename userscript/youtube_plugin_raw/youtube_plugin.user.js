@@ -4096,7 +4096,12 @@ class HandleTypes {
 			case 2: switch(split_parts[1]) {
 				case "account": break;
 				case "account_notifications": break;
-				default: this.on_new_page_url(data.url); break;
+				case "account_privacy": break;
+				default: {
+					/** @type {never} */
+					let never_part=split_parts[1]; never_part;
+					this.on_new_page_url(data.url);
+				} break;
 			} break;
 			default: debugger;
 		}
