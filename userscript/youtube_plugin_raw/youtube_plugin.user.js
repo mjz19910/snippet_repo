@@ -4541,42 +4541,28 @@ class ECatcherService {
 
 const e_catcher_service=new ECatcherService;
 
-class TrackingServices {
-	/**
-	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
-	 */
-	on_csi_service(service) {
-		csi_service.on_params(service.params);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
-	 */
-	on_e_catcher_service(service) {
-		e_catcher_service.on_params(service.params);
-	}
-	g_feedback_service={
+class GFeedbackService {
+	data={
 		/** @type {number[]|null} */
 		e: null,
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
-	};
-	/**
-	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
-	 */
-	on_g_feedback_service(service) {
-		for(let param of service.params) {
+	}
+	/** @param {import("./support/yt_api/_/g/GFeedbackServiceType.js").GFeedbackServiceType} params */
+	on_params(params) {
+		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
 				case "browse_id": parse_browse_id(param.value); break;
 				case "context": {
 					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
-					this.g_feedback_service.context=param.value;
+					this.data.context=param.value;
 				} break;
 				case "e": {
 					/** @type {number[]} */
 					let new_expected=[];
-					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
-					this.g_feedback_service.e.forEach(e => {
+					this.data.e=param.value.split(",").map(e => parseInt(e,10));
+					this.data.e.forEach(e => {
 						for(let known of e_catcher_service.data.expected_client_values.fexp) {
 							if(known.includes(e)) return;
 						}
@@ -4603,6 +4589,35 @@ class TrackingServices {
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
+	}
+}
+
+const g_feedback_service=new GFeedbackService
+
+class TrackingServices {
+	/**
+	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
+	 */
+	on_csi_service(service) {
+		csi_service.on_params(service.params);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 */
+	on_e_catcher_service(service) {
+		e_catcher_service.on_params(service.params);
+	}
+	g_feedback_service={
+		/** @type {number[]|null} */
+		e: null,
+		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
+		context: null,
+	};
+	/**
+	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
+	 */
+	on_g_feedback_service(service) {
+		g_feedback_service.on_params(service.params);
 	}
 	guided_help_service={
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
