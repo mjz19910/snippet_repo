@@ -3907,11 +3907,30 @@ class HandleTypes extends BaseService {
 	 */
 	GeneralCommand(cmd) {
 		if(!cmd) return;
-		console.log(cmd);
+		let {clickTrackingParams: ct,commandMetadata: md,continuationCommand: cc,signalServiceEndpoint: ss,...rest}=cmd;
+		this.clickTrackingParams(ct);
+		this.commandMetadata(md);
+		if(cc)this.continuationCommand(cc);
+		if(ss)this.signalServiceEndpoint(ss);
+		if(eq_keys(get_keys_of(rest),[])) return;
+		console.log(rest);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/t/TextRuns.js").TextRuns | undefined} text
+	 * @param {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpoint} ep
 	 */
+	signalServiceEndpoint(ep) {
+		for(let action of ep.actions) {
+			console.log(action);
+		}
+		if(ep.signal!=="CLIENT_SIGNAL") {
+			console.log("[new_signal]",ep.signal);
+		}
+	}
+	/** @param {import("./support/yt_api/_/c/ContinuationCommand.js").ContinuationCommand} cmd */
+	continuationCommand(cmd) {
+		console.log(cmd);
+	}
+	/** @param {import("./support/yt_api/_/t/TextRuns.js").TextRuns | undefined} text */
 	TextRuns(text) {
 		if(!text) return;
 		let ok=get_keys_of(text);
@@ -3927,9 +3946,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj
-	 */
+	/** @param {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj */
 	command(obj) {
 		console.log(obj);
 	}
@@ -3959,14 +3976,13 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok,["style"])) return;
 		debugger;
 	}
-	/** @arg {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc */
-	guideSubscriptionsSectionRenderer(desc) {
-		let ok=get_keys_of(desc.item);
-		/** @type {keyof typeof desc["item"]} */
-		let fk=cast_as(ok[0]);
-		let {[fk]: first}=desc.item;
+	/** @arg {import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData} item */
+	guideSubscriptionsSectionRenderer(item) {
+		let ok=get_keys_of(item);
+		let fk=ok[0];
+		let {[ok[0]]: first}=item;
 		if(eq_keys(ok,["sort","items","trackingParams","formattedTitle","handlerDatas"])) return;
-		console.log(desc.key,ok,[fk,first],desc.item);
+		console.log("guideSubscriptionsSectionRenderer",ok,[fk,first],item);
 	}
 	/** @typedef {{type: "guideSectionRenderer", value: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData}} GuideSectionRendererDataBox */
 	/** @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item */
@@ -3982,7 +3998,7 @@ class HandleTypes extends BaseService {
 				let data=item.guideSectionRenderer;
 				this.guideSectionRenderer({type: key,value: data});
 			} break;
-			case "guideSubscriptionsSectionRenderer": if(key in item) this.guideSubscriptionsSectionRenderer({key,item: item[key]}); break;
+			case "guideSubscriptionsSectionRenderer": if(key in item) this.guideSubscriptionsSectionRenderer(item[key]); break;
 			default: return;
 		}
 	}
@@ -4024,6 +4040,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data */
 	commandMetadata(data) {
+		if(!("webPageType" in data.webCommandMetadata)) return;
 		switch(data.webCommandMetadata.webPageType) {
 			case "WEB_PAGE_TYPE_BROWSE": break;
 			case "WEB_PAGE_TYPE_CHANNEL": break;
@@ -4402,8 +4419,17 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/i/AccountLinkProviderKey.js").AccountLinkProviderKey} obj
 	 */
 	providerKey(obj) {
-		const {id,subject}=obj;
-		console.log("[provider_key] id,subject",id,subject);
+		if(obj.id==="gpg"&&obj.subject!=="all") {
+			let gpg_id=parseInt(obj.subject,10);
+			if(Number.isNaN(gpg_id)) {
+				debugger;
+			}
+			return;
+		}
+		const {id,subject,...rest}=obj;
+		if(subject!=='all') debugger;
+		if(typeof id!=="string") debugger;
+		if(eq_keys(get_keys_of(rest),[])) return;
 		console.log(Object.keys(obj));
 	}
 	/**
