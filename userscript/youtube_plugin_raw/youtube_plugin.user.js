@@ -3309,15 +3309,19 @@ const general_service_state={
 	/** @type {"non_member"|null} */
 	premium_membership: null,
 };
-class CsiService {
+
+class BaseService {
 	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.res=res;
 	}
 	get r() {
-		if(this.res.value===null) throw new Error();
+		if(!this.res.value) throw 1;
 		return this.res.value;
 	}
+}
+
+class CsiService extends BaseService {
 	data={
 		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
 		yt_fn: null,
@@ -3377,13 +3381,7 @@ class CsiService {
 	}
 }
 
-class ECatcherService {
-	/**
-	 * @param {ResolverT} res
-	 */
-	constructor(res) {
-		this.res=res;
-	}
+class ECatcherService extends BaseService {
 	data={
 		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
 		client: null,
@@ -3441,17 +3439,7 @@ class ECatcherService {
 	}
 }
 
-class GFeedbackService {
-	/**
-	 * @param {ResolverT} service_resolver
-	 */
-	constructor(service_resolver) {
-		this.res=service_resolver;
-	}
-	get r() {
-		if(!this.res.value) throw 1;
-		return this.res.value;
-	}
+class GFeedbackService extends BaseService {
 	data={
 		/** @type {number[]|null} */
 		e: null,
@@ -3502,13 +3490,7 @@ class GFeedbackService {
 	}
 }
 
-class GuidedHelpService {
-	/**
-	 * @param {ResolverT} res
-	 */
-	constructor(res) {
-		this.res=res;
-	}
+class GuidedHelpService extends BaseService {
 	data={
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
@@ -3532,17 +3514,7 @@ class GuidedHelpService {
 }
 
 
-class TrackingServices {
-	/**
-	 * @param {ResolverT} res
-	 */
-	constructor(res) {
-		this._resolver=res;
-	}
-	get r() {
-		if(!this._resolver.value) throw 1;
-		return this._resolver.value;
-	}
+class TrackingServices extends BaseService {
 	/**
 	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
 	 */
@@ -3611,16 +3583,7 @@ if(typeof exports==="object") {
 	exports.ServiceResolver=ServiceResolver;
 }
 
-class HandleTypes {
-	/** @arg {ResolverT} res */
-	constructor(res) {
-		this.res=res;
-	}
-	
-	get r() {
-		if(!this.res.value) throw 1;
-		return this.res.value;
-	}
+class HandleTypes extends BaseService {
 	/**
 	 * @param {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
 	 */
