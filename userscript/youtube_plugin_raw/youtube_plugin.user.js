@@ -3876,6 +3876,9 @@ class HandleTypes extends BaseService {
 			console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
 			console.log("renderer.tooltip",renderer.tooltip);
 			console.log("renderer.accessibilityData",renderer.accessibilityData);
+		} else {
+			renderer;
+			debugger;
 		}
 		if(eq_keys(ok,["style","size","isDisabled","text","trackingParams","accessibilityData","command"])) return;
 		console.log(ok);

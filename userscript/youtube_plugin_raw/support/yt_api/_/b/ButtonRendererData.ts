@@ -4,9 +4,10 @@ import {TextRuns} from "../t/TextRuns.js";
 export type ButtonRendererData={
 	style: "STYLE_SUGGESTIVE";
 	size: "SIZE_DEFAULT";
-	trackingParams: string;
 	isDisabled: boolean;
 	text: TextRuns;
+	trackingParams: string;
+	accessibilityData: {};
 	command: ContinuationCommandH;
 }|{
 	style: "STYLE_DEFAULT";
