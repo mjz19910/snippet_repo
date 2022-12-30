@@ -159,7 +159,17 @@ function inject_appendChild(node) {
 	}
 	return add_inject_backup(cast_as(this)).b_inject_appendChild(node);
 }
-
+Node.prototype.removeChild=new Proxy(Node.prototype.removeChild, {
+	apply(...args) {
+		let [t_param,thisArg,argArray]=args;
+		for(let idx in argArray) {
+			if(real_element_map.has(argArray[idx])) {
+				argArray[idx]=real_element_map.get(argArray[idx]);
+			}
+		}
+		return Reflect.apply(t_param,thisArg,argArray);
+	}
+})
 /**
  * @this {Document}
  * @arg {string} n_type
@@ -4664,10 +4674,14 @@ class HandleTypes {
 			}
 		}
 	}
-	/** @param {{}} tags */
+	/** @param {import("./support/yt_api/_/b/BrowseResponseContent.js").StateTagItem[]} tags */
 	observedStateTags(tags) {
-		console.log(tags);
-		debugger;
+		for(let tag of tags) {
+			switch(tag.instruction) {
+				case "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY": break;
+				default: console.log(tag); debugger;
+			};
+		}
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
@@ -4686,7 +4700,7 @@ class HandleTypes {
 		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
 		if(typeof data.trackingParams!=="string") debugger;
 		if(data.observedStateTags) {
-			this.observedStateTags(data.observedStateTags)
+			this.observedStateTags(data.observedStateTags);
 		}
 		let ok=Object.keys(data);
 		let ok_miss=[];
