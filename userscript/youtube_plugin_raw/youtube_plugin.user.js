@@ -1280,7 +1280,7 @@ class YtIterateTarget {
 	 * @arg {ApiIterateState} state
 	 * @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer
 	 */
-	itemSectionRenderer(state,renderer) {
+	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",Object.keys(renderer));
 		t.iteration.default_iter(state,renderer);
@@ -1649,26 +1649,6 @@ class Base64Binary {
 const base64_dec=new Base64Binary();
 
 class HandlerBase {
-	/**
-	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
-	 */
-	adsControlFlowOpportunityReceivedCommand(command) {
-		let ok=filter_out_keys(Object.keys(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
-		if("adSlotAndLayoutMetadata" in command) {
-			for(let item of command.adSlotAndLayoutMetadata) {
-				this.adLayoutMetadata(item.adLayoutMetadata);
-				this.adSlotMetadata(item.adSlotMetadata);
-			}
-		}
-		if(eq_keys(ok,[])||eq_keys(ok,["adSlotAndLayoutMetadata"])) {
-			console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
-			console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
-			if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
-		} else {
-			console.log("[%s] %o",ok.join(","),command);
-			debugger;
-		}
-	}
 	decode_protobuf=function make() {
 		let bigint_val_32=new Uint32Array(2);
 		let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
@@ -1795,207 +1775,6 @@ class HandlerBase {
 			};
 		};
 	}();
-	/**
-	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
-	 */
-	adLayoutMetadata(metadata) {
-		let t=this;
-		/**
-		 * @param {string} str
-		 */
-		function decode_b64_proto_obj(str) {
-			return decode_protobuf(str);
-		}
-		/** @template T @arg {T|undefined} val @returns {T} */
-		function non_null(val) {
-			if(val===void 0) throw new Error();
-			return val;
-		}
-		/**
-		 * @param {string} str
-		 */
-		function decode_protobuf(str) {
-			let buffer=base64_dec.decodeArrayBuffer(str);
-			/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
-			let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
-			let loop_count=0;
-			/** @type {[number,number,(number | bigint)[]][]} */
-			let data=[];
-			let mode="initial";
-			let mode_stack=[];
-			let reader=new t.decode_protobuf.MyReader(buffer);
-			/** @type {[offset: number,length: number][]} */
-			let stack=[[0,reader.len]];
-			x: for(;loop_count<15;loop_count++) {
-				switch(mode) {
-					case "initial": break;
-					case "DateTime": break;
-				}
-				let [cur_off,cur_len]=non_null(stack.at(-1));
-				console.log('off',cur_len,cur_off);
-				if(reader.pos>=cur_off+cur_len) {
-					let mode_=mode_stack.pop();
-					if(!mode_) {
-						console.log("exit, mode stack empty and at end");
-						break x;
-					}
-					mode=mode_;
-					stack.pop();
-					continue x;
-				}
-				let cur_byte=reader.uint32();
-				let wireType=cur_byte&7;
-				let fieldId=cur_byte>>>3;
-				/** @type {(number|bigint)[]} */
-				let first_num=[];
-				console.log("field",fieldId,"type",wireType);
-				y: switch(wireType) {
-					case 0:
-						if(mode==="DateTime") {
-							switch(fieldId) {
-								case 1: {
-									let f_ty=expected_fields_date_time[0];
-									if(f_ty[1]!=="uint64") throw new Error();
-									first_num.push(reader.uint64());
-									console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
-									break y;
-								}
-								default: {
-									console.log("unexpected field");
-									break x;
-								}
-							}
-						}
-						first_num.push(reader.uint32());
-						console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
-						break;
-					case 2: if(mode==="initial") {
-						mode_stack.push(mode);
-						let next_len=reader.uint32();
-						stack.push([reader.pos,next_len]);
-						mode="DateTime";
-						continue x;
-					} else {
-						console.log("mode 2 and not able to handle it");
-						break x;
-					}
-					case 3: break;
-					case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
-					case 5: first_num.push(reader.fixed32()); break;
-					default: break x;
-				}
-				data.push([fieldId,wireType,first_num]);
-			}
-			let [first,...rest]=data;
-			let [fieldId,wireType,[first_num,...first_left]]=first;
-			/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number]} */
-			function filter_rest(e) {
-				let [fieldId,wireType,[num,...first_left]]=e;
-				if(first_left.length>1) throw new Error("Not decoded");
-				return [fieldId,wireType,num];
-			}
-			return {
-				first_w: wireType,
-				first_f: fieldId,
-				first_num,
-				first_left,
-				rest: rest.map(filter_rest),
-			};
-		}
-		for(let item of metadata) {
-			switch(item.layoutType) {
-				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
-				default: debugger;
-			}
-			let try_proto_dec=false;
-			if(try_proto_dec) {
-				let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
-				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
-				console.log("log data entry rest",...dec.rest);
-			}
-			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
-		}
-	}
-	/**
-	 * @param {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata
-	 */
-	adSlotMetadata(metadata) {
-		console.log("ad slot meta pos",metadata.slotType);
-		switch(metadata.slotType) {
-			case "SLOT_TYPE_IN_FEED": break;
-			default: debugger;
-		}
-		console.log("ad slot meta slot_id [%s]",metadata.slotId);
-		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
-	}
-	/**
-	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
-	 */
-	playlistVideoListRenderer(renderer) {
-		let data=renderer.playlistVideoListRenderer;
-		console.log("playlist",data.playlistId);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
-	 */
-	itemSectionRenderer(renderer) {
-		let data=renderer.itemSectionRenderer;
-		console.log("tp",data.trackingParams);
-		let contents=data.contents;
-		for(let content_item of contents) {
-			let ok_first=Object.keys(content_item)[0];
-			if("playlistVideoListRenderer" in content_item) {
-				this.playlistVideoListRenderer(content_item);
-			} else if("pageIntroductionRenderer" in content_item) {
-				this.pageIntroductionRenderer(content_item);
-			} else if("settingsOptionsRenderer" in content_item) {
-				console.log("[todo_handler]",content_item);
-			} else if("connectedAppRenderer" in content_item) {
-				console.log("[todo_handler]",content_item);
-			} else {
-				console.log("[need_section_handler][%s]",ok_first);
-				debugger;
-			}
-		}
-	}
-	/**
-	 * @param {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
-	 */
-	pageIntroductionRenderer(item) {
-		let data=item.pageIntroductionRenderer;
-		console.log("pageIntroductionRenderer",data);
-	}
-	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} renderer */
-	sectionListRenderer(renderer) {
-		let data=renderer.sectionListRenderer;
-		console.log("tp",data.trackingParams);
-		let contents=data.contents;
-		for(let content_item of contents) {
-			this.itemSectionRenderer(content_item);
-		}
-	}
-	/**
-	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
-	 */
-	tabRenderer(renderer) {
-		console.log("tp",renderer.trackingParams);
-		if("sectionListRenderer" in renderer.content) {
-			this.sectionListRenderer(renderer.content);
-		};
-	}
-	/**
-	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
-	 */
-	twoColumnBrowseResultsRenderer(renderer) {
-		if(Object.keys(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
-			console.log("[handler_invalid]", renderer);
-			return;
-		}
-		let data=renderer.twoColumnBrowseResultsRenderer;
-		for(let tab of data.tabs) {
-			this.tabRenderer(tab.tabRenderer);
-		}
-	}
 	/**
 	 * @param {string} path
 	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
@@ -2250,44 +2029,12 @@ class FilterHandlers {
 		return this._handle_t;
 	}
 	/**
-	 * @param {string} path
-	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
-	 */
-	on_browse_response_contents(path,contents) {
-		this.handle.twoColumnBrowseResultsRenderer(contents);
-		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=='twoColumnBrowseResultsRenderer') {
-			console.log(path,'contents',contents);
-		}
-	}
-	/**
 	 * @arg {string} path
 	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
 	 */
 	on_page_type_browse_response(path,data) {
-		console.log("tp",data.trackingParams);
-		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
-		if(data.contents) {
-			this.on_browse_response_contents(path, data.contents);
-		}
-		if(data.frameworkUpdates) {
-			this.handle_t.handleEntityBatchUpdate(data.frameworkUpdates);
-		}
-		this.handle_t.FeedTabbedHeaderRenderer(data.header);
-		for(let action of data.onResponseReceivedActions) {
-			if("adsControlFlowOpportunityReceivedCommand" in action) {
-				this.handle.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
-			} else if("reloadContinuationItemsCommand" in action) {
-				action;
-			} else {
-				debugger;
-			}
-		}
-		if(data.topbar) this.handle_t.DesktopTopbarRenderer(data.topbar);
-		if(typeof data.trackingParams!=="string") debugger;
-		let ok=Object.keys(data);
-		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
-		console.log("[browse_page_context]",ok.join(","),data);
-		debugger;
+		path;
+		this.handle_t.BrowseResponseContent(data);
 	}
 	/**
 	 * @param {string} path
@@ -2756,11 +2503,10 @@ class FilterHandlers {
 		console.log(data);
 		debugger;
 	}
-	/** @typedef {import("./support/yt_api/_/g/GeneralContext.js").AgeingContext} AgeingContext */
 	/** @typedef { import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
 	 * @arg {keyof FilterHandlers|"general_context"} _from
-	 * @arg {GeneralContext|AgeingContext} context
+	 * @arg {GeneralContext} context
 	 */
 	on_response_context(_from,context) {
 		let ok=Object.keys(context);
@@ -2770,18 +2516,18 @@ class FilterHandlers {
 			||false
 		)) debugger;
 		if("maxAgeSeconds" in context) {
-			this.general_service_state.maxAgeSeconds=context.maxAgeSeconds;
+			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
 		}
 		let data_sync_id=context.mainAppWebResponseContext.datasyncId;
-		this.general_service_state.mainAppWebResponseContext??={
+		general_service_state.mainAppWebResponseContext??={
 			datasyncId: data_sync_id.split("|").map(e => e===""? null:e).map(e => {
 				if(e===null) return e;
 				return BigInt(e);
 			})
 		};
-		if(this.filter_handler_debug) console.log(this.general_service_state.mainAppWebResponseContext.datasyncId);
+		if(this.filter_handler_debug) console.log(general_service_state.mainAppWebResponseContext.datasyncId);
 		if(context.mainAppWebResponseContext.loggedOut) {
-			this.general_service_state.logged_in=false;
+			general_service_state.logged_in=false;
 		}
 		this.set_service_params(context.serviceTrackingParams);
 	}
@@ -2878,8 +2624,8 @@ class FilterHandlers {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "logged_in": {
-					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
-					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
+					if(param.value=='0') {general_service_state.logged_in=false; break;}
+					if(param.value=='1') {general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
 				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.guided_help_service.context=param.value; break;
@@ -2887,15 +2633,6 @@ class FilterHandlers {
 			}
 		}
 	}
-	general_service_state={
-		logged_in: false,
-		/** @type {{datasyncId: (BigInt|null)[]}|null} */
-		mainAppWebResponseContext: null,
-		/** @type {number|null} */
-		maxAgeSeconds: null,
-		/** @type {"non_member"|null} */
-		premium_membership: null,
-	};
 	g_feedback_service={
 		/** @type {number[]|null} */
 		e: null,
@@ -2935,12 +2672,12 @@ class FilterHandlers {
 				case "is_owner": break;
 				case "is_viewed_live": break;
 				case "logged_in": {
-					if(param.value=='0') {this.general_service_state.logged_in=false; break;}
-					if(param.value=='1') {this.general_service_state.logged_in=true; break;}
+					if(param.value=='0') {general_service_state.logged_in=false; break;}
+					if(param.value=='1') {general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
 				case "num_shelves": break;
-				case "premium_membership": if(param.value!=="non_member") debugger; this.general_service_state.premium_membership=param.value; break;
+				case "premium_membership": if(param.value!=="non_member") debugger; general_service_state.premium_membership=param.value; break;
 				case "route": if(param.value!=="channel.featured") debugger; break;
 				default: console.log("new [param_key]",param); debugger;
 			}
@@ -4844,6 +4581,19 @@ function parse_browse_id(value) {
 	}
 }
 
+const general_service_state={
+	logged_in: false,
+	/** @type {{datasyncId: (BigInt|null)[]}|null} */
+	mainAppWebResponseContext: null,
+	/** @type {number|null} */
+	maxAgeSeconds: null,
+	/** @type {"non_member"|null} */
+	premium_membership: null,
+};
+class TrackingServices {}
+const service_tracking=new TrackingServices;
+service_tracking;
+
 class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
@@ -4872,7 +4622,7 @@ class HandleTypes {
 	 */
 	handleEntityBatchUpdate(obj) {
 		if(Object.keys(obj)[0]!=="entityBatchUpdate") {
-			console.log("[entity_batch_invalid]", obj);
+			console.log("[entity_batch_invalid]",obj);
 			return;
 		}
 		if(yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
@@ -4896,5 +4646,297 @@ class HandleTypes {
 				default: console.log("[mut]",mut); debugger;
 			}
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 */
+	reloadContinuationItemsCommand(command) {
+		let data=command.reloadContinuationItemsCommand;
+		for(let item of data.continuationItems) {
+			console.log("[reload_continuation_command_item]",item);
+		}
+	}
+	/** @arg {GeneralContext} context */
+	responseContext(context) {
+		let ok=Object.keys(context);
+		if(!(
+			eq_keys(ok,['serviceTrackingParams','mainAppWebResponseContext','webResponseContextExtensionData'])
+			||eq_keys(ok,['serviceTrackingParams','maxAgeSeconds','mainAppWebResponseContext','webResponseContextExtensionData'])
+			||false
+		)) debugger;
+		if("maxAgeSeconds" in context) {
+			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
+		}
+		let data_sync_id=context.mainAppWebResponseContext.datasyncId;
+		general_service_state.mainAppWebResponseContext??={
+			datasyncId: data_sync_id.split("|").map(e => e===""? null:e).map(e => {
+				if(e===null) return e;
+				return BigInt(e);
+			})
+		};
+		if(this.filter_handler_debug) console.log(this.general_service_state.mainAppWebResponseContext.datasyncId);
+		if(context.mainAppWebResponseContext.loggedOut) {
+			general_service_state.logged_in=false;
+		}
+		this.set_service_params(context.serviceTrackingParams);
+	}
+	/**
+	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
+	 */
+	playlistVideoListRenderer(renderer) {
+		let data=renderer.playlistVideoListRenderer;
+		console.log("playlist",data.playlistId);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
+	 */
+	pageIntroductionRenderer(item) {
+		let data=item.pageIntroductionRenderer;
+		console.log("pageIntroductionRenderer",data);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
+	 */
+	itemSectionRenderer(renderer) {
+		let data=renderer.itemSectionRenderer;
+		console.log("tp",data.trackingParams);
+		let contents=data.contents;
+		for(let content_item of contents) {
+			let ok_first=Object.keys(content_item)[0];
+			if("playlistVideoListRenderer" in content_item) {
+				this.playlistVideoListRenderer(content_item);
+			} else if("pageIntroductionRenderer" in content_item) {
+				this.pageIntroductionRenderer(content_item);
+			} else if("settingsOptionsRenderer" in content_item) {
+				console.log("[todo_handler]",content_item);
+			} else if("connectedAppRenderer" in content_item) {
+				console.log("[todo_handler]",content_item);
+			} else {
+				console.log("[need_section_handler][%s]",ok_first);
+				debugger;
+			}
+		}
+	}
+	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} renderer */
+	sectionListRenderer(renderer) {
+		let data=renderer.sectionListRenderer;
+		console.log("tp",data.trackingParams);
+		let contents=data.contents;
+		for(let content_item of contents) {
+			this.itemSectionRenderer(content_item);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
+	 */
+	tabRenderer(renderer) {
+		console.log("tp",renderer.trackingParams);
+		if("sectionListRenderer" in renderer.content) {
+			this.sectionListRenderer(renderer.content);
+		};
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
+	 */
+	twoColumnBrowseResultsRenderer(renderer) {
+		if(Object.keys(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
+			console.log("[handler_invalid]",renderer);
+			return;
+		}
+		let data=renderer.twoColumnBrowseResultsRenderer;
+		for(let tab of data.tabs) {
+			this.tabRenderer(tab.tabRenderer);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
+	 */
+	on_browse_response_contents(contents) {
+		this.twoColumnBrowseResultsRenderer(contents);
+		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=='twoColumnBrowseResultsRenderer') {
+			console.log("on_browse_response_contents",'contents',contents);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
+	 */
+	adLayoutMetadata(metadata) {
+		let t=this;
+		/**
+		 * @param {string} str
+		 */
+		function decode_b64_proto_obj(str) {
+			return decode_protobuf(str);
+		}
+		/** @template T @arg {T|undefined} val @returns {T} */
+		function non_null(val) {
+			if(val===void 0) throw new Error();
+			return val;
+		}
+		/**
+		 * @param {string} str
+		 */
+		function decode_protobuf(str) {
+			let buffer=base64_dec.decodeArrayBuffer(str);
+			/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
+			let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
+			let loop_count=0;
+			/** @type {[number,number,(number | bigint)[]][]} */
+			let data=[];
+			let mode="initial";
+			let mode_stack=[];
+			let reader=new t.decode_protobuf.MyReader(buffer);
+			/** @type {[offset: number,length: number][]} */
+			let stack=[[0,reader.len]];
+			x: for(;loop_count<15;loop_count++) {
+				switch(mode) {
+					case "initial": break;
+					case "DateTime": break;
+				}
+				let [cur_off,cur_len]=non_null(stack.at(-1));
+				console.log('off',cur_len,cur_off);
+				if(reader.pos>=cur_off+cur_len) {
+					let mode_=mode_stack.pop();
+					if(!mode_) {
+						console.log("exit, mode stack empty and at end");
+						break x;
+					}
+					mode=mode_;
+					stack.pop();
+					continue x;
+				}
+				let cur_byte=reader.uint32();
+				let wireType=cur_byte&7;
+				let fieldId=cur_byte>>>3;
+				/** @type {(number|bigint)[]} */
+				let first_num=[];
+				console.log("field",fieldId,"type",wireType);
+				y: switch(wireType) {
+					case 0:
+						if(mode==="DateTime") {
+							switch(fieldId) {
+								case 1: {
+									let f_ty=expected_fields_date_time[0];
+									if(f_ty[1]!=="uint64") throw new Error();
+									first_num.push(reader.uint64());
+									console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+									break y;
+								}
+								default: {
+									console.log("unexpected field");
+									break x;
+								}
+							}
+						}
+						first_num.push(reader.uint32());
+						console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+						break;
+					case 2: if(mode==="initial") {
+						mode_stack.push(mode);
+						let next_len=reader.uint32();
+						stack.push([reader.pos,next_len]);
+						mode="DateTime";
+						continue x;
+					} else {
+						console.log("mode 2 and not able to handle it");
+						break x;
+					}
+					case 3: break;
+					case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
+					case 5: first_num.push(reader.fixed32()); break;
+					default: break x;
+				}
+				data.push([fieldId,wireType,first_num]);
+			}
+			let [first,...rest]=data;
+			let [fieldId,wireType,[first_num,...first_left]]=first;
+			/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number]} */
+			function filter_rest(e) {
+				let [fieldId,wireType,[num,...first_left]]=e;
+				if(first_left.length>1) throw new Error("Not decoded");
+				return [fieldId,wireType,num];
+			}
+			return {
+				first_w: wireType,
+				first_f: fieldId,
+				first_num,
+				first_left,
+				rest: rest.map(filter_rest),
+			};
+		}
+		for(let item of metadata) {
+			switch(item.layoutType) {
+				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
+				default: debugger;
+			}
+			let try_proto_dec=false;
+			if(try_proto_dec) {
+				let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
+				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
+				console.log("log data entry rest",...dec.rest);
+			}
+			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata
+	 */
+	adSlotMetadata(metadata) {
+		console.log("ad slot meta pos",metadata.slotType);
+		switch(metadata.slotType) {
+			case "SLOT_TYPE_IN_FEED": break;
+			default: debugger;
+		}
+		console.log("ad slot meta slot_id [%s]",metadata.slotId);
+		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
+	 */
+	adsControlFlowOpportunityReceivedCommand(command) {
+		let ok=filter_out_keys(Object.keys(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
+		if("adSlotAndLayoutMetadata" in command) {
+			for(let item of command.adSlotAndLayoutMetadata) {
+				this.adLayoutMetadata(item.adLayoutMetadata);
+				this.adSlotMetadata(item.adSlotMetadata);
+			}
+		}
+		if(eq_keys(ok,[])||eq_keys(ok,["adSlotAndLayoutMetadata"])) {
+			console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
+			console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
+			if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
+		} else {
+			console.log("[%s] %o",ok.join(","),command);
+			debugger;
+		}
+	}
+	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
+	BrowseResponseContent(content) {
+		let data=content;
+		console.log("tp",data.trackingParams);
+		// was [on_response_context]
+		this.responseContext(data.responseContext);
+		if(data.contents) {
+			this.on_browse_response_contents(data.contents);
+		}
+		if(data.frameworkUpdates) {
+			this.handleEntityBatchUpdate(data.frameworkUpdates);
+		}
+		this.FeedTabbedHeaderRenderer(data.header);
+		for(let action of data.onResponseReceivedActions) {
+			if("adsControlFlowOpportunityReceivedCommand" in action) {
+				this.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
+			} else if("reloadContinuationItemsCommand" in action) {
+				this.reloadContinuationItemsCommand(action);
+			} else {
+				debugger;
+			}
+		}
+		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
+		if(typeof data.trackingParams!=="string") debugger;
+		let ok=Object.keys(data);
+		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
+		console.log("[browse_page_context]",ok.join(","),data);
+		debugger;
 	}
 }

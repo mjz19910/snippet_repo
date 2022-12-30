@@ -1,15 +1,10 @@
 import {AllServiceTrackingParams} from "../a/AllServiceTrackingParams.js";
+import {MainAppWebResponseContextData} from "./MainAppWebResponseContextData";
+import {WebResponseContextExtensionData} from "./WebResponseContextExtensionData";
 
 export type GeneralContext={
-	mainAppWebResponseContext: {
-		datasyncId: `${number}||${number}`;
-		loggedOut: boolean;
-	};
+	mainAppWebResponseContext: MainAppWebResponseContextData;
 	serviceTrackingParams: AllServiceTrackingParams[];
-	webResponseContextExtensionData: {
-		hasDecorated: boolean;
-	};
+	webResponseContextExtensionData: WebResponseContextExtensionData;
+	maxAgeSeconds?: number;
 };
-export interface AgeingContext extends GeneralContext {
-	maxAgeSeconds: number;
-}
