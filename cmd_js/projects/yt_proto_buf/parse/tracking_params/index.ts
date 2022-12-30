@@ -349,14 +349,15 @@ export async function parse_types(): Promise<void> {
 	const myArgs=process.argv.slice(2);
 	if(myArgs[0]==="--input") {
 		my_console.pad_log("message Type.U {");
-		// let reset=increase_padding();
+		let prev_pad=pad;
+		pad+=pad_with;
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(new Uint8Array(token_buffer));
 		let ss=reader.uint32();
 		my_console.pad_log("%o",ss);
 		reader.pos=0;
 		unk_type.decode(reader);
-		// reset();
+		pad=prev_pad;
 		my_console.pad_log("}");
 		return;
 	}
