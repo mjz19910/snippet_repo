@@ -3843,6 +3843,12 @@ class HandleTypes {
 			};
 		}
 	}
+	/**
+	 * @param {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar
+	 */
+	sidebar(sidebar) {
+		console.log(sidebar);
+	}
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
 		let data=content;
@@ -3853,11 +3859,12 @@ class HandleTypes {
 		if(data.frameworkUpdates) {
 			this.handleEntityBatchUpdate(data.frameworkUpdates);
 		}
-		this.FeedTabbedHeaderRenderer(data.header);
+		if(data.header) this.header(data.header);
 		if(data.onResponseReceivedActions) {
 			this.onResponseReceivedActions(data.onResponseReceivedActions);
 		}
 		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
+		if(data.sidebar) this.sidebar(data.sidebar);
 		if(typeof data.trackingParams!=="string") debugger;
 		if(data.observedStateTags) {
 			this.observedStateTags(data.observedStateTags);
@@ -3870,13 +3877,14 @@ class HandleTypes {
 			if(k==="header") continue;
 			if(k==="trackingParams") continue;
 			if(k==="topbar") continue;
+			if(k==="sidebar") continue;
 			if(k==="onResponseReceivedActions") continue;
 			if(k==="frameworkUpdates") continue;
 			if(k==="observedStateTags") continue;
 			ok_miss.push(k);
 		}
 		if(ok_miss.length>0) {
-			console.log("[browse_page_context_miss]",ok_miss.join(","),data);
+			console.log("[browse_page_context_miss]: [%s]",ok_miss.join(","),data);
 			debugger;
 		}
 	}
@@ -3904,12 +3912,18 @@ class HandleTypes {
 		}
 	}
 	/**
-	 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
+	 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header
 	 */
 	header(header) {
-		this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
+		if("feedTabbedHeaderRenderer" in header) {
+			this.FeedTabbedHeaderRenderer(header);
+		} else if("simpleMenuHeaderRenderer" in header) {
+			this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
+		} else {
+			debugger;
+		}
 		let ok=Object.keys(header);
-		ok;
+		console.log("header keys",ok);
 	}
 	/**
 	 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
@@ -4011,7 +4025,10 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
 	 */
 	browseEndpoint(endpoint) {
-		console.log("bid",endpoint.browseId);
+		parse_browse_id(endpoint.browseId);
+		if(!eq_keys(Object.keys(endpoint),["browseId"])) {
+			debugger;
+		}
 	}
 	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
@@ -4064,14 +4081,28 @@ class HandleTypes {
 		console.log(data.response);
 		console.log(data.url);
 	}
+	/** @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url']} url */
+	on_new_page_url(url) {
+		console.log("[new_page]",url);
+	}
 	/**
 	 * @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
 	 */
 	SettingsPageResponse(data) {
 		this.endpoint(data.endpoint);
 		this.response(data.response);
-		console.log(data.url);
-		debugger;
+		let split_parts=split_string(data.url,"/");
+		switch(split_parts.length) {
+			case 2: switch(split_parts[1]) {
+				case "account": break;
+				case "account_notifications": break;
+				default: this.on_new_page_url(data.url); break;
+			} break;
+			default: debugger;
+		}
+		if(Object.keys(data).length!==4) {
+			debugger;
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data
@@ -4269,10 +4300,10 @@ class HandleTypes {
 	/** @param {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 	YTNavigateFinishEventDetail(detail) {
 		switch(detail.pageType) {
-			case "browse": 
-			this.BrowsePageResponse(detail.response);
-			this.endpoint(detail.endpoint);
-			break;
+			case "browse":
+				this.BrowsePageResponse(detail.response);
+				this.endpoint(detail.endpoint);
+				break;
 			case "channel": {
 				this.ChannelPageResponse(detail.response);
 				console.log(detail.endpoint);

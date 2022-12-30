@@ -5,5 +5,5 @@ export type SettingsPageResponse={
 	page: "settings";
 	endpoint: BrowseEndpoint;
 	response: SettingsResponseContent;
-	url: string;
+	url: `/account${""|"_notifications"}`;
 };

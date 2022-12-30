@@ -1,9 +1,11 @@
 import {TextRunsSimpleT} from "../t/TextRunsSimple.js";
 
 
+type SettingsSidebarRendererData={
+	title: TextRunsSimpleT<"Settings">;
+	items: {}[];
+};
+
 export type SettingsSidebarRenderer={
-	settingsSidebarRenderer: {
-		title: TextRunsSimpleT<"Settings">;
-		items: {}[];
-	};
+	settingsSidebarRenderer: SettingsSidebarRendererData;
 };
