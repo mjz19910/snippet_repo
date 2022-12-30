@@ -4804,10 +4804,10 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
 	 */
-	on_browse_response_contents(contents) {
+	BrowseResponseContentContents(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=='twoColumnBrowseResultsRenderer') {
-			console.log("on_browse_response_contents",'contents',contents);
+			console.log("[on_browse_response_contents]",contents);
 		}
 	}
 	/**
@@ -4867,7 +4867,7 @@ class HandleTypes {
 		// was [on_response_context]
 		this.responseContext(data.responseContext);
 		if(data.contents) {
-			this.on_browse_response_contents(data.contents);
+			this.BrowseResponseContentContents(data.contents);
 		}
 		if(data.frameworkUpdates) {
 			this.handleEntityBatchUpdate(data.frameworkUpdates);
