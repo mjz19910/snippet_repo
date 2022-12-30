@@ -3804,7 +3804,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		let data=renderer.itemSectionRenderer;
-		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
+		this.trackingParams(data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			let ok_first=get_keys_of(content_item)[0];
@@ -3830,22 +3830,17 @@ class HandleTypes extends BaseService {
 		if(!data) {
 			debugger;
 		}
-		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
+		this.trackingParams(data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			if("itemSectionRenderer" in content_item) {
 				this.itemSectionRenderer(content_item);
 			} else if("continuationItemRenderer" in content_item) {
 				this.continuationItemRenderer(content_item);
-				console.log("[todo_handler]",content_item);
 			} else {
 				debugger;
 			}
 		}
-	}
-	/** @arg {string} params */
-	trackingParams(params) {
-		if(this.r.get_param("log_tracking_params")) console.log("tp",params);
 	}
 	/**
 	 * @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
@@ -3960,7 +3955,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
 		let data=content;
-		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
+		this.trackingParams(data.trackingParams);
 		if(data.contents) {
 			this.BrowseResponseContentContents(data.contents);
 		}
@@ -4090,7 +4085,7 @@ class HandleTypes extends BaseService {
 	 */
 	endpoint(endpoint) {
 		if("clickTrackingParams" in endpoint) {
-			if(this.r.get_param("log_click_tracking_params")) console.log("ctp",endpoint.clickTrackingParams);
+			this.clickTrackingParams(endpoint.clickTrackingParams);
 		} else {
 			console.log(endpoint);
 			debugger;
@@ -4524,6 +4519,27 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data
 	 */
 	continuationItemRenderer(data) {
+		this.ContinuationItemRendererData(data.continuationItemRenderer);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data
+	 */
+	ContinuationItemRendererData(data) {
+		this.continuationEndpoint(data.continuationEndpoint);
 		console.log(data);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/c/ContinuationEndpoint.js").ContinuationEndpoint} endpoint
+	 */
+	continuationEndpoint(endpoint) {
+		this.clickTrackingParams(endpoint.clickTrackingParams);
+	}
+	/** @arg {string} params */
+	trackingParams(params) {
+		if(this.r.get_param("log_tracking_params")) console.log("tp",params);
+	}
+	/** @param {string} params */
+	clickTrackingParams(params) {
+		if(this.r.get_param("log_click_tracking_params")) console.log("ctp",params);
 	}
 }
