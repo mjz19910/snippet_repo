@@ -3659,6 +3659,7 @@ class HandleTypes extends BaseService {
 	/** @template T @typedef {import("./support/yt_api/_/i/Icon.js").Icon<T>} Icon  */
 	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
+		switch(icon.iconType) {case "ACCOUNT_SETTINGS": return;}
 		/** @type {any} */
 		let any_icon=icon;
 		/** @type {Icon<Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>>} */
