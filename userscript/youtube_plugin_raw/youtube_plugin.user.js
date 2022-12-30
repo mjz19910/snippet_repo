@@ -3832,11 +3832,15 @@ class HandleTypes {
 			}
 		}
 	}
+	/** @param {string} params */
+	trackingParams(params) {
+		if(this.res.get_param("log_tracking_params")) console.log("tp",params);
+	}
 	/**
 	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
 	 */
 	tabRenderer(renderer) {
-		if(this.res.get_param("log_tracking_params")) console.log("tp",renderer.trackingParams);
+		this.trackingParams(renderer.trackingParams);
 		if("sectionListRenderer" in renderer.content) {
 			this.sectionListRenderer(renderer.content);
 		};
