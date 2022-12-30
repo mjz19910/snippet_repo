@@ -3590,6 +3590,27 @@ if(typeof exports==="object") {
 	exports.ServiceResolver=ServiceResolver;
 }
 
+/** @template T @arg {{text: T}} _run @returns {T} */
+function stringify_text_run(_run) {
+	return _run.text;
+}
+/** @template T @arg {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
+function stringify_text_runs(text) {
+	if(text.runs) {
+		if(text.runs.length===1) {
+			return stringify_text_run(text.runs[0]);
+		} else {
+			// need to join the parts
+			debugger;
+			throw 1;
+		}
+	} else {
+		// simple text
+		debugger;
+		throw 1;
+	}
+}
+
 class HandleTypes extends BaseService {
 	/**
 	 * @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
@@ -3815,6 +3836,7 @@ class HandleTypes extends BaseService {
 			if("itemSectionRenderer" in content_item) {
 				this.itemSectionRenderer(content_item);
 			} else if("continuationItemRenderer" in content_item) {
+				this.continuationItemRenderer(content_item);
 				console.log("[todo_handler]",content_item);
 			} else {
 				debugger;
@@ -4498,25 +4520,10 @@ class HandleTypes extends BaseService {
 	shelfRenderer(data) {
 		console.log(data);
 	}
-}
-
-/** @template T @arg {{text: T}} _run @returns {T} */
-function stringify_text_run(_run) {
-	return _run.text;
-}
-/** @template T @arg {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
-function stringify_text_runs(text) {
-	if(text.runs) {
-		if(text.runs.length===1) {
-			return stringify_text_run(text.runs[0]);
-		} else {
-			// need to join the parts
-			debugger;
-			throw 1;
-		}
-	} else {
-		// simple text
-		debugger;
-		throw 1;
+	/**
+	 * @param {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data
+	 */
+	continuationItemRenderer(data) {
+		console.log(data);
 	}
 }
