@@ -4445,10 +4445,15 @@ class HandleTypes {
 		if(Object.keys(data).length!==2) {
 			debugger;
 		}
-		for(let option in data.options) {
+		for(let option of data.options) {
 			console.log(option);
 		}
+		let str=stringify_text_runs(data.title);
+		console.log(str);
 		console.log(data);
+		if(Object.keys(renderer).length!==1) {
+			debugger;
+		}
 	}
 	/**
 	 * @param {{ connectedAppRenderer: {}; }} data
