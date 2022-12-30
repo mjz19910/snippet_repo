@@ -318,11 +318,10 @@ async function async_plugin_init(event) {
 	if(is_node_js()) console.log("start async_plugin");
 	try {
 		while(true) {
-			iter_count++;
-			if(cur_count>32) {
-				await new Promise((soon) => setTimeout(soon,0));
-				cur_count=0;
+			if(iter_count!==0) {
+				await new Promise((soon) => setTimeout(soon,40));
 			}
+			iter_count++;
 			if(!audio_gain_controller) {
 				audio_gain_controller=new AudioGainController;
 				AudioGainController.attach_instance();
@@ -3522,6 +3521,7 @@ class TrackingServices {
 const service_tracking=new TrackingServices;
 
 const log_tracking_params=false;
+const log_click_tracking_params=false;
 
 class HandleTypes {
 	/**
@@ -4019,7 +4019,7 @@ class HandleTypes {
 	 */
 	endpoint(endpoint) {
 		if("clickTrackingParams" in endpoint) {
-			console.log("ctp",endpoint.clickTrackingParams);
+			if(log_click_tracking_params) console.log("ctp",endpoint.clickTrackingParams);
 		} else {
 			console.log(endpoint);
 			debugger;
