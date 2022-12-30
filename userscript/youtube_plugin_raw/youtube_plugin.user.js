@@ -4833,12 +4833,12 @@ class HandleTypes {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
 			case "player": this.WatchResponsePlayer(res.json); return true;
-			case "guide": this.on_guide(res.json); return true;
+			case "guide": this.GuideJsonType(res.json); return true;
 			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return false;
-			case "notification.get_notification_menu": this.on_notification_data(res); return true;
-			case "next": this.process_next_response(res.json); return true;
+			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return true;
+			case "next": this.YtApiNext(res.json); return true;
 			case "browse": this.BrowseResponseContent(res.json); return true;
-			case "account.account_menu": this.on_account_menu(res.json); return true;
+			case "account.account_menu": this.AccountMenuJson(res.json); return true;
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
@@ -4864,7 +4864,7 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/_/notification_get_notification_menu_t.js").notification_get_notification_menu_t} res
 	 */
-	on_notification_data(res) {
+	notification_get_notification_menu_t(res) {
 		this.responseContext(res.json.responseContext);
 		for(let action of res.json.actions) {
 			this.on_popup_action(action);
@@ -4902,7 +4902,7 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
 	 */
-	on_guide(guide) {
+	GuideJsonType(guide) {
 		this.responseContext(guide.responseContext);
 		for(let item of guide.items) {
 			this.GuideItemType(item);
@@ -4917,14 +4917,14 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
 	 */
-	process_next_response(json) {
+	YtApiNext(json) {
 		this.responseContext(json.responseContext);
 		console.log(json);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
 	 */
-	on_account_menu(json) {
+	AccountMenuJson(json) {
 		this.responseContext(json.responseContext);
 		console.log(json);
 	}
