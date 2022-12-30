@@ -1847,12 +1847,18 @@ class HandlerBase {
 			}
 			let [first,...rest]=data;
 			let [fieldId,wireType,[first_num,...first_left]]=first;
+			/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number]} */
+			function filter_rest(e) {
+				let [fieldId,wireType,[num,...first_left]]=e;
+				if(first_left.length>1) throw new Error("Not decoded");
+				return [fieldId,wireType,num];
+			}
 			return {
 				first_w: wireType,
 				first_f: fieldId,
 				first_num,
 				first_left,
-				rest,
+				rest: rest.map(filter_rest),
 			};
 		}
 		for(let item of metadata) {
