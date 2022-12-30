@@ -257,7 +257,7 @@ function iterate_ytd_app() {
 /** @arg {HTMLElement} element */
 function on_ytd_app(element) {
 	const element_id="ytd-app";
-	if(is_yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
+	if(is_yt_debug_enabled||is_ytd_app_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
@@ -485,7 +485,7 @@ function with_ytd_scope() {
 	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
 	dom_observer.addEventListener("async-plugin-init",async_plugin_init);
 }
-const debug_ytd_app=true;
+const is_ytd_app_debug_enabled=true;
 class VolumeRange {
 	static enabled=true;
 	static create_if_needed() {
@@ -3703,6 +3703,10 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data
 	 */
 	PageIntroductionRendererData(data) {
+		let ok=Object.keys(data);
+		if(!has_keys(ok,"headerText,bodyText,pageTitle,headerIcon")) {
+			debugger;
+		}
 		if(data.headerText.runs[0].text!=="Control your download settings") {
 			debugger;
 		}
