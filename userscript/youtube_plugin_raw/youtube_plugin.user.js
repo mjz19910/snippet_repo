@@ -3697,11 +3697,16 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
 	 */
 	pageIntroductionRenderer(item) {
-		let data=item.pageIntroductionRenderer;
+		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data
+	 */
+	PageIntroductionRendererData(data) {
 		if(data.headerText.runs[0].text!=="Control your download settings") {
 			debugger;
 		}
-		console.log("pageIntroductionRenderer",data);
+		console.log("PageIntroductionRendererData",data);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
