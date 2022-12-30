@@ -2170,7 +2170,7 @@ class FilterHandlers {
 				case "notification": switch(target[1]) {
 					case "get_notification_menu": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/_/notification_get_notification_menu_t.js").notification_get_notification_menu_t["json"]} */
+						/** @type {import("./support/_/GetNotificationMenuJson.js").GetNotificationMenuJson} */
 						json: as_cast(json),
 					};
 					case "get_unseen_count": return {
@@ -4831,7 +4831,7 @@ class HandleTypes {
 	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
 	ResponseTypes(res) {
 		switch(res.url_type) {
-			case "att.get": this.on_att_get(res.json); return true;
+			case "att.get": this.AttGetV(res.json); return true;
 			case "player": this.WatchResponsePlayer(res.json); return true;
 			case "guide": this.GuideJsonType(res.json); return true;
 			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return false;
@@ -4843,7 +4843,7 @@ class HandleTypes {
 		}
 	}
 	/** @arg {import("./support/_/OpenPopupActionItem.js").OpenPopupActionItem} action */
-	on_popup_action(action) {
+	OpenPopupActionItem(action) {
 		let ok_1=Object.keys(action);
 		if('openPopupAction' in action) {
 			switch(action.openPopupAction.popupType) {
@@ -4862,12 +4862,12 @@ class HandleTypes {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/_/notification_get_notification_menu_t.js").notification_get_notification_menu_t} res
+	 * @param {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res
 	 */
 	notification_get_notification_menu_t(res) {
 		this.responseContext(res.json.responseContext);
 		for(let action of res.json.actions) {
-			this.on_popup_action(action);
+			this.OpenPopupActionItem(action);
 		}
 		let ok=Object.keys(res.json);
 		if(eq_keys(ok,['responseContext','actions','trackingParams'])) return;
@@ -4877,7 +4877,7 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
 	 */
-	on_att_get(data) {
+	AttGetV(data) {
 		this.responseContext(data.responseContext);
 		let ok=Object.keys(data);
 		if(eq_keys(ok,['responseContext','challenge','bgChallenge'])) return;
