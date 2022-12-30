@@ -1,6 +1,8 @@
+import {AdSlotAndLayoutMetadataItem} from "./AdSlotAndLayoutMetadataItem";
+
 export type AdsControlFlowOpportunityReceivedCommandData={
 	opportunityType: "OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED";
-	adSlotAndLayoutMetadata: {}[];
+	adSlotAndLayoutMetadata: AdSlotAndLayoutMetadataItem[];
 	isInitialLoad: boolean;
 	enablePacfLoggingWeb: boolean;
 };

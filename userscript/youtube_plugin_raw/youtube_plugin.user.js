@@ -1608,8 +1608,42 @@ class HandlerBase {
 	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
 	 */
 	adsControlFlowOpportunityReceivedCommand(command) {
-		console.log(command);
-		if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
+		if(has_keys(Object.keys(command),"opportunityType,isInitialLoad,adSlotAndLayoutMetadata,enablePacfLoggingWeb")) {
+			console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
+			for(let item of command.adSlotAndLayoutMetadata) {
+				this.adLayoutMetadata(item.adLayoutMetadata);
+				this.adSlotMetadata(item.adSlotMetadata);
+			}
+			console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
+			if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
+		} else {
+			console.log("[%s] %o",Object.keys(command).join(","),command);
+			debugger;
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
+	 */
+	adLayoutMetadata(metadata) {
+		for(let item of metadata) {
+			switch(item.layoutType) {
+				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
+				default: debugger;
+			}
+			console.log("log data entry [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata
+	 */
+	adSlotMetadata(metadata) {
+		console.log("ad slot meta pos",metadata.slotType);
+		switch(metadata.slotType) {
+			case "SLOT_TYPE_IN_FEED": break;
+			default: debugger;
+		}
+		console.log("ad slot meta slot_id [%s]",metadata.slotId);
+		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
 	}
 	/**
 	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRenderer.js").PlaylistVideoListRenderer}} renderer

@@ -29,16 +29,11 @@ message PlayerParams {
 }
 
 message TrackingParams {
-	required int32 field_01 = 1;
-	required int32 field_02 = 2;
-	required DateTime datetime = 4;
-}
-
-message TrackingParamsEx {
-	required int32 field_01 = 1;
-	required int32 field_02 = 2;
-	optional int32 field_03 = 3;
-	required DateTime datetime = 4;
+	optional int32 slot_number = 1;
+	optional int32 root_ve = 2;
+	optional int32 unk_3 = 3;
+	required DateTime ts = 4;
+	optional string unk_6 = 6;
 }
 
 message DelayPlayVm {
@@ -48,4 +43,15 @@ message DelayPlayVm {
 	required string f7 = 7;
 	required string f12 = 12;
 	required int32 f13 = 13;
+}
+
+message AdServingDataEntry {
+	optional int32 unk_4=4;
+	optional int32 unk_5=5;
+	optional int32 unk_6=6;
+	optional int32 unk_7=7;
+	required DateTime ts=9;
+	optional int32 unk_10=10;
+	optional int32 unk_13=13;
+	optional int32 unk_14=14;
 }
