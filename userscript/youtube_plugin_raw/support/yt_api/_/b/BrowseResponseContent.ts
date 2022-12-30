@@ -7,10 +7,10 @@ import {FeedTabbedHeaderRenderer} from "./FeedTabbedHeaderRenderer";
 
 export type BrowseResponseContent={
 	responseContext: GeneralContext;
-	contents: TwoColumnBrowseResultsRenderer;
+	contents?: TwoColumnBrowseResultsRenderer;
 	header: FeedTabbedHeaderRenderer;
-	topbar: DesktopTopbarRenderer;
+	topbar?: DesktopTopbarRenderer;
 	onResponseReceivedActions: AdsControlFlowOpportunityReceivedCommand[];
 	trackingParams: string;
-	frameworkUpdates: EntityBatchUpdate;
+	frameworkUpdates?: EntityBatchUpdate;
 };

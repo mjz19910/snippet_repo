@@ -1469,8 +1469,8 @@ class HandleRendererContentItemArray {
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRenderer.js").RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let debug_flag_value=false;
-		if('filter_handler_debug' in base&&base.filter_handler_debug) {
-			debug_flag_value=base.filter_handler_debug;
+		if('filter_handler_debug' in base) {
+			if(base.filter_handler_debug) debug_flag_value=base.filter_handler_debug;
 		} else if('debug' in base) {
 			debug_flag_value=base.debug;
 		} else {
@@ -1907,10 +1907,13 @@ class HandlerBase {
 				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
 				default: debugger;
 			}
-			let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
-			console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
-			console.log("log data entry rest",...dec.rest);
-			console.log(item.adLayoutLoggingData.serializedAdServingDataEntry);
+			let try_proto_dec=false;
+			if(try_proto_dec) {
+				let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
+				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
+				console.log("log data entry rest",...dec.rest);
+			}
+			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
 		}
 	}
 	/**
@@ -1940,18 +1943,27 @@ class HandlerBase {
 		console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
-			/** @type {keyof typeof content_item} */
-			let ok_first=as_cast(Object.keys(content_item)[0]);
-			switch(ok_first) {
-				case "playlistVideoListRenderer": break;
-				default: debugger;
-			}
+			let ok_first=Object.keys(content_item)[0];
 			if("playlistVideoListRenderer" in content_item) {
 				this.playlistVideoListRenderer(content_item);
+			} else if("pageIntroductionRenderer" in content_item) {
+				this.pageIntroductionRenderer(content_item);
+			} else if("settingsOptionsRenderer" in content_item) {
+				console.log("[todo_handler]",content_item);
+			} else if("connectedAppRenderer" in content_item) {
+				console.log("[todo_handler]",content_item);
 			} else {
+				console.log("[need_section_handler][%s]",ok_first);
 				debugger;
 			}
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
+	 */
+	pageIntroductionRenderer(item) {
+		let data=item.pageIntroductionRenderer;
+		console.log("pageIntroductionRenderer",data);
 	}
 	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} renderer */
 	sectionListRenderer(renderer) {
@@ -1975,6 +1987,10 @@ class HandlerBase {
 	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
 	 */
 	twoColumnBrowseResultsRenderer(renderer) {
+		if(Object.keys(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
+			console.log("[handler_invalid]", renderer);
+			return;
+		}
 		let data=renderer.twoColumnBrowseResultsRenderer;
 		for(let tab of data.tabs) {
 			this.tabRenderer(tab.tabRenderer);
@@ -2234,17 +2250,28 @@ class FilterHandlers {
 		return this._handle_t;
 	}
 	/**
+	 * @param {string} path
+	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
+	 */
+	on_browse_response_contents(path,contents) {
+		this.handle.twoColumnBrowseResultsRenderer(contents);
+		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=='twoColumnBrowseResultsRenderer') {
+			console.log(path,'contents',contents);
+		}
+	}
+	/**
 	 * @arg {string} path
 	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
 	 */
 	on_page_type_browse_response(path,data) {
 		console.log("tp",data.trackingParams);
 		this.on_response_context("on_page_type_browse_response",as_cast(data.responseContext));
-		this.handle.twoColumnBrowseResultsRenderer(data.contents);
-		if(Object.keys(data.contents).length!==1||Object.keys(data.contents)[0]!=='twoColumnBrowseResultsRenderer') {
-			console.log(path,'contents',data.contents);
+		if(data.contents) {
+			this.on_browse_response_contents(path, data.contents);
 		}
-		this.handle_t.handleEntityBatchUpdate(data.frameworkUpdates);
+		if(data.frameworkUpdates) {
+			this.handle_t.handleEntityBatchUpdate(data.frameworkUpdates);
+		}
 		this.handle_t.FeedTabbedHeaderRenderer(data.header);
 		for(let action of data.onResponseReceivedActions) {
 			if("adsControlFlowOpportunityReceivedCommand" in action) {
@@ -2253,7 +2280,7 @@ class FilterHandlers {
 				debugger;
 			}
 		}
-		this.handle_t.DesktopTopbarRenderer(data.topbar);
+		if(data.topbar) this.handle_t.DesktopTopbarRenderer(data.topbar);
 		if(typeof data.trackingParams!=="string") debugger;
 		let ok=Object.keys(data);
 		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
@@ -4842,6 +4869,10 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
 	 */
 	handleEntityBatchUpdate(obj) {
+		if(Object.keys(obj)[0]!=="entityBatchUpdate") {
+			console.log("[entity_batch_invalid]", obj);
+			return;
+		}
 		if(yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
 		this.handle_mutations(obj.entityBatchUpdate.mutations);
 	}
