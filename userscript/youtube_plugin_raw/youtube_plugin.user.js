@@ -1753,6 +1753,7 @@ class FilterHandlers {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
 	}
+	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
 	/** @typedef {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} DataResponsePageType */
 	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
 	on_initial_data(apply_args) {
@@ -1761,27 +1762,25 @@ class FilterHandlers {
 		if(!("page" in ret)) {
 			return ret;
 		}
-		if(ret.response) {
-			if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
-			try {
-				page_type_iter(ret.page);
-				this.handle_any_data(`page_type_${ret.page}`,ret);
-				this.handle_types.DataResponsePageType(ret);
-				let page_type=window.ytPageType;
-				switch(page_type) {
-					case void 0: return;
-					case "settings":
-					case "watch": case "browse": case "shorts": case "channel": case "playlist": {
-
-					} break;
-					default: console.log("on_initial_data",ret); debugger;
-				}
-			} catch(err) {
-				console.log(this.class_name+": init filter error");
-				console.log(err);
-			}
-		} else {
+		if(!ret.response) {
 			console.log(this.class_name+": unhandled return value:",ret);
+			debugger;
+		}
+		if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
+		page_type_iter(ret.page);
+		this.handle_any_data(`page_type_${ret.page}`,ret);
+		this.handle_types.DataResponsePageType(ret);
+		let page_type=window.ytPageType;
+		if(!page_type) {
+			debugger;
+			return ret;
+		}
+		/** @template {U[]} T @template U @arg {T} a @arg {U} t */
+		function includes(a,t) {
+			return a.includes(t);
+		}
+		if(!includes(this.known_page_types,page_type)) {
+			console.log("unknown page type",page_type);
 			debugger;
 		}
 		return ret;
