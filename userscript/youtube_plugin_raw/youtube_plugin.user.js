@@ -650,121 +650,7 @@ function to_url(url) {
 		return new URL(url);
 	}
 }
-/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
-/**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
-function fetch_filter_text_then_data_url(request,response_obj) {
-	try {
-		yt_handlers.on_handle_api(request,response_obj);
-	} catch(err) {
-		console.log("on_handle_api failed");
-		console.log("\t",err);
-	}
-}
-/**
- * @arg {string|URL|Request} request
- * @arg {{}|undefined} options
- * @arg {((arg0: any) => any)|undefined|null} onfulfilled
- * @arg {((arg0: any) => void)|undefined|null} on_rejected
- * @arg {string} response_text
- */
-function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
-	if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
-	let original_json_parse=JSON.parse;
-	if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
-	JSON.parse=new Proxy(original_json_parse,{
-		apply: function(...proxy_args) {
-			if(is_yt_debug_enabled) console.log("JSON.parse()");
-			let obj=Reflect.apply(...proxy_args);
-			if(is_yt_debug_enabled) console.log("request.url");
-			fetch_filter_text_then_data_url(request,obj);
-			return obj;
-		}
-	});
-	let ret;
-	try {
-		if(onfulfilled) {
-			ret=onfulfilled(response_text);
-		} else {
-			ret=response_text;
-		}
-	} catch(err) {
-		if(on_rejected) return on_rejected(err);
-		throw err;
-	} finally {
-		JSON.parse=original_json_parse;
-	}
-	return ret;
-}
-/**
- * @arg {string|URL|Request} request
- * @arg {{}|undefined} options
- * @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
- * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
- */
-function bind_promise_handler(request,options,onfulfilled,onrejected) {
-	if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
-	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
-	return ret;
-}
 
-/**
- * @arg {string|URL|Request} request
- * @arg {{}|undefined} options
- * @arg {Promise<any>} ov
- * @return {Promise<any>}
- */
-function handle_fetch_response_2(request,options,ov) {
-	return {
-		/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
-		then(onfulfilled,onrejected) {
-			return ov.then(bind_promise_handler(request,options,onfulfilled,onrejected));
-		},
-		/**@type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
-		catch(onrejected) {
-			return ov.catch(onrejected);
-		},
-		finally(onfinally) {
-			return ov.finally(onfinally);
-		},
-		[Symbol.toStringTag]: "Promise",
-	};
-}
-/**
- * @arg {string|URL|Request} request
- * @arg {{}|undefined} options
- * @arg {Response} response
- * @returns {Response}
- */
-function fetch_promise_handler(request,options,response) {
-	/** @type {["text"]} */
-	let handled_keys=["text"];
-	class FakeResponse {
-		text() {
-			if(is_yt_debug_enabled) console.log("response.text()");
-			return handle_fetch_response_2(request,options,response.text());
-		}
-	}
-	let fake_res=new FakeResponse;
-	/** @type {any} */
-	let any_x=fake_res;
-	/** @type {Response} */
-	let fake_res_t=any_x;
-	return new Proxy(fake_res_t,{
-		get(_obj,key,_proxy) {
-			for(let i=0;i<handled_keys.length;i++) {
-				if(key in fake_res) {
-					if(key==="text") {
-						return fake_res[key];
-					} else {
-						console.log("need new case for new key on fake Response");
-						debugger;
-					}
-				}
-			}
-			return Reflect.get(response,key);
-		}
-	});
-}
 /**
  * @arg {Error} rejection
  * @returns {Promise<Response>}
@@ -789,35 +675,7 @@ function fetch_rejection_handler(rejection) {
 	console.log("\t",rejection);
 	throw rejection;
 }
-/**
- * @type {typeof fetch | null}
- */
-let original_fetch=null;
-/**
- * @arg {string|URL|Request} user_request @arg {RequestInit} [request_init]
- * @returns {Promise<Response>}
-*/
-function fetch_inject(user_request,request_init) {
-	if(!original_fetch) throw new Error("No original fetch");
-	x: if(request_init) {
-		if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
-		console.log("[fetch_request_init_data]",user_request,request_init);
-	}
-	if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
-		return original_fetch(user_request,request_init);
-	}
-	let ret=original_fetch(user_request,request_init);
-	let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
-	return ret_1;
-}
-fetch_inject.__proxy_target__=window.fetch;
 
-/**
- * @arg {[()=>DataResponsePageType, object, []]} apply_args
- */
-function do_proxy_call_getInitialData(apply_args) {
-	return yt_handlers.on_initial_data(apply_args);
-}
 class PropertyHandler {
 	/** @type {PropertyHandler[]} */
 	static instances=[];
@@ -873,7 +731,6 @@ function override_prop(object,property,property_handler) {
 		}
 	});
 }
-override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 override_prop(window,"getInitialCommand",new PropertyHandler((/**@type {[any,any,any]} */args) => Reflect.apply(...args)));
 class ObjectInfo {
 	constructor() {
@@ -1576,7 +1433,8 @@ function non_null(val) {
 }
 
 class FilterHandlers {
-	constructor() {
+	/** @arg {any} res */
+	constructor(res) {
 		this.filter_handler_debug=false;
 		/**@readonly*/
 		this.class_name="FilterHandlers";
@@ -1610,7 +1468,7 @@ class FilterHandlers {
 			["shelfRenderer",false],
 			["videoRenderer",false],
 		]);
-		this.handle_types=new HandleTypes;
+		this.handle_types=new HandleTypes(res);
 		let t=this;
 		/** @param {string} value */
 		function whitelist_item(value) {
@@ -1910,7 +1768,7 @@ class FilterHandlers {
 	}
 	/**
 	 * @arg {string|URL|Request} request
-	 * @arg {JsonDataResponseType} data
+	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
 	 */
 	on_handle_api(request,data) {
 		var {req_hr_t,req_parse,debug}=this.on_handle_api_0(request);
@@ -2022,57 +1880,6 @@ class FilterHandlers {
 let blob_create_args_arr=[];
 let leftover_args=[];
 inject_api_yt.blob_create_args_arr=blob_create_args_arr;
-let yt_handlers=new FilterHandlers;
-inject_api_yt.yt_handlers=yt_handlers;
-function modify_global_env() {
-	/** @type {Map<string, Blob | MediaSource>}*/
-	let created_blobs=new Map;
-	inject_api_yt.created_blobs=created_blobs;
-	/** @type {Set<string>}*/
-	let active_blob_set=new Set;
-	inject_api_yt.active_blob_set=active_blob_set;
-	URL.createObjectURL=new Proxy(URL.createObjectURL,{
-		/**
-		 * @arg {typeof URL["createObjectURL"]} target
-		 * @arg {typeof URL} thisArg
-		 * @arg {[Blob | MediaSource]} args
-		*/
-		apply(target,thisArg,args) {
-			let [url_source,...rest]=args;
-			if(rest.length>0) {
-				leftover_args.push([target,thisArg,rest]);
-			}
-			blob_create_args_arr.push(url_source);
-			let ret=Reflect.apply(target,thisArg,args);
-			created_blobs.set(ret,url_source);
-			active_blob_set.add(ret);
-			return ret;
-		}
-	});
-	URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
-		/**
-		 * @arg {typeof URL["revokeObjectURL"]} target
-		 * @arg {typeof URL} thisArg
-		 * @arg {[string]} args
-		*/
-		apply(target,thisArg,args) {
-			let val=args[0];
-			active_blob_set.delete(val);
-			return Reflect.apply(target,thisArg,args);
-		}
-	});
-	original_fetch=fetch;
-	window.fetch=fetch_inject;
-	fetch_inject.__proxy_target__=original_fetch;
-	let navigator_sendBeacon=navigator.sendBeacon;
-	navigator.sendBeacon=function(...args) {
-		if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
-			return true;
-		}
-		console.log("send_beacon",args[0]);
-		return navigator_sendBeacon.call(this,...args);
-	};
-}
 let plr_raw_replace_debug=true;
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 	let raw_plr_rsp=player_config.args.raw_player_response;
@@ -2552,14 +2359,6 @@ class YTNavigateFinishEvent {
  * @type {((event:YTNavigateFinishEvent)=>void)[]}
  */
 let on_yt_navigate_finish=[];
-
-/** @arg {YTNavigateFinishEvent} event */
-function log_page_type_change(event) {
-	let {detail}=event;
-	if(!detail) return;
-	yt_handlers.on_page_type_changed(detail);
-}
-on_yt_navigate_finish.push(log_page_type_change);
 
 /**
  * @arg {string[]} src
@@ -3107,10 +2906,251 @@ Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<a
 };
 
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
-
-function main() {
+/** @template T,U */
+class ServiceResolver {
+	/** @type {T|null} */
+	services=null;
+	/** @type {U|null} */
+	params=null;
+	/** @param {T} services */
+	add_services(services) {
+		this.services=services;
+	}
+	/** @arg {U} params */
+	set_params(params) {
+		this.params=params;
+	}
+	/** @arg {keyof T} key */
+	get(key) {
+		if(!this.services) throw new Error("No services");
+		return this.services[key];
+	}
+}
+async function main() {
+	await Promise.resolve();
+	let service_resolver=new ServiceResolver;
+	const csi_service=new CsiService(service_resolver);
+	const e_catcher_service=new ECatcherService(service_resolver);
+	const g_feedback_service=new GFeedbackService(service_resolver);
+	const guided_help_service=new GuidedHelpService(service_resolver);
+	const service_tracking=new TrackingServices(service_resolver);
+	let yt_handlers=new FilterHandlers(service_resolver);
+	service_resolver.add_services({
+		csi_service,
+		e_catcher_service,
+		g_feedback_service,
+		guided_help_service,
+		service_tracking,
+		yt_handlers,
+	});
+	const log_tracking_params=false;
+	const log_click_tracking_params=false;
+	service_resolver.set_params({
+		log_tracking_params,
+		log_click_tracking_params,
+	});
+	inject_api_yt.yt_handlers=yt_handlers;
+	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
+	/**
+	 * @type {typeof fetch | null}
+	 */
+	let original_fetch=null;
+	fetch_inject.__proxy_target__=window.fetch;
 	modify_global_env();
 	start_message_channel_loop();
+	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
+	/**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
+	function fetch_filter_text_then_data_url(request,response_obj) {
+		try {
+			yt_handlers.on_handle_api(request,response_obj);
+		} catch(err) {
+			console.log("on_handle_api failed");
+			console.log("\t",err);
+		}
+	}
+	/**
+	 * @arg {string|URL|Request} request
+	 * @arg {{}|undefined} options
+	 * @arg {((arg0: any) => any)|undefined|null} onfulfilled
+	 * @arg {((arg0: any) => void)|undefined|null} on_rejected
+	 * @arg {string} response_text
+	 */
+	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
+		if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
+		let original_json_parse=JSON.parse;
+		if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
+		JSON.parse=new Proxy(original_json_parse,{
+			apply: function(...proxy_args) {
+				if(is_yt_debug_enabled) console.log("JSON.parse()");
+				let obj=Reflect.apply(...proxy_args);
+				if(is_yt_debug_enabled) console.log("request.url");
+				fetch_filter_text_then_data_url(request,obj);
+				return obj;
+			}
+		});
+		let ret;
+		try {
+			if(onfulfilled) {
+				ret=onfulfilled(response_text);
+			} else {
+				ret=response_text;
+			}
+		} catch(err) {
+			if(on_rejected) return on_rejected(err);
+			throw err;
+		} finally {
+			JSON.parse=original_json_parse;
+		}
+		return ret;
+	}
+	/**
+	 * @arg {string|URL|Request} request
+	 * @arg {{}|undefined} options
+	 * @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
+	 * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
+	 */
+	function bind_promise_handler(request,options,onfulfilled,onrejected) {
+		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
+		let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
+		return ret;
+	}
+	/**
+	 * @arg {string|URL|Request} request
+	 * @arg {{}|undefined} options
+	 * @arg {Promise<any>} ov
+	 * @return {Promise<any>}
+	 */
+	function handle_fetch_response_2(request,options,ov) {
+		return {
+			/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
+			then(onfulfilled,onrejected) {
+				return ov.then(bind_promise_handler(request,options,onfulfilled,onrejected));
+			},
+			/**@type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
+			catch(onrejected) {
+				return ov.catch(onrejected);
+			},
+			finally(onfinally) {
+				return ov.finally(onfinally);
+			},
+			[Symbol.toStringTag]: "Promise",
+		};
+	}
+	/**
+	 * @arg {string|URL|Request} request
+	 * @arg {{}|undefined} options
+	 * @arg {Response} response
+	 * @returns {Response}
+	 */
+	function fetch_promise_handler(request,options,response) {
+		/** @type {["text"]} */
+		let handled_keys=["text"];
+		class FakeResponse {
+			text() {
+				if(is_yt_debug_enabled) console.log("response.text()");
+				return handle_fetch_response_2(request,options,response.text());
+			}
+		}
+		let fake_res=new FakeResponse;
+		/** @type {any} */
+		let any_x=fake_res;
+		/** @type {Response} */
+		let fake_res_t=any_x;
+		return new Proxy(fake_res_t,{
+			get(_obj,key,_proxy) {
+				for(let i=0;i<handled_keys.length;i++) {
+					if(key in fake_res) {
+						if(key==="text") {
+							return fake_res[key];
+						} else {
+							console.log("need new case for new key on fake Response");
+							debugger;
+						}
+					}
+				}
+				return Reflect.get(response,key);
+			}
+		});
+	}
+	/**
+	 * @arg {string|URL|Request} user_request @arg {RequestInit} [request_init]
+	 * @returns {Promise<Response>}
+	*/
+	function fetch_inject(user_request,request_init) {
+		if(!original_fetch) throw new Error("No original fetch");
+		x: if(request_init) {
+			if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
+			console.log("[fetch_request_init_data]",user_request,request_init);
+		}
+		if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
+			return original_fetch(user_request,request_init);
+		}
+		let ret=original_fetch(user_request,request_init);
+		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
+		return ret_1;
+	}
+	/**
+	 * @arg {[()=>DataResponsePageType, object, []]} apply_args
+	 */
+	function do_proxy_call_getInitialData(apply_args) {
+		return yt_handlers.on_initial_data(apply_args);
+	}
+	function modify_global_env() {
+		/** @type {Map<string, Blob | MediaSource>}*/
+		let created_blobs=new Map;
+		inject_api_yt.created_blobs=created_blobs;
+		/** @type {Set<string>}*/
+		let active_blob_set=new Set;
+		inject_api_yt.active_blob_set=active_blob_set;
+		URL.createObjectURL=new Proxy(URL.createObjectURL,{
+			/**
+			 * @arg {typeof URL["createObjectURL"]} target
+			 * @arg {typeof URL} thisArg
+			 * @arg {[Blob | MediaSource]} args
+			*/
+			apply(target,thisArg,args) {
+				let [url_source,...rest]=args;
+				if(rest.length>0) {
+					leftover_args.push([target,thisArg,rest]);
+				}
+				blob_create_args_arr.push(url_source);
+				let ret=Reflect.apply(target,thisArg,args);
+				created_blobs.set(ret,url_source);
+				active_blob_set.add(ret);
+				return ret;
+			}
+		});
+		URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
+			/**
+			 * @arg {typeof URL["revokeObjectURL"]} target
+			 * @arg {typeof URL} thisArg
+			 * @arg {[string]} args
+			*/
+			apply(target,thisArg,args) {
+				let val=args[0];
+				active_blob_set.delete(val);
+				return Reflect.apply(target,thisArg,args);
+			}
+		});
+		original_fetch=fetch;
+		window.fetch=fetch_inject;
+		fetch_inject.__proxy_target__=original_fetch;
+		let navigator_sendBeacon=navigator.sendBeacon;
+		navigator.sendBeacon=function(...args) {
+			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
+				return true;
+			}
+			console.log("send_beacon",args[0]);
+			return navigator_sendBeacon.call(this,...args);
+		};
+	}
+	/** @arg {YTNavigateFinishEvent} event */
+	function log_page_type_change(event) {
+		let {detail}=event;
+		if(!detail) return;
+		yt_handlers.on_page_type_changed(detail);
+	}
+	on_yt_navigate_finish.push(log_page_type_change);
 }
 
 function get_exports() {
@@ -3252,6 +3292,10 @@ const general_service_state={
 	premium_membership: null,
 };
 class CsiService {
+	/** @arg {ServiceResolver<any, any>} resolver */
+	constructor(resolver) {
+		this.resolver=resolver;
+	}
 	data={
 		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
 		yt_fn: null,
@@ -3311,9 +3355,13 @@ class CsiService {
 	}
 }
 
-const csi_service=new CsiService;
-
 class ECatcherService {
+	/**
+	 * @param {ServiceResolver<any,any>} res
+	 */
+	constructor(res) {
+		this.res=res;
+	}
 	data={
 		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
 		client: null,
@@ -3371,9 +3419,13 @@ class ECatcherService {
 	}
 }
 
-const e_catcher_service=new ECatcherService;
-
 class GFeedbackService {
+	/**
+	 * @param {ServiceResolver<any,any>} service_resolver
+	 */
+	constructor(service_resolver) {
+		this.resolver=service_resolver;
+	}
 	data={
 		/** @type {number[]|null} */
 		e: null,
@@ -3395,7 +3447,7 @@ class GFeedbackService {
 					let new_expected=[];
 					this.data.e=param.value.split(",").map(e => parseInt(e,10));
 					this.data.e.forEach(e => {
-						for(let known of e_catcher_service.data.expected_client_values.fexp) {
+						for(let known of this.resolver.get("e_catcher_service").data.expected_client_values.fexp) {
 							if(known.includes(e)) return;
 						}
 						new_expected.push(e);
@@ -3424,9 +3476,13 @@ class GFeedbackService {
 	}
 }
 
-const g_feedback_service=new GFeedbackService;
-
 class GuidedHelpService {
+	/**
+	 * @param {ServiceResolver<any,any>} res
+	 */
+	constructor(res) {
+		this.res=res;
+	}
 	data={
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
@@ -3449,30 +3505,35 @@ class GuidedHelpService {
 	}
 }
 
-const guided_help_service=new GuidedHelpService;
 
 class TrackingServices {
+	/**
+	 * @param {ServiceResolver<any,any>} res
+	 */
+	constructor(res) {
+		this.res=res;
+	}
 	/**
 	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
 	 */
 	on_csi_service(service) {
-		csi_service.on_params(service.params);
+		this.res.get("csi_service").on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
 	on_e_catcher_service(service) {
-		e_catcher_service.on_params(service.params);
+		this.res.get("e_catcher_service").on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
 	on_g_feedback_service(service) {
-		g_feedback_service.on_params(service.params);
+		this.res.get("g_feedback_service").on_params(service.params);
 	}
 	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
-		guided_help_service.on_params(service.params);
+		this.res.get("guided_help_service").on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
@@ -3506,12 +3567,12 @@ class TrackingServices {
 		seen_map.clear();
 	}
 }
-const service_tracking=new TrackingServices;
-
-const log_tracking_params=false;
-const log_click_tracking_params=false;
 
 class HandleTypes {
+	/** @arg {any} res */
+	constructor(res) {
+		this.res=res;
+	}
 	/**
 	 * @param {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
 	 */
@@ -3674,7 +3735,7 @@ class HandleTypes {
 		if(context.mainAppWebResponseContext.loggedOut) {
 			general_service_state.logged_in=false;
 		}
-		service_tracking.set_service_params(context.serviceTrackingParams);
+		this.res.get("service_tracking").set_service_params(context.serviceTrackingParams);
 	}
 	/**
 	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
@@ -3728,7 +3789,7 @@ class HandleTypes {
 			debugger;
 		}
 		let data=renderer.itemSectionRenderer;
-		if(log_tracking_params) console.log("tp",data.trackingParams);
+		if(this.res.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			let ok_first=Object.keys(content_item)[0];
@@ -3754,7 +3815,7 @@ class HandleTypes {
 		if(!data) {
 			debugger;
 		}
-		if(log_tracking_params) console.log("tp",data.trackingParams);
+		if(this.res.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			if("itemSectionRenderer" in content_item) {
@@ -3879,7 +3940,7 @@ class HandleTypes {
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
 		let data=content;
-		if(log_tracking_params) console.log("tp",data.trackingParams);
+		if(this.res.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		if(data.contents) {
 			this.BrowseResponseContentContents(data.contents);
 		}
@@ -4007,7 +4068,7 @@ class HandleTypes {
 	 */
 	endpoint(endpoint) {
 		if("clickTrackingParams" in endpoint) {
-			if(log_click_tracking_params) console.log("ctp",endpoint.clickTrackingParams);
+			if(this.res.get_param("log_click_tracking_params")) console.log("ctp",endpoint.clickTrackingParams);
 		} else {
 			console.log(endpoint);
 			debugger;
