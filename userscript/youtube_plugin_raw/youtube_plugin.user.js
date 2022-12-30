@@ -3693,7 +3693,9 @@ class HandleTypes {
 	 */
 	pageIntroductionRenderer(item) {
 		let data=item.pageIntroductionRenderer;
-		if(data)
+		if(data.headerText.runs[0].text!=="Control your download settings") {
+			debugger;
+		}
 		console.log("pageIntroductionRenderer",data);
 	}
 	/**
