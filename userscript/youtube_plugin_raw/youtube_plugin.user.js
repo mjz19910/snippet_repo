@@ -508,12 +508,10 @@ class VolumeRange {
 			ytd_app.volume_range=volume_range;
 		}
 	}
-	/**
-	 * @arg {number} min
+	/** @arg {number} min
 	 * @arg {number} max
 	 * @arg {number} overdrive
-	 * @arg {AudioGainController} gain_controller
-	 */
+	 * @arg {AudioGainController} gain_controller */
 	constructor(min,max,overdrive,gain_controller) {
 		this.use_cache=true;
 		this.max=max;
@@ -521,9 +519,7 @@ class VolumeRange {
 		this.overdrive=overdrive;
 		this.gain_controller=gain_controller;
 	}
-	/**
-	 * @arg {number} gain
-	 */
+	/** @arg {number} gain */
 	setGain(gain) {
 		this.updateRangeElement(gain);
 		this.gain_controller.setGain(gain);
@@ -545,9 +541,7 @@ class VolumeRange {
 		return c_gain_1;
 	}
 	max_compressor_reduction=-0.00011033167538698763;
-	/**
-	 * @arg {KeyboardEvent} event
-	 */
+	/** @arg {KeyboardEvent} event */
 	onKeyDown(event) {
 		if(!this.range_element) return;
 		this.gain_controller.last_event=event;
@@ -571,9 +565,7 @@ class VolumeRange {
 		if(!this.range_element) return;
 		this.range_element.value=""+Math.floor(this.max*new_gain);
 	}
-	/**
-	 * @arg {CustomEvent<{filter_gain: number|undefined}>} event
-	 */
+	/** @arg {CustomEvent<{filter_gain: number|undefined}>} event */
 	onStateChange(event) {
 		if(event.detail.filter_gain==void 0) {
 			this.gain_controller.setGain(1);
@@ -583,9 +575,7 @@ class VolumeRange {
 		this.gain_controller.setGain(event.detail.filter_gain);
 		this.updateRangeElement(event.detail.filter_gain);
 	}
-	/**
-	 * @arg {Element} view_parent
-	 */
+	/** @arg {Element} view_parent */
 	attach_to_element(view_parent) {
 		if(!this.view_div) {
 			let element=document.getElementById("rh_css");
@@ -691,9 +681,7 @@ class PropertyHandler {
 	get() {
 		return this.override_value.value;
 	}
-	/**
-	 * @arg {any} value
-	 */
+	/** @arg {any} value */
 	set(value) {
 		if(value===void 0||value===null) {
 			this.override_value.value=value;
@@ -740,10 +728,8 @@ class ObjectInfo {
 		this.chunk_end=gr_2;
 		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
-	/**
-	 * @arg {{}} object
-	 * @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function]
-	 */
+	/** @arg {{}} object
+	 * @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function] */
 	keys_of(object,filter_function) {
 		let object_keys=get_keys_of(object);
 		if(filter_function) object_keys=object_keys.filter(filter_function);
@@ -785,10 +771,8 @@ class IterateApiResultBase {
 			this.keys_map.set(i,i);
 		}
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {{}} data
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {{}} data */
 	default_iter(state,data) {
 		if(data===void 0) {
 			return;
@@ -827,10 +811,8 @@ class IterateApiResultBase {
 }
 /** @typedef {{t:FilterHandlers;path:string}} ApiIterateState */
 class YtIterateTarget {
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {AppendContinuationItemsAction} action
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {AppendContinuationItemsAction} action */
 	appendContinuationItemsAction(state,action) {
 		debugger;
 		check_item_keys(state.path,"appendContinuationItemsAction",get_keys_of(action));
@@ -840,10 +822,8 @@ class YtIterateTarget {
 			action.continuationItems=filtered;
 		}
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",get_keys_of(command));
 		if(state.ReloadContinuationItemsCommandData(path,command)) return;
@@ -852,10 +832,8 @@ class YtIterateTarget {
 			command.continuationItems=filtered;
 		}
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));
@@ -884,35 +862,27 @@ class YtIterateTarget {
 		console.log("compactLinkRenderer",state.path,renderer);
 		state.t.run_mc=false;
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {{}} renderer
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {{}} renderer */
 	compactVideoRenderer(state,renderer) {
 		state.path="compactVideoRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {{}} renderer
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {{}} renderer */
 	thumbnailOverlayToggleButtonRenderer(state,renderer) {
 		state.path="thumbnailOverlayToggleButtonRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/**
-	 * @arg {ApiIterateState} state
-	 * @arg {{}} renderer
-	 */
+	/** @arg {ApiIterateState} state
+	 * @arg {{}} renderer */
 	videoRenderer(state,renderer) {
 		state.path="videoRenderer";
 		state.t.iteration.default_iter(state,renderer);
@@ -1084,8 +1054,7 @@ class HandleRendererContentItemArray {
 	 * @arg {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
 	 * @arg {T} arr
-	 * @returns {T}
-	 */
+	 * @returns {T} */
 	replace_array(base,path,arr) {
 		return cast_as(arr.filter((/**@type {typeof arr[number]}*/content_item) => {
 			let keys=get_keys_of(content_item);
@@ -1113,10 +1082,8 @@ class HandleRichGridRenderer {
 	/**@readonly*/
 	entry="richGridRenderer";
 	rendererContentItemArray=new HandleRendererContentItemArray;
-	/**
-	 * @arg {string} path
-	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer
-	 */
+	/** @arg {string} path
+	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",get_keys_of(renderer));
 		if(this.debug) console.log("run handler richGridRenderer");
@@ -1223,10 +1190,8 @@ const decode_protobuf_obj=function make() {
 			return bigint_buf[0];
 		}
 	}
-	/**
-	 * @arg {Uint8Array} buf
-	 * @arg {number} end
-	 */
+	/** @arg {Uint8Array} buf
+	 * @arg {number} end */
 	function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
 		return (buf[end-4]
 			|buf[end-3]<<8
@@ -1484,10 +1449,8 @@ class FilterHandlers {
 		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
-	/**
-	 * @arg {string} path
-	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action
-	 */
+	/** @arg {string} path
+	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action */
 	ReloadContinuationItemsCommandData(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			// /** @type {WatchNextContinuationAction} */
@@ -1514,10 +1477,8 @@ class FilterHandlers {
 		debugger;
 		return false;
 	}
-	/**
-	 * @arg {string} path
-	 * @arg {AppendContinuationItemsAction} action
-	 */
+	/** @arg {string} path
+	 * @arg {AppendContinuationItemsAction} action */
 	AppendContinuationItemsAction(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			// /** @type {WatchNextContinuationAction} */
@@ -1574,10 +1535,8 @@ class FilterHandlers {
 		return this.get_url_type(state,path_parts);
 	}
 	/** @typedef {import("./support/yt_api/_/u/UrlTypes.js").UrlTypes} UrlTypes */
-	/**
-	 * @arg {{}} state
-	 * @arg {string[]} parts
-	 */
+	/** @arg {{}} state
+	 * @arg {string[]} parts */
 	get_url_type(state,parts) {
 		let index=0;
 		const cur_part=parts[index];
@@ -1588,12 +1547,10 @@ class FilterHandlers {
 		}
 		throw new Error("Missing");
 	}
-	/**
-	 * @arg {{}} state
+	/** @arg {{}} state
 	 * @arg {"live_chat"} base
 	 * @arg {string[]} parts
-	 * @arg {number} index
-	 */
+	 * @arg {number} index */
 	get_live_chat_type(state,base,parts,index) {
 		let cur_part=parts[index];
 		switch(cur_part) {
@@ -1605,11 +1562,9 @@ class FilterHandlers {
 			name: `${base}.${cur_part}`
 		};
 	}
-	/**
-	 * @arg {{}} state
+	/** @arg {{}} state
 	 * @arg {string[]} parts
-	 * @arg {number} index
-	 */
+	 * @arg {number} index */
 	get_yt_url_type(state,parts,index) {
 		if(parts[1]!=="v1") {
 			debugger;
@@ -1771,10 +1726,8 @@ class FilterHandlers {
 			console.log("api not handled",input.url_type);
 		}
 	}
-	/**
-	 * @arg {string|URL|Request} request
-	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
-	 */
+	/** @arg {string|URL|Request} request
+	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
 	on_handle_api(request,data) {
 		var {req_hr_t,req_parse,debug}=this.on_handle_api_0(request);
 		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,req_parse);
@@ -1796,12 +1749,10 @@ class FilterHandlers {
 		this.on_json_type(res,request,req_parse);
 		this.handle_types.ResponseTypes(res);
 	}
-	/**
-	 * @arg {`https://${string}/${string}?${string}`} req_hr_t
+	/** @arg {`https://${string}/${string}?${string}`} req_hr_t
 	 * @arg {string | URL | Request} request
 	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
-	 * @arg {URL} req_parse
-	 */
+	 * @arg {URL} req_parse */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
@@ -1810,9 +1761,7 @@ class FilterHandlers {
 		return {path_url,url_type};
 	}
 
-	/**
-	 * @arg {string|URL|Request} request
-	 */
+	/** @arg {string|URL|Request} request */
 	on_handle_api_0(request) {
 		const debug=false;
 		function c1() {
@@ -1830,10 +1779,8 @@ class FilterHandlers {
 		return {req_hr_t,req_parse,debug};
 	}
 	guide_item_keys=make_guide_item_keys();
-	/**
-	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path
-	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data
-	 */
+	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path
+	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
@@ -1842,9 +1789,7 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	/** @typedef {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} DataResponsePageType */
-	/**
-	 * @arg {[()=>DataResponsePageType, object, []]} apply_args
-	 */
+	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @type {DataResponsePageType} */
 		let ret=Reflect.apply(...apply_args);
@@ -1928,9 +1873,7 @@ class OnWindowProperty {
 		/**@type {{[str:string]:any}} */
 		this._events={};
 	}
-	/**
-	 * @arg {{ type: any; data?: { type: any; data: any[]; }; }} ev
-	 */
+	/** @arg {{ type: any; data?: { type: any; data: any[]; }; }} ev */
 	dispatchEvent(ev) {
 		let evt=this._events[ev.type].slice();
 		if(evt===undefined) return;
@@ -1941,10 +1884,8 @@ class OnWindowProperty {
 			handler(ev);
 		}
 	}
-	/**
-	 * @arg {string | number} ev_name
-	 * @arg {any} fn
-	 */
+	/** @arg {string | number} ev_name
+	 * @arg {any} fn */
 	removeEventListener(ev_name,fn) {
 		let evt=this._events[ev_name];
 		if(evt===undefined) return;
@@ -1956,10 +1897,8 @@ class OnWindowProperty {
 			}
 		}
 	}
-	/**
-	 * @arg {string} ev_name
-	 * @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn
-	 */
+	/** @arg {string} ev_name
+	 * @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn */
 	addEventListener(ev_name,fn) {
 		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
 	}
@@ -2029,13 +1968,11 @@ class WithGhostSymbol {
 }
 class MKState {
 	[ghost_symbol]=true;
-	/**
-	 * @arg {{}} value
+	/** @arg {{}} value
 	 * @arg {PropertyKey} property_key
 	 * @arg {object} target
 	 * @arg {string} property_path
-	 * @arg {boolean} noisy
-	 */
+	 * @arg {boolean} noisy */
 	constructor(value,target,property_key,property_path,noisy) {
 		this.value=value;
 		this.property_key=property_key;
@@ -2130,17 +2067,13 @@ class CustomEventType {
 class CustomEventTarget {
 	/**@type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
-	/**
-	 * @arg {string} type
-	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
-	 */
+	/** @arg {string} type
+	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
 	addEventListener(type,handler) {
 		(this._events[type]??=[]).push(handler);
 	}
-	/**
-	 * @arg {string} type
-	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
-	 */
+	/** @arg {string} type
+	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
 	removeEventListener(type,handler) {
 		let event_arr=this._events[type];
 		if(!event_arr) return;
@@ -2151,9 +2084,7 @@ class CustomEventTarget {
 			event_arr.splice(i,1);
 		}
 	}
-	/**
-	 * @arg {CustomEventType} event
-	 */
+	/** @arg {CustomEventType} event */
 	dispatchEvent(event) {
 		let msg_arr=this._events[event.type];
 		if(!msg_arr) return;
@@ -2818,8 +2749,7 @@ class AudioGainController {
 	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
 	attached_element_list=[];
 	/**
-	 * @type {MediaElementAudioSourceNode[]}
-	 */
+	 * @type {MediaElementAudioSourceNode[]} */
 	media_element_source_list=[];
 	/**@type {Event|null}*/
 	last_event=null;
@@ -2848,18 +2778,14 @@ class AudioGainController {
 		node.threshold.value=-24;
 		return node;
 	}
-	/**
-	 * @arg {number} gain
-	 */
+	/** @arg {number} gain */
 	setGain(gain) {
 		this.gain_node.gain.value=gain;
 	}
 	getGain() {
 		return this.gain_node.gain.value;
 	}
-	/**
-	 * @arg {HTMLMediaElement[]} media_node_list
-	 */
+	/** @arg {HTMLMediaElement[]} media_node_list */
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
 			let video_element=media_node_list[i];
@@ -2980,8 +2906,7 @@ async function main() {
 	// modify global section
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	/**
-	 * @type {typeof fetch | null}
-	 */
+	 * @type {typeof fetch | null} */
 	let original_fetch=null;
 	fetch_inject.__proxy_target__=window.fetch;
 	modify_global_env();
@@ -3002,13 +2927,11 @@ async function main() {
 			console.log("\t",err);
 		}
 	}
-	/**
-	 * @arg {string|URL|Request} request
+	/** @arg {string|URL|Request} request
 	 * @arg {{}|undefined} options
 	 * @arg {((arg0: any) => any)|undefined|null} onfulfilled
 	 * @arg {((arg0: any) => void)|undefined|null} on_rejected
-	 * @arg {string} response_text
-	 */
+	 * @arg {string} response_text */
 	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
 		let original_json_parse=JSON.parse;
@@ -3037,23 +2960,19 @@ async function main() {
 		}
 		return ret;
 	}
-	/**
-	 * @arg {string|URL|Request} request
+	/** @arg {string|URL|Request} request
 	 * @arg {{}|undefined} options
 	 * @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
-	 * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
-	 */
+	 * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected */
 	function bind_promise_handler(request,options,onfulfilled,onrejected) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 		let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 		return ret;
 	}
-	/**
-	 * @arg {string|URL|Request} request
+	/** @arg {string|URL|Request} request
 	 * @arg {{}|undefined} options
 	 * @arg {Promise<any>} ov
-	 * @return {Promise<any>}
-	 */
+	 * @return {Promise<any>} */
 	function handle_fetch_response_2(request,options,ov) {
 		return {
 			/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
@@ -3070,12 +2989,10 @@ async function main() {
 			[Symbol.toStringTag]: "Promise",
 		};
 	}
-	/**
-	 * @arg {string|URL|Request} request
+	/** @arg {string|URL|Request} request
 	 * @arg {{}|undefined} options
 	 * @arg {Response} response
-	 * @returns {Response}
-	 */
+	 * @returns {Response} */
 	function fetch_promise_handler(request,options,response) {
 		/** @type {["text"]} */
 		let handled_keys=["text"];
@@ -3106,8 +3023,7 @@ async function main() {
 			}
 		});
 	}
-	/**
-	 * @arg {string|URL|Request} user_request @arg {RequestInit} [request_init]
+	/** @arg {string|URL|Request} user_request @arg {RequestInit} [request_init]
 	 * @returns {Promise<Response>}
 	*/
 	function fetch_inject(user_request,request_init) {
@@ -3123,9 +3039,7 @@ async function main() {
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
 	}
-	/**
-	 * @arg {[()=>DataResponsePageType, object, []]} apply_args
-	 */
+	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
 	}
@@ -3411,9 +3325,7 @@ class ECatcherService extends BaseService {
 			],
 		},
 	};
-	/**
-	 * @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParamsType} params
-	 */
+	/** @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParamsType} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3510,9 +3422,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/**
-	 * @arg {import("./support/yt_api/_/g/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params
-	 */
+	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3556,9 +3466,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params
-	 */
+	/** @arg {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params */
 	set_service_params(params) {
 		for(let service_param_list of params) {
 			switch(service_param_list.service) {
@@ -3612,9 +3520,7 @@ function stringify_text_runs(text) {
 }
 
 class HandleTypes extends BaseService {
-	/**
-	 * @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
-	 */
+	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response */
 	WatchResponsePlayer(response) {
 		let data=response;
 		if(data.playerAds) {
@@ -3677,9 +3583,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
-	 */
+	/** @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer */
 	DesktopTopbarRenderer(renderer) {
 		let ok=get_keys_of(renderer.desktopTopbarRenderer);
 		console.log(renderer.desktopTopbarRenderer);
@@ -3691,9 +3595,7 @@ class HandleTypes extends BaseService {
 		"Home",
 		"Subscriptions",
 	];
-	/**
-	 * @arg {import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer
-	 */
+	/** @arg {import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer */
 	FeedTabbedHeaderRenderer(renderer) {
 		let data=renderer.feedTabbedHeaderRenderer;
 		if(
@@ -3708,9 +3610,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
-	 */
+	/** @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj */
 	handleEntityBatchUpdate(obj) {
 		if(get_keys_of(obj)[0]!=="entityBatchUpdate") {
 			console.log("[entity_batch_invalid]",obj);get_keys_of
@@ -3719,9 +3619,7 @@ class HandleTypes extends BaseService {
 		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
 		this.handle_mutations(obj.entityBatchUpdate.mutations);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations
-	 */
+	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations */
 	handle_mutations(mutations) {
 		for(let mut of mutations) {
 			switch(mut.type) {
@@ -3738,9 +3636,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
-	 */
+	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command */
 	reloadContinuationItemsCommand(command) {
 		let data=command.reloadContinuationItemsCommand;
 		for(let item of data.continuationItems) {
@@ -3772,22 +3668,16 @@ class HandleTypes extends BaseService {
 		}
 		this.r.get("service_tracking").set_service_params(context.serviceTrackingParams);
 	}
-	/**
-	 * @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
-	 */
+	/** @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer */
 	playlistVideoListRenderer(renderer) {
 		let data=renderer.playlistVideoListRenderer;
 		console.log("playlist",data.playlistId);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
-	 */
+	/** @arg {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item */
 	pageIntroductionRenderer(item) {
 		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data
-	 */
+	/** @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
 	PageIntroductionRendererData(data) {
 		let ok=get_keys_of(data);
 		if(!has_keys(ok,"headerText,bodyText,pageTitle,headerIcon")) {
@@ -3796,9 +3686,7 @@ class HandleTypes extends BaseService {
 		stringify_text_runs(data.headerText);
 		console.log("PageIntroductionRendererData",data);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
-	 */
+	/** @arg {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer */
 	itemSectionRenderer(renderer) {
 		if(!renderer.itemSectionRenderer) {
 			debugger;
@@ -3842,18 +3730,14 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
-	 */
+	/** @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer */
 	tabRenderer(renderer) {
 		this.trackingParams(renderer.trackingParams);
 		if("sectionListRenderer" in renderer.content) {
 			this.sectionListRenderer(renderer.content);
 		};
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
-	 */
+	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer */
 	twoColumnBrowseResultsRenderer(renderer) {
 		if(get_keys_of(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
 			console.log("[handler_invalid]",renderer);
@@ -3864,18 +3748,14 @@ class HandleTypes extends BaseService {
 			this.tabRenderer(tab.tabRenderer);
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
-	 */
+	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents */
 	BrowseResponseContentContents(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 		if(get_keys_of(contents).length!==1||get_keys_of(contents)[0]!=="twoColumnBrowseResultsRenderer") {
 			console.log("[on_browse_response_contents]",contents);
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
-	 */
+	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata */
 	adLayoutMetadata(metadata) {
 		for(let item of metadata) {
 			switch(item.layoutType) {
@@ -3891,9 +3771,7 @@ class HandleTypes extends BaseService {
 			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata
-	 */
+	/** @arg {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata */
 	adSlotMetadata(metadata) {
 		console.log("ad slot meta pos",metadata.slotType);
 		switch(metadata.slotType) {
@@ -3903,9 +3781,7 @@ class HandleTypes extends BaseService {
 		console.log("ad slot meta slot_id [%s]",metadata.slotId);
 		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
-	 */
+	/** @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
 	adsControlFlowOpportunityReceivedCommand(command) {
 		let ok=filter_out_keys(get_keys_of(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
 		if("adSlotAndLayoutMetadata" in command) {
@@ -3923,9 +3799,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/r/ResponseReceivedActionItem.js").ResponseReceivedActionItem[]} actions
-	 */
+	/** @arg {import("./support/yt_api/_/r/ResponseReceivedActionItem.js").ResponseReceivedActionItem[]} actions */
 	onResponseReceivedActions(actions) {
 		for(let action of actions) {
 			if("adsControlFlowOpportunityReceivedCommand" in action) {
@@ -3946,9 +3820,7 @@ class HandleTypes extends BaseService {
 			};
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar
-	 */
+	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar */
 	sidebar(sidebar) {
 		console.log(sidebar);
 	}
@@ -3992,9 +3864,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @arg {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
-	 */
+	/** @arg {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer */
 	buttonRenderer(renderer) {
 		let ok=get_keys_of(renderer);
 		console.log("renderer.style",renderer.style);
@@ -4015,9 +3885,7 @@ class HandleTypes extends BaseService {
 			this.buttonRenderer(button.buttonRenderer);
 		}
 	}
-	/**
-	 * @arg {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header
-	 */
+	/** @arg {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header */
 	header(header) {
 		if("feedTabbedHeaderRenderer" in header) {
 			this.FeedTabbedHeaderRenderer(header);
@@ -4029,9 +3897,7 @@ class HandleTypes extends BaseService {
 		let ok=get_keys_of(header);
 		console.log("header keys",ok);
 	}
-	/**
-	 * @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
-	 */
+	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer */
 	multiPageMenuRenderer(renderer) {
 		this.header(renderer.header);
 		let ok=filter_out_keys(get_keys_of(renderer),"header,sections,trackingParams".split(","));
@@ -4039,9 +3905,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok,["style"])) return;
 		debugger;
 	}
-	/**
-	 * @arg {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
-	 */
+	/** @arg {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc */
 	guideSubscriptionsSectionRenderer(desc) {
 		let ok=get_keys_of(desc.item);
 		/** @type {keyof typeof desc["item"]} */
@@ -4051,9 +3915,7 @@ class HandleTypes extends BaseService {
 		console.log(desc.key,ok,[fk,first],desc.item);
 	}
 	/** @typedef {{type: "guideSectionRenderer", value: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData}} GuideSectionRendererDataBox */
-	/**
-	 * @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item
-	 */
+	/** @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item */
 	GuideItemType(item) {
 		let ok=get_keys_of(item);
 		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
@@ -4080,9 +3942,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok,["items","trackingParams","formattedTitle"])) return;
 		console.log(box.type,ok,[fk,first],box.value);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} endpoint
-	 */
+	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} endpoint */
 	endpoint(endpoint) {
 		if("clickTrackingParams" in endpoint) {
 			this.clickTrackingParams(endpoint.clickTrackingParams);
@@ -4104,15 +3964,11 @@ class HandleTypes extends BaseService {
 			this.commandMetadata(endpoint.commandMetadata);
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint
-	 */
+	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint */
 	watchEndpoint(endpoint) {
 		console.log(endpoint);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data
-	 */
+	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data */
 	commandMetadata(data) {
 		switch(data.webCommandMetadata.webPageType) {
 			case "WEB_PAGE_TYPE_BROWSE": break;
@@ -4125,9 +3981,7 @@ class HandleTypes extends BaseService {
 		};
 
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
-	 */
+	/** @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint */
 	browseEndpoint(endpoint) {
 		parse_browse_id(endpoint.browseId);
 		if("params" in endpoint) {
@@ -4149,31 +4003,23 @@ class HandleTypes extends BaseService {
 		console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
 		debugger;
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem[]} ves
-	 */
+/** @arg {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem[]} ves */
 	graftedVes(ves) {
 		for(let ve of ves) {
 			this.GraftedVeItem(ve);
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem} item
-	 */
+/** @arg {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem} item */
 	GraftedVeItem(item) {
 		console.log("csn",item.csn);
 		this.veData(item.veData);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/VeData.js").VeData} data
-	 */
+/** @arg {import("./support/yt_api/_/b/VeData.js").VeData} data */
 	veData(data) {
 		this.trackingParams(data.trackingParams);
 		console.log(data);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data
-	 */
+	/** @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data */
 	BrowsePageResponse(data) {
 		let ok=cast_as(filter_out_keys(get_keys_of(data),"page,endpoint,response,url".split(",")));
 		switch(ok[0]) {
@@ -4211,9 +4057,7 @@ class HandleTypes extends BaseService {
 	WatchPageResponse(data) {
 		this.WatchResponsePlayer(data.playerResponse);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data
-	 */
+	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data */
 	PlaylistPageResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
@@ -4225,9 +4069,7 @@ class HandleTypes extends BaseService {
 		console.log("[new_page]",data.url);
 		debugger;
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
-	 */
+	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	SettingsPageResponse(data) {
 		this.endpoint(data.endpoint);
 		this.SettingsResponseContent(data.response);
@@ -4251,9 +4093,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data
-	 */
+	/** @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data */
 	ShortsPageResponse(data) {
 		this.endpoint(data.endpoint);
 		console.assert(data.page==="shorts");
@@ -4266,9 +4106,7 @@ class HandleTypes extends BaseService {
 	ShortsResponse(response) {
 		console.log(response);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} data
-	 */
+	/** @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} data */
 	ChannelPageResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
@@ -4331,9 +4169,7 @@ class HandleTypes extends BaseService {
 	xx(data) {
 		console.log(data);
 	}
-	/**
-	 * @arg {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data
-	 */
+	/** @arg {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data */
 	withGeneralContext(data) {
 		this.responseContext(data.responseContext);
 	}
@@ -4356,9 +4192,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok_1,["clickTrackingParams","openPopupAction"])) return;
 		debugger;
 	}
-	/**
-	 * @arg {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res
-	 */
+	/** @arg {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res */
 	notification_get_notification_menu_t(res) {
 		for(let action of res.json.actions) {
 			this.OpenPopupActionItem(action);
@@ -4368,9 +4202,7 @@ class HandleTypes extends BaseService {
 		console.log(ok);
 		debugger;
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
-	 */
+	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data */
 	AttGetV(data) {
 		let ok=get_keys_of(data);
 		if(eq_keys(ok,["responseContext","challenge","bgChallenge"])) return;
@@ -4392,9 +4224,7 @@ class HandleTypes extends BaseService {
 		console.log(data);
 		debugger;
 	}
-	/**
-	 * @arg {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
-	 */
+	/** @arg {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide */
 	GuideJsonType(guide) {
 		for(let item of guide.items) {
 			this.GuideItemType(item);
@@ -4406,39 +4236,27 @@ class HandleTypes extends BaseService {
 		console.log(ok);
 		debugger;
 	}
-	/**
-	 * @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
-	 */
+	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json */
 	YtApiNext(json) {
 		console.log(json);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
-	 */
+	/** @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json */
 	AccountMenuJson(json) {
 		console.log(json);
 	}
-	/**
-	 * @arg {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data
-	 */
+	/** @arg {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data */
 	richItemRenderer(data) {
 		console.log(data);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/r/ReelWatchEndpointData.js").ReelWatchEndpointData} data
-	 */
+	/** @arg {import("./support/yt_api/_/r/ReelWatchEndpointData.js").ReelWatchEndpointData} data */
 	reelWatchEndpoint(data) {
 		console.log(data);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data
-	 */
+	/** @arg {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data */
 	playerResponse(data) {
 		console.log(data);
 	}
-	/**
-	 * @arg {{ responseContext: {}; entries: {}[]; trackingParams: string; }} data
-	 */
+	/** @arg {{ responseContext: {}; entries: {}[]; trackingParams: string; }} data */
 	reelWatchSequenceResponse(data) {
 		console.log(data);
 	}
@@ -4468,9 +4286,7 @@ class HandleTypes extends BaseService {
 			console.log(nav_load_str);
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
-	 */
+	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data */
 	SettingsResponseContent(data) {
 		this.responseContext(data.responseContext);
 		this.TwoColumnBrowseResultsRenderer(data.contents);
@@ -4482,9 +4298,7 @@ class HandleTypes extends BaseService {
 	topbar(topbar) {
 		this.DesktopTopbarRenderer(topbar);
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
-	 */
+	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents */
 	TwoColumnBrowseResultsRenderer(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
@@ -4494,9 +4308,7 @@ class HandleTypes extends BaseService {
 			console.log(option);
 		}
 	}
-	/**
-	 * @arg {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer
-	 */
+	/** @arg {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer */
 	settingsOptionsRenderer(renderer) {
 		let data=renderer.settingsOptionsRenderer;
 		if(get_keys_of(data).length!==2) {
@@ -4510,23 +4322,17 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/ConnectedAppRendererData.js").ConnectedAppRendererData} data
-	 */
+/** @arg {import("./support/yt_api/_/i/ConnectedAppRendererData.js").ConnectedAppRendererData} data */
 	ConnectedAppRendererData(data) {
 		this.connectButton(data.connectButton);
 		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
 		console.log(data);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj
-	 */
+/** @arg {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj */
 	connectButton(obj) {
 		console.log(obj);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data
-	 */
+/** @arg {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
 	connectedAppRenderer(data) {
 		this.ConnectedAppRendererData(data.connectedAppRenderer);
 		if(eq_keys(get_keys_of(data),["connectedAppRenderer"])) return;
@@ -4535,28 +4341,20 @@ class HandleTypes extends BaseService {
 		console.log(data);
 		debugger;
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/ShelfRenderer.js").ShelfRenderer} data
-	 */
+/** @arg {import("./support/yt_api/_/i/ShelfRenderer.js").ShelfRenderer} data */
 	shelfRenderer(data) {
 		console.log(data);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data
-	 */
+/** @arg {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data */
 	continuationItemRenderer(data) {
 		this.ContinuationItemRendererData(data.continuationItemRenderer);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data
-	 */
+/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data */
 	ContinuationItemRendererData(data) {
 		this.continuationEndpoint(data.continuationEndpoint);
 		console.log(data);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/c/ContinuationEndpoint.js").ContinuationEndpoint} endpoint
-	 */
+/** @arg {import("./support/yt_api/_/c/ContinuationEndpoint.js").ContinuationEndpoint} endpoint */
 	continuationEndpoint(endpoint) {
 		this.clickTrackingParams(endpoint.clickTrackingParams);
 	}
