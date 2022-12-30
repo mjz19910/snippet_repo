@@ -1650,16 +1650,19 @@ class HandlerBase {
 	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
 	 */
 	adsControlFlowOpportunityReceivedCommand(command) {
-		if(has_keys(Object.keys(command),"opportunityType,isInitialLoad,adSlotAndLayoutMetadata,enablePacfLoggingWeb")) {
-			console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
+		let ok=filter_out_keys(Object.keys(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
+		if("adSlotAndLayoutMetadata" in command) {
 			for(let item of command.adSlotAndLayoutMetadata) {
 				this.adLayoutMetadata(item.adLayoutMetadata);
 				this.adSlotMetadata(item.adSlotMetadata);
 			}
+		}
+		if(eq_keys(ok,[])||eq_keys(ok,["adSlotAndLayoutMetadata"])) {
+			console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
 			console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
 			if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
 		} else {
-			console.log("[%s] %o",Object.keys(command).join(","),command);
+			console.log("[%s] %o",ok.join(","),command);
 			debugger;
 		}
 	}
@@ -1675,13 +1678,88 @@ class HandlerBase {
 			let bin=dec.decodeArrayBuffer(str);
 			return decode_protobuf(bin);
 		}
+		/** @template T @arg {T|undefined} val @returns {T} */
+		function non_null(val) {
+			if(val===void 0) throw new Error();
+			return val;
+		}
 		/**
 		 * @param {Uint8Array} buffer
 		 */
 		function decode_protobuf(buffer) {
-			console.log(buffer[0]);
+			let i=0;
+			let loop_count=0;
+			/** @type {[number,number,number[]][]} */
+			let data=[];
+			let mode="initial";
+			/** @type {[offset: number,length: number][]} */
+			let stack=[[0,buffer.length]];
+			let data_stack=[];
+			let next_mode=null;
+			x: for(;loop_count<8;loop_count++){
+				switch(mode) {
+					case "initial": break;
+					case "uint32": 
+					if(next_mode!==null) {
+						let int_part=buffer[i];
+						data_stack.push(int_part);
+						mode=next_mode;
+						next_mode=null;
+					} else {
+						throw new Error("Don't know where to go");
+					} continue x;
+					case "DateTime": {
+						let mode_len=data_stack.pop();
+						if(!mode_len) throw new Error("Missing L-delim length");
+						stack.push([i,mode_len]);
+						mode="DateTimeInner";
+					} break;
+					case "DateTimeInner": break;
+				}
+				let [cur_off,cur_len]=non_null(stack.at(-1));
+				console.log('off',cur_len,cur_off);
+				if(i >= cur_off+cur_len) {
+					debugger;
+				}
+				let cur_byte=buffer[i];
+				let wireType=cur_byte&7;
+				let fieldId=buffer[i]>>>3;
+				/** @type {number[]} */
+				let first_num=[];
+				console.log("field",fieldId,"type",wireType);
+				switch(wireType) {
+					case 0:
+						i++;
+						first_num.push(buffer[i]);
+						console.log("\"field %o: VarInt\": %o",fieldId,buffer[i]);
+						i++;
+					break;
+					case 2: if(mode==="initial") {
+						i++;
+						mode="uint32";
+						next_mode="DateTime";
+						continue x;
+					} else {
+						console.log("mode 2 and not able to handle it");
+						break x;
+					}
+					// fixed32
+					case 3: for(let u=0;u<4;u++) {
+						i++;
+						first_num.push(buffer[i]);
+					}; break;
+					default: break x;
+				}
+				data.push([fieldId,wireType,first_num]);
+			}
+			let [first,...rest]=data;
+			let [fieldId,wireType,[first_num,...first_left]]=first;
 			return {
-				first: buffer[0],
+				first_w: wireType,
+				first_f: fieldId,
+				first_num,
+				first_left,
+				rest,
 			};
 		}
 		for(let item of metadata) {
@@ -1689,7 +1767,10 @@ class HandlerBase {
 				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
 				default: debugger;
 			}
-			console.log("log data entry [%o]",decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry));
+			let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
+			console.log("log data entry [%o]",{w:dec.first_w,f:dec.first_f},dec.first_num);
+			console.log("log data entry rest",...dec.rest);
+			console.log(item.adLayoutLoggingData.serializedAdServingDataEntry);
 		}
 	}
 	/**

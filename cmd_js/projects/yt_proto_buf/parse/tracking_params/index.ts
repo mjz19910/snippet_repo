@@ -14,7 +14,6 @@ import {r,__dirname} from "./r.js";
 function run() {
 	parse_types();
 }
-run();
 
 let pad=""
 let pad_with="  ";
@@ -398,7 +397,7 @@ export async function parse_types(): Promise<void> {
 	await useTypeA(loaded_types);
 }
 async function load_types() {
-	let root=await protobufjs.load(r(`protobuf/tracking_params.proto`));
+	let root=await protobufjs.load(r(`parse/tracking_params/protobuf/tracking_params.proto`));
 	const token_buffer=await get_token_data_from_file(r(`binary/tracking_params.bin`));
 	return {root,token_buffer};
 }
