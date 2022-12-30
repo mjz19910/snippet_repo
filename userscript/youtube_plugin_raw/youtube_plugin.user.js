@@ -2293,9 +2293,7 @@ class FilterHandlers {
 			case "next": this.process_next_response(res.json); return true;
 			case "browse": this.handle_t.BrowseResponseContent(res.json); return true;
 			case "account.account_menu": this.on_account_menu(res.json); return true;
-			default:
-				console.log("missed api type",res);
-				throw new Error("FIXME");
+			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
 	/**
