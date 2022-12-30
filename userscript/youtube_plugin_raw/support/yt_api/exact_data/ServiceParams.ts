@@ -1,6 +1,6 @@
-import {KVStore as KeyValueStore} from "../_/a/KVStore";
+import {KVStore} from "../_/k/KVStore.js";
 
 export type ServiceParams<T>={
 	service: T;
-	params: KeyValueStore[];
+	params: KVStore[];
 };
