@@ -4092,7 +4092,7 @@ class HandleTypes {
 	 */
 	SettingsPageResponse(data) {
 		this.endpoint(data.endpoint);
-		this.response(data.response);
+		this.SettingsResponseContent(data.response);
 		let split_parts=split_string(data.url,"/");
 		switch(split_parts.length) {
 			case 2: switch(split_parts[1]) {
@@ -4120,13 +4120,11 @@ class HandleTypes {
 		console.assert(data.page==="shorts");
 		this.playerResponse(data.playerResponse);
 		this.reelWatchSequenceResponse(data.reelWatchSequenceResponse);
-		this.response(data.response);
+		this.ShortsResponse(data.response);
 		console.log("[shorts_url]",data.url);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/j/JsonDataResponseType").JsonDataResponseType} response
-	 */
-	response(response) {
+	/** @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} response */
+	ShortsResponse(response) {
 		console.log(response);
 	}
 	/**
@@ -4318,6 +4316,12 @@ class HandleTypes {
 				// this.endpoint(detail.endpoint);
 			} break;
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
+	 */
+	SettingsResponseContent(data) {
+		console.log(data);
 	}
 }
 
