@@ -4,7 +4,7 @@ export type PaidContentEndpoint={
 		webCommandMetadata: {
 			rootVe: 83769;
 			url: string;
-			webPageType: 'WEB_PAGE_TYPE_UNKNOWN';
+			webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 		};
 	};
 	urlEndpoint: {

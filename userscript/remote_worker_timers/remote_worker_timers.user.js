@@ -13,7 +13,7 @@
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 (function() {
-	'use strict';
+	"use strict";
 	const LOG_LEVEL_CRIT=1;
 	const LOG_LEVEL_ERROR=2;
 	const LOG_LEVEL_WARN=3;
@@ -43,7 +43,7 @@
 		value=TIMER_REPEATING;
 	}
 	/**@typedef {TimerTagSingle|TimerTagRepeating} TimerTagValues */
-	/**@typedef {TimerTagValues['value']} TimerTag */
+	/**@typedef {TimerTagValues["value"]} TimerTag */
 	class TimerState {
 		/**
 		 * @arg {TimerTag} tag
@@ -330,7 +330,7 @@
 			/**@type {Map<number, ActiveTimerState>} */
 			this.m_active_state_map=new Map;
 		}
-		/**@arg {TimerApi['set_names']|TimerApi['clear_names']} names */
+		/**@arg {TimerApi["set_names"]|TimerApi["clear_names"]} names */
 		set_map_names(names) {
 			this.add_one_name(names.single);
 			this.add_one_name(names.repeating);
@@ -341,7 +341,7 @@
 		add_one_name(key) {
 			this.m_api_map.set(key,window[key]);
 		}
-		/**@arg {TimerApi['set_names']} set @arg {TimerApi['clear_names']} clear */
+		/**@arg {TimerApi["set_names"]} set @arg {TimerApi["clear_names"]} clear */
 		set_api_names(set,clear) {
 			this.set_map_names(set);
 			this.set_map_names(clear);
@@ -355,7 +355,7 @@
 		set_worker_state(worker_state_value) {
 			this.worker_state=worker_state_value;
 		}
-		/** @returns {asserts this is {worker_state: NonNullable<Timer['worker_state']>}} */
+		/** @returns {asserts this is {worker_state: NonNullable<Timer["worker_state"]>}} */
 		assert_valid_worker() {
 			assert_non_null(this.worker_state);
 		}
@@ -387,7 +387,7 @@
 		activate_state(state) {
 			let id=state.id;
 			if(!this.m_active_state_map.has(id)) {
-				if(typeof state.target_fn==='string') {
+				if(typeof state.target_fn==="string") {
 					let func=new Function(state.target_fn);
 					let active_state=new ActiveTimerState(id,state.type,state.repeat,func,state.target_args,state.timeout);
 					this.m_active_state_map.set(id,active_state);
@@ -429,8 +429,8 @@
 				case TIMER_REPEATING: msg_id=g_timer_api.worker.set.repeating; break;
 			}
 			if(!msg_id) {
-				console.assert(false,'Unknown timer_tag',tag);
-				console.info('TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
+				console.assert(false,"Unknown timer_tag",tag);
+				console.info("TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o",TIMER_SINGLE,TIMER_REPEATING,tag);
 				return;
 			}
 			this.worker_state.typedPostMessage({
@@ -480,10 +480,10 @@
 					break;
 				}
 				case ReplyToLocalTimer: {
-					console.assert(false,'on_result timer_result_msg needs a handler for ReplyMessage2');
+					console.assert(false,"on_result timer_result_msg needs a handler for ReplyMessage2");
 				} break;
 				default:
-					console.assert(false,'on_result timer_result_msg needs a handler for',msg);
+					console.assert(false,"on_result timer_result_msg needs a handler for",msg);
 			}
 		}
 		/**
@@ -494,7 +494,7 @@
 				case g_timer_api.reply.clear.single: break;
 				case g_timer_api.reply.clear.repeating: break;
 				default: {
-					console.log('reply for',msg);
+					console.log("reply for",msg);
 				} break;
 			}
 		}
@@ -786,7 +786,7 @@
 			this.worker.onmessage=function onmessage(e) {
 				let worker_state=WorkerState.get_global_state();
 				if(!worker_state) {
-					console.log('lost worker state');
+					console.log("lost worker state");
 					this.terminate();
 					return;
 				}
@@ -876,7 +876,7 @@
 		 * @returns {msg is {for_worker_state: boolean}}
 		 */
 		is_message_for(msg) {
-			return 'for_worker_state' in msg&&msg.for_worker_state;
+			return "for_worker_state" in msg&&msg.for_worker_state;
 		}
 		/**
 		 * @param {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg
@@ -1059,10 +1059,10 @@
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
 				window.setTimeout=setTimeout_global;
-				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN,"lost worker_state in timer");
 				return setTimeout_global(handler,timeout,...target_args);
 			}
-			if(typeof timeout==='undefined') timeout=0;
+			if(typeof timeout==="undefined") timeout=0;
 			return worker_state.timer.set(TIMER_SINGLE,handler,timeout,target_args);
 		}
 		const clearTimeout_global=clearTimeout;
@@ -1070,7 +1070,7 @@
 		function remoteClearTimeout(id) {
 			if(!worker_state) {
 				window.clearTimeout=clearTimeout_global;
-				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN,"lost worker_state in timer");
 				return clearTimeout_global(id);
 			}
 			if(id) {
@@ -1085,10 +1085,10 @@
 		function remoteSetInterval(handler,timeout=0,...target_args) {
 			if(!worker_state) {
 				window.setInterval=setInterval_global;
-				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN,"lost worker_state in timer");
 				return setInterval_global(handler,timeout,...target_args);
 			}
-			if(typeof timeout==='undefined') timeout=0;
+			if(typeof timeout==="undefined") timeout=0;
 			return worker_state.timer.set(TIMER_REPEATING,handler,timeout,target_args);
 		}
 		const clearInterval_global=clearInterval;
@@ -1096,7 +1096,7 @@
 		function remoteClearInterval(id) {
 			if(!worker_state) {
 				window.clearInterval=clearInterval_global;
-				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN,"lost worker_state in timer");
 				return clearInterval_global(id);
 			}
 			worker_state.timer.clear(TIMER_REPEATING,id);
@@ -1162,7 +1162,7 @@
 		const cached_messages=[];
 		/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
 		function assert_non_nullable_object(value) {
-			if(typeof value!=='object') throw 1;
+			if(typeof value!=="object") throw 1;
 			if(value===null) throw 1;
 		}
 		assert_non_nullable_object;
@@ -1217,7 +1217,7 @@
 					});
 				} break;
 				case g_timer_api.worker.set.single: {
-					console.log('worker set single',msg.remote_id,msg.timeout);
+					console.log("worker set single",msg.remote_id,msg.timeout);
 					let local_id=remote_worker_state.set(TIMER_SINGLE,msg.remote_id,msg.timeout);
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
@@ -1226,7 +1226,7 @@
 					});
 				} break;
 				case g_timer_api.worker.set.repeating: {
-					console.log('worker set repeating',msg.remote_id,msg.timeout);
+					console.log("worker set repeating",msg.remote_id,msg.timeout);
 					let local_id=remote_worker_state.set(TIMER_REPEATING,msg.remote_id,msg.timeout);
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
@@ -1338,7 +1338,7 @@
 				if(!local_state) return;
 				this.validate_state(local_state);
 				if(!local_state.active) {
-					console.log('fire inactive',remote_id,local_state);
+					console.log("fire inactive",remote_id,local_state);
 					return;
 				};
 				let tag=local_state.type;
@@ -1478,7 +1478,7 @@
 		onmessage=message_without_types_handler;
 	}
 	function on_remote_worker_active() {
-		console.log('setTimeout activation moved to Worker thread successfully');
+		console.log("setTimeout activation moved to Worker thread successfully");
 	}
 	let move_timers_to_worker=new Promise(set_timeout_on_remote_worker_executor);
 	move_timers_to_worker.then(on_remote_worker_active);

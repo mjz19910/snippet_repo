@@ -108,7 +108,7 @@ function main() {
 		}
 	}
 	function react_find_all() {
-		var cmap=new Map
+		var c_map=new Map
 			,fid=0
 			,emp=new Set();
 		var js;
@@ -165,7 +165,7 @@ function main() {
 			}();
 			ret_src=o;
 			/** @type {Map<string,{}>} */
-			var retcp=new Map;
+			var ret_cp=new Map;
 			if(st.ns>0) {
 				st.ns--;
 				if(typeof ret_src!="object") {
@@ -186,20 +186,20 @@ function main() {
 				}
 				if(ret_src instanceof HTMLElement) {
 					var fc=fid++;
-					var dname=o.id? "dom_"+o.id:"dom_gen_id_"+(fc);
-					st.dom_map.set(o,[dname,fc]);
-					return dname;
+					var d_name=o.id? "dom_"+o.id:"dom_gen_id_"+(fc);
+					st.dom_map.set(o,[d_name,fc]);
+					return d_name;
 				}
 				if(ret_src instanceof Element&&(!ret_src==st.target)) {
 					var fc=fid++;
-					var dname=ret_src.id? "dom_"+ret_src.id:"dom_gen_id_"+(fc);
-					st.dom_map.set(ret_src,[dname,fc]);
-					return dname;
+					var d_name=ret_src.id? "dom_"+ret_src.id:"dom_gen_id_"+(fc);
+					st.dom_map.set(ret_src,[d_name,fc]);
+					return d_name;
 				} if(ret_src instanceof Node&&(!ret_src==st.target)) {
 					var fc=fid++;
-					var dname="dom_gen_id_"+(fc);
-					st.dom_map.set(ret_src,[dname,fc]);
-					return dname;
+					var d_name="dom_gen_id_"+(fc);
+					st.dom_map.set(ret_src,[d_name,fc]);
+					return d_name;
 				}
 				if(st.func_map.has(ret_src)) {
 					return st.func_map.get(o);
@@ -226,36 +226,36 @@ function main() {
 						continue;
 					}
 					if(Object.getPrototypeOf(o[i])==null&&o[i].parent==window) {
-						retcp.set(i,"window_type_"+(fid++));
+						ret_cp.set(i,"window_type_"+(fid++));
 						continue;
 					}
 					if(o[i] instanceof CSSStyleSheet) {
-						retcp.set(i,"style_sheet");
+						ret_cp.set(i,"style_sheet");
 						continue;
 					}
 					if(st.func_map.has(o[i])) {
-						retcp.set(i,st.func_map.get(o[i])[1]);
+						ret_cp.set(i,st.func_map.get(o[i])[1]);
 						continue;
 					}
 					if(o[i] instanceof Function) {
 						var fname="func_"+o[i].name+"_"+(fid++);
-						var ffunc={
+						var f_func={
 							...o[i],
 							func_name: fname
 						};
-						st.func_map.set(o[i],[fname,ffunc]);
-						retcp.set(i,ffunc);
+						st.func_map.set(o[i],[fname,f_func]);
+						ret_cp.set(i,f_func);
 						let returns_fname=false;
 						if(!returns_fname) {
 							continue;
 						}
-						retcp.set(i,fname);
+						ret_cp.set(i,fname);
 					}
 					if(get_const_eq(o[i],Node)) {
 						var fc=fid++;
-						var dname=o.id? "dom_"+o.id:"dom_gen_id_"+(fc);
-						st.dom_map.set(o[i],[dname,fc]);
-						retcp.set(i,dname);
+						var d_name=o.id? "dom_"+o.id:"dom_gen_id_"+(fc);
+						st.dom_map.set(o[i],[d_name,fc]);
+						ret_cp.set(i,d_name);
 						continue;
 					}
 					if(o.tagName&&o.tagName=="SCRIPT"&&i=="childNodes") {
@@ -270,51 +270,51 @@ function main() {
 					if(all_map.has(o[i])) {
 						continue;
 					}
-					retcp.set(i,o[i]);
+					ret_cp.set(i,o[i]);
 				}
-				if(retcp.has("innerText")) {
-					retcp.delete("textContent");
-					retcp.delete("innerText");
-					retcp.delete("outerText");
+				if(ret_cp.has("innerText")) {
+					ret_cp.delete("textContent");
+					ret_cp.delete("innerText");
+					ret_cp.delete("outerText");
 				}
-				if(retcp.has("parentElement")||retcp.has("nextElementSibling")||retcp.has("previousElementSibling")) {
-					retcp.delete("parentElement");
-					retcp.delete("previousElementSibling");
-					retcp.delete("nextElementSibling");
-					retcp.delete("innerHTML");
-					retcp.delete("outerHTML");
+				if(ret_cp.has("parentElement")||ret_cp.has("nextElementSibling")||ret_cp.has("previousElementSibling")) {
+					ret_cp.delete("parentElement");
+					ret_cp.delete("previousElementSibling");
+					ret_cp.delete("nextElementSibling");
+					ret_cp.delete("innerHTML");
+					ret_cp.delete("outerHTML");
 				}
-				if(retcp.has("documentElement")) {
-					retcp.delete("documentElement");
-					retcp.delete("body");
-					retcp.delete("head");
+				if(ret_cp.has("documentElement")) {
+					ret_cp.delete("documentElement");
+					ret_cp.delete("body");
+					ret_cp.delete("head");
 				}
-				if(retcp.has("nextElementSibling")) {
-					retcp.delete("nextElementSibling");
-					retcp.delete("nextSibling");
+				if(ret_cp.has("nextElementSibling")) {
+					ret_cp.delete("nextElementSibling");
+					ret_cp.delete("nextSibling");
 				}
-				if(retcp.has("nextSibling")) {
-					retcp.delete("nextSibling");
+				if(ret_cp.has("nextSibling")) {
+					ret_cp.delete("nextSibling");
 				}
-				if(retcp.has("parentNode")) {
-					retcp.delete("parentNode");
-					retcp.delete("previousSibling");
-					retcp.delete("nextSibling");
-					retcp.delete("firstChild");
-					retcp.delete("lastChild");
+				if(ret_cp.has("parentNode")) {
+					ret_cp.delete("parentNode");
+					ret_cp.delete("previousSibling");
+					ret_cp.delete("nextSibling");
+					ret_cp.delete("firstChild");
+					ret_cp.delete("lastChild");
 				}
-				if(retcp.has("ownerElement")) {
-					if(all_map.has(retcp.get("ownerElement"))) {
-						retcp.delete("ownerElement");
+				if(ret_cp.has("ownerElement")) {
+					if(all_map.has(ret_cp.get("ownerElement"))) {
+						ret_cp.delete("ownerElement");
 					}
 				}
-				if(retcp.has("offsetParent")) {
-					all_map.set(retcp.get("offsetParent"),"f");
-					retcp.delete("offsetParent");
+				if(ret_cp.has("offsetParent")) {
+					all_map.set(ret_cp.get("offsetParent"),"f");
+					ret_cp.delete("offsetParent");
 				}
 				if(is_typechecking)
-					retcp.set("attributeStyleMap",new StylePropertyMap);
-				if(retcp.has("attributeStyleMap")) {
+					ret_cp.set("attributeStyleMap",new StylePropertyMap);
+				if(ret_cp.has("attributeStyleMap")) {
 					/**
 					 * @type {any[]}
 					 */
@@ -322,43 +322,43 @@ function main() {
 					for(let i=0,sa=o.attributeStyleMap;i<sa.length;i++) {
 						ta[i]=sa[i];
 					}
-					retcp.set("attributeStyleMap_c",ta);
-					retcp.delete("attributeStyleMap");
+					ret_cp.set("attributeStyleMap_c",ta);
+					ret_cp.delete("attributeStyleMap");
 				}
 				if(is_typechecking)
-					retcp.set("attributes",HTMLElement.prototype.attributes);
-				if(retcp.has("attributes")) {
+					ret_cp.set("attributes",HTMLElement.prototype.attributes);
+				if(ret_cp.has("attributes")) {
 					var ta=[];
 					for(let i=0,sa=o.attributes;i<sa.length;i++) {
 						ta[i]=sa[i];
 					}
-					retcp.set("attributes_c",ta);
-					retcp.delete("attributes");
+					ret_cp.set("attributes_c",ta);
+					ret_cp.delete("attributes");
 				}
 				if(is_typechecking)
-					retcp.set("classList",HTMLElement.prototype.classList);
-				if(retcp.has("classList")) {
-					let sa=retcp.get("classList");
+					ret_cp.set("classList",HTMLElement.prototype.classList);
+				if(ret_cp.has("classList")) {
+					let sa=ret_cp.get("classList");
 					if(!sa) throw new Error("1");
 					if(!(sa instanceof DOMTokenList)) throw new Error("1");
 					let class_list_iter_items=[];
 					for(let i=0;i<sa.length;i++) {
 						class_list_iter_items.push(sa[i]);
 					}
-					retcp.set("classList_c",class_list_iter_items);
-					retcp.delete("classList");
+					ret_cp.set("classList_c",class_list_iter_items);
+					ret_cp.delete("classList");
 				}
 				if(is_typechecking)
-					retcp.set("ownerDocument",HTMLElement.prototype.ownerDocument);
-				if(retcp.has("ownerDocument")) {
+					ret_cp.set("ownerDocument",HTMLElement.prototype.ownerDocument);
+				if(ret_cp.has("ownerDocument")) {
 					if(all_map.has(o.ownerDocument)) {} else {
 						console.log("cross_document",o.ownerDocument);
 						all_map.set(o.ownerDocument,"cross_document");
 					}
-					retcp.delete("ownerDocument");
+					ret_cp.delete("ownerDocument");
 				}
-				all_map.set(o,retcp);
-				return retcp;
+				all_map.set(o,ret_cp);
+				return ret_cp;
 			} else {
 				if(typeof o=="object") {
 					all_set.add(o);
@@ -443,11 +443,11 @@ function main() {
 			return cin;
 		}
 		if('cr_getC2Runtime' in window&&window.cr_getC2Runtime instanceof Function) {
-			js=do_json_stringify_iter(90,cmap,window.cr_getC2Runtime());
-			var retv=exdo_user(cmap);
+			js=do_json_stringify_iter(90,c_map,window.cr_getC2Runtime());
+			var retv=exdo_user(c_map);
 			var car=[]
 				,repo=[];
-			for(var c=cmap.entries(),j=c.next(),i=0;!j.done;j=c.next()) {
+			for(var c=c_map.entries(),j=c.next(),i=0;!j.done;j=c.next()) {
 				i++;
 				car.push(j.value[0]);
 				repo.push(j.value[1]);
@@ -553,7 +553,7 @@ function main() {
 			return js_inner;
 		}
 		if(!('$j' in window)) throw new Error("missing window.$j");
-		return do_json_stringify_iter(40000,cmap,window.$j);
+		return do_json_stringify_iter(40000,c_map,window.$j);
 	}
 	react_find_all();
 }

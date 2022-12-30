@@ -2,7 +2,7 @@ import {ServiceParams} from "./ServiceParams";
 import * as json from "./json/page_type_watch_detail.json";
 import {ExtractParamObj} from "./ExtractParamObj";
 
-export function use_guided_help(service_param: typeof json['response']['response']['responseContext']['serviceTrackingParams'][2]) {
+export function use_guided_help(service_param: typeof json["response"]["response"]["responseContext"]["serviceTrackingParams"][2]) {
 	const service_param_t: ServiceParams<"GUIDED_HELP">=service_param;
 	service_param_t;
 	type GuideHelpParams_=typeof service_param.params;

@@ -9,6 +9,6 @@ type ECatcherServiceType={
 };
 
 export type ECatcherServiceParams={
-	service: 'ECATCHER';
+	service: "ECATCHER";
 	params: ECatcherServiceParamsType;
 };

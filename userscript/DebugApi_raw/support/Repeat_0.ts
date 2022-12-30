@@ -1,6 +1,6 @@
 import {_DebugApiH_o} from "../DebugApi.user.js";
 
-export const Repeat_0_H=_DebugApiH_o['Repeat_0'];
+export const Repeat_0_H=_DebugApiH_o["Repeat_0"];
 
 /** @template T */
 export class Repeat_0<T> {

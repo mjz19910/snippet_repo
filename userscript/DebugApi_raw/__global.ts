@@ -117,7 +117,7 @@ declare global {
 
 declare global {
 	type dbg_arg_error={type: "argument-error";};
-	type dbg_invalid_state={type: 'invalid-state-error';};
+	type dbg_invalid_state={type: "invalid-state-error";};
 
 	type dbg_data={
 		type: "data";
@@ -129,17 +129,17 @@ declare global {
 		type: "unexpected";
 		data: {
 			result: {
-				type: 'hidden-var';
+				type: "hidden-var";
 				var: string;
 			}|{
-				type: 'no-var';
+				type: "no-var";
 			};
 			return: any;
 		};
 	};
 
 	type dbg_data_array={
-		type: 'data-arr';
+		type: "data-arr";
 		data: {
 			result: any[];
 			return: any;
@@ -190,9 +190,9 @@ declare global {
 }
 
 declare global {
-	type depth_type=['depth',number,WeakRef<depth_or_any[]>];
-	type value_id_type=['value_id',number,["real_holder",any]];
-	type depth_or_any=['real_holder',unknown]|value_id_type|depth_type;
+	type depth_type=["depth",number,WeakRef<depth_or_any[]>];
+	type value_id_type=["value_id",number,["real_holder",any]];
+	type depth_or_any=["real_holder",unknown]|value_id_type|depth_type;
 }
 
 

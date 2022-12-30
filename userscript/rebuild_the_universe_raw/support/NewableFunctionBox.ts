@@ -24,7 +24,7 @@ export class NewableFunctionBox {
 	}
 	on_get(vm: StackVM,key: string) {
 		switch(key) {
-			case 'factory_value': vm.push(new NewableInstancePackBox(this.value.factory_value))
+			case "factory_value": vm.push(new NewableInstancePackBox(this.value.factory_value))
 		}
 		throw new Error("Method not implemented.");
 	}

@@ -10,7 +10,7 @@ import {SavedInstanceType} from "./SavedInstanceType";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
-export const InjectApiH_o=_DebugApiH_o['InjectApi'];
+export const InjectApiH_o=_DebugApiH_o["InjectApi"];
 
 declare global {
 	interface InjectApi {

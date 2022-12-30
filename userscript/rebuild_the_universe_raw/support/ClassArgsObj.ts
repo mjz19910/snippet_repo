@@ -1,1 +1,1 @@
-export type ClassArgsObj=['class',any[]]
+export type ClassArgsObj=["class",any[]]

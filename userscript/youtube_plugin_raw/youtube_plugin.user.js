@@ -117,7 +117,7 @@ class PagePreparer {
 	}
 }
 
-/** @template {{length:number;[x:number]:T[number]}} T @param {T} x */
+/** @template {{length:number;[x:number]:T[number]}} T @arg {T} x */
 function make_iterator(x) {
 	let i=0;
 	return {
@@ -664,7 +664,7 @@ function fetch_rejection_handler(rejection) {
 		throw rejection;
 	}
 	if(rejection instanceof TypeError) {
-		if('cause' in rejection) {
+		if("cause" in rejection) {
 			console.log(rejection.message,rejection.name,rejection.cause);
 		} else {
 			console.log(rejection.message,rejection.name);
@@ -1027,9 +1027,9 @@ class HandleRendererContentItemArray {
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRenderer.js").RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let debug_flag_value=false;
-		if('filter_handler_debug' in base) {
+		if("filter_handler_debug" in base) {
 			if(base.filter_handler_debug) debug_flag_value=base.filter_handler_debug;
-		} else if('debug' in base) {
+		} else if("debug" in base) {
 			debug_flag_value=base.debug;
 		} else {
 			debugger;
@@ -1205,8 +1205,8 @@ const decode_protobuf_obj=function make() {
 	let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
 	class LongBits {
 		/**
-		 * @param {number} a
-		 * @param {number} b
+		 * @arg {number} a
+		 * @arg {number} b
 		 */
 		constructor(a,b) {
 			this.lo=a;
@@ -1219,8 +1219,8 @@ const decode_protobuf_obj=function make() {
 		}
 	}
 	/**
-	 * @param {Uint8Array} buf
-	 * @param {number} end
+	 * @arg {Uint8Array} buf
+	 * @arg {number} end
 	 */
 	function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
 		return (buf[end-4]
@@ -1306,7 +1306,7 @@ const decode_protobuf_obj=function make() {
 				throw Error("invalid varint encoding");
 			}
 			/**
-			 * @param {number} writeLength
+			 * @arg {number} writeLength
 			 */
 			indexOutOfRange(writeLength) {
 				return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
@@ -1329,7 +1329,7 @@ const decode_protobuf_obj=function make() {
 
 
 /**
- * @param {string} str
+ * @arg {string} str
  */
 function decode_protobuf(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
@@ -1421,7 +1421,7 @@ function decode_protobuf(str) {
 }
 
 /**
- * @param {string} str
+ * @arg {string} str
  */
 function decode_b64_proto_obj(str) {
 	return decode_protobuf(str);
@@ -1470,7 +1470,7 @@ class FilterHandlers {
 		]);
 		this.handle_types=new HandleTypes(res);
 		let t=this;
-		/** @param {string} value */
+		/** @arg {string} value */
 		function whitelist_item(value) {
 			t.blacklisted_item_sections.set(value,false);
 		}
@@ -1480,8 +1480,8 @@ class FilterHandlers {
 	}
 	run_mc=false;
 	/**
-	 * @param {string} path
-	 * @param {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action
+	 * @arg {string} path
+	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action
 	 */
 	ReloadContinuationItemsCommandData(path,action) {
 		if(is_watch_next_feed_target(action)) {
@@ -1667,12 +1667,12 @@ class FilterHandlers {
 			case 1: switch(target[0]) {
 				case "browse": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t['json']} */
+					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t["json"]} */
 					json: cast_as(json),
 				};
 				case "feedback": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t['json']} */
+					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t["json"]} */
 					json: cast_as(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
@@ -1681,7 +1681,7 @@ class FilterHandlers {
 				};
 				case "get_transcript": return {
 					url_type: target[0],
-					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t['json']} */
+					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t["json"]} */
 					json: cast_as(json),
 				};
 				case "guide": return {
@@ -1728,7 +1728,7 @@ class FilterHandlers {
 					};
 					case "get_unseen_count": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/yt/notification_get_unseen_count_t.js").notification_get_unseen_count_t['json']} */
+						/** @type {import("./support/yt_api/yt/notification_get_unseen_count_t.js").notification_get_unseen_count_t["json"]} */
 						json: cast_as(json),
 					};
 					case "record_interactions": return {
@@ -1740,7 +1740,7 @@ class FilterHandlers {
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/yt/reel_reel_item_watch_t.js").reel_reel_item_watch_t['json']} */
+						/** @type {import("./support/yt_api/yt/reel_reel_item_watch_t.js").reel_reel_item_watch_t["json"]} */
 						json: cast_as(json),
 					};
 					case "reel_watch_sequence": return {
@@ -1792,10 +1792,10 @@ class FilterHandlers {
 		this.handle_types.ResponseTypes(res);
 	}
 	/**
-	 * @param {`https://${string}/${string}?${string}`} req_hr_t
-	 * @param {string | URL | Request} request
-	 * @param {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
-	 * @param {URL} req_parse
+	 * @arg {`https://${string}/${string}?${string}`} req_hr_t
+	 * @arg {string | URL | Request} request
+	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
+	 * @arg {URL} req_parse
 	 */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
 		/** @type {`https://${string}/${string}?${string}`} */
@@ -1806,7 +1806,7 @@ class FilterHandlers {
 	}
 
 	/**
-	 * @param {string|URL|Request} request
+	 * @arg {string|URL|Request} request
 	 */
 	on_handle_api_0(request) {
 		const debug=false;
@@ -1826,7 +1826,7 @@ class FilterHandlers {
 	}
 	guide_item_keys=make_guide_item_keys();
 	/**
-	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
+	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path
 	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data
 	 */
 	handle_any_data(path,data) {
@@ -2390,7 +2390,7 @@ function filter_out_keys(keys,to_remove) {
 		ok_e.push(keys[i]);
 	}
 	if(to_remove.length>0) {
-		console.log("did not remove all target keys",keys,'missing',to_remove);
+		console.log("did not remove all target keys",keys,"missing",to_remove);
 		debugger;
 	}
 	return ok_e;
@@ -2409,7 +2409,7 @@ function on_json_request(request_info) {
 }
 
 /**
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']} pageType
+ * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]} pageType
  */
 function page_type_iter(pageType) {
 	switch(pageType) {
@@ -2917,7 +2917,7 @@ class ServiceResolver {
 		this.services=services;
 		this.params=params;
 	}
-	/** @param {T} services */
+	/** @arg {T} services */
 	add_services(services) {
 		this.services=services;
 	}
@@ -2930,7 +2930,7 @@ class ServiceResolver {
 		if(!this.params) throw new Error("No service params");
 		return this.params[key];
 	}
-	/** @template {keyof T} V @arg {V} key @returns {NonNullable<this['services']>[V]} */
+	/** @template {keyof T} V @arg {V} key @returns {NonNullable<this["services"]>[V]} */
 	get(key) {
 		if(!this.services) throw new Error("No services");
 		return this.services[key];
@@ -3181,10 +3181,10 @@ function get_exports() {
 }
 
 /**
- * @param {{}} state
- * @param {"account"} base
- * @param {string[]} parts
- * @param {number} index
+ * @arg {{}} state
+ * @arg {"account"} base
+ * @arg {string[]} parts
+ * @arg {number} index
  */
 function get_account_type(state,base,parts,index) {
 	let cur_part=parts[index];
@@ -3238,7 +3238,7 @@ if(typeof exports==="object") {
 	exports.FilterHandlers=FilterHandlers;
 }
 /**
- * @param {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
+ * @arg {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
  */
 function verify_param(param) {
 	switch(param.value) {
@@ -3252,8 +3252,8 @@ function verify_param(param) {
 }
 
 /**
- * @param {string[]} ok_3
- * @param {string} arg1
+ * @arg {string[]} ok_3
+ * @arg {string} arg1
  */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
@@ -3311,13 +3311,14 @@ const general_service_state={
 };
 
 class BaseService {
+	#res;
 	/** @arg {ResolverT} res */
 	constructor(res) {
-		this.res=res;
+		this.#res=res;
 	}
 	get r() {
-		if(!this.res.value) throw 1;
-		return this.res.value;
+		if(!this.#res.value) throw 1;
+		return this.#res.value;
 	}
 }
 
@@ -3361,7 +3362,7 @@ class CsiService extends BaseService {
 					if(param.value!=="1") debugger;
 					this.data[param.key]=param.value;
 				} continue;
-				case "yt_ad": if(param.value!=='1') debugger; this.data[param.key]=param.value; continue;
+				case "yt_ad": if(param.value!=="1") debugger; this.data[param.key]=param.value; continue;
 				case "yt_fn": if(!verify_param(param)) debugger; this.data[param.key]=param.value; continue;
 			}
 			if(param.key in this.rid) {
@@ -3397,15 +3398,15 @@ class ECatcherService extends BaseService {
 		},
 	};
 	/**
-	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParamsType} params
+	 * @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParamsType} params
 	 */
 	on_params(params) {
-		/** @type {NonNullable<this['data']['client']>} */
+		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
 		for(let param of params) {
 			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
 			let param_parts=cast_as(param.key.split("."));
-			if(param_parts[0]!=='client') debugger;
+			if(param_parts[0]!=="client") debugger;
 			switch(param_parts[1]) {
 				case "version": {
 					if(param.value!=="2.20221220") {debugger; break;};
@@ -3446,7 +3447,7 @@ class GFeedbackService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @param {import("./support/yt_api/_/g/GFeedbackServiceType.js").GFeedbackServiceType} params */
+	/** @arg {import("./support/yt_api/_/g/GFeedbackServiceType.js").GFeedbackServiceType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3477,8 +3478,8 @@ class GFeedbackService extends BaseService {
 				case "is_owner": break;
 				case "is_viewed_live": break;
 				case "logged_in": {
-					if(param.value=='0') {general_service_state.logged_in=false; break;}
-					if(param.value=='1') {general_service_state.logged_in=true; break;}
+					if(param.value=="0") {general_service_state.logged_in=false; break;}
+					if(param.value=="1") {general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
 				case "num_shelves": break;
@@ -3496,14 +3497,14 @@ class GuidedHelpService extends BaseService {
 		context: null,
 	};
 	/**
-	 * @param {import("./support/yt_api/_/g/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params
+	 * @arg {import("./support/yt_api/_/g/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params
 	 */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
 				case "logged_in": {
-					if(param.value=='0') {general_service_state.logged_in=false; break;}
-					if(param.value=='1') {general_service_state.logged_in=true; break;}
+					if(param.value=="0") {general_service_state.logged_in=false; break;}
+					if(param.value=="1") {general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
 				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.data.context=param.value; break;
@@ -3515,21 +3516,15 @@ class GuidedHelpService extends BaseService {
 
 
 class TrackingServices extends BaseService {
-	/**
-	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
-	 */
+	/** @arg {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service */
 	on_csi_service(service) {
 		this.r.get("csi_service").on_params(service.params);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
-	 */
+	/** @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service */
 	on_e_catcher_service(service) {
 		this.r.get("e_catcher_service").on_params(service.params);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
-	 */
+	/** @arg {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service */
 	on_g_feedback_service(service) {
 		this.r.get("g_feedback_service").on_params(service.params);
 	}
@@ -3537,9 +3532,7 @@ class TrackingServices extends BaseService {
 	on_guided_help_service(service) {
 		this.r.get("guided_help_service").on_params(service.params);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
-	 */
+	/** @arg {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -3550,7 +3543,7 @@ class TrackingServices extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params
+	 * @arg {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params
 	 */
 	set_service_params(params) {
 		for(let service_param_list of params) {
@@ -3585,7 +3578,7 @@ if(typeof exports==="object") {
 
 class HandleTypes extends BaseService {
 	/**
-	 * @param {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
+	 * @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
 	 */
 	WatchResponsePlayer(response) {
 		let data=response;
@@ -3593,7 +3586,7 @@ class HandleTypes extends BaseService {
 			let old_ads=data.playerAds;
 			if(is_yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
 			data.playerAds=[];
-			/** @type {{old_store:typeof data['playerAds']}&typeof data['playerAds']} */
+			/** @type {{old_store:typeof data["playerAds"]}&typeof data["playerAds"]} */
 			let with_old_store=cast_as(data.playerAds);
 			with_old_store.old_store=old_ads;
 		}
@@ -3650,7 +3643,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
+	 * @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer
 	 */
 	DesktopTopbarRenderer(renderer) {
 		let ok=Object.keys(renderer.desktopTopbarRenderer);
@@ -3664,7 +3657,7 @@ class HandleTypes extends BaseService {
 		"Subscriptions",
 	];
 	/**
-	 * @param {import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer
+	 * @arg {import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer
 	 */
 	FeedTabbedHeaderRenderer(renderer) {
 		let data=renderer.feedTabbedHeaderRenderer;
@@ -3681,7 +3674,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
+	 * @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
 	 */
 	handleEntityBatchUpdate(obj) {
 		if(Object.keys(obj)[0]!=="entityBatchUpdate") {
@@ -3692,7 +3685,7 @@ class HandleTypes extends BaseService {
 		this.handle_mutations(obj.entityBatchUpdate.mutations);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations
+	 * @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations
 	 */
 	handle_mutations(mutations) {
 		for(let mut of mutations) {
@@ -3711,7 +3704,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand(command) {
 		let data=command.reloadContinuationItemsCommand;
@@ -3728,8 +3721,8 @@ class HandleTypes extends BaseService {
 	responseContext(context) {
 		let ok=Object.keys(context);
 		if(!(
-			eq_keys(ok,['serviceTrackingParams','mainAppWebResponseContext','webResponseContextExtensionData'])
-			||eq_keys(ok,['serviceTrackingParams','maxAgeSeconds','mainAppWebResponseContext','webResponseContextExtensionData'])
+			eq_keys(ok,["serviceTrackingParams","mainAppWebResponseContext","webResponseContextExtensionData"])
+			||eq_keys(ok,["serviceTrackingParams","maxAgeSeconds","mainAppWebResponseContext","webResponseContextExtensionData"])
 			||false
 		)) debugger;
 		if(context.maxAgeSeconds!==void 0) {
@@ -3749,20 +3742,20 @@ class HandleTypes extends BaseService {
 		this.r.get("service_tracking").set_service_params(context.serviceTrackingParams);
 	}
 	/**
-	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
+	 * @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
 	 */
 	playlistVideoListRenderer(renderer) {
 		let data=renderer.playlistVideoListRenderer;
 		console.log("playlist",data.playlistId);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
+	 * @arg {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item
 	 */
 	pageIntroductionRenderer(item) {
 		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data
+	 * @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data
 	 */
 	PageIntroductionRendererData(data) {
 		let ok=Object.keys(data);
@@ -3773,7 +3766,7 @@ class HandleTypes extends BaseService {
 		console.log("PageIntroductionRendererData",data);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
+	 * @arg {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
 	 */
 	itemSectionRenderer(renderer) {
 		if(!renderer.itemSectionRenderer) {
@@ -3818,12 +3811,12 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @param {string} params */
+	/** @arg {string} params */
 	trackingParams(params) {
 		if(this.r.get_param("log_tracking_params")) console.log("tp",params);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
+	 * @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
 	 */
 	tabRenderer(renderer) {
 		this.trackingParams(renderer.trackingParams);
@@ -3832,7 +3825,7 @@ class HandleTypes extends BaseService {
 		};
 	}
 	/**
-	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
+	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer
 	 */
 	twoColumnBrowseResultsRenderer(renderer) {
 		if(Object.keys(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
@@ -3845,16 +3838,16 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
+	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
 	 */
 	BrowseResponseContentContents(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
-		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=='twoColumnBrowseResultsRenderer') {
+		if(Object.keys(contents).length!==1||Object.keys(contents)[0]!=="twoColumnBrowseResultsRenderer") {
 			console.log("[on_browse_response_contents]",contents);
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
+	 * @arg {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
 	 */
 	adLayoutMetadata(metadata) {
 		for(let item of metadata) {
@@ -3872,7 +3865,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata
+	 * @arg {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata
 	 */
 	adSlotMetadata(metadata) {
 		console.log("ad slot meta pos",metadata.slotType);
@@ -3884,7 +3877,7 @@ class HandleTypes extends BaseService {
 		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
+	 * @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
 	 */
 	adsControlFlowOpportunityReceivedCommand(command) {
 		let ok=filter_out_keys(Object.keys(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
@@ -3904,7 +3897,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/r/ResponseReceivedActionItem.js").ResponseReceivedActionItem[]} actions
+	 * @arg {import("./support/yt_api/_/r/ResponseReceivedActionItem.js").ResponseReceivedActionItem[]} actions
 	 */
 	onResponseReceivedActions(actions) {
 		for(let action of actions) {
@@ -3917,7 +3910,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @param {import("./support/yt_api/_/b/BrowseResponseContent.js").StateTagItem[]} tags */
+	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").StateTagItem[]} tags */
 	observedStateTags(tags) {
 		for(let tag of tags) {
 			switch(tag.instruction) {
@@ -3927,7 +3920,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar
+	 * @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar
 	 */
 	sidebar(sidebar) {
 		console.log(sidebar);
@@ -3971,7 +3964,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
+	 * @arg {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
 	 */
 	buttonRenderer(renderer) {
 		let ok=Object.keys(renderer);
@@ -3983,7 +3976,7 @@ class HandleTypes extends BaseService {
 		console.log("renderer.tooltip",renderer.tooltip);
 		console.log("renderer.trackingParams",renderer.trackingParams);
 		console.log("renderer.accessibilityData",renderer.accessibilityData);
-		if(eq_keys(ok,['style','size','isDisabled','icon','navigationEndpoint','tooltip','trackingParams','accessibilityData'])) return;
+		if(eq_keys(ok,["style","size","isDisabled","icon","navigationEndpoint","tooltip","trackingParams","accessibilityData"])) return;
 		console.log(ok);
 		debugger;
 	}
@@ -3994,7 +3987,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header
+	 * @arg {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header
 	 */
 	header(header) {
 		if("feedTabbedHeaderRenderer" in header) {
@@ -4008,29 +4001,29 @@ class HandleTypes extends BaseService {
 		console.log("header keys",ok);
 	}
 	/**
-	 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
+	 * @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
 	 */
 	multiPageMenuRenderer(renderer) {
 		this.header(renderer.header);
 		let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
 		if(eq_keys(ok,[])) return;
-		if(eq_keys(ok,['style'])) return;
+		if(eq_keys(ok,["style"])) return;
 		debugger;
 	}
 	/**
-	 * @param {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
+	 * @arg {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
 	 */
 	guideSubscriptionsSectionRenderer(desc) {
 		let ok=Object.keys(desc.item);
-		/** @type {keyof typeof desc['item']} */
+		/** @type {keyof typeof desc["item"]} */
 		let fk=cast_as(ok[0]);
 		let {[fk]: first}=desc.item;
-		if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
+		if(eq_keys(ok,["sort","items","trackingParams","formattedTitle","handlerDatas"])) return;
 		console.log(desc.key,ok,[fk,first],desc.item);
 	}
 	/** @typedef {{type: "guideSectionRenderer", value: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData}} GuideSectionRendererDataBox */
 	/**
-	 * @param {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item
+	 * @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item
 	 */
 	GuideItemType(item) {
 		let ok=Object.keys(item);
@@ -4048,18 +4041,18 @@ class HandleTypes extends BaseService {
 			default: return;
 		}
 	}
-	/** @param {GuideSectionRendererDataBox} box */
+	/** @arg {GuideSectionRendererDataBox} box */
 	guideSectionRenderer(box) {
 		let ok=Object.keys(box.value);
-		/** @type {keyof typeof box['value']} */
+		/** @type {keyof typeof box["value"]} */
 		let fk=cast_as(ok[0]);
 		let {[fk]: first}=box.value;
-		if(eq_keys(ok,['items','trackingParams'])) return;
-		if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
+		if(eq_keys(ok,["items","trackingParams"])) return;
+		if(eq_keys(ok,["items","trackingParams","formattedTitle"])) return;
 		console.log(box.type,ok,[fk,first],box.value);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} endpoint
+	 * @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} endpoint
 	 */
 	endpoint(endpoint) {
 		if("clickTrackingParams" in endpoint) {
@@ -4083,13 +4076,13 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint
+	 * @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint
 	 */
 	watchEndpoint(endpoint) {
 		console.log(endpoint);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data
+	 * @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data
 	 */
 	commandMetadata(data) {
 		switch(data.webCommandMetadata.webPageType) {
@@ -4104,7 +4097,7 @@ class HandleTypes extends BaseService {
 
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
+	 * @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
 	 */
 	browseEndpoint(endpoint) {
 		parse_browse_id(endpoint.browseId);
@@ -4128,7 +4121,7 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data
+	 * @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data
 	 */
 	BrowsePageResponse(data) {
 		this.BrowseResponseContent(data.response);
@@ -4138,7 +4131,7 @@ class HandleTypes extends BaseService {
 		console.log("[browse_response_top]",ok.join(","),data);
 		debugger;
 	}
-	/** @param {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} data */
+	/** @arg {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} data */
 	DataResponsePageType(data) {
 		const debug=false;
 		let page_type=data.page;
@@ -4158,21 +4151,21 @@ class HandleTypes extends BaseService {
 		this.WatchResponsePlayer(data.playerResponse);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data
+	 * @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data
 	 */
 	PlaylistPageResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		console.log(data.url);
 	}
-	/** @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
+	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	on_new_page_url(data) {
 		console.log("[probably_new_section]",data.url.split("/").slice(1)[0].split("_").slice(1));
 		console.log("[new_page]",data.url);
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
+	 * @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
 	 */
 	SettingsPageResponse(data) {
 		this.endpoint(data.endpoint);
@@ -4198,7 +4191,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data
+	 * @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data
 	 */
 	ShortsPageResponse(data) {
 		this.endpoint(data.endpoint);
@@ -4208,12 +4201,12 @@ class HandleTypes extends BaseService {
 		this.ShortsResponse(data.response);
 		console.log("[shorts_url]",data.url);
 	}
-	/** @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} response */
+	/** @arg {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} response */
 	ShortsResponse(response) {
 		console.log(response);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} data
+	 * @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} data
 	 */
 	ChannelPageResponse(data) {
 		console.log(data.endpoint);
@@ -4239,7 +4232,7 @@ class HandleTypes extends BaseService {
 		/** @type {number|null} */
 		unseenCount: null,
 	};
-	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
+	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
 	ResponseTypes(res) {
 		if("responseContext" in res.json) {
 			this.responseContext(res.json.responseContext);
@@ -4265,7 +4258,7 @@ class HandleTypes extends BaseService {
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
-	/** @param {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} response */
+	/** @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} response */
 	YtSuccessResponse(response) {
 		let {responseContext,...not_context}=response;
 		this.responseContext(responseContext);
@@ -4278,7 +4271,7 @@ class HandleTypes extends BaseService {
 		console.log(data);
 	}
 	/**
-	 * @param {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data
+	 * @arg {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data
 	 */
 	withGeneralContext(data) {
 		this.responseContext(data.responseContext);
@@ -4286,7 +4279,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/_/OpenPopupActionItem.js").OpenPopupActionItem} action */
 	OpenPopupActionItem(action) {
 		let ok_1=Object.keys(action);
-		if('openPopupAction' in action) {
+		if("openPopupAction" in action) {
 			switch(action.openPopupAction.popupType) {
 				case "DROPDOWN": {
 					let popup=action.openPopupAction.popup;
@@ -4299,27 +4292,27 @@ class HandleTypes extends BaseService {
 				default: console.log("popup type",action.openPopupAction.popupType); debugger;
 			}
 		}
-		if(eq_keys(ok_1,['clickTrackingParams','openPopupAction'])) return;
+		if(eq_keys(ok_1,["clickTrackingParams","openPopupAction"])) return;
 		debugger;
 	}
 	/**
-	 * @param {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res
+	 * @arg {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res
 	 */
 	notification_get_notification_menu_t(res) {
 		for(let action of res.json.actions) {
 			this.OpenPopupActionItem(action);
 		}
 		let ok=Object.keys(res.json);
-		if(eq_keys(ok,['responseContext','actions','trackingParams'])) return;
+		if(eq_keys(ok,["responseContext","actions","trackingParams"])) return;
 		console.log(ok);
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
+	 * @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
 	 */
 	AttGetV(data) {
 		let ok=Object.keys(data);
-		if(eq_keys(ok,['responseContext','challenge','bgChallenge'])) return;
+		if(eq_keys(ok,["responseContext","challenge","bgChallenge"])) return;
 		// spell:disable-next-line
 		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
@@ -4339,7 +4332,7 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
+	 * @arg {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
 	 */
 	GuideJsonType(guide) {
 		for(let item of guide.items) {
@@ -4347,48 +4340,48 @@ class HandleTypes extends BaseService {
 		}
 		let ok=Object.keys(guide);
 		let ok_res=false;
-		if(eq_keys(ok,['responseContext','items','trackingParams'])) ok_res=true;
+		if(eq_keys(ok,["responseContext","items","trackingParams"])) ok_res=true;
 		if(ok_res) return;
 		console.log(ok);
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
+	 * @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
 	 */
 	YtApiNext(json) {
 		console.log(json);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
+	 * @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
 	 */
 	AccountMenuJson(json) {
 		console.log(json);
 	}
 	/**
-	 * @param {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data
+	 * @arg {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data
 	 */
 	richItemRenderer(data) {
 		console.log(data);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/r/ReelWatchEndpointData.js").ReelWatchEndpointData} data
+	 * @arg {import("./support/yt_api/_/r/ReelWatchEndpointData.js").ReelWatchEndpointData} data
 	 */
 	reelWatchEndpoint(data) {
 		console.log(data);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data
+	 * @arg {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data
 	 */
 	playerResponse(data) {
 		console.log(data);
 	}
 	/**
-	 * @param {{ responseContext: {}; entries: {}[]; trackingParams: string; }} data
+	 * @arg {{ responseContext: {}; entries: {}[]; trackingParams: string; }} data
 	 */
 	reelWatchSequenceResponse(data) {
 		console.log(data);
 	}
-	/** @param {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
+	/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 	YTNavigateFinishEventDetail(detail) {
 		switch(detail.pageType) {
 			case "browse":
@@ -4415,26 +4408,26 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
+	 * @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
 	 */
 	SettingsResponseContent(data) {
 		this.TwoColumnBrowseResultsRenderer(data.contents);
 		console.log(data);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
+	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
 	 */
 	TwoColumnBrowseResultsRenderer(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
-	/** @param {{}[]} options */
+	/** @arg {{}[]} options */
 	options(options) {
 		for(let option of options) {
 			console.log(option);
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer
+	 * @arg {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer
 	 */
 	settingsOptionsRenderer(renderer) {
 		let data=renderer.settingsOptionsRenderer;
@@ -4443,20 +4436,20 @@ class HandleTypes extends BaseService {
 		}
 		if(data.options) this.options(data.options);
 		let str=stringify_text_runs(data.title);
-		if(typeof str!=='string') debugger;
+		if(typeof str!=="string") debugger;
 		if(this.r.get_param("noisy_logging")) console.log(data);
 		if(Object.keys(renderer).length!==1) {
 			debugger;
 		}
 	}
 	/**
-	 * @param {{ connectedAppRenderer: {}; }} data
+	 * @arg {{ connectedAppRenderer: {}; }} data
 	 */
 	connectedAppRenderer(data) {
 		console.log(data);
 	}
 	/**
-	 * @param {{ shelfRenderer: {}; }} data
+	 * @arg {{ shelfRenderer: {}; }} data
 	 */
 	shelfRenderer(data) {
 		console.log(data);
@@ -4467,7 +4460,7 @@ class HandleTypes extends BaseService {
 function stringify_text_run(_run) {
 	return _run.text;
 }
-/** @template T @param {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
+/** @template T @arg {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
 function stringify_text_runs(text) {
 	if(text.runs) {
 		if(text.runs.length===1) {

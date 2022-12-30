@@ -22,15 +22,15 @@
  * @param {{}} value
  */
 function use_jquery_overwrite(value) {
-	Object.defineProperty(window,'$',{
+	Object.defineProperty(window,"$",{
 		value,
 		writable: true,
 		enumerable: true,
 		configurable: true
 	});
 	if(!value) return;
-	if(typeof value!='function') return;
-	let res=value('head');
+	if(typeof value!="function") return;
+	let res=value("head");
 	let r_proto=Object.getPrototypeOf(res);
 	r_proto.lazyload=function(/** @type {any[]} */ ..._a) {};
 }
@@ -40,10 +40,10 @@ function set_jq_proxy_overwrite() {
 	let e_win=window;
 	/** @type {{}|null|undefined} */
 	let val=void 0;
-	if('$' in e_win) {
+	if("$" in e_win) {
 		val=e_win.$;
 	}
-	Object.defineProperty(window,'$',{
+	Object.defineProperty(window,"$",{
 		get() {
 			return val;
 		},
@@ -61,7 +61,7 @@ function set_jq_proxy_overwrite() {
 function do_real_page_action() {
 	document.stop=function() {};
 	set_jq_proxy_overwrite();
-	console.log('done');
+	console.log("done");
 }
 function page_url_no_protocol() {
 	return location.href.slice(location.protocol.length);
@@ -89,7 +89,7 @@ function do_local_mirror_write() {
 	document.close();
 }
 function main() {
-	console.log('re action 0');
+	console.log("re action 0");
 	let non_proto_url=page_url_no_protocol();
 	if(history.state&&history.state.real_page) {
 		do_real_page_action();
@@ -97,7 +97,7 @@ function main() {
 		do_just_reset();
 	} else if(history.state&&history.state.prev) {
 		do_just_reset();
-	} else if(non_proto_url=='//rebuildtheuniverse/?type=real') {
+	} else if(non_proto_url=="//rebuildtheuniverse/?type=real") {
 		history.pushState({real_page: true},'',non_proto_url);
 		do_real_page_action();
 	} else if(location.href=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {

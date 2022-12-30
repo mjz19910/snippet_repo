@@ -3,8 +3,8 @@ export class IDValue_0 {
 		if(arr.length===0)
 			throw new Error("Unable to use zero length array");
 		let item=arr[0] as any;
-		console.log('new_proto_keys',Object.keys(item));
-		console.log('new_proto',Object.getPrototypeOf(item));
+		console.log("new_proto_keys",Object.keys(item));
+		console.log("new_proto",Object.getPrototypeOf(item));
 	}
 	id: number;
 	next: IDValue_0|null;
@@ -15,9 +15,9 @@ export class IDValue_0 {
 	arr_str: string[];
 	arr_num: number[];
 	arr_dual_compressed: AnyOrRepeat2_0<string,number>[];
-	value: [number,'=',number]|null;
+	value: [number,"=",number]|null;
 	arr_rep: number[];
-	log_val: [number,'=',string,number]|null;
+	log_val: [number,"=",string,number]|null;
 	stats: [string,number][];
 	stats_win: number;
 	constructor(id: number,next: IDValue_0|null) {

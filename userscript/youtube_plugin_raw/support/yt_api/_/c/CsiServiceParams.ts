@@ -1,6 +1,6 @@
 import {CsiServiceParamsType} from "./CsiServiceParamsType";
 
 export type CsiServiceParams={
-	service: 'CSI',
+	service: "CSI",
 	params: CsiServiceParamsType;
 };

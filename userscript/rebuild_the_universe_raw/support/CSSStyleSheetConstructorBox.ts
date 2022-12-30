@@ -17,8 +17,8 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {
 			let val=arr[i];
-			if(val.type!='shape_box') continue;
-			if(val.shape!='CSSStyleSheetInit') continue;
+			if(val.type!="shape_box") continue;
+			if(val.shape!="CSSStyleSheetInit") continue;
 			let box: CSSStyleSheetInitBox=val;
 			valid_args[0]=box.value;
 		}

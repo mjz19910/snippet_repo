@@ -11,13 +11,13 @@ namespace hidden_namespace {
 	export type TJoin<T extends string>=`${T}`;
 	export type Cj2<T extends string>=T extends infer U? U extends `${Delay<Char>}${Delay<Char>}`? U:never:never;
 	export type Cj4<T extends string>=T extends infer U? U extends Cj4<`${T}`>? U:never:never;
-	type cc=Split<'g2U2-i13970',"">;
-	export type c2=Split<'AAAAAAAAAAA',"">;
-	export type UU=cc['length'];
+	type cc=Split<"g2U2-i13970","">;
+	export type c2=Split<"AAAAAAAAAAA","">;
+	export type UU=cc["length"];
 	export const vv: {
-		videoId: YtVideoIdStr<'g2U2-i13970'>;
+		videoId: YtVideoIdStr<"g2U2-i13970">;
 	}={
-		videoId: 'g2U2-i13970'
+		videoId: "g2U2-i13970"
 	};
 }
 

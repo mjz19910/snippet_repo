@@ -1,1 +1,1 @@
-export type ClassCallbackArgs=['class',new (...a: any[]) => {},any[]]
+export type ClassCallbackArgs=["class",new (...a: any[]) => {},any[]]

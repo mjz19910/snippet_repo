@@ -11,5 +11,5 @@ export interface ImpressionEndpoint extends ClickTrackingParams {
 	loggingUrls: [LoggingUrl];
 	pingingEndpoint: PingingEndpoint;
 }
-type Pu=UrlParse<LoggingUrl['baseUrl']>['search'];
+type Pu=UrlParse<LoggingUrl["baseUrl"]>["search"];
 export type LoggingUrlBaseUrlParseSearchParams=Decay<ParseUrlSearchParams<Pu>>;

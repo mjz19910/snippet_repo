@@ -3,8 +3,8 @@ import * as json from "./json/page_type_browse_detail.json";
 export function use_page_type_browse_detail() {
 	type Json=typeof json;
 	type json_d=keyof Json;
-	type Je=Json['endpoint']|JR['endpoint'];
-	type JR=Json['response'];
+	type Je=Json["endpoint"]|JR["endpoint"];
+	type JR=Json["response"];
 	type json_d_2=keyof JR;
 	const je_c: Je=json.endpoint;
 	const je_c_2: Je=json.response.endpoint;

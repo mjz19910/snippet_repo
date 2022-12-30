@@ -5,22 +5,22 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetI
 	readonly type="shape_box";
 	readonly shape="CSSStyleSheetInit";
 	set_property(key: keyof CSSStyleSheetInit,value: string|boolean|MediaListBox|undefined) {
-		if(key==='baseURL') {
-			if(typeof value=='string') {
+		if(key==="baseURL") {
+			if(typeof value=="string") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
 			}
-		} else if(key==='disabled') {
-			if(typeof value==='boolean') {
+		} else if(key==="disabled") {
+			if(typeof value==="boolean") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
 			}
-		} else if(key==='media') {
-			if(typeof value==='object'&&value.instance_type==='MediaList') {
+		} else if(key==="media") {
+			if(typeof value==="object"&&value.instance_type==="MediaList") {
 				this.value[key]=value.value;
-			} else if(typeof value==='string') {
+			} else if(typeof value==="string") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);

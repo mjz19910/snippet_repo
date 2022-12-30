@@ -8,7 +8,7 @@ export function use_service_csi(service_param: typeof watch_serviceTrackingParam
 	service_param.service;
 	const sp_0_params=service_param.params;
 	type CsiPt=typeof sp_0_params;
-	type Pxg<T extends number>=ExtractSingleParamKey<CsiPt[T],CsiPt[T]['key']>;
+	type Pxg<T extends number>=ExtractSingleParamKey<CsiPt[T],CsiPt[T]["key"]>;
 	type CsiV={
 		c: Pxg<0>["c"];
 		cver: Pxg<1>["cver"];
