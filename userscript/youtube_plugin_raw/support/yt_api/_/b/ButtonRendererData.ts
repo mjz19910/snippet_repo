@@ -19,14 +19,19 @@ export type ButtonRendererData={
 	text: TextRuns|SimpleText;
 	serviceEndpoint: ServiceEndpoint;
 	trackingParams: string;
+}|{
+	style: "STYLE_SUGGESTIVE"
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	text: TextRuns|SimpleText;
+	trackingParams: string;
+	accessibilityData: Accessibility;
+	command: GeneralCommand;
 };
 
 export type OptButtonData={
 	icon?: {};
 	navigationEndpoint?: NavigationEndpoint;
 	tooltip?: {};
-	trackingParams: string;
-	accessibilityData?: Accessibility;
-	command?: GeneralCommand;
 	clickTrackingParams?: string;
-}
+};
