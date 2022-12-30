@@ -2933,6 +2933,7 @@ class ServiceResolver {
 }
 async function main() {
 	await Promise.resolve();
+	/** @type {ServiceResolver<import("./Services.js").Services,{}>} */
 	const service_resolver=new ServiceResolver;
 	const csi_service=new CsiService(service_resolver);
 	const e_catcher_service=new ECatcherService(service_resolver);
@@ -2943,7 +2944,7 @@ async function main() {
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 	inject_api_yt.yt_handlers=yt_handlers;
-	
+
 	// init section
 	service_resolver.add_services({
 		csi_service,
@@ -2958,7 +2959,7 @@ async function main() {
 		log_click_tracking_params,
 	});
 	on_yt_navigate_finish.push(log_page_type_change);
-	
+
 	// modify global section
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	/**
@@ -3170,11 +3171,6 @@ async function main() {
 
 function get_exports() {
 	return exports;
-}
-if(typeof exports==="object") {
-	let exports=get_exports();
-	exports.SavedData=SavedData;
-	exports.Gn=Gn;
 }
 
 /**
@@ -3581,6 +3577,18 @@ class TrackingServices {
 	on_complete_set_service_params() {
 		seen_map.clear();
 	}
+}
+
+if(typeof exports==="object") {
+	let exports=get_exports();
+	exports.SavedData=SavedData;
+	exports.Gn=Gn;
+	exports.CsiService=CsiService;
+	exports.ECatcherService=ECatcherService;
+	exports.GFeedbackService=GFeedbackService;
+	exports.GuidedHelpService=GuidedHelpService;
+	exports.TrackingServices=TrackingServices;
+	exports.FilterHandlers=FilterHandlers;
 }
 
 class HandleTypes {
