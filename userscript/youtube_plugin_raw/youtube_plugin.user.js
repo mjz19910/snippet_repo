@@ -2244,27 +2244,12 @@ class FilterHandlers {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
-	 */
-	on_account_menu(json) {
-		this.on_response_context("on_account_menu",json.responseContext);
-		console.log(json);
-	}
-	/** @typedef { import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} GeneralContext */
-	/**
 	 * @param {string} from
-	 * @param {GeneralContext} data
+	 * @param {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} data
 	 */
 	on_response_context(from,data) {
 		from;
 		this.handle_t.responseContext(data);
-	}
-	/**
-	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
-	 */
-	process_next_response(json) {
-		this.on_response_context("process_next_response",json.responseContext);
-		console.log(json);
 	}
 	/**
 	 * @param {`https://${string}/${string}?${string}`} req_hr_t
@@ -2309,76 +2294,11 @@ class FilterHandlers {
 			debugger;
 		}
 	}
-	/**
-	 * @param {import("./support/_/notification_get_notification_menu_t.js").notification_get_notification_menu_t} res
-	 */
-	on_notification_data(res) {
-		this.on_response_context("on_notification_data",res.json.responseContext);
-		for(let action of res.json.actions) {
-			let ok_1=Object.keys(action);
-			if('openPopupAction' in action) {
-				switch(action.openPopupAction.popupType) {
-					case "DROPDOWN": let popup=action.openPopupAction.popup; this.handle_popup(popup); break;
-					default: console.log("popup type",action.openPopupAction.popupType); debugger;
-				}
-			}
-			if(eq_keys(ok_1,['clickTrackingParams','openPopupAction'])) continue;
-			debugger;
-		}
-		let ok=Object.keys(res.json);
-		if(eq_keys(ok,['responseContext','actions','trackingParams'])) return;
-		console.log(ok);
-		debugger;
-	}
 	notification={
 		/** @type {number|null} */
 		unseenCount: null,
 	};
-	/**
-	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
-	 */
-	on_guide(guide) {
-		this.on_response_context("on_guide",guide.responseContext);
-		for(let item of guide.items) {
-			this.on_guide_item(item);
-		}
-		let ok=Object.keys(guide);
-		let ok_res=false;
-		if(eq_keys(ok,['responseContext','items','trackingParams'])) ok_res=true;
-		if(ok_res) return;
-		console.log(ok);
-		debugger;
-	}
 	guide_item_keys=make_guide_item_keys();
-	/** @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item */
-	on_guide_item(item) {
-		this.handle_t.GuideItemType(item);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
-	 */
-	on_att_get(data) {
-		this.on_response_context("on_att_get",data.responseContext);
-		let ok=Object.keys(data);
-		if(eq_keys(ok,['responseContext','challenge','bgChallenge'])) return;
-		// spell:disable-next-line
-		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
-		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
-		const chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
-		/** @type {import("./AttChallengeObj").AttChallengeObj} */
-		let search_param_obj=make_search_params(chal_as_fmt);
-		/** @type {keyof typeof search_param_obj} */
-		let i;
-		for(i in search_param_obj) {
-			switch(i) {
-				case "a": break;
-				default: console.log("[att_param]",i); debugger;
-			}
-		}
-		data.bgChallenge;
-		console.log(data);
-		debugger;
-	}
 	/**
 	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data
@@ -4547,7 +4467,7 @@ class HandleTypes {
 			console.log("[reload_continuation_command_item]",item);
 		}
 	}
-	/** @arg {GeneralContext} context */
+	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} context */
 	responseContext(context) {
 		let ok=Object.keys(context);
 		if(!(
@@ -4788,7 +4708,7 @@ class HandleTypes {
 		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
 		let key=as_cast(ok[0]);
 		if(!key) {
-			console.log("on_guide_item",ok);
+			console.log("[log_GuideItemType]",ok);
 		}
 		switch(key) {
 			case "guideSectionRenderer": if(key in item) {
@@ -4918,18 +4838,109 @@ class HandleTypes {
 			debugger;
 		}
 	}
+	static notification={
+		unseenCount: 0,
+	};
 	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
 	ResponseTypes(res) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
-			case "player": this.handle_t.WatchResponsePlayer(res.json); return true;
+			case "player": this.WatchResponsePlayer(res.json); return true;
 			case "guide": this.on_guide(res.json); return true;
-			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
+			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return true;
-			case "browse": this.handle_t.BrowseResponseContent(res.json); return true;
+			case "browse": this.BrowseResponseContent(res.json); return true;
 			case "account.account_menu": this.on_account_menu(res.json); return true;
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
+	}
+	/**
+	 * @param {import("./support/_/notification_get_notification_menu_t.js").notification_get_notification_menu_t} res
+	 */
+	on_notification_data(res) {
+		this.on_response_context(res.json.responseContext);
+		for(let action of res.json.actions) {
+			let ok_1=Object.keys(action);
+			if('openPopupAction' in action) {
+				switch(action.openPopupAction.popupType) {
+					case "DROPDOWN": {
+						let popup=action.openPopupAction.popup;
+						if("multiPageMenuRenderer" in popup) {
+							this.multiPageMenuRenderer(popup.multiPageMenuRenderer);
+						} else {
+							debugger;
+						}
+					} break;
+					default: console.log("popup type",action.openPopupAction.popupType); debugger;
+				}
+			}
+			if(eq_keys(ok_1,['clickTrackingParams','openPopupAction'])) continue;
+			debugger;
+		}
+		let ok=Object.keys(res.json);
+		if(eq_keys(ok,['responseContext','actions','trackingParams'])) return;
+		console.log(ok);
+		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
+	 */
+	on_att_get(data) {
+		this.responseContext(data.responseContext);
+		let ok=Object.keys(data);
+		if(eq_keys(ok,['responseContext','challenge','bgChallenge'])) return;
+		// spell:disable-next-line
+		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
+		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
+		const chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
+		/** @type {import("./AttChallengeObj").AttChallengeObj} */
+		let search_param_obj=make_search_params(chal_as_fmt);
+		/** @type {keyof typeof search_param_obj} */
+		let i;
+		for(i in search_param_obj) {
+			switch(i) {
+				case "a": break;
+				default: console.log("[att_param]",i); debugger;
+			}
+		}
+		data.bgChallenge;
+		console.log(data);
+		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
+	 */
+	on_guide(guide) {
+		this.on_response_context("on_guide",guide.responseContext);
+		for(let item of guide.items) {
+			this.GuideItemType(item);
+		}
+		let ok=Object.keys(guide);
+		let ok_res=false;
+		if(eq_keys(ok,['responseContext','items','trackingParams'])) ok_res=true;
+		if(ok_res) return;
+		console.log(ok);
+		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} data
+	 */
+	on_response_context(data) {
+		this.responseContext(data);
+	}
+	/**
+	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
+	 */
+	process_next_response(json) {
+		this.on_response_context(json.responseContext);
+		console.log(json);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
+	 */
+	on_account_menu(json) {
+		this.on_response_context(json.responseContext);
+		console.log(json);
 	}
 }
