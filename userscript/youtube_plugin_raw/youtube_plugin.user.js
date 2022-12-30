@@ -1919,29 +1919,6 @@ class HandlerBase {
 	todo(_todo_desc) {
 		console.log("todo",_todo_desc.key,_todo_desc.item);
 	}
-	/**
-	 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData }} desc
-	 */
-	guideSectionRenderer(desc) {
-		let ok=Object.keys(desc.item);
-		/** @type {keyof typeof desc['item']} */
-		let fk=as_cast(ok[0]);
-		let {[fk]: first}=desc.item;
-		if(eq_keys(ok,['items','trackingParams'])) return;
-		if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
-		console.log(desc.key,ok,[fk,first],desc.item);
-	}
-	/**
-	 * @param {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
-	 */
-	guideSubscriptionsSectionRenderer(desc) {
-		let ok=Object.keys(desc.item);
-		/** @type {keyof typeof desc['item']} */
-		let fk=as_cast(ok[0]);
-		let {[fk]: first}=desc.item;
-		if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
-		console.log(desc.key,ok,[fk,first],desc.item);
-	}
 }
 
 class FilterHandlers {
@@ -2567,20 +2544,7 @@ class FilterHandlers {
 	guide_item_keys=make_guide_item_keys();
 	/** @arg {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item */
 	on_guide_item(item) {
-		let ok=Object.keys(item);
-		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
-		let key=as_cast(ok[0]);
-		if(!key) {
-			console.log("on_guide_item",ok);
-		}
-		switch(key) {
-			case "guideSectionRenderer": if(key in item) {
-				this.handle.guideSectionRenderer({key,item: item.guideSectionRenderer});
-				item.guideSectionRenderer;
-			} break;
-			case "guideSubscriptionsSectionRenderer": if(key in item) this.handle.guideSubscriptionsSectionRenderer({key,item: item[key]}); break;
-			default: return;
-		}
+		this.handle_t.GuideItemType(item);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
@@ -4960,5 +4924,46 @@ class HandleTypes {
 		if(eq_keys(ok,[])) return;
 		if(eq_keys(ok,['style'])) return;
 		debugger;
+	}
+	/**
+	 * @param {{ key: "guideSubscriptionsSectionRenderer"; item: import("./support/yt_api/yt/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData; }} desc
+	 */
+	guideSubscriptionsSectionRenderer(desc) {
+		let ok=Object.keys(desc.item);
+		/** @type {keyof typeof desc['item']} */
+		let fk=as_cast(ok[0]);
+		let {[fk]: first}=desc.item;
+		if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
+		console.log(desc.key,ok,[fk,first],desc.item);
+	}
+	/** @typedef {{type: "guideSectionRenderer", value: import("./support/yt_api/yt/GuideSectionRendererData.js").GuideSectionRendererData}} GuideSectionRendererDataBox */
+	/**
+	 * @param {import("./support/yt_api/yt/GuideItemType.js").GuideItemType} item
+	 */
+	GuideItemType(item) {
+		let ok=Object.keys(item);
+		/** @type {import("./support/yt_api/yt/GuideItemType.js").GuideItemKeys} */
+		let key=as_cast(ok[0]);
+		if(!key) {
+			console.log("on_guide_item",ok);
+		}
+		switch(key) {
+			case "guideSectionRenderer": if(key in item) {
+				let data=item.guideSectionRenderer;
+				this.guideSectionRenderer({type: key,value: data});
+			} break;
+			case "guideSubscriptionsSectionRenderer": if(key in item) this.guideSubscriptionsSectionRenderer({key,item: item[key]}); break;
+			default: return;
+		}
+	}
+	/** @param {GuideSectionRendererDataBox} box */
+	guideSectionRenderer(box) {
+		let ok=Object.keys(box.value);
+		/** @type {keyof typeof box['value']} */
+		let fk=as_cast(ok[0]);
+		let {[fk]: first}=box.value;
+		if(eq_keys(ok,['items','trackingParams'])) return;
+		if(eq_keys(ok,['items','trackingParams',"formattedTitle"])) return;
+		console.log(box.type,ok,[fk,first],box.value);
 	}
 }
