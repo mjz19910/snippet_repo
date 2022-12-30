@@ -3966,7 +3966,7 @@ class HandleTypes extends BaseService {
 		if(data.onResponseReceivedActions) {
 			this.onResponseReceivedActions(data.onResponseReceivedActions);
 		}
-		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
+		if(data.topbar) this.topbar(data.topbar);
 		if(data.sidebar) this.sidebar(data.sidebar);
 		if(data.observedStateTags) {
 			this.observedStateTags(data.observedStateTags);
@@ -4472,8 +4472,15 @@ class HandleTypes extends BaseService {
 	 * @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
 	 */
 	SettingsResponseContent(data) {
+		this.responseContext(data.responseContext);
 		this.TwoColumnBrowseResultsRenderer(data.contents);
+		this.trackingParams(data.trackingParams);
+		this.topbar(data.topbar);
 		console.log(data);
+	}
+	/** @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} topbar */
+	topbar(topbar) {
+		this.DesktopTopbarRenderer(topbar);
 	}
 	/**
 	 * @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
@@ -4504,13 +4511,16 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @arg {{ connectedAppRenderer: {}; }} data
+	 * @param {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data
 	 */
 	connectedAppRenderer(data) {
+		console.log(get_keys_of(data.connectedAppRenderer));
+		console.log(data.connectedAppRenderer.connectButton);
 		console.log(data);
+		debugger;
 	}
 	/**
-	 * @arg {{ shelfRenderer: {}; }} data
+	 * @param {import("./support/yt_api/_/i/ShelfRenderer.js").ShelfRenderer} data
 	 */
 	shelfRenderer(data) {
 		console.log(data);

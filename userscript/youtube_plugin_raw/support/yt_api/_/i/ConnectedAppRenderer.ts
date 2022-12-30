@@ -1,3 +1,8 @@
 export type ConnectedAppRenderer={
-	connectedAppRenderer: {};
+	connectedAppRenderer: {
+		icon: {};
+		title: {};
+		text: {};
+		connectButton: {};
+	};
 };
