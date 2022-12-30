@@ -1,7 +1,7 @@
 import {Accessibility} from "../../_/a/Accessibility";
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
 import {CommandMetadata} from "../c/CommandMetadata";
-import {Icon} from "../../_/Icon";
+import {Icon} from "../i/Icon.js";
 import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
 import {SignalServiceEndpoint} from "../s/SignalServiceEndpoint";
 import {TrackingParams} from "./TrackingParams.js";
@@ -25,7 +25,7 @@ export interface ThumbnailOverlayToggleButtonRenderer extends TrackingParams {
 	toggledTooltip: string;
 	untoggledServiceEndpoint: UntoggledServiceEndpoint;
 	toggledServiceEndpoint?: ToggledServiceEndpoint;
-	untoggledAccessibility: Accessibility;
-	toggledAccessibility: Accessibility;
+	untoggledAccessibility: Accessibility<string>;
+	toggledAccessibility: Accessibility<string>;
 	trackingParams: string;
 };
