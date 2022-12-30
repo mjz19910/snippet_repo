@@ -2912,6 +2912,11 @@ class ServiceResolver {
 	services=null;
 	/** @type {U|null} */
 	params=null;
+	/** @arg {T} services @arg {U} params */
+	constructor(services,params) {
+		this.services=services;
+		this.params=params;
+	}
 	/** @param {T} services */
 	add_services(services) {
 		this.services=services;
@@ -2935,30 +2940,31 @@ class ServiceResolver {
 async function main() {
 	await Promise.resolve();
 	/** @type {ResolverT} */
-	const service_resolver=new ServiceResolver;
-	const csi_service=new CsiService(service_resolver);
-	const e_catcher_service=new ECatcherService(service_resolver);
-	const g_feedback_service=new GFeedbackService(service_resolver);
-	const guided_help_service=new GuidedHelpService(service_resolver);
-	const service_tracking=new TrackingServices(service_resolver);
-	const yt_handlers=new FilterHandlers(service_resolver);
+	const resolver_value={value:null};
+	const csi_service=new CsiService(resolver_value);
+	const e_catcher_service=new ECatcherService(resolver_value);
+	const g_feedback_service=new GFeedbackService(resolver_value);
+	const guided_help_service=new GuidedHelpService(resolver_value);
+	const service_tracking=new TrackingServices(resolver_value);
+	const yt_handlers=new FilterHandlers(resolver_value);
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 	inject_api_yt.yt_handlers=yt_handlers;
 
 	// init section
-	service_resolver.add_services({
+	const service_resolver=new ServiceResolver({
 		csi_service,
 		e_catcher_service,
 		g_feedback_service,
 		guided_help_service,
 		service_tracking,
 		yt_handlers,
-	});
-	service_resolver.set_params({
+	},{
 		log_tracking_params,
 		log_click_tracking_params,
+		noisy_logging: false,
 	});
+	resolver_value.value=service_resolver;
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
@@ -3304,9 +3310,13 @@ const general_service_state={
 	premium_membership: null,
 };
 class CsiService {
-	/** @arg {ResolverT} resolver */
-	constructor(resolver) {
-		this.resolver=resolver;
+	/** @arg {ResolverT} res */
+	constructor(res) {
+		this.res=res;
+	}
+	get r() {
+		if(this.res.value===null) throw new Error();
+		return this.res.value;
 	}
 	data={
 		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
@@ -3436,7 +3446,11 @@ class GFeedbackService {
 	 * @param {ResolverT} service_resolver
 	 */
 	constructor(service_resolver) {
-		this.resolver=service_resolver;
+		this.res=service_resolver;
+	}
+	get r() {
+		if(!this.res.value) throw 1;
+		return this.res.value;
 	}
 	data={
 		/** @type {number[]|null} */
@@ -3459,7 +3473,7 @@ class GFeedbackService {
 					let new_expected=[];
 					this.data.e=param.value.split(",").map(e => parseInt(e,10));
 					this.data.e.forEach(e => {
-						for(let known of this.resolver.get("e_catcher_service").data.expected_client_values.fexp) {
+						for(let known of this.r.get("e_catcher_service").data.expected_client_values.fexp) {
 							if(known.includes(e)) return;
 						}
 						new_expected.push(e);
@@ -3523,29 +3537,33 @@ class TrackingServices {
 	 * @param {ResolverT} res
 	 */
 	constructor(res) {
-		this.res=res;
+		this._resolver=res;
+	}
+	get r() {
+		if(!this._resolver.value) throw 1;
+		return this._resolver.value;
 	}
 	/**
 	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
 	 */
 	on_csi_service(service) {
-		this.res.get("csi_service").on_params(service.params);
+		this.r.get("csi_service").on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
 	 */
 	on_e_catcher_service(service) {
-		this.res.get("e_catcher_service").on_params(service.params);
+		this.r.get("e_catcher_service").on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
 	on_g_feedback_service(service) {
-		this.res.get("g_feedback_service").on_params(service.params);
+		this.r.get("g_feedback_service").on_params(service.params);
 	}
 	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
-		this.res.get("guided_help_service").on_params(service.params);
+		this.r.get("guided_help_service").on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
@@ -3597,6 +3615,11 @@ class HandleTypes {
 	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.res=res;
+	}
+	
+	get r() {
+		if(!this.res.value) throw 1;
+		return this.res.value;
 	}
 	/**
 	 * @param {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
@@ -3760,7 +3783,7 @@ class HandleTypes {
 		if(context.mainAppWebResponseContext.loggedOut) {
 			general_service_state.logged_in=false;
 		}
-		this.res.get("service_tracking").set_service_params(context.serviceTrackingParams);
+		this.r.get("service_tracking").set_service_params(context.serviceTrackingParams);
 	}
 	/**
 	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
@@ -3794,7 +3817,7 @@ class HandleTypes {
 			debugger;
 		}
 		let data=renderer.itemSectionRenderer;
-		if(this.res.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
+		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			let ok_first=Object.keys(content_item)[0];
@@ -3820,7 +3843,7 @@ class HandleTypes {
 		if(!data) {
 			debugger;
 		}
-		if(this.res.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
+		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			if("itemSectionRenderer" in content_item) {
@@ -3834,7 +3857,7 @@ class HandleTypes {
 	}
 	/** @param {string} params */
 	trackingParams(params) {
-		if(this.res.get_param("log_tracking_params")) console.log("tp",params);
+		if(this.r.get_param("log_tracking_params")) console.log("tp",params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
@@ -3949,7 +3972,7 @@ class HandleTypes {
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
 		let data=content;
-		if(this.res.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
+		if(this.r.get_param("log_tracking_params")) console.log("tp",data.trackingParams);
 		if(data.contents) {
 			this.BrowseResponseContentContents(data.contents);
 		}
@@ -4077,7 +4100,7 @@ class HandleTypes {
 	 */
 	endpoint(endpoint) {
 		if("clickTrackingParams" in endpoint) {
-			if(this.res.get_param("log_click_tracking_params")) console.log("ctp",endpoint.clickTrackingParams);
+			if(this.r.get_param("log_click_tracking_params")) console.log("ctp",endpoint.clickTrackingParams);
 		} else {
 			console.log(endpoint);
 			debugger;
@@ -4457,8 +4480,8 @@ class HandleTypes {
 		}
 		if(data.options) this.options(data.options);
 		let str=stringify_text_runs(data.title);
-		console.log(str);
-		console.log(data);
+		if(typeof str!=='string') debugger;
+		if(this.r.get_param("noisy_logging")) console.log(data);
 		if(Object.keys(renderer).length!==1) {
 			debugger;
 		}
