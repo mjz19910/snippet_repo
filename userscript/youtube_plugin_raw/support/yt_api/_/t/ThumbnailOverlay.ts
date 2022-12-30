@@ -3,7 +3,7 @@ import {ThumbnailOverlayResumePlaybackRenderer} from "./ThumbnailOverlayResumePl
 import {ThumbnailOverlayTimeStatusRenderer} from "./ThumbnailOverlayTimeStatusRenderer";
 import {ThumbnailOverlayToggleButtonRenderer} from "./ThumbnailOverlayToggleButtonRenderer";
 
-export type ThumbnailOverlay={
+export type ThumbnailOverlayItem={
 	thumbnailOverlayResumePlaybackRenderer: ThumbnailOverlayResumePlaybackRenderer;
 }|{
 	thumbnailOverlayTimeStatusRenderer: ThumbnailOverlayTimeStatusRenderer;

@@ -5,7 +5,7 @@ import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {SimpleTextFixmeValueNeeded} from "../s/SimpleText.js";
 import {TextRuns} from "../t/TextRuns.js";
 import {ThumbnailH} from "../t/ThumbnailH.js";
-import {ThumbnailOverlay} from "../t/ThumbnailOverlay.js";
+import {ThumbnailOverlayItem} from "../t/ThumbnailOverlay.js";
 import {ThumbnailsList} from "../t/ThumbnailsList.js";
 import {TrackingParams} from "../t/TrackingParams.js";
 import {RichThumbnail} from "../../rich/RichThumbnail.js";
@@ -24,7 +24,7 @@ export interface CompactVideoRenderer extends TrackingParams {
 	shortBylineText: TextRuns;
 	shortViewCountText: SimpleTextFixmeValueNeeded;
 	thumbnail: ThumbnailsList;
-	thumbnailOverlays: ThumbnailOverlay[];
+	thumbnailOverlays: ThumbnailOverlayItem[];
 	title: SimpleTextFixmeValueNeeded;
 	trackingParams: string;
 	videoId: string;
