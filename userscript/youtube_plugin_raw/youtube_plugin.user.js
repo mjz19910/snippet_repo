@@ -4082,9 +4082,10 @@ class HandleTypes {
 		console.log(data.response);
 		console.log(data.url);
 	}
-	/** @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url']} url */
-	on_new_page_url(url) {
-		console.log("[new_page]",url);
+	/** @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
+	on_new_page_url(data) {
+		console.log("[new_page]",data.url);
+		debugger;
 	}
 	/**
 	 * @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
@@ -4098,10 +4099,11 @@ class HandleTypes {
 				case "account": break;
 				case "account_notifications": break;
 				case "account_privacy": break;
+				case "account_advanced": break;
 				default: {
 					/** @type {never} */
 					let never_part=split_parts[1]; never_part;
-					this.on_new_page_url(data.url);
+					this.on_new_page_url(data);
 				} break;
 			} break;
 			default: debugger;
