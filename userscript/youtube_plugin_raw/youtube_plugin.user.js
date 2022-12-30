@@ -3855,14 +3855,17 @@ class HandleTypes extends BaseService {
 	Accessibility(data) {
 		this.accessibilityData(data.accessibilityData);
 	}
+	/**
+	 * @param {import("./support/yt_api/_/a/ActionSetPlaylistVideoOrder.js").ServiceEndpoint} ep
+	 */
 	serviceEndpoint(ep) {
 		console.log(ep);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
-		let {size,isDisabled,text,serviceEndpoint,trackingParams,...rest_}=renderer;
+		let {size,isDisabled,text,trackingParams,...rest_}=renderer;
 		this.text(text);
-		this.serviceEndpoint(serviceEndpoint);
+		if("serviceEndpoint" in rest_) this.serviceEndpoint(rest_.serviceEndpoint);
 		this.trackingParams(trackingParams);
 		if(renderer.size!=="SIZE_DEFAULT") {
 			console.log("renderer.size",renderer.size);
