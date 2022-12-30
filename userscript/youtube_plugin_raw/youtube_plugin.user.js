@@ -4045,7 +4045,7 @@ class HandleTypes {
 		switch(data.page) {
 			case "browse": this.BrowsePageResponse(data); break;
 			case "playlist": this.PlaylistPageResponse(data); break;
-			case "settings": debugger; this.SettingsPageResponse(data); break;
+			case "settings": this.SettingsPageResponse(data); break;
 			case "shorts": this.ShortsPageResponse(data); break;
 			case "watch": this.WatchPageResponse(data); break;
 			case "channel": this.ChannelPageResponse(data); break;
