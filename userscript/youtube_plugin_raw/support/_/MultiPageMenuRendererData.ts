@@ -1,8 +1,8 @@
 import {MultiPageMenuNotificationSectionRenderer} from "./MultiPageMenuNotificationSectionRenderer";
 import {SimpleMenuHeaderRenderer} from "./SimpleMenuHeaderRenderer";
 
-export type MultiPageMenuRendererData<HeaderTitle extends string>={
-	header: SimpleMenuHeaderRenderer<HeaderTitle>;
+export type MultiPageMenuRendererData={
+	header: SimpleMenuHeaderRenderer;
 	sections: MultiPageMenuNotificationSectionRenderer[];
 	trackingParams: string;
 };

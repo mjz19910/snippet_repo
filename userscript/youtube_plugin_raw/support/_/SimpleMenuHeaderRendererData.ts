@@ -1,8 +1,7 @@
+import {SimpleTextFixmeValueNeeded} from "../yt_api/_/s/SimpleText.js";
 import {DefaultButtonRenderer} from "./DefaultButtonRenderer";
-import {SimpleTextOnly} from "./SimpleTextOnly";
 
-
-export type SimpleMenuHeaderRendererData<HeaderTitle extends string>={
-	title: SimpleTextOnly<HeaderTitle>;
+export type SimpleMenuHeaderRendererData={
+	title: SimpleTextFixmeValueNeeded;
 	buttons: DefaultButtonRenderer[];
 };

@@ -3857,11 +3857,29 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/ServiceEndpointAction.js").ServiceEndpointAction} action */
 	ServiceEndpointAction(action) {
-		this.clickTrackingParams(action.clickTrackingParams);
-		if("addToPlaylistCommand" in action) {
-			this.addToPlaylistCommand(action.addToPlaylistCommand);
+		let {clickTrackingParams: ct,...rest}=action;
+		this.clickTrackingParams(ct);
+		if("addToPlaylistCommand" in rest) {
+			this.addToPlaylistCommand(rest.addToPlaylistCommand);
+		} else if("openPopupAction" in rest) {
+			this.openPopupAction(rest.openPopupAction);
+		} else {
+			let k=get_keys_of(rest);
+			console.log(k,rest);
 		}
-		console.log(action.clickTrackingParams);
+	}
+	/**
+	 * @param {import("./support/_/OpenPopupAction.js").OpenPopupAction} obj
+	 */
+	openPopupAction(obj) {
+		switch(obj.popupType) {
+			case "DIALOG": this.popup(obj.popup); break;
+			case "DROPDOWN": this.popup(obj.popup); break;
+			default: console.log(obj);
+		}
+	}
+	popup(obj) {
+		obj;
 	}
 	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpoint} ep */
 	signalServiceEndpoint(ep) {
