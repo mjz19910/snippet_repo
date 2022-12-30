@@ -138,7 +138,7 @@ class FakeIframeElementData {
 }
 FakeIframeElementData.special_base=class {};
 var XG=function() {};
-Object.setPrototypeOf(XG.prototype, HTMLIFrameElement.prototype);
+Object.setPrototypeOf(XG.prototype,HTMLIFrameElement.prototype);
 // customElements.define('fake-iframe', FakeIframeElement);
 /** @type {Map<Node,Node>} */
 let real_element_map=new Map;
@@ -4419,18 +4419,27 @@ class HandleTypes {
 		if(has_keys(ok,"logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
 		debugger;
 	}
+	/** @type {import("./support/yt_api/_/b/valid_titles_for_tabbed_header_renderer_t.js").valid_titles_for_tabbed_header_renderer_t} */
+	valid_titles_for_tabbed_header_renderer=[
+		"Home",
+		"Subscriptions",
+	];
 	/**
 	 * @param {import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer
 	 */
 	FeedTabbedHeaderRenderer(renderer) {
-		let ren_data=renderer.feedTabbedHeaderRenderer;
+		let data=renderer.feedTabbedHeaderRenderer;
 		if(
-			eq_keys(Object.keys(ren_data),["title"])&&
-			ren_data.title.runs.length===1&&
-			ren_data.title.runs[0].text==="Home"
+			eq_keys(Object.keys(data),["title"])&&
+			data.title.runs.length===1&&
+			this.valid_titles_for_tabbed_header_renderer.includes(data.title.runs[0].text)
 		) return;
-		console.log(renderer.feedTabbedHeaderRenderer);
-		debugger;
+		if(eq_keys(Object.keys(data),["title"])&&data.title.runs.length===1) {
+			console.log("[feed_tabbed_header_new_title]",data.title.runs[0].text);
+		} else {
+			console.log(renderer.feedTabbedHeaderRenderer);
+			debugger;
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj
@@ -4518,6 +4527,9 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer
 	 */
 	itemSectionRenderer(renderer) {
+		if(!renderer.itemSectionRenderer) {
+			debugger;
+		}
 		let data=renderer.itemSectionRenderer;
 		console.log("tp",data.trackingParams);
 		let contents=data.contents;
@@ -4531,6 +4543,8 @@ class HandleTypes {
 				console.log("[todo_handler]",content_item);
 			} else if("connectedAppRenderer" in content_item) {
 				console.log("[todo_handler]",content_item);
+			} else if("shelfRenderer" in content_item) {
+				console.log("[todo_handler]",content_item);
 			} else {
 				console.log("[need_section_handler][%s]",ok_first);
 				debugger;
@@ -4540,10 +4554,19 @@ class HandleTypes {
 	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} renderer */
 	sectionListRenderer(renderer) {
 		let data=renderer.sectionListRenderer;
+		if(!data) {
+			debugger;
+		}
 		console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
-			this.itemSectionRenderer(content_item);
+			if("itemSectionRenderer" in content_item) {
+				this.itemSectionRenderer(content_item);
+			} else if("continuationItemRenderer" in content_item) {
+				console.log("[todo_handler]",content_item);
+			} else {
+				debugger;
+			}
 		}
 	}
 	/**
@@ -4924,7 +4947,7 @@ class HandleTypes {
 		let {responseContext,...not_context}=response;
 		this.responseContext(responseContext);
 		if(!response.success) {
-			console.log("YtFailure", not_context);
+			console.log("YtFailure",not_context);
 		};
 	}
 	/** @arg {{}} data */
