@@ -4650,6 +4650,25 @@ class HandleTypes {
 			debugger;
 		}
 	}
+	/**
+	 * @param {import("./support/yt_api/_/r/ResponseReceivedActionItem.js").ResponseReceivedActionItem[]} actions
+	 */
+	onResponseReceivedActions(actions) {
+		for(let action of actions) {
+			if("adsControlFlowOpportunityReceivedCommand" in action) {
+				this.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
+			} else if("reloadContinuationItemsCommand" in action) {
+				this.reloadContinuationItemsCommand(action);
+			} else {
+				debugger;
+			}
+		}
+	}
+	/** @param {{}} tags */
+	observedStateTags(tags) {
+		console.log(tags);
+		debugger;
+	}
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
 		let data=content;
@@ -4661,17 +4680,14 @@ class HandleTypes {
 			this.handleEntityBatchUpdate(data.frameworkUpdates);
 		}
 		this.FeedTabbedHeaderRenderer(data.header);
-		for(let action of data.onResponseReceivedActions) {
-			if("adsControlFlowOpportunityReceivedCommand" in action) {
-				this.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
-			} else if("reloadContinuationItemsCommand" in action) {
-				this.reloadContinuationItemsCommand(action);
-			} else {
-				debugger;
-			}
+		if(data.onResponseReceivedActions) {
+			this.onResponseReceivedActions(data.onResponseReceivedActions);
 		}
 		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
 		if(typeof data.trackingParams!=="string") debugger;
+		if(data.observedStateTags) {
+			this.observedStateTags(data.observedStateTags)
+		}
 		let ok=Object.keys(data);
 		let ok_miss=[];
 		for(let k of ok) {
@@ -4682,6 +4698,7 @@ class HandleTypes {
 			if(k==="topbar") continue;
 			if(k==="onResponseReceivedActions") continue;
 			if(k==="frameworkUpdates") continue;
+			if(k==="observedStateTags") continue;
 			ok_miss.push(k);
 		}
 		if(ok_miss.length>0) {

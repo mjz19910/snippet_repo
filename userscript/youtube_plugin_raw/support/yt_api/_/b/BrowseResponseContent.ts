@@ -10,7 +10,8 @@ export type BrowseResponseContent={
 	contents?: TwoColumnBrowseResultsRenderer;
 	header: FeedTabbedHeaderRenderer;
 	topbar?: DesktopTopbarRenderer;
-	onResponseReceivedActions: ResponseReceivedActionItem[];
+	onResponseReceivedActions?: ResponseReceivedActionItem[];
 	trackingParams: string;
 	frameworkUpdates?: EntityBatchUpdate;
+	observedStateTags?: {};
 };
