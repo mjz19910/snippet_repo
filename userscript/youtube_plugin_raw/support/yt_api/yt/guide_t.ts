@@ -1,6 +1,6 @@
 import {GuideJsonType} from "./GuideJsonType";
 
-export type yt_response_guide={
+export type guide_t={
 	url_type: "guide";
 	json: GuideJsonType;
 };

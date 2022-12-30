@@ -1,6 +1,6 @@
 import {AttGetV} from "../_/a/AttGetV.js";
 
-export type yt_response_att_get={
+export type att_get_t={
 	url_type: "att.get";
 	json: AttGetV;
 };

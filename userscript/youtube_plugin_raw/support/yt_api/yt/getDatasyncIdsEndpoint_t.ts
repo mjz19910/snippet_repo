@@ -1,4 +1,4 @@
-export type yt_response_getDatasyncIdsEndpoint={
+export type getDatasyncIdsEndpoint_t={
 	url_type: "getDatasyncIdsEndpoint";
 	json: {};
 };

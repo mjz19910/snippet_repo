@@ -1,7 +1,7 @@
 import {GeneralContext} from "../_/g/GeneralContext.js";
 
-export type yt_response_reel_watch_sequence={
-	url_type: "reel.reel_watch_sequence";
+export type reel_reel_item_watch_t={
+	url_type: "reel.reel_item_watch";
 	json: {
 		responseContext: GeneralContext;
 	};

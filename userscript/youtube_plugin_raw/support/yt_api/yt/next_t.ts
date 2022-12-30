@@ -1,7 +1,7 @@
 import {YtApiNext} from "./YtApiNext";
 
 
-export type yt_response_next={
+export type next_t={
 	url_type: "next";
 	json: YtApiNext;
 };
