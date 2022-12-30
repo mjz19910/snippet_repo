@@ -1849,7 +1849,7 @@ class HandlerBase {
 					}
 					case 3: break;
 					case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
-					case 5: break;
+					case 5: first_num.push(reader.fixed32()); break;
 					default: break x;
 				}
 				data.push([fieldId,wireType,first_num]);
