@@ -3749,11 +3749,13 @@ class HandleTypes {
 			} else if("pageIntroductionRenderer" in content_item) {
 				this.pageIntroductionRenderer(content_item);
 			} else if("settingsOptionsRenderer" in content_item) {
-				console.log("[todo_handler]",content_item);
+				this.settingsOptionsRenderer(content_item.settingsOptionsRenderer);
 			} else if("connectedAppRenderer" in content_item) {
 				console.log("[todo_handler]",content_item);
+				debugger;
 			} else if("shelfRenderer" in content_item) {
 				console.log("[todo_handler]",content_item);
+				debugger;
 			} else {
 				console.log("[need_section_handler][%s]",ok_first);
 				debugger;
@@ -4370,6 +4372,12 @@ class HandleTypes {
 	 */
 	TwoColumnBrowseResultsRenderer(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
+	}
+	/**
+	 * @param {SettingsOptionRenderer} data
+	 */
+	settingsOptionsRenderer(data) {
+		console.log(data);
 	}
 }
 
