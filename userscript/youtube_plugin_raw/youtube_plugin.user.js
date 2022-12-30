@@ -3870,12 +3870,14 @@ class HandleTypes extends BaseService {
 		console.log("renderer.style",renderer.style);
 		console.log("renderer.size",renderer.size);
 		console.log("renderer.isDisabled",renderer.isDisabled);
-		// console.log("renderer.icon",renderer.icon);
-		// console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
-		// console.log("renderer.tooltip",renderer.tooltip);
-		// console.log("renderer.trackingParams",renderer.trackingParams);
-		// console.log("renderer.accessibilityData",renderer.accessibilityData);
-		if(eq_keys(ok,["style","size","isDisabled"])) return;
+		console.log("renderer.trackingParams",renderer.trackingParams);
+		if(renderer.style==="STYLE_DEFAULT") {
+			console.log("renderer.icon",renderer.icon);
+			console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
+			console.log("renderer.tooltip",renderer.tooltip);
+			console.log("renderer.accessibilityData",renderer.accessibilityData);
+		}
+		if(eq_keys(ok,["style","size","isDisabled","text","trackingParams","accessibilityData","command"])) return;
 		console.log(ok);
 		debugger;
 	}
@@ -4341,6 +4343,14 @@ class HandleTypes extends BaseService {
 		this.providerKey(obj.providerKey);
 		this.ButtonRenderer(obj.unlinkedButton);
 		console.log(obj);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/AccountLinkProviderKey.js").AccountLinkProviderKey} obj
+	 */
+	providerKey(obj) {
+		const {id,subject}=obj;
+		console.log("[provider_key] id,subject",id,subject);
+		console.log(Object.keys(obj));
 	}
 	/**
 	 * @param {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} obj
