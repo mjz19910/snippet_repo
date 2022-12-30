@@ -1433,7 +1433,7 @@ function non_null(val) {
 }
 
 class FilterHandlers {
-	/** @arg {any} res */
+	/** @arg {ServiceResolver<any,any>} res */
 	constructor(res) {
 		this.filter_handler_debug=false;
 		/**@readonly*/
@@ -2920,6 +2920,11 @@ class ServiceResolver {
 	set_params(params) {
 		this.params=params;
 	}
+	/** @arg {keyof U} key */
+	get_param(key) {
+		if(!this.params) throw new Error("No service params");
+		return this.params[key];
+	}
 	/** @arg {keyof T} key */
 	get(key) {
 		if(!this.services) throw new Error("No services");
@@ -3569,7 +3574,7 @@ class TrackingServices {
 }
 
 class HandleTypes {
-	/** @arg {any} res */
+	/** @arg {ServiceResolver<any,any>} res */
 	constructor(res) {
 		this.res=res;
 	}
