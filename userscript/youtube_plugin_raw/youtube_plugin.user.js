@@ -2284,20 +2284,6 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	/**
-	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer<"Notifications">} popup
-	 */
-	handle_popup(popup) {
-		if("multiPageMenuRenderer" in popup) {
-			this.handle_t.multiPageMenuRenderer(popup.multiPageMenuRenderer);
-		} else {
-			debugger;
-		}
-	}
-	notification={
-		/** @type {number|null} */
-		unseenCount: null,
-	};
 	guide_item_keys=make_guide_item_keys();
 	/**
 	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
@@ -4839,7 +4825,8 @@ class HandleTypes {
 		}
 	}
 	static notification={
-		unseenCount: 0,
+		/** @type {number|null} */
+		unseenCount: null,
 	};
 	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
 	ResponseTypes(res) {
