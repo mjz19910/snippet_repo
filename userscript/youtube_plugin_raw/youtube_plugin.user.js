@@ -126,39 +126,6 @@ class PagePreparer {
 	}
 }
 
-
-const original_document_createElement=document.createElement;
-// @ts-ignore
-document.createElement=overwrite_createElement;
-// @ts-ignore
-class FakeIframeElementData {
-	constructor() {
-		this.__fake_data=new FakeIframeElementData.special_base;
-	}
-}
-FakeIframeElementData.special_base=class {};
-var XG=function() {};
-Object.setPrototypeOf(XG.prototype,HTMLIFrameElement.prototype);
-// customElements.define('fake-iframe', FakeIframeElement);
-
-/**
- * @this {Document}
- * @arg {string} n_type
- * @arg {ElementCreationOptions} [options]
- */
-function overwrite_createElement(n_type,options) {
-	if(n_type!=="iframe"&&n_type!=="IFRAME") {
-		return original_document_createElement.call(this,n_type,options);
-	}
-	class UU {
-		n_type=n_type;
-		n_opts=options;
-	}
-	FakeIframeElementData.special_base=UU;
-	let ret=original_document_createElement.call(this,n_type,options);
-	return ret;
-}
-
 /** @template {{length:number;[x:number]:T[number]}} T @param {T} x */
 function make_iterator(x) {
 	let i=0;
@@ -166,9 +133,10 @@ function make_iterator(x) {
 		[Symbol.iterator]() {
 			return {
 				next() {
-					if(i<x.length) {
+					i++;
+					if(i<=x.length) {
 						return {
-							value: x[i],
+							value: x[i-1],
 							done: false,
 						};
 					} else {
@@ -287,6 +255,9 @@ function do_find_video() {
 	}
 }
 
+/** @type {InstanceType<typeof YtdAppElement>|undefined} */
+let ytd_app=void 0;
+
 function iterate_ytd_app() {
 	if(ytd_app) return false;
 	const target_element=get_html_elements(document,"ytd-app")[0];
@@ -295,9 +266,59 @@ function iterate_ytd_app() {
 	return true;
 }
 
+/** @arg {HTMLElement} element */
+function on_ytd_app(element) {
+	const element_id="ytd-app";
+	if(is_yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	window.ytd_app=element;
+	ytd_app=YtdAppElement.cast(element);
+	ytd_app.addEventListener("yt-navigate-finish",function(event) {
+		// might have a new video element from page type change
+		setTimeout(function() {
+			do_find_video();
+		},80);
+		let real_event=YTNavigateFinishEvent.cast(event);
+		for(let handler of on_yt_navigate_finish) {
+			handler(real_event);
+		}
+	});
+	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
+	if(document.visibilityState==="visible") {
+		ytd_app.app_is_visible=true;
+		if(vis_imm) {
+			fire_on_visibility_change_restart_video_playback();
+			vis_imm=false;
+		}
+	} else {
+		ytd_app.app_is_visible=false;
+	}
+	ytd_app.ytp_click_cint=setInterval(() => {
+		if(!is_watch_page_active()||!ytd_app) return;
+		if(!ytd_app.app_is_visible) {
+			vis_imm=true;
+			return;
+		}
+	},15*60*1000);
+	document.addEventListener("visibilitychange",function() {
+		if(!ytd_app) throw new Error("No ytd-app");
+		if(!is_watch_page_active()) return;
+		if(document.visibilityState==="visible") {
+			ytd_app.app_is_visible=true;
+			if(vis_imm) {
+				fire_on_visibility_change_restart_video_playback();
+				vis_imm=false;
+			}
+		} else {
+			ytd_app.app_is_visible=false;
+		}
+	});
+}
+
 /** @arg {CustomEventType} event */
 async function async_plugin_init(event) {
 	let plugin_state={};
+	plugin_state.show_interesting_elements=true;
 	let cur_count=1;
 	let obj=dom_observer;
 	let iter_count=0;
@@ -319,32 +340,14 @@ async function async_plugin_init(event) {
 				if(plugin_state.polymer_loaded) break x;
 				if(!window.Polymer) break x;
 				if(!window.Polymer.Class) break x;
-				/** @template {{created?:()=>void;is: string;_legacyForceObservedAttributes?: {};prototype:{_legacyForceObservedAttributes?: {}}}} T @arg {T} a @returns {T} */
-				function polymer_register_custom_element(a) {
-					if(!window.Polymer.Class) throw new Error("window.Polymer.Class is not a function");
-					/** @type {T} */
-					var b="function"===typeof a? a:window.Polymer.Class(a);
-					a._legacyForceObservedAttributes&&(b.prototype._legacyForceObservedAttributes=a._legacyForceObservedAttributes);
-					/** @arg {any} x */
-					function any(x) {return x;}
-					customElements.define(b.is,any(b));
-					return b;
-				}
-				polymer_register_custom_element({
-					is: "fake-iframe",
-					fake_iframe_data: new FakeIframeElementData,
-					created: function() {
-						this.fake_iframe_data=new FakeIframeElementData;
-						debugger;
-					},
-					prototype: XG.prototype,
-				});
 				plugin_state.polymer_loaded=true;
 			}
-			if(plugin_state.polymer_loaded&&document.body) {
+			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body&&document.readyState==="complete") {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg");
-				interesting_body_elements;
+				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
+				console.log(interesting_body_elements);
 				debugger;
+				plugin_state.show_interesting_elements=false;
 			}
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
 			{
@@ -445,57 +448,6 @@ async function async_plugin_init(event) {
 let found_element_count=0;
 let expected_element_count=6;
 async_plugin_init.__debug=false;
-
-/** @arg {HTMLElement} element */
-function on_ytd_app(element) {
-	const element_id="ytd-app";
-	if(is_yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
-	element_map.set(element_id,element);
-	window.ytd_app=element;
-	ytd_app=YtdAppElement.cast(element);
-	ytd_app.addEventListener("yt-navigate-finish",function(event) {
-		// might have a new video element from page type change
-		setTimeout(function() {
-			do_find_video();
-		},80);
-		let real_event=YTNavigateFinishEvent.cast(event);
-		for(let handler of on_yt_navigate_finish) {
-			handler(real_event);
-		}
-	});
-	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
-	if(document.visibilityState==="visible") {
-		ytd_app.app_is_visible=true;
-		if(vis_imm) {
-			fire_on_visibility_change_restart_video_playback();
-			vis_imm=false;
-		}
-	} else {
-		ytd_app.app_is_visible=false;
-	}
-	ytd_app.ytp_click_cint=setInterval(() => {
-		if(!is_watch_page_active()||!ytd_app) return;
-		if(!ytd_app.app_is_visible) {
-			vis_imm=true;
-			return;
-		}
-	},15*60*1000);
-	document.addEventListener("visibilitychange",function() {
-		if(!ytd_app) throw new Error("No ytd-app");
-		if(!is_watch_page_active()) return;
-		if(document.visibilityState==="visible") {
-			ytd_app.app_is_visible=true;
-			if(vis_imm) {
-				fire_on_visibility_change_restart_video_playback();
-				vis_imm=false;
-			}
-		} else {
-			ytd_app.app_is_visible=false;
-		}
-	});
-}
-/** @type {InstanceType<typeof YtdAppElement>|undefined} */
-let ytd_app=void 0;
 
 // spell:words monospace
 let player_overlay_style_str=`
@@ -2397,9 +2349,13 @@ function setup_prototype_modify() {
 			return Reflect.apply(target,thisArg,args);
 		}
 	});
-	original_fetch=fetch;
-	window.fetch=fetch_inject;
-	fetch_inject.__proxy_target__=original_fetch;
+	/** @param {boolean} v */
+	function x(v){return v}
+	if(x(false)) {
+		original_fetch=fetch;
+		window.fetch=fetch_inject;
+		fetch_inject.__proxy_target__=original_fetch;
+	}
 	let navigator_sendBeacon=navigator.sendBeacon;
 	navigator.sendBeacon=function(...args) {
 		if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
@@ -3808,9 +3764,10 @@ class HistoryStateManager extends EventTarget {
 		this.do_state_update(this.cur_state);
 		if(this.debug) console.log("initial history state",this.cur_state);
 		/**
-		 * @arg {{}} obj
+		 * @arg {{}|null} obj
 		 */
 		function remove_yt_data(obj) {
+			if(obj===null) return null;
 			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint,savedComponentState");
 		}
 		window.addEventListener("popstate",(event) => {
@@ -3839,7 +3796,7 @@ class HistoryStateManager extends EventTarget {
 				if(t.cur_state) {
 					let new_my_data=remove_yt_data(new_state);
 					let old_my_data=remove_yt_data(t.cur_state);
-					if("filter_gain" in new_my_data&&"filter_gain" in old_my_data&&Object.keys(new_my_data).length===1) {
+					if(new_my_data&&old_my_data&&"filter_gain" in new_my_data&&"filter_gain" in old_my_data&&Object.keys(new_my_data).length===1) {
 						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_one] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
 					} else {
 						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
@@ -3866,6 +3823,7 @@ class HistoryStateManager extends EventTarget {
 			}
 		});
 		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
+			/** @arg {History['replaceState']} target @arg {History} thisArg @arg {[data: any, unused: string, url?: string | URL | null]} argArray */
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
