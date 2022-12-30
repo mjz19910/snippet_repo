@@ -55,6 +55,7 @@
       "decodedata",
       "decpart",
       "decreaseSpawnCooldown",
+      "deopt",
       "deref",
       "desync",
       "dname",

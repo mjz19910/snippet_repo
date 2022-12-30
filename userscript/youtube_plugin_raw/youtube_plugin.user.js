@@ -1666,10 +1666,109 @@ class HandlerBase {
 			debugger;
 		}
 	}
+	decode_protobuf=function make() {
+		let bigint_val_32=new Uint32Array(2);
+		let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
+		class LongBits {
+			/**
+			 * @param {number} a
+			 * @param {number} b
+			 */
+			constructor(a,b) {
+				this.lo=a;
+				this.hi=b;
+			}
+			toBigInt() {
+				bigint_val_32[0]=this.lo;
+				bigint_val_32[1]=this.hi;
+				return bigint_buf[0];
+			}
+		}
+		let value=4294967295;
+		return new class ProtobufDecoder {
+			MyReader=class MyReader {
+				/** @arg {Uint8Array} buf  */
+				constructor(buf) {
+					this.buf=buf;
+					this.pos=0;
+					this.len=buf.length;
+				}
+				uint32() {
+					value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
+					value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
+					value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
+					value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
+					value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
+
+					/* istanbul ignore if */
+					if((this.pos+=5)>this.len) {
+						this.pos=this.len;
+						throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
+					}
+					return value;
+				};
+				uint64() {
+					return this.readLongVarint().toBigInt();
+				}
+				readLongVarint() {
+					// tends to deopt with local vars for octet etc.
+					var bits=new LongBits(0,0);
+					var i=0;
+					if(this.len-this.pos>4) { // fast route (lo)
+						for(;i<4;++i) {
+							// 1st..4th
+							bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
+							if(this.buf[this.pos++]<128)
+								return bits;
+						}
+						// 5th
+						bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
+						bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+						if(this.buf[this.pos++]<128)
+							return bits;
+						i=0;
+					} else {
+						for(;i<3;++i) {
+							/* istanbul ignore if */
+							if(this.pos>=this.len) throw new Error("indexOutOfRange");
+							// 1st..3th
+							bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
+							if(this.buf[this.pos++]<128)
+								return bits;
+						}
+						// 4th
+						bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+						return bits;
+					}
+					if(this.len-this.pos>4) { // fast route (hi)
+						for(;i<5;++i) {
+							// 6th..10th
+							bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+							if(this.buf[this.pos++]<128)
+								return bits;
+						}
+					} else {
+						for(;i<5;++i) {
+							/* istanbul ignore if */
+							if(this.pos>=this.len)
+								throw new Error("indexOutOfRange");
+							// 6th..10th
+							bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+							if(this.buf[this.pos++]<128)
+								return bits;
+						}
+					}
+					/* istanbul ignore next */
+					throw Error("invalid varint encoding");
+				}
+			};
+		};
+	}();
 	/**
 	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
 	 */
 	adLayoutMetadata(metadata) {
+		let t=this;
 		/**
 		 * @param {string} str
 		 */
@@ -1687,66 +1786,61 @@ class HandlerBase {
 		 * @param {Uint8Array} buffer
 		 */
 		function decode_protobuf(buffer) {
-			let i=0;
+			/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
+			let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
 			let loop_count=0;
-			/** @type {[number,number,number[]][]} */
+			/** @type {[number,number,(number | bigint)[]][]} */
 			let data=[];
 			let mode="initial";
 			let mode_stack=[];
+			let reader=new t.decode_protobuf.MyReader(buffer);
 			/** @type {[offset: number,length: number][]} */
-			let stack=[[0,buffer.length]];
-			let data_stack=[];
-			let next_mode=null;
-			x: for(;loop_count<8;loop_count++){
+			let stack=[[0,reader.len]];
+			x: for(;loop_count<8;loop_count++) {
 				switch(mode) {
 					case "initial": break;
-					case "uint32": 
-					if(next_mode!==null) {
-						let int_part=buffer[i];
-						data_stack.push(int_part);
-						mode=next_mode;
-						next_mode=null;
-					} else {
-						throw new Error("Don't know where to go");
-					} continue x;
-					case "DateTime": {
-						let mode_len=data_stack.pop();
-						if(!mode_len) throw new Error("Missing L-delim length");
-						stack.push([i,mode_len]);
-						mode="DateTimeInner";
-					} break;
-					case "DateTimeInner": break;
+					case "DateTime": break;
 				}
 				let [cur_off,cur_len]=non_null(stack.at(-1));
 				console.log('off',cur_len,cur_off);
-				if(i >= cur_off+cur_len) {
+				if(reader.pos>=cur_off+cur_len) {
 					debugger;
 				}
-				let cur_byte=buffer[i];
+				let cur_byte=reader.uint32();
 				let wireType=cur_byte&7;
-				let fieldId=buffer[i]>>>3;
-				/** @type {number[]} */
+				let fieldId=cur_byte>>>3;
+				/** @type {(number|bigint)[]} */
 				let first_num=[];
 				console.log("field",fieldId,"type",wireType);
-				switch(wireType) {
+				y: switch(wireType) {
 					case 0:
-						i++;
-						first_num.push(buffer[i]);
-						console.log("\"field %o: VarInt\": %o",fieldId,buffer[i]);
-						i++;
-					break;
+						if(mode==="DateTime") {
+							switch(fieldId) {
+								case 1: {
+									let f_ty=expected_fields_date_time[0];
+									if(f_ty[1]!=="uint64") throw new Error();
+									first_num.push(reader.uint64());
+									console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+									break y;
+								}
+								default: throw new Error("Unexpected field");
+							}
+						}
+						first_num.push(reader.uint32());
+						console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+						break;
 					case 2: if(mode==="initial") {
-						i++;
 						mode_stack.push(mode);
-						mode="uint32";
-						next_mode="DateTime";
+						let next_len=reader.uint32();
+						stack.push([reader.pos,next_len]);
+						mode="DateTime";
 						continue x;
 					} else {
 						console.log("mode 2 and not able to handle it");
 						break x;
 					}
-					case 3: i++; break;
-					case 4: i++; let mode_=mode_stack.pop();if(!mode_) throw new Error(); mode=mode_; break;
+					case 3: break;
+					case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
 					default: break x;
 				}
 				data.push([fieldId,wireType,first_num]);
@@ -1767,7 +1861,7 @@ class HandlerBase {
 				default: debugger;
 			}
 			let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
-			console.log("log data entry [%o]",{w:dec.first_w,f:dec.first_f},dec.first_num);
+			console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
 			console.log("log data entry rest",...dec.rest);
 			console.log(item.adLayoutLoggingData.serializedAdServingDataEntry);
 		}
