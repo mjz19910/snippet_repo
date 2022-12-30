@@ -4482,20 +4482,27 @@ class CsiService {
 
 const csi_service=new CsiService;
 
-class TrackingServices {
+class ECatcherService {
+	data={
+		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
+		client: null,
+		expected_client_values: {
+			fexp: [
+				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574],
+				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
+				[39323120,39322983,39322873,39323013,39323020,39322863],
+				[39322866,39322870,39322980,39323016,45686551],
+				[39321827,39323023],
+			],
+		},
+	};
 	/**
-	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
+	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParamsType} params
 	 */
-	on_csi_service(service) {
-		csi_service.on_params(service.params);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
-	 */
-	on_e_catcher_service(service) {
-		/** @type {NonNullable<this['e_catcher_service']['client']>} */
+	on_params(params) {
+		/** @type {NonNullable<this['data']['client']>} */
 		let new_client={};
-		for(let param of service.params) {
+		for(let param of params) {
 			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
 			let param_parts=as_cast(param.key.split("."));
 			if(param_parts[0]!=='client') debugger;
@@ -4509,11 +4516,11 @@ class TrackingServices {
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
-		if(this.e_catcher_service.client) {
-			let prev_client=this.e_catcher_service.client;
-			this.e_catcher_service.client={...this.e_catcher_service.client,...new_client};
-			let client=this.e_catcher_service.client;
-			let expected=this.e_catcher_service.expected_client_values.fexp;
+		if(this.data.client) {
+			let prev_client=this.data.client;
+			this.data.client={...this.data.client,...new_client};
+			let client=this.data.client;
+			let expected=this.data.expected_client_values.fexp;
 			let new_expected=[];
 			x: for(let exp of client.fexp) {
 				for(let expected_item of expected) {
@@ -4521,26 +4528,31 @@ class TrackingServices {
 				}
 				new_expected.push(exp);
 			}
-			if(prev_client.name!==this.e_catcher_service.client.name) {
-				console.log({name: prev_client.name},{name: this.e_catcher_service.client.name});
+			if(prev_client.name!==this.data.client.name) {
+				console.log({name: prev_client.name},{name: this.data.client.name});
 			}
 			if(new_expected.length>0) console.log("new_fexp",new_expected);
 		} else {
-			this.e_catcher_service.client=new_client;
+			this.data.client=new_client;
 		}
+	
 	}
-	e_catcher_service={
-		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
-		client: null,
-		expected_client_values: {
-			fexp: [
-				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574],
-				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
-				[39323120,39322983,39322873,39323013,39323020,39322863],
-				[39322866,39322870,39322980,39323016,45686551],
-				[39321827,39323023],
-			],
-		},
+}
+
+const e_catcher_service=new ECatcherService;
+
+class TrackingServices {
+	/**
+	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
+	 */
+	on_csi_service(service) {
+		csi_service.on_params(service.params);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 */
+	on_e_catcher_service(service) {
+		e_catcher_service.on_params(service.params);
 	}
 	g_feedback_service={
 		/** @type {number[]|null} */
@@ -4565,7 +4577,7 @@ class TrackingServices {
 					let new_expected=[];
 					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
 					this.g_feedback_service.e.forEach(e => {
-						for(let known of service_tracking.e_catcher_service.expected_client_values.fexp) {
+						for(let known of e_catcher_service.data.expected_client_values.fexp) {
 							if(known.includes(e)) return;
 						}
 						new_expected.push(e);
