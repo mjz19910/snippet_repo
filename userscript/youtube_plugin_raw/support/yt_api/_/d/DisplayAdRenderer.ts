@@ -11,7 +11,6 @@ export interface DisplayAdRenderer {
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: TextRunsSimpleT<"Create Lasting Wealth">;
 	image: ThumbnailRoot;
-	// spell:ignore Linqto
 	bodyText: SimpleText;
 	secondaryText: SimpleText;
 	badge: MetadataBadgeRenderer;
