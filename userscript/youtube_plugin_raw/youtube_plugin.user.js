@@ -67,7 +67,7 @@ class SavedData {
 let saved_data=new SavedData;
 inject_api_yt.saved_data=saved_data;
 
-const yt_debug_enabled=false;
+const is_yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
 	void value,_constructor_type;
@@ -131,13 +131,14 @@ const original_document_createElement=document.createElement;
 // @ts-ignore
 document.createElement=overwrite_createElement;
 // @ts-ignore
-class FakeIframeElement {
+class FakeIframeElementData {
 	constructor() {
-		this.__fake_data=new FakeIframeElement.special_base;
+		this.__fake_data=new FakeIframeElementData.special_base;
 	}
 }
-FakeIframeElement.special_base=class {};
+FakeIframeElementData.special_base=class {};
 var XG=function() {};
+Object.setPrototypeOf(XG.prototype, HTMLIFrameElement.prototype);
 // customElements.define('fake-iframe', FakeIframeElement);
 
 /**
@@ -153,7 +154,7 @@ function overwrite_createElement(n_type,options) {
 		n_type=n_type;
 		n_opts=options;
 	}
-	FakeIframeElement.special_base=UU;
+	FakeIframeElementData.special_base=UU;
 	return original_document_createElement.call(this,"fake-iframe");
 }
 
@@ -245,7 +246,7 @@ function with_ytd_scope() {
 	}
 
 	function activate_nav() {
-		if(yt_debug_enabled) console.log("activate_nav:fire");
+		if(is_yt_debug_enabled) console.log("activate_nav:fire");
 		if(!ytd_player) return;
 		if(!ytd_page_manager) return;
 		if(ytd_player.active_nav) return;
@@ -334,9 +335,9 @@ function with_ytd_scope() {
 					}
 					polymer_register_custom_element({
 						is: "fake-iframe",
-						fake_iframe: new FakeIframeElement,
+						fake_iframe_data: new FakeIframeElementData,
 						created: function() {
-							this.fake_iframe=new FakeIframeElement;
+							this.fake_iframe_data=new FakeIframeElementData;
 						},
 						prototype: XG.prototype,
 					});
@@ -377,7 +378,7 @@ function with_ytd_scope() {
 						page_elem.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 						page_elem.__has_theater_handler_plugin=true;
 					}
-					if(yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
+					if(is_yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
 					if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
 						console.log("found other current_page at iter=",iter_count);
 						/** @type {Promise<void>} */
@@ -443,7 +444,7 @@ function with_ytd_scope() {
 	/** @arg {HTMLElement} element */
 	function on_ytd_app(element) {
 		const element_id="ytd-app";
-		if(yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
+		if(is_yt_debug_enabled||debug_ytd_app) console.log(`on ${element_id}`);
 		element_map.set(element_id,element);
 		window.ytd_app=element;
 		ytd_app=YtdAppElement.cast(element);
@@ -497,7 +498,7 @@ function with_ytd_scope() {
 			let player_masthead=ytd_app.__shady_children.masthead;
 			if(!player_masthead.$) return;
 			if(!ytd_app.volume_range&&audio_gain_controller) {
-				if(yt_debug_enabled) console.log("create VolumeRange");
+				if(is_yt_debug_enabled) console.log("create VolumeRange");
 				document.head.append(volume_plugin_style_element);
 				let volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 				let container_dom_parent=player_masthead.$.container.children.center;
@@ -954,14 +955,14 @@ function fetch_filter_text_then_data_url(request,response_obj) {
  * @arg {string} response_text
  */
 function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
-	if(yt_debug_enabled) console.log("handle_json_parse",request,options);
+	if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
 	let original_json_parse=JSON.parse;
-	if(yt_debug_enabled) console.log("JSON.parse = new Proxy()");
+	if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
 	JSON.parse=new Proxy(original_json_parse,{
 		apply: function(...proxy_args) {
-			if(yt_debug_enabled) console.log("JSON.parse()");
+			if(is_yt_debug_enabled) console.log("JSON.parse()");
 			let obj=Reflect.apply(...proxy_args);
-			if(yt_debug_enabled) console.log("request.url");
+			if(is_yt_debug_enabled) console.log("request.url");
 			fetch_filter_text_then_data_url(request,obj);
 			return obj;
 		}
@@ -988,7 +989,7 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
  * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
  */
 function bind_promise_handler(request,options,onfulfilled,onrejected) {
-	if(yt_debug_enabled) console.log("handle_json_parse.bind()");
+	if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 	return ret;
 }
@@ -1026,7 +1027,7 @@ function fetch_promise_handler(request,options,response) {
 	let handled_keys=["text"];
 	class FakeResponse {
 		text() {
-			if(yt_debug_enabled) console.log("response.text()");
+			if(is_yt_debug_enabled) console.log("response.text()");
 			return handle_fetch_response_2(request,options,response.text());
 		}
 	}
@@ -2292,7 +2293,7 @@ class FilterHandlers {
 		/** @type {JsonDataResponseType} */
 		let ret=Reflect.apply(...apply_args);
 		if(ret.response) {
-			if(yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
+			if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 			try {
 				page_type_iter(ret.page);
 				this.handle_any_data(`page_type_${ret.page}`,ret);
@@ -2757,7 +2758,7 @@ function get_ytd_page_manager() {
  */
 function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
-	if(yt_debug_enabled) console.log(`on ${element_id}`);
+	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	ytd_page_manager=any_c(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
@@ -2776,7 +2777,7 @@ let ytd_watch_flexy=null;
  */
 function on_ytd_watch_flexy(element) {
 	const element_id="ytd-watch-flexy";
-	if(yt_debug_enabled) console.log(`on ${element_id}`);
+	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	ytd_watch_flexy=any_c(element,YtdWatchFlexyElement);
 	window.ytd_watch_flexy=element;
@@ -2825,7 +2826,7 @@ let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
 	const element_id="ytd-player";
-	if(yt_debug_enabled) console.log(`on ${element_id}`);
+	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
@@ -3311,7 +3312,7 @@ let yt_playlist_manager=null;
  */
 function on_yt_playlist_manager(element) {
 	const element_id="yt-playlist-manager";
-	if(yt_debug_enabled) console.log(`on ${element_id}`);
+	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	yt_playlist_manager=element;
 	window.yt_playlist_manager=element;
@@ -3341,7 +3342,7 @@ let slow_message_event=false;
 const message_channel_loop_delay=80;
 /** @arg {MessageEvent<number>} event */
 function on_port_message(event) {
-	if(yt_debug_enabled) console.log("msg_port:message %o",event.data);
+	if(is_yt_debug_enabled) console.log("msg_port:message %o",event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
 	if(slow_message_event) {
 		setTimeout(dispatch_observer_event,message_channel_loop_delay);
@@ -3542,7 +3543,7 @@ function title_display_toggle() {
 	localStorage["title_save_data"]=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
-	if(yt_debug_enabled) console.log("update_ui_plugin");
+	if(is_yt_debug_enabled) console.log("update_ui_plugin");
 	setTimeout(plugin_overlay_element.onupdate.bind(plugin_overlay_element));
 }
 
@@ -3803,12 +3804,12 @@ class HistoryStateManager extends EventTarget {
 					let new_my_data=remove_yt_data(new_state);
 					let old_my_data=remove_yt_data(t.cur_state);
 					if("filter_gain" in new_my_data&&"filter_gain" in old_my_data&&Object.keys(new_my_data).length===1) {
-						if(yt_debug_enabled) console.log('pushState: [h_over_new_state_one] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
+						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_one] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
 					} else {
-						if(yt_debug_enabled) console.log('pushState: [h_over_new_state] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
+						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
 					}
 				} else {
-					if(yt_debug_enabled) console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
+					if(is_yt_debug_enabled) console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
 				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
@@ -3822,7 +3823,7 @@ class HistoryStateManager extends EventTarget {
 							}
 						}
 					}
-					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
+					if(is_yt_debug_enabled) console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
 				}
 				t.do_state_update(new_state);
 				return Reflect.apply(target,thisArg,argArray);
@@ -4320,14 +4321,14 @@ class HandleTypes {
 		let data=response;
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
-			if(yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
+			if(is_yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
 			data.playerAds=[];
 			/** @type {{old_store:typeof data['playerAds']}&typeof data['playerAds']} */
 			let with_old_store=as_cast(data.playerAds);
 			with_old_store.old_store=old_ads;
 		}
 		if(data.adPlacements) {
-			if(yt_debug_enabled) console.log("WatchResponsePlayer.adPlacements=",data.adPlacements);
+			if(is_yt_debug_enabled) console.log("WatchResponsePlayer.adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
 		if(data.endscreen) {
@@ -4408,7 +4409,7 @@ class HandleTypes {
 			console.log("[entity_batch_invalid]",obj);
 			return;
 		}
-		if(yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
+		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
 		this.handle_mutations(obj.entityBatchUpdate.mutations);
 	}
 	/**
@@ -4436,7 +4437,12 @@ class HandleTypes {
 	reloadContinuationItemsCommand(command) {
 		let data=command.reloadContinuationItemsCommand;
 		for(let item of data.continuationItems) {
-			console.log("[reload_continuation_command_item]",item);
+			if("richItemRenderer" in item) {
+				this.richItemRenderer(item.richItemRenderer);
+			} else {
+				console.log("[reload_continuation_command_item]",item);
+				debugger;
+			}
 		}
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} context */
@@ -4457,7 +4463,7 @@ class HandleTypes {
 				return BigInt(e);
 			})
 		};
-		if(yt_debug_enabled) console.log(general_service_state.mainAppWebResponseContext.datasyncId);
+		if(is_yt_debug_enabled) console.log(general_service_state.mainAppWebResponseContext.datasyncId);
 		if(context.mainAppWebResponseContext.loggedOut) {
 			general_service_state.logged_in=false;
 		}
@@ -4613,9 +4619,21 @@ class HandleTypes {
 		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
 		if(typeof data.trackingParams!=="string") debugger;
 		let ok=Object.keys(data);
-		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
-		console.log("[browse_page_context]",ok.join(","),data);
-		debugger;
+		let ok_miss=[];
+		for(let k of ok) {
+			if(k==="responseContext") continue;
+			if(k==="contents") continue;
+			if(k==="header") continue;
+			if(k==="trackingParams") continue;
+			if(k==="topbar") continue;
+			if(k==="onResponseReceivedActions") continue;
+			if(k==="frameworkUpdates") continue;
+			ok_miss.push(k);
+		}
+		if(ok_miss.length>0) {
+			console.log("[browse_page_context_miss]",ok_miss.join(","),data);
+			debugger;
+		}
 	}
 	/**
 	 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
@@ -4909,5 +4927,11 @@ class HandleTypes {
 	 */
 	AccountMenuJson(json) {
 		console.log(json);
+	}
+	/**
+	 * @param {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data
+	 */
+	richItemRenderer(data) {
+		console.log(data);
 	}
 }
