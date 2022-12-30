@@ -1,5 +1,4 @@
-import {PlaylistVideoListRenderer} from "../p/PlaylistVideoListRenderer";
+import {PageIntroductionRenderer} from "./PageIntroductionRenderer";
+import {PlaylistVideoListRenderer} from "./PlaylistVideoListRenderer";
 
-export type ItemSectionContentItem={
-	playlistVideoListRenderer: PlaylistVideoListRenderer;
-}|{};
+export type ItemSectionContentItem=PlaylistVideoListRenderer|PageIntroductionRenderer;

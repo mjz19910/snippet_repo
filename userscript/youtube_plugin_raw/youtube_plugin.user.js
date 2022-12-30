@@ -1645,6 +1645,9 @@ class Base64Binary {
 	}
 }
 
+
+const base64_dec=new Base64Binary();
+
 class HandlerBase {
 	/**
 	 * @param {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command
@@ -1683,6 +1686,16 @@ class HandlerBase {
 				bigint_val_32[1]=this.hi;
 				return bigint_buf[0];
 			}
+		}
+		/**
+		 * @param {Uint8Array} buf
+		 * @param {number} end
+		 */
+		function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
+			return (buf[end-4]
+				|buf[end-3]<<8
+				|buf[end-2]<<16
+				|buf[end-1]<<24)>>>0;
 		}
 		let value=4294967295;
 		return new class ProtobufDecoder {
@@ -1761,13 +1774,23 @@ class HandlerBase {
 					/* istanbul ignore next */
 					throw Error("invalid varint encoding");
 				}
+				/**
+				 * @param {number} writeLength
+				 */
+				indexOutOfRange(writeLength) {
+					return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
+				}
 				fixed32() {
-					let f32=(this.buf[this.pos]
-						|this.buf[this.pos+1]<<8
-						|this.buf[this.pos+2]<<16
-						|this.buf[this.pos+3]<<24)>>>0;
-					this.pos+=4;
-					return f32;
+					/* istanbul ignore if */
+					if(this.pos+4>this.len)
+						throw this.indexOutOfRange(4);
+
+					return readFixed32_end(this.buf,this.pos+=4);
+				}
+				/** @returns {[number,number]} */
+				read_field_description() {
+					let cur_byte=this.uint32();
+					return [cur_byte&7,cur_byte>>>3];
 				}
 			};
 		};
@@ -1781,9 +1804,7 @@ class HandlerBase {
 		 * @param {string} str
 		 */
 		function decode_b64_proto_obj(str) {
-			let dec=new Base64Binary();
-			let bin=dec.decodeArrayBuffer(str);
-			return decode_protobuf(bin);
+			return decode_protobuf(str);
 		}
 		/** @template T @arg {T|undefined} val @returns {T} */
 		function non_null(val) {
@@ -1791,9 +1812,10 @@ class HandlerBase {
 			return val;
 		}
 		/**
-		 * @param {Uint8Array} buffer
+		 * @param {string} str
 		 */
-		function decode_protobuf(buffer) {
+		function decode_protobuf(str) {
+			let buffer=base64_dec.decodeArrayBuffer(str);
 			/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
 			let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
 			let loop_count=0;
@@ -1804,7 +1826,7 @@ class HandlerBase {
 			let reader=new t.decode_protobuf.MyReader(buffer);
 			/** @type {[offset: number,length: number][]} */
 			let stack=[[0,reader.len]];
-			x: for(;loop_count<8;loop_count++) {
+			x: for(;loop_count<15;loop_count++) {
 				switch(mode) {
 					case "initial": break;
 					case "DateTime": break;
@@ -1812,7 +1834,14 @@ class HandlerBase {
 				let [cur_off,cur_len]=non_null(stack.at(-1));
 				console.log('off',cur_len,cur_off);
 				if(reader.pos>=cur_off+cur_len) {
-					debugger;
+					let mode_=mode_stack.pop();
+					if(!mode_) {
+						console.log("exit, mode stack empty and at end");
+						break x;
+					}
+					mode=mode_;
+					stack.pop();
+					continue x;
 				}
 				let cur_byte=reader.uint32();
 				let wireType=cur_byte&7;
@@ -1831,7 +1860,10 @@ class HandlerBase {
 									console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 									break y;
 								}
-								default: throw new Error("Unexpected field");
+								default: {
+									console.log("unexpected field");
+									break x;
+								}
 							}
 						}
 						first_num.push(reader.uint32());
@@ -1894,7 +1926,7 @@ class HandlerBase {
 		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
 	}
 	/**
-	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRenderer.js").PlaylistVideoListRenderer}} renderer
+	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
 	 */
 	playlistVideoListRenderer(renderer) {
 		let data=renderer.playlistVideoListRenderer;
@@ -1908,6 +1940,12 @@ class HandlerBase {
 		console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
+			/** @type {keyof typeof content_item} */
+			let ok_first=as_cast(Object.keys(content_item)[0]);
+			switch(ok_first) {
+				case "playlistVideoListRenderer": break;
+				default: debugger;
+			}
 			if("playlistVideoListRenderer" in content_item) {
 				this.playlistVideoListRenderer(content_item);
 			} else {
