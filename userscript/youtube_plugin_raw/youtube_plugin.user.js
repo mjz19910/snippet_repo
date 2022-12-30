@@ -2237,19 +2237,7 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		let handled=this.handle_t.ResponseTypes(res);
-		if(handled) return;
-		if("responseContext" in res.json) {
-			this.handle_t.responseContext(res.json.responseContext);
-		}
-	}
-	/**
-	 * @param {string} from
-	 * @param {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} data
-	 */
-	on_response_context(from,data) {
-		from;
-		this.handle_t.responseContext(data);
+		this.handle_t.ResponseTypes(res);
 	}
 	/**
 	 * @param {`https://${string}/${string}?${string}`} req_hr_t
@@ -4330,8 +4318,6 @@ class HandleTypes {
 	 */
 	WatchResponsePlayer(response) {
 		let data=response;
-		// "on_page_type_watch"
-		this.responseContext(data.responseContext);
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
 			if(yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
@@ -4608,8 +4594,6 @@ class HandleTypes {
 	BrowseResponseContent(content) {
 		let data=content;
 		console.log("tp",data.trackingParams);
-		// was [on_response_context]
-		this.responseContext(data.responseContext);
 		if(data.contents) {
 			this.BrowseResponseContentContents(data.contents);
 		}
@@ -4830,15 +4814,18 @@ class HandleTypes {
 	};
 	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
 	ResponseTypes(res) {
+		if("responseContext" in res.json) {
+			this.responseContext(res.json.responseContext);
+		}
 		switch(res.url_type) {
-			case "att.get": this.AttGetV(res.json); return true;
-			case "player": this.WatchResponsePlayer(res.json); return true;
-			case "guide": this.GuideJsonType(res.json); return true;
-			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return false;
-			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return true;
-			case "next": this.YtApiNext(res.json); return true;
-			case "browse": this.BrowseResponseContent(res.json); return true;
-			case "account.account_menu": this.AccountMenuJson(res.json); return true;
+			case "att.get": this.AttGetV(res.json); break
+			case "player": this.WatchResponsePlayer(res.json); break
+			case "guide": this.GuideJsonType(res.json); break
+			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; break;
+			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); break;
+			case "next": this.YtApiNext(res.json); break
+			case "browse": this.BrowseResponseContent(res.json); break
+			case "account.account_menu": this.AccountMenuJson(res.json); break
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
@@ -4865,7 +4852,6 @@ class HandleTypes {
 	 * @param {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res
 	 */
 	notification_get_notification_menu_t(res) {
-		this.responseContext(res.json.responseContext);
 		for(let action of res.json.actions) {
 			this.OpenPopupActionItem(action);
 		}
@@ -4878,7 +4864,6 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data
 	 */
 	AttGetV(data) {
-		this.responseContext(data.responseContext);
 		let ok=Object.keys(data);
 		if(eq_keys(ok,['responseContext','challenge','bgChallenge'])) return;
 		// spell:disable-next-line
@@ -4903,7 +4888,6 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
 	 */
 	GuideJsonType(guide) {
-		this.responseContext(guide.responseContext);
 		for(let item of guide.items) {
 			this.GuideItemType(item);
 		}
@@ -4918,14 +4902,12 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
 	 */
 	YtApiNext(json) {
-		this.responseContext(json.responseContext);
 		console.log(json);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
 	 */
 	AccountMenuJson(json) {
-		this.responseContext(json.responseContext);
 		console.log(json);
 	}
 }
