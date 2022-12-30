@@ -4855,28 +4855,32 @@ class HandleTypes {
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
+	/** @arg {import("./support/_/OpenPopupActionItem.js").OpenPopupActionItem} action */
+	on_popup_action(action) {
+		let ok_1=Object.keys(action);
+		if('openPopupAction' in action) {
+			switch(action.openPopupAction.popupType) {
+				case "DROPDOWN": {
+					let popup=action.openPopupAction.popup;
+					if("multiPageMenuRenderer" in popup) {
+						this.multiPageMenuRenderer(popup.multiPageMenuRenderer);
+					} else {
+						debugger;
+					}
+				} break;
+				default: console.log("popup type",action.openPopupAction.popupType); debugger;
+			}
+		}
+		if(eq_keys(ok_1,['clickTrackingParams','openPopupAction'])) return;
+		debugger;
+	}
 	/**
 	 * @param {import("./support/_/notification_get_notification_menu_t.js").notification_get_notification_menu_t} res
 	 */
 	on_notification_data(res) {
-		this.on_response_context(res.json.responseContext);
+		this.responseContext(res.json.responseContext);
 		for(let action of res.json.actions) {
-			let ok_1=Object.keys(action);
-			if('openPopupAction' in action) {
-				switch(action.openPopupAction.popupType) {
-					case "DROPDOWN": {
-						let popup=action.openPopupAction.popup;
-						if("multiPageMenuRenderer" in popup) {
-							this.multiPageMenuRenderer(popup.multiPageMenuRenderer);
-						} else {
-							debugger;
-						}
-					} break;
-					default: console.log("popup type",action.openPopupAction.popupType); debugger;
-				}
-			}
-			if(eq_keys(ok_1,['clickTrackingParams','openPopupAction'])) continue;
-			debugger;
+			this.on_popup_action(action);
 		}
 		let ok=Object.keys(res.json);
 		if(eq_keys(ok,['responseContext','actions','trackingParams'])) return;
@@ -4912,7 +4916,7 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
 	 */
 	on_guide(guide) {
-		this.on_response_context("on_guide",guide.responseContext);
+		this.responseContext(guide.responseContext);
 		for(let item of guide.items) {
 			this.GuideItemType(item);
 		}
@@ -4924,23 +4928,17 @@ class HandleTypes {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} data
-	 */
-	on_response_context(data) {
-		this.responseContext(data);
-	}
-	/**
 	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
 	 */
 	process_next_response(json) {
-		this.on_response_context(json.responseContext);
+		this.responseContext(json.responseContext);
 		console.log(json);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json
 	 */
 	on_account_menu(json) {
-		this.on_response_context(json.responseContext);
+		this.responseContext(json.responseContext);
 		console.log(json);
 	}
 }
