@@ -1,5 +1,5 @@
 import {Accessibility} from "../a/Accessibility.js";
-import {ServiceEndpoint} from "../a/ActionSetPlaylistVideoOrder.js";
+import {ServiceEndpoint} from "../a/ServiceEndpoint";
 import {GeneralCommand} from "../g/GeneralCommand.js";
 import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {SimpleText} from "../s/SimpleText.js";

@@ -3219,16 +3219,24 @@ class CsiService extends BaseService {
 		yt_ad: null,
 	};
 	/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
-	rid={
-		GetHome_rid: void 0,
-		GetPlayer_rid: void 0,
-		GetAccountMenu_rid: void 0,
-		GetWatchNext_rid: void 0,
-		GetAttestationChallenge_rid: void 0,
-		GetWebMainAppGuide_rid: void 0,
-		GetUnseenNotificationCount_rid: void 0,
-		GetPlaylist_rid: void 0,
-	};
+	rid={};
+	/** @type {`${string}_rid`[]} */
+	rid_keys=[
+		"GetAccountMenu_rid","GetAccountSharing_rid",
+		"GetAttestationChallenge_rid",
+		"GetHome_rid",
+		"GetPlayer_rid","GetPlaylist_rid",
+		"GetUnseenNotificationCount_rid",
+		"GetWatchNext_rid",
+		"GetWebMainAppGuide_rid",
+	];
+	/** @arg {ResolverT} x */
+	constructor(x) {
+		super(x);
+		for(let x of this.rid_keys) {
+			this.rid[x]=void 0;
+		}
+	}
 	/** @arg {import("./support/yt_api/_/c/CsiServiceParamsType.js").CsiServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
@@ -3521,8 +3529,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer */
 	DesktopTopbarRenderer(renderer) {
-		let ok=get_keys_of(renderer.desktopTopbarRenderer);
-		console.log(renderer.desktopTopbarRenderer);
+		this.DesktopTopbarRendererData(renderer.desktopTopbarRenderer);
+	}
+	/** @arg {import("./support/yt_api/_/b/DesktopTopbarRendererData.js").DesktopTopbarRendererData} data */
+	DesktopTopbarRendererData(data) {
+		let ok=get_keys_of(data);
+		console.log(data);
 		if(has_keys(ok,"logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
 		debugger;
 	}
@@ -3613,7 +3625,7 @@ class HandleTypes extends BaseService {
 	pageIntroductionRenderer(item) {
 		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
 	}
-	/** @template {{}} T @arg {string} name @param {T} obj */
+	/** @template {{}} T @arg {string} name @arg {T} obj */
 	ok(name,obj) {
 		let arr=get_keys_of(obj);
 		if(arr.length===0) return;
@@ -3644,14 +3656,11 @@ class HandleTypes extends BaseService {
 			throw 1;
 		}
 	}
-	/**
-	 * @template T
-	 * @param {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon
-	 */
+	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
 		switch(icon.iconType) {
 			case "ACCOUNT_SHARING": break;
-			default: console.log("[new_icon]", icon);debugger;
+			default: console.log("[new_icon]",icon); debugger;
 		}
 	}
 	/** @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
@@ -3869,9 +3878,7 @@ class HandleTypes extends BaseService {
 	Accessibility(data) {
 		this.accessibilityData(data.accessibilityData);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/a/ActionSetPlaylistVideoOrder.js").ServiceEndpoint} ep
-	 */
+	/** @arg {import("./support/yt_api/_/a/ServiceEndpoint.js").ServiceEndpoint} ep */
 	serviceEndpoint(ep) {
 		console.log(ep);
 	}
@@ -3921,13 +3928,11 @@ class HandleTypes extends BaseService {
 			this.on_empty_obj(renderer);
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/t/TextRuns.js").TextRuns | import("./support/yt_api/_/s/SimpleText.js").SimpleText | undefined} t
-	 */
+	/** @arg {import("./support/yt_api/_/t/TextRuns.js").TextRuns|import("./support/yt_api/_/s/SimpleText.js").SimpleText} t */
 	text(t) {
 		if(!t) return;
 		if("runs" in t) {
-			this.TextRuns(t);
+			this.on_text(t);
 		} else {
 			this.SimpleText(t);
 		}
@@ -4025,22 +4030,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/c/ContinuationCommand.js").ContinuationCommand} cmd */
 	continuationCommand(cmd) {
 		console.log(cmd);
-	}
-	/** @arg {import("./support/yt_api/_/t/TextRuns.js").TextRuns | undefined} text */
-	TextRuns(text) {
-		if(!text) return;
-		let ok=get_keys_of(text);
-		if(!eq_keys(ok,["runs"])) {
-			debugger;
-		}
-		for(let run of text.runs) {
-			if(run.navigationEndpoint) {
-				debugger;
-			}
-			if(typeof run.text!=='string') {
-				debugger;
-			}
-		}
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj */
 	command(obj) {

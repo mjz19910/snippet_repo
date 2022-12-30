@@ -1,6 +1,6 @@
-import {SimpleTextFixmeValueNeeded} from "../s/SimpleText";
+import {SimpleText} from "../s/SimpleText";
 
 export interface NotificationActionRenderer {
-	responseText: SimpleTextFixmeValueNeeded;
+	responseText: SimpleText;
 	trackingParams: string;
 }
