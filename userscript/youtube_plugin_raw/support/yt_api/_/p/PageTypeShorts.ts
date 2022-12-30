@@ -5,8 +5,8 @@ export const web_cmd_api_url:unique symbol=Symbol("ApiUrl");
 
 export type PageTypeShorts={
 	pageType: "shorts";
-	fromHistory: false;
-	navigationDoneMs: number;
 	endpoint: ReelWatchEndpointData;
 	response: ShortsPageResponse;
+	fromHistory: boolean;
+	navigationDoneMs: number;
 };

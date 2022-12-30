@@ -9,6 +9,3 @@ export type WatchPageResponse={
 	playerResponse: WatchResponsePlayer;
 	url: string;
 };
-export type VideoResponse={
-	responseContext: {};
-};

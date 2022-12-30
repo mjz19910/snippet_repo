@@ -2625,7 +2625,7 @@ function on_page_type_changed(detail) {
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
 		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
-		let nav_load_str=`page_type_change: {current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 		page_type_changes.push(nav_load_str);
 		console.log(nav_load_str);
 	}
@@ -3244,6 +3244,7 @@ function parse_browse_id(value) {
 				debugger;
 		} break;
 		case "UC": console.log("new with param [param_2c_UC]",value,value.slice(2)); break;
+		case "SP": break;
 		default: console.log("new [param_value_needed]",v_2c,value); break;
 	}
 }
