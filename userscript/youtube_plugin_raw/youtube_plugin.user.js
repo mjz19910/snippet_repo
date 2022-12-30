@@ -1610,7 +1610,6 @@ class FilterHandlers {
 		}
 		whitelist_item("pageIntroductionRenderer");
 		whitelist_item("settingsOptionsRenderer");
-		whitelist_item("pageIntroductionRenderer");
 		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
@@ -3514,7 +3513,8 @@ class TrackingServices {
 	}
 }
 const service_tracking=new TrackingServices;
-service_tracking;
+
+const log_tracking_params=false;
 
 class HandleTypes {
 	/**
@@ -3693,6 +3693,7 @@ class HandleTypes {
 	 */
 	pageIntroductionRenderer(item) {
 		let data=item.pageIntroductionRenderer;
+		if(data)
 		console.log("pageIntroductionRenderer",data);
 	}
 	/**
@@ -3703,7 +3704,7 @@ class HandleTypes {
 			debugger;
 		}
 		let data=renderer.itemSectionRenderer;
-		console.log("tp",data.trackingParams);
+		if(log_tracking_params) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			let ok_first=Object.keys(content_item)[0];
@@ -3729,7 +3730,7 @@ class HandleTypes {
 		if(!data) {
 			debugger;
 		}
-		console.log("tp",data.trackingParams);
+		if(log_tracking_params) console.log("tp",data.trackingParams);
 		let contents=data.contents;
 		for(let content_item of contents) {
 			if("itemSectionRenderer" in content_item) {
@@ -3854,7 +3855,7 @@ class HandleTypes {
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
 	BrowseResponseContent(content) {
 		let data=content;
-		console.log("tp",data.trackingParams);
+		if(log_tracking_params) console.log("tp",data.trackingParams);
 		if(data.contents) {
 			this.BrowseResponseContentContents(data.contents);
 		}
@@ -3867,7 +3868,6 @@ class HandleTypes {
 		}
 		if(data.topbar) this.DesktopTopbarRenderer(data.topbar);
 		if(data.sidebar) this.sidebar(data.sidebar);
-		if(typeof data.trackingParams!=="string") debugger;
 		if(data.observedStateTags) {
 			this.observedStateTags(data.observedStateTags);
 		}
