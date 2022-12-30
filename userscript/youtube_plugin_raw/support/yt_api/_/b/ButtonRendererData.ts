@@ -1,5 +1,6 @@
 import {Accessibility} from "../a/Accessibility.js";
 import {GeneralCommand} from "../g/GeneralCommand.js";
+import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {TextRuns} from "../t/TextRuns.js";
 
 export type ButtonRendererData={
@@ -8,7 +9,7 @@ export type ButtonRendererData={
 	isDisabled: boolean;
 	text?: TextRuns;
 	icon: {};
-	navigationEndpoint: {};
+	navigationEndpoint: NavigationEndpoint;
 	tooltip: {};
 	trackingParams: string;
 	accessibilityData: Accessibility;

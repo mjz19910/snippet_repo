@@ -1,5 +1,4 @@
-import {ClickTrackingParams} from "./ClickTrackingParams.js";
-import {CommandMetadata} from "./CommandMetadata";
+import {CommandMetadata} from "../c/CommandMetadata.js";
 
 export interface TrackedCommandMetadataH {
 	commandMetadata: CommandMetadata;

@@ -1,6 +1,6 @@
 import {BrowseEndpoint} from "../b/BrowseEndpoint.js";
 import {OpenPopupActionH} from "../o/OpenPopupActionH";
-import {TrackedCommandMetadataH} from "../TrackedCommandMetadataH.js";
+import {TrackedCommandMetadataH} from "../t/TrackedCommandMetadataH.js";
 import {WatchEndpoint} from "../w/WatchEndpoint";
 
 

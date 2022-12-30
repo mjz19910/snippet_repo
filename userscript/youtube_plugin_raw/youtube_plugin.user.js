@@ -2265,8 +2265,7 @@ function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
 	for(let i=0;i<src.length;i++) {
 		let a=src[i];
-		let b=target[i];
-		if(a!==b) return false;
+		if(!target.includes(a)) return false;
 	}
 	return true;
 }
@@ -3832,13 +3831,24 @@ class HandleTypes extends BaseService {
 			console.log("renderer",rest);
 			debugger;
 		} else {
-			let {style,command,text,...rest}=rest_;
+			let {style,command,text,navigationEndpoint,...rest}=rest_;
 			this.GeneralCommand(command);
 			this.TextRuns(text);
+			this.navigationEndpoint(navigationEndpoint);
 			if(eq_keys(get_keys_of(rest),[])) return;
 			console.log("renderer",rest);
 			debugger;
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep
+	 */
+	navigationEndpoint(ep) {
+		if("watchEndpoint" in ep) {
+			this.watchEndpoint(ep.watchEndpoint);
+		}
+		let k=get_keys_of(ep);
+		k;
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand | undefined} cmd */
 	GeneralCommand(cmd) {
@@ -3873,13 +3883,36 @@ class HandleTypes extends BaseService {
 	 */
 	openPopupAction(obj) {
 		switch(obj.popupType) {
-			case "DIALOG": this.popup(obj.popup); break;
-			case "DROPDOWN": this.popup(obj.popup); break;
+			case "DIALOG": this.ConfirmDialogRenderer(obj.popup); break;
+			case "DROPDOWN": this.MultiPageMenuRenderer(obj.popup); break;
 			default: console.log(obj);
 		}
 	}
-	popup(obj) {
-		obj;
+	/**
+	 * @param {import("./support/_/ConfirmDialogRenderer.js").ConfirmDialogRenderer} obj
+	 */
+	ConfirmDialogRenderer(obj) {
+		if(Object.keys(obj).length!==1) {
+			debugger;
+		}
+		this.ConfirmDialogRendererData(obj.confirmDialogRenderer);
+	}
+	/**
+	 * @param {import("./support/_/ConfirmDialogRendererData.js").ConfirmDialogRendererData} data
+	 */
+	ConfirmDialogRendererData(data) {
+		let ok=get_keys_of(data);
+		this.ButtonRenderer(data.cancelButton);
+		this.ButtonRenderer(data.confirmButton);
+		if(eq_keys(ok,["cancelButton","confirmButton","dialogMessages","primaryIsCancel","title","trackingParams"])) return;
+		console.log(ok);
+
+	}
+	/**
+	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer} obj
+	 */
+	MultiPageMenuRenderer(obj) {
+		console.log(obj);
 	}
 	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpoint} ep */
 	signalServiceEndpoint(ep) {
@@ -3914,13 +3947,13 @@ class HandleTypes extends BaseService {
 	command(obj) {
 		console.log(obj);
 	}
-	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
+	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData} renderer */
 	simpleMenuHeaderRenderer(renderer) {
 		for(let button of renderer.buttons) {
 			this.buttonRenderer(button.buttonRenderer);
 		}
 	}
-	/** @arg {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header */
+	/** @arg {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header */
 	header(header) {
 		if("feedTabbedHeaderRenderer" in header) {
 			this.FeedTabbedHeaderRenderer(header);
@@ -3932,7 +3965,7 @@ class HandleTypes extends BaseService {
 		let ok=get_keys_of(header);
 		console.log("header keys",ok);
 	}
-	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer */
+	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
 	multiPageMenuRenderer(renderer) {
 		this.header(renderer.header);
 		let ok=filter_out_keys(get_keys_of(renderer),"header,sections,trackingParams".split(","));
