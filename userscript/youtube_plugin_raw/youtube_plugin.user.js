@@ -1096,7 +1096,6 @@ function fetch_inject(user_request,request_init) {
 	let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 	return ret_1;
 }
-
 fetch_inject.__proxy_target__=window.fetch;
 
 /**
@@ -1576,12 +1575,6 @@ class HandleRichGridRenderer {
 }
 /** @typedef {import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
 /** @typedef {import("./support/yt_api/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
-// class AppendContinuationItemsAction {
-// 	/**@type {ContinuationItem[]} */
-// 	continuationItems=[];
-// 	targetId="";
-// }
-
 /** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
 	return o.targetId==="watch-next-feed";
@@ -1880,15 +1873,6 @@ function non_null(val) {
 	return val;
 }
 
-class HandlerBase {
-	/**
-	 * @param {{ key: "guideSectionRenderer"; item: import("./support/yt_api/yt/GuideSectionRenderer.js").GuideSectionRenderer; }|{key: "guideSubscriptionsSectionRenderer";item: import("./support/yt_api/yt/GuideSubscriptionsSectionRenderer.js").GuideSubscriptionsSectionRenderer}} _todo_desc
-	 */
-	todo(_todo_desc) {
-		console.log("todo",_todo_desc.key,_todo_desc.item);
-	}
-}
-
 class FilterHandlers {
 	constructor() {
 		this.filter_handler_debug=false;
@@ -2162,6 +2146,7 @@ class FilterHandlers {
 					/** @type {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} */
 					json: as_cast(json),
 				};
+				default: break;
 			} break;
 			case 2: switch(target[0]) {
 				case "account": switch(target[1]) {
@@ -2211,12 +2196,10 @@ class FilterHandlers {
 						json: as_cast(json),
 					};
 				}
-			}
+				default: break;
+			} break;
 		}
-		switch(target[0]) {
-			default: console.log(url_type,json); debugger;
-		}
-		throw new Error("Stop");
+		console.log("[log_get_res_data]",target,json); debugger; throw new Error("Stop");
 	}
 	/** @typedef {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} responseTypes */
 	/** @arg {responseTypes} input @arg {string|URL|Request} request @arg {URL} parsed_url */
@@ -2254,24 +2237,10 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		let handled=this.on_handle_api_2(res);
+		let handled=this.handle_t.ResponseTypes(res);
 		if(handled) return;
 		if("responseContext" in res.json) {
 			this.handle_t.responseContext(res.json.responseContext);
-		}
-	}
-	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
-	on_handle_api_2(res) {
-		switch(res.url_type) {
-			case "att.get": this.on_att_get(res.json); return true;
-			case "player": this.handle_t.WatchResponsePlayer(res.json); return true;
-			case "guide": this.on_guide(res.json); return true;
-			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
-			case "notification.get_notification_menu": this.on_notification_data(res); return true;
-			case "next": this.process_next_response(res.json); return true;
-			case "browse": this.handle_t.BrowseResponseContent(res.json); return true;
-			case "account.account_menu": this.on_account_menu(res.json); return true;
-			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
 	/**
@@ -2330,7 +2299,6 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	handle=new HandlerBase;
 	/**
 	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer<"Notifications">} popup
 	 */
@@ -4948,6 +4916,20 @@ class HandleTypes {
 		} else {
 			console.log("bad channel",data.url);
 			debugger;
+		}
+	}
+	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
+	ResponseTypes(res) {
+		switch(res.url_type) {
+			case "att.get": this.on_att_get(res.json); return true;
+			case "player": this.handle_t.WatchResponsePlayer(res.json); return true;
+			case "guide": this.on_guide(res.json); return true;
+			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
+			case "notification.get_notification_menu": this.on_notification_data(res); return true;
+			case "next": this.process_next_response(res.json); return true;
+			case "browse": this.handle_t.BrowseResponseContent(res.json); return true;
+			case "account.account_menu": this.on_account_menu(res.json); return true;
+			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
 	}
 }
