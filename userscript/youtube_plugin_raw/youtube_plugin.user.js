@@ -508,10 +508,7 @@ class VolumeRange {
 			ytd_app.volume_range=volume_range;
 		}
 	}
-	/** @arg {number} min
-	 * @arg {number} max
-	 * @arg {number} overdrive
-	 * @arg {AudioGainController} gain_controller */
+	/** @arg {number} min @arg {number} max @arg {number} overdrive @arg {AudioGainController} gain_controller */
 	constructor(min,max,overdrive,gain_controller) {
 		this.use_cache=true;
 		this.max=max;
@@ -728,8 +725,7 @@ class ObjectInfo {
 		this.chunk_end=gr_2;
 		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
-	/** @arg {{}} object
-	 * @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function] */
+	/** @arg {{}} object @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function] */
 	keys_of(object,filter_function) {
 		let object_keys=get_keys_of(object);
 		if(filter_function) object_keys=object_keys.filter(filter_function);
@@ -771,8 +767,7 @@ class IterateApiResultBase {
 			this.keys_map.set(i,i);
 		}
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {{}} data */
+	/** @arg {ApiIterateState} state @arg {{}} data */
 	default_iter(state,data) {
 		if(data===void 0) {
 			return;
@@ -811,8 +806,7 @@ class IterateApiResultBase {
 }
 /** @typedef {{t:FilterHandlers;path:string}} ApiIterateState */
 class YtIterateTarget {
-	/** @arg {ApiIterateState} state
-	 * @arg {AppendContinuationItemsAction} action */
+	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
 	appendContinuationItemsAction(state,action) {
 		debugger;
 		check_item_keys(state.path,"appendContinuationItemsAction",get_keys_of(action));
@@ -822,8 +816,7 @@ class YtIterateTarget {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command */
+	/** @arg {ApiIterateState} state @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",get_keys_of(command));
 		if(state.ReloadContinuationItemsCommandData(path,command)) return;
@@ -832,8 +825,7 @@ class YtIterateTarget {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));
@@ -862,27 +854,23 @@ class YtIterateTarget {
 		console.log("compactLinkRenderer",state.path,renderer);
 		state.t.run_mc=false;
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {{}} renderer */
+	/** @arg {ApiIterateState} state @arg {{}} renderer */
 	compactVideoRenderer(state,renderer) {
 		state.path="compactVideoRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {{}} renderer */
+	/** @arg {ApiIterateState} state @arg {{}} renderer */
 	thumbnailOverlayToggleButtonRenderer(state,renderer) {
 		state.path="thumbnailOverlayToggleButtonRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
-	/** @arg {ApiIterateState} state
-	 * @arg {{}} renderer */
+	/** @arg {ApiIterateState} state @arg {{}} renderer */
 	videoRenderer(state,renderer) {
 		state.path="videoRenderer";
 		state.t.iteration.default_iter(state,renderer);
@@ -1049,12 +1037,7 @@ class HandleRendererContentItemArray {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/**
-	 * @template {AppendContinuationItemsAction['continuationItems']|import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData['continuationItems']} T
-	 * @arg {HandleRichGridRenderer|FilterHandlers} base
-	 * @arg {string} path
-	 * @arg {T} arr
-	 * @returns {T} */
+	/** @template {AppendContinuationItemsAction['continuationItems']|import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData['continuationItems']} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
 	replace_array(base,path,arr) {
 		return cast_as(arr.filter((/**@type {typeof arr[number]}*/content_item) => {
 			let keys=get_keys_of(content_item);
@@ -1082,8 +1065,7 @@ class HandleRichGridRenderer {
 	/**@readonly*/
 	entry="richGridRenderer";
 	rendererContentItemArray=new HandleRendererContentItemArray;
-	/** @arg {string} path
-	 * @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
+	/** @arg {string} path @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",get_keys_of(renderer));
 		if(this.debug) console.log("run handler richGridRenderer");
@@ -1179,7 +1161,7 @@ const decode_protobuf_obj=function make() {
 		/**
 		 * @arg {number} a
 		 * @arg {number} b
-		 */
+	*/
 		constructor(a,b) {
 			this.lo=a;
 			this.hi=b;
@@ -1190,8 +1172,7 @@ const decode_protobuf_obj=function make() {
 			return bigint_buf[0];
 		}
 	}
-	/** @arg {Uint8Array} buf
-	 * @arg {number} end */
+	/** @arg {Uint8Array} buf @arg {number} end */
 	function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
 		return (buf[end-4]
 			|buf[end-3]<<8
@@ -1277,7 +1258,7 @@ const decode_protobuf_obj=function make() {
 			}
 			/**
 			 * @arg {number} writeLength
-			 */
+		*/
 			indexOutOfRange(writeLength) {
 				return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
 			}
@@ -1449,8 +1430,7 @@ class FilterHandlers {
 		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
-	/** @arg {string} path
-	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action */
+	/** @arg {string} path @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action */
 	ReloadContinuationItemsCommandData(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			// /** @type {WatchNextContinuationAction} */
@@ -1477,8 +1457,7 @@ class FilterHandlers {
 		debugger;
 		return false;
 	}
-	/** @arg {string} path
-	 * @arg {AppendContinuationItemsAction} action */
+	/** @arg {string} path @arg {AppendContinuationItemsAction} action */
 	AppendContinuationItemsAction(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			// /** @type {WatchNextContinuationAction} */
@@ -1505,14 +1484,7 @@ class FilterHandlers {
 		debugger;
 		return false;
 	}
-	/** 
-	 * @template {string} X
-	 * @template {string} U
-	 * @template {string} V
-	 * @template {`https://${X}/${U}?${V}`} T
-	 * @arg {{}} state
-	 * @arg {T} x 
-	 * */
+	/**  @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {{}} state @arg {T} x  */
 	use_template_url(state,x) {
 		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
@@ -1535,8 +1507,7 @@ class FilterHandlers {
 		return this.get_url_type(state,path_parts);
 	}
 	/** @typedef {import("./support/yt_api/_/u/UrlTypes.js").UrlTypes} UrlTypes */
-	/** @arg {{}} state
-	 * @arg {string[]} parts */
+	/** @arg {{}} state @arg {string[]} parts */
 	get_url_type(state,parts) {
 		let index=0;
 		const cur_part=parts[index];
@@ -1547,10 +1518,7 @@ class FilterHandlers {
 		}
 		throw new Error("Missing");
 	}
-	/** @arg {{}} state
-	 * @arg {"live_chat"} base
-	 * @arg {string[]} parts
-	 * @arg {number} index */
+	/** @arg {{}} state @arg {"live_chat"} base @arg {string[]} parts @arg {number} index */
 	get_live_chat_type(state,base,parts,index) {
 		let cur_part=parts[index];
 		switch(cur_part) {
@@ -1562,9 +1530,7 @@ class FilterHandlers {
 			name: `${base}.${cur_part}`
 		};
 	}
-	/** @arg {{}} state
-	 * @arg {string[]} parts
-	 * @arg {number} index */
+	/** @arg {{}} state @arg {string[]} parts @arg {number} index */
 	get_yt_url_type(state,parts,index) {
 		if(parts[1]!=="v1") {
 			debugger;
@@ -1726,8 +1692,7 @@ class FilterHandlers {
 			console.log("api not handled",input.url_type);
 		}
 	}
-	/** @arg {string|URL|Request} request
-	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
+	/** @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
 	on_handle_api(request,data) {
 		var {req_hr_t,req_parse,debug}=this.on_handle_api_0(request);
 		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,req_parse);
@@ -1749,10 +1714,7 @@ class FilterHandlers {
 		this.on_json_type(res,request,req_parse);
 		this.handle_types.ResponseTypes(res);
 	}
-	/** @arg {`https://${string}/${string}?${string}`} req_hr_t
-	 * @arg {string | URL | Request} request
-	 * @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
-	 * @arg {URL} req_parse */
+	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string | URL | Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data @arg {URL} req_parse */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
@@ -1779,8 +1741,7 @@ class FilterHandlers {
 		return {req_hr_t,req_parse,debug};
 	}
 	guide_item_keys=make_guide_item_keys();
-	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path
-	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
+	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
@@ -1884,8 +1845,7 @@ class OnWindowProperty {
 			handler(ev);
 		}
 	}
-	/** @arg {string | number} ev_name
-	 * @arg {any} fn */
+	/** @arg {string | number} ev_name @arg {any} fn */
 	removeEventListener(ev_name,fn) {
 		let evt=this._events[ev_name];
 		if(evt===undefined) return;
@@ -1897,8 +1857,7 @@ class OnWindowProperty {
 			}
 		}
 	}
-	/** @arg {string} ev_name
-	 * @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn */
+	/** @arg {string} ev_name @arg {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn */
 	addEventListener(ev_name,fn) {
 		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
 	}
@@ -1968,11 +1927,7 @@ class WithGhostSymbol {
 }
 class MKState {
 	[ghost_symbol]=true;
-	/** @arg {{}} value
-	 * @arg {PropertyKey} property_key
-	 * @arg {object} target
-	 * @arg {string} property_path
-	 * @arg {boolean} noisy */
+	/** @arg {{}} value @arg {PropertyKey} property_key @arg {object} target @arg {string} property_path @arg {boolean} noisy */
 	constructor(value,target,property_key,property_path,noisy) {
 		this.value=value;
 		this.property_key=property_key;
@@ -2067,13 +2022,11 @@ class CustomEventType {
 class CustomEventTarget {
 	/**@type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
-	/** @arg {string} type
-	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
+	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
 	addEventListener(type,handler) {
 		(this._events[type]??=[]).push(handler);
 	}
-	/** @arg {string} type
-	 * @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
+	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
 	removeEventListener(type,handler) {
 		let event_arr=this._events[type];
 		if(!event_arr) return;
@@ -2748,8 +2701,7 @@ let volume_plugin_style_source=`
 class AudioGainController {
 	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
 	attached_element_list=[];
-	/**
-	 * @type {MediaElementAudioSourceNode[]} */
+	/** @type {MediaElementAudioSourceNode[]} */
 	media_element_source_list=[];
 	/**@type {Event|null}*/
 	last_event=null;
@@ -2905,8 +2857,7 @@ async function main() {
 
 	// modify global section
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
-	/**
-	 * @type {typeof fetch | null} */
+	/** @type {typeof fetch | null} */
 	let original_fetch=null;
 	fetch_inject.__proxy_target__=window.fetch;
 	modify_global_env();
@@ -2927,11 +2878,7 @@ async function main() {
 			console.log("\t",err);
 		}
 	}
-	/** @arg {string|URL|Request} request
-	 * @arg {{}|undefined} options
-	 * @arg {((arg0: any) => any)|undefined|null} onfulfilled
-	 * @arg {((arg0: any) => void)|undefined|null} on_rejected
-	 * @arg {string} response_text */
+	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
 		let original_json_parse=JSON.parse;
@@ -2960,19 +2907,13 @@ async function main() {
 		}
 		return ret;
 	}
-	/** @arg {string|URL|Request} request
-	 * @arg {{}|undefined} options
-	 * @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
-	 * @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected */
+	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected */
 	function bind_promise_handler(request,options,onfulfilled,onrejected) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 		let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 		return ret;
 	}
-	/** @arg {string|URL|Request} request
-	 * @arg {{}|undefined} options
-	 * @arg {Promise<any>} ov
-	 * @return {Promise<any>} */
+	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Promise<any>} ov @return {Promise<any>} */
 	function handle_fetch_response_2(request,options,ov) {
 		return {
 			/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
@@ -2989,10 +2930,7 @@ async function main() {
 			[Symbol.toStringTag]: "Promise",
 		};
 	}
-	/** @arg {string|URL|Request} request
-	 * @arg {{}|undefined} options
-	 * @arg {Response} response
-	 * @returns {Response} */
+	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
 	function fetch_promise_handler(request,options,response) {
 		/** @type {["text"]} */
 		let handled_keys=["text"];
@@ -3023,8 +2961,7 @@ async function main() {
 			}
 		});
 	}
-	/** @arg {string|URL|Request} user_request @arg {RequestInit} [request_init]
-	 * @returns {Promise<Response>}
+	/** @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>}
 	*/
 	function fetch_inject(user_request,request_init) {
 		if(!original_fetch) throw new Error("No original fetch");
@@ -3864,15 +3801,13 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data
-	 */
+	/** @arg {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data */
 	accessibilityData(data) {
 		if(eq_keys(get_keys_of(data),["label"])) return;
 		console.log(data);
 		debugger;
 	}
-	/** @param {import("./support/yt_api/_/a/Accessibility.js").Accessibility} data */
+	/** @arg {import("./support/yt_api/_/a/Accessibility.js").Accessibility} data */
 	Accessibility(data) {
 		this.accessibilityData(data.accessibilityData);
 	}
@@ -3902,9 +3837,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand | undefined} cmd
-	 */
+	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand | undefined} cmd */
 	GeneralCommand(cmd) {
 		if(!cmd) return;
 		let {clickTrackingParams: ct,commandMetadata: md,continuationCommand: cc,signalServiceEndpoint: ss,...rest}=cmd;
@@ -3915,22 +3848,32 @@ class HandleTypes extends BaseService {
 		if(eq_keys(get_keys_of(rest),[])) return;
 		console.log(rest);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpoint} ep
-	 */
+	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} cmd */
+	addToPlaylistCommand(cmd) {
+		console.log(cmd);
+	}
+	/** @arg {import("./support/yt_api/_/s/ServiceEndpointAction.js").ServiceEndpointAction} action */
+	ServiceEndpointAction(action) {
+		this.clickTrackingParams(action.clickTrackingParams);
+		if("addToPlaylistCommand" in action) {
+			this.addToPlaylistCommand(action.addToPlaylistCommand);
+		}
+		console.log(action.clickTrackingParams);
+	}
+	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpoint} ep */
 	signalServiceEndpoint(ep) {
 		for(let action of ep.actions) {
-			console.log(action);
+			this.ServiceEndpointAction(action);
 		}
 		if(ep.signal!=="CLIENT_SIGNAL") {
 			console.log("[new_signal]",ep.signal);
 		}
 	}
-	/** @param {import("./support/yt_api/_/c/ContinuationCommand.js").ContinuationCommand} cmd */
+	/** @arg {import("./support/yt_api/_/c/ContinuationCommand.js").ContinuationCommand} cmd */
 	continuationCommand(cmd) {
 		console.log(cmd);
 	}
-	/** @param {import("./support/yt_api/_/t/TextRuns.js").TextRuns | undefined} text */
+	/** @arg {import("./support/yt_api/_/t/TextRuns.js").TextRuns | undefined} text */
 	TextRuns(text) {
 		if(!text) return;
 		let ok=get_keys_of(text);
@@ -3946,7 +3889,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @param {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj */
+	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj */
 	command(obj) {
 		console.log(obj);
 	}
@@ -4405,9 +4348,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(get_keys_of(obj),["accountLinkButtonRenderer"])) return;
 		console.log(obj);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} obj
-	 */
+	/** @arg {import("./support/yt_api/_/i/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} obj */
 	accountLinkButtonRenderer(obj) {
 		let {providerKey,unlinkedButton,...rest}=obj;
 		this.providerKey(providerKey);
@@ -4415,9 +4356,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(get_keys_of(rest),[])) return;
 		console.log(rest);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/AccountLinkProviderKey.js").AccountLinkProviderKey} obj
-	 */
+	/** @arg {import("./support/yt_api/_/i/AccountLinkProviderKey.js").AccountLinkProviderKey} obj */
 	providerKey(obj) {
 		if(obj.id==="gpg"&&obj.subject!=="all") {
 			let gpg_id=parseInt(obj.subject,10);
@@ -4432,9 +4371,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(get_keys_of(rest),[])) return;
 		console.log(Object.keys(obj));
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} obj
-	 */
+	/** @arg {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} obj */
 	ButtonRenderer(obj) {
 		this.buttonRenderer(obj.buttonRenderer);
 	}
@@ -4468,7 +4405,7 @@ class HandleTypes extends BaseService {
 	trackingParams(params) {
 		if(this.r.get_param("log_tracking_params")) console.log("tp",params);
 	}
-	/** @param {string} params */
+	/** @arg {string} params */
 	clickTrackingParams(params) {
 		if(this.r.get_param("log_click_tracking_params")) console.log("ctp",params);
 	}
