@@ -3116,10 +3116,6 @@ function make_guide_item_keys() {
 	}];
 }
 
-if(typeof exports==="object") {
-	exports.FilterHandlers=FilterHandlers;
-	exports.HiddenData=HiddenData;
-}
 /**
  * @arg {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
  */
@@ -3455,27 +3451,8 @@ if(typeof exports==="object") {
 	exports.TrackingServices=TrackingServices;
 	exports.FilterHandlers=FilterHandlers;
 	exports.ServiceResolver=ServiceResolver;
-}
-
-/** @template T @arg {{text: T}} _run @returns {T} */
-function stringify_text_run(_run) {
-	return _run.text;
-}
-/** @template T @arg {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
-function stringify_text_runs(text) {
-	if(text.runs) {
-		if(text.runs.length===1) {
-			return stringify_text_run(text.runs[0]);
-		} else {
-			// need to join the parts
-			debugger;
-			throw 1;
-		}
-	} else {
-		// simple text
-		debugger;
-		throw 1;
-	}
+	exports.FilterHandlers=FilterHandlers;
+	exports.HiddenData=HiddenData;
 }
 
 class HandleTypes extends BaseService {
@@ -3644,6 +3621,18 @@ class HandleTypes extends BaseService {
 		console.log(name,obj);
 		debugger;
 	}
+	/** @template T @arg {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text */
+	on_text(text) {
+		if("runs" in text) {
+			for(let run of text.runs) {
+				console.log(run);
+			}
+		} else {
+			// simple text
+			debugger;
+			throw 1;
+		}
+	}
 	/**
 	 * @template T
 	 * @param {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon
@@ -3657,18 +3646,18 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		let {headerText,...x}=data;
-		stringify_text_runs(headerText);
+		this.on_text(headerText);
 		/** @type {typeof x|{}} */
 		let y=x;
 		if("bodyText" in y) {
 			let {bodyText,pageTitle,...z}=y;
-			stringify_text_runs(bodyText);
-			stringify_text_runs(pageTitle);
+			this.on_text(bodyText);
+			this.on_text(pageTitle);
 			y=z;
 		}
 		if("pageTitle" in y) {
 			let {pageTitle,...z}=y;
-			stringify_text_runs(pageTitle);
+			this.on_text(pageTitle);
 			y=z;
 		}
 		if("headerIcon" in y) {
@@ -3866,32 +3855,54 @@ class HandleTypes extends BaseService {
 	Accessibility(data) {
 		this.accessibilityData(data.accessibilityData);
 	}
+	serviceEndpoint(ep) {
+		console.log(ep);
+	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
-		let {size,isDisabled,trackingParams,accessibilityData,...rest_}=renderer;
+		let {size,isDisabled,text,serviceEndpoint,trackingParams,...rest_}=renderer;
+		this.text(text);
+		this.serviceEndpoint(serviceEndpoint);
 		this.trackingParams(trackingParams);
 		if(renderer.size!=="SIZE_DEFAULT") {
 			console.log("renderer.size",renderer.size);
 		}
 		if(typeof renderer.isDisabled!=='boolean') debugger;
-		this.Accessibility(renderer.accessibilityData);
+		// if("accessibilityData" in renderer) this.Accessibility(renderer.accessibilityData);
 		if(rest_.style==="STYLE_DEFAULT") {
-			let {style,icon,navigationEndpoint,tooltip,...rest}=rest_;
-			console.log("renderer.icon",icon);
-			console.log("renderer.navigationEndpoint",navigationEndpoint);
-			console.log("renderer.tooltip",tooltip);
+			let {style,...rest}=rest_;
+			// console.log("renderer.icon",icon);
+			// console.log("renderer.navigationEndpoint",navigationEndpoint);
+			// console.log("renderer.tooltip",tooltip);
 			if(eq_keys(get_keys_of(rest),[])) return;
-			console.log("renderer",rest);
+			console.log("[renderer] [%s] %o",get_keys_of(rest).join(),rest);
 			debugger;
 		} else {
-			let {style,command,text,navigationEndpoint,...rest}=rest_;
-			this.GeneralCommand(command);
-			this.TextRuns(text);
-			this.navigationEndpoint(navigationEndpoint);
+			let {style,...rest}=rest_;
+			this.trackingParams(trackingParams);
+			// this.GeneralCommand(command);
+			// if(navigationEndpoint) this.navigationEndpoint(navigationEndpoint);
 			if(eq_keys(get_keys_of(rest),[])) return;
-			console.log("renderer",rest);
+			console.log("[renderer] [%s] %o",get_keys_of(rest).join(),rest);
 			debugger;
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TextRuns.js").TextRuns | import("./support/yt_api/_/s/SimpleText.js").SimpleText | undefined} t
+	 */
+	text(t) {
+		if(!t) return;
+		if("runs" in t) {
+			this.TextRuns(t);
+		} else {
+			this.SimpleText(t);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/SimpleText.js").SimpleText} t
+	 */
+	SimpleText(t) {
+		console.log(t);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep
@@ -4438,8 +4449,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if(data.options) this.options(data.options);
-		let str=stringify_text_runs(data.title);
-		if(typeof str!=="string") debugger;
+		this.on_text(data.title);
 		if(this.r.get_param("noisy_logging")) console.log(data);
 		if(get_keys_of(renderer).length!==1) {
 			debugger;
@@ -4451,11 +4461,16 @@ class HandleTypes extends BaseService {
 		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
 		console.log(data);
 	}
-	/** @arg {import("./support/yt_api/_/i/AccountLinkButtonRenderer.js").AccountLinkButtonRenderer} obj */
+	/** @arg {import("./support/yt_api/_/i/ConnectButton").ConnectButton} obj */
 	connectButton(obj) {
-		this.accountLinkButtonRenderer(obj.accountLinkButtonRenderer);
-		if(eq_keys(get_keys_of(obj),["accountLinkButtonRenderer"])) return;
-		console.log(obj);
+		if("accountLinkButtonRenderer" in obj) {
+			this.accountLinkButtonRenderer(obj.accountLinkButtonRenderer);
+		} else if("buttonRenderer" in obj) {
+			this.buttonRenderer(obj.buttonRenderer);
+		} else {
+			console.log(obj);
+			debugger;
+		}
 	}
 	/** @arg {import("./support/yt_api/_/i/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} obj */
 	accountLinkButtonRenderer(obj) {

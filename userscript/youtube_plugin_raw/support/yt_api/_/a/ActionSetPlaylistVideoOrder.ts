@@ -6,6 +6,9 @@ export type ServiceEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 	playlistEditEndpoint: PlaylistEditEndpoint;
+}|{
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
 };
 
 export type ActionSetPlaylistVideoOrder<T extends 1|2|3|4|5>={
