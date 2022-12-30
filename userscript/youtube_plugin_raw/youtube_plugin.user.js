@@ -4515,6 +4515,8 @@ class HandleTypes extends BaseService {
 	 */
 	ConnectedAppRendererData(data) {
 		this.connectButton(data.connectButton);
+		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
+		console.log(data);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj
@@ -4527,7 +4529,7 @@ class HandleTypes extends BaseService {
 	 */
 	connectedAppRenderer(data) {
 		this.ConnectedAppRendererData(data.connectedAppRenderer);
-		if(eq_keys(get_keys_of(data.connectedAppRenderer),["icon","title","text","connectButton"])) return;
+		if(eq_keys(get_keys_of(data),["connectedAppRenderer"])) return;
 		console.log(get_keys_of(data.connectedAppRenderer));
 		console.log(data.connectedAppRenderer.connectButton);
 		console.log(data);
