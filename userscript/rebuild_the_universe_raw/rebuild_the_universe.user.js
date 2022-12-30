@@ -365,7 +365,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
 		if(!fn_obj) {
-			throw new Error("Unreachable (type of value is not "function")");
+			throw new Error("Unreachable (type of value is not \"function\")");
 		}
 		if(fn_obj.type==="function_box") {
 			if(fn_obj.return_type==="Box") {
@@ -2439,8 +2439,8 @@ class AutoBuyImplR {
 	}
 	pre_init() {
 		let audio_element=document.querySelector("#background_audio");
-		if(!audio_element) throw new Error("Missing element querySelector("#background_audio")");
-		if(!(audio_element instanceof HTMLAudioElement)) throw new Error("querySelector("#background_audio") is not an instance of HTMLAudioElement");
+		if(!audio_element) throw new Error("Missing element querySelector(\"#background_audio\")");
+		if(!(audio_element instanceof HTMLAudioElement)) throw new Error("querySelector(\"#background_audio\") is not an instance of HTMLAudioElement");
 		this.background_audio=audio_element;
 		this.background_audio.onloadeddata=null;
 		this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
@@ -2901,13 +2901,13 @@ class AutoBuyImplR {
 	// spell:words constel2
 	edit_fns() {
 		// lightreset();
-		let original_code="&& a != encrypt("Py")";
+		let original_code="&& a != encrypt(\"Py\")";
 		let temp=window.lightreset.toString().replace(
 			original_code,
 			original_code+" "+
-			"&& a != encrypt("noti") "+
-			"&& a != encrypt("pace") "+
-			"&& a != "constel2""
+			"&& a != encrypt(\"noti\") "+
+			"&& a != encrypt(\"pace\") "+
+			"&& a != \"constel2\""
 		);
 		/** @type {any} */
 		let temp_function=new Function(
@@ -3421,8 +3421,16 @@ function got_jquery(value) {
 	});
 	use_jquery();
 }
+/** @template U @template {U} T @arg {U} e @returns {T} */
+function cast_as(e) {
+	/** @type {any} */
+	let x=e;
+	return x;
+}
 function use_jquery() {
-	let jq=window.$;
+	/** @type {typeof window&{$:any}} */
+	let win_jquery=cast_as(window);
+	let jq=win_jquery.$;
 	if(!jq) return;
 	if(typeof jq!="function") return;
 	let res=jq("head");
@@ -3699,7 +3707,10 @@ function main() {
 			if(!la) throw new Error("mut_observers underflow");
 			la.disconnect();
 		}
-		set_jq_proxy(window.$);
+		/** @type {typeof window&{$:any}} */
+		let win_jquery=cast_as(window);
+		let jq=win_jquery.$;
+		set_jq_proxy(jq);
 		/** @type {any[]} */
 		let arr=[];
 		/** @type {any} */

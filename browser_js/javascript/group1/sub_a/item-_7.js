@@ -368,10 +368,10 @@ function main() {
 		}
 		/**
 		 * @param {number} nsl
-		 * @param {Map<any, any>} cmap
+		 * @param {Map<any, any>} c_map
 		 * @param {any} trg
 		 */
-		function do_json_stringify_iter(nsl,cmap,trg) {
+		function do_json_stringify_iter(nsl,c_map,trg) {
 			/**
 			 * @type {string|null}
 			 */
@@ -398,7 +398,7 @@ function main() {
 						...trg
 					};
 					cin.ns=nsl;
-					cin.all_map=cmap;
+					cin.all_map=c_map;
 					cin.all_set=emp;
 					let js=JSON.stringify(cin.target,function(...args) {
 						json_rep(cin,...args);
@@ -409,7 +409,7 @@ function main() {
 					let cin=new JSONRepArg0;
 					cin.target=trg;
 					cin.ns=nsl;
-					cin.all_map=cmap;
+					cin.all_map=c_map;
 					cin.all_set=emp;
 					js=JSON.stringify(trg,json_rep.bind(null,cin));
 					set_js(js);
@@ -444,7 +444,7 @@ function main() {
 		}
 		if('cr_getC2Runtime' in window&&window.cr_getC2Runtime instanceof Function) {
 			js=do_json_stringify_iter(90,c_map,window.cr_getC2Runtime());
-			var retv=exdo_user(c_map);
+			var ret_v=do_user(c_map);
 			var car=[]
 				,repo=[];
 			for(var c=c_map.entries(),j=c.next(),i=0;!j.done;j=c.next()) {
@@ -453,12 +453,12 @@ function main() {
 				repo.push(j.value[1]);
 				if(i>30) {break;}
 			}
-			var protos=Array.from(new Set(car.map(e => Object.getPrototypeOf(e))));
+			var proto_arr=Array.from(new Set(car.map(e => Object.getPrototypeOf(e))));
 			/**
 			 * @param {any} e
 			 */
 			function get_proto_id(e) {
-				var pid=protos.indexOf(Object.getPrototypeOf(e));
+				var pid=proto_arr.indexOf(Object.getPrototypeOf(e));
 				if(pid>0) {
 					return pid;
 				} else {
@@ -473,13 +473,13 @@ function main() {
 				return get_proto_id(a)-get_proto_id(b);
 			}
 			car.sort(do_sort_by_proto);
-			return [protos,JSON.parse(js.js_g),car,JSON.parse(retv.js_g),js,repo];
+			return [proto_arr,JSON.parse(js.js_g),car,JSON.parse(ret_v.js_g),js,repo];
 		}
 		/**
-		 * @param {Map<any, any>} cmap
+		 * @param {Map<any, any>} c_map
 		 * @param {undefined} [o_start]
 		 */
-		function exdo_user(cmap,o_start) {
+		function do_user(c_map,o_start) {
 			var ps=performance.now()
 				,o_new_since=0
 				,found_objs=0;
@@ -490,7 +490,7 @@ function main() {
 				,tri=[]
 				,scs=[]
 				,sc=[];
-			for(var c=cmap.keys(),j=c.next(),i=0;!j.done;i++,
+			for(var c=c_map.keys(),j=c.next(),i=0;!j.done;i++,
 				j=c.next()) {
 				cars.push(j.value);
 				scs.push(j.value);
@@ -498,12 +498,12 @@ function main() {
 			}
 			found_objs=0;
 			for(var car=[],sb=2,wv=o_start,i=0;i<(10000*120)&&sb;i++) {
-				var js_inner_p=do_json_stringify_iter(9000,cmap,wv);
+				var js_inner_p=do_json_stringify_iter(9000,c_map,wv);
 				tri.push(wv);
 				if(js_inner_p.js_g.length>js_inner.js_g.length) {
 					js_inner=js_inner_p;
 				}
-				for(var c=cmap.keys(),j=c.next(),z=0;!j.done;j=c.next()) {
+				for(var c=c_map.keys(),j=c.next(),z=0;!j.done;j=c.next()) {
 					z++;
 					if(cars.indexOf(j.value)<0) {
 						car.push(j.value);
@@ -543,7 +543,7 @@ function main() {
 				if(performance.now()-ps>100) {
 					ps=performance.now();
 					console.log("long_running",wv,"total_objs_processed",found_objs);
-					console.log("ilen",js_inner_p.js_g.length);
+					console.log("i_len",js_inner_p.js_g.length);
 				}
 				if(performance.now()-ps>100*100) {
 					console.log("timeout, processed "+found_objs+" objects since iteration start");
