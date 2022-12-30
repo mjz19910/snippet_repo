@@ -3864,18 +3864,18 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer */
+	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
 		let ok=get_keys_of(renderer);
 		console.log("renderer.style",renderer.style);
 		console.log("renderer.size",renderer.size);
 		console.log("renderer.isDisabled",renderer.isDisabled);
-		console.log("renderer.icon",renderer.icon);
-		console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
-		console.log("renderer.tooltip",renderer.tooltip);
-		console.log("renderer.trackingParams",renderer.trackingParams);
-		console.log("renderer.accessibilityData",renderer.accessibilityData);
-		if(eq_keys(ok,["style","size","isDisabled","icon","navigationEndpoint","tooltip","trackingParams","accessibilityData"])) return;
+		// console.log("renderer.icon",renderer.icon);
+		// console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
+		// console.log("renderer.tooltip",renderer.tooltip);
+		// console.log("renderer.trackingParams",renderer.trackingParams);
+		// console.log("renderer.accessibilityData",renderer.accessibilityData);
+		if(eq_keys(ok,["style","size","isDisabled"])) return;
 		console.log(ok);
 		debugger;
 	}
@@ -4330,7 +4330,23 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj */
 	connectButton(obj) {
+		this.accountLinkButtonRenderer(obj.accountLinkButtonRenderer);
+		if(eq_keys(get_keys_of(obj),["accountLinkButtonRenderer"])) return;
 		console.log(obj);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} obj
+	 */
+	accountLinkButtonRenderer(obj) {
+		this.providerKey(obj.providerKey);
+		this.ButtonRenderer(obj.unlinkedButton);
+		console.log(obj);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} obj
+	 */
+	ButtonRenderer(obj) {
+		this.buttonRenderer(obj.buttonRenderer);
 	}
 	/** @arg {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
 	connectedAppRenderer(data) {

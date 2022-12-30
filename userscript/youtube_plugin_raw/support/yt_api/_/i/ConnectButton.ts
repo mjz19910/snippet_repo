@@ -1,11 +1,5 @@
-import {ButtonRenderer} from "../b/ButtonRenderer.js";
+import {AccountLinkButtonRendererData} from "./AccountLinkButtonRendererData";
 
 export type ConnectButton={
-	accountLinkButtonRenderer: {
-		providerKey:{
-			id: string;
-			subject: "all";
-		};
-		unlinkedButton: ButtonRenderer;
-	};
+	accountLinkButtonRenderer: AccountLinkButtonRendererData;
 };
