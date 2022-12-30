@@ -338,6 +338,7 @@ function with_ytd_scope() {
 						fake_iframe_data: new FakeIframeElementData,
 						created: function() {
 							this.fake_iframe_data=new FakeIframeElementData;
+							debugger;
 						},
 						prototype: XG.prototype,
 					});
