@@ -1269,7 +1269,7 @@ class YtIterateTarget {
 	}
 	/**
 	 * @arg {ApiIterateState} state
-	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command
+	 * @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} command
 	 */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
@@ -2276,6 +2276,8 @@ class FilterHandlers {
 		for(let action of data.onResponseReceivedActions) {
 			if("adsControlFlowOpportunityReceivedCommand" in action) {
 				this.handle.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
+			} else if("reloadContinuationItemsCommand" in action) {
+				action;
 			} else {
 				debugger;
 			}

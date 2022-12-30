@@ -1,7 +1,5 @@
-import {SectionItem} from "../s/SectionItem";
+import {ReloadContinuationItemsCommandData} from "./ReloadContinuationItemsCommandData";
 
 export type ReloadContinuationItemsCommand={
-	slot: "RELOAD_CONTINUATION_SLOT_BODY";
-	targetId: "browse-feedFEwhat_to_watch";
-	continuationItems: SectionItem[];
+	reloadContinuationItemsCommand: ReloadContinuationItemsCommandData;
 };
