@@ -1100,7 +1100,7 @@ function fetch_inject(user_request,request_init) {
 fetch_inject.__proxy_target__=window.fetch;
 
 /**
- * @arg {[()=>InitialDataType, object, []]} apply_args
+ * @arg {[()=>JsonDataResponseType, object, []]} apply_args
  */
 function do_proxy_call_getInitialData(apply_args) {
 	return yt_handlers.on_initial_data(apply_args);
@@ -2305,13 +2305,13 @@ class FilterHandlers {
 	on_handle_api_4(res,api_path) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
-			case "player": 
-			this.handle_t.WatchResponsePlayer(api_path,res.json); return true;
+			case "player":
+				this.handle_t.WatchResponsePlayer(api_path,res.json); return true;
 			case "guide": this.on_guide(api_path,res.json); return true;
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return true;
-			case "browse":  this.handle_t.BrowseResponseContent(res.json); return true;
+			case "browse": this.handle_t.BrowseResponseContent(res.json); return true;
 			case "account.account_menu": this.on_account_menu(res.json); return true;
 			default: return null;
 		}
@@ -2455,13 +2455,6 @@ class FilterHandlers {
 		debugger;
 	}
 	/**
-	 * @arg {InitialDataType} data
-	 */
-	handle_page_type(data) {
-		this.handle_any_data(`page_type_${data.page}`,data);
-		this.handle_t.JsonDataResponseType(data);
-	}
-	/**
 	 * @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail['pageType']}`} path
 	 * @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data
 	 */
@@ -2472,19 +2465,20 @@ class FilterHandlers {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
 	}
-	/** @typedef {import("./support/yt_api/_/i/InitialDataType.js").InitialDataType} InitialDataType */
+	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
 	/**
-	 * @arg {[()=>InitialDataType, object, []]} apply_args
+	 * @arg {[()=>JsonDataResponseType, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
-		/** @type {InitialDataType} */
+		/** @type {JsonDataResponseType} */
 		let ret=Reflect.apply(...apply_args);
 		if(ret.response) {
 			if(yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 			try {
-				this.handle_page_type(ret);
-				let page_type=window.ytPageType;
 				page_type_iter(ret.page);
+				this.handle_any_data(`page_type_${ret.page}`,ret);
+				this.handle_t.JsonDataResponseType(ret);
+				let page_type=window.ytPageType;
 				switch(page_type) {
 					case void 0: return;
 					case "settings":
@@ -4357,7 +4351,7 @@ class ECatcherService {
 		} else {
 			this.data.client=new_client;
 		}
-	
+
 	}
 }
 
@@ -4369,7 +4363,7 @@ class GFeedbackService {
 		e: null,
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
-	}
+	};
 	/** @param {import("./support/yt_api/_/g/GFeedbackServiceType.js").GFeedbackServiceType} params */
 	on_params(params) {
 		for(let param of params) {
@@ -4439,7 +4433,7 @@ class GuidedHelpService {
 	}
 }
 
-const guided_help_service=new GuidedHelpService
+const guided_help_service=new GuidedHelpService;
 
 class TrackingServices {
 	/**
@@ -4939,18 +4933,22 @@ class HandleTypes {
 		debug&&console.log("[handle_page_type] with page_type and response_type",page_type);
 		switch(data.page) {
 			case "browse": this.BrowseResponse(data); break;
-			case "playlist": this.on_page_type_playlist(data); break;
-			case "settings": this.on_page_type_settings(data); break;
-			case "shorts": this.on_page_type_shorts(data); break;
-			case "watch": this.WatchResponsePlayer(page_type,data.playerResponse); break;
-			case "channel": this.on_page_type_channel(data); break;
+			case "playlist": this.PlaylistResponse(data); break;
+			case "settings": this.SettingsResponse(data); break;
+			case "shorts": this.ShortsResponse(data); break;
+			case "watch": this.WatchResponse(data); break;
+			case "channel": this.ChannelResponse(data); break;
 			default: console.log("handle_page_type",page_type); debugger;
 		}
+	}
+	/** @arg {import("./support/yt_api/_/w/WatchResponse.js").WatchResponse} data */
+	WatchResponse(data) {
+		this.WatchResponsePlayer(data.page,data.playerResponse);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/p/PlaylistResponse.js").PlaylistResponse} data
 	 */
-	on_page_type_playlist(data) {
+	PlaylistResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		console.log(data.url);
@@ -4958,7 +4956,7 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/_/s/SettingsResponse.js").SettingsResponse} data
 	 */
-	on_page_type_settings(data) {
+	SettingsResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		console.log(data.url);
@@ -4967,7 +4965,7 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} data
 	 */
-	on_page_type_shorts(data) {
+	ShortsResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		console.log(data.url);
@@ -4976,7 +4974,7 @@ class HandleTypes {
 	/**
 	 * @param {import("./support/yt_api/_/c/ChannelResponse.js").ChannelResponse} data
 	 */
-	on_page_type_channel(data) {
+	ChannelResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		let up=split_string(data.url,"/");
