@@ -2441,6 +2441,7 @@ class FilterHandlers {
 		this.on_response_context("on_account_menu",json.responseContext);
 		console.log(json);
 	}
+	/** @typedef { import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} GeneralContext */
 	/**
 	 * @param {string} from
 	 * @param {GeneralContext} data
@@ -2570,218 +2571,6 @@ class FilterHandlers {
 		data.bgChallenge;
 		console.log(data);
 		debugger;
-	}
-	/** @typedef { import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} GeneralContext */
-	/**
-	 * @param {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} service_params_list
-	 */
-	set_service_params(service_params_list) {
-		for(let service_param_list of service_params_list) {
-			switch(service_param_list.service) {
-				case "CSI": this.on_csi_service(service_param_list); break;
-				case "ECATCHER": this.on_e_catcher_service(service_param_list); break;
-				case "GFEEDBACK": this.on_g_feedback_service(service_param_list); break;
-				case "GUIDED_HELP": this.on_guided_help_service(service_param_list); break;
-				case "GOOGLE_HELP": this.on_google_help_service(service_param_list); break;
-				default: debugger;
-			}
-		}
-		this.on_complete_set_service_params();
-	}
-	on_complete_set_service_params() {
-		seen_map.clear();
-	}
-	/**
-	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
-	 */
-	on_google_help_service(service) {
-		for(let param of service.params) {
-			switch(param.key) {
-				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": parse_browse_id(param.value); break;
-				default: console.log("new [param_key]",param); debugger;
-			}
-		}
-	}
-	e_catcher_service={
-		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
-		client: null,
-		expected_client_values: {
-			fexp: [
-				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574],
-				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
-				[39323120,39322983,39322873,39323013,39323020,39322863],
-				[39322866,39322870,39322980,39323016,45686551],
-				[39321827,39323023],
-			],
-		},
-	};
-	/**
-	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
-	 */
-	on_e_catcher_service(service) {
-		/** @type {NonNullable<this['e_catcher_service']['client']>} */
-		let new_client={};
-		for(let param of service.params) {
-			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
-			let param_parts=as_cast(param.key.split("."));
-			if(param_parts[0]!=='client') debugger;
-			switch(param_parts[1]) {
-				case "version": {
-					if(param.value!=="2.20221220") {debugger; break;};
-					new_client.version=param.value;
-				} break;
-				case "name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
-				case "fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
-				default: console.log("new [param_key]",param); debugger;
-			}
-		}
-		if(this.e_catcher_service.client) {
-			let prev_client=this.e_catcher_service.client;
-			this.e_catcher_service.client={...this.e_catcher_service.client,...new_client};
-			let client=this.e_catcher_service.client;
-			let expected=this.e_catcher_service.expected_client_values.fexp;
-			let new_expected=[];
-			x: for(let exp of client.fexp) {
-				for(let expected_item of expected) {
-					if(expected_item.includes(exp)) continue x;
-				}
-				new_expected.push(exp);
-			}
-			if(prev_client.name!==this.e_catcher_service.client.name) {
-				console.log({name: prev_client.name},{name: this.e_catcher_service.client.name});
-			}
-			if(new_expected.length>0) console.log("new_fexp",new_expected);
-		} else {
-			this.e_catcher_service.client=new_client;
-		}
-	}
-	guided_help_service={
-		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
-		context: null,
-	};
-	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
-	on_guided_help_service(service) {
-		for(let param of service.params) {
-			switch(param.key) {
-				case "logged_in": {
-					if(param.value=='0') {general_service_state.logged_in=false; break;}
-					if(param.value=='1') {general_service_state.logged_in=true; break;}
-					debugger;
-				} break;
-				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.guided_help_service.context=param.value; break;
-				default: console.log("new [param_key]",param); debugger;
-			}
-		}
-	}
-	g_feedback_service={
-		/** @type {number[]|null} */
-		e: null,
-		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
-		context: null,
-	};
-	/**
-	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
-	 */
-	on_g_feedback_service(service) {
-		for(let param of service.params) {
-			switch(param.key) {
-				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": parse_browse_id(param.value); break;
-				case "context": {
-					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
-					this.g_feedback_service.context=param.value;
-				} break;
-				case "e": {
-					/** @type {number[]} */
-					let new_expected=[];
-					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
-					this.g_feedback_service.e.forEach(e => {
-						for(let known of this.e_catcher_service.expected_client_values.fexp) {
-							if(known.includes(e)) return;
-						}
-						new_expected.push(e);
-					});
-					if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
-				} break;
-				case "has_alc_entitlement": break;
-				case "has_unlimited_entitlement": break;
-				case "ipcc": break;
-				case "is_alc_surface": break;
-				case "is_casual": break;
-				case "is_monetization_enabled": break;
-				case "is_owner": break;
-				case "is_viewed_live": break;
-				case "logged_in": {
-					if(param.value=='0') {general_service_state.logged_in=false; break;}
-					if(param.value=='1') {general_service_state.logged_in=true; break;}
-					debugger;
-				} break;
-				case "num_shelves": break;
-				case "premium_membership": if(param.value!=="non_member") debugger; general_service_state.premium_membership=param.value; break;
-				case "route": if(param.value!=="channel.featured") debugger; break;
-				default: console.log("new [param_key]",param); debugger;
-			}
-		}
-	}
-	csi_service={
-		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
-		yt_fn: null,
-		/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
-		rid: {
-			GetHome_rid: void 0,
-			GetPlayer_rid: void 0,
-			GetAccountMenu_rid: void 0,
-			GetWatchNext_rid: void 0,
-			GetAttestationChallenge_rid: void 0,
-			GetWebMainAppGuide_rid: void 0,
-			GetUnseenNotificationCount_rid: void 0,
-			GetPlaylist_rid: void 0,
-		},
-		/** @type {"WEB"|null} */
-		c: null,
-		/** @type {"2.20221220.09.00"|null} */
-		cver: null,
-		/** @type {"1"|null} */
-		yt_li: null,
-		/** @type {"1"|null} */
-		yt_ad: null,
-	};
-	/**
-	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
-	 */
-	on_csi_service(service) {
-		for(let param of service.params) {
-			switch(param.key) {
-				case "c": {
-					if(param.value!=="WEB") debugger;
-					this.csi_service[param.key]=param.value;
-				} continue;
-				case "cver": {
-					if(param.value!=="2.20221220.09.00") debugger;
-					this.csi_service[param.key]=param.value;
-				} continue;
-				case "yt_li": {
-					if(param.value!=="1") debugger;
-					this.csi_service[param.key]=param.value;
-				} continue;
-				case "yt_ad": if(param.value!=='1') debugger; this.csi_service[param.key]=param.value; continue;
-				case "yt_fn": if(!verify_param(param)) debugger; this.csi_service[param.key]=param.value; continue;
-			}
-			if(param.key in this.csi_service.rid) {
-				/** @type {`${string}_rid`} */
-				let rid_key=param.key;
-				this.csi_service.rid[rid_key]=param.value;
-				continue;
-			} else if(param.key.endsWith("_rid")) {
-				this.csi_service.rid[param.key]=param.value;
-				console.log("new [unknown_rid_key][%s][%s]",param.key,param.value);
-				continue;
-			} else {
-				console.log("new csi param",param);
-			}
-			console.log("new csi param",param); debugger;
-		}
 	}
 	/**
 	 * @arg {InitialDataType} data
@@ -4631,12 +4420,226 @@ const general_service_state={
 	/** @type {"non_member"|null} */
 	premium_membership: null,
 };
+class CsiService {
+	data={
+		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
+		yt_fn: null,
+		/** @type {"WEB"|null} */
+		c: null,
+		/** @type {"2.20221220.09.00"|null} */
+		cver: null,
+		/** @type {"1"|null} */
+		yt_li: null,
+		/** @type {"1"|null} */
+		yt_ad: null,
+	};
+	/** @type {{[x: `${string}_rid`]: `0x${string}`|undefined;}} */
+	rid={
+		GetHome_rid: void 0,
+		GetPlayer_rid: void 0,
+		GetAccountMenu_rid: void 0,
+		GetWatchNext_rid: void 0,
+		GetAttestationChallenge_rid: void 0,
+		GetWebMainAppGuide_rid: void 0,
+		GetUnseenNotificationCount_rid: void 0,
+		GetPlaylist_rid: void 0,
+	};
+	/** @arg {import("./support/yt_api/_/c/CsiServiceParamsType.js").CsiServiceParamsType} params */
+	on_params(params) {
+		for(let param of params) {
+			switch(param.key) {
+				case "c": {
+					if(param.value!=="WEB") debugger;
+					this.data[param.key]=param.value;
+				} continue;
+				case "cver": {
+					if(param.value!=="2.20221220.09.00") debugger;
+					this.data[param.key]=param.value;
+				} continue;
+				case "yt_li": {
+					if(param.value!=="1") debugger;
+					this.data[param.key]=param.value;
+				} continue;
+				case "yt_ad": if(param.value!=='1') debugger; this.data[param.key]=param.value; continue;
+				case "yt_fn": if(!verify_param(param)) debugger; this.data[param.key]=param.value; continue;
+			}
+			if(param.key in this.rid) {
+				/** @type {`${string}_rid`} */
+				let rid_key=param.key;
+				this.rid[rid_key]=param.value;
+				continue;
+			} else if(param.key.endsWith("_rid")) {
+				this.rid[param.key]=param.value;
+				console.log("new [unknown_rid_key][%s][%s]",param.key,param.value);
+				continue;
+			} else {
+				console.log("new csi param",param);
+			}
+			console.log("new csi param",param); debugger;
+		}
+	}
+}
+
+const csi_service=new CsiService;
+
 class TrackingServices {
+	/**
+	 * @param {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service
+	 */
+	on_csi_service(service) {
+		csi_service.on_params(service.params);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service
+	 */
+	on_e_catcher_service(service) {
+		/** @type {NonNullable<this['e_catcher_service']['client']>} */
+		let new_client={};
+		for(let param of service.params) {
+			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
+			let param_parts=as_cast(param.key.split("."));
+			if(param_parts[0]!=='client') debugger;
+			switch(param_parts[1]) {
+				case "version": {
+					if(param.value!=="2.20221220") {debugger; break;};
+					new_client.version=param.value;
+				} break;
+				case "name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
+				case "fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
+				default: console.log("new [param_key]",param); debugger;
+			}
+		}
+		if(this.e_catcher_service.client) {
+			let prev_client=this.e_catcher_service.client;
+			this.e_catcher_service.client={...this.e_catcher_service.client,...new_client};
+			let client=this.e_catcher_service.client;
+			let expected=this.e_catcher_service.expected_client_values.fexp;
+			let new_expected=[];
+			x: for(let exp of client.fexp) {
+				for(let expected_item of expected) {
+					if(expected_item.includes(exp)) continue x;
+				}
+				new_expected.push(exp);
+			}
+			if(prev_client.name!==this.e_catcher_service.client.name) {
+				console.log({name: prev_client.name},{name: this.e_catcher_service.client.name});
+			}
+			if(new_expected.length>0) console.log("new_fexp",new_expected);
+		} else {
+			this.e_catcher_service.client=new_client;
+		}
+	}
+	e_catcher_service={
+		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
+		client: null,
+		expected_client_values: {
+			fexp: [
+				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24001373,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24170049,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437562,24437575,24439482,24441244,39322504,39322574],
+				[24590921,24217535,24421159,24402891,24443373,24197450,24591046],
+				[39323120,39322983,39322873,39323013,39323020,39322863],
+				[39322866,39322870,39322980,39323016,45686551],
+				[39321827,39323023],
+			],
+		},
+	}
+	g_feedback_service={
+		/** @type {number[]|null} */
+		e: null,
+		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
+		context: null,
+	};
+	/**
+	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
+	 */
+	on_g_feedback_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
+				case "browse_id_prefix": if(param.value!=="") debugger; break;
+				case "browse_id": parse_browse_id(param.value); break;
+				case "context": {
+					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
+					this.g_feedback_service.context=param.value;
+				} break;
+				case "e": {
+					/** @type {number[]} */
+					let new_expected=[];
+					this.g_feedback_service.e=param.value.split(",").map(e => parseInt(e,10));
+					this.g_feedback_service.e.forEach(e => {
+						for(let known of service_tracking.e_catcher_service.expected_client_values.fexp) {
+							if(known.includes(e)) return;
+						}
+						new_expected.push(e);
+					});
+					if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
+				} break;
+				case "has_alc_entitlement": break;
+				case "has_unlimited_entitlement": break;
+				case "ipcc": break;
+				case "is_alc_surface": break;
+				case "is_casual": break;
+				case "is_monetization_enabled": break;
+				case "is_owner": break;
+				case "is_viewed_live": break;
+				case "logged_in": {
+					if(param.value=='0') {general_service_state.logged_in=false; break;}
+					if(param.value=='1') {general_service_state.logged_in=true; break;}
+					debugger;
+				} break;
+				case "num_shelves": break;
+				case "premium_membership": if(param.value!=="non_member") debugger; general_service_state.premium_membership=param.value; break;
+				case "route": if(param.value!=="channel.featured") debugger; break;
+				default: console.log("new [param_key]",param); debugger;
+			}
+		}
+	}
+	guided_help_service={
+		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
+		context: null,
+	};
+	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	on_guided_help_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
+				case "logged_in": {
+					if(param.value=='0') {general_service_state.logged_in=false; break;}
+					if(param.value=='1') {general_service_state.logged_in=true; break;}
+					debugger;
+				} break;
+				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.guided_help_service.context=param.value; break;
+				default: console.log("new [param_key]",param); debugger;
+			}
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
+	 */
+	on_google_help_service(service) {
+		for(let param of service.params) {
+			switch(param.key) {
+				case "browse_id_prefix": if(param.value!=="") debugger; break;
+				case "browse_id": parse_browse_id(param.value); break;
+				default: console.log("new [param_key]",param); debugger;
+			}
+		}
+	}
 	/**
 	 * @param {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params
 	 */
 	set_service_params(params) {
-		params;
+		for(let service_param_list of params) {
+			switch(service_param_list.service) {
+				case "CSI": this.on_csi_service(service_param_list); break;
+				case "ECATCHER": this.on_e_catcher_service(service_param_list); break;
+				case "GFEEDBACK": this.on_g_feedback_service(service_param_list); break;
+				case "GUIDED_HELP": this.on_guided_help_service(service_param_list); break;
+				case "GOOGLE_HELP": this.on_google_help_service(service_param_list); break;
+				default: debugger;
+			}
+		}
+		this.on_complete_set_service_params();
+	}
+	on_complete_set_service_params() {
+		seen_map.clear();
 	}
 }
 const service_tracking=new TrackingServices;
