@@ -4511,9 +4511,23 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
+	 * @param {import("./support/yt_api/_/i/ConnectedAppRendererData.js").ConnectedAppRendererData} data
+	 */
+	ConnectedAppRendererData(data) {
+		this.connectButton(data.connectButton);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj
+	 */
+	connectButton(obj) {
+		console.log(obj);
+	}
+	/**
 	 * @param {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data
 	 */
 	connectedAppRenderer(data) {
+		this.ConnectedAppRendererData(data.connectedAppRenderer);
+		if(eq_keys(get_keys_of(data.connectedAppRenderer),["icon","title","text","connectButton"])) return;
 		console.log(get_keys_of(data.connectedAppRenderer));
 		console.log(data.connectedAppRenderer.connectButton);
 		console.log(data);

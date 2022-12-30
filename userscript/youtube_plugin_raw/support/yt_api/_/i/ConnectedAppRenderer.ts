@@ -1,8 +1,5 @@
+import {ConnectedAppRendererData} from "./ConnectedAppRendererData";
+
 export type ConnectedAppRenderer={
-	connectedAppRenderer: {
-		icon: {};
-		title: {};
-		text: {};
-		connectButton: {};
-	};
+	connectedAppRenderer: ConnectedAppRendererData;
 };
