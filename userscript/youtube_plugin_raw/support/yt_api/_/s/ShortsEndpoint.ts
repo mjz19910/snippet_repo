@@ -1,4 +1,4 @@
-import {ReelWatchEndpoint} from "../../../../ReelWatchEndpoint";
+import {ReelWatchEndpoint} from "../r/ReelWatchEndpoint.js";
 import {ShortsCommandMetadata} from "./ShortsCommandMetadata";
 
 export type ShortsEndpoint={

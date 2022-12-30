@@ -4749,15 +4749,39 @@ class HandleTypes {
 		console.log(box.type,ok,[fk,first],box.value);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
+	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} endpoint
 	 */
 	endpoint(endpoint) {
-		console.log("ctp",endpoint.clickTrackingParams);
-		this.browseEndpoint(endpoint.browseEndpoint);
-		switch(endpoint.commandMetadata.webCommandMetadata.webPageType) {
+		if("clickTrackingParams" in endpoint) {
+			console.log("ctp",endpoint.clickTrackingParams);
+		} else {
+			console.log(endpoint);
+			debugger;
+		}
+		if("browseEndpoint" in endpoint) {
+			this.browseEndpoint(endpoint.browseEndpoint);
+		} else if("reelWatchEndpoint" in endpoint) {
+			this.reelWatchEndpoint(endpoint.reelWatchEndpoint);
+		} else {
+			debugger;
+		}
+		if("commandMetadata" in endpoint) {
+			this.commandMetadata(endpoint.commandMetadata);
+		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/p/JsonCommandMetadata.js").JsonCommandMetadata} data
+	 */
+	commandMetadata(data) {
+		switch(data.webCommandMetadata.webPageType) {
 			case "WEB_PAGE_TYPE_BROWSE": break;
+			case "WEB_PAGE_TYPE_CHANNEL": break;
+			case "WEB_PAGE_TYPE_PLAYLIST": break;
+			case "WEB_PAGE_TYPE_SHORTS": break;
+			case "WEB_PAGE_TYPE_WATCH": break;
 			default: debugger;
 		};
+
 	}
 	/**
 	 * @param {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
@@ -4829,10 +4853,18 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} data
 	 */
 	ShortsResponse(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		console.log(data.url);
-		data; debugger;
+		this.endpoint(data.endpoint);
+		console.assert(data.page==="shorts");
+		this.playerResponse(data.playerResponse);
+		this.reelWatchSequenceResponse(data.reelWatchSequenceResponse);
+		this.response(data.response);
+		console.log("[shorts_url]",data.url);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/ShortsResponseContent.js").ShortsResponseContent} response
+	 */
+	response(response) {
+		console.log(response);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/c/ChannelResponse.js").ChannelResponse} data
@@ -4867,16 +4899,43 @@ class HandleTypes {
 			this.responseContext(res.json.responseContext);
 		}
 		switch(res.url_type) {
-			case "att.get": this.AttGetV(res.json); break
-			case "player": this.WatchResponsePlayer(res.json); break
-			case "guide": this.GuideJsonType(res.json); break
-			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; break;
-			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); break;
-			case "next": this.YtApiNext(res.json); break
-			case "browse": this.BrowseResponseContent(res.json); break
-			case "account.account_menu": this.AccountMenuJson(res.json); break
+			case "att.get": this.AttGetV(res.json); return;
+			case "player": this.WatchResponsePlayer(res.json); return;
+			case "guide": this.GuideJsonType(res.json); return;
+			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return;
+			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
+			case "next": this.YtApiNext(res.json); return;
+			case "browse": this.BrowseResponseContent(res.json); return;
+			case "account.account_menu": this.AccountMenuJson(res.json); return;
+			case "reel.reel_item_watch": this.withGeneralContext(res.json); return;
+		}
+		switch(res.url_type) {
+			case "feedback": this.withGeneralContext(res.json); break;
+			case "getDatasyncIdsEndpoint": this.xx(res.json); break;
+			case "get_transcript": this.withGeneralContext(res.json); break;
+			case "live_chat.get_live_chat_replay": this.xx(res.json); break;
+			case "notification.record_interactions": this.YtSuccessResponse(res.json); break;
+			case "reel.reel_watch_sequence": this.xx(res.json); break;
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
+	}
+	/** @param {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} response */
+	YtSuccessResponse(response) {
+		let {responseContext,...not_context}=response;
+		this.responseContext(responseContext);
+		if(!response.success) {
+			console.log("YtFailure", not_context);
+		};
+	}
+	/** @arg {{}} data */
+	xx(data) {
+		console.log(data);
+	}
+	/**
+	 * @param {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").GeneralContext }} data
+	 */
+	withGeneralContext(data) {
+		this.responseContext(data.responseContext);
 	}
 	/** @arg {import("./support/_/OpenPopupActionItem.js").OpenPopupActionItem} action */
 	OpenPopupActionItem(action) {
@@ -4963,6 +5022,24 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data
 	 */
 	richItemRenderer(data) {
+		console.log(data);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/r/ReelWatchEndpoint.js").ReelWatchEndpoint} data
+	 */
+	reelWatchEndpoint(data) {
+		console.log(data);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data
+	 */
+	playerResponse(data) {
+		console.log(data);
+	}
+	/**
+	 * @param {{ responseContext: {}; entries: {}[]; trackingParams: string; }} data
+	 */
+	reelWatchSequenceResponse(data) {
 		console.log(data);
 	}
 }
