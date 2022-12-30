@@ -3783,26 +3783,6 @@ class HandleTypes {
 		if(!has_keys(ok,"headerText,bodyText,pageTitle,headerIcon")) {
 			debugger;
 		}
-		/** @template T @arg {{text: T}} _run @returns {T} */
-		function stringify_text_run(_run) {
-			return _run.text;
-		}
-		/** @template T @param {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
-		function stringify_text_runs(text) {
-			if(text.runs) {
-				if(text.runs.length===1) {
-					return stringify_text_run(text.runs[0]);
-				} else {
-					// need to join the parts
-					debugger;
-					throw 1;
-				}
-			} else {
-				// simple text
-				debugger;
-				throw 1;
-			}
-		}
 		stringify_text_runs(data.headerText);
 		console.log("PageIntroductionRendererData",data);
 	}
@@ -4458,9 +4438,16 @@ class HandleTypes {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} data
+	 * @param {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer
 	 */
-	settingsOptionsRenderer(data) {
+	settingsOptionsRenderer(renderer) {
+		let data=renderer.settingsOptionsRenderer;
+		if(Object.keys(data).length!==2) {
+			debugger;
+		}
+		for(let option in data.options) {
+			console.log(option);
+		}
 		console.log(data);
 	}
 	/**
@@ -4474,5 +4461,26 @@ class HandleTypes {
 	 */
 	shelfRenderer(data) {
 		console.log(data);
+	}
+}
+
+/** @template T @arg {{text: T}} _run @returns {T} */
+function stringify_text_run(_run) {
+	return _run.text;
+}
+/** @template T @param {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
+function stringify_text_runs(text) {
+	if(text.runs) {
+		if(text.runs.length===1) {
+			return stringify_text_run(text.runs[0]);
+		} else {
+			// need to join the parts
+			debugger;
+			throw 1;
+		}
+	} else {
+		// simple text
+		debugger;
+		throw 1;
 	}
 }
