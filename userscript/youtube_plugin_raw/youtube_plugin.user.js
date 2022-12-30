@@ -3836,7 +3836,7 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer
 	 */
 	tabRenderer(renderer) {
-		console.log("tp",renderer.trackingParams);
+		if(this.res.get_param("log_tracking_params")) console.log("tp",renderer.trackingParams);
 		if("sectionListRenderer" in renderer.content) {
 			this.sectionListRenderer(renderer.content);
 		};
@@ -4437,6 +4437,12 @@ class HandleTypes {
 	TwoColumnBrowseResultsRenderer(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
+	/** @param {{}[]} options */
+	options(options) {
+		for(let option of options) {
+			console.log(option);
+		}
+	}
 	/**
 	 * @param {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer
 	 */
@@ -4445,9 +4451,7 @@ class HandleTypes {
 		if(Object.keys(data).length!==2) {
 			debugger;
 		}
-		for(let option of data.options) {
-			console.log(option);
-		}
+		if(data.options) this.options(data.options);
 		let str=stringify_text_runs(data.title);
 		console.log(str);
 		console.log(data);
