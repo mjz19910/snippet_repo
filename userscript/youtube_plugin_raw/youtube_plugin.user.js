@@ -14,6 +14,7 @@
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 console=typeof window==="undefined"? console:(() => window.console)();
+main();
 var is_node_js=function is_node_js() {
 	return false;
 };
@@ -1609,6 +1610,7 @@ class FilterHandlers {
 			["shelfRenderer",false],
 			["videoRenderer",false],
 		]);
+		this.handle_types=new HandleTypes;
 		let t=this;
 		/** @param {string} value */
 		function whitelist_item(value) {
@@ -1929,7 +1931,7 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		handle_types.ResponseTypes(res);
+		this.handle_types.ResponseTypes(res);
 	}
 	/**
 	 * @param {`https://${string}/${string}?${string}`} req_hr_t
@@ -1988,7 +1990,7 @@ class FilterHandlers {
 			try {
 				page_type_iter(ret.page);
 				this.handle_any_data(`page_type_${ret.page}`,ret);
-				handle_types.DataResponsePageType(ret);
+				this.handle_types.DataResponsePageType(ret);
 				let page_type=window.ytPageType;
 				switch(page_type) {
 					case void 0: return;
@@ -2008,6 +2010,11 @@ class FilterHandlers {
 		}
 		return ret;
 	}
+	/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
+	on_page_type_changed(detail) {
+		this.handle_types.YTNavigateFinishEventDetail(detail);
+	}
+
 }
 /**
  * @type {any[]}
@@ -2550,9 +2557,7 @@ let on_yt_navigate_finish=[];
 function log_page_type_change(event) {
 	let {detail}=event;
 	if(!detail) return;
-	setTimeout(() => {
-		on_page_type_changed(detail);
-	});
+	yt_handlers.on_page_type_changed(detail);
 }
 on_yt_navigate_finish.push(log_page_type_change);
 
@@ -2616,23 +2621,6 @@ function page_type_iter(pageType) {
 		case "watch": break;
 		case "settings": break;
 		default: console.log("[%s]",pageType); debugger;
-	}
-}
-
-/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
-function on_page_type_changed(detail) {
-	handle_types.YTNavigateFinishEventDetail(detail);
-	if(typeof detail.pageType!=="string") debugger;
-	if(typeof detail.fromHistory!=="boolean") debugger;
-	if(typeof detail.navigationDoneMs!=="number") debugger;
-	console.log("detail_len",Object.keys(detail).length);
-	page_type_iter(detail.pageType);
-	if(last_page_type!==detail.pageType) {
-		last_page_type=detail.pageType;
-		let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
-		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
-		page_type_changes.push(nav_load_str);
-		console.log(nav_load_str);
 	}
 }
 
@@ -3336,7 +3324,7 @@ class ECatcherService {
 				[39323120,39322983,39322873,39323013,39323020,39322863],
 				[39322866,39322870,39322980,39323016,45686551],
 				[39321827,39323023],
-				[24128088, 24429904, 24124511, 24061846, 24293752],
+				[24128088,24429904,24124511,24061846,24293752],
 			],
 		},
 	};
@@ -3749,13 +3737,11 @@ class HandleTypes {
 			} else if("pageIntroductionRenderer" in content_item) {
 				this.pageIntroductionRenderer(content_item);
 			} else if("settingsOptionsRenderer" in content_item) {
-				this.settingsOptionsRenderer(content_item.settingsOptionsRenderer);
+				this.settingsOptionsRenderer(content_item);
 			} else if("connectedAppRenderer" in content_item) {
-				console.log("[todo_handler]",content_item);
-				debugger;
+				this.connectedAppRenderer(content_item);
 			} else if("shelfRenderer" in content_item) {
-				console.log("[todo_handler]",content_item);
-				debugger;
+				this.shelfRenderer(content_item);
 			} else {
 				console.log("[need_section_handler][%s]",ok_first);
 				debugger;
@@ -4067,7 +4053,7 @@ class HandleTypes {
 	browseEndpoint(endpoint) {
 		parse_browse_id(endpoint.browseId);
 		if("params" in endpoint) {
-			console.log("[browse_params] [%s]", endpoint.params);
+			console.log("[browse_params] [%s]",endpoint.params);
 		}
 		if(eq_keys(Object.keys(endpoint),["browseId"])) return;
 		if(has_keys(Object.keys(endpoint),"browseId,params")) return;
@@ -4137,7 +4123,7 @@ class HandleTypes {
 		this.SettingsResponseContent(data.response);
 		let split_parts=split_string(data.url,"/");
 		switch(split_parts.length) {
-			case 2: let cur_part=split_parts[1];switch(cur_part) {
+			case 2: let cur_part=split_parts[1]; switch(cur_part) {
 				case "account": break;
 				case "account_notifications": break;
 				case "account_privacy": break;
@@ -4359,6 +4345,18 @@ class HandleTypes {
 				// this.endpoint(detail.endpoint);
 			} break;
 		}
+		if(typeof detail.pageType!=="string") debugger;
+		if(typeof detail.fromHistory!=="boolean") debugger;
+		if(typeof detail.navigationDoneMs!=="number") debugger;
+		console.log("detail_len",Object.keys(detail).length);
+		page_type_iter(detail.pageType);
+		if(last_page_type!==detail.pageType) {
+			last_page_type=detail.pageType;
+			let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
+			let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+			page_type_changes.push(nav_load_str);
+			console.log(nav_load_str);
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
@@ -4374,13 +4372,21 @@ class HandleTypes {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
 	/**
-	 * @param {SettingsOptionRenderer} data
+	 * @param {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} data
 	 */
 	settingsOptionsRenderer(data) {
 		console.log(data);
 	}
+	/**
+	 * @param {{ connectedAppRenderer: {}; }} data
+	 */
+	connectedAppRenderer(data) {
+		console.log(data);
+	}
+	/**
+	 * @param {{ shelfRenderer: {}; }} data
+	 */
+	shelfRenderer(data) {
+		console.log(data);
+	}
 }
-
-const handle_types=new HandleTypes;
-
-main();
