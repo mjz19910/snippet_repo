@@ -206,7 +206,8 @@ function activate_nav() {
 	log_current_video_data();
 	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
-		let page_elem=get_ytd_page_manager().getCurrentPage();
+		if(!ytd_page_manager) return;
+		let page_elem=ytd_page_manager.getCurrentPage();
 		setTimeout(function() {
 			do_find_video();
 		},80);
@@ -2123,14 +2124,6 @@ function has_ytd_page_mgr() {
 	return ytd_page_manager!==null;
 }
 
-/** @returns {YtdPageManagerElement}*/
-function get_ytd_page_manager() {
-	if(ytd_page_manager!==null) {
-		return ytd_page_manager;
-	}
-	throw new Error("No ytd_page_manager");
-}
-
 /**
  * @arg {HTMLElement} element
  */
@@ -2188,9 +2181,9 @@ function as_node(value) {
 
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
-	if(!has_ytd_page_mgr()) return;
+	if(!ytd_page_manager) return;
 	plugin_overlay_element.onupdate();
-	get_ytd_page_manager().getCurrentPage().append(as_node(plugin_overlay_element));
+	ytd_page_manager.getCurrentPage().append(as_node(plugin_overlay_element));
 }
 
 /**@type {Map<string, HTMLElement>}*/
@@ -3034,7 +3027,12 @@ async function main() {
 	function log_page_type_change(event) {
 		let {detail}=event;
 		if(!detail) return;
-		yt_handlers.on_page_type_changed(detail);
+		try{
+			yt_handlers.on_page_type_changed(detail);
+		} catch (e) {
+			console.log("on page type changed error");
+			console.log(e);
+		}
 	}
 }
 
@@ -3843,6 +3841,7 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep
 	 */
 	navigationEndpoint(ep) {
+		if(ep===void 0) return;
 		if("watchEndpoint" in ep) {
 			this.watchEndpoint(ep.watchEndpoint);
 		}
@@ -4347,7 +4346,8 @@ class HandleTypes extends BaseService {
 		page_type_iter(detail.pageType);
 		if(last_page_type!==detail.pageType) {
 			last_page_type=detail.pageType;
-			let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
+			if(!ytd_page_manager) throw new Error("Missing ytd_page_manager");
+			let page_manager_current_tag_name=ytd_page_manager.getCurrentPage().tagName.toLowerCase();
 			let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 			page_type_changes.push(nav_load_str);
 			console.log(nav_load_str);
