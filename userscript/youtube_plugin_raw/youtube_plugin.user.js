@@ -1492,7 +1492,7 @@ function decode_protobuf(str) {
 			case "DateTime": break;
 		}
 		let [cur_off,cur_len]=non_null(stack.at(-1));
-		console.log('off',cur_len,cur_off);
+		console.log("off",cur_len,cur_off);
 		if(reader.pos>=cur_off+cur_len) {
 			let mode_=mode_stack.pop();
 			if(!mode_) {
@@ -1701,7 +1701,7 @@ class FilterHandlers {
 		}
 		const res_parse=create_from_parse(x);
 		if("_tag" in res_parse) {
-			console.log('parse failed (should never happen)',x,res_parse);
+			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
 		}
 		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
@@ -2626,7 +2626,7 @@ function on_page_type_changed(detail) {
 	if(typeof detail.pageType!=="string") debugger;
 	if(typeof detail.fromHistory!=="boolean") debugger;
 	if(typeof detail.navigationDoneMs!=="number") debugger;
-	console.log('detail_len',Object.keys(detail).length);
+	console.log("detail_len",Object.keys(detail).length);
 	page_type_iter(detail.pageType);
 	if(last_page_type!==detail.pageType) {
 		last_page_type=detail.pageType;
@@ -3154,7 +3154,7 @@ function get_account_type(state,base,parts,index) {
 }
 /** @arg {{parts: string[];index:number}} obj @returns {never} */
 function no_handler({parts,index}) {
-	console.log('no handler for',parts,parts[index]);
+	console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
 	debugger;
 	throw new Error("Stop");
 }
@@ -3729,13 +3729,7 @@ class HandleTypes {
 				throw 1;
 			}
 		}
-		let header_text_str=stringify_text_runs(data.headerText);
-		switch(header_text_str) {
-			case "Control your download settings": break;
-			case "Expand your experience": break;
-			case "Manage what you share on YouTube": break;
-			default: debugger;
-		}
+		stringify_text_runs(data.headerText);
 		console.log("PageIntroductionRendererData",data);
 	}
 	/**
