@@ -2818,6 +2818,37 @@ class ServiceResolver {
 		return this.services[key];
 	}
 }
+
+/** @template T */
+class HiddenData {
+	#value;
+	/** @arg {T} value */
+	constructor(value) {
+		this.#value=value;
+	}
+	/** @arg {(v:T)=>void} v */
+	extract(v) {
+		try {
+			v(this.#value);
+		} catch(e) {
+			console.log("target error");
+			console.log(e);
+		}
+	}
+	/**
+	 * @template U
+	 * @arg {(v:T)=>U} v @arg {()=>U} def */
+	extract_default(v,def) {
+		try {
+			return v(this.#value);
+		} catch(e) {
+			console.log("target error");
+			console.log(e);
+			return def();
+		}
+	}
+}
+
 /** @typedef {import("./ResolverT.js").ResolverT} ResolverT */
 async function main() {
 	await Promise.resolve();
@@ -2828,7 +2859,8 @@ async function main() {
 	const g_feedback_service=new GFeedbackService(resolver_value);
 	const guided_help_service=new GuidedHelpService(resolver_value);
 	const service_tracking=new TrackingServices(resolver_value);
-	const yt_handlers=new FilterHandlers(resolver_value);
+	const yt_handlers=new
+		HiddenData(new FilterHandlers(resolver_value));
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 	inject_api_yt.yt_handlers=yt_handlers;
@@ -2865,12 +2897,9 @@ async function main() {
 	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
 	/**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
-		try {
+		yt_handlers.extract(yt_handlers => {
 			yt_handlers.on_handle_api(request,response_obj);
-		} catch(err) {
-			console.log("on_handle_api failed");
-			console.log("\t",err);
-		}
+		});
 	}
 	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
@@ -2972,7 +3001,7 @@ async function main() {
 	}
 	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
-		return yt_handlers.on_initial_data(apply_args);
+		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
 	function modify_global_env() {
 		/** @type {Map<string, Blob | MediaSource>}*/
@@ -3027,12 +3056,7 @@ async function main() {
 	function log_page_type_change(event) {
 		let {detail}=event;
 		if(!detail) return;
-		try{
-			yt_handlers.on_page_type_changed(detail);
-		} catch (e) {
-			console.log("on page type changed error");
-			console.log(e);
-		}
+		yt_handlers.extract(h => h.on_page_type_changed(detail));
 	}
 }
 
@@ -3096,6 +3120,7 @@ function make_guide_item_keys() {
 
 if(typeof exports==="object") {
 	exports.FilterHandlers=FilterHandlers;
+	exports.HiddenData=HiddenData;
 }
 /**
  * @arg {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
@@ -3854,8 +3879,8 @@ class HandleTypes extends BaseService {
 		let {clickTrackingParams: ct,commandMetadata: md,continuationCommand: cc,signalServiceEndpoint: ss,...rest}=cmd;
 		this.clickTrackingParams(ct);
 		this.commandMetadata(md);
-		if(cc)this.continuationCommand(cc);
-		if(ss)this.signalServiceEndpoint(ss);
+		if(cc) this.continuationCommand(cc);
+		if(ss) this.signalServiceEndpoint(ss);
 		if(eq_keys(get_keys_of(rest),[])) return;
 		console.log(rest);
 	}

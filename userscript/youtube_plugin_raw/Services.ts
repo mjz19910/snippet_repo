@@ -4,6 +4,7 @@ import {
 	FilterHandlers,
 	GFeedbackService,
 	GuidedHelpService,
+	HiddenData,
 	TrackingServices
 } from "./youtube_plugin.user.js";
 
@@ -13,5 +14,5 @@ export type Services={
 	g_feedback_service: GFeedbackService;
 	guided_help_service: GuidedHelpService;
 	service_tracking: TrackingServices;
-	yt_handlers: FilterHandlers;
+	yt_handlers: HiddenData<FilterHandlers>;
 };
