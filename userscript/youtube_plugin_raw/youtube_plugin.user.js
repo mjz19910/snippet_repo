@@ -384,7 +384,7 @@ async function async_plugin_init(event) {
 				}
 				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
 				if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
-					console.log("found other current_page at iter=",iter_count);
+					console.log("found current_page [%s] at iter=%o",page_elem.tagName.toLowerCase(),iter_count);
 					/** @type {Promise<void>} */
 					let promise=new Promise((accept,reject) => {
 						if(!ytd_page_manager) return reject(new Error("missing data"));
