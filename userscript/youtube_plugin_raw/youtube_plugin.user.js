@@ -2876,7 +2876,7 @@ class ServiceResolver {
 async function main() {
 	await Promise.resolve();
 	/** @type {ResolverT} */
-	const resolver_value={value:null};
+	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
 	const e_catcher_service=new ECatcherService(resolver_value);
 	const g_feedback_service=new GFeedbackService(resolver_value);
@@ -3613,7 +3613,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj */
 	handleEntityBatchUpdate(obj) {
 		if(get_keys_of(obj)[0]!=="entityBatchUpdate") {
-			console.log("[entity_batch_invalid]",obj);get_keys_of
+			console.log("[entity_batch_invalid]",obj); get_keys_of;
 			return;
 		}
 		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
@@ -4003,18 +4003,18 @@ class HandleTypes extends BaseService {
 		console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
 		debugger;
 	}
-/** @arg {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem[]} ves */
+	/** @arg {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem[]} ves */
 	graftedVes(ves) {
 		for(let ve of ves) {
 			this.GraftedVeItem(ve);
 		}
 	}
-/** @arg {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem} item */
+	/** @arg {import("./support/yt_api/_/b/GraftedVeItem.js").GraftedVeItem} item */
 	GraftedVeItem(item) {
 		console.log("csn",item.csn);
 		this.veData(item.veData);
 	}
-/** @arg {import("./support/yt_api/_/b/VeData.js").VeData} data */
+	/** @arg {import("./support/yt_api/_/b/VeData.js").VeData} data */
 	veData(data) {
 		this.trackingParams(data.trackingParams);
 		console.log(data);
@@ -4322,17 +4322,17 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-/** @arg {import("./support/yt_api/_/i/ConnectedAppRendererData.js").ConnectedAppRendererData} data */
+	/** @arg {import("./support/yt_api/_/i/ConnectedAppRendererData.js").ConnectedAppRendererData} data */
 	ConnectedAppRendererData(data) {
 		this.connectButton(data.connectButton);
 		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
 		console.log(data);
 	}
-/** @arg {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj */
+	/** @arg {import("./support/yt_api/_/i/ConnectButton.js").ConnectButton} obj */
 	connectButton(obj) {
 		console.log(obj);
 	}
-/** @arg {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
+	/** @arg {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
 	connectedAppRenderer(data) {
 		this.ConnectedAppRendererData(data.connectedAppRenderer);
 		if(eq_keys(get_keys_of(data),["connectedAppRenderer"])) return;
@@ -4341,20 +4341,20 @@ class HandleTypes extends BaseService {
 		console.log(data);
 		debugger;
 	}
-/** @arg {import("./support/yt_api/_/i/ShelfRenderer.js").ShelfRenderer} data */
+	/** @arg {import("./support/yt_api/_/i/ShelfRenderer.js").ShelfRenderer} data */
 	shelfRenderer(data) {
 		console.log(data);
 	}
-/** @arg {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data */
+	/** @arg {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data */
 	continuationItemRenderer(data) {
 		this.ContinuationItemRendererData(data.continuationItemRenderer);
 	}
-/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data */
+	/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data */
 	ContinuationItemRendererData(data) {
 		this.continuationEndpoint(data.continuationEndpoint);
 		console.log(data);
 	}
-/** @arg {import("./support/yt_api/_/c/ContinuationEndpoint.js").ContinuationEndpoint} endpoint */
+	/** @arg {import("./support/yt_api/_/c/ContinuationEndpoint.js").ContinuationEndpoint} endpoint */
 	continuationEndpoint(endpoint) {
 		this.clickTrackingParams(endpoint.clickTrackingParams);
 	}
