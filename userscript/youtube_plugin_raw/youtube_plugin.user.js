@@ -4035,9 +4035,11 @@ class HandleTypes {
 	 */
 	browseEndpoint(endpoint) {
 		parse_browse_id(endpoint.browseId);
-		if(!eq_keys(Object.keys(endpoint),["browseId"])) {
-			debugger;
+		if("params" in endpoint) {
+			console.log("[browse_params] [%s]", endpoint.params);
 		}
+		if(eq_keys(Object.keys(endpoint),["browseId"])) return;
+		if(has_keys(Object.keys(endpoint),"browseId,params")) return;
 	}
 	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
@@ -4092,6 +4094,7 @@ class HandleTypes {
 	}
 	/** @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	on_new_page_url(data) {
+		console.log("[probably_new_section]",data.url.split("/").slice(1)[0].split("_").slice(1));
 		console.log("[new_page]",data.url);
 		debugger;
 	}
@@ -4103,14 +4106,15 @@ class HandleTypes {
 		this.SettingsResponseContent(data.response);
 		let split_parts=split_string(data.url,"/");
 		switch(split_parts.length) {
-			case 2: switch(split_parts[1]) {
+			case 2: let cur_part=split_parts[1];switch(cur_part) {
 				case "account": break;
 				case "account_notifications": break;
 				case "account_privacy": break;
 				case "account_advanced": break;
+				case "account_billing": break;
 				default: {
 					/** @type {never} */
-					let never_part=split_parts[1]; never_part;
+					let never_part=cur_part; never_part;
 					this.on_new_page_url(data);
 				} break;
 			} break;

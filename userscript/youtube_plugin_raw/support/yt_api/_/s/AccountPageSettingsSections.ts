@@ -1,1 +1,1 @@
-export type AccountPageSettingsSections="notifications"|"privacy"|"advanced";
+export type AccountPageSettingsSections="notifications"|"privacy"|"advanced"|"billing";
