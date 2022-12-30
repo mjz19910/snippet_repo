@@ -2002,26 +2002,6 @@ class FilterHandlers {
 		if(this._handle_t===null) this._handle_t=new HandleTypes;
 		return this._handle_t;
 	}
-	/**
-	 * @arg {string} path
-	 * @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data
-	 */
-	on_page_type_browse_response(path,data) {
-		path;
-		this.handle_t.BrowseResponseContent(data);
-	}
-	/**
-	 * @param {string} path
-	 * @param {import("./support/yt_api/_/b/BrowseResponse.js").BrowseResponse} data
-	 */
-	on_page_type_browse(path,data) {
-		this.handle_t.BrowseResponseContent(data.response);
-		this.handle_t.endpoint(path,data.endpoint);
-		let ok=Object.keys(data);
-		if(has_keys(ok,"page,endpoint,response,url")) return;
-		console.log("[log_page_type_browse]",ok.join(","),path,data);
-		debugger;
-	}
 	/** 
 	 * @template {string} X
 	 * @template {string} U
@@ -2483,7 +2463,7 @@ class FilterHandlers {
 		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type);
 		this.handle_any_data(`page_type_${page_type}`,data);
 		switch(data.page) {
-			case "browse": this.on_page_type_browse(page_type,data); break;
+			case "browse": this.handle_t.BrowseResponse(data); break;
 			case "playlist": this.on_page_type_playlist(data); break;
 			case "settings": this.on_page_type_settings(data); break;
 			case "shorts": this.on_page_type_shorts(data); break;
@@ -4972,23 +4952,21 @@ class HandleTypes {
 		console.log(box.type,ok,[fk,first],box.value);
 	}
 	/**
-	 * @param {string} path
 	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
 	 */
-	endpoint(path,endpoint) {
+	endpoint(endpoint) {
 		console.log("ctp",endpoint.clickTrackingParams);
-		this.browseEndpoint(path,endpoint.browseEndpoint);
+		this.browseEndpoint(endpoint.browseEndpoint);
 		switch(endpoint.commandMetadata.webCommandMetadata.webPageType) {
 			case "WEB_PAGE_TYPE_BROWSE": break;
 			default: debugger;
 		};
 	}
 	/**
-	 * @param {string} path
 	 * @param {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint
 	 */
-	browseEndpoint(path,endpoint) {
-		console.log("bid",path,endpoint.browseId);
+	browseEndpoint(endpoint) {
+		console.log("bid",endpoint.browseId);
 	}
 	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
 	endscreenElementRenderer(renderer) {
@@ -5001,6 +4979,17 @@ class HandleTypes {
 		if(has_keys(ok_3,"thumbnailOverlays")) return;
 		if(has_keys(ok_3,"icon,callToAction,dismiss,hovercardButton,isSubscribe")) return;
 		console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
+		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/BrowseResponse.js").BrowseResponse} data
+	 */
+	BrowseResponse(data) {
+		this.BrowseResponseContent(data.response);
+		this.endpoint(data.endpoint);
+		let ok=Object.keys(data);
+		if(has_keys(ok,"page,endpoint,response,url")) return;
+		console.log("[browse_response_top]",ok.join(","),data);
 		debugger;
 	}
 }
