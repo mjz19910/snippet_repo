@@ -2270,12 +2270,11 @@ function eq_keys(src,target) {
 	return true;
 }
 /**
- * @arg {string[]} keys
- * @arg {string[]} to_remove
+ * @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]}
  */
 function filter_out_keys(keys,to_remove) {
-	to_remove=to_remove.slice();
-	/** @type {string[]} */
+	to_remove=as_cast(to_remove.slice());
+	/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
 	let ok_e=[];
 	for(let i=0;i<keys.length;i++) {
 		if(to_remove.includes(keys[i])) {
@@ -2283,7 +2282,7 @@ function filter_out_keys(keys,to_remove) {
 			to_remove.splice(rm_i,1);
 			continue;
 		}
-		ok_e.push(keys[i]);
+		ok_e.push(as_cast(keys[i]));
 	}
 	if(to_remove.length>0) {
 		console.log("did not remove all target keys",keys,"missing",to_remove);
@@ -3722,7 +3721,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
 	adsControlFlowOpportunityReceivedCommand(command) {
-		let ok=filter_out_keys(get_keys_of(command),["opportunityType","isInitialLoad","enablePacfLoggingWeb"]);
+		let ok=filter_out_keys(get_keys_of(command),split_string("opportunityType,isInitialLoad,enablePacfLoggingWeb",","));
 		if("adSlotAndLayoutMetadata" in command) {
 			for(let item of command.adSlotAndLayoutMetadata) {
 				this.adLayoutMetadata(item.adLayoutMetadata);
@@ -3968,7 +3967,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
 	multiPageMenuRenderer(renderer) {
 		this.header(renderer.header);
-		let ok=filter_out_keys(get_keys_of(renderer),"header,sections,trackingParams".split(","));
+		let ok=filter_out_keys(get_keys_of(renderer),split_string("header,sections,trackingParams",","));
 		if(eq_keys(ok,[])) return;
 		if(eq_keys(ok,["style"])) return;
 		debugger;
