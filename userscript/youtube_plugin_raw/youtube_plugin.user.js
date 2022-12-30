@@ -4370,9 +4370,11 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/i/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} obj
 	 */
 	accountLinkButtonRenderer(obj) {
-		this.providerKey(obj.providerKey);
-		this.ButtonRenderer(obj.unlinkedButton);
-		console.log(obj);
+		let {providerKey,unlinkedButton,...rest}=obj;
+		this.providerKey(providerKey);
+		this.ButtonRenderer(unlinkedButton);
+		if(eq_keys(get_keys_of(rest),[])) return;
+		console.log(rest);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/i/AccountLinkProviderKey.js").AccountLinkProviderKey} obj
