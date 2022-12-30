@@ -3871,14 +3871,26 @@ class HandleTypes extends BaseService {
 		console.log("renderer.size",renderer.size);
 		console.log("renderer.isDisabled",renderer.isDisabled);
 		console.log("renderer.trackingParams",renderer.trackingParams);
+		console.log("renderer.accessibilityData",renderer.accessibilityData);
 		if(renderer.style==="STYLE_DEFAULT") {
-			console.log("renderer.icon",renderer.icon);
-			console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
-			console.log("renderer.tooltip",renderer.tooltip);
-			console.log("renderer.accessibilityData",renderer.accessibilityData);
+			let {
+				style,size,isDisabled,trackingParams,accessibilityData,
+				icon,navigationEndpoint,tooltip,
+				...rest
+			}=renderer;
+			console.log("renderer.icon",icon);
+			console.log("renderer.navigationEndpoint",navigationEndpoint);
+			console.log("renderer.tooltip",tooltip);
+			console.log("renderer",rest);
 		} else {
-			renderer;
-			debugger;
+			let {
+				style,size,isDisabled,trackingParams,accessibilityData,
+				command,text,
+				...rest
+			}=renderer;
+			console.log("renderer.command",command);
+			console.log("renderer.text",text);
+			console.log("renderer",rest);
 		}
 		if(eq_keys(ok,["style","size","isDisabled","text","trackingParams","accessibilityData","command"])) return;
 		console.log(ok);
