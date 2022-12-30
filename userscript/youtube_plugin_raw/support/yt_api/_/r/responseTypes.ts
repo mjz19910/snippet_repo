@@ -14,7 +14,7 @@ import {get_transcript_t} from "../g/get_transcript_t";
 import {notification_record_interactions} from "../n/notification_record_interactions";
 import {account_account_menu_t} from "./account_account_menu_t";
 
-export type responseTypes=
+export type ResponseTypes=
 	account_account_menu_t|
 	att_get_t|
 	browse_t|

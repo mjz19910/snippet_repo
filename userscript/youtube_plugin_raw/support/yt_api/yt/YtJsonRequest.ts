@@ -1,4 +1,4 @@
 import {YtUrlBase} from "./YtUrlBase.js";
-import {responseTypes} from "../_/r/responseTypes";
+import {ResponseTypes} from "../_/r/ResponseTypes";
 
-export type YtJsonRequest=responseTypes&YtUrlBase;
+export type YtJsonRequest=ResponseTypes&YtUrlBase;

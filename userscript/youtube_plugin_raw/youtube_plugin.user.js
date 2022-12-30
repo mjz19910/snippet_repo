@@ -2122,7 +2122,7 @@ class FilterHandlers {
 		}
 		return {name: cur_part};
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/responseTypes.js").responseTypes} */
+	/** @arg {UrlTypes} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} */
 	get_res_data(url_type,json) {
 		/** @type {import("./support/make/Split.js").Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
@@ -2218,7 +2218,7 @@ class FilterHandlers {
 		}
 		throw new Error("Stop");
 	}
-	/** @typedef {import("./support/yt_api/_/r/responseTypes.js").responseTypes} responseTypes */
+	/** @typedef {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} responseTypes */
 	/** @arg {responseTypes} input @arg {string|URL|Request} request @arg {URL} parsed_url */
 	on_json_type(input,request,parsed_url) {
 		try {
@@ -2249,38 +2249,23 @@ class FilterHandlers {
 			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
 			return;
 		}
-		let {res,api_path}=this.on_handle_api_2(api_parts,debug,url_type,data,request,req_parse);
-		let handled=this.on_handle_api_3(res,api_path);
-		if(handled) return;
-		if("responseContext" in res.json) {
-			this.handle_t.responseContext(res.json.responseContext);
-		}
-	}
-	/**
-	 * @param {any[]} api_parts
-	 * @param {boolean} debug
-	 * @param {UrlTypes} url_type
-	 * @param {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data
-	 * @param {string | URL | Request} request
-	 * @param {URL} req_parse
-	 */
-	on_handle_api_2(api_parts,debug,url_type,data,request,req_parse) {
 		let api_path=api_parts.slice(2).join(".");
 		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
-		return {res,api_path};
+		let handled=this.on_handle_api_2(res);
+		if(handled) return;
+		if("responseContext" in res.json) {
+			this.handle_t.responseContext(res.json.responseContext);
+		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
-	 * @param {string} api_path
-	 */
-	on_handle_api_3(res,api_path) {
+	/** @param {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
+	on_handle_api_2(res) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
-			case "player": this.handle_t.WatchResponsePlayer(api_path,res.json); return true;
-			case "guide": this.on_guide(api_path,res.json); return true;
+			case "player": this.handle_t.WatchResponsePlayer(res.json); return true;
+			case "guide": this.on_guide(res.json); return true;
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
 			case "next": this.process_next_response(res.json); return true;
@@ -2382,10 +2367,9 @@ class FilterHandlers {
 		unseenCount: null,
 	};
 	/**
-	 * @param {string} _path
 	 * @param {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide
 	 */
-	on_guide(_path,guide) {
+	on_guide(guide) {
 		this.on_response_context("on_guide",guide.responseContext);
 		for(let item of guide.items) {
 			this.on_guide_item(item);
@@ -4468,23 +4452,22 @@ service_tracking;
 
 class HandleTypes {
 	/**
-	 * @param {string} path
 	 * @param {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response
 	 */
-	WatchResponsePlayer(path,response) {
+	WatchResponsePlayer(response) {
 		let data=response;
 		// "on_page_type_watch"
 		this.responseContext(data.responseContext);
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
-			if(yt_debug_enabled) console.log(path+".playerAds=",data.playerAds);
+			if(yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
 			data.playerAds=[];
 			/** @type {{old_store:typeof data['playerAds']}&typeof data['playerAds']} */
 			let with_old_store=as_cast(data.playerAds);
 			with_old_store.old_store=old_ads;
 		}
 		if(data.adPlacements) {
-			if(yt_debug_enabled) console.log(path+".adPlacements=",data.adPlacements);
+			if(yt_debug_enabled) console.log("WatchResponsePlayer.adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
 		if(data.endscreen) {
@@ -4916,7 +4899,7 @@ class HandleTypes {
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchResponse.js").WatchResponse} data */
 	WatchResponse(data) {
-		this.WatchResponsePlayer(data.page,data.playerResponse);
+		this.WatchResponsePlayer(data.playerResponse);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/p/PlaylistResponse.js").PlaylistResponse} data
