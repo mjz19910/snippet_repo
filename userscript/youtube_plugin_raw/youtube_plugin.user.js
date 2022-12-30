@@ -1264,7 +1264,7 @@ class YtIterateTarget {
 	appendContinuationItemsAction(state,action) {
 		debugger;
 		check_item_keys(state.path,"appendContinuationItemsAction",Object.keys(action));
-		if(state.t.handleAppendContinuationItemsAction(state.path,action)) return;
+		if(state.t.AppendContinuationItemsAction(state.path,action)) return;
 		state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action,"continuationItems");
 	}
 	/**
@@ -1273,7 +1273,7 @@ class YtIterateTarget {
 	 */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
-		if(state.handleAppendContinuationItemsAction(path,command)) return;
+		if(state.ReloadContinuationItemsCommandData(path,command)) return;
 		state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command,"continuationItems");
 	}
 	/**
@@ -1648,133 +1648,239 @@ class Base64Binary {
 
 const base64_dec=new Base64Binary();
 
-class HandlerBase {
-	decode_protobuf=function make() {
-		let bigint_val_32=new Uint32Array(2);
-		let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
-		class LongBits {
-			/**
-			 * @param {number} a
-			 * @param {number} b
-			 */
-			constructor(a,b) {
-				this.lo=a;
-				this.hi=b;
-			}
-			toBigInt() {
-				bigint_val_32[0]=this.lo;
-				bigint_val_32[1]=this.hi;
-				return bigint_buf[0];
-			}
-		}
+const decode_protobuf_obj=function make() {
+	let bigint_val_32=new Uint32Array(2);
+	let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
+	class LongBits {
 		/**
-		 * @param {Uint8Array} buf
-		 * @param {number} end
+		 * @param {number} a
+		 * @param {number} b
 		 */
-		function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
-			return (buf[end-4]
-				|buf[end-3]<<8
-				|buf[end-2]<<16
-				|buf[end-1]<<24)>>>0;
+		constructor(a,b) {
+			this.lo=a;
+			this.hi=b;
 		}
-		let value=4294967295;
-		return new class ProtobufDecoder {
-			MyReader=class MyReader {
-				/** @arg {Uint8Array} buf  */
-				constructor(buf) {
-					this.buf=buf;
-					this.pos=0;
-					this.len=buf.length;
-				}
-				uint32() {
-					value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
-					value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
-					value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
-					value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
-					value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
+		toBigInt() {
+			bigint_val_32[0]=this.lo;
+			bigint_val_32[1]=this.hi;
+			return bigint_buf[0];
+		}
+	}
+	/**
+	 * @param {Uint8Array} buf
+	 * @param {number} end
+	 */
+	function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
+		return (buf[end-4]
+			|buf[end-3]<<8
+			|buf[end-2]<<16
+			|buf[end-1]<<24)>>>0;
+	}
+	let value=4294967295;
+	return new class ProtobufDecoder {
+		MyReader=class MyReader {
+			/** @arg {Uint8Array} buf  */
+			constructor(buf) {
+				this.buf=buf;
+				this.pos=0;
+				this.len=buf.length;
+			}
+			uint32() {
+				value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
+				value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
+				value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
+				value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
+				value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
 
-					/* istanbul ignore if */
-					if((this.pos+=5)>this.len) {
-						this.pos=this.len;
-						throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
-					}
-					return value;
-				};
-				uint64() {
-					return this.readLongVarint().toBigInt();
+				/* istanbul ignore if */
+				if((this.pos+=5)>this.len) {
+					this.pos=this.len;
+					throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
 				}
-				readLongVarint() {
-					// tends to deopt with local vars for octet etc.
-					var bits=new LongBits(0,0);
-					var i=0;
-					if(this.len-this.pos>4) { // fast route (lo)
-						for(;i<4;++i) {
-							// 1st..4th
-							bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
-							if(this.buf[this.pos++]<128)
-								return bits;
-						}
-						// 5th
-						bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
-						bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+				return value;
+			};
+			uint64() {
+				return this.readLongVarint().toBigInt();
+			}
+			readLongVarint() {
+				// tends to deopt with local vars for octet etc.
+				var bits=new LongBits(0,0);
+				var i=0;
+				if(this.len-this.pos>4) { // fast route (lo)
+					for(;i<4;++i) {
+						// 1st..4th
+						bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
 						if(this.buf[this.pos++]<128)
 							return bits;
-						i=0;
-					} else {
-						for(;i<3;++i) {
-							/* istanbul ignore if */
-							if(this.pos>=this.len) throw new Error("indexOutOfRange");
-							// 1st..3th
-							bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
-							if(this.buf[this.pos++]<128)
-								return bits;
-						}
-						// 4th
-						bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+					}
+					// 5th
+					bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
+					bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+					if(this.buf[this.pos++]<128)
 						return bits;
+					i=0;
+				} else {
+					for(;i<3;++i) {
+						/* istanbul ignore if */
+						if(this.pos>=this.len) throw new Error("indexOutOfRange");
+						// 1st..3th
+						bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
+						if(this.buf[this.pos++]<128)
+							return bits;
 					}
-					if(this.len-this.pos>4) { // fast route (hi)
-						for(;i<5;++i) {
-							// 6th..10th
-							bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
-							if(this.buf[this.pos++]<128)
-								return bits;
-						}
-					} else {
-						for(;i<5;++i) {
-							/* istanbul ignore if */
-							if(this.pos>=this.len)
-								throw new Error("indexOutOfRange");
-							// 6th..10th
-							bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
-							if(this.buf[this.pos++]<128)
-								return bits;
-						}
+					// 4th
+					bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+					return bits;
+				}
+				if(this.len-this.pos>4) { // fast route (hi)
+					for(;i<5;++i) {
+						// 6th..10th
+						bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+						if(this.buf[this.pos++]<128)
+							return bits;
 					}
-					/* istanbul ignore next */
-					throw Error("invalid varint encoding");
+				} else {
+					for(;i<5;++i) {
+						/* istanbul ignore if */
+						if(this.pos>=this.len)
+							throw new Error("indexOutOfRange");
+						// 6th..10th
+						bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+						if(this.buf[this.pos++]<128)
+							return bits;
+					}
 				}
-				/**
-				 * @param {number} writeLength
-				 */
-				indexOutOfRange(writeLength) {
-					return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
-				}
-				fixed32() {
-					/* istanbul ignore if */
-					if(this.pos+4>this.len)
-						throw this.indexOutOfRange(4);
+				/* istanbul ignore next */
+				throw Error("invalid varint encoding");
+			}
+			/**
+			 * @param {number} writeLength
+			 */
+			indexOutOfRange(writeLength) {
+				return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
+			}
+			fixed32() {
+				/* istanbul ignore if */
+				if(this.pos+4>this.len)
+					throw this.indexOutOfRange(4);
 
-					return readFixed32_end(this.buf,this.pos+=4);
-				}
-				/** @returns {[number,number]} */
-				read_field_description() {
-					let cur_byte=this.uint32();
-					return [cur_byte&7,cur_byte>>>3];
-				}
-			};
+				return readFixed32_end(this.buf,this.pos+=4);
+			}
+			/** @returns {[number,number]} */
+			read_field_description() {
+				let cur_byte=this.uint32();
+				return [cur_byte&7,cur_byte>>>3];
+			}
 		};
-	}();
+	};
+}();
+
+
+/**
+ * @param {string} str
+ */
+function decode_protobuf(str) {
+	let buffer=base64_dec.decodeArrayBuffer(str);
+	/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
+	let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
+	let loop_count=0;
+	/** @type {[number,number,(number | bigint)[]][]} */
+	let data=[];
+	let mode="initial";
+	let mode_stack=[];
+	let reader=new decode_protobuf_obj.MyReader(buffer);
+	/** @type {[offset: number,length: number][]} */
+	let stack=[[0,reader.len]];
+	x: for(;loop_count<15;loop_count++) {
+		switch(mode) {
+			case "initial": break;
+			case "DateTime": break;
+		}
+		let [cur_off,cur_len]=non_null(stack.at(-1));
+		console.log('off',cur_len,cur_off);
+		if(reader.pos>=cur_off+cur_len) {
+			let mode_=mode_stack.pop();
+			if(!mode_) {
+				console.log("exit, mode stack empty and at end");
+				break x;
+			}
+			mode=mode_;
+			stack.pop();
+			continue x;
+		}
+		let cur_byte=reader.uint32();
+		let wireType=cur_byte&7;
+		let fieldId=cur_byte>>>3;
+		/** @type {(number|bigint)[]} */
+		let first_num=[];
+		console.log("field",fieldId,"type",wireType);
+		y: switch(wireType) {
+			case 0:
+				if(mode==="DateTime") {
+					switch(fieldId) {
+						case 1: {
+							let f_ty=expected_fields_date_time[0];
+							if(f_ty[1]!=="uint64") throw new Error();
+							first_num.push(reader.uint64());
+							console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+							break y;
+						}
+						default: {
+							console.log("unexpected field");
+							break x;
+						}
+					}
+				}
+				first_num.push(reader.uint32());
+				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+				break;
+			case 2: if(mode==="initial") {
+				mode_stack.push(mode);
+				let next_len=reader.uint32();
+				stack.push([reader.pos,next_len]);
+				mode="DateTime";
+				continue x;
+			} else {
+				console.log("mode 2 and not able to handle it");
+				break x;
+			}
+			case 3: break;
+			case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
+			case 5: first_num.push(reader.fixed32()); break;
+			default: break x;
+		}
+		data.push([fieldId,wireType,first_num]);
+	}
+	let [first,...rest]=data;
+	let [fieldId,wireType,[first_num,...first_left]]=first;
+	/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number]} */
+	function filter_rest(e) {
+		let [fieldId,wireType,[num,...first_left]]=e;
+		if(first_left.length>1) throw new Error("Not decoded");
+		return [fieldId,wireType,num];
+	}
+	return {
+		first_w: wireType,
+		first_f: fieldId,
+		first_num,
+		first_left,
+		rest: rest.map(filter_rest),
+	};
+}
+
+/**
+ * @param {string} str
+ */
+function decode_b64_proto_obj(str) {
+	return decode_protobuf(str);
+}
+/** @template T @arg {T|undefined} val @returns {T} */
+function non_null(val) {
+	if(val===void 0) throw new Error();
+	return val;
+}
+
+class HandlerBase {
 	/**
 	 * @param {string} path
 	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} endpoint
@@ -1836,47 +1942,6 @@ class HandlerBase {
 		if(eq_keys(ok,['sort','items','trackingParams','formattedTitle','handlerDatas'])) return;
 		console.log(desc.key,ok,[fk,first],desc.item);
 	}
-	/**
-	 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
-	 */
-	multiPageMenuRenderer(renderer) {
-		this.header(renderer.header);
-		let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
-		if(eq_keys(ok,[])) return;
-		if(eq_keys(ok,['style'])) return;
-		debugger;
-	}
-	/**
-	 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
-	 */
-	header(header) {
-		this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
-		let ok=Object.keys(header);
-		ok;
-	}
-	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
-	simpleMenuHeaderRenderer(renderer) {
-		for(let button of renderer.buttons) {
-			this.buttonRenderer(button.buttonRenderer);
-		}
-	}
-	/**
-	 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
-	 */
-	buttonRenderer(renderer) {
-		let ok=Object.keys(renderer);
-		console.log("renderer.style",renderer.style);
-		console.log("renderer.size",renderer.size);
-		console.log("renderer.isDisabled",renderer.isDisabled);
-		console.log("renderer.icon",renderer.icon);
-		console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
-		console.log("renderer.tooltip",renderer.tooltip);
-		console.log("renderer.trackingParams",renderer.trackingParams);
-		console.log("renderer.accessibilityData",renderer.accessibilityData);
-		if(eq_keys(ok,['style','size','isDisabled','icon','navigationEndpoint','tooltip','trackingParams','accessibilityData'])) return;
-		console.log(ok);
-		debugger;
-	}
 }
 
 class FilterHandlers {
@@ -1926,10 +1991,40 @@ class FilterHandlers {
 	}
 	run_mc=false;
 	/**
+	 * @param {string} path
+	 * @param {import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} action
+	 */
+	ReloadContinuationItemsCommandData(path,action) {
+		if(is_watch_next_feed_target(action)) {
+			// /** @type {WatchNextContinuationAction} */
+			// let action_t=action;
+			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// return true;
+			return false;
+		}
+		if(is_comments_section_next(action)) {
+			// /** @type {CommentsSectionContinuationAction} */
+			// let action_t=action;
+			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// return true;
+			return false;
+		}
+		if(is_what_to_watch_section(action)) {
+			/** @type {import("./support/yt_api/_/b/BrowseFeedAction.js").BrowseFeedAction} */
+			let action_t=action;
+			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// return true;
+			return false;
+		}
+		console.log("path",path,"continuation action",action);
+		debugger;
+		return false;
+	}
+	/**
 	 * @arg {string} path
 	 * @arg {AppendContinuationItemsAction} action
 	 */
-	handleAppendContinuationItemsAction(path,action) {
+	AppendContinuationItemsAction(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			// /** @type {WatchNextContinuationAction} */
 			// let action_t=action;
@@ -1960,7 +2055,8 @@ class FilterHandlers {
 	 * @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} data
 	 */
 	on_page_type_watch(path,data) {
-		this.on_response_context("on_page_type_watch",data.responseContext);
+		// "on_page_type_watch"
+		this.handle_t.responseContext(data.responseContext);
 		if(data.playerAds) {
 			let old_ads=data.playerAds;
 			if(this.filter_handler_debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
@@ -2299,7 +2395,7 @@ class FilterHandlers {
 		let handled=this.on_handle_api_3(res,api_path);
 		if(handled) return;
 		if("responseContext" in res.json) {
-			this.on_response_context("general_context",res.json.responseContext);
+			this.handle_t.responseContext(res.json.responseContext);
 		}
 	}
 	/**
@@ -2369,6 +2465,14 @@ class FilterHandlers {
 		console.log(json);
 	}
 	/**
+	 * @param {string} from
+	 * @param {GeneralContext} data
+	 */
+	on_response_context(from,data) {
+		from;
+		this.handle_t.responseContext(data);
+	}
+	/**
 	 * @param {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json
 	 */
 	process_next_response(json) {
@@ -2414,7 +2518,7 @@ class FilterHandlers {
 	 */
 	handle_popup(popup) {
 		if("multiPageMenuRenderer" in popup) {
-			this.handle.multiPageMenuRenderer(popup.multiPageMenuRenderer);
+			this.handle_t.multiPageMenuRenderer(popup.multiPageMenuRenderer);
 		} else {
 			debugger;
 		}
@@ -2504,33 +2608,6 @@ class FilterHandlers {
 		debugger;
 	}
 	/** @typedef { import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} GeneralContext */
-	/**
-	 * @arg {keyof FilterHandlers|"general_context"} _from
-	 * @arg {GeneralContext} context
-	 */
-	on_response_context(_from,context) {
-		let ok=Object.keys(context);
-		if(!(
-			eq_keys(ok,['serviceTrackingParams','mainAppWebResponseContext','webResponseContextExtensionData'])
-			||eq_keys(ok,['serviceTrackingParams','maxAgeSeconds','mainAppWebResponseContext','webResponseContextExtensionData'])
-			||false
-		)) debugger;
-		if("maxAgeSeconds" in context) {
-			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
-		}
-		let data_sync_id=context.mainAppWebResponseContext.datasyncId;
-		general_service_state.mainAppWebResponseContext??={
-			datasyncId: data_sync_id.split("|").map(e => e===""? null:e).map(e => {
-				if(e===null) return e;
-				return BigInt(e);
-			})
-		};
-		if(this.filter_handler_debug) console.log(general_service_state.mainAppWebResponseContext.datasyncId);
-		if(context.mainAppWebResponseContext.loggedOut) {
-			general_service_state.logged_in=false;
-		}
-		this.set_service_params(context.serviceTrackingParams);
-	}
 	/**
 	 * @param {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} service_params_list
 	 */
@@ -4590,7 +4667,14 @@ const general_service_state={
 	/** @type {"non_member"|null} */
 	premium_membership: null,
 };
-class TrackingServices {}
+class TrackingServices {
+	/**
+	 * @param {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params
+	 */
+	set_service_params(params) {
+		params;
+	}
+}
 const service_tracking=new TrackingServices;
 service_tracking;
 
@@ -4664,7 +4748,7 @@ class HandleTypes {
 			||eq_keys(ok,['serviceTrackingParams','maxAgeSeconds','mainAppWebResponseContext','webResponseContextExtensionData'])
 			||false
 		)) debugger;
-		if("maxAgeSeconds" in context) {
+		if(context.maxAgeSeconds!==void 0) {
 			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
 		}
 		let data_sync_id=context.mainAppWebResponseContext.datasyncId;
@@ -4674,11 +4758,11 @@ class HandleTypes {
 				return BigInt(e);
 			})
 		};
-		if(this.filter_handler_debug) console.log(this.general_service_state.mainAppWebResponseContext.datasyncId);
+		if(yt_debug_enabled) console.log(general_service_state.mainAppWebResponseContext.datasyncId);
 		if(context.mainAppWebResponseContext.loggedOut) {
 			general_service_state.logged_in=false;
 		}
-		this.set_service_params(context.serviceTrackingParams);
+		service_tracking.set_service_params(context.serviceTrackingParams);
 	}
 	/**
 	 * @param {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer
@@ -4761,109 +4845,6 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata
 	 */
 	adLayoutMetadata(metadata) {
-		let t=this;
-		/**
-		 * @param {string} str
-		 */
-		function decode_b64_proto_obj(str) {
-			return decode_protobuf(str);
-		}
-		/** @template T @arg {T|undefined} val @returns {T} */
-		function non_null(val) {
-			if(val===void 0) throw new Error();
-			return val;
-		}
-		/**
-		 * @param {string} str
-		 */
-		function decode_protobuf(str) {
-			let buffer=base64_dec.decodeArrayBuffer(str);
-			/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
-			let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
-			let loop_count=0;
-			/** @type {[number,number,(number | bigint)[]][]} */
-			let data=[];
-			let mode="initial";
-			let mode_stack=[];
-			let reader=new t.decode_protobuf.MyReader(buffer);
-			/** @type {[offset: number,length: number][]} */
-			let stack=[[0,reader.len]];
-			x: for(;loop_count<15;loop_count++) {
-				switch(mode) {
-					case "initial": break;
-					case "DateTime": break;
-				}
-				let [cur_off,cur_len]=non_null(stack.at(-1));
-				console.log('off',cur_len,cur_off);
-				if(reader.pos>=cur_off+cur_len) {
-					let mode_=mode_stack.pop();
-					if(!mode_) {
-						console.log("exit, mode stack empty and at end");
-						break x;
-					}
-					mode=mode_;
-					stack.pop();
-					continue x;
-				}
-				let cur_byte=reader.uint32();
-				let wireType=cur_byte&7;
-				let fieldId=cur_byte>>>3;
-				/** @type {(number|bigint)[]} */
-				let first_num=[];
-				console.log("field",fieldId,"type",wireType);
-				y: switch(wireType) {
-					case 0:
-						if(mode==="DateTime") {
-							switch(fieldId) {
-								case 1: {
-									let f_ty=expected_fields_date_time[0];
-									if(f_ty[1]!=="uint64") throw new Error();
-									first_num.push(reader.uint64());
-									console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
-									break y;
-								}
-								default: {
-									console.log("unexpected field");
-									break x;
-								}
-							}
-						}
-						first_num.push(reader.uint32());
-						console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
-						break;
-					case 2: if(mode==="initial") {
-						mode_stack.push(mode);
-						let next_len=reader.uint32();
-						stack.push([reader.pos,next_len]);
-						mode="DateTime";
-						continue x;
-					} else {
-						console.log("mode 2 and not able to handle it");
-						break x;
-					}
-					case 3: break;
-					case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
-					case 5: first_num.push(reader.fixed32()); break;
-					default: break x;
-				}
-				data.push([fieldId,wireType,first_num]);
-			}
-			let [first,...rest]=data;
-			let [fieldId,wireType,[first_num,...first_left]]=first;
-			/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number]} */
-			function filter_rest(e) {
-				let [fieldId,wireType,[num,...first_left]]=e;
-				if(first_left.length>1) throw new Error("Not decoded");
-				return [fieldId,wireType,num];
-			}
-			return {
-				first_w: wireType,
-				first_f: fieldId,
-				first_num,
-				first_left,
-				rest: rest.map(filter_rest),
-			};
-		}
 		for(let item of metadata) {
 			switch(item.layoutType) {
 				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
@@ -4937,6 +4918,47 @@ class HandleTypes {
 		let ok=Object.keys(data);
 		if(has_keys(ok,"responseContext,contents,header,trackingParams,topbar,onResponseReceivedActions,frameworkUpdates")) return;
 		console.log("[browse_page_context]",ok.join(","),data);
+		debugger;
+	}
+	/**
+	 * @param {import("./support/_/DefaultButtonRendererData.js").DefaultButtonRendererData} renderer
+	 */
+	buttonRenderer(renderer) {
+		let ok=Object.keys(renderer);
+		console.log("renderer.style",renderer.style);
+		console.log("renderer.size",renderer.size);
+		console.log("renderer.isDisabled",renderer.isDisabled);
+		console.log("renderer.icon",renderer.icon);
+		console.log("renderer.navigationEndpoint",renderer.navigationEndpoint);
+		console.log("renderer.tooltip",renderer.tooltip);
+		console.log("renderer.trackingParams",renderer.trackingParams);
+		console.log("renderer.accessibilityData",renderer.accessibilityData);
+		if(eq_keys(ok,['style','size','isDisabled','icon','navigationEndpoint','tooltip','trackingParams','accessibilityData'])) return;
+		console.log(ok);
+		debugger;
+	}
+	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
+	simpleMenuHeaderRenderer(renderer) {
+		for(let button of renderer.buttons) {
+			this.buttonRenderer(button.buttonRenderer);
+		}
+	}
+	/**
+	 * @param {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer<"Notifications">} header
+	 */
+	header(header) {
+		this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
+		let ok=Object.keys(header);
+		ok;
+	}
+	/**
+	 * @param {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData<"Notifications">} renderer
+	 */
+	multiPageMenuRenderer(renderer) {
+		this.header(renderer.header);
+		let ok=filter_out_keys(Object.keys(renderer),"header,sections,trackingParams".split(","));
+		if(eq_keys(ok,[])) return;
+		if(eq_keys(ok,['style'])) return;
 		debugger;
 	}
 }
