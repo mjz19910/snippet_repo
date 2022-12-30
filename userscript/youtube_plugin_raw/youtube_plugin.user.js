@@ -2265,7 +2265,7 @@ function eq_keys(src,target) {
  * @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]}
  */
 function filter_out_keys(keys,to_remove) {
-	to_remove=as_cast(to_remove.slice());
+	to_remove=cast_as(to_remove.slice());
 	/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
 	let ok_e=[];
 	for(let i=0;i<keys.length;i++) {
@@ -2274,11 +2274,7 @@ function filter_out_keys(keys,to_remove) {
 			to_remove.splice(rm_i,1);
 			continue;
 		}
-		ok_e.push(as_cast(keys[i]));
-	}
-	if(to_remove.length>0) {
-		console.log("did not remove all target keys",keys,"missing",to_remove);
-		debugger;
+		ok_e.push(cast_as(keys[i]));
 	}
 	return ok_e;
 }
@@ -3142,8 +3138,8 @@ function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }
 
-/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/make/Split.js").Split<X,S>} */
-function split_string(x,s) {
+/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/make/Split.js").Split<X,string extends S?",":S>} */
+function split_string(x,s=cast_as(",")) {
 	let r=x.split(s);
 	return cast_as(r);
 }
@@ -4181,7 +4177,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data */
 	BrowsePageResponse(data) {
-		let ok=cast_as(filter_out_keys(get_keys_of(data),"page,endpoint,response,url".split(",")));
+		let ok=cast_as(filter_out_keys(get_keys_of(data),split_string("page,endpoint,response,url")));
 		switch(ok[0]) {
 			case "graftedVes": break;
 		}
@@ -4474,7 +4470,9 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer */
 	settingsOptionsRenderer(renderer) {
 		let data=renderer.settingsOptionsRenderer;
-		if(get_keys_of(data).length!==2) {
+		let k=filter_out_keys(get_keys_of(data),split_string("title,options,hidden,id"));
+		if(k.length>0) {
+			console.log(k);
 			debugger;
 		}
 		if(data.options) this.options(data.options);

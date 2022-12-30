@@ -1,11 +1,5 @@
 // cspell:disable-next
 const u="/youtubei/v1/att/get?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8&prettyPrint=false";
-/** @template U @template {U} T @arg {U} e @returns {T} */
-function as_cast(e) {
-	/** @type {any} */
-	let x=e;
-	return x;
-}
 if(u[0]==="/") {
 	/** @type {any} */
 	const b=u;
@@ -17,6 +11,12 @@ if(u[0]==="/") {
 		const a=x.split("?");
 		/** @type {import("../../../make/Split.js").Split<T,"?">} */
 		const fs=a;
+		/** @template U @template {U} T @arg {U} e @returns {T} */
+		function as_cast(e) {
+			/** @type {any} */
+			let x=e;
+			return x;
+		}
 		return as_cast({
 			whole_url: x,
 			pathname: fs[0],
