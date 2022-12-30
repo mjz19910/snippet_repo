@@ -4362,7 +4362,14 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data
 	 */
 	SettingsResponseContent(data) {
+		this.TwoColumnBrowseResultsRenderer(data.contents);
 		console.log(data);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents
+	 */
+	TwoColumnBrowseResultsRenderer(contents) {
+		this.twoColumnBrowseResultsRenderer(contents);
 	}
 }
 
