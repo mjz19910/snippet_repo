@@ -1,4 +1,4 @@
-import {GeneralContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "../g/GeneralContext.js";
 import {CaptionsRenderer} from "../c/CaptionsRenderer";
 import {EndscreenRenderer} from "../e/EndscreenRenderer";
 import {PlayerAdItem} from "../p/PlayerAdItem.js";
@@ -6,7 +6,7 @@ import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
 import {PaidContentOverlay} from "../p/PaidContentOverlay.js";
 
 export type WatchResponsePlayer={
-	responseContext: GeneralContext;
+	responseContext: ResponseContext;
 	playabilityStatus: {};
 	streamingData: {};
 	playerAds: PlayerAdItem[];

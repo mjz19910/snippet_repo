@@ -1,4 +1,4 @@
 import {CompactVideoRendererH} from "../c/CompactVideoRendererH.js";
-import {ContinuationItemRendererH} from "../c/ContinuationItemRendererH.js";
+import {ContinuationItemRenderer} from "../c/ContinuationItemRenderer.js";
 
-export type WatchNextItem=CompactVideoRendererH|ContinuationItemRendererH;
+export type WatchNextItem=CompactVideoRendererH|ContinuationItemRenderer;

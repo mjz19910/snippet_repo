@@ -1,4 +1,4 @@
-import {notification_get_notification_menu_t} from "../../../_/notification_get_notification_menu_t.js";
+import {GetNotificationMenuBox} from "../../../_/GetNotificationMenuBox";
 import {att_get_t} from "../../yt/att_get_t.js";
 import {getDatasyncIdsEndpoint_t} from "../../yt/getDatasyncIdsEndpoint_t";
 import {guide_t} from "../../yt/guide_t.js";
@@ -24,7 +24,7 @@ export type ResponseTypes=
 	guide_t|
 	live_chat_get_live_chat_replay_t|
 	next_t|
-	notification_get_notification_menu_t|
+	GetNotificationMenuBox|
 	notification_get_unseen_count_t|
 	notification_record_interactions|
 	player_t|

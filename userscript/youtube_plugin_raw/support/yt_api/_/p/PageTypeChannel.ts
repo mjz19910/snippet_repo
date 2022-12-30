@@ -1,10 +1,9 @@
-import {ChannelEndpoint} from "../c/ChannelEndpoint";
-import {ChannelResponse} from "../c/ChannelResponse";
+import {ChannelPageResponse} from "../c/ChannelPageResponse";
 
 export type PageTypeChannel={
 	pageType: "channel";
-	endpoint: ChannelEndpoint;
-	response: ChannelResponse;
+	endpoint: {};
+	response: ChannelPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

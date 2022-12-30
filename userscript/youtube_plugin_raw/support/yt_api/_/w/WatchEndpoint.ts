@@ -1,8 +1,9 @@
+import {CommandMetadata} from "../b/CommandMetadata.js";
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
-import {WatchCommandMetadata} from "./WatchCommandMetadata";
-import {WatchEndpointData} from "./WatchEndpointData.1";
+import {WatchEndpointData} from "./WatchEndpointData";
 
 export interface WatchEndpoint extends ClickTrackingParams {
-  commandMetadata: WatchCommandMetadata;
+  commandMetadata: CommandMetadata;
   watchEndpoint: WatchEndpointData;
+  clickTrackingParams: string;
 }

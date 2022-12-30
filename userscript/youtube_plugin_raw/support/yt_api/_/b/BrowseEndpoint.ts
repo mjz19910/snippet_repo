@@ -1,8 +1,8 @@
-import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
-import {BrowseCommandMetadata} from "./BrowseCommandMetadata";
+import {CommandMetadata} from "./CommandMetadata";
 import {BrowseEndpointData} from "./BrowseEndpointData";
 
-export interface BrowseEndpoint extends ClickTrackingParams {
-	commandMetadata: BrowseCommandMetadata;
+export type BrowseEndpoint={
+	commandMetadata: CommandMetadata;
 	browseEndpoint: BrowseEndpointData;
-}
+	clickTrackingParams: string;
+};

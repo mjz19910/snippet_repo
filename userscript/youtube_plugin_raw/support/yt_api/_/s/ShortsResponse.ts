@@ -1,16 +1,11 @@
-import {ShortsEndpoint} from "./ShortsEndpoint";
-import {ShortsResponsePlayer} from "./ShortsResponsePlayer";
-import {ShortsResponseContent as ShortsResponseContent} from "./ShortsResponseContent";
+import {EngagementPanelItem} from "../e/EngagementPanelItem";
+
 
 export type ShortsResponse={
-	page: "shorts";
-	endpoint: ShortsEndpoint;
-	response: ShortsResponseContent;
-	playerResponse: ShortsResponsePlayer;
-	reelWatchSequenceResponse: {
-		responseContext: {};
-		entries: {}[];
-		trackingParams: string;
-	};
-	url: `/shorts/${string}`;
+	responseContext: {};
+	overlay: {};
+	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
+	trackingParams: string;
+	desktopTopbar: {};
+	engagementPanels: EngagementPanelItem[];
 };

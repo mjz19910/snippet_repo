@@ -1,10 +1,10 @@
-import {SettingsResponse} from "../s/SettingsResponse";
+import {SettingsPageResponse} from "../s/SettingsPageResponse";
 import {SettingsEndpoint} from "./SettingsEndpoint";
 
 export type PageTypeSettings={
 	pageType: "settings";
 	endpoint: SettingsEndpoint;
-	response: SettingsResponse;
+	response: SettingsPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

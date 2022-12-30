@@ -1,4 +1,4 @@
-import {GeneralContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "../g/GeneralContext.js";
 import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer.js";
 import {DesktopTopbarRenderer} from "./DesktopTopbarRenderer";
 import {EntityBatchUpdate} from "./EntityBatchUpdate";
@@ -11,7 +11,7 @@ export type StateTagItem={
 };
 
 export type BrowseResponseContent={
-	responseContext: GeneralContext;
+	responseContext: ResponseContext;
 	contents?: TwoColumnBrowseResultsRenderer;
 	header: FeedTabbedHeaderRenderer;
 	topbar?: DesktopTopbarRenderer;

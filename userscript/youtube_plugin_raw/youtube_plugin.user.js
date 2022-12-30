@@ -806,7 +806,7 @@ function fetch_inject(user_request,request_init) {
 fetch_inject.__proxy_target__=window.fetch;
 
 /**
- * @arg {[()=>JsonDataResponseType, object, []]} apply_args
+ * @arg {[()=>DataResponsePageType, object, []]} apply_args
  */
 function do_proxy_call_getInitialData(apply_args) {
 	return yt_handlers.on_initial_data(apply_args);
@@ -1971,19 +1971,19 @@ class FilterHandlers {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
 	}
-	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
+	/** @typedef {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} DataResponsePageType */
 	/**
-	 * @arg {[()=>JsonDataResponseType, object, []]} apply_args
+	 * @arg {[()=>DataResponsePageType, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
-		/** @type {JsonDataResponseType} */
+		/** @type {DataResponsePageType} */
 		let ret=Reflect.apply(...apply_args);
 		if(ret.response) {
 			if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 			try {
 				page_type_iter(ret.page);
 				this.handle_any_data(`page_type_${ret.page}`,ret);
-				handle_types.JsonDataResponseType(ret);
+				handle_types.DataResponsePageType(ret);
 				let page_type=window.ytPageType;
 				switch(page_type) {
 					case void 0: return;
@@ -2617,8 +2617,6 @@ function page_type_iter(pageType) {
 /** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 function on_page_type_changed(detail) {
 	handle_types.YTNavigateFinishEventDetail(detail);
-	handle_types.response(detail.response);
-	handle_types.endpoint(detail.endpoint);
 	if(typeof detail.pageType!=="string") debugger;
 	if(typeof detail.fromHistory!=="boolean") debugger;
 	if(typeof detail.navigationDoneMs!=="number") debugger;
@@ -3657,7 +3655,7 @@ class HandleTypes {
 			}
 		}
 	}
-	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").GeneralContext} context */
+	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} context */
 	responseContext(context) {
 		let ok=Object.keys(context);
 		if(!(
@@ -3978,7 +3976,10 @@ class HandleTypes {
 			this.browseEndpoint(endpoint.browseEndpoint);
 		} else if("reelWatchEndpoint" in endpoint) {
 			this.reelWatchEndpoint(endpoint.reelWatchEndpoint);
+		} else if("watchEndpoint" in endpoint) {
+			this.watchEndpoint(endpoint.watchEndpoint);
 		} else {
+			endpoint;
 			debugger;
 		}
 		if("commandMetadata" in endpoint) {
@@ -3986,7 +3987,13 @@ class HandleTypes {
 		}
 	}
 	/**
-	 * @param {import("./support/yt_api/_/p/JsonCommandMetadata.js").JsonCommandMetadata} data
+	 * @param {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint
+	 */
+	watchEndpoint(endpoint) {
+		console.log(endpoint);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data
 	 */
 	commandMetadata(data) {
 		switch(data.webCommandMetadata.webPageType) {
@@ -3995,6 +4002,7 @@ class HandleTypes {
 			case "WEB_PAGE_TYPE_PLAYLIST": break;
 			case "WEB_PAGE_TYPE_SHORTS": break;
 			case "WEB_PAGE_TYPE_WATCH": break;
+			case "WEB_PAGE_TYPE_SETTINGS": break;
 			default: debugger;
 		};
 
@@ -4019,9 +4027,9 @@ class HandleTypes {
 		debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/BrowseResponse.js").BrowseResponse} data
+	 * @param {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data
 	 */
-	BrowseResponse(data) {
+	BrowsePageResponse(data) {
 		this.BrowseResponseContent(data.response);
 		this.endpoint(data.endpoint);
 		let ok=Object.keys(data);
@@ -4029,46 +4037,46 @@ class HandleTypes {
 		console.log("[browse_response_top]",ok.join(","),data);
 		debugger;
 	}
-	/** @param {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
-	JsonDataResponseType(data) {
+	/** @param {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} data */
+	DataResponsePageType(data) {
 		const debug=false;
 		let page_type=data.page;
 		debug&&console.log("[handle_page_type] with page_type and response_type",page_type);
 		switch(data.page) {
-			case "browse": this.BrowseResponse(data); break;
-			case "playlist": this.PlaylistResponse(data); break;
-			case "settings": this.SettingsResponse(data); break;
-			case "shorts": this.ShortsResponse(data); break;
-			case "watch": this.WatchResponse(data); break;
-			case "channel": this.ChannelResponse(data); break;
+			case "browse": this.BrowsePageResponse(data); break;
+			case "playlist": this.PlaylistPageResponse(data); break;
+			case "settings": debugger; this.SettingsPageResponse(data); break;
+			case "shorts": this.ShortsPageResponse(data); break;
+			case "watch": this.WatchPageResponse(data); break;
+			case "channel": this.ChannelPageResponse(data); break;
 			default: console.log("handle_page_type",page_type); debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/w/WatchResponse.js").WatchResponse} data */
-	WatchResponse(data) {
+	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} data */
+	WatchPageResponse(data) {
 		this.WatchResponsePlayer(data.playerResponse);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/p/PlaylistResponse.js").PlaylistResponse} data
+	 * @param {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data
 	 */
-	PlaylistResponse(data) {
+	PlaylistPageResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		console.log(data.url);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/SettingsResponse.js").SettingsResponse} data
+	 * @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
 	 */
-	SettingsResponse(data) {
+	SettingsPageResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		console.log(data.url);
 		data; debugger;
 	}
 	/**
-	 * @param {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} data
+	 * @param {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data
 	 */
-	ShortsResponse(data) {
+	ShortsPageResponse(data) {
 		this.endpoint(data.endpoint);
 		console.assert(data.page==="shorts");
 		this.playerResponse(data.playerResponse);
@@ -4077,15 +4085,15 @@ class HandleTypes {
 		console.log("[shorts_url]",data.url);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} response
+	 * @param {import("./support/yt_api/_/j/JsonDataResponseType").JsonDataResponseType} response
 	 */
 	response(response) {
 		console.log(response);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/c/ChannelResponse.js").ChannelResponse} data
+	 * @param {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} data
 	 */
-	ChannelResponse(data) {
+	ChannelPageResponse(data) {
 		console.log(data.endpoint);
 		console.log(data.response);
 		let up=split_string(data.url,"/");
@@ -4148,7 +4156,7 @@ class HandleTypes {
 		console.log(data);
 	}
 	/**
-	 * @param {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").GeneralContext }} data
+	 * @param {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data
 	 */
 	withGeneralContext(data) {
 		this.responseContext(data.responseContext);
@@ -4241,7 +4249,7 @@ class HandleTypes {
 		console.log(data);
 	}
 	/**
-	 * @param {import("./support/yt_api/_/r/ReelWatchEndpoint.js").ReelWatchEndpoint} data
+	 * @param {import("./support/yt_api/_/r/ReelWatchEndpointData.js").ReelWatchEndpointData} data
 	 */
 	reelWatchEndpoint(data) {
 		console.log(data);
@@ -4260,7 +4268,17 @@ class HandleTypes {
 	}
 	/** @param {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
 	YTNavigateFinishEventDetail(detail) {
-		detail;
+		switch(detail.pageType) {
+			case "browse": 
+			this.BrowsePageResponse(detail.response);
+			this.endpoint(detail.endpoint);
+			break;
+			case "channel": {
+				this.ChannelPageResponse(detail.response);
+				console.log(detail.endpoint);
+				// this.endpoint(detail.endpoint);
+			} break;
+		}
 	}
 }
 

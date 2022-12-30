@@ -1,8 +1,8 @@
-import {BrowseResponse} from "../b/BrowseResponse";
-import {ChannelResponse} from "../c/ChannelResponse";
-import {PlaylistResponse} from "../p/PlaylistResponse.js";
-import {SettingsResponse} from "../s/SettingsResponse";
+import {BrowseResponseContent} from "../b/BrowseResponseContent.js";
+import {ChannelResponse} from "../c/ChannelResponse.js";
+import {PageResponseContent} from "../p/PageResponseContent";
+import {SettingsResponseContent} from "../s/SettingsResponseContent.js";
 import {ShortsResponse} from "../s/ShortsResponse.js";
-import {WatchResponse} from "../w/WatchResponse";
+import {WatchResponseContent} from "../w/WatchResponseContent.js";
 
-export type JsonDataResponseType=ChannelResponse|WatchResponse|BrowseResponse|ShortsResponse|SettingsResponse|PlaylistResponse;
+export type JsonDataResponseType=ShortsResponse|ChannelResponse|WatchResponseContent|BrowseResponseContent|SettingsResponseContent|PageResponseContent;

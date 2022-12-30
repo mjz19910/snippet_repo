@@ -1,5 +1,5 @@
 
-export type ReelWatchEndpoint={
+export type ReelWatchEndpointData={
 	overlay: {};
 	params: string;
 	playerParams: string;

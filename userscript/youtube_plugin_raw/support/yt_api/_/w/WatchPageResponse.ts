@@ -2,7 +2,7 @@ import {WatchEndpoint} from "./WatchEndpoint.js";
 import {WatchResponseContent} from "./WatchResponseContent";
 import {WatchResponsePlayer} from "./WatchResponsePlayer";
 
-export type WatchResponse={
+export type WatchPageResponse={
 	page: "watch";
 	endpoint: WatchEndpoint;
 	response: WatchResponseContent;

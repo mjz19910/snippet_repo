@@ -1,4 +1,5 @@
-import {FrameworkUpdates} from "../../_abc/f/FrameworkUpdates";
+import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
+import {ResponseContext} from "../g/GeneralContext.js";
 
 export type WatchResponseContent={
 	currentVideoEndpoint: {};
@@ -7,7 +8,7 @@ export type WatchResponseContent={
 	onResponseReceivedEndpoints: {}[];
 	pageVisualEffects: {}[];
 	playerOverlays: {};
-	responseContext: {};
+	responseContext: ResponseContext;
 	topbar: {};
 	trackingParams: string;
 };

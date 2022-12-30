@@ -1,6 +1,6 @@
-import {GeneralContext} from "../_/g/GeneralContext.js";
+import {ResponseContext} from "../_/g/GeneralContext.js";
 
 export type YtSuccessResponse={
-	responseContext: GeneralContext;
+	responseContext: ResponseContext;
 	success: boolean;
 };
