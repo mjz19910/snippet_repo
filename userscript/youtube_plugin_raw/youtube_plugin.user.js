@@ -2305,8 +2305,7 @@ class FilterHandlers {
 	on_handle_api_4(res,api_path) {
 		switch(res.url_type) {
 			case "att.get": this.on_att_get(res.json); return true;
-			case "player":
-				this.handle_t.WatchResponsePlayer(api_path,res.json); return true;
+			case "player": this.handle_t.WatchResponsePlayer(api_path,res.json); return true;
 			case "guide": this.on_guide(api_path,res.json); return true;
 			case "notification.get_unseen_count": this.notification.unseenCount=res.json.unseenCount; return false;
 			case "notification.get_notification_menu": this.on_notification_data(res); return true;
