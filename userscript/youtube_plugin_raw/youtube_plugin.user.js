@@ -315,6 +315,9 @@ function on_ytd_app(element) {
 	});
 }
 
+/** @type {Element|null} */
+let main_page_app=null;
+
 /** @arg {CustomEventType} event */
 async function async_plugin_init(event) {
 	let plugin_state={};
@@ -345,8 +348,12 @@ async function async_plugin_init(event) {
 			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body&&document.readyState==="complete") {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg");
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
-				console.log(interesting_body_elements);
-				debugger;
+				if(interesting_body_elements.length===1) {
+					main_page_app=interesting_body_elements[0];
+				} else {
+					console.log(interesting_body_elements);
+					debugger;
+				}
 				plugin_state.show_interesting_elements=false;
 			}
 			// BEGIN(ytd-app): obj.dispatchEvent({type: "find-ytd-app",detail,port});
@@ -355,6 +362,9 @@ async function async_plugin_init(event) {
 				if(found) {
 					found_element_count++;
 				}
+			}
+			if(main_page_app&&!ytd_app) {
+				break;
 			}
 			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
 			// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
@@ -3759,8 +3769,11 @@ class HistoryStateManager extends EventTarget {
 	}
 	constructor() {
 		super();
-		let t=this;
 		this.cur_state=this.getHistoryState();
+		/** @arg {boolean} v */
+		function x(v){return v}
+		if(x(true)) return;
+		let t=this;
 		this.do_state_update(this.cur_state);
 		if(this.debug) console.log("initial history state",this.cur_state);
 		/**
@@ -3797,12 +3810,12 @@ class HistoryStateManager extends EventTarget {
 					let new_my_data=remove_yt_data(new_state);
 					let old_my_data=remove_yt_data(t.cur_state);
 					if(new_my_data&&old_my_data&&"filter_gain" in new_my_data&&"filter_gain" in old_my_data&&Object.keys(new_my_data).length===1) {
-						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_one] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
+						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_one_1] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
 					} else {
-						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
+						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_1] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
 					}
 				} else {
-					if(is_yt_debug_enabled) console.log('pushState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
+					if(is_yt_debug_enabled) console.log('pushState: h_over_beg_state_1: []',remove_yt_data(new_state),t.cur_state);
 				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
@@ -3816,7 +3829,7 @@ class HistoryStateManager extends EventTarget {
 							}
 						}
 					}
-					if(is_yt_debug_enabled) console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
+					if(is_yt_debug_enabled) console.log("replaceState: h_over_after_rep_1: []",remove_yt_data(argArray[0]),argArray.length);
 				}
 				t.do_state_update(new_state);
 				return Reflect.apply(target,thisArg,argArray);
@@ -3827,10 +3840,10 @@ class HistoryStateManager extends EventTarget {
 			apply(target,thisArg,argArray) {
 				let new_state=argArray[0];
 				if(t.cur_state) {
-					console.log('replaceState: h_over_new_state cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
-					console.log("replaceState: h_over_old_state: []",remove_yt_data(t.cur_state));
+					if(is_yt_debug_enabled) console.log('replaceState: h_over_new_state_2 cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
+					if(is_yt_debug_enabled) console.log("replaceState: h_over_old_state_2: []",remove_yt_data(t.cur_state));
 				} else {
-					console.log('replaceState: h_over_beg_state: []',remove_yt_data(new_state),t.cur_state);
+					if(is_yt_debug_enabled) console.log('replaceState: h_over_beg_state_2: []',remove_yt_data(new_state),t.cur_state);
 				}
 				x: {
 					if(t.is_replacing_custom_state) break x;
@@ -3844,7 +3857,7 @@ class HistoryStateManager extends EventTarget {
 							}
 						}
 					}
-					console.log("replaceState: h_over_after_rep: []",remove_yt_data(argArray[0]),argArray.length);
+					if(is_yt_debug_enabled) console.log("replaceState: h_over_after_rep_2: []",remove_yt_data(argArray[0]),argArray.length);
 				}
 				t.do_state_update(new_state);
 				return Reflect.apply(target,thisArg,argArray);
