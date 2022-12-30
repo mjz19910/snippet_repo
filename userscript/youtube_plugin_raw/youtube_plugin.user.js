@@ -5,7 +5,7 @@
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
-// @match	https://*.youtube.com/*
+// @match	https://www.youtube.com/*
 // @grant	none
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
@@ -76,18 +76,6 @@ function cast2_c(value,_constructor_type) {
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X} */
 function any_c(value,_constructor_type) {
 	if(cast2_c(value,_constructor_type)) {
-		return value;
-	}
-	throw new Error("Failed to cast");
-}
-/** @type {<T, U>(value: T|U, copy:U)=>value is U} */
-function cast2_o(value,copy) {
-	void value,copy;
-	return true;
-}
-/** @type {<T, U>(v:T|U, _copy:U)=>U} */
-function any_o(value,copy) {
-	if(cast2_o(value,copy)) {
 		return value;
 	}
 	throw new Error("Failed to cast");
@@ -532,13 +520,9 @@ class VolumeRange {
 	setGain(gain) {
 		this.updateRangeElement(gain);
 		this.gain_controller.setGain(gain);
-		if(!this.use_cache) return;
-		history_state_manager.setCacheValue("filter_gain",gain);
 	}
-	/** @private */
 	getGain() {
-		if(!this.use_cache) return null;
-		return history_state_manager.getCacheValue("filter_gain");
+		return this.gain_controller.getGain();
 	}
 	/** @private */
 	calculateGain() {
@@ -623,7 +607,6 @@ class VolumeRange {
 				this.setGain(range_value/this.max);
 			};
 			this.range_element.onkeydown=(event) => this.onKeyDown(event);
-			history_state_manager.addEventListener("update",this.onStateChange.bind(this));
 			this.range_element.min=""+this.min;
 			this.range_element.max=""+this.overdrive;
 			let new_gain=this.calculateGain();
@@ -652,280 +635,6 @@ class YtdAppElement extends HTMLElement {
 	hasNavigated=false;
 }
 
-class Seen {
-	static debug=false;
-	/**
-	 * @type {any[]}
-	 */
-	static all_seen_objs=[];
-	static all_seen_map=new Map;
-	static seen_gen_counter=1;
-	static seen_uid_counter=0;
-	/**
-	 * @arg {null} value
-	 */
-	static as_any(value) {
-		let weak_info,ret;
-		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
-		const index_key=instance_index+"@"+instance_gen;
-		if(this.debug) console.log("any",index_key,value);
-		value=null;
-		if(this.all_seen_map.has(index_key)) {
-			weak_info=this.all_seen_map.get(index_key);
-			ret=weak_info.deref();
-			if(ret!==null) {
-				return ret;
-			}
-		}
-		let obj_id=this.seen_uid_counter;
-		this.seen_uid_counter++;
-		ret={
-			type: "any",
-			any_key: index_key,
-			obj_id,
-		};
-		weak_info=new WeakRef(ret);
-		ref_obj.info=weak_info;
-		this.all_seen_map.set(index_key,weak_info);
-		return ret;
-	}
-	/**
-	 * @arg {Function|null} value
-	 */
-	static as_callable(value) {
-		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
-		value=null;
-		const index_key=instance_index+"@"+instance_gen;
-		if(this.all_seen_map.has(index_key)) {
-			let seen_info=this.all_seen_map.get(index_key);
-			if(this.debug) console.log("get callable",index_key,seen_info.deref());
-			if(seen_info.deref()!==null) return seen_info.deref();
-		}
-		let obj_id=this.seen_uid_counter;
-		this.seen_uid_counter++;
-		let ret={
-			type: "callable",
-			fn_index_key: index_key,
-			obj_id
-		};
-		let weak_info=new WeakRef(ret);
-		ref_obj.info=weak_info;
-		this.all_seen_map.set(index_key,weak_info);
-		return ret;
-	}
-	/**
-	 * @arg {null} value
-	 */
-	static as_constructor(value) {
-		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
-		value=null;
-		const index_key=instance_index+"@"+instance_gen;
-		if(this.all_seen_map.has(index_key)) {
-			let seen_info=this.all_seen_map.get(index_key);
-			if(this.debug) console.log("get constructor",index_key,seen_info.deref());
-			if(seen_info.deref()!==null) return seen_info.deref();
-		}
-		let obj_id=this.seen_uid_counter;
-		this.seen_uid_counter++;
-		let ret={
-			type: "constructor",
-			constructor_key: index_key,
-			obj_id
-		};
-		let weak_info=new WeakRef(ret);
-		ref_obj.info=weak_info;
-		this.all_seen_map.set(index_key,weak_info);
-		return ret;
-	}
-	/**
-	 * @arg {{} | null} instance
-	 * @arg {{ constructor_tag: any; prototype_tag: any; }} prototype_info
-	 */
-	static as_instance(instance,prototype_info) {
-		const [instance_index,instance_gen,ref_obj]=this.see_value(instance);
-		instance=null;
-		const index_key=instance_index+"@"+instance_gen;
-		if(this.all_seen_map.has(index_key)) {
-			let seen_info=this.all_seen_map.get(index_key);
-			if(this.debug) console.log("get instance",index_key,seen_info.deref());
-			if(seen_info.deref()!==null) return seen_info.deref();
-		}
-		let obj_id=this.seen_uid_counter;
-		this.seen_uid_counter++;
-		let ret={
-			type: "instance",
-			index_key,
-			prototype_info,
-			obj_id
-		};
-		let weak_info=new WeakRef(ret);
-		ref_obj.info=weak_info;
-		this.all_seen_map.set(index_key,weak_info);
-		return ret;
-	}
-	/**
-	 * @arg {any} value
-	 */
-	static see_value(value) {
-		let index=this.seen_index_of(value);
-		iz: if(index>-1) {
-			let ref_obj_seen=this.all_seen_objs[index];
-			let ref_obj=ref_obj_seen.ref.deref();
-			if(ref_obj===null) break iz;
-			return [index,this.seen_gen_counter,ref_obj];
-		}
-		let ref_obj={
-			ref: new WeakRef(value)
-		};
-		index=this.all_seen_objs.push(ref_obj)-1;
-		return [index,this.seen_gen_counter,ref_obj];
-	}
-	/**
-	 * @arg {any} value
-	 */
-	static seen_index_of(value) {
-		let arr=this.all_seen_objs;
-		let index=-1;
-		let remove_cnt=0;
-		for(let i=0;i<arr.length;i++) {
-			let obj=arr[i];
-			let ref=obj.ref;
-			let item=ref.deref();
-			if(item===null) {
-				remove_cnt++;
-				continue;
-			}
-			if(item===value) {
-				index=i;
-				break;
-			}
-		}
-		if(remove_cnt>arr.length/4) {
-			let new_arr=[];
-			this.seen_gen_counter++;
-			for(let i=0;i<arr.length;i++) {
-				let obj=arr[i];
-				let ref=obj.ref;
-				let item=ref.deref();
-				if(item===null) continue;
-				new_arr.push(obj);
-			}
-			this.all_seen_objs=new_arr;
-			index=this.seen_index_of(value);
-		}
-		return index;
-	}
-}
-inject_api_yt.Seen=Seen;
-
-const realHTMLElement=HTMLElement;
-
-/**
- * @type {<T extends any[]>(value:T)=>typeof value}
- */
-function clone_array(arr) {
-	arr=any_o([],arr);
-	for(let [v,i] of arr.entries()) {
-		arr[i]=deep_clone(v);
-	}
-	return arr;
-}
-/**
- * @type {<T extends Map<any, any>>(map:T)=>typeof map}
- */
-function clone_map(map) {
-	let arr=Array.from(map);
-	let cloned_arr=arr.map(/**@return {[any, any]}*/(map_entry) => [map_entry[0],deep_clone(map_entry[1])]);
-	return any_o(new Map(cloned_arr),map);
-}
-/**@arg {{}} obj*/
-function clone_object(obj) {
-	let obj_entries=Object.entries(obj);
-	let cloned_entries=obj_entries.map((object_entry) => [object_entry[0],deep_clone(object_entry[1])]);
-	let clone=Object.fromEntries(cloned_entries);
-	return clone;
-}
-class WithES5Shimmed {
-	/**@type {boolean|undefined} */
-	es5Shimmed=true;
-}
-/**
- * @type {<T>(value:T)=>typeof value}
- */
-function deep_clone(value) {
-	if(typeof value==="object") {
-		if(value===null) {
-			// null is a primitive
-			return value;
-		}
-		if(value instanceof Array) {
-			return clone_array(value);
-		}
-		if(value instanceof Map) {
-			/**@type {typeof value}*/
-			let copy=clone_map(value);
-			return copy;
-		}
-		if(Object.getPrototypeOf(value)===null) {
-			let obj=clone_object(value);
-			Object.setPrototypeOf(obj,null);
-			return obj;
-		}
-		if(Object.getPrototypeOf(value).constructor===Object) {
-			return clone_object(value);
-		}
-		let create=Object.getPrototypeOf(value).constructor;
-		let proto=Object.getPrototypeOf(value);
-		let str=Object.getPrototypeOf(value).constructor.name;
-		let seen_obj=Seen.as_instance(value,{
-			constructor_tag: Seen.as_constructor(create),
-			prototype_tag: Seen.as_any(proto)
-		});
-		if(create===HTMLVideoElement) {
-			// don't recurse into exact dom elements
-			return seen_obj;
-		}
-		// was the real one shimmed already
-		if(any_c(realHTMLElement,WithES5Shimmed).es5Shimmed) {
-			// the constructor is still non-shimmed
-			if(create===realHTMLElement.prototype.constructor) {
-				return seen_obj;
-			}
-		}
-		if(create===realHTMLElement) {
-			return seen_obj;
-		}
-		if(str in window) {
-			console.assert(false);
-		}
-		console.log("proto",str,create.toString().slice(0,32),create.toString().length);
-		return seen_obj;
-	}
-	if(typeof value==="boolean") {
-		// booleans are primitive
-		return value;
-	}
-	if(typeof value==="string") {
-		// strings are constant
-		return value;
-	}
-	if(typeof value==="number") {
-		// numbers are constant
-		return value;
-	}
-	if(typeof value==="function") {
-		if(value.name in window) {
-			console.assert(false);
-		}
-		return Seen.as_callable(value);
-	}
-	if(typeof value==="undefined") {
-		console.assert(false);
-		return value;
-	}
-	console.log("unk",typeof value,value);
-	return value;
-}
 /**@arg {string|URL} url */
 function to_url(url) {
 	if(url instanceof URL) {
@@ -1451,18 +1160,6 @@ function check_item_keys(real_path,path,keys) {
 
 class HandleRendererContentItemArray {
 	debug=false;
-	/*
-	// [B].join("\n");
-	// [Mma].join("");
-	// Ck("EXPERIMENT_FLAGS",{})["desktop_use_new_history_manager"];
-	// function get_Ak(){return ytcfg.data_};
-	// function use_Ck(key,fb) {
-	//   let Ak=get_Ak();
-	//   return a in Ak ?Ak[a]:b;
-	// }
-	// Ck;
-	// Jn().resolve(Cv).currentEndpoint;u5().browserHistory;
-	*/
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRenderer.js").RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let debug_flag_value=false;
@@ -2359,13 +2056,9 @@ function setup_prototype_modify() {
 			return Reflect.apply(target,thisArg,args);
 		}
 	});
-	/** @param {boolean} v */
-	function x(v){return v}
-	if(x(false)) {
-		original_fetch=fetch;
-		window.fetch=fetch_inject;
-		fetch_inject.__proxy_target__=original_fetch;
-	}
+	original_fetch=fetch;
+	window.fetch=fetch_inject;
+	fetch_inject.__proxy_target__=original_fetch;
 	let navigator_sendBeacon=navigator.sendBeacon;
 	navigator.sendBeacon=function(...args) {
 		if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
@@ -2374,27 +2067,6 @@ function setup_prototype_modify() {
 		console.log("send_beacon",args[0]);
 		return navigator_sendBeacon.call(this,...args);
 	};
-	let OriginalImage=Image;
-	Image=new Proxy(Image,{
-		construct(...proxy_args) {
-			let c_cls=proxy_args[0];
-			let tc=class extends c_cls {
-				/** @override */
-				get src() {
-					return super.src;
-				}
-				/** @override */
-				set src(_src) {
-					if(_src.indexOf("/api/stats/qoe?")>-1) return;
-					super.src=_src;
-				}
-			};
-			let c_args=proxy_args[1];
-			let ret=new tc(...c_args);
-			return ret;
-		}
-	});
-	Image=OriginalImage;
 }
 setup_prototype_modify();
 let plr_raw_replace_debug=true;
@@ -3681,6 +3353,9 @@ class AudioGainController {
 	setGain(gain) {
 		this.gain_node.gain.value=gain;
 	}
+	getGain() {
+		return this.gain_node.gain.value;
+	}
 	/**
 	 * @arg {HTMLMediaElement[]} media_node_list
 	 */
@@ -3738,188 +3413,12 @@ Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<a
 	let res=res_any;
 	return res;
 };
-/** @typedef {import("./support/history/HistoryStateManagerI.js").HistoryStateManagerI} HistoryStateManagerI */
-/** @typedef {import("./support/history/HistoryStateManagerEventMap.js").HistoryStateManagerEventMap} HistoryStateManagerEventMap */
-
-/** @implements {HistoryStateManagerI} */
-class HistoryStateManager extends EventTarget {
-	debug=false;
-	/** @type {{}|null} */
-	cur_state;
-	tmp_map=new Map;
-	/** @type {string[]} */
-	tmp_keys=[];
-	is_replacing_custom_state=false;
-	/**
-	 * @override
-	 * @template {string} K
-	 * @arg {K} type
-	 * @arg {K extends "update"?((this: HistoryStateManagerI, ev: HistoryStateManagerEventMap[K]) => any):EventListenerOrEventListenerObject} listener
-	 * @arg {boolean | AddEventListenerOptions} [options]
-	 * */
-	addEventListener(type,listener,options) {
-		super.addEventListener(type,listener,options);
-	}
-	/**
-	 * @arg {{}|null} new_state
-	 */
-	do_state_update(new_state) {
-		this.cur_state=new_state;
-		this.dispatchEvent(new CustomEvent("update",{detail: this.cur_state}));
-	}
-	constructor() {
-		super();
-		this.cur_state=this.getHistoryState();
-		/** @arg {boolean} v */
-		function x(v){return v}
-		if(x(true)) return;
-		let t=this;
-		this.do_state_update(this.cur_state);
-		if(this.debug) console.log("initial history state",this.cur_state);
-		/**
-		 * @arg {{}|null} obj
-		 */
-		function remove_yt_data(obj) {
-			if(obj===null) return null;
-			return Object.__ia_excludeKeysS(obj,"entryTime,endpoint,savedComponentState");
-		}
-		window.addEventListener("popstate",(event) => {
-			/** @type {{[x: string]: {}}|null} */
-			let prev_state=this.cur_state;
-			/** @type {{[x: string]: {}}|null} */
-			let new_state=this.historyStateFromEvent(event);
-			let clone=structuredClone(new_state);
-			if(prev_state&&new_state) {
-				for(let i=0;i<t.tmp_keys.length;i++) {
-					let cur_key=t.tmp_keys[i];
-					if(prev_state[cur_key]!==void 0&&new_state[cur_key]===void 0) {
-						new_state[cur_key]=prev_state[cur_key];
-					}
-				}
-			}
-			this.do_state_update(new_state);
-			this.is_replacing_custom_state=true;
-			history.replaceState(new_state,"");
-			this.is_replacing_custom_state=false;
-			console.log(clone,this.cur_state,prev_state);
-		});
-		History.prototype.pushState=new Proxy(History.prototype.pushState,{
-			apply(target,thisArg,argArray) {
-				let new_state=argArray[0];
-				if(t.cur_state) {
-					let new_my_data=remove_yt_data(new_state);
-					let old_my_data=remove_yt_data(t.cur_state);
-					if(new_my_data&&old_my_data&&"filter_gain" in new_my_data&&"filter_gain" in old_my_data&&Object.keys(new_my_data).length===1) {
-						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_one_1] old_cs=%o new_cs=%o:[]',t.is_replacing_custom_state,old_my_data.filter_gain,new_my_data.filter_gain);
-					} else {
-						if(is_yt_debug_enabled) console.log('pushState: [h_over_new_state_1] old_obj=%o new_obj=%o:[]',t.is_replacing_custom_state,old_my_data,new_my_data);
-					}
-				} else {
-					if(is_yt_debug_enabled) console.log('pushState: h_over_beg_state_1: []',remove_yt_data(new_state),t.cur_state);
-				}
-				x: {
-					if(t.is_replacing_custom_state) break x;
-					/** @type {{[x: string]: {}}|null} */
-					let prev_state=t.cur_state;
-					if(prev_state) {
-						for(let i=0;i<t.tmp_keys.length;i++) {
-							let cur_key=t.tmp_keys[i];
-							if(prev_state[cur_key]!==void 0) {
-								new_state[cur_key]=prev_state[cur_key];
-							}
-						}
-					}
-					if(is_yt_debug_enabled) console.log("replaceState: h_over_after_rep_1: []",remove_yt_data(argArray[0]),argArray.length);
-				}
-				t.do_state_update(new_state);
-				return Reflect.apply(target,thisArg,argArray);
-			}
-		});
-		History.prototype.replaceState=new Proxy(History.prototype.replaceState,{
-			/** @arg {History['replaceState']} target @arg {History} thisArg @arg {[data: any, unused: string, url?: string | URL | null]} argArray */
-			apply(target,thisArg,argArray) {
-				let new_state=argArray[0];
-				if(t.cur_state) {
-					if(is_yt_debug_enabled) console.log('replaceState: h_over_new_state_2 cs=%o:[]',t.is_replacing_custom_state,remove_yt_data(new_state));
-					if(is_yt_debug_enabled) console.log("replaceState: h_over_old_state_2: []",remove_yt_data(t.cur_state));
-				} else {
-					if(is_yt_debug_enabled) console.log('replaceState: h_over_beg_state_2: []',remove_yt_data(new_state),t.cur_state);
-				}
-				x: {
-					if(t.is_replacing_custom_state) break x;
-					/** @type {{[x: string]: {}}|null} */
-					let prev_state=t.cur_state;
-					if(prev_state) {
-						for(let i=0;i<t.tmp_keys.length;i++) {
-							let cur_key=t.tmp_keys[i];
-							if(prev_state[cur_key]!==void 0) {
-								new_state[cur_key]=prev_state[cur_key];
-							}
-						}
-					}
-					if(is_yt_debug_enabled) console.log("replaceState: h_over_after_rep_2: []",remove_yt_data(argArray[0]),argArray.length);
-				}
-				t.do_state_update(new_state);
-				return Reflect.apply(target,thisArg,argArray);
-			}
-		});
-		let xx=Object.getOwnPropertyDescriptor(History.prototype,"state");
-		if(!xx) throw 1;
-		if(!xx.get) throw 1;
-		let hist_state_getter=xx.get;
-		Object.defineProperty(History.prototype,"state",{
-			"configurable": true,
-			"enumerable": true,
-			"get": function() {
-				return hist_state_getter.call(this);
-			}
-		});
-	}
-	/** @arg {PopStateEvent} event */
-	historyStateFromEvent(event) {
-		/** @type {{}|null} */
-		let v=event.state;
-		return v;
-	}
-	/** @template {string} T @arg {T} key */
-	getCacheValue(key) {
-		if(typeof this.cur_state=="object"&&this.cur_state!==null) {
-			if(key in this.cur_state) {
-				let {[key]: value}=this.cur_state;
-				return value;
-			}
-		}
-		return null;
-	}
-	/** @returns {{}|null} */
-	getHistoryState() {
-		return history.state;
-	}
-	/** @arg {string} key  @arg {{}} value */
-	setCacheValue(key,value) {
-		this.is_replacing_custom_state=true;
-		x: if(typeof this.cur_state==="object"&&this.cur_state!==null) {
-			/** @type {{[U in typeof key]?: {}}} */
-			let state=this.cur_state;
-			if(!this.tmp_keys.includes(key)) this.tmp_keys.push(key);
-			if(key in state&&state[key]===value) {
-				break x;
-			}
-			history.replaceState({...state,[key]: value},"");
-		} else {
-			history.replaceState({[key]: value},"");
-		}
-		this.is_replacing_custom_state=false;
-	}
-}
-let history_state_manager=new HistoryStateManager();
 
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 
 function main() {
 	start_message_channel_loop();
 }
-main();
 
 let __res_ia_eks=Object.__ia_excludeKeysS({a: 4,test: 3,b: 1},"test,a,b");
 /** @type {{}} */
@@ -5063,3 +4562,5 @@ class HandleTypes {
 		console.log(data);
 	}
 }
+
+main();

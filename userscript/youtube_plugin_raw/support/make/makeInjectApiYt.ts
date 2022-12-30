@@ -4,7 +4,6 @@ declare global {
 	interface InjectApiYt {
 		saved_maps?: Map<string,Map<string,{}>>;
 		saved_data?: SavedData;
-		Seen?: {};
 		port_state?: {};
 		plugin_overlay_element?: {};
 		AudioGainController?: {};
