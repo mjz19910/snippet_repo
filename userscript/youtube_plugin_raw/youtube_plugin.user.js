@@ -2933,7 +2933,7 @@ class ServiceResolver {
 }
 async function main() {
 	await Promise.resolve();
-	/** @type {ServiceResolver<import("./Services.js").Services,{}>} */
+	/** @type {ServiceResolver<import("./Services.js").Services,{log_tracking_params:boolean;log_click_tracking_params:boolean;}>} */
 	const service_resolver=new ServiceResolver;
 	const csi_service=new CsiService(service_resolver);
 	const e_catcher_service=new ECatcherService(service_resolver);
@@ -3589,6 +3589,7 @@ if(typeof exports==="object") {
 	exports.GuidedHelpService=GuidedHelpService;
 	exports.TrackingServices=TrackingServices;
 	exports.FilterHandlers=FilterHandlers;
+	exports.ServiceResolver=ServiceResolver;
 }
 
 class HandleTypes {

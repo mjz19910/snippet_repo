@@ -1,4 +1,11 @@
-import {CsiService, ECatcherService, FilterHandlers, GFeedbackService, GuidedHelpService, TrackingServices} from "./youtube_plugin.user.js";
+import {
+	CsiService,
+	ECatcherService,
+	FilterHandlers,
+	GFeedbackService,
+	GuidedHelpService,
+	TrackingServices
+} from "./youtube_plugin.user.js";
 
 export type Services={
 	csi_service: CsiService;
