@@ -4592,7 +4592,32 @@ class GFeedbackService {
 	}
 }
 
-const g_feedback_service=new GFeedbackService
+const g_feedback_service=new GFeedbackService;
+
+class GuidedHelpService {
+	data={
+		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
+		context: null,
+	};
+	/**
+	 * @param {import("./support/yt_api/_/g/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params
+	 */
+	on_params(params) {
+		for(let param of params) {
+			switch(param.key) {
+				case "logged_in": {
+					if(param.value=='0') {general_service_state.logged_in=false; break;}
+					if(param.value=='1') {general_service_state.logged_in=true; break;}
+					debugger;
+				} break;
+				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.data.context=param.value; break;
+				default: console.log("new [param_key]",param); debugger;
+			}
+		}
+	}
+}
+
+const guided_help_service=new GuidedHelpService
 
 class TrackingServices {
 	/**
@@ -4607,35 +4632,15 @@ class TrackingServices {
 	on_e_catcher_service(service) {
 		e_catcher_service.on_params(service.params);
 	}
-	g_feedback_service={
-		/** @type {number[]|null} */
-		e: null,
-		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
-		context: null,
-	};
 	/**
 	 * @param {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service
 	 */
 	on_g_feedback_service(service) {
 		g_feedback_service.on_params(service.params);
 	}
-	guided_help_service={
-		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
-		context: null,
-	};
 	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
-		for(let param of service.params) {
-			switch(param.key) {
-				case "logged_in": {
-					if(param.value=='0') {general_service_state.logged_in=false; break;}
-					if(param.value=='1') {general_service_state.logged_in=true; break;}
-					debugger;
-				} break;
-				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.guided_help_service.context=param.value; break;
-				default: console.log("new [param_key]",param); debugger;
-			}
-		}
+		guided_help_service.on_params(service.params);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service
