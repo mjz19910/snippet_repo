@@ -3864,19 +3864,29 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
+	/**
+	 * @param {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data
+	 */
+	accessibilityData(data) {
+		if(eq_keys(get_keys_of(data),["label"])) return;
+		console.log(data);
+		debugger;
+	}
+	/** @param {import("./support/yt_api/_/a/Accessibility.js").Accessibility} data */
+	Accessibility(data) {
+		this.accessibilityData(data.accessibilityData);
+	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
-		console.log("renderer.style",renderer.style);
-		console.log("renderer.size",renderer.size);
-		console.log("renderer.isDisabled",renderer.isDisabled);
-		console.log("renderer.trackingParams",renderer.trackingParams);
-		console.log("renderer.accessibilityData",renderer.accessibilityData);
-		if(renderer.style==="STYLE_DEFAULT") {
-			let {
-				style,size,isDisabled,trackingParams,accessibilityData,
-				icon,navigationEndpoint,tooltip,
-				...rest
-			}=renderer;
+		let {size,isDisabled,trackingParams,accessibilityData,...rest_}=renderer;
+		this.trackingParams(trackingParams);
+		if(renderer.size!=="SIZE_DEFAULT") {
+			console.log("renderer.size",renderer.size);
+		}
+		if(typeof renderer.isDisabled!=='boolean') debugger;
+		this.Accessibility(renderer.accessibilityData);
+		if(rest_.style==="STYLE_DEFAULT") {
+			let {style,icon,navigationEndpoint,tooltip,...rest}=rest_;
 			console.log("renderer.icon",icon);
 			console.log("renderer.navigationEndpoint",navigationEndpoint);
 			console.log("renderer.tooltip",tooltip);
@@ -3884,17 +3894,22 @@ class HandleTypes extends BaseService {
 			console.log("renderer",rest);
 			debugger;
 		} else {
-			let {
-				style,size,isDisabled,trackingParams,accessibilityData,
-				command,text,
-				...rest
-			}=renderer;
+			let {style,command,text,...rest}=rest_;
+			if(command) {
+				this.command(command);
+			}
 			console.log("renderer.command",command);
 			console.log("renderer.text",text);
 			if(eq_keys(get_keys_of(rest),[])) return;
 			console.log("renderer",rest);
 			debugger;
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/c/ContinuationCommandH.js").ContinuationCommandH} obj
+	 */
+	command(obj) {
+		console.log(obj);
 	}
 	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData<"Notifications">} renderer */
 	simpleMenuHeaderRenderer(renderer) {

@@ -1,3 +1,3 @@
-export type AccessibilityData<T extends string>={
-	label: T;
+export type AccessibilityData={
+	label: string;
 };

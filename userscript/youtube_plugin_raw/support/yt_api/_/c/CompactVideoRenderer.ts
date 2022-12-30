@@ -7,11 +7,10 @@ import {TextRuns} from "../t/TextRuns.js";
 import {ThumbnailH} from "../t/ThumbnailH.js";
 import {ThumbnailOverlayItem} from "../t/ThumbnailOverlay.js";
 import {ThumbnailsList} from "../t/ThumbnailsList.js";
-import {TrackingParams} from "../t/TrackingParams.js";
 import {RichThumbnail} from "../../rich/RichThumbnail.js";
 
-export interface CompactVideoRenderer extends TrackingParams {
-	accessibility: Accessibility<string>;
+export interface CompactVideoRenderer {
+	accessibility: Accessibility;
 	badges?: MetadataBadgeRenderers[];
 	channelThumbnail: ThumbnailH;
 	lengthText: SimpleTextFixmeValueNeeded;

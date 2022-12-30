@@ -3,7 +3,7 @@ import {CommandMetadata} from "./CommandMetadata";
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
 
 
-export interface ClickCommand extends ClickTrackingParams {
+export interface ClickCommand {
 	commandMetadata: CommandMetadata;
 	urlEndpoint: UrlEndpoint<never>;
 };

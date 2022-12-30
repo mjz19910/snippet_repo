@@ -1,8 +1,8 @@
 import {CommandMetadata} from "./CommandMetadata";
 import {ContinuationCommand} from "./ContinuationCommand";
-import {ClickTrackingParams} from "./ClickTrackingParams.js";
 
-export interface ContinuationEndpoint  extends ClickTrackingParams {
+export interface ContinuationEndpoint  {
 	commandMetadata: CommandMetadata;
 	continuationCommand: ContinuationCommand;
+	clickTrackingParams: string;
 };
