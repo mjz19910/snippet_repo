@@ -2932,7 +2932,6 @@ class ServiceResolver {
 	}
 }
 async function main() {
-	on_yt_navigate_finish.push(log_page_type_change);
 	await Promise.resolve();
 	const service_resolver=new ServiceResolver;
 	const csi_service=new CsiService(service_resolver);
@@ -2958,6 +2957,7 @@ async function main() {
 		log_tracking_params,
 		log_click_tracking_params,
 	});
+	on_yt_navigate_finish.push(log_page_type_change);
 	
 	// modify global section
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
