@@ -334,7 +334,12 @@ async function async_plugin_init(event) {
 				plugin_state.polymer_loaded=true;
 			}
 			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body&&document.readyState==="complete") {
-				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg");
+				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => {
+					if(e.tagName==="LINK"&&e instanceof HTMLLinkElement) {
+						if(e.rel==="stylesheet") return false;
+					}
+					return e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg";
+				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
 				if(interesting_body_elements.length===1) {
 					main_page_app=interesting_body_elements[0];
