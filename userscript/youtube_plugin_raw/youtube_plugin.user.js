@@ -140,36 +140,7 @@ FakeIframeElementData.special_base=class {};
 var XG=function() {};
 Object.setPrototypeOf(XG.prototype,HTMLIFrameElement.prototype);
 // customElements.define('fake-iframe', FakeIframeElement);
-/** @type {Map<Node,Node>} */
-let real_element_map=new Map;
-const before_inject_appendChild=Node.prototype.appendChild;
-/** @arg {Node&{b_inject_appendChild: Node['appendChild']}} v */
-function add_inject_backup(v) {
-	return v;
-}
-add_inject_backup(cast_as(Node.prototype)).b_inject_appendChild=before_inject_appendChild;
-Node.prototype.appendChild=inject_appendChild;
-/** @this {Node} @template {Node} T @arg {T} node @returns {T} */
-function inject_appendChild(node) {
-	if(real_element_map.has(node)) {
-		/** @type {T} */
-		let res=cast_as(real_element_map.get(node));
-		if(!res) throw 1;
-		node=res;
-	}
-	return add_inject_backup(cast_as(this)).b_inject_appendChild(node);
-}
-Node.prototype.removeChild=new Proxy(Node.prototype.removeChild,{
-	apply(...args) {
-		let [t_param,thisArg,argArray]=args;
-		for(let idx in argArray) {
-			if(real_element_map.has(argArray[idx])) {
-				argArray[idx]=real_element_map.get(argArray[idx]);
-			}
-		}
-		return Reflect.apply(t_param,thisArg,argArray);
-	}
-});
+
 /**
  * @this {Document}
  * @arg {string} n_type
@@ -184,16 +155,7 @@ function overwrite_createElement(n_type,options) {
 		n_opts=options;
 	}
 	FakeIframeElementData.special_base=UU;
-	let api_ret=original_document_createElement.call(this,n_type,options);
-	let ret=new Proxy(api_ret,{
-		get(...args) {
-			return Reflect.get(args[0],args[1]);
-		},
-		set(...args) {
-			return Reflect.set(args[0],args[1],args[2]);
-		}
-	});
-	real_element_map.set(ret,api_ret);
+	let ret=original_document_createElement.call(this,n_type,options);
 	return ret;
 }
 
@@ -379,7 +341,7 @@ async function async_plugin_init(event) {
 				});
 				plugin_state.polymer_loaded=true;
 			}
-			if(plugin_state.polymer_loaded) {
+			if(plugin_state.polymer_loaded&&document.body) {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg");
 				interesting_body_elements;
 				debugger;
