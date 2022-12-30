@@ -68,6 +68,8 @@ let saved_data=new SavedData;
 inject_api_yt.saved_data=saved_data;
 
 const is_yt_debug_enabled=false;
+/** @template T @arg {T&{x:1}} _v */
+function assert_is_never(_v) {}
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
 	void value,_constructor_type;
@@ -3707,8 +3709,31 @@ class HandleTypes {
 		if(!has_keys(ok,"headerText,bodyText,pageTitle,headerIcon")) {
 			debugger;
 		}
-		if(data.headerText.runs[0].text!=="Control your download settings") {
-			debugger;
+		/** @template T @arg {{text: T}} _run @returns {T} */
+		function stringify_text_run(_run) {
+			return _run.text;
+		}
+		/** @template T @param {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text*/
+		function stringify_text_runs(text) {
+			if(text.runs) {
+				if(text.runs.length===1) {
+					return stringify_text_run(text.runs[0]);
+				} else {
+					// need to join the parts
+					debugger;
+					throw 1;
+				}
+			} else {
+				// simple text
+				debugger;
+				throw 1;
+			}
+		}
+		let header_text_str=stringify_text_runs(data.headerText);
+		switch(header_text_str) {
+			case "Control your download settings": break;
+			case "Expand your experience": break;
+			default: debugger;
 		}
 		console.log("PageIntroductionRendererData",data);
 	}
@@ -4121,9 +4146,9 @@ class HandleTypes {
 				case "account_privacy": break;
 				case "account_advanced": break;
 				case "account_billing": break;
+				case "account_sharing": break;
 				default: {
-					/** @type {never} */
-					let never_part=cur_part; never_part;
+					assert_is_never(cur_part);
 					this.on_new_page_url(data);
 				} break;
 			} break;

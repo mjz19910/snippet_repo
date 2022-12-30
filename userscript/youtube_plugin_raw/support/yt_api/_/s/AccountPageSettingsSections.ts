@@ -1,1 +1,6 @@
-export type AccountPageSettingsSections="notifications"|"privacy"|"advanced"|"billing";
+export type AccountPageSettingsSections=
+	"advanced"|
+	"billing"|
+	"notifications"|
+	"privacy"|
+	"sharing";
