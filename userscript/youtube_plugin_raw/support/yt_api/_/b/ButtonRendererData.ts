@@ -27,11 +27,19 @@ export type ButtonRendererData={
 	trackingParams: string;
 	accessibilityData: Accessibility;
 	command: GeneralCommand;
+}|{
+	style: "STYLE_SUGGESTIVE"
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	text: TextRuns|SimpleText;
+	navigationEndpoint: NavigationEndpoint;
+	trackingParams: string;
+	accessibilityData: Accessibility;
+	command: GeneralCommand;
 };
 
 export type OptButtonData={
 	icon?: {};
-	navigationEndpoint?: NavigationEndpoint;
 	tooltip?: {};
 	clickTrackingParams?: string;
 };

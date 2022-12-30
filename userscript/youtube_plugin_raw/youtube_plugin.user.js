@@ -3621,11 +3621,22 @@ class HandleTypes extends BaseService {
 		console.log(name,obj);
 		debugger;
 	}
-	/** @template T @arg {import("./support/yt_api/_/t/TextRunsSimple.js").TextRunsSimpleT<T>} text */
+	/** @arg {import("./support/yt_api/_/t/TextRuns.js").TextRuns} text */
 	on_text(text) {
 		if("runs" in text) {
+			/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
+			function run_extract_empty(run) {
+				if("navigationEndpoint" in run) {
+					let {text,navigationEndpoint,...rest}=run;
+					return rest;
+				} else {
+					let {text,...rest}=run;
+					return rest;
+				}
+			}
 			for(let run of text.runs) {
-				console.log(run);
+				let rest=run_extract_empty(run);
+				if(Object.keys(rest).length>0) console.log(rest);
 			}
 		} else {
 			// simple text
@@ -3638,7 +3649,10 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon
 	 */
 	Icon(icon) {
-		console.log(icon);
+		switch(icon.iconType) {
+			case "ACCOUNT_SHARING": break;
+			default: console.log("[new_icon]", icon);debugger;
+		}
 	}
 	/** @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
 	PageIntroductionRendererData(data) {
@@ -3861,33 +3875,50 @@ class HandleTypes extends BaseService {
 	serviceEndpoint(ep) {
 		console.log(ep);
 	}
+	/** @arg {{}} obj */
+	on_empty_obj(obj) {
+		if(eq_keys(get_keys_of(obj),[])) return;
+		console.log("[invalid_empty_obj] [%s] %o",get_keys_of(obj).join(),obj);
+		debugger;
+	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
 		let {size,isDisabled,text,trackingParams,...rest_}=renderer;
 		this.text(text);
-		if("serviceEndpoint" in rest_) this.serviceEndpoint(rest_.serviceEndpoint);
 		this.trackingParams(trackingParams);
+		let rest_2=null;
+		let rest_3=null;
+		if("serviceEndpoint" in rest_) {
+			let {serviceEndpoint,...rest}=rest_;
+			this.serviceEndpoint(rest_.serviceEndpoint);
+			rest_2=rest;
+		} else if("navigationEndpoint" in rest_) {
+			let {navigationEndpoint,...rest}=rest_;
+			this.navigationEndpoint(rest_.navigationEndpoint);
+			rest_3=rest;
+		} else {
+			rest_3=rest_;
+		}
 		if(renderer.size!=="SIZE_DEFAULT") {
 			console.log("renderer.size",renderer.size);
 		}
 		if(typeof renderer.isDisabled!=='boolean') debugger;
-		// if("accessibilityData" in renderer) this.Accessibility(renderer.accessibilityData);
-		if(rest_.style==="STYLE_DEFAULT") {
-			let {style,...rest}=rest_;
+		if(rest_2&&rest_2.style==="STYLE_DEFAULT") {
+			let {style,...rest}=rest_2;
+			this.on_empty_obj(rest);
 			// console.log("renderer.icon",icon);
 			// console.log("renderer.navigationEndpoint",navigationEndpoint);
 			// console.log("renderer.tooltip",tooltip);
-			if(eq_keys(get_keys_of(rest),[])) return;
-			console.log("[renderer] [%s] %o",get_keys_of(rest).join(),rest);
-			debugger;
+		} else if(rest_2) {
+			let {style,...rest}=rest_2;
+			this.on_empty_obj(rest);
+		} else if(rest_3) {
+			let {style,accessibilityData,command,...rest}=rest_3;
+			this.Accessibility(accessibilityData);
+			this.GeneralCommand(command);
+			this.on_empty_obj(rest);
 		} else {
-			let {style,...rest}=rest_;
-			this.trackingParams(trackingParams);
-			// this.GeneralCommand(command);
-			// if(navigationEndpoint) this.navigationEndpoint(navigationEndpoint);
-			if(eq_keys(get_keys_of(rest),[])) return;
-			console.log("[renderer] [%s] %o",get_keys_of(rest).join(),rest);
-			debugger;
+			this.on_empty_obj(renderer);
 		}
 	}
 	/**
