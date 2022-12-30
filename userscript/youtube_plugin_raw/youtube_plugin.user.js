@@ -4068,10 +4068,10 @@ class HandleTypes {
 	 * @param {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data
 	 */
 	SettingsPageResponse(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
+		this.endpoint(data.endpoint);
+		this.response(data.response);
 		console.log(data.url);
-		data; debugger;
+		debugger;
 	}
 	/**
 	 * @param {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data
