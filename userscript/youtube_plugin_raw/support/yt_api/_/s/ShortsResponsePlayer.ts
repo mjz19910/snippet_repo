@@ -26,7 +26,7 @@ export type ShortsResponsePlayer={
 		videoQualityPromoRenderer: {};
 	};
 	frameworkUpdates: FrameworkUpdates;
-	cacheMetadata: {
+	cacheMetadata?: {
 		isCacheHit: boolean;
 	};
 };
