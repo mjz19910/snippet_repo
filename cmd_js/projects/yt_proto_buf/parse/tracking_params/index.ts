@@ -137,7 +137,7 @@ export async function parse_types(): Promise<void> {
 		let reader=MyReader.create(new Uint8Array(token_buffer));
 		let ss=reader.uint32();
 		my_console.pad_log("fieldId:%o type:%o",ss&7, ss>>>3);
-		reader.uint64();
+		reader.fixed32();
 		reader.pos=0;
 		unk_type.decode(reader);
 		pad=prev_pad;

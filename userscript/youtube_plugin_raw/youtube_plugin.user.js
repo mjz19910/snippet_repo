@@ -1761,6 +1761,14 @@ class HandlerBase {
 					/* istanbul ignore next */
 					throw Error("invalid varint encoding");
 				}
+				fixed32() {
+					let f32=(this.buf[this.pos]
+						|this.buf[this.pos+1]<<8
+						|this.buf[this.pos+2]<<16
+						|this.buf[this.pos+3]<<24)>>>0;
+					this.pos+=4;
+					return f32;
+				}
 			};
 		};
 	}();
@@ -1841,6 +1849,7 @@ class HandlerBase {
 					}
 					case 3: break;
 					case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
+					case 5: break;
 					default: break x;
 				}
 				data.push([fieldId,wireType,first_num]);
