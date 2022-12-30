@@ -2261,10 +2261,7 @@ class FilterHandlers {
 	 * @param {string} api_path
 	 */
 	on_handle_api_3(res,api_path) {
-		let ret=this.on_handle_api_4(res,api_path);
-		if(ret!==null) return ret;
-		debugger;
-		return this.on_handle_api_5(res);
+		return this.on_handle_api_4(res,api_path);
 	};
 	/**
 	 * @param {any[]} api_parts
@@ -2282,22 +2279,6 @@ class FilterHandlers {
 		this.on_json_type(res,request,req_parse);
 		return {res,api_path};
 	}
-
-	/**
-	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
-	 */
-	on_handle_api_5(res) {
-		switch(res.url_type) {case "getDatasyncIdsEndpoint": return false;}
-		switch(res.url_type) {case "live_chat.get_live_chat_replay": return false;}
-		switch(res.url_type) {case "reel.reel_item_watch": return false;}
-		switch(res.url_type) {
-			case "reel.reel_watch_sequence": return false;
-			default:
-				console.log("missed api type",res);
-				throw new Error("FIXME");
-		}
-	}
-
 	/**
 	 * @param {import("./support/yt_api/_/r/responseTypes.js").responseTypes} res
 	 * @param {string} api_path
@@ -2312,7 +2293,9 @@ class FilterHandlers {
 			case "next": this.process_next_response(res.json); return true;
 			case "browse": this.handle_t.BrowseResponseContent(res.json); return true;
 			case "account.account_menu": this.on_account_menu(res.json); return true;
-			default: return null;
+			default:
+				console.log("missed api type",res);
+				throw new Error("FIXME");
 		}
 	}
 	/**
