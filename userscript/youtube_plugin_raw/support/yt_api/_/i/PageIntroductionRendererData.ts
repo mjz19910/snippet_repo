@@ -1,8 +1,8 @@
-import {TextRunsSimpleT} from "../t/TextRunsSimple.js";
+import {TextRunsSimple, TextRunsSimpleT} from "../t/TextRunsSimple.js";
 import {Icon} from "./Icon.js";
 
 export type PageIntroductionRendererData={
-	headerText: TextRunsSimpleT<"Expand your experience">;
+	headerText: TextRunsSimple;
 	headerIcon: Icon<"ACCOUNT_SHARING">;
 }|{
 	headerText: TextRunsSimpleT<"Control your download settings">;

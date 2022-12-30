@@ -3733,6 +3733,7 @@ class HandleTypes {
 		switch(header_text_str) {
 			case "Control your download settings": break;
 			case "Expand your experience": break;
+			case "Manage what you share on YouTube": break;
 			default: debugger;
 		}
 		console.log("PageIntroductionRendererData",data);
