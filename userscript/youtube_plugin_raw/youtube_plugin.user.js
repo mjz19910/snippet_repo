@@ -4138,11 +4138,40 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").DefaultButtonTypes} x */
 	DefaultButtonRenderer(x) {
-		x;
+		let {style,isDisabled,size,trackingParams,...y}=x;
+		if("icon" in y) {
+			let {accessibilityData,icon,...a}=y;
+			if("navigationEndpoint" in a) {
+				let {navigationEndpoint,tooltip,...x}=a;
+				this.empty_object(x);
+				return;
+			}
+			this.empty_object(a);
+			return;
+		}
+		let {serviceEndpoint,text,...a}=y;
+		this.YtEndpoint(serviceEndpoint);
+		this.YtTextType(text);
+		this.empty_object(a);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
 	SuggestiveButtonRenderer(x) {
-		x;
+		let {style,isDisabled,size,trackingParams,text,...y}=x;
+		this.YtTextType(text);
+		if("serviceEndpoint" in y) {
+			let {serviceEndpoint,...a}=y;
+			this.YtEndpoint(serviceEndpoint);
+			this.empty_object(a);
+			return;
+		}
+		let {accessibilityData,command,...a}=y;
+		if("navigationEndpoint" in a) {
+			let {navigationEndpoint,...x}=a;
+			this.YtEndpoint(navigationEndpoint);
+			this.empty_object(x);
+			return;
+		}
+		this.empty_object(a);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
 	NoStyleButtonTypes(x) {
@@ -4151,6 +4180,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
 		if(!("style" in renderer)) {
+			this.NoStyleButtonTypes(renderer);
 			return;
 		}
 		switch(renderer.style) {
