@@ -1379,6 +1379,7 @@ function decode_b64_proto_obj(str) {
 		let cur_byte=reader.uint32();
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
+		reader.first_num=[];
 		reader.skipEx(fieldId,wireType);
 		data.push([fieldId,wireType,reader.first_num]);
 	}
