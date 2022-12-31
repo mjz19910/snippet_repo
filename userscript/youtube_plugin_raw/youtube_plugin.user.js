@@ -3829,10 +3829,12 @@ class HandleTypes extends BaseService {
 	/** @template T @typedef {import("./support/yt_api/_/i/Icon.js").Icon<T>} Icon  */
 	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
-		switch(icon.iconType) {case "ACCOUNT_SETTINGS": return;}
+		switch(icon.iconType) {
+			case "SETTINGS": break;
+		}
 		/** @type {any} */
 		let any_icon=icon;
-		/** @type {Icon<Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>>} */
+		/** @type {Icon<"ACCOUNT_SETTINGS"|Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>>} */
 		let ict=any_icon;
 		switch(ict.iconType) {
 			case "ACCOUNT": debugger; return;
@@ -3841,6 +3843,7 @@ class HandleTypes extends BaseService {
 		}
 		switch(ict.iconType) {case "ACCOUNT_ADVANCED": return;}
 		switch(ict.iconType) {case "ACCOUNT_BILLING": return;}
+		switch(ict.iconType) {case "ACCOUNT_SETTINGS": return;}
 		switch(ict.iconType) {
 			case "ACCOUNT_NOTIFICATIONS": return;
 			default: console.log("[new_icon]",icon); debugger;
