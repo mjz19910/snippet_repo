@@ -1698,7 +1698,7 @@ class FilterHandlers {
 				case "notification": switch(target[1]) {
 					case "get_notification_menu": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/n/GetNotificationMenuJson.js").GetNotificationMenuJson} */
+						/** @type {import("./support/yt_api/_/g/GetNotificationMenuJson.js").GetNotificationMenuJson} */
 						json: cast_as(json),
 					};
 					case "get_unseen_count": return {
@@ -4145,7 +4145,6 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if(typeof isDisabled!=='boolean') debugger;
-		let rest_2=null;
 		if(!("accessibilityData" in rest_)) {
 			let {style,text,serviceEndpoint,...x}=rest_;
 			this.YtTextType(text);
@@ -4263,7 +4262,7 @@ class HandleTypes extends BaseService {
 		console.log(ok);
 
 	}
-	/** @arg {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer} obj */
+	/** @arg {import("./support/yt_api/_/d/DialogPopup.js").DialogPopup} obj */
 	DialogPopup(obj) {
 		console.log(obj);
 	}
@@ -4284,13 +4283,13 @@ class HandleTypes extends BaseService {
 	command(obj) {
 		console.log(obj);
 	}
-	/** @arg {import("./support/_/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData} renderer */
+	/** @arg {import("./support/yt_api/_/u/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData} renderer */
 	simpleMenuHeaderRenderer(renderer) {
 		for(let button of renderer.buttons) {
 			this.buttonRenderer(button.buttonRenderer);
 		}
 	}
-	/** @arg {import("./support/_/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header */
+	/** @arg {import("./support/yt_api/_/u/SimpleMenuHeaderRenderer.js").SimpleMenuHeaderRenderer|import("./support/yt_api/_/b/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} header */
 	header(header) {
 		if("feedTabbedHeaderRenderer" in header) {
 			this.FeedTabbedHeaderRenderer(header);
@@ -4305,7 +4304,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
+	/** @arg {import("./support/yt_api/_/m/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
 	multiPageMenuRenderer(renderer) {
 		this.header(renderer.header);
 		let ok=filter_out_keys(get_keys_of(renderer),split_string("header,sections,trackingParams",","));
@@ -4595,7 +4594,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok_1,["clickTrackingParams","openPopupAction"])) return;
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res */
+	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} res */
 	notification_get_notification_menu_t(res) {
 		for(let action of res.json.actions) {
 			this.OpenPopupActionItem(action);
