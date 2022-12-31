@@ -45,6 +45,13 @@ export type ButtonRendererData={
 	tooltip: string;
 	trackingParams: string;
 	accessibilityData: Accessibility;
+}|{
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	icon: ButtonRendererIconTypes;
+	trackingParams: string;
+	accessibilityData: Accessibility;
 };
 
 type ButtonRendererIconTypes=Icon<"SETTINGS">;

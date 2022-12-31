@@ -1,8 +1,5 @@
-import {Icon} from "../i/Icon.js";
+import {NotificationTopbarButtonRendererData} from "./NotificationTopbarButtonRendererData";
 
-
-export type notificationTopbarButtonRenderer={
-	notificationTopbarButtonRenderer: {
-		icon: Icon<"NOTIFICATIONS">;
-	};
+export type NotificationTopbarButtonRenderer={
+	notificationTopbarButtonRenderer: NotificationTopbarButtonRendererData;
 };

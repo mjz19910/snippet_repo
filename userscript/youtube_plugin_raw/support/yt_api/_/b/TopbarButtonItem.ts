@@ -1,4 +1,4 @@
 import {topbarMenuButtonRenderer} from "./topbarMenuButtonRenderer";
-import {notificationTopbarButtonRenderer} from "./notificationTopbarButtonRenderer";
+import {NotificationTopbarButtonRenderer} from "./notificationTopbarButtonRenderer";
 
-export type TopbarButtonItem=topbarMenuButtonRenderer|notificationTopbarButtonRenderer;
+export type TopbarButtonItem=topbarMenuButtonRenderer|NotificationTopbarButtonRenderer;

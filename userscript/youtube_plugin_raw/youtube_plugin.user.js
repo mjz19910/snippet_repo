@@ -3714,7 +3714,7 @@ class HandleTypes extends BaseService {
 		this.topbarLogoRenderer(logo.topbarLogoRenderer);
 		this.FusionSearchboxRenderer(searchbox);
 		this.primitive(countryCode);
-		this.iterate(topbarButtons,x=>this.empty_object(x));
+		this.iterate(topbarButtons,x => this.TopbarButtonItem(x));
 		this.empty_object(hotkeyDialog);
 		this.empty_object(backButton);
 		this.empty_object(forwardButton);
@@ -3863,25 +3863,23 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
+	valid_icon_types=[
+		"ACCOUNT_SHARING",
+		"ACCOUNT_PRIVACY",
+		"ACCOUNT_ADVANCED",
+		"ACCOUNT_BILLING",
+		"ACCOUNT_SETTINGS",
+		"ACCOUNT_NOTIFICATIONS",
+		"CLOSE",
+		"SEARCH",
+		"SETTINGS",
+		"YOUTUBE_LOGO",
+	];
+	/** @template {string} T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
-		/** @type {any} */
-		let any_icon=icon;
-		/** @type {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsIconTypes} */
-		let ict=any_icon;
-		switch(ict.iconType) {
-			case "ACCOUNT_SHARING": return;
-			case "ACCOUNT_PRIVACY": return;
-			case "ACCOUNT_ADVANCED": return;
-			case "ACCOUNT_BILLING": return;
-			case "ACCOUNT_SETTINGS": return;
-			case "ACCOUNT_NOTIFICATIONS": return;
-			default: break;
-		}
-		switch(icon.iconType) {
-			case "SETTINGS": return;
-			case "YOUTUBE_LOGO": return;
-			default: console.log("[new_icon]",icon); debugger;
+		if(!this.valid_icon_types.includes(icon.iconType)) {
+			console.log("[new_icon]",icon);
+			debugger;
 		}
 	}
 	/** @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
@@ -4142,43 +4140,54 @@ class HandleTypes extends BaseService {
 	buttonRenderer(renderer) {
 		let {size,isDisabled,trackingParams,...rest_}=renderer;
 		this.trackingParams(trackingParams);
+		if(size!=="SIZE_DEFAULT") {
+			console.log("[new_size] renderer",renderer.size);
+			debugger;
+		}
+		if(typeof isDisabled!=='boolean') debugger;
 		let rest_2=null;
-		let rest_3=null;
-		if("serviceEndpoint" in rest_) {
-			let {serviceEndpoint,text,...rest}=rest_;
+		if(!("accessibilityData" in rest_)) {
+			let {style,text,serviceEndpoint,...x}=rest_;
 			this.YtTextType(text);
 			this.serviceEndpoint(rest_.serviceEndpoint);
-			rest_2=rest;
-		} else if("navigationEndpoint" in rest_) {
-			let {navigationEndpoint,accessibilityData,...rest}=rest_;
+			this.empty_object(x);
+			return;
+		} else if("accessibilityData" in rest_) {
+			let {accessibilityData,...x}=rest_;
 			this.Accessibility(accessibilityData);
-			this.navigationEndpoint(rest_.navigationEndpoint);
-			rest_3=rest;
+			switch(x.style) {
+				case "STYLE_DEFAULT": {
+					let {style,icon,...y}=x;
+					if("tooltip" in y) {
+						let {navigationEndpoint,tooltip,...x}=y;
+						this.navigationEndpoint(navigationEndpoint);
+						this.primitive(tooltip);
+						this.empty_object(x);
+						return;
+					}
+					this.empty_object(y);
+				} break;
+				case "STYLE_SUGGESTIVE": {
+					let {style,text,command,...y}=x;
+					if("navigationEndpoint" in y) {
+						let {navigationEndpoint,...x}=y;
+						this.navigationEndpoint(navigationEndpoint);
+						this.empty_object(x);
+						return;
+					}
+					this.empty_object(y);
+					return;
+				}
+				default: debugger;
+			}
 		} else {
-			rest_3=rest_;
+			debugger;
 		}
-		if(renderer.size!=="SIZE_DEFAULT") {
-			console.log("renderer.size",renderer.size);
-		}
-		if(typeof renderer.isDisabled!=='boolean') debugger;
 		if(rest_2&&rest_2.style==="STYLE_DEFAULT") {
-			let {style,...rest}=rest_2;
-			this.empty_object(rest);
 		} else if(rest_2) {
-			let {style,...rest}=rest_2;
-			this.empty_object(rest);
-		} else if(rest_3&&rest_3.style==="STYLE_DEFAULT") {
-			let {style,icon,tooltip,...rest}=rest_3;
-			this.Icon(icon);
-			this.primitive(tooltip);
-			this.empty_object(rest);
-		} else if(rest_3) {
-			let {style,text,command,...rest}=rest_3;
-			this.YtTextType(text);
-			this.GeneralCommand(command);
-			this.empty_object(rest);
-		} else {
-			this.empty_object(renderer);
+			let {style,...x}=rest_2;
+			if(style!=="STYLE_SUGGESTIVE") debugger;
+			this.empty_object(x);
 		}
 	}
 	/** @arg {number|string|bigint|boolean} value */
@@ -4884,21 +4893,28 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(x);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta
-	 */
-	webCommandMetadata(meta) {
-		console.log("[command_meta]",meta);
-		switch(meta.webPageType) {
+	/** @arg {import("./support/yt_api/_/w/WebCommandPageType.js").WebCommandPageType} type */
+	WebCommandPageType(type) {
+		switch(type) {
 			case "WEB_PAGE_TYPE_BROWSE": break;
 			case "WEB_PAGE_TYPE_CHANNEL": break;
 			case "WEB_PAGE_TYPE_PLAYLIST": break;
 			case "WEB_PAGE_TYPE_SHORTS": break;
 			case "WEB_PAGE_TYPE_WATCH": break;
 			case "WEB_PAGE_TYPE_SETTINGS": break;
+			case "WEB_PAGE_TYPE_SEARCH": break;
 			case "WEB_PAGE_TYPE_UNKNOWN": break;
 			default: debugger;
 		};
+	}
+	/**
+	 * @param {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta
+	 */
+	webCommandMetadata(meta) {
+		console.log("[command_meta]",meta);
+		if(meta.webPageType!==void 0) {
+			this.WebCommandPageType(meta.webPageType);
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_/b/LogoEntity.js").LogoEntity} x
@@ -4920,7 +4936,63 @@ class HandleTypes extends BaseService {
 		this.commandMetadata(commandMetadata);
 		this.empty_object(y);
 	}
+	/**
+	 * @param {import("./support/yt_api/_/b/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x
+	 */
 	FusionSearchboxRenderer(x) {
-		x;
+		let y=x.fusionSearchboxRenderer;
+		{
+			let {trackingParams,icon,clearButton,config,placeholderText,searchEndpoint,...x}=y;
+			this.trackingParams(trackingParams);
+			this.Icon(icon);
+			this.ButtonRenderer(clearButton);
+			let a=config.webSearchboxConfig;
+			{
+				let {requestDomain,requestLanguage,hasOnscreenKeyboard,focusSearchbox,...x}=a;
+				this.primitives(requestDomain,requestLanguage,hasOnscreenKeyboard,focusSearchbox);
+				this.empty_object(x);
+			}
+			this.YtTextType(placeholderText);
+			this.SearchEndpoint(searchEndpoint);
+			this.empty_object(x);
+		}
+	}
+	/** @arg {(string | boolean)[]} args */
+	primitives(...args) {
+		this.iterate(args,arg => this.primitive(arg));
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/SearchEndpoint.js").SearchEndpoint} x
+	 */
+	SearchEndpoint(x) {
+		let {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x;
+		this.clickTrackingParams(clickTrackingParams);
+		this.commandMetadata(commandMetadata);
+		this.searchEndpoint(searchEndpoint);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/SearchEndpointData.js").SearchEndpointData} x
+	 */
+	searchEndpoint(x) {
+		this.primitive(x.query);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/TopbarButtonItem.js").TopbarButtonItem} x
+	 */
+	TopbarButtonItem(x) {
+		if("topbarMenuButtonRenderer" in x) {
+			x.topbarMenuButtonRenderer
+		} else if("notificationTopbarButtonRenderer" in x) {
+			const {notificationTopbarButtonRenderer:y}=x;
+			this.notificationTopbarButtonRenderer(y);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {import("./support/yt_api/_/b/NotificationTopbarButtonRendererData.js").NotificationTopbarButtonRendererData} x */
+	notificationTopbarButtonRenderer(x) {
+		const {icon,...y}=x;
+		this.empty_object(y);
 	}
 }
