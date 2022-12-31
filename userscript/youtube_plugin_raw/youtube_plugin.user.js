@@ -4355,22 +4355,26 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if("confirmDialogRenderer" in x) {
-			this.ConfirmDialogRendererData(x.confirmDialogRenderer);
+			const {confirmDialogRenderer: a0,...c}=x; empty_object(c);
+			this.ConfirmDialogRendererData(a0);
 		}
 		if("voiceSearchDialogRenderer" in x) {
-			this.voiceSearchDialogRenderer(x.voiceSearchDialogRenderer);
+			const {voiceSearchDialogRenderer: a0,...c}=x; empty_object(c);
+			this.voiceSearchDialogRenderer(a0);
 		}
-		if(!cr&&"notificationActionRenderer" in x) {
-			const {notificationActionRenderer: a0,...c}=x; cr=c;
+		if("notificationActionRenderer" in x) {
+			const {notificationActionRenderer: a0,...c}=x;
 			const {responseText,trackingParams,...a}=a0;
-			empty_objects(a);
+			this.YtTextType(responseText);
+			this.primitive(trackingParams);
+			empty_objects(c,a);
 		}
-		if(!cr&&"ghostGridRenderer" in x) {
-			const {ghostGridRenderer: a0,...c}=x; cr=c;
+		if("ghostGridRenderer" in x) {
+			const {ghostGridRenderer: a0,...c}=x; empty_object(c);
 			this.ghostGridRenderer(a0);
 		}
-		if(!cr&&"trackingParams" in x) {
-			const {trackingParams: tp,...c}=x; cr=c;
+		if("trackingParams" in x) {
+			const {trackingParams: tp,...c}=x; empty_object(c);
 			this.trackingParams(tp);
 		}
 		if(!cr) return;
