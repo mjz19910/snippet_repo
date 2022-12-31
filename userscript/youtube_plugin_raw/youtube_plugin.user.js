@@ -63,7 +63,7 @@ function save_new_map(key,map) {
 	if(!inject_api_yt.saved_maps) return;
 	inject_api_yt.saved_maps.set(key,map);
 }
-/** @type {import("./support/yt_api/_/a/SavedData.js").SavedData} */
+/** @type {import("./support/yt_api/_/s/SavedData.js").SavedData} */
 let saved_data=cast_as({});
 inject_api_yt.saved_data=saved_data;
 
@@ -3912,7 +3912,7 @@ class HandleTypes extends BaseService {
 		let {text,navigationEndpoint,bold,...rest}=run;
 		return rest;
 	}
-	/** @typedef {import("./support/yt_api/_/s/YtTextType.js").YtTextType} YtTextType */
+	/** @typedef {import("./support/yt_api/yt/YtTextType.js").YtTextType} YtTextType */
 	/** @arg {Extract<YtTextType,{runs:any}>} text */
 	TextRuns(text) {
 		let rest=[];
@@ -4302,7 +4302,7 @@ class HandleTypes extends BaseService {
 			console.log("[service_action] [%s]",k.join(),rest);
 		}
 	}
-	/** @arg {import("./support/yt_api/_/s/YtSignalAction.js").YtSignalAction} x */
+	/** @arg {import("./support/yt_api/yt/YtSignalAction.js").YtSignalAction} x */
 	signalAction(x) {
 		switch(x.signal) {
 			case "HISTORY_BACK": break;
@@ -4320,16 +4320,16 @@ class HandleTypes extends BaseService {
 			default: console.log(obj);
 		}
 	}
-	/** @arg {import("./support/yt_api/_/o/AllPopups.js").AllPopups} x */
+	/** @arg {import("./support/yt_api/_/a/AllPopups.js").AllPopups} x */
 	popup(x) {
 		let ok=get_keys_of(x);
-		switch(ok[0]) {case "aboutThisAdRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
+		switch(ok[0]) {case "aboutThisAdRenderer": if(ok[0] in x) this.renderer(x); return;}
 		switch(ok[0]) {case "confirmDialogRenderer": if(ok[0] in x) this.renderer(x); return;}
-		switch(ok[0]) {case "multiPageMenuRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
+		switch(ok[0]) {case "multiPageMenuRenderer": if(ok[0] in x) this.renderer(x); return;}
 		switch(ok[0]) {case "notificationActionRenderer": if(ok[0] in x) this.renderer(x); return;}
 		switch(ok[0]) {
-			case "voiceSearchDialogRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;
-			default: if(ok[0] in x) {console.log("use default for",x,x[ok[0]]); this.renderer(x[ok[0]]);}
+			case "voiceSearchDialogRenderer": if(ok[0] in x) this.renderer(x); return;
+			default: if(ok[0] in x) {console.log("use default for",x,x[ok[0]]); this.renderer(x);}
 		}
 		console.log("[unk_popup_info][%s]",ok,x);
 	}
@@ -5115,7 +5115,7 @@ class HandleTypes extends BaseService {
 	sendPost(x) {
 		this.save_new_bool("sendPost",x);
 	}
-	/** @arg {{ placeholderHeader?: import("./support/yt_api/_/s/YtTextType.js").YtTextType; promptHeader?: import("./support/yt_api/_/s/YtTextType.js").YtTextType; }} x */
+	/** @arg {{ placeholderHeader?: import("./support/yt_api/yt/YtTextType.js").YtTextType; promptHeader?: import("./support/yt_api/yt/YtTextType.js").YtTextType; }} x */
 	voiceSearch(x) {
 		let v=Object.keys(x).join();
 		this.log(v);
@@ -5164,7 +5164,7 @@ class HandleTypes extends BaseService {
 	endpoint_va(...arr) {
 		iterate(arr,this.endpoint.bind(this));
 	}
-	/** @arg {import("./support/yt_api/_/s/YtTextType.js").YtTextType[]} arr */
+	/** @arg {import("./support/yt_api/yt/YtTextType.js").YtTextType[]} arr */
 	YtTextType_va(...arr) {
 		iterate(arr.filter(e => !!e),this.YtTextType.bind(this));
 	}

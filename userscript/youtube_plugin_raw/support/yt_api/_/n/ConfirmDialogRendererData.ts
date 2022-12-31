@@ -1,5 +1,5 @@
+import {YtTextType} from "../../yt/YtTextType.js";
 import {ButtonRenderer} from "../b/ButtonRenderer.js";
-import {YtTextType} from "../s/YtTextType.js";
 
 export type ConfirmDialogRendererData={
 	title: YtTextType;

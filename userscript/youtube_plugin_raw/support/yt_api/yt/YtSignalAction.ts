@@ -1,4 +1,4 @@
-import {HistoryBackSignal} from "./HistoryBackSignal";
+import {HistoryBackSignal} from "../_/s/HistoryBackSignal";
 
 
 export type YtSignalAction=HistoryBackSignal|{
