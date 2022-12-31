@@ -82,6 +82,10 @@ export class MyReader extends protobufjs.Reader {
 		super(buf);
 		this.last_pos=this.pos;
 	}
+	override skip(length?: number) {
+		console.log("asked to skip", length);
+		return super.skip(length);
+	}
 	public override uint32(): number {
 		this.last_pos=this.pos;
 		return super.uint32();
