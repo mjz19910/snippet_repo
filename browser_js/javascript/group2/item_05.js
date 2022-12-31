@@ -9,7 +9,7 @@ function as_cast(e) {
 function main() {
 	"use strict";
 	let str="40580802070e1e0b010c1c1b021a480a0701141d4b571f080a0c581c01092a1a410d0b190a541406580b02074b1c5f0f1b04380410001c1c43450a130b0c4a0b1416531c5a1526190e0417081c031b544d19140a0e00000758574d4f5b0c14250c06091d100a01544d0c18";
-	/** @param {string|any[]} str @param {number} len */
+	/** @arg {string|any[]} str @arg {number} len */
 	function chunk_str(str,len) {
 		let res=[];
 		for(let cur,i=0;i<str.length;) {
@@ -26,19 +26,19 @@ function main() {
 	let u8_data=new Uint8Array(f32_diff.buffer); u8_data;
 	/** @type {number[]} */
 	let long_tick_log=[];
-	/** @param {number} num */
+	/** @arg {number} num */
 	function ceil_near(num) {
 		return Math.ceil(num*10)/10;
 	}
-	/** @param {number} num */
+	/** @arg {number} num */
 	function round_near(num) {
 		return Math.round(num*10)/10;
 	}
-	/** @param {number} num */
+	/** @arg {number} num */
 	function floor_near(num) {
 		return Math.floor(num*10)/10;
 	}
-	/** @param {any} num */
+	/** @arg {any} num */
 	function math_near(num) {
 		let ret=[];
 		ret.push(floor_near(num).toFixed(1));
@@ -47,7 +47,7 @@ function main() {
 		return ret;
 	}
 	math_near;
-	/** @param {{ postMessage: { bind: (arg0: any) => any; }; onmessage: (e: any) => void; }} g */
+	/** @arg {{ postMessage: { bind: (arg0: any) => any; }; onmessage: (e: any) => void; }} g */
 	function worker_scope(g) {
 		"use strict";
 		let post_message=g.postMessage.bind(g);
@@ -64,17 +64,14 @@ function main() {
 			count=0;
 			last_index=-1;
 			start_index=-1;
-			/** @type {number[]}
-			 */
+			/** @type {number[]} */
 			result_vec=[];
-			/** @type {number[]}
-			 */
+			/** @type {number[]} */
 			overflow_vec=[];
 			constructor() {
 				this.result_vec[0]=1;
 			}
-			/** @param {number} start_index
-			 */
+			/** @arg {number} start_index */
 			set_start_index(start_index) {
 				if(this.start_index===-1) {
 					this.start_index=start_index;
@@ -135,8 +132,7 @@ function main() {
 				this.result_vec[this.start_index+1]=process_result;
 				console.log('pd',this.start_index,count,process_result,start_value);
 			}
-			/** @param {Float64Array|number[]} range_f64
-			 */
+			/** @arg {Float64Array|number[]} range_f64 */
 			next_larger_perf_time(range_f64) {
 				for(;;) {
 					let min_diff=get_next_performance_time();
@@ -152,8 +148,7 @@ function main() {
 			message=null;
 			/** @type {{type: "response";response?:{detail?: {};error?: {}|null;type: "unset";count?: number;overflow_vec?: {}[];result_vec:{}[]};source: {}}|null} */
 			reply=null;
-			/** @param {null} message
-			 */
+			/** @arg {null} message */
 			set_message(message) {
 				this.message=message;
 			}
@@ -226,8 +221,7 @@ function main() {
 				post_message(this.reply);
 				this.reset();
 			}
-			/** @param {{ type: any; error?: any; }} report_object
-			 */
+			/** @arg {{ type: any; error?: any; }} report_object */
 			report_reply(report_object) {
 				if(!this.reply?.response) throw 1;
 				this.reply.response.count=this.count;
@@ -247,8 +241,7 @@ function main() {
 			}
 			log_level_vec=['error','warning','info','debug','trace'];
 			log_level='debug';
-			/** @param {string|undefined} [error]
-			 */
+			/** @arg {string|undefined} [error] */
 			on_failure(error) {
 				if(this.log_level==='debug') {
 					let last=this.overflow_vec.at(-1);
@@ -283,8 +276,7 @@ function main() {
 	class IntervalClock {
 		timeout_id=-1;
 		handler_map=new Map;
-		/** @param {{ on_tick: () => void; }} self
-		 */
+		/** @arg {{ on_tick: () => void; }} self */
 		static on_interval(self) {
 			self.on_tick();
 		}
@@ -295,19 +287,16 @@ function main() {
 		get_delay() {
 			return this.delay;
 		}
-		/** @param {any} delay
-		 */
+		/** @arg {any} delay */
 		set_delay(delay) {
 			this.delay=delay;
 		}
 		//cspell:words set_handler_fptr fptr
-		/** @template T,U @param {string} type @arg {{ptr: T,data: U}} fptr
-		 */
+		/** @template T,U @arg {string} type @arg {{ptr: T,data: U}} fptr */
 		set_handler_fptr(type,fptr) {
 			this.handler_map.set(type,fptr);
 		}
-		/** @param {any} type @param {any} fptr
-		 */
+		/** @arg {any} type @arg {any} fptr */
 		delete_handler(type,fptr) {
 			if(this.timeout_id!==-1) {
 				throw new Error('panic clock timeout running');
@@ -336,7 +325,7 @@ function main() {
 			this.timeout_id=-1;
 		}
 	}
-	/** @param {any} type @param {any[]} data_vec */
+	/** @arg {any} type @arg {any[]} data_vec */
 	function worker_message_factory(type,data_vec) {
 		return {
 			type,
@@ -373,8 +362,7 @@ function main() {
 			window.__worker=this.inner;
 			this.handler_map=new Map;
 		}
-		/** @param {any} user_message
-		 */
+		/** @arg {any} user_message */
 		on_response(user_message) {
 			user_message;
 			let can_not_handle=worker_state.is_not_handled();
@@ -390,8 +378,7 @@ function main() {
 				worker_state.do_accept();
 			}
 		}
-		/** @param {{ data: any; }} event
-		 */
+		/** @arg {{ data: any; }} event */
 		message_event_handler(event) {
 			let user_message=event.data;
 			switch(user_message.type) {
@@ -421,8 +408,7 @@ function main() {
 		terminate_worker() {
 			this.inner.terminate();
 		}
-		/** @param {string} type @param {undefined[]} data_vec
-		 */
+		/** @arg {string} type @arg {undefined[]} data_vec */
 		send_request(type,...data_vec) {
 			this.inner.postMessage(worker_message_factory(type,data_vec));
 		}
@@ -432,13 +418,11 @@ function main() {
 		send_shutdown_request() {
 			this.send_request('shutdown');
 		}
-		/** @param {any} index
-		 */
+		/** @arg {any} index */
 		send_process_request(index) {
 			this.send_request('process',index);
 		}
-		/** @param {string} key @param {{ (): void; (user_message: { source: any; response: any; }): void; (user_message: any): void; }} handler
-		 */
+		/** @arg {string} key @arg {{ (): void; (user_message: { source: any; response: any; }): void; (user_message: any): void; }} handler */
 		set_handler(key,handler) {
 			this.handler_map.set(key,handler);
 		}
@@ -457,13 +441,11 @@ function main() {
 			this.remote_worker.set_handler('response',as_cast(this.on_response.bind(this)));
 			this.remote_worker.set_handler('failure',as_cast(this.on_failure.bind(this)));
 		}
-		/** @param {any} user_message
-		 */
+		/** @arg {any} user_message */
 		on_failure(user_message) {
 			this.do_reject(user_message);
 		}
-		/** @param {{ source: any; response: any; }} user_message
-		 */
+		/** @arg {{ source: any; response: any; }} user_message */
 		on_response(user_message) {
 			switch(user_message.source) {
 				case 'init':
@@ -483,15 +465,13 @@ function main() {
 			}
 		}
 		attach_worker() {}
-		/** @param {{ tag: any; }} accept @param {any} tag
-		 */
+		/** @arg {{ tag: any; }} accept @arg {any} tag */
 		maybe_tag_promise_resolver(accept,tag) {
 			if(this.tag_promise_resolver) {
 				accept.tag=tag;
 			}
 		}
-		/** @param {WorkerStateModel} self @param {any} accept @param {any} reject
-		 */
+		/** @arg {WorkerStateModel} self @arg {any} accept @arg {any} reject */
 		static init_request_executor(self,accept,reject) {
 			self.remote_worker.send_init_request();
 			self.maybe_tag_promise_resolver(accept,'init');
@@ -500,8 +480,7 @@ function main() {
 		request_init() {
 			return this.into_async(WorkerStateModel.init_request_executor,this,0);
 		}
-		/** @param {WorkerStateModel} self @param {any} accept @param {any} reject
-		 */
+		/** @arg {WorkerStateModel} self @arg {any} accept @arg {any} reject */
 		static shutdown_request_executor(self,accept,reject) {
 			self.remote_worker.send_shutdown_request();
 			self.maybe_tag_promise_resolver(accept,'shutdown');
@@ -515,21 +494,18 @@ function main() {
 			this.clock.stop();
 			this.remote_worker.terminate_worker();
 		}
-		/** @param {WorkerStateModel} self @param {any} index @param {any} accept @param {any} reject
-		 */
+		/** @arg {WorkerStateModel} self @arg {any} index @arg {any} accept @arg {any} reject */
 		static process_request_executor(self,index,accept,reject) {
 			self.last_process=performance.now();
 			self.remote_worker.send_process_request(index);
 			self.maybe_tag_promise_resolver(accept,'process');
 			self.reset(accept,reject);
 		}
-		/** @arg {typeof WorkerStateModel['process_request_executor']} promise_executor @param {[this,number]} argument_vec @returns {Promise<BaseWorkProcessorType>}
-		 */
+		/** @arg {typeof WorkerStateModel['process_request_executor']} promise_executor @arg {[this,number]} argument_vec @returns {Promise<BaseWorkProcessorType>} */
 		into_async(promise_executor,...argument_vec) {
 			return new Promise(promise_executor.bind(null,...argument_vec));
 		}
-		/** @param {any} index
-		 */
+		/** @arg {any} index */
 		request_process(index) {
 			return this.into_async(WorkerStateModel.process_request_executor,this,index);
 		}
@@ -542,8 +518,7 @@ function main() {
 		}
 		tag_promise_resolver=false;
 		log_resolver_tags=true;
-		/** @param {any} reason
-		 */
+		/** @arg {any} reason */
 		do_reject(reason) {
 			if(!this.accept) throw 1;
 			if(!this.reject) throw 1;
@@ -553,8 +528,7 @@ function main() {
 			this.reject(reason);
 			this.reset();
 		}
-		/** @param {{}} [response]
-		 */
+		/** @arg {{}} [response] */
 		do_accept(response) {
 			if(!this.accept) throw 1;
 			if(this.tag_promise_resolver&&this.log_resolver_tags) {
@@ -566,7 +540,7 @@ function main() {
 		on_start() {
 			this.running=true;
 		}
-		/** @param {{type:"timeout";response:null}} reason */
+		/** @arg {{type:"timeout";response:null}} reason */
 		abort(reason) {
 			this.do_reject(reason);
 			setTimeout(async () => {
@@ -590,13 +564,11 @@ function main() {
 			this.clock.stop();
 		}
 		last_process=0;
-		/** @param {WorkerStateModel} self
-		 */
+		/** @arg {WorkerStateModel} self */
 		static on_clock_interval(self) {
 			self.check_timeout(performance.now()-self.last_process);
 		}
-		/** @param {number} clock_diff
-		 */
+		/** @arg {number} clock_diff */
 		check_timeout(clock_diff) {
 			let sec_diff=clock_diff/1000;
 			let sd=sec_diff.toFixed(2);
@@ -608,8 +580,7 @@ function main() {
 			}
 			this.on_timeout();
 		}
-		/** @param {any} clock_delay
-		 */
+		/** @arg {any} clock_delay */
 		set_clock_interval(clock_delay) {
 			this.clock.set_delay(clock_delay);
 			this.clock.set_handler_fptr('tick',{
@@ -620,8 +591,7 @@ function main() {
 		}
 		// at least clock_delay * 2,
 		// clock_delay * 3 is much better
-		/** @param {number} timeout_delay
-		 */
+		/** @arg {number} timeout_delay */
 		set_timeout_delay(timeout_delay) {
 			this.timeout_delay=timeout_delay;
 		}

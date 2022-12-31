@@ -1,4 +1,4 @@
-/** @param {typeof import("./item_04")} exports */
+/** @arg {typeof import("./item_04")} exports */
 function main(exports) {
 	//spell:words vtable
 	class RustBasicSymbolGenerator {
@@ -11,23 +11,19 @@ function main(exports) {
 			this.set(this.last_sym_key,this.next_symbol_id++);
 			return this.last_sym_key;
 		}
-		/** @param {symbol} sym_key @param {number} sym_id
-		 */
+		/** @arg {symbol} sym_key @arg {number} sym_id */
 		set(sym_key,sym_id) {
 			this.generated_symbol_map.set(sym_key,sym_id);
 		}
-		/** @param {any} sym_key
-		 */
+		/** @arg {any} sym_key */
 		get(sym_key) {
 			return this.generated_symbol_map.get(sym_key);
 		}
-		/** @param {any} sym_key
-		 */
+		/** @arg {any} sym_key */
 		has(sym_key) {
 			return this.generated_symbol_map.has(sym_key);
 		}
-		/** @param {any} sym_key_a @param {any} sym_key_b
-		 */
+		/** @arg {any} sym_key_a @arg {any} sym_key_b */
 		distance(sym_key_a,sym_key_b) {
 			if(this.has(sym_key_a)&&this.has(sym_key_b))
 				return this.get(sym_key_b)-this.get(sym_key_a);
@@ -45,20 +41,15 @@ function main(exports) {
 		poll_fn=({delay}) => {
 			return {delay};
 		};
-		/** @type {any[]}
-		 */
+		/** @type {any[]} */
 		value_vec=[];
-		/** @type {any[]}
-		 */
+		/** @type {any[]} */
 		key_vec=[];
-		/** @type {(number|undefined)[]}
-		 */
+		/** @type {(number|undefined)[]} */
 		data_start_vec=[];
-		/** @type {(number|undefined)[]}
-		 */
+		/** @type {(number|undefined)[]} */
 		data_end_vec=[];
-		/** @type {any[]}
-		 */
+		/** @type {any[]} */
 		data_store_vec=[];
 		/** @type {(()=>void)|null} */
 		lastValue=null;
@@ -77,8 +68,7 @@ function main(exports) {
 		set k(key) {
 			this.lastKey=key;
 		}
-		/** @param {string|symbol} key @param {any} value @param {string|any[]} data_vec
-		 */
+		/** @arg {string|symbol} key @arg {any} value @arg {string|any[]} data_vec */
 		add_function(key,value,data_vec) {
 			if(key==='') {
 				key=this.key_generator.generate();
@@ -92,13 +82,11 @@ function main(exports) {
 			}
 			this.data_end_vec.push(data_store_vec.length);
 		}
-		/** @param {any} key
-		 */
+		/** @arg {any} key */
 		key_index(key) {
 			return this.key_generator.distance(this.my_key,key)-1;
 		}
-		/** @param {string} inject_data @param {number[]} data_vec @param {any} key
-		 */
+		/** @arg {string} inject_data @arg {number[]} data_vec @arg {any} key */
 		append_auto_info(inject_data,data_vec,key) {
 			let inject_data_vec=[];
 			if(inject_data.startsWith('req_')) {
@@ -120,8 +108,7 @@ function main(exports) {
 				}
 			}
 		}
-		/** @param {string} key @param {{(...arg0: any[]):any;name:string}} value @param {any[]} data_vec
-		 */
+		/** @arg {string} key @arg {{(...arg0: any[]):any;name:string}} value @arg {any[]} data_vec */
 		execute_function(key,value,data_vec) {
 			value.name&&this.append_auto_info(value.name,data_vec,key);
 			return value(...data_vec);
@@ -159,11 +146,9 @@ function main(exports) {
 		}
 		let rust_scope=new RustScope;
 		class RustCrate {
-			/** @type {{ definition_vec: any[]; }[]}
-			 */
+			/** @type {{ definition_vec: any[]; }[]} */
 			define_vec=[];
-			/** @param {any[]} arg_vec
-			 */
+			/** @arg {any[]} arg_vec */
 			type(...arg_vec) {
 				arg_vec;
 				return null;
@@ -183,32 +168,28 @@ function main(exports) {
 		}
 		let rust_tmp=new RustCrate;
 		class RustFunctionDefinition {
-			/** @param {string} name @param {{type_param: RustTypeParameter[]; arg_def: RustFunctionArgument[]; return_type: string}} info
-			 */
+			/** @arg {string} name @arg {{type_param: RustTypeParameter[]; arg_def: RustFunctionArgument[]; return_type: string}} info */
 			constructor(name,info) {
 				this.name=name;
 				this.info=info;
 			}
 		}
 		class RustTypeParameter {
-			/** @param {string} var_name @param {string} var_type
-			 */
+			/** @arg {string} var_name @arg {string} var_type */
 			constructor(var_name,var_type) {
 				this.name=var_name;
 				this.type=var_type;
 			}
 		}
 		class RustFunctionArgument {
-			/** @param {string} name @param {RustType} type
-			 */
+			/** @arg {string} name @arg {RustType} type */
 			constructor(name,type) {
 				this.name=name;
 				this.type=type;
 			}
 		}
 		class RustType {
-			/** @param {string} qual @param {string|null} type
-			 */
+			/** @arg {string} qual @arg {string|null} type */
 			constructor(qual,type) {
 				this.qual=qual;
 				this.type=type;
@@ -216,8 +197,7 @@ function main(exports) {
 		}
 		/** @template T */
 		class RustTypeValue {
-			/**  @param {RustType} type_info @param {T} value
-			 */
+			/**  @arg {RustType} type_info @arg {T} value */
 			constructor(type_info,value) {
 				this.type_info=type_info;
 				this.value=value;
@@ -246,8 +226,7 @@ function main(exports) {
 			}
 		}
 		class RustOption {
-			/** @param {any} value
-			 */
+			/** @arg {any} value */
 			constructor(value) {
 				this.value=value;
 			}
@@ -271,8 +250,7 @@ function main(exports) {
 			is_some() {
 				return this.value!==null;
 			}
-			/** @param {{ unwrap: () => any; }} ref
-			 */
+			/** @arg {{ unwrap: () => any; }} ref */
 			contains(ref) {
 				let other_value=ref.unwrap();
 				return this.value===other_value;
@@ -311,8 +289,7 @@ function main(exports) {
 					count: 0
 				};
 			}
-			/** @param {{ canceled: any; }} self @param {{ waker: { clone: () => any; }; }} cx
-			 */
+			/** @arg {{ canceled: any; }} self @arg {{ waker: { clone: () => any; }; }} cx */
 			poll(self,cx) {
 				let delay=50;
 				let poll_scope=cur.poll_fn({
@@ -355,8 +332,7 @@ function main(exports) {
 			}
 		}
 		class task_Waker {
-			/** @param {{ future?: any; executor: any; from_waker?: any; }} data
-			 */
+			/** @arg {{ future?: any; executor: any; from_waker?: any; }} data */
 			constructor(data) {
 				if(!data.from_waker) {
 					data.executor.waker_new();
@@ -398,8 +374,7 @@ function main(exports) {
 		let cur_executer=null;
 		/** @template T */
 		class ArrayDequeue {
-			/** @param {number} cap
-			 */
+			/** @arg {number} cap */
 			constructor(cap) {
 				this.cap=cap;
 				/** @type {(T|null)[]} */
@@ -408,8 +383,7 @@ function main(exports) {
 				this.front_index=0;
 				this.back_index=0;
 			}
-			/** @param {any} value
-			 */
+			/** @arg {any} value */
 			push_back(value) {
 				this.len++;
 				if(this.len>this.cap) {
@@ -436,8 +410,7 @@ function main(exports) {
 			}
 		}
 		class Waker {
-			/** @arg {WakerVtable} vtable @param {{ notifier: any; }} data
-			 */
+			/** @arg {WakerVtable} vtable @arg {{ notifier: any; }} data */
 			constructor(vtable,data) {
 				if(!vtable.wake) {
 					throw Error('no waker');
@@ -450,21 +423,18 @@ function main(exports) {
 			}
 		}
 		class WakerVtable {
-			/** @param {any} wake_callback
-			 */
+			/** @arg {any} wake_callback */
 			constructor(wake_callback) {
 				this.wake_callback=wake_callback;
 			}
-			/** @param {{ notifier: { wake_count: number; }; }} data
-			 */
+			/** @arg {{ notifier: { wake_count: number; }; }} data */
 			wake(data) {
 				data.notifier.wake_count++;
 				this.wake_callback();
 			}
 		}
 		class AsyncNotifier {
-			/** @arg {AsyncNotifier} notifier @param {(value: any) => void} accept @param {()=>void} reject
-			 */
+			/** @arg {AsyncNotifier} notifier @arg {(value: any) => void} accept @arg {()=>void} reject */
 			static promise_execute(notifier,accept,reject) {
 				reject;
 				notifier.waker=new Waker(new WakerVtable(accept),{
@@ -472,12 +442,10 @@ function main(exports) {
 				});
 			}
 			constructor() {
-				/** @type {{ wake: () => void; }|null}
-				 */
+				/** @type {{ wake: () => void; }|null} */
 				this.waker=null;
 				this.wake_count=0;
-				/** @type {{}|null}
-				 */
+				/** @type {{}|null} */
 				this.inner=null;
 				this.notifier=null;
 			}
@@ -505,8 +473,7 @@ function main(exports) {
 			}
 		}
 		class TimeoutExecutor {
-			/** @type {any}
-			 */
+			/** @type {any} */
 			active=[];
 			/** @type {ArrayDequeue<AutomationFuture>} */
 			task_queue=new ArrayDequeue(4);

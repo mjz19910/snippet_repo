@@ -83,13 +83,11 @@ write :: (package: *Create_Package, filename: string) -> bool {
 		offset_from_start_of_file += cast(u64) entry.data.count;
 	}
 
-/*
 	success = file_write(*file, package.data);
 	if !success {
 		log_error("In Simple_Package, unable to write the body for file '%'\n", filename);
 		return false;
 	}
-*/
 
 	//
 	// Table of contents: 

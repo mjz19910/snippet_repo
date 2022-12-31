@@ -404,7 +404,7 @@ function main() {
 					js_out=[];
 				}
 				/** @arg {string[]} js_in @arg {string[]} js_tmp @returns {[[]|[string,string],string[],string[]]}
-				 */
+*/
 				function js_parse_ident(js_in,js_tmp){
 					let js_out=[];
 					let [wt,...rest]=js_in;
@@ -420,7 +420,7 @@ function main() {
 					}
 					return [[],rest,js_tmp];
 				};
-				/** @param {string} str @returns {any[]} */
+				/** @arg {string} str @returns {any[]} */
 				function js_parse_func_def_head(str) {
 					let js_out=[];
 					if(str[0].match(/\(/)&&str[1]==')') {
@@ -623,7 +623,7 @@ function main() {
 						} else {
 							let wt=js_out.join('');
 							let block_match_rx=/^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
-							/** @param {number} cur_idx @param {number} [skip_len] @returns {[any,any]} */
+							/** @arg {number} cur_idx @arg {number} [skip_len] @returns {[any,any]} */
 							function parse_bracket_down(cur_idx,skip_len) {
 								let cur,cs;
 								cs=wt.slice(cur_idx);
@@ -717,7 +717,7 @@ function main() {
 				if(maybe)
 					return null;
 				maybe=false;
-				/** @template T @param {T[]} arr */
+				/** @template T @arg {T[]} arr */
 				function unwrap_pop(arr) {
 					let ret=arr.pop();
 					if(!ret) throw new Error("panic");
@@ -737,7 +737,7 @@ function main() {
 						cs.push(e);
 						return;
 					}
-					/** @param {string} e */
+					/** @arg {string} e */
 					function dn(e,bf=false) {
 						stk.push(cs);
 						/** @type {any[]} */
@@ -800,7 +800,7 @@ function main() {
 				if(maybe)
 					return null;
 				let fb=cs.slice(-3,-2)[0];
-				/** @param {any[]} arr */
+				/** @arg {any[]} arr */
 				function f_down(arr) {
 					/** @type {any[]} */
 					let stk=[];
