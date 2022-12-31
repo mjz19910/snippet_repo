@@ -3857,26 +3857,31 @@ class HandleTypes extends BaseService {
 		this.ButtonRenderer(voiceSearchButton);
 		empty_object(x);
 	}
-	/** @arg {import("./support/yt_api/_/f/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer */
-	FeedTabbedHeaderRenderer(renderer) {
-		let data=renderer.feedTabbedHeaderRenderer;
-		console.log(data);
+	/** @arg {import("./support/yt_api/_/f/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} x */
+	FeedTabbedHeaderRenderer(x) {
+		const {feedTabbedHeaderRenderer}=x;
+		this.FeedTabbedHeaderRendererData(feedTabbedHeaderRenderer);
 	}
-	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdate} obj */
-	handleEntityBatchUpdate(obj) {
-		this.EntityBatchUpdateData(obj.entityBatchUpdate);
+	/**
+	 * @param {import("./support/yt_api/_/f/FeedTabbedHeaderRendererData.js").FeedTabbedHeaderRendererData} x
+	 */
+	FeedTabbedHeaderRendererData(x) {
+		const {title,...y}=x;
+		this.YtTextType(title);
+		empty_object(y);
+	}
+	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdate} x */
+	handleEntityBatchUpdate(x) {
+		const {entityBatchUpdate,...y}=x;
+		this.EntityBatchUpdateData(entityBatchUpdate);
+		empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdateData.js").EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		const {mutations,timestamp,...y}=x;
-		if(get_keys_of(y).length) {
-			debugger;
-		}
-		if(is_yt_debug_enabled) console.log("[entity_update_time]",x.timestamp);
-		iterate(mutations,mut => {
-			this.EntityMutationItem(mut);
-		});
+		iterate(mutations,mut => this.EntityMutationItem(mut));
 		this.TimestampWithNanos(timestamp);
+		empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} mut */
 	EntityMutationItem(mut) {
