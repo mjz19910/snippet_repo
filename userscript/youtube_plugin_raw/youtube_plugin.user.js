@@ -5069,7 +5069,7 @@ class HandleTypes extends BaseService {
 		this.load_root_ve();
 	}
 	load_root_ve() {
-		let json_str=localStorage.known_root_ve;
+		let json_str=this.get_local_storage();
 		if(json_str) {
 			let res=JSON.parse(json_str);
 			if(res.known_root_ve) {
@@ -5124,6 +5124,7 @@ class HandleTypes extends BaseService {
 			for(let item of arr) {
 				known_str[item[0]].push(item[1]);
 			}
+			this.new_known_strings=[];
 			json_str=JSON.stringify(this.known_data_tmp);
 			this.save_local_storage(json_str);
 		} else {
