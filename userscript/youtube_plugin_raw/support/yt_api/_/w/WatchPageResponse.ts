@@ -1,10 +1,10 @@
-import {WatchEndpoint} from "./WatchEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {WatchResponseContent} from "./WatchResponseContent";
 import {WatchResponsePlayer} from "./WatchResponsePlayer";
 
 export type WatchPageResponse={
 	page: "watch";
-	endpoint: WatchEndpoint;
+	endpoint: YtEndpoint;
 	response: WatchResponseContent;
 	playerResponse: WatchResponsePlayer;
 	url: string;

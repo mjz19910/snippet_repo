@@ -4583,8 +4583,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} data */
 	DataResponsePageType(data) {
-		if(!("page" in data)) return;
 		let page_type=data.page;
+		this.save_keys("DataResponsePageType.page",data.page);
+		this.save_keys("DataResponsePageType",data);
 		switch(data.page) {
 			case "browse": this.BrowsePageResponse(data); break;
 			case "playlist": this.PlaylistPageResponse(data); break;
@@ -4597,7 +4598,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} data */
 	WatchPageResponse(data) {
-		this.WatchResponsePlayer(data.playerResponse);
+		let {page,playerResponse,}=data;
+		this.primitive(page);
+		this.save_keys("WatchPageResponse",data);
+		this.WatchResponsePlayer(playerResponse);
 	}
 	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data */
 	PlaylistPageResponse(data) {
