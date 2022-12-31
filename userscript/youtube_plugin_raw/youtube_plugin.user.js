@@ -4305,7 +4305,7 @@ class HandleTypes extends BaseService {
 		if("urlEndpoint" in ex) return this.UrlEndpointRoot(ex.urlEndpoint);
 		if("browseEndpoint" in ex) return this.BrowseEndpointData(ex.browseEndpoint);
 		if("searchEndpoint" in ex) return this.SearchEndpointData(ex.searchEndpoint);
-		if("setSettingEndpoint" in ep) return this.setSettingEndpoint(ex);
+		if("setSettingEndpoint" in ep) return this.setSettingEndpoint(ex.setSettingEndpoint);
 		if(Object.keys(ex).length>0) {
 			console.log("[yt_endpoint] [%s]",Object.keys(ex).join(),ex);
 		}
