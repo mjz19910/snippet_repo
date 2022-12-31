@@ -1355,7 +1355,7 @@ class MyReader {
 				try {
 					this.skip(size);
 				} catch {
-					console.log("skip failed at",fieldId);
+					console.log("skip failed at",this.pos,fieldId);
 					this.failed=true;
 				}
 				first_num.push(['child',sub_buffer]);
