@@ -5152,6 +5152,9 @@ class HandleTypes extends BaseService {
 			tmp_known_str[item[0]].push(item[1]);
 		}
 		this.new_known_strings=[];
+		this.save_tmp_data();
+	}
+	save_tmp_data() {
 		let json_str=JSON.stringify(this.known_data_tmp);
 		this.save_local_storage(json_str);
 	}
