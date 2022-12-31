@@ -10,9 +10,9 @@ class ContextType {
 }
 
 /**
- * @param {string} specifier
- * @param {ContextType} context
- * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
+ * @arg {string} specifier
+ * @arg {ContextType} context
+ * @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve
  */
 export async function resolve(specifier,context,defaultResolve) {
 	if(debug) console.log('spec',specifier);

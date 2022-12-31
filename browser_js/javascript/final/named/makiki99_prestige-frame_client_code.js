@@ -7,36 +7,36 @@ let holder=1;
 holder;
 if(activatePrestige.length==3) {
 	/**
-	 * @param {number} x
-	 * @param {number} y
-	 * @param {number} l
+	 * @arg {number} x
+	 * @arg {number} y
+	 * @arg {number} l
 	 */
 	function nx_l(x,y,l) {
 		return nx_df(x,y,l,x,y,l+1);
 	}
 	/**
-	 * @param {number} x
-	 * @param {number} y
-	 * @param {number} l
+	 * @arg {number} x
+	 * @arg {number} y
+	 * @arg {number} l
 	 */
 	function nx_x(x,y,l) {
 		return nx_df(x,y,l,x+1,y,l);
 	}
 	/**
-	 * @param {number} x
-	 * @param {number} y
-	 * @param {number} l
+	 * @arg {number} x
+	 * @arg {number} y
+	 * @arg {number} l
 	 */
 	function nx_y(x,y,l) {
 		return nx_df(x,y,l,x,y+1,l);
 	}
 	/**
-	 * @param {number} prestige_a
-	 * @param {number} prestige_b
-	 * @param {number} prestige_count
-	 * @param {number} requirement_a
-	 * @param {number} requirement_b
-	 * @param {number} requirement_count
+	 * @arg {number} prestige_a
+	 * @arg {number} prestige_b
+	 * @arg {number} prestige_count
+	 * @arg {number} requirement_a
+	 * @arg {number} requirement_b
+	 * @arg {number} requirement_count
 	 */
 	function nx_df(prestige_a,prestige_b,prestige_count,requirement_a,requirement_b,requirement_count) {
 		let ret,nx=getRequirement(requirement_a,requirement_b,requirement_count);
@@ -70,24 +70,24 @@ if(activatePrestige.length==3) {
 	}
 } else {
 	/**
-	 * @param {number} x
-	 * @param {number} y
+	 * @arg {number} x
+	 * @arg {number} y
 	 */
 	function nx_x(x,y) {
 		return nx_df(x,y,x+1,y);
 	}
 	/**
-	 * @param {number} x
-	 * @param {number} y
+	 * @arg {number} x
+	 * @arg {number} y
 	 */
 	function nx_y(x,y) {
 		return nx_df(x,y,x,y+1);
 	}
 	/**
-	 * @param {number} prestige_1_a
-	 * @param {number} prestige_1_b
-	 * @param {number} prestige_2_a
-	 * @param {number} prestige_2_b
+	 * @arg {number} prestige_1_a
+	 * @arg {number} prestige_1_b
+	 * @arg {number} prestige_2_a
+	 * @arg {number} prestige_2_b
 	 */
 	function nx_df(prestige_1_a,prestige_1_b,prestige_2_a,prestige_2_b) {
 		let prestige_2_requirement=getRequirement(prestige_2_a,prestige_2_b,0);

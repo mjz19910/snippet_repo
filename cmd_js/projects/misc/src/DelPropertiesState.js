@@ -17,7 +17,7 @@ export class DelPropertiesState {
 		this.del_undo_start=this.del_parents.length;
 		this.del_undo_cur=this.del_undo_start;
 	}
-	/** @param {() => void} fn */
+	/** @arg {() => void} fn */
 	del_undo_until_ok(fn) {
 		let is_ok=false;
 		while(!is_ok) {

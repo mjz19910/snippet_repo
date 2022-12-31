@@ -1,6 +1,6 @@
 /**
- * @param {string} text
- * @param {any} _ec_info
+ * @arg {string} text
+ * @arg {any} _ec_info
  */
 export function do_exec(text,_ec_info) {
     while(1) {

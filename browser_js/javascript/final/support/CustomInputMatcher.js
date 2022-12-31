@@ -1,7 +1,7 @@
 export class CustomInputMatcher {
 	/**
-	 * @param {any} t_needle
-	 * @param {any} t_string_getter
+	 * @arg {any} t_needle
+	 * @arg {any} t_string_getter
 	 * @arg {string} result_name
 	 */
 	constructor(t_needle,t_string_getter,result_name) {

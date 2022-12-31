@@ -16,11 +16,11 @@ export function ctx_exec() {
 	const obj_proto_of=Object.getPrototypeOf;
 	const obj_has_own_property=Object.hasOwnProperty;
 	/**
-	 * @param {DelPropertiesState} state
-	 * @param {any[][]} cc
-	 * @param {string} key
-	 * @param {(TypedPropertyDescriptor<any> & PropertyDescriptor)} property_descriptor
-	 * @param {any} obj
+	 * @arg {DelPropertiesState} state
+	 * @arg {any[][]} cc
+	 * @arg {string} key
+	 * @arg {(TypedPropertyDescriptor<any> & PropertyDescriptor)} property_descriptor
+	 * @arg {any} obj
 	 */
 	function del_all_properties_1(state,obj,cc,key,property_descriptor) {
 		const s=state;
@@ -112,7 +112,7 @@ export function ctx_exec() {
 			this.del_undo_cur=this.del_undo_start;
 		}
 		/**
-		 * @param {() => void} fn
+		 * @arg {() => void} fn
 		 */
 		del_undo_until_ok(fn) {
 			let is_ok=false;

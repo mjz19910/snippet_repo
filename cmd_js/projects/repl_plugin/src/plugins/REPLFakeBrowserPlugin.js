@@ -8,7 +8,7 @@ import {BrowserPluginData} from "./BrowserPluginIndexType.js";
 import {ObjMaybeKeys} from "./ObjMaybeKeys.js";
 
 export class REPLFakeBrowserPlugin {
-	/** @param {ReplPluginManager} repl */
+	/** @arg {ReplPluginManager} repl */
 	constructor(repl) {
 		this.repl=repl;
 	}
@@ -29,14 +29,14 @@ export class REPLFakeBrowserPlugin {
 		return any(context);
 	}
 	/**
-	 * @param {string} key
+	 * @arg {string} key
 	 */
 	update_stored_keys(key) {
 		if(!this.obj) return;
 		this.obj.update(key);
 	}
 	/**
-	 * @param {BrowserPluginData} object
+	 * @arg {BrowserPluginData} object
 	 */
 	set_object_store(object) {
 		this.obj=new ObjMaybeKeys(object);

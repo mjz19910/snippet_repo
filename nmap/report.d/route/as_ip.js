@@ -1,5 +1,5 @@
 /**
- * @param {number[]} arr
+ * @arg {number[]} arr
  */
 export function as_ip(arr) {
 	let res = 0;

@@ -3,13 +3,13 @@ import * as https from "https";
 import {PageLoaderState} from "./page_loader.js";
 
 /**
- * @param {PageLoaderState} state
+ * @arg {PageLoaderState} state
  */
 function async_http_get(state) {
 	state.fetcher.async_api_use_for_get(state,http);
 }
 /**
- * @param {PageLoaderState} state
+ * @arg {PageLoaderState} state
  */
 function async_https_get(state) {
 	state.fetcher.async_api_use_for_get(state,https);

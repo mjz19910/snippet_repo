@@ -4,7 +4,7 @@ import {REPLContextPlugin} from "./REPLContextPlugin.js";
 import {REPLFakeBrowserPlugin} from "./REPLFakeBrowserPlugin.js";
 
 
-/** @param {ReplPluginManager} manager */
+/** @arg {ReplPluginManager} manager */
 export function bind_plugins(manager) {
 	console.log('plug bind');
 	new REPLCommandsPlugin(manager).enable();

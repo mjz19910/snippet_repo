@@ -36,15 +36,15 @@ class RustSetTheory {
 class RustLogic {
 }
 class RustTypeInterface {
-	/** @param {string} target */
+	/** @arg {string} target */
 	constructor(target) {
 		this.target=target;
 		/** @type {{}[]} */
 		this.values=[];
 	}
 	/**
-	 * @param {string} str_0
-	 * @param {{}} value
+	 * @arg {string} str_0
+	 * @arg {{}} value
 	 */
 	defineType(str_0,value) {
 		this.values.push([str_0,value]);
@@ -119,7 +119,7 @@ class NatNum {
 	/** @type {SumMonad} */
 	monad;
 	/**
-	 * @param {number} value
+	 * @arg {number} value
 	 */
 	constructor(value) {
 		this.value=value;
@@ -168,7 +168,7 @@ const nat_num_ops={
 };
 tt_info.addTypeDescription("Nat",new NatNum(0));
 /**
- * @param {{type: string;description?:string}[]} types
+ * @arg {{type: string;description?:string}[]} types
  */
 function types_to_map(types) {
 	return new Map(types.map(e => {

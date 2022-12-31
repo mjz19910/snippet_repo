@@ -385,8 +385,8 @@ let Og_opts=`-fbranch-count-reg
 //spell:enable
 
 /**
- * @param {Set<string>} base
- * @param {string} base_ext_string
+ * @arg {Set<string>} base
+ * @arg {string} base_ext_string
  */
 function remove_flags_from(base,base_ext_string) {
 	for(let i of base_ext_string.split(/\s+/)) {

@@ -4,22 +4,22 @@ import {XHolder} from './XHolder.js';
 
 /**@implements {NodeJS.EventEmitter} @extends {XHolder<NodeJS.EventEmitter>} */
 class NodeEventEmitter extends XHolder {
-	/** @param {string} event_name */
+	/** @arg {string} event_name */
 	listeners(event_name) {
 		return this.X.listeners(event_name);
 	}
-	/** @param {string} event_name */
+	/** @arg {string} event_name */
 	rawListeners(event_name) {
 		return this.X.rawListeners(event_name);
 	}
-	/** @param {string | symbol} eventName */
+	/** @arg {string | symbol} eventName */
 	listenerCount(eventName) {
 		return this.X.listenerCount(eventName);
 	}
 	eventNames() {
 		return this.X.eventNames();
 	}
-	/** @param {[event: string, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string, listener: (...args: any[]) => void]} args */
 	off(...args) {
 		this.X.off(...args);
 		return this;
@@ -28,7 +28,7 @@ class NodeEventEmitter extends XHolder {
 		this.X.removeAllListeners();
 		return this;
 	}
-	/** @param {number} n */
+	/** @arg {number} n */
 	setMaxListeners(n) {
 		this.X.setMaxListeners(n);
 		return this;
@@ -36,36 +36,36 @@ class NodeEventEmitter extends XHolder {
 	getMaxListeners() {
 		return this.X.getMaxListeners();
 	}
-	/** @param {[event: string, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string, listener: (...args: any[]) => void]} args */
 	prependListener(...args) {
 		this.X.prependListener(...args);
 		return this;
 	}
-	/** @param {[event: string, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string, listener: (...args: any[]) => void]} args */
 	prependOnceListener(...args) {
 		this.X.prependOnceListener(...args);
 		return this;
 	}
-	/** @param {[event: string | symbol, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string | symbol, listener: (...args: any[]) => void]} args */
 	removeListener(...args) {
 		this.X.removeListener(...args);
 		return this;
 	}
-	/** @param {[event: string, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string, listener: (...args: any[]) => void]} args */
 	addListener(...args) {
 		this.X.addListener(...args);
 		return this;
 	}
-	/** @param {[event: string | symbol, ...args: any[]]} args */
+	/** @arg {[event: string | symbol, ...args: any[]]} args */
 	emit(...args) {
 		return this.X.emit(...args);
 	}
-	/** @param {[event: string, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string, listener: (...args: any[]) => void]} args */
 	on(...args) {
 		this.X.on(...args);
 		return this;
 	}
-	/** @param {[event: string, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string, listener: (...args: any[]) => void]} args */
 	once(...args) {
 		this.X.once(...args);
 		return this;
@@ -84,7 +84,7 @@ class RLInterface extends NodeEventEmitter {
 	close() {
 		this.X.close();
 	}
-	/** @param {[data: string | Buffer, key?: import('readline').Key | undefined]} args */
+	/** @arg {[data: string | Buffer, key?: import('readline').Key | undefined]} args */
 	write(...args) {
 		return this.X.write(...args);
 	}
@@ -92,7 +92,7 @@ class RLInterface extends NodeEventEmitter {
 		return this.X.getCursorPos();
 	}
 	/**
-	 * @param {Interface} base_val
+	 * @arg {Interface} base_val
 	 */
 	constructor(base_val) {
 		super(base_val);
@@ -110,7 +110,7 @@ class RLInterface extends NodeEventEmitter {
 	getPrompt() {
 		return this.X.getPrompt();
 	}
-	/** @param {string} value */
+	/** @arg {string} value */
 	setPrompt(value) {
 		if(!this.X) {
 			debugger;
@@ -122,7 +122,7 @@ class RLInterface extends NodeEventEmitter {
 		return this.X.setPrompt(value);
 	}
 	/**
-	 * @param {boolean} [x]
+	 * @arg {boolean} [x]
 	 */
 	prompt(x) {
 		this.X.prompt(x);
@@ -160,7 +160,7 @@ export class REPLServerRuntime extends RLInterface {
 	/**@type {REPLServer} */
 	X;
 	/**
-	 * @param {REPLServer} real_value
+	 * @arg {REPLServer} real_value
 	 */
 	constructor(real_value) {
 		super(real_value);
@@ -183,10 +183,10 @@ export class REPLServerRuntime extends RLInterface {
 	get replMode() {return this.X.replMode;}
 	get last() {return this.X.last;}
 	/**
-	 * @param {string} evalCmd
-	 * @param {import("vm").Context} context
-	 * @param {string} file
-	 * @param {(err: Error | null, result: any) => void} cb
+	 * @arg {string} evalCmd
+	 * @arg {import("vm").Context} context
+	 * @arg {string} file
+	 * @arg {(err: Error | null, result: any) => void} cb
 	 */
 	eval(evalCmd,context,file,cb) {
 		return this.X.eval(evalCmd,context,file,cb);
@@ -200,7 +200,7 @@ export class REPLServerRuntime extends RLInterface {
 	defineCommand(keyword,cmd) {
 		this.X.defineCommand(keyword,cmd);
 	}
-	/** @param {boolean} [preserveCursor] */
+	/** @arg {boolean} [preserveCursor] */
 	displayPrompt(preserveCursor) {
 		this.X.displayPrompt(preserveCursor);
 	}
@@ -209,8 +209,8 @@ export class REPLServerRuntime extends RLInterface {
 	}
 	/**
 	 * @type {this['X']['setupHistory']}
-	 * @param {string} path
-	 * @param {import('./CallbackType.js').CallbackType} callback
+	 * @arg {string} path
+	 * @arg {import('./CallbackType.js').CallbackType} callback
 	 */
 	setupHistory(path,callback) {
 		this.X.setupHistory(path,callback);

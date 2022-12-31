@@ -1,7 +1,7 @@
 const path=require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-/** @param {ModuleDesc} template */
+/** @arg {ModuleDesc} template */
 function devtool_module_template(template) {
 	debugger;
 	if(template.identifier.includes("webpack/")) {

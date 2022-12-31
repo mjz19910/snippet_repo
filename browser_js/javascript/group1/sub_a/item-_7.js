@@ -12,7 +12,7 @@ function main() {
 	const log_level=LOG_INFO;
 	class CSSStyleValue {
 		/**
-		 * @param {string} value
+		 * @arg {string} value
 		 */
 		static create(value) {
 			const val=new CSSStyleValue;
@@ -49,15 +49,15 @@ function main() {
 	}
 	class StylePropertyMapReadOnly {
 		/**
-		 * @param {any} _property
+		 * @arg {any} _property
 		 */
 		get(_property) {}
 		/**
-		 * @param {any} _property
+		 * @arg {any} _property
 		 */
 		getAll(_property) {}
 		/**
-		 * @param {any} _property
+		 * @arg {any} _property
 		 */
 		has(_property) {}
 		entries() {}
@@ -66,18 +66,18 @@ function main() {
 	}
 	class StylePropertyMap extends StylePropertyMapReadOnly {
 		/**
-		 * @param {any} _property
-		 * @param {any[]} _values
+		 * @arg {any} _property
+		 * @arg {any[]} _values
 		 */
 		append(_property,..._values) {}
 		clear() {}
 		/**
-		 * @param {any} _property
+		 * @arg {any} _property
 		 */
 		delete(_property) {}
 		/**
-		 * @param {any} _property
-		 * @param {any[]} _values
+		 * @arg {any} _property
+		 * @arg {any[]} _values
 		 */
 		set(_property,..._values) {}
 	}
@@ -100,7 +100,7 @@ function main() {
 		return {};
 	}();
 	/**
-	 * @param {(Window|(Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v
+	 * @arg {(Window|(Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v
 	 */
 	function log_if_noisy(...v) {
 		if(log_level>LOG_VERBOSE) {
@@ -113,8 +113,8 @@ function main() {
 			,emp=new Set();
 		var js;
 		/**
-		 * @param {NodeList|Node|Function} a
-		 * @param {typeof NodeList|typeof Node|FunctionConstructor} b
+		 * @arg {NodeList|Node|Function} a
+		 * @arg {typeof NodeList|typeof Node|FunctionConstructor} b
 		 */
 		function get_const_eq(a,b) {
 			return Object.getPrototypeOf(a).constructor==b;
@@ -132,8 +132,8 @@ function main() {
 			js_g="{\"type\":\"Error\"}";
 		}
 		/**
-		 * @param {any} e
-		 * @param {any} o
+		 * @arg {any} e
+		 * @arg {any} o
 		 */
 		function json_rep(st=new JSONRepArg0,e,o) {
 			void e;
@@ -367,9 +367,9 @@ function main() {
 			}
 		}
 		/**
-		 * @param {number} nsl
-		 * @param {Map<any, any>} c_map
-		 * @param {any} trg
+		 * @arg {number} nsl
+		 * @arg {Map<any, any>} c_map
+		 * @arg {any} trg
 		 */
 		function do_json_stringify_iter(nsl,c_map,trg) {
 			/**
@@ -385,7 +385,7 @@ function main() {
 				cin=v;
 			}
 			/**
-			 * @param {string} v
+			 * @arg {string} v
 			 */
 			function set_js(v) {
 				js=v;
@@ -455,7 +455,7 @@ function main() {
 			}
 			var proto_arr=Array.from(new Set(car.map(e => Object.getPrototypeOf(e))));
 			/**
-			 * @param {any} e
+			 * @arg {any} e
 			 */
 			function get_proto_id(e) {
 				var pid=proto_arr.indexOf(Object.getPrototypeOf(e));
@@ -466,8 +466,8 @@ function main() {
 				}
 			}
 			/**
-			 * @param {any} a
-			 * @param {any} b
+			 * @arg {any} a
+			 * @arg {any} b
 			 */
 			function do_sort_by_proto(a,b) {
 				return get_proto_id(a)-get_proto_id(b);
@@ -476,8 +476,8 @@ function main() {
 			return [proto_arr,JSON.parse(js.js_g),car,JSON.parse(ret_v.js_g),js,repo];
 		}
 		/**
-		 * @param {Map<any, any>} c_map
-		 * @param {undefined} [o_start]
+		 * @arg {Map<any, any>} c_map
+		 * @arg {undefined} [o_start]
 		 */
 		function do_user(c_map,o_start) {
 			var ps=performance.now()

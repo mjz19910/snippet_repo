@@ -45,7 +45,7 @@ function main() {
 			fr.insertRow();
 		}
 		let frame_row=fr.rows[0];
-		/** @param {HTMLTableRowElement} c_row */
+		/** @arg {HTMLTableRowElement} c_row */
 		function make_cell(c_row) {
 			if(c_row.cells.length==0) {
 				return c_row.insertCell();
@@ -54,7 +54,7 @@ function main() {
 		}
 		let cd=make_cell(frame_row);
 		/**
-		 * @param {{ children: any; }} cd
+		 * @arg {{ children: any; }} cd
 		 */
 		function run_for_cell(cd) {
 			[...cd.children].map(e => e.remove());

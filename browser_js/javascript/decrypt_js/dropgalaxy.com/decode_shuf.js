@@ -7,7 +7,7 @@ function start_process() {
 	first_run_code(arr);
 }
 /**
- * @param {(string|undefined)[]} arr
+ * @arg {(string|undefined)[]} arr
  */
 export function process_00(arr) {
 	let target=0xd357d;

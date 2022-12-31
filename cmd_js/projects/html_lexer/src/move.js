@@ -1,6 +1,6 @@
 /**
  * @template T
- * @param {T} value
+ * @arg {T} value
  */
 
 export function move(value) {

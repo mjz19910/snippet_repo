@@ -1,7 +1,7 @@
 
 let n_registers=[];
 /**
- * @param {string} n
+ * @arg {string} n
  */
 function pi(n) {
 	return parseInt(n,16);
@@ -16,9 +16,9 @@ function main() {
 }
 class ParseAsm {
 	/**
-	 * @param {string[]} map_regflags
-	 * @param {string[]} reg8
-	 * @param {string[]} ar
+	 * @arg {string[]} map_regflags
+	 * @arg {string[]} reg8
+	 * @arg {string[]} ar
 	 */
 	constructor(map_regflags,reg8,ar) {
 		this.map_regflags=map_regflags;
@@ -26,14 +26,14 @@ class ParseAsm {
 		this.instructions=ar;
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	"8b"(ar) {
 		ar;
 		//mov
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	"83"(ar) {
 		//add & cmp
@@ -64,7 +64,7 @@ class ParseAsm {
 		return ar.slice(3);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	"80"(ar) {
 		//cmp
@@ -89,7 +89,7 @@ class ParseAsm {
 		return ar.slice(4);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	"72"(ar) {
 		var num=parseInt(ar[1],16);
@@ -99,7 +99,7 @@ class ParseAsm {
 		return ar.slice(2);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	"8a"(ar) {
 		//mov
@@ -142,7 +142,7 @@ class ParseAsm {
 		return ar.slice(1);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * @arg {number} num
 	 * op>=0xb0 and op<0xc0
 	 */
@@ -159,7 +159,7 @@ class ParseAsm {
 	}
 	jumps=["jo","jno","jb","jae","je","jne","jbe","ja","js"];
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * @arg {number} num
 	 */
 	parse_jumping(ar,num) {
@@ -173,7 +173,7 @@ class ParseAsm {
 		return ar.slice(2);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	parse_test(ar) {
 		let mrm=parseInt(ar[1],16);
@@ -183,8 +183,8 @@ class ParseAsm {
 		return ar.slice(2);
 	}
 	/**
-	 * @param {string[]} ar
-	 * @param {number} sz
+	 * @arg {string[]} ar
+	 * @arg {number} sz
 	 */
 	parse_push_1(ar,sz) {
 		if(sz==1) {
@@ -233,7 +233,7 @@ class ParseAsm {
 		return 0;
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	// @ts-ignore
 	parse_ff(ar) {
@@ -343,7 +343,7 @@ class ParseAsm {
 		throw new Error("Unexpected flow");
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	parse_0f(ar) {
 		let next=pi(ar[1]);
@@ -381,7 +381,7 @@ class ParseAsm {
 		return ar.slice(3);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x8b
 	 */
 	parse_mov_1(ar) {
@@ -417,35 +417,35 @@ class ParseAsm {
 		}
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x8c
 	 */
 	parse_mov_2(ar) {
 		ar;
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x8d
 	 */
 	parse_lea_1(ar) {
 		ar;
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x8e
 	 */
 	parse_mov_3(ar) {
 		ar;
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x8f
 	 */
 	parse_pop_1(ar) {
 		ar;
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x90
 	 */
 	parse_xchg(ar) {
@@ -453,7 +453,7 @@ class ParseAsm {
 		return ar.slice(1);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * 0x6a
 	 */
 	parse_push_2(ar) {
@@ -466,20 +466,20 @@ class ParseAsm {
 		return ar.slice(2);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	nn(ar) {
 		return parseInt(ar[1],16);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * @arg {number} i
 	 */
 	ni(ar,i) {
 		return parseInt(ar[i],16);
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 * @arg {number} off
 	 */
 	id(ar,off) {
@@ -491,7 +491,7 @@ class ParseAsm {
 		return dword.reverse().join("");
 	}
 	/**
-	 * @param {string[]} ar
+	 * @arg {string[]} ar
 	 */
 	parse_add_1(ar) {
 		let dword_str=this.id(ar,1);

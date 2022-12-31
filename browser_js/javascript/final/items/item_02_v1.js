@@ -4,13 +4,13 @@ v1 (cur): snippet_repo/javascript/final/items/item_02_v1.js
 */
 class FakeJavascriptObject {
 	/**
-	 * @param {RustFakeVM} vm
+	 * @arg {RustFakeVM} vm
 	 */
 	constructor(vm) {
 		this.vm=vm;
 	}
 	/**
-	 * @param {string} key
+	 * @arg {string} key
 	 */
 	get_field(key) {
 		if(key==='[[Realm]]') {
@@ -28,14 +28,14 @@ class FakeJavascriptObject {
 }
 class RustIDBFactory extends FakeJavascriptObject {
 	/**
-	 * @param {RustFakeVM} vm
+	 * @arg {RustFakeVM} vm
 	 */
 	constructor(vm) {
 		super(vm);
 	}
 	/**
-	 * @param {any} _name
-	 * @param {number} version
+	 * @arg {any} _name
+	 * @arg {number} version
 	 */
 	open(_name,version) {
 		if(version===0) {
@@ -47,7 +47,7 @@ class RustIDBFactory extends FakeJavascriptObject {
 }
 class RustFakeHost {
 	/**
-	 * @param {RustFakeVM} vm
+	 * @arg {RustFakeVM} vm
 	 */
 	constructor(vm) {
 		vm.set_host_intrinsic(this);
@@ -56,14 +56,14 @@ class RustFakeHost {
 }
 class HostObjectRc {
 	/**
-	 * @param {any} _vm
-	 * @param {any} value
+	 * @arg {any} _vm
+	 * @arg {any} value
 	 */
 	constructor(_vm,value) {
 		this.value=value;
 	}
 	/**
-	 * @param {(arg0: this) => void} callback
+	 * @arg {(arg0: this) => void} callback
 	 */
 	use(callback) {
 		callback(this);
@@ -75,7 +75,7 @@ class RustBuilderTrait {
 	 */
 	children=[];
 	/**
-	 * @param {{children: never[]}[]} build_source
+	 * @arg {{children: never[]}[]} build_source
 	 */
 	build_from_vec(build_source) {
 		for(let x of build_source) {
@@ -85,7 +85,7 @@ class RustBuilderTrait {
 		}
 	}
 	/**
-	 * @param {ExportItem} item
+	 * @arg {ExportItem} item
 	 */
 	build_from_item(item) {
 		this.children.push(item);
@@ -104,7 +104,7 @@ class RustRootBuilder extends RustBuilderTrait {
 		 */
 		this.children_crate_vec=[];
 	}
-	/** @param {{ children: any[]; }} crate */
+	/** @arg {{ children: any[]; }} crate */
 	add_crate_child(crate) {
 		this.children_crate_vec.push(crate);
 	}
@@ -118,8 +118,8 @@ class RustRootBuilder extends RustBuilderTrait {
 }
 class ExportItem {
 	/**
-	 * @param {{ type: string; export_value: RustStdCrate; } | null} [item]
-	 * @param {string | null} [key]
+	 * @arg {{ type: string; export_value: RustStdCrate; } | null} [item]
+	 * @arg {string | null} [key]
 	 */
 	constructor(item=null,key=null) {
 		this.item=item;
@@ -127,7 +127,7 @@ class ExportItem {
 	}
 }
 class RustExportBuilder extends RustBuilderTrait {
-	/** @param {RustBuilderTrait} parent */
+	/** @arg {RustBuilderTrait} parent */
 	constructor(parent) {
 		super();
 		/**@type {{}|null} */
@@ -135,12 +135,12 @@ class RustExportBuilder extends RustBuilderTrait {
 		this.export_as_value=null;
 		this.export_item=null;
 	}
-	/** @param {string} export_as_define */
+	/** @arg {string} export_as_define */
 	export_as(export_as_define) {
 		this.export_as_value=export_as_define;
 		return this;
 	}
-	/** @param {RustStdCrate} value */
+	/** @arg {RustStdCrate} value */
 	crate(value) {
 		this.export_item={
 			type: 'crate',
@@ -159,7 +159,7 @@ class RustExportBuilder extends RustBuilderTrait {
 }
 class RustCrateBuilder extends RustBuilderTrait {
 	/**
-	 * @param {RustBuilderTrait} for_target
+	 * @arg {RustBuilderTrait} for_target
 	 */
 	constructor(for_target) {
 		super();
@@ -196,7 +196,7 @@ class FakeRealm {
 	//[[HostDefined]]
 	fake_host_defined_data={};
 	/**
-	 * @param {string} key
+	 * @arg {string} key
 	 */
 	get_field(key) {
 		if(key==='[[HostDefined]]') {
@@ -218,7 +218,7 @@ class RustFakeVM {
 		this.realm=new FakeRealm;
 	}
 	/**
-	 * @param {RustBuilderTrait} for_target
+	 * @arg {RustBuilderTrait} for_target
 	 */
 	crate_builder(for_target) {
 		return new RustCrateBuilder(for_target);
@@ -227,7 +227,7 @@ class RustFakeVM {
 		return new RustRootBuilder;
 	}
 	/**
-	 * @param {RustFakeHost} value
+	 * @arg {RustFakeHost} value
 	 */
 	set_host_intrinsic(value) {
 		this.intrinsic_data.host=value;
@@ -244,14 +244,14 @@ class RustFakeBuildTarget extends RustBuilderTrait {
 	 */
 	build_result_vec=[];
 	/**
-	 * @param {any} _builder
+	 * @arg {any} _builder
 	 */
 	build_visit(_builder) {
 		this.build_result_vec=null;
 	}
 }
 class RustFakeCrate extends RustFakeBuildTarget {
-	/** @param {any} vm */
+	/** @arg {any} vm */
 	constructor(vm) {
 		super();
 		this.vm=vm;
@@ -262,8 +262,8 @@ class RustFakeCrate extends RustFakeBuildTarget {
 		this.children_crate_vec=[];
 	}
 	/**
-	 * @param {string} define_key
-	 * @param {(value: any) => void} define_value
+	 * @arg {string} define_key
+	 * @arg {(value: any) => void} define_value
 	 */
 	add_function(define_key,define_value) {
 		this.define_data.set(define_key,{
@@ -272,13 +272,13 @@ class RustFakeCrate extends RustFakeBuildTarget {
 		});
 	}
 	/**
-	 * @param {{ children: ExportItem[]; }} crate
+	 * @arg {{ children: ExportItem[]; }} crate
 	 */
 	add_crate_child(crate) {
 		this.children_crate_vec.push(crate);
 	}
 	/**
-	 * @param {any} builder
+	 * @arg {any} builder
 	 * @override
 	 */
 	build_visit(builder) {
@@ -289,13 +289,13 @@ class RustFakeCrate extends RustFakeBuildTarget {
 class RustStdMemCrate extends RustFakeCrate {
 	/**
 	 * @this {RustStdMemCrate}
-	 * @param {any} value
+	 * @arg {any} value
 	 */
 	static intrinsic_drop_in_place(value) {
 		this.vm.intrinsic_drop_in_place(value);
 	}
 	/**
-	 * @param {any} vm
+	 * @arg {any} vm
 	 */
 	constructor(vm) {
 		super(vm);
@@ -304,7 +304,7 @@ class RustStdMemCrate extends RustFakeCrate {
 }
 class RustStdCrate extends RustFakeCrate {
 	/**
-	 * @param {RustFakeVM} vm
+	 * @arg {RustFakeVM} vm
 	 */
 	constructor(vm) {
 		super(vm);

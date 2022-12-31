@@ -22,8 +22,8 @@
 	const LOG_LEVEL_DEBUG=6;
 	const local_logging_level=LOG_LEVEL_WARN;
 	/**
-	 * @param {number} level
-	 * @param {string[]} args
+	 * @arg {number} level
+	 * @arg {string[]} args
 	 */
 	function l_log_if(level,...args) {
 		if(level<=local_logging_level) {
@@ -48,10 +48,10 @@
 		/**
 		 * @arg {TimerTag} tag
 		 * @arg {number} id
-		 * @param {boolean} is_repeating
-		 * @param {TimerHandler} target_fn
-		 * @param {any} target_args
-		 * @param {number} timeout
+		 * @arg {boolean} is_repeating
+		 * @arg {TimerHandler} target_fn
+		 * @arg {any} target_args
+		 * @arg {number} timeout
 		 */
 		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
@@ -71,10 +71,10 @@
 		/**
 		 * @arg {TimerTag} type
 		 * @arg {number} id
-		 * @param {boolean} is_repeating
-		 * @param {Function} target_fn
-		 * @param {any} target_args
-		 * @param {number} timeout
+		 * @arg {boolean} is_repeating
+		 * @arg {Function} target_fn
+		 * @arg {any} target_args
+		 * @arg {number} timeout
 		 */
 		constructor(id,type,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
@@ -93,8 +93,8 @@
 	function timer_nop() {}
 	class PromiseExecutorHandle {
 		/**
-		 * @param {any} accept
-		 * @param {any} reject
+		 * @arg {any} accept
+		 * @arg {any} reject
 		 */
 		constructor(accept,reject) {
 			this.m_closed=false;
@@ -102,7 +102,7 @@
 			this.m_reject=reject;
 		}
 		/**
-		 * @param {any} value
+		 * @arg {any} value
 		 */
 		accept(value) {
 			if(this.m_closed) throw new Error("accept called on closed handle");
@@ -111,7 +111,7 @@
 			this.close();
 		}
 		/**
-		 * @param {any} error
+		 * @arg {any} error
 		 */
 		reject(error) {
 			if(this.m_closed) throw new Error("accept called on closed handle");
@@ -272,7 +272,7 @@
 			this.m_current=-1;
 		}
 		/**
-		 * @param {number} current_value
+		 * @arg {number} current_value
 		 */
 		set_current(current_value) {
 			this.m_current=current_value;
@@ -286,7 +286,7 @@
 	}
 	class VerifyError extends Error {
 		/**
-		 * @param {string | undefined} message
+		 * @arg {string | undefined} message
 		 */
 		constructor(message) {
 			super(message);
@@ -295,7 +295,7 @@
 	}
 	class AssertionError extends Error {
 		/**
-		 * @param {string | undefined} message
+		 * @arg {string | undefined} message
 		 */
 		constructor(message) {
 			super(message);
@@ -303,8 +303,8 @@
 		}
 	}
 	/**
-	 * @param {boolean} assert_result
-	 * @param {string} assert_message
+	 * @arg {boolean} assert_result
+	 * @arg {string} assert_message
 	 */
 	function VERIFY(assert_result,assert_message) {
 		if(!assert_result) {
@@ -336,7 +336,7 @@
 			this.add_one_name(names.repeating);
 		}
 		/**
-		 * @param {keyof Window} key
+		 * @arg {keyof Window} key
 		 */
 		add_one_name(key) {
 			this.m_api_map.set(key,window[key]);
@@ -350,7 +350,7 @@
 			this.id_generator.set_current(this.base_id);
 		}
 		/**
-		 * @param {WorkerState} worker_state_value
+		 * @arg {WorkerState} worker_state_value
 		 */
 		set_worker_state(worker_state_value) {
 			this.worker_state=worker_state_value;
@@ -361,7 +361,7 @@
 		}
 		/**
 		 * @arg {TimerTag} tag
-		 * @param {number} remote_id
+		 * @arg {number} remote_id
 		 */
 		fire(tag,remote_id) {
 			this.assert_valid_worker();
@@ -398,10 +398,10 @@
 			return value;
 		}
 		/**
-		 * @param {1|2} tag
-		 * @param {any} target_fn
-		 * @param {number} timeout
-		 * @param {any} target_args
+		 * @arg {1|2} tag
+		 * @arg {any} target_fn
+		 * @arg {number} timeout
+		 * @arg {any} target_args
 		 */
 		set(tag,target_fn,timeout,target_args) {
 			let remote_id=this.id_generator.next();
@@ -416,9 +416,9 @@
 			return remote_id;
 		}
 		/**
-		 * @param {1 | 2} tag
-		 * @param {number} remote_id
-		 * @param {number} timeout
+		 * @arg {1 | 2} tag
+		 * @arg {number} remote_id
+		 * @arg {number} timeout
 		 */
 		send_worker_set_message(tag,remote_id,timeout) {
 			this.assert_valid_worker();
@@ -440,7 +440,7 @@
 			});
 		}
 		/**
-		 * @param {number} remote_id
+		 * @arg {number} remote_id
 		 */
 		is_state_stored_by_remote_id(remote_id) {
 			return this.m_remote_id_to_state_map.has(remote_id);
@@ -450,14 +450,14 @@
 			return this.m_remote_id_to_state_map.get(remote_id);
 		}
 		/**
-		 * @param {number} remote_id
+		 * @arg {number} remote_id
 		 * @arg {TimerState} state
 		 */
 		store_state_by_remote_id(remote_id,state) {
 			this.m_remote_id_to_state_map.set(remote_id,state);
 		}
 		/**
-		 * @param {number} remote_id
+		 * @arg {number} remote_id
 		 */
 		delete_state_by_remote_id(remote_id) {
 			this.m_remote_id_to_state_map.delete(remote_id);
@@ -487,7 +487,7 @@
 			}
 		}
 		/**
-		 * @param {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|ReplySetRepeatingMsg|ReplyClearSingleMsg|ReplyClearRepeatingMsg} msg
+		 * @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|ReplySetRepeatingMsg|ReplyClearSingleMsg|ReplyClearRepeatingMsg} msg
 		 */
 		on_reply(msg) {
 			switch(msg.type) {
@@ -499,8 +499,8 @@
 			}
 		}
 		/**
-		 * @param {1|2} tag
-		 * @param {number} remote_id
+		 * @arg {1|2} tag
+		 * @arg {number} remote_id
 		 */
 		force_clear(tag,remote_id) {
 			this.assert_valid_worker();
@@ -523,8 +523,8 @@
 			}
 		}
 		/**
-		 * @param {TimerTag} tag
-		 * @param {number} remote_id
+		 * @arg {TimerTag} tag
+		 * @arg {number} remote_id
 		 */
 		clear(tag,remote_id) {
 			this.assert_valid_worker();
@@ -752,7 +752,7 @@
 	const WorkerStateMessageV=WorkerStateMessage.as_any_of();
 	class WorkerState {
 		/**
-		 * @param {Blob} worker_code_blob
+		 * @arg {Blob} worker_code_blob
 		 * @arg {Timer} timer
 		 * @arg {PromiseExecutorHandle} executor_handle
 		 */
@@ -842,13 +842,13 @@
 			}
 		}
 		/**
-		 * @param {any} handle
+		 * @arg {any} handle
 		 */
 		set_executor_handle(handle) {
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|TimerWorkerSetTypesMsg} msg
+		 * @arg {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|TimerWorkerSetTypesMsg} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -872,14 +872,14 @@
 		}
 		/**
 		 * @template {{}|{for_worker_state: boolean}} T
-		 * @param {T} msg
+		 * @arg {T} msg
 		 * @returns {msg is {for_worker_state: boolean}}
 		 */
 		is_message_for(msg) {
 			return 'for_worker_state' in msg&&msg.for_worker_state;
 		}
 		/**
-		 * @param {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg
+		 * @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg
 		 */
 		dispatch_message(msg) {
 			if(this.is_message_for(msg)) {
@@ -935,19 +935,19 @@
 			return this.worker?.postMessage(msg);
 		}
 		/**
-		 * @param {WorkerState} worker_state_value
+		 * @arg {WorkerState} worker_state_value
 		 */
 		static has_old_global_state_value(worker_state_value) {
 			return this.has_global_state()&&!this.equals_global_state(worker_state_value);
 		}
 		/**
-		 * @param {WorkerState} worker_state_value
+		 * @arg {WorkerState} worker_state_value
 		 */
 		static equals_global_state(worker_state_value) {
 			return this.get_global_state()===worker_state_value;
 		}
 		/**
-		 * @param {WorkerState} worker_state_value
+		 * @arg {WorkerState} worker_state_value
 		 */
 		static maybe_delete_old_global_state_value(worker_state_value) {
 			if(this.has_old_global_state_value(worker_state_value)) {
@@ -978,7 +978,7 @@
 			return any_window[this.global_state_key];
 		}
 		/**
-		 * @param {WorkerState} worker_state_value
+		 * @arg {WorkerState} worker_state_value
 		 */
 		static set_global_state(worker_state_value) {
 			/** @type {any} */
@@ -1014,8 +1014,8 @@
 		postMessage(msg);
 	}
 	/**
-	 * @param {(arg0: null) => void} executor_accept
-	 * @param {(arg0: Error) => void} executor_reject
+	 * @arg {(arg0: null) => void} executor_accept
+	 * @arg {(arg0: Error) => void} executor_reject
 	 */
 	function set_timeout_on_remote_worker_executor(executor_accept,executor_reject) {
 		let failed=false;
@@ -1052,9 +1052,9 @@
 		worker_state.init();
 		const setTimeout_global=setTimeout;
 		/**
-		 * @param {TimerHandler} handler
-		 * @param {number | undefined} timeout
-		 * @param {any[]} target_args
+		 * @arg {TimerHandler} handler
+		 * @arg {number | undefined} timeout
+		 * @arg {any[]} target_args
 		 */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
@@ -1079,8 +1079,8 @@
 		}
 		const setInterval_global=setInterval;
 		/**
-		 * @param {TimerHandler} handler
-		 * @param {any[]} target_args
+		 * @arg {TimerHandler} handler
+		 * @arg {any[]} target_args
 		 */
 		function remoteSetInterval(handler,timeout=0,...target_args) {
 			if(!worker_state) {
@@ -1108,7 +1108,7 @@
 			clearInterval
 		};
 		/**
-		 * @param {{setTimeout: any,setInterval: any,clearTimeout: any,clearInterval: any}} obj
+		 * @arg {{setTimeout: any,setInterval: any,clearTimeout: any,clearInterval: any}} obj
 		 */
 		function connect_local_to_remote_timer_api(obj) {
 			/** @type {any} */
@@ -1139,7 +1139,7 @@
 		TimeoutSetTypes=TimeoutSetTypes;
 	}
 	/**
-	 * @param {{(arg0: WorkerVars): void; }} verify_callback
+	 * @arg {{(arg0: WorkerVars): void; }} verify_callback
 	 */
 	function worker_code_function(verify_callback) {
 		const TIMER_SINGLE=1;
@@ -1172,7 +1172,7 @@
 		}
 		decay_to_object;
 		/**
-		 * @param {MessageEvent<typeof WorkerStateMessageV>} e
+		 * @arg {MessageEvent<typeof WorkerStateMessageV>} e
 		 */
 		function message_without_types_handler(e) {
 			if(!g_timer_api.worker_set_types) throw 1;
@@ -1199,7 +1199,7 @@
 			}
 		}
 		/**
-		 * @param {MessageEvent<typeof WorkerStateMessageV>} e
+		 * @arg {MessageEvent<typeof WorkerStateMessageV>} e
 		 */
 		function message_with_types_handler(e) {
 			let msg=e.data;
@@ -1266,7 +1266,7 @@
 				repeating: "clearInterval"
 			};
 			/**
-			 * @param {RemoteWorkerTypes} types
+			 * @arg {RemoteWorkerTypes} types
 			 */
 			on_set_types(types) {
 				this.async=types.async;
@@ -1290,9 +1290,9 @@
 				this.m_timer=timer;
 			}
 			/**
-			 * @param {1|2} tag
-			 * @param {number} remote_id
-			 * @param {number|undefined} timeout
+			 * @arg {1|2} tag
+			 * @arg {number} remote_id
+			 * @arg {number|undefined} timeout
 			 */
 			set(tag,remote_id,timeout) {
 				if(!this.m_timer) throw 1;
@@ -1306,8 +1306,8 @@
 		}
 		function nop_fn() {};
 		/**
-		 * @param {RemoteTimer} timer
-		 * @param {number} remote_id
+		 * @arg {RemoteTimer} timer
+		 * @arg {number} remote_id
 		 */
 		function fire_timer(timer,remote_id) {
 			timer.fire(remote_id);
@@ -1315,7 +1315,7 @@
 		const g_timer_api=new RemoteTimerApi;
 		class RemoteTimerState {
 			/**
-			 * @param {1|2} type
+			 * @arg {1|2} type
 			 */
 			constructor(type) {
 				this.type=type;
@@ -1331,7 +1331,7 @@
 				globalThis[g_timer_api.clear_names.single](this.base_id);
 			}
 			/**
-			 * @param {number} remote_id
+			 * @arg {number} remote_id
 			 */
 			fire(remote_id) {
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
@@ -1359,9 +1359,9 @@
 				}
 			}
 			/**
-			 * @param {1|2} tag
-			 * @param {number} remote_id
-			 * @param {number | undefined} timeout
+			 * @arg {1|2} tag
+			 * @arg {number} remote_id
+			 * @arg {number | undefined} timeout
 			 */
 			set(tag,remote_id,timeout) {
 				// debugger;
@@ -1384,7 +1384,7 @@
 			}
 			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
 			/**
-			 * @param {1|2} tag
+			 * @arg {1|2} tag
 			 */
 			verify_tag(tag) {
 				if(!this.validate_tag(tag)) {
@@ -1392,8 +1392,8 @@
 				}
 			}
 			/**
-			 * @param {RemoteTimerState} state
-			 * @param {any} remote_id
+			 * @arg {RemoteTimerState} state
+			 * @arg {any} remote_id
 			 */
 			verify_state(state,remote_id) {
 				if(!this.validate_state(state)) {
@@ -1405,7 +1405,7 @@
 				}
 			}
 			/**
-			 * @param {1|2} tag
+			 * @arg {1|2} tag
 			 */
 			validate_tag(tag) {
 				if(tag<TIMER_SINGLE||tag>=TIMER_TAG_COUNT) {
@@ -1416,13 +1416,13 @@
 				return true;
 			}
 			/**
-			 * @param {{ type: 1|2; }} state
+			 * @arg {{ type: 1|2; }} state
 			 */
 			validate_state(state) {
 				return this.validate_tag(state.type);
 			}
 			/**
-			 * @param {any} remote_id
+			 * @arg {any} remote_id
 			 */
 			clear(remote_id) {
 				if(!this.m_remote_id_to_state_map.has(remote_id)) {

@@ -598,7 +598,7 @@ class NamesAndKeywords extends ECMA262Base {
 
 class PunctuatorsData extends ECMA262Base {
 	/**
-	 * @param {ecma_root} parent
+	 * @arg {ecma_root} parent
 	 */
 	constructor(parent) {
 		super(parent);
@@ -1908,7 +1908,7 @@ class ecma_root {
 class js_token_generator {
 	static EOF_TOKEN=Symbol();
 	/**
-	 * @param {string} str
+	 * @arg {string} str
 	 */
 	constructor(str) {
 		this.str=str;
@@ -1916,7 +1916,7 @@ class js_token_generator {
 		this.root=new ecma_root();
 	}
 	/**
-	 * @param {[true,string,number,number]|[false,symbol,number,number] | null} token_value
+	 * @arg {[true,string,number,number]|[false,symbol,number,number] | null} token_value
 	 */
 	describe_token(token_value) {
 		if(!token_value) return ["undefined"];
@@ -1958,7 +1958,7 @@ class js_token_generator {
 		return null;
 	}
 	/**
-	 * @param {{ type: string|null; item: string|null; length: number; }} state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} state
 	 * @arg {LexReturnTyShort} lex_return
 	 * @arg {string} type
 	 */
@@ -1970,72 +1970,72 @@ class js_token_generator {
 		}
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseWhiteSpace(in_state,out_state) {
 		let res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"WhiteSpace");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseLineTerminator(in_state,out_state) {
 		let res=this.root.line_terminators.LineTerminator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"LineTerminator");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseComment(in_state,out_state) {
 		let res=this.root.comments.Comment(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"Comment");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseRightBracePunctuator(in_state,out_state) {
 		let res=this.root.punctuators.RightBracePunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RightBracePunctuator");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseDivPunctuator(in_state,out_state) {
 		let res=this.root.punctuators.DivPunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"DivPunctuator");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseCommonToken(in_state,out_state) {
 		let res=this.root.tokens.CommonToken(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"CommonToken");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseRegularExpressionLiteral(in_state,out_state) {
 		let res=this.root.RegularExpressionLiterals.RegularExpressionLiteral(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RegularExpressionLiteral");
 	}
 	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 * @arg {{ str: string; index: number; }} in_state
+	 * @arg {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseTemplateSubstitutionTail(in_state,out_state) {
 		let res=this.root.template_literal_lexical_components.TemplateSubstitutionTail(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"TemplateSubstitutionTail");
 	}
 	/**
-	 * @param {{str:string;index:number;}} in_state
-	 * @param {{type:string|null;item:string|null;length:number}} out_state
+	 * @arg {{str:string;index:number;}} in_state
+	 * @arg {{type:string|null;item:string|null;length:number}} out_state
 	 */
 	ParseCommonElements(in_state,out_state) {
 		this.ParseWhiteSpace(in_state,out_state);
@@ -2138,7 +2138,7 @@ class js_token_generator {
 }
 
 
-/** @param {string} code_str */
+/** @arg {string} code_str */
 function parse_javascript_str(code_str) {
 	let token_gen=new js_token_generator(code_str);
 	let res_item;

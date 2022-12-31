@@ -6,9 +6,9 @@ function any(v) {
 }
 
 /**
- * @param {any[]} a
- * @param {{}} b
- * @param {string[]} path
+ * @arg {any[]} a
+ * @arg {{}} b
+ * @arg {string[]} path
  */
 function visitor(a,b,path) {
 	var results=[];
@@ -139,9 +139,9 @@ let recurwork=[];
  */
 let recurargs=[];
 /**
- * @param {string} a
- * @param {{ deps: any; vm: { _uid: string | number; }; }} b
- * @param {number} d
+ * @arg {string} a
+ * @arg {{ deps: any; vm: { _uid: string | number; }; }} b
+ * @arg {number} d
  */
 function w_vs(a,b,d=0) {
 	if(d>1) {

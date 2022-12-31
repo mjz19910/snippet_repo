@@ -2314,10 +2314,7 @@ class ecma_root {
 		console.log("next token fallthrough",cur,this.index);
 		return null;
 	}
-	/**
-	 * @arg {string} source_code
-	 * @arg {number} start_index
-	 */
+	/** @arg {string} source_code @arg {number} start_index */
 	constructor(source_code,start_index) {
 		this.source_code=source_code;
 		this.start_index=start_index;
@@ -2416,18 +2413,11 @@ class LoggingEventTarget {
 inject_api.LoggingEventTarget=LoggingEventTarget;
 
 class ApiProxyManager {
-	/**
-	 * @arg {LoggingEventTarget} event_handler
-	 */
+	/** @arg {LoggingEventTarget} event_handler */
 	constructor(event_handler) {
 		this.event_handler=event_handler;
 	}
-	/**
-	 * @template {(...x:any[])=>any} T
-	 * @arg {string} message_to_send
-	 * @arg {T} function_value
-	 * @returns {T}
-	 */
+	/** @template {(...x:any[])=>any} T @arg {string} message_to_send @arg {T} function_value @returns {T} */
 	create_proxy_for_function(message_to_send,function_value) {
 		let t=this.event_handler;
 		/** @arg {[target: T, thisArg: any, argArray: any[]]} post_message_proxy_spread */
@@ -2459,10 +2449,7 @@ ApiProxyManager.attach_to_api();
 class ReversePrototypeChain {
 	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
 	/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
-	/**
-	 * @arg {{}} base
-	 * @arg {{}[]} targets
-	 */
+	/** @arg {{}} base @arg {{}[]} targets */
 	constructor(base,targets) {
 		this.window_list=[];
 		for(let i=0;i<window.length;i++) {
@@ -2942,14 +2929,7 @@ class AddEventListenerExtension {
 			default: throw new Error("1");
 		}
 	}
-	/**
-	 * @typedef {EventListenerOrEventListenerObject} InterceptFuncType
-	 * @typedef {[string, InterceptFuncType, any?]} InterceptThis
-	 * @arg {InterceptThis[1]} arg_function
-	 * @arg {InterceptThis} arg_this
-	 * @arg {[evt: Event]} args
-	 * @private
-	 */
+	/** @typedef {EventListenerOrEventListenerObject} InterceptFuncType @typedef {[string, InterceptFuncType, any?]} InterceptThis @arg {InterceptThis[1]} arg_function @arg {InterceptThis} arg_this @arg {[evt: Event]} args @private */
 	eventFireInterceptor(arg_function,arg_this,args) {
 		if(args[0] instanceof MessageEvent) {
 			/** @type {MessageEvent<unknown>} */
@@ -3023,9 +3003,7 @@ class CreateObjURLCache {
 		createObjectURL: URL.createObjectURL,
 		revokeObjectURL: URL.revokeObjectURL,
 	};
-	/**
-	 * @type {[(Blob | MediaSource)[], string, boolean][]}
-	 */
+	/** @type {[(Blob | MediaSource)[], string, boolean][]} */
 	static expired=[];
 	/** @type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
 	static cache=new Map;
@@ -3035,9 +3013,7 @@ class CreateObjURLCache {
 	static disable() {
 		this.update_scope(this.originalScope);
 	}
-	/**
-	 * @arg {CreateObjURLCache.originalScope} scope
-	 */
+	/** @arg {CreateObjURLCache.originalScope} scope */
 	static update_scope(scope) {
 		URL.createObjectURL=scope.createObjectURL;
 		URL.revokeObjectURL=scope.revokeObjectURL;
@@ -3151,9 +3127,7 @@ class CompressRepeated {
 		if(this.did_decompress(src,dst)) return [true,dst];
 		return [false,dst];
 	}
-	/**
-	 * @arg {string | any[]} arr
-	 */
+	/** @arg {string | any[]} arr */
 	static can_compress_items(arr) {
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -3311,10 +3285,7 @@ class CompressState extends CompressStateBase {
 }
 
 class MulCompression extends BaseCompression {
-	/**
-	 * @arg {{i:number,arr:string[],ret:string[]}} state
-	 * @arg {string} item
-	 */
+	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
 	compress_rle(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
@@ -3324,10 +3295,7 @@ class MulCompression extends BaseCompression {
 		state.i+=off-1;
 		return true;
 	}
-	/**
-	 * @arg {{i:number,arr:number[],ret:(number|RepeatImpl_0<number>)[]}} state
-	 * @arg {number} item
-	 */
+	/** @arg {{i:number,arr:number[],ret:(number|RepeatImpl_0<number>)[]}} state @arg {number} item */
 	compress_rle_number(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
@@ -3397,10 +3365,7 @@ class MulCompression extends BaseCompression {
 
 /** @typedef {typeof DisabledMulCompression} DisabledMulCompressionT */
 class DisabledMulCompression extends MulCompression {
-	/**
-	 * @template T
-	 * @arg {T[]} arr
-	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
+	/** @template T @arg {T[]} arr @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
 		/** @type {CompressState<T,AnyOrRepeat_0<T>>} */
 		let state=new CompressState(arr);
@@ -3412,12 +3377,7 @@ class DisabledMulCompression extends MulCompression {
 		}
 		return this.compress_result_state(state);
 	}
-	/**
-	 * @template {RecordKey<symbol>} U
-	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, AnyOrRepeat_0<T>>} state
-	 * @arg {T} item
-	 * */
+	/** @template {RecordKey<symbol>} U @template {InstanceType<U>} T @arg {CompressState<T, AnyOrRepeat_0<T>>} state @arg {T} item */
 	compress_rle_T_X(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
@@ -3427,13 +3387,7 @@ class DisabledMulCompression extends MulCompression {
 		state.i+=off-1;
 		return true;
 	}
-	/**
-	 * @template {InstanceType<U>} T
-	 * @template {new (...args: any) => any} U
-	 * @arg {U} _
-	 * @arg {T[]} arr
-	 * @arg {AnyOrRepeat_0<T>[]} ret
-	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
+	/** @template {InstanceType<U>} T @template {new (...args: any) => any} U @arg {U} _ @arg {T[]} arr @arg {AnyOrRepeat_0<T>[]} ret @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
@@ -3756,11 +3710,7 @@ function run_modules_plugin() {
 		}
 		return ret;
 	};
-	/**
-	 * @this {()=>void}
-	 * @arg {any} tv
-	 * @arg {any} r
-	 */
+	/** @this {()=>void} @arg {any} tv @arg {any} r */
 	function function_prototype_apply_inject(tv,r) {
 		if(!inject_api.function_as_string_vec) throw 1;
 		let ret=bound_apply_call(this,[tv,r]);
@@ -3822,14 +3772,7 @@ class CompressionStatsCalculator {
 		let values=this.map_values();
 		return to_tuple_arr(keys,values);
 	}
-	/**
-	 * @template T
-	 * @template U
-	 * @arg {T[]} arr
-	 * @arg {number} range
-	 * @arg {U} replacement
-	 * @returns {(["T", T]|["U", U])[]}
-	 * */
+	/** @template T @template U @arg {T[]} arr @arg {number} range @arg {U} replacement @returns {(["T", T]|["U", U])[]} */
 	replace_range(arr,range,replacement) {
 		/** @type {(["T", T]|["U", U])[]} */
 		let ret=[];
@@ -4029,9 +3972,7 @@ class DoCalc {
 	get_result() {
 		return this.m_return_value;
 	}
-	/**
-	 * @type {DualR_0|null}
-	 */
+	/** @type {DualR_0|null} */
 	m_return_value=null;
 	run() {
 		this.obj.stats_win=2;
@@ -4074,10 +4015,7 @@ class DoCalc {
 		}
 		return null;
 	}
-	/**
-	 * @arg {CompressionStatsCalculator} stats
-	 * @arg {IDValueImpl_0} obj
-	 */
+	/** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj */
 	constructor(stats,obj) {
 		this.stats=stats;
 		x: {
@@ -4570,9 +4508,7 @@ class HexRandomDataGenerator {
 		this.random_num=Math.random();
 		this.used_bits=0;
 	}
-	/**
-	 * @arg {number} bit_count
-	 */
+	/** @arg {number} bit_count */
 	next(bit_count) {
 		let random_size=1<<bit_count;
 		let num=~~(this.random_num*random_size);
@@ -4584,9 +4520,7 @@ class HexRandomDataGenerator {
 	reset_part() {
 		this.cur_part=null;
 	}
-	/**
-	 * @arg {number} bit_count
-	 */
+	/** @arg {number} bit_count */
 	next_part(bit_count) {
 		let cur_num=this.next(bit_count);
 		if(this.used_bits>=48) {
@@ -4624,10 +4558,7 @@ inject_api.HexRandomDataGenerator=HexRandomDataGenerator;
 const random_data_generator=new HexRandomDataGenerator;
 
 class EventListenerValue {
-	/**
-	 * @arg {EventListenerOrEventListenerObject|null} callback
-	 * @arg {boolean | EventListenerOptions} options
-	 */
+	/** @arg {EventListenerOrEventListenerObject|null} callback @arg {boolean | EventListenerOptions} options */
 	constructor(callback,options) {
 		/** @type {EventListenerOrEventListenerObject|null} */
 		this.callback=callback;
@@ -4656,10 +4587,7 @@ class GenericEvent {
 inject_api.GenericEvent=GenericEvent;
 
 class GenericDataEvent extends GenericEvent {
-	/**
-	 * @arg {string} type
-	 * @arg {any} data
-	 */
+	/** @arg {string} type @arg {any} data */
 	constructor(type,data) {
 		super(type);
 		this.data=data;
@@ -4812,13 +4740,7 @@ const ack_win=5000;
 class TCPMessage {
 	/** @readonly */
 	type="tcp";
-	/**
-	 * @arg {ConnectFlag} flags
-	 * @arg {number} client_id
-	 * @arg {number} seq
-	 * @arg {number|null} ack
-	 * @arg {ConnectionMessage["data"]} data
-	 */
+	/** @arg {ConnectFlag} flags @arg {number} client_id @arg {number} seq @arg {number|null} ack @arg {ConnectionMessage["data"]} data */
 	constructor(flags,client_id,seq,ack,data) {
 		this.flags=flags;
 		this.client_id=client_id;
@@ -4827,10 +4749,7 @@ class TCPMessage {
 		/** @type {ConnectionMessage["data"]} */
 		this.data=data;
 	}
-	/**
-	 * @arg {number} client_id
-	 * @returns {ConnectionMessage}
-	 */
+	/** @arg {number} client_id @returns {ConnectionMessage} */
 	static make_syn(client_id) {
 		let seq=(Math.random()*ack_win)%ack_win|0;
 		if(testing_tcp) {
@@ -4838,13 +4757,7 @@ class TCPMessage {
 		}
 		return new TCPMessage(tcp_syn,client_id,seq,null,null);
 	}
-	/**
-	 * @arg {number} client_id
-	 * @arg {ConnectionMessage["data"]} data
-	 * @arg {number} seq
-	 * @arg {number} ack
-	 * @returns {ConnectionMessage}
-	 */
+	/** @arg {number} client_id @arg {ConnectionMessage["data"]} data @arg {number} seq @arg {number} ack @returns {ConnectionMessage} */
 	static make_message(client_id,data,seq,ack) {
 		return new TCPMessage(0,client_id,seq,ack,data);
 	}
@@ -5152,9 +5065,7 @@ class ListenSocket {
 			type: "disconnected",
 		},1,1));
 	}
-	/**
-	 * @arg {boolean} can_reconnect
-	 */
+	/** @arg {boolean} can_reconnect */
 	will_disconnect(can_reconnect) {
 		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
 			type: "will_disconnect",
@@ -5417,22 +5328,13 @@ class DebugApi {
 	deleteData(key) {
 		return this.data_store.delete(key);
 	}
-	/**
-	 * @arg {any} element
-	 * @returns {{[x: string]: EventListenerInternal[]}}
-	 */
+	/** @arg {any} element @returns {{[x: string]: EventListenerInternal[]}} */
 	getEventListeners(element) {
 		if(!this.hasData("getEventListeners"))
 			throw new Error("1");
 		return this.get_getEventListeners("getEventListeners")(element);
 	}
-	/**
-	 * @arg {I_debug} debug
-	 * @arg {I_undebug} undebug
-	 * @arg {Constructor} func
-	 * @arg {string} name
-	 * @returns {dbg_result}
-	 */
+	/** @arg {I_debug} debug @arg {I_undebug} undebug @arg {Constructor} func @arg {string} name @returns {dbg_result} */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
 		/**
@@ -5458,11 +5360,7 @@ class DebugApi {
 			activate_args: [],
 		});
 	}
-	/**
-	 * @arg {any} debug
-	 * @arg {any} undebug
-	 * @arg {null} getEventListeners @returns {this}
-	 */
+	/** @arg {any} debug @arg {any} undebug @arg {null} getEventListeners @returns {this} */
 	attach(debug,undebug,getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
 		let obj_debug=this.get_d();
@@ -5475,18 +5373,11 @@ class DebugApi {
 		}
 		return this;
 	}
-	/**
-	 * @arg {new (...arg0: any[]) => any} class_value
-	 * @arg {any[]} arg_vec @returns {boolean}
-	 */
+	/** @arg {new (...arg0: any[]) => any} class_value @arg {any[]} arg_vec @returns {boolean} */
 	activateClass(class_value,arg_vec) {
 		return new class_value(...arg_vec);
 	}
-	/**
-	 * @arg {any} function_value
-	 * @arg {any} target_obj
-	 * @arg {any} arg_vec @returns {boolean}
-	 */
+	/** @arg {any} function_value @arg {any} target_obj @arg {any} arg_vec @returns {boolean} */
 	activateApply(function_value,target_obj,arg_vec) {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
@@ -5523,9 +5414,7 @@ class DebugApi {
 		}
 		return false;
 	}
-	/**
-	 * @argument {Function} function_value
-	 * @returns {string}
+	/** @argument {Function} function_value @returns {string}
 	*/
 	stringifyFunction(function_value) {
 		let function_code=function_value.toString();
@@ -5536,10 +5425,7 @@ class DebugApi {
 		}
 		return function_code;
 	}
-	/**
-	 * @arg {IDebugBreakpointArgs} breakpoint_arguments
-	 * @returns {dbg_result}
-	 */
+	/** @arg {IDebugBreakpointArgs} breakpoint_arguments @returns {dbg_result} */
 	debuggerGetVarArray_a(breakpoint_arguments) {
 		let function_value=breakpoint_arguments.target;
 		let var_match=breakpoint_arguments.name;
@@ -5617,12 +5503,7 @@ class DebugApi {
 			return: activate_return
 		};
 	}
-	/**
-	 * @arg {Constructor} class_value
-	 * @arg {[any,any[]]} activate_args
-	 * @arg {string} var_match
-	 * @returns {dbg_result}
-	 */
+	/** @arg {Constructor} class_value @arg {[any,any[]]} activate_args @arg {string} var_match @returns {dbg_result} */
 	debuggerGetVarArray_c(class_value,activate_args,var_match) {
 		return this.debuggerGetVarArray_a({
 			type: "class-breakpoint",
@@ -5632,12 +5513,7 @@ class DebugApi {
 			activate_args,
 		});
 	}
-	/**
-	 * @arg {(...x: any[]) => void} function_value
-	 * @arg {[any, any[]]} activate_args
-	 * @arg {string} var_match
-	 * @returns {dbg_result}
-	 */
+	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_args @arg {string} var_match @returns {dbg_result} */
 	debuggerGetVarArray(function_value,activate_args,var_match) {
 		return this.debuggerGetVarArray_a({
 			type: "function-breakpoint",
@@ -5647,10 +5523,7 @@ class DebugApi {
 			activate_args,
 		});
 	}
-	/**
-	 * @arg {IDebugBreakpointArgs} breakpoint_arguments
-	 * @returns {dbg_result}
-	 */
+	/** @arg {IDebugBreakpointArgs} breakpoint_arguments @returns {dbg_result} */
 	debuggerGetVar_a(breakpoint_arguments) {
 		if(!this.hasData("d")||!this.getData("u")) return {type: "invalid-state-error"};
 		if(typeof breakpoint_arguments.target!="function") return {type: "argument-error"};
@@ -5705,12 +5578,7 @@ class DebugApi {
 			return: activate_return,
 		};
 	}
-	/**
-	 * @arg {Constructor} class_value
-	 * @arg {any[]} activate_args
-	 * @arg {string} var_name
-	 * @returns {dbg_result}
-	 */
+	/** @arg {Constructor} class_value @arg {any[]} activate_args @arg {string} var_name @returns {dbg_result} */
 	debuggerGetVar_c(class_value,activate_args,var_name) {
 		return this.debuggerGetVar_a({
 			type: "class-breakpoint",
@@ -5720,12 +5588,7 @@ class DebugApi {
 			activate_args,
 		});
 	}
-	/**
-	 * @arg {(...x: any[]) => void} function_value
-	 * @arg {[any, any[]]} activate_vec
-	 * @arg {string} var_name
-	 * @returns {dbg_result}
-	 */
+	/** @arg {(...x: any[]) => void} function_value @arg {[any, any[]]} activate_vec @arg {string} var_name @returns {dbg_result} */
 	debuggerGetVar(function_value,activate_vec,var_name) {
 		if(typeof function_value!="function") {
 			return {type: "argument-error"};

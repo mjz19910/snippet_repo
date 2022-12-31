@@ -2,7 +2,7 @@ import {inject_api} from "../../../../typescript/modules/DebugApi/types/inject_a
 
 inject_api.saved_objects=[];
 
-/** @param {{ name: string; }} callable */
+/** @arg {{ name: string; }} callable */
 export function add_function(callable) {
 	if(!inject_api.saved_objects) return;
 	inject_api.saved_objects.push([callable.name,callable]);

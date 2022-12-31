@@ -15,7 +15,7 @@ export class Optional {
     m_has_value=false;
     /**@type {NonNullable<T>|null} */
     m_value;
-    /** @param {T} dv */
+    /** @arg {T} dv */
     value_or(dv) {
         if(this.m_has_value) {
             if(this.m_value == null) throw new Error("Runtime error");
@@ -23,7 +23,7 @@ export class Optional {
         }
         return dv;
     }
-    /** @param {[x: NonNullable<T>]|[]} args */
+    /** @arg {[x: NonNullable<T>]|[]} args */
     constructor(...args) {
         if(args.length===0) {
             this.m_has_value=false;

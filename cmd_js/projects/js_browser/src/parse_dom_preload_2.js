@@ -6,7 +6,7 @@ import {Extern} from "./use_extern.js";
 
 class UndefinedParseResult {
 	/**
-	 * @param {boolean} fallback
+	 * @arg {boolean} fallback
 	 */
 	bool(fallback) {
 		return fallback;
@@ -15,13 +15,13 @@ class UndefinedParseResult {
 
 class JSONParseResult {
 	/**
-	 * @param {any} value
+	 * @arg {any} value
 	 */
 	constructor(value) {
 		this.value=value;
 	}
 	/**
-	 * @param {boolean} fallback
+	 * @arg {boolean} fallback
 	 */
 	bool(fallback) {
 		if(typeof this.value==='boolean') {
@@ -32,7 +32,7 @@ class JSONParseResult {
 }
 
 /**
- * @param {string | undefined} env_value
+ * @arg {string | undefined} env_value
  */
 function try_parse_env(env_value) {
 	if(env_value===undefined) {
@@ -46,13 +46,13 @@ const debug=try_parse_env(process.env.DEBUG).bool(false);
 process.on('unhandledRejection',(/** @type {unknown} */ error) => {
 	console.log('unhandled promise rejection',error);
 });
-/** @param {string} url */
+/** @arg {string} url */
 async function new_FetchRequestState(url) {
 	return new PageLoaderState(url);
 }
 
 /**
- * @param {{url:string}} state
+ * @arg {{url:string}} state
  */
 async function do_browse(state) {
 	let res=await new_FetchRequestState(state.url);

@@ -1,5 +1,5 @@
 /**
- * @param {string} url
+ * @arg {string} url
  */
 export function resolve_http_url(url) {
 	try {

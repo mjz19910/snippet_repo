@@ -21,8 +21,8 @@ async function x() {
 	let dom_parser=new DOMParser;
 	let xml_document=dom_parser.parseFromString(text,"application/xml");
 	/**
-	 * @param {{ [x: string]: any; }} obj
-	 * @param {(obj: {}, key: string, p: string[])=>{}} cb
+	 * @arg {{ [x: string]: any; }} obj
+	 * @arg {(obj: {}, key: string, p: string[])=>{}} cb
 	 * @returns {{}[][]}
 	 */
 	function do_iter(obj,cb,c=0,/** @type {string[]} */kp=[]) {
@@ -80,9 +80,9 @@ async function x() {
 				}
 			}
 			/**
-			 * @param {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj
-			 * @param {string} key
-			 * @param {HTMLCollection | NodeListOf<ChildNode>} list
+			 * @arg {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj
+			 * @arg {string} key
+			 * @arg {HTMLCollection | NodeListOf<ChildNode>} list
 			 */
 			function append_from_list(obj,key,list) {
 				if(obj instanceof Array) {
@@ -94,20 +94,20 @@ async function x() {
 				}
 			}
 			/**
-			 * @param {Element} element
-			 * @param {{}} obj
+			 * @arg {Element} element
+			 * @arg {{}} obj
 			 */
 			function append_from_children(obj,element) {
 				append_from_list(obj,element.tagName,element.children);
 			}
 			/**
 			 * @argument {Node} node
-			 * @param {{}} obj
+			 * @arg {{}} obj
 			 */
 			function append_from_childNodes(obj,node) {
 				append_from_list(obj,node.nodeName,node.childNodes);
 			}
-			/** @param {HTMLCollection | NodeList} e */
+			/** @arg {HTMLCollection | NodeList} e */
 			function *iterator_of_html_array(e) {
 				for(let i=0;i<e.length;i++) yield e[i];
 			}
@@ -136,7 +136,7 @@ async function x() {
 	// const con_list=lib_desc.searchConnectorDescriptionList;
 	// let binary_data,overflow,b32_data;
 	// /**
-	//  * @param {{ searchConnectorDescription: any; }} list_item
+	//  * @arg {{ searchConnectorDescription: any; }} list_item
 	//  */
 	// function get_data_slice(list_item) {
 	// 	let con_desc=list_item.searchConnectorDescription;

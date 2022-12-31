@@ -19,13 +19,13 @@ function main() {
 			if(!this.m_start) return;
 			this.m_start();
 		}
-		/** @param {number} dl */
+		/** @arg {number} dl */
 		wait(dl) {
 			this.dl=dl;
 			return new Promise(a => setTimeout(a,this.dl));
 		}
 		/**
-		 * @param {(x: PromiseHandlerImpl) => Promise<void>} fn
+		 * @arg {(x: PromiseHandlerImpl) => Promise<void>} fn
 		 */
 		constructor(fn) {
 			this.fn=fn;
@@ -40,7 +40,7 @@ function main() {
 		window.postMessage(rng);
 		var promise_val=new PromiseHandlerImpl(fn);
 		/**
-		 * @param {{ data: number; }} e
+		 * @arg {{ data: number; }} e
 		 */
 		function msg_listener(e) {
 			if(e.data===rng) return;

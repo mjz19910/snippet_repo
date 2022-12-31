@@ -5,15 +5,15 @@ v2 (cur): snippet_repo/javascript/group1/sub_a/item-_9.js
 */
 
 /**
- * @param {any[]} stats
+ * @arg {any[]} stats
  */
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]))
 }
 const compressionStatsCalc_0=new CompressionStatsCalculator;
 /**
- * @param {any} arr
- * @param {any} calc_win
+ * @arg {any} arr
+ * @arg {any} calc_win
  */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win)
@@ -21,8 +21,8 @@ function sorted_comp_stats(arr,calc_win) {
 	return ret
 }
 /**
- * @param {any} arr
- * @param {number} start
+ * @arg {any} arr
+ * @arg {number} start
  */
 function next_chunk(arr,start) {
 	let c_len;
@@ -47,21 +47,21 @@ function next_chunk(arr,start) {
 	return c_len
 }
 /**
- * @param {any} e
+ * @arg {any} e
  */
 function get_ids(e) {
 	let ss=JSON.stringify(e)
 	return ids.value.indexOf(ss)
 }
 /**
- * @param {{ stats: any; arr: any; stats_win: any; }} obj
+ * @arg {{ stats: any; arr: any; stats_win: any; }} obj
  */
 function calc_cur(obj) {
 	obj.stats=sorted_comp_stats(obj.arr,obj.stats_win)
 }
 /**
- * @param {{ stats: string | any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj
- * @param {any} max_id
+ * @arg {{ stats: string | any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj
+ * @arg {any} max_id
  */
 function calc_next(obj,max_id) {
 	if(obj.stats.length===0) {
@@ -79,7 +79,7 @@ function calc_next(obj,max_id) {
 	return compress_result
 }
 /**
- * @param {{ id?: number; arr_rep?: any; arr?: any; next?: any; }} obj
+ * @arg {{ id?: number; arr_rep?: any; arr?: any; next?: any; }} obj
  */
 function flat_obj(obj) {
 	let ret=[]
@@ -92,8 +92,8 @@ function flat_obj(obj) {
 	return ret
 }
 /**
- * @param {{ [s: string]: any; }} obj_1
- * @param {{ [s: string]: any; }} obj_2
+ * @arg {{ [s: string]: any; }} obj_1
+ * @arg {{ [s: string]: any; }} obj_2
  * @returns {boolean}
  */
 function deep_eq(obj_1,obj_2) {
@@ -124,8 +124,8 @@ function deep_eq(obj_1,obj_2) {
 	throw new Error("Fixme")
 }
 /**
- * @param {string | any[]} arr
- * @param {any} value
+ * @arg {string | any[]} arr
+ * @arg {any} value
  */
 function deep_includes(arr,value) {
 	for(let i=0;i<arr.length;i++) {

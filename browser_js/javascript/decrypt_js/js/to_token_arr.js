@@ -3,7 +3,7 @@ import {is_open} from "./is_open.js";
 
 	/**
  * @arg {string[]} arr
- * @param {number} level
+ * @arg {number} level
  */
 export function to_token_arr(arr,level) {
 	/** @type {[number,string][]} */

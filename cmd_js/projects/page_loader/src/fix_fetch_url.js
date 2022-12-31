@@ -1,6 +1,6 @@
 import {PageLoaderState} from "./PageLoaderState.js";
 /**
- * @param {PageLoaderState} state
+ * @arg {PageLoaderState} state
  */
 export function fix_fetch_url(state) {
 	if(!state.url)

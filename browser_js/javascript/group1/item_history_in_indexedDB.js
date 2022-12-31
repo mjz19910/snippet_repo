@@ -8,8 +8,8 @@ function main() {
     }
 }
 /**
- * @param {{url: string;title: string;}} item
- * @param {{ appendChild: (arg0: HTMLLIElement) => void; }} list
+ * @arg {{url: string;title: string;}} item
+ * @arg {{ appendChild: (arg0: HTMLLIElement) => void; }} list
  */
 function ap_l(list,item) {
     var i=document.createElement('li')
@@ -21,9 +21,9 @@ function ap_l(list,item) {
     list.appendChild(i)
 }
 /**
- * @param {Node} list
- * @param {IDBOpenDBRequest} odb
- * @param {any[]} out
+ * @arg {Node} list
+ * @arg {IDBOpenDBRequest} odb
+ * @arg {any[]} out
  */
 function open_complete(list,odb,out) {
     document.body.prepend(list)

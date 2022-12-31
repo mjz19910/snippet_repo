@@ -4,8 +4,8 @@ v1 (old): snippet_repo/javascript/final/item6_v1.js
 v2 (cur): snippet_repo/javascript/group1/sub_a/item-_6.js
 */
 /**
- * @param {number} id
- * @param {string | any[]} arr
+ * @arg {number} id
+ * @arg {string | any[]} arr
  */
 function encode_section(id,arr) {
 	if(arr.length>=128) {
@@ -15,7 +15,7 @@ function encode_section(id,arr) {
 	return [id,arr.length,...arr];
 }
 /**
- * @param {string | any[]} arr
+ * @arg {string | any[]} arr
  */
 function encode_string(arr) {
 	if(arr.length>=128) {

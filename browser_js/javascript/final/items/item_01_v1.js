@@ -21,13 +21,13 @@ class RustStdLibrary {
 	/**@type {RustProcess[]} */
 	processes=[];
 	/**
-	 * @param {any} value
+	 * @arg {any} value
 	 */
 	print(value) {
 		console.log(value);
 	}
 	/**
-	 * @param {RustProcess} new_process
+	 * @arg {RustProcess} new_process
 	 */
 	start_process(new_process) {
 		this.processes.push(new_process);
@@ -48,7 +48,7 @@ class RustStdLibrary {
 let std_lib=new RustStdLibrary;
 class RustModelDescription {
 	/**
-	 * @param {string} name
+	 * @arg {string} name
 	 */
 	constructor(name) {
 		this.name=name;
@@ -61,7 +61,7 @@ class RustComputerScience {
 	 */
 	model_description_vec=[];
 	/**
-	 * @param {RustModelDescription} model_description
+	 * @arg {RustModelDescription} model_description
 	 */
 	addModel(model_description) {
 		this.model_description_vec.push(model_description);
@@ -73,22 +73,22 @@ class RustActor {
 	 */
 	callable;
 	/**
-	 * @param {((_f: any, transmitted_actor: RustActor, _a: any, _ec: any) => void)} callable
+	 * @arg {((_f: any, transmitted_actor: RustActor, _a: any, _ec: any) => void)} callable
 	 */
 	constructor(callable) {
 		this.callable=callable;
 	}
 	/**
-	 * @param {(_f: any, transmitted_actor: RustActor, _a: any, _ec: any) => void} callable
+	 * @arg {(_f: any, transmitted_actor: RustActor, _a: any, _ec: any) => void} callable
 	 */
 	static fromCallable(callable) {
 		return new this(callable);
 	}
 	/**
-	 * @param {RustActor} target_actor
-	 * @param {RustActor} transmitted_actor
-	 * @param {{ is_root: () => any; }} activator
-	 * @param {number} event_count
+	 * @arg {RustActor} target_actor
+	 * @arg {RustActor} transmitted_actor
+	 * @arg {{ is_root: () => any; }} activator
+	 * @arg {number} event_count
 	 */
 	process_event(target_actor,transmitted_actor,activator,event_count) {
 		if(this.callable) {
@@ -124,7 +124,7 @@ let comp_sci=new RustComputerScience;
 		 * @arg {RustActor} transmitted_actor
 		 * @arg {RustActivator} transmitted_actor
 		 * @arg {number} event_count
-		 * @param {any} activator
+		 * @arg {any} activator
 		 */
 		on_receive_event(target_actor,transmitted_actor,activator,event_count) {
 			this.impl.process_event(target_actor,transmitted_actor,activator,event_count);

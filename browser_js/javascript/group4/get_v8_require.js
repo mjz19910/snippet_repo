@@ -57,9 +57,9 @@ function get_v8_require_main() {
 		import_arr=null;
 		aborted=false;
 		/**
-		 * @param {(...x:any[])=>any} f
-		 * @param {(...x:any[])=>any} b
-		 * @param {string} s
+		 * @arg {(...x:any[])=>any} f
+		 * @arg {(...x:any[])=>any} b
+		 * @arg {string} s
 		 */
 		m(f,b,s) {
 			if(this.aborted) {

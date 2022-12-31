@@ -3,7 +3,7 @@ import {RouteDescription} from "./RouteDescription.js";
 export class Route {
 	m_route_description;
 	/**
-	 * @param {RouteDescription} route_description
+	 * @arg {RouteDescription} route_description
 	 * @arg {boolean} [is_raw]
 	 */
 	constructor(route_description, is_raw) {

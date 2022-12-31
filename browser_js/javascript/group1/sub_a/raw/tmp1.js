@@ -21,18 +21,18 @@ window.confirm = function(msg) {
 	return true;
 };
 
-/** @param {number} e */
+/** @arg {number} e */
 function do_SBUpgAmt(e) {
 	//@ts-ignore
 	return SBUpgAmt(e);
 }
-/** @param {number} e */
+/** @arg {number} e */
 function do_buySBUpg(e) {
 	//@ts-ignore
 	buySBUpg(e);
 }
 
-/** @param {number} e */
+/** @arg {number} e */
 function buy_allSBUpg(e) {
 	let prev = do_SBUpgAmt(e);
 	do_buySBUpg(e);

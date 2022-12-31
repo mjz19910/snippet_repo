@@ -1,8 +1,5 @@
 export class EventListenerValue {
-	/**
-	 * @param {EventListenerOrEventListenerObject|null} callback
-	 * @param {boolean | EventListenerOptions} options
-	 */
+	/** @arg {EventListenerOrEventListenerObject|null} callback @arg {boolean | EventListenerOptions} options */
 	constructor(callback,options) {
 		/**@type {EventListenerOrEventListenerObject|null} */
 		this.callback=callback;

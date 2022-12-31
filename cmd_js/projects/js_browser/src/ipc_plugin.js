@@ -7,7 +7,7 @@ let g_loaded_ipc_plugins=new Map;
 export class ReplPluginManagerModule {
 	/** @type {IpcLoader} */
 	static IPCLoader;
-	/** @param {IpcLoader} state @param {string} key @param {string} module_path */
+	/** @arg {IpcLoader} state @arg {string} key @arg {string} module_path */
 	static async import_ipc_plugin(state,key,module_path) {
 		this.IPCLoader=state;
 		let module_=await import(module_path);

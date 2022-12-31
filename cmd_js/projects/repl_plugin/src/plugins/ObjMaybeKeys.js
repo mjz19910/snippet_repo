@@ -5,18 +5,18 @@ export class ObjMaybeKeys {
 	type="no_keys";
 	/** @type {string[]} */
 	arr=[];
-	/** @param {BrowserPluginData} value */
+	/** @arg {BrowserPluginData} value */
 	constructor(value) {
 		this.value=value;
 	}
-	/** @param {string} key */
+	/** @arg {string} key */
 	update(key) {
 		if(this.type!=="keys")
 			this.type="keys";
 		this.arr.push(key);
 	}
 	/**
-	 * @param {keyof BrowserPluginData} name
+	 * @arg {keyof BrowserPluginData} name
 	 */
 	get_from_store(name) {
 		switch(this.type) {

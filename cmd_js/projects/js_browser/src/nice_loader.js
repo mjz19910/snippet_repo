@@ -94,7 +94,7 @@ export class IpcLoader {
 		let start_index;
 		let log_path;
 		let log_dir=prev_log_dir;
-		/** @param {string} source_url */
+		/** @arg {string} source_url */
 		function get_parent_url_parts(source_url) {
 			parent_url_parts=source_url.split("/");
 			start_index=parent_url_parts.indexOf("javascript")+2;
@@ -203,9 +203,9 @@ function get_typescript_file_to_compile(state) {
 let ipc_load_data=new IpcLoader;
 
 /**
- * @param {string} specifier
- * @param {ContextType<any>} context
- * @param {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
+ * @arg {string} specifier
+ * @arg {ContextType<any>} context
+ * @arg {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
  */
 export async function resolve(specifier,context,nextResolve) {
 	ipc_load_data.args=[specifier,context,nextResolve];

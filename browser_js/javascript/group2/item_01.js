@@ -9,9 +9,9 @@ let extensionId="cjpalhdlnbpafiamejdnhcphjbkeiagm";
 //cspell:enable
 // @ts-expect-error
 main(chrome);
-/** @param {any} chrome */
+/** @arg {any} chrome */
 function main(chrome) {
-	/** @param {any} _resolve */
+	/** @arg {any} _resolve */
 	function load_activity_log(_resolve) {
 		chrome.activityLogPrivate.getExtensionActivities({
 			activityType: chrome.activityLogPrivate.ExtensionActivityFilter.ANY,

@@ -41,7 +41,7 @@ function get_totalAtome() {
 			} while(!iter_cur.done);
 		}
 		/**
-		 * @param {IterState} state
+		 * @arg {IterState} state
 		 */
 		constructor(state) {
 			this.state=state;

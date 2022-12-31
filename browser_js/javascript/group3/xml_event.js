@@ -1,5 +1,5 @@
 /**
- * @param {string} s
+ * @arg {string} s
  */
 function split_tags(s) {
 	var t=""

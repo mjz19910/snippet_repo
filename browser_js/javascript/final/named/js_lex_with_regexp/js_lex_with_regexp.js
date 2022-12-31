@@ -140,7 +140,7 @@ function main() {
 		}
 		let p_eval_sym=Symbol('s');
 		/**
-		 * @param {string} str
+		 * @arg {string} str
 		 */
 		function process_string_parse_d(str) {
 			let r=str.match(/"(?:(?:[0-9a-zA-Z]+|\\.|\\")+)?"/);
@@ -148,7 +148,7 @@ function main() {
 			return r[0];
 		}
 		/**
-		 * @param {string} str
+		 * @arg {string} str
 		 */
 		function process_string_parse_s(str) {
 			let r=str.match(/'(?:(?:[0-9a-zA-Z]+|\\.|\\')+)?'/);
@@ -238,8 +238,8 @@ function main() {
 				lex_cur: null,
 			};
 			/**
-			 * @param {string} str
-			 * @param {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj
+			 * @arg {string} str
+			 * @arg {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj
 			 */
 			constructor(str,obj) {
 				this.lex_chunks=[]
@@ -247,7 +247,7 @@ function main() {
 				this.obj=obj;
 			}
 		}
-		/** @param {JSLexState} state */
+		/** @arg {JSLexState} state */
 		function func_cont_js_lex(state) {
 			let spl_parse=js_parse_regexp;
 			let str=state.str;

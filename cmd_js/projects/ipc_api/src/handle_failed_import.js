@@ -4,8 +4,8 @@ import {import_ipc_plugin} from "./import_ipc_plugin.js";
 import {IpcLoader} from "./ipc_loader_state.js";
 
 /**
- * @param {unknown} error
- * @param {string} import_string
+ * @arg {unknown} error
+ * @arg {string} import_string
  * @arg {IpcLoader} state
  */
 export async function handle_failed_import(state,error,import_string) {

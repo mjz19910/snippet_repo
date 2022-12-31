@@ -19,7 +19,7 @@ export class Runner {
 	names=[];
 	self_sym=Symbol();
 	/**
-	 * @param {any[]} e
+	 * @arg {any[]} e
 	 */
 	do_cur(...e) {
 		var i;
@@ -39,7 +39,7 @@ export class Runner {
 		return null;
 	}
 	/**
-	 * @param {number} t
+	 * @arg {number} t
 	 */
 	execute(t) {
 		var r_fnname=this.names[t];
@@ -88,8 +88,8 @@ export class Runner {
 		} finally {}
 	}
 	/**
-	 * @param {string|CustomInputMatcher} name
-	 * @param {((...x: any[]) => any)} func
+	 * @arg {string|CustomInputMatcher} name
+	 * @arg {((...x: any[]) => any)} func
 	 */
 	add_func(name,func) {
 		var y=this.funcs.push(func);

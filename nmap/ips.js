@@ -4,7 +4,7 @@ function make_1e100(a, b) {
 	return `${a}-in-f${c}.1e100.net`;
 }
 
-/** @param {number} a */
+/** @arg {number} a */
 function x(a) {
 	let b = a.toString();
 	if (b.length == 1) {
@@ -13,7 +13,7 @@ function x(a) {
 	return b;
 }
 
-/** @param {number} a @param {number} b */
+/** @arg {number} a @arg {number} b */
 function _dfw_s(a, b) {
 	let c = x(a);
 	let d = x(b);
@@ -23,13 +23,13 @@ function _dfw_s(a, b) {
 let a = _dfw_s;
 let f = make_1e100;
 
-/** @param {any} x */
+/** @arg {any} x */
 function c(x) {
 	console.log(x);
 }
 
 function my() {
-	/** @param {(arg0: any, arg1: any) => string} x * @param {any} a * @param {any} b @param {number} c */
+	/** @arg {(arg0: any, arg1: any) => string} x * @arg {any} a * @arg {any} b @arg {number} c */
 	function zy(x, a, b, c) {
 		let z = make_1e100(x(a, b), c);
 		console.log(z);
@@ -41,7 +41,7 @@ function my() {
 }
 my();
 function ma() {
-	/** @param {string} b @param {number} c */
+	/** @arg {string} b @arg {number} c */
 	function y(b, c) {
 		let z = make_1e100(b, c);
 		console.log(z);

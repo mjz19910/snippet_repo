@@ -10,8 +10,8 @@ export function t_arr_maker(src) {
 			this.values.push(value);
 		}
 		/**
-		 * @param {readonly (src[0])[]} template
-		 * @param {string[]} _sep_arr
+		 * @arg {readonly (src[0])[]} template
+		 * @arg {string[]} _sep_arr
 		 */
 		add_template(template, ..._sep_arr) {
 			this.values.push(...template);

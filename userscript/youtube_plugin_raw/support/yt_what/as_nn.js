@@ -1,6 +1,6 @@
 /**
  * @template T
- * @param {T} x
+ * @arg {T} x
  * @returns {NonNullable<T>}
  */
 export function as_nn(x) {

@@ -36,7 +36,7 @@ export class PageLoaderState {
 		}
 	}
 	/**
-	 * @param {IncomingMessage} message
+	 * @arg {IncomingMessage} message
 	 */
 	async on_incoming_message(message) {
 		this.m_incoming_message=message;
@@ -75,7 +75,7 @@ export class PageLoaderState {
 		await promise;
 	}
 	/**
-	 * @param {Error} e
+	 * @arg {Error} e
 	 */
 	on_error_result(e) {
 		console.error(e);

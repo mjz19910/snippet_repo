@@ -1,6 +1,6 @@
 /**
- * @param {string[]} target_source_arr
- * @param {string[]} target_new_items
+ * @arg {string[]} target_source_arr
+ * @arg {string[]} target_new_items
  */
 export function get_missing_set(target_source_arr, target_new_items) {
 	let set_cache = new Set;

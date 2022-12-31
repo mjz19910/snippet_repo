@@ -179,9 +179,7 @@ class StackVMBoxImpl {
 	type="custom_box";
 	/** @type {"StackVM"} */
 	box_type="StackVM";
-	/**
-	 * @param {string} to_match
-	 */
+	/** @arg {string} to_match */
 	as_type(to_match) {
 		if(typeof this.value===to_match) {
 			return this;
@@ -204,9 +202,7 @@ class WindowBoxImpl {
 	extension="null";
 	/** @type {"Window"} */
 	inner_type="Window";
-	/**
-	 * @param {string} to_match
-	 */
+	/** @arg {string} to_match */
 	as_type(to_match) {
 		if(typeof this.value===to_match) {
 			return this;
@@ -229,9 +225,7 @@ class ObjectBoxImpl {
 	inner_type="object";
 	/** @readonly */
 	extension="null";
-	/**
-	 * @param {string} to_match
-	 */
+	/** @arg {string} to_match */
 	as_type(to_match) {
 		if(typeof this.value===to_match) {
 			return this;
@@ -272,21 +266,15 @@ class InstructionImplBase {}
 class PromiseBoxImpl {
 	/** @readonly */
 	type="promise_box";
-	/**
-	 * @type {any}
-	 */
+	/** @type {any} */
 	inner_type;
-	/**
-	 * @type {any}
-	 */
+	/** @type {any} */
 	await_type;
-	/**
-	 * @param {any} _to_match
-	 */
+	/** @arg {any} _to_match */
 	as_type(_to_match) {
 		return this;
 	}
-	/** @param {Promise<Box_CJS>} value */
+	/** @arg {Promise<Box_CJS>} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -572,17 +560,14 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 class NumberBoxImpl {
 	/** @readonly */
 	type="number";
-	/**
-	 * @returns {this | null}
-	 * @param {string} target
-	 */
+	/** @returns {this | null} @arg {string} target */
 	as_type(target) {
 		if(typeof this.value===target) {
 			return this;
 		}
 		return null;
 	}
-	/** @param {number} value */
+	/** @arg {number} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -936,15 +921,11 @@ class StackVMImpl {
 		if(!value) throw 1;
 		return value;
 	}
-	/**
-	 * @param {import("./ns.js").Box} value
-	 */
+	/** @arg {import("./ns.js").Box} value */
 	push(value) {
 		this.stack.push(value);
 	}
-	/**
-	 * @param {number} distance
-	 */
+	/** @arg {number} distance */
 	peek_at(distance) {
 		return this.stack.at(-1-distance);
 	}
@@ -1073,18 +1054,14 @@ class EventHandlerVMDispatchImplR extends StackVMImpl {
 class StringBoxImpl {
 	/** @readonly */
 	type="string";
-	/**
-	 * @param {string} target
-	 */
+	/** @arg {string} target */
 	as_type(target) {
 		if(target==="string") {
 			return this;
 		}
 		return null;
 	}
-	/**
-	 * @param {string} string
-	 */
+	/** @arg {string} string */
 	constructor(string) {
 		this.value=string;
 	}
@@ -1455,10 +1432,7 @@ class MulCompressionImpl extends BaseCompressionImpl {
 		this.compression_stats=[];
 	}
 
-	/**
-	 * @param {{i:number,arr:string[],ret:string[]}} state
-	 * @arg {string} item
-	 */
+	/** @arg {{i:number,arr:string[],ret:string[]}} state @arg {string} item */
 	compress_rle(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
@@ -1469,10 +1443,7 @@ class MulCompressionImpl extends BaseCompressionImpl {
 		return true;
 	}
 
-	/**
-	 * @param {{i:number,arr:number[],ret:(number|Repeat_0<number>)[]}} state
-	 * @arg {number} item
-	 */
+	/** @arg {{i:number,arr:number[],ret:(number|Repeat_0<number>)[]}} state @arg {number} item */
 	compress_rle_number(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
@@ -1788,9 +1759,7 @@ class AsyncNodeRootImplR {
 	append_raw_timeout(timeout_id) {
 		this.append_child(new TimeoutIdNode(timeout_id));
 	}
-	/**
-	 * @param {ReturnType<typeof setInterval>} timeout_id
-	 */
+	/** @arg {ReturnType<typeof setInterval>} timeout_id */
 	append_raw_interval(timeout_id) {
 		this.append_child(new IntervalIdNode(timeout_id));
 	}
@@ -1939,9 +1908,7 @@ function labeled_sym(name) {
 	return sym;
 }
 class DataLoaderImplR {
-	/**
-	 * @param {string} value
-	 */
+	/** @arg {string} value */
 	static int_parser(value) {
 		return parseInt(value,10);
 	}
@@ -1949,9 +1916,7 @@ class DataLoaderImplR {
 	constructor(storage) {
 		this.storage=storage;
 	}
-	/**
-	 * @param {string} key
-	 */
+	/** @arg {string} key */
 	getItem(key) {
 		return this.storage.getItem(key);
 	}
@@ -2132,9 +2097,7 @@ class AutoBuyStateImplR {
 		this.ratio_mode+=mode_change_direction;
 		this.locked_cycle_count+=num_of_cycles;
 	}
-	/**
-	 * @param {number} num
-	 */
+	/** @arg {number} num */
 	calc_near_val(num) {
 		let exp=0;
 		if(num<1||num>10) {
@@ -2404,11 +2367,7 @@ class AutoBuyImplR {
 			}
 		}
 	}
-	/**
-	 * @param {number} log_level
-	 * @param {string} format_str
-	 * @param {string[]} args
-	 */
+	/** @arg {number} log_level @arg {string} format_str @arg {string[]} args */
 	test_log(log_level,format_str,...args) {
 		if(args.length>0) {
 			args.unshift("test:");
@@ -2610,11 +2569,11 @@ class AutoBuyImplR {
 			color:lightgray;
 		}`;
 		/**
-		 * @param {any} obj
-		 * @param {HTMLElement} parent
-		 * @param {string} tag_name
-		 * @param {string} id
-		 * @param {string | undefined} [content]
+		 * @arg {any} obj
+		 * @arg {HTMLElement} parent
+		 * @arg {string} tag_name
+		 * @arg {string} id
+		 * @arg {string | undefined} [content]
 		 */
 		function create_element(obj,parent,tag_name,id,content) {
 			let ele=document.createElement(tag_name);
@@ -3247,7 +3206,7 @@ class AutoBuyImplR {
 	}
 }
 /**
- * @param {number} delay
+ * @arg {number} delay
  */
 function wait(delay) {
 	return new Promise(function(a) {
@@ -3255,7 +3214,7 @@ function wait(delay) {
 	});
 }
 /**
- * @param {number} id
+ * @arg {number} id
  */
 async function tonext_async(id) {
 	var next=Find_ToNext(id);

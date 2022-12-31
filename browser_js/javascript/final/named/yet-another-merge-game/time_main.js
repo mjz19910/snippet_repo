@@ -14,8 +14,8 @@ export function time_main() {
 	let c=0;
 	let tc=1000;
 	/**
-	 * @param {number} tc
-	 * @param {number} c
+	 * @arg {number} tc
+	 * @arg {number} c
 	 */
 	function time_loop_1(tc,c) {
 		for(let i=0;i<tc;i++)
@@ -23,8 +23,8 @@ export function time_main() {
 		return c;
 	}
 	/**
-	 * @param {number} tc
-	 * @param {number} c
+	 * @arg {number} tc
+	 * @arg {number} c
 	 */
 	function time_loop_2(tc,c) {
 		for(let i=0;i<tc;i++)

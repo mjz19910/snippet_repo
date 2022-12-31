@@ -4,7 +4,7 @@ import {Extern} from "./use_extern.js";
 
 /**
  * @returns {ReplPluginManager | null}
- * @param {Extern.PageLoaderState} state
+ * @arg {Extern.PageLoaderState} state
  */
 export function repl_plugin_get_global_repl_activator(state) {
 	if(!g_repl_plugin_value.value) {

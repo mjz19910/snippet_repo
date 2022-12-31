@@ -1,5 +1,5 @@
 /**
- * @param {import("vm").Context} obj
+ * @arg {import("vm").Context} obj
  */
 export function rm_all_properties_from_obj(obj) {
 	let k_arr

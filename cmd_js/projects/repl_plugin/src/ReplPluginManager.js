@@ -16,7 +16,7 @@ export class ReplPluginManager {
 		this.get_repl().clearBufferedCommand();
 	}
 	/**
-	 * @param {string} arg0
+	 * @arg {string} arg0
 	 */
 	setPrompt(arg0) {
 		let repl=this.get_repl();
@@ -79,8 +79,8 @@ export class ReplPluginManager {
 		bind_plugins(this);
 	}
 	/**
-	 * @param {string} keyword
-	 * @param {import("repl").REPLCommand} cmd
+	 * @arg {string} keyword
+	 * @arg {import("repl").REPLCommand} cmd
 	 */
 	defineCommand(keyword,cmd) {
 		this.get_repl().defineCommand(keyword,cmd);
@@ -117,7 +117,7 @@ export class ReplPluginManager {
 		}
 	}
 	/**
-	 * @param {Extern.PageLoaderState} state
+	 * @arg {Extern.PageLoaderState} state
 	 */
 	update(state) {
 		this.m_request_state=state;

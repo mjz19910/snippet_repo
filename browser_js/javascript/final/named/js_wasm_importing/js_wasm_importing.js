@@ -48,8 +48,8 @@ function main() {
 				wasm.console_log_from_wasm();
 			}
 			/**
-			 * @param {any} arg0
-			 * @param {any} arg1
+			 * @arg {any} arg0
+			 * @arg {any} arg1
 			 */
 			function __wbg_log_f48fd9f1562bf74d(arg0,arg1) {
 				let varg0=getStringFromWasm(arg0,arg1);
@@ -73,8 +73,8 @@ function main() {
 				return wasm_memory_cache;
 			}
 			/**
-			 * @param {any} ptr
-			 * @param {any} len
+			 * @arg {any} ptr
+			 * @arg {any} len
 			 */
 			function getStringFromWasm(ptr,len) {
 				return cachedTextDecoder.decode(getUint8Memory().subarray(ptr,ptr+len));

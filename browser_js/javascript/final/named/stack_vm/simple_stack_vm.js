@@ -2,7 +2,7 @@ export class SimpleStackVM {
 	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['get_argv']|['push_window']|['breakpoint'])[]} */
 	instructions;
 	/**
-	 * @param {SimpleStackVM['instructions']} instructions
+	 * @arg {SimpleStackVM['instructions']} instructions
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
@@ -19,7 +19,7 @@ export class SimpleStackVM {
 		this.running=false;
 	}
 	/**
-	 * @param {{}[]} values
+	 * @arg {{}[]} values
 	 */
 	push(...values) {
 		this.stack.push(...values);
@@ -30,7 +30,7 @@ export class SimpleStackVM {
 		return top;
 	}
 	/**
-	 * @param {{}[]} run_arguments
+	 * @arg {{}[]} run_arguments
 	 */
 	run(...run_arguments) {
 		this.running=true;

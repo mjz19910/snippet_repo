@@ -21,7 +21,7 @@ function main() {
 		if(!('_reactRootContainer' in dom_0)) throw 1;
 		if(!(dom_0._reactRootContainer instanceof Object)) throw 1;
 		class RedditNodeIter {
-			/** @param {Object} node */
+			/** @arg {Object} node */
 			constructor(node) {
 				this.m_iter_node=node;
 			}
@@ -179,7 +179,7 @@ function main() {
 		 */
 		let refs=[];
 		/**
-		 * @param {any[]} r
+		 * @arg {any[]} r
 		 */
 		function add_root(r) {
 			if(typeof root_new!='undefined') {
@@ -212,7 +212,7 @@ function main() {
 			function map_own_properties([n,e]) {
 				if(e.get||e.set) {
 					class xy {
-						/** @param {PropertyDescriptor} e */
+						/** @arg {PropertyDescriptor} e */
 						constructor(e) {
 							if(e.get)
 								this.get=e.get;
@@ -225,7 +225,7 @@ function main() {
 				}
 				var v=e.value;
 				var f=false;
-				/** @param {boolean} b */
+				/** @arg {boolean} b */
 				function or(b) {f=f||b;}
 				or(typeof v=='number');
 				or(typeof v=='function');

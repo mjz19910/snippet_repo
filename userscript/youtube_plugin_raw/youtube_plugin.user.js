@@ -2831,9 +2831,7 @@ class HiddenData {
 			return null;
 		}
 	}
-	/**
-	 * @template U
-	 * @arg {(v:T)=>U} v @arg {()=>U} def */
+	/** @template U @arg {(v:T)=>U} v @arg {()=>U} def */
 	extract_default(v,def) {
 		try {
 			return v(this.#value);

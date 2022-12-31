@@ -1,5 +1,5 @@
 /**
- * @param {string} ip
+ * @arg {string} ip
  * @return {["IP", string]}
  */
 export function IP(ip) {

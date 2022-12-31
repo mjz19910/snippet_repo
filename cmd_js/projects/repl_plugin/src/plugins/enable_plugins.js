@@ -1,7 +1,7 @@
 import {REPLPlugin} from "./REPLPlugin.js";
 
 /**
- * @param {REPLPlugin[]} list
+ * @arg {REPLPlugin[]} list
  */
 export function enable_plugins(list) {
 	for(let item of list) {

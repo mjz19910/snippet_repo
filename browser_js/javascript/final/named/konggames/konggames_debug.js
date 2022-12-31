@@ -50,7 +50,7 @@ function main() {
 		}
 		class debug_class {
 			/**
-			 * @param {DebugState} state
+			 * @arg {DebugState} state
 			 */
 			constructor(state) {
 				this.data={
@@ -90,7 +90,7 @@ function main() {
 				state.info.push(this.sym.debug);
 			}
 			/**
-			 * @param {any} event_forward_function
+			 * @arg {any} event_forward_function
 			 */
 			async clear(event_forward_function) {
 				if(this.state.root) {
@@ -160,7 +160,7 @@ function main() {
 				}
 			}
 			/**
-			 * @param {any} info
+			 * @arg {any} info
 			 */
 			do_internal_callback(info) {
 				this.internal_result=info;
@@ -168,7 +168,7 @@ function main() {
 				this.on_internal_callback(this.internal_result);
 			}
 			/**
-			 * @param {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }} info
+			 * @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }} info
 			 */
 			callback(info) {
 				x: {
@@ -200,7 +200,7 @@ function main() {
 				}
 			}
 			/**
-			 * @param {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; } | null | undefined} result
+			 * @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; } | null | undefined} result
 			 */
 			clear_breakpoint(result) {
 				var error;
@@ -305,7 +305,7 @@ function main() {
 		}
 		function run_sync_code() {
 			/**
-			 * @param {()=>DebugState} pre_init
+			 * @arg {()=>DebugState} pre_init
 			 * @arg {(x:debug_class,s:DebugState)=>unknown} at_init
 			 * @arg {(x:debug_class,s:DebugState)=>unknown} done_cb
 			 */
@@ -328,7 +328,7 @@ function main() {
 			}
 			function init_callback() {}
 			/**
-			 * @param {debug_class} promise_debugger
+			 * @arg {debug_class} promise_debugger
 			 */
 			function done_callback(promise_debugger) {
 				console.log("promise_debugger",promise_debugger);

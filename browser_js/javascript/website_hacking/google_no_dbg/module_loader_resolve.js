@@ -20,8 +20,8 @@
 			c.push([...acc]);
 		}
 		/**
-		 * @param {any[]} arr
-		 * @param {any[]} val
+		 * @arg {any[]} arr
+		 * @arg {any[]} val
 		 */
 		function fix_ref(arr,val) {
 			let nc=0;

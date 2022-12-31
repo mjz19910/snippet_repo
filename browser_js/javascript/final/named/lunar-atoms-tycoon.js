@@ -18,7 +18,7 @@ function main() {
 		e=etm;
 		class Logger {
 			/**
-			 * @param {any[]} a
+			 * @arg {any[]} a
 			 */
 			log(...a) {
 				console.log(...a);

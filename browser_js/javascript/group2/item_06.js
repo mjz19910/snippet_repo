@@ -111,8 +111,8 @@ async function kernel_main() {
 			this.dirty_object_vec=[]
 		}
 		/**
-		 * @param {string | number} event_type
-		 * @param {any} event_listener
+		 * @arg {string | number} event_type
+		 * @arg {any} event_listener
 		 */
 		addEventListener(event_type,event_listener) {
 			this._events[event_type]??=[]
@@ -123,8 +123,8 @@ async function kernel_main() {
 			this._events[event_type].push(event_listener_description)
 		}
 		/**
-		 * @param {string | number} event_type
-		 * @param {any} event_listener
+		 * @arg {string | number} event_type
+		 * @arg {any} event_listener
 		 */
 		removeEventListener(event_type,event_listener) {
 			if(this._events[event_type]===void 0)
@@ -145,7 +145,7 @@ async function kernel_main() {
 			}
 		}
 		/**
-		 * @param {{ type: any; }} event
+		 * @arg {{ type: any; }} event
 		 */
 		dispatchEvent(event) {
 			let event_type=event.type
@@ -236,7 +236,7 @@ async function kernel_main() {
 			await Promise.all(task_vec)
 		}
 		/**
-		 * @param {any} func
+		 * @arg {any} func
 		 */
 		add_shutdown_callback(func) {
 			this.on_shutdown_vec.push(func)
@@ -252,9 +252,9 @@ async function kernel_main() {
 			this.is_shutdown=true
 		}
 		/**
-		 * @param {{ shutdown_waiter: (() => void) | null; }} runtime
-		 * @param {() => void} accept
-		 * @param {any} reject
+		 * @arg {{ shutdown_waiter: (() => void) | null; }} runtime
+		 * @arg {() => void} accept
+		 * @arg {any} reject
 		 */
 		// @ts-ignore
 		static wait_into_promise(runtime,accept,reject) {
@@ -276,15 +276,15 @@ async function kernel_main() {
 			return ref_sym
 		}
 		/**
-		 * @param {new (arg0: this) => any} class_constructor
-		 * @param {any[]} rest
+		 * @arg {new (arg0: this) => any} class_constructor
+		 * @arg {any[]} rest
 		 */
 		// @ts-ignore
 		class_ref(class_constructor,...rest) {
 			return new class_constructor(this)
 		}
 		/**
-		 * @param {symbol} task
+		 * @arg {symbol} task
 		 */
 		ref(task) {
 			if(this.is_shutdown) {
@@ -293,7 +293,7 @@ async function kernel_main() {
 			this.references.push(task)
 		}
 		/**
-		 * @param {{ dispose: () => void; }} task
+		 * @arg {{ dispose: () => void; }} task
 		 */
 		unref(task) {
 			let idx=this.references.indexOf(task)
@@ -367,9 +367,9 @@ async function kernel_main() {
 	}
 	class AsyncBlocker {
 		/**
-		 * @param {any} runtime
-		 * @param {any} accept
-		 * @param {any} reject
+		 * @arg {any} runtime
+		 * @arg {any} accept
+		 * @arg {any} reject
 		 */
 		// @ts-ignore
 		constructor(runtime,accept,reject) {
@@ -382,7 +382,7 @@ async function kernel_main() {
 	}
 	class RustTaskNotifier {
 		/**
-		 * @param {any} runtime
+		 * @arg {any} runtime
 		 */
 		constructor(runtime) {
 			this.runtime=runtime
@@ -390,8 +390,8 @@ async function kernel_main() {
 		count=0
 		inner=null
 		/**
-		 * @param {any} accept
-		 * @param {any} reject
+		 * @arg {any} accept
+		 * @arg {any} reject
 		 */
 		// @ts-ignore
 		static create_promise(obj,accept,reject) {
@@ -416,7 +416,7 @@ async function kernel_main() {
 	}
 	class RustTaskContext {
 		/**
-		 * @param {any} runtime
+		 * @arg {any} runtime
 		 */
 		constructor(runtime) {
 			this.runtime=runtime
@@ -483,9 +483,9 @@ async function kernel_main() {
 			 */
 			let c_can_buy_arr=[]
 			/**
-			 * @param {string} target
-			 * @param {number[]} src_arr
-			 * @param {any[]} target_arr
+			 * @arg {string} target
+			 * @arg {number[]} src_arr
+			 * @arg {any[]} target_arr
 			 */
 			function process_buyables_arr(target,src_arr,target_arr) {
 				let i=0
@@ -530,8 +530,8 @@ async function kernel_main() {
 				return 'done'
 			}
 			/**
-			 * @param {any[]} arr
-			 * @param {string} target
+			 * @arg {any[]} arr
+			 * @arg {string} target
 			 */
 			function buyable_iter(arr,target) {
 				for(let x of arr) {
@@ -546,8 +546,8 @@ async function kernel_main() {
 				return false
 			}
 			/**
-			 * @param {number[]} arr
-			 * @param {string} target
+			 * @arg {number[]} arr
+			 * @arg {string} target
 			 */
 			function upgrade_iter(arr,target) {
 				for(let x of arr) {
@@ -681,7 +681,7 @@ async function kernel_main() {
 	window.Poll=Poll
 	class DelayFuture {
 		/**
-		 * @param {any} timeout
+		 * @arg {any} timeout
 		 */
 		constructor(timeout) {
 			this.delay=timeout
@@ -700,7 +700,7 @@ async function kernel_main() {
 			this.cint=-1
 		}
 		/**
-		 * @param {{ is_timed_out: boolean; waker: { is_some: () => any; take: () => { (): any; new (): any; unwrap: { (): any; new (): any; }; }; }; finish: () => void; dispose: () => void; }} self
+		 * @arg {{ is_timed_out: boolean; waker: { is_some: () => any; take: () => { (): any; new (): any; unwrap: { (): any; new (): any; }; }; }; finish: () => void; dispose: () => void; }} self
 		 */
 		static on_timeout(self) {
 			self.is_timed_out=true
@@ -735,8 +735,8 @@ async function kernel_main() {
 		}
 	}
 	/**
-	 * @param {any} runtime
-	 * @param {number} delay
+	 * @arg {any} runtime
+	 * @arg {number} delay
 	 */
 	function async_delay_future(runtime,delay) {
 		let future=new DelayFuture(delay)
@@ -746,8 +746,8 @@ async function kernel_main() {
 		return cx.wait_for()
 	}
 	/**
-	 * @param {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime
-	 * @param {string | number} i
+	 * @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime
+	 * @arg {string | number} i
 	 */
 	async function async_loop_function_inner(runtime,i) {
 		let w=async_delay_future.bind(null,runtime)
@@ -806,9 +806,9 @@ async function kernel_main() {
 				let __d=DebugApi._PrivInstance
 				__d.attach(debug,undebug,null)
 				/**
-				 * @param {(this: any, ...args: readonly any[]) => any} func
-				 * @param {any} f_this
-				 * @param {readonly any[]} c_args
+				 * @arg {(this: any, ...args: readonly any[]) => any} func
+				 * @arg {any} f_this
+				 * @arg {readonly any[]} c_args
 				 */
 				function do_activate(func,f_this,c_args) {
 					try {
@@ -884,7 +884,7 @@ async function kernel_main() {
 		}
 	}
 	/**
-	 * @param {{ is_shutdown: any; }} runtime
+	 * @arg {{ is_shutdown: any; }} runtime
 	 */
 	async function async_process(runtime) {
 		for(let i=0;i<600;i++) {
@@ -899,7 +899,7 @@ async function kernel_main() {
 		}
 	}
 	/**
-	 * @param {{ ref: (arg0: { active: null; dispose(): void; }) => void; auto_ref: () => any; unref: (arg0: { active: null; dispose(): void; }) => void; }} runtime
+	 * @arg {{ ref: (arg0: { active: null; dispose(): void; }) => void; auto_ref: () => any; unref: (arg0: { active: null; dispose(): void; }) => void; }} runtime
 	 */
 	async function async_loop_function(runtime) {
 		let w_state={
@@ -926,7 +926,7 @@ async function kernel_main() {
 	}
 	class Ref {
 		/**
-		 * @param {any} runtime
+		 * @arg {any} runtime
 		 */
 		constructor(runtime) {
 			this.runtime=runtime
@@ -938,7 +938,7 @@ async function kernel_main() {
 	}
 	class RuntimeTask {
 		/**
-		 * @param {any} runtime
+		 * @arg {any} runtime
 		 */
 		constructor(runtime) {
 			this.runtime=runtime
@@ -957,7 +957,7 @@ async function kernel_main() {
 	}
 	class ExportTask {
 		/**
-		 * @param {any} runtime
+		 * @arg {any} runtime
 		 */
 		constructor(runtime) {
 			// @ts-ignore

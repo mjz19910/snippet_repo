@@ -3,7 +3,7 @@ import {log_fancy_inspect} from "./log_fancy_inspect.js";
 import {str_to_ip} from "./str_to_ip.js";
 /**
  * @returns {Promise<[string, string[]][]>}
- * @param {string} filename
+ * @arg {string} filename
  */
 async function load_route_from_file(filename) {
 	let buf = await readFile(filename, {"encoding": "utf8"});
@@ -18,7 +18,7 @@ async function load_route_from_file(filename) {
 	});
 }
 /**
- * @param {[string, string[]][]} traceroute_results
+ * @arg {[string, string[]][]} traceroute_results
  */
 function log_if_traceroute_mismatch(traceroute_results) {
 	traceroute_results.map(e => {
@@ -44,7 +44,7 @@ function sort_by_ip_key(array) {
 }
 export class RouteReader {
 	/**
-	 * @param {string} filename
+	 * @arg {string} filename
 	 */
 	async read_file(filename) {
 		let res = await load_route_from_file(filename);

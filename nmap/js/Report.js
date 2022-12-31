@@ -4,7 +4,7 @@ export class Report {
 	 */
 	report_contents = [];
 	/**
-	 * @param {any[]} value
+	 * @arg {any[]} value
 	 */
 	add(value) {
 		this.report_contents.push(value);

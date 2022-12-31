@@ -211,7 +211,7 @@ dp??=new class_for_var_dp;
 //dp.doc_res=dp.parseFromString(dp.doc_str, "text/html")
 class TokenizerBase {
 	/**
-	 * @param {string} source
+	 * @arg {string} source
 	 */
 	constructor(source) {
 		this.source=source;
@@ -223,7 +223,7 @@ class CPPEnumParser extends TokenizerBase {
 CPPEnumParser;
 class HTMLParser extends TokenizerBase {
 	/**
-	 * @param {string} source
+	 * @arg {string} source
 	 */
 	constructor(source) {
 		super(source);
@@ -333,7 +333,7 @@ class HTMLParser extends TokenizerBase {
 		this.index=0;
 	}
 	/**
-	 * @param {number} offset
+	 * @arg {number} offset
 	 */
 	get(offset) {
 		return this.source[this.index+offset];
@@ -505,7 +505,7 @@ class HTMLParser extends TokenizerBase {
 		if(val===void 0) throw new Error("State stack underflow");
 		return val;
 	}
-	/** @param {[number,number]} token_item @returns {[string,string]} */
+	/** @arg {[number,number]} token_item @returns {[string,string]} */
 	printable(token_item) {
 		let rev_item=this.tok_map_rev.get(token_item[0]);
 		if(!rev_item) throw new Error("unable to print: "+token_item[0]);

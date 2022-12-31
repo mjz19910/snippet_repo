@@ -6,7 +6,7 @@ import {UrlFetcher} from "./url_fetcher/UrlFetcher.js";
 export let cached_data_buffer=[];
 
 export class PageLoaderState {
-	/** @param {import("../ipc_index.js").JSBrowserIpcPlugin} arg0 */
+	/** @arg {import("../ipc_index.js").JSBrowserIpcPlugin} arg0 */
 	set_html_lexer(arg0) {
 		this.m_page_html_lexer=arg0;
 	}
@@ -36,7 +36,7 @@ export class PageLoaderState {
 		}
 	}
 	/**
-	 * @param {IncomingMessage} message
+	 * @arg {IncomingMessage} message
 	 */
 	async on_incoming_message(message) {
 		this.m_incoming_message=message;
@@ -75,7 +75,7 @@ export class PageLoaderState {
 		await promise;
 	}
 	/**
-	 * @param {Error} e
+	 * @arg {Error} e
 	 */
 	on_error_result(e) {
 		console.error(e);

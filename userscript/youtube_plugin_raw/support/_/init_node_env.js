@@ -13,7 +13,7 @@ navigator=na;
 		 * @type {{ [x: string]: any; }}
 		 */
 		index_arr=[];
-		/** @param {string} str */
+		/** @arg {string} str */
 		getItem(str) {
 			return this.map.get(str);
 		}
@@ -21,20 +21,20 @@ navigator=na;
 			return this.map.size;
 		}
 		/**
-		 * @param {any} key
-		 * @param {any} value
+		 * @arg {any} key
+		 * @arg {any} value
 		 */
 		setItem(key,value) {
 			this.map.set(key,value);
 		}
 		/**
-		 * @param {any} key
+		 * @arg {any} key
 		 */
 		removeItem(key) {
 			this.map.delete(key);
 		}
 		/**
-		 * @param {string | number} index
+		 * @arg {string | number} index
 		 */
 		key(index) {
 			return this.index_arr[index];
@@ -54,7 +54,7 @@ navigator=na;
 	window.Image=Image;
 	class Document extends EventTarget {
 		/**
-		 * @param {string} tagName
+		 * @arg {string} tagName
 		 */
 		createElement(tagName) {
 			let element=new Element;
@@ -70,7 +70,7 @@ navigator=na;
 			return {};
 		}
 		/**
-		 * @param {string} tn
+		 * @arg {string} tn
 		 */
 		_setup(tn) {
 			this.tagName=tn;
@@ -80,7 +80,7 @@ navigator=na;
 		 */
 		children=[];
 		/**
-		 * @param {any} other_ele
+		 * @arg {any} other_ele
 		 */
 		append(other_ele) {
 			this.children.push(other_ele);
@@ -98,7 +98,7 @@ navigator=na;
 			return this._state;
 		}
 		/**
-		 * @param {{} | null} state
+		 * @arg {{} | null} state
 		 */
 		pushState(state) {
 			this.history_list.push(this._state);
@@ -106,7 +106,7 @@ navigator=na;
 			console.log("history push state base");
 		}
 		/**
-		 * @param {{} | null} state
+		 * @arg {{} | null} state
 		 */
 		replaceState(state) {
 			console.log("history replace state base");
@@ -172,7 +172,7 @@ let r_window=window; r_window;
 	}
 	class Gain extends AudioNode {
 		/**
-		 * @param {AudioContext} ctx
+		 * @arg {AudioContext} ctx
 		 */
 		constructor(ctx) {
 			super();
@@ -204,7 +204,7 @@ function destroy_env(message_channel) {
 	}`);
 	do_node_exit(0);
 }
-/** @param {number} exit_status */
+/** @arg {number} exit_status */
 async function do_node_exit(exit_status) {
 	/** @arg {string} x */
 	function dyn_import(x) {

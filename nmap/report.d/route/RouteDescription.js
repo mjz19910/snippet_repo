@@ -11,9 +11,9 @@ export class RouteDescription {
 	/**@type {Route|null} */
 	new_version=null;
 	/**
-	 * @param {string} target
-	 * @param {string[]} route_list
-	 * @param {Route | null} new_version
+	 * @arg {string} target
+	 * @arg {string[]} route_list
+	 * @arg {Route | null} new_version
 	 */
 	constructor(target,route_list,new_version) {
 		this.target=target;
@@ -21,7 +21,7 @@ export class RouteDescription {
 		this.new_version=new_version;
 	}
 	/**
-	 * @param {RouteDesc|RouteDescRo} value
+	 * @arg {RouteDesc|RouteDescRo} value
 	 */
 	static from(value) {
 		let {target,route,new_version}=value;

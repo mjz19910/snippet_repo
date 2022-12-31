@@ -24,13 +24,13 @@ function main() {
 		commit() {
 			this.set(this.lastKey,this.lastValue);
 		}
-		/** @param {string} key  */
+		/** @arg {string} key  */
 		keyIndexOf(key) {
 			return this.keys.indexOf(key);
 		}
 		/**
-		 * @param {string} key
-		 * @param {()=>void} value
+		 * @arg {string} key
+		 * @arg {()=>void} value
 		 */
 		set(key,value) {
 			if(this.keys.indexOf(key)>-1) {
@@ -39,14 +39,14 @@ function main() {
 			this.keys.push(key);
 			this.values.push(value);
 		}
-		/** @param {number} id */
+		/** @arg {number} id */
 		run(id) {
 			var key=this.keys[id];
 			var value=this.values[id];
 			console.log("running",key);
 			return value();
 		}
-		/** @param {number} id */
+		/** @arg {number} id */
 		execute(id) {
 			return this.run(id);
 		}

@@ -6,14 +6,14 @@ export class DNSReport {
 	 */
 	contents = [];
 	/**
-	 * @param {DNSReportSeq|string} value
+	 * @arg {DNSReportSeq|string} value
 	 */
 	append(value) {
 		this.contents.push(value);
 		return this;
 	}
 	/**
-	 * @param {readonly string[]} value
+	 * @arg {readonly string[]} value
 	 */
 	raw(value) {
 		this.contents.push(value.join(""));

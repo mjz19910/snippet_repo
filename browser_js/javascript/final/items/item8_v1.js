@@ -16,7 +16,7 @@ function main() {
 	}
 	// cspell: disable-next-line
 	/**
-	 * @param {number} lim
+	 * @arg {number} lim
 	 */
 	function do_work_1(lim) {
 		let game=get_game();
@@ -101,7 +101,7 @@ function main() {
 	}
 	// cspell: disable-next-line
 	/**
-	 * @param {number} dcs
+	 * @arg {number} dcs
 	 */
 	function do_work_0(dcs) {
 		let game=get_game();
@@ -164,8 +164,8 @@ function main() {
 		return v;
 	}
 	/**
-	 * @param {number} dim_l
-	 * @param {number} lim
+	 * @arg {number} dim_l
+	 * @arg {number} lim
 	 */
 	function maxall_dim(dim_l,lim) {
 		let game=get_game();

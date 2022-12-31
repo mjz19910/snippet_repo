@@ -19,7 +19,7 @@
 /*eslint-disable no-undef*/
 
 /**
- * @param {{}} value
+ * @arg {{}} value
  */
 function use_jquery_overwrite(value) {
 	Object.defineProperty(window,"$",{

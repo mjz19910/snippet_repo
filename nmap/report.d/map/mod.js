@@ -288,8 +288,8 @@ class B {
 		let first_dup=null;
 		let sort_count=0;
 		/**
-		 * @param {string} a
-		 * @param {string} b
+		 * @arg {string} a
+		 * @arg {string} b
 		 */
 		function ip_leq(a,b) {
 			let ip_a=a.split(".").map(e => +e);

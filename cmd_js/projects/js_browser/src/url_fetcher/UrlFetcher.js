@@ -3,7 +3,7 @@ import * as node_html_parser from "node-html-parser";
 
 
 export class UrlFetcher {
-	/** @param {import("../page_loader.js").PageLoaderState} state @param {typeof import("http")|typeof import("https")} cur_api */
+	/** @arg {import("../page_loader.js").PageLoaderState} state @arg {typeof import("http")|typeof import("https")} cur_api */
 	async_api_use_for_get(state,cur_api) {
 		let t=this;
 		cur_api.get(state.url,(resp) => {
@@ -26,7 +26,7 @@ export class UrlFetcher {
 		});
 	}
 
-	/** @param {string} data */
+	/** @arg {string} data */
 	on_response_end(data) {
 		/** @type {import("node-html-parser").HTMLElement} */
 		const root=parse(data,{
@@ -47,8 +47,8 @@ export class UrlFetcher {
 		this.show_dom_node(state,root);
 	}
 	/**
-	 * @param {ReturnType<typeof parse>['childNodes'][number]} element
-	 * @param {{ depth: number; }} state
+	 * @arg {ReturnType<typeof parse>['childNodes'][number]} element
+	 * @arg {{ depth: number; }} state
 	 */
 	show_dom_node(state,element) {
 		if(element instanceof node_html_parser.HTMLElement) {

@@ -2,7 +2,7 @@ import util from "util";
 
 export class IP_base {
 	/**
-	 * @param {string} str
+	 * @arg {string} str
 	 */
 	static parse(str) {
 		return str.split(".").map(e => +e);
@@ -12,7 +12,7 @@ export class IP_base {
 		return `IP("${value[1]}")`;
 	}
 	/**
-	 * @param {string} ip
+	 * @arg {string} ip
 	 */
 	constructor(ip) {
 		this.addr = IP_base.parse(ip);
@@ -21,9 +21,9 @@ export class IP_base {
 		return this.addr.join(".");
 	}
 	/**
-	 * @param {any} _
-	 * @param {any} options
-	 * @param {(object: string, options: any) => any} inspect
+	 * @arg {any} _
+	 * @arg {any} options
+	 * @arg {(object: string, options: any) => any} inspect
 	 */
 	[util.inspect.custom](_, options, inspect) {
 		return `${options.stylize('IP', 'special')}[${inspect(this.addr.join(".") + ".", options)}]`;

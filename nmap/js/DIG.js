@@ -1,5 +1,5 @@
 /**
- * @param {string} v
+ * @arg {string} v
  * @return {['DIG', string]}
  */
 

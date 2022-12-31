@@ -14,7 +14,7 @@ v5 (new): snippet_repo/javascript/group1/sub_a/item-_3.js
 	if('cint' in ele&&typeof ele.cint==='number') clearInterval(ele.cint);
 	let pr=SharkGame.PlayerResources;
 	/**
-	 * @param {number} v
+	 * @arg {number} v
 	 */
 	function fmt(v) {
 		if(v===0) return "0";
@@ -30,7 +30,7 @@ v5 (new): snippet_repo/javascript/group1/sub_a/item-_3.js
 		return v.toFixed(4);
 	}
 	/**
-	 * @param {string} v
+	 * @arg {string} v
 	 */
 	function res_get(v) {
 		return pr.get(v).amount;
