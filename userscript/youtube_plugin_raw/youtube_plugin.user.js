@@ -3099,6 +3099,10 @@ class BaseServicePrivate {
 		this.changed_known_bool=[];
 		this.save_tmp_data();
 	}
+	on_new_known_str() {
+		this.save_known_string();
+	}
+	/** @private */
 	save_known_string() {
 		this.load_tmp_data();
 		if(!this.known_data_tmp) {
@@ -3196,7 +3200,7 @@ class BaseService extends BaseServicePrivate {
 		if(cur.has(x)) return;
 		cur.add(x);
 		this.new_known_strings.push([key,x]);
-		this.save_known_string();
+		this.on_new_known_str();
 		console.log(key,x);
 	}
 	/** @arg {number} x */
@@ -3932,7 +3936,7 @@ class HandleTypes extends BaseService {
 		this.primitive(simpleText);
 		this.empty_object(y);
 	}
-	/** @private @param {import("./support/yt_api/_/t/TextRun.js").TextRun[]} arr */
+	/** @private @arg {import("./support/yt_api/_/t/TextRun.js").TextRun[]} arr */
 	TextRun_va(...arr) {
 		this.iterate(arr,this.TextRun.bind(this));
 	}
@@ -5123,24 +5127,22 @@ class HandleTypes extends BaseService {
 		this.primitives(enabled);
 		this.empty_object(y);
 	}
-	/** @param {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint[]} arr */
+	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint[]} arr */
 	endpoint_va(...arr) {
 		this.iterate(arr,this.endpoint.bind(this));
 	}
-	/** @param {import("./support/yt_api/_/s/YtTextType.js").YtTextType[]} arr */
+	/** @arg {import("./support/yt_api/_/s/YtTextType.js").YtTextType[]} arr */
 	YtTextType_va(...arr) {
 		this.iterate(arr.filter(e => !!e),this.YtTextType.bind(this));
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/SetSettingEndpointData.js").SetSettingEndpointData} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/SetSettingEndpointData.js").SetSettingEndpointData} x */
 	setSettingEndpoint(x) {
 		const {boolValue,settingItemId,settingItemIdForClient,...y}=x;
 		if(x.boolValue!==void 0) {
 			this.primitive(x.boolValue);
 		}
-		console.log("[setting_id][%s]",x.settingItemId);
-		console.log("[setting_name][%s]",x.settingItemIdForClient);
+		this.save_new_string("setting_id",x.settingItemId);
+		this.save_new_string("setting_name",x.settingItemIdForClient);
 		this.log_empty_obj(y);
 	}
 	/** @template {{}} T @arg {T} x @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
