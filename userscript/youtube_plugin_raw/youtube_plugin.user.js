@@ -3518,7 +3518,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
 	on_text(text) {
 		let rest=run_extract_empty(text);
-		if(rest instanceof Array) for (let i of rest) {
+		if(rest instanceof Array) for(let i of rest) {
 			if(Object.keys(i).length>0) console.log(i);
 		}
 		return;
@@ -3680,7 +3680,7 @@ class HandleTypes extends BaseService {
 			switch(item.layoutType) {
 				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
 					this.item_with_layout_id(item);
-					console.log("[display_top_landscape_image] [%s]",item.layoutId); 
+					console.log("[display_top_landscape_image] [%s]",item.layoutId);
 				} break;
 				default: debugger;
 			}
@@ -3696,13 +3696,15 @@ class HandleTypes extends BaseService {
 	log_ad_metadata=false;
 	/** @arg {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata */
 	adSlotMetadata(metadata) {
-		if(this.log_ad_metadata) console.log("ad slot meta pos",metadata.slotType);
 		switch(metadata.slotType) {
 			case "SLOT_TYPE_IN_FEED": break;
 			default: debugger;
 		}
-		console.log("ad slot meta slot_id [%s]",metadata.slotId);
-		console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
+		if(this.log_ad_metadata) {
+			console.log("ad slot meta pos",metadata.slotType);
+			console.log("ad slot meta slot_id [%s]",metadata.slotId);
+			console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
+		}
 	}
 	/** @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
 	adsControlFlowOpportunityReceivedCommand(command) {
