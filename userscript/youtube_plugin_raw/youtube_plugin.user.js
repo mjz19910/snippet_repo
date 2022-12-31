@@ -3112,6 +3112,16 @@ const general_service_state={
 };
 
 class BaseService {
+	/** @param {string} known_data */
+	save_local_storage(known_data) {
+		localStorage.known_data=known_data;
+	}
+	get_local_storage() {
+		return localStorage.known_data;
+	}
+	delete_known_data() {
+		localStorage.removeItem("known_data");
+	}
 	#res;
 	/** @arg {ResolverT} res */
 	constructor(res) {
@@ -5067,27 +5077,9 @@ class HandleTypes extends BaseService {
 	url(x) {
 		this.save_new_string("url",x);
 	}
-	/**
-	 * @param {string} key
-	 * @param {boolean} bool
-	 */
-	save_new_bool(key,bool) {
-		let kc=this.known_booleans.get(key);
-		if(!kc) {
-			kc={t: false,f: false};
-		}
-		if(bool) {
-			kc.t=true;
-		} else {
-			kc.f=true;
-		}
-		this.changed_known_bool.push([key,kc]);
-		this.save_known_bool();
-	}
 	/** @arg {boolean} x */
 	sendPost(x) {
 		this.save_new_bool("sendPost",x);
-		console.log("sendPost",x);
 	}
 	/** @arg {ResolverT} x */
 	constructor(x) {
@@ -5191,14 +5183,25 @@ class HandleTypes extends BaseService {
 		let json_str=JSON.stringify(this.known_data_tmp);
 		this.save_local_storage(json_str);
 	}
-	/** @param {string} known_data */
-	save_local_storage(known_data) {
-		localStorage.known_data=known_data;
-	}
-	get_local_storage() {
-		return localStorage.known_data;
-	}
-	delete_known_data() {
-		localStorage.removeItem("known_data");
+	/** @param {string} key @param {boolean} bool */
+	save_new_bool(key,bool) {
+		let kc=this.known_booleans.get(key);
+		if(!kc) {
+			kc={t: false,f: false};
+			this.known_booleans.set(key,kc);
+		}
+		if(bool) {
+			if(!kc.t) {
+				console.log(key,bool);
+			}
+			kc.t=true;
+		} else {
+			if(!kc.f) {
+				console.log(key,bool);
+			}
+			kc.f=true;
+		}
+		this.changed_known_bool.push([key,kc]);
+		this.save_known_bool();
 	}
 }
