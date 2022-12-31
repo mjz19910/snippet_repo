@@ -1,2 +1,3 @@
+import {ChannelOptionsRenderer} from "./ChannelOptionsRenderer";
 
-export type SettingsOptionItemType={};
+export type SettingsOptionItemType=ChannelOptionsRenderer;

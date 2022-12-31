@@ -1,5 +1,8 @@
-export type UrlEndpointTargetType="TARGET_NEW_WINDOW";
-export type UrlEndpoint<Target extends UrlEndpointTargetType>={
-	url: string;
-	target: Target;
+import {CommandMetadata} from "../b/CommandMetadata.js";
+import {UrlEndpointData} from "./UrlEndpointData";
+
+export type UrlEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	urlEndpoint: UrlEndpointData;
 };

@@ -3120,6 +3120,12 @@ class BaseService {
 		if(!this.#res.value) throw 1;
 		return this.#res.value;
 	}
+	/** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
+	iterate(...[t,u]) {
+		for(let item of t) {
+			u(item);
+		}
+	}
 }
 
 class CsiService extends BaseService {
@@ -3825,7 +3831,8 @@ class HandleTypes extends BaseService {
 				return rest;
 			}
 		}
-		/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
+		/** @typedef {import("./support/yt_api/_/s/YtTextType.js").YtTextType} YtTextType */
+		/** @arg {YtTextType} text */
 		function run_extract_empty(text) {
 			let rest=[];
 			if("runs" in text) {
@@ -3836,7 +3843,7 @@ class HandleTypes extends BaseService {
 			return rest;
 
 		}
-		/** @arg {import("./support/yt_api/_/s/SimpleText.js").SimpleText} simple_text */
+		/** @arg {Exclude<YtTextType,{runs:any}>} simple_text */
 		function run_extract_empty_s(simple_text) {
 			if("accessibility" in simple_text) {
 				let {simpleText,accessibility,...rest}=simple_text;
@@ -4711,10 +4718,10 @@ class HandleTypes extends BaseService {
 	TwoColumnBrowseResultsRenderer(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
-	/** @arg {{}[]} options */
+	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType[]} options */
 	options(options) {
 		for(let option of options) {
-			console.log(option);
+			this.SettingsOptionItemType(option);
 		}
 	}
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer */
@@ -4819,10 +4826,9 @@ class HandleTypes extends BaseService {
 			this.endpoint(endpoint);
 		});
 	}
-	/** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
-	iterate(...[t,u]) {
-		for(let item of t) {
-			u(item);
-		}
+	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
+	SettingsOptionItemType(item) {
+		console.log(item.channelOptionsRenderer);
+		debugger;
 	}
 }

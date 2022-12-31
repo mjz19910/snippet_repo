@@ -1,6 +1,6 @@
 import {Thumbnail} from "./Thumbnail";
 
 
-export interface ThumbnailsList {
+export type ThumbnailsList={
 	thumbnails: Thumbnail[];
 }
