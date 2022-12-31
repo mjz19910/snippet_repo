@@ -4323,6 +4323,7 @@ class HandleTypes extends BaseService {
 		this.commandMetadata(b);
 		if(c) this.signalServiceEndpoint(c);
 		if(d) this.watchEndpoint(d);
+		if("urlEndpoint" in ep) console.log("[url_ep]", ep.urlEndpoint);
 		if(Object.keys(ex).length!==0) {
 			console.log(ex);
 		}

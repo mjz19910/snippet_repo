@@ -7,4 +7,7 @@ export type YtEndpoint={
 	commandMetadata: CommandMetadata;
 	signalServiceEndpoint?: SignalServiceEndpointData;
 	watchEndpoint?: WatchEndpointData;
+	// TODO: 
+	// target=UrlEndpointTargetType;
+	urlEndpoint?: {};
 };
