@@ -723,7 +723,7 @@ class ObjectInfo {
 		this.chunk_end=gr_2;
 		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
-	/** @template U @template {U[]} T  @arg {T} a @arg {(value: U) => boolean} b */
+	/** @template U @template {U[]} T @arg {T} a @arg {(value: U) => boolean} b */
 	do_filter(a,b) {
 		/** @type {U[]} */
 		let r=[];
@@ -748,7 +748,7 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {{}} T  @arg {T} obj  @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
+/** @template {{}} T @arg {T} obj @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
 function get_keys_of(obj) {
 	let rq=Object.keys(obj);
 	/** @type {any} */
@@ -1193,6 +1193,10 @@ const decode_protobuf_obj=function make() {
 				this.pos=0;
 				this.len=buf.length;
 			}
+			/** @arg {number} offset */
+			skip(offset) {
+				this.pos+=offset;
+			}
 			uint32() {
 				value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
 				value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
@@ -1450,7 +1454,7 @@ class FilterHandlers {
 		debugger;
 		return false;
 	}
-	/**  @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {{}} state @arg {T} x  */
+	/** @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {{}} state @arg {T} x  */
 	use_template_url(state,x) {
 		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */

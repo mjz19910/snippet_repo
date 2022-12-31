@@ -508,7 +508,7 @@ class InstructionCastImpl extends InstructionImplBase {
 class InstructionJeImpl extends InstructionImplBase {
 	/** @type {"je"} */
 	type="je";
-	/** @arg {StackVMImpl} vm  @arg {number} target */
+	/** @arg {StackVMImpl} vm @arg {number} target */
 	run(vm,target) {
 		if(typeof target!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
