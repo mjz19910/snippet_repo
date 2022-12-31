@@ -1,13 +1,6 @@
 import {Accessibility} from "../a/Accessibility.js";
 import {Icon} from "../i/Icon.js";
-import {SignalServiceEndpointData} from "../s/SignalServiceEndpoint.js";
-import {CommandMetadata} from "./CommandMetadata.js";
-
-type YtEndpoint={
-	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
-	signalServiceEndpoint: SignalServiceEndpointData;
-}
+import {YtEndpoint} from "./YtEndpoint";
 
 export type NotificationTopbarButtonRendererData={
 	icon: Icon<"NOTIFICATIONS">;
