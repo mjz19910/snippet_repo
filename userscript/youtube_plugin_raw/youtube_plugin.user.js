@@ -1143,7 +1143,6 @@ class MyReader {
 		this.len=buf.length;
 		this.last_pos=0;
 	}
-
 	read_any() {
 		/** @type {[number,number,(number|bigint)[]][]} */
 		let data=[];
@@ -1169,9 +1168,23 @@ class MyReader {
 				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
 			}
 		}
-		return data;
+		let [first,...rest]=data;
+		let [fieldId,wireType,as_num]=first;
+		/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number|null]} */
+		function filter_rest(e) {
+			let [fieldId,wireType,as_num]=e;
+			if(as_num.length===0) {
+				return [fieldId,wireType,null];
+			}
+			return [fieldId,wireType,as_num[0]];
+		}
+		return {
+			first_w: wireType,
+			first_f: fieldId,
+			as_num,
+			rest: rest.map(filter_rest),
+		};
 	}
-
 	/** @template T @arg {()=>T} x */
 	revert(x) {
 		let prev_pos=this.pos;
@@ -1272,7 +1285,6 @@ class MyReader {
 			}
 		} else {
 			for(;i<5;++i) {
-				/* istanbul ignore if */
 				if(this.pos>=this.len)
 					throw new Error("indexOutOfRange");
 				// 6th..10th
@@ -1329,7 +1341,7 @@ class MyReader {
 				} else {
 					first_num.push(num32);
 				}
-				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
 			case 1:
 				this.skip(8);
@@ -1358,27 +1370,8 @@ const base64_dec=new Base64Binary();
 /** @arg {string} str */
 function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
-	/** @type {[number,number,(number|bigint)[]][]} */
-	let data=[];
 	let reader=new MyReader(buffer);
-	let data_2=reader.read_any();
-	data=data_2;
-	let [first,...rest]=data;
-	let [fieldId,wireType,as_num]=first;
-	/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number|null]} */
-	function filter_rest(e) {
-		let [fieldId,wireType,as_num]=e;
-		if(as_num.length===0) {
-			return [fieldId,wireType,null];
-		}
-		return [fieldId,wireType,as_num[0]];
-	}
-	return {
-		first_w: wireType,
-		first_f: fieldId,
-		as_num,
-		rest: rest.map(filter_rest),
-	};
+	return reader.read_any();
 }
 
 /** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
