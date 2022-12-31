@@ -4359,18 +4359,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data */
 	commandMetadata(data) {
-		if(!("webPageType" in data.webCommandMetadata)) return;
-		switch(data.webCommandMetadata.webPageType) {
-			case "WEB_PAGE_TYPE_BROWSE": break;
-			case "WEB_PAGE_TYPE_CHANNEL": break;
-			case "WEB_PAGE_TYPE_PLAYLIST": break;
-			case "WEB_PAGE_TYPE_SHORTS": break;
-			case "WEB_PAGE_TYPE_WATCH": break;
-			case "WEB_PAGE_TYPE_SETTINGS": break;
-			case "WEB_PAGE_TYPE_UNKNOWN": break;
-			default: debugger;
-		};
-
+		this.webCommandMetadata(data.webCommandMetadata);
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint */
 	browseEndpoint(endpoint) {
@@ -4880,5 +4869,20 @@ class HandleTypes extends BaseService {
 		}
 		this.primitive(url);
 		this.empty_object(rest);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta
+	 */
+	webCommandMetadata(meta) {
+		switch(meta.webPageType) {
+			case "WEB_PAGE_TYPE_BROWSE": break;
+			case "WEB_PAGE_TYPE_CHANNEL": break;
+			case "WEB_PAGE_TYPE_PLAYLIST": break;
+			case "WEB_PAGE_TYPE_SHORTS": break;
+			case "WEB_PAGE_TYPE_WATCH": break;
+			case "WEB_PAGE_TYPE_SETTINGS": break;
+			case "WEB_PAGE_TYPE_UNKNOWN": break;
+			default: debugger;
+		};
 	}
 }
