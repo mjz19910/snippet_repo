@@ -3045,7 +3045,6 @@ class BaseServicePrivate {
 	/** @arg {string} key @arg {string|string[]} x */
 	save_new_string(key,x) {
 		if(x instanceof Array) {
-			return;
 		} else if(x.startsWith("http://www.youtube.com/channel/UC")) {
 			if(this.log_skipped_strings) console.log("skip channel like",key,x);
 			return;
@@ -3060,16 +3059,26 @@ class BaseServicePrivate {
 		} else {
 			cur=p[1];
 		}
-		if(cur[0]==='one') {
-			if(!cur[1].includes(x)) {
-				was_known=false;
-				cur[1].push(x);
+		if(x instanceof Array) {
+			let target=p[1];
+			if(target[0]==='one') {
+				let inner=target[1].map(e => [e]);
+				target=["many",inner];
+				p[1]=target;
 			}
-		} else if(cur[0]==='many') {
-			let res=cur[1].find(([e,...r]) => !r.length&&e===x);
-			if(!res) {
-				was_known=false;
-				cur[1].push([x]);
+			target[1].push(x);
+		} else {
+			if(cur[0]==='one') {
+				if(!cur[1].includes(x)) {
+					was_known=false;
+					cur[1].push(x);
+				}
+			} else if(cur[0]==='many') {
+				let res=cur[1].find(([e,...r]) => !r.length&&e===x);
+				if(!res) {
+					was_known=false;
+					cur[1].push([x]);
+				}
 			}
 		}
 		if(was_known) return;
@@ -3130,7 +3139,7 @@ class BaseServicePrivate {
 	new_known_root_ve=[];
 	/** @private @type {[string,['one',string[]]|['many',string[][]]][]} */
 	known_strings=[];
-	/** @private @type {[string,string][]} */
+	/** @private @type {[string,string|string[]][]} */
 	new_known_strings=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	known_booleans=[];
@@ -3163,6 +3172,20 @@ class BaseServicePrivate {
 		for(let item of arr) {
 			let [key,val]=item;
 			let index=tmp_known_str.findIndex(e => e[0]===key);
+			if(val instanceof Array) {
+				if(index<0) {
+					tmp_known_str.push([item[0],["many",[val]]]);
+				} else {
+					let target=tmp_known_str[index][1];
+					if(target[0]==='one') {
+						let inner=target[1].map(e => [e]);
+						target=["many",inner];
+						tmp_known_str[index][1]=target;
+					}
+					target[1].push(val);
+				}
+				return;
+			}
 			if(index<0) {
 				tmp_known_str.push([item[0],['one',[val]]]);
 				index=tmp_known_str.length-1;
@@ -4346,15 +4369,42 @@ class HandleTypes extends BaseService {
 		switch(ok[0]) {case "notificationActionRenderer": if(ok[0] in x) this.renderer(x); return;}
 		switch(ok[0]) {
 			case "voiceSearchDialogRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;
-			default: if(ok[0] in x) { console.log("use default for",x,x[ok[0]]); this.renderer(x[ok[0]]);}
+			default: if(ok[0] in x) {console.log("use default for",x,x[ok[0]]); this.renderer(x[ok[0]]);}
 		}
 		console.log("[unk_popup_info][%s]",ok,x);
 	}
 	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
 	renderer(x) {
 		let cr=null;
+		let ok=get_keys_of(x);
+		iterate(ok,v => {
+			switch(v) {
+				case "connectionErrorHeader": return;
+				case "placeholderHeader": return;
+				case "promptHeader": return;
+				case "exampleQuery1": return;
+				case "exampleQuery2": return;
+				case "promptMicrophoneLabel": return;
+				case "loadingHeader": return;
+				case "connectionErrorHeader": return;
+				case "connectionErrorMicrophoneLabel": return;
+				case "permissionsHeader": return;
+				case "permissionsSubtext": return;
+				case "disabledHeader": return;
+				case "disabledSubtext": return;
+				case "microphoneButtonAriaLabel": return;
+				case "exitButton": return;
+				case "ghostGridRenderer": return;
+				case "microphoneOffPromptHeader": return;
+				case "notificationActionRenderer": return;
+				case "trackingParams": return;
+				case "url": return;
+				default: debugger;
+			}
+		});
 		if("placeholderHeader" in x) {
 			let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
+			cr=c;
 			this.trackingParams(tp);
 			this.YtTextType(placeholderHeader);
 			this.YtTextType(promptHeader);
@@ -4371,12 +4421,11 @@ class HandleTypes extends BaseService {
 			this.YtTextType(microphoneButtonAriaLabel);
 			this.ButtonRenderer(exitButton);
 			this.YtTextType(microphoneOffPromptHeader);
-			empty_object(c);
 		}
 		if("notificationActionRenderer" in x) {
 			const {notificationActionRenderer: a0,...c}=x; cr=c;
 			const {responseText,trackingParams,...a}=a0;
-			empty_objects(c,a);
+			empty_objects(a);
 		}
 		if("ghostGridRenderer" in x) {
 			const {ghostGridRenderer: a0,...c}=x; cr=c;
@@ -4387,6 +4436,8 @@ class HandleTypes extends BaseService {
 			this.trackingParams(tp);
 		}
 		if(!cr) return;
+		let ok_1=Object.keys(cr);
+		if(!ok_1.length) return;
 		console.log("[renderer_log] [%s]",Object.keys(cr).join(),cr);
 	}
 	/** @arg {import("./support/yt_api/_/t/NotificationActionRenderer.js").NotificationActionRenderer} x */
@@ -4586,9 +4637,9 @@ class HandleTypes extends BaseService {
 	on_new_page_url(data) {
 		console.log("[probably_new_section]",data.url.split("/").slice(1)[0].split("_").slice(1));
 		console.log("[new_page]",data.url);
-		let res=data.url.split("/").slice(1)?.[0].split("_").slice(1).join(".");
+		let res=data.url.split("/").slice(1)?.[0].split("_").slice(1);
 		if(res) {
-			this.save_new_string("page_section",data.url.split("/").slice(1)[0].split("_").slice(1).join("."));
+			this.save_new_string("page_section",res);
 		}
 		this.save_new_string("new_page.page_url",data.url);
 	}
