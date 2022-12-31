@@ -2787,7 +2787,15 @@ async function main() {
 		JSON.parse=new Proxy(original_json_parse,{
 			apply: function(...proxy_args) {
 				if(is_yt_debug_enabled) console.log("JSON.parse()");
-				let obj=Reflect.apply(...proxy_args);
+				let obj;
+				try {
+					obj=Reflect.apply(...proxy_args);
+				} catch (e) {
+					console.log("target error", e);
+					throw e;
+				} finally {
+					JSON.parse=original_json_parse;
+				}
 				if(is_yt_debug_enabled) console.log("request.url");
 				fetch_filter_text_then_data_url(request,obj);
 				return obj;
@@ -2804,7 +2812,6 @@ async function main() {
 			if(on_rejected) return on_rejected(err);
 			throw err;
 		} finally {
-			JSON.parse=original_json_parse;
 		}
 		return ret;
 	}
@@ -4375,14 +4382,14 @@ class HandleTypes extends BaseService {
 			this.ButtonRenderer(exitButton);
 			this.YtTextType(microphoneOffPromptHeader);
 			this.empty_object(c);
-		} else if("trackingParams" in x) {
-			const {trackingParams: tp,...c}=x;
-			this.trackingParams(tp);
-			this.empty_object(c);
+		} else if("notificationActionRenderer" in x) {
+			x.notificationActionRenderer;
 		} else if("ghostGridRenderer" in x) {
 			this.ghostGridRenderer(x.ghostGridRenderer);
 		} else {
-			console.log("[renderer_log] [%s]",Object.keys(x).join(),x);
+			const {trackingParams: tp,...c}=x;
+			this.trackingParams(tp);
+			console.log("[renderer_log] [%s]",Object.keys(c).join(),c);
 		}
 	}
 	/** @arg {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x */
