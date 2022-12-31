@@ -1218,7 +1218,7 @@ class MyReader {
 	}
 	/** @arg {number} [length] */
 	skip(length) {
-		console.log("asked to skip", length);
+		let start_pos=this.pos;
 		if(typeof length==="number") {
 			/* istanbul ignore if */
 			if(this.pos+length>this.len)
@@ -1230,6 +1230,11 @@ class MyReader {
 				if(this.pos>=this.len)
 					throw indexOutOfRange(this);
 			} while(this.buf[this.pos++]&128);
+		}
+		if(length!==void 0) {
+			console.log("asked to skip from %o to",start_pos,this.pos);
+		} else {
+			console.log("asked to skip VarInt from %o to",start_pos,this.pos);
 		}
 	}
 	uint32() {
@@ -3839,7 +3844,7 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
 		switch(icon.iconType) {
-			case "SETTINGS": break;
+			case "SETTINGS": return;
 		}
 		/** @type {any} */
 		let any_icon=icon;
