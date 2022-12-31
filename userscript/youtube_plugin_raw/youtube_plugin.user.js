@@ -3934,7 +3934,7 @@ class HandleTypes extends BaseService {
 				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": this.item_with_layout_id(item); break;
 				default: debugger;
 			}
-			let try_proto_dec=false;
+			let try_proto_dec=true;
 			if(try_proto_dec) {
 				if(inject_api_yt.saved_data) {
 					inject_api_yt.saved_data.any_data.ad_layout_data??={};
