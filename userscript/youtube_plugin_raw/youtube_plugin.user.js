@@ -4565,7 +4565,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowsePageResponse.js").BrowsePageResponse} data */
 	BrowsePageResponse(data) {
-		let ok=cast_as(filter_out_keys(get_keys_of(data),split_string("page,endpoint,response,url,expirationTime,graftedVes")));
 		if("expirationTime" in data) {
 			this.primitive(data.expirationTime);
 		}
@@ -4577,12 +4576,9 @@ class HandleTypes extends BaseService {
 			console.log("[BrowsePage_csn]",data.previousCsn);
 			this.primitive(data.previousCsn);
 		}
-		if(!("page" in data)) return;
 		this.BrowseResponseContent(data.response);
 		this.endpoint(data.endpoint);
-		if(eq_keys(ok,[])) return;
-		if(has_keys(ok,"expirationTime")) return;
-		console.log("[browse_response_top] [%s]",ok.join(","),data);
+		this.save_keys("BrowsePageResponse",data);
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} data */
@@ -4751,12 +4747,15 @@ class HandleTypes extends BaseService {
 		console.log(ok);
 		debugger;
 	}
+	store_trayride_challenge=false;
 	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data */
 	AttGetV(data) {
 		const {challenge,bgChallenge,responseContext,...v}=data;
 		this.bgChallenge(bgChallenge);
-		this.delete_old_string_values("tr_challenge");
-		this.save_new_string("tr_challenge",challenge);
+		if(this.store_trayride_challenge) {
+			this.delete_old_string_values("tr_challenge");
+			this.save_new_string("tr_challenge",challenge);
+		}
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
 		let chal_as_fmt=challenge;
 		chal_as_fmt=cast_as(challenge);
@@ -5230,11 +5229,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/i/RendererData.js").RendererData} x */
 	RendererData(x) {
-		this.save_keys("RendererData",x);
+		this.save_keys("RendererData_keys",x);
 	}
 	/** @template {{}} T @arg {string} key @arg {T} obj */
 	save_keys(key,obj) {
-		this.save_new_string(`${key}_keys`,get_keys_of(obj).join());
+		this.save_new_string(key,get_keys_of(obj).join());
 	}
 }
 //#endregion
