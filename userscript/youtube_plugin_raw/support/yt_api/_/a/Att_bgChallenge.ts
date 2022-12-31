@@ -1,7 +1,7 @@
-import {UrlWrappedValue} from "../../_abc/u/UrlWrappedValue.js";
+import {UrlWrappedValue} from "../u/UrlWrappedValue.js";
 
 export type Att_bgChallenge={
-	interpreterUrl: UrlWrappedValue;
+	interpreterUrl: UrlWrappedValue<any>;
 	interpreterHash: string;
 	program: string;
 	globalName: "trayride";

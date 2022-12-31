@@ -3843,30 +3843,46 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj */
 	handleEntityBatchUpdate(obj) {
-		if(get_keys_of(obj)[0]!=="entityBatchUpdate") {
-			console.log("[entity_batch_invalid]",obj);
-			return;
-		}
-		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
-		this.handle_mutations(obj.entityBatchUpdate.mutations);
+		this.EntityBatchUpdateData(obj.entityBatchUpdate);
 	}
-	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations */
-	handle_mutations(mutations) {
-		for(let mut of mutations) {
-			switch(mut.type) {
-				case "ENTITY_MUTATION_TYPE_DELETE": {
-					let dec=decode_entity_key(mut.entityKey);
-					console.log("[mut_del] type=[%s] id=[%s]",dec.entityType,dec.entityId);
-					if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
-						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
-					} else {
-						debugger;
-					}
-				} break;
-				case "ENTITY_MUTATION_TYPE_REPLACE": console.log("[mut_rep]",mut); break;
-				default: console.log("[mut]",mut); debugger;
-			}
+	/**
+	 * @param {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdateData} x
+	 */
+	EntityBatchUpdateData(x) {
+		const {mutations,timestamp,...y}=x;
+		if(get_keys_of(y).length) {
+			debugger;
 		}
+		if(is_yt_debug_enabled) console.log("[entity_update_time]",x.timestamp);
+		iterate(mutations,mut=>{
+			this.EntityMutationItem(mut);
+		});
+		this.TimestampWithNanos(timestamp);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} mut
+	 */
+	EntityMutationItem(mut) {
+		switch(mut.type) {
+			case "ENTITY_MUTATION_TYPE_DELETE": {
+				let dec=decode_entity_key(mut.entityKey);
+				console.log("[mut_del] type=[%s] id=[%s]",dec.entityType,dec.entityId);
+				if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
+					console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
+				} else {
+					debugger;
+				}
+			} break;
+			case "ENTITY_MUTATION_TYPE_REPLACE": console.log("[mut_rep]",mut); break;
+			default: console.log("[mut]",mut); debugger;
+		}
+
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/TimestampWithNanos.js").TimestampWithNanos} x
+	 */
+	TimestampWithNanos(x) {
+		this.primitives(x.nanos,x.seconds);
 	}
 	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command */
 	ReloadContinuationItemsCommand(command) {
@@ -4282,10 +4298,11 @@ class HandleTypes extends BaseService {
 			case "STYLE_DEFAULT": this.DefaultButtonRenderer(renderer); break;
 			case "STYLE_SUGGESTIVE": this.SuggestiveButtonRenderer(renderer); break;
 			case void 0: this.NoStyleButtonTypes(renderer); break;
-			default: console.log(renderer); debugger;
+			default: break;
 		}
+		this.save_new_string("button_renderer_style",renderer.style);
 	}
-	/** @arg {number|string|bigint|boolean} value */
+	/** @arg {bigint|string|number|boolean} value */
 	primitive(value) {
 		switch(typeof value) {
 			case "bigint":
@@ -4350,6 +4367,7 @@ class HandleTypes extends BaseService {
 	renderer(x) {
 		let cr=null;
 		let ok=get_keys_of(x);
+		this.save_new_string("renderer_keys",ok.join());
 		/** @type {string[]} */
 		let m=[];
 		iterate(ok,v => {
@@ -4365,6 +4383,7 @@ class HandleTypes extends BaseService {
 		if(m.length>0) {
 			console.log("[m_join]",m.join());
 			console.log("[ok_join]",ok.join());
+			this.save_new_string("renderer_new_keys",m.join());
 			debugger;
 		}
 		if("confirmDialogRenderer" in x) {
@@ -4550,6 +4569,7 @@ class HandleTypes extends BaseService {
 			this.primitive(data.expirationTime);
 		}
 		if("graftedVes" in data) {
+			iterate(data.graftedVes,x=>this.GraftedVeItem(x));
 			this.graftedVes(data.graftedVes);
 		}
 		if("previousCsn" in data) {
@@ -4721,24 +4741,25 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok_1,["clickTrackingParams","openPopupAction"])) return;
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} res */
-	notification_get_notification_menu_t(res) {
-		for(let action of res.json.actions) {
-			this.OpenPopupActionItem(action);
-		}
-		let ok=get_keys_of(res.json);
+	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
+	notification_get_notification_menu_t(x) {
+		const {json}=x;
+		iterate(json.actions,x=>this.OpenPopupActionItem(x))
+		let ok=get_keys_of(json);
 		if(eq_keys(ok,["responseContext","actions","trackingParams"])) return;
 		console.log(ok);
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data */
 	AttGetV(data) {
-		let ok=get_keys_of(data);
-		if(eq_keys(ok,["responseContext","challenge","bgChallenge"])) return;
+		const {challenge,bgChallenge,responseContext,...v}=data;
+		this.bgChallenge(bgChallenge);
+		this.save_new_string("tr_challenge",challenge);
 		// spell:disable-next-line
 		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
-		const chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
+		let chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
+		chal_as_fmt=bgChallenge.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue;
 		/** @type {import("./support/AttChallengeObj").AttChallengeObj} */
 		let search_param_obj=make_search_params(chal_as_fmt);
 		/** @type {keyof typeof search_param_obj} */
@@ -4749,9 +4770,17 @@ class HandleTypes extends BaseService {
 				default: console.log("[att_param]",i); debugger;
 			}
 		}
-		data.bgChallenge;
+		let ok=get_keys_of(v);
+		if(!ok.length) return;
 		console.log(data);
 		debugger;
+	}
+	/**
+	 * @param {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x
+	 */
+	bgChallenge(x) {
+		this.save_new_string("tr_bg_global_name",x.globalName);
+		this.save_new_string("tr_bg_interpreter_hash",x.interpreterHash);
 	}
 	/** @arg {import("./support/yt_api/yt/GuideJsonType.js").GuideJsonType} guide */
 	GuideJsonType(guide) {
@@ -5043,7 +5072,7 @@ class HandleTypes extends BaseService {
 			empty_object(x);
 		}
 	}
-	/** @arg {(string | boolean)[]} args */
+	/** @arg {(bigint|string|number|boolean)[]} args */
 	primitives(...args) {
 		iterate(args,arg => this.primitive(arg));
 	}
