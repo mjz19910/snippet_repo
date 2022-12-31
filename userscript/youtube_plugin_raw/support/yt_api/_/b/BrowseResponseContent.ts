@@ -5,6 +5,7 @@ import {EntityBatchUpdate} from "./EntityBatchUpdate";
 import {FeedTabbedHeaderRenderer} from "./FeedTabbedHeaderRenderer";
 import {ResponseReceivedActionItem} from "../r/ResponseReceivedActionItem";
 import {SettingsSidebarRenderer} from "../s/SettingsSidebarRenderer.js";
+import {CacheMetadata} from "../s/CacheMetadata.js";
 
 export type StateTagItem={
 	stateTag: 3;
@@ -13,12 +14,13 @@ export type StateTagItem={
 
 export type BrowseResponseContent={
 	responseContext: ResponseContext;
+	trackingParams: string;
 	contents?: TwoColumnBrowseResultsRenderer;
 	header?: FeedTabbedHeaderRenderer;
 	topbar?: DesktopTopbarRenderer;
 	sidebar?: SettingsSidebarRenderer;
 	onResponseReceivedActions?: ResponseReceivedActionItem[];
-	trackingParams: string;
 	frameworkUpdates?: EntityBatchUpdate;
 	observedStateTags?: StateTagItem[];
+	cacheMetadata?: CacheMetadata;
 };

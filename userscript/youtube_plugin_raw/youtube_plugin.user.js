@@ -3994,9 +3994,11 @@ class HandleTypes extends BaseService {
 			if(k==="onResponseReceivedActions") continue;
 			if(k==="frameworkUpdates") continue;
 			if(k==="observedStateTags") continue;
+			if(k==="cacheMetadata") continue;
 			assert_is_never(k);
 			ok_miss.push(k);
 		}
+		data.cacheMetadata;
 		if(ok_miss.length>0) {
 			console.log("[browse_page_context_miss]: [%s]",ok_miss.join(","),data);
 			debugger;
