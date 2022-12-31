@@ -56,9 +56,9 @@ function debug_l_delim_message({reader,unk_type,field_id,size}: DebugDelimType) 
 			console.disabled=false;
 		}
 		if(has_error) {
-			console.pad_log("\"field %o: L-delim string\": %o",field_id,decoder.decode(o.buf.subarray(o.pos,o.pos+size)));
+			console.pad_log("\"field #%o: L-delim string\": %o,",field_id,decoder.decode(o.buf.subarray(o.pos,o.pos+size)));
 		} else {
-			console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
+			console.pad_log("\"field #%o: L-delim message(length=%o)\": {",field_id,size);
 			let prev_pad=pad;
 			pad+=pad_with;
 			unk_type.decode(o.buf.subarray(o.pos,o.pos+size));
@@ -66,7 +66,7 @@ function debug_l_delim_message({reader,unk_type,field_id,size}: DebugDelimType) 
 			console.pad_log("}");
 		}
 	} else {
-		console.pad_log("\"field %o: L-delim string\": %o",field_id,"");
+		console.pad_log("\"field #%o: L-delim string\": %o,",field_id,"");
 	}
 }
 
@@ -94,18 +94,25 @@ export class MyReader extends protobufjs.Reader {
 	}
 	override skipType(wireType: number) {
 		let info=this.revert(() => {
-			let prev_pad=pad;
 			let info=this.uint32();
 			switch(wireType) {
-				case 2:
+				case 0: {
+					let value=this.uint32();
+					if(this.pos>=this.buf.length) {
+						my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o",info>>>3,info&7,value);
+					} else
+					my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o,",info>>>3,info&7,value);
+				} break;
+				case 2:{
 					let size=this.uint32();
 					debug_l_delim_message({reader: this,unk_type,field_id:info>>>3,size});
+				} break;
+				case 5: break;
 			}
-			pad=prev_pad;
 			return info;
 		});
-		if(wireType!==2) {
-			my_console.pad_log("fieldId=%o type=%o",info>>>3,info&7);
+		if(wireType!==2&&wireType!==0) {
+			my_console.pad_log("\"field #%o: VarInt\"=%o type=%o",info>>>3,null,info&7);
 		}
 		let ret=super.skipType(wireType);
 		return ret;
@@ -115,11 +122,11 @@ export class MyReader extends protobufjs.Reader {
 		let prev_pad;
 		switch(wireType) {
 			case 0:
-				console.pad_log("\"field %o: VarInt\": ?",fieldId);
+				console.pad_log("\"field #%o: VarInt\": ?",fieldId);
 				this.skip();
 				break;
 			case 1:
-				console.pad_log("\"field %o: 64-Bit\": ?",fieldId);
+				console.pad_log("\"field #%o: 64-Bit\": ?",fieldId);
 				this.skip(8);
 				break;
 			case 2:
@@ -138,7 +145,7 @@ export class MyReader extends protobufjs.Reader {
 				console.pad_log("}");
 				break;
 			case 5:
-				console.pad_log("\"field %o: 32-Bit\": ?",fieldId);
+				console.pad_log("\"field #%o: 32-Bit\": ?",fieldId);
 				this.skip(4);
 				break;
 
