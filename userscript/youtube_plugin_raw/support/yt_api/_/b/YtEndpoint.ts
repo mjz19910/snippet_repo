@@ -2,6 +2,7 @@ import {SignalServiceEndpointData} from "../s/SignalServiceEndpoint.js";
 import {WatchEndpointData} from "../w/WatchEndpointData.js";
 import {BrowseEndpointData} from "./BrowseEndpointData.js";
 import {CommandMetadata} from "./CommandMetadata.js";
+import {SearchEndpointData} from "./SearchEndpointData.js";
 
 type UrlEndpointRoot={
 	url: string;
@@ -20,6 +21,8 @@ type YtEndpointParts={
 	signalServiceEndpoint: SignalServiceEndpointData;
 }|{
 	browseEndpoint: BrowseEndpointData;
+}|{
+	searchEndpoint: SearchEndpointData;
 };
 
 export type YtEndpoint=YtEndpointParts&YtEndpointBase;

@@ -4310,9 +4310,10 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
 		if("signalServiceEndpoint" in ex) return this.SignalServiceEndpointData(ex.signalServiceEndpoint);
-		if("watchEndpoint" in ex) return this.watchEndpoint(ex.watchEndpoint);
+		if("watchEndpoint" in ex) return this.WatchEndpointData(ex.watchEndpoint);
 		if("urlEndpoint" in ex) return this.UrlEndpointRoot(ex.urlEndpoint);
-		if("browseEndpoint" in ex) return this.browseEndpoint(ex.browseEndpoint);
+		if("browseEndpoint" in ex) return this.BrowseEndpointData(ex.browseEndpoint);
+		if("searchEndpoint" in ex) return this.SearchEndpointData(ex.searchEndpoint);
 		if(Object.keys(ex).length>0) {
 			console.log("[yt_endpoint] [%s]",Object.keys(ex).join());
 		}
@@ -4576,7 +4577,7 @@ class HandleTypes extends BaseService {
 		console.log(box.type,ok,[fk,first],box.value);
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint */
-	watchEndpoint(endpoint) {
+	WatchEndpointData(endpoint) {
 		console.log(endpoint);
 	}
 	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data */
@@ -4584,7 +4585,7 @@ class HandleTypes extends BaseService {
 		this.webCommandMetadata(data.webCommandMetadata);
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint */
-	browseEndpoint(endpoint) {
+	BrowseEndpointData(endpoint) {
 		parse_browse_id(endpoint.browseId);
 		if("params" in endpoint) {
 			console.log("[browse_params] [%s]",endpoint.params);
