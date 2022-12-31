@@ -3959,7 +3959,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
 	adsControlFlowOpportunityReceivedCommand(command) {
-		let ok=filter_out_keys(get_keys_of(command),split_string("opportunityType,isInitialLoad,enablePacfLoggingWeb",","));
+		let ok=filter_out_keys(get_keys_of(command),split_string("opportunityType,isInitialLoad,enablePacfLoggingWeb,",","));
 		if("adSlotAndLayoutMetadata" in command) {
 			for(let item of command.adSlotAndLayoutMetadata) {
 				this.adLayoutMetadata(item.adLayoutMetadata);
