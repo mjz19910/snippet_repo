@@ -4905,7 +4905,20 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/b/LogoEntity.js").LogoEntity} x
 	 */
 	topbarLogoRenderer(x) {
-		console.log(Object.keys(x).join());
-		debugger;
+		let {trackingParams,iconImage,endpoint,tooltipText,overrideEntityKey,...y}=x;
+		this.trackingParams(trackingParams);
+		this.Icon(iconImage);
+		this.BrowseEndpoint(endpoint);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} x
+	 */
+	BrowseEndpoint(x) {
+		let {browseEndpoint,clickTrackingParams,commandMetadata,...y}=x;
+		this.browseEndpoint(browseEndpoint);
+		this.clickTrackingParams(clickTrackingParams);
+		this.commandMetadata(commandMetadata);
+		this.empty_object(y);
 	}
 }
