@@ -3029,10 +3029,17 @@ function parse_browse_id(value) {
 	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
 	/** @type {StartPart} */
 	let v_2c=cast_as(value.slice(0,2));
-	switch(v_2c) {
+	x: switch(v_2c) {
 		case "FE": {
 			/** @type {KnownParts} */
 			let v_ac=cast_as(value.slice(2));
+			switch(v_ac) {
+				case "history": break x;
+				case "library": break x;
+				case "subscriptions": break x;
+				case "what_to_watch": break x;
+				default: break;
+			}
 			if(seen_map.has(v_ac)) break;
 			seen_map.add(v_ac);
 			console.log("new [param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
@@ -3693,9 +3700,9 @@ class HandleTypes extends BaseService {
 							entityId: b
 						};
 					}
-					console.log("[mut_del] ek",mut.entityKey);
 					let dec=decode_entity_key(mut.entityKey);
 					console.log(dec.entityId,dec.entityType);
+					console.log("[mut_del] type=[%s] id=[%s]",dec.entityType,dec.entityId);
 					if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
 						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
 					} else {
