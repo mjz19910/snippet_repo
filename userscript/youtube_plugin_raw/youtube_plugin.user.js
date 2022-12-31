@@ -197,10 +197,7 @@ function activate_nav() {
 	if(!ytd_player) return;
 	if(!ytd_page_manager) return;
 	if(ytd_player.active_nav) return;
-	if(!plugin_overlay_element) return;
 	ytd_player.active_nav=true;
-	plugin_overlay_element.setAttribute("style",player_overlay_style_str);
-	ytd_page_manager.getCurrentPage().append(plugin_overlay_element);
 	log_current_video_data();
 	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
@@ -208,7 +205,7 @@ function activate_nav() {
 		setTimeout(function() {
 			do_find_video();
 		},80);
-		if(ytd_page_manager.getCurrentPage().tagName.toLowerCase()!="ytd-watch-flexy") {
+		if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
 			ytd_player.is_watch_page_active=false;
 			plugin_overlay_element&&plugin_overlay_element.remove();
 			return;
@@ -381,15 +378,24 @@ async function async_plugin_init(event) {
 			x: {
 				if(ytd_watch_flexy) break x;
 				if(!ytd_page_manager) break x;
-				let page_elem=ytd_page_manager.getCurrentPage();
-				if(!page_elem) break x;
-				if(!page_elem.__has_theater_handler_plugin) {
-					page_elem.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-					page_elem.__has_theater_handler_plugin=true;
+				if(!ytd_page_manager.getCurrentPage()) break x;
+				/**
+				 * @template T
+				 * @param {T | undefined} x
+				 * @param {(e:T)=>void} w
+				 */
+				function using(x, w) {
+					if(x) {
+						w(x);
+					}
 				}
-				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+page_elem.tagName.toLowerCase());
-				if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
-					console.log("found current_page [%s] at iter=%o",page_elem.tagName.toLowerCase(),iter_count);
+				if(!ytd_page_manager.getCurrentPage()?.__has_theater_handler_plugin) {
+					ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+					using(ytd_page_manager.getCurrentPage(),e=>e.__has_theater_handler_plugin=true);
+				}
+				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
+				if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
+					console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);
 					/** @type {Promise<void>} */
 					let promise=new Promise((accept,reject) => {
 						if(!ytd_page_manager) return reject(new Error("missing data"));
@@ -403,7 +409,7 @@ async function async_plugin_init(event) {
 					break x;
 				}
 				found_element_count++;
-				on_ytd_watch_flexy(page_elem);
+				using(ytd_page_manager.getCurrentPage(),on_ytd_watch_flexy);
 			}
 			// END(ytd-watch-flexy): obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 			// BEGIN(ytd-player): obj.dispatchEvent({type: "find-ytd-player",detail,port});
@@ -2051,7 +2057,7 @@ inject_api_yt.dom_observer=dom_observer;
 
 
 class YtdPageManagerElement extends HTMLElement {
-	/** @returns {import("./support/yt_api/yt/YtCurrentPage.js").YtCurrentPage} */
+	/** @returns {import("./support/yt_api/yt/YtCurrentPage.js").YtCurrentPage|undefined} */
 	getCurrentPage() {throw 1;}
 }
 
@@ -2098,8 +2104,7 @@ function is_watch_page_active() {
 	if(!ytd_page_manager?.getCurrentPage()) {
 		return false;
 	}
-	let page_elem=ytd_page_manager.getCurrentPage();
-	return page_elem.tagName.toLowerCase()=="ytd-watch-flexy";
+	return ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()==="ytd-watch-flexy";
 }
 
 /** @arg {Node} value */
@@ -2110,7 +2115,7 @@ function as_node(value) {
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!ytd_page_manager) return;
-	ytd_page_manager.getCurrentPage().append(as_node(plugin_overlay_element));
+	ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
 }
 
 /**@type {Map<string, HTMLElement>}*/
@@ -2398,12 +2403,12 @@ plugin_overlay_element.id="mz_overlay";
 plugin_overlay_element.append(overlay_content_div);
 plugin_overlay_element.append(input_modify_css_style);
 plugin_overlay_element.append(overlay_hide_ui_input);
+plugin_overlay_element.setAttribute("style",player_overlay_style_str);
 
 inject_api_yt.plugin_overlay_element=plugin_overlay_element;
 
 function fix_offset() {
 	if(!ytd_player) return;
-	if(!plugin_overlay_element) return;
 	let player_offset=sumOffset(ytd_player);
 	plugin_overlay_element.style.top=player_offset.top_offset+"px";
 	plugin_overlay_element.style.left=player_offset.left_offset+"px";
@@ -4547,7 +4552,7 @@ class HandleTypes extends BaseService {
 		if(last_page_type!==detail.pageType) {
 			last_page_type=detail.pageType;
 			if(!ytd_page_manager) throw new Error("Missing ytd_page_manager");
-			let page_manager_current_tag_name=ytd_page_manager.getCurrentPage().tagName.toLowerCase();
+			let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
 			let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 			page_type_changes.push(nav_load_str);
 			console.log(nav_load_str);
