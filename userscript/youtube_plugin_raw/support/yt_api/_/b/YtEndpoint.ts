@@ -2,12 +2,22 @@ import {SignalServiceEndpointData} from "../s/SignalServiceEndpoint.js";
 import {WatchEndpointData} from "../w/WatchEndpointData.js";
 import {CommandMetadata} from "./CommandMetadata.js";
 
-export type YtEndpoint={
+type UrlEndpointRoot={
+	url: string;
+};
+type YtEndpointBase={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
-	signalServiceEndpoint?: SignalServiceEndpointData;
-	watchEndpoint?: WatchEndpointData;
+};
+type YtEndpointParts={
+	watchEndpoint: WatchEndpointData;
+}|{
 	// TODO: 
 	// target=UrlEndpointTargetType;
-	urlEndpoint?: {};
+	urlEndpoint: UrlEndpointRoot;
+}|{
+	signalServiceEndpoint: SignalServiceEndpointData;
 };
+
+export type YtEndpoint=YtEndpointParts&YtEndpointBase;
+

@@ -4262,10 +4262,6 @@ class HandleTypes extends BaseService {
 			};
 		}
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar */
-	sidebar(sidebar) {
-		console.log(sidebar);
-	}
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data */
 	BrowseResponseContent(data) {
 		let {
@@ -4318,15 +4314,22 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} ep */
 	YtEndpoint(ep) {
-		const {clickTrackingParams: a,commandMetadata: b,signalServiceEndpoint: c,watchEndpoint: d,...ex}=ep;
+		const {clickTrackingParams: a,commandMetadata: b,...ex}=ep;
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
-		if(c) this.signalServiceEndpoint(c);
-		if(d) this.watchEndpoint(d);
-		if("urlEndpoint" in ep) console.log("[url_ep]", ep.urlEndpoint);
-		if(Object.keys(ex).length!==0) {
-			console.log(ex);
-		}
+		if("signalServiceEndpoint" in ep) this.signalServiceEndpoint(ep.signalServiceEndpoint);
+		if("watchEndpoint" in ep) this.watchEndpoint(ep.watchEndpoint);
+		if("urlEndpoint" in ep) this.UrlEndpointRoot(ep.urlEndpoint);
+		let k=get_keys_of(ep);
+		this.iterate(k,v => {
+			switch(v) {
+				case "clickTrackingParams": break;
+				case "commandMetadata": break;
+				case "signalServiceEndpoint": break;
+				case "urlEndpoint": break;
+				default: console.log(k); debugger; break;
+			}
+		});
 	}
 	/** @arg {{}} obj */
 	empty_object(obj) {
@@ -4405,15 +4408,6 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} ep */
-	navigationEndpoint(ep) {
-		if(ep===void 0) return;
-		if(ep.watchEndpoint) {
-			this.watchEndpoint(ep.watchEndpoint);
-		}
-		let k=get_keys_of(ep);
-		k;
-	}
 	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} cmd */
 	addToPlaylistCommand(cmd) {
 		console.log(cmd);
@@ -4469,7 +4463,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
 	renderer(x) {
 		if("placeholderHeader" in x) {
-			let {trackingParams:tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
+			let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
 			this.trackingParams(tp);
 			this.YtTextType(placeholderHeader);
 			this.YtTextType(promptHeader);
@@ -4487,11 +4481,11 @@ class HandleTypes extends BaseService {
 			this.ButtonRenderer(exitButton);
 			this.YtTextType(microphoneOffPromptHeader);
 			this.empty_object(c);
-		} else if("trackingParams" in x){
-			const {trackingParams:tp,...c}=x;
+		} else if("trackingParams" in x) {
+			const {trackingParams: tp,...c}=x;
 			this.trackingParams(tp);
 			this.empty_object(c);
-		}else{
+		} else {
 			console.log("[renderer_log] [%s]",Object.keys(x).join(),x);
 		}
 	}
@@ -4964,11 +4958,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data */
 	SettingsResponseContent(data) {
-		this.responseContext(data.responseContext);
-		this.TwoColumnBrowseResultsRenderer(data.contents);
-		this.trackingParams(data.trackingParams);
-		this.topbar(data.topbar);
-		console.log(data);
+		const {responseContext: a,contents: b,sidebar: d,topbar: e,trackingParams: c,...r}=data;
+		this.responseContext(a);
+		this.TwoColumnBrowseResultsRenderer(b);
+		this.trackingParams(c);
+		this.sidebar(d);
+		this.topbar(e);
+		this.empty_object(r);
 	}
 	/** @arg {import("./support/yt_api/_/b/DesktopTopbarRenderer.js").DesktopTopbarRenderer} topbar */
 	topbar(topbar) {
@@ -5117,22 +5113,6 @@ class HandleTypes extends BaseService {
 		this.primitive(url);
 		this.primitive(width);
 		this.empty_object(rest);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/u/UrlEndpointData.js").UrlEndpointData} v
-	 */
-	UrlEndpointData(v) {
-		let {url,...x}=v;
-		this.primitive(url);
-		if("target" in x) {
-			let {target,...y}=x;
-			switch(target) {
-				case "TARGET_NEW_WINDOW": break;
-				default: debugger;
-			}
-			x=y;
-		}
-		this.empty_object(x);
 	}
 	/** @arg {import("./support/yt_api/_/w/WebCommandPageType.js").WebCommandPageType} type */
 	WebCommandPageType(type) {
@@ -5286,5 +5266,18 @@ class HandleTypes extends BaseService {
 	voiceSearch(x) {
 		let v=Object.keys(x).join();
 		this.log(v);
+	}
+	/**
+	 * @param {{ url: string; }} x
+	 */
+	UrlEndpointRoot(x) {
+		const {url,...r}=x;
+		if(Object.keys(r).length>0) {
+			debugger;
+		}
+	}
+	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar */
+	sidebar(sidebar) {
+		this.settingsSidebarRenderer(sidebar.settingsSidebarRenderer);
 	}
 }
