@@ -4171,9 +4171,8 @@ class HandleTypes extends BaseService {
 			this.Accessibility(accessibilityData);
 			this.command(command);
 		} else {
-			debugger;
+			this.empty_object(y);
 		}
-		this.empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
 	NoStyleButtonTypes(x) {
