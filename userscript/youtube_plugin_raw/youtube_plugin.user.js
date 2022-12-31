@@ -5119,7 +5119,13 @@ class HandleTypes extends BaseService {
 				this.delete_known_data();
 				throw new Error("Invalid data");
 			}
-			this.known_data_tmp.known_strings;
+			let known_str=this.known_data_tmp.known_strings;
+			let arr=this.new_known_strings;
+			for(let item of arr) {
+				known_str[item[0]].push(item[1]);
+			}
+			json_str=JSON.stringify(this.known_data_tmp);
+			this.save_local_storage(json_str);
 		} else {
 			this.save_root_ve();
 		}
