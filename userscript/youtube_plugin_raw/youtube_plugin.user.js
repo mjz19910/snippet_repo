@@ -4870,7 +4870,7 @@ class HandleTypes extends BaseService {
 	TwoColumnBrowseResultsRenderer(contents) {
 		this.twoColumnBrowseResultsRenderer(contents);
 	}
-	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType[]} options */
+	/** @arg {import("./support/yt_api/_/s/SettingsOptionItemType.js").SettingsOptionItemType[]} options */
 	options(options) {
 		for(let option of options) {
 			this.SettingsOptionItemType(option);
@@ -5095,13 +5095,13 @@ class HandleTypes extends BaseService {
 		this.trackingParams(trackingParams);
 		empty_object(y);
 	}
-	/** @arg {import("./support/yt_api/_/b/hotkeyDialogRenderer.js").HotkeyDialogRenderer} x */
+	/** @arg {import("./support/yt_api/_/h/HotkeyDialogRenderer.js").HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
 		const {hotkeyDialogRenderer,...v}=x;
 		this.hotkeyDialogRenderer(hotkeyDialogRenderer);
 		empty_object(v);
 	}
-	/** @arg {import("./support/yt_api/_/b/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x */
+	/** @arg {import("./support/yt_api/_/h/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x */
 	hotkeyDialogRenderer(x) {
 		const {trackingParams,dismissButton,sections,title,...y}=x;
 		this.trackingParams(trackingParams);
