@@ -387,18 +387,18 @@ async function async_plugin_init(event) {
 				 * @param {T | undefined} x
 				 * @param {(e:T)=>void} w
 				 */
-				function using(x, w) {
+				function using(x,w) {
 					if(x) {
 						w(x);
 					}
 				}
 				if(!ytd_page_manager.getCurrentPage()?.__has_theater_handler_plugin) {
 					ytd_page_manager.getCurrentPage()?.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-					using(ytd_page_manager.getCurrentPage(),e=>e.__has_theater_handler_plugin=true);
+					using(ytd_page_manager.getCurrentPage(),e => e.__has_theater_handler_plugin=true);
 				}
 				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
 				if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
-					if(iter_count > 100) {
+					if(iter_count>100) {
 						console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);
 					}
 					/** @type {Promise<void>} */
@@ -1590,8 +1590,8 @@ class FilterHandlers {
 			case "live_chat": index++; return this.get_live_chat_type(state,"live_chat",parts,index);
 			case "get_transcript": break;
 			case "account": return get_account_type(state,cur_part,parts,index+1);
-			case "feedback": if(index<parts.length) {
-				index++; let next_part=parts[index]; switch(next_part) {
+			case "feedback": index++; if(index<parts.length) {
+				let next_part=parts[index]; switch(next_part) {
 					default: no_handler({...state,parts,index});
 				}
 			} break;
@@ -3627,8 +3627,8 @@ class HandleTypes extends BaseService {
 					let RUa=this.RUa;
 					/** @type {(this:number,...c: any[])=>any[]} @this {number} */
 					function za() {
-						for (var a = Number(this), b = [], c = a; c < arguments.length; c++)
-							b[c - a] = arguments[c];
+						for(var a=Number(this),b=[],c=a;c<arguments.length;c++)
+							b[c-a]=arguments[c];
 						return b;
 					};
 					class Bl extends Error {
@@ -3923,16 +3923,15 @@ class HandleTypes extends BaseService {
 	item_by_layout_id=new Map;
 	/** @arg {{ layoutId: string; }} node */
 	item_with_layout_id(node) {
+		if(this.log_layout_ids) console.log("[node_layout_id] [%s]",node.layoutId);
 		this.item_by_layout_id.set(node.layoutId,node);
 	}
+	log_layout_ids=false;
 	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata */
 	adLayoutMetadata(metadata) {
 		for(let item of metadata) {
 			switch(item.layoutType) {
-				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
-					this.item_with_layout_id(item);
-					console.log("[display_top_landscape_image] [%s]",item.layoutId);
-				} break;
+				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": this.item_with_layout_id(item); break;
 				default: debugger;
 			}
 			let try_proto_dec=false;
@@ -4204,8 +4203,11 @@ class HandleTypes extends BaseService {
 		} else {
 			debugger;
 		}
-		let ok=filter_out_keys(get_keys_of(header),split_string("feedTabbedHeaderRenderer,"));
-		console.log("header keys",ok);
+		let ok=filter_out_keys(get_keys_of(header),split_string("feedTabbedHeaderRenderer,simpleMenuHeaderRenderer"));
+		if(ok.length>0) {
+			console.log("header keys",ok);
+			debugger;
+		}
 	}
 	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
 	multiPageMenuRenderer(renderer) {
