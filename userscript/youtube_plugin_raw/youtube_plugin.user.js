@@ -1136,6 +1136,7 @@ function indexOutOfRange(reader,writeLength) {
 	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 }
 class MyReader {
+	noisy_log_level=false;
 	/** @arg {Uint8Array} buf  */
 	constructor(buf) {
 		this.buf=buf;
@@ -1178,7 +1179,6 @@ class MyReader {
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
 			let [_fieldId,_type,decoded_data]=cur;
-			res_arr.push(['info',cur[0],cur[1]]);
 			for(let item of decoded_data) {
 				res_arr.push(item);
 			}
@@ -1320,7 +1320,6 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
-	noisy_log_level=true;
 	/** @typedef {import("./types_tmp.js").DecTypeNum} DecTypeNum */
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {

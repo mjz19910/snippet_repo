@@ -84,7 +84,7 @@ export class MyReader extends protobufjs.Reader {
 		var t=r.uint32()
 		switch(t>>>3){
 		default:
-		r.skipType(t&7)
+		r.skipTypeEx(t>>>3,t&7);
 		break
 		}
 		}
@@ -105,6 +105,7 @@ export class MyReader extends protobufjs.Reader {
 		return ret;
 	}
 	public override uint32(): number {
+		if(this.pos >20&&this.pos<36)
 		my_console.pad_log("[uint32] pos=%o",this.pos);
 		this.last_pos=this.pos;
 		let ret=super.uint32();
@@ -207,7 +208,10 @@ export class MyReader extends protobufjs.Reader {
 				break;
 			case 2:
 				let size=this.uint32();
-				debug_l_delim_message({reader: this,unk_type,field_id: fieldId,size});
+				let do_delim=false;
+				if(do_delim) {
+					debug_l_delim_message({reader: this,unk_type,field_id: fieldId,size});
+				}
 				this.skip(size);
 				break;
 			case 3:
@@ -260,7 +264,6 @@ export async function parse_types(): Promise<void> {
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(new Uint8Array(token_buffer));
 		reader.decode_any();
-		unk_type.decode(reader);
 		pad=prev_pad;
 		my_console.pad_log("}");
 		return;
