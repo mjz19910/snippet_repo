@@ -28,6 +28,7 @@
 		"strict": true,
 		"useUnknownInCatchVariables": true,
 		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
 	},
 	"ts-node": {
 		"esm": true,
