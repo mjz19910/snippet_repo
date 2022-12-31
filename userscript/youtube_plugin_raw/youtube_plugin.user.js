@@ -200,18 +200,15 @@ function activate_nav() {
 	if(!plugin_overlay_element) return;
 	ytd_player.active_nav=true;
 	plugin_overlay_element.setAttribute("style",player_overlay_style_str);
-	plugin_overlay_element.onupdate();
-	let page_elem=ytd_page_manager.getCurrentPage();
-	page_elem.append(plugin_overlay_element);
+	ytd_page_manager.getCurrentPage().append(plugin_overlay_element);
 	log_current_video_data();
 	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
 		if(!ytd_page_manager) return;
-		let page_elem=ytd_page_manager.getCurrentPage();
 		setTimeout(function() {
 			do_find_video();
 		},80);
-		if(page_elem.tagName.toLowerCase()!="ytd-watch-flexy") {
+		if(ytd_page_manager.getCurrentPage().tagName.toLowerCase()!="ytd-watch-flexy") {
 			ytd_player.is_watch_page_active=false;
 			plugin_overlay_element&&plugin_overlay_element.remove();
 			return;
@@ -2076,19 +2073,14 @@ function on_ytd_page_manager(element) {
 	ytd_page_manager=any_c(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
 }
-class YtdWatchFlexyElement extends HTMLElement {
-	static sel() {
-
-	}
-}
-/** @type {YtdWatchFlexyElement | null} */
+/** @type {HTMLElement | null} */
 let ytd_watch_flexy=null;
 /** @arg {HTMLElement} element */
 function on_ytd_watch_flexy(element) {
 	const element_id="ytd-watch-flexy";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	ytd_watch_flexy=any_c(element,YtdWatchFlexyElement);
+	ytd_watch_flexy=element;
 	window.ytd_watch_flexy=element;
 	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {
 		for(let handler of on_yt_navigate) {
@@ -2118,7 +2110,6 @@ function as_node(value) {
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!ytd_page_manager) return;
-	plugin_overlay_element.onupdate();
 	ytd_page_manager.getCurrentPage().append(as_node(plugin_overlay_element));
 }
 
@@ -2389,45 +2380,25 @@ function sumOffset(element) {
 	return cache;
 }
 
-/**@return {HTMLDivElement} */
-function createOverlayContent() {
-	let element=document.createElement("div");
-	element.style.userSelect="all";
-	element.style.width="max-content";
-	return element;
-}
-
-/**@type {HTMLDivElement}*/
-let overlay_content_div=createOverlayContent();
+let overlay_content_div=document.createElement("div");
+overlay_content_div.style.userSelect="all";
+overlay_content_div.style.width="max-content";
 
 let input_modify_css_style=document.createElement("div");
 input_modify_css_style.style.float="left";
 input_modify_css_style.innerHTML="C";
 input_modify_css_style.onclick=ui_css_toggle_click_handler;
-
-
-/**@type {HTMLDivElement}*/
 let overlay_hide_ui_input=document.createElement("div");
 overlay_hide_ui_input.style.float="left";
 overlay_hide_ui_input.style.clear="left";
 overlay_hide_ui_input.innerHTML="H";
 overlay_hide_ui_input.onclick=title_display_toggle;
+let plugin_overlay_element=document.createElement("div");
+plugin_overlay_element.id="mz_overlay";
+plugin_overlay_element.append(overlay_content_div);
+plugin_overlay_element.append(input_modify_css_style);
+plugin_overlay_element.append(overlay_hide_ui_input);
 
-/**@returns {PluginOverlayElement} */
-function createPluginOverlay() {
-	let element=document.createElement("div");
-	element.id="mz_overlay";
-	element.append(overlay_content_div);
-	element.append(input_modify_css_style);
-	element.append(overlay_hide_ui_input);
-	/**@type {any} */
-	let any=element;
-	any.onupdate=fix_offset;
-	return any;
-}
-
-/**@type {PluginOverlayElement} */
-let plugin_overlay_element=createPluginOverlay();
 inject_api_yt.plugin_overlay_element=plugin_overlay_element;
 
 function fix_offset() {
@@ -2451,7 +2422,6 @@ function log_current_video_data() {
 		return;
 	}
 	const video_data=ytd_player.player_.getVideoData();
-	plugin_overlay_element.onupdate();
 	if(video_data.video_id===undefined) return;
 	if(video_data.eventId===void 0) return;
 	const {video_id,title,author}=video_data;
@@ -2493,11 +2463,7 @@ function on_yt_action(event) {
 		title_text_overlay_update();
 	}
 }
-{
-	/**@type {any} */
-	let any_document=document;
-	any_document.addEventListener("yt-action",on_yt_action);
-}
+document.addEventListener("yt-action",cast_as(on_yt_action));
 
 function title_display_toggle() {
 	title_on=!title_on;
@@ -2506,17 +2472,7 @@ function title_display_toggle() {
 }
 function update_ui_plugin() {
 	if(is_yt_debug_enabled) console.log("update_ui_plugin");
-	setTimeout(plugin_overlay_element.onupdate.bind(plugin_overlay_element));
 }
-
-
-class PluginOverlayElement extends HTMLDivElement {
-	onupdate() {}
-}
-
-window.addEventListener("resize",function() {
-	plugin_overlay_element&&plugin_overlay_element.onupdate();
-});
 let volume_plugin_style_source=`
 	#rh_css {
 		--w: calc(100% - 16px - 264px - 728px - 225px);
@@ -3705,7 +3661,8 @@ class HandleTypes extends BaseService {
 						};
 					}
 					console.log("[mut_del] ek",mut.entityKey);
-					console.log(decode_entity_key(mut.entityKey));
+					let dec=decode_entity_key(mut.entityKey);
+					console.log(dec.entityId,dec.entityType);
 					if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
 						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
 					} else {
