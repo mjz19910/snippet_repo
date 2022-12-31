@@ -4367,6 +4367,7 @@ class HandleTypes extends BaseService {
 			case "WEB_PAGE_TYPE_SHORTS": break;
 			case "WEB_PAGE_TYPE_WATCH": break;
 			case "WEB_PAGE_TYPE_SETTINGS": break;
+			case "WEB_PAGE_TYPE_UNKNOWN": break;
 			default: debugger;
 		};
 
