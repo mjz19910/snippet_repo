@@ -3724,7 +3724,20 @@ function decode_entity_key(...gs) {
 	};
 }
 //#endregion
-//#region 
+//#region HandleTypes
+/** @template {{}} T @arg {{} extends T?T:never} obj */
+function empty_object(obj) {
+	let keys=get_keys_of(obj);
+	if(!keys.length) return;
+	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
+}
+/** @template {{}} T @arg {({} extends T?T:never)[]} x */
+function empty_objects(...x) {
+	for(let v of x) {
+		empty_object(v);
+	}
+	iterate(x,empty_object);
+}
 class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response */
 	WatchResponsePlayer(response) {
@@ -5188,19 +5201,6 @@ class HandleTypes extends BaseService {
 		this.YtTextType(microphoneOffPromptHeader);
 		empty_object(y);
 	}
-}
-/** @template {{}} T @arg {{} extends T?T:never} obj */
-function empty_object(obj) {
-	let keys=get_keys_of(obj);
-	if(!keys.length) return;
-	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
-}
-/** @template {{}} T @arg {({} extends T?T:never)[]} x */
-function empty_objects(...x) {
-	for(let v of x) {
-		empty_object(v);
-	}
-	iterate(x,empty_object);
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
