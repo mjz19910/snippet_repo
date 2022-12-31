@@ -77,6 +77,18 @@ export class MyReader extends protobufjs.Reader {
 	static override create(buffer: Uint8Array) {
 		return new MyReader(buffer);
 	}
+	decode_any(l?: number) {
+		let r=this;
+		var c=l===undefined?r.len:r.pos+l;
+		while(r.pos<c){
+		var t=r.uint32()
+		switch(t>>>3){
+		default:
+		r.skipType(t&7)
+		break
+		}
+		}
+	}
 	last_pos: number;
 	constructor(buf: Uint8Array) {
 		super(buf);
@@ -247,6 +259,7 @@ export async function parse_types(): Promise<void> {
 		pad+=pad_with;
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(new Uint8Array(token_buffer));
+		reader.decode_any();
 		unk_type.decode(reader);
 		pad=prev_pad;
 		my_console.pad_log("}");
