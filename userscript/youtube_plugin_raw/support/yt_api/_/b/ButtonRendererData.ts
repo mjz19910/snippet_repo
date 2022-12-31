@@ -51,6 +51,9 @@ export type ButtonRendererData={
 	icon: ButtonRendererIconTypes;
 	trackingParams: string;
 	accessibilityData: Accessibility;
+}|{
+	trackingParams: string;
+	command: YtEndpoint;
 };
 
 type ButtonRendererIconTypes=Icon<"SETTINGS">;
