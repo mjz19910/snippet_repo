@@ -86,17 +86,19 @@ export class MyReader extends protobufjs.Reader {
 		let start_pos=this.pos;
 		let ret=super.skip(length);
 		if(length!==void 0) {
-			my_console.pad_log("asked to skip from %o to",start_pos,this.pos);
-			if(start_pos===10&&this.pos===29) debugger;
+			my_console.pad_log("asked to skip %o bytes",this.pos-start_pos);
 		} else {
-			my_console.pad_log("asked to skip VarInt from %o to",start_pos,this.pos);
+			my_console.pad_log("asked to skip %o bytes of VarInt",this.pos-start_pos);
 		}
 		return ret;
 	}
 	public override uint32(): number {
 		this.last_pos=this.pos;
 		let ret=super.uint32();
-		my_console.pad_log("uint32 consumed from %o to ",this.last_pos,this.pos);
+		let diff=this.pos-this.last_pos;
+		if(diff!==1) {
+			my_console.pad_log("at %o uint32 consumed %o bytes",this.last_pos,this.pos-this.last_pos);
+		}
 		return ret;
 	}
 	revert<T>(x: () => T) {
@@ -120,36 +122,7 @@ export class MyReader extends protobufjs.Reader {
 			my_console.pad_log(`${format},`,...args);
 		}
 	}
-	override skipType(wireType: number) {
-		my_console.pad_log("[skip] pos=%o",this.pos);
-		this.revert(() => {
-			let info=this.uint32();
-			let pos_start=this.pos;
-			switch(wireType) {
-				case 0: {
-					let value64=this.revert_to(pos_start,() => {
-						return this.uint64();
-					}) as Long;
-					let value32=this.uint32();
-					if(value32!==value64.toNumber()) {
-						this.logField("\"field #%o: VarInt(int64, type=%o)\": %o",info>>>3,info&7,value64.toNumber());
-					} else {
-						this.logField("\"field #%o: VarInt(int32, type=%o)\": %o",info>>>3,info&7,value32);
-					}
-				} break;
-				case 2: {
-					let size=this.uint32();
-					let do_delim=false;
-					if(!do_delim) break;
-					debug_l_delim_message({reader: this,unk_type,field_id: info>>>3,size});
-				} break;
-				case 5: {
-					let f32=this.fixed32();
-					this.logField("\"field #%o: 32-Bit(type=%o)\": %o",info>>>3,info&7,f32);
-				} break;
-				default: my_console.pad_log("\"field #%o: (type=%o)\": \"??\"",info>>>3,info&7);
-			}
-		});
+	default_skipType(wireType: number) {
 		switch(wireType) {
 			case 0:
 				this.skip();
@@ -170,6 +143,42 @@ export class MyReader extends protobufjs.Reader {
 				break;
 			default:
 				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
+		}
+	}
+	override skipType(wireType: number) {
+		let skip_type_saved_pos=this.pos;
+		skip_type_saved_pos;
+		my_console.pad_log("[skip] pos=%o",this.pos);
+		let prev_pos=this.revert(() => this.pos);
+		this.pos=prev_pos;
+		let info=this.uint32();
+		let pos_start=this.pos;
+		switch(wireType) {
+			case 0: {
+				my_console.disabled=true;
+				let value64=this.revert_to(pos_start,() => {
+					return this.uint64();
+				}) as Long;
+				my_console.disabled=false;
+				let value32=this.uint32();
+				if(value32!==value64.toNumber()) {
+					this.logField("\"field #%o: VarInt(int64, type=%o)\": %o",info>>>3,info&7,value64.toNumber());
+				} else {
+					this.logField("\"field #%o: VarInt(int32, type=%o)\": %o",info>>>3,info&7,value32);
+				}
+			} break;
+			case 2: {
+				let size=this.uint32();
+				this.skip(size);
+				let do_delim=false;
+				if(!do_delim) break;
+				debug_l_delim_message({reader: this,unk_type,field_id: info>>>3,size});
+			} break;
+			case 5: {
+				let f32=this.fixed32();
+				this.logField("\"field #%o: 32-Bit(type=%o)\": %o",info>>>3,info&7,f32);
+			} break;
+			default: my_console.pad_log("\"field #%o: (type=%o)\": \"??\"",info>>>3,info&7);
 		}
 		return this;
 	}

@@ -1159,7 +1159,6 @@ class MyReader {
 		for(;reader.pos<target_len;loop_count++) {
 			let start_pos=reader.pos;
 			let cur_byte=reader.uint32();
-			if(reader.noisy_log_level) console.log("uint32 consumed from %o to ",start_pos,reader.pos);
 			let wireType=cur_byte&7;
 			let fieldId=cur_byte>>>3;
 			let first_num=reader.skipTypeEx(fieldId,wireType);
@@ -1226,6 +1225,12 @@ class MyReader {
 		}
 	}
 	uint32() {
+		let start_pos=this.pos;
+		let ret=this.do_uint32_read();
+		if(this.noisy_log_level) console.log("at %o uint32 consumed %o bytes",this.last_pos,this.pos-start_pos);
+		return ret;
+	};
+	do_uint32_read() {
 		let value=0;
 		this.last_pos=this.pos;
 		value=(this.buf[this.pos]&127)>>>0;
@@ -1243,7 +1248,7 @@ class MyReader {
 			throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
 		}
 		return value;
-	};
+	}
 	uint64() {
 		this.last_pos=this.pos;
 		return this.readLongVarint().toBigInt();
@@ -1360,7 +1365,12 @@ class MyReader {
 				}
 				first_num.push(['child',sub_buffer]);
 			} break;
-			case 3: break;
+			case 3: {
+				let res;
+				while((wireType=(res=this.uint32())&7)!==4) {
+					this.skipTypeEx(res>>>3,wireType);
+				}
+			} break;
 			case 4: throw new Error("Invalid state");
 			case 5: first_num.push(["data",this.fixed32()]); break;
 			default: break;
@@ -5190,8 +5200,8 @@ class HandleTypes extends BaseService {
 		let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...y}=x;
 		this.trackingParams(tp);
 		iterate(
-			[placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext, microphoneButtonAriaLabel],
-			t=>this.YtTextType(t),
+			[placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel],
+			t => this.YtTextType(t),
 		);
 		this.ButtonRenderer(exitButton);
 		this.YtTextType(microphoneOffPromptHeader);
