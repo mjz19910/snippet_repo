@@ -17,6 +17,13 @@ declare global {
 		__active_task?: ActiveTask<{}>;
 		get_active_task<T>(like:T): ActiveTask<T>;
 		__cur_task: TimeoutExecutor;
+		// item_05
+		buffer_vec: ArrayBuffer;
+		float_32_vec: Float32Array;
+		uint8_vec: Uint8Array;
+		__worker: {};
+		__tick_log: {}[];
+		__result_vec: number[];
 	}
 }
 
