@@ -1178,16 +1178,13 @@ class LongBits {
 	}
 }
 /** @arg {Uint8Array} buf @arg {number} end */
-function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
+function readFixed32_end(buf,end) {
 	return (buf[end-4]
 		|buf[end-3]<<8
 		|buf[end-2]<<16
 		|buf[end-1]<<24)>>>0;
 }
-/**
- @arg {MyReader} reader
- @arg {number | undefined} [writeLength]
- */
+/** @arg {MyReader} reader @arg {number} [writeLength] */
 function indexOutOfRange(reader,writeLength) {
 	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 }
