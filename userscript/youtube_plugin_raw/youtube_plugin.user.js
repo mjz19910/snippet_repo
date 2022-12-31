@@ -5031,15 +5031,32 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {Set<number>} */
 	known_root_ve=new Set;
+	/** @type {Map<string,Set<number>>} */
+	known_numbers=new Map;
+	/** @type {Map<string,Set<string>>} */
+	known_strings=new Map;
+	/** @type {[string,string][]} */
+	new_known_strings=[];
+	/** @type {Map<string,{t:boolean;f:boolean}>} */
+	known_booleans=new Map;
 	/** @arg {number} x */
 	rootVe(x) {
 		if(this.known_root_ve.has(x)) return;
 		this.known_root_ve.add(x);
 		this.save_root_ve();
 		console.log("rootVe",x);
-}
+	}
 	/** @arg {string} x */
-	apiUrl(x) {console.log("apiUrl",x);}
+	apiUrl(x) {
+		let cur=this.known_strings.get("apiUrl");
+		if(!cur) {
+			cur=new Set;
+			this.known_strings.set("apiUrl",cur);
+		}
+		if(cur.has(x)) return;
+		cur.add(x);
+		console.log("apiUrl",x);
+	}
 	/** @arg {string} x */
 	url(x) {console.log("url",x);}
 	/** @arg {boolean} x */
@@ -5056,10 +5073,45 @@ class HandleTypes extends BaseService {
 			if(res.known_root_ve) {
 				this.known_root_ve=new Set(res.known_root_ve);
 			}
+			if(res.known_strings) {
+				this.load_known_strings_from(res.known_strings);
+			}
 		}
 	}
+	/**
+	 * @param {{[s:string]:string[]}} known_strings
+	 */
+	load_known_strings_from(known_strings) {
+		/** @type {[string,string[]][]} */
+		let ks=Object.entries(known_strings);
+		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
+		function from_entry_pair(x) {
+			return [x[0],new Set(x[1])];
+		}
+		let res_2=ks.map(from_entry_pair);
+		let res_3=new Map(res_2);
+		this.known_strings=res_3;
+	}
 	save_root_ve() {
-		let arr=[...this.known_root_ve.values()];
-		localStorage.known_root_ve=JSON.stringify({known_root_ve:arr});
+		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
+		function to_entry_pair(x) {
+			return [x[0],[...x[1]]];
+		}
+		let known_root_ve=[...this.known_root_ve.values()];
+		let known_strings=Object.fromEntries([...this.known_strings.entries()].
+			map(to_entry_pair));
+		localStorage.known_root_ve=JSON.stringify({
+			known_root_ve,
+			known_strings,
+		});
+	}
+	save_known_string() {
+		let json_str=localStorage.known_root_ve;
+		if(json_str) {
+			let res=JSON.parse(json_str);
+		} else {
+
+		}
+		
 	}
 }
