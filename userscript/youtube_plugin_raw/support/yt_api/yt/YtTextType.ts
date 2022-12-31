@@ -1,5 +1,6 @@
-import {Accessibility} from "../a/Accessibility.js";
-import {TextRun} from "../t/TextRun.js";
+import {Accessibility} from "../_/a/Accessibility.js";
+import {TextRun} from "../_/t/TextRun.js";
+
 type TextRuns={
 	runs: TextRun[];
 };

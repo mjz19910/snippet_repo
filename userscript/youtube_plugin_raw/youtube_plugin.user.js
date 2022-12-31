@@ -695,7 +695,7 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {{}} T @arg {T} obj @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
+/** @template {{}} T @arg {T} obj @returns {import("./support/yt_api/_/g/GetMaybeKeys.js").MaybeKeysArray<T>} */
 function get_keys_of(obj) {
 	if(!obj) {
 		debugger;
