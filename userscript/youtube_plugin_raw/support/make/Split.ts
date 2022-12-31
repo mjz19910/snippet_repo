@@ -15,6 +15,6 @@ type TypeError1={[x: Validate<InvalidResult1,["1"]>]:any};
 type TypeError2={[x: Validate<InvalidResult2,["1,2",""]>]:any};
 type InvalidResult2=Split<"1,2,",",">;
 
-type UseInvalid=TypeError1|TypeError2;
+type UseTestTypes=TypeError1|TypeError2|{[x:TypeValidTest]:any};
 
-export {type TypeValidTest,type UseInvalid};
+export {type TypeValidTest,type UseTestTypes as UseInvalid};
