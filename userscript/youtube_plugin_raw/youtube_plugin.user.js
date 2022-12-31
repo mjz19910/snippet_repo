@@ -3712,7 +3712,7 @@ class HandleTypes extends BaseService {
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...x}=data;
 		this.trackingParams(trackingParams);
 		this.topbarLogoRenderer(logo.topbarLogoRenderer);
-		this.empty_object(searchbox);
+		this.FusionSearchboxRenderer(searchbox);
 		this.primitive(countryCode);
 		this.iterate(topbarButtons,x=>this.empty_object(x));
 		this.empty_object(hotkeyDialog);
@@ -4919,5 +4919,8 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(clickTrackingParams);
 		this.commandMetadata(commandMetadata);
 		this.empty_object(y);
+	}
+	FusionSearchboxRenderer(x) {
+		x;
 	}
 }

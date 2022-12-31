@@ -1,7 +1,7 @@
 import {ButtonRenderer} from "./ButtonRenderer.js";
 import {CountryCode} from "./CountryCode";
 import {FusionSearchboxRenderer} from "./FusionSearchboxRenderer";
-import {hotkeyDialogRenderer} from "./hotkeyDialogRenderer";
+import {HotkeyDialogRenderer} from "./hotkeyDialogRenderer";
 import {TopbarButtonItem} from "./TopbarButtonItem";
 import {TopbarLogoRenderer} from "./TopbarLogoRenderer";
 
@@ -11,7 +11,7 @@ export type DesktopTopbarRendererData={
 	trackingParams: string;
 	countryCode: CountryCode;
 	topbarButtons: TopbarButtonItem[];
-	hotkeyDialog: hotkeyDialogRenderer;
+	hotkeyDialog: HotkeyDialogRenderer;
 	backButton: ButtonRenderer;
 	forwardButton: ButtonRenderer;
 	a11ySkipNavigationButton: ButtonRenderer;

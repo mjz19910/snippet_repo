@@ -1,7 +1,5 @@
-import {YtTextType} from "../s/YtTextType.js";
+import {HotkeyDialogRendererData} from "./HotkeyDialogRendererData";
 
-export type hotkeyDialogRenderer={
-	hotkeyDialogRenderer: {
-		title: YtTextType;
-	};
+export type HotkeyDialogRenderer={
+	hotkeyDialogRenderer: HotkeyDialogRendererData;
 };
