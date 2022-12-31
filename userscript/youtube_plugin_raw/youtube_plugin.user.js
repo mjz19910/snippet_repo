@@ -3677,7 +3677,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/EntityBatchUpdate.js").EntityBatchUpdate} obj */
 	handleEntityBatchUpdate(obj) {
 		if(get_keys_of(obj)[0]!=="entityBatchUpdate") {
-			console.log("[entity_batch_invalid]",obj); get_keys_of;
+			console.log("[entity_batch_invalid]",obj);
 			return;
 		}
 		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
