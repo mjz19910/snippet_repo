@@ -108,6 +108,7 @@ export class MyReader extends protobufjs.Reader {
 		}
 	}
 	override skipType(wireType: number) {
+		my_console.pad_log("skip type",this.pos);
 		this.revert(() => {
 			let info=this.uint32();
 			let pos_start=this.pos;
@@ -134,8 +135,31 @@ export class MyReader extends protobufjs.Reader {
 				default: my_console.pad_log("\"field #%o: (type=%o)\": \"??\"",info>>>3,info&7);
 			}
 		});
-		let ret=super.skipType(wireType);
-		return ret;
+
+		switch(wireType) {
+			case 0:
+				this.skip();
+				break;
+			case 1:
+				this.skip(8);
+				break;
+			case 2:
+				this.skip(this.uint32());
+				break;
+			case 3:
+				while((wireType=this.uint32()&7)!==4) {
+					this.skipType(wireType);
+				}
+				break;
+			case 5:
+				this.skip(4);
+				break;
+
+			/* istanbul ignore next */
+			default:
+				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
+		}
+		return this;
 	}
 	skipTypeEx(fieldId: number,wireType: number) {
 		let console=my_console;
