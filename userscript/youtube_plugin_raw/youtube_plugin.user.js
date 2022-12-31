@@ -3037,7 +3037,17 @@ class BaseServicePrivate {
 	/** @arg {string} key */
 	delete_old_string_values(key) {
 		let p=this.known_strings.find(e => e[0]===key);
-		console.log(p);
+		if(!p) return;
+		let [,cur]=p;
+		/**
+		 * @param {["one", string[]]|["many", string[][]]} x
+		 */
+		function to_obj(x) {return {key:x[0],values:x[1]}}
+		let obj=to_obj(cur);
+		switch(obj.key) {
+			case "one": obj.values.length=0; break;
+			case "many": throw new Error("Tried to delete key with many for each value");
+		};
 	}
 	/** @arg {string} key @arg {string|string[]} x */
 	save_new_string(key,x) {
