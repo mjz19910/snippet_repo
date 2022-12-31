@@ -1143,13 +1143,20 @@ class MyReader {
 		this.len=buf.length;
 		this.last_pos=0;
 	}
-	read_any() {
+	/** @arg {number} [size] */
+	read_any(size) {
+		let target_len;
+		if(!size) {
+			target_len=this.len;
+		} else {
+			target_len=this.pos+size;
+		}
 		/** @type {[number,number,(number|bigint)[]][]} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
 		let reader=this;
-		for(;reader.pos<reader.buf.length;loop_count++) {
+		for(;reader.pos<target_len;loop_count++) {
 			let start_pos=reader.pos;
 			let cur_byte=reader.uint32();
 			if(reader.noisy_log_level) console.log("uint32 consumed from %o to ",start_pos,reader.pos);
@@ -1218,9 +1225,9 @@ class MyReader {
 			} while(this.buf[this.pos++]&128);
 		}
 		if(length!==void 0) {
-			console.log("asked to skip from %o to",start_pos,this.pos);
+			if(this.noisy_log_level) console.log("asked to skip from %o to",start_pos,this.pos);
 		} else {
-			console.log("asked to skip VarInt from %o to",start_pos,this.pos);
+			if(this.noisy_log_level) console.log("asked to skip VarInt from %o to",start_pos,this.pos);
 		}
 	}
 	uint32() {
@@ -1348,12 +1355,24 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
-				this.buf.subarray(this.pos,this.pos+size);
-				try {
-					this.skip(size);
-				} catch {
-					console.log("skip failed at",fieldId);
-					this.failed=true;
+				let skipping=false;
+				if(!skipping) {
+					try {
+						console.group();
+						this.read_any(size);
+					} catch {
+						console.log("read any failed at",fieldId);
+						this.failed=true;
+					} finally {
+						console.groupEnd();
+					}
+				} else {
+					try {
+						this.skip(size);
+					} catch {
+						console.log("skip failed at",fieldId);
+						this.failed=true;
+					}
 				}
 			} break;
 			case 3: break;
@@ -3054,7 +3073,7 @@ class BaseServicePrivate {
 		/**
 		 * @param {["one", string[]]|["many", string[][]]} x
 		 */
-		function to_obj(x) {return {key:x[0],values:x[1]}}
+		function to_obj(x) {return {key: x[0],values: x[1]};}
 		let obj=to_obj(cur);
 		switch(obj.key) {
 			case "one": obj.values.length=0; break;
@@ -3085,7 +3104,7 @@ class BaseServicePrivate {
 				target=["many",inner];
 				p[1]=target;
 			}
-			let found=target[1].find(e=>eq_keys(e,x));
+			let found=target[1].find(e => eq_keys(e,x));
 			if(!found) {
 				was_known=false;
 				target[1].push(x);
@@ -3874,7 +3893,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if(is_yt_debug_enabled) console.log("[entity_update_time]",x.timestamp);
-		iterate(mutations,mut=>{
+		iterate(mutations,mut => {
 			this.EntityMutationItem(mut);
 		});
 		this.TimestampWithNanos(timestamp);
@@ -4112,14 +4131,6 @@ class HandleTypes extends BaseService {
 	log_layout_ids=false;
 	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
 	adLayoutLoggingData(data) {
-		let new_data=data.serializedAdServingDataEntry;
-		if(saved_data.ad_layout_data) {
-			saved_data.ad_layout_data.serializedAdServingDataEntry=new_data;
-		} else {
-			saved_data.ad_layout_data??={
-				serializedAdServingDataEntry: new_data
-			};
-		}
 		let dec=decode_b64_proto_obj(data.serializedAdServingDataEntry);
 		console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
 		console.log("log data entry rest",...dec.rest);
@@ -4581,7 +4592,7 @@ class HandleTypes extends BaseService {
 			this.primitive(data.expirationTime);
 		}
 		if("graftedVes" in data) {
-			iterate(data.graftedVes,x=>this.GraftedVeItem(x));
+			iterate(data.graftedVes,x => this.GraftedVeItem(x));
 			this.graftedVes(data.graftedVes);
 		}
 		if("previousCsn" in data) {
@@ -4733,7 +4744,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
 		const {json}=x;
-		iterate(json.actions,x=>this.OpenPopupActionItem(x))
+		iterate(json.actions,x => this.OpenPopupActionItem(x));
 		let ok=get_keys_of(json);
 		if(eq_keys(ok,["responseContext","actions","trackingParams"])) return;
 		console.log(ok);
