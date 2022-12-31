@@ -41,7 +41,6 @@ export function dec_uint32(binary,idx) {
 }
 /** @arg {Uint8Array} binary */
 export function do_token_decode(binary) {
-	/* istanbul ignore next */
 	/** @arg {Reader} reader @arg {number} [writeLength] */
 	function indexOutOfRange(reader,writeLength) {
 		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
@@ -52,7 +51,7 @@ export function do_token_decode(binary) {
 			console.log(p);
 		}
 	}
-	/** Constructs a new reader instance using the specified buffer. @classdesc Wire format reader using `Uint8Array` if available, otherwise `Array`. @constructor @arg {Uint8Array} buffer Buffer to read from */
+	/** @classdesc @constructor @arg {Uint8Array} buffer */
 	class Reader {
 		/** @arg {Uint8Array} buffer */
 		constructor(buffer) {
@@ -66,33 +65,29 @@ export function do_token_decode(binary) {
 		}
 		bytes() {
 			var length=this.uint32(),start=this.pos,end=this.pos+length;
-
-			/* istanbul ignore if */
 			if(end>this.len)
 				throw indexOutOfRange(this,length);
 
 			this.pos+=length;
-			if(Array.isArray(this.buf)) // plain array
+			if(Array.isArray(this.buf))
 				return this.buf.slice(start,end);
 			return start===end? new Uint8Array(0):this.buf.slice(start,end);
 		}
-		/** Skips the specified number of bytes if specified, otherwise skips a varint. @arg {number} [length] Length if known, otherwise a varint is assumed @returns {Reader} `this` */
+		/** @arg {number} [length] @returns {Reader} */
 		skip(length) {
 			if(typeof length==="number") {
-				/* istanbul ignore if */
 				if(this.pos+length>this.len)
 					throw indexOutOfRange(this,length);
 				this.pos+=length;
 			} else {
 				do {
-					/* istanbul ignore if */
 					if(this.pos>=this.len)
 						throw indexOutOfRange(this);
 				} while(this.buf[this.pos++]&128);
 			}
 			return this;
 		}
-		/** Skips the next element of the specified wire type. @arg {number} wireType Wire type received @returns {Reader} `this` */
+		/** @arg {number} wireType @returns {Reader} */
 		skipType(wireType) {
 			switch(wireType) {
 				case 0:

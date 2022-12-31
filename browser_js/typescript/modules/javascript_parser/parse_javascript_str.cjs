@@ -2128,6 +2128,8 @@ function parse_javascript_str(code_str) {
 
 if(typeof exports==='object') {
 	exports.parse_javascript_str=parse_javascript_str;
-} else if(window.inject_api!==void 0) {
-	window.inject_api.parse_javascript_str=parse_javascript_str;
+} else if("inject_api" in window&&window.inject_api) {
+	/** @type {{parse_javascript_str?: {}}} */
+	let inject_api=window.inject_api;
+	inject_api.parse_javascript_str=parse_javascript_str;
 }
