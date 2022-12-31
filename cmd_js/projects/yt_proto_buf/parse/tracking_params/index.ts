@@ -96,7 +96,7 @@ export class MyReader extends protobufjs.Reader {
 	public override uint32(): number {
 		this.last_pos=this.pos;
 		let ret=super.uint32();
-		console.log("uint32 consumed from %o to ",this.last_pos,this.pos);
+		my_console.pad_log("uint32 consumed from %o to ",this.last_pos,this.pos);
 		return ret;
 	}
 	revert<T>(x: () => T) {
@@ -139,6 +139,8 @@ export class MyReader extends protobufjs.Reader {
 				} break;
 				case 2: {
 					let size=this.uint32();
+					let do_delim=false;
+					if(!do_delim) break;
 					debug_l_delim_message({reader: this,unk_type,field_id: info>>>3,size});
 				} break;
 				case 5: {
