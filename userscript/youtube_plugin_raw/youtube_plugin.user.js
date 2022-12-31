@@ -1144,6 +1144,34 @@ class MyReader {
 		this.last_pos=0;
 	}
 
+	read_any() {
+		/** @type {[number,number,(number|bigint)[]][]} */
+		let data=[];
+		let loop_count=0;
+		let log_slow=true;
+		let reader=this;
+		for(;reader.pos<reader.buf.length;loop_count++) {
+			let start_pos=reader.pos;
+			let cur_byte=reader.uint32();
+			if(reader.noisy_log_level) console.log("uint32 consumed from %o to ",start_pos,reader.pos);
+			let wireType=cur_byte&7;
+			let fieldId=cur_byte>>>3;
+			let first_num=reader.skipTypeEx(fieldId,wireType);
+			data.push([fieldId,wireType,first_num]);
+			if(reader.failed) {
+				break;
+			}
+			if(log_slow&&loop_count>128) {
+				console.log("taking a long time to read protobuf data");
+				log_slow=false;
+			}
+			if(!log_slow&&loop_count%4096==0) {
+				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
+			}
+		}
+		return data;
+	}
+
 	/** @template T @arg {()=>T} x */
 	revert(x) {
 		let prev_pos=this.pos;
@@ -1272,9 +1300,10 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
+	noisy_log_level=false;
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
-		console.log("[skip] pos=%o",this.last_pos,this.pos);
+		if(this.noisy_log_level) console.log("[skip] pos=%o",this.last_pos,this.pos);
 		let pos_start=this.pos;
 		/** @type {(number|bigint)[]} */
 		let first_num=[];
@@ -1329,22 +1358,11 @@ const base64_dec=new Base64Binary();
 /** @arg {string} str */
 function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
-	let loop_count=0;
 	/** @type {[number,number,(number|bigint)[]][]} */
 	let data=[];
 	let reader=new MyReader(buffer);
-	for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
-		let start_pos=reader.pos;
-		let cur_byte=reader.uint32();
-		console.log("uint32 consumed from %o to ",start_pos,reader.pos);
-		let wireType=cur_byte&7;
-		let fieldId=cur_byte>>>3;
-		let first_num=reader.skipTypeEx(fieldId,wireType);
-		data.push([fieldId,wireType,first_num]);
-		if(reader.failed) {
-			break;
-		}
-	}
+	let data_2=reader.read_any();
+	data=data_2;
 	let [first,...rest]=data;
 	let [fieldId,wireType,as_num]=first;
 	/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number|null]} */
