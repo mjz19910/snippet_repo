@@ -93,7 +93,7 @@ export class MyReader extends protobufjs.Reader {
 		this.pos=prev_pos;
 		return ret;
 	}
-	revert_to<T>(pos:number,x: ()=>T) {
+	revert_to<T>(pos: number,x: () => T) {
 		let prev_pos=this.pos;
 		this.pos=pos;
 		let ret=x();
@@ -101,31 +101,31 @@ export class MyReader extends protobufjs.Reader {
 		return ret;
 	}
 	override skipType(wireType: number) {
-		let info=this.revert(() => {
+		this.revert(() => {
 			let info=this.uint32();
 			let pos_start=this.pos;
 			switch(wireType) {
 				case 0: {
-					let value64=this.revert_to(pos_start,()=>{
+					let value64=this.revert_to(pos_start,() => {
 						return this.uint64();
 					}) as Long;
 					let value32=this.uint32();
 					if(this.pos>=this.buf.length) {
 						my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o",info>>>3,info&7,value32,value64.toNumber());
-					} else
-					my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o,",info>>>3,info&7,value32,value64.toNumber());
+					} else {
+						my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o,",info>>>3,info&7,value32,value64.toNumber());
+					}
 				} break;
-				case 2:{
+				case 2: {
 					let size=this.uint32();
-					debug_l_delim_message({reader: this,unk_type,field_id:info>>>3,size});
+					debug_l_delim_message({reader: this,unk_type,field_id: info>>>3,size});
 				} break;
-				case 5: break;
+				case 5: {
+
+				} break;
+				default: my_console.pad_log("\"field #%o: (type=%o)\": \"??\"",info>>>3,info&7);
 			}
-			return info;
 		});
-		if(wireType!==2&&wireType!==0) {
-			my_console.pad_log("\"field #%o: VarInt\"=%o type=%o",info>>>3,null,info&7);
-		}
 		let ret=super.skipType(wireType);
 		return ret;
 	}
