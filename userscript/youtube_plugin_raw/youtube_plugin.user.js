@@ -5217,11 +5217,11 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/i/SettingsSwitchRendererData.js").SettingsSwitchRendererData} x */
 	settingsSwitchRenderer(x) {
 		const {title,subtitle,enabled,enableServiceEndpoint: ep_0,disableServiceEndpoint: ep_1,id,text,thumbnail,trackingParams,...y}=x;
-		this.endpoints(ep_0,ep_1);
+		this.endpoint_va(ep_0,ep_1);
 		this.empty_object(y);
 	}
 	/** @param {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint[]} arr */
-	endpoints(...arr) {
+	endpoint_va(...arr) {
 		this.iterate(arr,this.endpoint.bind(this));
 	}
 }
