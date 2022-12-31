@@ -5121,7 +5121,7 @@ class HandleTypes extends BaseService {
 		let res_3=new Map(res_2);
 		this.known_strings=res_3;
 	}
-	/** @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: { [k: string]: string[]; }; }|null} */
+	/** @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: [string, string[]][]; }|null} */
 	known_data_tmp=null;
 	save_data_cache() {
 		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
@@ -5129,8 +5129,7 @@ class HandleTypes extends BaseService {
 			return [x[0],[...x[1]]];
 		}
 		let known_root_ve=[...this.known_root_ve.values()];
-		let known_strings=Object.fromEntries([...this.known_strings.entries()].
-			map(to_entry_pair));
+		let known_strings=[...this.known_strings.entries()].map(to_entry_pair);
 		let known_bool=[...this.known_booleans.entries()];
 		this.known_data_tmp={
 			known_root_ve,
@@ -5178,8 +5177,14 @@ class HandleTypes extends BaseService {
 		let tmp_known_str=this.known_data_tmp.known_strings;
 		let arr=this.new_known_strings;
 		for(let item of arr) {
-			tmp_known_str[item[0]]??=[];
-			tmp_known_str[item[0]].push(item[1]);
+			let [key,val]=item;
+			let index=tmp_known_str.findIndex(e=>e[0]===key);
+			if(index<0) {
+				tmp_known_str.push([item[0],[val]]);
+				index=tmp_known_str.length-1;
+			} else {
+				tmp_known_str[index][1].push(val);
+			}
 		}
 		this.new_known_strings=[];
 		this.save_tmp_data();
