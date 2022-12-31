@@ -4109,12 +4109,11 @@ class HandleTypes extends BaseService {
 		this.item_by_layout_id.set(node.layoutId,node);
 	}
 	log_layout_ids=false;
-	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
-	adLayoutLoggingData(data) {
-		let dec=decode_b64_proto_obj(data.serializedAdServingDataEntry);
-		console.log("log data entry [%o]",dec[0]);
-		console.log("log data entry rest",...dec.slice(1));
-		console.log("[log_data_entry] [%s]",data.serializedAdServingDataEntry);
+	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} x */
+	adLayoutLoggingData(x) {
+		const {serializedAdServingDataEntry,...y}=x;
+		this.primitive(serializedAdServingDataEntry);
+		this.log_empty_obj(y);
 	}
 	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
 	AdLayoutMetadataItem(item) {
