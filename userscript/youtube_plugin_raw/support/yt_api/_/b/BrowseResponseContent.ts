@@ -13,7 +13,7 @@ export type StateTagItem={
 };
 
 export type BrowseResponseContent={
-	responseContext: ResponseContext;
+	responseContext?: ResponseContext;
 	trackingParams: string;
 	contents?: TwoColumnBrowseResultsRenderer;
 	header?: FeedTabbedHeaderRenderer;

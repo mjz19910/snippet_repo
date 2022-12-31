@@ -697,6 +697,9 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 /** @template {{}} T @arg {T} obj @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
 function get_keys_of(obj) {
+	if(!obj) {
+		debugger;
+	}
 	let rq=Object.keys(obj);
 	/** @type {any} */
 	let ra=rq;
@@ -3882,6 +3885,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} context */
 	responseContext(context) {
+		if(!context) {
+			debugger;
+		}
 		let ok=get_keys_of(context);
 		for(let key of ok) {key;}
 		if(context.maxAgeSeconds!==void 0) {
@@ -3958,6 +3964,7 @@ class HandleTypes extends BaseService {
 		"ACCOUNT_ADVANCED",
 		"ACCOUNT_BILLING",
 		"ACCOUNT_SETTINGS",
+		"ACCOUNT_PLAYBACK",
 		"ACCOUNT_NOTIFICATIONS",
 		"CLOSE",
 		"SEARCH",
@@ -4159,13 +4166,13 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data */
 	BrowseResponseContent(data) {
 		let {
-			trackingParams,responseContext,
+			trackingParams,responseContext: rc,
 			contents,frameworkUpdates,header,topbar,sidebar,
 			observedStateTags,cacheMetadata,
 			onResponseReceivedActions,
 			...rest
 		}=data;
-		this.responseContext(responseContext);
+		if(rc) this.responseContext(rc);
 		this.trackingParams(trackingParams);
 		if(contents) this.BrowseResponseContentContents(contents);
 		if(data.frameworkUpdates) {
