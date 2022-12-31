@@ -4359,6 +4359,7 @@ class HandleTypes extends BaseService {
 				case "microphoneOffPromptHeader": return;
 				case "notificationActionRenderer": return;
 				case "trackingParams": return;
+				case "confirmDialogRenderer": return;
 				case "url": return;
 				default: m.push(v);
 			}
@@ -4367,6 +4368,9 @@ class HandleTypes extends BaseService {
 			console.log("[m_join]",m.join());
 			console.log("[ok_join]",ok.join());
 			debugger;
+		}
+		if("confirmDialogRenderer" in x) {
+			this.ConfirmDialogRendererData(x.confirmDialogRenderer);
 		}
 		if("placeholderHeader" in x) {
 			let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
