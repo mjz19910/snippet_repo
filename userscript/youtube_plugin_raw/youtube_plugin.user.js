@@ -4156,25 +4156,27 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
 	SuggestiveButtonRenderer(x) {
-		let {style,isDisabled,size,trackingParams,text,...y}=x;
-		/** @type {typeof y|{}} */
-		let c=y;
+		/** @type {typeof x|{}} */
+		let y;
+		let style,isDisabled,size,trackingParams,text;
+		({style,isDisabled,size,trackingParams,text,...y}=x);
+		this.trackingParams(trackingParams);
+		this.primitives(style,isDisabled,size);
 		this.YtTextType(text);
-		if("serviceEndpoint" in c) {
-			let {serviceEndpoint,...a}=c; c=a;
+		if("serviceEndpoint" in y) {
+			let {serviceEndpoint,...a}=y; y=a;
 			this.YtEndpoint(serviceEndpoint);
 		}
-		if("navigationEndpoint" in c) {
-			let {navigationEndpoint,...a}=c; c=a;
+		if("navigationEndpoint" in y) {
+			let {navigationEndpoint,...a}=y; y=a;
 			this.YtEndpoint(navigationEndpoint);
-			this.empty_object(a);
 		}
-		if("accessibilityData" in c) {
-			let {accessibilityData,command,...a}=c; c=a;
+		if("accessibilityData" in y) {
+			let {accessibilityData,command,...a}=y; y=a;
 			this.Accessibility(accessibilityData);
 			this.command(command);
 		}
-		this.empty_object(c);
+		this.empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
 	NoStyleButtonTypes(x) {
