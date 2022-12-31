@@ -1,10 +1,10 @@
 import {ButtonRenderer} from "../b/ButtonRenderer.js";
-import {GhostCards} from "../g/GhostCards.js";
-import {ContinuationEndpoint} from "./ContinuationEndpoint.js";
+import {YtEndpoint} from "../b/YtEndpoint.js";
+import {GhostGridRenderer} from "../g/GhostGridRenderer.js";
 
 export type ContinuationItemRendererData={
 	trigger: string;
-	continuationEndpoint: ContinuationEndpoint;
+	continuationEndpoint: YtEndpoint;
 	button?: ButtonRenderer;
-	ghostCards?: GhostCards;
+	ghostCards?: GhostGridRenderer;
 };

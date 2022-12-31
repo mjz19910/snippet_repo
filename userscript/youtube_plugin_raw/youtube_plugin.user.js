@@ -4867,10 +4867,6 @@ class HandleTypes extends BaseService {
 	richItemRenderer(data) {
 		console.log(data);
 	}
-	/** @arg {import("./support/yt_api/_/r/ReelWatchEndpointData.js").ReelWatchEndpointData} data */
-	reelWatchEndpoint(data) {
-		console.log(data);
-	}
 	/** @arg {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data */
 	playerResponse(data) {
 		console.log(data);
@@ -5017,12 +5013,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data */
 	ContinuationItemRendererData(data) {
-		this.continuationEndpoint(data.continuationEndpoint);
-		console.log(data);
-	}
-	/** @arg {import("./support/yt_api/_/c/ContinuationEndpoint.js").ContinuationEndpoint} endpoint */
-	continuationEndpoint(endpoint) {
-		this.clickTrackingParams(endpoint.clickTrackingParams);
+		let {continuationEndpoint,trigger,ghostCards,button,...x}=data;
+		this.endpoint(data.continuationEndpoint);
+		this.primitive(trigger);
+		if(ghostCards) this.renderer(ghostCards);
+		console.log(x);
 	}
 	/** @arg {string} params */
 	trackingParams(params) {
