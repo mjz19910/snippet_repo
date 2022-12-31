@@ -83,8 +83,8 @@ function main() {
 				if(!n_dom) throw 1;
 				n_dom.click();
 				// window.inner_dom=n_dom;
-				window.cint=setTimeout(function() {
-					window.cint=f(f);
+				window.__cint=setTimeout(function() {
+					window.__cint=f(f);
 				},1500);
 			}
 			if(!dom) {
@@ -100,7 +100,7 @@ function main() {
 						if(count>45) {
 							var want=[...any(document).all].filter(e => e[react_ii]).map(e => e[react_ii]).filter(e => e.key=='commentsPaneWrapper').map(e => e);
 							if(want.length==0) {
-								window.cint=setTimeout(t,33);
+								window.__cint=setTimeout(t,33);
 								return;
 							}
 							var w2=want[0].stateNode.querySelectorAll('[target=_blank][rel]:not([id])');
@@ -109,10 +109,10 @@ function main() {
 							a_link.rel='';
 							a_link.href=a_link.href.replace("old.reddit.com","reddit.com");
 							a_link.click();
-							window.cint=setTimeout(t,12000);
+							window.__cint=setTimeout(t,12000);
 							return;
 						}
-						window.cint=setTimeout(t,33);
+						window.__cint=setTimeout(t,33);
 					},33);
 				}
 				);
@@ -147,7 +147,7 @@ function main() {
 						return;
 					}
 					count++;
-					window.cint=setTimeout(t,33);
+					window.__cint=setTimeout(t,33);
 				}
 				t();
 			}

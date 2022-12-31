@@ -1,10 +1,10 @@
-if(window.cint) {
-	clearTimeout(window.cint)
+if(window.__cint) {
+	clearTimeout(window.__cint)
 }
 if(window.cint2) {
 	clearInterval(cint2)
 }
-window.cint=setTimeout(function() {
+window.__cint=setTimeout(function() {
 	window.cint2=setInterval(maxAll,17*1000)
 	//setTimeout(pointReset,200)
 	setTimeout(maxAll,400)
@@ -45,13 +45,13 @@ window.cint=setTimeout(function() {
 				clearInterval(window.cint2)
 			}
 			c.i+=c.d/1000
-			window.cint=setTimeout(rep,c.d,rep,c)
+			window.__cint=setTimeout(rep,c.d,rep,c)
 		} else {
 			console.log("min:"+dsx/60,Math.random())
-			window.cint=setTimeout(rep.nr,dsx*1000)
+			window.__cint=setTimeout(rep.nr,dsx*1000)
 		}
 	}
-	window.cint=setTimeout(e => {
+	window.__cint=setTimeout(e => {
 		var ds=performance.now()
 		e(e,ds)
 	}

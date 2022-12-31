@@ -13,7 +13,7 @@ declare global {
 		syms: any;
 		state: any;
 		// kongregate_yet-another-merge-game.js
-		cint?: ReturnType<typeof window.setTimeout>|number;
+		__cint?: ReturnType<typeof window.setTimeout>|number;
 		citv?: ReturnType<typeof window.setInterval>|number;
 		// makiki99 prestige-frame
 		HTMLIFrameExt: typeof HTMLIFrameElement;

@@ -163,6 +163,103 @@ class FakeRealm {
 		throw 1;
 	}
 }
+class RustTransactionHead {
+	/** @param {string} arg0 */
+	set_expr(arg0) {
+		this.expr=arg0;
+	}
+}
+class RustTransactionBlock {
+	/**
+	 * @param {string} arg0
+	 */
+	add_item(arg0) {
+		arg0;
+		throw new Error("Method not implemented.");
+	}
+	/**
+	 * @param {string} arg0
+	 */
+	set_sep(arg0) {
+		arg0;
+		throw new Error("Method not implemented.");
+	}
+	/** @param {string} arg0 */
+	constructor(arg0) {
+		this.arg0=arg0;
+	}
+}
+class RustTransactionBody {
+	/** @param {string} arg0 */
+	start_block(arg0) {
+		return new RustTransactionBlock(arg0);
+	}
+}
+class RustTransactionMatcher {
+	body_transact() {
+		this.cur_transaction_body=new RustTransactionBody;
+		return this.cur_transaction_body;
+	}
+	head_transact() {
+		this.cur_transaction_head=new RustTransactionHead;
+		return this.cur_transaction_head;
+	}
+}
+
+class RustBuiltExpressionForJavascript {
+	/**
+	 * @param {RustTransactionMatcher[]} x
+	 */
+	constructor(x) {
+		this.data=x;
+	}
+	build_function() {
+		return () => {
+			console.log("built expression",this.data);
+			throw new Error("called fake function");
+		}
+	}
+}
+
+class RustBuiltExpression {
+	/**
+	 * @param {"js"} [arg0]
+	 */
+	into(arg0) {
+		switch(arg0) {
+			case "js": {
+				return new RustBuiltExpressionForJavascript(this.matches);
+			}
+		}
+		throw new Error("Unable to convert to: "+arg0);
+	}
+	/**
+	 * @param {RustTransactionMatcher[]} matches
+	 */
+	constructor(matches) {
+		this.matches=matches;
+	}
+}
+class RustTransaction {
+	/**
+	 * @type {RustTransactionMatcher[]}
+	 */
+	closed_matches=[];
+	build() {
+		let matches=this.closed_matches;
+		this.closed_matches.length=0;
+		return new RustBuiltExpression([...matches]);
+	}
+	close() {
+		if(!this.cur_match) throw new Error("Unable to close without current match");
+		this.closed_matches.push(this.cur_match);
+		this.cur_match=null;
+	}
+	start_match() {
+		this.cur_match=new RustTransactionMatcher;
+		return this.cur_match;
+	}
+}
 class RustFakeVM {
 	constructor() {
 		this.intrinsic_data={
@@ -172,6 +269,9 @@ class RustFakeVM {
 		/** @type {{ children: any[]; } | null} */
 		this.active_root=null;
 		this.realm=new FakeRealm;
+	}
+	start_syntax_transact() {
+		return new RustTransaction();
 	}
 	/** @arg {RustBuilderTrait} for_target */
 	crate_builder(for_target) {

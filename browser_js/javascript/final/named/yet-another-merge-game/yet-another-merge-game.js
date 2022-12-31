@@ -33,8 +33,8 @@ function main() {
 		function zero_spawn_timer() {
 			game.spawnTime.cd=0;
 		}
-		if(window.cint)
-			clearInterval(window.cint);
+		if(window.__cint)
+			clearInterval(window.__cint);
 		if(window.citv)
 			clearInterval(window.citv);
 		window.citv=setInterval(function() {
@@ -48,7 +48,7 @@ function main() {
 				scd_c+=0.075;
 			gameFunctions.decreaseSpawnCooldown(scd_c-scd);
 		},100);
-		window.cint=setInterval(function() {
+		window.__cint=setInterval(function() {
 			gameFunctions.maxUpgrades(game.matter,game.upgrades);
 		},150);
 	};

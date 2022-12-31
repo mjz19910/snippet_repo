@@ -8,14 +8,6 @@ player_nums = Object.fromEntries(
 		.map(e => [e[0], e[1].clone()])
 );
 
-/*
-sacrificeGen
-FORMULA.sacrifice().gt('1e50')
-player.money.log().toNumber()
-element.onclick=function(){
-	ionCoreReset()
-}*/
-
 window.confirm = function(msg) {
 	console.log(msg, new Error().stack);
 	return true;
@@ -42,8 +34,8 @@ function buy_allSBUpg(e) {
 		do_buySBUpg(e);
 		ch = do_SBUpgAmt(e) - prev;
 	}
-}; if(window.cint) clearInterval(window.cint);
-window.cint = setInterval(function() {
+}; if(window.__cint) clearInterval(window.__cint);
+window.__cint = setInterval(function() {
 	buy_allSBUpg(1);
 	buy_allSBUpg(2);
 	buy_allSBUpg(3);

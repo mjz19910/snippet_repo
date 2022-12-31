@@ -12,7 +12,7 @@ v1 (cur): snippet_repo/javascript/group1/sub_a/item-_5.js
 		return window.player;
 	}
 	if(window.hasOwnProperty("cint")) {
-		clearTimeout(window.cint)
+		clearTimeout(window.__cint)
 	}
 	let player=get_player();
 	var delay=70
@@ -43,7 +43,7 @@ v1 (cur): snippet_repo/javascript/group1/sub_a/item-_5.js
 				window.exchange(7);
 			}
 		}
-		window.cint=setTimeout(rep,delay);
+		window.__cint=setTimeout(rep,delay);
 	}
 	rep()
 	player.fuel
