@@ -1314,8 +1314,8 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
+	noisy_log_level=true;
 	/** @typedef {import("./types_tmp.js").DecTypeNum} DecTypeNum */
-	noisy_log_level=false;
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.last_pos,this.pos);
@@ -3888,14 +3888,14 @@ class HandleTypes extends BaseService {
 		switch(mut.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": {
 				let dec=decode_entity_key(mut.entityKey);
-				console.log("[mut_del] type=[%s] id=[%s]",dec.entityType,dec.entityId);
+				this.save_new_string("mut_del",`type=[${dec.entityType}] id=[${dec.entityId}]`);
 				if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
-					console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
+					this.save_new_string("mut_del",`[persistence][${mut.options.persistenceOption}]`);
 				} else {
 					debugger;
 				}
 			} break;
-			case "ENTITY_MUTATION_TYPE_REPLACE": console.log("[mut_rep]",mut); break;
+			case "ENTITY_MUTATION_TYPE_REPLACE": console.log("[mut_rep]",mut); debugger; break;
 			default: console.log("[mut]",mut); debugger;
 		}
 
