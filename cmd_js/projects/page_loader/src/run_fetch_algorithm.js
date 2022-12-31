@@ -1,6 +1,6 @@
 import {PageLoaderState} from "./PageLoaderState.js";
 
-/**@param {PageLoaderState} state @returns {Promise<void>} */
+/** @param {PageLoaderState} state @returns {Promise<void>} */
 export function run_fetch_algorithm(state) {
 	return new Promise(function(accept,reject) {
 		if(!state.url) throw new Error("Invalid state");
