@@ -1,9 +1,9 @@
+import {YtEndpoint} from "../b/YtEndpoint.js";
 import {SettingsPageResponse} from "../s/SettingsPageResponse";
-import {SettingsEndpoint} from "./SettingsEndpoint";
 
 export type PageTypeSettings={
 	pageType: "settings";
-	endpoint: SettingsEndpoint;
+	endpoint: YtEndpoint;
 	response: SettingsPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

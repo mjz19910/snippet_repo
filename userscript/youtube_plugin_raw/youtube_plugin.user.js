@@ -5138,17 +5138,7 @@ class HandleTypes extends BaseService {
 		let {trackingParams,iconImage,endpoint,tooltipText,overrideEntityKey,...y}=x;
 		this.trackingParams(trackingParams);
 		this.Icon(iconImage);
-		this.BrowseEndpoint(endpoint);
-		this.empty_object(y);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/b/BrowseEndpoint.js").BrowseEndpoint} x
-	 */
-	BrowseEndpoint(x) {
-		let {browseEndpoint,clickTrackingParams,commandMetadata,...y}=x;
-		this.browseEndpoint(browseEndpoint);
-		this.clickTrackingParams(clickTrackingParams);
-		this.commandMetadata(commandMetadata);
+		this.YtEndpoint(endpoint);
 		this.empty_object(y);
 	}
 	/**
@@ -5168,7 +5158,7 @@ class HandleTypes extends BaseService {
 				this.empty_object(x);
 			}
 			this.YtTextType(placeholderText);
-			this.SearchEndpoint(searchEndpoint);
+			this.YtEndpoint(searchEndpoint);
 			this.empty_object(x);
 		}
 	}
@@ -5177,19 +5167,9 @@ class HandleTypes extends BaseService {
 		this.iterate(args,arg => this.primitive(arg));
 	}
 	/**
-	 * @param {import("./support/yt_api/_/b/SearchEndpoint.js").SearchEndpoint} x
-	 */
-	SearchEndpoint(x) {
-		let {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x;
-		this.clickTrackingParams(clickTrackingParams);
-		this.commandMetadata(commandMetadata);
-		this.searchEndpoint(searchEndpoint);
-		this.empty_object(y);
-	}
-	/**
 	 * @param {import("./support/yt_api/_/b/SearchEndpointData.js").SearchEndpointData} x
 	 */
-	searchEndpoint(x) {
+	SearchEndpointData(x) {
 		this.primitive(x.query);
 	}
 	/**
@@ -5276,8 +5256,9 @@ class HandleTypes extends BaseService {
 	 */
 	settingsSidebarRenderer(x) {
 		this.iterate(x.items,v=>{
-			console.log('[settings_sidebar]',v);
+			this.empty_object(v.compactLinkRenderer);
 		});
 		this.YtTextType(x.title);
+		console.log('[settings_sidebar]',x);
 	}
 }

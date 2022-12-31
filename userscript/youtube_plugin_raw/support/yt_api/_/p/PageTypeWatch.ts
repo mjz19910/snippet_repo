@@ -1,9 +1,9 @@
-import {WatchEndpoint} from "../../_/w/WatchEndpoint.js";
+import {YtEndpoint} from "../b/YtEndpoint.js";
 import {WatchPageResponse} from "../w/WatchPageResponse";
 
 export interface PageTypeWatch {
 	pageType: "watch";
-	endpoint: WatchEndpoint;
+	endpoint: YtEndpoint;
 	response: WatchPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

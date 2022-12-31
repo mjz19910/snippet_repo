@@ -1,13 +1,10 @@
-import {BrowseEndpoint} from "../../_/b/BrowseEndpoint.js";
 import {BrowsePageResponse} from "../b/BrowsePageResponse";
+import {YtEndpoint} from "../b/YtEndpoint.js";
 
-
-
-
-export interface PageTypeBrowse {
+export type PageTypeBrowse={
 	pageType: "browse";
 	fromHistory: false;
 	navigationDoneMs: number;
-	endpoint: BrowseEndpoint;
+	endpoint: YtEndpoint;
 	response: BrowsePageResponse;
-}
+};

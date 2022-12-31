@@ -1,7 +1,6 @@
-import {ClickTrackingParams} from "c/ClickTrackingParams.js";
-import {PingingEndpoint} from "../_abc/p/PingingEndpoint.js";
-import {UrlParse} from "../../url_parse/UrlParse";
 import {ParseUrlSearchParams} from "../../search_params_parse/SearchParamsParse";
+import {UrlParse} from "../../url_parse/UrlParse";
+import {YtEndpoint} from "../_/b/YtEndpoint.js";
 import {Decay} from "./Decay";
 
 export interface LoggingUrl {
@@ -9,7 +8,7 @@ export interface LoggingUrl {
 }
 export interface ImpressionEndpoint {
 	loggingUrls: [LoggingUrl];
-	pingingEndpoint: PingingEndpoint;
+	pingingEndpoint: YtEndpoint;
 }
 type Pu=UrlParse<LoggingUrl["baseUrl"]>["search"];
 export type LoggingUrlBaseUrlParseSearchParams=Decay<ParseUrlSearchParams<Pu>>;

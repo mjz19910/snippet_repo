@@ -1,7 +1,7 @@
 import {Icon} from "../i/Icon.js";
 import {YtTextType} from "../s/YtTextType.js";
 import {ButtonRenderer} from "./ButtonRenderer.js";
-import {SearchEndpoint} from "./SearchEndpoint";
+import {YtEndpoint} from "./YtEndpoint.js";
 
 
 export type FusionSearchboxRendererData={
@@ -16,6 +16,6 @@ export type FusionSearchboxRendererData={
 		};
 	};
 	trackingParams: string;
-	searchEndpoint: SearchEndpoint;
+	searchEndpoint: YtEndpoint;
 	clearButton: ButtonRenderer;
 };
