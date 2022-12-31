@@ -19,9 +19,7 @@ async function x() {
 	let text=await r.text();
 	let dom_parser=new DOMParser;
 	let xml_document=dom_parser.parseFromString(text,"application/xml");
-	/** @arg {{ [x: string]: any; }} obj
-	 * @arg {(obj: {}, key: string, p: string[])=>{}} cb
-	 * @returns {{}[][]} */
+	/** @arg {{ [x: string]: any; }} obj @arg {(obj: {}, key: string, p: string[])=>{}} cb @returns {{}[][]} */
 	function do_iter(obj,cb,c=0,/** @type {string[]} */kp=[]) {
 		let out=[];
 		if(typeof obj==='string') {

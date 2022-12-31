@@ -76,8 +76,7 @@ export class PageLoaderState {
 	on_error_result(e) {
 		console.error(e);
 	}
-	/** @arg {string} url
-	 * @arg {Partial<PageLoaderState>} [opts] */
+	/** @arg {string} url @arg {Partial<PageLoaderState>} [opts] */
 	constructor(url,opts) {
 		if(opts) {
 			if(opts.no_repl!==void 0) {

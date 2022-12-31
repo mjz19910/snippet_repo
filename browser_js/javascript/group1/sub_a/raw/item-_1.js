@@ -25,8 +25,7 @@ class DirBuilder {
 	}
 }
 class FSDirEntry {
-	/** @arg {string} name
-	 * @arg {FSDir | FSFile} value */
+	/** @arg {string} name @arg {FSDir | FSFile} value */
 	constructor(name,value) {
 		this.name=name
 		this.value=value
@@ -135,8 +134,7 @@ class Win32FSDir {
 		if(parent_dir===void 0) return null
 		return parent_dir
 	}
-	/** @arg {string} file_name
-	 * @arg {string} [file_content] */
+	/** @arg {string} file_name @arg {string} [file_content] */
 	add_file(file_name,file_content) {
 		let new_file=new FSFile(file_content)
 		this.m_children.push(new FSDirEntry(file_name,new_file))
@@ -162,9 +160,7 @@ class _SimplePackageModule {
 		let dir_builder=new DirBuilder(this.fs_root)
 		dir_builder.cur.add_dir("examples")
 	}
-	/** @arg {string} module_file_name
-	 * @arg {string} module_file_content
-	 * @arg {_module_jai} module_obj */
+	/** @arg {string} module_file_name @arg {string} module_file_content @arg {_module_jai} module_obj */
 	add_module_jai(module_file_name,module_file_content,module_obj) {
 		let mod_file=this.current_dir.add_file(module_file_name)
 		mod_file.set_content(module_file_content)
@@ -185,8 +181,7 @@ class AK_Error {
 class AK_ErrorOr {
 	/**@type {symbol|AK_Error|null} */
 	m_data
-	/** @arg {symbol|null} tag_or_value
-	 * @arg {[any, ...any[]]} value_or_error_rest */
+	/** @arg {symbol|null} tag_or_value @arg {[any, ...any[]]} value_or_error_rest */
 	constructor(tag_or_value,...value_or_error_rest) {
 		if(tag_or_value===ErrorTag) {
 			let [error,...rest_args]=value_or_error_rest
@@ -224,9 +219,7 @@ class JaiFunctionPolymorph {
 	}
 }
 class JaiExecuteCall {
-	/** @arg {typeof jai_runner} jai
-	 * @arg {string} function_name
-	 * @arg {any} function_args */
+	/** @arg {typeof jai_runner} jai @arg {string} function_name @arg {any} function_args */
 	constructor(jai,function_name,function_args) {
 		let function_def=jai.get_function_def(function_name)
 		let function_call_types=jai.get_type_for_args(function_args)
@@ -266,8 +259,7 @@ class NullValueHb {
 	}
 }
 class NullEntryHb {
-	/** @arg {any} name
-	 * @arg {JaiStructMember} value */
+	/** @arg {any} name @arg {JaiStructMember} value */
 	constructor(name,value) {
 		this.name=name
 		this.value=value
@@ -303,8 +295,7 @@ class JaiStructBuilder {
 		/** @type {JaiStructMemberEntry[]} */
 		this.struct_entries=[]
 	}
-	/** @arg {any} member_name
-	 * @arg {any} member_type */
+	/** @arg {any} member_name @arg {any} member_type */
 	add_member(member_name,member_type) {
 		let new_member=new JaiStructMember(member_type)
 		this.struct_entries.push(new JaiStructMemberEntry(member_name,new_member))
@@ -323,8 +314,7 @@ class JaiStructBuilder {
 class JaiDynamicArrayTag extends NullValueHb {
 }
 class JaiDynamicArray {
-	/** @arg {any} tag
-	 * @arg {any} member_type */
+	/** @arg {any} tag @arg {any} member_type */
 	constructor(tag,member_type) {
 		this.tag=tag
 		this.member_type=member_type
@@ -363,33 +353,26 @@ class JaiRunner {
 	dyn_array_tag(info) {
 		return new JaiDynamicArrayTag(info)
 	}
-	/** @arg {JaiDynamicArrayTag} array_tag
-	 * @arg {string} array_member_type */
+	/** @arg {JaiDynamicArrayTag} array_tag @arg {string} array_member_type */
 	dyn_array(array_tag,array_member_type) {
 		return new JaiDynamicArray(array_tag,array_member_type)
 	}
-	/** @arg {string} name
-	 * @returns {never} */
+	/** @arg {string} name @returns {never} */
 	get_function_def(name) {
 		void name
 		throw new Error("TODO")
 	}
-	/** @arg {any} function_args
-	 * @returns {never} */
+	/** @arg {any} function_args @returns {never} */
 	get_type_for_args(function_args) {
 		void function_args
 		throw new Error("TODO")
 	}
-	/** @arg {never} a
-	 * @arg {never} b
-	 * @returns {JaiFunctionInstance|null} */
+	/** @arg {never} a @arg {never} b @returns {JaiFunctionInstance|null} */
 	getInstantiation(a,b) {
 		void a,b
 		return new JaiFunctionInstance("Dummy tag")
 	}
-	/** @arg {never} a
-	 * @arg {any} b
-	 * @arg {never} c */
+	/** @arg {never} a @arg {any} b @arg {never} c */
 	polymorph_function(a,b,c) {
 		void a,b,c
 		return new AK_Result("Dummy tag")
@@ -409,10 +392,7 @@ class JaiFunctionInstance {
 	}
 }
 class JaiFunctionDef {
-	/** @arg {JaiRunner} cur_jai
-	 * @arg {string} function_name
-	 * @arg {string[]} argument_names
-	 * @arg {(builder: any, x: any) => void} function_body */
+	/** @arg {JaiRunner} cur_jai @arg {string} function_name @arg {string[]} argument_names @arg {(builder: any, x: any) => void} function_body */
 	constructor(cur_jai,function_name,argument_names,function_body) {
 		this.cur_jai=cur_jai
 		this.function_name=function_name

@@ -688,8 +688,7 @@ async function kernel_main() {
 			return new this
 		}
 	}
-	/** @arg {any} runtime
-	 * @arg {number} delay */
+	/** @arg {any} runtime @arg {number} delay */
 	function async_delay_future(runtime,delay) {
 		let future=new DelayFuture(delay)
 		let cx=new RustTaskContext(runtime)
@@ -697,8 +696,7 @@ async function kernel_main() {
 		future.poll(future,cx)
 		return cx.wait_for()
 	}
-	/** @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime
-	 * @arg {string | number} i */
+	/** @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime @arg {string | number} i */
 	async function async_loop_function_inner(runtime,i) {
 		let w=async_delay_future.bind(null,runtime)
 		let ref_sym=runtime.auto_ref()

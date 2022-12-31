@@ -68,10 +68,7 @@ class RustActor {
 	static fromCallable(callable) {
 		return new this(callable);
 	}
-	/** @arg {RustActor} target_actor
-	 * @arg {RustActor} transmitted_actor
-	 * @arg {{ is_root: () => any; }} activator
-	 * @arg {number} event_count */
+	/** @arg {RustActor} target_actor @arg {RustActor} transmitted_actor @arg {{ is_root: () => any; }} activator @arg {number} event_count */
 	process_event(target_actor,transmitted_actor,activator,event_count) {
 		if(this.callable) {
 			this.callable(target_actor,transmitted_actor,activator,event_count);

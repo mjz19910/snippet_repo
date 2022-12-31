@@ -46,8 +46,7 @@ export class UrlFetcher {
 		console.log(Object.keys(root));
 		this.show_dom_node(state,root);
 	}
-	/** @arg {ReturnType<typeof parse>['childNodes'][number]} element
-	 * @arg {{ depth: number; }} state */
+	/** @arg {ReturnType<typeof parse>['childNodes'][number]} element @arg {{ depth: number; }} state */
 	show_dom_node(state,element) {
 		if(element instanceof node_html_parser.HTMLElement) {
 			let {childNodes,nodeType,rawTagName,classList,id}=element;

@@ -14,8 +14,7 @@ class FakeJavascriptObject {
 		}
 		throw new Error("Bad field "+key);
 	}
-	/** @template T
-	 * @arg {[T]} var_arg */
+	/** @template T @arg {[T]} var_arg */
 	todo(...var_arg) {
 		this.vm.todo(...var_arg);
 	}
@@ -25,8 +24,7 @@ class RustIDBFactory extends FakeJavascriptObject {
 	constructor(vm) {
 		super(vm);
 	}
-	/** @arg {any} _name
-	 * @arg {number} version */
+	/** @arg {any} _name @arg {number} version */
 	open(_name,version) {
 		if(version===0) {
 			throw TypeError('The version provided must not be 0.');
@@ -43,8 +41,7 @@ class RustFakeHost {
 	}
 }
 class HostObjectRc {
-	/** @arg {any} _vm
-	 * @arg {any} value */
+	/** @arg {any} _vm @arg {any} value */
 	constructor(_vm,value) {
 		this.value=value;
 	}
@@ -91,8 +88,7 @@ class RustRootBuilder extends RustBuilderTrait {
 	}
 }
 class ExportItem {
-	/** @arg {{ type: string; export_value: RustStdCrate; } | null} [item]
-	 * @arg {string | null} [key] */
+	/** @arg {{ type: string; export_value: RustStdCrate; } | null} [item] @arg {string | null} [key] */
 	constructor(item=null,key=null) {
 		this.item=item;
 		this.key=key;
@@ -211,8 +207,7 @@ class RustFakeCrate extends RustFakeBuildTarget {
 		/** @type {{ children: ExportItem[]; }[]} */
 		this.children_crate_vec=[];
 	}
-	/** @arg {string} define_key
-	 * @arg {(value: any) => void} define_value */
+	/** @arg {string} define_key @arg {(value: any) => void} define_value */
 	add_function(define_key,define_value) {
 		this.define_data.set(define_key,{
 			type: 'function',
@@ -223,16 +218,14 @@ class RustFakeCrate extends RustFakeBuildTarget {
 	add_crate_child(crate) {
 		this.children_crate_vec.push(crate);
 	}
-	/** @arg {any} builder
-	 * @override */
+	/** @arg {any} builder @override */
 	build_visit(builder) {
 		this.vm=null;
 		super.build_visit(builder);
 	}
 }
 class RustStdMemCrate extends RustFakeCrate {
-	/** @this {RustStdMemCrate}
-	 * @arg {any} value */
+	/** @this {RustStdMemCrate} @arg {any} value */
 	static intrinsic_drop_in_place(value) {
 		this.vm.intrinsic_drop_in_place(value);
 	}

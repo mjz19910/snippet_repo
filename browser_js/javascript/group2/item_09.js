@@ -42,8 +42,7 @@ class RustTypeInterface {
 		/** @type {{}[]} */
 		this.values=[];
 	}
-	/** @arg {string} str_0
-	 * @arg {{}} value */
+	/** @arg {string} str_0 @arg {{}} value */
 	defineType(str_0,value) {
 		this.values.push([str_0,value]);
 	}

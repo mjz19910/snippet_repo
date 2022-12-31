@@ -176,18 +176,13 @@ export class REPLServerRuntime extends RLInterface {
 	get writer() {return this.X.writer;}
 	get replMode() {return this.X.replMode;}
 	get last() {return this.X.last;}
-	/** @arg {string} evalCmd
-	 * @arg {import("vm").Context} context
-	 * @arg {string} file
-	 * @arg {(err: Error | null, result: any) => void} cb */
+	/** @arg {string} evalCmd @arg {import("vm").Context} context @arg {string} file @arg {(err: Error | null, result: any) => void} cb */
 	eval(evalCmd,context,file,cb) {
 		return this.X.eval(evalCmd,context,file,cb);
 	}
 	get lastError() {return this.X.lastError;}
 	get completer() {return this.X.completer;}
-	/** @arg {string} keyword
-	 * @arg {repl.REPLCommand | repl.REPLCommandAction} cmd
-	 * */
+	/** @arg {string} keyword @arg {repl.REPLCommand | repl.REPLCommandAction} cmd */
 	defineCommand(keyword,cmd) {
 		this.X.defineCommand(keyword,cmd);
 	}
@@ -198,9 +193,7 @@ export class REPLServerRuntime extends RLInterface {
 	clearBufferedCommand() {
 		this.X.clearBufferedCommand();
 	}
-	/** @type {this['X']['setupHistory']}
-	 * @arg {string} path
-	 * @arg {import('./CallbackType.js').CallbackType} callback */
+	/** @type {this['X']['setupHistory']} @arg {string} path @arg {import('./CallbackType.js').CallbackType} callback */
 	setupHistory(path,callback) {
 		this.X.setupHistory(path,callback);
 	}

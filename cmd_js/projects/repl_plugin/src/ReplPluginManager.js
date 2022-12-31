@@ -76,8 +76,7 @@ export class ReplPluginManager {
 		this.repl_activating=true;
 		bind_plugins(this);
 	}
-	/** @arg {string} keyword
-	 * @arg {import("repl").REPLCommand} cmd */
+	/** @arg {string} keyword @arg {import("repl").REPLCommand} cmd */
 	defineCommand(keyword,cmd) {
 		this.get_repl().defineCommand(keyword,cmd);
 	}

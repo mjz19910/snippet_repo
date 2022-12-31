@@ -63,9 +63,7 @@ export class RouteReader {
 		await fc.write(`export const tree_contents = [\n\t${res.map(e => `r_${e[0].replaceAll(".", "_")}`).join(",\n\t")}\n];\n`);
 		await fc.close();
 	}
-	/** @arg {import("fs/promises").FileHandle} out
-	 * @arg {[string, string[]]} item
-	 * */
+	/** @arg {import("fs/promises").FileHandle} out @arg {[string, string[]]} item */
 	format_route_const_export(out, item) {
 		/**@type {[string, string[]]}*/
 		let [target, route] = item;

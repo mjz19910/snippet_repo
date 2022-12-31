@@ -42,8 +42,7 @@ export function dec_uint32(binary,idx) {
 /** @param {Uint8Array} binary */
 export function do_token_decode(binary) {
 	/* istanbul ignore next */
-	/** @param {Reader} reader
-	 * @param {number} [writeLength] */
+	/** @param {Reader} reader @param {number} [writeLength] */
 	function indexOutOfRange(reader,writeLength) {
 		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 	}
@@ -53,10 +52,7 @@ export function do_token_decode(binary) {
 			console.log(p);
 		}
 	}
-	/** Constructs a new reader instance using the specified buffer.
-	 * @classdesc Wire format reader using `Uint8Array` if available, otherwise `Array`.
-	 * @constructor
-	 * @param {Uint8Array} buffer Buffer to read from */
+	/** Constructs a new reader instance using the specified buffer. @classdesc Wire format reader using `Uint8Array` if available, otherwise `Array`. @constructor @param {Uint8Array} buffer Buffer to read from */
 	class Reader {
 		/** @arg {Uint8Array} buffer */
 		constructor(buffer) {
@@ -164,9 +160,7 @@ export function do_token_decode(binary) {
 		};
 	})();
 
-	/** Constructs a new buffer reader instance.
-	 * @classdesc Wire format reader using node buffers.
-	 * @extends Reader */
+	/** Constructs a new buffer reader instance. @classdesc Wire format reader using node buffers. @extends Reader */
 	class BufferReader extends Reader {
 		/** @param {Buffer} buffer */
 		constructor(buffer) {

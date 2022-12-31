@@ -7,9 +7,7 @@ export class RouteDescription {
 	route=[""];
 	/**@type {Route|null} */
 	new_version=null;
-	/** @arg {string} target
-	 * @arg {string[]} route_list
-	 * @arg {Route | null} new_version */
+	/** @arg {string} target @arg {string[]} route_list @arg {Route | null} new_version */
 	constructor(target,route_list,new_version) {
 		this.target=target;
 		this.route=route_list;

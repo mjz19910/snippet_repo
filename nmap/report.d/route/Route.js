@@ -2,8 +2,7 @@ import {RouteDescription} from "./RouteDescription.js";
 
 export class Route {
 	m_route_description;
-	/** @arg {RouteDescription} route_description
-	 * @arg {boolean} [is_raw] */
+	/** @arg {RouteDescription} route_description @arg {boolean} [is_raw] */
 	constructor(route_description, is_raw) {
 		this.m_route_description = route_description;
 		if(is_raw){

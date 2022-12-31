@@ -21,8 +21,7 @@
 	const LOG_LEVEL_INFO=5;
 	const LOG_LEVEL_DEBUG=6;
 	const local_logging_level=LOG_LEVEL_WARN;
-	/** @arg {number} level
-	 * @arg {string[]} args */
+	/** @arg {number} level @arg {string[]} args */
 	function l_log_if(level,...args) {
 		if(level<=local_logging_level) {
 			console.log(...args);
@@ -284,8 +283,7 @@
 			this.name="AssertionError";
 		}
 	}
-	/** @arg {boolean} assert_result
-	 * @arg {string} assert_message */
+	/** @arg {boolean} assert_result @arg {string} assert_message */
 	function VERIFY(assert_result,assert_message) {
 		if(!assert_result) {
 			throw new VerifyError(assert_message);
@@ -647,12 +645,7 @@
 		for_worker_state=true;
 		worker_types=new RemoteWorkerTypes;
 	}
-	/** @template T
-	 * @template {abstract new (...args: any)=>any} U
-	 * @arg {T} _obj
-	 * @arg {U} _fn
-	 * @returns {asserts _obj is InstanceType<U>}
-	 * */
+	/** @template T @template {abstract new (...args: any)=>any} U @arg {T} _obj @arg {U} _fn @returns {asserts _obj is InstanceType<U>} */
 	function assert_as_instance(_obj,_fn) {}
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
@@ -952,8 +945,7 @@
 	function typedPostMessage(msg) {
 		postMessage(msg);
 	}
-	/** @arg {(arg0: null) => void} executor_accept
-	 * @arg {(arg0: Error) => void} executor_reject */
+	/** @arg {(arg0: null) => void} executor_accept @arg {(arg0: Error) => void} executor_reject */
 	function set_timeout_on_remote_worker_executor(executor_accept,executor_reject) {
 		let failed=false;
 		/** @type {any} */

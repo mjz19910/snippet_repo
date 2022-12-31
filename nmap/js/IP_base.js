@@ -16,9 +16,7 @@ export class IP_base {
 	toString() {
 		return this.addr.join(".");
 	}
-	/** @arg {any} _
-	 * @arg {any} options
-	 * @arg {(object: string, options: any) => any} inspect */
+	/** @arg {any} _ @arg {any} options @arg {(object: string, options: any) => any} inspect */
 	[util.inspect.custom](_, options, inspect) {
 		return `${options.stylize('IP', 'special')}[${inspect(this.addr.join(".") + ".", options)}]`;
 	}

@@ -83,8 +83,7 @@ export class Runner {
 			}
 		} finally {}
 	}
-	/** @arg {string|CustomInputMatcher} name
-	 * @arg {((...x: any[]) => any)} func */
+	/** @arg {string|CustomInputMatcher} name @arg {((...x: any[]) => any)} func */
 	add_func(name,func) {
 		var y=this.funcs.push(func);
 		if(!(name instanceof CustomInputMatcher)) {

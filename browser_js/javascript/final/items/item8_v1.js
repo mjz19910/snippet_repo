@@ -159,8 +159,7 @@ function main() {
 		if(v===null) throw 1;
 		return v;
 	}
-	/** @arg {number} dim_l
-	 * @arg {number} lim */
+	/** @arg {number} dim_l @arg {number} lim */
 	function maxall_dim(dim_l,lim) {
 		let game=get_game();
 		let lsw=document.querySelector("#layerswrapper");
