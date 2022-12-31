@@ -1184,114 +1184,132 @@ const decode_protobuf_obj=function make() {
 			|buf[end-2]<<16
 			|buf[end-1]<<24)>>>0;
 	}
-	let value=4294967295;
-	return new class ProtobufDecoder {
-		MyReader=class MyReader {
-			/** @arg {Uint8Array} buf  */
-			constructor(buf) {
-				this.buf=buf;
-				this.pos=0;
-				this.len=buf.length;
-				this.last_pos=0;
-			}
+	/**
+	 * @param {MyReader} reader
+	 * @param {number | undefined} [writeLength]
+	 */
+	function indexOutOfRange(reader,writeLength) {
+    return RangeError("index out of range: " + reader.pos + " + " + (writeLength || 1) + " > " + reader.len);
+	}
+	let value=4294967295;class MyReader {
+		/** @arg {Uint8Array} buf  */
+		constructor(buf) {
+			this.buf=buf;
+			this.pos=0;
+			this.len=buf.length;
+			this.last_pos=0;
+		}
 
-			/** @template T @arg {()=>T} x */
-			revert(x) {
-				let prev_pos=this.pos;
-				this.pos=this.last_pos;
-				let ret=x();
-				this.pos=prev_pos;
-				return ret;
+		/** @template T @arg {()=>T} x */
+		revert(x) {
+			let prev_pos=this.pos;
+			this.pos=this.last_pos;
+			let ret=x();
+			this.pos=prev_pos;
+			return ret;
+		}
+		/** @arg {number} [length] */
+		skip(length) {
+			if(typeof length==="number") {
+				/* istanbul ignore if */
+				if(this.pos+length>this.len)
+					throw indexOutOfRange(this,length);
+				this.pos+=length;
+			} else {
+				do {
+					/* istanbul ignore if */
+					if(this.pos>=this.len)
+						throw indexOutOfRange(this);
+				} while(this.buf[this.pos++]&128);
 			}
-			/** @arg {number} offset */
-			skip(offset) {
-				this.pos+=offset;
+		}
+		uint32() {
+			this.last_pos=this.pos;
+			value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
+			if((this.pos+=5)>this.len) {
+				this.pos=this.len;
+				throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
 			}
-			uint32() {
-				this.last_pos=this.pos;
-				value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
-				value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
-				value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
-				value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
-				value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
-				if((this.pos+=5)>this.len) {
-					this.pos=this.len;
-					throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
-				}
-				return value;
-			};
-			uint64() {
-				this.last_pos=this.pos;
-				return this.readLongVarint().toBigInt();
-			}
-			readLongVarint() {
-				// tends to deopt with local vars for octet etc.
-				var bits=new LongBits(0,0);
-				var i=0;
-				if(this.len-this.pos>4) { // fast route (lo)
-					for(;i<4;++i) {
-						// 1st..4th
-						bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
-						if(this.buf[this.pos++]<128)
-							return bits;
-					}
-					// 5th
-					bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
-					bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+			return value;
+		};
+		uint64() {
+			this.last_pos=this.pos;
+			return this.readLongVarint().toBigInt();
+		}
+		readLongVarint() {
+			// tends to deopt with local vars for octet etc.
+			var bits=new LongBits(0,0);
+			var i=0;
+			if(this.len-this.pos>4) { // fast route (lo)
+				for(;i<4;++i) {
+					// 1st..4th
+					bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
 					if(this.buf[this.pos++]<128)
 						return bits;
-					i=0;
-				} else {
-					for(;i<3;++i) {
-						/* istanbul ignore if */
-						if(this.pos>=this.len) throw new Error("indexOutOfRange");
-						// 1st..3th
-						bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
-						if(this.buf[this.pos++]<128)
-							return bits;
-					}
-					// 4th
-					bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+				}
+				// 5th
+				bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
+				bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+				if(this.buf[this.pos++]<128)
 					return bits;
+				i=0;
+			} else {
+				for(;i<3;++i) {
+					/* istanbul ignore if */
+					if(this.pos>=this.len) throw new Error("indexOutOfRange");
+					// 1st..3th
+					bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
+					if(this.buf[this.pos++]<128)
+						return bits;
 				}
-				if(this.len-this.pos>4) { // fast route (hi)
-					for(;i<5;++i) {
-						// 6th..10th
-						bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
-						if(this.buf[this.pos++]<128)
-							return bits;
-					}
-				} else {
-					for(;i<5;++i) {
-						/* istanbul ignore if */
-						if(this.pos>=this.len)
-							throw new Error("indexOutOfRange");
-						// 6th..10th
-						bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
-						if(this.buf[this.pos++]<128)
-							return bits;
-					}
+				// 4th
+				bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+				return bits;
+			}
+			if(this.len-this.pos>4) { // fast route (hi)
+				for(;i<5;++i) {
+					// 6th..10th
+					bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+					if(this.buf[this.pos++]<128)
+						return bits;
 				}
-				/* istanbul ignore next */
-				throw Error("invalid varint encoding");
+			} else {
+				for(;i<5;++i) {
+					/* istanbul ignore if */
+					if(this.pos>=this.len)
+						throw new Error("indexOutOfRange");
+					// 6th..10th
+					bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+					if(this.buf[this.pos++]<128)
+						return bits;
+				}
 			}
-			/** @arg {number} writeLength */
-			indexOutOfRange(writeLength) {
-				return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
-			}
-			fixed32() {
-				/* istanbul ignore if */
-				if(this.pos+4>this.len)
-					throw this.indexOutOfRange(4);
+			/* istanbul ignore next */
+			throw Error("invalid varint encoding");
+		}
+		/** @arg {number} writeLength */
+		indexOutOfRange(writeLength) {
+			return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
+		}
+		fixed32() {
+			/* istanbul ignore if */
+			if(this.pos+4>this.len)
+				throw this.indexOutOfRange(4);
 
-				return readFixed32_end(this.buf,this.pos+=4);
-			}
-			/** @returns {[number,number]} */
-			read_field_description() {
-				let cur_byte=this.uint32();
-				return [cur_byte&7,cur_byte>>>3];
-			}
-		};
+			return readFixed32_end(this.buf,this.pos+=4);
+		}
+		/** @returns {[number,number]} */
+		read_field_description() {
+			let cur_byte=this.uint32();
+			return [cur_byte&7,cur_byte>>>3];
+		}
+	}
+	return new class ProtobufDecoder {
+		MyReader=;
 	};
 }();
 
@@ -1313,10 +1331,16 @@ function decode_protobuf(str) {
 		switch(wireType) {
 			case 0:
 				let num32=reader.uint32();
-				reader.revert(() => {
-					return reader.uint64();
+				let [num64,new_pos]=reader.revert(() => {
+					let u64=reader.uint64();
+					return [u64,reader.pos];
 				});
-				first_num.push(num32);
+				if(num64!==BigInt(num32)) {
+					first_num.push(num64);
+					reader.pos=new_pos;
+				} else {
+					first_num.push(num32);
+				}
 				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
 			case 2: {
