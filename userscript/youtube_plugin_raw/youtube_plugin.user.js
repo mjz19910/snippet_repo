@@ -1300,7 +1300,7 @@ function decode_protobuf(str) {
 		/** @type {(number|bigint)[]} */
 		let first_num=[];
 		console.log("field",fieldId,"type",wireType);
-		y: switch(wireType) {
+		switch(wireType) {
 			case 0:
 				first_num.push(reader.uint32());
 				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
