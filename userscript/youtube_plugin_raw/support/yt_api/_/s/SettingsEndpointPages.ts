@@ -1,3 +1,3 @@
-import {AccountPageSettingsSections} from "./AccountPageSettingsSections";
+import {AccountPageSettingsSections} from "../a/AccountPageSettingsSections";
 
 export type SettingsEndpointPages=`account${""|`_${AccountPageSettingsSections}`}`;

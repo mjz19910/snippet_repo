@@ -1,6 +1,4 @@
-import {HistoryBackSignal} from "../_/s/HistoryBackSignal";
+import {HistoryBackSignal} from "../_/HistoryBackSignal.js";
+import {HistoryForwardSignal} from "../_/HistoryForwardSignal";
 
-
-export type YtSignalAction=HistoryBackSignal|{
-	signal: "HISTORY_FORWARD";
-};
+export type YtSignalAction=HistoryBackSignal|HistoryForwardSignal;

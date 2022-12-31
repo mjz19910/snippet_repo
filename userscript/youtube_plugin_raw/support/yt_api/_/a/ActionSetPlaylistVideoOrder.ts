@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../b/YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {Accessibility} from "./Accessibility.js";
 
 export type ActionSetPlaylistVideoOrder<T extends 1|2|3|4|5>={

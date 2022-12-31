@@ -1,3 +1,3 @@
-import {YtEndpoint} from "../b/YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 
 export type JsonDataEndpointType=YtEndpoint;

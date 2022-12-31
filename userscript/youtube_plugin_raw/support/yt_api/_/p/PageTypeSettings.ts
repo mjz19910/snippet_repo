@@ -1,5 +1,5 @@
 import {SettingsPageResponse} from "../s/SettingsPageResponse";
-import {YtEndpoint} from "../YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 
 export type PageTypeSettings={
 	pageType: "settings";

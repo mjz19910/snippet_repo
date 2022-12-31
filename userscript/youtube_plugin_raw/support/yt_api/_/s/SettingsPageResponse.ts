@@ -1,5 +1,5 @@
 import {Icon} from "../i/Icon.js";
-import {YtEndpoint} from "../YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {SettingsEndpointPages} from "./SettingsEndpointPages";
 import {SettingsResponseContent} from "./SettingsResponseContent";
 

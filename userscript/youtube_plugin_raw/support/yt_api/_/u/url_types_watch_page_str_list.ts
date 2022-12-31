@@ -1,4 +1,4 @@
-import {RadioPlaylistStr} from "./RadioPlaylistStr";
+import {RadioPlaylistStr} from "../RadioPlaylistStr";
 import {YtVideoIdStr} from "../../yt/YtVideoIdStr";
 
 export type url_types_watch_page_str_list=[

@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../b/YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {ChannelId} from "./ChannelId";
 import {ChannelResponse} from "./ChannelResponse";
 

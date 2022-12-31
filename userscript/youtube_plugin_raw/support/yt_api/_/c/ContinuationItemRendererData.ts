@@ -1,5 +1,5 @@
 import {ButtonRenderer} from "../b/ButtonRenderer.js";
-import {YtEndpoint} from "../b/YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {GhostGridRenderer} from "../g/GhostGridRenderer.js";
 
 export type ContinuationItemRendererData={

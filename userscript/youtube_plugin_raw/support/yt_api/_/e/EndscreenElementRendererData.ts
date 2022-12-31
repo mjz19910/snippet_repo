@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../b/YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {HexLen} from "../h/HexLen.js";
 
 export type EndscreenElementRendererData={

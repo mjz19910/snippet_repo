@@ -1,7 +1,5 @@
-import {TimestampWithNanos} from "../t/TimestampWithNanos.js";
-import {EntityMutationItem} from "./EntityMutationItem";
+import {EntityBatchUpdateData} from "../e/EntityBatchUpdate.js";
 
-export type EntityBatchUpdateData={
-	mutations: EntityMutationItem[];
-	timestamp: TimestampWithNanos;
+export type EntityBatchUpdate={
+	entityBatchUpdate: EntityBatchUpdateData;
 };
