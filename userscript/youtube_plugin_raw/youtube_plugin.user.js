@@ -3712,7 +3712,6 @@ class HandleTypes extends BaseService {
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...x}=data;
 		this.trackingParams(trackingParams);
 		this.topbarLogoRenderer(logo.topbarLogoRenderer);
-		this.empty_object(logo.topbarLogoRenderer);
 		this.empty_object(searchbox);
 		this.primitive(countryCode);
 		this.iterate(topbarButtons,x=>this.empty_object(x));
@@ -3866,9 +3865,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
 	Icon(icon) {
-		switch(icon.iconType) {
-			case "SETTINGS": return;
-		}
 		/** @type {any} */
 		let any_icon=icon;
 		/** @type {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsIconTypes} */
@@ -3876,12 +3872,15 @@ class HandleTypes extends BaseService {
 		switch(ict.iconType) {
 			case "ACCOUNT_SHARING": return;
 			case "ACCOUNT_PRIVACY": return;
-		}
-		switch(ict.iconType) {case "ACCOUNT_ADVANCED": return;}
-		switch(ict.iconType) {case "ACCOUNT_BILLING": return;}
-		switch(ict.iconType) {case "ACCOUNT_SETTINGS": return;}
-		switch(ict.iconType) {
+			case "ACCOUNT_ADVANCED": return;
+			case "ACCOUNT_BILLING": return;
+			case "ACCOUNT_SETTINGS": return;
 			case "ACCOUNT_NOTIFICATIONS": return;
+			default: break;
+		}
+		switch(icon.iconType) {
+			case "SETTINGS": return;
+			case "YOUTUBE_LOGO": return;
 			default: console.log("[new_icon]",icon); debugger;
 		}
 	}
