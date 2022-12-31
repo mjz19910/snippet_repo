@@ -4401,7 +4401,7 @@ class HandleTypes extends BaseService {
 		this.endpoint(data.endpoint);
 		if(eq_keys(ok,[])) return;
 		if(has_keys(ok,"expirationTime")) return;
-		console.log("[browse_response_top]",ok.join(","),data);
+		console.log("[browse_response_top] [%s]",ok.join(","),data);
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} data */
