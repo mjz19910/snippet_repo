@@ -13,8 +13,11 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+/** @type {InstanceType<typeof YtdAppElement>|undefined} */
+let ytd_app=void 0;
 console=typeof window==="undefined"? console:(() => window.console)();
 main();
+// #region node
 var is_node_js=function is_node_js() {
 	return false;
 };
@@ -40,10 +43,11 @@ if(typeof window==="undefined") {
 		throw new Error("Unable to generate fake window");
 	}
 }
+// #endregion
 // #section Use module types
 /** @type {import("./__global.js")} */
 // #section end
-
+// #region
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
 /** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};
@@ -84,38 +88,8 @@ function any_c(value,_constructor_type) {
 	throw new Error("Failed to cast");
 }
 
-class YtdMastheadContainerChildren {
-	/** @type {Element|undefined} */
-	center=new Element;
-}
-
-class YtdMastheadContainer {
-	children=new YtdMastheadContainerChildren;
-}
-
-class YtdMastheadWithContainer {
-	container=new YtdMastheadContainer;
-}
-
-class YtdMasthead {
-	$=new YtdMastheadWithContainer;
-}
-
-class ShadyChildrenOfYtdApp {
-	masthead=new YtdMasthead;
-}
-
-
-
-
 /** @type {unique symbol} */
 const Gn=Symbol("injectionDeps");
-
-class PagePreparer {
-	cancel() {
-		throw new Error("Only types");
-	}
-}
 
 /** @template {{length:number;[x:number]:T[number]}} T @arg {T} x */
 function make_iterator(x) {
@@ -138,7 +112,6 @@ function make_iterator(x) {
 		}
 	};
 }
-
 
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
@@ -240,10 +213,6 @@ function do_find_video() {
 		if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
 	}
 }
-
-/** @type {InstanceType<typeof YtdAppElement>|undefined} */
-let ytd_app=void 0;
-
 function iterate_ytd_app() {
 	if(ytd_app) return false;
 	const target_element=get_html_elements(document,"ytd-app")[0];
@@ -251,7 +220,6 @@ function iterate_ytd_app() {
 	on_ytd_app(target_element);
 	return true;
 }
-
 /** @arg {HTMLElement} element */
 function on_ytd_app(element) {
 	const element_id="ytd-app";
@@ -628,12 +596,14 @@ class YtdAppElement extends HTMLElement {
 	app_is_visible;
 	/** @type {ReturnType<typeof setInterval>|undefined} */
 	ytp_click_cint;
-	pagePreparer=new PagePreparer;
+	/** @type {import("./types_tmp.js").PagePreparer} */
+	pagePreparer=cast_as({});
 	/** @arg {HTMLElement} element @return {YtdAppElement} */
 	static cast(element) {
 		return any_c(element,YtdAppElement);
 	}
-	__shady_children=new ShadyChildrenOfYtdApp;
+	/** @type {import("./support/yt_api/yt/YtdShadyChildrenOfYtdApp.js").YtdShadyChildrenOfYtdApp} */
+	__shady_children=cast_as({});
 	hasNavigated=false;
 }
 
@@ -3108,64 +3078,37 @@ const general_service_state={
 	premium_membership: null,
 };
 
-class BaseService {
-	/** @arg {any[]} x */
-	log(...x) {
-		console.log(...x);
-	}
-	/** @arg {string} key @arg {boolean} bool */
-	save_new_bool(key,bool) {
-		let kc=this.known_booleans.get(key);
-		if(!kc) {
-			kc={t: false,f: false};
-			this.known_booleans.set(key,kc);
-		}
-		if(bool) {
-			if(!kc.t) {
-				console.log(key,bool);
-			}
-			kc.t=true;
-		} else {
-			if(!kc.f) {
-				console.log(key,bool);
-			}
-			kc.f=true;
-		}
-		this.changed_known_bool.push([key,kc]);
-		this.save_known_bool();
+class BaseServicePrivate {
+	// section
+	on_new_data_known() {
+		this.save_data_cache();
 	}
 	log_skipped_strings=false;
-	/** @arg {string} key @arg {string} x */
-	save_new_string(key,x) {
-		if(x.startsWith("http://www.youtube.com/channel/UC")) {
-			if(this.log_skipped_strings) console.log("skip channel like",key,x);
-			return;
-		}
-		let cur=this.known_strings.get(key);
-		if(!cur) {
-			cur=new Set;
-			this.known_strings.set(key,cur);
-		}
-		if(cur.has(x)) return;
-		cur.add(x);
-		this.new_known_strings.push([key,x]);
-		this.save_known_string();
-		console.log(key,x);
+	#x;
+	/** @arg {string} known_data */
+	save_local_storage(known_data) {
+		localStorage.known_data=known_data;
 	}
-	/** @arg {number} x */
-	save_new_root_ve(x) {
-		if(this.known_root_ve.has(x)) return;
-		console.log("rootVe",x);
-		this.known_root_ve.add(x);
-		this.new_known_root_ve.push(x);
+	get_local_storage() {
+		return localStorage.known_data;
+	}
+	delete_known_data() {
+		localStorage.removeItem("known_data");
+	}
+	/** @arg {ResolverT} x */
+	constructor(x) {
+		this.#x=x;
+		this.load_data_cache();
 		this.save_data_cache();
+	}
+	get x() {
+		if(!this.#x.value) throw 1;
+		return this.#x.value;
 	}
 	/** @type {Set<number>} */
 	known_root_ve=new Set;
 	/** @type {number[]} */
 	new_known_root_ve=[];
-	/** @type {Map<string,Set<number>>} */
-	known_numbers=new Map;
 	/** @type {Map<string,Set<string>>} */
 	known_strings=new Map;
 	/** @type {[string,string][]} */
@@ -3174,23 +3117,8 @@ class BaseService {
 	known_booleans=new Map;
 	/** @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
-	/** @private */
-	load_data_cache() {
-		this.load_tmp_data();
-		if(!this.known_data_tmp) {
-			return;
-		}
-		let res=this.known_data_tmp;
-		if(res.known_root_ve) {
-			this.known_root_ve=new Set(res.known_root_ve);
-		}
-		if(res.known_strings) {
-			this.load_known_strings_from(res.known_strings);
-		}
-		if(res.known_bool) {
-			this.load_bool_from(res.known_bool);
-		}
-	}
+	/** @private @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: [string, string[]][]; }|null} */
+	known_data_tmp=null;
 	/** @arg {[string,string[]][]} known_strings * @private */
 	load_known_strings_from(known_strings) {
 		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
@@ -3218,16 +3146,6 @@ class BaseService {
 		let json_str=JSON.stringify(this.known_data_tmp);
 		this.save_local_storage(json_str);
 	}
-	/** @private */
-	load_tmp_data() {
-		let json_str=this.get_local_storage();
-		if(json_str) {
-			this.known_data_tmp=JSON.parse(json_str);
-		} else {
-			this.save_data_cache();
-		}
-	}
-	/** @private */
 	save_known_bool() {
 		this.load_tmp_data();
 		if(!this.known_data_tmp) {
@@ -3249,7 +3167,6 @@ class BaseService {
 		this.changed_known_bool=[];
 		this.save_tmp_data();
 	}
-	/** @private */
 	save_known_string() {
 		this.load_tmp_data();
 		if(!this.known_data_tmp) {
@@ -3280,25 +3197,84 @@ class BaseService {
 	load_bool_from(bool_cache) {
 		this.known_booleans=new Map(bool_cache);
 	}
-	/** @arg {string} known_data */
-	save_local_storage(known_data) {
-		localStorage.known_data=known_data;
+	/** @private */
+	load_tmp_data() {
+		let json_str=this.get_local_storage();
+		if(json_str) {
+			this.known_data_tmp=JSON.parse(json_str);
+		} else {
+			this.save_data_cache();
+		}
 	}
-	get_local_storage() {
-		return localStorage.known_data;
+	/** @private */
+	load_data_cache() {
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			return;
+		}
+		let res=this.known_data_tmp;
+		if(res.known_root_ve) {
+			this.known_root_ve=new Set(res.known_root_ve);
+		}
+		if(res.known_strings) {
+			this.load_known_strings_from(res.known_strings);
+		}
+		if(res.known_bool) {
+			this.load_bool_from(res.known_bool);
+		}
 	}
-	delete_known_data() {
-		localStorage.removeItem("known_data");
+}
+
+class BaseService extends BaseServicePrivate {
+	/** @arg {any[]} x */
+	log(...x) {
+		console.log(...x);
 	}
-	/** @arg {ResolverT} res */
-	constructor(res) {
-		this.#res=res;
-		this.load_data_cache();
-		this.save_data_cache();
+	/** @arg {string} key @arg {boolean} bool */
+	save_new_bool(key,bool) {
+		let kc=this.known_booleans.get(key);
+		if(!kc) {
+			kc={t: false,f: false};
+			this.known_booleans.set(key,kc);
+		}
+		if(bool) {
+			if(!kc.t) {
+				console.log(key,bool);
+			}
+			kc.t=true;
+		} else {
+			if(!kc.f) {
+				console.log(key,bool);
+			}
+			kc.f=true;
+		}
+		this.changed_known_bool.push([key,kc]);
+		this.save_known_bool();
 	}
-	get r() {
-		if(!this.#res.value) throw 1;
-		return this.#res.value;
+	/** @arg {string} key @arg {string} x */
+	save_new_string(key,x) {
+		if(x.startsWith("http://www.youtube.com/channel/UC")) {
+			if(this.log_skipped_strings) console.log("skip channel like",key,x);
+			return;
+		}
+		let cur=this.known_strings.get(key);
+		if(!cur) {
+			cur=new Set;
+			this.known_strings.set(key,cur);
+		}
+		if(cur.has(x)) return;
+		cur.add(x);
+		this.new_known_strings.push([key,x]);
+		this.save_known_string();
+		console.log(key,x);
+	}
+	/** @arg {number} x */
+	save_new_root_ve(x) {
+		if(this.known_root_ve.has(x)) return;
+		console.log("rootVe",x);
+		this.known_root_ve.add(x);
+		this.new_known_root_ve.push(x);
+		this.on_new_data_known();
 	}
 	/** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
 	iterate(...[t,u]) {
@@ -3306,9 +3282,6 @@ class BaseService {
 			u(item);
 		}
 	}
-	#res;
-	/** @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: [string, string[]][]; }|null} */
-	known_data_tmp=null;
 }
 
 class CsiService extends BaseService {
@@ -3461,7 +3434,7 @@ class GFeedbackService extends BaseService {
 					let new_expected=[];
 					this.data.e=param.value.split(",").map(e => parseInt(e,10));
 					this.data.e.forEach(e => {
-						for(let known of this.r.get("e_catcher_service").data.expected_client_values.fexp) {
+						for(let known of this.x.get("e_catcher_service").data.expected_client_values.fexp) {
 							if(known.includes(e)) return;
 						}
 						new_expected.push(e);
@@ -3515,19 +3488,19 @@ class GuidedHelpService extends BaseService {
 class TrackingServices extends BaseService {
 	/** @arg {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service */
 	on_csi_service(service) {
-		this.r.get("csi_service").on_params(service.params);
+		this.x.get("csi_service").on_params(service.params);
 	}
 	/** @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service */
 	on_e_catcher_service(service) {
-		this.r.get("e_catcher_service").on_params(service.params);
+		this.x.get("e_catcher_service").on_params(service.params);
 	}
 	/** @arg {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service */
 	on_g_feedback_service(service) {
-		this.r.get("g_feedback_service").on_params(service.params);
+		this.x.get("g_feedback_service").on_params(service.params);
 	}
 	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
-		this.r.get("guided_help_service").on_params(service.params);
+		this.x.get("guided_help_service").on_params(service.params);
 	}
 	/** @arg {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service */
 	on_google_help_service(service) {
@@ -3982,7 +3955,7 @@ class HandleTypes extends BaseService {
 		if(context.mainAppWebResponseContext.loggedOut) {
 			general_service_state.logged_in=false;
 		}
-		this.r.get("service_tracking").set_service_params(context.serviceTrackingParams);
+		this.x.get("service_tracking").set_service_params(context.serviceTrackingParams);
 	}
 	/** @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer */
 	playlistVideoListRenderer(renderer) {
@@ -4938,7 +4911,7 @@ class HandleTypes extends BaseService {
 		if(data.options) this.options(data.options);
 		if("text" in data) this.YtTextType(data.text);
 		this.YtTextType(data.title);
-		if(this.r.get_param("noisy_logging")) console.log(data);
+		if(this.x.get_param("noisy_logging")) console.log(data);
 		if(get_keys_of(renderer).length!==1) {
 			debugger;
 		}
@@ -5014,11 +4987,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} params */
 	trackingParams(params) {
-		if(this.r.get_param("log_tracking_params")) console.log("tp",params);
+		if(this.x.get_param("log_tracking_params")) console.log("tp",params);
 	}
 	/** @arg {string} params */
 	clickTrackingParams(params) {
-		if(this.r.get_param("log_click_tracking_params")) console.log("ctp",params);
+		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",params);
 	}
 	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints */
 	onResponseReceivedEndpoints(endpoints) {
@@ -5224,7 +5197,27 @@ class HandleTypes extends BaseService {
 	YtTextType_va(...arr) {
 		this.iterate(arr.filter(e=>!!e),this.YtTextType.bind(this));
 	}
+	/**
+	 * @param {import("./support/yt_api/_/b/SetSettingEndpointData.js").SetSettingEndpointData} x
+	 */
 	setSettingEndpoint(x) {
-		console.log(x);
+		const {boolValue,settingItemId,settingItemIdForClient,...y}=x;
+		if(x.boolValue!==void 0) {
+			this.primitive(x.boolValue);
+		}
+		console.log("[setting_id][%s]",x.settingItemId);
+		console.log("[setting_name][%s]",x.settingItemIdForClient);
+		this.log_empty_obj(y);
+	}
+	/** @template {{}} T @arg {T} x @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
+	keys(x){
+		return get_keys_of(x);
+	}
+	/** @param {{}} x */
+	log_empty_obj(x) {
+		let k=this.keys(x);
+		if(k.length>0) {
+			this.log("[not_empty][%s]",k.join());
+		}
 	}
 }
