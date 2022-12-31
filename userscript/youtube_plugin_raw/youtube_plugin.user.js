@@ -1233,6 +1233,7 @@ class MyReader {
 		}
 		if(length!==void 0) {
 			console.log("asked to skip from %o to",start_pos,this.pos);
+			if(start_pos===10&&this.pos===29) debugger;
 		} else {
 			console.log("asked to skip VarInt from %o to",start_pos,this.pos);
 		}
@@ -1389,7 +1390,9 @@ function decode_b64_proto_obj(str) {
 	let data=[];
 	let reader=new MyReader(buffer);
 	for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
+		let start_pos=reader.pos;
 		let cur_byte=reader.uint32();
+		console.log("uint32 consumed from %o to ",start_pos,reader.pos);
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
 		let first_num=reader.skipTypeEx(fieldId,wireType);
