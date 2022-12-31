@@ -3916,7 +3916,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
 		let {size,isDisabled,text,trackingParams,...rest_}=renderer;
-		this.text(text);
+		this.on_text(text);
 		this.trackingParams(trackingParams);
 		let rest_2=null;
 		let rest_3=null;
@@ -3952,10 +3952,6 @@ class HandleTypes extends BaseService {
 		} else {
 			this.on_empty_obj(renderer);
 		}
-	}
-	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} t */
-	text(t) {
-		this.on_text(t);
 	}
 	/** @arg {import("./support/yt_api/_/s/SimpleText.js").SimpleText} t */
 	SimpleText(t) {
