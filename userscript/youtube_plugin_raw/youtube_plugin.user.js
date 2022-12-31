@@ -338,6 +338,9 @@ async function async_plugin_init(event) {
 					if(e.tagName==="LINK"&&e instanceof HTMLLinkElement) {
 						if(e.rel==="stylesheet") return false;
 					}
+					if(e.id==="home-page-skeleton") return false;
+					// cspell:ignore skeletonhidden
+					if(e.id==="watch-page-skeleton"&&e.classList.value==="watch-skeletonhidden") return false;
 					return e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg";
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -1160,175 +1163,210 @@ class Base64Binary {
 		return binary_arr;
 	}
 }
-
-
-const base64_dec=new Base64Binary();
-
-const decode_protobuf_obj=function make() {
-	let bigint_val_32=new Uint32Array(2);
-	let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
-	class LongBits {
-		/** @arg {number} a @arg {number} b */
-		constructor(a,b) {
-			this.lo=a;
-			this.hi=b;
-		}
-		toBigInt() {
-			bigint_val_32[0]=this.lo;
-			bigint_val_32[1]=this.hi;
-			return bigint_buf[0];
-		}
+let bigint_val_32=new Uint32Array(2);
+let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
+class LongBits {
+	/** @arg {number} a @arg {number} b */
+	constructor(a,b) {
+		this.lo=a;
+		this.hi=b;
 	}
-	/** @arg {Uint8Array} buf @arg {number} end */
-	function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
-		return (buf[end-4]
-			|buf[end-3]<<8
-			|buf[end-2]<<16
-			|buf[end-1]<<24)>>>0;
+	toBigInt() {
+		bigint_val_32[0]=this.lo;
+		bigint_val_32[1]=this.hi;
+		return bigint_buf[0];
 	}
-	/**
-	 * @param {MyReader} reader
-	 * @param {number | undefined} [writeLength]
-	 */
-	function indexOutOfRange(reader,writeLength) {
-		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
+}
+/** @arg {Uint8Array} buf @arg {number} end */
+function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
+	return (buf[end-4]
+		|buf[end-3]<<8
+		|buf[end-2]<<16
+		|buf[end-1]<<24)>>>0;
+}
+/**
+ * @param {MyReader} reader
+ * @param {number | undefined} [writeLength]
+ */
+function indexOutOfRange(reader,writeLength) {
+	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
+}
+class MyReader {
+	/** @arg {Uint8Array} buf  */
+	constructor(buf) {
+		this.buf=buf;
+		this.pos=0;
+		this.len=buf.length;
+		this.last_pos=0;
+		/** @type {(number|bigint)[]} */
+		this.first_num=[];
 	}
-	class MyReader {
-		/** @arg {Uint8Array} buf  */
-		constructor(buf) {
-			this.buf=buf;
-			this.pos=0;
-			this.len=buf.length;
-			this.last_pos=0;
-		}
 
-		/** @template T @arg {()=>T} x */
-		revert(x) {
-			let prev_pos=this.pos;
-			this.pos=this.last_pos;
-			let ret=x();
-			this.pos=prev_pos;
-			return ret;
-		}
-		/** @template T @arg {number} pos @arg {()=>T} x */
-		revert_to(pos,x) {
-			let prev_pos=this.pos;
-			this.pos=pos;
-			let ret=x();
-			this.pos=prev_pos;
-			return ret;
-		}
-		/** @arg {number} [length] */
-		skip(length) {
-			if(typeof length==="number") {
+	/** @template T @arg {()=>T} x */
+	revert(x) {
+		let prev_pos=this.pos;
+		this.pos=this.last_pos;
+		let ret=x();
+		this.pos=prev_pos;
+		return ret;
+	}
+	/** @template T @arg {number} pos @arg {()=>T} x */
+	revert_to(pos,x) {
+		let prev_pos=this.pos;
+		this.pos=pos;
+		let ret=x();
+		this.pos=prev_pos;
+		return ret;
+	}
+	/** @arg {number} [length] */
+	skip(length) {
+		if(typeof length==="number") {
+			/* istanbul ignore if */
+			if(this.pos+length>this.len)
+				throw indexOutOfRange(this,length);
+			this.pos+=length;
+		} else {
+			do {
 				/* istanbul ignore if */
-				if(this.pos+length>this.len)
-					throw indexOutOfRange(this,length);
-				this.pos+=length;
-			} else {
-				do {
-					/* istanbul ignore if */
-					if(this.pos>=this.len)
-						throw indexOutOfRange(this);
-				} while(this.buf[this.pos++]&128);
-			}
+				if(this.pos>=this.len)
+					throw indexOutOfRange(this);
+			} while(this.buf[this.pos++]&128);
 		}
-		uint32() {
-			let value=0;
-			this.last_pos=this.pos;
-			value=(this.buf[this.pos]&127)>>>0;
-			if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<7)>>>0;
-			if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<14)>>>0;
-			if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<21)>>>0;
-			if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&15)<<28)>>>0;
-			if(this.buf[this.pos++]<128) return value;
-			if((this.pos+=5)>this.len) {
-				this.pos=this.len;
-				throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
-			}
-			return value;
-		};
-		uint64() {
-			this.last_pos=this.pos;
-			return this.readLongVarint().toBigInt();
+	}
+	uint32() {
+		let value=0;
+		this.last_pos=this.pos;
+		value=(this.buf[this.pos]&127)>>>0;
+		if(this.buf[this.pos++]<128) return value;
+		value=(value|(this.buf[this.pos]&127)<<7)>>>0;
+		if(this.buf[this.pos++]<128) return value;
+		value=(value|(this.buf[this.pos]&127)<<14)>>>0;
+		if(this.buf[this.pos++]<128) return value;
+		value=(value|(this.buf[this.pos]&127)<<21)>>>0;
+		if(this.buf[this.pos++]<128) return value;
+		value=(value|(this.buf[this.pos]&15)<<28)>>>0;
+		if(this.buf[this.pos++]<128) return value;
+		if((this.pos+=5)>this.len) {
+			this.pos=this.len;
+			throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
 		}
-		readLongVarint() {
-			// tends to deopt with local vars for octet etc.
-			var bits=new LongBits(0,0);
-			var i=0;
-			if(this.len-this.pos>4) { // fast route (lo)
-				for(;i<4;++i) {
-					// 1st..4th
-					bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
-					if(this.buf[this.pos++]<128)
-						return bits;
-				}
-				// 5th
-				bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
-				bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+		return value;
+	};
+	uint64() {
+		this.last_pos=this.pos;
+		return this.readLongVarint().toBigInt();
+	}
+	readLongVarint() {
+		// tends to deopt with local vars for octet etc.
+		var bits=new LongBits(0,0);
+		var i=0;
+		if(this.len-this.pos>4) { // fast route (lo)
+			for(;i<4;++i) {
+				// 1st..4th
+				bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
 				if(this.buf[this.pos++]<128)
 					return bits;
-				i=0;
-			} else {
-				for(;i<3;++i) {
-					/* istanbul ignore if */
-					if(this.pos>=this.len) throw new Error("indexOutOfRange");
-					// 1st..3th
-					bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
-					if(this.buf[this.pos++]<128)
-						return bits;
-				}
-				// 4th
-				bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+			}
+			// 5th
+			bits.lo=(bits.lo|(this.buf[this.pos]&127)<<28)>>>0;
+			bits.hi=(bits.hi|(this.buf[this.pos]&127)>>4)>>>0;
+			if(this.buf[this.pos++]<128)
 				return bits;
+			i=0;
+		} else {
+			for(;i<3;++i) {
+				/* istanbul ignore if */
+				if(this.pos>=this.len) throw new Error("indexOutOfRange");
+				// 1st..3th
+				bits.lo=(bits.lo|(this.buf[this.pos]&127)<<i*7)>>>0;
+				if(this.buf[this.pos++]<128)
+					return bits;
 			}
-			if(this.len-this.pos>4) { // fast route (hi)
-				for(;i<5;++i) {
-					// 6th..10th
-					bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
-					if(this.buf[this.pos++]<128)
-						return bits;
-				}
-			} else {
-				for(;i<5;++i) {
-					/* istanbul ignore if */
-					if(this.pos>=this.len)
-						throw new Error("indexOutOfRange");
-					// 6th..10th
-					bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
-					if(this.buf[this.pos++]<128)
-						return bits;
-				}
+			// 4th
+			bits.lo=(bits.lo|(this.buf[this.pos++]&127)<<i*7)>>>0;
+			return bits;
+		}
+		if(this.len-this.pos>4) { // fast route (hi)
+			for(;i<5;++i) {
+				// 6th..10th
+				bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+				if(this.buf[this.pos++]<128)
+					return bits;
 			}
-			/* istanbul ignore next */
-			throw Error("invalid varint encoding");
+		} else {
+			for(;i<5;++i) {
+				/* istanbul ignore if */
+				if(this.pos>=this.len)
+					throw new Error("indexOutOfRange");
+				// 6th..10th
+				bits.hi=(bits.hi|(this.buf[this.pos]&127)<<i*7+3)>>>0;
+				if(this.buf[this.pos++]<128)
+					return bits;
+			}
 		}
-		/** @arg {number} writeLength */
-		indexOutOfRange(writeLength) {
-			return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
-		}
-		fixed32() {
-			/* istanbul ignore if */
-			if(this.pos+4>this.len)
-				throw this.indexOutOfRange(4);
+		/* istanbul ignore next */
+		throw Error("invalid varint encoding");
+	}
+	/** @arg {number} writeLength */
+	indexOutOfRange(writeLength) {
+		return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
+	}
+	fixed32() {
+		/* istanbul ignore if */
+		if(this.pos+4>this.len)
+			throw this.indexOutOfRange(4);
 
-			return readFixed32_end(this.buf,this.pos+=4);
-		}
-		/** @returns {[number,number]} */
-		read_field_description() {
-			let cur_byte=this.uint32();
-			return [cur_byte&7,cur_byte>>>3];
+		return readFixed32_end(this.buf,this.pos+=4);
+	}
+	/** @returns {[number,number]} */
+	read_field_description() {
+		let cur_byte=this.uint32();
+		return [cur_byte&7,cur_byte>>>3];
+	}
+	/** @arg {number} fieldId @arg {number} wireType */
+	skipEx(fieldId,wireType) {
+		console.log("read loop pos=%o",this.pos);
+		let pos_start=this.pos;
+		switch(wireType) {
+			case 0:
+				let [num64,new_pos]=this.revert_to(pos_start,() => {
+					try {
+						let u64=this.uint64();
+						return [u64,this.pos];
+					} catch {}
+					return [this.uint32(),this.pos];
+				});
+				let num32=this.uint32();
+				if(num64!==BigInt(num32)) {
+					this.first_num.push(num64);
+					this.pos=new_pos;
+				} else {
+					this.first_num.push(num32);
+				}
+				console.log("\"field %o: VarInt\": %o",fieldId,this.first_num[0]);
+				break;
+			case 1:
+				this.skip(8);
+				break;
+			case 2: {
+				let size=this.uint32();
+				this.buf.subarray(this.pos,this.pos+size);
+				try {
+					this.skip(size);
+				} catch {
+					console.log("skip failed at",fieldId);
+					return;
+				}
+			} break;
+			case 3: break;
+			case 4: throw new Error("Invalid state");
+			case 5: this.first_num.push(this.fixed32()); break;
+			default: return;
 		}
 	}
-	return new class ProtobufDecoder {
-		MyReader=MyReader;
-	};
-}();
+}
 
+const base64_dec=new Base64Binary();
 
 /** @arg {string} str */
 function decode_b64_proto_obj(str) {
@@ -1336,53 +1374,13 @@ function decode_b64_proto_obj(str) {
 	let loop_count=0;
 	/** @type {[number,number,(number|bigint)[]][]} */
 	let data=[];
-	let reader=new decode_protobuf_obj.MyReader(buffer);
-	x: for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
+	let reader=new MyReader(buffer);
+	for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
 		let cur_byte=reader.uint32();
-		console.log("read loop pos=%o",reader.pos);
-		let pos_start=reader.pos;
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
-		/** @type {(number|bigint)[]} */
-		let first_num=[];
-		console.log("field",fieldId,"type",wireType);
-		switch(wireType) {
-			case 0:
-				let [num64,new_pos]=reader.revert_to(pos_start,() => {
-					try {
-						let u64=reader.uint64();
-						return [u64,reader.pos];
-					} catch {}
-					return [reader.uint32(),reader.pos];
-				});
-				let num32=reader.uint32();
-				if(num64!==BigInt(num32)) {
-					first_num.push(num64);
-					reader.pos=new_pos;
-				} else {
-					first_num.push(num32);
-				}
-				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
-				break;
-			case 1:
-				reader.skip(8);
-				break;
-			case 2: {
-				let size=reader.uint32();
-				reader.buf.subarray(reader.pos,reader.pos+size);
-				try {
-					reader.skip(size);
-				} catch {
-					console.log("skip failed at",fieldId);
-					break x;
-				}
-			} break;
-			case 3: break;
-			case 4: throw new Error("Invalid state");
-			case 5: first_num.push(reader.fixed32()); break;
-			default: break x;
-		}
-		data.push([fieldId,wireType,first_num]);
+		reader.skipEx(fieldId,wireType);
+		data.push([fieldId,wireType,reader.first_num]);
 	}
 	let [first,...rest]=data;
 	let [fieldId,wireType,as_num]=first;
