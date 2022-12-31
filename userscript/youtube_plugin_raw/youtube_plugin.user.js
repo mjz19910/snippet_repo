@@ -3811,7 +3811,7 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
-	on_text(text) {
+	YtTextType(text) {
 		if(!text) {
 			debugger;
 			return;
@@ -3880,18 +3880,18 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		let {headerText,...x}=data;
-		this.on_text(headerText);
+		this.YtTextType(headerText);
 		/** @type {typeof x|{}} */
 		let y=x;
 		if("bodyText" in y) {
 			let {bodyText,pageTitle,...z}=y;
-			this.on_text(bodyText);
-			this.on_text(pageTitle);
+			this.YtTextType(bodyText);
+			this.YtTextType(pageTitle);
 			y=z;
 		}
 		if("pageTitle" in y) {
 			let {pageTitle,...z}=y;
-			this.on_text(pageTitle);
+			this.YtTextType(pageTitle);
 			y=z;
 		}
 		if("headerIcon" in y) {
@@ -4136,7 +4136,7 @@ class HandleTypes extends BaseService {
 		let rest_3=null;
 		if("serviceEndpoint" in rest_) {
 			let {serviceEndpoint,text,...rest}=rest_;
-			this.on_text(text);
+			this.YtTextType(text);
 			this.serviceEndpoint(rest_.serviceEndpoint);
 			rest_2=rest;
 		} else if("navigationEndpoint" in rest_) {
@@ -4160,20 +4160,27 @@ class HandleTypes extends BaseService {
 		} else if(rest_3&&rest_3.style==="STYLE_DEFAULT") {
 			let {style,icon,tooltip,...rest}=rest_3;
 			this.Icon(icon);
-			this.primitive(tooltip,"string");
+			this.primitive(tooltip);
 			this.empty_object(rest);
 		} else if(rest_3) {
 			let {style,text,command,...rest}=rest_3;
-			this.on_text(text);
+			this.YtTextType(text);
 			this.GeneralCommand(command);
 			this.empty_object(rest);
 		} else {
 			this.empty_object(renderer);
 		}
 	}
-	/** @arg {number|string|bigint|boolean} value @arg {"string"|"number"|"bigint"|"boolean"} expected_type */
-	primitive(value,expected_type) {
-		if(typeof value!==expected_type) debugger;
+	/** @arg {number|string|bigint|boolean} value */
+	primitive(value) {
+		switch(typeof value) {
+			case "bigint":
+			case "boolean":
+			case "number":
+			case "string": {
+			} break;
+			default: debugger;
+		}
 	}
 	/** @arg {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep */
 	navigationEndpoint(ep) {
@@ -4406,14 +4413,14 @@ class HandleTypes extends BaseService {
 	BrowsePageResponse(data) {
 		let ok=cast_as(filter_out_keys(get_keys_of(data),split_string("page,endpoint,response,url,expirationTime,graftedVes")));
 		if("expirationTime" in data) {
-			this.primitive(data.expirationTime,"number");
+			this.primitive(data.expirationTime);
 		}
 		if("graftedVes" in data) {
 			this.graftedVes(data.graftedVes);
 		}
 		if("previousCsn" in data) {
 			console.log("[BrowsePage_csn]",data.previousCsn);
-			this.primitive(data.previousCsn,"string");
+			this.primitive(data.previousCsn);
 		}
 		if(!("page" in data)) return;
 		this.BrowseResponseContent(data.response);
@@ -4726,8 +4733,8 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if(data.options) this.options(data.options);
-		if("text" in data) this.on_text(data.text);
-		this.on_text(data.title);
+		if("text" in data) this.YtTextType(data.text);
+		this.YtTextType(data.title);
 		if(this.r.get_param("noisy_logging")) console.log(data);
 		if(get_keys_of(renderer).length!==1) {
 			debugger;
@@ -4821,7 +4828,55 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
 	SettingsOptionItemType(item) {
-		console.log(item.channelOptionsRenderer);
-		debugger;
+		this.ChannelOptionsRendererData(item.channelOptionsRenderer);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data
+	 */
+	ChannelOptionsRendererData(data) {
+		let {avatar,avatarAccessibility,avatarEndpoint,links,name,...rest}=data;
+		this.ThumbnailsList(avatar);
+		this.Accessibility(avatarAccessibility);
+		this.UrlEndpoint(avatarEndpoint);
+		this.iterate(links,link => this.YtTextType(link));
+		this.primitive(name);
+		this.empty_object(rest);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} v
+	 */
+	ThumbnailsList(v) {
+		this. iterate(v.thumbnails,v=>this.Thumbnail(v))
+	}
+	/**
+	 * @param {import("./support/yt_api/_/u/UrlEndpoint.js").UrlEndpoint} v
+	 */
+	UrlEndpoint(v) {
+		let {clickTrackingParams,commandMetadata,urlEndpoint,...x}=v;
+		this.clickTrackingParams(v.clickTrackingParams);
+		this.commandMetadata(commandMetadata);
+		this.UrlEndpointData(urlEndpoint);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v
+	 */
+	Thumbnail(v) {
+		let {height,url,width,...rest}=v;
+		this.primitive(height);
+		this.primitive(url);
+		this.primitive(width);
+		this.empty_object(rest);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/u/UrlEndpointData.js").UrlEndpointData} v
+	 */
+	UrlEndpointData(v) {
+		let {target,url,...rest}=v;
+		switch(target) {
+			case "TARGET_NEW_WINDOW": break;
+			default: debugger;
+		}
+		this.primitive(url);
+		this.empty_object(rest);
 	}
 }

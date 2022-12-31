@@ -1,14 +1,5 @@
-import {Accessibility} from "../a/Accessibility.js";
-import {YtTextType} from "../s/YtTextType.js";
-import {ThumbnailsList} from "../t/ThumbnailsList.js";
-import {UrlEndpoint} from "../u/UrlEndpoint.js";
+import {ChannelOptionsRendererData} from "./ChannelOptionsRendererData";
 
 export type ChannelOptionsRenderer={
-	channelOptionsRenderer: {
-		avatar: ThumbnailsList;
-		avatarEndpoint: UrlEndpoint;
-		name: string;
-		links: YtTextType[];
-		avatarAccessibility: Accessibility;
-	};
+	channelOptionsRenderer: ChannelOptionsRendererData;
 };
