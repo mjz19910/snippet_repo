@@ -4150,6 +4150,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
+		if(!("style" in renderer)) {
+			return;
+		}
 		switch(renderer.style) {
 			case "STYLE_DEFAULT": this.DefaultButtonRenderer(renderer); break;
 			case "STYLE_SUGGESTIVE": this.SuggestiveButtonRenderer(renderer); break;

@@ -5,7 +5,7 @@ import {YtTextType} from "../s/YtTextType.js";
 import {YtEndpoint} from "./YtEndpoint.js";
 
 type Default_0={
-	style?: "STYLE_DEFAULT";
+	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
@@ -14,7 +14,7 @@ type Default_0={
 };
 
 type Suggestive_0={
-	style?: "STYLE_SUGGESTIVE";
+	style: "STYLE_SUGGESTIVE";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
@@ -64,7 +64,6 @@ type Default_2={
 };
 
 export type NoStyleButtonTypes_={
-	style?: undefined;
 	trackingParams: string;
 	command: YtEndpoint;
 };
