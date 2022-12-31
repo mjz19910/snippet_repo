@@ -1323,8 +1323,8 @@ class MyReader {
 		return [cur_byte&7,cur_byte>>>3];
 	}
 	/** @arg {number} fieldId @arg {number} wireType */
-	skipEx(fieldId,wireType) {
-		console.log("read loop pos=%o",this.pos);
+	skipTypeEx(fieldId,wireType) {
+		console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
 		/** @type {(number|bigint)[]} */
 		let first_num=[];
@@ -1387,7 +1387,7 @@ function decode_b64_proto_obj(str) {
 		let cur_byte=reader.uint32();
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
-		let first_num=reader.skipEx(fieldId,wireType);
+		let first_num=reader.skipTypeEx(fieldId,wireType);
 		if(reader.failed) {
 			break;
 		}
