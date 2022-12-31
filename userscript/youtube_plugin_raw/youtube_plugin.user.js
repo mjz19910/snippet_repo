@@ -4149,8 +4149,8 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {number|string|bigint} value
-	 * @param {"string"} expected_type
+	 * @param {number|string|bigint|boolean} value
+	 * @param {"string"|"number"|"bigint"|"boolean"} expected_type
 	 */
 	primitive(value,expected_type) {
 		if(typeof value!==expected_type) debugger;
@@ -4391,7 +4391,7 @@ class HandleTypes extends BaseService {
 			case "graftedVes": break;
 		}
 		if("expirationTime" in data) {
-
+			this.primitive(data.expirationTime,"number");
 		}
 		if("graftedVes" in data) {
 			this.graftedVes(data.graftedVes);
