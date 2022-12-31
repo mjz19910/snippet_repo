@@ -4171,10 +4171,7 @@ class HandleTypes extends BaseService {
 			this.empty_object(renderer);
 		}
 	}
-	/**
-	 * @param {number|string|bigint|boolean} value
-	 * @param {"string"|"number"|"bigint"|"boolean"} expected_type
-	 */
+	/** @arg {number|string|bigint|boolean} value @arg {"string"|"number"|"bigint"|"boolean"} expected_type */
 	primitive(value,expected_type) {
 		if(typeof value!==expected_type) debugger;
 	}
