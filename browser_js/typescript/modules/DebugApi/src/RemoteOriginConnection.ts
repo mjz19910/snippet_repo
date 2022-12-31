@@ -1,4 +1,3 @@
-import {OriginState} from "./OriginState";
 import {elevate_event_handler} from "./elevate_event_handler";
 import {RemoteHandler} from "./RemoteHandler";
 import {RemoteSocket} from "./RemoteSocket";
@@ -7,7 +6,6 @@ import {ReportInfo} from "./ReportInfo";
 import {LocalHandler} from "./LocalHandler";
 import {ConnectionFlags} from "./ConnectionFlags";
 import {cast_to_object, cast_to_record_with_key_and_string_type, cast_to_record_with_string_type} from "./cast_to_object";
-import {inject_api} from "../types/inject_api";
 
 // @sha1		ce87fbfd
 // @hash_for_version typescript_DebugApi.1.0.0
@@ -20,7 +18,6 @@ export class RemoteOriginConnection {
 	m_transport_map: Map<LocalHandler,{port: MessagePort;}>=new Map;
 	max_elevate_id=0;
 	event_transport_map: WeakMap<MessageEventSource|Window,Window>=new WeakMap;
-	state=OriginState;
 	elevated_array: ({}|null)[]=[];
 	request_new_port(obj: LocalHandler) {
 		this.request_connection(obj);
@@ -32,26 +29,6 @@ export class RemoteOriginConnection {
 	m_local_handler: LocalHandler;
 	constructor() {
 		this.m_local_handler=new LocalHandler(this,30000);
-		let s=this.state;
-		s.is_top=this.state.window===this.state.top;
-		s.is_root=this.state.opener===null;
-		if(!s.is_top)
-			s.is_root=false;
-		if(s.is_top&&s.opener===null) {
-			this.start_root_server();
-			return;
-		}
-		if(s.is_top&&s.opener!==null) {
-			if(s.opener.top!==s.opener&&s.opener.top!==null) {
-				this.init_with_next_parent(s.opener.top);
-				return;
-			}
-			this.init_with_opener(s.opener);
-			return;
-		}
-		if(!this.state.top)
-			throw new Error("Invalid state, not top and window.top is null");
-		this.init_with_next_parent(this.state.top);
 	}
 	last_misbehaved_client_event?: MessageEvent<unknown>|undefined;
 	init_with_next_parent(cur_window: Window) {
@@ -96,16 +73,10 @@ export class RemoteOriginConnection {
 		local_handler.connect(channel.port2,this.get_next_elevation_id());
 		return true;
 	}
-	/**
-	 * @param {number} elevated_id
-	 */
 	clear_elevation_by_id(elevated_id: number) {
 		this.elevated_array[elevated_id]=null;
 	}
 	max_elevated_id=0;
-	/**
-	 * @param {any} object
-	 */
 	elevate_object(object: any) {
 		let elevated_id=this.max_elevated_id++;
 		this.elevated_array[elevated_id]=object;
@@ -267,10 +238,5 @@ export class RemoteOriginConnection {
 		window.addEventListener("unload",function() {
 			t.connections.length=0;
 		});
-	}
-	static connect_to_api() {
-		inject_api.RemoteOriginConnection=this;
-		let remote_origin=new this;
-		inject_api.remote_origin=remote_origin;
 	}
 }
