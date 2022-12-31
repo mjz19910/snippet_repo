@@ -3219,7 +3219,7 @@ class CsiService extends BaseService {
 	/** @type {`${string}_rid`[]} */
 	rid_keys=[
 		"GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid",
-		"GetAccountPrivacy_rid",
+		"GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid",
 		"GetAttestationChallenge_rid",
 		"GetHome_rid",
 		"GetPlayer_rid","GetPlaylist_rid",
@@ -3632,8 +3632,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
 	on_text(text) {
+		let rest=run_extract_empty(text);
+		if(rest instanceof Array) for (let i of rest) {
+			if(Object.keys(i).length>0) console.log(i);
+		}
+		return;
 		/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
-		function run_extract_empty(run) {
+		function run_extract_empty_r(run) {
 			if("navigationEndpoint" in run) {
 				let {text,navigationEndpoint,...rest}=run;
 				return rest;
@@ -3643,28 +3648,24 @@ class HandleTypes extends BaseService {
 			}
 		}
 		/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
-		function run_extract_empty_r(text) {
+		function run_extract_empty(text) {
 			let rest=[];
 			if("runs" in text) {
-				for(let run of text.runs) rest.push(run_extract_empty(run));
+				for(let run of text.runs) rest.push(run_extract_empty_r(run));
 			} else {
-				rest.push(run_extract_empty(text));
+				rest.push(run_extract_empty_s(text));
 			}
 			return rest;
 
 		}
 		/** @arg {import("./support/yt_api/_/s/SimpleText.js").SimpleText} simple_text */
-		function run_extract_empty(simple_text) {
+		function run_extract_empty_s(simple_text) {
 			if("accessibility" in simple_text) {
 				let {simpleText,accessibility,...rest}=simple_text;
 				return rest;
 			}
 			let {simpleText,...rest}=simple_text;
 			return rest;
-		}
-		let rest=run_extract_empty_r(text);
-		if(rest instanceof Array) for (let i of rest) {
-			if(Object.keys(i).length>0) console.log(rest);
 		}
 	}
 	/** @template T @typedef {import("./support/yt_api/_/i/Icon.js").Icon<T>} Icon  */
