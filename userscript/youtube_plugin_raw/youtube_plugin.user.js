@@ -5055,6 +5055,8 @@ class HandleTypes extends BaseService {
 		}
 		if(cur.has(x)) return;
 		cur.add(x);
+		this.new_known_strings.push(["apiUrl",x]);
+		this.save_known_string();
 		console.log("apiUrl",x);
 	}
 	/** @arg {string} x */
@@ -5092,6 +5094,8 @@ class HandleTypes extends BaseService {
 		let res_3=new Map(res_2);
 		this.known_strings=res_3;
 	}
+	/** @type {{ known_root_ve: number[]; known_strings: { [k: string]: string[]; }; }|null} */
+	known_data_tmp=null;
 	save_root_ve() {
 		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
 		function to_entry_pair(x) {
@@ -5100,18 +5104,34 @@ class HandleTypes extends BaseService {
 		let known_root_ve=[...this.known_root_ve.values()];
 		let known_strings=Object.fromEntries([...this.known_strings.entries()].
 			map(to_entry_pair));
-		localStorage.known_root_ve=JSON.stringify({
+		this.known_data_tmp={
 			known_root_ve,
 			known_strings,
-		});
+		};
+		let json_str=JSON.stringify(this.known_data_tmp);
+		this.save_local_storage(json_str);
 	}
 	save_known_string() {
-		let json_str=localStorage.known_root_ve;
+		let json_str=this.get_local_storage();
 		if(json_str) {
-			let res=JSON.parse(json_str);
+			this.known_data_tmp=JSON.parse(json_str);
+			if(!this.known_data_tmp) {
+				this.delete_known_data();
+				throw new Error("Invalid data");
+			}
+			this.known_data_tmp.known_strings;
 		} else {
 
 		}
-		
+	}
+	/** @param {string} known_data */
+	save_local_storage(known_data) {
+		localStorage.known_data=known_data;
+	}
+	get_local_storage() {
+		return localStorage.known_data;
+	}
+	delete_known_data() {
+		localStorage.removeItem("known_data");
 	}
 }
