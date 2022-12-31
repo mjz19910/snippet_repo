@@ -1388,10 +1388,10 @@ function decode_b64_proto_obj(str) {
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
 		let first_num=reader.skipTypeEx(fieldId,wireType);
+		data.push([fieldId,wireType,first_num]);
 		if(reader.failed) {
 			break;
 		}
-		data.push([fieldId,wireType,first_num]);
 	}
 	let [first,...rest]=data;
 	let [fieldId,wireType,as_num]=first;
