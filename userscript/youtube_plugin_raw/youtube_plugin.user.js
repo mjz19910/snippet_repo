@@ -4248,10 +4248,10 @@ class HandleTypes extends BaseService {
 			this.openPopupAction(rest.openPopupAction);
 		} else if("signalAction" in action) {
 			this.signalAction(action.signalAction);
-			console.log(action.signalAction);
 		} else {
 			let k=get_keys_of(rest);
 			console.log(k,rest);
+			debugger;
 		}
 	}
 	/**
