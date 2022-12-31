@@ -146,8 +146,6 @@ export class MyReader extends protobufjs.Reader {
 		}
 	}
 	override skipType(wireType: number) {
-		let skip_type_saved_pos=this.pos;
-		skip_type_saved_pos;
 		my_console.pad_log("[skip] pos=%o",this.pos);
 		let prev_pos=this.revert(() => this.pos);
 		this.pos=prev_pos;

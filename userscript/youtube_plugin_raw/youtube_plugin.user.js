@@ -1157,7 +1157,6 @@ class MyReader {
 		let log_slow=true;
 		let reader=this;
 		for(;reader.pos<target_len;loop_count++) {
-			let start_pos=reader.pos;
 			let cur_byte=reader.uint32();
 			let wireType=cur_byte&7;
 			let fieldId=cur_byte>>>3;
@@ -1219,20 +1218,22 @@ class MyReader {
 			} while(this.buf[this.pos++]&128);
 		}
 		if(length!==void 0) {
-			if(this.noisy_log_level) console.log("asked to skip from %o to",start_pos,this.pos);
+			if(this.noisy_log_level) console.log("asked to skip %o bytes",this.pos-start_pos);
 		} else {
-			if(this.noisy_log_level) console.log("asked to skip VarInt from %o to",start_pos,this.pos);
+			if(this.noisy_log_level) console.log("asked to skip %o bytes of VarInt",this.pos-start_pos);
 		}
 	}
 	uint32() {
-		let start_pos=this.pos;
+		this.last_pos=this.pos;
 		let ret=this.do_uint32_read();
-		if(this.noisy_log_level) console.log("at %o uint32 consumed %o bytes",this.last_pos,this.pos-start_pos);
+		let diff=this.pos-this.last_pos;
+		if(diff!==1) {
+			if(this.noisy_log_level) console.log("at %o uint32 consumed %o bytes",this.last_pos,diff);
+		}
 		return ret;
 	};
 	do_uint32_read() {
 		let value=0;
-		this.last_pos=this.pos;
 		value=(this.buf[this.pos]&127)>>>0;
 		if(this.buf[this.pos++]<128) return value;
 		value=(value|(this.buf[this.pos]&127)<<7)>>>0;
@@ -1323,7 +1324,7 @@ class MyReader {
 	/** @typedef {import("./types_tmp.js").DecTypeNum} DecTypeNum */
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
-		if(this.noisy_log_level) console.log("[skip] pos=%o",this.last_pos,this.pos);
+		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
 		/** @type {DecTypeNum[]} */
 		let first_num=[];
