@@ -70,11 +70,6 @@ function debug_l_delim_message({reader,unk_type,field_id,size}: DebugDelimType) 
 
 let my_console=new MyConsole;
 
-type SkipTypeExArgs={
-	fieldId: number;
-	wireType: number;
-};
-
 export class MyReader extends protobufjs.Reader {
 	static override create(buffer: Uint8Array) {
 		return new MyReader(buffer);
@@ -102,7 +97,7 @@ export class MyReader extends protobufjs.Reader {
 		my_console.pad_log("fieldId=%o type=%o",info>>>3,info&7);
 		return super.skipType(wireType);
 	}
-	skipTypeEx({fieldId,wireType}: SkipTypeExArgs) {
+	skipTypeEx(fieldId: number,wireType: number) {
 		let console=my_console;
 		let prev_pad;
 		switch(wireType) {
@@ -124,7 +119,7 @@ export class MyReader extends protobufjs.Reader {
 				console.pad_log("oneof: {",wireType);
 				pad+=pad_with;
 				while((wireType=this.uint32()&7)!==4) {
-					this.skipTypeEx({fieldId,wireType});
+					this.skipTypeEx(fieldId,wireType);
 				}
 				pad=prev_pad;
 				console.pad_log("}");
