@@ -382,11 +382,7 @@ async function async_plugin_init(event) {
 				if(ytd_watch_flexy) break x;
 				if(!ytd_page_manager) break x;
 				if(!ytd_page_manager.getCurrentPage()) break x;
-				/**
-				 * @template T
-				 * @param {T | undefined} x
-				 * @param {(e:T)=>void} w
-				 */
+				/** @template T @arg {T|undefined} x @arg {(e:T)=>void} w */
 				function using(x,w) {
 					if(x) {
 						w(x);
@@ -621,16 +617,16 @@ class VolumeRange {
 }
 
 class YtdAppElement extends HTMLElement {
-	/**@type {HTMLStyleElement|undefined}*/
+	/** @type {HTMLStyleElement|undefined} */
 	ui_plugin_style_element;
-	/**@type {VolumeRange|undefined}*/
+	/** @type {VolumeRange|undefined} */
 	volume_range;
-	/**@type {boolean|undefined} */
+	/** @type {boolean|undefined} */
 	app_is_visible;
-	/**@type {ReturnType<typeof setInterval>|undefined} */
+	/** @type {ReturnType<typeof setInterval>|undefined} */
 	ytp_click_cint;
 	pagePreparer=new PagePreparer;
-	/**@arg {HTMLElement} element @return {YtdAppElement} */
+	/** @arg {HTMLElement} element @return {YtdAppElement} */
 	static cast(element) {
 		return any_c(element,YtdAppElement);
 	}
@@ -638,7 +634,7 @@ class YtdAppElement extends HTMLElement {
 	hasNavigated=false;
 }
 
-/**@arg {string|URL} url */
+/** @arg {string|URL} url */
 function to_url(url) {
 	if(url instanceof URL) {
 		return url;
@@ -718,7 +714,7 @@ function override_prop(object,property,property_handler) {
 		}
 	});
 }
-override_prop(window,"getInitialCommand",new PropertyHandler((/**@type {[any,any,any]} */args) => Reflect.apply(...args)));
+override_prop(window,"getInitialCommand",new PropertyHandler((/** @type {[any,any,any]} */args) => Reflect.apply(...args)));
 class ObjectInfo {
 	constructor() {
 		let [gr_0,gr_1,gr_2]="{{:,:}}".split(":");
@@ -727,12 +723,7 @@ class ObjectInfo {
 		this.chunk_end=gr_2;
 		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
-	/**
-	 * @template U
-	 * @template {U[]} T
-	 * @param {T} a
-	 * @param {(value: U) => boolean} b
-	 */
+	/** @template U @template {U[]} T  @arg {T} a @arg {(value: U) => boolean} b */
 	do_filter(a,b) {
 		/** @type {U[]} */
 		let r=[];
@@ -745,13 +736,7 @@ class ObjectInfo {
 		}
 		return res;
 	}
-	/**
-	 * @template U
-	 * @template {U[]} T
-	 * @param {T} a
-	 * @param {(value: U) => boolean} [b]
-	 * @returns {T|[]}
-	 */
+	/** @template U @template {U[]} T @arg {T} a @arg {(value: U) => boolean} [b] @returns {T|[]} */
 	filter_keys_of(a,b) {
 		if(b) return this.do_filter(a,b);
 		return a;
@@ -938,7 +923,7 @@ function check_item_keys(real_path,path,keys) {
 		case "richItemRenderer": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_2_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "content": break;
-			case /*grep-skip*/"trackingParams": break;
+			case "trackingParams": break;
 		} break;
 		case "richGridRenderer.contents[]": mode="items"; break;
 		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
@@ -950,7 +935,7 @@ function check_item_keys(real_path,path,keys) {
 		case "richGridRenderer": for(let key of keys) switch(key) {
 			default: console.log("item_keys_tag [ci_3_4_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 			case "contents": break;
-			case /*grep-skip*/"trackingParams": break;
+			case "trackingParams": break;
 			case "header": break;
 			case "targetId": break;
 			case "reflowOptions": break;
@@ -964,7 +949,7 @@ function check_item_keys(real_path,path,keys) {
 			case "header": break;
 			case "sectionIdentifier": break;
 			case "targetId": break;
-			case /*grep-skip*/"trackingParams": break;
+			case "trackingParams": break;
 		} break;
 		case "reloadContinuationItemsCommand.continuationItems[]": mode="items"; break;
 		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
@@ -1062,7 +1047,7 @@ class HandleRendererContentItemArray {
 	/** @typedef  {ReloadContinuationItemsCommandData['continuationItems']} T2 */
 	/** @template {T1|T2} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
 	replace_array(base,path,arr) {
-		return cast_as(arr.filter((/**@type {typeof arr[number]}*/content_item) => {
+		return cast_as(arr.filter((/** @type {typeof arr[number]} */content_item) => {
 			let keys=get_keys_of(content_item);
 			check_item_keys(path,`${path}[]`,keys);
 			if("richItemRenderer" in content_item) {
@@ -1083,9 +1068,9 @@ class HandleRendererContentItemArray {
 
 class HandleRichGridRenderer {
 	debug=false;
-	/**@readonly*/
+	/** @readonly */
 	class_name="HandleRichGridRenderer";
-	/**@readonly*/
+	/** @readonly */
 	entry="richGridRenderer";
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/** @arg {string} path @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
@@ -1401,7 +1386,7 @@ class FilterHandlers {
 	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.filter_handler_debug=false;
-		/**@readonly*/
+		/** @readonly */
 		this.class_name="FilterHandlers";
 		this.handlers={
 			rich_grid: new HandleRichGridRenderer,
@@ -1839,7 +1824,7 @@ let locked_set=new WeakMap();
 let ud_func=new WeakSet();
 class OnWindowProperty {
 	constructor() {
-		/**@type {{[str:string]:any}} */
+		/** @type {{[str:string]:any}} */
 		this._events={};
 	}
 	/** @arg {{ type: any; data?: { type: any; data: any[]; }; }} ev */
@@ -1911,7 +1896,7 @@ function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 }
 /** @arg {MKState} cc */
 function on_mk_function_property(cc) {
-	/**@this {{}}*/
+	/** @this {{}} */
 	function with_this(/** @type {any} */ ...args) {
 		new_pv_fn(this,cc,...args);
 	}
@@ -1920,7 +1905,7 @@ function on_mk_function_property(cc) {
 }
 const ghost_symbol=Symbol.for("ghost");
 class WithGhostSymbol {
-	/**@type {boolean|undefined} */
+	/** @type {boolean|undefined} */
 	[ghost_symbol]=true;
 }
 class MKState {
@@ -1938,7 +1923,7 @@ class MKState {
 	}
 	value={};
 	value_tr="";
-	/**@type {Function | null} */
+	/** @type {Function | null} */
 	function_value=null;
 	noisy=false;
 }
@@ -2005,7 +1990,7 @@ class CustomEventType {
 	port=new MessagePort;
 }
 class CustomEventTarget {
-	/**@type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
+	/** @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
 	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
 	addEventListener(type,handler) {
@@ -2077,7 +2062,7 @@ class DomObserver extends CustomEventTarget {
 		});
 	}
 	trace=false;
-	/**@arg {MessagePort} port @arg {number} count */
+	/** @arg {MessagePort} port @arg {number} count */
 	next_tick_action(port,count) {
 		if(this.trace) console.log("tick_trace",count);
 		// port.postMessage() -> on_port_message;
@@ -2094,7 +2079,7 @@ class YtdPageManagerElement extends HTMLElement {
 }
 
 inject_api_yt.playlist_arr??=[];
-/**@type {string[]} */
+/** @type {string[]} */
 let playlist_arr=inject_api_yt.playlist_arr;
 /** @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
@@ -2129,7 +2114,7 @@ function on_ytd_watch_flexy(element) {
 inject_api_yt.page_type_changes??=[];
 let page_type_changes=inject_api_yt.page_type_changes;
 
-/** @type {string | null}*/
+/** @type {string | null} */
 let last_page_type=null;
 
 function is_watch_page_active() {
@@ -2150,9 +2135,9 @@ function page_changed_next_frame() {
 	ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
 }
 
-/**@type {Map<string, HTMLElement>}*/
+/** @type {Map<string, HTMLElement>} */
 let element_map=new Map;
-/**@type {Map<string, HTMLVideoElementArrayBox>}*/
+/** @type {Map<string, HTMLVideoElementArrayBox>} */
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
@@ -2181,7 +2166,7 @@ function fire_on_visibility_change_restart_video_playback() {
 }
 
 class HTMLVideoElementArrayBox {
-	/**@readonly*/
+	/** @readonly */
 	type="HTMLVideoElementArrayBox";
 	/** @arg {HTMLVideoElement[]} value */
 	constructor(value) {
@@ -2199,7 +2184,7 @@ function cast_as(e) {
 class YTNavigateFinishEvent {
 	/** @arg {Event} value @return {YTNavigateFinishEvent} */
 	static cast(value) {
-		/**@type {any} */
+		/** @type {any} */
 		let ret=value;
 		return ret;
 	}
@@ -2314,17 +2299,17 @@ function on_yt_playlist_manager(element) {
 	window.yt_playlist_manager=element;
 }
 
-/**@arg {number} value @returns {ReturnType<typeof setTimeout>} */
+/** @arg {number} value @returns {ReturnType<typeof setTimeout>} */
 function as_timeout_type(value) {
-	/**@type {any} */
+	/** @type {any} */
 	let value_any=value;
 	return value_any;
 }
 
-/**@type {[number, number][]}*/
+/** @type {[number, number][]} */
 let port_state_log=[];
 class MessagePortState {
-	/**@type {ReturnType<typeof setTimeout>} */
+	/** @type {ReturnType<typeof setTimeout>} */
 	cint=as_timeout_type(-1);
 	port_state_log=port_state_log;
 	time_offset=performance.now();
@@ -2380,7 +2365,7 @@ function start_message_channel_loop() {
 	}
 }
 
-/**@arg {Document|Element} node @arg {string} child_node_tag_name*/
+/** @arg {Document|Element} node @arg {string} child_node_tag_name*/
 function get_html_elements(node,child_node_tag_name) {
 	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
 }
@@ -2400,13 +2385,13 @@ function sumOffset(element) {
 		top_offset: 0,
 		left_offset: 0
 	};
-	/**@type {HTMLElement | null} */
+	/** @type {HTMLElement | null} */
 	let cur_element=null;
 	cur_element=element;
 	for(;;) {
 		cache.top_offset+=cur_element.offsetTop;
 		cache.left_offset+=cur_element.offsetLeft;
-		/**@type {Element|null}*/
+		/** @type {Element|null} */
 		let next_element=cur_element.offsetParent;
 		if(next_element instanceof HTMLElement) {
 			cur_element=next_element;
@@ -2485,7 +2470,7 @@ function title_text_overlay_update() {
 		overlay_content_div.style.display="none";
 	}
 }
-/**@type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}}*/
+/** @type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}} */
 function is_yt_fullscreen_change_action(detail) {
 	return detail.actionName==="yt-fullscreen-change-action";
 }
@@ -2595,11 +2580,11 @@ let volume_plugin_style_source=`
 `;
 
 class AudioGainController {
-	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
+	/** @type {(HTMLVideoElement | HTMLAudioElement)[]} */
 	attached_element_list=[];
 	/** @type {MediaElementAudioSourceNode[]} */
 	media_element_source_list=[];
-	/**@type {Event|null}*/
+	/** @type {Event|null} */
 	last_event=null;
 	constructor() {
 		this.audioCtx=new AudioContext();
@@ -2790,7 +2775,7 @@ async function main() {
 
 	// hoisted functions below
 	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
-	/**@arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
+	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
 		yt_handlers.extract(h => h.on_handle_api(request,response_obj));
 	}
@@ -2832,11 +2817,11 @@ async function main() {
 	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Promise<any>} ov @return {Promise<any>} */
 	function handle_fetch_response_2(request,options,ov) {
 		return {
-			/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
+			/** @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
 			then(onfulfilled,onrejected) {
 				return ov.then(bind_promise_handler(request,options,onfulfilled,onrejected));
 			},
-			/**@type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
+			/** @type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
 			catch(onrejected) {
 				return ov.catch(onrejected);
 			},
@@ -2896,10 +2881,10 @@ async function main() {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
 	function modify_global_env() {
-		/** @type {Map<string, Blob | MediaSource>}*/
+		/** @type {Map<string, Blob | MediaSource>} */
 		let created_blobs=new Map;
 		inject_api_yt.created_blobs=created_blobs;
-		/** @type {Set<string>}*/
+		/** @type {Set<string>} */
 		let active_blob_set=new Set;
 		inject_api_yt.active_blob_set=active_blob_set;
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
@@ -3347,7 +3332,7 @@ if(typeof exports==="object") {
 
 /** @name Ys */
 class ArrayViewType {
-	/** @param {Uint8Array[]} v */
+	/** @arg {Uint8Array[]} v */
 	constructor(v) {
 		this.arrays=v;
 		this.arrayIdx=0;
@@ -3355,18 +3340,18 @@ class ArrayViewType {
 		this.totalLength=0;
 		v.forEach(c => this.append(c));
 	}
-	/** @param {number} a */
+	/** @arg {number} a */
 	isFocused(a) {
 		return a>=this.arrayPos&&a<this.arrayPos+this.arrays[this.arrayIdx].length;
 	}
-	/** @param {number} a */
+	/** @arg {number} a */
 	focus(a) {
 		if(!this.isFocused(a))
 			for(a<this.arrayPos&&(this.arrayPos=this.arrayIdx=0);this.arrayPos+this.arrays[this.arrayIdx].length<=a&&this.arrayIdx<this.arrays.length;)
 				this.arrayPos+=this.arrays[this.arrayIdx].length,
 					this.arrayIdx+=1;
 	}
-	/** @param {Uint8Array} a */
+	/** @arg {Uint8Array} a */
 	append(a) {
 		/** @type {boolean|Uint8Array} */
 		var b=0===this.arrays.length? !1:(b=this.arrays[this.arrays.length-1])&&b.buffer===a.buffer&&b.byteOffset+b.length===a.byteOffset;
@@ -3700,7 +3685,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations */
 	handle_mutations(mutations) {
-		let t=this;
 		for(let mut of mutations) {
 			switch(mut.type) {
 				case "ENTITY_MUTATION_TYPE_DELETE": {
