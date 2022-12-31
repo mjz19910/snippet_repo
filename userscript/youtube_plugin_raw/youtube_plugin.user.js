@@ -1774,7 +1774,6 @@ class FilterHandlers {
 		if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 		page_type_iter(ret.page);
 		this.handle_any_data(`page_type_${ret.page}`,ret);
-		this.handle_types.DataResponsePageType(ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
 			debugger;
@@ -3701,7 +3700,6 @@ class HandleTypes extends BaseService {
 						};
 					}
 					let dec=decode_entity_key(mut.entityKey);
-					console.log(dec.entityId,dec.entityType);
 					console.log("[mut_del] type=[%s] id=[%s]",dec.entityType,dec.entityId);
 					if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
 						console.log("[mut_del] mut_opt [persistence][%s]",mut.options.persistenceOption);
@@ -4588,7 +4586,15 @@ class HandleTypes extends BaseService {
 		page_type_iter(detail.pageType);
 		if(last_page_type!==detail.pageType) {
 			last_page_type=detail.pageType;
-			if(!ytd_page_manager) throw new Error("Missing ytd_page_manager");
+			if(!ytd_page_manager) {
+				const target_element=get_html_elements(document,"ytd-page-manager")[0];
+				if(!target_element) {
+					throw new Error("Missing ytd_page_manager");
+				} else {
+					on_ytd_page_manager(target_element);
+				}
+			}
+			if(!ytd_page_manager) throw new Error("Invalid state");
 			let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
 			let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 			page_type_changes.push(nav_load_str);
