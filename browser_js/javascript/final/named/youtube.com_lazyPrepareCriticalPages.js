@@ -13,8 +13,7 @@ function main() {
 	if(/youtube.com/) {
 		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin,"youtube_lazy_pages");
 		let bp_class=class {
-			/** @arg {any} a
-			 * @arg {any} b */
+			/** @arg {any} a @arg {any} b */
 			constructor(a,b) {
 				this.a=a;
 				this.b=b;

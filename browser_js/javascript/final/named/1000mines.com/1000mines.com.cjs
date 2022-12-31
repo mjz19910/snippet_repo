@@ -291,10 +291,7 @@ function main() {
 
 			}
 			let __nf=Symbol(2);
-			/** @param {(...a:any[])=>any} fn
-			 * @param {string} bp_str
-			 * @param {(string | undefined)[]} args
-			 * @returns {symbol | [any,any]} */
+			/** @param {(...a:any[])=>any} fn @param {string} bp_str @param {(string | undefined)[]} args @returns {symbol | [any,any]} */
 			function __run(fn,bp_str,...args) {
 				if(!x.u) throw 1;
 				x.o=__nf;
@@ -315,9 +312,7 @@ function main() {
 				return x.o;
 			}
 			x.rx.jQuery=ret[1];
-			/** @param {(...arg0: any[]) => any} fn
-			 * @param {string} bp_str
-			 * @param {(number | boolean)[]} args */
+			/** @param {(...arg0: any[]) => any} fn @param {string} bp_str @param {(number | boolean)[]} args */
 			function __run_noisy(fn,bp_str,...args) {
 				x(fn,bp_str);
 				try {

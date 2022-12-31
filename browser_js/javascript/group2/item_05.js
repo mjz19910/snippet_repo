@@ -9,10 +9,7 @@ function as_cast(e) {
 function main() {
 	"use strict";
 	let str="40580802070e1e0b010c1c1b021a480a0701141d4b571f080a0c581c01092a1a410d0b190a541406580b02074b1c5f0f1b04380410001c1c43450a130b0c4a0b1416531c5a1526190e0417081c031b544d19140a0e00000758574d4f5b0c14250c06091d100a01544d0c18";
-	/**
-	 * @param {string | any[]} str
-	 * @param {number} len
-	 */
+	/** @param {string | any[]} str @param {number} len */
 	function chunk_str(str,len) {
 		let res=[];
 		for(let cur,i=0;i<str.length;) {
@@ -27,31 +24,21 @@ function main() {
 	window.uint8_vec=new Uint8Array(window.buffer_vec);
 	let f32_diff=new Float32Array(1);
 	let u8_data=new Uint8Array(f32_diff.buffer); u8_data;
-	/**
-	 * @type {number[]}
-	 */
+	/** @type {number[]} */
 	let long_tick_log=[];
-	/**
-	 * @param {number} num
-	 */
+	/** @param {number} num */
 	function ceil_near(num) {
 		return Math.ceil(num*10)/10;
 	}
-	/**
-	 * @param {number} num
-	 */
+	/** @param {number} num */
 	function round_near(num) {
 		return Math.round(num*10)/10;
 	}
-	/**
-	 * @param {number} num
-	 */
+	/** @param {number} num */
 	function floor_near(num) {
 		return Math.floor(num*10)/10;
 	}
-	/**
-	 * @param {any} num
-	 */
+	/** @param {any} num */
 	function math_near(num) {
 		let ret=[];
 		ret.push(floor_near(num).toFixed(1));
@@ -60,9 +47,7 @@ function main() {
 		return ret;
 	}
 	math_near;
-	/**
-	 * @param {{ postMessage: { bind: (arg0: any) => any; }; onmessage: (e: any) => void; }} g
-	 */
+	/** @param {{ postMessage: { bind: (arg0: any) => any; }; onmessage: (e: any) => void; }} g */
 	function worker_scope(g) {
 		"use strict";
 		let post_message=g.postMessage.bind(g);
@@ -79,19 +64,16 @@ function main() {
 			count=0;
 			last_index=-1;
 			start_index=-1;
-			/**
-			 * @type {number[]}
+			/** @type {number[]}
 			 */
 			result_vec=[];
-			/**
-			 * @type {number[]}
+			/** @type {number[]}
 			 */
 			overflow_vec=[];
 			constructor() {
 				this.result_vec[0]=1;
 			}
-			/**
-			 * @param {number} start_index
+			/** @param {number} start_index
 			 */
 			set_start_index(start_index) {
 				if(this.start_index===-1) {
@@ -153,8 +135,7 @@ function main() {
 				this.result_vec[this.start_index+1]=process_result;
 				console.log('pd',this.start_index,count,process_result,start_value);
 			}
-			/**
-			 * @param {Float64Array | number[]} range_f64
+			/** @param {Float64Array | number[]} range_f64
 			 */
 			next_larger_perf_time(range_f64) {
 				for(;;) {
@@ -171,8 +152,7 @@ function main() {
 			message=null;
 			/** @type {{type: "response";response?:{detail?: {};error?: {}|null;type: "unset";count?: number;overflow_vec?: {}[];result_vec:{}[]};source: {}}|null} */
 			reply=null;
-			/**
-			 * @param {null} message
+			/** @param {null} message
 			 */
 			set_message(message) {
 				this.message=message;
@@ -246,8 +226,7 @@ function main() {
 				post_message(this.reply);
 				this.reset();
 			}
-			/**
-			 * @param {{ type: any; error?: any; }} report_object
+			/** @param {{ type: any; error?: any; }} report_object
 			 */
 			report_reply(report_object) {
 				if(!this.reply?.response) throw 1;
@@ -268,8 +247,7 @@ function main() {
 			}
 			log_level_vec=['error','warning','info','debug','trace'];
 			log_level='debug';
-			/**
-			 * @param {string | undefined} [error]
+			/** @param {string | undefined} [error]
 			 */
 			on_failure(error) {
 				if(this.log_level==='debug') {
@@ -300,9 +278,7 @@ function main() {
 			work_processor.run();
 		};
 	}
-	/**
-	 * @type {number[]}
-	 */
+	/** @type {number[]} */
 	let min_arr=[];
 	class IntervalClock {
 		timeout_id=-1;
@@ -367,10 +343,7 @@ function main() {
 			this.timeout_id=-1;
 		}
 	}
-	/**
-	 * @param {any} type
-	 * @param {any[]} data_vec
-	 */
+	/** @param {any} type @param {any[]} data_vec */
 	function worker_message_factory(type,data_vec) {
 		return {
 			type,
@@ -736,13 +709,11 @@ function main() {
 	function is_promise_rejection_type(err) {
 		return typeof err==='object'&&err!==null&&"type"in err&&err.type==="timeout";
 	}
-	/**
-	 * @arg {WorkerStateModel} cx
-	 * @param {number} gg
-	 */
+	/** @arg {WorkerStateModel} cx @arg {number} gg */
 	async function min_try(cx,gg) {
 		let err=true;
 		let tc=0;
+		/** @type {BaseWorkProcessorType|null} */
 		let ret=null;
 		while(err) {
 			try {

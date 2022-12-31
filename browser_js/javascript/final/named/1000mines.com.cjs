@@ -1,6 +1,6 @@
 function main() {
 	class CustomInputMatcher {
-		/** @param {any} t_needle @param {any} t_string_getter @arg {string} result_name */
+		/** @arg {any} t_needle @arg {any} t_string_getter @arg {string} result_name */
 		constructor(t_needle,t_string_getter,result_name) {
 			this.ts_get=t_string_getter;
 			this.tr=t_needle;
@@ -31,7 +31,7 @@ function main() {
 		/** @type {string[]} */
 		names=[];
 		self_sym=Symbol();
-		/** @param {any[]} e */
+		/** @arg {any[]} e */
 		do_cur(...e) {
 			var i;
 			debugger;
@@ -50,7 +50,7 @@ function main() {
 			if(i>=0) return this.execute(i);
 			return null;
 		}
-		/** @param {number} t */
+		/** @arg {number} t */
 		execute(t) {
 			var function_name=this.names[t];
 			var function_value=this.funcs[t];
@@ -96,7 +96,7 @@ function main() {
 				}
 			} finally {}
 		}
-		/** @param {string|CustomInputMatcher} name @param {((...x: any[]) => any)} func */
+		/** @arg {string|CustomInputMatcher} name @arg {((...x: any[]) => any)} func */
 		add_func(name,func) {
 			var y=this.funcs.push(func);
 			if(!(name instanceof CustomInputMatcher)) {
@@ -291,10 +291,7 @@ function main() {
 
 			}
 			let __nf=Symbol(2);
-			/** @param {(...a:any[])=>any} fn
-			 * @param {string} bp_str
-			 * @param {(string | undefined)[]} args
-			 * @returns {symbol | [any,any]} */
+			/** @arg {(...a:any[])=>any} fn @arg {string} bp_str @arg {(string | undefined)[]} args @returns {symbol | [any,any]} */
 			function __run(fn,bp_str,...args) {
 				if(!x.u) throw 1;
 				x.o=__nf;
@@ -315,9 +312,7 @@ function main() {
 				return x.o;
 			}
 			x.rx.jQuery=ret[1];
-			/** @param {(...arg0: any[]) => any} fn
-			 * @param {string} bp_str
-			 * @param {(number | boolean)[]} args */
+			/** @arg {(...arg0: any[]) => any} fn @arg {string} bp_str @arg {(number | boolean)[]} args */
 			function __run_noisy(fn,bp_str,...args) {
 				x(fn,bp_str);
 				try {
@@ -338,7 +333,7 @@ function main() {
 				x.f=expando_data.events.mouseup[0].handler;
 			}
 			__run(x.f,x.__all_vars);
-			/** @param {CallableFunction} func */
+			/** @arg {CallableFunction} func */
 			function get_code_formatted(func) {
 				/** @type {any[][]} */
 				let stk=[];
@@ -402,22 +397,31 @@ function main() {
 					}
 					js_out.push(e);
 				};
-				/** @param {{ (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (value: any, index: number, array: any[]): void; }} func */
+				/** @arg {(value: string, index: number, array: string[])=> void} func */
 				function fe_block(func) {
 					js_filt.forEach(func);
 					js_filt=js_out;
 					js_out=[];
 				}
-				let js_parse_ident=( /** @type {any[]} */ js_in, /** @type {any[]} */ js_tmp) => {
+				/**
+				 * @param {string[]} js_in
+				 * @param {string[]} js_tmp
+				 * @returns {[[]|[string,string],string[],string[]]}
+				 */
+				function js_parse_ident(js_in,js_tmp){
 					let js_out=[];
-					let wt=js_in.pop();
+					let [wt,...rest]=js_in;
 					let m;
 					if(m=wt.match(/^[a-zA-Z_$]/)) {
-						m=wt.match(/^[a-zA-z_$]([0-9a-zA-Z$_]+)?/);
-						js_out.push(m[0]);
-						js_out.push(wt.slice(m[0].length));
+						if(m=wt.match(/^[a-zA-z_$]([0-9a-zA-Z$_]+)?/)) {;
+							js_out.push(m[0]);
+							let p2=wt.slice(m[0].length);
+							return [[m[0],p2],rest,js_tmp];
+						} else {
+							debugger;
+						}
 					}
-					return [js_out,js_in,js_tmp];
+					return [[],rest,js_tmp];
 				};
 				/** @param {string} str
 				 * @returns {any[]} */
@@ -429,6 +433,7 @@ function main() {
 					if(str[0]=='(') {
 						js_out.push('()'[0]);
 						let [ret]=js_parse_ident([str.slice(1)],[]);
+						if(ret.length===0)throw new Error("failed");
 						if(ret[1][0]==')') {
 							return ['(',ret[0],')',str.slice(2+ret[0].length)];
 						}
@@ -437,6 +442,7 @@ function main() {
 						while(ret[1][0]==',') {
 							js_out.push(',');
 							([ret]=js_parse_ident([str.slice(cc)],[]));
+							if(ret.length===0)throw new Error("failed");
 							js_out.push(ret[0]);
 							if(ret[1][0]==')') {
 								js_out.push('()'[1]);

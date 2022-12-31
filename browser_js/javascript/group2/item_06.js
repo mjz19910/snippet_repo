@@ -438,9 +438,7 @@ async function kernel_main() {
 			let s_buy_arr=[11,12]
 			/** @type {never[]} */
 			let c_can_buy_arr=[]
-			/** @arg {string} target
-			 * @arg {number[]} src_arr
-			 * @arg {any[]} target_arr */
+			/** @arg {string} target @arg {number[]} src_arr @arg {any[]} target_arr */
 			function process_buyables_arr(target,src_arr,target_arr) {
 				let i=0
 				for(let x of src_arr) {
@@ -483,8 +481,7 @@ async function kernel_main() {
 				}
 				return 'done'
 			}
-			/** @arg {any[]} arr
-			 * @arg {string} target */
+			/** @arg {any[]} arr @arg {string} target */
 			function buyable_iter(arr,target) {
 				for(let x of arr) {
 					// @ts-ignore
@@ -497,8 +494,7 @@ async function kernel_main() {
 				}
 				return false
 			}
-			/** @arg {number[]} arr
-			 * @arg {string} target */
+			/** @arg {number[]} arr @arg {string} target */
 			function upgrade_iter(arr,target) {
 				for(let x of arr) {
 					// @ts-ignore

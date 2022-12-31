@@ -164,33 +164,29 @@ class FakeRealm {
 	}
 }
 class RustTransactionHead {
-	/** @param {string} arg0 */
+	/** @arg {string} arg0 */
 	set_expr(arg0) {
 		this.expr=arg0;
 	}
 }
 class RustTransactionBlock {
-	/**
-	 * @param {string} arg0
-	 */
+	/** @arg {string} arg0 */
 	add_item(arg0) {
 		arg0;
 		throw new Error("Method not implemented.");
 	}
-	/**
-	 * @param {string} arg0
-	 */
+	/** @arg {string} arg0 */
 	set_sep(arg0) {
 		arg0;
 		throw new Error("Method not implemented.");
 	}
-	/** @param {string} arg0 */
+	/** @arg {string} arg0 */
 	constructor(arg0) {
 		this.arg0=arg0;
 	}
 }
 class RustTransactionBody {
-	/** @param {string} arg0 */
+	/** @arg {string} arg0 */
 	start_block(arg0) {
 		return new RustTransactionBlock(arg0);
 	}
@@ -207,9 +203,7 @@ class RustTransactionMatcher {
 }
 
 class RustBuiltExpressionForJavascript {
-	/**
-	 * @param {RustTransactionMatcher[]} x
-	 */
+	/** @arg {RustTransactionMatcher[]} x */
 	constructor(x) {
 		this.data=x;
 	}
@@ -222,9 +216,7 @@ class RustBuiltExpressionForJavascript {
 }
 
 class RustBuiltExpression {
-	/**
-	 * @param {"js"} [arg0]
-	 */
+	/** @arg {"js"} [arg0] */
 	into(arg0) {
 		switch(arg0) {
 			case "js": {
@@ -233,17 +225,13 @@ class RustBuiltExpression {
 		}
 		throw new Error("Unable to convert to: "+arg0);
 	}
-	/**
-	 * @param {RustTransactionMatcher[]} matches
-	 */
+	/** @arg {RustTransactionMatcher[]} matches */
 	constructor(matches) {
 		this.matches=matches;
 	}
 }
 class RustTransaction {
-	/**
-	 * @type {RustTransactionMatcher[]}
-	 */
+	/** @type {RustTransactionMatcher[]} */
 	closed_matches=[];
 	build() {
 		let matches=this.closed_matches;

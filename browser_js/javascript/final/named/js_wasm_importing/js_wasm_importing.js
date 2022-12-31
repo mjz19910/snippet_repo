@@ -43,8 +43,7 @@ function main() {
 				if(!('console_log_from_wasm' in wasm&&typeof wasm.console_log_from_wasm=='function')) throw new Error("1");
 				wasm.console_log_from_wasm();
 			}
-			/** @arg {any} arg0
-			 * @arg {any} arg1 */
+			/** @arg {any} arg0 @arg {any} arg1 */
 			function __wbg_log_f48fd9f1562bf74d(arg0,arg1) {
 				let varg0=getStringFromWasm(arg0,arg1);
 				console.log(varg0);
@@ -66,8 +65,7 @@ function main() {
 				}
 				return wasm_memory_cache;
 			}
-			/** @arg {any} ptr
-			 * @arg {any} len */
+			/** @arg {any} ptr @arg {any} len */
 			function getStringFromWasm(ptr,len) {
 				return cachedTextDecoder.decode(getUint8Memory().subarray(ptr,ptr+len));
 			}

@@ -1177,9 +1177,7 @@
 			set_timer(timer) {
 				this.m_timer=timer;
 			}
-			/** @arg {1|2} tag
-			 * @arg {number} remote_id
-			 * @arg {number|undefined} timeout */
+			/** @arg {1|2} tag @arg {number} remote_id @arg {number|undefined} timeout */
 			set(tag,remote_id,timeout) {
 				if(!this.m_timer) throw 1;
 				return this.m_timer.set(tag,remote_id,timeout);
@@ -1237,9 +1235,7 @@
 					default: throw new Error("TODO");
 				}
 			}
-			/** @arg {1|2} tag
-			 * @arg {number} remote_id
-			 * @arg {number | undefined} timeout */
+			/** @arg {1|2} tag @arg {number} remote_id @arg {number | undefined} timeout */
 			set(tag,remote_id,timeout) {
 				// debugger;
 				this.verify_tag(tag);
@@ -1266,8 +1262,7 @@
 					throw new Error("tag verification failed in RemoteTimer");
 				}
 			}
-			/** @arg {RemoteTimerState} state
-			 * @arg {any} remote_id */
+			/** @arg {RemoteTimerState} state @arg {any} remote_id */
 			verify_state(state,remote_id) {
 				if(!this.validate_state(state)) {
 					console.info("Removed invalid local_state");

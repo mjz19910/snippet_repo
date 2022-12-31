@@ -270,9 +270,7 @@ function main() {
 			}
 		}
 		function run_sync_code() {
-			/** @arg {()=>DebugState} pre_init
-			 * @arg {(x:debug_class,s:DebugState)=>unknown} at_init
-			 * @arg {(x:debug_class,s:DebugState)=>unknown} done_cb */
+			/** @arg {()=>DebugState} pre_init @arg {(x:debug_class,s:DebugState)=>unknown} at_init @arg {(x:debug_class,s:DebugState)=>unknown} done_cb */
 			function dbg_init(pre_init,at_init,done_cb) {
 				var state=pre_init();
 				let _debugger=new debug_class(state);

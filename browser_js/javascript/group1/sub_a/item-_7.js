@@ -427,8 +427,7 @@ function main() {
 					return 0;
 				}
 			}
-			/** @arg {any} a
-			 * @arg {any} b */
+			/** @arg {any} a @arg {any} b */
 			function do_sort_by_proto(a,b) {
 				return get_proto_id(a)-get_proto_id(b);
 			}

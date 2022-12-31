@@ -225,8 +225,7 @@ function main() {
 				nx_len: 0,
 				lex_cur: null,
 			};
-			/** @arg {string} str
-			 * @arg {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj */
+			/** @arg {string} str @arg {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj */
 			constructor(str,obj) {
 				this.lex_chunks=[]
 				this.str=str;

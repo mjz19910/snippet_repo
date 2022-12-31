@@ -74,9 +74,7 @@ async function x() {
 					return e[0].nodeValue;
 				}
 			}
-			/** @arg {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj
-			 * @arg {string} key
-			 * @arg {HTMLCollection | NodeListOf<ChildNode>} list */
+			/** @arg {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj @arg {string} key @arg {HTMLCollection | NodeListOf<ChildNode>} list */
 			function append_from_list(obj,key,list) {
 				if(obj instanceof Array) {
 					obj.push({
@@ -86,13 +84,11 @@ async function x() {
 					obj[key]=list;
 				}
 			}
-			/** @arg {Element} element
-			 * @arg {{}} obj */
+			/** @arg {Element} element @arg {{}} obj */
 			function append_from_children(obj,element) {
 				append_from_list(obj,element.tagName,element.children);
 			}
-			/** @argument {Node} node
-			 * @arg {{}} obj */
+			/** @argument {Node} node @arg {{}} obj */
 			function append_from_childNodes(obj,node) {
 				append_from_list(obj,node.nodeName,node.childNodes);
 			}

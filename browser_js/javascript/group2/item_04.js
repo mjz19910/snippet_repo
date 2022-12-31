@@ -182,12 +182,10 @@ function main(exports) {
 		}
 		let rust_scope=new RustScope;
 		class RustCrate {
-			/**
-			 * @type {{ definition_vec: any[]; }[]}
+			/** @type {{ definition_vec: any[]; }[]}
 			 */
 			define_vec=[];
-			/**
-			 * @param {any[]} arg_vec
+			/** @param {any[]} arg_vec
 			 */
 			type(...arg_vec) {
 				arg_vec;
@@ -208,9 +206,7 @@ function main(exports) {
 		}
 		let rust_tmp=new RustCrate;
 		class RustFunctionDefinition {
-			/**
-			 * @param {string} name
-			 * @param {{type_param: RustTypeParameter[]; arg_def: RustFunctionArgument[]; return_type: string}} info
+			/** @param {string} name @param {{type_param: RustTypeParameter[]; arg_def: RustFunctionArgument[]; return_type: string}} info
 			 */
 			constructor(name,info) {
 				this.name=name;
@@ -218,9 +214,7 @@ function main(exports) {
 			}
 		}
 		class RustTypeParameter {
-			/**
-			 * @param {string} var_name
-			 * @param {string} var_type
+			/** @param {string} var_name @param {string} var_type
 			 */
 			constructor(var_name,var_type) {
 				this.name=var_name;
@@ -228,9 +222,7 @@ function main(exports) {
 			}
 		}
 		class RustFunctionArgument {
-			/**
-			 * @param {string} name
-			 * @param {RustType} type
+			/** @param {string} name @param {RustType} type
 			 */
 			constructor(name,type) {
 				this.name=name;
@@ -238,9 +230,7 @@ function main(exports) {
 			}
 		}
 		class RustType {
-			/**
-			 * @param {string} qual
-			 * @param {string | null} type
+			/** @param {string} qual @param {string | null} type
 			 */
 			constructor(qual,type) {
 				this.qual=qual;
@@ -249,10 +239,7 @@ function main(exports) {
 		}
 		/** @template T */
 		class RustTypeValue {
-			/**
-			 * 
-			 * @param {RustType} type_info
-			 * @param {T} value
+			/**  @param {RustType} type_info @param {T} value
 			 */
 			constructor(type_info,value) {
 				this.type_info=type_info;
@@ -282,8 +269,7 @@ function main(exports) {
 			}
 		}
 		class RustOption {
-			/**
-			 * @param {any} value
+			/** @param {any} value
 			 */
 			constructor(value) {
 				this.value=value;
@@ -308,8 +294,7 @@ function main(exports) {
 			is_some() {
 				return this.value!==null;
 			}
-			/**
-			 * @param {{ unwrap: () => any; }} ref
+			/** @param {{ unwrap: () => any; }} ref
 			 */
 			contains(ref) {
 				let other_value=ref.unwrap();
@@ -349,9 +334,7 @@ function main(exports) {
 					count: 0
 				};
 			}
-			/**
-			 * @param {{ canceled: any; }} self
-			 * @param {{ waker: { clone: () => any; }; }} cx
+			/** @param {{ canceled: any; }} self @param {{ waker: { clone: () => any; }; }} cx
 			 */
 			poll(self,cx) {
 				let delay=50;
@@ -395,8 +378,7 @@ function main(exports) {
 			}
 		}
 		class task_Waker {
-			/**
-			 * @param {{ future?: any; executor: any; from_waker?: any; }} data
+			/** @param {{ future?: any; executor: any; from_waker?: any; }} data
 			 */
 			constructor(data) {
 				if(!data.from_waker) {
@@ -439,8 +421,7 @@ function main(exports) {
 		let cur_executer=null;
 		/** @template T */
 		class ArrayDequeue {
-			/**
-			 * @param {number} cap
+			/** @param {number} cap
 			 */
 			constructor(cap) {
 				this.cap=cap;
@@ -450,8 +431,7 @@ function main(exports) {
 				this.front_index=0;
 				this.back_index=0;
 			}
-			/**
-			 * @param {any} value
+			/** @param {any} value
 			 */
 			push_back(value) {
 				this.len++;
@@ -479,9 +459,7 @@ function main(exports) {
 			}
 		}
 		class Waker {
-			/**
-			 * @arg {WakerVtable} vtable
-			 * @param {{ notifier: any; }} data
+			/** @arg {WakerVtable} vtable @param {{ notifier: any; }} data
 			 */
 			constructor(vtable,data) {
 				if(!vtable.wake) {
@@ -495,14 +473,12 @@ function main(exports) {
 			}
 		}
 		class WakerVtable {
-			/**
-			 * @param {any} wake_callback
+			/** @param {any} wake_callback
 			 */
 			constructor(wake_callback) {
 				this.wake_callback=wake_callback;
 			}
-			/**
-			 * @param {{ notifier: { wake_count: number; }; }} data
+			/** @param {{ notifier: { wake_count: number; }; }} data
 			 */
 			wake(data) {
 				data.notifier.wake_count++;
@@ -510,10 +486,7 @@ function main(exports) {
 			}
 		}
 		class AsyncNotifier {
-			/**
-			 * @arg {AsyncNotifier} notifier
-			 * @param {(value: any) => void} accept
-			 * @param {()=>void} reject
+			/** @arg {AsyncNotifier} notifier @param {(value: any) => void} accept @param {()=>void} reject
 			 */
 			static promise_execute(notifier,accept,reject) {
 				reject;
@@ -557,8 +530,7 @@ function main(exports) {
 			}
 		}
 		class TimeoutExecutor {
-			/**
-			 * @type {any}
+			/** @type {any}
 			 */
 			active=[];
 			/** @type {ArrayDequeue<AutomationFuture>} */

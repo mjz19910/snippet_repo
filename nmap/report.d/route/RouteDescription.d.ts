@@ -17,15 +17,13 @@ export class RouteDescription {
 	route=[""];
 	/**@type {Route|null} */
 	new_version: Route|null=null;
-	/** @param {string} target @param {string[]} route_list @param {Route | null} new_version
-	 */
+	/** @param {string} target @param {string[]} route_list @param {Route | null} new_version */
 	constructor(target: string,route_list: string[],new_version: Route|null) {
 		this.target=target;
 		this.route=route_list;
 		this.new_version=new_version;
 	}
-	/** @param {RouteDesc|RouteDescRo} value
-	 */
+	/** @param {RouteDesc|RouteDescRo} value */
 	static from(value: RouteDesc|RouteDescRo) {
 		let {target,route,new_version}=value;
 		if(!new_version) {
