@@ -5108,16 +5108,14 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/**
-	 * @param {{[s:string]:string[]}} known_strings
+	 * @param {[string,string[]][]} known_strings
 	 */
 	load_known_strings_from(known_strings) {
-		/** @type {[string,string[]][]} */
-		let ks=Object.entries(known_strings);
 		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
 		function from_entry_pair(x) {
 			return [x[0],new Set(x[1])];
 		}
-		let res_2=ks.map(from_entry_pair);
+		let res_2=known_strings.map(from_entry_pair);
 		let res_3=new Map(res_2);
 		this.known_strings=res_3;
 	}
