@@ -1285,33 +1285,11 @@ const decode_protobuf_obj=function make() {
 /** @arg {string} str */
 function decode_protobuf(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
-	/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
-	let expected_fields_date_time=[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]];
 	let loop_count=0;
 	/** @type {[number,number,(number | bigint)[]][]} */
 	let data=[];
-	let mode="initial";
-	let mode_stack=[];
 	let reader=new decode_protobuf_obj.MyReader(buffer);
-	/** @type {[offset: number,length: number][]} */
-	let stack=[[0,reader.len]];
 	x: for(;loop_count<15;loop_count++) {
-		switch(mode) {
-			case "initial": break;
-			case "DateTime": break;
-		}
-		let [cur_off,cur_len]=non_null(stack.at(-1));
-		console.log("off",cur_len,cur_off);
-		if(reader.pos>=cur_off+cur_len) {
-			let mode_=mode_stack.pop();
-			if(!mode_) {
-				console.log("exit, mode stack empty and at end");
-				break x;
-			}
-			mode=mode_;
-			stack.pop();
-			continue x;
-		}
 		let cur_byte=reader.uint32();
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
@@ -1320,34 +1298,16 @@ function decode_protobuf(str) {
 		console.log("field",fieldId,"type",wireType);
 		y: switch(wireType) {
 			case 0:
-				if(mode==="DateTime") {
-					switch(fieldId) {
-						case 1: {
-							let f_ty=expected_fields_date_time[0];
-							if(f_ty[1]!=="uint64") throw new Error();
-							first_num.push(reader.uint64());
-							console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
-							break y;
-						}
-						default: {
-							console.log("unexpected field");
-							break x;
-						}
-					}
-				}
 				first_num.push(reader.uint32());
 				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
-			case 2: if(mode==="initial") {
-				mode_stack.push(mode);
-				mode="DateTime";
-				continue x;
-			} else {
-				console.log("mode 2 and not able to handle it");
-				break x;
-			}
+			case 2:{
+				let size=reader.uint32();
+				reader.buf.subarray(reader.pos,reader.pos+size);
+				reader.skip(size);
+			} break;
 			case 3: break;
-			case 4: let mode_=mode_stack.pop(); if(!mode_) throw new Error(); mode=mode_; break;
+			case 4: throw new Error("Invalid state");
 			case 5: first_num.push(reader.fixed32()); break;
 			default: break x;
 		}
@@ -1374,11 +1334,20 @@ function decode_protobuf(str) {
 function decode_b64_proto_obj(str) {
 	return decode_protobuf(str);
 }
+
+/** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
+function add_function(function_obj) {
+	if(!inject_api.saved_function_objects) return;
+	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
+}
+inject_api.add_function=add_function;
+
 /** @template T @arg {T|undefined} val @returns {T} */
 function non_null(val) {
 	if(val===void 0) throw new Error();
 	return val;
 }
+add_function(non_null);
 
 class FilterHandlers {
 	/** @arg {ResolverT} res */
