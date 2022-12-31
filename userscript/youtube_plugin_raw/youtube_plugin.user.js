@@ -3112,6 +3112,145 @@ const general_service_state={
 };
 
 class BaseService {
+	/** @type {Set<number>} */
+	known_root_ve=new Set;
+	/** @type {number[]} */
+	new_known_root_ve=[];
+	/** @type {Map<string,Set<number>>} */
+	known_numbers=new Map;
+	/** @type {Map<string,Set<string>>} */
+	known_strings=new Map;
+	/** @type {[string,string][]} */
+	new_known_strings=[];
+	/** @type {Map<string,{t:boolean;f:boolean}>} */
+	known_booleans=new Map;
+	/** @type {[string,{t:boolean;f:boolean}][]} */
+	changed_known_bool=[];
+	load_data_cache() {
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			return;
+		}
+		let res=this.known_data_tmp;
+		if(res.known_root_ve) {
+			this.known_root_ve=new Set(res.known_root_ve);
+		}
+		if(res.known_strings) {
+			this.load_known_strings_from(res.known_strings);
+		}
+		if(res.known_bool) {
+			this.load_bool_from(res.known_bool);
+		}
+	}
+	/**
+	 * @param {[string,string[]][]} known_strings
+	 */
+	load_known_strings_from(known_strings) {
+		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
+		function from_entry_pair(x) {
+			return [x[0],new Set(x[1])];
+		}
+		let res_2=known_strings.map(from_entry_pair);
+		let res_3=new Map(res_2);
+		this.known_strings=res_3;
+	}
+	save_data_cache() {
+		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
+		function to_entry_pair(x) {
+			return [x[0],[...x[1]]];
+		}
+		let known_root_ve=[...this.known_root_ve.values()];
+		let known_strings=[...this.known_strings.entries()].map(to_entry_pair);
+		let known_bool=[...this.known_booleans.entries()];
+		this.known_data_tmp={
+			known_root_ve,
+			known_strings,
+			known_bool,
+		};
+		let json_str=JSON.stringify(this.known_data_tmp);
+		this.save_local_storage(json_str);
+	}
+	load_tmp_data() {
+		let json_str=this.get_local_storage();
+		if(json_str) {
+			this.known_data_tmp=JSON.parse(json_str);
+		} else {
+			this.save_data_cache();
+		}
+	}
+	save_known_bool() {
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			this.delete_known_data();
+			throw new Error("Invalid data");
+		}
+		let bool_d=this.known_data_tmp.known_bool;
+		let arr=this.changed_known_bool;
+		for(let item of arr) {
+			let [key,val]=item;
+			let index=bool_d.findIndex(e => e[0]===key);
+			if(index<0) {
+				bool_d.push([item[0],val]);
+				index=bool_d.length-1;
+			} else {
+				bool_d[index][1]=val;
+			}
+		}
+		this.changed_known_bool=[];
+		this.save_tmp_data();
+	}
+	save_known_string() {
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			this.delete_known_data();
+			throw new Error("Invalid data");
+		}
+		let tmp_known_str=this.known_data_tmp.known_strings;
+		let arr=this.new_known_strings;
+		for(let item of arr) {
+			let [key,val]=item;
+			let index=tmp_known_str.findIndex(e => e[0]===key);
+			if(index<0) {
+				tmp_known_str.push([item[0],[val]]);
+				index=tmp_known_str.length-1;
+			} else {
+				tmp_known_str[index][1].push(val);
+			}
+		}
+		this.new_known_strings=[];
+		this.save_tmp_data();
+	}
+	save_tmp_data() {
+		let json_str=JSON.stringify(this.known_data_tmp);
+		this.save_local_storage(json_str);
+	}
+	/** @param {string} key @param {boolean} bool */
+	save_new_bool(key,bool) {
+		let kc=this.known_booleans.get(key);
+		if(!kc) {
+			kc={t: false,f: false};
+			this.known_booleans.set(key,kc);
+		}
+		if(bool) {
+			if(!kc.t) {
+				console.log(key,bool);
+			}
+			kc.t=true;
+		} else {
+			if(!kc.f) {
+				console.log(key,bool);
+			}
+			kc.f=true;
+		}
+		this.changed_known_bool.push([key,kc]);
+		this.save_known_bool();
+	}
+	/**
+	 * @param {[string, { t: boolean; f: boolean; }][]} bool_cache
+	 */
+	load_bool_from(bool_cache) {
+		this.known_booleans=new Map(bool_cache);
+	}
 	/** @param {string} known_data */
 	save_local_storage(known_data) {
 		localStorage.known_data=known_data;
@@ -3122,7 +3261,6 @@ class BaseService {
 	delete_known_data() {
 		localStorage.removeItem("known_data");
 	}
-	#res;
 	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.#res=res;
@@ -3137,6 +3275,9 @@ class BaseService {
 			u(item);
 		}
 	}
+	#res;
+	/** @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: [string, string[]][]; }|null} */
+	known_data_tmp=null;
 }
 
 class CsiService extends BaseService {
@@ -4267,11 +4408,18 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction} obj */
 	openPopupAction(obj) {
 		switch(obj.popupType) {
-			case "DIALOG": this.DialogPopup(obj); break;
-			case "DROPDOWN": this.DropdownPopup(obj); break;
-			case "TOAST": this.ToastPopupTag(obj.popup); break;
+			case "DIALOG": this.popup(obj.popup); break;
+			case "DROPDOWN": this.popup(obj.popup); break;
+			case "TOAST": this.popup(obj.popup); break;
+			case "TOP_ALIGNED_DIALOG": this.popup(obj.popup); break;
 			default: console.log(obj);
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/o/OpenPopupAction.js").VoicePopup|import("./support/yt_api/_/t/ToastPopup.js").ToastPopup|import("./support/yt_api/_/m/MultiPageMenuRenderer.js").MultiPageMenuRenderer|import("./support/yt_api/_/n/ConfirmDialogRenderer.js").ConfirmDialogRenderer | { aboutThisAdRenderer: import("./support/yt_api/_/a/AboutThisAdRenderer.js").AboutThisAdRenderer; }} x
+	 */
+	popup(x) {
+		console.log("[popup_found] [%s]",Object.keys(x).join());
 	}
 	/**
 	 * @param {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x
@@ -5044,20 +5192,6 @@ class HandleTypes extends BaseService {
 		this.YtTextType(title);
 		this.empty_object(y);
 	}
-	/** @type {Set<number>} */
-	known_root_ve=new Set;
-	/** @type {number[]} */
-	new_known_root_ve=[];
-	/** @type {Map<string,Set<number>>} */
-	known_numbers=new Map;
-	/** @type {Map<string,Set<string>>} */
-	known_strings=new Map;
-	/** @type {[string,string][]} */
-	new_known_strings=[];
-	/** @type {Map<string,{t:boolean;f:boolean}>} */
-	known_booleans=new Map;
-	/** @type {[string,{t:boolean;f:boolean}][]} */
-	changed_known_bool=[];
 	/** @arg {number} x */
 	rootVe(x) {
 		if(this.known_root_ve.has(x)) return;
@@ -5103,132 +5237,5 @@ class HandleTypes extends BaseService {
 		super(x);
 		this.load_data_cache();
 		this.save_data_cache();
-	}
-	load_data_cache() {
-		this.load_tmp_data();
-		if(!this.known_data_tmp) {
-			return;
-		}
-		let res=this.known_data_tmp;
-		if(res.known_root_ve) {
-			this.known_root_ve=new Set(res.known_root_ve);
-		}
-		if(res.known_strings) {
-			this.load_known_strings_from(res.known_strings);
-		}
-		if(res.known_bool) {
-			this.load_bool_from(res.known_bool);
-		}
-	}
-	/**
-	 * @param {[string,string[]][]} known_strings
-	 */
-	load_known_strings_from(known_strings) {
-		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
-		function from_entry_pair(x) {
-			return [x[0],new Set(x[1])];
-		}
-		let res_2=known_strings.map(from_entry_pair);
-		let res_3=new Map(res_2);
-		this.known_strings=res_3;
-	}
-	/** @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: [string, string[]][]; }|null} */
-	known_data_tmp=null;
-	save_data_cache() {
-		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
-		function to_entry_pair(x) {
-			return [x[0],[...x[1]]];
-		}
-		let known_root_ve=[...this.known_root_ve.values()];
-		let known_strings=[...this.known_strings.entries()].map(to_entry_pair);
-		let known_bool=[...this.known_booleans.entries()];
-		this.known_data_tmp={
-			known_root_ve,
-			known_strings,
-			known_bool,
-		};
-		let json_str=JSON.stringify(this.known_data_tmp);
-		this.save_local_storage(json_str);
-	}
-	load_tmp_data() {
-		let json_str=this.get_local_storage();
-		if(json_str) {
-			this.known_data_tmp=JSON.parse(json_str);
-		} else {
-			this.save_data_cache();
-		}
-	}
-	save_known_bool() {
-		this.load_tmp_data();
-		if(!this.known_data_tmp) {
-			this.delete_known_data();
-			throw new Error("Invalid data");
-		}
-		let bool_d=this.known_data_tmp.known_bool;
-		let arr=this.changed_known_bool;
-		for(let item of arr) {
-			let [key,val]=item;
-			let index=bool_d.findIndex(e => e[0]===key);
-			if(index<0) {
-				bool_d.push([item[0],val]);
-				index=bool_d.length-1;
-			} else {
-				bool_d[index][1]=val;
-			}
-		}
-		this.changed_known_bool=[];
-		this.save_tmp_data();
-	}
-	save_known_string() {
-		this.load_tmp_data();
-		if(!this.known_data_tmp) {
-			this.delete_known_data();
-			throw new Error("Invalid data");
-		}
-		let tmp_known_str=this.known_data_tmp.known_strings;
-		let arr=this.new_known_strings;
-		for(let item of arr) {
-			let [key,val]=item;
-			let index=tmp_known_str.findIndex(e => e[0]===key);
-			if(index<0) {
-				tmp_known_str.push([item[0],[val]]);
-				index=tmp_known_str.length-1;
-			} else {
-				tmp_known_str[index][1].push(val);
-			}
-		}
-		this.new_known_strings=[];
-		this.save_tmp_data();
-	}
-	save_tmp_data() {
-		let json_str=JSON.stringify(this.known_data_tmp);
-		this.save_local_storage(json_str);
-	}
-	/** @param {string} key @param {boolean} bool */
-	save_new_bool(key,bool) {
-		let kc=this.known_booleans.get(key);
-		if(!kc) {
-			kc={t: false,f: false};
-			this.known_booleans.set(key,kc);
-		}
-		if(bool) {
-			if(!kc.t) {
-				console.log(key,bool);
-			}
-			kc.t=true;
-		} else {
-			if(!kc.f) {
-				console.log(key,bool);
-			}
-			kc.f=true;
-		}
-		this.changed_known_bool.push([key,kc]);
-		this.save_known_bool();
-	}
-	/**
-	 * @param {[string, { t: boolean; f: boolean; }][]} bool_cache
-	 */
-	load_bool_from(bool_cache) {
-		this.known_booleans=new Map(bool_cache);
 	}
 }
