@@ -3810,47 +3810,49 @@ class HandleTypes extends BaseService {
 		console.log(name,obj);
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
+	/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
+	run_extract_empty_r(run) {
+		let {text,navigationEndpoint,bold,...rest}=run;
+		return rest;
+	}
+	/** @typedef {import("./support/yt_api/_/s/YtTextType.js").YtTextType} YtTextType */
+	/** @arg {Extract<YtTextType,{runs:any}>} text */
+	run_extract_empty_r_iter(text) {
+		let rest=[];
+		for(let run of text.runs) rest.push(this.run_extract_empty_r(run));
+		return rest;
+	}
+	/** @arg {Exclude<YtTextType,{runs:any}>} text */
+	run_extract_empty_simple(text) {
+		return this.run_extract_empty_s(text);
+	}
+	/** @arg {Exclude<YtTextType,{runs:any}>} simple_text */
+	run_extract_empty_s(simple_text) {
+		let {simpleText,accessibility,...rest}=simple_text;
+		return rest;
+	}
+	/** @arg {YtTextType} text */
 	YtTextType(text) {
 		if(!text) {
 			debugger;
 			return;
 		}
-		let rest=run_extract_empty(text);
-		if(rest instanceof Array) for(let i of rest) {
-			if(Object.keys(i).length>0) console.log(i);
-		}
-		return;
-		/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
-		function run_extract_empty_r(run) {
-			if("navigationEndpoint" in run) {
-				let {text,navigationEndpoint,...rest}=run;
-				return rest;
-			} else {
-				let {text,...rest}=run;
-				return rest;
-			}
-		}
-		/** @typedef {import("./support/yt_api/_/s/YtTextType.js").YtTextType} YtTextType */
-		/** @arg {YtTextType} text */
-		function run_extract_empty(text) {
+		if("runs" in text) {
 			let rest=[];
-			if("runs" in text) {
-				for(let run of text.runs) rest.push(run_extract_empty_r(run));
-			} else {
-				rest.push(run_extract_empty_s(text));
+			let ret=this.run_extract_empty_r_iter(text);
+			if(ret instanceof Array) for(let i of ret) {
+				if(Object.keys(i).length>0) rest.push(i);
 			}
-			return rest;
-
-		}
-		/** @arg {Exclude<YtTextType,{runs:any}>} simple_text */
-		function run_extract_empty_s(simple_text) {
-			if("accessibility" in simple_text) {
-				let {simpleText,accessibility,...rest}=simple_text;
-				return rest;
+			if(rest.length>0) {
+				console.log(rest);
+				debugger;
 			}
-			let {simpleText,...rest}=simple_text;
-			return rest;
+		} else {
+			let ret=this.run_extract_empty_simple(text);
+			if(Object.keys(ret).length>0) {
+				console.log(ret);
+				debugger;
+			}
 		}
 	}
 	/** @template T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
@@ -4862,18 +4864,23 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/u/UrlEndpointData.js").UrlEndpointData} v
 	 */
 	UrlEndpointData(v) {
-		let {target,url,...rest}=v;
-		switch(target) {
-			case "TARGET_NEW_WINDOW": break;
-			default: debugger;
-		}
+		let {url,...x}=v;
 		this.primitive(url);
-		this.empty_object(rest);
+		if("target" in x) {
+			let {target,...y}=x;
+			switch(target) {
+				case "TARGET_NEW_WINDOW": break;
+				default: debugger;
+			}
+			x=y;
+		}
+		this.empty_object(x);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta
 	 */
 	webCommandMetadata(meta) {
+		console.log("[command_meta]",meta);
 		switch(meta.webPageType) {
 			case "WEB_PAGE_TYPE_BROWSE": break;
 			case "WEB_PAGE_TYPE_CHANNEL": break;
