@@ -18,9 +18,7 @@
 // ==/UserScript==
 /*eslint-disable no-undef*/
 
-/**
- * @arg {{}} value
- */
+/** @arg {{}} value */
 function use_jquery_overwrite(value) {
 	Object.defineProperty(window,"$",{
 		value,

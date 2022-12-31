@@ -884,11 +884,9 @@ class StackVmBaseImpl {
 	}
 }
 
-/**
- * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
- * @typedef {import("./ns.js").Box} Box_CJS
- * @typedef {import("./ns.js").StackVM} StackVM_CJS
-*/
+/** @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS */
+/** @typedef {import("./ns.js").Box} Box_CJS */
+/** @typedef {import("./ns.js").StackVM} StackVM_CJS */
 
 /** @implements {StackVM_CJS} */
 class StackVMImpl {
@@ -2568,13 +2566,7 @@ class AutoBuyImplR {
 			font-size:22px;
 			color:lightgray;
 		}`;
-		/**
-		 * @arg {any} obj
-		 * @arg {HTMLElement} parent
-		 * @arg {string} tag_name
-		 * @arg {string} id
-		 * @arg {string | undefined} [content]
-		 */
+		/** @arg {any} obj * @arg {HTMLElement} parent * @arg {string} tag_name * @arg {string} id * @arg {string | undefined} [content] */
 		function create_element(obj,parent,tag_name,id,content) {
 			let ele=document.createElement(tag_name);
 			ele.id=id;
@@ -3205,17 +3197,13 @@ class AutoBuyImplR {
 		this.next_timeout(this.on_repeat_r,1*1000,"r");
 	}
 }
-/**
- * @arg {number} delay
- */
+/** @arg {number} delay */
 function wait(delay) {
 	return new Promise(function(a) {
 		setTimeout(a,delay);
 	});
 }
-/**
- * @arg {number} id
- */
+/** @arg {number} id */
 async function tonext_async(id) {
 	var next=Find_ToNext(id);
 	if(arUnit[id][16]||arUnit[id][8]=="quantum foam") {

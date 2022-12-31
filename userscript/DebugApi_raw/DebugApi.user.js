@@ -3023,17 +3023,13 @@ class CreateObjURLCache {
 		/** @type {CreateObjURLCache.originalScope} */
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
-		/**
-		 * @arg {[Blob | MediaSource]} args
-		 */
+		/** @arg {[Blob | MediaSource]} args */
 		function createObjectURL(...args) {
 			let ret=base.createObjectURL(...args);
 			CreateObjURLCache.cache.set(ret,[args,ret,true]);
 			return ret;
 		}
-		/**
-		 * @arg {[string]} args
-		 */
+		/** @arg {[string]} args */
 		function revokeObjectURL(...args) {
 			let key=args[0];
 			let cache_value=CreateObjURLCache.cache.get(key);
@@ -3811,19 +3807,13 @@ function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]));
 }
 add_function(log_stats);
-/**
- * @arg {string[]} arr
- * @arg {number} calc_win
- */
+/** @arg {string[]} arr @arg {number} calc_win */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
 	ret.sort((a,b) => b[1]-a[1]);
 	return ret;
 }
-/**
- * @arg {any[]} arr
- * @arg {number} start
- */
+/** @arg {any[]} arr @arg {number} start */
 function next_chunk(arr,start) {
 	let s_arr=null;
 	let last;
@@ -4104,11 +4094,7 @@ class CompressDual {
 }
 
 
-/**
- * @arg {CompressionStatsCalculator} stats
- * @arg {IDValueImpl_0} obj
- * @arg {number} max_id
- */
+/** @arg {CompressionStatsCalculator} stats @arg {IDValueImpl_0} obj @arg {number} max_id */
 function calc_next(stats,obj,max_id) {
 	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
 		return null;
@@ -4145,10 +4131,7 @@ function calc_next(stats,obj,max_id) {
 	return compress_result;
 }
 
-/**
- * @arg {IDValueImpl_0} value
- * @arg {IDValueImpl_0} next
- */
+/** @arg {IDValueImpl_0} value @arg {IDValueImpl_0} next */
 function assign_next(value,next) {
 	value.next=next;
 	return next;
@@ -4209,9 +4192,7 @@ function flat_obj(obj) {
 	ret.push(obj);
 	return ret;
 }
-/**
- * @type {{value:IDValueImpl_0[]}}
- */
+/** @type {{value:IDValueImpl_0[]}} */
 let g_obj_arr={value: []};
 
 /** @arg {number|string} val @arg {unknown} e */
@@ -5278,9 +5259,7 @@ class CrossOriginConnection {
 CrossOriginConnection.connect_to_api();
 
 const html_parsing_div_element=document.createElement("div");
-/**
- * @arg {string} html
- */
+/** @arg {string} html */
 function parse_html_to_binary_arr(html) {
 	html_parsing_div_element.innerHTML=html;
 	return Array.prototype.map.call(html_parsing_div_element.textContent,e => e.charCodeAt(0));
@@ -5337,11 +5316,7 @@ class DebugApi {
 	/** @arg {I_debug} debug @arg {I_undebug} undebug @arg {Constructor} func @arg {string} name @returns {dbg_result} */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
-		/**
-		 * @arg {Constructor} func
-		 * @arg {any} f_this
-		 * @arg {any[]} c_args
-		 */
+		/** @arg {Constructor} func * @arg {any} f_this * @arg {any[]} c_args */
 		function do_activate(func,f_this,c_args) {
 			try {
 				return Reflect.apply(func,f_this,c_args);
@@ -5414,8 +5389,7 @@ class DebugApi {
 		}
 		return false;
 	}
-	/** @argument {Function} function_value @returns {string}
-	*/
+	/** @argument {Function} function_value @returns {string} */
 	stringifyFunction(function_value) {
 		let function_code=function_value.toString();
 		if(function_code.includes("{}"[0])) {

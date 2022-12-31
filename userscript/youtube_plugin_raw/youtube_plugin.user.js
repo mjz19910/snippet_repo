@@ -639,10 +639,7 @@ function to_url(url) {
 	}
 }
 
-/**
- * @arg {Error} rejection
- * @returns {Promise<Response>}
- */
+/** @arg {Error} rejection @returns {Promise<Response>} */
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {
 		if(rejection.message!=="") {
@@ -702,11 +699,7 @@ class PropertyHandler {
 	}
 }
 inject_api_yt.PropertyHandler=PropertyHandler;
-/**
- * @arg {{}} object
- * @arg {PropertyKey} property
- * @arg {PropertyHandler} property_handler
- */
+/** @arg {{}} object @arg {PropertyKey} property @arg {PropertyHandler} property_handler */
 function override_prop(object,property,property_handler) {
 	Object.defineProperty(object,property,{
 		get() {
@@ -734,11 +727,7 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/**
- * @template {{}} T 
- * @arg {T} obj 
- * @returns {(import("./support/yt_api/_/b/GetMaybeKeys.js").GetMaybeKeys<T>)[]}
- */
+/** @template {{}} T  @arg {T} obj  @returns {(import("./support/yt_api/_/b/GetMaybeKeys.js").GetMaybeKeys<T>)[]} */
 function get_keys_of(obj) {
 	let rq=Object.keys(obj);
 	/** @type {any} */
@@ -878,13 +867,8 @@ class YtIterateTarget {
 	}
 }
 
-/**
- * @arg {string} real_path
- * @arg {string[]} keys
- * @arg {string} path
- * @return {void}
- * @log item_keys_tag
- */
+/** @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag
+  */
 function check_item_keys(real_path,path,keys) {
 	let real_path_arr=real_path.split(".");
 	let real_path_arr_dyn={
@@ -1162,10 +1146,7 @@ const decode_protobuf_obj=function make() {
 	let bigint_val_32=new Uint32Array(2);
 	let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
 	class LongBits {
-		/**
-		 * @arg {number} a
-		 * @arg {number} b
-	*/
+		/** @arg {number} a @arg {number} b */
 		constructor(a,b) {
 			this.lo=a;
 			this.hi=b;
@@ -1260,9 +1241,7 @@ const decode_protobuf_obj=function make() {
 				/* istanbul ignore next */
 				throw Error("invalid varint encoding");
 			}
-			/**
-			 * @arg {number} writeLength
-		*/
+			/** @arg {number} writeLength */
 			indexOutOfRange(writeLength) {
 				return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
 			}
@@ -1283,9 +1262,7 @@ const decode_protobuf_obj=function make() {
 }();
 
 
-/**
- * @arg {string} str
- */
+/** @arg {string} str */
 function decode_protobuf(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
 	/** @type {[[1,"uint64"],[2,"fixed32"],[3,"fixed32"]]} */
@@ -1375,9 +1352,7 @@ function decode_protobuf(str) {
 	};
 }
 
-/**
- * @arg {string} str
- */
+/** @arg {string} str */
 function decode_b64_proto_obj(str) {
 	return decode_protobuf(str);
 }
@@ -1791,9 +1766,7 @@ class FilterHandlers {
 	}
 
 }
-/**
- * @type {any[]}
- */
+/** @type {any[]} */
 let blob_create_args_arr=[];
 let leftover_args=[];
 inject_api_yt.blob_create_args_arr=blob_create_args_arr;
@@ -1813,9 +1786,7 @@ function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */
 function plr_raw_replace_embed() {
 	return;
 }
-/**
- * @type {any[]}
- */
+/** @type {any[]} */
 let mk_tree_arr=[];
 function act_found_create_yt_player(/** @type {{ data: { type: string; data: [any, any, any]; }; }} */ event) {
 	let tr=event.data.type;
@@ -1865,12 +1836,7 @@ class OnWindowProperty {
 		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
 	}
 }
-/**
- * @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc
- * @arg {string} ms
- * @arg {{}} obj
- * @arg {string} [mc]
- */
+/** @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
 function walk_key_path(cc,ms,obj,mc) {
 	let fs;
 	let mt=ms.match(cc.value_tr);
@@ -1897,10 +1863,7 @@ function walk_key_path(cc,ms,obj,mc) {
 	throw 1;
 }
 let win_watch=new OnWindowProperty;
-/**
- * @arg {any} val
- * @arg {MKState} cc
- */
+/** @arg {any} val @arg {MKState} cc */
 function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
@@ -1912,9 +1875,7 @@ function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	}
 	return ret;
 }
-/**
- * @arg {MKState} cc
- */
+/** @arg {MKState} cc */
 function on_mk_function_property(cc) {
 	/**@this {{}}*/
 	function with_this(/** @type {any} */ ...args) {
@@ -1947,10 +1908,7 @@ class MKState {
 	function_value=null;
 	noisy=false;
 }
-/**
- * @arg {MKState} cc
- * @arg {{}} obj
- */
+/** @arg {MKState} cc @arg {{}} obj */
 function on_mk_new_property(cc,obj) {
 	if(obj instanceof Function) {
 		cc.function_value=obj;
@@ -1967,10 +1925,7 @@ function on_mk_new_property(cc,obj) {
 		cc.value=obj;
 	}
 }
-/**
- * @arg {MKState} cc
- * @arg {{}} obj
- */
+/** @arg {MKState} cc @arg {{}} obj */
 function on_mk_property_set(cc,obj) {
 	if(ud_func.has(obj)) cc.value=obj;
 	if(any_c(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
@@ -1979,9 +1934,7 @@ function on_mk_property_set(cc,obj) {
 		cc.value=obj;
 	}
 }
-/**
- * @arg {MKState} cc
- */
+/** @arg {MKState} cc */
 function mk_run(cc) {
 	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {
 		return cc;
@@ -2003,12 +1956,7 @@ function mk_run(cc) {
 	}
 	return cc;
 }
-/**
- * @arg {object} target
- * @arg {PropertyKey} property_key
- * @arg {string} property_path
- * @arg {boolean} noisy
- */
+/** @arg {object} target @arg {PropertyKey} property_key @arg {string} property_path @arg {boolean} noisy */
 function mk(target,property_key,property_path,noisy=false) {
 	return new MKState({},target,property_key,property_path,noisy).run();
 }
@@ -2114,18 +2062,14 @@ class YtdPageManagerElement extends HTMLElement {
 inject_api_yt.playlist_arr??=[];
 /**@type {string[]} */
 let playlist_arr=inject_api_yt.playlist_arr;
-/**
- * @type {YtdPageManagerElement|null}
- */
+/** @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
 
 function has_ytd_page_mgr() {
 	return ytd_page_manager!==null;
 }
 
-/**
- * @arg {HTMLElement} element
- */
+/** @arg {HTMLElement} element */
 function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2138,13 +2082,9 @@ class YtdWatchFlexyElement extends HTMLElement {
 
 	}
 }
-/**
- * @type {YtdWatchFlexyElement | null}
- */
+/** @type {YtdWatchFlexyElement | null} */
 let ytd_watch_flexy=null;
-/**
- * @arg {HTMLElement} element
- */
+/** @arg {HTMLElement} element */
 function on_ytd_watch_flexy(element) {
 	const element_id="ytd-watch-flexy";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2171,9 +2111,7 @@ function is_watch_page_active() {
 	return page_elem.tagName.toLowerCase()=="ytd-watch-flexy";
 }
 
-/**
- * @arg {Node} value
- */
+/** @arg {Node} value */
 function as_node(value) {
 	return value;
 }
@@ -2242,17 +2180,11 @@ class YTNavigateFinishEvent {
 	detail=cast_as({});
 }
 
-/**
- * @type {((event:YTNavigateFinishEvent)=>void)[]}
- */
+/** @type {((event:YTNavigateFinishEvent)=>void)[]} */
 let on_yt_navigate_finish=[];
 
-/**
- * @template {string} U
- * @template {U[]} T
- * @arg {T} src
- * @arg {T} target
- */
+/** @template {string} U @template {U[]} T @arg {T} src @arg {T} target
+  */
 function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
 	for(let i=0;i<src.length;i++) {
@@ -2261,9 +2193,7 @@ function eq_keys(src,target) {
 	}
 	return true;
 }
-/**
- * @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]}
- */
+/** @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]} */
 function filter_out_keys(keys,to_remove) {
 	to_remove=cast_as(to_remove.slice());
 	/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
@@ -2291,9 +2221,7 @@ function on_json_request(request_info) {
 	}
 }
 
-/**
- * @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]} pageType
- */
+/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": break;
@@ -2314,9 +2242,7 @@ let css_str=`
 	}
 	/*# sourceURL=yt_css_user */
 `;
-/**
- * @arg {string} css_content
- */
+/** @arg {string} css_content */
 function createStyleElement(css_content) {
 	let style=document.createElement("style");
 	style.innerHTML=css_content;
@@ -2351,13 +2277,9 @@ function get_new_video_element_list(element_list,list_box) {
 	return new_video_elements;
 }
 
-/**
- * @type {HTMLElement | null}
- */
+/** @type {HTMLElement | null} */
 let yt_playlist_manager=null;
-/**
- * @arg {HTMLElement} element
- */
+/** @arg {HTMLElement} element */
 function on_yt_playlist_manager(element) {
 	const element_id="yt-playlist-manager";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2438,9 +2360,7 @@ function get_html_elements(node,child_node_tag_name) {
 }
 
 
-/**
- * @type {((event:{})=>void)[]}
- */
+/** @type {((event:{})=>void)[]} */
 var on_yt_navigate=[];
 async function wait_for_yt_player() {
 	if(!ytd_player) {
@@ -2448,9 +2368,7 @@ async function wait_for_yt_player() {
 	}
 	await ytd_player.playerResolver_.promise;
 }
-/**
- * @arg {HTMLElement} element
- */
+/** @arg {HTMLElement} element */
 function sumOffset(element) {
 	let cache={
 		top_offset: 0,
@@ -2566,9 +2484,7 @@ function title_text_overlay_update() {
 function is_yt_fullscreen_change_action(detail) {
 	return detail.actionName==="yt-fullscreen-change-action";
 }
-/**
- * @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event
- */
+/** @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
 function on_yt_action(event) {
 	let {detail}=event;
 	if(is_yt_fullscreen_change_action(detail)) {
@@ -2748,13 +2664,8 @@ inject_api_yt.AudioGainController=AudioGainController;
 /** @type {AudioGainController|null} */
 let audio_gain_controller=null;
 
-/**
- * @template {string} T
- * @template {{}} U
- * @template {import("./support/make/Split.js").Split<T, ",">} C
- * @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}}
- * @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS}
- */
+/** @template {string} T @template {{}} U @template {import("./support/make/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS}
+  */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
@@ -2976,8 +2887,7 @@ async function main() {
 			}
 		});
 	}
-	/** @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>}
-	*/
+	/** @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>} */
 	function fetch_inject(user_request,request_init) {
 		if(!original_fetch) throw new Error("No original fetch");
 		x: if(request_init) {
@@ -3003,11 +2913,10 @@ async function main() {
 		let active_blob_set=new Set;
 		inject_api_yt.active_blob_set=active_blob_set;
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
-			/**
-			 * @arg {typeof URL["createObjectURL"]} target
+			/** @arg {typeof URL["createObjectURL"]} target
 			 * @arg {typeof URL} thisArg
 			 * @arg {[Blob | MediaSource]} args
-			*/
+			 */
 			apply(target,thisArg,args) {
 				let [url_source,...rest]=args;
 				if(rest.length>0) {
@@ -3021,11 +2930,10 @@ async function main() {
 			}
 		});
 		URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
-			/**
-			 * @arg {typeof URL["revokeObjectURL"]} target
+			/** @arg {typeof URL["revokeObjectURL"]} target
 			 * @arg {typeof URL} thisArg
 			 * @arg {[string]} args
-			*/
+			 */
 			apply(target,thisArg,args) {
 				let val=args[0];
 				active_blob_set.delete(val);
@@ -3056,12 +2964,8 @@ function get_exports() {
 	return exports;
 }
 
-/**
- * @arg {{}} state
- * @arg {"account"} base
- * @arg {string[]} parts
- * @arg {number} index
- */
+/** @arg {{}} state @arg {"account"} base @arg {string[]} parts @arg {number} index
+  */
 function get_account_type(state,base,parts,index) {
 	let cur_part=parts[index];
 	switch(cur_part) {
@@ -3110,9 +3014,7 @@ function make_guide_item_keys() {
 	}];
 }
 
-/**
- * @arg {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param
- */
+/** @arg {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param */
 function verify_param(param) {
 	switch(param.value) {
 		case "history":
@@ -3124,14 +3026,8 @@ function verify_param(param) {
 	};
 }
 
-/**
- * @template {string} C
- * @template {string} U
- * @template {import("./support/make/Split.js").Split<C,",">[number]} _V
- * @template {_V extends U?U[]:never} T
- * @arg {T} ok_3
- * @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1
- */
+/** @template {string} C @template {string} U @template {import("./support/make/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1
+  */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }
@@ -3143,9 +3039,7 @@ function split_string(x,s=cast_as(",")) {
 }
 
 const seen_map=new Set;
-/**
- * @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value
- */
+/** @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value */
 function parse_browse_id(value) {
 	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
 	/** @template T,U @typedef {import("./ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */

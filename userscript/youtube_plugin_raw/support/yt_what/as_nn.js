@@ -1,8 +1,4 @@
-/**
- * @template T
- * @arg {T} x
- * @returns {NonNullable<T>}
- */
+/** @template T @arg {T} x @returns {NonNullable<T>} */
 export function as_nn(x) {
 	/** @arg {T} x @returns {x is NonNullable<T>} */
 	function assume_nonnull(x) {x; return true;}

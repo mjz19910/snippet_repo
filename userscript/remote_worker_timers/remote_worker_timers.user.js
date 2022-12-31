@@ -42,14 +42,7 @@
 	/**@typedef {TimerTagSingle|TimerTagRepeating} TimerTagValues */
 	/**@typedef {TimerTagValues["value"]} TimerTag */
 	class TimerState {
-		/**
-		 * @arg {TimerTag} tag
-		 * @arg {number} id
-		 * @arg {boolean} is_repeating
-		 * @arg {TimerHandler} target_fn
-		 * @arg {any} target_args
-		 * @arg {number} timeout
-		 */
+		/** @arg {TimerTag} tag * @arg {number} id * @arg {boolean} is_repeating * @arg {TimerHandler} target_fn * @arg {any} target_args * @arg {number} timeout */
 		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
@@ -65,14 +58,7 @@
 		}
 	}
 	class ActiveTimerState {
-		/**
-		 * @arg {TimerTag} type
-		 * @arg {number} id
-		 * @arg {boolean} is_repeating
-		 * @arg {Function} target_fn
-		 * @arg {any} target_args
-		 * @arg {number} timeout
-		 */
+		/** @arg {TimerTag} type * @arg {number} id * @arg {boolean} is_repeating * @arg {Function} target_fn * @arg {any} target_args * @arg {number} timeout */
 		constructor(id,type,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
@@ -89,27 +75,20 @@
 	}
 	function timer_nop() {}
 	class PromiseExecutorHandle {
-		/**
-		 * @arg {any} accept
-		 * @arg {any} reject
-		 */
+		/** @arg {any} accept @arg {any} reject */
 		constructor(accept,reject) {
 			this.m_closed=false;
 			this.m_accept=accept;
 			this.m_reject=reject;
 		}
-		/**
-		 * @arg {any} value
-		 */
+		/** @arg {any} value */
 		accept(value) {
 			if(this.m_closed) throw new Error("accept called on closed handle");
 			let accept=this.m_accept;
 			accept(value);
 			this.close();
 		}
-		/**
-		 * @arg {any} error
-		 */
+		/** @arg {any} error */
 		reject(error) {
 			if(this.m_closed) throw new Error("accept called on closed handle");
 			let reject=this.m_reject;
@@ -268,9 +247,7 @@
 		constructor() {
 			this.m_current=-1;
 		}
-		/**
-		 * @arg {number} current_value
-		 */
+		/** @arg {number} current_value */
 		set_current(current_value) {
 			this.m_current=current_value;
 		}
@@ -282,18 +259,14 @@
 		}
 	}
 	class VerifyError extends Error {
-		/**
-		 * @arg {string | undefined} message
-		 */
+		/** @arg {string | undefined} message */
 		constructor(message) {
 			super(message);
 			this.name="VerifyError";
 		}
 	}
 	class AssertionError extends Error {
-		/**
-		 * @arg {string | undefined} message
-		 */
+		/** @arg {string | undefined} message */
 		constructor(message) {
 			super(message);
 			this.name="AssertionError";
@@ -329,9 +302,7 @@
 			this.add_one_name(names.single);
 			this.add_one_name(names.repeating);
 		}
-		/**
-		 * @arg {keyof Window} key
-		 */
+		/** @arg {keyof Window} key */
 		add_one_name(key) {
 			this.m_api_map.set(key,window[key]);
 		}
@@ -343,9 +314,7 @@
 			window[clear.single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
-		/**
-		 * @arg {WorkerState} worker_state_value
-		 */
+		/** @arg {WorkerState} worker_state_value */
 		set_worker_state(worker_state_value) {
 			this.worker_state=worker_state_value;
 		}
@@ -353,10 +322,7 @@
 		assert_valid_worker() {
 			assert_non_null(this.worker_state);
 		}
-		/**
-		 * @arg {TimerTag} tag
-		 * @arg {number} remote_id
-		 */
+		/** @arg {TimerTag} tag @arg {number} remote_id */
 		fire(tag,remote_id) {
 			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
@@ -391,12 +357,7 @@
 			if(!value) throw new Error("Invalid");
 			return value;
 		}
-		/**
-		 * @arg {1|2} tag
-		 * @arg {any} target_fn
-		 * @arg {number} timeout
-		 * @arg {any} target_args
-		 */
+		/** @arg {1|2} tag * @arg {any} target_fn * @arg {number} timeout * @arg {any} target_args */
 		set(tag,target_fn,timeout,target_args) {
 			let remote_id=this.id_generator.next();
 			let is_repeating=false;
@@ -409,11 +370,7 @@
 			this.send_worker_set_message(tag,remote_id,timeout);
 			return remote_id;
 		}
-		/**
-		 * @arg {1 | 2} tag
-		 * @arg {number} remote_id
-		 * @arg {number} timeout
-		 */
+		/** @arg {1 | 2} tag * @arg {number} remote_id * @arg {number} timeout */
 		send_worker_set_message(tag,remote_id,timeout) {
 			this.assert_valid_worker();
 			/** @type {typeof TimeoutSetSingle|typeof TimeoutSetRepeating|null} */
@@ -433,9 +390,7 @@
 				timeout,
 			});
 		}
-		/**
-		 * @arg {number} remote_id
-		 */
+		/** @arg {number} remote_id */
 		is_state_stored_by_remote_id(remote_id) {
 			return this.m_remote_id_to_state_map.has(remote_id);
 		}
@@ -443,16 +398,11 @@
 		get_state_by_remote_id(remote_id) {
 			return this.m_remote_id_to_state_map.get(remote_id);
 		}
-		/**
-		 * @arg {number} remote_id
-		 * @arg {TimerState} state
-		 */
+		/** @arg {number} remote_id @arg {TimerState} state */
 		store_state_by_remote_id(remote_id,state) {
 			this.m_remote_id_to_state_map.set(remote_id,state);
 		}
-		/**
-		 * @arg {number} remote_id
-		 */
+		/** @arg {number} remote_id */
 		delete_state_by_remote_id(remote_id) {
 			this.m_remote_id_to_state_map.delete(remote_id);
 		}
@@ -480,9 +430,7 @@
 					console.assert(false,"on_result timer_result_msg needs a handler for",msg);
 			}
 		}
-		/**
-		 * @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|ReplySetRepeatingMsg|ReplyClearSingleMsg|ReplyClearRepeatingMsg} msg
-		 */
+		/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|ReplySetRepeatingMsg|ReplyClearSingleMsg|ReplyClearRepeatingMsg} msg */
 		on_reply(msg) {
 			switch(msg.type) {
 				case g_timer_api.reply.clear.single: break;
@@ -492,10 +440,7 @@
 				} break;
 			}
 		}
-		/**
-		 * @arg {1|2} tag
-		 * @arg {number} remote_id
-		 */
+		/** @arg {1|2} tag @arg {number} remote_id */
 		force_clear(tag,remote_id) {
 			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
@@ -516,10 +461,7 @@
 				});
 			}
 		}
-		/**
-		 * @arg {TimerTag} tag
-		 * @arg {number} remote_id
-		 */
+		/** @arg {TimerTag} tag @arg {number} remote_id */
 		clear(tag,remote_id) {
 			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
@@ -739,11 +681,7 @@
 	}
 	const WorkerStateMessageV=WorkerStateMessage.as_any_of();
 	class WorkerState {
-		/**
-		 * @arg {Blob} worker_code_blob
-		 * @arg {Timer} timer
-		 * @arg {PromiseExecutorHandle} executor_handle
-		 */
+		/** @arg {Blob} worker_code_blob * @arg {Timer} timer * @arg {PromiseExecutorHandle} executor_handle */
 		constructor(worker_code_blob,timer,executor_handle) {
 			let has_blob=false;
 			if(worker_code_blob instanceof Blob) has_blob=true;
@@ -829,15 +767,11 @@
 				} break;
 			}
 		}
-		/**
-		 * @arg {any} handle
-		 */
+		/** @arg {any} handle */
 		set_executor_handle(handle) {
 			this.executor_handle=handle;
 		}
-		/**
-		 * @arg {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|TimerWorkerSetTypesMsg} msg
-		 */
+		/** @arg {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|TimerWorkerSetTypesMsg} msg */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
 			switch(msg.type) {
@@ -858,17 +792,11 @@
 				} break;
 			}
 		}
-		/**
-		 * @template {{}|{for_worker_state: boolean}} T
-		 * @arg {T} msg
-		 * @returns {msg is {for_worker_state: boolean}}
-		 */
+		/** @template {{}|{for_worker_state: boolean}} T * @arg {T} msg * @returns {msg is {for_worker_state: boolean}} */
 		is_message_for(msg) {
 			return "for_worker_state" in msg&&msg.for_worker_state;
 		}
-		/**
-		 * @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg
-		 */
+		/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg */
 		dispatch_message(msg) {
 			if(this.is_message_for(msg)) {
 				switch(msg.type) {
@@ -922,21 +850,15 @@
 		typedPostMessage(msg) {
 			return this.worker?.postMessage(msg);
 		}
-		/**
-		 * @arg {WorkerState} worker_state_value
-		 */
+		/** @arg {WorkerState} worker_state_value */
 		static has_old_global_state_value(worker_state_value) {
 			return this.has_global_state()&&!this.equals_global_state(worker_state_value);
 		}
-		/**
-		 * @arg {WorkerState} worker_state_value
-		 */
+		/** @arg {WorkerState} worker_state_value */
 		static equals_global_state(worker_state_value) {
 			return this.get_global_state()===worker_state_value;
 		}
-		/**
-		 * @arg {WorkerState} worker_state_value
-		 */
+		/** @arg {WorkerState} worker_state_value */
 		static maybe_delete_old_global_state_value(worker_state_value) {
 			if(this.has_old_global_state_value(worker_state_value)) {
 				this.delete_old_global_state();
@@ -965,9 +887,7 @@
 			let any_window=window;
 			return any_window[this.global_state_key];
 		}
-		/**
-		 * @arg {WorkerState} worker_state_value
-		 */
+		/** @arg {WorkerState} worker_state_value */
 		static set_global_state(worker_state_value) {
 			/** @type {any} */
 			let any_window=window;
@@ -1036,11 +956,7 @@
 		let worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
 		worker_state.init();
 		const setTimeout_global=setTimeout;
-		/**
-		 * @arg {TimerHandler} handler
-		 * @arg {number | undefined} timeout
-		 * @arg {any[]} target_args
-		 */
+		/** @arg {TimerHandler} handler * @arg {number | undefined} timeout * @arg {any[]} target_args */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
 				window.setTimeout=setTimeout_global;
@@ -1063,10 +979,7 @@
 			}
 		}
 		const setInterval_global=setInterval;
-		/**
-		 * @arg {TimerHandler} handler
-		 * @arg {any[]} target_args
-		 */
+		/** @arg {TimerHandler} handler @arg {any[]} target_args */
 		function remoteSetInterval(handler,timeout=0,...target_args) {
 			if(!worker_state) {
 				window.setInterval=setInterval_global;
@@ -1092,9 +1005,7 @@
 			clearTimeout,
 			clearInterval
 		};
-		/**
-		 * @arg {{setTimeout: any,setInterval: any,clearTimeout: any,clearInterval: any}} obj
-		 */
+		/** @arg {{setTimeout: any,setInterval: any,clearTimeout: any,clearInterval: any}} obj */
 		function connect_local_to_remote_timer_api(obj) {
 			/** @type {any} */
 			let any_window=window;
@@ -1154,9 +1065,7 @@
 			return value;
 		}
 		decay_to_object;
-		/**
-		 * @arg {MessageEvent<typeof WorkerStateMessageV>} e
-		 */
+		/** @arg {MessageEvent<typeof WorkerStateMessageV>} e */
 		function message_without_types_handler(e) {
 			if(!g_timer_api.worker_set_types) throw 1;
 			let msg=e.data;
@@ -1181,9 +1090,7 @@
 				} break;
 			}
 		}
-		/**
-		 * @arg {MessageEvent<typeof WorkerStateMessageV>} e
-		 */
+		/** @arg {MessageEvent<typeof WorkerStateMessageV>} e */
 		function message_with_types_handler(e) {
 			let msg=e.data;
 			switch(msg.type) {
@@ -1248,9 +1155,7 @@
 				single: "clearTimeout",
 				repeating: "clearInterval"
 			};
-			/**
-			 * @arg {RemoteWorkerTypes} types
-			 */
+			/** @arg {RemoteWorkerTypes} types */
 			on_set_types(types) {
 				this.async=types.async;
 				this.reply=types.reply;
@@ -1272,11 +1177,10 @@
 			set_timer(timer) {
 				this.m_timer=timer;
 			}
-			/**
-			 * @arg {1|2} tag
+			/** @arg {1|2} tag
 			 * @arg {number} remote_id
 			 * @arg {number|undefined} timeout
-			 */
+			  */
 			set(tag,remote_id,timeout) {
 				if(!this.m_timer) throw 1;
 				return this.m_timer.set(tag,remote_id,timeout);
@@ -1288,18 +1192,13 @@
 			}
 		}
 		function nop_fn() {};
-		/**
-		 * @arg {RemoteTimer} timer
-		 * @arg {number} remote_id
-		 */
+		/** @arg {RemoteTimer} timer @arg {number} remote_id */
 		function fire_timer(timer,remote_id) {
 			timer.fire(remote_id);
 		}
 		const g_timer_api=new RemoteTimerApi;
 		class RemoteTimerState {
-			/**
-			 * @arg {1|2} type
-			 */
+			/** @arg {1|2} type */
 			constructor(type) {
 				this.type=type;
 				this.active=true;
@@ -1313,9 +1212,7 @@
 				this.base_id=globalThis[g_timer_api.set_names.single](nop_fn);
 				globalThis[g_timer_api.clear_names.single](this.base_id);
 			}
-			/**
-			 * @arg {number} remote_id
-			 */
+			/** @arg {number} remote_id */
 			fire(remote_id) {
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state) return;
@@ -1341,11 +1238,10 @@
 					default: throw new Error("TODO");
 				}
 			}
-			/**
-			 * @arg {1|2} tag
+			/** @arg {1|2} tag
 			 * @arg {number} remote_id
 			 * @arg {number | undefined} timeout
-			 */
+			  */
 			set(tag,remote_id,timeout) {
 				// debugger;
 				this.verify_tag(tag);
@@ -1366,18 +1262,13 @@
 				return obj.local_id;
 			}
 			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
-			/**
-			 * @arg {1|2} tag
-			 */
+			/** @arg {1|2} tag */
 			verify_tag(tag) {
 				if(!this.validate_tag(tag)) {
 					throw new Error("tag verification failed in RemoteTimer");
 				}
 			}
-			/**
-			 * @arg {RemoteTimerState} state
-			 * @arg {any} remote_id
-			 */
+			/** @arg {RemoteTimerState} state @arg {any} remote_id */
 			verify_state(state,remote_id) {
 				if(!this.validate_state(state)) {
 					console.info("Removed invalid local_state");
@@ -1387,9 +1278,7 @@
 					throw new Error("Tag verification failed in RemoteWorker");
 				}
 			}
-			/**
-			 * @arg {1|2} tag
-			 */
+			/** @arg {1|2} tag */
 			validate_tag(tag) {
 				if(tag<TIMER_SINGLE||tag>=TIMER_TAG_COUNT) {
 					console.assert(false,"Assertion failed in RemoteTimer.validate_tag: tag=%o is out of range");
@@ -1398,15 +1287,11 @@
 				}
 				return true;
 			}
-			/**
-			 * @arg {{ type: 1|2; }} state
-			 */
+			/** @arg {{ type: 1|2; }} state */
 			validate_state(state) {
 				return this.validate_tag(state.type);
 			}
-			/**
-			 * @arg {any} remote_id
-			 */
+			/** @arg {any} remote_id */
 			clear(remote_id) {
 				if(!this.m_remote_id_to_state_map.has(remote_id)) {
 					return null;

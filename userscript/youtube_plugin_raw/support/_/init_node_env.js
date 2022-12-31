@@ -9,9 +9,7 @@ navigator=na;
 {
 	class Storage {
 		map=new Map;
-		/**
-		 * @type {{ [x: string]: any; }}
-		 */
+		/** @type {{ [x: string]: any; }} */
 		index_arr=[];
 		/** @arg {string} str */
 		getItem(str) {
@@ -20,22 +18,15 @@ navigator=na;
 		get length() {
 			return this.map.size;
 		}
-		/**
-		 * @arg {any} key
-		 * @arg {any} value
-		 */
+		/** @arg {any} key @arg {any} value */
 		setItem(key,value) {
 			this.map.set(key,value);
 		}
-		/**
-		 * @arg {any} key
-		 */
+		/** @arg {any} key */
 		removeItem(key) {
 			this.map.delete(key);
 		}
-		/**
-		 * @arg {string | number} index
-		 */
+		/** @arg {string | number} index */
 		key(index) {
 			return this.index_arr[index];
 		};
@@ -53,9 +44,7 @@ navigator=na;
 	class Image {}
 	window.Image=Image;
 	class Document extends EventTarget {
-		/**
-		 * @arg {string} tagName
-		 */
+		/** @arg {string} tagName */
 		createElement(tagName) {
 			let element=new Element;
 			element._setup(tagName);
@@ -69,19 +58,13 @@ navigator=na;
 		get style() {
 			return {};
 		}
-		/**
-		 * @arg {string} tn
-		 */
+		/** @arg {string} tn */
 		_setup(tn) {
 			this.tagName=tn;
 		}
-		/**
-		 * @type {any[]}
-		 */
+		/** @type {any[]} */
 		children=[];
-		/**
-		 * @arg {any} other_ele
-		 */
+		/** @arg {any} other_ele */
 		append(other_ele) {
 			this.children.push(other_ele);
 		}
@@ -97,17 +80,13 @@ navigator=na;
 		get state() {
 			return this._state;
 		}
-		/**
-		 * @arg {{} | null} state
-		 */
+		/** @arg {{} | null} state */
 		pushState(state) {
 			this.history_list.push(this._state);
 			this._state=state;
 			console.log("history push state base");
 		}
-		/**
-		 * @arg {{} | null} state
-		 */
+		/** @arg {{} | null} state */
 		replaceState(state) {
 			console.log("history replace state base");
 			this.history_list[this.history_list.length-1]=state;
@@ -171,9 +150,7 @@ let r_window=window; r_window;
 		}
 	}
 	class Gain extends AudioNode {
-		/**
-		 * @arg {AudioContext} ctx
-		 */
+		/** @arg {AudioContext} ctx */
 		constructor(ctx) {
 			super();
 			this.ctx=ctx;
