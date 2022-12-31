@@ -20,7 +20,7 @@ x () {
             done
 	} <<< $va)
     cf_info=(${(f)tree_result})
-	blob_hash=$(echo -n $cf_info[2] | xxd -ps)
+	blob_hash=$(echo -n $cf_info[2]|xxd -ps)
     echo ""${cf_info[1]}" ---------------"
     git cat-file blob $blob_hash
     echo

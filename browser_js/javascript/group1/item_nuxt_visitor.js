@@ -36,7 +36,7 @@ visitors_m.pn={
 		a: {
 			once: true,
 			sub() {return visitors_m.pn.sub;},
-			v_it: function(/** @type {{ $children: any; $parent: { _watcher: any; }; _uid: string | number; }} */ v,/** @type {string[]} */ path) {
+			v_it: function(/** @type {{ $children: any; $parent: { _watcher: any; }; _uid: string|number; }} */ v,/** @type {string[]} */ path) {
 				var results=[];
 				var iter=v.$children;
 				if(!this.once) {
@@ -74,7 +74,7 @@ visitors_m.pn={
 			}
 		}
 	},
-	v_it(/** @type {{ $children: any; _uid: string | number; $store: any; }} */ v,/** @type {string[]} */ path) {
+	v_it(/** @type {{ $children: any; _uid: string|number; $store: any; }} */ v,/** @type {string[]} */ path) {
 		var results=[];
 		var keys=["_uid","_isVue","$options","_renderProxy"];
 		var iter=v.$children;
@@ -101,7 +101,7 @@ visitors_m.pn={
 let visitors_store={
 	sub: {},
 	f: {
-		v_it: function(/** @type {{ _vm: { _uid: string | number; _watchers: any; }; }} */ v,/** @type {any[]} */ path) {
+		v_it: function(/** @type {{ _vm: { _uid: string|number; _watchers: any; }; }} */ v,/** @type {any[]} */ path) {
 			if(!any(window).nvisit[v._vm._uid]) {
 				var cur=v._vm._watchers;
 				for(var i=0;i<cur.length;i++) {
@@ -124,7 +124,7 @@ if(typeof any(window).seen_vue_objs=="undefined") {
 let recurwork=[];
 /** @type {any[]} */
 let recurargs=[];
-/** @arg {string} a @arg {{ deps: any; vm: { _uid: string | number; }; }} b @arg {number} d */
+/** @arg {string} a @arg {{ deps: any; vm: { _uid: string|number; }; }} b @arg {number} d */
 function w_vs(a,b,d=0) {
 	if(d>1) {
 		return;
@@ -140,7 +140,7 @@ function w_vs(a,b,d=0) {
 	}
 	seen_watchers.push(b);
 	console.log(a,b);
-	dep.forEach(function(/** @type {{ subs: string | any[]; }} */ c,/** @type {any} */ curnum) {
+	dep.forEach(function(/** @type {{ subs: string|any[]; }} */ c,/** @type {any} */ curnum) {
 		for(i=1;i<c.subs.length;i++) {
 			var cur=c.subs[i];
 			if(any(window).recurwork.indexOf(cur)==-1) {

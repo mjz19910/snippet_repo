@@ -154,7 +154,7 @@ export class Timer {
 		})(tag);
 		if(!msg_id) {
 			console.assert(false,'Unknown timer_tag',tag);
-			console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
+			console.info('TypeError like: let v:TIMER_SINGLE|TIMER_REPEATING (%o|%o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
 			return;
 		}
 		worker_state.postMessage({

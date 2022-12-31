@@ -25,7 +25,7 @@ class DirBuilder {
 	}
 }
 class FSDirEntry {
-	/** @arg {string} name @arg {FSDir | FSFile} value */
+	/** @arg {string} name @arg {FSDir|FSFile} value */
 	constructor(name,value) {
 		this.name=name
 		this.value=value
@@ -52,7 +52,7 @@ class FSDir {
 	m_children=[]
 	/**@type {WeakRef<FSDir>|null} */
 	m_parent=null
-	/** @arg {FSDir | null} parent */
+	/** @arg {FSDir|null} parent */
 	constructor(parent) {
 		if(parent!==null) {
 			this.m_parent=new WeakRef(parent)
@@ -72,7 +72,7 @@ class FSDir {
 		this.m_children.push(new FSDirEntry(dir_name,new_dir))
 		return new_dir
 	}
-	/**@returns {FSDir | null} */
+	/**@returns {FSDir|null} */
 	get parent() {
 		if(!this.m_parent) return null
 		let parent_dir=this.m_parent.deref()
@@ -96,7 +96,7 @@ class Win32FSDir {
 		this.base=init_args.base
 		this.m_object_parent=init_args.object_parent
 	}
-	/**@returns {FSDir | null} */
+	/**@returns {FSDir|null} */
 	get parent() {
 		if(this.base=="/") {
 			return null
@@ -278,7 +278,7 @@ class JaiStruct {
 		/**@type {{[x:string]:any}} */
 		this.value={}
 	}
-	/** @arg {string | any[]} entries */
+	/** @arg {string|any[]} entries */
 	static from_builder_entries(entries) {
 		let new_struct=new this
 		for(let i=0;i<entries.length;i++) {

@@ -326,7 +326,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {Box_CJS[]} arg_arr */
 	unbox_arr(arg_arr) {
-		/** @type {({} | Function | StackVMImpl | null)[]} */
+		/** @type {({}|Function|StackVMImpl|null)[]} */
 		let arr=[];
 		for(let i=0;i<arg_arr.length;i++) {
 			let cur=arg_arr[i];
@@ -424,7 +424,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 			let obj=a.factory(...construct_arr);
 			vm.stack.push(obj);
 		} else if(a.instance_type==="CSSStyleSheet") {
-			/** @type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
+			/** @type {{s:[options?: CSSStyleSheetInit|undefined], valid_count:1}|{s:[], valid_count:0}} */
 			let valid_args={
 				s: [],
 				valid_count: 0
@@ -560,7 +560,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 class NumberBoxImpl {
 	/** @readonly */
 	type="number";
-	/** @returns {this | null} @arg {string} target */
+	/** @returns {this|null} @arg {string} target */
 	as_type(target) {
 		if(typeof this.value===target) {
 			return this;
@@ -1066,7 +1066,7 @@ class StringBoxImpl {
 }
 class StackVMParserImplR {
 	static match_regex=/(.+?)(;|$)/gm;
-	/** @arg {string[] | number[]} cur @arg {number} arg_loc*/
+	/** @arg {string[]|number[]} cur @arg {number} arg_loc*/
 	static parse_int_arg(cur,arg_loc) {
 		let cur_item=cur[arg_loc];
 		if(typeof cur_item=="string") {
@@ -1077,7 +1077,7 @@ class StackVMParserImplR {
 			}
 		}
 	}
-	/** @arg {string | string[]} str @arg {any[]} format_list */
+	/** @arg {string|string[]} str @arg {any[]} format_list */
 	static parse_string_with_format_ident(str,format_list) {
 		let format_index=str.indexOf("%");
 		let format_type=str[format_index+1];
@@ -1406,7 +1406,7 @@ class BaseCompressionImpl {
 	compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
@@ -1514,7 +1514,7 @@ class MulCompressionImpl extends BaseCompressionImpl {
 }
 window.MulCompression=MulCompressionImpl;
 class TimeoutTarget {
-	/** @arg {AutoBuyStateImplR | AutoBuyImplR | null} obj @arg {()=>void} callback */
+	/** @arg {AutoBuyStateImplR|AutoBuyImplR|null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {
 		this.m_once=true;
 		this.m_obj=obj;
@@ -1656,7 +1656,7 @@ class TimeoutNode extends BaseNodeImpl {
 	set() {
 		this.m_id=setTimeout(this.run.bind(this),this.m_timeout);
 	}
-	/** @arg {{} | null} target */
+	/** @arg {{}|null} target */
 	start(target) {
 		if(!target) throw new Error("No target");
 		this.m_target=target;
@@ -1684,7 +1684,7 @@ class IntervalNode extends BaseNodeImpl {
 	set() {
 		this.id=setInterval(this.run.bind(this),this.m_timeout);
 	}
-	/** @arg {{} | null} target */
+	/** @arg {{}|null} target */
 	start(target=null) {
 		if(target) {
 			this.m_target=target;
@@ -1742,7 +1742,7 @@ class AsyncNodeRootImplR {
 		/** @type {BaseNodeImpl[]} */
 		this.children=[];
 	}
-	/** @arg {()=>void} target_fn @arg {number | undefined} timeout */
+	/** @arg {()=>void} target_fn @arg {number|undefined} timeout */
 	set(target_fn,timeout,repeat=false) {
 		let node;
 		if(repeat) {
@@ -2566,7 +2566,7 @@ class AutoBuyImplR {
 			font-size:22px;
 			color:lightgray;
 		}`;
-		/** @arg {any} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string | undefined} [content] */
+		/** @arg {any} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string|undefined} [content] */
 		function create_element(obj,parent,tag_name,id,content) {
 			let ele=document.createElement(tag_name);
 			ele.id=id;
@@ -2640,7 +2640,7 @@ class AutoBuyImplR {
 			}
 		}
 	}
-	/** @arg {string | number} value @arg {string} pad_char @arg {number} char_num */
+	/** @arg {string|number} value @arg {string} pad_char @arg {number} char_num */
 	do_zero_pad(value,pad_char,char_num) {
 		let string;
 		if(typeof value==="number") {
@@ -3080,7 +3080,7 @@ class AutoBuyImplR {
 	next_timeout_async_err_log(msg,err) {
 		console.log(msg,err);
 	}
-	/** @arg {number | undefined} timeout @arg {string} char */
+	/** @arg {number|undefined} timeout @arg {string} char */
 	[labeled_sym("next_timeout_async")](timeout,char) {
 		console.log("next_timeout_async",char,timeout);
 		let err=new Error;
@@ -3389,7 +3389,7 @@ function proxy_jquery() {
 	let val=use_jquery();
 	set_jq_proxy(val);
 }
-/** @arg {{} | undefined} value */
+/** @arg {{}|undefined} value */
 function set_jq_proxy(value) {
 	let s_value=value;
 	Object.defineProperty(window,"$",{
@@ -3562,7 +3562,7 @@ class LoadMutationObserver extends BaseMutationObserver {
 /** @type {BaseMutationObserver[]} */
 let mut_observers=[];
 window.g_mut_observers=mut_observers;
-/** @type {(node: Node, child: Node | null)=>boolean}*/
+/** @type {(node: Node, child: Node|null)=>boolean}*/
 function insert_before_enabled(node,child) {
 	if(node instanceof HTMLScriptElement) {
 		let should_insert_1=dom_add_elm_filter(node);

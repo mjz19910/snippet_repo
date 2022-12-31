@@ -11,9 +11,9 @@ export class PageLoaderState {
 		this.m_page_html_lexer=arg0;
 	}
 	fetcher=new UrlFetcher;
-	/** @type {ClientRequest | null} */
+	/** @type {ClientRequest|null} */
 	m_client_request=null;
-	/** @type {IncomingMessage | null} */
+	/** @type {IncomingMessage|null} */
 	m_incoming_message=null;
 	silent=false;
 	no_repl=false;

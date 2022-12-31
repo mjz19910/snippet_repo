@@ -291,7 +291,7 @@ function main() {
 
 			}
 			let __nf=Symbol(2);
-			/** @param {(...a:any[])=>any} fn @param {string} bp_str @param {(string | undefined)[]} args @returns {symbol | [any,any]} */
+			/** @param {(...a:any[])=>any} fn @param {string} bp_str @param {(string|undefined)[]} args @returns {symbol|[any,any]} */
 			function __run(fn,bp_str,...args) {
 				if(!x.u) throw 1;
 				x.o=__nf;
@@ -312,7 +312,7 @@ function main() {
 				return x.o;
 			}
 			x.rx.jQuery=ret[1];
-			/** @param {(...arg0: any[]) => any} fn @param {string} bp_str @param {(number | boolean)[]} args */
+			/** @param {(...arg0: any[]) => any} fn @param {string} bp_str @param {(number|boolean)[]} args */
 			function __run_noisy(fn,bp_str,...args) {
 				x(fn,bp_str);
 				try {
@@ -442,7 +442,7 @@ function main() {
 					}
 					throw new Error("Failed to parse function head");
 				}
-				let js_parse_function=( /** @type {string | any[]} */ e) => {
+				let js_parse_function=( /** @type {string|any[]} */ e) => {
 					let fn=e.slice(0,8);
 					if(fn=='function') {
 						js_out.push(fn);
@@ -484,7 +484,7 @@ function main() {
 					} while(true);
 					return [js_out,js_in,js_tmp];
 				};
-				let js_parse_block_enter=( /** @type {string | any[]} */ e) => {
+				let js_parse_block_enter=( /** @type {string|any[]} */ e) => {
 					if(e[0].match(/{/)) {
 						let js_class_methods=[];
 						let js_func_ident,js_func_args;

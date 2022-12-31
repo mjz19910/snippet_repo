@@ -6,7 +6,7 @@ export class RequestModule {
 	/**@type {false} */
 	is_https=false;
 	get=http.get.bind(http);
-	/** @arg {HttpsOnly | HttpOnly} update_imp */
+	/** @arg {HttpsOnly|HttpOnly} update_imp */
 	init(update_imp) {
 		this.get=update_imp.value.get.bind(update_imp);
 	}

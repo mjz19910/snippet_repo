@@ -26,7 +26,7 @@ navigator=na;
 		removeItem(key) {
 			this.map.delete(key);
 		}
-		/** @arg {string | number} index */
+		/** @arg {string|number} index */
 		key(index) {
 			return this.index_arr[index];
 		};
@@ -80,13 +80,13 @@ navigator=na;
 		get state() {
 			return this._state;
 		}
-		/** @arg {{} | null} state */
+		/** @arg {{}|null} state */
 		pushState(state) {
 			this.history_list.push(this._state);
 			this._state=state;
 			console.log("history push state base");
 		}
-		/** @arg {{} | null} state */
+		/** @arg {{}|null} state */
 		replaceState(state) {
 			console.log("history replace state base");
 			this.history_list[this.history_list.length-1]=state;

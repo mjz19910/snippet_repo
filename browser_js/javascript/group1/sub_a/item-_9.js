@@ -47,7 +47,7 @@ function get_ids(e) {
 function calc_cur(obj) {
 	obj.stats=sorted_comp_stats(obj.arr,obj.stats_win)
 }
-/** @arg {{ stats: string | any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj @arg {any} max_id */
+/** @arg {{ stats: string|any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj @arg {any} max_id */
 function calc_next(obj,max_id) {
 	if(obj.stats.length===0) {
 		return null
@@ -102,7 +102,7 @@ function deep_eq(obj_1,obj_2) {
 	}
 	throw new Error("Fixme")
 }
-/** @arg {string | any[]} arr @arg {any} value */
+/** @arg {string|any[]} arr @arg {any} value */
 function deep_includes(arr,value) {
 	for(let i=0;i<arr.length;i++) {
 		let is_eq=deep_eq(arr[i],value)

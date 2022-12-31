@@ -5,7 +5,7 @@
  created by iterating over the xml tree.
  When a duplicate tag is found in the xml tree, convert the value corresponding to
  that tag into an array */
-async function x() {
+async function read_library_ms_xml() {
 	/** @type {import("./__global.js")} */
 	let holder=1;
 	holder;
@@ -74,7 +74,7 @@ async function x() {
 					return e[0].nodeValue;
 				}
 			}
-			/** @arg {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj @arg {string} key @arg {HTMLCollection | NodeListOf<ChildNode>} list */
+			/** @arg {({[x:string]:HTMLCollection|NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection|NodeListOf<ChildNode>}} obj @arg {string} key @arg {HTMLCollection|NodeListOf<ChildNode>} list */
 			function append_from_list(obj,key,list) {
 				if(obj instanceof Array) {
 					obj.push({
@@ -92,7 +92,7 @@ async function x() {
 			function append_from_childNodes(obj,node) {
 				append_from_list(obj,node.nodeName,node.childNodes);
 			}
-			/** @arg {HTMLCollection | NodeList} e */
+			/** @arg {HTMLCollection|NodeList} e */
 			function *iterator_of_html_array(e) {
 				for(let i=0;i<e.length;i++) yield e[i];
 			}
@@ -158,4 +158,4 @@ async function x() {
 	// 	// ^ probably url type? === [val]::{[GUID]}
 	// }
 }
-x();
+read_library_ms_xml();

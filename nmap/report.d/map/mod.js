@@ -284,7 +284,7 @@ class B {
 	find_duplicate() {
 		/**@readonly*/const Reply=Query.A_ValueEnum.ReplyArray;
 		let dup_count=0;
-		/**@type {[import("./ns.js").DNS_IN_A_Type, import("./ns.js").DNS_IN_A_Type] | null} */
+		/**@type {[import("./ns.js").DNS_IN_A_Type, import("./ns.js").DNS_IN_A_Type]|null} */
 		let first_dup=null;
 		let sort_count=0;
 		/** @arg {string} a @arg {string} b */
@@ -1021,7 +1021,7 @@ export const rev_dig_todo=[
 
 /**@readonly*/
 export const rev_arr_2=(() => {
-	/**@type {import("./ns.js").ip_range_in_type | null}*/
+	/**@type {import("./ns.js").ip_range_in_type|null}*/
 	let x=null;
 	return [
 		[64,233,(x=[[160,171],[176,191]],range(...x)),1],

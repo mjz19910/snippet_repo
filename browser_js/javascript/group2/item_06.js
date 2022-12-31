@@ -110,7 +110,7 @@ async function kernel_main() {
 			/**@type {any[]} */
 			this.dirty_object_vec=[]
 		}
-		/** @arg {string | number} event_type @arg {any} event_listener */
+		/** @arg {string|number} event_type @arg {any} event_listener */
 		addEventListener(event_type,event_listener) {
 			this._events[event_type]??=[]
 			let event_listener_description={
@@ -119,7 +119,7 @@ async function kernel_main() {
 			}
 			this._events[event_type].push(event_listener_description)
 		}
-		/** @arg {string | number} event_type @arg {any} event_listener */
+		/** @arg {string|number} event_type @arg {any} event_listener */
 		removeEventListener(event_type,event_listener) {
 			if(this._events[event_type]===void 0)
 				return
@@ -182,7 +182,7 @@ async function kernel_main() {
 			this.is_shutdown=false
 			/** @type {any[]} */
 			this.on_shutdown_vec=[]
-			/** @type {(() => void) | null} */
+			/** @type {(() => void)|null} */
 			this.shutdown_waiter=null
 		}
 		// @ts-ignore
@@ -231,7 +231,7 @@ async function kernel_main() {
 			}
 			this.is_shutdown=true
 		}
-		/** @arg {{ shutdown_waiter: (() => void) | null; }} runtime @arg {() => void} accept @arg {any} reject */
+		/** @arg {{ shutdown_waiter: (() => void)|null; }} runtime @arg {() => void} accept @arg {any} reject */
 		// @ts-ignore
 		static wait_into_promise(runtime,accept,reject) {
 			runtime.shutdown_waiter=function() {
@@ -684,7 +684,7 @@ async function kernel_main() {
 		future.poll(future,cx)
 		return cx.wait_for()
 	}
-	/** @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime @arg {string | number} i */
+	/** @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime @arg {string|number} i */
 	async function async_loop_function_inner(runtime,i) {
 		let w=async_delay_future.bind(null,runtime)
 		let ref_sym=runtime.auto_ref()

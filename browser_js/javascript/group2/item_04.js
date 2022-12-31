@@ -51,10 +51,10 @@ function main(exports) {
 		/** @type {any[]}
 		 */
 		key_vec=[];
-		/** @type {(number | undefined)[]}
+		/** @type {(number|undefined)[]}
 		 */
 		data_start_vec=[];
-		/** @type {(number | undefined)[]}
+		/** @type {(number|undefined)[]}
 		 */
 		data_end_vec=[];
 		/** @type {any[]}
@@ -77,7 +77,7 @@ function main(exports) {
 		set k(key) {
 			this.lastKey=key;
 		}
-		/** @param {string|symbol} key @param {any} value @param {string | any[]} data_vec
+		/** @param {string|symbol} key @param {any} value @param {string|any[]} data_vec
 		 */
 		add_function(key,value,data_vec) {
 			if(key==='') {
@@ -207,7 +207,7 @@ function main(exports) {
 			}
 		}
 		class RustType {
-			/** @param {string} qual @param {string | null} type
+			/** @param {string} qual @param {string|null} type
 			 */
 			constructor(qual,type) {
 				this.qual=qual;
@@ -472,7 +472,7 @@ function main(exports) {
 				});
 			}
 			constructor() {
-				/** @type {{ wake: () => void; } | null}
+				/** @type {{ wake: () => void; }|null}
 				 */
 				this.waker=null;
 				this.wake_count=0;

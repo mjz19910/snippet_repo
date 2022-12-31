@@ -151,7 +151,7 @@ function main() {
 			if(!r) throw new Error("failed to parse single quotes");
 			return r[0];
 		}
-		let func_process_result=function(/** @type {string | any[]} */ res,/** @type {string} */ str) {
+		let func_process_result=function(/** @type {string|any[]} */ res,/** @type {string} */ str) {
 			let obj={};
 			if(res.length<2) {
 				obj.break_parse=true;
@@ -217,7 +217,7 @@ function main() {
 			reset_count=false;
 			/** @type {boolean} */
 			m_at_eof=false;
-			/** @type {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; } | null} */
+			/** @type {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }|null} */
 			obj={
 				break_parse: false,
 				eof: false,

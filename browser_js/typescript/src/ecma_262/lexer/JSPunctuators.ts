@@ -161,7 +161,7 @@ export class JSPunctuators extends LexerBase {
 			s_single_char_tokens.set('%',JSTokenizerTokenType.Percent);
 			// . is OtherPunctuator
 			s_single_char_tokens.set('.',JSTokenizerTokenType.Period);
-			// | is OtherPunctuator
+			//|is OtherPunctuator
 			s_single_char_tokens.set('|',JSTokenizerTokenType.Pipe);
 			// + is OtherPunctuator
 			s_single_char_tokens.set('+',JSTokenizerTokenType.Plus);

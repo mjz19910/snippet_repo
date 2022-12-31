@@ -30,7 +30,7 @@ function main() {
 		var state=window.state;
 		/*class_gen_scope*/ {
 			/*class_scope*/ {
-				t.data_arr.put=function(/** @type {{ [x: string]: any[][]; }} */ obj,/** @type {string | number} */ target,/** @type {string | any[]} */ cur) {
+				t.data_arr.put=function(/** @type {{ [x: string]: any[][]; }} */ obj,/** @type {string|number} */ target,/** @type {string|any[]} */ cur) {
 					var nv=cur.slice(1+this.off,cur[this.off]+1);
 					/** @type {any[][]} */
 					var arr_out=[];

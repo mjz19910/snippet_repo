@@ -60,9 +60,9 @@ function main() {
 					state.sym=this.sym;
 				}
 				state.info=[];
-				/** @type {((e: any) => void) | undefined} */
+				/** @type {((e: any) => void)|undefined} */
 				this.on_internal_callback=undefined;
-				/** @type {((e: any) => void) | undefined} */
+				/** @type {((e: any) => void)|undefined} */
 				this.on_breakpoint_clear=undefined;
 				this.in_callback=false;
 				state.info.push(this.sym.debug);
@@ -79,7 +79,7 @@ function main() {
 						await this.next.clear(() => {
 							console.log('prev clear done');
 						});
-						/** @type {debug_class | null} */
+						/** @type {debug_class|null} */
 						this.next=null;
 					}
 					return;
@@ -104,7 +104,7 @@ function main() {
 					state.breakpoint_function=g;
 				}
 				this.breakpoint_function=state.breakpoint_function;
-				/** @type {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }[]} */
+				/** @type {{ arg: any[][]; m_this: { (start?: number|undefined, end?: number|undefined): any[]; (v: PropertyKey): boolean; }; }[]} */
 				this.failed_check=[];
 				var make_internal_promise=function(/** @type {(arg0: any) => void} */ a) {
 					t.on_internal_callback=function(e) {
@@ -137,7 +137,7 @@ function main() {
 				if(!this.on_internal_callback) return;
 				this.on_internal_callback(this.internal_result);
 			}
-			/** @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }} info */
+			/** @arg {{ arg: any[][]; m_this: { (start?: number|undefined, end?: number|undefined): any[]; (v: PropertyKey): boolean; }; }} info */
 			callback(info) {
 				x: {
 					if(this.state.info&&info.arg?.[1]?.[0]!==undefined&&this.state.info.indexOf(info.arg[1][0])>-1) {
@@ -167,7 +167,7 @@ function main() {
 					this.clear_breakpoint(info);
 				}
 			}
-			/** @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; } | null | undefined} result */
+			/** @arg {{ arg: any[][]; m_this: { (start?: number|undefined, end?: number|undefined): any[]; (v: PropertyKey): boolean; }; }|null|undefined} result */
 			clear_breakpoint(result) {
 				var error;
 				if(!window.undebug) {

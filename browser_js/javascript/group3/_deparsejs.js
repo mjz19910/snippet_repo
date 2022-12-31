@@ -1,6 +1,6 @@
 //cspell:words getargs idents keywordhandlers gethandler mclass fnbody parama
 //cspell:words parast parsebody parsebracket notreg charexpr gimuy
-//cspell:words Paran Seperator jsonlike Asignment eatnext outobj
+//cspell:words Paran Separator jsonlike Asignment eatnext outobj
 //cspell:words newfn sethandler tryblock tryobj
 if(typeof window.code=="undefined") {
 	window.code="function d(t){return Boolean(t&&t[vr])}";
@@ -13,9 +13,39 @@ function as_cast(e) {
 	let x=e;
 	return x;
 }
+class ParseJsState {
+	/**
+	 * @param {Set<string>} keywords
+	 * @param {prim_types} primitives
+	 */
+	constructor(keywords,primitives) {
+		this.getargs=0;
+		this.parsebody=0;
+		this.parsebracket=0;
+		/** @type {PtType} */
+		this.pt=0;
+		/** @type {PtType[]} */
+		this.parast=[];
+		/** @type {TokenTypes[]} */
+		this.tok=[];
+		this.idents=[];
+		this.keywords=keywords;
+		this.primitives=primitives;
+	}
+	pop_para_stack() {
+		let first=this.parast.pop()
+		if(!first) throw 1;
+		return first;
+	}
+}
+
+if(typeof exports==="object") {
+	exports.ParseJsState=ParseJsState;
+}
+
 // cspell:ignore parsejs
 class parsejs {
-	constructor(s) {
+	constructor() {
 		let kwo_from={
 			/** @type {"async,await"} */a: "async,await",
 			/** @type {"case,catch,class,const,continue"} */c: "case,catch,class,const,continue",
@@ -59,8 +89,8 @@ class parsejs {
 			}
 		}
 		if(!keywords) throw new Error("keywords not generated");
+		/** @type {Map<"function"|"try"|"catch"|"finally",{}>} */
 		this.keywordhandlers=new Map;
-		let mclass=this.constructor;
 		/** @template T @arg {T} _x @returns {_x is (keyof parsejs)[]}  */
 		function as_keyof_arr(_x) {return true;}
 		let keyof_arr=Object.getOwnPropertyNames(Reflect.getPrototypeOf(this));
@@ -75,47 +105,30 @@ class parsejs {
 				let x=e;
 				return x;
 			}
-			/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/make/Split.js").Split<X,string extends S?",":S>} */
+			/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 			function split_string(x,s=cast_as(",")) {
 				let r=x.split(s);
 				return cast_as(r);
 			}
 			if(is_key_like(i)) {
-				this.keywordhandlers.set(split_string(i,"_"),this[i].bind(this));
+				let t=this;
+				/** @arg {"eat_function"|"eat_try"|"eat_catch"|"eat_finally"} i @arg {{}} v */
+				function make(i,v) {
+					t.keywordhandlers.set(split_string(i,"_")[1],v);
+				}
+				switch(i) {
+					case "eat_catch": make(i,this.eat_catch.bind(this)); break;
+					case "eat_finally": make(i,this.eat_finally.bind(this)); break;
+					case "eat_function": make(i,this.eat_function.bind(this)); break;
+					case "eat_try": make(i,this.eat_try.bind(this)); break;
+				}
 			}
 		}
+		/** @type {prim_types} */
 		let primitives=["null","undefined","true","false","NaN","Infinity","-Infinity","String"];
-		this.state={
-			getargs: 0,
-			parsebody: 0,
-			parsebracket: 0,
-			pt: 0,
-			parast: [],
-			tok: [],
-			idents: [],
-			keywords,
-			primitives,
-		};
-		if(s) {
-			/** @this {this} */
-			function sethandler(n,fn) {
-				if(!this instanceof mclass) {
-					throw RangeError("this not instance of "+mclass);
-				}
-				if(typeof fn!="function") {
-					throw TypeError("sethandler called but parameter 2 is not a function");
-				}
-				this.keywordhandlers.set(n,fn.bind(this));
-			};
-			let gethandler=function(g) {
-				if(!this instanceof mclass) {
-					throw RangeError("this not instance of "+mclass);
-				}
-				this.keywordhandlers.get(g);
-			};
-			s(this,sethandler,gethandler);
-		}
+		this.state=new ParseJsState(keywords,primitives);
 	}
+	/** @arg {string} s @arg {ParseJsState} state */
 	eat_function(s,state) {
 		state.parast.push(state.pt);
 		state.pt=7;
@@ -134,7 +147,8 @@ class parsejs {
 					break;
 				}
 			}
-		s=this.parse(s,state,1);
+		let sn=this.parse(s,state,1);
+		s=sn;
 		state.pt=3;
 		var parama=state.tok;
 		if(s[0]!="{}"[0]&&s.length!=0) {
@@ -156,28 +170,34 @@ class parsejs {
 		s=this.parse(s,state,2);
 		var fnbody=state.tok;
 		if(named) {
+			let first_tok=parama[0];
+			if(!first_tok) throw 1;
+			if(first_tok.value!=="primitive") throw 1;
 			save.push({
+				/** @type {"Function"} */
 				value: "Function",
 				head: parama.slice(1),
 				body: fnbody,
-				name: parama[0].data,
-				named: true
+				name: first_tok.data,
+				named: true,
 			});
 		} else {
 			save.push({
 				value: "Function",
 				head: parama,
 				body: fnbody,
-				named: false
+				named: false,
 			});
 		}
 		state.tok=save;
 		state.parsebody=0;
 		if(state.parast.length>0) {
-			state.pt=state.parast.pop();
+			let last=state.pop_para_stack();
+			state.pt=last;
 		}
 		return s;
 	}
+	/** @arg {string} s @arg {ParseJsState} state */
 	eat_try(s,state) {
 		state.parast.push(state.pt);
 		state.pt=8;
@@ -185,11 +205,12 @@ class parsejs {
 		state.tok=[];
 		s=this.parse(s,state,0);
 		var tryblock=state.tok;
+		/** @type {TryObjType} */
 		var tryobj={
 			value: "Try",
 			body: tryblock
 		};
-		if(s.substr(0,5)=="catch") {
+		if(s.slice(0,5)=="catch") {
 			state.tok=[];
 			s=s.slice(5);
 			state.pt=12;
@@ -202,18 +223,19 @@ class parsejs {
 			s=this.eat_finally(s,state,tryobj);
 		}
 		if(state.parast.length>0) {
-			state.pt=state.parast.pop();
+			state.pt=state.pop_para_stack();
 		}
 		save.push(tryobj);
 		state.tok=save;
 		return s;
 	}
+	/** @arg {string} s @arg {ParseJsState} state @arg {TryObjType} tryobj */
 	eat_catch(s,state,tryobj) {
 		if(state.pt!=12)
 			throw SyntaxError("Unexpected token catch");
 		state.parast.push(state.pt);
 		state.pt=6;
-		var save=state.tok;
+		var save=state.tok; save;
 		state.tok=[];
 		s=this.parse(s,state,1);
 		tryobj.catch={
@@ -223,9 +245,10 @@ class parsejs {
 		state.pt=14;
 		s=this.parse(s,state,0);
 		tryobj.catch.body=state.tok;
-		state.pt=state.parast.pop();
+		state.pt=state.pop_para_stack();
 		return s;
 	}
+	/** @arg {string} s @arg {ParseJsState} state @arg {TryObjType} tryobj */
 	eat_finally(s,state,tryobj) {
 		if(state.pt!=9)
 			throw SyntaxError("Unexpected token finally");
@@ -237,16 +260,18 @@ class parsejs {
 		tryobj.finally={
 			body: state.tok
 		};
-		state.pt=state.parast.pop();
+		state.pt=state.pop_para_stack();
+		save;
 		return s;
 	}
+	/** @arg {string} s @arg {ParseJsState} state @arg {number} d @returns {string} */
 	parse(s,state,d) {
 		let comments=[];
 		while(s!="") {
 			var len=1;
 			var td=0;
 			if(s=="") {
-				return;
+				return "";
 			}
 			if(s.charAt(0)=="/"&&s.charAt(1)=="*") {
 				var end=s.indexOf('*/');
@@ -287,7 +312,7 @@ class parsejs {
 						}
 						var prev=state.tok[state.tok.length-1];
 						console.log(prev);
-						if((prev.value=="ident")||(prev.value=="RParan")) {
+						if((prev.value=="ident")||(prev.value=="r_paren")) {
 							len=1;
 							state.tok.push({
 								value: "Operator",
@@ -311,7 +336,7 @@ class parsejs {
 					var match=s.match(/^\s+/);
 					if(match==null) {
 						len=1;
-					} else if(match.index>0) {
+					} else if(match.index!==void 0&&match.index>0) {
 						len=1;
 					} else {
 						len=match[0].length;
@@ -327,7 +352,7 @@ class parsejs {
 						break;
 					}
 					if(state.tok[state.tok.length-1]) {
-						if(state.tok[state.tok.length-1].value=="Seperator") {
+						if(state.tok[state.tok.length-1].value=="Separator") {
 							state.tok.pop();
 							if(state.tok.length==0) {
 								break;
@@ -335,12 +360,12 @@ class parsejs {
 						}
 						if(state.tok[state.tok.length-1].value!="LBracket") {
 							state.tok.push({
-								value: "Seperator"
+								value: "Separator"
 							});
 						}
 					} else {
 						state.tok.push({
-							value: "Seperator"
+							value: "Separator"
 						});
 					}
 					break;
@@ -356,7 +381,7 @@ class parsejs {
 						break;
 					}
 					state.tok.push({
-						value: "LParan"
+						value: "l_paren"
 					});
 					break;
 				case "{}"[0]:
@@ -376,7 +401,7 @@ class parsejs {
 					}
 					break;
 				case "{}"[1]:
-					if(state.tok.length>1&&state.tok[state.tok.length-1].value=="Seperator") {
+					if(state.tok.length>1&&state.tok[state.tok.length-1].value=="Separator") {
 						state.tok.pop();
 					}
 					if(state.pt==0) {
@@ -386,11 +411,11 @@ class parsejs {
 						state.tok.push({
 							value: "RBracket"
 						});
-						state.pt=state.parast.pop();
+						state.pt=state.pop_para_stack();
 						break;
 					}
 					if(state.pt==5) {
-						state.pt=state.parast.pop();
+						state.pt=state.pop_para_stack();
 						return s.slice(1);
 					}
 					//console.log(state.tok.slice(state.tok.length > 20 ? state.tok.length - 20 : 0, state.tok.length))
@@ -398,17 +423,17 @@ class parsejs {
 					break;
 				case "()"[1]:
 					if(state.pt==11) {
-						state.pt=state.parast.pop();
+						state.pt=state.pop_para_stack();
 						return s.slice(1);
 					}
 					if(state.pt==1) {
 						state.tok.push({
-							value: "RParan"
+							value: "r_paren"
 						});
 						return s.slice(1);
 					}
 					state.tok.push({
-						value: "RParan"
+						value: "r_paren"
 					});
 					break;
 				case "!":
@@ -458,6 +483,7 @@ class parsejs {
 				case "'":
 					var match=s.slice(1).match(/\'/);
 					if(match) {
+						if(match.index===void 0) throw 1;
 						state.tok.push({
 							value: "primitive",
 							type: "StringSingle",
@@ -485,7 +511,7 @@ class parsejs {
 						}
 					} else {
 						state.tok.push({
-							value: "Asignment"
+							value: "Assignment"
 						});
 					}
 					break;
@@ -547,7 +573,7 @@ class parsejs {
 					break;
 				case ":":
 					if(state.pt==4) {
-						state.tok[state.tok.length-1].eatnext=true;
+						state.tok[state.tok.length-1].eat_next=true;
 						break;
 					}
 					state.tok.push({
@@ -602,7 +628,6 @@ class parsejs {
 						state.tok.push({
 							value: "bracket",
 							empty: true,
-							body: []
 						});
 						len=2;
 					} else {
@@ -619,12 +644,13 @@ class parsejs {
 						var bracket=state.tok;
 						save.push({
 							value: "bracket",
-							body: bracket
+							empty: false,
+							body: bracket,
 						});
 						state.tok=save;
 						state.parsebracket=0;
 						if(state.parast.length>0) {
-							state.pt=state.parast.pop();
+							state.pt=state.pop_para_stack();
 						}
 						continue;
 					}
@@ -713,17 +739,29 @@ class parsejs {
 					});
 					break;
 				default:
+					/** @type {"ident"} */
 					var js_ident="ident";
 					var match=s.match(/^[a-zA-Z$_\d]+/);
 					if(match) {
-						var hit=match[0];
-						var bailout=state.tok.length>1&&state.tok[state.tok.length-1].value=="Operator"&&state.tok[state.tok.length-1].data=="."&&hit=="catch";
+						// cspell:ignore deparsejs
+						/** @type {Split<Extract<keyof parsejs,`eat_${string}`>,"_">[1]} */
+						var hit=as_cast(match[0]);
+						function calc_bail_out() {
+							if(state.tok.length<1) {
+								return false;
+							}
+							let last=state.tok[state.tok.length-1];
+							if(!(last.value==="Operator"&&last.data=="."&&hit==="catch")) {
+								return false;
+							}
+							return true;
+						}
+						var bailout=calc_bail_out();
 						if(!bailout&&state.keywords.has(hit)) {
 							if(this.keywordhandlers.has(hit)) {
 								s=s.slice(hit.length);
 								console.log(etn);
-								window.outobj=0;
-								var pre=this["eat_"+hit].toString().slice("eat_".length+hit.length);
+								var pre=this[`eat_${hit}`].toString().slice("eat_".length+hit.length);
 								this.newfn=eval("outobj=function "+pre+"//# sourceURL=eat_"+(etn++)+".js");
 								s=this.newfn(s,state);
 								continue;
@@ -753,13 +791,14 @@ class parsejs {
 		return s;
 	}
 	toString() {
-		return state.tok;
+		return this.state.tok;
 	}
 }
 if(typeof exports=="undefined") {
-	parser=new parsejs();
-	parser.parse(code,parser.state);
-	parser.state.tok;
+	window.parser=new parsejs();
+	window.parser.parse(window.code,window.parser.state,0);
+	window.parser.state.tok;
+	window.$;
 } else {
 	exports.parsejs=parsejs;
 }

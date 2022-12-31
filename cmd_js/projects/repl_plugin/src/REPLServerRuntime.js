@@ -12,7 +12,7 @@ class NodeEventEmitter extends XHolder {
 	rawListeners(event_name) {
 		return this.X.rawListeners(event_name);
 	}
-	/** @arg {string | symbol} eventName */
+	/** @arg {string|symbol} eventName */
 	listenerCount(eventName) {
 		return this.X.listenerCount(eventName);
 	}
@@ -46,7 +46,7 @@ class NodeEventEmitter extends XHolder {
 		this.X.prependOnceListener(...args);
 		return this;
 	}
-	/** @arg {[event: string | symbol, listener: (...args: any[]) => void]} args */
+	/** @arg {[event: string|symbol, listener: (...args: any[]) => void]} args */
 	removeListener(...args) {
 		this.X.removeListener(...args);
 		return this;
@@ -56,7 +56,7 @@ class NodeEventEmitter extends XHolder {
 		this.X.addListener(...args);
 		return this;
 	}
-	/** @arg {[event: string | symbol, ...args: any[]]} args */
+	/** @arg {[event: string|symbol, ...args: any[]]} args */
 	emit(...args) {
 		return this.X.emit(...args);
 	}
@@ -84,7 +84,7 @@ class RLInterface extends NodeEventEmitter {
 	close() {
 		this.X.close();
 	}
-	/** @arg {[data: string | Buffer, key?: import('readline').Key | undefined]} args */
+	/** @arg {[data: string|Buffer, key?: import('readline').Key|undefined]} args */
 	write(...args) {
 		return this.X.write(...args);
 	}
@@ -144,7 +144,7 @@ class RLInterface extends NodeEventEmitter {
 
 /**@implements {REPLServer} */
 export class REPLServerRuntime extends RLInterface {
-	/**@arg {string | repl.ReplOptions} [options] @returns {REPLServerRuntime} */
+	/**@arg {string|repl.ReplOptions} [options] @returns {REPLServerRuntime} */
 	static start_repl(options) {
 		console.log("start repl");
 		let repl_value=repl.start(options);
@@ -176,13 +176,13 @@ export class REPLServerRuntime extends RLInterface {
 	get writer() {return this.X.writer;}
 	get replMode() {return this.X.replMode;}
 	get last() {return this.X.last;}
-	/** @arg {string} evalCmd @arg {import("vm").Context} context @arg {string} file @arg {(err: Error | null, result: any) => void} cb */
+	/** @arg {string} evalCmd @arg {import("vm").Context} context @arg {string} file @arg {(err: Error|null, result: any) => void} cb */
 	eval(evalCmd,context,file,cb) {
 		return this.X.eval(evalCmd,context,file,cb);
 	}
 	get lastError() {return this.X.lastError;}
 	get completer() {return this.X.completer;}
-	/** @arg {string} keyword @arg {repl.REPLCommand | repl.REPLCommandAction} cmd */
+	/** @arg {string} keyword @arg {repl.REPLCommand|repl.REPLCommandAction} cmd */
 	defineCommand(keyword,cmd) {
 		this.X.defineCommand(keyword,cmd);
 	}

@@ -1,5 +1,5 @@
 export class SimpleStackVM {
-	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['get_argv']|['push_window']|['breakpoint'])[]} */
+	/** @type {(["this"]|["push", string]|["get"]|["call", number]|["drop"]|['return']|['halt']|['get_argv']|['push_window']|['breakpoint'])[]} */
 	instructions;
 	/** @arg {SimpleStackVM['instructions']} instructions */
 	constructor(instructions) {

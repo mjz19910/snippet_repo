@@ -259,14 +259,14 @@
 		}
 	}
 	class VerifyError extends Error {
-		/** @arg {string | undefined} message */
+		/** @arg {string|undefined} message */
 		constructor(message) {
 			super(message);
 			this.name="VerifyError";
 		}
 	}
 	class AssertionError extends Error {
-		/** @arg {string | undefined} message */
+		/** @arg {string|undefined} message */
 		constructor(message) {
 			super(message);
 			this.name="AssertionError";
@@ -370,7 +370,7 @@
 			this.send_worker_set_message(tag,remote_id,timeout);
 			return remote_id;
 		}
-		/** @arg {1 | 2} tag @arg {number} remote_id @arg {number} timeout */
+		/** @arg {1|2} tag @arg {number} remote_id @arg {number} timeout */
 		send_worker_set_message(tag,remote_id,timeout) {
 			this.assert_valid_worker();
 			/** @type {typeof TimeoutSetSingle|typeof TimeoutSetRepeating|null} */
@@ -381,7 +381,7 @@
 			}
 			if(!msg_id) {
 				console.assert(false,"Unknown timer_tag",tag);
-				console.info("TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o",TIMER_SINGLE,TIMER_REPEATING,tag);
+				console.info("TypeError like: let value:TIMER_SINGLE|TIMER_REPEATING (%o|%o) = %o",TIMER_SINGLE,TIMER_REPEATING,tag);
 				return;
 			}
 			this.worker_state.typedPostMessage({
@@ -956,7 +956,7 @@
 		let worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
 		worker_state.init();
 		const setTimeout_global=setTimeout;
-		/** @arg {TimerHandler} handler @arg {number | undefined} timeout @arg {any[]} target_args */
+		/** @arg {TimerHandler} handler @arg {number|undefined} timeout @arg {any[]} target_args */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
 				window.setTimeout=setTimeout_global;
@@ -1239,7 +1239,7 @@
 			}
 			/** @arg {1|2} tag
 			 @arg {number} remote_id
-			 @arg {number | undefined} timeout */
+			 @arg {number|undefined} timeout */
 			set(tag,remote_id,timeout) {
 				// debugger;
 				this.verify_tag(tag);

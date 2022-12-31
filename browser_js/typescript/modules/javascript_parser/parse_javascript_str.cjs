@@ -601,7 +601,7 @@ class PunctuatorsData extends ECMA262Base {
 	constructor(parent) {
 		super(parent);
 	}
-	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
+	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> &|^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
 	DivPunctuatorArray="/ /=".split(" ");
 }
 
@@ -1910,7 +1910,7 @@ class js_token_generator {
 		this.index=0;
 		this.root=new ecma_root();
 	}
-	/** @param {[true,string,number,number]|[false,symbol,number,number] | null} token_value */
+	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
 	describe_token(token_value) {
 		if(!token_value) return ["undefined"];
 		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);

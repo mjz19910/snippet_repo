@@ -9,7 +9,7 @@ function as_cast(e) {
 function main() {
 	"use strict";
 	let str="40580802070e1e0b010c1c1b021a480a0701141d4b571f080a0c581c01092a1a410d0b190a541406580b02074b1c5f0f1b04380410001c1c43450a130b0c4a0b1416531c5a1526190e0417081c031b544d19140a0e00000758574d4f5b0c14250c06091d100a01544d0c18";
-	/** @param {string | any[]} str @param {number} len */
+	/** @param {string|any[]} str @param {number} len */
 	function chunk_str(str,len) {
 		let res=[];
 		for(let cur,i=0;i<str.length;) {
@@ -135,7 +135,7 @@ function main() {
 				this.result_vec[this.start_index+1]=process_result;
 				console.log('pd',this.start_index,count,process_result,start_value);
 			}
-			/** @param {Float64Array | number[]} range_f64
+			/** @param {Float64Array|number[]} range_f64
 			 */
 			next_larger_perf_time(range_f64) {
 				for(;;) {
@@ -247,7 +247,7 @@ function main() {
 			}
 			log_level_vec=['error','warning','info','debug','trace'];
 			log_level='debug';
-			/** @param {string | undefined} [error]
+			/** @param {string|undefined} [error]
 			 */
 			on_failure(error) {
 				if(this.log_level==='debug') {

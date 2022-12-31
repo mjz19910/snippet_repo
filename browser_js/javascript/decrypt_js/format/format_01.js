@@ -1,6 +1,6 @@
 // @ts-nocheck
 globalThis.setInterval=new Proxy(globalThis.setInterval,{
-	/** @arg {[ typeof setInterval, any, [ TimerHandler, number | undefined ] ]} arg0 */
+	/** @arg {[ typeof setInterval, any, [ TimerHandler, number|undefined ] ]} arg0 */
 	apply(...[,,[func,ms]]) {
 		console.log("set_interval ms",ms);
 		return setTimeout(function() {

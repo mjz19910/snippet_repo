@@ -83,7 +83,7 @@ function main() {
 			return "";
 		return {};
 	}();
-	/** @arg {(Window|(Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v */
+	/** @arg {(Window|(Window & typeof globalThis)|HTMLIFrameElement|CSSStyleDeclaration)[]} v */
 	function log_if_noisy(...v) {
 		if(log_level>LOG_VERBOSE) {
 			console.log(...v);

@@ -1290,7 +1290,7 @@ const decode_protobuf_obj=function make() {
 function decode_protobuf(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
 	let loop_count=0;
-	/** @type {[number,number,(number | bigint)[]][]} */
+	/** @type {[number,number,(number|bigint)[]][]} */
 	let data=[];
 	let reader=new decode_protobuf_obj.MyReader(buffer);
 	x: for(;loop_count<15;loop_count++) {
@@ -1684,7 +1684,7 @@ class FilterHandlers {
 		this.on_json_type(res,request,req_parse);
 		this.handle_types.ResponseTypes(res);
 	}
-	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string | URL | Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data @arg {URL} req_parse */
+	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data @arg {URL} req_parse */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
@@ -1809,7 +1809,7 @@ class OnWindowProperty {
 			handler(ev);
 		}
 	}
-	/** @arg {string | number} ev_name @arg {any} fn */
+	/** @arg {string|number} ev_name @arg {any} fn */
 	removeEventListener(ev_name,fn) {
 		let evt=this._events[ev_name];
 		if(evt===undefined) return;
@@ -1894,7 +1894,7 @@ class MKState {
 	}
 	value={};
 	value_tr="";
-	/** @type {Function | null} */
+	/** @type {Function|null} */
 	function_value=null;
 	noisy=false;
 }
@@ -2067,7 +2067,7 @@ function on_ytd_page_manager(element) {
 	ytd_page_manager=any_c(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
 }
-/** @type {HTMLElement | null} */
+/** @type {HTMLElement|null} */
 let ytd_watch_flexy=null;
 /** @arg {HTMLElement} element */
 function on_ytd_watch_flexy(element) {
@@ -2085,7 +2085,7 @@ function on_ytd_watch_flexy(element) {
 inject_api_yt.page_type_changes??=[];
 let page_type_changes=inject_api_yt.page_type_changes;
 
-/** @type {string | null} */
+/** @type {string|null} */
 let last_page_type=null;
 
 function is_watch_page_active() {
@@ -2112,7 +2112,7 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-/** @type {import("./support/yt_api/yt/YtdPlayerElement.js").YtdPlayerElement | null} */
+/** @type {import("./support/yt_api/yt/YtdPlayerElement.js").YtdPlayerElement|null} */
 let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
@@ -2259,7 +2259,7 @@ function get_new_video_element_list(element_list,list_box) {
 	return new_video_elements;
 }
 
-/** @type {HTMLElement | null} */
+/** @type {HTMLElement|null} */
 let yt_playlist_manager=null;
 /** @arg {HTMLElement} element */
 function on_yt_playlist_manager(element) {
@@ -2356,7 +2356,7 @@ function sumOffset(element) {
 		top_offset: 0,
 		left_offset: 0
 	};
-	/** @type {HTMLElement | null} */
+	/** @type {HTMLElement|null} */
 	let cur_element=null;
 	cur_element=element;
 	for(;;) {
@@ -2551,7 +2551,7 @@ let volume_plugin_style_source=`
 `;
 
 class AudioGainController {
-	/** @type {(HTMLVideoElement | HTMLAudioElement)[]} */
+	/** @type {(HTMLVideoElement|HTMLAudioElement)[]} */
 	attached_element_list=[];
 	/** @type {MediaElementAudioSourceNode[]} */
 	media_element_source_list=[];
@@ -2612,7 +2612,7 @@ inject_api_yt.AudioGainController=AudioGainController;
 let audio_gain_controller=null;
 
 /** @template {string} T @template {{}} U @template {import("./support/make/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
-Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
+Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
 	/** @type {C} */
@@ -2734,7 +2734,7 @@ async function main() {
 
 	// modify global section
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
-	/** @type {typeof fetch | null} */
+	/** @type {typeof fetch|null} */
 	let original_fetch=null;
 	fetch_inject.__proxy_target__=window.fetch;
 	modify_global_env();
@@ -2779,7 +2779,7 @@ async function main() {
 		}
 		return ret;
 	}
-	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected */
+	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
 	function bind_promise_handler(request,options,onfulfilled,onrejected) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 		let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
@@ -2788,11 +2788,11 @@ async function main() {
 	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Promise<any>} ov @return {Promise<any>} */
 	function handle_fetch_response_2(request,options,ov) {
 		return {
-			/** @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
+			/** @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
 			then(onfulfilled,onrejected) {
 				return ov.then(bind_promise_handler(request,options,onfulfilled,onrejected));
 			},
-			/** @type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
+			/** @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
 			catch(onrejected) {
 				return ov.catch(onrejected);
 			},
@@ -2852,7 +2852,7 @@ async function main() {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
 	function modify_global_env() {
-		/** @type {Map<string, Blob | MediaSource>} */
+		/** @type {Map<string, Blob|MediaSource>} */
 		let created_blobs=new Map;
 		inject_api_yt.created_blobs=created_blobs;
 		/** @type {Set<string>} */
@@ -2861,7 +2861,7 @@ async function main() {
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
 			/** @arg {typeof URL["createObjectURL"]} target
 			 @arg {typeof URL} thisArg
-			 @arg {[Blob | MediaSource]} args */
+			 @arg {[Blob|MediaSource]} args */
 			apply(target,thisArg,args) {
 				let [url_source,...rest]=args;
 				if(rest.length>0) {
@@ -4073,7 +4073,7 @@ class HandleTypes extends BaseService {
 		let k=get_keys_of(ep);
 		k;
 	}
-	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand | undefined} cmd */
+	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand|undefined} cmd */
 	GeneralCommand(cmd) {
 		if(!cmd) return;
 		let {clickTrackingParams: ct,commandMetadata: md,continuationCommand: cc,signalServiceEndpoint: ss,...rest}=cmd;

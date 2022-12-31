@@ -103,7 +103,7 @@ export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 			}
 			if(!msg_id) {
 				console.assert(false,'Unknown tag in RemoteWorker.fire',tag);
-				console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
+				console.info('TypeError like: let v:TIMER_SINGLE|TIMER_REPEATING (%o|%o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
 				return;
 			}
 			if(fire_pause.includes(remote_id)) {

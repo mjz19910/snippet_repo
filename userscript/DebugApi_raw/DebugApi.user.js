@@ -702,7 +702,7 @@ class PunctuatorsData extends ECMA262Base {
 	constructor(parent) {
 		super(parent);
 	}
-	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
+	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> &|^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
 	DivPunctuatorArray="/ /=".split(" ");
 }
 
@@ -2518,7 +2518,7 @@ class ReversePrototypeChain {
 		}
 		return "cache_id::"+index;
 	}
-	/** @arg {string} cache_key @arg {{} | null} prototype */
+	/** @arg {string} cache_key @arg {{}|null} prototype */
 	cache_prototype(cache_key,prototype) {
 		this.destination[cache_key]??={
 			__proto__: null,
@@ -2531,7 +2531,7 @@ class ReversePrototypeChain {
 			}
 		};
 	}
-	/** @arg {{} | undefined} prototype @arg {{} | undefined} next_proto @arg {number} index */
+	/** @arg {{}|undefined} prototype @arg {{}|undefined} next_proto @arg {number} index */
 	add_one(prototype,next_proto,index) {
 		if(!this.list)
 			throw new Error("No prototype list");
@@ -2648,7 +2648,7 @@ function overwrite_addEventListener(obj) {
 	let prototype=obj.get_target_prototype();
 	let target=prototype.addEventListener;
 	let new_target=new Proxy(target,{
-		/** @arg {[type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions | undefined]} argArray */
+		/** @arg {[type: string, callback: EventListenerOrEventListenerObject|null, options?: boolean|AddEventListenerOptions|undefined]} argArray */
 		apply(target,callback,argArray) {
 			/** @type {{}[]} */
 			let cq=[callback,argArray.length,...argArray];
@@ -2802,7 +2802,7 @@ class AddEventListenerExtension {
 		if(!(this.namespace_key in val)) throw new Error("Invalid");
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
-	/** @private @returns {void} @arg {[unknown,number,unknown,...unknown[]]} real_value @arg {number} key @arg {{} | null} val */
+	/** @private @returns {void} @arg {[unknown,number,unknown,...unknown[]]} real_value @arg {number} key @arg {{}|null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
@@ -3003,9 +3003,9 @@ class CreateObjURLCache {
 		createObjectURL: URL.createObjectURL,
 		revokeObjectURL: URL.revokeObjectURL,
 	};
-	/** @type {[(Blob | MediaSource)[], string, boolean][]} */
+	/** @type {[(Blob|MediaSource)[], string, boolean][]} */
 	static expired=[];
-	/** @type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
+	/** @type {Map<string, [(Blob|MediaSource)[], string, boolean]>} */
 	static cache=new Map;
 	static enable() {
 		this.update_scope(this.getScope());
@@ -3023,7 +3023,7 @@ class CreateObjURLCache {
 		/** @type {CreateObjURLCache.originalScope} */
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
-		/** @arg {[Blob | MediaSource]} args */
+		/** @arg {[Blob|MediaSource]} args */
 		function createObjectURL(...args) {
 			let ret=base.createObjectURL(...args);
 			CreateObjURLCache.cache.set(ret,[args,ret,true]);
@@ -3118,12 +3118,12 @@ class CompressRepeated {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
-	/** @arg {(string | RepeatImpl_0<string>)[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
+	/** @arg {(string|RepeatImpl_0<string>)[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
 	decompress_result(src,dst) {
 		if(this.did_decompress(src,dst)) return [true,dst];
 		return [false,dst];
 	}
-	/** @arg {string | any[]} arr */
+	/** @arg {string|any[]} arr */
 	static can_compress_items(arr) {
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -3152,7 +3152,7 @@ class CompressRepeated {
 		}
 		return this.compress_result(arr,ret);
 	}
-	/** @arg {(string | RepeatImpl_0<string>)[]} arr */
+	/** @arg {(string|RepeatImpl_0<string>)[]} arr */
 	try_decompress(arr) {
 		/** @type {string[]} */
 		let ret=[];
@@ -3237,7 +3237,7 @@ class BaseCompression {
 	compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
@@ -4208,7 +4208,7 @@ function find_matching_value(val,e) {
 	}
 }
 
-/** @arg {string | number} val */
+/** @arg {string|number} val */
 function key_not_found(val) {
 	console.log("not found",val);
 }
@@ -4216,7 +4216,7 @@ function key_not_found(val) {
 /** @type {number[]} */
 let id_map_one=[];
 
-/** @arg {string | number} val */
+/** @arg {string|number} val */
 function do_decode(val) {
 	let fv=g_obj_arr.value.slice(1).find(e => find_matching_value(val,e));
 	if(!fv) return key_not_found(val);
@@ -4235,32 +4235,32 @@ function do_decode(val) {
 	}
 }
 
-/** @type {(string | number)[][]} */
+/** @type {(string|number)[][]} */
 let dr_map_num=[];
 
-/** @type {(string | number)[][]} */
+/** @type {(string|number)[][]} */
 let ids_dec_num=[];
 
-/** @type {RepeatImpl_0<(string | number)[]>[]} */
+/** @type {RepeatImpl_0<(string|number)[]>[]} */
 let dr_map_rep=[];
 
-/** @type {(string | number)[][]} */
+/** @type {(string|number)[][]} */
 let id_map_rep=[];
 
-/** @type {(string | number)[][]} */
+/** @type {(string|number)[][]} */
 let id_map_num=[];
 
 /** @type {number[]} */
 let ids_dec_rep=[];
 
-/** @arg {string | number | RepeatImpl_0<number>} e @returns {["dr_map_num", any]|["id_map_num",any]|["dr_map_rep", any]|["ids_dec_rep",any]|["ids_dec_num",any]|null} */
+/** @arg {string|number|RepeatImpl_0<number>} e @returns {["dr_map_num", any]|["id_map_num",any]|["dr_map_rep", any]|["ids_dec_rep",any]|["ids_dec_num",any]|null} */
 function try_decode(e,deep=true) {
 	if(typeof e==="number") {
 		if(dr_map_num[e]) {
 			return ["dr_map_num",dr_map_num[e]];
 		}
 		if(id_map_num[e]) {
-			/** @type {(string | number)[]} */
+			/** @type {(string|number)[]} */
 			let res=id_map_num[e];
 			if(!deep)
 				return ["id_map_num",res];
@@ -4281,7 +4281,7 @@ function try_decode(e,deep=true) {
 			return ["dr_map_rep",dr_map[e.value]];
 		}
 		if(id_map_rep[e.value]) {
-			/** @type {(string | number)[]} */
+			/** @type {(string|number)[]} */
 			let res=id_map_rep[e.value];
 			let dec_res=[];
 			for(let i=0;i<res.length;i++) {
@@ -4305,7 +4305,7 @@ let id_map=[];
 let id_map_str=new Map;
 /** @type {JsonValueBox[]} */
 let ids_dec=[];
-/** @type {(RepeatImpl_0<string | number>|RepeatImpl_0<(string | number)[]>|(string | number)[])[]} */
+/** @type {(RepeatImpl_0<string|number>|RepeatImpl_0<(string|number)[]>|(string|number)[])[]} */
 let dr_map=[];
 add_array(ids_dec);
 
@@ -4539,11 +4539,11 @@ inject_api.HexRandomDataGenerator=HexRandomDataGenerator;
 const random_data_generator=new HexRandomDataGenerator;
 
 class EventListenerValue {
-	/** @arg {EventListenerOrEventListenerObject|null} callback @arg {boolean | EventListenerOptions} options */
+	/** @arg {EventListenerOrEventListenerObject|null} callback @arg {boolean|EventListenerOptions} options */
 	constructor(callback,options) {
 		/** @type {EventListenerOrEventListenerObject|null} */
 		this.callback=callback;
-		/** @type {boolean | EventListenerOptions} */
+		/** @type {boolean|EventListenerOptions} */
 		this.options=options;
 	}
 }

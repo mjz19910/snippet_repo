@@ -5,7 +5,7 @@ trace_ip_r () {
 }
 
 trace_ip () {
-	trace_ip_r | grep -P "Time to live|bytes from" | perl -p get_ip.pm
+	trace_ip_r|grep -P "Time to live|bytes from"|perl -p get_ip.pm
 }
 
 trace_ip_win_r () {
@@ -13,7 +13,7 @@ trace_ip_win_r () {
 }
 
 trace_ip_win () {
-	trace_ip_win_r $1 $2 | grep -P "Reply from" | perl -p get_ip_win.pm
+	trace_ip_win_r $1 $2|grep -P "Reply from"|perl -p get_ip_win.pm
 }
 
 ping_host_ttl () {

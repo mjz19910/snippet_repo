@@ -12,7 +12,7 @@ function get_v8_require_main() {
 	}
 	let w=window.debug;
 	w.u=window.undebug;
-	/** @arg {ReqSt} state @returns {({} | null)[]|null} */
+	/** @arg {ReqSt} state @returns {({}|null)[]|null} */
 	function get_v8_require_run(state) {
 		if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
 			console.log("no nodeRequire");

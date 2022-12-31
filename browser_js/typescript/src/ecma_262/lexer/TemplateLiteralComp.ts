@@ -282,7 +282,7 @@ export class TemplateLiteralComp extends LexerBase {
 		return [null,0];
 	}
 	/* TemplateCharacters ::*/
-	/* | TemplateCharacter TemplateCharacters opt*/
+	/*|TemplateCharacter TemplateCharacters opt*/
 	TemplateCharacters(str: string,index: number): LexReturnType {
 		let cur_index=index;
 		let tmp=this.TemplateCharacter(str,cur_index);

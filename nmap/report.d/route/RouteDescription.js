@@ -1,13 +1,13 @@
 import {Route} from "./Route.js";
 
-/** @typedef {{target: string;route: string[];new_version?: Route|Readonly<Route> | null;}} RouteDesc @typedef {{readonly target: string;readonly route: readonly string[];readonly new_version?: Readonly<Route> | null;}} RouteDescRo */
+/** @typedef {{target: string;route: string[];new_version?: Route|Readonly<Route>|null;}} RouteDesc @typedef {{readonly target: string;readonly route: readonly string[];readonly new_version?: Readonly<Route>|null;}} RouteDescRo */
 
 export class RouteDescription {
 	target="";
 	route=[""];
 	/**@type {Route|null} */
 	new_version=null;
-	/** @arg {string} target @arg {string[]} route_list @arg {Route | null} new_version */
+	/** @arg {string} target @arg {string[]} route_list @arg {Route|null} new_version */
 	constructor(target,route_list,new_version) {
 		this.target=target;
 		this.route=route_list;

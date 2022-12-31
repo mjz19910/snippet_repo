@@ -88,7 +88,7 @@ class RustRootBuilder extends RustBuilderTrait {
 	}
 }
 class ExportItem {
-	/** @arg {{ type: string; export_value: RustStdCrate; } | null} [item] @arg {string | null} [key] */
+	/** @arg {{ type: string; export_value: RustStdCrate; }|null} [item] @arg {string|null} [key] */
 	constructor(item=null,key=null) {
 		this.item=item;
 		this.key=key;
@@ -254,7 +254,7 @@ class RustFakeVM {
 			/** @type {RustFakeHost|null} */
 			host: null,
 		};
-		/** @type {{ children: any[]; } | null} */
+		/** @type {{ children: any[]; }|null} */
 		this.active_root=null;
 		this.realm=new FakeRealm;
 	}

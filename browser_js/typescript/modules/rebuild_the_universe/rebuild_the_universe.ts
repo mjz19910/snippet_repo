@@ -1542,7 +1542,7 @@ class BaseCompression {
 	compress_result_state<T,U>(state: CompressStateBase<T,U>) {
 		return this.compress_result(state.arr,state.ret);
 	}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]]|[false, T[]]} */
 	compress_result<T,U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
 		if(this.did_compress(src,dst))
 			return [true,dst];

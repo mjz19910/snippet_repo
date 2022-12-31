@@ -25,7 +25,7 @@ class JSONParseResult {
 	}
 }
 
-/** @arg {string | undefined} env_value */
+/** @arg {string|undefined} env_value */
 function try_parse_env(env_value) {
 	if(env_value===undefined) {
 		return new UndefinedParseResult;

@@ -9,9 +9,9 @@ export let cached_data_buffer=[];
 export class PageLoaderState {
 	/**@type {RequestModule} */
 	m_start_request_module=new RequestModule;
-	/** @type {ClientRequest | null} */
+	/** @type {ClientRequest|null} */
 	m_client_request=null;
-	/** @type {IncomingMessage | null} */
+	/** @type {IncomingMessage|null} */
 	m_incoming_message=null;
 	/**@type {PageLoaderHTMLState} */
 	html_state=new PageLoaderHTMLState;
