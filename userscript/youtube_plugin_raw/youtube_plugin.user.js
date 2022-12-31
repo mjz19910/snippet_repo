@@ -13,10 +13,10 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+/** @type {import("./types_tmp.js").YtdAppElement} */
+const YtdAppElement=cast_as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
-console=typeof window==="undefined"? console:(() => window.console)();
-main();
 // #region node
 var is_node_js=function is_node_js() {
 	return false;
@@ -226,7 +226,7 @@ function on_ytd_app(element) {
 	if(is_yt_debug_enabled||is_ytd_app_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	window.ytd_app=element;
-	ytd_app=YtdAppElement.cast(element);
+	ytd_app=any_c(element,YtdAppElement);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		const target_element=get_html_elements(document,"ytd-page-manager")[0];
 		if(!target_element) throw new Error("Missing ytd-page-manager when we have ytd-app");
@@ -586,27 +586,6 @@ class VolumeRange {
 		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
 }
-
-class YtdAppElement extends HTMLElement {
-	/** @type {HTMLStyleElement|undefined} */
-	ui_plugin_style_element;
-	/** @type {VolumeRange|undefined} */
-	volume_range;
-	/** @type {boolean|undefined} */
-	app_is_visible;
-	/** @type {ReturnType<typeof setInterval>|undefined} */
-	ytp_click_cint;
-	/** @type {import("./types_tmp.js").PagePreparer} */
-	pagePreparer=cast_as({});
-	/** @arg {HTMLElement} element @return {YtdAppElement} */
-	static cast(element) {
-		return any_c(element,YtdAppElement);
-	}
-	/** @type {import("./support/yt_api/yt/YtdShadyChildrenOfYtdApp.js").YtdShadyChildrenOfYtdApp} */
-	__shady_children=cast_as({});
-	hasNavigated=false;
-}
-
 /** @arg {string|URL} url */
 function to_url(url) {
 	if(url instanceof URL) {
@@ -1756,7 +1735,11 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	guide_item_keys=make_guide_item_keys();
+	/** @type {import("./support/yt_api/yt/GuideItemType").GuideItemKeys[]} */
+	guide_item_keys=[
+		"guideSectionRenderer",
+		"guideSubscriptionsSectionRenderer",
+	];
 	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
@@ -2746,11 +2729,11 @@ class HiddenData {
 		}
 	}
 }
+//#region
 /** @typedef {import("./support/Services.js").Services} Services */
 /** @typedef {import("./support/ServiceOptions.js").ServiceOptions} ServiceOptions */
 /** @typedef {import("./support/ResolverT.js").ResolverT<Services,ServiceOptions>} ResolverT */
 async function main() {
-	await Promise.resolve();
 	/** @type {ResolverT} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
@@ -2792,7 +2775,7 @@ async function main() {
 
 	return;
 
-	// hoisted functions below
+	// #region hoisted functions below
 	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
 	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
@@ -2950,12 +2933,9 @@ async function main() {
 		if(!detail) return;
 		yt_handlers.extract(h => h.on_page_type_changed(detail));
 	}
+	// #endregion
 }
-
-function get_exports() {
-	return exports;
-}
-
+//#endregion
 /** @arg {{}} state @arg {"account"} base @arg {string[]} parts @arg {number} index */
 function get_account_type(state,base,parts,index) {
 	let cur_part=parts[index];
@@ -2974,49 +2954,6 @@ function no_handler({parts,index}) {
 	debugger;
 	throw new Error("Stop");
 }
-/** @returns {import("./support/yt_api/yt/GuideItemType").GuideItemKeys[]} */
-function make_guide_item_keys() {
-	/** @arg {number} i @returns {import("./support/yt_api/yt/GuideItemType").GuideItemKeys|null} */
-	function e(i) {
-		switch(i) {
-			case 0: return "guideSectionRenderer";
-			case 1: return "guideSubscriptionsSectionRenderer";
-			case 2: return null;
-			default: debugger; throw new Error("Bad");
-		}
-	}
-	return [...{
-		[Symbol.iterator]() {
-			let i=0;
-			let start_value=e(i);
-			if(!start_value) throw new Error("Invalid");
-			let default_v=start_value;
-			return {
-				next() {
-					let value=e(i);
-					i++;
-					if(!value) return {value: default_v,done: true};
-					default_v=value;
-					if(!e(i)) return {value,done: true};
-					return {value,done: false};
-				}
-			};
-		}
-	}];
-}
-
-/** @arg {{ key: "yt_fn"; value: import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages; }} param */
-function verify_param(param) {
-	switch(param.value) {
-		case "history":
-		case "library":
-		case "subscriptions":
-		case "what_to_watch":
-			return true;
-		default: console.log("[verify_param_bad]",param); debugger; return false;
-	};
-}
-
 /** @template {string} C @template {string} U @template {import("./support/make/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1 */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
@@ -3320,6 +3257,17 @@ class CsiService extends BaseService {
 			this.rid[x]=void 0;
 		}
 	}
+	/** @arg {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages} value */
+	verify_param_yt_fn(value) {
+		switch(value) {
+			case "history":
+			case "library":
+			case "subscriptions":
+			case "what_to_watch":
+				return true;
+			default: console.log("[verify_param_bad]",value); debugger; return false;
+		};
+	}
 	/** @arg {import("./support/yt_api/_/c/CsiServiceParamsType.js").CsiServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
@@ -3337,7 +3285,7 @@ class CsiService extends BaseService {
 					this.data[param.key]=param.value;
 				} continue;
 				case "yt_ad": if(param.value!=="1") debugger; this.data[param.key]=param.value; continue;
-				case "yt_fn": if(!verify_param(param)) debugger; this.data[param.key]=param.value; continue;
+				case "yt_fn": if(!this.verify_param_yt_fn(param.value)) debugger; this.data[param.key]=param.value; continue;
 			}
 			if(param.key in this.rid) {
 				/** @type {`${string}_rid`} */
@@ -3531,6 +3479,9 @@ class TrackingServices extends BaseService {
 	}
 }
 
+function get_exports() {
+	return exports;
+}
 if(typeof exports==="object") {
 	let exports=get_exports();
 	exports.SavedData=SavedData;
@@ -3544,6 +3495,7 @@ if(typeof exports==="object") {
 	exports.ServiceResolver=ServiceResolver;
 	exports.FilterHandlers=FilterHandlers;
 	exports.HiddenData=HiddenData;
+	exports.VolumeRange=VolumeRange;
 }
 
 /** @name Ys */
@@ -5221,3 +5173,5 @@ class HandleTypes extends BaseService {
 		}
 	}
 }
+console=typeof window==="undefined"? console:(() => window.console)();
+main();
