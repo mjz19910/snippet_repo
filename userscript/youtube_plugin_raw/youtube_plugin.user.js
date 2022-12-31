@@ -3715,11 +3715,11 @@ class HandleTypes extends BaseService {
 		this.FusionSearchboxRenderer(searchbox);
 		this.primitive(countryCode);
 		this.iterate(topbarButtons,x => this.TopbarButtonItem(x));
-		this.empty_object(hotkeyDialog);
-		this.empty_object(backButton);
-		this.empty_object(forwardButton);
-		this.empty_object(a11ySkipNavigationButton);
-		this.empty_object(voiceSearchButton);
+		this.HotkeyDialogRenderer(hotkeyDialog);
+		this.ButtonRenderer(backButton);
+		this.ButtonRenderer(forwardButton);
+		this.ButtonRenderer(a11ySkipNavigationButton);
+		this.ButtonRenderer(voiceSearchButton);
 		this.empty_object(x);
 	}
 	/** @type {import("./support/yt_api/_/b/valid_titles_for_tabbed_header_renderer_t.js").valid_titles_for_tabbed_header_renderer_t} */
@@ -5002,6 +5002,24 @@ class HandleTypes extends BaseService {
 		const {responseText,trackingParams,...y}=x;
 		this.YtTextType(responseText);
 		this.trackingParams(trackingParams);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/hotkeyDialogRenderer.js").HotkeyDialogRenderer} x
+	 */
+	HotkeyDialogRenderer(x) {
+		const {hotkeyDialogRenderer,...v}=x;
+		this.hotkeyDialogRenderer(hotkeyDialogRenderer);
+		this.empty_object(v);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/b/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x
+	 */
+	hotkeyDialogRenderer(x) {
+		const {trackingParams,dismissButton,sections,title,...y}=x;
+		this.trackingParams(trackingParams);
+		this.iterate(sections,v=>v);
+		this.YtTextType(title);
 		this.empty_object(y);
 	}
 }
