@@ -76,9 +76,7 @@ export function do_token_decode(binary) {
 				return this.buf.slice(start,end);
 			return start===end? new Uint8Array(0):this.buf.slice(start,end);
 		}
-		/** Skips the specified number of bytes if specified, otherwise skips a varint.
-		 * @param {number} [length] Length if known, otherwise a varint is assumed
-		 * @returns {Reader} `this` */
+		/** Skips the specified number of bytes if specified, otherwise skips a varint. @param {number} [length] Length if known, otherwise a varint is assumed @returns {Reader} `this` */
 		skip(length) {
 			if(typeof length==="number") {
 				/* istanbul ignore if */
@@ -94,9 +92,7 @@ export function do_token_decode(binary) {
 			}
 			return this;
 		}
-		/** Skips the next element of the specified wire type.
-		 * @param {number} wireType Wire type received
-		 * @returns {Reader} `this` */
+		/** Skips the next element of the specified wire type. @param {number} wireType Wire type received @returns {Reader} `this` */
 		skipType(wireType) {
 			switch(wireType) {
 				case 0:
@@ -123,8 +119,7 @@ export function do_token_decode(binary) {
 			}
 			return this;
 		}
-		/** @param {Uint8Array} r
-		 * @param {undefined} l */
+		/** @param {Uint8Array} r @param {undefined} l */
 		verySimpleObject(r,l) {
 			/** @type {Reader} */
 			let x=new Reader(r);

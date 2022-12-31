@@ -110,8 +110,7 @@ async function kernel_main() {
 			/**@type {any[]} */
 			this.dirty_object_vec=[]
 		}
-		/** @arg {string | number} event_type
-		 * @arg {any} event_listener */
+		/** @arg {string | number} event_type @arg {any} event_listener */
 		addEventListener(event_type,event_listener) {
 			this._events[event_type]??=[]
 			let event_listener_description={
@@ -120,8 +119,7 @@ async function kernel_main() {
 			}
 			this._events[event_type].push(event_listener_description)
 		}
-		/** @arg {string | number} event_type
-		 * @arg {any} event_listener */
+		/** @arg {string | number} event_type @arg {any} event_listener */
 		removeEventListener(event_type,event_listener) {
 			if(this._events[event_type]===void 0)
 				return
@@ -233,9 +231,7 @@ async function kernel_main() {
 			}
 			this.is_shutdown=true
 		}
-		/** @arg {{ shutdown_waiter: (() => void) | null; }} runtime
-		 * @arg {() => void} accept
-		 * @arg {any} reject */
+		/** @arg {{ shutdown_waiter: (() => void) | null; }} runtime @arg {() => void} accept @arg {any} reject */
 		// @ts-ignore
 		static wait_into_promise(runtime,accept,reject) {
 			runtime.shutdown_waiter=function() {
@@ -255,8 +251,7 @@ async function kernel_main() {
 			this.ref(ref_sym)
 			return ref_sym
 		}
-		/** @arg {new (arg0: this) => any} class_constructor
-		 * @arg {any[]} rest */
+		/** @arg {new (arg0: this) => any} class_constructor @arg {any[]} rest */
 		// @ts-ignore
 		class_ref(class_constructor,...rest) {
 			return new class_constructor(this)
@@ -340,9 +335,7 @@ async function kernel_main() {
 		}
 	}
 	class AsyncBlocker {
-		/** @arg {any} runtime
-		 * @arg {any} accept
-		 * @arg {any} reject */
+		/** @arg {any} runtime @arg {any} accept @arg {any} reject */
 		// @ts-ignore
 		constructor(runtime,accept,reject) {
 			this.accept=accept
@@ -359,8 +352,7 @@ async function kernel_main() {
 		}
 		count=0
 		inner=null
-		/** @arg {any} accept
-		 * @arg {any} reject */
+		/** @arg {any} accept @arg {any} reject */
 		// @ts-ignore
 		static create_promise(obj,accept,reject) {
 			obj.inner=new AsyncBlocker(obj.runtime,accept,reject)

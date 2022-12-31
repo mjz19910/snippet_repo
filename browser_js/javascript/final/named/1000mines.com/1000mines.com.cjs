@@ -1,8 +1,6 @@
 function main() {
 	class CustomInputMatcher {
-		/** @param {any} t_needle
-		 * @param {any} t_string_getter
-		 * @arg {string} result_name */
+		/** @param {any} t_needle @param {any} t_string_getter @arg {string} result_name */
 		constructor(t_needle,t_string_getter,result_name) {
 			this.ts_get=t_string_getter;
 			this.tr=t_needle;
@@ -98,8 +96,7 @@ function main() {
 				}
 			} finally {}
 		}
-		/** @param {string|CustomInputMatcher} name
-		 * @param {((...x: any[]) => any)} func */
+		/** @param {string|CustomInputMatcher} name @param {((...x: any[]) => any)} func */
 		add_func(name,func) {
 			var y=this.funcs.push(func);
 			if(!(name instanceof CustomInputMatcher)) {

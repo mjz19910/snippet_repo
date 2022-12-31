@@ -57,14 +57,12 @@ function main() {
 		forEach(_callback) {}
 	}
 	class StylePropertyMap extends StylePropertyMapReadOnly {
-		/** @arg {any} _property
-		 * @arg {any[]} _values */
+		/** @arg {any} _property @arg {any[]} _values */
 		append(_property,..._values) {}
 		clear() {}
 		/** @arg {any} _property */
 		delete(_property) {}
-		/** @arg {any} _property
-		 * @arg {any[]} _values */
+		/** @arg {any} _property @arg {any[]} _values */
 		set(_property,..._values) {}
 	}
 	let is_typechecking=false;
@@ -96,8 +94,7 @@ function main() {
 			,fid=0
 			,emp=new Set();
 		var js;
-		/** @arg {NodeList|Node|Function} a
-		 * @arg {typeof NodeList|typeof Node|FunctionConstructor} b */
+		/** @arg {NodeList|Node|Function} a @arg {typeof NodeList|typeof Node|FunctionConstructor} b */
 		function get_const_eq(a,b) {
 			return Object.getPrototypeOf(a).constructor==b;
 		}
@@ -113,8 +110,7 @@ function main() {
 			l;
 			js_g="{\"type\":\"Error\"}";
 		}
-		/** @arg {any} e
-		 * @arg {any} o */
+		/** @arg {any} e @arg {any} o */
 		function json_rep(st=new JSONRepArg0,e,o) {
 			void e;
 			let all_set=st.all_set;
@@ -344,9 +340,7 @@ function main() {
 				return "f";
 			}
 		}
-		/** @arg {number} nsl
-		 * @arg {Map<any, any>} c_map
-		 * @arg {any} trg */
+		/** @arg {number} nsl @arg {Map<any, any>} c_map @arg {any} trg */
 		function do_json_stringify_iter(nsl,c_map,trg) {
 			/** @type {string|null} */
 			var js=null;
@@ -441,8 +435,7 @@ function main() {
 			car.sort(do_sort_by_proto);
 			return [proto_arr,JSON.parse(js.js_g),car,JSON.parse(ret_v.js_g),js,repo];
 		}
-		/** @arg {Map<any, any>} c_map
-		 * @arg {undefined} [o_start] */
+		/** @arg {Map<any, any>} c_map @arg {undefined} [o_start] */
 		function do_user(c_map,o_start) {
 			var ps=performance.now()
 				,o_new_since=0

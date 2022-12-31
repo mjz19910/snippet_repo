@@ -56,9 +56,7 @@ function get_v8_require_main() {
 		/** @type {({}|null)[]|null} */
 		import_arr=null;
 		aborted=false;
-		/** @arg {(...x:any[])=>any} f
-		 * @arg {(...x:any[])=>any} b
-		 * @arg {string} s */
+		/** @arg {(...x:any[])=>any} f @arg {(...x:any[])=>any} b @arg {string} s */
 		m(f,b,s) {
 			if(this.aborted) {
 				console.log("aborted");

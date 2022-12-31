@@ -19,8 +19,7 @@
 			}
 			c.push([...acc]);
 		}
-		/** @arg {any[]} arr
-		 * @arg {any[]} val */
+		/** @arg {any[]} arr @arg {any[]} val */
 		function fix_ref(arr,val) {
 			let nc=0;
 			if(val.length==1)

@@ -97,12 +97,7 @@ let comp_sci=new RustComputerScience;
 	class ActorInterface {
 		state={};
 		impl=new RustActor(()=>{});
-		/** @returns {void}
-		 * @arg {RustActor} target_actor
-		 * @arg {RustActor} transmitted_actor
-		 * @arg {RustActivator} transmitted_actor
-		 * @arg {number} event_count
-		 * @arg {any} activator */
+		/** @returns {void} @arg {RustActor} target_actor @arg {RustActor} transmitted_actor @arg {RustActivator} transmitted_actor @arg {number} event_count @arg {any} activator */
 		on_receive_event(target_actor,transmitted_actor,activator,event_count) {
 			this.impl.process_event(target_actor,transmitted_actor,activator,event_count);
 		}
