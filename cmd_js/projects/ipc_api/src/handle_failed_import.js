@@ -3,9 +3,7 @@ import * as path from "path";
 import {import_ipc_plugin} from "./import_ipc_plugin.js";
 import {IpcLoader} from "./ipc_loader_state.js";
 
-/** @arg {unknown} error
- * @arg {string} import_string
- * @arg {IpcLoader} state */
+/** @arg {unknown} error @arg {string} import_string @arg {IpcLoader} state */
 export async function handle_failed_import(state,error,import_string) {
 	let errors=[];
 	if(state.depth>8) {

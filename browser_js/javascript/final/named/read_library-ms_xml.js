@@ -1,4 +1,5 @@
-/** @author mjz19910
+/**
+ * @author mjz19910
  * @copyright MIT
  * @description Read the library-ms xml format into a json compatible format
  * created by iterating over the xml tree.

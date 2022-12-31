@@ -3,8 +3,7 @@
 v1 (old): snippet_repo/javascript/final/item6_v1.js
 v2 (cur): snippet_repo/javascript/group1/sub_a/item-_6.js
 */
-/** @arg {number} id
- * @arg {string | any[]} arr */
+/** @arg {number} id @arg {string | any[]} arr */
 function encode_section(id,arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);

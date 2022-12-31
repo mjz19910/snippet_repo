@@ -24,9 +24,7 @@ export function decode_tlv(binary) {
 	let data=rest.subarray(0,length_);
 	return [type,data];
 }
-/** @param {Uint8Array} binary
- * @param {number} idx
- * @returns {[number,number]} */
+/** @param {Uint8Array} binary @param {number} idx @returns {[number,number]} */
 export function dec_uint32(binary,idx) {
 	let ret,len=0;
 	x: {
@@ -146,9 +144,7 @@ export function do_token_decode(binary) {
 			return m;
 		}
 	}
-	/** Reads a varint as an unsigned 32 bit value.
- * @function
- * @returns {number} Value read */
+	/** Reads a varint as an unsigned 32 bit value. @function @returns {number} Value read */
 	Reader.prototype.uint32=(function read_uint32_setup() {
 		var value=4294967295;
 		/** @type {(this: Reader)=>number} */

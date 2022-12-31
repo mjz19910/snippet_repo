@@ -9,9 +9,7 @@ class ContextType {
 	parentURL="";
 }
 
-/** @arg {string} specifier
- * @arg {ContextType} context
- * @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve */
+/** @arg {string} specifier @arg {ContextType} context @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve */
 export async function resolve(specifier,context,defaultResolve) {
 	if(debug) console.log('spec',specifier);
 	if(debug) console.log('ctx',context);

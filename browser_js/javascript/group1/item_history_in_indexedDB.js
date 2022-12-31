@@ -7,8 +7,7 @@ function main() {
         open_complete(list,odb,out);
     }
 }
-/** @arg {{url: string;title: string;}} item
- * @arg {{ appendChild: (arg0: HTMLLIElement) => void; }} list */
+/** @arg {{url: string;title: string;}} item @arg {{ appendChild: (arg0: HTMLLIElement) => void; }} list */
 function ap_l(list,item) {
     var i=document.createElement('li')
     var l1=document.createElement('div')
@@ -18,9 +17,7 @@ function ap_l(list,item) {
     i.append(l1,l2)
     list.appendChild(i)
 }
-/** @arg {Node} list
- * @arg {IDBOpenDBRequest} odb
- * @arg {any[]} out */
+/** @arg {Node} list @arg {IDBOpenDBRequest} odb @arg {any[]} out */
 function open_complete(list,odb,out) {
     document.body.prepend(list)
     let tr=odb.result.transaction(['history'],"readonly")

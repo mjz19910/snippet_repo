@@ -9,15 +9,13 @@ function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]))
 }
 const compressionStatsCalc_0=new CompressionStatsCalculator;
-/** @arg {any} arr
- * @arg {any} calc_win */
+/** @arg {any} arr @arg {any} calc_win */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win)
 	ret.sort((a,b) => b[1]-a[1])
 	return ret
 }
-/** @arg {any} arr
- * @arg {number} start */
+/** @arg {any} arr @arg {number} start */
 function next_chunk(arr,start) {
 	let c_len;
 	let s_arr
@@ -49,8 +47,7 @@ function get_ids(e) {
 function calc_cur(obj) {
 	obj.stats=sorted_comp_stats(obj.arr,obj.stats_win)
 }
-/** @arg {{ stats: string | any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj
- * @arg {any} max_id */
+/** @arg {{ stats: string | any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj @arg {any} max_id */
 function calc_next(obj,max_id) {
 	if(obj.stats.length===0) {
 		return null
@@ -77,9 +74,7 @@ function flat_obj(obj) {
 	ret.push(obj)
 	return ret
 }
-/** @arg {{ [s: string]: any; }} obj_1
- * @arg {{ [s: string]: any; }} obj_2
- * @returns {boolean} */
+/** @arg {{ [s: string]: any; }} obj_1 @arg {{ [s: string]: any; }} obj_2 @returns {boolean} */
 function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
 		return true
@@ -107,8 +102,7 @@ function deep_eq(obj_1,obj_2) {
 	}
 	throw new Error("Fixme")
 }
-/** @arg {string | any[]} arr
- * @arg {any} value */
+/** @arg {string | any[]} arr @arg {any} value */
 function deep_includes(arr,value) {
 	for(let i=0;i<arr.length;i++) {
 		let is_eq=deep_eq(arr[i],value)

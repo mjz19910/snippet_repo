@@ -1,8 +1,7 @@
 import {open, readFile} from "fs/promises";
 import {log_fancy_inspect} from "./log_fancy_inspect.js";
 import {str_to_ip} from "./str_to_ip.js";
-/** @returns {Promise<[string, string[]][]>}
- * @arg {string} filename */
+/** @returns {Promise<[string, string[]][]>} @arg {string} filename */
 async function load_route_from_file(filename) {
 	let buf = await readFile(filename, {"encoding": "utf8"});
 	let s1 = buf.toString().split("--- ROUTE TO ---").slice(1);

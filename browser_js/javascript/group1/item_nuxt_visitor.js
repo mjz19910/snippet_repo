@@ -3,9 +3,7 @@ function any(v) {
 	return v;
 }
 
-/** @arg {any[]} a
- * @arg {{}} b
- * @arg {string[]} path */
+/** @arg {any[]} a @arg {{}} b @arg {string[]} path */
 function visitor(a,b,path) {
 	var results=[];
 	for(let i=0;i<a.length;i++) {
@@ -126,9 +124,7 @@ if(typeof any(window).seen_vue_objs=="undefined") {
 let recurwork=[];
 /** @type {any[]} */
 let recurargs=[];
-/** @arg {string} a
- * @arg {{ deps: any; vm: { _uid: string | number; }; }} b
- * @arg {number} d */
+/** @arg {string} a @arg {{ deps: any; vm: { _uid: string | number; }; }} b @arg {number} d */
 function w_vs(a,b,d=0) {
 	if(d>1) {
 		return;

@@ -1,7 +1,6 @@
 import {Route} from "./Route.js";
 
-/** @typedef {{target: string;route: string[];new_version?: Route|Readonly<Route> | null;}} RouteDesc
- * @typedef {{readonly target: string;readonly route: readonly string[];readonly new_version?: Readonly<Route> | null;}} RouteDescRo */
+/** @typedef {{target: string;route: string[];new_version?: Route|Readonly<Route> | null;}} RouteDesc @typedef {{readonly target: string;readonly route: readonly string[];readonly new_version?: Readonly<Route> | null;}} RouteDescRo */
 
 export class RouteDescription {
 	target="";
