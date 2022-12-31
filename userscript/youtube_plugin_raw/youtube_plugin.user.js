@@ -2780,7 +2780,7 @@ class HiddenData {
 	}
 }
 /** @typedef {import("./support/Services.js").Services} Services */
-/** @typedef {import("./support/Services.js").ServiceOptions} ServiceOptions */
+/** @typedef {import("./support/ServiceOptions.js").ServiceOptions} ServiceOptions */
 /** @typedef {import("./support/ResolverT.js").ResolverT<Services,ServiceOptions>} ResolverT */
 async function main() {
 	await Promise.resolve();
@@ -5029,16 +5029,37 @@ class HandleTypes extends BaseService {
 		this.YtTextType(title);
 		this.empty_object(y);
 	}
-	known_root_ve=[];
+	/** @type {Set<number>} */
+	known_root_ve=new Set;
 	/** @arg {number} x */
-	rootVe(x) {console.log("rootVe",x);}
+	rootVe(x) {
+		if(this.known_root_ve.has(x)) return;
+		this.known_root_ve.add(x);
+		this.save_root_ve();
+		console.log("rootVe",x);
+}
 	/** @arg {string} x */
 	apiUrl(x) {console.log("apiUrl",x);}
 	/** @arg {string} x */
 	url(x) {console.log("url",x);}
 	/** @arg {boolean} x */
 	sendPost(x) {console.log("sendPost",x);}
+	/** @arg {ResolverT} x */
 	constructor(x) {
 		super(x);
+		this.load_root_ve();
+	}
+	load_root_ve() {
+		let json_str=localStorage.known_root_ve;
+		if(json_str) {
+			let res=JSON.parse(json_str);
+			if(res.known_root_ve) {
+				this.known_root_ve=new Set(res.known_root_ve);
+			}
+		}
+	}
+	save_root_ve() {
+		let arr=[...this.known_root_ve.values()];
+		localStorage.known_root_ve=JSON.stringify({known_root_ve:arr});
 	}
 }
