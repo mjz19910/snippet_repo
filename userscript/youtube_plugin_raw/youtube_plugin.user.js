@@ -4462,7 +4462,6 @@ class HandleTypes extends BaseService {
 			/** @type {{[U in typeof key]: import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer}} */
 			let xu=cast_as(xg);
 			let generic_renderer=xu[key];
-			console.log("[cast] [%s] as GenericRenderer (%o)",key,generic_renderer);
 			this.renderer(generic_renderer);
 		}
 	}
@@ -4492,7 +4491,7 @@ class HandleTypes extends BaseService {
 			this.trackingParams(tp);
 			this.empty_object(c);
 		}else{
-			console.log("[renderer_log] [%s]",Object.keys(x).join());
+			console.log("[renderer_log] [%s]",Object.keys(x).join(),x);
 		}
 	}
 	/**
