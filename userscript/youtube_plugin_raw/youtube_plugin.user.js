@@ -2779,8 +2779,9 @@ class HiddenData {
 		}
 	}
 }
-
-/** @typedef {import("./support/ResolverT.js").ResolverT} ResolverT */
+/** @typedef {import("./support/Services.js").Services} Services */
+/** @typedef {import("./support/Services.js").ServiceOptions} ServiceOptions */
+/** @typedef {import("./support/ResolverT.js").ResolverT<Services,ServiceOptions>} ResolverT */
 async function main() {
 	await Promise.resolve();
 	/** @type {ResolverT} */
@@ -4160,7 +4161,7 @@ class HandleTypes extends BaseService {
 			this.empty_object(a);
 			this.YtEndpoint(serviceEndpoint);
 			return;
-		}else if("navigationEndpoint" in y) {
+		} else if("navigationEndpoint" in y) {
 			let {navigationEndpoint,accessibilityData,command,...a}=y;
 			this.empty_object(a);
 			this.Accessibility(accessibilityData);
@@ -4914,10 +4915,13 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta
 	 */
 	webCommandMetadata(meta) {
-		console.log("[command_meta]",meta);
-		if(meta.webPageType!==void 0) {
-			this.WebCommandPageType(meta.webPageType);
-		}
+		const {apiUrl,url,rootVe,webPageType,sendPost,...y}=meta;
+		if(webPageType!==void 0) this.WebCommandPageType(webPageType);
+		if(rootVe!==void 0) this.rootVe(rootVe);
+		if(apiUrl!==void 0) this.apiUrl(apiUrl);
+		if(url!==void 0) this.url(url);
+		if(sendPost!==void 0) this.sendPost(sendPost);
+		this.empty_object(y);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/b/LogoEntity.js").LogoEntity} x
@@ -5024,5 +5028,17 @@ class HandleTypes extends BaseService {
 		this.iterate(sections,v => v);
 		this.YtTextType(title);
 		this.empty_object(y);
+	}
+	known_root_ve=[];
+	/** @arg {number} x */
+	rootVe(x) {console.log("rootVe",x);}
+	/** @arg {string} x */
+	apiUrl(x) {console.log("apiUrl",x);}
+	/** @arg {string} x */
+	url(x) {console.log("url",x);}
+	/** @arg {boolean} x */
+	sendPost(x) {console.log("sendPost",x);}
+	constructor(x) {
+		super(x);
 	}
 }
