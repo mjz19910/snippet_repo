@@ -1192,19 +1192,28 @@ const decode_protobuf_obj=function make() {
 				this.buf=buf;
 				this.pos=0;
 				this.len=buf.length;
+				this.last_pos=0;
+			}
+
+			/** @template T @arg {()=>T} x */
+			revert(x) {
+				let prev_pos=this.pos;
+				this.pos=this.last_pos;
+				let ret=x();
+				this.pos=prev_pos;
+				return ret;
 			}
 			/** @arg {number} offset */
 			skip(offset) {
 				this.pos+=offset;
 			}
 			uint32() {
+				this.last_pos=this.pos;
 				value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
 				value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
 				value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
 				value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
 				value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
-
-				/* istanbul ignore if */
 				if((this.pos+=5)>this.len) {
 					this.pos=this.len;
 					throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
@@ -1212,6 +1221,7 @@ const decode_protobuf_obj=function make() {
 				return value;
 			};
 			uint64() {
+				this.last_pos=this.pos;
 				return this.readLongVarint().toBigInt();
 			}
 			readLongVarint() {
@@ -1302,10 +1312,14 @@ function decode_protobuf(str) {
 		console.log("field",fieldId,"type",wireType);
 		switch(wireType) {
 			case 0:
-				first_num.push(reader.uint32());
+				let num32=reader.uint32();
+				reader.revert(() => {
+					return reader.uint64();
+				});
+				first_num.push(num32);
 				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
-			case 2:{
+			case 2: {
 				let size=reader.uint32();
 				reader.buf.subarray(reader.pos,reader.pos+size);
 				reader.skip(size);
