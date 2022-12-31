@@ -18,9 +18,7 @@ export class Runner {
 	/** @type {string[]} */
 	names=[];
 	self_sym=Symbol();
-	/**
-	 * @arg {any[]} e
-	 */
+	/** @arg {any[]} e */
 	do_cur(...e) {
 		var i;
 		this.argv=e;
@@ -38,9 +36,7 @@ export class Runner {
 		if(i>=0) return this.execute(i);
 		return null;
 	}
-	/**
-	 * @arg {number} t
-	 */
+	/** @arg {number} t */
 	execute(t) {
 		var r_fnname=this.names[t];
 		var func=this.funcs[t];
@@ -87,10 +83,8 @@ export class Runner {
 			}
 		} finally {}
 	}
-	/**
-	 * @arg {string|CustomInputMatcher} name
-	 * @arg {((...x: any[]) => any)} func
-	 */
+	/** @arg {string|CustomInputMatcher} name
+	 * @arg {((...x: any[]) => any)} func */
 	add_func(name,func) {
 		var y=this.funcs.push(func);
 		if(!(name instanceof CustomInputMatcher)) {

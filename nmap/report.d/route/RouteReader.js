@@ -1,10 +1,8 @@
 import {open, readFile} from "fs/promises";
 import {log_fancy_inspect} from "./log_fancy_inspect.js";
 import {str_to_ip} from "./str_to_ip.js";
-/**
- * @returns {Promise<[string, string[]][]>}
- * @arg {string} filename
- */
+/** @returns {Promise<[string, string[]][]>}
+ * @arg {string} filename */
 async function load_route_from_file(filename) {
 	let buf = await readFile(filename, {"encoding": "utf8"});
 	let s1 = buf.toString().split("--- ROUTE TO ---").slice(1);
@@ -17,9 +15,7 @@ async function load_route_from_file(filename) {
 		return [g[0], g[1].split("\n")];
 	});
 }
-/**
- * @arg {[string, string[]][]} traceroute_results
- */
+/** @arg {[string, string[]][]} traceroute_results */
 function log_if_traceroute_mismatch(traceroute_results) {
 	traceroute_results.map(e => {
 		e = [...e];
@@ -43,9 +39,7 @@ function sort_by_ip_key(array) {
 	});
 }
 export class RouteReader {
-	/**
-	 * @arg {string} filename
-	 */
+	/** @arg {string} filename */
 	async read_file(filename) {
 		let res = await load_route_from_file(filename);
 		log_if_traceroute_mismatch(res);
@@ -70,8 +64,7 @@ export class RouteReader {
 		await fc.write(`export const tree_contents = [\n\t${res.map(e => `r_${e[0].replaceAll(".", "_")}`).join(",\n\t")}\n];\n`);
 		await fc.close();
 	}
-	/**
-	 * @arg {import("fs/promises").FileHandle} out
+	/** @arg {import("fs/promises").FileHandle} out
 	 * @arg {[string, string[]]} item
 	 * */
 	format_route_const_export(out, item) {

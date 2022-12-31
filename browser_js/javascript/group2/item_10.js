@@ -333,8 +333,7 @@ ${(e => {
 		//console.log(["use", " ", "riker", "::", "actors", "::", "*", ";"]);//
 		/*
 		use riker_testkit::probe::channel::{probe, ChannelProbe};//
-		use riker_testkit::probe::{Probe, ProbeReceive};//
-		*/
+		use riker_testkit::probe::{Probe, ProbeReceive};// */
 		// console.log(/**/
 		// ["use", " ", "riker_testkit", "::", "probe", "::", "channel", "::", "{", "probe", ",", " ", "ChannelProbe", "}", ";"], /**/
 		// ["use"," ","riker_testkit","::","probe","::","{","Probe",","," ","ProbeReceive","}",";"]/**/
@@ -342,8 +341,7 @@ ${(e => {
 
 		/*
 		#[derive(Clone, Debug)]
-		pub struct Add;//
-		*/
+		pub struct Add;// */
 		//console.log(/**/
 		//["#", "[", "derive", "(", "Clone", ",", " ", "Debug", ")", "]"], /**/
 		//["pub", " ", "struct", " ", "Add", ";"], /**/
@@ -351,8 +349,7 @@ ${(e => {
 
 		/*
 		#[derive(Clone, Debug)]
-		pub struct TestProbe(ChannelProbe<(), ()>);//
-		*/
+		pub struct TestProbe(ChannelProbe<(), ()>);// */
 		//console.log(/**/
 		//['#', '[', 'derive', '(', 'Clone', ',', ' ', 'Debug', ')', ']'], /**/
 		//['pub', ' ', 'struct', ' ', 'TestProbe', '(', 'ChannelProbe', '<', '(', ')', ',', ' ', '(', ')', '>', ')', ';']/**/
@@ -364,8 +361,7 @@ ${(e => {
 		struct Counter {
 			probe: Option<TestProbe>,
 			count: u32,
-		}
-		*/
+		} */
 		//console.log(/**/
 		//["#", "[", "actor", "(", "TestProbe", ",", " ", "Add", ")", "]"], /**/
 		//["#", "[", "derive", "(", "Default", ")", "]"], /**/
@@ -380,8 +376,7 @@ ${(e => {
 			fn recv(&mut self, ctx: &Context<Self::Msg>, msg: Self::Msg, sender: Sender) {
 				self.receive(ctx, msg, sender);//
 			}
-		}
-		*/
+		} */
 		console.log(/**/
 			[/**/
 				"impl"," ","Actor"," ","for"," ","Counter"," ", /**/

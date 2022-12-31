@@ -1,11 +1,9 @@
 import {DelPropertiesState} from "./DelPropertiesState.js";
-/**
- * @arg {DelPropertiesState} state
+/** @arg {DelPropertiesState} state
  * @arg {any[][]} cc
  * @arg {string} key
  * @arg {(TypedPropertyDescriptor<any> & PropertyDescriptor)} property_descriptor
- * @arg {any} obj
- */
+ * @arg {any} obj */
 export function del_all_properties_1(state,obj,cc,key,property_descriptor) {
 	state.del_parents.push([obj,key,property_descriptor]);
 	cc.push([obj,key,property_descriptor]);

@@ -174,13 +174,9 @@ function main() {
 		let found_name=any(found_name_);
 		if(!(found_name in dom_thread)) throw 1;
 		var root_new=dom_thread[found_name];
-		/**
-		 * @type {any[]}
-		 */
+		/** @type {any[]} */
 		let refs=[];
-		/**
-		 * @arg {any[]} r
-		 */
+		/** @arg {any[]} r */
 		function add_root(r) {
 			if(typeof root_new!='undefined') {
 				r.push(root_new);

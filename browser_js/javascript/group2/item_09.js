@@ -42,10 +42,8 @@ class RustTypeInterface {
 		/** @type {{}[]} */
 		this.values=[];
 	}
-	/**
-	 * @arg {string} str_0
-	 * @arg {{}} value
-	 */
+	/** @arg {string} str_0
+	 * @arg {{}} value */
 	defineType(str_0,value) {
 		this.values.push([str_0,value]);
 	}
@@ -118,9 +116,7 @@ class NatNum {
 	construct() {}
 	/** @type {SumMonad} */
 	monad;
-	/**
-	 * @arg {number} value
-	 */
+	/** @arg {number} value */
 	constructor(value) {
 		this.value=value;
 		this.monad=new SumMonad(this);
@@ -167,9 +163,7 @@ const nat_num_ops={
 	}
 };
 tt_info.addTypeDescription("Nat",new NatNum(0));
-/**
- * @arg {{type: string;description?:string}[]} types
- */
+/** @arg {{type: string;description?:string}[]} types */
 function types_to_map(types) {
 	return new Map(types.map(e => {
 		return e.description? [e.type,e.description]:[e.type,{}];

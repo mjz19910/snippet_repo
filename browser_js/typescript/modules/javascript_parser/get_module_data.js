@@ -24,8 +24,7 @@ export function get_module_data() {
 				* The buffer module from node.js, for the browser.
 				*
 				* @author   Feross Aboukhadijeh <http://feross.org>
-				* @license  MIT
-				*/
+				* @license  MIT */
 				var n=r(658),i=r(659),o=r(533);
 				function s() {
 					return u.TYPED_ARRAY_SUPPORT? 2147483647:1073741823;

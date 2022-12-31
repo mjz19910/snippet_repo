@@ -202,11 +202,9 @@ function get_typescript_file_to_compile(state) {
 
 let ipc_load_data=new IpcLoader;
 
-/**
- * @arg {string} specifier
+/** @arg {string} specifier
  * @arg {ContextType<any>} context
- * @arg {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
- */
+ * @arg {import("./nice_loader_types.js").ResolveFn<any>} nextResolve */
 export async function resolve(specifier,context,nextResolve) {
 	ipc_load_data.args=[specifier,context,nextResolve];
 	return await ipc_load_data.do_import();

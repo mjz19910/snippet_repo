@@ -28,16 +28,12 @@ export class REPLFakeBrowserPlugin {
 	wrap_context(context) {
 		return any(context);
 	}
-	/**
-	 * @arg {string} key
-	 */
+	/** @arg {string} key */
 	update_stored_keys(key) {
 		if(!this.obj) return;
 		this.obj.update(key);
 	}
-	/**
-	 * @arg {BrowserPluginData} object
-	 */
+	/** @arg {BrowserPluginData} object */
 	set_object_store(object) {
 		this.obj=new ObjMaybeKeys(object);
 	}

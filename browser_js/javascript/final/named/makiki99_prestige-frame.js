@@ -53,9 +53,7 @@ function main() {
 			return c_row.cells[c_row.cells.length-1];
 		}
 		let cd=make_cell(frame_row);
-		/**
-		 * @arg {{ children: any; }} cd
-		 */
+		/** @arg {{ children: any; }} cd */
 		function run_for_cell(cd) {
 			[...cd.children].map(e => e.remove());
 		}

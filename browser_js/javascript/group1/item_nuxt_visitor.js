@@ -1,15 +1,11 @@
-/**
- * @type {<T>(v:any)=>T}
- */
+/** @type {<T>(v:any)=>T} */
 function any(v) {
 	return v;
 }
 
-/**
- * @arg {any[]} a
+/** @arg {any[]} a
  * @arg {{}} b
- * @arg {string[]} path
- */
+ * @arg {string[]} path */
 function visitor(a,b,path) {
 	var results=[];
 	for(let i=0;i<a.length;i++) {
@@ -31,9 +27,7 @@ const visitors={};
 visitors.Pe={
 	v_it(/** @type {any} */ v,/** @type {any} */ vis) {
 		void vis;
-		/**
-		 * @type {any[]}
-		 */
+		/** @type {any[]} */
 		var results=[];
 		console.log(v);
 		return results;
@@ -120,9 +114,7 @@ let visitors_store={
 		}
 	}
 };
-/**
- * @type {any[]}
- */
+/** @type {any[]} */
 let seen_watchers=[];
 /**@type {{value:any[]|null}} */
 let seen_vue_objs={value: null};
@@ -130,19 +122,13 @@ if(typeof any(window).seen_vue_objs=="undefined") {
 	seen_vue_objs.value=[];
 	any(window).seen_vue_objs=seen_vue_objs.value;
 }
-/**
- * @type {any[]}
- */
+/** @type {any[]} */
 let recurwork=[];
-/**
- * @type {any[]}
- */
+/** @type {any[]} */
 let recurargs=[];
-/**
- * @arg {string} a
+/** @arg {string} a
  * @arg {{ deps: any; vm: { _uid: string | number; }; }} b
- * @arg {number} d
- */
+ * @arg {number} d */
 function w_vs(a,b,d=0) {
 	if(d>1) {
 		return;

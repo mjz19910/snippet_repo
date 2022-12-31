@@ -5316,7 +5316,7 @@ class DebugApi {
 	/** @arg {I_debug} debug @arg {I_undebug} undebug @arg {Constructor} func @arg {string} name @returns {dbg_result} */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
-		/** @arg {Constructor} func * @arg {any} f_this * @arg {any[]} c_args */
+		/** @arg {Constructor} func @arg {any} f_this @arg {any[]} c_args */
 		function do_activate(func,f_this,c_args) {
 			try {
 				return Reflect.apply(func,f_this,c_args);

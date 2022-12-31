@@ -1,6 +1,4 @@
-/**
- * @arg {string} url
- */
+/** @arg {string} url */
 export function resolve_http_url(url) {
 	try {
 		new URL(url)

@@ -169,8 +169,7 @@ export class TemplateLiteralComp extends LexerBase {
 			return [null,0];
 		}
 		/* TODO: SourceCharacter is too complex for js
-				 It requires handling all of unicode
-		*/
+				 It requires handling all of unicode */
 		return [true,1];
 	}
 	// https://tc39.es/ecma262/#prod-NotEscapeSequence

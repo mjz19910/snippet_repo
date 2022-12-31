@@ -19,9 +19,7 @@ v1 (cur): snippet_repo/javascript/group1/sub_a/item-_5.js
 	function mult() {
 		return player.mults[0]*player.mults[1]*player.mults[2]+(player.gens[0]*1e7+player.gens[1]*1e8+player.gens[2]*1e9)*player.genpower;
 	}
-	/**
-	 * @arg {number} scale
-	 */
+	/** @arg {number} scale */
 	function mod(scale) {
 		var gain=Math.floor(player.num/scale);
 		player.num-=gain*1e9;

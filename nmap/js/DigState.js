@@ -1,8 +1,6 @@
 
 export class DigState {
-	/**
-	 * @type {Parameters<ReturnType<this['nmap_get_result_fn']>>[0][]}
-	 */
+	/** @type {Parameters<ReturnType<this['nmap_get_result_fn']>>[0][]} */
 	m_nmap_results = [];
 	/** @arg {[DNS_base, Extract<typeof Status[keyof typeof Status], number>, IP_base, string]} item*/
 	nmap_result_has_dns(item) {
@@ -23,13 +21,9 @@ export class DigState {
 	nmap_result(item) {
 		this.m_nmap_results.push(item);
 	}
-	/**
-	 * @type {[DNS_base, number, string, string, IP_base][]}
-	 */
+	/** @type {[DNS_base, number, string, string, IP_base][]} */
 	m_dig_results = [];
-	/**
-	 * @arg {[DNS_base, number, string, string, IP_base]} item
-	 */
+	/** @arg {[DNS_base, number, string, string, IP_base]} item */
 	dig_result(item) {
 		this.m_dig_results.push(item);
 	}

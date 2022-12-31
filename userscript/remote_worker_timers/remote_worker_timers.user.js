@@ -42,7 +42,7 @@
 	/**@typedef {TimerTagSingle|TimerTagRepeating} TimerTagValues */
 	/**@typedef {TimerTagValues["value"]} TimerTag */
 	class TimerState {
-		/** @arg {TimerTag} tag * @arg {number} id * @arg {boolean} is_repeating * @arg {TimerHandler} target_fn * @arg {any} target_args * @arg {number} timeout */
+		/** @arg {TimerTag} tag @arg {number} id @arg {boolean} is_repeating @arg {TimerHandler} target_fn @arg {any} target_args @arg {number} timeout */
 		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
@@ -58,7 +58,7 @@
 		}
 	}
 	class ActiveTimerState {
-		/** @arg {TimerTag} type * @arg {number} id * @arg {boolean} is_repeating * @arg {Function} target_fn * @arg {any} target_args * @arg {number} timeout */
+		/** @arg {TimerTag} type @arg {number} id @arg {boolean} is_repeating @arg {Function} target_fn @arg {any} target_args @arg {number} timeout */
 		constructor(id,type,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
@@ -357,7 +357,7 @@
 			if(!value) throw new Error("Invalid");
 			return value;
 		}
-		/** @arg {1|2} tag * @arg {any} target_fn * @arg {number} timeout * @arg {any} target_args */
+		/** @arg {1|2} tag @arg {any} target_fn @arg {number} timeout @arg {any} target_args */
 		set(tag,target_fn,timeout,target_args) {
 			let remote_id=this.id_generator.next();
 			let is_repeating=false;
@@ -370,7 +370,7 @@
 			this.send_worker_set_message(tag,remote_id,timeout);
 			return remote_id;
 		}
-		/** @arg {1 | 2} tag * @arg {number} remote_id * @arg {number} timeout */
+		/** @arg {1 | 2} tag @arg {number} remote_id @arg {number} timeout */
 		send_worker_set_message(tag,remote_id,timeout) {
 			this.assert_valid_worker();
 			/** @type {typeof TimeoutSetSingle|typeof TimeoutSetRepeating|null} */
@@ -681,7 +681,7 @@
 	}
 	const WorkerStateMessageV=WorkerStateMessage.as_any_of();
 	class WorkerState {
-		/** @arg {Blob} worker_code_blob * @arg {Timer} timer * @arg {PromiseExecutorHandle} executor_handle */
+		/** @arg {Blob} worker_code_blob @arg {Timer} timer @arg {PromiseExecutorHandle} executor_handle */
 		constructor(worker_code_blob,timer,executor_handle) {
 			let has_blob=false;
 			if(worker_code_blob instanceof Blob) has_blob=true;
@@ -792,7 +792,7 @@
 				} break;
 			}
 		}
-		/** @template {{}|{for_worker_state: boolean}} T * @arg {T} msg * @returns {msg is {for_worker_state: boolean}} */
+		/** @template {{}|{for_worker_state: boolean}} T @arg {T} msg @returns {msg is {for_worker_state: boolean}} */
 		is_message_for(msg) {
 			return "for_worker_state" in msg&&msg.for_worker_state;
 		}
@@ -956,7 +956,7 @@
 		let worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
 		worker_state.init();
 		const setTimeout_global=setTimeout;
-		/** @arg {TimerHandler} handler * @arg {number | undefined} timeout * @arg {any[]} target_args */
+		/** @arg {TimerHandler} handler @arg {number | undefined} timeout @arg {any[]} target_args */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
 				window.setTimeout=setTimeout_global;
@@ -1178,9 +1178,8 @@
 				this.m_timer=timer;
 			}
 			/** @arg {1|2} tag
-			 * @arg {number} remote_id
-			 * @arg {number|undefined} timeout
-			  */
+			 @arg {number} remote_id
+			 @arg {number|undefined} timeout */
 			set(tag,remote_id,timeout) {
 				if(!this.m_timer) throw 1;
 				return this.m_timer.set(tag,remote_id,timeout);
@@ -1239,9 +1238,8 @@
 				}
 			}
 			/** @arg {1|2} tag
-			 * @arg {number} remote_id
-			 * @arg {number | undefined} timeout
-			  */
+			 @arg {number} remote_id
+			 @arg {number | undefined} timeout */
 			set(tag,remote_id,timeout) {
 				// debugger;
 				this.verify_tag(tag);

@@ -13,29 +13,17 @@ function main() {
 	cur.n="konggames_debug";
 	cur.f=function() {
 		class DebugState {
-			/**
-			 * @type {symbol}
-			 */
+			/** @type {symbol} */
 			call_info=Symbol.for("Unknown");
-			/**
-			 * @type {any}
-			 */
+			/** @type {any} */
 			breakpoint_function;
-			/**
-			 * @type {any}
-			 */
+			/** @type {any} */
 			root;
-			/**
-			 * @type {symbol[]}
-			 */
+			/** @type {symbol[]} */
 			info=[];
-			/**
-			 * @type {any}
-			 */
+			/** @type {any} */
 			breakpoint_function_path;
-			/**
-			 * @type {{ abort: symbol; error: symbol; success: symbol; failure: symbol; debug: symbol; }}
-			 */
+			/** @type {{ abort: symbol; error: symbol; success: symbol; failure: symbol; debug: symbol; }} */
 			sym={
 				abort: Symbol('abort'),
 				error: Symbol('error'),
@@ -43,22 +31,16 @@ function main() {
 				failure: Symbol("failure"),
 				debug: Symbol("debug"),
 			};
-			/**
-			 * @type {number}
-			 */
+			/** @type {number} */
 			depth=0;
 		}
 		class debug_class {
-			/**
-			 * @arg {DebugState} state
-			 */
+			/** @arg {DebugState} state */
 			constructor(state) {
 				this.data={
 					ghost_tree: null,
 				};
-				/**
-				 * @type {any[]}
-				 */
+				/** @type {any[]} */
 				this.error_array=[];
 				var id=Math.floor(Math.random()*(1<<(24))*(1<<8+8+4)).toString(16);
 				let key='_debugger_'+id;
@@ -78,20 +60,14 @@ function main() {
 					state.sym=this.sym;
 				}
 				state.info=[];
-				/**
-				 * @type {((e: any) => void) | undefined}
-				 */
+				/** @type {((e: any) => void) | undefined} */
 				this.on_internal_callback=undefined;
-				/**
-				 * @type {((e: any) => void) | undefined}
-				 */
+				/** @type {((e: any) => void) | undefined} */
 				this.on_breakpoint_clear=undefined;
 				this.in_callback=false;
 				state.info.push(this.sym.debug);
 			}
-			/**
-			 * @arg {any} event_forward_function
-			 */
+			/** @arg {any} event_forward_function */
 			async clear(event_forward_function) {
 				if(this.state.root) {
 					var nop=function() {};
@@ -103,9 +79,7 @@ function main() {
 						await this.next.clear(() => {
 							console.log('prev clear done');
 						});
-						/**
-						 * @type {debug_class | null}
-						 */
+						/** @type {debug_class | null} */
 						this.next=null;
 					}
 					return;
@@ -130,9 +104,7 @@ function main() {
 					state.breakpoint_function=g;
 				}
 				this.breakpoint_function=state.breakpoint_function;
-				/**
-				 * @type {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }[]}
-				 */
+				/** @type {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }[]} */
 				this.failed_check=[];
 				var make_internal_promise=function(/** @type {(arg0: any) => void} */ a) {
 					t.on_internal_callback=function(e) {
@@ -159,17 +131,13 @@ function main() {
 					this.set_breakpoint();
 				}
 			}
-			/**
-			 * @arg {any} info
-			 */
+			/** @arg {any} info */
 			do_internal_callback(info) {
 				this.internal_result=info;
 				if(!this.on_internal_callback) return;
 				this.on_internal_callback(this.internal_result);
 			}
-			/**
-			 * @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }} info
-			 */
+			/** @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }} info */
 			callback(info) {
 				x: {
 					if(this.state.info&&info.arg?.[1]?.[0]!==undefined&&this.state.info.indexOf(info.arg[1][0])>-1) {
@@ -199,9 +167,7 @@ function main() {
 					this.clear_breakpoint(info);
 				}
 			}
-			/**
-			 * @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; } | null | undefined} result
-			 */
+			/** @arg {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; } | null | undefined} result */
 			clear_breakpoint(result) {
 				var error;
 				if(!window.undebug) {
@@ -304,11 +270,9 @@ function main() {
 			}
 		}
 		function run_sync_code() {
-			/**
-			 * @arg {()=>DebugState} pre_init
+			/** @arg {()=>DebugState} pre_init
 			 * @arg {(x:debug_class,s:DebugState)=>unknown} at_init
-			 * @arg {(x:debug_class,s:DebugState)=>unknown} done_cb
-			 */
+			 * @arg {(x:debug_class,s:DebugState)=>unknown} done_cb */
 			function dbg_init(pre_init,at_init,done_cb) {
 				var state=pre_init();
 				let _debugger=new debug_class(state);
@@ -327,9 +291,7 @@ function main() {
 				return state;
 			}
 			function init_callback() {}
-			/**
-			 * @arg {debug_class} promise_debugger
-			 */
+			/** @arg {debug_class} promise_debugger */
 			function done_callback(promise_debugger) {
 				console.log("promise_debugger",promise_debugger);
 			}

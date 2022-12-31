@@ -15,9 +15,7 @@ function main() {
 			let fr=await fetch('/examples/importing-javascript-functions-into-webassembly/demo/rust/pkg/importing_javascript_functions_into_webassembly_bg.wasm');
 			if(!fr.body) throw new Error("no body on fetch");
 			let cr,rd=fr.body.getReader();
-			/**
-			 * @type {any[]}
-			 */
+			/** @type {any[]} */
 			let u8=[];
 			let uint_8_arr=new Uint8Array(0);
 			while(!(cr=await rd.read()).done) {
@@ -39,18 +37,14 @@ function main() {
 			uint_8_arr[196]=128;
 			uint_8_arr[194]=128;
 			window.module_bytes=uint_8_arr;
-			/**
-			 * @type {WebAssembly.Exports}
-			 */
+			/** @type {WebAssembly.Exports} */
 			let wasm;
 			function console_log_from_wasm() {
 				if(!('console_log_from_wasm' in wasm&&typeof wasm.console_log_from_wasm=='function')) throw new Error("1");
 				wasm.console_log_from_wasm();
 			}
-			/**
-			 * @arg {any} arg0
-			 * @arg {any} arg1
-			 */
+			/** @arg {any} arg0
+			 * @arg {any} arg1 */
 			function __wbg_log_f48fd9f1562bf74d(arg0,arg1) {
 				let varg0=getStringFromWasm(arg0,arg1);
 				console.log(varg0);
@@ -72,10 +66,8 @@ function main() {
 				}
 				return wasm_memory_cache;
 			}
-			/**
-			 * @arg {any} ptr
-			 * @arg {any} len
-			 */
+			/** @arg {any} ptr
+			 * @arg {any} len */
 			function getStringFromWasm(ptr,len) {
 				return cachedTextDecoder.decode(getUint8Memory().subarray(ptr,ptr+len));
 			}

@@ -1,8 +1,6 @@
 import {State} from "./State.js";
 
-/**
- * @arg {State} s_val
- */
+/** @arg {State} s_val */
 export function state_to_string(s_val) {
 	switch(s_val) {
 		case State.InvalidState: return "InvalidState";

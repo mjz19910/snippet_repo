@@ -13,9 +13,7 @@ x: {
 		}
 		break x;
 	}
-	/**
-	 * @arg {any} v
-	 */
+	/** @arg {any} v */
 	function any(v) {return v;}
 	/** @type {{}[]} */
 	let tmp=any(window.temp1);

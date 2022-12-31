@@ -1,9 +1,7 @@
 export class SimpleStackVM {
 	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['get_argv']|['push_window']|['breakpoint'])[]} */
 	instructions;
-	/**
-	 * @arg {SimpleStackVM['instructions']} instructions
-	 */
+	/** @arg {SimpleStackVM['instructions']} instructions */
 	constructor(instructions) {
 		this.instructions=instructions;
 		/** @type {{}[]} */
@@ -18,9 +16,7 @@ export class SimpleStackVM {
 		this.return_value=void 0;
 		this.running=false;
 	}
-	/**
-	 * @arg {{}[]} values
-	 */
+	/** @arg {{}[]} values */
 	push(...values) {
 		this.stack.push(...values);
 	}
@@ -29,9 +25,7 @@ export class SimpleStackVM {
 		if(!top) throw new Error("Stack underflow");
 		return top;
 	}
-	/**
-	 * @arg {{}[]} run_arguments
-	 */
+	/** @arg {{}[]} run_arguments */
 	run(...run_arguments) {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {

@@ -3,9 +3,7 @@
 v1 (old-o): snippet_repo/javascript/final/__ret_do_cur_debugApi.js
 v2 (cur-c): snippet_repo/javascript/group1/sub_a/item-_2.js
 */
-/**
- * @arg {TemplateStringsArray} v
- */
+/** @arg {TemplateStringsArray} v */
 function raw_template(v) {
 	return v.raw[0]
 }

@@ -17,9 +17,7 @@ function main() {
 		var t=window.syms;
 		e=etm;
 		class Logger {
-			/**
-			 * @arg {any[]} a
-			 */
+			/** @arg {any[]} a */
 			log(...a) {
 				console.log(...a);
 			}

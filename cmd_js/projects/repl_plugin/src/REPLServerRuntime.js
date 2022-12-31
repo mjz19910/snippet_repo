@@ -91,9 +91,7 @@ class RLInterface extends NodeEventEmitter {
 	getCursorPos() {
 		return this.X.getCursorPos();
 	}
-	/**
-	 * @arg {Interface} base_val
-	 */
+	/** @arg {Interface} base_val */
 	constructor(base_val) {
 		super(base_val);
 		this.X=base_val;
@@ -121,9 +119,7 @@ class RLInterface extends NodeEventEmitter {
 		}
 		return this.X.setPrompt(value);
 	}
-	/**
-	 * @arg {boolean} [x]
-	 */
+	/** @arg {boolean} [x] */
 	prompt(x) {
 		this.X.prompt(x);
 	}
@@ -159,9 +155,7 @@ export class REPLServerRuntime extends RLInterface {
 	}
 	/**@type {REPLServer} */
 	X;
-	/**
-	 * @arg {REPLServer} real_value
-	 */
+	/** @arg {REPLServer} real_value */
 	constructor(real_value) {
 		super(real_value);
 		this.X=real_value;
@@ -182,19 +176,16 @@ export class REPLServerRuntime extends RLInterface {
 	get writer() {return this.X.writer;}
 	get replMode() {return this.X.replMode;}
 	get last() {return this.X.last;}
-	/**
-	 * @arg {string} evalCmd
+	/** @arg {string} evalCmd
 	 * @arg {import("vm").Context} context
 	 * @arg {string} file
-	 * @arg {(err: Error | null, result: any) => void} cb
-	 */
+	 * @arg {(err: Error | null, result: any) => void} cb */
 	eval(evalCmd,context,file,cb) {
 		return this.X.eval(evalCmd,context,file,cb);
 	}
 	get lastError() {return this.X.lastError;}
 	get completer() {return this.X.completer;}
-	/**
-	 * @arg {string} keyword
+	/** @arg {string} keyword
 	 * @arg {repl.REPLCommand | repl.REPLCommandAction} cmd
 	 * */
 	defineCommand(keyword,cmd) {
@@ -207,11 +198,9 @@ export class REPLServerRuntime extends RLInterface {
 	clearBufferedCommand() {
 		this.X.clearBufferedCommand();
 	}
-	/**
-	 * @type {this['X']['setupHistory']}
+	/** @type {this['X']['setupHistory']}
 	 * @arg {string} path
-	 * @arg {import('./CallbackType.js').CallbackType} callback
-	 */
+	 * @arg {import('./CallbackType.js').CallbackType} callback */
 	setupHistory(path,callback) {
 		this.X.setupHistory(path,callback);
 	}

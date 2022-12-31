@@ -1,10 +1,8 @@
 function main() {
 	class CustomInputMatcher {
-		/**
-		 * @param {any} t_needle
+		/** @param {any} t_needle
 		 * @param {any} t_string_getter
-		 * @arg {string} result_name
-		 */
+		 * @arg {string} result_name */
 		constructor(t_needle,t_string_getter,result_name) {
 			this.ts_get=t_string_getter;
 			this.tr=t_needle;
@@ -35,9 +33,7 @@ function main() {
 		/** @type {string[]} */
 		names=[];
 		self_sym=Symbol();
-		/**
-		 * @param {any[]} e
-		 */
+		/** @param {any[]} e */
 		do_cur(...e) {
 			var i;
 			debugger;
@@ -56,9 +52,7 @@ function main() {
 			if(i>=0) return this.execute(i);
 			return null;
 		}
-		/**
-		 * @param {number} t
-		 */
+		/** @param {number} t */
 		execute(t) {
 			var function_name=this.names[t];
 			var function_value=this.funcs[t];
@@ -104,10 +98,8 @@ function main() {
 				}
 			} finally {}
 		}
-		/**
-		 * @param {string|CustomInputMatcher} name
-		 * @param {((...x: any[]) => any)} func
-		 */
+		/** @param {string|CustomInputMatcher} name
+		 * @param {((...x: any[]) => any)} func */
 		add_func(name,func) {
 			var y=this.funcs.push(func);
 			if(!(name instanceof CustomInputMatcher)) {
@@ -302,12 +294,10 @@ function main() {
 
 			}
 			let __nf=Symbol(2);
-			/**
-			 * @param {(...a:any[])=>any} fn
+			/** @param {(...a:any[])=>any} fn
 			 * @param {string} bp_str
 			 * @param {(string | undefined)[]} args
-			 * @returns {symbol | [any,any]}
-			 */
+			 * @returns {symbol | [any,any]} */
 			function __run(fn,bp_str,...args) {
 				if(!x.u) throw 1;
 				x.o=__nf;
@@ -328,11 +318,9 @@ function main() {
 				return x.o;
 			}
 			x.rx.jQuery=ret[1];
-			/**
-			 * @param {(...arg0: any[]) => any} fn
+			/** @param {(...arg0: any[]) => any} fn
 			 * @param {string} bp_str
-			 * @param {(number | boolean)[]} args
-			 */
+			 * @param {(number | boolean)[]} args */
 			function __run_noisy(fn,bp_str,...args) {
 				x(fn,bp_str);
 				try {
@@ -353,21 +341,13 @@ function main() {
 				x.f=expando_data.events.mouseup[0].handler;
 			}
 			__run(x.f,x.__all_vars);
-			/**
-			 * @param {CallableFunction} func
-			 */
+			/** @param {CallableFunction} func */
 			function get_code_formatted(func) {
-				/**
-				 * @type {any[][]}
-				 */
+				/** @type {any[][]} */
 				let stk=[];
-				/**
-				 * @type {any[]}
-				 */
+				/** @type {any[]} */
 				let cs=[];
-				/**
-				 * @type {string[]}
-				 */
+				/** @type {string[]} */
 				let s_stk=[];
 				let ss_sp='';
 				let is_classy=false;
@@ -392,9 +372,7 @@ function main() {
 				}
 				func_as_string=func.toString();
 				let js_filt=[func.toString()];
-				/**
-				 * @type {any[]}
-				 */
+				/** @type {any[]} */
 				let js_out=[];
 				let js_parse_no_white=( /** @type {string} */ e) => {
 					let m=null;
@@ -427,9 +405,7 @@ function main() {
 					}
 					js_out.push(e);
 				};
-				/**
-				 * @param {{ (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (value: any, index: number, array: any[]): void; }} func
-				 */
+				/** @param {{ (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (value: any, index: number, array: any[]): void; }} func */
 				function fe_block(func) {
 					js_filt.forEach(func);
 					js_filt=js_out;
@@ -446,10 +422,8 @@ function main() {
 					}
 					return [js_out,js_in,js_tmp];
 				};
-				/**
-				 * @param {string} str
-				 * @returns {any[]}
-				 */
+				/** @param {string} str
+				 * @returns {any[]} */
 				function js_parse_func_def_head(str) {
 					let js_out=[];
 					if(str[0].match(/\(/)&&str[1]==')') {
@@ -495,9 +469,7 @@ function main() {
 					fe_block(js_parse_function);
 				}
 				fe_block(js_parse_no_white);
-				/**
-				 * @type {any[]}
-				 */
+				/** @type {any[]} */
 				let parse_stack=[];
 				let loop_max_count=100;
 				let loop_counter=0;
@@ -652,11 +624,9 @@ function main() {
 						} else {
 							let wt=js_out.join('');
 							let block_match_rx=/^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
-							/**
-							 * @param {number} cur_idx
+							/** @param {number} cur_idx
 							 * @param {number} [skip_len]
-							 * @returns {[any,any]}
-							 */
+							 * @returns {[any,any]} */
 							function parse_bracket_down(cur_idx,skip_len) {
 								let cur,cs;
 								cs=wt.slice(cur_idx);
@@ -773,9 +743,7 @@ function main() {
 					/** @param {string} e */
 					function dn(e,bf=false) {
 						stk.push(cs);
-						/**
-						 * @type {any[]}
-						 */
+						/** @type {any[]} */
 						let nx=[];
 						if(bf) {
 							cs.push(e);
@@ -835,13 +803,9 @@ function main() {
 				if(maybe)
 					return null;
 				let fb=cs.slice(-3,-2)[0];
-				/**
-				 * @param {any[]} arr
-				 */
+				/** @param {any[]} arr */
 				function f_down(arr) {
-					/**
-					 * @type {any[]}
-					 */
+					/** @type {any[]} */
 					let stk=[];
 					let statement=[stk];
 					arr.forEach(( /** @type {string} */ e) => {
@@ -886,9 +850,7 @@ function main() {
 					return statement;
 				}
 				let statement=f_down(fb);
-				/**
-				 * @type {any[][]}
-				 */
+				/** @type {any[][]} */
 				let res_code=[];
 
 				function __statement() {
@@ -922,9 +884,7 @@ function main() {
 				__statement();
 				return {cs,res_code,statement};
 			}
-			/**
-			 * @type {any[]}
-			 */
+			/** @type {any[]} */
 			get_code_formatted.targets=[]; {
 				debugger;
 				let fc=get_code_formatted;
@@ -1020,8 +980,7 @@ function main() {
 				}; */
 				/* __r_ret=real_return;
 				real_return.__f=x.f;
-				return real_return;
-				*/
+				return real_return; */
 				return x.o;
 			}
 			// x.fo.push([x.f,x.o]);

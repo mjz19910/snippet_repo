@@ -139,17 +139,13 @@ function main() {
 			code+=');';
 		}
 		let p_eval_sym=Symbol('s');
-		/**
-		 * @arg {string} str
-		 */
+		/** @arg {string} str */
 		function process_string_parse_d(str) {
 			let r=str.match(/"(?:(?:[0-9a-zA-Z]+|\\.|\\")+)?"/);
 			if(!r) throw new Error("failed to parse double quotes");
 			return r[0];
 		}
-		/**
-		 * @arg {string} str
-		 */
+		/** @arg {string} str */
 		function process_string_parse_s(str) {
 			let r=str.match(/'(?:(?:[0-9a-zA-Z]+|\\.|\\')+)?'/);
 			if(!r) throw new Error("failed to parse single quotes");
@@ -215,21 +211,13 @@ function main() {
 		class JSLexState {
 			/** @type {string|undefined} */
 			str;
-			/**
-			 * @type {any[]}
-			 */
+			/** @type {any[]} */
 			lex_chunks=[];
-			/**
-			 * @type {boolean}
-			 */
+			/** @type {boolean} */
 			reset_count=false;
-			/**
-			 * @type {boolean}
-			 */
+			/** @type {boolean} */
 			m_at_eof=false;
-			/**
-			 * @type {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; } | null}
-			 */
+			/** @type {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; } | null} */
 			obj={
 				break_parse: false,
 				eof: false,
@@ -237,10 +225,8 @@ function main() {
 				nx_len: 0,
 				lex_cur: null,
 			};
-			/**
-			 * @arg {string} str
-			 * @arg {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj
-			 */
+			/** @arg {string} str
+			 * @arg {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj */
 			constructor(str,obj) {
 				this.lex_chunks=[]
 				this.str=str;
@@ -311,9 +297,7 @@ function main() {
 					throw new Error("1");
 				if(state.m_at_eof) {
 					console.log('EOF={bytes_left:'+state.str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
-					/**
-					 * @type {string[]}
-					 */
+					/** @type {string[]} */
 					let lc=state.lex_chunks;
 					{
 						let a='[]';

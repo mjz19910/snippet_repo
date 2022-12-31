@@ -2,11 +2,9 @@ import {SourceLocation} from "./SourceLocation";
 
 export const TOKENIZER_TRACE_DEBUG=true;
 
-/**
- * @arg {boolean} flag
+/** @arg {boolean} flag
  * @arg {any[]} args
- * @arg {string} format
- */
+ * @arg {string} format */
 export function dbgln_if(flag,format,...args) {
 	if(flag) {
 		console.log(format, args);

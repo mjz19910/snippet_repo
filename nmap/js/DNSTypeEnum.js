@@ -95,10 +95,8 @@ export class DNSTypeEnum {
     /**@readonly*/ static CAA = 257;
     /**@readonly*/ static TA = 32768;
     /**@readonly*/ static DLV = 32769;
-    /**
-     * @arg {Extract<keyof typeof this, number>} value
-     * @arg {boolean} short
-     */
+    /** @arg {Extract<keyof typeof this, number>} value
+     * @arg {boolean} short */
     static stringify(value, short) {
         if(short) {
             return this[value];

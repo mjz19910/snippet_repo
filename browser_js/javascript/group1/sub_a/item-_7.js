@@ -11,9 +11,7 @@ function main() {
 	void [LOG_ERROR,LOG_DEBUG,LOG_TRACE];
 	const log_level=LOG_INFO;
 	class CSSStyleValue {
-		/**
-		 * @arg {string} value
-		 */
+		/** @arg {string} value */
 		static create(value) {
 			const val=new CSSStyleValue;
 			val.#set_value(value);
@@ -48,37 +46,25 @@ function main() {
 		}
 	}
 	class StylePropertyMapReadOnly {
-		/**
-		 * @arg {any} _property
-		 */
+		/** @arg {any} _property */
 		get(_property) {}
-		/**
-		 * @arg {any} _property
-		 */
+		/** @arg {any} _property */
 		getAll(_property) {}
-		/**
-		 * @arg {any} _property
-		 */
+		/** @arg {any} _property */
 		has(_property) {}
 		entries() {}
 		/**@type {Array<CSSKeywordValue|CSSStyleValue>['forEach']} */
 		forEach(_callback) {}
 	}
 	class StylePropertyMap extends StylePropertyMapReadOnly {
-		/**
-		 * @arg {any} _property
-		 * @arg {any[]} _values
-		 */
+		/** @arg {any} _property
+		 * @arg {any[]} _values */
 		append(_property,..._values) {}
 		clear() {}
-		/**
-		 * @arg {any} _property
-		 */
+		/** @arg {any} _property */
 		delete(_property) {}
-		/**
-		 * @arg {any} _property
-		 * @arg {any[]} _values
-		 */
+		/** @arg {any} _property
+		 * @arg {any[]} _values */
 		set(_property,..._values) {}
 	}
 	let is_typechecking=false;
@@ -99,9 +85,7 @@ function main() {
 			return "";
 		return {};
 	}();
-	/**
-	 * @arg {(Window|(Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v
-	 */
+	/** @arg {(Window|(Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v */
 	function log_if_noisy(...v) {
 		if(log_level>LOG_VERBOSE) {
 			console.log(...v);
@@ -112,10 +96,8 @@ function main() {
 			,fid=0
 			,emp=new Set();
 		var js;
-		/**
-		 * @arg {NodeList|Node|Function} a
-		 * @arg {typeof NodeList|typeof Node|FunctionConstructor} b
-		 */
+		/** @arg {NodeList|Node|Function} a
+		 * @arg {typeof NodeList|typeof Node|FunctionConstructor} b */
 		function get_const_eq(a,b) {
 			return Object.getPrototypeOf(a).constructor==b;
 		}
@@ -131,10 +113,8 @@ function main() {
 			l;
 			js_g="{\"type\":\"Error\"}";
 		}
-		/**
-		 * @arg {any} e
-		 * @arg {any} o
-		 */
+		/** @arg {any} e
+		 * @arg {any} o */
 		function json_rep(st=new JSONRepArg0,e,o) {
 			void e;
 			let all_set=st.all_set;
@@ -315,9 +295,7 @@ function main() {
 				if(is_typechecking)
 					ret_cp.set("attributeStyleMap",new StylePropertyMap);
 				if(ret_cp.has("attributeStyleMap")) {
-					/**
-					 * @type {any[]}
-					 */
+					/** @type {any[]} */
 					var ta=[];
 					for(let i=0,sa=o.attributeStyleMap;i<sa.length;i++) {
 						ta[i]=sa[i];
@@ -366,27 +344,19 @@ function main() {
 				return "f";
 			}
 		}
-		/**
-		 * @arg {number} nsl
+		/** @arg {number} nsl
 		 * @arg {Map<any, any>} c_map
-		 * @arg {any} trg
-		 */
+		 * @arg {any} trg */
 		function do_json_stringify_iter(nsl,c_map,trg) {
-			/**
-			 * @type {string|null}
-			 */
+			/** @type {string|null} */
 			var js=null;
-			/**
-			 * @type {JSONRepArg0|undefined}
-			 */
+			/** @type {JSONRepArg0|undefined} */
 			var cin;
 			/** @arg {JSONRepArg0} v */
 			function set_cin(v) {
 				cin=v;
 			}
-			/**
-			 * @arg {string} v
-			 */
+			/** @arg {string} v */
 			function set_js(v) {
 				js=v;
 			}
@@ -454,9 +424,7 @@ function main() {
 				if(i>30) {break;}
 			}
 			var proto_arr=Array.from(new Set(car.map(e => Object.getPrototypeOf(e))));
-			/**
-			 * @arg {any} e
-			 */
+			/** @arg {any} e */
 			function get_proto_id(e) {
 				var pid=proto_arr.indexOf(Object.getPrototypeOf(e));
 				if(pid>0) {
@@ -465,20 +433,16 @@ function main() {
 					return 0;
 				}
 			}
-			/**
-			 * @arg {any} a
-			 * @arg {any} b
-			 */
+			/** @arg {any} a
+			 * @arg {any} b */
 			function do_sort_by_proto(a,b) {
 				return get_proto_id(a)-get_proto_id(b);
 			}
 			car.sort(do_sort_by_proto);
 			return [proto_arr,JSON.parse(js.js_g),car,JSON.parse(ret_v.js_g),js,repo];
 		}
-		/**
-		 * @arg {Map<any, any>} c_map
-		 * @arg {undefined} [o_start]
-		 */
+		/** @arg {Map<any, any>} c_map
+		 * @arg {undefined} [o_start] */
 		function do_user(c_map,o_start) {
 			var ps=performance.now()
 				,o_new_since=0

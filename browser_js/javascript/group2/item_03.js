@@ -28,10 +28,8 @@ function main() {
 		keyIndexOf(key) {
 			return this.keys.indexOf(key);
 		}
-		/**
-		 * @arg {string} key
-		 * @arg {()=>void} value
-		 */
+		/** @arg {string} key
+		 * @arg {()=>void} value */
 		set(key,value) {
 			if(this.keys.indexOf(key)>-1) {
 				throw Error("Duplicate key");

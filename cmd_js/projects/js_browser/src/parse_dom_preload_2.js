@@ -5,24 +5,18 @@ import {PageLoaderState} from "./page_loader.js";
 import {Extern} from "./use_extern.js";
 
 class UndefinedParseResult {
-	/**
-	 * @arg {boolean} fallback
-	 */
+	/** @arg {boolean} fallback */
 	bool(fallback) {
 		return fallback;
 	}
 }
 
 class JSONParseResult {
-	/**
-	 * @arg {any} value
-	 */
+	/** @arg {any} value */
 	constructor(value) {
 		this.value=value;
 	}
-	/**
-	 * @arg {boolean} fallback
-	 */
+	/** @arg {boolean} fallback */
 	bool(fallback) {
 		if(typeof this.value==='boolean') {
 			return this.value;
@@ -31,9 +25,7 @@ class JSONParseResult {
 	}
 }
 
-/**
- * @arg {string | undefined} env_value
- */
+/** @arg {string | undefined} env_value */
 function try_parse_env(env_value) {
 	if(env_value===undefined) {
 		return new UndefinedParseResult;
@@ -51,9 +43,7 @@ async function new_FetchRequestState(url) {
 	return new PageLoaderState(url);
 }
 
-/**
- * @arg {{url:string}} state
- */
+/** @arg {{url:string}} state */
 async function do_browse(state) {
 	let res=await new_FetchRequestState(state.url);
 	res.set_html_lexer(new Extern.HtmlLexerIpcPlugin);

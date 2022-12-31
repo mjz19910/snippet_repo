@@ -1,18 +1,14 @@
 import {SimpleStackVM} from "./simple_stack_vm.js";
 
 class EventHandlerVMDispatch extends SimpleStackVM {
-	/**
-	 * @arg {{background_audio: {play(): void;};}} target_obj
-	 * @arg {SimpleStackVM['instructions']} instructions
-	 */
+	/** @arg {{background_audio: {play(): void;};}} target_obj
+	 * @arg {SimpleStackVM['instructions']} instructions */
 	constructor(instructions,target_obj) {
 		super(instructions);
 		/** @type {{background_audio: {play(): void;};}} */
 		this.target_obj=target_obj;
 	}
-	/**
-	 * @arg {{}} event
-	 */
+	/** @arg {{}} event */
 	handleEvent(event) {
 		this.reset();
 		this.run(event);

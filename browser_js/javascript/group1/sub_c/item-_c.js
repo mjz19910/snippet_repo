@@ -24,24 +24,18 @@ function main() {
 			this.dl=dl;
 			return new Promise(a => setTimeout(a,this.dl));
 		}
-		/**
-		 * @arg {(x: PromiseHandlerImpl) => Promise<void>} fn
-		 */
+		/** @arg {(x: PromiseHandlerImpl) => Promise<void>} fn */
 		constructor(fn) {
 			this.fn=fn;
 			this.p=this.fn(this);
 		}
 	}
-	/**
-	 * @arg {(x: PromiseHandlerImpl) => Promise<void>} fn
-	 */
+	/** @arg {(x: PromiseHandlerImpl) => Promise<void>} fn */
 	function z(fn) {
 		var rng=Math.random();
 		window.postMessage(rng);
 		var promise_val=new PromiseHandlerImpl(fn);
-		/**
-		 * @arg {{ data: number; }} e
-		 */
+		/** @arg {{ data: number; }} e */
 		function msg_listener(e) {
 			if(e.data===rng) return;
 			promise_val.run=false;

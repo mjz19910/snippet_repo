@@ -110,10 +110,8 @@ async function kernel_main() {
 			/**@type {any[]} */
 			this.dirty_object_vec=[]
 		}
-		/**
-		 * @arg {string | number} event_type
-		 * @arg {any} event_listener
-		 */
+		/** @arg {string | number} event_type
+		 * @arg {any} event_listener */
 		addEventListener(event_type,event_listener) {
 			this._events[event_type]??=[]
 			let event_listener_description={
@@ -122,10 +120,8 @@ async function kernel_main() {
 			}
 			this._events[event_type].push(event_listener_description)
 		}
-		/**
-		 * @arg {string | number} event_type
-		 * @arg {any} event_listener
-		 */
+		/** @arg {string | number} event_type
+		 * @arg {any} event_listener */
 		removeEventListener(event_type,event_listener) {
 			if(this._events[event_type]===void 0)
 				return
@@ -144,9 +140,7 @@ async function kernel_main() {
 				}
 			}
 		}
-		/**
-		 * @arg {{ type: any; }} event
-		 */
+		/** @arg {{ type: any; }} event */
 		dispatchEvent(event) {
 			let event_type=event.type
 			let event_vec=this._events[event_type]
@@ -180,27 +174,17 @@ async function kernel_main() {
 	class RustRuntime {
 		constructor() {
 			this.event_handler=new RustEventHandler
-			/**
-			 * @type {{ type: string; value: any; }[]}
-			 */
+			/** @type {{ type: string; value: any; }[]} */
 			this.task_vec=[]
-			/**
-			 * @type {any[]}
-			 */
+			/** @type {any[]} */
 			this.active_task_vec=[]
-			/**
-			 * @type {any[]}
-			 */
+			/** @type {any[]} */
 			this.references=[]
 			this.state={}
 			this.is_shutdown=false
-			/**
-			 * @type {any[]}
-			 */
+			/** @type {any[]} */
 			this.on_shutdown_vec=[]
-			/**
-			 * @type {(() => void) | null}
-			 */
+			/** @type {(() => void) | null} */
 			this.shutdown_waiter=null
 		}
 		// @ts-ignore
@@ -235,9 +219,7 @@ async function kernel_main() {
 			}
 			await Promise.all(task_vec)
 		}
-		/**
-		 * @arg {any} func
-		 */
+		/** @arg {any} func */
 		add_shutdown_callback(func) {
 			this.on_shutdown_vec.push(func)
 		}
@@ -251,11 +233,9 @@ async function kernel_main() {
 			}
 			this.is_shutdown=true
 		}
-		/**
-		 * @arg {{ shutdown_waiter: (() => void) | null; }} runtime
+		/** @arg {{ shutdown_waiter: (() => void) | null; }} runtime
 		 * @arg {() => void} accept
-		 * @arg {any} reject
-		 */
+		 * @arg {any} reject */
 		// @ts-ignore
 		static wait_into_promise(runtime,accept,reject) {
 			runtime.shutdown_waiter=function() {
@@ -275,26 +255,20 @@ async function kernel_main() {
 			this.ref(ref_sym)
 			return ref_sym
 		}
-		/**
-		 * @arg {new (arg0: this) => any} class_constructor
-		 * @arg {any[]} rest
-		 */
+		/** @arg {new (arg0: this) => any} class_constructor
+		 * @arg {any[]} rest */
 		// @ts-ignore
 		class_ref(class_constructor,...rest) {
 			return new class_constructor(this)
 		}
-		/**
-		 * @arg {symbol} task
-		 */
+		/** @arg {symbol} task */
 		ref(task) {
 			if(this.is_shutdown) {
 				throw Error('unable to create ref to task, runtime is shutdown')
 			}
 			this.references.push(task)
 		}
-		/**
-		 * @arg {{ dispose: () => void; }} task
-		 */
+		/** @arg {{ dispose: () => void; }} task */
 		unref(task) {
 			let idx=this.references.indexOf(task)
 			if(idx>-1) {
@@ -366,11 +340,9 @@ async function kernel_main() {
 		}
 	}
 	class AsyncBlocker {
-		/**
-		 * @arg {any} runtime
+		/** @arg {any} runtime
 		 * @arg {any} accept
-		 * @arg {any} reject
-		 */
+		 * @arg {any} reject */
 		// @ts-ignore
 		constructor(runtime,accept,reject) {
 			this.accept=accept
@@ -381,18 +353,14 @@ async function kernel_main() {
 		}
 	}
 	class RustTaskNotifier {
-		/**
-		 * @arg {any} runtime
-		 */
+		/** @arg {any} runtime */
 		constructor(runtime) {
 			this.runtime=runtime
 		}
 		count=0
 		inner=null
-		/**
-		 * @arg {any} accept
-		 * @arg {any} reject
-		 */
+		/** @arg {any} accept
+		 * @arg {any} reject */
 		// @ts-ignore
 		static create_promise(obj,accept,reject) {
 			obj.inner=new AsyncBlocker(obj.runtime,accept,reject)
@@ -415,9 +383,7 @@ async function kernel_main() {
 		}
 	}
 	class RustTaskContext {
-		/**
-		 * @arg {any} runtime
-		 */
+		/** @arg {any} runtime */
 		constructor(runtime) {
 			this.runtime=runtime
 			this.notifier=new RustTaskNotifier(runtime)
@@ -478,15 +444,11 @@ async function kernel_main() {
 			}
 			let c_buy_arr=[92,72,71,91,82,81,51,52,52,61,62]
 			let s_buy_arr=[11,12]
-			/**
-			 * @type {never[]}
-			 */
+			/** @type {never[]} */
 			let c_can_buy_arr=[]
-			/**
-			 * @arg {string} target
+			/** @arg {string} target
 			 * @arg {number[]} src_arr
-			 * @arg {any[]} target_arr
-			 */
+			 * @arg {any[]} target_arr */
 			function process_buyables_arr(target,src_arr,target_arr) {
 				let i=0
 				for(let x of src_arr) {
@@ -529,10 +491,8 @@ async function kernel_main() {
 				}
 				return 'done'
 			}
-			/**
-			 * @arg {any[]} arr
-			 * @arg {string} target
-			 */
+			/** @arg {any[]} arr
+			 * @arg {string} target */
 			function buyable_iter(arr,target) {
 				for(let x of arr) {
 					// @ts-ignore
@@ -545,10 +505,8 @@ async function kernel_main() {
 				}
 				return false
 			}
-			/**
-			 * @arg {number[]} arr
-			 * @arg {string} target
-			 */
+			/** @arg {number[]} arr
+			 * @arg {string} target */
 			function upgrade_iter(arr,target) {
 				for(let x of arr) {
 					// @ts-ignore
@@ -680,9 +638,7 @@ async function kernel_main() {
 	// @ts-ignore
 	window.Poll=Poll
 	class DelayFuture {
-		/**
-		 * @arg {any} timeout
-		 */
+		/** @arg {any} timeout */
 		constructor(timeout) {
 			this.delay=timeout
 			this.is_timed_out=false
@@ -699,9 +655,7 @@ async function kernel_main() {
 		finish() {
 			this.cint=-1
 		}
-		/**
-		 * @arg {{ is_timed_out: boolean; waker: { is_some: () => any; take: () => { (): any; new (): any; unwrap: { (): any; new (): any; }; }; }; finish: () => void; dispose: () => void; }} self
-		 */
+		/** @arg {{ is_timed_out: boolean; waker: { is_some: () => any; take: () => { (): any; new (): any; unwrap: { (): any; new (): any; }; }; }; finish: () => void; dispose: () => void; }} self */
 		static on_timeout(self) {
 			self.is_timed_out=true
 			if(self.waker.is_some()) {
@@ -734,10 +688,8 @@ async function kernel_main() {
 			return new this
 		}
 	}
-	/**
-	 * @arg {any} runtime
-	 * @arg {number} delay
-	 */
+	/** @arg {any} runtime
+	 * @arg {number} delay */
 	function async_delay_future(runtime,delay) {
 		let future=new DelayFuture(delay)
 		let cx=new RustTaskContext(runtime)
@@ -745,10 +697,8 @@ async function kernel_main() {
 		future.poll(future,cx)
 		return cx.wait_for()
 	}
-	/**
-	 * @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime
-	 * @arg {string | number} i
-	 */
+	/** @arg {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime
+	 * @arg {string | number} i */
 	async function async_loop_function_inner(runtime,i) {
 		let w=async_delay_future.bind(null,runtime)
 		let ref_sym=runtime.auto_ref()
@@ -805,11 +755,9 @@ async function kernel_main() {
 				// @ts-ignore
 				let __d=DebugApi._PrivInstance
 				__d.attach(debug,undebug,null)
-				/**
-				 * @arg {(this: any, ...args: readonly any[]) => any} func
+				/** @arg {(this: any, ...args: readonly any[]) => any} func
 				 * @arg {any} f_this
-				 * @arg {readonly any[]} c_args
-				 */
+				 * @arg {readonly any[]} c_args */
 				function do_activate(func,f_this,c_args) {
 					try {
 						return Reflect.apply(func,f_this,c_args)
@@ -883,9 +831,7 @@ async function kernel_main() {
 			runtime.unref(ref_sym)
 		}
 	}
-	/**
-	 * @arg {{ is_shutdown: any; }} runtime
-	 */
+	/** @arg {{ is_shutdown: any; }} runtime */
 	async function async_process(runtime) {
 		for(let i=0;i<600;i++) {
 			// @ts-ignore
@@ -898,9 +844,7 @@ async function kernel_main() {
 			}
 		}
 	}
-	/**
-	 * @arg {{ ref: (arg0: { active: null; dispose(): void; }) => void; auto_ref: () => any; unref: (arg0: { active: null; dispose(): void; }) => void; }} runtime
-	 */
+	/** @arg {{ ref: (arg0: { active: null; dispose(): void; }) => void; auto_ref: () => any; unref: (arg0: { active: null; dispose(): void; }) => void; }} runtime */
 	async function async_loop_function(runtime) {
 		let w_state={
 			active: null,
@@ -925,9 +869,7 @@ async function kernel_main() {
 		runtime.unref(w_state)
 	}
 	class Ref {
-		/**
-		 * @arg {any} runtime
-		 */
+		/** @arg {any} runtime */
 		constructor(runtime) {
 			this.runtime=runtime
 			this.runtime.ref(this)
@@ -937,9 +879,7 @@ async function kernel_main() {
 		}
 	}
 	class RuntimeTask {
-		/**
-		 * @arg {any} runtime
-		 */
+		/** @arg {any} runtime */
 		constructor(runtime) {
 			this.runtime=runtime
 		}
@@ -956,9 +896,7 @@ async function kernel_main() {
 		}
 	}
 	class ExportTask {
-		/**
-		 * @arg {any} runtime
-		 */
+		/** @arg {any} runtime */
 		constructor(runtime) {
 			// @ts-ignore
 			if(window.__obj) {

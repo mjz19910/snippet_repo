@@ -1,11 +1,9 @@
-/**
- * @author mjz19910
+/** @author mjz19910
  * @copyright MIT
  * @description Read the library-ms xml format into a json compatible format
  * created by iterating over the xml tree.
  * When a duplicate tag is found in the xml tree, convert the value corresponding to
- * that tag into an array
- */
+ * that tag into an array */
 async function x() {
 	/** @type {import("./__global.js")} */
 	let holder=1;
@@ -20,11 +18,9 @@ async function x() {
 	let text=await r.text();
 	let dom_parser=new DOMParser;
 	let xml_document=dom_parser.parseFromString(text,"application/xml");
-	/**
-	 * @arg {{ [x: string]: any; }} obj
+	/** @arg {{ [x: string]: any; }} obj
 	 * @arg {(obj: {}, key: string, p: string[])=>{}} cb
-	 * @returns {{}[][]}
-	 */
+	 * @returns {{}[][]} */
 	function do_iter(obj,cb,c=0,/** @type {string[]} */kp=[]) {
 		let out=[];
 		if(typeof obj==='string') {
@@ -79,11 +75,9 @@ async function x() {
 					return e[0].nodeValue;
 				}
 			}
-			/**
-			 * @arg {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj
+			/** @arg {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj
 			 * @arg {string} key
-			 * @arg {HTMLCollection | NodeListOf<ChildNode>} list
-			 */
+			 * @arg {HTMLCollection | NodeListOf<ChildNode>} list */
 			function append_from_list(obj,key,list) {
 				if(obj instanceof Array) {
 					obj.push({
@@ -93,17 +87,13 @@ async function x() {
 					obj[key]=list;
 				}
 			}
-			/**
-			 * @arg {Element} element
-			 * @arg {{}} obj
-			 */
+			/** @arg {Element} element
+			 * @arg {{}} obj */
 			function append_from_children(obj,element) {
 				append_from_list(obj,element.tagName,element.children);
 			}
-			/**
-			 * @argument {Node} node
-			 * @arg {{}} obj
-			 */
+			/** @argument {Node} node
+			 * @arg {{}} obj */
 			function append_from_childNodes(obj,node) {
 				append_from_list(obj,node.nodeName,node.childNodes);
 			}
@@ -135,9 +125,7 @@ async function x() {
 	// const lib_desc=obj.libraryDescription;
 	// const con_list=lib_desc.searchConnectorDescriptionList;
 	// let binary_data,overflow,b32_data;
-	// /**
-	//  * @arg {{ searchConnectorDescription: any; }} list_item
-	//  */
+	// /** @arg {{ searchConnectorDescription: any; }} list_item */
 	// function get_data_slice(list_item) {
 	// 	let con_desc=list_item.searchConnectorDescription;
 	// 	let simple_loc=con_desc.simpleLocation;

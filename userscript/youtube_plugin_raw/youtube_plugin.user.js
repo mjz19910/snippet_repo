@@ -867,8 +867,7 @@ class YtIterateTarget {
 	}
 }
 
-/** @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag
-  */
+/** @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag */
 function check_item_keys(real_path,path,keys) {
 	let real_path_arr=real_path.split(".");
 	let real_path_arr_dyn={
@@ -2183,8 +2182,7 @@ class YTNavigateFinishEvent {
 /** @type {((event:YTNavigateFinishEvent)=>void)[]} */
 let on_yt_navigate_finish=[];
 
-/** @template {string} U @template {U[]} T @arg {T} src @arg {T} target
-  */
+/** @template {string} U @template {U[]} T @arg {T} src @arg {T} target */
 function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
 	for(let i=0;i<src.length;i++) {
@@ -2664,8 +2662,7 @@ inject_api_yt.AudioGainController=AudioGainController;
 /** @type {AudioGainController|null} */
 let audio_gain_controller=null;
 
-/** @template {string} T @template {{}} U @template {import("./support/make/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS}
-  */
+/** @template {string} T @template {{}} U @template {import("./support/make/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; } | ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
@@ -2914,9 +2911,8 @@ async function main() {
 		inject_api_yt.active_blob_set=active_blob_set;
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
 			/** @arg {typeof URL["createObjectURL"]} target
-			 * @arg {typeof URL} thisArg
-			 * @arg {[Blob | MediaSource]} args
-			 */
+			 @arg {typeof URL} thisArg
+			 @arg {[Blob | MediaSource]} args */
 			apply(target,thisArg,args) {
 				let [url_source,...rest]=args;
 				if(rest.length>0) {
@@ -2931,9 +2927,8 @@ async function main() {
 		});
 		URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
 			/** @arg {typeof URL["revokeObjectURL"]} target
-			 * @arg {typeof URL} thisArg
-			 * @arg {[string]} args
-			 */
+			 @arg {typeof URL} thisArg
+			 @arg {[string]} args */
 			apply(target,thisArg,args) {
 				let val=args[0];
 				active_blob_set.delete(val);
@@ -2964,8 +2959,7 @@ function get_exports() {
 	return exports;
 }
 
-/** @arg {{}} state @arg {"account"} base @arg {string[]} parts @arg {number} index
-  */
+/** @arg {{}} state @arg {"account"} base @arg {string[]} parts @arg {number} index */
 function get_account_type(state,base,parts,index) {
 	let cur_part=parts[index];
 	switch(cur_part) {
@@ -3026,8 +3020,7 @@ function verify_param(param) {
 	};
 }
 
-/** @template {string} C @template {string} U @template {import("./support/make/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1
-  */
+/** @template {string} C @template {string} U @template {import("./support/make/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1 */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }

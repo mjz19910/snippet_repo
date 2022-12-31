@@ -1,10 +1,8 @@
 import {is_close} from "./is_close.js";
 import {is_open} from "./is_open.js";
 
-	/**
- * @arg {string[]} arr
- * @arg {number} level
- */
+	/** @arg {string[]} arr
+ * @arg {number} level */
 export function to_token_arr(arr,level) {
 	/** @type {[number,string][]} */
 	let ret=[];

@@ -24,9 +24,7 @@ function main() {
 		mc.port1.onmessage=function(e) {
 			switch(e.data.msg_type) {
 				case msg_clk:
-					/**
-					 * @type {any[]}
-					 */
+					/** @type {any[]} */
 					let ev=clk_priv.clk_id;
 					let f=ev[e.data.fn];
 					f();
@@ -41,9 +39,7 @@ function main() {
 				setTimeout(e);
 			},
 			r: function(/** @type {any} */ e) {
-				/**
-				 * @type {any[]}
-				 */
+				/** @type {any[]} */
 				let ev=clk_priv.clk_id;
 				let id=ev.length;
 				ev.push(e);

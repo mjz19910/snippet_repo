@@ -205,8 +205,7 @@ function main() {
 			Punctuator
 			NumericLiteral
 			StringLiteral
-			Template
-			*/
+			Template */
 			CommonToken(str,index) {
 				let cur=null
 					,item=null
@@ -510,8 +509,7 @@ function main() {
 			u{ CodePoint }
 
 			Hex4Digits ::
-			HexDigit HexDigit HexDigit HexDigit
-			*/
+			HexDigit HexDigit HexDigit HexDigit */
 			StringLiteral(str,index) {
 				let cur=str[index];
 				if(cur==='"') {
@@ -639,8 +637,7 @@ function main() {
 			UnicodeEscapeSequence
 
 			following function ignores:
-			LegacyOctalEscapeSequence
-			*/
+			LegacyOctalEscapeSequence */
 			EscapeSequence(str,index) {
 				let len=this.CharacterEscapeSequence(str,index);
 				if(len>0) {
@@ -723,8 +720,7 @@ function main() {
 			NonZeroOctalDigit [lookahead ∉ OctalDigit]
 			ZeroToThree OctalDigit [lookahead ∉ OctalDigit]
 			FourToSeven OctalDigit
-			ZeroToThree OctalDigit OctalDigit
-			 */
+			ZeroToThree OctalDigit OctalDigit */
 			LegacyOctalEscapeSequence(str,index) {
 				x: {
 					if(str[index]==='0') {

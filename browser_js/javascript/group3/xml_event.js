@@ -1,6 +1,4 @@
-/**
- * @arg {string} s
- */
+/** @arg {string} s */
 function split_tags(s) {
 	var t=""
 	/** @type {([1,string]|[0,string])[]} */

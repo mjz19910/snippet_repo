@@ -3,18 +3,14 @@
 v1 (cur): snippet_repo/javascript/final/items/item9_v1.js
 v2 (new): snippet_repo/javascript/group1/sub_a/item-_9.js
 */
-/**
- * @arg {any} a
+/** @arg {any} a
  * @arg {any} c
- * @arg {any} m_require
- */
+ * @arg {any} m_require */
 function found_modules(a,c,m_require) {
 	void a,c,m_require;
 }
-/**
- * @arg {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
- * @arg {{ (a: any, c: any, m_require: any): void; (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
- */
+/** @arg {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
+ * @arg {{ (a: any, c: any, m_require: any): void; (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb */
 function rv(oc,cb) {
 	void oc;
 	let fpc_x=Function.prototype.call;

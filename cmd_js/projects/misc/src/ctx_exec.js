@@ -15,13 +15,11 @@ export function ctx_exec() {
 	const obj_entries=Object.entries;
 	const obj_proto_of=Object.getPrototypeOf;
 	const obj_has_own_property=Object.hasOwnProperty;
-	/**
-	 * @arg {DelPropertiesState} state
+	/** @arg {DelPropertiesState} state
 	 * @arg {any[][]} cc
 	 * @arg {string} key
 	 * @arg {(TypedPropertyDescriptor<any> & PropertyDescriptor)} property_descriptor
-	 * @arg {any} obj
-	 */
+	 * @arg {any} obj */
 	function del_all_properties_1(state,obj,cc,key,property_descriptor) {
 		const s=state;
 		const debug=false;
@@ -99,21 +97,15 @@ export function ctx_exec() {
 		del_parents=[];
 		/**@type {any[]}*/
 		del_objs=[];
-		/**
-		 * @type {any}
-		 */
+		/** @type {any} */
 		cur;
-		/**
-		 * @type {any}
-		 */
+		/** @type {any} */
 		ctx_req;
 		del_undo_init() {
 			this.del_undo_start=this.del_parents.length;
 			this.del_undo_cur=this.del_undo_start;
 		}
-		/**
-		 * @arg {() => void} fn
-		 */
+		/** @arg {() => void} fn */
 		del_undo_until_ok(fn) {
 			let is_ok=false;
 			let count=0;

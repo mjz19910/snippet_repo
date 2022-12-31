@@ -6,38 +6,30 @@ v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame_client_code.js
 let holder=1;
 holder;
 if(activatePrestige.length==3) {
-	/**
-	 * @arg {number} x
+	/** @arg {number} x
 	 * @arg {number} y
-	 * @arg {number} l
-	 */
+	 * @arg {number} l */
 	function nx_l(x,y,l) {
 		return nx_df(x,y,l,x,y,l+1);
 	}
-	/**
-	 * @arg {number} x
+	/** @arg {number} x
 	 * @arg {number} y
-	 * @arg {number} l
-	 */
+	 * @arg {number} l */
 	function nx_x(x,y,l) {
 		return nx_df(x,y,l,x+1,y,l);
 	}
-	/**
-	 * @arg {number} x
+	/** @arg {number} x
 	 * @arg {number} y
-	 * @arg {number} l
-	 */
+	 * @arg {number} l */
 	function nx_y(x,y,l) {
 		return nx_df(x,y,l,x,y+1,l);
 	}
-	/**
-	 * @arg {number} prestige_a
+	/** @arg {number} prestige_a
 	 * @arg {number} prestige_b
 	 * @arg {number} prestige_count
 	 * @arg {number} requirement_a
 	 * @arg {number} requirement_b
-	 * @arg {number} requirement_count
-	 */
+	 * @arg {number} requirement_count */
 	function nx_df(prestige_a,prestige_b,prestige_count,requirement_a,requirement_b,requirement_count) {
 		let ret,nx=getRequirement(requirement_a,requirement_b,requirement_count);
 		for(let i=0;i<=nx;i++) {
@@ -69,26 +61,20 @@ if(activatePrestige.length==3) {
 		}
 	}
 } else {
-	/**
-	 * @arg {number} x
-	 * @arg {number} y
-	 */
+	/** @arg {number} x
+	 * @arg {number} y */
 	function nx_x(x,y) {
 		return nx_df(x,y,x+1,y);
 	}
-	/**
-	 * @arg {number} x
-	 * @arg {number} y
-	 */
+	/** @arg {number} x
+	 * @arg {number} y */
 	function nx_y(x,y) {
 		return nx_df(x,y,x,y+1);
 	}
-	/**
-	 * @arg {number} prestige_1_a
+	/** @arg {number} prestige_1_a
 	 * @arg {number} prestige_1_b
 	 * @arg {number} prestige_2_a
-	 * @arg {number} prestige_2_b
-	 */
+	 * @arg {number} prestige_2_b */
 	function nx_df(prestige_1_a,prestige_1_b,prestige_2_a,prestige_2_b) {
 		let prestige_2_requirement=getRequirement(prestige_2_a,prestige_2_b,0);
 		for(let i=0;i<=prestige_2_requirement;i++) {

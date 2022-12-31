@@ -287,10 +287,8 @@ class B {
 		/**@type {[import("./ns.js").DNS_IN_A_Type, import("./ns.js").DNS_IN_A_Type] | null} */
 		let first_dup=null;
 		let sort_count=0;
-		/**
-		 * @arg {string} a
-		 * @arg {string} b
-		 */
+		/** @arg {string} a
+		 * @arg {string} b */
 		function ip_leq(a,b) {
 			let ip_a=a.split(".").map(e => +e);
 			let ip_b=b.split(".").map(e => +e);

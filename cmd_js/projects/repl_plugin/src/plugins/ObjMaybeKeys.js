@@ -15,9 +15,7 @@ export class ObjMaybeKeys {
 			this.type="keys";
 		this.arr.push(key);
 	}
-	/**
-	 * @arg {keyof BrowserPluginData} name
-	 */
+	/** @arg {keyof BrowserPluginData} name */
 	get_from_store(name) {
 		switch(this.type) {
 			case 'keys': {

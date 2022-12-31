@@ -15,9 +15,7 @@ function main() {
 		return game;
 	}
 	// cspell: disable-next-line
-	/**
-	 * @arg {number} lim
-	 */
+	/** @arg {number} lim */
 	function do_work_1(lim) {
 		let game=get_game();
 		// cspell: disable-next-line
@@ -100,9 +98,7 @@ function main() {
 		} while(do_cont<(s_count-4));
 	}
 	// cspell: disable-next-line
-	/**
-	 * @arg {number} dcs
-	 */
+	/** @arg {number} dcs */
 	function do_work_0(dcs) {
 		let game=get_game();
 		// cspell: disable-next-line
@@ -163,10 +159,8 @@ function main() {
 		if(v===null) throw 1;
 		return v;
 	}
-	/**
-	 * @arg {number} dim_l
-	 * @arg {number} lim
-	 */
+	/** @arg {number} dim_l
+	 * @arg {number} lim */
 	function maxall_dim(dim_l,lim) {
 		let game=get_game();
 		let lsw=document.querySelector("#layerswrapper");

@@ -159,25 +159,17 @@ v1 (cur): snippet_repo/javascript/final/myhtml_tokenizer.js
 var url_arr;
 var p_res;
 var px_res;
-/**
- * @type {Promise<Response>[]}
- */
+/** @type {Promise<Response>[]} */
 var promise_arr;
 class class_for_var_dp {
 	parser=new DOMParser
 	doc_str="";
 	mc=new HTMLParser("");
-	/**
-	 * @type {[number,number][]}
-	 */
+	/** @type {[number,number][]} */
 	token_result_arr=[];
-	/**
-	 * @type {[number,number,number][]}
-	 */
+	/** @type {[number,number,number][]} */
 	printable_token_result_arr=[];
-	/**
-	* @type {[string,string][]}
-	*/
+	/** @type {[string,string][]} */
 	token_result_print_arr=[];
 }
 /** @type {class_for_var_dp} */
@@ -210,9 +202,7 @@ async function run () {
 dp??=new class_for_var_dp;
 //dp.doc_res=dp.parseFromString(dp.doc_str, "text/html")
 class TokenizerBase {
-	/**
-	 * @arg {string} source
-	 */
+	/** @arg {string} source */
 	constructor(source) {
 		this.source=source;
 		this.index=0;
@@ -222,9 +212,7 @@ class CPPEnumParser extends TokenizerBase {
 }
 CPPEnumParser;
 class HTMLParser extends TokenizerBase {
-	/**
-	 * @arg {string} source
-	 */
+	/** @arg {string} source */
 	constructor(source) {
 		super(source);
 		let iota_count=0;
@@ -332,9 +320,7 @@ class HTMLParser extends TokenizerBase {
 	reset() {
 		this.index=0;
 	}
-	/**
-	 * @arg {number} offset
-	 */
+	/** @arg {number} offset */
 	get(offset) {
 		return this.source[this.index+offset];
 	}

@@ -95,9 +95,7 @@ export class RemoteOriginConnection {
 	/**@type {RemoteSocket[]} */
 	connections: RemoteSocket[]=[];
 	client_max_id=0;
-	/**
-	 * @arg {MessageEvent<unknown>} event
-	 */
+	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event: MessageEvent<unknown>) {
 		let fail=() => this.on_client_misbehaved(event);
 		let cast_result=cast_to_object(event.data);

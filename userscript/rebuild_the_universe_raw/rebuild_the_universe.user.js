@@ -2566,7 +2566,7 @@ class AutoBuyImplR {
 			font-size:22px;
 			color:lightgray;
 		}`;
-		/** @arg {any} obj * @arg {HTMLElement} parent * @arg {string} tag_name * @arg {string} id * @arg {string | undefined} [content] */
+		/** @arg {any} obj @arg {HTMLElement} parent @arg {string} tag_name @arg {string} id @arg {string | undefined} [content] */
 		function create_element(obj,parent,tag_name,id,content) {
 			let ele=document.createElement(tag_name);
 			ele.id=id;

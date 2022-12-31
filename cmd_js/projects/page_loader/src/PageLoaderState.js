@@ -35,9 +35,7 @@ export class PageLoaderState {
 			}
 		}
 	}
-	/**
-	 * @arg {IncomingMessage} message
-	 */
+	/** @arg {IncomingMessage} message */
 	async on_incoming_message(message) {
 		this.m_incoming_message=message;
 		switch(this.m_incoming_message.statusCode) {
@@ -74,16 +72,12 @@ export class PageLoaderState {
 		});
 		await promise;
 	}
-	/**
-	 * @arg {Error} e
-	 */
+	/** @arg {Error} e */
 	on_error_result(e) {
 		console.error(e);
 	}
-	/**
-	 * @arg {string} url
-	 * @arg {Partial<PageLoaderState>} [opts]
-	 */
+	/** @arg {string} url
+	 * @arg {Partial<PageLoaderState>} [opts] */
 	constructor(url,opts) {
 		if(opts) {
 			if(opts.no_repl!==void 0) {

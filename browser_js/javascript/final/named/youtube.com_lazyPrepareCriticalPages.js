@@ -13,10 +13,8 @@ function main() {
 	if(/youtube.com/) {
 		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin,"youtube_lazy_pages");
 		let bp_class=class {
-			/**
-			 * @arg {any} a
-			 * @arg {any} b
-			 */
+			/** @arg {any} a
+			 * @arg {any} b */
 			constructor(a,b) {
 				this.a=a;
 				this.b=b;
@@ -34,9 +32,7 @@ function main() {
 		if(!window.debug) throw new Error("needs devtools open for debug function");
 		if(!window.undebug) throw new Error("1");
 		window.debug.u=window.undebug;
-		/**
-		 * @arg {any[]} e
-		 */
+		/** @arg {any[]} e */
 		function ts(e) {
 			return e[0];
 		}

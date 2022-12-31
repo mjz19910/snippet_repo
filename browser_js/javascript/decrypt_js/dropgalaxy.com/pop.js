@@ -1,6 +1,4 @@
-/**
- * @arg {any[]} arr
- */
+/** @arg {any[]} arr */
 export function pop(arr) {
 	let v=arr.pop();
 	if(!v)

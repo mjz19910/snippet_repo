@@ -4,9 +4,7 @@ import {PageLoaderState} from "./PageLoaderState.js";
 import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
-/**
- * @arg {PageLoaderState} state
- */
+/** @arg {PageLoaderState} state */
 export async function fetch_url(state,silent=false) {
 	if(!state.url) throw new Error("No url to get");
 	let repl=get_cached_repl_plugin(state);

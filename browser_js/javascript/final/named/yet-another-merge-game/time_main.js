@@ -13,19 +13,15 @@ export function time_main() {
 	}
 	let c=0;
 	let tc=1000;
-	/**
-	 * @arg {number} tc
-	 * @arg {number} c
-	 */
+	/** @arg {number} tc
+	 * @arg {number} c */
 	function time_loop_1(tc,c) {
 		for(let i=0;i<tc;i++)
 			c+=time_it();
 		return c;
 	}
-	/**
-	 * @arg {number} tc
-	 * @arg {number} c
-	 */
+	/** @arg {number} tc
+	 * @arg {number} c */
 	function time_loop_2(tc,c) {
 		for(let i=0;i<tc;i++)
 			c+=time_base();

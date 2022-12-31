@@ -159,8 +159,7 @@ export class NumericLiterals extends LexerBase {
 		m_line_column++
 	}
 
-	m_current_char = m_source[m_position++]
-	 */
+	m_current_char = m_source[m_position++] */
 		this.m_position++
 		this.m_current_char=this.m_source[this.m_position]
 	}
@@ -210,8 +209,7 @@ export class NumericLiterals extends LexerBase {
 	}
 	/*
 	// C++ from SerenityOS's LibJS Lexer::next()
-	if (is_numeric_literal_start()) {
-	*/
+	if (is_numeric_literal_start()) { */
 	NumericLiteral(str: string,index: number): LexReturnType {
 		// token_type = TokenType::NumericLiteral
 		this.token_type=TokenType.NumericLiteral

@@ -10,9 +10,7 @@ class InitPluginContext {
 	get_vars=get_vars;
 	get_page_loader_dom_state=get_page_loader_dom_state;
 	async_import=async_import;
-	/**
-	 * @type {(e: string) => any}
-	 */
+	/** @type {(e: string) => any} */
 	do_eval_script(string) {
 		console.log('do_eval_script',string);
 	};

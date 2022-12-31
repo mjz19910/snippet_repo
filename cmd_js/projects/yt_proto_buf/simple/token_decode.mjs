@@ -24,11 +24,9 @@ export function decode_tlv(binary) {
 	let data=rest.subarray(0,length_);
 	return [type,data];
 }
-/**
- * @param {Uint8Array} binary
+/** @param {Uint8Array} binary
  * @param {number} idx
- * @returns {[number,number]}
- */
+ * @returns {[number,number]} */
 export function dec_uint32(binary,idx) {
 	let ret,len=0;
 	x: {
@@ -43,32 +41,24 @@ export function dec_uint32(binary,idx) {
 	}
 	return [ret,len];
 }
-/**
- * @param {Uint8Array} binary
- */
+/** @param {Uint8Array} binary */
 export function do_token_decode(binary) {
 	/* istanbul ignore next */
-	/**
-	 * @param {Reader} reader
-	 * @param {number} [writeLength]
-	 */
+	/** @param {Reader} reader
+	 * @param {number} [writeLength] */
 	function indexOutOfRange(reader,writeLength) {
 		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 	}
 	class SimpleType {
-		/**
-		 * @param {any} [p]
-		 */
+		/** @param {any} [p] */
 		constructor(p) {
 			console.log(p);
 		}
 	}
-	/**
-	 * Constructs a new reader instance using the specified buffer.
+	/** Constructs a new reader instance using the specified buffer.
 	 * @classdesc Wire format reader using `Uint8Array` if available, otherwise `Array`.
 	 * @constructor
-	 * @param {Uint8Array} buffer Buffer to read from
-	 */
+	 * @param {Uint8Array} buffer Buffer to read from */
 	class Reader {
 		/** @arg {Uint8Array} buffer */
 		constructor(buffer) {
@@ -92,11 +82,9 @@ export function do_token_decode(binary) {
 				return this.buf.slice(start,end);
 			return start===end? new Uint8Array(0):this.buf.slice(start,end);
 		}
-		/**
-		 * Skips the specified number of bytes if specified, otherwise skips a varint.
+		/** Skips the specified number of bytes if specified, otherwise skips a varint.
 		 * @param {number} [length] Length if known, otherwise a varint is assumed
-		 * @returns {Reader} `this`
-		 */
+		 * @returns {Reader} `this` */
 		skip(length) {
 			if(typeof length==="number") {
 				/* istanbul ignore if */
@@ -112,11 +100,9 @@ export function do_token_decode(binary) {
 			}
 			return this;
 		}
-		/**
-		 * Skips the next element of the specified wire type.
+		/** Skips the next element of the specified wire type.
 		 * @param {number} wireType Wire type received
-		 * @returns {Reader} `this`
-		 */
+		 * @returns {Reader} `this` */
 		skipType(wireType) {
 			switch(wireType) {
 				case 0:
@@ -143,10 +129,8 @@ export function do_token_decode(binary) {
 			}
 			return this;
 		}
-		/**
-		 * @param {Uint8Array} r
-		 * @param {undefined} l
-		 */
+		/** @param {Uint8Array} r
+		 * @param {undefined} l */
 		verySimpleObject(r,l) {
 			/** @type {Reader} */
 			let x=new Reader(r);
@@ -162,11 +146,9 @@ export function do_token_decode(binary) {
 			return m;
 		}
 	}
-	/**
- * Reads a varint as an unsigned 32 bit value.
+	/** Reads a varint as an unsigned 32 bit value.
  * @function
- * @returns {number} Value read
- */
+ * @returns {number} Value read */
 	Reader.prototype.uint32=(function read_uint32_setup() {
 		var value=4294967295;
 		/** @type {(this: Reader)=>number} */
@@ -186,11 +168,9 @@ export function do_token_decode(binary) {
 		};
 	})();
 
-	/**
-	 * Constructs a new buffer reader instance.
+	/** Constructs a new buffer reader instance.
 	 * @classdesc Wire format reader using node buffers.
-	 * @extends Reader
-	 */
+	 * @extends Reader */
 	class BufferReader extends Reader {
 		/** @param {Buffer} buffer */
 		constructor(buffer) {
