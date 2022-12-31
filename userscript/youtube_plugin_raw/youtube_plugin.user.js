@@ -5088,15 +5088,19 @@ class HandleTypes extends BaseService {
 		this.save_data_cache();
 	}
 	load_data_cache() {
-		let json_str=this.get_local_storage();
-		if(json_str) {
-			let res=JSON.parse(json_str);
-			if(res.known_root_ve) {
-				this.known_root_ve=new Set(res.known_root_ve);
-			}
-			if(res.known_strings) {
-				this.load_known_strings_from(res.known_strings);
-			}
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			return;
+		}
+		let res=this.known_data_tmp;
+		if(res.known_root_ve) {
+			this.known_root_ve=new Set(res.known_root_ve);
+		}
+		if(res.known_strings) {
+			this.load_known_strings_from(res.known_strings);
+		}
+		if(res.known_bool) {
+			this.load_bool_from(res.known_bool);
 		}
 	}
 	/**
@@ -5147,7 +5151,7 @@ class HandleTypes extends BaseService {
 		let arr=this.changed_known_bool;
 		for(let item of arr) {
 			let [key,val]=item;
-			let index=bool_d.findIndex(e=>e[0]===key);
+			let index=bool_d.findIndex(e => e[0]===key);
 			if(index<0) {
 				bool_d.push([item[0],val]);
 				index=bool_d.length-1;
@@ -5168,7 +5172,7 @@ class HandleTypes extends BaseService {
 		let arr=this.new_known_strings;
 		for(let item of arr) {
 			let [key,val]=item;
-			let index=tmp_known_str.findIndex(e=>e[0]===key);
+			let index=tmp_known_str.findIndex(e => e[0]===key);
 			if(index<0) {
 				tmp_known_str.push([item[0],[val]]);
 				index=tmp_known_str.length-1;
@@ -5203,5 +5207,11 @@ class HandleTypes extends BaseService {
 		}
 		this.changed_known_bool.push([key,kc]);
 		this.save_known_bool();
+	}
+	/**
+	 * @param {[string, { t: boolean; f: boolean; }][]} bool_cache
+	 */
+	load_bool_from(bool_cache) {
+		this.known_booleans=new Map(bool_cache);
 	}
 }
