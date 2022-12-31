@@ -171,7 +171,7 @@ export class MyReader extends protobufjs.Reader {
 class MyUnkType extends protobufjs.Type {
 	_fieldsArray!: protobufjs.Field[];
 	override setup() {
-		let types=[];
+		let types: (protobufjs.Type|protobufjs.Enum|null)[]=[];
 		for(var i=0;i< /* initializes */ this.fieldsArray.length;++i)
 			types.push(this._fieldsArray[i].resolve().resolvedType);
 		this.decode=protobufjs.decoder(this)({
