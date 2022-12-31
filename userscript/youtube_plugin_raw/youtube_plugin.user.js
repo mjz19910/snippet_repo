@@ -3962,13 +3962,18 @@ class HandleTypes extends BaseService {
 	sidebar(sidebar) {
 		console.log(sidebar);
 	}
-	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} content */
-	BrowseResponseContent(content) {
-		let data=content;
-		this.trackingParams(data.trackingParams);
-		if(data.contents) {
-			this.BrowseResponseContentContents(data.contents);
-		}
+	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data */
+	BrowseResponseContent(data) {
+		let {
+			trackingParams,responseContext,
+			contents,frameworkUpdates,header,topbar,sidebar,
+			observedStateTags,cacheMetadata,
+			onResponseReceivedActions,
+			...rest
+		}=data;
+		this.responseContext(responseContext);
+		this.trackingParams(trackingParams);
+		if(contents) this.BrowseResponseContentContents(contents);
 		if(data.frameworkUpdates) {
 			this.handleEntityBatchUpdate(data.frameworkUpdates);
 		}
@@ -3981,28 +3986,23 @@ class HandleTypes extends BaseService {
 		if(data.observedStateTags) {
 			this.observedStateTags(data.observedStateTags);
 		}
-		let ok=get_keys_of(data);
-		/** @type {string[]} */
-		let ok_miss=[];
-		for(let k of ok) {
-			if(k==="responseContext") continue;
-			if(k==="contents") continue;
-			if(k==="header") continue;
-			if(k==="trackingParams") continue;
-			if(k==="topbar") continue;
-			if(k==="sidebar") continue;
-			if(k==="onResponseReceivedActions") continue;
-			if(k==="frameworkUpdates") continue;
-			if(k==="observedStateTags") continue;
-			if(k==="cacheMetadata") continue;
-			assert_is_never(k);
-			ok_miss.push(k);
+		if(data.cacheMetadata) {
+			this.cacheMetadata(data.cacheMetadata);
 		}
-		data.cacheMetadata;
-		if(ok_miss.length>0) {
-			console.log("[browse_page_context_miss]: [%s]",ok_miss.join(","),data);
+		let ok=get_keys_of(rest);
+		for(let k of ok) {
+			assert_is_never(k);
+		}
+		if(ok.length>0) {
+			console.log("[browse_page_context_miss]: [%s]",ok.join(","),data);
 			debugger;
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/CacheMetadata.js").CacheMetadata | undefined} meta
+	 */
+	cacheMetadata(meta) {
+		meta;
 	}
 	/** @arg {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data */
 	accessibilityData(data) {
