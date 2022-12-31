@@ -4846,7 +4846,7 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} v
 	 */
 	ThumbnailsList(v) {
-		this. iterate(v.thumbnails,v=>this.Thumbnail(v))
+		this.iterate(v.thumbnails,v=>this.Thumbnail(v))
 	}
 	/**
 	 * @param {import("./support/yt_api/_/u/UrlEndpoint.js").UrlEndpoint} v
@@ -4856,6 +4856,7 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(v.clickTrackingParams);
 		this.commandMetadata(commandMetadata);
 		this.UrlEndpointData(urlEndpoint);
+		this.empty_object(x);
 	}
 	/**
 	 * @param {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v
