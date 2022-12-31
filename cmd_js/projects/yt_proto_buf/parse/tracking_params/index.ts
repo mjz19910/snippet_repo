@@ -8,7 +8,8 @@ import {into_type} from "../support/into_type.js";
 import {get_token_data} from "./get_token_data.js";
 import {get_token_data_from_file} from "./get_token_data_from_file.js";
 import {r,__dirname} from "./r.js";
-import {default as Long} from "../../../../node_modules/long/umd/index.js";
+type Long=import("../../../../node_modules/long/index.js");
+
 function run() {
 	parse_types();
 }
