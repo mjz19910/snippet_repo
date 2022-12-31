@@ -1162,6 +1162,7 @@ class MyReader {
 	}
 	/** @arg {number} [length] */
 	skip(length) {
+		this.last_pos=this.pos;
 		let start_pos=this.pos;
 		if(typeof length==="number") {
 			/* istanbul ignore if */
@@ -1273,7 +1274,7 @@ class MyReader {
 	}
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
-		console.log("[skip] pos=%o",this.pos);
+		console.log("[skip] pos=%o",this.last_pos,this.pos);
 		let pos_start=this.pos;
 		/** @type {(number|bigint)[]} */
 		let first_num=[];
@@ -4579,11 +4580,9 @@ class HandleTypes extends BaseService {
 		this.BrowseResponseContent(data.response);
 		this.endpoint(data.endpoint);
 		this.save_keys("BrowsePageResponse",data);
-		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} data */
 	DataResponsePageType(data) {
-		let page_type=data.page;
 		this.save_keys("DataResponsePageType.page",data.page);
 		this.save_keys("DataResponsePageType",data);
 		switch(data.page) {
@@ -4593,7 +4592,7 @@ class HandleTypes extends BaseService {
 			case "shorts": this.ShortsPageResponse(data); break;
 			case "watch": this.WatchPageResponse(data); break;
 			case "channel": this.ChannelPageResponse(data); break;
-			default: console.log("[handle_page_type] [%s]",page_type); debugger;
+			default: break;
 		}
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} data */
@@ -4606,39 +4605,20 @@ class HandleTypes extends BaseService {
 		console.log(data.response);
 		console.log(data.url);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
-	on_new_page_url(data) {
-		let res=data.url.split("/").slice(1)?.[0].split("_").slice(1);
+	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").ResponsePageUrl} url */
+	onResponsePageUrl(url) {
+		let res=url.split("/").slice(1)?.[0].split("_").slice(1);
 		if(res) {
 			this.save_new_string("page_section",res);
 		}
-		this.save_new_string("new_page.page_url",data.url);
+		this.save_new_string("new_page.page_url",url);
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	SettingsPageResponse(data) {
+		this.save_keys("SettingsPageResponse",data);
 		this.endpoint(data.endpoint);
 		this.SettingsResponseContent(data.response);
-		let split_parts=split_string(data.url,"/");
-		/** @type {Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>} */
-		let xx="ACCOUNT"; xx;
-		switch(split_parts.length) {
-			case 2: let cur_part=split_parts[1]; switch(cur_part) {
-				case "account": break;
-				case "account_notifications": break;
-				case "account_privacy": break;
-				case "account_advanced": break;
-				case "account_billing": break;
-				case "account_sharing": break;
-				default: {
-					assert_is_never(cur_part);
-					this.on_new_page_url(data);
-				} break;
-			} break;
-			default: debugger;
-		}
-		if(get_keys_of(data).length!==4) {
-			debugger;
-		}
+		this.onResponsePageUrl(data.url);
 	}
 	/** @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data */
 	ShortsPageResponse(data) {
