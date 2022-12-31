@@ -1191,7 +1191,8 @@ const decode_protobuf_obj=function make() {
 	function indexOutOfRange(reader,writeLength) {
     return RangeError("index out of range: " + reader.pos + " + " + (writeLength || 1) + " > " + reader.len);
 	}
-	let value=4294967295;class MyReader {
+	let value=4294967295;
+	class MyReader {
 		/** @arg {Uint8Array} buf  */
 		constructor(buf) {
 			this.buf=buf;
