@@ -1,7 +1,7 @@
-import {SignalServiceEndpoint} from "./SignalServiceEndpoint";
+import {SignalServiceEndpointData} from "./SignalServiceEndpoint";
 import {ServiceEndpointGeneral} from "./ServiceEndpointGeneral";
 
 
 export interface SignalServiceEndpoints extends ServiceEndpointGeneral {
-	signalServiceEndpoint: SignalServiceEndpoint;
+	signalServiceEndpoint: SignalServiceEndpointData;
 }

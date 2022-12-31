@@ -4266,7 +4266,7 @@ class HandleTypes extends BaseService {
 	MultiPageMenuRenderer(obj) {
 		console.log(obj);
 	}
-	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpoint} ep */
+	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpointData} ep */
 	signalServiceEndpoint(ep) {
 		for(let action of ep.actions) {
 			this.ServiceEndpointAction(action);
@@ -4992,7 +4992,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/NotificationTopbarButtonRendererData.js").NotificationTopbarButtonRendererData} x */
 	notificationTopbarButtonRenderer(x) {
-		const {icon,...y}=x;
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x;
 		this.empty_object(y);
 	}
 }
