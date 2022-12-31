@@ -1,0 +1,67 @@
+message EntityKey {
+	optional string entity_id=2;
+	optional EntityType entity_type_field_number=4;
+}
+
+enum EntityType {
+	fakeChannel=2;
+	musicAlbumRelease=17;
+	musicAlbumReleaseDetail=18;
+	musicAlbumReleaseUserDetail=19;
+	musicArtist=20;
+	musicArtistDetail=21;
+	musicArtistUserDetail=22;
+	musicPlaylist=24;
+	musicTrack=28;
+	musicTrackDetail=29;
+	musicTrackUserDetail=30;
+	videoPlaybackPositionEntity=76;
+	musicShare=100;
+	playbackData=119;
+	transfer=120;
+	musicLibraryEdit=121;
+	offlineVideoPolicy=130;
+	downloadStatusEntity=141;
+	refresh=148;
+	ytMainVideoEntity=151;
+	ytMainChannelEntity=152;
+	ytMainDownloadedVideoEntity=155;
+	mainDownloadsLibraryEntity=158;
+	mainDownloadsListEntity=164;
+	offlineOrchestrationActionWrapperEntity=169;
+	fakeVideo=182;
+	offlineVideoStreams=198;
+	downloadQualityPickerEntity=202;
+	liveChatPollStateEntity=217;
+	captionTrack=225;
+	iconBadgeEntity=229;
+	musicTrackDownloadMetadataEntity=234;
+	commerceCartListEntity=236;
+	orchestrationWebSamplingEntity=242;
+	logoEntity=245;
+	offlineabilityEntity=246;
+	musicPlaylistDownloadMetadataEntity=248;
+	flowStateEntity=252;
+	musicDownloadsLibraryEntity=257;
+	musicAlbumReleaseDownloadMetadataEntity=259;
+	mainVideoEntity=261;
+	mainVideoDownloadStateEntity=262;
+	downloadsPageViewConfigurationEntity=264;
+	pinnedProductEntity=273;
+	channelHandle=275;
+	fakeVideoDescription=278;
+	fakePlaylist=279;
+	fakePlaylistEntryCollection=280;
+	settingEntity=297;
+	downloadsPageRefreshTokenEntity=299;
+	mainPlaylistEntity=306;
+	markersVisibilityOverrideEntity=312;
+	musicLibraryStatusEntity=318;
+	macroMarkerEntity=329;
+	quantityIncrementerEntity=356;
+	buttonEntity=358;
+	mainPlaylistVideoEntity=368;
+	mainPlaylistDownloadStateEntity=373;
+	emojiFountainDataEntity=393;
+	continuationTokenEntity=406;
+}
