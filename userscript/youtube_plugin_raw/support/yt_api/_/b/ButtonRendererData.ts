@@ -1,23 +1,22 @@
 import {Accessibility} from "../a/Accessibility.js";
-import {ServiceEndpoint} from "../a/ServiceEndpoint";
 import {GeneralCommand} from "../g/GeneralCommand.js";
 import {Icon} from "../i/Icon.js";
-import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
 import {YtTextType} from "../s/YtTextType.js";
+import {YtEndpoint} from "./YtEndpoint.js";
 
 export type ButtonRendererData={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
-	serviceEndpoint: ServiceEndpoint;
+	serviceEndpoint: YtEndpoint;
 	trackingParams: string;
 }|{
 	style: "STYLE_SUGGESTIVE"
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
-	serviceEndpoint: ServiceEndpoint;
+	serviceEndpoint: YtEndpoint;
 	trackingParams: string;
 }|{
 	style: "STYLE_SUGGESTIVE"
@@ -32,7 +31,7 @@ export type ButtonRendererData={
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
-	navigationEndpoint: NavigationEndpoint;
+	navigationEndpoint: YtEndpoint;
 	trackingParams: string;
 	accessibilityData: Accessibility;
 	command: GeneralCommand;
@@ -41,7 +40,7 @@ export type ButtonRendererData={
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	icon: ButtonRendererIconTypes;
-	navigationEndpoint: NavigationEndpoint;
+	navigationEndpoint: YtEndpoint;
 	tooltip: string;
 	trackingParams: string;
 	accessibilityData: Accessibility;

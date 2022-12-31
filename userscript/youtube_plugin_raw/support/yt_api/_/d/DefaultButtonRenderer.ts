@@ -1,4 +1,4 @@
-import {ButtonRendererData} from "../yt_api/_/b/ButtonRendererData.js";
+import {ButtonRendererData} from "../b/ButtonRendererData.js";
 
 export type DefaultButtonRenderer={
 	buttonRenderer: ButtonRendererData;

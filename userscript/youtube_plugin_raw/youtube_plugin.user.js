@@ -1698,7 +1698,7 @@ class FilterHandlers {
 				case "notification": switch(target[1]) {
 					case "get_notification_menu": return {
 						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/_/GetNotificationMenuJson.js").GetNotificationMenuJson} */
+						/** @type {import("./support/yt_api/_/n/GetNotificationMenuJson.js").GetNotificationMenuJson} */
 						json: cast_as(json),
 					};
 					case "get_unseen_count": return {
@@ -4126,8 +4126,8 @@ class HandleTypes extends BaseService {
 	Accessibility(data) {
 		this.AccessibilityData(data.accessibilityData);
 	}
-	/** @arg {import("./support/yt_api/_/a/ServiceEndpoint.js").ServiceEndpoint} ep */
-	serviceEndpoint(ep) {
+	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} ep */
+	YtEndpoint(ep) {
 		console.log(ep);
 	}
 	/** @arg {{}} obj */
@@ -4149,7 +4149,7 @@ class HandleTypes extends BaseService {
 		if(!("accessibilityData" in rest_)) {
 			let {style,text,serviceEndpoint,...x}=rest_;
 			this.YtTextType(text);
-			this.serviceEndpoint(rest_.serviceEndpoint);
+			this.YtEndpoint(rest_.serviceEndpoint);
 			this.empty_object(x);
 			return;
 		} else if("accessibilityData" in rest_) {
@@ -4160,7 +4160,7 @@ class HandleTypes extends BaseService {
 					let {style,icon,...y}=x;
 					if("tooltip" in y) {
 						let {navigationEndpoint,tooltip,...x}=y;
-						this.navigationEndpoint(navigationEndpoint);
+						this.YtEndpoint(navigationEndpoint);
 						this.primitive(tooltip);
 						this.empty_object(x);
 						return;
@@ -4183,12 +4183,6 @@ class HandleTypes extends BaseService {
 		} else {
 			debugger;
 		}
-		if(rest_2&&rest_2.style==="STYLE_DEFAULT") {
-		} else if(rest_2) {
-			let {style,...x}=rest_2;
-			if(style!=="STYLE_SUGGESTIVE") debugger;
-			this.empty_object(x);
-		}
 	}
 	/** @arg {number|string|bigint|boolean} value */
 	primitive(value) {
@@ -4201,10 +4195,10 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep */
+	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} ep */
 	navigationEndpoint(ep) {
 		if(ep===void 0) return;
-		if("watchEndpoint" in ep) {
+		if(ep.watchEndpoint) {
 			this.watchEndpoint(ep.watchEndpoint);
 		}
 		let k=get_keys_of(ep);
@@ -4238,22 +4232,29 @@ class HandleTypes extends BaseService {
 			console.log(k,rest);
 		}
 	}
-	/** @arg {import("./support/_/OpenPopupAction.js").OpenPopupAction} obj */
+	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction} obj */
 	openPopupAction(obj) {
 		switch(obj.popupType) {
-			case "DIALOG": this.ConfirmDialogRenderer(obj.popup); break;
-			case "DROPDOWN": this.MultiPageMenuRenderer(obj.popup); break;
+			case "DIALOG": this.DialogPopup(obj); break;
+			case "DROPDOWN": this.DropdownPopup(obj); break;
+			case "TOAST": this.ToastPopupTag(obj.popup); break;
 			default: console.log(obj);
 		}
 	}
-	/** @arg {import("./support/_/ConfirmDialogRenderer.js").ConfirmDialogRenderer} obj */
-	ConfirmDialogRenderer(obj) {
-		if(Object.keys(obj).length!==1) {
-			debugger;
-		}
-		this.ConfirmDialogRendererData(obj.confirmDialogRenderer);
+	/**
+	 * @param {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x
+	 */
+	ToastPopupTag(x) {
+		const {notificationActionRenderer:v,...y}=x;
+		this.notificationActionRenderer(v);
+		this.empty_object(y);
 	}
-	/** @arg {import("./support/_/ConfirmDialogRendererData.js").ConfirmDialogRendererData} data */
+	/** @arg {import("./support/yt_api/_/d/DropdownPopup.js").DropdownPopup} obj */
+	DropdownPopup(obj) {
+		console.log(obj);
+		debugger;
+	}
+	/** @arg {import("./support/yt_api/_/n/ConfirmDialogRendererData.js").ConfirmDialogRendererData} data */
 	ConfirmDialogRendererData(data) {
 		let ok=get_keys_of(data);
 		this.ButtonRenderer(data.cancelButton);
@@ -4263,7 +4264,7 @@ class HandleTypes extends BaseService {
 
 	}
 	/** @arg {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer} obj */
-	MultiPageMenuRenderer(obj) {
+	DialogPopup(obj) {
 		console.log(obj);
 	}
 	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpointData} ep */
@@ -4575,7 +4576,7 @@ class HandleTypes extends BaseService {
 	withGeneralContext(data) {
 		this.responseContext(data.responseContext);
 	}
-	/** @arg {import("./support/_/OpenPopupActionItem.js").OpenPopupActionItem} action */
+	/** @arg {import("./support/yt_api/_/o/OpenPopupActionItem.js").OpenPopupActionItem} action */
 	OpenPopupActionItem(action) {
 		let ok_1=get_keys_of(action);
 		if("openPopupAction" in action) {
@@ -4594,7 +4595,7 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok_1,["clickTrackingParams","openPopupAction"])) return;
 		debugger;
 	}
-	/** @arg {import("./support/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res */
+	/** @arg {import("./support/yt_api/_/GetNotificationMenuBox.js").GetNotificationMenuBox} res */
 	notification_get_notification_menu_t(res) {
 		for(let action of res.json.actions) {
 			this.OpenPopupActionItem(action);
@@ -4993,6 +4994,15 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/NotificationTopbarButtonRendererData.js").NotificationTopbarButtonRendererData} x */
 	notificationTopbarButtonRenderer(x) {
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x;
+		this.empty_object(y);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x
+	 */
+	notificationActionRenderer(x) {
+		const {responseText,trackingParams,...y}=x;
+		this.YtTextType(responseText);
+		this.trackingParams(trackingParams);
 		this.empty_object(y);
 	}
 }

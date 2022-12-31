@@ -1,4 +1,4 @@
-import {OnCreateListCommand} from "./OnCreateListCommand";
+import {OnCreateListCommand} from "../o/OnCreateListCommand.js";
 
 export type AddToPlaylistCommand={
 	listType: string;

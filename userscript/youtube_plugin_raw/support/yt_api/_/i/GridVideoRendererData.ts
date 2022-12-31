@@ -1,5 +1,5 @@
 import {MenuRenderer} from "../m/MenuRenderer.js";
-import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
+import {YtEndpoint} from "../n/YtEndpoint.js";
 import {TextRuns} from "../t/TextRuns.js";
 import {ThumbnailOverlayItem} from "../t/ThumbnailOverlay.js";
 import {ThumbnailsList} from "../t/ThumbnailsList.js";
@@ -9,7 +9,7 @@ export type GridVideoRendererData={
 	badges: {}[];
 	channelThumbnail: ThumbnailsList;
 	menu: MenuRenderer;
-	navigationEndpoint: NavigationEndpoint;
+	navigationEndpoint: YtEndpoint;
 	shortBylineText: TextRuns;
 	shortViewCountText: TextRuns;
 	thumbnail: ThumbnailsList;

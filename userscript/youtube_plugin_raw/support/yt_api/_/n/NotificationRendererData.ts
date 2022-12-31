@@ -1,9 +1,11 @@
+import {YtEndpoint} from "../b/YtEndpoint.js";
+
 export type NotificationRendererData={
 	thumbnail: {};
 	videoThumbnail: {};
 	shortMessage: {};
 	sentTimeText: {};
-	navigationEndpoint: {};
+	navigationEndpoint: YtEndpoint;
 	accessibilityData: {};
 	icon: {};
 	tooltip: "Settings";

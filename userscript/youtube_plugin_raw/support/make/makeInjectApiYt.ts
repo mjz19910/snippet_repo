@@ -1,4 +1,4 @@
-import {SavedData} from "../yt_api/_/a/SavedData";
+import {SavedData} from "../a/SavedData";
 
 declare global {
 	interface InjectApiYt {

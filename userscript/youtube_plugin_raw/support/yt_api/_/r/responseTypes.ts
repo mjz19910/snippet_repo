@@ -1,4 +1,4 @@
-import {GetNotificationMenuBox} from "../../../_/GetNotificationMenuBox";
+import {GetNotificationMenuBox} from "../GetNotificationMenuBox";
 import {att_get_t} from "../../yt/att_get_t.js";
 import {getDatasyncIdsEndpoint_t} from "../../yt/getDatasyncIdsEndpoint_t";
 import {guide_t} from "../../yt/guide_t.js";

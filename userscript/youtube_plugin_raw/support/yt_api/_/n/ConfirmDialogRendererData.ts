@@ -1,5 +1,5 @@
-import {ButtonRenderer} from "../yt_api/_/b/ButtonRenderer.js";
-import {TextRuns} from "../yt_api/_/t/TextRuns.js";
+import {ButtonRenderer} from "../b/ButtonRenderer.js";
+import {TextRuns} from "../t/TextRuns.js";
 
 export type ConfirmDialogRendererData={
 	title: TextRuns;

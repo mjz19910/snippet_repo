@@ -1,7 +1,7 @@
-import {NavigationEndpoint} from "../n/NavigationEndpoint";
+import {YtEndpoint} from "../b/YtEndpoint.js";
 
 export type TextRun={
 	text: string;
-	navigationEndpoint?: NavigationEndpoint;
+	navigationEndpoint?: YtEndpoint;
 	bold?: boolean;
 };

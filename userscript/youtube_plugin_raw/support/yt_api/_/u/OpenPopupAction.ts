@@ -1,4 +1,4 @@
-import {ConfirmDialogRenderer} from "./ConfirmDialogRenderer";
+import {ConfirmDialogRenderer} from "../ConfirmDialogRenderer";
 import {MultiPageMenuRenderer} from "./MultiPageMenuRenderer";
 
 export type OpenPopupAction={

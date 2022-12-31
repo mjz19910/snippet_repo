@@ -1,5 +1,5 @@
-import {ResponseContext} from "../yt_api/_/g/GeneralContext.js";
-import {OpenPopupActionItem} from "./OpenPopupActionItem";
+import {ResponseContext} from "../g/GeneralContext.js";
+import {OpenPopupActionItem} from "../o/OpenPopupActionItem";
 
 export type GetNotificationMenuJson={
 	responseContext: ResponseContext;

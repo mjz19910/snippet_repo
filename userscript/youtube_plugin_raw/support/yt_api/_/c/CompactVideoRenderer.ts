@@ -1,7 +1,7 @@
 import {Accessibility} from "../../_/a/Accessibility.js";
 import {MenuRendererH} from "../../_/m/MenuRendererH.js";
 import {MetadataBadgeRenderers} from "../../_/m/MetadataBadgeRenderers.js";
-import {NavigationEndpoint} from "../n/NavigationEndpoint.js";
+import {YtEndpoint} from "../n/YtEndpoint.js";
 import {SimpleTextFixmeValueNeeded} from "../s/SimpleText.js";
 import {TextRuns} from "../t/TextRuns.js";
 import {ThumbnailH} from "../t/ThumbnailH.js";
@@ -16,7 +16,7 @@ export interface CompactVideoRenderer {
 	lengthText: SimpleTextFixmeValueNeeded;
 	longBylineText: TextRuns;
 	menu: MenuRendererH;
-	navigationEndpoint: NavigationEndpoint;
+	navigationEndpoint: YtEndpoint;
 	ownerBadges?: MetadataBadgeRenderers[];
 	publishedTimeText: SimpleTextFixmeValueNeeded;
 	richThumbnail?: RichThumbnail;

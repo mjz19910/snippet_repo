@@ -4,7 +4,7 @@ import {AddToPlaylistServiceEndpointH} from "./AddToPlaylistServiceEndpointH";
 import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
 import {SignalServiceEndpoints} from "./SignalServiceEndpoints";
 
-export type ServiceEndpoint=
+export type YtEndpoint=
 	SignalServiceEndpoints|
 	PlaylistEditEndpoint|
 	AddToPlaylistServiceEndpointH|
