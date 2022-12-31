@@ -1,5 +1,5 @@
-import {YtEndpoint} from "../yt/YtEndpoint.js";
-import {YtTextType} from "../yt/YtTextType.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
+import {YtTextType} from "../../yt/YtTextType.js";
 
 export type LinkRenderer={
 	title: YtTextType;

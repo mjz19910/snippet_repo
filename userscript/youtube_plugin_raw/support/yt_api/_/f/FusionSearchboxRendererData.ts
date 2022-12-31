@@ -1,7 +1,7 @@
 import {Icon} from "../i/Icon.js";
 import {YtTextType} from "../../yt/YtTextType.js";
-import {ButtonRenderer} from "./ButtonRenderer.js";
-import {YtEndpoint} from "../yt/YtEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
+import {ButtonRenderer} from "../b/ButtonRenderer.js";
 
 
 export type FusionSearchboxRendererData={
