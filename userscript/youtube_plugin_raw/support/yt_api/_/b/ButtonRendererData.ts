@@ -69,7 +69,17 @@ export type NoStyleButtonTypes_={
 };
 
 export type SuggestiveButtonTypes=Suggestive_0|Suggestive_1|Suggestive_2;
-export type DefaultButtonTypes=Default_0|Default_1|Default_2;
+
+type Default_3={
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	text: YtTextType;
+	trackingParams: string;
+	command: YtEndpoint;
+};
+
+export type DefaultButtonTypes=Default_0|Default_1|Default_2|Default_3;
 
 export type ButtonRendererData=DefaultButtonTypes|SuggestiveButtonTypes|NoStyleButtonTypes_;
 
