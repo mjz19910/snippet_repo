@@ -1191,7 +1191,6 @@ const decode_protobuf_obj=function make() {
 	function indexOutOfRange(reader,writeLength) {
     return RangeError("index out of range: " + reader.pos + " + " + (writeLength || 1) + " > " + reader.len);
 	}
-	let value=4294967295;
 	class MyReader {
 		/** @arg {Uint8Array} buf  */
 		constructor(buf) {
@@ -1225,12 +1224,18 @@ const decode_protobuf_obj=function make() {
 			}
 		}
 		uint32() {
+			let value=0;
 			this.last_pos=this.pos;
-			value=(this.buf[this.pos]&127)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<7)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<14)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&127)<<21)>>>0; if(this.buf[this.pos++]<128) return value;
-			value=(value|(this.buf[this.pos]&15)<<28)>>>0; if(this.buf[this.pos++]<128) return value;
+			value=(this.buf[this.pos]&127)>>>0;
+			if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<7)>>>0;
+			if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<14)>>>0;
+			if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&127)<<21)>>>0;
+			if(this.buf[this.pos++]<128) return value;
+			value=(value|(this.buf[this.pos]&15)<<28)>>>0;
+			if(this.buf[this.pos++]<128) return value;
 			if((this.pos+=5)>this.len) {
 				this.pos=this.len;
 				throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
