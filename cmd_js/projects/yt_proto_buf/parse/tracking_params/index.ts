@@ -135,7 +135,6 @@ export class MyReader extends protobufjs.Reader {
 				default: my_console.pad_log("\"field #%o: (type=%o)\": \"??\"",info>>>3,info&7);
 			}
 		});
-
 		switch(wireType) {
 			case 0:
 				this.skip();
@@ -155,7 +154,6 @@ export class MyReader extends protobufjs.Reader {
 				this.skip(4);
 				break;
 
-			/* istanbul ignore next */
 			default:
 				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
 		}
