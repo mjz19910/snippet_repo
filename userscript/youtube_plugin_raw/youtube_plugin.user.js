@@ -1122,7 +1122,9 @@ class Base64Binary {
 	/* will return a  Uint8Array type */
 	/** @arg {string} input */
 	decodeArrayBuffer(input) {
-		var byte_len=(input.length/4)*3;
+		let real_len=input.length-1;
+		while(real_len>=0&&input[real_len]==="=") real_len--;
+		var byte_len=((real_len+1)/4)*3|0;
 		var ab=new ArrayBuffer(byte_len);
 		let byte_arr=new Uint8Array(ab);
 		this.decode(input,byte_arr);
@@ -1189,7 +1191,7 @@ const decode_protobuf_obj=function make() {
 	 * @param {number | undefined} [writeLength]
 	 */
 	function indexOutOfRange(reader,writeLength) {
-    return RangeError("index out of range: " + reader.pos + " + " + (writeLength || 1) + " > " + reader.len);
+		return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 	}
 	class MyReader {
 		/** @arg {Uint8Array} buf  */
@@ -1204,6 +1206,14 @@ const decode_protobuf_obj=function make() {
 		revert(x) {
 			let prev_pos=this.pos;
 			this.pos=this.last_pos;
+			let ret=x();
+			this.pos=prev_pos;
+			return ret;
+		}
+		/** @template T @arg {number} pos @arg {()=>T} x */
+		revert_to(pos,x) {
+			let prev_pos=this.pos;
+			this.pos=pos;
 			let ret=x();
 			this.pos=prev_pos;
 			return ret;
@@ -1321,7 +1331,7 @@ const decode_protobuf_obj=function make() {
 
 
 /** @arg {string} str */
-function decode_protobuf(str) {
+function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeArrayBuffer(str);
 	let loop_count=0;
 	/** @type {[number,number,(number|bigint)[]][]} */
@@ -1329,6 +1339,7 @@ function decode_protobuf(str) {
 	let reader=new decode_protobuf_obj.MyReader(buffer);
 	x: for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
 		let cur_byte=reader.uint32();
+		let pos_start=reader.pos;
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
 		/** @type {(number|bigint)[]} */
@@ -1337,7 +1348,7 @@ function decode_protobuf(str) {
 		switch(wireType) {
 			case 0:
 				let num32=reader.uint32();
-				let [num64,new_pos]=reader.revert(() => {
+				let [num64,new_pos]=reader.revert_to(pos_start,() => {
 					let u64=reader.uint64();
 					return [u64,reader.pos];
 				});
@@ -1352,7 +1363,12 @@ function decode_protobuf(str) {
 			case 2: {
 				let size=reader.uint32();
 				reader.buf.subarray(reader.pos,reader.pos+size);
-				reader.skip(size);
+				try{
+					reader.skip(size);
+				} catch {
+					console.log("skip failed at",fieldId);
+					break x;
+				}
 			} break;
 			case 3: break;
 			case 4: throw new Error("Invalid state");
@@ -1362,25 +1378,21 @@ function decode_protobuf(str) {
 		data.push([fieldId,wireType,first_num]);
 	}
 	let [first,...rest]=data;
-	let [fieldId,wireType,[first_num,...first_left]]=first;
-	/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number]} */
+	let [fieldId,wireType,as_num]=first;
+	/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number|null]} */
 	function filter_rest(e) {
-		let [fieldId,wireType,[num,...first_left]]=e;
-		if(first_left.length>1) throw new Error("Not decoded");
-		return [fieldId,wireType,num];
+		let [fieldId,wireType,as_num]=e;
+		if(as_num.length===0) {
+			return [fieldId,wireType,null];
+		}
+		return [fieldId,wireType,as_num[0]];
 	}
 	return {
 		first_w: wireType,
 		first_f: fieldId,
-		first_num,
-		first_left,
+		as_num,
 		rest: rest.map(filter_rest),
 	};
-}
-
-/** @arg {string} str */
-function decode_b64_proto_obj(str) {
-	return decode_protobuf(str);
 }
 
 /** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
@@ -3941,7 +3953,7 @@ class HandleTypes extends BaseService {
 						item.adLayoutLoggingData.serializedAdServingDataEntry;
 				}
 				let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
-				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
+				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
 				console.log("log data entry rest",...dec.rest);
 			}
 			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
