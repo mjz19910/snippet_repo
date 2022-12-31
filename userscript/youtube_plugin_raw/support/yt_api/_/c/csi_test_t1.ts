@@ -1,6 +1,6 @@
 import {Split} from "../../../make/Split.js";
 import {HexByte} from "../h/HexByte";
-import {HexNib} from "../HexNib";
+import {HexNib} from "../h/HexNib";
 
 export function csi_test_t1() {
 	type U0=HexNib<"d">;

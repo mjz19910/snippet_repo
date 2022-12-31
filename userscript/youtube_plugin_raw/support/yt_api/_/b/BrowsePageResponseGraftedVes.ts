@@ -1,5 +1,5 @@
+import {GraftedVeItem} from "../g/GraftedVeItem.js";
 import {BrowsePageResponseBase} from "./BrowsePageResponseBase";
-import {GraftedVeItem} from "./GraftedVeItem";
 
 export type BrowsePageResponseGraftedVes={
 	graftedVes: GraftedVeItem[];
