@@ -2790,8 +2790,8 @@ async function main() {
 				let obj;
 				try {
 					obj=Reflect.apply(...proxy_args);
-				} catch (e) {
-					console.log("target error", e);
+				} catch(e) {
+					console.log("target error",e);
 					throw e;
 				} finally {
 					JSON.parse=original_json_parse;
@@ -3046,14 +3046,14 @@ class BaseServicePrivate {
 	save_new_string(key,x) {
 		if(x instanceof Array) {
 			return;
-		} else if( x.startsWith("http://www.youtube.com/channel/UC")) {
+		} else if(x.startsWith("http://www.youtube.com/channel/UC")) {
 			if(this.log_skipped_strings) console.log("skip channel like",key,x);
 			return;
 		}
 		let was_known=true;
 		/** @type {["one", string[]]|["many",string[][]]} */
 		let cur;
-		let p=this.known_strings.find(e=>e[0]===key);
+		let p=this.known_strings.find(e => e[0]===key);
 		if(!p) {
 			p=[key,cur=['one',[]]];
 			this.known_strings.push(p);
@@ -3066,7 +3066,7 @@ class BaseServicePrivate {
 				cur[1].push(x);
 			}
 		} else if(cur[0]==='many') {
-			let res=cur[1].find(([e,...r])=>!r.length&&e===x);
+			let res=cur[1].find(([e,...r]) => !r.length&&e===x);
 			if(!res) {
 				was_known=false;
 				cur[1].push([x]);
@@ -3079,7 +3079,7 @@ class BaseServicePrivate {
 	}
 	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
-		let krc=this.known_booleans.find(e=>e[0]===key);
+		let krc=this.known_booleans.find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];
 			this.known_booleans.push(krc);
@@ -3149,9 +3149,9 @@ class BaseServicePrivate {
 	/** @private @returns {SaveDataRet} */
 	create_save_data() {
 		return {
-			known_root_ve:this.known_root_ve,
-			known_strings:this.known_strings,
-			known_bool:this.known_booleans,
+			known_root_ve: this.known_root_ve,
+			known_strings: this.known_strings,
+			known_bool: this.known_booleans,
 		};
 	}
 	/** @private */
@@ -4340,17 +4340,19 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/o/AllPopups.js").AllPopups} x */
 	popup(x) {
 		let ok=get_keys_of(x);
-		for(let key of ok) {
-			/** @type {{}} */
-			let xg=cast_as(x);
-			/** @type {{[U in typeof key]: import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer}} */
-			let xu=cast_as(xg);
-			let generic_renderer=xu[key];
-			this.renderer(generic_renderer);
+		switch(ok[0]) {case "aboutThisAdRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
+		switch(ok[0]) {case "confirmDialogRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
+		switch(ok[0]) {case "multiPageMenuRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
+		switch(ok[0]) {case "notificationActionRenderer": if(ok[0] in x) this.renderer(x); return;}
+		switch(ok[0]) {
+			case "voiceSearchDialogRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;
+			default: if(ok[0] in x) { console.log("use default for",x,x[ok[0]]); this.renderer(x[ok[0]]);}
 		}
+		console.log("[unk_popup_info][%s]",ok,x);
 	}
 	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
 	renderer(x) {
+		let cr=null;
 		if("placeholderHeader" in x) {
 			let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
 			this.trackingParams(tp);
@@ -4370,19 +4372,24 @@ class HandleTypes extends BaseService {
 			this.ButtonRenderer(exitButton);
 			this.YtTextType(microphoneOffPromptHeader);
 			empty_object(c);
-		} else if("notificationActionRenderer" in x) {
-			const {notificationActionRenderer: a0,...y}=x;
-			const {responseText,trackingParams,...a}=a0;
-			empty_objects(y,a);
-		} else if("ghostGridRenderer" in x) {
-			this.ghostGridRenderer(x.ghostGridRenderer);
-		} else {
-			const {trackingParams: tp,...c}=x;
-			this.trackingParams(tp);
-			console.log("[renderer_log] [%s]",Object.keys(c).join(),c);
 		}
+		if("notificationActionRenderer" in x) {
+			const {notificationActionRenderer: a0,...c}=x; cr=c;
+			const {responseText,trackingParams,...a}=a0;
+			empty_objects(c,a);
+		}
+		if("ghostGridRenderer" in x) {
+			const {ghostGridRenderer: a0,...c}=x; cr=c;
+			this.ghostGridRenderer(a0);
+		}
+		if("trackingParams" in x) {
+			const {trackingParams: tp,...c}=x; cr=c;
+			this.trackingParams(tp);
+		}
+		if(!cr) return;
+		console.log("[renderer_log] [%s]",Object.keys(cr).join(),cr);
 	}
-	/** @arg {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x */
+	/** @arg {import("./support/yt_api/_/t/NotificationActionRenderer.js").NotificationActionRenderer} x */
 	ToastPopupTag(x) {
 		const {notificationActionRenderer: v,...y}=x;
 		this.notificationActionRenderer(v);
@@ -4948,12 +4955,15 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
 	SettingsOptionItemType(item) {
 		if("channelOptionsRenderer" in item) {
-			this.ChannelOptionsRendererData(item.channelOptionsRenderer);
+			return this.ChannelOptionsRendererData(item.channelOptionsRenderer);
 		} else if("settingsSwitchRenderer" in item) {
-			this.settingsSwitchRenderer(item.settingsSwitchRenderer);
-		} else {
-			this.log("[option_item][%s]",get_keys_of(item).join());
+			return this.settingsSwitchRenderer(item.settingsSwitchRenderer);
+		} else if("settingsCheckboxRenderer" in item) {
+			item.settingsCheckboxRenderer;
+		} else if("settingsRadioOptionRenderer" in item) {
+
 		}
+		this.log("[option_item][%s]",get_keys_of(item).join(),"->",Object.values(item)[0]);
 	}
 	/** @arg {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
 	ChannelOptionsRendererData(data) {
@@ -5053,7 +5063,7 @@ class HandleTypes extends BaseService {
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x;
 		empty_object(y);
 	}
-	/** @arg {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x */
+	/** @arg {import("./support/yt_api/_/n/NotificationActionRendererData.js").NotificationActionRendererData} x */
 	notificationActionRenderer(x) {
 		const {responseText,trackingParams,...y}=x;
 		this.YtTextType(responseText);
@@ -5157,7 +5167,7 @@ class HandleTypes extends BaseService {
 	keys(x) {
 		return get_keys_of(x);
 	}
-	/** @param {{}} x */
+	/** @arg {{}} x */
 	log_empty_obj(x) {
 		let k=this.keys(x);
 		if(k.length>0) {
@@ -5168,10 +5178,10 @@ class HandleTypes extends BaseService {
 /** @arg {{}} obj */
 function empty_object(obj) {
 	let keys=get_keys_of(obj);
-	if(!keys.length)return;
+	if(!keys.length) return;
 	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
 }
-/** @param {{}[]} x */
+/** @arg {{}[]} x */
 function empty_objects(...x) {
 	iterate(x,empty_object);
 }

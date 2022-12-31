@@ -1,6 +1,11 @@
+import {AboutThisAdRenderer} from "../a/AboutThisAdRenderer.js";
 import {GhostGridRenderer} from "../g/GhostGridRenderer.js";
 import {VoiceSearchDialogRenderer} from "../o/VoiceSearchDialogRenderer.js";
-import {YtTextType} from "../s/YtTextType.js";
-import {MakeRenderer} from "./MakeRenderer";
+import {NotificationActionRenderer} from "../t/NotificationActionRenderer.js";
+import {TrackingOnlyRenderer} from "./TrackingOnlyRenderer";
 
-export type GenericRenderer=MakeRenderer<"",[never,never]>[""]|VoiceSearchDialogRenderer|GhostGridRenderer|MakeRenderer<"notificationActionRenderer",["responseText",YtTextType]>;
+export type GenericRenderer=TrackingOnlyRenderer|
+	VoiceSearchDialogRenderer|
+	GhostGridRenderer|
+	AboutThisAdRenderer|
+	NotificationActionRenderer;
