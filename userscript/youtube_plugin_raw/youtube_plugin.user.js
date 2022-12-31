@@ -3784,11 +3784,19 @@ class HandleTypes extends BaseService {
 			console.log("[on_browse_response_contents]",contents);
 		}
 	}
+	item_by_layout_id=new Map;
+	/** @arg {{ layoutId: string; }} node */
+	item_with_layout_id(node) {
+		this.item_by_layout_id.set(node.layoutId,node);
+	}
 	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata */
 	adLayoutMetadata(metadata) {
 		for(let item of metadata) {
 			switch(item.layoutType) {
-				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": console.log("[display_top_landscape_image] [%s]",item.layoutId); break;
+				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": {
+					this.item_with_layout_id(item);
+					console.log("[display_top_landscape_image] [%s]",item.layoutId); 
+				} break;
 				default: debugger;
 			}
 			let try_proto_dec=false;
@@ -3994,9 +4002,7 @@ class HandleTypes extends BaseService {
 			console.log(k,rest);
 		}
 	}
-	/**
-	 * @param {import("./support/_/OpenPopupAction.js").OpenPopupAction} obj
-	 */
+	/** @arg {import("./support/_/OpenPopupAction.js").OpenPopupAction} obj */
 	openPopupAction(obj) {
 		switch(obj.popupType) {
 			case "DIALOG": this.ConfirmDialogRenderer(obj.popup); break;
@@ -4004,18 +4010,14 @@ class HandleTypes extends BaseService {
 			default: console.log(obj);
 		}
 	}
-	/**
-	 * @param {import("./support/_/ConfirmDialogRenderer.js").ConfirmDialogRenderer} obj
-	 */
+	/** @arg {import("./support/_/ConfirmDialogRenderer.js").ConfirmDialogRenderer} obj */
 	ConfirmDialogRenderer(obj) {
 		if(Object.keys(obj).length!==1) {
 			debugger;
 		}
 		this.ConfirmDialogRendererData(obj.confirmDialogRenderer);
 	}
-	/**
-	 * @param {import("./support/_/ConfirmDialogRendererData.js").ConfirmDialogRendererData} data
-	 */
+	/** @arg {import("./support/_/ConfirmDialogRendererData.js").ConfirmDialogRendererData} data */
 	ConfirmDialogRendererData(data) {
 		let ok=get_keys_of(data);
 		this.ButtonRenderer(data.cancelButton);
@@ -4024,9 +4026,7 @@ class HandleTypes extends BaseService {
 		console.log(ok);
 
 	}
-	/**
-	 * @param {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer} obj
-	 */
+	/** @arg {import("./support/_/MultiPageMenuRenderer.js").MultiPageMenuRenderer} obj */
 	MultiPageMenuRenderer(obj) {
 		console.log(obj);
 	}
