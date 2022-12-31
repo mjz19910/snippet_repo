@@ -4113,14 +4113,13 @@ class HandleTypes extends BaseService {
 		if(rest_2&&rest_2.style==="STYLE_DEFAULT") {
 			let {style,...rest}=rest_2;
 			this.on_empty_obj(rest);
-			// console.log("renderer.icon",icon);
-			// console.log("renderer.navigationEndpoint",navigationEndpoint);
-			// console.log("renderer.tooltip",tooltip);
 		} else if(rest_2) {
 			let {style,...rest}=rest_2;
 			this.on_empty_obj(rest);
 		} else if(rest_3&&rest_3.style==="STYLE_DEFAULT") {
-			let {style,...rest}=rest_3;
+			let {style,icon,tooltip,...rest}=rest_3;
+			this.Icon(icon);
+			this.primitive(tooltip,"string");
 			this.on_empty_obj(rest);
 		} else if(rest_3) {
 			let {style,text,command,...rest}=rest_3;
@@ -4130,6 +4129,13 @@ class HandleTypes extends BaseService {
 		} else {
 			this.on_empty_obj(renderer);
 		}
+	}
+	/**
+	 * @param {number|string|bigint} value
+	 * @param {"string"} expected_type
+	 */
+	primitive(value,expected_type) {
+		if(typeof value!==expected_type) debugger;
 	}
 	/** @arg {import("./support/yt_api/_/s/SimpleText.js").SimpleText} t */
 	SimpleText(t) {
