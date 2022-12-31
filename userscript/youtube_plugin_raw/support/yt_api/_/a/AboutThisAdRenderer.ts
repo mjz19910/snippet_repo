@@ -1,6 +1,5 @@
-import {TrackingParams} from "./TrackingParams.js.js";
-import {UrlWrappedValue} from "./UrlWrappedValue";
+import {UrlWrappedValue} from "../u/UrlWrappedValue";
 
-export interface AboutThisAdRenderer extends TrackingParams {
+export interface AboutThisAdRenderer {
 	"url": UrlWrappedValue;
 }

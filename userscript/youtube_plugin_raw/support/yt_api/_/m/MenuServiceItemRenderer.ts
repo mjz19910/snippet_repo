@@ -9,5 +9,5 @@ export type MenuServiceItemRenderer={
 	serviceEndpoint: YtEndpoint;
 	text: TextRuns;
 };
-export interface MenuServiceItemRendererTP extends TrackingParams,MenuServiceItemRenderer {}
+export interface MenuServiceItemRendererTP,MenuServiceItemRenderer {}
 export interface MenuServiceItemRendererSP extends Separator,MenuServiceItemRenderer {} 

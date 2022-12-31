@@ -5,7 +5,7 @@ import {MakeTextRuns} from "./MakeTextRuns";
 import {InfoIcon} from "../../_abc/i/InfoIcon";
 
 
-export interface MenuNavigationItemRendererData extends TrackingParams {
+export interface MenuNavigationItemRendererData {
 	text: MakeTextRuns<[makeText<"My Ad Centre">]>;
 	icon: InfoIcon;
 	navigationEndpoint: YtEndpoint;
