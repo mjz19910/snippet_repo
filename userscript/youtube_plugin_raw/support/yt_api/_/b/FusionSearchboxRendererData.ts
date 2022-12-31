@@ -1,5 +1,5 @@
 import {Icon} from "../i/Icon.js";
-import {YtTextType} from "../s/YtTextType.js";
+import {YtTextType} from "../../yt/YtTextType.js";
 import {ButtonRenderer} from "./ButtonRenderer.js";
 import {YtEndpoint} from "./YtEndpoint.js";
 

@@ -2,6 +2,6 @@ import {AboutThisAdRendererPopup} from "../d/AboutThisAdRendererPopup.js";
 import {MultiPageMenuRenderer} from "../m/MultiPageMenuRenderer.js";
 import {ConfirmDialogRenderer} from "../n/ConfirmDialogRenderer.js";
 import {NotificationActionRenderer} from "../t/NotificationActionRenderer.js";
-import {VoicePopup} from "../o/VoicePopup";
+import {VoiceSearchDialogRenderer} from "../o/VoiceSearchDialogRenderer";
 
-export type AllPopups=VoicePopup|NotificationActionRenderer|MultiPageMenuRenderer|AboutThisAdRendererPopup|ConfirmDialogRenderer;
+export type AllPopups=VoiceSearchDialogRenderer|NotificationActionRenderer|MultiPageMenuRenderer|AboutThisAdRendererPopup|ConfirmDialogRenderer;

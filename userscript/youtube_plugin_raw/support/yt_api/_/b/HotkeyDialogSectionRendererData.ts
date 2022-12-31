@@ -1,4 +1,4 @@
-import {YtTextType} from "../s/YtTextType.js";
+import {YtTextType} from "../../yt/YtTextType.js";
 import {HotkeyDialogSectionOptionRenderer} from "./HotkeyDialogSectionOptionRenderer";
 
 export type HotkeyDialogSectionRendererData={

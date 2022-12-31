@@ -1,6 +1,6 @@
 import {Accessibility} from "../a/Accessibility.js";
 import {Icon} from "../i/Icon.js";
-import {YtTextType} from "../s/YtTextType.js";
+import {YtTextType} from "../../yt/YtTextType.js";
 import {YtEndpoint} from "./YtEndpoint.js";
 
 type Default_0={

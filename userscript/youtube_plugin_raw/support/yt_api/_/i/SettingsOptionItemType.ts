@@ -1,5 +1,5 @@
 import {YtEndpoint} from "../b/YtEndpoint.js";
-import {YtTextType} from "../s/YtTextType.js";
+import {YtTextType} from "../../yt/YtTextType.js";
 import {ChannelOptionsRenderer} from "./ChannelOptionsRenderer";
 import {SettingsSwitchRenderer} from "./SettingsSwitchRenderer";
 

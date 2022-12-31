@@ -4341,22 +4341,7 @@ class HandleTypes extends BaseService {
 		let m=[];
 		iterate(ok,v => {
 			switch(v) {
-				case "connectionErrorHeader": return;
-				case "placeholderHeader": return;
-				case "promptHeader": return;
-				case "exampleQuery1": return;
-				case "exampleQuery2": return;
-				case "promptMicrophoneLabel": return;
-				case "loadingHeader": return;
-				case "connectionErrorMicrophoneLabel": return;
-				case "permissionsHeader": return;
-				case "permissionsSubtext": return;
-				case "disabledHeader": return;
-				case "disabledSubtext": return;
-				case "microphoneButtonAriaLabel": return;
-				case "exitButton": return;
 				case "ghostGridRenderer": return;
-				case "microphoneOffPromptHeader": return;
 				case "notificationActionRenderer": return;
 				case "trackingParams": return;
 				case "confirmDialogRenderer": return;
@@ -4372,25 +4357,8 @@ class HandleTypes extends BaseService {
 		if("confirmDialogRenderer" in x) {
 			this.ConfirmDialogRendererData(x.confirmDialogRenderer);
 		}
-		if("placeholderHeader" in x) {
-			let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
-			cr=c;
-			this.trackingParams(tp);
-			this.YtTextType(placeholderHeader);
-			this.YtTextType(promptHeader);
-			this.YtTextType(exampleQuery1);
-			this.YtTextType(exampleQuery2);
-			this.YtTextType(promptMicrophoneLabel);
-			this.YtTextType(loadingHeader);
-			this.YtTextType(connectionErrorHeader);
-			this.YtTextType(connectionErrorMicrophoneLabel);
-			this.YtTextType(permissionsHeader);
-			this.YtTextType(permissionsSubtext);
-			this.YtTextType(disabledHeader);
-			this.YtTextType(disabledSubtext);
-			this.YtTextType(microphoneButtonAriaLabel);
-			this.ButtonRenderer(exitButton);
-			this.YtTextType(microphoneOffPromptHeader);
+		if("voiceSearchDialogRenderer" in x) {
+			this.voiceSearchDialogRenderer(x.voiceSearchDialogRenderer);
 		}
 		if(!cr&&"notificationActionRenderer" in x) {
 			const {notificationActionRenderer: a0,...c}=x; cr=c;
@@ -5192,6 +5160,29 @@ class HandleTypes extends BaseService {
 		if(k.length>0) {
 			this.log("[not_empty][%s]",k.join());
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/o/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x
+	 */
+	voiceSearchDialogRenderer(x) {
+		let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...y}=x;
+		this.trackingParams(tp);
+		this.YtTextType(placeholderHeader);
+		this.YtTextType(promptHeader);
+		this.YtTextType(exampleQuery1);
+		this.YtTextType(exampleQuery2);
+		this.YtTextType(promptMicrophoneLabel);
+		this.YtTextType(loadingHeader);
+		this.YtTextType(connectionErrorHeader);
+		this.YtTextType(connectionErrorMicrophoneLabel);
+		this.YtTextType(permissionsHeader);
+		this.YtTextType(permissionsSubtext);
+		this.YtTextType(disabledHeader);
+		this.YtTextType(disabledSubtext);
+		this.YtTextType(microphoneButtonAriaLabel);
+		this.ButtonRenderer(exitButton);
+		this.YtTextType(microphoneOffPromptHeader);
+		empty_object(y);
 	}
 }
 /** @arg {{}} obj */
