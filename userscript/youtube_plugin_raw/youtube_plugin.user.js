@@ -3112,6 +3112,34 @@ const general_service_state={
 };
 
 class BaseService {
+	/**
+	 * @param {string} key
+	 * @param {string} x
+	 */
+	save_new_string(key,x) {
+		if(x.startsWith("http://www.youtube.com/channel/UC")) {
+			console.log("skip channel like",key,x);
+			return;
+		}
+		let cur=this.known_strings.get(key);
+		if(!cur) {
+			cur=new Set;
+			this.known_strings.set(key,cur);
+		}
+		if(cur.has(x)) return;
+		cur.add(x);
+		this.new_known_strings.push([key,x]);
+		this.save_known_string();
+		console.log(key,x);
+	}
+	/** @param {number} x */
+	save_new_root_ve(x) {
+		console.log("rootVe",x);
+		if(this.known_root_ve.has(x)) return;
+		this.known_root_ve.add(x);
+		this.new_known_root_ve.push(x);
+		this.save_data_cache();
+	}
 	/** @type {Set<number>} */
 	known_root_ve=new Set;
 	/** @type {number[]} */
@@ -3126,6 +3154,7 @@ class BaseService {
 	known_booleans=new Map;
 	/** @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
+	/** @private */
 	load_data_cache() {
 		this.load_tmp_data();
 		if(!this.known_data_tmp) {
@@ -3144,6 +3173,7 @@ class BaseService {
 	}
 	/**
 	 * @param {[string,string[]][]} known_strings
+	 * @private
 	 */
 	load_known_strings_from(known_strings) {
 		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
@@ -3154,6 +3184,7 @@ class BaseService {
 		let res_3=new Map(res_2);
 		this.known_strings=res_3;
 	}
+	/** @private */
 	save_data_cache() {
 		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
 		function to_entry_pair(x) {
@@ -3264,6 +3295,8 @@ class BaseService {
 	/** @arg {ResolverT} res */
 	constructor(res) {
 		this.#res=res;
+		this.load_data_cache();
+		this.save_data_cache();
 	}
 	get r() {
 		if(!this.#res.value) throw 1;
@@ -5194,35 +5227,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {number} x */
 	rootVe(x) {
-		if(this.known_root_ve.has(x)) return;
-		this.known_root_ve.add(x);
-		this.new_known_root_ve.push(x);
-		this.save_data_cache();
-		console.log("rootVe",x);
-	}
-	/**
-	 * @param {string} key
-	 * @param {string} x
-	 */
-	save_new_string(key,x) {
-		if(x.startsWith("http://www.youtube.com/channel/UC")) {
-			console.log("skip channel like",key,x);
-			return;
-		}
-		let cur=this.known_strings.get(key);
-		if(!cur) {
-			cur=new Set;
-			this.known_strings.set(key,cur);
-		}
-		if(cur.has(x)) return;
-		cur.add(x);
-		this.new_known_strings.push([key,x]);
-		this.save_known_string();
-		console.log(key,x);
+		this.save_new_root_ve(x);
 	}
 	/** @arg {string} x */
 	apiUrl(x) {
-		this.save_new_string("apiUrl",x);
+		super.save_new_string("apiUrl",x);
 	}
 	/** @arg {string} x */
 	url(x) {
@@ -5235,7 +5244,5 @@ class HandleTypes extends BaseService {
 	/** @arg {ResolverT} x */
 	constructor(x) {
 		super(x);
-		this.load_data_cache();
-		this.save_data_cache();
 	}
 }
