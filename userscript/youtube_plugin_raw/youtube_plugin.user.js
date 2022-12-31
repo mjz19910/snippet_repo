@@ -1348,8 +1348,11 @@ function decode_b64_proto_obj(str) {
 		switch(wireType) {
 			case 0:
 				let [num64,new_pos]=reader.revert_to(pos_start,() => {
-					let u64=reader.uint64();
-					return [u64,reader.pos];
+					try{ 
+						let u64=reader.uint64();
+						return [u64,reader.pos];
+					} catch {}
+					return [reader.uint32(),reader.pos];
 				});
 				let num32=reader.uint32();
 				if(num64!==BigInt(num32)) {
