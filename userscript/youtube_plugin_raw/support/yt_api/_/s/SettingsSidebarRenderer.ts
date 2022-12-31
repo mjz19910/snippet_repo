@@ -1,8 +1,8 @@
-import {TextRunsSimpleT} from "../t/TextRunsSimple.js";
+import {YtTextType} from "./YtTextType.js";
 
 
-type SettingsSidebarRendererData={
-	title: TextRunsSimpleT<"Settings">;
+export type SettingsSidebarRendererData={
+	title: YtTextType;
 	items: {}[];
 };
 

@@ -4317,19 +4317,10 @@ class HandleTypes extends BaseService {
 		const {clickTrackingParams: a,commandMetadata: b,...ex}=ep;
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
-		if("signalServiceEndpoint" in ep) this.signalServiceEndpoint(ep.signalServiceEndpoint);
-		if("watchEndpoint" in ep) this.watchEndpoint(ep.watchEndpoint);
-		if("urlEndpoint" in ep) this.UrlEndpointRoot(ep.urlEndpoint);
-		let k=get_keys_of(ep);
-		this.iterate(k,v => {
-			switch(v) {
-				case "clickTrackingParams": break;
-				case "commandMetadata": break;
-				case "signalServiceEndpoint": break;
-				case "urlEndpoint": break;
-				default: console.log(k); debugger; break;
-			}
-		});
+		if("signalServiceEndpoint" in ex) return this.signalServiceEndpoint(ex.signalServiceEndpoint);
+		if("watchEndpoint" in ex) return this.watchEndpoint(ex.watchEndpoint);
+		if("urlEndpoint" in ex) return this.UrlEndpointRoot(ex.urlEndpoint);
+		this.empty_object(ex);
 	}
 	/** @arg {{}} obj */
 	empty_object(obj) {
@@ -5279,5 +5270,14 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar */
 	sidebar(sidebar) {
 		this.settingsSidebarRenderer(sidebar.settingsSidebarRenderer);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRendererData} x
+	 */
+	settingsSidebarRenderer(x) {
+		this.iterate(x.items,v=>{
+			console.log('[settings_sidebar]',v);
+		});
+		this.YtTextType(x.title);
 	}
 }
