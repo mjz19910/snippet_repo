@@ -3516,7 +3516,7 @@ function za() {
 	return b;
 };
 class Bl extends Error {
-	/** @param {string | undefined} a */
+	/** @arg {string} [a] */
 	constructor(a) {
 		var b=za.apply(1,arguments);
 		super(a);
