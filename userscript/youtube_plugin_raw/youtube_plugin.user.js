@@ -1151,7 +1151,7 @@ class MyReader {
 		} else {
 			target_len=this.pos+size;
 		}
-		/** @type {[number,number,(number|bigint)[]][]} */
+		/** @type {[number,number,(number|bigint|DecRetType)[]][]} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -1177,7 +1177,7 @@ class MyReader {
 		}
 		let [first,...rest]=data;
 		let [fieldId,wireType,as_num]=first;
-		/** @arg {[number,number,(number|bigint)[]]} e @returns {[number,number,bigint|number|null]} */
+		/** @arg {[number,number,(number|bigint|DecRetType)[]]} e @returns {[number,number,bigint|number|DecRetType|null]} */
 		function filter_rest(e) {
 			let [fieldId,wireType,as_num]=e;
 			if(as_num.length===0) {
@@ -1319,12 +1319,13 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
+	/** @typedef {import("./types_tmp.js").DecRetType} DecRetType */
 	noisy_log_level=false;
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.last_pos,this.pos);
 		let pos_start=this.pos;
-		/** @type {(number|bigint)[]} */
+		/** @type {(number|bigint|DecRetType)[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
@@ -1359,7 +1360,8 @@ class MyReader {
 				if(!skipping) {
 					try {
 						console.group();
-						this.read_any(size);
+						let result=this.read_any(size);
+						first_num.push(result);
 					} catch {
 						console.log("read any failed at",fieldId);
 						this.failed=true;

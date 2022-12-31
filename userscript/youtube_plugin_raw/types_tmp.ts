@@ -1,6 +1,6 @@
-let known_root_ve:number[]=[];
-let known_strings:[string, ["one", string[]] | ["many", string[][]]][]=[];
-let known_bool:[string,{t:boolean;f:boolean}][];
+let known_root_ve: number[]=[];
+let known_strings: [string,["one",string[]]|["many",string[][]]][]=[];
+let known_bool: [string,{t: boolean; f: boolean;}][];
 function save_data_cache() {
 	let data={
 		known_root_ve,
@@ -15,3 +15,9 @@ function save_data_cache() {
 export type SaveDataRet=ReturnType<typeof save_data_cache>;
 
 export {};
+
+export type DecRetType={
+	first_w: number;
+	first_f: number;
+	as_num: (number|bigint|DecRetType)[]; rest: [number,number,number|bigint|DecRetType|null][];
+};
