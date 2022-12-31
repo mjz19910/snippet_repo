@@ -3034,6 +3034,11 @@ class BaseServicePrivate {
 	on_request_data_removal() {
 		this.delete_known_data();
 	}
+	/** @arg {string} key */
+	delete_old_string_values(key) {
+		let p=this.known_strings.find(e => e[0]===key);
+		console.log(p);
+	}
 	/** @arg {string} key @arg {string|string[]} x */
 	save_new_string(key,x) {
 		if(x instanceof Array) {
@@ -3107,7 +3112,7 @@ class BaseServicePrivate {
 	/** @arg {number} x */
 	save_new_root_ve(x) {
 		if(this.known_root_ve.includes(x)) return;
-		console.log("rootVe",x);
+		console.log("store rootVe [%o]",x);
 		this.known_root_ve.push(x);
 		this.new_known_root_ve.push(x);
 		this.on_new_data_known();
@@ -3840,9 +3845,7 @@ class HandleTypes extends BaseService {
 	handleEntityBatchUpdate(obj) {
 		this.EntityBatchUpdateData(obj.entityBatchUpdate);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/e/EntityBatchUpdateData.js").EntityBatchUpdateData} x
-	 */
+	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdateData.js").EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		const {mutations,timestamp,...y}=x;
 		if(get_keys_of(y).length) {
@@ -3854,9 +3857,7 @@ class HandleTypes extends BaseService {
 		});
 		this.TimestampWithNanos(timestamp);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} mut
-	 */
+	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} mut */
 	EntityMutationItem(mut) {
 		switch(mut.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": {
@@ -3873,9 +3874,7 @@ class HandleTypes extends BaseService {
 		}
 
 	}
-	/**
-	 * @param {import("./support/yt_api/_/t/TimestampWithNanos.js").TimestampWithNanos} x
-	 */
+	/** @arg {import("./support/yt_api/_/t/TimestampWithNanos.js").TimestampWithNanos} x */
 	TimestampWithNanos(x) {
 		this.primitives(x.nanos,x.seconds);
 	}
@@ -4746,6 +4745,7 @@ class HandleTypes extends BaseService {
 	AttGetV(data) {
 		const {challenge,bgChallenge,responseContext,...v}=data;
 		this.bgChallenge(bgChallenge);
+		this.delete_old_string_values("tr_challenge");
 		this.save_new_string("tr_challenge",challenge);
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
 		let chal_as_fmt=challenge;
@@ -4765,9 +4765,7 @@ class HandleTypes extends BaseService {
 		console.log(data);
 		debugger;
 	}
-	/**
-	 * @param {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x
-	 */
+	/** @arg {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x */
 	bgChallenge(x) {
 		this.save_new_string("tr_bg_global_name",x.globalName);
 		this.save_new_string("tr_bg_interpreter_hash",x.interpreterHash);
@@ -5188,7 +5186,7 @@ class HandleTypes extends BaseService {
 		this.save_new_string("setting_name",x.settingItemIdForClient);
 		this.log_empty_obj(y);
 	}
-	/** @template {{}} T @arg {T} x @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
+	/** @template {{}} T @arg {T} x @returns {import("./support/yt_api/_/g/GetMaybeKeys.js").MaybeKeysArray<T>} */
 	keys(x) {
 		return get_keys_of(x);
 	}
@@ -5199,9 +5197,7 @@ class HandleTypes extends BaseService {
 			this.log("[not_empty][%s]",k.join());
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/o/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x
-	 */
+	/** @arg {import("./support/yt_api/_/o/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x */
 	voiceSearchDialogRenderer(x) {
 		let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...y}=x;
 		this.trackingParams(tp);
