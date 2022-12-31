@@ -3936,6 +3936,11 @@ class HandleTypes extends BaseService {
 			}
 			let try_proto_dec=false;
 			if(try_proto_dec) {
+				if(inject_api_yt.saved_data) {
+					inject_api_yt.saved_data.any_data.ad_layout_data??={};
+					inject_api_yt.saved_data.any_data.ad_layout_data.serializedAdServingDataEntry=
+						item.adLayoutLoggingData.serializedAdServingDataEntry;
+				}
 				let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
 				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.first_num);
 				console.log("log data entry rest",...dec.rest);
