@@ -5033,6 +5033,7 @@ class HandleTypes extends BaseService {
 	new_known_strings=[];
 	/** @type {Map<string,{t:boolean;f:boolean}>} */
 	known_booleans=new Map;
+	/** @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
 	/** @arg {number} x */
 	rootVe(x) {
@@ -5042,6 +5043,10 @@ class HandleTypes extends BaseService {
 		this.save_data_cache();
 		console.log("rootVe",x);
 	}
+	/**
+	 * @param {string} key
+	 * @param {string} x
+	 */
 	save_new_string(key,x) {
 		let cur=this.known_strings.get(key);
 		if(!cur) {
@@ -5062,6 +5067,10 @@ class HandleTypes extends BaseService {
 	url(x) {
 		this.save_new_string("url",x);
 	}
+	/**
+	 * @param {string} key
+	 * @param {boolean} bool
+	 */
 	save_new_bool(key,bool) {
 		let kc=this.known_booleans.get(key);
 		if(!kc) {
@@ -5112,7 +5121,7 @@ class HandleTypes extends BaseService {
 		let res_3=new Map(res_2);
 		this.known_strings=res_3;
 	}
-	/** @type {{ known_root_ve: number[]; known_strings: { [k: string]: string[]; }; }|null} */
+	/** @type {{ known_bool: [string,{t:boolean;f:boolean}][]; known_root_ve: number[]; known_strings: { [k: string]: string[]; }; }|null} */
 	known_data_tmp=null;
 	save_data_cache() {
 		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
@@ -5122,9 +5131,11 @@ class HandleTypes extends BaseService {
 		let known_root_ve=[...this.known_root_ve.values()];
 		let known_strings=Object.fromEntries([...this.known_strings.entries()].
 			map(to_entry_pair));
+		let known_bool=[...this.known_booleans.entries()];
 		this.known_data_tmp={
 			known_root_ve,
 			known_strings,
+			known_bool,
 		};
 		let json_str=JSON.stringify(this.known_data_tmp);
 		this.save_local_storage(json_str);
@@ -5138,6 +5149,25 @@ class HandleTypes extends BaseService {
 		}
 	}
 	save_known_bool() {
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			this.delete_known_data();
+			throw new Error("Invalid data");
+		}
+		let bool_d=this.known_data_tmp.known_bool;
+		let arr=this.changed_known_bool;
+		for(let item of arr) {
+			let [key,val]=item;
+			let index=bool_d.findIndex(e=>e[0]===key);
+			if(index<0) {
+				bool_d.push([item[0],val]);
+				index=bool_d.length-1;
+			} else {
+				bool_d[index][1]=val;
+			}
+		}
+		this.changed_known_bool=[];
+		this.save_tmp_data();
 	}
 	save_known_string() {
 		this.load_tmp_data();
