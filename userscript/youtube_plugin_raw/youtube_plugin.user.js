@@ -1327,6 +1327,7 @@ class MyReader {
 	skipEx(fieldId,wireType) {
 		console.log("read loop pos=%o",this.pos);
 		let pos_start=this.pos;
+		this.first_num=[];
 		switch(wireType) {
 			case 0:
 				let [num64,new_pos]=this.revert_to(pos_start,() => {
@@ -1379,7 +1380,6 @@ function decode_b64_proto_obj(str) {
 		let cur_byte=reader.uint32();
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
-		reader.first_num=[];
 		reader.skipEx(fieldId,wireType);
 		data.push([fieldId,wireType,reader.first_num]);
 	}
