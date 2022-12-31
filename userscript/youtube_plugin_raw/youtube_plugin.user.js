@@ -3134,10 +3134,11 @@ class BaseService {
 		this.changed_known_bool.push([key,kc]);
 		this.save_known_bool();
 	}
+	log_skipped_strings=false;
 	/** @arg {string} key @arg {string} x */
 	save_new_string(key,x) {
 		if(x.startsWith("http://www.youtube.com/channel/UC")) {
-			console.log("skip channel like",key,x);
+			if(this.log_skipped_strings) console.log("skip channel like",key,x);
 			return;
 		}
 		let cur=this.known_strings.get(key);
@@ -4470,6 +4471,8 @@ class HandleTypes extends BaseService {
 			const {trackingParams: tp,...c}=x;
 			this.trackingParams(tp);
 			this.empty_object(c);
+		} else if("ghostGridRenderer" in x) {
+			this.ghostGridRenderer(x.ghostGridRenderer);
 		} else {
 			console.log("[renderer_log] [%s]",Object.keys(x).join(),x);
 		}
@@ -5035,7 +5038,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
 	SettingsOptionItemType(item) {
-		this.ChannelOptionsRendererData(item.channelOptionsRenderer);
+		if("channelOptionsRenderer" in item) {
+			this.ChannelOptionsRendererData(item.channelOptionsRenderer);
+		} else {
+			item;
+			debugger;
+		}
 	}
 	/** @arg {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
 	ChannelOptionsRendererData(data) {
@@ -5189,11 +5197,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRendererData.js").SettingsSidebarRendererData} x */
 	settingsSidebarRenderer(x) {
+		const {items,title,...y}=x;
 		this.iterate(x.items,v=>{
 			this.LinkRenderer(v.compactLinkRenderer);
 		});
 		this.YtTextType(x.title);
-		console.log('[settings_sidebar]',x);
+		if(get_keys_of(y).length>0) console.log('[settings_sidebar]',y);
 	}
 	/** @arg {import("./support/yt_api/_/s/LinkRenderer.js").LinkRenderer} x */
 	LinkRenderer(x) {
@@ -5202,5 +5211,11 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} x */
 	endpoint(x) {
 		this.YtEndpoint(x);
+	}
+	/** @arg {import("./support/yt_api/_/g/GhostGridRendererData.js").GhostGridRendererData} x */
+	ghostGridRenderer(x) {
+		const {rows,...y}=x;
+		this.primitive(rows);
+		this.empty_object(y);
 	}
 }
