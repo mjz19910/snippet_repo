@@ -726,7 +726,7 @@ class ObjectInfo {
 	 * @template U
 	 * @template {U[]} T
 	 * @param {T} a
-	 * @param {(value: U) => value is U} b
+	 * @param {(value: U) => boolean} b
 	 */
 	do_filter(a,b) {
 		/** @type {U[]} */
@@ -744,14 +744,14 @@ class ObjectInfo {
 	 * @template U
 	 * @template {U[]} T
 	 * @param {T} a
-	 * @param {(value: U) => value is U} [b]
+	 * @param {(value: U) => boolean} [b]
 	 * @returns {T|[]}
 	 */
 	filter_keys_of(a,b) {
 		if(b) return this.do_filter(a,b);
 		return a;
 	}
-	/** @template {{}} T @arg {T} object @arg {(value: string) => value is string} [filter_function] */
+	/** @template {{}} T @arg {T} object @arg {(value: string) => boolean} [filter_function] */
 	keys_of(object,filter_function) {
 		let object_keys=this.filter_keys_of(get_keys_of(object),filter_function);
 		return this.chunk_beg+object_keys.join(this.key_sep)+this.chunk_end;
