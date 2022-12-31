@@ -4144,7 +4144,18 @@ class HandleTypes extends BaseService {
 		if("text" in y) {
 			const {text,serviceEndpoint,...a}=y;
 			this.empty_object(a);
+			return;
 		}
+		const {accessibilityData,icon,...a}=y;
+		this.Accessibility(accessibilityData);
+		this.Icon(icon);
+		if("navigationEndpoint" in a) {
+			const {navigationEndpoint,tooltip,...x}=a;
+			this.YtEndpoint(navigationEndpoint);
+			this.empty_object(x);
+			return;
+		}
+		this.empty_object(a);
 	}
 	/**
 	 * @param {{ style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; }} x
@@ -4166,17 +4177,13 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {serviceEndpoint,...a}=y;
-		this.YtEndpoint
+		this.YtEndpoint(serviceEndpoint);
+		this.empty_object(a);
 	}
 	/**
-	 * @param {{ style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; } | { style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; icon: { iconType: "SETTINGS"; }; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; tooltip: string; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; } | { style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; icon: { iconType: "SETTINGS"; }; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; }} renderer
+	 * @param {ButtonType_2} renderer
 	 */
 	buttonRenderer_2(renderer) {
-		switch(renderer.style) {
-			case "STYLE_DEFAULT": this.DefaultButtonRenderer(renderer); break;
-			case "STYLE_SUGGESTIVE": this.SuggestiveButtonRenderer(renderer); break;
-			default: console.log(renderer); debugger;
-		}
 	}
 	/**
 	 * @param {{ command: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; }} x
@@ -4187,7 +4194,7 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/**
-	 * @param {{ style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; } | { style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; icon: { iconType: "SETTINGS"; }; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; tooltip: string; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; } | { style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; icon: { iconType: "SETTINGS"; }; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; } | { command: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; }} x
+	 * @param {ButtonType_0} x
 	 */
 	buttonRenderer_0(x) {
 		if("style" in x) {
@@ -4198,9 +4205,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
-		let {trackingParams,...rest_}=renderer;
-		this.trackingParams(trackingParams);
-		this.buttonRenderer_0(rest_);
+		switch(renderer.style) {
+			case "STYLE_DEFAULT": this.DefaultButtonRenderer(renderer); break;
+			case "STYLE_SUGGESTIVE": this.SuggestiveButtonRenderer(renderer); break;
+			case void 0: break;
+			default: console.log(renderer); debugger;
+		}
 	}
 	/** @arg {number|string|bigint|boolean} value */
 	primitive(value) {

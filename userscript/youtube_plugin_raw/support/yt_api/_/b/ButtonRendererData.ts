@@ -4,30 +4,36 @@ import {Icon} from "../i/Icon.js";
 import {YtTextType} from "../s/YtTextType.js";
 import {YtEndpoint} from "./YtEndpoint.js";
 
-export type ButtonRendererData={
-	style: "STYLE_DEFAULT";
+type Default_0={
+	style?: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
 	serviceEndpoint: YtEndpoint;
 	trackingParams: string;
-}|{
-	style: "STYLE_SUGGESTIVE"
+};
+
+type Suggestive_0={
+	style?: "STYLE_SUGGESTIVE";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
 	serviceEndpoint: YtEndpoint;
 	trackingParams: string;
-}|{
-	style: "STYLE_SUGGESTIVE"
+};
+
+type Suggestive_1={
+	style: "STYLE_SUGGESTIVE";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
 	trackingParams: string;
 	accessibilityData: Accessibility;
 	command: GeneralCommand;
-}|{
-	style: "STYLE_SUGGESTIVE"
+};
+
+type Suggestive_2={
+	style: "STYLE_SUGGESTIVE";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	text: YtTextType;
@@ -35,7 +41,9 @@ export type ButtonRendererData={
 	trackingParams: string;
 	accessibilityData: Accessibility;
 	command: GeneralCommand;
-}|{
+};
+
+type Default_1={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
@@ -44,17 +52,27 @@ export type ButtonRendererData={
 	tooltip: string;
 	trackingParams: string;
 	accessibilityData: Accessibility;
-}|{
+};
+
+type Default_2={
 	style: "STYLE_DEFAULT";
 	size: "SIZE_DEFAULT";
 	isDisabled: boolean;
 	icon: ButtonRendererIconTypes;
 	trackingParams: string;
 	accessibilityData: Accessibility;
-}|{
+};
+
+export type NoStyleButtonTypes_={
+	style?: undefined;
 	trackingParams: string;
 	command: YtEndpoint;
 };
+
+type SuggestiveButtonTypes=Suggestive_0|Suggestive_1|Suggestive_2;
+type DefaultButtonTypes=Default_0|Default_1|Default_2;
+
+export type ButtonRendererData=DefaultButtonTypes|SuggestiveButtonTypes|NoStyleButtonTypes_;
 
 type ButtonRendererIconTypes=Icon<"SETTINGS">;
 
