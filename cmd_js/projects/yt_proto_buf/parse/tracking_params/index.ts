@@ -153,7 +153,6 @@ export class MyReader extends protobufjs.Reader {
 			case 5:
 				this.skip(4);
 				break;
-
 			default:
 				throw Error("invalid wire type "+wireType+" at offset "+this.pos);
 		}
