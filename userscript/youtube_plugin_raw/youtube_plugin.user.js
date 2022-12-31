@@ -27,7 +27,7 @@ if(typeof window==="undefined") {
 	/** @type {{require:()=>any}&typeof globalThis} */
 	let njs_require=cast_as(globalThis);
 	if(typeof njs_require.require==="function") {
-		let n_env=require("./support/_/init_node_env.js");
+		let n_env=require("./support/init_node_env.js");
 		destroy_env=() => {
 			n_env.destroy_env(message_channel);
 		};
