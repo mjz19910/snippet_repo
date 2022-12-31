@@ -44,9 +44,9 @@ if(typeof window==="undefined") {
 	}
 }
 // #endregion
-// #section Use module types
+// #region Use module types
 /** @type {import("./__global.js")} */
-// #section end
+// #endregion
 // #region
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
 /** @type {Exclude<typeof window[InjectApiStr],undefined>} */
@@ -63,14 +63,9 @@ function save_new_map(key,map) {
 	if(!inject_api_yt.saved_maps) return;
 	inject_api_yt.saved_maps.set(key,map);
 }
-
-class SavedData {
-	/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
-	any_data={};
-}
-
-let saved_data=new SavedData;
-inject_api_yt.saved_data={};
+/** @type {import("./support/yt_api/_/a/SavedData.js").SavedData} */
+let saved_data=cast_as({});
+inject_api_yt.saved_data=saved_data;
 
 const is_yt_debug_enabled=false;
 /** @template T @arg {T&{x:1}} _v */
@@ -3014,7 +3009,7 @@ const general_service_state={
 	/** @type {"non_member"|null} */
 	premium_membership: null,
 };
-
+//#region Service
 class BaseServicePrivate {
 	// section
 	on_new_data_known() {
@@ -3161,7 +3156,6 @@ class BaseServicePrivate {
 		}
 	}
 }
-
 class BaseService extends BaseServicePrivate {
 	/** @arg {any[]} x */
 	log(...x) {
@@ -3220,7 +3214,6 @@ class BaseService extends BaseServicePrivate {
 		}
 	}
 }
-
 class CsiService extends BaseService {
 	data={
 		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
@@ -3303,7 +3296,6 @@ class CsiService extends BaseService {
 		}
 	}
 }
-
 class ECatcherService extends BaseService {
 	data={
 		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
@@ -3359,7 +3351,6 @@ class ECatcherService extends BaseService {
 
 	}
 }
-
 class GFeedbackService extends BaseService {
 	data={
 		/** @type {number[]|null} */
@@ -3410,7 +3401,6 @@ class GFeedbackService extends BaseService {
 		}
 	}
 }
-
 class GuidedHelpService extends BaseService {
 	data={
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
@@ -3431,8 +3421,6 @@ class GuidedHelpService extends BaseService {
 		}
 	}
 }
-
-
 class TrackingServices extends BaseService {
 	/** @arg {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service */
 	on_csi_service(service) {
@@ -3478,13 +3466,12 @@ class TrackingServices extends BaseService {
 		seen_map.clear();
 	}
 }
-
+//#endregion Service
 function get_exports() {
 	return exports;
 }
 if(typeof exports==="object") {
 	let exports=get_exports();
-	exports.SavedData=SavedData;
 	exports.Gn=Gn;
 	exports.CsiService=CsiService;
 	exports.ECatcherService=ECatcherService;
@@ -3497,7 +3484,7 @@ if(typeof exports==="object") {
 	exports.HiddenData=HiddenData;
 	exports.VolumeRange=VolumeRange;
 }
-
+//#region decode_entity_key
 /** @name Ys */
 class ArrayViewType {
 	/** @arg {Uint8Array[]} v */
@@ -3560,7 +3547,6 @@ function Zs(a) {
 function base64_to_array(x) {
 	return base64_dec.decodeArrayBuffer(x);
 }
-
 const uint8_string_decoder=new TextDecoder();
 /** @arg {BufferSource} x */
 function LUa(x) {
@@ -3746,7 +3732,8 @@ function decode_entity_key(...gs) {
 		entityId: b
 	};
 }
-
+//#endregion
+//#region 
 class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response */
 	WatchResponsePlayer(response) {
@@ -4077,7 +4064,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	item_by_layout_id=new Map;
-	/** @arg {{ layoutId: string; }} node */
+	/** @arg {{layoutId:string}} node */
 	item_with_layout_id(node) {
 		if(this.log_layout_ids) console.log("[node_layout_id] [%s]",node.layoutId);
 		this.item_by_layout_id.set(node.layoutId,node);
@@ -4085,22 +4072,17 @@ class HandleTypes extends BaseService {
 	log_layout_ids=false;
 	/** @arg {import("./support/yt_api/_/b/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
 	adLayoutLoggingData(data) {
-		let try_proto_dec=true;
-		if(try_proto_dec) {
-			if(inject_api_yt.saved_data) {
-				let new_data=data.serializedAdServingDataEntry;
-				if(inject_api_yt.saved_data.ad_layout_data) {
-					inject_api_yt.saved_data.ad_layout_data.serializedAdServingDataEntry=new_data;
-				} else {
-					inject_api_yt.saved_data.ad_layout_data??={
-						serializedAdServingDataEntry: new_data
-					};
-				}
-			}
-			let dec=decode_b64_proto_obj(data.serializedAdServingDataEntry);
-			console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
-			console.log("log data entry rest",...dec.rest);
+		let new_data=data.serializedAdServingDataEntry;
+		if(saved_data.ad_layout_data) {
+			saved_data.ad_layout_data.serializedAdServingDataEntry=new_data;
+		} else {
+			saved_data.ad_layout_data??={
+				serializedAdServingDataEntry: new_data
+			};
 		}
+		let dec=decode_b64_proto_obj(data.serializedAdServingDataEntry);
+		console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
+		console.log("log data entry rest",...dec.rest);
 		console.log("[log_data_entry] [%s]",data.serializedAdServingDataEntry);
 	}
 	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
@@ -5147,7 +5129,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @param {import("./support/yt_api/_/s/YtTextType.js").YtTextType[]} arr */
 	YtTextType_va(...arr) {
-		this.iterate(arr.filter(e=>!!e),this.YtTextType.bind(this));
+		this.iterate(arr.filter(e => !!e),this.YtTextType.bind(this));
 	}
 	/**
 	 * @param {import("./support/yt_api/_/b/SetSettingEndpointData.js").SetSettingEndpointData} x
@@ -5162,7 +5144,7 @@ class HandleTypes extends BaseService {
 		this.log_empty_obj(y);
 	}
 	/** @template {{}} T @arg {T} x @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
-	keys(x){
+	keys(x) {
 		return get_keys_of(x);
 	}
 	/** @param {{}} x */
@@ -5173,5 +5155,6 @@ class HandleTypes extends BaseService {
 		}
 	}
 }
+//#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
 main();
