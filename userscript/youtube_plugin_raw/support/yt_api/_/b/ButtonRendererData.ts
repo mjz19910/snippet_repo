@@ -36,6 +36,15 @@ export type ButtonRendererData={
 	trackingParams: string;
 	accessibilityData: Accessibility;
 	command: GeneralCommand;
+}|{
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	icon: {};
+	navigationEndpoint: NavigationEndpoint;
+	tooltip: string;
+	trackingParams: string;
+	accessibilityData: Accessibility;
 };
 
 export type OptButtonData={

@@ -1339,6 +1339,7 @@ function decode_b64_proto_obj(str) {
 	let reader=new decode_protobuf_obj.MyReader(buffer);
 	x: for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
 		let cur_byte=reader.uint32();
+		console.log("read loop pos=%o",reader.pos);
 		let pos_start=reader.pos;
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
@@ -1348,7 +1349,7 @@ function decode_b64_proto_obj(str) {
 		switch(wireType) {
 			case 0:
 				let [num64,new_pos]=reader.revert_to(pos_start,() => {
-					try{ 
+					try {
 						let u64=reader.uint64();
 						return [u64,reader.pos];
 					} catch {}
@@ -3785,6 +3786,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/YtTextType").YtTextType} text */
 	on_text(text) {
+		if(!text) {
+			debugger;
+			return;
+		}
 		let rest=run_extract_empty(text);
 		if(rest instanceof Array) for(let i of rest) {
 			if(Object.keys(i).length>0) console.log(i);
@@ -4063,14 +4068,14 @@ class HandleTypes extends BaseService {
 		console.log(meta);
 	}
 	/** @arg {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data */
-	accessibilityData(data) {
+	AccessibilityData(data) {
 		if(eq_keys(get_keys_of(data),["label"])) return;
 		console.log(data);
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/a/Accessibility.js").Accessibility} data */
 	Accessibility(data) {
-		this.accessibilityData(data.accessibilityData);
+		this.AccessibilityData(data.accessibilityData);
 	}
 	/** @arg {import("./support/yt_api/_/a/ServiceEndpoint.js").ServiceEndpoint} ep */
 	serviceEndpoint(ep) {
@@ -4084,17 +4089,18 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
-		let {size,isDisabled,text,trackingParams,...rest_}=renderer;
-		this.on_text(text);
+		let {size,isDisabled,trackingParams,...rest_}=renderer;
 		this.trackingParams(trackingParams);
 		let rest_2=null;
 		let rest_3=null;
 		if("serviceEndpoint" in rest_) {
-			let {serviceEndpoint,...rest}=rest_;
+			let {serviceEndpoint,text,...rest}=rest_;
+			this.on_text(text);
 			this.serviceEndpoint(rest_.serviceEndpoint);
 			rest_2=rest;
 		} else if("navigationEndpoint" in rest_) {
-			let {navigationEndpoint,...rest}=rest_;
+			let {navigationEndpoint,accessibilityData,...rest}=rest_;
+			this.Accessibility(accessibilityData);
 			this.navigationEndpoint(rest_.navigationEndpoint);
 			rest_3=rest;
 		} else {
