@@ -3711,7 +3711,8 @@ class HandleTypes extends BaseService {
 	DesktopTopbarRendererData(data) {
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...x}=data;
 		this.trackingParams(trackingParams);
-		this.empty_object(logo);
+		this.topbarLogoRenderer(logo.topbarLogoRenderer);
+		this.empty_object(logo.topbarLogoRenderer);
 		this.empty_object(searchbox);
 		this.primitive(countryCode);
 		this.iterate(topbarButtons,x=>this.empty_object(x));
@@ -3720,7 +3721,7 @@ class HandleTypes extends BaseService {
 		this.empty_object(forwardButton);
 		this.empty_object(a11ySkipNavigationButton);
 		this.empty_object(voiceSearchButton);
-
+		this.empty_object(x);
 	}
 	/** @type {import("./support/yt_api/_/b/valid_titles_for_tabbed_header_renderer_t.js").valid_titles_for_tabbed_header_renderer_t} */
 	valid_titles_for_tabbed_header_renderer=[
@@ -4899,5 +4900,8 @@ class HandleTypes extends BaseService {
 			case "WEB_PAGE_TYPE_UNKNOWN": break;
 			default: debugger;
 		};
+	}
+	topbarLogoRenderer(x) {
+		x;
 	}
 }
