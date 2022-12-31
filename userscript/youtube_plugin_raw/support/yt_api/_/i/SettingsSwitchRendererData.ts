@@ -10,6 +10,6 @@ export type SettingsSwitchRendererData={
 	disableServiceEndpoint: YtEndpoint;
 	id: "SETTINGS_OPTIONS_ID_TYPE_PUSH_NOTIFICATIONS_ENABLED";
 	text: YtTextType;
-	thumbnail: ThumbnailsList;
+	thumbnail?: ThumbnailsList;
 	trackingParams: string;
 };

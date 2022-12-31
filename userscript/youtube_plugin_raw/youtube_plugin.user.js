@@ -4305,8 +4305,9 @@ class HandleTypes extends BaseService {
 		if("urlEndpoint" in ex) return this.UrlEndpointRoot(ex.urlEndpoint);
 		if("browseEndpoint" in ex) return this.BrowseEndpointData(ex.browseEndpoint);
 		if("searchEndpoint" in ex) return this.SearchEndpointData(ex.searchEndpoint);
+		if("setSettingEndpoint" in ep) return this.setSettingEndpoint(ex);
 		if(Object.keys(ex).length>0) {
-			console.log("[yt_endpoint] [%s]",Object.keys(ex).join());
+			console.log("[yt_endpoint] [%s]",Object.keys(ex).join(),ex);
 		}
 	}
 	/** @arg {{}} obj */
@@ -5029,9 +5030,10 @@ class HandleTypes extends BaseService {
 	SettingsOptionItemType(item) {
 		if("channelOptionsRenderer" in item) {
 			this.ChannelOptionsRendererData(item.channelOptionsRenderer);
-		} else {
+		} else if("settingsSwitchRenderer" in item) {
 			this.settingsSwitchRenderer(item.settingsSwitchRenderer);
-			debugger;
+		} else {
+			this.log("[option_item][%s]",get_keys_of(item).join());
 		}
 	}
 	/** @arg {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
@@ -5046,6 +5048,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} v */
 	ThumbnailsList(v) {
+		if(!v) debugger;
 		this.iterate(v.thumbnails,v => this.Thumbnail(v));
 	}
 	/** @arg {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v */
@@ -5209,7 +5212,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(tp);
 		this.YtTextType_va(t_0,t_1,t_2);
 		this.endpoint_va(ep_0,ep_1);
-		this.ThumbnailsList(v_0);
+		if(v_0) this.ThumbnailsList(v_0);
 		this.primitives(enabled);
 		this.empty_object(y);
 	}
@@ -5219,6 +5222,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @param {import("./support/yt_api/_/s/YtTextType.js").YtTextType[]} arr */
 	YtTextType_va(...arr) {
-		this.iterate(arr,this.YtTextType.bind(this));
+		this.iterate(arr.filter(e=>!!e),this.YtTextType.bind(this));
+	}
+	setSettingEndpoint(x) {
+		console.log(x);
 	}
 }
