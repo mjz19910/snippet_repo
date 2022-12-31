@@ -4901,7 +4901,11 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		};
 	}
+	/**
+	 * @param {import("./support/yt_api/_/b/LogoEntity.js").LogoEntity} x
+	 */
 	topbarLogoRenderer(x) {
-		x;
+		console.log(Object.keys(x).join());
+		debugger;
 	}
 }

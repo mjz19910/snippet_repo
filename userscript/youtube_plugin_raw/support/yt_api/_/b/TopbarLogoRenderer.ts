@@ -1,5 +1,5 @@
-import {TopbarLogoRendererData} from "./TopbarLogoRendererData";
+import {LogoEntity} from "./LogoEntity";
 
 export type TopbarLogoRenderer={
-	topbarLogoRenderer: TopbarLogoRendererData;
+	topbarLogoRenderer: LogoEntity;
 };
