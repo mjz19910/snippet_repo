@@ -1,5 +1,4 @@
 import {Accessibility} from "../a/Accessibility.js";
-import {GeneralCommand} from "../g/GeneralCommand.js";
 import {Icon} from "../i/Icon.js";
 import {YtTextType} from "../s/YtTextType.js";
 import {YtEndpoint} from "./YtEndpoint.js";
@@ -29,7 +28,7 @@ type Suggestive_1={
 	text: YtTextType;
 	trackingParams: string;
 	accessibilityData: Accessibility;
-	command: GeneralCommand;
+	command: YtEndpoint;
 };
 
 type Suggestive_2={
@@ -40,7 +39,7 @@ type Suggestive_2={
 	navigationEndpoint: YtEndpoint;
 	trackingParams: string;
 	accessibilityData: Accessibility;
-	command: GeneralCommand;
+	command: YtEndpoint;
 };
 
 type Default_1={

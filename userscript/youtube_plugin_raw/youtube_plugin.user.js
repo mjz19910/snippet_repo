@@ -4129,7 +4129,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} ep */
 	YtEndpoint(ep) {
-		console.log(ep);
+		const {clickTrackingParams: a,commandMetadata: b,signalServiceEndpoint: c,watchEndpoint: d,...ex}=ep;
+		this.clickTrackingParams(a);
+		this.commandMetadata(b);
+		if(c) this.signalServiceEndpoint(c);
+		if(d) this.watchEndpoint(d);
+		if(Object.keys(ex).length!==0) {
+			console.log(ex);
+		}
 	}
 	/** @arg {{}} obj */
 	empty_object(obj) {
@@ -4165,14 +4172,14 @@ class HandleTypes extends BaseService {
 			let {navigationEndpoint,accessibilityData,command,...a}=y;
 			this.empty_object(a);
 			this.Accessibility(accessibilityData);
-			this.command(command);
+			this.YtEndpoint(command);
 			this.YtEndpoint(navigationEndpoint);
 			return;
 		} else if("accessibilityData" in y) {
 			let {accessibilityData,command,...a}=y;
 			this.empty_object(a);
 			this.Accessibility(accessibilityData);
-			this.command(command);
+			this.YtEndpoint(command);
 			return;
 		}
 		this.empty_object(y);
@@ -4181,7 +4188,7 @@ class HandleTypes extends BaseService {
 	NoStyleButtonTypes(x) {
 		let {trackingParams,command,...y}=x;
 		this.trackingParams(trackingParams);
-		this.command(command);
+		this.YtEndpoint(command);
 		this.empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
@@ -4216,17 +4223,6 @@ class HandleTypes extends BaseService {
 		}
 		let k=get_keys_of(ep);
 		k;
-	}
-	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand|undefined} cmd */
-	GeneralCommand(cmd) {
-		if(!cmd) return;
-		let {clickTrackingParams: ct,commandMetadata: md,continuationCommand: cc,signalServiceEndpoint: ss,...rest}=cmd;
-		this.clickTrackingParams(ct);
-		this.commandMetadata(md);
-		if(cc) this.continuationCommand(cc);
-		if(ss) this.signalServiceEndpoint(ss);
-		if(eq_keys(get_keys_of(rest),[])) return;
-		console.log(rest);
 	}
 	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} cmd */
 	addToPlaylistCommand(cmd) {
@@ -4292,10 +4288,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/c/ContinuationCommand.js").ContinuationCommand} cmd */
 	continuationCommand(cmd) {
 		console.log(cmd);
-	}
-	/** @arg {import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand} obj */
-	command(obj) {
-		console.log(obj);
 	}
 	/** @arg {import("./support/yt_api/_/u/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData} renderer */
 	simpleMenuHeaderRenderer(renderer) {
@@ -5031,6 +5023,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {Set<number>} */
 	known_root_ve=new Set;
+	/** @type {number[]} */
+	new_known_root_ve=[];
 	/** @type {Map<string,Set<number>>} */
 	known_numbers=new Map;
 	/** @type {Map<string,Set<string>>} */
@@ -5039,30 +5033,53 @@ class HandleTypes extends BaseService {
 	new_known_strings=[];
 	/** @type {Map<string,{t:boolean;f:boolean}>} */
 	known_booleans=new Map;
+	changed_known_bool=[];
 	/** @arg {number} x */
 	rootVe(x) {
 		if(this.known_root_ve.has(x)) return;
 		this.known_root_ve.add(x);
+		this.new_known_root_ve.push(x);
 		this.save_data_cache();
 		console.log("rootVe",x);
 	}
-	/** @arg {string} x */
-	apiUrl(x) {
-		let cur=this.known_strings.get("apiUrl");
+	save_new_string(key,x) {
+		let cur=this.known_strings.get(key);
 		if(!cur) {
 			cur=new Set;
-			this.known_strings.set("apiUrl",cur);
+			this.known_strings.set(key,cur);
 		}
 		if(cur.has(x)) return;
 		cur.add(x);
-		this.new_known_strings.push(["apiUrl",x]);
+		this.new_known_strings.push([key,x]);
 		this.save_known_string();
-		console.log("apiUrl",x);
+		console.log(key,x);
 	}
 	/** @arg {string} x */
-	url(x) {console.log("url",x);}
+	apiUrl(x) {
+		this.save_new_string("apiUrl",x);
+	}
+	/** @arg {string} x */
+	url(x) {
+		this.save_new_string("url",x);
+	}
+	save_new_bool(key,bool) {
+		let kc=this.known_booleans.get(key);
+		if(!kc) {
+			kc={t: false,f: false};
+		}
+		if(bool) {
+			kc.t=true;
+		} else {
+			kc.f=true;
+		}
+		this.changed_known_bool.push([key,kc]);
+		this.save_known_bool();
+	}
 	/** @arg {boolean} x */
-	sendPost(x) {console.log("sendPost",x);}
+	sendPost(x) {
+		this.save_new_bool("sendPost",x);
+		console.log("sendPost",x);
+	}
 	/** @arg {ResolverT} x */
 	constructor(x) {
 		super(x);
@@ -5112,25 +5129,31 @@ class HandleTypes extends BaseService {
 		let json_str=JSON.stringify(this.known_data_tmp);
 		this.save_local_storage(json_str);
 	}
-	save_known_string() {
+	load_tmp_data() {
 		let json_str=this.get_local_storage();
 		if(json_str) {
 			this.known_data_tmp=JSON.parse(json_str);
-			if(!this.known_data_tmp) {
-				this.delete_known_data();
-				throw new Error("Invalid data");
-			}
-			let known_str=this.known_data_tmp.known_strings;
-			let arr=this.new_known_strings;
-			for(let item of arr) {
-				known_str[item[0]].push(item[1]);
-			}
-			this.new_known_strings=[];
-			json_str=JSON.stringify(this.known_data_tmp);
-			this.save_local_storage(json_str);
 		} else {
 			this.save_data_cache();
 		}
+	}
+	save_known_bool() {
+	}
+	save_known_string() {
+		this.load_tmp_data();
+		if(!this.known_data_tmp) {
+			this.delete_known_data();
+			throw new Error("Invalid data");
+		}
+		let tmp_known_str=this.known_data_tmp.known_strings;
+		let arr=this.new_known_strings;
+		for(let item of arr) {
+			tmp_known_str[item[0]]??=[];
+			tmp_known_str[item[0]].push(item[1]);
+		}
+		this.new_known_strings=[];
+		let json_str=JSON.stringify(this.known_data_tmp);
+		this.save_local_storage(json_str);
 	}
 	/** @param {string} known_data */
 	save_local_storage(known_data) {
