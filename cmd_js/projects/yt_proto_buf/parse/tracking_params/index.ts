@@ -100,6 +100,13 @@ export class MyReader extends protobufjs.Reader {
 		this.pos=prev_pos;
 		return ret;
 	}
+	logField<T extends any[]>(format: string,...args: T) {
+		if(this.pos>=this.buf.length) {
+			my_console.pad_log(format,...args);
+		} else {
+			my_console.pad_log(`${format},`,...args);
+		}
+	}
 	override skipType(wireType: number) {
 		this.revert(() => {
 			let info=this.uint32();
@@ -110,10 +117,10 @@ export class MyReader extends protobufjs.Reader {
 						return this.uint64();
 					}) as Long;
 					let value32=this.uint32();
-					if(this.pos>=this.buf.length) {
-						my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o",info>>>3,info&7,value32,value64.toNumber());
+					if(value32!==value64.toNumber()) {
+						this.logField("\"field #%o: VarInt(int64, type=%o)\": %o",info>>>3,info&7,value64.toNumber());
 					} else {
-						my_console.pad_log("\"field #%o: VarInt(type=%o)\": %o,",info>>>3,info&7,value32,value64.toNumber());
+						this.logField("\"field #%o: VarInt(int32, type=%o)\": %o",info>>>3,info&7,value32);
 					}
 				} break;
 				case 2: {
@@ -121,7 +128,8 @@ export class MyReader extends protobufjs.Reader {
 					debug_l_delim_message({reader: this,unk_type,field_id: info>>>3,size});
 				} break;
 				case 5: {
-
+					let f32=this.fixed32();
+					this.logField("\"field #%o: 32-Bit(type=%o)\": %o",info>>>3,info&7,f32);
 				} break;
 				default: my_console.pad_log("\"field #%o: (type=%o)\": \"??\"",info>>>3,info&7);
 			}
