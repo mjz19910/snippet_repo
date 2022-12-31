@@ -4180,7 +4180,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
 	NoStyleButtonTypes(x) {
-		x;
+		let {trackingParams,command,...y}=x;
+		this.trackingParams(trackingParams);
+		this.command(command);
+		this.empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
