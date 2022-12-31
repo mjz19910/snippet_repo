@@ -4605,7 +4605,7 @@ class HandleTypes extends BaseService {
 		console.log(data.response);
 		console.log(data.url);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").ResponsePageUrl} url */
+	/** @arg {import("./support/yt_api/_/r/ResponsePageUrl").ResponsePageUrl} url */
 	onResponsePageUrl(url) {
 		let res=url.split("/").slice(1)?.[0].split("_").slice(1);
 		if(res) {
