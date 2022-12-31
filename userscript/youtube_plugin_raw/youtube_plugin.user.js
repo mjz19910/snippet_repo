@@ -398,7 +398,9 @@ async function async_plugin_init(event) {
 				}
 				if(is_yt_debug_enabled) console.log("PageManager:current_page:"+ytd_page_manager.getCurrentPage()?.tagName.toLowerCase());
 				if(ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()!="ytd-watch-flexy") {
-					console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);
+					if(iter_count > 100) {
+						console.log("found current_page [%s] at iter=%o",ytd_page_manager.getCurrentPage()?.tagName.toLowerCase(),iter_count);
+					}
 					/** @type {Promise<void>} */
 					let promise=new Promise((accept,reject) => {
 						if(!ytd_page_manager) return reject(new Error("missing data"));
@@ -4201,7 +4203,7 @@ class HandleTypes extends BaseService {
 		} else {
 			debugger;
 		}
-		let ok=get_keys_of(header);
+		let ok=filter_out_keys(get_keys_of(header),split_string("feedTabbedHeaderRenderer,"));
 		console.log("header keys",ok);
 	}
 	/** @arg {import("./support/_/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
@@ -4585,7 +4587,8 @@ class HandleTypes extends BaseService {
 		if(typeof detail.pageType!=="string") debugger;
 		if(typeof detail.fromHistory!=="boolean") debugger;
 		if(typeof detail.navigationDoneMs!=="number") debugger;
-		console.log("detail_len",get_keys_of(detail).length);
+		let ok=filter_out_keys(get_keys_of(detail),split_string("endpoint,pageType,fromHistory,response,navigationDoneMs"));
+		if(ok.length>0) console.log("[detail_event] [%s]",ok.join());
 		page_type_iter(detail.pageType);
 		if(last_page_type!==detail.pageType) {
 			last_page_type=detail.pageType;
