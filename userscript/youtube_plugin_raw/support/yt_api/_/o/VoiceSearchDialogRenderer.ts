@@ -1,3 +1,4 @@
+import {ButtonRenderer} from "../b/ButtonRenderer.js";
 import {YtTextType} from "../s/YtTextType.js";
 
 
@@ -16,6 +17,6 @@ export type VoiceSearchDialogRenderer={
 	disabledHeader: YtTextType;
 	disabledSubtext: YtTextType;
 	microphoneButtonAriaLabel: YtTextType;
-	exitButton: YtTextType;
+	exitButton: ButtonRenderer;
 	microphoneOffPromptHeader: YtTextType;
 };

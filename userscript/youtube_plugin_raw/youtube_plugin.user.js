@@ -4455,10 +4455,45 @@ class HandleTypes extends BaseService {
 	}
 	/** @param {import("./support/yt_api/_/o/AllPopups.js").AllPopups} x */
 	popup(x) {
-		if("voiceSearchDialogRenderer" in x) {
-			this.voiceSearch(x.voiceSearchDialogRenderer);
+		let ok=get_keys_of(x);
+		for(let key of ok) {
+			/** @type {{}} */
+			let xg=cast_as(x);
+			/** @type {{[U in typeof key]: import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer}} */
+			let xu=cast_as(xg);
+			let generic_renderer=xu[key];
+			console.log("[cast] [%s] as GenericRenderer (%o)",key,generic_renderer);
+			this.renderer(generic_renderer);
 		}
-		console.log("[popup_found] [%s]",Object.keys(x).join());
+	}
+	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
+	renderer(x) {
+		if("placeholderHeader" in x) {
+			let {trackingParams:tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
+			this.trackingParams(tp);
+			this.YtTextType(placeholderHeader);
+			this.YtTextType(promptHeader);
+			this.YtTextType(exampleQuery1);
+			this.YtTextType(exampleQuery2);
+			this.YtTextType(promptMicrophoneLabel);
+			this.YtTextType(loadingHeader);
+			this.YtTextType(connectionErrorHeader);
+			this.YtTextType(connectionErrorMicrophoneLabel);
+			this.YtTextType(permissionsHeader);
+			this.YtTextType(permissionsSubtext);
+			this.YtTextType(disabledHeader);
+			this.YtTextType(disabledSubtext);
+			this.YtTextType(microphoneButtonAriaLabel);
+			this.ButtonRenderer(exitButton);
+			this.YtTextType(microphoneOffPromptHeader);
+			this.empty_object(c);
+		} else if("trackingParams" in x){
+			const {trackingParams:tp,...c}=x;
+			this.trackingParams(tp);
+			this.empty_object(c);
+		}else{
+			console.log("[renderer_log] [%s]",Object.keys(x).join());
+		}
 	}
 	/**
 	 * @param {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x
