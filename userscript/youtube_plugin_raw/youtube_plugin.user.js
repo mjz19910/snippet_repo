@@ -4041,11 +4041,9 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/s/CacheMetadata.js").CacheMetadata | undefined} meta
-	 */
+	/** @arg {import("./support/yt_api/_/s/CacheMetadata.js").CacheMetadata} meta */
 	cacheMetadata(meta) {
-		meta;
+		console.log(meta);
 	}
 	/** @arg {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data */
 	accessibilityData(data) {
