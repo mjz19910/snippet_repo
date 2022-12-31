@@ -1,9 +1,7 @@
-/*!
-* The buffer module from node.js, for the browser.
-*
-* @author   Feross Aboukhadijeh <http://feross.org>
-* @license  MIT
-*/
+/**
+The buffer module from node.js, for the browser.
+@author   Feross Aboukhadijeh <http://feross.org>
+@license  MIT */
 export function is_valid_utf8(/** @type {string} */ e, /** @type {number} */ t) {
 	var r;
 	t=t||1/0;

@@ -741,9 +741,7 @@ async function kernel_main() {
 				// @ts-ignore
 				let __d=DebugApi._PrivInstance
 				__d.attach(debug,undebug,null)
-				/** @arg {(this: any, ...args: readonly any[]) => any} func
-				 * @arg {any} f_this
-				 * @arg {readonly any[]} c_args */
+				/** @arg {(this: any, ...args: readonly any[]) => any} func @arg {any} f_this @arg {readonly any[]} c_args */
 				function do_activate(func,f_this,c_args) {
 					try {
 						return Reflect.apply(func,f_this,c_args)

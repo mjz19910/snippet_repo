@@ -283,8 +283,7 @@ function main() {
 	class IntervalClock {
 		timeout_id=-1;
 		handler_map=new Map;
-		/**
-		 * @param {{ on_tick: () => void; }} self
+		/** @param {{ on_tick: () => void; }} self
 		 */
 		static on_interval(self) {
 			self.on_tick();
@@ -296,24 +295,18 @@ function main() {
 		get_delay() {
 			return this.delay;
 		}
-		/**
-		 * @param {any} delay
+		/** @param {any} delay
 		 */
 		set_delay(delay) {
 			this.delay=delay;
 		}
 		//cspell:words set_handler_fptr fptr
-		/**
-		 * @template T,U
-		 * @param {string} type
-		 * @arg {{ptr: T,data: U}} fptr
+		/** @template T,U @param {string} type @arg {{ptr: T,data: U}} fptr
 		 */
 		set_handler_fptr(type,fptr) {
 			this.handler_map.set(type,fptr);
 		}
-		/**
-		 * @param {any} type
-		 * @param {any} fptr
+		/** @param {any} type @param {any} fptr
 		 */
 		delete_handler(type,fptr) {
 			if(this.timeout_id!==-1) {
@@ -380,8 +373,7 @@ function main() {
 			window.__worker=this.inner;
 			this.handler_map=new Map;
 		}
-		/**
-		 * @param {any} user_message
+		/** @param {any} user_message
 		 */
 		on_response(user_message) {
 			user_message;
@@ -398,8 +390,7 @@ function main() {
 				worker_state.do_accept();
 			}
 		}
-		/**
-		 * @param {{ data: any; }} event
+		/** @param {{ data: any; }} event
 		 */
 		message_event_handler(event) {
 			let user_message=event.data;
@@ -430,9 +421,7 @@ function main() {
 		terminate_worker() {
 			this.inner.terminate();
 		}
-		/**
-		 * @param {string} type
-		 * @param {undefined[]} data_vec
+		/** @param {string} type @param {undefined[]} data_vec
 		 */
 		send_request(type,...data_vec) {
 			this.inner.postMessage(worker_message_factory(type,data_vec));
@@ -443,15 +432,12 @@ function main() {
 		send_shutdown_request() {
 			this.send_request('shutdown');
 		}
-		/**
-		 * @param {any} index
+		/** @param {any} index
 		 */
 		send_process_request(index) {
 			this.send_request('process',index);
 		}
-		/**
-		 * @param {string} key
-		 * @param {{ (): void; (user_message: { source: any; response: any; }): void; (user_message: any): void; }} handler
+		/** @param {string} key @param {{ (): void; (user_message: { source: any; response: any; }): void; (user_message: any): void; }} handler
 		 */
 		set_handler(key,handler) {
 			this.handler_map.set(key,handler);
@@ -471,14 +457,12 @@ function main() {
 			this.remote_worker.set_handler('response',as_cast(this.on_response.bind(this)));
 			this.remote_worker.set_handler('failure',as_cast(this.on_failure.bind(this)));
 		}
-		/**
-		 * @param {any} user_message
+		/** @param {any} user_message
 		 */
 		on_failure(user_message) {
 			this.do_reject(user_message);
 		}
-		/**
-		 * @param {{ source: any; response: any; }} user_message
+		/** @param {{ source: any; response: any; }} user_message
 		 */
 		on_response(user_message) {
 			switch(user_message.source) {
@@ -499,19 +483,14 @@ function main() {
 			}
 		}
 		attach_worker() {}
-		/**
-		 * @param {{ tag: any; }} accept
-		 * @param {any} tag
+		/** @param {{ tag: any; }} accept @param {any} tag
 		 */
 		maybe_tag_promise_resolver(accept,tag) {
 			if(this.tag_promise_resolver) {
 				accept.tag=tag;
 			}
 		}
-		/**
-		 * @param {WorkerStateModel} self
-		 * @param {any} accept
-		 * @param {any} reject
+		/** @param {WorkerStateModel} self @param {any} accept @param {any} reject
 		 */
 		static init_request_executor(self,accept,reject) {
 			self.remote_worker.send_init_request();
@@ -521,10 +500,7 @@ function main() {
 		request_init() {
 			return this.into_async(WorkerStateModel.init_request_executor,this,0);
 		}
-		/**
-		 * @param {WorkerStateModel} self
-		 * @param {any} accept
-		 * @param {any} reject
+		/** @param {WorkerStateModel} self @param {any} accept @param {any} reject
 		 */
 		static shutdown_request_executor(self,accept,reject) {
 			self.remote_worker.send_shutdown_request();
@@ -539,11 +515,7 @@ function main() {
 			this.clock.stop();
 			this.remote_worker.terminate_worker();
 		}
-		/**
-		 * @param {WorkerStateModel} self
-		 * @param {any} index
-		 * @param {any} accept
-		 * @param {any} reject
+		/** @param {WorkerStateModel} self @param {any} index @param {any} accept @param {any} reject
 		 */
 		static process_request_executor(self,index,accept,reject) {
 			self.last_process=performance.now();
@@ -551,16 +523,12 @@ function main() {
 			self.maybe_tag_promise_resolver(accept,'process');
 			self.reset(accept,reject);
 		}
-		/**
-		 * @arg {typeof WorkerStateModel['process_request_executor']} promise_executor
-		 * @param {[this,number]} argument_vec
-		 * @returns {Promise<BaseWorkProcessorType>}
+		/** @arg {typeof WorkerStateModel['process_request_executor']} promise_executor @param {[this,number]} argument_vec @returns {Promise<BaseWorkProcessorType>}
 		 */
 		into_async(promise_executor,...argument_vec) {
 			return new Promise(promise_executor.bind(null,...argument_vec));
 		}
-		/**
-		 * @param {any} index
+		/** @param {any} index
 		 */
 		request_process(index) {
 			return this.into_async(WorkerStateModel.process_request_executor,this,index);
@@ -574,8 +542,7 @@ function main() {
 		}
 		tag_promise_resolver=false;
 		log_resolver_tags=true;
-		/**
-		 * @param {any} reason
+		/** @param {any} reason
 		 */
 		do_reject(reason) {
 			if(!this.accept) throw 1;
@@ -586,8 +553,7 @@ function main() {
 			this.reject(reason);
 			this.reset();
 		}
-		/**
-		 * @param {{}} [response]
+		/** @param {{}} [response]
 		 */
 		do_accept(response) {
 			if(!this.accept) throw 1;
@@ -624,14 +590,12 @@ function main() {
 			this.clock.stop();
 		}
 		last_process=0;
-		/**
-		 * @param {WorkerStateModel} self
+		/** @param {WorkerStateModel} self
 		 */
 		static on_clock_interval(self) {
 			self.check_timeout(performance.now()-self.last_process);
 		}
-		/**
-		 * @param {number} clock_diff
+		/** @param {number} clock_diff
 		 */
 		check_timeout(clock_diff) {
 			let sec_diff=clock_diff/1000;
@@ -644,8 +608,7 @@ function main() {
 			}
 			this.on_timeout();
 		}
-		/**
-		 * @param {any} clock_delay
+		/** @param {any} clock_delay
 		 */
 		set_clock_interval(clock_delay) {
 			this.clock.set_delay(clock_delay);
@@ -657,8 +620,7 @@ function main() {
 		}
 		// at least clock_delay * 2,
 		// clock_delay * 3 is much better
-		/**
-		 * @param {number} timeout_delay
+		/** @param {number} timeout_delay
 		 */
 		set_timeout_delay(timeout_delay) {
 			this.timeout_delay=timeout_delay;

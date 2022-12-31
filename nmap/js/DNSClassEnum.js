@@ -5,8 +5,7 @@ export class DNSClassEnum {
     /**@readonly*/ static HS = 1;
     /**@readonly*/ static 2 = "CH";
     /**@readonly*/ static CH = 2;
-    /** @arg {Extract<keyof typeof this, number>} value
-     * @arg {boolean} short */
+    /** @arg {Extract<keyof typeof this, number>} value @arg {boolean} short */
     static stringify(value, short) {
         if(short) {
             return this[value];

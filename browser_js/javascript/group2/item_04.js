@@ -1,6 +1,4 @@
-/**
- * @param {typeof import("./item_04")} exports
- */
+/** @param {typeof import("./item_04")} exports */
 function main(exports) {
 	//spell:words vtable
 	class RustBasicSymbolGenerator {
@@ -13,28 +11,22 @@ function main(exports) {
 			this.set(this.last_sym_key,this.next_symbol_id++);
 			return this.last_sym_key;
 		}
-		/**
-		 * @param {symbol} sym_key
-		 * @param {number} sym_id
+		/** @param {symbol} sym_key @param {number} sym_id
 		 */
 		set(sym_key,sym_id) {
 			this.generated_symbol_map.set(sym_key,sym_id);
 		}
-		/**
-		 * @param {any} sym_key
+		/** @param {any} sym_key
 		 */
 		get(sym_key) {
 			return this.generated_symbol_map.get(sym_key);
 		}
-		/**
-		 * @param {any} sym_key
+		/** @param {any} sym_key
 		 */
 		has(sym_key) {
 			return this.generated_symbol_map.has(sym_key);
 		}
-		/**
-		 * @param {any} sym_key_a
-		 * @param {any} sym_key_b
+		/** @param {any} sym_key_a @param {any} sym_key_b
 		 */
 		distance(sym_key_a,sym_key_b) {
 			if(this.has(sym_key_a)&&this.has(sym_key_b))
@@ -53,24 +45,19 @@ function main(exports) {
 		poll_fn=({delay}) => {
 			return {delay};
 		};
-		/**
-		 * @type {any[]}
+		/** @type {any[]}
 		 */
 		value_vec=[];
-		/**
-		 * @type {any[]}
+		/** @type {any[]}
 		 */
 		key_vec=[];
-		/**
-		 * @type {(number | undefined)[]}
+		/** @type {(number | undefined)[]}
 		 */
 		data_start_vec=[];
-		/**
-		 * @type {(number | undefined)[]}
+		/** @type {(number | undefined)[]}
 		 */
 		data_end_vec=[];
-		/**
-		 * @type {any[]}
+		/** @type {any[]}
 		 */
 		data_store_vec=[];
 		/** @type {(()=>void)|null} */
@@ -90,10 +77,7 @@ function main(exports) {
 		set k(key) {
 			this.lastKey=key;
 		}
-		/**
-		 * @param {string|symbol} key
-		 * @param {any} value
-		 * @param {string | any[]} data_vec
+		/** @param {string|symbol} key @param {any} value @param {string | any[]} data_vec
 		 */
 		add_function(key,value,data_vec) {
 			if(key==='') {
@@ -108,16 +92,12 @@ function main(exports) {
 			}
 			this.data_end_vec.push(data_store_vec.length);
 		}
-		/**
-		 * @param {any} key
+		/** @param {any} key
 		 */
 		key_index(key) {
 			return this.key_generator.distance(this.my_key,key)-1;
 		}
-		/**
-		 * @param {string} inject_data
-		 * @param {number[]} data_vec
-		 * @param {any} key
+		/** @param {string} inject_data @param {number[]} data_vec @param {any} key
 		 */
 		append_auto_info(inject_data,data_vec,key) {
 			let inject_data_vec=[];
@@ -140,10 +120,7 @@ function main(exports) {
 				}
 			}
 		}
-		/**
-		 * @param {string} key
-		 * @param {{(...arg0: any[]):any;name:string}} value
-		 * @param {any[]} data_vec
+		/** @param {string} key @param {{(...arg0: any[]):any;name:string}} value @param {any[]} data_vec
 		 */
 		execute_function(key,value,data_vec) {
 			value.name&&this.append_auto_info(value.name,data_vec,key);
@@ -495,13 +472,11 @@ function main(exports) {
 				});
 			}
 			constructor() {
-				/**
-				 * @type {{ wake: () => void; } | null}
+				/** @type {{ wake: () => void; } | null}
 				 */
 				this.waker=null;
 				this.wake_count=0;
-				/**
-				 * @type {{}|null}
+				/** @type {{}|null}
 				 */
 				this.inner=null;
 				this.notifier=null;

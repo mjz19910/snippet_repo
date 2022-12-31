@@ -1,10 +1,10 @@
 /**
- * @author mjz19910
- * @copyright MIT
- * @description Read the library-ms xml format into a json compatible format
- * created by iterating over the xml tree.
- * When a duplicate tag is found in the xml tree, convert the value corresponding to
- * that tag into an array */
+ @author mjz19910
+ @copyright MIT
+ @description Read the library-ms xml format into a json compatible format
+ created by iterating over the xml tree.
+ When a duplicate tag is found in the xml tree, convert the value corresponding to
+ that tag into an array */
 async function x() {
 	/** @type {import("./__global.js")} */
 	let holder=1;

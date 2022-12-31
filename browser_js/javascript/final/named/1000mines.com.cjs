@@ -403,10 +403,7 @@ function main() {
 					js_filt=js_out;
 					js_out=[];
 				}
-				/**
-				 * @param {string[]} js_in
-				 * @param {string[]} js_tmp
-				 * @returns {[[]|[string,string],string[],string[]]}
+				/** @arg {string[]} js_in @arg {string[]} js_tmp @returns {[[]|[string,string],string[],string[]]}
 				 */
 				function js_parse_ident(js_in,js_tmp){
 					let js_out=[];
@@ -423,8 +420,7 @@ function main() {
 					}
 					return [[],rest,js_tmp];
 				};
-				/** @param {string} str
-				 * @returns {any[]} */
+				/** @param {string} str @returns {any[]} */
 				function js_parse_func_def_head(str) {
 					let js_out=[];
 					if(str[0].match(/\(/)&&str[1]==')') {
@@ -627,9 +623,7 @@ function main() {
 						} else {
 							let wt=js_out.join('');
 							let block_match_rx=/^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
-							/** @param {number} cur_idx
-							 * @param {number} [skip_len]
-							 * @returns {[any,any]} */
+							/** @param {number} cur_idx @param {number} [skip_len] @returns {[any,any]} */
 							function parse_bracket_down(cur_idx,skip_len) {
 								let cur,cs;
 								cs=wt.slice(cur_idx);
