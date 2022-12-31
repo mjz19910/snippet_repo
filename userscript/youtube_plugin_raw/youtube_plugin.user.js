@@ -4453,9 +4453,7 @@ class HandleTypes extends BaseService {
 			default: console.log(obj);
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/o/OpenPopupAction.js").VoicePopup|import("./support/yt_api/_/t/ToastPopup.js").ToastPopup|import("./support/yt_api/_/m/MultiPageMenuRenderer.js").MultiPageMenuRenderer|import("./support/yt_api/_/n/ConfirmDialogRenderer.js").ConfirmDialogRenderer | { aboutThisAdRenderer: import("./support/yt_api/_/a/AboutThisAdRenderer.js").AboutThisAdRenderer; }} x
-	 */
+	/** @param {import("./support/yt_api/_/o/AllPopups.js").AllPopups} x */
 	popup(x) {
 		if("voiceSearchDialogRenderer" in x) {
 			this.voiceSearch(x.voiceSearchDialogRenderer);
@@ -4475,7 +4473,7 @@ class HandleTypes extends BaseService {
 		console.log(obj);
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/n/ConfirmDialogRendererData.js").ConfirmDialogRendererData} data */
+	/** @arg {import("./support/yt_api/_/n/ConfirmDialogRenderer.js").ConfirmDialogRenderer} data */
 	ConfirmDialogRendererData(data) {
 		let ok=get_keys_of(data);
 		this.ButtonRenderer(data.cancelButton);

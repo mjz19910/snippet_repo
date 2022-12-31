@@ -1,9 +1,7 @@
-import {ConfirmDialogRenderer} from "../n/ConfirmDialogRenderer.js";
-import {AboutThisAdRenderer} from "../a/AboutThisAdRenderer";
+import {ConfirmDialogPopup} from "../n/ConfirmDialogPopup.js";
+import {AboutThisAdRendererPopup} from "./AboutThisAdRendererPopup";
 
 export type DialogPopup={
-	popup: ConfirmDialogRenderer|{
-		aboutThisAdRenderer: AboutThisAdRenderer;
-	};
+	popup: ConfirmDialogPopup|AboutThisAdRendererPopup;
 	popupType: "DIALOG";
 };
