@@ -40,6 +40,8 @@ interface DebugDelimType {
 	size: number;
 }
 
+const decoder=new TextDecoder;
+
 function debug_l_delim_message({reader,unk_type,field_id,size}: DebugDelimType) {
 	let console=my_console;
 	let o=reader;
@@ -54,7 +56,7 @@ function debug_l_delim_message({reader,unk_type,field_id,size}: DebugDelimType) 
 			console.disabled=false;
 		}
 		if(has_error) {
-			console.pad_log("\"field %o: L-delim string\": %o",field_id,o.buf.subarray(o.pos,o.pos+size).toString());
+			console.pad_log("\"field %o: L-delim string\": %o",field_id,decoder.decode(o.buf.subarray(o.pos,o.pos+size)));
 		} else {
 			console.pad_log("\"field %o: L-delim message(length=%o)\": {",field_id,size);
 			let prev_pad=pad;
@@ -92,13 +94,20 @@ export class MyReader extends protobufjs.Reader {
 	}
 	override skipType(wireType: number) {
 		let info=this.revert(() => {
-			return this.uint32();
+			let prev_pad=pad;
+			let info=this.uint32();
+			switch(wireType) {
+				case 2:
+					let size=this.uint32();
+					debug_l_delim_message({reader: this,unk_type,field_id:info>>>3,size});
+			}
+			pad=prev_pad;
+			return info;
 		});
-		my_console.pad_log("fieldId=%o type=%o",info>>>3,info&7);
-		let prev_pad=pad;
-		pad+=pad_with;
+		if(wireType!==2) {
+			my_console.pad_log("fieldId=%o type=%o",info>>>3,info&7);
+		}
 		let ret=super.skipType(wireType);
-		pad=prev_pad;
 		return ret;
 	}
 	skipTypeEx(fieldId: number,wireType: number) {
