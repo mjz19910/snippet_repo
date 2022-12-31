@@ -1,10 +1,10 @@
 import {ButtonRenderer} from "../b/ButtonRenderer.js";
 import {YtTextType} from "../s/YtTextType.js";
 
-export type ConfirmDialogRenderer={
+export type ConfirmDialogRendererData={
 	title: YtTextType;
 	trackingParams: string;
-	dialogMessages: {}[];
+	dialogMessages: YtTextType[];
 	confirmButton: ButtonRenderer;
 	cancelButton: ButtonRenderer;
 	primaryIsCancel: boolean;

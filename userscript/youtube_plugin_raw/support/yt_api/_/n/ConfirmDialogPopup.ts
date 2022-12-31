@@ -1,5 +1,5 @@
-import {ConfirmDialogRenderer} from "./ConfirmDialogRenderer";
+import {ConfirmDialogRendererData} from "./ConfirmDialogRendererData";
 
 export type ConfirmDialogPopup={
-	confirmDialogRenderer: ConfirmDialogRenderer;
+	confirmDialogRenderer: ConfirmDialogRendererData;
 };

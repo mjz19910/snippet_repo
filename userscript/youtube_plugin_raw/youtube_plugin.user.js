@@ -3027,17 +3027,14 @@ class BaseServicePrivate {
 	constructor(x) {
 		this.#x=x;
 		this.load_data();
-		this.save_data();
+		this.save_current_data();
 	}
 	get x() {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
 	on_new_data_known() {
-		this.save_data();
-	}
-	on_new_known_str() {
-		this.save_known_string();
+		this.save_current_data();
 	}
 	on_request_data_removal() {
 		this.delete_known_data();
@@ -3066,7 +3063,11 @@ class BaseServicePrivate {
 				target=["many",inner];
 				p[1]=target;
 			}
-			target[1].push(x);
+			let found=target[1].find(e=>eq_keys(e,x));
+			if(!found) {
+				was_known=false;
+				target[1].push(x);
+			}
 		} else {
 			if(cur[0]==='one') {
 				if(!cur[1].includes(x)) {
@@ -3083,7 +3084,7 @@ class BaseServicePrivate {
 		}
 		if(was_known) return;
 		this.new_known_strings.push([key,x]);
-		this.on_new_known_str();
+		this.on_new_data_known();
 		console.log(key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
@@ -3106,7 +3107,7 @@ class BaseServicePrivate {
 			kc.f=true;
 		}
 		this.changed_known_bool.push([key,kc]);
-		this.save_known_bool();
+		this.save_current_data();
 	}
 	/** @arg {number} x */
 	save_new_root_ve(x) {
@@ -3146,14 +3147,12 @@ class BaseServicePrivate {
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
 	/** @private */
-	save_data() {
+	loaded_from_storage=false;
+	/** @private */
+	save_current_data() {
 		let data=this.create_save_data();
 		let json_str=JSON.stringify(data);
 		this.save_local_storage(json_str);
-	}
-	/** @private */
-	save_known_bool() {
-		this.save_tmp_data(this.create_save_data());
 	}
 	/** @private @returns {SaveDataRet} */
 	create_save_data() {
@@ -3164,50 +3163,10 @@ class BaseServicePrivate {
 		};
 	}
 	/** @private */
-	save_known_string() {
-		/** @type {import("./types_tmp.js").SaveDataRet} */
-		let data=this.restore_data();
-		let tmp_known_str=this.known_strings;
-		let arr=this.new_known_strings;
-		for(let item of arr) {
-			let [key,val]=item;
-			let index=tmp_known_str.findIndex(e => e[0]===key);
-			if(val instanceof Array) {
-				if(index<0) {
-					tmp_known_str.push([item[0],["many",[val]]]);
-				} else {
-					let target=tmp_known_str[index][1];
-					if(target[0]==='one') {
-						let inner=target[1].map(e => [e]);
-						target=["many",inner];
-						tmp_known_str[index][1]=target;
-					}
-					target[1].push(val);
-				}
-				return;
-			}
-			if(index<0) {
-				tmp_known_str.push([item[0],['one',[val]]]);
-				index=tmp_known_str.length-1;
-			} else {
-				let target=tmp_known_str[index][1];
-				if(target[0]==='one') {
-					target[1].push(val);
-				} else {
-					target[1].push([val]);
-				}
-			}
-		}
-		this.new_known_strings=[];
-		this.save_tmp_data(data);
-	}
-	/** @private @arg {import("./types_tmp.js").SaveDataRet} data */
-	save_tmp_data(data) {
-		let json_str=JSON.stringify(data);
-		this.save_local_storage(json_str);
-	}
-	/** @private */
 	restore_data() {
+		if(this.loaded_from_storage) {
+			return this.create_save_data();
+		}
 		let json_str=this.get_local_storage();
 		if(json_str) {
 			return this.parse_data(json_str);
@@ -3231,6 +3190,7 @@ class BaseServicePrivate {
 		if(res.known_bool) {
 			this.known_booleans=res.known_bool;
 		}
+		this.loaded_from_storage=true;
 	}
 }
 /** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
@@ -4364,7 +4324,7 @@ class HandleTypes extends BaseService {
 	popup(x) {
 		let ok=get_keys_of(x);
 		switch(ok[0]) {case "aboutThisAdRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
-		switch(ok[0]) {case "confirmDialogRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
+		switch(ok[0]) {case "confirmDialogRenderer": if(ok[0] in x) this.renderer(x); return;}
 		switch(ok[0]) {case "multiPageMenuRenderer": if(ok[0] in x) this.renderer(x[ok[0]]); return;}
 		switch(ok[0]) {case "notificationActionRenderer": if(ok[0] in x) this.renderer(x); return;}
 		switch(ok[0]) {
@@ -4377,6 +4337,8 @@ class HandleTypes extends BaseService {
 	renderer(x) {
 		let cr=null;
 		let ok=get_keys_of(x);
+		/** @type {string[]} */
+		let m=[];
 		iterate(ok,v => {
 			switch(v) {
 				case "connectionErrorHeader": return;
@@ -4386,7 +4348,6 @@ class HandleTypes extends BaseService {
 				case "exampleQuery2": return;
 				case "promptMicrophoneLabel": return;
 				case "loadingHeader": return;
-				case "connectionErrorHeader": return;
 				case "connectionErrorMicrophoneLabel": return;
 				case "permissionsHeader": return;
 				case "permissionsSubtext": return;
@@ -4399,9 +4360,14 @@ class HandleTypes extends BaseService {
 				case "notificationActionRenderer": return;
 				case "trackingParams": return;
 				case "url": return;
-				default: debugger;
+				default: m.push(v);
 			}
 		});
+		if(m.length>0) {
+			console.log("[m_join]",m.join());
+			console.log("[ok_join]",ok.join());
+			debugger;
+		}
 		if("placeholderHeader" in x) {
 			let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...c}=x;
 			cr=c;
@@ -4451,7 +4417,7 @@ class HandleTypes extends BaseService {
 		console.log(obj);
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/n/ConfirmDialogRenderer.js").ConfirmDialogRenderer} data */
+	/** @arg {import("./support/yt_api/_/n/ConfirmDialogRendererData").ConfirmDialogRendererData} data */
 	ConfirmDialogRendererData(data) {
 		let ok=get_keys_of(data);
 		this.ButtonRenderer(data.cancelButton);
