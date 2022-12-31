@@ -260,6 +260,9 @@ function on_ytd_app(element) {
 	window.ytd_app=element;
 	ytd_app=YtdAppElement.cast(element);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
+		const target_element=get_html_elements(document,"ytd-page-manager")[0];
+		if(!target_element) throw new Error("Missing ytd-page-manager when we have ytd-app");
+		on_ytd_page_manager(target_element);
 		// might have a new video element from page type change
 		setTimeout(function() {
 			do_find_video();
