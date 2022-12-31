@@ -197,7 +197,7 @@ function main(exports) {
 		}
 		/** @template T */
 		class RustTypeValue {
-			/**  @arg {RustType} type_info @arg {T} value */
+			/** @arg {RustType} type_info @arg {T} value */
 			constructor(type_info,value) {
 				this.type_info=type_info;
 				this.value=value;

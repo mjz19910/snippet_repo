@@ -39,21 +39,21 @@
 		/** @readonly */
 		value=TIMER_REPEATING;
 	}
-	/**@typedef {TimerTagSingle|TimerTagRepeating} TimerTagValues */
-	/**@typedef {TimerTagValues["value"]} TimerTag */
+	/** @typedef {TimerTagSingle|TimerTagRepeating} TimerTagValues */
+	/** @typedef {TimerTagValues["value"]} TimerTag */
 	class TimerState {
 		/** @arg {TimerTag} tag @arg {number} id @arg {boolean} is_repeating @arg {TimerHandler} target_fn @arg {any} target_args @arg {number} timeout */
 		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
-			/**@type {TimerTag} */
+			/** @type {TimerTag} */
 			this.type=tag;
-			/**@type {boolean} */
+			/** @type {boolean} */
 			this.repeat=is_repeating;
-			/**@type {TimerHandler} */
+			/** @type {TimerHandler} */
 			this.target_fn=target_fn;
 			this.target_args=target_args;
-			/**@type {number} */
+			/** @type {number} */
 			this.timeout=timeout;
 		}
 	}
@@ -62,14 +62,14 @@
 		constructor(id,type,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
-			/**@type {TimerTag} */
+			/** @type {TimerTag} */
 			this.type=type;
-			/**@type {boolean} */
+			/** @type {boolean} */
 			this.repeat=is_repeating;
-			/**@type {Function} */
+			/** @type {Function} */
 			this.target_fn=target_fn;
 			this.target_args=target_args;
-			/**@type {number} */
+			/** @type {number} */
 			this.timeout=timeout;
 		}
 	}
@@ -288,16 +288,16 @@
 		/** @arg {UniqueIdGenerator} id_generator @arg {TimerApi} api_info */
 		constructor(id_generator,api_info) {
 			this.id_generator=id_generator;
-			/**@type {Map<number, TimerState>} */
+			/** @type {Map<number, TimerState>} */
 			this.m_remote_id_to_state_map=new Map;
 			this.worker_state=null;
 			this.m_api_map=new Map;
 			this.m_raw_api_info=api_info;
 			this.set_api_names(g_timer_api.set_names,g_timer_api.clear_names);
-			/**@type {Map<number, ActiveTimerState>} */
+			/** @type {Map<number, ActiveTimerState>} */
 			this.m_active_state_map=new Map;
 		}
-		/**@arg {TimerApi["set_names"]|TimerApi["clear_names"]} names */
+		/** @arg {TimerApi["set_names"]|TimerApi["clear_names"]} names */
 		set_map_names(names) {
 			this.add_one_name(names.single);
 			this.add_one_name(names.repeating);
@@ -306,7 +306,7 @@
 		add_one_name(key) {
 			this.m_api_map.set(key,window[key]);
 		}
-		/**@arg {TimerApi["set_names"]} set @arg {TimerApi["clear_names"]} clear */
+		/** @arg {TimerApi["set_names"]} set @arg {TimerApi["clear_names"]} clear */
 		set_api_names(set,clear) {
 			this.set_map_names(set);
 			this.set_map_names(clear);
@@ -394,7 +394,7 @@
 		is_state_stored_by_remote_id(remote_id) {
 			return this.m_remote_id_to_state_map.has(remote_id);
 		}
-		/**@arg {number} remote_id */
+		/** @arg {number} remote_id */
 		get_state_by_remote_id(remote_id) {
 			return this.m_remote_id_to_state_map.get(remote_id);
 		}
@@ -967,7 +967,7 @@
 			return worker_state.timer.set(TIMER_SINGLE,handler,timeout,target_args);
 		}
 		const clearTimeout_global=clearTimeout;
-		/**@arg {number|undefined} id */
+		/** @arg {number|undefined} id */
 		function remoteClearTimeout(id) {
 			if(!worker_state) {
 				window.clearTimeout=clearTimeout_global;
@@ -990,7 +990,7 @@
 			return worker_state.timer.set(TIMER_REPEATING,handler,timeout,target_args);
 		}
 		const clearInterval_global=clearInterval;
-		/**@arg {number} id */
+		/** @arg {number} id */
 		function remoteClearInterval(id) {
 			if(!worker_state) {
 				window.clearInterval=clearInterval_global;
@@ -1138,19 +1138,19 @@
 			}
 		}
 		class RemoteTimerApi {
-			/**@type {typeof WorkerAsyncMessage} */
+			/** @type {typeof WorkerAsyncMessage} */
 			async=WorkerAsyncMessage;
-			/**@type {typeof TimeoutSetTypes} */
+			/** @type {typeof TimeoutSetTypes} */
 			worker_set_types=TimeoutSetTypes;
 			reply=new ReplyTypes;
 			fire=new TimeoutFireInfo;
 			worker=new TimeoutWorkerTypes;
-			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
+			/** @type {{single:"setTimeout",repeating:"setInterval"}} */
 			set_names={
 				single: "setTimeout",
 				repeating: "setInterval"
 			};
-			/**@type {{single:"clearTimeout",repeating:"clearInterval"}} */
+			/** @type {{single:"clearTimeout",repeating:"clearInterval"}} */
 			clear_names={
 				single: "clearTimeout",
 				repeating: "clearInterval"
@@ -1169,7 +1169,7 @@
 		}
 		class RemoteWorkerState {
 			constructor() {
-				/**@type {RemoteTimer|null} */
+				/** @type {RemoteTimer|null} */
 				this.m_timer=null;
 				this.unique_script_id=1;
 			}
@@ -1249,7 +1249,7 @@
 					type: tag
 				};
 				this.m_remote_id_to_state_map.set(remote_id,obj);
-				/**@type {typeof g_timer_api.set_names.single|typeof g_timer_api.set_names.repeating|null} */
+				/** @type {typeof g_timer_api.set_names.single|typeof g_timer_api.set_names.repeating|null} */
 				let api_name=null;
 				switch(tag) {
 					case TIMER_SINGLE: api_name=g_timer_api.set_names.single; break;

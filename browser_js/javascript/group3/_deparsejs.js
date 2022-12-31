@@ -14,9 +14,7 @@ function as_cast(e) {
 	return x;
 }
 class ParseJsState {
-	/**
-	 * @param {Set<string>} keywords
-	 * @param {prim_types} primitives */
+	/** @arg {Set<string>} keywords @arg {prim_types} primitives */
 	constructor(keywords,primitives) {
 		this.getargs=0;
 		this.parsebody=0;

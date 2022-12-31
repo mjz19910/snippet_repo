@@ -32,7 +32,7 @@ class FSDirEntry {
 	}
 }
 class FSFile {
-	/**@type {string|null} */
+	/** @type {string|null} */
 	file_data=null
 	content_length=0
 	/** @arg {string} [file_data] */
@@ -50,7 +50,7 @@ class FSFile {
 class FSDir {
 	/** @type {FSDirEntry[]} */
 	m_children=[]
-	/**@type {WeakRef<FSDir>|null} */
+	/** @type {WeakRef<FSDir>|null} */
 	m_parent=null
 	/** @arg {FSDir|null} parent */
 	constructor(parent) {
@@ -72,7 +72,7 @@ class FSDir {
 		this.m_children.push(new FSDirEntry(dir_name,new_dir))
 		return new_dir
 	}
-	/**@returns {FSDir|null} */
+	/** @returns {FSDir|null} */
 	get parent() {
 		if(!this.m_parent) return null
 		let parent_dir=this.m_parent.deref()
@@ -81,7 +81,7 @@ class FSDir {
 	}
 }
 class Win32FSDir {
-	/**@type {WeakRef<FSDir>|null} */
+	/** @type {WeakRef<FSDir>|null} */
 	m_parent=null
 	/** @type {FSDirEntry[]} */
 	m_children=[]
@@ -96,7 +96,7 @@ class Win32FSDir {
 		this.base=init_args.base
 		this.m_object_parent=init_args.object_parent
 	}
-	/**@returns {FSDir|null} */
+	/** @returns {FSDir|null} */
 	get parent() {
 		if(this.base=="/") {
 			return null
@@ -179,7 +179,7 @@ class AK_Error {
 	}
 }
 class AK_ErrorOr {
-	/**@type {symbol|AK_Error|null} */
+	/** @type {symbol|AK_Error|null} */
 	m_data
 	/** @arg {symbol|null} tag_or_value @arg {[any, ...any[]]} value_or_error_rest */
 	constructor(tag_or_value,...value_or_error_rest) {
@@ -207,7 +207,7 @@ class AK_Optional {
 	has_value() {
 		return false
 	}
-	/**@returns {never} */
+	/** @returns {never} */
 	value() {
 		throw new Error("No value")
 	}
@@ -234,15 +234,15 @@ class JaiExecuteCall {
 			return
 		}
 		let optional_polymorph=polymorph_or_error.release_value()
-		/**@type {any} */
+		/** @type {any} */
 		let optional_polymorph_any=optional_polymorph
-		/**@type {AK_Optional} */
+		/** @type {AK_Optional} */
 		let optional_polymorph_typed=optional_polymorph_any
 		if(optional_polymorph_typed.has_value()) {
 			let polymorph=optional_polymorph_typed.value()
-			/**@type {any} */
+			/** @type {any} */
 			let polymorph_any=polymorph
-			/**@type {JaiFunctionPolymorph} */
+			/** @type {JaiFunctionPolymorph} */
 			let polymorph_typed=polymorph_any
 			this.result=polymorph_typed.execute_call(function_args)
 		} else {
@@ -275,7 +275,7 @@ class JaiStruct {
 		this.layout=[]
 		/** @type {any[]} */
 		this.name_map=[]
-		/**@type {{[x:string]:any}} */
+		/** @type {{[x:string]:any}} */
 		this.value={}
 	}
 	/** @arg {string|any[]} entries */
@@ -301,7 +301,7 @@ class JaiStructBuilder {
 		this.struct_entries.push(new JaiStructMemberEntry(member_name,new_member))
 		return new_member
 	}
-	/**@arg {(v:JaiStructBuilder)=>void} function_callback*/
+	/** @arg {(v:JaiStructBuilder)=>void} function_callback */
 	with_function(function_callback) {
 		function_callback(this)
 		return this
@@ -332,7 +332,7 @@ class AK_Result {
 	is_error() {
 		return true
 	}
-	/**@returns {never} */
+	/** @returns {never} */
 	release_value() {
 		throw new Error()
 	}
@@ -386,7 +386,7 @@ class JaiFunctionInstance {
 			throw new Error("Dummy tag used to instantiate function")
 		}
 	}
-	/**@arg {FunctionArguments} call_arguments */
+	/** @arg {FunctionArguments} call_arguments */
 	execute_call(call_arguments) {
 		void call_arguments
 	}

@@ -25,7 +25,7 @@ function log_if_traceroute_mismatch(traceroute_results) {
 		return e;
 	});
 }
-/**@arg {[string, ...any[]][]} array */
+/** @arg {[string, ...any[]][]} array */
 function sort_by_ip_key(array) {
 	array.sort((a, b) => {
 		let a_ip = str_to_ip(a[0]);
@@ -43,7 +43,7 @@ export class RouteReader {
 		let res = await load_route_from_file(filename);
 		log_if_traceroute_mismatch(res);
 		let mod = await import("./tree.js");
-		/**@type {Map<string, [string, string[]]>} */
+		/** @type {Map<string, [string, string[]]>} */
 		let route_map = new Map;
 		if(!mod.route_map){
 			throw new Error("Bad");
@@ -65,7 +65,7 @@ export class RouteReader {
 	}
 	/** @arg {import("fs/promises").FileHandle} out @arg {[string, string[]]} item */
 	format_route_const_export(out, item) {
-		/**@type {[string, string[]]}*/
+		/** @type {[string, string[]]}*/
 		let [target, route] = item;
 		return out.write(`
 export const r_${target.replaceAll(".", "_")} = new Route({

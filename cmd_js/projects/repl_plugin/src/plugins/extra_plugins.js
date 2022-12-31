@@ -1,4 +1,4 @@
 import {REPLPlugin} from "./REPLPlugin.js";
 
-/**@type {(typeof REPLPlugin)[]} */
+/** @type {(typeof REPLPlugin)[]} */
 export let extra_plugins=[];

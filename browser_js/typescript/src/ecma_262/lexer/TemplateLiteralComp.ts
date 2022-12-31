@@ -22,10 +22,10 @@ export class TemplateLiteralComp extends LexerBase {
 			}
 		}
 		len=0;
-		/* HexEscapeSequence*/
+		/* HexEscapeSequence */
 		let res=this.m_dispatcher.HexEscapeSequence(str,index);
 		if(res[0]) return [true,res[1]];
-		/* UnicodeEscapeSequence*/
+		/* UnicodeEscapeSequence */
 		res=this.m_dispatcher.UnicodeEscapeSequence(str,index);
 		if(res[0]) return [true,res[1]];
 		return [null,0];
@@ -116,7 +116,7 @@ export class TemplateLiteralComp extends LexerBase {
 		}
 		return [null,0];
 	}
-	/*Template*/
+	/*Template */
 	Template(str: string,index: number): LexReturnType {
 		// NoSubstitutionTemplate
 		let ret=this.NoSubstitutionTemplate(str,index);
@@ -130,20 +130,20 @@ export class TemplateLiteralComp extends LexerBase {
 		}
 		return [null,0];
 	}
-	/* TemplateCharacter*/
+	/* TemplateCharacter */
 	TemplateCharacter(str: string,index: number): LexReturnType {
 		/* $ [lookahead ≠ {]*/
 		if(str[index]==='$'&&str[index+1]!=='{') {
 			return [true,1];
 		}
-		/* \ TemplateEscapeSequence*/
+		/* \ TemplateEscapeSequence */
 		if(str[index]==='\\') {
 			let escape_res=this.TemplateEscapeSequence(str,index);
 			if(escape_res[0]) {
 				return [true,escape_res[1]];
 			}
 		}
-		/* \ NotEscapeSequence*/
+		/* \ NotEscapeSequence */
 		if(str[index]==='\\') {
 			let not_esc=this.NotEscapeSequence(str,index);
 			if(not_esc[0]===false) {
@@ -160,7 +160,7 @@ export class TemplateLiteralComp extends LexerBase {
 		if(res[0]) {
 			return [true,res[1]];
 		}
-		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+		/* SourceCharacter but not one of ` or \ or $ or LineTerminator */
 		if(str[index]==='`'||str[index]==='\\'||str[index]==='$') {
 			return [null,0];
 		}
@@ -282,7 +282,7 @@ export class TemplateLiteralComp extends LexerBase {
 		return [null,0];
 	}
 	/* TemplateCharacters ::*/
-	/*|TemplateCharacter TemplateCharacters opt*/
+	/*|TemplateCharacter TemplateCharacters opt */
 	TemplateCharacters(str: string,index: number): LexReturnType {
 		let cur_index=index;
 		let tmp=this.TemplateCharacter(str,cur_index);

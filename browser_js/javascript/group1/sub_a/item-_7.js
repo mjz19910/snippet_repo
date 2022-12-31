@@ -18,14 +18,14 @@ function main() {
 			return val;
 		}
 		#has_value=false;
-		/**@type {string} */
+		/** @type {string} */
 		#inner_value="";
-		/**@arg {string} style_value */
+		/** @arg {string} style_value */
 		#set_value(style_value) {
 			this.#has_value=true;
 			this.#inner_value=style_value;
 		}
-		/**@type {ObjectConstructor['prototype']['toString']} */
+		/** @type {ObjectConstructor['prototype']['toString']} */
 		toString() {
 			if(this instanceof CSSKeywordValue) {
 				return this.value;
@@ -53,7 +53,7 @@ function main() {
 		/** @arg {any} _property */
 		has(_property) {}
 		entries() {}
-		/**@type {Array<CSSKeywordValue|CSSStyleValue>['forEach']} */
+		/** @type {Array<CSSKeywordValue|CSSStyleValue>['forEach']} */
 		forEach(_callback) {}
 	}
 	class StylePropertyMap extends StylePropertyMapReadOnly {
@@ -102,7 +102,7 @@ function main() {
 			target={};
 			ns=0;
 			all_map=new Map;
-			/**@type {Set<typeof all_set_inner_type>} */
+			/** @type {Set<typeof all_set_inner_type>} */
 			all_set=new Set;
 			func_map=new Map;
 			dom_map=new Map;

@@ -1,5 +1,5 @@
 export class HtmlLexerIpc {
-	/**@arg {"none"} arg @arg {[]} args */
+	/** @arg {"none"} arg @arg {[]} args */
 	static ipc_call(arg,args) {
 		console.log('HtmlLexerIpc ipc_call',arg,args);
 	}

@@ -4,7 +4,7 @@ export class Queue {
     enqueue(arg0) {
         this.array_que.push(arg0);
     }
-    /**@returns {T} */
+    /** @returns {T} */
     dequeue() {
         let last=this.array_que.pop();
         if(last===void 0) throw new Error("");
@@ -13,6 +13,6 @@ export class Queue {
     is_empty() {
         return this.array_que.length===0;
     }
-    /**@type {T[]} */
+    /** @type {T[]} */
     array_que=[];
 }

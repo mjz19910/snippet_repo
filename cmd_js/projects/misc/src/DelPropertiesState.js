@@ -1,12 +1,12 @@
 export class DelPropertiesState {
 	#define_property=Object.defineProperty;
-	/**@type {Map<any, [string, TypedPropertyDescriptor<any> & PropertyDescriptor][]>}*/
+	/** @type {Map<any, [string, TypedPropertyDescriptor<any> & PropertyDescriptor][]>}*/
 	remove_map=new Map;
-	/**@type {any[]}*/
+	/** @type {any[]}*/
 	new_cache=[];
-	/**@type {any[]}*/
+	/** @type {any[]}*/
 	new_del=[];
-	/**@type {any[]}*/
+	/** @type {any[]}*/
 	del_parents=[];
 	/** @type {any} */
 	cur;

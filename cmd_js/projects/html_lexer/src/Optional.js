@@ -13,7 +13,7 @@ export class Optional {
         return this.m_has_value;
     }
     m_has_value=false;
-    /**@type {NonNullable<T>|null} */
+    /** @type {NonNullable<T>|null} */
     m_value;
     /** @arg {T} dv */
     value_or(dv) {

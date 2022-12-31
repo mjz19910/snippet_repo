@@ -98,7 +98,7 @@ class RustExportBuilder extends RustBuilderTrait {
 	/** @arg {RustBuilderTrait} parent */
 	constructor(parent) {
 		super();
-		/**@type {{}|null} */
+		/** @type {{}|null} */
 		this.parent=parent;
 		this.export_as_value=null;
 		this.export_item=null;

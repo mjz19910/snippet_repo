@@ -451,7 +451,7 @@ class Comments extends ECMA262Base {
 		return [false,null,0];
 	}
 	/*SingleLineCommentChars ::
-	SingleLineCommentChar SingleLineCommentChars*/
+	SingleLineCommentChar SingleLineCommentChars */
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	SingleLineCommentChars(str,index) {
 		if(index>=str.length) {
@@ -1567,7 +1567,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		if(res[0]) {
 			return [true,"TemplateCharacter",res[2]];
 		}
-		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+		/* SourceCharacter but not one of ` or \ or $ or LineTerminator */
 		if(str[index]==="`"||str[index]==="\\"||str[index]==="$") {
 			return [false,null,0];
 		}

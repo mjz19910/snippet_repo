@@ -1,6 +1,6 @@
 import {State} from "./State.js"
 import {typed_entries} from "./typed_entries.js"
-/**@type {[keyof typeof State, typeof State[keyof typeof State]][]}*/
+/** @type {[keyof typeof State, typeof State[keyof typeof State]][]}*/
 export const StateEntries=typed_entries(State)
 /** @arg {Extract<typeof State[keyof typeof State], number>} state */
 export function state_name(state) {

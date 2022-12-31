@@ -1,5 +1,5 @@
 export class BrowserPluginData {
-	/**@arg {{}} window */
+	/** @arg {{}} window */
 	constructor(window) {
 		this.window=window;
 	}

@@ -5,7 +5,7 @@ v1 (cur): snippet_repo/javascript/final/items/item_01_v1.js
 class RustProcess {
 	/** @type {(()=>void)|null} */
 	callable=null;
-	/**@arg {()=>void} value */
+	/** @arg {()=>void} value */
 	static fromCallable(value) {
 		let obj=new this;
 		obj.callable=value;
@@ -18,7 +18,7 @@ class RustProcess {
 	}
 }
 class RustStdLibrary {
-	/**@type {RustProcess[]} */
+	/** @type {RustProcess[]} */
 	processes=[];
 	/** @arg {any} value */
 	print(value) {

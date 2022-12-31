@@ -1,5 +1,6 @@
 import {SignalServiceEndpointData} from "../s/SignalServiceEndpoint.js";
 import {WatchEndpointData} from "../w/WatchEndpointData.js";
+import {BrowseEndpointData} from "./BrowseEndpointData.js";
 import {CommandMetadata} from "./CommandMetadata.js";
 
 type UrlEndpointRoot={
@@ -17,6 +18,8 @@ type YtEndpointParts={
 	urlEndpoint: UrlEndpointRoot;
 }|{
 	signalServiceEndpoint: SignalServiceEndpointData;
+}|{
+	browseEndpoint: BrowseEndpointData;
 };
 
 export type YtEndpoint=YtEndpointParts&YtEndpointBase;

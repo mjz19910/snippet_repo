@@ -392,7 +392,7 @@ export class NumericLiterals extends LexerBase {
 		//consume()
 		this.consume()
 		/*if (!is_octal_digit(m_current_char))
-			return false*/
+			return false */
 		if(!is_octal_digit(this.m_current_char))
 			return false
 

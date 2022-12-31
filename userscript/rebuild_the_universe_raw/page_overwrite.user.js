@@ -16,7 +16,7 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/rebuild_the_universe_raw/page_overwrite.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/rebuild_the_universe_raw/page_overwrite.user.js
 // ==/UserScript==
-/*eslint-disable no-undef*/
+/*eslint-disable no-undef */
 
 /** @arg {{}} value */
 function use_jquery_overwrite(value) {
@@ -45,7 +45,7 @@ function set_jq_proxy_overwrite() {
 		get() {
 			return val;
 		},
-		/**@arg {{}|null|undefined} value */
+		/** @arg {{}|null|undefined} value */
 		set(value) {
 			val=value;
 			if(value) use_jquery_overwrite(value);

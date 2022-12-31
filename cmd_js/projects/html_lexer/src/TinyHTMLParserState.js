@@ -6,7 +6,7 @@ export class TinyHTMLParserState {
 	/** @arg {{url:string;no_repl:boolean}|null} state */
 	constructor(state) {
 		this.request_state=state
-		/**@type {{}|undefined} */
+		/** @type {{}|undefined} */
 		this.tag_handlers=undefined
 	}
 }

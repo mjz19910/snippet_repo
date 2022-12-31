@@ -1,8 +1,8 @@
-//**@arg {HTMLLexerState} obj*/
+//** @arg {HTMLLexerState} obj */
 // export function ctx_exec(obj) {
 export function ctx_exec() {
 	//	const code=`
-	//**@this {globalThis}*/
+	//** @this {globalThis}*/
 	//(function() {
 	const obj_define_property=Object.defineProperty;
 	const obj_own_props=Object.getOwnPropertyDescriptors;
@@ -52,10 +52,10 @@ export function ctx_exec() {
 	}
 
 	// del_all_properties
-	/**@arg {DelPropertiesState} state@arg {any} tq*/
+	/** @arg {DelPropertiesState} state@arg {any} tq */
 	function del_all_properties(state,tq) {
 		while(tq) {
-			/**@type {[string, TypedPropertyDescriptor<any> & PropertyDescriptor][]}*/
+			/** @type {[string, TypedPropertyDescriptor<any> & PropertyDescriptor][]}*/
 			let cc;
 			if(reflect_apply(map_has,state.remove_map,[tq])) {
 				let v=reflect_apply(map_get,state.remove_map,[tq]);
@@ -83,15 +83,15 @@ export function ctx_exec() {
 		}
 	}
 	class DelPropertiesState {
-		/**@type {Map<any, [string, TypedPropertyDescriptor<any> & PropertyDescriptor][]>}*/
+		/** @type {Map<any, [string, TypedPropertyDescriptor<any> & PropertyDescriptor][]>}*/
 		remove_map=new Map;
-		/**@type {any[]}*/
+		/** @type {any[]}*/
 		new_cache=[];
-		/**@type {any[]}*/
+		/** @type {any[]}*/
 		new_del=[];
-		/**@type {any[]}*/
+		/** @type {any[]}*/
 		del_parents=[];
-		/**@type {any[]}*/
+		/** @type {any[]}*/
 		del_objs=[];
 		/** @type {any} */
 		cur;
@@ -129,7 +129,7 @@ export function ctx_exec() {
 		}
 	}
 	let s=new DelPropertiesState;
-	/**@type {Array<any>['pop']}*/
+	/** @type {Array<any>['pop']}*/
 	const arr_prototype_pop=Array.prototype.pop;
 	const map_proto=Map.prototype;
 	map_proto;
@@ -137,9 +137,9 @@ export function ctx_exec() {
 	const prev_Buffer=Buffer;
 	const prev_Array_proto=Array.prototype;
 	prev_Array_proto;
-	/**@type {any}*/
+	/** @type {any}*/
 	let ws_t=global;
-	/**@type {Window&typeof globalThis}*/
+	/** @type {Window&typeof globalThis}*/
 	const window_saved=ws_t;
 	s.cur=window_saved;
 	s.ctx_req=[s,console];

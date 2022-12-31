@@ -13,7 +13,7 @@ const system_modules=[
 
 /** @template T @type {T} */
 class ContextType {
-	/**@type {string[]}*/
+	/** @type {string[]}*/
 	conditions=[];
 	/** @type {{}} */
 	importAssertions={};
@@ -24,25 +24,25 @@ let module_map=new Map();
 
 export class IpcLoader {
 	depth=0;
-	/**@type {(()=>void)[]} */
+	/** @type {(()=>void)[]} */
 	exports=[];
-	/**@type {unknown[]} */
+	/** @type {unknown[]} */
 	errors=[];
-	/**@type {[]|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn<any>]} */
+	/** @type {[]|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn<any>]} */
 	args=[];
-	/**@type {string[]} */
+	/** @type {string[]} */
 	arr=[];
-	/**@type {string|undefined} */
+	/** @type {string|undefined} */
 	plugin_key;
-	/**@type {string|undefined} */
+	/** @type {string|undefined} */
 	stack;
-	/**@type {string|undefined} */
+	/** @type {string|undefined} */
 	error_header;
-	/**@type {string|undefined} */
+	/** @type {string|undefined} */
 	imported_from;
-	/**@type {string|undefined} */
+	/** @type {string|undefined} */
 	import_target;
-	/**@type {string|undefined} */
+	/** @type {string|undefined} */
 	import_target_ts;
 	split_error_into_lines=false;
 	no_logging=true;
@@ -89,7 +89,7 @@ export class IpcLoader {
 		let [specifier,context,nextResolve]=state.args;
 		let errors=[];
 		let prev_log_dir="file://"+env.PWD||"";
-		/**@type {string[]} */
+		/** @type {string[]} */
 		let parent_url_parts=[];
 		let start_index;
 		let log_path;

@@ -1,7 +1,7 @@
 
 export class IpcLoader {
 	depth=0;
-	/**@type {(()=>void)[]} */
+	/** @type {(()=>void)[]} */
 	exports=[];
 }
 

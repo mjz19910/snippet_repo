@@ -12,7 +12,7 @@ export class REPLFakeBrowserPlugin {
 	constructor(repl) {
 		this.repl=repl;
 	}
-	/**@type {ObjMaybeKeys|null}*/
+	/** @type {ObjMaybeKeys|null}*/
 	obj=null;
 	enable() {
 		if(!this.obj) {
@@ -24,7 +24,7 @@ export class REPLFakeBrowserPlugin {
 		let ctx=this.wrap_context(this.repl.context);
 		ctx.get_from_store=get_from_store_bound;
 	}
-	/**@arg {import('vm').Context} context @returns {ObjMaybeKeys} */
+	/** @arg {import('vm').Context} context @returns {ObjMaybeKeys} */
 	wrap_context(context) {
 		return any(context);
 	}

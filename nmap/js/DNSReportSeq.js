@@ -1,10 +1,10 @@
 export class DNSReportSeq {
 	constructor() {
-		/**@type {readonly string[]|null} */
+		/** @type {readonly string[]|null} */
 		this.m_from = null;
-		/**@type {readonly string[]|null} */
+		/** @type {readonly string[]|null} */
 		this.m_to = null;
-		/**@type {readonly string[]|null} */
+		/** @type {readonly string[]|null} */
 		this.m_all = null;
 	}
 	/** @arg {string|readonly string[]} value */

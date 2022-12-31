@@ -92,7 +92,7 @@ function append_console_message(level,format_str,...args) {
 	}
 	logger_updated=false;
 }
-/** @arg {number} level*/
+/** @arg {number} level */
 function human_log_level(level) {
 	switch(level) {
 		case LOG_LEVEL_CRIT_IMPL: return "crit";
@@ -677,7 +677,7 @@ class InstructionReturnImpl extends InstructionImplBase {
 class InstructionBreakpointImpl extends InstructionImplBase {
 	/** @type {"breakpoint"} */
 	type="breakpoint";
-	/** @arg {StackVMImpl} vm*/
+	/** @arg {StackVMImpl} vm */
 	run(vm) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
@@ -686,7 +686,7 @@ class InstructionBreakpointImpl extends InstructionImplBase {
 class InstructionPushVMObjImpl extends InstructionImplBase {
 	/** @type {"vm_push_self"} */
 	type="vm_push_self";
-	/** @arg {StackVMImpl} vm*/
+	/** @arg {StackVMImpl} vm */
 	run(vm) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
@@ -1066,7 +1066,7 @@ class StringBoxImpl {
 }
 class StackVMParserImplR {
 	static match_regex=/(.+?)(;|$)/gm;
-	/** @arg {string[]|number[]} cur @arg {number} arg_loc*/
+	/** @arg {string[]|number[]} cur @arg {number} arg_loc */
 	static parse_int_arg(cur,arg_loc) {
 		let cur_item=cur[arg_loc];
 		if(typeof cur_item=="string") {
@@ -1174,7 +1174,7 @@ class StackVMParserImplR {
 				}
 				if(num_to_parse>0) throw new Error("Assertion failed: cast operand `"+m_arg+"` is invalid");
 			} break;
-			case "drop":/*opcode parse*/
+			case "drop":/*opcode parse */
 			case "dup":
 			case "get":
 			case "return":
@@ -1402,7 +1402,7 @@ class BaseCompressionImpl {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/**@template T,U @arg {CompressStateBase<T, U>} state*/
+	/** @template T,U @arg {CompressStateBase<T, U>} state */
 	compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}
@@ -1454,7 +1454,7 @@ class MulCompressionImpl extends BaseCompressionImpl {
 
 	/** @arg {string[]} arr */
 	try_compress(arr) {
-		/**@type {CompressState<string, string>} */
+		/** @type {CompressState<string, string>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -1467,7 +1467,7 @@ class MulCompressionImpl extends BaseCompressionImpl {
 
 	/** @arg {number[]} arr */
 	try_compress_number(arr) {
-		/**@type {CompressState<number, number>} */
+		/** @type {CompressState<number, number>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -1924,7 +1924,7 @@ class DataLoaderImplR {
 		if(data===null) return [false,data];
 		return [true,this.default_split(data)];
 	}
-	/**@arg {string} key @returns {[true,number[]]|[false,null]} */
+	/** @arg {string} key @returns {[true,number[]]|[false,null]} */
 	load_int_arr(key) {
 		let storage_data=this.getItem(key);
 		if(storage_data===null) return [false,storage_data];

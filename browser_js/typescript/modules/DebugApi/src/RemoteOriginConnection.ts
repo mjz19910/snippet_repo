@@ -92,7 +92,7 @@ export class RemoteOriginConnection {
 			this.event_transport_map.set(message_event.event.source,window);
 		}
 	}
-	/**@type {RemoteSocket[]} */
+	/** @type {RemoteSocket[]} */
 	connections: RemoteSocket[]=[];
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event */

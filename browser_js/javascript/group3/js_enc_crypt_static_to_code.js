@@ -182,7 +182,7 @@ function main() {
 				return [null,0];
 			}
 			/*SingleLineCommentChars ::
-			SingleLineCommentChar SingleLineCommentChars*/
+			SingleLineCommentChar SingleLineCommentChars */
 			SingleLineCommentChars(str,index) {
 				let sidx=index;
 				while(str[sidx]!=='\n') {
@@ -866,7 +866,7 @@ function main() {
 		class ecma_12_8_6 extends ecma_base {
 			/*Template ::
 			NoSubstitutionTemplate
-			TemplateHead*/
+			TemplateHead */
 			Template(str,index) {
 				// TODO:implement template parsing without Substitution
 				if(str[0]==='`') {

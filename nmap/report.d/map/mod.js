@@ -275,16 +275,16 @@ export const dns_names=[
 const IN=DNSClassEnum.IN;
 const A=DNSTypeEnum.A;
 class B {
-	/**@type {import("./ns.js").DNS_IN_A_Type[]}*/
+	/** @type {import("./ns.js").DNS_IN_A_Type[]}*/
 	dns_res_arr=[];
 	constructor() {
-		/**@type {Map<string, this['dns_res_arr'][0]>} */
+		/** @type {Map<string, this['dns_res_arr'][0]>} */
 		this.map=new Map;
 	}
 	find_duplicate() {
-		/**@readonly*/const Reply=Query.A_ValueEnum.ReplyArray;
+		/** @readonly*/const Reply=Query.A_ValueEnum.ReplyArray;
 		let dup_count=0;
-		/**@type {[import("./ns.js").DNS_IN_A_Type, import("./ns.js").DNS_IN_A_Type]|null} */
+		/** @type {[import("./ns.js").DNS_IN_A_Type, import("./ns.js").DNS_IN_A_Type]|null} */
 		let first_dup=null;
 		let sort_count=0;
 		/** @arg {string} a @arg {string} b */
@@ -354,7 +354,7 @@ class B {
 	}
 }
 class ams extends B {
-	/**@readonly*/static key="ams";
+	/** @readonly*/static key="ams";
 	static value=[
 		"ams15s21-in-f1.1e100.net","ams15s22-in-f1.1e100.net","ams15s29-in-f1.1e100.net",
 		"ams15s30-in-f1.1e100.net","ams15s33-in-f1.1e100.net",
@@ -637,7 +637,7 @@ Nmap scan report for ams17s17-in-f10.1e100.net (74.125.8.138)
 	nmap_res=``;
 };
 class arn extends B {
-	/**@readonly*/static key="arn";
+	/** @readonly*/static key="arn";
 	static value=[
 		"arn09s19-in-f1.1e100.net","arn09s20-in-f1.1e100.net",
 		"arn11s04-in-f1.1e100.net",
@@ -711,171 +711,171 @@ Nmap scan report for arn09s11-in-f1.1e100.net (216.239.37.1)
 	}
 };
 class atl extends B {
-	/**@readonly*/static key="atl";
+	/** @readonly*/static key="atl";
 	static value=["14s63-in-f1.1e100.net"];
 };
 class bkk extends B {
-	/**@readonly*/static key="bkk";
+	/** @readonly*/static key="bkk";
 	static value=[
 		"02s01-in-f1.1e100.net","02s02-in-f1.1e100.net","02s03-in-f1.1e100.net","02s04-in-f1.1e100.net",
 		"03s01-in-f1.1e100.net","03s02-in-f1.1e100.net","03s03-in-f1.1e100.net"
 	];
 };
 class bom extends B {
-	/**@readonly*/static key="bom";
+	/** @readonly*/static key="bom";
 	static value=[
 		"07s01-in-f1.1e100.net","07s45-in-f1.1e100.net",
 		"12s04-in-f1.1e100.net","12s05-in-f1.1e100.net","12s19-in-f1.1e100.net","12s20-in-f1.1e100.net","12s21-in-f1.1e100.net"
 	];
 };
 class bud extends B {
-	/**@readonly*/static key="bud";
+	/** @readonly*/static key="bud";
 	static value=["02s22-in-f1.1e100.net","02s37-in-f1.1e100.net","02s38-in-f1.1e100.net","02s39-in-f1.1e100.net"];
 };
 class cbf extends B {
-	/**@readonly*/static key="cbf";
+	/** @readonly*/static key="cbf";
 	static value=["96s07-in-f1.1e100.net","96s10-in-f1.1e100.net"];
 };
 class del extends B {
-	/**@readonly*/static key="del";
+	/** @readonly*/static key="del";
 	static value=["03s06-in-f1.1e100.net"];
 };
 class den extends B {
-	/**@readonly*/static key="den";
+	/** @readonly*/static key="den";
 	static value=["03s09-in-f1.1e100.net"];
 };
 class dfw extends B {
-	/**@readonly*/static key="dfw";
+	/** @readonly*/static key="dfw";
 	static value=[
 		"25s42-in-f1.1e100.net","25s43-in-f1.1e100.net","25s44-in-f1.1e100.net","25s46-in-f1.1e100.net","25s47-in-f1.1e100.net","25s48-in-f1.1e100.net",
 		"28s29-in-f1.1e100.net","28s30-in-f1.1e100.net","28s31-in-f1.1e100.net","28s34-in-f1.1e100.net","28s35-in-f1.1e100.net"
 	];
 };
 class eze extends B {
-	/**@readonly*/static key="eze";
+	/** @readonly*/static key="eze";
 	static value=["06s09-in-f1.1e100.net"];
 };
 class fjr extends B {
-	/**@readonly*/static key="fjr";
+	/** @readonly*/static key="fjr";
 	static value=["02s03-in-f1.1e100.net","02s04-in-f1.1e100.net"];
 };
 class fra extends B {
-	/**@readonly*/static key="fra";
+	/** @readonly*/static key="fra";
 	static value=[
 		"16s46-in-f1.1e100.net",
 		"24s01-in-f1.1e100.net"
 	];
 };
 class gru extends B {
-	/**@readonly*/static key="gru";
+	/** @readonly*/static key="gru";
 	static value=[
 		"06s66-in-f1.1e100.net",
 		"10s13-in-f1.1e100.net"
 	];
 };
 class hem extends B {
-	/**@readonly*/static key="hem";
+	/** @readonly*/static key="hem";
 	static value=["08s07-in-f1.1e100.net"];
 };
 class hkg extends B {
-	/**@readonly*/static key="hkg";
+	/** @readonly*/static key="hkg";
 	static value=["12s11-in-f1.1e100.net"];
 };
 class iad extends B {
-	/**@readonly*/static key="iad";
+	/** @readonly*/static key="iad";
 	static value=["23s04-in-f1.1e100.net","23s96-in-f1.1e100.net","66s01-in-f1.1e100.net"
 	];
 };
 class kul extends B {
-	/**@readonly*/static key="kul";
+	/** @readonly*/static key="kul";
 	static value=["01s11-in-f1.1e100.net","08s10-in-f1.1e100.net","09s12-in-f1.1e100.net","09s15-in-f1.1e100.net"
 	];
 };
 class las extends B {
-	/**@readonly*/static key="las";
+	/** @readonly*/static key="las";
 	static value=["15s01-in-f1.1e100.net"];
 };
 class lax extends B {
-	/**@readonly*/static key="lax";
+	/** @readonly*/static key="lax";
 	static value=["17s55-in-f1.1e100.net"];
 };
 class lga extends B {
-	/**@readonly*/static key="lga";
+	/** @readonly*/static key="lga";
 	static value=["25s77-in-f1.1e100.net","25s78-in-f1.1e100.net","25s79-in-f1.1e100.net","25s80-in-f1.1e100.net","25s81-in-f1.1e100.net","34s38-in-f1.1e100.net","34s39-in-f1.1e100.net","34s40-in-f1.1e100.net"
 	];
 };
 class lhr extends B {
-	/**@readonly*/static key="lhr";
+	/** @readonly*/static key="lhr";
 	static value=["25s08-in-f1.1e100.net","25s09-in-f1.1e100.net","25s25-in-f1.1e100.net","25s27-in-f1.1e100.net","26s05-in-f1.1e100.net"
 	];
 };
 class los extends B {
-	/**@readonly*/static key="los";
+	/** @readonly*/static key="los";
 	static value=["02s03-in-f1.1e100.net"];
 };
 class maa extends B {
-	/**@readonly*/static key="maa";
+	/** @readonly*/static key="maa";
 	static value=["03s31-in-f1.1e100.net","05s10-in-f1.1e100.net"
 	];
 };
 class mad extends B {
-	/**@readonly*/static key="mad";
+	/** @readonly*/static key="mad";
 	static value=["41s04-in-f1.1e100.net","41s07-in-f1.1e100.net"];
 };
 class mba extends B {
-	/**@readonly*/static key="mba";
+	/** @readonly*/static key="mba";
 	static value=["01s07-in-f1.1e100.net"];
 };
 class mct extends B {
-	/**@readonly*/static key="mct";
+	/** @readonly*/static key="mct";
 	static value=["01s13-in-f1.1e100.net"];
 };
 class mrs extends B {
-	/**@readonly*/static key="mrs";
+	/** @readonly*/static key="mrs";
 	static value=[
 		"09s08-in-f1.1e100.net","09s09-in-f1.1e100.net","09s13-in-f1.1e100.net","09s14-in-f1.1e100.net","09s15-in-f1.1e100.net","09s16-in-f1.1e100.net"
 	];
 };
 class muc extends B {
-	/**@readonly*/static key="muc";
+	/** @readonly*/static key="muc";
 	static value=[
 		"11s22-in-f1.1e100.net","11s23-in-f1.1e100.net",
 		"12s11-in-f1.1e100.net","12s12-in-f1.1e100.net"
 	];
 };
 class nrt extends B {
-	/**@readonly*/static key="nrt";
+	/** @readonly*/static key="nrt";
 	static value=["12s45-in-f1.1e100.net","12s46-in-f1.1e100.net","12s47-in-f1.1e100.net"];
 };
 class nuq extends B {
-	/**@readonly*/static key="nuq";
+	/** @readonly*/static key="nuq";
 	static value=["04s44-in-f1.1e100.net","04s45-in-f1.1e100.net"];
 };
 class ord extends B {
-	/**@readonly*/static key="ord";
+	/** @readonly*/static key="ord";
 	static value=["38s33-in-f1.1e100.net"];
 };
 class par extends B {
-	/**@readonly*/static key="par";
+	/** @readonly*/static key="par";
 	static value=[
 		"10s29-in-f1.1e100.net","10s33-in-f1.1e100.net","10s34-in-f1.1e100.net","10s39-in-f1.1e100.net",
 		"21s04-in-f1.1e100.net","21s05-in-f1.1e100.net","21s17-in-f1.1e100.net","21s18-in-f1.1e100.net"
 	];
 };
 class prg extends B {
-	/**@readonly*/static key="prg";
+	/** @readonly*/static key="prg";
 	static value=["03s10-in-f1.1e100.net","03s11-in-f1.1e100.net","03s12-in-f1.1e100.net","03s13-in-f1.1e100.net"
 	];
 };
 class qro extends B {
-	/**@readonly*/static key="qro";
+	/** @readonly*/static key="qro";
 	static value=[
 		"01s26-in-f1.1e100.net","01s27-in-f1.1e100.net","01s28-in-f1.1e100.net",
 		"02s23-in-f1.1e100.net","02s24-in-f1.1e100.net","02s25-in-f1.1e100.net","02s26-in-f1.1e100.net","02s27-in-f1.1e100.net","02s28-in-f1.1e100.net","02s29-in-f1.1e100.net"
 	];
 };
 class sea extends B {
-	/**@readonly*/static key="sea";
+	/** @readonly*/static key="sea";
 	static value=[
 		"sea09s28-in-f1.1e100.net","sea09s29-in-f1.1e100.net","sea09s30-in-f1.1e100.net",
 		"sea30s10-in-f1.1e100.net"
@@ -897,46 +897,46 @@ Nmap scan report for sea30s10-in-f1.1e100.net. (142.251.33.97)
 	];
 };
 class sfo extends B {
-	/**@readonly*/static key="sfo";
+	/** @readonly*/static key="sfo";
 	static value=[
 		"sfo03s06-in-f1.1e100.net","sfo03s26-in-f1.1e100.net","sfo03s27-in-f1.1e100.net",
 		"sfo07s13-in-f1.1e100.net","sfo07s16-in-f1.1e100.net"
 	];
 };
 class sof extends B {
-	/**@readonly*/static key="sof";
+	/** @readonly*/static key="sof";
 	static value=[
 		"sof01s12-in-f1.1e100.net",
 		"sof02s27-in-f1.1e100.net","sof02s28-in-f1.1e100.net"
 	];
 };
 class tlv extends B {
-	/**@readonly*/static key="tlv";
+	/** @readonly*/static key="tlv";
 	static value=["tlv03s01-in-f1.1e100.net"];
 };
 class tsa extends B {
-	/**@readonly*/static key="tsa";
+	/** @readonly*/static key="tsa";
 	static value=[
 		"01s11-in-f1.1e100.net",
 		"03s08-in-f1.1e100.net"
 	];
 };
 class waw extends B {
-	/**@readonly*/static key="waw";
+	/** @readonly*/static key="waw";
 	static value=[
 		"02s05-in-f1.1e100.net","02s16-in-f1.1e100.net","02s17-in-f1.1e100.net",
 		"07s02-in-f1.1e100.net"
 	];
 };
 class yyz extends B {
-	/**@readonly*/static key="yyz";
+	/** @readonly*/static key="yyz";
 	static value=[
 		"10s17-in-f1.1e100.net","10s20-in-f1.1e100.net",
 		"12s07-in-f1.1e100.net","12s08-in-f1.1e100.net"
 	];
 };
 class zrh extends B {
-	/**@readonly*/static key="zrh";
+	/** @readonly*/static key="zrh";
 	static value=["11s02-in-f1.1e100.net"];
 };
 
@@ -1019,9 +1019,9 @@ export const rev_dig_todo=[
 	"216.58.214.1",
 ];
 
-/**@readonly*/
+/** @readonly */
 export const rev_arr_2=(() => {
-	/**@type {import("./ns.js").ip_range_in_type|null}*/
+	/** @type {import("./ns.js").ip_range_in_type|null}*/
 	let x=null;
 	return [
 		[64,233,(x=[[160,171],[176,191]],range(...x)),1],

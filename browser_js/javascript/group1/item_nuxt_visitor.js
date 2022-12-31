@@ -114,7 +114,7 @@ let visitors_store={
 };
 /** @type {any[]} */
 let seen_watchers=[];
-/**@type {{value:any[]|null}} */
+/** @type {{value:any[]|null}} */
 let seen_vue_objs={value: null};
 if(typeof any(window).seen_vue_objs=="undefined") {
 	seen_vue_objs.value=[];
@@ -157,7 +157,7 @@ function w_vs(a,b,d=0) {
 	}
 }
 export function main() {
-	/**@type {{value:any[]|null}} */
+	/** @type {{value:any[]|null}} */
 	let watch_n={value: null};
 	x: if(typeof any(window).watch_n=="object") {
 		watch_n.value=any(window).watch_n;

@@ -5,7 +5,7 @@ export class IP_base {
 	static parse(str) {
 		return str.split(".").map(e => +e);
 	}
-	/**@arg {["IP", string]} value*/
+	/** @arg {["IP", string]} value */
 	static stringify_raw(value) {
 		return `IP("${value[1]}")`;
 	}

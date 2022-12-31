@@ -1185,8 +1185,8 @@ function readFixed32_end(buf,end) { // note that this uses `end`, not `pos`
 		|buf[end-1]<<24)>>>0;
 }
 /**
- * @param {MyReader} reader
- * @param {number | undefined} [writeLength]
+ @arg {MyReader} reader
+ @arg {number | undefined} [writeLength]
  */
 function indexOutOfRange(reader,writeLength) {
 	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
@@ -2416,7 +2416,7 @@ function start_message_channel_loop() {
 	}
 }
 
-/** @arg {Document|Element} node @arg {string} child_node_tag_name*/
+/** @arg {Document|Element} node @arg {string} child_node_tag_name */
 function get_html_elements(node,child_node_tag_name) {
 	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
 }
@@ -3116,7 +3116,7 @@ class BaseService {
 	log(...x) {
 		console.log(...x);
 	}
-	/** @param {string} key @param {boolean} bool */
+	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
 		let kc=this.known_booleans.get(key);
 		if(!kc) {
@@ -3154,7 +3154,7 @@ class BaseService {
 		this.save_known_string();
 		console.log(key,x);
 	}
-	/** @param {number} x */
+	/** @arg {number} x */
 	save_new_root_ve(x) {
 		if(this.known_root_ve.has(x)) return;
 		console.log("rootVe",x);
@@ -3193,10 +3193,7 @@ class BaseService {
 			this.load_bool_from(res.known_bool);
 		}
 	}
-	/**
-	 * @param {[string,string[]][]} known_strings
-	 * @private
-	 */
+	/** @arg {[string,string[]][]} known_strings * @private */
 	load_known_strings_from(known_strings) {
 		/** @arg {[string,string[]]} x @returns {[string,Set<string>]} */
 		function from_entry_pair(x) {
@@ -3281,13 +3278,11 @@ class BaseService {
 		let json_str=JSON.stringify(this.known_data_tmp);
 		this.save_local_storage(json_str);
 	}
-	/**
-	 * @param {[string, { t: boolean; f: boolean; }][]} bool_cache
-	 */
+	/** @arg {[string, { t: boolean; f: boolean; }][]} bool_cache */
 	load_bool_from(bool_cache) {
 		this.known_booleans=new Map(bool_cache);
 	}
-	/** @param {string} known_data */
+	/** @arg {string} known_data */
 	save_local_storage(known_data) {
 		localStorage.known_data=known_data;
 	}
@@ -4317,10 +4312,13 @@ class HandleTypes extends BaseService {
 		const {clickTrackingParams: a,commandMetadata: b,...ex}=ep;
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
-		if("signalServiceEndpoint" in ex) return this.signalServiceEndpoint(ex.signalServiceEndpoint);
+		if("signalServiceEndpoint" in ex) return this.SignalServiceEndpointData(ex.signalServiceEndpoint);
 		if("watchEndpoint" in ex) return this.watchEndpoint(ex.watchEndpoint);
 		if("urlEndpoint" in ex) return this.UrlEndpointRoot(ex.urlEndpoint);
-		this.empty_object(ex);
+		if("browseEndpoint" in ex) return this.browseEndpoint(ex.browseEndpoint);
+		if(Object.keys(ex).length>0) {
+			console.log("[yt_endpoint] [%s]",Object.keys(ex).join());
+		}
 	}
 	/** @arg {{}} obj */
 	empty_object(obj) {
@@ -4419,9 +4417,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/s/YtSignalAction.js").YtSignalAction} x
-	 */
+	/** @arg {import("./support/yt_api/_/s/YtSignalAction.js").YtSignalAction} x */
 	signalAction(x) {
 		switch(x.signal) {
 			case "HISTORY_BACK": break;
@@ -4439,7 +4435,7 @@ class HandleTypes extends BaseService {
 			default: console.log(obj);
 		}
 	}
-	/** @param {import("./support/yt_api/_/o/AllPopups.js").AllPopups} x */
+	/** @arg {import("./support/yt_api/_/o/AllPopups.js").AllPopups} x */
 	popup(x) {
 		let ok=get_keys_of(x);
 		for(let key of ok) {
@@ -4480,9 +4476,7 @@ class HandleTypes extends BaseService {
 			console.log("[renderer_log] [%s]",Object.keys(x).join(),x);
 		}
 	}
-	/**
-	 * @param {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x
-	 */
+	/** @arg {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x */
 	ToastPopupTag(x) {
 		const {notificationActionRenderer: v,...y}=x;
 		this.notificationActionRenderer(v);
@@ -4507,7 +4501,7 @@ class HandleTypes extends BaseService {
 		console.log(obj);
 	}
 	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpointData} ep */
-	signalServiceEndpoint(ep) {
+	SignalServiceEndpointData(ep) {
 		for(let action of ep.actions) {
 			this.ServiceEndpointAction(action);
 		}
@@ -4584,30 +4578,6 @@ class HandleTypes extends BaseService {
 		if(eq_keys(ok,["items","trackingParams","formattedTitle"])) return;
 		console.log(box.type,ok,[fk,first],box.value);
 	}
-	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType} endpoint */
-	endpoint(endpoint) {
-		if("clickTrackingParams" in endpoint) {
-			this.clickTrackingParams(endpoint.clickTrackingParams);
-		} else {
-			console.log(endpoint);
-			debugger;
-		}
-		if("browseEndpoint" in endpoint) {
-			this.browseEndpoint(endpoint.browseEndpoint);
-		} else if("reelWatchEndpoint" in endpoint) {
-			this.reelWatchEndpoint(endpoint.reelWatchEndpoint);
-		} else if("watchEndpoint" in endpoint) {
-			this.watchEndpoint(endpoint.watchEndpoint);
-		} else if("reloadContinuationItemsCommand" in endpoint) {
-			this.ReloadContinuationItemsCommand(endpoint);
-		} else {
-			console.log("[endpoint]",endpoint,get_keys_of(endpoint));
-			debugger;
-		}
-		if("commandMetadata" in endpoint) {
-			this.commandMetadata(endpoint.commandMetadata);
-		}
-	}
 	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint */
 	watchEndpoint(endpoint) {
 		console.log(endpoint);
@@ -4669,7 +4639,7 @@ class HandleTypes extends BaseService {
 		}
 		if(!("page" in data)) return;
 		this.BrowseResponseContent(data.response);
-		this.endpoint(data.endpoint);
+		this.YtEndpoint(data.endpoint);
 		if(eq_keys(ok,[])) return;
 		if(has_keys(ok,"expirationTime")) return;
 		console.log("[browse_response_top] [%s]",ok.join(","),data);
@@ -4707,7 +4677,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	SettingsPageResponse(data) {
-		this.endpoint(data.endpoint);
+		this.YtEndpoint(data.endpoint);
 		this.SettingsResponseContent(data.response);
 		let split_parts=split_string(data.url,"/");
 		/** @type {Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>} */
@@ -4733,7 +4703,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data */
 	ShortsPageResponse(data) {
-		this.endpoint(data.endpoint);
+		this.YtEndpoint(data.endpoint);
 		console.assert(data.page==="shorts");
 		this.playerResponse(data.playerResponse);
 		this.reelWatchSequenceResponse(data.reelWatchSequenceResponse);
@@ -4889,7 +4859,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(trackingParams);
 		this.empty_object(rest);
 	}
-	/** @param {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction[]} actions */
+	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction[]} actions */
 	actions(actions) {
 		for(let action of actions) {
 			action;
@@ -4916,12 +4886,11 @@ class HandleTypes extends BaseService {
 		switch(detail.pageType) {
 			case "browse":
 				this.BrowsePageResponse(detail.response);
-				this.endpoint(detail.endpoint);
+				this.YtEndpoint(detail.endpoint);
 				break;
 			case "channel": {
 				this.ChannelPageResponse(detail.response);
 				console.log(detail.endpoint);
-				// this.endpoint(detail.endpoint);
 			} break;
 		}
 		if(typeof detail.pageType!=="string") debugger;
@@ -5065,21 +5034,17 @@ class HandleTypes extends BaseService {
 	clickTrackingParams(params) {
 		if(this.r.get_param("log_click_tracking_params")) console.log("ctp",params);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints
-	 */
+	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints */
 	onResponseReceivedEndpoints(endpoints) {
 		this.iterate(endpoints,(endpoint) => {
-			this.endpoint(endpoint);
+			this.YtEndpoint(endpoint);
 		});
 	}
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
 	SettingsOptionItemType(item) {
 		this.ChannelOptionsRendererData(item.channelOptionsRenderer);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data
-	 */
+	/** @arg {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
 	ChannelOptionsRendererData(data) {
 		let {avatar,avatarAccessibility,avatarEndpoint,links,name,...rest}=data;
 		this.ThumbnailsList(avatar);
@@ -5089,15 +5054,11 @@ class HandleTypes extends BaseService {
 		this.primitive(name);
 		this.empty_object(rest);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} v
-	 */
+	/** @arg {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} v */
 	ThumbnailsList(v) {
 		this.iterate(v.thumbnails,v => this.Thumbnail(v));
 	}
-	/**
-	 * @param {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v
-	 */
+	/** @arg {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v */
 	Thumbnail(v) {
 		let {height,url,width,...rest}=v;
 		this.primitive(height);
@@ -5119,9 +5080,7 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		};
 	}
-	/**
-	 * @param {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta
-	 */
+	/** @arg {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta */
 	webCommandMetadata(meta) {
 		const {apiUrl,url,rootVe,webPageType,sendPost,...y}=meta;
 		if(webPageType!==void 0) this.WebCommandPageType(webPageType);
@@ -5131,9 +5090,7 @@ class HandleTypes extends BaseService {
 		if(sendPost!==void 0) this.sendPost(sendPost);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/LogoEntity.js").LogoEntity} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/LogoEntity.js").LogoEntity} x */
 	topbarLogoRenderer(x) {
 		let {trackingParams,iconImage,endpoint,tooltipText,overrideEntityKey,...y}=x;
 		this.trackingParams(trackingParams);
@@ -5141,9 +5098,7 @@ class HandleTypes extends BaseService {
 		this.YtEndpoint(endpoint);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
 		let y=x.fusionSearchboxRenderer;
 		{
@@ -5166,15 +5121,11 @@ class HandleTypes extends BaseService {
 	primitives(...args) {
 		this.iterate(args,arg => this.primitive(arg));
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/SearchEndpointData.js").SearchEndpointData} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/SearchEndpointData.js").SearchEndpointData} x */
 	SearchEndpointData(x) {
 		this.primitive(x.query);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/TopbarButtonItem.js").TopbarButtonItem} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/TopbarButtonItem.js").TopbarButtonItem} x */
 	TopbarButtonItem(x) {
 		if("topbarMenuButtonRenderer" in x) {
 			x.topbarMenuButtonRenderer;
@@ -5190,26 +5141,20 @@ class HandleTypes extends BaseService {
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x;
 		this.empty_object(y);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x
-	 */
+	/** @arg {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x */
 	notificationActionRenderer(x) {
 		const {responseText,trackingParams,...y}=x;
 		this.YtTextType(responseText);
 		this.trackingParams(trackingParams);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/hotkeyDialogRenderer.js").HotkeyDialogRenderer} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/hotkeyDialogRenderer.js").HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
 		const {hotkeyDialogRenderer,...v}=x;
 		this.hotkeyDialogRenderer(hotkeyDialogRenderer);
 		this.empty_object(v);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/b/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x */
 	hotkeyDialogRenderer(x) {
 		const {trackingParams,dismissButton,sections,title,...y}=x;
 		this.trackingParams(trackingParams);
@@ -5238,9 +5183,7 @@ class HandleTypes extends BaseService {
 		let v=Object.keys(x).join();
 		this.log(v);
 	}
-	/**
-	 * @param {{ url: string; }} x
-	 */
+	/** @arg {{ url: string; }} x */
 	UrlEndpointRoot(x) {
 		const {url,...r}=x;
 		if(Object.keys(r).length>0) {
@@ -5251,14 +5194,20 @@ class HandleTypes extends BaseService {
 	sidebar(sidebar) {
 		this.settingsSidebarRenderer(sidebar.settingsSidebarRenderer);
 	}
-	/**
-	 * @param {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRendererData} x
-	 */
+	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRendererData.js").SettingsSidebarRendererData} x */
 	settingsSidebarRenderer(x) {
 		this.iterate(x.items,v=>{
-			this.empty_object(v.compactLinkRenderer);
+			this.LinkRenderer(v.compactLinkRenderer);
 		});
 		this.YtTextType(x.title);
 		console.log('[settings_sidebar]',x);
+	}
+	/** @arg {import("./support/yt_api/_/s/LinkRenderer.js").LinkRenderer} x */
+	LinkRenderer(x) {
+		this.endpoint(x.navigationEndpoint);
+	}
+	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} x */
+	endpoint(x) {
+		this.YtEndpoint(x);
 	}
 }

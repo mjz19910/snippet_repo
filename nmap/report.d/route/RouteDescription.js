@@ -5,7 +5,7 @@ import {Route} from "./Route.js";
 export class RouteDescription {
 	target="";
 	route=[""];
-	/**@type {Route|null} */
+	/** @type {Route|null} */
 	new_version=null;
 	/** @arg {string} target @arg {string[]} route_list @arg {Route|null} new_version */
 	constructor(target,route_list,new_version) {
@@ -21,9 +21,9 @@ export class RouteDescription {
 		};
 		return new this(target,route.slice(),new_version);
 	}
-	/**@arg {Map<string, { target: string; route: string[]; new_version?: Route|null; }>} map */
+	/** @arg {Map<string, { target: string; route: string[]; new_version?: Route|null; }>} map */
 	static from_map(map) {
-		/**@type {Map<string, Route>} */
+		/** @type {Map<string, Route>} */
 		let ret=new Map;
 		for(let [key,val] of map) {
 			ret.set(key,new Route(this.from(val)));

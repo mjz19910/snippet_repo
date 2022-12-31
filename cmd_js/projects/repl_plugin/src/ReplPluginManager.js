@@ -24,9 +24,9 @@ export class ReplPluginManager {
 		this.get_repl().pause();
 	}
 	repl_active=false;
-	/**@type {import("vm").Context|null} */
+	/** @type {import("vm").Context|null} */
 	m_context=null;
-	/**@type {REPLServer|null} */
+	/** @type {REPLServer|null} */
 	m_repl_runtime=null;
 	/** @arg {Extern.PageLoaderState} state */
 	constructor(state) {
@@ -101,7 +101,7 @@ export class ReplPluginManager {
 	refresh() {
 		this.get_repl().displayPrompt();
 	}
-	/**@arg {()=>void} callback */
+	/** @arg {()=>void} callback */
 	do_logging(callback) {
 		if(this.m_repl_runtime) {
 			process.stdout.write("\r");

@@ -10,7 +10,7 @@ export class Query {
 		}
 		switch(query_type) {
 			case DNSTypeEnum.A: {
-				/**@type {["DNS"]} */
+				/** @type {["DNS"]} */
 				let val = ["DNS"];
 				return val;
 			}
@@ -19,7 +19,7 @@ export class Query {
 	}
 	/** @type {import("./types/mod.js").DNS_IN_A} */
 	static A(arg0, arg1, query_class, query_type, arg4) {
-		/**@type {(v:any)=>v is ['IP', string]} */
+		/** @type {(v:any)=>v is ['IP', string]} */
 		function get_ip_type(v) {
 			return v[0] === 'IP';
 		}
@@ -28,7 +28,7 @@ export class Query {
 		}
 		return ["DNS", ['hostname', arg0], arg1, query_class, query_type, arg4];
 	}
-	/**@arg {import("./types/mod.js").DNS_IN_A_Type} value */
+	/** @arg {import("./types/mod.js").DNS_IN_A_Type} value */
 	static stringify(value, short = false) {
 		switch(value[this.A_ValueEnum.RecordType]){
 			case DNSTypeEnum.A:{
@@ -47,19 +47,19 @@ export class Query {
 	static PTR(arg0, arg1, query_class, query_type, arg4) {
 		return ["DNS", ['hostname', arg0], arg1, query_class, query_type, arg4];
 	}
-	/**@readonly*/
+	/** @readonly */
 	static A_ValueEnum = {
-		/**@type {'Type'}*/0:"Type",
-		/**@type {0}*/"Type":0,
-		/**@type {'Hostname'}*/1:'Hostname',
-		/**@type {1}*/'Hostname':1,
-		/**@type {'TTL'}*/2:'TTL',
-		/**@type {2}*/TTL:2,
-		/**@type {'Class'}*/3:'Class',
-		/**@type {3}*/Class:3,
-		/**@type {'RecordType'}*/4:'RecordType',
-		/**@type {4}*/RecordType:4,
-		/**@type {'ReplyArray'}*/5:'ReplyArray',
-		/**@type {5}*/'ReplyArray':5,
+		/** @type {'Type'}*/0:"Type",
+		/** @type {0}*/"Type":0,
+		/** @type {'Hostname'}*/1:'Hostname',
+		/** @type {1}*/'Hostname':1,
+		/** @type {'TTL'}*/2:'TTL',
+		/** @type {2}*/TTL:2,
+		/** @type {'Class'}*/3:'Class',
+		/** @type {3}*/Class:3,
+		/** @type {'RecordType'}*/4:'RecordType',
+		/** @type {4}*/RecordType:4,
+		/** @type {'ReplyArray'}*/5:'ReplyArray',
+		/** @type {5}*/'ReplyArray':5,
 	}
 }

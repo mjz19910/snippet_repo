@@ -104,10 +104,10 @@ async function kernel_main() {
 	"use strict"
 	class RustEventHandler {
 		constructor() {
-			/**@type {{[x:string]:{listener: ((x:{})=>void)|null}[]}} */
+			/** @type {{[x:string]:{listener: ((x:{})=>void)|null}[]}} */
 			this._events={}
 			this.event_sem=0
-			/**@type {any[]} */
+			/** @type {any[]} */
 			this.dirty_object_vec=[]
 		}
 		/** @arg {string|number} event_type @arg {any} event_listener */

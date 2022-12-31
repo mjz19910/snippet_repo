@@ -1,7 +1,7 @@
 import {BrowserPluginData} from "./BrowserPluginIndexType.js";
 
 export class ObjMaybeKeys {
-	/**@type {"keys"|"no_keys"} */
+	/** @type {"keys"|"no_keys"} */
 	type="no_keys";
 	/** @type {string[]} */
 	arr=[];

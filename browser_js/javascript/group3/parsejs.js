@@ -80,7 +80,7 @@ var parsejs=class {
 			s(this,set_handler,get_handler)
 		}
 	}
-	/**@arg {this["state"]} state */
+	/** @arg {this["state"]} state */
 	eat_function(s,state) {
 		state.para_stack.push(state.pt)
 		state.pt=7
@@ -143,7 +143,7 @@ var parsejs=class {
 		}
 		return s
 	}
-	/**@arg {this["state"]} state */
+	/** @arg {this["state"]} state */
 	eat_try(s,state) {
 		state.para_stack.push(state.pt)
 		state.pt=8
@@ -175,7 +175,7 @@ var parsejs=class {
 		state.tok=save
 		return s
 	}
-	/**@arg {this["state"]} state */
+	/** @arg {this["state"]} state */
 	eat_catch(s,state,try_obj) {
 		if(state.pt!=12)
 			throw SyntaxError("Unexpected token catch")
@@ -194,7 +194,7 @@ var parsejs=class {
 		state.pt=state.para_stack.pop()
 		return s
 	}
-	/**@arg {this["state"]} state */
+	/** @arg {this["state"]} state */
 	eat_finally(s,state,try_obj) {
 		void try_obj
 		if(state.pt!=9)
@@ -207,7 +207,7 @@ var parsejs=class {
 		state.pt=state.para_stack.pop()
 		return s
 	}
-	/**@arg {this["state"]} state */
+	/** @arg {this["state"]} state */
 	parse(s,state,d) {
 		while(s!="") {
 			rx++

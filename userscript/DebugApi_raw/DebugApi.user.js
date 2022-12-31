@@ -1228,7 +1228,7 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-HexDigits
-	/** @returns {LexReturnTyShort} @arg {{sep:boolean}} grammar_params @arg {number} i*/
+	/** @returns {LexReturnTyShort} @arg {{sep:boolean}} grammar_params @arg {number} i */
 	HexDigits(grammar_params,i) {
 		if(grammar_params.sep) {
 			this.len=0;
@@ -1829,7 +1829,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		if(res[0]) {
 			return [true,"TemplateCharacter",res[2]];
 		}
-		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+		/* SourceCharacter but not one of ` or \ or $ or LineTerminator */
 		if(str[index]==="`"||str[index]==="\\"||str[index]==="$") {
 			return [false,null,0];
 		}
@@ -3233,7 +3233,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @template T,U @arg {CompressStateBase<T, U>} state*/
+	/** @template T,U @arg {CompressStateBase<T, U>} state */
 	compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}

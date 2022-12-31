@@ -2,7 +2,7 @@ import {Interface} from 'readline';
 import repl,{REPLServer} from 'repl';
 import {XHolder} from './XHolder.js';
 
-/**@implements {NodeJS.EventEmitter} @extends {XHolder<NodeJS.EventEmitter>} */
+/** @implements {NodeJS.EventEmitter} @extends {XHolder<NodeJS.EventEmitter>} */
 class NodeEventEmitter extends XHolder {
 	/** @arg {string} event_name */
 	listeners(event_name) {
@@ -72,7 +72,7 @@ class NodeEventEmitter extends XHolder {
 	}
 }
 
-/**@implements {Interface} */
+/** @implements {Interface} */
 class RLInterface extends NodeEventEmitter {
 	get [Symbol.asyncIterator]() {
 		return this.X[Symbol.asyncIterator].bind(this.X);
@@ -142,9 +142,9 @@ class RLInterface extends NodeEventEmitter {
 }
 
 
-/**@implements {REPLServer} */
+/** @implements {REPLServer} */
 export class REPLServerRuntime extends RLInterface {
-	/**@arg {string|repl.ReplOptions} [options] @returns {REPLServerRuntime} */
+	/** @arg {string|repl.ReplOptions} [options] @returns {REPLServerRuntime} */
 	static start_repl(options) {
 		console.log("start repl");
 		let repl_value=repl.start(options);
@@ -153,7 +153,7 @@ export class REPLServerRuntime extends RLInterface {
 		console.log("res");
 		return repl_value_wrapped;
 	}
-	/**@type {REPLServer} */
+	/** @type {REPLServer} */
 	X;
 	/** @arg {REPLServer} real_value */
 	constructor(real_value) {

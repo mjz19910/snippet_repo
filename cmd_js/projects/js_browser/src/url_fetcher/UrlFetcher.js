@@ -7,7 +7,7 @@ export class UrlFetcher {
 	async_api_use_for_get(state,cur_api) {
 		let t=this;
 		cur_api.get(state.url,(resp) => {
-			/**@type {Buffer[]} */
+			/** @type {Buffer[]} */
 			let buffer_list=[];
 			let data='';
 
@@ -56,7 +56,7 @@ export class UrlFetcher {
 			}
 			let classList_=simplify_class_list(classList);
 			if(state.depth > 1) {
-				console.log({childNodes: childNodes.filter(/**@returns {e is node_html_parser.HTMLElement}*/e=>e instanceof node_html_parser.HTMLElement).map(e=>"<"+e.rawTagName+">"),nodeType,rawTagName,classList: classList_,id});
+				console.log({childNodes: childNodes.filter(/** @returns {e is node_html_parser.HTMLElement}*/e=>e instanceof node_html_parser.HTMLElement).map(e=>"<"+e.rawTagName+">"),nodeType,rawTagName,classList: classList_,id});
 				return;
 			} else {
 				console.log({childNodes: [childNodes],nodeType,rawTagName,classList: classList_,id});

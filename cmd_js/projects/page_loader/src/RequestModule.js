@@ -3,7 +3,7 @@ import * as https from "https";
 
 /** @typedef {{is_https: true;value: typeof https;}} HttpsOnly @typedef {{is_https: false;value: typeof http;}} HttpOnly */
 export class RequestModule {
-	/**@type {false} */
+	/** @type {false} */
 	is_https=false;
 	get=http.get.bind(http);
 	/** @arg {HttpsOnly|HttpOnly} update_imp */

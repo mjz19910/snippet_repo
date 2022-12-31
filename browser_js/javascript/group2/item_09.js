@@ -126,8 +126,8 @@ class SumMonad {
 	constructor(parent) {
 		this.parent=parent;
 	}
-	/**@readonly*/_type="Monad";
-	/**@readonly*/type="Sum";
+	/** @readonly*/_type="Monad";
+	/** @readonly*/type="Sum";
 	sum_count=0;
 	/** @arg {NatNum} nat_a @arg {NatNum} nat_b @returns {NatNum} */
 	sum(nat_a,nat_b) {

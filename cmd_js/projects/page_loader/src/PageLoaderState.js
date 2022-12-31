@@ -3,17 +3,17 @@ import {fetch_url} from "./fetch_url.js";
 import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
 import {RequestModule} from "./RequestModule.js";
 
-/**@type {Buffer[]} */
+/** @type {Buffer[]} */
 export let cached_data_buffer=[];
 
 export class PageLoaderState {
-	/**@type {RequestModule} */
+	/** @type {RequestModule} */
 	m_start_request_module=new RequestModule;
 	/** @type {ClientRequest|null} */
 	m_client_request=null;
 	/** @type {IncomingMessage|null} */
 	m_incoming_message=null;
-	/**@type {PageLoaderHTMLState} */
+	/** @type {PageLoaderHTMLState} */
 	html_state=new PageLoaderHTMLState;
 	silent=false;
 	no_repl=false;
@@ -51,7 +51,7 @@ export class PageLoaderState {
 		let chunk_offset=0;
 		let chunk_sz=2**12;
 		process.stdout.write('.');
-		/**@type {Promise<void>} */
+		/** @type {Promise<void>} */
 		let promise=new Promise((accept,reject) => {
 			if(!this.m_incoming_message) return reject(new Error("No incoming message"));
 			this.m_incoming_message.on('data',(/** @type {Uint8Array} */ e) => {

@@ -19,13 +19,13 @@ class InitPluginContext {
 
 export class REPLContextPlugin extends REPLPlugin {
 	enable() {
-		/**@type {InitPluginContext} */
+		/** @type {InitPluginContext} */
 		let ctx=any(this.repl.context);
 		ctx.get_vars=get_vars;
 		ctx.get_page_loader_dom_state=get_page_loader_dom_state;
 		ctx.async_import=async_import;
 		ctx.do_eval_script=eval_script;
-		/**@type {Extern.PageLoaderState} */
+		/** @type {Extern.PageLoaderState} */
 		let real_state=any(this.repl.m_request_state);
 		ctx.reload=Extern.make_reload_page_request_handler(real_state);
 	}

@@ -1,7 +1,7 @@
-/**@template T */
+/** @template T */
 
 export class XHolder {
-	/**@type {T} */
+	/** @type {T} */
 	X;
 	/** @arg {T} x_val */
 	constructor(x_val) {

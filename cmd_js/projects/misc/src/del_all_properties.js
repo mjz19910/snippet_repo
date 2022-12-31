@@ -9,10 +9,10 @@ const map_has=Map.prototype.has;
 const map_get=Map.prototype.get;
 const map_prototype_set=Map.prototype.set;
 const error_constructor=Error;
-/**@arg {DelPropertiesState} state@arg {any} tq*/
+/** @arg {DelPropertiesState} state@arg {any} tq */
 export function del_all_properties(state,tq) {
 	while(tq) {
-		/**@type {[string, TypedPropertyDescriptor<any> & PropertyDescriptor][]}*/
+		/** @type {[string, TypedPropertyDescriptor<any> & PropertyDescriptor][]}*/
 		let cc;
 		if(reflect_apply(map_has,state.remove_map,[tq])) {
 			let v=reflect_apply(map_get,state.remove_map,[tq]);

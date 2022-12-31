@@ -6,7 +6,7 @@ if(typeof exports!="undefined") {
 var rx=0
 void rx
 class parser_base {
-	/**@arg {(a:parser_base,set_handler:(key:any, value:any)=>void,get_handler:(key:any)=>any)=>void} s */
+	/** @arg {(a:parser_base,set_handler:(key:any, value:any)=>void,get_handler:(key:any)=>any)=>void} s */
 	constructor(s) {
 		this.state={
 			tok: [],
@@ -29,7 +29,7 @@ class parser_base {
 			}
 		}
 		if(s) {
-			/**@this {parser_base} */
+			/** @this {parser_base} */
 			function set_handler(n,fn) {
 				if(!this instanceof m_class) {
 					throw RangeError("this not instance of "+m_class)
@@ -39,7 +39,7 @@ class parser_base {
 				}
 				this.keyword_handlers.set(n,fn.bind(this))
 			}
-			/**@this {parser_base} */
+			/** @this {parser_base} */
 			function get_handler(g) {
 				if(!this instanceof m_class) {
 					throw RangeError("this not instance of "+m_class)
@@ -379,7 +379,7 @@ class parser_base {
 	}
 }
 function run_code() {
-	/**@arg {parser_base} target */
+	/** @arg {parser_base} target */
 	function gen_parsejs(target) {
 		console.log("ggs")
 		var ts=target.state
