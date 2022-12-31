@@ -4384,7 +4384,6 @@ class HandleTypes extends BaseService {
 			console.log("[m_join]",m.join());
 			console.log("[ok_join]",ok.join());
 			this.save_new_string("renderer_new_keys",m.join());
-			debugger;
 		}
 		if("confirmDialogRenderer" in x) {
 			const {confirmDialogRenderer: a0,...c}=x; empty_object(c);
@@ -4755,11 +4754,9 @@ class HandleTypes extends BaseService {
 		const {challenge,bgChallenge,responseContext,...v}=data;
 		this.bgChallenge(bgChallenge);
 		this.save_new_string("tr_challenge",challenge);
-		// spell:disable-next-line
-		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
-		let chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
-		chal_as_fmt=bgChallenge.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue;
+		let chal_as_fmt=challenge;
+		chal_as_fmt=cast_as(challenge);
 		/** @type {import("./support/AttChallengeObj").AttChallengeObj} */
 		let search_param_obj=make_search_params(chal_as_fmt);
 		/** @type {keyof typeof search_param_obj} */
