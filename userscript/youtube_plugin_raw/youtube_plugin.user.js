@@ -3519,7 +3519,6 @@ class HandleTypes extends BaseService {
 		for(let mut of mutations) {
 			switch(mut.type) {
 				case "ENTITY_MUTATION_TYPE_DELETE": {
-					debugger;
 					/** @name Ys */
 					class ArrayViewType {
 						/** @param {Uint8Array[]} v */
