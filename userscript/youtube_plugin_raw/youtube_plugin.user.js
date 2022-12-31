@@ -1347,11 +1347,11 @@ function decode_b64_proto_obj(str) {
 		console.log("field",fieldId,"type",wireType);
 		switch(wireType) {
 			case 0:
-				let num32=reader.uint32();
 				let [num64,new_pos]=reader.revert_to(pos_start,() => {
 					let u64=reader.uint64();
 					return [u64,reader.pos];
 				});
+				let num32=reader.uint32();
 				if(num64!==BigInt(num32)) {
 					first_num.push(num64);
 					reader.pos=new_pos;
@@ -1360,10 +1360,13 @@ function decode_b64_proto_obj(str) {
 				}
 				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
+			case 1:
+				reader.skip(8);
+				break;
 			case 2: {
 				let size=reader.uint32();
 				reader.buf.subarray(reader.pos,reader.pos+size);
-				try{
+				try {
 					reader.skip(size);
 				} catch {
 					console.log("skip failed at",fieldId);
