@@ -3345,6 +3345,255 @@ if(typeof exports==="object") {
 	exports.HiddenData=HiddenData;
 }
 
+/** @name Ys */
+class ArrayViewType {
+	/** @param {Uint8Array[]} v */
+	constructor(v) {
+		this.arrays=v;
+		this.arrayIdx=0;
+		this.arrayPos=0;
+		this.totalLength=0;
+		v.forEach(c => this.append(c));
+	}
+	/** @param {number} a */
+	isFocused(a) {
+		return a>=this.arrayPos&&a<this.arrayPos+this.arrays[this.arrayIdx].length;
+	}
+	/** @param {number} a */
+	focus(a) {
+		if(!this.isFocused(a))
+			for(a<this.arrayPos&&(this.arrayPos=this.arrayIdx=0);this.arrayPos+this.arrays[this.arrayIdx].length<=a&&this.arrayIdx<this.arrays.length;)
+				this.arrayPos+=this.arrays[this.arrayIdx].length,
+					this.arrayIdx+=1;
+	}
+	/** @param {Uint8Array} a */
+	append(a) {
+		/** @type {boolean|Uint8Array} */
+		var b=0===this.arrays.length? !1:(b=this.arrays[this.arrays.length-1])&&b.buffer===a.buffer&&b.byteOffset+b.length===a.byteOffset;
+		b? (b=this.arrays[this.arrays.length-1],
+			this.arrays[this.arrays.length-1]=new Uint8Array(b.buffer,b.byteOffset,b.length+a.length),
+			this.arrayPos=this.arrayIdx=0):this.arrays.push(a);
+		this.totalLength+=a.length;
+	}
+}
+/** @name OUa */
+class EntityKeyReader {
+	/** @arg {ArrayViewType} v */
+	constructor(v) {
+		this.arrayView=v;
+		this.pos=0;
+		this.pendingTagAndType=-1;
+	}
+}
+/** @arg {ArrayViewType} a @arg {number} b */
+function IUa(a,b) {
+	a.focus(b);
+	return a.arrays[a.arrayIdx][b-a.arrayPos];
+}
+/** @arg {EntityKeyReader} a */
+function Zs(a) {
+	var b=IUa(a.arrayView,a.pos);
+	++a.pos;
+	if(128>b)
+		return b;
+	for(var c=b&127,d=1;128<=b;)
+		b=IUa(a.arrayView,a.pos),
+			++a.pos,
+			d*=128,
+			c+=(b&127)*d;
+	return c;
+}
+/** @arg {string} x @name Rd */
+function base64_to_array(x) {
+	return base64_dec.decodeArrayBuffer(x);
+}
+
+const uint8_string_decoder=new TextDecoder();
+/** @arg {BufferSource} x */
+function LUa(x) {
+	return uint8_string_decoder.decode(x);
+}
+/** @arg {EntityKeyReader} a @arg {number} b */
+function PUa(a,b) {
+	var c=a.pendingTagAndType;
+	for(a.pendingTagAndType=-1;a.pos+1<=a.arrayView.totalLength;) {
+		0>c&&(c=Zs(a));
+		var d=c>>3
+			,f=c&7;
+		if(d===b)
+			return !0;
+		if(d>b) {
+			a.pendingTagAndType=c;
+			break;
+		}
+		c=-1;
+		switch(f) {
+			case 0:
+				Zs(a);
+				break;
+			case 1:
+				a.pos+=8;
+				break;
+			case 2:
+				d=Zs(a);
+				a.pos+=d;
+				break;
+			case 5:
+				a.pos+=4;
+		}
+	}
+	return !1;
+}
+/** @type {import("./RUa_type.js").RUa} */
+const RUa_b={
+	"2": "fakeChannel",
+	"17": "musicAlbumRelease",
+	"18": "musicAlbumReleaseDetail",
+	"19": "musicAlbumReleaseUserDetail",
+	"20": "musicArtist",
+	"21": "musicArtistDetail",
+	"22": "musicArtistUserDetail",
+	"24": "musicPlaylist",
+	"28": "musicTrack",
+	"29": "musicTrackDetail",
+	"30": "musicTrackUserDetail",
+	"76": "videoPlaybackPositionEntity",
+	"100": "musicShare",
+	"119": "playbackData",
+	"120": "transfer",
+	"121": "musicLibraryEdit",
+	"130": "offlineVideoPolicy",
+	"141": "downloadStatusEntity",
+	"148": "refresh",
+	"151": "ytMainVideoEntity",
+	"152": "ytMainChannelEntity",
+	"155": "ytMainDownloadedVideoEntity",
+	"158": "mainDownloadsLibraryEntity",
+	"164": "mainDownloadsListEntity",
+	"169": "offlineOrchestrationActionWrapperEntity",
+	"182": "fakeVideo",
+	"198": "offlineVideoStreams",
+	"202": "downloadQualityPickerEntity",
+	"217": "liveChatPollStateEntity",
+	"225": "captionTrack",
+	"229": "iconBadgeEntity",
+	"234": "musicTrackDownloadMetadataEntity",
+	"236": "commerceCartListEntity",
+	"242": "orchestrationWebSamplingEntity",
+	"245": "logoEntity",
+	"246": "offlineabilityEntity",
+	"248": "musicPlaylistDownloadMetadataEntity",
+	"252": "flowStateEntity",
+	"257": "musicDownloadsLibraryEntity",
+	"259": "musicAlbumReleaseDownloadMetadataEntity",
+	"261": "mainVideoEntity",
+	"262": "mainVideoDownloadStateEntity",
+	"264": "downloadsPageViewConfigurationEntity",
+	"273": "pinnedProductEntity",
+	"275": "channelHandle",
+	"278": "fakeVideoDescription",
+	"279": "fakePlaylist",
+	"280": "fakePlaylistEntryCollection",
+	"297": "settingEntity",
+	"299": "downloadsPageRefreshTokenEntity",
+	"306": "mainPlaylistEntity",
+	"312": "markersVisibilityOverrideEntity",
+	"318": "musicLibraryStatusEntity",
+	"329": "macroMarkerEntity",
+	"356": "quantityIncrementerEntity",
+	"358": "buttonEntity",
+	"368": "mainPlaylistVideoEntity",
+	"373": "mainPlaylistDownloadStateEntity",
+	"393": "emojiFountainDataEntity",
+	"406": "continuationTokenEntity"
+};
+/** @type {{[U in keyof typeof RUa_b]: import("./RUa_type.js").RUa[U]}} */
+const RUa=RUa_b;
+/** @type {(this:number,...c: any[])=>any[]} @this {number} */
+function za() {
+	for(var a=Number(this),b=[],c=a;c<arguments.length;c++)
+		b[c-a]=arguments[c];
+	return b;
+};
+class Bl extends Error {
+	/** @param {string | undefined} a */
+	constructor(a) {
+		var b=za.apply(1,arguments);
+		super(a);
+		this.args=b.slice();
+	}
+};
+/** @arg {Bl} exception */
+function $n(exception) {
+	console.log("report error");
+	console.log(exception);
+}
+/** @arg {[string]} gs */
+function decode_entity_key(...gs) {
+	/** @type {[Bl|string|number|EntityKeyReader|undefined]} */
+	let [a]=gs;
+	// a = new OUa(new Ys([Rd(decodeURIComponent(a))]));
+	a=new EntityKeyReader(new ArrayViewType([base64_to_array(decodeURIComponent(a))]));
+	if(PUa(a,2)) {
+		/** @type {string|number|Uint8Array|undefined} */
+		var b=Zs(a);
+		var c=a.pos;
+		/** @type {ArrayViewType|DataView|Uint8Array|string} */
+		var d=a.arrayView;
+		c=void 0===c? 0:c;
+		var f=void 0===b? -1:b;
+		c=void 0===c? 0:c;
+		f=void 0===f? -1:f;
+		if(d.totalLength&&f) {
+			0>f&&(f=d.totalLength-c);
+			d.focus(c);
+			if(!(c-d.arrayPos+f<=d.arrays[d.arrayIdx].length)) {
+				/** @type {number|Uint8Array} */
+				var h=d.arrayIdx,
+					/** @type {number|Uint8Array} */
+					l=d.arrayPos;
+				d.focus(c+f-1);
+				l=new Uint8Array(d.arrayPos+d.arrays[d.arrayIdx].length-l);
+				for(var n=0,p=h;p<=d.arrayIdx;p++)
+					l.set(d.arrays[p],n),
+						n+=d.arrays[p].length;
+				d.arrays.splice(h,d.arrayIdx-h+1,l);
+				d.arrayIdx=0;
+				d.arrayPos=0;
+				d.focus(c);
+			}
+			h=d.arrays[d.arrayIdx];
+			d=new DataView(h.buffer,h.byteOffset+c-d.arrayPos,f);
+		} else
+			d=new DataView(new ArrayBuffer(0));
+		d=new Uint8Array(d.buffer,d.byteOffset,d.byteLength);
+		a.pos+=b;
+		b=d;
+	} else
+		b=void 0;
+	b=b? LUa(b):void 0;
+	a=PUa(a,4)? Zs(a):void 0;
+	if(!a) throw new Error("Invalid state");
+	/** @template {number} T @arg {T} v @returns {v is keyof typeof RUa} */
+	function is_keyof_RUa(v) {
+		return v in RUa;
+	}
+	if(!is_keyof_RUa(a)) throw new Error("Invalid state");
+	d=RUa[a];
+	if("undefined"===typeof d)
+		throw a=new Bl("Failed to recognize field number",{
+			name: "EntityKeyHelperError",
+			fieldNumber: a
+		}),
+		$n(a),
+		a;
+	return {
+		entityTypeFieldNumber: a,
+		entityType: d,
+		entityId: b
+	};
+}
+
 class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response */
 	WatchResponsePlayer(response) {
@@ -3449,261 +3698,12 @@ class HandleTypes extends BaseService {
 		if(is_yt_debug_enabled) console.log("[entity_update_time]",obj.entityBatchUpdate.timestamp);
 		this.handle_mutations(obj.entityBatchUpdate.mutations);
 	}
-	uint8_string_decoder=new TextDecoder();
-	/** @type {{[x: number]: string}} */
-	RUa={
-		"2": "fakeChannel",
-		"17": "musicAlbumRelease",
-		"18": "musicAlbumReleaseDetail",
-		"19": "musicAlbumReleaseUserDetail",
-		"20": "musicArtist",
-		"21": "musicArtistDetail",
-		"22": "musicArtistUserDetail",
-		"24": "musicPlaylist",
-		"28": "musicTrack",
-		"29": "musicTrackDetail",
-		"30": "musicTrackUserDetail",
-		"76": "videoPlaybackPositionEntity",
-		"100": "musicShare",
-		"119": "playbackData",
-		"120": "transfer",
-		"121": "musicLibraryEdit",
-		"130": "offlineVideoPolicy",
-		"141": "downloadStatusEntity",
-		"148": "refresh",
-		"151": "ytMainVideoEntity",
-		"152": "ytMainChannelEntity",
-		"155": "ytMainDownloadedVideoEntity",
-		"158": "mainDownloadsLibraryEntity",
-		"164": "mainDownloadsListEntity",
-		"169": "offlineOrchestrationActionWrapperEntity",
-		"182": "fakeVideo",
-		"198": "offlineVideoStreams",
-		"202": "downloadQualityPickerEntity",
-		"217": "liveChatPollStateEntity",
-		"225": "captionTrack",
-		"229": "iconBadgeEntity",
-		"234": "musicTrackDownloadMetadataEntity",
-		"236": "commerceCartListEntity",
-		"242": "orchestrationWebSamplingEntity",
-		"245": "logoEntity",
-		"246": "offlineabilityEntity",
-		"248": "musicPlaylistDownloadMetadataEntity",
-		"252": "flowStateEntity",
-		"257": "musicDownloadsLibraryEntity",
-		"259": "musicAlbumReleaseDownloadMetadataEntity",
-		"261": "mainVideoEntity",
-		"262": "mainVideoDownloadStateEntity",
-		"264": "downloadsPageViewConfigurationEntity",
-		"273": "pinnedProductEntity",
-		"275": "channelHandle",
-		"278": "fakeVideoDescription",
-		"279": "fakePlaylist",
-		"280": "fakePlaylistEntryCollection",
-		"297": "settingEntity",
-		"299": "downloadsPageRefreshTokenEntity",
-		"306": "mainPlaylistEntity",
-		"312": "markersVisibilityOverrideEntity",
-		"318": "musicLibraryStatusEntity",
-		"329": "macroMarkerEntity",
-		"356": "quantityIncrementerEntity",
-		"358": "buttonEntity",
-		"368": "mainPlaylistVideoEntity",
-		"373": "mainPlaylistDownloadStateEntity",
-		"393": "emojiFountainDataEntity",
-		"406": "continuationTokenEntity"
-	};
 	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem[]} mutations */
 	handle_mutations(mutations) {
 		let t=this;
 		for(let mut of mutations) {
 			switch(mut.type) {
 				case "ENTITY_MUTATION_TYPE_DELETE": {
-					/** @name Ys */
-					class ArrayViewType {
-						/** @param {Uint8Array[]} v */
-						constructor(v) {
-							this.arrays=v;
-							this.arrayIdx=0;
-							this.arrayPos=0;
-							this.totalLength=0;
-							v.forEach(c => this.append(c));
-						}
-						/** @param {number} a */
-						isFocused(a) {
-							return a>=this.arrayPos&&a<this.arrayPos+this.arrays[this.arrayIdx].length;
-						}
-						/** @param {number} a */
-						focus(a) {
-							if(!this.isFocused(a))
-								for(a<this.arrayPos&&(this.arrayPos=this.arrayIdx=0);this.arrayPos+this.arrays[this.arrayIdx].length<=a&&this.arrayIdx<this.arrays.length;)
-									this.arrayPos+=this.arrays[this.arrayIdx].length,
-										this.arrayIdx+=1;
-						}
-						/** @param {Uint8Array} a */
-						append(a) {
-							/** @type {boolean|Uint8Array} */
-							var b=0===this.arrays.length? !1:(b=this.arrays[this.arrays.length-1])&&b.buffer===a.buffer&&b.byteOffset+b.length===a.byteOffset;
-							b? (b=this.arrays[this.arrays.length-1],
-								this.arrays[this.arrays.length-1]=new Uint8Array(b.buffer,b.byteOffset,b.length+a.length),
-								this.arrayPos=this.arrayIdx=0):this.arrays.push(a);
-							this.totalLength+=a.length;
-						}
-					}
-					/** @name OUa */
-					class EntityKeyReader {
-						/** @arg {ArrayViewType} v */
-						constructor(v) {
-							this.arrayView=v;
-							this.pos=0;
-							this.pendingTagAndType=-1;
-						}
-					}
-					/** @arg {ArrayViewType} a @arg {number} b */
-					function IUa(a,b) {
-						a.focus(b);
-						return a.arrays[a.arrayIdx][b-a.arrayPos];
-					}
-					/** @arg {EntityKeyReader} a */
-					function Zs(a) {
-						var b=IUa(a.arrayView,a.pos);
-						++a.pos;
-						if(128>b)
-							return b;
-						for(var c=b&127,d=1;128<=b;)
-							b=IUa(a.arrayView,a.pos),
-								++a.pos,
-								d*=128,
-								c+=(b&127)*d;
-						return c;
-					}
-					/**
-					 * @param {string} x
-					 * @name Rd
-					 */
-					function base64_to_array(x) {
-						return base64_dec.decodeArrayBuffer(x);
-					}
-					/**
-					 * @param {BufferSource} x
-					 */
-					function LUa(x) {
-						return t.uint8_string_decoder.decode(x);
-					}
-					/**
-					 * @arg {EntityKeyReader} a
-					 * @param {number} b
-					 */
-					function PUa(a,b) {
-						var c=a.pendingTagAndType;
-						for(a.pendingTagAndType=-1;a.pos+1<=a.arrayView.totalLength;) {
-							0>c&&(c=Zs(a));
-							var d=c>>3
-								,f=c&7;
-							if(d===b)
-								return !0;
-							if(d>b) {
-								a.pendingTagAndType=c;
-								break;
-							}
-							c=-1;
-							switch(f) {
-								case 0:
-									Zs(a);
-									break;
-								case 1:
-									a.pos+=8;
-									break;
-								case 2:
-									d=Zs(a);
-									a.pos+=d;
-									break;
-								case 5:
-									a.pos+=4;
-							}
-						}
-						return !1;
-					}
-					let RUa=this.RUa;
-					/** @type {(this:number,...c: any[])=>any[]} @this {number} */
-					function za() {
-						for(var a=Number(this),b=[],c=a;c<arguments.length;c++)
-							b[c-a]=arguments[c];
-						return b;
-					};
-					class Bl extends Error {
-						/** @param {string | undefined} a */
-						constructor(a) {
-							var b=za.apply(1,arguments);
-							super(a);
-							this.args=b.slice();
-						}
-					};
-					/** @arg {Bl} exception */
-					function $n(exception) {
-						console.log("report error");
-						console.log(exception);
-					}
-					/** @arg {[string]} gs */
-					function decode_entity_key(...gs) {
-						/** @type {[Bl|string|number|EntityKeyReader|undefined]} */
-						let [a]=gs;
-						// a = new OUa(new Ys([Rd(decodeURIComponent(a))]));
-						a=new EntityKeyReader(new ArrayViewType([base64_to_array(decodeURIComponent(a))]));
-						if(PUa(a,2)) {
-							/** @type {string|number|Uint8Array|undefined} */
-							var b=Zs(a);
-							var c=a.pos;
-							/** @type {ArrayViewType|DataView|Uint8Array|string} */
-							var d=a.arrayView;
-							c=void 0===c? 0:c;
-							var f=void 0===b? -1:b;
-							c=void 0===c? 0:c;
-							f=void 0===f? -1:f;
-							if(d.totalLength&&f) {
-								0>f&&(f=d.totalLength-c);
-								d.focus(c);
-								if(!(c-d.arrayPos+f<=d.arrays[d.arrayIdx].length)) {
-									/** @type {number|Uint8Array} */
-									var h=d.arrayIdx,
-										/** @type {number|Uint8Array} */
-										l=d.arrayPos;
-									d.focus(c+f-1);
-									l=new Uint8Array(d.arrayPos+d.arrays[d.arrayIdx].length-l);
-									for(var n=0,p=h;p<=d.arrayIdx;p++)
-										l.set(d.arrays[p],n),
-											n+=d.arrays[p].length;
-									d.arrays.splice(h,d.arrayIdx-h+1,l);
-									d.arrayIdx=0;
-									d.arrayPos=0;
-									d.focus(c);
-								}
-								h=d.arrays[d.arrayIdx];
-								d=new DataView(h.buffer,h.byteOffset+c-d.arrayPos,f);
-							} else
-								d=new DataView(new ArrayBuffer(0));
-							d=new Uint8Array(d.buffer,d.byteOffset,d.byteLength);
-							a.pos+=b;
-							b=d;
-						} else
-							b=void 0;
-						b=b? LUa(b):void 0;
-						a=PUa(a,4)? Zs(a):void 0;
-						if(!a) throw new Error("Invalid state");
-						d=RUa[a];
-						if("undefined"===typeof d)
-							throw a=new Bl("Failed to recognize field number",{
-								name: "EntityKeyHelperError",
-								fieldNumber: a
-							}),
-							$n(a),
-							a;
-						return {
-							entityTypeFieldNumber: a,
-							entityType: d,
-							entityId: b
-						};
-					}
 					let dec=decode_entity_key(mut.entityKey);
 					console.log("[mut_del] type=[%s] id=[%s]",dec.entityType,dec.entityId);
 					if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
