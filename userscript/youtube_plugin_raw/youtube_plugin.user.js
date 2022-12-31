@@ -4157,21 +4157,24 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
 	SuggestiveButtonRenderer(x) {
 		let {style,isDisabled,size,trackingParams,text,...y}=x;
+		/** @type {typeof y|{}} */
+		let c=y;
 		this.YtTextType(text);
-		if("serviceEndpoint" in y) {
-			let {serviceEndpoint,...a}=y;
+		if("serviceEndpoint" in c) {
+			let {serviceEndpoint,...a}=c; c=a;
 			this.YtEndpoint(serviceEndpoint);
-			this.empty_object(a);
-			return;
 		}
-		let {accessibilityData,command,...a}=y;
-		if("navigationEndpoint" in a) {
-			let {navigationEndpoint,...x}=a;
+		if("navigationEndpoint" in c) {
+			let {navigationEndpoint,...a}=c; c=a;
 			this.YtEndpoint(navigationEndpoint);
-			this.empty_object(x);
-			return;
+			this.empty_object(a);
 		}
-		this.empty_object(a);
+		if("accessibilityData" in c) {
+			let {accessibilityData,command,...a}=c; c=a;
+			this.Accessibility(accessibilityData);
+			this.command(command);
+		}
+		this.empty_object(c);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
 	NoStyleButtonTypes(x) {
