@@ -1293,7 +1293,7 @@ function decode_protobuf(str) {
 	/** @type {[number,number,(number|bigint)[]][]} */
 	let data=[];
 	let reader=new decode_protobuf_obj.MyReader(buffer);
-	x: for(;loop_count<15;loop_count++) {
+	x: for(;loop_count<15&&reader.pos<reader.buf.length;loop_count++) {
 		let cur_byte=reader.uint32();
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
