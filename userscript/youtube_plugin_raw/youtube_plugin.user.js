@@ -1198,8 +1198,6 @@ class MyReader {
 		this.pos=0;
 		this.len=buf.length;
 		this.last_pos=0;
-		/** @type {(number|bigint)[]} */
-		this.first_num=[];
 	}
 
 	/** @template T @arg {()=>T} x */
@@ -1327,7 +1325,8 @@ class MyReader {
 	skipEx(fieldId,wireType) {
 		console.log("read loop pos=%o",this.pos);
 		let pos_start=this.pos;
-		this.first_num=[];
+		/** @type {(number|bigint)[]} */
+		let first_num=[];
 		switch(wireType) {
 			case 0:
 				let [num64,new_pos]=this.revert_to(pos_start,() => {
@@ -1339,12 +1338,12 @@ class MyReader {
 				});
 				let num32=this.uint32();
 				if(num64!==BigInt(num32)) {
-					this.first_num.push(num64);
+					first_num.push(num64);
 					this.pos=new_pos;
 				} else {
-					this.first_num.push(num32);
+					first_num.push(num32);
 				}
-				console.log("\"field %o: VarInt\": %o",fieldId,this.first_num[0]);
+				console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
 			case 1:
 				this.skip(8);
@@ -1356,14 +1355,14 @@ class MyReader {
 					this.skip(size);
 				} catch {
 					console.log("skip failed at",fieldId);
-					return;
 				}
 			} break;
 			case 3: break;
 			case 4: throw new Error("Invalid state");
-			case 5: this.first_num.push(this.fixed32()); break;
-			default: return;
+			case 5: first_num.push(this.fixed32()); break;
+			default: break;
 		}
+		return first_num;
 	}
 }
 
@@ -1380,8 +1379,8 @@ function decode_b64_proto_obj(str) {
 		let cur_byte=reader.uint32();
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
-		reader.skipEx(fieldId,wireType);
-		data.push([fieldId,wireType,reader.first_num]);
+		let first_num=reader.skipEx(fieldId,wireType);
+		data.push([fieldId,wireType,first_num]);
 	}
 	let [first,...rest]=data;
 	let [fieldId,wireType,as_num]=first;
