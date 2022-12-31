@@ -722,15 +722,47 @@ class ObjectInfo {
 		this.chunk_end=gr_2;
 		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
-	/** @arg {{}} object @arg {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function] */
+	/**
+	 * @template U
+	 * @template {U[]} T
+	 * @param {T} a
+	 * @param {(value: U) => value is U} b
+	 */
+	do_filter(a,b) {
+		/** @type {U[]} */
+		let r=[];
+		/** @type {T} */
+		let res=cast_as(r);
+		for(let i=0;i<a.length;i++) {
+			if(b(a[i])) {
+				res.push(a[i]);
+			}
+		}
+		return res;
+	}
+	/**
+	 * @template U
+	 * @template {U[]} T
+	 * @param {T} a
+	 * @param {(value: U) => value is U} [b]
+	 * @returns {T|[]}
+	 */
+	filter_keys_of(a,b) {
+		if(b) return this.do_filter(a,b);
+		return a;
+	}
+	/** @template {{}} T @arg {T} object @arg {(value: string) => value is string} [filter_function] */
 	keys_of(object,filter_function) {
 		let object_keys=get_keys_of(object);
-		if(filter_function) object_keys=object_keys.filter(filter_function);
+		object_keys=this.filter_keys_of(object_keys,filter_function);
+		if(filter_function) {
+			object_keys.filter(filter_function);
+		}
 		return this.chunk_beg+object_keys.join(this.key_sep)+this.chunk_end;
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {{}} T  @arg {T} obj  @returns {(import("./support/yt_api/_/b/GetMaybeKeys.js").GetMaybeKeys<T>)[]} */
+/** @template {{}} T  @arg {T} obj  @returns {import("./support/yt_api/_/b/GetMaybeKeys.js").MaybeKeysArray<T>} */
 function get_keys_of(obj) {
 	let rq=Object.keys(obj);
 	/** @type {any} */
