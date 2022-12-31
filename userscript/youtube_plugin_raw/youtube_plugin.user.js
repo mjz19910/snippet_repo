@@ -3709,10 +3709,18 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/DesktopTopbarRendererData.js").DesktopTopbarRendererData} data */
 	DesktopTopbarRendererData(data) {
-		let ok=get_keys_of(data);
-		console.log(data);
-		if(has_keys(ok,"logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton")) return;
-		debugger;
+		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...x}=data;
+		this.trackingParams(trackingParams);
+		this.empty_object(logo);
+		this.empty_object(searchbox);
+		this.primitive(countryCode);
+		this.iterate(topbarButtons,x=>this.empty_object(x));
+		this.empty_object(hotkeyDialog);
+		this.empty_object(backButton);
+		this.empty_object(forwardButton);
+		this.empty_object(a11ySkipNavigationButton);
+		this.empty_object(voiceSearchButton);
+
 	}
 	/** @type {import("./support/yt_api/_/b/valid_titles_for_tabbed_header_renderer_t.js").valid_titles_for_tabbed_header_renderer_t} */
 	valid_titles_for_tabbed_header_renderer=[
