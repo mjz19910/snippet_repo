@@ -1175,18 +1175,14 @@ class MyReader {
 				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
 			}
 		}
-		/** @type {(['data',number | bigint | DecRetType]|['info',number,number])[]} */
+		/** @type {DecTypeNum[]} */
 		let res_arr=[];
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
 			let [_fieldId,_type,decoded_data]=cur;
 			res_arr.push(['info',cur[0],cur[1]]);
 			for(let item of decoded_data) {
-				if(item[0]==="data") {
-					res_arr.push(['data',decoded_data[0][1]]);
-				} else if(item[0]==="info") {
-					res_arr.push(['info',item[1],item[2]]);
-				}
+				res_arr.push(item);
 			}
 		}
 		return res_arr;
@@ -1318,7 +1314,6 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
-	/** @typedef {import("./types_tmp.js").DecRetType} DecRetType */
 	/** @typedef {import("./types_tmp.js").DecTypeNum} DecTypeNum */
 	noisy_log_level=false;
 	/** @arg {number} fieldId @arg {number} wireType */

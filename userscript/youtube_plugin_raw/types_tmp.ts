@@ -16,13 +16,7 @@ export type SaveDataRet=ReturnType<typeof save_data_cache>;
 
 export {};
 
-export type DecRetType={
-	first_w: number;
-	first_f: number;
-	as_num: DecTypeNum[];
-	rest: [number,number,DecTypeNum|null][];
-};
-export type DecTypeNum=["data",number|bigint|DecRetType]|["info",number,number]|['child',Uint8Array];
+export type DecTypeNum=["data",number|bigint]|["info",number,number]|['child',Uint8Array];
 export type DataArrType=[number,number,DecTypeNum[]][];
 function run() {
 	let first_num: DecTypeNum[]=[];
