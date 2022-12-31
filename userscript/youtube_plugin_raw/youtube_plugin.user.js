@@ -4119,9 +4119,12 @@ class HandleTypes extends BaseService {
 		} else if(rest_2) {
 			let {style,...rest}=rest_2;
 			this.on_empty_obj(rest);
+		} else if(rest_3&&rest_3.style==="STYLE_DEFAULT") {
+			let {style,...rest}=rest_3;
+			this.on_empty_obj(rest);
 		} else if(rest_3) {
-			let {style,accessibilityData,command,...rest}=rest_3;
-			this.Accessibility(accessibilityData);
+			let {style,text,command,...rest}=rest_3;
+			this.on_text(text);
 			this.GeneralCommand(command);
 			this.on_empty_obj(rest);
 		} else {
