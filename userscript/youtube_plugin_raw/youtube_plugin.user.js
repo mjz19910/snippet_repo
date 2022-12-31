@@ -1799,7 +1799,7 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @typedef {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} DataResponsePageType */
+	/** @typedef {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} DataResponsePageType */
 	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @type {DataResponsePageType} */
@@ -3754,8 +3754,8 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommandData} command */
-	reloadContinuationItemsCommand(command) {
+	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command */
+	ReloadContinuationItemsCommand(command) {
 		let data=command.reloadContinuationItemsCommand;
 		for(let item of data.continuationItems) {
 			if("richItemRenderer" in item) {
@@ -4028,7 +4028,7 @@ class HandleTypes extends BaseService {
 			if("adsControlFlowOpportunityReceivedCommand" in action) {
 				this.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
 			} else if("reloadContinuationItemsCommand" in action) {
-				this.reloadContinuationItemsCommand(action);
+				this.ReloadContinuationItemsCommand(action);
 			} else {
 				debugger;
 			}
@@ -4323,7 +4323,7 @@ class HandleTypes extends BaseService {
 		} else if("watchEndpoint" in endpoint) {
 			this.watchEndpoint(endpoint.watchEndpoint);
 		} else if("reloadContinuationItemsCommand" in endpoint) {
-			this.reloadContinuationItemsCommand(endpoint.reloadContinuationItemsCommand);
+			this.ReloadContinuationItemsCommand(endpoint);
 		} else {
 			get_keys_of(endpoint);
 			debugger;
@@ -4409,7 +4409,7 @@ class HandleTypes extends BaseService {
 		console.log("[browse_response_top] [%s]",ok.join(","),data);
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/j/DataResponsePageType.js").DataResponsePageType} data */
+	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} data */
 	DataResponsePageType(data) {
 		if(!("page" in data)) return;
 		let page_type=data.page;
