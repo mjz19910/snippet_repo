@@ -1344,7 +1344,7 @@ class MyReader {
 				} else {
 					first_num.push(["data",num32]);
 				}
-				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
+				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
 				break;
 			case 1:
 				this.skip(8);
@@ -3944,7 +3944,7 @@ class HandleTypes extends BaseService {
 		let data=renderer.playlistVideoListRenderer;
 		console.log("playlist",data.playlistId);
 	}
-	/** @arg {import("./support/yt_api/_/i/PageIntroductionRenderer.js").PageIntroductionRenderer} item */
+	/** @arg {import("./support/yt_api/_/p/PageIntroductionRenderer.js").PageIntroductionRenderer} item */
 	pageIntroductionRenderer(item) {
 		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
 	}
@@ -4011,7 +4011,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/i/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
+	/** @arg {import("./support/yt_api/_/p/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
 	PageIntroductionRendererData(data) {
 		if(!("headerText" in data)) {
 			debugger;
@@ -5221,7 +5221,7 @@ class HandleTypes extends BaseService {
 		this.YtTextType(microphoneOffPromptHeader);
 		empty_object(y);
 	}
-	/** @arg {import("./support/yt_api/_/i/RendererData.js").RendererData} x */
+	/** @arg {import("./support/yt_api/_/r/RendererData.js").RendererData} x */
 	RendererData(x) {
 		this.save_keys("RendererData_keys",x);
 	}
