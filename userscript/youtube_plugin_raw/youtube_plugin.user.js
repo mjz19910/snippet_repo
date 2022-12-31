@@ -5043,7 +5043,7 @@ class HandleTypes extends BaseService {
 	rootVe(x) {
 		if(this.known_root_ve.has(x)) return;
 		this.known_root_ve.add(x);
-		this.save_root_ve();
+		this.save_data_cache();
 		console.log("rootVe",x);
 	}
 	/** @arg {string} x */
@@ -5066,9 +5066,10 @@ class HandleTypes extends BaseService {
 	/** @arg {ResolverT} x */
 	constructor(x) {
 		super(x);
-		this.load_root_ve();
+		this.load_data_cache();
+		this.save_data_cache();
 	}
-	load_root_ve() {
+	load_data_cache() {
 		let json_str=this.get_local_storage();
 		if(json_str) {
 			let res=JSON.parse(json_str);
@@ -5096,7 +5097,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {{ known_root_ve: number[]; known_strings: { [k: string]: string[]; }; }|null} */
 	known_data_tmp=null;
-	save_root_ve() {
+	save_data_cache() {
 		/** @arg {[string,Set<string>]} x @returns {[string,string[]]} */
 		function to_entry_pair(x) {
 			return [x[0],[...x[1]]];
@@ -5128,7 +5129,7 @@ class HandleTypes extends BaseService {
 			json_str=JSON.stringify(this.known_data_tmp);
 			this.save_local_storage(json_str);
 		} else {
-			this.save_root_ve();
+			this.save_data_cache();
 		}
 	}
 	/** @param {string} known_data */
