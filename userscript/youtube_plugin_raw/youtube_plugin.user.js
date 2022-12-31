@@ -4002,7 +4002,7 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
-	run_extract_empty_r(run) {
+	TextRun(run) {
 		let {text,navigationEndpoint,bold,...rest}=run;
 		return rest;
 	}
@@ -4010,40 +4010,30 @@ class HandleTypes extends BaseService {
 	/** @arg {Extract<YtTextType,{runs:any}>} text */
 	TextRuns(text) {
 		let rest=[];
-		for(let run of text.runs) rest.push(this.run_extract_empty_r(run));
+		for(let run of text.runs) rest.push(this.TextRun(run));
 		return rest;
 	}
-	/** @arg {Exclude<YtTextType,{runs:any}>} text */
-	SimpleText(text) {
-		return this.run_extract_empty_s(text);
+	/** @private @arg {Exclude<YtTextType,{runs:any}>} x */
+	SimpleText(x) {
+		let {simpleText,accessibility: a,...y}=x;
+		if(a) this.Accessibility(a);
+		this.primitive(simpleText);
+		this.empty_object(y);
 	}
-	/** @arg {Exclude<YtTextType,{runs:any}>} simple_text */
-	run_extract_empty_s(simple_text) {
-		let {simpleText,accessibility,...rest}=simple_text;
-		return rest;
+	/** @private @param {import("./support/yt_api/_/t/TextRun.js").TextRun[]} arr */
+	TextRun_va(...arr) {
+		this.iterate(arr,this.TextRun.bind(this));
 	}
-	/** @arg {YtTextType} text */
+	/** @private @arg {YtTextType} text */
 	YtTextType(text) {
 		if(!text) {
 			debugger;
 			return;
 		}
 		if("runs" in text) {
-			let rest=[];
-			let ret=this.TextRuns(text);
-			if(ret instanceof Array) for(let i of ret) {
-				if(Object.keys(i).length>0) rest.push(i);
-			}
-			if(rest.length>0) {
-				console.log(rest);
-				debugger;
-			}
+			this.TextRun_va(...text.runs);
 		} else {
-			let ret=this.SimpleText(text);
-			if(Object.keys(ret).length>0) {
-				console.log(ret);
-				debugger;
-			}
+			this.SimpleText(text);
 		}
 	}
 	valid_icon_types=[
@@ -4412,8 +4402,7 @@ class HandleTypes extends BaseService {
 			this.signalAction(action.signalAction);
 		} else {
 			let k=get_keys_of(rest);
-			console.log(k,rest);
-			debugger;
+			console.log("[service_action] [%s]",k.join(),rest);
 		}
 	}
 	/** @arg {import("./support/yt_api/_/s/YtSignalAction.js").YtSignalAction} x */
@@ -5216,12 +5205,20 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/i/SettingsSwitchRendererData.js").SettingsSwitchRendererData} x */
 	settingsSwitchRenderer(x) {
-		const {title,subtitle,enabled,enableServiceEndpoint: ep_0,disableServiceEndpoint: ep_1,id,text,thumbnail,trackingParams,...y}=x;
+		const {title: t_0,subtitle: t_1,enabled,enableServiceEndpoint: ep_0,disableServiceEndpoint: ep_1,id,text: t_2,thumbnail: v_0,trackingParams: tp,...y}=x;
+		this.trackingParams(tp);
+		this.YtTextType_va(t_0,t_1,t_2);
 		this.endpoint_va(ep_0,ep_1);
+		this.ThumbnailsList(v_0);
+		this.primitives(enabled);
 		this.empty_object(y);
 	}
 	/** @param {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint[]} arr */
 	endpoint_va(...arr) {
 		this.iterate(arr,this.endpoint.bind(this));
+	}
+	/** @param {import("./support/yt_api/_/s/YtTextType.js").YtTextType[]} arr */
+	YtTextType_va(...arr) {
+		this.iterate(arr,this.YtTextType.bind(this));
 	}
 }
