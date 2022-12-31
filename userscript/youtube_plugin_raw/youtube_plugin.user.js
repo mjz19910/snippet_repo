@@ -5121,7 +5121,7 @@ class HandleTypes extends BaseService {
 			}
 			this.known_data_tmp.known_strings;
 		} else {
-
+			this.save_root_ve();
 		}
 	}
 	/** @param {string} known_data */
