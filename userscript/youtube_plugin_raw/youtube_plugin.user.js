@@ -1340,8 +1340,6 @@ function decode_protobuf(str) {
 				break;
 			case 2: if(mode==="initial") {
 				mode_stack.push(mode);
-				let next_len=reader.uint32();
-				stack.push([reader.pos,next_len]);
 				mode="DateTime";
 				continue x;
 			} else {

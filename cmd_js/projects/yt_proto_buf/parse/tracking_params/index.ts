@@ -13,7 +13,7 @@ function run() {
 	parse_types();
 }
 
-let pad=""
+let pad="";
 let pad_with="  ";
 
 class MyConsole {
@@ -33,12 +33,15 @@ class MyConsole {
 	}
 }
 
-type MyState={
-	my_console: MyConsole;
-};
+interface DebugDelimType {
+	reader: Reader;
+	unk_type: Type;
+	field_id: number;
+	size: number;
+}
 
-function debug_l_delim_message(state: MyState,reader: Reader,unk_type: Type,field_id: number,size: number) {
-	let console=state.my_console;
+function debug_l_delim_message({reader,unk_type,field_id,size}: DebugDelimType) {
+	let console=my_console;
 	let o=reader;
 	if(size>0) {
 		let has_error=false;
@@ -65,12 +68,42 @@ function debug_l_delim_message(state: MyState,reader: Reader,unk_type: Type,fiel
 	}
 }
 
+let my_console=new MyConsole;
+
+type SkipTypeExArgs={
+	fieldId: number;
+	wireType: number;
+};
+
 export class MyReader extends protobufjs.Reader {
 	static override create(buffer: Uint8Array) {
 		return new MyReader(buffer);
 	}
-	skipTypeEx(state: MyState,fieldId: number,wireType: number) {
-		let console=state.my_console;
+	last_pos: number;
+	constructor(buf: Uint8Array) {
+		super(buf);
+		this.last_pos=this.pos;
+	}
+	public override uint32(): number {
+		this.last_pos=this.pos;
+		return super.uint32();
+	}
+	revert<T>(x: () => T) {
+		let prev_pos=this.pos;
+		this.pos=this.last_pos;
+		let ret=x();
+		this.pos=prev_pos;
+		return ret;
+	}
+	override skipType(wireType: number) {
+		let info=this.revert(() => {
+			return this.uint32();
+		});
+		my_console.pad_log("fieldId=%o type=%o",info>>>3,info&7);
+		return super.skipType(wireType);
+	}
+	skipTypeEx({fieldId,wireType}: SkipTypeExArgs) {
+		let console=my_console;
 		let prev_pad;
 		switch(wireType) {
 			case 0:
@@ -83,7 +116,7 @@ export class MyReader extends protobufjs.Reader {
 				break;
 			case 2:
 				let size=this.uint32();
-				debug_l_delim_message(state,this,unk_type,fieldId,size);
+				debug_l_delim_message({reader: this,unk_type,field_id: fieldId,size});
 				this.skip(size);
 				break;
 			case 3:
@@ -91,7 +124,7 @@ export class MyReader extends protobufjs.Reader {
 				console.pad_log("oneof: {",wireType);
 				pad+=pad_with;
 				while((wireType=this.uint32()&7)!==4) {
-					this.skipTypeEx(state,fieldId,wireType);
+					this.skipTypeEx({fieldId,wireType});
 				}
 				pad=prev_pad;
 				console.pad_log("}");
@@ -135,10 +168,6 @@ export async function parse_types(): Promise<void> {
 		pad+=pad_with;
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(new Uint8Array(token_buffer));
-		let ss=reader.uint32();
-		my_console.pad_log("fieldId:%o type:%o",ss&7, ss>>>3);
-		reader.fixed32();
-		reader.pos=0;
 		unk_type.decode(reader);
 		pad=prev_pad;
 		my_console.pad_log("}");
