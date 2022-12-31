@@ -79,6 +79,13 @@ type Default_3={
 	command: YtEndpoint;
 };
 
+export type BasicDefaultButtonType={
+	style: "STYLE_DEFAULT";
+	size: "SIZE_DEFAULT";
+	isDisabled: boolean;
+	trackingParams: string;
+}
+
 export type DefaultButtonTypes=Default_0|Default_1|Default_2|Default_3;
 
 export type ButtonRendererData=DefaultButtonTypes|SuggestiveButtonTypes|NoStyleButtonTypes_;

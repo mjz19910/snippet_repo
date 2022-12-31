@@ -4138,43 +4138,40 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").DefaultButtonTypes} x */
 	DefaultButtonRenderer(x) {
-		let {style,isDisabled,size,trackingParams,...y}=x;
-		if("icon" in y) {
-			let {accessibilityData,icon,...a}=y;
-			if("navigationEndpoint" in a) {
-				let {navigationEndpoint,tooltip,...x}=a;
-				this.empty_object(x);
-				return;
-			}
-			this.empty_object(a);
-			return;
-		}
-		let {serviceEndpoint,text,...a}=y;
-		this.YtEndpoint(serviceEndpoint);
-		this.YtTextType(text);
-		this.empty_object(a);
-	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
-	SuggestiveButtonRenderer(x) {
 		/** @type {typeof x|{}} */
 		let y;
-		let style,isDisabled,size,trackingParams,text;
-		({style,isDisabled,size,trackingParams,text,...y}=x);
+		let style,isDisabled,size,trackingParams;
+		({style,size,isDisabled,trackingParams,...y}=x);
 		this.trackingParams(trackingParams);
 		this.primitives(style,isDisabled,size);
-		this.YtTextType(text);
 		if("serviceEndpoint" in y) {
 			let {serviceEndpoint,...a}=y; y=a;
 			this.YtEndpoint(serviceEndpoint);
 		}
-		if("navigationEndpoint" in y) {
-			let {navigationEndpoint,...a}=y; y=a;
-			this.YtEndpoint(navigationEndpoint);
-		}
-		if("accessibilityData" in y) {
-			let {accessibilityData,command,...a}=y; y=a;
+	}
+	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
+	SuggestiveButtonRenderer(x) {
+		let {style,isDisabled,size,trackingParams,text,...y}=x;
+		this.trackingParams(trackingParams);
+		this.primitives(style,isDisabled,size);
+		this.YtTextType(text);
+		if("serviceEndpoint" in y) {
+			let {serviceEndpoint,...a}=y;
+			this.empty_object(a);
+			this.YtEndpoint(serviceEndpoint);
+		}else if("navigationEndpoint" in y) {
+			let {navigationEndpoint,accessibilityData,command,...a}=y;
+			this.empty_object(a);
 			this.Accessibility(accessibilityData);
 			this.command(command);
+			this.YtEndpoint(navigationEndpoint);
+		} else if("accessibilityData" in y) {
+			let {accessibilityData,command,...a}=y;
+			this.empty_object(a);
+			this.Accessibility(accessibilityData);
+			this.command(command);
+		} else {
+			debugger;
 		}
 		this.empty_object(y);
 	}
