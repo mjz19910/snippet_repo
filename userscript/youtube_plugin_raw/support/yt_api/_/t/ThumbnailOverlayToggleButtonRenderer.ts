@@ -1,7 +1,7 @@
 import {Accessibility} from "../../_/a/Accessibility";
 import {Icon} from "../i/Icon.js";
 import {ToggledServiceEndpoint} from "./ToggledServiceEndpoint";
-import {UntoggledServiceEndpoint} from "./UntoggledServiceEndpoint";
+import {UntoggledServiceEndpoint} from "../u/UntoggledServiceEndpoint";
 
 export interface ThumbnailOverlayToggleButtonRenderer {
 	isToggled?: boolean;

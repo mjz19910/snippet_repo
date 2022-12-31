@@ -1,9 +1,9 @@
 import {AboutThisAdRenderer} from "../a/AboutThisAdRenderer.js";
 import {AllPopups} from "../a/AllPopups.js";
 import {GhostGridRenderer} from "../g/GhostGridRenderer.js";
-import {ConfirmDialogRenderer} from "../n/ConfirmDialogRenderer.js";
+import {ConfirmDialogRenderer} from "../c/ConfirmDialogRenderer.js";
 import {VoiceSearchDialogRenderer} from "../o/VoiceSearchDialogRenderer.js";
-import {NotificationActionRenderer} from "../t/NotificationActionRenderer.js";
+import {NotificationActionRenderer} from "../n/NotificationActionRenderer.js";
 import {TrackingOnlyRenderer} from "./TrackingOnlyRenderer";
 
 export type GenericRenderer=

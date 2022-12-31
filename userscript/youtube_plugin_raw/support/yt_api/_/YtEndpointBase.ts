@@ -1,4 +1,4 @@
-import {CommandMetadata} from "./CommandMetadata.js";
+import {CommandMetadata} from "./c/CommandMetadata_0.js";
 
 export type YtEndpointBase={
 	clickTrackingParams: string;

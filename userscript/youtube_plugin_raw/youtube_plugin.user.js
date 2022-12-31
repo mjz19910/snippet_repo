@@ -3085,7 +3085,7 @@ class BaseServicePrivate {
 		if(was_known) return;
 		this.new_known_strings.push([key,x]);
 		this.on_new_data_known();
-		console.log(key,x);
+		console.log("store_str [%s]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
@@ -4094,7 +4094,7 @@ class HandleTypes extends BaseService {
 		this.item_by_layout_id.set(node.layoutId,node);
 	}
 	log_layout_ids=false;
-	/** @arg {import("./support/yt_api/_/b/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
+	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
 	adLayoutLoggingData(data) {
 		let new_data=data.serializedAdServingDataEntry;
 		if(saved_data.ad_layout_data) {
@@ -4109,7 +4109,7 @@ class HandleTypes extends BaseService {
 		console.log("log data entry rest",...dec.rest);
 		console.log("[log_data_entry] [%s]",data.serializedAdServingDataEntry);
 	}
-	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
+	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
 	AdLayoutMetadataItem(item) {
 		switch(item.layoutType) {
 			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": this.item_with_layout_id(item); break;
@@ -4117,14 +4117,14 @@ class HandleTypes extends BaseService {
 		}
 		this.adLayoutLoggingData(item.adLayoutLoggingData);
 	}
-	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadataItem.js").AdLayoutMetadataItem[]} metadata */
+	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem[]} metadata */
 	adLayoutMetadata(metadata) {
 		for(let item of metadata) {
 			this.AdLayoutMetadataItem(item);
 		}
 	}
 	log_ad_metadata=false;
-	/** @arg {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata */
+	/** @arg {import("./support/yt_api/_/a/AdSlotMetadata_0.js").AdSlotMetadata} metadata */
 	adSlotMetadata(metadata) {
 		switch(metadata.slotType) {
 			case "SLOT_TYPE_IN_FEED": break;
@@ -4137,7 +4137,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	log_ads_commands=false;
-	/** @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
+	/** @arg {import("./support/yt_api/_/a/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
 	adsControlFlowOpportunityReceivedCommand(command) {
 		let ok=filter_out_keys(get_keys_of(command),split_string("opportunityType,isInitialLoad,enablePacfLoggingWeb,",","));
 		if("adSlotAndLayoutMetadata" in command) {
@@ -4381,8 +4381,6 @@ class HandleTypes extends BaseService {
 			}
 		});
 		if(m.length>0) {
-			console.log("[m_join]",m.join());
-			console.log("[ok_join]",ok.join());
 			this.save_new_string("renderer_new_keys",m.join());
 		}
 		if("confirmDialogRenderer" in x) {
@@ -4413,7 +4411,7 @@ class HandleTypes extends BaseService {
 		if(!ok_1.length) return;
 		console.log("[renderer_log] [%s]",Object.keys(cr).join(),cr);
 	}
-	/** @arg {import("./support/yt_api/_/t/NotificationActionRenderer.js").NotificationActionRenderer} x */
+	/** @arg {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x */
 	ToastPopupTag(x) {
 		const {notificationActionRenderer: v,...y}=x;
 		this.notificationActionRenderer(v);
@@ -4424,7 +4422,7 @@ class HandleTypes extends BaseService {
 		console.log(obj);
 		debugger;
 	}
-	/** @arg {import("./support/yt_api/_/n/ConfirmDialogRendererData").ConfirmDialogRendererData} data */
+	/** @arg {import("./support/yt_api/_/c/ConfirmDialogRendererData").ConfirmDialogRendererData} data */
 	ConfirmDialogRendererData(data) {
 		let ok=get_keys_of(data);
 		this.ButtonRenderer(data.cancelButton);
@@ -4764,7 +4762,7 @@ class HandleTypes extends BaseService {
 		for(i in search_param_obj) {
 			switch(i) {
 				case "a": break;
-				default: console.log("[att_param]",i); debugger;
+				default: this.save_new_string("att_param",i);
 			}
 		}
 		let ok=get_keys_of(v);
@@ -4985,15 +4983,17 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
 	SettingsOptionItemType(item) {
 		if("channelOptionsRenderer" in item) {
-			return this.ChannelOptionsRendererData(item.channelOptionsRenderer);
+			return this.RendererData(item.channelOptionsRenderer);
 		} else if("settingsSwitchRenderer" in item) {
-			return this.settingsSwitchRenderer(item.settingsSwitchRenderer);
+			return this.RendererData(item.settingsSwitchRenderer);
 		} else if("settingsCheckboxRenderer" in item) {
-			item.settingsCheckboxRenderer;
+			return this.RendererData(item.settingsCheckboxRenderer);
 		} else if("settingsRadioOptionRenderer" in item) {
-
+			return this.RendererData(item.settingsRadioOptionRenderer);
+		} else if("copyLinkRenderer" in item) {
+			return this.RendererData(item.copyLinkRenderer);
 		}
-		this.log("[option_item][%s]",get_keys_of(item).join(),"->",Object.values(item)[0]);
+		this.save_new_string("OptionItemType_keys",get_keys_of(item).join());
 	}
 	/** @arg {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
 	ChannelOptionsRendererData(data) {
@@ -5226,6 +5226,14 @@ class HandleTypes extends BaseService {
 		this.ButtonRenderer(exitButton);
 		this.YtTextType(microphoneOffPromptHeader);
 		empty_object(y);
+	}
+	/** @arg {import("./support/yt_api/_/i/RendererData.js").RendererData} x */
+	RendererData(x) {
+		this.save_keys("RendererData",x);
+	}
+	/** @template {{}} T @arg {string} key @arg {T} obj */
+	save_keys(key,obj) {
+		this.save_new_string(`${key}_keys`,get_keys_of(obj).join());
 	}
 }
 //#endregion

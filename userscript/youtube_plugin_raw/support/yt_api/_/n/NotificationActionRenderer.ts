@@ -1,4 +1,4 @@
-import {NotificationActionRendererData} from "../n/NotificationActionRendererData";
+import {NotificationActionRendererData} from "./NotificationActionRendererData";
 
 export type NotificationActionRenderer={
 	notificationActionRenderer: NotificationActionRendererData;

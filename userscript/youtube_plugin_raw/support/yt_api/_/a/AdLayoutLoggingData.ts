@@ -1,3 +1,3 @@
 export type AdLayoutLoggingData={
-	"serializedAdServingDataEntry": string;
+	serializedAdServingDataEntry: string;
 };

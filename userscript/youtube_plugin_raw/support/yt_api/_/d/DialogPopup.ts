@@ -1,4 +1,4 @@
-import {ConfirmDialogRenderer} from "../n/ConfirmDialogRenderer.js";
+import {ConfirmDialogRenderer} from "../c/ConfirmDialogRenderer.js";
 import {AboutThisAdRendererPopup} from "./AboutThisAdRendererPopup";
 
 export type DialogPopup={

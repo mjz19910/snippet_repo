@@ -1,11 +1,11 @@
-import {BrowseEndpoint} from "../b/BrowseEndpoint.js";
 import {Icon} from "../i/Icon.js";
+import {YtEndpoint} from "../YtEndpoint.js";
 import {SettingsEndpointPages} from "./SettingsEndpointPages";
 import {SettingsResponseContent} from "./SettingsResponseContent";
 
 export type SettingsPageResponse={
 	page: "settings";
-	endpoint: BrowseEndpoint;
+	endpoint: YtEndpoint;
 	response: SettingsResponseContent;
 	url: `/${SettingsEndpointPages}`;
 };

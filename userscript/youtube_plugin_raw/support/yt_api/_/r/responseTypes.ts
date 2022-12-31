@@ -12,7 +12,7 @@ import {browse_t} from "../b/browse_t.js";
 import {feedback_t} from "../f/feedback_t";
 import {get_transcript_t} from "../g/get_transcript_t";
 import {notification_record_interactions} from "../n/notification_record_interactions";
-import {account_account_menu_t} from "./account_account_menu_t";
+import {account_account_menu_t} from "../p/account_account_menu_t";
 
 export type ResponseTypes=
 	account_account_menu_t|
