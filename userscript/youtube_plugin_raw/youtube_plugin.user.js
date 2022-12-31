@@ -1218,6 +1218,7 @@ class MyReader {
 	}
 	/** @arg {number} [length] */
 	skip(length) {
+		console.log("asked to skip", length);
 		if(typeof length==="number") {
 			/* istanbul ignore if */
 			if(this.pos+length>this.len)
@@ -1334,9 +1335,15 @@ class MyReader {
 						let u64=this.uint64();
 						return [u64,this.pos];
 					} catch {}
-					return [this.uint32(),this.pos];
+					return [0,this.pos];
 				});
-				let num32=this.uint32();
+				let num32;
+				try {
+					num32=this.uint32()
+				} catch {
+					this.failed=true;
+					break;
+				}
 				if(num64!==BigInt(num32)) {
 					first_num.push(num64);
 					this.pos=new_pos;
@@ -1355,6 +1362,7 @@ class MyReader {
 					this.skip(size);
 				} catch {
 					console.log("skip failed at",fieldId);
+					this.failed=true;
 				}
 			} break;
 			case 3: break;
@@ -1380,6 +1388,9 @@ function decode_b64_proto_obj(str) {
 		let wireType=cur_byte&7;
 		let fieldId=cur_byte>>>3;
 		let first_num=reader.skipEx(fieldId,wireType);
+		if(reader.failed) {
+			break;
+		}
 		data.push([fieldId,wireType,first_num]);
 	}
 	let [first,...rest]=data;
