@@ -4306,7 +4306,7 @@ class HandleTypes extends BaseService {
 		this.AccessibilityData(data.accessibilityData);
 	}
 	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} ep */
-	YtEndpoint(ep) {
+	endpoint(ep) {
 		const {clickTrackingParams: a,commandMetadata: b,...ex}=ep;
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
@@ -4335,7 +4335,7 @@ class HandleTypes extends BaseService {
 		this.primitives(style,isDisabled,size);
 		if("serviceEndpoint" in y) {
 			let {serviceEndpoint,...a}=y; y=a;
-			this.YtEndpoint(serviceEndpoint);
+			this.endpoint(serviceEndpoint);
 		}
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
@@ -4347,20 +4347,20 @@ class HandleTypes extends BaseService {
 		if("serviceEndpoint" in y) {
 			let {serviceEndpoint,...a}=y;
 			this.empty_object(a);
-			this.YtEndpoint(serviceEndpoint);
+			this.endpoint(serviceEndpoint);
 			return;
 		} else if("navigationEndpoint" in y) {
 			let {navigationEndpoint,accessibilityData,command,...a}=y;
 			this.empty_object(a);
 			this.Accessibility(accessibilityData);
-			this.YtEndpoint(command);
-			this.YtEndpoint(navigationEndpoint);
+			this.endpoint(command);
+			this.endpoint(navigationEndpoint);
 			return;
 		} else if("accessibilityData" in y) {
 			let {accessibilityData,command,...a}=y;
 			this.empty_object(a);
 			this.Accessibility(accessibilityData);
-			this.YtEndpoint(command);
+			this.endpoint(command);
 			return;
 		}
 		this.empty_object(y);
@@ -4369,7 +4369,7 @@ class HandleTypes extends BaseService {
 	NoStyleButtonTypes(x) {
 		let {trackingParams,command,...y}=x;
 		this.trackingParams(trackingParams);
-		this.YtEndpoint(command);
+		this.endpoint(command);
 		this.empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
@@ -4640,7 +4640,7 @@ class HandleTypes extends BaseService {
 		}
 		if(!("page" in data)) return;
 		this.BrowseResponseContent(data.response);
-		this.YtEndpoint(data.endpoint);
+		this.endpoint(data.endpoint);
 		if(eq_keys(ok,[])) return;
 		if(has_keys(ok,"expirationTime")) return;
 		console.log("[browse_response_top] [%s]",ok.join(","),data);
@@ -4678,7 +4678,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	SettingsPageResponse(data) {
-		this.YtEndpoint(data.endpoint);
+		this.endpoint(data.endpoint);
 		this.SettingsResponseContent(data.response);
 		let split_parts=split_string(data.url,"/");
 		/** @type {Uppercase<import("./support/make/Split.js").Split<import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse['url'],"/">[1]>} */
@@ -4704,7 +4704,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data */
 	ShortsPageResponse(data) {
-		this.YtEndpoint(data.endpoint);
+		this.endpoint(data.endpoint);
 		console.assert(data.page==="shorts");
 		this.playerResponse(data.playerResponse);
 		this.reelWatchSequenceResponse(data.reelWatchSequenceResponse);
@@ -4883,7 +4883,7 @@ class HandleTypes extends BaseService {
 		switch(detail.pageType) {
 			case "browse":
 				this.BrowsePageResponse(detail.response);
-				this.YtEndpoint(detail.endpoint);
+				this.endpoint(detail.endpoint);
 				break;
 			case "channel": {
 				this.ChannelPageResponse(detail.response);
@@ -5033,7 +5033,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints */
 	onResponseReceivedEndpoints(endpoints) {
 		this.iterate(endpoints,(endpoint) => {
-			this.YtEndpoint(endpoint);
+			this.endpoint(endpoint);
 		});
 	}
 	/** @arg {import("./support/yt_api/_/i/SettingsOptionItemType.js").SettingsOptionItemType} item */
@@ -5041,7 +5041,7 @@ class HandleTypes extends BaseService {
 		if("channelOptionsRenderer" in item) {
 			this.ChannelOptionsRendererData(item.channelOptionsRenderer);
 		} else {
-			item;
+			this.settingsSwitchRenderer(item.settingsSwitchRenderer);
 			debugger;
 		}
 	}
@@ -5050,7 +5050,7 @@ class HandleTypes extends BaseService {
 		let {avatar,avatarAccessibility,avatarEndpoint,links,name,...rest}=data;
 		this.ThumbnailsList(avatar);
 		this.Accessibility(avatarAccessibility);
-		this.YtEndpoint(avatarEndpoint);
+		this.endpoint(avatarEndpoint);
 		this.iterate(links,link => this.YtTextType(link));
 		this.primitive(name);
 		this.empty_object(rest);
@@ -5096,7 +5096,7 @@ class HandleTypes extends BaseService {
 		let {trackingParams,iconImage,endpoint,tooltipText,overrideEntityKey,...y}=x;
 		this.trackingParams(trackingParams);
 		this.Icon(iconImage);
-		this.YtEndpoint(endpoint);
+		this.endpoint(endpoint);
 		this.empty_object(y);
 	}
 	/** @arg {import("./support/yt_api/_/b/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x */
@@ -5114,7 +5114,7 @@ class HandleTypes extends BaseService {
 				this.empty_object(x);
 			}
 			this.YtTextType(placeholderText);
-			this.YtEndpoint(searchEndpoint);
+			this.endpoint(searchEndpoint);
 			this.empty_object(x);
 		}
 	}
@@ -5198,7 +5198,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRendererData.js").SettingsSidebarRendererData} x */
 	settingsSidebarRenderer(x) {
 		const {items,title,...y}=x;
-		this.iterate(x.items,v=>{
+		this.iterate(x.items,v => {
 			this.LinkRenderer(v.compactLinkRenderer);
 		});
 		this.YtTextType(x.title);
@@ -5208,14 +5208,20 @@ class HandleTypes extends BaseService {
 	LinkRenderer(x) {
 		this.endpoint(x.navigationEndpoint);
 	}
-	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint} x */
-	endpoint(x) {
-		this.YtEndpoint(x);
-	}
 	/** @arg {import("./support/yt_api/_/g/GhostGridRendererData.js").GhostGridRendererData} x */
 	ghostGridRenderer(x) {
 		const {rows,...y}=x;
 		this.primitive(rows);
 		this.empty_object(y);
+	}
+	/** @arg {import("./support/yt_api/_/i/SettingsSwitchRendererData.js").SettingsSwitchRendererData} x */
+	settingsSwitchRenderer(x) {
+		const {title,subtitle,enabled,enableServiceEndpoint: ep_0,disableServiceEndpoint: ep_1,id,text,thumbnail,trackingParams,...y}=x;
+		this.endpoints(ep_0,ep_1);
+		this.empty_object(y);
+	}
+	/** @param {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint[]} arr */
+	endpoints(...arr) {
+		this.iterate(arr,this.endpoint.bind(this));
 	}
 }
