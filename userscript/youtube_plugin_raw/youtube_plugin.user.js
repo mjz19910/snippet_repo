@@ -3817,13 +3817,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @typedef {import("./support/yt_api/_/s/YtTextType.js").YtTextType} YtTextType */
 	/** @arg {Extract<YtTextType,{runs:any}>} text */
-	run_extract_empty_r_iter(text) {
+	TextRuns(text) {
 		let rest=[];
 		for(let run of text.runs) rest.push(this.run_extract_empty_r(run));
 		return rest;
 	}
 	/** @arg {Exclude<YtTextType,{runs:any}>} text */
-	run_extract_empty_simple(text) {
+	SimpleText(text) {
 		return this.run_extract_empty_s(text);
 	}
 	/** @arg {Exclude<YtTextType,{runs:any}>} simple_text */
@@ -3839,7 +3839,7 @@ class HandleTypes extends BaseService {
 		}
 		if("runs" in text) {
 			let rest=[];
-			let ret=this.run_extract_empty_r_iter(text);
+			let ret=this.TextRuns(text);
 			if(ret instanceof Array) for(let i of ret) {
 				if(Object.keys(i).length>0) rest.push(i);
 			}
@@ -3848,7 +3848,7 @@ class HandleTypes extends BaseService {
 				debugger;
 			}
 		} else {
-			let ret=this.run_extract_empty_simple(text);
+			let ret=this.SimpleText(text);
 			if(Object.keys(ret).length>0) {
 				console.log(ret);
 				debugger;
