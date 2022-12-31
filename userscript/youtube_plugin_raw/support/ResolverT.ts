@@ -1,4 +1,4 @@
-import {ServiceResolver} from "./youtube_plugin.user.js";
+import {ServiceResolver} from "../youtube_plugin.user.js";
 import {Services} from "./Services";
 
 export type ResolverT={

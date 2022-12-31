@@ -2700,7 +2700,7 @@ class HiddenData {
 	}
 }
 
-/** @typedef {import("./ResolverT.js").ResolverT} ResolverT */
+/** @typedef {import("./support/ResolverT.js").ResolverT} ResolverT */
 async function main() {
 	await Promise.resolve();
 	/** @type {ResolverT} */
@@ -2984,7 +2984,7 @@ const seen_map=new Set;
 /** @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value */
 function parse_browse_id(value) {
 	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
-	/** @template T,U @typedef {import("./ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */
+	/** @template T,U @typedef {import("./support/ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */
 	/** @typedef {ExtractAfterStr<typeof value,"FE">} KnownParts */
 	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
 	/** @type {StartPart} */
@@ -3400,7 +3400,7 @@ function PUa(a,b) {
 	}
 	return !1;
 }
-/** @type {import("./RUa_type.js").RUa} */
+/** @type {import("./support/RUa_type.js").RUa} */
 const RUa_b={
 	"2": "fakeChannel",
 	"17": "musicAlbumRelease",
@@ -3463,7 +3463,7 @@ const RUa_b={
 	"393": "emojiFountainDataEntity",
 	"406": "continuationTokenEntity"
 };
-/** @type {{[U in keyof typeof RUa_b]: import("./RUa_type.js").RUa[U]}} */
+/** @type {{[U in keyof typeof RUa_b]: import("./support/RUa_type.js").RUa[U]}} */
 const RUa=RUa_b;
 /** @type {(this:number,...c: any[])=>any[]} @this {number} */
 function za() {
@@ -4482,7 +4482,7 @@ class HandleTypes extends BaseService {
 		const token1="kS9PUbzBzfkpnx636le0IQOnLToPkJ8rDwtv7Zd3CH8";
 		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
 		const chal_as_fmt=`a=5&a2=10&c=1672268443&d=1&t=7200&c1a=1&hh=${token1}`;
-		/** @type {import("./AttChallengeObj").AttChallengeObj} */
+		/** @type {import("./support/AttChallengeObj").AttChallengeObj} */
 		let search_param_obj=make_search_params(chal_as_fmt);
 		/** @type {keyof typeof search_param_obj} */
 		let i;
