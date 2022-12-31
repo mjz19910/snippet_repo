@@ -1233,7 +1233,6 @@ class MyReader {
 		}
 		if(length!==void 0) {
 			console.log("asked to skip from %o to",start_pos,this.pos);
-			if(start_pos===10&&this.pos===29) debugger;
 		} else {
 			console.log("asked to skip VarInt from %o to",start_pos,this.pos);
 		}
@@ -3755,7 +3754,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command */
+	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommandData} command */
 	reloadContinuationItemsCommand(command) {
 		let data=command.reloadContinuationItemsCommand;
 		for(let item of data.continuationItems) {
@@ -4103,7 +4102,7 @@ class HandleTypes extends BaseService {
 		console.log(ep);
 	}
 	/** @arg {{}} obj */
-	on_empty_obj(obj) {
+	empty_object(obj) {
 		if(eq_keys(get_keys_of(obj),[])) return;
 		console.log("[invalid_empty_obj] [%s] %o",get_keys_of(obj).join(),obj);
 		debugger;
@@ -4133,22 +4132,22 @@ class HandleTypes extends BaseService {
 		if(typeof renderer.isDisabled!=='boolean') debugger;
 		if(rest_2&&rest_2.style==="STYLE_DEFAULT") {
 			let {style,...rest}=rest_2;
-			this.on_empty_obj(rest);
+			this.empty_object(rest);
 		} else if(rest_2) {
 			let {style,...rest}=rest_2;
-			this.on_empty_obj(rest);
+			this.empty_object(rest);
 		} else if(rest_3&&rest_3.style==="STYLE_DEFAULT") {
 			let {style,icon,tooltip,...rest}=rest_3;
 			this.Icon(icon);
 			this.primitive(tooltip,"string");
-			this.on_empty_obj(rest);
+			this.empty_object(rest);
 		} else if(rest_3) {
 			let {style,text,command,...rest}=rest_3;
 			this.on_text(text);
 			this.GeneralCommand(command);
-			this.on_empty_obj(rest);
+			this.empty_object(rest);
 		} else {
-			this.on_empty_obj(renderer);
+			this.empty_object(renderer);
 		}
 	}
 	/**
@@ -4323,8 +4322,10 @@ class HandleTypes extends BaseService {
 			this.reelWatchEndpoint(endpoint.reelWatchEndpoint);
 		} else if("watchEndpoint" in endpoint) {
 			this.watchEndpoint(endpoint.watchEndpoint);
+		} else if("reloadContinuationItemsCommand" in endpoint) {
+			this.reloadContinuationItemsCommand(endpoint.reloadContinuationItemsCommand);
 		} else {
-			endpoint;
+			get_keys_of(endpoint);
 			debugger;
 		}
 		if("commandMetadata" in endpoint) {
@@ -4609,11 +4610,24 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json */
 	YtApiNext(json) {
+		let {responseContext,trackingParams,onResponseReceivedEndpoints,...rest}=json;
+		this.onResponseReceivedEndpoints(onResponseReceivedEndpoints);
+		this.empty_object(rest);
 		console.log(json);
 	}
 	/** @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json */
 	AccountMenuJson(json) {
-		console.log(json);
+		let {responseContext,actions,trackingParams,...rest}=json;
+		this.responseContext(responseContext);
+		this.actions(json.actions);
+		this.trackingParams(trackingParams);
+		this.empty_object(rest);
+	}
+	/** @param {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction[]} actions */
+	actions(actions) {
+		for(let action of actions) {
+			action;
+		}
 	}
 	/** @arg {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data */
 	richItemRenderer(data) {
@@ -4782,5 +4796,19 @@ class HandleTypes extends BaseService {
 	/** @arg {string} params */
 	clickTrackingParams(params) {
 		if(this.r.get_param("log_click_tracking_params")) console.log("ctp",params);
+	}
+	/**
+	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints
+	 */
+	onResponseReceivedEndpoints(endpoints) {
+		this.iterate(endpoints,(endpoint)=>{
+			this.endpoint(endpoint);
+		})
+	}
+	/** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
+	iterate(...[t,u]) {
+		for(let item of t) {
+			u(item);
+		}
 	}
 }

@@ -1,4 +1,4 @@
 import {AdsControlFlowOpportunityReceivedCommand} from "../b/AdsControlFlowOpportunityReceivedCommand";
-import {ReloadContinuationItemsCommand} from "./ReloadContinuationItemsCommand";
+import {ReloadContinuationItemsCommandData} from "./ReloadContinuationItemsCommand";
 
-export type ResponseReceivedActionItem=AdsControlFlowOpportunityReceivedCommand|ReloadContinuationItemsCommand;
+export type ResponseReceivedActionItem=AdsControlFlowOpportunityReceivedCommand|ReloadContinuationItemsCommandData;

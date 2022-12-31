@@ -1,8 +1,8 @@
-import {AllResponseReceivedEndpoints} from "../_/a/AllResponseReceivedEndpoints";
 import {ResponseContext} from "../_/g/GeneralContext";
+import {JsonDataEndpointType} from "../_/j/JsonDataEndpointType.js";
 
 export type YtApiNext={
-	onResponseReceivedEndpoints: AllResponseReceivedEndpoints[];
+	onResponseReceivedEndpoints: JsonDataEndpointType[];
 	responseContext: ResponseContext;
 	trackingParams: string;
 };
