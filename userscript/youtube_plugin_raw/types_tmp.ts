@@ -19,5 +19,17 @@ export {};
 export type DecRetType={
 	first_w: number;
 	first_f: number;
-	as_num: (number|bigint|DecRetType)[]; rest: [number,number,number|bigint|DecRetType|null][];
+	as_num: DecTypeNum[];
+	rest: [number,number,DecTypeNum|null][];
 };
+export type DecTypeNum=["data",number|bigint|DecRetType]|["info",number,number]|['child',Uint8Array];
+export type DataArrType=[number,number,DecTypeNum[]][];
+function run() {
+	let first_num: DecTypeNum[]=[];
+	let wireType=0;
+	let fieldId=4;
+	/** @type {import("./types_tmp.js").DataArrType} */
+	let data: DataArrType=[];
+	data.push([fieldId,wireType,first_num]);
+}
+run();

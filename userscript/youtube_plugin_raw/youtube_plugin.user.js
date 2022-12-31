@@ -1151,7 +1151,7 @@ class MyReader {
 		} else {
 			target_len=this.pos+size;
 		}
-		/** @type {[number,number,(number|bigint|DecRetType)[]][]} */
+		/** @type {import("./types_tmp.js").DataArrType} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -1175,22 +1175,21 @@ class MyReader {
 				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
 			}
 		}
-		let [first,...rest]=data;
-		let [fieldId,wireType,as_num]=first;
-		/** @arg {[number,number,(number|bigint|DecRetType)[]]} e @returns {[number,number,bigint|number|DecRetType|null]} */
-		function filter_rest(e) {
-			let [fieldId,wireType,as_num]=e;
-			if(as_num.length===0) {
-				return [fieldId,wireType,null];
+		/** @type {(['data',number | bigint | DecRetType]|['info',number,number])[]} */
+		let res_arr=[];
+		for(let i=0;i<data.length;i++) {
+			let cur=data[i];
+			let [_fieldId,_type,decoded_data]=cur;
+			res_arr.push(['info',cur[0],cur[1]]);
+			for(let item of decoded_data) {
+				if(item[0]==="data") {
+					res_arr.push(['data',decoded_data[0][1]]);
+				} else if(item[0]==="info") {
+					res_arr.push(['info',item[1],item[2]]);
+				}
 			}
-			return [fieldId,wireType,as_num[0]];
 		}
-		return {
-			first_w: wireType,
-			first_f: fieldId,
-			as_num,
-			rest: rest.map(filter_rest),
-		};
+		return res_arr;
 	}
 	/** @template T @arg {()=>T} x */
 	revert(x) {
@@ -1320,12 +1319,13 @@ class MyReader {
 		return [cur_byte&7,cur_byte>>>3];
 	}
 	/** @typedef {import("./types_tmp.js").DecRetType} DecRetType */
+	/** @typedef {import("./types_tmp.js").DecTypeNum} DecTypeNum */
 	noisy_log_level=false;
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.last_pos,this.pos);
 		let pos_start=this.pos;
-		/** @type {(number|bigint|DecRetType)[]} */
+		/** @type {DecTypeNum[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
@@ -1344,10 +1344,10 @@ class MyReader {
 					break;
 				}
 				if(num64!==BigInt(num32)) {
-					first_num.push(num64);
+					first_num.push(["data",num64]);
 					this.pos=new_pos;
 				} else {
-					first_num.push(num32);
+					first_num.push(["data",num32]);
 				}
 				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0]);
 				break;
@@ -1356,30 +1356,18 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
-				let skipping=false;
-				if(!skipping) {
-					try {
-						console.group();
-						let result=this.read_any(size);
-						first_num.push(result);
-					} catch {
-						console.log("read any failed at",fieldId);
-						this.failed=true;
-					} finally {
-						console.groupEnd();
-					}
-				} else {
-					try {
-						this.skip(size);
-					} catch {
-						console.log("skip failed at",fieldId);
-						this.failed=true;
-					}
+				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
+				try {
+					this.skip(size);
+				} catch {
+					console.log("skip failed at",fieldId);
+					this.failed=true;
 				}
+				first_num.push(['child',sub_buffer]);
 			} break;
 			case 3: break;
 			case 4: throw new Error("Invalid state");
-			case 5: first_num.push(this.fixed32()); break;
+			case 5: first_num.push(["data",this.fixed32()]); break;
 			default: break;
 		}
 		return first_num;
@@ -4134,8 +4122,8 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
 	adLayoutLoggingData(data) {
 		let dec=decode_b64_proto_obj(data.serializedAdServingDataEntry);
-		console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
-		console.log("log data entry rest",...dec.rest);
+		console.log("log data entry [%o]",dec[0]);
+		console.log("log data entry rest",...dec.slice(1));
 		console.log("[log_data_entry] [%s]",data.serializedAdServingDataEntry);
 	}
 	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
