@@ -4588,8 +4588,14 @@ class HandleTypes extends BaseService {
 		this.endpoint(data.endpoint);
 		this.save_keys("BrowsePageResponse",data);
 	}
+	seen_page_data=new Set;
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} data */
 	DataResponsePageType(data) {
+		if(this.seen_page_data.has(data)) {
+			console.log("skip seen data");
+			return;
+		}
+		this.seen_page_data.add(data);
 		this.save_keys("DataResponsePageType.page",data.page);
 		this.save_keys("DataResponsePageType",data);
 		switch(data.page) {
