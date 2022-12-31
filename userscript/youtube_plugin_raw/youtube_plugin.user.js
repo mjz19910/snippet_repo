@@ -5170,7 +5170,7 @@ class HandleTypes extends BaseService {
 		this.primitives(enabled);
 		empty_object(y);
 	}
-	/** @arg {import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint[]} arr */
+	/** @arg {import("./support/yt_api/yt/YtEndpoint.js").YtEndpoint[]} arr */
 	endpoint_va(...arr) {
 		iterate(arr,this.endpoint.bind(this));
 	}
