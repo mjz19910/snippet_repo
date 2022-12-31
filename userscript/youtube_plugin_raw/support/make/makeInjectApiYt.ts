@@ -1,4 +1,4 @@
-import {SavedData} from "../../youtube_plugin.user.js";
+import {SavedData} from "../yt_api/_/a/SavedData";
 
 declare global {
 	interface InjectApiYt {

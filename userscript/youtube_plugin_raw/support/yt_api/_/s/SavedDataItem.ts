@@ -1,3 +1,1 @@
-export type SavedDataItem={
-	[str: string]: {};
-};
+export type SavedDataItem={};

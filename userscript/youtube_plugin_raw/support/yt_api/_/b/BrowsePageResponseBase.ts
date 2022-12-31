@@ -1,16 +1,9 @@
 import {BrowseEndpoint} from "./BrowseEndpoint.js";
 import {BrowseResponseContent} from "./BrowseResponseContent";
-import {GraftedVeItem} from "./GraftedVeItem";
 
-export type BrowsePageResponse={
+export type BrowsePageResponseBase={
 	page: "browse";
 	endpoint: BrowseEndpoint;
 	response: BrowseResponseContent;
 	url: "/";
-}|{
-	expirationTime: number;
-}|{
-	previousCsn: string;
-}|{
-	graftedVes: GraftedVeItem[];
 };

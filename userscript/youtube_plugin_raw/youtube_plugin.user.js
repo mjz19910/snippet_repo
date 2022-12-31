@@ -66,7 +66,7 @@ class SavedData {
 }
 
 let saved_data=new SavedData;
-inject_api_yt.saved_data=saved_data;
+inject_api_yt.saved_data={};
 
 const is_yt_debug_enabled=false;
 /** @template T @arg {T&{x:1}} _v */
@@ -1344,7 +1344,7 @@ class MyReader {
 				});
 				let num32;
 				try {
-					num32=this.uint32()
+					num32=this.uint32();
 				} catch {
 					this.failed=true;
 					break;
@@ -1813,7 +1813,8 @@ class FilterHandlers {
 		}
 		if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
 		page_type_iter(ret.page);
-		this.handle_any_data(`page_type_${ret.page}`,ret);
+		this.handle_any_data(`page_type_${ret.page}`,cast_as(ret));
+		this.handle_types.DataResponsePageType(ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
 			debugger;
@@ -3969,25 +3970,38 @@ class HandleTypes extends BaseService {
 		this.item_by_layout_id.set(node.layoutId,node);
 	}
 	log_layout_ids=false;
-	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadata.js").AdLayoutMetadata[]} metadata */
+	/** @arg {import("./support/yt_api/_/b/AdLayoutLoggingData.js").AdLayoutLoggingData} data */
+	adLayoutLoggingData(data) {
+		let try_proto_dec=true;
+		if(try_proto_dec) {
+			if(inject_api_yt.saved_data) {
+				let new_data=data.serializedAdServingDataEntry;
+				if(inject_api_yt.saved_data.ad_layout_data) {
+					inject_api_yt.saved_data.ad_layout_data.serializedAdServingDataEntry=new_data;
+				} else {
+					inject_api_yt.saved_data.ad_layout_data??={
+						serializedAdServingDataEntry: new_data
+					};
+				}
+			}
+			let dec=decode_b64_proto_obj(data.serializedAdServingDataEntry);
+			console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
+			console.log("log data entry rest",...dec.rest);
+		}
+		console.log("[log_data_entry] [%s]",data.serializedAdServingDataEntry);
+	}
+	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
+	AdLayoutMetadataItem(item) {
+		switch(item.layoutType) {
+			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": this.item_with_layout_id(item); break;
+			default: debugger;
+		}
+		this.adLayoutLoggingData(item.adLayoutLoggingData);
+	}
+	/** @arg {import("./support/yt_api/_/b/AdLayoutMetadataItem.js").AdLayoutMetadataItem[]} metadata */
 	adLayoutMetadata(metadata) {
 		for(let item of metadata) {
-			switch(item.layoutType) {
-				case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": this.item_with_layout_id(item); break;
-				default: debugger;
-			}
-			let try_proto_dec=true;
-			if(try_proto_dec) {
-				if(inject_api_yt.saved_data) {
-					inject_api_yt.saved_data.any_data.ad_layout_data??={};
-					inject_api_yt.saved_data.any_data.ad_layout_data.serializedAdServingDataEntry=
-						item.adLayoutLoggingData.serializedAdServingDataEntry;
-				}
-				let dec=decode_b64_proto_obj(item.adLayoutLoggingData.serializedAdServingDataEntry);
-				console.log("log data entry [%o]",{w: dec.first_w,f: dec.first_f},dec.as_num);
-				console.log("log data entry rest",...dec.rest);
-			}
-			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
+			this.AdLayoutMetadataItem(item);
 		}
 	}
 	log_ad_metadata=false;
@@ -4325,7 +4339,7 @@ class HandleTypes extends BaseService {
 		} else if("reloadContinuationItemsCommand" in endpoint) {
 			this.ReloadContinuationItemsCommand(endpoint);
 		} else {
-			console.log("[endpoint]", endpoint, get_keys_of(endpoint));
+			console.log("[endpoint]",endpoint,get_keys_of(endpoint));
 			debugger;
 		}
 		if("commandMetadata" in endpoint) {
@@ -4388,7 +4402,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(data.trackingParams);
 		console.log(data);
 	}
-	/** @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data */
+	/** @arg {import("./support/yt_api/_/b/BrowsePageResponse.js").BrowsePageResponse} data */
 	BrowsePageResponse(data) {
 		let ok=cast_as(filter_out_keys(get_keys_of(data),split_string("page,endpoint,response,url,expirationTime,graftedVes")));
 		if("expirationTime" in data) {
@@ -4801,9 +4815,9 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints
 	 */
 	onResponseReceivedEndpoints(endpoints) {
-		this.iterate(endpoints,(endpoint)=>{
+		this.iterate(endpoints,(endpoint) => {
 			this.endpoint(endpoint);
-		})
+		});
 	}
 	/** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
 	iterate(...[t,u]) {
