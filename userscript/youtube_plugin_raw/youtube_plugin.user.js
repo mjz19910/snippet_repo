@@ -3957,6 +3957,7 @@ class HandleTypes extends BaseService {
 			console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
 		}
 	}
+	log_ads_commands=false;
 	/** @arg {import("./support/yt_api/_/b/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
 	adsControlFlowOpportunityReceivedCommand(command) {
 		let ok=filter_out_keys(get_keys_of(command),split_string("opportunityType,isInitialLoad,enablePacfLoggingWeb,",","));
@@ -3967,8 +3968,8 @@ class HandleTypes extends BaseService {
 			}
 		}
 		if(eq_keys(ok,[])||eq_keys(ok,["adSlotAndLayoutMetadata"])) {
-			console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
-			console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
+			if(this.log_ads_commands) console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
+			if(this.log_ads_commands) console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
 			if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
 		} else {
 			console.log("[%s] %o",ok.join(","),command);
