@@ -3693,9 +3693,10 @@ class HandleTypes extends BaseService {
 			console.log("[log_data_entry] [%s]",item.adLayoutLoggingData.serializedAdServingDataEntry);
 		}
 	}
+	log_ad_metadata=false;
 	/** @arg {import("./support/yt_api/_/b/AdSlotMetadata.js").AdSlotMetadata} metadata */
 	adSlotMetadata(metadata) {
-		console.log("ad slot meta pos",metadata.slotType);
+		if(this.log_ad_metadata) console.log("ad slot meta pos",metadata.slotType);
 		switch(metadata.slotType) {
 			case "SLOT_TYPE_IN_FEED": break;
 			default: debugger;
