@@ -1309,7 +1309,7 @@ const decode_protobuf_obj=function make() {
 		}
 	}
 	return new class ProtobufDecoder {
-		MyReader=;
+		MyReader=MyReader;
 	};
 }();
 
