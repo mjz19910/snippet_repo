@@ -4178,10 +4178,6 @@ class HandleTypes extends BaseService {
 	primitive(value,expected_type) {
 		if(typeof value!==expected_type) debugger;
 	}
-	/** @arg {import("./support/yt_api/_/s/SimpleText.js").SimpleText} t */
-	SimpleText(t) {
-		console.log(t);
-	}
 	/** @arg {import("./support/yt_api/_/n/NavigationEndpoint.js").NavigationEndpoint} ep */
 	navigationEndpoint(ep) {
 		if(ep===void 0) return;
