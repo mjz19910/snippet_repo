@@ -4246,10 +4246,23 @@ class HandleTypes extends BaseService {
 			this.addToPlaylistCommand(rest.addToPlaylistCommand);
 		} else if("openPopupAction" in rest) {
 			this.openPopupAction(rest.openPopupAction);
+		} else if("signalAction" in action) {
+			this.signalAction(action.signalAction);
+			console.log(action.signalAction);
 		} else {
 			let k=get_keys_of(rest);
 			console.log(k,rest);
 		}
+	}
+	/**
+	 * @param {import("./support/yt_api/_/s/YtSignalAction.js").YtSignalAction} x
+	 */
+	signalAction(x) {
+		switch(x.signal) {
+			case "HISTORY_BACK": break;
+			case "HISTORY_FORWARD": break;
+			default: debugger;
+		};
 	}
 	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction} obj */
 	openPopupAction(obj) {
@@ -5058,6 +5071,10 @@ class HandleTypes extends BaseService {
 	 * @param {string} x
 	 */
 	save_new_string(key,x) {
+		if(x.startsWith("http://www.youtube.com/channel/UC")) {
+			console.log("skip channel like",key,x);
+			return;
+		}
 		let cur=this.known_strings.get(key);
 		if(!cur) {
 			cur=new Set;
