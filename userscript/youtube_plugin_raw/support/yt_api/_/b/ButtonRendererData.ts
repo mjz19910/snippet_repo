@@ -69,8 +69,8 @@ export type NoStyleButtonTypes_={
 	command: YtEndpoint;
 };
 
-type SuggestiveButtonTypes=Suggestive_0|Suggestive_1|Suggestive_2;
-type DefaultButtonTypes=Default_0|Default_1|Default_2;
+export type SuggestiveButtonTypes=Suggestive_0|Suggestive_1|Suggestive_2;
+export type DefaultButtonTypes=Default_0|Default_1|Default_2;
 
 export type ButtonRendererData=DefaultButtonTypes|SuggestiveButtonTypes|NoStyleButtonTypes_;
 

@@ -4136,79 +4136,24 @@ class HandleTypes extends BaseService {
 		console.log("[invalid_empty_obj] [%s] %o",get_keys_of(obj).join(),obj);
 		debugger;
 	}
-	/**
-	 * @param {{ style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; icon: { iconType: "SETTINGS"; }; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; tooltip: string; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; } | { style: "STYLE_DEFAULT"; size: "SIZE_DEFAULT"; isDisabled: boolean; icon: { iconType: "SETTINGS"; }; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; }} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").DefaultButtonTypes} x */
 	DefaultButtonRenderer(x) {
-		const {style,size,isDisabled,...y}=x;
-		if("text" in y) {
-			const {text,serviceEndpoint,...a}=y;
-			this.empty_object(a);
-			return;
-		}
-		const {accessibilityData,icon,...a}=y;
-		this.Accessibility(accessibilityData);
-		this.Icon(icon);
-		if("navigationEndpoint" in a) {
-			const {navigationEndpoint,tooltip,...x}=a;
-			this.YtEndpoint(navigationEndpoint);
-			this.empty_object(x);
-			return;
-		}
-		this.empty_object(a);
+		x;
 	}
-	/**
-	 * @param {{ style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; serviceEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; } | { style: "STYLE_SUGGESTIVE"; size: "SIZE_DEFAULT"; isDisabled: boolean; text: import("./support/yt_api/_/s/YtTextType.js").YtTextType; navigationEndpoint: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; accessibilityData: import("./support/yt_api/_/a/Accessibility.js").Accessibility; command: import("./support/yt_api/_/g/GeneralCommand.js").GeneralCommand; }} x
-	 */
+	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
 	SuggestiveButtonRenderer(x) {
-		const {style,size,isDisabled,text,...y}=x;
-		this.YtTextType(text);
-		if("command" in y) {
-			const {command,accessibilityData,...a}=y;
-			this.Accessibility(accessibilityData);
-			this.GeneralCommand(command);
-			if("navigationEndpoint" in a) {
-				const {navigationEndpoint,...x}=a;
-				this.YtEndpoint(navigationEndpoint);
-				this.empty_object(x);
-				return;
-			}
-			this.empty_object(a);
-			return;
-		}
-		const {serviceEndpoint,...a}=y;
-		this.YtEndpoint(serviceEndpoint);
-		this.empty_object(a);
+		x;
 	}
-	/**
-	 * @param {ButtonType_2} renderer
-	 */
-	buttonRenderer_2(renderer) {
-	}
-	/**
-	 * @param {{ command: import("./support/yt_api/_/b/YtEndpoint.js").YtEndpoint; }} x
-	 */
-	buttonRenderer_1(x) {
-		const {command,...y}=x;
-		this.YtEndpoint(command);
-		this.empty_object(y);
-	}
-	/**
-	 * @param {ButtonType_0} x
-	 */
-	buttonRenderer_0(x) {
-		if("style" in x) {
-			this.buttonRenderer_2(x);
-		} else {
-			this.buttonRenderer_1(x);
-		}
+	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
+	NoStyleButtonTypes(x) {
+		x;
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
 	buttonRenderer(renderer) {
 		switch(renderer.style) {
 			case "STYLE_DEFAULT": this.DefaultButtonRenderer(renderer); break;
 			case "STYLE_SUGGESTIVE": this.SuggestiveButtonRenderer(renderer); break;
-			case void 0: break;
+			case void 0: this.NoStyleButtonTypes(renderer); break;
 			default: console.log(renderer); debugger;
 		}
 	}
@@ -4273,7 +4218,7 @@ class HandleTypes extends BaseService {
 	 * @param {import("./support/yt_api/_/t/ToastPopup.js").ToastPopup} x
 	 */
 	ToastPopupTag(x) {
-		const {notificationActionRenderer:v,...y}=x;
+		const {notificationActionRenderer: v,...y}=x;
 		this.notificationActionRenderer(v);
 		this.empty_object(y);
 	}
@@ -5001,9 +4946,9 @@ class HandleTypes extends BaseService {
 	 */
 	TopbarButtonItem(x) {
 		if("topbarMenuButtonRenderer" in x) {
-			x.topbarMenuButtonRenderer
+			x.topbarMenuButtonRenderer;
 		} else if("notificationTopbarButtonRenderer" in x) {
-			const {notificationTopbarButtonRenderer:y}=x;
+			const {notificationTopbarButtonRenderer: y}=x;
 			this.notificationTopbarButtonRenderer(y);
 		} else {
 			debugger;
@@ -5037,7 +4982,7 @@ class HandleTypes extends BaseService {
 	hotkeyDialogRenderer(x) {
 		const {trackingParams,dismissButton,sections,title,...y}=x;
 		this.trackingParams(trackingParams);
-		this.iterate(sections,v=>v);
+		this.iterate(sections,v => v);
 		this.YtTextType(title);
 		this.empty_object(y);
 	}
