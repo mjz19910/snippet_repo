@@ -4325,7 +4325,7 @@ class HandleTypes extends BaseService {
 		} else if("reloadContinuationItemsCommand" in endpoint) {
 			this.ReloadContinuationItemsCommand(endpoint);
 		} else {
-			get_keys_of(endpoint);
+			console.log("[endpoint]", endpoint, get_keys_of(endpoint));
 			debugger;
 		}
 		if("commandMetadata" in endpoint) {
