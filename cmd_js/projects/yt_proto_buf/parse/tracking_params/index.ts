@@ -93,6 +93,7 @@ export class MyReader extends protobufjs.Reader {
 		return ret;
 	}
 	public override uint32(): number {
+		my_console.pad_log("[uint32] pos=%o",this.pos);
 		this.last_pos=this.pos;
 		let ret=super.uint32();
 		let diff=this.pos-this.last_pos;
