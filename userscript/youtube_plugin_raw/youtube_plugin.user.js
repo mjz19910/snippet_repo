@@ -5185,14 +5185,17 @@ class HandleTypes extends BaseService {
 		empty_object(y);
 	}
 }
-/** @arg {{}} obj */
+/** @template {{}} T @arg {{} extends T?T:never} obj */
 function empty_object(obj) {
 	let keys=get_keys_of(obj);
 	if(!keys.length) return;
 	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
 }
-/** @arg {{}[]} x */
+/** @template {{}} T @arg {({} extends T?T:never)[]} x */
 function empty_objects(...x) {
+	for(let v of x) {
+		empty_object(v);
+	}
 	iterate(x,empty_object);
 }
 //#endregion
