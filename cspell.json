@@ -110,6 +110,7 @@
       "idents",
       "idxoff",
       "ilen",
+      "Incrementer",
       "INMEMORY",
       "Instream",
       "ipcc",

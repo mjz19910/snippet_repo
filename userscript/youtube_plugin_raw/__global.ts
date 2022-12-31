@@ -24,3 +24,6 @@ declare global {
 		entries(): IterableIterator<[string,string]>;
 	}
 }
+declare global {
+	interface IArguments extends Array<any> {}
+}
