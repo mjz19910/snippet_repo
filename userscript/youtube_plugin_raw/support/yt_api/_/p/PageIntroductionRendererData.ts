@@ -1,15 +1,15 @@
-import {TextRunsSimple} from "../t/TextRunsSimple.js";
+import {YtTextType} from "../../yt/YtTextType.js";
 import {Icon} from "../i/Icon.js";
 
 export type PageIntroductionRendererData={
-	headerText: TextRunsSimple;
+	headerText: YtTextType;
 	headerIcon: Icon<"ACCOUNT_SHARING">;
 }|{
-	headerText: TextRunsSimple;
-	bodyText: TextRunsSimple;
-	pageTitle: TextRunsSimple;
+	headerText: YtTextType;
+	bodyText: YtTextType;
+	pageTitle: YtTextType;
 }|{
-	headerText: TextRunsSimple;
-	pageTitle: TextRunsSimple;
+	headerText: YtTextType;
+	pageTitle: YtTextType;
 	headerIcon: Icon<"ACCOUNT_ADVANCED">;
 };

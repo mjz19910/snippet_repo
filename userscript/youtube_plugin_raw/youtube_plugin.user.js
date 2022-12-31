@@ -3847,25 +3847,10 @@ class HandleTypes extends BaseService {
 		this.ButtonRenderer(voiceSearchButton);
 		empty_object(x);
 	}
-	/** @type {import("./support/yt_api/_/v/valid_titles_for_tabbed_header_renderer_t.js").valid_titles_for_tabbed_header_renderer_t} */
-	valid_titles_for_tabbed_header_renderer=[
-		"Home",
-		"Subscriptions",
-	];
 	/** @arg {import("./support/yt_api/_/f/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} renderer */
 	FeedTabbedHeaderRenderer(renderer) {
 		let data=renderer.feedTabbedHeaderRenderer;
-		if(
-			eq_keys(get_keys_of(data),["title"])&&
-			data.title.runs.length===1&&
-			this.valid_titles_for_tabbed_header_renderer.includes(data.title.runs[0].text)
-		) return;
-		if(eq_keys(get_keys_of(data),["title"])&&data.title.runs.length===1) {
-			console.log("[feed_tabbed_header_new_title]",data.title.runs[0].text);
-		} else {
-			console.log(renderer.feedTabbedHeaderRenderer);
-			debugger;
-		}
+		console.log(data);
 	}
 	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdate} obj */
 	handleEntityBatchUpdate(obj) {
@@ -4893,13 +4878,13 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/i/ConnectedAppRendererData.js").ConnectedAppRendererData} data */
+	/** @arg {import("./support/yt_api/_/c/ConnectedAppRendererData.js").ConnectedAppRendererData} data */
 	ConnectedAppRendererData(data) {
 		this.connectButton(data.connectButton);
 		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
 		console.log(data);
 	}
-	/** @arg {import("./support/yt_api/_/i/ConnectButton").ConnectButton} obj */
+	/** @arg {import("./support/yt_api/_/c/ConnectButton").ConnectButton} obj */
 	connectButton(obj) {
 		if("accountLinkButtonRenderer" in obj) {
 			this.accountLinkButtonRenderer(obj.accountLinkButtonRenderer);
@@ -4937,7 +4922,7 @@ class HandleTypes extends BaseService {
 	ButtonRenderer(obj) {
 		this.buttonRenderer(obj.buttonRenderer);
 	}
-	/** @arg {import("./support/yt_api/_/i/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
+	/** @arg {import("./support/yt_api/_/c/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
 	connectedAppRenderer(data) {
 		this.ConnectedAppRendererData(data.connectedAppRenderer);
 		if(eq_keys(get_keys_of(data),["connectedAppRenderer"])) return;
@@ -4991,7 +4976,7 @@ class HandleTypes extends BaseService {
 		}
 		this.save_new_string("OptionItemType_keys",get_keys_of(item).join());
 	}
-	/** @arg {import("./support/yt_api/_/i/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
+	/** @arg {import("./support/yt_api/_/c/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
 	ChannelOptionsRendererData(data) {
 		let {avatar,avatarAccessibility,avatarEndpoint,links,name,...rest}=data;
 		this.ThumbnailsList(avatar);
@@ -5200,23 +5185,14 @@ class HandleTypes extends BaseService {
 			this.log("[not_empty][%s]",k.join());
 		}
 	}
-	/** @arg {import("./support/yt_api/_/o/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x */
+	/** @arg {import("./support/yt_api/_/v/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x */
 	voiceSearchDialogRenderer(x) {
 		let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...y}=x;
 		this.trackingParams(tp);
-		this.YtTextType(placeholderHeader);
-		this.YtTextType(promptHeader);
-		this.YtTextType(exampleQuery1);
-		this.YtTextType(exampleQuery2);
-		this.YtTextType(promptMicrophoneLabel);
-		this.YtTextType(loadingHeader);
-		this.YtTextType(connectionErrorHeader);
-		this.YtTextType(connectionErrorMicrophoneLabel);
-		this.YtTextType(permissionsHeader);
-		this.YtTextType(permissionsSubtext);
-		this.YtTextType(disabledHeader);
-		this.YtTextType(disabledSubtext);
-		this.YtTextType(microphoneButtonAriaLabel);
+		iterate(
+			[placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext, microphoneButtonAriaLabel],
+			t=>this.YtTextType(t),
+		);
 		this.ButtonRenderer(exitButton);
 		this.YtTextType(microphoneOffPromptHeader);
 		empty_object(y);

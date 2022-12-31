@@ -1,9 +1,9 @@
+import {YtTextType} from "../../yt/YtTextType.js";
 import {CommentSimpleboxRenderer} from "./CommentSimpleboxRenderer";
-import {TextRunsSimple} from "../t/TextRunsSimple";
 
 export type CommentsHeaderRendererData={
-	commentsCount: TextRunsSimple;
-	countText: TextRunsSimple;
+	commentsCount: YtTextType;
+	countText: YtTextType;
 	createRenderer: CommentSimpleboxRenderer;
 	customEmojis: {};
 	loggingDirectives: {};
