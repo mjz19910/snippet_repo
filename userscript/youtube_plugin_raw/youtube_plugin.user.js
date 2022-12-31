@@ -4598,10 +4598,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} data */
 	WatchPageResponse(data) {
-		let {page,playerResponse,}=data;
-		this.primitive(page);
-		this.save_keys("WatchPageResponse",data);
-		this.WatchResponsePlayer(playerResponse);
+		this.WatchResponsePlayer(data.playerResponse);
 	}
 	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data */
 	PlaylistPageResponse(data) {
