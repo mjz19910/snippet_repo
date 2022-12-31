@@ -3141,6 +3141,9 @@ class CsiService extends BaseService {
 	rid_keys=[
 		"GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid",
 		"GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid",
+		"GetSubscriptions_rid",
+		"GetNotificationsMenu_rid",
+		"RecordNotificationInteractions_rid",
 		"GetAttestationChallenge_rid",
 		"GetHome_rid",
 		"GetPlayer_rid","GetPlaylist_rid",
@@ -4386,15 +4389,16 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowseResponse.js").BrowsePageResponse} data */
 	BrowsePageResponse(data) {
-		let ok=cast_as(filter_out_keys(get_keys_of(data),split_string("page,endpoint,response,url")));
-		switch(ok[0]) {
-			case "graftedVes": break;
-		}
+		let ok=cast_as(filter_out_keys(get_keys_of(data),split_string("page,endpoint,response,url,expirationTime,graftedVes")));
 		if("expirationTime" in data) {
 			this.primitive(data.expirationTime,"number");
 		}
 		if("graftedVes" in data) {
 			this.graftedVes(data.graftedVes);
+		}
+		if("previousCsn" in data) {
+			console.log("[BrowsePage_csn]",data.previousCsn);
+			this.primitive(data.previousCsn,"string");
 		}
 		if(!("page" in data)) return;
 		this.BrowseResponseContent(data.response);
