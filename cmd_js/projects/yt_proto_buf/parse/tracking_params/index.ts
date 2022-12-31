@@ -95,7 +95,11 @@ export class MyReader extends protobufjs.Reader {
 			return this.uint32();
 		});
 		my_console.pad_log("fieldId=%o type=%o",info>>>3,info&7);
-		return super.skipType(wireType);
+		let prev_pad=pad;
+		pad+=pad_with;
+		let ret=super.skipType(wireType);
+		pad=prev_pad;
+		return ret;
 	}
 	skipTypeEx(fieldId: number,wireType: number) {
 		let console=my_console;
