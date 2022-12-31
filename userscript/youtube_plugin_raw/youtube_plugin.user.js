@@ -4422,16 +4422,16 @@ class HandleTypes extends BaseService {
 			this.ButtonRenderer(exitButton);
 			this.YtTextType(microphoneOffPromptHeader);
 		}
-		if("notificationActionRenderer" in x) {
+		if(!cr&&"notificationActionRenderer" in x) {
 			const {notificationActionRenderer: a0,...c}=x; cr=c;
 			const {responseText,trackingParams,...a}=a0;
 			empty_objects(a);
 		}
-		if("ghostGridRenderer" in x) {
+		if(!cr&&"ghostGridRenderer" in x) {
 			const {ghostGridRenderer: a0,...c}=x; cr=c;
 			this.ghostGridRenderer(a0);
 		}
-		if("trackingParams" in x) {
+		if(!cr&&"trackingParams" in x) {
 			const {trackingParams: tp,...c}=x; cr=c;
 			this.trackingParams(tp);
 		}
@@ -4635,8 +4635,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
 	on_new_page_url(data) {
-		console.log("[probably_new_section]",data.url.split("/").slice(1)[0].split("_").slice(1));
-		console.log("[new_page]",data.url);
 		let res=data.url.split("/").slice(1)?.[0].split("_").slice(1);
 		if(res) {
 			this.save_new_string("page_section",res);
