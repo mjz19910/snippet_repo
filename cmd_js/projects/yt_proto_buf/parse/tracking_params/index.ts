@@ -83,12 +83,14 @@ export class MyReader extends protobufjs.Reader {
 		this.last_pos=this.pos;
 	}
 	override skip(length?: number) {
+		let start_pos=this.pos;
+		let ret=super.skip(length);
 		if(length!==void 0) {
-			my_console.pad_log("asked to skip", length);
+			my_console.pad_log("asked to skip from %o to",start_pos,this.pos);
 		} else {
-			my_console.pad_log("asked to skip VarInt");
+			my_console.pad_log("asked to skip VarInt from %o to",start_pos,this.pos);
 		}
-		return super.skip(length);
+		return ret;
 	}
 	public override uint32(): number {
 		this.last_pos=this.pos;
