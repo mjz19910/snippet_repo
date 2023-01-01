@@ -1,6 +1,6 @@
-import {YtEndpoint} from "../json/YtEndpoint.js";
-import json from "./json/page_type_browse_detail.json";
-export function use_page_type_browse_detail() {
+async function use_page_type_browse_detail() {
+	const watch_j_response=(await import("./json/page_type_browse_detail.json")).default;
+	const json: typeof watch_j_response=watch_j_response;
 	type Json=typeof json;
 	type json_d=keyof Json;
 	type Je=Json["endpoint"]|JR["endpoint"];

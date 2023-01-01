@@ -1,4 +1,4 @@
-export type UrlParseResFor2<
+type UrlParseResFor2<
 	T extends string,
 	Search extends string,
 	Pathname extends string>={
