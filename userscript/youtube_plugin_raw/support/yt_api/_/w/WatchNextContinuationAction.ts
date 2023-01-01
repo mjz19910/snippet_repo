@@ -1,7 +1,4 @@
-import {WatchNextItem} from "./WatchNextItem";
-
-
-export type WatchNextContinuationAction={
+type WatchNextContinuationAction={
 	targetId: "watch-next-feed";
 	continuationItems: WatchNextItem[];
 };

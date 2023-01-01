@@ -1,12 +1,5 @@
-import {YtEndpoint} from "../n/YtEndpoint.js";
-import {TrackingParams} from "../../_abc/t/TrackingParams.js";
-import {makeText} from "./makeText";
-import {MakeTextRuns} from "./MakeTextRuns";
-import {InfoIcon} from "../../_abc/i/InfoIcon";
-
-
-export interface MenuNavigationItemRendererData {
-	text: MakeTextRuns<[makeText<"My Ad Centre">]>;
-	icon: InfoIcon;
+type MenuNavigationItemRendererData={
+	text: YtTextType;
+	icon: Icon<never>;
 	navigationEndpoint: YtEndpoint;
 }

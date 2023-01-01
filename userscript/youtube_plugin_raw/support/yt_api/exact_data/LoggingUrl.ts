@@ -1,6 +1,5 @@
 import {ParseUrlSearchParams} from "../../search_params_parse/SearchParamsParse";
 import {UrlParse} from "../../url_parse/UrlParse";
-import {YtEndpoint} from "../_/b/YtEndpoint.js";
 import {Decay} from "./Decay";
 
 export interface LoggingUrl {

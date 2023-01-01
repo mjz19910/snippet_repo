@@ -1,2 +1,1 @@
-import {SettingsEndpointPages} from "./SettingsEndpointPages";
-export type SettingsIdType=`SP${SettingsEndpointPages}`;
+type SettingsIdType=`SP${SettingsEndpointPages}`;

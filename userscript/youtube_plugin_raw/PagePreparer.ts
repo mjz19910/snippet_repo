@@ -1,3 +1,3 @@
-export type PagePreparer={
+type PagePreparer={
 	cancel(): void;
 };

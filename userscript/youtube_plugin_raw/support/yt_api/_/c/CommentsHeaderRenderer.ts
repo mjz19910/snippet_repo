@@ -1,5 +1,3 @@
-import {CommentsHeaderRendererData} from "./CommentsHeaderRendererData.js";
-
-export type CommentsHeaderRenderer={
+type CommentsHeaderRenderer={
 	commentsHeaderRenderer: CommentsHeaderRendererData;
 };

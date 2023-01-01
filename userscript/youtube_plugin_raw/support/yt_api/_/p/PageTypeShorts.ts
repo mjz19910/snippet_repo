@@ -1,12 +1,10 @@
-import {ShortsPageResponse} from "../s/ShortsPageResponse.js";
-import {ReelWatchEndpointData} from "../r/ReelWatchEndpointData";
-export const use_post_req_uniq_symbol:unique symbol=Symbol("PostTag");
-export const web_cmd_api_url:unique symbol=Symbol("ApiUrl");
+const use_post_req_uniq_symbol:unique symbol=Symbol("PostTag");
+const web_cmd_api_url:unique symbol=Symbol("ApiUrl");
 
-export type PageTypeShorts={
+type PageTypeShorts={
 	pageType: "shorts";
 	endpoint: ReelWatchEndpointData;
-	response: ShortsPageResponse;
+	response: {};
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

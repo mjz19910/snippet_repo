@@ -1,9 +1,7 @@
-import {ChannelPageResponse} from "../c/ChannelPageResponse";
-
-export type PageTypeChannel={
+type PageTypeChannel={
 	pageType: "channel";
 	endpoint: {};
-	response: ChannelPageResponse;
+	response: {};
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

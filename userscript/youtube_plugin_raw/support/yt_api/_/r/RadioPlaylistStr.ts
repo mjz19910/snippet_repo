@@ -1,1 +1,1 @@
-export type RadioPlaylistStr<T extends string>=`RD${T}`;
+type RadioPlaylistStr<T extends string>=`RD${T}`;

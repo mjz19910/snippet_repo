@@ -1,3 +1,3 @@
-export interface ReelWatchEndpointData {
+type ReelWatchEndpointData={
 	videoId: string;
-}
+};

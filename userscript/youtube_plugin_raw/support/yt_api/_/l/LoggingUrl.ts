@@ -1,3 +1,3 @@
-export type LoggingUrl={
+type LoggingUrl={
 	baseUrl: string;
 };

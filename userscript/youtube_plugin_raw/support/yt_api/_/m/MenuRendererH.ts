@@ -1,5 +1,3 @@
-import {MenuRenderer} from "./MenuRenderer";
-
-export type MenuRendererH={
+type MenuRendererH={
 	menuRenderer: MenuRenderer;
 };

@@ -1,9 +1,5 @@
-import {SimpleTextRun} from "./SimpleTextRun";
-import {SettingsOptionItemType} from "./SettingsOptionItemType";
-
-
-export type OptionWithText={
+type OptionWithText={
 	options: SettingsOptionItemType[];
-	title: SimpleTextRun;
-	text: SimpleTextRun;
+	title: YtTextType;
+	text: YtTextType;
 };

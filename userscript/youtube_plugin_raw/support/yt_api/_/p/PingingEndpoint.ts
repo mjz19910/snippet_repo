@@ -1,3 +1,3 @@
-export type PingingEndpoint={
+type PingingEndpoint={
 	hack: true;
 };

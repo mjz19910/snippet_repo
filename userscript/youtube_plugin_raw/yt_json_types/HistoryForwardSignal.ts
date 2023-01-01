@@ -1,3 +1,3 @@
-export type HistoryForwardSignal={
+type HistoryForwardSignal={
 	signal: "HISTORY_FORWARD";
 };
