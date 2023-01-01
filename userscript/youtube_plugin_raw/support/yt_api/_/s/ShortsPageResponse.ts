@@ -1,13 +1,12 @@
-import {ReelWatchEndpoint} from "./ReelWatchEndpoint";
 import {ShortsResponsePlayer} from "./ShortsResponsePlayer";
 import {ShortsResponse} from "./ShortsResponse";
-import {ReelWatchSequenceResponse} from "./ReelWatchSequenceResponse";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 
 export type ShortsPageResponse={
 	page: "shorts";
-	endpoint: ReelWatchEndpoint;
+	endpoint: YtEndpoint;
 	response: ShortsResponse;
 	playerResponse: ShortsResponsePlayer;
-	reelWatchSequenceResponse: ReelWatchSequenceResponse;
+	reelWatchSequenceResponse: {};
 	url: `/shorts/${string}`;
 };

@@ -1,9 +1,9 @@
-import {BrowseEndpoint} from "./BrowseEndpoint.js";
+import {YtEndpoint} from "../../yt/YtEndpoint.js";
 import {BrowseResponseContent} from "./BrowseResponseContent";
 
 export type BrowsePageResponseBase={
 	page: "browse";
-	endpoint: BrowseEndpoint;
+	endpoint: YtEndpoint;
 	response: BrowseResponseContent;
 	url: "/";
 };

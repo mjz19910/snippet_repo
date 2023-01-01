@@ -2206,7 +2206,7 @@ function filter_out_keys(keys,to_remove) {
 	}
 	return ok_e;
 }
-
+inject_api_yt.filter_out_keys=filter_out_keys;
 /** @typedef {import("./support/yt_api").YtJsonRequest} YtJsonRequest */
 /** @typedef {import("./support/yt_api").YtJsonUnsupportedRequest} YtJsonUnsupportedRequest */
 /** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
@@ -2953,7 +2953,7 @@ function no_handler({parts,index}) {
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }
-
+inject_api_yt.has_keys=has_keys;
 /** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/make/Split.js").Split<X,string extends S?",":S>} */
 function split_string(x,s=cast_as(",")) {
 	let r=x.split(s);
@@ -3044,6 +3044,7 @@ class BaseServicePrivate {
 	}
 	/** @arg {string} key @arg {string|string[]} x */
 	save_new_string(key,x) {
+		if(key==="any") debugger;
 		if(!(x instanceof Array)&&x.startsWith("http://www.youtube.com/channel/UC")) {
 			if(this.log_skipped_strings) console.log("skip channel like",key,x);
 			return;
@@ -3805,62 +3806,21 @@ class HandleTypes extends BaseService {
 	BrowseResponseContentContents(x) {
 		this.save_keys("any",x);
 	}
-	item_by_layout_id=new Map;
-	/** @arg {{layoutId:string}} node */
-	item_with_layout_id(node) {
-		if(this.log_layout_ids) console.log("[node_layout_id] [%s]",node.layoutId);
-		this.item_by_layout_id.set(node.layoutId,node);
-	}
-	log_layout_ids=false;
 	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} x */
 	adLayoutLoggingData(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
-	AdLayoutMetadataItem(item) {
-		switch(item.layoutType) {
-			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": this.item_with_layout_id(item); break;
-			default: debugger;
-		}
-		this.adLayoutLoggingData(item.adLayoutLoggingData);
+	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} x */
+	AdLayoutMetadataItem(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem[]} metadata */
-	adLayoutMetadata(metadata) {
-		for(let item of metadata) {
-			this.AdLayoutMetadataItem(item);
-		}
+	/** @arg {import("./support/yt_api/_/a/AdSlotMetadata_0.js").AdSlotMetadata} x */
+	adSlotMetadata(x) {
+		this.save_keys("any",x);
 	}
-	log_ad_metadata=false;
-	/** @arg {import("./support/yt_api/_/a/AdSlotMetadata_0.js").AdSlotMetadata} metadata */
-	adSlotMetadata(metadata) {
-		switch(metadata.slotType) {
-			case "SLOT_TYPE_IN_FEED": break;
-			default: debugger;
-		}
-		if(this.log_ad_metadata) {
-			console.log("ad slot meta pos",metadata.slotType);
-			console.log("ad slot meta slot_id [%s]",metadata.slotId);
-			console.log("ad slot meta pos [%o]",metadata.slotPhysicalPosition);
-		}
-	}
-	log_ads_commands=false;
-	/** @arg {import("./support/yt_api/_/a/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} command */
-	adsControlFlowOpportunityReceivedCommand(command) {
-		let ok=filter_out_keys(get_keys_of(command),split_string("opportunityType,isInitialLoad,enablePacfLoggingWeb,",","));
-		if("adSlotAndLayoutMetadata" in command) {
-			for(let item of command.adSlotAndLayoutMetadata) {
-				this.adLayoutMetadata(item.adLayoutMetadata);
-				this.adSlotMetadata(item.adSlotMetadata);
-			}
-		}
-		if(eq_keys(ok,[])||eq_keys(ok,["adSlotAndLayoutMetadata"])) {
-			if(this.log_ads_commands) console.log("[browse_response_rx_ad] is_initial_load [%o]",command.isInitialLoad);
-			if(this.log_ads_commands) console.log("[browse_response_rx_ad] PacfLogging_web [%o]",command.enablePacfLoggingWeb);
-			if(command.opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
-		} else {
-			console.log("[%s] %o",ok.join(","),command);
-			debugger;
-		}
+	/** @arg {import("./support/yt_api/_/a/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} x */
+	adsControlFlowOpportunityReceivedCommand(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/yt/YtEndpoint.js").YtEndpoint} x */
 	endpoint(x) {
@@ -3874,9 +3834,9 @@ class HandleTypes extends BaseService {
 	NoStyleButtonTypes(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} cmd */
-	addToPlaylistCommand(cmd) {
-		console.log(cmd);
+	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} x */
+	addToPlaylistCommand(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/ServiceEndpointAction.js").ServiceEndpointAction} x */
 	ServiceEndpointAction(x) {
@@ -3884,34 +3844,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/yt/YtSignalAction.js").YtSignalAction} x */
 	signalAction(x) {
-		switch(x.signal) {
-			case "HISTORY_BACK": break;
-			case "HISTORY_FORWARD": break;
-			default: debugger;
-		};
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction} obj */
-	openPopupAction(obj) {
-		switch(obj.popupType) {
-			case "DIALOG": this.popup(obj.popup); break;
-			case "DROPDOWN": this.popup(obj.popup); break;
-			case "TOAST": this.popup(obj.popup); break;
-			case "TOP_ALIGNED_DIALOG": this.popup(obj.popup); break;
-			default: console.log(obj);
-		}
+	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction} x */
+	openPopupAction(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/a/AllPopups.js").AllPopups} x */
 	popup(x) {
-		let ok=get_keys_of(x);
-		switch(ok[0]) {case "aboutThisAdRenderer": if(ok[0] in x) this.renderer(x); return;}
-		switch(ok[0]) {case "confirmDialogRenderer": if(ok[0] in x) this.renderer(x); return;}
-		switch(ok[0]) {case "multiPageMenuRenderer": if(ok[0] in x) this.renderer(x); return;}
-		switch(ok[0]) {case "notificationActionRenderer": if(ok[0] in x) this.renderer(x); return;}
-		switch(ok[0]) {
-			case "voiceSearchDialogRenderer": if(ok[0] in x) this.renderer(x); return;
-			default: if(ok[0] in x) {console.log("use default for",x,x[ok[0]]); this.renderer(x);}
-		}
-		console.log("[unk_popup_info][%s]",ok,x);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
 	renderer(x) {
@@ -3919,77 +3860,43 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x */
 	ToastPopupTag(x) {
-		const {notificationActionRenderer: v,...y}=x;
-		this.notificationActionRenderer(v);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/d/DropdownPopup.js").DropdownPopup} obj */
-	DropdownPopup(obj) {
-		console.log(obj);
-		debugger;
+	/** @arg {import("./support/yt_api/_/d/DropdownPopup.js").DropdownPopup} x */
+	DropdownPopup(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/c/ConfirmDialogRendererData").ConfirmDialogRendererData} data */
-	ConfirmDialogRendererData(data) {
-		let ok=get_keys_of(data);
-		this.ButtonRenderer(data.cancelButton);
-		this.ButtonRenderer(data.confirmButton);
-		if(eq_keys(ok,["cancelButton","confirmButton","dialogMessages","primaryIsCancel","title","trackingParams"])) return;
-		console.log(ok);
-
+	/** @arg {import("./support/yt_api/_/c/ConfirmDialogRendererData").ConfirmDialogRendererData} x */
+	ConfirmDialogRendererData(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/d/DialogPopup.js").DialogPopup} obj */
-	DialogPopup(obj) {
-		console.log(obj);
+	/** @arg {import("./support/yt_api/_/d/DialogPopup.js").DialogPopup} x */
+	DialogPopup(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpointData} ep */
-	SignalServiceEndpointData(ep) {
-		for(let action of ep.actions) {
-			this.ServiceEndpointAction(action);
-		}
-		if(ep.signal!=="CLIENT_SIGNAL") {
-			console.log("[new_signal]",ep.signal);
-		}
+	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpointData} x */
+	SignalServiceEndpointData(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint */
-	WatchEndpointData(endpoint) {
-		console.log(endpoint);
+	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} x */
+	WatchEndpointData(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} data */
-	commandMetadata(data) {
-		this.webCommandMetadata(data.webCommandMetadata);
+	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} x */
+	commandMetadata(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} endpoint */
-	BrowseEndpointData(endpoint) {
-		parse_browse_id(endpoint.browseId);
-		if("params" in endpoint) {
-			console.log("[browse_params] [%s]",endpoint.params);
-		}
-		if(eq_keys(get_keys_of(endpoint),["browseId"])) return;
-		if(has_keys(get_keys_of(endpoint),"browseId,params")) return;
+	/** @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} x */
+	BrowseEndpointData(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} renderer */
-	endscreenElementRenderer(renderer) {
-		switch(renderer.style) {
-			case "VIDEO": break;
-			case "CHANNEL": break;
-			default: console.log("[endscreen_element]",renderer.style); debugger;
-		}
-		let ok_3=filter_out_keys(get_keys_of(renderer),"style,image,left,width,top,aspectRatio,startMs,endMs,title,metadata,endpoint,trackingParams,id".split(","));
-		if(has_keys(ok_3,"thumbnailOverlays")) return;
-		if(has_keys(ok_3,"icon,callToAction,dismiss,hovercardButton,isSubscribe")) return;
-		console.log("[on_page_type_watch_log_element] element ok_3 [%s]",ok_3.join(","));
-		debugger;
+	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} x */
+	endscreenElementRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/g/GraftedVeItem.js").GraftedVeItem[]} ves */
-	graftedVes(ves) {
-		for(let ve of ves) {
-			this.GraftedVeItem(ve);
-		}
-	}
-	/** @arg {import("./support/yt_api/_/g/GraftedVeItem.js").GraftedVeItem} item */
-	GraftedVeItem(item) {
-		console.log("csn",item.csn);
-		this.veData(item.veData);
+	/** @arg {import("./support/yt_api/_/g/GraftedVeItem.js").GraftedVeItem} x */
+	GraftedVeItem(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/v/VeData.js").VeData} x */
 	veData(x) {
@@ -4001,15 +3908,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} x */
 	DataResponsePageType(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} x */
-	WatchPageResponse(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} x */
-	PlaylistPageResponse(x) {
-		this.save_keys("any",x);
+		this.save_keys("DataResponsePageType",x);
+		x.endpoint;
 	}
 	/** @arg {import("./support/yt_api/_/r/ResponsePageUrl").ResponsePageUrl} x */
 	onResponsePageUrl(x) {
@@ -4142,26 +4042,9 @@ class HandleTypes extends BaseService {
 	ContinuationItemRendererData(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints */
-	onResponseReceivedEndpoints(endpoints) {
-		iterate(endpoints,(endpoint) => {
-			this.endpoint(endpoint);
-		});
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsOptionItemType.js").SettingsOptionItemType} item */
-	SettingsOptionItemType(item) {
-		if("channelOptionsRenderer" in item) {
-			return this.RendererData(item.channelOptionsRenderer);
-		} else if("settingsSwitchRenderer" in item) {
-			return this.RendererData(item.settingsSwitchRenderer);
-		} else if("settingsCheckboxRenderer" in item) {
-			return this.RendererData(item.settingsCheckboxRenderer);
-		} else if("settingsRadioOptionRenderer" in item) {
-			return this.RendererData(item.settingsRadioOptionRenderer);
-		} else if("copyLinkRenderer" in item) {
-			return this.RendererData(item.copyLinkRenderer);
-		}
-		this.save_new_string("OptionItemType_keys",get_keys_of(item).join());
+	/** @arg {import("./support/yt_api/_/s/SettingsOptionItemType.js").SettingsOptionItemType} x */
+	SettingsOptionItemType(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/c/ChannelOptionsRendererData.js").ChannelOptionsRendererData} x */
 	ChannelOptionsRendererData(x) {
@@ -4171,27 +4054,13 @@ class HandleTypes extends BaseService {
 	ThumbnailsList(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v */
-	Thumbnail(v) {
-		let {height,url,width,...rest}=v;
-		this.primitive(height);
-		this.primitive(url);
-		this.primitive(width);
-		empty_object(rest);
+	/** @arg {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} x */
+	Thumbnail(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/w/WebCommandPageType.js").WebCommandPageType} type */
-	WebCommandPageType(type) {
-		switch(type) {
-			case "WEB_PAGE_TYPE_BROWSE": break;
-			case "WEB_PAGE_TYPE_CHANNEL": break;
-			case "WEB_PAGE_TYPE_PLAYLIST": break;
-			case "WEB_PAGE_TYPE_SHORTS": break;
-			case "WEB_PAGE_TYPE_WATCH": break;
-			case "WEB_PAGE_TYPE_SETTINGS": break;
-			case "WEB_PAGE_TYPE_SEARCH": break;
-			case "WEB_PAGE_TYPE_UNKNOWN": break;
-			default: debugger;
-		};
+	/** @arg {import("./support/yt_api/_/w/WebCommandPageType.js").WebCommandPageType} x */
+	WebCommandPageType(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} x */
 	webCommandMetadata(x) {
