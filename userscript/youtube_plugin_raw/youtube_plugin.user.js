@@ -47,8 +47,6 @@ let saved_data=cast_as({});
 inject_api_yt.saved_data=saved_data;
 
 const is_yt_debug_enabled=false;
-/** @template T @arg {T&{x:1}} _v */
-function assert_is_never(_v) {}
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
 	void value,_constructor_type;
@@ -3736,13 +3734,6 @@ function empty_object(obj) {
 	if(!keys.length) return;
 	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
 }
-/** @template {{}} T @arg {({} extends T?T:never)[]} x */
-function empty_objects(...x) {
-	for(let v of x) {
-		empty_object(v);
-	}
-	iterate(x,empty_object);
-}
 class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response */
 	WatchResponsePlayer(response) {
@@ -3807,50 +3798,17 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} renderer */
-	DesktopTopbarRenderer(renderer) {
-		this.DesktopTopbarRendererData(renderer.desktopTopbarRenderer);
+	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRendererData.js").DesktopTopbarRendererData} data */
-	DesktopTopbarRendererData(data) {
-		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...x}=data;
-		this.trackingParams(trackingParams);
-		this.topbarLogoRenderer(logo.topbarLogoRenderer);
-		this.FusionSearchboxRenderer(searchbox);
-		this.primitive(countryCode);
-		iterate(topbarButtons,x => this.TopbarButtonItem(x));
-		this.HotkeyDialogRenderer(hotkeyDialog);
-		this.ButtonRenderer(backButton);
-		this.ButtonRenderer(forwardButton);
-		this.ButtonRenderer(a11ySkipNavigationButton);
-		this.ButtonRenderer(voiceSearchButton);
-		empty_object(x);
-	}
-	/** @arg {import("./support/yt_api/_/f/FeedTabbedHeaderRenderer.js").FeedTabbedHeaderRenderer} x */
-	FeedTabbedHeaderRenderer(x) {
-		const {feedTabbedHeaderRenderer}=x;
-		this.FeedTabbedHeaderRendererData(feedTabbedHeaderRenderer);
-	}
-	/**
-	 * @param {import("./support/yt_api/_/f/FeedTabbedHeaderRendererData.js").FeedTabbedHeaderRendererData} x
-	 */
-	FeedTabbedHeaderRendererData(x) {
-		const {title,...y}=x;
-		this.YtTextType(title);
-		empty_object(y);
-	}
-	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdate.js").EntityBatchUpdate} x */
-	handleEntityBatchUpdate(x) {
-		const {entityBatchUpdate,...y}=x;
-		this.EntityBatchUpdateData(entityBatchUpdate);
-		empty_object(y);
+	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRendererData.js").DesktopTopbarRendererData} x */
+	DesktopTopbarRendererData(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdateData.js").EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
-		const {mutations,timestamp,...y}=x;
-		iterate(mutations,mut => this.EntityMutationItem(mut));
-		this.TimestampWithNanos(timestamp);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} mut */
 	EntityMutationItem(mut) {
@@ -3872,18 +3830,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/t/TimestampWithNanos.js").TimestampWithNanos} x */
 	TimestampWithNanos(x) {
 		this.primitives(x.nanos,x.seconds);
-	}
-	/** @arg {import("./support/yt_api/_/r/ReloadContinuationItemsCommand.js").ReloadContinuationItemsCommand} command */
-	ReloadContinuationItemsCommand(command) {
-		let data=command.reloadContinuationItemsCommand;
-		for(let item of data.continuationItems) {
-			if("richItemRenderer" in item) {
-				this.richItemRenderer(item.richItemRenderer);
-			} else {
-				console.log("[reload_continuation_command_item]",item);
-				debugger;
-			}
-		}
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} context */
 	responseContext(context) {
@@ -3913,10 +3859,6 @@ class HandleTypes extends BaseService {
 		let data=renderer.playlistVideoListRenderer;
 		console.log("playlist",data.playlistId);
 	}
-	/** @arg {import("./support/yt_api/_/p/PageIntroductionRenderer.js").PageIntroductionRenderer} item */
-	pageIntroductionRenderer(item) {
-		this.PageIntroductionRendererData(item.pageIntroductionRenderer);
-	}
 	/** @template {{}} T @arg {string} name @arg {T} obj */
 	ok(name,obj) {
 		let arr=get_keys_of(obj);
@@ -3937,144 +3879,21 @@ class HandleTypes extends BaseService {
 		for(let run of text.runs) rest.push(this.TextRun(run));
 		return rest;
 	}
-	/** @private @arg {Exclude<YtTextType,{runs:any}>} x */
-	SimpleText(x) {
-		let {simpleText,accessibility: a,...y}=x;
-		if(a) this.Accessibility(a);
-		this.primitive(simpleText);
-		empty_object(y);
+	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} x */
+	sectionListRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/t/TextRun.js").TextRun[]} arr */
-	TextRun_va(...arr) {
-		iterate(arr,this.TextRun.bind(this));
+	/** @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} x */
+	tabRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @private @arg {YtTextType} text */
-	YtTextType(text) {
-		if(!text) {
-			debugger;
-			return;
-		}
-		if("runs" in text) {
-			this.TextRun_va(...text.runs);
-		} else {
-			this.SimpleText(text);
-		}
+	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} x */
+	twoColumnBrowseResultsRenderer(x) {
+		this.save_keys("any",x);
 	}
-	valid_icon_types=[
-		"ACCOUNT_SHARING",
-		"ACCOUNT_PRIVACY",
-		"ACCOUNT_ADVANCED",
-		"ACCOUNT_BILLING",
-		"ACCOUNT_SETTINGS",
-		"ACCOUNT_PLAYBACK",
-		"ACCOUNT_NOTIFICATIONS",
-		"CLOSE",
-		"SEARCH",
-		"SETTINGS",
-		"YOUTUBE_LOGO",
-	];
-	/** @template {string} T @arg {import("./support/yt_api/_/i/Icon.js").Icon<T>} icon */
-	Icon(icon) {
-		if(!this.valid_icon_types.includes(icon.iconType)) {
-			console.log("[new_icon]",icon);
-			debugger;
-		}
-	}
-	/** @arg {import("./support/yt_api/_/p/PageIntroductionRendererData.js").PageIntroductionRendererData} data */
-	PageIntroductionRendererData(data) {
-		if(!("headerText" in data)) {
-			debugger;
-		}
-		let {headerText,...x}=data;
-		this.YtTextType(headerText);
-		/** @type {typeof x|{}} */
-		let y=x;
-		if("bodyText" in y) {
-			let {bodyText,pageTitle,...z}=y;
-			this.YtTextType(bodyText);
-			this.YtTextType(pageTitle);
-			y=z;
-		}
-		if("pageTitle" in y) {
-			let {pageTitle,...z}=y;
-			this.YtTextType(pageTitle);
-			y=z;
-		}
-		if("headerIcon" in y) {
-			let {headerIcon,...z}=y;
-			this.Icon(headerIcon);
-			y=z;
-		}
-		this.ok("PageIntroductionRendererData",y);
-	}
-	/** @arg {import("./support/yt_api/_/i/ItemSectionRenderer.js").ItemSectionRenderer} renderer */
-	itemSectionRenderer(renderer) {
-		if(!renderer.itemSectionRenderer) {
-			debugger;
-		}
-		let data=renderer.itemSectionRenderer;
-		this.trackingParams(data.trackingParams);
-		let contents=data.contents;
-		for(let content_item of contents) {
-			let ok_first=get_keys_of(content_item)[0];
-			if("playlistVideoListRenderer" in content_item) {
-				this.playlistVideoListRenderer(content_item);
-			} else if("pageIntroductionRenderer" in content_item) {
-				this.pageIntroductionRenderer(content_item);
-			} else if("settingsOptionsRenderer" in content_item) {
-				this.settingsOptionsRenderer(content_item);
-			} else if("connectedAppRenderer" in content_item) {
-				this.connectedAppRenderer(content_item);
-			} else if("shelfRenderer" in content_item) {
-				this.shelfRenderer(content_item);
-			} else {
-				console.log("[need_section_handler][%s]",ok_first);
-				debugger;
-			}
-		}
-	}
-	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} renderer */
-	sectionListRenderer(renderer) {
-		let data=renderer.sectionListRenderer;
-		if(!data) {
-			debugger;
-		}
-		this.trackingParams(data.trackingParams);
-		let contents=data.contents;
-		for(let content_item of contents) {
-			if("itemSectionRenderer" in content_item) {
-				this.itemSectionRenderer(content_item);
-			} else if("continuationItemRenderer" in content_item) {
-				this.continuationItemRenderer(content_item);
-			} else {
-				debugger;
-			}
-		}
-	}
-	/** @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} renderer */
-	tabRenderer(renderer) {
-		this.trackingParams(renderer.trackingParams);
-		if("sectionListRenderer" in renderer.content) {
-			this.sectionListRenderer(renderer.content);
-		};
-	}
-	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} renderer */
-	twoColumnBrowseResultsRenderer(renderer) {
-		if(get_keys_of(renderer)[0]!=="twoColumnBrowseResultsRenderer") {
-			console.log("[handler_invalid]",renderer);
-			return;
-		}
-		let data=renderer.twoColumnBrowseResultsRenderer;
-		for(let tab of data.tabs) {
-			this.tabRenderer(tab.tabRenderer);
-		}
-	}
-	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents */
-	BrowseResponseContentContents(contents) {
-		this.twoColumnBrowseResultsRenderer(contents);
-		if(get_keys_of(contents).length!==1||get_keys_of(contents)[0]!=="twoColumnBrowseResultsRenderer") {
-			console.log("[on_browse_response_contents]",contents);
-		}
+	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} x */
+	BrowseResponseContentContents(x) {
+		this.save_keys("any",x);
 	}
 	item_by_layout_id=new Map;
 	/** @arg {{layoutId:string}} node */
@@ -4133,152 +3952,17 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/r/ResponseReceivedActionItem.js").ResponseReceivedActionItem[]} actions */
-	onResponseReceivedActions(actions) {
-		for(let action of actions) {
-			if("adsControlFlowOpportunityReceivedCommand" in action) {
-				this.adsControlFlowOpportunityReceivedCommand(action.adsControlFlowOpportunityReceivedCommand);
-			} else if("reloadContinuationItemsCommand" in action) {
-				this.ReloadContinuationItemsCommand(action);
-			} else {
-				debugger;
-			}
-		}
-	}
-	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").StateTagItem[]} tags */
-	observedStateTags(tags) {
-		for(let tag of tags) {
-			switch(tag.instruction) {
-				case "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY": break;
-				default: console.log(tag); debugger;
-			};
-		}
-	}
-	/** @arg {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} data */
-	BrowseResponseContent(data) {
-		let {
-			trackingParams,responseContext: rc,
-			contents,frameworkUpdates,header,topbar,sidebar,
-			observedStateTags,cacheMetadata,
-			onResponseReceivedActions,
-			...rest
-		}=data;
-		if(rc) this.responseContext(rc);
-		this.trackingParams(trackingParams);
-		if(contents) this.BrowseResponseContentContents(contents);
-		if(data.frameworkUpdates) {
-			this.handleEntityBatchUpdate(data.frameworkUpdates);
-		}
-		if(data.header) this.header(data.header);
-		if(data.onResponseReceivedActions) {
-			this.onResponseReceivedActions(data.onResponseReceivedActions);
-		}
-		if(data.topbar) this.topbar(data.topbar);
-		if(data.sidebar) this.sidebar(data.sidebar);
-		if(data.observedStateTags) {
-			this.observedStateTags(data.observedStateTags);
-		}
-		if(data.cacheMetadata) {
-			this.cacheMetadata(data.cacheMetadata);
-		}
-		let ok=get_keys_of(rest);
-		for(let k of ok) {
-			assert_is_never(k);
-		}
-		if(ok.length>0) {
-			console.log("[browse_page_context_miss]: [%s]",ok.join(","),data);
-			debugger;
-		}
-	}
-	/** @arg {import("./support/yt_api/_/c/CacheMetadata.js").CacheMetadata} meta */
-	cacheMetadata(meta) {
-		console.log(meta);
-	}
-	/** @arg {import("./support/yt_api/_/a/AccessibilityData.js").AccessibilityData} data */
-	AccessibilityData(data) {
-		if(eq_keys(get_keys_of(data),["label"])) return;
-		console.log(data);
-		debugger;
-	}
-	/** @arg {import("./support/yt_api/_/a/Accessibility.js").Accessibility} data */
-	Accessibility(data) {
-		this.AccessibilityData(data.accessibilityData);
-	}
-	/** @arg {import("./support/yt_api/yt/YtEndpoint.js").YtEndpoint} ep */
-	endpoint(ep) {
-		const {clickTrackingParams: a,commandMetadata: b,...ex}=ep;
-		this.clickTrackingParams(a);
-		this.commandMetadata(b);
-		if("signalServiceEndpoint" in ex) return this.SignalServiceEndpointData(ex.signalServiceEndpoint);
-		if("watchEndpoint" in ex) return this.WatchEndpointData(ex.watchEndpoint);
-		if("urlEndpoint" in ex) return this.UrlEndpointRoot(ex.urlEndpoint);
-		if("browseEndpoint" in ex) return this.BrowseEndpointData(ex.browseEndpoint);
-		if("searchEndpoint" in ex) return this.SearchEndpointData(ex.searchEndpoint);
-		if("setSettingEndpoint" in ep) return this.setSettingEndpoint(ex.setSettingEndpoint);
-		if(Object.keys(ex).length>0) {
-			console.log("[yt_endpoint] [%s]",Object.keys(ex).join(),ex);
-		}
+	/** @arg {import("./support/yt_api/yt/YtEndpoint.js").YtEndpoint} x */
+	endpoint(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").DefaultButtonTypes} x */
 	DefaultButtonRenderer(x) {
-		/** @type {typeof x|{}} */
-		let y;
-		let style,isDisabled,size,trackingParams;
-		({style,size,isDisabled,trackingParams,...y}=x);
-		this.trackingParams(trackingParams);
-		this.primitives(style,isDisabled,size);
-		if("serviceEndpoint" in y) {
-			let {serviceEndpoint,...a}=y; y=a;
-			this.endpoint(serviceEndpoint);
-		}
-	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").SuggestiveButtonTypes} x */
-	SuggestiveButtonRenderer(x) {
-		let {style,isDisabled,size,trackingParams,text,...y}=x;
-		this.trackingParams(trackingParams);
-		this.primitives(style,isDisabled,size);
-		this.YtTextType(text);
-		if("serviceEndpoint" in y) {
-			let {serviceEndpoint,...a}=y;
-			empty_object(a);
-			this.endpoint(serviceEndpoint);
-			return;
-		} else if("navigationEndpoint" in y) {
-			let {navigationEndpoint,accessibilityData,command,...a}=y;
-			empty_object(a);
-			this.Accessibility(accessibilityData);
-			this.endpoint(command);
-			this.endpoint(navigationEndpoint);
-			return;
-		} else if("accessibilityData" in y) {
-			let {accessibilityData,command,...a}=y;
-			empty_object(a);
-			this.Accessibility(accessibilityData);
-			this.endpoint(command);
-			return;
-		}
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
 	NoStyleButtonTypes(x) {
-		let {trackingParams,command,...y}=x;
-		this.trackingParams(trackingParams);
-		this.endpoint(command);
-		empty_object(y);
-	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").ButtonRendererData} renderer */
-	buttonRenderer(renderer) {
-		if(!("style" in renderer)) {
-			this.NoStyleButtonTypes(renderer);
-			return;
-		}
-		switch(renderer.style) {
-			case "STYLE_DEFAULT": this.DefaultButtonRenderer(renderer); break;
-			case "STYLE_SUGGESTIVE": this.SuggestiveButtonRenderer(renderer); break;
-			case void 0: this.NoStyleButtonTypes(renderer); break;
-			default: break;
-		}
-		this.save_new_string("button_renderer_style",renderer.style);
+		this.save_keys("any",x);
 	}
 	/** @arg {bigint|string|number|boolean} value */
 	primitive(value) {
@@ -4295,20 +3979,9 @@ class HandleTypes extends BaseService {
 	addToPlaylistCommand(cmd) {
 		console.log(cmd);
 	}
-	/** @arg {import("./support/yt_api/_/s/ServiceEndpointAction.js").ServiceEndpointAction} action */
-	ServiceEndpointAction(action) {
-		let {clickTrackingParams: ct,...rest}=action;
-		this.clickTrackingParams(ct);
-		if("addToPlaylistCommand" in rest) {
-			this.addToPlaylistCommand(rest.addToPlaylistCommand);
-		} else if("openPopupAction" in rest) {
-			this.openPopupAction(rest.openPopupAction);
-		} else if("signalAction" in action) {
-			this.signalAction(action.signalAction);
-		} else {
-			let k=get_keys_of(rest);
-			console.log("[service_action] [%s]",k.join(),rest);
-		}
+	/** @arg {import("./support/yt_api/_/s/ServiceEndpointAction.js").ServiceEndpointAction} x */
+	ServiceEndpointAction(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/yt/YtSignalAction.js").YtSignalAction} x */
 	signalAction(x) {
@@ -4343,51 +4016,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
 	renderer(x) {
-		let cr=null;
-		let ok=get_keys_of(x);
-		this.save_new_string("renderer_keys",ok.join());
-		/** @type {string[]} */
-		let m=[];
-		iterate(ok,v => {
-			switch(v) {
-				case "ghostGridRenderer": return;
-				case "notificationActionRenderer": return;
-				case "trackingParams": return;
-				case "confirmDialogRenderer": return;
-				case "url": return;
-				default: m.push(v);
-			}
-		});
-		if(m.length>0) {
-			this.save_new_string("renderer_new_keys",m.join());
-		}
-		if("confirmDialogRenderer" in x) {
-			const {confirmDialogRenderer: a0,...c}=x; empty_object(c);
-			this.ConfirmDialogRendererData(a0);
-		}
-		if("voiceSearchDialogRenderer" in x) {
-			const {voiceSearchDialogRenderer: a0,...c}=x; empty_object(c);
-			this.voiceSearchDialogRenderer(a0);
-		}
-		if("notificationActionRenderer" in x) {
-			const {notificationActionRenderer: a0,...c}=x;
-			const {responseText,trackingParams,...a}=a0;
-			this.YtTextType(responseText);
-			this.primitive(trackingParams);
-			empty_objects(c,a);
-		}
-		if("ghostGridRenderer" in x) {
-			const {ghostGridRenderer: a0,...c}=x; empty_object(c);
-			this.ghostGridRenderer(a0);
-		}
-		if("trackingParams" in x) {
-			const {trackingParams: tp,...c}=x; empty_object(c);
-			this.trackingParams(tp);
-		}
-		if(!cr) return;
-		let ok_1=Object.keys(cr);
-		if(!ok_1.length) return;
-		console.log("[renderer_log] [%s]",Object.keys(cr).join(),cr);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x */
 	ToastPopupTag(x) {
@@ -4421,75 +4050,6 @@ class HandleTypes extends BaseService {
 		if(ep.signal!=="CLIENT_SIGNAL") {
 			console.log("[new_signal]",ep.signal);
 		}
-	}
-	/** @arg {import("./support/yt_api/_/c/ContinuationCommand.js").ContinuationCommand} cmd */
-	continuationCommand(cmd) {
-		console.log(cmd);
-	}
-	/** @arg {import("./support/yt_api/_/s/SimpleMenuHeaderRendererData.js").SimpleMenuHeaderRendererData} renderer */
-	simpleMenuHeaderRenderer(renderer) {
-		for(let button of renderer.buttons) {
-			this.buttonRenderer(button.buttonRenderer);
-		}
-	}
-	/** @arg {import("./support/yt_api/_/h/HeaderTypes.js").HeaderTypes} header */
-	header(header) {
-		if("feedTabbedHeaderRenderer" in header) {
-			this.FeedTabbedHeaderRenderer(header);
-		} else if("simpleMenuHeaderRenderer" in header) {
-			this.simpleMenuHeaderRenderer(header.simpleMenuHeaderRenderer);
-		} else {
-			debugger;
-		}
-		let ok=filter_out_keys(get_keys_of(header),split_string("feedTabbedHeaderRenderer,simpleMenuHeaderRenderer"));
-		if(ok.length>0) {
-			console.log("header keys",ok);
-			debugger;
-		}
-	}
-	/** @arg {import("./support/yt_api/_/m/MultiPageMenuRendererData.js").MultiPageMenuRendererData} renderer */
-	multiPageMenuRenderer(renderer) {
-		this.header(renderer.header);
-		let ok=filter_out_keys(get_keys_of(renderer),split_string("header,sections,trackingParams",","));
-		if(eq_keys(ok,[])) return;
-		if(eq_keys(ok,["style"])) return;
-		debugger;
-	}
-	/** @arg {import("./support/yt_api/_/g/GuideSubscriptionsSectionRendererData.js").GuideSubscriptionsSectionRendererData} item */
-	guideSubscriptionsSectionRenderer(item) {
-		let ok=get_keys_of(item);
-		let fk=ok[0];
-		let {[ok[0]]: first}=item;
-		if(eq_keys(ok,["sort","items","trackingParams","formattedTitle","handlerDatas"])) return;
-		console.log("guideSubscriptionsSectionRenderer",ok,[fk,first],item);
-	}
-	/** @typedef {{type: "guideSectionRenderer", value: import("./support/yt_api/_/g/GuideSectionRendererData.js").GuideSectionRendererData}} GuideSectionRendererDataBox */
-	/** @arg {import("./support/yt_api/_/g/GuideItemType").GuideItemType} item */
-	GuideItemType(item) {
-		let ok=get_keys_of(item);
-		/** @type {import("./support/yt_api/_/g/GuideItemKeys").GuideItemKeys} */
-		let key=cast_as(ok[0]);
-		if(!key) {
-			console.log("[log_GuideItemType]",ok);
-		}
-		switch(key) {
-			case "guideSectionRenderer": if(key in item) {
-				let data=item.guideSectionRenderer;
-				this.guideSectionRenderer({type: key,value: data});
-			} break;
-			case "guideSubscriptionsSectionRenderer": if(key in item) this.guideSubscriptionsSectionRenderer(item[key]); break;
-			default: return;
-		}
-	}
-	/** @arg {GuideSectionRendererDataBox} box */
-	guideSectionRenderer(box) {
-		let ok=get_keys_of(box.value);
-		/** @type {keyof typeof box["value"]} */
-		let fk=cast_as(ok[0]);
-		let {[fk]: first}=box.value;
-		if(eq_keys(ok,["items","trackingParams"])) return;
-		if(eq_keys(ok,["items","trackingParams","formattedTitle"])) return;
-		console.log(box.type,ok,[fk,first],box.value);
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} endpoint */
 	WatchEndpointData(endpoint) {
@@ -4532,10 +4092,9 @@ class HandleTypes extends BaseService {
 		console.log("csn",item.csn);
 		this.veData(item.veData);
 	}
-	/** @arg {import("./support/yt_api/_/v/VeData.js").VeData} data */
-	veData(data) {
-		this.trackingParams(data.trackingParams);
-		console.log(data);
+	/** @arg {import("./support/yt_api/_/v/VeData.js").VeData} x */
+	veData(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/b/BrowsePageResponse.js").BrowsePageResponse} data */
 	BrowsePageResponse(data) {
@@ -4550,27 +4109,25 @@ class HandleTypes extends BaseService {
 			console.log("[BrowsePage_csn]",data.previousCsn);
 			this.primitive(data.previousCsn);
 		}
-		this.BrowseResponseContent(data.response);
 		this.endpoint(data.endpoint);
 		this.save_keys("BrowsePageResponse",data);
 	}
 	seen_page_data=new Set;
-	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} data */
-	DataResponsePageType(data) {
-		if(this.seen_page_data.has(data)) {
+	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} x */
+	DataResponsePageType(x) {
+		if(this.seen_page_data.has(x)) {
 			console.log("skip seen data");
 			return;
 		}
-		this.seen_page_data.add(data);
-		this.save_keys("DataResponsePageType.page",data.page);
-		this.save_keys("DataResponsePageType",data);
-		switch(data.page) {
-			case "browse": this.BrowsePageResponse(data); break;
-			case "playlist": this.PlaylistPageResponse(data); break;
-			case "settings": this.SettingsPageResponse(data); break;
-			case "shorts": this.ShortsPageResponse(data); break;
-			case "watch": this.WatchPageResponse(data); break;
-			case "channel": this.ChannelPageResponse(data); break;
+		this.seen_page_data.add(x);
+		this.save_keys("DataResponsePageType.page",x.page);
+		this.save_keys("DataResponsePageType",x);
+		switch(x.page) {
+			case "browse": this.BrowsePageResponse(x); break;
+			case "playlist": this.PlaylistPageResponse(x); break;
+			case "settings": this.SettingsPageResponse(x); break;
+			case "watch": this.WatchPageResponse(x); break;
+			case "channel": this.ChannelPageResponse(x); break;
 			default: break;
 		}
 	}
@@ -4592,21 +4149,9 @@ class HandleTypes extends BaseService {
 		}
 		this.save_new_string("new_page.page_url",url);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} data */
-	SettingsPageResponse(data) {
-		this.save_keys("SettingsPageResponse",data);
-		this.endpoint(data.endpoint);
-		this.SettingsResponseContent(data.response);
-		this.onResponsePageUrl(data.url);
-	}
-	/** @arg {import("./support/yt_api/_/s/ShortsPageResponse.js").ShortsPageResponse} data */
-	ShortsPageResponse(data) {
-		this.endpoint(data.endpoint);
-		console.assert(data.page==="shorts");
-		this.playerResponse(data.playerResponse);
-		this.reelWatchSequenceResponse(data.reelWatchSequenceResponse);
-		this.ShortsResponse(data.response);
-		console.log("[shorts_url]",data.url);
+	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} x */
+	SettingsPageResponse(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} response */
 	ShortsResponse(response) {
@@ -4649,7 +4194,6 @@ class HandleTypes extends BaseService {
 			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return;
 			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
 			case "next": this.YtApiNext(res.json); return;
-			case "browse": this.BrowseResponseContent(res.json); return;
 			case "account.account_menu": this.AccountMenuJson(res.json); return;
 			case "reel.reel_item_watch": this.withGeneralContext(res.json); return;
 		}
@@ -4679,24 +4223,9 @@ class HandleTypes extends BaseService {
 	withGeneralContext(data) {
 		this.responseContext(data.responseContext);
 	}
-	/** @arg {import("./support/yt_api/_/o/OpenPopupActionItem.js").OpenPopupActionItem} action */
-	OpenPopupActionItem(action) {
-		let ok_1=get_keys_of(action);
-		if("openPopupAction" in action) {
-			switch(action.openPopupAction.popupType) {
-				case "DROPDOWN": {
-					let popup=action.openPopupAction.popup;
-					if("multiPageMenuRenderer" in popup) {
-						this.multiPageMenuRenderer(popup.multiPageMenuRenderer);
-					} else {
-						debugger;
-					}
-				} break;
-				default: console.log("popup type",action.openPopupAction.popupType); debugger;
-			}
-		}
-		if(eq_keys(ok_1,["clickTrackingParams","openPopupAction"])) return;
-		debugger;
+	/** @arg {import("./support/yt_api/_/o/OpenPopupActionItem.js").OpenPopupActionItem} x */
+	OpenPopupActionItem(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
@@ -4739,17 +4268,9 @@ class HandleTypes extends BaseService {
 		this.save_new_string("tr_bg_global_name",x.globalName);
 		this.save_new_string("tr_bg_interpreter_hash",x.interpreterHash);
 	}
-	/** @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} guide */
-	GuideJsonType(guide) {
-		for(let item of guide.items) {
-			this.GuideItemType(item);
-		}
-		let ok=get_keys_of(guide);
-		let ok_res=false;
-		if(eq_keys(ok,["responseContext","items","trackingParams"])) ok_res=true;
-		if(ok_res) return;
-		console.log(ok);
-		debugger;
+	/** @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} x */
+	GuideJsonType(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json */
 	YtApiNext(json) {
@@ -4758,153 +4279,62 @@ class HandleTypes extends BaseService {
 		empty_object(rest);
 		console.log(json);
 	}
-	/** @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} json */
-	AccountMenuJson(json) {
-		let {responseContext,actions,trackingParams,...rest}=json;
-		this.responseContext(responseContext);
-		this.actions(json.actions);
-		this.trackingParams(trackingParams);
-		empty_object(rest);
+	/** @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} x */
+	AccountMenuJson(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction[]} actions */
-	actions(actions) {
-		for(let action of actions) {
-			action;
-		}
-	}
-	/** @arg {import("./support/yt_api/rich/RichItemRendererData.js").RichItemRendererData} data */
-	richItemRenderer(data) {
-		console.log(data);
-	}
-	/** @arg {import("./support/yt_api/_/s/ShortsResponsePlayer.js").ShortsResponsePlayer} data */
-	playerResponse(data) {
-		console.log(data);
-	}
-	/** @arg {{ responseContext: {}; entries: {}[]; trackingParams: string; }} data */
-	reelWatchSequenceResponse(data) {
-		console.log(data);
+	/** @arg {{}} x */
+	reelWatchSequenceResponse(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} x */
 	YtPageState(x) {
 		this.save_keys("any",x);
 		page_type_iter(x.pageType);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data */
-	SettingsResponseContent(data) {
-		const {responseContext: a,contents: b,sidebar: d,topbar: e,trackingParams: c,...r}=data;
-		this.responseContext(a);
-		this.TwoColumnBrowseResultsRenderer(b);
-		this.trackingParams(c);
-		this.sidebar(d);
-		this.topbar(e);
-		empty_object(r);
+	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} x */
+	SettingsResponseContent(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} topbar */
-	topbar(topbar) {
-		this.DesktopTopbarRenderer(topbar);
+	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} x */
+	topbar(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} contents */
-	TwoColumnBrowseResultsRenderer(contents) {
-		this.twoColumnBrowseResultsRenderer(contents);
+	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} x */
+	TwoColumnBrowseResultsRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsOptionItemType.js").SettingsOptionItemType[]} options */
-	options(options) {
-		for(let option of options) {
-			this.SettingsOptionItemType(option);
-		}
+	/** @arg {import("./support/yt_api/_/c/ConnectedAppRendererData.js").ConnectedAppRendererData} x */
+	ConnectedAppRendererData(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsOptionRenderer.js").SettingsOptionRenderer} renderer */
-	settingsOptionsRenderer(renderer) {
-		let data=renderer.settingsOptionsRenderer;
-		let k=filter_out_keys(get_keys_of(data),split_string("title,options,hidden,id,text"));
-		if(k.length>0) {
-			console.log(k);
-			debugger;
-		}
-		if(data.options) this.options(data.options);
-		if("text" in data) this.YtTextType(data.text);
-		this.YtTextType(data.title);
-		if(this.x.get_param("noisy_logging")) console.log(data);
-		if(get_keys_of(renderer).length!==1) {
-			debugger;
-		}
+	/** @arg {import("./support/yt_api/_/a/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} x */
+	accountLinkButtonRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/c/ConnectedAppRendererData.js").ConnectedAppRendererData} data */
-	ConnectedAppRendererData(data) {
-		this.connectButton(data.connectButton);
-		if(eq_keys(get_keys_of(data),["icon","title","text","connectButton"])) return;
-		console.log(data);
+	/** @arg {import("./support/yt_api/_/a/AccountLinkProviderKey.js").AccountLinkProviderKey} x */
+	providerKey(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/c/ConnectButton").ConnectButton} obj */
-	connectButton(obj) {
-		if("accountLinkButtonRenderer" in obj) {
-			this.accountLinkButtonRenderer(obj.accountLinkButtonRenderer);
-		} else if("buttonRenderer" in obj) {
-			this.buttonRenderer(obj.buttonRenderer);
-		} else {
-			console.log(obj);
-			debugger;
-		}
+	/** @arg {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} x */
+	ButtonRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} obj */
-	accountLinkButtonRenderer(obj) {
-		let {providerKey,unlinkedButton,...rest}=obj;
-		this.providerKey(providerKey);
-		this.ButtonRenderer(unlinkedButton);
-		if(eq_keys(get_keys_of(rest),[])) return;
-		console.log(rest);
+	/** @arg {import("./support/yt_api/_/c/ConnectedAppRenderer.js").ConnectedAppRenderer} x */
+	connectedAppRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AccountLinkProviderKey.js").AccountLinkProviderKey} obj */
-	providerKey(obj) {
-		if(obj.id==="gpg"&&obj.subject!=="all") {
-			let gpg_id=parseInt(obj.subject,10);
-			if(Number.isNaN(gpg_id)) {
-				debugger;
-			}
-			return;
-		}
-		const {id,subject,...rest}=obj;
-		if(subject!=='all') debugger;
-		if(typeof id!=="string") debugger;
-		if(eq_keys(get_keys_of(rest),[])) return;
-		console.log(Object.keys(obj));
+	/** @arg {import("./support/yt_api/_/s/ShelfRenderer.js").ShelfRenderer} x */
+	shelfRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} obj */
-	ButtonRenderer(obj) {
-		this.buttonRenderer(obj.buttonRenderer);
+	/** @arg {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} x */
+	continuationItemRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/c/ConnectedAppRenderer.js").ConnectedAppRenderer} data */
-	connectedAppRenderer(data) {
-		this.ConnectedAppRendererData(data.connectedAppRenderer);
-		if(eq_keys(get_keys_of(data),["connectedAppRenderer"])) return;
-		console.log(get_keys_of(data.connectedAppRenderer));
-		console.log(data.connectedAppRenderer.connectButton);
-		console.log(data);
-		debugger;
-	}
-	/** @arg {import("./support/yt_api/_/s/ShelfRenderer.js").ShelfRenderer} data */
-	shelfRenderer(data) {
-		console.log(data);
-	}
-	/** @arg {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} data */
-	continuationItemRenderer(data) {
-		this.ContinuationItemRendererData(data.continuationItemRenderer);
-	}
-	/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} data */
-	ContinuationItemRendererData(data) {
-		let {continuationEndpoint,trigger,ghostCards,button,...x}=data;
-		this.endpoint(data.continuationEndpoint);
-		this.primitive(trigger);
-		if(ghostCards) this.renderer(ghostCards);
-		console.log(x);
-	}
-	/** @arg {string} params */
-	trackingParams(params) {
-		if(this.x.get_param("log_tracking_params")) console.log("tp",params);
-	}
-	/** @arg {string} params */
-	clickTrackingParams(params) {
-		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",params);
+	/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} x */
+	ContinuationItemRendererData(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/j/JsonDataEndpointType.js").JsonDataEndpointType[]} endpoints */
 	onResponseReceivedEndpoints(endpoints) {
@@ -4931,9 +4361,7 @@ class HandleTypes extends BaseService {
 	ChannelOptionsRendererData(data) {
 		let {avatar,avatarAccessibility,avatarEndpoint,links,name,...rest}=data;
 		this.ThumbnailsList(avatar);
-		this.Accessibility(avatarAccessibility);
 		this.endpoint(avatarEndpoint);
-		iterate(links,link => this.YtTextType(link));
 		this.primitive(name);
 		empty_object(rest);
 	}
@@ -4976,30 +4404,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/l/LogoEntity.js").LogoEntity} x */
 	topbarLogoRenderer(x) {
-		let {trackingParams,iconImage,endpoint,tooltipText,overrideEntityKey,...y}=x;
-		this.trackingParams(trackingParams);
-		this.Icon(iconImage);
-		this.endpoint(endpoint);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/f/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
-		let y=x.fusionSearchboxRenderer;
-		{
-			let {trackingParams,icon,clearButton,config,placeholderText,searchEndpoint,...x}=y;
-			this.trackingParams(trackingParams);
-			this.Icon(icon);
-			this.ButtonRenderer(clearButton);
-			let a=config.webSearchboxConfig;
-			{
-				let {requestDomain,requestLanguage,hasOnscreenKeyboard,focusSearchbox,...x}=a;
-				this.primitives(requestDomain,requestLanguage,hasOnscreenKeyboard,focusSearchbox);
-				empty_object(x);
-			}
-			this.YtTextType(placeholderText);
-			this.endpoint(searchEndpoint);
-			empty_object(x);
-		}
+		this.save_keys("any",x);
 	}
 	/** @arg {(bigint|string|number|boolean)[]} args */
 	primitives(...args) {
@@ -5027,10 +4436,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/n/NotificationActionRendererData.js").NotificationActionRendererData} x */
 	notificationActionRenderer(x) {
-		const {responseText,trackingParams,...y}=x;
-		this.YtTextType(responseText);
-		this.trackingParams(trackingParams);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/h/HotkeyDialogRenderer.js").HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
@@ -5040,11 +4446,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/h/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x */
 	hotkeyDialogRenderer(x) {
-		const {trackingParams,dismissButton,sections,title,...y}=x;
-		this.trackingParams(trackingParams);
-		iterate(sections,v => v);
-		this.YtTextType(title);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {number} x */
 	rootVe(x) {
@@ -5084,7 +4486,6 @@ class HandleTypes extends BaseService {
 		iterate(x.items,v => {
 			this.LinkRenderer(v.compactLinkRenderer);
 		});
-		this.YtTextType(x.title);
 		if(get_keys_of(y).length>0) console.log('[settings_sidebar]',y);
 	}
 	/** @arg {import("./support/yt_api/_/l/LinkRenderer.js").LinkRenderer} x */
@@ -5093,27 +4494,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/g/GhostGridRendererData.js").GhostGridRendererData} x */
 	ghostGridRenderer(x) {
-		const {rows,...y}=x;
-		this.primitive(rows);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsSwitchRendererData.js").SettingsSwitchRendererData} x */
 	settingsSwitchRenderer(x) {
-		const {title: t_0,subtitle: t_1,enabled,enableServiceEndpoint: ep_0,disableServiceEndpoint: ep_1,id,text: t_2,thumbnail: v_0,trackingParams: tp,...y}=x;
-		this.trackingParams(tp);
-		this.YtTextType_va(t_0,t_1,t_2);
-		this.endpoint_va(ep_0,ep_1);
-		if(v_0) this.ThumbnailsList(v_0);
-		this.primitives(enabled);
-		empty_object(y);
-	}
-	/** @arg {import("./support/yt_api/yt/YtEndpoint.js").YtEndpoint[]} arr */
-	endpoint_va(...arr) {
-		iterate(arr,this.endpoint.bind(this));
-	}
-	/** @arg {import("./support/yt_api/yt/YtTextType.js").YtTextType[]} arr */
-	YtTextType_va(...arr) {
-		iterate(arr.filter(e => !!e),this.YtTextType.bind(this));
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/SetSettingEndpointData.js").SetSettingEndpointData} x */
 	setSettingEndpoint(x) {
