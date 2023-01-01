@@ -3996,66 +3996,33 @@ class HandleTypes extends BaseService {
 	veData(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/b/BrowsePageResponse.js").BrowsePageResponse} data */
-	BrowsePageResponse(data) {
-		if("expirationTime" in data) {
-			this.primitive(data.expirationTime);
-		}
-		if("graftedVes" in data) {
-			iterate(data.graftedVes,x => this.GraftedVeItem(x));
-			this.graftedVes(data.graftedVes);
-		}
-		if("previousCsn" in data) {
-			console.log("[BrowsePage_csn]",data.previousCsn);
-			this.primitive(data.previousCsn);
-		}
-		this.endpoint(data.endpoint);
-		this.save_keys("BrowsePageResponse",data);
+	/** @arg {import("./support/yt_api/_/b/BrowsePageResponse.js").BrowsePageResponse} x */
+	BrowsePageResponse(x) {
+		this.save_keys("any",x);
 	}
-	seen_page_data=new Set;
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} x */
 	DataResponsePageType(x) {
-		if(this.seen_page_data.has(x)) {
-			console.log("skip seen data");
-			return;
-		}
-		this.seen_page_data.add(x);
-		this.save_keys("DataResponsePageType.page",x.page);
-		this.save_keys("DataResponsePageType",x);
-		switch(x.page) {
-			case "browse": this.BrowsePageResponse(x); break;
-			case "playlist": this.PlaylistPageResponse(x); break;
-			case "settings": this.SettingsPageResponse(x); break;
-			case "watch": this.WatchPageResponse(x); break;
-			case "channel": this.ChannelPageResponse(x); break;
-			default: break;
-		}
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data */
-	PlaylistPageResponse(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		console.log(data.url);
+	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} x */
+	PlaylistPageResponse(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/r/ResponsePageUrl").ResponsePageUrl} url */
-	onResponsePageUrl(url) {
-		let res=url.split("/").slice(1)?.[0].split("_").slice(1);
-		if(res) {
-			this.save_new_string("page_section",res);
-		}
-		this.save_new_string("new_page.page_url",url);
+	/** @arg {import("./support/yt_api/_/r/ResponsePageUrl").ResponsePageUrl} x */
+	onResponsePageUrl(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} x */
 	SettingsPageResponse(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} response */
-	ShortsResponse(response) {
-		console.log(response);
+	/** @arg {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} x */
+	ShortsResponse(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} x */
 	ChannelPageResponse(x) {
@@ -4071,21 +4038,19 @@ class HandleTypes extends BaseService {
 			this.responseContext(res.json.responseContext);
 		}
 		switch(res.url_type) {
-			case "att.get": this.AttGetV(res.json); return;
-			case "player": this.WatchResponsePlayer(res.json); return;
-			case "guide": this.GuideJsonType(res.json); return;
-			case "notification.get_unseen_count": this.notification_get_unseen_count_t(res); return;
-			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
-			case "next": this.YtApiNext(res.json); return;
 			case "account.account_menu": this.AccountMenuJson(res.json); return;
-			case "reel.reel_item_watch": this.withGeneralContext(res.json); return;
-		}
-		switch(res.url_type) {
+			case "att.get": this.AttGetV(res.json); return;
 			case "feedback": this.withGeneralContext(res.json); break;
-			case "getDatasyncIdsEndpoint": this.xx(res.json); break;
 			case "get_transcript": this.withGeneralContext(res.json); break;
+			case "getDatasyncIdsEndpoint": this.xx(res.json); break;
+			case "guide": this.GuideJsonType(res.json); return;
 			case "live_chat.get_live_chat_replay": this.xx(res.json); break;
+			case "next": this.YtApiNext(res.json); return;
+			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
+			case "notification.get_unseen_count": this.notification_get_unseen_count_t(res); return;
 			case "notification.record_interactions": this.YtSuccessResponse(res.json); break;
+			case "player": this.WatchResponsePlayer(res.json); return;
+			case "reel.reel_item_watch": this.withGeneralContext(res.json); return;
 			case "reel.reel_watch_sequence": this.xx(res.json); break;
 			default: console.log("missed api type",res); throw new Error("FIXME");
 		}
