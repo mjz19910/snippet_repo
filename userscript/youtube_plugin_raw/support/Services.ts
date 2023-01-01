@@ -1,4 +1,4 @@
-export type Services={
+type Services={
 	csi_service: CsiService;
 	e_catcher_service: ECatcherService;
 	g_feedback_service: GFeedbackService;

@@ -2683,8 +2683,6 @@ class HiddenData {
 	}
 }
 //#region
-/** @typedef {import("./support/Services.js").Services} Services */
-/** @typedef {import("./support/ServiceOptions.js").ServiceOptions} ServiceOptions */
 async function main() {
 	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
