@@ -5584,26 +5584,3 @@ class DebugApi {
 	}
 }
 inject_api.DebugApi=DebugApi;
-
-function get_exports() {
-	return exports;
-}
-
-if(typeof exports==="object") {
-	let exports=get_exports();
-	exports._DebugApiH_o=DebugApiH_o;
-	exports.add_function=add_function;
-	exports.AddEventListenerExtension=AddEventListenerExtension;
-	exports.BaseCompression=BaseCompression;
-	exports.CompressDual=CompressDual;
-	exports.CompressionStatsCalculator=CompressionStatsCalculator;
-	exports.CompressState=CompressState;
-	exports.CompressStateBase=CompressStateBase;
-	exports.CrossOriginConnection=CrossOriginConnection;
-	exports.DebugApi=DebugApi;
-	exports.inject_api=inject_api;
-	exports.InjectApiStr=InjectApiStr;
-	exports.MulCompression=MulCompression;
-	exports.post_message_connect_message_type=post_message_connect_message_type;
-	exports.random_data_generator=random_data_generator;
-}

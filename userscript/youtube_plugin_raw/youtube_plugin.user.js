@@ -18,10 +18,8 @@ const YtdAppElement=cast_as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
 // #region Use module types
-/** @type {import("./__global.js")} */
 // #endregion
 // #region
-/** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
 let inject_api_yt={};
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
@@ -1480,7 +1478,6 @@ class FilterHandlers {
 	}
 	/** @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {{}} state @arg {T} x  */
 	use_template_url(state,x) {
-		/** @template T @typedef {import("./support/url_parse/UrlParse.js").UrlParse<T>} UrlParse */
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 		function create_from_parse(str) {
 			let s=new URL(str);
@@ -3534,71 +3531,69 @@ function PUa(a,b) {
 	}
 	return !1;
 }
-/** @type {import("./support/RUa_type.js").RUa} */
-const RUa_b={
-	"2": "fakeChannel",
-	"17": "musicAlbumRelease",
-	"18": "musicAlbumReleaseDetail",
-	"19": "musicAlbumReleaseUserDetail",
-	"20": "musicArtist",
-	"21": "musicArtistDetail",
-	"22": "musicArtistUserDetail",
-	"24": "musicPlaylist",
-	"28": "musicTrack",
-	"29": "musicTrackDetail",
-	"30": "musicTrackUserDetail",
-	"76": "videoPlaybackPositionEntity",
-	"100": "musicShare",
-	"119": "playbackData",
-	"120": "transfer",
-	"121": "musicLibraryEdit",
-	"130": "offlineVideoPolicy",
-	"141": "downloadStatusEntity",
-	"148": "refresh",
-	"151": "ytMainVideoEntity",
-	"152": "ytMainChannelEntity",
-	"155": "ytMainDownloadedVideoEntity",
-	"158": "mainDownloadsLibraryEntity",
-	"164": "mainDownloadsListEntity",
-	"169": "offlineOrchestrationActionWrapperEntity",
-	"182": "fakeVideo",
-	"198": "offlineVideoStreams",
-	"202": "downloadQualityPickerEntity",
-	"217": "liveChatPollStateEntity",
-	"225": "captionTrack",
-	"229": "iconBadgeEntity",
-	"234": "musicTrackDownloadMetadataEntity",
-	"236": "commerceCartListEntity",
-	"242": "orchestrationWebSamplingEntity",
-	"245": "logoEntity",
-	"246": "offlineabilityEntity",
-	"248": "musicPlaylistDownloadMetadataEntity",
-	"252": "flowStateEntity",
-	"257": "musicDownloadsLibraryEntity",
-	"259": "musicAlbumReleaseDownloadMetadataEntity",
-	"261": "mainVideoEntity",
-	"262": "mainVideoDownloadStateEntity",
-	"264": "downloadsPageViewConfigurationEntity",
-	"273": "pinnedProductEntity",
-	"275": "channelHandle",
-	"278": "fakeVideoDescription",
-	"279": "fakePlaylist",
-	"280": "fakePlaylistEntryCollection",
-	"297": "settingEntity",
-	"299": "downloadsPageRefreshTokenEntity",
-	"306": "mainPlaylistEntity",
-	"312": "markersVisibilityOverrideEntity",
-	"318": "musicLibraryStatusEntity",
-	"329": "macroMarkerEntity",
-	"356": "quantityIncrementerEntity",
-	"358": "buttonEntity",
-	"368": "mainPlaylistVideoEntity",
-	"373": "mainPlaylistDownloadStateEntity",
-	"393": "emojiFountainDataEntity",
-	"406": "continuationTokenEntity"
+/** @type {RUa_from_enum_map} */
+const RUa={
+	2: "fakeChannel",
+	17: "musicAlbumRelease",
+	18: "musicAlbumReleaseDetail",
+	19: "musicAlbumReleaseUserDetail",
+	20: "musicArtist",
+	21: "musicArtistDetail",
+	22: "musicArtistUserDetail",
+	24: "musicPlaylist",
+	28: "musicTrack",
+	29: "musicTrackDetail",
+	30: "musicTrackUserDetail",
+	76: "videoPlaybackPositionEntity",
+	100: "musicShare",
+	119: "playbackData",
+	120: "transfer",
+	121: "musicLibraryEdit",
+	130: "offlineVideoPolicy",
+	141: "downloadStatusEntity",
+	148: "refresh",
+	151: "ytMainVideoEntity",
+	152: "ytMainChannelEntity",
+	155: "ytMainDownloadedVideoEntity",
+	158: "mainDownloadsLibraryEntity",
+	164: "mainDownloadsListEntity",
+	169: "offlineOrchestrationActionWrapperEntity",
+	182: "fakeVideo",
+	198: "offlineVideoStreams",
+	202: "downloadQualityPickerEntity",
+	217: "liveChatPollStateEntity",
+	225: "captionTrack",
+	229: "iconBadgeEntity",
+	234: "musicTrackDownloadMetadataEntity",
+	236: "commerceCartListEntity",
+	242: "orchestrationWebSamplingEntity",
+	245: "logoEntity",
+	246: "offlineabilityEntity",
+	248: "musicPlaylistDownloadMetadataEntity",
+	252: "flowStateEntity",
+	257: "musicDownloadsLibraryEntity",
+	259: "musicAlbumReleaseDownloadMetadataEntity",
+	261: "mainVideoEntity",
+	262: "mainVideoDownloadStateEntity",
+	264: "downloadsPageViewConfigurationEntity",
+	273: "pinnedProductEntity",
+	275: "channelHandle",
+	278: "fakeVideoDescription",
+	279: "fakePlaylist",
+	280: "fakePlaylistEntryCollection",
+	297: "settingEntity",
+	299: "downloadsPageRefreshTokenEntity",
+	306: "mainPlaylistEntity",
+	312: "markersVisibilityOverrideEntity",
+	318: "musicLibraryStatusEntity",
+	329: "macroMarkerEntity",
+	356: "quantityIncrementerEntity",
+	358: "buttonEntity",
+	368: "mainPlaylistVideoEntity",
+	373: "mainPlaylistDownloadStateEntity",
+	393: "emojiFountainDataEntity",
+	406: "continuationTokenEntity"
 };
-/** @type {{[U in keyof typeof RUa_b]: import("./support/RUa_type.js").RUa[U]}} */
-const RUa=RUa_b;
 /** @type {(this:number,...c: any[])=>any[]} @this {number} */
 function za() {
 	for(var a=Number(this),b=[],c=a;c<arguments.length;c++)

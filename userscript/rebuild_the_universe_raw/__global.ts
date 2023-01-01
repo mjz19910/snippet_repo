@@ -1,13 +1,5 @@
-import {
-	CompressState as CompressState_,
-	MulCompression as MulCompression_,
-} from "../DebugApi_raw/DebugApi.user";
 import {AutoBuyImplR, DocumentWriteListImpl} from "./rebuild_the_universe.user";
 
-declare global {
-	var MulCompression: typeof MulCompression_;
-	type MulCompression=MulCompression_;
-}
 
 declare global {
 	interface Window {
@@ -22,11 +14,6 @@ declare global {
 	interface Window {
 		g_mut_observers: any[];
 	}
-}
-
-declare global {
-	var CompressState: typeof CompressState_;
-	type CompressState<T,U>=CompressState_<T,U>;
 }
 
 declare global {

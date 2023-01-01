@@ -1380,9 +1380,6 @@ class CompressionStatsCalculatorImpl {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
 }
-/** @typedef {import("../DebugApi_raw/DebugApi.user").BaseCompression} BaseCompression */
-/** @typedef {import("../DebugApi_raw/DebugApi.user").CompressDual} CompressDual */
-/** @template T,U @typedef {import("../DebugApi_raw/DebugApi.user").CompressStateBase<T,U>} CompressStateBase */
 /** @implements {BaseCompression} */
 class BaseCompressionImpl {
 	/** @arg {CompressDual} arg0 @returns {DualR_0} */
