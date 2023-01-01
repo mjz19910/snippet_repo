@@ -1,4 +1,4 @@
-import {CommandMetadata} from "./CommandMetadata";
+import {CommandMetadata} from "../../json/CommandMetadata";
 import {ContinuationCommand} from "./ContinuationCommand";
 
 export interface ContinuationEndpoint  {

@@ -1,5 +1,5 @@
 import {SettingsEndpointPages} from "../_/s/SettingsEndpointPages.js";
-import {YtEndpoint} from "./YtEndpoint.js";
+import {YtEndpoint} from "../json/YtEndpoint.js";
 
 export type PageTypeList=[
 	"watch",

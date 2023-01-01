@@ -1499,7 +1499,7 @@ class FilterHandlers {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
 		}
-		/** @template T @template U @typedef {import("./support/make/Split.js").Split<T,U>} Split */
+		/** @template T @template U @typedef {import("./support/yt_api/json/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./support/parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(state,path_parts);
@@ -1585,7 +1585,7 @@ class FilterHandlers {
 	}
 	/** @arg {UrlTypes} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} */
 	get_res_data(url_type,json) {
-		/** @type {import("./support/make/Split.js").Split<UrlTypes, ".">} */
+		/** @type {import("./support/yt_api/json/Split.js").Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
 		switch(target.length) {
 			case 1: switch(target[0]) {
@@ -1620,7 +1620,7 @@ class FilterHandlers {
 				};
 				case "player": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} */
+					/** @type {import("./support/yt_api/json/WatchResponsePlayer.js").WatchResponsePlayer} */
 					data: cast_as(json),
 				};
 				default: break;
@@ -2625,7 +2625,7 @@ inject_api_yt.AudioGainController=AudioGainController;
 let audio_gain_controller=new AudioGainController;
 inject_api_yt.audio_gain_controller=audio_gain_controller;
 
-/** @template {string} T @template {{}} U @template {import("./support/make/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
+/** @template {string} T @template {{}} U @template {import("./support/yt_api/json/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
@@ -2951,12 +2951,12 @@ function no_handler({parts,index}) {
 	debugger;
 	throw new Error("Stop");
 }
-/** @template {string} C @template {string} U @template {import("./support/make/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./support/make/Split.js").Split<C,","> extends U[]?C:never} arg1 */
+/** @template {string} C @template {string} U @template {import("./support/yt_api/json/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./support/yt_api/json/Split.js").Split<C,","> extends U[]?C:never} arg1 */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }
 inject_api_yt.has_keys=has_keys;
-/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/make/Split.js").Split<X,string extends S?",":S>} */
+/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./support/yt_api/json/Split.js").Split<X,string extends S?",":S>} */
 function split_string(x,s=cast_as(",")) {
 	let r=x.split(s);
 	return cast_as(r);
@@ -3319,12 +3319,12 @@ class ECatcherService extends BaseService {
 			],
 		},
 	};
-	/** @arg {import("./support/yt_api/json/ECatcherServiceParamsType.js").ECatcherServiceParamsType} params */
+	/** @arg {import("./support/yt_api/json/ECatcherServiceParams").ECatcherServiceParams['params']} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
 		for(let param of params) {
-			/** @type {import("./support/make/Split.js").Split<typeof param.key,".">} */
+			/** @type {import("./support/yt_api/json/Split.js").Split<typeof param.key,".">} */
 			let param_parts=cast_as(param.key.split("."));
 			if(param_parts[0]!=="client") debugger;
 			switch(param_parts[1]) {
@@ -3416,7 +3416,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {GuidedHelpServiceParamsList} params */
+	/** @arg {import("./support/yt_api/json/GuidedHelpServiceParams.js").GuidedHelpServiceParams['params']} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3444,7 +3444,7 @@ class TrackingServices extends BaseService {
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
-	/** @arg {import("./support/yt_api/_/g/json/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	/** @arg {import("./support/yt_api/json/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
@@ -3458,7 +3458,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @arg {import("./support/yt_api/_/g/json/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params */
+	/** @arg {import("./support/yt_api/json/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params */
 	set_service_params(params) {
 		for(let service_param_list of params) {
 			switch(service_param_list.service) {
@@ -3747,11 +3747,11 @@ inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	/** @private @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} x */
+	/** @private @arg {import("./support/yt_api/json/WatchResponsePlayer.js").WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/g/json/GeneralContext.js").ResponseContext} x */
+	/** @private @arg {import("./support/yt_api/json/GeneralContext.js").ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x);
 	}

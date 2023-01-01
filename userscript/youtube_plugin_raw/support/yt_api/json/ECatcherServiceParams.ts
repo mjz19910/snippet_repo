@@ -1,6 +1,7 @@
-import {ECatcherServiceParamsType} from "./ECatcherServiceParamsType";
+import {ECatcherServiceType} from "./ECatcherServiceType.js";
+import {ToServiceParams} from "./ToServiceParams.js";
 
 export type ECatcherServiceParams={
 	service: "ECATCHER";
-	params: ECatcherServiceParamsType;
+	params: ToServiceParams<ECatcherServiceType>;
 };

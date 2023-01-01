@@ -1,4 +1,4 @@
-import {Split} from "../make/Split.js";
+import {Split} from "./json/Split.js";
 import {YtVideoIdStr} from "./yt/YtVideoIdStr";
 
 namespace hidden_namespace {

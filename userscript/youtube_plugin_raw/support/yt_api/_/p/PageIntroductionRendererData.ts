@@ -1,4 +1,4 @@
-import {YtTextType} from "../../yt/YtTextType.js";
+import {YtTextType} from "../../json/YtTextType.js";
 import {Icon} from "../i/Icon.js";
 
 export type PageIntroductionRendererData={

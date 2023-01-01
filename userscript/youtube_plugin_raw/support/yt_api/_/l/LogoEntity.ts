@@ -1,5 +1,5 @@
 import {Icon} from "../i/Icon.js";
-import {YtTextType} from "../../yt/YtTextType.js";
+import {YtTextType} from "../../json/YtTextType.js";
 import {BrowseEndpoint} from "./BrowseEndpoint.js";
 
 export type LogoEntity={

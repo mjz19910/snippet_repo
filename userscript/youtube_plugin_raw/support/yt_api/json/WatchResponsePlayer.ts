@@ -1,15 +1,15 @@
-import {ResponseContext} from "../g/json/GeneralContext.js";
-import {CaptionsRenderer} from "../c/CaptionsRenderer";
-import {EndscreenRenderer} from "../e/EndscreenRenderer";
-import {PlayerAdItem} from "../p/PlayerAdItem.js";
-import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
-import {PaidContentOverlay} from "../p/PaidContentOverlay.js";
+import {CaptionsRenderer} from "../_/c/CaptionsRenderer";
+import {EndscreenRenderer} from "./EndscreenRenderer";
+import {PlayerLegacyDesktopWatchAdsRenderer} from "./PlayerLegacyDesktopWatchAdsRenderer.js";
+import {FrameworkUpdates} from "./FrameworkUpdates.js";
+import {PaidContentOverlay} from "./PaidContentOverlay.js";
+import {ResponseContext} from "./GeneralContext.js";
 
 export type WatchResponsePlayer={
 	responseContext: ResponseContext;
 	playabilityStatus: {};
 	streamingData: {};
-	playerAds: PlayerAdItem[];
+	playerAds: PlayerLegacyDesktopWatchAdsRenderer[];
 	playbackTracking: {};
 	captions: CaptionsRenderer;
 	videoDetails: {};

@@ -1,5 +1,5 @@
 import {CaptionsRenderer} from "../c/CaptionsRenderer.js";
-import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
+import {FrameworkUpdates} from "../../json/FrameworkUpdates.js";
 import {PlaybackTracking} from "../p/PlaybackTracking.js";
 import {VideoDetails} from "../v/VideoDetails.js";
 import {CacheMetadata} from "./CacheMetadata";

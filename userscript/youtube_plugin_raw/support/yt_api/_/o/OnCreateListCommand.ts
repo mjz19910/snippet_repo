@@ -1,4 +1,4 @@
-import {CommandMetadata} from "../c/CommandMetadata";
+import {CommandMetadata} from "../../json/CommandMetadata";
 import {CreatePlaylistServiceEndpoint} from "../c/CreatePlaylistServiceEndpoint";
 import {ClickTrackingParams} from "../c/ClickTrackingParams.js";
 

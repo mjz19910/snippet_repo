@@ -9,7 +9,7 @@ if(u[0]==="/") {
 	function create_from_parse_partial(x) {
 		/** @type {any} */
 		const a=x.split("?");
-		/** @type {import("../../../make/Split.js").Split<T,"?">} */
+		/** @type {import("../../json/Split.js").Split<T,"?">} */
 		const fs=a;
 		/** @template U @template {U} T @arg {U} e @returns {T} */
 		function as_cast(e) {

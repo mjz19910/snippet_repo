@@ -1,4 +1,4 @@
-import {YtTextType} from "../../yt/YtTextType.js";
+import {YtTextType} from "../../json/YtTextType.js";
 import {ButtonRenderer} from "../b/ButtonRenderer.js";
 import {ImpressionEndpoint} from "../i/ImpressionEndpoint.js";
 import {MenuRenderer} from "../m/MenuRenderer.js";

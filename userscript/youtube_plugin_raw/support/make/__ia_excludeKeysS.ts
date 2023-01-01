@@ -1,4 +1,4 @@
-import {Split} from "./Split.js";
+import {Split} from "../yt_api/json/Split.js";
 
 declare global {
 	interface Object {

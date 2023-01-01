@@ -1,4 +1,4 @@
-import {YtTextType} from "../../yt/YtTextType.js";
+import {YtTextType} from "../../json/YtTextType.js";
 import {CommentSimpleboxRenderer} from "./CommentSimpleboxRenderer";
 
 export type CommentsHeaderRendererData={

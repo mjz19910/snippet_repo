@@ -1,8 +1,8 @@
 import {GFeedbackVarMap} from "./GFeedbackVarMap.js";
-import {ToServiceParamsList} from "./ToServiceParamsList.js";
+import {ToServiceParams} from "./ToServiceParams.js";
 
 export type GFeedbackServiceParams={
 	service: "GFEEDBACK";
-	params: ToServiceParamsList<GFeedbackVarMap>;
+	params: ToServiceParams<GFeedbackVarMap>;
 };
 

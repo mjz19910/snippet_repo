@@ -1,4 +1,4 @@
-import {Split} from "../make/Split.js";
+import {Split} from "../yt_api/json/Split.js";
 import {UrlParse_ext} from "./UrlParse_ext";
 
 export function create_from_parse_partial<T extends string>(x: T): UrlParse_ext<T> {

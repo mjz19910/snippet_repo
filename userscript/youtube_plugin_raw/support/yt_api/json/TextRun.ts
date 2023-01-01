@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../../yt/YtEndpoint.js";
+import {YtEndpoint} from "./YtEndpoint.js";
 
 export type TextRun={
 	text: string;

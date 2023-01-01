@@ -1,4 +1,4 @@
-import {Split} from "../../../make/Split.js";
+import {Split} from "../../json/Split.js";
 import {NumArrStr} from "../n/NumArrStr.js";
 import {NumArrStrVerify} from "../n/NumArrStrVerify.js";
 

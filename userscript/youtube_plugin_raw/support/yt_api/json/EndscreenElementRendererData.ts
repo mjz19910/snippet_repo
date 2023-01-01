@@ -1,5 +1,5 @@
-import {YtEndpoint} from "../../yt/YtEndpoint.js";
-import {HexLen} from "../h/HexLen.js";
+import {YtEndpoint} from "./YtEndpoint.js";
+import {HexLen} from "./HexLen.js";
 
 export type EndscreenElementRendererData={
 	style: "VIDEO"|"CHANNEL";

@@ -1,4 +1,4 @@
-import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
+import {FrameworkUpdates} from "../../json/FrameworkUpdates.js";
 import {ResponseContext} from "../g/json/GeneralContext.js";
 
 export type WatchResponseContent={

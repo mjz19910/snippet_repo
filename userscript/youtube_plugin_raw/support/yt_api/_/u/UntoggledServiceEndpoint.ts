@@ -1,4 +1,4 @@
-import {CommandMetadata} from "../c/CommandMetadata";
+import {CommandMetadata} from "../../json/CommandMetadata";
 import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
 import {SignalServiceEndpointData} from "../s/SignalServiceEndpoint";
 

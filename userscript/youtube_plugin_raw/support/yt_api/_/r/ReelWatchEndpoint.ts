@@ -1,5 +1,5 @@
 import {ReelWatchEndpointData} from "./ReelWatchEndpointData";
-import {CommandMetadata} from "../c/CommandMetadata.js";
+import {CommandMetadata} from "../../json/CommandMetadata.js";
 
 export interface ReelWatchEndpoint {
 	commandMetadata: CommandMetadata;
