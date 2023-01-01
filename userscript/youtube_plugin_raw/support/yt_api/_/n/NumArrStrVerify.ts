@@ -1,4 +1,4 @@
-export type NumArrStrVerify<T extends string,C extends string="">=
+type NumArrStrVerify<T extends string,C extends string="">=
 	C extends ''?
 	T extends `${number},${number},${infer X}`?
 	NumArrStrVerify<T,X>:

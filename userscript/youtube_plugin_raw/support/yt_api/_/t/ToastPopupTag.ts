@@ -1,6 +1,4 @@
-import {NotificationActionRenderer} from "../n/NotificationActionRenderer";
-
-export type ToastPopupTag={
+type ToastPopupTag={
 	popup: NotificationActionRenderer;
 	popupType: "TOAST";
 };
