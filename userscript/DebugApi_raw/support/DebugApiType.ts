@@ -1,3 +1,1 @@
-import {DebugApi} from "../DebugApi.user";
-
-export type DebugApiType=typeof DebugApi;
+type DebugApiType=typeof DebugApi;
