@@ -1,5 +1,3 @@
-import {YtPlayerApi} from "./YtPlayerApi";
-
-export interface YtPlayerApiResolver {
+interface YtPlayerApiResolver {
 	promise: Promise<YtPlayerApi>;
 }

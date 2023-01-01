@@ -2117,7 +2117,7 @@ let element_map=new Map;
 let box_map=new Map;
 save_new_map("box_map",box_map);
 
-/** @type {import("./support/yt_api/yt/YtdPlayerElement.js").YtdPlayerElement|null} */
+/** @type {YtdPlayerElement|null} */
 let ytd_player=null;
 /** @arg {HTMLElement} element */
 function on_ytd_player(element) {
@@ -2126,7 +2126,7 @@ function on_ytd_player(element) {
 	element_map.set(element_id,element);
 	/** @type {any} */
 	let element_any=element;
-	/** @type {import("./support/yt_api/yt/YtdPlayerElement.js").YtdPlayerElement} */
+	/** @type {YtdPlayerElement} */
 	let element_type=element_any;
 	ytd_player=element_type;
 	window.ytd_player=element;

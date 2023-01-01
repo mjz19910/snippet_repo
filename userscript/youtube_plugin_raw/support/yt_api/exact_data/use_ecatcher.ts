@@ -1,7 +1,6 @@
-import {ServiceParams} from "./ServiceParams";
-import {watch_serviceTrackingParams} from "./use_service_csi.js";
-
-export function use_ecatcher(service_param: typeof watch_serviceTrackingParams[3]) {
+async function use_ecatcher() {
+	const watch_j_response=(await import("./json/page_type_watch_detail.json")).default.response.response;
+	let service_param=watch_j_response.responseContext.serviceTrackingParams[3];
 	const service_param_t: ServiceParams<"ECATCHER">=service_param;
 	service_param_t;
 	const param={

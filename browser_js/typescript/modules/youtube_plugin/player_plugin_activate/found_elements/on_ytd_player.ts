@@ -1,5 +1,3 @@
-import {YtdPlayerElement} from "../elements/interfaces/YtdPlayerElement.js";
-import {ytd_player} from "../elements/ytd_player.js";
 import {element_map} from "../event/element_map.js";
 
 declare global {

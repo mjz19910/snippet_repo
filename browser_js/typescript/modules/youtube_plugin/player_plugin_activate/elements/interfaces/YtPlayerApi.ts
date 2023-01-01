@@ -1,4 +1,4 @@
-export interface YtPlayerApi {
+interface YtPlayerApi {
 	getVideoData(): {
 		video_id: string;
 		eventId: undefined;

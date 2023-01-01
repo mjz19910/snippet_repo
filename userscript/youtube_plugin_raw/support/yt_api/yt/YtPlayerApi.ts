@@ -1,4 +1,4 @@
-export type YtPlayerApi={
+type YtPlayerApi={
 	getVideoData(): {
 		video_id: string;
 		eventId: undefined;

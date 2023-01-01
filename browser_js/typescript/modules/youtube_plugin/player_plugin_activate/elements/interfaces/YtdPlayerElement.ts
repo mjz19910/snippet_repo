@@ -1,7 +1,4 @@
-import {YtPlayerApi} from "./YtPlayerApi";
-import {YtPlayerApiResolver} from "./YtPlayerApiResolver";
-
-export interface YtdPlayerElement extends HTMLElement {
+interface YtdPlayerElement extends HTMLElement {
 	active_nav: boolean;
 	player_: YtPlayerApi|null;
 	playerResolver_: YtPlayerApiResolver;
