@@ -597,7 +597,7 @@ function main() {
 		}
 	}
 	let worker_state=new WorkerStateModel();
-	/** @typedef {import("./item_05_types"). BaseWorkProcessorType} BaseWorkProcessorType */
+	/** @typedef {import("./WorkerStateModel_types"). BaseWorkProcessorType} BaseWorkProcessorType */
 	async function on_worker_async_work() {
 		let gg=0;
 		let cx=worker_state;
