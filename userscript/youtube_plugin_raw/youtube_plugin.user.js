@@ -3067,6 +3067,8 @@ class BaseServicePrivate {
 	}
 	/** @private @type {[string,['one',number[]]|['many',number[][]]][]} */
 	known_numbers=[];
+	/** @private @type {[string,number|number[]][]} */
+	new_known_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(key==="any") debugger;
@@ -3167,8 +3169,6 @@ class BaseServicePrivate {
 	known_strings=[];
 	/** @private @type {[string,string|string[]][]} */
 	new_known_strings=[];
-	/** @private @type {[string,number|number[]][]} */
-	new_known_numbers=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	known_booleans=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
