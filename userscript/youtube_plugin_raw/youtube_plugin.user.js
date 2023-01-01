@@ -272,13 +272,22 @@ async function async_plugin_init(event) {
 			}
 			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body&&document.readyState==="complete") {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => {
-					if(e.tagName==="LINK"&&e instanceof HTMLLinkElement) {
+					let e_tn=e.tagName;
+					if(e_tn==="LINK"&&e instanceof HTMLLinkElement) {
 						if(e.rel==="stylesheet") return false;
 					}
 					if(e.id==="home-page-skeleton") return false;
 					// cspell:ignore skeletonhidden
 					if(e.id==="watch-page-skeleton"&&e.classList.value==="watch-skeletonhidden") return false;
-					return e.tagName!=="SCRIPT"&&e.tagName!=="IFRAME"&&e.tagName!=="IRON-ICONSET-SVG"&&e.tagName!=="IRON-A11Y-ANNOUNCER"&&e.tagName!=="svg";
+					if(e.id==="player"&&e.classList.value==="skeleton flexy") return false;
+					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
+					if(e_tn=="SCRIPT") return false;
+					if(e_tn=="IFRAME") return false;
+					if(e_tn=="IRON-ICONSET-SVG") return false;
+					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
+					if(e_tn=="svg") return false;
+					console.log(e.tagName.toLowerCase(),e.id,e.classList.value);
+					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
 				if(interesting_body_elements.length===1) {
@@ -1628,7 +1637,7 @@ class FilterHandlers {
 				};
 				case "att": return {
 					type: `${target[0]}.${target[1]}`,
-					/** @type {import("./support/yt_api/_/a/AttGetV.js").AttGetV} */
+					/** @type {import("./support/yt_api/_/a/AttGet.js").AttGet} */
 					data: cast_as(json),
 				};
 				case "live_chat": switch(target[1]) {
@@ -3751,7 +3760,7 @@ function empty_object(obj) {
 class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
-		this.save_keys("any",x);
+		this.save_keys("WatchResponsePlayer",x);
 	}
 	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {
@@ -3774,8 +3783,8 @@ class HandleTypes extends BaseService {
 		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} x */
-	responseContext(x) {
-		this.save_keys("any",x);
+	ResponseContext(x) {
+		this.save_keys("ResponseContext",x);
 	}
 	/** @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} x */
 	playlistVideoListRenderer(x) {
@@ -3931,27 +3940,28 @@ class HandleTypes extends BaseService {
 		/** @type {number|null} */
 		unseenCount: null,
 	};
-	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
-	ResponseTypes(res) {
-		if("responseContext" in res.data) {
-			this.responseContext(res.data.responseContext);
+	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} x */
+	ResponseTypes(x) {
+		this.save_keys("ResponseTypes",x.data);
+		if("responseContext" in x.data) {
+			this.ResponseContext(x.data.responseContext);
 		}
-		switch(res.type) {
-			case "account.account_menu": this.AccountMenuJson(res.data); return;
-			case "att.get": this.AttGetV(res.data); return;
-			case "feedback": this.withGeneralContext(res.data); break;
-			case "get_transcript": this.withGeneralContext(res.data); break;
-			case "getDatasyncIdsEndpoint": debugger; this.save_keys(res.type,res.data); break;
-			case "guide": this.GuideJsonType(res.data); return;
-			case "live_chat.get_live_chat_replay": this.save_keys(res.type,res.data); break;
-			case "next": this.YtApiNext(res.data); return;
-			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
-			case "notification.get_unseen_count": this.notification_get_unseen_count_t(res); return;
-			case "notification.record_interactions": this.YtSuccessResponse(res.data); break;
-			case "player": this.WatchResponsePlayer(res.data); return;
-			case "reel.reel_item_watch": this.withGeneralContext(res.data); return;
-			case "reel.reel_watch_sequence": this.save_keys(res.type,res.data); break;
-			default: this.save_keys("need_api_type",res.type);
+		switch(x.type) {
+			case "account.account_menu": this.AccountMenuJson(x.data); return;
+			case "att.get": this.AttGet(x.data); return;
+			case "feedback": this.withGeneralContext(x.data); break;
+			case "get_transcript": this.withGeneralContext(x.data); break;
+			case "getDatasyncIdsEndpoint": debugger; this.save_keys(x.type,x.data); break;
+			case "guide": this.GuideJsonType(x.data); return;
+			case "live_chat.get_live_chat_replay": this.save_keys(x.type,x.data); break;
+			case "next": this.YtApiNext(x.data); return;
+			case "notification.get_notification_menu": this.notification_get_notification_menu_t(x); return;
+			case "notification.get_unseen_count": this.notification_get_unseen_count_t(x); return;
+			case "notification.record_interactions": this.YtSuccessResponse(x.data); break;
+			case "player": this.WatchResponsePlayer(x.data); return;
+			case "reel.reel_item_watch": this.withGeneralContext(x.data); return;
+			case "reel.reel_watch_sequence": this.save_keys(x.type,x.data); break;
+			default: this.save_keys("need_api_type",x.type);
 		}
 	}
 	/** @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} x */
@@ -3960,7 +3970,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data */
 	withGeneralContext(data) {
-		this.responseContext(data.responseContext);
+		this.ResponseContext(data.responseContext);
 	}
 	/** @arg {import("./support/yt_api/_/o/OpenPopupActionItem.js").OpenPopupActionItem} x */
 	OpenPopupActionItem(x) {
@@ -3970,9 +3980,9 @@ class HandleTypes extends BaseService {
 	notification_get_notification_menu_t(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} x */
-	AttGetV(x) {
-		this.save_keys("any",x);
+	/** @arg {import("./support/yt_api/_/a/AttGet.js").AttGet} x */
+	AttGet(x) {
+		this.save_keys("AttGet",x);
 	}
 	/** @arg {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x */
 	bgChallenge(x) {
@@ -3980,7 +3990,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} x */
 	GuideJsonType(x) {
-		this.save_keys("any",x);
+		this.save_keys("GuideJsonType",x);
 	}
 	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} x */
 	YtApiNext(x) {
@@ -3996,7 +4006,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} x */
 	YtPageState(x) {
-		this.save_keys("any",x);
+		this.save_keys("YtPageState",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} x */
 	SettingsResponseContent(x) {
