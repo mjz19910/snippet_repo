@@ -1703,7 +1703,7 @@ class FilterHandlers {
 		this.on_json_request({
 			...res,
 			request,
-			req_parse,
+			parsed_url:req_parse,
 		});
 		this.handle_types.ResponseTypes(res);
 	}
