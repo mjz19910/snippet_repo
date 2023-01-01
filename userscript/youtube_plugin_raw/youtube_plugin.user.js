@@ -3751,190 +3751,19 @@ function decode_entity_key(...gs) {
 inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
-/** @template {{}} T @arg {{} extends T?T:never} obj */
-function empty_object(obj) {
-	let keys=get_keys_of(obj);
-	if(!keys.length) return;
-	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
-}
 class HandleTypes extends BaseService {
-	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} x */
+	/** @private @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x);
 	}
-	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRendererData.js").DesktopTopbarRendererData} x */
-	DesktopTopbarRendererData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/e/EntityBatchUpdateData.js").EntityBatchUpdateData} x */
-	EntityBatchUpdateData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} x */
-	EntityMutationItem(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/TimestampWithNanos.js").TimestampWithNanos} x */
-	TimestampWithNanos(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} x */
+	/** @private @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x);
-	}
-	/** @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} x */
-	playlistVideoListRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} x */
-	TextRun(x) {
-		this.save_keys("any",x);
-	}
-	/** @typedef {import("./support/yt_api/yt/YtTextType.js").YtTextType} YtTextType */
-	/** @arg {Extract<YtTextType,{runs:any}>} x */
-	TextRuns(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} x */
-	sectionListRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/TabRenderer.js").TabRenderer} x */
-	tabRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} x */
-	twoColumnBrowseResultsRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} x */
-	BrowseResponseContentContents(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} x */
-	adLayoutLoggingData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} x */
-	AdLayoutMetadataItem(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AdSlotMetadata_0.js").AdSlotMetadata} x */
-	adSlotMetadata(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AdsControlFlowOpportunityReceivedCommandData.js").AdsControlFlowOpportunityReceivedCommandData} x */
-	adsControlFlowOpportunityReceivedCommand(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/yt/YtEndpoint.js").YtEndpoint} x */
-	endpoint(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").DefaultButtonTypes} x */
-	DefaultButtonRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRendererData.js").NoStyleButtonTypes_} x */
-	NoStyleButtonTypes(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} x */
-	addToPlaylistCommand(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/ServiceEndpointAction.js").ServiceEndpointAction} x */
-	ServiceEndpointAction(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/yt/YtSignalAction.js").YtSignalAction} x */
-	signalAction(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/o/OpenPopupAction.js").OpenPopupAction} x */
-	openPopupAction(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AllPopups.js").AllPopups} x */
-	popup(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/d/GenericRenderer.js").GenericRenderer} x */
-	renderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/n/NotificationActionRenderer.js").NotificationActionRenderer} x */
-	ToastPopupTag(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/d/DropdownPopup.js").DropdownPopup} x */
-	DropdownPopup(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ConfirmDialogRendererData").ConfirmDialogRendererData} x */
-	ConfirmDialogRendererData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/d/DialogPopup.js").DialogPopup} x */
-	DialogPopup(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SignalServiceEndpoint.js").SignalServiceEndpointData} x */
-	SignalServiceEndpointData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/w/WatchEndpointData.js").WatchEndpointData} x */
-	WatchEndpointData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/CommandMetadata.js").CommandMetadata} x */
-	commandMetadata(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/b/BrowseEndpointData.js").BrowseEndpointData} x */
-	BrowseEndpointData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/e/EndscreenElementRendererData.js").EndscreenElementRendererData} x */
-	endscreenElementRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/g/GraftedVeItem.js").GraftedVeItem} x */
-	GraftedVeItem(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/v/VeData.js").VeData} x */
-	veData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/b/BrowsePageResponse.js").BrowsePageResponse} x */
-	BrowsePageResponse(x) {
-		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} x */
 	DataResponsePageType(x) {
 		this.save_keys("DataResponsePageType",x);
 		x.endpoint;
-	}
-	/** @arg {import("./support/yt_api/_/r/ResponsePageUrl").ResponsePageUrl} x */
-	onResponsePageUrl(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsPageResponse.js").SettingsPageResponse} x */
-	SettingsPageResponse(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/ShortsResponse.js").ShortsResponse} x */
-	ShortsResponse(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} x */
-	ChannelPageResponse(x) {
-		this.save_keys("any",x);
 	}
 	static notification={
 		/** @type {number|null} */
@@ -3949,8 +3778,8 @@ class HandleTypes extends BaseService {
 		switch(x.type) {
 			case "account.account_menu": this.AccountMenuJson(x.data); return;
 			case "att.get": this.AttGet(x.data); return;
-			case "feedback": this.withGeneralContext(x.data); break;
-			case "get_transcript": this.withGeneralContext(x.data); break;
+			case "feedback": this.save_keys(x.type,x.data); break;
+			case "get_transcript": this.save_keys(x.type,x.data); break;
 			case "getDatasyncIdsEndpoint": debugger; this.save_keys(x.type,x.data); break;
 			case "guide": this.GuideJsonType(x.data); return;
 			case "live_chat.get_live_chat_replay": this.save_keys(x.type,x.data); break;
@@ -3959,210 +3788,44 @@ class HandleTypes extends BaseService {
 			case "notification.get_unseen_count": this.notification_get_unseen_count_t(x); return;
 			case "notification.record_interactions": this.YtSuccessResponse(x.data); break;
 			case "player": this.WatchResponsePlayer(x.data); return;
-			case "reel.reel_item_watch": this.withGeneralContext(x.data); return;
+			case "reel.reel_item_watch": this.save_keys(x.type,x.data); return;
 			case "reel.reel_watch_sequence": this.save_keys(x.type,x.data); break;
 			default: this.save_keys("need_api_type",x.type);
 		}
 	}
-	/** @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} x */
+	/** @private @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} x */
 	YtSuccessResponse(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data */
-	withGeneralContext(data) {
-		this.ResponseContext(data.responseContext);
-	}
-	/** @arg {import("./support/yt_api/_/o/OpenPopupActionItem.js").OpenPopupActionItem} x */
-	OpenPopupActionItem(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
+	/** @private @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AttGet.js").AttGet} x */
+	/** @private @arg {import("./support/yt_api/_/a/AttGet.js").AttGet} x */
 	AttGet(x) {
 		this.save_keys("AttGet",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x */
-	bgChallenge(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} x */
+	/** @private @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} x */
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x);
 	}
-	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} x */
+	/** @private @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} x */
 	YtApiNext(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} x */
+	/** @private @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} x */
 	AccountMenuJson(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {{}} x */
-	reelWatchSequenceResponse(x) {
 		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} x */
 	YtPageState(x) {
 		this.save_keys("YtPageState",x);
 	}
-	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} x */
-	SettingsResponseContent(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} x */
-	topbar(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/TwoColumnBrowseResultsRenderer.js").TwoColumnBrowseResultsRenderer} x */
-	TwoColumnBrowseResultsRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ConnectedAppRendererData.js").ConnectedAppRendererData} x */
-	ConnectedAppRendererData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AccountLinkButtonRendererData.js").AccountLinkButtonRendererData} x */
-	accountLinkButtonRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/a/AccountLinkProviderKey.js").AccountLinkProviderKey} x */
-	providerKey(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/b/ButtonRenderer.js").ButtonRenderer} x */
-	ButtonRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ConnectedAppRenderer.js").ConnectedAppRenderer} x */
-	connectedAppRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/ShelfRenderer.js").ShelfRenderer} x */
-	shelfRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ContinuationItemRenderer.js").ContinuationItemRenderer} x */
-	continuationItemRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ContinuationItemRendererData.js").ContinuationItemRendererData} x */
-	ContinuationItemRendererData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsOptionItemType.js").SettingsOptionItemType} x */
-	SettingsOptionItemType(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/c/ChannelOptionsRendererData.js").ChannelOptionsRendererData} x */
-	ChannelOptionsRendererData(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} x */
-	ThumbnailsList(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} x */
-	Thumbnail(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/w/WebCommandPageType.js").WebCommandPageType} x */
-	WebCommandPageType(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} x */
-	webCommandMetadata(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/l/LogoEntity.js").LogoEntity} x */
-	topbarLogoRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/f/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x */
-	FusionSearchboxRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SearchEndpointData.js").SearchEndpointData} x */
-	SearchEndpointData(x) {
-		this.primitive(x.query);
-	}
-	/** @arg {import("./support/yt_api/_/t/TopbarButtonItem.js").TopbarButtonItem} x */
-	TopbarButtonItem(x) {
-		if("topbarMenuButtonRenderer" in x) {
-			x.topbarMenuButtonRenderer;
-		} else if("notificationTopbarButtonRenderer" in x) {
-			const {notificationTopbarButtonRenderer: y}=x;
-			this.notificationTopbarButtonRenderer(y);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {import("./support/yt_api/_/n/NotificationTopbarButtonRendererData.js").NotificationTopbarButtonRendererData} x */
-	notificationTopbarButtonRenderer(x) {
-		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x;
-		empty_object(y);
-	}
-	/** @arg {import("./support/yt_api/_/n/NotificationActionRendererData.js").NotificationActionRendererData} x */
-	notificationActionRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/h/HotkeyDialogRenderer.js").HotkeyDialogRenderer} x */
-	HotkeyDialogRenderer(x) {
-		const {hotkeyDialogRenderer,...v}=x;
-		this.hotkeyDialogRenderer(hotkeyDialogRenderer);
-		empty_object(v);
-	}
-	/** @arg {import("./support/yt_api/_/h/HotkeyDialogRendererData.js").HotkeyDialogRendererData} x */
-	hotkeyDialogRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {number} x */
-	rootVe(x) {
-		this.save_new_root_ve(x);
-	}
-	/** @arg {string} x */
-	apiUrl(x) {
-		super.save_new_string("apiUrl",x);
-	}
-	/** @arg {string} x */
-	url(x) {
-		this.save_new_string("url",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} x */
-	sidebar(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRendererData.js").SettingsSidebarRendererData} x */
-	settingsSidebarRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/l/LinkRenderer.js").LinkRenderer} x */
-	LinkRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/g/GhostGridRendererData.js").GhostGridRendererData} x */
-	ghostGridRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsSwitchRendererData.js").SettingsSwitchRendererData} x */
-	settingsSwitchRenderer(x) {
-		this.save_keys("any",x);
-	}
 	/** @arg {import("./support/yt_api/_/s/SetSettingEndpointData.js").SetSettingEndpointData} x */
 	setSettingEndpoint(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/v/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x */
-	voiceSearchDialogRenderer(x) {
-		this.save_keys("any",x);
-	}
-	/** @arg {import("./support/yt_api/_/r/RendererData.js").RendererData} x */
-	RendererData(x) {
-		this.save_keys("RendererData",x);
-	}
-	/** @arg {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t} x */
+	/** @private @arg {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
 		this.save_keys("notification_get_unseen_count",x);
 	}
