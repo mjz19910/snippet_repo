@@ -2195,6 +2195,7 @@ inject_api_yt.filter_out_keys=filter_out_keys;
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": break;
+		case "watch": break;
 		default: console.log("[%s]",pageType); debugger;
 	}
 }
