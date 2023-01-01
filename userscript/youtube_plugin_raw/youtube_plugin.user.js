@@ -1030,7 +1030,7 @@ function make_search_params(t) {
 	let as_any=Object.fromEntries(sp.entries());
 	return as_any;
 }
-
+inject_api_yt.make_search_params=make_search_params;
 class Base64Binary {
 	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	/* will return a  Uint8Array type */
@@ -3027,9 +3027,7 @@ class BaseServicePrivate {
 		let p=this.known_strings.find(e => e[0]===key);
 		if(!p) return;
 		let [,cur]=p;
-		/**
-		 * @param {["one", string[]]|["many", string[][]]} x
-		 */
+		/** @arg {["one", string[]]|["many", string[][]]} x */
 		function to_obj(x) {return {key: x[0],values: x[1]};}
 		let obj=to_obj(cur);
 		switch(obj.key) {
@@ -3735,68 +3733,9 @@ function empty_object(obj) {
 	console.log("[invalid_empty_obj] [%s] %o",keys.join(),obj);
 }
 class HandleTypes extends BaseService {
-	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} response */
-	WatchResponsePlayer(response) {
-		let data=response;
-		if(data.playerAds) {
-			let old_ads=data.playerAds;
-			if(is_yt_debug_enabled) console.log("WatchResponsePlayer.playerAds=",data.playerAds);
-			data.playerAds=[];
-			/** @type {{old_store:typeof data["playerAds"]}&typeof data["playerAds"]} */
-			let with_old_store=cast_as(data.playerAds);
-			with_old_store.old_store=old_ads;
-		}
-		if(data.adPlacements) {
-			if(is_yt_debug_enabled) console.log("WatchResponsePlayer.adPlacements=",data.adPlacements);
-			data.adPlacements=[];
-		}
-		if(data.endscreen) {
-			let elements=data.endscreen.endscreenRenderer.elements;
-			for(let element of elements) {
-				let ok_2=get_keys_of(element);
-				x: {
-					if(ok_2[0]==="endscreenElementRenderer"&&ok_2.length===1) break x;
-					console.log("[on_page_type_watch_log_element] element ok_2 [%s]",ok_2.join(","));
-				}
-				if("endscreenElementRenderer" in element) {
-					this.endscreenElementRenderer(element.endscreenElementRenderer);
-				} else {
-					debugger;
-				}
-			}
-			let ok_1=get_keys_of(data.endscreen);
-			if(ok_1.length!==1) {
-				console.log("[on_page_type_watch_log_0] endscreen ok_1 [%s]",ok_1.join(","));
-				debugger;
-			}
-			let ok_2=get_keys_of(data.endscreen.endscreenRenderer);
-			if(eq_keys(ok_2,["elements","startMs","trackingParams"])) return;
-			console.log("[on_page_type_watch_log_1] endscreenRenderer ok_2 [%s]",ok_2.join(","));
-		}
-		let ok=get_keys_of(data);
-		for(let key of ok) {
-			if(key==="responseContext") continue;
-			if(key==="playabilityStatus") continue;
-			if(key==="streamingData") continue;
-			if(key==="playerAds") continue;
-			if(key==="playbackTracking") continue;
-			if(key==="captions") continue;
-			if(key==="videoDetails") continue;
-			if(key==="annotations") continue;
-			if(key==="playerConfig") continue;
-			if(key==="storyboards") continue;
-			if(key==="microformat") continue;
-			if(key==="cards") continue;
-			if(key==="trackingParams") continue;
-			if(key==="attestation") continue;
-			if(key==="videoQualityPromoSupportedRenderers") continue;
-			if(key==="adPlacements") continue;
-			if(key==="frameworkUpdates") continue;
-			// other
-			if(key==="endscreen") continue;
-			console.log("[on_page_type_watch_log_iter]",key);
-			debugger;
-		}
+	/** @arg {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} x */
+	WatchResponsePlayer(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/d/DesktopTopbarRenderer.js").DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {
@@ -4131,9 +4070,9 @@ class HandleTypes extends BaseService {
 			default: break;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} data */
-	WatchPageResponse(data) {
-		this.WatchResponsePlayer(data.playerResponse);
+	/** @arg {import("./support/yt_api/_/w/WatchPageResponse.js").WatchPageResponse} x */
+	WatchPageResponse(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/p/PlaylistPageResponse.js").PlaylistPageResponse} data */
 	PlaylistPageResponse(data) {
@@ -4157,26 +4096,9 @@ class HandleTypes extends BaseService {
 	ShortsResponse(response) {
 		console.log(response);
 	}
-	/** @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} data */
-	ChannelPageResponse(data) {
-		console.log(data.endpoint);
-		console.log(data.response);
-		let up=split_string(data.url,"/");
-		let x=up[2];
-		if(!x) {
-			if(!up[1].startsWith("@")) {
-				console.log(up[1]);
-				debugger;
-			}
-		} else if(x.startsWith("UC")) {
-			let v=x.slice(2);
-			if(atob(v).length!==16) {
-				console.log("bad channel length",data.url);
-			}
-		} else {
-			console.log("bad channel",data.url);
-			debugger;
-		}
+	/** @arg {import("./support/yt_api/_/c/ChannelPageResponse.js").ChannelPageResponse} x */
+	ChannelPageResponse(x) {
+		this.save_keys("any",x);
 	}
 	static notification={
 		/** @type {number|null} */
@@ -4191,7 +4113,7 @@ class HandleTypes extends BaseService {
 			case "att.get": this.AttGetV(res.json); return;
 			case "player": this.WatchResponsePlayer(res.json); return;
 			case "guide": this.GuideJsonType(res.json); return;
-			case "notification.get_unseen_count": HandleTypes.notification.unseenCount=res.json.unseenCount; return;
+			case "notification.get_unseen_count": this.notification_get_unseen_count_t(res); return;
 			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
 			case "next": this.YtApiNext(res.json); return;
 			case "account.account_menu": this.AccountMenuJson(res.json); return;
@@ -4237,31 +4159,9 @@ class HandleTypes extends BaseService {
 		debugger;
 	}
 	store_trayride_challenge=false;
-	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} data */
-	AttGetV(data) {
-		const {challenge,bgChallenge,responseContext,...v}=data;
-		this.bgChallenge(bgChallenge);
-		if(this.store_trayride_challenge) {
-			this.delete_old_string_values("tr_challenge");
-			this.save_new_string("tr_challenge",challenge);
-		}
-		/** @type {`a=${number}&a2=${number}&c=${number}&d=${number}&t=${number}&c1a=${number}&hh=${string}`} */
-		let chal_as_fmt=challenge;
-		chal_as_fmt=cast_as(challenge);
-		/** @type {import("./support/AttChallengeObj").AttChallengeObj} */
-		let search_param_obj=make_search_params(chal_as_fmt);
-		/** @type {keyof typeof search_param_obj} */
-		let i;
-		for(i in search_param_obj) {
-			switch(i) {
-				case "a": break;
-				default: this.save_new_string("att_param",i);
-			}
-		}
-		let ok=get_keys_of(v);
-		if(!ok.length) return;
-		console.log(data);
-		debugger;
+	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} x */
+	AttGetV(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x */
 	bgChallenge(x) {
@@ -4357,18 +4257,13 @@ class HandleTypes extends BaseService {
 		}
 		this.save_new_string("OptionItemType_keys",get_keys_of(item).join());
 	}
-	/** @arg {import("./support/yt_api/_/c/ChannelOptionsRendererData.js").ChannelOptionsRendererData} data */
-	ChannelOptionsRendererData(data) {
-		let {avatar,avatarAccessibility,avatarEndpoint,links,name,...rest}=data;
-		this.ThumbnailsList(avatar);
-		this.endpoint(avatarEndpoint);
-		this.primitive(name);
-		empty_object(rest);
+	/** @arg {import("./support/yt_api/_/c/ChannelOptionsRendererData.js").ChannelOptionsRendererData} x */
+	ChannelOptionsRendererData(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} v */
-	ThumbnailsList(v) {
-		if(!v) debugger;
-		iterate(v.thumbnails,v => this.Thumbnail(v));
+	/** @arg {import("./support/yt_api/_/t/ThumbnailsList.js").ThumbnailsList} x */
+	ThumbnailsList(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/t/Thumbnail.js").Thumbnail} v */
 	Thumbnail(v) {
@@ -4511,6 +4406,10 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/r/RendererData.js").RendererData} x */
 	RendererData(x) {
 		this.save_keys("RendererData_keys",x);
+	}
+	/** @arg {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t} x */
+	notification_get_unseen_count_t(x) {
+		this.save_keys("notification_get_unseen_count",x);
 	}
 }
 //#endregion
