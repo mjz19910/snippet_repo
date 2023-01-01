@@ -761,7 +761,7 @@ class YtIterateTarget {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state @arg {import("./support/yt_api/_/i/ItemSectionRendererData.js").ItemSectionRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {import("./yt_json_types/ItemSectionRendererData.js").ItemSectionRendererData} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));

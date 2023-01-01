@@ -1,6 +1,6 @@
-import {Accessibility} from "../../../../yt_json_types/Accessibility.js";
-import {Icon} from "../../../../yt_json_types/Icon.js";
-import {YtTextType} from "../../json/YtTextType.js";
+import {Accessibility} from "./Accessibility.js";
+import {Icon} from "./Icon.js";
+import {YtTextType} from "./YtTextType.js";
 import {YtEndpoint} from "./YtEndpoint.js";
 
 type Default_0={

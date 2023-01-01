@@ -1,5 +1,5 @@
 import {YtTextType} from "../../json/YtTextType.js";
-import {ButtonRenderer} from "../b/ButtonRenderer.js";
+import {ButtonRenderer} from "../../../../yt_json_types/ButtonRenderer.js";
 import {ImpressionEndpoint} from "../i/ImpressionEndpoint.js";
 import {MenuRenderer} from "../m/MenuRenderer.js";
 import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";

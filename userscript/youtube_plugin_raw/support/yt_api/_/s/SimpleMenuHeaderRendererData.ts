@@ -1,5 +1,5 @@
 import {SimpleTextFixmeValueNeeded} from "../s/SimpleText.js";
-import {DefaultButtonRenderer} from "../d/DefaultButtonRenderer";
+import {DefaultButtonRenderer} from "../../../../yt_json_types/DefaultButtonRenderer";
 
 export type SimpleMenuHeaderRendererData={
 	title: SimpleTextFixmeValueNeeded;

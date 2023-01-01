@@ -1,4 +1,4 @@
-import {ButtonRenderer} from "../b/ButtonRenderer.js";
+import {ButtonRenderer} from "../../../../yt_json_types/ButtonRenderer.js";
 import {AccountLinkButtonRenderer} from "./AccountLinkButtonRenderer";
 
 
