@@ -1,4 +1,4 @@
-import {ResponseContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "./json/GeneralContext.js";
 import {OpenPopupActionItem} from "../o/OpenPopupActionItem";
 
 export type GetNotificationMenuJson={

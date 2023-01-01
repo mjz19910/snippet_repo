@@ -1,4 +1,4 @@
-import {ResponseContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "../g/json/GeneralContext.js";
 import {CaptionsRenderer} from "../c/CaptionsRenderer";
 import {EndscreenRenderer} from "../e/EndscreenRenderer";
 import {PlayerAdItem} from "../p/PlayerAdItem.js";

@@ -1,4 +1,4 @@
-import {ResponseContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "../g/json/GeneralContext.js";
 import {Att_bgChallenge} from "./Att_bgChallenge";
 
 // spell:disable-next-line

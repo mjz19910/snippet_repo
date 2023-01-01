@@ -1,4 +1,4 @@
-import {ResponseContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "../g/json/GeneralContext.js";
 import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer.js";
 import {DesktopTopbarRenderer} from "./DesktopTopbarRenderer";
 import {EntityBatchUpdate} from "./EntityBatchUpdate";

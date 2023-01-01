@@ -1,5 +1,5 @@
 import {FrameworkUpdates} from "../f/FrameworkUpdates.js";
-import {ResponseContext} from "../g/GeneralContext.js";
+import {ResponseContext} from "../g/json/GeneralContext.js";
 
 export type WatchResponseContent={
 	currentVideoEndpoint: {};

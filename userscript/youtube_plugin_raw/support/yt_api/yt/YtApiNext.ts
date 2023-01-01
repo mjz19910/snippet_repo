@@ -1,4 +1,4 @@
-import {ResponseContext} from "../_/g/GeneralContext";
+import {ResponseContext} from "../_/g/json/GeneralContext";
 import {JsonDataEndpointType} from "../_/j/JsonDataEndpointType.js";
 
 export type YtApiNext={

@@ -1605,7 +1605,7 @@ class FilterHandlers {
 				};
 				case "get_transcript": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t["data"]} */
+					/** @type {import("./support/yt_api/_/g/json/get_transcript_t.js").get_transcript_t["data"]} */
 					data: cast_as(json),
 				};
 				case "guide": return {
@@ -3414,7 +3414,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params */
+	/** @arg {import("./support/yt_api/_/g/json/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3442,7 +3442,7 @@ class TrackingServices extends BaseService {
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
-	/** @arg {import("./support/yt_api/_/g/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	/** @arg {import("./support/yt_api/_/g/json/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
@@ -3456,7 +3456,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @arg {import("./support/yt_api/_/a/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params */
+	/** @arg {import("./support/yt_api/_/g/json/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params */
 	set_service_params(params) {
 		for(let service_param_list of params) {
 			switch(service_param_list.service) {
@@ -3749,7 +3749,7 @@ class HandleTypes extends BaseService {
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} x */
+	/** @private @arg {import("./support/yt_api/_/g/json/GeneralContext.js").ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x);
 	}

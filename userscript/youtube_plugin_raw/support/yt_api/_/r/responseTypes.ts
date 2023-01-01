@@ -3,7 +3,7 @@ import {browse_t} from "../b/browse_t.js";
 import {feedback_t} from "../f/feedback_t.js";
 import {getDatasyncIdsEndpoint_t} from "../g/getDatasyncIdsEndpoint_t.js";
 import {GetNotificationMenuBox} from "../g/GetNotificationMenuBox.js";
-import {get_transcript_t} from "../g/get_transcript_t.js";
+import {get_transcript_t} from "../g/json/get_transcript_t.js";
 import {guide_t} from "../g/guide_t.js";
 import {live_chat_get_live_chat_replay_t} from "../l/live_chat_get_live_chat_replay_t.js";
 import {next_t} from "../n/next_t.js";
