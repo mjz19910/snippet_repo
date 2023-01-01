@@ -1580,7 +1580,7 @@ class FilterHandlers {
 		}
 		return {name: cur_part};
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} */
+	/** @arg {UrlTypes} url_type @arg {{}} json @returns {ResponseTypes} */
 	get_res_data(url_type,json) {
 		/** @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
@@ -1675,16 +1675,11 @@ class FilterHandlers {
 		}
 		console.log("[log_get_res_data]",target,json); debugger; throw new Error("Stop");
 	}
-	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} input @arg {string|URL|Request} request @arg {URL} parsed_url */
-	on_json_type(input,request,parsed_url) {
-		try {
-			on_json_request({
-				...input,
-				request,
-				parsed_url,
-			});
-		} catch {
-			console.log("api not handled",input.type);
+	/** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
+	on_json_request(request_info) {
+		switch(request_info.type) {
+			case "att.get": console.log(request_info.data,request_info.data); break;
+			default: console.log(request_info.type,request_info.data); debugger; break;
 		}
 	}
 	/** @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
@@ -1706,7 +1701,11 @@ class FilterHandlers {
 		debug&&console.log("on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
-		this.on_json_type(res,request,req_parse);
+		this.on_json_request({
+			...res,
+			request,
+			req_parse,
+		});
 		this.handle_types.ResponseTypes(res);
 	}
 	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data @arg {URL} req_parse */
@@ -2212,16 +2211,6 @@ function filter_out_keys(keys,to_remove) {
 inject_api_yt.filter_out_keys=filter_out_keys;
 /** @typedef {import("./support/yt_api").YtJsonRequest} YtJsonRequest */
 /** @typedef {import("./support/yt_api").YtJsonUnsupportedRequest} YtJsonUnsupportedRequest */
-/** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
-function on_json_request(request_info) {
-	let skip_req_check=true;
-	if(skip_req_check) return;
-	switch(request_info.type) {
-		case "att.get": console.log(request_info.data,request_info.data); break;
-		default: console.log(request_info.type,request_info.data); break;
-	}
-}
-
 /** @arg {YtPageState["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
@@ -3740,7 +3729,7 @@ class HandleTypes extends BaseService {
 	yt_endpoint(x) {
 		this.save_keys("yt_endpoint",x);
 	}
-	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} x */
+	/** @arg {ResponseTypes} x */
 	ResponseTypes(x) {
 		this.save_keys("ResponseTypes",x.data);
 		if("responseContext" in x.data&&x.data.responseContext) {
