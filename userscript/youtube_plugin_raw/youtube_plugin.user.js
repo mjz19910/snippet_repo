@@ -17,33 +17,6 @@
 const YtdAppElement=cast_as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
-// #region node
-var is_node_js=function is_node_js() {
-	return false;
-};
-var destroy_env=() => {};
-if(typeof window==="undefined") {
-	is_node_js=() => true;
-	/** @type {{require:()=>any}&typeof globalThis} */
-	let njs_require=cast_as(globalThis);
-	if(typeof njs_require.require==="function") {
-		let n_env=require("./support/init_node_env.js");
-		destroy_env=() => {
-			n_env.destroy_env(message_channel);
-		};
-		window=n_env.window;
-		History=window.History;
-		HTMLElement=window.HTMLElement;
-		Image=window.Image;
-		document=window.document;
-		localStorage=window.localStorage;
-		HTMLDivElement=window.HTMLDivElement;
-		top=window;
-	} else {
-		throw new Error("Unable to generate fake window");
-	}
-}
-// #endregion
 // #region Use module types
 /** @type {import("./__global.js")} */
 // #endregion
@@ -52,10 +25,16 @@ if(typeof window==="undefined") {
 /** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};
 window.inject_api=inject_api;
-/** @type {InjectApiYt} */
 let inject_api_yt={};
 inject_api.modules=new Map;
 inject_api.modules.set("yt",inject_api_yt);
+
+/** @type {Map<string, Blob|MediaSource>} */
+let created_blobs=new Map;
+inject_api_yt.created_blobs=created_blobs;
+/** @type {Set<string>} */
+let active_blob_set=new Set;
+inject_api_yt.active_blob_set=active_blob_set;
 
 inject_api_yt.saved_maps=new Map;
 /** @arg {string} key @arg {Map<string, {}>} map */
@@ -277,17 +256,12 @@ async function async_plugin_init(event) {
 	let cur_count=1;
 	let obj=dom_observer;
 	let iter_count=0;
-	if(is_node_js()) console.log("start async_plugin");
 	try {
 		while(true) {
 			if(iter_count!==0) {
 				await new Promise((soon) => setTimeout(soon,40));
 			}
 			iter_count++;
-			if(!audio_gain_controller) {
-				audio_gain_controller=new AudioGainController;
-				AudioGainController.attach_instance();
-			}
 			VolumeRange.create_if_needed();
 			cur_count++;
 			x: {
@@ -398,10 +372,6 @@ async function async_plugin_init(event) {
 				break;
 			}
 			const max_find_iter=7588;
-			if(is_node_js()&&iter_count>max_find_iter&&found_element_count===0) {
-				console.log("wait for plugin ready timeout");
-				break;
-			}
 			if(!box_map.has("video-list")) continue;
 			if(ytd_page_manager===null) continue;
 			if(!ytd_page_manager.getCurrentPage()) continue;
@@ -414,10 +384,6 @@ async function async_plugin_init(event) {
 		}
 	} catch(e) {
 		console.log("had error in async init",e);
-	}
-	if(is_node_js()) {
-		destroy_env();
-		return;
 	}
 }
 
@@ -1387,6 +1353,7 @@ function decode_b64_proto_obj(str) {
 	let reader=new MyReader(buffer);
 	return reader.read_any();
 }
+inject_api_yt.decode_b64_proto_obj=decode_b64_proto_obj;
 
 /** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
 function add_function(function_obj) {
@@ -2098,9 +2065,9 @@ class YtdPageManagerElement extends HTMLElement {
 	getCurrentPage() {throw 1;}
 }
 
-inject_api_yt.playlist_arr??=[];
 /** @type {string[]} */
-let playlist_arr=inject_api_yt.playlist_arr;
+let playlist_arr=[];
+inject_api_yt.playlist_arr=playlist_arr;
 /** @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
 
@@ -2131,8 +2098,9 @@ function on_ytd_watch_flexy(element) {
 		}
 	});
 }
-inject_api_yt.page_type_changes??=[];
-let page_type_changes=inject_api_yt.page_type_changes;
+/** @type {string[]} */
+let page_type_changes=[];
+inject_api_yt.page_type_changes=page_type_changes;
 
 /** @type {string|null} */
 let last_page_type=null;
@@ -2650,15 +2618,11 @@ class AudioGainController {
 			this.media_element_source_list.push(media_element_source);
 		}
 	}
-	static attach_instance() {
-		if(!window.inject_api) throw new Error("Missing inject_api");
-		if(!audio_gain_controller) throw new Error("Missing instance");
-		inject_api_yt.audio_gain_controller=audio_gain_controller;
-	}
 }
 inject_api_yt.AudioGainController=AudioGainController;
 /** @type {AudioGainController|null} */
-let audio_gain_controller=null;
+let audio_gain_controller=new AudioGainController;
+inject_api_yt.audio_gain_controller=audio_gain_controller;
 
 /** @template {string} T @template {{}} U @template {import("./support/make/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
@@ -2764,7 +2728,6 @@ async function main() {
 		HiddenData(new FilterHandlers(resolver_value));
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
-	inject_api_yt.yt_handlers=yt_handlers;
 
 	// init section
 	const service_resolver=new ServiceResolver({
@@ -2909,12 +2872,6 @@ async function main() {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
 	function modify_global_env() {
-		/** @type {Map<string, Blob|MediaSource>} */
-		let created_blobs=new Map;
-		inject_api_yt.created_blobs=created_blobs;
-		/** @type {Set<string>} */
-		let active_blob_set=new Set;
-		inject_api_yt.active_blob_set=active_blob_set;
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
 			/** @arg {typeof URL["createObjectURL"]} target
 			 @arg {typeof URL} thisArg
@@ -3510,6 +3467,7 @@ if(typeof exports==="object") {
 	exports.FilterHandlers=FilterHandlers;
 	exports.HiddenData=HiddenData;
 	exports.VolumeRange=VolumeRange;
+	exports.inject_api_yt=inject_api_yt;
 }
 //#region decode_entity_key
 /** @name Ys */
