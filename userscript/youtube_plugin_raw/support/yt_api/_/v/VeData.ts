@@ -1,3 +1,3 @@
-export type VeData={
+type VeData={
 	trackingParams: string;
 };
