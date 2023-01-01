@@ -1,4 +1,4 @@
-import {TimeoutExecutor} from "../../group2/item_04.js";
+import {TimeoutExecutor} from "../../group2/RustBasicExecutor_item.js";
 
 type TaskAsFuture<T>={
 	contains(value: T): boolean;
