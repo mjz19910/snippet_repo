@@ -4160,7 +4160,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/r/RendererData.js").RendererData} x */
 	RendererData(x) {
-		this.save_keys("RendererData_keys",x);
+		this.save_keys("RendererData",x);
 	}
 	/** @arg {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
