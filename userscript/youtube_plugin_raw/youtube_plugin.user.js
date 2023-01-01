@@ -1443,10 +1443,10 @@ class FilterHandlers {
 			return false;
 		}
 		if(is_what_to_watch_section(action)) {
-			/** @type {BrowseFeedAction} */
-			let action_t=action;
-			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// return true;
+			// /** @type {BrowseFeedAction} */
+			// let action_t=action;
+			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// // return true;
 			return false;
 		}
 		console.log("path",path,"continuation action",action);
@@ -1674,11 +1674,11 @@ class FilterHandlers {
 		}
 		console.log("[log_get_res_data]",target,json); debugger; throw new Error("Stop");
 	}
-	/** @arg {YtJsonRequest|YtJsonUnsupportedRequest} request_info */
+	/** @arg {YtJsonRequest} request_info */
 	on_json_request(request_info) {
 		switch(request_info.type) {
-			case "att.get": console.log(request_info.data,request_info.data); break;
-			default: console.log(request_info.type,request_info.data); debugger; break;
+			case "att.get": console.log(request_info.type,request_info.data); break;
+			default: console.log(request_info.type,request_info.data); break;
 		}
 	}
 	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} data */
@@ -2209,7 +2209,6 @@ function filter_out_keys(keys,to_remove) {
 }
 inject_api_yt.filter_out_keys=filter_out_keys;
 /** @typedef {import("./support/yt_api").YtJsonRequest} YtJsonRequest */
-/** @typedef {import("./support/yt_api").YtJsonUnsupportedRequest} YtJsonUnsupportedRequest */
 /** @arg {YtPageState["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
