@@ -1,6 +1,3 @@
-import {ClickTrackingParams} from "./ClickTrackingParams.js";
-import {CommandMetadata} from "./CommandMetadata";
-
-export interface ServiceEndpointGeneral {
+type ServiceEndpointGeneral={
 	commandMetadata: CommandMetadata;
 };

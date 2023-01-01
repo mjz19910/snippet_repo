@@ -1,6 +1,4 @@
-import {YtCurrentPage} from "./YtCurrentPage";
-
-export interface YtdPageManagerElementInterface extends HTMLElement {
+interface YtdPageManagerElementInterface extends HTMLElement {
 	getCurrentPage(): YtCurrentPage;
 	getCurrentData(): {};
 }

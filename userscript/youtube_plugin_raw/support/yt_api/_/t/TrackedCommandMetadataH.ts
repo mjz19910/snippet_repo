@@ -1,5 +1,3 @@
-import {CommandMetadata} from "../../json/CommandMetadata.js";
-
-export interface TrackedCommandMetadataH {
+interface TrackedCommandMetadataH {
 	commandMetadata: CommandMetadata;
 };

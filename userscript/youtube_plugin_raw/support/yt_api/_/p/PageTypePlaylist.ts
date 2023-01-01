@@ -1,9 +1,7 @@
-import {GeneralHistoryState} from "../g/GeneralHistoryState.js";
-import {PlaylistEndpoint} from "./PlaylistEndpoint";
-import {PlaylistPageResponse} from "./PlaylistPageResponse";
-
-export interface PageTypePlaylist extends GeneralHistoryState {
+export interface PageTypePlaylist {
 	pageType: "playlist";
-	endpoint: PlaylistEndpoint;
-	response: PlaylistPageResponse;
-}
+	endpoint: YtEndpoint;
+	response: {};
+	fromHistory: boolean;
+	navigationDoneMs: number;
+};

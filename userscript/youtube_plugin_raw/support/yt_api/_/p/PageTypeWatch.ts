@@ -1,10 +1,7 @@
-import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
-import {WatchPageResponse} from "../w/WatchPageResponse";
-
-export interface PageTypeWatch {
+type PageTypeWatch={
 	pageType: "watch";
 	endpoint: YtEndpoint;
-	response: WatchPageResponse;
+	response: {};
 	fromHistory: boolean;
 	navigationDoneMs: number;
-}
+};

@@ -1,6 +1,4 @@
-import {CommentsHeaderRenderer} from "./CommentsHeaderRenderer";
-
-export type CommentsHeaderContent={
+type CommentsHeaderContent={
 	continuationItems: [
 		CommentsHeaderRenderer
 	];

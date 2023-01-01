@@ -5,7 +5,7 @@ if(u[0]==="/") {
 	const b=u;
 	/** @type {`/${string}?${string}`} */
 	const x=b;
-	/** @template {string} T @returns {import("../../../parse_url/UrlParse_ext.js").UrlParse_ext<T>} @arg {T} x */
+	/** @template {string} T @returns {UrlParse_ext<T>} @arg {T} x */
 	function create_from_parse_partial(x) {
 		/** @type {any} */
 		const a=x.split("?");

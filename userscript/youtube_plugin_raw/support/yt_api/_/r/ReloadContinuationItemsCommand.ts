@@ -1,6 +1,4 @@
-import {ReloadContinuationItemsCommandData} from "../r/ReloadContinuationItemsCommandData.js";
-
-export type ReloadContinuationItemsCommand={
+type ReloadContinuationItemsCommand={
 	clickTrackingParams: string;
 	reloadContinuationItemsCommand: ReloadContinuationItemsCommandData;
 };

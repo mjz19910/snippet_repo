@@ -1018,7 +1018,6 @@ class HandleRichGridRenderer {
 		}
 	}
 }
-/** @typedef {import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
 /** @arg {AppendContinuationItemsAction} o @returns {o is WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
 	return o.targetId==="watch-next-feed";
@@ -1382,7 +1381,7 @@ function non_null(val) {
 add_function(non_null);
 
 class FilterHandlers {
-	/** @arg {ResolverT} res */
+	/** @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
@@ -2055,7 +2054,7 @@ inject_api_yt.dom_observer=dom_observer;
 
 
 class YtdPageManagerElement extends HTMLElement {
-	/** @returns {import("./support/yt_api/yt/YtCurrentPage.js").YtCurrentPage|undefined} */
+	/** @returns {YtCurrentPage|undefined} */
 	getCurrentPage() {throw 1;}
 }
 
@@ -2687,9 +2686,8 @@ class HiddenData {
 //#region
 /** @typedef {import("./support/Services.js").Services} Services */
 /** @typedef {import("./support/ServiceOptions.js").ServiceOptions} ServiceOptions */
-/** @typedef {import("./support/ResolverT.js").ResolverT<Services,ServiceOptions>} ResolverT */
 async function main() {
-	/** @type {ResolverT} */
+	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
 	const e_catcher_service=new ECatcherService(resolver_value);
@@ -2982,7 +2980,7 @@ const general_service_state={
 /** @typedef {import("./types_tmp.js").SaveDataRet} SaveDataRet */
 class BaseServicePrivate {
 	// #region Public
-	/** @arg {ResolverT} x */
+	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		this.#x=x;
 		this.load_data();
@@ -3218,7 +3216,7 @@ class CsiService extends BaseService {
 		"GetWatchNext_rid",
 		"GetWebMainAppGuide_rid",
 	];
-	/** @arg {ResolverT} x */
+	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		for(let x of this.rid_keys) {

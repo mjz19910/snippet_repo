@@ -1,6 +1,4 @@
-import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer";
-
-export type PlaylistResponseContent={
+type PlaylistResponseContent={
 	contents: TwoColumnBrowseResultsRenderer;
 	trackingParams: string;
 };
