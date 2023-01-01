@@ -1,12 +1,4 @@
-import {ToServiceParamsList} from "./ToServiceParamsList.js";
-
-export type ECatcherServiceParamsType=ToServiceParamsList<ECatcherServiceType>;
-
-type ECatcherServiceType={
-	["client.version"]: `${2}.${2022}${12}${20}`;
-	["client.name"]: "WEB";
-	["client.fexp"]: string;
-};
+import {ECatcherServiceParamsType} from "./ECatcherServiceParamsType";
 
 export type ECatcherServiceParams={
 	service: "ECATCHER";
