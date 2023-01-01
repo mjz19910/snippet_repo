@@ -1674,14 +1674,7 @@ class FilterHandlers {
 		}
 		console.log("[log_get_res_data]",target,json); debugger; throw new Error("Stop");
 	}
-	/** @arg {YtJsonRequest} request_info */
-	on_json_request(request_info) {
-		switch(request_info.type) {
-			case "att.get": console.log(request_info.type,request_info.data); break;
-			default: console.log(request_info.type,request_info.data); break;
-		}
-	}
-	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} data */
+	/** @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {
 		var {req_hr_t,req_parse: parsed_url,debug}=this.on_handle_api_0(request);
 		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,parsed_url);
@@ -1700,14 +1693,9 @@ class FilterHandlers {
 		debug&&console.log("on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
-		this.on_json_request({
-			...res,
-			request,
-			parsed_url,
-		});
 		this.handle_types.ResponseTypes(res);
 	}
-	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string|URL|Request} request @arg {JsonDataResponseType} data @arg {URL} req_parse */
+	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string|URL|Request} request @arg {{}} data @arg {URL} req_parse */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
