@@ -3819,14 +3819,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {NotificationGetUnseenCountData} x */
 	NotificationGetUnseenCountData(x) {
-		const {responseContext,unseenCount,...y}=x;
+		const {responseContext,actions,...y}=x;
 		this.save_keys("GetUnseenCount",x);
 		this.ResponseContext(x.responseContext);
 		if("unseenCount" in x) {
-			this.save_number("notification.unseenCount",as_cast(x.unseenCount));
-		} else {
-			console.log("TODO: traverse the actions to find the unseenCount");
+			this.save_number("notification.unseenCount",cast_as(x.unseenCount));
 		}
+		iterate(actions,this.empty_object)
 		this.empty_object(y);
 	}
 	/** @private @arg {{}} x */
