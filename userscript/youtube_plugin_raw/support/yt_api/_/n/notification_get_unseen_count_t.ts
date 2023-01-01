@@ -1,8 +1,8 @@
 import {ResponseContext} from "../_/g/GeneralContext.js";
 
 export type notification_get_unseen_count_t={
-	url_type: "notification.get_unseen_count";
-	json: {
+	type: "notification.get_unseen_count";
+	data: {
 		responseContext: ResponseContext;
 		unseenCount: number;
 	};

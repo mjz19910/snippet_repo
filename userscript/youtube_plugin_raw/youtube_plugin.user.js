@@ -1583,87 +1583,87 @@ class FilterHandlers {
 		switch(target.length) {
 			case 1: switch(target[0]) {
 				case "browse": return {
-					url_type: target[0],
-					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t["json"]} */
-					json: cast_as(json),
+					type: target[0],
+					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t["data"]} */
+					data: cast_as(json),
 				};
 				case "feedback": return {
-					url_type: target[0],
-					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t["json"]} */
-					json: cast_as(json),
+					type: target[0],
+					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t["data"]} */
+					data: cast_as(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
-					url_type: target[0],
-					json,
+					type: target[0],
+					data: json,
 				};
 				case "get_transcript": return {
-					url_type: target[0],
-					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t["json"]} */
-					json: cast_as(json),
+					type: target[0],
+					/** @type {import("./support/yt_api/_/g/get_transcript_t.js").get_transcript_t["data"]} */
+					data: cast_as(json),
 				};
 				case "guide": return {
-					url_type: target[0],
+					type: target[0],
 					/** @type {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} */
-					json: cast_as(json),
+					data: cast_as(json),
 				};
 				case "next": return {
-					url_type: target[0],
+					type: target[0],
 					/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
-					json: cast_as(json),
+					data: cast_as(json),
 				};
 				case "player": return {
-					url_type: target[0],
+					type: target[0],
 					/** @type {import("./support/yt_api/_/w/WatchResponsePlayer.js").WatchResponsePlayer} */
-					json: cast_as(json),
+					data: cast_as(json),
 				};
 				default: break;
 			} break;
 			case 2: switch(target[0]) {
 				case "account": switch(target[1]) {
 					case "account_menu": return {
-						url_type: `${target[0]}.${target[1]}`,
+						type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} */
-						json: cast_as(json),
+						data: cast_as(json),
 					};
 				};
 				case "att": return {
-					url_type: `${target[0]}.${target[1]}`,
+					type: `${target[0]}.${target[1]}`,
 					/** @type {import("./support/yt_api/_/a/AttGetV.js").AttGetV} */
-					json: cast_as(json),
+					data: cast_as(json),
 				};
 				case "live_chat": switch(target[1]) {
 					case "get_live_chat_replay": return {
-						url_type: `${target[0]}.${target[1]}`,
-						json,
+						type: `${target[0]}.${target[1]}`,
+						data: json,
 					};
 				}
 				case "notification": switch(target[1]) {
 					case "get_notification_menu": return {
-						url_type: `${target[0]}.${target[1]}`,
+						type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/_/g/GetNotificationMenuJson.js").GetNotificationMenuJson} */
-						json: cast_as(json),
+						data: cast_as(json),
 					};
 					case "get_unseen_count": return {
-						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t["json"]} */
-						json: cast_as(json),
+						type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t["data"]} */
+						data: cast_as(json),
 					};
 					case "record_interactions": return {
-						url_type: `${target[0]}.${target[1]}`,
+						type: `${target[0]}.${target[1]}`,
 						/** @type {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} */
-						json: cast_as(json),
+						data: cast_as(json),
 					};
 				}
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
-						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/r/reel_reel_item_watch_t.js").reel_reel_item_watch_t["json"]} */
-						json: cast_as(json),
+						type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/yt_api/_/r/reel_reel_item_watch_t.js").reel_reel_item_watch_t["data"]} */
+						data: cast_as(json),
 					};
 					case "reel_watch_sequence": return {
-						url_type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/r/reel_reel_watch_sequence_t.js").reel_reel_watch_sequence_t["json"]} */
-						json: cast_as(json),
+						type: `${target[0]}.${target[1]}`,
+						/** @type {import("./support/yt_api/_/r/reel_reel_watch_sequence_t.js").reel_reel_watch_sequence_t["data"]} */
+						data: cast_as(json),
 					};
 				}
 				default: break;
@@ -1680,7 +1680,7 @@ class FilterHandlers {
 				parsed_url,
 			});
 		} catch {
-			console.log("api not handled",input.url_type);
+			console.log("api not handled",input.type);
 		}
 	}
 	/** @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
@@ -2213,9 +2213,9 @@ function filter_out_keys(keys,to_remove) {
 function on_json_request(request_info) {
 	let skip_req_check=true;
 	if(skip_req_check) return;
-	switch(request_info.url_type) {
-		case "att.get": console.log(request_info.url_type,request_info.json); break;
-		default: console.log(request_info.url_type,request_info.json); break;
+	switch(request_info.type) {
+		case "att.get": console.log(request_info.data,request_info.data); break;
+		default: console.log(request_info.type,request_info.data); break;
 	}
 }
 
@@ -4034,25 +4034,25 @@ class HandleTypes extends BaseService {
 	};
 	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} res */
 	ResponseTypes(res) {
-		if("responseContext" in res.json) {
-			this.responseContext(res.json.responseContext);
+		if("responseContext" in res.data) {
+			this.responseContext(res.data.responseContext);
 		}
-		switch(res.url_type) {
-			case "account.account_menu": this.AccountMenuJson(res.json); return;
-			case "att.get": this.AttGetV(res.json); return;
-			case "feedback": this.withGeneralContext(res.json); break;
-			case "get_transcript": this.withGeneralContext(res.json); break;
-			case "getDatasyncIdsEndpoint": this.xx(res.json); break;
-			case "guide": this.GuideJsonType(res.json); return;
-			case "live_chat.get_live_chat_replay": this.xx(res.json); break;
-			case "next": this.YtApiNext(res.json); return;
+		switch(res.type) {
+			case "account.account_menu": this.AccountMenuJson(res.data); return;
+			case "att.get": this.AttGetV(res.data); return;
+			case "feedback": this.withGeneralContext(res.data); break;
+			case "get_transcript": this.withGeneralContext(res.data); break;
+			case "getDatasyncIdsEndpoint": this.xx(res.data); break;
+			case "guide": this.GuideJsonType(res.data); return;
+			case "live_chat.get_live_chat_replay": this.xx(res.data); break;
+			case "next": this.YtApiNext(res.data); return;
 			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
 			case "notification.get_unseen_count": this.notification_get_unseen_count_t(res); return;
-			case "notification.record_interactions": this.YtSuccessResponse(res.json); break;
-			case "player": this.WatchResponsePlayer(res.json); return;
-			case "reel.reel_item_watch": this.withGeneralContext(res.json); return;
-			case "reel.reel_watch_sequence": this.xx(res.json); break;
-			default: console.log("missed api type",res); throw new Error("FIXME");
+			case "notification.record_interactions": this.YtSuccessResponse(res.data); break;
+			case "player": this.WatchResponsePlayer(res.data); return;
+			case "reel.reel_item_watch": this.withGeneralContext(res.data); return;
+			case "reel.reel_watch_sequence": this.xx(res.data); break;
+			default: this.save_keys("need_api_type",res.type);
 		}
 	}
 	/** @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} response */
@@ -4077,9 +4077,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
-		const {json}=x;
-		iterate(json.actions,x => this.OpenPopupActionItem(x));
-		let ok=get_keys_of(json);
+		const {data}=x;
+		iterate(data.actions,x => this.OpenPopupActionItem(x));
+		let ok=get_keys_of(data);
 		if(eq_keys(ok,["responseContext","actions","trackingParams"])) return;
 		console.log(ok);
 		debugger;
