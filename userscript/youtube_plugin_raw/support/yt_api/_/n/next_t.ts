@@ -1,5 +1,4 @@
-import {YtApiNext} from "./YtApiNext";
-
+import {YtApiNext} from "../../yt/YtApiNext.js";
 
 export type next_t={
 	type: "next";

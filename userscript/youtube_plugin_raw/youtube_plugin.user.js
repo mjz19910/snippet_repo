@@ -3763,7 +3763,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} x */
 	DataResponsePageType(x) {
 		this.save_keys("DataResponsePageType",x);
-		x.endpoint;
 	}
 	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} x */
 	ResponseTypes(x) {
@@ -3786,7 +3785,7 @@ class HandleTypes extends BaseService {
 			case "player": this.WatchResponsePlayer(x.data); return;
 			case "reel.reel_item_watch": this.save_keys(x.type,x.data); return;
 			case "reel.reel_watch_sequence": this.save_keys(x.type,x.data); break;
-			default: this.save_keys("need_api_type",x.type);
+			default: this.save_new_string("need_api_type",x.type);
 		}
 	}
 	/** @private @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} x */
