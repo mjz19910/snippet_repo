@@ -1,4 +1,4 @@
-export type CreatePlaylistServiceEndpoint={
+type CreatePlaylistServiceEndpoint={
 	params: string;
 	videoIds: string[];
 };

@@ -1,6 +1,4 @@
-import {UrlEndpointTargetType} from "./UrlEndpointTargetType.js";
-
-export type UrlEndpointRoot={
+type UrlEndpointRoot={
 	url: string;
-	target?: UrlEndpointTargetType;
+	target?: "TARGET_NEW_WINDOW";
 };

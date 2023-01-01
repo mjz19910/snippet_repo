@@ -1,6 +1,4 @@
-import {BrowseEndpointPages} from "./BrowseEndpointPages";
-
-export type CsiVarMap={
+type CsiVarMap={
 	c: "WEB";
 	cver: "2.20221220.09.00";
 	yt_li: "1";

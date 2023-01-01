@@ -1,5 +1,3 @@
-import {WebCommandMetadata} from "./WebCommandMetadata";
-
-export type CommandMetadata={
+type CommandMetadata={
 	webCommandMetadata: WebCommandMetadata;
 };

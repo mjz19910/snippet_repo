@@ -1,6 +1,4 @@
-import {Split} from "./Split.js";
-
-export type SetSettingEndpointData={
+type SetSettingEndpointData={
 	settingItemId: `${number}`;
 	boolValue?: boolean;
 	settingItemIdForClient: KnownSplit;

@@ -1,6 +1,4 @@
-import {WebCommandPageType} from "./WebCommandPageType";
-
-export type WebCommandMetadata={
+type WebCommandMetadata={
 	webPageType?: WebCommandPageType;
 	sendPost?: boolean;
 	apiUrl?: string;

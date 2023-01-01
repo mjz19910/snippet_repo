@@ -1,3 +1,3 @@
-export type WatchEndpointData={
+type WatchEndpointData={
 	videoId: string;
 };

@@ -1,6 +1,4 @@
-import {OnCreateListCommand} from "../o/OnCreateListCommand.js";
-
-export type AddToPlaylistCommand={
+type AddToPlaylistCommandData={
 	listType: string;
 	onCreateListCommand: OnCreateListCommand;
 	openListPanel: boolean;

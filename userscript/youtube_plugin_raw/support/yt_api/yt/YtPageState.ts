@@ -1,4 +1,4 @@
-import {SettingsEndpointPages} from "../_/s/SettingsEndpointPages.js";
+import {SettingsEndpointPages} from "../../../yt_json_types/SettingsEndpointPages.js";
 import {YtEndpoint} from "../json/YtEndpoint.js";
 
 export type PageTypeList=[

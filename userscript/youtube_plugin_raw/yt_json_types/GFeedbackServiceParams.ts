@@ -1,7 +1,4 @@
-import {GFeedbackVarMap} from "./GFeedbackVarMap.js";
-import {ToServiceParams} from "./ToServiceParams.js";
-
-export type GFeedbackServiceParams={
+type GFeedbackServiceParams={
 	service: "GFEEDBACK";
 	params: ToServiceParams<GFeedbackVarMap>;
 };

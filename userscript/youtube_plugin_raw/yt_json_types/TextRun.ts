@@ -1,6 +1,4 @@
-import {YtEndpoint} from "./YtEndpoint.js";
-
-export type TextRun={
+type TextRun={
 	text: string;
 	navigationEndpoint?: YtEndpoint;
 	bold?: boolean;

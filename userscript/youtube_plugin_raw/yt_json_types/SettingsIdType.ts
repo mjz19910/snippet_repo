@@ -1,2 +1,2 @@
-import {SettingsEndpointPages} from "../support/yt_api/_/s/SettingsEndpointPages";
+import {SettingsEndpointPages} from "./SettingsEndpointPages";
 export type SettingsIdType=`SP${SettingsEndpointPages}`;

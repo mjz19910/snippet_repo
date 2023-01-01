@@ -1,3 +1,3 @@
-export type SearchEndpointData={
+type SearchEndpointData={
 	query: string;
 };

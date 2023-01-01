@@ -1499,7 +1499,6 @@ class FilterHandlers {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
 		}
-		/** @template T @template U @typedef {import("./yt_json_types/Split.js").Split<T,U>} Split */
 		/** @type {Split<import("./support/parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(state,path_parts);
@@ -1585,7 +1584,7 @@ class FilterHandlers {
 	}
 	/** @arg {UrlTypes} url_type @arg {{}} json @returns {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} */
 	get_res_data(url_type,json) {
-		/** @type {import("./yt_json_types/Split.js").Split<UrlTypes, ".">} */
+		/** @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
 		switch(target.length) {
 			case 1: switch(target[0]) {
@@ -2625,7 +2624,7 @@ inject_api_yt.AudioGainController=AudioGainController;
 let audio_gain_controller=new AudioGainController;
 inject_api_yt.audio_gain_controller=audio_gain_controller;
 
-/** @template {string} T @template {{}} U @template {import("./yt_json_types/Split.js").Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
+/** @template {string} T @template {{}} U @template {Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {import("./support/make/__ia_excludeKeysS.js").__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
 	/** @type {any} */
 	let ex_keys_any=ex_keys_str.split(",");
@@ -2951,12 +2950,12 @@ function no_handler({parts,index}) {
 	debugger;
 	throw new Error("Stop");
 }
-/** @template {string} C @template {string} U @template {import("./yt_json_types/Split.js").Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {import("./yt_json_types/Split.js").Split<C,","> extends U[]?C:never} arg1 */
+/** @template {string} C @template {string} U @template {Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {Split<C,","> extends U[]?C:never} arg1 */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }
 inject_api_yt.has_keys=has_keys;
-/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {import("./yt_json_types/Split.js").Split<X,string extends S?",":S>} */
+/** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 function split_string(x,s=cast_as(",")) {
 	let r=x.split(s);
 	return cast_as(r);
@@ -3224,7 +3223,7 @@ class BaseService extends BaseServicePrivate {
 }
 class CsiService extends BaseService {
 	data={
-		/** @type {import("./yt_json_types/BrowseEndpointPages.js").BrowseEndpointPages|null} */
+		/** @type {BrowseEndpointPages|null} */
 		yt_fn: null,
 		/** @type {"WEB"|null} */
 		c: null,
@@ -3258,7 +3257,7 @@ class CsiService extends BaseService {
 			this.rid[x]=void 0;
 		}
 	}
-	/** @arg {import("./yt_json_types/BrowseEndpointPages.js").BrowseEndpointPages} value */
+	/** @arg {BrowseEndpointPages} value */
 	verify_param_yt_fn(value) {
 		switch(value) {
 			case "history":
@@ -3269,7 +3268,7 @@ class CsiService extends BaseService {
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @arg {import("./yt_json_types/CsiServiceParamsType.js").CsiServiceParamsType} params */
+	/** @arg {CsiServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3319,12 +3318,12 @@ class ECatcherService extends BaseService {
 			],
 		},
 	};
-	/** @arg {import("./yt_json_types/ECatcherServiceParams").ECatcherServiceParams['params']} params */
+	/** @arg {ECatcherServiceParams['params']} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
 		for(let param of params) {
-			/** @type {import("./yt_json_types/Split.js").Split<typeof param.key,".">} */
+			/** @type {Split<typeof param.key,".">} */
 			let param_parts=cast_as(param.key.split("."));
 			if(param_parts[0]!=="client") debugger;
 			switch(param_parts[1]) {
@@ -3366,7 +3365,6 @@ class GFeedbackService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @template T @typedef {import("./yt_json_types/ToServiceParams.js").ToServiceParams<T>} ToServiceParams */
 	/** @typedef {import("./yt_json_types/GFeedbackVarMap.js").GFeedbackVarMap} GFeedbackVarMap */
 	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
 	on_params(params) {
@@ -3436,19 +3434,19 @@ class TrackingServices extends BaseService {
 	on_csi_service(service) {
 		this.x.get("csi_service").on_params(service.params);
 	}
-	/** @arg {import("./yt_json_types/ECatcherServiceParams.js").ECatcherServiceParams} service */
+	/** @arg {ECatcherServiceParams} service */
 	on_e_catcher_service(service) {
 		this.x.get("e_catcher_service").on_params(service.params);
 	}
-	/** @arg {import("./yt_json_types/GFeedbackServiceParams.js").GFeedbackServiceParams} service */
+	/** @arg {GFeedbackServiceParams} service */
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
-	/** @arg {import("./yt_json_types/GuidedHelpServiceParams.js").GuidedHelpServiceParams} service */
+	/** @arg {GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
-	/** @arg {import("./yt_json_types/GoogleHelpServiceParams.js").GoogleHelpServiceParams} service */
+	/** @arg {GoogleHelpServiceParams} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -3757,7 +3755,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtPageResponseType} x */
 	DataResponsePageType(x) {
+		const {endpoint}=x;
+		this.yt_endpoint(endpoint);
 		this.save_keys("DataResponsePageType",x);
+	}
+	/** @param {YtEndpoint} x */
+	yt_endpoint(x) {
+		this.save_keys("yt_endpoint",x);
 	}
 	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} x */
 	ResponseTypes(x) {

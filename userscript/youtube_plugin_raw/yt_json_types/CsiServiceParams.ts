@@ -1,6 +1,4 @@
-import {CsiServiceParamsType} from "./CsiServiceParamsType";
-
-export type CsiServiceParams={
+type CsiServiceParams={
 	service: "CSI",
 	params: CsiServiceParamsType;
 };

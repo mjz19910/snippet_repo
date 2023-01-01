@@ -1,5 +1,5 @@
-import {ConfirmDialogRenderer} from "../c/ConfirmDialogRenderer.js";
-import {MultiPageMenuRenderer} from "../m/MultiPageMenuRenderer.js";
+import {ConfirmDialogRenderer} from "../support/yt_api/_/c/ConfirmDialogRenderer.js";
+import {MultiPageMenuRenderer} from "./MultiPageMenuRenderer.js";
 
 export type OpenPopupAction={
 	popup: MultiPageMenuRenderer|ConfirmDialogRenderer;

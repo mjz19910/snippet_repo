@@ -1,6 +1,4 @@
-import {BrowseIdType} from "./BrowseIdType";
-
-export type BrowseEndpointData={
+type BrowseEndpointData={
 	browseId: BrowseIdType;
 	params?: string;
 };

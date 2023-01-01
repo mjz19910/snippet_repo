@@ -1,3 +1,1 @@
-import {ToServiceParams} from "./ToServiceParams.js";
-
-export type ToServiceParamsList<T>=ToServiceParams<T>;
+type ToServiceParamsList<T>=ToServiceParams<T>;

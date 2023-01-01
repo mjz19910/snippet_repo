@@ -1,12 +1,4 @@
-import {BrowseEndpointData} from "./BrowseEndpointData.js";
-import {SearchEndpointData} from "./SearchEndpointData.js";
-import {SetSettingEndpointData} from "./SetSettingEndpointData.js";
-import {SignalServiceEndpointData} from "./SignalServiceEndpoint.js";
-import {UrlEndpointRoot} from "./UrlEndpointRoot.js";
-import {WatchEndpointData} from "./WatchEndpointData.js";
-import {YtEndpointBase} from "./YtEndpointBase";
-
-export type YtEndpoint=YtEndpointBase&({
+type YtEndpoint=YtEndpointBase&({
 	watchEndpoint: WatchEndpointData;
 }|{
 	urlEndpoint: UrlEndpointRoot;
