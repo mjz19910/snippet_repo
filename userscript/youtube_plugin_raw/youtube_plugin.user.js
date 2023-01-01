@@ -933,7 +933,7 @@ class HandleRendererContentItemArray {
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
 		check_item_keys(path,"richItemRenderer.content",get_keys_of(renderer.content));
 		if("adSlotRenderer" in renderer.content) {
-			if(debug_flag_value) console.log(base.class_name,"adSlotRenderer=",renderer.content.adSlotRenderer);
+			if(debug_flag_value) console.log("adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
 		}
 		return true;
@@ -1388,8 +1388,6 @@ class FilterHandlers {
 	constructor(res) {
 		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
-		/** @readonly */
-		this.class_name="FilterHandlers";
 		this.handlers={
 			rich_grid: new HandleRichGridRenderer,
 			renderer_content_item_array: new HandleRendererContentItemArray,
@@ -1593,12 +1591,12 @@ class FilterHandlers {
 			case 1: switch(target[0]) {
 				case "browse": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/b/browse_t.js").browse_t["data"]} */
+					/** @type {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} */
 					data: cast_as(json),
 				};
 				case "feedback": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/f/feedback_t.js").feedback_t["data"]} */
+					/** @type {import("./support/yt_api/_/f/JsonFeedbackData.js").JsonFeedbackData} */
 					data: cast_as(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
@@ -1700,15 +1698,15 @@ class FilterHandlers {
 		let api_parts=req_parse.pathname.slice(1).split("/");
 		// spell:ignore youtubei
 		if(api_parts[0]!=="youtubei") {
-			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
+			console.log("unknown api path",req_parse.pathname);
 			return;
 		}
 		if(api_parts[1]!=="v1") {
-			console.log(this.class_name+": "+"unknown api path",req_parse.pathname);
+			console.log("unknown api path",req_parse.pathname);
 			return;
 		}
 		let api_path=api_parts.slice(2).join(".");
-		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
+		debug&&console.log("on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.on_json_type(res,request,req_parse);
@@ -1749,19 +1747,19 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @typedef {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} DataResponsePageType */
-	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
+	/** @typedef {import("./support/yt_api/yt/YtPageState.js").YtPageResponseType} YtPageResponseType */
+	/** @arg {[()=>YtPageResponseType, object, []]} apply_args */
 	on_initial_data(apply_args) {
-		/** @type {DataResponsePageType} */
+		/** @type {YtPageResponseType} */
 		let ret=Reflect.apply(...apply_args);
 		if(!("page" in ret)) {
 			return ret;
 		}
 		if(!ret.response) {
-			console.log(this.class_name+": unhandled return value:",ret);
+			console.log("[unhandled_return_value]",ret);
 			debugger;
 		}
-		if(is_yt_debug_enabled) console.log(this.class_name+": initial_data:",ret);
+		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		page_type_iter(ret.page);
 		this.handle_any_data(`page_type_${ret.page}`,cast_as(ret));
 		this.handle_types.DataResponsePageType(ret);
@@ -2232,11 +2230,6 @@ function on_json_request(request_info) {
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": break;
-		case "channel": break;
-		case "playlist": break;
-		case "settings": break;
-		case "shorts": break;
-		case "watch": break;
 		default: console.log("[%s]",pageType); debugger;
 	}
 }
@@ -2875,7 +2868,7 @@ async function main() {
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
 	}
-	/** @arg {[()=>DataResponsePageType, object, []]} apply_args */
+	/** @arg {[()=>YtPageResponseType, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
@@ -3760,7 +3753,7 @@ class HandleTypes extends BaseService {
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x);
 	}
-	/** @arg {import("./support/yt_api/_/d/DataResponsePageType.js").DataResponsePageType} x */
+	/** @arg {YtPageResponseType} x */
 	DataResponsePageType(x) {
 		this.save_keys("DataResponsePageType",x);
 	}

@@ -1,4 +1,4 @@
-import {att_get_t} from "../a/att_get_t.js";
+import {att_get_response} from "../a/att_get_response.js";
 import {browse_t} from "../b/browse_t.js";
 import {feedback_t} from "../f/feedback_t.js";
 import {getDatasyncIdsEndpoint_t} from "../g/getDatasyncIdsEndpoint_t.js";
@@ -16,7 +16,7 @@ import {reel_reel_watch_sequence_t} from "./reel_reel_watch_sequence_t.js";
 
 export type ResponseTypes=
 	account_account_menu_t|
-	att_get_t|
+	att_get_response|
 	browse_t|
 	feedback_t|
 	get_transcript_t|

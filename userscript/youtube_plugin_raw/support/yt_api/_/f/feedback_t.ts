@@ -1,8 +1,6 @@
-import {ResponseContext} from "../g/GeneralContext.js";
+import {JsonFeedbackData} from "./JsonFeedbackData";
 
 export type feedback_t={
 	type: "feedback";
-	data: {
-		responseContext: ResponseContext;
-	};
+	data: JsonFeedbackData;
 };

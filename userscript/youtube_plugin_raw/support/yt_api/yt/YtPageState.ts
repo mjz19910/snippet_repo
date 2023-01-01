@@ -1,3 +1,4 @@
+import {SettingsEndpointPages} from "../_/s/SettingsEndpointPages.js";
 import {YtEndpoint} from "./YtEndpoint.js";
 
 export type PageTypeList=[
@@ -8,9 +9,11 @@ export type PageTypeList=[
 	"settings",
 	"shorts",
 ];
-
+export type ResponsePageUrlList=[
+	`/${SettingsEndpointPages}`,
+]
 export type YtPageState={
-	pageType: PageTypeList[number];
+	pageType: "browse";
 	endpoint: YtEndpoint;
 	response: YtPageResponseType;
 	fromHistory: boolean;
@@ -21,6 +24,6 @@ export type YtPageResponseType={
 	page: "browse";
 	endpoint: YtEndpoint;
 	response: {};
-	url: "/";
+	url: string;
 };
 
