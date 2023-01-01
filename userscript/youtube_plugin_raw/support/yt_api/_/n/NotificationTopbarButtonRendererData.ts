@@ -1,6 +1,6 @@
 import {YtEndpoint} from "../../json/YtEndpoint.js";
 import {Accessibility} from "../../../../yt_json_types/Accessibility.js";
-import {Icon} from "../i/Icon.js";
+import {Icon} from "../../../../yt_json_types/Icon.js";
 
 export type NotificationTopbarButtonRendererData={
 	icon: Icon<"NOTIFICATIONS">;

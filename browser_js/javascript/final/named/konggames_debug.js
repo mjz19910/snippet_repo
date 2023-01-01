@@ -1,4 +1,3 @@
-import captureStackTrace from "../../../typescript/src/capture-stack-trace.js";
 import {Runner} from "../support/Runner.js";
 
 /* spell:words konggames
@@ -180,7 +179,6 @@ function main() {
 					error=new Error("required argument 'result' is undefined");
 				}
 				if(error) {
-					captureStackTrace(error);
 					throw error;
 				}
 				if(this.event_forward_function) {

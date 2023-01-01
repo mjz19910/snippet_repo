@@ -1,4 +1,4 @@
-import {SortFilterSubMenuRenderer} from "../s/SortFilterSubMenuRenderer";
+import {SortFilterSubMenuRenderer} from "./SortFilterSubMenuRenderer";
 
 export type PlaylistVideoListRendererData={
 	playlistId: "WL";

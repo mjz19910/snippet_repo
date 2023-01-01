@@ -1,4 +1,4 @@
-import {Icon} from "../i/Icon.js";
+import {Icon} from "../../../../yt_json_types/Icon.js";
 import {YtTextType} from "../../json/YtTextType.js";
 import {YtEndpoint} from "../../json/YtEndpoint.js";
 import {ButtonRenderer} from "../b/ButtonRenderer.js";

@@ -1,5 +1,5 @@
 import {Accessibility} from "../../../../yt_json_types/Accessibility";
-import {Icon} from "../i/Icon.js";
+import {Icon} from "../../../../yt_json_types/Icon.js";
 import {ToggledServiceEndpoint} from "./ToggledServiceEndpoint";
 import {UntoggledServiceEndpoint} from "../u/UntoggledServiceEndpoint";
 

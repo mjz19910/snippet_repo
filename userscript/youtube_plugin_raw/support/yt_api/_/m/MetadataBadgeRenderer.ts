@@ -1,5 +1,5 @@
 import {AccessibilityData} from "../../../../yt_json_types/AccessibilityData";
-import {Icon} from "../i/Icon";
+import {Icon} from "../../../../yt_json_types/Icon";
 
 export type MetadataBadgeRenderer={
 	icon: Icon<never>;

@@ -1,4 +1,4 @@
-import {PlaylistVideoListRendererData} from "./PlaylistVideoListRendererData";
+import {PlaylistVideoListRendererData} from "../../../../yt_json_types/PlaylistVideoListRendererData";
 
 export type PlaylistVideoListRenderer={
 	playlistVideoListRenderer: PlaylistVideoListRendererData;
