@@ -1,6 +1,4 @@
-import {AdsControlFlowOpportunityReceivedCommandData} from "./AdsControlFlowOpportunityReceivedCommandData";
-
-export type AdsControlFlowOpportunityReceivedCommand={
+type AdsControlFlowOpportunityReceivedCommand={
 	clickTrackingParams: string;
 	adsControlFlowOpportunityReceivedCommand: AdsControlFlowOpportunityReceivedCommandData;
 };

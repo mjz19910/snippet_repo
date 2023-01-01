@@ -1,6 +1,4 @@
-import {AdSlotAndLayoutMetadataItem} from "./AdSlotAndLayoutMetadataItem";
-
-export type AdsControlFlowOpportunityReceivedCommandData={
+type AdsControlFlowOpportunityReceivedCommandData={
 	opportunityType: "OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED";
 	adSlotAndLayoutMetadata: AdSlotAndLayoutMetadataItem[];
 	isInitialLoad: boolean;

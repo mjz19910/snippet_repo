@@ -1,8 +1,4 @@
-import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
-import {YtTextType} from "../../json/YtTextType.js";
-import {ThumbnailsList} from "../t/ThumbnailsList.js";
-
-export type SettingsSwitchRendererData={
+type SettingsSwitchRendererData={
 	title: YtTextType;
 	subtitle: YtTextType;
 	enabled: boolean;
