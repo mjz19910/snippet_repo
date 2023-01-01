@@ -2963,7 +2963,7 @@ function split_string(x,s=cast_as(",")) {
 }
 
 const seen_map=new Set;
-/** @arg {import("./support/yt_api/_/b/BrowseIdType.js").BrowseIdType} value */
+/** @arg {import("./yt_json_types/BrowseIdType.js").BrowseIdType} value */
 function parse_browse_id(value) {
 	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
 	/** @template T,U @typedef {import("./support/ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */

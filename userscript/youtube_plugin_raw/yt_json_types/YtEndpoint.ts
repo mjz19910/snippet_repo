@@ -1,4 +1,4 @@
-import {BrowseEndpointData} from "../support/yt_api/_/b/BrowseEndpointData.js";
+import {BrowseEndpointData} from "./BrowseEndpointData.js";
 import {SearchEndpointData} from "./SearchEndpointData.js";
 import {SetSettingEndpointData} from "./SetSettingEndpointData.js";
 import {SignalServiceEndpointData} from "./SignalServiceEndpoint.js";
