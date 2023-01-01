@@ -2195,7 +2195,6 @@ function filter_out_keys(keys,to_remove) {
 	return ok_e;
 }
 inject_api_yt.filter_out_keys=filter_out_keys;
-/** @typedef {import("./support/yt_api/yt/YtJsonRequest.js").YtJsonRequest} YtJsonRequest */
 /** @arg {NavigateEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
