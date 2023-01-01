@@ -12,3 +12,13 @@ function run() {
 	data.push([fieldId,wireType,first_num]);
 }
 run();
+type CustomEventType={
+	type:"async-plugin-init";
+	detail:{
+		handle_types_fut: Future<any, HandleTypes>,
+	};
+	port:MessagePort;
+}|{
+	type:"plugin-activate";
+	port:MessagePort;
+};

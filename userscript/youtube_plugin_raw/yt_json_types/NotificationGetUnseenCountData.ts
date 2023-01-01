@@ -1,4 +1,12 @@
+type ActionType={
+	clickTrackingParams: string;
+	updateNotificationsUnseenCountAction: {};
+};
+
 type NotificationGetUnseenCountData={
 	responseContext: ResponseContext;
-	actions: {}[];
+	actions?: ActionType[];
+}|{
+	responseContext: ResponseContext;
+	unseenCount: number;
 };

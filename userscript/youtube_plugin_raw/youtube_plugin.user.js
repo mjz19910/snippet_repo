@@ -575,7 +575,7 @@ function to_url(url) {
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {
 		if(rejection.message!=="") {
-			console.log("fetch_rejection_handler",rejection);
+			console.log("fetch_rejection_handler",rejection.name);
 			console.log(rejection);
 		}
 		throw rejection;
@@ -1971,11 +1971,6 @@ mk_tree_arr.push(yta_str+".create",yta_str+".createAlternate");
 mk(window,"yt","yt",true);
 win_watch.addEventListener("new_window_object",act_found_create_yt_player);
 
-class CustomEventType {
-	type="event_type";
-	detail={};
-	port=new MessagePort;
-}
 class CustomEventTarget {
 	/** @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
@@ -2311,13 +2306,32 @@ function dispatch_observer_event() {
 	return fire_observer_event();
 }
 
-function start_message_channel_loop() {
+/** @template T,U */
+class Future {
+	/** @arg {HiddenData<T>} v @arg {(x:T)=>U} f */
+	constructor(v,f) {
+		this.v=v;
+		this.f=f;
+	}
+	/** @template V @arg {(x:U)=>V} f */
+	run_with(f) {
+		return this.v.extract(e=>{
+			let inner=this.f(e);
+			f(inner);
+		});
+	}
+}
+
+/** @arg {HiddenData<FilterHandlers>} fh */
+function start_message_channel_loop(fh) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
-			detail: {},
+			detail: {
+				handle_types_fut: new Future(fh,fh=>fh.handle_types),
+			},
 			port: message_channel.port1,
 		});
 	}
@@ -2720,7 +2734,7 @@ async function main() {
 	modify_global_env();
 
 	// wait for plugin requirements
-	start_message_channel_loop();
+	start_message_channel_loop(yt_handlers);
 	return;
 	// #region hoisted functions below
 	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
@@ -3216,8 +3230,9 @@ class BaseServicePrivate {
 		this.get_known_data();
 	}
 }
-/** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
+/** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
 function iterate(...[t,u]) {
+	if(t===void 0) return;
 	for(let item of t) {
 		u(item);
 	}
@@ -3791,7 +3806,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
-		this.save_keys("any",x);
+		this.save_keys("get_notification_menu",x);
 	}
 	/** @private @arg {AttGet} x */
 	AttGet(x) {
@@ -3803,7 +3818,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
-		this.save_keys("any",x);
+		this.save_keys("api_next",x);
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
@@ -3819,20 +3834,40 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {NotificationGetUnseenCountData} x */
 	NotificationGetUnseenCountData(x) {
-		const {responseContext,actions,...y}=x;
+		const {responseContext,...y}=x;
 		this.save_keys("GetUnseenCount",x);
 		this.ResponseContext(x.responseContext);
-		if("unseenCount" in x) {
-			this.save_number("notification.unseenCount",cast_as(x.unseenCount));
+		if("actions" in y) {
+			const {actions: a,...c}=y;
+			iterate(a,x => {
+				this.clickTrackingParams(x.clickTrackingParams);
+				this.empty_object(x.updateNotificationsUnseenCountAction);
+			});
+			this.empty_object(c);
+		} else if("unseenCount" in y) {
+			const {unseenCount: a,...c}=y;
+			this.save_number("notification.unseenCount",a);
+			this.empty_object(c);
 		}
-		iterate(actions,this.empty_object)
-		this.empty_object(y);
 	}
-	/** @private @arg {{}} x */
+	/** @private @template {{}} T @arg {{} extends T?T:never} x */
 	empty_object(x) {
 		let keys=get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s] %o",keys.join(),x);
+		console.log(new Error);
+	}
+	/**
+	 * @arg {string} x
+	 */
+	clickTrackingParams(x) {
+		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",x);
+		this.primitive(x);
+	}
+	/** @arg {string} x */
+	trackingParams(x) {
+		if(this.x.get_param("log_tracking_params")) console.log("tp",x);
+		this.primitive(x);
 	}
 }
 //#endregion
