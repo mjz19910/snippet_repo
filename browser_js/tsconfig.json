@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "None",
+		"module": "ESNext",
 		"moduleResolution": "Classic",
 		"target": "ESNext",
 		"lib": [
