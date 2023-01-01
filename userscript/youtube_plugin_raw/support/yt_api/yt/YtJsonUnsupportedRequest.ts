@@ -1,4 +1,4 @@
-import {UrlTypes} from "../_/u/UrlTypes.js";
+import {UrlTypes} from "../../../yt_json_types/UrlTypes.js";
 import {YtJsonRequest} from "./YtJsonRequest";
 
 export type YtJsonUnsupportedRequest={
