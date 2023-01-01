@@ -3211,6 +3211,14 @@ class BaseService extends BaseServicePrivate {
 	save_keys(key,obj) {
 		this.save_new_string(key,get_keys_of(obj).join());
 	}
+	/** @arg {(bigint|string|number|boolean)[]} args */
+	primitives(...args) {
+		iterate(args,arg => this.primitive(arg));
+	}
+	/** @arg {bigint|string|number|boolean} value */
+	primitive(value) {
+		switch(typeof value) {case "bigint": case "boolean": case "number": case "string": break; default: debugger;}
+	}
 }
 class CsiService extends BaseService {
 	data={
@@ -3867,17 +3875,6 @@ class HandleTypes extends BaseService {
 	NoStyleButtonTypes(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {bigint|string|number|boolean} value */
-	primitive(value) {
-		switch(typeof value) {
-			case "bigint":
-			case "boolean":
-			case "number":
-			case "string": {
-			} break;
-			default: debugger;
-		}
-	}
 	/** @arg {import("./support/yt_api/_/a/AddToPlaylistCommand.js").AddToPlaylistCommand} cmd */
 	addToPlaylistCommand(cmd) {
 		console.log(cmd);
@@ -4251,15 +4248,9 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		};
 	}
-	/** @arg {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} meta */
-	webCommandMetadata(meta) {
-		const {apiUrl,url,rootVe,webPageType,sendPost,...y}=meta;
-		if(webPageType!==void 0) this.WebCommandPageType(webPageType);
-		if(rootVe!==void 0) this.rootVe(rootVe);
-		if(apiUrl!==void 0) this.apiUrl(apiUrl);
-		if(url!==void 0) this.url(url);
-		if(sendPost!==void 0) this.sendPost(sendPost);
-		empty_object(y);
+	/** @arg {import("./support/yt_api/_/w/WebCommandMetadata.js").WebCommandMetadata} x */
+	webCommandMetadata(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/l/LogoEntity.js").LogoEntity} x */
 	topbarLogoRenderer(x) {
@@ -4268,10 +4259,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/f/FusionSearchboxRenderer.js").FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
 		this.save_keys("any",x);
-	}
-	/** @arg {(bigint|string|number|boolean)[]} args */
-	primitives(...args) {
-		iterate(args,arg => this.primitive(arg));
 	}
 	/** @arg {import("./support/yt_api/_/s/SearchEndpointData.js").SearchEndpointData} x */
 	SearchEndpointData(x) {
@@ -4319,37 +4306,17 @@ class HandleTypes extends BaseService {
 	url(x) {
 		this.save_new_string("url",x);
 	}
-	/** @arg {boolean} x */
-	sendPost(x) {
-		this.save_new_bool("sendPost",x);
-	}
-	/** @arg {{ placeholderHeader?: import("./support/yt_api/yt/YtTextType.js").YtTextType; promptHeader?: import("./support/yt_api/yt/YtTextType.js").YtTextType; }} x */
-	voiceSearch(x) {
-		let v=Object.keys(x).join();
-		this.log(v);
-	}
-	/** @arg {{ url: string; }} x */
-	UrlEndpointRoot(x) {
-		const {url,...r}=x;
-		if(Object.keys(r).length>0) {
-			debugger;
-		}
-	}
-	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} sidebar */
-	sidebar(sidebar) {
-		this.settingsSidebarRenderer(sidebar.settingsSidebarRenderer);
+	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRenderer.js").SettingsSidebarRenderer} x */
+	sidebar(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsSidebarRendererData.js").SettingsSidebarRendererData} x */
 	settingsSidebarRenderer(x) {
-		const {items,title,...y}=x;
-		iterate(x.items,v => {
-			this.LinkRenderer(v.compactLinkRenderer);
-		});
-		if(get_keys_of(y).length>0) console.log('[settings_sidebar]',y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/l/LinkRenderer.js").LinkRenderer} x */
 	LinkRenderer(x) {
-		this.endpoint(x.navigationEndpoint);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/g/GhostGridRendererData.js").GhostGridRendererData} x */
 	ghostGridRenderer(x) {
