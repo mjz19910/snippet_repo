@@ -3200,10 +3200,6 @@ class BaseServicePrivate {
 			if(known_numbers) {
 				this.known_numbers=known_numbers;
 			}
-			if("known_bool" in ret) {
-				console.log("upgraded known_bool to known_booleans")
-				this.known_booleans=cast_as(ret.known_bool);
-			}
 			this.loaded_from_storage=true;
 		}
 	}
