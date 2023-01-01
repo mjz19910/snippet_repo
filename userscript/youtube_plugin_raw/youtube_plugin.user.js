@@ -4042,30 +4042,22 @@ class HandleTypes extends BaseService {
 			case "att.get": this.AttGetV(res.data); return;
 			case "feedback": this.withGeneralContext(res.data); break;
 			case "get_transcript": this.withGeneralContext(res.data); break;
-			case "getDatasyncIdsEndpoint": this.xx(res.data); break;
+			case "getDatasyncIdsEndpoint": this.save_keys(res.type,res.data); break;
 			case "guide": this.GuideJsonType(res.data); return;
-			case "live_chat.get_live_chat_replay": this.xx(res.data); break;
+			case "live_chat.get_live_chat_replay": this.save_keys(res.type,res.data); break;
 			case "next": this.YtApiNext(res.data); return;
 			case "notification.get_notification_menu": this.notification_get_notification_menu_t(res); return;
 			case "notification.get_unseen_count": this.notification_get_unseen_count_t(res); return;
 			case "notification.record_interactions": this.YtSuccessResponse(res.data); break;
 			case "player": this.WatchResponsePlayer(res.data); return;
 			case "reel.reel_item_watch": this.withGeneralContext(res.data); return;
-			case "reel.reel_watch_sequence": this.xx(res.data); break;
+			case "reel.reel_watch_sequence": this.save_keys(res.type,res.data); break;
 			default: this.save_keys("need_api_type",res.type);
 		}
 	}
-	/** @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} response */
-	YtSuccessResponse(response) {
-		let {responseContext,...not_context}=response;
-		this.responseContext(responseContext);
-		if(!response.success) {
-			console.log("YtFailure",not_context);
-		};
-	}
-	/** @arg {{}} data */
-	xx(data) {
-		console.log(data);
+	/** @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} x */
+	YtSuccessResponse(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {{ responseContext: import("./support/yt_api/_/g/GeneralContext.js").ResponseContext }} data */
 	withGeneralContext(data) {
