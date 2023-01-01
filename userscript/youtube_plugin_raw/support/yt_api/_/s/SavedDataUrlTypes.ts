@@ -1,4 +1,4 @@
-import {YTNavigateFinishEventDetail} from "../../yt/YTNavigateFinishEventDetail.js";
+import {YtPageState} from "../../yt/YtPageState.js";
 import {UrlTypes} from "../u/UrlTypes.js";
 
-export type SavedDataUrlTypes=`page_type_${YTNavigateFinishEventDetail["pageType"]}`|UrlTypes;
+export type SavedDataUrlTypes=`page_type_${YtPageState["pageType"]}`|UrlTypes;

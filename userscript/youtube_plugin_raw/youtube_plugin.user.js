@@ -1726,7 +1726,7 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
+	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YtPageState.js").YtPageState["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
@@ -1766,9 +1766,9 @@ class FilterHandlers {
 		}
 		return ret;
 	}
-	/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
+	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} detail */
 	on_page_type_changed(detail) {
-		this.handle_types.YTNavigateFinishEventDetail(detail);
+		this.handle_types.YtPageState(detail);
 	}
 
 }
@@ -2176,7 +2176,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} */
+	/** @type {import("./support/yt_api/yt/YtPageState.js").YtPageState} */
 	detail=cast_as({});
 }
 
@@ -2220,15 +2220,15 @@ function on_json_request(request_info) {
 	}
 }
 
-/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail["pageType"]} pageType */
+/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": break;
 		case "channel": break;
 		case "playlist": break;
+		case "settings": break;
 		case "shorts": break;
 		case "watch": break;
-		case "settings": break;
 		default: console.log("[%s]",pageType); debugger;
 	}
 }
@@ -2914,6 +2914,19 @@ async function main() {
 	function log_page_type_change(event) {
 		let {detail}=event;
 		if(!detail) return;
+		if(!ytd_page_manager) {
+			const target_element=get_html_elements(document,"ytd-page-manager")[0];
+			if(!target_element) {
+				throw new Error("Missing ytd_page_manager");
+			} else {
+				on_ytd_page_manager(target_element);
+			}
+		}
+		if(!ytd_page_manager) throw new Error("Invalid state");
+		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
+		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+		page_type_changes.push(nav_load_str);
+		console.log(nav_load_str);
 		yt_handlers.extract(h => h.on_page_type_changed(detail));
 	}
 	// #endregion
@@ -3196,6 +3209,10 @@ class BaseService extends BaseServicePrivate {
 	/** @arg {any[]} x */
 	log(...x) {
 		console.log(...x);
+	}
+	/** @template {{}} T @arg {string} key @arg {T} obj */
+	save_keys(key,obj) {
+		this.save_new_string(key,get_keys_of(obj).join());
 	}
 }
 class CsiService extends BaseService {
@@ -4074,9 +4091,7 @@ class HandleTypes extends BaseService {
 	log_layout_ids=false;
 	/** @arg {import("./support/yt_api/_/a/AdLayoutLoggingData.js").AdLayoutLoggingData} x */
 	adLayoutLoggingData(x) {
-		const {serializedAdServingDataEntry,...y}=x;
-		this.primitive(serializedAdServingDataEntry);
-		this.log_empty_obj(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/a/AdLayoutMetadataItem.js").AdLayoutMetadataItem} item */
 	AdLayoutMetadataItem(item) {
@@ -4775,39 +4790,12 @@ class HandleTypes extends BaseService {
 	reelWatchSequenceResponse(data) {
 		console.log(data);
 	}
-	/** @arg {import("./support/yt_api/yt/YTNavigateFinishEventDetail.js").YTNavigateFinishEventDetail} detail */
-	YTNavigateFinishEventDetail(detail) {
-		switch(detail.pageType) {
-			case "browse":
-				this.BrowsePageResponse(detail.response);
-				this.endpoint(detail.endpoint);
-				break;
-			case "channel": {
-				this.ChannelPageResponse(detail.response);
-				console.log(detail.endpoint);
-			} break;
-		}
-		if(typeof detail.pageType!=="string") debugger;
-		if(typeof detail.fromHistory!=="boolean") debugger;
-		if(typeof detail.navigationDoneMs!=="number") debugger;
-		let ok=filter_out_keys(get_keys_of(detail),split_string("endpoint,pageType,fromHistory,response,navigationDoneMs"));
-		if(ok.length>0) console.log("[detail_event] [%s]",ok.join());
-		page_type_iter(detail.pageType);
-		if(last_page_type!==detail.pageType) {
-			last_page_type=detail.pageType;
-			if(!ytd_page_manager) {
-				const target_element=get_html_elements(document,"ytd-page-manager")[0];
-				if(!target_element) {
-					throw new Error("Missing ytd_page_manager");
-				} else {
-					on_ytd_page_manager(target_element);
-				}
-			}
-			if(!ytd_page_manager) throw new Error("Invalid state");
-			let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
-			let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
-			page_type_changes.push(nav_load_str);
-			console.log(nav_load_str);
+	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} x */
+	YtPageState(x) {
+		this.save_keys("any",x);
+		page_type_iter(x.pageType);
+		if(last_page_type!==x.pageType) {
+			last_page_type=x.pageType;
 		}
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data */
@@ -5138,44 +5126,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/s/SetSettingEndpointData.js").SetSettingEndpointData} x */
 	setSettingEndpoint(x) {
-		const {boolValue,settingItemId,settingItemIdForClient,...y}=x;
-		if(x.boolValue!==void 0) {
-			this.primitive(x.boolValue);
-		}
-		this.save_new_string("setting_id",x.settingItemId);
-		this.save_new_string("setting_name",x.settingItemIdForClient);
-		this.log_empty_obj(y);
-	}
-	/** @template {{}} T @arg {T} x @returns {import("./support/yt_api/_/g/GetMaybeKeys.js").MaybeKeysArray<T>} */
-	keys(x) {
-		return get_keys_of(x);
-	}
-	/** @arg {{}} x */
-	log_empty_obj(x) {
-		let k=this.keys(x);
-		if(k.length>0) {
-			this.log("[not_empty][%s]",k.join());
-		}
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/v/VoiceSearchDialogRendererData.js").VoiceSearchDialogRendererData} x */
 	voiceSearchDialogRenderer(x) {
-		let {trackingParams: tp,placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,microphoneOffPromptHeader,...y}=x;
-		this.trackingParams(tp);
-		iterate(
-			[placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel],
-			t => this.YtTextType(t),
-		);
-		this.ButtonRenderer(exitButton);
-		this.YtTextType(microphoneOffPromptHeader);
-		empty_object(y);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/r/RendererData.js").RendererData} x */
 	RendererData(x) {
 		this.save_keys("RendererData_keys",x);
-	}
-	/** @template {{}} T @arg {string} key @arg {T} obj */
-	save_keys(key,obj) {
-		this.save_new_string(key,get_keys_of(obj).join());
 	}
 }
 //#endregion
