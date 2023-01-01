@@ -1,5 +1,3 @@
-import {GuideSectionRendererData} from "./GuideSectionRendererData";
-
-export type GuideSectionRenderer={
+type GuideSectionRenderer={
 	guideSectionRenderer: GuideSectionRendererData;
 };

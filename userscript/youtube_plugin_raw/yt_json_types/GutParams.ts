@@ -1,3 +1,3 @@
-export type GutParams={
+type GutParams={
 	tag: string;
 };

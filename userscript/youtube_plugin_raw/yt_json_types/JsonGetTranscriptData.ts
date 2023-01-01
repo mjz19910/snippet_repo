@@ -1,5 +1,3 @@
-import {ResponseContext} from "./GeneralContext.js";
-
-export type JsonGetTranscriptData={
+type JsonGetTranscriptData={
 	responseContext: ResponseContext;
 };

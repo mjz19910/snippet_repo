@@ -1,3 +1,3 @@
-export type JsonFeedbackData={
+type JsonFeedbackData={
 	responseContext: ResponseContext;
 };

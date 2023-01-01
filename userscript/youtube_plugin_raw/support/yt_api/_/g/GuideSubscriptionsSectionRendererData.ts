@@ -1,4 +1,4 @@
-export type GuideSubscriptionsSectionRendererData={
+type GuideSubscriptionsSectionRendererData={
 	sort: "CHANNEL_ACTIVITY";
 	items: {}[];
 	trackingParams: string;

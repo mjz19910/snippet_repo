@@ -1,10 +1,7 @@
-import {SettingsPageResponse} from "../s/SettingsPageResponse";
-import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
-
-export type PageTypeSettings={
+type PageTypeSettings={
 	pageType: "settings";
 	endpoint: YtEndpoint;
-	response: SettingsPageResponse;
+	response: {};
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

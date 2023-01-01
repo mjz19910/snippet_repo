@@ -1,5 +1,3 @@
-import {AccountLinkButtonRendererData} from "./AccountLinkButtonRendererData";
-
-export type AccountLinkButtonRenderer={
+type AccountLinkButtonRenderer={
 	accountLinkButtonRenderer: AccountLinkButtonRendererData;
 };

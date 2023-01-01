@@ -1,5 +1,3 @@
-import {EndscreenElementRendererData} from "./EndscreenElementRendererData";
-
-export type EndscreenElementRenderer={
+type EndscreenElementRenderer={
 	endscreenElementRenderer: EndscreenElementRendererData;
 };

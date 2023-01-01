@@ -1,4 +1,3 @@
-
-export type CaptionsRenderer={
+type CaptionsRenderer={
 	playerCaptionsTracklistRenderer: {};
 };

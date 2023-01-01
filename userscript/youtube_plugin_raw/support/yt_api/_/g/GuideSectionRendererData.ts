@@ -1,4 +1,4 @@
-export type GuideSectionRendererData={
+type GuideSectionRendererData={
 	items: {}[];
 	trackingParams: {};
 	formattedTitle?: {};

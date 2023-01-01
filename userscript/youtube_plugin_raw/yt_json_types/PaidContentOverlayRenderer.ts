@@ -1,8 +1,4 @@
-import {YtEndpoint} from "./YtEndpoint.js";
-import {YtTextType} from "./YtTextType.js";
-import {Icon} from "../_/i/Icon.js";
-
-export type PaidContentOverlayRenderer={
+type PaidContentOverlayRenderer={
 	durationMs: `${number}`;
 	icon: Icon<"MONEY_HAND">;
 	navigationEndpoint: YtEndpoint;

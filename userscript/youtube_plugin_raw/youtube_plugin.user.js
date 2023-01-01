@@ -1593,7 +1593,7 @@ class FilterHandlers {
 				};
 				case "feedback": return {
 					type: target[0],
-					/** @type {import("./yt_json_types/JsonFeedbackData.js").JsonFeedbackData} */
+					/** @type {JsonFeedbackData} */
 					data: cast_as(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
@@ -1602,22 +1602,22 @@ class FilterHandlers {
 				};
 				case "get_transcript": return {
 					type: target[0],
-					/** @type {import("./yt_json_types/get_transcript_t.js").get_transcript_t["data"]} */
+					/** @type {get_transcript_t["data"]} */
 					data: cast_as(json),
 				};
 				case "guide": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} */
+					/** @type {GuideJsonType} */
 					data: cast_as(json),
 				};
 				case "next": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} */
+					/** @type {YtApiNext} */
 					data: cast_as(json),
 				};
 				case "player": return {
 					type: target[0],
-					/** @type {import("./yt_json_types/WatchResponsePlayer.js").WatchResponsePlayer} */
+					/** @type {WatchResponsePlayer} */
 					data: cast_as(json),
 				};
 				default: break;
@@ -1654,19 +1654,19 @@ class FilterHandlers {
 					};
 					case "record_interactions": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} */
+						/** @type {YtSuccessResponse} */
 						data: cast_as(json),
 					};
 				}
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/r/reel_reel_item_watch_t.js").reel_reel_item_watch_t["data"]} */
+						/** @type {reel_reel_item_watch_t["data"]} */
 						data: cast_as(json),
 					};
 					case "reel_watch_sequence": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/r/reel_reel_watch_sequence_t.js").reel_reel_watch_sequence_t["data"]} */
+						/** @type {reel_reel_watch_sequence_t["data"]} */
 						data: cast_as(json),
 					};
 				}
@@ -3722,7 +3722,7 @@ inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	/** @private @arg {import("./yt_json_types/WatchResponsePlayer.js").WatchResponsePlayer} x */
+	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x);
 	}
@@ -3743,7 +3743,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} x */
 	ResponseTypes(x) {
 		this.save_keys("ResponseTypes",x.data);
-		if("responseContext" in x.data) {
+		if("responseContext" in x.data&&x.data.responseContext) {
 			this.ResponseContext(x.data.responseContext);
 		}
 		switch(x.type) {
@@ -3764,7 +3764,7 @@ class HandleTypes extends BaseService {
 			default: this.save_new_string("need_api_type",x.type);
 		}
 	}
-	/** @private @arg {import("./support/yt_api/yt/YtSuccessResponse.js").YtSuccessResponse} x */
+	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
 		this.save_keys("any",x);
 	}
@@ -3776,11 +3776,11 @@ class HandleTypes extends BaseService {
 	AttGet(x) {
 		this.save_keys("AttGet",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} x */
+	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x);
 	}
-	/** @private @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} x */
+	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
 		this.save_keys("any",x);
 	}

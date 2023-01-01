@@ -1,5 +1,3 @@
-import {PlayerLegacyDesktopWatchAdsRendererData} from "./PlayerLegacyDesktopWatchAdsRendererData";
-
-export type PlayerLegacyDesktopWatchAdsRenderer={
+type PlayerLegacyDesktopWatchAdsRenderer={
 	playerLegacyDesktopWatchAdsRenderer: PlayerLegacyDesktopWatchAdsRendererData;
 };

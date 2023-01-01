@@ -1,4 +1,4 @@
-export type PlayerAdParams={
+type PlayerAdParams={
 	enabledEngageTypes: string;
 	showContentThumbnail: boolean;
 };

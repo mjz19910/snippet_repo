@@ -1,11 +1,4 @@
-import {CaptionsRenderer} from "../_/c/CaptionsRenderer";
-import {EndscreenRenderer} from "./EndscreenRenderer";
-import {PlayerLegacyDesktopWatchAdsRenderer} from "./PlayerLegacyDesktopWatchAdsRenderer.js";
-import {FrameworkUpdates} from "./FrameworkUpdates.js";
-import {PaidContentOverlay} from "./PaidContentOverlay.js";
-import {ResponseContext} from "./GeneralContext.js";
-
-export type WatchResponsePlayer={
+type WatchResponsePlayer={
 	responseContext: ResponseContext;
 	playabilityStatus: {};
 	streamingData: {};

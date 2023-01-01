@@ -1,6 +1,4 @@
-import {EndscreenElementRenderer} from "./EndscreenElementRenderer";
-
-export type EndscreenRendererData={
+type EndscreenRendererData={
 	elements: EndscreenElementRenderer[];
 	startMs?: number;
 };

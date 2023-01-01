@@ -1,5 +1,3 @@
-import {PaidContentOverlayRenderer} from "./PaidContentOverlayRenderer";
-
-export type PaidContentOverlay={
+type PaidContentOverlay={
 	paidContentOverlayRenderer: PaidContentOverlayRenderer;
 };

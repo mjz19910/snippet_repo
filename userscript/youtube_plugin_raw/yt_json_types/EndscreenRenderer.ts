@@ -1,5 +1,3 @@
-import {EndscreenRendererData} from "./EndscreenRendererData";
-
-export type EndscreenRenderer={
+type EndscreenRenderer={
 	endscreenRenderer: EndscreenRendererData;
 };

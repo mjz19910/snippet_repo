@@ -1,6 +1,4 @@
-import {YtEndpoint} from "./YtEndpoint.js";
-
-export type EndscreenElementRendererData={
+type EndscreenElementRendererData={
 	style: "VIDEO"|"CHANNEL";
 	image: {},
 	left: number,

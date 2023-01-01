@@ -1,5 +1,3 @@
-import {GuideSubscriptionsSectionRendererData} from "./GuideSubscriptionsSectionRendererData";
-
-export type GuideSubscriptionsSectionRenderer={
+type GuideSubscriptionsSectionRenderer={
 	guideSubscriptionsSectionRenderer: GuideSubscriptionsSectionRendererData;
 };

@@ -1,7 +1,4 @@
-import {GutParams} from "./GutParams";
-import {PlayerAdParams} from "./PlayerAdParams";
-
-export type PlayerLegacyDesktopWatchAdsRendererData={
+type PlayerLegacyDesktopWatchAdsRendererData={
 	gutParams: GutParams;
 	playerAdParams: PlayerAdParams;
 	showCompanion: true;

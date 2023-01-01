@@ -1,4 +1,4 @@
-export type AccountLinkProviderKey={
+type AccountLinkProviderKey={
 	id: string;
 	subject: "all";
 }|{
