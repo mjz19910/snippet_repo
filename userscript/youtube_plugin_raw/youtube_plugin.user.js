@@ -22,12 +22,14 @@ let ytd_app=void 0;
 // #endregion
 // #region
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
-/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
-let inject_api=window.inject_api??{};
-window.inject_api=inject_api;
 let inject_api_yt={};
-inject_api.modules=new Map;
-inject_api.modules.set("yt",inject_api_yt);
+{
+	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
+	let inject_api=window.inject_api??{};
+	window.inject_api=inject_api;
+	inject_api.modules=new Map;
+	inject_api.modules.set("yt",inject_api_yt);
+}
 
 /** @type {Map<string, Blob|MediaSource>} */
 let created_blobs=new Map;
@@ -1353,12 +1355,17 @@ function decode_b64_proto_obj(str) {
 }
 inject_api_yt.decode_b64_proto_obj=decode_b64_proto_obj;
 
-/** @arg {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
+/**
+ * @type {[string,{name: string;}][]}
+ */
+inject_api_yt.saved_function_objects=[];
+
+/** @arg {{name:string}} function_obj */
 function add_function(function_obj) {
-	if(!inject_api.saved_function_objects) return;
-	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
+	if(!inject_api_yt.saved_function_objects) return;
+	inject_api_yt.saved_function_objects.push([function_obj.name,function_obj]);
 }
-inject_api.add_function=add_function;
+inject_api_yt.add_function=add_function;
 
 /** @template T @arg {T|undefined} val @returns {T} */
 function non_null(val) {
@@ -3724,6 +3731,7 @@ function decode_entity_key(...gs) {
 		entityId: b
 	};
 }
+inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
 /** @template {{}} T @arg {{} extends T?T:never} obj */
@@ -3749,74 +3757,30 @@ class HandleTypes extends BaseService {
 	EntityBatchUpdateData(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} mut */
-	EntityMutationItem(mut) {
-		switch(mut.type) {
-			case "ENTITY_MUTATION_TYPE_DELETE": {
-				let dec=decode_entity_key(mut.entityKey);
-				this.save_new_string("mut_del",`type=[${dec.entityType}] id=[${dec.entityId}]`);
-				if(eq_keys(get_keys_of(mut.options),["persistenceOption"])) {
-					this.save_new_string("mut_del",`[persistence][${mut.options.persistenceOption}]`);
-				} else {
-					debugger;
-				}
-			} break;
-			case "ENTITY_MUTATION_TYPE_REPLACE": console.log("[mut_rep]",mut); debugger; break;
-			default: console.log("[mut]",mut); debugger;
-		}
-
+	/** @arg {import("./support/yt_api/_/e/EntityMutationItem.js").EntityMutationItem} x */
+	EntityMutationItem(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/t/TimestampWithNanos.js").TimestampWithNanos} x */
 	TimestampWithNanos(x) {
-		this.primitives(x.nanos,x.seconds);
+		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} context */
-	responseContext(context) {
-		if(!context) {
-			debugger;
-		}
-		let ok=get_keys_of(context);
-		for(let key of ok) {key;}
-		if(context.maxAgeSeconds!==void 0) {
-			general_service_state.maxAgeSeconds=context.maxAgeSeconds;
-		}
-		let data_sync_id=context.mainAppWebResponseContext.datasyncId;
-		general_service_state.mainAppWebResponseContext??={
-			datasyncId: data_sync_id.split("|").map(e => e===""? null:e).map(e => {
-				if(e===null) return e;
-				return BigInt(e);
-			})
-		};
-		if(is_yt_debug_enabled) console.log(general_service_state.mainAppWebResponseContext.datasyncId);
-		if(context.mainAppWebResponseContext.loggedOut) {
-			general_service_state.logged_in=false;
-		}
-		this.x.get("service_tracking").set_service_params(context.serviceTrackingParams);
+	/** @arg {import("./support/yt_api/_/g/GeneralContext.js").ResponseContext} x */
+	responseContext(x) {
+		this.save_keys("any",x);
 	}
-	/** @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} renderer */
-	playlistVideoListRenderer(renderer) {
-		let data=renderer.playlistVideoListRenderer;
-		console.log("playlist",data.playlistId);
+	/** @arg {{playlistVideoListRenderer:import("./support/yt_api/_/p/PlaylistVideoListRendererData.js").PlaylistVideoListRendererData}} x */
+	playlistVideoListRenderer(x) {
+		this.save_keys("any",x);
 	}
-	/** @template {{}} T @arg {string} name @arg {T} obj */
-	ok(name,obj) {
-		let arr=get_keys_of(obj);
-		if(arr.length===0) return;
-		console.log(name+": not ok",arr.join());
-		console.log(name,obj);
-		debugger;
-	}
-	/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} run */
-	TextRun(run) {
-		let {text,navigationEndpoint,bold,...rest}=run;
-		return rest;
+	/** @arg {import("./support/yt_api/_/t/TextRun.js").TextRun} x */
+	TextRun(x) {
+		this.save_keys("any",x);
 	}
 	/** @typedef {import("./support/yt_api/yt/YtTextType.js").YtTextType} YtTextType */
-	/** @arg {Extract<YtTextType,{runs:any}>} text */
-	TextRuns(text) {
-		let rest=[];
-		for(let run of text.runs) rest.push(this.TextRun(run));
-		return rest;
+	/** @arg {Extract<YtTextType,{runs:any}>} x */
+	TextRuns(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/s/SectionListRenderer.js").SectionListRenderer} x */
 	sectionListRenderer(x) {
