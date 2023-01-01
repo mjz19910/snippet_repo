@@ -3765,10 +3765,6 @@ class HandleTypes extends BaseService {
 		this.save_keys("DataResponsePageType",x);
 		x.endpoint;
 	}
-	static notification={
-		/** @type {number|null} */
-		unseenCount: null,
-	};
 	/** @arg {import("./support/yt_api/_/r/ResponseTypes.js").ResponseTypes} x */
 	ResponseTypes(x) {
 		this.save_keys("ResponseTypes",x.data);
