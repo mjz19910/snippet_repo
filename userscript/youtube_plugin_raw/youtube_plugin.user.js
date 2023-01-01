@@ -3821,10 +3821,6 @@ class HandleTypes extends BaseService {
 	YtPageState(x) {
 		this.save_keys("YtPageState",x);
 	}
-	/** @arg {import("./support/yt_api/_/s/SetSettingEndpointData.js").SetSettingEndpointData} x */
-	setSettingEndpoint(x) {
-		this.save_keys("any",x);
-	}
 	/** @private @arg {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
 		this.save_keys("notification_get_unseen_count",x);
