@@ -4106,7 +4106,6 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} x */
 	YtPageState(x) {
 		this.save_keys("any",x);
-		page_type_iter(x.pageType);
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} x */
 	SettingsResponseContent(x) {
