@@ -3224,7 +3224,7 @@ class BaseService extends BaseServicePrivate {
 }
 class CsiService extends BaseService {
 	data={
-		/** @type {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages|null} */
+		/** @type {import("./support/yt_api/json/BrowseEndpointPages.js").BrowseEndpointPages|null} */
 		yt_fn: null,
 		/** @type {"WEB"|null} */
 		c: null,
@@ -3258,7 +3258,7 @@ class CsiService extends BaseService {
 			this.rid[x]=void 0;
 		}
 	}
-	/** @arg {import("./support/yt_api/_/b/BrowseEndpointPages.js").BrowseEndpointPages} value */
+	/** @arg {import("./support/yt_api/json/BrowseEndpointPages.js").BrowseEndpointPages} value */
 	verify_param_yt_fn(value) {
 		switch(value) {
 			case "history":
@@ -3269,7 +3269,7 @@ class CsiService extends BaseService {
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @arg {import("./support/yt_api/_/c/CsiServiceParamsType.js").CsiServiceParamsType} params */
+	/** @arg {import("./support/yt_api/json/CsiServiceParamsType.js").CsiServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3319,7 +3319,7 @@ class ECatcherService extends BaseService {
 			],
 		},
 	};
-	/** @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParamsType} params */
+	/** @arg {import("./support/yt_api/json/ECatcherServiceParams.js").ECatcherServiceParamsType} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3366,7 +3366,7 @@ class GFeedbackService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {import("./support/yt_api/_/g/GFeedbackServiceType.js").GFeedbackServiceType} params */
+	/** @arg {import("./support/yt_api/json/GFeedbackServiceType.js").GFeedbackServiceType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3430,15 +3430,15 @@ class GuidedHelpService extends BaseService {
 	}
 }
 class TrackingServices extends BaseService {
-	/** @arg {import("./support/yt_api/_/c/CsiServiceParams.js").CsiServiceParams} service */
+	/** @arg {import("./support/yt_api/json/CsiServiceParams.js").CsiServiceParams} service */
 	on_csi_service(service) {
 		this.x.get("csi_service").on_params(service.params);
 	}
-	/** @arg {import("./support/yt_api/_/e/ECatcherServiceParams.js").ECatcherServiceParams} service */
+	/** @arg {import("./support/yt_api/json/ECatcherServiceParams.js").ECatcherServiceParams} service */
 	on_e_catcher_service(service) {
 		this.x.get("e_catcher_service").on_params(service.params);
 	}
-	/** @arg {import("./support/yt_api/_/g/GFeedbackServiceParams.js").GFeedbackServiceParams} service */
+	/** @arg {import("./support/yt_api/json/GFeedbackServiceParams.js").GFeedbackServiceParams} service */
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
@@ -3446,7 +3446,7 @@ class TrackingServices extends BaseService {
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
-	/** @arg {import("./support/yt_api/_/g/GOOGLE_HELP_service_params.js").GOOGLE_HELP_service_params} service */
+	/** @arg {import("./support/yt_api/json/GoogleHelpServiceParams.js").GoogleHelpServiceParams} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {

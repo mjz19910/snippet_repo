@@ -1,4 +1,4 @@
-import {ToServiceParamsList} from "../t/ToServiceParamsList.js";
+import {ToServiceParamsList} from "./ToServiceParamsList.js";
 
 export type ECatcherServiceParamsType=ToServiceParamsList<ECatcherServiceType>;
 

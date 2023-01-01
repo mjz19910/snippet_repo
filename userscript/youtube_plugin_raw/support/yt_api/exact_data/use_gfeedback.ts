@@ -1,4 +1,4 @@
-import {GFeedbackServiceParams} from "../_/g/GFeedbackServiceParams.js";
+import {GFeedbackServiceParams} from "../json/GFeedbackServiceParams.js";
 import {watch_serviceTrackingParams} from "./use_service_csi.js";
 
 export function use_gfeedback(service_param_1: typeof watch_serviceTrackingParams[1]) {

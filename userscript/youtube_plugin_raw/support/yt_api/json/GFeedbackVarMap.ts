@@ -1,4 +1,4 @@
-import {BrowseIdType} from "../b/BrowseIdType.js";
+import {BrowseIdType} from "../_/b/BrowseIdType.js";
 
 export type GFeedbackVarMap={
 	browse_id_prefix: "";

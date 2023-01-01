@@ -1,4 +1,4 @@
-import {BrowseEndpointPages} from "../b/BrowseEndpointPages";
+import {BrowseEndpointPages} from "./BrowseEndpointPages";
 
 export type CsiVarMap={
 	c: "WEB";

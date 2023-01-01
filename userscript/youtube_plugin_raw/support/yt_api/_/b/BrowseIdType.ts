@@ -1,4 +1,4 @@
-import {BrowseEndpointPages} from "./BrowseEndpointPages";
+import {BrowseEndpointPages} from "../../json/BrowseEndpointPages";
 import {ChannelIdStr} from "../c/ChannelIdStr";
 import {FeedEntry} from "../f/FeedEntry.js";
 import {VideoListStr} from "../v/VideoListStr";
