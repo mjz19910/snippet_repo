@@ -2194,8 +2194,7 @@ inject_api_yt.filter_out_keys=filter_out_keys;
 /** @arg {NavigateEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
-		case "browse": break;
-		case "watch": break;
+		case "browse": case "watch": break;
 		default: console.log("[%s]",pageType); debugger;
 	}
 }
@@ -2976,15 +2975,15 @@ class BaseServicePrivate {
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		this.#x=x;
-		this.load_data();
-		this.save_current_data();
+		this.save_known_data_to_self();
+		this.save_known_data_to_storage();
 	}
 	get x() {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
-	on_new_data_known() {
-		this.save_current_data();
+	on_data_known_change() {
+		this.save_known_data_to_storage();
 	}
 	on_request_data_removal() {
 		this.delete_known_data();
@@ -3047,7 +3046,7 @@ class BaseServicePrivate {
 		}
 		if(was_known) return;
 		this.new_known_strings.push([key,x]);
-		this.on_new_data_known();
+		this.on_data_known_change();
 		console.log("store_str [%s]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
@@ -3070,7 +3069,7 @@ class BaseServicePrivate {
 			kc.f=true;
 		}
 		this.changed_known_bool.push([key,kc]);
-		this.save_current_data();
+		this.save_known_data_to_storage();
 	}
 	/** @arg {number} x */
 	save_new_root_ve(x) {
@@ -3078,7 +3077,7 @@ class BaseServicePrivate {
 		console.log("store rootVe [%o]",x);
 		this.known_root_ve.push(x);
 		this.new_known_root_ve.push(x);
-		this.on_new_data_known();
+		this.on_data_known_change();
 	}
 	// #endregion
 	//#region private
@@ -3112,13 +3111,13 @@ class BaseServicePrivate {
 	/** @private */
 	loaded_from_storage=false;
 	/** @private */
-	save_current_data() {
-		let data=this.create_save_data();
+	save_known_data_to_storage() {
+		let data=this.known_data_from_self();
 		let json_str=JSON.stringify(data);
 		this.save_local_storage(json_str);
 	}
 	/** @private @returns {SaveDataRet} */
-	create_save_data() {
+	known_data_from_self() {
 		return {
 			known_root_ve: this.known_root_ve,
 			known_strings: this.known_strings,
@@ -3126,15 +3125,21 @@ class BaseServicePrivate {
 		};
 	}
 	/** @private */
-	restore_data() {
-		if(this.loaded_from_storage) {
-			return this.create_save_data();
-		}
+	get_known_data() {
+		if(this.loaded_from_storage) return;
 		let json_str=this.get_local_storage();
 		if(json_str) {
-			return this.parse_data(json_str);
-		} else {
-			return this.create_save_data();
+			let ret=this.parse_data(json_str);
+			if(ret.known_root_ve) {
+				this.known_root_ve=ret.known_root_ve;
+			}
+			if(ret.known_strings) {
+				this.known_strings=ret.known_strings;
+			}
+			if(ret.known_bool) {
+				this.known_booleans=ret.known_bool;
+			}
+			this.loaded_from_storage=true;
 		}
 	}
 	/** @private @arg {string} str @returns {SaveDataRet} */
@@ -3142,18 +3147,8 @@ class BaseServicePrivate {
 		return JSON.parse(str);
 	}
 	/** @private */
-	load_data() {
-		let res=this.restore_data();
-		if(res.known_root_ve) {
-			this.known_root_ve=res.known_root_ve;
-		}
-		if(res.known_strings) {
-			this.known_strings=res.known_strings;
-		}
-		if(res.known_bool) {
-			this.known_booleans=res.known_bool;
-		}
-		this.loaded_from_storage=true;
+	save_known_data_to_self() {
+		this.get_known_data();
 	}
 }
 /** @template {any[]} T @arg {[T,(x:T[number])=>void]} a0  */
@@ -3755,7 +3750,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
-		this.save_keys("notification_get_unseen_count",x);
+		this.NotificationGetUnseenCountData(x.data)
+	}
+	/** @private @arg {NotificationGetUnseenCountData} x */
+	NotificationGetUnseenCountData(x) {
+		this.ResponseContext(x.responseContext);
+		this.save_new_number("notification.unseenCount",x.unseenCount);
 	}
 }
 //#endregion
