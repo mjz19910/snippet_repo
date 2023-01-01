@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../../json/YtEndpoint.js";
+import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
 
 export type NotificationRendererData={
 	thumbnail: {};

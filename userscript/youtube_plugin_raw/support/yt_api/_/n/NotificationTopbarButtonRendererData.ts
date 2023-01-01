@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../../json/YtEndpoint.js";
+import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
 import {Accessibility} from "../../../../yt_json_types/Accessibility.js";
 import {Icon} from "../../../../yt_json_types/Icon.js";
 

@@ -1,5 +1,5 @@
 import {BrowsePageResponse} from "../b/BrowsePageResponse";
-import {YtEndpoint} from "../../json/YtEndpoint.js";
+import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
 
 export type PageTypeBrowse={
 	pageType: "browse";

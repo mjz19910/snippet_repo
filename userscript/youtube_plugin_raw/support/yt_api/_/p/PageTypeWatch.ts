@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../../json/YtEndpoint.js";
+import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
 import {WatchPageResponse} from "../w/WatchPageResponse";
 
 export interface PageTypeWatch {

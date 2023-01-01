@@ -1,4 +1,4 @@
-import {Split} from "../../json/Split.js";
+import {Split} from "./Split.js";
 
 export type SetSettingEndpointData={
 	settingItemId: `${number}`;

@@ -1,9 +1,9 @@
-import {BrowseEndpointData} from "../_/b/BrowseEndpointData.js";
-import {SearchEndpointData} from "../_/s/SearchEndpointData.js";
-import {SetSettingEndpointData} from "../_/s/SetSettingEndpointData.js";
-import {SignalServiceEndpointData} from "../_/s/SignalServiceEndpoint.js";
-import {UrlEndpointRoot} from "../_/u/UrlEndpointRoot.js";
-import {WatchEndpointData} from "../_/w/WatchEndpointData.js";
+import {BrowseEndpointData} from "../support/yt_api/_/b/BrowseEndpointData.js";
+import {SearchEndpointData} from "./SearchEndpointData.js";
+import {SetSettingEndpointData} from "./SetSettingEndpointData.js";
+import {SignalServiceEndpointData} from "./SignalServiceEndpoint.js";
+import {UrlEndpointRoot} from "./UrlEndpointRoot.js";
+import {WatchEndpointData} from "./WatchEndpointData.js";
 import {YtEndpointBase} from "./YtEndpointBase";
 
 export type YtEndpoint=YtEndpointBase&({

@@ -1,4 +1,4 @@
-import {UrlEndpointTargetType} from "../u/UrlEndpointTargetType.js";
+import {UrlEndpointTargetType} from "./UrlEndpointTargetType.js";
 
 export type UrlEndpointRoot={
 	url: string;

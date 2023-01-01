@@ -1,4 +1,4 @@
-import {YtEndpoint} from "../../json/YtEndpoint.js";
+import {YtEndpoint} from "./YtEndpoint.js";
 
 export type DefaultButtonRendererData={
 	style: "STYLE_DEFAULT";

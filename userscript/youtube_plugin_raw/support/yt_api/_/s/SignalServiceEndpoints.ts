@@ -1,4 +1,4 @@
-import {SignalServiceEndpointData} from "./SignalServiceEndpoint";
+import {SignalServiceEndpointData} from "../../../../yt_json_types/SignalServiceEndpoint";
 import {ServiceEndpointGeneral} from "./ServiceEndpointGeneral";
 
 
