@@ -1,5 +1,3 @@
-import {PlaybackOnesieConfig} from "./PlaybackOnesieConfig";
-
-export type WatchEndpointConfig={
+type WatchEndpointConfig={
 	html5PlaybackOnesieConfig: PlaybackOnesieConfig;
 };

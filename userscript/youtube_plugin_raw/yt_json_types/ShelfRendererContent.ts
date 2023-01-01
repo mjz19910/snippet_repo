@@ -1,3 +1,3 @@
-export type ShelfRendererContent={
+type ShelfRendererContent={
 	gridRenderer: GridRenderer;
 };

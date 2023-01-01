@@ -1,5 +1,3 @@
-import {ContinuationItemRendererData} from "./ContinuationItemRendererData";
-
-export type ContinuationItemRenderer={
+type ContinuationItemRenderer={
 	continuationItemRenderer: ContinuationItemRendererData;
 };

@@ -1,8 +1,7 @@
-import {ExtractSingleParamKey} from "./ExtractSingleParamKey";
-import {CsiServiceParams} from "../_/a/CsiServiceParams";
-import {watch_j_response} from "./watch_j_response.js";
-export const watch_serviceTrackingParams=watch_j_response.responseContext.serviceTrackingParams;
-export function use_service_csi(service_param: typeof watch_serviceTrackingParams[0]) {
+async function use_service_csi() {
+	const watch_j_response=(await import("./json/page_type_watch_detail.json")).default.response.response;
+	const watch_serviceTrackingParams=watch_j_response.responseContext.serviceTrackingParams;
+	let service_param: typeof watch_serviceTrackingParams[0]=watch_j_response.responseContext.serviceTrackingParams[0];
 	const service_param_t: CsiServiceParams=service_param;
 	service_param_t;
 	service_param.service;

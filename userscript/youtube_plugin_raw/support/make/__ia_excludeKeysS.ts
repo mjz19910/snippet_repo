@@ -1,5 +1,3 @@
-import {Split} from "../yt_api/json/Split.js";
-
 declare global {
 	interface Object {
 		__ia_excludeKeysS: typeof __ia_excludeKeysS;

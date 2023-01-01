@@ -1,4 +1,4 @@
-export type ServiceEndpointCreateComment={
+type ServiceEndpointCreateComment={
 	createCommentEndpoint: {
 		createCommentParams: {};
 	};

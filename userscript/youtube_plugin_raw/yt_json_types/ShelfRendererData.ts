@@ -1,5 +1,3 @@
-import {ShelfRendererContent} from "./ShelfRendererContent.js";
-
 type ShelfRendererData={
 	title: {};
 	content: ShelfRendererContent;

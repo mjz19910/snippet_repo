@@ -1,6 +1,3 @@
-import {Split} from "./json/Split.js";
-import {YtVideoIdStr} from "./yt/YtVideoIdStr";
-
 namespace hidden_namespace {
 	type AbcChar=Split<"abcdefghijklmnopqrstuvwxyz","">[number];
 	type NumChar=Split<"0123456789","">[number];
@@ -20,7 +17,3 @@ namespace hidden_namespace {
 		videoId: "g2U2-i13970"
 	};
 }
-
-hidden_namespace;
-
-export {};

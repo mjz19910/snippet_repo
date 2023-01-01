@@ -1,1 +1,1 @@
-export type CommentThreadRenderer={};
+type CommentThreadRenderer={};

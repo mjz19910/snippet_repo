@@ -1,4 +1,4 @@
-export type KVStore={
+type KVStore={
 	key: string;
 	value: string;
 };
