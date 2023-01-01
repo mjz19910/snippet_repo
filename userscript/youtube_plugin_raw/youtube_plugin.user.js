@@ -4079,7 +4079,6 @@ class HandleTypes extends BaseService {
 	notification_get_notification_menu_t(x) {
 		this.save_keys("any",x);
 	}
-	store_trayride_challenge=false;
 	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} x */
 	AttGetV(x) {
 		this.save_keys("any",x);
@@ -4092,12 +4091,9 @@ class HandleTypes extends BaseService {
 	GuideJsonType(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} json */
-	YtApiNext(json) {
-		let {responseContext,trackingParams,onResponseReceivedEndpoints,...rest}=json;
-		this.onResponseReceivedEndpoints(onResponseReceivedEndpoints);
-		empty_object(rest);
-		console.log(json);
+	/** @arg {import("./support/yt_api/yt/YtApiNext.js").YtApiNext} x */
+	YtApiNext(x) {
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} x */
 	AccountMenuJson(x) {
