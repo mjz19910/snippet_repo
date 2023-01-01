@@ -1,1 +1,1 @@
-export type CommentsSectionItem={};
+type CommentsSectionItem={};

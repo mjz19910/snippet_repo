@@ -13,7 +13,7 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-/** @type {import("./YtdAppElement.js").YtdAppElement} */
+/** @type {YtdAppElement} */
 const YtdAppElement=cast_as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
@@ -1019,16 +1019,15 @@ class HandleRichGridRenderer {
 	}
 }
 /** @typedef {import("./support/yt_api/_/c/ContinuationItem.js").ContinuationItem} ContinuationItem */
-/** @typedef {import("./support/yt_api/AppendContinuationItemsAction.js").AppendContinuationItemsAction} AppendContinuationItemsAction */
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/w/WatchNextContinuationAction.js").WatchNextContinuationAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is WatchNextContinuationAction} */
 function is_watch_next_feed_target(o) {
 	return o.targetId==="watch-next-feed";
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/c/CommentsSectionContinuationAction.js").CommentsSectionContinuationAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is CommentsSectionContinuationAction} */
 function is_comments_section_next(o) {
 	return o.targetId==="comments-section";
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is import("./support/yt_api/_/b/BrowseFeedAction.js").BrowseFeedAction} */
+/** @arg {AppendContinuationItemsAction} o @returns {o is BrowseFeedAction} */
 function is_what_to_watch_section(o) {
 	return o.targetId==="browse-feedFEwhat_to_watch";
 }
@@ -1444,7 +1443,7 @@ class FilterHandlers {
 			return false;
 		}
 		if(is_what_to_watch_section(action)) {
-			/** @type {import("./support/yt_api/_/b/BrowseFeedAction.js").BrowseFeedAction} */
+			/** @type {BrowseFeedAction} */
 			let action_t=action;
 			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			// return true;
@@ -1471,7 +1470,7 @@ class FilterHandlers {
 			return false;
 		}
 		if(is_what_to_watch_section(action)) {
-			/** @type {import("./support/yt_api/_/b/BrowseFeedAction.js").BrowseFeedAction} */
+			/** @type {BrowseFeedAction} */
 			let action_t=action;
 			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			// return true;

@@ -1,1 +1,1 @@
-export type BrowseFeedItem={};
+type BrowseFeedItem={};

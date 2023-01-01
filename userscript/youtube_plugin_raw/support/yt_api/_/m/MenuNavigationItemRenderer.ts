@@ -1,5 +1,3 @@
-import {MenuNavigationItemRendererData} from "./MenuNavigationItemRendererData";
-
-export type MenuNavigationItemRenderer={
+type MenuNavigationItemRenderer={
 	menuNavigationItemRenderer: MenuNavigationItemRendererData;
 };
