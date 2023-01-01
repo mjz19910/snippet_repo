@@ -1,7 +1,7 @@
 import {EventListenersT} from "../../typescript/modules/DebugApi/src/EventListenersT.js";
 
 type InterceptFuncType=EventListenerOrEventListenerObject;
-type InterceptThis=[string, InterceptFuncType, any?];
+type InterceptThis=[string,InterceptFuncType,any?];
 class Socket {
 	client_id() {return 0;};
 }
@@ -141,7 +141,7 @@ class AddEventListenerExtension {
 		}
 	}
 	/** @private @arg {Node} val */
-	generate_node_id(val: Node|({__id_holder: {value: number}}&Node)) {
+	generate_node_id(val: Node|({__id_holder: {value: number;};}&Node)) {
 		if("__id_holder" in val&&val.__id_holder) {
 			return val.__id_holder.value;
 		}
@@ -212,11 +212,15 @@ class AddEventListenerExtension {
 	}
 }
 export let inject_api={
-	addEventListenerExt:new AddEventListenerExtension,
-}
+	addEventListenerExt: new AddEventListenerExtension,
+	reversePrototypeChain: new class {
+		add_target(_v: {}) {}
+		generate() {}
+	},
+};
 function overwrite_addEventListener<T extends AddEventListenerExtension>(arg0: T) {
 	arg0;
 }
 function define_property_as_value<T>(val: {}|CallableFunction,namespace_key: string,namespace: T) {
-	val;namespace_key;namespace;
+	val; namespace_key; namespace;
 }
