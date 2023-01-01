@@ -1,7 +1,7 @@
 import {GuidedHelpState} from "./GuidedHelpState.js";
-import {ToServiceParamsList} from "./ToServiceParamsList.js";
+import {ToServiceParams} from "./ToServiceParams.js";
 
 export type GuidedHelpServiceParams={
 	service: "GUIDED_HELP";
-	params: ToServiceParamsList<GuidedHelpState>;
+	params: ToServiceParams<GuidedHelpState>;
 };

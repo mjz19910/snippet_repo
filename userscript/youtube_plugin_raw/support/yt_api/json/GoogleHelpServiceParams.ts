@@ -1,7 +1,7 @@
 import {GoogleHelpServiceObj} from "./GoogleHelpServiceObj";
-import {ToServiceParamsList} from "./ToServiceParamsList.js";
+import {ToServiceParams} from "./ToServiceParams.js";
 
 export type GoogleHelpServiceParams={
 	service: "GOOGLE_HELP";
-	params: ToServiceParamsList<GoogleHelpServiceObj>;
+	params: ToServiceParams<GoogleHelpServiceObj>;
 };

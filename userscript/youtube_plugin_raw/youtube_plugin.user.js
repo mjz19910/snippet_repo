@@ -1605,7 +1605,7 @@ class FilterHandlers {
 				};
 				case "get_transcript": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/g/json/get_transcript_t.js").get_transcript_t["data"]} */
+					/** @type {import("./support/yt_api/json/get_transcript_t.js").get_transcript_t["data"]} */
 					data: cast_as(json),
 				};
 				case "guide": return {
@@ -3319,7 +3319,7 @@ class ECatcherService extends BaseService {
 			],
 		},
 	};
-	/** @arg {import("./support/yt_api/json/ECatcherServiceParams.js").ECatcherServiceParamsType} params */
+	/** @arg {import("./support/yt_api/json/ECatcherServiceParamsType.js").ECatcherServiceParamsType} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3366,7 +3366,9 @@ class GFeedbackService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {import("./support/yt_api/json/GFeedbackServiceType.js").GFeedbackServiceType} params */
+	/** @template T @typedef {import("./support/yt_api/json/ToServiceParams.js").ToServiceParams<T>} ToServiceParams */
+	/** @typedef {import("./support/yt_api/json/GFeedbackVarMap.js").GFeedbackVarMap} GFeedbackVarMap */
+	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3414,7 +3416,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {import("./support/yt_api/_/g/json/GuidedHelpServiceParamsList.js").GuidedHelpServiceParamsList} params */
+	/** @arg {GuidedHelpServiceParamsList} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
