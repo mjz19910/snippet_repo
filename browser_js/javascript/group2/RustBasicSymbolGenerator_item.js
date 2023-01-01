@@ -23,21 +23,36 @@ function main(){
 class RustBasicSymbolGenerator {
 	next_symbol_id=0
 	generated_symbol_map=new Map
+	/** @type {symbol|null} */
 	last_sym_key=null
 	generate() {
 		this.last_sym_key=Symbol()
 		this.set(this.last_sym_key,this.next_symbol_id++)
 		return this.last_sym_key
 	}
+	/**
+	 * @param {symbol} sym_key
+	 * @param {number} sym_id
+	 */
 	set(sym_key,sym_id) {
 		this.generated_symbol_map.set(sym_key,sym_id)
 	}
+	/**
+	 * @param {any} sym_key
+	 */
 	get(sym_key) {
 		return this.generated_symbol_map.get(sym_key)
 	}
+	/**
+	 * @param {any} sym_key
+	 */
 	has(sym_key) {
 		return this.generated_symbol_map.has(sym_key)
 	}
+	/**
+	 * @param {any} sym_key_a
+	 * @param {any} sym_key_b
+	 */
 	distance(sym_key_a,sym_key_b) {
 		if(this.has(sym_key_a)&&this.has(sym_key_b))
 			return this.get(sym_key_b)-this.get(sym_key_a)
@@ -45,15 +60,37 @@ class RustBasicSymbolGenerator {
 	}
 }
 class RustBasicExecutor {
+	/**
+	 * @type {any[]}
+	 */
 	value_vec=[]
+	/**
+	 * @type {any[]}
+	 */
 	key_vec=[]
+	/**
+	 * @type {(number | undefined)[]}
+	 */
 	data_start_vec=[]
+	/**
+	 * @type {(number | undefined)[]}
+	 */
 	data_end_vec=[]
+	/**
+	 * @type {any[]}
+	 */
 	data_store_vec=[]
+	/**
+	 * @param {RustBasicSymbolGenerator} key_generator
+	 */
 	constructor(key_generator) {
 		this.key_generator=key_generator
 		this.my_key=key_generator.generate()
 	}
+	/**
+	 * @type {any}
+	 */
+	lastValue;
 	get v() {
 		return this.lastValue
 	}
@@ -61,12 +98,21 @@ class RustBasicExecutor {
 		this.lastValue=value
 		this.add_function(this.lastKey,this.lastValue,[])
 	}
+	/**
+	 * @type {string}
+	 */
+	lastKey="";
 	get k() {
 		return this.lastKey
 	}
 	set k(key) {
 		this.lastKey=key
 	}
+	/**
+	 * @param {string|symbol} key
+	 * @param {any} value
+	 * @param {string | any[]} data_vec
+	 */
 	add_function(key,value,data_vec) {
 		if(key==='') {
 			key=this.key_generator.generate()
@@ -80,9 +126,17 @@ class RustBasicExecutor {
 		}
 		this.data_end_vec.push(data_store_vec.length)
 	}
+	/**
+	 * @param {any} key
+	 */
 	key_index(key) {
 		return this.key_generator.distance(this.my_key,key)-1
 	}
+	/**
+	 * @param {string} inject_data
+	 * @param {number[]} data_vec
+	 * @param {any} key
+	 */
 	append_auto_info(inject_data,data_vec,key) {
 		let inject_data_vec=[]
 		if(inject_data.startsWith('req_')) {
@@ -104,6 +158,11 @@ class RustBasicExecutor {
 			}
 		}
 	}
+	/**
+	 * @param {string} key
+	 * @param {{(...arg0:any[]):any;name:string}} value
+	 * @param {any[]} data_vec
+	 */
 	execute_function(key,value,data_vec) {
 		value.name&&this.append_auto_info(value.name,data_vec,key)
 		return value(...data_vec)
@@ -124,7 +183,7 @@ function main() {
 		var cur=new RustBasicExecutor(key_generator)
 	}
 	cur.k=''
-	cur.v=function req_$sym_distance$(sym_distance) {
+	cur.v=function req_$sym_distance$(/** @type {any} */ sym_distance) {
 		console.log('sym_distance',sym_distance)
 	}
 	return cur.execute()
