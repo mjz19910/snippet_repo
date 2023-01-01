@@ -976,9 +976,9 @@ class HandleRendererContentItemArray {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @typedef {AppendContinuationItemsAction['continuationItems']} T1 */
-	/** @typedef  {ReloadContinuationItemsCommandData['continuationItems']} T2 */
-	/** @template {T1|T2} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
+	/** @typedef {AppendContinuationItemsAction['continuationItems']} AppendItem */
+	/** @typedef  {ReloadContinuationItemsCommandData['continuationItems']} ReloadItem */
+	/** @template {AppendItem|ReloadItem} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
 	replace_array(base,path,arr) {
 		return cast_as(arr.filter((/** @type {typeof arr[number]} */content_item) => {
 			let keys=get_keys_of(content_item);
