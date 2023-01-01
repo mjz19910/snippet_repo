@@ -2313,7 +2313,7 @@ class Future {
 	}
 	/** @template V @arg {(x:U)=>V} f */
 	run_with(f) {
-		return this.v.extract(e=>{
+		return this.v.extract(e => {
 			let inner=this.f(e);
 			f(inner);
 		});
@@ -2328,7 +2328,7 @@ function start_message_channel_loop(fh) {
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {
-				handle_types_fut: new Future(fh,fh=>fh.handle_types),
+				handle_types_fut: new Future(fh,fh => fh.handle_types),
 			},
 			port: message_channel.port1,
 		});
@@ -3188,9 +3188,7 @@ class BaseServicePrivate {
 			known_numbers
 		}=this;
 		return {
-			known_root_ve,
-			known_strings,
-			known_numbers,
+			known_root_ve,known_strings,known_numbers,
 			known_booleans,
 		};
 	}
