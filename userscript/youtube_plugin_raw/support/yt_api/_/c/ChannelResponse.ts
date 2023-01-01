@@ -1,4 +1,4 @@
-export type ChannelResponse={
+type ChannelResponse={
 	responseContext: {};
 	contents: {};
 	header: {};

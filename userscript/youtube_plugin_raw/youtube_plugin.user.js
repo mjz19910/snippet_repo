@@ -1682,7 +1682,7 @@ class FilterHandlers {
 			default: console.log(request_info.type,request_info.data); debugger; break;
 		}
 	}
-	/** @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data */
+	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} data */
 	on_handle_api(request,data) {
 		var {req_hr_t,req_parse,debug}=this.on_handle_api_0(request);
 		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,req_parse);
@@ -1708,7 +1708,7 @@ class FilterHandlers {
 		});
 		this.handle_types.ResponseTypes(res);
 	}
-	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string|URL|Request} request @arg {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} data @arg {URL} req_parse */
+	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {string|URL|Request} request @arg {JsonDataResponseType} data @arg {URL} req_parse */
 	on_handle_api_1(req_hr_t,request,data,req_parse) {
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
@@ -2740,11 +2740,8 @@ async function main() {
 
 	// wait for plugin requirements
 	start_message_channel_loop();
-
 	return;
-
 	// #region hoisted functions below
-	/** @typedef {import("./support/yt_api/_/j/JsonDataResponseType.js").JsonDataResponseType} JsonDataResponseType */
 	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
 		yt_handlers.extract(h => h.on_handle_api(request,response_obj));

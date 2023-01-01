@@ -1,4 +1,1 @@
-import {EngagementPanelSectionShortsComments} from "./EngagementPanelSectionShortsComments";
-import {EngagementPanelStructuredDescription} from "./EngagementPanelStructuredDescription";
-
-export type EngagementPanelSectionListRendererOpt=EngagementPanelSectionShortsComments|EngagementPanelStructuredDescription;
+type EngagementPanelSectionListRendererOpt=EngagementPanelSectionShortsComments|EngagementPanelStructuredDescription;

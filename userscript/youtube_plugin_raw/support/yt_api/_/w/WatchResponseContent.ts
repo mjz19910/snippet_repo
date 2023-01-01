@@ -1,7 +1,4 @@
-import {FrameworkUpdates} from "../../json/FrameworkUpdates.js";
-import {ResponseContext} from "../g/json/GeneralContext.js";
-
-export type WatchResponseContent={
+type WatchResponseContent={
 	currentVideoEndpoint: {};
 	engagementPanels: {}[];
 	frameworkUpdates: FrameworkUpdates;

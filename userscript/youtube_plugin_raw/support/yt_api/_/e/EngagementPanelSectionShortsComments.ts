@@ -1,6 +1,4 @@
-import {SectionListRenderer} from "../../_abc/s/SectionListRenderer";
-
-export type EngagementPanelSectionShortsComments={
+type EngagementPanelSectionShortsComments={
 	content: SectionListRenderer;
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};

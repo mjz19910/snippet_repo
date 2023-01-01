@@ -1,4 +1,4 @@
-export type EngagementPanelStructuredDescription={
+type EngagementPanelStructuredDescription={
 	content: {};
 	header: {};
 	identifier: {

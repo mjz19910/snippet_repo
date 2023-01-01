@@ -1,6 +1,3 @@
-import {EngagementPanelSectionListRendererOpt} from "./EngagementPanelSectionListRendererOpt.js";
-
-
-export type EngagementPanelItem={
+type EngagementPanelItem={
 	engagementPanelSectionListRenderer: EngagementPanelSectionListRendererOpt;
 };

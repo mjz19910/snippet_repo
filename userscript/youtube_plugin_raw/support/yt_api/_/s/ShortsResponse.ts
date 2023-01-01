@@ -1,7 +1,4 @@
-import {EngagementPanelItem} from "../e/EngagementPanelItem";
-
-
-export type ShortsResponse={
+type ShortsResponse={
 	responseContext: {};
 	overlay: {};
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";

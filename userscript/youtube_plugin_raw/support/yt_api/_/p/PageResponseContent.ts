@@ -1,7 +1,4 @@
-import {TwoColumnBrowseResultsRenderer} from "../t/TwoColumnBrowseResultsRenderer.js";
-
-
-export type PageResponseContent={
+type PageResponseContent={
 	contents: TwoColumnBrowseResultsRenderer;
 	trackingParams: string;
 };
