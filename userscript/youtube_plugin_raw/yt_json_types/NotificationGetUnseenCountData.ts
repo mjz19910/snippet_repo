@@ -1,4 +1,4 @@
 type NotificationGetUnseenCountData={
 	responseContext: ResponseContext;
-	unseenCount: number;
+	unseenCount?: number;
 };

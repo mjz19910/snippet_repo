@@ -13,6 +13,11 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
+/** @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
+function cast_as(e,x=e) {
+	return x;
+}
+
 /** @type {YtdAppElement} */
 const YtdAppElement=cast_as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
@@ -276,7 +281,10 @@ async function async_plugin_init(event) {
 					}
 					if(e.id==="home-page-skeleton") return false;
 					// cspell:ignore skeletonhidden
-					if(e.id==="watch-page-skeleton"&&e.classList.value==="watch-skeletonhidden") return false;
+					if(e.id==="watch-page-skeleton"&&(
+						e.classList.value==="watch-skeletonhidden"||
+						e.classList.value==="watch-skeleton"
+					)) return false;
 					if(e.id==="player"&&e.classList.value==="skeleton flexy") return false;
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="SCRIPT") return false;
@@ -753,6 +761,9 @@ class YtIterateTarget {
 	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
 	reloadContinuationItemsCommand({t: state,path},command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",get_keys_of(command));
+		if(!command.continuationItems) {
+			debugger;
+		}
 		if(state.ReloadContinuationItemsCommandData(path,command)) return;
 		let filtered=state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command.continuationItems);
 		if(filtered.length>0) {
@@ -2143,13 +2154,6 @@ class HTMLVideoElementArrayBox {
 	constructor(value) {
 		this.value=value;
 	}
-}
-
-/** @template U @template {U} T @arg {U} e @returns {T} */
-function cast_as(e) {
-	/** @type {any} */
-	let x=e;
-	return x;
 }
 
 class YTNavigateFinishEvent {
@@ -3818,7 +3822,11 @@ class HandleTypes extends BaseService {
 		const {responseContext,unseenCount,...y}=x;
 		this.save_keys("GetUnseenCount",x);
 		this.ResponseContext(x.responseContext);
-		this.save_number("notification.unseenCount",x.unseenCount);
+		if("unseenCount" in x) {
+			this.save_number("notification.unseenCount",as_cast(x.unseenCount));
+		} else {
+			console.log("TODO: traverse the actions to find the unseenCount");
+		}
 		this.empty_object(y);
 	}
 	/** @private @arg {{}} x */
