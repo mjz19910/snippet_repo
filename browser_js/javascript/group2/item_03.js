@@ -1,60 +1,40 @@
-function main() {
-	class curTy {
-		constructor() {
-			/** @type {string[]} */
-			this.keys=[];
-			/** @type {(()=>void)[]} */
-			this.values=[];
-			this.lastKey="";
-			this.lastValue=() => {};
+x:{
+	if(!('temp1' in window)) {
+		if(queryObjects) {
+			console.log("please export the queryObjects result as temp1");
+			queryObjects(Function.prototype);
+		} else {
+			console.log("please open the console/devtools");
 		}
-		get k() {
-			return this.lastKey;
-		}
-		set k(key) {
-			this.lastKey=key;
-		}
-		get v() {
-			return this.lastValue;
-		}
-		set v(value) {
-			this.lastValue=value;
-			this.commit();
-		}
-		commit() {
-			this.set(this.lastKey,this.lastValue);
-		}
-		/** @arg {string} key  */
-		keyIndexOf(key) {
-			return this.keys.indexOf(key);
-		}
-		/** @arg {string} key @arg {()=>void} value */
-		set(key,value) {
-			if(this.keys.indexOf(key)>-1) {
-				throw Error("Duplicate key");
-			}
-			this.keys.push(key);
-			this.values.push(value);
-		}
-		/** @arg {number} id */
-		run(id) {
-			var key=this.keys[id];
-			var value=this.values[id];
-			console.log("running",key);
-			return value();
-		}
-		/** @arg {number} id */
-		execute(id) {
-			return this.run(id);
+		break x;
+	}
+	/** @arg {any} v */
+	function any(v) {return v;}
+	/** @type {{}[]} */
+	let temp1=any(window.temp1);
+	let GeneratorFunction = (function*(){}).prototype.constructor;
+	let not_proto = temp1.filter(e=>e !== Function.prototype && e !== GeneratorFunction && e !== GeneratorFunction.constructor);
+	let fn_map_str = [...new Set(not_proto.map(e=>{
+		try {
+			return e.toString()
+		} catch {
+			return ""
 		}
 	}
-	let cur=new curTy;
-	cur.k='start';
-	cur.v=function() {
-		console.log('start');
-		return 'done';
-	};
-	let target_id=0;
-	return cur.execute(target_id);
+	))];
+	let ids = not_proto.map(e=>{
+		try {
+			return [e, fn_map_str.indexOf(e.toString())]
+		} catch (x) {
+			return {
+				type: "error",
+				cause: e
+			}
+		}
+	}
+	);
+	for (let x of ids) {
+		console.log(x);
+		break;
+	}
 }
-main();
