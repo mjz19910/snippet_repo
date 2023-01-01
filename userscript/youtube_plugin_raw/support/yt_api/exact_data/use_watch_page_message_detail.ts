@@ -12,7 +12,10 @@ async function use_watch_page_message_detail() {
 	VV;
 	const endpoint=json.response.endpoint;
 	console.log("page ep",endpoint);
-	use_response_context();
+	use_service_csi();
+	use_ecatcher();
+	use_gfeedback();
+	use_guided_help();
 	type XX={
 		a: {
 			[U in json_d]: Json[U];
