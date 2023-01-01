@@ -3094,7 +3094,7 @@ class BaseServicePrivate {
 		if(was_known) return;
 		this.new_known_numbers.push([key,x]);
 		this.on_data_known_change();
-		console.log("store_num [%s]",key,x);
+		console.log("store_num [%o]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
@@ -3815,8 +3815,17 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {NotificationGetUnseenCountData} x */
 	NotificationGetUnseenCountData(x) {
+		const {responseContext,unseenCount,...y}=x;
+		this.save_keys("GetUnseenCount",x);
 		this.ResponseContext(x.responseContext);
 		this.save_number("notification.unseenCount",x.unseenCount);
+		this.empty_object(y);
+	}
+	/** @private @arg {{}} x */
+	empty_object(x) {
+		let keys=get_keys_of(x);
+		if(!keys.length) return;
+		console.log("[empty_object] [%s] %o",keys.join(),x);
 	}
 }
 //#endregion
