@@ -1029,7 +1029,7 @@ function is_what_to_watch_section(o) {
 	return o.targetId==="browse-feedFEwhat_to_watch";
 }
 
-/** @template {string} T @arg {T} t @returns {import("./support/search_params_parse/SearchParamsParse.js").ParseUrlSearchParams<T>} */
+/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
 function make_search_params(t) {
 	let sp=new URLSearchParams(t);
 	/** @type {any} */
