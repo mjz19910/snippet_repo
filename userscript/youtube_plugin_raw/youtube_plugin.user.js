@@ -3192,28 +3192,34 @@ class BaseServicePrivate {
 			known_booleans,
 		};
 	}
+	/**
+	 * @private @arg {Partial<ReturnType<BaseServicePrivate['known_data_from_self']>>} x
+	 */
+	update_known_data_from_parsed(x) {
+		const {
+			known_root_ve,known_strings,known_booleans,
+			known_numbers,
+		}=x;
+		if(known_root_ve) {
+			this.known_root_ve=known_root_ve;
+		}
+		if(known_strings) {
+			this.known_strings=known_strings;
+		}
+		if(known_booleans) {
+			this.known_booleans=known_booleans;
+		}
+		if(known_numbers) {
+			this.known_numbers=known_numbers;
+		}
+	}
 	/** @private */
 	get_known_data() {
 		if(this.loaded_from_storage) return;
 		let json_str=this.get_local_storage();
 		if(json_str) {
 			let ret=this.parse_data(json_str);
-			const {
-				known_root_ve,known_strings,known_booleans,
-				known_numbers,
-			}=ret;
-			if(known_root_ve) {
-				this.known_root_ve=known_root_ve;
-			}
-			if(known_strings) {
-				this.known_strings=known_strings;
-			}
-			if(known_booleans) {
-				this.known_booleans=known_booleans;
-			}
-			if(known_numbers) {
-				this.known_numbers=known_numbers;
-			}
+			this.update_known_data_from_parsed(ret);
 			this.loaded_from_storage=true;
 		}
 	}
