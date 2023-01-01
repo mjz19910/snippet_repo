@@ -2166,7 +2166,7 @@ class YTNavigateFinishEvent {
 /** @type {((event:YTNavigateFinishEvent)=>void)[]} */
 let on_yt_navigate_finish=[];
 
-/** @template {string} U @template {U[]} T @arg {T} src @arg {T} target */
+/** @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
 function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
 	for(let i=0;i<src.length;i++) {
@@ -3049,6 +3049,53 @@ class BaseServicePrivate {
 		this.on_data_known_change();
 		console.log("store_str [%s]",key,x);
 	}
+	/** @private @type {[string,['one',number[]]|['many',number[][]]][]} */
+	known_numbers=[];
+	/** @arg {string} key @arg {number|number[]} x */
+	save_number(key,x) {
+		if(key==="any") debugger;
+		let was_known=true;
+		/** @type {["one", number[]]|["many",number[][]]} */
+		let cur;
+		let p=this.known_numbers.find(e => e[0]===key);
+		if(!p) {
+			cur=['one',[]];
+			p=[key,cur];
+			this.known_numbers.push(p);
+		} else {
+			cur=p[1];
+		}
+		if(x instanceof Array) {
+			let target=p[1];
+			if(target[0]==='one') {
+				let inner=target[1].map(e => [e]);
+				target=["many",inner];
+				p[1]=target;
+			}
+			let found=target[1].find(e => eq_keys(e,x));
+			if(!found) {
+				was_known=false;
+				target[1].push(x);
+			}
+		} else {
+			if(cur[0]==='one') {
+				if(!cur[1].includes(x)) {
+					was_known=false;
+					cur[1].push(x);
+				}
+			} else if(cur[0]==='many') {
+				let res=cur[1].find(([e,...r]) => !r.length&&e===x);
+				if(!res) {
+					was_known=false;
+					cur[1].push([x]);
+				}
+			}
+		}
+		if(was_known) return;
+		this.new_known_numbers.push([key,x]);
+		this.on_data_known_change();
+		console.log("store_num [%s]",key,x);
+	}
 	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
 		let krc=this.known_booleans.find(e => e[0]===key);
@@ -3104,6 +3151,8 @@ class BaseServicePrivate {
 	known_strings=[];
 	/** @private @type {[string,string|string[]][]} */
 	new_known_strings=[];
+	/** @private @type {[string,number|number[]][]} */
+	new_known_numbers=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	known_booleans=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
@@ -3116,12 +3165,17 @@ class BaseServicePrivate {
 		let json_str=JSON.stringify(data);
 		this.save_local_storage(json_str);
 	}
-	/** @private @returns {SaveDataRet} */
+	/** @private */
 	known_data_from_self() {
+		const {
+			known_root_ve,known_strings,known_booleans,
+			known_numbers
+		}=this;
 		return {
-			known_root_ve: this.known_root_ve,
-			known_strings: this.known_strings,
-			known_bool: this.known_booleans,
+			known_root_ve,
+			known_strings,
+			known_numbers,
+			known_booleans,
 		};
 	}
 	/** @private */
@@ -3130,19 +3184,30 @@ class BaseServicePrivate {
 		let json_str=this.get_local_storage();
 		if(json_str) {
 			let ret=this.parse_data(json_str);
-			if(ret.known_root_ve) {
-				this.known_root_ve=ret.known_root_ve;
+			const {
+				known_root_ve,known_strings,known_booleans,
+				known_numbers,
+			}=ret;
+			if(known_root_ve) {
+				this.known_root_ve=known_root_ve;
 			}
-			if(ret.known_strings) {
-				this.known_strings=ret.known_strings;
+			if(known_strings) {
+				this.known_strings=known_strings;
 			}
-			if(ret.known_bool) {
-				this.known_booleans=ret.known_bool;
+			if(known_booleans) {
+				this.known_booleans=known_booleans;
+			}
+			if(known_numbers) {
+				this.known_numbers=known_numbers;
+			}
+			if("known_bool" in ret) {
+				console.log("upgraded known_bool to known_booleans")
+				this.known_booleans=cast_as(ret.known_bool);
 			}
 			this.loaded_from_storage=true;
 		}
 	}
-	/** @private @arg {string} str @returns {SaveDataRet} */
+	/** @private @arg {string} str @returns {Partial<ReturnType<this['known_data_from_self']>>} */
 	parse_data(str) {
 		return JSON.parse(str);
 	}
@@ -3750,12 +3815,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
-		this.NotificationGetUnseenCountData(x.data)
+		this.NotificationGetUnseenCountData(x.data);
 	}
 	/** @private @arg {NotificationGetUnseenCountData} x */
 	NotificationGetUnseenCountData(x) {
 		this.ResponseContext(x.responseContext);
-		this.save_new_number("notification.unseenCount",x.unseenCount);
+		this.save_number("notification.unseenCount",x.unseenCount);
 	}
 }
 //#endregion
