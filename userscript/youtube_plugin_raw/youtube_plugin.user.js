@@ -44,7 +44,7 @@ function save_new_map(key,map) {
 	if(!inject_api_yt.saved_maps) return;
 	inject_api_yt.saved_maps.set(key,map);
 }
-/** @type {import("./support/yt_api/_/s/SavedData.js").SavedData} */
+/** @type {SavedData} */
 let saved_data=cast_as({});
 inject_api_yt.saved_data=saved_data;
 
@@ -1502,7 +1502,6 @@ class FilterHandlers {
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(state,path_parts);
 	}
-	/** @typedef {import("./yt_json_types/UrlTypes.js").UrlTypes} UrlTypes */
 	/** @arg {{}} state @arg {string[]} parts */
 	get_url_type(state,parts) {
 		let index=0;
@@ -1736,10 +1735,10 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	/** @arg {UrlTypes|`page_type_${YtPageState["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
+	/** @arg {UrlTypes|`page_type_${YtPageState["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
+		/** @type {AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
@@ -3471,24 +3470,6 @@ class TrackingServices extends BaseService {
 	}
 }
 //#endregion Service
-function get_exports() {
-	return exports;
-}
-if(typeof exports==="object") {
-	let exports=get_exports();
-	exports.Gn=Gn;
-	exports.CsiService=CsiService;
-	exports.ECatcherService=ECatcherService;
-	exports.GFeedbackService=GFeedbackService;
-	exports.GuidedHelpService=GuidedHelpService;
-	exports.TrackingServices=TrackingServices;
-	exports.FilterHandlers=FilterHandlers;
-	exports.ServiceResolver=ServiceResolver;
-	exports.FilterHandlers=FilterHandlers;
-	exports.HiddenData=HiddenData;
-	exports.VolumeRange=VolumeRange;
-	exports.inject_api_yt=inject_api_yt;
-}
 //#region decode_entity_key
 /** @name Ys */
 class ArrayViewType {

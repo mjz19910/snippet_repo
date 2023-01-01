@@ -1,1 +1,1 @@
-export type SavedDataItem={};
+type SavedDataItem={};
