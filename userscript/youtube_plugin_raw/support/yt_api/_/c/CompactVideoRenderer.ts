@@ -1,4 +1,4 @@
-import {Accessibility} from "../../_/a/Accessibility.js";
+import {Accessibility} from "../../../../yt_json_types/Accessibility.js";
 import {MenuRendererH} from "../../_/m/MenuRendererH.js";
 import {MetadataBadgeRenderers} from "../../_/m/MetadataBadgeRenderers.js";
 import {YtEndpoint} from "../n/YtEndpoint.js";

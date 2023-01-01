@@ -1,4 +1,4 @@
-import {Accessibility} from "../a/Accessibility";
+import {Accessibility} from "../../../../yt_json_types/Accessibility";
 import {MenuServiceItem} from "./MenuServiceItem";
 
 

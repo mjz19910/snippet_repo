@@ -1,4 +1,4 @@
-import {Accessibility} from "../../_/a/Accessibility";
+import {Accessibility} from "../../../../yt_json_types/Accessibility";
 import {Icon} from "../i/Icon.js";
 import {ToggledServiceEndpoint} from "./ToggledServiceEndpoint";
 import {UntoggledServiceEndpoint} from "../u/UntoggledServiceEndpoint";

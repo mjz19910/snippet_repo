@@ -1,11 +1,8 @@
-import {Accessibility} from "../_/a/Accessibility.js";
+import {Accessibility} from "./Accessibility.js";
 import {TextRun} from "./TextRun.js";
 
-type TextRuns={
-	runs: TextRun[];
-};
-type SimpleText={
+export type YtTextType={
+	runs?: TextRun[];
 	accessibility?: Accessibility;
-	simpleText: string;
+	simpleText?: string;
 };
-export type YtTextType=SimpleText|TextRuns;

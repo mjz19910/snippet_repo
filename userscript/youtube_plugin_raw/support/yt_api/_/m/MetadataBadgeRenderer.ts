@@ -1,4 +1,4 @@
-import {AccessibilityData} from "../a/AccessibilityData";
+import {AccessibilityData} from "../../../../yt_json_types/AccessibilityData";
 import {Icon} from "../i/Icon";
 
 export type MetadataBadgeRenderer={
