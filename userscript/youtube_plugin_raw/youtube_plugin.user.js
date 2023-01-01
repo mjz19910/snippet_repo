@@ -3217,7 +3217,7 @@ class BaseServicePrivate {
 			this.loaded_from_storage=true;
 		}
 	}
-	/** @private @arg {string} str @returns {Partial<ReturnType<this['known_data_from_self']>>} */
+	/** @private @arg {string} str @returns {Partial<ReturnType<BaseServicePrivate['known_data_from_self']>>} */
 	parse_data(str) {
 		return JSON.parse(str);
 	}
