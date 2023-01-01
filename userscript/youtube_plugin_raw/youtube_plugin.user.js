@@ -1683,17 +1683,17 @@ class FilterHandlers {
 	}
 	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} data */
 	on_handle_api(request,data) {
-		var {req_hr_t,req_parse,debug}=this.on_handle_api_0(request);
-		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,req_parse);
+		var {req_hr_t,req_parse: parsed_url,debug}=this.on_handle_api_0(request);
+		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,request,data,parsed_url);
 		if(path_url==="/getDatasyncIdsEndpoint") return;
-		let api_parts=req_parse.pathname.slice(1).split("/");
+		let api_parts=parsed_url.pathname.slice(1).split("/");
 		// spell:ignore youtubei
 		if(api_parts[0]!=="youtubei") {
-			console.log("unknown api path",req_parse.pathname);
+			console.log("unknown api path",parsed_url.pathname);
 			return;
 		}
 		if(api_parts[1]!=="v1") {
-			console.log("unknown api path",req_parse.pathname);
+			console.log("unknown api path",parsed_url.pathname);
 			return;
 		}
 		let api_path=api_parts.slice(2).join(".");
@@ -1703,7 +1703,7 @@ class FilterHandlers {
 		this.on_json_request({
 			...res,
 			request,
-			parsed_url:req_parse,
+			parsed_url,
 		});
 		this.handle_types.ResponseTypes(res);
 	}
