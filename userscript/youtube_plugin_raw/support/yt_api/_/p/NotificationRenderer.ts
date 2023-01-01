@@ -1,5 +1,3 @@
-import {NotificationRendererData} from "../n/NotificationRendererData";
-
-export type NotificationRenderer={
+type NotificationRenderer={
 	notificationRenderer: NotificationRendererData;
 };

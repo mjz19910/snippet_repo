@@ -1,3 +1,3 @@
-export type CommandToken={
+type CommandToken={
 	token: string;
 };

@@ -1,5 +1,3 @@
-import {CommandToken} from "./CommandToken";
-
-export type ContinuationCommand=CommandToken&{
+type ContinuationCommand=CommandToken&{
 	request: string;
 };

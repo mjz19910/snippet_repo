@@ -1,6 +1,4 @@
-import {VeData} from "./VeData";
-
-export type GraftedVeItem={
+type GraftedVeItem={
 	csn: string;
 	veData: VeData;
 };
