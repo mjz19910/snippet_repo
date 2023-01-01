@@ -1386,6 +1386,7 @@ add_function(non_null);
 class FilterHandlers {
 	/** @arg {ResolverT} res */
 	constructor(res) {
+		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
 		/** @readonly */
 		this.class_name="FilterHandlers";
@@ -1419,7 +1420,6 @@ class FilterHandlers {
 			["shelfRenderer",false],
 			["videoRenderer",false],
 		]);
-		this.handle_types=new HandleTypes(res);
 		let t=this;
 		/** @arg {string} value */
 		function whitelist_item(value) {
