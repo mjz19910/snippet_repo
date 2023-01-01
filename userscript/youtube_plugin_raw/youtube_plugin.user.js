@@ -2101,22 +2101,16 @@ function on_ytd_watch_flexy(element) {
 /** @type {string[]} */
 let page_type_changes=[];
 inject_api_yt.page_type_changes=page_type_changes;
-
-/** @type {string|null} */
-let last_page_type=null;
-
 function is_watch_page_active() {
 	if(!ytd_page_manager?.getCurrentPage()) {
 		return false;
 	}
 	return ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()==="ytd-watch-flexy";
 }
-
 /** @arg {Node} value */
 function as_node(value) {
 	return value;
 }
-
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!ytd_page_manager) return;
@@ -4794,9 +4788,6 @@ class HandleTypes extends BaseService {
 	YtPageState(x) {
 		this.save_keys("any",x);
 		page_type_iter(x.pageType);
-		if(last_page_type!==x.pageType) {
-			last_page_type=x.pageType;
-		}
 	}
 	/** @arg {import("./support/yt_api/_/s/SettingsResponseContent.js").SettingsResponseContent} data */
 	SettingsResponseContent(data) {
