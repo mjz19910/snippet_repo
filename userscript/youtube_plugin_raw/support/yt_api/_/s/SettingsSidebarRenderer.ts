@@ -1,5 +1,3 @@
-import {SettingsSidebarRendererData} from "./SettingsSidebarRendererData";
-
-export type SettingsSidebarRenderer={
+type SettingsSidebarRenderer={
 	settingsSidebarRenderer: SettingsSidebarRendererData;
 };

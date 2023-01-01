@@ -1,5 +1,3 @@
-import {MenuServiceItemRenderer} from "./MenuServiceItemRenderer";
-
-export type MenuServiceItem={
+type MenuServiceItem={
 	menuServiceItemRenderer: MenuServiceItemRenderer;
 };

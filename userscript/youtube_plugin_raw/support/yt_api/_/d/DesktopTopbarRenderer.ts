@@ -1,5 +1,3 @@
-import {DesktopTopbarRendererData} from "./DesktopTopbarRendererData";
-
-export type DesktopTopbarRenderer={
+type DesktopTopbarRenderer={
 	desktopTopbarRenderer: DesktopTopbarRendererData;
 };

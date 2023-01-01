@@ -1,20 +1,4 @@
 type CompactVideoRenderer={
 	accessibility: Accessibility;
 	badges?: MetadataBadgeRenderers[];
-	channelThumbnail: ThumbnailH;
-	lengthText: SimpleTextFixmeValueNeeded;
-	longBylineText: TextRuns;
-	menu: MenuRendererH;
-	navigationEndpoint: YtEndpoint;
-	ownerBadges?: MetadataBadgeRenderers[];
-	publishedTimeText: SimpleTextFixmeValueNeeded;
-	richThumbnail?: RichThumbnail;
-	shortBylineText: TextRuns;
-	shortViewCountText: SimpleTextFixmeValueNeeded;
-	thumbnail: ThumbnailsList;
-	thumbnailOverlays: ThumbnailOverlayItem[];
-	title: SimpleTextFixmeValueNeeded;
-	trackingParams: string;
-	videoId: string;
-	viewCountText: SimpleTextFixmeValueNeeded;
 };

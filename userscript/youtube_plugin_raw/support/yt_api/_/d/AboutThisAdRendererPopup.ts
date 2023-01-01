@@ -1,6 +1,3 @@
-import {AboutThisAdRenderer} from "../a/AboutThisAdRenderer";
-
-
-export type AboutThisAdRendererPopup={
+type AboutThisAdRendererPopup={
 	aboutThisAdRenderer: AboutThisAdRenderer;
 };

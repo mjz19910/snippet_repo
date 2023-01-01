@@ -1,5 +1,3 @@
-import {PlaylistVideoListRendererData} from "./PlaylistVideoListRendererData";
-
-export type PlaylistVideoListRenderer={
+type PlaylistVideoListRenderer={
 	playlistVideoListRenderer: PlaylistVideoListRendererData;
 };

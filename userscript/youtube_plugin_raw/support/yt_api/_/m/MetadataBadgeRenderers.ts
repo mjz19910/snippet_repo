@@ -1,5 +1,3 @@
-import {MetadataBadgeRenderer} from "./MetadataBadgeRenderer";
-
-export type MetadataBadgeRenderers={
+type MetadataBadgeRenderers={
 	metadataBadgeRenderer: MetadataBadgeRenderer;
 };

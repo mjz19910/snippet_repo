@@ -1,6 +1,4 @@
-import {ItemSectionContentItem} from "./ItemSectionContentItem";
-
-export type ItemSectionRendererData={
+type ItemSectionRendererData={
 	contents: ItemSectionContentItem[];
 	trackingParams: string;
 };

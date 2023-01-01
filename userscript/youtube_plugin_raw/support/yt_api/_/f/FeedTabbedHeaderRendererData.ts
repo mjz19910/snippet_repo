@@ -1,5 +1,3 @@
-import {YtTextType} from "../../json/YtTextType.js";
-
-export type FeedTabbedHeaderRendererData={
+type FeedTabbedHeaderRendererData={
 	title: YtTextType;
 };

@@ -1,0 +1,3 @@
+type SearchboxConfig={
+	webSearchboxConfig: WebSearchboxConfig;
+};

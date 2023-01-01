@@ -1,5 +1,3 @@
-import {FeedTabbedHeaderRendererData} from "./FeedTabbedHeaderRendererData";
-
-export type FeedTabbedHeaderRenderer={
+type FeedTabbedHeaderRenderer={
 	feedTabbedHeaderRenderer: FeedTabbedHeaderRendererData;
 };

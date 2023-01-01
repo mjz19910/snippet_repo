@@ -1,4 +1,4 @@
-export type MainAppWebResponseContextData={
+type MainAppWebResponseContextData={
 	datasyncId: `${number}||${number}`;
 	loggedOut: boolean;
 };

@@ -1,3 +1,3 @@
-export type GhostGridRendererData={
+type GhostGridRendererData={
 	rows: number;
 };

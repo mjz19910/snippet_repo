@@ -1,5 +1,3 @@
-import {ItemSectionRendererData} from "./ItemSectionRendererData";
-
-export type ItemSectionRenderer={
+type ItemSectionRenderer={
 	itemSectionRenderer: ItemSectionRendererData;
 };

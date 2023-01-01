@@ -1,5 +1,3 @@
-import {NotificationTopbarButtonRendererData} from "./NotificationTopbarButtonRendererData";
-
-export type NotificationTopbarButtonRenderer={
+type NotificationTopbarButtonRenderer={
 	notificationTopbarButtonRenderer: NotificationTopbarButtonRendererData;
 };

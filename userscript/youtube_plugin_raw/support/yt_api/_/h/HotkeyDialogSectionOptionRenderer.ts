@@ -1,5 +1,3 @@
-import {HotkeyDialogData} from "./HotkeyDialogData";
-
-export type HotkeyDialogSectionOptionRenderer={
+type HotkeyDialogSectionOptionRenderer={
 	hotkeyDialogSectionOptionRenderer: HotkeyDialogData;
 };

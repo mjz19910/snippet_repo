@@ -1,5 +1,3 @@
-import {SectionListRendererData} from "../../../../yt_json_types/SectionListRendererData";
-
-export type SectionListRenderer={
+type SectionListRenderer={
 	sectionListRenderer: SectionListRendererData;
 };

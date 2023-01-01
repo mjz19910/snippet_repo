@@ -1,6 +1,3 @@
-import {Thumbnail} from "./Thumbnail";
-
-
-export type ThumbnailsList={
+type ThumbnailsList={
 	thumbnails: Thumbnail[];
 }

@@ -1,7 +1,4 @@
-import {Icon} from "../../../../yt_json_types/Icon.js";
-
-
-export type topbarMenuButtonRenderer={
+type topbarMenuButtonRenderer={
 	topbarMenuButtonRenderer: {
 		icon: Icon<"VIDEO_CALL">;
 	};

@@ -1,9 +1,4 @@
-import {Accessibility} from "../../../../yt_json_types/Accessibility";
-import {MenuServiceItem} from "./MenuServiceItem";
-
-
-
-export interface MenuRenderer {
+type MenuRendererData={
 	trackingParams: string;
 	accessibility: Accessibility;
 	items: MenuServiceItem[];

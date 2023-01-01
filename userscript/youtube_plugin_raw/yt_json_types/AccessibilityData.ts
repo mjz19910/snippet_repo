@@ -1,3 +1,3 @@
-export type AccessibilityData={
+type AccessibilityData={
 	label: string;
 };

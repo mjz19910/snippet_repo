@@ -1,6 +1,4 @@
-import {UrlWrappedValue} from "../u/UrlWrappedValue.js";
-
-export type Att_bgChallenge={
+type AttBgChallenge={
 	interpreterUrl: UrlWrappedValue;
 	interpreterHash: string;
 	program: string;

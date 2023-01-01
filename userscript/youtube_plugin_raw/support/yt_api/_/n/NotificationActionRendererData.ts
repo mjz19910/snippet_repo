@@ -1,6 +1,4 @@
-import {YtTextType} from "../../json/YtTextType.js";
-
-export type NotificationActionRendererData={
+type NotificationActionRendererData={
 	responseText: YtTextType;
 	trackingParams: string;
 };

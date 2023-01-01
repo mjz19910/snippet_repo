@@ -1,5 +1,3 @@
-import {AccessibilityData} from "./AccessibilityData";
-
-export type Accessibility={
+type Accessibility={
 	accessibilityData: AccessibilityData;
 };

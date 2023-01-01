@@ -1,11 +1,4 @@
-import {YtTextType} from "../../json/YtTextType.js";
-import {ButtonRenderer} from "../../../../yt_json_types/ButtonRenderer.js";
-import {ImpressionEndpoint} from "../i/ImpressionEndpoint.js";
-import {MenuRenderer} from "../m/MenuRenderer.js";
-import {MetadataBadgeRenderer} from "../m/MetadataBadgeRenderer.js";
-import {ThumbnailRoot} from "../t/ThumbnailRoot";
-
-export interface DisplayAdRenderer {
+type DisplayAdRenderer={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: YtTextType;
 	image: ThumbnailRoot;
@@ -14,7 +7,7 @@ export interface DisplayAdRenderer {
 	badge: MetadataBadgeRenderer;
 	menu: MenuRenderer;
 	ctaButton: ButtonRenderer;
-	impressionEndpoints: ImpressionEndpoint[];
+	impressionEndpoints: YtEndpoint[];
 	clickCommand: {};
 	mediaHoverOverlay: ButtonRenderer;
 	mediaBadge: MetadataBadgeRenderer;

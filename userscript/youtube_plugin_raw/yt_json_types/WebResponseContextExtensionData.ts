@@ -1,3 +1,3 @@
-export type WebResponseContextExtensionData={
+type WebResponseContextExtensionData={
 	hasDecorated: boolean;
 };

@@ -1,7 +1,4 @@
-import {OpenPopupAction} from "./OpenPopupAction";
-
-export type OpenPopupActionItem={
+type OpenPopupActionItem={
 	clickTrackingParams: string;
-	// "Notifications"
 	openPopupAction: OpenPopupAction;
 };

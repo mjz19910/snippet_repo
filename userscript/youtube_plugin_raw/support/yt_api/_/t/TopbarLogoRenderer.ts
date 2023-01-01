@@ -1,5 +1,3 @@
-import {LogoEntity} from "./LogoEntity";
-
-export type TopbarLogoRenderer={
+type TopbarLogoRenderer={
 	topbarLogoRenderer: LogoEntity;
 };

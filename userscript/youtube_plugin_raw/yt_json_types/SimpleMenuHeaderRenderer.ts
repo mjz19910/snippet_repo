@@ -1,5 +1,3 @@
-import {SimpleMenuHeaderRendererData} from "./SimpleMenuHeaderRendererData";
-
-export type SimpleMenuHeaderRenderer={
+type SimpleMenuHeaderRenderer={
 	simpleMenuHeaderRenderer: SimpleMenuHeaderRendererData;
 };

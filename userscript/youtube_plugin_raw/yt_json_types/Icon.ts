@@ -1,3 +1,3 @@
-export type Icon<T>={
+type Icon<T>={
 	iconType: T;
 };

@@ -1,6 +1,4 @@
-import {BrowseIdType} from "../_/b/BrowseIdType.js";
-
-export type GFeedbackVarMap={
+type GFeedbackVarMap={
 	browse_id_prefix: "";
 	browse_id: BrowseIdType;
 	context: "yt_web_unknown_form_factor_kevlar_w2w";

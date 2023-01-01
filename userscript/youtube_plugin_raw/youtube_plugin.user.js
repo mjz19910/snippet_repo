@@ -1499,7 +1499,7 @@ class FilterHandlers {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
 		}
-		/** @type {Split<import("./support/parse_url/RemoveFirst.js").RemoveFirst<typeof res_parse.pathname>,"/">} */
+		/** @type {Split<RemoveFirst<typeof res_parse.pathname>,"/">} */
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.get_url_type(state,path_parts);
 	}
@@ -1634,7 +1634,7 @@ class FilterHandlers {
 				};
 				case "att": return {
 					type: `${target[0]}.${target[1]}`,
-					/** @type {import("./support/yt_api/_/a/AttGet.js").AttGet} */
+					/** @type {import("./support/yt_api/_/a/att_get_challenge_token_1.js").AttGet} */
 					data: cast_as(json),
 				};
 				case "live_chat": switch(target[1]) {
@@ -2962,10 +2962,9 @@ function split_string(x,s=cast_as(",")) {
 }
 
 const seen_map=new Set;
-/** @arg {import("./yt_json_types/BrowseIdType.js").BrowseIdType} value */
+/** @arg {BrowseIdType} value */
 function parse_browse_id(value) {
-	/** @typedef {import("./support/yt_api/_/s/SplitIntoGroups.js").SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
-	/** @template T,U @typedef {import("./support/ExtractAfterStr.js").ExtractAfterStr<T,U>} ExtractAfterStr */
+	/** @typedef {SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
 	/** @typedef {ExtractAfterStr<typeof value,"FE">} KnownParts */
 	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
 	/** @type {StartPart} */
@@ -3365,7 +3364,6 @@ class GFeedbackService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @typedef {import("./yt_json_types/GFeedbackVarMap.js").GFeedbackVarMap} GFeedbackVarMap */
 	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
 	on_params(params) {
 		for(let param of params) {
@@ -3414,7 +3412,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {import("./yt_json_types/GuidedHelpServiceParams.js").GuidedHelpServiceParams['params']} params */
+	/** @arg {GuidedHelpServiceParams['params']} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3430,7 +3428,7 @@ class GuidedHelpService extends BaseService {
 	}
 }
 class TrackingServices extends BaseService {
-	/** @arg {import("./yt_json_types/CsiServiceParams.js").CsiServiceParams} service */
+	/** @arg {CsiServiceParams} service */
 	on_csi_service(service) {
 		this.x.get("csi_service").on_params(service.params);
 	}
@@ -3456,7 +3454,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @arg {import("./yt_json_types/AllServiceTrackingParams.js").AllServiceTrackingParams[]} params */
+	/** @arg {AllServiceTrackingParams[]} params */
 	set_service_params(params) {
 		for(let service_param_list of params) {
 			switch(service_param_list.service) {
@@ -3795,7 +3793,7 @@ class HandleTypes extends BaseService {
 	notification_get_notification_menu_t(x) {
 		this.save_keys("any",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/a/AttGet.js").AttGet} x */
+	/** @private @arg {import("./support/yt_api/_/a/att_get_challenge_token_1.js").AttGet} x */
 	AttGet(x) {
 		this.save_keys("AttGet",x);
 	}

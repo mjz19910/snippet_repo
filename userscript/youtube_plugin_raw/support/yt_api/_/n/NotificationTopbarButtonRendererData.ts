@@ -1,8 +1,4 @@
-import {YtEndpoint} from "../../../../yt_json_types/YtEndpoint.js";
-import {Accessibility} from "../../../../yt_json_types/Accessibility.js";
-import {Icon} from "../../../../yt_json_types/Icon.js";
-
-export type NotificationTopbarButtonRendererData={
+type NotificationTopbarButtonRendererData={
 	icon: Icon<"NOTIFICATIONS">;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	menuRequest: YtEndpoint;

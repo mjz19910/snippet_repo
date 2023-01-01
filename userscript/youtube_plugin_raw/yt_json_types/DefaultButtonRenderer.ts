@@ -1,5 +1,3 @@
-import {ButtonRendererData} from "./ButtonRendererData.js";
-
-export type DefaultButtonRenderer={
+type DefaultButtonRenderer={
 	buttonRenderer: ButtonRendererData;
 };

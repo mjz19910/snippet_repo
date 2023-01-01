@@ -1,11 +1,7 @@
-import {Icon} from "../../../../yt_json_types/Icon.js";
-import {YtTextType} from "../../json/YtTextType.js";
-import {BrowseEndpoint} from "./BrowseEndpoint.js";
-
-export type LogoEntity={
+type LogoEntity={
 	iconImage: Icon<"YOUTUBE_LOGO">;
 	tooltipText: YtTextType;
-	endpoint: BrowseEndpoint;
+	endpoint: YtEndpoint;
 	trackingParams: string;
 	overrideEntityKey: string;
 };

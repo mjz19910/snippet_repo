@@ -1,6 +1,4 @@
-import {ThumbnailsList} from "../t/ThumbnailsList.js";
-
-export interface ThumbnailRoot {
+type ThumbnailRoot={
 	thumbnail: ThumbnailsList;
 	trackingParams: string;
 }

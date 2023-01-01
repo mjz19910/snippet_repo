@@ -1,6 +1,4 @@
-import {MultiPageMenuRenderer} from "../../../../yt_json_types/MultiPageMenuRenderer.js";
-
-export type DropdownPopup={
+type DropdownPopup={
 	popup: MultiPageMenuRenderer;
 	popupType: "DROPDOWN";
 };

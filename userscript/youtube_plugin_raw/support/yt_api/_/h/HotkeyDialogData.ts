@@ -1,6 +1,4 @@
-import {YtTextType} from "../../json/YtTextType.js";
-
-export type HotkeyDialogData={
+type HotkeyDialogData={
 	label: YtTextType;
 	hotkey: string;
 };

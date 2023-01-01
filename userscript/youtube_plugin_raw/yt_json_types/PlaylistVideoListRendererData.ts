@@ -1,10 +1,10 @@
-import {SortFilterSubMenuRenderer} from "./SortFilterSubMenuRenderer";
+type SortFilterMenuType={
+	sortFilterSubMenuRenderer: SortFilterSubMenuRenderer;
+};
 
-export type PlaylistVideoListRendererData={
+type PlaylistVideoListRendererData={
 	playlistId: "WL";
-	sortFilterMenu: {
-		sortFilterSubMenuRenderer: SortFilterSubMenuRenderer;
-	};
+	sortFilterMenu: SortFilterMenuType;
 	targetId: "WL";
 	trackingParams: string;
 };

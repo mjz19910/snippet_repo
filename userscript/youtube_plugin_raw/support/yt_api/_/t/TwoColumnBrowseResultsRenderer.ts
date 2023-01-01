@@ -1,5 +1,3 @@
-import {TwoColumnBrowseResultsRendererData} from "./TwoColumnBrowseResultsRendererData";
-
-export type TwoColumnBrowseResultsRenderer={
+type TwoColumnBrowseResultsRenderer={
 	twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsRendererData;
 };

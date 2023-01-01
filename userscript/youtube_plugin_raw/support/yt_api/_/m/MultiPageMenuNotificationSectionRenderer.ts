@@ -1,5 +1,3 @@
-import {MultiPageMenuNotificationSectionRendererData} from "./MultiPageMenuNotificationSectionRendererData";
-
-export type MultiPageMenuNotificationSectionRenderer={
+type MultiPageMenuNotificationSectionRenderer={
 	multiPageMenuNotificationSectionRenderer: MultiPageMenuNotificationSectionRendererData;
 };

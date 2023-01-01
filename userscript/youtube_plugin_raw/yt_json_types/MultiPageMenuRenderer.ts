@@ -1,5 +1,3 @@
-import {MultiPageMenuRendererData} from "./MultiPageMenuRendererData";
-
-export type MultiPageMenuRenderer={
+type MultiPageMenuRenderer={
 	multiPageMenuRenderer: MultiPageMenuRendererData;
 };

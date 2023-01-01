@@ -1,6 +1,3 @@
-import {VoiceSearchDialogRendererData} from "./VoiceSearchDialogRendererData";
-
-
-export type VoiceSearchDialogRenderer={
+type VoiceSearchDialogRenderer={
 	voiceSearchDialogRenderer: VoiceSearchDialogRendererData;
 };

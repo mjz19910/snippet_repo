@@ -1,5 +1,3 @@
-import {TabRenderer} from "../t/TabRenderer";
-
-export type ResultRenderer={
+type ResultRenderer={
 	tabRenderer: TabRenderer;
 };

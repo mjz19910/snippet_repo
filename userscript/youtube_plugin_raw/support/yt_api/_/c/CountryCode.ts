@@ -1,1 +1,1 @@
-export type CountryCode="CA";
+type CountryCode="CA";

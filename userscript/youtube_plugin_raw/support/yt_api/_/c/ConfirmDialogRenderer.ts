@@ -1,5 +1,3 @@
-import {ConfirmDialogRendererData} from "./ConfirmDialogRendererData";
-
-export type ConfirmDialogRenderer={
+type ConfirmDialogRenderer={
 	confirmDialogRenderer: ConfirmDialogRendererData;
 };

@@ -1,5 +1,3 @@
-import {FusionSearchboxRendererData} from "./FusionSearchboxRendererData";
-
-export type FusionSearchboxRenderer={
+type FusionSearchboxRenderer={
 	fusionSearchboxRenderer: FusionSearchboxRendererData;
 };

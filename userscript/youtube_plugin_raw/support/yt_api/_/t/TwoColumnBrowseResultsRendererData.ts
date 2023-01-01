@@ -1,5 +1,3 @@
-import {ResultRenderer} from "../r/ResultRenderer";
-
-export type TwoColumnBrowseResultsRendererData={
+type TwoColumnBrowseResultsRendererData={
 	tabs: ResultRenderer[];
 };

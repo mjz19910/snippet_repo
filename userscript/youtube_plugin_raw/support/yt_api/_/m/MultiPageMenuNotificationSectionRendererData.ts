@@ -1,6 +1,4 @@
-import {NotificationRenderer} from "./NotificationRenderer";
-
-export type MultiPageMenuNotificationSectionRendererData={
+type MultiPageMenuNotificationSectionRendererData={
 	items: NotificationRenderer[];
 	trackingParams: string;
 };

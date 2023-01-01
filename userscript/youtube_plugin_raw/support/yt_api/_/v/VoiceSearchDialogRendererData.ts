@@ -1,7 +1,4 @@
-import {YtTextType} from "../../json/YtTextType.js";
-import {ButtonRenderer} from "../../../../yt_json_types/ButtonRenderer.js";
-
-export type VoiceSearchDialogRendererData={
+type VoiceSearchDialogRendererData={
 	trackingParams: string;
 	placeholderHeader: YtTextType;
 	promptHeader: YtTextType;

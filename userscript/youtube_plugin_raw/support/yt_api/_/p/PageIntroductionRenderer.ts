@@ -1,5 +1,3 @@
-import {PageIntroductionRendererData} from "./PageIntroductionRendererData";
-
-export type PageIntroductionRenderer={
+type PageIntroductionRenderer={
 	pageIntroductionRenderer: PageIntroductionRendererData;
 };

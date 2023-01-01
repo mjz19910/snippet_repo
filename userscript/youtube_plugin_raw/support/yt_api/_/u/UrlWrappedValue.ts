@@ -1,3 +1,3 @@
-export type UrlWrappedValue={
+type UrlWrappedValue={
 	privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: string;
 };

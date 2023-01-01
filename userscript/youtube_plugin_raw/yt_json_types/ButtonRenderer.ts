@@ -1,5 +1,3 @@
-import {ButtonRendererData} from "./ButtonRendererData";
-
-export type ButtonRenderer={
+type ButtonRenderer={
 	buttonRenderer: ButtonRendererData;
 };

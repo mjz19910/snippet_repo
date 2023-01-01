@@ -1,8 +1,4 @@
-import {YtTextType} from "../../json/YtTextType.js";
-import {ButtonRenderer} from "./ButtonRenderer.js";
-import {HotkeyDialogSectionRenderer} from "./HotkeyDialogSectionRenderer";
-
-export type HotkeyDialogRendererData={
+type HotkeyDialogRendererData={
 	title: YtTextType;
 	sections: HotkeyDialogSectionRenderer[];
 	dismissButton: ButtonRenderer;
