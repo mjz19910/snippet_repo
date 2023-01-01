@@ -1,4 +1,4 @@
-type YtPageResponseType={
+type YtBrowsePageResponse={
 	page: "browse";
 	endpoint: YtEndpoint;
 	response: {};

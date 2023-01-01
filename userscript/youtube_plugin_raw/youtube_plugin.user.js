@@ -1721,7 +1721,7 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	/** @arg {UrlTypes|`page_type_${YtPageState["pageType"]}`} path @arg {SavedDataItem} data */
+	/** @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @type {AnySavedData} */
@@ -1730,9 +1730,9 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @arg {[()=>YtPageResponseType, object, []]} apply_args */
+	/** @arg {[()=>YtBrowsePageResponse, object, []]} apply_args */
 	on_initial_data(apply_args) {
-		/** @type {YtPageResponseType} */
+		/** @type {YtBrowsePageResponse} */
 		let ret=Reflect.apply(...apply_args);
 		if(!("page" in ret)) {
 			return ret;
@@ -1760,7 +1760,7 @@ class FilterHandlers {
 		}
 		return ret;
 	}
-	/** @arg {YtPageState} detail */
+	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
 		this.handle_types.YtPageState(detail);
 	}
@@ -2164,7 +2164,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {YtPageState} */
+	/** @type {NavigateEventDetail} */
 	detail=cast_as({});
 }
 
@@ -2196,8 +2196,8 @@ function filter_out_keys(keys,to_remove) {
 	return ok_e;
 }
 inject_api_yt.filter_out_keys=filter_out_keys;
-/** @typedef {import("./support/yt_api").YtJsonRequest} YtJsonRequest */
-/** @arg {YtPageState["pageType"]} pageType */
+/** @typedef {import("./support/yt_api/yt/YtJsonRequest.js").YtJsonRequest} YtJsonRequest */
+/** @arg {NavigateEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": break;
@@ -2836,7 +2836,7 @@ async function main() {
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
 	}
-	/** @arg {[()=>YtPageResponseType, object, []]} apply_args */
+	/** @arg {[()=>YtBrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
@@ -3702,7 +3702,7 @@ class HandleTypes extends BaseService {
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x);
 	}
-	/** @arg {YtPageResponseType} x */
+	/** @arg {YtBrowsePageResponse} x */
 	DataResponsePageType(x) {
 		const {endpoint}=x;
 		this.yt_endpoint(endpoint);
@@ -3760,7 +3760,7 @@ class HandleTypes extends BaseService {
 	AccountMenuJson(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {YtPageState} x */
+	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
 		this.save_keys("YtPageState",x);
 	}

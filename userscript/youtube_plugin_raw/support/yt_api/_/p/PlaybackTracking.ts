@@ -1,5 +1,4 @@
-
-export type PlaybackTracking={
+type PlaybackTracking={
 	atrUrl: {
 		baseUrl: string;
 		elapsedMediaTimeSeconds: number;

@@ -1,6 +1,3 @@
-import {CompactPlaylistRenderer} from "./CompactPlaylistRenderer";
-
-
-export type CompactPlaylistRendererH={
+type CompactPlaylistRendererH={
 	compactPlaylistRenderer: CompactPlaylistRenderer;
 };

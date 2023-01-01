@@ -1,4 +1,4 @@
-export type VideoDetails={
+type VideoDetails={
 	videoId: string;
 	channelId: string;
 	author: string;
