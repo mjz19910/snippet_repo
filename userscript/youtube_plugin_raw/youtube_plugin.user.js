@@ -3178,6 +3178,16 @@ class BaseServicePrivate {
 	/** @private */
 	save_known_data_to_storage() {
 		let data=this.known_data_from_self();
+		for(let v=0;v<data.known_numbers.length;v++) {
+			const j=data.known_numbers[v];
+			const [_n,[_k,c]]=j;
+			for(let i=0;i<c.length;i++) {
+				if(c[i]===null) {
+					c.splice(i,1);
+					i--;
+				}
+			}
+		}
 		let json_str=JSON.stringify(data);
 		this.save_local_storage(json_str);
 	}
