@@ -1,6 +1,4 @@
-import {UrlParseResImpl} from "./UrlParseResImpl";
-
-export type UrlParseRes<
+type UrlParseRes<
 	T extends string,
 	Host extends string,
 	Protocol extends string,

@@ -1124,7 +1124,7 @@ class MyReader {
 		} else {
 			target_len=this.pos+size;
 		}
-		/** @type {import("./types_tmp.js").DataArrType} */
+		/** @type {DataArrType} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -1292,7 +1292,6 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
-	/** @typedef {import("./types_tmp.js").DecTypeNum} DecTypeNum */
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
@@ -2974,7 +2973,6 @@ const general_service_state={
 	premium_membership: null,
 };
 // #region Service
-/** @typedef {import("./types_tmp.js").SaveDataRet} SaveDataRet */
 class BaseServicePrivate {
 	// #region Public
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
@@ -3141,7 +3139,7 @@ class BaseServicePrivate {
 			return this.create_save_data();
 		}
 	}
-	/** @private @arg {string} str @returns {import("./types_tmp.js").SaveDataRet} */
+	/** @private @arg {string} str @returns {SaveDataRet} */
 	parse_data(str) {
 		return JSON.parse(str);
 	}

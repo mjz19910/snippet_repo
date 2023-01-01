@@ -12,12 +12,11 @@ function save_data_cache() {
 	return data;
 }
 
-export type SaveDataRet=ReturnType<typeof save_data_cache>;
+type SaveDataRet=ReturnType<typeof save_data_cache>;
 
-export {};
 
-export type DecTypeNum=["data",number|bigint]|["info",number,number]|['child',Uint8Array];
-export type DataArrType=[number,number,DecTypeNum[]][];
+type DecTypeNum=["data",number|bigint]|["info",number,number]|['child',Uint8Array];
+type DataArrType=[number,number,DecTypeNum[]][];
 function run() {
 	let first_num: DecTypeNum[]=[];
 	let wireType=0;
