@@ -1,0 +1,3 @@
+type SettingsCheckboxRenderer={
+	settingsCheckboxRenderer: SettingsCheckboxRendererData;
+};

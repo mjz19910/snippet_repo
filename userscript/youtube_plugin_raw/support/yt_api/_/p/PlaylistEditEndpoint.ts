@@ -1,5 +1,3 @@
-import {PlaylistEditEndpointData} from "./PlaylistEditEndpointData.js";
-
-export type PlaylistEditEndpoint={
+type PlaylistEditEndpoint={
 	playlistEditEndpoint: PlaylistEditEndpointData;
 };

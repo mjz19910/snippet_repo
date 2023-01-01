@@ -1,0 +1,3 @@
+type SettingsSwitchRenderer={
+	settingsSwitchRenderer: SettingsSwitchRendererData;
+};

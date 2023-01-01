@@ -1,0 +1,1 @@
+type VideoMastheadAdV3RendererData={};

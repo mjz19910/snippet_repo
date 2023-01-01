@@ -1,6 +1,4 @@
-import {CommentSimpleboxRenderer} from "./CommentSimpleboxRenderer";
-
-export type CommentsHeaderRendererData={
+type CommentsHeaderRendererData={
 	commentsCount: YtTextType;
 	countText: YtTextType;
 	createRenderer: CommentSimpleboxRenderer;

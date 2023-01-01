@@ -1,5 +1,3 @@
-import {DisplayAdRenderer} from "../d/DisplayAdRenderer.js";
-
-export type RenderingContent={
+type RenderingContent={
 	displayAdRenderer: DisplayAdRenderer;
 };

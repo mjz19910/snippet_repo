@@ -1,10 +1,6 @@
-import {CommandMetadata} from "../../json/CommandMetadata";
-import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
-import {SignalServiceEndpointData} from "../../../../yt_json_types/SignalServiceEndpoint";
-
-export interface UntoggledServiceEndpoint {
+type UntoggledServiceEndpoint={
 	commandMetadata: CommandMetadata;
-	playlistEditEndpoint?: PlaylistEditEndpoint;
+	playlistEditEndpoint?: YtEndpoint;
 	signalServiceEndpoint?: SignalServiceEndpointData;
 	clickTrackingParams: string;
 }

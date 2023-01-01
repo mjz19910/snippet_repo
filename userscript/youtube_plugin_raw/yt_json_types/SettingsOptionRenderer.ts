@@ -1,0 +1,3 @@
+type SettingsOptionRenderer={
+	settingsOptionsRenderer: SettingsOptionsRendererData;
+};

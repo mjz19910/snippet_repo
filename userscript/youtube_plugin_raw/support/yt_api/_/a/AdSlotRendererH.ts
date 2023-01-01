@@ -1,5 +1,3 @@
-import {AdSlotRendererData} from "./AdSlotRendererData";
-
-export type AdSlotRendererH={
+type AdSlotRendererH={
 	adSlotRenderer: AdSlotRendererData;
 };

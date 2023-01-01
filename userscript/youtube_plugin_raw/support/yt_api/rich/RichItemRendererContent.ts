@@ -1,3 +1,1 @@
-import {RichItemRendererContentDef} from "./RichItemRendererContentDef";
-
-export type RichItemRendererContent=RichItemRendererContentDef;
+type RichItemRendererContent=RichItemRendererContentDef;

@@ -1,6 +1,3 @@
-import {VideoRendererData} from "./VideoRendererData";
-
-
-export type VideoRenderer={
+type VideoRenderer={
 	videoRenderer: VideoRendererData;
 };

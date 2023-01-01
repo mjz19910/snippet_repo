@@ -1,5 +1,3 @@
-import {CopyLinkRendererData} from "./CopyLinkRendererData";
-
-export type CopyLinkRenderer={
+type CopyLinkRenderer={
 	copyLinkRenderer: CopyLinkRendererData;
 };

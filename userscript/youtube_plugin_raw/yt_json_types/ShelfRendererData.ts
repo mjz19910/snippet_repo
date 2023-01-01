@@ -1,6 +1,6 @@
-import {ShelfRendererContent} from "./ShelfRendererContent";
+import {ShelfRendererContent} from "./ShelfRendererContent.js";
 
-export type ShelfRendererData={
+type ShelfRendererData={
 	title: {};
 	content: ShelfRendererContent;
 	trackingParams: string;

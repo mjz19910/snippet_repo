@@ -1,5 +1,3 @@
-import {ChannelOptionsRendererData} from "../../../../yt_json_types/ChannelOptionsRendererData";
-
-export type ChannelOptionsRenderer={
+type ChannelOptionsRenderer={
 	channelOptionsRenderer: ChannelOptionsRendererData;
 };

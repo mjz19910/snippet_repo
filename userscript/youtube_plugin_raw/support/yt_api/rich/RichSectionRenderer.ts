@@ -1,8 +1,16 @@
-import {RichShelfRenderer} from "./RichShelfRenderer";
+type RichShelfRendererData={
+	icon: Icon<"YOUTUBE_SHORTS_BRAND_24">;
+	title: YtTextType;
+};
 
+type RichShelfRenderer={
+	richShelfRenderer: RichShelfRendererData;
+};
 
-export interface RichSectionRenderer {
-	content: {
-		richShelfRenderer: RichShelfRenderer;
-	};
-}
+type RichSectionRendererData={
+	content: RichShelfRenderer;
+};
+
+type RichSectionRenderer={
+	richSectionRenderer: RichSectionRendererData;
+};

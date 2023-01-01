@@ -1,17 +1,13 @@
-import {CompactPlaylistRendererH} from "./CompactPlaylistRendererH.js";
-import {CompactVideoRendererH} from "./CompactVideoRendererH.js";
-import {ContinuationItemRendererH} from "./ContinuationItemRendererH.js";
-import {CommentThreadRendererH} from "./CommentThreadRendererH.js";
-import {CommentsHeaderRendererH} from "./CommentsHeaderRendererH.js";
-import {RichSectionRendererH} from "./RichSectionRendererH.js";
-import {RichItemRendererH} from "./RichItemRendererH.js";
+import {CommentsHeaderRendererH} from "../c/CommentsHeaderRendererH.js";
+import {CommentThreadRendererH} from "../c/CommentThreadRendererH.js";
+import {CompactPlaylistRendererH} from "../c/CompactPlaylistRendererH.js";
+import {CompactVideoRendererH} from "../c/CompactVideoRendererH.js";
 
 export type RendererContentItemDef=
 	RichItemRendererH|
-	RichSectionRendererH|
+	RichSectionRenderer|
 	CommentsHeaderRendererH|
 	CommentThreadRendererH|
-	ContinuationItemRendererH|
 	CompactVideoRendererH|
 	CompactPlaylistRendererH;
 

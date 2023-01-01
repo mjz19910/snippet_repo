@@ -1,6 +1,4 @@
-import {ButtonRenderer} from "../../../../yt_json_types/ButtonRenderer.js";
-
-export type CopyLinkRendererData={
+type CopyLinkRendererData={
 	copyButton: ButtonRenderer;
 	shortUrl: string;
 	trackingParams: string;

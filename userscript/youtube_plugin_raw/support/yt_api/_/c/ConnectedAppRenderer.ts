@@ -1,5 +1,3 @@
-import {ConnectedAppRendererData} from "./ConnectedAppRendererData";
-
-export type ConnectedAppRenderer={
+type ConnectedAppRenderer={
 	connectedAppRenderer: ConnectedAppRendererData;
 };

@@ -1,4 +1,4 @@
-export type TimestampWithNanos={
+type TimestampWithNanos={
 	seconds: `${number}`;
 	nanos: number;
 };

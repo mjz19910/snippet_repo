@@ -1,5 +1,7 @@
-import {RichItemRendererData} from "./RichItemRendererData.js";
-
-export type RichItemRenderer={
-	richItemRenderer: RichItemRendererData;
+type RichItemRenderer={
+	richItemRenderer: {
+		content: {
+			adSlotRenderer: AdSlotRendererData;
+		};
+	};
 };

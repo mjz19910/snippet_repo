@@ -1,6 +1,4 @@
-import {ConnectButton} from "./ConnectButton";
-
-export type ConnectedAppRendererData={
+type ConnectedAppRendererData={
 	icon: {};
 	title: {};
 	text: {};

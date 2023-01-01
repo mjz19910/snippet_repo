@@ -1,9 +1,4 @@
-import {Accessibility} from "../../../../yt_json_types/Accessibility";
-import {Icon} from "../../../../yt_json_types/Icon.js";
-import {ToggledServiceEndpoint} from "./ToggledServiceEndpoint";
-import {UntoggledServiceEndpoint} from "../u/UntoggledServiceEndpoint";
-
-export interface ThumbnailOverlayToggleButtonRenderer {
+type ThumbnailOverlayToggleButtonRenderer={
 	isToggled?: boolean;
 	untoggledIcon: Icon<never>;
 	toggledIcon: Icon<never>;

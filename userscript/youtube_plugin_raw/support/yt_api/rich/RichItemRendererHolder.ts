@@ -1,5 +1,3 @@
-import {RichItemRendererData} from "./RichItemRendererData";
-
-export type RichItemRendererH={
+type RichItemRendererH={
 	richItemRenderer: RichItemRendererData;
 };

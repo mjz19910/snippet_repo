@@ -761,7 +761,7 @@ class YtIterateTarget {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state @arg {import("./yt_json_types/ItemSectionRendererData.js").ItemSectionRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {ItemSectionRendererData} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));
@@ -790,7 +790,7 @@ class YtIterateTarget {
 		console.log("compactLinkRenderer",state.path,renderer);
 		state.t.run_mc=false;
 	}
-	/** @arg {ApiIterateState} state @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {RichGridRendererData} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
@@ -918,7 +918,7 @@ function check_item_keys(real_path,path,keys) {
 
 class HandleRendererContentItemArray {
 	debug=false;
-	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {import("./support/yt_api/rich/RichItemRenderer.js").RichItemRenderer} content_item */
+	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let debug_flag_value=false;
 		if("filter_handler_debug" in base) {
@@ -938,7 +938,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {import("./support/yt_api/rich/RichSectionRendererH.js").RichSectionRendererH} content_item */
+	/** @arg {RichSectionRenderer} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if(!("richShelfRenderer" in renderer.content)) {
@@ -967,7 +967,6 @@ class HandleRendererContentItemArray {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @typedef { import("./support/yt_api/_/r/ReloadContinuationItemsCommandData.js").ReloadContinuationItemsCommandData} ReloadContinuationItemsCommandData */
 	/** @typedef {AppendContinuationItemsAction['continuationItems']} T1 */
 	/** @typedef  {ReloadContinuationItemsCommandData['continuationItems']} T2 */
 	/** @template {T1|T2} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
@@ -998,7 +997,7 @@ class HandleRichGridRenderer {
 	/** @readonly */
 	entry="richGridRenderer";
 	rendererContentItemArray=new HandleRendererContentItemArray;
-	/** @arg {string} path @arg {import("./support/yt_api/rich/RichGridRendererData.js").RichGridRendererData} renderer */
+	/** @arg {string} path @arg {RichGridRendererData} renderer */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",get_keys_of(renderer));
 		if(this.debug) console.log("run handler richGridRenderer");
@@ -1590,12 +1589,12 @@ class FilterHandlers {
 			case 1: switch(target[0]) {
 				case "browse": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/b/BrowseResponseContent.js").BrowseResponseContent} */
+					/** @type {BrowseResponseContent} */
 					data: cast_as(json),
 				};
 				case "feedback": return {
 					type: target[0],
-					/** @type {import("./support/yt_api/_/f/JsonFeedbackData.js").JsonFeedbackData} */
+					/** @type {import("./yt_json_types/JsonFeedbackData.js").JsonFeedbackData} */
 					data: cast_as(json),
 				};
 				case "getDatasyncIdsEndpoint": debugger; return {
@@ -1628,13 +1627,13 @@ class FilterHandlers {
 				case "account": switch(target[1]) {
 					case "account_menu": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} */
+						/** @type {AccountMenuJson} */
 						data: cast_as(json),
 					};
 				};
 				case "att": return {
 					type: `${target[0]}.${target[1]}`,
-					/** @type {import("./support/yt_api/_/a/att_get_challenge_token_1.js").AttGet} */
+					/** @type {AttGet} */
 					data: cast_as(json),
 				};
 				case "live_chat": switch(target[1]) {
@@ -1646,12 +1645,12 @@ class FilterHandlers {
 				case "notification": switch(target[1]) {
 					case "get_notification_menu": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/g/GetNotificationMenuJson.js").GetNotificationMenuJson} */
+						/** @type {GetNotificationMenuJson} */
 						data: cast_as(json),
 					};
 					case "get_unseen_count": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t["data"]} */
+						/** @type {notification_get_unseen_count_t["data"]} */
 						data: cast_as(json),
 					};
 					case "record_interactions": return {
@@ -1737,7 +1736,7 @@ class FilterHandlers {
 		let req_hr_t=req_parse.href;
 		return {req_hr_t,req_parse,debug};
 	}
-	/** @arg {UrlTypes|`page_type_${import("./support/yt_api/yt/YtPageState.js").YtPageState["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
+	/** @arg {UrlTypes|`page_type_${YtPageState["pageType"]}`} path @arg {import("./support/yt_api/_/s/SavedDataItem.js").SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @type {import("./support/yt_api/_/a/AnySavedData.js").AnySavedData} */
@@ -1746,7 +1745,6 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @typedef {import("./support/yt_api/yt/YtPageState.js").YtPageResponseType} YtPageResponseType */
 	/** @arg {[()=>YtPageResponseType, object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @type {YtPageResponseType} */
@@ -1777,7 +1775,7 @@ class FilterHandlers {
 		}
 		return ret;
 	}
-	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} detail */
+	/** @arg {YtPageState} detail */
 	on_page_type_changed(detail) {
 		this.handle_types.YtPageState(detail);
 	}
@@ -2181,7 +2179,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @type {import("./support/yt_api/yt/YtPageState.js").YtPageState} */
+	/** @type {YtPageState} */
 	detail=cast_as({});
 }
 
@@ -2225,7 +2223,7 @@ function on_json_request(request_info) {
 	}
 }
 
-/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState["pageType"]} pageType */
+/** @arg {YtPageState["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": break;
@@ -3747,7 +3745,7 @@ class HandleTypes extends BaseService {
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x);
 	}
-	/** @private @arg {import("./yt_json_types/GeneralContext.js").ResponseContext} x */
+	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x);
 	}
@@ -3789,11 +3787,11 @@ class HandleTypes extends BaseService {
 	YtSuccessResponse(x) {
 		this.save_keys("any",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
+	/** @private @arg {GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
 		this.save_keys("any",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/a/att_get_challenge_token_1.js").AttGet} x */
+	/** @private @arg {AttGet} x */
 	AttGet(x) {
 		this.save_keys("AttGet",x);
 	}
@@ -3805,15 +3803,15 @@ class HandleTypes extends BaseService {
 	YtApiNext(x) {
 		this.save_keys("any",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/a/AccountMenuJson.js").AccountMenuJson} x */
+	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
 		this.save_keys("any",x);
 	}
-	/** @arg {import("./support/yt_api/yt/YtPageState.js").YtPageState} x */
+	/** @arg {YtPageState} x */
 	YtPageState(x) {
 		this.save_keys("YtPageState",x);
 	}
-	/** @private @arg {import("./support/yt_api/_/n/notification_get_unseen_count_t.js").notification_get_unseen_count_t} x */
+	/** @private @arg {notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
 		this.save_keys("notification_get_unseen_count",x);
 	}

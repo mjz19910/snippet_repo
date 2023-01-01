@@ -1,0 +1,3 @@
+type SubmitButton={
+	buttonRenderer: SubmitButtonRenderer;
+};

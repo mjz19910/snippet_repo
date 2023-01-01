@@ -1,5 +1,3 @@
-import {GridVideoRendererData} from "./GridVideoRendererData";
-
-export type GridVideoRenderer={
+type GridVideoRenderer={
 	gridVideoRenderer: GridVideoRendererData;
 };

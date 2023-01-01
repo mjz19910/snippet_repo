@@ -1,1 +1,1 @@
-export type RadioRendererData={};
+type RadioRendererData={};

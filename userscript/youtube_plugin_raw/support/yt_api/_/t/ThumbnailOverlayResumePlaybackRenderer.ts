@@ -1,3 +1,3 @@
-export type ThumbnailOverlayResumePlaybackRenderer={
+type ThumbnailOverlayResumePlaybackRenderer={
 	percentDurationWatched: number;
 };

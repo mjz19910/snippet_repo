@@ -1,5 +1,3 @@
-import {CommentSimpleboxRendererData} from "./CommentSimpleboxRendererData";
-
-export type CommentSimpleboxRenderer={
+type CommentSimpleboxRenderer={
 	commentSimpleboxRenderer: CommentSimpleboxRendererData;
 };

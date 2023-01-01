@@ -1,6 +1,4 @@
-import {SubmitButton} from "../s/SubmitButton";
-
-export type CommentSimpleboxRendererData={
+type CommentSimpleboxRendererData={
 	submitButton: SubmitButton;
 	cancelButton:{};
 	authorThumbnail: {};

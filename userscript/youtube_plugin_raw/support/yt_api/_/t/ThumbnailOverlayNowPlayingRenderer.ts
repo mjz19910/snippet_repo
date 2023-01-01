@@ -1,5 +1,3 @@
-import {TextRuns} from "./TextRuns";
-
-export type ThumbnailOverlayNowPlayingRenderer={
-	text: TextRuns;
+type ThumbnailOverlayNowPlayingRenderer={
+	text: YtTextType;
 };

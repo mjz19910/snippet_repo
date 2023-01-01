@@ -1,1 +1,1 @@
-export type VideoRendererData=never;
+type VideoRendererData={};

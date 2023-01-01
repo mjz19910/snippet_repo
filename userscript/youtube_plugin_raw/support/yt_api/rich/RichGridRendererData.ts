@@ -1,8 +1,4 @@
-import {RendererContentItem} from "../_/r/RendererContentItem.js";
-
-export interface RichGridRendererData {
-	masthead: {
-		videoMastheadAdV3Renderer?: {};
-	};
+type RichGridRendererData={
+	masthead: VideoMastheadAdV3Renderer;
 	contents: RendererContentItem[];
 }

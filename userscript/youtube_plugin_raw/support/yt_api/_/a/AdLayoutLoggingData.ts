@@ -1,3 +1,3 @@
-export type AdLayoutLoggingData={
+type AdLayoutLoggingData={
 	serializedAdServingDataEntry: string;
 };

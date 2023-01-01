@@ -1,6 +1,4 @@
-import {SimpleText} from "./s/SimpleText";
-
-export type ThumbnailOverlayTimeStatusRenderer={
-	text: SimpleText;
+type ThumbnailOverlayTimeStatusRenderer={
+	text: YtTextType;
 	style: "DEFAULT";
 };

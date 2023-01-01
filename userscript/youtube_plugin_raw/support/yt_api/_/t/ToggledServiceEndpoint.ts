@@ -1,8 +1,5 @@
-import {CommandMetadata} from "../../json/CommandMetadata";
-import {PlaylistEditEndpoint} from "../p/PlaylistEditEndpoint";
-
-export interface ToggledServiceEndpoint {
+type ToggledServiceEndpoint={
 	commandMetadata: CommandMetadata;
 	playlistEditEndpoint: PlaylistEditEndpoint;
 	clickTrackingParams: string;
-}
+};

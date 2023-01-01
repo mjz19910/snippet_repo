@@ -1,5 +1,3 @@
-import {RadioRendererData} from "./RadioRendererData";
-
-export type RadioRenderer={
+type RadioRenderer={
 	radioRenderer: RadioRendererData;
 };
