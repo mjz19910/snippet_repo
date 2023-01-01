@@ -1,4 +1,4 @@
-import {EntityBatchUpdateData} from "../_/e/EntityBatchUpdateData.js";
+import {EntityBatchUpdateData} from "./EntityBatchUpdateData.js";
 
 export type FrameworkUpdates={
 	entityBatchUpdate: EntityBatchUpdateData;
