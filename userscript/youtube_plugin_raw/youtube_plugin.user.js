@@ -3044,8 +3044,7 @@ class BaseServicePrivate {
 	}
 	/** @arg {string} key @arg {string|string[]} x */
 	save_new_string(key,x) {
-		if(x instanceof Array) {
-		} else if(x.startsWith("http://www.youtube.com/channel/UC")) {
+		if(!(x instanceof Array)&&x.startsWith("http://www.youtube.com/channel/UC")) {
 			if(this.log_skipped_strings) console.log("skip channel like",key,x);
 			return;
 		}
@@ -4042,7 +4041,7 @@ class HandleTypes extends BaseService {
 			case "att.get": this.AttGetV(res.data); return;
 			case "feedback": this.withGeneralContext(res.data); break;
 			case "get_transcript": this.withGeneralContext(res.data); break;
-			case "getDatasyncIdsEndpoint": this.save_keys(res.type,res.data); break;
+			case "getDatasyncIdsEndpoint": debugger; this.save_keys(res.type,res.data); break;
 			case "guide": this.GuideJsonType(res.data); return;
 			case "live_chat.get_live_chat_replay": this.save_keys(res.type,res.data); break;
 			case "next": this.YtApiNext(res.data); return;
