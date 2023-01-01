@@ -4077,12 +4077,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/g/GetNotificationMenuBox.js").GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
-		const {data}=x;
-		iterate(data.actions,x => this.OpenPopupActionItem(x));
-		let ok=get_keys_of(data);
-		if(eq_keys(ok,["responseContext","actions","trackingParams"])) return;
-		console.log(ok);
-		debugger;
+		this.save_keys("any",x);
 	}
 	store_trayride_challenge=false;
 	/** @arg {import("./support/yt_api/_/a/AttGetV.js").AttGetV} x */
@@ -4091,8 +4086,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./support/yt_api/_/a/Att_bgChallenge.js").Att_bgChallenge} x */
 	bgChallenge(x) {
-		this.save_new_string("tr_bg_global_name",x.globalName);
-		this.save_new_string("tr_bg_interpreter_hash",x.interpreterHash);
+		this.save_keys("any",x);
 	}
 	/** @arg {import("./support/yt_api/_/g/GuideJsonType.js").GuideJsonType} x */
 	GuideJsonType(x) {
