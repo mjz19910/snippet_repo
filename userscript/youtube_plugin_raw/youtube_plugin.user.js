@@ -927,6 +927,7 @@ function check_item_keys(real_path,path,keys) {
 		case "radioRenderer": break;
 		// comments
 		case "commentThreadRenderer": break;
+		case "commentsHeaderRenderer": break;
 	}
 }
 
