@@ -2814,7 +2814,10 @@ async function main() {
 			get redirected() {
 				return response.redirected;
 			}
-		}
+			get ok() {
+				return response.ok;
+			}
+ 		}
 		let fake_res=new FakeResponse;
 		/** @type {any} */
 		let any_x=fake_res;
@@ -2826,7 +2829,7 @@ async function main() {
 					return void 0;
 				}
 				switch(key) {
-					case "text": case "redirected": return fake_res[key];
+					case "text": case "redirected": case "ok": return fake_res[key];
 					default: console.log("[new_response_key] [%s]",key); debugger;
 				}
 				return Reflect.get(response,key);
