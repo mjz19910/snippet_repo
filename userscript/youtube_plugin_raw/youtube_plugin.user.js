@@ -1069,15 +1069,19 @@ class Base64Binary {
 	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	/* will return a  Uint8Array type */
 	/** @arg {string} input */
-	decodeArrayBuffer(input) {
+	decodeByteArray(input) {
 		let real_len=input.length-1;
 		while(real_len>=0&&input[real_len]==="=") real_len--;
 		var byte_len=((real_len+1)/4)*3|0;
 		var ab=new ArrayBuffer(byte_len);
 		let byte_arr=new Uint8Array(ab);
 		this.decode(input,byte_arr);
-
 		return byte_arr;
+	}
+	/** @arg {string} input */
+	decode_str(input) {
+		let y=this.decodeByteArray(input);
+		return uint8_string_decoder.decode(y);
 	}
 	/** @arg {string} input @arg {Uint8Array} binary_arr */
 	decode(input,binary_arr) {
@@ -1380,7 +1384,7 @@ const base64_dec=new Base64Binary();
 
 /** @arg {string} str */
 function decode_b64_proto_obj(str) {
-	let buffer=base64_dec.decodeArrayBuffer(str);
+	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
 	return reader.read_any();
 }
@@ -3535,7 +3539,7 @@ function Zs(a) {
 }
 /** @arg {string} x @name Rd */
 function base64_to_array(x) {
-	return base64_dec.decodeArrayBuffer(x);
+	return base64_dec.decodeByteArray(x);
 }
 const uint8_string_decoder=new TextDecoder();
 /** @arg {BufferSource} x */
@@ -3732,13 +3736,21 @@ class HandleTypes extends BaseService {
 	 * @param {YtBrowsePageResponse} x
 	 */
 	YtBrowsePageResponse(x) {
-		const {page: a,endpoint: b,response: c,url: d,...y}=x;
+		/** @type {{}} */
+		let z;
+		let {page: a,endpoint: b,response: c,url: d,...y}=x;
+		if("previousCsn" in y) {
+			const {previousCsn: e,...m}=y;
+			base64_dec.decode_str(e);
+			y=m;
+		}
+		z=y;
 		if(a!=="browse") debugger;
 		this.yt_endpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
 		this.parse_url(d);
 		this.BrowseResponseContent(c);
-		this.empty_object(y);
+		this.empty_object(z);
 	}
 	/** @arg {NavigateEventDetail['response']} x */
 	DataResponsePageType(x) {
