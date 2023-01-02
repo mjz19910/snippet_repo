@@ -9,3 +9,9 @@ type WebCommandMetadata={
 }|{
 	url: string;
 };
+type DataResponsePageTypeWebMetadata={
+	url: string;
+	webPageType: WebCommandPageType;
+	rootVe: 3854;
+	apiUrl: Join<url_pathname_parts,".">;
+};
