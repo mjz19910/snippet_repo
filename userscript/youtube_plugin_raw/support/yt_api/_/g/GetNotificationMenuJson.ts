@@ -1,5 +1,5 @@
 type GetNotificationMenuJson={
 	responseContext: ResponseContext;
-	actions: OpenPopupActionItem[];
+	actions: OpenPopupAction[];
 	trackingParams: string;
 };

@@ -254,6 +254,7 @@ let main_page_app=null;
 
 /** @arg {CustomEventType} event */
 async function async_plugin_init(event) {
+	if(event.type!=="async-plugin-init") return;
 	let plugin_state={};
 	plugin_state.show_interesting_elements=true;
 	let cur_count=1;
@@ -292,7 +293,11 @@ async function async_plugin_init(event) {
 					if(e_tn=="IRON-ICONSET-SVG") return false;
 					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e_tn=="svg") return false;
-					console.log(e.tagName.toLowerCase(),e.id,e.classList.value);
+					let fut_data=[e.tagName.toLowerCase(),e.id,e.classList.value];
+					let did_run=event.detail.handle_types_fut.run_with(v=>v.save_new_string("body_element",fut_data));
+					if(!did_run) {
+						console.log("fut failed", ...fut_data);
+					}
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2235,10 +2240,13 @@ class Future {
 	}
 	/** @template V @arg {(x:U)=>V} f */
 	run_with(f) {
-		return this.v.extract(e => {
+		let res=this.v.extract(e => {
 			let inner=this.f(e);
 			f(inner);
+			return true;
 		});
+		if(res===null) return false;
+		return res;
 	}
 }
 
@@ -3719,10 +3727,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {NavigateEventDetail['response']} x */
 	DataResponsePageType(x) {
+		let mt=x;
 		this._current_response_type=x.page;
-		switch(x.page) {
-			case "browse": return this.YtBrowsePageResponse(x);
-			case "watch": break;
+		switch(mt.page) {
+			case "browse": return this.YtBrowsePageResponse(mt);
+			case "watch": return this.YtWatchPageResponse(mt);
 			default: break;
 		}
 		console.log("pt",x.page,x);
@@ -3953,8 +3962,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
-		x.actions;
-		this.save_keys("GetNotificationMenuJson",x);
+		const {responseContext,actions,trackingParams,...y}=x;
+		this.ResponseContext(responseContext);
+		iterate(actions,v=>this.action(v));
+		this.trackingParams(trackingParams);
+		this.save_keys("GetNotificationMenuJson",x,true);
+		this.empty_object(y);
 	}
 	/** @private @arg {AttGet} x */
 	AttGet(x) {
@@ -4223,6 +4236,14 @@ class HandleTypes extends BaseService {
 	 * @param {WebResponseContextExtensionData} x
 	 */
 	WebResponseContextExtensionData(x) {x;}
+	/**
+	 * @param {YtWatchPageResponse} x
+	 */
+	YtWatchPageResponse(x) {x;}
+	/**
+	 * @param {OpenPopupAction} x
+	 */
+	action(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

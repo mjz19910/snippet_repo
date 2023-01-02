@@ -1,4 +1,4 @@
-type ServiceEndpointAction=AddToPlaylistCommand|OpenPopupActionItem|{
+type ServiceEndpointAction=AddToPlaylistCommand|OpenPopupAction|{
 	clickTrackingParams: string;
 	signalAction: YtSignalAction;
 };
