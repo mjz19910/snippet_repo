@@ -1,1 +1,1 @@
-type WatchNextItem=CompactVideoRendererH|ContinuationItemRenderer;
+type WatchNextItem=CompactVideoRenderer|ContinuationItemRenderer;

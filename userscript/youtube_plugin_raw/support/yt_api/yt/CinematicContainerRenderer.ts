@@ -1,0 +1,3 @@
+type CinematicContainerRenderer={
+	cinematicContainerRenderer: CinematicContainerRendererData;
+};

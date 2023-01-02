@@ -1,0 +1,1 @@
+type IsColorHelper<T,U>=U extends `0x${infer I}`? Split<I,""> extends infer G extends Split<I,"">? G['length'] extends 6|8? EnsureHex<`0x${I}`> extends infer V extends string? V extends string? T:never:never:never:never:never;

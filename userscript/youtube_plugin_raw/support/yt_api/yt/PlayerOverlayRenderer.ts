@@ -1,0 +1,3 @@
+type PlayerOverlayRenderer={
+	playerOverlayRenderer: {};
+};

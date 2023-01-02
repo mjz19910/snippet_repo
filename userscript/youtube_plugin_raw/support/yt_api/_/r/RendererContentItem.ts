@@ -4,6 +4,6 @@ type RendererContentItem=
 	CommentsHeaderRendererH|
 	CommentThreadRendererH|
 	ContinuationItemRenderer|
-	CompactVideoRendererH|
+	CompactVideoRenderer|
 	CompactPlaylistRendererH|
 	never;

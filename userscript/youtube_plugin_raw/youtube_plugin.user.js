@@ -934,6 +934,7 @@ function check_item_keys(real_path,path,keys) {
 		case "videoRenderer": break;
 		// richGridRenderer.contents[]
 		case "richItemRenderer": break;
+		case "richSectionRenderer": break;
 		// richItemRenderer.content
 		case "adSlotRenderer": break;
 		case "radioRenderer": break;
@@ -968,6 +969,10 @@ class HandleRendererContentItemArray {
 	/** @arg {RichSectionRenderer} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
+		if("inlineSurveyRenderer" in renderer.content) {
+			renderer.content.inlineSurveyRenderer;
+			return true;
+		}
 		if(!("richShelfRenderer" in renderer.content)) {
 			console.log("rich section content",renderer.content);
 			return true;
@@ -1031,8 +1036,10 @@ class HandleRichGridRenderer {
 			check_item_keys(path,"richGridRenderer.masthead",get_keys_of(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
+				/** @type {{masthead: {}}&Omit<typeof renderer,"masthead">} */
+				let no_ad_renderer=renderer;
 				console.log("masthead",masthead);
-				renderer.masthead=masthead;
+				no_ad_renderer.masthead=masthead;
 			}
 		}
 		if(renderer.contents) {
@@ -2270,15 +2277,15 @@ class Future {
 	}
 }
 
-/** @arg {HiddenData<FilterHandlers>} fh */
-function start_message_channel_loop(fh) {
+/** @arg {HiddenData<FilterHandlers>} yt_handlers */
+function start_message_channel_loop(yt_handlers) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {
-				handle_types_fut: new Future(fh,fh => fh.handle_types),
+				handle_types_fut: new Future(yt_handlers,v => v.handle_types),
 			},
 			port: message_channel.port1,
 		});
@@ -2644,7 +2651,6 @@ class HiddenData {
 	}
 	/** @template U @arg {(v:T)=>U} v @arg {()=>U} def */
 	extract_default(v,def) {
-		return v(this.#value);
 		try {
 			return v(this.#value);
 		} catch(e) {
@@ -2921,119 +2927,114 @@ const general_service_state={
 	premium_membership: null,
 };
 // #region Service
-class BaseServicePrivate {
-	#known_data_saver;
+class KnownDataSaver {
+	constructor() {
+		this.load_data();
+		this.store_data();
+	}
+	/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} */
+	parse_data(str) {
+		return JSON.parse(str);
+	}
+	/** @private */
+	store_data() {
+		let data=this.pull_data_from_parent();
+		for(let v=0;v<data.known_numbers.length;v++) {
+			const j=data.known_numbers[v];
+			const [_n,[_k,c]]=j;
+			for(let i=0;i<c.length;i++) {
+				if(c[i]===null) {
+					c.splice(i,1);
+					i--;
+				}
+			}
+		}
+		let json_str=JSON.stringify(data);
+		this.save_local_storage(json_str);
+	}
+	/** @private */
+	load_data() {
+		if(this.loaded_from_storage) return;
+		let json_str=this.get_local_storage();
+		if(json_str) {
+			let ret=this.parse_data(json_str);
+			this.push_data_to_parent(ret);
+			this.loaded_from_storage=true;
+		}
+	}
+	/** @private */
+	pull_data_from_parent() {
+		const {
+			known_root_ve,known_strings,known_booleans,
+			known_numbers
+		}=this;
+		return {
+			known_root_ve,known_strings,known_numbers,
+			known_booleans,
+		};
+	}
+	/** @private @arg {string} known_data */
+	save_local_storage(known_data) {
+		if(no_storage_access) {
+			this.known_data_str_no_access=known_data;
+			return;
+		}
+		localStorage.known_data=known_data;
+	}
+	/** @private */
+	get_local_storage() {
+		if(no_storage_access) return this.known_data_str_no_access;
+		return localStorage.getItem("known_data");
+	}
+	/** @private @arg {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} x */
+	push_data_to_parent(x) {
+		const {
+			known_root_ve,known_strings,known_booleans,
+			known_numbers,
+		}=x;
+		if(known_root_ve) {
+			this.known_root_ve=known_root_ve;
+		}
+		if(known_strings) {
+			this.known_strings=known_strings;
+		}
+		if(known_booleans) {
+			this.known_booleans=known_booleans;
+		}
+		if(known_numbers) {
+			this.known_numbers=known_numbers;
+		}
+	}
+	/** @private */
+	delete_data() {
+		if(no_storage_access) {
+			this.known_data_str_no_access=null;
+			return;
+		}
+		localStorage.removeItem("known_data");
+	}
+	/** @private @type {string|null} */
+	known_data_str_no_access=null;
+	/** @private */
+	loaded_from_storage=false;
+	/** @protected @type {number[]} */
+	known_root_ve=[];
+	/** @protected @type {[string,['one',string[]]|['many',string[][]]][]} */
+	known_strings=[];
+	/** @protected @type {[string,['one',number[]]|['many',number[][]]][]} */
+	known_numbers=[];
+	/** @protected @type {[string,{t:boolean;f:boolean}][]} */
+	known_booleans=[];
+	/** @protected */
+	on_data_change() {this.store_data();}
+	/** @protected */
+	on_request_data_removal() {this.delete_data();}
+}
+class BaseServicePrivate extends KnownDataSaver {
 	// #region Public
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
-		const t=this;
-		class KnownDataSaver {
-			static #instance=(() => true)? new KnownDataSaver(t):null;
-			static get instance() {
-				if(this.#instance===null) throw new Error();
-				let ret=this.#instance;
-				this.#instance=null;
-				return ret;
-			}
-			/** @private @arg {BaseServicePrivate} parent */
-			constructor(parent) {
-				this.parent=parent;
-				this.load_data();
-				this.store_data();
-			}
-			/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} */
-			parse_data(str) {
-				return JSON.parse(str);
-			}
-			/** @private */
-			store_data() {
-				let data=this.pull_data_from_parent();
-				for(let v=0;v<data.known_numbers.length;v++) {
-					const j=data.known_numbers[v];
-					const [_n,[_k,c]]=j;
-					for(let i=0;i<c.length;i++) {
-						if(c[i]===null) {
-							c.splice(i,1);
-							i--;
-						}
-					}
-				}
-				let json_str=JSON.stringify(data);
-				this.save_local_storage(json_str);
-			}
-			/** @private */
-			load_data() {
-				if(this.loaded_from_storage) return;
-				let json_str=this.get_local_storage();
-				if(json_str) {
-					let ret=this.parse_data(json_str);
-					this.push_data_to_parent(ret);
-					this.loaded_from_storage=true;
-				}
-			}
-			/** @private */
-			pull_data_from_parent() {
-				const {
-					known_root_ve,known_strings,known_booleans,
-					known_numbers
-				}=this.parent;
-				return {
-					known_root_ve,known_strings,known_numbers,
-					known_booleans,
-				};
-			}
-			/** @private @arg {string} known_data */
-			save_local_storage(known_data) {
-				if(no_storage_access) {
-					this.known_data_str_no_access=known_data;
-					return;
-				}
-				localStorage.known_data=known_data;
-			}
-			/** @private */
-			get_local_storage() {
-				if(no_storage_access) return this.known_data_str_no_access;
-				return localStorage.known_data;
-			}
-			/** @private @arg {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} x */
-			push_data_to_parent(x) {
-				const {
-					known_root_ve,known_strings,known_booleans,
-					known_numbers,
-				}=x;
-				if(known_root_ve) {
-					this.parent.known_root_ve=known_root_ve;
-				}
-				if(known_strings) {
-					this.parent.known_strings=known_strings;
-				}
-				if(known_booleans) {
-					this.parent.known_booleans=known_booleans;
-				}
-				if(known_numbers) {
-					this.parent.known_numbers=known_numbers;
-				}
-			}
-			/** @private */
-			delete_data() {
-				if(no_storage_access) {
-					this.known_data_str_no_access="";
-					return;
-				}
-				localStorage.removeItem("known_data");
-			}
-			/** @private */
-			known_data_str_no_access="";
-			/** @private */
-			loaded_from_storage=false;
-			on_data_change() {
-				this.store_data();
-			}
-			on_request_data_removal() {
-				this.delete_data();
-			}
-		}
-		this.#known_data_saver=KnownDataSaver.instance;
+		super();
 		this.#x=x;
 	}
 	get x() {
@@ -3041,10 +3042,7 @@ class BaseServicePrivate {
 		return this.#x.value;
 	}
 	on_known_data_change() {
-		this.#known_data_saver.on_data_change();
-	}
-	on_request_data_removal() {
-		this.#known_data_saver.on_request_data_removal();
+		this.on_data_change();
 	}
 	/** @arg {string} key */
 	delete_old_string_values(key) {
@@ -3108,8 +3106,6 @@ class BaseServicePrivate {
 		console.log("store_str [%s]",key,x);
 		debugger;
 	}
-	/** @private @type {[string,['one',number[]]|['many',number[][]]][]} */
-	known_numbers=[];
 	/** @private @type {[string,number|number[]][]} */
 	new_known_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
@@ -3193,15 +3189,9 @@ class BaseServicePrivate {
 	log_skipped_strings=false;
 	#x;
 	/** @private @type {number[]} */
-	known_root_ve=[];
-	/** @private @type {number[]} */
 	new_known_root_ve=[];
-	/** @private @type {[string,['one',string[]]|['many',string[][]]][]} */
-	known_strings=[];
 	/** @private @type {[string,string|string[]][]} */
 	new_known_strings=[];
-	/** @private @type {[string,{t:boolean;f:boolean}][]} */
-	known_booleans=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
 }
@@ -4005,7 +3995,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
-		this.save_keys("YtSuccessResponse",x);
+		this.save_keys("YtSuccessResponse",x,this.TODO_true);
 	}
 	/** @private @arg {GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
@@ -4033,13 +4023,19 @@ class HandleTypes extends BaseService {
 		let z;
 		if("currentVideoEndpoint" in x) {
 			const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
-			debugger;
+			this.ResponseContext(responseContext);
+			iterate(engagementPanels,v=>this.empty_object(v));
 			z=y;
 		} else if("engagementPanels" in x) {
 			const {responseContext,trackingParams,onResponseReceivedEndpoints,engagementPanels,...y}=x;
+			this.ResponseContext(responseContext);
+			iterate(engagementPanels,v=>this.empty_object(v));
 			z=y;
 		} else {
 			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=x;
+			this.ResponseContext(responseContext);
+			this.trackingParams(trackingParams);
+			iterate(onResponseReceivedEndpoints,ep=>this.yt_endpoint(ep));
 			z=y;
 		}
 		this.save_keys("api_next",x,true);

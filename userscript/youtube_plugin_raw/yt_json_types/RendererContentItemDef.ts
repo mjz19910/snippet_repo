@@ -3,6 +3,6 @@ type RendererContentItemDef=
 	RichSectionRenderer|
 	CommentsHeaderRendererH|
 	CommentThreadRendererH|
-	CompactVideoRendererH|
+	CompactVideoRenderer|
 	CompactPlaylistRendererH;
 

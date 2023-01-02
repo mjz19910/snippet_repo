@@ -1,0 +1,3 @@
+type CheckboxSurveyOptionRenderer={
+	checkboxSurveyOptionRenderer: CheckboxSurveyOptionRendererData;
+};

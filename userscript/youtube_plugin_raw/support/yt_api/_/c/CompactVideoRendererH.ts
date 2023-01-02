@@ -1,3 +1,0 @@
-type CompactVideoRendererH={
-	compactVideoRenderer: CompactVideoRenderer;
-};
