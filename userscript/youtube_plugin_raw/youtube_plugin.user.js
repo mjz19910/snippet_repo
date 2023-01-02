@@ -2962,6 +2962,7 @@ class BaseServicePrivate {
 		this.new_known_strings.push([key,x]);
 		this.on_data_known_change();
 		console.log("store_str [%s]",key,x);
+		debugger;
 	}
 	/** @private @type {[string,['one',number[]]|['many',number[][]]][]} */
 	known_numbers=[];
@@ -3704,13 +3705,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	DataResponsePageType(x) {
-		const {page,endpoint,response,url}=x;
+		const {page,endpoint,response,url,...y}=x;
 		if(page!=="browse") debugger;
 		response;
 		this.yt_endpoint(endpoint);
-		this.save_keys("DataResponsePageType",x);
+		this.save_keys("DataResponsePageType",x,true);
 		this.parse_url(url);
 		this.empty_object(response);
+		this.empty_object(y);
 	}
 	/**
 	 * @param {WatchEndpointData} x
@@ -3777,7 +3779,7 @@ class HandleTypes extends BaseService {
 		if("browseId" in x) {
 			const {browseId: a,...y}=x;
 			this.parse_browse_id(a);
-			this.save_keys("endpoint_data",x);
+			this.save_keys("endpoint_data",x,true);
 			this.empty_object(y);
 			return;
 		}
@@ -3976,6 +3978,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_url(x) {
+		if(x==="/") return;
 		console.log(x); debugger;
 	}
 	/**
@@ -3986,12 +3989,23 @@ class HandleTypes extends BaseService {
 		this.WebCommandMetadata(x.webCommandMetadata);
 		this.empty_object(y);
 	}
+	/** @arg {YtPageTypeEnum} x */
+	parse_page_type(x) {
+		switch(x) {
+			case "WEB_PAGE_TYPE_BROWSE": case "WEB_PAGE_TYPE_CHANNEL": case "WEB_PAGE_TYPE_PLAYLIST": case "WEB_PAGE_TYPE_SEARCH":
+			case "WEB_PAGE_TYPE_SETTINGS": case "WEB_PAGE_TYPE_SHORTS": case "WEB_PAGE_TYPE_WATCH":
+			case "WEB_PAGE_TYPE_UNKNOWN": break;
+			default: console.log("[new_page_type] [%s]",x); debugger; break;
+		}
+	}
 	/**
 	 * @param {WebCommandMetadata} x
 	 */
 	WebCommandMetadata(x) {
 		if("apiUrl" in x) {
-			const {apiUrl,...y}=x;
+			const {url,webPageType,rootVe,apiUrl,...y}=x;
+			this.parse_url(url);
+			this.parse_page_type(webPageType);
 			this.parse_api_url(apiUrl);
 			this.empty_object(y);
 		} else {

@@ -1,4 +1,4 @@
-type WebCommandPageTypeList=[
+type YtPageTypeList=[
 	"WEB_PAGE_TYPE_BROWSE",
 	"WEB_PAGE_TYPE_CHANNEL",
 	"WEB_PAGE_TYPE_PLAYLIST",

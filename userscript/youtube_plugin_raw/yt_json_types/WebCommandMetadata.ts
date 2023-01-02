@@ -1,17 +1,15 @@
 type WebCommandMetadata={
-	webPageType: WebCommandPageType;
+	webPageType: YtPageTypeEnum;
 }|{
 	sendPost: boolean;
-}|{
-	apiUrl: string;
 }|{
 	rootVe: number;
 }|{
 	url: string;
-};
+}|DataResponsePageTypeWebMetadata;
 type DataResponsePageTypeWebMetadata={
 	url: string;
-	webPageType: WebCommandPageType;
+	webPageType: YtPageTypeEnum;
 	rootVe: 3854;
 	apiUrl: Join<url_pathname_parts,".">;
 };

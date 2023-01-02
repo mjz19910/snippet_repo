@@ -1,1 +1,1 @@
-type WebCommandPageType=WebCommandPageTypeList[number];
+type YtPageTypeEnum=YtPageTypeList[number];
