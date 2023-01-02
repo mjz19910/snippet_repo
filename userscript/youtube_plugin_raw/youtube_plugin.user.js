@@ -3742,7 +3742,39 @@ class HandleTypes extends BaseService {
 	/**
 	 * @param {WatchEndpointData} x
 	 */
-	WatchEndpointData(x) {x;}
+	WatchEndpointData(x) {
+		this.save_keys("endpoint_data",x);
+	}
+	/**
+	 * @param {BrowseEndpointData} x
+	 */
+	BrowseEndpointData(x) {
+		this.save_keys("endpoint_data",x);
+	}
+	/**
+	 * @param {SearchEndpointData} x
+	 */
+	SearchEndpointData(x) {
+		this.save_keys("endpoint_data",x);
+	}
+	/**
+	 * @param {SetSettingEndpointData} x
+	 */
+	SetSettingEndpointData(x) {
+		this.save_keys("endpoint_data",x);
+	}
+	/**
+	 * @param {SignalServiceEndpointData} x
+	 */
+	SignalServiceEndpointData(x) {
+		this.save_keys("endpoint_data",x);
+	}
+	/**
+	 * @param {UrlEndpointRoot} x
+	 */
+	UrlEndpointRoot(x) {
+		this.save_keys("endpoint_data",x);
+	}
 	/** @param {YtEndpoint} x */
 	yt_endpoint(x) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
@@ -3757,30 +3789,35 @@ class HandleTypes extends BaseService {
 		}
 		if("browseEndpoint" in y) {
 			const {browseEndpoint: a,...b}=y;
+			this.BrowseEndpointData(a);
 			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("searchEndpoint" in y) {
 			const {searchEndpoint: a,...b}=y;
+			this.SearchEndpointData(a);
 			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("setSettingEndpoint" in y) {
 			const {setSettingEndpoint: a,...b}=y;
+			this.SetSettingEndpointData(a);
 			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("signalServiceEndpoint" in y) {
 			const {signalServiceEndpoint: a,...b}=y;
+			this.SignalServiceEndpointData(a);
 			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("urlEndpoint" in y) {
 			const {urlEndpoint: a,...b}=y;
+			this.UrlEndpointRoot(a);
 			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
