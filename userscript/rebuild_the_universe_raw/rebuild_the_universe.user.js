@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		rebuild the universe
 // @namespace	https://github.com/mjz19910/
-// @version		0.1.0.0
+// @version		0.1.0.1
 // @description	rebuildtheuniverse.com automation
 // @author		You
 // @match		http://rebuildtheuniverse.com/?type=real
@@ -1416,6 +1416,21 @@ class BaseCompressionImpl {
 		if(this.did_decompress(src,dst))
 			return [true,dst];
 		return [false,dst];
+	}
+}
+/** @template T @template U */
+class CompressStateBase {
+	/** @type {number} */
+	i;
+	/** @type {T[]} */
+	arr;
+	/** @type {U[]} */
+	ret;
+	/** @arg {number} i @arg {T[]} arr @arg {U[]} ret */
+	constructor(i,arr,ret) {
+		this.i=i;
+		this.arr=arr;
+		this.ret=ret;
 	}
 }
 /** @template T @template U @extends {CompressStateBase<T,U>} */
@@ -3866,10 +3881,6 @@ if(typeof exports==="object") {
 	exports.InstructionVMPushIPImpl=InstructionVMPushIPImpl;
 	exports.InstructionPushVMObjImpl=InstructionPushVMObjImpl;
 	exports.InstructionVMReturnImpl=InstructionVMReturnImpl;
-
-
 	exports.UnimplementedInstruction=UnimplementedInstruction;
-
-
 	exports.StackVMImpl=StackVMImpl;
 }
