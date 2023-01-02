@@ -1574,11 +1574,7 @@ class FilterHandlers {
 			case "live_chat": index++; return this.get_live_chat_type(state,"live_chat",parts,index);
 			case "get_transcript": break;
 			case "account": return get_account_type(state,cur_part,parts,index+1);
-			case "feedback": index++; if(index<parts.length) {
-				let next_part=parts[index]; switch(next_part) {
-					default: no_handler({...state,parts,index});
-				}
-			} break;
+			case "feedback": break;
 			default: no_handler({...state,parts,index});
 		}
 		return {name: cur_part};
