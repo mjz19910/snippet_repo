@@ -2731,6 +2731,7 @@ async function main() {
 		noisy_logging: false,
 	});
 	resolver_value.value=service_resolver;
+	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
@@ -2895,7 +2896,6 @@ async function main() {
 			return navigator_sendBeacon.call(this,...args);
 		};
 	}
-	let current_page_type="";
 	/** @arg {YTNavigateFinishEvent} event */
 	function log_page_type_change(event) {
 		let {detail}=event;
