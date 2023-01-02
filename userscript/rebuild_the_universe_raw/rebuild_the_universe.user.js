@@ -1418,6 +1418,16 @@ class BaseCompressionImpl {
 		return [false,dst];
 	}
 }
+/** @template T @template U @extends {CompressStateBase<T,U>} */
+class CompressState extends CompressStateBase {
+	/** @type {T|null} */
+	item;
+	/** @arg {T[]} arr */
+	constructor(arr) {
+		super(0,arr,[]);
+		this.item=null;
+	}
+}
 /** @implements {MulCompression} */
 class MulCompressionImpl extends BaseCompressionImpl {
 	constructor() {
