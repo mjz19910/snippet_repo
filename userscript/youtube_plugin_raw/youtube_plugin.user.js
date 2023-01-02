@@ -295,7 +295,7 @@ async function async_plugin_init(event) {
 					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName.toLowerCase(),e.id,e.classList.value];
-					let did_run=event.detail.handle_types_fut.run_with(v => v.save_new_string("body_element",fut_data));
+					let did_run=event.detail.handle_types_fut.run_with(v => v.save_string("body_element",fut_data));
 					if(!did_run) {
 						console.log("fut failed",...fut_data);
 					}
@@ -1091,7 +1091,9 @@ class Base64Binary {
 		var i=0;
 		var j=0;
 
+		let prev_len=input.length;
 		input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
+		if(prev_len!==input.length) console.log("removed %n%o non base64 chars",prev_len-input.length);
 
 		for(i=0;i<byte_len;i+=3) {
 			//get the 3 octets in 4 ascii chars
@@ -2920,22 +2922,129 @@ const general_service_state={
 };
 // #region Service
 class BaseServicePrivate {
+	#known_data_saver;
 	// #region Public
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
+		const t=this;
+		class KnownDataSaver {
+			static #instance=(()=>true)?new KnownDataSaver(t):null;
+			static get instance() {
+				if(this.#instance === null) throw new Error();
+				let ret=this.#instance;
+				this.#instance=null;
+				return ret;
+			}
+			/** @private @arg {BaseServicePrivate} parent */
+			constructor(parent) {
+				this.parent=parent;
+				this.load_data();
+				this.store_data();
+			}
+			/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} */
+			parse_data(str) {
+				return JSON.parse(str);
+			}
+			/** @private */
+			store_data() {
+				let data=this.pull_data_from_parent();
+				for(let v=0;v<data.known_numbers.length;v++) {
+					const j=data.known_numbers[v];
+					const [_n,[_k,c]]=j;
+					for(let i=0;i<c.length;i++) {
+						if(c[i]===null) {
+							c.splice(i,1);
+							i--;
+						}
+					}
+				}
+				let json_str=JSON.stringify(data);
+				this.save_local_storage(json_str);
+			}
+			/** @private */
+			load_data() {
+				if(this.loaded_from_storage) return;
+				let json_str=this.get_local_storage();
+				if(json_str) {
+					let ret=this.parse_data(json_str);
+					this.push_data_to_parent(ret);
+					this.loaded_from_storage=true;
+				}
+			}
+			/** @private */
+			pull_data_from_parent() {
+				const {
+					known_root_ve,known_strings,known_booleans,
+					known_numbers
+				}=this.parent;
+				return {
+					known_root_ve,known_strings,known_numbers,
+					known_booleans,
+				};
+			}
+			/** @private @arg {string} known_data */
+			save_local_storage(known_data) {
+				if(no_storage_access) {
+					this.known_data_str_no_access=known_data;
+					return;
+				}
+				localStorage.known_data=known_data;
+			}
+			/** @private */
+			get_local_storage() {
+				if(no_storage_access) return this.known_data_str_no_access;
+				return localStorage.known_data;
+			}
+			/** @private @arg {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} x */
+			push_data_to_parent(x) {
+				const {
+					known_root_ve,known_strings,known_booleans,
+					known_numbers,
+				}=x;
+				if(known_root_ve) {
+					this.parent.known_root_ve=known_root_ve;
+				}
+				if(known_strings) {
+					this.parent.known_strings=known_strings;
+				}
+				if(known_booleans) {
+					this.parent.known_booleans=known_booleans;
+				}
+				if(known_numbers) {
+					this.parent.known_numbers=known_numbers;
+				}
+			}
+			/** @private */
+			delete_data() {
+				if(no_storage_access) {
+					this.known_data_str_no_access="";
+					return;
+				}
+				localStorage.removeItem("known_data");
+			}
+			/** @private */
+			known_data_str_no_access="";
+			/** @private */
+			loaded_from_storage=false;
+			on_data_change() {
+				this.store_data();
+			}
+			on_request_data_removal() {
+				this.delete_data();
+			}
+		}
+		this.#known_data_saver=KnownDataSaver.instance;
 		this.#x=x;
-		this.save_known_data_to_self();
-		this.save_known_data_to_storage();
 	}
 	get x() {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
-	on_data_known_change() {
-		this.save_known_data_to_storage();
+	on_known_data_change() {
+		this.#known_data_saver.on_data_change();
 	}
 	on_request_data_removal() {
-		this.delete_known_data();
+		this.#known_data_saver.on_request_data_removal();
 	}
 	/** @arg {string} key */
 	delete_old_string_values(key) {
@@ -2951,7 +3060,7 @@ class BaseServicePrivate {
 		};
 	}
 	/** @arg {string} key @arg {string|string[]} x */
-	save_new_string(key,x) {
+	save_string(key,x) {
 		if(key==="any") debugger;
 		if(!(x instanceof Array)&&x.startsWith("http://www.youtube.com/channel/UC")) {
 			if(this.log_skipped_strings) console.log("skip channel like",key,x);
@@ -2995,7 +3104,7 @@ class BaseServicePrivate {
 		}
 		if(was_known) return;
 		this.new_known_strings.push([key,x]);
-		this.on_data_known_change();
+		this.on_known_data_change();
 		console.log("store_str [%s]",key,x);
 		debugger;
 	}
@@ -3045,7 +3154,7 @@ class BaseServicePrivate {
 		}
 		if(was_known) return;
 		this.new_known_numbers.push([key,x]);
-		this.on_data_known_change();
+		this.on_known_data_change();
 		console.log("store_num [%s]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
@@ -3068,7 +3177,7 @@ class BaseServicePrivate {
 			kc.f=true;
 		}
 		this.changed_known_bool.push([key,kc]);
-		this.save_known_data_to_storage();
+		this.on_known_data_change();
 	}
 	/** @arg {number} x */
 	save_new_root_ve(x) {
@@ -3076,36 +3185,13 @@ class BaseServicePrivate {
 		console.log("store rootVe [%o]",x);
 		this.known_root_ve.push(x);
 		this.new_known_root_ve.push(x);
-		this.on_data_known_change();
+		this.on_known_data_change();
 	}
 	// #endregion
 	//#region private
 	/** @private */
 	log_skipped_strings=false;
 	#x;
-	/** @private */
-	known_data_str_no_access="";
-	/** @private @arg {string} known_data */
-	save_local_storage(known_data) {
-		if(no_storage_access) {
-			this.known_data_str_no_access=known_data;
-			return;
-		}
-		localStorage.known_data=known_data;
-	}
-	/** @private */
-	get_local_storage() {
-		if(no_storage_access) return this.known_data_str_no_access;
-		return localStorage.known_data;
-	}
-	/** @private */
-	delete_known_data() {
-		if(no_storage_access) {
-			this.known_data_str_no_access="";
-			return;
-		}
-		localStorage.removeItem("known_data");
-	}
 	/** @private @type {number[]} */
 	known_root_ve=[];
 	/** @private @type {number[]} */
@@ -3118,74 +3204,6 @@ class BaseServicePrivate {
 	known_booleans=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
-	/** @private */
-	loaded_from_storage=false;
-	/** @private */
-	save_known_data_to_storage() {
-		let data=this.known_data_from_self();
-		for(let v=0;v<data.known_numbers.length;v++) {
-			const j=data.known_numbers[v];
-			const [_n,[_k,c]]=j;
-			for(let i=0;i<c.length;i++) {
-				if(c[i]===null) {
-					c.splice(i,1);
-					i--;
-				}
-			}
-		}
-		let json_str=JSON.stringify(data);
-		this.save_local_storage(json_str);
-	}
-	/** @private */
-	known_data_from_self() {
-		const {
-			known_root_ve,known_strings,known_booleans,
-			known_numbers
-		}=this;
-		return {
-			known_root_ve,known_strings,known_numbers,
-			known_booleans,
-		};
-	}
-	/**
-	 * @private @arg {Partial<ReturnType<BaseServicePrivate['known_data_from_self']>>} x
-	 */
-	update_known_data_from_parsed(x) {
-		const {
-			known_root_ve,known_strings,known_booleans,
-			known_numbers,
-		}=x;
-		if(known_root_ve) {
-			this.known_root_ve=known_root_ve;
-		}
-		if(known_strings) {
-			this.known_strings=known_strings;
-		}
-		if(known_booleans) {
-			this.known_booleans=known_booleans;
-		}
-		if(known_numbers) {
-			this.known_numbers=known_numbers;
-		}
-	}
-	/** @private */
-	get_known_data() {
-		if(this.loaded_from_storage) return;
-		let json_str=this.get_local_storage();
-		if(json_str) {
-			let ret=this.parse_data(json_str);
-			this.update_known_data_from_parsed(ret);
-			this.loaded_from_storage=true;
-		}
-	}
-	/** @private @arg {string} str @returns {Partial<ReturnType<BaseServicePrivate['known_data_from_self']>>} */
-	parse_data(str) {
-		return JSON.parse(str);
-	}
-	/** @private */
-	save_known_data_to_self() {
-		this.get_known_data();
-	}
 }
 /** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
 function iterate(...[t,u]) {
@@ -3206,7 +3224,7 @@ class BaseService extends BaseServicePrivate {
 		if(eq_keys(keys,["type","data"])) {
 			debugger;
 		}
-		this.save_new_string(key,keys.join());
+		this.save_string(key,keys.join());
 	}
 	/** @arg {(bigint|string|number|boolean)[]} args */
 	primitives(...args) {
@@ -3982,7 +4000,7 @@ class HandleTypes extends BaseService {
 			case "player": this.WatchResponsePlayer(x.data); return;
 			case "reel.reel_item_watch": this.save_keys(x.type,x.data); return;
 			case "reel.reel_watch_sequence": this.save_keys(x.type,x.data); break;
-			default: this.save_new_string("need_api_type",x.type);
+			default: this.save_string("need_api_type",x.type);
 		}
 	}
 	/** @private @arg {YtSuccessResponse} x */
@@ -4013,7 +4031,11 @@ class HandleTypes extends BaseService {
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
 		let z;
-		if("engagementPanels" in x) {
+		if("currentVideoEndpoint" in x) {
+			const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
+			debugger;
+			z=y;
+		} else if("engagementPanels" in x) {
 			const {responseContext,trackingParams,onResponseReceivedEndpoints,engagementPanels,...y}=x;
 			z=y;
 		} else {
