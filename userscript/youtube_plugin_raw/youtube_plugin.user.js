@@ -3752,6 +3752,12 @@ class HandleTypes extends BaseService {
 		console.log(x); debugger;
 	}
 	/**
+	 * @param {string} x
+	 */
+	parse_browse_id(x) {
+		console.log(x); debugger;
+	}
+	/**
 	 * @param {BrowseEndpointData} x
 	 */
 	BrowseEndpointData(x) {
@@ -3763,7 +3769,8 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		if("browseId" in x) {
-			const {browseId,...y}=x;
+			const {browseId: a,...y}=x;
+			this.parse_browse_id(a);
 			this.save_keys("endpoint_data",x);
 			this.empty_object(y);
 			return;
