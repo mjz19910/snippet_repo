@@ -2895,6 +2895,7 @@ async function main() {
 			return navigator_sendBeacon.call(this,...args);
 		};
 	}
+	let current_page_type="";
 	/** @arg {YTNavigateFinishEvent} event */
 	function log_page_type_change(event) {
 		let {detail}=event;
@@ -2910,6 +2911,8 @@ async function main() {
 		if(!ytd_page_manager) throw new Error("Invalid state");
 		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
 		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+		if(nav_load_str === current_page_type) return;
+		current_page_type=nav_load_str;
 		page_type_changes.push(nav_load_str);
 		console.log(nav_load_str);
 		yt_handlers.extract(h => h.on_page_type_changed(detail));
@@ -3276,7 +3279,11 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @template {{}} T @arg {string} key @arg {T} obj */
 	save_keys(key,obj) {
-		this.save_new_string(key,get_keys_of(obj).join());
+		let keys=get_keys_of(obj);
+		if(eq_keys(keys,["type","data"])) {
+			debugger;
+		}
+		this.save_new_string(key,keys.join());
 	}
 	/** @arg {(bigint|string|number|boolean)[]} args */
 	primitives(...args) {
@@ -3834,11 +3841,16 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
-		this.save_keys("any",x);
+		this.save_keys("YtSuccessResponse",x);
 	}
 	/** @private @arg {GetNotificationMenuBox} x */
 	notification_get_notification_menu_t(x) {
-		this.save_keys("get_notification_menu",x);
+		this.GetNotificationMenuJson(x.data);
+	}
+	/** @private @arg {GetNotificationMenuJson} x */
+	GetNotificationMenuJson(x) {
+		x.actions;
+		this.save_keys("GetNotificationMenuJson",x);
 	}
 	/** @private @arg {AttGet} x */
 	AttGet(x) {
@@ -3854,7 +3866,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
-		this.save_keys("any",x);
+		this.save_keys("AccountMenuJson",x);
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
