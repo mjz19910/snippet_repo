@@ -3325,12 +3325,17 @@ class GFeedbackService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
+	get handle_types() {
+		let res=this.x.get("yt_handlers").extract(e => e)?.handle_types;
+		if(!res) throw new Error();
+		return res;
+	}
 	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("yt_handlers").extract(e => e)?.handle_types.parse_browse_id(param.value); break;
+				case "browse_id": this.handle_types.parse_browse_id(param.value); break;
 				case "context": {
 					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
 					this.data.context=param.value;
