@@ -294,9 +294,9 @@ async function async_plugin_init(event) {
 					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName.toLowerCase(),e.id,e.classList.value];
-					let did_run=event.detail.handle_types_fut.run_with(v=>v.save_new_string("body_element",fut_data));
+					let did_run=event.detail.handle_types_fut.run_with(v => v.save_new_string("body_element",fut_data));
 					if(!did_run) {
-						console.log("fut failed", ...fut_data);
+						console.log("fut failed",...fut_data);
 					}
 					return true;
 				});
@@ -3293,6 +3293,7 @@ class ECatcherService extends BaseService {
 				[39322866,39322870,39322980,39323016,45686551],
 				[39321827,39323023],
 				[24128088,24429904,24124511,24061846,24293752],
+				[24440901],
 			],
 		},
 	};
@@ -3964,7 +3965,7 @@ class HandleTypes extends BaseService {
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
 		this.ResponseContext(responseContext);
-		iterate(actions,v=>this.action(v));
+		iterate(actions,v => this.action(v));
 		this.trackingParams(trackingParams);
 		this.save_keys("GetNotificationMenuJson",x,true);
 		this.empty_object(y);
@@ -4186,7 +4187,7 @@ class HandleTypes extends BaseService {
 	 */
 	TwoColumnBrowseResultsRendererData(x) {
 		const {tabs,...y}=x;
-		iterate(tabs,v=>this.ResultRenderer(v));
+		iterate(tabs,v => this.ResultRenderer(v));
 		this.empty_object(y);
 	}
 	/**
@@ -4202,7 +4203,7 @@ class HandleTypes extends BaseService {
 	 */
 	TabRenderer(x) {
 		const {content,selected,trackingParams,...y}=x;
-		if("richGridRenderer"in content) {
+		if("richGridRenderer" in content) {
 			return;
 		}
 		if("sectionListRenderer" in content) {
@@ -4222,7 +4223,7 @@ class HandleTypes extends BaseService {
 		const {mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,...y}=x;
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
-		iterate(b,v=>tracking_handler.set_service_params(v));
+		iterate(b,v => tracking_handler.set_service_params(v));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
 		this.save_keys("ResponseContext",x,this.TODO_true);
@@ -4231,7 +4232,7 @@ class HandleTypes extends BaseService {
 	/**
 	 * @param {MainAppWebResponseContextData} x
 	 */
-	MainAppWebResponseContextData(x){x;}
+	MainAppWebResponseContextData(x) {x;}
 	/**
 	 * @param {WebResponseContextExtensionData} x
 	 */
