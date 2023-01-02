@@ -3120,7 +3120,7 @@ class BaseServicePrivate {
 		if(was_known) return;
 		this.new_known_numbers.push([key,x]);
 		this.on_data_known_change();
-		console.log("store_num [%o]",key,x);
+		console.log("store_num [%s]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
