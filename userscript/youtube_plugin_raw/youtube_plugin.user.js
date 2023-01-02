@@ -3758,12 +3758,6 @@ class HandleTypes extends BaseService {
 		this.save_keys("ResponseReceivedAction",x);
 	}
 	/**
-	 * @param {TwoColumnBrowseResultsRenderer} x
-	 */
-	TwoColumnBrowseResultsRenderer(x) {
-		this.save_keys("TwoColumnBrowseResultsRenderer",x);
-	}
-	/**
 	 * @param {WatchEndpointData} x
 	 */
 	WatchEndpointData(x) {
@@ -4140,6 +4134,17 @@ class HandleTypes extends BaseService {
 		}
 		throw new Error("Missing");
 	}
+	/**
+	 * @param {TwoColumnBrowseResultsRenderer} x
+	 */
+	TwoColumnBrowseResultsRenderer(x) {
+		this.TwoColumnBrowseResultsRendererData(x.twoColumnBrowseResultsRenderer);
+		this.save_keys("TwoColumnBrowseResultsRenderer",x);
+	}
+	/**
+	 * @param {TwoColumnBrowseResultsRendererData} x
+	 */
+	TwoColumnBrowseResultsRendererData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
