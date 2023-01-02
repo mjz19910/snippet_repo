@@ -2744,6 +2744,9 @@ async function main() {
 			get ok() {
 				return response.ok;
 			}
+			get status() {
+				return response.status;
+			}
 		}
 		let fake_res=new FakeResponse;
 		/** @type {any} */
@@ -2751,12 +2754,17 @@ async function main() {
 		/** @type {Response} */
 		let fake_res_t=any_x;
 		return new Proxy(fake_res_t,{
+			/** @arg {keyof Response} key */
 			get(_obj,key,_proxy) {
-				if(key==="then") {
+				/** @type {string} */
+				let ks=cast_as(key);
+				if(ks==="then") {
 					return void 0;
 				}
 				switch(key) {
-					case "text": case "redirected": case "ok": return fake_res[key];
+					case "text": case "redirected": case "ok": case "status": return fake_res[key];
+					case "body": return response.body;
+					case "headers": return response.headers;
 					default: console.log("[new_response_key] [%s]",key); debugger;
 				}
 				return Reflect.get(response,key);
@@ -3695,18 +3703,30 @@ inject_api_yt.decode_entity_key=decode_entity_key;
 class HandleTypes extends BaseService {
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
-		this.save_keys("WatchResponsePlayer",x);
+		this.save_keys("WatchResponsePlayer",x,this.TODO_true);
 	}
-	/** @arg {YtBrowsePageResponse} x */
-	DataResponsePageType(x) {
+	/**
+	 * @param {YtBrowsePageResponse} x
+	 */
+	YtBrowsePageResponse(x) {
 		const {page: a,endpoint: b,response: c,url: d,...y}=x;
-		this._current_response_type=a;
 		if(a!=="browse") debugger;
 		this.yt_endpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
 		this.parse_url(d);
 		this.BrowseResponseContent(c);
 		this.empty_object(y);
+	}
+	/** @arg {NavigateEventDetail['response']} x */
+	DataResponsePageType(x) {
+		this._current_response_type=x.page;
+		switch(x.page) {
+			case "browse": return this.YtBrowsePageResponse(x);
+			case "watch": break;
+			default: break;
+		}
+		console.log("pt",x.page,x);
+		debugger;
 	}
 	/**
 	 * @param {BrowseResponseContent} x
@@ -3732,25 +3752,25 @@ class HandleTypes extends BaseService {
 	 * @param {DesktopTopbarRenderer} x
 	 */
 	topbar(x) {
-		this.save_keys("DesktopTopbarRenderer",x);
+		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
 	}
 	/**
 	 * @param {FeedTabbedHeaderRenderer} x
 	 */
 	header(x) {
-		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true());
+		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
 	}
 	/**
 	 * @param {EntityBatchUpdate} x
 	 */
 	frameworkUpdates(x) {
-		this.save_keys("EntityBatchUpdate",x);
+		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
 	}
 	/**
 	 * @param {ResponseReceivedAction} x
 	 */
 	ResponseReceivedAction(x) {
-		this.save_keys("ResponseReceivedAction",x);
+		this.save_keys("ResponseReceivedAction",x,this.TODO_true);
 	}
 	/**
 	 * @param {WatchEndpointData} x
@@ -3938,11 +3958,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AttGet} x */
 	AttGet(x) {
-		this.save_keys("AttGet",x,this.TODO_true());
+		this.save_keys("AttGet",x,this.TODO_true);
 	}
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
-		this.save_keys("GuideJsonType",x,this.TODO_true());
+		this.save_keys("GuideJsonType",x,this.TODO_true);
 	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
@@ -3954,9 +3974,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
-		this.save_keys("YtPageState",x,this.TODO_true());
+		this.save_keys("YtPageState",x,this.TODO_true);
 	}
-	TODO_true() {
+	get TODO_true() {
 		return true;
 	}
 	/** @private @arg {notification_get_unseen_count_t} x */
@@ -4192,7 +4212,7 @@ class HandleTypes extends BaseService {
 		iterate(b,v=>tracking_handler.set_service_params(v));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
-		this.save_keys("ResponseContext",x,this.TODO_true());
+		this.save_keys("ResponseContext",x,this.TODO_true);
 		this.empty_object(y);
 	}
 	/**

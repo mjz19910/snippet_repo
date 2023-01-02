@@ -14,4 +14,8 @@ type ResponseTypes=
 	player_t|
 	reel_reel_item_watch_t|
 	reel_reel_watch_sequence_t|
+	{
+		type:"watch",
+		data: {},
+	}|
 	never;
