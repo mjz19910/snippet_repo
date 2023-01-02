@@ -2159,7 +2159,7 @@ class AutoBuyStateImplR {
 		}
 		// this.div=Math.log2(window.prestige)*AutoBuyRatioDiv;
 		this.div=AutoBuyRatioDiv;
-		this.val=Math.log10(window.totalAtome/window.atomepersecond)/this.div;
+		this.val=Math.log2(window.totalAtome/window.atomepersecond)/this.div;
 		if(!Number.isFinite(this.val)) {
 			this.val=1e-16;
 			this.update_not_ready();
