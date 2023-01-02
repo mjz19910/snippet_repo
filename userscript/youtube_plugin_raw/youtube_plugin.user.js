@@ -3749,7 +3749,20 @@ class HandleTypes extends BaseService {
 	 * @param {BrowseEndpointData} x
 	 */
 	BrowseEndpointData(x) {
+		if("params" in x) {
+			const {params,...y}=x;
+			this.save_keys("endpoint_data",x);
+			this.empty_object(y);
+			return;
+		}
+		if("browseId" in x) {
+			const {browseId,...y}=x;
+			this.save_keys("endpoint_data",x);
+			this.empty_object(y);
+			return;
+		}
 		this.save_keys("endpoint_data",x);
+		this.empty_object(x);
 	}
 	/**
 	 * @param {SearchEndpointData} x

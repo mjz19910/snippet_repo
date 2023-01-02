@@ -1,4 +1,5 @@
 type BrowseEndpointData={
 	browseId: BrowseIdType;
-	params?: string;
+}|{
+	params: string;
 };
