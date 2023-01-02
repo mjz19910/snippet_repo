@@ -3978,7 +3978,16 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
-		this.save_keys("api_next",x);
+		let z;
+		if("engagementPanels" in x) {
+			const {responseContext,trackingParams,onResponseReceivedEndpoints,engagementPanels,...y}=x;
+			z=y;
+		} else {
+			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=x;
+			z=y;
+		}
+		this.save_keys("api_next",x,true);
+		if(!this.is_empty_object(z)) console.log("[api_next] [%s]", Object.keys(x).join());
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
@@ -4026,6 +4035,12 @@ class HandleTypes extends BaseService {
 		console.log("[empty_object] [%s] %o",keys.join(),x);
 		console.log(new Error);
 		debugger;
+	}
+	/** @private @template {{}} T @arg {T} x */
+	is_empty_object(x) {
+		let keys=get_keys_of(x);
+		if(!keys.length) return true;
+		return false;
 	}
 	/** @private @arg {string} x */
 	clickTrackingParams(x) {
