@@ -3320,13 +3320,14 @@ class ECatcherService extends BaseService {
 		this.data.client={...this.data.client,...new_client};
 		let client=this.data.client;
 		let expected=this.data.expected_client_values.fexp;
+		/** @type {number[]} */
 		let new_expected=[];
-		x: for(let exp of client.fexp) {
-			for(let expected_item of expected) {
-				if(expected_item.includes(exp)) continue x;
+		client.fexp.forEach(e => {
+			for(let known of expected) {
+				if(known.includes(e)) void 0;
+				else new_expected.push(e);
 			}
-			new_expected.push(exp);
-		}
+		});
 		if(prev_client.name!==this.data.client.name) {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
@@ -3363,10 +3364,9 @@ class GFeedbackService extends BaseService {
 					/** @type {number[]} */
 					let new_expected=[];
 					this.data.e=param.value.split(",").map(e => parseInt(e,10));
+					let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
 					this.data.e.forEach(e => {
-						for(let known of this.x.get("e_catcher_service").data.expected_client_values.fexp) {
-							if(known.includes(e)) return;
-						}
+						for(let known of expected) if(known.includes(e)) return;
 						new_expected.push(e);
 					});
 					if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
