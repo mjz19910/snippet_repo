@@ -3350,6 +3350,10 @@ class GFeedbackService extends BaseService {
 		if(!res) throw new Error();
 		return res;
 	}
+	/** @arg {Extract<ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
+	parse_e_param(param) {
+		return param.value.split(",").map(e => parseInt(e,10));
+	}
 	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
 	on_params(params) {
 		for(let param of params) {
@@ -3361,15 +3365,7 @@ class GFeedbackService extends BaseService {
 					this.data.context=param.value;
 				} break;
 				case "e": {
-					/** @type {number[]} */
-					let new_expected=[];
-					this.data.e=param.value.split(",").map(e => parseInt(e,10));
-					let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
-					this.data.e.forEach(e => {
-						for(let known of expected) if(known.includes(e)) return;
-						new_expected.push(e);
-					});
-					if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
+					this.data.e=this.parse_e_param(param);
 				} break;
 				case "has_alc_entitlement": break;
 				case "has_unlimited_entitlement": break;
@@ -3389,6 +3385,14 @@ class GFeedbackService extends BaseService {
 				case "route": if(param.value!=="channel.featured") debugger; break;
 				default: console.log("new [param_key]",param); debugger;
 			}
+			/** @type {number[]} */
+			let new_expected=[];
+			let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
+			this.data.e?.forEach(e => {
+				for(let known of expected) if(known.includes(e)) return;
+				new_expected.push(e);
+			});
+			if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
 		}
 	}
 }
