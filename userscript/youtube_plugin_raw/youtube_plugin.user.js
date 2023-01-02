@@ -2400,11 +2400,19 @@ function fix_offset() {
 	plugin_overlay_element.style.top=player_offset.top_offset+"px";
 	plugin_overlay_element.style.left=player_offset.left_offset+"px";
 }
+let no_storage_access=false;
+let title_save;
+try {
+	title_save=localStorage.getItem("title_save_data");
+} catch {
+	no_storage_access=true;
+}
 
-let title_save=localStorage.getItem("title_save_data");
 if(!title_save) {
 	title_save="{\"value\":false}";
-	localStorage.setItem("title_save_data",title_save);
+	if(!no_storage_access) {
+		localStorage.setItem("title_save_data",title_save);
+	}
 }
 
 function log_current_video_data() {
@@ -2460,6 +2468,7 @@ document.addEventListener("yt-action",cast_as(on_yt_action));
 function title_display_toggle() {
 	title_on=!title_on;
 	title_text_overlay_update();
+	if(no_storage_access) return;
 	localStorage["title_save_data"]=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
@@ -3149,16 +3158,27 @@ class BaseServicePrivate {
 	/** @private */
 	log_skipped_strings=false;
 	#x;
+	/** @private */
+	known_data_str_no_access="";
 	/** @private @arg {string} known_data */
 	save_local_storage(known_data) {
+		if(no_storage_access) {
+			this.known_data_str_no_access=known_data;
+			return;
+		}
 		localStorage.known_data=known_data;
 	}
 	/** @private */
 	get_local_storage() {
+		if(no_storage_access) return this.known_data_str_no_access;
 		return localStorage.known_data;
 	}
 	/** @private */
 	delete_known_data() {
+		if(no_storage_access) {
+			this.known_data_str_no_access="";
+			return;
+		}
 		localStorage.removeItem("known_data");
 	}
 	/** @private @type {number[]} */
