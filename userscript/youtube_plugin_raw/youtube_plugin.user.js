@@ -3315,26 +3315,26 @@ class ECatcherService extends BaseService {
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
-		if(this.data.client) {
-			let prev_client=this.data.client;
-			this.data.client={...this.data.client,...new_client};
-			let client=this.data.client;
-			let expected=this.data.expected_client_values.fexp;
-			let new_expected=[];
-			x: for(let exp of client.fexp) {
-				for(let expected_item of expected) {
-					if(expected_item.includes(exp)) continue x;
-				}
-				new_expected.push(exp);
+		let prev_client=this.data.client;
+		if(!prev_client) return this.update_client(new_client);
+		this.data.client={...this.data.client,...new_client};
+		let client=this.data.client;
+		let expected=this.data.expected_client_values.fexp;
+		let new_expected=[];
+		x: for(let exp of client.fexp) {
+			for(let expected_item of expected) {
+				if(expected_item.includes(exp)) continue x;
 			}
-			if(prev_client.name!==this.data.client.name) {
-				console.log({name: prev_client.name},{name: this.data.client.name});
-			}
-			if(new_expected.length>0) console.log("new_fexp",new_expected);
-		} else {
-			this.data.client=new_client;
+			new_expected.push(exp);
 		}
-
+		if(prev_client.name!==this.data.client.name) {
+			console.log({name: prev_client.name},{name: this.data.client.name});
+		}
+		if(new_expected.length>0) console.log("new_fexp",new_expected);
+	}
+	/** @arg {NonNullable<this["data"]["client"]>} client */
+	update_client(client) {
+		this.data.client=client;
 	}
 }
 class GFeedbackService extends BaseService {
