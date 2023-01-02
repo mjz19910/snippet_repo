@@ -52,7 +52,7 @@ const AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
 
 const AutoBuyMulModifierFactor=1;
-const AutoBuyRatioDiv=2;
+const AutoBuyRatioDiv=1;
 const calcPres_target_percent=1;
 
 const LOG_LEVEL_CRIT_IMPL=1;
