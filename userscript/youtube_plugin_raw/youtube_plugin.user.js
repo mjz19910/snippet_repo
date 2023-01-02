@@ -2928,9 +2928,9 @@ class BaseServicePrivate {
 	constructor(x) {
 		const t=this;
 		class KnownDataSaver {
-			static #instance=(()=>true)?new KnownDataSaver(t):null;
+			static #instance=(() => true)? new KnownDataSaver(t):null;
 			static get instance() {
-				if(this.#instance === null) throw new Error();
+				if(this.#instance===null) throw new Error();
 				let ret=this.#instance;
 				this.#instance=null;
 				return ret;
