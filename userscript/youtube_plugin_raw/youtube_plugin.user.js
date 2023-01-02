@@ -3426,19 +3426,16 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @arg {AllServiceTrackingParams[]} params */
-	set_service_params(params) {
-		for(let service_param_list of params) {
-			switch(service_param_list.service) {
-				case "CSI": this.on_csi_service(service_param_list); break;
-				case "ECATCHER": this.on_e_catcher_service(service_param_list); break;
-				case "GFEEDBACK": this.on_g_feedback_service(service_param_list); break;
-				case "GUIDED_HELP": this.on_guided_help_service(service_param_list); break;
-				case "GOOGLE_HELP": this.on_google_help_service(service_param_list); break;
-				default: debugger;
-			}
+	/** @arg {AllServiceTrackingParams} service_arg */
+	set_service_params(service_arg) {
+		switch(service_arg.service) {
+			case "CSI": this.on_csi_service(service_arg); break;
+			case "ECATCHER": this.on_e_catcher_service(service_arg); break;
+			case "GFEEDBACK": this.on_g_feedback_service(service_arg); break;
+			case "GUIDED_HELP": this.on_guided_help_service(service_arg); break;
+			case "GOOGLE_HELP": this.on_google_help_service(service_arg); break;
+			default: debugger;
 		}
-		this.on_complete_set_service_params();
 	}
 	on_complete_set_service_params() {
 		seen_map.clear();
@@ -3699,10 +3696,6 @@ class HandleTypes extends BaseService {
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x);
 	}
-	/** @private @arg {ResponseContext} x */
-	ResponseContext(x) {
-		this.save_keys("ResponseContext",x);
-	}
 	/** @arg {YtBrowsePageResponse} x */
 	DataResponsePageType(x) {
 		const {page: a,endpoint: b,response: c,url: d,...y}=x;
@@ -3897,9 +3890,16 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(y);
 	}
+	/** @type {ResponseTypes['type']|null} */
+	_current_response_type=null;
+	get current_response_type() {
+		if(!this._current_response_type) throw 1;
+		return this._current_response_type;
+	}
 	/** @arg {ResponseTypes} x */
 	ResponseTypes(x) {
-		this.save_keys("ResponseTypes",x.data);
+		this._current_response_type=x.type;
+		this.save_keys("ResponseTypes",x.data,true);
 		if("responseContext" in x.data&&x.data.responseContext) {
 			this.ResponseContext(x.data.responseContext);
 		}
@@ -3952,7 +3952,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
-		this.save_keys("YtPageState",x);
+		this.save_keys("YtPageState",x,this.TODO_true());
+	}
+	TODO_true() {
+		return true;
 	}
 	/** @private @arg {notification_get_unseen_count_t} x */
 	notification_get_unseen_count_t(x) {
@@ -4174,6 +4177,30 @@ class HandleTypes extends BaseService {
 		this.trackingParams(trackingParams);
 		this.empty_object(y);
 	}
+	/** @private @arg {ResponseContext} x */
+	ResponseContext(x) {
+		if("maxAgeSeconds" in x) {
+			const {maxAgeSeconds: a,...v}=x;
+			this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
+			x=v;
+		}
+		const {mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,...y}=x;
+		this.MainAppWebResponseContextData(a);
+		let tracking_handler=this.x.get("service_tracking");
+		iterate(b,v=>tracking_handler.set_service_params(v));
+		tracking_handler.on_complete_set_service_params();
+		this.WebResponseContextExtensionData(c);
+		this.save_keys("ResponseContext",x,this.TODO_true());
+		this.empty_object(y);
+	}
+	/**
+	 * @param {MainAppWebResponseContextData} x
+	 */
+	MainAppWebResponseContextData(x){x;}
+	/**
+	 * @param {WebResponseContextExtensionData} x
+	 */
+	WebResponseContextExtensionData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

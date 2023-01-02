@@ -2,5 +2,9 @@ type ResponseContext={
 	mainAppWebResponseContext: MainAppWebResponseContextData;
 	serviceTrackingParams: AllServiceTrackingParams[];
 	webResponseContextExtensionData: WebResponseContextExtensionData;
-	maxAgeSeconds?: number;
+}|{
+	serviceTrackingParams: AllServiceTrackingParams[];
+	maxAgeSeconds: number;
+	mainAppWebResponseContext: MainAppWebResponseContextData;
+	webResponseContextExtensionData: WebResponseContextExtensionData;
 };
