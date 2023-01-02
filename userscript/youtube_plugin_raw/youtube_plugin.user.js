@@ -2826,7 +2826,7 @@ async function main() {
 					return void 0;
 				}
 				switch(key) {
-					case "text": return fake_res[key];
+					case "text": case "redirected": return fake_res[key];
 					default: console.log("[new_response_key] [%s]",key); debugger;
 				}
 				return Reflect.get(response,key);
