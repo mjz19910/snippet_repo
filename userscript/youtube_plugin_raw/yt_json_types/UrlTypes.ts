@@ -1,1 +1,1 @@
-type UrlTypes=ReturnType<FilterHandlers["get_url_type"]>["name"];
+type UrlTypes=ReturnType<HandleTypes["get_url_type"]>["name"];
