@@ -2743,7 +2743,7 @@ async function main() {
 			get ok() {
 				return response.ok;
 			}
- 		}
+		}
 		let fake_res=new FakeResponse;
 		/** @type {any} */
 		let any_x=fake_res;
@@ -2873,43 +2873,6 @@ function split_string(x,s=cast_as(",")) {
 }
 
 const seen_map=new Set;
-/** @arg {BrowseIdType} value */
-function parse_browse_id(value) {
-	/** @typedef {SplitIntoGroups<typeof value,`${string}`>[0]} StartPart */
-	/** @typedef {ExtractAfterStr<typeof value,"FE">} KnownParts */
-	/** @typedef {ExtractAfterStr<typeof value,"VL"|"UC">} KnownParts_VL */
-	/** @type {StartPart} */
-	let v_2c=cast_as(value.slice(0,2));
-	x: switch(v_2c) {
-		case "FE": {
-			/** @type {KnownParts} */
-			let v_ac=cast_as(value.slice(2));
-			switch(v_ac) {
-				case "history": break x;
-				case "library": break x;
-				case "subscriptions": break x;
-				case "what_to_watch": break x;
-				default: break;
-			}
-			if(seen_map.has(v_ac)) break;
-			seen_map.add(v_ac);
-			console.log("new [param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
-		} break;
-		case "VL": let v_4c=value.slice(2,4); switch(v_4c) {
-			case "LL": break;
-			case "WL": break;
-			case "PL": break;
-			default:
-				/** @type {KnownParts_VL} */
-				let ve_ac=value.slice(2);
-				console.log("new with param [param_2c_VL]",value,ve_ac);
-				debugger;
-		} break;
-		case "UC": console.log("new with param [param_2c_UC]",value,value.slice(2)); break;
-		case "SP": break;
-		default: console.log("new [param_value_needed]",v_2c,value); break;
-	}
-}
 
 const general_service_state={
 	logged_in: false,
@@ -3367,7 +3330,7 @@ class GFeedbackService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": parse_browse_id(param.value); break;
+				case "browse_id": this.x.get("yt_handlers").extract(e => e)?.handle_types.parse_browse_id(param.value); break;
 				case "context": {
 					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
 					this.data.context=param.value;
@@ -3442,12 +3405,17 @@ class TrackingServices extends BaseService {
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
+	get handle_types() {
+		let res=this.x.get("yt_handlers").extract(e => e)?.handle_types;
+		if(!res) throw new Error();
+		return res;
+	}
 	/** @arg {GoogleHelpServiceParams} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": parse_browse_id(param.value); break;
+				case "browse_id": this.handle_types.parse_browse_id(param.value); break;
 				default: console.log("new [param_key]",param); debugger;
 			}
 		}
@@ -3748,14 +3716,47 @@ class HandleTypes extends BaseService {
 	/**
 	 * @param {string} x
 	 */
-	parse_endpoint_params(x){
+	parse_endpoint_params(x) {
 		console.log(x); debugger;
 	}
 	/**
-	 * @param {string} x
+	 * @param {BrowseIdType} x
 	 */
 	parse_browse_id(x) {
-		console.log(x); debugger;
+		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
+		/** @typedef {ExtractAfterStr<typeof x,"FE">} KnownParts */
+		/** @typedef {ExtractAfterStr<typeof x,"VL"|"UC">} KnownParts_VL */
+		/** @type {StartPart} */
+		let v_2c=cast_as(x.slice(0,2));
+		x: switch(v_2c) {
+			case "FE": {
+				/** @type {KnownParts} */
+				let v_ac=cast_as(x.slice(2));
+				switch(v_ac) {
+					case "history": break x;
+					case "library": break x;
+					case "subscriptions": break x;
+					case "what_to_watch": break x;
+					default: break;
+				}
+				if(seen_map.has(v_ac)) break;
+				seen_map.add(v_ac);
+				console.log("new [param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
+			} break;
+			case "VL": let v_4c=x.slice(2,4); switch(v_4c) {
+				case "LL": break;
+				case "WL": break;
+				case "PL": break;
+				default:
+					/** @type {KnownParts_VL} */
+					let ve_ac=x.slice(2);
+					console.log("new with param [param_2c_VL]",x,ve_ac);
+					debugger;
+			} break;
+			case "UC": console.log("new with param [param_2c_UC]",x,x.slice(2)); break;
+			case "SP": break;
+			default: console.log("new [param_value_needed]",v_2c,x); break;
+		}
 	}
 	/**
 	 * @param {BrowseEndpointData} x
@@ -3975,7 +3976,7 @@ class HandleTypes extends BaseService {
 	 * @param {CommandMetadata} x
 	 */
 	commandMetadata(x) {
-		const {webCommandMetadata,...y}=x;	
+		const {webCommandMetadata,...y}=x;
 		this.WebCommandMetadata(x.webCommandMetadata);
 		this.empty_object(y);
 	}
