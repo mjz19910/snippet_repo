@@ -1,10 +1,4 @@
-import {MovingThumbnailDetails} from "./MovingThumbnailDetails";
-
-export interface MovingThumbnailRenderer {
+type MovingThumbnailRenderer={
 	enableHoveredLogging: true;
 	enableOverlay: true;
-}
-
-export interface MovingThumbnailRendererDetail extends MovingThumbnailRenderer {
-	movingThumbnailDetails: MovingThumbnailDetails;
-} 
+};

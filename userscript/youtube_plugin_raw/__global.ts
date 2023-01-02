@@ -1,6 +1,6 @@
 import {GlobalAttachWindow} from "./support/make/make_Window.js";
-import {GlobalAttach_yt} from "./support/make/make_yt.js";
-import {GlobalAttach_ytcfg} from "./support/make/make_ytcfg.js";
+import {GlobalAttach_yt} from "./yt_json_types/make_yt.js";
+import {GlobalAttach_ytcfg} from "./yt_json_types/make_ytcfg.js";
 
 export type Attachments=[
 	GlobalAttach_yt,

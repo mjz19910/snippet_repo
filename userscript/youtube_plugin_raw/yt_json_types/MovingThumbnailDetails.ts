@@ -1,3 +1,4 @@
-export interface MovingThumbnailDetails extends ThumbnailsList {
+type MovingThumbnailDetails={
+	thumbnails: Thumbnail[];
 	logAsMovingThumbnail: boolean;
-}
+};

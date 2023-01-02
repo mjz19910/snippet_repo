@@ -1,4 +1,4 @@
-import {Type_ytcfg} from "../yt_api/_/t/Type_ytcfg.js";
+import {Type_ytcfg} from "./Type_ytcfg.js";
 
 export type GlobalAttach_ytcfg=1;
 

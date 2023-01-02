@@ -1,3 +1,3 @@
 type ThumbnailsList={
 	thumbnails: Thumbnail[];
-}
+};
