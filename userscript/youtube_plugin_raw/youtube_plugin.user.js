@@ -3881,15 +3881,21 @@ class HandleTypes extends BaseService {
 		if("actions" in y) {
 			const {actions: a,...c}=y;
 			iterate(a,x => {
+				const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=x;
 				this.clickTrackingParams(x.clickTrackingParams);
-				this.empty_object(x.updateNotificationsUnseenCountAction);
+				this.UpdateNotificationsUnseenCount(updateNotificationsUnseenCountAction);
+				this.empty_object(y);
 			});
 			this.empty_object(c);
 		} else if("unseenCount" in y) {
-			const {unseenCount: a,...c}=y;
-			this.save_number("notification.unseenCount",a);
-			this.empty_object(c);
+			this.notification_unseenCount(y);
 		}
+	}
+	/** @arg {{unseenCount:number}} x */
+	notification_unseenCount(x) {
+		const {unseenCount: a,...c}=x;
+		this.save_number("notification.unseenCount",a);
+		this.empty_object(c);
 	}
 	/** @private @template {{}} T @arg {{} extends T?T:never} x */
 	empty_object(x) {
@@ -3907,6 +3913,20 @@ class HandleTypes extends BaseService {
 	trackingParams(x) {
 		if(this.x.get_param("log_tracking_params")) console.log("tp",x);
 		this.primitive(x);
+	}
+	/** @arg {UpdateNotificationsUnseenCount} x */
+	UpdateNotificationsUnseenCount(x) {
+		const {handlerData,timeoutMs,...y}=x;
+		switch(handlerData) {
+			case "NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT": break;
+			default: debugger;
+		}
+		this.primitive_of(timeoutMs,"number");
+		this.notification_unseenCount(y);
+	}
+	/** @template T @arg {T} x @arg {TypeOfType<T>} y */
+	primitive_of(x,y) {
+		if(typeof x!==y) debugger;
 	}
 }
 //#endregion
