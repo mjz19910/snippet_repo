@@ -3889,9 +3889,7 @@ class HandleTypes extends BaseService {
 		console.log("[empty_object] [%s] %o",keys.join(),x);
 		console.log(new Error);
 	}
-	/**
-	 * @arg {string} x
-	 */
+	/** @private @arg {string} x */
 	clickTrackingParams(x) {
 		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",x);
 		this.primitive(x);
