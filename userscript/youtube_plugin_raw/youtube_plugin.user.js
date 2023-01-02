@@ -3717,15 +3717,57 @@ class HandleTypes extends BaseService {
 	 * @param {BrowseResponseContent} x
 	 */
 	BrowseResponseContent(x) {
-		const {trackingParams,...y}=x;
-		this.save_keys("BrowseResponseContent",x);
+		this.save_keys("BrowseResponseContent",x,Object.keys(x).length===7);
+		const {trackingParams: a,...y}=x;
+		this.trackingParams(a);
+		if("responseContext" in y) {
+			const {responseContext: res_ctx,contents: cont,header: hd/*tp*/,topbar: tb,onResponseReceivedActions: act_arr,frameworkUpdates: upd,...z}=y;
+			this.ResponseContext(res_ctx);
+			this.TwoColumnBrowseResultsRenderer(cont);
+			this.header(hd);
+			this.topbar(tb);
+			iterate(act_arr,v => this.ResponseReceivedAction(v));
+			this.frameworkUpdates(upd);
+			this.empty_object(z);
+			return;
+		}
 		this.empty_object(y);
+	}
+	/**
+	 * @param {DesktopTopbarRenderer} x
+	 */
+	topbar(x) {
+		this.save_keys("DesktopTopbarRenderer",x);
+	}
+	/**
+	 * @param {FeedTabbedHeaderRenderer} x
+	 */
+	header(x) {
+		this.save_keys("FeedTabbedHeaderRenderer",x);
+	}
+	/**
+	 * @param {EntityBatchUpdate} x
+	 */
+	frameworkUpdates(x) {
+		this.save_keys("EntityBatchUpdate",x);
+	}
+	/**
+	 * @param {ResponseReceivedAction} x
+	 */
+	ResponseReceivedAction(x) {
+		this.save_keys("ResponseReceivedAction",x);
+	}
+	/**
+	 * @param {TwoColumnBrowseResultsRenderer} x
+	 */
+	TwoColumnBrowseResultsRenderer(x) {
+		this.save_keys("TwoColumnBrowseResultsRenderer",x);
 	}
 	/**
 	 * @param {WatchEndpointData} x
 	 */
 	WatchEndpointData(x) {
-		this.save_keys("endpoint_data",x);
+		this.save_keys("WatchEndpointData",x);
 	}
 	/**
 	 * @param {string} x
@@ -3779,92 +3821,87 @@ class HandleTypes extends BaseService {
 		if("params" in x) {
 			const {params: a,...y}=x;
 			this.parse_endpoint_params(a);
-			this.save_keys("endpoint_data",x);
+			this.save_keys("BrowseEndpointData_params",x);
 			this.empty_object(y);
 			return;
 		}
 		if("browseId" in x) {
 			const {browseId: a,...y}=x;
 			this.parse_browse_id(a);
-			this.save_keys("endpoint_data",x,true);
+			this.save_keys("BrowseEndpointData_browseId",x,true);
 			this.empty_object(y);
 			return;
 		}
-		this.save_keys("endpoint_data",x);
+		this.save_keys("BrowseEndpointData",x);
 		this.empty_object(x);
 	}
 	/**
 	 * @param {SearchEndpointData} x
 	 */
 	SearchEndpointData(x) {
-		this.save_keys("endpoint_data",x);
+		this.save_keys("SearchEndpointData",x);
 	}
 	/**
 	 * @param {SetSettingEndpointData} x
 	 */
 	SetSettingEndpointData(x) {
-		this.save_keys("endpoint_data",x);
+		this.save_keys("SetSettingEndpointData",x);
 	}
 	/**
 	 * @param {SignalServiceEndpointData} x
 	 */
 	SignalServiceEndpointData(x) {
-		this.save_keys("endpoint_data",x);
+		this.save_keys("SignalServiceEndpointData",x);
 	}
 	/**
 	 * @param {UrlEndpointRoot} x
 	 */
 	UrlEndpointRoot(x) {
-		this.save_keys("endpoint_data",x);
+		this.save_keys("UrlEndpointRoot",x);
 	}
 	/** @param {YtEndpoint} x */
 	yt_endpoint(x) {
+		this.save_keys("YtEndpoint",x,true);
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
 		if("watchEndpoint" in y) {
 			const {watchEndpoint: a,...b}=y;
 			this.WatchEndpointData(a);
-			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("browseEndpoint" in y) {
 			const {browseEndpoint: a,...b}=y;
 			this.BrowseEndpointData(a);
-			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("searchEndpoint" in y) {
 			const {searchEndpoint: a,...b}=y;
 			this.SearchEndpointData(a);
-			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("setSettingEndpoint" in y) {
 			const {setSettingEndpoint: a,...b}=y;
 			this.SetSettingEndpointData(a);
-			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("signalServiceEndpoint" in y) {
 			const {signalServiceEndpoint: a,...b}=y;
 			this.SignalServiceEndpointData(a);
-			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
 		if("urlEndpoint" in y) {
 			const {urlEndpoint: a,...b}=y;
 			this.UrlEndpointRoot(a);
-			this.save_keys("yt_endpoint",x,true);
 			this.empty_object(b);
 			return;
 		}
-		this.save_keys("yt_endpoint",x);
+		this.empty_object(y);
 	}
 	/** @arg {ResponseTypes} x */
 	ResponseTypes(x) {

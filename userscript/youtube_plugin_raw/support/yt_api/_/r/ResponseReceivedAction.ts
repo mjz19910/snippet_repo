@@ -1,3 +1,3 @@
-type ResponseReceivedActionItem=
+type ResponseReceivedAction=
 	AdsControlFlowOpportunityReceivedCommand|
 	ReloadContinuationItemsCommandData;

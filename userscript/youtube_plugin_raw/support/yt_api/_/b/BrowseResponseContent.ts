@@ -6,7 +6,7 @@ type BrowseResponseContent={
 	header: FeedTabbedHeaderRenderer;
 	trackingParams: string;
 	topbar: DesktopTopbarRenderer;
-	onResponseReceivedActions: ResponseReceivedActionItem[];
+	onResponseReceivedActions: ResponseReceivedAction[];
 	frameworkUpdates: EntityBatchUpdate;
 }|{
 	trackingParams: string;
