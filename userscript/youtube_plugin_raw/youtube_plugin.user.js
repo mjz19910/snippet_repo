@@ -4138,13 +4138,42 @@ class HandleTypes extends BaseService {
 	 * @param {TwoColumnBrowseResultsRenderer} x
 	 */
 	TwoColumnBrowseResultsRenderer(x) {
-		this.TwoColumnBrowseResultsRendererData(x.twoColumnBrowseResultsRenderer);
+		const {twoColumnBrowseResultsRenderer,...y}=x;
+		this.TwoColumnBrowseResultsRendererData(twoColumnBrowseResultsRenderer);
 		this.save_keys("TwoColumnBrowseResultsRenderer",x);
+		this.empty_object(y);
 	}
 	/**
 	 * @param {TwoColumnBrowseResultsRendererData} x
 	 */
-	TwoColumnBrowseResultsRendererData(x) {x;}
+	TwoColumnBrowseResultsRendererData(x) {
+		const {tabs,...y}=x;
+		iterate(tabs,v=>this.ResultRenderer(v));
+		this.empty_object(y);
+	}
+	/**
+	 * @param {ResultRenderer} x
+	 */
+	ResultRenderer(x) {
+		const {tabRenderer,...y}=x;
+		this.TabRenderer(tabRenderer);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {TabRenderer} x
+	 */
+	TabRenderer(x) {
+		const {content,selected,trackingParams,...y}=x;
+		if("richGridRenderer"in content) {
+			return;
+		}
+		if("sectionListRenderer" in content) {
+			return;
+		}
+		this.primitive_of(selected,"boolean");
+		this.trackingParams(trackingParams);
+		this.empty_object(y);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
