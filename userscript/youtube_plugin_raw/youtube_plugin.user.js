@@ -3227,6 +3227,7 @@ class CsiService extends BaseService {
 		"GetUnseenNotificationCount_rid",
 		"GetWatchNext_rid",
 		"GetWebMainAppGuide_rid",
+		"GetWatchPageWebTopLevelComments_rid",
 	];
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
@@ -3294,6 +3295,7 @@ class ECatcherService extends BaseService {
 				[39321827,39323023],
 				[24128088,24429904,24124511,24061846,24293752],
 				[24440901],
+				[24422508,24401504],
 			].flat(),
 		},
 	};
@@ -3987,7 +3989,7 @@ class HandleTypes extends BaseService {
 			z=y;
 		}
 		this.save_keys("api_next",x,true);
-		if(!this.is_empty_object(z)) console.log("[api_next] [%s]", Object.keys(x).join());
+		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
