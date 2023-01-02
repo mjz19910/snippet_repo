@@ -2490,7 +2490,7 @@ class AutoBuyImplR {
 			// (return is Promise<void>)
 			drop;
 			// [none]
-			push_global_object;
+			push_window_object;
 			// window
 			dup;
 			// window window
@@ -2932,6 +2932,7 @@ class AutoBuyImplR {
 		// we destroyed the node this was attached to,
 		// replace it again (it was there, we destroyed it, now please put it back)
 		this.set_timeplayed_update_interval();
+		this.with_async.main_running=false;
 	}
 	set_auto_buy_timeout() {
 		if(this.timeout_ms) {
