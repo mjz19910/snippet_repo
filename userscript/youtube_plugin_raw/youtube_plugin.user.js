@@ -274,7 +274,7 @@ async function async_plugin_init(event) {
 				if(!window.Polymer.Class) break x;
 				plugin_state.polymer_loaded=true;
 			}
-			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body&&document.readyState==="complete") {
+			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body) {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => {
 					let e_tn=e.tagName;
 					if(e_tn==="LINK"&&e instanceof HTMLLinkElement) {
