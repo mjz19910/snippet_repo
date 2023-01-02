@@ -2616,6 +2616,7 @@ class HiddenData {
 	}
 	/** @template U @arg {(v:T)=>U} v @arg {()=>U} def */
 	extract_default(v,def) {
+		return v(this.#value);
 		try {
 			return v(this.#value);
 		} catch(e) {
@@ -3699,6 +3700,7 @@ class HandleTypes extends BaseService {
 	/** @arg {YtBrowsePageResponse} x */
 	DataResponsePageType(x) {
 		const {page: a,endpoint: b,response: c,url: d,...y}=x;
+		this._current_response_type=a;
 		if(a!=="browse") debugger;
 		this.yt_endpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
@@ -3736,7 +3738,7 @@ class HandleTypes extends BaseService {
 	 * @param {FeedTabbedHeaderRenderer} x
 	 */
 	header(x) {
-		this.save_keys("FeedTabbedHeaderRenderer",x);
+		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true());
 	}
 	/**
 	 * @param {EntityBatchUpdate} x
@@ -3936,11 +3938,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AttGet} x */
 	AttGet(x) {
-		this.save_keys("AttGet",x);
+		this.save_keys("AttGet",x,this.TODO_true());
 	}
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
-		this.save_keys("GuideJsonType",x);
+		this.save_keys("GuideJsonType",x,this.TODO_true());
 	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
@@ -3964,7 +3966,7 @@ class HandleTypes extends BaseService {
 	/** @private @arg {NotificationGetUnseenCountData} x */
 	NotificationGetUnseenCountData(x) {
 		const {responseContext,...y}=x;
-		this.save_keys("GetUnseenCount",x);
+		this.save_keys("GetUnseenCount",x,true);
 		this.ResponseContext(x.responseContext);
 		if("actions" in y) {
 			const {actions: a,...c}=y;
@@ -4143,7 +4145,7 @@ class HandleTypes extends BaseService {
 	TwoColumnBrowseResultsRenderer(x) {
 		const {twoColumnBrowseResultsRenderer,...y}=x;
 		this.TwoColumnBrowseResultsRendererData(twoColumnBrowseResultsRenderer);
-		this.save_keys("TwoColumnBrowseResultsRenderer",x);
+		this.save_keys("TwoColumnBrowseResultsRenderer",x,true);
 		this.empty_object(y);
 	}
 	/**
