@@ -52,7 +52,7 @@ const AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
 
 const AutoBuyMulModifierFactor=1;
-const AutoBuyRatioDiv=1;
+const AutoBuyRatioDiv=3;
 const calcPres_target_percent=1;
 
 const LOG_LEVEL_CRIT_IMPL=1;
@@ -2159,7 +2159,7 @@ class AutoBuyStateImplR {
 		}
 		// this.div=Math.log2(window.prestige)*AutoBuyRatioDiv;
 		this.div=AutoBuyRatioDiv;
-		this.val=Math.log2(window.totalAtome/window.atomepersecond)/this.div;
+		this.val=Math.log2(window.totalAtome/window.atomepersecond/2)/this.div;
 		if(!Number.isFinite(this.val)) {
 			this.val=1e-16;
 			this.update_not_ready();
