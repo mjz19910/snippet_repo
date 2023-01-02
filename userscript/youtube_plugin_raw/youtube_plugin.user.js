@@ -3274,8 +3274,9 @@ class BaseService extends BaseServicePrivate {
 	log(...x) {
 		console.log(...x);
 	}
-	/** @template {{}} T @arg {string} key @arg {T} obj */
-	save_keys(key,obj) {
+	/** @template {{}} T @arg {string} key @arg {T} obj @arg {boolean} [handled] */
+	save_keys(key,obj,handled) {
+		if(handled===void 0) debugger;
 		let keys=get_keys_of(obj);
 		if(eq_keys(keys,["type","data"])) {
 			debugger;
@@ -3804,12 +3805,25 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	DataResponsePageType(x) {
-		const {endpoint}=x;
+		const {page,endpoint,response,url}=x;
+		if(page!=="browse") debugger;
+		response;
 		this.yt_endpoint(endpoint);
 		this.save_keys("DataResponsePageType",x);
+		this.parse_url(url);
+		this.empty_object(response);
 	}
 	/** @param {YtEndpoint} x */
 	yt_endpoint(x) {
+		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
+		this.clickTrackingParams(a);
+		this.commandMetadata(b);
+		if("watchEndpoint" in y) {
+			const {watchEndpoint,...a}=y;
+			this.save_keys("yt_endpoint",x,true);
+			this.empty_object(a);
+			return;
+		}
 		this.save_keys("yt_endpoint",x);
 	}
 	/** @arg {ResponseTypes} x */
@@ -3927,6 +3941,30 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {T} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
+	}
+	/** @arg {string} x */
+	parse_url(x) {
+		console.log(x); debugger;
+	}
+	/**
+	 * @param {CommandMetadata} x
+	 */
+	commandMetadata(x) {
+		const {webCommandMetadata,...y}=x;	
+		this.WebCommandMetadata(x.webCommandMetadata);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {WebCommandMetadata} x
+	 */
+	WebCommandMetadata(x) {
+		const {apiUrl,...y}=x;
+		apiUrl&&this.parse_api_url(apiUrl);
+		this.empty_object(y);
+	}
+	/** @arg {string} x */
+	parse_api_url(x) {
+		console.log(x); debugger;
 	}
 }
 //#endregion
