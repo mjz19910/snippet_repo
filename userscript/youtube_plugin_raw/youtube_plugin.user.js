@@ -3705,13 +3705,20 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	DataResponsePageType(x) {
-		const {page,endpoint,response,url,...y}=x;
-		if(page!=="browse") debugger;
-		response;
-		this.yt_endpoint(endpoint);
+		const {page: a,endpoint: b,response: c,url: d,...y}=x;
+		if(a!=="browse") debugger;
+		this.yt_endpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
-		this.parse_url(url);
-		this.empty_object(response);
+		this.parse_url(d);
+		this.BrowseResponseContent(c);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {BrowseResponseContent} x
+	 */
+	BrowseResponseContent(x) {
+		const {trackingParams,...y}=x;
+		this.save_keys("BrowseResponseContent",x);
 		this.empty_object(y);
 	}
 	/**

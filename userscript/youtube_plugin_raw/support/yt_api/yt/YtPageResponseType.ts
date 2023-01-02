@@ -1,6 +1,6 @@
 type YtBrowsePageResponse={
 	page: "browse";
 	endpoint: YtEndpoint;
-	response: {};
+	response: BrowseResponseContent;
 	url: string;
 };

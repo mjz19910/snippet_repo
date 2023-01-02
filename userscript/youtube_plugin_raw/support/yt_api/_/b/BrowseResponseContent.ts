@@ -1,12 +1,20 @@
 type BrowseResponseContent={
-	responseContext?: ResponseContext;
 	trackingParams: string;
-	contents?: TwoColumnBrowseResultsRenderer;
-	header?: FeedTabbedHeaderRenderer;
-	topbar?: DesktopTopbarRenderer;
-	sidebar?: SettingsSidebarRenderer;
-	onResponseReceivedActions?: ResponseReceivedActionItem[];
-	frameworkUpdates?: EntityBatchUpdate;
-	observedStateTags?: StateTagItem[];
-	cacheMetadata?: CacheMetadata;
+}|{
+	responseContext: ResponseContext;
+	contents: TwoColumnBrowseResultsRenderer;
+	header: FeedTabbedHeaderRenderer;
+	trackingParams: string;
+	topbar: DesktopTopbarRenderer;
+	onResponseReceivedActions: ResponseReceivedActionItem[];
+	frameworkUpdates: EntityBatchUpdate;
+}|{
+	trackingParams: string;
+	sidebar: SettingsSidebarRenderer;
+}|{
+	trackingParams: string;
+	observedStateTags: StateTagItem[];
+}|{
+	trackingParams: string;
+	cacheMetadata: CacheMetadata;
 };
