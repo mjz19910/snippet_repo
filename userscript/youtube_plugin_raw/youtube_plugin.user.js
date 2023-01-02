@@ -3756,33 +3756,33 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		if("browseEndpoint" in y) {
-			const {browseEndpoint,...a}=y;
+			const {browseEndpoint: a,...b}=y;
 			this.save_keys("yt_endpoint",x,true);
-			this.empty_object(a);
+			this.empty_object(b);
 			return;
 		}
 		if("searchEndpoint" in y) {
-			const {searchEndpoint,...a}=y;
+			const {searchEndpoint: a,...b}=y;
 			this.save_keys("yt_endpoint",x,true);
-			this.empty_object(a);
+			this.empty_object(b);
 			return;
 		}
 		if("setSettingEndpoint" in y) {
-			const {setSettingEndpoint,...a}=y;
+			const {setSettingEndpoint: a,...b}=y;
 			this.save_keys("yt_endpoint",x,true);
-			this.empty_object(a);
+			this.empty_object(b);
 			return;
 		}
 		if("signalServiceEndpoint" in y) {
-			const {signalServiceEndpoint,...a}=y;
+			const {signalServiceEndpoint: a,...b}=y;
 			this.save_keys("yt_endpoint",x,true);
-			this.empty_object(a);
+			this.empty_object(b);
 			return;
 		}
 		if("urlEndpoint" in y) {
-			const {urlEndpoint,...a}=y;
+			const {urlEndpoint: a,...b}=y;
 			this.save_keys("yt_endpoint",x,true);
-			this.empty_object(a);
+			this.empty_object(b);
 			return;
 		}
 		this.save_keys("yt_endpoint",x);
