@@ -3294,7 +3294,7 @@ class ECatcherService extends BaseService {
 				[39321827,39323023],
 				[24128088,24429904,24124511,24061846,24293752],
 				[24440901],
-			],
+			].flat(),
 		},
 	};
 	/** @arg {ECatcherServiceParams['params']} params */
@@ -3322,12 +3322,7 @@ class ECatcherService extends BaseService {
 		let expected=this.data.expected_client_values.fexp;
 		/** @type {number[]} */
 		let new_expected=[];
-		client.fexp.forEach(e => {
-			for(let known of expected) {
-				if(known.includes(e)) void 0;
-				else new_expected.push(e);
-			}
-		});
+		client.fexp.forEach(e => expected.includes(e)? 0:new_expected.push(e));
 		if(prev_client.name!==this.data.client.name) {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
@@ -3356,6 +3351,7 @@ class GFeedbackService extends BaseService {
 	}
 	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
 	on_params(params) {
+		let parsed_e=null;
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
@@ -3364,9 +3360,7 @@ class GFeedbackService extends BaseService {
 					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
 					this.data.context=param.value;
 				} break;
-				case "e": {
-					this.data.e=this.parse_e_param(param);
-				} break;
+				case "e": parsed_e=this.data.e=this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
 				case "has_unlimited_entitlement": break;
 				case "ipcc": break;
@@ -3385,15 +3379,15 @@ class GFeedbackService extends BaseService {
 				case "route": if(param.value!=="channel.featured") debugger; break;
 				default: console.log("new [param_key]",param); debugger;
 			}
-			/** @type {number[]} */
-			let new_expected=[];
-			let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
-			this.data.e?.forEach(e => {
-				for(let known of expected) if(known.includes(e)) return;
-				new_expected.push(e);
-			});
-			if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
+			if(parsed_e) this.maybe_new_e();
 		}
+	}
+	maybe_new_e() {
+		/** @type {number[]} */
+		let new_expected=[];
+		let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
+		this.data.e?.forEach(e => expected.includes(e)? 0:new_expected.push(e));
+		if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
 	}
 }
 class GuidedHelpService extends BaseService {
