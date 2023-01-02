@@ -17,6 +17,7 @@
 function cast_as(e,x=e) {
 	return x;
 }
+const as_cast=cast_as;
 
 /** @type {YtdAppElement} */
 const YtdAppElement=cast_as({});
@@ -681,12 +682,23 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @template {{}} T @arg {T} obj @returns {import("./support/yt_api/_/g/GetMaybeKeys.js").MaybeKeysArray<T>} */
+/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
 function get_keys_of(obj) {
 	if(!obj) {
 		debugger;
 	}
 	let rq=Object.keys(obj);
+	/** @type {any} */
+	let ra=rq;
+	return ra;
+}
+/** @template {{}} T @arg {T} obj @returns {[MaybeKeysArray<T>[0]]} */
+function get_keys_of_one(obj) {
+	if(!obj) {
+		debugger;
+	}
+	let rq=Object.keys(obj);
+	if(rq.length>1) throw new Error("Too many keys");
 	/** @type {any} */
 	let ra=rq;
 	return ra;
@@ -994,6 +1006,7 @@ class HandleRendererContentItemArray {
 			if("commentsHeaderRenderer" in content_item) return true;
 			if("continuationItemRenderer" in content_item) return true;
 			if("compactVideoRenderer" in content_item) return true;
+			if("compactPlaylistRenderer" in content_item) return true;
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
 				return true;
@@ -3879,49 +3892,55 @@ class HandleTypes extends BaseService {
 	UrlEndpointRoot(x) {
 		this.save_keys("UrlEndpointRoot",x);
 	}
+	endpoint_data_map=new class {
+		constructor() {
+			this._map=new Map(Object.entries(this._obj_map));
+		}
+		/** @type {endpoint_data_handler_names} */
+		_obj_map={
+			watchEndpoint: "WatchEndpointData",
+			browseEndpoint: "BrowseEndpointData",
+			searchEndpoint: "SearchEndpointData",
+			setSettingEndpoint: "SetSettingEndpointData",
+			signalServiceEndpoint: "SignalServiceEndpointData",
+			urlEndpoint: "UrlEndpointRoot",
+			resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData",
+		};
+		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {endpoint_data_handler_names[T]} */
+		get(k) {
+			let key=this._map.get(k);
+			if(!key) throw new Error();
+			return as_cast(key);
+		}
+	};
 	/** @param {YtEndpoint} x */
 	yt_endpoint(x) {
 		this.save_keys("YtEndpoint",x,true);
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.commandMetadata(b);
-		if("watchEndpoint" in y) {
-			const {watchEndpoint: a,...b}=y;
-			this.WatchEndpointData(a);
-			this.empty_object(b);
-			return;
+		/** @type {endpoint_target_type} */
+		let v=y;
+		let yk=get_keys_of_one(y);
+		const [ya]=yk;
+		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
+		let q=(v) => this.endpoint_data_map.get(v);
+		/** @template {{}} T @arg {{} extends T?T:never} x */
+		let g=x => this.empty_object(x);
+		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
+		let n=(x,b) => {if(!x) throw new Error(); g(b);};
+		switch(ya) {
+			case "browseEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "searchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "setSettingEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "signalServiceEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "urlEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "watchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			default:
 		}
-		if("browseEndpoint" in y) {
-			const {browseEndpoint: a,...b}=y;
-			this.BrowseEndpointData(a);
-			this.empty_object(b);
-			return;
+		switch(ya) {
+			default: console.log('[new_ep_data] [%s]',ya); debugger;
 		}
-		if("searchEndpoint" in y) {
-			const {searchEndpoint: a,...b}=y;
-			this.SearchEndpointData(a);
-			this.empty_object(b);
-			return;
-		}
-		if("setSettingEndpoint" in y) {
-			const {setSettingEndpoint: a,...b}=y;
-			this.SetSettingEndpointData(a);
-			this.empty_object(b);
-			return;
-		}
-		if("signalServiceEndpoint" in y) {
-			const {signalServiceEndpoint: a,...b}=y;
-			this.SignalServiceEndpointData(a);
-			this.empty_object(b);
-			return;
-		}
-		if("urlEndpoint" in y) {
-			const {urlEndpoint: a,...b}=y;
-			this.UrlEndpointRoot(a);
-			this.empty_object(b);
-			return;
-		}
-		this.empty_object(y);
 	}
 	/** @type {ResponseTypes['type']|null} */
 	_current_response_type=null;
