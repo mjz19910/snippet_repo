@@ -2806,12 +2806,13 @@ async function main() {
 	}
 	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
 	function fetch_promise_handler(request,options,response) {
-		/** @type {["text"]} */
-		let handled_keys=["text"];
 		class FakeResponse {
 			text() {
 				if(is_yt_debug_enabled) console.log("response.text()");
 				return handle_fetch_response_2(request,options,response.text());
+			}
+			get redirected() {
+				return response.redirected;
 			}
 		}
 		let fake_res=new FakeResponse;
@@ -2821,15 +2822,12 @@ async function main() {
 		let fake_res_t=any_x;
 		return new Proxy(fake_res_t,{
 			get(_obj,key,_proxy) {
-				for(let i=0;i<handled_keys.length;i++) {
-					if(key in fake_res) {
-						if(key==="text") {
-							return fake_res[key];
-						} else {
-							console.log("need new case for new key on fake Response");
-							debugger;
-						}
-					}
+				if(key==="then") {
+					return void 0;
+				}
+				switch(key) {
+					case "text": return fake_res[key];
+					default: console.log("[new_response_key] [%s]",key); debugger;
 				}
 				return Reflect.get(response,key);
 			}
@@ -2907,7 +2905,7 @@ async function main() {
 		if(!ytd_page_manager) throw new Error("Invalid state");
 		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
 		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
-		if(nav_load_str === current_page_type) return;
+		if(nav_load_str===current_page_type) return;
 		current_page_type=nav_load_str;
 		page_type_changes.push(nav_load_str);
 		console.log(nav_load_str);
