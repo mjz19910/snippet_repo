@@ -6,5 +6,6 @@ type EndpointPlugins=[
 	SearchEndpointPlugin,
 	SetSettingEndpointPlugin,
 	SignalNavigationEndpointPlugin,
-	SignOutEndpointPlugin
+	SignOutEndpointPlugin,
+	GetAccountsListInnertubeEndpointPlugin,
 ][number];

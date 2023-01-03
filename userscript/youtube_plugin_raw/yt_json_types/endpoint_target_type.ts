@@ -8,4 +8,5 @@ type endpoint_target_type=Partial<{
 	resolveUrlCommandMetadata: ResolveUrlCommandMetadataData;
 	signalNavigationEndpoint: SignalNavigationEndpointData;
 	signOutEndpoint: SignOutEndpointData;
+	getAccountsListInnertubeEndpoint: GetAccountsListInnertubeEndpointData;
 }>;

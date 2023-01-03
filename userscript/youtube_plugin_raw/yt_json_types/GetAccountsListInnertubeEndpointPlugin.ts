@@ -1,0 +1,3 @@
+type GetAccountsListInnertubeEndpointPlugin={
+	getAccountsListInnertubeEndpoint: GetAccountsListInnertubeEndpointData;
+};

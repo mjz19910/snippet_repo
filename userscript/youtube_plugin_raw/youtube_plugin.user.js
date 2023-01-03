@@ -1551,6 +1551,11 @@ class FilterHandlers {
 						/** @type {AccountMenuJson} */
 						data: cast_as(json),
 					};
+					case "accounts_list": return {
+						type: `${target[0]}.${target[1]}`,
+						/** @type {{}} */
+						data: cast_as(json),
+					};
 					case "set_setting": return {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {AccountSetSetting} */
@@ -2842,6 +2847,7 @@ function get_account_type(base,parts,index) {
 	let cur_part=parts[index];
 	switch(cur_part) {
 		case "account_menu": break;
+		case "accounts_list": break;
 		case "set_setting": break;
 		default: no_handler({parts,index});
 	}
@@ -3961,6 +3967,7 @@ class HandleTypes extends BaseService {
 			resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData",
 			signalNavigationEndpoint: "SignalNavigationEndpointData",
 			signOutEndpoint: "SignOutEndpointData",
+			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpoint",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {endpoint_data_handler_names[T]} */
 		get(k) {
@@ -3994,6 +4001,7 @@ class HandleTypes extends BaseService {
 			case "watchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "signalNavigationEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "signOutEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "getAccountsListInnertubeEndpoint": break;
 			default:
 		}
 		switch(ya) {
