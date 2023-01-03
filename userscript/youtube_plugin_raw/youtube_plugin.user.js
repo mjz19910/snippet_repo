@@ -1430,6 +1430,16 @@ function create_from_parse(str) {
 	let ret=a;
 	return ret;
 }
+/** @arg {string|URL|Request} req */
+function convert_to_url(req) {
+	if(typeof req=="string") {
+		return {url: to_url(req)};
+	}
+	if(req instanceof URL) {
+		return {url: req};
+	}
+	return {url: to_url(req.url)};
+}
 class FilterHandlers {
 	/** @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
@@ -1475,7 +1485,7 @@ class FilterHandlers {
 		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
-	/** @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {T} x  */
+	/** @template {string} T @arg {T} x */
 	use_template_url(x) {
 		const res_parse=create_from_parse(x);
 		if("_tag" in res_parse) {
@@ -1599,34 +1609,8 @@ class FilterHandlers {
 	}
 	/** @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {
-		const debug=false;
-		function c1() {
-			if(typeof request=="string") {
-				return {url: to_url(request)};
-			}
-			if(request instanceof URL) {
-				return {url: request};
-			}
-			return {url: to_url(request.url)};
-		}
-		let parsed_url=c1().url;
-		/** @type {any} */
-		let href_any=parsed_url.href;
-		/** @type {`https://${string}/${string}?${string}`} */
-		let href=href_any;
-		var url_type=this.use_template_url(href).name;
-		let api_parts=parsed_url.pathname.slice(1).split("/");
-		// spell:ignore youtubei
-		if(api_parts[0]!=="youtubei") {
-			console.log("unknown api path",parsed_url.pathname);
-			return;
-		}
-		if(api_parts[1]!=="v1") {
-			console.log("unknown api path",parsed_url.pathname);
-			return;
-		}
-		let api_path=api_parts.slice(2).join(".");
-		debug&&console.log("on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
+		let parsed_url=convert_to_url(request).url;
+		var url_type=this.use_template_url(parsed_url.href).name;
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.handle_types.ResponseTypes(res);
