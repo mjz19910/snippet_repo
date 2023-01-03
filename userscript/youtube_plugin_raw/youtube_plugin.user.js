@@ -3328,7 +3328,7 @@ class CsiService extends BaseService {
 			}
 			/** @template {string} T @arg {T} x @returns {x is `${string}_rid`} */
 			function get_ends_with(x) {x; return x.endsWith("_rid");}
-			/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${Uppercase<Letters>}${string}_rid`} */
+			/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}_rid`} */
 			function get_starts_with(x,v) {x; return x.startsWith(v);}
 			if(param.key in this.rid) {
 				/** @type {RidFormat<string>} */
@@ -3342,7 +3342,7 @@ class CsiService extends BaseService {
 				} else if(get_starts_with(param.key,"Record")) {
 					console.log("[new_record_rid][%s][%s]",param.key,param.value);
 				} else if(get_starts_with(param.key,"Set")) {
-					console.log("[new_record_rid][%s][%s]",param.key,param.value);
+					console.log("[new_set_rid][%s][%s]",param.key,param.value);
 				} else {
 					console.log("[new_rid_section][%s]",param.key);
 				}
