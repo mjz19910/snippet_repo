@@ -2111,7 +2111,9 @@ inject_api_yt.filter_out_keys=filter_out_keys;
 /** @arg {NavigateEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
-		case "browse": case "watch": case "channel": break;
+		case "browse": case "channel": break;
+		case "playlist": case "settings": break;
+		case "shorts": case "watch": break;
 		default: console.log("[%s]",pageType); debugger;
 	}
 }
@@ -4408,9 +4410,54 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtSettingsResponse} x */
 	YtSettingsResponse(x) {
-		const {page,endpoint,...y}=x;
+		const {page: {},endpoint: a,response: b,url: c,...y}=x;
+		this.yt_endpoint(a);
+		this.SettingsResponseContent(b);
+		this.parse_url(c);
 		this.empty_object(y);
 	}
+	/** @arg {SettingsResponseContent} x */
+	SettingsResponseContent(x) {
+		const {responseContext: a,contents: b,trackingParams: tp,topbar: c,sidebar: d,...y}=x;
+		this.ResponseContext(a);
+		this.TwoColumnBrowseResultsRenderer(b);
+		this.DesktopTopbarRenderer(c);
+		this.renderer(d);
+		this.trackingParams(tp);
+		this.empty_object(y);
+	}
+	/** @arg {SettingsSidebarRendererData} x */
+	SettingsSidebarRendererData(x) {
+		iterate(x.items,v => this.CompactLinkRenderer(v));
+		this.YtTextType(x.title);
+	}
+	/** @arg {TextRun} x */
+	TextRun(x) {
+		x;
+	}
+	/** @arg {Accessibility} x */
+	Accessibility(x) {x;}
+	/** @private @arg {YtTextType} x */
+	YtTextType(x) {
+		if(!x) debugger;
+		const {runs: a,accessibility: b,simpleText: c,...y}=x;
+		if(a) iterate(a,v=>this.TextRun(v));
+		if(b) this.Accessibility(b);
+		if(c) this.primitive_of(c,"string");
+		this.empty_object(y);
+	}
+	/** @arg {CompactLinkRenderer} x */
+	CompactLinkRenderer(x) {x;}
+	/** @arg {GeneralRenderer} x */
+	renderer(x) {
+		if("settingsSidebarRenderer" in x) {
+			const {settingsSidebarRenderer: a,...y}=x;
+			this.SettingsSidebarRendererData(a);
+			this.empty_object(y);
+		}
+	}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {x;}
 	/** @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {
 		const {page,...y}=x;

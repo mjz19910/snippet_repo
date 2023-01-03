@@ -1,0 +1,3 @@
+type CompactLinkRenderer={
+	compactLinkRenderer: LinkRenderer;
+};
