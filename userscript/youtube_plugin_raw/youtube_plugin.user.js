@@ -3985,30 +3985,34 @@ class HandleTypes extends BaseService {
 			this.ResponseContext(x.data.responseContext);
 		}
 		switch(x.type) {
-			case "account.account_menu": this.AccountMenuJson(x.data); return;
-			case "att.get": this.AttGet(x.data); return;
-			case "feedback": this.save_keys(x.type,x.data); break;
-			case "get_transcript": this.save_keys(x.type,x.data); break;
-			case "getDatasyncIdsEndpoint": debugger; this.save_keys(x.type,x.data); break;
-			case "guide": this.GuideJsonType(x.data); return;
-			case "live_chat.get_live_chat_replay": this.save_keys(x.type,x.data); break;
-			case "next": this.YtApiNext(x.data); return;
-			case "notification.get_notification_menu": this.notification_get_notification_menu_t(x); return;
-			case "notification.get_unseen_count": this.notification_get_unseen_count_t(x); return;
-			case "notification.record_interactions": this.YtSuccessResponse(x.data); break;
-			case "player": this.WatchResponsePlayer(x.data); return;
-			case "reel.reel_item_watch": this.save_keys(x.type,x.data); return;
-			case "reel.reel_watch_sequence": this.save_keys(x.type,x.data); break;
-			default: this.save_string("need_api_type",x.type);
+			case "account.account_menu": return this.AccountMenuJson(x.data);
+			case "att.get": return this.AttGet(x.data);
+			case "att.log": return this.save_keys(x.type,x.data);
+			case "browse": return this.save_keys(x.type,x.data);
+			case "channel": return this.save_keys(x.type,x.data);
+			case "feedback": return this.save_keys(x.type,x.data);
+			case "get_transcript": return this.save_keys(x.type,x.data);
+			case "getDatasyncIdsEndpoint": debugger; return this.save_keys(x.type,x.data);
+			case "guide": return this.GuideJsonType(x.data);
+			case "live_chat.get_live_chat_replay": return this.save_keys(x.type,x.data);
+			case "next": return this.YtApiNext(x.data);
+			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
+			case "notification.get_unseen_count": return this.NotificationGetUnseenCountData(x.data);
+			case "notification.modify_channel_preference": return this.save_keys(x.type,x.data);
+			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
+			case "player": return this.WatchResponsePlayer(x.data);
+			case "playlist": return this.save_keys(x.type,x.data);
+			case "reel.reel_item_watch": return this.save_keys(x.type,x.data);
+			case "reel.reel_watch_sequence": return this.save_keys(x.type,x.data);
+			case "settings": return this.save_keys(x.type,x.data);
+			case "shorts": return this.save_keys(x.type,x.data);
+			case "watch": return this.save_keys(x.type,x.data);
+			default: this.save_string("need_api_type",x);
 		}
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
 		this.save_keys("YtSuccessResponse",x,this.TODO_true);
-	}
-	/** @private @arg {GetNotificationMenuBox} x */
-	notification_get_notification_menu_t(x) {
-		this.GetNotificationMenuJson(x.data);
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
@@ -4073,12 +4077,9 @@ class HandleTypes extends BaseService {
 	YtPageState(x) {
 		this.save_keys("YtPageState",x,this.TODO_true);
 	}
+	/** @private */
 	get TODO_true() {
 		return true;
-	}
-	/** @private @arg {notification_get_unseen_count_t} x */
-	notification_get_unseen_count_t(x) {
-		this.NotificationGetUnseenCountData(x.data);
 	}
 	/** @private @arg {NotificationGetUnseenCountData} x */
 	NotificationGetUnseenCountData(x) {
