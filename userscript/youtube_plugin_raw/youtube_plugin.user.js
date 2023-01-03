@@ -3188,7 +3188,7 @@ class CsiService extends BaseService {
 		yt_fn: null,
 		/** @type {"WEB"|null} */
 		c: null,
-		/** @type {"2.20221220.09.00"|null} */
+		/** @type {CsiVarTypes['cver']|null} */
 		cver: null,
 		/** @type {"1"|null} */
 		yt_li: null,
@@ -3237,7 +3237,7 @@ class CsiService extends BaseService {
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": {
-					if(param.value!=="2.20221220.09.00") debugger;
+					if(param.value!=="2.20230103.01.00") debugger;
 					this.data[param.key]=param.value;
 				} continue;
 				case "yt_li": {
@@ -3278,7 +3278,7 @@ class CsiService extends BaseService {
 }
 class ECatcherService extends BaseService {
 	data={
-		/** @type {{name: "WEB";fexp:number[];version: "2.20221220"}|null} */
+		/** @type {{name: "WEB";fexp:number[];version: "2.20230103"}|null} */
 		client: null,
 		expected_client_values: {
 			fexp: [
@@ -3301,17 +3301,14 @@ class ECatcherService extends BaseService {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
 		for(let param of params) {
-			/** @type {Split<typeof param.key,".">} */
-			let param_parts=cast_as(param.key.split("."));
-			if(param_parts[0]!=="client") debugger;
-			switch(param_parts[1]) {
-				case "version": {
-					if(param.value!=="2.20221220") {debugger; break;};
+			switch(param.key) {
+				case "client.version": {
+					if(param.value!=="2.20230103") {debugger; break;};
 					new_client.version=param.value;
 				} break;
-				case "name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
-				case "fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
-				default: console.log("[new_param_part][%s]",param.key.split(".")[1]); debugger;
+				case "client.name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
+				case "client.fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
+				default: console.log("[new_param_part]",param); debugger;
 			}
 		}
 		let prev_client=this.data.client;
@@ -4450,7 +4447,7 @@ class HandleTypes extends BaseService {
 			x=y;
 		}
 		if("webPrefetchData" in x) {
-			const {webPrefetchData:a,...y}=x;
+			const {webPrefetchData: a,...y}=x;
 			this.WebPrefetchData(a);
 			this.empty_object(y);
 			return;
@@ -4812,8 +4809,8 @@ class HandleTypes extends BaseService {
 	GetAccountsListInnertubeEndpointData(x) {x;}
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
-		const {navigationEndpoints:a,...y}=x;
-		iterate(a,v=>this.yt_endpoint(v));
+		const {navigationEndpoints: a,...y}=x;
+		iterate(a,v => this.yt_endpoint(v));
 		this.empty_object(y);
 	}
 }
