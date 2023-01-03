@@ -1,5 +1,5 @@
 type RichItemRendererData={
-	content: RichItemRendererContentDef;
+	content: RichItemContent;
 	rowIndex?: number;
 	colIndex?: number;
 };

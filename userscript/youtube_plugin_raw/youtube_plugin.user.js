@@ -4911,17 +4911,69 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
-		iterate(x.continuationItems,v=>{
+		iterate(x.continuationItems,v => {
 			this.SectionItem(v);
 		});
 	}
 	/** @arg {SectionItem} x */
 	SectionItem(x) {
+		if("richItemRenderer" in x) {
+			const {richItemRenderer,...y}=x;
+			this.RichItemRendererData(x.richItemRenderer);
+			this.empty_object(y);
+			return;
+		}
 		let r=get_keys_of(x);
 		switch(r[0]) {
-			case "richItemRenderer":
-			case "richSectionRenderer":
+			case "richSectionRenderer": break;
+			default: debugger;
 		}
+		if("richSectionRenderer" in x) {
+			const {richSectionRenderer: a,...y}=x;
+			this.RichSectionRendererData(a);
+			this.empty_object(y);
+			return;
+		}
+	}
+	/** @arg {RichItemRendererData} x */
+	RichItemRendererData(x) {
+		const {content: a,rowIndex: b,colIndex: c,...y}=x;
+		this.RichItemContent(a);
+		if(b!==void 0) this.primitive_of(b,"number");
+		if(c!==void 0) this.primitive_of(c,"number");
+		this.empty_object(y);
+	}
+	/** @arg {RichItemContent} x */
+	RichItemContent(x) {
+		let r=get_keys_of(x);
+		switch(r[0]) {
+			case "adSlotRenderer": break;
+			case "radioRenderer": break;
+			case "videoRenderer": break;
+			default: debugger;
+		}
+		if("adSlotRenderer" in x) {
+			this.AdSlotRendererData(x.adSlotRenderer);
+			return;
+		}
+		if("radioRenderer" in x) {
+			this.RadioRendererData(x.radioRenderer);
+			return;
+		}
+		if("videoRenderer" in x) {
+			this.VideoRendererData(x.videoRenderer);
+		}
+	}
+	/** @arg {AdSlotRendererData} x */
+	AdSlotRendererData(x) {x;}
+	/** @arg {RadioRendererData} x */
+	RadioRendererData(x) {x;}
+	/** @arg {VideoRendererData} x */
+	VideoRendererData(x) {x;}
+	/** @arg {RichSectionRendererData} x */
+	RichSectionRendererData(x) {
+		const {content,...y}=x;
+		this.empty_object(y);
 	}
 }
 //#endregion

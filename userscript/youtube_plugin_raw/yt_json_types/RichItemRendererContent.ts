@@ -1,1 +1,1 @@
-type RichItemRendererContent=RichItemRendererContentDef;
+type RichItemRendererContent=RichItemContent;

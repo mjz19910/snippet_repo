@@ -1,1 +1,0 @@
-type RichItemRendererContentDef=AdSlotRenderer|VideoRenderer|RadioRenderer;

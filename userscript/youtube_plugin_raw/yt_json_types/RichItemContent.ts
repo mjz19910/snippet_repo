@@ -1,0 +1,1 @@
+type RichItemContent=AdSlotRenderer|VideoRenderer|RadioRenderer;
