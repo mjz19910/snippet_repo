@@ -4026,7 +4026,7 @@ class HandleTypes extends BaseService {
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
 		this.ResponseContext(responseContext);
-		iterate(actions,v => this.action(v));
+		iterate(actions,v => this.OpenPopupAction(v));
 		this.trackingParams(trackingParams);
 		this.save_keys("GetNotificationMenuJson",x,true);
 		this.empty_object(y);
@@ -4327,10 +4327,8 @@ class HandleTypes extends BaseService {
 	 * @param {YtWatchPageResponse} x
 	 */
 	YtWatchPageResponse(x) {x;}
-	/**
-	 * @param {OpenPopupAction} x
-	 */
-	action(x) {x;}
+	/** @arg {OpenPopupAction} x */
+	OpenPopupAction(x) {x;}
 	YtChannelPageResponse(x) {x;}
 }
 //#endregion
