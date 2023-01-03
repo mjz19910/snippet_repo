@@ -1,0 +1,3 @@
+type ConsistencyTokenJar={
+	consistencyTokenJar: ConsistencyTokenJarData;
+};

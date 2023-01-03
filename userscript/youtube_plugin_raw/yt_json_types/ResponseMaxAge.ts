@@ -1,0 +1,3 @@
+type ResponseMaxAge={
+	maxAgeSeconds: number;
+};

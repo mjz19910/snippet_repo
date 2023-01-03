@@ -1,0 +1,3 @@
+type StateTags={
+	stateTags: RelevantStateTags;
+};
