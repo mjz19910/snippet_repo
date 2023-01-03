@@ -1,0 +1,3 @@
+type GetMultiPageMenuAction={
+	getMultiPageMenuAction: GetMultiPageMenuActionData;
+};

@@ -1517,9 +1517,9 @@ class FilterHandlers {
 					/** @type {DatasyncIdsResponse} */
 					data: cast_as(json),
 				};
-				case "getAccountSwitcherEndpoint": debugger; return {
+				case "getAccountSwitcherEndpoint": return {
 					type: target[0],
-					/** @type {{}} */
+					/** @type {GetAccountSwitcherEndpointResult} */
 					data: cast_as(json),
 				};
 				case "get_transcript": return {
@@ -4507,13 +4507,39 @@ class HandleTypes extends BaseService {
 		if(b!=="600") debugger;
 		this.empty_object(y);
 	}
+	/** @type {string|null} */
+	my_main_channel_id=null;
+	/** @type {[string,string][]} */
+	alt_channel_ids=[];
 	/** @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
 		const {responseContext: a,datasyncIds: b,...y}=x;
 		this.ResponseContext(a);
-		iterate(b,v => {
-			console.log("datasync_id",v);
+		/** @type {string[][]} */
+		let c=[];
+		iterate(b,v => c.push(v.split("||")));
+		iterate(c,chan_id=>{
+			if(chan_id[1]==="") {
+				this.save_string("my_main_channel_id",chan_id[0]);
+				this.my_main_channel_id=chan_id[0];
+			}
 		});
+		iterate(c,chan_ids => {
+			if(chan_ids[1]!=="") {
+				if(this.alt_channel_ids.findIndex(e=>e[0]===chan_ids[0])<0) {
+					this.alt_channel_ids.push([chan_ids[0],chan_ids[1]]);
+				}
+				this.save_string("my_brand_channel_id",chan_ids);
+			}
+		});
+		if(this.my_main_channel_id) {
+			this.alt_channel_ids.forEach(v=>{
+				if(v[1]!==this.my_main_channel_id) {
+					console.log("alt channel not owned by main google account channel",v);
+					debugger;
+				}
+			});
+		}
 		this.empty_object(y);
 	}
 }

@@ -1,6 +1,6 @@
 type MultiPageMenuRendererData={
 	header: SimpleMenuHeaderRenderer;
-	sections: MultiPageMenuNotificationSectionRenderer[];
-	trackingParams: string;
-	style?: {};
+	sections: AccountSectionListRenderer[];
+	footer: MultiPageMenuSectionRenderer;
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER";
 };
