@@ -4379,7 +4379,6 @@ class HandleTypes extends BaseService {
 			this.empty_object(y);
 			return;
 		}
-
 		const {stateTag: a,instruction: b,...y}=x;
 		switch(a) {
 			case 3: break;
