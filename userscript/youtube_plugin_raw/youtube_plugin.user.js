@@ -1592,6 +1592,7 @@ class FilterHandlers {
 					};
 					case "set_setting": return {
 						type: `${target[0]}.${target[1]}`,
+						/** @type {AccountSetSetting} */
 						data: cast_as(json),
 					};
 				};
@@ -4045,6 +4046,11 @@ class HandleTypes extends BaseService {
 		if("responseContext" in x.data&&x.data.responseContext) {
 			this.ResponseContext(x.data.responseContext);
 		}
+		let t=this;
+		/** @arg {{type:string}} x */
+		function g(x) {
+			return t.save_string("need_api_type",x.type);
+		}
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuJson(x.data);
 			case "account.set_setting": return this.save_keys(x.type,x.data);
@@ -4069,8 +4075,8 @@ class HandleTypes extends BaseService {
 			case "settings": return this.save_keys(x.type,x.data);
 			case "shorts": return this.save_keys(x.type,x.data);
 			case "watch": return this.save_keys(x.type,x.data);
+			default: g(x);
 		}
-		this.save_string("need_api_type",x.type);
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
