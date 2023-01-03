@@ -1,1 +1,0 @@
-type RidFormat<T extends string>=`Get${T}_rid`|`Record${T}_rid`;

@@ -1,1 +1,1 @@
-type ModifyChannelPreference={};
+type Letters=Split<"abcdefghijklmnopqrstuvwxyz","">[number];
