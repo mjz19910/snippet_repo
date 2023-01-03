@@ -1,6 +1,7 @@
 type YtUrlFormat=
 	"/"|
-	`/${YtUrlPageOpt}?v=${string}&list=${YtInfinitePlaylistFormat}`|
+	`/watch?v=${string}`|
+	`/watch?v=${string}&list=${YtInfinitePlaylistFormat}`|
 	`/feed/${YtFeedSubSections}`|
 	`/${SettingsEndpointPages}`|
 	"/channel_switcher";

@@ -3148,7 +3148,6 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.onDataChange();
 	}
 	// #endregion
-	//#region private
 	/** @private */
 	log_skipped_strings=false;
 	#x;
@@ -3207,6 +3206,7 @@ class CsiService extends BaseService {
 		/* other*/"GetReelItemWatch_rid","GetWatchNext_rid","GetWebMainAppGuide_rid","GetWatchPageWebTopLevelComments_rid","GetAttestationChallenge_rid",
 		/* destinations */ "GetGamingDestination_rid",
 		"GetAccountsList_rid",
+		/*reel_watch*/"GetReelWatchSequence_rid",
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
@@ -4046,7 +4046,7 @@ class HandleTypes extends BaseService {
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
 			case "player": return this.WatchResponsePlayer(x.data);
 			case "playlist": return this.save_keys(x.type,x.data);
-			case "reel.reel_item_watch": return this.save_keys(x.type,x.data);
+			case "reel.reel_item_watch": return this.save_keys(x.type,x.data,this.TODO_true);
 			case "reel.reel_watch_sequence": return this.save_keys(x.type,x.data);
 			case "settings": return this.save_keys(x.type,x.data);
 			case "shorts": return this.save_keys(x.type,x.data);
