@@ -24,4 +24,10 @@ type BrowseResponseContent={
 	trackingParams: string;
 	topbar: DesktopTopbarRenderer;
 	observedStateTags: StateTag[];
+}|{
+	responseContext: ResponseContext;
+	contents: TwoColumnBrowseResultsRenderer;
+	trackingParams: string;
+	topbar: DesktopTopbarRenderer;
+	sidebar: SettingsSidebarRenderer;
 };

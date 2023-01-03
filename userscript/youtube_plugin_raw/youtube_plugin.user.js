@@ -771,9 +771,10 @@ class IterateApiResultBase {
 class YtIterateTarget {
 	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
 	appendContinuationItemsAction(state,action) {
-		debugger;
 		check_item_keys(state.path,"appendContinuationItemsAction",get_keys_of(action));
-		if(state.t.AppendContinuationItemsAction(state.path,action)) return;
+		if(!action.continuationItems) {
+			debugger;
+		}
 		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action.continuationItems);
 		if(filtered.length>0) {
 			action.continuationItems=filtered;
@@ -785,7 +786,6 @@ class YtIterateTarget {
 		if(!command.continuationItems) {
 			debugger;
 		}
-		if(state.ReloadContinuationItemsCommandData(path,command)) return;
 		let filtered=state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command.continuationItems);
 		if(filtered.length>0) {
 			command.continuationItems=filtered;
@@ -1467,60 +1467,6 @@ class FilterHandlers {
 		whitelist_item("connectedAppRenderer");
 	}
 	run_mc=false;
-	/** @arg {string} path @arg  {ReloadContinuationItemsCommandData} action */
-	ReloadContinuationItemsCommandData(path,action) {
-		if(is_watch_next_feed_target(action)) {
-			// /** @type {WatchNextContinuationAction} */
-			// let action_t=action;
-			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// return true;
-			return false;
-		}
-		if(is_comments_section_next(action)) {
-			// /** @type {CommentsSectionContinuationAction} */
-			// let action_t=action;
-			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// return true;
-			return false;
-		}
-		if(is_what_to_watch_section(action)) {
-			// /** @type {BrowseFeedAction} */
-			// let action_t=action;
-			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// // return true;
-			return false;
-		}
-		console.log("path",path,"continuation action",action);
-		debugger;
-		return false;
-	}
-	/** @arg {string} path @arg {AppendContinuationItemsAction} action */
-	AppendContinuationItemsAction(path,action) {
-		if(is_watch_next_feed_target(action)) {
-			// /** @type {WatchNextContinuationAction} */
-			// let action_t=action;
-			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// return true;
-			return false;
-		}
-		if(is_comments_section_next(action)) {
-			// /** @type {CommentsSectionContinuationAction} */
-			// let action_t=action;
-			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// return true;
-			return false;
-		}
-		if(is_what_to_watch_section(action)) {
-			/** @type {BrowseFeedAction} */
-			let action_t=action;
-			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			// return true;
-			return false;
-		}
-		console.log("path",path,"continuation action",action);
-		debugger;
-		return false;
-	}
 	/** @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {T} x  */
 	use_template_url(x) {
 		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
@@ -3848,12 +3794,19 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
-		this.save_keys("BrowseResponseContent",x,Object.keys(x).length===7);
+		this.save_keys("BrowseResponseContent",x,true);
 		const {trackingParams: a,...y}=x;
 		this.trackingParams(a);
 		if("responseContext" in y&&"frameworkUpdates" in y) {
-			const {responseContext: res_ctx,contents: cont,header: hd/*tp*/,topbar: tb,onResponseReceivedActions: act_arr,frameworkUpdates: upd,...z}=y;
+			const {
+				responseContext: res_ctx,contents: cont,
+				header: hd/*tp*/,topbar: tb,
+				onResponseReceivedActions: act_arr,
+				frameworkUpdates: upd,
+				...z
+			}=y;
 			this.ResponseContext(res_ctx);
+			if(!cont) debugger;
 			this.TwoColumnBrowseResultsRenderer(cont);
 			this.header(hd);
 			this.topbar(tb);
@@ -3862,13 +3815,26 @@ class HandleTypes extends BaseService {
 			this.empty_object(z);
 			return;
 		}
-		if("responseContext" in y) {
-			const {responseContext: res_ctx,contents: cont,header: hd/*tp*/,topbar: tb,observedStateTags: st,...z}=y;
+		if("responseContext" in y&&"observedStateTags" in y) {
+			const {
+				responseContext: res_ctx,contents: cont,
+				header: hd/*tp*/,topbar: tb,
+				observedStateTags: st,
+				...z
+			}=y;
 			this.ResponseContext(res_ctx);
 			this.TwoColumnBrowseResultsRenderer(cont);
 			this.header(hd);
 			this.topbar(tb);
 			iterate(st,v => this.StateTag(v));
+			this.empty_object(z);
+			return;
+		}
+		if("responseContext" in y) {
+			const {responseContext: res_ctx,contents: cont,topbar: tb,sidebar,...z}=y;
+			this.ResponseContext(res_ctx);
+			this.TwoColumnBrowseResultsRenderer(cont);
+			this.topbar(tb);
 			this.empty_object(z);
 			return;
 		}
@@ -4410,21 +4376,46 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {MainAppWebResponseContextData} x */
-	MainAppWebResponseContextData(x) {x;}
+	MainAppWebResponseContextData(x) {
+		const {datasyncId,loggedOut,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {WebResponseContextExtensionData} x */
-	WebResponseContextExtensionData(x) {x;}
+	WebResponseContextExtensionData(x) {
+		const {hasDecorated,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {YtWatchPageResponse} x */
-	YtWatchPageResponse(x) {x;}
+	YtWatchPageResponse(x) {
+		const {page,playerResponse,endpoint,response,url,...y}=x;
+		this.parse_url(url);
+		this.empty_object(y);
+	}
 	/** @arg {OpenPopupAction} x */
-	OpenPopupAction(x) {x;}
+	OpenPopupAction(x) {
+		const {clickTrackingParams,openPopupAction,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {YtChannelPageResponse} x */
-	YtChannelPageResponse(x) {x;}
+	YtChannelPageResponse(x) {
+		const {page,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {YtPlaylistResponse} x */
-	YtPlaylistResponse(x) {x;}
+	YtPlaylistResponse(x) {
+		const {page,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {YtSettingsResponse} x */
-	YtSettingsResponse(x) {x;}
+	YtSettingsResponse(x) {
+		const {page,endpoint,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {YtShortsResponse} x */
-	YtShortsResponse(x) {x;}
+	YtShortsResponse(x) {
+		const {page,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {ModifyChannelPreference} x */
 	ModifyChannelPreference(x) {
 		this.save_keys("ModifyChannelPreference",x);
@@ -4459,7 +4450,13 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {ConsistencyTokenJarData} x */
-	ConsistencyTokenJarData(x) {x;}
+	ConsistencyTokenJarData(x) {
+		const {encryptedTokenJarContents: a,expirationSeconds: b,...y}=x;
+		this.primitive_of(a,"string");
+		this.save_number("ConsistencyTokenJar.expirationSeconds",parseInt(b,10));
+		if(b!=="600") debugger;
+		this.empty_object(y);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
