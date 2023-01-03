@@ -1512,9 +1512,15 @@ class FilterHandlers {
 					/** @type {JsonFeedbackData} */
 					data: cast_as(json),
 				};
-				case "getDatasyncIdsEndpoint": debugger; return {
+				case "getDatasyncIdsEndpoint": return {
 					type: target[0],
-					data: json,
+					/** @type {DatasyncIdsResponse} */
+					data: cast_as(json),
+				};
+				case "getAccountSwitcherEndpoint": debugger; return {
+					type: target[0],
+					/** @type {{}} */
+					data: cast_as(json),
 				};
 				case "get_transcript": return {
 					type: target[0],
@@ -3184,36 +3190,20 @@ class CsiService extends BaseService {
 		/** @type {"1"|null} */
 		yt_ad: null,
 	};
-	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
-	rid={};
 	/** @type {(RidFormat<string>)[]} */
 	rid_keys=[
-		// `Get${string}_rid`
-		// settings
-		"GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid",
-		"GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid",
-		// ?
-		"GetSubscriptions_rid",
-		// Notification
-		"GetNotificationsMenu_rid",
-		"GetUnseenNotificationCount_rid",
-		"GetAttestationChallenge_rid",
-		"GetHome_rid",
-		// player
-		"GetPlayer_rid",
-		// shorts
-		"GetReelItemWatch_rid",
-		"GetPlaylist_rid",
-		"GetWatchNext_rid",
-		"GetWebMainAppGuide_rid",
-		"GetWatchPageWebTopLevelComments_rid",
-		// destinations
-		"GetGamingDestination_rid",
-		// `Record${string}_rid`
-		"RecordNotificationInteractions_rid",
+		/* `Record${string}_rid` */"RecordNotificationInteractions_rid",
 		// settings
 		"SetSetting_rid",
+		/* `Get${string}_rid` & settings*/"GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid",
+		/* Notification */"GetNotificationsMenu_rid","GetUnseenNotificationCount_rid",
+		/* one word after section */"GetHome_rid","GetPlayer_rid","GetPlaylist_rid","GetSubscriptions_rid",
+		/* other*/"GetReelItemWatch_rid","GetWatchNext_rid","GetWebMainAppGuide_rid","GetWatchPageWebTopLevelComments_rid","GetAttestationChallenge_rid",
+		/* destinations */ "GetGamingDestination_rid",
+		"GetAccountsList_rid",
 	];
+	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
+	rid={};
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
@@ -4007,7 +3997,7 @@ class HandleTypes extends BaseService {
 			case "channel": return this.save_keys(x.type,x.data);
 			case "feedback": return this.save_keys(x.type,x.data);
 			case "get_transcript": return this.save_keys(x.type,x.data);
-			case "getDatasyncIdsEndpoint": debugger; return this.save_keys(x.type,x.data);
+			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
 			case "guide": return this.GuideJsonType(x.data);
 			case "live_chat.get_live_chat_replay": return this.save_keys(x.type,x.data);
 			case "next": return this.YtApiNext(x.data);
@@ -4515,6 +4505,15 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"string");
 		this.save_number("ConsistencyTokenJar.expirationSeconds",parseInt(b,10));
 		if(b!=="600") debugger;
+		this.empty_object(y);
+	}
+	/** @arg {DatasyncIdsResponse} x */
+	DatasyncIdsResponse(x) {
+		const {responseContext: a,datasyncIds: b,...y}=x;
+		this.ResponseContext(a);
+		iterate(b,v => {
+			console.log("datasync_id",v);
+		});
 		this.empty_object(y);
 	}
 }

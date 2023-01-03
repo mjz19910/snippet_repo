@@ -9,6 +9,7 @@ type ResponseTypes=
 	get_notification_menu_t|
 	get_transcript_t|
 	getDatasyncIdsEndpoint_t|
+	getAccountSwitcherEndpoint_t|
 	guide_t|
 	live_chat_get_live_chat_replay_t|
 	modify_channel_preference_t|
@@ -23,3 +24,7 @@ type ResponseTypes=
 	shorts_t|
 	watch_t|
 	never;
+type getAccountSwitcherEndpoint_t={
+	type: "getAccountSwitcherEndpoint";
+	data: {};
+};
