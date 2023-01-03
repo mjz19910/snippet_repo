@@ -1,7 +1,3 @@
-type YtPlaylistResponse={
-	page: "playlist";
-};
-
 type PageTypePlaylist={
 	pageType: "playlist";
 	endpoint: YtEndpoint;

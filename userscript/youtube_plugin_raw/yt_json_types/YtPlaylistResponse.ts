@@ -1,0 +1,3 @@
+type YtPlaylistResponse={
+	page: "playlist";
+};

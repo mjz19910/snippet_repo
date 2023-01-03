@@ -1,7 +1,3 @@
-type YtShortsResponse={
-	page: "shorts";
-};
-
 type PageTypeShorts={
 	pageType: "shorts";
 	endpoint: ReelWatchEndpointData;

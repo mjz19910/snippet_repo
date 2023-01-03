@@ -1,0 +1,3 @@
+type YtShortsResponse={
+	page: "shorts";
+};

@@ -4329,7 +4329,14 @@ class HandleTypes extends BaseService {
 	YtWatchPageResponse(x) {x;}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {x;}
+	/** @arg {YtChannelPageResponse} x */
 	YtChannelPageResponse(x) {x;}
+	/** @arg {YtPlaylistResponse} x */
+	YtPlaylistResponse(x) {x;}
+	/** @arg {YtSettingsResponse} x */
+	YtSettingsResponse(x) {x;}
+	/** @arg {YtShortsResponse} x */
+	YtShortsResponse(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
