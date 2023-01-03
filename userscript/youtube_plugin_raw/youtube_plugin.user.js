@@ -3288,6 +3288,8 @@ class CsiService extends BaseService {
 		"GetGamingDestination_rid",
 		// `Record${string}_rid`
 		"RecordNotificationInteractions_rid",
+		// settings
+		"SetSetting_rid",
 	];
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
