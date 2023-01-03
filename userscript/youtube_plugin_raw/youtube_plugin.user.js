@@ -3456,7 +3456,7 @@ class GFeedbackService extends BaseService {
 			if(parsed_e) this.maybe_new_e();
 		}
 	}
-	/** @arg {GFeedbackServiceParam} x */
+	/** @arg {GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
 		this.data.route=x.value;
 		let route_parts=split_string(x.value,".");
@@ -3464,6 +3464,11 @@ class GFeedbackService extends BaseService {
 			case "channel": switch(route_parts[1]) {
 				case "featured": break;
 				case "videos": break;
+				case "playlists": break;
+				case "community": break;
+				case "channels": break;
+				case "about": break;
+				case "search": break;
 				default: debugger;
 			} break;
 			default: debugger;
