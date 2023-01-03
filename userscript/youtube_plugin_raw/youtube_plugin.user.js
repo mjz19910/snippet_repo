@@ -4324,23 +4324,13 @@ class HandleTypes extends BaseService {
 		}
 		let [a0,a1]=split_string(f0,"?");
 		switch(a0) {
-			case "watch": {
-				this.parse_watch_page_url(a1);
-				let parts=split_string(a1,"&");
-				let [p0,...pr]=parts;
-				if(pr.length!==0) {
-					debugger;
-				}
-				let [c0,c1]=split_string(p0,"=");
-				if(c0==="v"&&this.last_video_watch_url===c1) return;
-				if(c0==="v")this.last_video_watch_url=c1;
-				console.log('watch page %s=%s',c0,c1);
-			} return;
-			default:
+			case "watch": this.parse_watch_page_url(a1); break;
+			default: {
+				if(f!=="") debugger;
+				console.log(up.slice(1));
+				debugger;
+			} break;
 		}
-		if(f!=="") debugger;
-		console.log(up.slice(1));
-		debugger;
 	}
 	/** @arg {YtWatchUrlParamsFormat} x */
 	parse_watch_page_url(x) {
@@ -4351,9 +4341,8 @@ class HandleTypes extends BaseService {
 		}
 		let [c0,c1]=split_string(p0,"=");
 		if(c0==="v"&&this.last_video_watch_url===c1) return;
-		if(c0==="v")this.last_video_watch_url=c1;
+		if(c0==="v") this.last_video_watch_url=c1;
 		console.log('watch page %s=%s',c0,c1);
-
 	}
 	/** @arg {CommandMetadata} x */
 	commandMetadata(x) {
