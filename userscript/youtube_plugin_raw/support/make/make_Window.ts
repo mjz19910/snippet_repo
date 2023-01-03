@@ -1,5 +1,4 @@
-export type GlobalAttachWindow=1;
-
+export {};
 declare global {
 	interface Window {
 		// Elements
@@ -12,5 +11,3 @@ declare global {
 		ytPageType?: string;
 	}
 }
-
-export {};

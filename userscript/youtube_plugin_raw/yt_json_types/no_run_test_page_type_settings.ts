@@ -1,9 +1,4 @@
-import {assert_equal_type} from "./assert_equal_type";
-import {assert_is_equal_t} from "./assert_is_equal_t.js";
-import {make_never} from "./make_never";
-
-
-export function no_run_test_page_type_settings(break_it: false) {
+function no_run_test_page_type_settings(break_it: false) {
 	if(break_it===false)
 		return;
 		type nv=assert_is_equal_t<YtEndpoint,PageTypeSettings["response"]["endpoint"]>;
