@@ -1377,7 +1377,7 @@ class MyReader {
 					console.log("skip failed at",this.pos,fieldId);
 					this.failed=true;
 				}
-				first_num.push(['child',sub_buffer]);
+				first_num.push(['child',fieldId,sub_buffer]);
 			} break;
 			case 3: {
 				let res;
@@ -3845,7 +3845,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_endpoint_params(x) {
-		console.log(x); debugger;
+		let ba=base64_dec.decodeByteArray(x);
+		let reader=new MyReader(ba);
+		const [f0]=reader.read_any();
+		if(f0[0]!=="child") {
+			console.log(f0);
+			return;
+		}
+		console.log("parsed_endpoint_param field_id=",f0[1],"result=",uint8_string_decoder.decode(f0[2]));
 	}
 	/** @arg {BrowseIdType} x */
 	parse_browse_id(x) {
@@ -3888,10 +3895,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
+		if("params" in x && "browseId" in x) {
+			return;
+		}
 		if("params" in x) {
 			const {params: a,...y}=x;
 			this.parse_endpoint_params(a);
-			this.save_keys("BrowseEndpointData_params",x);
+			this.save_keys("BrowseEndpointData_params",x,true);
 			this.empty_object(y);
 			return;
 		}
@@ -4165,10 +4175,22 @@ class HandleTypes extends BaseService {
 	}
 	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
 	str_starts_with(x,v) {x; return x.startsWith(v);}
+	/**
+	 * @param {string} x
+	 * @param {URL} url
+	 */
+	parse_account_google_com_url(x,url) {
+		if(url.pathname === "/AddSession") return;
+		console.log("[parse_url_external_2]",x);
+	}
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
 		if(x.startsWith("https://")) {
-			console.log("[parse_url_external]",x);
+			let rem_url=new URL(x);
+			if(rem_url.hostname==="accounts.google.com") {
+				return this.parse_account_google_com_url(x,rem_url);
+			}
+			console.log("[parse_url_external_1]",x);
 			return;
 		}
 		if(x==="/") return;
