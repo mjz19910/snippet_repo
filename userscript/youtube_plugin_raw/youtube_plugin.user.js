@@ -3895,7 +3895,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
-		if("params" in x && "browseId" in x) {
+		if("params" in x&&"browseId" in x) {
+			const {params: a,browseId: b,...y}=x;
+			this.parse_endpoint_params(a);
+			this.parse_browse_id(b);
+			this.save_keys("BrowseEndpointData_2",x,true);
+			this.empty_object(y);
 			return;
 		}
 		if("params" in x) {
@@ -3912,7 +3917,7 @@ class HandleTypes extends BaseService {
 			this.empty_object(y);
 			return;
 		}
-		this.save_keys("BrowseEndpointData",x);
+		this.save_keys("BrowseEndpointData_1",x);
 		this.empty_object(x);
 	}
 	/** @arg {SearchEndpointData} x */
@@ -4081,21 +4086,21 @@ class HandleTypes extends BaseService {
 			return x;
 		};
 		if("currentVideoEndpoint" in x) {
-			const v=g(x);
+			const v=this.filter_response_endpoints(g(x));
 			const {
-				responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,topbar,pageVisualEffects,frameworkUpdates,
+				responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,topbar,pageVisualEffects,frameworkUpdates,
 				...y
 			}=v; z=y;
 			this.ResponseContext(responseContext);
 		} else if("engagementPanels" in x) {
-			const v=g(x);
-			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=v; z=y;
+			const v=this.filter_response_endpoints(g(x));
+			const {responseContext,trackingParams,...y}=v; z=y;
 			this.ResponseContext(responseContext);
 		} else {
-			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=x; z=y;
+			const v=this.filter_response_endpoints(g(x));
+			const {responseContext,trackingParams,...y}=v; z=y;
 			this.ResponseContext(responseContext);
 			this.trackingParams(trackingParams);
-			iterate(onResponseReceivedEndpoints,ep => this.yt_endpoint(ep));
 		}
 		this.save_keys("api_next",x,true);
 		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
@@ -4180,7 +4185,7 @@ class HandleTypes extends BaseService {
 	 * @param {URL} url
 	 */
 	parse_account_google_com_url(x,url) {
-		if(url.pathname === "/AddSession") return;
+		if(url.pathname==="/AddSession") return;
 		console.log("[parse_url_external_2]",x);
 	}
 	/** @arg {YtUrlFormat} x */
@@ -4467,9 +4472,20 @@ class HandleTypes extends BaseService {
 		this.parse_url(c);
 		this.empty_object(y);
 	}
+	/** @template {{onResponseReceivedEndpoints: YtEndpoint[]}|{}} T @arg {T} x @returns {Omit<T,"onResponseReceivedEndpoints">} */
+	filter_response_endpoints(x) {
+		if("onResponseReceivedEndpoints" in x) {
+			const {onResponseReceivedEndpoints: a,...y}=x;
+			iterate(a,ep => this.yt_endpoint(ep));
+			return y;
+		}
+		return x;
+	}
 	/** @arg {SettingsResponseContent} x */
 	SettingsResponseContent(x) {
-		const {responseContext: a,contents: b,trackingParams: tp,topbar: c,sidebar: d,...y}=x;
+		const {
+			responseContext: a,contents: b,trackingParams: tp,topbar: c,sidebar: d,...y
+		}=this.filter_response_endpoints(x);
 		this.ResponseContext(a);
 		this.TwoColumnBrowseResultsRenderer(b);
 		this.DesktopTopbarRenderer(c);
