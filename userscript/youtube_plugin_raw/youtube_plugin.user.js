@@ -2908,8 +2908,8 @@ class KnownDataSaver {
 	/** @private */
 	store_data() {
 		let data=this.pull_data_from_parent();
-		for(let v=0;v<data.known_numbers.length;v++) {
-			const j=data.known_numbers[v];
+		for(let v=0;v<data.seen_numbers.length;v++) {
+			const j=data.seen_numbers[v];
 			const [_n,[_k,c]]=j;
 			for(let i=0;i<c.length;i++) {
 				if(c[i]===null) {
@@ -2934,66 +2934,66 @@ class KnownDataSaver {
 	/** @private */
 	pull_data_from_parent() {
 		const {
-			known_root_ve,known_strings,known_booleans,
-			known_numbers
+			seen_root_visual_elements,seen_strings,seen_booleans,
+			seen_numbers
 		}=this;
 		return {
-			known_root_ve,known_strings,known_numbers,
-			known_booleans,
+			seen_root_visual_elements,seen_strings,seen_numbers,
+			seen_booleans,
 		};
 	}
-	/** @private @arg {string} known_data */
-	save_local_storage(known_data) {
+	/** @private @arg {string} seen_data */
+	save_local_storage(seen_data) {
 		if(no_storage_access) {
-			this.known_data_str_no_access=known_data;
+			this.seen_data_json_str=seen_data;
 			return;
 		}
-		localStorage.known_data=known_data;
+		localStorage.seen_data=seen_data;
 	}
 	/** @private */
 	get_local_storage() {
-		if(no_storage_access) return this.known_data_str_no_access;
-		return localStorage.getItem("known_data");
+		if(no_storage_access) return this.seen_data_json_str;
+		return localStorage.getItem("seen_data");
 	}
 	/** @private @arg {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} x */
 	push_data_to_parent(x) {
 		const {
-			known_root_ve,known_strings,known_booleans,
-			known_numbers,
+			seen_root_visual_elements,seen_strings,seen_booleans,
+			seen_numbers,
 		}=x;
-		if(known_root_ve) {
-			this.known_root_ve=known_root_ve;
+		if(seen_root_visual_elements) {
+			this.seen_root_visual_elements=seen_root_visual_elements;
 		}
-		if(known_strings) {
-			this.known_strings=known_strings;
+		if(seen_strings) {
+			this.seen_strings=seen_strings;
 		}
-		if(known_booleans) {
-			this.known_booleans=known_booleans;
+		if(seen_booleans) {
+			this.seen_booleans=seen_booleans;
 		}
-		if(known_numbers) {
-			this.known_numbers=known_numbers;
+		if(seen_numbers) {
+			this.seen_numbers=seen_numbers;
 		}
 	}
 	/** @private */
 	delete_data() {
 		if(no_storage_access) {
-			this.known_data_str_no_access=null;
+			this.seen_data_json_str=null;
 			return;
 		}
-		localStorage.removeItem("known_data");
+		localStorage.removeItem("seen_data");
 	}
 	/** @private @type {string|null} */
-	known_data_str_no_access=null;
+	seen_data_json_str=null;
 	/** @private */
 	loaded_from_storage=false;
 	/** @protected @type {number[]} */
-	known_root_ve=[];
+	seen_root_visual_elements=[];
 	/** @protected @type {[string,['one',string[]]|['many',string[][]]][]} */
-	known_strings=[];
+	seen_strings=[];
 	/** @protected @type {[string,['one',number[]]|['many',number[][]]][]} */
-	known_numbers=[];
+	seen_numbers=[];
 	/** @protected @type {[string,{t:boolean;f:boolean}][]} */
-	known_booleans=[];
+	seen_booleans=[];
 	/** @protected */
 	on_data_change() {this.store_data();}
 	/** @protected */
@@ -3010,12 +3010,12 @@ class BaseServicePrivate extends KnownDataSaver {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
-	on_known_data_change() {
+	on_seen_data_change() {
 		this.on_data_change();
 	}
 	/** @arg {string} key */
 	delete_old_string_values(key) {
-		let p=this.known_strings.find(e => e[0]===key);
+		let p=this.seen_strings.find(e => e[0]===key);
 		if(!p) return;
 		let [,cur]=p;
 		/** @arg {["one", string[]]|["many", string[][]]} x */
@@ -3036,10 +3036,10 @@ class BaseServicePrivate extends KnownDataSaver {
 		let was_known=true;
 		/** @type {["one", string[]]|["many",string[][]]} */
 		let cur;
-		let p=this.known_strings.find(e => e[0]===key);
+		let p=this.seen_strings.find(e => e[0]===key);
 		if(!p) {
 			p=[key,cur=['one',[]]];
-			this.known_strings.push(p);
+			this.seen_strings.push(p);
 		} else {
 			cur=p[1];
 		}
@@ -3070,24 +3070,24 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_known_strings.push([key,x]);
-		this.on_known_data_change();
+		this.new_seen_strings.push([key,x]);
+		this.on_seen_data_change();
 		console.log("store_str [%s]",key,x);
 		debugger;
 	}
 	/** @private @type {[string,number|number[]][]} */
-	new_known_numbers=[];
+	new_seen_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(key==="any") debugger;
 		let was_known=true;
 		/** @type {["one", number[]]|["many",number[][]]} */
 		let cur;
-		let p=this.known_numbers.find(e => e[0]===key);
+		let p=this.seen_numbers.find(e => e[0]===key);
 		if(!p) {
 			cur=['one',[]];
 			p=[key,cur];
-			this.known_numbers.push(p);
+			this.seen_numbers.push(p);
 		} else {
 			cur=p[1];
 		}
@@ -3118,16 +3118,16 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_known_numbers.push([key,x]);
-		this.on_known_data_change();
+		this.new_seen_numbers.push([key,x]);
+		this.on_seen_data_change();
 		console.log("store_num [%s]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
 	save_new_bool(key,bool) {
-		let krc=this.known_booleans.find(e => e[0]===key);
+		let krc=this.seen_booleans.find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];
-			this.known_booleans.push(krc);
+			this.seen_booleans.push(krc);
 		}
 		let [,kc]=krc;
 		if(bool) {
@@ -3142,15 +3142,15 @@ class BaseServicePrivate extends KnownDataSaver {
 			kc.f=true;
 		}
 		this.changed_known_bool.push([key,kc]);
-		this.on_known_data_change();
+		this.on_seen_data_change();
 	}
 	/** @arg {number} x */
-	save_new_root_ve(x) {
-		if(this.known_root_ve.includes(x)) return;
-		console.log("store rootVe [%o]",x);
-		this.known_root_ve.push(x);
-		this.new_known_root_ve.push(x);
-		this.on_known_data_change();
+	save_root_visual_element(x) {
+		if(this.seen_root_visual_elements.includes(x)) return;
+		console.log("store root_visual_element [%o]",x);
+		this.seen_root_visual_elements.push(x);
+		this.new_root_visual_elements.push(x);
+		this.on_seen_data_change();
 	}
 	// #endregion
 	//#region private
@@ -3158,9 +3158,9 @@ class BaseServicePrivate extends KnownDataSaver {
 	log_skipped_strings=false;
 	#x;
 	/** @private @type {number[]} */
-	new_known_root_ve=[];
+	new_root_visual_elements=[];
 	/** @private @type {[string,string|string[]][]} */
-	new_known_strings=[];
+	new_seen_strings=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
 	changed_known_bool=[];
 }
@@ -4148,7 +4148,6 @@ class HandleTypes extends BaseService {
 		let keys=get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s] %o",keys.join(),x);
-		console.log(new Error);
 		debugger;
 	}
 	/** @private @template {{}} T @arg {T} x */
@@ -4181,16 +4180,31 @@ class HandleTypes extends BaseService {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
+	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
+	str_starts_with(x,v) {x; return x.startsWith(v);}
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
 		if(x==="/") return;
 		let up=split_string(x,"/");
-		const [f,...ux]=up;
-		switch(ux[0]) {
-			case "feed": switch(ux[1]) {case "subscriptions": return;}
+		const [f,f0]=up;
+		if(this.str_starts_with(f0,"account")) {
+			let c1=split_string(f0,"_");
+			if(c1.length===1) return;
+			switch(c1[1]) {
+				case "advanced": break;
+				case "billing": break;
+				case "notifications": break;
+				case "privacy": break;
+				case "sharing": break;
+				default: debugger;
+			}
+			return;
+		}
+		switch(f0) {
+			case "feed": switch(up[2]) {case "subscriptions": return;}
 		}
 		if(f!=="") debugger;
-		console.log(ux);
+		console.log(up.slice(1));
 		debugger;
 	}
 	/** @arg {CommandMetadata} x */
@@ -4384,7 +4398,21 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {
+		if("ytConfigData" in x) {
+			const {ytConfigData: a,...y}=x;
+			this.YtConfigData(a);
+			x=y;
+		}
 		const {hasDecorated,...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {YtConfigData} x */
+	YtConfigData(x) {
+		const {rootVisualElementType: a,sessionIndex: b,visitorData: c,...y}=x;
+		this.save_root_visual_element(a);
+		this.save_number("YtConfigData.rootVisualElementType",a);
+		this.save_number("YtConfigData.sessionIndex",b);
+		this.primitive_of(c,"string");
 		this.empty_object(y);
 	}
 	/** @arg {YtWatchPageResponse} x */
