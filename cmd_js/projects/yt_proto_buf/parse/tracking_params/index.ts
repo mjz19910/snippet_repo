@@ -263,8 +263,6 @@ export async function parse_types(): Promise<void> {
 		pad+=pad_with;
 		const token_buffer=get_token_data(myArgs[1]);
 		let reader=MyReader.create(new Uint8Array(token_buffer));
-		reader.fixed64();
-		reader.pos=0;
 		reader.decode_any();
 		pad=prev_pad;
 		my_console.pad_log("}");
