@@ -6,4 +6,5 @@ type endpoint_data_handler_names={
 	signalServiceEndpoint: "SignalServiceEndpointData";
 	urlEndpoint: "UrlEndpointRoot";
 	resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData";
+	signalNavigationEndpoint: "SignalNavigationEndpointData";
 };

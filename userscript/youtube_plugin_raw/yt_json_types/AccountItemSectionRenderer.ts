@@ -1,0 +1,3 @@
+type AccountItemSectionRenderer={
+	accountItemSectionRenderer: AccountItemSectionRendererData;
+};

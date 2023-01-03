@@ -3933,6 +3933,7 @@ class HandleTypes extends BaseService {
 			signalServiceEndpoint: "SignalServiceEndpointData",
 			urlEndpoint: "UrlEndpointRoot",
 			resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData",
+			signalNavigationEndpoint: "SignalNavigationEndpointData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {endpoint_data_handler_names[T]} */
 		get(k) {
@@ -3945,7 +3946,7 @@ class HandleTypes extends BaseService {
 	yt_endpoint(x) {
 		this.save_keys("YtEndpoint",x,true);
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
-		this.clickTrackingParams(a);
+		if(a!==void 0) this.clickTrackingParams(a);
 		if(b) this.commandMetadata(b);
 		/** @type {endpoint_target_type} */
 		let v=y;
@@ -3964,6 +3965,7 @@ class HandleTypes extends BaseService {
 			case "signalServiceEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "urlEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "watchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "signalNavigationEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			default:
 		}
 		switch(ya) {
@@ -3998,6 +4000,7 @@ class HandleTypes extends BaseService {
 			case "feedback": return this.save_keys(x.type,x.data);
 			case "get_transcript": return this.save_keys(x.type,x.data);
 			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
+			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResult(x.data);
 			case "guide": return this.GuideJsonType(x.data);
 			case "live_chat.get_live_chat_replay": return this.save_keys(x.type,x.data);
 			case "next": return this.YtApiNext(x.data);
@@ -4169,6 +4172,7 @@ class HandleTypes extends BaseService {
 		}
 		switch(f0) {
 			case "feed": switch(up[2]) {case "subscriptions": return;}
+			case "channel_switcher": return;
 		}
 		if(f!=="") debugger;
 		console.log(up.slice(1));
@@ -4195,7 +4199,14 @@ class HandleTypes extends BaseService {
 			const {url,webPageType,rootVe,apiUrl,...y}=x;
 			this.parse_url(url);
 			this.parse_page_type(webPageType);
+			this.save_root_visual_element(rootVe);
 			this.parse_api_url(apiUrl);
+			this.empty_object(y);
+		} else if("url" in x) {
+			const {url,webPageType,rootVe,...y}=x;
+			this.parse_url(url);
+			this.parse_page_type(webPageType);
+			this.save_root_visual_element(rootVe);
 			this.empty_object(y);
 		} else {
 			debugger;
@@ -4518,7 +4529,7 @@ class HandleTypes extends BaseService {
 		/** @type {string[][]} */
 		let c=[];
 		iterate(b,v => c.push(v.split("||")));
-		iterate(c,chan_id=>{
+		iterate(c,chan_id => {
 			if(chan_id[1]==="") {
 				this.save_string("my_main_channel_id",chan_id[0]);
 				this.my_main_channel_id=chan_id[0];
@@ -4526,14 +4537,14 @@ class HandleTypes extends BaseService {
 		});
 		iterate(c,chan_ids => {
 			if(chan_ids[1]!=="") {
-				if(this.alt_channel_ids.findIndex(e=>e[0]===chan_ids[0])<0) {
+				if(this.alt_channel_ids.findIndex(e => e[0]===chan_ids[0])<0) {
 					this.alt_channel_ids.push([chan_ids[0],chan_ids[1]]);
 				}
 				this.save_string("my_brand_channel_id",chan_ids);
 			}
 		});
 		if(this.my_main_channel_id) {
-			this.alt_channel_ids.forEach(v=>{
+			this.alt_channel_ids.forEach(v => {
 				if(v[1]!==this.my_main_channel_id) {
 					console.log("alt channel not owned by main google account channel",v);
 					debugger;
@@ -4542,6 +4553,144 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(y);
 	}
+	/** @arg {GetAccountSwitcherEndpointResult} x */
+	GetAccountSwitcherEndpointResult(x) {
+		if(x.code!=="SUCCESS") {
+			console.log("request failed",x);
+			return;
+		}
+		const {code: {},data: a,...y}=x;
+		this.GetAccountSwitcherEndpointResponse(a);
+		this.empty_object(y);
+	}
+	/** @arg {GetAccountSwitcherEndpointResponse} x */
+	GetAccountSwitcherEndpointResponse(x) {
+		const {responseContext: a,actions: b,selectedText: c,...y}=x;
+		this.ResponseContext(a);
+		iterate(b,v => {
+			this.GetMultiPageMenuAction(v);
+		});
+		this.YtTextType(c);
+		this.empty_object(y);
+	}
+	/** @arg {GetMultiPageMenuAction} x */
+	GetMultiPageMenuAction(x) {
+		const {getMultiPageMenuAction: a,...y}=x;
+		this.GetMultiPageMenuActionData(a);
+		this.empty_object(y);
+	}
+	/** @arg {GetMultiPageMenuActionData} x */
+	GetMultiPageMenuActionData(x) {
+		const {menu: a,...y}=x;
+		this.MultiPageMenuRenderer(a);
+		this.empty_object(y);
+	}
+	/** @arg {MultiPageMenuRenderer} x */
+	MultiPageMenuRenderer(x) {
+		this.MultiPageMenuRendererData(x.multiPageMenuRenderer);
+	}
+	/**
+	 * @param {MultiPageMenuRendererData} x
+	 */
+	MultiPageMenuRendererData(x) {
+		if(x.style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
+		const {header: a,sections: b,footer: c,style: {},...y}=x;
+		this.SimpleMenuHeaderRenderer(a);
+		iterate(b,v => {
+			this.AccountSectionListRenderer(v);
+		});
+		this.MultiPageMenuSectionRenderer(c);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {SimpleMenuHeaderRenderer} x
+	 */
+	SimpleMenuHeaderRenderer(x) {
+		this.SimpleMenuHeaderRendererData(x.simpleMenuHeaderRenderer);
+	}
+	/**
+	 * @param {SimpleMenuHeaderRendererData} x
+	 */
+	SimpleMenuHeaderRendererData(x) {
+		iterate(x.buttons,v => {
+			this.ButtonRenderer(v);
+		});
+		this.YtTextType(x.title);
+	}
+	/**
+	 * @param {AccountSectionListRenderer} x
+	 */
+	AccountSectionListRenderer(x) {
+		this.AccountSectionListRendererData(x.accountSectionListRenderer);
+	}
+	/**
+	 * @param {AccountSectionListRendererData} x
+	 */
+	AccountSectionListRendererData(x) {
+		iterate(x.contents,v=>this.AccountItemSectionRenderer(v));
+	}
+	/**
+	 * @param {AccountItemSectionRenderer} x
+	 */
+	AccountItemSectionRenderer(x) {
+		this.AccountItemSectionRendererData(x.accountItemSectionRenderer)
+	}
+	/**
+	 * @param {AccountItemSectionRendererData} x
+	 */
+	AccountItemSectionRendererData(x) {
+		iterate(x.contents,v=>{
+			if("accountItem" in v) return this.AccountItem(v);
+			this.LinkRenderer(v.compactLinkRenderer);
+		});
+	}
+	/**
+	 * @param {LinkRenderer} x
+	 */
+	LinkRenderer(x) {
+		const {navigationEndpoint,style,title,trackingParams,...y}=x;
+		this.yt_endpoint(navigationEndpoint);
+		if(style!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
+		this.YtTextType(title);
+		this.trackingParams(trackingParams);
+		this.empty_object(y);
+	}
+	/**
+	 * @param {AccountItem} x
+	 */
+	AccountItem(x) {
+		this.AccountItemData(x.accountItem);
+	}
+	/**
+	 * @param {AccountItemData} x
+	 */
+	AccountItemData(x) {
+		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=x;
+		this.empty_object(y);
+	}
+	/**
+	 * @param {MultiPageMenuSectionRenderer} x
+	 */
+	MultiPageMenuSectionRenderer(x) {
+		this.empty_object(x.multiPageMenuSectionRenderer);
+	}
+	/**
+	 * @param {ButtonRenderer} x
+	 */
+	ButtonRenderer(x) {
+		this.ButtonRendererData(x.buttonRenderer);
+		x.buttonRenderer;
+	}
+	/**
+	 * @param {ButtonRendererData} x
+	 */
+	ButtonRendererData(x) {
+		debugger;x;
+	}
+	/**
+	 * @param {SignalNavigationEndpointData} x
+	 */
+	SignalNavigationEndpointData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

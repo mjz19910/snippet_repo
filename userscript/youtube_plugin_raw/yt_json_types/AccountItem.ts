@@ -1,0 +1,3 @@
+type AccountItem={
+	accountItem: AccountItemData;
+};

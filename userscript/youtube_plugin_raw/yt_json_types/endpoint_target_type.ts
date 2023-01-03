@@ -6,4 +6,5 @@ type endpoint_target_type={
 	signalServiceEndpoint?: SignalServiceEndpointData;
 	urlEndpoint?: UrlEndpointRoot;
 	resolveUrlCommandMetadata?: ResolveUrlCommandMetadataData;
+	signalNavigationEndpoint: SignalNavigationEndpointData;
 };
