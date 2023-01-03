@@ -3959,7 +3959,22 @@ class HandleTypes extends BaseService {
 			signOutEndpoint: "SignOutEndpointData",
 			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData",
 			clickTrackingParams: null,
+			commandMetadata: null,
+			loadMarkersCommand: null,
+			changeKeyedMarkersVisibilityCommand: null,
 		};
+		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
+		has_key(k) {
+			return this._map.has(k);
+		}
+		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
+		has(k) {
+			if(!this._map.has(k)) return false;
+			let key=this._map.get(k);
+			if(key===null) return false;
+			if(key===void 0) return false;
+			return true;
+		}
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {Extract<endpoint_data_handler_names[T],string>} */
 		get(k) {
 			let key=this._map.get(k);
@@ -3971,12 +3986,14 @@ class HandleTypes extends BaseService {
 	yt_endpoint(x) {
 		this.save_keys("YtEndpoint",x,true);
 		if("clickTrackingParams" in x) {
-			const {clickTrackingParams: a}=x;
+			const {clickTrackingParams: a,...y}=x;
 			if(a!==void 0) this.clickTrackingParams(a);
+			x=y;
 		}
 		if("commandMetadata" in x) {
-			const {commandMetadata: b}=x;
+			const {commandMetadata: b,...y}=x;
 			this.commandMetadata(b);
+			x=y;
 		}
 		let yk=get_keys_of(x);
 		let y=x;
@@ -4017,7 +4034,7 @@ class HandleTypes extends BaseService {
 				} break;
 				default:
 			}
-			if(!this.endpoint_data_map._map.has(ya)) {
+			if(!this.endpoint_data_map.has_key(ya)) {
 				console.log('[new_ep_data] [%s]',ya);
 				debugger;
 				throw new Error();
@@ -4033,7 +4050,7 @@ class HandleTypes extends BaseService {
 		}
 		if("loadMarkersCommand" in y) {
 			let cmd=y.loadMarkersCommand;
-			iterate(cmd.entityKeys,key=>{
+			iterate(cmd.entityKeys,key => {
 				let res=decode_entity_key(key);
 				console.log("[entity_key]",res);
 			});
