@@ -3831,7 +3831,7 @@ class HandleTypes extends BaseService {
 		}
 		if("observedStateTags" in y) {
 			const {observedStateTags: a,...z}=y;
-			iterate(a,v=>this.StateTag(v));
+			iterate(a,v => this.StateTag(v));
 			this.empty_object(z);
 		}
 		if("cacheMetadata" in y) {
@@ -4365,7 +4365,7 @@ class HandleTypes extends BaseService {
 	/** @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const {relevantStateTags: a,...y}=x;
-		iterate(a,v=>this.StateTag(v));
+		iterate(a,v => this.StateTag(v));
 		this.empty_object(y);
 	}
 	/** @arg {StateTag} x */
@@ -4379,7 +4379,7 @@ class HandleTypes extends BaseService {
 			this.empty_object(y);
 			return;
 		}
-		
+
 		const {stateTag: a,instruction: b,...y}=x;
 		switch(a) {
 			case 3: break;
