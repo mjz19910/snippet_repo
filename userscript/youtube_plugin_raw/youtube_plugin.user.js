@@ -2986,7 +2986,7 @@ class KnownDataSaver {
 	/** @protected */
 	onDataChangeAction() {this.store_data();}
 	/** @protected */
-	on_request_data_removal() {this.delete_data();}
+	onDataClearAction() {this.delete_data();}
 }
 class BaseServicePrivate extends KnownDataSaver {
 	// #region Public
