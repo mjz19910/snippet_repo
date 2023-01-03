@@ -4033,8 +4033,12 @@ class HandleTypes extends BaseService {
 			x=y;
 		}
 		if("commandMetadata" in x) {
-			const {commandMetadata: b,...y}=x;
-			this.commandMetadata(b);
+			const {commandMetadata: a,...y}=x;
+			this.commandMetadata(a);
+			x=y;
+		}
+		if("reloadContinuationItemsCommand" in x) {
+			const {reloadContinuationItemsCommand: a,...y}=x;
 			x=y;
 		}
 		let yk=get_keys_of(x);
