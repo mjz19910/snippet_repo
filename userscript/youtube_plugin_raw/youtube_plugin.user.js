@@ -3917,9 +3917,19 @@ class HandleTypes extends BaseService {
 	SignalServiceEndpointData(x) {
 		this.save_keys("SignalServiceEndpointData",x);
 	}
-	/** @arg {UrlEndpointRoot} x */
+	/** @arg {UrlEndpointData} x */
 	UrlEndpointRoot(x) {
-		this.save_keys("UrlEndpointRoot",x);
+		if("target" in x) {
+			const {url,target,...y}=x;
+			this.parse_url(url);
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			this.empty_object(y);
+			return;
+		}
+		const {url,...y}=x;
+		this.parse_url(url);
+		this.save_keys("UrlEndpointRoot",x,true);
+		this.empty_object(y);
 	}
 	endpoint_data_map=new class {
 		constructor() {

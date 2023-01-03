@@ -3,7 +3,7 @@ type WatchEndpointPlugin={
 };
 
 type UrlEndpointPlugin={
-	urlEndpoint: UrlEndpointRoot;
+	urlEndpoint: UrlEndpointData;
 };
 
 type SignalServiceEndpointPlugin={

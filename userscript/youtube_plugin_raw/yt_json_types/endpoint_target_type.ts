@@ -4,7 +4,7 @@ type endpoint_target_type=Partial<{
 	searchEndpoint: SearchEndpointData;
 	setSettingEndpoint: SetSettingEndpointData;
 	signalServiceEndpoint: SignalServiceEndpointData;
-	urlEndpoint: UrlEndpointRoot;
+	urlEndpoint: UrlEndpointData;
 	resolveUrlCommandMetadata: ResolveUrlCommandMetadataData;
 	signalNavigationEndpoint: SignalNavigationEndpointData;
 }>;
