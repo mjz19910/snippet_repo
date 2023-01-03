@@ -4591,11 +4591,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
-		const {responseContext: a,actions: b,selectedText: c,...y}=x;
+		const {responseContext: a,actions: b,selectText: c,...y}=x;
 		this.ResponseContext(a);
 		iterate(b,v => {
 			this.GetMultiPageMenuAction(v);
 		});
+		if(!c) debugger;
 		this.YtTextType(c);
 		this.empty_object(y);
 	}
