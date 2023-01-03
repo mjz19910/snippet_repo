@@ -3152,7 +3152,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	log_skipped_strings=false;
 	#x;
 }
-/** @template {any[]} T @arg {T|undefined} t @arg {(x:T[number])=>void} u  */
+/** @template U @template {U[]} T @arg {T|undefined} t @arg {(x:U)=>void} u  */
 function iterate(t,u) {
 	if(t===void 0) return;
 	for(let item of t) {
