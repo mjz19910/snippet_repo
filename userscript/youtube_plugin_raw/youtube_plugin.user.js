@@ -4234,8 +4234,7 @@ class HandleTypes extends BaseService {
 				let parts=split_string(a1,"&");
 				let [p0]=parts;
 				let [c0,c1]=split_string(p0,"=");
-				if(c0!=="v") debugger;
-				console.log('watch page v=',c1);
+				console.log('watch page %s=',c0,c1);
 			} return;
 		}
 		if(f!=="") debugger;
