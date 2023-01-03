@@ -1,0 +1,1 @@
+type YtMyMixPlaylistFormat=`MM${string}`;

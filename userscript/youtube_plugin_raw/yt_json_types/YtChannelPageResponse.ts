@@ -1,0 +1,3 @@
+type YtChannelPageResponse={
+	page: "channel";
+};

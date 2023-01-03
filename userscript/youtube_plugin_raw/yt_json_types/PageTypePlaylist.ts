@@ -1,7 +1,11 @@
-export interface PageTypePlaylist {
+type YtPlaylistResponse={
+	page: "playlist";
+};
+
+type PageTypePlaylist={
 	pageType: "playlist";
 	endpoint: YtEndpoint;
-	response: {};
+	response: YtPlaylistResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

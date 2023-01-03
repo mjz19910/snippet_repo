@@ -1,10 +1,11 @@
-const use_post_req_uniq_symbol:unique symbol=Symbol("PostTag");
-const web_cmd_api_url:unique symbol=Symbol("ApiUrl");
+type YtShortsResponse={
+	page: "shorts";
+};
 
 type PageTypeShorts={
 	pageType: "shorts";
 	endpoint: ReelWatchEndpointData;
-	response: {};
+	response: YtShortsResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

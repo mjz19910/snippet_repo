@@ -4,5 +4,5 @@ type CsiVarMap={
 	yt_li: "1";
 	yt_ad: "1";
 	yt_fn: BrowseEndpointPages;
-	[x: `${string}_rid`]: `0x${string}`;
+	[x: RidFormat<string>]: `0x${string}`;
 };
