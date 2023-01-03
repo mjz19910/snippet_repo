@@ -1319,6 +1319,18 @@ class MyReader {
 		/* istanbul ignore next */
 		throw Error("invalid varint encoding");
 	}
+	readFixed64() {
+		if(this.pos+8>this.len)
+			throw indexOutOfRange(this,8);
+		return new LongBits(
+			readFixed32_end(this.buf,this.pos+=4),
+			readFixed32_end(this.buf,this.pos+=4)
+		).toBigInt();
+	}
+	fixed64() {
+		this.last_pos=this.pos;
+		return this.readFixed64();
+	}
 	/** @arg {number} writeLength */
 	indexOutOfRange(writeLength) {
 		return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
@@ -1348,7 +1360,7 @@ class MyReader {
 						let u64=this.uint64();
 						return [u64,this.pos];
 					} catch {}
-					return [0,this.pos];
+					return [0n,this.pos];
 				});
 				let num32;
 				try {
@@ -1358,15 +1370,15 @@ class MyReader {
 					break;
 				}
 				if(num64!==BigInt(num32)) {
-					first_num.push(["data",num64]);
+					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
 				} else {
-					first_num.push(["data",num32]);
+					first_num.push(["data32",fieldId,num32]);
 				}
 				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
 				break;
 			case 1:
-				this.skip(8);
+				first_num.push(["data_fixed64",fieldId,this.fixed64()]);
 				break;
 			case 2: {
 				let size=this.uint32();
@@ -1386,7 +1398,7 @@ class MyReader {
 				}
 			} break;
 			case 4: throw new Error("Invalid state");
-			case 5: first_num.push(["data",this.fixed32()]); break;
+			case 5: first_num.push(["data_fixed32",fieldId,this.fixed32()]); break;
 			default: break;
 		}
 		return first_num;
@@ -3141,6 +3153,10 @@ class BaseServicePrivate extends KnownDataSaver {
 	new_root_visual_elements=[];
 	/** @arg {number} x */
 	save_root_visual_element(x) {
+		if(x===void 0) {
+			debugger;
+			return;
+		}
 		if(this.seen_root_visual_elements.includes(x)) return;
 		console.log("store [root_visual_element]",x);
 		this.seen_root_visual_elements.push(x);
@@ -4051,7 +4067,7 @@ class HandleTypes extends BaseService {
 		if("loadMarkersCommand" in y) {
 			let cmd=y.loadMarkersCommand;
 			iterate(cmd.entityKeys,key => {
-				let res=decode_entity_key(key);
+				let res=decode_b64_proto_obj(key);
 				console.log("[entity_key]",res);
 			});
 		}
@@ -4311,7 +4327,7 @@ class HandleTypes extends BaseService {
 		if(b!==void 0) this.parse_page_type(b);
 		if(d!==void 0) this.parse_api_url(d);
 		if(e!==void 0) this.primitive_of(e,"boolean");
-		this.save_root_visual_element(c);
+		if(c!==void 0) this.save_root_visual_element(c);
 		this.empty_object(y);
 	}
 	/** @arg {string} x */

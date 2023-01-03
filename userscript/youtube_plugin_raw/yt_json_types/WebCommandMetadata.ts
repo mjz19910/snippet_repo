@@ -3,5 +3,5 @@ type WebCommandMetadata={
 	webPageType?: YtPageTypeEnum;
 	apiUrl?: YtApiUrlFormat;
 	sendPost?: boolean;
-	rootVe: 3854|83769;
+	rootVe?: 3854|83769;
 };
