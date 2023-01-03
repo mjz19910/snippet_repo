@@ -3168,7 +3168,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	log_skipped_strings=false;
 	#x;
 }
-/** @template U @template {U[]} T @arg {T|undefined} t @arg {(x:U,i:number)=>void} u  */
+/** @template U @arg {U[]|undefined} t @arg {(x:U,i:number)=>void} u  */
 function iterate(t,u) {
 	if(t===void 0) return;
 	for(let it of t.entries()) {
@@ -4039,6 +4039,7 @@ class HandleTypes extends BaseService {
 		}
 		if("reloadContinuationItemsCommand" in x) {
 			const {reloadContinuationItemsCommand: a,...y}=x;
+			this.ReloadContinuationItemsCommandData(a);
 			x=y;
 		}
 		let yk=get_keys_of(x);
@@ -4907,6 +4908,20 @@ class HandleTypes extends BaseService {
 		const {navigationEndpoints: a,...y}=x;
 		iterate(a,v => this.yt_endpoint(v));
 		this.empty_object(y);
+	}
+	/** @arg {ReloadContinuationItemsCommandData} x */
+	ReloadContinuationItemsCommandData(x) {
+		iterate(x.continuationItems,v=>{
+			this.SectionItem(v);
+		});
+	}
+	/** @arg {SectionItem} x */
+	SectionItem(x) {
+		let r=get_keys_of(x);
+		switch(r[0]) {
+			case "richItemRenderer":
+			case "richSectionRenderer":
+		}
 	}
 }
 //#endregion

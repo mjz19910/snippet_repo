@@ -1,0 +1,1 @@
+type AdSlotRenderer={adSlotRenderer: AdSlotRendererData;};

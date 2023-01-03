@@ -1,7 +1,1 @@
-type RichItemRenderer={
-	richItemRenderer: {
-		content: {
-			adSlotRenderer: AdSlotRendererData;
-		};
-	};
-};
+type RichItemRenderer={richItemRenderer: RichItemRendererData;};

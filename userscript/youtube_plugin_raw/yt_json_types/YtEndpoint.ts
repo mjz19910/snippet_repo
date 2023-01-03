@@ -8,14 +8,9 @@ type YtEndpoint={
 	signalNavigationEndpoint?: SignalNavigationEndpointData;
 	signOutEndpoint?: SignOutEndpointData;
 	getAccountsListInnertubeEndpoint?: GetAccountsListInnertubeEndpointData;
-}|{
-	loadMarkersCommand: {
-		entityKeys: string[];
-	};
-}|{
-	changeKeyedMarkersVisibilityCommand: ChangeKeyedMarkersVisibilityCommand;
-}|{
-	commandMetadata: CommandMetadata;
-}|{
-	clickTrackingParams: string;
-};
+}|
+{loadMarkersCommand: LoadMarkersCommandData;}|
+{changeKeyedMarkersVisibilityCommand: ChangeKeyedMarkersVisibilityCommand;}|
+{commandMetadata: CommandMetadata;}|
+{clickTrackingParams: string;}|
+{reloadContinuationItemsCommand: ReloadContinuationItemsCommandData;};

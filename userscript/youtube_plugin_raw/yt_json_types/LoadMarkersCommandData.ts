@@ -1,0 +1,3 @@
+type LoadMarkersCommandData={
+	entityKeys: string[];
+};
