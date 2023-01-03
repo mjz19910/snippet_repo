@@ -1,6 +1,5 @@
 type YtEndpoint={
 	clickTrackingParams?: string;
-	commandMetadata?: CommandMetadata;
 	watchEndpoint?: WatchEndpointData;
 	urlEndpoint?: UrlEndpointData;
 	signalServiceEndpoint?: SignalServiceEndpointData;
@@ -10,5 +9,13 @@ type YtEndpoint={
 	signalNavigationEndpoint?: SignalNavigationEndpointData;
 	signOutEndpoint?: SignOutEndpointData;
 	getAccountsListInnertubeEndpoint?: GetAccountsListInnertubeEndpointData;
-	changeKeyedMarkersVisibilityCommand?: ChangeKeyedMarkersVisibilityCommand;
+}|{
+	clickTrackingParams: string;
+	loadMarkersCommand: {
+		entityKeys: string[];
+	};
+}|{
+	changeKeyedMarkersVisibilityCommand: ChangeKeyedMarkersVisibilityCommand;
+}|{
+	commandMetadata: CommandMetadata;
 };
