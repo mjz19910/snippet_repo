@@ -4433,7 +4433,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
-		x;
+		const {text: a,bold: b,navigationEndpoint: c,...y}=x;
+		this.primitive_of(a,"string");
+		if(b) this.primitive_of(b,"boolean");
+		if(c) this.yt_endpoint(c);
+		this.empty_object(y);
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {x;}
