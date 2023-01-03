@@ -9,4 +9,5 @@ type endpoint_data_handler_names={
 	signalNavigationEndpoint: "SignalNavigationEndpointData";
 	signOutEndpoint: "SignOutEndpointData";
 	getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData";
+	clickTrackingParams:null;
 };

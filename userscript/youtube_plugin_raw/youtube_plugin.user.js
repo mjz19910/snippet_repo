@@ -3958,8 +3958,9 @@ class HandleTypes extends BaseService {
 			signalNavigationEndpoint: "SignalNavigationEndpointData",
 			signOutEndpoint: "SignOutEndpointData",
 			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData",
+			clickTrackingParams: null,
 		};
-		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {endpoint_data_handler_names[T]} */
+		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {Extract<endpoint_data_handler_names[T],string>} */
 		get(k) {
 			let key=this._map.get(k);
 			if(!key) throw new Error();
@@ -3977,44 +3978,50 @@ class HandleTypes extends BaseService {
 			const {commandMetadata: b}=x;
 			this.commandMetadata(b);
 		}
-		let yk=get_keys_of_one(x);
+		let yk=get_keys_of(x);
 		let y=x;
-		const [ya]=yk;
-		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
-		let q=(v) => this.endpoint_data_map.get(v);
-		/** @template {{}} T @arg {{} extends T?T:never} x */
-		let g=x => this.empty_object(x);
-		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
-		let n=(x,b) => {if(!x) throw new Error(); g(b);};
-		switch(ya) {
-			case "browseEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "searchEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "setSettingEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "signalServiceEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "urlEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "watchEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "signalNavigationEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "signOutEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			case "getAccountsListInnertubeEndpoint": if(ya in y) {
-				const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-			} break;
-			default:
+		for(let ya of yk) {
+			/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
+			let q=(v) => this.endpoint_data_map.get(v);
+			/** @template {{}} T @arg {{} extends T?T:never} x */
+			let g=x => this.empty_object(x);
+			/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
+			let n=(x,b) => {if(!x) throw new Error(); g(b);};
+			switch(ya) {
+				case "browseEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "searchEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "setSettingEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "signalServiceEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "urlEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "watchEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "signalNavigationEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "signOutEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				case "getAccountsListInnertubeEndpoint": if(ya in y) {
+					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
+				} break;
+				default:
+			}
+			if(!this.endpoint_data_map._map.has(ya)) {
+				console.log('[new_ep_data] [%s]',ya);
+				debugger;
+				throw new Error();
+			}
 		}
 		if("changeKeyedMarkersVisibilityCommand" in y) {
 			let cmd=y.changeKeyedMarkersVisibilityCommand;
@@ -4026,9 +4033,10 @@ class HandleTypes extends BaseService {
 		}
 		if("loadMarkersCommand" in y) {
 			let cmd=y.loadMarkersCommand;
-		}
-		switch(ya) {
-			default: console.log('[new_ep_data] [%s]',ya); debugger;
+			iterate(cmd.entityKeys,key=>{
+				let res=decode_entity_key(key);
+				console.log("[entity_key]",res);
+			});
 		}
 	}
 	/** @type {ResponseTypes['type']|null} */
