@@ -1611,10 +1611,10 @@ class FilterHandlers {
 		}
 		let parsed_url=c1().url;
 		/** @type {any} */
-		let href_=parsed_url.href;
+		let href_any=parsed_url.href;
 		/** @type {`https://${string}/${string}?${string}`} */
-		let href_v=href_;
-		var url_type=this.use_template_url(href_v).name;
+		let href=href_any;
+		var url_type=this.use_template_url(href).name;
 		let api_parts=parsed_url.pathname.slice(1).split("/");
 		// spell:ignore youtubei
 		if(api_parts[0]!=="youtubei") {
