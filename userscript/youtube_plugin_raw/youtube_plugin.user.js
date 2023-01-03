@@ -3152,8 +3152,8 @@ class BaseServicePrivate extends KnownDataSaver {
 	log_skipped_strings=false;
 	#x;
 }
-/** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
-function iterate(...[t,u]) {
+/** @template {any[]} T @arg {T|undefined} t @arg {(x:T[number])=>void} u  */
+function iterate(t,u) {
 	if(t===void 0) return;
 	for(let item of t) {
 		u(item);
@@ -4449,6 +4449,9 @@ class HandleTypes extends BaseService {
 			x=y;
 		}
 		if("webPrefetchData" in x) {
+			const {webPrefetchData:a,...y}=x;
+			this.WebPrefetchData(a);
+			this.empty_object(y);
 			return;
 		}
 		const {hasDecorated,...y}=x;
@@ -4806,6 +4809,12 @@ class HandleTypes extends BaseService {
 	SignOutEndpointData(x) {x;}
 	/** @arg {GetAccountsListInnertubeEndpointData} x */
 	GetAccountsListInnertubeEndpointData(x) {x;}
+	/** @arg {WebPrefetchData} x */
+	WebPrefetchData(x) {
+		const {navigationEndpoints:a,...y}=x;
+		iterate(a,v=>this.yt_endpoint(v));
+		this.empty_object(y);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
