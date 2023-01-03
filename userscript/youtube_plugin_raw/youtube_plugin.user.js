@@ -1421,7 +1421,15 @@ function non_null(val) {
 	return val;
 }
 add_function(non_null);
-
+/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
+function create_from_parse(str) {
+	let s=new URL(str);
+	/** @type {any} */
+	let a=s;
+	/** @type {UrlParse<T>} */
+	let ret=a;
+	return ret;
+}
 class FilterHandlers {
 	/** @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
@@ -1469,15 +1477,6 @@ class FilterHandlers {
 	run_mc=false;
 	/** @template {string} X @template {string} U @template {string} V @template {`https://${X}/${U}?${V}`} T @arg {T} x  */
 	use_template_url(x) {
-		/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
-		function create_from_parse(str) {
-			let s=new URL(str);
-			/** @type {any} */
-			let a=s;
-			/** @type {UrlParse<T>} */
-			let ret=a;
-			return ret;
-		}
 		const res_parse=create_from_parse(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);
@@ -1600,9 +1599,22 @@ class FilterHandlers {
 	}
 	/** @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {
-		var {req_hr_t,req_parse: parsed_url,debug}=this.on_handle_api_0(request);
-		var {path_url,url_type}=this.on_handle_api_1(req_hr_t,parsed_url);
-		if(path_url==="/getDatasyncIdsEndpoint") return;
+		const debug=false;
+		function c1() {
+			if(typeof request=="string") {
+				return {url: to_url(request)};
+			}
+			if(request instanceof URL) {
+				return {url: request};
+			}
+			return {url: to_url(request.url)};
+		}
+		let parsed_url=c1().url;
+		/** @type {any} */
+		let href_=parsed_url.href;
+		/** @type {`https://${string}/${string}?${string}`} */
+		let href_v=href_;
+		var url_type=this.use_template_url(href_v).name;
 		let api_parts=parsed_url.pathname.slice(1).split("/");
 		// spell:ignore youtubei
 		if(api_parts[0]!=="youtubei") {
@@ -1619,31 +1631,12 @@ class FilterHandlers {
 		let res=this.get_res_data(url_type,data);
 		this.handle_types.ResponseTypes(res);
 	}
-	/** @arg {`https://${string}/${string}?${string}`} req_hr_t @arg {URL} req_parse */
-	on_handle_api_1(req_hr_t,req_parse) {
+	/** @arg {`https://${string}/${string}?${string}`} req_hr_t */
+	on_handle_api_1(req_hr_t) {
 		/** @type {`https://${string}/${string}?${string}`} */
 		let href_=req_hr_t;
 		const url_type=this.use_template_url(href_).name;
-		let path_url=req_parse.pathname;
-		return {path_url,url_type};
-	}
-
-	/** @arg {string|URL|Request} request */
-	on_handle_api_0(request) {
-		const debug=false;
-		function c1() {
-			if(typeof request=="string") {
-				return {url: to_url(request)};
-			}
-			if(request instanceof URL) {
-				return {url: request};
-			}
-			return {url: to_url(request.url)};
-		}
-		let req_parse=c1().url;
-		/** @type {any} */
-		let req_hr_t=req_parse.href;
-		return {req_hr_t,req_parse,debug};
+		return url_type;
 	}
 	/** @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
@@ -3147,7 +3140,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	/** @arg {number} x */
 	save_root_visual_element(x) {
 		if(this.seen_root_visual_elements.includes(x)) return;
-		console.log("store root_visual_element [%o]",x);
+		console.log("store [root_visual_element]",x);
 		this.seen_root_visual_elements.push(x);
 		this.new_root_visual_elements.push(x);
 		this.on_seen_data_change();
@@ -4325,10 +4318,14 @@ class HandleTypes extends BaseService {
 		const cur_part=parts[index];
 		switch(cur_part) {
 			case "youtubei": index++; return this.get_yt_url_type(parts,index);
-			case "getDatasyncIdsEndpoint": return {name: cur_part};
-			default: console.log("get_url_type",cur_part); debugger;
+			case "getDatasyncIdsEndpoint": break;
+			case "getAccountSwitcherEndpoint": break;
+			default: {
+				console.log("get_url_type",cur_part);
+				debugger;
+			} throw new Error("Missing");
 		}
-		throw new Error("Missing");
+		return {name: cur_part};
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
@@ -4473,7 +4470,7 @@ class HandleTypes extends BaseService {
 	YtTextType(x) {
 		if(!x) debugger;
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
-		if(a) iterate(a,v=>this.TextRun(v));
+		if(a) iterate(a,v => this.TextRun(v));
 		if(b) this.Accessibility(b);
 		if(c) this.primitive_of(c,"string");
 		this.empty_object(y);
