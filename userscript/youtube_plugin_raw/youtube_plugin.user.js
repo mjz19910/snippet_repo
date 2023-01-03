@@ -3972,8 +3972,6 @@ class HandleTypes extends BaseService {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		if(a!==void 0) this.clickTrackingParams(a);
 		if(b) this.commandMetadata(b);
-		/** @type {endpoint_target_type} */
-		let v=y;
 		let yk=get_keys_of_one(y);
 		const [ya]=yk;
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
@@ -3983,19 +3981,23 @@ class HandleTypes extends BaseService {
 		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
 		let n=(x,b) => {if(!x) throw new Error(); g(b);};
 		switch(ya) {
-			case "browseEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "searchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "setSettingEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "signalServiceEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "urlEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "watchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "signalNavigationEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "signOutEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "getAccountsListInnertubeEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "browseEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "searchEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "setSettingEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "signalServiceEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "urlEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "watchEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "signalNavigationEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "signOutEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
+			case "getAccountsListInnertubeEndpoint": {const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);}
 			default:
 		}
-		if("changeKeyedMarkersVisibilityCommand" in v) {
-
+		if(y.changeKeyedMarkersVisibilityCommand!==void 0) {
+			let cmd=y.changeKeyedMarkersVisibilityCommand;
+			const {isVisible,key,...v}=cmd;
+			this.primitive_of(isVisible,"boolean");
+			if(key!=="HEATSEEKER") debugger;
+			this.empty_object(v);
 		}
 		switch(ya) {
 			default: console.log('[new_ep_data] [%s]',ya); debugger;
