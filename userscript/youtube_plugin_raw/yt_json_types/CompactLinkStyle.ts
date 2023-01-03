@@ -1,0 +1,1 @@
+type CompactLinkStyle=CompactLinkStyleNS.Enum;

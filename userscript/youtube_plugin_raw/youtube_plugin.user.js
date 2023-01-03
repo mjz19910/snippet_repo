@@ -4668,6 +4668,11 @@ class HandleTypes extends BaseService {
 	CompactLinkRendererData(x) {
 		if("style" in x) {
 			const {navigationEndpoint: a,style: b,title: c,trackingParams: d,...y}=x;
+			switch(b) {
+				case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
+				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
+				default: debugger;
+			}
 			if(b!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
 			this.yt_endpoint(a);
 			this.YtTextType(c);
