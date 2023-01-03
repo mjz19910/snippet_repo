@@ -1596,7 +1596,7 @@ class FilterHandlers {
 					case "log": return {
 						type: `${target[0]}.${target[1]}`,
 						data: cast_as(json),
-					}
+					};
 				}
 				case "live_chat": switch(target[1]) {
 					case "get_live_chat_replay": return {
@@ -1624,7 +1624,7 @@ class FilterHandlers {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {YtSuccessResponse} */
 						data: cast_as(json),
-					}
+					};
 				}
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
@@ -4027,25 +4027,40 @@ class HandleTypes extends BaseService {
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x,this.TODO_true);
 	}
+	/**
+	 * @param {EngagementPanelSectionListRenderer} x
+	 */
+	EngagementPanel(x) {
+		x;
+	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
 		let z;
+		/** @template {YtApiNext} T @arg {T} x @returns {Omit<T,"engagementPanels">} */
+		let g=x => {
+			if("engagementPanels" in x) {
+				const {engagementPanels,...y}=x;
+				iterate(engagementPanels,v => this.EngagementPanel(v));
+				return y;
+			}
+			return x;
+		};
 		if("currentVideoEndpoint" in x) {
-			const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
+			const v=g(x);
+			const {
+				responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,topbar,pageVisualEffects,frameworkUpdates,
+				...y
+			}=v; z=y;
 			this.ResponseContext(responseContext);
-			iterate(engagementPanels,v => this.empty_object(v));
-			z=y;
 		} else if("engagementPanels" in x) {
-			const {responseContext,trackingParams,onResponseReceivedEndpoints,engagementPanels,...y}=x;
+			const v=g(x);
+			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=v; z=y;
 			this.ResponseContext(responseContext);
-			iterate(engagementPanels,v => this.empty_object(v));
-			z=y;
 		} else {
-			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=x;
+			const {responseContext,trackingParams,onResponseReceivedEndpoints,...y}=x; z=y;
 			this.ResponseContext(responseContext);
 			this.trackingParams(trackingParams);
 			iterate(onResponseReceivedEndpoints,ep => this.yt_endpoint(ep));
-			z=y;
 		}
 		this.save_keys("api_next",x,true);
 		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
