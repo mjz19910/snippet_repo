@@ -7,4 +7,5 @@ type endpoint_data_handler_names={
 	urlEndpoint: "UrlEndpointRoot";
 	resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData";
 	signalNavigationEndpoint: "SignalNavigationEndpointData";
+	signOutEndpoint: "SignOutEndpointData";
 };

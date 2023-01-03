@@ -7,4 +7,5 @@ type endpoint_target_type=Partial<{
 	urlEndpoint: UrlEndpointData;
 	resolveUrlCommandMetadata: ResolveUrlCommandMetadataData;
 	signalNavigationEndpoint: SignalNavigationEndpointData;
+	signOutEndpoint: SignOutEndpointData;
 }>;

@@ -3945,6 +3945,7 @@ class HandleTypes extends BaseService {
 			urlEndpoint: "UrlEndpointRoot",
 			resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData",
 			signalNavigationEndpoint: "SignalNavigationEndpointData",
+			signOutEndpoint: "SignOutEndpointData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {endpoint_data_handler_names[T]} */
 		get(k) {
@@ -3977,6 +3978,7 @@ class HandleTypes extends BaseService {
 			case "urlEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "watchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "signalNavigationEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
+			case "signOutEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			default:
 		}
 		switch(ya) {
@@ -4743,10 +4745,10 @@ class HandleTypes extends BaseService {
 	ButtonRendererData(x) {
 		debugger; x;
 	}
-	/**
-	 * @param {SignalNavigationEndpointData} x
-	 */
+	/** @arg {SignalNavigationEndpointData} x */
 	SignalNavigationEndpointData(x) {x;}
+	/** @arg {SignOutEndpointData} x */
+	SignOutEndpointData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
