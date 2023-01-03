@@ -1,5 +1,5 @@
-type WebResponseContextExtensionData=[
-	WebResponseContextExtension_1,
-	WebResponseContextExtension_2,
-	WebResponsePrefetchData,
-][number];
+type WebResponseContextExtensionData={
+	hasDecorated?: boolean;
+	ytConfigData?: YtConfigData;
+	webPrefetchData?: WebPrefetchData;
+};

@@ -3173,14 +3173,6 @@ class BaseService extends BaseServicePrivate {
 		}
 		this.save_string(key,keys.join());
 	}
-	/** @arg {(bigint|string|number|boolean)[]} args */
-	primitives(...args) {
-		iterate(args,arg => this.primitive(arg));
-	}
-	/** @arg {bigint|string|number|boolean} value */
-	primitive(value) {
-		switch(typeof value) {case "bigint": case "boolean": case "number": case "string": break; default: debugger;}
-	}
 }
 class CsiService extends BaseService {
 	data={
@@ -3845,7 +3837,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
-		this.save_keys("WatchEndpointData",x);
+		this.save_keys("WatchEndpointData",x,this.TODO_true);
 	}
 	/** @arg {string} x */
 	parse_endpoint_params(x) {
@@ -3934,7 +3926,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
-		this.save_keys("SignalServiceEndpointData",x);
+		this.save_keys("SignalServiceEndpointData",x,this.TODO_true);
 	}
 	/** @arg {UrlEndpointData} x */
 	UrlEndpointRoot(x) {
@@ -4001,6 +3993,9 @@ class HandleTypes extends BaseService {
 			case "signOutEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "getAccountsListInnertubeEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			default:
+		}
+		if("changeKeyedMarkersVisibilityCommand" in v) {
+
 		}
 		switch(ya) {
 			default: console.log('[new_ep_data] [%s]',ya); debugger;
@@ -4163,12 +4158,12 @@ class HandleTypes extends BaseService {
 	/** @private @arg {string} x */
 	clickTrackingParams(x) {
 		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",x);
-		this.primitive(x);
+		this.primitive_of(x,"string");
 	}
 	/** @arg {string} x */
 	trackingParams(x) {
 		if(this.x.get_param("log_tracking_params")) console.log("tp",x);
-		this.primitive(x);
+		this.primitive_of(x,"string");
 	}
 	/** @arg {UpdateNotificationsUnseenCount} x */
 	UpdateNotificationsUnseenCount(x) {
@@ -4256,22 +4251,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
-		if("apiUrl" in x) {
-			const {url,webPageType,rootVe,apiUrl,...y}=x;
-			this.parse_url(url);
-			this.parse_page_type(webPageType);
-			this.save_root_visual_element(rootVe);
-			this.parse_api_url(apiUrl);
-			this.empty_object(y);
-		} else if("url" in x) {
-			const {url,webPageType,rootVe,...y}=x;
-			this.parse_url(url);
-			this.parse_page_type(webPageType);
-			this.save_root_visual_element(rootVe);
-			this.empty_object(y);
-		} else {
-			debugger;
-		}
+		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,...y}=x;
+		if(a!==void 0) this.parse_url(a);
+		if(b!==void 0) this.parse_page_type(b);
+		if(d!==void 0) this.parse_api_url(d);
+		if(e!==void 0) this.primitive_of(e,"boolean");
+		this.save_root_visual_element(c);
+		this.empty_object(y);
 	}
 	/** @arg {string} x */
 	parse_api_url(x) {
@@ -4441,18 +4427,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {
-		if("ytConfigData" in x) {
-			const {ytConfigData: a,...y}=x;
-			this.YtConfigData(a);
-			x=y;
-		}
-		if("webPrefetchData" in x) {
-			const {webPrefetchData: a,...y}=x;
-			this.WebPrefetchData(a);
-			this.empty_object(y);
-			return;
-		}
-		const {hasDecorated,...y}=x;
+		const {ytConfigData: a,webPrefetchData: b,hasDecorated: c,...y}=x;
+		if(a) this.YtConfigData(a);
+		if(b) this.WebPrefetchData(b);
+		if(c!==void 0) this.primitive_of(c,"boolean");
 		this.empty_object(y);
 	}
 	/** @arg {YtConfigData} x */

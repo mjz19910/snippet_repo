@@ -1,3 +1,0 @@
-type WebResponsePrefetchData={
-	webPrefetchData: WebPrefetchData;
-};
