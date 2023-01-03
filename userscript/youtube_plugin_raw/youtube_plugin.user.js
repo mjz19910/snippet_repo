@@ -4666,18 +4666,32 @@ class HandleTypes extends BaseService {
 	}
 	/** @param {CompactLinkRendererData} x */
 	CompactLinkRendererData(x) {
-		if("style" in x) {
-			const {navigationEndpoint: a,style: b,title: c,trackingParams: d,...y}=x;
+		let t=this;
+		/**
+		 * @param {YtEndpoint} a
+		 * @param {string} b
+		 * @param {YtTextType} c
+		 * @template {{}} T @arg {{} extends T?T:never} y
+		 */
+		function g(a,b,c,y) {
+			t.yt_endpoint(a);
 			switch(b) {
 				case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
 				default: debugger;
 			}
-			if(b!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
-			this.yt_endpoint(a);
-			this.YtTextType(c);
+			t.YtTextType(c);
+			t.empty_object(y);
+		}
+		if("trackingParams" in x) {
+			const {navigationEndpoint: a,style: b,title: c,trackingParams: d,...y}=x;
+			g(a,b,c,y);
 			this.trackingParams(d);
-			this.empty_object(y);
+			return;
+		}
+		if("style" in x) {
+			const {icon: a,title: b,navigationEndpoint: c,style: d,...y}=x;
+			g(c,d,b,y);
 			return;
 		}
 		const {title: a,navigationEndpoint: b,...y}=x;
