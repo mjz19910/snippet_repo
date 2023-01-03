@@ -3176,6 +3176,13 @@ function iterate(t,u) {
 		u(item,i);
 	}
 }
+/** @arg {{}} obj @arg {(k:string,v: {})=>void} fn */
+function iterate_obj(obj,fn) {
+	let arr=Object.entries(obj);
+	iterate(arr,e => {
+		fn(e[0],e[1]);
+	});
+}
 class BaseService extends BaseServicePrivate {
 	/** @arg {any[]} x */
 	log(...x) {
@@ -3743,21 +3750,13 @@ class HandleTypes extends BaseService {
 	z=iterate;
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
-		const {responseContext,annotations,attestation,adPlacements,playabilityStatus,playbackTracking,playerAds,playerConfig,paidContentOverlay,trackingParams,videoQualityPromoSupportedRenderers,endscreen,videoDetails,storyboards,streamingData,captions,cards,frameworkUpdates,microformat,...y}=x;
-		/**
-		 * @param {{}} obj
-		 * @param {(k: string, v: {})=>void} fn
-		 */
-		function iterate_obj(obj,fn) {
-			let arr=Object.entries(obj);
-			iterate(arr,e=>{
-				fn(e[0],e[1]);
-			});
-		}
+		const {responseContext,...c}=x;
+		this.ResponseContext(responseContext);
+		const {annotations,attestation,adPlacements,playabilityStatus,playbackTracking,playerAds,playerConfig,paidContentOverlay,trackingParams,videoQualityPromoSupportedRenderers,endscreen,videoDetails,storyboards,streamingData,captions,cards,frameworkUpdates,microformat,...y}=c;
 		iterate_obj(x,(k,v) => {
 			if(typeof v==='string') return;
 			if(v instanceof Array) {
-				iterate(v,(q,i)=>{
+				iterate(v,(q,i) => {
 					this.save_keys(`WatchResponsePlayer.${k}[${i}]`,q,true);
 				});
 				return;
