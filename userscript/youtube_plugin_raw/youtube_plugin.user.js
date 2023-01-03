@@ -4228,6 +4228,16 @@ class HandleTypes extends BaseService {
 			case "channel_switcher": return;
 			case "logout": return;
 		}
+		let [a0,a1]=split_string(f0,"?");
+		switch(a0) {
+			case "watch": {
+				let parts=split_string(a1,"&");
+				let [p0]=parts;
+				let [c0,c1]=split_string(p0,"=");
+				if(c0!=="v") debugger;
+				console.log('watch page v=',c1);
+			} return;
+		}
 		if(f!=="") debugger;
 		console.log(up.slice(1));
 		debugger;
