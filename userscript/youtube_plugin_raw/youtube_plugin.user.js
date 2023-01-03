@@ -3168,11 +3168,12 @@ class BaseServicePrivate extends KnownDataSaver {
 	log_skipped_strings=false;
 	#x;
 }
-/** @template U @template {U[]} T @arg {T|undefined} t @arg {(x:U)=>void} u  */
+/** @template U @template {U[]} T @arg {T|undefined} t @arg {(x:U,i:number)=>void} u  */
 function iterate(t,u) {
 	if(t===void 0) return;
-	for(let item of t) {
-		u(item);
+	for(let it of t.entries()) {
+		const [i,item]=it;
+		u(item,i);
 	}
 }
 class BaseService extends BaseServicePrivate {
@@ -3487,7 +3488,7 @@ class TrackingServices extends BaseService {
 //#endregion Service
 //#region decode_entity_key
 /** @name Ys */
-class ArrayViewType {
+class ServiceArrayViewType {
 	/** @arg {Uint8Array[]} v */
 	constructor(v) {
 		this.arrays=v;
@@ -3519,14 +3520,14 @@ class ArrayViewType {
 }
 /** @name OUa */
 class EntityKeyReader {
-	/** @arg {ArrayViewType} v */
+	/** @arg {ServiceArrayViewType} v */
 	constructor(v) {
 		this.arrayView=v;
 		this.pos=0;
 		this.pendingTagAndType=-1;
 	}
 }
-/** @arg {ArrayViewType} a @arg {number} b */
+/** @arg {ServiceArrayViewType} a @arg {number} b */
 function IUa(a,b) {
 	a.focus(b);
 	return a.arrays[a.arrayIdx][b-a.arrayPos];
@@ -3671,12 +3672,12 @@ function decode_entity_key(...gs) {
 	/** @type {[Bl|string|number|EntityKeyReader|undefined]} */
 	let [a]=gs;
 	// a = new OUa(new Ys([Rd(decodeURIComponent(a))]));
-	a=new EntityKeyReader(new ArrayViewType([base64_to_array(decodeURIComponent(a))]));
+	a=new EntityKeyReader(new ServiceArrayViewType([base64_to_array(decodeURIComponent(a))]));
 	if(PUa(a,2)) {
 		/** @type {string|number|Uint8Array|undefined} */
 		var b=Zs(a);
 		var c=a.pos;
-		/** @type {ArrayViewType|DataView|Uint8Array|string} */
+		/** @type {ServiceArrayViewType|DataView|Uint8Array|string} */
 		var d=a.arrayView;
 		c=void 0===c? 0:c;
 		var f=void 0===b? -1:b;
@@ -3754,8 +3755,14 @@ class HandleTypes extends BaseService {
 			});
 		}
 		iterate_obj(x,(k,v) => {
-			console.log("[watch_response_player_at]", k);
-			return this.empty_object(v);
+			if(typeof v==='string') return;
+			if(v instanceof Array) {
+				iterate(v,(q,i)=>{
+					this.save_keys(`WatchResponsePlayer.${k}[${i}]`,q,true);
+				});
+				return;
+			}
+			this.save_keys("WatchResponsePlayer."+k,v,true);
 		});
 		this.save_keys("WatchResponsePlayer",x,true);
 		this.empty_object(y);
