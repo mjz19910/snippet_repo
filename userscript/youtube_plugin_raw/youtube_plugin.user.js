@@ -3137,6 +3137,8 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.new_booleans.push([key,kc]);
 		this.onDataChange();
 	}
+	/** @private @type {number[]} */
+	new_root_visual_elements=[];
 	/** @arg {number} x */
 	save_root_visual_element(x) {
 		if(this.seen_root_visual_elements.includes(x)) return;
@@ -3150,8 +3152,6 @@ class BaseServicePrivate extends KnownDataSaver {
 	/** @private */
 	log_skipped_strings=false;
 	#x;
-	/** @private @type {number[]} */
-	new_root_visual_elements=[];
 }
 /** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
 function iterate(...[t,u]) {
