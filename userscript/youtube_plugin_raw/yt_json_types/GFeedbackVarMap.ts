@@ -14,5 +14,4 @@ type GFeedbackVarMap={
 	logged_in: "0"|"1";
 	num_shelves: "1";
 	premium_membership: "non_member";
-	route: "channel.featured";
 };

@@ -1,5 +1,5 @@
 type GFeedbackServiceParams={
 	service: "GFEEDBACK";
-	params: ToServiceParams<GFeedbackVarMap>;
+	params: GFeedbackServiceParamsType;
 };
 

@@ -278,9 +278,17 @@ async function async_plugin_init(event) {
 			x: if(plugin_state.show_interesting_elements&&plugin_state.polymer_loaded&&document.body) {
 				let interesting_body_elements=[...make_iterator(document.body.children)].filter(e => {
 					let e_tn=e.tagName;
+					if(e_tn=="SPAN") return false;
+					if(e_tn=="LINK") return false;
+					if(e_tn=="META") return false;
+					if(e_tn=="TITLE") return false;
+					if(e_tn=="SCRIPT") return false;
+					if(e_tn=="IFRAME") return false;
 					if(e_tn==="LINK"&&e instanceof HTMLLinkElement) {
 						if(e.rel==="stylesheet") return false;
 					}
+					if(e_tn=="IRON-ICONSET-SVG") return false;
+					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e.id==="home-page-skeleton") return false;
 					// cspell:ignore skeletonhidden
 					if(e.id==="watch-page-skeleton"&&(
@@ -289,16 +297,8 @@ async function async_plugin_init(event) {
 					)) return false;
 					if(e.id==="player"&&e.classList.value==="skeleton flexy") return false;
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
-					if(e_tn=="SCRIPT") return false;
-					if(e_tn=="IFRAME") return false;
-					if(e_tn=="IRON-ICONSET-SVG") return false;
-					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e_tn=="svg") return false;
-					if(e_tn=="span") return false;
-					if(e_tn=="link") return false;
-					if(e_tn=="meta") return false;
-					if(e_tn=="title") return false;
-					let fut_data=[e.tagName.toLowerCase(),e.id,e.classList.value];
+					let fut_data=[e.tagName,e.id,e.classList.value];
 					let did_run=event.detail.handle_types_fut.run_with(v => v.save_string("body_element",fut_data));
 					if(!did_run) {
 						console.log("fut failed",...fut_data);
@@ -3409,6 +3409,8 @@ class GFeedbackService extends BaseService {
 		e: null,
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
+		/** @type {GFeedbackServiceRouteParam['value']|null} */
+		route: null,
 	};
 	get handle_types() {
 		let res=this.x.get("yt_handlers").extract(e => e)?.handle_types;
@@ -3419,7 +3421,7 @@ class GFeedbackService extends BaseService {
 	parse_e_param(param) {
 		return param.value.split(",").map(e => parseInt(e,10));
 	}
-	/** @arg {ToServiceParams<GFeedbackVarMap>} params */
+	/** @arg {GFeedbackServiceParamsType} params */
 	on_params(params) {
 		let parsed_e=null;
 		for(let param of params) {
@@ -3446,10 +3448,25 @@ class GFeedbackService extends BaseService {
 				} break;
 				case "num_shelves": break;
 				case "premium_membership": if(param.value!=="non_member") debugger; general_service_state.premium_membership=param.value; break;
-				case "route": if(param.value!=="channel.featured") debugger; break;
+				case "route": {
+					this.parse_route_param(param);
+				} break;
 				default: console.log("[param_key]",param); debugger;
 			}
 			if(parsed_e) this.maybe_new_e();
+		}
+	}
+	/** @arg {GFeedbackServiceParam} x */
+	parse_route_param(x) {
+		this.data.route=x.value;
+		let route_parts=split_string(x.value,".");
+		switch(route_parts[0]) {
+			case "channel": switch(route_parts[1]) {
+				case "featured": break;
+				case "videos": break;
+				default: debugger;
+			} break;
+			default: debugger;
 		}
 	}
 	maybe_new_e() {

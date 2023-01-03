@@ -1,0 +1,1 @@
+type GFeedbackServiceParamsType=GFeedbackServiceParamList|ToServiceParams<GFeedbackVarMap>;
