@@ -4448,6 +4448,9 @@ class HandleTypes extends BaseService {
 			this.YtConfigData(a);
 			x=y;
 		}
+		if("webPrefetchData" in x) {
+			return;
+		}
 		const {hasDecorated,...y}=x;
 		this.empty_object(y);
 	}
