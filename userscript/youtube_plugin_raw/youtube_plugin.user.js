@@ -1590,6 +1590,10 @@ class FilterHandlers {
 						/** @type {AccountMenuJson} */
 						data: cast_as(json),
 					};
+					case "set_setting": return {
+						type: `${target[0]}.${target[1]}`,
+						data: cast_as(json),
+					};
 				};
 				case "att": switch(target[1]) {
 					case "get": return {
@@ -2906,6 +2910,7 @@ function get_account_type(base,parts,index) {
 	let cur_part=parts[index];
 	switch(cur_part) {
 		case "account_menu": break;
+		case "set_setting": break;
 		default: no_handler({parts,index});
 	}
 	return {
@@ -4042,6 +4047,7 @@ class HandleTypes extends BaseService {
 		}
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuJson(x.data);
+			case "account.set_setting": return this.save_keys(x.type,x.data);
 			case "att.get": return this.AttGet(x.data);
 			case "att.log": return this.save_keys(x.type,x.data);
 			case "browse": return this.BrowseResponseContent(x.data);
@@ -4063,8 +4069,8 @@ class HandleTypes extends BaseService {
 			case "settings": return this.save_keys(x.type,x.data);
 			case "shorts": return this.save_keys(x.type,x.data);
 			case "watch": return this.save_keys(x.type,x.data);
-			default: this.save_string("need_api_type",x);
 		}
+		this.save_string("need_api_type",x.type);
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {

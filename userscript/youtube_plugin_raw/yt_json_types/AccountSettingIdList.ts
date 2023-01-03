@@ -1,0 +1,3 @@
+type AccountSettingIdList=[
+	407
+];
