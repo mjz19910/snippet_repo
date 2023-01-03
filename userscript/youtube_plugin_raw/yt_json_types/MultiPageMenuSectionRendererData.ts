@@ -1,0 +1,3 @@
+type MultiPageMenuSectionRendererData={
+	items: CompactLinkRenderer[];
+};

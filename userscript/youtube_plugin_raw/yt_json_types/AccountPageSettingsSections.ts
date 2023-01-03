@@ -4,4 +4,5 @@ type AccountPageSettingsSections=[
 	"notifications",
 	"privacy",
 	"sharing",
+	"playback",
 ][number];

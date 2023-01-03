@@ -3723,6 +3723,7 @@ inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
 class HandleTypes extends BaseService {
+	z=iterate;
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x,this.TODO_true);
@@ -4154,6 +4155,10 @@ class HandleTypes extends BaseService {
 	str_starts_with(x,v) {x; return x.startsWith(v);}
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
+		if(x.startsWith("https://")) {
+			console.log("[parse_url_external]",x);
+			return;
+		}
 		if(x==="/") return;
 		let up=split_string(x,"/");
 		const [f,f0]=up;
@@ -4166,6 +4171,7 @@ class HandleTypes extends BaseService {
 				case "notifications": break;
 				case "privacy": break;
 				case "sharing": break;
+				case "playback": break;
 				default: debugger;
 			}
 			return;
@@ -4461,7 +4467,11 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {CompactLinkRenderer} x */
-	CompactLinkRenderer(x) {x;}
+	CompactLinkRenderer(x) {
+		const {compactLinkRenderer,...y}=x;
+		this.CompactLinkRendererData(x.compactLinkRenderer);
+		this.empty_object(y);
+	}
 	/** @arg {GeneralRenderer} x */
 	renderer(x) {
 		if("settingsSidebarRenderer" in x) {
@@ -4627,32 +4637,37 @@ class HandleTypes extends BaseService {
 	 * @param {AccountSectionListRendererData} x
 	 */
 	AccountSectionListRendererData(x) {
-		iterate(x.contents,v=>this.AccountItemSectionRenderer(v));
+		iterate(x.contents,v => this.AccountItemSectionRenderer(v));
 	}
 	/**
 	 * @param {AccountItemSectionRenderer} x
 	 */
 	AccountItemSectionRenderer(x) {
-		this.AccountItemSectionRendererData(x.accountItemSectionRenderer)
+		this.AccountItemSectionRendererData(x.accountItemSectionRenderer);
 	}
 	/**
 	 * @param {AccountItemSectionRendererData} x
 	 */
 	AccountItemSectionRendererData(x) {
-		iterate(x.contents,v=>{
+		iterate(x.contents,v => {
 			if("accountItem" in v) return this.AccountItem(v);
-			this.LinkRenderer(v.compactLinkRenderer);
+			this.CompactLinkRendererData(v.compactLinkRenderer);
 		});
 	}
-	/**
-	 * @param {LinkRenderer} x
-	 */
-	LinkRenderer(x) {
-		const {navigationEndpoint,style,title,trackingParams,...y}=x;
-		this.yt_endpoint(navigationEndpoint);
-		if(style!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
-		this.YtTextType(title);
-		this.trackingParams(trackingParams);
+	/** @param {CompactLinkRendererData} x */
+	CompactLinkRendererData(x) {
+		if("style" in x) {
+			const {navigationEndpoint: a,style: b,title: c,trackingParams: d,...y}=x;
+			if(b!=="COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR") debugger;
+			this.yt_endpoint(a);
+			this.YtTextType(c);
+			this.trackingParams(d);
+			this.empty_object(y);
+			return;
+		}
+		const {title: a,navigationEndpoint: b,...y}=x;
+		this.YtTextType(a);
+		this.yt_endpoint(b);
 		this.empty_object(y);
 	}
 	/**
@@ -4672,7 +4687,15 @@ class HandleTypes extends BaseService {
 	 * @param {MultiPageMenuSectionRenderer} x
 	 */
 	MultiPageMenuSectionRenderer(x) {
-		this.empty_object(x.multiPageMenuSectionRenderer);
+		this.MultiPageMenuSectionRendererData(x.multiPageMenuSectionRenderer);
+	}
+	/**
+	 * @param {MultiPageMenuSectionRendererData} x
+	 */
+	MultiPageMenuSectionRendererData(x) {
+		const {items: a,...y}=x;
+		this.z(a,v => this.CompactLinkRenderer(v));
+		this.empty_object(y);
 	}
 	/**
 	 * @param {ButtonRenderer} x
@@ -4685,7 +4708,7 @@ class HandleTypes extends BaseService {
 	 * @param {ButtonRendererData} x
 	 */
 	ButtonRendererData(x) {
-		debugger;x;
+		debugger; x;
 	}
 	/**
 	 * @param {SignalNavigationEndpointData} x
