@@ -1,0 +1,3 @@
+type SignalServiceEndpointPlugin={
+	signalServiceEndpoint: SignalServiceEndpointData;
+};

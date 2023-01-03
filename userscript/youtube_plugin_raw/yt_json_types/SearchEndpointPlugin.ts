@@ -1,0 +1,3 @@
+type SearchEndpointPlugin={
+	searchEndpoint: SearchEndpointData;
+};

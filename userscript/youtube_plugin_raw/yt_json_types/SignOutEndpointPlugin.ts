@@ -1,0 +1,3 @@
+type SignOutEndpointPlugin={
+	signOutEndpoint: SignOutEndpointData;
+};

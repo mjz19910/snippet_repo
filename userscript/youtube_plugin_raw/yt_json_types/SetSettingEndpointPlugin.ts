@@ -1,0 +1,3 @@
+type SetSettingEndpointPlugin={
+	setSettingEndpoint: SetSettingEndpointData;
+};

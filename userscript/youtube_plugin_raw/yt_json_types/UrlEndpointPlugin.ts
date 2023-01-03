@@ -1,0 +1,3 @@
+type UrlEndpointPlugin={
+	urlEndpoint: UrlEndpointData;
+};

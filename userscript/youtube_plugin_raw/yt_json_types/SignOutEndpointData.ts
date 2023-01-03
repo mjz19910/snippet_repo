@@ -1,0 +1,3 @@
+type SignOutEndpointData={
+	hack: true;
+};

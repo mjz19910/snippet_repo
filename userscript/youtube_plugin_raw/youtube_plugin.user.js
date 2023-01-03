@@ -4189,6 +4189,7 @@ class HandleTypes extends BaseService {
 		switch(f0) {
 			case "feed": switch(up[2]) {case "subscriptions": return;}
 			case "channel_switcher": return;
+			case "logout": return;
 		}
 		if(f!=="") debugger;
 		console.log(up.slice(1));
@@ -4469,7 +4470,10 @@ class HandleTypes extends BaseService {
 	Accessibility(x) {x;}
 	/** @private @arg {YtTextType} x */
 	YtTextType(x) {
-		if(!x) debugger;
+		if(!x) {
+			debugger;
+			return;
+		}
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
 		if(a) iterate(a,v => this.TextRun(v));
 		if(b) this.Accessibility(b);
