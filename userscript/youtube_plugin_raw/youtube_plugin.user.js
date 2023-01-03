@@ -294,6 +294,10 @@ async function async_plugin_init(event) {
 					if(e_tn=="IRON-ICONSET-SVG") return false;
 					if(e_tn=="IRON-A11Y-ANNOUNCER") return false;
 					if(e_tn=="svg") return false;
+					if(e_tn=="span") return false;
+					if(e_tn=="link") return false;
+					if(e_tn=="meta") return false;
+					if(e_tn=="title") return false;
 					let fut_data=[e.tagName.toLowerCase(),e.id,e.classList.value];
 					let did_run=event.detail.handle_types_fut.run_with(v => v.save_string("body_element",fut_data));
 					if(!did_run) {
@@ -3355,9 +3359,11 @@ class ECatcherService extends BaseService {
 				[39322866,39322870,39322980,39323016,45686551],
 				[39321827,39323023],
 				[24128088,24429904,24124511,24061846,24293752],
-				[24440901],
 				[24422508,24401504],
-			].flat(),
+			].flat().concat([
+				24440901,
+				39321826,
+			]),
 		},
 	};
 	/** @arg {ECatcherServiceParams['params']} params */
@@ -3390,6 +3396,7 @@ class ECatcherService extends BaseService {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
 		if(new_expected.length>0) console.log("new_fexp",new_expected);
+		this.data.expected_client_values.fexp;
 	}
 	/** @arg {NonNullable<this["data"]["client"]>} client */
 	update_client(client) {
@@ -3814,7 +3821,7 @@ class HandleTypes extends BaseService {
 		this.save_keys("BrowseResponseContent",x,Object.keys(x).length===7);
 		const {trackingParams: a,...y}=x;
 		this.trackingParams(a);
-		if("responseContext" in y) {
+		if("responseContext" in y&&"frameworkUpdates" in y) {
 			const {responseContext: res_ctx,contents: cont,header: hd/*tp*/,topbar: tb,onResponseReceivedActions: act_arr,frameworkUpdates: upd,...z}=y;
 			this.ResponseContext(res_ctx);
 			this.TwoColumnBrowseResultsRenderer(cont);
@@ -3822,6 +3829,16 @@ class HandleTypes extends BaseService {
 			this.topbar(tb);
 			iterate(act_arr,v => this.ResponseReceivedAction(v));
 			this.frameworkUpdates(upd);
+			this.empty_object(z);
+			return;
+		}
+		if("responseContext" in y) {
+			const {responseContext: res_ctx,contents: cont,header: hd/*tp*/,topbar: tb,observedStateTags: st,...z}=y;
+			this.ResponseContext(res_ctx);
+			this.TwoColumnBrowseResultsRenderer(cont);
+			this.header(hd);
+			this.topbar(tb);
+			iterate(st,v => this.StateTag(v));
 			this.empty_object(z);
 			return;
 		}
@@ -4164,8 +4181,13 @@ class HandleTypes extends BaseService {
 	parse_url(x) {
 		if(x==="/") return;
 		let up=split_string(x,"/");
-		up;
-		console.log(x); debugger;
+		const [f,...ux]=up;
+		switch(ux[0]) {
+			case "feed": switch(ux[1]) {case "subscriptions": return;}
+		}
+		if(f!=="") debugger;
+		console.log(ux);
+		debugger;
 	}
 	/** @arg {CommandMetadata} x */
 	commandMetadata(x) {

@@ -17,4 +17,11 @@ type BrowseResponseContent={
 }|{
 	trackingParams: string;
 	cacheMetadata: CacheMetadata;
+}|{
+	responseContext: ResponseContext;
+	contents: TwoColumnBrowseResultsRenderer;
+	header: FeedTabbedHeaderRenderer;
+	trackingParams: string;
+	topbar: DesktopTopbarRenderer;
+	observedStateTags: StateTag[];
 };
