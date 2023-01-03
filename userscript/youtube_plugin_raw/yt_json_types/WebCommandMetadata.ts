@@ -8,7 +8,7 @@ type WebCommandMetadata={
 	url: string;
 }|DataResponsePageTypeWebMetadata;
 type DataResponsePageTypeWebMetadata={
-	url: string;
+	url: YtUrlFormat;
 	webPageType: YtPageTypeEnum;
 	rootVe: 3854;
 	apiUrl: Join<url_pathname_parts,".">;

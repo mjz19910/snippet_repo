@@ -4160,9 +4160,11 @@ class HandleTypes extends BaseService {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @arg {string} x */
+	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
 		if(x==="/") return;
+		let up=split_string(x,"/");
+		up;
 		console.log(x); debugger;
 	}
 	/** @arg {CommandMetadata} x */

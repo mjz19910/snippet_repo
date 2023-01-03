@@ -2,11 +2,11 @@ type YtBrowsePageResponse={
 	page: "browse";
 	endpoint: YtEndpoint;
 	response: BrowseResponseContent;
-	url: string;
+	url: YtUrlFormat;
 }|{
 	page: "browse";
 	endpoint: YtEndpoint;
 	response: BrowseResponseContent;
-	url: string;
+	url: YtUrlFormat;
 	previousCsn: string;
 };
