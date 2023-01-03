@@ -2984,7 +2984,7 @@ class KnownDataSaver {
 	/** @protected @type {[string,{t:boolean;f:boolean}][]} */
 	seen_booleans=[];
 	/** @protected */
-	on_data_change() {this.store_data();}
+	onDataChangeAction() {this.store_data();}
 	/** @protected */
 	on_request_data_removal() {this.delete_data();}
 }
@@ -2999,8 +2999,8 @@ class BaseServicePrivate extends KnownDataSaver {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
-	on_seen_data_change() {
-		this.on_data_change();
+	onDataChange() {
+		this.onDataChangeAction();
 	}
 	/** @arg {string} key */
 	delete_old_string_values(key) {
@@ -3062,7 +3062,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		}
 		if(was_known) return;
 		this.new_strings.push([key,x]);
-		this.on_seen_data_change();
+		this.onDataChange();
 		console.log("store_str [%s]",key,x);
 		debugger;
 	}
@@ -3110,9 +3110,11 @@ class BaseServicePrivate extends KnownDataSaver {
 		}
 		if(was_known) return;
 		this.new_numbers.push([key,x]);
-		this.on_seen_data_change();
+		this.onDataChange();
 		console.log("store_num [%s]",key,x);
 	}
+	/** @private @type {[string,{t:boolean;f:boolean}][]} */
+	new_booleans=[];
 	/** @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
 		let krc=this.seen_booleans.find(e => e[0]===key);
@@ -3133,7 +3135,7 @@ class BaseServicePrivate extends KnownDataSaver {
 			kc.f=true;
 		}
 		this.new_booleans.push([key,kc]);
-		this.on_seen_data_change();
+		this.onDataChange();
 	}
 	/** @arg {number} x */
 	save_root_visual_element(x) {
@@ -3141,7 +3143,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		console.log("store [root_visual_element]",x);
 		this.seen_root_visual_elements.push(x);
 		this.new_root_visual_elements.push(x);
-		this.on_seen_data_change();
+		this.onDataChange();
 	}
 	// #endregion
 	//#region private
@@ -3150,8 +3152,6 @@ class BaseServicePrivate extends KnownDataSaver {
 	#x;
 	/** @private @type {number[]} */
 	new_root_visual_elements=[];
-	/** @private @type {[string,{t:boolean;f:boolean}][]} */
-	new_booleans=[];
 }
 /** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
 function iterate(...[t,u]) {
