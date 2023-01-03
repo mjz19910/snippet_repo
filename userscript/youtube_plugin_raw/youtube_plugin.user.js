@@ -3015,6 +3015,8 @@ class BaseServicePrivate extends KnownDataSaver {
 			case "many": throw new Error("Tried to delete key with many for each value");
 		};
 	}
+	/** @private @type {[string,string|string[]][]} */
+	new_strings=[];
 	/** @arg {string} key @arg {string|string[]} x */
 	save_string(key,x) {
 		if(key==="any") debugger;
@@ -3059,13 +3061,13 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_seen_strings.push([key,x]);
+		this.new_strings.push([key,x]);
 		this.on_seen_data_change();
 		console.log("store_str [%s]",key,x);
 		debugger;
 	}
 	/** @private @type {[string,number|number[]][]} */
-	new_seen_numbers=[];
+	new_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(key==="any") debugger;
@@ -3107,12 +3109,12 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_seen_numbers.push([key,x]);
+		this.new_numbers.push([key,x]);
 		this.on_seen_data_change();
 		console.log("store_num [%s]",key,x);
 	}
 	/** @arg {string} key @arg {boolean} bool */
-	save_new_bool(key,bool) {
+	save_boolean(key,bool) {
 		let krc=this.seen_booleans.find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];
@@ -3130,7 +3132,7 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 			kc.f=true;
 		}
-		this.changed_known_bool.push([key,kc]);
+		this.new_boolean.push([key,kc]);
 		this.on_seen_data_change();
 	}
 	/** @arg {number} x */
@@ -3148,10 +3150,8 @@ class BaseServicePrivate extends KnownDataSaver {
 	#x;
 	/** @private @type {number[]} */
 	new_root_visual_elements=[];
-	/** @private @type {[string,string|string[]][]} */
-	new_seen_strings=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
-	changed_known_bool=[];
+	new_boolean=[];
 }
 /** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
 function iterate(...[t,u]) {
@@ -3967,7 +3967,7 @@ class HandleTypes extends BaseService {
 			resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData",
 			signalNavigationEndpoint: "SignalNavigationEndpointData",
 			signOutEndpoint: "SignOutEndpointData",
-			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpoint",
+			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k @returns {endpoint_data_handler_names[T]} */
 		get(k) {
@@ -4001,7 +4001,7 @@ class HandleTypes extends BaseService {
 			case "watchEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "signalNavigationEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			case "signOutEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
-			case "getAccountsListInnertubeEndpoint": break;
+			case "getAccountsListInnertubeEndpoint": {const {[ya]: a,...b}=v; n(a,b); return this[q(ya)](a);}
 			default:
 		}
 		switch(ya) {
@@ -4779,16 +4779,12 @@ class HandleTypes extends BaseService {
 		this.z(a,v => this.CompactLinkRenderer(v));
 		this.empty_object(y);
 	}
-	/**
-	 * @param {ButtonRenderer} x
-	 */
+	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
 		this.ButtonRendererData(x.buttonRenderer);
 		x.buttonRenderer;
 	}
-	/**
-	 * @param {ButtonRendererData} x
-	 */
+	/** @arg {ButtonRendererData} x */
 	ButtonRendererData(x) {
 		debugger; x;
 	}
@@ -4796,6 +4792,8 @@ class HandleTypes extends BaseService {
 	SignalNavigationEndpointData(x) {x;}
 	/** @arg {SignOutEndpointData} x */
 	SignOutEndpointData(x) {x;}
+	/** @arg {GetAccountsListInnertubeEndpointData} x */
+	GetAccountsListInnertubeEndpointData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

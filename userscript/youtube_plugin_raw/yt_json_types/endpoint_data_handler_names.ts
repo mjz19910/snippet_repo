@@ -8,5 +8,5 @@ type endpoint_data_handler_names={
 	resolveUrlCommandMetadata: "ResolveUrlCommandMetadataData";
 	signalNavigationEndpoint: "SignalNavigationEndpointData";
 	signOutEndpoint: "SignOutEndpointData";
-	getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpoint";
+	getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData";
 };
