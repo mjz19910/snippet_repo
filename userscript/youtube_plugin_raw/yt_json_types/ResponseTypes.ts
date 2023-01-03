@@ -19,4 +19,11 @@ type ResponseTypes=
 	playlist_t|
 	settings_t|
 	shorts_t|
+	{
+		type: "att.log";
+		data: {};
+	}|{
+		type: "notification.modify_channel_preference";
+		data: {};
+	}|
 	never;

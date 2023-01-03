@@ -1587,11 +1587,17 @@ class FilterHandlers {
 						data: cast_as(json),
 					};
 				};
-				case "att": return {
-					type: `${target[0]}.${target[1]}`,
-					/** @type {AttGet} */
-					data: cast_as(json),
-				};
+				case "att": switch(target[1]) {
+					case "get": return {
+						type: `${target[0]}.${target[1]}`,
+						/** @type {AttGet} */
+						data: cast_as(json),
+					};
+					case "log": return {
+						type: `${target[0]}.${target[1]}`,
+						data: cast_as(json),
+					}
+				}
 				case "live_chat": switch(target[1]) {
 					case "get_live_chat_replay": return {
 						type: `${target[0]}.${target[1]}`,
@@ -1614,6 +1620,11 @@ class FilterHandlers {
 						/** @type {YtSuccessResponse} */
 						data: cast_as(json),
 					};
+					case "modify_channel_preference": return {
+						type: `${target[0]}.${target[1]}`,
+						/** @type {YtSuccessResponse} */
+						data: cast_as(json),
+					}
 				}
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
@@ -3203,6 +3214,8 @@ function iterate(...[t,u]) {
 	}
 }
 class BaseService extends BaseServicePrivate {
+	/** @arg {{}} x */
+	xx(x) {x;}
 	/** @arg {any[]} x */
 	log(...x) {
 		console.log(...x);
@@ -3300,9 +3313,9 @@ class CsiService extends BaseService {
 				case "yt_fn": if(!this.verify_param_yt_fn(param.value)) debugger; this.data[param.key]=param.value; continue;
 			}
 			/** @template {string} T @arg {T} x @returns {x is `${string}_rid`} */
-			function get_ends_with(x) {x;return x.endsWith("_rid");}
+			function get_ends_with(x) {x; return x.endsWith("_rid");}
 			/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}_rid`} */
-			function get_starts_with(x,v) {x;return x.startsWith(v);}
+			function get_starts_with(x,v) {x; return x.startsWith(v);}
 			if(param.key in this.rid) {
 				/** @type {RidFormat<string>} */
 				let rid_key=param.key;
@@ -3312,7 +3325,7 @@ class CsiService extends BaseService {
 				if(get_starts_with(param.key,"Get")) {
 					console.log("[new_get_rid][%s][%s]",param.key,param.value);
 					param.key;
-				} else if(get_starts_with(param.key,"Record")){
+				} else if(get_starts_with(param.key,"Record")) {
 					console.log("[new_record_rid][%s][%s]",param.key,param.value);
 				} else {
 					console.log("[new_rid_section][%s][%s]",param.key);
@@ -3758,9 +3771,7 @@ class HandleTypes extends BaseService {
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x,this.TODO_true);
 	}
-	/**
-	 * @param {YtBrowsePageResponse} x
-	 */
+	/** @arg {YtBrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
 		/** @type {{}} */
 		let z;
@@ -3786,14 +3797,15 @@ class HandleTypes extends BaseService {
 			case "browse": return this.YtBrowsePageResponse(mt);
 			case "watch": return this.YtWatchPageResponse(mt);
 			case "channel": return this.YtChannelPageResponse(mt);
+			case "playlist": return this.YtPlaylistResponse(mt);
+			case "settings": return this.YtSettingsResponse(mt);
+			case "shorts": return this.YtShortsResponse(mt);
 			default: break;
 		}
 		console.log("pt",x.page,x);
 		debugger;
 	}
-	/**
-	 * @param {BrowseResponseContent} x
-	 */
+	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
 		this.save_keys("BrowseResponseContent",x,Object.keys(x).length===7);
 		const {trackingParams: a,...y}=x;
@@ -3811,45 +3823,31 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(y);
 	}
-	/**
-	 * @param {DesktopTopbarRenderer} x
-	 */
+	/** @arg {DesktopTopbarRenderer} x */
 	topbar(x) {
 		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
 	}
-	/**
-	 * @param {FeedTabbedHeaderRenderer} x
-	 */
+	/** @arg {FeedTabbedHeaderRenderer} x */
 	header(x) {
 		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
 	}
-	/**
-	 * @param {EntityBatchUpdate} x
-	 */
+	/** @arg {EntityBatchUpdate} x */
 	frameworkUpdates(x) {
 		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
 	}
-	/**
-	 * @param {ResponseReceivedAction} x
-	 */
+	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
 		this.save_keys("ResponseReceivedAction",x,this.TODO_true);
 	}
-	/**
-	 * @param {WatchEndpointData} x
-	 */
+	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
 		this.save_keys("WatchEndpointData",x);
 	}
-	/**
-	 * @param {string} x
-	 */
+	/** @arg {string} x */
 	parse_endpoint_params(x) {
 		console.log(x); debugger;
 	}
-	/**
-	 * @param {BrowseIdType} x
-	 */
+	/** @arg {BrowseIdType} x */
 	parse_browse_id(x) {
 		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
 		/** @typedef {ExtractAfterStr<typeof x,"FE">} KnownParts */
@@ -3888,9 +3886,7 @@ class HandleTypes extends BaseService {
 			default: console.log("[param_value_needed]",v_2c,x); break;
 		}
 	}
-	/**
-	 * @param {BrowseEndpointData} x
-	 */
+	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
 		if("params" in x) {
 			const {params: a,...y}=x;
@@ -3909,27 +3905,19 @@ class HandleTypes extends BaseService {
 		this.save_keys("BrowseEndpointData",x);
 		this.empty_object(x);
 	}
-	/**
-	 * @param {SearchEndpointData} x
-	 */
+	/** @arg {SearchEndpointData} x */
 	SearchEndpointData(x) {
 		this.save_keys("SearchEndpointData",x);
 	}
-	/**
-	 * @param {SetSettingEndpointData} x
-	 */
+	/** @arg {SetSettingEndpointData} x */
 	SetSettingEndpointData(x) {
 		this.save_keys("SetSettingEndpointData",x);
 	}
-	/**
-	 * @param {SignalServiceEndpointData} x
-	 */
+	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
 		this.save_keys("SignalServiceEndpointData",x);
 	}
-	/**
-	 * @param {UrlEndpointRoot} x
-	 */
+	/** @arg {UrlEndpointRoot} x */
 	UrlEndpointRoot(x) {
 		this.save_keys("UrlEndpointRoot",x);
 	}
@@ -3954,12 +3942,12 @@ class HandleTypes extends BaseService {
 			return as_cast(key);
 		}
 	};
-	/** @param {YtEndpoint} x */
+	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		this.save_keys("YtEndpoint",x,true);
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
-		this.commandMetadata(b);
+		if(b) this.commandMetadata(b);
 		/** @type {endpoint_target_type} */
 		let v=y;
 		let yk=get_keys_of_one(y);
@@ -4144,9 +4132,7 @@ class HandleTypes extends BaseService {
 		if(x==="/") return;
 		console.log(x); debugger;
 	}
-	/**
-	 * @param {CommandMetadata} x
-	 */
+	/** @arg {CommandMetadata} x */
 	commandMetadata(x) {
 		const {webCommandMetadata,...y}=x;
 		this.WebCommandMetadata(x.webCommandMetadata);
@@ -4161,9 +4147,7 @@ class HandleTypes extends BaseService {
 			default: console.log("[new_page_type] [%s]",x); debugger; break;
 		}
 	}
-	/**
-	 * @param {WebCommandMetadata} x
-	 */
+	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		if("apiUrl" in x) {
 			const {url,webPageType,rootVe,apiUrl,...y}=x;
@@ -4194,19 +4178,31 @@ class HandleTypes extends BaseService {
 		const cur_part=parts[index];
 		switch(cur_part) {
 			case "att": {
-				const next_part=parts[index+1]; switch(next_part) {
-					case "get": return {
-						/** @type {`${typeof cur_part}.${typeof next_part}`} */
-						name: `${cur_part}.${next_part}`
-					};
+				index++; const next_part=parts[index]; switch(next_part) {
+					case "get": break;
+					case "log": break;
 					default: no_handler({parts,index});
 				}
+				return {
+					/** @type {`${typeof cur_part}.${typeof next_part}`} */
+					name: `${cur_part}.${next_part}`
+				};
 			}
 			case "notification": {
 				index++; let next_part=parts[index]; switch(next_part) {
 					case "get_unseen_count": break;
 					case "get_notification_menu": break;
 					case "record_interactions": break;
+					case "modify_channel_preference": break;
+					default: no_handler({parts,index});
+				} return {
+					/** @type {`${typeof cur_part}.${typeof next_part}`} */
+					name: `${cur_part}.${next_part}`
+				};
+			}
+			case "subscription": {
+				index++; let next_part=parts[index]; switch(next_part) {
+					case "subscribe": break;
 					default: no_handler({parts,index});
 				} return {
 					/** @type {`${typeof cur_part}.${typeof next_part}`} */
@@ -4259,34 +4255,26 @@ class HandleTypes extends BaseService {
 		}
 		throw new Error("Missing");
 	}
-	/**
-	 * @param {TwoColumnBrowseResultsRenderer} x
-	 */
+	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
 		const {twoColumnBrowseResultsRenderer,...y}=x;
 		this.TwoColumnBrowseResultsRendererData(twoColumnBrowseResultsRenderer);
 		this.save_keys("TwoColumnBrowseResultsRenderer",x,true);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {TwoColumnBrowseResultsRendererData} x
-	 */
+	/** @arg {TwoColumnBrowseResultsRendererData} x */
 	TwoColumnBrowseResultsRendererData(x) {
 		const {tabs,...y}=x;
 		iterate(tabs,v => this.ResultRenderer(v));
 		this.empty_object(y);
 	}
-	/**
-	 * @param {ResultRenderer} x
-	 */
+	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
 		const {tabRenderer,...y}=x;
 		this.TabRenderer(tabRenderer);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {TabRenderer} x
-	 */
+	/** @arg {TabRenderer} x */
 	TabRenderer(x) {
 		const {content,selected,trackingParams,...y}=x;
 		if("richGridRenderer" in content) {
@@ -4315,17 +4303,11 @@ class HandleTypes extends BaseService {
 		this.save_keys("ResponseContext",x,this.TODO_true);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {MainAppWebResponseContextData} x
-	 */
+	/** @arg {MainAppWebResponseContextData} x */
 	MainAppWebResponseContextData(x) {x;}
-	/**
-	 * @param {WebResponseContextExtensionData} x
-	 */
+	/** @arg {WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {x;}
-	/**
-	 * @param {YtWatchPageResponse} x
-	 */
+	/** @arg {YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {x;}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {x;}

@@ -1,4 +1,4 @@
 type YtEndpointBase={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata?: CommandMetadata;
 };
