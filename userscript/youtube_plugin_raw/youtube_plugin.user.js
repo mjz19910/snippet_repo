@@ -3132,7 +3132,7 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 			kc.f=true;
 		}
-		this.new_boolean.push([key,kc]);
+		this.new_booleans.push([key,kc]);
 		this.on_seen_data_change();
 	}
 	/** @arg {number} x */
@@ -3151,7 +3151,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	/** @private @type {number[]} */
 	new_root_visual_elements=[];
 	/** @private @type {[string,{t:boolean;f:boolean}][]} */
-	new_boolean=[];
+	new_booleans=[];
 }
 /** @template {any[]} T @arg {[T|undefined,(x:T[number])=>void]} a0  */
 function iterate(...[t,u]) {
