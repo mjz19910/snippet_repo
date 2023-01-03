@@ -4044,7 +4044,7 @@ class HandleTypes extends BaseService {
 			case "account.account_menu": return this.AccountMenuJson(x.data);
 			case "att.get": return this.AttGet(x.data);
 			case "att.log": return this.save_keys(x.type,x.data);
-			case "browse": return this.save_keys(x.type,x.data);
+			case "browse": return this.BrowseResponseContent(x.data);
 			case "channel": return this.save_keys(x.type,x.data);
 			case "feedback": return this.save_keys(x.type,x.data);
 			case "get_transcript": return this.save_keys(x.type,x.data);
@@ -4127,7 +4127,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
-		this.save_keys("AccountMenuJson",x);
+		this.save_keys("AccountMenuJson",x,this.TODO_true);
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
