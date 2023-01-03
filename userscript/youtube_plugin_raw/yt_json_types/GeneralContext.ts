@@ -1,10 +1,15 @@
-type ResponseContext={
+type BaseResponseContext={
 	mainAppWebResponseContext: MainAppWebResponseContextData;
 	serviceTrackingParams: AllServiceTrackingParams[];
-	webResponseContextExtensionData: WebResponseContextExtensionData;
-}|{
-	serviceTrackingParams: AllServiceTrackingParams[];
-	maxAgeSeconds: number;
-	mainAppWebResponseContext: MainAppWebResponseContextData;
 	webResponseContextExtensionData: WebResponseContextExtensionData;
 };
+
+type RelevantStateTags={
+	relevantStateTags: StateTag[];
+};
+
+type ResponseContext=BaseResponseContext|BaseResponseContext&({
+	maxAgeSeconds: number;
+}|{
+	stateTags: RelevantStateTags;
+});

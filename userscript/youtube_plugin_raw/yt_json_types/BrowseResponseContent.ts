@@ -13,7 +13,7 @@ type BrowseResponseContent={
 	sidebar: SettingsSidebarRenderer;
 }|{
 	trackingParams: string;
-	observedStateTags: StateTagItem[];
+	observedStateTags: StateTag[];
 }|{
 	trackingParams: string;
 	cacheMetadata: CacheMetadata;

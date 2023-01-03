@@ -3266,7 +3266,11 @@ class CsiService extends BaseService {
 		"GetUnseenNotificationCount_rid",
 		"GetAttestationChallenge_rid",
 		"GetHome_rid",
-		"GetPlayer_rid","GetPlaylist_rid",
+		// player
+		"GetPlayer_rid",
+		// shorts
+		"GetReelItemWatch_rid",
+		"GetPlaylist_rid",
 		"GetWatchNext_rid",
 		"GetWebMainAppGuide_rid",
 		"GetWatchPageWebTopLevelComments_rid",
@@ -3821,6 +3825,19 @@ class HandleTypes extends BaseService {
 			this.empty_object(z);
 			return;
 		}
+		if("sidebar" in y) {
+			const {sidebar: a,...z}=y;
+			this.empty_object(z);
+		}
+		if("observedStateTags" in y) {
+			const {observedStateTags: a,...z}=y;
+			iterate(a,v=>this.StateTag(v));
+			this.empty_object(z);
+		}
+		if("cacheMetadata" in y) {
+			const {cacheMetadata: a,...z}=y;
+			this.empty_object(z);
+		}
 		this.empty_object(y);
 	}
 	/** @arg {DesktopTopbarRenderer} x */
@@ -3998,7 +4015,7 @@ class HandleTypes extends BaseService {
 			case "next": return this.YtApiNext(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountData(x.data);
-			case "notification.modify_channel_preference": return this.save_keys(x.type,x.data);
+			case "notification.modify_channel_preference": return this.ModifyChannelPreference(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
 			case "player": return this.WatchResponsePlayer(x.data);
 			case "playlist": return this.save_keys(x.type,x.data);
@@ -4310,6 +4327,11 @@ class HandleTypes extends BaseService {
 			this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
 			x=v;
 		}
+		if("stateTags" in x) {
+			const {stateTags: a,...v}=x; x=v;
+			this.RelevantStateTags(a);
+			// iterate(a,v=>this.StateTag(v));
+		}
 		const {mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,...y}=x;
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
@@ -4335,6 +4357,40 @@ class HandleTypes extends BaseService {
 	YtSettingsResponse(x) {x;}
 	/** @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {x;}
+	/** @arg {ModifyChannelPreference} x */
+	ModifyChannelPreference(x) {
+		this.save_keys("ModifyChannelPreference",x);
+		this.empty_object(x);
+	}
+	/** @arg {RelevantStateTags} x */
+	RelevantStateTags(x) {
+		const {relevantStateTags: a,...y}=x;
+		iterate(a,v=>this.StateTag(v));
+		this.empty_object(y);
+	}
+	/** @arg {StateTag} x */
+	StateTag(x) {
+		if("onStateTagModified" in x) {
+			const {stateTag: a,onStateTagModified: b,...y}=x;
+			switch(b) {
+				case "STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE": break;
+				default: debugger;
+			}
+			this.empty_object(y);
+			return;
+		}
+		
+		const {stateTag: a,instruction: b,...y}=x;
+		switch(a) {
+			case 3: break;
+			default: debugger;
+		}
+		switch(b) {
+			case "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY": break;
+			default: debugger;
+		}
+		this.empty_object(y);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
