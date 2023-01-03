@@ -3716,7 +3716,11 @@ function decode_entity_key(...gs) {
 	function is_keyof_RUa(v) {
 		return v in RUa;
 	}
-	if(!is_keyof_RUa(a)) throw new Error("Invalid state");
+	if(!is_keyof_RUa(a)) return {
+		entityTypeFieldNumber: a,
+		entityType: null,
+		entityId: b
+	};
 	d=RUa[a];
 	if("undefined"===typeof d)
 		throw a=new Bl("Failed to recognize field number",{
@@ -3738,7 +3742,23 @@ class HandleTypes extends BaseService {
 	z=iterate;
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
-		this.save_keys("WatchResponsePlayer",x,this.TODO_true);
+		const {responseContext,annotations,attestation,adPlacements,playabilityStatus,playbackTracking,playerAds,playerConfig,paidContentOverlay,trackingParams,videoQualityPromoSupportedRenderers,endscreen,videoDetails,storyboards,streamingData,captions,cards,frameworkUpdates,microformat,...y}=x;
+		/**
+		 * @param {{}} obj
+		 * @param {(k: string, v: {})=>void} fn
+		 */
+		function iterate_obj(obj,fn) {
+			let arr=Object.entries(obj);
+			iterate(arr,e=>{
+				fn(e[0],e[1]);
+			});
+		}
+		iterate_obj(x,(k,v) => {
+			console.log("[watch_response_player_at]", k);
+			return this.empty_object(v);
+		});
+		this.save_keys("WatchResponsePlayer",x,true);
+		this.empty_object(y);
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
@@ -4068,7 +4088,8 @@ class HandleTypes extends BaseService {
 			let cmd=y.loadMarkersCommand;
 			iterate(cmd.entityKeys,key => {
 				let res=decode_b64_proto_obj(key);
-				console.log("[entity_key]",res);
+				let res_2=decode_entity_key(key);
+				console.log("[entity_key]",res_2,res);
 			});
 		}
 	}
@@ -4219,6 +4240,7 @@ class HandleTypes extends BaseService {
 		if(!keys.length) return;
 		console.log("[empty_object] [%s] %o",keys.join(),x);
 		debugger;
+		throw new Error();
 	}
 	/** @private @template {{}} T @arg {T} x */
 	is_empty_object(x) {
@@ -4488,7 +4510,7 @@ class HandleTypes extends BaseService {
 		iterate(b,v => tracking_handler.set_service_params(v));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
-		this.save_keys("ResponseContext",x,this.TODO_true);
+		this.save_keys("ResponseContext",x,true);
 		this.empty_object(y);
 	}
 	/** @arg {MainAppWebResponseContextData} x */
@@ -4843,12 +4865,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
+		const {buttonRenderer,...v}=x;
 		this.ButtonRendererData(x.buttonRenderer);
-		x.buttonRenderer;
+		this.empty_object(v);
 	}
 	/** @arg {ButtonRendererData} x */
 	ButtonRendererData(x) {
-		debugger; x;
+		// const {...v}=x;
+		console.log("[button_renderer_data]",Object.keys(x).join());
+		debugger;
 	}
 	/** @arg {SignalNavigationEndpointData} x */
 	SignalNavigationEndpointData(x) {x;}
