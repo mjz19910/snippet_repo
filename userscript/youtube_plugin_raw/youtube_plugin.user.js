@@ -3224,8 +3224,6 @@ function iterate(...[t,u]) {
 	}
 }
 class BaseService extends BaseServicePrivate {
-	/** @arg {{}} x */
-	xx(x) {x;}
 	/** @arg {any[]} x */
 	log(...x) {
 		console.log(...x);
@@ -4384,17 +4382,25 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
-		if("maxAgeSeconds" in x) {
-			const {maxAgeSeconds: a,...v}=x;
-			this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
-			x=v;
-		}
-		if("stateTags" in x) {
-			const {stateTags: a,...v}=x; x=v;
-			this.RelevantStateTags(a);
-			// iterate(a,v=>this.StateTag(v));
-		}
 		const {mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,...y}=x;
+		if("maxAgeSeconds" in y) {
+			const {maxAgeSeconds: a,...v}=y;
+			this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
+			this.empty_object(v);
+			return;
+		}
+		if("stateTags" in y) {
+			const {stateTags: a,...v}=y;
+			this.RelevantStateTags(a);
+			this.empty_object(v);
+			return;
+		}
+		if("consistencyTokenJar" in y) {
+			const {consistencyTokenJar: a,...v}=y;
+			this.ConsistencyTokenJarData(a);
+			this.empty_object(v);
+			return;
+		}
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
 		iterate(b,v => tracking_handler.set_service_params(v));
@@ -4452,6 +4458,8 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(y);
 	}
+	/** @arg {ConsistencyTokenJarData} x */
+	ConsistencyTokenJarData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

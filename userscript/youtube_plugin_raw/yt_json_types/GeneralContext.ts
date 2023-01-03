@@ -1,1 +1,1 @@
-type ResponseContext=BaseResponseContext|BaseResponseContext&ResponseContextExtensions;
+type ResponseContext=ResponseContextExtensions;
