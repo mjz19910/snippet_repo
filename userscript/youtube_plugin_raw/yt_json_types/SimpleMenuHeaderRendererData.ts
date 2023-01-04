@@ -1,4 +1,4 @@
 type SimpleMenuHeaderRendererData={
-	title: YtTextType;
+	title: TextT;
 	buttons: ButtonRenderer[];
 };

@@ -1,4 +1,4 @@
 type HotkeyDialogData={
-	label: YtTextType;
+	label: TextT;
 	hotkey: string;
 };

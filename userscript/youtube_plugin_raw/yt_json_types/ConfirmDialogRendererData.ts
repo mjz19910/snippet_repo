@@ -1,7 +1,7 @@
 type ConfirmDialogRendererData={
-	title: YtTextType;
+	title: TextT;
 	trackingParams: string;
-	dialogMessages: YtTextType[];
+	dialogMessages: TextT[];
 	confirmButton: ButtonRenderer;
 	cancelButton: ButtonRenderer;
 	primaryIsCancel: boolean;

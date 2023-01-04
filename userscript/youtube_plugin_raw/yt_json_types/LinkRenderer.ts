@@ -1,14 +1,14 @@
 type CompactLinkRendererData={
-	title: YtTextType;
+	title: TextT;
 	navigationEndpoint: YtEndpoint;
 	trackingParams: string;
 	style: CompactLinkStyle;
 }|{
-	title: YtTextType;
+	title: TextT;
 	navigationEndpoint: YtEndpoint;
 }|{
 	icon: Icon<"PERSON_ADD">;
-	title: YtTextType;
+	title: TextT;
 	navigationEndpoint: YtEndpoint;
 	style: CompactLinkStyle;
 };

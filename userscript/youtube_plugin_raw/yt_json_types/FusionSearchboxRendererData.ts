@@ -1,6 +1,6 @@
 type FusionSearchboxRendererData={
 	icon: Icon<"SEARCH">;
-	placeholderText: YtTextType;
+	placeholderText: TextT;
 	config: SearchboxConfig;
 	trackingParams: string;
 	searchEndpoint: YtEndpoint;

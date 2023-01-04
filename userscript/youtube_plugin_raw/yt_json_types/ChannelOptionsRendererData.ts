@@ -1,7 +1,7 @@
 type ChannelOptionsRendererData={
-	avatar: ThumbnailsList;
+	avatar: ThumbnailsListData;
 	avatarEndpoint: YtEndpoint;
 	name: string;
-	links: YtTextType[];
+	links: TextT[];
 	avatarAccessibility: Accessibility;
 };

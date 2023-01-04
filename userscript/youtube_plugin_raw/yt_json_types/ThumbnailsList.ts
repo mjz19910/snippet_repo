@@ -1,3 +1,4 @@
 type ThumbnailsList={
-	thumbnails: Thumbnail[];
+	thumbnail: ThumbnailsListData;
+	trackingParams: string;
 };

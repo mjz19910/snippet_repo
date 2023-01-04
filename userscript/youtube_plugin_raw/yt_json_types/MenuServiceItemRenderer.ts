@@ -1,4 +1,4 @@
 type MenuServiceItemRenderer={
 	serviceEndpoint: YtEndpoint;
-	text: YtTextType;
+	text: TextT;
 };

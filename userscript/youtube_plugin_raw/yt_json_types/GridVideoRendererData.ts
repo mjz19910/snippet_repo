@@ -1,14 +1,14 @@
 type GridVideoRendererData={
 	badges: {}[];
-	channelThumbnail: ThumbnailsList;
+	channelThumbnail: ThumbnailsListData;
 	menu: MenuRenderer;
 	navigationEndpoint: YtEndpoint;
-	shortBylineText: YtTextType;
-	shortViewCountText: YtTextType;
-	thumbnail: ThumbnailsList;
+	shortBylineText: TextT;
+	shortViewCountText: TextT;
+	thumbnail: ThumbnailsListData;
 	thumbnailOverlay: ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;
 	videoId: string;
-	viewCountText: YtTextType;
+	viewCountText: TextT;
 };

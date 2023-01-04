@@ -1,4 +1,4 @@
 type NotificationActionRendererData={
-	responseText: YtTextType;
+	responseText: TextT;
 	trackingParams: string;
 };

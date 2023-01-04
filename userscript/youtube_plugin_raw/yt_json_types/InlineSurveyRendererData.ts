@@ -1,10 +1,10 @@
 type InlineSurveyRendererData={
 	dismissalEndpoint: YtEndpoint;
-	title: YtTextType;
-	subtitle: YtTextType;
+	title: TextT;
+	subtitle: TextT;
 	inlineContent: CompactVideoRenderer;
 	response: SurveyRendererResponse;
 	trackingParams: string;
-	dismissalText: YtTextType;
+	dismissalText: TextT;
 	impressionEndpoints: YtEndpoint[];
 };

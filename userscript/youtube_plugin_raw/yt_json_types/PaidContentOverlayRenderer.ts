@@ -2,6 +2,6 @@ type PaidContentOverlayRenderer={
 	durationMs: `${number}`;
 	icon: Icon<"MONEY_HAND">;
 	navigationEndpoint: YtEndpoint;
-	text: YtTextType;
+	text: TextT;
 	trackingParams: string;
 };

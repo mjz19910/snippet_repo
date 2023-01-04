@@ -1,6 +1,6 @@
 type SettingsCheckboxRendererData={
-	title: YtTextType;
-	helpText?: YtTextType;
+	title: TextT;
+	helpText?: TextT;
 	enabled: boolean;
 	enableServiceEndpoint: YtEndpoint;
 	disableServiceEndpoint: YtEndpoint;

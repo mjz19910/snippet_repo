@@ -1568,7 +1568,7 @@ class FilterHandlers {
 					};
 					case "accounts_list": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {{}} */
+						/** @type {AccountsListResponse} */
 						data: cast_as(json),
 					};
 					case "set_setting": return {
@@ -4150,6 +4150,10 @@ class HandleTypes extends BaseService {
 			case "settings": return this.save_keys(x.type,x.data);
 			case "shorts": return this.save_keys(x.type,x.data);
 			case "watch": return this.save_keys(x.type,x.data);
+			default:
+		}
+		switch(x.type) {
+			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			default: g(x);
 		}
 	}
@@ -4623,7 +4627,7 @@ class HandleTypes extends BaseService {
 		if(c) this.yt_endpoint(c);
 		this.empty_object(y);
 	}
-	/** @private @arg {string} from @arg {YtTextType} x */
+	/** @private @arg {string} from @arg {TextT} x */
 	YtTextType(from,x) {
 		if(!x) {
 			debugger;
@@ -4828,7 +4832,7 @@ class HandleTypes extends BaseService {
 		/**
 		 * @param {YtEndpoint} a
 		 * @param {string} b
-		 * @param {YtTextType} c
+		 * @param {TextT} c
 		 * @template {{}} T @arg {{} extends T?T:never} y
 		 */
 		function g(a,b,c,y) {
@@ -5039,6 +5043,8 @@ class HandleTypes extends BaseService {
 	SignOutEndpointData(x) {x;}
 	/** @arg {GetAccountsListInnertubeEndpointData} x */
 	GetAccountsListInnertubeEndpointData(x) {x;}
+	/** @arg {AccountsListResponse} x */
+	AccountsListResponse(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

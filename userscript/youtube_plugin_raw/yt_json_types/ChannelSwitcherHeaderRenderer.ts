@@ -1,0 +1,3 @@
+type ChannelSwitcherHeaderRenderer={
+	channelSwitcherHeaderRenderer: ChannelSwitcherHeader;
+};

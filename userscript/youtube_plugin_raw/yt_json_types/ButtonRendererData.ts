@@ -7,7 +7,7 @@ type ButtonRendererData={
 	serviceEndpoint: YtEndpoint;
 	size: "SIZE_DEFAULT";
 	style: "STYLE_DEFAULT"|"STYLE_SUGGESTIVE";
-	text: YtTextType;
+	text: TextT;
 	tooltip: string;
 	trackingParams: string;
 	clickTrackingParams?: string;

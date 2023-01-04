@@ -1,4 +1,4 @@
 type HotkeyDialogSectionRendererData={
-	title: YtTextType;
+	title: TextT;
 	options: HotkeyDialogSectionOptionRenderer[];
 };

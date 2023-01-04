@@ -1,3 +1,3 @@
 type ThumbnailOverlayNowPlayingRenderer={
-	text: YtTextType;
+	text: TextT;
 };

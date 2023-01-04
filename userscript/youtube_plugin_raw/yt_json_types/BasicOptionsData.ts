@@ -1,4 +1,4 @@
 type BasicOptionsData={
 	options: SettingsOptionItemType[];
-	title: YtTextType;
+	title: TextT;
 };

@@ -1,0 +1,3 @@
+type ChannelSwitcherPageRenderer={
+	channelSwitcherPageRenderer: ChannelSwitcherPage;
+};

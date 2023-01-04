@@ -1,5 +1,5 @@
 type HotkeyDialogRendererData={
-	title: YtTextType;
+	title: TextT;
 	sections: HotkeyDialogSectionRenderer[];
 	dismissButton: ButtonRenderer;
 	trackingParams: string;

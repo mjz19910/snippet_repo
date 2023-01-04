@@ -1,4 +1,4 @@
 type ThumbnailOverlayTimeStatusRenderer={
-	text: YtTextType;
+	text: TextT;
 	style: "DEFAULT";
 };

@@ -1,10 +1,10 @@
 type AccountItemData={
-	accountName: YtTextType;
-	accountPhoto: ThumbnailsList;
+	accountName: TextT;
+	accountPhoto: ThumbnailsListData;
 	isSelected: false;
 	isDisabled: false;
 	hasChannel: boolean;
 	serviceEndpoint: YtEndpoint;
-	accountByline: YtTextType;
-	channelHandle: YtTextType;
+	accountByline: TextT;
+	channelHandle: TextT;
 };

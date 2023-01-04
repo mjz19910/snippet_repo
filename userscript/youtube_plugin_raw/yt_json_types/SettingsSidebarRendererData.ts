@@ -1,4 +1,4 @@
 type SettingsSidebarRendererData={
-	title: YtTextType;
+	title: TextT;
 	items: CompactLinkRenderer[];
 };

@@ -1,6 +1,6 @@
 type CommentsHeaderRendererData={
-	commentsCount: YtTextType;
-	countText: YtTextType;
+	commentsCount: TextT;
+	countText: TextT;
 	createRenderer: CommentSimpleboxRenderer;
 	customEmojis: {};
 	loggingDirectives: {};

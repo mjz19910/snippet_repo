@@ -1,3 +1,3 @@
 type FeedTabbedHeaderRendererData={
-	title: YtTextType;
+	title: TextT;
 };
