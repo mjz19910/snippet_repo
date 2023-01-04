@@ -3213,10 +3213,7 @@ class CsiService extends BaseService {
 					if(param.value!=="WEB") debugger;
 					this.data[param.key]=param.value;
 				} continue;
-				case "cver": {
-					if(param.value!=="2.20230103.01.00") debugger;
-					this.data[param.key]=param.value;
-				} continue;
+				case "cver": this.data[param.key]=param.value; continue;
 				case "yt_li": {
 					if(param.value!=="1") debugger;
 					this.data[param.key]=param.value;
@@ -3255,7 +3252,7 @@ class CsiService extends BaseService {
 }
 class ECatcherService extends BaseService {
 	data={
-		/** @type {{name: "WEB";fexp:number[];version: "2.20230103"}|null} */
+		/** @type {{name: "WEB";fexp:number[];version: SomeVer<CsiVarTypes['cver']>}|null} */
 		client: null,
 		expected_client_values: {
 			/** @type {number[]} */
@@ -3273,7 +3270,7 @@ class ECatcherService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "client.version": {
-					if(param.value!=="2.20230103") {debugger; break;};
+					if(param.value!=="2.20230104") {debugger; break;};
 					new_client.version=param.value;
 				} break;
 				case "client.name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
