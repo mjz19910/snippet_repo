@@ -3881,15 +3881,18 @@ class HandleTypes extends BaseService {
 		if("sidebar" in y) {
 			const {sidebar: a,...z}=y;
 			this.empty_object(z);
+			return;
 		}
 		if("observedStateTags" in y) {
 			const {observedStateTags: a,...z}=y;
 			iterate(a,v => this.StateTag(v));
 			this.empty_object(z);
+			return;
 		}
 		if("cacheMetadata" in y) {
 			const {cacheMetadata: a,...z}=y;
 			this.empty_object(z);
+			return;
 		}
 		this.empty_object(y);
 	}
@@ -4080,7 +4083,7 @@ class HandleTypes extends BaseService {
 		for(let ya of yk) {
 			/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
 			let q=(v) => this.endpoint_data_map.get(v);
-			/** @template {{}} T @arg {{} extends T?T:never} x */
+			/** @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 			let g=x => this.empty_object(x);
 			/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
 			let n=(x,b) => {if(!x) throw new Error(); g(b);};
@@ -4280,7 +4283,7 @@ class HandleTypes extends BaseService {
 		this.save_number("notification.unseenCount",a);
 		this.empty_object(c);
 	}
-	/** @private @template {{}} T @arg {{} extends T?T:never} x */
+	/** @private @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	empty_object(x) {
 		let keys=get_keys_of(x);
 		if(!keys.length) return;
@@ -4864,7 +4867,7 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactLinkRendererData} x */
 	CompactLinkRendererData(x) {
 		let t=this;
-		/** @arg {YtEndpoint} a @arg {string} b @arg {TextT} c @template {{}} T @arg {{} extends T?T:never} y */
+		/** @arg {YtEndpoint} a @arg {string} b @arg {TextT} c @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} y */
 		function g(a,b,c,y) {
 			t.yt_endpoint(a);
 			switch(b) {
@@ -5123,6 +5126,11 @@ class HandleTypes extends BaseService {
 		this.text_t(c);
 		this.Icon(d);
 		this.save_keys("ButtonRendererData",x,true);
+		if("size" in y) {
+			const {size,serviceEndpoint,accessibility,trackingParams,...z}=y;
+			this.empty_object(z);
+			return;
+		}
 		this.empty_object(y);
 	}
 	/** @arg {Icon<"SETTINGS"> | Icon<string>} x*/
