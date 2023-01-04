@@ -3372,19 +3372,12 @@ class GFeedbackService extends BaseService {
 	}
 	/** @arg {GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
+		let h=this.x.get("yt_handlers").extract(e=>e)?.handle_types;
+		if(!h) return;
 		this.data.route=x.value;
 		let route_parts=split_string(x.value,".");
 		switch(route_parts[0]) {
-			case "channel": switch(route_parts[1]) {
-				case "featured": break;
-				case "videos": break;
-				case "playlists": break;
-				case "community": break;
-				case "channels": break;
-				case "about": break;
-				case "search": break;
-				default: debugger;
-			} break;
+			case "channel": h.parse_channel_section(route_parts[1]); break;
 			default: debugger;
 		}
 	}
@@ -3903,6 +3896,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_endpoint_params(x) {
+		x=x.replaceAll("_","/").replaceAll("-","+");
 		let ba=base64_dec.decodeByteArray(x);
 		let reader=new MyReader(ba);
 		let any_res=reader.read_any();
@@ -4313,12 +4307,7 @@ class HandleTypes extends BaseService {
 				return t.str_starts_with(x[1],w);
 			}
 			if(str_starts_with_at_1(this,up,"@")) {
-				switch(up[2]) {
-					case "videos": break;
-					case "shorts": break;
-					default: debugger;
-				}
-				return;
+				return this.parse_channel_section(up[2]);
 			}
 			switch(up[1]) {
 				case "feed": switch(up[2]) {
@@ -4341,6 +4330,21 @@ class HandleTypes extends BaseService {
 		switch(up.length) {
 			case 2: parse_url_len_2.call(this); break;
 			case 3: parse_url_len_3.call(this); break;
+			default: debugger;
+		}
+	}
+	/** @arg {ChanTabStr} x */
+	parse_channel_section(x) {
+		switch(x) {
+			case "featured": break;
+			case "videos": break;
+			case "playlists": break;
+			case "community": break;
+			case "channels": break;
+			case "about": break;
+			case "search": break;
+			case "streams": break;
+			case "shorts": break;
 			default: debugger;
 		}
 	}
