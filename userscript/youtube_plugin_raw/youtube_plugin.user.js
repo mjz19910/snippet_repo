@@ -5323,9 +5323,10 @@ class HandleTypes extends BaseService {
 	YtPageState(x) {
 		this.save_keys("YtPageState",x,this.TODO_true);
 	}
-	/** @arg {{}} x */
+	/** @arg {ReelItemWatch} x */
 	ReelItemWatch(x) {
-		debugger;x;
+		const {responseContext,overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
+		this.empty_object(y);
 	}
 }
 //#endregion
