@@ -1,16 +1,16 @@
 type CommentsHeaderRendererData={
-	commentsCount: TextT;
 	countText: TextT;
 	createRenderer: CommentSimpleboxRenderer;
-	customEmojis: {};
-	loggingDirectives: {};
+	commentsCount: TextT;
+	customEmojis: CustomEmoji[];
+	loggingDirectives: {
+		trackingParams: string;
+		visibility: {};
+		enableDisplayloggerExperiment: boolean;
+	};
 	showSeparator: true;
-	sortMenu: {
-		sortFilterSubMenuRenderer: {};
-	};
-	titleText: {
-		runs: {text: string;}[];
-	};
+	sortMenu: SortFilterSubMenuRenderer;
+	titleText: TextT;
 	trackingParams: string;
 	unicodeEmojisUrl: string;
 };

@@ -60,6 +60,7 @@
       "deopt",
       "deref",
       "desync",
+      "Displaylogger",
       "dname",
       "dofn",
       "DONT",

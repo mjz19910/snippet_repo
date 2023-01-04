@@ -4357,17 +4357,26 @@ class HandleTypes extends BaseService {
 			let sp=new URLSearchParams(t);
 			return as_cast(Object.fromEntries(sp.entries()));
 		}
-		/** @type {{list: `RD${YtMyMixPlaylistFormat}`}|{v: string}|{pp: string}} */
+		/** @type {{list: YtPlaylistFormat}|{v: string}|{pp: string}} */
 		let sp=make_search_params(x);
 		let k=filter_out_keys(get_keys_of(sp),["list","v","pp"]);
 		if(k.length>0) {
 			console.log("[missed_url_param_keys]",k);
 		}
 		if("list" in sp) {
-			let [d3,d4,d5,d6,...d7]=split_string(sp.list,""); let d8=d7.join("");
-			/** @type {`${typeof d3}${typeof d4}${typeof d5}${typeof d6}`} */
-			let rd_desc=`${d3}${d4}${d5}${d6}`;
-			console.log("[playlist_found]",rd_desc,d8);
+			let v=sp.list;
+			if(this.str_starts_with(v,"RD")) {
+				if(this.str_starts_with(v,`${"RD"}${"MM"}`)) {
+					console.log("[playlist_found]",v.slice(4),v.slice(4).length);
+					v;
+				} else {
+					debugger;
+				}
+			} else if(this.str_starts_with(v,"PL")) {
+				console.log("[playlist_found]","PL",v.slice(2),v.slice(2).length);
+			} else {
+				debugger;
+			}
 		}
 		if("pp" in sp) {
 			console.log("[player_params_found]",sp.pp);
@@ -4909,16 +4918,19 @@ class HandleTypes extends BaseService {
 			this.empty_object(y);
 			return;
 		}
-		let r=get_keys_of(x);
-		switch(r[0]) {
-			case "richSectionRenderer": break;
-			default: debugger;
-		}
 		if("richSectionRenderer" in x) {
 			const {richSectionRenderer: a,...y}=x;
 			this.RichSectionRendererData(a);
 			this.empty_object(y);
 			return;
+		}
+		let r=get_keys_of(x);
+		switch(r[0]) {
+			case "commentsHeaderRenderer": break;
+			default: debugger;
+		}
+		if("commentsHeaderRenderer" in x) {
+			this.w(x,v=>this.CommentsHeaderRendererData(v));
 		}
 	}
 	/** @arg {RichItemRendererData} x */
@@ -5110,6 +5122,10 @@ class HandleTypes extends BaseService {
 		const {iconType: a,...y}=x;
 		this.save_string(`${from}.icon_type`,a);
 		this.empty_object(y);
+	}
+	/** @arg {CommentsHeaderRendererData} x */
+	CommentsHeaderRendererData(x) {
+		this.save_keys("CommentsHeaderRenderer",x);
 	}
 }
 //#endregion

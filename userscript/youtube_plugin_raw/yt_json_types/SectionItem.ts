@@ -1,1 +1,1 @@
-type SectionItem=RichItemRenderer|RichSectionRenderer;
+type SectionItem=RichItemRenderer|RichSectionRenderer|CommentsHeaderRenderer;
