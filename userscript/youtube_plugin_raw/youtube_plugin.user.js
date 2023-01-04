@@ -3315,6 +3315,8 @@ class ECatcherService extends BaseService {
 			]),
 		},
 	};
+	/** @type {number[]} */
+	seen_new_expected=[];
 	/** @arg {ECatcherServiceParams['params']} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
@@ -3337,10 +3339,15 @@ class ECatcherService extends BaseService {
 		let expected=this.data.expected_client_values.fexp;
 		/** @type {number[]} */
 		let new_expected=[];
-		client.fexp.forEach(e => expected.includes(e)? 0:new_expected.push(e));
+		client.fexp.forEach(e => {
+			if(expected.includes(e)) return;
+			if(this.seen_new_expected.includes(e)) return;
+			new_expected.push(e);
+		});
 		if(prev_client.name!==this.data.client.name) {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
+		this.seen_new_expected.push(...new_expected);
 		if(new_expected.length>0) console.log("new_fexp",new_expected);
 		this.data.expected_client_values.fexp;
 	}
