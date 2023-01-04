@@ -4255,6 +4255,52 @@ class HandleTypes extends BaseService {
 	last_video_watch_url=null;
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
+		let t=this;
+		/** @this {typeof t} */
+		function parse_url_len_2() {
+			if(up.length!==2) return;
+			const [f,f0]=up;
+			if(this.str_starts_with(f0,"account")) {
+				let c1=split_string(f0,"_");
+				if(c1.length===1) return;
+				switch(c1[1]) {
+					case "advanced": break;
+					case "billing": break;
+					case "notifications": break;
+					case "privacy": break;
+					case "sharing": break;
+					case "playback": break;
+					default: debugger;
+				}
+				return;
+			}
+			switch(f0) {
+				case "channel_switcher": return;
+				case "logout": return;
+			}
+			if(this.str_starts_with(f0,"@")) {
+				console.log("[handle_like_url]",x);
+				return;
+			}
+			let [a0,a1]=split_string(f0,"?");
+			switch(a0) {
+				case "watch": this.parse_watch_page_url(a1); break;
+				default: {
+					if(f!=="") debugger;
+					console.log(up.slice(1));
+					debugger;
+				} break;
+			}
+
+		}
+		/** @this {typeof t} */
+		function parse_url_len_3() {
+			if(up.length!==3) return;
+			switch(up[1]) {
+				case "feed": switch(up[2]) {case "subscriptions": return;}
+				default: debugger;
+			}
+		}
 		if(x.startsWith("https://")) {
 			let rem_url=new URL(x);
 			if(rem_url.hostname==="accounts.google.com") {
@@ -4265,38 +4311,10 @@ class HandleTypes extends BaseService {
 		}
 		if(x==="/") return;
 		let up=split_string(x,"/");
-		const [f,f0]=up;
-		if(this.str_starts_with(f0,"account")) {
-			let c1=split_string(f0,"_");
-			if(c1.length===1) return;
-			switch(c1[1]) {
-				case "advanced": break;
-				case "billing": break;
-				case "notifications": break;
-				case "privacy": break;
-				case "sharing": break;
-				case "playback": break;
-				default: debugger;
-			}
-			return;
-		}
-		switch(f0) {
-			case "feed": switch(up[2]) {case "subscriptions": return;}
-			case "channel_switcher": return;
-			case "logout": return;
-		}
-		if(this.str_starts_with(f0,"@")) {
-			console.log("[handle_like_url]",x);
-			return;
-		}
-		let [a0,a1]=split_string(f0,"?");
-		switch(a0) {
-			case "watch": this.parse_watch_page_url(a1); break;
-			default: {
-				if(f!=="") debugger;
-				console.log(up.slice(1));
-				debugger;
-			} break;
+		switch(up.length) {
+			case 2: parse_url_len_2.call(this); break;
+			case 3: parse_url_len_3.call(this); break;
+			default: debugger;
 		}
 	}
 	/** @arg {YtWatchUrlParamsFormat} x */
