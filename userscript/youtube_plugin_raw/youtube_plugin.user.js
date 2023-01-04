@@ -5116,7 +5116,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ButtonRendererData} x */
 	ButtonRendererData(x) {
-		const {style: a,isDisabled: b,text: c,icon: d,command: e,...y}=x;
+		const {style: a,text: c,...y}=x;
 		switch(a) {
 			case "STYLE_DEFAULT": break;
 			case "STYLE_SUGGESTIVE": break;
@@ -5124,14 +5124,38 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 		this.text_t(c);
-		this.Icon(d);
 		this.save_keys("ButtonRendererData",x,true);
-		if("size" in y) {
-			const {size,serviceEndpoint,accessibility,trackingParams,...z}=y;
+		if("icon" in y&&"size" in y) {
+			const {size: a,serviceEndpoint: b,accessibility: c,trackingParams: d,command: e,icon: f,isDisabled: g,...z}=y;
+			switch(a) {
+				case "SIZE_DEFAULT": break;
+				default: debugger;
+			}
+			this.yt_endpoint(b);
+			this.Accessibility(c);
+			this.trackingParams(d);
+			this.yt_endpoint(e);
+			this.Icon(f);
+			this.primitive_of(g,"boolean");
 			this.empty_object(z);
 			return;
 		}
-		this.empty_object(y);
+		if("icon" in y) {
+			const {icon: d,command: e,...z}=y;
+			this.Icon(d);
+			this.yt_endpoint(e);
+			this.empty_object(z);
+			return;
+		}
+		const {size: b,serviceEndpoint: d,accessibility: e,trackingParams: f,...z}=y;
+		switch(b) {
+			case "SIZE_DEFAULT": break;
+			default: debugger;
+		}
+		this.yt_endpoint(d);
+		this.Accessibility(e);
+		this.trackingParams(f);
+		this.empty_object(z);
 	}
 	/** @arg {Icon<"SETTINGS"> | Icon<string>} x*/
 	Icon(x) {
