@@ -1,0 +1,3 @@
+type ConfirmDialogEndpoint={
+	content: ConfirmDialogRenderer;
+};

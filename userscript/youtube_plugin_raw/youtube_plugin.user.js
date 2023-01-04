@@ -4063,12 +4063,14 @@ class HandleTypes extends BaseService {
 		});
 		this.empty_object(y);
 	}
-	/**
-	 * @param {CreateCommentEndpoint} x
-	 */
+	/** @arg {CreateCommentEndpoint} x */
 	CreateCommentEndpoint(x) {
 		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
 		console.log(res);
+	}
+	/** @arg {ConfirmDialogEndpoint} x */
+	ConfirmDialogEndpoint(x) {
+		x;
 	}
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
@@ -4109,6 +4111,7 @@ class HandleTypes extends BaseService {
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="changeKeyedMarkersVisibilityCommand";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="loadMarkersCommand";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="createCommentEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="confirmDialogEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}
 		let yc=get_keys_of(c);
 		for(let ya of yc) {
