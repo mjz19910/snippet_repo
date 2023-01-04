@@ -4003,18 +4003,6 @@ class HandleTypes extends BaseService {
 		this.save_keys("BrowseEndpointData",x,true);
 		this.empty_object(y);
 	}
-	/** @arg {SearchEndpointData} x */
-	SearchEndpointData(x) {
-		this.save_keys("SearchEndpointData",x);
-	}
-	/** @arg {SetSettingEndpointData} x */
-	SetSettingEndpointData(x) {
-		this.save_keys("SetSettingEndpointData",x);
-	}
-	/** @arg {SignalServiceEndpointData} x */
-	SignalServiceEndpointData(x) {
-		this.save_keys("SignalServiceEndpointData",x,this.TODO_true);
-	}
 	/** @arg {UrlEndpointData} x */
 	UrlEndpointRoot(x) {
 		if("target" in x) {
@@ -5350,6 +5338,18 @@ class HandleTypes extends BaseService {
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
 		this.save_keys("ChannelResponse",x,this.TODO_true);
+	}
+	/** @arg {SearchEndpointData} x */
+	SearchEndpointData(x) {
+		this.save_keys("SearchEndpointData",x,this.TODO_true);
+	}
+	/** @arg {SetSettingEndpointData} x */
+	SetSettingEndpointData(x) {
+		this.save_keys("SetSettingEndpointData",x,this.TODO_true);
+	}
+	/** @arg {SignalServiceEndpointData} x */
+	SignalServiceEndpointData(x) {
+		this.save_keys("SignalServiceEndpointData",x,this.TODO_true);
 	}
 }
 //#endregion
