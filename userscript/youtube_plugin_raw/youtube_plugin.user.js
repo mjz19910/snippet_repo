@@ -4268,7 +4268,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(timeoutMs,"number");
 		this.notification_unseenCount(y);
 	}
-	/** @template T @arg {T} x @arg {T extends undefined?never:TypeOfType<T>} y */
+	/** @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
@@ -4457,11 +4457,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
-		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,...y}=x;
+		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,ignoreNavigation: f,...y}=x;
+		this.z([e,f],a=>a!==void 0?this.primitive_of(a,"boolean"):0)
 		if(a!==void 0) this.parse_url(a);
 		if(b!==void 0) this.parse_page_type(b);
 		if(d!==void 0) this.parse_api_url(d);
-		if(e!==void 0) this.primitive_of(e,"boolean");
 		if(c!==void 0) this.save_root_visual_element(c);
 		this.empty_object(y);
 	}
@@ -4619,7 +4619,7 @@ class HandleTypes extends BaseService {
 		this.yt_endpoint(a);
 		this.save_string("title",b);
 		this.primitive_of(c,"boolean");
-		this.primitive_of(d,"string");
+		if(d) this.primitive_of(d,"string");
 		if(e) {
 			if("sectionListRenderer" in e) {
 				this.w(e,a => this.SectionListData(a));
@@ -5190,7 +5190,11 @@ class HandleTypes extends BaseService {
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("ButtonRendererData",x,true);
-		const {accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,...y}=x;
+		const {
+			accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
+			navigationEndpoint: j,
+			...y
+		}=x;
 		switch(g) {
 			case "STYLE_DEFAULT": break;
 			case "STYLE_SUGGESTIVE": break;
@@ -5210,6 +5214,7 @@ class HandleTypes extends BaseService {
 		if(e) this.yt_endpoint(e);
 		if(i) this.trackingParams(i);
 		this.text_t(h);
+		if(j) this.yt_endpoint(j);
 		this.empty_object(y);
 	}
 	/** @arg {AnyIcon} x*/
