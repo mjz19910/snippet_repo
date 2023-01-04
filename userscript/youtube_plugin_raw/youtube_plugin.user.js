@@ -4559,24 +4559,19 @@ class HandleTypes extends BaseService {
 	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("ResponseContext",x,true);
-		const {mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,...y}=x;
+		const {
+			mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,
+			maxAgeSeconds: d,stateTags: e,consistencyTokenJar: f,
+			...y
+		}=x;
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
 		this.z(b,a => tracking_handler.set_service_params(a));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
-		if("maxAgeSeconds" in y) {
-			const {maxAgeSeconds: a}=y;
-			a&&this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
-		}
-		if("stateTags" in y) {
-			const {stateTags: a}=y;
-			a&&this.RelevantStateTags(a);
-		}
-		if("consistencyTokenJar" in y) {
-			const {consistencyTokenJar: a}=y;
-			a&&this.ConsistencyTokenJarData(a);
-		}
+		d&&this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,d);
+		e&&this.RelevantStateTags(e);
+		f&&this.ConsistencyTokenJarData(f);
 		this.empty_object(y);
 	}
 	/** @arg {MainAppWebResponseContextData} x */
