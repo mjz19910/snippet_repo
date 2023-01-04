@@ -4681,11 +4681,6 @@ class HandleTypes extends BaseService {
 		const {page,...y}=x;
 		this.empty_object(y);
 	}
-	/** @arg {ModifyChannelPreference} x */
-	ModifyChannelPreference(x) {
-		this.save_keys("ModifyChannelPreference",x);
-		this.empty_object(x);
-	}
 	/** @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const {relevantStateTags: a,...y}=x;
@@ -5339,6 +5334,11 @@ class HandleTypes extends BaseService {
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanel(x) {
 		this.save_keys("EngagementPanel",x,this.TODO_true);
+	}
+	/** @arg {ModifyChannelPreference} x */
+	ModifyChannelPreference(x) {
+		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
+		this.empty_object(x);
 	}
 }
 //#endregion
