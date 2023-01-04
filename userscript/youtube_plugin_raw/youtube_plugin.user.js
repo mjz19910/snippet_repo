@@ -1505,7 +1505,7 @@ class FilterHandlers {
 						/** @type {AccountSetSetting} */
 						data: cast_as(json),
 					};
-				};
+				} break;
 				case "att": switch(target[1]) {
 					case "get": return {
 						type: `${target[0]}.${target[1]}`,
@@ -1516,13 +1516,13 @@ class FilterHandlers {
 						type: `${target[0]}.${target[1]}`,
 						data: cast_as(json),
 					};
-				}
+				} break;
 				case "live_chat": switch(target[1]) {
 					case "get_live_chat_replay": return {
 						type: `${target[0]}.${target[1]}`,
 						data: json,
 					};
-				}
+				} break;
 				case "notification": switch(target[1]) {
 					case "get_notification_menu": return {
 						type: `${target[0]}.${target[1]}`,
@@ -1544,7 +1544,7 @@ class FilterHandlers {
 						/** @type {YtSuccessResponse} */
 						data: cast_as(json),
 					};
-				}
+				} break;
 				case "reel": switch(target[1]) {
 					case "reel_item_watch": return {
 						type: `${target[0]}.${target[1]}`,
@@ -1556,27 +1556,29 @@ class FilterHandlers {
 						/** @type {reel_reel_watch_sequence_t["data"]} */
 						data: cast_as(json),
 					};
-				}
+				} break;
 				default: break;
 			} break;
 		}
-		console.log("[log_get_res_data]",target,json); debugger; throw new Error("Stop");
+		console.log("[log_get_res_data]",target,json);
+		debugger;
+		return {
+			_tag: "Generic",
+			type: "Generic",
+			data: json,
+		};
 	}
 	/** @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {
 		let parsed_url=convert_to_url(request).url;
-		var url_type=this.use_template_url(parsed_url.href).name;
+		let url_res=this.use_template_url(parsed_url.href);
+		if(!url_res) url_res={name:as_cast(parsed_url.href)};
+		if(!url_res) throw new Error();
+		var url_type=url_res.name;
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.handle_types.ResponseTypes(res);
 		this.iteration.default_iter({t: this,path: url_type},data);
-	}
-	/** @arg {`https://${string}/${string}?${string}`} req_hr_t */
-	on_handle_api_1(req_hr_t) {
-		/** @type {`https://${string}/${string}?${string}`} */
-		let href_=req_hr_t;
-		const url_type=this.use_template_url(href_).name;
-		return url_type;
 	}
 	/** @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
@@ -4455,7 +4457,7 @@ class HandleTypes extends BaseService {
 				index++; const next_part=parts[index]; switch(next_part) {
 					case "get": break;
 					case "log": break;
-					default: no_handler({parts,index});
+					default: return null;
 				}
 				return {
 					/** @type {`${typeof cur_part}.${typeof next_part}`} */

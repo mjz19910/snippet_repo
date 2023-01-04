@@ -23,5 +23,10 @@ type ResponseTypes=[
 	settings_t,
 	shorts_t,
 	watch_t,
-	accounts_list_t
+	accounts_list_t,
+	{
+		_tag: "Generic";
+		type: "Generic";
+		data: {};
+	}
 ][number];
