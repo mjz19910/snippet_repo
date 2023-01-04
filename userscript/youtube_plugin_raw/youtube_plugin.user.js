@@ -3134,10 +3134,6 @@ class BaseService extends BaseServicePrivate {
 			y(a,i);
 		}
 	}
-	/** @protected @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
-	zw(a,b) {
-		this.z(a,v => this.w(v,b));
-	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	empty_object(x) {
 		let keys=get_keys_of(x);
@@ -3783,7 +3779,10 @@ class HandleTypes extends BaseService {
 		function p1(x) {
 			const {responseContext: a,annotations: b,attestation: c,adPlacements: d,...y}=x;
 			this.ResponseContext(a);
-			this.zw(b,v => this.PlayerAnnotationsExpandedRendererData(v));
+			this.z(b,a => {
+				if(get_keys_of_one(a)[0]!=="playerAnnotationsExpandedRenderer") debugger;
+				this.PlayerAnnotationsExpandedRendererData(a);
+			});
 			this.PlayerAttestationRenderer(c);
 			this.z(d,a => this.empty_object(a));
 			return y;
@@ -3794,7 +3793,10 @@ class HandleTypes extends BaseService {
 			const {playabilityStatus: e,playbackTracking: f,playerAds: g,playerConfig: h,...y}=x;
 			this.PlayabilityStatus(e);
 			this.PlaybackTracking(f);
-			this.zw(g,v => this.DesktopWatchAdsData(v));
+			this.z(g,a => {
+				if(get_keys_of_one(a)[0]!=="playerLegacyDesktopWatchAdsRenderer") debugger;
+				this.w(a,a => this.DesktopWatchAdsData(a));
+			});
 			this.empty_object(h);
 			return y;
 		}
@@ -3802,7 +3804,10 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof b} x */
 		function p3(x) {
 			const {paidContentOverlay: i,trackingParams: j,videoQualityPromoSupportedRenderers: k,endscreen: l,...y}=x;
-			if(i) this.w(i,v => this.PaidContentOverlayRenderer(v));
+			if(i) {
+				if(get_keys_of_one(i)[0]!=="paidContentOverlayRenderer") debugger;
+				this.w(i,a => this.PaidContentOverlayRenderer(a));
+			}
 			this.trackingParams(j);
 			this.empty_object(k);
 			if(l) this.EndscreenRenderer(l);
@@ -4587,7 +4592,7 @@ class HandleTypes extends BaseService {
 	TwoColumnBrowseResultsRendererData(x) {
 		const {tabs: a,secondaryContents: b,...y}=x;
 		this.z(a,a => this.ResultRenderer(a));
-		if(b) b;
+		if(b) this.SecondaryContents(b);
 		this.empty_object(y);
 	}
 	/** @arg {ResultRenderer} x */
@@ -4617,10 +4622,6 @@ class HandleTypes extends BaseService {
 			} else debugger;
 		}
 		return this.empty_object(y);
-	}
-	/** @arg {SectionListRendererData} x */
-	SectionListRendererData(x) {
-		x;
 	}
 	/** @arg {TabRendererData} x */
 	TabRenderer(x) {
@@ -4731,6 +4732,7 @@ class HandleTypes extends BaseService {
 		}=this.filter_response_endpoints(x);
 		this.ResponseContext(a);
 		this.TwoColumnBrowseResultsRenderer(b);
+		if(get_keys_of_one(c)[0]!=="desktopTopbarRenderer") debugger;
 		this.w(c,c => this.DesktopTopbarRendererData(c));
 		this.renderer(d);
 		this.trackingParams(tp);
@@ -5126,10 +5128,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {UpdateChannelSwitcherPageAction} x */
 	UpdateChannelSwitcherPageAction(x) {
-		this.w(x,a =>
-			this.w(a,a =>
+		if(get_keys_of_one(x)[0]!=="updateChannelSwitcherPageAction") debugger;
+		this.w(x,a => {
+			if(get_keys_of_one(a)[0]!=="page") debugger;
+			this.w(a,a => {
+				if(get_keys_of_one(a)[0]!=="channelSwitcherPageRenderer") debugger;
 				this.w(a,a =>
-					this.ChannelSwitcherPage(a))));
+					this.ChannelSwitcherPage(a));
+			});
+		});
 	}
 	/** @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
@@ -5144,18 +5151,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChannelSwitcherContent} x */
 	ChannelSwitcherContent(x) {
-		let k=get_keys_of(x)[0];
-		switch(k) {
-			case "accountItemRenderer": case "buttonRenderer": break;
-			default: debugger;
-		}
 		if("accountItemRenderer" in x) {
 			this.w(x,a => this.AccountItemRendererData(a));
-			return;
-		}
-		if("buttonRenderer" in x) {
+		} else if("buttonRenderer" in x) {
 			this.w(x,a => this.ButtonRendererData(a));
-			return;
+		} else {
+			debugger;
 		}
 	}
 	/** @arg {AccountItemRendererData} x */
@@ -5168,13 +5169,15 @@ class HandleTypes extends BaseService {
 		this.z([a,g,h],a => this.text_t(a));
 		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
 		this.yt_endpoint(f);
-		this.w(b,a =>
+		if(get_keys_of_one(b)[0]!=="thumbnails") debugger;
+		this.w(b,a => {
 			this.z(a,a =>
-				this.Thumbnail(a)));
+				this.ThumbnailItem(a));
+		});
 		this.empty_object(y);
 	}
 	/** @arg {ThumbnailItem} x */
-	Thumbnail(x) {
+	ThumbnailItem(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
 		this.z([b,c],v => this.primitive_of(v,"number"));
@@ -5238,6 +5241,7 @@ class HandleTypes extends BaseService {
 			...y
 		}=x;
 		this.z([a,e,f],v => this.text_t(v));
+		if(get_keys_of_one(b)[0]!=="commentSimpleboxRenderer") debugger;
 		this.w(b,b => this.CommentSimpleboxRendererData(b));
 		this.SortFilterSubMenuRenderer(c);
 		this.trackingParams(d);
@@ -5431,7 +5435,7 @@ class HandleTypes extends BaseService {
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanel(x) {
 		if("engagementPanelSectionListRenderer" in x) {
-			this.w(x,a=>this.EngagementPanelSectionListData(a));
+			this.w(x,a => this.EngagementPanelSectionListData(a));
 		} else {
 			debugger;
 		}
@@ -5451,6 +5455,47 @@ class HandleTypes extends BaseService {
 	/** @arg {CacheMetadata} x */
 	CacheMetadata(x) {
 		this.save_keys("CacheMetadata",x,this.TODO_true);
+	}
+	/** @arg {SecondaryContents} x */
+	SecondaryContents(x) {
+		this.save_keys("SecondaryContents",x,this.TODO_true);
+		if(get_keys_of_one(x)[0]!=="profileColumnRenderer") debugger;
+		this.w(x,a => this.ProfileColumnData(a));
+	}
+	/** @arg {ProfileColumnData} x */
+	ProfileColumnData(x) {
+		if(get_keys_of_one(x)[0]!=="items") debugger;
+		this.w(x,a => this.z(a,b => {
+			if("profileColumnUserInfoRenderer" in b) {
+				this.w(b,a => this.ProfileColumnUserInfoData(a));
+				return;
+			} else if("profileColumnStatsRenderer" in b) {
+				this.w(b,c => this.ProfileColumnStatsData(c));
+				return;
+			} else {
+				debugger;
+			}
+		}));
+	}
+	/** @arg {ProfileColumnStatsData} x */
+	ProfileColumnStatsData(x) {
+		if(get_keys_of_one(x)[0]!=="items") debugger;
+		this.w(x,d => this.z(d,e => {
+			if(get_keys_of_one(e)[0]!=="profileColumnStatsEntryRenderer") debugger;
+			this.w(e,f => this.ProfileColumnStatsEntryData(f));
+		}));
+	}
+	/** @arg {ProfileColumnStatsEntryData} x */
+	ProfileColumnStatsEntryData(x) {
+		const {label: a,value: b,...y}=x;
+		this.z([a,b],a=>this.text_t(a));
+		this.empty_object(y);
+	}
+	/** @arg {ProfileColumnUserInfoData} x */
+	ProfileColumnUserInfoData(x) {x;}
+	/** @arg {SectionListRendererData} x */
+	SectionListRendererData(x) {
+		this.save_keys("SectionListRendererData",x,this.TODO_true);
 	}
 }
 //#endregion
