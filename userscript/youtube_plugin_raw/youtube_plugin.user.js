@@ -3025,6 +3025,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	new_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
+		if(x===void 0) debugger;
 		if(key==="any") debugger;
 		let was_known=true;
 		/** @type {["one", number[]]|["many",number[][]]} */
