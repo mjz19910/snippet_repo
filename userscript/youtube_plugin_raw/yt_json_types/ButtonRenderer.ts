@@ -1,3 +1,3 @@
 type ButtonRenderer={
-	buttonRenderer: ButtonRendererData;
+	buttonRenderer: ButtonData;
 };

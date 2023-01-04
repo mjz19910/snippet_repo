@@ -4985,7 +4985,7 @@ class HandleTypes extends BaseService {
 	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
 		const {buttonRenderer,...v}=x;
-		this.ButtonRendererData(x.buttonRenderer);
+		this.ButtonData(x.buttonRenderer);
 		this.empty_object(v);
 	}
 	/** @arg {WebPrefetchData} x */
@@ -5158,7 +5158,7 @@ class HandleTypes extends BaseService {
 		if("accountItemRenderer" in x) {
 			this.w(x,a => this.AccountItemRendererData(a));
 		} else if("buttonRenderer" in x) {
-			this.w(x,a => this.ButtonRendererData(a));
+			this.w(x,a => this.ButtonData(a));
 		} else {
 			debugger;
 		}
@@ -5187,48 +5187,28 @@ class HandleTypes extends BaseService {
 		this.z([b,c],v => this.primitive_of(v,"number"));
 		this.empty_object(y);
 	}
-	/** @arg {ButtonRendererData} x */
-	ButtonRendererData(x) {
-		const {style: a,text: c,...y}=x;
-		switch(a) {
+	/** @arg {ButtonData} x */
+	ButtonData(x) {
+		this.save_keys("ButtonRendererData",x,true);
+		const {accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,...y}=x;
+		switch(g) {
 			case "STYLE_DEFAULT": break;
 			case "STYLE_SUGGESTIVE": break;
 			case "STYLE_PRIMARY": break;
 			default: debugger;
 		}
-		this.text_t(c);
-		this.save_keys("ButtonRendererData",x,true);
-		if("icon" in y&&"size" in y) {
-			const {size: a,serviceEndpoint: b,accessibility: c,trackingParams: d,command: e,icon: f,isDisabled: g,...z}=y;
-			switch(a) {
-				case "SIZE_DEFAULT": break;
-				default: debugger;
-			}
-			this.yt_endpoint(b);
-			this.Accessibility(c);
-			this.trackingParams(d);
-			this.yt_endpoint(e);
-			this.Icon(f);
-			this.primitive_of(g,"boolean");
-			this.empty_object(z);
-			return;
-		}
-		if("icon" in y) {
-			const {icon: d,command: e,...z}=y;
-			this.Icon(d);
-			this.yt_endpoint(e);
-			this.empty_object(z);
-			return;
-		}
-		const {size: b,serviceEndpoint: d,accessibility: e,trackingParams: f,...z}=y;
-		switch(b) {
+		switch(f) {
 			case "SIZE_DEFAULT": break;
 			default: debugger;
 		}
-		this.yt_endpoint(d);
-		this.Accessibility(e);
-		this.trackingParams(f);
-		this.empty_object(z);
+		if(a) this.Accessibility(a);
+		if(b) this.yt_endpoint(b);
+		this.Icon(c);
+		this.primitive_of(d,"boolean");
+		if(e) this.yt_endpoint(e);
+		if(i) this.trackingParams(i);
+		this.text_t(h);
+		this.empty_object(y);
 	}
 	/** @arg {Icon<"SETTINGS"> | Icon<string>} x*/
 	Icon(x) {
@@ -5473,6 +5453,9 @@ class HandleTypes extends BaseService {
 	/** @arg {BrowseFeedContent} x */
 	BrowseFeedContent(x) {
 		let [k]=get_keys_of(x);
+		if("buttonRenderer" in x) {
+			this.w(x,a=>this.ButtonData(a));
+		}
 		switch(k) {
 			case "buttonRenderer": break;
 		}
