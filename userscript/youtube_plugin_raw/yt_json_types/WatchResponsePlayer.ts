@@ -10,7 +10,7 @@ type WatchResponsePlayer={
 	storyboards: {};
 	microformat: {};
 	cards: {};
-	trackingParams: {};
+	trackingParams: string;
 	attestation: PlayerAttestationRenderer;
 	videoQualityPromoSupportedRenderers: {};
 	adPlacements?: {}[];

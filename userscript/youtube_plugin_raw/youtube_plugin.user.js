@@ -3769,21 +3769,44 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
+		let t=this;
+		/** @this {typeof t} @arg {WatchResponsePlayer} x */
+		function p1(x) {
+			const {responseContext: a,annotations: b,attestation: c,adPlacements: d,...y}=x;
+			this.ResponseContext(a);
+			this.zw(b,v => this.PlayerAnnotationsExpandedRendererData(v));
+			this.PlayerAttestationRenderer(c);
+			this.z(d,a => this.empty_object(a));
+			return y;
+		}
+		let a=p1.call(this,x);
+		/** @this {typeof t} @arg {typeof a} x */
+		function p2(x) {
+			const {playabilityStatus: e,playbackTracking: f,playerAds: g,playerConfig: h,...y}=x;
+			this.PlayabilityStatus(e);
+			this.PlaybackTracking(f);
+			this.zw(g,v => this.PlayerLegacyDesktopWatchAdsRendererData(v));
+			this.empty_object(h);
+			return y;
+		}
+		let b=p2.call(this,a);
+		/** @this {typeof t} @arg {typeof b} x */
+		function p3(x) {
+			const {paidContentOverlay: i,trackingParams: j,videoQualityPromoSupportedRenderers: k,endscreen: l,...y}=x;
+			if(i) this.w(i,v=>this.PaidContentOverlayRenderer(v));
+			this.trackingParams(j);
+			this.empty_object(k);
+			if(l) this.EndscreenRenderer(l);
+			return y;
+		}
+		let c=p3.call(this,b); c;
 		const {
-			responseContext: a,annotations: b,attestation: c,adPlacements: d,
-			playabilityStatus: e,playbackTracking: f,playerAds: g,playerConfig,paidContentOverlay,
-			trackingParams,videoQualityPromoSupportedRenderers,endscreen,videoDetails,
-			storyboards,streamingData,captions,cards,
-			frameworkUpdates,microformat,
+			videoDetails: m,storyboards: n,streamingData: o,captions: p,
+			cards: q,frameworkUpdates: r,microformat: s,
 			...y
 		}=x;
-		this.ResponseContext(a);
-		this.zw(b,v => this.PlayerAnnotationsExpandedRendererData(v));
-		this.PlayerAttestationRenderer(c);
-		this.z(d,v => this.empty_object(v));
-		this.PlayabilityStatus(e);
-		this.PlaybackTracking(f);
-		this.zw(g,v => this.PlayerLegacyDesktopWatchAdsRendererData(v));
+		this.empty_object(m);
+		this.empty_object(n);
 		iterate_obj(x,(k,v) => {
 			if(typeof v==='string') return;
 			if(v instanceof Array) {
@@ -5286,6 +5309,14 @@ class HandleTypes extends BaseService {
 	/** @arg {PlayerAttestationRenderer} x */
 	PlayerAttestationRenderer(x) {
 		this.save_keys("PlayerAttestationRenderer",x,this.TODO_true);
+	}
+	/** @arg {PaidContentOverlayRenderer} x */
+	PaidContentOverlayRenderer(x) {
+		this.save_keys("PaidContentOverlayRenderer",x,this.TODO_true);
+	}
+	/** @arg {EndscreenRenderer} x */
+	EndscreenRenderer(x) {
+		x;
 	}
 }
 //#endregion
