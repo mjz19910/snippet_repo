@@ -4260,6 +4260,7 @@ class HandleTypes extends BaseService {
 		function parse_url_len_2() {
 			if(up.length!==2) return;
 			const [f,f0]=up;
+			if(f!=="") debugger;
 			if(this.str_starts_with(f0,"account")) {
 				let c1=split_string(f0,"_");
 				if(c1.length===1) return;
@@ -4286,7 +4287,6 @@ class HandleTypes extends BaseService {
 			switch(a0) {
 				case "watch": this.parse_watch_page_url(a1); break;
 				default: {
-					if(f!=="") debugger;
 					console.log(up.slice(1));
 					debugger;
 				} break;
