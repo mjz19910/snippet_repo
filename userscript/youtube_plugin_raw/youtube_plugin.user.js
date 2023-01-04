@@ -3799,14 +3799,18 @@ class HandleTypes extends BaseService {
 			if(l) this.EndscreenRenderer(l);
 			return y;
 		}
-		let c=p3.call(this,b); c;
-		const {
-			videoDetails: m,storyboards: n,streamingData: o,captions: p,
-			cards: q,frameworkUpdates: r,microformat: s,
-			...y
-		}=x;
-		this.empty_object(m);
-		this.empty_object(n);
+		let c=p3.call(this,b);
+		/** @this {typeof t} @arg {typeof c} x */
+		function p4(x) {
+			const {videoDetails: m,storyboards: n,streamingData: o,captions: p,...y}=x;
+			this.empty_object(m);
+			this.empty_object(n);
+			this.empty_object(o);
+			this.CaptionsRenderer(p);
+			return y;
+		}
+		let d=p4.call(this,c);
+		const {cards: q,frameworkUpdates: r,microformat: s,...y}=d;
 		iterate_obj(x,(k,v) => {
 			if(typeof v==='string') return;
 			if(v instanceof Array) {
@@ -5316,6 +5320,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EndscreenRenderer} x */
 	EndscreenRenderer(x) {
+		x;
+	}
+	/** @arg {CaptionsRenderer} x */
+	CaptionsRenderer(x) {
 		x;
 	}
 }
