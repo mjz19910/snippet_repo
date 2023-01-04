@@ -3750,6 +3750,13 @@ inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
 class HandleTypes extends BaseService {
+	/** @template {{}} T @template U @arg {T} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
+	w(x,y) {
+		let [k]=get_keys_of_one(x);
+		return y(x[k]);
+	}
+	// x is reserved for the first arg
+	// y reserved for unpack target
 	z=iterate;
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
@@ -5045,7 +5052,23 @@ class HandleTypes extends BaseService {
 	GetAccountsListInnertubeEndpointData(x) {x;}
 	/** @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
+		const {responseContext: a,selectText: b,actions: c,...y}=x;
+		this.ResponseContext(a);
+		this.TextT("AccountsList",b);
+		this.z(c,v => this.UpdateChannelSwitcherPageAction(v));
 		this.save_keys("AccountsListResponse",x,true);
+		this.empty_object(y);
+	}
+	/** @arg {UpdateChannelSwitcherPageAction} x */
+	UpdateChannelSwitcherPageAction(x) {
+		this.w(x,a =>
+			this.w(a,a =>
+				this.w(a,a =>
+					this.ChannelSwitcherPage(a))));
+	}
+	/** @arg {ChannelSwitcherPage} x */
+	ChannelSwitcherPage(x) {
+		iterate(x.contents,a=>this.SignOutEndpointData(a));
 	}
 }
 //#endregion
