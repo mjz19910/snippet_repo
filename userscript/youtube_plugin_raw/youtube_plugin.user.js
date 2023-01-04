@@ -3871,11 +3871,11 @@ class HandleTypes extends BaseService {
 		this.trackingParams(a);
 		this.ResponseContext(res_ctx);
 		iterate(act_arr,v => this.ResponseReceivedAction(v));
+		iterate(ost,v => this.StateTag(v));
 		if(cont) this.BrowseContents(cont);
 		if(hd) this.FeedTabbedHeaderRenderer(hd);
 		if(tb) this.DesktopTopbarRenderer(tb);
 		if(upd) this.EntityBatchUpdate(upd);
-		iterate(ost,v => this.StateTag(v));
 		if(sb) this.SettingsSidebarRenderer(sb);
 		if(cm) this.CacheMetadata(cm);
 		this.empty_object(y);
