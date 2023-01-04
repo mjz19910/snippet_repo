@@ -2168,10 +2168,12 @@ function start_message_channel_loop(yt_handlers) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
+		const handle_types_fut=new Future(yt_handlers,v => v.handle_types);
+		exports.handle_types_fut=handle_types_fut;
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {
-				handle_types_fut: new Future(yt_handlers,v => v.handle_types),
+				handle_types_fut: handle_types_fut,
 			},
 			port: message_channel.port1,
 		});
@@ -2546,14 +2548,6 @@ async function main() {
 	function get_exports() {
 		return exports;
 	}
-	if(typeof exports==="object") {
-		let exports=get_exports();
-		exports.ServiceResolver=ServiceResolver;
-		const future_type=new Future(new HiddenData(new FilterHandlers({value: null})),v => v.handle_types);
-		exports.future_type=future_type;
-		exports.HandleTypes=HandleTypes;
-		exports.Services=Services;
-	}
 	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
@@ -2584,6 +2578,12 @@ async function main() {
 		log_click_tracking_params,
 		noisy_logging: false,
 	});
+	if(typeof exports==="object") {
+		let exports=get_exports();
+		exports.ServiceResolver=ServiceResolver;
+		exports.HandleTypes=HandleTypes;
+		exports.Services=Services;
+	}
 	resolver_value.value=service_resolver;
 	yt_inject_api.set_yt_handlers(yt_handlers);
 	yt_inject_api.save_new_map("box_map",box_map);

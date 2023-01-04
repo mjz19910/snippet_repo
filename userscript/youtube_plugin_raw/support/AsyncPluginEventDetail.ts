@@ -1,1 +1,1 @@
-type AsyncPluginEventDetail={handle_types_fut: typeof import("../youtube_plugin.user.js").future_type;};
+type AsyncPluginEventDetail={handle_types_fut: typeof import("../youtube_plugin.user.js").handle_types_fut;};
