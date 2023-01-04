@@ -5195,6 +5195,7 @@ class HandleTypes extends BaseService {
 			case "STYLE_DEFAULT": break;
 			case "STYLE_SUGGESTIVE": break;
 			case "STYLE_PRIMARY": break;
+			case void 0: break;
 			default: debugger;
 		}
 		switch(f) {
