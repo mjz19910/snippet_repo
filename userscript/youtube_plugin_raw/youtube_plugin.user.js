@@ -2541,11 +2541,11 @@ class HiddenData {
 		}
 	}
 }
+function get_exports() {
+	return exports;
+}
 //#region
 async function main() {
-	function get_exports() {
-		return exports;
-	}
 	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
