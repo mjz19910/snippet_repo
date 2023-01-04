@@ -1,3 +1,3 @@
 type ConnectedAppRenderer={
-	connectedAppRenderer: ConnectedAppRendererData;
+	connectedAppRenderer: ConnectedAppData;
 };

@@ -1,3 +1,3 @@
 type PageIntroductionRenderer={
-	pageIntroductionRenderer: PageIntroductionRendererData;
+	pageIntroductionRenderer: PageIntroductionData;
 };

@@ -1,1 +1,1 @@
-type SettingsOptionsRendererData=BasicOptionsData;
+type SettingsOptionsData={options: SettingsOptionItemType[];title: TextT;};

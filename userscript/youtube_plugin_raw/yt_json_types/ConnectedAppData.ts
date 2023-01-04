@@ -1,4 +1,4 @@
-type ConnectedAppRendererData={
+type ConnectedAppData={
 	icon: {};
 	title: {};
 	text: {};

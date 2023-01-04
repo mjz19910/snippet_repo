@@ -1,0 +1,3 @@
+type SortFilterMenuType={
+	sortFilterSubMenuRenderer: SortFilterSubMenuRenderer;
+};

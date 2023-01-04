@@ -1,3 +1,3 @@
 type PlaylistVideoListRenderer={
-	playlistVideoListRenderer: PlaylistVideoListRendererData;
+	playlistVideoListRenderer: PlaylistVideoListData;
 };

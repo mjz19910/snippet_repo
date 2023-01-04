@@ -1,6 +1,6 @@
-type ShelfRendererData={
+type ShelfData={
 	title: {};
-	content: ShelfRendererContent;
+	content: ShelfItem;
 	trackingParams: string;
 	menu?: {};
 	subscribeButton?: {};

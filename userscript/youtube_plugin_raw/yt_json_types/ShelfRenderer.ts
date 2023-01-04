@@ -1,3 +1,3 @@
 type ShelfRenderer={
-	shelfRenderer: ShelfRendererData;
+	shelfRenderer: ShelfData;
 };

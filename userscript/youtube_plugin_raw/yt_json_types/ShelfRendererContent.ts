@@ -1,3 +1,3 @@
-type ShelfRendererContent={
+type ShelfItem={
 	gridRenderer: GridRenderer;
 };

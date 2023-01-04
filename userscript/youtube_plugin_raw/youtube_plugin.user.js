@@ -5522,7 +5522,6 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	item_section_map=new Map();
-	ConnectedAppRenderer(x) {x;}
 	/** @arg {ItemSectionItem} c */
 	ItemSectionItem(c) {
 		let t=this;
@@ -5532,14 +5531,20 @@ class HandleTypes extends BaseService {
 		/** @template {GetMaybeKeys<typeof c>} T @arg {T} v @returns {ItemSectionItemMap[T]} */
 		let q=v => this.item_section_map.get(v);
 		k="connectedAppRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		
-		if("playlistVideoListRenderer" in c) {
-			this.w(c,a=>a);
-		}
+		k="pageIntroductionRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		debugger;
 	}
+	PageIntroductionData(x) {x;}
 	/** @arg {{}} x */
 	ReelPlayerOverlayData(x) {
 		this.save_keys("ReelPlayerOverlayData",x,this.TODO_true);
+	}
+	/** @arg {ConnectedAppData} x */
+	ConnectedAppData(x) {
+		this.w(x,a=>this.save_keys("ConnectedAppRenderer",a,this.TODO_true));
 	}
 }
 //#endregion
