@@ -2172,9 +2172,7 @@ function start_message_channel_loop(yt_handlers) {
 		exports.handle_types_fut=handle_types_fut;
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
-			detail: {
-				handle_types_fut: handle_types_fut,
-			},
+			detail: {handle_types_fut},
 			port: message_channel.port1,
 		});
 	}
