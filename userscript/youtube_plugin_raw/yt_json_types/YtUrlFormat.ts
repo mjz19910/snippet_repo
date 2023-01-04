@@ -6,9 +6,10 @@ type YtUrlFormat=
 	`/watch?${YtWatchUrlParamsFormat}`|
 	`/feed/${YtFeedSubSections}`|
 	`/${SettingsEndpointPages}`|
-	"/channel_switcher";
+	"/channel_switcher"|
+	`/playlist?list=${YtPlaylistFormat}`;
 type YtGeneralPlaylistFormat=`PL${string}`;
-type YtPlaylistFormat=YtInfinitePlaylistFormat|YtGeneralPlaylistFormat;
+type YtPlaylistFormat=YtInfinitePlaylistFormat|YtGeneralPlaylistFormat|"WL";
 type YtWatchUrlParamsFormat=`v=${string}`|`v=${string}&list=${YtPlaylistFormat}`|`v=${string}&pp=${string}`;
 type ChannelSubUrl=ChanTabStr;
 type GoogleLoginExternalUrl={

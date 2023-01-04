@@ -1,4 +1,4 @@
-type YtSettingsResponse={
+type YtSettingsPageResponse={
 	page: "settings";
 	endpoint: YtEndpoint;
 	response: SettingsResponseContent;

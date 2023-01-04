@@ -3257,7 +3257,9 @@ class ECatcherService extends BaseService {
 		expected_client_values: {
 			/** @type {number[]} */
 			fexp: [
-				[1714247, 9405964, 23804281, 23882502, 23918597, 23934970, 23946420, 23966208, 23983296, 23986033, 23998056, 24002022, 24002025, 24004644, 24007246, 24034168, 24036947, 24059444, 24059508, 24077241, 24080738, 24108447, 24120820, 24135310, 24140247, 24161116, 24162919, 24164186, 24166867, 24169501, 24181174, 24187043, 24187377, 24211178, 24219381, 24219713, 24241378, 24248091, 24250324, 24255163, 24255543, 24255545, 24260378, 24262346, 24263796, 24267564, 24268142, 24279196, 24281896, 24283015, 24283093, 24287604, 24288442, 24288663, 24290971, 24291857, 24292955, 24390675, 24396645, 24404640, 24406313, 24406621, 24414718, 24415864, 24415866, 24416290, 24429095, 24433679, 24436009, 24437575, 24438162, 24438848, 24439361, 24439483, 24441244, 39322504, 39322574]
+				[1714247, 9405964, 23804281, 23882502, 23918597, 23934970, 23946420, 23966208, 23983296, 23986033, 23998056, 24002022, 24002025, 24004644, 24007246, 24034168, 24036947, 24059444, 24059508, 24077241, 24080738, 24108447, 24120820, 24135310, 24140247, 24161116, 24162919, 24164186, 24166867, 24169501, 24181174, 24187043, 24187377, 24211178, 24219381, 24219713, 24241378, 24248091, 24250324, 24255163, 24255543, 24255545, 24260378, 24262346, 24263796, 24267564, 24268142, 24279196, 24281896, 24283015, 24283093, 24287604, 24288442, 24288663, 24290971, 24291857, 24292955, 24390675, 24396645, 24404640, 24406313, 24406621, 24414718, 24415864, 24415866, 24416290, 24429095, 24433679, 24436009, 24437575, 24438162, 24438848, 24439361, 24439483, 24441244, 39322504, 39322574],
+				[39322873, 39322983, 39323013, 39323020, 39323120, 45686551],
+				[24591046, 24197450, 24590921, 24402891, 24217535],
 			].flat(),
 		},
 	};
@@ -3294,7 +3296,7 @@ class ECatcherService extends BaseService {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
 		this.seen_new_expected.push(...new_expected);
-		if(new_expected.length>0) console.log("new_fexp",new_expected);
+		if(new_expected.length>0) console.log("[new_fexp_expected]",new_expected);
 		this.data.expected_client_values.fexp;
 	}
 	/** @arg {NonNullable<this["data"]["client"]>} client */
@@ -3847,8 +3849,8 @@ class HandleTypes extends BaseService {
 			case "browse": return this.YtBrowsePageResponse(mt);
 			case "watch": return this.YtWatchPageResponse(mt);
 			case "channel": return this.YtChannelPageResponse(mt);
-			case "playlist": return this.YtPlaylistResponse(mt);
-			case "settings": return this.YtSettingsResponse(mt);
+			case "playlist": return this.YtPlaylistPageResponse(mt);
+			case "settings": return this.YtSettingsPageResponse(mt);
 			case "shorts": return this.YtShortsResponse(mt);
 			default: break;
 		}
@@ -4283,6 +4285,7 @@ class HandleTypes extends BaseService {
 				}
 				return;
 			}
+			if(this.str_starts_with(up[1],"account")) return;
 			switch(f0) {
 				case "channel_switcher": return;
 				case "logout": return;
@@ -4291,11 +4294,11 @@ class HandleTypes extends BaseService {
 				console.log("[handle_like_url]",f0);
 				return;
 			}
-			let [a0,a1]=split_string(f0,"?");
-			switch(a0) {
-				case "watch": this.parse_watch_page_url(a1); break;
+			let s0=split_string(f0,"?");
+			switch(s0[0]) {
+				case "watch": this.parse_watch_page_url(s0[1]); break;
 				default: {
-					console.log(up.slice(1));
+					console.log(s0.join("?"));
 					debugger;
 				} break;
 			}
@@ -4685,13 +4688,40 @@ class HandleTypes extends BaseService {
 		this.parse_url(url);
 		this.empty_object(y);
 	}
-	/** @arg {YtPlaylistResponse} x */
-	YtPlaylistResponse(x) {
-		const {page,...y}=x;
+	/** @arg {YtPlaylistPageResponse} x */
+	YtPlaylistPageResponse(x) {
+		const {page,endpoint,response,url,...y}=x;
+		if(page!=="playlist") debugger;
+		this.yt_endpoint(endpoint);
+		this.PlaylistResponse(response);
+		this.parse_url(url);
 		this.empty_object(y);
 	}
-	/** @arg {YtSettingsResponse} x */
-	YtSettingsResponse(x) {
+	/** @arg {PlaylistResponse} x */
+	PlaylistResponse(x) {
+		const {responseContext: a,contents: b,header: c,metadata: d,trackingParams: e,topbar: f,microformat: g,sidebar: h,...y}=x;
+		this.ResponseContext(a);
+		this.TwoColumnBrowseResultsRenderer(b);
+		this.PlaylistHeaderRenderer(c);
+		this.PlaylistMetadataRenderer(d);
+		this.trackingParams(e);
+		this.DesktopTopbarRenderer(f);
+		this.MicroformatDataRenderer(g);
+		this.PlaylistSidebarRenderer(h);
+		y;
+	}
+	/** @arg {PlaylistSidebarRenderer} x */
+	PlaylistSidebarRenderer(x) {x;}
+	/** @arg {MicroformatDataRenderer} x */
+	MicroformatDataRenderer(x) {x;}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {this.w(x,a=>this.DesktopTopbarRendererData(a));}
+	/** @arg {PlaylistMetadataRenderer} x */
+	PlaylistMetadataRenderer(x) {x;}
+	/** @arg {PlaylistHeaderRenderer} x */
+	PlaylistHeaderRenderer(x) {x;}
+	/** @arg {YtSettingsPageResponse} x */
+	YtSettingsPageResponse(x) {
 		const {page: {},endpoint: a,response: b,url: c,...y}=x;
 		this.yt_endpoint(a);
 		this.SettingsResponseContent(b);
