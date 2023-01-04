@@ -3794,7 +3794,7 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof b} x */
 		function p3(x) {
 			const {paidContentOverlay: i,trackingParams: j,videoQualityPromoSupportedRenderers: k,endscreen: l,...y}=x;
-			if(i) this.w(i,v=>this.PaidContentOverlayRenderer(v));
+			if(i) this.w(i,v => this.PaidContentOverlayRenderer(v));
 			this.trackingParams(j);
 			this.empty_object(k);
 			if(l) this.EndscreenRenderer(l);
@@ -5141,7 +5141,8 @@ class HandleTypes extends BaseService {
 	ChannelSwitcherContent(x) {
 		let k=get_keys_of(x)[0];
 		switch(k) {
-			case "accountItemRenderer": break; case "buttonRenderer": break;
+			case "accountItemRenderer": case "buttonRenderer": break;
+			default: debugger;
 		}
 		if("accountItemRenderer" in x) {
 			this.w(x,a => this.AccountItemRendererData(a));
@@ -5159,7 +5160,7 @@ class HandleTypes extends BaseService {
 			serviceEndpoint: f,accountByline: g,channelHandle: h,
 			...y
 		}=x;
-		this.z([a,g,h],a=>this.text_t(a));
+		this.z([a,g,h],a => this.text_t(a));
 		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
 		this.yt_endpoint(f);
 		this.w(b,a =>
