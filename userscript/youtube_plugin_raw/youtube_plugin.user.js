@@ -4301,7 +4301,18 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} */
 		function parse_url_len_3() {
 			if(up.length!==3) return;
-			if(this.str_starts_with(up[1],"@")) {
+			/**
+			 * @arg {typeof t} t
+			 * @template {string[]} T
+			 * @template {string} U
+			 * @arg {U} w
+			 * @arg {T} x
+			 * @returns {x is [string,`${U}${string}`,...string[]]}
+			 */
+			function str_starts_with_at_1(t,x,w) {
+				return t.str_starts_with(x[1],w);
+			}
+			if(str_starts_with_at_1(this,up,"@")) {
 				console.log("[handle_like_url]",up[1]);
 				return;
 			}
