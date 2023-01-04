@@ -895,11 +895,17 @@ function check_item_keys(real_path,path,keys) {
 		case "commentThreadRenderer": break;
 		case "commentsHeaderRenderer": break;
 	}
+	keys=keys.filter(e=>e!=="trackingParams");
 	if(mode==="action") for(let key of keys) switch(key) {
 		default: console.log("item_keys_tag [ci_4_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+		case "contents": break;
+		case "header": break;
+		case "targetId": break;
+		case "reflowOptions": break;
 	}
 	if(mode==="renderer") for(let key of keys) switch(key) {
 		default: console.log("item_keys_tag [ci_5_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+		case "content": break;
 	}
 }
 
@@ -5070,7 +5076,12 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {Thumbnail} x */
-	Thumbnail(x) {x;}
+	Thumbnail(x) {
+		const {url: a,width: b,height: c,...y}=x;
+		this.parse_url(a);
+		this.z([b,c],v=>this.primitive_of(v,"number"));
+		this.empty_object(y);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
