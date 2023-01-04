@@ -3123,8 +3123,8 @@ class BaseService extends BaseServicePrivate {
 	z(x,y) {
 		if(x===void 0) return;
 		for(let it of x.entries()) {
-			const [i,item]=it;
-			y(item,i);
+			const [i,a]=it;
+			y(a,i);
 		}
 	}
 	/** @protected @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
