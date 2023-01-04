@@ -895,7 +895,7 @@ function check_item_keys(real_path,path,keys) {
 		case "commentThreadRenderer": break;
 		case "commentsHeaderRenderer": break;
 	}
-	keys=keys.filter(e=>e!=="trackingParams");
+	keys=keys.filter(e => e!=="trackingParams");
 	if(mode==="action") for(let key of keys) switch(key) {
 		default: console.log("item_keys_tag [ci_4_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 		case "contents": break;
@@ -4352,15 +4352,31 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtWatchUrlParamsFormat} x */
 	parse_watch_page_url(x) {
-		let parts=split_string(x,"&");
-		let [p0,...pr]=parts;
-		if(pr.length!==0) {
-			debugger;
+		/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
+		function make_search_params(t) {
+			let sp=new URLSearchParams(t);
+			return as_cast(Object.fromEntries(sp.entries()));
 		}
-		let [c0,c1]=split_string(p0,"=");
-		if(c0==="v"&&this.last_video_watch_url===c1) return;
-		if(c0==="v") this.last_video_watch_url=c1;
-		console.log('watch page %s=%s',c0,c1);
+		/** @type {{list: `RD${YtMyMixPlaylistFormat}`}|{v: string}|{pp: string}} */
+		let sp=make_search_params(x);
+		let k=filter_out_keys(get_keys_of(sp),["list","v","pp"]);
+		if(k.length>0) {
+			console.log("[missed_url_param_keys]",k);
+		}
+		if("list" in sp) {
+			let [d3,d4,d5,d6,...d7]=split_string(sp.list,""); let d8=d7.join("");
+			/** @type {`${typeof d3}${typeof d4}${typeof d5}${typeof d6}`} */
+			let rd_desc=`${d3}${d4}${d5}${d6}`;
+			console.log("[playlist_found]",rd_desc,d8);
+		}
+		if("pp" in sp) {
+			console.log("[player_params_found]",sp.pp);
+		}
+		x: if("v" in sp) {
+			if(this.last_video_watch_url===sp.v) break x;
+			this.last_video_watch_url=sp.v;
+			console.log('watch page v=%s',sp.v);
+		}
 	}
 	/** @arg {CommandMetadata} x */
 	commandMetadata(x) {
@@ -5073,7 +5089,7 @@ class HandleTypes extends BaseService {
 	Thumbnail(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
-		this.z([b,c],v=>this.primitive_of(v,"number"));
+		this.z([b,c],v => this.primitive_of(v,"number"));
 		this.empty_object(y);
 	}
 	/** @arg {ButtonRendererData} x */

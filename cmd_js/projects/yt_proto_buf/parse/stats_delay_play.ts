@@ -19,6 +19,14 @@ function create_from_parse<T extends string>(str: T): UrlParse<T> {
 type ParseParam<T extends string>=T extends `${infer U}=${infer C}`? {
 	[V in U]: C;
 }:T;
+declare global {
+	interface URLSearchParams {
+		[Symbol.iterator](): IterableIterator<[string,string]>;
+		append(name: string,value: string): void;
+		delete(name: string): void;
+		entries(): IterableIterator<[string,string]>;
+	}
+}
 type ParseParamItem<T extends string>=T extends `${infer U}&${infer Z}`? ParseParam<U>&ParseParamItem<Z>:T extends `${infer U}`? ParseParam<U>:never;
 type ParseUrlSearchParams<T extends string>=T extends `?${infer V}`? ParseParamItem<V>:T extends `${infer X}`? ParseParamItem<X>:never;
 function make_search_params<T extends string>(t: T): ParseUrlSearchParams<T> {
