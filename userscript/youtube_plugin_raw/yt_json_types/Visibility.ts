@@ -1,0 +1,3 @@
+type Visibility={
+	types: `${number}`;
+};

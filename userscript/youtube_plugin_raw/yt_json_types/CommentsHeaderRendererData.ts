@@ -3,13 +3,7 @@ type CommentsHeaderRendererData={
 	createRenderer: CommentSimpleboxRenderer;
 	commentsCount: TextT;
 	customEmojis: CustomEmoji[];
-	loggingDirectives: {
-		trackingParams: string;
-		visibility: {
-			types: `${number}`;
-		};
-		enableDisplayloggerExperiment: boolean;
-	};
+	loggingDirectives: LoggingDirectives;
 	showSeparator: true;
 	sortMenu: SortFilterSubMenuRenderer;
 	titleText: TextT;
