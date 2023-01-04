@@ -1,5 +1,5 @@
 type OptionWithText={
-	options: SettingsOptionItemType[];
+	options: SettingsOptionItem[];
 	title: TextT;
 	text: TextT;
 };

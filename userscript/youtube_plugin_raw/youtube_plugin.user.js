@@ -5537,14 +5537,29 @@ class HandleTypes extends BaseService {
 		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		debugger;
 	}
-	PageIntroductionData(x) {x;}
+	/** @arg {ShelfData} x */
+	ShelfData(x) {
+		this.save_keys("ShelfData",x,this.TODO_true);
+	}
+	/** @arg {SettingsOptionsData} x */
+	SettingsOptionsData(x) {
+		this.save_keys("SettingsOptionsData",x,this.TODO_true);
+	}
+	/** @arg {PlaylistVideoListData} x */
+	PlaylistVideoListData(x) {
+		this.save_keys("PlaylistVideoListData",x,this.TODO_true);
+	}
+	/** @arg {PageIntroductionData} x */
+	PageIntroductionData(x) {
+		this.save_keys("PageIntroductionData",x,this.TODO_true);
+	}
 	/** @arg {{}} x */
 	ReelPlayerOverlayData(x) {
 		this.save_keys("ReelPlayerOverlayData",x,this.TODO_true);
 	}
 	/** @arg {ConnectedAppData} x */
 	ConnectedAppData(x) {
-		this.w(x,a=>this.save_keys("ConnectedAppRenderer",a,this.TODO_true));
+		this.save_keys("ConnectedAppData",x,this.TODO_true);
 	}
 }
 //#endregion

@@ -1,4 +1,4 @@
-type SettingsOptionItemType=
+type SettingsOptionItem=
 	ChannelOptionsRenderer|
 	SettingsSwitchRenderer|
 	SettingsCheckboxRenderer|
