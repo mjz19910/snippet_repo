@@ -5214,11 +5214,13 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(y);
 	}
-	/** @arg {ReelPlayerOverlayRenderer} x */
-	ReelPlayerOverlayRenderer(x) {x;}
 	/** @private */
 	get TODO_true() {
 		return true;
+	}
+	/** @arg {ReelPlayerOverlayRenderer} x */
+	ReelPlayerOverlayRenderer(x) {
+		this.save_keys("ReelPlayerOverlayRenderer",x,this.TODO_true);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
