@@ -902,6 +902,8 @@ function check_item_keys(real_path,path,keys) {
 		case "header": break;
 		case "targetId": break;
 		case "reflowOptions": break;
+		case "continuationItems": break;
+		case "slot": break;
 	}
 	if(mode==="renderer") for(let key of keys) switch(key) {
 		default: console.log("item_keys_tag [ci_5_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
