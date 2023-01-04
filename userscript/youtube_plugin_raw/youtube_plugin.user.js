@@ -4279,7 +4279,7 @@ class HandleTypes extends BaseService {
 				case "logout": return;
 			}
 			if(this.str_starts_with(f0,"@")) {
-				console.log("[handle_like_url]",x);
+				console.log("[handle_like_url]",f0);
 				return;
 			}
 			let [a0,a1]=split_string(f0,"?");
@@ -4296,6 +4296,10 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} */
 		function parse_url_len_3() {
 			if(up.length!==3) return;
+			if(this.str_starts_with(up[1],"@")) {
+				console.log("[handle_like_url]",up[1]);
+				return;
+			}
 			switch(up[1]) {
 				case "feed": switch(up[2]) {case "subscriptions": return;}
 				default: debugger;
