@@ -894,6 +894,7 @@ function check_item_keys(real_path,path,keys) {
 		// comments
 		case "commentThreadRenderer": break;
 		case "commentsHeaderRenderer": break;
+		case "feedFilterChipBarRenderer": break;
 	}
 	keys=keys.filter(e => e!=="trackingParams");
 	if(mode==="action") for(let key of keys) switch(key) {
@@ -980,6 +981,7 @@ class HandleRendererContentItemArray {
 			if("continuationItemRenderer" in content_item) return true;
 			if("compactVideoRenderer" in content_item) return true;
 			if("compactPlaylistRenderer" in content_item) return true;
+			if("feedFilterChipBarRenderer" in content_item) return true;
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
 				return true;
