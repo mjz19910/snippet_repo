@@ -5253,54 +5253,6 @@ class HandleTypes extends BaseService {
 		this.trackingParams(e);
 		this.empty_object(y);
 	}
-	/** @arg {ActionSetPlaylistVideoOrder} x */
-	ActionSetPlaylistVideoOrder(x) {
-		this.save_keys("ActionSetPlaylistVideoOrder",x);
-	}
-	/** @arg {CustomEmoji} x */
-	CustomEmoji(x) {
-		this.save_keys("CustomEmoji",x);
-	}
-	/** @arg {LoggingDirectives} x */
-	LoggingDirectives(x) {
-		this.save_keys("LoggingDirectives",x);
-	}
-	/** @arg {FulfillmentContent} x */
-	FulfillmentContent(x) {
-		this.save_keys("FulfillmentContent",x);
-	}
-	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {
-		this.save_keys("DesktopTopbarRenderer",x);
-	}
-	/** @arg {SignalNavigationEndpointData} x */
-	SignalNavigationEndpointData(x) {
-		this.save_keys("SignalNavigationEndpointData",x);
-	}
-	/** @arg {SignOutEndpointData} x */
-	SignOutEndpointData(x) {
-		this.save_keys("SignOutEndpointData",x);
-	}
-	/** @arg {GetAccountsListInnertubeEndpointData} x */
-	GetAccountsListInnertubeEndpointData(x) {
-		this.save_keys("GetAccountsListInnertubeEndpointData",x);
-	}
-	/** @arg {PlayerAnnotationsExpandedRendererData} x */
-	PlayerAnnotationsExpandedRendererData(x) {
-		this.save_keys("PlayerAnnotationsExpandedRendererData",x);
-	}
-	/** @arg {PlayabilityStatus} x */
-	PlayabilityStatus(x) {
-		this.save_keys("PlayabilityStatus",x);
-	}
-	/** @arg {PlaybackTracking} x */
-	PlaybackTracking(x) {
-		this.save_keys("PlaybackTracking",x);
-	}
-	/** @arg {PlayerLegacyDesktopWatchAdsRendererData} x */
-	PlayerLegacyDesktopWatchAdsRendererData(x) {
-		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x);
-	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
 		const {isVanityUrl: a,...y}=x;
@@ -5344,6 +5296,54 @@ class HandleTypes extends BaseService {
 	/** @arg {CaptionsRenderer} x */
 	CaptionsRenderer(x) {
 		this.save_keys("CaptionsRenderer",x,this.TODO_true);
+	}
+	/** @arg {ActionSetPlaylistVideoOrder} x */
+	ActionSetPlaylistVideoOrder(x) {
+		this.save_keys("ActionSetPlaylistVideoOrder",x,this.TODO_true);
+	}
+	/** @arg {CustomEmoji} x */
+	CustomEmoji(x) {
+		this.save_keys("CustomEmoji",x,this.TODO_true);
+	}
+	/** @arg {LoggingDirectives} x */
+	LoggingDirectives(x) {
+		this.save_keys("LoggingDirectives",x,this.TODO_true);
+	}
+	/** @arg {FulfillmentContent} x */
+	FulfillmentContent(x) {
+		this.save_keys("FulfillmentContent",x,this.TODO_true);
+	}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {
+		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
+	}
+	/** @arg {SignalNavigationEndpointData} x */
+	SignalNavigationEndpointData(x) {
+		this.save_keys("SignalNavigationEndpointData",x,this.TODO_true);
+	}
+	/** @arg {SignOutEndpointData} x */
+	SignOutEndpointData(x) {
+		this.save_keys("SignOutEndpointData",x,this.TODO_true);
+	}
+	/** @arg {GetAccountsListInnertubeEndpointData} x */
+	GetAccountsListInnertubeEndpointData(x) {
+		this.save_keys("GetAccountsListInnertubeEndpointData",x,this.TODO_true);
+	}
+	/** @arg {PlayerAnnotationsExpandedRendererData} x */
+	PlayerAnnotationsExpandedRendererData(x) {
+		this.save_keys("PlayerAnnotationsExpandedRendererData",x,this.TODO_true);
+	}
+	/** @arg {PlayabilityStatus} x */
+	PlayabilityStatus(x) {
+		this.save_keys("PlayabilityStatus",x,this.TODO_true);
+	}
+	/** @arg {PlaybackTracking} x */
+	PlaybackTracking(x) {
+		this.save_keys("PlaybackTracking",x,this.TODO_true);
+	}
+	/** @arg {PlayerLegacyDesktopWatchAdsRendererData} x */
+	PlayerLegacyDesktopWatchAdsRendererData(x) {
+		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x,this.TODO_true);
 	}
 }
 //#endregion
