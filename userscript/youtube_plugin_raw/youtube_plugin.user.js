@@ -4268,7 +4268,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(timeoutMs,"number");
 		this.notification_unseenCount(y);
 	}
-	/** @template T @arg {T} x @arg {TypeOfType<T>} y */
+	/** @template T @arg {T} x @arg {T extends undefined?never:TypeOfType<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
@@ -5200,12 +5200,13 @@ class HandleTypes extends BaseService {
 		}
 		switch(f) {
 			case "SIZE_DEFAULT": break;
+			case void 0: break;
 			default: debugger;
 		}
 		if(a) this.Accessibility(a);
 		if(b) this.yt_endpoint(b);
 		this.Icon(c);
-		this.primitive_of(d,"boolean");
+		if(d) this.primitive_of(d,"boolean");
 		if(e) this.yt_endpoint(e);
 		if(i) this.trackingParams(i);
 		this.text_t(h);
