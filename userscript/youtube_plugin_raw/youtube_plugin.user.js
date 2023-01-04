@@ -5167,7 +5167,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
-		this.save_keys("ButtonRendererData",x,true);
+		this.save_keys("ButtonData",x,true);
 		const {
 			accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
 			navigationEndpoint: j,
@@ -5177,6 +5177,7 @@ class HandleTypes extends BaseService {
 			case "STYLE_DEFAULT": break;
 			case "STYLE_SUGGESTIVE": break;
 			case "STYLE_PRIMARY": break;
+			case "STYLE_TEXT": break;
 			case void 0: break;
 			default: debugger;
 		}
@@ -5193,7 +5194,11 @@ class HandleTypes extends BaseService {
 		if(i) this.trackingParams(i);
 		this.text_t(h);
 		if(j) this.yt_endpoint(j);
-		this.empty_object(y);
+		{
+			const {targetId: a,...z}=y;
+			if(a) this.parse_target_id(a);
+			this.empty_object(z);
+		}
 	}
 	/** @arg {AnyIcon} x*/
 	Icon(x) {

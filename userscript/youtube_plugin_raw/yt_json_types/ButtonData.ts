@@ -9,4 +9,5 @@ type ButtonData={
 	style?: ButtonStyleType;
 	text: TextT;
 	trackingParams?: string;
+	targetId?: string;
 };
