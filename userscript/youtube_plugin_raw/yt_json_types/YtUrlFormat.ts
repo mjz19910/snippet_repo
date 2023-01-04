@@ -2,6 +2,7 @@ type YtUrlFormat=
 	"/"|
 	`/@${string}`|
 	`/@${string}/${ChannelSubUrl}`|
+	`/@${string}/search?query=${string}`|
 	`/watch?${YtWatchUrlParamsFormat}`|
 	`/feed/${YtFeedSubSections}`|
 	`/${SettingsEndpointPages}`|

@@ -3186,6 +3186,7 @@ class CsiService extends BaseService {
 		/* destinations */ "GetGamingDestination_rid",
 		"GetAccountsList_rid",
 		/*reel_watch*/"GetReelWatchSequence_rid",
+		"GetLibrary_rid",
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
@@ -4330,7 +4331,22 @@ class HandleTypes extends BaseService {
 			function str_starts_with_at_1(t,x,w) {
 				return t.str_starts_with(x[1],w);
 			}
+			/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+			function str_is_search(x) {
+				return x.includes("?");
+			}
 			if(str_starts_with_at_1(this,up,"@")) {
+				if(str_is_search(up[2])) {
+					let v=up[2];
+					let q=split_string(v,"?");
+					let sp=make_search_params(q[1]);
+					if("query" in sp) {
+						console.log("[found_search_query]",sp.query);
+					} else {
+						debugger;
+					}
+					return this.parse_channel_section(q[0]);
+				}
 				return this.parse_channel_section(up[2]);
 			}
 			switch(up[1]) {
