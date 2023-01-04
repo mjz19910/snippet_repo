@@ -5,7 +5,9 @@ type CommentsHeaderRendererData={
 	customEmojis: CustomEmoji[];
 	loggingDirectives: {
 		trackingParams: string;
-		visibility: {};
+		visibility: {
+			types: `${number}`;
+		};
 		enableDisplayloggerExperiment: boolean;
 	};
 	showSeparator: true;
