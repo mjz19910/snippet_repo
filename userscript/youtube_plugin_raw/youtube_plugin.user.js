@@ -2169,7 +2169,7 @@ function start_message_channel_loop(yt_handlers) {
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
 		const handle_types_fut=new Future(yt_handlers,v => v.handle_types);
-		exports.handle_types_fut=handle_types_fut;
+		if(typeof exports==="object") exports.handle_types_fut=handle_types_fut;
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {handle_types_fut},
