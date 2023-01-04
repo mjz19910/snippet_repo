@@ -1,0 +1,5 @@
+type ProfileColumnStatsRenderer={
+	profileColumnStatsRenderer: {
+		items: {}[];
+	};
+};

@@ -4585,8 +4585,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnBrowseResultsRendererData} x */
 	TwoColumnBrowseResultsRendererData(x) {
-		const {tabs,...y}=x;
-		this.z(tabs,a => this.ResultRenderer(a));
+		const {tabs: a,secondaryContents: b,...y}=x;
+		this.z(a,a => this.ResultRenderer(a));
+		if(b) b;
 		this.empty_object(y);
 	}
 	/** @arg {ResultRenderer} x */

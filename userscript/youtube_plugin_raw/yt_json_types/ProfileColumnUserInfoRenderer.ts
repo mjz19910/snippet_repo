@@ -1,0 +1,3 @@
+type ProfileColumnUserInfoRenderer={
+	profileColumnUserInfoRenderer: ProfileColumnUserInfoData;
+};
