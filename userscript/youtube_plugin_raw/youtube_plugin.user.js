@@ -3105,26 +3105,33 @@ class BaseServicePrivate extends KnownDataSaver {
 	log_skipped_strings=false;
 	#x;
 }
-/** @template U @arg {U[]|undefined} t @arg {(x:U,i:number)=>void} u  */
-function iterate(t,u) {
-	if(t===void 0) return;
-	for(let it of t.entries()) {
-		const [i,item]=it;
-		u(item,i);
-	}
-}
-/** @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
-function iterate_obj(obj,fn) {
-	if(obj===void 0) return;
-	let arr=Object.entries(obj);
-	iterate(arr,e => {
-		fn(e[0],e[1]);
-	});
-}
 class BaseService extends BaseServicePrivate {
-	/** @arg {any[]} x */
-	log(...x) {
-		console.log(...x);
+	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
+	v(obj,fn) {
+		if(obj===void 0) return;
+		let arr=Object.entries(obj);
+		this.z(arr,e => {
+			fn(e[0],e[1]);
+		});
+	}
+	/** @protected @template {{}} T @template U @arg {T} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
+	w(x,y) {
+		let [k]=get_keys_of_one(x);
+		return y(x[k]);
+	}
+	// x is reserved for the first arg
+	// y reserved for unpack target
+	/** @protected @template U @arg {U[]|undefined} t @arg {(x:U,i:number)=>void} u  */
+	z(t,u) {
+		if(t===void 0) return;
+		for(let it of t.entries()) {
+			const [i,item]=it;
+			u(item,i);
+		}
+	}
+	/** @protected @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
+	zw(a,b) {
+		this.z(a,v => this.w(v,b));
 	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	empty_object(x) {
@@ -3139,7 +3146,7 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @template {{}} T @arg {string} key @arg {T} obj @arg {boolean} [handled] */
+	/** @protected @template {{}} T @arg {string} key @arg {T} obj @arg {boolean} [handled] */
 	save_keys(key,obj,handled) {
 		if(handled===void 0) debugger;
 		let keys=get_keys_of(obj);
@@ -3739,7 +3746,6 @@ class YtInjectApi {
 		this.has_keys=has_keys;
 		this.decode_entity_key=decode_entity_key;
 		this.add_function(non_null);
-		this.add_function(iterate_obj);
 	}
 	/** @arg {string} key @arg {Map<string, {}>} map */
 	save_new_map(key,map) {
@@ -3771,18 +3777,6 @@ class YtInjectApi {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	/** @template {{}} T @template U @arg {T} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
-	w(x,y) {
-		let [k]=get_keys_of_one(x);
-		return y(x[k]);
-	}
-	// x is reserved for the first arg
-	// y reserved for unpack target
-	z=iterate;
-	/** @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
-	zw(a,b) {
-		this.z(a,v => this.w(v,b));
-	}
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
 		let t=this;
