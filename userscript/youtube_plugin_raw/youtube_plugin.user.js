@@ -1110,6 +1110,7 @@ class MyReader {
 	}
 	/** @arg {number} [size] */
 	read_any(size) {
+		this.pos=0;
 		let target_len;
 		if(!size) {
 			target_len=this.len;
@@ -1573,7 +1574,7 @@ class FilterHandlers {
 		let parsed_url=convert_to_url(request).url;
 		let url_res=this.use_template_url(parsed_url.href);
 		if(!url_res) url_res={name:as_cast(parsed_url.href)};
-		if(!url_res) throw new Error();
+		if(!url_res) throw new Error("Unreachable");
 		var url_type=url_res.name;
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
@@ -2801,18 +2802,14 @@ function get_account_type(base,parts,index) {
 		case "account_menu": break;
 		case "accounts_list": break;
 		case "set_setting": break;
-		default: no_handler({parts,index});
+		default:
+			console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+			return null;
 	}
 	return {
 		/** @type {`${typeof base}.${typeof cur_part}`} */
 		name: `${base}.${cur_part}`
 	};
-}
-/** @arg {{parts: string[];index:number}} obj @returns {never} */
-function no_handler({parts,index}) {
-	console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-	debugger;
-	throw new Error("Stop");
 }
 /** @template {string} C @template {string} U @template {Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {Split<C,","> extends U[]?C:never} arg1 */
 function has_keys(ok_3,arg1) {
@@ -4028,6 +4025,7 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {endpoint_data_handler_names} */
 		_obj_map={
+			createCommentEndpoint: null,
 			watchEndpoint: "WatchEndpointData",
 			browseEndpoint: "BrowseEndpointData",
 			searchEndpoint: "SearchEndpointData",
@@ -4064,83 +4062,83 @@ class HandleTypes extends BaseService {
 	};
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
-		this.save_keys("YtEndpoint",x,true);
-		if("clickTrackingParams" in x) {
-			const {clickTrackingParams: a,...y}=x;
+		/** @type {{}|YtEndpoint} */
+		let c=x;
+		this.save_keys("YtEndpoint",c,true);
+		if("clickTrackingParams" in c) {
+			const {clickTrackingParams: a,...y}=c;
 			if(a!==void 0) this.clickTrackingParams(a);
-			x=y;
+			c=y;
 		}
-		if("commandMetadata" in x) {
-			const {commandMetadata: a,...y}=x;
+		if("commandMetadata" in c) {
+			const {commandMetadata: a,...y}=c;
 			this.commandMetadata(a);
-			x=y;
+			c=y;
 		}
-		if("reloadContinuationItemsCommand" in x) {
-			const {reloadContinuationItemsCommand: a,...y}=x;
+		if("reloadContinuationItemsCommand" in c) {
+			const {reloadContinuationItemsCommand: a,...y}=c;
 			this.ReloadContinuationItemsCommandData(a);
-			x=y;
+			c=y;
 		}
-		let yk=get_keys_of(x);
-		let y=x;
+		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
+		let q=(v) => this.endpoint_data_map.get(v);
+		/** @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
+		let g=x => this.empty_object(x);
+		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
+		let n=(x,b) => {if(!x) throw new Error(); g(b);};
+		let yk=get_keys_of(c);
+		let ya=yk[0];
+		ya="browseEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="searchEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="setSettingEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="signalServiceEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="urlEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="watchEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="signalNavigationEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="signOutEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
+		ya="getAccountsListInnertubeEndpoint"; if(ya in c) {
+			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
+		}
 		for(let ya of yk) {
-			/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
-			let q=(v) => this.endpoint_data_map.get(v);
-			/** @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
-			let g=x => this.empty_object(x);
-			/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
-			let n=(x,b) => {if(!x) throw new Error(); g(b);};
-			switch(ya) {
-				case "browseEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "searchEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "setSettingEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "signalServiceEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "urlEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "watchEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "signalNavigationEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "signOutEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				case "getAccountsListInnertubeEndpoint": if(ya in y) {
-					const {[ya]: a,...b}=y; n(a,b); return this[q(ya)](a);
-				} break;
-				default:
-			}
 			if(!this.endpoint_data_map.has_key(ya)) {
 				console.log('[new_ep_data] [%s]',ya);
 				debugger;
-				throw new Error();
 			}
 		}
-		if("changeKeyedMarkersVisibilityCommand" in y) {
-			let cmd=y.changeKeyedMarkersVisibilityCommand;
+		if("changeKeyedMarkersVisibilityCommand" in c) {
+			let cmd=c.changeKeyedMarkersVisibilityCommand;
 			const {isVisible,key,...v}=cmd;
 			this.primitive_of(isVisible,"boolean");
 			if(key!=="HEATSEEKER") debugger;
 			this.empty_object(v);
 			return;
 		}
-		if("loadMarkersCommand" in y) {
-			let cmd=y.loadMarkersCommand;
+		if("loadMarkersCommand" in c) {
+			let cmd=c.loadMarkersCommand;
 			iterate(cmd.entityKeys,key => {
 				let res=decode_b64_proto_obj(key);
 				let res_2=decode_entity_key(key);
 				console.log("[entity_key]",res_2,res);
 			});
+			return;
 		}
+		c;
 	}
 	/** @type {ResponseTypes['type']|null} */
 	_current_response_type=null;
@@ -4470,7 +4468,9 @@ class HandleTypes extends BaseService {
 					case "get_notification_menu": break;
 					case "record_interactions": break;
 					case "modify_channel_preference": break;
-					default: no_handler({parts,index});
+					default:
+						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+						return null;
 				} return {
 					/** @type {`${typeof cur_part}.${typeof next_part}`} */
 					name: `${cur_part}.${next_part}`
@@ -4479,21 +4479,22 @@ class HandleTypes extends BaseService {
 			case "subscription": {
 				index++; let next_part=parts[index]; switch(next_part) {
 					case "subscribe": break;
-					default: no_handler({parts,index});
+					default:
+						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+						return null;
 				} return {
 					/** @type {`${typeof cur_part}.${typeof next_part}`} */
 					name: `${cur_part}.${next_part}`
 				};
 			}
 			case "browse": break;
-			case "guide": index++; switch(parts[index]) {
-				case void 0: break;
-				default: no_handler({parts,index});
-			} break;
+			case "guide": break;
 			case "reel": index++; let next_part=parts[index]; switch(next_part) {
 				case "reel_item_watch": break;
 				case "reel_watch_sequence": break;
-				default: no_handler({parts,index});
+				default:
+					console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+					return null;
 			} return {
 				/** @type {`${typeof cur_part}.${typeof next_part}`} */
 				name: `${cur_part}.${next_part}`
@@ -4504,7 +4505,19 @@ class HandleTypes extends BaseService {
 			case "get_transcript": break;
 			case "account": return get_account_type(cur_part,parts,index+1);
 			case "feedback": break;
-			default: no_handler({parts,index});
+			case "comment": index++; next_part=parts[index]; switch(next_part) {
+				case "create_comment": break;
+				default:
+					console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+					return null;
+			} return {
+				/** @type {`${typeof cur_part}.${typeof next_part}`} */
+				name: `${cur_part}.${next_part}`
+			};
+			default:
+				console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+				debugger;
+				return null;
 		}
 		return {name: cur_part};
 	}
@@ -4513,7 +4526,9 @@ class HandleTypes extends BaseService {
 		let cur_part=parts[index];
 		switch(cur_part) {
 			case "get_live_chat_replay": break;
-			default: no_handler({parts,index});
+			default:
+				console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+				return null;
 		};
 		return {
 			/** @type {`${typeof base}.${typeof cur_part}`} */

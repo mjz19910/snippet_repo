@@ -1,0 +1,3 @@
+type CreateCommentEndpoint={
+	createCommentParams: string;
+};

@@ -1,4 +1,5 @@
 type endpoint_data_handler_names={
+	createCommentEndpoint: null;
 	watchEndpoint: "WatchEndpointData";
 	browseEndpoint: "BrowseEndpointData";
 	searchEndpoint: "SearchEndpointData";
