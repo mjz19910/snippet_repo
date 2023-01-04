@@ -3310,6 +3310,7 @@ class ECatcherService extends BaseService {
 				[24422508,24401504],
 			].flat().concat([
 				24438848,
+				24439483,
 				24440901,
 				39321826,
 			]),
@@ -3432,7 +3433,13 @@ class GFeedbackService extends BaseService {
 		let new_expected=[];
 		let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
 		this.data.e?.forEach(e => expected.includes(e)? 0:new_expected.push(e));
-		if(new_expected.length>0) console.log("new g_feedback flag_id",new_expected);
+		if(new_expected.length>0) {
+			if(new_expected.length>1) {
+				console.log("[new_e_expected]",new_expected);
+			} else {
+				console.log("[new_e_expected][%o]",new_expected[0]);
+			}
+		}
 	}
 }
 class GuidedHelpService extends BaseService {
