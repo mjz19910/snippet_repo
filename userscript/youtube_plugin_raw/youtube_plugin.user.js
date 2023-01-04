@@ -5132,13 +5132,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommentsHeaderRendererData} x */
 	CommentsHeaderRendererData(x) {
-		this.save_keys("CommentsHeaderRenderer",x);
+		this.save_keys("CommentsHeaderRenderer",x,true);
 		const {
 			countText: a,createRenderer: b,sortMenu: c,trackingParams: d,titleText: e,commentsCount: f,
 			showSeparator: g,customEmojis: h,unicodeEmojisUrl: i,loggingDirectives: j,
 			...y
 		}=x;
 		this.z([a,e,f],v => this.text_t(v));
+		this.CommentSimpleboxRenderer(b);
 		this.SortFilterSubMenuRenderer(c);
 		this.trackingParams(d);
 		this.primitive_of(g,"boolean");
@@ -5149,10 +5150,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
-		const {accessibility: a,icon,subMenuItems,title,trackingParams,...y}=x;
+		const {accessibility: a,icon: b,subMenuItems: c,title: d,trackingParams: e,...y}=x;
 		this.Accessibility(a);
-		this.Icon(icon);
-		this.z(subMenuItems,v => this.ActionSetPlaylistVideoOrder(v));
+		this.Icon(b);
+		this.z(c,v => this.ActionSetPlaylistVideoOrder(v));
+		this.primitive_of(d,"string");
+		this.trackingParams(e);
 		this.empty_object(y);
 	}
 	/** @arg {ActionSetPlaylistVideoOrder} x */
@@ -5202,6 +5205,10 @@ class HandleTypes extends BaseService {
 	/** @arg {PlayerLegacyDesktopWatchAdsRendererData} x */
 	PlayerLegacyDesktopWatchAdsRendererData(x) {
 		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x);
+	}
+	/** @arg {CommentSimpleboxRenderer} x */
+	CommentSimpleboxRenderer(x) {
+		this.save_keys("CommentSimpleboxRenderer",x);
 	}
 }
 //#endregion
