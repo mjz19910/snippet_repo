@@ -3126,6 +3126,19 @@ class BaseService extends BaseServicePrivate {
 	log(...x) {
 		console.log(...x);
 	}
+	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
+	empty_object(x) {
+		let keys=get_keys_of(x);
+		if(!keys.length) return;
+		console.log("[empty_object] [%s] %o",keys.join(),x);
+		debugger;
+	}
+	/** @protected @template {{}} T @arg {T} x */
+	is_empty_object(x) {
+		let keys=get_keys_of(x);
+		if(!keys.length) return true;
+		return false;
+	}
 	/** @template {{}} T @arg {string} key @arg {T} obj @arg {boolean} [handled] */
 	save_keys(key,obj,handled) {
 		if(handled===void 0) debugger;
@@ -4210,19 +4223,6 @@ class HandleTypes extends BaseService {
 		const {unseenCount: a,...c}=x;
 		this.save_number("notification.unseenCount",a);
 		this.empty_object(c);
-	}
-	/** @private @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
-	empty_object(x) {
-		let keys=get_keys_of(x);
-		if(!keys.length) return;
-		console.log("[empty_object] [%s] %o",keys.join(),x);
-		debugger;
-	}
-	/** @private @template {{}} T @arg {T} x */
-	is_empty_object(x) {
-		let keys=get_keys_of(x);
-		if(!keys.length) return true;
-		return false;
 	}
 	/** @private @arg {string} x */
 	clickTrackingParams(x) {
