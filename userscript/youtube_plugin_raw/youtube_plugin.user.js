@@ -5159,9 +5159,7 @@ class HandleTypes extends BaseService {
 			serviceEndpoint: f,accountByline: g,channelHandle: h,
 			...y
 		}=x;
-		this.text_t(a);
-		this.text_t(g);
-		this.text_t(h);
+		this.z([a,g,h],a=>this.text_t(a));
 		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
 		this.yt_endpoint(f);
 		this.w(b,a =>
