@@ -4711,15 +4711,23 @@ class HandleTypes extends BaseService {
 		y;
 	}
 	/** @arg {PlaylistSidebarRenderer} x */
-	PlaylistSidebarRenderer(x) {x;}
+	PlaylistSidebarRenderer(x) {
+		this.save_keys("PlaylistSidebarRenderer",x,this.TODO_true);
+	}
 	/** @arg {MicroformatDataRenderer} x */
-	MicroformatDataRenderer(x) {x;}
+	MicroformatDataRenderer(x) {
+		this.save_keys("MicroformatDataRenderer",x,this.TODO_true);
+	}
 	/** @arg {DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {this.w(x,a=>this.DesktopTopbarRendererData(a));}
 	/** @arg {PlaylistMetadataRenderer} x */
-	PlaylistMetadataRenderer(x) {x;}
+	PlaylistMetadataRenderer(x) {
+		this.save_keys("PlaylistMetadataRenderer",x,this.TODO_true);
+	}
 	/** @arg {PlaylistHeaderRenderer} x */
-	PlaylistHeaderRenderer(x) {x;}
+	PlaylistHeaderRenderer(x) {
+		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
+	}
 	/** @arg {YtSettingsPageResponse} x */
 	YtSettingsPageResponse(x) {
 		const {page: {},endpoint: a,response: b,url: c,...y}=x;
