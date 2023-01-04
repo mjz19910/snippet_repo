@@ -1,1 +1,1 @@
-type YtFeedSubSections="subscriptions";
+type YtFeedSubSections=BrowseEndpointPages;

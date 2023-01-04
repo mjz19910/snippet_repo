@@ -4357,9 +4357,10 @@ class HandleTypes extends BaseService {
 			}
 			switch(up[1]) {
 				case "feed": switch(up[2]) {
-					case "subscriptions": return;
+					case "subscriptions": break;
+					case "library": return;
 					default: debugger;
-				} break;
+				} return;
 				default: debugger;
 			}
 		}
