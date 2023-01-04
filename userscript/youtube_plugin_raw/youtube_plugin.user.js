@@ -1377,7 +1377,7 @@ function convert_to_url(req) {
 	return {url: to_url(req.url)};
 }
 class FilterHandlers {
-	/** @arg {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} res */
+	/** @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
@@ -2506,7 +2506,7 @@ class ServiceResolver {
 		if(!this.params) throw new Error("No service params");
 		return this.params[key];
 	}
-	/** @template {keyof T} V @arg {V} key @returns {NonNullable<this["services"]>[V]} */
+	/** @template {keyof T} V @arg {V} key */
 	get(key) {
 		if(!this.services) throw new Error("No services");
 		return this.services[key];
@@ -2543,7 +2543,7 @@ class HiddenData {
 }
 //#region
 async function main() {
-	/** @type {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} */
+	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
 	const e_catcher_service=new ECatcherService(resolver_value);
@@ -2922,7 +2922,7 @@ class KnownDataSaver {
 }
 class BaseServicePrivate extends KnownDataSaver {
 	// #region Public
-	/** @arg {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} x */
+	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
@@ -3146,7 +3146,7 @@ class CsiService extends BaseService {
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @arg {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} x */
+	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		for(let x of this.rid_keys) {
@@ -3425,6 +3425,14 @@ class TrackingServices extends BaseService {
 	on_complete_set_service_params() {
 		seen_map.clear();
 	}
+}
+class Services {
+	csi_service=new CsiService({value:null});
+	e_catcher_service=new ECatcherService({value:null});
+	g_feedback_service=new GFeedbackService({value:null});
+	guided_help_service=new GuidedHelpService({value:null});
+	service_tracking=new TrackingServices({value:null});
+	yt_handlers=new HiddenData(new FilterHandlers({value:null}));
 }
 //#endregion Service
 //#region decode_entity_key
@@ -5062,15 +5070,10 @@ function get_exports() {
 if(typeof exports==="object") {
 	let exports=get_exports();
 	exports.ServiceResolver=ServiceResolver;
-	exports.Future=Future;
+	const future_type=new Future(new HiddenData(new FilterHandlers({value:null})),v=>v.handle_types);
+	exports.future_type=future_type;
 	exports.HandleTypes=HandleTypes;
-	exports.HiddenData=HiddenData;
-	exports.FilterHandlers=FilterHandlers;
-	exports.CsiService=CsiService;
-	exports.ECatcherService=ECatcherService;
-	exports.GFeedbackService=GFeedbackService;
-	exports.GuidedHelpService=GuidedHelpService;
-	exports.TrackingServices=TrackingServices;
+	exports.Services=Services;
 }
 console=typeof window==="undefined"? console:(() => window.console)();
 main();
