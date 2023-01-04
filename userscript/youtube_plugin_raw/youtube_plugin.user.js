@@ -4443,10 +4443,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommandMetadata} x */
 	commandMetadata(x) {
-		const {webCommandMetadata,...y}=x;
-		this.WebCommandMetadata(x.webCommandMetadata);
+		const {webCommandMetadata: a,...y}=x;
+		this.WebCommandMetadata(a);
 		if("resolveUrlCommandMetadata" in y) {
-			this.resolveUrlCommandMetadata(y.resolveUrlCommandMetadata);
+			const {resolveUrlCommandMetadata: a,...z}=y;
+			this.ResolveUrlCommandMetadata(a);
+			this.empty_object(z);
 			return;
 		}
 		this.empty_object(y);
@@ -5299,6 +5301,13 @@ class HandleTypes extends BaseService {
 	PlayerLegacyDesktopWatchAdsRendererData(x) {
 		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x);
 	}
+	/** @arg {ResolveUrlCommandMetadata} x */
+	ResolveUrlCommandMetadata(x) {
+		const {isVanityUrl: a,...y}=x;
+		this.primitive_of(a,"boolean");
+		this.save_keys("resolveUrlCommandMetadata",x,true);
+		this.empty_object(y);
+	}
 	/** @arg {CommentSimpleboxRendererData} x */
 	CommentSimpleboxRendererData(x) {
 		const {
@@ -5313,7 +5322,7 @@ class HandleTypes extends BaseService {
 		this.save_string("avatarSizeEnum",f);
 		this.EmojiPickerRenderer(h);
 		this.primitive_of(i,"string");
-		this.save_keys("CommentSimpleboxRendererData",x,this.TODO_true);
+		this.save_keys("CommentSimpleboxRendererData",x,true);
 		this.empty_object(y);
 	}
 	/** @arg {EmojiPickerRenderer} x */
@@ -5335,10 +5344,6 @@ class HandleTypes extends BaseService {
 	/** @arg {CaptionsRenderer} x */
 	CaptionsRenderer(x) {
 		this.save_keys("CaptionsRenderer",x,this.TODO_true);
-	}
-	/** @arg {{}} x */
-	resolveUrlCommandMetadata(x) {
-		this.save_keys("resolveUrlCommandMetadata",x,this.TODO_true);
 	}
 }
 //#endregion
