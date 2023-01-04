@@ -4071,8 +4071,8 @@ class HandleTypes extends BaseService {
 		let g=x => this.empty_object(x);
 		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
 		let n=(x,b) => {if(!x) throw new Error(); g(b);};
-		let yk=get_keys_of(c);
-		let ya=yk[0];
+		let [k]=get_keys_of(c);
+		let ya=k;
 		ya="browseEndpoint"; if(ya in c) {
 			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
 		}
@@ -5290,7 +5290,7 @@ class HandleTypes extends BaseService {
 	ReelItemWatch(x) {
 		const {responseContext: a,overlay: b,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
 		this.ResponseContext(a);
-		this.w(b,a=>this.ReelPlayerOverlayData(a));
+		this.w(b,a => this.ReelPlayerOverlayData(a));
 		switch(status) {
 			case "REEL_ITEM_WATCH_STATUS_SUCCEEDED": break;
 			default: debugger;
@@ -5485,7 +5485,7 @@ class HandleTypes extends BaseService {
 	/** @arg {ProfileColumnStatsEntryData} x */
 	ProfileColumnStatsEntryData(x) {
 		const {label: a,value: b,...y}=x;
-		this.z([a,b],a=>this.text_t(a));
+		this.z([a,b],a => this.text_t(a));
 		this.empty_object(y);
 	}
 	/** @arg {ProfileColumnUserInfoData} x */
@@ -5495,7 +5495,7 @@ class HandleTypes extends BaseService {
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
 		const {thumbnails: a,accessibility: b,...y}=x;
-		this.z(a,a=>this.ThumbnailItem(a));
+		this.z(a,a => this.ThumbnailItem(a));
 		if(b) this.Accessibility(b);
 		this.empty_object(y);
 	}
@@ -5503,21 +5503,21 @@ class HandleTypes extends BaseService {
 	SectionListData(x) {
 		this.save_keys("SectionListData",x,true);
 		const {contents: a,trackingParams: b,...y}=x;
-		this.z(a,a=>this.SectionListItem(a));
+		this.z(a,a => this.SectionListItem(a));
 		this.trackingParams(b);
 		this.empty_object(y);
 	}
 	/** @arg {SectionListItem} x */
 	SectionListItem(x) {
 		if("itemSectionRenderer" in x) {
-			this.w(x,a=>this.ItemSectionData(a));
+			this.w(x,a => this.ItemSectionData(a));
 		}
 	}
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
 		this.save_keys("SectionListData",x,true);
 		const {contents: a,trackingParams: b,...y}=x;
-		this.z(a,a=>this.ItemSectionItem(a));
+		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
 		this.empty_object(y);
 	}
@@ -5525,7 +5525,8 @@ class HandleTypes extends BaseService {
 	/** @arg {ItemSectionItem} c */
 	ItemSectionItem(c) {
 		let t=this;
-		let [k]=get_keys_of(c);
+		let y=get_keys_of(c);
+		let [k]=y;
 		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
 		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
 		/** @template {GetMaybeKeys<typeof c>} T @arg {T} v @returns {ItemSectionItemMap[T]} */
@@ -5535,7 +5536,12 @@ class HandleTypes extends BaseService {
 		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		debugger;
+		let m=get_keys_of(c);
+		for(let k of m) {
+			if(this.item_section_map.has(k)) continue;
+			console.log('[new_section_item] [%s]',k);
+			debugger;
+		}
 	}
 	/** @arg {ShelfData} x */
 	ShelfData(x) {
