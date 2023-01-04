@@ -3183,7 +3183,7 @@ class CsiService extends BaseService {
 		/* destinations */ "GetGamingDestination_rid",
 		"GetAccountsList_rid",
 		/*reel_watch*/"GetReelWatchSequence_rid",
-		"GetLibrary_rid",
+		"GetLibrary_rid","GetHistory_rid",
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
@@ -4046,6 +4046,30 @@ class HandleTypes extends BaseService {
 			return as_cast(key);
 		}
 	};
+	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
+	ChangeKeyedMarkersVisibilityCommand(x) {
+		const {isVisible,key,...v}=x;
+		this.primitive_of(isVisible,"boolean");
+		if(key!=="HEATSEEKER") debugger;
+		this.empty_object(v);
+	}
+	/** @arg {LoadMarkersCommandData} x */
+	LoadMarkersCommand(x) {
+		const {entityKeys: a,...y}=x;
+		this.z(a,a => {
+			let res=decode_b64_proto_obj(a);
+			let res_2=decode_entity_key(a);
+			console.log("[entity_key]",res_2,res);
+		});
+		this.empty_object(y);
+	}
+	/**
+	 * @param {CreateCommentEndpoint} x
+	 */
+	CreateCommentEndpoint(x) {
+		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
+		console.log(res);
+	}
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		/** @type {{}|YtEndpoint} */
@@ -4082,6 +4106,9 @@ class HandleTypes extends BaseService {
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signalNavigationEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signOutEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="getAccountsListInnertubeEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="changeKeyedMarkersVisibilityCommand";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="loadMarkersCommand";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="createCommentEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}
 		let yc=get_keys_of(c);
 		for(let ya of yc) {
@@ -4089,28 +4116,6 @@ class HandleTypes extends BaseService {
 				console.log('[new_ep_data] [%s]',ya);
 				debugger;
 			}
-		}
-		if("changeKeyedMarkersVisibilityCommand" in c) {
-			let cmd=c.changeKeyedMarkersVisibilityCommand;
-			const {isVisible,key,...v}=cmd;
-			this.primitive_of(isVisible,"boolean");
-			if(key!=="HEATSEEKER") debugger;
-			this.empty_object(v);
-			return;
-		}
-		if("loadMarkersCommand" in c) {
-			let cmd=c.loadMarkersCommand;
-			this.z(cmd.entityKeys,key => {
-				let res=decode_b64_proto_obj(key);
-				let res_2=decode_entity_key(key);
-				console.log("[entity_key]",res_2,res);
-			});
-			return;
-		}
-		if("createCommentEndpoint" in c) {
-			let res=decode_b64_proto_obj(decodeURIComponent(c.createCommentEndpoint.createCommentParams));
-			console.log(res);
-			return;
 		}
 		this.empty_object(c);
 	}
