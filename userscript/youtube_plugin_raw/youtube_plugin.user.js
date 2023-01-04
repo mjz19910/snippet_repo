@@ -4185,9 +4185,7 @@ class HandleTypes extends BaseService {
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x,this.TODO_true);
 	}
-	/**
-	 * @param {EngagementPanelSectionListRenderer} x
-	 */
+	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanel(x) {
 		x;
 	}
@@ -4299,10 +4297,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
 	str_starts_with(x,v) {x; return x.startsWith(v);}
-	/**
-	 * @param {string} x
-	 * @param {URL} url
-	 */
+	/** @arg {string} x @arg {URL} url */
 	parse_account_google_com_url(x,url) {
 		if(url.pathname==="/AddSession") return;
 		console.log("[parse_url_external_2]",x);
@@ -4624,7 +4619,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SettingsSidebarRendererData} x */
 	SettingsSidebarRendererData(x) {
 		iterate(x.items,v => this.CompactLinkRenderer(v));
-		this.TextT("SettingsSidebarRenderer",x.title);
+		this.text_t("SettingsSidebarRenderer",x.title);
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
@@ -4635,7 +4630,7 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @private @arg {string} from @arg {TextT} x */
-	TextT(from,x) {
+	text_t(from,x) {
 		if(!x) {
 			debugger;
 			return;
@@ -4759,7 +4754,7 @@ class HandleTypes extends BaseService {
 			this.GetMultiPageMenuAction(v);
 		});
 		if(!c) debugger;
-		this.TextT("GetAccountSwitcherEndpointResponse",c);
+		this.text_t("GetAccountSwitcherEndpointResponse",c);
 		this.empty_object(y);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
@@ -4778,9 +4773,7 @@ class HandleTypes extends BaseService {
 	MultiPageMenuRenderer(x) {
 		this.MultiPageMenuRendererData(x.multiPageMenuRenderer);
 	}
-	/**
-	 * @param {MultiPageMenuRendererData} x
-	 */
+	/** @arg {MultiPageMenuRendererData} x */
 	MultiPageMenuRendererData(x) {
 		if(x.style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 		const {header: a,sections: b,footer: c,style: {},...y}=x;
@@ -4791,55 +4784,43 @@ class HandleTypes extends BaseService {
 		this.MultiPageMenuSectionRenderer(c);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {SimpleMenuHeaderRenderer} x
-	 */
+	/** @arg {SimpleMenuHeaderRenderer} x */
 	SimpleMenuHeaderRenderer(x) {
 		this.SimpleMenuHeaderRendererData(x.simpleMenuHeaderRenderer);
 	}
-	/**
-	 * @param {SimpleMenuHeaderRendererData} x
-	 */
+	/** @arg {SimpleMenuHeaderRendererData} x */
 	SimpleMenuHeaderRendererData(x) {
 		iterate(x.buttons,v => {
 			this.ButtonRenderer(v);
 		});
-		this.TextT("SimpleMenuHeaderRenderer",x.title);
+		this.text_t("SimpleMenuHeaderRenderer",x.title);
 	}
-	/**
-	 * @param {AccountSectionListRenderer} x
-	 */
+	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
 		this.AccountSectionListRendererData(x.accountSectionListRenderer);
 	}
-	/**
-	 * @param {AccountSectionListRendererData} x
-	 */
+	/** @arg {AccountSectionListRendererData} x */
 	AccountSectionListRendererData(x) {
 		iterate(x.contents,v => this.AccountItemSectionRenderer(v));
 	}
-	/**
-	 * @param {AccountItemSectionRenderer} x
-	 */
+	/** @arg {AccountItemSectionRenderer} x */
 	AccountItemSectionRenderer(x) {
 		this.AccountItemSectionRendererData(x.accountItemSectionRenderer);
 	}
-	/**
-	 * @param {AccountItemSectionRendererData} x
-	 */
+	/** @arg {AccountItemSectionRendererData} x */
 	AccountItemSectionRendererData(x) {
 		iterate(x.contents,v => {
 			if("accountItem" in v) return this.AccountItem(v);
 			this.CompactLinkRendererData(v.compactLinkRenderer);
 		});
 	}
-	/** @param {CompactLinkRendererData} x */
+	/** @arg {CompactLinkRendererData} x */
 	CompactLinkRendererData(x) {
 		let t=this;
 		/**
-		 * @param {YtEndpoint} a
-		 * @param {string} b
-		 * @param {TextT} c
+		 * @arg {YtEndpoint} a
+		 * @arg {string} b
+		 * @arg {TextT} c
 		 * @template {{}} T @arg {{} extends T?T:never} y
 		 */
 		function g(a,b,c,y) {
@@ -4849,7 +4830,7 @@ class HandleTypes extends BaseService {
 				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
 				default: debugger;
 			}
-			t.TextT("CompactLinkRenderer",c);
+			t.text_t("CompactLinkRenderer",c);
 			t.empty_object(y);
 		}
 		if("trackingParams" in x) {
@@ -4864,32 +4845,24 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {title: a,navigationEndpoint: b,...y}=x;
-		this.TextT("CompactLinkRenderer",a);
+		this.text_t("CompactLinkRenderer",a);
 		this.yt_endpoint(b);
 		this.empty_object(y);
 	}
-	/**
-	 * @param {AccountItem} x
-	 */
+	/** @arg {AccountItem} x */
 	AccountItem(x) {
 		this.AccountItemData(x.accountItem);
 	}
-	/**
-	 * @param {AccountItemData} x
-	 */
+	/** @arg {AccountItemData} x */
 	AccountItemData(x) {
 		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=x;
 		this.empty_object(y);
 	}
-	/**
-	 * @param {MultiPageMenuSectionRenderer} x
-	 */
+	/** @arg {MultiPageMenuSectionRenderer} x */
 	MultiPageMenuSectionRenderer(x) {
 		this.MultiPageMenuSectionRendererData(x.multiPageMenuSectionRenderer);
 	}
-	/**
-	 * @param {MultiPageMenuSectionRendererData} x
-	 */
+	/** @arg {MultiPageMenuSectionRendererData} x */
 	MultiPageMenuSectionRendererData(x) {
 		const {items: a,...y}=x;
 		this.z(a,v => this.CompactLinkRenderer(v));
@@ -5016,7 +4989,7 @@ class HandleTypes extends BaseService {
 			this.save_string("RichShelfRenderer.icon.iconType",c);
 			this.empty_object(u);
 		}
-		this.TextT("RichShelfRenderer",b);
+		this.text_t("RichShelfRenderer",b);
 		this.empty_object(y);
 	}
 	/** @arg {AdSlotMetadata} x */
@@ -5054,7 +5027,7 @@ class HandleTypes extends BaseService {
 	AccountsListResponse(x) {
 		const {responseContext: a,selectText: b,actions: c,...y}=x;
 		this.ResponseContext(a);
-		this.TextT("AccountsList",b);
+		this.text_t("AccountsList",b);
 		this.z(c,v => this.UpdateChannelSwitcherPageAction(v));
 		this.save_keys("AccountsListResponse",x,true);
 		this.empty_object(y);
@@ -5068,8 +5041,43 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
-		iterate(x.contents,a=>this.SignOutEndpointData(a));
+		iterate(x.contents,a => this.ChannelSwitcherContent(a));
 	}
+	/** @arg {ChannelSwitcherContent} x */
+	ChannelSwitcherContent(x) {
+		let k=get_keys_of(x)[0];
+		switch(k) {
+			case "accountItemRenderer": break; case "buttonRenderer": break;
+		}
+		if("accountItemRenderer" in x) {
+			this.w(x,a => this.AccountItemRendererData(a));
+			return;
+		}
+		if("buttonRenderer" in x) {
+			this.w(x,a => this.ButtonRendererData(a));
+			return;
+		}
+	}
+	/** @arg {AccountItemRendererData} x */
+	AccountItemRendererData(x) {
+		const {
+			accountName: a,accountPhoto: b,isSelected: c,isDisabled: d,hasChannel: e,
+			serviceEndpoint: f,accountByline: g,channelHandle: h,
+			...y
+		}=x;
+		const l="AccountItem";
+		this.text_t(`${l}.accountName`,a);
+		this.text_t(`${l}.accountByline`,g);
+		this.text_t(`${l}.channelHandle`,h);
+		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
+		this.yt_endpoint(f);
+		this.w(b,a =>
+			this.z(a,a =>
+				this.Thumbnail(a)));
+		this.empty_object(y);
+	}
+	/** @arg {Thumbnail} x */
+	Thumbnail(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
