@@ -5208,7 +5208,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommentSimpleboxRenderer} x */
 	CommentSimpleboxRenderer(x) {
-		this.save_keys("CommentSimpleboxRenderer",x);
+		this.save_keys("CommentSimpleboxRenderer",x,this.TODO_true);
 	}
 }
 //#endregion
