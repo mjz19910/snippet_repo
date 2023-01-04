@@ -4617,7 +4617,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SettingsSidebarRendererData} x */
 	SettingsSidebarRendererData(x) {
 		iterate(x.items,v => this.CompactLinkRenderer(v));
-		this.YtTextType("SettingsSidebarRenderer",x.title);
+		this.TextT("SettingsSidebarRenderer",x.title);
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
@@ -4628,7 +4628,7 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @private @arg {string} from @arg {TextT} x */
-	YtTextType(from,x) {
+	TextT(from,x) {
 		if(!x) {
 			debugger;
 			return;
@@ -4752,7 +4752,7 @@ class HandleTypes extends BaseService {
 			this.GetMultiPageMenuAction(v);
 		});
 		if(!c) debugger;
-		this.YtTextType("GetAccountSwitcherEndpointResponse",c);
+		this.TextT("GetAccountSwitcherEndpointResponse",c);
 		this.empty_object(y);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
@@ -4797,7 +4797,7 @@ class HandleTypes extends BaseService {
 		iterate(x.buttons,v => {
 			this.ButtonRenderer(v);
 		});
-		this.YtTextType("SimpleMenuHeaderRenderer",x.title);
+		this.TextT("SimpleMenuHeaderRenderer",x.title);
 	}
 	/**
 	 * @param {AccountSectionListRenderer} x
@@ -4842,7 +4842,7 @@ class HandleTypes extends BaseService {
 				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
 				default: debugger;
 			}
-			t.YtTextType("CompactLinkRenderer",c);
+			t.TextT("CompactLinkRenderer",c);
 			t.empty_object(y);
 		}
 		if("trackingParams" in x) {
@@ -4857,7 +4857,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {title: a,navigationEndpoint: b,...y}=x;
-		this.YtTextType("CompactLinkRenderer",a);
+		this.TextT("CompactLinkRenderer",a);
 		this.yt_endpoint(b);
 		this.empty_object(y);
 	}
@@ -5009,7 +5009,7 @@ class HandleTypes extends BaseService {
 			this.save_string("RichShelfRenderer.icon.iconType",c);
 			this.empty_object(u);
 		}
-		this.YtTextType("RichShelfRenderer",b);
+		this.TextT("RichShelfRenderer",b);
 		this.empty_object(y);
 	}
 	/** @arg {AdSlotMetadata} x */
