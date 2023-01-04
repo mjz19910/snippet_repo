@@ -3786,7 +3786,7 @@ class HandleTypes extends BaseService {
 			const {playabilityStatus: e,playbackTracking: f,playerAds: g,playerConfig: h,...y}=x;
 			this.PlayabilityStatus(e);
 			this.PlaybackTracking(f);
-			this.zw(g,v => this.PlayerLegacyDesktopWatchAdsRendererData(v));
+			this.zw(g,v => this.DesktopWatchAdsData(v));
 			this.empty_object(h);
 			return y;
 		}
