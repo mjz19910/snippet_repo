@@ -26,32 +26,55 @@ let ytd_app=void 0;
 // #region Use module types
 // #endregion
 // #region
-let inject_api_yt={};
+class YtInjectApi {
+	/** @type {[string,{name: string;}][]} */
+	saved_function_objects=[];
+	constructor() {
+		this.created_blobs=created_blobs;
+		this.active_blob_set=active_blob_set;
+		this.saved_maps=new Map;
+		this.saved_data=saved_data;
+		this.PropertyHandler=PropertyHandler;
+		this.make_search_params=make_search_params;
+		this.decode_b64_proto_obj=decode_b64_proto_obj;
+		this.add_function=add_function;
+		this.blob_create_args_arr=blob_create_args_arr;
+		this.dom_observer=dom_observer;
+		this.playlist_arr=playlist_arr;
+		this.page_type_changes=page_type_changes;
+		this.filter_out_keys=filter_out_keys;
+		this.port_state=port_state;
+		this.plugin_overlay_element=plugin_overlay_element;
+		this.AudioGainController=AudioGainController;
+		this.audio_gain_controller=audio_gain_controller;
+		this.has_keys=has_keys;
+		this.decode_entity_key=decode_entity_key;
+	}
+	/** @arg {string} key @arg {Map<string, {}>} map */
+	save_new_map(key,map) {
+		if(!this.saved_maps) return;
+		this.saved_maps.set(key,map);
+	}
+	/** @arg {HiddenData<FilterHandlers>} value */
+	set_yt_handlers(value) {
+		this.yt_handlers=value;
+	}
+}
+let yt_inject_api=new YtInjectApi;
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 	let inject_api=window.inject_api??{};
 	window.inject_api=inject_api;
+	window.yt_inject_api=yt_inject_api;
 	inject_api.modules=new Map;
-	inject_api.modules.set("yt",inject_api_yt);
+	inject_api.modules.set("yt",yt_inject_api);
 }
-
 /** @type {Map<string, Blob|MediaSource>} */
 let created_blobs=new Map;
-inject_api_yt.created_blobs=created_blobs;
 /** @type {Set<string>} */
 let active_blob_set=new Set;
-inject_api_yt.active_blob_set=active_blob_set;
-
-inject_api_yt.saved_maps=new Map;
-/** @arg {string} key @arg {Map<string, {}>} map */
-function save_new_map(key,map) {
-	if(!inject_api_yt.saved_maps) return;
-	inject_api_yt.saved_maps.set(key,map);
-}
 /** @type {SavedData} */
 let saved_data=cast_as({});
-inject_api_yt.saved_data=saved_data;
-
 const is_yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
@@ -643,7 +666,6 @@ class PropertyHandler {
 		}
 	}
 }
-inject_api_yt.PropertyHandler=PropertyHandler;
 /** @arg {{}} object @arg {PropertyKey} property @arg {PropertyHandler} property_handler */
 function override_prop(object,property,property_handler) {
 	Object.defineProperty(object,property,{
@@ -1078,7 +1100,6 @@ function make_search_params(t) {
 	let as_any=Object.fromEntries(sp.entries());
 	return as_any;
 }
-inject_api_yt.make_search_params=make_search_params;
 class Base64Binary {
 	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	/* will return a  Uint8Array type */
@@ -1416,19 +1437,13 @@ function decode_b64_proto_obj(str) {
 	let reader=new MyReader(buffer);
 	return reader.read_any();
 }
-inject_api_yt.decode_b64_proto_obj=decode_b64_proto_obj;
 
-/**
- * @type {[string,{name: string;}][]}
- */
-inject_api_yt.saved_function_objects=[];
 
 /** @arg {{name:string}} function_obj */
 function add_function(function_obj) {
-	if(!inject_api_yt.saved_function_objects) return;
-	inject_api_yt.saved_function_objects.push([function_obj.name,function_obj]);
+	if(!yt_inject_api.saved_function_objects) return;
+	yt_inject_api.saved_function_objects.push([function_obj.name,function_obj]);
 }
-inject_api_yt.add_function=add_function;
 
 /** @template T @arg {T|undefined} val @returns {T} */
 function non_null(val) {
@@ -1696,7 +1711,6 @@ class FilterHandlers {
 /** @type {any[]} */
 let blob_create_args_arr=[];
 let leftover_args=[];
-inject_api_yt.blob_create_args_arr=blob_create_args_arr;
 let plr_raw_replace_debug=true;
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 	let raw_plr_rsp=player_config.args.raw_player_response;
@@ -1973,7 +1987,6 @@ class DomObserver extends CustomEventTarget {
 	}
 }
 let dom_observer=new DomObserver;
-inject_api_yt.dom_observer=dom_observer;
 
 
 class YtdPageManagerElement extends HTMLElement {
@@ -1983,7 +1996,6 @@ class YtdPageManagerElement extends HTMLElement {
 
 /** @type {string[]} */
 let playlist_arr=[];
-inject_api_yt.playlist_arr=playlist_arr;
 /** @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
 
@@ -2016,7 +2028,6 @@ function on_ytd_watch_flexy(element) {
 }
 /** @type {string[]} */
 let page_type_changes=[];
-inject_api_yt.page_type_changes=page_type_changes;
 function is_watch_page_active() {
 	if(!ytd_page_manager?.getCurrentPage()) {
 		return false;
@@ -2037,7 +2048,7 @@ function page_changed_next_frame() {
 let element_map=new Map;
 /** @type {Map<string, HTMLVideoElementArrayBox>} */
 let box_map=new Map;
-save_new_map("box_map",box_map);
+yt_inject_api.save_new_map("box_map",box_map);
 
 /** @type {YtdPlayerElement|null} */
 let ytd_player=null;
@@ -2110,7 +2121,6 @@ function filter_out_keys(keys,to_remove) {
 	}
 	return ok_e;
 }
-inject_api_yt.filter_out_keys=filter_out_keys;
 /** @arg {NavigateEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
@@ -2193,7 +2203,6 @@ class MessagePortState {
 	current_event_type="async-plugin-init";
 }
 let port_state=new MessagePortState;
-inject_api_yt.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
@@ -2319,9 +2328,6 @@ plugin_overlay_element.append(overlay_content_div);
 plugin_overlay_element.append(input_modify_css_style);
 plugin_overlay_element.append(overlay_hide_ui_input);
 plugin_overlay_element.setAttribute("style",player_overlay_style_str);
-
-inject_api_yt.plugin_overlay_element=plugin_overlay_element;
-
 function fix_offset() {
 	if(!ytd_player) return;
 	let player_offset=sumOffset(ytd_player);
@@ -2538,10 +2544,8 @@ class AudioGainController {
 		}
 	}
 }
-inject_api_yt.AudioGainController=AudioGainController;
 /** @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
-inject_api_yt.audio_gain_controller=audio_gain_controller;
 
 /** @template {string} T @template {{}} U @template {Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @type {string} */ ex_keys_str) {
@@ -2659,6 +2663,7 @@ async function main() {
 		noisy_logging: false,
 	});
 	resolver_value.value=service_resolver;
+	yt_inject_api.set_yt_handlers(yt_handlers);
 	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
@@ -2881,7 +2886,6 @@ function no_handler({parts,index}) {
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
 }
-inject_api_yt.has_keys=has_keys;
 /** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 function split_string(x,s=cast_as(",")) {
 	let r=x.split(s);
@@ -3760,7 +3764,6 @@ function decode_entity_key(...gs) {
 		entityId: b
 	};
 }
-inject_api_yt.decode_entity_key=decode_entity_key;
 //#endregion
 //#region HandleTypes
 class HandleTypes extends BaseService {
@@ -4831,12 +4834,7 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactLinkRendererData} x */
 	CompactLinkRendererData(x) {
 		let t=this;
-		/**
-		 * @arg {YtEndpoint} a
-		 * @arg {string} b
-		 * @arg {TextT} c
-		 * @template {{}} T @arg {{} extends T?T:never} y
-		 */
+		/** @arg {YtEndpoint} a @arg {string} b @arg {TextT} c @template {{}} T @arg {{} extends T?T:never} y */
 		function g(a,b,c,y) {
 			t.yt_endpoint(a);
 			switch(b) {
