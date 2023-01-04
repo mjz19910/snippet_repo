@@ -1,5 +1,4 @@
 type endpoint_data_handler_names={
-	createCommentEndpoint: null;
 	watchEndpoint: "WatchEndpointData";
 	browseEndpoint: "BrowseEndpointData";
 	searchEndpoint: "SearchEndpointData";
@@ -10,8 +9,10 @@ type endpoint_data_handler_names={
 	signalNavigationEndpoint: "SignalNavigationEndpointData";
 	signOutEndpoint: "SignOutEndpointData";
 	getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData";
-	clickTrackingParams: null;
-	commandMetadata: null;
-	loadMarkersCommand: null;
-	changeKeyedMarkersVisibilityCommand: null;
+	clickTrackingParams: "clickTrackingParams";
+	commandMetadata: "CommandMetadata";
+	loadMarkersCommand: "LoadMarkersCommand";
+	changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand";
+	createCommentEndpoint: "CreateCommentEndpoint";
+	confirmDialogEndpoint: "ConfirmDialogEndpoint";
 };

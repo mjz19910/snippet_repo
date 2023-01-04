@@ -4010,7 +4010,7 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {endpoint_data_handler_names} */
 		_obj_map={
-			createCommentEndpoint: null,
+			createCommentEndpoint: "CreateCommentEndpoint",
 			watchEndpoint: "WatchEndpointData",
 			browseEndpoint: "BrowseEndpointData",
 			searchEndpoint: "SearchEndpointData",
@@ -4021,10 +4021,11 @@ class HandleTypes extends BaseService {
 			signalNavigationEndpoint: "SignalNavigationEndpointData",
 			signOutEndpoint: "SignOutEndpointData",
 			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData",
-			clickTrackingParams: null,
-			commandMetadata: null,
-			loadMarkersCommand: null,
-			changeKeyedMarkersVisibilityCommand: null,
+			clickTrackingParams: "clickTrackingParams",
+			commandMetadata: "CommandMetadata",
+			loadMarkersCommand: "LoadMarkersCommand",
+			changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand",
+			confirmDialogEndpoint: "ConfirmDialogEndpoint",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
 		has_key(k) {
@@ -4072,34 +4073,16 @@ class HandleTypes extends BaseService {
 		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
 		let n=(x,b) => {if(!x) throw new Error(); g(b);};
 		let [k]=get_keys_of(c);
-		let ya=k;
-		ya="browseEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="searchEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="setSettingEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="signalServiceEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="urlEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="watchEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="signalNavigationEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="signOutEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
-		ya="getAccountsListInnertubeEndpoint"; if(ya in c) {
-			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
-		}
+		k="browseEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="searchEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="setSettingEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signalServiceEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="urlEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="watchEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signalNavigationEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signOutEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="getAccountsListInnertubeEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}
 		let yc=get_keys_of(c);
 		for(let ya of yc) {
 			if(!this.endpoint_data_map.has_key(ya)) {
