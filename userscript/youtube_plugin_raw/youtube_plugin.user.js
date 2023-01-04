@@ -5492,7 +5492,16 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {ProfileColumnUserInfoData} x */
-	ProfileColumnUserInfoData(x) {x;}
+	ProfileColumnUserInfoData(x) {
+		this.Thumbnail(x.thumbnail);
+	}
+	/** @arg {Thumbnail} x */
+	Thumbnail(x) {
+		const {thumbnails: a,accessibility: b,...y}=x;
+		this.z(a,a=>this.ThumbnailItem(a));
+		if(b) this.Accessibility(b);
+		this.empty_object(y);
+	}
 	/** @arg {SectionListRendererData} x */
 	SectionListRendererData(x) {
 		this.save_keys("SectionListRendererData",x,this.TODO_true);
