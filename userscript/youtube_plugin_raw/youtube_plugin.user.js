@@ -3119,12 +3119,12 @@ class BaseService extends BaseServicePrivate {
 	}
 	// x is reserved for the first arg
 	// y reserved for unpack target
-	/** @protected @template U @arg {U[]|undefined} t @arg {(x:U,i:number)=>void} u  */
-	z(t,u) {
-		if(t===void 0) return;
-		for(let it of t.entries()) {
+	/** @protected @template U @arg {U[]|undefined} x @arg {(x:U,i:number)=>void} y  */
+	z(x,y) {
+		if(x===void 0) return;
+		for(let it of x.entries()) {
 			const [i,item]=it;
-			u(item,i);
+			y(item,i);
 		}
 	}
 	/** @protected @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
