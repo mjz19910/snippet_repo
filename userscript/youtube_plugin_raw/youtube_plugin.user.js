@@ -5061,7 +5061,6 @@ function get_exports() {
 }
 if(typeof exports==="object") {
 	let exports=get_exports();
-	exports.yt_inject_api=YtInjectApi;
 	exports.ServiceResolver=ServiceResolver;
 	exports.Future=Future;
 	exports.HandleTypes=HandleTypes;
