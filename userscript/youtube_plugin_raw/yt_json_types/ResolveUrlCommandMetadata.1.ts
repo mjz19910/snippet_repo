@@ -1,0 +1,3 @@
+type ResolveUrlCommandMetadata={
+	isVanityUrl: boolean;
+};

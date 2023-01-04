@@ -4445,6 +4445,10 @@ class HandleTypes extends BaseService {
 	commandMetadata(x) {
 		const {webCommandMetadata,...y}=x;
 		this.WebCommandMetadata(x.webCommandMetadata);
+		if("resolveUrlCommandMetadata" in y) {
+			this.resolveUrlCommandMetadata(y.resolveUrlCommandMetadata);
+			return;
+		}
 		this.empty_object(y);
 	}
 	/** @arg {YtPageTypeEnum} x */
@@ -5326,11 +5330,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EndscreenRenderer} x */
 	EndscreenRenderer(x) {
-		x;
+		this.save_keys("EndscreenRenderer",x,this.TODO_true);
 	}
 	/** @arg {CaptionsRenderer} x */
 	CaptionsRenderer(x) {
-		x;
+		this.save_keys("CaptionsRenderer",x,this.TODO_true);
+	}
+	/** @arg {{}} x */
+	resolveUrlCommandMetadata(x) {
+		this.save_keys("resolveUrlCommandMetadata",x,this.TODO_true);
 	}
 }
 //#endregion
