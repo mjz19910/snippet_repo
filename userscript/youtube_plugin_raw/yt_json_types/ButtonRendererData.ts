@@ -6,13 +6,12 @@ type ButtonRendererData={
 	navigationEndpoint: YtEndpoint;
 	serviceEndpoint: YtEndpoint;
 	size: "SIZE_DEFAULT";
-	style: "STYLE_DEFAULT"|"STYLE_SUGGESTIVE";
+	style: ButtonStyleType;
 	text: TextT;
 	tooltip: string;
 	trackingParams: string;
-	clickTrackingParams?: string;
 }|{
-	style: "STYLE_DEFAULT"|"STYLE_SUGGESTIVE";
+	style: ButtonStyleType;
 	isDisabled: boolean;
 	text: TextT;
 	icon: Icon<string>;
