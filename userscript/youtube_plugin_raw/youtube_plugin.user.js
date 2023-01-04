@@ -3865,7 +3865,7 @@ class HandleTypes extends BaseService {
 			header: hd/*tp*/,topbar: tb,sidebar: sb,
 			onResponseReceivedActions: act_arr,
 			frameworkUpdates: upd,cacheMetadata: cm,
-			observedStateTags,
+			observedStateTags: ost,
 			...y
 		}=x;
 		this.trackingParams(a);
@@ -3875,7 +3875,7 @@ class HandleTypes extends BaseService {
 		if(hd) this.FeedTabbedHeaderRenderer(hd);
 		if(tb) this.DesktopTopbarRenderer(tb);
 		if(upd) this.EntityBatchUpdate(upd);
-		iterate(observedStateTags,v => this.StateTag(v));
+		iterate(ost,v => this.StateTag(v));
 		if(sb) this.SettingsSidebarRenderer(sb);
 		if(cm) this.CacheMetadata(cm);
 		this.empty_object(y);
