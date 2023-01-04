@@ -5044,7 +5044,9 @@ class HandleTypes extends BaseService {
 	/** @arg {GetAccountsListInnertubeEndpointData} x */
 	GetAccountsListInnertubeEndpointData(x) {x;}
 	/** @arg {AccountsListResponse} x */
-	AccountsListResponse(x) {x;}
+	AccountsListResponse(x) {
+		this.save_keys("AccountsListResponse",x,true);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
