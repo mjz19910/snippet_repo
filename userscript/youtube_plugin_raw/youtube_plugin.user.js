@@ -3110,9 +3110,7 @@ class BaseService extends BaseServicePrivate {
 	v(obj,fn) {
 		if(obj===void 0) return;
 		let arr=Object.entries(obj);
-		this.z(arr,e => {
-			fn(e[0],e[1]);
-		});
+		this.z(arr,e => fn(e[0],e[1]));
 	}
 	/** @protected @template {{}} T @template U @arg {T} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
 	w(x,y) {
