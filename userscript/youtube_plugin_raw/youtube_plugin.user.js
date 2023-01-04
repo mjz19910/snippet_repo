@@ -5203,6 +5203,19 @@ class HandleTypes extends BaseService {
 		this.save_keys("CommentSimpleboxRendererData",x,true);
 		this.empty_object(y);
 	}
+	/** @arg {ReelItemWatch} x */
+	ReelItemWatch(x) {
+		const {responseContext: a,overlay: b,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
+		this.ResponseContext(a);
+		this.ReelPlayerOverlayRenderer(b); 
+		switch(status) {
+			case "REEL_ITEM_WATCH_STATUS_SUCCEEDED": break;
+			default: debugger;
+		}
+		this.empty_object(y);
+	}
+	/** @arg {ReelPlayerOverlayRenderer} x */
+	ReelPlayerOverlayRenderer(x) {x;}
 	/** @private */
 	get TODO_true() {
 		return true;
@@ -5322,11 +5335,6 @@ class HandleTypes extends BaseService {
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
 		this.save_keys("YtPageState",x,this.TODO_true);
-	}
-	/** @arg {ReelItemWatch} x */
-	ReelItemWatch(x) {
-		const {responseContext,overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
-		this.empty_object(y);
 	}
 }
 //#endregion
