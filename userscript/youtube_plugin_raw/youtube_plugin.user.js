@@ -1561,7 +1561,7 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.handle_types.ResponseTypes(res);
-		this.iteration.default_iter({t:this,path:url_type},data);
+		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @arg {`https://${string}/${string}?${string}`} req_hr_t */
 	on_handle_api_1(req_hr_t) {
@@ -1594,7 +1594,7 @@ class FilterHandlers {
 		page_type_iter(ret.page);
 		this.handle_any_data(`page_type_${ret.page}`,cast_as(ret));
 		this.handle_types.DataResponsePageType(ret);
-		this.iteration.default_iter({t:this,path:ret.page},ret);
+		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
 			debugger;
@@ -2543,6 +2543,17 @@ class HiddenData {
 }
 //#region
 async function main() {
+	function get_exports() {
+		return exports;
+	}
+	if(typeof exports==="object") {
+		let exports=get_exports();
+		exports.ServiceResolver=ServiceResolver;
+		const future_type=new Future(new HiddenData(new FilterHandlers({value: null})),v => v.handle_types);
+		exports.future_type=future_type;
+		exports.HandleTypes=HandleTypes;
+		exports.Services=Services;
+	}
 	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
@@ -3427,12 +3438,12 @@ class TrackingServices extends BaseService {
 	}
 }
 class Services {
-	csi_service=new CsiService({value:null});
-	e_catcher_service=new ECatcherService({value:null});
-	g_feedback_service=new GFeedbackService({value:null});
-	guided_help_service=new GuidedHelpService({value:null});
-	service_tracking=new TrackingServices({value:null});
-	yt_handlers=new HiddenData(new FilterHandlers({value:null}));
+	csi_service=new CsiService({value: null});
+	e_catcher_service=new ECatcherService({value: null});
+	g_feedback_service=new GFeedbackService({value: null});
+	guided_help_service=new GuidedHelpService({value: null});
+	service_tracking=new TrackingServices({value: null});
+	yt_handlers=new HiddenData(new FilterHandlers({value: null}));
 }
 //#endregion Service
 //#region decode_entity_key
@@ -5064,16 +5075,5 @@ class HandleTypes extends BaseService {
 	Thumbnail(x) {x;}
 }
 //#endregion
-function get_exports() {
-	return exports;
-}
-if(typeof exports==="object") {
-	let exports=get_exports();
-	exports.ServiceResolver=ServiceResolver;
-	const future_type=new Future(new HiddenData(new FilterHandlers({value:null})),v=>v.handle_types);
-	exports.future_type=future_type;
-	exports.HandleTypes=HandleTypes;
-	exports.Services=Services;
-}
 console=typeof window==="undefined"? console:(() => window.console)();
 main();
