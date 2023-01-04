@@ -24,9 +24,5 @@ type ResponseTypes=[
 	shorts_t,
 	watch_t,
 	accounts_list_t,
-	{
-		_tag: "Generic";
-		type: "Generic";
-		data: {};
-	}
+	GenericResponseType
 ][number];
