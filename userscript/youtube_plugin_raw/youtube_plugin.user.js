@@ -3948,7 +3948,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		console.log(f_ex);
-		console.log("parsed_endpoint_param field_id=",f0[1],"result=",uint8_string_decoder.decode(f0[2]));
+		console.log("parsed_endpoint_param field_id=%o result(%o)=\"%s\"",f0[1],f0[2].length,uint8_string_decoder.decode(f0[2]));
 	}
 	/** @arg {BrowseIdType} x */
 	parse_browse_id(x) {

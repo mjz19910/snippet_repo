@@ -1,10 +1,10 @@
 type ChannelResponse={
-	responseContext: {};
-	contents: {};
-	header: {};
-	metadata: {};
+	responseContext: ResponseContext;
+	contents: TwoColumnBrowseResultsRenderer;
+	header: C4TabbedHeaderRenderer;
+	metadata: ChannelMetadataRenderer;
 	trackingParams: string;
-	topbar: {};
-	microformat: {};
-	onResponseReceivedActions: {}[];
+	topbar: DesktopTopbarRenderer;
+	microformat: MicroformatDataRenderer;
+	onResponseReceivedActions: ResetChannelUnreadCountCommand[];
 };
