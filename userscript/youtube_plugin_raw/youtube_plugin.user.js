@@ -1041,7 +1041,7 @@ class Base64Binary {
 	/** @arg {string} input */
 	decode_str(input) {
 		let y=this.decodeByteArray(input);
-		return uint8_string_decoder.decode(y);
+		return decoder.decode(y);
 	}
 	/** @arg {string} input @arg {Uint8Array} binary_arr */
 	decode(input,binary_arr) {
@@ -3514,10 +3514,10 @@ function Zs(a) {
 function base64_to_array(x) {
 	return base64_dec.decodeByteArray(x);
 }
-const uint8_string_decoder=new TextDecoder();
+const decoder=new TextDecoder();
 /** @arg {BufferSource} x */
 function LUa(x) {
-	return uint8_string_decoder.decode(x);
+	return decoder.decode(x);
 }
 /** @arg {EntityKeyReader} a @arg {number} b */
 function PUa(a,b) {
@@ -3942,13 +3942,18 @@ class HandleTypes extends BaseService {
 	parse_endpoint_params(x) {
 		let ba=base64_dec.decodeByteArray(x);
 		let reader=new MyReader(ba);
-		const [f0,...f_ex]=reader.read_any();
+		let any_res=reader.read_any();
+		const [f0]=any_res;
 		if(f0[0]!=="child") {
 			console.log(f0);
 			return;
 		}
-		console.log(f_ex);
-		console.log("parsed_endpoint_param field_id=%o result(%o)=\"%s\"",f0[1],f0[2].length,uint8_string_decoder.decode(f0[2]));
+		console.log(any_res);
+		let [,field_id,data]=f0;
+		console.log(
+			"parsed_endpoint_param field_id=%o result(%o)=\"%s\"",
+			field_id,data.length,decoder.decode(data)
+		);
 	}
 	/** @arg {BrowseIdType} x */
 	parse_browse_id(x) {
@@ -4690,7 +4695,7 @@ class HandleTypes extends BaseService {
 	YtChannelPageResponse(x) {
 		const {page,endpoint,response,url,...y}=x;
 		this.yt_endpoint(endpoint);
-		debugger;
+		this.ChannelResponse(response);
 		this.parse_url(url);
 		this.empty_object(y);
 	}
@@ -5351,6 +5356,10 @@ class HandleTypes extends BaseService {
 	/** @arg {InlineSurveyRendererData} x */
 	InlineSurveyRendererData(x) {
 		this.save_keys("InlineSurveyRendererData",x,this.TODO_true);
+	}
+	/** @arg {ChannelResponse} x */
+	ChannelResponse(x) {
+		this.save_keys("ChannelResponse",x,this.TODO_true);
 	}
 }
 //#endregion
