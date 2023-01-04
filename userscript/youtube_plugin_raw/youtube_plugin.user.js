@@ -1054,7 +1054,7 @@ class Base64Binary {
 
 		let prev_len=input.length;
 		input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
-		if(prev_len!==input.length) console.log("removed %n%o non base64 chars",prev_len-input.length);
+		if(prev_len!==input.length) console.log("removed %o non base64 chars",prev_len-input.length);
 
 		for(i=0;i<byte_len;i+=3) {
 			//get the 3 octets in 4 ascii chars
@@ -3997,30 +3997,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
-		if("params" in x&&"browseId" in x) {
-			const {params: a,browseId: b,...y}=x;
-			this.parse_endpoint_params(a);
-			this.parse_browse_id(b);
-			this.save_keys("BrowseEndpointData_2",x,true);
-			this.empty_object(y);
-			return;
-		}
-		if("params" in x) {
-			const {params: a,...y}=x;
-			this.parse_endpoint_params(a);
-			this.save_keys("BrowseEndpointData_params",x,true);
-			this.empty_object(y);
-			return;
-		}
-		if("browseId" in x) {
-			const {browseId: a,...y}=x;
-			this.parse_browse_id(a);
-			this.save_keys("BrowseEndpointData_browseId",x,true);
-			this.empty_object(y);
-			return;
-		}
-		this.save_keys("BrowseEndpointData_1",x);
-		this.empty_object(x);
+		const {params: a,browseId: b,canonicalBaseUrl: c,...y}=x;
+		if(a) this.parse_endpoint_params(decodeURIComponent(a));
+		if(b) this.parse_browse_id(b);
+		this.save_keys("BrowseEndpointData",x,true);
+		this.empty_object(y);
 	}
 	/** @arg {SearchEndpointData} x */
 	SearchEndpointData(x) {
@@ -4619,18 +4600,23 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TabRenderer} x */
 	TabRenderer(x) {
-		const {content,selected,trackingParams,...y}=x;
-		if(!content) {
-			debugger;
-		}
-		if("richGridRenderer" in content) {
+		if("content" in x) {
+			const {content: a,selected: b,trackingParams: c,...y}=x;
+			if("richGridRenderer" in a) {
+				return;
+			}
+			if("sectionListRenderer" in a) {
+				return;
+			}
+			this.primitive_of(b,"boolean");
+			this.trackingParams(c);
+			this.empty_object(y);
 			return;
 		}
-		if("sectionListRenderer" in content) {
-			return;
-		}
-		this.primitive_of(selected,"boolean");
-		this.trackingParams(trackingParams);
+		const {endpoint: a,title: b,trackingParams: c,...y}=x;
+		this.yt_endpoint(a);
+		this.primitive_of(b,"string");
+		this.trackingParams(c);
 		this.empty_object(y);
 	}
 	/** @private @arg {ResponseContext} x */
