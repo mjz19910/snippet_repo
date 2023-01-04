@@ -4610,7 +4610,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SettingsSidebarRendererData} x */
 	SettingsSidebarRendererData(x) {
 		iterate(x.items,v => this.CompactLinkRenderer(v));
-		this.YtTextType(x.title);
+		this.YtTextType("SettingsSidebarRenderer",x.title);
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
@@ -4620,17 +4620,15 @@ class HandleTypes extends BaseService {
 		if(c) this.yt_endpoint(c);
 		this.empty_object(y);
 	}
-	/** @arg {Accessibility} x */
-	Accessibility(x) {x;}
-	/** @private @arg {YtTextType} x */
-	YtTextType(x) {
+	/** @private @arg {string} from @arg {YtTextType} x */
+	YtTextType(from,x) {
 		if(!x) {
 			debugger;
 			return;
 		}
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
 		if(a) iterate(a,v => this.TextRun(v));
-		if(b) this.Accessibility(b);
+		if(b) this.Accessibility(from,b);
 		if(c) this.primitive_of(c,"string");
 		this.empty_object(y);
 	}
@@ -4648,8 +4646,6 @@ class HandleTypes extends BaseService {
 			this.empty_object(y);
 		}
 	}
-	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {x;}
 	/** @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {
 		const {page,...y}=x;
@@ -4749,7 +4745,7 @@ class HandleTypes extends BaseService {
 			this.GetMultiPageMenuAction(v);
 		});
 		if(!c) debugger;
-		this.YtTextType(c);
+		this.YtTextType("GetAccountSwitcherEndpointResponse",c);
 		this.empty_object(y);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
@@ -4794,7 +4790,7 @@ class HandleTypes extends BaseService {
 		iterate(x.buttons,v => {
 			this.ButtonRenderer(v);
 		});
-		this.YtTextType(x.title);
+		this.YtTextType("SimpleMenuHeaderRenderer",x.title);
 	}
 	/**
 	 * @param {AccountSectionListRenderer} x
@@ -4839,7 +4835,7 @@ class HandleTypes extends BaseService {
 				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
 				default: debugger;
 			}
-			t.YtTextType(c);
+			t.YtTextType("CompactLinkRenderer",c);
 			t.empty_object(y);
 		}
 		if("trackingParams" in x) {
@@ -4854,7 +4850,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {title: a,navigationEndpoint: b,...y}=x;
-		this.YtTextType(a);
+		this.YtTextType("CompactLinkRenderer",a);
 		this.yt_endpoint(b);
 		this.empty_object(y);
 	}
@@ -4897,12 +4893,6 @@ class HandleTypes extends BaseService {
 		console.log("[button_renderer_data]",Object.keys(x).join());
 		debugger;
 	}
-	/** @arg {SignalNavigationEndpointData} x */
-	SignalNavigationEndpointData(x) {x;}
-	/** @arg {SignOutEndpointData} x */
-	SignOutEndpointData(x) {x;}
-	/** @arg {GetAccountsListInnertubeEndpointData} x */
-	GetAccountsListInnertubeEndpointData(x) {x;}
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
 		const {navigationEndpoints: a,...y}=x;
@@ -4945,36 +4935,107 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {
-		let r=get_keys_of(x);
-		switch(r[0]) {
-			case "adSlotRenderer": break;
-			case "radioRenderer": break;
-			case "videoRenderer": break;
-			default: debugger;
-		}
 		if("adSlotRenderer" in x) {
-			this.AdSlotRendererData(x.adSlotRenderer);
+			const {adSlotRenderer: a,...y}=x;
+			this.AdSlotRendererData(a);
+			this.empty_object(y);
 			return;
 		}
 		if("radioRenderer" in x) {
-			this.RadioRendererData(x.radioRenderer);
+			const {radioRenderer: a,...y}=x;
+			this.RadioRendererData(a);
+			this.empty_object(y);
 			return;
 		}
 		if("videoRenderer" in x) {
-			this.VideoRendererData(x.videoRenderer);
+			const {videoRenderer: a,...y}=x;
+			this.VideoRendererData(a);
+			this.empty_object(y);
+			return;
 		}
+		this.empty_object(x);
 	}
-	/** @arg {AdSlotRendererData} x */
-	AdSlotRendererData(x) {x;}
 	/** @arg {RadioRendererData} x */
-	RadioRendererData(x) {x;}
-	/** @arg {VideoRendererData} x */
-	VideoRendererData(x) {x;}
-	/** @arg {RichSectionRendererData} x */
-	RichSectionRendererData(x) {
-		const {content,...y}=x;
+	RadioRendererData(x) {
+		const {...y}=x;
 		this.empty_object(y);
 	}
+	/** @arg {VideoRendererData} x */
+	VideoRendererData(x) {
+		const {...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {RichSectionRendererData} x */
+	RichSectionRendererData(x) {
+		const {content: a,...y}=x;
+		this.RichSectionContent(a);
+		this.empty_object(y);
+	}
+	/** @arg {RichSectionContent} x */
+	RichSectionContent(x) {
+		if("richShelfRenderer" in x) {
+			const {richShelfRenderer: a,...y}=x;
+			x.richShelfRenderer;
+			this.empty_object(y);
+			return;
+		}
+		if("inlineSurveyRenderer" in x) {
+			const {inlineSurveyRenderer: a,...y}=x;
+			this.empty_object(y);
+			return;
+		}
+		this.empty_object(x);
+	}
+	/** @arg {AdSlotRendererData} x */
+	AdSlotRendererData(x) {
+		const {adSlotMetadata: a,fulfillmentContent: b,enablePacfLoggingWeb: c,...y}=x;
+		this.AdSlotMetadata(a);
+		this.FulfillmentContent(b);
+		this.primitive_of(c,"boolean");
+		this.empty_object(y);
+	}
+	/** @arg {RichShelfRendererData} x */
+	RichShelfRendererData(x) {
+		const {icon: a,title: b,...y}=x;
+		{
+			const {iconType: c,...u}=a;
+			this.save_string("RichShelfRenderer.icon.iconType",c);
+			this.empty_object(u);
+		}
+		this.YtTextType("RichShelfRenderer",b);
+		this.empty_object(y);
+	}
+	/** @arg {AdSlotMetadata} x */
+	AdSlotMetadata(x) {
+		const {slotId: a,slotType: b,slotPhysicalPosition: c,...y}=x;
+		let ss=split_string(a,":");
+		console.log("AdSlot.slotId",ss);
+		this.save_string("AdSlot.slotType",b);
+		this.save_number("AdSlot.slotPhysicalPosition",c);
+		this.empty_object(y);
+	}
+	/** @arg {string} from @arg {Accessibility} x */
+	Accessibility(from,x) {
+		const {accessibilityData: a,...y}=x;
+		this.AccessibilityData(from,a);
+		this.empty_object(y);
+	}
+	/** @arg {string} from @arg {AccessibilityData} x */
+	AccessibilityData(from,x) {
+		const {label: a,...y}=x;
+		this.save_string(`${from}.Accessibility.label`,a);
+		this.empty_object(y);
+	}
+	/** @arg {FulfillmentContent} x */
+	FulfillmentContent(x) {x;}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {x;}
+	/** @arg {SignalNavigationEndpointData} x */
+	SignalNavigationEndpointData(x) {x;}
+	/** @arg {SignOutEndpointData} x */
+	SignOutEndpointData(x) {x;}
+	/** @arg {GetAccountsListInnertubeEndpointData} x */
+	GetAccountsListInnertubeEndpointData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

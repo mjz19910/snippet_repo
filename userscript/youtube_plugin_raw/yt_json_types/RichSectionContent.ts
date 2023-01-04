@@ -1,0 +1,1 @@
+type RichSectionContent=RichShelfRenderer|InlineSurveyRenderer;

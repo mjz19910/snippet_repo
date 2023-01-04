@@ -1,3 +1,1 @@
-type RichSectionRendererData={
-	content: RichShelfRenderer|InlineSurveyRenderer;
-};
+type RichSectionRendererData={content: RichSectionContent;};
