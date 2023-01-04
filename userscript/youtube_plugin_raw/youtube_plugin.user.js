@@ -3779,7 +3779,7 @@ class HandleTypes extends BaseService {
 		}=x;
 		this.ResponseContext(a);
 		this.zw(b,v => this.PlayerAnnotationsExpandedRendererData(v));
-		this.w(c,v => this.empty_object(v));
+		this.PlayerAttestationRenderer(c);
 		this.z(d,v => this.empty_object(v));
 		this.PlayabilityStatus(e);
 		this.PlaybackTracking(f);
@@ -4139,6 +4139,12 @@ class HandleTypes extends BaseService {
 			});
 			return;
 		}
+		if("createCommentEndpoint" in c) {
+			let res=decode_b64_proto_obj(decodeURIComponent(c.createCommentEndpoint.createCommentParams));
+			console.log(res);
+			return;
+		}
+		this.empty_object(c);
 	}
 	/** @type {ResponseTypes['type']|null} */
 	_current_response_type=null;
@@ -5276,6 +5282,10 @@ class HandleTypes extends BaseService {
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		this.save_keys("EmojiPickerRenderer",x,this.TODO_true);
+	}
+	/** @arg {PlayerAttestationRenderer} x */
+	PlayerAttestationRenderer(x) {
+		this.save_keys("PlayerAttestationRenderer",x,this.TODO_true);
 	}
 }
 //#endregion
