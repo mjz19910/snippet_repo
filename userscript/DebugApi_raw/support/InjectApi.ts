@@ -10,7 +10,6 @@ declare global {
 		iterate_tracking_params?: () => void;
 		saved_instances?: SavedInstanceType[];
 		saved_object_arrays?: {}[][];
-		add_function?: typeof add_function;
 		saved_function_objects?: [string,{name: string;}][];
 		add_array?: {};
 		add_object_with_name?: {};
@@ -54,5 +53,3 @@ declare global {
 		DebugApi?: DebugApiType;
 	}
 }
-
-export {type InjectApi};

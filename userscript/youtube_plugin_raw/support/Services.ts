@@ -1,8 +1,8 @@
 type Services={
-	csi_service: CsiService;
-	e_catcher_service: ECatcherService;
-	g_feedback_service: GFeedbackService;
-	guided_help_service: GuidedHelpService;
-	service_tracking: TrackingServices;
-	yt_handlers: HiddenData<FilterHandlers>;
+	csi_service: import("../youtube_plugin.user.js").CsiService;
+	e_catcher_service: import("../youtube_plugin.user.js").ECatcherService;
+	g_feedback_service: import("../youtube_plugin.user.js").GFeedbackService;
+	guided_help_service: import("../youtube_plugin.user.js").GuidedHelpService;
+	service_tracking: import("../youtube_plugin.user.js").TrackingServices;
+	yt_handlers: import("../youtube_plugin.user.js").HiddenData<import("../youtube_plugin.user.js").FilterHandlers>;
 };

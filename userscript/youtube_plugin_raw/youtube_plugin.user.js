@@ -26,48 +26,10 @@ let ytd_app=void 0;
 // #region Use module types
 // #endregion
 // #region
-class YtInjectApi {
-	/** @type {[string,{name: string;}][]} */
-	saved_function_objects=[];
-	constructor() {
-		this.created_blobs=created_blobs;
-		this.active_blob_set=active_blob_set;
-		this.saved_maps=new Map;
-		this.saved_data=saved_data;
-		this.PropertyHandler=PropertyHandler;
-		this.make_search_params=make_search_params;
-		this.decode_b64_proto_obj=decode_b64_proto_obj;
-		this.add_function=add_function;
-		this.blob_create_args_arr=blob_create_args_arr;
-		this.dom_observer=dom_observer;
-		this.playlist_arr=playlist_arr;
-		this.page_type_changes=page_type_changes;
-		this.filter_out_keys=filter_out_keys;
-		this.port_state=port_state;
-		this.plugin_overlay_element=plugin_overlay_element;
-		this.AudioGainController=AudioGainController;
-		this.audio_gain_controller=audio_gain_controller;
-		this.has_keys=has_keys;
-		this.decode_entity_key=decode_entity_key;
-	}
-	/** @arg {string} key @arg {Map<string, {}>} map */
-	save_new_map(key,map) {
-		if(!this.saved_maps) return;
-		this.saved_maps.set(key,map);
-	}
-	/** @arg {HiddenData<FilterHandlers>} value */
-	set_yt_handlers(value) {
-		this.yt_handlers=value;
-	}
-}
-let yt_inject_api=new YtInjectApi;
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 	let inject_api=window.inject_api??{};
 	window.inject_api=inject_api;
-	window.yt_inject_api=yt_inject_api;
-	inject_api.modules=new Map;
-	inject_api.modules.set("yt",yt_inject_api);
 }
 /** @type {Map<string, Blob|MediaSource>} */
 let created_blobs=new Map;
@@ -88,10 +50,6 @@ function any_c(value,_constructor_type) {
 	}
 	throw new Error("Failed to cast");
 }
-
-/** @type {unique symbol} */
-const Gn=Symbol("injectionDeps");
-
 /** @template {{length:number;[x:number]:T[number]}} T @arg {T} x */
 function make_iterator(x) {
 	let i=0;
@@ -894,53 +852,19 @@ function check_item_keys(real_path,path,keys) {
 	switch(path) {
 		default: console.log("item_keys_tag [ci_2_1_]: content path",path,real_path_arr_dyn); break;
 		case "appendContinuationItemsAction.continuationItems[]": mode="items"; break;
-		case "appendContinuationItemsAction": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_1_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "continuationItems": break;
-			case "targetId": break;
-		} break;
+		case "appendContinuationItemsAction": mode="action"; break;
 		case "richItemRenderer.content": mode="items"; break;
-		case "richItemRenderer": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_2_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "content": break;
-			case "trackingParams": break;
-		} break;
+		case "richItemRenderer": mode="renderer"; break;
 		case "richGridRenderer.contents[]": mode="items"; break;
-		case "richGridRenderer.masthead": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_3_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "adSlotRenderer": break;
-			case "radioRenderer": break;
-			case "videoRenderer": break;
-		} break;
-		case "richGridRenderer": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_4_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "contents": break;
-			case "trackingParams": break;
-			case "header": break;
-			case "targetId": break;
-			case "reflowOptions": break;
-			case "style": break;
-			case "masthead": break;
-		} break;
+		case "richGridRenderer.masthead": mode="renderer"; break;
+		case "richGridRenderer": mode="action"; break;
 		case "itemSectionRenderer.contents[]": mode="items"; break;
-		case "itemSectionRenderer": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_5_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "contents": break;
-			case "header": break;
-			case "sectionIdentifier": break;
-			case "targetId": break;
-			case "trackingParams": break;
-		} break;
+		case "itemSectionRenderer": mode="action"; break;
 		case "reloadContinuationItemsCommand.continuationItems[]": mode="items"; break;
-		case "reloadContinuationItemsCommand": for(let key of keys) switch(key) {
-			default: console.log("item_keys_tag [ci_3_6_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-			case "continuationItems": break;
-			case "slot": break;
-			case "targetId": break;
-		} break;
+		case "reloadContinuationItemsCommand": mode="action"; break;
 	}
 	if(mode==="items") for(let key of keys) switch(key) {
-		default: console.log("item_keys_tag [ci_4_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+		default: console.log("item_keys_tag [ci_3_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 		case "backstagePostThreadRenderer": break;
 		case "channelAboutFullMetadataRenderer": break;
 		case "channelFeaturedContentRenderer": break;
@@ -970,6 +894,12 @@ function check_item_keys(real_path,path,keys) {
 		// comments
 		case "commentThreadRenderer": break;
 		case "commentsHeaderRenderer": break;
+	}
+	if(mode==="action") for(let key of keys) switch(key) {
+		default: console.log("item_keys_tag [ci_4_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
+	}
+	if(mode==="renderer") for(let key of keys) switch(key) {
+		default: console.log("item_keys_tag [ci_5_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
 	}
 }
 
@@ -1080,19 +1010,6 @@ class HandleRichGridRenderer {
 		}
 	}
 }
-/** @arg {AppendContinuationItemsAction} o @returns {o is WatchNextContinuationAction} */
-function is_watch_next_feed_target(o) {
-	return o.targetId==="watch-next-feed";
-}
-/** @arg {AppendContinuationItemsAction} o @returns {o is CommentsSectionContinuationAction} */
-function is_comments_section_next(o) {
-	return o.targetId==="comments-section";
-}
-/** @arg {AppendContinuationItemsAction} o @returns {o is BrowseFeedAction} */
-function is_what_to_watch_section(o) {
-	return o.targetId==="browse-feedFEwhat_to_watch";
-}
-
 /** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
 function make_search_params(t) {
 	let sp=new URLSearchParams(t);
@@ -1428,29 +1345,18 @@ class MyReader {
 		return first_num;
 	}
 }
-
 const base64_dec=new Base64Binary();
-
 /** @arg {string} str */
 function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
 	return reader.read_any();
 }
-
-
-/** @arg {{name:string}} function_obj */
-function add_function(function_obj) {
-	if(!yt_inject_api.saved_function_objects) return;
-	yt_inject_api.saved_function_objects.push([function_obj.name,function_obj]);
-}
-
 /** @template T @arg {T|undefined} val @returns {T} */
 function non_null(val) {
 	if(val===void 0) throw new Error();
 	return val;
 }
-add_function(non_null);
 /** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 function create_from_parse(str) {
 	let s=new URL(str);
@@ -1471,7 +1377,7 @@ function convert_to_url(req) {
 	return {url: to_url(req.url)};
 }
 class FilterHandlers {
-	/** @arg {ResolverT<Services,ServiceOptions>} res */
+	/** @arg {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
@@ -1655,6 +1561,7 @@ class FilterHandlers {
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
 		this.handle_types.ResponseTypes(res);
+		this.iteration.default_iter({t:this,path:url_type},data);
 	}
 	/** @arg {`https://${string}/${string}?${string}`} req_hr_t */
 	on_handle_api_1(req_hr_t) {
@@ -1687,6 +1594,7 @@ class FilterHandlers {
 		page_type_iter(ret.page);
 		this.handle_any_data(`page_type_${ret.page}`,cast_as(ret));
 		this.handle_types.DataResponsePageType(ret);
+		this.iteration.default_iter({t:this,path:ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
 			debugger;
@@ -2048,8 +1956,6 @@ function page_changed_next_frame() {
 let element_map=new Map;
 /** @type {Map<string, HTMLVideoElementArrayBox>} */
 let box_map=new Map;
-yt_inject_api.save_new_map("box_map",box_map);
-
 /** @type {YtdPlayerElement|null} */
 let ytd_player=null;
 /** @arg {HTMLElement} element */
@@ -2637,13 +2543,18 @@ class HiddenData {
 }
 //#region
 async function main() {
-	/** @type {ResolverT<Services,ServiceOptions>} */
+	/** @type {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
 	const e_catcher_service=new ECatcherService(resolver_value);
 	const g_feedback_service=new GFeedbackService(resolver_value);
 	const guided_help_service=new GuidedHelpService(resolver_value);
 	const service_tracking=new TrackingServices(resolver_value);
+	const yt_inject_api=new YtInjectApi;
+	{
+		inject_api.modules??=new Map;
+		inject_api.modules.set("yt",yt_inject_api);
+	}
 	const yt_handlers=new
 		HiddenData(new FilterHandlers(resolver_value));
 	const log_tracking_params=false;
@@ -2664,10 +2575,12 @@ async function main() {
 	});
 	resolver_value.value=service_resolver;
 	yt_inject_api.set_yt_handlers(yt_handlers);
+	yt_inject_api.save_new_map("box_map",box_map);
 	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
+	window.yt_inject_api=yt_inject_api;
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	/** @type {typeof fetch|null} */
 	let original_fetch=null;
@@ -3009,7 +2922,7 @@ class KnownDataSaver {
 }
 class BaseServicePrivate extends KnownDataSaver {
 	// #region Public
-	/** @arg {ResolverT<Services,ServiceOptions>} x */
+	/** @arg {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
@@ -3233,7 +3146,7 @@ class CsiService extends BaseService {
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
-	/** @arg {ResolverT<Services,ServiceOptions>} x */
+	/** @arg {import("./support/ResolverT").ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
 		super(x);
 		for(let x of this.rid_keys) {
@@ -3763,6 +3676,57 @@ function decode_entity_key(...gs) {
 		entityType: d,
 		entityId: b
 	};
+}
+class YtInjectApi {
+	/** @type {[string,{name: string;}][]} */
+	saved_function_objects=[];
+	constructor() {
+		this.created_blobs=created_blobs;
+		this.active_blob_set=active_blob_set;
+		this.saved_maps=new Map;
+		this.saved_data=saved_data;
+		this.PropertyHandler=PropertyHandler;
+		this.make_search_params=make_search_params;
+		this.decode_b64_proto_obj=decode_b64_proto_obj;
+		this.blob_create_args_arr=blob_create_args_arr;
+		this.dom_observer=dom_observer;
+		this.playlist_arr=playlist_arr;
+		this.page_type_changes=page_type_changes;
+		this.filter_out_keys=filter_out_keys;
+		this.port_state=port_state;
+		this.plugin_overlay_element=plugin_overlay_element;
+		this.AudioGainController=AudioGainController;
+		this.audio_gain_controller=audio_gain_controller;
+		this.has_keys=has_keys;
+		this.decode_entity_key=decode_entity_key;
+		this.add_function(non_null);
+	}
+	/** @arg {string} key @arg {Map<string, {}>} map */
+	save_new_map(key,map) {
+		if(!this.saved_maps) return;
+		this.saved_maps.set(key,map);
+	}
+	/** @arg {HiddenData<FilterHandlers>} value */
+	set_yt_handlers(value) {
+		this.yt_handlers=value;
+	}
+	/** @arg {{name:string}} function_obj */
+	add_function(function_obj) {
+		if(!this.saved_function_objects) return;
+		this.saved_function_objects.push([function_obj.name,function_obj]);
+	}
+	/** @arg {AppendContinuationItemsAction} o @returns {o is WatchNextContinuationAction} */
+	is_watch_next_feed_target(o) {
+		return o.targetId==="watch-next-feed";
+	}
+	/** @arg {AppendContinuationItemsAction} o @returns {o is CommentsSectionContinuationAction} */
+	is_comments_section_next(o) {
+		return o.targetId==="comments-section";
+	}
+	/** @arg {AppendContinuationItemsAction} o @returns {o is BrowseFeedAction} */
+	is_what_to_watch_section(o) {
+		return o.targetId==="browse-feedFEwhat_to_watch";
+	}
 }
 //#endregion
 //#region HandleTypes
@@ -5092,5 +5056,22 @@ class HandleTypes extends BaseService {
 	Thumbnail(x) {x;}
 }
 //#endregion
+function get_exports() {
+	return exports;
+}
+if(typeof exports==="object") {
+	let exports=get_exports();
+	exports.yt_inject_api=YtInjectApi;
+	exports.ServiceResolver=ServiceResolver;
+	exports.Future=Future;
+	exports.HandleTypes=HandleTypes;
+	exports.HiddenData=HiddenData;
+	exports.FilterHandlers=FilterHandlers;
+	exports.CsiService=CsiService;
+	exports.ECatcherService=ECatcherService;
+	exports.GFeedbackService=GFeedbackService;
+	exports.GuidedHelpService=GuidedHelpService;
+	exports.TrackingServices=TrackingServices;
+}
 console=typeof window==="undefined"? console:(() => window.console)();
 main();

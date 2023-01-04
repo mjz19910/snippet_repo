@@ -30,19 +30,19 @@ const DebugApiH_o={
 // #region InjectApi
 /** @readonly */
 const InjectApiStr="inject_api";
-/** @type {Exclude<typeof window.inject_api,undefined>} */
-let inject_api={};
+class InjectApi {
+	/** @arg {{name:string}} function_obj */
+	add_function(function_obj) {
+		if(!this.saved_function_objects) return;
+		this.saved_function_objects.push([function_obj.name,function_obj]);
+	}
+}
+let inject_api=new InjectApi;
+let z=inject_api;
 window.inject_api=inject_api;
 // #endregion InjectApi
 // #region saved
 inject_api.saved_function_objects=[];
-/** @arg {{name:string}} function_obj */
-function add_function(function_obj) {
-	if(!inject_api.saved_function_objects) return;
-	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
-}
-inject_api.add_function=add_function;
-
 inject_api.saved_object_arrays=[];
 /** @arg {{}[]} ids_dec */
 function add_array(ids_dec) {
@@ -86,7 +86,7 @@ function add_object(constructor_,object) {
 	const instance_item=[name,instance_obj];
 	inject_api.saved_instances.push(instance_item);
 }
-add_function(add_object);
+z.add_function(add_object);
 // #endregion saved
 // #region sha1_hash
 const commit_id_sha1=/* @sha1 */"ce87fbfd";
@@ -3190,7 +3190,7 @@ class W {
 		this.val=val;
 	}
 }
-add_function(W);
+z.add_function(W);
 
 /** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
@@ -3425,7 +3425,7 @@ function wasm_encode_section(id,arr) {
 	}
 	return [id,arr.length,...arr];
 }
-add_function(wasm_encode_section);
+z.add_function(wasm_encode_section);
 
 // Looked at .zz impl for https://github.com/little-core-labs/varint-wasm
 /** @arg {number[]} arr */
@@ -3438,14 +3438,14 @@ function wasm_encode_string(arr) {
 	}
 	return [...out,n,...arr];
 }
-add_function(wasm_encode_string);
+z.add_function(wasm_encode_string);
 
 /** @type {<T>(v:T|null)=>T} */
 function not_null(value) {
 	if(value===null) throw new Error("Unexpected null");
 	return value;
 }
-add_function(not_null);
+z.add_function(not_null);
 
 /** @template {any[]} T @template U */
 class VoidCallback {
@@ -3594,7 +3594,7 @@ async function decode_wasm_data() {
 	let wasm_module_bytes=await fetch_wasm_module();
 	console.log(wasm_module_bytes);
 }
-add_function(decode_wasm_data);
+z.add_function(decode_wasm_data);
 
 /** @arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
@@ -3806,7 +3806,7 @@ let compressionStatsCalc=stats_calculator_info.stats_calculator;
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]));
 }
-add_function(log_stats);
+z.add_function(log_stats);
 /** @arg {string[]} arr @arg {number} calc_win */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
@@ -3836,7 +3836,7 @@ function next_chunk(arr,start) {
 	}
 	return c_len;
 }
-add_function(next_chunk);
+z.add_function(next_chunk);
 /** @type {{value:string[]}} */
 let ids={value: []};
 /** @arg {string} value */
@@ -3894,7 +3894,7 @@ class IDValueImpl {
 		this.stats_win=0;
 	}
 }
-add_function(IDValueImpl);
+z.add_function(IDValueImpl);
 
 /** @arg {IDValueImpl_0} next */
 function get_next({next}) {
@@ -4136,7 +4136,7 @@ function assign_next(value,next) {
 	value.next=next;
 	return next;
 }
-add_function(assign_next);
+z.add_function(assign_next);
 /** @implements {IDValueImpl_0} */
 class Value {
 	set_arr_T() {}
@@ -4171,7 +4171,7 @@ class Value {
 	/** @type {any} */
 	stats_win;
 }
-add_function(Value);
+z.add_function(Value);
 
 let max_id={value: 0};
 /** @arg {IDValueImpl_0} obj @arg {CompressionStatsCalculator} stats */
@@ -4405,7 +4405,7 @@ function deep_eq(obj_1,obj_2) {
 	}
 	throw new Error("Fixme");
 }
-add_function(deep_eq);
+z.add_function(deep_eq);
 
 /** @arg {string[][]} arr_2d @arg {number} key @arg {string} value */
 function make_group_from_item(arr_2d,key,value) {
@@ -4678,7 +4678,7 @@ function cast_to_record_with_key_and_string_type(x,k) {
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
 }
-add_function(cast_to_record_with_key_and_string_type);
+z.add_function(cast_to_record_with_key_and_string_type);
 //#endregion
 
 
