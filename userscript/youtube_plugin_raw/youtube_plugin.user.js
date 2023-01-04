@@ -3113,8 +3113,9 @@ function iterate(t,u) {
 		u(item,i);
 	}
 }
-/** @arg {{}} obj @arg {(k:string,v: {})=>void} fn */
+/** @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
 function iterate_obj(obj,fn) {
+	if(obj===void 0) return;
 	let arr=Object.entries(obj);
 	iterate(arr,e => {
 		fn(e[0],e[1]);
@@ -3861,22 +3862,22 @@ class HandleTypes extends BaseService {
 		const {
 			trackingParams: a,
 			responseContext: res_ctx,contents: cont,
-			header: hd/*tp*/,topbar: tb,sidebar,
+			header: hd/*tp*/,topbar: tb,sidebar: sb,
 			onResponseReceivedActions: act_arr,
-			frameworkUpdates: upd,cacheMetadata,
+			frameworkUpdates: upd,cacheMetadata: cm,
 			observedStateTags,
 			...y
 		}=x;
 		this.trackingParams(a);
 		this.ResponseContext(res_ctx);
-		if(cont) this.BrowseContents(cont);
-		this.FeedTabbedHeaderRenderer(hd);
-		this.DesktopTopbarRenderer(tb);
 		iterate(act_arr,v => this.ResponseReceivedAction(v));
-		this.EntityBatchUpdate(upd);
+		if(cont) this.BrowseContents(cont);
+		if(hd) this.FeedTabbedHeaderRenderer(hd);
+		if(tb) this.DesktopTopbarRenderer(tb);
+		if(upd) this.EntityBatchUpdate(upd);
 		iterate(observedStateTags,v => this.StateTag(v));
-		sidebar;
-		cacheMetadata;
+		if(sb) this.SettingsSidebarRenderer(sb);
+		if(cm) this.CacheMetadata(cm);
 		this.empty_object(y);
 	}
 	/** @arg {BrowseContents} x */
@@ -5188,7 +5189,7 @@ class HandleTypes extends BaseService {
 	ReelItemWatch(x) {
 		const {responseContext: a,overlay: b,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
 		this.ResponseContext(a);
-		this.ReelPlayerOverlayRenderer(b); 
+		this.ReelPlayerOverlayRenderer(b);
 		switch(status) {
 			case "REEL_ITEM_WATCH_STATUS_SUCCEEDED": break;
 			default: debugger;
@@ -5338,7 +5339,14 @@ class HandleTypes extends BaseService {
 	/** @arg {ModifyChannelPreference} x */
 	ModifyChannelPreference(x) {
 		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
-		this.empty_object(x);
+	}
+	/** @arg {SettingsSidebarRenderer} x */
+	SettingsSidebarRenderer(x) {
+		this.save_keys("SettingsSidebarRenderer",x,this.TODO_true);
+	}
+	/** @arg {CacheMetadata} x */
+	CacheMetadata(x) {
+		this.save_keys("CacheMetadata",x,this.TODO_true);
 	}
 }
 //#endregion
