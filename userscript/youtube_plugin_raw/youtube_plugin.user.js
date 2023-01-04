@@ -3724,6 +3724,7 @@ class YtInjectApi {
 		this.has_keys=has_keys;
 		this.decode_entity_key=decode_entity_key;
 		this.add_function(non_null);
+		this.add_function(iterate_obj);
 	}
 	/** @arg {string} key @arg {Map<string, {}>} map */
 	save_new_map(key,map) {
@@ -3810,19 +3811,14 @@ class HandleTypes extends BaseService {
 			return y;
 		}
 		let d=p4.call(this,c);
-		const {cards: q,frameworkUpdates: r,microformat: s,...y}=d;
-		iterate_obj(x,(k,v) => {
-			if(typeof v==='string') return;
-			if(v instanceof Array) {
-				iterate(v,(q,i) => {
-					this.save_keys(`WatchResponsePlayer.${k}[${i}]`,q,true);
-				});
-				return;
-			}
-			this.save_keys("WatchResponsePlayer."+k,v,true);
-		});
+		/** @this {typeof t} @arg {typeof d} x */
+		function p5(x) {
+			const {cards: q,frameworkUpdates: r,microformat: s,...y}=x;
+			return y;
+		}
+		let e=p5.call(this,d);
+		this.empty_object(e);
 		this.save_keys("WatchResponsePlayer",x,true);
-		this.empty_object(y);
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
