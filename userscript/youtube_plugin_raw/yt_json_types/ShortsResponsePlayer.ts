@@ -1,19 +1,3 @@
-type PlayerMicroformatRenderer={
-	playerMicroformatRenderer: {};
-};
-
-type playerAttestationRenderer={
-	playerAttestationRenderer: {};
-};
-
-type playerStoryboardSpecRenderer={
-	playerStoryboardSpecRenderer: {};
-};
-
-type videoQualityPromoRenderer={
-	videoQualityPromoRenderer: {};
-};
-
 type ShortsResponsePlayer={
 	responseContext: {};
 	playabilityStatus: {};
@@ -22,11 +6,11 @@ type ShortsResponsePlayer={
 	captions: CaptionsRenderer;
 	videoDetails: VideoDetails;
 	playerConfig: {};
-	storyboards: playerStoryboardSpecRenderer;
+	storyboards: PlayerStoryboardSpecRenderer;
 	microformat: PlayerMicroformatRenderer;
 	trackingParams: string;
-	attestation: playerAttestationRenderer;
-	videoQualityPromoSupportedRenderers: videoQualityPromoRenderer;
+	attestation: PlayerAttestationRenderer;
+	videoQualityPromoSupportedRenderers: VideoQualityPromoRenderer;
 	frameworkUpdates: FrameworkUpdates;
 	cacheMetadata?: CacheMetadata;
 };
