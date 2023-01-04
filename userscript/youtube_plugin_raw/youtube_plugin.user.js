@@ -4390,6 +4390,10 @@ class HandleTypes extends BaseService {
 			case "channel_switcher": return;
 			case "logout": return;
 		}
+		if(this.str_starts_with(f0,"@")) {
+			console.log("[handle_like_url]",x);
+			return;
+		}
 		let [a0,a1]=split_string(f0,"?");
 		switch(a0) {
 			case "watch": this.parse_watch_page_url(a1); break;
@@ -4595,6 +4599,9 @@ class HandleTypes extends BaseService {
 	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
 		const {tabRenderer,...y}=x;
+		if(!tabRenderer) {
+			debugger;
+		}
 		this.TabRenderer(tabRenderer);
 		this.empty_object(y);
 	}
@@ -4675,7 +4682,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtChannelPageResponse} x */
 	YtChannelPageResponse(x) {
-		const {page,...y}=x;
+		const {page,endpoint,response,url,...y}=x;
+		this.yt_endpoint(endpoint);
+		debugger;
+		this.parse_url(url);
 		this.empty_object(y);
 	}
 	/** @arg {YtPlaylistResponse} x */

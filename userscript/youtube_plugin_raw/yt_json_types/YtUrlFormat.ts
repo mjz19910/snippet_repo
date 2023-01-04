@@ -1,5 +1,6 @@
 type YtUrlFormat=
 	"/"|
+	`/@${string}`|
 	`/watch?${YtWatchUrlParamsFormat}`|
 	`/feed/${YtFeedSubSections}`|
 	`/${SettingsEndpointPages}`|
