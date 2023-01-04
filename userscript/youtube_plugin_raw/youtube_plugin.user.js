@@ -5135,7 +5135,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
-		iterate(x.contents,a => this.ChannelSwitcherContent(a));
+		const {contents,header,targetId,...y}=x;
+		this.z(x.contents,a => this.ChannelSwitcherContent(a));
+		this.parse_target_id(targetId);
+		this.empty_object(y);
+	}
+	/** @arg {string} x */
+	parse_target_id(x) {
+		console.log("[target_id]",x);
 	}
 	/** @arg {ChannelSwitcherContent} x */
 	ChannelSwitcherContent(x) {
