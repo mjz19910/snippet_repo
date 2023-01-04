@@ -1573,7 +1573,7 @@ class FilterHandlers {
 	on_handle_api(request,data) {
 		let parsed_url=convert_to_url(request).url;
 		let url_res=this.use_template_url(parsed_url.href);
-		if(!url_res) url_res={name:as_cast(parsed_url.href)};
+		if(!url_res) url_res={name: as_cast(parsed_url.href)};
 		if(!url_res) throw new Error("Unreachable");
 		var url_type=url_res.name;
 		this.handle_any_data(url_type,data);
@@ -3765,7 +3765,7 @@ class HandleTypes extends BaseService {
 	z=iterate;
 	/** @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
 	zw(a,b) {
-		this.z(a,v=>this.w(v,b));
+		this.z(a,v => this.w(v,b));
 	}
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
@@ -3783,7 +3783,7 @@ class HandleTypes extends BaseService {
 		this.z(d,v => this.empty_object(v));
 		this.PlayabilityStatus(e);
 		this.PlaybackTracking(f);
-		this.zw(g,v=>this.PlayerLegacyDesktopWatchAdsRendererData(v));
+		this.zw(g,v => this.PlayerLegacyDesktopWatchAdsRendererData(v));
 		iterate_obj(x,(k,v) => {
 			if(typeof v==='string') return;
 			if(v instanceof Array) {
@@ -4115,7 +4115,8 @@ class HandleTypes extends BaseService {
 		ya="getAccountsListInnertubeEndpoint"; if(ya in c) {
 			const {[ya]: a,...b}=c; n(a,b); return this[q(ya)](a);
 		}
-		for(let ya of yk) {
+		let yc=get_keys_of(c);
+		for(let ya of yc) {
 			if(!this.endpoint_data_map.has_key(ya)) {
 				console.log('[new_ep_data] [%s]',ya);
 				debugger;
@@ -4138,7 +4139,6 @@ class HandleTypes extends BaseService {
 			});
 			return;
 		}
-		c;
 	}
 	/** @type {ResponseTypes['type']|null} */
 	_current_response_type=null;
@@ -5189,7 +5189,7 @@ class HandleTypes extends BaseService {
 			...y
 		}=x;
 		this.z([a,e,f],v => this.text_t(v));
-		this.w(b,b=>this.CommentSimpleboxRendererData(b));
+		this.w(b,b => this.CommentSimpleboxRendererData(b));
 		this.SortFilterSubMenuRenderer(c);
 		this.trackingParams(d);
 		this.primitive_of(g,"boolean");
@@ -5264,8 +5264,8 @@ class HandleTypes extends BaseService {
 			emojiPicker: h,aadcGuidelinesStateEntityKey: i,
 			...y
 		}=x;
-		this.z([a,b,g],a=>this.ButtonRenderer(a));
-		this.z([d],a=>this.text_t(a));
+		this.z([a,b,g],a => this.ButtonRenderer(a));
+		this.z([d],a => this.text_t(a));
 		this.trackingParams(e);
 		this.save_string("avatarSizeEnum",f);
 		this.EmojiPickerRenderer(h);
