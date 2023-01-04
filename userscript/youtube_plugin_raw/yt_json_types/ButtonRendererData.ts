@@ -11,4 +11,10 @@ type ButtonRendererData={
 	tooltip: string;
 	trackingParams: string;
 	clickTrackingParams?: string;
+}|{
+	style: "STYLE_DEFAULT"|"STYLE_SUGGESTIVE";
+	isDisabled: boolean;
+	text: TextT;
+	icon: Icon<string>;
+	command: YtEndpoint;
 };

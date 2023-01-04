@@ -3899,11 +3899,12 @@ class HandleTypes extends BaseService {
 	parse_endpoint_params(x) {
 		let ba=base64_dec.decodeByteArray(x);
 		let reader=new MyReader(ba);
-		const [f0]=reader.read_any();
+		const [f0,...f_ex]=reader.read_any();
 		if(f0[0]!=="child") {
 			console.log(f0);
 			return;
 		}
+		console.log(f_ex);
 		console.log("parsed_endpoint_param field_id=",f0[1],"result=",uint8_string_decoder.decode(f0[2]));
 	}
 	/** @arg {BrowseIdType} x */
@@ -4267,7 +4268,6 @@ class HandleTypes extends BaseService {
 		if(!keys.length) return;
 		console.log("[empty_object] [%s] %o",keys.join(),x);
 		debugger;
-		throw new Error();
 	}
 	/** @private @template {{}} T @arg {T} x */
 	is_empty_object(x) {
@@ -4873,12 +4873,6 @@ class HandleTypes extends BaseService {
 		this.ButtonRendererData(x.buttonRenderer);
 		this.empty_object(v);
 	}
-	/** @arg {ButtonRendererData} x */
-	ButtonRendererData(x) {
-		// const {...v}=x;
-		console.log("[button_renderer_data]",Object.keys(x).join());
-		debugger;
-	}
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
 		const {navigationEndpoints: a,...y}=x;
@@ -5080,6 +5074,25 @@ class HandleTypes extends BaseService {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
 		this.z([b,c],v=>this.primitive_of(v,"number"));
+		this.empty_object(y);
+	}
+	/** @arg {ButtonRendererData} x */
+	ButtonRendererData(x) {
+		const {style: a,isDisabled: b,text: c,icon: d,command: e,...y}=x;
+		switch(a) {
+			case "STYLE_DEFAULT": break;
+			case "STYLE_SUGGESTIVE": break;
+			default: debugger;
+		}
+		this.text_t("ButtonRenderer",c);
+		this.Icon("ButtonRenderer",d);
+		this.save_keys("ButtonRendererData",x,true);
+		this.empty_object(y);
+	}
+	/** @arg {string} from @arg {Icon<"SETTINGS"> | Icon<string>} x*/
+	Icon(from,x) {
+		const {iconType: a,...y}=x;
+		this.save_string(`${from}.icon_type`,a);
 		this.empty_object(y);
 	}
 }
