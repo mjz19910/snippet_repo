@@ -3870,8 +3870,8 @@ class HandleTypes extends BaseService {
 		}=x;
 		this.trackingParams(a);
 		this.ResponseContext(res_ctx);
-		iterate(act_arr,v => this.ResponseReceivedAction(v));
-		iterate(ost,v => this.StateTag(v));
+		iterate(act_arr,a => this.ResponseReceivedAction(a));
+		iterate(ost,a => this.StateTag(a));
 		if(cont) this.BrowseContents(cont);
 		if(hd) this.FeedTabbedHeaderRenderer(hd);
 		if(tb) this.DesktopTopbarRenderer(tb);
@@ -4148,7 +4148,7 @@ class HandleTypes extends BaseService {
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
 		this.ResponseContext(responseContext);
-		iterate(actions,v => this.OpenPopupAction(v));
+		iterate(actions,a => this.OpenPopupAction(a));
 		this.trackingParams(trackingParams);
 		this.save_keys("GetNotificationMenuJson",x,true);
 		this.empty_object(y);
@@ -4160,7 +4160,7 @@ class HandleTypes extends BaseService {
 		let g=x => {
 			if("engagementPanels" in x) {
 				const {engagementPanels,...y}=x;
-				iterate(engagementPanels,v => this.EngagementPanel(v));
+				iterate(engagementPanels,a => this.EngagementPanel(a));
 				return y;
 			}
 			return x;
@@ -4501,7 +4501,7 @@ class HandleTypes extends BaseService {
 	/** @arg {TwoColumnBrowseResultsRendererData} x */
 	TwoColumnBrowseResultsRendererData(x) {
 		const {tabs,...y}=x;
-		iterate(tabs,v => this.ResultRenderer(v));
+		iterate(tabs,a => this.ResultRenderer(a));
 		this.empty_object(y);
 	}
 	/** @arg {ResultRenderer} x */
@@ -4557,7 +4557,7 @@ class HandleTypes extends BaseService {
 		}
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
-		iterate(b,v => tracking_handler.set_service_params(v));
+		iterate(b,a => tracking_handler.set_service_params(a));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
 		this.save_keys("ResponseContext",x,true);
@@ -4640,8 +4640,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SettingsSidebarRendererData} x */
 	SettingsSidebarRendererData(x) {
-		iterate(x.items,v => this.CompactLinkRenderer(v));
-		this.text_t(x.title);
+		const {items: a,title: b,...y}=x;
+		iterate(a,a => this.CompactLinkRenderer(a));
+		this.text_t(b);
+		this.empty_object(y);
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
