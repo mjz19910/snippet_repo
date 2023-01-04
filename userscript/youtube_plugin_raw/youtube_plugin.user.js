@@ -5088,11 +5088,7 @@ class HandleTypes extends BaseService {
 	/** @arg {RichShelfRendererData} x */
 	RichShelfRendererData(x) {
 		const {icon: a,title: b,...y}=x;
-		{
-			const {iconType: c,...u}=a;
-			this.save_string("RichShelfRenderer.icon.iconType",c);
-			this.empty_object(u);
-		}
+		this.Icon(a);
 		this.text_t(b);
 		this.empty_object(y);
 	}
