@@ -4357,8 +4357,10 @@ class HandleTypes extends BaseService {
 			}
 			switch(up[1]) {
 				case "feed": switch(up[2]) {
-					case "subscriptions": break;
-					case "library": return;
+					case "history":
+					case "library":
+					case "subscriptions":
+					case "what_to_watch": break;
 					default: debugger;
 				} return;
 				default: debugger;
@@ -5457,8 +5459,16 @@ class HandleTypes extends BaseService {
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
 		this.save_keys("SecondaryContents",x,this.TODO_true);
-		if(get_keys_of_one(x)[0]!=="profileColumnRenderer") debugger;
-		this.w(x,a => this.ProfileColumnData(a));
+		if("profileColumnRenderer" in x) {
+			this.w(x,a => this.ProfileColumnData(a));
+		} else if("browseFeedActionsRenderer" in x) {
+			this.w(x,a => this.BrowseFeedActions(a));
+		}
+	}
+	/** @arg {BrowseFeedActions} x */
+	BrowseFeedActions(x) {
+		if(get_keys_of_one(x)[0]!=="contents") debugger;
+		this.w(x,a => this.z(a,a=>this.g(a)));
 	}
 	/** @arg {ProfileColumnData} x */
 	ProfileColumnData(x) {
