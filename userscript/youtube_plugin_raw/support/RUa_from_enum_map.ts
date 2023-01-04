@@ -58,5 +58,5 @@ type RUa_from_enum_map={
 	368: "mainPlaylistVideoEntity",
 	373: "mainPlaylistDownloadStateEntity",
 	393: "emojiFountainDataEntity",
-	406: "continuationTokenEntity"
-}
+	406: "continuationTokenEntity";
+};
