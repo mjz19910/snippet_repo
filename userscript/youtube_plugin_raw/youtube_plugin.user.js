@@ -5104,7 +5104,7 @@ class HandleTypes extends BaseService {
 				this.Thumbnail(a)));
 		this.empty_object(y);
 	}
-	/** @arg {Thumbnail} x */
+	/** @arg {ThumbnailItem} x */
 	Thumbnail(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
@@ -5139,7 +5139,7 @@ class HandleTypes extends BaseService {
 			...y
 		}=x;
 		this.z([a,e,f],v => this.text_t(v));
-		this.CommentSimpleboxRenderer(b);
+		this.w(b,b=>this.CommentSimpleboxRendererData(b));
 		this.SortFilterSubMenuRenderer(c);
 		this.trackingParams(d);
 		this.primitive_of(g,"boolean");
@@ -5206,9 +5206,26 @@ class HandleTypes extends BaseService {
 	PlayerLegacyDesktopWatchAdsRendererData(x) {
 		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x);
 	}
-	/** @arg {CommentSimpleboxRenderer} x */
-	CommentSimpleboxRenderer(x) {
-		this.save_keys("CommentSimpleboxRenderer",x,this.TODO_true);
+	/** @arg {CommentSimpleboxRendererData} x */
+	CommentSimpleboxRendererData(x) {
+		const {
+			submitButton: a,cancelButton: b,authorThumbnail: c,
+			placeholderText: d,trackingParams: e,avatarSize: f,emojiButton: g,
+			emojiPicker: h,aadcGuidelinesStateEntityKey: i,
+			...y
+		}=x;
+		this.z([a,b,g],a=>this.ButtonRenderer(a));
+		this.z([d],a=>this.text_t(a));
+		this.trackingParams(e);
+		this.save_string("avatarSizeEnum",f);
+		this.EmojiPickerRenderer(h);
+		this.primitive_of(i,"string");
+		this.save_keys("CommentSimpleboxRendererData",x,this.TODO_true);
+		this.empty_object(y);
+	}
+	/** @arg {EmojiPickerRenderer} x */
+	EmojiPickerRenderer(x) {
+		this.save_keys("EmojiPickerRenderer",x,this.TODO_true);
 	}
 }
 //#endregion

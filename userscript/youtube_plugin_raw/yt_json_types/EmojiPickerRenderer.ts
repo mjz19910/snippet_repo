@@ -1,0 +1,3 @@
+type EmojiPickerRenderer={
+	emojiPickerRenderer: {};
+};

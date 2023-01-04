@@ -1,5 +1,4 @@
 type Thumbnail={
-	url: YtUrlFormat;
-	width: number;
-	height: number;
+	thumbnails: ThumbnailItem[];
+	accessibility: Accessibility;
 };

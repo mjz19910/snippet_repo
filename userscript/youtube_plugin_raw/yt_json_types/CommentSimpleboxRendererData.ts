@@ -1,11 +1,11 @@
 type CommentSimpleboxRendererData={
-	submitButton: SubmitButton;
-	cancelButton:{};
-	authorThumbnail: {};
-	placeholderText: {};
+	submitButton: ButtonRenderer;
+	cancelButton: ButtonRenderer;
+	authorThumbnail: Thumbnail;
+	placeholderText: TextT;
 	trackingParams: string;
 	avatarSize: "SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT";
-	emojiButton: {};
-	emojiPicker: {};
+	emojiButton: ButtonRenderer;
+	emojiPicker: EmojiPickerRenderer;
 	aadcGuidelinesStateEntityKey: string;
 };
