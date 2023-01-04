@@ -1,9 +1,11 @@
 type ChanTabStr=[
-	"videos",
+	"about",
+	"channels",
+	"community",
 	"featured",
 	"playlists",
-	"community",
-	"channels",
-	"about",
 	"search",
+	"shorts",
+	"streams",
+	"videos",
 ][number];

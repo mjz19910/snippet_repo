@@ -4313,7 +4313,11 @@ class HandleTypes extends BaseService {
 				return t.str_starts_with(x[1],w);
 			}
 			if(str_starts_with_at_1(this,up,"@")) {
-				console.log("[handle_like_url]",up[1]);
+				switch(up[2]) {
+					case "videos": break;
+					case "shorts": break;
+					default: debugger;
+				}
 				return;
 			}
 			switch(up[1]) {
