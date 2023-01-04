@@ -1,0 +1,3 @@
+type FeedFilterChipBarRenderer={
+	feedFilterChipBarRenderer: FeedFilterChipBarData;
+};

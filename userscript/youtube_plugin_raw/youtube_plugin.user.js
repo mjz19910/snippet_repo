@@ -3858,86 +3858,35 @@ class HandleTypes extends BaseService {
 	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
 		this.save_keys("BrowseResponseContent",x,true);
-		const {trackingParams: a,...y}=x;
+		const {
+			trackingParams: a,
+			responseContext: res_ctx,contents: cont,
+			header: hd/*tp*/,topbar: tb,sidebar,
+			onResponseReceivedActions: act_arr,
+			frameworkUpdates: upd,cacheMetadata,
+			observedStateTags,
+			...y
+		}=x;
 		this.trackingParams(a);
-		if("responseContext" in y&&"frameworkUpdates" in y) {
-			const {
-				responseContext: res_ctx,contents: cont,
-				header: hd/*tp*/,topbar: tb,
-				onResponseReceivedActions: act_arr,
-				frameworkUpdates: upd,
-				...z
-			}=y;
-			this.ResponseContext(res_ctx);
-			if(!cont) debugger;
-			this.TwoColumnBrowseResultsRenderer(cont);
-			this.header(hd);
-			this.topbar(tb);
-			iterate(act_arr,v => this.ResponseReceivedAction(v));
-			this.frameworkUpdates(upd);
-			this.empty_object(z);
-			return;
-		}
-		if("responseContext" in y&&"observedStateTags" in y) {
-			const {
-				responseContext: res_ctx,contents: cont,
-				header: hd/*tp*/,topbar: tb,
-				observedStateTags: st,
-				...z
-			}=y;
-			this.ResponseContext(res_ctx);
-			this.TwoColumnBrowseResultsRenderer(cont);
-			this.header(hd);
-			this.topbar(tb);
-			iterate(st,v => this.StateTag(v));
-			this.empty_object(z);
-			return;
-		}
-		if("responseContext" in y) {
-			const {responseContext: res_ctx,contents: cont,topbar: tb,sidebar,...z}=y;
-			this.ResponseContext(res_ctx);
-			this.TwoColumnBrowseResultsRenderer(cont);
-			this.topbar(tb);
-			this.empty_object(z);
-			return;
-		}
-		if("sidebar" in y) {
-			const {sidebar: a,...z}=y;
-			this.empty_object(z);
-			return;
-		}
-		if("observedStateTags" in y) {
-			const {observedStateTags: a,...z}=y;
-			iterate(a,v => this.StateTag(v));
-			this.empty_object(z);
-			return;
-		}
-		if("cacheMetadata" in y) {
-			const {cacheMetadata: a,...z}=y;
-			this.empty_object(z);
-			return;
-		}
+		this.ResponseContext(res_ctx);
+		if(cont) this.BrowseContents(cont);
+		this.FeedTabbedHeaderRenderer(hd);
+		this.DesktopTopbarRenderer(tb);
+		iterate(act_arr,v => this.ResponseReceivedAction(v));
+		this.EntityBatchUpdate(upd);
+		iterate(observedStateTags,v => this.StateTag(v));
+		sidebar;
+		cacheMetadata;
 		this.empty_object(y);
 	}
-	/** @arg {DesktopTopbarRenderer} x */
-	topbar(x) {
-		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
-	}
-	/** @arg {FeedTabbedHeaderRenderer} x */
-	header(x) {
-		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
-	}
-	/** @arg {EntityBatchUpdate} x */
-	frameworkUpdates(x) {
-		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
-	}
-	/** @arg {ResponseReceivedAction} x */
-	ResponseReceivedAction(x) {
-		this.save_keys("ResponseReceivedAction",x,this.TODO_true);
-	}
-	/** @arg {WatchEndpointData} x */
-	WatchEndpointData(x) {
-		this.save_keys("WatchEndpointData",x,this.TODO_true);
+	/** @arg {BrowseContents} x */
+	BrowseContents(x) {
+		if("twoColumnBrowseResultsRenderer" in x) {
+			return this.TwoColumnBrowseResultsRenderer(x);
+		}
+		if("feedFilterChipBarRenderer" in x) {
+			return this.FeedFilterChipBarRenderer(x);
+		}
 	}
 	/** @arg {string} x */
 	parse_endpoint_params(x) {
@@ -4566,6 +4515,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
+		if(!x) {
+			debugger;
+		}
 		const {twoColumnBrowseResultsRenderer,...y}=x;
 		this.TwoColumnBrowseResultsRendererData(twoColumnBrowseResultsRenderer);
 		this.save_keys("TwoColumnBrowseResultsRenderer",x,true);
@@ -5350,6 +5302,26 @@ class HandleTypes extends BaseService {
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
 		this.save_keys("SignalServiceEndpointData",x,this.TODO_true);
+	}
+	/** @arg {FeedFilterChipBarRenderer} x */
+	FeedFilterChipBarRenderer(x) {
+		this.save_keys("FeedFilterChipBarRenderer",x,this.TODO_true);
+	}
+	/** @arg {FeedTabbedHeaderRenderer} x */
+	FeedTabbedHeaderRenderer(x) {
+		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
+	}
+	/** @arg {EntityBatchUpdate} x */
+	EntityBatchUpdate(x) {
+		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
+	}
+	/** @arg {ResponseReceivedAction} x */
+	ResponseReceivedAction(x) {
+		this.save_keys("ResponseReceivedAction",x,this.TODO_true);
+	}
+	/** @arg {WatchEndpointData} x */
+	WatchEndpointData(x) {
+		this.save_keys("WatchEndpointData",x,this.TODO_true);
 	}
 }
 //#endregion
