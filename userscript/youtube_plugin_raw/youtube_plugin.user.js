@@ -584,6 +584,9 @@ function to_url(url) {
 /** @arg {Error} rejection @returns {Promise<Response>} */
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {
+		if(rejection.name==="AbortError") {
+			throw rejection;
+		}
 		if(rejection.message!=="") {
 			console.log("fetch_rejection_handler",rejection.name);
 			console.log(rejection);
