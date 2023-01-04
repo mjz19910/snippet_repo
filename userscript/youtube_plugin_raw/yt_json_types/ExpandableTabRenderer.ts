@@ -1,0 +1,3 @@
+type ExpandableTabRenderer={
+	expandableTabRenderer: ExpandableTabData;
+};

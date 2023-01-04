@@ -4551,14 +4551,26 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
-		const {tabRenderer,...y}=x;
-		if(!tabRenderer) {
-			debugger;
+		if("tabRenderer" in x) {
+			const {tabRenderer: a,...y}=x;
+			this.TabRenderer(a);
+			return this.empty_object(y);
 		}
-		this.TabRenderer(tabRenderer);
-		this.empty_object(y);
+		if("expandableTabRenderer" in x) {
+			const {expandableTabRenderer: a,...y}=x;
+			this.ExpandableTabData(a);
+			return this.empty_object(y);
+		}
+		debugger;
 	}
-	/** @arg {TabRenderer} x */
+	/** @arg {ExpandableTabData} x */
+	ExpandableTabData(x) {
+		const {endpoint: a,title: b,selected: c,...y}=x;
+		this.yt_endpoint(a);
+		this.save_string("title",b);
+		return this.empty_object(y);
+	}
+	/** @arg {TabRendererData} x */
 	TabRenderer(x) {
 		if("content" in x) {
 			const {content: a,selected: b,trackingParams: c,...y}=x;

@@ -1,3 +1,1 @@
-type ResultRenderer={
-	tabRenderer: TabRenderer;
-};
+type ResultRenderer=TabRenderer|ExpandableTabRenderer;
