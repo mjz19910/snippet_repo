@@ -1,0 +1,3 @@
+type BrowseFeedActions={
+	contents: BrowseFeedContent[];
+};

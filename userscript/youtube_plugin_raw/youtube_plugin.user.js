@@ -5468,7 +5468,14 @@ class HandleTypes extends BaseService {
 	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {
 		if(get_keys_of_one(x)[0]!=="contents") debugger;
-		this.w(x,a => this.z(a,a=>this.g(a)));
+		this.w(x,a => this.z(a,a=>this.BrowseFeedContent(a)));
+	}
+	/** @arg {BrowseFeedContent} x */
+	BrowseFeedContent(x) {
+		let [k]=get_keys_of(x);
+		switch(k) {
+			case "buttonRenderer": break;
+		}
 	}
 	/** @arg {ProfileColumnData} x */
 	ProfileColumnData(x) {

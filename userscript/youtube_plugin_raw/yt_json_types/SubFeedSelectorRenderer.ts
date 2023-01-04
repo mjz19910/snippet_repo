@@ -1,0 +1,3 @@
+type SubFeedSelectorRenderer={
+	subFeedSelectorRenderer: SubFeedSelector;
+};

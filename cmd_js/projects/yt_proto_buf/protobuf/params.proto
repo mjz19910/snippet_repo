@@ -31,7 +31,7 @@ message PlayerParams {
 message TrackingParams {
 	optional int32 slot_number = 1;
 	optional int32 root_ve = 2;
-	optional int32 unk_3 = 3;
+	optional int32 index = 3;
 	required DateTime ts = 4;
 	optional string unk_6 = 6;
 }

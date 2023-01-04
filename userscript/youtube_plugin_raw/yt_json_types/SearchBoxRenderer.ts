@@ -1,0 +1,3 @@
+type SearchBoxRenderer={
+	searchBoxRenderer: SearchBox;
+};

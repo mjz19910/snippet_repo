@@ -1,0 +1,3 @@
+type SubFeedOptionRenderer={
+	subFeedOptionRenderer: SubFeedOption;
+};
