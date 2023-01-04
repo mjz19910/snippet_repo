@@ -5066,12 +5066,13 @@ class HandleTypes extends BaseService {
 	RichSectionContent(x) {
 		if("richShelfRenderer" in x) {
 			const {richShelfRenderer: a,...y}=x;
-			x.richShelfRenderer;
+			this.RichShelfRendererData(a);
 			this.empty_object(y);
 			return;
 		}
 		if("inlineSurveyRenderer" in x) {
 			const {inlineSurveyRenderer: a,...y}=x;
+			this.InlineSurveyRendererData(a);
 			this.empty_object(y);
 			return;
 		}
@@ -5343,9 +5344,13 @@ class HandleTypes extends BaseService {
 	PlaybackTracking(x) {
 		this.save_keys("PlaybackTracking",x,this.TODO_true);
 	}
-	/** @arg {PlayerLegacyDesktopWatchAdsRendererData} x */
-	PlayerLegacyDesktopWatchAdsRendererData(x) {
-		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x,this.TODO_true);
+	/** @arg {DesktopWatchAdsData} x */
+	DesktopWatchAdsData(x) {
+		this.save_keys("DesktopWatchAdsData",x,this.TODO_true);
+	}
+	/** @arg {InlineSurveyRendererData} x */
+	InlineSurveyRendererData(x) {
+		this.save_keys("InlineSurveyRendererData",x,this.TODO_true);
 	}
 }
 //#endregion

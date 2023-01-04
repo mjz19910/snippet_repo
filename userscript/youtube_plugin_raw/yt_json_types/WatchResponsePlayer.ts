@@ -2,7 +2,7 @@ type WatchResponsePlayer={
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
 	streamingData: {};
-	playerAds: PlayerLegacyDesktopWatchAdsRenderer[];
+	playerAds: DesktopWatchAdsRenderer[];
 	playbackTracking: PlaybackTracking;
 	captions: CaptionsRenderer;
 	videoDetails: {};

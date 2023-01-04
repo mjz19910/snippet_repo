@@ -1,0 +1,1 @@
+type DesktopWatchAdsRenderer={playerLegacyDesktopWatchAdsRenderer: DesktopWatchAdsData;};

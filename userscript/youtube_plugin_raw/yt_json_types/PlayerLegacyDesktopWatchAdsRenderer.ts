@@ -1,3 +1,0 @@
-type PlayerLegacyDesktopWatchAdsRenderer={
-	playerLegacyDesktopWatchAdsRenderer: PlayerLegacyDesktopWatchAdsRendererData;
-};

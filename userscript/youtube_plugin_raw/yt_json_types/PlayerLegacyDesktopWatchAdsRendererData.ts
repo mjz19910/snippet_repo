@@ -1,4 +1,4 @@
-type PlayerLegacyDesktopWatchAdsRendererData={
+type DesktopWatchAdsData={
 	gutParams: GutParams;
 	playerAdParams: PlayerAdParams;
 	showCompanion: true;
