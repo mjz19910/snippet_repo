@@ -895,6 +895,7 @@ function check_item_keys(real_path,path,keys) {
 		case "commentThreadRenderer": break;
 		case "commentsHeaderRenderer": break;
 		case "feedFilterChipBarRenderer": break;
+		case "reelItemRenderer": break;
 	}
 	keys=keys.filter(e => e!=="trackingParams");
 	if(mode==="action") for(let key of keys) switch(key) {
@@ -1056,7 +1057,10 @@ class Base64Binary {
 
 		let prev_len=input.length;
 		input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
-		if(prev_len!==input.length) console.log("removed %o non base64 chars",prev_len-input.length);
+		if(prev_len!==input.length) {
+			console.log("removed %o non base64 chars",prev_len-input.length);
+			debugger;
+		}
 
 		for(i=0;i<byte_len;i+=3) {
 			//get the 3 octets in 4 ascii chars
@@ -4554,31 +4558,25 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
+		this.save_keys("ResponseContext",x,true);
 		const {mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,...y}=x;
-		if("maxAgeSeconds" in y) {
-			const {maxAgeSeconds: a,...v}=y;
-			this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
-			this.empty_object(v);
-			return;
-		}
-		if("stateTags" in y) {
-			const {stateTags: a,...v}=y;
-			this.RelevantStateTags(a);
-			this.empty_object(v);
-			return;
-		}
-		if("consistencyTokenJar" in y) {
-			const {consistencyTokenJar: a,...v}=y;
-			this.ConsistencyTokenJarData(a);
-			this.empty_object(v);
-			return;
-		}
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
 		this.z(b,a => tracking_handler.set_service_params(a));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
-		this.save_keys("ResponseContext",x,true);
+		if("maxAgeSeconds" in y) {
+			const {maxAgeSeconds: a}=y;
+			a&&this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,a);
+		}
+		if("stateTags" in y) {
+			const {stateTags: a}=y;
+			a&&this.RelevantStateTags(a);
+		}
+		if("consistencyTokenJar" in y) {
+			const {consistencyTokenJar: a}=y;
+			a&&this.ConsistencyTokenJarData(a);
+		}
 		this.empty_object(y);
 	}
 	/** @arg {MainAppWebResponseContextData} x */
