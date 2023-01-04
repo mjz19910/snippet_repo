@@ -1,3 +1,3 @@
 type ItemSectionRenderer={
-	itemSectionRenderer: ItemSectionRendererData;
+	itemSectionRenderer: ItemSectionData;
 };

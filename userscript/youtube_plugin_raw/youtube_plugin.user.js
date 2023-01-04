@@ -774,7 +774,7 @@ class YtIterateTarget {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state @arg {ItemSectionRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {ItemSectionData} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t,path}=state;
 		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));
@@ -3141,6 +3141,7 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s] %o",keys.join(),x);
 		debugger;
 	}
+	g=this.empty_object;
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
 		let keys=get_keys_of(x);
@@ -4618,7 +4619,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(d,"string");
 		if(e) {
 			if("sectionListRenderer" in e) {
-				this.w(e,a => this.SectionListRendererData(a));
+				this.w(e,a => this.SectionListData(a));
 			} else debugger;
 		}
 		return this.empty_object(y);
@@ -5289,7 +5290,7 @@ class HandleTypes extends BaseService {
 	ReelItemWatch(x) {
 		const {responseContext: a,overlay: b,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
 		this.ResponseContext(a);
-		this.ReelPlayerOverlayRenderer(b);
+		this.w(b,a=>this.ReelPlayerOverlayData(a));
 		switch(status) {
 			case "REEL_ITEM_WATCH_STATUS_SUCCEEDED": break;
 			default: debugger;
@@ -5299,10 +5300,6 @@ class HandleTypes extends BaseService {
 	/** @private */
 	get TODO_true() {
 		return true;
-	}
-	/** @arg {ReelPlayerOverlayRenderer} x */
-	ReelPlayerOverlayRenderer(x) {
-		this.save_keys("ReelPlayerOverlayRenderer",x,this.TODO_true);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
@@ -5502,9 +5499,47 @@ class HandleTypes extends BaseService {
 		if(b) this.Accessibility(b);
 		this.empty_object(y);
 	}
-	/** @arg {SectionListRendererData} x */
-	SectionListRendererData(x) {
-		this.save_keys("SectionListRendererData",x,this.TODO_true);
+	/** @arg {SectionListData} x */
+	SectionListData(x) {
+		this.save_keys("SectionListData",x,true);
+		const {contents: a,trackingParams: b,...y}=x;
+		this.z(a,a=>this.SectionListItem(a));
+		this.trackingParams(b);
+		this.empty_object(y);
+	}
+	/** @arg {SectionListItem} x */
+	SectionListItem(x) {
+		if("itemSectionRenderer" in x) {
+			this.w(x,a=>this.ItemSectionData(a));
+		}
+	}
+	/** @arg {ItemSectionData} x */
+	ItemSectionData(x) {
+		this.save_keys("SectionListData",x,true);
+		const {contents: a,trackingParams: b,...y}=x;
+		this.z(a,a=>this.ItemSectionItem(a));
+		this.trackingParams(b);
+		this.empty_object(y);
+	}
+	item_section_map=new Map();
+	ConnectedAppRenderer(x) {x;}
+	/** @arg {ItemSectionItem} c */
+	ItemSectionItem(c) {
+		let t=this;
+		let [k]=get_keys_of(c);
+		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
+		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
+		/** @template {GetMaybeKeys<typeof c>} T @arg {T} v @returns {ItemSectionItemMap[T]} */
+		let q=v => this.item_section_map.get(v);
+		k="connectedAppRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		
+		if("playlistVideoListRenderer" in c) {
+			this.w(c,a=>a);
+		}
+	}
+	/** @arg {{}} x */
+	ReelPlayerOverlayData(x) {
+		this.save_keys("ReelPlayerOverlayData",x,this.TODO_true);
 	}
 }
 //#endregion

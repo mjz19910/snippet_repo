@@ -1,4 +1,4 @@
-type ItemSectionContentItem=
+type ItemSectionItem=
 	PlaylistVideoListRenderer|
 	PageIntroductionRenderer|
 	SettingsOptionRenderer|
