@@ -5211,7 +5211,7 @@ class HandleTypes extends BaseService {
 		this.text_t(h);
 		this.empty_object(y);
 	}
-	/** @arg {Icon<"SETTINGS"> | Icon<string>} x*/
+	/** @arg {AnyIcon} x*/
 	Icon(x) {
 		const {iconType: a,...y}=x;
 		this.save_string(`icon_type`,a);
