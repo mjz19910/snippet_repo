@@ -1,9 +1,11 @@
+type EngagementPanelSectionListData={
+	content: {};
+	targetId: "engagement-panel-ads";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+};
+
 type EngagementPanelSectionListRenderer={
-	engagementPanelSectionListRenderer: {
-		content: {};
-		targetId: "engagement-panel-ads";
-		visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	};
+	engagementPanelSectionListRenderer: EngagementPanelSectionListData;
 };
 type EngagementPanel=EngagementPanelSectionListRenderer;
 type WatchNextResponse={

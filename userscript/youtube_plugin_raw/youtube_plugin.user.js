@@ -3372,7 +3372,7 @@ class GFeedbackService extends BaseService {
 	}
 	/** @arg {GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
-		let h=this.x.get("yt_handlers").extract(e=>e)?.handle_types;
+		let h=this.x.get("yt_handlers").extract(e => e)?.handle_types;
 		if(!h) return;
 		this.data.route=x.value;
 		let route_parts=split_string(x.value,".");
@@ -3878,12 +3878,36 @@ class HandleTypes extends BaseService {
 		this.z(act_arr,a => this.ResponseReceivedAction(a));
 		this.z(ost,a => this.StateTag(a));
 		if(cont) this.BrowseContents(cont);
-		if(hd) this.FeedTabbedHeaderRenderer(hd);
-		if(tb) this.DesktopTopbarRenderer(tb);
-		if(upd) this.EntityBatchUpdate(upd);
+		if(hd) {
+			if("feedTabbedHeaderRenderer" in hd) {
+				this.w(hd,a => this.FeedTabbedHeaderRendererData(a));
+			} else if("c4TabbedHeaderRenderer" in hd) {
+				this.w(hd,a => this.C4TabbedHeaderData(a));
+			} else {
+				debugger;
+			}
+		}
+		if(tb) {
+			if("desktopTopbarRenderer" in tb) {
+				this.w(tb,a => this.DesktopTopbarRendererData(a));
+			} else {
+				debugger;
+			}
+		}
+		if(upd) {
+			if("entityBatchUpdate" in upd) {
+				this.w(upd,a => this.EntityBatchUpdateData(a));
+			} else {
+				debugger;
+			}
+		}
 		if(sb) this.SettingsSidebarRenderer(sb);
 		if(cm) this.CacheMetadata(cm);
 		this.empty_object(y);
+	}
+	/** @arg {C4TabbedHeaderData} x */
+	C4TabbedHeaderData(x) {
+		x;
 	}
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
@@ -4165,8 +4189,8 @@ class HandleTypes extends BaseService {
 		/** @template {YtApiNext} T @arg {T} x @returns {Omit<T,"engagementPanels">} */
 		let g=x => {
 			if("engagementPanels" in x) {
-				const {engagementPanels,...y}=x;
-				this.z(engagementPanels,a => this.EngagementPanel(a));
+				const {engagementPanels: a,...y}=x;
+				this.z(a,a => this.EngagementPanel(a));
 				return y;
 			}
 			return x;
@@ -4565,10 +4589,21 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ExpandableTabData} x */
 	ExpandableTabData(x) {
-		const {endpoint: a,title: b,selected: c,...y}=x;
+		const {endpoint: a,title: b,selected: c,expandedText: d,content: e,...y}=x;
 		this.yt_endpoint(a);
 		this.save_string("title",b);
+		this.primitive_of(c,"boolean");
+		this.primitive_of(d,"string");
+		if(e) {
+			if("sectionListRenderer" in e) {
+				this.w(e,a => this.SectionListRendererData(a));
+			} else debugger;
+		}
 		return this.empty_object(y);
+	}
+	/** @arg {SectionListRendererData} x */
+	SectionListRendererData(x) {
+		x;
 	}
 	/** @arg {TabRendererData} x */
 	TabRenderer(x) {
@@ -4679,7 +4714,7 @@ class HandleTypes extends BaseService {
 		}=this.filter_response_endpoints(x);
 		this.ResponseContext(a);
 		this.TwoColumnBrowseResultsRenderer(b);
-		this.DesktopTopbarRenderer(c);
+		this.w(c,c => this.DesktopTopbarRendererData(c));
 		this.renderer(d);
 		this.trackingParams(tp);
 		this.empty_object(y);
@@ -5284,8 +5319,8 @@ class HandleTypes extends BaseService {
 	FulfillmentContent(x) {
 		this.save_keys("FulfillmentContent",x,this.TODO_true);
 	}
-	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {
+	/** @arg {DesktopTopbarRendererData} x */
+	DesktopTopbarRendererData(x) {
 		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
 	}
 	/** @arg {SignalNavigationEndpointData} x */
@@ -5340,12 +5375,12 @@ class HandleTypes extends BaseService {
 	FeedFilterChipBarRenderer(x) {
 		this.save_keys("FeedFilterChipBarRenderer",x,this.TODO_true);
 	}
-	/** @arg {FeedTabbedHeaderRenderer} x */
-	FeedTabbedHeaderRenderer(x) {
+	/** @arg {FeedTabbedHeaderRendererData} x */
+	FeedTabbedHeaderRendererData(x) {
 		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
 	}
-	/** @arg {EntityBatchUpdate} x */
-	EntityBatchUpdate(x) {
+	/** @arg {EntityBatchUpdateData} x */
+	EntityBatchUpdateData(x) {
 		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
 	}
 	/** @arg {ResponseReceivedAction} x */
@@ -5378,6 +5413,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanel(x) {
+		if("engagementPanelSectionListRenderer" in x) {
+			this.w(x,a=>this.EngagementPanelSectionListData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {EngagementPanelSectionListData} x */
+	EngagementPanelSectionListData(x) {
 		this.save_keys("EngagementPanel",x,this.TODO_true);
 	}
 	/** @arg {ModifyChannelPreference} x */

@@ -3,7 +3,7 @@ type BrowseResponseContent={
 	trackingParams: string;
 	onResponseReceivedActions: ResponseReceivedAction[];
 	contents?: BrowseContents;
-	header?: FeedTabbedHeaderRenderer;
+	header?: FeedTabbedHeaderRenderer|C4TabbedHeaderRenderer;
 	topbar?: DesktopTopbarRenderer;
 	frameworkUpdates?: EntityBatchUpdate;
 	sidebar?: SettingsSidebarRenderer;
