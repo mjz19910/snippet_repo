@@ -4143,10 +4143,6 @@ class HandleTypes extends BaseService {
 			default: g(x);
 		}
 	}
-	/** @private @arg {YtSuccessResponse} x */
-	YtSuccessResponse(x) {
-		this.save_keys("YtSuccessResponse",x,this.TODO_true);
-	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
@@ -4155,18 +4151,6 @@ class HandleTypes extends BaseService {
 		this.trackingParams(trackingParams);
 		this.save_keys("GetNotificationMenuJson",x,true);
 		this.empty_object(y);
-	}
-	/** @private @arg {AttGet} x */
-	AttGet(x) {
-		this.save_keys("AttGet",x,this.TODO_true);
-	}
-	/** @private @arg {GuideJsonType} x */
-	GuideJsonType(x) {
-		this.save_keys("GuideJsonType",x,this.TODO_true);
-	}
-	/** @arg {EngagementPanelSectionListRenderer} x */
-	EngagementPanel(x) {
-		x;
 	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
@@ -4262,7 +4246,9 @@ class HandleTypes extends BaseService {
 		if(typeof x!==y) debugger;
 	}
 	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
-	str_starts_with(x,v) {x; return x.startsWith(v);}
+	str_starts_with(x,v) {
+		return x.startsWith(v);
+	}
 	/** @arg {string} x @arg {URL} url */
 	parse_account_google_com_url(x,url) {
 		if(url.pathname==="/AddSession") return;
@@ -5337,6 +5323,22 @@ class HandleTypes extends BaseService {
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
 		this.save_keys("YtPageState",x,this.TODO_true);
+	}
+	/** @private @arg {YtSuccessResponse} x */
+	YtSuccessResponse(x) {
+		this.save_keys("YtSuccessResponse",x,this.TODO_true);
+	}
+	/** @private @arg {AttGet} x */
+	AttGet(x) {
+		this.save_keys("AttGet",x,this.TODO_true);
+	}
+	/** @private @arg {GuideJsonType} x */
+	GuideJsonType(x) {
+		this.save_keys("GuideJsonType",x,this.TODO_true);
+	}
+	/** @arg {EngagementPanelSectionListRenderer} x */
+	EngagementPanel(x) {
+		this.save_keys("EngagementPanel",x,this.TODO_true);
 	}
 }
 //#endregion
