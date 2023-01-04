@@ -3762,11 +3762,27 @@ class HandleTypes extends BaseService {
 	// x is reserved for the first arg
 	// y reserved for unpack target
 	z=iterate;
+	/** @template {{}} T @arg {T[]} a @arg {(v: T[MaybeKeysArray<T>[0]]) => void} b */
+	zw(a,b) {
+		this.z(a,v=>this.w(v,b));
+	}
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
-		const {responseContext,...c}=x;
-		this.ResponseContext(responseContext);
-		const {annotations,attestation,adPlacements,playabilityStatus,playbackTracking,playerAds,playerConfig,paidContentOverlay,trackingParams,videoQualityPromoSupportedRenderers,endscreen,videoDetails,storyboards,streamingData,captions,cards,frameworkUpdates,microformat,...y}=c;
+		const {
+			responseContext: a,annotations: b,attestation: c,adPlacements: d,
+			playabilityStatus: e,playbackTracking: f,playerAds: g,playerConfig,paidContentOverlay,
+			trackingParams,videoQualityPromoSupportedRenderers,endscreen,videoDetails,
+			storyboards,streamingData,captions,cards,
+			frameworkUpdates,microformat,
+			...y
+		}=x;
+		this.ResponseContext(a);
+		this.zw(b,v => this.PlayerAnnotationsExpandedRendererData(v));
+		this.w(c,v => this.empty_object(v));
+		this.z(d,v => this.empty_object(v));
+		this.PlayabilityStatus(e);
+		this.PlaybackTracking(f);
+		this.zw(g,v=>this.PlayerLegacyDesktopWatchAdsRendererData(v));
 		iterate_obj(x,(k,v) => {
 			if(typeof v==='string') return;
 			if(v instanceof Array) {
@@ -4648,7 +4664,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SettingsSidebarRendererData} x */
 	SettingsSidebarRendererData(x) {
 		iterate(x.items,v => this.CompactLinkRenderer(v));
-		this.text_t("SettingsSidebarRenderer",x.title);
+		this.text_t(x.title);
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
@@ -4658,15 +4674,15 @@ class HandleTypes extends BaseService {
 		if(c) this.yt_endpoint(c);
 		this.empty_object(y);
 	}
-	/** @private @arg {string} from @arg {TextT} x */
-	text_t(from,x) {
+	/** @private @arg {TextT} x */
+	text_t(x) {
 		if(!x) {
 			debugger;
 			return;
 		}
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
 		if(a) iterate(a,v => this.TextRun(v));
-		if(b) this.Accessibility(from,b);
+		if(b) this.Accessibility(b);
 		if(c) this.primitive_of(c,"string");
 		this.empty_object(y);
 	}
@@ -4783,7 +4799,7 @@ class HandleTypes extends BaseService {
 			this.GetMultiPageMenuAction(v);
 		});
 		if(!c) debugger;
-		this.text_t("GetAccountSwitcherEndpointResponse",c);
+		this.text_t(c);
 		this.empty_object(y);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
@@ -4822,7 +4838,7 @@ class HandleTypes extends BaseService {
 		iterate(x.buttons,v => {
 			this.ButtonRenderer(v);
 		});
-		this.text_t("SimpleMenuHeaderRenderer",x.title);
+		this.text_t(x.title);
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
@@ -4854,7 +4870,7 @@ class HandleTypes extends BaseService {
 				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
 				default: debugger;
 			}
-			t.text_t("CompactLinkRenderer",c);
+			t.text_t(c);
 			t.empty_object(y);
 		}
 		if("trackingParams" in x) {
@@ -4869,7 +4885,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {title: a,navigationEndpoint: b,...y}=x;
-		this.text_t("CompactLinkRenderer",a);
+		this.text_t(a);
 		this.yt_endpoint(b);
 		this.empty_object(y);
 	}
@@ -4930,7 +4946,7 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 		if("commentsHeaderRenderer" in x) {
-			this.w(x,v=>this.CommentsHeaderRendererData(v));
+			this.w(x,v => this.CommentsHeaderRendererData(v));
 		}
 	}
 	/** @arg {RichItemRendererData} x */
@@ -5010,7 +5026,7 @@ class HandleTypes extends BaseService {
 			this.save_string("RichShelfRenderer.icon.iconType",c);
 			this.empty_object(u);
 		}
-		this.text_t("RichShelfRenderer",b);
+		this.text_t(b);
 		this.empty_object(y);
 	}
 	/** @arg {AdSlotMetadata} x */
@@ -5022,33 +5038,23 @@ class HandleTypes extends BaseService {
 		this.save_number("AdSlot.slotPhysicalPosition",c);
 		this.empty_object(y);
 	}
-	/** @arg {string} from @arg {Accessibility} x */
-	Accessibility(from,x) {
+	/** @arg {Accessibility} x */
+	Accessibility(x) {
 		const {accessibilityData: a,...y}=x;
-		this.AccessibilityData(from,a);
+		this.AccessibilityData(a);
 		this.empty_object(y);
 	}
-	/** @arg {string} from @arg {AccessibilityData} x */
-	AccessibilityData(from,x) {
+	/** @arg {AccessibilityData} x */
+	AccessibilityData(x) {
 		const {label: a,...y}=x;
-		this.save_string(`${from}.Accessibility.label`,a);
+		this.save_string(`label`,a);
 		this.empty_object(y);
 	}
-	/** @arg {FulfillmentContent} x */
-	FulfillmentContent(x) {x;}
-	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {x;}
-	/** @arg {SignalNavigationEndpointData} x */
-	SignalNavigationEndpointData(x) {x;}
-	/** @arg {SignOutEndpointData} x */
-	SignOutEndpointData(x) {x;}
-	/** @arg {GetAccountsListInnertubeEndpointData} x */
-	GetAccountsListInnertubeEndpointData(x) {x;}
 	/** @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
 		const {responseContext: a,selectText: b,actions: c,...y}=x;
 		this.ResponseContext(a);
-		this.text_t("AccountsList",b);
+		this.text_t(b);
 		this.z(c,v => this.UpdateChannelSwitcherPageAction(v));
 		this.save_keys("AccountsListResponse",x,true);
 		this.empty_object(y);
@@ -5086,10 +5092,9 @@ class HandleTypes extends BaseService {
 			serviceEndpoint: f,accountByline: g,channelHandle: h,
 			...y
 		}=x;
-		const l="AccountItem";
-		this.text_t(`${l}.accountName`,a);
-		this.text_t(`${l}.accountByline`,g);
-		this.text_t(`${l}.channelHandle`,h);
+		this.text_t(a);
+		this.text_t(g);
+		this.text_t(h);
 		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
 		this.yt_endpoint(f);
 		this.w(b,a =>
@@ -5112,20 +5117,89 @@ class HandleTypes extends BaseService {
 			case "STYLE_SUGGESTIVE": break;
 			default: debugger;
 		}
-		this.text_t("ButtonRenderer",c);
-		this.Icon("ButtonRenderer",d);
+		this.text_t(c);
+		this.Icon(d);
 		this.save_keys("ButtonRendererData",x,true);
 		this.empty_object(y);
 	}
-	/** @arg {string} from @arg {Icon<"SETTINGS"> | Icon<string>} x*/
-	Icon(from,x) {
+	/** @arg {Icon<"SETTINGS"> | Icon<string>} x*/
+	Icon(x) {
 		const {iconType: a,...y}=x;
-		this.save_string(`${from}.icon_type`,a);
+		this.save_string(`icon_type`,a);
 		this.empty_object(y);
 	}
 	/** @arg {CommentsHeaderRendererData} x */
 	CommentsHeaderRendererData(x) {
 		this.save_keys("CommentsHeaderRenderer",x);
+		const {
+			countText: a,createRenderer: b,sortMenu: c,trackingParams: d,titleText: e,commentsCount: f,
+			showSeparator: g,customEmojis: h,unicodeEmojisUrl: i,loggingDirectives: j,
+			...y
+		}=x;
+		this.z([a,e,f],v => this.text_t(v));
+		this.SortFilterSubMenuRenderer(c);
+		this.trackingParams(d);
+		this.primitive_of(g,"boolean");
+		this.z(h,v => this.CustomEmoji(v));
+		this.parse_url(i);
+		this.LoggingDirectives(j);
+		this.empty_object(y);
+	}
+	/** @arg {SortFilterSubMenuRenderer} x */
+	SortFilterSubMenuRenderer(x) {
+		const {accessibility: a,icon,subMenuItems,title,trackingParams,...y}=x;
+		this.Accessibility(a);
+		this.Icon(icon);
+		this.z(subMenuItems,v => this.ActionSetPlaylistVideoOrder(v));
+		this.empty_object(y);
+	}
+	/** @arg {ActionSetPlaylistVideoOrder} x */
+	ActionSetPlaylistVideoOrder(x) {
+		this.save_keys("ActionSetPlaylistVideoOrder",x);
+	}
+	/** @arg {CustomEmoji} x */
+	CustomEmoji(x) {
+		this.save_keys("CustomEmoji",x);
+	}
+	/** @arg {LoggingDirectives} x */
+	LoggingDirectives(x) {
+		this.save_keys("LoggingDirectives",x);
+	}
+	/** @arg {FulfillmentContent} x */
+	FulfillmentContent(x) {
+		this.save_keys("FulfillmentContent",x);
+	}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {
+		this.save_keys("DesktopTopbarRenderer",x);
+	}
+	/** @arg {SignalNavigationEndpointData} x */
+	SignalNavigationEndpointData(x) {
+		this.save_keys("SignalNavigationEndpointData",x);
+	}
+	/** @arg {SignOutEndpointData} x */
+	SignOutEndpointData(x) {
+		this.save_keys("SignOutEndpointData",x);
+	}
+	/** @arg {GetAccountsListInnertubeEndpointData} x */
+	GetAccountsListInnertubeEndpointData(x) {
+		this.save_keys("GetAccountsListInnertubeEndpointData",x);
+	}
+	/** @arg {PlayerAnnotationsExpandedRendererData} x */
+	PlayerAnnotationsExpandedRendererData(x) {
+		this.save_keys("PlayerAnnotationsExpandedRendererData",x);
+	}
+	/** @arg {PlayabilityStatus} x */
+	PlayabilityStatus(x) {
+		this.save_keys("PlayabilityStatus",x);
+	}
+	/** @arg {PlaybackTracking} x */
+	PlaybackTracking(x) {
+		this.save_keys("PlaybackTracking",x);
+	}
+	/** @arg {PlayerLegacyDesktopWatchAdsRendererData} x */
+	PlayerLegacyDesktopWatchAdsRendererData(x) {
+		this.save_keys("PlayerLegacyDesktopWatchAdsRendererData",x);
 	}
 }
 //#endregion

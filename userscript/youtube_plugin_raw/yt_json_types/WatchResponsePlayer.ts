@@ -1,9 +1,9 @@
 type WatchResponsePlayer={
 	responseContext: ResponseContext;
-	playabilityStatus: {};
+	playabilityStatus: PlayabilityStatus;
 	streamingData: {};
 	playerAds: PlayerLegacyDesktopWatchAdsRenderer[];
-	playbackTracking: {};
+	playbackTracking: PlaybackTracking;
 	captions: CaptionsRenderer;
 	videoDetails: {};
 	playerConfig: {};
@@ -11,11 +11,11 @@ type WatchResponsePlayer={
 	microformat: {};
 	cards: {};
 	trackingParams: {};
-	attestation: {};
+	attestation: PlayerAttestationRenderer;
 	videoQualityPromoSupportedRenderers: {};
-	adPlacements?: [];
+	adPlacements?: {}[];
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;
 	paidContentOverlay?: PaidContentOverlay;
-	annotations: {};
+	annotations: PlayerAnnotationsExpandedRenderer[];
 };

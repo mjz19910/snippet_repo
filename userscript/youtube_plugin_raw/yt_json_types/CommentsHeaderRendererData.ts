@@ -7,6 +7,6 @@ type CommentsHeaderRendererData={
 	commentsCount: TextT;
 	showSeparator: true;
 	customEmojis: CustomEmoji[];
-	unicodeEmojisUrl: string;
+	unicodeEmojisUrl: YtUrlFormat;
 	loggingDirectives: LoggingDirectives;
 };

@@ -21,4 +21,5 @@ type PlaybackTracking={
 	videostatsWatchtimeUrl: {
 		baseUrl: string;
 	};
+	youtubeRemarketingUrl?: {};
 };
