@@ -3870,8 +3870,8 @@ class HandleTypes extends BaseService {
 		}=x;
 		this.trackingParams(a);
 		this.ResponseContext(res_ctx);
-		iterate(act_arr,a => this.ResponseReceivedAction(a));
-		iterate(ost,a => this.StateTag(a));
+		this.z(act_arr,a => this.ResponseReceivedAction(a));
+		this.z(ost,a => this.StateTag(a));
 		if(cont) this.BrowseContents(cont);
 		if(hd) this.FeedTabbedHeaderRenderer(hd);
 		if(tb) this.DesktopTopbarRenderer(tb);
@@ -4080,7 +4080,7 @@ class HandleTypes extends BaseService {
 		}
 		if("loadMarkersCommand" in c) {
 			let cmd=c.loadMarkersCommand;
-			iterate(cmd.entityKeys,key => {
+			this.z(cmd.entityKeys,key => {
 				let res=decode_b64_proto_obj(key);
 				let res_2=decode_entity_key(key);
 				console.log("[entity_key]",res_2,res);
@@ -4148,7 +4148,7 @@ class HandleTypes extends BaseService {
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
 		this.ResponseContext(responseContext);
-		iterate(actions,a => this.OpenPopupAction(a));
+		this.z(actions,a => this.OpenPopupAction(a));
 		this.trackingParams(trackingParams);
 		this.save_keys("GetNotificationMenuJson",x,true);
 		this.empty_object(y);
@@ -4160,7 +4160,7 @@ class HandleTypes extends BaseService {
 		let g=x => {
 			if("engagementPanels" in x) {
 				const {engagementPanels,...y}=x;
-				iterate(engagementPanels,a => this.EngagementPanel(a));
+				this.z(engagementPanels,a => this.EngagementPanel(a));
 				return y;
 			}
 			return x;
@@ -4192,16 +4192,18 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(x.responseContext);
 		if("actions" in y) {
 			const {actions: a,...c}=y;
-			iterate(a,x => {
-				const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=x;
-				this.clickTrackingParams(x.clickTrackingParams);
-				this.UpdateNotificationsUnseenCount(updateNotificationsUnseenCountAction);
-				this.empty_object(y);
-			});
+			this.z(a,a => this.ActionType(a));
 			this.empty_object(c);
 		} else if("unseenCount" in y) {
 			this.notification_unseenCount(y);
 		}
+	}
+	/** @arg {ActionType} x */
+	ActionType(x) {
+		const {clickTrackingParams: a,updateNotificationsUnseenCountAction: b,...y}=x;
+		this.clickTrackingParams(a);
+		this.UpdateNotificationsUnseenCount(b);
+		this.empty_object(y);
 	}
 	/** @arg {{unseenCount:number}} x */
 	notification_unseenCount(x) {
@@ -4501,7 +4503,7 @@ class HandleTypes extends BaseService {
 	/** @arg {TwoColumnBrowseResultsRendererData} x */
 	TwoColumnBrowseResultsRendererData(x) {
 		const {tabs,...y}=x;
-		iterate(tabs,a => this.ResultRenderer(a));
+		this.z(tabs,a => this.ResultRenderer(a));
 		this.empty_object(y);
 	}
 	/** @arg {ResultRenderer} x */
@@ -4557,7 +4559,7 @@ class HandleTypes extends BaseService {
 		}
 		this.MainAppWebResponseContextData(a);
 		let tracking_handler=this.x.get("service_tracking");
-		iterate(b,a => tracking_handler.set_service_params(a));
+		this.z(b,a => tracking_handler.set_service_params(a));
 		tracking_handler.on_complete_set_service_params();
 		this.WebResponseContextExtensionData(c);
 		this.save_keys("ResponseContext",x,true);
@@ -4621,7 +4623,7 @@ class HandleTypes extends BaseService {
 	filter_response_endpoints(x) {
 		if("onResponseReceivedEndpoints" in x) {
 			const {onResponseReceivedEndpoints: a,...y}=x;
-			iterate(a,ep => this.yt_endpoint(ep));
+			this.z(a,ep => this.yt_endpoint(ep));
 			return y;
 		}
 		return x;
@@ -4641,7 +4643,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SettingsSidebarRendererData} x */
 	SettingsSidebarRendererData(x) {
 		const {items: a,title: b,...y}=x;
-		iterate(a,a => this.CompactLinkRenderer(a));
+		this.z(a,a => this.CompactLinkRenderer(a));
 		this.text_t(b);
 		this.empty_object(y);
 	}
@@ -4660,7 +4662,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
-		if(a) iterate(a,v => this.TextRun(v));
+		if(a) this.z(a,a => this.TextRun(a));
 		if(b) this.Accessibility(b);
 		if(c) this.primitive_of(c,"string");
 		this.empty_object(y);
@@ -4687,7 +4689,7 @@ class HandleTypes extends BaseService {
 	/** @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const {relevantStateTags: a,...y}=x;
-		iterate(a,v => this.StateTag(v));
+		this.z(a,a => this.StateTag(a));
 		this.empty_object(y);
 	}
 	/** @arg {StateTag} x */
@@ -4730,14 +4732,14 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(a);
 		/** @type {string[][]} */
 		let c=[];
-		iterate(b,v => c.push(v.split("||")));
-		iterate(c,chan_id => {
+		this.z(b,a => c.push(a.split("||")));
+		this.z(c,chan_id => {
 			if(chan_id[1]==="") {
 				this.save_string("my_main_channel_id",chan_id[0]);
 				this.my_main_channel_id=chan_id[0];
 			}
 		});
-		iterate(c,chan_ids => {
+		this.z(c,chan_ids => {
 			if(chan_ids[1]!=="") {
 				if(this.alt_channel_ids.findIndex(e => e[0]===chan_ids[0])<0) {
 					this.alt_channel_ids.push([chan_ids[0],chan_ids[1]]);
@@ -4746,9 +4748,9 @@ class HandleTypes extends BaseService {
 			}
 		});
 		if(this.my_main_channel_id) {
-			this.alt_channel_ids.forEach(v => {
-				if(v[1]!==this.my_main_channel_id) {
-					console.log("alt channel not owned by main google account channel",v);
+			this.alt_channel_ids.forEach(a => {
+				if(a[1]!==this.my_main_channel_id) {
+					console.log("alt channel not owned by main google account channel",a);
 					debugger;
 				}
 			});
@@ -4769,9 +4771,7 @@ class HandleTypes extends BaseService {
 	GetAccountSwitcherEndpointResponse(x) {
 		const {responseContext: a,actions: b,selectText: c,...y}=x;
 		this.ResponseContext(a);
-		iterate(b,v => {
-			this.GetMultiPageMenuAction(v);
-		});
+		this.z(b,a => this.GetMultiPageMenuAction(a));
 		if(!c) debugger;
 		this.text_t(c);
 		this.empty_object(y);
@@ -4797,9 +4797,7 @@ class HandleTypes extends BaseService {
 		if(x.style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 		const {header: a,sections: b,footer: c,style: {},...y}=x;
 		this.SimpleMenuHeaderRenderer(a);
-		iterate(b,v => {
-			this.AccountSectionListRenderer(v);
-		});
+		this.z(b,a => this.AccountSectionListRenderer(a));
 		this.MultiPageMenuSectionRenderer(c);
 		this.empty_object(y);
 	}
@@ -4809,10 +4807,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SimpleMenuHeaderRendererData} x */
 	SimpleMenuHeaderRendererData(x) {
-		iterate(x.buttons,v => {
-			this.ButtonRenderer(v);
-		});
-		this.text_t(x.title);
+		const {buttons: a,title: b,...y}=x;
+		this.z(a,a => this.ButtonRenderer(a));
+		this.text_t(b);
+		this.empty_object(y);
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
@@ -4820,7 +4818,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccountSectionListRendererData} x */
 	AccountSectionListRendererData(x) {
-		iterate(x.contents,v => this.AccountItemSectionRenderer(v));
+		this.z(x.contents,v => this.AccountItemSectionRenderer(v));
 	}
 	/** @arg {AccountItemSectionRenderer} x */
 	AccountItemSectionRenderer(x) {
@@ -4828,7 +4826,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccountItemSectionRendererData} x */
 	AccountItemSectionRendererData(x) {
-		iterate(x.contents,v => {
+		this.z(x.contents,v => {
 			if("accountItem" in v) return this.AccountItem(v);
 			this.CompactLinkRendererData(v.compactLinkRenderer);
 		});
@@ -4891,12 +4889,12 @@ class HandleTypes extends BaseService {
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
 		const {navigationEndpoints: a,...y}=x;
-		iterate(a,v => this.yt_endpoint(v));
+		this.z(a,v => this.yt_endpoint(v));
 		this.empty_object(y);
 	}
 	/** @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
-		iterate(x.continuationItems,v => {
+		this.z(x.continuationItems,v => {
 			this.SectionItem(v);
 		});
 	}
