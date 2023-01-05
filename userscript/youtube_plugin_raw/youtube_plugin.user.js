@@ -3896,10 +3896,7 @@ class IndexedDbAccessor {
 		const db=request.result;
 		const store=db.createObjectStore("video_id",{keyPath: "v"});
 		for(let x of data_source) {
-			const store_request=store.put(x);
-			store_request.onsuccess=() => {
-				request.transaction?.commit();
-			};
+			store.put(x);
 		}
 
 	}
