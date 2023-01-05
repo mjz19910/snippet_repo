@@ -3775,6 +3775,10 @@ class IndexedDbAccessor {
 	open() {
 		const {name,version}=this.db_args;
 		const request=indexedDB.open(name,version);
+		this.onOpenRequest(request);
+	}
+	/** @arg {IDBOpenDBRequest} request */
+	onOpenRequest(request) {
 		request.onsuccess=event => this.onSuccess(request,event);
 		request.onerror=event => this.onError(event);
 		request.onupgradeneeded=event => this.onUpgradeNeeded(request,event);
