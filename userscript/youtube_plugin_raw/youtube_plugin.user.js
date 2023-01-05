@@ -3767,7 +3767,7 @@ class IndexedDbAccessor {
 	}
 	/** @type {{}[]} */
 	arr=[];
-	/** @arg {{}} obj */
+	/** @arg {{v: string}} obj */
 	put(obj) {
 		this.arr.push(obj);
 		this.open();
@@ -3777,24 +3777,16 @@ class IndexedDbAccessor {
 		const request=indexedDB.open(name,version);
 		request.onsuccess=event => this.onSuccess(request,event);
 		request.onerror=event => this.onError(event);
-		request.onupgradeneeded=event => this.onUpgradeNeeded(request.result,event);
+		request.onupgradeneeded=event => this.onUpgradeNeeded(request,event);
 	}
 	close_db_on_transaction_complete=false;
 	/** @arg {IDBOpenDBRequest} req @arg {Event} event */
 	onSuccess(req,event) {
-		let event_pd=Object.getOwnPropertyDescriptors(Event.prototype);
-		let my_event_pd=Object.getOwnPropertyDescriptors(event);
-		/** @type {{[x:string]:any}} */
-		let ev_ac=event;
-		for(let k in my_event_pd) {
-			if(k in event_pd) continue;
-			console.log("idb open event key",k,ev_ac[k]);
-		}
-		console.log(event);
+		console.log("OpenDBRequest success", event);
 		let db=req.result;
-		db.onversionchange = () => {
+		db.onversionchange=() => {
 			db.close();
-		}
+		};
 		this.start_transaction(db);
 	}
 	/** @arg {IDBDatabase} db */
@@ -3821,26 +3813,51 @@ class IndexedDbAccessor {
 			request.onsuccess=(event) => {
 				this.active_requests--;
 				console.log("request success",event);
-				if(this.active_requests === 0) {
+				if(this.active_requests===0) {
 					transaction.commit();
 				}
 			};
 		}
 		this.arr.length=0;
 	}
-	/** @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
-	onUpgradeNeeded(db,event) {
+	outstanding_upgrade_requests=0;
+	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
+	onUpgradeNeeded(request,event) {
 		console.log("old version",event.oldVersion);
-		db.createObjectStore("video_id",{
-			autoIncrement: true
-		});
+		const db=request.result;
+		if (event.oldVersion < 1){
+			db.createObjectStore("video_id",{
+				autoIncrement: true
+			});
+		}
+		if (event.oldVersion < 2) {
+			if(!request.transaction) throw new Error("No transaction");
+			const video_id_store=request.transaction.objectStore("video_id");
+			/** @type {IDBRequest<{v:string}[]>} */
+			let get_all_request=video_id_store.getAll();
+			get_all_request.onsuccess=() => {
+				const all_video_ids=get_all_request.result;
+				db.deleteObjectStore("video_id");
+				const store=db.createObjectStore("video_id",{keyPath: "v"});
+				for(let x of all_video_ids) {
+					this.outstanding_upgrade_requests++;
+					const request=store.put(x);
+					request.onsuccess=()=>{
+						if(!request.transaction) throw new Error("No transaction");
+						if(this.outstanding_upgrade_requests===0) {
+							request.transaction.commit();
+						}
+					}
+				}
+			}
+		}
 	}
 	/** @arg {Event} event */
 	onError(event) {
 		console.log('idb error',event);
 	}
 }
-const indexed_db=new IndexedDbAccessor("yt_plugin");
+const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @private @arg {WatchResponsePlayer} x */
@@ -3880,7 +3897,7 @@ class HandleTypes extends BaseService {
 				this.w(i,a => this.PaidContentOverlayRenderer(a));
 			}
 			this.trackingParams(j);
-			this.w(k,a=>this.empty_object(a));
+			this.w(k,a => this.empty_object(a));
 			if(l) this.EndscreenRenderer(l);
 			return y;
 		}
@@ -4502,12 +4519,34 @@ class HandleTypes extends BaseService {
 		}
 		let vv=split_string(x,"&");
 		for(let prop of vv) {
-			if(this.str_starts_with(prop,"v=")) {
-				/** @type {SplitOnce<typeof prop,"=">} */
-				let res=split_string_once(prop,"=");
-				res;
-			} else {
-				debugger;
+			/** @type {SplitOnce<typeof prop,"=">} */
+			let res=split_string_once(prop,"=");
+			switch(res[0]) {
+				case "v": {
+					let value=res[1];
+					indexed_db.put({v: value});
+				} break;
+				case "list": {
+					let v=res[1];
+					if(this.str_starts_with(v,"RD")) {
+						if(this.str_starts_with(v,`${"RD"}${"MM"}`)) {
+							console.log("[playlist_found]",v.slice(4),v.slice(4).length);
+							v;
+						} else {
+							debugger;
+						}
+					} else if(this.str_starts_with(v,"PL")) {
+						console.log("[playlist_found]","PL",v.slice(2),v.slice(2).length);
+					} else {
+						debugger;
+					}
+				} break;
+				case "pp": {
+					let sp_pp=res[1];
+					if(this.cache_player_params.includes(sp_pp)) return;
+					this.cache_player_params.push(sp_pp);
+					console.log("[player_params_found]",sp_pp);
+				} break;
 			}
 		}
 		/** @type {{list?: YtPlaylistFormat;v: string;pp?: string;index?: `${number}`;start_radio?:`${1|0}`}} */
@@ -4515,26 +4554,6 @@ class HandleTypes extends BaseService {
 		let k=filter_out_keys(get_keys_of(sp),["list","v","pp","index","start_radio"]);
 		if(k.length>0) {
 			console.log("[missed_url_param_keys]",k);
-		}
-		if(sp.list!==void 0) {
-			let v=sp.list;
-			if(this.str_starts_with(v,"RD")) {
-				if(this.str_starts_with(v,`${"RD"}${"MM"}`)) {
-					console.log("[playlist_found]",v.slice(4),v.slice(4).length);
-					v;
-				} else {
-					debugger;
-				}
-			} else if(this.str_starts_with(v,"PL")) {
-				console.log("[playlist_found]","PL",v.slice(2),v.slice(2).length);
-			} else {
-				debugger;
-			}
-		}
-		if(sp.pp!==void 0) {
-			if(this.cache_player_params.includes(sp.pp)) return;
-			this.cache_player_params.push(sp.pp);
-			console.log("[player_params_found]",sp.pp);
 		}
 		if("v" in sp) {
 			indexed_db.put({v: sp.v});
