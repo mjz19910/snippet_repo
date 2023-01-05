@@ -3257,9 +3257,9 @@ class ECatcherService extends BaseService {
 		expected_client_values: {
 			/** @type {number[]} */
 			fexp: [
-				[1714247, 9405964, 23804281, 23882502, 23918597, 23934970, 23946420, 23966208, 23983296, 23986033, 23998056, 24002022, 24002025, 24004644, 24007246, 24034168, 24036947, 24059444, 24059508, 24077241, 24080738, 24108447, 24120820, 24135310, 24140247, 24161116, 24162919, 24164186, 24166867, 24169501, 24181174, 24187043, 24187377, 24211178, 24219381, 24219713, 24241378, 24248091, 24250324, 24255163, 24255543, 24255545, 24260378, 24262346, 24263796, 24267564, 24268142, 24279196, 24281896, 24283015, 24283093, 24287604, 24288442, 24288663, 24290971, 24291857, 24292955, 24390675, 24396645, 24404640, 24406313, 24406621, 24414718, 24415864, 24415866, 24416290, 24429095, 24433679, 24436009, 24437575, 24438162, 24438848, 24439361, 24439483, 24441244, 39322504, 39322574],
-				[39322873, 39322983, 39323013, 39323020, 39323120, 45686551],
-				[24591046, 24197450, 24590921, 24402891, 24217535],
+				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437575,24438162,24438848,24439361,24439483,24441244,39322504,39322574],
+				[39322873,39322983,39323013,39323020,39323120,45686551],
+				[24591046,24197450,24590921,24402891,24217535],
 			].flat(),
 		},
 	};
@@ -4089,18 +4089,18 @@ class HandleTypes extends BaseService {
 		let n=(x,b) => {if(!x) throw new Error(); g(b);};
 		let [k]=get_keys_of(c);
 		k="browseEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="searchEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="setSettingEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signalServiceEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="urlEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="watchEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signalNavigationEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="signOutEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="getAccountsListInnertubeEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="changeKeyedMarkersVisibilityCommand";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="loadMarkersCommand";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="createCommentEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}k="confirmDialogEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="searchEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="setSettingEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="signalServiceEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="urlEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="watchEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="signalNavigationEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="signOutEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="getAccountsListInnertubeEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="changeKeyedMarkersVisibilityCommand";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="loadMarkersCommand";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="createCommentEndpoint";
+		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="confirmDialogEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}
 		let yc=get_keys_of(c);
 		for(let ya of yc) {
@@ -4367,10 +4367,35 @@ class HandleTypes extends BaseService {
 	parse_playlist_page_url(x) {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
+		/**
+		 * @arg {HandleTypes} t
+		 * @template {string[]} T
+		 * @template {string} U
+		 * @arg {U} w
+		 * @arg {T} x
+		 * @returns {x is [string,`${U}${string}`,...string[]]}
+		 */
+		function str_starts_with_at_1(t,x,w) {
+			return t.str_starts_with(x[1],w);
+		}
 		switch(y[0]) {
-			case "list": if(this.str_starts_with(y[1],"RD")) {
-				y[1];
-			};break;
+			case "list": {
+				if(y[1]==="WL") return;
+				if(str_starts_with_at_1(this,y,"RD")) {
+					if(str_starts_with_at_1(this,y,`RD${"MM"}`)) {
+						return;
+					}
+					console.log(y);
+					debugger;
+					return;
+				};
+				if(str_starts_with_at_1(this,y,"PL")) {
+					let [,v]=y; v;
+					return;
+				};
+				console.log(y);
+				debugger;
+			} break;
 			default: debugger;
 		}
 	}
@@ -4450,7 +4475,7 @@ class HandleTypes extends BaseService {
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,ignoreNavigation: f,...y}=x;
-		this.z([e,f],a=>a!==void 0?this.primitive_of(a,"boolean"):0)
+		this.z([e,f],a => a!==void 0? this.primitive_of(a,"boolean"):0);
 		if(a!==void 0) this.parse_url(a);
 		if(b!==void 0) this.parse_page_type(b);
 		if(d!==void 0) this.parse_api_url(d);
@@ -4722,7 +4747,7 @@ class HandleTypes extends BaseService {
 		y;
 	}
 	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {this.w(x,a=>this.DesktopTopbarRendererData(a));}
+	DesktopTopbarRenderer(x) {this.w(x,a => this.DesktopTopbarRendererData(a));}
 	/** @arg {YtSettingsPageResponse} x */
 	YtSettingsPageResponse(x) {
 		const {page: {},endpoint: a,response: b,url: c,...y}=x;
@@ -5471,13 +5496,13 @@ class HandleTypes extends BaseService {
 	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {
 		if(get_keys_of_one(x)[0]!=="contents") debugger;
-		this.w(x,a => this.z(a,a=>this.BrowseFeedContent(a)));
+		this.w(x,a => this.z(a,a => this.BrowseFeedContent(a)));
 	}
 	/** @arg {BrowseFeedContent} x */
 	BrowseFeedContent(x) {
 		let [k]=get_keys_of(x);
 		if("buttonRenderer" in x) {
-			this.w(x,a=>this.ButtonData(a));
+			this.w(x,a => this.ButtonData(a));
 		}
 		switch(k) {
 			case "buttonRenderer": break;
