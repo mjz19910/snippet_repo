@@ -4718,6 +4718,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtUrlInfoPlaylist} x */
 	log_playlist_id(x) {
+		if(this.cache_playlist_id.includes(x.id)) return;
+		this.cache_playlist_id.push(x.id);
 		console.log("[playlist]",x.type,x.id);
 	}
 	/** @arg {CommandMetadata} x */
