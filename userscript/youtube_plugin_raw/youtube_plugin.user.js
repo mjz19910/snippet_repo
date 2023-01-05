@@ -1540,6 +1540,7 @@ class FilterHandlers {
 						data: cast_as(json),
 					};
 					case "log": debugger; return {
+						// @ts-ignore
 						type: `${target[0]}.${target[1]}`,
 						data: cast_as(json),
 					};
@@ -1547,8 +1548,9 @@ class FilterHandlers {
 				case "live_chat": switch(target[1]) {
 					default: debugger; break;
 					case "get_live_chat_replay": debugger; return {
+						// @ts-ignore
 						type: `${target[0]}.${target[1]}`,
-						data: json,
+						data: cast_as(json),
 					};
 				} break;
 				case "notification": switch(target[1]) {
@@ -1569,6 +1571,7 @@ class FilterHandlers {
 						data: cast_as(json),
 					};
 					case "modify_channel_preference": return {
+						// @ts-ignore
 						type: `${target[0]}.${target[1]}`,
 						/** @type {YtSuccessResponse} */
 						data: cast_as(json),
@@ -4276,7 +4279,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @type {ResponseTypes['type']|null} */
+	/** @type {ResponseTypes['type']|NavigateEventDetail['response']['page']|null} */
 	_current_response_type=null;
 	get current_response_type() {
 		if(!this._current_response_type) throw 1;
@@ -4316,6 +4319,7 @@ class HandleTypes extends BaseService {
 			case "next": return this.YtApiNext(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCount(x.data);
+			// @ts-ignore
 			case "notification.modify_channel_preference": return this.ModifyChannelPreference(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
 			case "player": return this.WatchResponsePlayer(x.data);
@@ -5938,14 +5942,20 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
-		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
+		this.save_keys("AccountSetSetting",x,this.TODO_true);
 	}
 	/** @arg {ReelWatchSequence} x */
-	ReelWatchSequence(x) {x;}
+	ReelWatchSequence(x) {
+		this.save_keys("ReelWatchSequence",x,this.TODO_true);
+	}
 	/** @arg {JsonFeedbackData} x */
-	JsonFeedbackData(x) {x;}
+	JsonFeedbackData(x) {
+		this.save_keys("JsonFeedbackData",x,this.TODO_true);
+	}
 	/** @arg {JsonGetTranscriptData} x */
-	JsonGetTranscriptData(x) {x;}
+	JsonGetTranscriptData(x) {
+		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
