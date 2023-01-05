@@ -5208,7 +5208,11 @@ class HandleTypes extends BaseService {
 	/** @arg {AnimationConfig} x */
 	AnimationConfig(x) {
 		const {minImageUpdateIntervalMs: a,crossfadeDurationMs: b,crossfadeStartOffset: c,maxFrameRate: d,...y}=x; this.g(y);
-		if(a!==5000) debugger;
+		switch(a) {
+			case 10000: break;
+			case 5000: break;
+			default: debugger;
+		}
 		if(b!==5000) debugger;
 		if(c!==1) debugger;
 		if(d!==30) debugger;
