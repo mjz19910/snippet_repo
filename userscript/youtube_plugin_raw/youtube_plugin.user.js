@@ -3895,10 +3895,7 @@ class IndexedDbAccessor {
 	createLatestDatabaseVersion(request,data_source) {
 		const db=request.result;
 		const store=db.createObjectStore("video_id",{keyPath: "v"});
-		for(let x of data_source) {
-			store.put(x);
-		}
-
+		for(let x of data_source) store.put(x);
 	}
 	/** @arg {Event} event */
 	onError(event) {
