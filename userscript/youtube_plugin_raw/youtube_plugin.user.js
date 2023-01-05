@@ -1103,7 +1103,7 @@ class MyReader {
 			return null;
 		}
 	}
-	/** @arg {number} [size] */
+	/** @private @arg {number} [size] */
 	read_any(size) {
 		this.pos=0;
 		let target_len;
@@ -1346,10 +1346,14 @@ class MyReader {
 			case 3: {
 				let res;
 				while((wireType=(res=this.uint32())&7)!==4) {
-					this.skipTypeEx(res>>>3,wireType);
+					let skip_res=this.skipTypeEx(res>>>3,wireType);
+					first_num.push(["group",skip_res]);
 				}
 			} break;
-			case 4: throw new Error("Invalid state");
+			case 4: {
+				first_num.push(["error"]);
+				return first_num;
+			}
 			case 5: first_num.push(["data_fixed32",fieldId,this.fixed32()]); break;
 			default: break;
 		}
@@ -1361,22 +1365,19 @@ const base64_dec=new Base64Binary();
 function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
-	try {
-		return reader.read_any();
-	} catch {
-		return null;
-	}
+	return reader.try_read_any();
+}
+/** @arg {string} x */
+function decode_url_b64(x) {
+	x=x.replaceAll("_","/").replaceAll("-","+");
+	return base64_dec.decodeByteArray(x);
 }
 /** @arg {string} x */
 function decode_url_b64_proto_obj(x) {
 	x=x.replaceAll("_","/").replaceAll("-","+");
 	let ba=base64_dec.decodeByteArray(x);
 	let reader=new MyReader(ba);
-	try {
-		return reader.read_any();
-	} catch {
-		return null;
-	}
+	return reader.try_read_any();
 }
 /** @template T @arg {T|undefined} val @returns {T} */
 function non_null(val) {
@@ -5085,16 +5086,16 @@ class HandleTypes extends BaseService {
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
 		const {updates: a,...y}=x;
-		this.z(a,a=>this.ElementUpdateItem(a));
+		this.z(a,a => this.ElementUpdateItem(a));
 		this.g(y);
 	}
 	/** @arg {ElementUpdateItem} x */
 	ElementUpdateItem(x) {
 		if("templateUpdate" in x) {
-			const {templateUpdate:a,...y}=x; this.g(y);
+			const {templateUpdate: a,...y}=x; this.g(y);
 			this.TemplateUpdateData(a);
 		} else if("resourceStatusInResponseCheck" in x) {
-			const {resourceStatusInResponseCheck:a,...y}=x; this.g(y);
+			const {resourceStatusInResponseCheck: a,...y}=x; this.g(y);
 			this.ResourceStatusInResponseCheckData(a);
 		} else {
 			debugger;
@@ -5105,9 +5106,14 @@ class HandleTypes extends BaseService {
 		const {identifier: a,serializedTemplateConfig: b,dependencies: c,...y}=x; this.g(y);
 		let id=a.split("|");
 		console.log(id);
-		let res=decode_url_b64_proto_obj(b);
-		console.log(res);
-		this.z(c,a=>{
+		x: {
+			let binary=decode_url_b64(b);
+			let reader=new MyReader(binary.subarray(7));
+			let res=reader.try_read_any();
+			if(!res) break x;
+			console.log(res[0]);
+		}
+		this.z(c,a => {
 			let id=a.split("|");
 			console.log(id);
 		});
