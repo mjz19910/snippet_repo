@@ -5123,7 +5123,7 @@ class HandleTypes extends BaseService {
 			let binary=decode_url_b64(b);
 			let reader=new MyReader(binary);
 			reader.pos=7;
-			let res=reader.try_read_any(binary.byteLength-8);
+			let res=reader.try_read_any();
 			if(!res) break x;
 			let item=res[0];
 			switch(item[0]) {
@@ -5493,8 +5493,34 @@ class HandleTypes extends BaseService {
 			this.w(x,v => this.CommentThreadData(v));
 		} else if("compactVideoRenderer" in x) {
 			this.w(x,v => this.CompactVideoData(v));
+		} else if("continuationItemRenderer" in x) {
+			this.w(x,v => this.ContinuationItemData(v));
 		} else {
-			this.empty_object(x);
+			this.g(x);
+		}
+	}
+	/** @arg {ContinuationItemData} x */
+	ContinuationItemData(x) {
+		const {trigger: a,continuationEndpoint: b,button: c,ghostCards: d,...y}=x;
+		switch(a) {
+			case "CONTINUATION_TRIGGER_ON_ITEM_SHOWN": break;
+			default: debugger;
+		}
+		this.yt_endpoint(b);
+		if(c) this.ButtonRenderer(c);
+		if(d) this.GhostGridRenderer(d);
+		this.g(y);
+	}
+	/** @arg {GhostGridRenderer} x */
+	GhostGridRenderer(x) {
+		const {ghostGridRenderer: a,...y}=x; this.g(y);
+		this.GhostGridData(a);
+	}
+	/** @arg {GhostGridData} x */
+	GhostGridData(x) {
+		const {rows: a,...y}=x; this.g(y);
+		switch(a) {
+			default: debugger;
 		}
 	}
 	/** @arg {RichItemData} x */

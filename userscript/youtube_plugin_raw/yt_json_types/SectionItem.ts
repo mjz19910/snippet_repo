@@ -4,4 +4,5 @@ type SectionItem=[
 	CommentsHeaderRenderer,
 	CommentThreadRenderer,
 	CompactVideoRenderer,
+	ContinuationItemRenderer,
 ][number];
