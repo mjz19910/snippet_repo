@@ -6092,8 +6092,24 @@ class HandleTypes extends BaseService {
 	TranscriptSearchPanelData(x) {
 		const {body: a,footer: b,trackingParams: c,targetId: d,...y}=x; this.g(y);
 		this.TranscriptSegmentListRenderer(a);
+		this.TranscriptFooterRenderer(b);
 		this.trackingParams(c);
 		this.parse_target_id(d);
+	}
+	/** @arg {TranscriptFooterRenderer} x */
+	TranscriptFooterRenderer(x) {
+		const {transcriptFooterRenderer: a,...y}=x; this.g(y);
+		this.TranscriptFooterData(a);
+	}
+	/** @arg {TranscriptFooterData} x */
+	TranscriptFooterData(x) {
+		const {languageMenu: a,...y}=x; this.g(y);
+		this.SortFilterSubMenuRenderer(a);
+	}
+	/** @arg {SortFilterSubMenuRenderer} x */
+	SortFilterSubMenuRenderer(x) {
+		const {sortFilterSubMenuRenderer: a,...y}=x; this.g(y);
+		this.SortFilterSubMenuData(a);
 	}
 	/** @arg {TranscriptSegmentListRenderer} x */
 	TranscriptSegmentListRenderer(x) {
