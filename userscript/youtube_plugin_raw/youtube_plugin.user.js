@@ -4123,6 +4123,36 @@ class HandleTypes extends BaseService {
 		this.save_keys("UrlEndpointRoot",x,true);
 		this.empty_object(y);
 	}
+	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
+	ChangeKeyedMarkersVisibilityCommand(x) {
+		const {isVisible,key,...v}=x;
+		this.primitive_of(isVisible,"boolean");
+		if(key!=="HEATSEEKER") debugger;
+		this.empty_object(v);
+	}
+	/** @arg {LoadMarkersCommandData} x */
+	LoadMarkersCommand(x) {
+		const {entityKeys: a,...y}=x;
+		this.z(a,a => {
+			let res=decode_b64_proto_obj(a);
+			let res_2=decode_entity_key(a);
+			console.log("[entity_key]",res_2,res);
+		});
+		this.empty_object(y);
+	}
+	/** @arg {CreateCommentEndpointData} x */
+	CreateCommentEndpointData(x) {
+		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
+		if(!res) {
+			console.log("failed to decode create_comment_params");
+			return;
+		}
+		if(res[0][0]==="child"&&res[0][1]===2) {
+			console.log("fieldId",res[0][1],"str",decoder.decode(res[0][2]),"rest",res.slice(1));
+		} else {
+			console.log(res);
+		}
+	}
 	endpoint_data_map=new class {
 		constructor() {
 			this._map=new Map(Object.entries(this._obj_map));
@@ -4164,36 +4194,6 @@ class HandleTypes extends BaseService {
 			return as_cast(key);
 		}
 	};
-	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
-	ChangeKeyedMarkersVisibilityCommand(x) {
-		const {isVisible,key,...v}=x;
-		this.primitive_of(isVisible,"boolean");
-		if(key!=="HEATSEEKER") debugger;
-		this.empty_object(v);
-	}
-	/** @arg {LoadMarkersCommandData} x */
-	LoadMarkersCommand(x) {
-		const {entityKeys: a,...y}=x;
-		this.z(a,a => {
-			let res=decode_b64_proto_obj(a);
-			let res_2=decode_entity_key(a);
-			console.log("[entity_key]",res_2,res);
-		});
-		this.empty_object(y);
-	}
-	/** @arg {CreateCommentEndpointData} x */
-	CreateCommentEndpointData(x) {
-		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
-		if(!res) {
-			console.log("failed to decode create_comment_params");
-			return;
-		}
-		if(res[0][0]==="child"&&res[0][1]===2) {
-			console.log("fieldId",res[0][1],"str",decoder.decode(res[0][2]),"rest",res.slice(1));
-		} else {
-			console.log(res);
-		}
-	}
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		this.save_keys("YtEndpoint",x,true);
