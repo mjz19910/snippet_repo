@@ -5207,8 +5207,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AnimationConfig} x */
 	AnimationConfig(x) {
-		const {...y}=x; this.g(y);
-		
+		const {minImageUpdateIntervalMs: a,crossfadeDurationMs: b,crossfadeStartOffset: c,maxFrameRate: d,...y}=x; this.g(y);
+		if(a!==5000) debugger;
+		if(b!==5000) debugger;
+		if(c!==1) debugger;
+		if(d!==30) debugger;
 	}
 	/** @template {ThemeBackgroundVars} T @arg {T} x @returns {Omit<T,keyof ThemeBackgroundVars>} */
 	parse_theme_background_vars(x) {
