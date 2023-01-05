@@ -3268,6 +3268,7 @@ class ECatcherService extends BaseService {
 				[24591046,24197450,24590921,24402891,24217535],
 				[24440901,24443373],
 				[24401504,24422508],
+				24442137,
 			].flat(),
 		},
 	};
@@ -3291,6 +3292,7 @@ class ECatcherService extends BaseService {
 				console.log("[new_fexp_expected][%o]",new_expected[0]);
 			}
 		}
+		this.data.expected_client_values.fexp;
 	}
 	/** @arg {ECatcherServiceParams['params']} params */
 	on_params(params) {
@@ -4718,6 +4720,17 @@ class HandleTypes extends BaseService {
 			case "comment": {
 				index++; let next_part=parts[index]; switch(next_part) {
 					case "create_comment": break;
+					default:
+						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+						return null;
+				} return {
+					/** @type {`${typeof cur_part}.${typeof next_part}`} */
+					name: `${cur_part}.${next_part}`
+				};
+			}
+			case "like": {
+				index++; let next_part=parts[index]; switch(next_part) {
+					case "like": break;
 					default:
 						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
 						return null;
