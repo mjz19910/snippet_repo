@@ -1,3 +1,1 @@
-type InfoCardIconRenderer={
-	infoCardIconRenderer: {};
-};
+type InfoCardIconRenderer={infoCardIconRenderer: InfoCardIconData;};

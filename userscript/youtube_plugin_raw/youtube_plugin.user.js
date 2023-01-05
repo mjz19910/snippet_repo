@@ -6548,7 +6548,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {InfoCardIconRenderer} x */
 	InfoCardIconRenderer(x) {
-		this.g(x.infoCardIconRenderer);
+		const {infoCardIconRenderer: a,...y}=x; this.g(y);
+		this.InfoCardIconData(x.infoCardIconRenderer);
+	}
+	/** @arg {InfoCardIconData} x */
+	InfoCardIconData(x) {
+		const {trackingParams: a,...y}=x; this.g(y);
+		this.trackingParams(a);
 	}
 	/** @arg {PlayerMicroformatRenderer} x */
 	PlayerMicroformatRenderer(x) {

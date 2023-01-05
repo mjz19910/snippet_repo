@@ -1,0 +1,3 @@
+type InfoCardIconData={
+	trackingParams: string;
+};
