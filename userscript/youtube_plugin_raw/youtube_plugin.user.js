@@ -5259,10 +5259,10 @@ class HandleTypes extends BaseService {
 		}
 		if(a) {
 			if("accessibilityData" in a) {
-				console.log("[button_accessibility]");
-				debugger;
+				this.save_string("button_accessibility","accessibility_Accessibility");
 				this.Accessibility(a);
 			} else {
+				this.save_string("button_accessibility","accessibility_AccessibilityData");
 				this.AccessibilityData(a);
 			}
 		}
@@ -5276,12 +5276,24 @@ class HandleTypes extends BaseService {
 		{
 			const {targetId: a,accessibilityData: b,...z}=y;
 			if(a) this.parse_target_id(a);
-			if(b) this.AccessibilityData(b);
+			if(b) {
+				if("accessibilityData" in b) {
+					this.save_string("button_accessibility","accessibilityData_Accessibility");
+					this.Accessibility(b);
+				} else {
+					this.save_string("button_accessibility","accessibilityData_AccessibilityData");
+					this.AccessibilityData(b);
+				}
+			}
 			this.empty_object(z);
 		}
 	}
 	/** @arg {AnyIcon} x*/
 	Icon(x) {
+		if(!x) {
+			debugger;
+			return;
+		}
 		const {iconType: a,...y}=x;
 		this.save_string(`icon_type`,a);
 		this.empty_object(y);
@@ -5305,11 +5317,11 @@ class HandleTypes extends BaseService {
 		this.LoggingDirectives(j);
 		this.empty_object(y);
 	}
-	/** @arg {SortFilterSubMenuRenderer} x */
+	/** @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuRenderer(x) {
 		const {accessibility: a,icon: b,subMenuItems: c,title: d,trackingParams: e,...y}=x;
 		if(a) this.Accessibility(a);
-		this.Icon(b);
+		if(b) this.Icon(b);
 		this.z(c,v => this.ActionSetPlaylistVideoOrder(v));
 		this.primitive_of(d,"string");
 		this.trackingParams(e);

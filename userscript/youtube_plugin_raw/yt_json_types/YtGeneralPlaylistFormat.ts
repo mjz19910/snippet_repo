@@ -1,0 +1,1 @@
+type YtGeneralPlaylistFormat=`PL${string}`;

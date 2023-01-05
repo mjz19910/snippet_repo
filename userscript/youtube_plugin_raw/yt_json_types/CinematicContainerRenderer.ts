@@ -1,3 +1,1 @@
-type CinematicContainerRenderer={
-	cinematicContainerRenderer: CinematicContainerRendererData;
-};
+type CinematicContainerRenderer={cinematicContainerRenderer: CinematicContainerData;};

@@ -1,6 +1,6 @@
 type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
-	accessibilityData?: AccessibilityData;
+	accessibilityData?: Accessibility|AccessibilityData;
 	command?: YtEndpoint;
 	icon?: Icon<"SETTINGS">|Icon<"DELETE">;
 	isDisabled?: boolean;

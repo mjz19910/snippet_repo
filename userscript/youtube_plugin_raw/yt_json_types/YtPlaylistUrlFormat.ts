@@ -1,0 +1,1 @@
+type YtPlaylistUrlFormat=`playlist?${YtPlaylistUrlParamsFormat}`;
