@@ -4049,8 +4049,9 @@ class HandleTypes extends BaseService {
 			this.VideoDetails(m);
 			if("playerStoryboardSpecRenderer" in n) {
 				this.PlayerStoryboardSpecRenderer(n);
+			} else if("playerLiveStoryboardSpecRenderer" in n) {
+				this.PlayerLiveStoryboardSpecRenderer(n);
 			} else {
-				n;
 				debugger;
 			}
 			this.StreamingData(o);
@@ -4066,6 +4067,16 @@ class HandleTypes extends BaseService {
 		let e=p5.call(this,d);
 		this.empty_object(e);
 		this.save_keys("WatchResponsePlayer",x,true);
+	}
+	/** @arg {PlayerLiveStoryboardSpecRenderer} x */
+	PlayerLiveStoryboardSpecRenderer(x) {
+		const {playerLiveStoryboardSpecRenderer: a,...y}=x; this.g(y);
+		this.PlayerLiveStoryboardSpecData(a);
+	}
+	/** @arg {PlayerLiveStoryboardSpecData} x */
+	PlayerLiveStoryboardSpecData(x) {
+		const {spec: a,...y}=x; this.g(y);
+		this.primitive_of(a,"string");
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
