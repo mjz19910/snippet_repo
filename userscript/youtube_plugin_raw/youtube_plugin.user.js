@@ -6607,22 +6607,35 @@ class HandleTypes extends BaseService {
 		let b=p2.call(this,a);
 		/** @this {typeof t} @arg {typeof b} x */
 		function p3(x) {
-			const {availableCountries,isUnlisted,hasYpcMetadata,viewCount,...y}=x;
+			const {availableCountries: a,isUnlisted: c,hasYpcMetadata: d,viewCount: e,...y}=x;
+			this.z(a,a=>this.save_string("country_code",a));
+			this.z([c,d],a=>this.primitive_of(a,"boolean"));
+			this.primitive_of(e,"string");
 			return y;
 		}
 		let c=p3.call(this,b);
 		/** @this {typeof t} @arg {typeof c} x */
 		function p4(x) {
-			const {category,publishDate,ownerChannelName,liveBroadcastDetails,...y}=x;
+			const {category: a,publishDate: b,ownerChannelName: d,liveBroadcastDetails: e,...y}=x;
+			this.save_string("video.category",a);
+			this.z([b,d],a=>this.primitive_of(a,"string"));
+			if(e) this.LiveBroadcastDetails(e);
 			return y;
 		}
 		let d=p4.call(this,c);
 		/** @this {typeof t} @arg {typeof d} x */
 		function p5(x) {
-			const {uploadDate,...y}=x;
+			const {uploadDate: a,...y}=x;
+			this.primitive_of(a,"string");
 			return y;
 		}
 		let y=p5.call(this,d); this.g(y);
+	}
+	/** @arg {LiveBroadcastDetails} x */
+	LiveBroadcastDetails(x) {
+		const {isLiveNow: a,startTimestamp: b,...y}=x; this.g(y);
+		this.primitive_of(a,"boolean");
+		this.primitive_of(b,"string");
 	}
 	/** @arg {`http://www.youtube.com/channel/UC${string}`} x */
 	parse_channel_url(x) {

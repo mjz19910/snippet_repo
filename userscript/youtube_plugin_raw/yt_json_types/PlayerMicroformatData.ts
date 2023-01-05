@@ -14,6 +14,6 @@ type PlayerMicroformatData={
 	category: YtCategoryStr;
 	publishDate: string;
 	ownerChannelName: string;
-	liveBroadcastDetails: LiveBroadcastDetails;
+	liveBroadcastDetails?: LiveBroadcastDetails;
 	uploadDate: string;
 };
