@@ -1095,13 +1095,6 @@ class LongBits {
 		return bigint_buf[0];
 	}
 }
-/** @arg {Uint8Array} buf @arg {number} end */
-function readFixed32_end(buf,end) {
-	return (buf[end-4]
-		|buf[end-3]<<8
-		|buf[end-2]<<16
-		|buf[end-1]<<24)>>>0;
-}
 /** @arg {MyReader} reader @arg {number} [writeLength] */
 function indexOutOfRange(reader,writeLength) {
 	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
@@ -1280,9 +1273,16 @@ class MyReader {
 		if(this.pos+8>this.len)
 			throw indexOutOfRange(this,8);
 		return new LongBits(
-			readFixed32_end(this.buf,this.pos+=4),
-			readFixed32_end(this.buf,this.pos+=4)
+			this.readFixed32_end(this.buf,this.pos+=4),
+			this.readFixed32_end(this.buf,this.pos+=4)
 		).toBigInt();
+	}
+	/** @arg {Uint8Array} buf @arg {number} end */
+	readFixed32_end(buf,end) {
+		return (buf[end-4]
+			|buf[end-3]<<8
+			|buf[end-2]<<16
+			|buf[end-1]<<24)>>>0;
 	}
 	fixed64() {
 		this.last_pos=this.pos;
@@ -1297,7 +1297,7 @@ class MyReader {
 		if(this.pos+4>this.len)
 			throw this.indexOutOfRange(4);
 
-		return readFixed32_end(this.buf,this.pos+=4);
+		return this.readFixed32_end(this.buf,this.pos+=4);
 	}
 	/** @returns {[number,number]} */
 	read_field_description() {
@@ -2135,31 +2135,16 @@ function on_port_message(event) {
 	if(is_yt_debug_enabled) console.log("msg_port:message %o",event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
 	if(slow_message_event) {
-		setTimeout(dispatch_observer_event,message_channel_loop_delay);
+		setTimeout(fire_observer_event,message_channel_loop_delay);
 		return;
 	}
-	dispatch_observer_event();
+	fire_observer_event();
 }
 
 let message_channel=new MessageChannel();
 
 function fire_observer_event() {
 	dom_observer.notify_with_port(message_channel.port1);
-}
-
-let always_dispatch_event=false;
-let rep_count=0;
-let rep_max=300;
-function dispatch_observer_event() {
-	rep_count+=1;
-	if(always_dispatch_event) {
-		return fire_observer_event();
-	}
-	if(rep_count%rep_max==(rep_max-1)) {
-		port_state.cint=setTimeout(fire_observer_event,10);
-		return;
-	}
-	return fire_observer_event();
 }
 
 /** @template T,U */
@@ -3260,6 +3245,8 @@ class ECatcherService extends BaseService {
 				[1714247,9405964,23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738,24108447,24120820,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24181174,24187043,24187377,24211178,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,24404640,24406313,24406621,24414718,24415864,24415866,24416290,24429095,24433679,24436009,24437575,24438162,24438848,24439361,24439483,24441244,39322504,39322574],
 				[39322873,39322983,39323013,39323020,39323120,45686551],
 				[24591046,24197450,24590921,24402891,24217535],
+				[24440901,24443373],
+				[24401504,24422508],
 			].flat(),
 		},
 	};
@@ -4414,6 +4401,8 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
+	/** @type {string[]} */
+	cache_player_params=[];
 	/** @arg {YtWatchUrlParamsFormat} x */
 	parse_watch_page_url(x) {
 		/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
@@ -4421,13 +4410,13 @@ class HandleTypes extends BaseService {
 			let sp=new URLSearchParams(t);
 			return as_cast(Object.fromEntries(sp.entries()));
 		}
-		/** @type {{list: YtPlaylistFormat}|{v: string}|{pp: string}} */
+		/** @type {{list?: YtPlaylistFormat;v: string;pp?: string;index?: `${number}`}} */
 		let sp=make_search_params(x);
 		let k=filter_out_keys(get_keys_of(sp),["list","v","pp","index"]);
 		if(k.length>0) {
 			console.log("[missed_url_param_keys]",k);
 		}
-		if("list" in sp) {
+		if(sp.list!==void 0) {
 			let v=sp.list;
 			if(this.str_starts_with(v,"RD")) {
 				if(this.str_starts_with(v,`${"RD"}${"MM"}`)) {
@@ -4442,7 +4431,9 @@ class HandleTypes extends BaseService {
 				debugger;
 			}
 		}
-		if("pp" in sp) {
+		if(sp.pp!==void 0) {
+			if(this.cache_player_params.includes(sp.pp)) return;
+			this.cache_player_params.push(sp.pp);
 			console.log("[player_params_found]",sp.pp);
 		}
 		x: if("v" in sp) {
@@ -4538,31 +4529,35 @@ class HandleTypes extends BaseService {
 			}
 			case "browse": break;
 			case "guide": break;
-			case "reel": index++; let next_part=parts[index]; switch(next_part) {
-				case "reel_item_watch": break;
-				case "reel_watch_sequence": break;
-				default:
-					console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-					return null;
-			} return {
-				/** @type {`${typeof cur_part}.${typeof next_part}`} */
-				name: `${cur_part}.${next_part}`
-			};
+			case "reel": {
+				index++; let next_part=parts[index]; switch(next_part) {
+					case "reel_item_watch": break;
+					case "reel_watch_sequence": break;
+					default:
+						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+						return null;
+				}return {
+					/** @type {`${typeof cur_part}.${typeof next_part}`} */
+					name: `${cur_part}.${next_part}`
+				};
+			}
 			case "next": break;
 			case "player": break;
 			case "live_chat": index++; return this.get_live_chat_type("live_chat",parts,index);
 			case "get_transcript": break;
 			case "account": return get_account_type(cur_part,parts,index+1);
 			case "feedback": break;
-			case "comment": index++; next_part=parts[index]; switch(next_part) {
-				case "create_comment": break;
-				default:
-					console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-					return null;
-			} return {
-				/** @type {`${typeof cur_part}.${typeof next_part}`} */
-				name: `${cur_part}.${next_part}`
-			};
+			case "comment": {
+				index++; let next_part=parts[index]; switch(next_part) {
+					case "create_comment": break;
+					default:
+						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
+						return null;
+				} return {
+					/** @type {`${typeof cur_part}.${typeof next_part}`} */
+					name: `${cur_part}.${next_part}`
+				};
+			}
 			default:
 				console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
 				debugger;
@@ -5153,6 +5148,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccessibilityData} x */
 	AccessibilityData(x) {
+		if(!x) debugger;
 		const {label: a,...y}=x;
 		this.save_string(`label`,a);
 		this.empty_object(y);
@@ -5244,9 +5240,17 @@ class HandleTypes extends BaseService {
 			case void 0: break;
 			default: debugger;
 		}
-		if(a) this.Accessibility(a);
+		if(a) {
+			if("accessibilityData" in a) {
+				console.log("[button_accessibility]");
+				this.Accessibility(a);
+			} else {
+				console.log("[button_accessibility_data]");
+				this.AccessibilityData(a);
+			}
+		}
 		if(b) this.yt_endpoint(b);
-		this.Icon(c);
+		if(c) this.Icon(c);
 		if(d) this.primitive_of(d,"boolean");
 		if(e) this.yt_endpoint(e);
 		if(i) this.trackingParams(i);
