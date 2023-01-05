@@ -4731,6 +4731,7 @@ class HandleTypes extends BaseService {
 			case "like": {
 				index++; let next_part=parts[index]; switch(next_part) {
 					case "like": break;
+					case "removelike": break;
 					default:
 						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
 						return null;
