@@ -5188,7 +5188,56 @@ class HandleTypes extends BaseService {
 	CinematicContainerData(x) {
 		const {backgroundImageConfig: a,gradientColorConfig: b,presentationStyle: c,config: d,...y}=x; this.g(y);
 		if(a) this.ThumbnailsList(a);
-		this.z(b,a => a);
+		this.z(b,a => this.GradientColorConfigItem(a));
+		switch(c) {
+			case "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED": break;
+			case void 0: break;
+			default: debugger;
+		}
+		this.PageVisualEffectsConfig(d);
+	}
+	/** @arg {PageVisualEffectsConfig} x */
+	PageVisualEffectsConfig(x) {
+		let a=this.parse_theme_background_vars(x);
+		let b=this.parse_color_source_vars(a);
+		const {animationConfig: c,applyClientImageBlur: d,blurStrength: e,...y}=b; this.g(y);
+		this.AnimationConfig(c);
+		this.primitive_of(d,"boolean");
+		if(e!==5) debugger;
+	}
+	/** @arg {AnimationConfig} x */
+	AnimationConfig(x) {
+		const {...y}=x; this.g(y);
+		
+	}
+	/** @template {ThemeBackgroundVars} T @arg {T} x @returns {Omit<T,keyof ThemeBackgroundVars>} */
+	parse_theme_background_vars(x) {
+		const {lightThemeBackgroundColor: a,darkThemeBackgroundColor: b,...y}=x;
+		console.log("light theme background color",a.toString(16));
+		console.log("dark theme background color",b.toString(16));
+		return y;
+	}
+	/** @template {ColorSourceVars} T @arg {T} x @returns {Omit<T,keyof ColorSourceVars>}  */
+	parse_color_source_vars(x) {
+		const {
+			colorSourceHeightMultiplier: a,colorSourceSizeMultiplier: b,
+			colorSourceWidthMultiplier: c,bottomColorSourceHeightMultiplier: d,
+			maxBottomColorSourceHeight: e,
+			...y
+		}=x;
+		if(a!==2) debugger;
+		if(b!==1.4) debugger;
+		if(c!==1.5) debugger;
+		if(d!==0.67) debugger;
+		if(e!==260) debugger;
+		return y;
+	}
+	/** @arg {GradientColorConfigItem} x */
+	GradientColorConfigItem(x) {
+		const {lightThemeColor: a,darkThemeColor: b,startLocation: c,...y}=x; this.g(y);
+		console.log("gradient light theme color",a.toString(16));
+		console.log("gradient dark theme color",b.toString(16));
+		console.log("gradient start location",c);
 	}
 	/** @arg {ThumbnailsList} x */
 	ThumbnailsList(x) {
