@@ -4395,7 +4395,7 @@ class HandleTypes extends BaseService {
 			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
 			default: debugger;
 		};
-		this.z(b,a=>this.GuideEntryRenderer(a));
+		this.z(b,a => this.GuideEntryRenderer(a));
 		this.empty_object(y);
 	}
 	/** @arg {RemoveFromGuideSectionAction} x */
@@ -4989,9 +4989,9 @@ class HandleTypes extends BaseService {
 		function p1(x) {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
 			this.yt_endpoint(a);
-			this.z(b,a=>this.EngagementPanelSectionListRenderer(a));
+			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
 			this.FrameworkUpdates(c);
-			this.z(d,a=>this.yt_endpoint(a));
+			this.z(d,a => this.yt_endpoint(a));
 			return y;
 		}
 		/** @this {typeof t} @arg {typeof x} x */
@@ -5793,7 +5793,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerStoryboardSpecRenderer} x */
 	PlayerStoryboardSpecRenderer(x) {
-		const {playerStoryboardSpecRenderer:a,...y}=x;
+		const {playerStoryboardSpecRenderer: a,...y}=x;
 		this.PlayerStoryboardSpecData(a);
 		this.empty_object(y);
 	}
@@ -5911,7 +5911,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerStoryboardSpecData} x */
 	PlayerStoryboardSpecData(x) {
-		this.save_keys("PlayerStoryboardSpecData",x,this.TODO_true);
+		const {spec: a,...y}=x;
+		this.primitive_of(a,"string");
+		this.empty_object(y);
 	}
 	/** @arg {StreamingData} x */
 	StreamingData(x) {

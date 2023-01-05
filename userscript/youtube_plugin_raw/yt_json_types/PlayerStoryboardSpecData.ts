@@ -1,1 +1,3 @@
-type PlayerStoryboardSpecData={};
+type PlayerStoryboardSpecData={
+	spec: string;
+};
