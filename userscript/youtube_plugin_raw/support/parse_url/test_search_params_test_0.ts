@@ -1,10 +1,15 @@
-export const url_test_value_ytimg_vi_jpg="https://i.ytimg.com/vi/OAIqCpqszVw/hqdefault.jpg?sqp=-oaymwE1CKgBEF5IVfKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGB8gZShWMA8=&rs=AOn4CLCpqrflce1_k2te4K_5kNbCpjCm6Q";
+function create_from_parse<T extends string>(str:T): UrlParse<T> {
+	let s=new URL(str);
+	return s as any as UrlParse<T>;
+}
+
 function test_search_params_test_0() {
 	function black_box<T>(v:T) {return v;}
 	const str=url_test_value_ytimg_vi_jpg;
 	const vv=create_from_parse(str);
-	type ru=Decay<ParseUrlSearchParams<typeof vv['search']>>;
-	let res_a=make_search_params(vv.search);
+	const search_str=split_string(vv.search,"?")[1];
+	type ru=Decay<ParseUrlSearchParams<typeof search_str>>;
+	let res_a=make_search_params(search_str);
 	let ux:ru=black_box<ru>(res_a);
 	if('rs' in ux) {
 		type v=typeof ux;

@@ -10,9 +10,10 @@ function do_test_url_parse_test_0() {
 	let vv=create_from_parse(url_test_value_ytimg_vi_jpg);
 
 	let rt_u=vv;rt_u;
+	const search_str=split_string(vv.search,"?")[1];
 	console.log('rt_u.search has_sqp=%o',rt_u.search.includes("sqp")?"yes":"no");
-	console.log("rs",get_url_params(vv.search,"rs"));
-	console.log("sqp",get_url_params(vv.search,"sqp"));
+	console.log("rs",get_url_params(search_str,"rs"));
+	console.log("sqp",get_url_params(search_str,"sqp"));
 }
 
 do_test_url_parse_test_0();

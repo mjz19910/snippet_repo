@@ -553,6 +553,10 @@ class VolumeRange {
 		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
 }
+if(typeof exports==="object") {
+	let exports=get_exports();
+	exports.VolumeRange=VolumeRange;
+}
 /** @arg {string|URL} url */
 function to_url(url) {
 	if(url instanceof URL) {
