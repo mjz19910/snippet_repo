@@ -6362,23 +6362,41 @@ class HandleTypes extends BaseService {
 	LiveChatTextMessageData(x) {
 		const {
 			message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,
-			id: e,timestampUsec: f,authorExternalChannelId: g,contextMenuAccessibility: h,
-			timestampText: i,...y
+			id: e,timestampUsec: f,authorBadges: g,authorExternalChannelId: h,contextMenuAccessibility: i,
+			timestampText: j,...y
 		}=x;
-		this.z([a,b,i],a=>this.text_t(a));
+		this.z([a,b,j],a=>this.text_t(a));
 		this.Thumbnail(c);
 		this.yt_endpoint(d);
 		this.z([e,f],a=>this.primitive_of(a,"string"));
-		this.parse_external_channel_id(g);
-		this.Accessibility(h);
+		this.parse_external_channel_id(h);
+		this.Accessibility(i);
+		if(g) this.z(g,a=>this.LiveChatAuthorBadgeRenderer(a));
 		this.g(y);
+	}
+	/** @arg {LiveChatAuthorBadgeRenderer} x */
+	LiveChatAuthorBadgeRenderer(x) {
+		if("liveChatAuthorBadgeRenderer" in x) {
+			this.w(x,a=>{
+				const {accessibility: b,icon: c,tooltip: d,...y}=a;
+				this.Accessibility(b);
+				this.Icon(c);
+				this.g(y);
+			});
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {`UC${string}`} x */
 	parse_external_channel_id(x) {
 		/** @type {SplitIntoGroups<typeof x,`${string}`>[0]} */
 		let g1=as_cast(x.slice(0,2));
 		switch(g1) {
-			case "UC": let cr=x.slice(2); console.log("[channel_id] %s %s",g1,cr); break;
+			case "UC": {
+				let cr=x.slice(2);
+				if(cr.length===22) break;
+				console.log("[channel_id] %s %s",g1,cr);
+			} break;
 			default: debugger;
 		}
 	}

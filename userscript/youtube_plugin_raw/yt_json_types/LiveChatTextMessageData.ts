@@ -4,6 +4,7 @@ type LiveChatTextMessageData={
 	authorPhoto: Thumbnail;
 	contextMenuEndpoint: YtEndpoint;
 	id: string;
+	authorBadges?: LiveChatAuthorBadgeRenderer[];
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
 	contextMenuAccessibility: Accessibility;

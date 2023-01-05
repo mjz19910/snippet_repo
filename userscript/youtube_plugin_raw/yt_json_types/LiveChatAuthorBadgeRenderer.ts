@@ -1,0 +1,3 @@
+type LiveChatAuthorBadgeRenderer={
+	liveChatAuthorBadgeRenderer: LiveChatAuthorBadgeData;
+};
