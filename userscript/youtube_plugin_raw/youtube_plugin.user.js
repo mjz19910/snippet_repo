@@ -1353,7 +1353,11 @@ const base64_dec=new Base64Binary();
 function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
-	return reader.read_any();
+	try {
+		return reader.read_any();
+	} catch {
+		return null;
+	}
 }
 /** @template T @arg {T|undefined} val @returns {T} */
 function non_null(val) {
@@ -3765,11 +3769,22 @@ class IndexedDbAccessor {
 			version,
 		};
 	}
+	database_opening=false;
+	database_open=false;
 	/** @type {{}[]} */
 	arr=[];
 	/** @arg {{v: string}} obj */
 	put(obj) {
+		if(this.database_open) {
+			this.arr.push(obj);
+			return;
+		}
+		this.requestOpen();
 		this.arr.push(obj);
+	}
+	requestOpen() {
+		if(this.database_opening||this.database_open) return;
+		this.database_opening=true;
 		this.open();
 	}
 	open() {
@@ -3791,6 +3806,8 @@ class IndexedDbAccessor {
 	}
 	/** @arg {IDBDatabase} db */
 	onDatabaseReady(db) {
+		this.database_opening=false;
+		this.database_open=true;
 		this.onDatabaseResult(db);
 		this.start_transaction(db);
 	}
@@ -4158,6 +4175,10 @@ class HandleTypes extends BaseService {
 	/** @arg {CreateCommentEndpointData} x */
 	CreateCommentEndpointData(x) {
 		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
+		if(!res) {
+			console.log("failed to decode create_comment_params");
+			return;
+		}
 		if(res[0][0]==="child"&&res[0][1]===2) {
 			console.log("fieldId",res[0][1],"str",decoder.decode(res[0][2]),"rest",res.slice(1));
 		} else {
