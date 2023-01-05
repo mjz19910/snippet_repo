@@ -3869,7 +3869,6 @@ class IndexedDbAccessor {
 		}
 		this.arr.length=0;
 	}
-	outstanding_upgrade_requests=0;
 	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
 		if(event.oldVersion===0) {
@@ -3897,14 +3896,9 @@ class IndexedDbAccessor {
 		const db=request.result;
 		const store=db.createObjectStore("video_id",{keyPath: "v"});
 		for(let x of data_source) {
-			this.outstanding_upgrade_requests++;
-			const request=store.put(x);
-			request.onsuccess=() => {
-				if(!request.transaction) throw new Error("No transaction");
-				this.outstanding_upgrade_requests--;
-				if(this.outstanding_upgrade_requests===0) {
-					request.transaction.commit();
-				}
+			const store_request=store.put(x);
+			store_request.onsuccess=() => {
+				request.transaction?.commit();
 			};
 		}
 
