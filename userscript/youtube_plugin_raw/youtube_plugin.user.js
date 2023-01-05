@@ -1503,7 +1503,7 @@ class FilterHandlers {
 				default: debugger; break;
 				case "like": switch(target[1]) {
 					default: debugger; break;
-					case "like": debugger; return {
+					case "like": return {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {ResponseWithActions} */
 						data: cast_as(json),
@@ -4974,13 +4974,55 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {
-		const {page,playerResponse,endpoint,response,url,...y}=x;
-		this.parse_url(url);
+		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,...y}=x;
+		if(a!=="watch") debugger;
+		this.PlayerResponse(b);
+		this.yt_endpoint(c);
+		this.WatchResponseContent(d);
+		this.parse_url(e);
 		this.empty_object(y);
+	}
+	/** @arg {WatchResponseContent} x */
+	WatchResponseContent(x) {
+		let t=this;
+		/** @this {typeof t} @arg {typeof x} x */
+		function p1(x) {
+			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
+			this.g(a);
+			this.z(b,a=>this.g(a));
+			this.FrameworkUpdates(c);
+			this.z(d,a=>this.g(a));
+			return y;
+		}
+		/** @this {typeof t} @arg {typeof x} x */
+		function p2(x) {
+			const {pageVisualEffects: b,playerOverlays: c,responseContext: d,topbar: e,...y}=p1.call(this,x);
+			return y;
+		}
+		const {trackingParams,...y}=p2.call(this,x);
+		this.empty_object(y);
+	}
+	/** @arg {FrameworkUpdates} x */
+	FrameworkUpdates(x) {
+		const {entityBatchUpdate: a,...y}=x;
+		this.EntityBatchUpdateData(a);
+		this.empty_object(y);
+	}
+	/** @arg {PlayerResponse} x */
+	PlayerResponse(x) {
+		this.empty_object(x);
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
-		const {clickTrackingParams,openPopupAction,...y}=x;
+		const {clickTrackingParams: a,openPopupAction: b,...y}=x;
+		this.clickTrackingParams(a);
+		this.OpenPopupActionData(b);
+		this.empty_object(y);
+	}
+	/** @arg {OpenPopupActionData} x */
+	OpenPopupActionData(x) {
+		const {popup: a,popupType: b,...y}=x;
+		x.popup;
 		this.empty_object(y);
 	}
 	/** @arg {YtChannelPageResponse} x */
