@@ -4229,6 +4229,7 @@ class HandleTypes extends BaseService {
 			createCommentEndpoint: "CreateCommentEndpointData",
 			confirmDialogEndpoint: "ConfirmDialogEndpointData",
 			reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData",
+			appendContinuationItemsAction: "AppendContinuationItemsAction",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
 		has_key(k) {
@@ -4277,6 +4278,7 @@ class HandleTypes extends BaseService {
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="createCommentEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="confirmDialogEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="reloadContinuationItemsCommand";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);}
 		let yc=get_keys_of(y);
 		for(let ya of yc) {
@@ -4285,6 +4287,10 @@ class HandleTypes extends BaseService {
 				debugger;
 			}
 		}
+	}
+	/** @arg {AppendContinuationItemsAction} x */
+	AppendContinuationItemsAction(x) {
+		this.parse_target_id(x.targetId);
 	}
 	/** @type {ResponseTypes['type']|NavigateEventDetail['response']['page']|null} */
 	_current_response_type=null;
@@ -5657,7 +5663,7 @@ class HandleTypes extends BaseService {
 		this.parse_target_id(targetId);
 		this.g(y);
 	}
-	/** @arg {string} x */
+	/** @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		console.log("[target_id]",x);
 	}

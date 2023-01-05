@@ -14,4 +14,5 @@ type endpoint_data_handler_names={
 	createCommentEndpoint: "CreateCommentEndpointData";
 	confirmDialogEndpoint: "ConfirmDialogEndpointData";
 	reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData";
+	appendContinuationItemsAction: "AppendContinuationItemsAction";
 };

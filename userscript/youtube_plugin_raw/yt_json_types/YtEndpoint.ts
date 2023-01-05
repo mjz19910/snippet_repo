@@ -14,6 +14,7 @@ type EndpointTypes={
 	reloadContinuationItemsCommand?: ReloadContinuationItemsCommandData;
 	createCommentEndpoint?: CreateCommentEndpointData;
 	confirmDialogEndpoint?: ConfirmDialogEndpointData;
+	appendContinuationItemsAction?: AppendContinuationItemsAction;
 };
 interface YtEndpoint extends EndpointTypes {
 	clickTrackingParams: string;
