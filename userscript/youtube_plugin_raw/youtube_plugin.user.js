@@ -1352,8 +1352,8 @@ class MyReader {
 			} break;
 			case 4: {
 				first_num.push(["error"]);
-				return first_num;
-			}
+				this.failed=true;
+			} break;
 			case 5: first_num.push(["data_fixed32",fieldId,this.fixed32()]); break;
 			default: break;
 		}
