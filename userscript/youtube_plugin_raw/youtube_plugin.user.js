@@ -5663,6 +5663,11 @@ class HandleTypes extends BaseService {
 		this.RichSectionContent(a);
 		this.g(y);
 	}
+	/** @template T @arg {PageAction<T>} x @arg {(x:T)=>void} f */
+	PageAction(x,f) {
+		const {page: a,...y}=x; this.g(y);
+		f(a);
+	}
 	/** @arg {RichSectionContent} x */
 	RichSectionContent(x) {
 		if("richShelfRenderer" in x) {
@@ -5734,15 +5739,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {UpdateChannelSwitcherPageAction} x */
 	UpdateChannelSwitcherPageAction(x) {
-		if(get_keys_of_one(x)[0]!=="updateChannelSwitcherPageAction") debugger;
-		this.w(x,a => {
-			if(get_keys_of_one(a)[0]!=="page") debugger;
-			this.w(a,a => {
-				if(get_keys_of_one(a)[0]!=="channelSwitcherPageRenderer") debugger;
-				this.w(a,a =>
-					this.ChannelSwitcherPage(a));
-			});
-		});
+		const {updateChannelSwitcherPageAction: a,...y}=x; this.g(y);
+		this.PageAction(a,a=>this.ChannelSwitcherPageRenderer(a));
+	}
+	/** @arg {ChannelSwitcherPageRenderer} x */
+	ChannelSwitcherPageRenderer(x) {
+		const {channelSwitcherPageRenderer: a,...y}=x; this.g(y);
+		this.ChannelSwitcherPage(a);
 	}
 	/** @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
@@ -5919,10 +5922,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelItemWatch} x */
 	ReelItemWatch(x) {
-		const {responseContext: a,overlay: b,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
+		const {responseContext: a,overlay: b,status: c,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
 		this.ResponseContext(a);
 		this.w(b,a => this.ReelPlayerOverlayData(a));
-		switch(status) {
+		switch(c) {
 			case "REEL_ITEM_WATCH_STATUS_SUCCEEDED": break;
 			default: debugger;
 		}
@@ -6561,6 +6564,7 @@ class HandleTypes extends BaseService {
 		const {playerMicroformatRenderer: a,...y}=x; this.g(y);
 		this.PlayerMicroformatData(a);
 	}
+	/** @arg {PlayerMicroformatData} x */
 	PlayerMicroformatData(x) {
 		x;
 	}
