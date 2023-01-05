@@ -1103,9 +1103,12 @@ class MyReader {
 			return null;
 		}
 	}
+	read_any_new() {
+		this.pos=0;
+		return this.read_any();
+	}
 	/** @private @arg {number} [size] */
 	read_any(size) {
-		this.pos=0;
 		let target_len;
 		if(!size) {
 			target_len=this.len;
@@ -5111,6 +5114,16 @@ class HandleTypes extends BaseService {
 			let reader=new MyReader(binary.subarray(7));
 			let res=reader.try_read_any();
 			if(!res) break x;
+			let item=res[0];
+			switch(item[0]) {
+				case "child": {
+					reader.pos=item[2].byteOffset;
+					let res=reader.try_read_any();
+					if(!res) break;
+					console.log("template child_1",res[0]);
+				} break;
+				default: debugger;
+			}
 			console.log(res[0]);
 		}
 		this.z(c,a => {
