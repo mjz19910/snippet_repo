@@ -3782,9 +3782,19 @@ class IndexedDbAccessor {
 	close_db_on_transaction_complete=false;
 	/** @arg {IDBOpenDBRequest} req @arg {Event} event */
 	onSuccess(req,event) {
-		console.log("OpenDBRequest success", event);
+		console.log("OpenDBRequest success",event);
 		let db=req.result;
-		db.onversionchange=() => {
+		db.onerror=event => {
+			console.log("IDBDatabase: error",event);
+		};
+		db.onabort=event => {
+			console.log("IDBDatabase: abort",event);
+		};
+		db.onclose=event => {
+			console.log("IDBDatabase: close",event);
+		};
+		db.onversionchange=event => {
+			console.log("IDBDatabase: version_change",event);
 			db.close();
 		};
 		this.start_transaction(db);
@@ -3793,9 +3803,13 @@ class IndexedDbAccessor {
 	start_transaction(db) {
 		const transaction=db.transaction("video_id","readwrite");
 		transaction.onerror=(event) => {
-			console.log("transaction error",event);
+			console.log("IDBTransaction: error",event);
 		};
-		transaction.oncomplete=() => {
+		transaction.onabort=(event) => {
+			console.log("IDBTransaction: abort",event);
+		};
+		transaction.oncomplete=(event) => {
+			console.log("IDBTransaction: complete",event);
 			db.close();
 		};
 		if(this.arr.length>0) this.consume_data(transaction);
@@ -3808,11 +3822,11 @@ class IndexedDbAccessor {
 			const request=store.put(data);
 			this.active_requests++;
 			request.onerror=(event) => {
-				console.log("request error",event);
+				console.log("IDBRequest: error",event);
 			};
 			request.onsuccess=(event) => {
 				this.active_requests--;
-				console.log("request success",event);
+				console.log("IDBRequest: success",event);
 				if(this.active_requests===0) {
 					transaction.commit();
 				}
@@ -3825,12 +3839,12 @@ class IndexedDbAccessor {
 	onUpgradeNeeded(request,event) {
 		console.log("old version",event.oldVersion);
 		const db=request.result;
-		if (event.oldVersion < 1){
+		if(event.oldVersion<1) {
 			db.createObjectStore("video_id",{
 				autoIncrement: true
 			});
 		}
-		if (event.oldVersion < 2) {
+		if(event.oldVersion<2) {
 			if(!request.transaction) throw new Error("No transaction");
 			const video_id_store=request.transaction.objectStore("video_id");
 			/** @type {IDBRequest<{v:string}[]>} */
@@ -3842,14 +3856,14 @@ class IndexedDbAccessor {
 				for(let x of all_video_ids) {
 					this.outstanding_upgrade_requests++;
 					const request=store.put(x);
-					request.onsuccess=()=>{
+					request.onsuccess=() => {
 						if(!request.transaction) throw new Error("No transaction");
 						if(this.outstanding_upgrade_requests===0) {
 							request.transaction.commit();
 						}
-					}
+					};
 				}
-			}
+			};
 		}
 	}
 	/** @arg {Event} event */
@@ -4535,9 +4549,9 @@ class HandleTypes extends BaseService {
 					let v=res[1];
 					if(this.str_starts_with(v,"RD")) {
 						if(this.str_starts_with(v,"RDMM")) {
-							url_info.push({type:"RDMM",id: v.slice(4)});
+							url_info.push({type: "RDMM",id: v.slice(4)});
 						} else {
-							url_info.push({type:"RD",id: v.slice(2)});
+							url_info.push({type: "RD",id: v.slice(2)});
 						}
 					} else if(this.str_starts_with(v,"PL")) {
 						console.log("[playlist_found]","PL",v.slice(2),v.slice(2).length);
