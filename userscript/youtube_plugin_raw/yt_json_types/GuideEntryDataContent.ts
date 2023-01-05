@@ -1,0 +1,3 @@
+type GuideEntryDataContent={
+	guideEntryId: YtMixPlaylistFormat;
+};

@@ -4374,10 +4374,62 @@ class HandleTypes extends BaseService {
 		} else if("openPopupAction" in x) {
 			this.OpenPopupAction(x);
 		} else if("removeFromGuideSectionAction" in x) {
-			this.w(x,a => this.RemoveFromGuideSectionActionData(a));
+			this.RemoveFromGuideSectionAction(x);
+		} else if("addToGuideSectionAction" in x) {
+			this.AddToGuideSectionAction(x);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {AddToGuideSectionAction} x */
+	AddToGuideSectionAction(x) {
+		const {addToGuideSectionAction: a,clickTrackingParams: b,...y}=x;
+		this.AddToGuideSectionActionData(a);
+		this.clickTrackingParams(b);
+		this.empty_object(y);
+	}
+	/** @arg {AddToGuideSectionActionData} x */
+	AddToGuideSectionActionData(x) {
+		const {handlerData: a,items: b,...y}=x;
+		switch(a) {
+			case "GUIDE_ACTION_ADD_TO_PLAYLISTS": break;
+			default: debugger;
+		};
+		this.z(b,a=>this.GuideEntryRenderer(a));
+		this.empty_object(y);
+	}
+	/** @arg {GuideEntryRenderer} x */
+	GuideEntryRenderer(x) {
+		const {guideEntryRenderer: a,...y}=x;
+		this.GuideEntryRendererData(a);
+		this.empty_object(y);
+	}
+	/** @arg {GuideEntryRendererData} x */
+	GuideEntryRendererData(x) {
+		const {accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,...y}=x;
+		this.Accessibility(a);
+		this.yt_endpoint(b);
+		this.Icon(c);
+		this.trackingParams(d);
+		this.text_t(e);
+		this.GuideEntryData(f);
+		this.g(y);
+	}
+	/** @arg {GuideEntryData} x */
+	GuideEntryData(x) {
+		const {guideEntryData: a,...y}=x; this.g(y);
+		this.GuideEntryDataContent(a);
+	}
+	/** @arg {GuideEntryDataContent} x */
+	GuideEntryDataContent(x) {
+		const {guideEntryId: a,...y}=x; this.g(y);
+		this.parse_guide_entry_id(a);
+	}
+	/** @arg {RemoveFromGuideSectionAction} x */
+	RemoveFromGuideSectionAction(x) {
+		const {removeFromGuideSectionAction: a,...y}=x;
+		this.RemoveFromGuideSectionActionData(a);
+		this.empty_object(y);
 	}
 	/** @arg {RemoveFromGuideSectionActionData} x */
 	RemoveFromGuideSectionActionData(x) {
