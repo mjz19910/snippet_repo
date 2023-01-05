@@ -6549,7 +6549,7 @@ class HandleTypes extends BaseService {
 	/** @arg {InfoCardIconRenderer} x */
 	InfoCardIconRenderer(x) {
 		const {infoCardIconRenderer: a,...y}=x; this.g(y);
-		this.InfoCardIconData(x.infoCardIconRenderer);
+		this.InfoCardIconData(a);
 	}
 	/** @arg {InfoCardIconData} x */
 	InfoCardIconData(x) {
