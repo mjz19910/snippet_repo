@@ -5188,13 +5188,29 @@ class HandleTypes extends BaseService {
 	CinematicContainerData(x) {
 		const {backgroundImageConfig: a,gradientColorConfig: b,presentationStyle: c,config: d,...y}=x; this.g(y);
 		if(a) this.ThumbnailsList(a);
-		this.z(b,a => this.GradientColorConfigItem(a));
+		this.GradientColorConfigStart(b[0]);
+		this.GradientColorConfigMid(b[1]);
+		this.GradientColorConfigEnd(b[2]);
 		switch(c) {
 			case "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED": break;
 			case void 0: break;
 			default: debugger;
 		}
 		this.PageVisualEffectsConfig(d);
+	}
+	/** @arg {GradientColorConfigEnd} x */
+	GradientColorConfigEnd(x) {
+		if(x.darkThemeColor!==0xff000000) debugger;
+		if(x.startLocation!==1) debugger;
+	}
+	/** @arg {GradientColorConfigMid} x */
+	GradientColorConfigMid(x) {
+		if(x.darkThemeColor!==0x7f000000) debugger;
+	}
+	/** @arg {GradientColorConfigStart} x */
+	GradientColorConfigStart(x) {
+		if(x.darkThemeColor!==0x99000000) debugger;
+		if(x.startLocation!==0) debugger;
 	}
 	/** @arg {PageVisualEffectsConfig} x */
 	PageVisualEffectsConfig(x) {
@@ -5248,13 +5264,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GradientColorConfigItem} x */
 	GradientColorConfigItem(x) {
-		const {lightThemeColor: a,darkThemeColor: b,startLocation: c,...y}=x; this.g(y);
-		if(a!==void 0) {
-			console.log("gradient light theme color",a.toString(16),a);
-			debugger;
+		if("startLocation" in x) {
+			const {darkThemeColor: b,startLocation: c,...z}=x; this.g(z);
+			console.log("gradient dark theme color",b.toString(16));
+			console.log("gradient start location",c);
+			return;
 		}
+		const {darkThemeColor: b,...y}=x; this.g(y);
 		console.log("gradient dark theme color",b.toString(16));
-		if(c!==void 0) console.log("gradient start location",c);
 	}
 	/** @arg {ThumbnailsList} x */
 	ThumbnailsList(x) {
