@@ -5191,6 +5191,7 @@ class HandleTypes extends BaseService {
 		this.GradientColorConfigStart(b[0]);
 		this.GradientColorConfigMid(b[1]);
 		this.GradientColorConfigEnd(b[2]);
+		if(b.length!==3) debugger;
 		switch(c) {
 			case "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED": break;
 			case void 0: break;
@@ -5243,9 +5244,19 @@ class HandleTypes extends BaseService {
 	/** @template {number} T  @arg {T} a @arg {T} b */
 	float_cmp(a,b) {
 		let epsilon=0.0000001;
-		if(a > (b-epsilon)) return false;
-		if(b > (a-epsilon)) return false;
-		return true;
+		let table=[
+			a>(b-epsilon),
+			a<(b-epsilon),
+			a>(b+epsilon),
+			a<(b+epsilon),
+			b>(a-epsilon),
+			b<(a-epsilon),
+			b>(a+epsilon),
+			b<(a+epsilon),
+		];
+		table;
+		if(a>(b-epsilon)&&a<(b+epsilon)) return true;
+		return false;
 	}
 	/** @template {ColorSourceVars} T @arg {T} x @returns {Omit<T,keyof ColorSourceVars>}  */
 	parse_color_source_vars(x) {
@@ -5258,7 +5269,7 @@ class HandleTypes extends BaseService {
 		if(a!==2) debugger;
 		if(b!==1.4) debugger;
 		if(c!==1.5) debugger;
-		if(this.float_cmp(d,0.67)) debugger;
+		if(!this.float_cmp(d,0.67)) debugger;
 		if(e!==260) debugger;
 		return y;
 	}
