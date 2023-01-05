@@ -1,18 +1,18 @@
 type WatchResponsePlayer={
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
-	streamingData: {};
+	streamingData: StreamingData;
 	playerAds: DesktopWatchAdsRenderer[];
 	playbackTracking: PlaybackTracking;
 	captions: CaptionsRenderer;
-	videoDetails: {};
-	playerConfig: {};
-	storyboards: {};
-	microformat: {};
-	cards: {};
+	videoDetails: VideoDetails;
+	playerConfig: PlayerConfig;
+	storyboards: PlayerStoryboardSpecRenderer;
+	microformat: PlayerMicroformatRenderer;
+	cards: CardCollectionRenderer;
 	trackingParams: string;
 	attestation: PlayerAttestationRenderer;
-	videoQualityPromoSupportedRenderers: {};
+	videoQualityPromoSupportedRenderers: VideoQualityPromoRenderer;
 	adPlacements?: {}[];
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;

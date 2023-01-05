@@ -9,7 +9,7 @@ type FormatItem={
 };
 
 type StreamingData={
-	adaptiveFormats: AdaptiveFormatItem[];
 	expiresInSeconds: `${number}`;
+	adaptiveFormats: AdaptiveFormatItem[];
 	formats: FormatItem[];
 };

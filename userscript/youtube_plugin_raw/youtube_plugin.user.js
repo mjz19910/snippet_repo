@@ -3735,8 +3735,6 @@ class YtPlugin {
 }
 //#endregion
 class IndexedDbAccessor {
-	/** @type {IDBOpenDBRequest|null} */
-	db_open_request=null;
 	/** @arg {string} db_name */
 	constructor(db_name,version=1) {
 		this.db_args={
@@ -3756,7 +3754,7 @@ class IndexedDbAccessor {
 		const request=indexedDB.open(name,version);
 		request.onsuccess=event => this.onSuccess(request,event);
 		request.onerror=event => this.onError(event);
-		request.onupgradeneeded=event => this.onUpgradeNeeded(event);
+		request.onupgradeneeded=event => this.onUpgradeNeeded(request.result,event);
 	}
 	close_db_on_transaction_complete=false;
 	/** @arg {IDBOpenDBRequest} req @arg {Event} event */
@@ -3807,11 +3805,9 @@ class IndexedDbAccessor {
 		}
 		this.arr.length=0;
 	}
-	/** @arg {IDBVersionChangeEvent} event */
-	onUpgradeNeeded(event) {
-		if(!this.db_open_request) throw new Error("no db request");
+	/** @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
+	onUpgradeNeeded(db,event) {
 		console.log("old version",event.oldVersion);
-		const db=this.db_open_request.result;
 		db.createObjectStore("video_id",{
 			autoIncrement: true
 		});
@@ -3849,7 +3845,7 @@ class HandleTypes extends BaseService {
 				if(get_keys_of_one(a)[0]!=="playerLegacyDesktopWatchAdsRenderer") debugger;
 				this.w(a,a => this.DesktopWatchAdsData(a));
 			});
-			this.empty_object(h);
+			this.PlayerConfig(h);
 			return y;
 		}
 		let b=p2.call(this,a);
@@ -3861,7 +3857,7 @@ class HandleTypes extends BaseService {
 				this.w(i,a => this.PaidContentOverlayRenderer(a));
 			}
 			this.trackingParams(j);
-			this.empty_object(k);
+			this.w(k,a=>this.empty_object(a));
 			if(l) this.EndscreenRenderer(l);
 			return y;
 		}
@@ -3869,9 +3865,9 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof c} x */
 		function p4(x) {
 			const {videoDetails: m,storyboards: n,streamingData: o,captions: p,...y}=x;
-			this.empty_object(m);
-			this.empty_object(n);
-			this.empty_object(o);
+			this.VideoDetails(m);
+			this.PlayerStoryboardSpecRenderer(n);
+			this.StreamingData(o);
 			this.CaptionsRenderer(p);
 			return y;
 		}
@@ -5737,6 +5733,22 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {
 		this.save_keys("CompactVideoData",x,this.TODO_true);
+	}
+	/** @arg {PlayerConfig} x */
+	PlayerConfig(x) {
+		this.save_keys("PlayerConfig",x,this.TODO_true);
+	}
+	/** @arg {VideoDetails} x */
+	VideoDetails(x) {
+		this.save_keys("VideoDetails",x,this.TODO_true);
+	}
+	/** @arg {PlayerStoryboardSpecRenderer} x */
+	PlayerStoryboardSpecRenderer(x) {
+		this.save_keys("PlayerStoryboardSpecRenderer",x.playerStoryboardSpecRenderer,this.TODO_true);
+	}
+	/** @arg {StreamingData} x */
+	StreamingData(x) {
+		this.save_keys("StreamingData",x,this.TODO_true);
 	}
 }
 //#endregion
