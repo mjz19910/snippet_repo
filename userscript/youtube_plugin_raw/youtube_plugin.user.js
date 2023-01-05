@@ -4301,11 +4301,11 @@ class HandleTypes extends BaseService {
 			case "player": return this.WatchResponsePlayer(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatch(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequence(x.data);
-			default:
+			default: break;
 		}
 		switch(x.type) {
 			case "_Generic": return g(x);
-			default: g(x);
+			default: return g(x);
 		}
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
