@@ -4066,7 +4066,7 @@ class HandleTypes extends BaseService {
 		let {page: a,endpoint: b,response: c,url: d,...y}=x;
 		if("previousCsn" in y) {
 			const {previousCsn: e,...m}=y;
-			base64_dec.decode_str(e);
+			base64_dec.decode_str(e.replaceAll(".","="));
 			y=m;
 		}
 		z=y;
