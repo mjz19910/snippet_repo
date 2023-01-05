@@ -1,3 +1,0 @@
-type MenuRendererH={
-	menuRenderer: MenuRenderer;
-};

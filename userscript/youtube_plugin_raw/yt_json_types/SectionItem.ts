@@ -1,1 +1,6 @@
-type SectionItem=RichItemRenderer|RichSectionRenderer|CommentsHeaderRenderer;
+type SectionItem=[
+	RichItemRenderer,
+	RichSectionRenderer,
+	CommentsHeaderRenderer,
+	CommentThreadData,
+][number];

@@ -4083,7 +4083,9 @@ class HandleTypes extends BaseService {
 		let g=x => this.empty_object(x);
 		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
 		let n=(x,b) => {if(!x) throw new Error(); g(b);};
-		let [k]=get_keys_of(c);
+		let m=get_keys_of(c);
+		if(m.length===0) return;
+		let [k]=m;
 		k="browseEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="searchEndpoint";
 		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="setSettingEndpoint";
@@ -5060,7 +5062,7 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 		if("commentsHeaderRenderer" in x) {
-			this.w(x,v => this.CommentsHeaderRendererData(v));
+			this.w(x,v => this.CommentsHeaderData(v));
 		}
 	}
 	/** @arg {RichItemRendererData} x */
@@ -5298,8 +5300,8 @@ class HandleTypes extends BaseService {
 		this.save_string(`icon_type`,a);
 		this.empty_object(y);
 	}
-	/** @arg {CommentsHeaderRendererData} x */
-	CommentsHeaderRendererData(x) {
+	/** @arg {CommentsHeaderData} x */
+	CommentsHeaderData(x) {
 		this.save_keys("CommentsHeaderRenderer",x,true);
 		const {
 			countText: a,createRenderer: b,sortMenu: c,trackingParams: d,titleText: e,commentsCount: f,
@@ -5309,7 +5311,8 @@ class HandleTypes extends BaseService {
 		this.z([a,e,f],v => this.text_t(v));
 		if(get_keys_of_one(b)[0]!=="commentSimpleboxRenderer") debugger;
 		this.w(b,b => this.CommentSimpleboxRendererData(b));
-		this.SortFilterSubMenuRenderer(c);
+		if(get_keys_of_one(c)[0]!=="sortFilterSubMenuRenderer") debugger;
+		this.w(c,c => this.SortFilterSubMenuData(c));
 		this.trackingParams(d);
 		this.primitive_of(g,"boolean");
 		this.z(h,v => this.CustomEmoji(v));
@@ -5318,13 +5321,14 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {SortFilterSubMenuData} x */
-	SortFilterSubMenuRenderer(x) {
-		const {accessibility: a,icon: b,subMenuItems: c,title: d,trackingParams: e,...y}=x;
-		if(a) this.Accessibility(a);
-		if(b) this.Icon(b);
-		this.z(c,v => this.ActionSetPlaylistVideoOrder(v));
-		this.primitive_of(d,"string");
-		this.trackingParams(e);
+	SortFilterSubMenuData(x) {
+		const {subMenuItems: a,title: b,icon: c,accessibility: d,tooltip: e,trackingParams: f,...y}=x;
+		this.z(a,v => this.ActionSetPlaylistVideoOrder(v));
+		this.primitive_of(b,"string");
+		if(c) this.Icon(c);
+		if(d) this.Accessibility(d);
+		e!==void 0&&this.primitive_of(e,"string");
+		this.trackingParams(f);
 		this.empty_object(y);
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */

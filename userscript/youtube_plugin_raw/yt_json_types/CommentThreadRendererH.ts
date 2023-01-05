@@ -1,3 +1,0 @@
-type CommentThreadRendererH={
-	commentThreadRenderer: CommentThreadRenderer;
-};

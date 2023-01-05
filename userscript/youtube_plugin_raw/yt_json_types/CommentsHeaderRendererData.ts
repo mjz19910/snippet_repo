@@ -1,7 +1,7 @@
-type CommentsHeaderRendererData={
+type CommentsHeaderData={
 	countText: TextT;
 	createRenderer: CommentSimpleboxRenderer;
-	sortMenu: SortFilterSubMenuData;
+	sortMenu: SortFilterSubMenuRenderer;
 	trackingParams: string;
 	titleText: TextT;
 	commentsCount: TextT;

@@ -1,3 +1,3 @@
 type CommentsHeaderRenderer={
-	commentsHeaderRenderer: CommentsHeaderRendererData;
+	commentsHeaderRenderer: CommentsHeaderData;
 };

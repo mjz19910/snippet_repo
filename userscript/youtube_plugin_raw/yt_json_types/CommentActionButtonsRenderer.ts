@@ -1,0 +1,3 @@
+type CommentActionButtonsRenderer={
+	commentActionButtonsRenderer: CommentActionButtonsData;
+};

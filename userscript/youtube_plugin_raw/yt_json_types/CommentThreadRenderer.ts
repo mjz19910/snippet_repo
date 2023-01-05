@@ -1,1 +1,1 @@
-type CommentThreadRenderer={};
+type CommentThreadRenderer={commentThreadRenderer: CommentThreadData;};
