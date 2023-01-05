@@ -4042,7 +4042,11 @@ class HandleTypes extends BaseService {
 	/** @arg {CreateCommentEndpoint} x */
 	CreateCommentEndpoint(x) {
 		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
-		console.log(res);
+		if(res[0][0]==="child"&&res[0][1]===2) {
+			console.log("fieldId",res[0][1],"str",decoder.decode(res[0][2]),"rest",res.slice(1));
+		} else {
+			console.log(res);
+		}
 	}
 	/** @arg {ConfirmDialogEndpoint} x */
 	ConfirmDialogEndpoint(x) {
@@ -5237,15 +5241,16 @@ class HandleTypes extends BaseService {
 		}
 		switch(f) {
 			case "SIZE_DEFAULT": break;
+			case "SIZE_SMALL": break;
 			case void 0: break;
 			default: debugger;
 		}
 		if(a) {
 			if("accessibilityData" in a) {
 				console.log("[button_accessibility]");
+				debugger;
 				this.Accessibility(a);
 			} else {
-				console.log("[button_accessibility_data]");
 				this.AccessibilityData(a);
 			}
 		}
@@ -5257,8 +5262,9 @@ class HandleTypes extends BaseService {
 		this.text_t(h);
 		if(j) this.yt_endpoint(j);
 		{
-			const {targetId: a,...z}=y;
+			const {targetId: a,accessibilityData: b,...z}=y;
 			if(a) this.parse_target_id(a);
+			if(b) this.AccessibilityData(b);
 			this.empty_object(z);
 		}
 	}

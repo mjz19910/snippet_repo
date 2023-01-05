@@ -1,11 +1,12 @@
 type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
+	accessibilityData?: AccessibilityData;
 	command?: YtEndpoint;
 	icon?: Icon<"SETTINGS">|Icon<"DELETE">;
 	isDisabled?: boolean;
 	serviceEndpoint?: YtEndpoint;
 	navigationEndpoint?: YtEndpoint;
-	size?: "SIZE_DEFAULT";
+	size?: ButtonSizeType;
 	style?: ButtonStyleType;
 	text: TextT;
 	trackingParams?: string;
