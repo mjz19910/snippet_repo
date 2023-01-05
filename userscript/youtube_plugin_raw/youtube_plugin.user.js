@@ -3202,8 +3202,9 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn(e[0],e[1]));
 	}
-	/** @protected @template {{}} T @template U @arg {T} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
+	/** @protected @template {{}} T @template U @arg {T|undefined} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
 	w(x,y) {
+		if(x===void 0) return;
 		let [k]=get_keys_of_one(x);
 		return y(x[k]);
 	}
@@ -4003,6 +4004,7 @@ const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class HandleTypes extends BaseService {
 	/** @private @arg {WatchResponsePlayer} x */
 	WatchResponsePlayer(x) {
+		this.save_keys("WatchResponsePlayer",x,true);
 		let t=this;
 		/** @this {typeof t} @arg {WatchResponsePlayer} x */
 		function p1(x) {
@@ -4012,65 +4014,67 @@ class HandleTypes extends BaseService {
 				if(get_keys_of_one(a)[0]!=="playerAnnotationsExpandedRenderer") debugger;
 				this.PlayerAnnotationsExpandedData(a);
 			});
-			this.PlayerAttestationRenderer(c);
+			if(c) this.PlayerAttestationRenderer(c);
 			this.z(d,a => this.empty_object(a));
 			return y;
 		}
 		let a=p1.call(this,x);
 		/** @this {typeof t} @arg {typeof a} x */
 		function p2(x) {
-			const {playabilityStatus: e,playbackTracking: f,playerAds: g,playerConfig: h,...y}=x;
-			this.PlayabilityStatus(e);
-			this.PlaybackTracking(f);
-			this.z(g,a => {
+			const {playabilityStatus: b,playbackTracking: c,playerAds: d,playerConfig: e,...y}=x;
+			this.PlayabilityStatus(b);
+			if(c) this.PlaybackTracking(c);
+			this.z(d,a => {
 				if(get_keys_of_one(a)[0]!=="playerLegacyDesktopWatchAdsRenderer") debugger;
 				this.w(a,a => this.DesktopWatchAdsData(a));
 			});
-			this.PlayerConfig(h);
+			if(e) this.PlayerConfig(e);
 			return y;
 		}
 		let b=p2.call(this,a);
 		/** @this {typeof t} @arg {typeof b} x */
 		function p3(x) {
-			const {paidContentOverlay: i,trackingParams: j,videoQualityPromoSupportedRenderers: k,endscreen: l,...y}=x;
-			if(i) {
-				if(get_keys_of_one(i)[0]!=="paidContentOverlayRenderer") debugger;
-				this.w(i,a => this.PaidContentOverlayRenderer(a));
+			const {paidContentOverlay: a,trackingParams: c,videoQualityPromoSupportedRenderers: d,endscreen: e,...y}=x;
+			if(a) {
+				if(get_keys_of_one(a)[0]!=="paidContentOverlayRenderer") debugger;
+				this.w(a,a => this.PaidContentOverlayRenderer(a));
 			}
-			this.trackingParams(j);
-			this.w(k,a => this.VideoQualityPromoData(a));
-			if(l) this.EndscreenRenderer(l);
+			this.trackingParams(c);
+			this.w(d,a => this.VideoQualityPromoData(a));
+			if(e) this.EndscreenRenderer(e);
 			return y;
 		}
 		let c=p3.call(this,b);
 		/** @this {typeof t} @arg {typeof c} x */
 		function p4(x) {
-			const {videoDetails: m,storyboards: n,streamingData: o,heartbeatParams: p,...y}=x;
-			this.VideoDetails(m);
-			if("playerStoryboardSpecRenderer" in n) {
-				this.PlayerStoryboardSpecRenderer(n);
-			} else if("playerLiveStoryboardSpecRenderer" in n) {
-				this.PlayerLiveStoryboardSpecRenderer(n);
-			} else {
-				debugger;
-			}
-			this.StreamingData(o);
-			if(p) this.HeartbeatParams(p);
+			const {videoDetails: a,storyboards: b,streamingData: d,heartbeatParams: e,...y}=x;
+			if(a) this.VideoDetails(a);
+			if(b) this.storyboards(b);
+			if(d) this.StreamingData(d);
+			if(e) this.HeartbeatParams(e);
 			return y;
 		}
 		let d=p4.call(this,c);
 		/** @this {typeof t} @arg {typeof d} x */
 		function p5(x) {
-			const {captions: p,cards: q,frameworkUpdates: r,microformat: s,...y}=x;
-			if(p) this.CaptionsRenderer(p);
-			this.CardCollectionRenderer(q);
-			this.FrameworkUpdates(r);
-			this.PlayerMicroformatRenderer(s);
+			const {captions: a,cards: b,frameworkUpdates: c,microformat: e,...y}=x;
+			if(a) this.CaptionsRenderer(a);
+			if(b) this.CardCollectionRenderer(b);
+			this.FrameworkUpdates(c);
+			if(e) this.PlayerMicroformatRenderer(e);
 			return y;
 		}
-		let e=p5.call(this,d);
-		this.empty_object(e);
-		this.save_keys("WatchResponsePlayer",x,true);
+		let y=p5.call(this,d); this.g(y);
+	}
+	/** @arg {PlayerStoryboardSpecRenderer|PlayerLiveStoryboardSpecRenderer} x */
+	storyboards(x) {
+		if("playerStoryboardSpecRenderer" in x) {
+			this.PlayerStoryboardSpecRenderer(x);
+		} else if("playerLiveStoryboardSpecRenderer" in x) {
+			this.PlayerLiveStoryboardSpecRenderer(x);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {PlayerLiveStoryboardSpecRenderer} x */
 	PlayerLiveStoryboardSpecRenderer(x) {
@@ -6510,16 +6514,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {`UC${string}`} x */
 	parse_external_channel_id(x) {
-		/** @type {SplitIntoGroups<typeof x,`${string}`>[0]} */
-		let g1=as_cast(x.slice(0,2));
-		switch(g1) {
-			case "UC": {
-				let cr=x.slice(2);
-				if(cr.length===22) break;
-				console.log("[channel_id] %s %s",g1,cr);
-			} break;
-			default: debugger;
-		}
+		let chan_parts=split_string_once(x,"UC");
+		if(chan_parts[0]!=="") debugger;
+		let cr=chan_parts[1];
+		if(cr.length===22) return;
+		console.log("[channel_id] %s %s","UC",cr);
 	}
 	/** @arg {LiveChatItemContextMenuEndpointData} x */
 	LiveChatItemContextMenuEndpointData(x) {
@@ -6607,11 +6606,21 @@ class HandleTypes extends BaseService {
 	/** @arg {`http://www.youtube.com/channel/UC${string}`} x */
 	parse_channel_url(x) {
 		let r=create_from_parse(x);
-		r;
+		let chan_part=split_string_once(r.pathname,"/")[1];
+		let [chan_str,channel_id]=split_string_once(chan_part,"/");
+		if(chan_str!=="channel") debugger;
+		if(channel_id.startsWith("UC")) {
+			this.parse_external_channel_id(channel_id);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {MicroformatEmbed} x */
 	MicroformatEmbed(x) {
-		x;
+		const {iframeUrl: a,flashUrl: b,width: c,height: d,flashSecureUrl: e,...y}=x; this.g(y);
+		this.z([a,b,e],a=>this.primitive_of(a,"string"));
+		this.primitive_of(x.flashSecureUrl,"string");
+		this.z([c,d],a=>this.primitive_of(a,"number"));
 	}
 }
 //#endregion
