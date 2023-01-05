@@ -4423,7 +4423,7 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {{list: YtPlaylistFormat}|{v: string}|{pp: string}} */
 		let sp=make_search_params(x);
-		let k=filter_out_keys(get_keys_of(sp),["list","v","pp"]);
+		let k=filter_out_keys(get_keys_of(sp),["list","v","pp","index"]);
 		if(k.length>0) {
 			console.log("[missed_url_param_keys]",k);
 		}
