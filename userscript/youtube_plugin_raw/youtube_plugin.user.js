@@ -1322,6 +1322,7 @@ class MyReader {
 					num32=this.uint32();
 				} catch {
 					this.failed=true;
+					first_num.push(["error"]);
 					break;
 				}
 				if(num64!==BigInt(num32)) {
@@ -1342,6 +1343,7 @@ class MyReader {
 					this.skip(size);
 				} catch {
 					console.log("skip failed at",this.pos,fieldId);
+					first_num.push(["error"]);
 					this.failed=true;
 				}
 				first_num.push(['child',fieldId,sub_buffer]);
@@ -5111,7 +5113,8 @@ class HandleTypes extends BaseService {
 		console.log(id);
 		x: {
 			let binary=decode_url_b64(b);
-			let reader=new MyReader(binary.subarray(7));
+			let reader=new MyReader(binary);
+			reader.pos=7;
 			let res=reader.try_read_any();
 			if(!res) break x;
 			let item=res[0];
@@ -5120,7 +5123,7 @@ class HandleTypes extends BaseService {
 					reader.pos=item[2].byteOffset;
 					let res=reader.try_read_any();
 					if(!res) break;
-					console.log("template child_1",res[0]);
+					console.log("template child_1",res[0],reader.try_read_any());
 				} break;
 				default: debugger;
 			}
