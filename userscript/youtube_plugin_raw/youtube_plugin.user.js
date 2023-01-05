@@ -4297,31 +4297,38 @@ class HandleTypes extends BaseService {
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuJson(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
-			case "account.set_setting": return this.save_keys(x.type,x.data);
+			case "account.set_setting": return this.AccountSetSetting(x.data);
 			case "att.get": return this.AttGet(x.data);
-			case "att.log": return this.save_keys(x.type,x.data);
+			// @ts-ignore
+			case "att.log": return this.ResponseWithActions(x.data);
 			case "browse": return this.BrowseResponseContent(x.data);
-			case "channel": return this.save_keys(x.type,x.data);
-			case "feedback": return this.save_keys(x.type,x.data);
-			case "get_transcript": return this.save_keys(x.type,x.data);
+			// @ts-ignore
+			case "channel": return this.ResponseWithActions(x.data);
+			case "feedback": return this.JsonFeedbackData(x.data);
+			case "get_transcript": return this.JsonGetTranscriptData(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResult(x.data);
 			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
 			case "guide": return this.GuideJsonType(x.data);
 			case "like.like": return this.ResponseWithActions(x.data);
 			case "like.removelike": return this.ResponseWithActions(x.data);
-			case "live_chat.get_live_chat_replay": return this.save_keys(x.type,x.data);
+			// @ts-ignore
+			case "live_chat.get_live_chat_replay": return this.ResponseWithActions(x.data);
 			case "next": return this.YtApiNext(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountData(x.data);
 			case "notification.modify_channel_preference": return this.ModifyChannelPreference(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
 			case "player": return this.WatchResponsePlayer(x.data);
-			case "playlist": return this.save_keys(x.type,x.data);
+			// @ts-ignore
+			case "playlist": return this.ResponseWithActions(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatch(x.data);
-			case "reel.reel_watch_sequence": return this.save_keys(x.type,x.data);
-			case "settings": return this.save_keys(x.type,x.data);
-			case "shorts": return this.save_keys(x.type,x.data);
-			case "watch": return this.save_keys(x.type,x.data);
+			case "reel.reel_watch_sequence": return this.ReelWatchSequence(x.data);
+			// @ts-ignore
+			case "settings": return this.ResponseWithActions(x.data);
+			// @ts-ignore
+			case "shorts": return this.ResponseWithActions(x.data);
+			// @ts-ignore
+			case "watch": return this.ResponseWithActions(x.data);
 			default:
 		}
 		switch(x.type) {
@@ -4372,7 +4379,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountData(x) {
-		const {responseContext,...y}=x;
+		const {responseContext: a,...y}=x;
+		this.ResponseContext(a);
 		this.save_keys("GetUnseenCount",x,true);
 		if("actions" in x) {
 			this.ResponseWithActions(x);
@@ -5928,6 +5936,16 @@ class HandleTypes extends BaseService {
 	VideoQualityPromoData(x) {
 		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
 	}
+	/** @arg {AccountSetSetting} x */
+	AccountSetSetting(x) {
+		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
+	}
+	/** @arg {ReelWatchSequence} x */
+	ReelWatchSequence(x) {x;}
+	/** @arg {JsonFeedbackData} x */
+	JsonFeedbackData(x) {x;}
+	/** @arg {JsonGetTranscriptData} x */
+	JsonGetTranscriptData(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
