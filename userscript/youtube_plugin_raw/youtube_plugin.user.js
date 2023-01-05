@@ -4315,7 +4315,7 @@ class HandleTypes extends BaseService {
 			case "live_chat.get_live_chat_replay": return this.ResponseWithActions(x.data);
 			case "next": return this.YtApiNext(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
-			case "notification.get_unseen_count": return this.NotificationGetUnseenCountData(x.data);
+			case "notification.get_unseen_count": return this.NotificationGetUnseenCount(x.data);
 			case "notification.modify_channel_preference": return this.ModifyChannelPreference(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
 			case "player": return this.WatchResponsePlayer(x.data);
@@ -4378,7 +4378,7 @@ class HandleTypes extends BaseService {
 		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
-	NotificationGetUnseenCountData(x) {
+	NotificationGetUnseenCount(x) {
 		const {responseContext: a,...y}=x;
 		this.ResponseContext(a);
 		this.save_keys("GetUnseenCount",x,true);
