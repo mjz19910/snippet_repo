@@ -3,4 +3,5 @@ type SectionItem=[
 	RichSectionRenderer,
 	CommentsHeaderRenderer,
 	CommentThreadRenderer,
+	CompactVideoRenderer,
 ][number];

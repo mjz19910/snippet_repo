@@ -3969,7 +3969,6 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {endpoint_data_handler_names} */
 		_obj_map={
-			createCommentEndpoint: "CreateCommentEndpoint",
 			watchEndpoint: "WatchEndpointData",
 			browseEndpoint: "BrowseEndpointData",
 			searchEndpoint: "SearchEndpointData",
@@ -3984,7 +3983,8 @@ class HandleTypes extends BaseService {
 			commandMetadata: "CommandMetadata",
 			loadMarkersCommand: "LoadMarkersCommand",
 			changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand",
-			confirmDialogEndpoint: "ConfirmDialogEndpoint",
+			createCommentEndpoint: "CreateCommentEndpointData",
+			confirmDialogEndpoint: "ConfirmDialogEndpointData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
 		has_key(k) {
@@ -4023,7 +4023,7 @@ class HandleTypes extends BaseService {
 		this.empty_object(y);
 	}
 	/** @arg {CreateCommentEndpointData} x */
-	CreateCommentEndpoint(x) {
+	CreateCommentEndpointData(x) {
 		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
 		if(res[0][0]==="child"&&res[0][1]===2) {
 			console.log("fieldId",res[0][1],"str",decoder.decode(res[0][2]),"rest",res.slice(1));
@@ -5027,8 +5027,10 @@ class HandleTypes extends BaseService {
 			this.w(x,v => this.CommentsHeaderData(v));
 		} else if("commentThreadRenderer" in x) {
 			this.w(x,v => this.CommentThreadData(v));
+		} else if("compactVideoRenderer" in x) {
+			this.w(x,v => this.CompactVideoData(v));
 		} else {
-			debugger;
+			this.empty_object(x);
 		}
  	}
 	/** @arg {RichItemData} x */
@@ -5645,8 +5647,12 @@ class HandleTypes extends BaseService {
 		this.save_keys("C4TabbedHeaderData",x,this.TODO_true);
 	}
 	/** @arg {ConfirmDialogEndpointData} x */
-	ConfirmDialogEndpoint(x) {
+	ConfirmDialogEndpointData(x) {
 		this.save_keys("ConfirmDialogEndpoint",x,this.TODO_true);
+	}
+	/** @arg {CompactVideoData} x */
+	CompactVideoData(x) {
+		x;
 	}
 }
 //#endregion

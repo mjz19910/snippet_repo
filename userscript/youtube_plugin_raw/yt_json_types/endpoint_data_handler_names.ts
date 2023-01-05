@@ -13,6 +13,6 @@ type endpoint_data_handler_names={
 	commandMetadata: "CommandMetadata";
 	loadMarkersCommand: "LoadMarkersCommand";
 	changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand";
-	createCommentEndpoint: "CreateCommentEndpoint";
-	confirmDialogEndpoint: "ConfirmDialogEndpoint";
+	createCommentEndpoint: "CreateCommentEndpointData";
+	confirmDialogEndpoint: "ConfirmDialogEndpointData";
 };
