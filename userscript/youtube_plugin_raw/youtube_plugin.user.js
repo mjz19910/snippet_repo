@@ -1406,16 +1406,6 @@ function create_from_parse(str) {
 	let ret=a;
 	return ret;
 }
-/** @arg {string|URL|Request} req */
-function convert_to_url(req) {
-	if(typeof req=="string") {
-		return {url: to_url(req)};
-	}
-	if(req instanceof URL) {
-		return {url: req};
-	}
-	return {url: to_url(req.url)};
-}
 class FilterHandlers {
 	/** @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
@@ -1653,6 +1643,16 @@ class FilterHandlers {
 	}
 	/** @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {
+		/** @arg {string|URL|Request} req */
+		function convert_to_url(req) {
+			if(typeof req=="string") {
+				return {url: to_url(req)};
+			}
+			if(req instanceof URL) {
+				return {url: req};
+			}
+			return {url: to_url(req.url)};
+		}
 		let parsed_url=convert_to_url(request).url;
 		let url_res=this.use_template_url(parsed_url.href);
 		if(!url_res) {
@@ -5384,8 +5384,22 @@ class HandleTypes extends BaseService {
 					console.log("[template_child_iter_child]",res);
 				} break;
 				case "struct": {
+					let struct_map=new Map;
 					let res=struct[2];
-					console.log("[template_child_iter]",res);
+					for(let member of res) {
+						if(member[0]!=="struct") {
+							console.log(member);
+							continue;
+						}
+						let [,field,value]=member;
+						let cur=struct_map.get(field);
+						if(cur) {
+							cur.push(value);
+							continue;
+						}
+						struct_map.set(field,[value]);
+					}
+					console.log("[template_child_iter]",struct_map);
 				} break;
 				default: root_data.push(struct);
 			}
@@ -6562,11 +6576,11 @@ class HandleTypes extends BaseService {
 	GetLiveChatReplay(x) {
 		const {responseContext: a,continuationContents: b,...y}=x;
 		this.ResponseContext(a);
-		this.continuationContents(b);
+		this.iter_continuationContents(b);
 		this.g(y);
 	}
 	/** @arg {LiveChatContinuation} x */
-	continuationContents(x) {
+	iter_continuationContents(x) {
 		if("liveChatContinuation" in x) {
 			this.w(x,a => this.LiveChatContinuationData(a));
 		} else {
