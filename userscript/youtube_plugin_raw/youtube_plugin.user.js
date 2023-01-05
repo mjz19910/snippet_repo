@@ -1362,7 +1362,6 @@ function decode_b64_proto_obj(str) {
 }
 /** @arg {string} x */
 function decode_url_b64_proto_obj(x) {
-	debugger;
 	x=x.replaceAll("_","/").replaceAll("-","+");
 	let ba=base64_dec.decodeByteArray(x);
 	let reader=new MyReader(ba);
@@ -4163,7 +4162,7 @@ class HandleTypes extends BaseService {
 	LoadMarkersCommand(x) {
 		const {entityKeys: a,...y}=x;
 		this.z(a,a => {
-			let res=decode_url_b64_proto_obj(decodeURIComponent(a));
+			let res=decode_b64_proto_obj(decodeURIComponent(a));
 			let res_2=decode_entity_key(a);
 			if(!res_2) {
 				debugger;
