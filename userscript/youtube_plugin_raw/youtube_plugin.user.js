@@ -1592,8 +1592,8 @@ class FilterHandlers {
 		console.log("[log_get_res_data]",target,json);
 		debugger;
 		return {
-			_tag: "Generic",
-			type: "Generic",
+			_tag: "_Generic",
+			type: "_Generic",
 			data: json,
 		};
 	}
@@ -4296,6 +4296,7 @@ class HandleTypes extends BaseService {
 		}
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuJson(x.data);
+			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			case "account.set_setting": return this.save_keys(x.type,x.data);
 			case "att.get": return this.AttGet(x.data);
 			case "att.log": return this.save_keys(x.type,x.data);
@@ -4303,9 +4304,11 @@ class HandleTypes extends BaseService {
 			case "channel": return this.save_keys(x.type,x.data);
 			case "feedback": return this.save_keys(x.type,x.data);
 			case "get_transcript": return this.save_keys(x.type,x.data);
-			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResult(x.data);
+			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
 			case "guide": return this.GuideJsonType(x.data);
+			case "like.like": return this.ResponseWithActions(x.data);
+			case "like.removelike": return this.ResponseWithActions(x.data);
 			case "live_chat.get_live_chat_replay": return this.save_keys(x.type,x.data);
 			case "next": return this.YtApiNext(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
@@ -4322,7 +4325,7 @@ class HandleTypes extends BaseService {
 			default:
 		}
 		switch(x.type) {
-			case "account.accounts_list": return this.AccountsListResponse(x.data);
+			case "_Generic": return g(x);
 			default: g(x);
 		}
 	}

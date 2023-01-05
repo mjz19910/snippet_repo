@@ -1,5 +1,5 @@
 type GenericResponseType={
-	_tag: "Generic";
-	type: "Generic";
+	_tag: "_Generic";
+	type: "_Generic";
 	data: {};
 };
