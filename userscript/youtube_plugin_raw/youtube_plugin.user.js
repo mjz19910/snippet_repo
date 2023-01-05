@@ -5237,8 +5237,8 @@ class HandleTypes extends BaseService {
 	/** @template {ThemeBackgroundVars} T @arg {T} x @returns {Omit<T,keyof ThemeBackgroundVars>} */
 	parse_theme_background_vars(x) {
 		const {lightThemeBackgroundColor: a,darkThemeBackgroundColor: b,...y}=x;
-		console.log("light theme background color",a.toString(16));
-		console.log("dark theme background color",b.toString(16));
+		if(a!==0xffffff) console.log("light theme background color",a);
+		if(b!==0xff000000) console.log("dark theme background color",b);
 		return y;
 	}
 	/** @template {number} T  @arg {T} a @arg {T} b */
