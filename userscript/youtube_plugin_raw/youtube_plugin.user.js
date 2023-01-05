@@ -793,18 +793,6 @@ class YtIterateTarget {
 			return true;
 		});
 	}
-	/** @type {(...x:[ApiIterateState,{}])=>void} */
-	webCommandMetadata(state,metadata) {
-		if(!state.t.run_mc) return;
-		console.log("webCommandMetadata",state.path,metadata);
-		state.t.run_mc=false;
-	}
-	/** @type {(...x:[ApiIterateState,{}])=>void} */
-	compactLinkRenderer(state,renderer) {
-		if(!state.t.run_mc) return;
-		console.log("compactLinkRenderer",state.path,renderer);
-		state.t.run_mc=false;
-	}
 	/** @arg {ApiIterateState} state @arg {RichGridData} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
@@ -1435,7 +1423,6 @@ class FilterHandlers {
 		whitelist_item("settingsOptionsRenderer");
 		whitelist_item("connectedAppRenderer");
 	}
-	run_mc=false;
 	/** @template {string} T @arg {T} x */
 	use_template_url(x) {
 		const res_parse=create_from_parse(x);
@@ -5039,22 +5026,19 @@ class HandleTypes extends BaseService {
 			this.RichItemData(x.richItemRenderer);
 			this.empty_object(y);
 			return;
-		}
-		if("richSectionRenderer" in x) {
+		} else if("richSectionRenderer" in x) {
 			const {richSectionRenderer: a,...y}=x;
 			this.RichSectionData(a);
 			this.empty_object(y);
 			return;
-		}
-		let r=get_keys_of(x);
-		switch(r[0]) {
-			case "commentsHeaderRenderer": break;
-			default: debugger;
-		}
-		if("commentsHeaderRenderer" in x) {
+		} else if("commentsHeaderRenderer" in x) {
 			this.w(x,v => this.CommentsHeaderData(v));
+		} else if("commentThreadRenderer" in x) {
+			this.w(x,v => this.CommentThreadData(v));
+		} else {
+			debugger;
 		}
-	}
+ 	}
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
 		const {content: a,rowIndex: b,colIndex: c,...y}=x;
@@ -5659,6 +5643,10 @@ class HandleTypes extends BaseService {
 	/** @arg {PlaylistHeaderRenderer} x */
 	PlaylistHeaderRenderer(x) {
 		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
+	}
+	/** @arg {CommentThreadData} x */
+	CommentThreadData(x) {
+		this.save_keys("CommentThreadData",x,this.TODO_true);
 	}
 }
 //#endregion

@@ -2,5 +2,5 @@ type SectionItem=[
 	RichItemRenderer,
 	RichSectionRenderer,
 	CommentsHeaderRenderer,
-	CommentThreadData,
+	CommentThreadRenderer,
 ][number];
