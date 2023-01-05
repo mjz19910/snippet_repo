@@ -4195,7 +4195,11 @@ class HandleTypes extends BaseService {
 				debugger;
 				return;
 			}
-			if(res_2.entityId==="HEATSEEKER") return;
+			switch(res_2.entityId) {
+				case "DESCRIPTION_CHAPTERS": return;
+				case "HEATSEEKER": return;
+				default:
+			}
 			console.log("[entity_key]",res_2,res);
 		});
 		this.g(y);
