@@ -4286,6 +4286,7 @@ class HandleTypes extends BaseService {
 			confirmDialogEndpoint: "ConfirmDialogEndpointData",
 			reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData",
 			appendContinuationItemsAction: "AppendContinuationItemsAction",
+			liveChatItemContextMenuEndpoint: "LiveChatItemContextMenuEndpointData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
 		has_key(k) {
@@ -4311,8 +4312,10 @@ class HandleTypes extends BaseService {
 		this.save_keys("YtEndpoint",x,true);
 		const {
 			clickTrackingParams: a,
-			...y
+			...y_
 		}=x;
+		/** @type {EndpointTypes} */
+		let y=y_;
 		if(a) this.clickTrackingParams(a);
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
 		let q=(v) => this.endpoint_data_map.get(v);
@@ -4320,7 +4323,8 @@ class HandleTypes extends BaseService {
 		if(m.length===0) return;
 		let [k]=m;
 		k="commandMetadata";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="browseEndpoint";
+		{const {[k]: a}=y; if(a) this[q(k)](a);}
+		k="browseEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="searchEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="setSettingEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signalServiceEndpoint";
@@ -4335,9 +4339,11 @@ class HandleTypes extends BaseService {
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="confirmDialogEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="reloadContinuationItemsCommand";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="liveChatItemContextMenuEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);}
 		let yc=get_keys_of(y);
 		for(let ya of yc) {
+			/** @type {endpoint_data_handler_names} */
 			if(!this.endpoint_data_map.has_key(ya)) {
 				console.log('[new_ep_data] [%s]',ya);
 				debugger;
@@ -4675,6 +4681,7 @@ class HandleTypes extends BaseService {
 			if(rem_url.hostname==="accounts.google.com") {
 				return this.parse_account_google_com_url(x,rem_url);
 			}
+			if(rem_url.hostname.endsWith("ggpht.com")) return;
 			console.log("[parse_url_external_1]",x);
 			return;
 		}
@@ -6286,20 +6293,20 @@ class HandleTypes extends BaseService {
 	/** @arg {LiveChatContinuation} x */
 	continuationContents(x) {
 		if("liveChatContinuation" in x) {
-			this.w(x,a=>this.LiveChatContinuationData(a));
+			this.w(x,a => this.LiveChatContinuationData(a));
 		} else {
 			debugger;
 		}
 	}
 	/** @arg {LiveChatContinuationData} x */
 	LiveChatContinuationData(x) {
-		this.z(x.actions,a=>this.ReplayChatItemAction(a));
-		this.z(x.continuations,a=>this.LiveChatContinuationItem(a));
+		this.z(x.actions,a => this.ReplayChatItemAction(a));
+		this.z(x.continuations,a => this.LiveChatContinuationItem(a));
 	}
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
 		if("replayChatItemAction" in x) {
-			this.w(x,a=>this.ReplayChatItemActionData(a));
+			this.w(x,a => this.ReplayChatItemActionData(a));
 		} else {
 			debugger;
 		}
@@ -6307,10 +6314,18 @@ class HandleTypes extends BaseService {
 	/** @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {
 		if("liveChatReplayContinuationData" in x) {
-			this.w(x,a=>this.LiveChatReplayContinuationData(a));
+			this.w(x,a => this.LiveChatReplayContinuationData(a));
+		} else if("playerSeekContinuationData" in x) {
+			this.w(x,a => this.GenericContinuationData(a));
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {GenericContinuationData} x */
+	GenericContinuationData(x) {
+		const {continuation: a,...y}=x;
+		this.primitive_of(a,"string");
+		this.g(y);
 	}
 	/** @arg {LiveChatReplayContinuationData} x */
 	LiveChatReplayContinuationData(x) {
@@ -6320,12 +6335,12 @@ class HandleTypes extends BaseService {
 	/** @arg {ReplayChatItemActionData} x */
 	ReplayChatItemActionData(x) {
 		this.primitive_of(x.videoOffsetTimeMsec,"string");
-		this.z(x.actions,a=>this.AddChatItemAction(a));
+		this.z(x.actions,a => this.AddChatItemAction(a));
 	}
 	/** @arg {AddChatItemAction} x */
 	AddChatItemAction(x) {
 		if("addChatItemAction" in x) {
-			this.w(x,a=>this.AddChatItemActionData(a));
+			this.w(x,a => this.AddChatItemActionData(a));
 		} else {
 			debugger;
 		}
@@ -6338,15 +6353,38 @@ class HandleTypes extends BaseService {
 	/** @arg {LiveChatTextMessageRenderer} x */
 	LiveChatTextMessageRenderer(x) {
 		if("liveChatTextMessageRenderer" in x) {
-			this.w(x,a=>this.LiveChatTextMessageData(a));
+			this.w(x,a => this.LiveChatTextMessageData(a));
 		} else {
 			debugger;
 		}
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
-		const {message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,id: e,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x;
+		const {
+			message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,
+			id: e,timestampUsec: f,authorExternalChannelId: g,contextMenuAccessibility: h,
+			timestampText: i,...y
+		}=x;
+		this.z([a,b,i],a=>this.text_t(a));
+		this.Thumbnail(c);
+		this.yt_endpoint(d);
+		this.z([e,f],a=>this.primitive_of(a,"string"));
+		this.parse_external_channel_id(g);
+		this.Accessibility(h);
 		this.g(y);
+	}
+	/** @arg {`UC${string}`} x */
+	parse_external_channel_id(x) {
+		/** @type {SplitIntoGroups<typeof x,`${string}`>[0]} */
+		let g1=as_cast(x.slice(0,2));
+		switch(g1) {
+			case "UC": let cr=x.slice(2); console.log("[channel_id] %s %s",g1,cr); break;
+			default: debugger;
+		}
+	}
+	/** @arg {LiveChatItemContextMenuEndpointData} x */
+	LiveChatItemContextMenuEndpointData(x) {
+		this.primitive_of(x.params,"string");
 	}
 }
 //#endregion

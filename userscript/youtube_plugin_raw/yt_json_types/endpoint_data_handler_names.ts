@@ -15,4 +15,5 @@ type endpoint_data_handler_names={
 	confirmDialogEndpoint: "ConfirmDialogEndpointData";
 	reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData";
 	appendContinuationItemsAction: "AppendContinuationItemsAction";
+	liveChatItemContextMenuEndpoint: "LiveChatItemContextMenuEndpointData";
 };
