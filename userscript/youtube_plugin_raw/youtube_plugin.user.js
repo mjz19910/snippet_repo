@@ -5825,6 +5825,12 @@ class HandleTypes extends BaseService {
 		const {responseContext: a,...y}=x;
 		this.empty_object(y);
 	}
+	/** @arg {PlayerStoryboardSpecData} x */
+	PlayerStoryboardSpecData(x) {
+		const {spec: a,...y}=x;
+		this.primitive_of(a,"string");
+		this.empty_object(y);
+	}
 	/** @private */
 	get TODO_true() {
 		return true;
@@ -5908,12 +5914,6 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoDetails} x */
 	VideoDetails(x) {
 		this.save_keys("VideoDetails",x,this.TODO_true);
-	}
-	/** @arg {PlayerStoryboardSpecData} x */
-	PlayerStoryboardSpecData(x) {
-		const {spec: a,...y}=x;
-		this.primitive_of(a,"string");
-		this.empty_object(y);
 	}
 	/** @arg {StreamingData} x */
 	StreamingData(x) {
