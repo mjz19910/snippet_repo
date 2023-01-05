@@ -1463,7 +1463,7 @@ class FilterHandlers {
 					/** @type {BrowseResponseContent} */
 					data: cast_as(json),
 				};
-				case "feedback": return {
+				case "feedback": debugger; return {
 					type: target[0],
 					/** @type {JsonFeedbackData} */
 					data: cast_as(json),
@@ -1478,7 +1478,7 @@ class FilterHandlers {
 					/** @type {GetAccountSwitcherEndpointResult} */
 					data: cast_as(json),
 				};
-				case "get_transcript": return {
+				case "get_transcript": debugger; return {
 					type: target[0],
 					/** @type {JsonGetTranscriptData} */
 					data: cast_as(json),
@@ -1539,19 +1539,9 @@ class FilterHandlers {
 						/** @type {AttGet} */
 						data: cast_as(json),
 					};
-					case "log": debugger; return {
-						// @ts-ignore
-						type: `${target[0]}.${target[1]}`,
-						data: cast_as(json),
-					};
 				} break;
 				case "live_chat": switch(target[1]) {
 					default: debugger; break;
-					case "get_live_chat_replay": debugger; return {
-						// @ts-ignore
-						type: `${target[0]}.${target[1]}`,
-						data: cast_as(json),
-					};
 				} break;
 				case "notification": switch(target[1]) {
 					default: debugger; break;
@@ -1566,12 +1556,6 @@ class FilterHandlers {
 						data: cast_as(json),
 					};
 					case "record_interactions": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {YtSuccessResponse} */
-						data: cast_as(json),
-					};
-					case "modify_channel_preference": return {
-						// @ts-ignore
 						type: `${target[0]}.${target[1]}`,
 						/** @type {YtSuccessResponse} */
 						data: cast_as(json),
@@ -4302,11 +4286,7 @@ class HandleTypes extends BaseService {
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			case "account.set_setting": return this.AccountSetSetting(x.data);
 			case "att.get": return this.AttGet(x.data);
-			// @ts-ignore
-			case "att.log": return this.ResponseWithActions(x.data);
 			case "browse": return this.BrowseResponseContent(x.data);
-			// @ts-ignore
-			case "channel": return this.ResponseWithActions(x.data);
 			case "feedback": return this.JsonFeedbackData(x.data);
 			case "get_transcript": return this.JsonGetTranscriptData(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResult(x.data);
@@ -4314,25 +4294,13 @@ class HandleTypes extends BaseService {
 			case "guide": return this.GuideJsonType(x.data);
 			case "like.like": return this.ResponseWithActions(x.data);
 			case "like.removelike": return this.ResponseWithActions(x.data);
-			// @ts-ignore
-			case "live_chat.get_live_chat_replay": return this.ResponseWithActions(x.data);
 			case "next": return this.YtApiNext(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCount(x.data);
-			// @ts-ignore
-			case "notification.modify_channel_preference": return this.ModifyChannelPreference(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
 			case "player": return this.WatchResponsePlayer(x.data);
-			// @ts-ignore
-			case "playlist": return this.ResponseWithActions(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatch(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequence(x.data);
-			// @ts-ignore
-			case "settings": return this.ResponseWithActions(x.data);
-			// @ts-ignore
-			case "shorts": return this.ResponseWithActions(x.data);
-			// @ts-ignore
-			case "watch": return this.ResponseWithActions(x.data);
 			default:
 		}
 		switch(x.type) {
@@ -4406,7 +4374,7 @@ class HandleTypes extends BaseService {
 		} else if("openPopupAction" in x) {
 			this.OpenPopupAction(x);
 		} else if("removeFromGuideSectionAction" in x) {
-			this.w(x,a=>this.RemoveFromGuideSectionActionData(a));
+			this.w(x,a => this.RemoveFromGuideSectionActionData(a));
 		} else {
 			debugger;
 		}
@@ -5943,18 +5911,30 @@ class HandleTypes extends BaseService {
 	/** @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
 		this.save_keys("AccountSetSetting",x,this.TODO_true);
+		const {responseContext: a,settingItemId: b,...y}=x;
+		switch(b) {
+			case "407": break;
+			default: debugger; break;
+		}
+		this.empty_object(y);
 	}
 	/** @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
 		this.save_keys("ReelWatchSequence",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
 		this.save_keys("JsonFeedbackData",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
 	}
 	/** @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
 		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
 	}
 }
 //#endregion
