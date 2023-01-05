@@ -4398,6 +4398,22 @@ class HandleTypes extends BaseService {
 		this.z(b,a=>this.GuideEntryRenderer(a));
 		this.empty_object(y);
 	}
+	/** @arg {RemoveFromGuideSectionAction} x */
+	RemoveFromGuideSectionAction(x) {
+		const {removeFromGuideSectionAction: a,...y}=x;
+		this.RemoveFromGuideSectionActionData(a);
+		this.empty_object(y);
+	}
+	/** @arg {RemoveFromGuideSectionActionData} x */
+	RemoveFromGuideSectionActionData(x) {
+		const {handlerData: a,guideEntryId: b,...y}=x;
+		switch(a) {
+			case "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS": break;
+			default: debugger; break;
+		}
+		this.parse_guide_entry_id(b);
+		this.empty_object(y);
+	}
 	/** @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
 		const {guideEntryRenderer: a,...y}=x;
@@ -4424,22 +4440,6 @@ class HandleTypes extends BaseService {
 	GuideEntryDataContent(x) {
 		const {guideEntryId: a,...y}=x; this.g(y);
 		this.parse_guide_entry_id(a);
-	}
-	/** @arg {RemoveFromGuideSectionAction} x */
-	RemoveFromGuideSectionAction(x) {
-		const {removeFromGuideSectionAction: a,...y}=x;
-		this.RemoveFromGuideSectionActionData(a);
-		this.empty_object(y);
-	}
-	/** @arg {RemoveFromGuideSectionActionData} x */
-	RemoveFromGuideSectionActionData(x) {
-		const {handlerData: a,guideEntryId: b,...y}=x;
-		switch(a) {
-			case "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS": break;
-			default: debugger; break;
-		}
-		this.parse_guide_entry_id(b);
-		this.empty_object(y);
 	}
 	/** @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
