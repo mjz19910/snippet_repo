@@ -3887,9 +3887,8 @@ class IndexedDbAccessor {
 			/** @type {IDBRequest<{v:string}[]>} */
 			let get_all_request=video_id_store.getAll();
 			get_all_request.onsuccess=() => {
-				const all_video_ids=get_all_request.result;
 				db.deleteObjectStore("video_id");
-				this.createLatestDatabaseVersion(request,all_video_ids);
+				this.createLatestDatabaseVersion(request,get_all_request.result);
 			};
 		}
 	}
