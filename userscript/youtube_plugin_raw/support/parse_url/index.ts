@@ -3,7 +3,7 @@ type ParseUrlValue<T extends string>=T extends `${infer U}=${infer C}`? {
 }:T;
 type ParseUrlItems<T extends string>=T extends `${infer U}&${infer Z}`?
 	ParseUrlValue<U>&ParseUrlItems<Z>:T extends `${infer U}`? ParseUrlValue<U>:never;
-type ParseUrlSearchParams<T extends string>=T extends `${infer V}`? ParseUrlItems<V>:never;
+type ParseUrlSearchParams<T extends string>=T extends `?${infer V}`?ParseUrlItems<V>:T extends `${infer V}`? ParseUrlItems<V>:never;
 function make_search_params<T extends string>(t: T) {
 	let sp=new URLSearchParams(t);
 	return Object.fromEntries(sp.entries()) as ParseUrlSearchParams<T>;
