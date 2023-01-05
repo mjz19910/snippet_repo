@@ -1,5 +1,5 @@
 type GradientColorConfigItem={
-	lightThemeColor: number;
-	darkThemeColor: number;
-	startLocation: number;
+	lightThemeColor?: number;
+	darkThemeColor: Color<2566914048,"0x99000000">;
+	startLocation?: number;
 };

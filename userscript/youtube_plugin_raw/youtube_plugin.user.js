@@ -2900,7 +2900,7 @@ function split_string_once(s,d=cast_as(",")) {
 		return cast_as(q);
 	}
 	let a=s.slice(0,i);
-	let b=s.slice(i+1);
+	let b=s.slice(i+d.length);
 	/** @type {[string,string]} */
 	let r=[a,b];
 	/** @type {any} */
@@ -5220,6 +5220,13 @@ class HandleTypes extends BaseService {
 		console.log("dark theme background color",b.toString(16));
 		return y;
 	}
+	/** @template {number} T  @arg {T} a @arg {T} b */
+	float_cmp(a,b) {
+		let epsilon=0.0000001;
+		if(a > (b-epsilon)) return false;
+		if(b > (a-epsilon)) return false;
+		return true;
+	}
 	/** @template {ColorSourceVars} T @arg {T} x @returns {Omit<T,keyof ColorSourceVars>}  */
 	parse_color_source_vars(x) {
 		const {
@@ -5231,16 +5238,19 @@ class HandleTypes extends BaseService {
 		if(a!==2) debugger;
 		if(b!==1.4) debugger;
 		if(c!==1.5) debugger;
-		if(d!==0.67) debugger;
+		if(this.float_cmp(d,0.67)) debugger;
 		if(e!==260) debugger;
 		return y;
 	}
 	/** @arg {GradientColorConfigItem} x */
 	GradientColorConfigItem(x) {
 		const {lightThemeColor: a,darkThemeColor: b,startLocation: c,...y}=x; this.g(y);
-		console.log("gradient light theme color",a.toString(16));
+		if(a!==void 0) {
+			console.log("gradient light theme color",a.toString(16),a);
+			debugger;
+		}
 		console.log("gradient dark theme color",b.toString(16));
-		console.log("gradient start location",c);
+		if(c!==void 0) console.log("gradient start location",c);
 	}
 	/** @arg {ThumbnailsList} x */
 	ThumbnailsList(x) {
