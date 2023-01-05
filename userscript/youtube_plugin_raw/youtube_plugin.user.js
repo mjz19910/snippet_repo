@@ -5733,9 +5733,9 @@ class HandleTypes extends BaseService {
 		switch(x) {
 			case "browse-feedFEwhat_to_watch": return;
 			case "comments-section": return;
+			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "engagement-panel-searchable-transcript": return;
 			case "watch-next-feed": return;
-			case "engagement-panel-searchable-transcript-search-panel": return;
 			default:
 		}
 		switch(x) {
