@@ -543,7 +543,7 @@ class VolumeRange {
 				let range_value=Number.parseInt(this.range_element.value,10);
 				this.setGain(range_value/this.max);
 			};
-			this.range_element.onkeydown=(event) => this.onKeyDown(event);
+			this.range_element.onkeydown=event => this.onKeyDown(event);
 			this.range_element.min=""+this.min;
 			this.range_element.max=""+this.overdrive;
 			let new_gain=this.calculateGain();
@@ -3802,13 +3802,13 @@ class IndexedDbAccessor {
 	/** @arg {IDBDatabase} db */
 	start_transaction(db) {
 		const transaction=db.transaction("video_id","readwrite");
-		transaction.onerror=(event) => {
+		transaction.onerror=event => {
 			console.log("IDBTransaction: error",event);
 		};
-		transaction.onabort=(event) => {
+		transaction.onabort=event => {
 			console.log("IDBTransaction: abort",event);
 		};
-		transaction.oncomplete=(event) => {
+		transaction.oncomplete=event => {
 			console.log("IDBTransaction: complete",event);
 			db.close();
 		};
@@ -3821,12 +3821,12 @@ class IndexedDbAccessor {
 		for(let data of this.arr) {
 			const request=store.put(data);
 			this.active_requests++;
-			request.onerror=(event) => {
+			request.onerror=event => {
 				console.log("IDBRequest: error",event);
 			};
-			request.onsuccess=(event) => {
-				this.active_requests--;
+			request.onsuccess=event => {
 				console.log("IDBRequest: success",event);
+				this.active_requests--;
 				if(this.active_requests===0) {
 					transaction.commit();
 				}
