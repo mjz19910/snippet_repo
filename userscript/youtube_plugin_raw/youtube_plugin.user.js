@@ -4386,6 +4386,7 @@ class HandleTypes extends BaseService {
 			case "player": return this.WatchResponsePlayer(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatch(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequence(x.data);
+			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplay(x.data);
 			default: debugger; break;
 		}
 		switch(x.type) {
@@ -6274,6 +6275,78 @@ class HandleTypes extends BaseService {
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x,this.TODO_true);
+	}
+	/** @arg {GetLiveChatReplay} x */
+	GetLiveChatReplay(x) {
+		const {responseContext: a,continuationContents: b,...y}=x;
+		this.ResponseContext(a);
+		this.continuationContents(b);
+		this.g(y);
+	}
+	/** @arg {LiveChatContinuation} x */
+	continuationContents(x) {
+		if("liveChatContinuation" in x) {
+			this.w(x,a=>this.LiveChatContinuationData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatContinuationData} x */
+	LiveChatContinuationData(x) {
+		this.z(x.actions,a=>this.ReplayChatItemAction(a));
+		this.z(x.continuations,a=>this.LiveChatContinuationItem(a));
+	}
+	/** @arg {ReplayChatItemAction} x */
+	ReplayChatItemAction(x) {
+		if("replayChatItemAction" in x) {
+			this.w(x,a=>this.ReplayChatItemActionData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatContinuationItem} x */
+	LiveChatContinuationItem(x) {
+		if("liveChatReplayContinuationData" in x) {
+			this.w(x,a=>this.LiveChatReplayContinuationData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatReplayContinuationData} x */
+	LiveChatReplayContinuationData(x) {
+		this.primitive_of(x.continuation,"string");
+		this.primitive_of(x.timeUntilLastMessageMsec,"number");
+	}
+	/** @arg {ReplayChatItemActionData} x */
+	ReplayChatItemActionData(x) {
+		this.primitive_of(x.videoOffsetTimeMsec,"string");
+		this.z(x.actions,a=>this.AddChatItemAction(a));
+	}
+	/** @arg {AddChatItemAction} x */
+	AddChatItemAction(x) {
+		if("addChatItemAction" in x) {
+			this.w(x,a=>this.AddChatItemActionData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {AddChatItemActionData} x */
+	AddChatItemActionData(x) {
+		this.primitive_of(x.clientId,"string");
+		this.LiveChatTextMessageRenderer(x.item);
+	}
+	/** @arg {LiveChatTextMessageRenderer} x */
+	LiveChatTextMessageRenderer(x) {
+		if("liveChatTextMessageRenderer" in x) {
+			this.w(x,a=>this.LiveChatTextMessageData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatTextMessageData} x */
+	LiveChatTextMessageData(x) {
+		const {message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,id: e,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x;
+		this.g(y);
 	}
 }
 //#endregion

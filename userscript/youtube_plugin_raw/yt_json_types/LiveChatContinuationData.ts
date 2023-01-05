@@ -1,4 +1,4 @@
 type LiveChatContinuationData={
-	continuations: {}[];
-	actions: {}[];
+	continuations: LiveChatContinuationItem[];
+	actions: ReplayChatItemAction[];
 };

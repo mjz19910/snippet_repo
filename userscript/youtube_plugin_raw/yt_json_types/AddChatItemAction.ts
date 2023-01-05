@@ -1,0 +1,3 @@
+type AddChatItemAction={
+	addChatItemAction: AddChatItemActionData;
+};

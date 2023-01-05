@@ -1,0 +1,3 @@
+type PlayerSeekContinuationDataRoot={
+	playerSeekContinuationData: PlayerSeekContinuationData;
+};

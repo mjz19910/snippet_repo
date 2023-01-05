@@ -1,0 +1,3 @@
+type GenericContinuationData={
+	continuation: string;
+};
