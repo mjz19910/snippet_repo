@@ -1,1 +1,0 @@
-type PlayerResponse=WatchResponsePlayer;

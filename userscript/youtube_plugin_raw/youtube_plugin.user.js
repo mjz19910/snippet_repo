@@ -4976,7 +4976,7 @@ class HandleTypes extends BaseService {
 	YtWatchPageResponse(x) {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,...y}=x;
 		if(a!=="watch") debugger;
-		this.PlayerResponse(b);
+		this.WatchResponsePlayer(b);
 		this.yt_endpoint(c);
 		this.WatchResponseContent(d);
 		this.parse_url(e);
@@ -5007,10 +5007,6 @@ class HandleTypes extends BaseService {
 		const {entityBatchUpdate: a,...y}=x;
 		this.EntityBatchUpdateData(a);
 		this.empty_object(y);
-	}
-	/** @arg {PlayerResponse} x */
-	PlayerResponse(x) {
-		this.WatchResponsePlayer(x);
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
