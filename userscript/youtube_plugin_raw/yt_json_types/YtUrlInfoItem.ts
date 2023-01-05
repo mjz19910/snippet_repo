@@ -1,2 +1,8 @@
-// spell:ignore RDMM
-type YtUrlInfoItem={type: "RD"; id: string;}|{type: "RDMM"; id: string;};
+type YtUrlInfoItem={
+	_tag: "playlist";
+	type:YtUrlInfoItemType;
+	id: string;
+}|{
+	_tag: "video";
+	id: string;
+};

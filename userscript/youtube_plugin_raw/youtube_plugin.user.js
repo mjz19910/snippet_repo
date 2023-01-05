@@ -3839,10 +3839,19 @@ class IndexedDbAccessor {
 	/** @arg {IDBTransaction} transaction */
 	consume_data(transaction) {
 		const store=transaction.objectStore("video_id");
+		this.consume_data_with_store(store);
+	}
+	/** @arg {IDBObjectStore} store */
+	consume_data_with_store(store) {
 		for(let data of this.arr) {
 			const request=store.put(data);
 			request.onerror=event => console.log("IDBRequest: error",event);
-			request.onsuccess=event => console.log("IDBRequest: success",event);
+			request.onsuccess=event => {
+				console.log("IDBRequest: success",event);
+				if(this.arr.length>0) {
+					this.consume_data_with_store(store);
+				}
+			};
 		}
 		this.arr.length=0;
 	}
@@ -4548,9 +4557,8 @@ class HandleTypes extends BaseService {
 	/** @arg {YtWatchUrlParamsFormat} x */
 	parse_watch_page_url(x) {
 		let vv=split_string(x,"&");
-		let video_id=null;
 		/** @type {YtUrlInfoItem[]} */
-		let url_info=[];
+		let url_info_arr=[];
 		// spell:ignore RDMM
 		for(let prop of vv) {
 			/** @type {SplitOnce<typeof prop,"=">} */
@@ -4558,19 +4566,18 @@ class HandleTypes extends BaseService {
 			switch(res[0]) {
 				case "v": {
 					let value=res[1];
-					video_id=value;
-					indexed_db.put({v: value});
+					url_info_arr.push({_tag: "video",id: value});
 				} break;
 				case "list": {
 					let v=res[1];
 					if(this.str_starts_with(v,"RD")) {
 						if(this.str_starts_with(v,"RDMM")) {
-							url_info.push({type: "RDMM",id: v.slice(4)});
+							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
 						} else {
-							url_info.push({type: "RD",id: v.slice(2)});
+							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
 						}
 					} else if(this.str_starts_with(v,"PL")) {
-						console.log("[playlist_found]","PL",v.slice(2),v.slice(2).length);
+						url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});
 					} else {
 						debugger;
 					}
@@ -4579,22 +4586,18 @@ class HandleTypes extends BaseService {
 					let sp_pp=res[1];
 					if(this.cache_player_params.includes(sp_pp)) return;
 					this.cache_player_params.push(sp_pp);
-					console.log("[player_params_found]",sp_pp);
+					console.log("[new_player_params]",sp_pp);
 				} break;
-				case "start_radio": console.log("[playlist_start_radio_found]",res[1]); break;
+				case "start_radio": console.log("[playlist_start_radio]",res[1]); break;
+				case "index": console.log("[playlist_index]",res[1]); break;
 				default: debugger;
 			}
 		}
-		for(let infos of url_info) {
-			if(video_id===null) {
-				console.log("[playlist_found_radio]",infos.type,infos.id,infos.id.length);
-				continue;
+		for(let url_info of url_info_arr) {
+			switch(url_info._tag) {
+				case "playlist": console.log("[playlist]",url_info.type,url_info.id,url_info.id.length); break;
+				case "video": indexed_db.put({v: url_info.id}); break;
 			}
-			if(video_id!==infos.id) {
-				console.log("[playlist_found_radio_neq]",infos.type,infos.id,infos.id.length);
-				continue;
-			}
-			console.log("[playlist_found_radio_eq]",infos.type,infos.id,infos.id.length);
 		}
 	}
 	/** @arg {CommandMetadata} x */
