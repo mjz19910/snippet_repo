@@ -5665,7 +5665,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtTargetIdType} x */
 	parse_target_id(x) {
-		console.log("[target_id]",x);
+		switch(x) {
+			case "browse-feedFEwhat_to_watch": return;
+			case "comments-section": return;
+		}
+		switch(x) {
+			case "watch-next-feed": return;
+			default: debugger; return;
+		}
 	}
 	/** @arg {ChannelSwitcherContent} x */
 	ChannelSwitcherContent(x) {
