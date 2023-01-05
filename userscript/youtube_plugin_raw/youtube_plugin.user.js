@@ -1655,7 +1655,10 @@ class FilterHandlers {
 	on_handle_api(request,data) {
 		let parsed_url=convert_to_url(request).url;
 		let url_res=this.use_template_url(parsed_url.href);
-		if(!url_res) url_res={name: as_cast(parsed_url.href)};
+		if(!url_res) {
+			debugger;
+			url_res={name: as_cast(parsed_url.href)};
+		}
 		if(!url_res) throw new Error("Unreachable");
 		var url_type=url_res.name;
 		this.handle_any_data(url_type,data);
@@ -4044,7 +4047,12 @@ class HandleTypes extends BaseService {
 		function p4(x) {
 			const {videoDetails: m,storyboards: n,streamingData: o,captions: p,...y}=x;
 			this.VideoDetails(m);
-			this.PlayerStoryboardSpecRenderer(n);
+			if("playerStoryboardSpecRenderer" in n) {
+				this.PlayerStoryboardSpecRenderer(n);
+			} else {
+				n;
+				debugger;
+			}
 			this.StreamingData(o);
 			if(p) this.CaptionsRenderer(p);
 			return y;
@@ -6141,6 +6149,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerStoryboardSpecData} x */
 	PlayerStoryboardSpecData(x) {
+		if(!x) {
+			debugger;
+			return;
+		}
 		const {spec: a,...y}=x;
 		this.primitive_of(a,"string");
 		this.g(y);

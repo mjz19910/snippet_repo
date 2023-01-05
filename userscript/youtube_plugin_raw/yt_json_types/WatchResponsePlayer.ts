@@ -7,7 +7,7 @@ interface WatchResponsePlayer {
 	captions?: CaptionsRenderer;
 	videoDetails: VideoDetails;
 	playerConfig: PlayerConfig;
-	storyboards: PlayerStoryboardSpecRenderer;
+	storyboards: PlayerStoryboardSpecRenderer|PlayerLiveStoryboardSpecRenderer;
 	microformat: PlayerMicroformatRenderer;
 	cards: CardCollectionRenderer;
 	trackingParams: string;
