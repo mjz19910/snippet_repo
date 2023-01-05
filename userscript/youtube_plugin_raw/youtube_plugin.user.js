@@ -3613,15 +3613,21 @@ function base64_to_array(x) {
 	return base64_dec.decodeByteArray(x);
 }
 const decoder=new TextDecoder();
+/** @type {lua_strs} */
+const lua_strs=["AUTO_CHAPTERS","HEATSEEKER","DESCRIPTION_CHAPTERS"];
 /** @arg {BufferSource} x */
 function LUa(x) {
 	let res=decoder.decode(x);
-	switch(res) {
-		case "HEATSEEKER":
-		case "DESCRIPTION_CHAPTERS": break;
-		default: debugger; throw new Error();
+	if(!is_in_arr(lua_strs,res)) {
+		console.log("[new_lua_str] [%s]",res);
+		debugger;
+		throw new Error();
 	}
 	return res;
+}
+/** @template {any[]} T @arg {T} arr @arg {string} x @returns {x is T[number]} */
+function is_in_arr(arr,x) {
+	return arr.includes(x);
 }
 /** @arg {EntityKeyReader} a @arg {number} b */
 function PUa(a,b) {
@@ -3788,10 +3794,9 @@ function decode_entity_key(...gs) {
 	}
 	if(!b) return null;
 	if(!is_keyof_RUa(a)) {
-		switch(b) {
-			case "DESCRIPTION_CHAPTERS": break;
-			case "HEATSEEKER": break;
-			default: debugger; return;
+		if(!lua_strs.includes(b)) {
+			debugger;
+			return null;
 		}
 		return {
 			entityTypeFieldNumber: a,
@@ -4270,11 +4275,7 @@ class HandleTypes extends BaseService {
 				debugger;
 				return;
 			}
-			switch(res_2.entityId) {
-				case "DESCRIPTION_CHAPTERS": return;
-				case "HEATSEEKER": return;
-				default:
-			}
+			if(lua_strs.includes(res_2.entityId)) return;
 			console.log("[entity_key]",res_2,res);
 		});
 		this.g(y);
@@ -5168,7 +5169,7 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof x} x */
 		function p2(x) {
 			const {pageVisualEffects: b,playerOverlays: c,responseContext: d,topbar: e,...y}=p1.call(this,x);
-			this.z(b,a=>this.CinematicContainerRenderer(a));
+			this.z(b,a => this.CinematicContainerRenderer(a));
 			return y;
 		}
 		const {trackingParams: a,contents: b,...y}=p2.call(this,x);
@@ -5179,15 +5180,15 @@ class HandleTypes extends BaseService {
 	/** @arg {CinematicContainerRenderer} x */
 	CinematicContainerRenderer(x) {
 		if("cinematicContainerRenderer" in x) {
-			return this.w(x,a=>this.CinematicContainerData(a));
+			return this.w(x,a => this.CinematicContainerData(a));
 		}
 		debugger;
 	}
 	/** @arg {CinematicContainerData} x */
 	CinematicContainerData(x) {
 		const {backgroundImageConfig: a,gradientColorConfig: b,presentationStyle: c,config: d,...y}=x; this.g(y);
-		this.ThumbnailsList(a);
-		this.z(b,a=>a);
+		if(a) this.ThumbnailsList(a);
+		this.z(b,a => a);
 	}
 	/** @arg {ThumbnailsList} x */
 	ThumbnailsList(x) {
@@ -6608,8 +6609,8 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof b} x */
 		function p3(x) {
 			const {availableCountries: a,isUnlisted: c,hasYpcMetadata: d,viewCount: e,...y}=x;
-			this.z(a,a=>this.save_string("country_code",a));
-			this.z([c,d],a=>this.primitive_of(a,"boolean"));
+			this.z(a,a => this.save_string("country_code",a));
+			this.z([c,d],a => this.primitive_of(a,"boolean"));
 			this.primitive_of(e,"string");
 			return y;
 		}
@@ -6618,7 +6619,7 @@ class HandleTypes extends BaseService {
 		function p4(x) {
 			const {category: a,publishDate: b,ownerChannelName: d,liveBroadcastDetails: e,...y}=x;
 			this.save_string("video.category",a);
-			this.z([b,d],a=>this.primitive_of(a,"string"));
+			this.z([b,d],a => this.primitive_of(a,"string"));
 			if(e) this.LiveBroadcastDetails(e);
 			return y;
 		}
@@ -6637,16 +6638,22 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"boolean");
 		this.primitive_of(b,"string");
 	}
-	/** @arg {`http://www.youtube.com/channel/UC${string}`} x */
+	log_user_channel_url=false;
+	/** @arg {FullChannelUrlFormat} x */
 	parse_channel_url(x) {
 		let r=create_from_parse(x);
 		let chan_part=split_string_once(r.pathname,"/")[1];
-		let [chan_str,channel_id]=split_string_once(chan_part,"/");
-		if(chan_str!=="channel") debugger;
-		if(channel_id.startsWith("UC")) {
-			this.parse_external_channel_id(channel_id);
-		} else {
-			debugger;
+		let channel_id=split_string_once(chan_part,"/");
+		switch(channel_id[0]) {
+			case "channel": if(channel_id[1].startsWith("UC")) {
+				this.parse_external_channel_id(channel_id[1]);
+			} else {
+				debugger;
+			} break;
+			case "user": {
+				if(this.log_user_channel_url) console.log("[parse_channel_url] [%s]",`${channel_id[0]}/${channel_id[1]}`);
+			} break;
+			default: debugger;
 		}
 	}
 	/** @arg {MicroformatEmbed} x */
