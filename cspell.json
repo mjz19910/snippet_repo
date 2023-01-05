@@ -197,6 +197,7 @@
       "RAWTEXT",
       "RCDATA",
       "realpath",
+      "rebuffer",
       "rebuildtheuniverse",
       "reconsume",
       "regs",

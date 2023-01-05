@@ -3933,7 +3933,7 @@ class HandleTypes extends BaseService {
 				this.w(i,a => this.PaidContentOverlayRenderer(a));
 			}
 			this.trackingParams(j);
-			this.w(k,a => this.empty_object(a));
+			this.w(k,a => this.VideoQualityPromoData(a));
 			if(l) this.EndscreenRenderer(l);
 			return y;
 		}
@@ -4145,6 +4145,7 @@ class HandleTypes extends BaseService {
 			changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand",
 			createCommentEndpoint: "CreateCommentEndpointData",
 			confirmDialogEndpoint: "ConfirmDialogEndpointData",
+			reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
 		has_key(k) {
@@ -4197,55 +4198,40 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
-		/** @type {{}|YtEndpoint} */
-		let c=x;
-		this.save_keys("YtEndpoint",c,true);
-		if("clickTrackingParams" in c) {
-			const {clickTrackingParams: a,...y}=c;
-			if(a!==void 0) this.clickTrackingParams(a);
-			c=y;
-		}
-		if("commandMetadata" in c) {
-			const {commandMetadata: a,...y}=c;
-			this.commandMetadata(a);
-			c=y;
-		}
-		if("reloadContinuationItemsCommand" in c) {
-			const {reloadContinuationItemsCommand: a,...y}=c;
-			this.ReloadContinuationItemsCommandData(a);
-			c=y;
-		}
+		this.save_keys("YtEndpoint",x,true);
+		const {
+			clickTrackingParams: a,commandMetadata: b,
+			...y
+		}=x;
+		if(a) this.clickTrackingParams(a);
+		this.commandMetadata(b);
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
 		let q=(v) => this.endpoint_data_map.get(v);
-		/** @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
-		let g=x => this.empty_object(x);
-		/** @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
-		let n=(x,b) => {if(!x) throw new Error(); g(b);};
-		let m=get_keys_of(c);
+		let m=get_keys_of(y);
 		if(m.length===0) return;
 		let [k]=m;
 		k="browseEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="searchEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="setSettingEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="signalServiceEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="urlEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="watchEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="signalNavigationEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="signOutEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="getAccountsListInnertubeEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="changeKeyedMarkersVisibilityCommand";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="loadMarkersCommand";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="createCommentEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);} k="confirmDialogEndpoint";
-		if(k in c) {const {[k]: a,...b}=c; n(a,b); return this[q(k)](a);}
-		let yc=get_keys_of(c);
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="searchEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="setSettingEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signalServiceEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="urlEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="watchEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signalNavigationEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signOutEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="getAccountsListInnertubeEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="changeKeyedMarkersVisibilityCommand";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="loadMarkersCommand";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="createCommentEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="confirmDialogEndpoint";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="reloadContinuationItemsCommand";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);}
+		let yc=get_keys_of(y);
 		for(let ya of yc) {
 			if(!this.endpoint_data_map.has_key(ya)) {
 				console.log('[new_ep_data] [%s]',ya);
 				debugger;
 			}
 		}
-		this.empty_object(c);
 	}
 	/** @type {ResponseTypes['type']|null} */
 	_current_response_type=null;
@@ -5843,6 +5829,10 @@ class HandleTypes extends BaseService {
 	/** @arg {StreamingData} x */
 	StreamingData(x) {
 		this.save_keys("StreamingData",x,this.TODO_true);
+	}
+	/** @arg {VideoQualityPromoData} x */
+	VideoQualityPromoData(x) {
+		x;
 	}
 }
 //#endregion

@@ -1,3 +1,1 @@
-type NotificationActionRenderer={
-	notificationActionRenderer: NotificationActionData;
-};
+type NotificationActionRenderer={notificationActionRenderer: NotificationActionData;};

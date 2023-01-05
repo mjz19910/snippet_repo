@@ -15,4 +15,5 @@ type endpoint_data_handler_names={
 	changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand";
 	createCommentEndpoint: "CreateCommentEndpointData";
 	confirmDialogEndpoint: "ConfirmDialogEndpointData";
+	reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData";
 };

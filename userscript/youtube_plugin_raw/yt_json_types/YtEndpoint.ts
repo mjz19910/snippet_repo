@@ -1,18 +1,20 @@
-type YtEndpoint=[
-	{watchEndpoint: WatchEndpointData;},
-	{urlEndpoint: UrlEndpointData;},
-	{signalServiceEndpoint: SignalServiceEndpointData;},
-	{browseEndpoint: BrowseEndpointData;},
-	{searchEndpoint: SearchEndpointData;},
-	{setSettingEndpoint: SetSettingEndpointData;},
-	{signalNavigationEndpoint: SignalNavigationEndpointData;},
-	{signOutEndpoint: SignOutEndpointData;},
-	{getAccountsListInnertubeEndpoint: GetAccountsListInnertubeEndpointData;},
-	{loadMarkersCommand: LoadMarkersCommandData;},
-	{changeKeyedMarkersVisibilityCommand: ChangeKeyedMarkersVisibilityCommand;},
-	{commandMetadata: CommandMetadata;},
-	{clickTrackingParams: string;},
-	{reloadContinuationItemsCommand: ReloadContinuationItemsCommandData;},
-	{createCommentEndpoint: CreateCommentEndpointData;},
-	{confirmDialogEndpoint: ConfirmDialogEndpointData}
-][number];
+type EndpointTypes={
+	watchEndpoint?: WatchEndpointData;
+	urlEndpoint?: UrlEndpointData;
+	signalServiceEndpoint?: SignalServiceEndpointData;
+	browseEndpoint?: BrowseEndpointData;
+	searchEndpoint?: SearchEndpointData;
+	setSettingEndpoint?: SetSettingEndpointData;
+	signalNavigationEndpoint?: SignalNavigationEndpointData;
+	signOutEndpoint?: SignOutEndpointData;
+	getAccountsListInnertubeEndpoint?: GetAccountsListInnertubeEndpointData;
+	loadMarkersCommand?: LoadMarkersCommandData;
+	changeKeyedMarkersVisibilityCommand?: ChangeKeyedMarkersVisibilityCommand;
+	reloadContinuationItemsCommand?: ReloadContinuationItemsCommandData;
+	createCommentEndpoint?: CreateCommentEndpointData;
+	confirmDialogEndpoint?: ConfirmDialogEndpointData;
+};
+interface YtEndpoint extends EndpointTypes {
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+}

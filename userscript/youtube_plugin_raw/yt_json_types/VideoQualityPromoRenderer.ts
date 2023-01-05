@@ -1,3 +1,1 @@
-type VideoQualityPromoRenderer={
-	videoQualityPromoRenderer: {};
-};
+type VideoQualityPromoRenderer={videoQualityPromoRenderer: VideoQualityPromoData;};
