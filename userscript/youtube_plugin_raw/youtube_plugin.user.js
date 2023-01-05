@@ -2553,6 +2553,28 @@ function get_exports() {
 }
 //#region
 async function main() {
+	const log_enabled_page_type_change=false;
+	/** @arg {YTNavigateFinishEvent} event */
+	function log_page_type_change(event) {
+		let {detail}=event;
+		if(!detail) return;
+		yt_handlers.extract(h => h.on_page_type_changed(detail));
+		if(!ytd_page_manager) {
+			const target_element=get_html_elements(document,"ytd-page-manager")[0];
+			if(!target_element) {
+				throw new Error("Missing ytd_page_manager");
+			} else {
+				on_ytd_page_manager(target_element);
+			}
+		}
+		if(!ytd_page_manager) throw new Error("Invalid state");
+		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
+		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+		if(nav_load_str===current_page_type) return;
+		current_page_type=nav_load_str;
+		page_type_changes.push(nav_load_str);
+		if(log_enabled_page_type_change) console.log(nav_load_str);
+	}
 	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const csi_service=new CsiService(resolver_value);
@@ -2761,27 +2783,6 @@ async function main() {
 			console.log("send_beacon",args[0]);
 			return navigator_sendBeacon.call(this,...args);
 		};
-	}
-	/** @arg {YTNavigateFinishEvent} event */
-	function log_page_type_change(event) {
-		let {detail}=event;
-		if(!detail) return;
-		if(!ytd_page_manager) {
-			const target_element=get_html_elements(document,"ytd-page-manager")[0];
-			if(!target_element) {
-				throw new Error("Missing ytd_page_manager");
-			} else {
-				on_ytd_page_manager(target_element);
-			}
-		}
-		if(!ytd_page_manager) throw new Error("Invalid state");
-		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
-		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
-		if(nav_load_str===current_page_type) return;
-		current_page_type=nav_load_str;
-		page_type_changes.push(nav_load_str);
-		console.log(nav_load_str);
-		yt_handlers.extract(h => h.on_page_type_changed(detail));
 	}
 	// #endregion
 }
@@ -4654,6 +4655,7 @@ class HandleTypes extends BaseService {
 		return as_cast(Object.fromEntries(sp.entries()));
 	}
 	log_playlist_index=false;
+	log_enabled_playlist_id=false;
 	/** @type {string[]} */
 	cache_playlist_index=[];
 	/** @type {string[]} */
@@ -4710,17 +4712,17 @@ class HandleTypes extends BaseService {
 						case 11: this.log_playlist_id(url_info); continue;
 						default: debugger; break;
 					}
-					this.log_playlist_id(url_info);
+					this.log_playlist_id(url_info,true);
 				} break;
 				case "video": indexed_db.put({v: url_info.id}); break;
 			}
 		}
 	}
 	/** @arg {YtUrlInfoPlaylist} x */
-	log_playlist_id(x) {
+	log_playlist_id(x,critical=false) {
 		if(this.cache_playlist_id.includes(x.id)) return;
 		this.cache_playlist_id.push(x.id);
-		console.log("[playlist]",x.type,x.id);
+		if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
 	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
