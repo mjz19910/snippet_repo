@@ -3749,77 +3749,60 @@ class IndexedDbAccessor {
 	/** @arg {{}} obj */
 	put(obj) {
 		this.arr.push(obj);
-		if(!this.db_open_request) this.db_open_request=this.open();
-		if(this.current_database) {
-			if(this.current_rw_transaction) {
-				return this.consume_data();
-			}
-			return this.start_transaction();
-		} else {
-			console.log("database_open_request readyState",this.db_open_request.readyState);
-		}
+		this.open();
 	}
 	open() {
 		const {name,version}=this.db_args;
 		const request=indexedDB.open(name,version);
-		request.onsuccess=event => this.onSuccess(event);
+		request.onsuccess=event => this.onSuccess(request,event);
 		request.onerror=event => this.onError(event);
 		request.onupgradeneeded=event => this.onUpgradeNeeded(event);
-		return request;
 	}
-	/** @type {IDBDatabase|null} */
-	current_database=null;
-	/** @type {IDBTransaction|null} */
-	current_rw_transaction=null;
 	close_db_on_transaction_complete=false;
-	onDbClose() {
-		if(!this.current_database) throw new Error("no database to close");
-		if(this.current_rw_transaction) {
-			this.close_db_on_transaction_complete=true;
-			return;
+	/** @arg {IDBOpenDBRequest} req @arg {Event} event */
+	onSuccess(req,event) {
+		let event_pd=Object.getOwnPropertyDescriptors(Event.prototype);
+		let my_event_pd=Object.getOwnPropertyDescriptors(event);
+		/** @type {{[x:string]:any}} */
+		let ev_ac=event;
+		for(let k in my_event_pd) {
+			if(k in event_pd) continue;
+			console.log("idb open event key",k,ev_ac[k]);
 		}
-		if(this.close_db_on_transaction_complete) {
-			this.current_database.close();
-			this.current_database=null;
-		}
-	}
-	/** @arg {Event} event */
-	onSuccess(event) {
-		if(!this.db_open_request) throw new Error("no db request");
-		console.log('db open success',event);
-		let db=this.db_open_request.result;
-		this.current_database=db;
+		console.log(event);
+		let db=req.result;
 		db.onversionchange = () => {
-			this.close_db_on_transaction_complete=true;
-			this.onDbClose();
+			db.close();
 		}
-		this.start_transaction();
+		this.start_transaction(db);
 	}
-	start_transaction() {
-		if(!this.current_database) throw new Error("no database open");
-		const db=this.current_database;
+	/** @arg {IDBDatabase} db */
+	start_transaction(db) {
 		const transaction=db.transaction("video_id","readwrite");
 		transaction.onerror=(event) => {
 			console.log("transaction error",event);
 		};
 		transaction.oncomplete=() => {
-			this.current_rw_transaction=null;
-			this.onDbClose();
+			db.close();
 		};
-		this.current_rw_transaction=transaction;
-		if(this.arr.length>0) this.consume_data();
+		if(this.arr.length>0) this.consume_data(transaction);
 	}
-	consume_data() {
-		if(!this.current_rw_transaction) throw new Error("no db transaction");
-		let transaction=this.current_rw_transaction;
+	active_requests=0;
+	/** @arg {IDBTransaction} transaction */
+	consume_data(transaction) {
 		const store=transaction.objectStore("video_id");
 		for(let data of this.arr) {
 			const request=store.put(data);
+			this.active_requests++;
 			request.onerror=(event) => {
 				console.log("request error",event);
 			};
 			request.onsuccess=(event) => {
+				this.active_requests--;
 				console.log("request success",event);
+				if(this.active_requests === 0) {
+					transaction.commit();
+				}
 			};
 		}
 		this.arr.length=0;
