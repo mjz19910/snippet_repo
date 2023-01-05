@@ -2789,9 +2789,33 @@ function split_string(x,s=cast_as(",")) {
 	let r=x.split(s);
 	return cast_as(r);
 }
-
+/** @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
+function split_string_once(s,d=cast_as(",")) {
+	if(s==="") {
+		/** @type {[]} */
+		let r=[];
+		/** @type {any} */
+		let q=r;
+		return cast_as(q);
+	}
+	let idx=s.indexOf(d);
+	if(idx===-1) {
+		/** @type {[S]} */
+		let r=[s];
+		/** @type {any} */
+		let q=r;
+		return cast_as(q);
+	}
+	let a=s.slice(0,idx);
+	let b=s.slice(idx);
+	debugger;
+	/** @type {[string,string]} */
+	let r=[a,b];
+	/** @type {any} */
+	let q=r;
+	return cast_as(q);
+}
 const seen_map=new Set;
-
 const general_service_state={
 	logged_in: false,
 	/** @type {{datasyncId: (BigInt|null)[]}|null} */
@@ -4477,9 +4501,19 @@ class HandleTypes extends BaseService {
 			let sp=new URLSearchParams(t);
 			return as_cast(Object.fromEntries(sp.entries()));
 		}
-		/** @type {{list?: YtPlaylistFormat;v: string;pp?: string;index?: `${number}`}} */
+		let vv=split_string(x,"&");
+		for(let prop of vv) {
+			if(this.str_starts_with(prop,"v=")) {
+				/** @type {SplitOnce<typeof prop,"=">} */
+				let res=split_string_once(prop,"=");
+				res;
+			} else {
+				debugger;
+			}
+		}
+		/** @type {{list?: YtPlaylistFormat;v: string;pp?: string;index?: `${number}`;start_radio?:`${1|0}`}} */
 		let sp=make_search_params(x);
-		let k=filter_out_keys(get_keys_of(sp),["list","v","pp","index"]);
+		let k=filter_out_keys(get_keys_of(sp),["list","v","pp","index","start_radio"]);
 		if(k.length>0) {
 			console.log("[missed_url_param_keys]",k);
 		}
@@ -4505,6 +4539,9 @@ class HandleTypes extends BaseService {
 		}
 		if("v" in sp) {
 			indexed_db.put({v: sp.v});
+		}
+		if(sp.start_radio!==void 0) {
+			console.log("[playlist_start_radio_found]",sp.start_radio);
 		}
 	}
 	/** @arg {CommandMetadata} x */
