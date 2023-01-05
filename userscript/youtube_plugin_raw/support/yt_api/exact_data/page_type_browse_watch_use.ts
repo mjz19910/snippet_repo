@@ -30,7 +30,7 @@ async function use_page_type_watch_detail() {
 	let e_catcher=use_ecatcher();
 	const watch_serviceTrackingParams=watch_j_response.response.response.responseContext.serviceTrackingParams;
 	let service_param: typeof watch_serviceTrackingParams[0]=watch_serviceTrackingParams[0];
-	const service_param_t: CsiServiceParams=service_param;
+	const service_param_t=service_param;
 	service_param.service;
 	const sp_0_params=service_param.params;
 	type CsiPt=typeof sp_0_params;
