@@ -5394,7 +5394,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
-		x;
+		const {resourceStatuses: a,serverBuildLabel: b,...y}=x; this.g(y);
+		this.z(a,a=>this.ElementResourceStatus(a));
+		if(b!=="boq_youtube-watch-ui_20230102.12_p0") debugger;
+	}
+	/** @arg {ElementResourceStatus} x */
+	ElementResourceStatus(x) {
+		if(x.status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
+		console.log("ElementResourceStatus.identifier",x.identifier);
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
