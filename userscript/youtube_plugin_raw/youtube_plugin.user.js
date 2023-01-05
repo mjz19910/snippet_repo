@@ -5384,6 +5384,7 @@ class HandleTypes extends BaseService {
 					console.log("[template_child_iter_child]",res);
 				} break;
 				case "struct": {
+					/** @type {Map<number,DecTypeNum[][]>} */
 					let struct_map=new Map;
 					let res=struct[2];
 					for(let member of res) {
