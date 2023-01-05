@@ -1472,7 +1472,7 @@ class FilterHandlers {
 		return this.handle_types.get_url_type(path_parts);
 	}
 	/** @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_res_one(target,x) {
+	convert_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
 			case "browse": return {
@@ -1519,7 +1519,7 @@ class FilterHandlers {
 		return null;
 	}
 	/** @arg {Extract<Split<UrlTypes, ".">,[any,any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_res_2(target,x) {
+	convert_length_2(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
 			case "like": return this.convert_like(target,x);
@@ -1639,8 +1639,8 @@ class FilterHandlers {
 		let res=null;
 		switch(target.length) {
 			default: debugger; break;
-			case 1: res=this.convert_res_one(target,x); break;
-			case 2: res=this.convert_res_2(target,x); break;
+			case 1: res=this.convert_length_1(target,x); break;
+			case 2: res=this.convert_length_2(target,x); break;
 		}
 		if(res) return res;
 		console.log("[log_get_res_data]",target,x);
