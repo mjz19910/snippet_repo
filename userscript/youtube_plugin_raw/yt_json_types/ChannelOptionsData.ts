@@ -1,5 +1,5 @@
 type ChannelOptionsData={
-	avatar: ThumbnailsListData;
+	avatar: Thumbnail;
 	avatarEndpoint: YtEndpoint;
 	name: string;
 	links: TextT[];

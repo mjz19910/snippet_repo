@@ -1,6 +1,6 @@
 type AccountItemData={
 	accountName: TextT;
-	accountPhoto: ThumbnailsListData;
+	accountPhoto: Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;

@@ -1,1 +1,0 @@
-type ThumbnailsListData={thumbnails: ThumbnailItem[];};

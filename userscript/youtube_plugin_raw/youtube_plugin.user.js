@@ -5168,12 +5168,35 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof x} x */
 		function p2(x) {
 			const {pageVisualEffects: b,playerOverlays: c,responseContext: d,topbar: e,...y}=p1.call(this,x);
+			this.z(b,a=>this.CinematicContainerRenderer(a));
 			return y;
 		}
 		const {trackingParams: a,contents: b,...y}=p2.call(this,x);
 		this.trackingParams(a);
 		if(b) this.TwoColumnWatchNextResults(b);
 		this.g(y);
+	}
+	/** @arg {CinematicContainerRenderer} x */
+	CinematicContainerRenderer(x) {
+		if("cinematicContainerRenderer" in x) {
+			return this.w(x,a=>this.CinematicContainerData(a));
+		}
+		debugger;
+	}
+	/** @arg {CinematicContainerData} x */
+	CinematicContainerData(x) {
+		const {backgroundImageConfig: a,gradientColorConfig: b,presentationStyle: c,config: d,...y}=x; this.g(y);
+		this.ThumbnailsList(a);
+		this.z(b,a=>a);
+	}
+	/** @arg {ThumbnailsList} x */
+	ThumbnailsList(x) {
+		const {thumbnail,trackingParams,...y}=x; this.g(y);
+		this.Thumbnail(x.thumbnail);
+	}
+	/** @arg {Thumbnail} x */
+	ThumbnailsListData(x) {
+		this.Thumbnail(x);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
@@ -5794,10 +5817,7 @@ class HandleTypes extends BaseService {
 		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
 		this.yt_endpoint(f);
 		if(get_keys_of_one(b)[0]!=="thumbnails") debugger;
-		this.w(b,a => {
-			this.z(a,a =>
-				this.ThumbnailItem(a));
-		});
+		this.Thumbnail(b);
 		this.g(y);
 	}
 	/** @arg {ThumbnailItem} x */
