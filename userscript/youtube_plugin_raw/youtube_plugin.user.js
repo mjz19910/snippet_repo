@@ -4978,20 +4978,20 @@ class HandleTypes extends BaseService {
 		if(a!=="watch") debugger;
 		this.WatchResponsePlayer(b);
 		this.yt_endpoint(c);
-		this.WatchResponseContent(d);
+		this.WatchNextResponse(d);
 		this.parse_url(e);
 		this.empty_object(y);
 	}
-	/** @arg {WatchResponseContent} x */
-	WatchResponseContent(x) {
+	/** @arg {WatchNextResponse} x */
+	WatchNextResponse(x) {
 		let t=this;
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
-			this.g(a);
-			this.z(b,a=>this.g(a));
+			this.yt_endpoint(a);
+			this.z(b,a=>this.EngagementPanelSectionListRenderer(a));
 			this.FrameworkUpdates(c);
-			this.z(d,a=>this.g(a));
+			this.z(d,a=>this.yt_endpoint(a));
 			return y;
 		}
 		/** @this {typeof t} @arg {typeof x} x */
@@ -4999,7 +4999,21 @@ class HandleTypes extends BaseService {
 			const {pageVisualEffects: b,playerOverlays: c,responseContext: d,topbar: e,...y}=p1.call(this,x);
 			return y;
 		}
-		const {trackingParams,...y}=p2.call(this,x);
+		const {trackingParams: a,contents: b,...y}=p2.call(this,x);
+		this.trackingParams(a);
+		if(b) this.TwoColumnWatchNextResults(b);
+		this.empty_object(y);
+	}
+	/** @arg {TwoColumnWatchNextResults} x */
+	TwoColumnWatchNextResults(x) {
+		const {twoColumnWatchNextResults: a,...y}=x;
+		this.g(a);
+		this.empty_object(y);
+	}
+	/** @arg {EngagementPanelSectionListRenderer} x */
+	EngagementPanelSectionListRenderer(x) {
+		const {engagementPanelSectionListRenderer: a,...y}=x;
+		this.EngagementPanelSectionListData(a);
 		this.empty_object(y);
 	}
 	/** @arg {FrameworkUpdates} x */
