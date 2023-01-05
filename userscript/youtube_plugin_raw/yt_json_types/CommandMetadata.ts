@@ -1,7 +1,4 @@
-type CommandMetadata=[
-	{webCommandMetadata: WebCommandMetadata;},
-	{
-		webCommandMetadata: WebCommandMetadata;
-		resolveUrlCommandMetadata: ResolveUrlCommandMetadata;
-	}
-][number];
+type CommandMetadata={
+	webCommandMetadata: WebCommandMetadata;
+	resolveUrlCommandMetadata?: ResolveUrlCommandMetadata;
+};

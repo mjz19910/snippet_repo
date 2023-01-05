@@ -1,4 +1,5 @@
 type EndpointTypes={
+	commandMetadata?: CommandMetadata;
 	watchEndpoint?: WatchEndpointData;
 	urlEndpoint?: UrlEndpointData;
 	signalServiceEndpoint?: SignalServiceEndpointData;
@@ -16,5 +17,4 @@ type EndpointTypes={
 };
 interface YtEndpoint extends EndpointTypes {
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
 }

@@ -4129,6 +4129,7 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {endpoint_data_handler_names} */
 		_obj_map={
+			commandMetadata: "CommandMetadata",
 			watchEndpoint: "WatchEndpointData",
 			browseEndpoint: "BrowseEndpointData",
 			searchEndpoint: "SearchEndpointData",
@@ -4197,17 +4198,17 @@ class HandleTypes extends BaseService {
 	yt_endpoint(x) {
 		this.save_keys("YtEndpoint",x,true);
 		const {
-			clickTrackingParams: a,commandMetadata: b,
+			clickTrackingParams: a,
 			...y
 		}=x;
 		if(a) this.clickTrackingParams(a);
-		this.commandMetadata(b);
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
 		let q=(v) => this.endpoint_data_map.get(v);
 		let m=get_keys_of(y);
 		if(m.length===0) return;
 		let [k]=m;
-		k="browseEndpoint";
+		k="commandMetadata";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="browseEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="searchEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="setSettingEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signalServiceEndpoint";
@@ -4585,15 +4586,10 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @arg {CommandMetadata} x */
-	commandMetadata(x) {
-		const {webCommandMetadata: a,...y}=x;
+	CommandMetadata(x) {
+		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=x;
 		this.WebCommandMetadata(a);
-		if("resolveUrlCommandMetadata" in y) {
-			const {resolveUrlCommandMetadata: a,...z}=y;
-			this.ResolveUrlCommandMetadata(a);
-			this.empty_object(z);
-			return;
-		}
+		if(b) this.ResolveUrlCommandMetadata(b);
 		this.empty_object(y);
 	}
 	/** @arg {YtPageTypeEnum} x */
