@@ -5648,11 +5648,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ConfirmDialogEndpointData} x */
 	ConfirmDialogEndpointData(x) {
-		this.save_keys("ConfirmDialogEndpoint",x,this.TODO_true);
+		this.save_keys("ConfirmDialogEndpointData",x,this.TODO_true);
 	}
 	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {
-		x;
+		this.save_keys("CompactVideoData",x,this.TODO_true);
 	}
 }
 //#endregion
