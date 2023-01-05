@@ -3197,7 +3197,7 @@ class CsiService extends BaseService {
 		"GetAccountsList_rid",
 		/*reel_watch*/"GetReelWatchSequence_rid",
 		"GetLibrary_rid","GetHistory_rid",
-		"RemoveLike_rid",
+		/*`Remove${string}_rid`*/"RemoveLike_rid",
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
