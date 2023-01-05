@@ -4045,7 +4045,7 @@ class HandleTypes extends BaseService {
 		let c=p3.call(this,b);
 		/** @this {typeof t} @arg {typeof c} x */
 		function p4(x) {
-			const {videoDetails: m,storyboards: n,streamingData: o,captions: p,...y}=x;
+			const {videoDetails: m,storyboards: n,streamingData: o,heartbeatParams: p,...y}=x;
 			this.VideoDetails(m);
 			if("playerStoryboardSpecRenderer" in n) {
 				this.PlayerStoryboardSpecRenderer(n);
@@ -4055,13 +4055,17 @@ class HandleTypes extends BaseService {
 				debugger;
 			}
 			this.StreamingData(o);
-			if(p) this.CaptionsRenderer(p);
+			if(p) this.HeartbeatParams(p);
 			return y;
 		}
 		let d=p4.call(this,c);
 		/** @this {typeof t} @arg {typeof d} x */
 		function p5(x) {
-			const {cards: q,frameworkUpdates: r,microformat: s,...y}=x;
+			const {captions: p,cards: q,frameworkUpdates: r,microformat: s,...y}=x;
+			if(p) this.CaptionsRenderer(p);
+			this.CardCollectionRenderer(q);
+			this.FrameworkUpdates(r);
+			this.PlayerMicroformatRenderer(s);
 			return y;
 		}
 		let e=p5.call(this,d);
@@ -6519,6 +6523,16 @@ class HandleTypes extends BaseService {
 		const {params: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
+	/** @arg {HeartbeatParams} x */
+	HeartbeatParams(x) {
+		const {heartbeatServerData: a,intervalMilliseconds: b,softFailOnError: c,...y}=x; this.g(y);
+		this.z([a,b],a=>this.primitive_of(a,"string"));
+		this.primitive_of(c,"boolean");
+	}
+	/** @arg {CardCollectionRenderer} x */
+	CardCollectionRenderer(x) {x;}
+	/** @arg {PlayerMicroformatRenderer} x */
+	PlayerMicroformatRenderer(x) {x;}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
