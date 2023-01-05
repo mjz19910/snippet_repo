@@ -3783,7 +3783,12 @@ class IndexedDbAccessor {
 	/** @arg {IDBOpenDBRequest} request @arg {Event} event */
 	onSuccess(request,event) {
 		console.log("OpenDBRequest success",event);
-		this.onDatabaseResult(request.result);
+		this.onDatabaseReady(request.result);
+	}
+	/** @arg {IDBDatabase} db */
+	onDatabaseReady(db) {
+		this.onDatabaseResult(db);
+		this.start_transaction(db);
 	}
 	/** @arg {IDBDatabase} db */
 	onDatabaseResult(db) {
@@ -3791,7 +3796,6 @@ class IndexedDbAccessor {
 		db.onabort=event => console.log("IDBDatabase: abort",event);
 		db.onclose=event => console.log("IDBDatabase: close",event);
 		db.onversionchange=event => this.onDatabaseVersionChange(db,event);
-		this.start_transaction(db);
 	}
 	/** @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
 	onDatabaseVersionChange(db,event) {
