@@ -4710,24 +4710,8 @@ class HandleTypes extends BaseService {
 		this.PlaylistSidebarRenderer(h);
 		y;
 	}
-	/** @arg {PlaylistSidebarRenderer} x */
-	PlaylistSidebarRenderer(x) {
-		this.save_keys("PlaylistSidebarRenderer",x,this.TODO_true);
-	}
-	/** @arg {MicroformatDataRenderer} x */
-	MicroformatDataRenderer(x) {
-		this.save_keys("MicroformatDataRenderer",x,this.TODO_true);
-	}
 	/** @arg {DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {this.w(x,a=>this.DesktopTopbarRendererData(a));}
-	/** @arg {PlaylistMetadataRenderer} x */
-	PlaylistMetadataRenderer(x) {
-		this.save_keys("PlaylistMetadataRenderer",x,this.TODO_true);
-	}
-	/** @arg {PlaylistHeaderRenderer} x */
-	PlaylistHeaderRenderer(x) {
-		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
-	}
 	/** @arg {YtSettingsPageResponse} x */
 	YtSettingsPageResponse(x) {
 		const {page: {},endpoint: a,response: b,url: c,...y}=x;
@@ -5595,6 +5579,22 @@ class HandleTypes extends BaseService {
 	/** @arg {ConnectedAppData} x */
 	ConnectedAppData(x) {
 		this.save_keys("ConnectedAppData",x,this.TODO_true);
+	}
+	/** @arg {PlaylistSidebarRenderer} x */
+	PlaylistSidebarRenderer(x) {
+		this.save_keys("PlaylistSidebarRenderer",x,this.TODO_true);
+	}
+	/** @arg {MicroformatDataRenderer} x */
+	MicroformatDataRenderer(x) {
+		this.save_keys("MicroformatDataRenderer",x,this.TODO_true);
+	}
+	/** @arg {PlaylistMetadataRenderer} x */
+	PlaylistMetadataRenderer(x) {
+		this.save_keys("PlaylistMetadataRenderer",x,this.TODO_true);
+	}
+	/** @arg {PlaylistHeaderRenderer} x */
+	PlaylistHeaderRenderer(x) {
+		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
 	}
 }
 //#endregion
