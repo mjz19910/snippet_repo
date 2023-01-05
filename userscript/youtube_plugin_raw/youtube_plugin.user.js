@@ -6307,7 +6307,9 @@ class HandleTypes extends BaseService {
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
 		if("replayChatItemAction" in x) {
-			this.w(x,a => this.ReplayChatItemActionData(a));
+			const {replayChatItemAction:a,...y}=x;
+			this.ReplayChatItemActionData(x.replayChatItemAction);
+			this.empty_object(y);
 		} else {
 			debugger;
 		}
@@ -6341,14 +6343,17 @@ class HandleTypes extends BaseService {
 	/** @arg {AddChatItemAction} x */
 	AddChatItemAction(x) {
 		if("addChatItemAction" in x) {
-			this.w(x,a => this.AddChatItemActionData(a));
+			const {clickTrackingParams: a,addChatItemAction: b,...y}=x; this.g(y);
+			if(a) this.clickTrackingParams(a);
+			this.AddChatItemActionData(b);
 		} else {
 			debugger;
 		}
 	}
 	/** @arg {AddChatItemActionData} x */
 	AddChatItemActionData(x) {
-		this.primitive_of(x.clientId,"string");
+		const {clientId: a,item: b,...y}=x; this.g(y);
+		if(a) this.primitive_of(a,"string");
 		this.LiveChatTextMessageRenderer(x.item);
 	}
 	/** @arg {LiveChatTextMessageRenderer} x */
@@ -6403,7 +6408,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {LiveChatItemContextMenuEndpointData} x */
 	LiveChatItemContextMenuEndpointData(x) {
-		this.primitive_of(x.params,"string");
+		const {params: a,...y}=x; this.g(y);
+		this.primitive_of(a,"string");
 	}
 }
 //#endregion
