@@ -1,1 +1,1 @@
-export type ChannelId=`UC${string}`;
+type ChannelId=`UC${string}`;

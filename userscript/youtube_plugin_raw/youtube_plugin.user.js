@@ -6558,7 +6558,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerMicroformatRenderer} x */
 	PlayerMicroformatRenderer(x) {
-		this.g(x.playerMicroformatRenderer);
+		const {playerMicroformatRenderer: a,...y}=x; this.g(y);
+		this.PlayerMicroformatData(a);
+	}
+	PlayerMicroformatData(x) {
+		x;
 	}
 }
 //#endregion
