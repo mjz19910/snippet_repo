@@ -1096,16 +1096,18 @@ class MyReader {
 		this.len=buf.length;
 		this.last_pos=0;
 	}
-	try_read_any() {
+	/** @arg {number} [size] */
+	try_read_any(size) {
 		try {
-			return this.read_any();
+			return this.read_any(size);
 		} catch {
 			return null;
 		}
 	}
-	read_any_new() {
+	/** @arg {number} [size] */
+	read_any_new(size) {
 		this.pos=0;
-		return this.read_any();
+		return this.read_any(size);
 	}
 	/** @private @arg {number} [size] */
 	read_any(size) {
@@ -1310,22 +1312,28 @@ class MyReader {
 		let first_num=[];
 		switch(wireType) {
 			case 0:
-				let [num64,new_pos]=this.revert_to(pos_start,() => {
+				/** @type {[boolean,bigint,number]} */
+				let revert_res=this.revert_to(pos_start,() => {
 					try {
 						let u64=this.uint64();
-						return [u64,this.pos];
+						return [true,u64,this.pos];
 					} catch {}
-					return [0n,this.pos];
+					return [false,0n,this.pos];
 				});
-				let num32;
-				try {
+				let num32=null;
+				x: try {
 					num32=this.uint32();
 				} catch {
+					if(revert_res[0]) break x;
 					this.failed=true;
 					first_num.push(["error"]);
 					break;
 				}
-				if(num64!==BigInt(num32)) {
+				let [,num64,new_pos]=revert_res;
+				if(!num32) {
+					first_num.push(["data64",fieldId,num64]);
+					this.pos=new_pos;
+				} else if(num64!==BigInt(num32)) {
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
 				} else {
@@ -5115,19 +5123,19 @@ class HandleTypes extends BaseService {
 			let binary=decode_url_b64(b);
 			let reader=new MyReader(binary);
 			reader.pos=7;
-			let res=reader.try_read_any();
+			let res=reader.try_read_any(binary.byteLength-8);
 			if(!res) break x;
 			let item=res[0];
 			switch(item[0]) {
 				case "child": {
 					reader.pos=item[2].byteOffset;
-					let res=reader.try_read_any();
+					let res=reader.try_read_any(item[2].byteLength);
 					if(!res) break;
-					console.log("template child_1",res[0]);
+					console.log("[template_child_1]",res);
 				} break;
 				default: debugger;
 			}
-			console.log(res[0]);
+			console.log("[template_root]",...res);
 		}
 		this.z(c,a => {
 			let id=a.split("|");
