@@ -1480,7 +1480,7 @@ class FilterHandlers {
 				};
 				case "get_transcript": return {
 					type: target[0],
-					/** @type {get_transcript_t["data"]} */
+					/** @type {JsonGetTranscriptData} */
 					data: cast_as(json),
 				};
 				case "guide": return {
@@ -1578,12 +1578,12 @@ class FilterHandlers {
 					default: debugger; break;
 					case "reel_item_watch": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {reel_reel_item_watch_t["data"]} */
+						/** @type {ReelItemWatch} */
 						data: cast_as(json),
 					};
 					case "reel_watch_sequence": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {reel_reel_watch_sequence_t["data"]} */
+						/** @type {ReelWatchSequence} */
 						data: cast_as(json),
 					};
 				} break;
