@@ -3532,7 +3532,12 @@ function base64_to_array(x) {
 const decoder=new TextDecoder();
 /** @arg {BufferSource} x */
 function LUa(x) {
-	return decoder.decode(x);
+	let res=decoder.decode(x);
+	switch(res) {
+		case "HEATSEEKER": return res;
+	}
+	debugger;
+	throw new Error("New id");
 }
 /** @arg {EntityKeyReader} a @arg {number} b */
 function PUa(a,b) {
@@ -3654,7 +3659,7 @@ function decode_entity_key(...gs) {
 	// a = new OUa(new Ys([Rd(decodeURIComponent(a))]));
 	a=new EntityKeyReader(new ServiceArrayViewType([base64_to_array(decodeURIComponent(a))]));
 	if(PUa(a,2)) {
-		/** @type {string|number|Uint8Array|undefined} */
+		/** @type {ReturnType<typeof LUa>|number|Uint8Array|undefined} */
 		var b=Zs(a);
 		var c=a.pos;
 		/** @type {ServiceArrayViewType|DataView|Uint8Array|string} */
@@ -3697,11 +3702,15 @@ function decode_entity_key(...gs) {
 	function is_keyof_RUa(v) {
 		return v in RUa;
 	}
-	if(!is_keyof_RUa(a)) return {
-		entityTypeFieldNumber: a,
-		entityType: null,
-		entityId: b
-	};
+	if(!b) return null;
+	if(!is_keyof_RUa(a)) {
+		if(b!=="HEATSEEKER") return;
+		return {
+			entityTypeFieldNumber: a,
+			entityType: null,
+			entityId: b
+		};
+	}
 	d=RUa[a];
 	if("undefined"===typeof d)
 		throw a=new Bl("Failed to recognize field number",{
@@ -4146,6 +4155,11 @@ class HandleTypes extends BaseService {
 		this.z(a,a => {
 			let res=decode_url_b64_proto_obj(decodeURIComponent(a));
 			let res_2=decode_entity_key(a);
+			if(!res_2) {
+				debugger;
+				return;
+			}
+			if(res_2.entityId==="HEATSEEKER") return;
 			console.log("[entity_key]",res_2,res);
 		});
 		this.empty_object(y);
