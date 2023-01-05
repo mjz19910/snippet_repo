@@ -2959,7 +2959,10 @@ class BaseServicePrivate extends KnownDataSaver {
 	new_strings=[];
 	/** @arg {string} key @arg {string|string[]} x */
 	save_string(key,x) {
-		if(key==="any") debugger;
+		if(x===void 0) {
+			debugger;
+			return;
+		}
 		if(!(x instanceof Array)&&x.startsWith("http://www.youtube.com/channel/UC")) {
 			if(this.log_skipped_strings) console.log("skip channel like",key,x);
 			return;
@@ -3010,8 +3013,10 @@ class BaseServicePrivate extends KnownDataSaver {
 	new_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
-		if(x===void 0) debugger;
-		if(key==="any") debugger;
+		if(x===void 0) {
+			debugger;
+			return;
+		}
 		let was_known=true;
 		/** @type {["one", number[]]|["many",number[][]]} */
 		let cur;
@@ -5146,15 +5151,22 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
+		if(!x) {
+			debugger;
+			return;
+		}
 		const {accessibilityData: a,...y}=x;
 		this.AccessibilityData(a);
 		this.empty_object(y);
 	}
 	/** @arg {AccessibilityData} x */
 	AccessibilityData(x) {
-		if(!x) debugger;
+		if(!x) {
+			debugger;
+			return;
+		}
 		const {label: a,...y}=x;
-		this.save_string(`label`,a);
+		if(a) this.save_string(`label`,a);
 		this.empty_object(y);
 	}
 	/** @arg {AccountsListResponse} x */
@@ -5259,7 +5271,7 @@ class HandleTypes extends BaseService {
 		if(d) this.primitive_of(d,"boolean");
 		if(e) this.yt_endpoint(e);
 		if(i) this.trackingParams(i);
-		this.text_t(h);
+		if(h) this.text_t(h);
 		if(j) this.yt_endpoint(j);
 		{
 			const {targetId: a,accessibilityData: b,...z}=y;
@@ -5296,7 +5308,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
 		const {accessibility: a,icon: b,subMenuItems: c,title: d,trackingParams: e,...y}=x;
-		this.Accessibility(a);
+		if(a) this.Accessibility(a);
 		this.Icon(b);
 		this.z(c,v => this.ActionSetPlaylistVideoOrder(v));
 		this.primitive_of(d,"string");

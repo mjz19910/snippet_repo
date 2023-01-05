@@ -1,3 +1,3 @@
 type AccessibilityData={
-	label: string;
+	label?: string;
 };

@@ -8,7 +8,7 @@ type ButtonData={
 	navigationEndpoint?: YtEndpoint;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
-	text: TextT;
+	text?: TextT;
 	trackingParams?: string;
 	targetId?: string;
 };

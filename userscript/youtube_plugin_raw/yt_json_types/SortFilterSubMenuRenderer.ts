@@ -1,5 +1,5 @@
 type SortFilterSubMenuRenderer={
-	accessibility: Accessibility;
+	accessibility?: Accessibility;
 	icon: Icon<"SORT">;
 	subMenuItems: ActionSetPlaylistVideoOrder[];
 	title: string;
