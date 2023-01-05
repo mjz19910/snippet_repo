@@ -3809,10 +3809,11 @@ class IndexedDbAccessor {
 		request.onerror=event => this.onError(event);
 		request.onupgradeneeded=event => this.onUpgradeNeeded(request,event);
 	}
+	log_all_events=false;
 	close_db_on_transaction_complete=false;
 	/** @arg {IDBOpenDBRequest} request @arg {Event} event */
 	onSuccess(request,event) {
-		console.log("OpenDBRequest success",event);
+		if(this.log_all_events) console.log("OpenDBRequest success",event);
 		this.onDatabaseReady(request.result);
 	}
 	/** @arg {IDBDatabase} db */
@@ -3844,7 +3845,7 @@ class IndexedDbAccessor {
 	}
 	/** @arg {IDBDatabase} db @arg {Event} event */
 	onTransactionComplete(db,event) {
-		console.log("IDBTransaction: complete",event);
+		if(this.log_all_events) console.log("IDBTransaction: complete",event);
 		db.close();
 	}
 	/** @arg {IDBTransaction} transaction */
@@ -3855,11 +3856,11 @@ class IndexedDbAccessor {
 	/** @arg {IDBObjectStore} store */
 	consume_data_with_store(store) {
 		for(let data of this.arr) {
-			console.log("IDBObjectStore.put()",data);
+			if(this.log_all_events) console.log("IDBObjectStore.put()",data);
 			const request=store.put(data);
 			request.onerror=event => console.log("IDBRequest: error",event);
 			request.onsuccess=event => {
-				console.log("IDBRequest: success",event);
+				if(this.log_all_events) console.log("IDBRequest: success",event);
 				if(this.arr.length>0) {
 					this.consume_data_with_store(store);
 				}
@@ -5843,7 +5844,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
-		x;
+		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
 	}
 }
 //#endregion
