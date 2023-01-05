@@ -1,1 +1,1 @@
-type YtInfinitePlaylistFormat=`RD${string}`|`RD${YtMyMixPlaylistFormat}`;
+type YtInfinitePlaylistFormat=YtMixPlaylistFormat|YtMyMixPlaylistFormat;

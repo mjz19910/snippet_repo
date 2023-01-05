@@ -1501,6 +1501,19 @@ class FilterHandlers {
 			} break;
 			case 2: switch(target[0]) {
 				default: debugger; break;
+				case "like": switch(target[1]) {
+					default: debugger; break;
+					case "like": return {
+						type: `${target[0]}.${target[1]}`,
+						/** @type {{}} */
+						data: cast_as(json),
+					};
+					case "removelike": return {
+						type: `${target[0]}.${target[1]}`,
+						/** @type {ResponseWithActions} */
+						data: cast_as(json),
+					};
+				} break;
 				case "account": switch(target[1]) {
 					default: debugger; break;
 					case "account_menu": return {

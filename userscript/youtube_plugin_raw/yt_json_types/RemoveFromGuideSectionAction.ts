@@ -1,0 +1,3 @@
+type RemoveFromGuideSectionAction={
+	removeFromGuideSectionAction: RemoveFromGuideSectionActionData;
+};

@@ -1,6 +1,7 @@
 type ResponseTypes=[
 	account_account_menu_t,
 	account_set_setting_t,
+	accounts_list_t,
 	att_get_response,
 	att_log_t,
 	browse_t,
@@ -11,6 +12,7 @@ type ResponseTypes=[
 	getAccountSwitcherEndpoint_t,
 	getDatasyncIdsEndpoint_t,
 	guide_t,
+	like_removelike_t,
 	live_chat_get_live_chat_replay_t,
 	modify_channel_preference_t,
 	next_t,
@@ -23,6 +25,4 @@ type ResponseTypes=[
 	settings_t,
 	shorts_t,
 	watch_t,
-	accounts_list_t,
-	GenericResponseType
 ][number];

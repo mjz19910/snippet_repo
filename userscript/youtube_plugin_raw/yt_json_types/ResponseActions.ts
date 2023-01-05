@@ -1,0 +1,1 @@
+type ResponseActions=OpenPopupAction|RemoveFromGuideSectionAction;

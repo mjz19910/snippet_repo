@@ -1,1 +1,1 @@
-type YtMyMixPlaylistFormat=`MM${string}`;
+type YtMyMixPlaylistFormat=`RDMM${string}`;
