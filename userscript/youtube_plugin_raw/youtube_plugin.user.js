@@ -3780,57 +3780,44 @@ class IndexedDbAccessor {
 		request.onupgradeneeded=event => this.onUpgradeNeeded(request,event);
 	}
 	close_db_on_transaction_complete=false;
-	/** @arg {IDBOpenDBRequest} req @arg {Event} event */
-	onSuccess(req,event) {
+	/** @arg {IDBOpenDBRequest} request @arg {Event} event */
+	onSuccess(request,event) {
 		console.log("OpenDBRequest success",event);
-		let db=req.result;
-		db.onerror=event => {
-			console.log("IDBDatabase: error",event);
-		};
-		db.onabort=event => {
-			console.log("IDBDatabase: abort",event);
-		};
-		db.onclose=event => {
-			console.log("IDBDatabase: close",event);
-		};
-		db.onversionchange=event => {
-			console.log("IDBDatabase: version_change",event);
-			db.close();
-		};
+		this.onDatabaseResult(request.result);
+	}
+	/** @arg {IDBDatabase} db */
+	onDatabaseResult(db) {
+		db.onerror=event => console.log("IDBDatabase: error",event);
+		db.onabort=event => console.log("IDBDatabase: abort",event);
+		db.onclose=event => console.log("IDBDatabase: close",event);
+		db.onversionchange=event => this.onDatabaseVersionChange(db,event);
 		this.start_transaction(db);
+	}
+	/** @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
+	onDatabaseVersionChange(db,event) {
+		console.log("IDBDatabase: version_change",event);
+		db.close();
 	}
 	/** @arg {IDBDatabase} db */
 	start_transaction(db) {
 		const transaction=db.transaction("video_id","readwrite");
-		transaction.onerror=event => {
-			console.log("IDBTransaction: error",event);
-		};
-		transaction.onabort=event => {
-			console.log("IDBTransaction: abort",event);
-		};
-		transaction.oncomplete=event => {
-			console.log("IDBTransaction: complete",event);
-			db.close();
-		};
+		transaction.onerror=event => console.log("IDBTransaction: error",event);
+		transaction.onabort=event => console.log("IDBTransaction: abort",event);
+		transaction.oncomplete=event => this.onTransactionComplete(db,event);
 		if(this.arr.length>0) this.consume_data(transaction);
 	}
-	active_requests=0;
+	/** @arg {IDBDatabase} db @arg {Event} event */
+	onTransactionComplete(db,event) {
+		console.log("IDBTransaction: complete",event);
+		db.close();
+	}
 	/** @arg {IDBTransaction} transaction */
 	consume_data(transaction) {
 		const store=transaction.objectStore("video_id");
 		for(let data of this.arr) {
 			const request=store.put(data);
-			this.active_requests++;
-			request.onerror=event => {
-				console.log("IDBRequest: error",event);
-			};
-			request.onsuccess=event => {
-				console.log("IDBRequest: success",event);
-				this.active_requests--;
-				if(this.active_requests===0) {
-					transaction.commit();
-				}
-			};
+			request.onerror=event => console.log("IDBRequest: error",event);
+			request.onsuccess=event => console.log("IDBRequest: success",event);
 		}
 		this.arr.length=0;
 	}
