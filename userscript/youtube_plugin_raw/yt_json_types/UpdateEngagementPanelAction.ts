@@ -1,4 +1,4 @@
 type UpdateEngagementPanelAction={
-	updateEngagementPanelAction: UpdateEngagementPanel;
+	updateEngagementPanelAction: UpdateEngagementPanelData;
 	clickTrackingParams: string;
 };

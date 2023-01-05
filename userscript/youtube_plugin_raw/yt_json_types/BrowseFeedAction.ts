@@ -4,4 +4,6 @@ type BrowseFeedAction={
 };
 type YtTargetIdType=[
 	AppendContinuationItemsAction['targetId'],
+	UpdateEngagementPanelData['targetId'],
+	TranscriptSearchPanelData['targetId'],
 ][number];

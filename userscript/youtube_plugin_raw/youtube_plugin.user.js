@@ -5733,9 +5733,12 @@ class HandleTypes extends BaseService {
 		switch(x) {
 			case "browse-feedFEwhat_to_watch": return;
 			case "comments-section": return;
+			case "engagement-panel-searchable-transcript": return;
+			case "watch-next-feed": return;
+			case "engagement-panel-searchable-transcript-search-panel": return;
+			default:
 		}
 		switch(x) {
-			case "watch-next-feed": return;
 			default: debugger; return;
 		}
 	}
@@ -6053,13 +6056,72 @@ class HandleTypes extends BaseService {
 		this.save_keys("JsonGetTranscriptData",x,true);
 		const {responseContext: a,actions: b,trackingParams: c,...y}=x;
 		this.ResponseContext(a);
-		this.z(b,a=>this.updateEngagementPanelAction(a));
+		this.z(b,a => this.UpdateEngagementPanelAction(a));
 		this.trackingParams(c);
 		this.g(y);
 	}
 	/** @arg {UpdateEngagementPanelAction} x */
-	updateEngagementPanelAction(x) {
-		x;
+	UpdateEngagementPanelAction(x) {
+		const {clickTrackingParams: a,updateEngagementPanelAction: b,...y}=x; this.g(y);
+		this.clickTrackingParams(a);
+		this.UpdateEngagementPanelData(b);
+	}
+	/** @arg {UpdateEngagementPanelData} x */
+	UpdateEngagementPanelData(x) {
+		const {content: a,targetId: b,...y}=x; this.g(y);
+		this.TranscriptRenderer(a);
+		this.parse_target_id(b);
+	}
+	/** @arg {TranscriptRenderer} x */
+	TranscriptRenderer(x) {
+		const {transcriptRenderer: a,...y}=x; this.g(y);
+		this.TranscriptData(a);
+	}
+	/** @arg {TranscriptData} x */
+	TranscriptData(x) {
+		const {content: a,trackingParams: b,...y}=x; this.g(y);
+		this.TranscriptSearchPanelRenderer(a);
+		this.trackingParams(b);
+	}
+	/** @arg {TranscriptSearchPanelRenderer} x */
+	TranscriptSearchPanelRenderer(x) {
+		const {transcriptSearchPanelRenderer: a,...y}=x; this.g(y);
+		this.TranscriptSearchPanelData(a);
+	}
+	/** @arg {TranscriptSearchPanelData} x */
+	TranscriptSearchPanelData(x) {
+		const {body: a,footer: b,trackingParams: c,targetId: d,...y}=x; this.g(y);
+		this.TranscriptSegmentListRenderer(a);
+		this.trackingParams(c);
+		this.parse_target_id(d);
+	}
+	/** @arg {TranscriptSegmentListRenderer} x */
+	TranscriptSegmentListRenderer(x) {
+		const {transcriptSegmentListRenderer: a,...y}=x; this.g(y);
+		this.TranscriptSegmentListData(a);
+	}
+	/** @arg {TranscriptSegmentListData} x */
+	TranscriptSegmentListData(x) {
+		const {initialSegments: a,noResultLabel: b,retryLabel: c,touchCaptionsEnabled: d,...y}=x; this.g(y);
+		this.z(a,a=>this.TranscriptSegmentRenderer(a));
+		this.z([b,c],a=>this.text_t(a));
+		this.primitive_of(d,"boolean");
+	}
+	/** @arg {TranscriptSegmentRenderer} x */
+	TranscriptSegmentRenderer(x) {
+		if("transcriptSegmentRenderer" in x) {
+			this.w(x,a=>this.TranscriptSegmentData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {TranscriptSegmentData} x */
+	TranscriptSegmentData(x) {
+		const {startMs: a,endMs: b,snippet: c,startTimeText: d,trackingParams: e,accessibility: f,...y}=x; this.g(y);
+		this.z([a,b],a=>this.primitive_of(a,"string"));
+		this.z([c,d],a=>this.text_t(a));
+		this.trackingParams(e);
+		this.Accessibility(f);
 	}
 	/** @arg {PlayerStoryboardSpecData} x */
 	PlayerStoryboardSpecData(x) {
@@ -6314,7 +6376,7 @@ class HandleTypes extends BaseService {
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
 		if("replayChatItemAction" in x) {
-			const {replayChatItemAction:a,...y}=x;
+			const {replayChatItemAction: a,...y}=x;
 			this.ReplayChatItemActionData(x.replayChatItemAction);
 			this.empty_object(y);
 		} else {
@@ -6378,19 +6440,19 @@ class HandleTypes extends BaseService {
 			id: e,timestampUsec: f,authorBadges: g,authorExternalChannelId: h,contextMenuAccessibility: i,
 			timestampText: j,...y
 		}=x;
-		this.z([a,b,j],a=>this.text_t(a));
+		this.z([a,b,j],a => this.text_t(a));
 		this.Thumbnail(c);
 		this.yt_endpoint(d);
-		this.z([e,f],a=>this.primitive_of(a,"string"));
+		this.z([e,f],a => this.primitive_of(a,"string"));
 		this.parse_external_channel_id(h);
 		this.Accessibility(i);
-		if(g) this.z(g,a=>this.LiveChatAuthorBadgeRenderer(a));
+		if(g) this.z(g,a => this.LiveChatAuthorBadgeRenderer(a));
 		this.g(y);
 	}
 	/** @arg {LiveChatAuthorBadgeRenderer} x */
 	LiveChatAuthorBadgeRenderer(x) {
 		if("liveChatAuthorBadgeRenderer" in x) {
-			this.w(x,a=>{
+			this.w(x,a => {
 				const {accessibility: b,icon: c,tooltip: d,...y}=a;
 				this.Accessibility(b);
 				this.Icon(c);
