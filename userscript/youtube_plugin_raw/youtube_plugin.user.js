@@ -3875,10 +3875,6 @@ class HandleTypes extends BaseService {
 		if(cm) this.CacheMetadata(cm);
 		this.empty_object(y);
 	}
-	/** @arg {C4TabbedHeaderData} x */
-	C4TabbedHeaderData(x) {
-		x;
-	}
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
 		if("twoColumnBrowseResultsRenderer" in x) {
@@ -4026,7 +4022,7 @@ class HandleTypes extends BaseService {
 		});
 		this.empty_object(y);
 	}
-	/** @arg {CreateCommentEndpoint} x */
+	/** @arg {CreateCommentEndpointData} x */
 	CreateCommentEndpoint(x) {
 		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
 		if(res[0][0]==="child"&&res[0][1]===2) {
@@ -4034,10 +4030,6 @@ class HandleTypes extends BaseService {
 		} else {
 			console.log(res);
 		}
-	}
-	/** @arg {ConfirmDialogEndpoint} x */
-	ConfirmDialogEndpoint(x) {
-		x;
 	}
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
@@ -5647,6 +5639,14 @@ class HandleTypes extends BaseService {
 	/** @arg {CommentThreadData} x */
 	CommentThreadData(x) {
 		this.save_keys("CommentThreadData",x,this.TODO_true);
+	}
+	/** @arg {C4TabbedHeaderData} x */
+	C4TabbedHeaderData(x) {
+		this.save_keys("C4TabbedHeaderData",x,this.TODO_true);
+	}
+	/** @arg {ConfirmDialogEndpointData} x */
+	ConfirmDialogEndpoint(x) {
+		this.save_keys("ConfirmDialogEndpoint",x,this.TODO_true);
 	}
 }
 //#endregion

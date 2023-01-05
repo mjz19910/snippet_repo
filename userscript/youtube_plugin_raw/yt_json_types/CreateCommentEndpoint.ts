@@ -1,3 +1,1 @@
-type CreateCommentEndpoint={
-	createCommentParams: string;
-};
+type CreateCommentEndpointData={createCommentParams: string;};

@@ -13,6 +13,6 @@ type YtEndpoint=[
 	{commandMetadata: CommandMetadata;},
 	{clickTrackingParams: string;},
 	{reloadContinuationItemsCommand: ReloadContinuationItemsCommandData;},
-	{createCommentEndpoint: CreateCommentEndpoint;},
-	{confirmDialogEndpoint: ConfirmDialogEndpoint}
+	{createCommentEndpoint: CreateCommentEndpointData;},
+	{confirmDialogEndpoint: ConfirmDialogEndpointData}
 ][number];
