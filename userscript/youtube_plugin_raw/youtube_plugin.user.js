@@ -2798,17 +2798,16 @@ function split_string_once(s,d=cast_as(",")) {
 		let q=r;
 		return cast_as(q);
 	}
-	let idx=s.indexOf(d);
-	if(idx===-1) {
+	let i=s.indexOf(d);
+	if(i===-1) {
 		/** @type {[S]} */
 		let r=[s];
 		/** @type {any} */
 		let q=r;
 		return cast_as(q);
 	}
-	let a=s.slice(0,idx);
-	let b=s.slice(idx);
-	debugger;
+	let a=s.slice(0,i);
+	let b=s.slice(i+1);
 	/** @type {[string,string]} */
 	let r=[a,b];
 	/** @type {any} */
