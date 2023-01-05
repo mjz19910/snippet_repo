@@ -1,3 +1,1 @@
-type PlayerStoryboardSpecRenderer={
-	playerStoryboardSpecRenderer: {};
-};
+type PlayerStoryboardSpecRenderer={playerStoryboardSpecRenderer: PlayerStoryboardSpecData;};

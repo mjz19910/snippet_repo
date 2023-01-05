@@ -5673,9 +5673,255 @@ class HandleTypes extends BaseService {
 		}
 		this.empty_object(y);
 	}
+	/** @arg {EngagementPanelSectionListRenderer} x */
+	EngagementPanel(x) {
+		if("engagementPanelSectionListRenderer" in x) {
+			this.w(x,a => this.EngagementPanelSectionListData(a));
+		} else {
+			debugger;
+		}
+	}
 	/** @private */
 	get TODO_true() {
 		return true;
+	}
+	/** @arg {AccountSetSetting} x */
+	AccountSetSetting(x) {
+		this.save_keys("AccountSetSetting",x,true);
+		const {responseContext: a,settingItemId: b,...y}=x;
+		switch(b) {
+			case "407": break;
+			default: debugger; break;
+		}
+		this.empty_object(y);
+	}
+	/** @arg {EngagementPanelSectionListData} x */
+	EngagementPanelSectionListData(x) {
+		this.save_keys("EngagementPanel",x,this.TODO_true);
+	}
+	/** @arg {ModifyChannelPreference} x */
+	ModifyChannelPreference(x) {
+		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
+	}
+	/** @arg {SettingsSidebarRenderer} x */
+	SettingsSidebarRenderer(x) {
+		this.save_keys("SettingsSidebarRenderer",x,this.TODO_true);
+	}
+	/** @arg {CacheMetadata} x */
+	CacheMetadata(x) {
+		this.save_keys("CacheMetadata",x,this.TODO_true);
+	}
+	/** @arg {SecondaryContents} x */
+	SecondaryContents(x) {
+		this.save_keys("SecondaryContents",x,this.TODO_true);
+		if("profileColumnRenderer" in x) {
+			this.w(x,a => this.ProfileColumnData(a));
+		} else if("browseFeedActionsRenderer" in x) {
+			this.w(x,a => this.BrowseFeedActions(a));
+		}
+	}
+	/** @arg {BrowseFeedActions} x */
+	BrowseFeedActions(x) {
+		if(get_keys_of_one(x)[0]!=="contents") debugger;
+		this.w(x,a => this.z(a,a => this.BrowseFeedContent(a)));
+	}
+	/** @arg {BrowseFeedContent} x */
+	BrowseFeedContent(x) {
+		let [k]=get_keys_of(x);
+		if("buttonRenderer" in x) {
+			this.w(x,a => this.ButtonData(a));
+		}
+		switch(k) {
+			case "buttonRenderer": break;
+		}
+	}
+	/** @arg {ProfileColumnData} x */
+	ProfileColumnData(x) {
+		if(get_keys_of_one(x)[0]!=="items") debugger;
+		this.w(x,a => this.z(a,b => {
+			if("profileColumnUserInfoRenderer" in b) {
+				this.w(b,a => this.ProfileColumnUserInfoData(a));
+				return;
+			} else if("profileColumnStatsRenderer" in b) {
+				this.w(b,c => this.ProfileColumnStatsData(c));
+				return;
+			} else {
+				debugger;
+			}
+		}));
+	}
+	/** @arg {ProfileColumnStatsData} x */
+	ProfileColumnStatsData(x) {
+		if(get_keys_of_one(x)[0]!=="items") debugger;
+		this.w(x,d => this.z(d,e => {
+			if(get_keys_of_one(e)[0]!=="profileColumnStatsEntryRenderer") debugger;
+			this.w(e,f => this.ProfileColumnStatsEntryData(f));
+		}));
+	}
+	/** @arg {ProfileColumnStatsEntryData} x */
+	ProfileColumnStatsEntryData(x) {
+		const {label: a,value: b,...y}=x;
+		this.z([a,b],a => this.text_t(a));
+		this.empty_object(y);
+	}
+	/** @arg {ProfileColumnUserInfoData} x */
+	ProfileColumnUserInfoData(x) {
+		this.Thumbnail(x.thumbnail);
+	}
+	/** @arg {Thumbnail} x */
+	Thumbnail(x) {
+		const {thumbnails: a,accessibility: b,...y}=x;
+		this.z(a,a => this.ThumbnailItem(a));
+		if(b) this.Accessibility(b);
+		this.empty_object(y);
+	}
+	/** @arg {SectionListData} x */
+	SectionListData(x) {
+		this.save_keys("SectionListData",x,true);
+		const {contents: a,trackingParams: b,...y}=x;
+		this.z(a,a => this.SectionListItem(a));
+		this.trackingParams(b);
+		this.empty_object(y);
+	}
+	/** @arg {SectionListItem} x */
+	SectionListItem(x) {
+		if("itemSectionRenderer" in x) {
+			this.w(x,a => this.ItemSectionData(a));
+		}
+	}
+	/** @arg {ItemSectionData} x */
+	ItemSectionData(x) {
+		this.save_keys("SectionListData",x,true);
+		const {contents: a,trackingParams: b,...y}=x;
+		this.z(a,a => this.ItemSectionItem(a));
+		this.trackingParams(b);
+		this.empty_object(y);
+	}
+	item_section_map=new Map();
+	/** @arg {ItemSectionItem} c */
+	ItemSectionItem(c) {
+		let t=this;
+		let y=get_keys_of(c);
+		let [k]=y;
+		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
+		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
+		/** @template {GetMaybeKeys<typeof c>} T @arg {T} v @returns {ItemSectionItemMap[T]} */
+		let q=v => this.item_section_map.get(v);
+		k="connectedAppRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="pageIntroductionRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		let m=get_keys_of(c);
+		for(let k of m) {
+			if(this.item_section_map.has(k)) continue;
+			console.log('[new_section_item] [%s]',k);
+			debugger;
+		}
+	}
+	/** @arg {PlayerStoryboardSpecRenderer} x */
+	PlayerStoryboardSpecRenderer(x) {
+		const {playerStoryboardSpecRenderer:a,...y}=x;
+		this.PlayerStoryboardSpecData(a);
+		this.empty_object(y);
+	}
+	/** @arg {ReelWatchSequence} x */
+	ReelWatchSequence(x) {
+		this.save_keys("ReelWatchSequence",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {JsonFeedbackData} x */
+	JsonFeedbackData(x) {
+		this.save_keys("JsonFeedbackData",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {JsonGetTranscriptData} x */
+	JsonGetTranscriptData(x) {
+		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {ShelfData} x */
+	ShelfData(x) {
+		this.save_keys("ShelfData",x,this.TODO_true);
+	}
+	/** @arg {SettingsOptionsData} x */
+	SettingsOptionsData(x) {
+		this.save_keys("SettingsOptionsData",x,this.TODO_true);
+	}
+	/** @arg {PlaylistVideoListData} x */
+	PlaylistVideoListData(x) {
+		this.save_keys("PlaylistVideoListData",x,this.TODO_true);
+	}
+	/** @arg {PageIntroductionData} x */
+	PageIntroductionData(x) {
+		this.save_keys("PageIntroductionData",x,this.TODO_true);
+	}
+	/** @arg {ReelPlayerOverlayData} x */
+	ReelPlayerOverlayData(x) {
+		this.save_keys("ReelPlayerOverlayData",x,this.TODO_true);
+	}
+	/** @arg {ConnectedAppData} x */
+	ConnectedAppData(x) {
+		this.save_keys("ConnectedAppData",x,this.TODO_true);
+	}
+	/** @arg {PlaylistSidebarRenderer} x */
+	PlaylistSidebarRenderer(x) {
+		this.save_keys("PlaylistSidebarRenderer",x,this.TODO_true);
+	}
+	/** @arg {MicroformatDataRenderer} x */
+	MicroformatDataRenderer(x) {
+		this.save_keys("MicroformatDataRenderer",x,this.TODO_true);
+	}
+	/** @arg {PlaylistMetadataRenderer} x */
+	PlaylistMetadataRenderer(x) {
+		this.save_keys("PlaylistMetadataRenderer",x,this.TODO_true);
+	}
+	/** @arg {PlaylistHeaderRenderer} x */
+	PlaylistHeaderRenderer(x) {
+		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
+	}
+	/** @arg {CommentThreadData} x */
+	CommentThreadData(x) {
+		this.save_keys("CommentThreadData",x,this.TODO_true);
+	}
+	/** @arg {C4TabbedHeaderData} x */
+	C4TabbedHeaderData(x) {
+		this.save_keys("C4TabbedHeaderData",x,this.TODO_true);
+	}
+	/** @arg {ConfirmDialogEndpointData} x */
+	ConfirmDialogEndpointData(x) {
+		this.save_keys("ConfirmDialogEndpointData",x,this.TODO_true);
+	}
+	/** @arg {CompactVideoData} x */
+	CompactVideoData(x) {
+		this.save_keys("CompactVideoData",x,this.TODO_true);
+	}
+	/** @arg {PlayerConfig} x */
+	PlayerConfig(x) {
+		this.save_keys("PlayerConfig",x,this.TODO_true);
+	}
+	/** @arg {VideoDetails} x */
+	VideoDetails(x) {
+		this.save_keys("VideoDetails",x,this.TODO_true);
+	}
+	/** @arg {PlayerStoryboardSpecData} x */
+	PlayerStoryboardSpecData(x) {
+		this.save_keys("PlayerStoryboardSpecData",x,this.TODO_true);
+	}
+	/** @arg {StreamingData} x */
+	StreamingData(x) {
+		this.save_keys("StreamingData",x,this.TODO_true);
+	}
+	/** @arg {VideoQualityPromoData} x */
+	VideoQualityPromoData(x) {
+		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
+	}
+	/** @arg {TwoColumnWatchNextResultsData} x */
+	TwoColumnWatchNextResultsData(x) {
+		this.save_keys("TwoColumnWatchNextResultsData",x,this.TODO_true);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
@@ -5804,246 +6050,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x,this.TODO_true);
-	}
-	/** @arg {EngagementPanelSectionListRenderer} x */
-	EngagementPanel(x) {
-		if("engagementPanelSectionListRenderer" in x) {
-			this.w(x,a => this.EngagementPanelSectionListData(a));
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {EngagementPanelSectionListData} x */
-	EngagementPanelSectionListData(x) {
-		this.save_keys("EngagementPanel",x,this.TODO_true);
-	}
-	/** @arg {ModifyChannelPreference} x */
-	ModifyChannelPreference(x) {
-		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
-	}
-	/** @arg {SettingsSidebarRenderer} x */
-	SettingsSidebarRenderer(x) {
-		this.save_keys("SettingsSidebarRenderer",x,this.TODO_true);
-	}
-	/** @arg {CacheMetadata} x */
-	CacheMetadata(x) {
-		this.save_keys("CacheMetadata",x,this.TODO_true);
-	}
-	/** @arg {SecondaryContents} x */
-	SecondaryContents(x) {
-		this.save_keys("SecondaryContents",x,this.TODO_true);
-		if("profileColumnRenderer" in x) {
-			this.w(x,a => this.ProfileColumnData(a));
-		} else if("browseFeedActionsRenderer" in x) {
-			this.w(x,a => this.BrowseFeedActions(a));
-		}
-	}
-	/** @arg {BrowseFeedActions} x */
-	BrowseFeedActions(x) {
-		if(get_keys_of_one(x)[0]!=="contents") debugger;
-		this.w(x,a => this.z(a,a => this.BrowseFeedContent(a)));
-	}
-	/** @arg {BrowseFeedContent} x */
-	BrowseFeedContent(x) {
-		let [k]=get_keys_of(x);
-		if("buttonRenderer" in x) {
-			this.w(x,a => this.ButtonData(a));
-		}
-		switch(k) {
-			case "buttonRenderer": break;
-		}
-	}
-	/** @arg {ProfileColumnData} x */
-	ProfileColumnData(x) {
-		if(get_keys_of_one(x)[0]!=="items") debugger;
-		this.w(x,a => this.z(a,b => {
-			if("profileColumnUserInfoRenderer" in b) {
-				this.w(b,a => this.ProfileColumnUserInfoData(a));
-				return;
-			} else if("profileColumnStatsRenderer" in b) {
-				this.w(b,c => this.ProfileColumnStatsData(c));
-				return;
-			} else {
-				debugger;
-			}
-		}));
-	}
-	/** @arg {ProfileColumnStatsData} x */
-	ProfileColumnStatsData(x) {
-		if(get_keys_of_one(x)[0]!=="items") debugger;
-		this.w(x,d => this.z(d,e => {
-			if(get_keys_of_one(e)[0]!=="profileColumnStatsEntryRenderer") debugger;
-			this.w(e,f => this.ProfileColumnStatsEntryData(f));
-		}));
-	}
-	/** @arg {ProfileColumnStatsEntryData} x */
-	ProfileColumnStatsEntryData(x) {
-		const {label: a,value: b,...y}=x;
-		this.z([a,b],a => this.text_t(a));
-		this.empty_object(y);
-	}
-	/** @arg {ProfileColumnUserInfoData} x */
-	ProfileColumnUserInfoData(x) {
-		this.Thumbnail(x.thumbnail);
-	}
-	/** @arg {Thumbnail} x */
-	Thumbnail(x) {
-		const {thumbnails: a,accessibility: b,...y}=x;
-		this.z(a,a => this.ThumbnailItem(a));
-		if(b) this.Accessibility(b);
-		this.empty_object(y);
-	}
-	/** @arg {SectionListData} x */
-	SectionListData(x) {
-		this.save_keys("SectionListData",x,true);
-		const {contents: a,trackingParams: b,...y}=x;
-		this.z(a,a => this.SectionListItem(a));
-		this.trackingParams(b);
-		this.empty_object(y);
-	}
-	/** @arg {SectionListItem} x */
-	SectionListItem(x) {
-		if("itemSectionRenderer" in x) {
-			this.w(x,a => this.ItemSectionData(a));
-		}
-	}
-	/** @arg {ItemSectionData} x */
-	ItemSectionData(x) {
-		this.save_keys("SectionListData",x,true);
-		const {contents: a,trackingParams: b,...y}=x;
-		this.z(a,a => this.ItemSectionItem(a));
-		this.trackingParams(b);
-		this.empty_object(y);
-	}
-	item_section_map=new Map();
-	/** @arg {ItemSectionItem} c */
-	ItemSectionItem(c) {
-		let t=this;
-		let y=get_keys_of(c);
-		let [k]=y;
-		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
-		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
-		/** @template {GetMaybeKeys<typeof c>} T @arg {T} v @returns {ItemSectionItemMap[T]} */
-		let q=v => this.item_section_map.get(v);
-		k="connectedAppRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="pageIntroductionRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		let m=get_keys_of(c);
-		for(let k of m) {
-			if(this.item_section_map.has(k)) continue;
-			console.log('[new_section_item] [%s]',k);
-			debugger;
-		}
-	}
-	/** @arg {AccountSetSetting} x */
-	AccountSetSetting(x) {
-		this.save_keys("AccountSetSetting",x,this.TODO_true);
-		const {responseContext: a,settingItemId: b,...y}=x;
-		switch(b) {
-			case "407": break;
-			default: debugger; break;
-		}
-		this.empty_object(y);
-	}
-	/** @arg {ReelWatchSequence} x */
-	ReelWatchSequence(x) {
-		this.save_keys("ReelWatchSequence",x,this.TODO_true);
-		const {responseContext: a,...y}=x;
-		this.empty_object(y);
-	}
-	/** @arg {JsonFeedbackData} x */
-	JsonFeedbackData(x) {
-		this.save_keys("JsonFeedbackData",x,this.TODO_true);
-		const {responseContext: a,...y}=x;
-		this.empty_object(y);
-	}
-	/** @arg {JsonGetTranscriptData} x */
-	JsonGetTranscriptData(x) {
-		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
-		const {responseContext: a,...y}=x;
-		this.empty_object(y);
-	}
-	/** @arg {ShelfData} x */
-	ShelfData(x) {
-		this.save_keys("ShelfData",x,this.TODO_true);
-	}
-	/** @arg {SettingsOptionsData} x */
-	SettingsOptionsData(x) {
-		this.save_keys("SettingsOptionsData",x,this.TODO_true);
-	}
-	/** @arg {PlaylistVideoListData} x */
-	PlaylistVideoListData(x) {
-		this.save_keys("PlaylistVideoListData",x,this.TODO_true);
-	}
-	/** @arg {PageIntroductionData} x */
-	PageIntroductionData(x) {
-		this.save_keys("PageIntroductionData",x,this.TODO_true);
-	}
-	/** @arg {{}} x */
-	ReelPlayerOverlayData(x) {
-		this.save_keys("ReelPlayerOverlayData",x,this.TODO_true);
-	}
-	/** @arg {ConnectedAppData} x */
-	ConnectedAppData(x) {
-		this.save_keys("ConnectedAppData",x,this.TODO_true);
-	}
-	/** @arg {PlaylistSidebarRenderer} x */
-	PlaylistSidebarRenderer(x) {
-		this.save_keys("PlaylistSidebarRenderer",x,this.TODO_true);
-	}
-	/** @arg {MicroformatDataRenderer} x */
-	MicroformatDataRenderer(x) {
-		this.save_keys("MicroformatDataRenderer",x,this.TODO_true);
-	}
-	/** @arg {PlaylistMetadataRenderer} x */
-	PlaylistMetadataRenderer(x) {
-		this.save_keys("PlaylistMetadataRenderer",x,this.TODO_true);
-	}
-	/** @arg {PlaylistHeaderRenderer} x */
-	PlaylistHeaderRenderer(x) {
-		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
-	}
-	/** @arg {CommentThreadData} x */
-	CommentThreadData(x) {
-		this.save_keys("CommentThreadData",x,this.TODO_true);
-	}
-	/** @arg {C4TabbedHeaderData} x */
-	C4TabbedHeaderData(x) {
-		this.save_keys("C4TabbedHeaderData",x,this.TODO_true);
-	}
-	/** @arg {ConfirmDialogEndpointData} x */
-	ConfirmDialogEndpointData(x) {
-		this.save_keys("ConfirmDialogEndpointData",x,this.TODO_true);
-	}
-	/** @arg {CompactVideoData} x */
-	CompactVideoData(x) {
-		this.save_keys("CompactVideoData",x,this.TODO_true);
-	}
-	/** @arg {PlayerConfig} x */
-	PlayerConfig(x) {
-		this.save_keys("PlayerConfig",x,this.TODO_true);
-	}
-	/** @arg {VideoDetails} x */
-	VideoDetails(x) {
-		this.save_keys("VideoDetails",x,this.TODO_true);
-	}
-	/** @arg {PlayerStoryboardSpecRenderer} x */
-	PlayerStoryboardSpecRenderer(x) {
-		this.save_keys("PlayerStoryboardSpecRenderer",x.playerStoryboardSpecRenderer,this.TODO_true);
-	}
-	/** @arg {StreamingData} x */
-	StreamingData(x) {
-		this.save_keys("StreamingData",x,this.TODO_true);
-	}
-	/** @arg {VideoQualityPromoData} x */
-	VideoQualityPromoData(x) {
-		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
-	}
-	/** @arg {TwoColumnWatchNextResultsData} x */
-	TwoColumnWatchNextResultsData(x) {
-		this.save_keys("TwoColumnWatchNextResultsData",x,this.TODO_true);
 	}
 }
 //#endregion

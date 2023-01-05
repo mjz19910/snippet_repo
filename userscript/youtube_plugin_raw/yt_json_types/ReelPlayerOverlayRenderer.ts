@@ -1,3 +1,1 @@
-type ReelPlayerOverlayRenderer={
-	reelPlayerOverlayRenderer: {};
-};
+type ReelPlayerOverlayRenderer={reelPlayerOverlayRenderer: ReelPlayerOverlayData;};
