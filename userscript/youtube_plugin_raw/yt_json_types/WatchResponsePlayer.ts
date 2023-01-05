@@ -2,6 +2,7 @@ interface WatchResponsePlayer {
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
 	streamingData: StreamingData;
+	heartbeatParams: HeartbeatParams;
 	playerAds: DesktopWatchAdsRenderer[];
 	playbackTracking: PlaybackTracking;
 	captions?: CaptionsRenderer;
