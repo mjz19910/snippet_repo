@@ -1109,6 +1109,7 @@ class MyReader {
 	}
 	/** @private @arg {number} [size] */
 	read_any(size) {
+		this.failed=false;
 		let target_len;
 		if(!size) {
 			target_len=this.len;
@@ -1119,14 +1120,13 @@ class MyReader {
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
-		let reader=this;
-		for(;reader.pos<target_len;loop_count++) {
-			let cur_byte=reader.uint32();
+		for(;this.pos<target_len;loop_count++) {
+			let cur_byte=this.uint32();
 			let wireType=cur_byte&7;
 			let fieldId=cur_byte>>>3;
-			let first_num=reader.skipTypeEx(fieldId,wireType);
+			let first_num=this.skipTypeEx(fieldId,wireType);
 			data.push([fieldId,wireType,first_num]);
-			if(reader.failed) {
+			if(this.failed) {
 				break;
 			}
 			if(log_slow&&loop_count>128) {
