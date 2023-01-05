@@ -4518,22 +4518,28 @@ class HandleTypes extends BaseService {
 			return as_cast(Object.fromEntries(sp.entries()));
 		}
 		let vv=split_string(x,"&");
+		let video_id=null;
+		/** @type {({type:"RD";id:string}|{type:"RDMM";id:string})[]} */
+		let url_info=[];
+		// spell:ignore RDMM
 		for(let prop of vv) {
 			/** @type {SplitOnce<typeof prop,"=">} */
 			let res=split_string_once(prop,"=");
 			switch(res[0]) {
 				case "v": {
 					let value=res[1];
+					video_id=value;
 					indexed_db.put({v: value});
 				} break;
 				case "list": {
 					let v=res[1];
 					if(this.str_starts_with(v,"RD")) {
-						if(this.str_starts_with(v,`${"RD"}${"MM"}`)) {
+						if(this.str_starts_with(v,"RDMM")) {
+							url_info.push({type:"RDMM",id: v.slice(4)});
 							console.log("[playlist_found]",v.slice(4),v.slice(4).length);
-							v;
 						} else {
-							debugger;
+							url_info.push({type:"RD",id: v.slice(2)});
+							console.log("[playlist_found]",v.slice(2),v.slice(2).length);
 						}
 					} else if(this.str_starts_with(v,"PL")) {
 						console.log("[playlist_found]","PL",v.slice(2),v.slice(2).length);
@@ -4547,16 +4553,17 @@ class HandleTypes extends BaseService {
 					this.cache_player_params.push(sp_pp);
 					console.log("[player_params_found]",sp_pp);
 				} break;
+				default: debugger;
 			}
+		}
+		for(let infos of url_info) {
+			console.log("[playlist_found]",infos.type,infos.id);
 		}
 		/** @type {{list?: YtPlaylistFormat;v: string;pp?: string;index?: `${number}`;start_radio?:`${1|0}`}} */
 		let sp=make_search_params(x);
 		let k=filter_out_keys(get_keys_of(sp),["list","v","pp","index","start_radio"]);
 		if(k.length>0) {
 			console.log("[missed_url_param_keys]",k);
-		}
-		if("v" in sp) {
-			indexed_db.put({v: sp.v});
 		}
 		if(sp.start_radio!==void 0) {
 			console.log("[playlist_start_radio_found]",sp.start_radio);
