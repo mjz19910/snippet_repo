@@ -5161,7 +5161,7 @@ class HandleTypes extends BaseService {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
 			this.yt_endpoint(a);
 			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
-			this.FrameworkUpdates(c);
+			if(c) this.FrameworkUpdates(c);
 			this.z(d,a => this.yt_endpoint(a));
 			return y;
 		}
@@ -5189,6 +5189,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {FrameworkUpdates} x */
 	FrameworkUpdates(x) {
+		if(!x) {debugger; return;}
 		const {entityBatchUpdate: a,elementUpdate: b,...y}=x;
 		this.EntityBatchUpdateData(a);
 		if(b) this.ElementUpdate(b);
@@ -5744,7 +5745,7 @@ class HandleTypes extends BaseService {
 	/** @arg {UpdateChannelSwitcherPageAction} x */
 	UpdateChannelSwitcherPageAction(x) {
 		const {updateChannelSwitcherPageAction: a,...y}=x; this.g(y);
-		this.PageAction(a,a=>this.ChannelSwitcherPageRenderer(a));
+		this.PageAction(a,a => this.ChannelSwitcherPageRenderer(a));
 	}
 	/** @arg {ChannelSwitcherPageRenderer} x */
 	ChannelSwitcherPageRenderer(x) {
@@ -6542,11 +6543,11 @@ class HandleTypes extends BaseService {
 			cards: a,headerText: b,icon: c,closeButton: d,
 			trackingParams: e,allowTeaserDismiss: f,logIconVisibilityUpdates: g,...y
 		}=x; this.g(y);
-		this.z(a,a=>a);
+		this.z(a,a => a);
 		this.text_t(b);
-		this.z([c,d],a=>this.InfoCardIconRenderer(a));
+		this.z([c,d],a => this.InfoCardIconRenderer(a));
 		this.trackingParams(e);
-		this.z([f,g],a=>this.primitive_of(a,"boolean"));
+		this.z([f,g],a => this.primitive_of(a,"boolean"));
 	}
 	/** @arg {InfoCardIconRenderer} x */
 	InfoCardIconRenderer(x) {
@@ -6618,9 +6619,9 @@ class HandleTypes extends BaseService {
 	/** @arg {MicroformatEmbed} x */
 	MicroformatEmbed(x) {
 		const {iframeUrl: a,flashUrl: b,width: c,height: d,flashSecureUrl: e,...y}=x; this.g(y);
-		this.z([a,b,e],a=>this.primitive_of(a,"string"));
+		this.z([a,b,e],a => this.primitive_of(a,"string"));
 		this.primitive_of(x.flashSecureUrl,"string");
-		this.z([c,d],a=>this.primitive_of(a,"number"));
+		this.z([c,d],a => this.primitive_of(a,"number"));
 	}
 }
 //#endregion

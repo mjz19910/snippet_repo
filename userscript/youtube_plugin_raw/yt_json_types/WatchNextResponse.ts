@@ -8,5 +8,5 @@ interface WatchNextResponse {
 	playerOverlays: PlayerOverlayRenderer;
 	topbar: DesktopTopbarRenderer;
 	pageVisualEffects: CinematicContainerRenderer[];
-	frameworkUpdates: FrameworkUpdates;
+	frameworkUpdates?: FrameworkUpdates;
 }
