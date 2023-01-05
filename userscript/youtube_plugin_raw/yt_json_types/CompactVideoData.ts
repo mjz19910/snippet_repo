@@ -1,4 +1,20 @@
 type CompactVideoData={
+	videoId: string;
+	thumbnail: Thumbnail;
+	title: {};
+	longBylineText: TextT;
+	publishedTimeText: TextT;
+	viewCountText: TextT;
+	lengthText: TextT;
+	navigationEndpoint: YtEndpoint;
+	shortBylineText: TextT;
+	channelThumbnail: {};
+	ownerBadges?: {};
+	trackingParams: string;
+	shortViewCountText: TextT;
+	menu: {};
+	thumbnailOverlays: {};
 	accessibility: Accessibility;
+	richThumbnail: {};
 	badges?: MetadataBadgeRenderers[];
 };
