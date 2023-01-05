@@ -1,1 +1,1 @@
-type PlayerResponse={};
+type PlayerResponse=WatchResponsePlayer;

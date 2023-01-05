@@ -5010,7 +5010,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerResponse} x */
 	PlayerResponse(x) {
-		this.empty_object(x);
+		this.WatchResponsePlayer(x);
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
