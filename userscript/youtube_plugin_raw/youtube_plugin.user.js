@@ -4446,12 +4446,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
+		/** @type {YtUrlInfoItem[]} */
+		let arr=[];
 		if(this.str_starts_with(x,"RD")) {
-			console.log("[radio_entry_id]",x);
+			arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});
 		} else {
 			console.log(x);
 			debugger;
 		}
+		this.log_url_info_arr(arr);
 	}
 	/** @arg {UpdateNotificationsUnseenCountAction} x */
 	UpdateNotificationsUnseenCountAction(x) {
@@ -4703,7 +4706,11 @@ class HandleTypes extends BaseService {
 				default: debugger;
 			}
 		}
-		for(let url_info of url_info_arr) {
+		this.log_url_info_arr(url_info_arr);
+	}
+	/** @arg {YtUrlInfoItem[]} x */
+	log_url_info_arr(x) {
+		for(let url_info of x) {
 			switch(url_info._tag) {
 				case "playlist": {
 					switch(url_info.id.length) {
