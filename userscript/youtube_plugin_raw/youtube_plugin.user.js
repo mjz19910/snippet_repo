@@ -6142,14 +6142,14 @@ class HandleTypes extends BaseService {
 	/** @arg {TranscriptSegmentListData} x */
 	TranscriptSegmentListData(x) {
 		const {initialSegments: a,noResultLabel: b,retryLabel: c,touchCaptionsEnabled: d,...y}=x; this.g(y);
-		this.z(a,a=>this.TranscriptSegmentRenderer(a));
-		this.z([b,c],a=>this.text_t(a));
+		this.z(a,a => this.TranscriptSegmentRenderer(a));
+		this.z([b,c],a => this.text_t(a));
 		this.primitive_of(d,"boolean");
 	}
 	/** @arg {TranscriptSegmentRenderer} x */
 	TranscriptSegmentRenderer(x) {
 		if("transcriptSegmentRenderer" in x) {
-			this.w(x,a=>this.TranscriptSegmentData(a));
+			this.w(x,a => this.TranscriptSegmentData(a));
 		} else {
 			debugger;
 		}
@@ -6157,8 +6157,8 @@ class HandleTypes extends BaseService {
 	/** @arg {TranscriptSegmentData} x */
 	TranscriptSegmentData(x) {
 		const {startMs: a,endMs: b,snippet: c,startTimeText: d,trackingParams: e,accessibility: f,...y}=x; this.g(y);
-		this.z([a,b],a=>this.primitive_of(a,"string"));
-		this.z([c,d],a=>this.text_t(a));
+		this.z([a,b],a => this.primitive_of(a,"string"));
+		this.z([c,d],a => this.text_t(a));
 		this.trackingParams(e);
 		this.Accessibility(f);
 	}
@@ -6526,13 +6526,34 @@ class HandleTypes extends BaseService {
 	/** @arg {HeartbeatParams} x */
 	HeartbeatParams(x) {
 		const {heartbeatServerData: a,intervalMilliseconds: b,softFailOnError: c,...y}=x; this.g(y);
-		this.z([a,b],a=>this.primitive_of(a,"string"));
+		this.z([a,b],a => this.primitive_of(a,"string"));
 		this.primitive_of(c,"boolean");
 	}
 	/** @arg {CardCollectionRenderer} x */
-	CardCollectionRenderer(x) {x;}
+	CardCollectionRenderer(x) {
+		const {cardCollectionRenderer: a,...y}=x; this.g(y);
+		this.CardCollectionData(a);
+	}
+	/** @arg {CardCollectionData} x */
+	CardCollectionData(x) {
+		const {
+			cards: a,headerText: b,icon: c,closeButton: d,
+			trackingParams: e,allowTeaserDismiss: f,logIconVisibilityUpdates: g,...y
+		}=x; this.g(y);
+		this.z(a,a=>a);
+		this.text_t(b);
+		this.z([c,d],a=>this.InfoCardIconRenderer(a));
+		this.trackingParams(e);
+		this.z([f,g],a=>this.primitive_of(a,"boolean"));
+	}
+	/** @arg {InfoCardIconRenderer} x */
+	InfoCardIconRenderer(x) {
+		this.g(x.infoCardIconRenderer);
+	}
 	/** @arg {PlayerMicroformatRenderer} x */
-	PlayerMicroformatRenderer(x) {x;}
+	PlayerMicroformatRenderer(x) {
+		this.g(x.playerMicroformatRenderer);
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

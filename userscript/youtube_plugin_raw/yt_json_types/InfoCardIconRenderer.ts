@@ -1,0 +1,3 @@
+type InfoCardIconRenderer={
+	infoCardIconRenderer: {};
+};
