@@ -12,6 +12,7 @@ type ResponseTypes=[
 	getAccountSwitcherEndpoint_t,
 	getDatasyncIdsEndpoint_t,
 	guide_t,
+	like_like_t,
 	like_removelike_t,
 	live_chat_get_live_chat_replay_t,
 	modify_channel_preference_t,

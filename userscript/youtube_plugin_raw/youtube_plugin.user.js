@@ -1503,9 +1503,9 @@ class FilterHandlers {
 				default: debugger; break;
 				case "like": switch(target[1]) {
 					default: debugger; break;
-					case "like": return {
+					case "like": debugger; return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {{}} */
+						/** @type {ResponseWithActions} */
 						data: cast_as(json),
 					};
 					case "removelike": return {
