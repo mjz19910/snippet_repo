@@ -1455,7 +1455,9 @@ class FilterHandlers {
 		/** @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
 		switch(target.length) {
+			default: debugger; break;
 			case 1: switch(target[0]) {
+				default: debugger; break;
 				case "browse": return {
 					type: target[0],
 					/** @type {BrowseResponseContent} */
@@ -1496,10 +1498,11 @@ class FilterHandlers {
 					/** @type {WatchResponsePlayer} */
 					data: cast_as(json),
 				};
-				default: break;
 			} break;
 			case 2: switch(target[0]) {
+				default: debugger; break;
 				case "account": switch(target[1]) {
+					default: debugger; break;
 					case "account_menu": return {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {AccountMenuJson} */
@@ -1517,6 +1520,7 @@ class FilterHandlers {
 					};
 				} break;
 				case "att": switch(target[1]) {
+					default: debugger; break;
 					case "get": return {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {AttGet} */
@@ -1528,12 +1532,14 @@ class FilterHandlers {
 					};
 				} break;
 				case "live_chat": switch(target[1]) {
+					default: debugger; break;
 					case "get_live_chat_replay": return {
 						type: `${target[0]}.${target[1]}`,
 						data: json,
 					};
 				} break;
 				case "notification": switch(target[1]) {
+					default: debugger; break;
 					case "get_notification_menu": return {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {GetNotificationMenuJson} */
@@ -1556,6 +1562,7 @@ class FilterHandlers {
 					};
 				} break;
 				case "reel": switch(target[1]) {
+					default: debugger; break;
 					case "reel_item_watch": return {
 						type: `${target[0]}.${target[1]}`,
 						/** @type {reel_reel_item_watch_t["data"]} */
@@ -1567,7 +1574,6 @@ class FilterHandlers {
 						data: cast_as(json),
 					};
 				} break;
-				default: break;
 			} break;
 		}
 		console.log("[log_get_res_data]",target,json);
