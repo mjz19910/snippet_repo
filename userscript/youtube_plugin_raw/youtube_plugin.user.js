@@ -5681,43 +5681,15 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @private */
-	get TODO_true() {
-		return true;
-	}
-	/** @arg {AccountSetSetting} x */
-	AccountSetSetting(x) {
-		this.save_keys("AccountSetSetting",x,true);
-		const {responseContext: a,settingItemId: b,...y}=x;
-		switch(b) {
-			case "407": break;
-			default: debugger; break;
-		}
-		this.empty_object(y);
-	}
-	/** @arg {EngagementPanelSectionListData} x */
-	EngagementPanelSectionListData(x) {
-		this.save_keys("EngagementPanel",x,this.TODO_true);
-	}
-	/** @arg {ModifyChannelPreference} x */
-	ModifyChannelPreference(x) {
-		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
-	}
-	/** @arg {SettingsSidebarRenderer} x */
-	SettingsSidebarRenderer(x) {
-		this.save_keys("SettingsSidebarRenderer",x,this.TODO_true);
-	}
-	/** @arg {CacheMetadata} x */
-	CacheMetadata(x) {
-		this.save_keys("CacheMetadata",x,this.TODO_true);
-	}
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
-		this.save_keys("SecondaryContents",x,this.TODO_true);
+		this.save_keys("SecondaryContents",x,true);
 		if("profileColumnRenderer" in x) {
 			this.w(x,a => this.ProfileColumnData(a));
 		} else if("browseFeedActionsRenderer" in x) {
 			this.w(x,a => this.BrowseFeedActions(a));
+		} else {
+			debugger;
 		}
 	}
 	/** @arg {BrowseFeedActions} x */
@@ -5825,23 +5797,53 @@ class HandleTypes extends BaseService {
 		this.PlayerStoryboardSpecData(a);
 		this.empty_object(y);
 	}
+	/** @arg {AccountSetSetting} x */
+	AccountSetSetting(x) {
+		this.save_keys("AccountSetSetting",x,true);
+		const {responseContext: a,settingItemId: b,...y}=x;
+		switch(b) {
+			case "407": break;
+			default: debugger; break;
+		}
+		this.empty_object(y);
+	}
 	/** @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
-		this.save_keys("ReelWatchSequence",x,this.TODO_true);
+		this.save_keys("ReelWatchSequence",x,true);
 		const {responseContext: a,...y}=x;
 		this.empty_object(y);
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
-		this.save_keys("JsonFeedbackData",x,this.TODO_true);
+		this.save_keys("JsonFeedbackData",x,true);
 		const {responseContext: a,...y}=x;
 		this.empty_object(y);
 	}
 	/** @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
-		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
+		this.save_keys("JsonGetTranscriptData",x,true);
 		const {responseContext: a,...y}=x;
 		this.empty_object(y);
+	}
+	/** @private */
+	get TODO_true() {
+		return true;
+	}
+	/** @arg {EngagementPanelSectionListData} x */
+	EngagementPanelSectionListData(x) {
+		this.save_keys("EngagementPanel",x,this.TODO_true);
+	}
+	/** @arg {ModifyChannelPreference} x */
+	ModifyChannelPreference(x) {
+		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
+	}
+	/** @arg {SettingsSidebarRenderer} x */
+	SettingsSidebarRenderer(x) {
+		this.save_keys("SettingsSidebarRenderer",x,this.TODO_true);
+	}
+	/** @arg {CacheMetadata} x */
+	CacheMetadata(x) {
+		this.save_keys("CacheMetadata",x,this.TODO_true);
 	}
 	/** @arg {ShelfData} x */
 	ShelfData(x) {
