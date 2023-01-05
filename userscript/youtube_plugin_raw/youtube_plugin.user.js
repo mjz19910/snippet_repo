@@ -1351,7 +1351,7 @@ class MyReader {
 }
 const base64_dec=new Base64Binary();
 /** @arg {string} str */
-function decode_url_b64_proto_obj(str) {
+function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
 	try {
@@ -1362,6 +1362,7 @@ function decode_url_b64_proto_obj(str) {
 }
 /** @arg {string} x */
 function decode_url_b64_proto_obj(x) {
+	debugger;
 	x=x.replaceAll("_","/").replaceAll("-","+");
 	let ba=base64_dec.decodeByteArray(x);
 	let reader=new MyReader(ba);
@@ -4691,10 +4692,7 @@ class HandleTypes extends BaseService {
 					}
 				} break;
 				case "pp": {
-					let sp_pp=res[1];
-					if(this.cache_player_params.includes(sp_pp)) return;
-					this.cache_player_params.push(sp_pp);
-					console.log("[new_player_params]",sp_pp);
+					this.on_player_params(res[1]);
 				} break;
 				case "start_radio": console.log("[playlist_start_radio]",res[1]); break;
 				case "index": {
@@ -4717,6 +4715,36 @@ class HandleTypes extends BaseService {
 				case "video": indexed_db.put({v: url_info.id}); break;
 			}
 		}
+	}
+	/** @arg {string} x */
+	on_player_params(x) {
+		let pp_value=x;
+		let pp_dec=decodeURIComponent(pp_value);
+		if(this.cache_player_params.includes(pp_value)) return;
+		this.cache_player_params.push(pp_value);
+		let res_e=decode_b64_proto_obj(pp_dec);
+		if(!res_e) {
+			debugger;
+			return;
+		}
+		/** @type {Map<number,number>} */
+		let param_map=new Map();
+		for(let param of res_e) {
+			switch(param[0]) {
+				case "data32": param_map.set(param[1],param[2]); break;
+				default: debugger; break;
+			}
+		}
+		let map_keys=[...param_map.keys()];
+		if(eq_keys(map_keys,[8,9])) {
+			let p8=param_map.get(8);
+			let p9=param_map.get(9);
+			if(p8!==void 0&&p9!==void 0) {
+				if(p8===1&&p9===1) return;
+			}
+		}
+		console.log("[new_player_params]",Object.fromEntries(param_map.entries()));
+		debugger;
 	}
 	/** @arg {YtUrlInfoPlaylist} x */
 	log_playlist_id(x,critical=false) {
