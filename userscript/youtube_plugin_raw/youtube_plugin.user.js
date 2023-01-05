@@ -1350,9 +1350,20 @@ class MyReader {
 }
 const base64_dec=new Base64Binary();
 /** @arg {string} str */
-function decode_b64_proto_obj(str) {
+function decode_url_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
+	try {
+		return reader.read_any();
+	} catch {
+		return null;
+	}
+}
+/** @arg {string} x */
+function decode_url_b64_proto_obj(x) {
+	x=x.replaceAll("_","/").replaceAll("-","+");
+	let ba=base64_dec.decodeByteArray(x);
+	let reader=new MyReader(ba);
 	try {
 		return reader.read_any();
 	} catch {
@@ -3714,7 +3725,7 @@ class YtPlugin {
 		this.saved_data=saved_data;
 		this.PropertyHandler=PropertyHandler;
 		this.make_search_params=make_search_params;
-		this.decode_b64_proto_obj=decode_b64_proto_obj;
+		this.decode_b64_proto_obj=decode_url_b64_proto_obj;
 		this.blob_create_args_arr=blob_create_args_arr;
 		this.dom_observer=dom_observer;
 		this.playlist_arr=playlist_arr;
@@ -4046,10 +4057,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_endpoint_params(x) {
-		x=x.replaceAll("_","/").replaceAll("-","+");
-		let ba=base64_dec.decodeByteArray(x);
-		let reader=new MyReader(ba);
-		let any_res=reader.read_any();
+		let any_res=decode_url_b64_proto_obj(x);
+		if(!any_res) {
+			debugger;
+			return;
+		}
 		const [f0]=any_res;
 		if(f0[0]!=="child") {
 			console.log(f0);
@@ -4134,7 +4146,7 @@ class HandleTypes extends BaseService {
 	LoadMarkersCommand(x) {
 		const {entityKeys: a,...y}=x;
 		this.z(a,a => {
-			let res=decode_b64_proto_obj(a);
+			let res=decode_url_b64_proto_obj(a);
 			let res_2=decode_entity_key(a);
 			console.log("[entity_key]",res_2,res);
 		});
@@ -4142,7 +4154,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CreateCommentEndpointData} x */
 	CreateCommentEndpointData(x) {
-		let res=decode_b64_proto_obj(decodeURIComponent(x.createCommentParams));
+		let res=decode_url_b64_proto_obj(decodeURIComponent(x.createCommentParams));
 		if(!res) {
 			console.log("failed to decode create_comment_params");
 			return;
@@ -4538,6 +4550,8 @@ class HandleTypes extends BaseService {
 		return as_cast(Object.fromEntries(sp.entries()));
 	}
 	/** @type {string[]} */
+	cache_playlist_index=[];
+	/** @type {string[]} */
 	cache_player_params=[];
 	/** @arg {YtWatchUrlParamsFormat} x */
 	parse_watch_page_url(x) {
@@ -4574,7 +4588,11 @@ class HandleTypes extends BaseService {
 					console.log("[new_player_params]",sp_pp);
 				} break;
 				case "start_radio": console.log("[playlist_start_radio]",res[1]); break;
-				case "index": console.log("[playlist_index]",res[1]); break;
+				case "index": {
+					if(this.cache_playlist_index.includes(res[1])) break;
+					this.cache_playlist_index.push(res[1]);
+					console.log("[playlist_index]",res[1]);
+				} break;
 				default: debugger;
 			}
 		}
