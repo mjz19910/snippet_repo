@@ -28,7 +28,7 @@ let ytd_app=void 0;
 // #region
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
-	let inject_api=window.inject_api??{};
+	let inject_api=window.inject_api??as_cast({});
 	window.inject_api=inject_api;
 }
 /** @type {Map<string, Blob|MediaSource>} */

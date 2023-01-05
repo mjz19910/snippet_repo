@@ -1,5 +1,4 @@
 import {IDValue_0 as IDValue_0_import} from "./support/IDValueI_0.js";
-import {InjectApi} from "./support/InjectApi.js";
 import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
 
@@ -82,7 +81,7 @@ declare global {
 }
 
 function test_inject_api() {
-	let inject_api: InjectApi={};
+	let inject_api=new InjectApi;
 	inject_api;
 }
 test_inject_api();
