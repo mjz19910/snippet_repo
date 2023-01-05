@@ -5335,54 +5335,62 @@ class HandleTypes extends BaseService {
 	TemplateUpdateData(x) {
 		const {identifier: a,serializedTemplateConfig: b,dependencies: c,...y}=x; this.g(y);
 		let id=a.split("|");
-		console.log(id);
-		/** @arg {MyReader} reader @arg {DecTypeNum[]} results */
-		function unpack_children_reader_result(reader,results) {
-			/** @type {DecTypeNum[]} */
-			let out=[];
-			for(let item of results) {
-				switch(item[0]) {
-					case "child": {
-						let buffer=item[2];
-						reader.pos=buffer.byteOffset;
-						let res=reader.try_read_any(buffer.byteLength);
-						if(!res) return null;
-						let unpack=unpack_children_reader_result(reader,res);
-						out.push(["struct",item[1],unpack]);
-					} break;
-					case "info": break;
-					default: out.push(item); break;
-					case "error": return null;
-				}
-			}
-			reader;
-			results;
-			return out;
-		}
-		x: {
-			let binary=decode_url_b64(b);
-			let reader=new MyReader(binary);
-			reader.pos=7;
-			let res=reader.try_read_any();
-			if(!res) break x;
-			let no_children=unpack_children_reader_result(reader,res);
-			let item=res[0];
-			switch(item[0]) {
-				case "child": {
-					reader.pos=item[2].byteOffset;
-					let res=reader.try_read_any(item[2].byteLength);
-					if(!res) break;
-					console.log("[template_child_1]",res);
-				} break;
-				default: debugger;
-			}
-			console.log("[template_root]",...res);
-		}
+		console.log(id);		
+		this.decode_template_protobuf(b);
 		this.z(c,a => {
 			let id=a.split("|");
 			console.log(id);
 		});
 		this.empty_object(y);
+	}
+	/** @arg {MyReader} reader @arg {DecTypeNum[]} results */
+	unpack_children_reader_result(reader,results) {
+		/** @type {DecTypeNum[]} */
+		let out=[];
+		for(let item of results) {
+			switch(item[0]) {
+				case "child": {
+					let buffer=item[2];
+					reader.pos=buffer.byteOffset;
+					let res=reader.try_read_any(buffer.byteLength);
+					if(!res) {
+						out.push(item);
+						break;
+					}
+					let unpack=this.unpack_children_reader_result(reader,res);
+					out.push(["struct",item[1],unpack]);
+				} break;
+				case "info": break;
+				default: out.push(item); break;
+				case "error": out.push(item);
+			}
+		}
+		return out;
+	}
+	/** @arg {string} x */
+	decode_template_protobuf(x) {
+		let binary=decode_url_b64(x);
+		let reader=new MyReader(binary);
+		reader.pos=7;
+		let packed_reader_results=reader.try_read_any();
+		if(!packed_reader_results) return;
+		let no_children=this.unpack_children_reader_result(reader,packed_reader_results);
+		if(!no_children) return;
+		let root_data=[];
+		for(let struct of no_children) {
+			switch(struct[0]) {
+				case "child": {
+					let res=struct[2];
+					console.log("[template_child_iter_child]",res);
+				} break;
+				case "struct": {
+					let res=struct[2];
+					console.log("[template_child_iter]",res);
+				} break;
+				default: root_data.push(struct);
+			}
+		}
+		console.log("template_root_data",...root_data);
 	}
 	/** @arg {ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
