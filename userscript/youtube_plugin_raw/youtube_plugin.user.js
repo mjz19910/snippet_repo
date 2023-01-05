@@ -5007,7 +5007,7 @@ class HandleTypes extends BaseService {
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
 		const {twoColumnWatchNextResults: a,...y}=x;
-		this.g(a);
+		this.TwoColumnWatchNextResultsData(a);
 		this.empty_object(y);
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
@@ -5937,6 +5937,34 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
+	/** @arg {AccountSetSetting} x */
+	AccountSetSetting(x) {
+		this.save_keys("AccountSetSetting",x,this.TODO_true);
+		const {responseContext: a,settingItemId: b,...y}=x;
+		switch(b) {
+			case "407": break;
+			default: debugger; break;
+		}
+		this.empty_object(y);
+	}
+	/** @arg {ReelWatchSequence} x */
+	ReelWatchSequence(x) {
+		this.save_keys("ReelWatchSequence",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {JsonFeedbackData} x */
+	JsonFeedbackData(x) {
+		this.save_keys("JsonFeedbackData",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
+	}
+	/** @arg {JsonGetTranscriptData} x */
+	JsonGetTranscriptData(x) {
+		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
+		const {responseContext: a,...y}=x;
+		this.empty_object(y);
+	}
 	/** @arg {ShelfData} x */
 	ShelfData(x) {
 		this.save_keys("ShelfData",x,this.TODO_true);
@@ -6013,33 +6041,9 @@ class HandleTypes extends BaseService {
 	VideoQualityPromoData(x) {
 		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
 	}
-	/** @arg {AccountSetSetting} x */
-	AccountSetSetting(x) {
-		this.save_keys("AccountSetSetting",x,this.TODO_true);
-		const {responseContext: a,settingItemId: b,...y}=x;
-		switch(b) {
-			case "407": break;
-			default: debugger; break;
-		}
-		this.empty_object(y);
-	}
-	/** @arg {ReelWatchSequence} x */
-	ReelWatchSequence(x) {
-		this.save_keys("ReelWatchSequence",x,this.TODO_true);
-		const {responseContext: a,...y}=x;
-		this.empty_object(y);
-	}
-	/** @arg {JsonFeedbackData} x */
-	JsonFeedbackData(x) {
-		this.save_keys("JsonFeedbackData",x,this.TODO_true);
-		const {responseContext: a,...y}=x;
-		this.empty_object(y);
-	}
-	/** @arg {JsonGetTranscriptData} x */
-	JsonGetTranscriptData(x) {
-		this.save_keys("JsonGetTranscriptData",x,this.TODO_true);
-		const {responseContext: a,...y}=x;
-		this.empty_object(y);
+	/** @arg {TwoColumnWatchNextResultsData} x */
+	TwoColumnWatchNextResultsData(x) {
+		this.save_keys("TwoColumnWatchNextResultsData",x,this.TODO_true);
 	}
 }
 //#endregion
