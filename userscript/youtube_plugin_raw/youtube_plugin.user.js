@@ -3105,7 +3105,7 @@ class BaseService extends BaseServicePrivate {
 	empty_object(x) {
 		let keys=get_keys_of(x);
 		if(!keys.length) return;
-		console.log("[empty_object] [%s] %o",keys.join(),x);
+		console.log("[empty_object] [%s]",keys.join());
 		debugger;
 	}
 	g=this.empty_object;
@@ -4338,8 +4338,6 @@ class HandleTypes extends BaseService {
 		if(url.pathname==="/AddSession") return;
 		console.log("[parse_url_external_2]",x);
 	}
-	/** @type {string|null} */
-	last_video_watch_url=null;
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
 		let t=this;
@@ -4526,11 +4524,8 @@ class HandleTypes extends BaseService {
 			this.cache_player_params.push(sp.pp);
 			console.log("[player_params_found]",sp.pp);
 		}
-		x: if("v" in sp) {
+		if("v" in sp) {
 			indexed_db.put({v: sp.v});
-			if(this.last_video_watch_url===sp.v) break x;
-			this.last_video_watch_url=sp.v;
-			console.log('watch page v=%s',sp.v);
 		}
 	}
 	/** @arg {CommandMetadata} x */
