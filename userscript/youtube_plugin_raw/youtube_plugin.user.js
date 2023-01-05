@@ -4285,7 +4285,6 @@ class HandleTypes extends BaseService {
 				}
 				return;
 			}
-			if(this.str_starts_with(up[1],"account")) return;
 			switch(f0) {
 				case "channel_switcher": return;
 				case "logout": return;
@@ -4297,8 +4296,9 @@ class HandleTypes extends BaseService {
 			let s0=split_string(f0,"?");
 			switch(s0[0]) {
 				case "watch": this.parse_watch_page_url(s0[1]); break;
+				case "playlist": this.parse_playlist_page_url(s0[1]); break;
 				default: {
-					console.log(s0.join("?"));
+					console.log(s0);
 					debugger;
 				} break;
 			}
@@ -4360,6 +4360,17 @@ class HandleTypes extends BaseService {
 		switch(up.length) {
 			case 2: parse_url_len_2.call(this); break;
 			case 3: parse_url_len_3.call(this); break;
+			default: debugger;
+		}
+	}
+	/** @arg {YtPlaylistUrlParamsFormat} x */
+	parse_playlist_page_url(x) {
+		if(x.includes("&")) debugger;
+		let y=split_string(x,"=");
+		switch(y[0]) {
+			case "list": if(this.str_starts_with(y[1],"RD")) {
+				y[1];
+			};break;
 			default: debugger;
 		}
 	}
