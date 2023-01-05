@@ -3844,6 +3844,7 @@ class IndexedDbAccessor {
 	/** @arg {IDBObjectStore} store */
 	consume_data_with_store(store) {
 		for(let data of this.arr) {
+			console.log("IDBObjectStore.put()",data);
 			const request=store.put(data);
 			request.onerror=event => console.log("IDBRequest: error",event);
 			request.onsuccess=event => {
