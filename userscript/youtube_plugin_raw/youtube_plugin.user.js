@@ -4400,8 +4400,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {RemoveFromGuideSectionAction} x */
 	RemoveFromGuideSectionAction(x) {
-		const {removeFromGuideSectionAction: a,...y}=x;
+		const {removeFromGuideSectionAction: a,clickTrackingParams: b,...y}=x;
 		this.RemoveFromGuideSectionActionData(a);
+		this.clickTrackingParams(b);
 		this.empty_object(y);
 	}
 	/** @arg {RemoveFromGuideSectionActionData} x */
