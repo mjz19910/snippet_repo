@@ -565,7 +565,6 @@ function to_url(url) {
 		return new URL(url);
 	}
 }
-
 /** @arg {Error} rejection @returns {Promise<Response>} */
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {
@@ -590,7 +589,6 @@ function fetch_rejection_handler(rejection) {
 	console.log("\t",rejection);
 	throw rejection;
 }
-
 class PropertyHandler {
 	/** @type {PropertyHandler[]} */
 	static instances=[];
@@ -829,7 +827,6 @@ class YtIterateTarget {
 		state.t.iteration.default_iter(state,renderer);
 	}
 }
-
 /** @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag */
 function check_item_keys(real_path,path,keys) {
 	let real_path_arr=real_path.split(".");
@@ -917,7 +914,6 @@ function check_item_keys(real_path,path,keys) {
 		case "content": break;
 	}
 }
-
 class HandleRendererContentItemArray {
 	debug=false;
 	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
@@ -995,7 +991,6 @@ class HandleRendererContentItemArray {
 		}));
 	}
 }
-
 class HandleRichGridRenderer {
 	debug=false;
 	/** @readonly */
@@ -1728,7 +1723,7 @@ function walk_key_path(cc,ms,obj,mc) {
 		if((cc.value_tr+"."+pq)==mc) {
 			return cc.value_tr+"."+pq;
 		}
-		mk(obj,pq,cc.value_tr+"."+pq,cc.noisy_flag);
+		new MKState({},obj,pq,`${cc.value_tr}.${pq}`,cc.noisy_flag).run();
 		return cc.value_tr+"."+pq;
 	}
 	throw 1;
@@ -1827,13 +1822,9 @@ function mk_run(cc) {
 	}
 	return cc;
 }
-/** @arg {object} target @arg {PropertyKey} property_key @arg {string} property_path @arg {boolean} noisy */
-function mk(target,property_key,property_path,noisy=false) {
-	return new MKState({},target,property_key,property_path,noisy).run();
-}
 let yta_str="yt.player.Application";
 mk_tree_arr.push(yta_str+".create",yta_str+".createAlternate");
-mk(window,"yt","yt",true);
+new MKState({},window,"yt","yt",true).run();
 win_watch.addEventListener("new_window_object",act_found_create_yt_player);
 
 class CustomEventTarget {
