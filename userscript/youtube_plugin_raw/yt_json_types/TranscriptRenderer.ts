@@ -1,0 +1,3 @@
+type TranscriptRenderer={
+	transcriptRenderer: TranscriptData;
+};

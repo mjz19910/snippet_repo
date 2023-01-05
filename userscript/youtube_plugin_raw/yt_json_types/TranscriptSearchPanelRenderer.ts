@@ -1,0 +1,3 @@
+type TranscriptSearchPanelRenderer={
+	transcriptSearchPanelRenderer: TranscriptSearchPanelData;
+};

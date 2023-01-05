@@ -1,0 +1,3 @@
+type TranscriptFooterRenderer={
+	transcriptFooterRenderer: TranscriptFooterData;
+};

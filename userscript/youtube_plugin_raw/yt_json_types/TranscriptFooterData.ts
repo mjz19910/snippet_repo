@@ -1,0 +1,3 @@
+type TranscriptFooterData={
+	languageMenu: SortFilterSubMenuRenderer;
+};

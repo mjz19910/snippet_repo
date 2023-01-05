@@ -1,0 +1,3 @@
+type TranscriptSegmentRenderer={
+	transcriptSegmentRenderer: TranscriptSegmentData;
+};

@@ -1495,7 +1495,7 @@ class FilterHandlers {
 				/** @type {GetAccountSwitcherEndpointResult} */
 				data: cast_as(x),
 			};
-			case "get_transcript": debugger; return {
+			case "get_transcript": return {
 				type: target[0],
 				/** @type {JsonGetTranscriptData} */
 				data: cast_as(x),
@@ -6051,8 +6051,15 @@ class HandleTypes extends BaseService {
 	/** @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
 		this.save_keys("JsonGetTranscriptData",x,true);
-		const {responseContext: a,...y}=x;
+		const {responseContext: a,actions: b,trackingParams: c,...y}=x;
+		this.ResponseContext(a);
+		this.z(b,a=>this.updateEngagementPanelAction(a));
+		this.trackingParams(c);
 		this.g(y);
+	}
+	/** @arg {UpdateEngagementPanelAction} x */
+	updateEngagementPanelAction(x) {
+		x;
 	}
 	/** @arg {PlayerStoryboardSpecData} x */
 	PlayerStoryboardSpecData(x) {
