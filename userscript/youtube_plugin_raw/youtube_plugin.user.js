@@ -430,7 +430,7 @@ function with_ytd_scope() {
 	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
 	dom_observer.addEventListener("async-plugin-init",async_plugin_init);
 }
-const is_ytd_app_debug_enabled=true;
+const is_ytd_app_debug_enabled=false;
 class VolumeRange {
 	static enabled=true;
 	static create_if_needed() {
@@ -4653,8 +4653,11 @@ class HandleTypes extends BaseService {
 		let sp=new URLSearchParams(t);
 		return as_cast(Object.fromEntries(sp.entries()));
 	}
+	log_playlist_index=false;
 	/** @type {string[]} */
 	cache_playlist_index=[];
+	/** @type {string[]} */
+	cache_playlist_id=[];
 	/** @type {string[]} */
 	cache_player_params=[];
 	/** @arg {YtWatchUrlParamsFormat} x */
@@ -4695,17 +4698,27 @@ class HandleTypes extends BaseService {
 				case "index": {
 					if(this.cache_playlist_index.includes(res[1])) break;
 					this.cache_playlist_index.push(res[1]);
-					console.log("[playlist_index]",res[1]);
+					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
 				} break;
 				default: debugger;
 			}
 		}
 		for(let url_info of url_info_arr) {
 			switch(url_info._tag) {
-				case "playlist": console.log("[playlist]",url_info.type,url_info.id,url_info.id.length); break;
+				case "playlist": {
+					switch(url_info.id.length) {
+						case 11: this.log_playlist_id(url_info); continue;
+						default: debugger; break;
+					}
+					this.log_playlist_id(url_info);
+				} break;
 				case "video": indexed_db.put({v: url_info.id}); break;
 			}
 		}
+	}
+	/** @arg {YtUrlInfoPlaylist} x */
+	log_playlist_id(x) {
+		console.log("[playlist]",x.type,x.id);
 	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
