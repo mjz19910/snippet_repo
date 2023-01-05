@@ -4061,7 +4061,7 @@ class HandleTypes extends BaseService {
 		}
 		if(sb) this.SettingsSidebarRenderer(sb);
 		if(cm) this.CacheMetadata(cm);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
@@ -4136,7 +4136,7 @@ class HandleTypes extends BaseService {
 		if(a) this.parse_endpoint_params(decodeURIComponent(a));
 		if(b) this.parse_browse_id(b);
 		this.save_keys("BrowseEndpointData",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {UrlEndpointData} x */
 	UrlEndpointRoot(x) {
@@ -4144,13 +4144,13 @@ class HandleTypes extends BaseService {
 			const {url,target,...y}=x;
 			this.parse_url(url);
 			if(target!=="TARGET_NEW_WINDOW") debugger;
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		const {url,...y}=x;
 		this.parse_url(url);
 		this.save_keys("UrlEndpointRoot",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommand(x) {
@@ -4172,7 +4172,7 @@ class HandleTypes extends BaseService {
 			if(res_2.entityId==="HEATSEEKER") return;
 			console.log("[entity_key]",res_2,res);
 		});
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {CreateCommentEndpointData} x */
 	CreateCommentEndpointData(x) {
@@ -4317,7 +4317,7 @@ class HandleTypes extends BaseService {
 		this.z(actions,a => this.OpenPopupAction(a));
 		this.trackingParams(trackingParams);
 		this.save_keys("GetNotificationMenuJson",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
@@ -4388,7 +4388,7 @@ class HandleTypes extends BaseService {
 		const {addToGuideSectionAction: a,clickTrackingParams: b,...y}=x;
 		this.AddToGuideSectionActionData(a);
 		this.clickTrackingParams(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AddToGuideSectionActionData} x */
 	AddToGuideSectionActionData(x) {
@@ -4398,14 +4398,14 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		};
 		this.z(b,a => this.GuideEntryRenderer(a));
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RemoveFromGuideSectionAction} x */
 	RemoveFromGuideSectionAction(x) {
 		const {removeFromGuideSectionAction: a,clickTrackingParams: b,...y}=x;
 		this.RemoveFromGuideSectionActionData(a);
 		this.clickTrackingParams(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RemoveFromGuideSectionActionData} x */
 	RemoveFromGuideSectionActionData(x) {
@@ -4415,13 +4415,13 @@ class HandleTypes extends BaseService {
 			default: debugger; break;
 		}
 		this.parse_guide_entry_id(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
 		const {guideEntryRenderer: a,...y}=x;
 		this.GuideEntryRendererData(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GuideEntryRendererData} x */
 	GuideEntryRendererData(x) {
@@ -4461,7 +4461,7 @@ class HandleTypes extends BaseService {
 		const {clickTrackingParams: a,updateNotificationsUnseenCountAction: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.UpdateNotificationsUnseenCount(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {{unseenCount:number}} x */
 	notification_unseenCount(x) {
@@ -4764,7 +4764,7 @@ class HandleTypes extends BaseService {
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=x;
 		this.WebCommandMetadata(a);
 		if(b) this.ResolveUrlCommandMetadata(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {YtPageTypeEnum} x */
 	parse_page_type(x) {
@@ -4783,7 +4783,7 @@ class HandleTypes extends BaseService {
 		if(b!==void 0) this.parse_page_type(b);
 		if(d!==void 0) this.parse_api_url(d);
 		if(c!==void 0) this.save_root_visual_element(c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {string} x */
 	parse_api_url(x) {
@@ -4926,26 +4926,26 @@ class HandleTypes extends BaseService {
 		const {twoColumnBrowseResultsRenderer,...y}=x;
 		this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
 		this.save_keys("TwoColumnBrowseResultsRenderer",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
 	TwoColumnBrowseResultsData(x) {
 		const {tabs: a,secondaryContents: b,...y}=x;
 		this.z(a,a => this.ResultRenderer(a));
 		if(b) this.SecondaryContents(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
 		if("tabRenderer" in x) {
 			const {tabRenderer: a,...y}=x;
 			this.TabRenderer(a);
-			return this.empty_object(y);
+			return this.g(y);
 		}
 		if("expandableTabRenderer" in x) {
 			const {expandableTabRenderer: a,...y}=x;
 			this.ExpandableTabData(a);
-			return this.empty_object(y);
+			return this.g(y);
 		}
 		debugger;
 	}
@@ -4961,7 +4961,7 @@ class HandleTypes extends BaseService {
 				this.w(e,a => this.SectionListData(a));
 			} else debugger;
 		}
-		return this.empty_object(y);
+		return this.g(y);
 	}
 	/** @arg {TabData} x */
 	TabRenderer(x) {
@@ -4975,14 +4975,14 @@ class HandleTypes extends BaseService {
 			}
 			this.primitive_of(b,"boolean");
 			this.trackingParams(c);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		const {endpoint: a,title: b,trackingParams: c,...y}=x;
 		this.yt_endpoint(a);
 		this.primitive_of(b,"string");
 		this.trackingParams(c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
@@ -5000,12 +5000,12 @@ class HandleTypes extends BaseService {
 		d&&this.save_number(`${this.current_response_type}.response.maxAgeSeconds`,d);
 		e&&this.RelevantStateTags(e);
 		f&&this.ConsistencyTokenJarData(f);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {MainAppWebResponseContextData} x */
 	MainAppWebResponseContextData(x) {
 		const {datasyncId,loggedOut,...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {
@@ -5013,7 +5013,7 @@ class HandleTypes extends BaseService {
 		if(a) this.YtConfigData(a);
 		if(b) this.WebPrefetchData(b);
 		if(c!==void 0) this.primitive_of(c,"boolean");
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {YtConfigData} x */
 	YtConfigData(x) {
@@ -5022,7 +5022,7 @@ class HandleTypes extends BaseService {
 		this.save_number("YtConfigData.rootVisualElementType",a);
 		this.save_number("YtConfigData.sessionIndex",b);
 		this.primitive_of(c,"string");
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {
@@ -5032,7 +5032,7 @@ class HandleTypes extends BaseService {
 		this.yt_endpoint(c);
 		this.WatchNextResponse(d);
 		this.parse_url(e);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {WatchNextResponse} x */
 	WatchNextResponse(x) {
@@ -5054,38 +5054,45 @@ class HandleTypes extends BaseService {
 		const {trackingParams: a,contents: b,...y}=p2.call(this,x);
 		this.trackingParams(a);
 		if(b) this.TwoColumnWatchNextResults(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
 		const {twoColumnWatchNextResults: a,...y}=x;
 		this.TwoColumnWatchNextResultsData(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanelSectionListRenderer(x) {
 		const {engagementPanelSectionListRenderer: a,...y}=x;
 		this.EngagementPanelSectionListData(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {FrameworkUpdates} x */
 	FrameworkUpdates(x) {
-		const {entityBatchUpdate: a,...y}=x;
+		const {entityBatchUpdate: a,elementUpdate: b,...y}=x;
 		this.EntityBatchUpdateData(a);
-		this.empty_object(y);
+		if(b) this.ElementUpdate(b);
+		this.g(y);
+	}
+	/** @arg {ElementUpdate} x */
+	ElementUpdate(x) {
+		const {updates,...y}=x;
+		this.z(x.updates,a=>a);
+		this.g(y);
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
 		const {clickTrackingParams: a,openPopupAction: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.OpenPopupActionData(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {OpenPopupActionData} x */
 	OpenPopupActionData(x) {
 		const {popup: a,popupType: b,...y}=x;
 		x.popup;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {YtChannelPageResponse} x */
 	YtChannelPageResponse(x) {
@@ -5093,7 +5100,7 @@ class HandleTypes extends BaseService {
 		this.yt_endpoint(endpoint);
 		this.ChannelResponse(response);
 		this.parse_url(url);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {YtPlaylistPageResponse} x */
 	YtPlaylistPageResponse(x) {
@@ -5102,7 +5109,7 @@ class HandleTypes extends BaseService {
 		this.yt_endpoint(endpoint);
 		this.PlaylistResponse(response);
 		this.parse_url(url);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {PlaylistResponse} x */
 	PlaylistResponse(x) {
@@ -5125,7 +5132,7 @@ class HandleTypes extends BaseService {
 		this.yt_endpoint(a);
 		this.SettingsResponseContent(b);
 		this.parse_url(c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @template {{onResponseReceivedEndpoints: YtEndpoint[]}|{}} T @arg {T} x @returns {Omit<T,"onResponseReceivedEndpoints">} */
 	filter_response_endpoints(x) {
@@ -5147,14 +5154,14 @@ class HandleTypes extends BaseService {
 		this.w(c,c => this.DesktopTopbarData(c));
 		this.renderer(d);
 		this.trackingParams(tp);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
 		const {items: a,title: b,...y}=x;
 		this.z(a,a => this.CompactLinkRenderer(a));
 		this.text_t(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {TextRun} x */
 	TextRun(x) {
@@ -5162,7 +5169,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"string");
 		if(b) this.primitive_of(b,"boolean");
 		if(c) this.yt_endpoint(c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @private @arg {TextT} x */
 	text_t(x) {
@@ -5174,32 +5181,32 @@ class HandleTypes extends BaseService {
 		if(a) this.z(a,a => this.TextRun(a));
 		if(b) this.Accessibility(b);
 		if(c) this.primitive_of(c,"string");
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
 		const {compactLinkRenderer,...y}=x;
 		this.CompactLinkData(x.compactLinkRenderer);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GeneralRenderer} x */
 	renderer(x) {
 		if("settingsSidebarRenderer" in x) {
 			const {settingsSidebarRenderer: a,...y}=x;
 			this.SettingsSidebarData(a);
-			this.empty_object(y);
+			this.g(y);
 		}
 	}
 	/** @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {
 		const {page,...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const {relevantStateTags: a,...y}=x;
 		this.z(a,a => this.StateTag(a));
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {StateTag} x */
 	StateTag(x) {
@@ -5209,7 +5216,7 @@ class HandleTypes extends BaseService {
 				case "STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE": break;
 				default: debugger;
 			}
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		const {stateTag: a,instruction: b,...y}=x;
@@ -5221,7 +5228,7 @@ class HandleTypes extends BaseService {
 			case "STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY": break;
 			default: debugger;
 		}
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ConsistencyTokenJarData} x */
 	ConsistencyTokenJarData(x) {
@@ -5229,7 +5236,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"string");
 		this.save_number("ConsistencyTokenJar.expirationSeconds",parseInt(b,10));
 		if(b!=="600") debugger;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @type {string|null} */
 	my_main_channel_id=null;
@@ -5264,7 +5271,7 @@ class HandleTypes extends BaseService {
 				}
 			});
 		}
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GetAccountSwitcherEndpointResult} x */
 	GetAccountSwitcherEndpointResult(x) {
@@ -5274,7 +5281,7 @@ class HandleTypes extends BaseService {
 		}
 		const {code: {},data: a,...y}=x;
 		this.GetAccountSwitcherEndpointResponse(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
@@ -5283,19 +5290,19 @@ class HandleTypes extends BaseService {
 		this.z(b,a => this.GetMultiPageMenuAction(a));
 		if(!c) debugger;
 		this.text_t(c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
 		const {getMultiPageMenuAction: a,...y}=x;
 		this.GetMultiPageMenuActionData(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
 		const {menu: a,...y}=x;
 		this.MultiPageMenuRenderer(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {MultiPageMenuRenderer} x */
 	MultiPageMenuRenderer(x) {
@@ -5308,7 +5315,7 @@ class HandleTypes extends BaseService {
 		this.SimpleMenuHeaderRenderer(a);
 		this.z(b,a => this.AccountSectionListRenderer(a));
 		this.MultiPageMenuSectionRenderer(c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {SimpleMenuHeaderRenderer} x */
 	SimpleMenuHeaderRenderer(x) {
@@ -5319,7 +5326,7 @@ class HandleTypes extends BaseService {
 		const {buttons: a,title: b,...y}=x;
 		this.z(a,a => this.ButtonRenderer(a));
 		this.text_t(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
@@ -5368,7 +5375,7 @@ class HandleTypes extends BaseService {
 		const {title: a,navigationEndpoint: b,...y}=x;
 		this.text_t(a);
 		this.yt_endpoint(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
@@ -5382,7 +5389,7 @@ class HandleTypes extends BaseService {
 	MultiPageMenuSectionData(x) {
 		const {items: a,...y}=x;
 		this.z(a,v => this.CompactLinkRenderer(v));
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
@@ -5394,7 +5401,7 @@ class HandleTypes extends BaseService {
 	WebPrefetchData(x) {
 		const {navigationEndpoints: a,...y}=x;
 		this.z(a,v => this.yt_endpoint(v));
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
@@ -5407,12 +5414,12 @@ class HandleTypes extends BaseService {
 		if("richItemRenderer" in x) {
 			const {richItemRenderer,...y}=x;
 			this.RichItemData(x.richItemRenderer);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		} else if("richSectionRenderer" in x) {
 			const {richSectionRenderer: a,...y}=x;
 			this.RichSectionData(a);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		} else if("commentsHeaderRenderer" in x) {
 			this.w(x,v => this.CommentsHeaderData(v));
@@ -5430,26 +5437,26 @@ class HandleTypes extends BaseService {
 		this.RichItemContent(a);
 		if(b!==void 0) this.primitive_of(b,"number");
 		if(c!==void 0) this.primitive_of(c,"number");
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {
 		if("adSlotRenderer" in x) {
 			const {adSlotRenderer: a,...y}=x;
 			this.AdSlotData(a);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		if("radioRenderer" in x) {
 			const {radioRenderer: a,...y}=x;
 			this.RadioData(a);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		if("videoRenderer" in x) {
 			const {videoRenderer: a,...y}=x;
 			this.VideoData(a);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		this.empty_object(x);
@@ -5457,31 +5464,31 @@ class HandleTypes extends BaseService {
 	/** @arg {RadioData} x */
 	RadioData(x) {
 		const {...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {VideoData} x */
 	VideoData(x) {
 		const {...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RichSectionData} x */
 	RichSectionData(x) {
 		const {content: a,...y}=x;
 		this.RichSectionContent(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RichSectionContent} x */
 	RichSectionContent(x) {
 		if("richShelfRenderer" in x) {
 			const {richShelfRenderer: a,...y}=x;
 			this.RichShelfData(a);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		if("inlineSurveyRenderer" in x) {
 			const {inlineSurveyRenderer: a,...y}=x;
 			this.InlineSurveyData(a);
-			this.empty_object(y);
+			this.g(y);
 			return;
 		}
 		this.empty_object(x);
@@ -5492,14 +5499,14 @@ class HandleTypes extends BaseService {
 		this.AdSlotMetadata(a);
 		this.FulfillmentContent(b);
 		this.primitive_of(c,"boolean");
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {RichShelfData} x */
 	RichShelfData(x) {
 		const {icon: a,title: b,...y}=x;
 		this.Icon(a);
 		this.text_t(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AdSlotMetadata} x */
 	AdSlotMetadata(x) {
@@ -5508,7 +5515,7 @@ class HandleTypes extends BaseService {
 		console.log("AdSlot.slotId",ss);
 		this.save_string("AdSlot.slotType",b);
 		this.save_number("AdSlot.slotPhysicalPosition",c);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
@@ -5518,7 +5525,7 @@ class HandleTypes extends BaseService {
 		}
 		const {accessibilityData: a,...y}=x;
 		this.AccessibilityData(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AccessibilityData} x */
 	AccessibilityData(x) {
@@ -5528,7 +5535,7 @@ class HandleTypes extends BaseService {
 		}
 		const {label: a,...y}=x;
 		if(a) this.save_string(`label`,a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
@@ -5537,7 +5544,7 @@ class HandleTypes extends BaseService {
 		this.text_t(b);
 		this.z(c,v => this.UpdateChannelSwitcherPageAction(v));
 		this.save_keys("AccountsListResponse",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {UpdateChannelSwitcherPageAction} x */
 	UpdateChannelSwitcherPageAction(x) {
@@ -5556,7 +5563,7 @@ class HandleTypes extends BaseService {
 		const {contents,header,targetId,...y}=x;
 		this.z(x.contents,a => this.ChannelSwitcherContent(a));
 		this.parse_target_id(targetId);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {string} x */
 	parse_target_id(x) {
@@ -5587,14 +5594,14 @@ class HandleTypes extends BaseService {
 			this.z(a,a =>
 				this.ThumbnailItem(a));
 		});
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
 		this.z([b,c],v => this.primitive_of(v,"number"));
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
@@ -5657,7 +5664,7 @@ class HandleTypes extends BaseService {
 		}
 		const {iconType: a,...y}=x;
 		this.save_string(`icon_type`,a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {CommentsHeaderData} x */
 	CommentsHeaderData(x) {
@@ -5677,7 +5684,7 @@ class HandleTypes extends BaseService {
 		this.z(h,v => this.CustomEmoji(v));
 		this.parse_url(i);
 		this.LoggingDirectives(j);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuData(x) {
@@ -5688,14 +5695,14 @@ class HandleTypes extends BaseService {
 		if(d) this.Accessibility(d);
 		e!==void 0&&this.primitive_of(e,"string");
 		this.trackingParams(f);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
 		const {isVanityUrl: a,...y}=x;
 		this.primitive_of(a,"boolean");
 		this.save_keys("resolveUrlCommandMetadata",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {CommentSimpleboxData} x */
 	CommentSimpleboxData(x) {
@@ -5712,7 +5719,7 @@ class HandleTypes extends BaseService {
 		this.EmojiPickerRenderer(h);
 		this.primitive_of(i,"string");
 		this.save_keys("CommentSimpleboxData",x,true);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ReelItemWatch} x */
 	ReelItemWatch(x) {
@@ -5723,7 +5730,7 @@ class HandleTypes extends BaseService {
 			case "REEL_ITEM_WATCH_STATUS_SUCCEEDED": break;
 			default: debugger;
 		}
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanel(x) {
@@ -5786,7 +5793,7 @@ class HandleTypes extends BaseService {
 	ProfileColumnStatsEntryData(x) {
 		const {label: a,value: b,...y}=x;
 		this.z([a,b],a => this.text_t(a));
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ProfileColumnUserInfoData} x */
 	ProfileColumnUserInfoData(x) {
@@ -5797,7 +5804,7 @@ class HandleTypes extends BaseService {
 		const {thumbnails: a,accessibility: b,...y}=x;
 		this.z(a,a => this.ThumbnailItem(a));
 		if(b) this.Accessibility(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
@@ -5805,7 +5812,7 @@ class HandleTypes extends BaseService {
 		const {contents: a,trackingParams: b,...y}=x;
 		this.z(a,a => this.SectionListItem(a));
 		this.trackingParams(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {SectionListItem} x */
 	SectionListItem(x) {
@@ -5819,7 +5826,7 @@ class HandleTypes extends BaseService {
 		const {contents: a,trackingParams: b,...y}=x;
 		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
-		this.empty_object(y);
+		this.g(y);
 	}
 	item_section_map=new Map();
 	/** @arg {ItemSectionItem} c */
@@ -5847,7 +5854,7 @@ class HandleTypes extends BaseService {
 	PlayerStoryboardSpecRenderer(x) {
 		const {playerStoryboardSpecRenderer: a,...y}=x;
 		this.PlayerStoryboardSpecData(a);
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
@@ -5857,31 +5864,31 @@ class HandleTypes extends BaseService {
 			case "407": break;
 			default: debugger; break;
 		}
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
 		this.save_keys("ReelWatchSequence",x,true);
 		const {responseContext: a,...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
 		this.save_keys("JsonFeedbackData",x,true);
 		const {responseContext: a,...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
 		this.save_keys("JsonGetTranscriptData",x,true);
 		const {responseContext: a,...y}=x;
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {PlayerStoryboardSpecData} x */
 	PlayerStoryboardSpecData(x) {
 		const {spec: a,...y}=x;
 		this.primitive_of(a,"string");
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @private */
 	get TODO_true() {

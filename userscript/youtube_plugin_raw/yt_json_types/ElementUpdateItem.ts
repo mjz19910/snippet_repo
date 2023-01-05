@@ -1,0 +1,1 @@
+type ElementUpdateItem=TemplateUpdate|ResourceStatusInResponseCheck;
