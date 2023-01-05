@@ -1096,6 +1096,13 @@ class MyReader {
 		this.len=buf.length;
 		this.last_pos=0;
 	}
+	try_read_any() {
+		try {
+			return this.read_any();
+		} catch {
+			return null;
+		}
+	}
 	/** @arg {number} [size] */
 	read_any(size) {
 		this.pos=0;
@@ -5077,9 +5084,38 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
-		const {updates,...y}=x;
-		this.z(x.updates,a=>a);
+		const {updates: a,...y}=x;
+		this.z(a,a=>this.ElementUpdateItem(a));
 		this.g(y);
+	}
+	/** @arg {ElementUpdateItem} x */
+	ElementUpdateItem(x) {
+		if("templateUpdate" in x) {
+			const {templateUpdate:a,...y}=x; this.g(y);
+			this.TemplateUpdateData(a);
+		} else if("resourceStatusInResponseCheck" in x) {
+			const {resourceStatusInResponseCheck:a,...y}=x; this.g(y);
+			this.ResourceStatusInResponseCheckData(a);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {TemplateUpdateData} x */
+	TemplateUpdateData(x) {
+		const {identifier: a,serializedTemplateConfig: b,dependencies: c,...y}=x; this.g(y);
+		let id=a.split("|");
+		console.log(id);
+		let res=decode_url_b64_proto_obj(b);
+		console.log(res);
+		this.z(c,a=>{
+			let id=a.split("|");
+			console.log(id);
+		});
+		this.empty_object(y);
+	}
+	/** @arg {ResourceStatusInResponseCheckData} x */
+	ResourceStatusInResponseCheckData(x) {
+		x;
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
