@@ -5123,7 +5123,7 @@ class HandleTypes extends BaseService {
 					reader.pos=item[2].byteOffset;
 					let res=reader.try_read_any();
 					if(!res) break;
-					console.log("template child_1",res[0],reader.try_read_any());
+					console.log("template child_1",res[0]);
 				} break;
 				default: debugger;
 			}
