@@ -4,7 +4,7 @@ type WatchResponsePlayer={
 	streamingData: StreamingData;
 	playerAds: DesktopWatchAdsRenderer[];
 	playbackTracking: PlaybackTracking;
-	captions: CaptionsRenderer;
+	captions?: CaptionsRenderer;
 	videoDetails: VideoDetails;
 	playerConfig: PlayerConfig;
 	storyboards: PlayerStoryboardSpecRenderer;

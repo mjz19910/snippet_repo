@@ -1047,6 +1047,7 @@ class Base64Binary {
 		if(prev_len!==input.length) {
 			console.log("removed %o non base64 chars",prev_len-input.length);
 			debugger;
+			throw new Error("Bad");
 		}
 
 		for(i=0;i<byte_len;i+=3) {
@@ -3272,6 +3273,25 @@ class ECatcherService extends BaseService {
 	};
 	/** @type {number[]} */
 	seen_new_expected=[];
+	/** @arg {number[]} x */
+	iterate_fexp(x) {
+		let expected=this.data.expected_client_values.fexp;
+		/** @type {number[]} */
+		let new_expected=[];
+		x.forEach(e => {
+			if(expected.includes(e)) return;
+			if(this.seen_new_expected.includes(e)) return;
+			this.seen_new_expected.push(e);
+			new_expected.push(e);
+		});
+		if(new_expected.length>0) {
+			if(new_expected.length>1) {
+				console.log("[new_fexp_expected]",new_expected);
+			} else {
+				console.log("[new_fexp_expected][%o]",new_expected[0]);
+			}
+		}
+	}
 	/** @arg {ECatcherServiceParams['params']} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
@@ -3291,20 +3311,10 @@ class ECatcherService extends BaseService {
 		if(!prev_client) return this.update_client(new_client);
 		this.data.client={...this.data.client,...new_client};
 		let client=this.data.client;
-		let expected=this.data.expected_client_values.fexp;
-		/** @type {number[]} */
-		let new_expected=[];
-		client.fexp.forEach(e => {
-			if(expected.includes(e)) return;
-			if(this.seen_new_expected.includes(e)) return;
-			new_expected.push(e);
-		});
+		this.iterate_fexp(client.fexp);
 		if(prev_client.name!==this.data.client.name) {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
-		this.seen_new_expected.push(...new_expected);
-		if(new_expected.length>0) console.log("[new_fexp_expected]",new_expected);
-		this.data.expected_client_values.fexp;
 	}
 	/** @arg {NonNullable<this["data"]["client"]>} client */
 	update_client(client) {
@@ -3376,17 +3386,8 @@ class GFeedbackService extends BaseService {
 		}
 	}
 	maybe_new_e() {
-		/** @type {number[]} */
-		let new_expected=[];
-		let expected=this.x.get("e_catcher_service").data.expected_client_values.fexp;
-		this.data.e?.forEach(e => expected.includes(e)? 0:new_expected.push(e));
-		if(new_expected.length>0) {
-			if(new_expected.length>1) {
-				console.log("[new_e_expected]",new_expected);
-			} else {
-				console.log("[new_e_expected][%o]",new_expected[0]);
-			}
-		}
+		if(!this.data.e) return;
+		this.x.get("e_catcher_service").iterate_fexp(this.data.e);
 	}
 }
 class GuidedHelpService extends BaseService {
@@ -3871,12 +3872,14 @@ class IndexedDbAccessor {
 	outstanding_upgrade_requests=0;
 	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
-		console.log("old version",event.oldVersion);
+		if(event.oldVersion===0) {
+			this.createLatestDatabaseVersion(request,[]);
+			return;
+		}
+		if(this.log_all_events) console.log("IDBOpenDBRequest: oldVersion",event.oldVersion);
 		const db=request.result;
 		if(event.oldVersion<1) {
-			db.createObjectStore("video_id",{
-				autoIncrement: true
-			});
+			db.createObjectStore("video_id",{autoIncrement: true});
 		}
 		if(event.oldVersion<2) {
 			if(!request.transaction) throw new Error("No transaction");
@@ -3886,19 +3889,26 @@ class IndexedDbAccessor {
 			get_all_request.onsuccess=() => {
 				const all_video_ids=get_all_request.result;
 				db.deleteObjectStore("video_id");
-				const store=db.createObjectStore("video_id",{keyPath: "v"});
-				for(let x of all_video_ids) {
-					this.outstanding_upgrade_requests++;
-					const request=store.put(x);
-					request.onsuccess=() => {
-						if(!request.transaction) throw new Error("No transaction");
-						if(this.outstanding_upgrade_requests===0) {
-							request.transaction.commit();
-						}
-					};
+				this.createLatestDatabaseVersion(request,all_video_ids);
+			};
+		}
+	}
+	/** @arg {IDBOpenDBRequest} request @arg {{v:string}[]} data_source */
+	createLatestDatabaseVersion(request,data_source) {
+		const db=request.result;
+		const store=db.createObjectStore("video_id",{keyPath: "v"});
+		for(let x of data_source) {
+			this.outstanding_upgrade_requests++;
+			const request=store.put(x);
+			request.onsuccess=() => {
+				if(!request.transaction) throw new Error("No transaction");
+				this.outstanding_upgrade_requests--;
+				if(this.outstanding_upgrade_requests===0) {
+					request.transaction.commit();
 				}
 			};
 		}
+
 	}
 	/** @arg {Event} event */
 	onError(event) {
@@ -3956,7 +3966,7 @@ class HandleTypes extends BaseService {
 			this.VideoDetails(m);
 			this.PlayerStoryboardSpecRenderer(n);
 			this.StreamingData(o);
-			this.CaptionsRenderer(p);
+			if(p) this.CaptionsRenderer(p);
 			return y;
 		}
 		let d=p4.call(this,c);
@@ -4147,7 +4157,7 @@ class HandleTypes extends BaseService {
 	LoadMarkersCommand(x) {
 		const {entityKeys: a,...y}=x;
 		this.z(a,a => {
-			let res=decode_url_b64_proto_obj(a);
+			let res=decode_url_b64_proto_obj(decodeURIComponent(a));
 			let res_2=decode_entity_key(a);
 			console.log("[entity_key]",res_2,res);
 		});
