@@ -6566,6 +6566,51 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerMicroformatData} x */
 	PlayerMicroformatData(x) {
+		let t=this;
+		/** @this {typeof t} @arg {PlayerMicroformatData} x */
+		function p1(x) {
+			const {thumbnail: a,embed: b,title: c,description: d,...y}=x;
+			this.Thumbnail(a);
+			this.MicroformatEmbed(b);
+			this.text_t(c);
+			this.text_t(d);
+			return y;
+		}
+		let a=p1.call(this,x);
+		/** @this {typeof t} @arg {typeof a} x */
+		function p2(x) {
+			const {lengthSeconds: b,ownerProfileUrl: c,externalChannelId: d,isFamilySafe: e,...y}=x;
+			this.primitive_of(b,"string");
+			this.parse_channel_url(c);
+			return y;
+		}
+		let b=p2.call(this,a);
+		/** @this {typeof t} @arg {typeof b} x */
+		function p3(x) {
+			const {availableCountries,isUnlisted,hasYpcMetadata,viewCount,...y}=x;
+			return y;
+		}
+		let c=p3.call(this,b);
+		/** @this {typeof t} @arg {typeof c} x */
+		function p4(x) {
+			const {category,publishDate,ownerChannelName,liveBroadcastDetails,...y}=x;
+			return y;
+		}
+		let d=p4.call(this,c);
+		/** @this {typeof t} @arg {typeof d} x */
+		function p5(x) {
+			const {uploadDate,...y}=x;
+			return y;
+		}
+		let y=p5.call(this,d); this.g(y);
+	}
+	/** @arg {`http://www.youtube.com/channel/UC${string}`} x */
+	parse_channel_url(x) {
+		let r=create_from_parse(x);
+		r;
+	}
+	/** @arg {MicroformatEmbed} x */
+	MicroformatEmbed(x) {
 		x;
 	}
 }
