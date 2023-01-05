@@ -3748,16 +3748,8 @@ class IndexedDbAccessor {
 	arr=[];
 	/** @arg {{}} obj */
 	put(obj) {
-		if(this.db_open_request) {
-			if(this.db_open_request.readyState==="done") {
-				if(this.current_rw_transaction) {
-
-				}
-				return;
-			};
-		}
-		if(!this.db_open_request) this.db_open_request=this.open();
 		this.arr.push(obj);
+		if(!this.db_open_request) this.db_open_request=this.open();
 		if(this.current_database) {
 			if(this.current_rw_transaction) {
 				return this.consume_data();
