@@ -25,4 +25,4 @@ type ResponseTypes=[
 	settings_t,
 	shorts_t,
 	watch_t,
-][number];
+][number]|GenericResponseType;
