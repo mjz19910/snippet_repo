@@ -3368,6 +3368,7 @@ function specialclick_inject(that) {
 		if(noti) gritter("Power-up !",toTitleCase(plurials(arrayNames[that]))+" X100 APS",null,"+"+rounding(spec_aps,false,0)+" APS","");
 		//spell:ignore updateprogress
 		updateprogress(that);
+		// @ts-expect-error(2581)
 		$("#spec"+that).remove();
 		(that<74)? seeUnit(that+1):seeUnit(that-1);
 		seeUnit(that);
@@ -3381,6 +3382,7 @@ function specialclick_inject(that) {
 	window.atomepersecond=atomepersecond;
 	window.specialsbought=specialsbought;
 }
+// @ts-expect-error(2581)
 /** @arg {typeof $} value */
 function got_jquery(value) {
 	Object.defineProperty(window,"$",{
