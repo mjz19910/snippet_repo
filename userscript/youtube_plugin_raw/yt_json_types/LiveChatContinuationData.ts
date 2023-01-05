@@ -1,0 +1,4 @@
+type LiveChatContinuationData={
+	continuations: {}[];
+	actions: {}[];
+};

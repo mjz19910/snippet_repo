@@ -1,0 +1,3 @@
+type LiveChatContinuation={
+	liveChatContinuation: LiveChatContinuationData;
+};

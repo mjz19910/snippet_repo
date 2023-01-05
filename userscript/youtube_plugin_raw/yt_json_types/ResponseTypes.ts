@@ -12,6 +12,7 @@ type ResponseTypes=[
 	guide_t,
 	like_like_t,
 	like_removelike_t,
+	live_chat_get_live_chat_replay_t,
 	next_t,
 	notification_get_unseen_count_t,
 	notification_record_interactions,

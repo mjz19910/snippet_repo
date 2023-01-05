@@ -1471,138 +1471,184 @@ class FilterHandlers {
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.handle_types.get_url_type(path_parts);
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} json @returns {ResponseTypes} */
-	get_res_data(url_type,json) {
+	/** @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_res_one(target,x) {
+		switch(target[0]) {
+			default: debugger; break;
+			case "browse": return {
+				type: target[0],
+				/** @type {BrowseResponseContent} */
+				data: cast_as(x),
+			};
+			case "feedback": debugger; return {
+				type: target[0],
+				/** @type {JsonFeedbackData} */
+				data: cast_as(x),
+			};
+			case "getDatasyncIdsEndpoint": return {
+				type: target[0],
+				/** @type {DatasyncIdsResponse} */
+				data: cast_as(x),
+			};
+			case "getAccountSwitcherEndpoint": return {
+				type: target[0],
+				/** @type {GetAccountSwitcherEndpointResult} */
+				data: cast_as(x),
+			};
+			case "get_transcript": debugger; return {
+				type: target[0],
+				/** @type {JsonGetTranscriptData} */
+				data: cast_as(x),
+			};
+			case "guide": return {
+				type: target[0],
+				/** @type {GuideJsonType} */
+				data: cast_as(x),
+			};
+			case "next": return {
+				type: target[0],
+				/** @type {YtApiNext} */
+				data: cast_as(x),
+			};
+			case "player": return {
+				type: target[0],
+				/** @type {WatchResponsePlayer} */
+				data: cast_as(x),
+			};
+		}
+		return null;
+	}
+	/** @arg {Extract<Split<UrlTypes, ".">,[any,any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_res_2(target,x) {
+		switch(target[0]) {
+			default: debugger; break;
+			case "like": return this.convert_like(target,x);
+			case "account": return this.convert_account(target,x);
+			case "att":  return this.convert_res_att(target,x);
+			case "live_chat": return this.convert_live_chat(target,x);
+			case "notification": return this.convert_notification(target,x)??null;
+			case "reel":  return this.convert_reel(target,x)??null;
+		}
+		return null;
+	}
+	/** @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
+	convert_reel(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "reel_item_watch": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {ReelItemWatch} */
+				data: cast_as(x),
+			};
+			case "reel_watch_sequence": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {ReelWatchSequence} */
+				data: cast_as(x),
+			};
+		}
+	}
+	/** @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
+	convert_notification(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get_notification_menu": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {GetNotificationMenuJson} */
+				data: cast_as(x),
+			};
+			case "get_unseen_count": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {NotificationGetUnseenCount} */
+				data: cast_as(x),
+			};
+			case "record_interactions": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {YtSuccessResponse} */
+				data: cast_as(x),
+			};
+		}
+	}
+	/** @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_live_chat(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get_live_chat_replay": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {GetLiveChatReplay} */
+				data: cast_as(x),
+			};
+		}
+		return null;
+	}
+	/** @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_res_att(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {AttGet} */
+				data: cast_as(x),
+			};
+		}
+		return null;
+	}
+	/** @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_account(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "account_menu": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {AccountMenuJson} */
+				data: cast_as(x),
+			};
+			case "accounts_list": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {AccountsListResponse} */
+				data: cast_as(x),
+			};
+			case "set_setting": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {AccountSetSetting} */
+				data: cast_as(x),
+			};
+		}
+		return null;
+	}
+ 	/** @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_like(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "like": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {ResponseWithActions} */
+				data: cast_as(x),
+			};
+			case "removelike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {ResponseWithActions} */
+				data: cast_as(x),
+			};
+		}
+		return null;
+	}
+	/** @arg {UrlTypes} url_type @arg {{}} x @returns {ResponseTypes} */
+	get_res_data(url_type,x) {
 		/** @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
+		/** @type {ResponseTypes|null} */
+		let res=null;
 		switch(target.length) {
 			default: debugger; break;
-			case 1: switch(target[0]) {
-				default: debugger; break;
-				case "browse": return {
-					type: target[0],
-					/** @type {BrowseResponseContent} */
-					data: cast_as(json),
-				};
-				case "feedback": debugger; return {
-					type: target[0],
-					/** @type {JsonFeedbackData} */
-					data: cast_as(json),
-				};
-				case "getDatasyncIdsEndpoint": return {
-					type: target[0],
-					/** @type {DatasyncIdsResponse} */
-					data: cast_as(json),
-				};
-				case "getAccountSwitcherEndpoint": return {
-					type: target[0],
-					/** @type {GetAccountSwitcherEndpointResult} */
-					data: cast_as(json),
-				};
-				case "get_transcript": debugger; return {
-					type: target[0],
-					/** @type {JsonGetTranscriptData} */
-					data: cast_as(json),
-				};
-				case "guide": return {
-					type: target[0],
-					/** @type {GuideJsonType} */
-					data: cast_as(json),
-				};
-				case "next": return {
-					type: target[0],
-					/** @type {YtApiNext} */
-					data: cast_as(json),
-				};
-				case "player": return {
-					type: target[0],
-					/** @type {WatchResponsePlayer} */
-					data: cast_as(json),
-				};
-			} break;
-			case 2: switch(target[0]) {
-				default: debugger; break;
-				case "like": switch(target[1]) {
-					default: debugger; break;
-					case "like": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {ResponseWithActions} */
-						data: cast_as(json),
-					};
-					case "removelike": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {ResponseWithActions} */
-						data: cast_as(json),
-					};
-				} break;
-				case "account": switch(target[1]) {
-					default: debugger; break;
-					case "account_menu": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {AccountMenuJson} */
-						data: cast_as(json),
-					};
-					case "accounts_list": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {AccountsListResponse} */
-						data: cast_as(json),
-					};
-					case "set_setting": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {AccountSetSetting} */
-						data: cast_as(json),
-					};
-				} break;
-				case "att": switch(target[1]) {
-					default: debugger; break;
-					case "get": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {AttGet} */
-						data: cast_as(json),
-					};
-				} break;
-				case "live_chat": switch(target[1]) {
-					default: debugger; break;
-				} break;
-				case "notification": switch(target[1]) {
-					default: debugger; break;
-					case "get_notification_menu": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {GetNotificationMenuJson} */
-						data: cast_as(json),
-					};
-					case "get_unseen_count": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {NotificationGetUnseenCount} */
-						data: cast_as(json),
-					};
-					case "record_interactions": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {YtSuccessResponse} */
-						data: cast_as(json),
-					};
-				} break;
-				case "reel": switch(target[1]) {
-					default: debugger; break;
-					case "reel_item_watch": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {ReelItemWatch} */
-						data: cast_as(json),
-					};
-					case "reel_watch_sequence": return {
-						type: `${target[0]}.${target[1]}`,
-						/** @type {ReelWatchSequence} */
-						data: cast_as(json),
-					};
-				} break;
-			} break;
+			case 1: res=this.convert_res_one(target,x); break;
+			case 2: res=this.convert_res_2(target,x); break;
 		}
-		console.log("[log_get_res_data]",target,json);
+		if(res) return res;
+		console.log("[log_get_res_data]",target,x);
 		debugger;
 		return {
 			_tag: "_Generic",
 			type: "_Generic",
-			data: json,
+			data: x,
 		};
 	}
 	/** @arg {string|URL|Request} request @arg {{}} data */
