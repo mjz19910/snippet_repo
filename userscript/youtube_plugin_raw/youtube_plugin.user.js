@@ -1539,14 +1539,14 @@ class FilterHandlers {
 						/** @type {AttGet} */
 						data: cast_as(json),
 					};
-					case "log": return {
+					case "log": debugger; return {
 						type: `${target[0]}.${target[1]}`,
 						data: cast_as(json),
 					};
 				} break;
 				case "live_chat": switch(target[1]) {
 					default: debugger; break;
-					case "get_live_chat_replay": return {
+					case "get_live_chat_replay": debugger; return {
 						type: `${target[0]}.${target[1]}`,
 						data: json,
 					};
@@ -1560,7 +1560,7 @@ class FilterHandlers {
 					};
 					case "get_unseen_count": return {
 						type: `${target[0]}.${target[1]}`,
-						/** @type {notification_get_unseen_count_t["data"]} */
+						/** @type {NotificationGetUnseenCount} */
 						data: cast_as(json),
 					};
 					case "record_interactions": return {
@@ -4367,21 +4367,56 @@ class HandleTypes extends BaseService {
 		this.save_keys("api_next",x,true);
 		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
 	}
-	/** @private @arg {NotificationGetUnseenCountData} x */
+	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountData(x) {
 		const {responseContext,...y}=x;
 		this.save_keys("GetUnseenCount",x,true);
-		this.ResponseContext(x.responseContext);
-		if("actions" in y) {
-			const {actions: a,...c}=y;
-			this.z(a,a => this.ActionType(a));
-			this.empty_object(c);
+		if("actions" in x) {
+			this.ResponseWithActions(x);
 		} else if("unseenCount" in y) {
 			this.notification_unseenCount(y);
 		}
 	}
-	/** @arg {ActionType} x */
-	ActionType(x) {
+	/** @arg {ResponseWithActions} x */
+	ResponseWithActions(x) {
+		const {responseContext: a,actions: b,...c}=x;
+		this.ResponseContext(a);
+		this.z(b,a => this.ResponseActions(a));
+		this.empty_object(c);
+	}
+	/** @arg {ResponseActions} x */
+	ResponseActions(x) {
+		if("updateNotificationsUnseenCountAction" in x) {
+			this.UpdateNotificationsUnseenCountAction(x);
+		} else if("openPopupAction" in x) {
+			this.OpenPopupAction(x);
+		} else if("removeFromGuideSectionAction" in x) {
+			this.w(x,a=>this.RemoveFromGuideSectionActionData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {RemoveFromGuideSectionActionData} x */
+	RemoveFromGuideSectionActionData(x) {
+		const {handlerData: a,guideEntryId: b,...y}=x;
+		switch(a) {
+			case "GUIDE_ACTION_REMOVE_FROM_PLAYLISTS": break;
+			default: debugger; break;
+		}
+		this.parse_guide_entry_id(b);
+		this.empty_object(y);
+	}
+	/** @arg {`RD${string}`} x */
+	parse_guide_entry_id(x) {
+		if(this.str_starts_with(x,"RD")) {
+			console.log("[radio_entry_id]",x);
+		} else {
+			console.log(x);
+			debugger;
+		}
+	}
+	/** @arg {UpdateNotificationsUnseenCountAction} x */
+	UpdateNotificationsUnseenCountAction(x) {
 		const {clickTrackingParams: a,updateNotificationsUnseenCountAction: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.UpdateNotificationsUnseenCount(b);

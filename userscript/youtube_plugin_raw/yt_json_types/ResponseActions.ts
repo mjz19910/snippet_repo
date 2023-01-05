@@ -1,1 +1,1 @@
-type ResponseActions=OpenPopupAction|RemoveFromGuideSectionAction;
+type ResponseActions=OpenPopupAction|UpdateNotificationsUnseenCountAction|RemoveFromGuideSectionAction;
