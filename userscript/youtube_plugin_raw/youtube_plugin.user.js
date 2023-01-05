@@ -2538,13 +2538,8 @@ async function main() {
 	const g_feedback_service=new GFeedbackService(resolver_value);
 	const guided_help_service=new GuidedHelpService(resolver_value);
 	const service_tracking=new TrackingServices(resolver_value);
-	const yt_inject_api=new YtInjectApi;
-	{
-		inject_api.modules??=new Map;
-		inject_api.modules.set("yt",yt_inject_api);
-	}
-	const yt_handlers=new
-		HiddenData(new FilterHandlers(resolver_value));
+	const yt_plugin=new YtPlugin;
+	const yt_handlers=new HiddenData(new FilterHandlers(resolver_value));
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 
@@ -2568,13 +2563,13 @@ async function main() {
 		exports.Services=Services;
 	}
 	resolver_value.value=service_resolver;
-	yt_inject_api.set_yt_handlers(yt_handlers);
-	yt_inject_api.save_new_map("box_map",box_map);
+	yt_plugin.init();
+	yt_plugin.set_yt_handlers(yt_handlers);
 	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
-	window.yt_inject_api=yt_inject_api;
+	window.yt_plugin=yt_plugin;
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	/** @type {typeof fetch|null} */
 	let original_fetch=null;
@@ -3682,7 +3677,7 @@ function decode_entity_key(...gs) {
 		entityId: b
 	};
 }
-class YtInjectApi {
+class YtPlugin {
 	/** @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
 	constructor() {
@@ -3704,7 +3699,12 @@ class YtInjectApi {
 		this.audio_gain_controller=audio_gain_controller;
 		this.has_keys=has_keys;
 		this.decode_entity_key=decode_entity_key;
+	}
+	init() {
 		this.add_function(non_null);
+		this.save_new_map("box_map",box_map);
+		inject_api.modules??=new Map;
+		inject_api.modules.set("yt",this);
 	}
 	/** @arg {string} key @arg {Map<string, {}>} map */
 	save_new_map(key,map) {
@@ -3734,6 +3734,119 @@ class YtInjectApi {
 	}
 }
 //#endregion
+class IndexedDbAccessor {
+	/** @type {IDBOpenDBRequest|null} */
+	db_open_request=null;
+	/** @arg {string} db_name */
+	constructor(db_name,version=1) {
+		this.db_args={
+			name: db_name,
+			version,
+		};
+	}
+	/** @type {{}[]} */
+	arr=[];
+	/** @arg {{}} obj */
+	put(obj) {
+		if(this.db_open_request) {
+			if(this.db_open_request.readyState==="done") {
+				if(this.current_rw_transaction) {
+
+				}
+				return;
+			};
+		}
+		if(!this.db_open_request) this.db_open_request=this.open();
+		this.arr.push(obj);
+		if(this.current_database) {
+			if(this.current_rw_transaction) {
+				return this.consume_data();
+			}
+			return this.start_transaction();
+		} else {
+			console.log("database_open_request readyState",this.db_open_request.readyState);
+		}
+	}
+	open() {
+		const {name,version}=this.db_args;
+		const request=indexedDB.open(name,version);
+		request.onsuccess=event => this.onSuccess(event);
+		request.onerror=event => this.onError(event);
+		request.onupgradeneeded=event => this.onUpgradeNeeded(event);
+		return request;
+	}
+	/** @type {IDBDatabase|null} */
+	current_database=null;
+	/** @type {IDBTransaction|null} */
+	current_rw_transaction=null;
+	close_db_on_transaction_complete=false;
+	onDbClose() {
+		if(!this.current_database) throw new Error("no database to close");
+		if(this.current_rw_transaction) {
+			this.close_db_on_transaction_complete=true;
+			return;
+		}
+		if(this.close_db_on_transaction_complete) {
+			this.current_database.close();
+			this.current_database=null;
+		}
+	}
+	/** @arg {Event} event */
+	onSuccess(event) {
+		if(!this.db_open_request) throw new Error("no db request");
+		console.log('db open success',event);
+		let db=this.db_open_request.result;
+		this.current_database=db;
+		db.onversionchange = () => {
+			this.close_db_on_transaction_complete=true;
+			this.onDbClose();
+		}
+		this.start_transaction();
+	}
+	start_transaction() {
+		if(!this.current_database) throw new Error("no database open");
+		const db=this.current_database;
+		const transaction=db.transaction("video_id","readwrite");
+		transaction.onerror=(event) => {
+			console.log("transaction error",event);
+		};
+		transaction.oncomplete=() => {
+			this.current_rw_transaction=null;
+			this.onDbClose();
+		};
+		this.current_rw_transaction=transaction;
+		if(this.arr.length>0) this.consume_data();
+	}
+	consume_data() {
+		if(!this.current_rw_transaction) throw new Error("no db transaction");
+		let transaction=this.current_rw_transaction;
+		const store=transaction.objectStore("video_id");
+		for(let data of this.arr) {
+			const request=store.put(data);
+			request.onerror=(event) => {
+				console.log("request error",event);
+			};
+			request.onsuccess=(event) => {
+				console.log("request success",event);
+			};
+		}
+		this.arr.length=0;
+	}
+	/** @arg {IDBVersionChangeEvent} event */
+	onUpgradeNeeded(event) {
+		if(!this.db_open_request) throw new Error("no db request");
+		console.log("old version",event.oldVersion);
+		const db=this.db_open_request.result;
+		db.createObjectStore("video_id",{
+			autoIncrement: true
+		});
+	}
+	/** @arg {Event} event */
+	onError(event) {
+		console.log('idb error',event);
+	}
+}
+const indexed_db=new IndexedDbAccessor("yt_plugin");
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @private @arg {WatchResponsePlayer} x */
@@ -4422,6 +4535,7 @@ class HandleTypes extends BaseService {
 			console.log("[player_params_found]",sp.pp);
 		}
 		x: if("v" in sp) {
+			indexed_db.put({v: sp.v});
 			if(this.last_video_watch_url===sp.v) break x;
 			this.last_video_watch_url=sp.v;
 			console.log('watch page v=%s',sp.v);
@@ -5032,7 +5146,7 @@ class HandleTypes extends BaseService {
 		} else {
 			this.empty_object(x);
 		}
- 	}
+	}
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
 		const {content: a,rowIndex: b,colIndex: c,...y}=x;

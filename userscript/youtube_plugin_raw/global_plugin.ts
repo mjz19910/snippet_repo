@@ -1,2 +1,2 @@
 export {};
-declare global {interface Window {yt_inject_api?: InjectApi;}}
+declare global {interface Window {yt_plugin?: InjectApi;}}
