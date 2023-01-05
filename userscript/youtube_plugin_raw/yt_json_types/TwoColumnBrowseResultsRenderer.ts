@@ -1,3 +1,3 @@
 type TwoColumnBrowseResultsRenderer={
-	twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsRendererData;
+	twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsData;
 };

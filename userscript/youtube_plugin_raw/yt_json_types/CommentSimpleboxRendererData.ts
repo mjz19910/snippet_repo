@@ -1,4 +1,4 @@
-type CommentSimpleboxRendererData={
+type CommentSimpleboxData={
 	submitButton: ButtonRenderer;
 	cancelButton: ButtonRenderer;
 	authorThumbnail: Thumbnail;

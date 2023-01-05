@@ -1,4 +1,4 @@
-type HotkeyDialogRendererData={
+type HotkeyDialogData={
 	title: TextT;
 	sections: HotkeyDialogSectionRenderer[];
 	dismissButton: ButtonRenderer;

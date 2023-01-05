@@ -1,4 +1,4 @@
-type SettingsCheckboxRendererData={
+type SettingsCheckboxData={
 	title: TextT;
 	helpText?: TextT;
 	enabled: boolean;

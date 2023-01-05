@@ -1,4 +1,4 @@
-type GridVideoRendererData={
+type GridVideoData={
 	badges: {}[];
 	channelThumbnail: ThumbnailsListData;
 	menu: MenuRenderer;

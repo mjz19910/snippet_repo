@@ -1,3 +1,3 @@
 type MenuNavigationItemRenderer={
-	menuNavigationItemRenderer: MenuNavigationItemRendererData;
+	menuNavigationItemRenderer: MenuNavigationItemData;
 };

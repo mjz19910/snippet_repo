@@ -1,3 +1,3 @@
 type GridVideoRenderer={
-	gridVideoRenderer: GridVideoRendererData;
+	gridVideoRenderer: GridVideoData;
 };

@@ -1,3 +1,3 @@
 type SettingsSidebarRenderer={
-	settingsSidebarRenderer: SettingsSidebarRendererData;
+	settingsSidebarRenderer: SettingsSidebarData;
 };

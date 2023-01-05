@@ -1,4 +1,4 @@
-type ChannelOptionsRendererData={
+type ChannelOptionsData={
 	avatar: ThumbnailsListData;
 	avatarEndpoint: YtEndpoint;
 	name: string;

@@ -1,4 +1,4 @@
-type GuideSectionRendererData={
+type GuideSectionData={
 	items: {}[];
 	trackingParams: {};
 	formattedTitle?: {};

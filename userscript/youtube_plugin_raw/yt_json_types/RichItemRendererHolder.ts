@@ -1,3 +1,3 @@
 type RichItemRendererH={
-	richItemRenderer: RichItemRendererData;
+	richItemRenderer: RichItemData;
 };

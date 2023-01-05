@@ -1,4 +1,4 @@
-type ConfirmDialogRendererData={
+type ConfirmDialogData={
 	title: TextT;
 	trackingParams: string;
 	dialogMessages: TextT[];

@@ -1,3 +1,3 @@
 type NotificationTopbarButtonRenderer={
-	notificationTopbarButtonRenderer: NotificationTopbarButtonRendererData;
+	notificationTopbarButtonRenderer: NotificationTopbarButtonData;
 };

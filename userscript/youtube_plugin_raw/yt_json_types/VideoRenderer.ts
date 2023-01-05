@@ -1,3 +1,3 @@
 type VideoRenderer={
-	videoRenderer: VideoRendererData;
+	videoRenderer: VideoData;
 };

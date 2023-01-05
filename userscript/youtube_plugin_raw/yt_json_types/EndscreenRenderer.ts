@@ -1,3 +1,3 @@
 type EndscreenRenderer={
-	endscreenRenderer: EndscreenRendererData;
+	endscreenRenderer: EndscreenData;
 };

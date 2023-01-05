@@ -1,3 +1,3 @@
 type ConfirmDialogRenderer={
-	confirmDialogRenderer: ConfirmDialogRendererData;
+	confirmDialogRenderer: ConfirmDialogData;
 };

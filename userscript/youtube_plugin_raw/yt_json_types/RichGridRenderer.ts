@@ -1,3 +1,3 @@
 type RichGridRenderer={
-	richGridRenderer: RichGridRendererData;
+	richGridRenderer: RichGridData;
 };

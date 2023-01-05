@@ -1,3 +1,1 @@
-type AccountItemSectionRendererData={
-	contents: (AccountItem|CompactLinkRenderer)[];
-};
+type AccountItemSectionData={contents: AccountItemSectionContent[];};

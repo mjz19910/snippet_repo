@@ -1,4 +1,4 @@
-type RatingSurveyRendererData={
+type RatingSurveyData={
 	ratings: RatingSurveyOptionRenderer[];
 	trackingParams: string;
 	notSureButton: ButtonRenderer;

@@ -1,3 +1,3 @@
 type ContinuationItemRenderer={
-	continuationItemRenderer: ContinuationItemRendererData;
+	continuationItemRenderer: ContinuationItemData;
 };

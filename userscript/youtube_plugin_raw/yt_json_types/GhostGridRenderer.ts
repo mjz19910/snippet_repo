@@ -1,3 +1,3 @@
 type GhostGridRenderer={
-	ghostGridRenderer: GhostGridRendererData;
+	ghostGridRenderer: GhostGridData;
 };

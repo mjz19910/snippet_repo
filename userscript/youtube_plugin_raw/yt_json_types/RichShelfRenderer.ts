@@ -1,3 +1,3 @@
 type RichShelfRenderer={
-	richShelfRenderer: RichShelfRendererData;
+	richShelfRenderer: RichShelfData;
 };

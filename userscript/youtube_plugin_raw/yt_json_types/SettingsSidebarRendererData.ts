@@ -1,4 +1,4 @@
-type SettingsSidebarRendererData={
+type SettingsSidebarData={
 	title: TextT;
 	items: CompactLinkRenderer[];
 };

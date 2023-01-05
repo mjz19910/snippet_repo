@@ -1,4 +1,4 @@
-type NotificationTopbarButtonRendererData={
+type NotificationTopbarButtonData={
 	icon: Icon<"NOTIFICATIONS">;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	menuRequest: YtEndpoint;

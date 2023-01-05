@@ -1,4 +1,4 @@
-type NotificationActionRendererData={
+type NotificationActionData={
 	responseText: TextT;
 	trackingParams: string;
 };

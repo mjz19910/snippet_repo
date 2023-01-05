@@ -1,4 +1,4 @@
-type DesktopTopbarRendererData={
+type DesktopTopbarData={
 	logo: TopbarLogoRenderer;
 	searchbox: FusionSearchboxRenderer;
 	trackingParams: string;

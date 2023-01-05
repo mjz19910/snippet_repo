@@ -1,3 +1,3 @@
 type RatingSurveyOptionRenderer={
-	ratingSurveyOptionRenderer: RatingSurveyOptionRendererData;
+	ratingSurveyOptionRenderer: RatingSurveyOptionData;
 };

@@ -1,4 +1,4 @@
-type InFeedAdLayoutRendererData={
+type InFeedAdLayoutData={
 	adLayoutMetadata: AdLayoutMetadata;
 	renderingContent: RenderingContent;
 };

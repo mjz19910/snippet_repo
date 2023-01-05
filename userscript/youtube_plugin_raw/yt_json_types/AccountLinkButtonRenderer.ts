@@ -1,3 +1,3 @@
 type AccountLinkButtonRenderer={
-	accountLinkButtonRenderer: AccountLinkButtonRendererData;
+	accountLinkButtonRenderer: AccountLinkButtonData;
 };

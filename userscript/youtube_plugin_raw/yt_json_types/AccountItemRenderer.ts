@@ -1,3 +1,3 @@
 type AccountItemRenderer={
-	accountItemRenderer: AccountItemRendererData;
+	accountItemRenderer: AccountItemData;
 };

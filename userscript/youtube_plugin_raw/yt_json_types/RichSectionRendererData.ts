@@ -1,1 +1,1 @@
-type RichSectionRendererData={content: RichSectionContent;};
+type RichSectionData={content: RichSectionContent;};

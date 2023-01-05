@@ -1,3 +1,3 @@
 type SimpleMenuHeaderRenderer={
-	simpleMenuHeaderRenderer: SimpleMenuHeaderRendererData;
+	simpleMenuHeaderRenderer: SimpleMenuHeaderData;
 };

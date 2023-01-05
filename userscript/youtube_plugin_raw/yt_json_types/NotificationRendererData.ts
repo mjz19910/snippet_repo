@@ -1,4 +1,4 @@
-type NotificationRendererData={
+type NotificationData={
 	thumbnail: {};
 	videoThumbnail: {};
 	shortMessage: {};

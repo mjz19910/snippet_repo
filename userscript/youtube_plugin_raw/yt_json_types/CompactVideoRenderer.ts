@@ -1,3 +1,3 @@
 type CompactVideoRenderer={
-	compactVideoRenderer: CompactVideoRendererData;
+	compactVideoRenderer: CompactVideoData;
 };

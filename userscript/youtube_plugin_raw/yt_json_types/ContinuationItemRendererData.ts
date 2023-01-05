@@ -1,4 +1,4 @@
-type ContinuationItemRendererData={
+type ContinuationItemData={
 	trigger: string;
 	continuationEndpoint: YtEndpoint;
 	button?: ButtonRenderer;

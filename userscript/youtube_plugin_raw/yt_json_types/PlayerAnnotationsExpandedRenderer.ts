@@ -1,3 +1,3 @@
 type PlayerAnnotationsExpandedRenderer={
-	playerAnnotationsExpandedRenderer: PlayerAnnotationsExpandedRendererData;
+	playerAnnotationsExpandedRenderer: PlayerAnnotationsExpandedData;
 };

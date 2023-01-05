@@ -1,3 +1,3 @@
 type ChannelOptionsRenderer={
-	channelOptionsRenderer: ChannelOptionsRendererData;
+	channelOptionsRenderer: ChannelOptionsData;
 };

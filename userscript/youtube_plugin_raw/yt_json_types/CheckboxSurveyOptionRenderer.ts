@@ -1,3 +1,3 @@
 type CheckboxSurveyOptionRenderer={
-	checkboxSurveyOptionRenderer: CheckboxSurveyOptionRendererData;
+	checkboxSurveyOptionRenderer: CheckboxSurveyOptionData;
 };

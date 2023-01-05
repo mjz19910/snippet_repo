@@ -1,3 +1,3 @@
 type GuideSectionRenderer={
-	guideSectionRenderer: GuideSectionRendererData;
+	guideSectionRenderer: GuideSectionData;
 };

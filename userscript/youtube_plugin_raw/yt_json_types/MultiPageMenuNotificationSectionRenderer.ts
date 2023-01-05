@@ -1,3 +1,3 @@
 type MultiPageMenuNotificationSectionRenderer={
-	multiPageMenuNotificationSectionRenderer: MultiPageMenuNotificationSectionRendererData;
+	multiPageMenuNotificationSectionRenderer: MultiPageMenuNotificationSectionData;
 };

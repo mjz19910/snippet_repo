@@ -1,4 +1,4 @@
-type GuideSubscriptionsSectionRendererData={
+type GuideSubscriptionsSectionData={
 	sort: "CHANNEL_ACTIVITY";
 	items: {}[];
 	trackingParams: string;

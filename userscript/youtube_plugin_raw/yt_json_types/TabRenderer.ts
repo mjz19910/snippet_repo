@@ -1,1 +1,1 @@
-type TabRenderer={tabRenderer: TabRendererData;};
+type TabRenderer={tabRenderer: TabData;};

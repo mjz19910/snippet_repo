@@ -1,3 +1,3 @@
 type CommentSimpleboxRenderer={
-	commentSimpleboxRenderer: CommentSimpleboxRendererData;
+	commentSimpleboxRenderer: CommentSimpleboxData;
 };

@@ -1,4 +1,4 @@
-type CopyLinkRendererData={
+type CopyLinkData={
 	copyButton: ButtonRenderer;
 	shortUrl: string;
 	trackingParams: string;

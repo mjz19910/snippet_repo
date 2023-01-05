@@ -1,3 +1,3 @@
-type GhostGridRendererData={
+type GhostGridData={
 	rows: number;
 };

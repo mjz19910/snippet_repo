@@ -1,4 +1,4 @@
-type SettingsSwitchRendererData={
+type SettingsSwitchData={
 	title: TextT;
 	subtitle: TextT;
 	enabled: boolean;

@@ -1,3 +1,3 @@
 type SettingsRadioOptionRenderer={
-	settingsRadioOptionRenderer: SettingsRadioOptionRendererData;
+	settingsRadioOptionRenderer: SettingsRadioOptionData;
 };

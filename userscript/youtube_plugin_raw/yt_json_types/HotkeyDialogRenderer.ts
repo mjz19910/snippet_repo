@@ -1,3 +1,3 @@
 type HotkeyDialogRenderer={
-	hotkeyDialogRenderer: HotkeyDialogRendererData;
+	hotkeyDialogRenderer: HotkeyDialogData;
 };

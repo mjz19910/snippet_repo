@@ -1,3 +1,3 @@
 type RatingSurveyRenderer={
-	ratingSurveyRenderer: RatingSurveyRendererData;
+	ratingSurveyRenderer: RatingSurveyData;
 };

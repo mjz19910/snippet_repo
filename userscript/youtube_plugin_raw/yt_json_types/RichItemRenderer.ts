@@ -1,1 +1,1 @@
-type RichItemRenderer={richItemRenderer: RichItemRendererData;};
+type RichItemRenderer={richItemRenderer: RichItemData;};

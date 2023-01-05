@@ -1,4 +1,4 @@
-type TabRendererData={
+type TabData={
 	content: SectionListRenderer|RichGridRenderer;
 	selected: true;
 	trackingParams: string;

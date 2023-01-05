@@ -1,3 +1,3 @@
 type AccountSectionListRenderer={
-	accountSectionListRenderer: AccountSectionListRendererData;
+	accountSectionListRenderer: AccountSectionListData;
 };

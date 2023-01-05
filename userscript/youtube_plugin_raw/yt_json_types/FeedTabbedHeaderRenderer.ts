@@ -1,3 +1,3 @@
 type FeedTabbedHeaderRenderer={
-	feedTabbedHeaderRenderer: FeedTabbedHeaderRendererData;
+	feedTabbedHeaderRenderer: FeedTabbedHeaderData;
 };

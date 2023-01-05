@@ -1,3 +1,3 @@
-type FeedTabbedHeaderRendererData={
+type FeedTabbedHeaderData={
 	title: TextT;
 };

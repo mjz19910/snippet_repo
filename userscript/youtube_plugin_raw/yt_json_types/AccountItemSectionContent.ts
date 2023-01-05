@@ -1,0 +1,1 @@
+type AccountItemSectionContent=AccountItem|CompactLinkRenderer;

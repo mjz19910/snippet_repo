@@ -1,1 +1,1 @@
-type VideoRendererData={};
+type VideoData={};

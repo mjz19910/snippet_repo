@@ -1,3 +1,3 @@
 type MultiPageMenuRenderer={
-	multiPageMenuRenderer: MultiPageMenuRendererData;
+	multiPageMenuRenderer: MultiPageMenuData;
 };

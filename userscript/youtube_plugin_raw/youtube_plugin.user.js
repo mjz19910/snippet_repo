@@ -803,7 +803,7 @@ class YtIterateTarget {
 		console.log("compactLinkRenderer",state.path,renderer);
 		state.t.run_mc=false;
 	}
-	/** @arg {ApiIterateState} state @arg {RichGridRendererData} renderer */
+	/** @arg {ApiIterateState} state @arg {RichGridData} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
@@ -999,7 +999,7 @@ class HandleRichGridRenderer {
 	/** @readonly */
 	entry="richGridRenderer";
 	rendererContentItemArray=new HandleRendererContentItemArray;
-	/** @arg {string} path @arg {RichGridRendererData} renderer */
+	/** @arg {string} path @arg {RichGridData} renderer */
 	richGridRenderer(path,renderer) {
 		check_item_keys(path,"richGridRenderer",get_keys_of(renderer));
 		if(this.debug) console.log("run handler richGridRenderer");
@@ -3763,7 +3763,7 @@ class HandleTypes extends BaseService {
 			this.ResponseContext(a);
 			this.z(b,a => {
 				if(get_keys_of_one(a)[0]!=="playerAnnotationsExpandedRenderer") debugger;
-				this.PlayerAnnotationsExpandedRendererData(a);
+				this.PlayerAnnotationsExpandedData(a);
 			});
 			this.PlayerAttestationRenderer(c);
 			this.z(d,a => this.empty_object(a));
@@ -3868,7 +3868,7 @@ class HandleTypes extends BaseService {
 		if(cont) this.BrowseContents(cont);
 		if(hd) {
 			if("feedTabbedHeaderRenderer" in hd) {
-				this.w(hd,a => this.FeedTabbedHeaderRendererData(a));
+				this.w(hd,a => this.FeedTabbedHeaderData(a));
 			} else if("c4TabbedHeaderRenderer" in hd) {
 				this.w(hd,a => this.C4TabbedHeaderData(a));
 			} else {
@@ -3877,7 +3877,7 @@ class HandleTypes extends BaseService {
 		}
 		if(tb) {
 			if("desktopTopbarRenderer" in tb) {
-				this.w(tb,a => this.DesktopTopbarRendererData(a));
+				this.w(tb,a => this.DesktopTopbarData(a));
 			} else {
 				debugger;
 			}
@@ -4611,12 +4611,12 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		const {twoColumnBrowseResultsRenderer,...y}=x;
-		this.TwoColumnBrowseResultsRendererData(twoColumnBrowseResultsRenderer);
+		this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
 		this.save_keys("TwoColumnBrowseResultsRenderer",x,true);
 		this.empty_object(y);
 	}
-	/** @arg {TwoColumnBrowseResultsRendererData} x */
-	TwoColumnBrowseResultsRendererData(x) {
+	/** @arg {TwoColumnBrowseResultsData} x */
+	TwoColumnBrowseResultsData(x) {
 		const {tabs: a,secondaryContents: b,...y}=x;
 		this.z(a,a => this.ResultRenderer(a));
 		if(b) this.SecondaryContents(b);
@@ -4650,7 +4650,7 @@ class HandleTypes extends BaseService {
 		}
 		return this.empty_object(y);
 	}
-	/** @arg {TabRendererData} x */
+	/** @arg {TabData} x */
 	TabRenderer(x) {
 		if("content" in x) {
 			const {content: a,selected: b,trackingParams: c,...y}=x;
@@ -4753,7 +4753,7 @@ class HandleTypes extends BaseService {
 		y;
 	}
 	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {this.w(x,a => this.DesktopTopbarRendererData(a));}
+	DesktopTopbarRenderer(x) {this.w(x,a => this.DesktopTopbarData(a));}
 	/** @arg {YtSettingsPageResponse} x */
 	YtSettingsPageResponse(x) {
 		const {page: {},endpoint: a,response: b,url: c,...y}=x;
@@ -4779,13 +4779,13 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(a);
 		this.TwoColumnBrowseResultsRenderer(b);
 		if(get_keys_of_one(c)[0]!=="desktopTopbarRenderer") debugger;
-		this.w(c,c => this.DesktopTopbarRendererData(c));
+		this.w(c,c => this.DesktopTopbarData(c));
 		this.renderer(d);
 		this.trackingParams(tp);
 		this.empty_object(y);
 	}
-	/** @arg {SettingsSidebarRendererData} x */
-	SettingsSidebarRendererData(x) {
+	/** @arg {SettingsSidebarData} x */
+	SettingsSidebarData(x) {
 		const {items: a,title: b,...y}=x;
 		this.z(a,a => this.CompactLinkRenderer(a));
 		this.text_t(b);
@@ -4814,14 +4814,14 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
 		const {compactLinkRenderer,...y}=x;
-		this.CompactLinkRendererData(x.compactLinkRenderer);
+		this.CompactLinkData(x.compactLinkRenderer);
 		this.empty_object(y);
 	}
 	/** @arg {GeneralRenderer} x */
 	renderer(x) {
 		if("settingsSidebarRenderer" in x) {
 			const {settingsSidebarRenderer: a,...y}=x;
-			this.SettingsSidebarRendererData(a);
+			this.SettingsSidebarData(a);
 			this.empty_object(y);
 		}
 	}
@@ -4934,10 +4934,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MultiPageMenuRenderer} x */
 	MultiPageMenuRenderer(x) {
-		this.MultiPageMenuRendererData(x.multiPageMenuRenderer);
+		this.MultiPageMenuData(x.multiPageMenuRenderer);
 	}
-	/** @arg {MultiPageMenuRendererData} x */
-	MultiPageMenuRendererData(x) {
+	/** @arg {MultiPageMenuData} x */
+	MultiPageMenuData(x) {
 		if(x.style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 		const {header: a,sections: b,footer: c,style: {},...y}=x;
 		this.SimpleMenuHeaderRenderer(a);
@@ -4947,10 +4947,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SimpleMenuHeaderRenderer} x */
 	SimpleMenuHeaderRenderer(x) {
-		this.SimpleMenuHeaderRendererData(x.simpleMenuHeaderRenderer);
+		this.SimpleMenuHeaderData(x.simpleMenuHeaderRenderer);
 	}
-	/** @arg {SimpleMenuHeaderRendererData} x */
-	SimpleMenuHeaderRendererData(x) {
+	/** @arg {SimpleMenuHeaderData} x */
+	SimpleMenuHeaderData(x) {
 		const {buttons: a,title: b,...y}=x;
 		this.z(a,a => this.ButtonRenderer(a));
 		this.text_t(b);
@@ -4958,25 +4958,25 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
-		this.AccountSectionListRendererData(x.accountSectionListRenderer);
+		this.AccountSectionListData(x.accountSectionListRenderer);
 	}
-	/** @arg {AccountSectionListRendererData} x */
-	AccountSectionListRendererData(x) {
+	/** @arg {AccountSectionListData} x */
+	AccountSectionListData(x) {
 		this.z(x.contents,v => this.AccountItemSectionRenderer(v));
 	}
 	/** @arg {AccountItemSectionRenderer} x */
 	AccountItemSectionRenderer(x) {
-		this.AccountItemSectionRendererData(x.accountItemSectionRenderer);
+		this.AccountItemSectionData(x.accountItemSectionRenderer);
 	}
-	/** @arg {AccountItemSectionRendererData} x */
-	AccountItemSectionRendererData(x) {
+	/** @arg {AccountItemSectionData} x */
+	AccountItemSectionData(x) {
 		this.z(x.contents,v => {
 			if("accountItem" in v) return this.AccountItem(v);
-			this.CompactLinkRendererData(v.compactLinkRenderer);
+			this.CompactLinkData(v.compactLinkRenderer);
 		});
 	}
-	/** @arg {CompactLinkRendererData} x */
-	CompactLinkRendererData(x) {
+	/** @arg {CompactLinkData} x */
+	CompactLinkData(x) {
 		let t=this;
 		/** @arg {YtEndpoint} a @arg {string} b @arg {TextT} c @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} y */
 		function g(a,b,c,y) {
@@ -5009,17 +5009,12 @@ class HandleTypes extends BaseService {
 	AccountItem(x) {
 		this.AccountItemData(x.accountItem);
 	}
-	/** @arg {AccountItemData} x */
-	AccountItemData(x) {
-		const {accountName,accountPhoto,isSelected,isDisabled,hasChannel,serviceEndpoint,accountByline,channelHandle,...y}=x;
-		this.empty_object(y);
-	}
 	/** @arg {MultiPageMenuSectionRenderer} x */
 	MultiPageMenuSectionRenderer(x) {
-		this.MultiPageMenuSectionRendererData(x.multiPageMenuSectionRenderer);
+		this.MultiPageMenuSectionData(x.multiPageMenuSectionRenderer);
 	}
-	/** @arg {MultiPageMenuSectionRendererData} x */
-	MultiPageMenuSectionRendererData(x) {
+	/** @arg {MultiPageMenuSectionData} x */
+	MultiPageMenuSectionData(x) {
 		const {items: a,...y}=x;
 		this.z(a,v => this.CompactLinkRenderer(v));
 		this.empty_object(y);
@@ -5046,13 +5041,13 @@ class HandleTypes extends BaseService {
 	SectionItem(x) {
 		if("richItemRenderer" in x) {
 			const {richItemRenderer,...y}=x;
-			this.RichItemRendererData(x.richItemRenderer);
+			this.RichItemData(x.richItemRenderer);
 			this.empty_object(y);
 			return;
 		}
 		if("richSectionRenderer" in x) {
 			const {richSectionRenderer: a,...y}=x;
-			this.RichSectionRendererData(a);
+			this.RichSectionData(a);
 			this.empty_object(y);
 			return;
 		}
@@ -5065,8 +5060,8 @@ class HandleTypes extends BaseService {
 			this.w(x,v => this.CommentsHeaderData(v));
 		}
 	}
-	/** @arg {RichItemRendererData} x */
-	RichItemRendererData(x) {
+	/** @arg {RichItemData} x */
+	RichItemData(x) {
 		const {content: a,rowIndex: b,colIndex: c,...y}=x;
 		this.RichItemContent(a);
 		if(b!==void 0) this.primitive_of(b,"number");
@@ -5077,36 +5072,36 @@ class HandleTypes extends BaseService {
 	RichItemContent(x) {
 		if("adSlotRenderer" in x) {
 			const {adSlotRenderer: a,...y}=x;
-			this.AdSlotRendererData(a);
+			this.AdSlotData(a);
 			this.empty_object(y);
 			return;
 		}
 		if("radioRenderer" in x) {
 			const {radioRenderer: a,...y}=x;
-			this.RadioRendererData(a);
+			this.RadioData(a);
 			this.empty_object(y);
 			return;
 		}
 		if("videoRenderer" in x) {
 			const {videoRenderer: a,...y}=x;
-			this.VideoRendererData(a);
+			this.VideoData(a);
 			this.empty_object(y);
 			return;
 		}
 		this.empty_object(x);
 	}
-	/** @arg {RadioRendererData} x */
-	RadioRendererData(x) {
+	/** @arg {RadioData} x */
+	RadioData(x) {
 		const {...y}=x;
 		this.empty_object(y);
 	}
-	/** @arg {VideoRendererData} x */
-	VideoRendererData(x) {
+	/** @arg {VideoData} x */
+	VideoData(x) {
 		const {...y}=x;
 		this.empty_object(y);
 	}
-	/** @arg {RichSectionRendererData} x */
-	RichSectionRendererData(x) {
+	/** @arg {RichSectionData} x */
+	RichSectionData(x) {
 		const {content: a,...y}=x;
 		this.RichSectionContent(a);
 		this.empty_object(y);
@@ -5115,28 +5110,28 @@ class HandleTypes extends BaseService {
 	RichSectionContent(x) {
 		if("richShelfRenderer" in x) {
 			const {richShelfRenderer: a,...y}=x;
-			this.RichShelfRendererData(a);
+			this.RichShelfData(a);
 			this.empty_object(y);
 			return;
 		}
 		if("inlineSurveyRenderer" in x) {
 			const {inlineSurveyRenderer: a,...y}=x;
-			this.InlineSurveyRendererData(a);
+			this.InlineSurveyData(a);
 			this.empty_object(y);
 			return;
 		}
 		this.empty_object(x);
 	}
-	/** @arg {AdSlotRendererData} x */
-	AdSlotRendererData(x) {
+	/** @arg {AdSlotData} x */
+	AdSlotData(x) {
 		const {adSlotMetadata: a,fulfillmentContent: b,enablePacfLoggingWeb: c,...y}=x;
 		this.AdSlotMetadata(a);
 		this.FulfillmentContent(b);
 		this.primitive_of(c,"boolean");
 		this.empty_object(y);
 	}
-	/** @arg {RichShelfRendererData} x */
-	RichShelfRendererData(x) {
+	/** @arg {RichShelfData} x */
+	RichShelfData(x) {
 		const {icon: a,title: b,...y}=x;
 		this.Icon(a);
 		this.text_t(b);
@@ -5206,15 +5201,15 @@ class HandleTypes extends BaseService {
 	/** @arg {ChannelSwitcherContent} x */
 	ChannelSwitcherContent(x) {
 		if("accountItemRenderer" in x) {
-			this.w(x,a => this.AccountItemRendererData(a));
+			this.w(x,a => this.AccountItemData(a));
 		} else if("buttonRenderer" in x) {
 			this.w(x,a => this.ButtonData(a));
 		} else {
 			debugger;
 		}
 	}
-	/** @arg {AccountItemRendererData} x */
-	AccountItemRendererData(x) {
+	/** @arg {AccountItemData} x */
+	AccountItemData(x) {
 		const {
 			accountName: a,accountPhoto: b,isSelected: c,isDisabled: d,hasChannel: e,
 			serviceEndpoint: f,accountByline: g,channelHandle: h,
@@ -5310,7 +5305,7 @@ class HandleTypes extends BaseService {
 		}=x;
 		this.z([a,e,f],v => this.text_t(v));
 		if(get_keys_of_one(b)[0]!=="commentSimpleboxRenderer") debugger;
-		this.w(b,b => this.CommentSimpleboxRendererData(b));
+		this.w(b,b => this.CommentSimpleboxData(b));
 		if(get_keys_of_one(c)[0]!=="sortFilterSubMenuRenderer") debugger;
 		this.w(c,c => this.SortFilterSubMenuData(c));
 		this.trackingParams(d);
@@ -5338,8 +5333,8 @@ class HandleTypes extends BaseService {
 		this.save_keys("resolveUrlCommandMetadata",x,true);
 		this.empty_object(y);
 	}
-	/** @arg {CommentSimpleboxRendererData} x */
-	CommentSimpleboxRendererData(x) {
+	/** @arg {CommentSimpleboxData} x */
+	CommentSimpleboxData(x) {
 		const {
 			submitButton: a,cancelButton: b,authorThumbnail: c,
 			placeholderText: d,trackingParams: e,avatarSize: f,emojiButton: g,
@@ -5352,7 +5347,7 @@ class HandleTypes extends BaseService {
 		this.save_string("avatarSizeEnum",f);
 		this.EmojiPickerRenderer(h);
 		this.primitive_of(i,"string");
-		this.save_keys("CommentSimpleboxRendererData",x,true);
+		this.save_keys("CommentSimpleboxData",x,true);
 		this.empty_object(y);
 	}
 	/** @arg {ReelItemWatch} x */
@@ -5406,8 +5401,8 @@ class HandleTypes extends BaseService {
 	FulfillmentContent(x) {
 		this.save_keys("FulfillmentContent",x,this.TODO_true);
 	}
-	/** @arg {DesktopTopbarRendererData} x */
-	DesktopTopbarRendererData(x) {
+	/** @arg {DesktopTopbarData} x */
+	DesktopTopbarData(x) {
 		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
 	}
 	/** @arg {SignalNavigationEndpointData} x */
@@ -5422,9 +5417,9 @@ class HandleTypes extends BaseService {
 	GetAccountsListInnertubeEndpointData(x) {
 		this.save_keys("GetAccountsListInnertubeEndpointData",x,this.TODO_true);
 	}
-	/** @arg {PlayerAnnotationsExpandedRendererData} x */
-	PlayerAnnotationsExpandedRendererData(x) {
-		this.save_keys("PlayerAnnotationsExpandedRendererData",x,this.TODO_true);
+	/** @arg {PlayerAnnotationsExpandedData} x */
+	PlayerAnnotationsExpandedData(x) {
+		this.save_keys("PlayerAnnotationsExpandedData",x,this.TODO_true);
 	}
 	/** @arg {PlayabilityStatus} x */
 	PlayabilityStatus(x) {
@@ -5438,9 +5433,9 @@ class HandleTypes extends BaseService {
 	DesktopWatchAdsData(x) {
 		this.save_keys("DesktopWatchAdsData",x,this.TODO_true);
 	}
-	/** @arg {InlineSurveyRendererData} x */
-	InlineSurveyRendererData(x) {
-		this.save_keys("InlineSurveyRendererData",x,this.TODO_true);
+	/** @arg {InlineSurveyData} x */
+	InlineSurveyData(x) {
+		this.save_keys("InlineSurveyData",x,this.TODO_true);
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
@@ -5462,8 +5457,8 @@ class HandleTypes extends BaseService {
 	FeedFilterChipBarRenderer(x) {
 		this.save_keys("FeedFilterChipBarRenderer",x,this.TODO_true);
 	}
-	/** @arg {FeedTabbedHeaderRendererData} x */
-	FeedTabbedHeaderRendererData(x) {
+	/** @arg {FeedTabbedHeaderData} x */
+	FeedTabbedHeaderData(x) {
 		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
 	}
 	/** @arg {EntityBatchUpdateData} x */

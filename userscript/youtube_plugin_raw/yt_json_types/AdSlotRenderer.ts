@@ -1,1 +1,1 @@
-type AdSlotRenderer={adSlotRenderer: AdSlotRendererData;};
+type AdSlotRenderer={adSlotRenderer: AdSlotData;};

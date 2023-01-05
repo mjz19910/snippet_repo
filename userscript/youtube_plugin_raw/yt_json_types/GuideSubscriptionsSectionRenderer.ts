@@ -1,3 +1,3 @@
 type GuideSubscriptionsSectionRenderer={
-	guideSubscriptionsSectionRenderer: GuideSubscriptionsSectionRendererData;
+	guideSubscriptionsSectionRenderer: GuideSubscriptionsSectionData;
 };

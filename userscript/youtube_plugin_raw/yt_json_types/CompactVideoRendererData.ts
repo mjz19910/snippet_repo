@@ -1,4 +1,4 @@
-type CompactVideoRendererData={
+type CompactVideoData={
 	accessibility: Accessibility;
 	badges?: MetadataBadgeRenderers[];
 };

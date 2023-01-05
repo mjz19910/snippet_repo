@@ -1,3 +1,3 @@
 type FusionSearchboxRenderer={
-	fusionSearchboxRenderer: FusionSearchboxRendererData;
+	fusionSearchboxRenderer: FusionSearchboxData;
 };

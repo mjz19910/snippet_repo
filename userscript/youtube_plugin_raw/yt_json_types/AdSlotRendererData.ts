@@ -1,11 +1,11 @@
 type FulfilledLayout={
-	inFeedAdLayoutRenderer: InFeedAdLayoutRendererData;
+	inFeedAdLayoutRenderer: InFeedAdLayoutData;
 };
 
 type FulfillmentContent={
 	fulfilledLayout: FulfilledLayout;
 };
-type AdSlotRendererData={
+type AdSlotData={
 	adSlotMetadata: AdSlotMetadata;
 	fulfillmentContent: FulfillmentContent;
 	enablePacfLoggingWeb: boolean;

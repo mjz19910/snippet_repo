@@ -1,4 +1,4 @@
-type EndscreenElementRendererData={
+type EndscreenElementData={
 	style: "VIDEO"|"CHANNEL";
 	image: {},
 	left: number,

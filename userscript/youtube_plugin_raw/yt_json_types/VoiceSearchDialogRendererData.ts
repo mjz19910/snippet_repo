@@ -1,4 +1,4 @@
-type VoiceSearchDialogRendererData={
+type VoiceSearchDialogData={
 	trackingParams: string;
 	placeholderHeader: TextT;
 	promptHeader: TextT;

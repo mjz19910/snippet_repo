@@ -1,3 +1,3 @@
 type RadioButtonSurveyOptionRenderer={
-	radioButtonSurveyOptionRenderer: RadioButtonSurveyOptionRendererData;
+	radioButtonSurveyOptionRenderer: RadioButtonSurveyOptionData;
 };

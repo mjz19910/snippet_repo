@@ -1,6 +1,6 @@
-export type RendererData=
-	ChannelOptionsRendererData|
-	SettingsSwitchRendererData|
-	SettingsCheckboxRendererData|
-	SettingsRadioOptionRendererData|
-	CopyLinkRendererData;
+export type Data=
+	ChannelOptionsData|
+	SettingsSwitchData|
+	SettingsCheckboxData|
+	SettingsRadioOptionData|
+	CopyLinkData;

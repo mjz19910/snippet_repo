@@ -1,1 +1,1 @@
-type PlayerAnnotationsExpandedRendererData={};
+type PlayerAnnotationsExpandedData={};

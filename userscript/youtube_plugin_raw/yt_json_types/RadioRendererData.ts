@@ -1,1 +1,1 @@
-type RadioRendererData={};
+type RadioData={};

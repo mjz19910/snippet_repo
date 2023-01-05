@@ -1,4 +1,4 @@
-type SimpleMenuHeaderRendererData={
+type SimpleMenuHeaderData={
 	title: TextT;
 	buttons: ButtonRenderer[];
 };

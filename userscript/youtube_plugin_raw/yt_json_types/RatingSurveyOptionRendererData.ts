@@ -1,4 +1,4 @@
-type RatingSurveyOptionRendererData={
+type RatingSurveyOptionData={
 	responseText: TextT;
 	defaultStateIcon: Icon<"STAR_BORDER">;
 	onStateIcon: Icon<"STAR">;

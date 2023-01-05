@@ -1,4 +1,4 @@
-type FusionSearchboxRendererData={
+type FusionSearchboxData={
 	icon: Icon<"SEARCH">;
 	placeholderText: TextT;
 	config: SearchboxConfig;

@@ -1,3 +1,3 @@
 type CompactLinkRenderer={
-	compactLinkRenderer: CompactLinkRendererData;
+	compactLinkRenderer: CompactLinkData;
 };

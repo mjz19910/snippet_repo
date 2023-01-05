@@ -1,3 +1,3 @@
 type NotificationRenderer={
-	notificationRenderer: NotificationRendererData;
+	notificationRenderer: NotificationData;
 };

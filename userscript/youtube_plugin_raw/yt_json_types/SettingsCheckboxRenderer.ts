@@ -1,3 +1,3 @@
 type SettingsCheckboxRenderer={
-	settingsCheckboxRenderer: SettingsCheckboxRendererData;
+	settingsCheckboxRenderer: SettingsCheckboxData;
 };

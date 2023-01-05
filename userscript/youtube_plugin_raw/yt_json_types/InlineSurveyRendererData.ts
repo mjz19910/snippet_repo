@@ -1,4 +1,4 @@
-type InlineSurveyRendererData={
+type InlineSurveyData={
 	dismissalEndpoint: YtEndpoint;
 	title: TextT;
 	subtitle: TextT;

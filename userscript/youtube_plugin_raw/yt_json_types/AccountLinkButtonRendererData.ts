@@ -1,4 +1,4 @@
-type AccountLinkButtonRendererData={
+type AccountLinkButtonData={
 	providerKey: AccountLinkProviderKey;
 	unlinkedButton: ButtonRenderer;
 };

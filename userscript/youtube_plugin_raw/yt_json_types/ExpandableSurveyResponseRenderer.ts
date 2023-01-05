@@ -1,3 +1,3 @@
 type ExpandableSurveyResponseRenderer={
-	expandableSurveyResponseRenderer: ExpandableSurveyResponseRendererData;
+	expandableSurveyResponseRenderer: ExpandableSurveyResponseData;
 };

@@ -1,8 +1,8 @@
 type AccountItemData={
 	accountName: TextT;
 	accountPhoto: ThumbnailsListData;
-	isSelected: false;
-	isDisabled: false;
+	isSelected: boolean;
+	isDisabled: boolean;
 	hasChannel: boolean;
 	serviceEndpoint: YtEndpoint;
 	accountByline: TextT;

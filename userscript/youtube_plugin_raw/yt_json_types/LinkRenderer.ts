@@ -1,4 +1,4 @@
-type CompactLinkRendererData={
+type CompactLinkData={
 	title: TextT;
 	navigationEndpoint: YtEndpoint;
 	trackingParams: string;
