@@ -4093,21 +4093,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtBrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
-		/** @type {{}} */
-		let z;
-		let {page: a,endpoint: b,response: c,url: d,...y}=x;
-		if("previousCsn" in y) {
-			const {previousCsn: e,...m}=y;
-			base64_dec.decode_str(e.replaceAll(".","="));
-			y=m;
-		}
-		z=y;
+		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
 		this.yt_endpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
 		this.parse_url(d);
 		this.BrowseResponseContent(c);
-		this.empty_object(z);
+		if(e) this.previousCsn(e);
+		this.g(y);
 	}
 	/** @arg {NavigateEventDetail['response']} x */
 	DataResponsePageType(x) {
@@ -4707,10 +4700,12 @@ class HandleTypes extends BaseService {
 		}
 		if(x.startsWith("https://")) {
 			let rem_url=new URL(x);
-			if(rem_url.hostname==="accounts.google.com") {
+			let url_host=rem_url.hostname;
+			if(url_host==="accounts.google.com") {
 				return this.parse_account_google_com_url(x,rem_url);
 			}
-			if(rem_url.hostname.endsWith("ggpht.com")) return;
+			if(url_host.endsWith("ggpht.com")) return;
+			if(url_host==="i.ytimg.com") return;
 			console.log("[parse_url_external_1]",x);
 			return;
 		}
@@ -5146,13 +5141,19 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {
-		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,...y}=x;
+		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
 		this.WatchResponsePlayer(b);
 		this.yt_endpoint(c);
 		this.WatchNextResponse(d);
 		this.parse_url(e);
+		if(f) this.previousCsn(f);
 		this.g(y);
+	}
+	/** @arg {string} x */
+	previousCsn(x) {
+		let csn=base64_dec.decode_str(x.replaceAll(".","="));
+		console.log("[prev_csn]",csn);
 	}
 	/** @arg {WatchNextResponse} x */
 	WatchNextResponse(x) {
@@ -5335,7 +5336,7 @@ class HandleTypes extends BaseService {
 	TemplateUpdateData(x) {
 		const {identifier: a,serializedTemplateConfig: b,dependencies: c,...y}=x; this.g(y);
 		let id=a.split("|");
-		console.log(id);		
+		console.log(id);
 		this.decode_template_protobuf(b);
 		this.z(c,a => {
 			let id=a.split("|");
@@ -5353,16 +5354,14 @@ class HandleTypes extends BaseService {
 					let buffer=item[2];
 					reader.pos=buffer.byteOffset;
 					let res=reader.try_read_any(buffer.byteLength);
-					if(!res) {
-						out.push(item);
-						break;
-					}
+					if(!res) {out.push(item);break;}
 					let unpack=this.unpack_children_reader_result(reader,res);
+					if(!unpack) {out.push(item);break;}
 					out.push(["struct",item[1],unpack]);
 				} break;
 				case "info": break;
 				default: out.push(item); break;
-				case "error": out.push(item);
+				case "error": return null;
 			}
 		}
 		return out;
@@ -5400,23 +5399,49 @@ class HandleTypes extends BaseService {
 						}
 						struct_map.set(field,[value]);
 					}
-					console.log("[template_child_iter]",struct_map);
+					let at_1=struct_map.get(1);
+					if(!at_1) continue;
+					let at_2=struct_map.get(2);
+					if(!at_2) continue;
+					let at_1_f=at_1.map(e => this.decode_template_element(e));
+					let at_2_f=at_2.map(e => this.decode_template_element(e));
+					console.log("[template_child_iter_1]",...at_1_f);
+					console.log("[template_child_iter_2]",...at_2_f);
 				} break;
 				default: root_data.push(struct);
 			}
 		}
 		console.log("template_root_data",...root_data);
 	}
+	/** @arg {DecTypeNum[]} x */
+	decode_template_element(x) {
+		/** @type {TemplateElement} */
+		let res_obj={};
+		for(let member of x) {
+			switch(member[0]) {
+				case "data32": {
+					let [,f,v]=member;
+					res_obj[`f${f}`]=v;
+				} break;
+				case "struct": {
+					let [,f,v]=member;
+					res_obj[`s${f}`]=this.decode_template_element(v);
+				} break;
+				default: debugger;
+			}
+		}
+		return res_obj;
+	}
 	/** @arg {ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
 		const {resourceStatuses: a,serverBuildLabel: b,...y}=x; this.g(y);
-		this.z(a,a=>this.ElementResourceStatus(a));
+		this.z(a,a => this.ElementResourceStatus(a));
 		if(b!=="boq_youtube-watch-ui_20230102.12_p0") debugger;
 	}
 	/** @arg {ElementResourceStatus} x */
 	ElementResourceStatus(x) {
 		if(x.status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
-		console.log("ElementResourceStatus.identifier",x.identifier);
+		console.log("[ElementResourceStatus_identifier]",split_string_once(x.identifier,"|"));
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
@@ -6072,9 +6097,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
-		const {isVanityUrl: a,...y}=x;
-		this.primitive_of(a,"boolean");
+		const {isVanityUrl: a,parentTrackingParams: b,...y}=x;
+		if(a) this.primitive_of(a,"boolean");
 		this.save_keys("resolveUrlCommandMetadata",x,true);
+		if(b) this.trackingParams(b);
 		this.g(y);
 	}
 	/** @arg {CommentSimpleboxData} x */

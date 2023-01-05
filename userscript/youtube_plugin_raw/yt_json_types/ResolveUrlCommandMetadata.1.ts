@@ -1,3 +1,4 @@
 type ResolveUrlCommandMetadata={
-	isVanityUrl: boolean;
+	isVanityUrl?: boolean;
+	parentTrackingParams?: string; 
 };

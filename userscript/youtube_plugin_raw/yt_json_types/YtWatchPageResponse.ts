@@ -4,4 +4,5 @@ type YtWatchPageResponse={
 	response: WatchNextResponse;
 	playerResponse: WatchResponsePlayer;
 	url: YtUrlFormat;
+	previousCsn?: string;
 };
