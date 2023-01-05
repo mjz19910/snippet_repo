@@ -3565,10 +3565,11 @@ const decoder=new TextDecoder();
 function LUa(x) {
 	let res=decoder.decode(x);
 	switch(res) {
-		case "HEATSEEKER": return res;
+		case "HEATSEEKER":
+		case "DESCRIPTION_CHAPTERS": break;
+		default: debugger; throw new Error();
 	}
-	debugger;
-	throw new Error("New id");
+	return res;
 }
 /** @arg {EntityKeyReader} a @arg {number} b */
 function PUa(a,b) {
@@ -3735,7 +3736,11 @@ function decode_entity_key(...gs) {
 	}
 	if(!b) return null;
 	if(!is_keyof_RUa(a)) {
-		if(b!=="HEATSEEKER") return;
+		switch(b) {
+			case "DESCRIPTION_CHAPTERS": break;
+			case "HEATSEEKER": break;
+			default: debugger; return;
+		}
 		return {
 			entityTypeFieldNumber: a,
 			entityType: null,
