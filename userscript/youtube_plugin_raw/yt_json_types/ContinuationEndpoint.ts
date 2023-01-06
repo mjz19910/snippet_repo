@@ -1,5 +1,5 @@
 type ContinuationEndpoint={
-	commandMetadata: CommandMetadata;
-	continuationCommand: ContinuationCommand;
+	commandMetadata?: CommandMetadata;
 	clickTrackingParams: string;
+	continuationCommand: ContinuationCommand;
 };
