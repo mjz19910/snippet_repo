@@ -3280,6 +3280,7 @@ class CsiService extends BaseService {
 		"GetLibrary_rid","GetHistory_rid",
 		/*`Remove${string}_rid`*/"RemoveLike_rid",
 		"GetLiveChatReplay_rid",
+		"GetAccountDownloads_rid",
 	];
 	/** @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
