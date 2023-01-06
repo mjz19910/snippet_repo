@@ -7238,20 +7238,21 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {FormatItag[]} */
 	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315];
-	/** @arg {AdaptiveFormatItem} x */
+	/** @arg {Format140} x */
+	format_140_p1=(x)=>{
+		const {itag: a,url: b,mimeType: c,bitrate: d,...y}=x;
+		if(!this.format_itag_arr.includes(a)) {
+			debugger;
+		}
+		this.primitive_of(b,"string");
+		this.save_string("mime-type",c);
+		this.primitive_of(d,"number");
+		return y;
+	};
+	/** @arg {Format140} x */
 	v_format_140(x) {
-		/** @arg {AdaptiveFormatItem} x */
-		let p1=(x)=>{
-			const {itag: a,url: b,mimeType: c,bitrate: d,...y}=x;
-			if(!this.format_itag_arr.includes(a)) {
-				debugger;
-			}
-			this.primitive_of(b,"string");
-			this.save_string("mime-type",c);
-			this.primitive_of(d,"number");
-			return y;
-		};
-		let a=p1(x);
+		console.log("140 like",x.itag);
+		let a=this.format_140_p1(x);
 		/** @arg {typeof a} x */
 		let p2=x=>{
 			const {initRange,indexRange,lastModified,contentLength,...y}=x;
@@ -7288,20 +7289,43 @@ class HandleTypes extends BaseService {
 		const {loudnessDb,...y}=p4(c); this.g(y);
 		this.primitive_of(loudnessDb,"number");
 	}
+	/** @arg {Format137} x */
+	v_format_137(x) {
+		console.log("137 like",x.itag);
+		/** @arg {typeof x} x */
+		let p1=(x)=>{
+			const {itag: a,url: b,mimeType: c,bitrate: d,...y}=x;
+			if(!this.format_itag_arr.includes(a)) {
+				debugger;
+			}
+			this.primitive_of(b,"string");
+			this.save_string("mime-type",c);
+			this.primitive_of(d,"number");
+			return y;
+		};
+		let a=p1(x); a;
+		x;
+	}
+	/** @arg {AdaptiveFormatItem} x */
+	AdaptiveFormatItem(x) {
+		// 140
+		if("audioSampleRate" in x) {
+			return this.v_format_140(x);
+		} else if("height" in x) {
+			return this.v_format_137(x);
+		} else {
+			debugger;
+		}
+		// if(w) this.primitive_of(w,"number");
+		// if(h) this.primitive_of(h,"number");
+		// this.parse_format_fps(fps);
+		// if(ci) this.FormatColorInfo(ci);
+	}
 	/** @arg {AudioQuality} x */
 	parse_audio_quality(x) {
 		switch(x) {
 			case "AUDIO_QUALITY_MEDIUM": break;
 		}
-	}
-	/** @arg {AdaptiveFormatItem} x */
-	AdaptiveFormatItem(x) {
-		// 140
-		this.v_format_140(x);
-		// if(w) this.primitive_of(w,"number");
-		// if(h) this.primitive_of(h,"number");
-		// this.parse_format_fps(fps);
-		// if(ci) this.FormatColorInfo(ci);
 	}
 	/** @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {
