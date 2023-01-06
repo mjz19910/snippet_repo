@@ -6386,7 +6386,7 @@ class HandleTypes extends BaseService {
 		this.z([b,c],v => this.primitive_of(v,"number"));
 		this.g(y);
 	}
-	/** @arg {ButtonData} x */
+	/** @arg {import("./yt_json_types/ButtonData").ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("ButtonData",x,true);
 		const {
@@ -6986,7 +6986,7 @@ class HandleTypes extends BaseService {
 	CaptionsRenderer(x) {
 		this.save_keys("CaptionsRenderer",x,this.TODO_true);
 	}
-	/** @arg {ActionSetPlaylistVideoOrder} x */
+	/** @arg {import("./yt_json_types/ActionSetPlaylistVideoOrder").ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
 		this.save_keys("ActionSetPlaylistVideoOrder",x,this.TODO_true);
 	}

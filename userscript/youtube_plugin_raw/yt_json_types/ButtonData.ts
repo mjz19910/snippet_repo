@@ -1,4 +1,5 @@
 import {Accessibility} from "./Accessibility.js";
+import {TextT} from "./TextT.js";
 
 export type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
