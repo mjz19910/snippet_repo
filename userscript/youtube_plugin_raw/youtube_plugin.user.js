@@ -3946,6 +3946,7 @@ class IndexedDbAccessor {
 	}
 	/** @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
 	onDatabaseVersionChange(db,event) {
+		this.database_open=false;
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
@@ -3960,6 +3961,7 @@ class IndexedDbAccessor {
 	/** @arg {IDBDatabase} db @arg {Event} event */
 	onTransactionComplete(db,event) {
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
+		this.database_open=false;
 		db.close();
 	}
 	/** @arg {IDBTransaction} transaction */
@@ -4184,18 +4186,13 @@ class HandleTypes extends BaseService {
 	AdLayoutMetadataItem(x) {
 		const {layoutType: a,layoutId: b,adLayoutLoggingData: c,...y}=x; this.g(y);
 		if(a!=="LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE") debugger;
-		this.parse_layout_id(b);
+		this.primitive_of(b,"string");
 		this.AdLayoutLoggingData(c);
-	}
-	/** @arg {string} x */
-	parse_layout_id(x) {
-		console.log("[ad_layout_meta_layout_id]",x);
 	}
 	/** @arg {AdLayoutLoggingData} x */
 	AdLayoutLoggingData(x) {
 		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
-		let dec=decode_url_b64_proto_obj(a);
-		console.log("[ad_serving_data_entry]",dec);
+		this.primitive_of(a,"string");
 	}
 	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
