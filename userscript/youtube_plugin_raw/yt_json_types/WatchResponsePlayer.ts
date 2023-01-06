@@ -8,7 +8,7 @@ export interface PlayerResponse {
 	heartbeatParams?: HeartbeatParams;
 	playerAds?: DesktopWatchAdsRenderer[];
 	playbackTracking?: PlaybackTracking;
-	captions?: CaptionsRenderer;
+	captions?: PlayerCaptionsTracklistRenderer;
 	videoDetails?: VideoDetails;
 	playerConfig?: PlayerConfig;
 	storyboards?: PlayerStoryboardSpecRenderer|PlayerLiveStoryboardSpecRenderer;

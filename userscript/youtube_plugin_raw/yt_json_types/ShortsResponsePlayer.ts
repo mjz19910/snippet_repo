@@ -3,7 +3,7 @@ type ShortsResponsePlayer={
 	playabilityStatus: {};
 	streamingData: StreamingData;
 	playbackTracking: PlaybackTracking;
-	captions: CaptionsRenderer;
+	captions: PlayerCaptionsTracklistRenderer;
 	videoDetails: VideoDetails;
 	playerConfig: {};
 	storyboards: PlayerStoryboardSpecRenderer;

@@ -7277,9 +7277,17 @@ class HandleTypes extends BaseService {
 		this.primitive_of(averageBitrate,"number");
 		if(ci) this.FormatColorInfo(ci);
 		this.primitive_of(approxDurationMs,"string");
-		if(audioSampleRate&&audioSampleRate!=="44100") debugger; 
+		if(audioSampleRate) this.parse_audio_sample_rate(audioSampleRate);
 		if(audioChannels&&audioChannels!==2) debugger;
 		if(loudnessDb) this.primitive_of(loudnessDb,"number");
+	}
+	/** @arg {`${AudioSampleRate}`} x */
+	parse_audio_sample_rate(x) {
+		switch(x) {
+			case "44100": break;
+			case "48000": break;
+			default: debugger;
+		}
 	}
 	/** @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {
@@ -7375,9 +7383,30 @@ class HandleTypes extends BaseService {
 	EndscreenElementData(x) {
 		this.primitive_of(x.aspectRatio,"number");
 	}
-	/** @arg {CaptionsRenderer} x */
+	/** @arg {import("./yt_json_types/PlayerCaptionsTracklistRenderer").PlayerCaptionsTracklistRenderer} x */
 	CaptionsRenderer(x) {
-		this.g(x.playerCaptionsTracklistRenderer);
+		this.PlayerCaptionsTracklistData(x.playerCaptionsTracklistRenderer);
+	}
+	/** @arg {import("./yt_json_types/PlayerCaptionsTracklistData").PlayerCaptionsTracklistData} x */
+	PlayerCaptionsTracklistData(x) {
+		this.z(x.audioTracks,a => {
+			this.z(a.captionTrackIndices,a => {
+				this.primitive_of(a,"number");
+			});
+		});
+		this.z(x.captionTracks,a => {
+			this.primitive_of(a.baseUrl,"string");
+			if(a.vssId!=="a.en") debugger;
+			this.text_t(a.name);
+		});
+		x.defaultAudioTrackIndex;
+		this.z(x.translationLanguages,a => a);
+	}
+	/** @arg {import("./yt_json_types/TranslationLanguage").TranslationLanguage} x */
+	TranslationLanguage(x) {
+		const {languageCode,languageName: {simpleText},...y}=x; this.g(y);
+		this.primitive_of(languageCode,"string");
+		this.primitive_of(simpleText,"string");
 	}
 	/** @arg {import("./yt_json_types/ActionSetPlaylistVideoOrder").ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {

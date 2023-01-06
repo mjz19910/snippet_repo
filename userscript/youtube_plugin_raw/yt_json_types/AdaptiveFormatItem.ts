@@ -18,7 +18,7 @@ type AdaptiveFormatItem={
   highReplication?: true,
   audioQuality?: "AUDIO_QUALITY_MEDIUM";
 	approxDurationMs: `${number}`;
-  audioSampleRate?: `${44100}`;
+  audioSampleRate?: `${AudioSampleRate}`;
   audioChannels?: 2;
   loudnessDb?: number;
 };
