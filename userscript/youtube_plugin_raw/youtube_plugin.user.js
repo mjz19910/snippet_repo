@@ -6653,16 +6653,46 @@ class HandleTypes extends BaseService {
 		let [k]=y;
 		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
 		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
-		/** @template {keyof ItemSectionItemMap} T @arg {T} v @returns {ItemSectionItemMap[T]} */
-		let q=v => this.item_section_map[v];
-		k="connectedAppRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="pageIntroductionRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="searchPyvRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="videoRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
-		k="reelShelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="connectedAppRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.ConnectedAppData(a);
+		}
+		k="pageIntroductionRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.PageIntroductionData(a);
+		}
+		k="playlistVideoListRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.PlaylistVideoListData(a);
+		}
+		k="settingsOptionsRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.SettingsOptionsData(a);
+		}
+		k="shelfRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.ShelfData(a);
+		}
+		k="searchPyvRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.SearchPyvData(a);
+		}
+		k="videoRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.VideoData(a);
+		}
+		k="reelShelfRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.ReelShelfData(a);
+		}
 		let m=get_keys_of(c);
 		for(let k of m) {
 			if(k in this.item_section_map) continue;
@@ -6673,7 +6703,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./yt_json_types/ReelShelfData").ReelShelfData} x */
 	ReelShelfData(x) {
 		this.Icon(x.icon);
-		this.z(x.items,a=>this.ReelItemRenderer(a));
+		this.z(x.items,a => this.ReelItemRenderer(a));
 		this.text_t(x.title);
 		this.trackingParams(x.trackingParams);
 	}
@@ -6695,7 +6725,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./yt_json_types/MenuData").MenuData} x */
 	MenuData(x) {
 		this.Accessibility(x.accessibility);
-		this.z(x.items,a=>this.MenuServiceItem(a));
+		this.z(x.items,a => this.MenuServiceItem(a));
 	}
 	/** @arg {import("./yt_json_types/MenuServiceItem").MenuServiceItem} x */
 	MenuServiceItem(x) {
@@ -6707,7 +6737,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SearchPyvData} x */
 	SearchPyvData(x) {
-		this.z(x.ads,a=>this.AdSlotRenderer(a));
+		this.z(x.ads,a => this.AdSlotRenderer(a));
 		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {AdSlotRenderer} x */
