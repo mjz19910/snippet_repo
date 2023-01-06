@@ -3629,7 +3629,7 @@ function base64_to_array(x) {
 }
 const decoder=new TextDecoder();
 /** @type {lua_strs} */
-const lua_strs=["AUTO_CHAPTERS","HEATSEEKER","DESCRIPTION_CHAPTERS"];
+const lua_strs=["AUTO_CHAPTERS","HEATSEEKER","DESCRIPTION_CHAPTERS","topbar"];
 /** @arg {BufferSource} x */
 function LUa(x) {
 	let res=decoder.decode(x);
@@ -4766,6 +4766,7 @@ class HandleTypes extends BaseService {
 	};
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
+		if(!x) {debugger;return;}
 		this.save_keys("YtEndpoint",x,true);
 		const {
 			clickTrackingParams: a,
@@ -5211,19 +5212,21 @@ class HandleTypes extends BaseService {
 		this.GuideEntryRendererData(a);
 		this.g(y);
 	}
-	/** @arg {GuideEntryRendererData} x */
+	/** @arg {import("./yt_json_types/GuideEntryRendererData").GuideEntryRendererData} x */
 	GuideEntryRendererData(x) {
-		const {accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,...y}=x;
+		const {accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,isPrimary: g,...y}=x;
 		this.Accessibility(a);
-		this.yt_endpoint(b);
+		if(b) this.yt_endpoint(b);
 		this.Icon(c);
 		this.trackingParams(d);
 		this.text_t(e);
-		this.GuideEntryData(f);
+		if(f) this.GuideEntryData(f);
+		if(g) this.primitive_of(g,"boolean");
 		this.g(y);
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
+		if(!x) {debugger; return;}
 		const {guideEntryData: a,...y}=x; this.g(y);
 		this.GuideEntryDataContent(a);
 	}
@@ -6333,7 +6336,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const {label: a,...y}=x;
-		if(a) this.save_string(`label`,a);
+		if(a) this.primitive_of(a,"string");
 		this.g(y);
 	}
 	/** @arg {AccountsListResponse} x */
@@ -7138,7 +7141,8 @@ class HandleTypes extends BaseService {
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {itag,url,...y}=x; this.g(y);
-		console.log("[adaptive_format]",itag,url);
+		this.primitive_of(itag,"number");
+		this.primitive_of(url,"string");
 	}
 	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
@@ -7331,8 +7335,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
-		console.log(x.entityKey);
-		debugger;
+		let dec=decode_entity_key(x.entityKey);
+		dec;
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {

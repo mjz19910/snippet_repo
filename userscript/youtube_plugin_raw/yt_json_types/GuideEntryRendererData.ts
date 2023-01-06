@@ -1,8 +1,12 @@
-type GuideEntryRendererData={
-	navigationEndpoint: YtEndpoint;
+import {Accessibility} from "./Accessibility.js";
+import {TextT} from "./TextT.js";
+
+export type GuideEntryRendererData={
+	navigationEndpoint?: YtEndpoint;
 	icon: Icon<"MIX">;
 	trackingParams: string;
 	formattedTitle: TextT;
 	accessibility: Accessibility;
-	entryData: GuideEntryData;
+	entryData?: GuideEntryData;
+	isPrimary?: boolean;
 };
