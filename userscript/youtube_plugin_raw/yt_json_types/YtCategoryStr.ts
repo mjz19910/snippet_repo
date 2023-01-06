@@ -4,6 +4,7 @@ type YtCategoryStr=[
 	"Autos & Vehicles",
 	"People & Blogs",
 	"Howto & Style",
+	"Entertainment",
 	"Gaming",
 	"Comedy",
 	"Music",
