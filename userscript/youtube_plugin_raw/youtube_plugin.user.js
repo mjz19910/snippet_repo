@@ -7091,15 +7091,18 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnSearchResultsRenderer} x */
 	TwoColumnSearchResultsRenderer(x) {
-		this.TwoColumnSearchResults(x.twoColumnSearchResultsRenderer);
+		const {twoColumnSearchResultsRenderer: a,...y}=x; this.g(y);
+		this.TwoColumnSearchResults(a);
 	}
 	/** @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
-		this.SectionListRenderer(x.primaryContents);
+		const {primaryContents: a,...y}=x; this.g(y);
+		this.SectionListRenderer(a);
 	}
 	/** @arg {SectionListRenderer} x */
 	SectionListRenderer(x) {
-		this.SectionListData(x.sectionListRenderer);
+		const {sectionListRenderer: a,...y}=x; this.g(y);
+		this.SectionListData(a);
 	}
 	/** @arg {SearchEndpoint} x */
 	SearchEndpoint(x) {
