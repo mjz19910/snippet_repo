@@ -7070,10 +7070,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EngagementPanelSectionListData} x */
 	EngagementPanelSectionListData(x) {
-		const {content,targetId,visibility,...y}=x; this.g(y);
-		this.g(content);
-		if(targetId!=="engagement-panel-ads") debugger;
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; this.g(y);
+		this.AdsEngagementPanelContentRenderer(a);
+		if(b!=="engagement-panel-ads") debugger;
+		if(c!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.LoggingDirectives(d);
+	}
+	/** @arg {AdsEngagementPanelContentRenderer} x */
+	AdsEngagementPanelContentRenderer(x) {
+		x.adsEngagementPanelContentRenderer;
 	}
 	/** @arg {ModifyChannelPreference} x */
 	ModifyChannelPreference(x) {
