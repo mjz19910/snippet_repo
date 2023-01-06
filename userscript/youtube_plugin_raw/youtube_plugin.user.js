@@ -7078,7 +7078,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
-		x.adsEngagementPanelContentRenderer;
+		if("adsEngagementPanelContentRenderer" in x) {
+			this.AdsEngagementPanelContentData(x.adsEngagementPanelContentRenderer);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {AdsEngagementPanelContentData} x */
+	AdsEngagementPanelContentData(x) {
+		x;
 	}
 	/** @arg {ModifyChannelPreference} x */
 	ModifyChannelPreference(x) {

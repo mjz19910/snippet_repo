@@ -1,3 +1,3 @@
 type AdsEngagementPanelContentRenderer={
-	adsEngagementPanelContentRenderer: adsEngagementPanelContentData;
+	adsEngagementPanelContentRenderer: AdsEngagementPanelContentData;
 };

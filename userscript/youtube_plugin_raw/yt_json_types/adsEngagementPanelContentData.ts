@@ -1,3 +1,3 @@
-type adsEngagementPanelContentData={
+type AdsEngagementPanelContentData={
 	hack: true;
 };
