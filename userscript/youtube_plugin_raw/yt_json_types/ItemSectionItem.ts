@@ -1,6 +1,8 @@
-type ItemSectionItem=
-	PlaylistVideoListRenderer|
-	PageIntroductionRenderer|
-	SettingsOptionRenderer|
-	ConnectedAppRenderer|
-	ShelfRenderer;
+type ItemSectionItem=[
+	ConnectedAppRenderer,
+	PageIntroductionRenderer,
+	PlaylistVideoListRenderer,
+	SearchPyvRenderer,
+	SettingsOptionRenderer,
+	ShelfRenderer,
+][number];

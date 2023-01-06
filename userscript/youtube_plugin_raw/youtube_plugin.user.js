@@ -6637,6 +6637,7 @@ class HandleTypes extends BaseService {
 		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="searchPyvRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		let m=get_keys_of(c);
 		for(let k of m) {
 			if(this.item_section_map.has(k)) continue;
