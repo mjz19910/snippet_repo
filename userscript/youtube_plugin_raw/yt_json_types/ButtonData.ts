@@ -1,4 +1,6 @@
-type ButtonData={
+import {Accessibility} from "./Accessibility.js";
+
+export type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
 	accessibilityData?: Accessibility|AccessibilityData;
 	command?: YtEndpoint;

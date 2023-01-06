@@ -1,1 +1,1 @@
-type Accessibility={accessibilityData: AccessibilityData;};
+export type Accessibility={accessibilityData: AccessibilityData;};

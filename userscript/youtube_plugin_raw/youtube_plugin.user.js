@@ -5942,7 +5942,7 @@ class HandleTypes extends BaseService {
 		if(c) this.yt_endpoint(c);
 		this.g(y);
 	}
-	/** @private @arg {TextT} x */
+	/** @private @arg {import("./yt_json_types/TextT").TextT} x */
 	text_t(x) {
 		if(!x) {
 			debugger;
@@ -6124,36 +6124,6 @@ class HandleTypes extends BaseService {
 			this.CompactLinkData(v.compactLinkRenderer);
 		});
 	}
-	/** @arg {CompactLinkData} x */
-	CompactLinkData(x) {
-		let t=this;
-		/** @arg {YtEndpoint} a @arg {string} b @arg {TextT} c @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} y */
-		function g(a,b,c,y) {
-			t.yt_endpoint(a);
-			switch(b) {
-				case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
-				case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
-				default: debugger;
-			}
-			t.text_t(c);
-			t.empty_object(y);
-		}
-		if("trackingParams" in x) {
-			const {navigationEndpoint: a,style: b,title: c,trackingParams: d,...y}=x;
-			g(a,b,c,y);
-			this.trackingParams(d);
-			return;
-		}
-		if("style" in x) {
-			const {icon: a,title: b,navigationEndpoint: c,style: d,...y}=x;
-			g(c,d,b,y);
-			return;
-		}
-		const {title: a,navigationEndpoint: b,...y}=x;
-		this.text_t(a);
-		this.yt_endpoint(b);
-		this.g(y);
-	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
 		this.AccountItemData(x.accountItem);
@@ -6325,7 +6295,7 @@ class HandleTypes extends BaseService {
 		this.save_number("AdSlot.slotPhysicalPosition",c);
 		this.g(y);
 	}
-	/** @arg {Accessibility} x */
+	/** @arg {import("./yt_json_types/Accessibility").Accessibility} x */
 	Accessibility(x) {
 		if(!x) {
 			debugger;
@@ -6850,6 +6820,56 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"string");
 		this.g(y);
 	}
+	/** @arg {SearchPageResponse} x */
+	SearchPageResponse(x) {
+		const {page: a,endpoint: b,response: c,url: d,...y}=x; this.g(y);
+		if(a!=="search") debugger;
+		this.SearchEndpoint(b);
+		this.SearchResponse(c);
+		this.parse_url(d);
+	}
+	/** @arg {SearchResponse} x */
+	SearchResponse(x) {
+		const {responseContext: a,estimatedResults: b,contents: c,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y);
+		this.ResponseContext(a);
+		this.primitive_of(b,"string");
+		this.TwoColumnSearchResultsRenderer(c);
+		if(targetId!=="search-page") debugger;
+	}
+	/** @arg {TwoColumnSearchResultsRenderer} x */
+	TwoColumnSearchResultsRenderer(x) {
+		const {twoColumnSearchResultsRenderer: a,...y}=x; this.g(y);
+		this.TwoColumnSearchResults(a);
+	}
+	/** @arg {TwoColumnSearchResults} x */
+	TwoColumnSearchResults(x) {
+		const {primaryContents: a,...y}=x; this.g(y);
+		this.SectionListRenderer(a);
+	}
+	/** @arg {SectionListRenderer} x */
+	SectionListRenderer(x) {
+		const {sectionListRenderer: a,...y}=x; this.g(y);
+		this.SectionListData(a);
+	}
+	/** @arg {SearchEndpoint} x */
+	SearchEndpoint(x) {
+		let a=this.handle_clickTrackingParams(x);
+		const {commandMetadata: b,searchEndpoint: c,...y}=a; this.g(y);
+		this.SearchCommandMetadata(b);
+		this.SearchEndpointData(c);
+	}
+	/** @arg {SearchCommandMetadata} x */
+	SearchCommandMetadata(x) {
+		const {webCommandMetadata: a,...y}=x; this.g(y);
+		this.SearchWebCommandMetadata(a);
+	}
+	/** @arg {SearchWebCommandMetadata} x */
+	SearchWebCommandMetadata(x) {
+		const {url: a,webPageType: b,rootVe: c,...y}=x; this.g(y);
+		this.parse_url(a);
+		if(b!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		this.save_root_visual_element(c);
+	}
 	/** @private */
 	get TODO_true() {
 		return true;
@@ -7079,55 +7099,9 @@ class HandleTypes extends BaseService {
 	ReelResponse(x) {
 		this.save_keys("ReelResponse",x,this.TODO_true);
 	}
-	/** @arg {SearchPageResponse} x */
-	SearchPageResponse(x) {
-		const {page: a,endpoint: b,response: c,url: d,...y}=x; this.g(y);
-		if(a!=="search") debugger;
-		this.SearchEndpoint(b);
-		this.SearchResponse(c);
-		this.parse_url(d);
-	}
-	/** @arg {SearchResponse} x */
-	SearchResponse(x) {
-		const {responseContext: a,estimatedResults: b,contents: c,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y);
-		this.ResponseContext(a);
-		this.primitive_of(b,"string");
-		this.TwoColumnSearchResultsRenderer(c);
-		if(targetId!=="search-page") debugger;
-	}
-	/** @arg {TwoColumnSearchResultsRenderer} x */
-	TwoColumnSearchResultsRenderer(x) {
-		const {twoColumnSearchResultsRenderer: a,...y}=x; this.g(y);
-		this.TwoColumnSearchResults(a);
-	}
-	/** @arg {TwoColumnSearchResults} x */
-	TwoColumnSearchResults(x) {
-		const {primaryContents: a,...y}=x; this.g(y);
-		this.SectionListRenderer(a);
-	}
-	/** @arg {SectionListRenderer} x */
-	SectionListRenderer(x) {
-		const {sectionListRenderer: a,...y}=x; this.g(y);
-		this.SectionListData(a);
-	}
-	/** @arg {SearchEndpoint} x */
-	SearchEndpoint(x) {
-		let a=this.handle_clickTrackingParams(x);
-		const {commandMetadata: b,searchEndpoint: c,...y}=a; this.g(y);
-		this.SearchCommandMetadata(b);
-		this.SearchEndpointData(c);
-	}
-	/** @arg {SearchCommandMetadata} x */
-	SearchCommandMetadata(x) {
-		const {webCommandMetadata: a,...y}=x; this.g(y);
-		this.SearchWebCommandMetadata(a);
-	}
-	/** @arg {SearchWebCommandMetadata} x */
-	SearchWebCommandMetadata(x) {
-		const {url: a,webPageType: b,rootVe: c,...y}=x; this.g(y);
-		this.parse_url(a);
-		if(b!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		this.save_root_visual_element(c);
+	/** @arg {CompactLinkData} x */
+	CompactLinkData(x) {
+		x;	
 	}
 }
 //#endregion

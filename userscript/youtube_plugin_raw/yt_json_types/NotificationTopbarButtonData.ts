@@ -1,9 +1,11 @@
-type NotificationTopbarButtonData={
+import {Accessibility} from "./Accessibility.js";
+
+export type NotificationTopbarButtonData={
 	icon: Icon<"NOTIFICATIONS">;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	menuRequest: YtEndpoint;
-	trackingParams:string;
-	accessibility:Accessibility;
+	trackingParams: string;
+	accessibility: Accessibility;
 	tooltip: string;
 	updateUnseenCountEndpoint: YtEndpoint;
 	notificationCount: number;
