@@ -3896,7 +3896,7 @@ class IndexedDbAccessor {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @type {{}[]} */
+	/** @type {{v: string}[]} */
 	arr=[];
 	/** @arg {{v: string}} obj */
 	put(obj) {
@@ -3970,15 +3970,34 @@ class IndexedDbAccessor {
 	/** @arg {IDBObjectStore} store */
 	consume_data_with_store(store) {
 		for(let data of this.arr) {
-			if(this.log_all_events) console.log("IDBObjectStore.put()",data);
-			const request=store.put(data);
-			request.onerror=event => console.log("IDBRequest: error",event);
-			request.onsuccess=event => {
-				if(this.log_all_events) console.log("IDBRequest: success",event);
-				if(this.arr.length>0) {
-					this.consume_data_with_store(store);
+			const cursor_req=store.openCursor();
+			/** @type {{v: string}|null} */
+			let cursor_data=null;
+			cursor_req.onsuccess=event => {
+				console.log("IDBRequest.IDBCursor: success",event);
+				const cursor=cursor_req.result;
+				if(cursor) {
+					let prev_data=cursor_data;
+					cursor_data=cursor.value;
+					if(!cursor_data) throw new Error("null in database");
+					if(cursor_data.v===data.v) {
+						console.log("idb update needed",data,cursor_data);
+					} else {
+						if(prev_data) cursor_data=prev_data;
+					}
+					cursor.continue();
+				} else {
+					if(cursor_data) return;
+					const request=store.add(data);
+					request.onerror=event => console.log("IDBRequest: error",event);
+					request.onsuccess=event => {
+						if(this.log_all_events) console.log("IDBRequest: success",event);
+						if(this.arr.length>0) {
+							this.consume_data_with_store(store);
+						}
+					};
 				}
-			};
+			}
 		}
 		this.arr.length=0;
 	}
@@ -4674,6 +4693,7 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof c} x */
 		function p4(x) {
 			const {category: a,publishDate: b,ownerChannelName: d,liveBroadcastDetails: e,...y}=x;
+			/** @type {YtCategoryStr} */
 			this.save_string("video.category",a);
 			this.z([b,d],a => this.primitive_of(a,"string"));
 			if(e) this.LiveBroadcastDetails(e);
