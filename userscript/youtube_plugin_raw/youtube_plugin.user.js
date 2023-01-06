@@ -7238,108 +7238,44 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {FormatItag[]} */
 	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315];
-	/** @template {FormatLike140} T @arg {T} x */
-	format_140_p1(x) {
-		const {itag: a,url: b,mimeType: c,bitrate: d,...y}=x;
-		if(!this.format_itag_arr.includes(a)) {
-			debugger;
-		}
-		this.primitive_of(b,"string");
-		this.save_string("mime-type",c);
-		this.primitive_of(d,"number");
-		return y;
-	};
-	/** @template {Omit<FormatLike140,"url"|"itag"|"mimeType"|"bitrate">} T @arg {T} x */
-	format_140_p2(x) {
-		const {initRange,indexRange,...y}=x;
-		this.YtRange(initRange);
-		this.YtRange(indexRange);
-		return y;
-	};
-	/** @arg {Format140} x */
-	v_format_140(x) {
-		console.log("140 like",x.itag);
-		let a=this.format_140_p1(x);
-		let {lastModified,contentLength,...b}=this.format_140_p2(a);
-		this.primitive_of(lastModified,"string");
-		this.primitive_of(contentLength,"string");
-		/** @arg {typeof b} x */
-		let p3=x => {
-			const {quality,projectionType,averageBitrate,highReplication,...y}=x;
-			this.parse_format_quality(quality);
-			if(projectionType!=="RECTANGULAR") debugger;
-			this.primitive_of(averageBitrate,"number");
-			switch(highReplication) {
-				case true:
-				case void 0: break;
-				default: debugger;
-			}
-			return y;
-		};
-		let c=p3(b);
-		/** @arg {typeof c} x */
-		let p4=x => {
-			const {audioQuality: aq,approxDurationMs,audioSampleRate,audioChannels,...y}=x;
-			if(aq) this.parse_audio_quality(aq);
-			this.primitive_of(approxDurationMs,"string");
-			if(audioSampleRate!=="44100") debugger;
-			if(audioChannels!==2) debugger;
-			return y;
-		};
-		const {loudnessDb,...y}=p4(c); this.g(y);
-		this.primitive_of(loudnessDb,"number");
-	}
-	/** @template {FormatLike140} T @arg {T} x */
-	v_format_140_filt(x) {
-		console.log("140 like",x.itag);
-		const a=this.format_140_p1(x);
-		const b=this.format_140_p2(a);
-		const c=b; c;
-		/** @template {typeof c} T @arg {T} x */
-		const p2=x=> {
-			const {quality,projectionType,...y}=x;
-			this.parse_format_quality(quality);
-			if(projectionType!=="RECTANGULAR") debugger;
-			return y;
-		}
-		const d=p2(c);
-		const y=d;
-		return y;
-	}
-	/** @arg {Format248} x */
-	v_format_248(x) {
-		const {colorInfo,...a}=x;
-		this.FormatColorInfo(colorInfo);
-		let y=this.v_format_140_filt(a);
-		this.g(y);
-	}
-	/** @template {Extract<AdaptiveFormatItem,{height:number}>} T @arg {T} x */
-	v_format_137(x) {
-		let y=this.v_format_140_filt(x); this.g(y);
-	}
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
-		if(x.itag===248) {
-			return this.v_format_248(x);
-		}
-		// 140
-		if("audioSampleRate" in x) {
-			return this.v_format_140(x);
-		} else if("height" in x) {
-			return this.v_format_137(x);
-		} else {
+		const {
+			itag,url,mimeType,bitrate,width: w,height: h,initRange,indexRange,
+			...a
+		}=x;
+		if(!this.format_itag_arr.includes(itag)) {
 			debugger;
 		}
-		// if(w) this.primitive_of(w,"number");
-		// if(h) this.primitive_of(h,"number");
-		// this.parse_format_fps(fps);
-		// if(ci) this.FormatColorInfo(ci);
-	}
-	/** @arg {AudioQuality} x */
-	parse_audio_quality(x) {
-		switch(x) {
-			case "AUDIO_QUALITY_MEDIUM": break;
+		this.primitive_of(url,"string");
+		this.save_string("mime-type",mimeType);
+		this.primitive_of(bitrate,"number");
+		if(w) this.primitive_of(w,"number");
+		if(h) this.primitive_of(h,"number");
+		this.YtRange(initRange);
+		this.YtRange(indexRange);
+		const {
+			lastModified,contentLength,quality,fps,
+			qualityLabel: ql,projectionType,averageBitrate,colorInfo: ci,
+			highReplication,
+			audioQuality,
+			approxDurationMs,
+			...y
+		}=a; this.g(y);
+		switch(highReplication) {
+			case true:
+			case void 0: break;
+			default: debugger;
 		}
+		this.primitive_of(lastModified,"string");
+		this.primitive_of(contentLength,"string");
+		this.parse_format_quality(quality);
+		if(fps) this.parse_format_fps(fps);
+		if(ql) this.parse_format_quality_label(ql);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.primitive_of(averageBitrate,"number");
+		if(ci) this.FormatColorInfo(ci);
+		this.primitive_of(approxDurationMs,"string");
 	}
 	/** @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {
