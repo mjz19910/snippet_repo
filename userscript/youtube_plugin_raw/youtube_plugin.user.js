@@ -3992,8 +3992,8 @@ class IndexedDbAccessor {
 			data;
 		}
 	}
-	/** @arg {IDBTransaction} tx @arg {IDBObjectStore} store @arg {{v:string}} data */
-	add_data_to_store(tx,store,data) {
+	/** @arg {IDBObjectStore} store @arg {{v:string}} data */
+	add_data_to_store(store,data) {
 		const request=store.add(data);
 		request.onerror=event => console.log("IDBRequest: error",event);
 		request.onsuccess=event => {
