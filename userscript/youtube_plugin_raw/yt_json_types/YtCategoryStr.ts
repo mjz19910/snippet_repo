@@ -1,7 +1,8 @@
 type YtCategoryStr=[
 	"Science & Technology",
-	"Howto & Style",
+	"Film & Animation",
 	"People & Blogs",
-	"Music",
+	"Howto & Style",
 	"Gaming",
+	"Music",
 ][number];
