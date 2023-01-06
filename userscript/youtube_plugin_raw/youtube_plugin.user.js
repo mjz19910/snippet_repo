@@ -1350,8 +1350,8 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
-				if(this.pos+size > this.cur_len) {
-					if(this.log_range_error) console.log("range error at",this.pos,fieldId, "size is too big", size);
+				if(this.pos+size>this.cur_len) {
+					if(this.log_range_error) console.log("range error at",this.pos,fieldId,"size is too big",size);
 					first_num.push(["error"]);
 					this.failed=true;
 					break;
@@ -5364,9 +5364,9 @@ class HandleTypes extends BaseService {
 					let buffer=item[2];
 					reader.pos=buffer.byteOffset;
 					let res=reader.try_read_any(buffer.byteLength);
-					if(!res) {out.push(item);break;}
+					if(!res) {out.push(item); break;}
 					let unpack=this.unpack_children_reader_result(reader,res);
-					if(!unpack) {out.push(item);break;}
+					if(!unpack) {out.push(item); break;}
 					out.push(["struct",item[1],unpack]);
 				} break;
 				case "info": break;
@@ -5413,33 +5413,8 @@ class HandleTypes extends BaseService {
 					if(!at_1) continue;
 					let at_2=struct_map.get(2);
 					if(!at_2) continue;
-					let at_1_f=at_1.map(e => this.decode_template_element(e));
-					let at_2_f=at_2.map(e => this.decode_template_element(e)).map(e=>{
-						let res={};
-						let unk_2=e.f_n2;
-						if(unk_2!==void 0) res.unk_2=unk_2;
-						let unk_3=e.f_n3;
-						if(unk_3!==void 0) res.unk_3=unk_3;
-						let unk_child_obj=e.f_o4;
-						let r=Object.keys(e);
-						for(let k of r) {
-							switch(k) {
-								case "f_n1": {
-									let index=e.f_n1;
-									if(index===void 0) continue;
-									res.index_unk_1=index;
-								} break;
-								case "f_n2": break;
-								case "f_n3": break;
-								case "f_o4": break;
-								default: debugger;
-							}
-						}
-						if(unk_child_obj!==void 0) {
-							res={...res,...unk_child_obj};
-						}
-						return res;
-					});
+					let at_1_f=at_1.map(a => this.decode_template_element(a));
+					let at_2_f=at_2.map(a => this.decode_template_element(a));
 					console.log("[template_child_iter_1]",...at_1_f);
 					console.log("[template_child_iter_2]",...at_2_f);
 				} break;
@@ -5450,6 +5425,28 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {DecTypeNum[]} x */
 	decode_template_element(x) {
+		let a=this.decode_template_element_1(x);
+		return this.decode_template_element_2(a);
+	}
+	/** @arg {TemplateElement} x */
+	decode_template_element_2(x) {
+		let res_obj={};
+		let unk_3=x.f_n3;
+		if(unk_3!==void 0) res_obj.unk_3=unk_3;
+		let r=Object.keys(x);
+		for(let k of r) {
+			switch(k) {
+				case "f_n1": res_obj.index_unk_1=x.f_n1; break;
+				case "f_n2": res_obj.unk_2=x.f_n2; break;
+				case "f_n3": res_obj.unk_3=x.f_n3; break;
+				case "f_o4": res_obj={...res_obj,...x.f_o4}; break;
+				default: debugger;
+			}
+		}
+		return res_obj;
+	}
+	/** @arg {DecTypeNum[]} x */
+	decode_template_element_1(x) {
 		/** @type {TemplateElement} */
 		let res_obj={};
 		for(let it of x) {
@@ -5462,7 +5459,7 @@ class HandleTypes extends BaseService {
 				case "child": res_obj[`f_s${it[1]}`]=decoder.decode(it[2]); break;
 				case "struct": {
 					let [,f,v]=it;
-					res_obj[`f_o${f}`]=this.decode_template_element(v);
+					res_obj[`f_o${f}`]=this.decode_template_element_1(v);
 				} break;
 				case "data64": res_obj[`f_n${it[1]}`]=it[2]; break;
 				case "data_fixed64": res_obj[`f_n${it[1]}`]=it[2]; break;
@@ -5475,7 +5472,13 @@ class HandleTypes extends BaseService {
 	ResourceStatusInResponseCheckData(x) {
 		const {resourceStatuses: a,serverBuildLabel: b,...y}=x; this.g(y);
 		this.z(a,a => this.ElementResourceStatus(a));
-		if(b!=="boq_youtube-watch-ui_20230102.12_p0") debugger;
+		let pp=split_string(b,"_");
+		if(pp.length!==4) debugger;
+		if(pp[0]!=="boq") debugger;
+		if(pp[1]!=="youtube-watch-ui") debugger;
+		let pp_ver=pp[2];
+		let ver=split_string(pp_ver,".");
+		console.log('[server_build]',`${ver[0]}.${ver[1]}_${pp[3]}`);
 	}
 	/** @arg {ElementResourceStatus} x */
 	ElementResourceStatus(x) {
