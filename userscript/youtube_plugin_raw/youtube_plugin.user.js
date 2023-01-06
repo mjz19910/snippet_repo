@@ -7086,7 +7086,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdsEngagementPanelContentData} x */
 	AdsEngagementPanelContentData(x) {
-		x;
+		if("hack" in x) return;
+		debugger;
 	}
 	/** @arg {ModifyChannelPreference} x */
 	ModifyChannelPreference(x) {
