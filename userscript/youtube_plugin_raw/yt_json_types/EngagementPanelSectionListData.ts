@@ -1,5 +1,6 @@
 type EngagementPanelSectionListData={
-	content: {};
+	content: AdsEngagementPanelContentRenderer;
 	targetId: "engagement-panel-ads";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: LoggingDirectives;
 };
