@@ -1,0 +1,3 @@
+type GuideCollapsibleSectionEntryRenderer={
+	guideCollapsibleSectionEntryRenderer: GuideCollapsibleSectionEntry;
+};

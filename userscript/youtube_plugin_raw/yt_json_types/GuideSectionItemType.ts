@@ -1,1 +1,1 @@
-type GuideSectionItemType=GuideEntryRenderer;
+type GuideSectionItemType=GuideEntryRenderer|GuideCollapsibleSectionEntryRenderer;

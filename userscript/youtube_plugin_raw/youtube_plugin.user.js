@@ -7400,9 +7400,16 @@ class HandleTypes extends BaseService {
 	GuideSectionItemType(x) {
 		if("guideEntryRenderer" in x) {
 			this.GuideEntryRenderer(x);
+		} else if("guideCollapsibleSectionEntryRenderer" in x) {
+			this.GuideCollapsibleSectionEntry(x.guideCollapsibleSectionEntryRenderer);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {GuideCollapsibleSectionEntry} x */
+	GuideCollapsibleSectionEntry(x) {
+		const {headerEntry,...y}=x; this.g(y);
+		this.g(x.headerEntry);
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
