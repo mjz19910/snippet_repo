@@ -1,7 +1,8 @@
-type PageTypeBrowse={
+import {BrowsePageResponse} from "./BrowsePageResponse.js";
+export type PageTypeBrowse={
 	pageType: "browse";
 	endpoint: YtEndpoint;
-	response: YtBrowsePageResponse;
+	response: BrowsePageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

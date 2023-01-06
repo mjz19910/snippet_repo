@@ -2813,7 +2813,8 @@ function main() {
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
 	}
-	/** @arg {[()=>YtBrowsePageResponse, object, []]} apply_args */
+	/** @typedef {import("./yt_json_types/BrowsePageResponse").BrowsePageResponse} BrowsePageResponse */
+	/** @arg {[()=>BrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
@@ -4482,16 +4483,40 @@ class HandleTypes extends BaseService {
 		const {spec: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {YtBrowsePageResponse} x */
+	/** @arg {import("./yt_json_types/BrowsePageResponse").BrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
-		this.yt_endpoint(b);
+		this.BrowseEndpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
 		this.x.get("string_parser").parse_url(d);
 		this.BrowseResponseContent(c);
 		if(e) this.previousCsn(e);
 		this.g(y);
+	}
+	/** @arg {BrowseEndpoint} x */
+	BrowseEndpoint(x) {
+		const {clickTrackingParams: a,commandMetadata: b,browseEndpoint: c,...y}=x; this.g(y);
+		this.clickTrackingParams(a);
+		this.BrowseCommandMetadata(b);
+		this.BrowseEndpointData(c);
+	}
+	/** @arg {BrowseCommandMetadata} x */
+	BrowseCommandMetadata(x) {
+		if("resolveUrlCommandMetadata" in x) {
+			this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
+		}
+		if("webCommandMetadata" in x) {
+			this.BrowseWebCommandMetadata(x.webCommandMetadata);
+		}
+	}
+	/** @arg {BrowseWebCommandMetadata} x */
+	BrowseWebCommandMetadata(x) {
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		if(x.url!=="/") debugger;
+		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(x.rootVe!==3854) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {NavigateEventDetail['response']} x */
 	DataResponsePageType(x) {
@@ -4629,7 +4654,7 @@ class HandleTypes extends BaseService {
 		let [,field_id,data]=f0;
 		reader.pos=data.byteOffset;
 		let more=reader.try_read_any(data.byteLength);
-		if(more&&!more.find(e=>e[0]==="error")) {
+		if(more&&!more.find(e => e[0]==="error")) {
 			const [f0]=more;
 			console.log(
 				"parsed_endpoint_param field_id=%o result(%o)={message}",
@@ -4788,7 +4813,7 @@ class HandleTypes extends BaseService {
 	};
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
-		if(!x) {debugger;return;}
+		if(!x) {debugger; return;}
 		this.save_keys("YtEndpoint",x,true);
 		const {
 			clickTrackingParams: a,
@@ -5248,7 +5273,7 @@ class HandleTypes extends BaseService {
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
 		let {serviceEndpoint: i,targetId: j,...y}=h;
-		if(i) this.ServiceEndpoint(i,a=>this.ServiceEndpointPlugin(a));
+		if(i) this.ServiceEndpoint(i,a => this.ServiceEndpointPlugin(a));
 		if(j) this.parse_target_id(j);
 		this.g(y);
 	}
@@ -5267,7 +5292,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template {{}} T @arg {import("./yt_json_types/ServiceEndpoint").ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
 	ServiceEndpoint(x,f) {
-		const {clickTrackingParams:a,commandMetadata:b,...y}=x;
+		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		/** @type {any} */
 		let c=y;
 		f(as_cast(c));
@@ -7202,7 +7227,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(itag,"number");
 		this.primitive_of(url,"string");
 	}
-	/** @arg {VideoQualityPromoData} x */
+	/** @arg {import("./yt_json_types/VideoQualityPromoData").VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
 		console.log("VideoQualityPromo.endpoint",x.endpoint);
 	}
@@ -7237,7 +7262,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./yt_json_types/BotguardData").BotguardData} x */
 	BotguardData(x) {
 		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
-		this.UrlWrappedValueT(interpreterSafeUrl,a=>a);
+		this.UrlWrappedValueT(interpreterSafeUrl,a => a);
 	}
 	/** @template T @arg {import("./yt_json_types/UrlWrappedValueT").UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
 	UrlWrappedValueT(x,f) {
@@ -7331,7 +7356,7 @@ class HandleTypes extends BaseService {
 	PlayerAnnotationsExpandedData(x) {
 		x;
 	}
- 	/** @arg {import("./yt_json_types/PlayabilityStatus").PlayabilityStatus} x */
+	/** @arg {import("./yt_json_types/PlayabilityStatus").PlayabilityStatus} x */
 	PlayabilityStatus(x) {
 		decode_url_b64_proto_obj(x.contextParams);
 	}
@@ -7412,7 +7437,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
-		let dec=decode_entity_key(x.entityKey);
+		let dec=decode_url_b64_proto_obj(decodeURIComponent(x.entityKey));
 		dec;
 	}
 	/** @arg {WatchEndpointData} x */
