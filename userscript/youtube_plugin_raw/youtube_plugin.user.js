@@ -4408,7 +4408,7 @@ class HandleTypes extends BaseService {
 			this.ResponseContext(a);
 			this.z(b,a => {
 				if(get_keys_of_one(a)[0]!=="playerAnnotationsExpandedRenderer") debugger;
-				this.PlayerAnnotationsExpandedData(a);
+				this.PlayerAnnotationsExpandedRenderer(a);
 			});
 			if(c) this.PlayerAttestationRenderer(c);
 			this.z(d,a => this.empty_object(a));
@@ -6655,7 +6655,7 @@ class HandleTypes extends BaseService {
 	ProfileColumnUserInfoData(x) {
 		this.Thumbnail(x.thumbnail);
 	}
-	/** @arg {Thumbnail} x */
+	/** @arg {import("./yt_json_types/Thumbnail").Thumbnail} x */
 	Thumbnail(x) {
 		const {thumbnails: a,accessibility: b,...y}=x;
 		this.z(a,a => this.ThumbnailItem(a));
@@ -7310,11 +7310,15 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {PlayerAnnotationsExpandedData} x */
-	PlayerAnnotationsExpandedData(x) {
-		this.g(x);
+	/** @arg {PlayerAnnotationsExpandedRenderer} x */
+	PlayerAnnotationsExpandedRenderer(x) {
+		this.PlayerAnnotationsExpandedData(x.playerAnnotationsExpandedRenderer);
 	}
-	/** @arg {import("./yt_json_types/PlayabilityStatus").PlayabilityStatus} x */
+	/** @arg {import("./yt_json_types/PlayerAnnotationsExpandedData").PlayerAnnotationsExpandedData} x */
+	PlayerAnnotationsExpandedData(x) {
+		x;
+	}
+ 	/** @arg {import("./yt_json_types/PlayabilityStatus").PlayabilityStatus} x */
 	PlayabilityStatus(x) {
 		decode_url_b64_proto_obj(x.contextParams);
 	}
