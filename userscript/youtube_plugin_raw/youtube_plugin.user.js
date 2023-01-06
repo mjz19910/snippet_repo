@@ -5370,15 +5370,34 @@ class HandleTypes extends BaseService {
 		debugger;
 		return null;
 	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
+	get_yt_url_type_3(x) {
+		switch(x[2]) {
+			case "browse": break;
+			case "feedback": break;
+			case "get_transcript": break;
+			case "guide": break;
+			case "next": break;
+			case "player": break;
+			default: this.api_no_handler(x,x[2]);
+		}
+		console.log('get_yt_url_type_3',x.slice(1));
+		return null;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
+	get_yt_url_type_4(x) {
+		console.log('get_yt_url_type_4',x.slice(1));
+		return null;
+	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} parts */
 	get_yt_url_type(parts) {
-		switch(parts.length) {
-			case 4: console.log('get_yt_url_type_4',parts.slice(1)); break;
-			case 3: console.log('get_yt_url_type_3',parts.slice(1)); break;
-			default: console.log("new_length",parts); debugger;
-		}
 		if(parts[1]!=="v1") {
 			return this.api_no_handler(parts,parts[1]);
+		}
+		switch(parts.length) {
+			case 4: this.get_yt_url_type_4(parts); break;
+			case 3: this.get_yt_url_type_3(parts); break;
+			default: console.log("new_length",parts); debugger;
 		}
 		switch(parts[2]) {
 			case "att": switch(parts[3]) {
