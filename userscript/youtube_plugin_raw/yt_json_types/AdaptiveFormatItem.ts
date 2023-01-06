@@ -1,0 +1,19 @@
+type AdaptiveFormatItem={
+	itag: number;
+	url: string;
+	mimeType: string;
+	bitrate: number;
+	width: number;
+	height: number;
+	initRange: YtRange;
+	indexRange: YtRange;
+	lastModified: string;
+	contentLength: string;
+	quality: FormatQuality;
+	fps: 50;
+	qualityLabel: "2160p50";
+	projectionType: "RECTANGULAR";
+	averageBitrate: number;
+	colorInfo: FormatColorInfo;
+	approxDurationMs: `${number}`;
+};
