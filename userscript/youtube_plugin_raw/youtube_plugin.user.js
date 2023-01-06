@@ -7257,7 +7257,7 @@ class HandleTypes extends BaseService {
 			qualityLabel: ql,projectionType,averageBitrate,colorInfo,
 			approxDurationMs,
 			...y
-		}=a;
+		}=a; this.g(y);
 		this.primitive_of(lastModified,"string");
 		this.primitive_of(contentLength,"string");
 		this.parse_format_quality(quality);
@@ -7266,7 +7266,7 @@ class HandleTypes extends BaseService {
 		if(projectionType!=="RECTANGULAR") debugger;
 		this.primitive_of(averageBitrate,"number");
 		this.FormatColorInfo(colorInfo);
-		this.g(y);
+		this.primitive_of(approxDurationMs,"string");
 	}
 	/** @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {
