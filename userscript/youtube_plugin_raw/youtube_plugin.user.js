@@ -7260,6 +7260,7 @@ class HandleTypes extends BaseService {
 			highReplication,
 			audioQuality,
 			approxDurationMs,
+			audioSampleRate,audioChannels,loudnessDb,
 			...y
 		}=a; this.g(y);
 		switch(highReplication) {
@@ -7276,6 +7277,9 @@ class HandleTypes extends BaseService {
 		this.primitive_of(averageBitrate,"number");
 		if(ci) this.FormatColorInfo(ci);
 		this.primitive_of(approxDurationMs,"string");
+		if(audioSampleRate&&audioSampleRate!=="44100") debugger; 
+		if(audioChannels&&audioChannels!==2) debugger;
+		if(loudnessDb) this.primitive_of(loudnessDb,"number");
 	}
 	/** @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {
