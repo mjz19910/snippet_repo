@@ -1686,6 +1686,7 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
+	/** @typedef {import("./yt_json_types/NavigateEventDetail").NavigateEventDetail} NavigateEventDetail */
 	/** @arg {[()=>NavigateEventDetail['response'], object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @type {NavigateEventDetail['response']} */
@@ -5578,7 +5579,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(c,"string");
 		this.g(y);
 	}
-	/** @arg {YtWatchPageResponse} x */
+	/** @arg {import("./yt_json_types/YtWatchPageResponse").YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
