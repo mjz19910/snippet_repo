@@ -6627,6 +6627,8 @@ class HandleTypes extends BaseService {
 	SectionListItem(x) {
 		if("itemSectionRenderer" in x) {
 			this.w(x,a => this.ItemSectionData(a));
+		} else {
+			debugger;
 		}
 	}
 	/** @arg {ItemSectionData} x */
@@ -7073,8 +7075,50 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
-		const {page,endpoint,response,url,...y}=x; this.g(y);
-		this.parse_url(url);
+		const {page: a,endpoint: b,response: c,url: d,...y}=x; this.g(y);
+		if(a!=="search") debugger;
+		this.SearchEndpoint(b);
+		this.SearchResponse(c);
+		this.parse_url(d);
+	}
+	/** @arg {SearchResponse} x */
+	SearchResponse(x) {
+		const {responseContext: a,estimatedResults: b,contents: c,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y);
+		this.ResponseContext(a);
+		this.primitive_of(b,"string");
+		this.TwoColumnSearchResultsRenderer(c);
+		if(targetId!=="search-page") debugger;
+	}
+	/** @arg {TwoColumnSearchResultsRenderer} x */
+	TwoColumnSearchResultsRenderer(x) {
+		x.twoColumnSearchResultsRenderer;
+	}
+	/** @arg {TwoColumnSearchResults} x */
+	TwoColumnSearchResults(x) {
+		this.SectionListRenderer(x.primaryContents);
+	}
+	/** @arg {SectionListRenderer} x */
+	SectionListRenderer(x) {
+		this.SectionListData(x.sectionListRenderer);
+	}
+	/** @arg {SearchEndpoint} x */
+	SearchEndpoint(x) {
+		let a=this.handle_clickTrackingParams(x);
+		const {commandMetadata: b,searchEndpoint: c,...y}=a; this.g(y);
+		this.SearchCommandMetadata(b);
+		this.SearchEndpointData(c);
+	}
+	/** @arg {SearchCommandMetadata} x */
+	SearchCommandMetadata(x) {
+		const {webCommandMetadata: a,...y}=x; this.g(y);
+		this.SearchWebCommandMetadata(a);
+	}
+	/** @arg {SearchWebCommandMetadata} x */
+	SearchWebCommandMetadata(x) {
+		const {url: a,webPageType: b,rootVe: c,...y}=x; this.g(y);
+		this.parse_url(a);
+		if(b!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		this.save_root_visual_element(c);
 	}
 }
 //#endregion
