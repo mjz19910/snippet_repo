@@ -1,1 +1,1 @@
-type YtPlaylistUrlFormat=`playlist?${YtPlaylistUrlParamsFormat}`;
+type YtPlaylistUrlFormat=`/playlist?${YtPlaylistUrlParamsFormat}`;

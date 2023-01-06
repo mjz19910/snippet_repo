@@ -4173,6 +4173,7 @@ class HandleTypes extends BaseService {
 			case "playlist": return this.YtPlaylistPageResponse(mt);
 			case "settings": return this.YtSettingsPageResponse(mt);
 			case "shorts": return this.YtShortsResponse(mt);
+			case "search": return this.SearchPageResponse(mt);
 			default: break;
 		}
 		console.log("pt",x.page,x);
@@ -5266,20 +5267,10 @@ class HandleTypes extends BaseService {
 		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,ignoreNavigation: f,...y}=x;
 		this.z([e,f],a => a!==void 0? this.primitive_of(a,"boolean"):0);
 		if(a!==void 0) this.parse_url(a);
+		if(d!==void 0) this.parse_url(d);
 		if(b!==void 0) this.parse_page_type(b);
-		if(d!==void 0) this.parse_api_url(d);
 		if(c!==void 0) this.save_root_visual_element(c);
 		this.g(y);
-	}
-	/** @arg {string} x */
-	parse_api_url(x) {
-		if(x.startsWith("/")) {
-			let parts=x.slice(1).split("/");
-			let url_type=this.get_url_type(parts);
-			if(!url_type) debugger;
-		} else {
-			debugger;
-		}
 	}
 	/** @arg {string[]} parts @arg {number} index */
 	get_yt_url_type(parts,index) {
@@ -7079,6 +7070,11 @@ class HandleTypes extends BaseService {
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
 		this.save_keys("ReelResponse",x,this.TODO_true);
+	}
+	/** @arg {SearchPageResponse} x */
+	SearchPageResponse(x) {
+		const {page,endpoint,response,url,...y}=x; this.g(y);
+		this.parse_url(url);
 	}
 }
 //#endregion

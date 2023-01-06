@@ -1,1 +1,1 @@
-type ChannelSwitcherUrlFormat="channel_switcher";
+type ChannelSwitcherUrlFormat="/channel_switcher";

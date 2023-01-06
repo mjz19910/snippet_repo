@@ -1,3 +1,1 @@
-type TwoColumnSearchResults={
-	primaryContents: {};
-};
+type TwoColumnSearchResults={primaryContents: SectionListRenderer;};

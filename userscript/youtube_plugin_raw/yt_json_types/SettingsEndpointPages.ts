@@ -1,1 +1,1 @@
-type SettingsEndpointPages=`account${""|`_${AccountPageSettingsSections}`}`;
+type SettingsEndpointPages=`/account${""|`_${AccountPageSettingsSections}`}`;

@@ -1,1 +1,5 @@
-type YtUrlFormat="/"|`/${YtURlFormatLocation}`;
+type YtUrlFormat=[
+	"/",
+	YtURlFormatLocation,
+	YtApiUrlFormat,
+][number];
