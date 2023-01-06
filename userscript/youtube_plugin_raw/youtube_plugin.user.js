@@ -7393,11 +7393,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./yt_json_types/GuideSectionData").GuideSectionData} x */
 	GuideSectionData(x) {
-		if(x.formattedTitle) {
-			debugger;
-		}
 		this.z(x.items,a => this.GuideSectionItemType(a));
 		this.trackingParams(x.trackingParams);
+		if(x.formattedTitle) this.text_t(x.formattedTitle);
 	}
 	/** @arg {import("./yt_json_types/GuideSectionItemType").GuideSectionItemType} x */
 	GuideSectionItemType(x) {
