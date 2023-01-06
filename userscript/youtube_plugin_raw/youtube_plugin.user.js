@@ -7235,7 +7235,7 @@ class HandleTypes extends BaseService {
 	StreamingData(x) {
 		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
-	format_itag_arr=[133,134,135,136,140,160,242,243,244,247,249,250,251,278,298,299,302,303,308,315];
+	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,249,250,251,278,298,299,302,303,308,315];
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
@@ -7281,14 +7281,15 @@ class HandleTypes extends BaseService {
 		switch(b) {case "COLOR_TRANSFER_CHARACTERISTICS_BT709": break; default: debugger;};
 		switch(c) {case "COLOR_MATRIX_COEFFICIENTS_BT709": break; default: debugger;};
 	}
-	format_quality_label_arr=["2160p50","1440p50","1080p50","720p","720p50","480p","360p","240p","144p"];
+	/** @type {QualArr} */
+	format_quality_label_arr=["2160p50","1440p50","1080p50","720p50","1080p","720p","480p","360p","240p","144p"];
 	/** @arg {QualityLabel} x */
 	parse_format_quality_label(x) {
 		if(!this.format_quality_label_arr.includes(x)) {
 			debugger;
 		}
 	}
-	valid_fps_arr=[25,50,60];
+	valid_fps_arr=[25,30,50,60];
 	/** @arg {FormatFps} x */
 	parse_format_fps(x) {
 		if(!this.valid_fps_arr.includes(x)) {
