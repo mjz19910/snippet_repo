@@ -4301,6 +4301,7 @@ class YtUrlParser extends BaseService {
 			}
 		}
 	}
+	/** @type {YtUrlFormat} */
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
 	parse_url_2(x) {
 		if(this.str_is_search(x)) {
@@ -4321,6 +4322,7 @@ class YtUrlParser extends BaseService {
 		switch(x) {
 			case "channel_switcher": return;
 			case "gaming": return;
+			case "premium": return;
 			default: debugger; return;
 		}
 	}
@@ -4616,10 +4618,8 @@ class HandleTypes extends BaseService {
 		let [,field_id,data]=f0;
 		reader.pos=data.byteOffset;
 		let more=reader.try_read_any(data.byteLength);
-		if(more) {
+		if(more&&!more.find(e=>e[0]==="error")) {
 			const [f0]=more;
-			console.log(more);
-			debugger;
 			console.log(
 				"parsed_endpoint_param field_id=%o result(%o)={message}",
 				field_id,data.length

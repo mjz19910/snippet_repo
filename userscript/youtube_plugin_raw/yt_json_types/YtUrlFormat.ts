@@ -11,6 +11,7 @@ type YtUrlFormat=[
 	`/shorts/${string}`,
 	`/gaming`,
 	`/premium`,
+	`/reporthistory`,
 	`/watch?${YtWatchUrlParamsFormat}`,
 	`/youtubei/v1/browse`,
 ][number];
