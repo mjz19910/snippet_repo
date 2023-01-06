@@ -4862,88 +4862,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
-		let t=this;
-		/** @this {typeof t} */
-		function parse_url_len_2() {
-			if(up.length!==2) return;
-			const [f,f0]=up;
-			if(f!=="") debugger;
-			if(this.str_starts_with(f0,"account")) {
-				let c1=split_string(f0,"_");
-				if(c1.length===1) return;
-				switch(c1[1]) {
-					case "advanced": break;
-					case "billing": break;
-					case "notifications": break;
-					case "privacy": break;
-					case "sharing": break;
-					case "playback": break;
-					default: debugger;
-				}
-				return;
-			}
-			switch(f0) {
-				case "channel_switcher": return;
-				case "logout": return;
-			}
-			if(this.str_starts_with(f0,"@")) {
-				console.log("[handle_like_url]",f0);
-				return;
-			}
-			let s0=split_string(f0,"?");
-			switch(s0[0]) {
-				case "watch": this.parse_watch_page_url(s0[1]); break;
-				case "playlist": this.parse_playlist_page_url(s0[1]); break;
-				default: {
-					console.log(s0);
-					debugger;
-				} break;
-			}
-
-		}
-		/** @this {typeof t} */
-		function parse_url_len_3() {
-			if(up.length!==3) return;
-			/**
-			 * @arg {typeof t} t
-			 * @template {string[]} T
-			 * @template {string} U
-			 * @arg {U} w
-			 * @arg {T} x
-			 * @returns {x is [string,`${U}${string}`,...string[]]}
-			 */
-			function str_starts_with_at_1(t,x,w) {
-				return t.str_starts_with(x[1],w);
-			}
-			/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
-			function str_is_search(x) {
-				return x.includes("?");
-			}
-			if(str_starts_with_at_1(this,up,"@")) {
-				if(str_is_search(up[2])) {
-					let v=up[2];
-					let q=split_string(v,"?");
-					let sp=make_search_params(q[1]);
-					if("query" in sp) {
-						console.log("[found_search_query]",sp.query);
-					} else {
-						debugger;
-					}
-					return this.parse_channel_section(q[0]);
-				}
-				return this.parse_channel_section(up[2]);
-			}
-			switch(up[1]) {
-				case "feed": switch(up[2]) {
-					case "history":
-					case "library":
-					case "subscriptions":
-					case "what_to_watch": break;
-					default: debugger;
-				} return;
-				default: debugger;
-			}
-		}
 		if(x.startsWith("https://")) {
 			let rem_url=new URL(x);
 			let url_host=rem_url.hostname;
@@ -4956,12 +4874,33 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		if(x==="/") return;
-		let up=split_string(x,"/");
-		switch(up.length) {
-			case 2: parse_url_len_2.call(this); break;
-			case 3: parse_url_len_3.call(this); break;
-			default: debugger;
+		let [f,up]=split_string_once(x,"/");
+		if(f!=="") {
+			debugger;
+			return
 		}
+		let u1=split_string_once(up,"/");
+		switch(u1.length) {
+			case 1: {
+				let up_sp=split_string_once(u1[0],"?");
+				switch(up_sp.length) {
+					case 1: up_sp; break;
+				}
+				switch(up_sp[0]) {
+					case "account": break;
+				}
+			} return;
+		}
+	}
+	/** @arg {YtUrlFormat} x */
+	get_parse_url_1(x) {
+		let [f,up]=split_string_once(x,"/");
+		if(f!=="") throw new Error();
+		return up;
+	}
+	/** @arg {SplitOnce<YtUrlFormat,"/">} x */
+	parse_url_1(x) {
+		x;
 	}
 	/** @arg {YtPlaylistUrlParamsFormat} x */
 	parse_playlist_page_url(x) {
