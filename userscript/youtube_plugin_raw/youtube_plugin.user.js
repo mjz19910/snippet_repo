@@ -7325,6 +7325,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
+		if(x.itag===248) {
+			const {colorInfo,...y}=x;
+			return;
+		}
 		// 140
 		if("audioSampleRate" in x) {
 			return this.v_format_140(x);
