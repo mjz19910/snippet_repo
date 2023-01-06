@@ -4921,11 +4921,8 @@ class HandleTypes extends BaseService {
 	/** @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
 		let sp=make_search_params(x);
-		if("query" in sp) {
-			console.log("[found_search_query]",sp.query);
-		} else {
-			debugger;
-		}
+		if(!eq_keys(get_keys_of(sp),["query"])) debugger;
+		console.log("[found_search_query]",sp.query);
 	}
 	/** @arg {ParseUrlStr_3} x */
 	parse_url_3(x) {
