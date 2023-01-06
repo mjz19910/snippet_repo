@@ -4114,9 +4114,14 @@ class YtUrlParser extends BaseService {
 		switch(x[0]) {
 			case "feed": return this.parse_feed_url(x);
 			case "shorts": return this.parse_shorts_url(x);
+			case "channel": return this.parse_channel_url(x);
 			case "youtubei": return this.parse_api_url(x);
 			default: debugger; return;
 		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
+	parse_channel_url(x) {
+		x;
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
 	parse_api_url(x) {
@@ -4347,29 +4352,18 @@ class YtUrlParser extends BaseService {
 	parse_playlist_page_url(x) {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
-		/**
-		 * @arg {YtUrlParser} t
-		 * @template {string[]} T
-		 * @template {string} U
-		 * @arg {U} w
-		 * @arg {T} x
-		 * @returns {x is [string,`${U}${string}`,...string[]]}
-		 */
-		function str_starts_with_at_1(t,x,w) {
-			return t.str_starts_with(x[1],w);
-		}
 		switch(y[0]) {
 			case "list": {
 				if(y[1]==="WL") return;
-				if(str_starts_with_at_1(this,y,"RD")) {
-					if(str_starts_with_at_1(this,y,`RD${"MM"}`)) {
+				if(this.str_starts_with_at_1(y,"RD")) {
+					if(this.str_starts_with_at_1(y,`RD${"MM"}`)) {
 						return;
 					}
 					console.log(y);
 					debugger;
 					return;
 				};
-				if(str_starts_with_at_1(this,y,"PL")) {
+				if(this.str_starts_with_at_1(y,"PL")) {
 					let [,v]=y; v;
 					return;
 				};
