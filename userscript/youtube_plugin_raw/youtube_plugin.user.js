@@ -6930,11 +6930,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		x;
+		this.save_keys("ReelWatchSequenceResponse",x,this.TODO_true);
 	}
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
-		x;
+		this.save_keys("ReelResponse",x,this.TODO_true);
 	}
 }
 //#endregion
