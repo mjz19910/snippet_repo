@@ -1,6 +1,8 @@
 type PlayerConfig={
-	audioConfig: {};
-	streamSelectionConfig: {};
+	audioConfig: AudioConfig;
+	streamSelectionConfig: {
+		maxBitrate: `${number};`
+	};
 	mediaCommonConfig: {};
 	webPlayerConfig: {};
 };
