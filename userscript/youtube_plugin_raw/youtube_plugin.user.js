@@ -4909,10 +4909,23 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
 	parse_channel_section_url(x) {
-		if(this.str_is_search(x)) {
-			return;
+		if(!this.str_is_search(x)) {
+			return this.parse_channel_section(x);
 		}
-		x;
+		let a=split_string(x,"?");
+		switch(a[0]) {
+			case "search": this.parse_channel_search_url(a[1]); break;
+			default: debugger; break;
+		}
+	}
+	/** @arg {`query=${string}`} x */
+	parse_channel_search_url(x) {
+		let sp=make_search_params(x);
+		if("query" in sp) {
+			console.log("[found_search_query]",sp.query);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {ParseUrlStr_3} x */
 	parse_url_3(x) {
