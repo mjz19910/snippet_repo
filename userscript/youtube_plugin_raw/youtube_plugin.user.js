@@ -35,7 +35,7 @@ let ytd_app=void 0;
 let created_blobs=new Map;
 /** @type {Set<string>} */
 let active_blob_set=new Set;
-/** @type {SavedData} */
+/** @type {import("./yt_json_types/SavedData").SavedData} */
 let saved_data=cast_as({});
 const is_yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
@@ -1690,7 +1690,7 @@ class FilterHandlers {
 	/** @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {AnySavedData} */
+		/** @type {import("./yt_json_types/AnySavedData").AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
@@ -5880,19 +5880,22 @@ class HandleTypes extends BaseService {
 					if(!at_2) continue;
 					let at_1_f=at_1.map(a => this.decode_template_element(a));
 					let at_2_f=at_2.map(a => this.decode_template_element(a));
+					saved_data.data??={};
+					saved_data.data.arr??=[];
+					saved_data.data.arr.push([at_1_f,at_2_f]);
 					at_1_f.forEach(a => {
-						const {arr,...y}=a;
-						/** @type {[typeof y|typeof arr]} */
+						const {children,...y}=a;
+						/** @type {[typeof y|typeof children]} */
 						let out=[y];
-						if(arr) out.push(arr);
+						if(children) out.push(children);
 						console.log("[template_child_iter_1]",...out);
 						a;
 					});
 					at_2_f.forEach(a => {
-						const {arr,...y}=a;
-						/** @type {[typeof y|typeof arr]} */
+						const {children,...y}=a;
+						/** @type {[typeof y|typeof children]} */
 						let out=[y];
-						if(arr) out.push(arr);
+						if(children) out.push(children);
 						console.log("[template_child_iter_2]",...out);
 						a;
 					});
@@ -5911,9 +5914,9 @@ class HandleTypes extends BaseService {
 	decode_template_element_2(x) {
 		let res_obj={};
 		if(x.f_n1!==void 0) res_obj.index_unk_1=x.f_n1;
-		if(x.f_n3!==void 0) res_obj.unk_3=x.f_n3;
-		if(x.f_n2!==void 0) res_obj.unk_2=x.f_n2;
-		if(x.f_o4!==void 0) res_obj.arr=x.f_o4;
+		if(x.f_n3!==void 0) res_obj.type_enum_3=x.f_n3;
+		if(x.f_n2!==void 0) res_obj.attr_enum_2=x.f_n2;
+		if(x.f_o4!==void 0) res_obj.children=x.f_o4;
 		let r=filter_out_keys(get_keys_of(x),split_string("f_n1,f_n2,f_n3,f_o4"));
 		if(r.length>0) debugger;
 		return res_obj;
