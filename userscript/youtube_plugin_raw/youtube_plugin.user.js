@@ -4600,7 +4600,7 @@ class HandleTypes extends BaseService {
 			this.Thumbnail(a);
 			this.MicroformatEmbed(b);
 			this.text_t(c);
-			this.text_t(d);
+			if(d) this.text_t(d);
 			return y;
 		}
 		let a=p1.call(this,x);
