@@ -3969,37 +3969,40 @@ class IndexedDbAccessor {
 	}
 	/** @arg {IDBObjectStore} store */
 	consume_data_with_store(store) {
-		for(let data of this.arr) {
-			const cursor_req=store.openCursor();
-			/** @type {{v: string}|null} */
-			let cursor_data=null;
-			cursor_req.onsuccess=event => {
-				console.log("IDBRequest.IDBCursor: success",event);
-				const cursor=cursor_req.result;
-				if(cursor) {
-					let prev_data=cursor_data;
-					cursor_data=cursor.value;
-					if(!cursor_data) throw new Error("null in database");
-					if(cursor_data.v===data.v) {
-						console.log("idb update needed",data,cursor_data);
-					} else {
-						if(prev_data) cursor_data=prev_data;
+		const cursor_req=store.openCursor();
+		/** @type {{v: string}|null} */
+		let cursor_data=null;
+		cursor_req.onsuccess=event => {
+			console.log("IDBRequest.IDBCursor: success",event);
+			const cursor=cursor_req.result;
+			if(cursor) {
+				cursor_data=cursor.value;
+				if(cursor_data) {
+					let data=cursor_data;
+					let res=this.arr.find(e=>e.v===data.v);
+					if(res) {
+						console.log(res,data);
 					}
-					cursor.continue();
-				} else {
-					if(cursor_data) return;
-					const request=store.add(data);
-					request.onerror=event => console.log("IDBRequest: error",event);
-					request.onsuccess=event => {
-						if(this.log_all_events) console.log("IDBRequest: success",event);
-						if(this.arr.length>0) {
-							this.consume_data_with_store(store);
-						}
-					};
 				}
+				cursor.continue();
+			} else {
+				if(cursor_data) return;
 			}
 		}
-		this.arr.length=0;
+		for(let data of this.arr) {
+			data;
+		}
+	}
+	/** @arg {IDBObjectStore} store @arg {{v:string}} data */
+	add_data_to_store(store,data) {
+		const request=store.add(data);
+		request.onerror=event => console.log("IDBRequest: error",event);
+		request.onsuccess=event => {
+			if(this.log_all_events) console.log("IDBRequest: success",event);
+			if(this.arr.length>0) {
+				this.consume_data_with_store(store);
+			}
+		};
 	}
 	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
@@ -5753,12 +5756,18 @@ class HandleTypes extends BaseService {
 					let at_2_f=at_2.map(a => this.decode_template_element(a));
 					at_1_f.forEach(a => {
 						const {arr,...y}=a;
-						console.log("[template_child_iter_1]",y,arr??{});
+						/** @type {[typeof y|typeof arr]} */
+						let out=[y];
+						if(arr) out.push(arr);
+						console.log("[template_child_iter_1]",...out);
 						a;
 					});
 					at_2_f.forEach(a => {
 						const {arr,...y}=a;
-						console.log("[template_child_iter_2]",y,arr??{});
+						/** @type {[typeof y|typeof arr]} */
+						let out=[y];
+						if(arr) out.push(arr);
+						console.log("[template_child_iter_2]",...out);
 						a;
 					});
 				} break;
