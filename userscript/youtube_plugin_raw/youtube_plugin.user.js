@@ -5214,7 +5214,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./yt_json_types/GuideEntryRendererData").GuideEntryRendererData} x */
 	GuideEntryRendererData(x) {
-		const {accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,isPrimary: g,...y}=x;
+		const {
+			accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,isPrimary: g,
+			...h
+		}=x;
 		this.Accessibility(a);
 		if(b) this.yt_endpoint(b);
 		this.Icon(c);
@@ -5222,7 +5225,13 @@ class HandleTypes extends BaseService {
 		this.text_t(e);
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
+		let {serviceEndpoint: i,...y}=h;
+		if(i) this.ServiceEndpoint(i);
 		this.g(y);
+	}
+	/** @template T @arg {ServiceEndpoint<T>} */
+	ServiceEndpoint(x) {
+
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
@@ -5274,9 +5283,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
-		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=x;
+		const {webCommandMetadata: a,...y}=x;
 		this.WebCommandMetadata(a);
-		if(b) this.ResolveUrlCommandMetadata(b);
 		this.g(y);
 	}
 	/** @arg {YtPageTypeEnum} x */
