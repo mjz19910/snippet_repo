@@ -1,1 +1,4 @@
-type YtCategoryStr="Science & Technology";
+type YtCategoryStr=[
+	"Science & Technology",
+	"Howto & Style",
+][number];
