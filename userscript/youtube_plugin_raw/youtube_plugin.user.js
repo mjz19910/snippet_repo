@@ -5605,7 +5605,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {
-		const {page: a,endpoint: b,response: c,playerResponse: d,reelWatchSequenceResponse: e,...y}=x;
+		const {page: a,endpoint: b,response: c,playerResponse: d,reelWatchSequenceResponse: e,url: f,...y}=x;
+		this.parse_url(f);
 		this.g(y);
 	}
 	/** @arg {RelevantStateTags} x */

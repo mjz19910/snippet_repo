@@ -1,1 +1,1 @@
-type YtUrlFormat=`/${YtURlFormatLocation}`;
+type YtUrlFormat="/"|`/${YtURlFormatLocation}`;
