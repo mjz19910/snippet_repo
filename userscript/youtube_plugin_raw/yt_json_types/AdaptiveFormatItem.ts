@@ -39,5 +39,18 @@ type Format137={
   averageBitrate: number;
   approxDurationMs: `${number}`;
 };
-
+type Format137_Omit4={
+  width: number;
+  height: number;
+  initRange: YtRange;
+  indexRange: YtRange;
+  lastModified: `${number}`;
+  contentLength: `${number}`;
+  quality: "hd1080";
+  fps: 30;
+  qualityLabel: "1080p";
+  projectionType: "RECTANGULAR";
+  averageBitrate: number;
+  approxDurationMs: `${number}`;
+}
 type AdaptiveFormatItem=Format140|Format137;
