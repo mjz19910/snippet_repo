@@ -1,3 +1,4 @@
+import {MaybeAdPlacementRenderer} from "./MaybeAdPlacementRenderer.js";
 import {PlayabilityStatus} from "./PlayabilityStatus.js";
 import {PlayerAttestationRenderer} from "./PlayerAttestationRenderer.js";
 import {PlayerCaptionsTracklistRenderer} from "./PlayerCaptionsTracklistRenderer.js";
@@ -17,7 +18,7 @@ export interface PlayerResponse {
 	trackingParams: string;
 	attestation?: PlayerAttestationRenderer;
 	videoQualityPromoSupportedRenderers?: VideoQualityPromoRenderer;
-	adPlacements?: {}[];
+	adPlacements?: MaybeAdPlacementRenderer[];
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;
 	paidContentOverlay?: PaidContentOverlay;
