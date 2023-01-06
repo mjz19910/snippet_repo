@@ -1,7 +1,8 @@
-type GuideCollapsibleSectionEntry={
-	headerEntry: {};
-	expanderIcon: {};
-	collapserIcon: {};
+import {GuideEntryRenderer} from "./GuideEntryRenderer.1";
+export type GuideCollapsibleSectionEntry={
+	headerEntry: GuideEntryRenderer;
+	expanderIcon: Icon<"EXPAND">;
+	collapserIcon: Icon<"COLLAPSE">;
 	sectionItems: {}[];
-	handlerDatas: {}[];
+	handlerDatas: ["GUIDE_ACTION_ADD_TO_PLAYLISTS","GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"];
 };

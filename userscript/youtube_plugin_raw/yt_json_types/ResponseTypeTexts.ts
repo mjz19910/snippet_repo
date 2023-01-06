@@ -1,4 +1,6 @@
-namespace ResponseTypeTexts {
+import {ResponseTypes} from "./ResponseTypes.js";
+
+export namespace ResponseTypeTexts {
 	function cast_as<T extends U,U>(e: U,x: any=e): T {
 		return x;
 	}	

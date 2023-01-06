@@ -1,4 +1,5 @@
-type ResponseTypes=[
+import {guide_t} from "./guide_t.js";
+export type ResponseTypes=[
 	account_account_menu_t,
 	account_set_setting_t,
 	accounts_list_t,

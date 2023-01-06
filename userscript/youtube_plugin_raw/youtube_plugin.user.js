@@ -1471,6 +1471,7 @@ class FilterHandlers {
 		let path_parts=res_parse.pathname.slice(1).split("/");
 		return this.handle_types.get_url_type(path_parts);
 	}
+	/** @typedef {import("./yt_json_types/ResponseTypes").ResponseTypes} ResponseTypes */
 	/** @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_length_1(target,x) {
 		switch(target[0]) {
@@ -1502,7 +1503,7 @@ class FilterHandlers {
 			};
 			case "guide": return {
 				type: target[0],
-				/** @type {GuideJsonType} */
+				/** @type {import("./yt_json_types/GuideJsonType").GuideJsonType} */
 				data: cast_as(x),
 			};
 			case "next": return {
@@ -7378,17 +7379,17 @@ class HandleTypes extends BaseService {
 	AttBgChallenge(x) {
 		console.log("bg_interpreter_url",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
-	/** @arg {GuideJsonType} x */
+	/** @arg {import("./yt_json_types/GuideJsonType").GuideJsonType} x */
 	GuideJsonType(x) {
 		this.z(x.items,a => this.GuideItemType(a));
 	}
-	/** @arg {GuideItemType} x */
+	/** @arg {import("./yt_json_types/GuideItemType").GuideItemType} x */
 	GuideItemType(x) {
 		if("guideSectionRenderer" in x) {
 			this.GuideSectionData(x.guideSectionRenderer);
 		}
 	}
-	/** @arg {GuideSectionData} x */
+	/** @arg {import("./yt_json_types/GuideSectionData").GuideSectionData} x */
 	GuideSectionData(x) {
 		if(x.formattedTitle) {
 			debugger;
@@ -7396,7 +7397,7 @@ class HandleTypes extends BaseService {
 		this.z(x.items,a => this.GuideSectionItemType(a));
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {GuideSectionItemType} x */
+	/** @arg {import("./yt_json_types/GuideSectionItemType").GuideSectionItemType} x */
 	GuideSectionItemType(x) {
 		if("guideEntryRenderer" in x) {
 			this.GuideEntryRenderer(x);
@@ -7406,10 +7407,10 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {GuideCollapsibleSectionEntry} x */
+	/** @arg {import("./yt_json_types/GuideCollapsibleSectionEntry").GuideCollapsibleSectionEntry} x */
 	GuideCollapsibleSectionEntry(x) {
-		const {headerEntry,...y}=x; this.g(y);
-		this.g(x.headerEntry);
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
+		this.GuideEntryRenderer(headerEntry);
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
