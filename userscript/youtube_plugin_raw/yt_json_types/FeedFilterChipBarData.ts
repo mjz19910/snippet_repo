@@ -1,7 +1,5 @@
 type FeedFilterChipBarData={
-	contents: {
-		chipCloudChipRenderer: {};
-	}[];
+	contents: ChipCloudChipRenderer[];
 	trackingParams: string;
 	styleType: ChannelPageGrid;
 };

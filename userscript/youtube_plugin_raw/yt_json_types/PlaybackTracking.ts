@@ -1,25 +1,11 @@
 type PlaybackTracking={
-	atrUrl: {
-		baseUrl: string;
-		elapsedMediaTimeSeconds: number;
-	};
-	ptrackingUrl: {
-		baseUrl: string;
-	};
-	qoeUrl: {
-		baseUrl: string;
-	};
+	atrUrl: UrlAndElapsedMediaTime;
+	ptrackingUrl: BaseUrl;
+	qoeUrl: BaseUrl
 	videostatsDefaultFlushIntervalSeconds: 40;
-	videostatsDelayplayUrl: {
-		baseUrl: string;
-		elapsedMediaTimeSeconds: number;
-	};
-	videostatsPlaybackUrl: {
-		baseUrl: string;
-	};
+	videostatsDelayplayUrl: UrlAndElapsedMediaTime;
+	videostatsPlaybackUrl: BaseUrl
 	videostatsScheduledFlushWalltimeSeconds: [10,20,30];
-	videostatsWatchtimeUrl: {
-		baseUrl: string;
-	};
+	videostatsWatchtimeUrl: BaseUrl;
 	youtubeRemarketingUrl?: {};
 };

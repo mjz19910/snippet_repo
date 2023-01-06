@@ -1685,9 +1685,9 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @arg {[()=>YtBrowsePageResponse, object, []]} apply_args */
+	/** @arg {[()=>NavigateEventDetail['response'], object, []]} apply_args */
 	on_initial_data(apply_args) {
-		/** @type {YtBrowsePageResponse} */
+		/** @type {NavigateEventDetail['response']} */
 		let ret=Reflect.apply(...apply_args);
 		if(!("page" in ret)) {
 			return ret;
@@ -6870,177 +6870,314 @@ class HandleTypes extends BaseService {
 		if(b!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		this.save_root_visual_element(c);
 	}
-	/** @private */
-	get TODO_true() {
-		return true;
-	}
 	/** @arg {EngagementPanelSectionListData} x */
 	EngagementPanelSectionListData(x) {
-		this.save_keys("EngagementPanel",x,this.TODO_true);
+		const {content,targetId,visibility,...y}=x; this.g(y);
+		this.g(content);
+		if(targetId!=="engagement-panel-ads") debugger;
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 	}
 	/** @arg {ModifyChannelPreference} x */
 	ModifyChannelPreference(x) {
-		this.save_keys("ModifyChannelPreference",x,this.TODO_true);
+		this.g(x);
 	}
 	/** @arg {SettingsSidebarRenderer} x */
 	SettingsSidebarRenderer(x) {
-		this.save_keys("SettingsSidebarRenderer",x,this.TODO_true);
+		const {settingsSidebarRenderer: a,...y}=x; this.g(y);
+		this.SettingsSidebarData(a);
 	}
 	/** @arg {CacheMetadata} x */
 	CacheMetadata(x) {
-		this.save_keys("CacheMetadata",x,this.TODO_true);
+		const {isCacheHit: a,...y}=x; this.g(y);
+		this.primitive_of(a,"boolean");
 	}
 	/** @arg {ShelfData} x */
 	ShelfData(x) {
-		this.save_keys("ShelfData",x,this.TODO_true);
+		const {title: a,content: b,trackingParams: c,menu: d,subscribeButton: e,...y}=x; this.g(y);
+		this.g(a);
+		this.ShelfItem(b);
+		this.trackingParams(c);
+		if(d) this.g(d);
+		if(e) this.g(e);
+	}
+	/** @arg {ShelfItem} x */
+	ShelfItem(x) {
+		this.GridRenderer(x.gridRenderer);
+	}
+	/** @arg {GridRenderer} x */
+	GridRenderer(x) {
+		this.z(x.items,a=>this.GridVideoRenderer(a));
+	}
+	/** @arg {GridVideoRenderer} x */
+	GridVideoRenderer(x) {
+		this.GridVideoData(x.gridVideoRenderer);
+	}
+	/** @arg {GridVideoData} x */
+	GridVideoData(x) {
+		this.z(x.badges,a=>this.g(a));
 	}
 	/** @arg {SettingsOptionsData} x */
 	SettingsOptionsData(x) {
-		this.save_keys("SettingsOptionsData",x,this.TODO_true);
+		this.z(x.options,a=>this.SettingsOptionItem(a));
+	}
+	/** @arg {SettingsOptionItem} x */
+	SettingsOptionItem(x) {
+		if("channelOptionsRenderer" in x) {
+			this.ChannelOptionsData(x.channelOptionsRenderer);
+		}
+	}
+	/** @arg {import("./yt_json_types/ChannelOptionsData").ChannelOptionsData} x */
+	ChannelOptionsData(x) {
+		this.Thumbnail(x.avatar);
+		this.Accessibility(x.avatarAccessibility);
+		console.log(x.avatarEndpoint);
+		debugger;
 	}
 	/** @arg {PlaylistVideoListData} x */
 	PlaylistVideoListData(x) {
-		this.save_keys("PlaylistVideoListData",x,this.TODO_true);
+		this.parse_playlist_id(x.playlistId);
+	}
+	/** @arg {"WL"} x */
+	parse_playlist_id(x) {
+		if(x!=="WL") debugger;
 	}
 	/** @arg {PageIntroductionData} x */
 	PageIntroductionData(x) {
-		this.save_keys("PageIntroductionData",x,this.TODO_true);
+		this.text_t(x.bodyText);
+		debugger;
 	}
 	/** @arg {ReelPlayerOverlayData} x */
 	ReelPlayerOverlayData(x) {
-		this.save_keys("ReelPlayerOverlayData",x,this.TODO_true);
+		this.g(x.likeButton);
 	}
 	/** @arg {ConnectedAppData} x */
 	ConnectedAppData(x) {
-		this.save_keys("ConnectedAppData",x,this.TODO_true);
+		this.ButtonRenderer(x.connectButton);
 	}
 	/** @arg {PlaylistSidebarRenderer} x */
 	PlaylistSidebarRenderer(x) {
-		this.save_keys("PlaylistSidebarRenderer",x,this.TODO_true);
+		this.g(x.playlistSidebarRenderer);
 	}
 	/** @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {
-		this.save_keys("MicroformatDataRenderer",x,this.TODO_true);
+		this.g(x.microformatDataRenderer);
 	}
 	/** @arg {PlaylistMetadataRenderer} x */
 	PlaylistMetadataRenderer(x) {
-		this.save_keys("PlaylistMetadataRenderer",x,this.TODO_true);
+		this.g(x.playlistMetadataRenderer);
 	}
 	/** @arg {PlaylistHeaderRenderer} x */
 	PlaylistHeaderRenderer(x) {
-		this.save_keys("PlaylistHeaderRenderer",x,this.TODO_true);
+		this.PlaylistHeader(x.playlistHeaderRenderer);
+	}
+	/** @arg {PlaylistHeader} x */
+	PlaylistHeader(x) {
+		this.z(x.briefStats,a=>this.text_t(a));
 	}
 	/** @arg {CommentThreadData} x */
 	CommentThreadData(x) {
-		this.save_keys("CommentThreadData",x,this.TODO_true);
+		this.CommentRenderer(x.comment);
+	}
+	/** @arg {CommentRenderer} x */
+	CommentRenderer(x) {
+		this.CommentData(x.commentRenderer);
+	}
+	/** @arg {CommentData} x */
+	CommentData(x) {
+		this.CommentActionButtonsRenderer(x.actionButtons);
+	}
+	/** @arg {CommentActionButtonsRenderer} x */
+	CommentActionButtonsRenderer(x) {
+		this.CommentActionButtonsData(x.commentActionButtonsRenderer);
+	}
+	/** @arg {CommentActionButtonsData} x */
+	CommentActionButtonsData(x) {
+		this.g(x);
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
-		this.save_keys("C4TabbedHeaderData",x,this.TODO_true);
+		this.parse_channel_id(x.channelId);
+	}
+	/** @arg {`UC${string}`} x */
+	parse_channel_id(x) {
+		let r=split_string_once(x,"UC");
+		if(r[0]!=="") debugger;
 	}
 	/** @arg {ConfirmDialogEndpointData} x */
 	ConfirmDialogEndpointData(x) {
-		this.save_keys("ConfirmDialogEndpointData",x,this.TODO_true);
+		this.ConfirmDialogRenderer(x.content);
+	}
+	/** @arg {ConfirmDialogRenderer} x */
+	ConfirmDialogRenderer(x) {
+		this.ConfirmDialogData(x.confirmDialogRenderer);
+	}
+	/** @arg {ConfirmDialogData} x */
+	ConfirmDialogData(x) {
+		this.ButtonRenderer(x.cancelButton);
 	}
 	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {
-		this.save_keys("CompactVideoData",x,this.TODO_true);
+		this.Accessibility(x.accessibility);
 	}
 	/** @arg {PlayerConfig} x */
 	PlayerConfig(x) {
-		this.save_keys("PlayerConfig",x,this.TODO_true);
+		this.g(x.audioConfig);
 	}
 	/** @arg {VideoDetails} x */
 	VideoDetails(x) {
-		this.save_keys("VideoDetails",x,this.TODO_true);
+		this.primitive_of(x.author,"string");
 	}
 	/** @arg {StreamingData} x */
 	StreamingData(x) {
-		this.save_keys("StreamingData",x,this.TODO_true);
+		this.z(x.adaptiveFormats,a=>this.AdaptiveFormatItem(a))
+	}
+	/** @arg {AdaptiveFormatItem} x */
+	AdaptiveFormatItem(x) {
+		const {itag,url,...y}=x; this.g(y);
+		console.log("[adaptive_format]",itag,url);
 	}
 	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
-		this.save_keys("VideoQualityPromoData",x,this.TODO_true);
+		console.log("VideoQualityPromo.endpoint",x.endpoint);
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
-		this.save_keys("TwoColumnWatchNextResultsData",x,this.TODO_true);
+		this.AutoplayTemplate(x.autoplay,a=>this.AutoplayContent(a));
+	}
+	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
+	AutoplayTemplate(x,f) {
+		f(x.autoplay);
+	}
+	/** @arg {AutoplayContent} x */
+	AutoplayContent(x) {
+		this.z(x.modifiedSets,a=>this.ModifiedSetItem(a));
+	}
+	/** @arg {ModifiedSetItem} x */
+	ModifiedSetItem(x) {
+		console.log("ModifiedSetItem.autoplayVideo",x.autoplayVideo);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
-		this.save_keys("EmojiPickerRenderer",x,this.TODO_true);
+		this.g(x.emojiPickerRenderer);
 	}
 	/** @arg {PlayerAttestationRenderer} x */
 	PlayerAttestationRenderer(x) {
-		this.save_keys("PlayerAttestationRenderer",x,this.TODO_true);
+		this.g(x.playerAttestationRenderer);
 	}
 	/** @arg {PaidContentOverlayRenderer} x */
 	PaidContentOverlayRenderer(x) {
-		this.save_keys("PaidContentOverlayRenderer",x,this.TODO_true);
+		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {EndscreenRenderer} x */
 	EndscreenRenderer(x) {
-		this.save_keys("EndscreenRenderer",x,this.TODO_true);
+		this.EndscreenData(x.endscreenRenderer);
+	}
+	/** @arg {EndscreenData} x */
+	EndscreenData(x) {
+		this.z(x.elements,a=>this.EndscreenElementRenderer(a));
+	}
+	/** @arg {EndscreenElementRenderer} x */
+	EndscreenElementRenderer(x) {
+		this.EndscreenElementData(x.endscreenElementRenderer);
+	}
+	/** @arg {EndscreenElementData} x */
+	EndscreenElementData(x) {
+		this.primitive_of(x.aspectRatio,"number");
 	}
 	/** @arg {CaptionsRenderer} x */
 	CaptionsRenderer(x) {
-		this.save_keys("CaptionsRenderer",x,this.TODO_true);
+		this.g(x.playerCaptionsTracklistRenderer);
 	}
 	/** @arg {import("./yt_json_types/ActionSetPlaylistVideoOrder").ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
-		this.save_keys("ActionSetPlaylistVideoOrder",x,this.TODO_true);
+		this.Accessibility(x.accessibility);
 	}
 	/** @arg {CustomEmoji} x */
 	CustomEmoji(x) {
-		this.save_keys("CustomEmoji",x,this.TODO_true);
+		this.primitive_of(x.emojiId,"string");
+		this.EmojiImage(x.image);
+	}
+	/** @arg {import("./yt_json_types/EmojiImage").EmojiImage} x */
+	EmojiImage(x) {
+		this.Accessibility(x.accessibility);
+		this.z(x.thumbnails,a=>this.ThumbnailItem(a));
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
-		this.save_keys("LoggingDirectives",x,this.TODO_true);
+		this.primitive_of(x.enableDisplayloggerExperiment,"boolean");
 	}
 	/** @arg {FulfillmentContent} x */
 	FulfillmentContent(x) {
-		this.save_keys("FulfillmentContent",x,this.TODO_true);
+		this.FulfilledLayout(x.fulfilledLayout);
+	}
+	/** @arg {FulfilledLayout} x */
+	FulfilledLayout(x) {
+		this.InFeedAdLayoutData(x.inFeedAdLayoutRenderer);
+	}
+	/** @arg {InFeedAdLayoutData} x */
+	InFeedAdLayoutData(x) {
+		this.AdLayoutMetadata(x.adLayoutMetadata);
+	}
+	/** @arg {AdLayoutMetadata} x */
+	AdLayoutMetadata(x) {
+		this.AdLayoutLoggingData(x.adLayoutLoggingData);
 	}
 	/** @arg {DesktopTopbarData} x */
 	DesktopTopbarData(x) {
-		this.save_keys("DesktopTopbarRenderer",x,this.TODO_true);
+		this.ButtonRenderer(x.a11ySkipNavigationButton);
 	}
 	/** @arg {SignalNavigationEndpointData} x */
 	SignalNavigationEndpointData(x) {
-		this.save_keys("SignalNavigationEndpointData",x,this.TODO_true);
+		switch(x.signal) {
+			case "CHANNEL_SWITCHER": break;
+			default: debugger;
+		}
 	}
 	/** @arg {SignOutEndpointData} x */
 	SignOutEndpointData(x) {
-		this.save_keys("SignOutEndpointData",x,this.TODO_true);
+		this.primitive_of(x.hack,"boolean");
 	}
 	/** @arg {GetAccountsListInnertubeEndpointData} x */
 	GetAccountsListInnertubeEndpointData(x) {
-		this.save_keys("GetAccountsListInnertubeEndpointData",x,this.TODO_true);
+		switch(x.requestType) {
+			case "ACCOUNTS_LIST_REQUEST_TYPE_CHANNEL_SWITCHER": break;
+			default: debugger;
+		}
 	}
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
-		this.save_keys("PlayerAnnotationsExpandedData",x,this.TODO_true);
+		this.g(x);
 	}
 	/** @arg {PlayabilityStatus} x */
 	PlayabilityStatus(x) {
-		this.save_keys("PlayabilityStatus",x,this.TODO_true);
+		this.g(x.contextParams);
 	}
 	/** @arg {PlaybackTracking} x */
 	PlaybackTracking(x) {
-		this.save_keys("PlaybackTracking",x,this.TODO_true);
+		this.UrlAndElapsedMediaTime(x.atrUrl);
+	}
+	/** @arg {UrlAndElapsedMediaTime} x */
+	UrlAndElapsedMediaTime(x) {
+		console.log(x.baseUrl);
+		debugger;
 	}
 	/** @arg {DesktopWatchAdsData} x */
 	DesktopWatchAdsData(x) {
-		this.save_keys("DesktopWatchAdsData",x,this.TODO_true);
+		this.GutParams(x.gutParams);
+	}
+	/** @arg {GutParams} x */
+	GutParams(x) {
+		console.log(x.tag);
+		debugger;
 	}
 	/** @arg {InlineSurveyData} x */
 	InlineSurveyData(x) {
-		this.save_keys("InlineSurveyData",x,this.TODO_true);
+		console.log(x.dismissalEndpoint);
+		debugger;
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
-		this.save_keys("ChannelResponse",x,this.TODO_true);
+		this.TwoColumnBrowseResultsRenderer(x.contents);
 	}
 	/** @arg {SearchEndpointData} x */
 	SearchEndpointData(x) {
@@ -7049,59 +7186,91 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SetSettingEndpointData} x */
 	SetSettingEndpointData(x) {
-		this.save_keys("SetSettingEndpointData",x,this.TODO_true);
+		if(x.boolValue!==void 0) {
+			this.primitive_of(x.boolValue,"boolean");
+		}
+		console.log("[setting_item_id]",x.settingItemId);
 	}
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
-		this.save_keys("SignalServiceEndpointData",x,this.TODO_true);
+		this.z(x.actions,a=>this.ServiceEndpointAction(a));
+	}
+	/** @arg {ServiceEndpointAction} x */
+	ServiceEndpointAction(x) {
+		this.clickTrackingParams(x.clickTrackingParams);
 	}
 	/** @arg {FeedFilterChipBarRenderer} x */
 	FeedFilterChipBarRenderer(x) {
-		this.save_keys("FeedFilterChipBarRenderer",x,this.TODO_true);
+		this.FeedFilterChipBarData(x.feedFilterChipBarRenderer);
+	}
+	/** @arg {FeedFilterChipBarData} x */
+	FeedFilterChipBarData(x) {
+		this.z(x.contents,a=>this.ChipCloudChipRenderer(a));
+	}
+	/** @arg {ChipCloudChipRenderer} x */
+	ChipCloudChipRenderer(x) {
+		this.g(x.chipCloudChipRenderer);
 	}
 	/** @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {
-		this.save_keys("FeedTabbedHeaderRenderer",x,this.TODO_true);
+		this.text_t(x.title);
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
-		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
+		this.z(x.mutations,a=>this.EntityMutationItem(a));
+		this.TimestampWithNanos(x.timestamp);
+	}
+	/** @arg {TimestampWithNanos} x */
+	TimestampWithNanos(x) {
+		this.primitive_of(x.nanos,"number");
+		this.primitive_of(x.seconds,"string");
+	}
+	/** @arg {EntityMutationItem} x */
+	EntityMutationItem(x) {
+		console.log(x.entityKey);
+		debugger;
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
-		this.save_keys("WatchEndpointData",x,this.TODO_true);
+		this.parse_video_id(x.videoId);
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
-		this.save_keys("AccountMenuJson",x,this.TODO_true);
+		this.z(x.actions,a=>this.OpenPopupActionData(a));
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
-		this.save_keys("YtPageState",x,this.TODO_true);
+		switch(x.pageType) {
+			case "browse": x.response; break;
+		};
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
-		this.save_keys("YtSuccessResponse",x,this.TODO_true);
+		this.ResponseContext(x.responseContext);
 	}
-	/** @private @arg {AttGet} x */
+	/** @arg {AttGet} x */
 	AttGet(x) {
-		this.save_keys("AttGet",x,this.TODO_true);
+		this.AttBgChallenge(x.bgChallenge);
+	}
+	/** @arg {AttBgChallenge} x */
+	AttBgChallenge(x) {
+		console.log("bg_interpreter_url",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
-		this.save_keys("GuideJsonType",x,this.TODO_true);
+		this.g(x);
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		this.save_keys("ReelWatchSequenceResponse",x,this.TODO_true);
+		this.g(x);
 	}
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
-		this.save_keys("ReelResponse",x,this.TODO_true);
+		this.g(x);
 	}
 	/** @arg {CompactLinkData} x */
 	CompactLinkData(x) {
-		x;	
+		this.g(x);
 	}
 }
 //#endregion
