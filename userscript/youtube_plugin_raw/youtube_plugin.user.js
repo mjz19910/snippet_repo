@@ -3898,6 +3898,8 @@ class IndexedDbAccessor {
 	database_open=false;
 	/** @type {{v: string}[]} */
 	arr=[];
+	/** @type {{v: string}[]} */
+	committed_data=[];
 	/** @arg {{v: string}} obj */
 	put(obj) {
 		if(this.database_open) {
@@ -3961,37 +3963,62 @@ class IndexedDbAccessor {
 	/** @arg {IDBDatabase} db @arg {Event} event */
 	onTransactionComplete(db,event) {
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
+		for(let i=this.arr.length-1;i>=0;i--) {
+			if(!this.committed_data.includes(this.arr[i])) continue;
+			this.arr.splice(i,1);
+		}
+		if(this.arr.length>0) {
+			console.log("transaction done, but not all data was committed");
+		} else {
+			this.committed_data.length=0;
+		}
 		this.database_open=false;
 		db.close();
 	}
 	/** @arg {IDBTransaction} transaction */
 	consume_data(transaction) {
 		const store=transaction.objectStore("video_id");
-		this.consume_data_with_store(transaction,store);
+		this.consume_data_with_store(store);
 	}
-	/** @arg {IDBTransaction} tx @arg {IDBObjectStore} store */
-	consume_data_with_store(tx,store) {
+	/** @arg {IDBObjectStore} store */
+	consume_data_with_store(store) {
 		const cursor_req=store.openCursor();
-		/** @type {{v: string}|null} */
-		let cursor_data=null;
+		/** @type {{v: string}[]} */
+		let database_data=[];
 		cursor_req.onsuccess=() => {
 			const cursor=cursor_req.result;
 			if(cursor) {
-				cursor_data=cursor.value;
-				if(cursor_data) {
-					let data=cursor_data;
-					let res=this.arr.find(e=>e.v===data.v);
-					if(res) {
-						console.log(res,data);
-					}
-				}
+				database_data.push(cursor.value);
 				cursor.continue();
 			} else {
-				tx.commit();
+				/** @type {Map<string,{v:string}>} */
+				let database_map=new Map;
+				/** @type {Map<string,{v:string}>} */
+				let new_data_map=new Map;
+				database_data.forEach(e=>database_map.set(e.v,e));
+				for(let data of this.arr) {
+					if(database_map.has(data.v)) {
+						this.committed_data.push(data);
+						let ok=get_keys_of(data);
+						let in_db=database_map.get(data.v);
+						if(!in_db) continue;
+						let ok_db=get_keys_of(in_db);
+						if(eq_keys(ok,ok_db)) continue;
+						console.log("[database_needs_obj_merge]");
+						console.log("[obj_merge_new]",data);
+						console.log("[obj_merge_cur]",in_db);
+						debugger;
+					} else if(new_data_map.has(data.v)) {
+						this.committed_data.push(data);
+						continue;
+					} else {
+						new_data_map.set(data.v,data);
+					}
+				}
+				[...new_data_map.values()].forEach(e=>{
+					this.add_data_to_store(store,e);
+				});
 			}
-		}
-		for(let data of this.arr) {
-			data;
 		}
 	}
 	/** @arg {IDBObjectStore} store @arg {{v:string}} data */
@@ -4000,6 +4027,7 @@ class IndexedDbAccessor {
 		request.onerror=event => console.log("IDBRequest: error",event);
 		request.onsuccess=event => {
 			if(this.log_all_events) console.log("IDBRequest: success",event);
+			this.committed_data.push(data);
 		};
 	}
 	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
@@ -6293,7 +6321,7 @@ class HandleTypes extends BaseService {
 	AdSlotMetadata(x) {
 		const {slotId: a,slotType: b,slotPhysicalPosition: c,...y}=x;
 		let ss=split_string(a,":");
-		console.log("AdSlot.slotId",ss);
+		this.z(ss,a=>this.primitive_of(a,"string"));
 		this.save_string("AdSlot.slotType",b);
 		this.save_number("AdSlot.slotPhysicalPosition",c);
 		this.g(y);

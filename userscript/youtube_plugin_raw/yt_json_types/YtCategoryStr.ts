@@ -3,4 +3,5 @@ type YtCategoryStr=[
 	"Howto & Style",
 	"People & Blogs",
 	"Music",
+	"Gaming",
 ][number];
