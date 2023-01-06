@@ -7091,7 +7091,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnSearchResultsRenderer} x */
 	TwoColumnSearchResultsRenderer(x) {
-		x.twoColumnSearchResultsRenderer;
+		this.TwoColumnSearchResults(x.twoColumnSearchResultsRenderer);
 	}
 	/** @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
