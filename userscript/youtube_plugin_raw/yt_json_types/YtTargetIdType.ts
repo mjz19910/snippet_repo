@@ -3,5 +3,6 @@ type YtTargetIdType=[
 	CommentsSectionContinuationAction['targetId'],
 	BrowseFeedAction['targetId'],
 	UpdateEngagementPanelData['targetId'],
-	TranscriptSearchPanelData['targetId']
+	TranscriptSearchPanelData['targetId'],
+	"library-guide-item",
 ][number];

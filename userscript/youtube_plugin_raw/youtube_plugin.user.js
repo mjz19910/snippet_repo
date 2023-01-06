@@ -5226,11 +5226,12 @@ class HandleTypes extends BaseService {
 		this.text_t(e);
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
-		let {serviceEndpoint: i,...y}=h;
+		let {serviceEndpoint: i,targetId: j,...y}=h;
 		if(i) this.ServiceEndpoint(i,a=>{
 			const {reelWatchEndpoint: b,...y}=a; this.g(y);
 			this.ReelWatchEndpointData(b);
 		});
+		if(j) this.parse_target_id(j);
 		this.g(y);
 	}
 	/** @template {{}} T @arg {import("./yt_json_types/ServiceEndpoint").ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
@@ -6388,6 +6389,7 @@ class HandleTypes extends BaseService {
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "engagement-panel-searchable-transcript": return;
 			case "watch-next-feed": return;
+			case "library-guide-item": return;
 			default:
 		}
 		switch(x) {
