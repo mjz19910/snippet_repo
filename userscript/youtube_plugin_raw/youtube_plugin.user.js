@@ -4907,9 +4907,13 @@ class HandleTypes extends BaseService {
 			case 2: this.parse_url_3(v); break;
 		}
 	}
+	parse_channel_section_url(x) {
+		x;
+	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any,any]>} x */
 	parse_url_3(x) {
 		if(this.str_starts_with_at_0(x,"@")) {
+			this.parse_channel_section_url(x[1]);
 			return;
 		}
 		switch(x[0]) {
