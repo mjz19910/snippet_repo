@@ -4154,11 +4154,13 @@ class HandleTypes extends BaseService {
 		const {opportunityType: a,adSlotAndLayoutMetadata: b,isInitialLoad: c,enablePacfLoggingWeb: d,...y}=x; this.g(y);
 		if(a!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
 		this.z(b,a => this.AdSlotAndLayoutMetadataItem(a));
+		this.z([c,d],a => this.primitive_of(a,"boolean"));
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		const {adLayoutMetadata: a,adSlotMetadata: b,...y}=x; this.g(y);
 		this.z(a,a => this.AdLayoutMetadataItem(a));
+		this.AdSlotMetadata(b);
 	}
 	/** @arg {AdLayoutMetadataItem} x */
 	AdLayoutMetadataItem(x) {
