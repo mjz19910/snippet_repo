@@ -1,0 +1,1 @@
+type FormatFps=50;

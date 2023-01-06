@@ -10,7 +10,7 @@ type AdaptiveFormatItem={
 	lastModified: string;
 	contentLength: string;
 	quality: FormatQuality;
-	fps: 50;
+	fps: FormatFps;
 	qualityLabel: "2160p50";
 	projectionType: "RECTANGULAR";
 	averageBitrate: number;

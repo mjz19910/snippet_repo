@@ -7237,9 +7237,45 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
-		const {itag,url,...y}=x; this.g(y);
+		const {
+			itag,url,mimeType,bitrate,width,height,initRange,indexRange,
+			...a
+		}=x;
 		this.primitive_of(itag,"number");
 		this.primitive_of(url,"string");
+		this.save_string("mime-type",mimeType);
+		this.primitive_of(bitrate,"number");
+		this.primitive_of(width,"number");
+		this.primitive_of(height,"number");
+		this.YtRange(initRange);
+		this.YtRange(indexRange);
+		const {
+			lastModified,contentLength,quality,fps,
+			qualityLabel,projectionType,averageBitrate,colorInfo,
+			approxDurationMs,
+			...y
+		}=a;
+		this.primitive_of(lastModified,"string");
+		this.primitive_of(contentLength,"string");
+		this.parse_format_quality(quality);
+		this.parse_format_fps(fps);
+		if(qualityLabel!=="2160p50") debugger;
+		this.g(y);
+	}
+	/** @arg {FormatFps} x */
+	parse_format_fps(x) {
+		if(x!==50) debugger;
+	}
+	/** @arg {FormatQuality} x */
+	parse_format_quality(x) {
+		switch(x) {
+			case "hd2160": break;
+			default: debugger;
+		}
+	}
+	/** @arg {YtRange} x */
+	YtRange(x) {
+		this.z([x.end,x.start],a=>this.primitive_of(a,"string"));
 	}
 	/** @arg {import("./yt_json_types/VideoQualityPromoData").VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
