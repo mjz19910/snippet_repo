@@ -4519,10 +4519,16 @@ class HandleTypes extends BaseService {
 	ResponseReceivedAction(x) {
 		if("adsControlFlowOpportunityReceivedCommand" in x) {
 			return this.AdsControlFlowOpportunityReceivedCommand(x);
-		} else if("continuationItems" in x) {
-			return this.ReloadContinuationItemsCommandData(x);
+		} else if("reloadContinuationItemsCommand" in x) {
+			return this.ReloadContinuationItemsCommand(x);
 		}
 		debugger;
+	}
+	/** @arg {ReloadContinuationItemsCommand} x */
+	ReloadContinuationItemsCommand(x) {
+		const {clickTrackingParams: a,reloadContinuationItemsCommand: b,...y}=x; this.g(y);
+		this.clickTrackingParams(a);
+		this.ReloadContinuationItemsCommandData(b);
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
@@ -7309,7 +7315,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayabilityStatus} x */
 	PlayabilityStatus(x) {
-		this.g(x.contextParams);
+		decode_url_b64_proto_obj(x.contextParams);
 	}
 	/** @arg {PlaybackTracking} x */
 	PlaybackTracking(x) {
