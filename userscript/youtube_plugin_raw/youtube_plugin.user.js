@@ -4874,33 +4874,104 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		if(x==="/") return;
-		let [f,up]=split_string_once(x,"/");
-		if(f!=="") {
+		let up=split_string_once(x,"/");
+		if(up[0]!=="") {
 			debugger;
-			return
+			return;
 		}
-		let u1=split_string_once(up,"/");
-		switch(u1.length) {
-			case 1: {
-				let up_sp=split_string_once(u1[0],"?");
-				switch(up_sp.length) {
-					case 1: up_sp; break;
-				}
-				switch(up_sp[0]) {
-					case "account": break;
-				}
-			} return;
-		}
+		this.parse_url_1(up[1]);
 	}
-	/** @arg {YtUrlFormat} x */
-	get_parse_url_1(x) {
-		let [f,up]=split_string_once(x,"/");
-		if(f!=="") throw new Error();
-		return up;
+	/**
+	* @template {string[]} T
+	* @template {string} U
+	* @arg {U} w
+	* @arg {T} x
+	* @returns {x is [string,`${U}${string}`,...string[]]} */
+	str_starts_with_at_1(x,w) {
+		return this.str_starts_with(x[1],w);
 	}
-	/** @arg {SplitOnce<YtUrlFormat,"/">} x */
+	/**
+	* @template {string[]} T
+	* @template {string} U
+	* @arg {U} w
+	* @arg {T} x
+	* @returns {x is [`${U}${string}`,...string[]]} */
+	str_starts_with_at_0(x,w) {
+		return this.str_starts_with(x[0],w);
+	}
+	/** @arg {ParseUrlStr_1} x */
 	parse_url_1(x) {
-		x;
+		let v=split_string_once(x,"/");
+		switch(v.length) {
+			case 1: this.parse_url_2(v[0]); break;
+			case 2: this.parse_url_3(v); break;
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any,any]>} x */
+	parse_url_3(x) {
+		if(this.str_starts_with_at_0(x,"@")) {
+			return;
+		}
+		switch(x[0]) {
+			case "feed": return this.parse_feed_url(x);
+			case "shorts": return this.parse_shorts_url(x);
+			default: debugger; return
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
+	parse_shorts_url(x) {
+		console.log("[shorts_video]",x[1]);
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
+	parse_feed_url(x) {
+		let [,a]=x;
+		switch(a) {case "history": return;}
+		switch(a) {case "library": return;}
+		switch(a) {case "subscriptions": return;}
+		switch(a) {
+			case "what_to_watch": return;
+			default: debugger; return;
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
+	parse_url_2(x) {
+		/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+		function str_is_search(x) {
+			return x.includes("?");
+		}
+		if(str_is_search(x)) {
+			let a=split_string(x,"?");
+			switch(a[0]) {
+				case "playlist": this.parse_playlist_page_url(a[1]); break;
+				case "watch": this.parse_watch_page_url(a[1]); break;
+			}
+			return;
+		}
+		if(this.str_starts_with(x,"@")) {
+			return;
+		}
+		if(this.str_starts_with(x,"account")) {
+			return this.parse_account_url(x);
+		}
+		switch(x) {
+			case "channel_switcher": return;
+			default: debugger; return;
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
+	parse_account_url(x) {
+		let a=split_string(x,"_");
+		if(a.length===1) return;
+		switch(a[1]) {
+			default: debugger; break;
+			case "advanced": break;
+			case "billing": break;
+			case "notifications": break;
+			case "privacy": break;
+			case "sharing": break;
+			case "playback": break;
+		}
+		return;
 	}
 	/** @arg {YtPlaylistUrlParamsFormat} x */
 	parse_playlist_page_url(x) {
@@ -5590,12 +5661,12 @@ class HandleTypes extends BaseService {
 					if(!at_2) continue;
 					let at_1_f=at_1.map(a => this.decode_template_element(a));
 					let at_2_f=at_2.map(a => this.decode_template_element(a));
-					at_1_f.forEach(a=>{
+					at_1_f.forEach(a => {
 						const {arr,...y}=a;
 						console.log("[template_child_iter_1]",y,arr??[]);
 						a;
 					});
-					at_2_f.forEach(a=>{
+					at_2_f.forEach(a => {
 						const {arr,...y}=a;
 						console.log("[template_child_iter_2]",y,arr??[]);
 						a;
@@ -6513,7 +6584,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommandTemplate<ReelWatchEndpoint>[]} x */
 	ReelWatchEntries(x) {
-		this.z(x,a=>this.CommandTemplate(a,a=>this.ReelWatchEndpoint(a)));
+		this.z(x,a => this.CommandTemplate(a,a => this.ReelWatchEndpoint(a)));
 	}
 	/** @template {EndpointBase} T @arg {T} x */
 	handle_common_endpoint(x) {
