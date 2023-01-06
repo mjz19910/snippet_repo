@@ -5241,12 +5241,22 @@ class HandleTypes extends BaseService {
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
 		let {serviceEndpoint: i,targetId: j,...y}=h;
-		if(i) this.ServiceEndpoint(i,a=>{
-			const {reelWatchEndpoint: b,...y}=a; this.g(y);
-			this.ReelWatchEndpointData(b);
-		});
+		if(i) this.ServiceEndpoint(i,a=>this.ServiceEndpointPlugin(a));
 		if(j) this.parse_target_id(j);
 		this.g(y);
+	}
+	/** @arg {import("./yt_json_types/GuideEntryServicePlugins").GuideEntryServicePlugins} x */
+	ServiceEndpointPlugin(x) {
+		if("reelWatchEndpoint" in x) {
+			const {reelWatchEndpoint: a,...y}=x; this.g(y);
+			return this.ReelWatchEndpointData(a);
+		} else if("signalServiceEndpoint" in x) {
+			const {signalServiceEndpoint: a,...y}=x; this.g(y);
+			this.SignalServiceEndpointData(a);
+		} else {
+			debugger;
+		}
+		x.signalServiceEndpoint;
 	}
 	/** @template {{}} T @arg {import("./yt_json_types/ServiceEndpoint").ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
 	ServiceEndpoint(x,f) {
@@ -6855,7 +6865,11 @@ class HandleTypes extends BaseService {
 		const {videoId: a,playerParams: b,overlay: c,params: d,sequenceProvider: f,inputType: g,...y}=x; this.g(y);
 		let h_=this.x.get("string_parser");
 		if(a) h_.parse_video_id(a);
-		
+		let dec_1=decode_url_b64_proto_obj(b);
+		if(dec_1) console.log("[reel_watch_endpoint_player_params]",...dec_1);
+		let dec_2=decode_url_b64_proto_obj(decodeURIComponent(d));
+		if(dec_2) console.log("[reel_watch_endpoint_params]",...dec_2);
+
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
@@ -7089,7 +7103,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelPlayerOverlayData} x */
 	ReelPlayerOverlayData(x) {
-		this.g(x.likeButton);
+		const {style: a,trackingParams: b,reelPlayerNavigationModel: c,...y}=x; this.g(y);
+		if(a!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.trackingParams(b);
+		if(c!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
 	}
 	/** @arg {ConnectedAppData} x */
 	ConnectedAppData(x) {

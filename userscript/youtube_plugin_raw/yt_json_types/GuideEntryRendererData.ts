@@ -1,5 +1,5 @@
 import {Accessibility} from "./Accessibility.js";
-import {ReelWatchEndpointPlugin} from "./ReelWatchEndpointPlugin.js";
+import {GuideEntryServicePlugins} from "./GuideEntryServicePlugins";
 import {ServiceEndpoint} from "./ServiceEndpoint";
 import {TextT} from "./TextT.js";
 export type GuideEntryRendererData={
@@ -8,7 +8,7 @@ export type GuideEntryRendererData={
 	trackingParams: string;
 	formattedTitle: TextT;
 	accessibility: Accessibility;
-	serviceEndpoint?: ServiceEndpoint<ReelWatchEndpointPlugin>;
+	serviceEndpoint?: ServiceEndpoint<GuideEntryServicePlugins>;
 	entryData?: GuideEntryData;
 	isPrimary?: boolean;
 	targetId?: "library-guide-item";
