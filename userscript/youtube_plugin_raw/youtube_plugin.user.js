@@ -7235,13 +7235,16 @@ class HandleTypes extends BaseService {
 	StreamingData(x) {
 		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
+	format_itag_arr=[133,134,135,136,140,160,242,243,244,247,249,250,251,278,298,299,302,303,308,315];
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
 			itag,url,mimeType,bitrate,width,height,initRange,indexRange,
 			...a
 		}=x;
-		this.primitive_of(itag,"number");
+		if(!this.format_itag_arr.includes(itag)) {
+			debugger;
+		}
 		this.primitive_of(url,"string");
 		this.save_string("mime-type",mimeType);
 		this.primitive_of(bitrate,"number");
@@ -7251,7 +7254,7 @@ class HandleTypes extends BaseService {
 		this.YtRange(indexRange);
 		const {
 			lastModified,contentLength,quality,fps,
-			qualityLabel,projectionType,averageBitrate,colorInfo,
+			qualityLabel: ql,projectionType,averageBitrate,colorInfo,
 			approxDurationMs,
 			...y
 		}=a;
@@ -7259,23 +7262,40 @@ class HandleTypes extends BaseService {
 		this.primitive_of(contentLength,"string");
 		this.parse_format_quality(quality);
 		this.parse_format_fps(fps);
-		if(qualityLabel!=="2160p50") debugger;
+		if(ql) this.parse_format_quality_label(ql);
+		if(projectionType!=="RECTANGULAR") debugger;
+		this.primitive_of(averageBitrate,"number");
+		this.FormatColorInfo(colorInfo);
 		this.g(y);
+	}
+	/** @arg {FormatColorInfo} x */
+	FormatColorInfo(x) {
+		const {primaries: a,transferCharacteristics: b,matrixCoefficients: c,...y}=x; this.g(y);
+		switch(a) {case "COLOR_PRIMARIES_BT709": break; default: debugger;};
+		switch(b) {case "COLOR_TRANSFER_CHARACTERISTICS_BT709": break; default: debugger;};
+		switch(c) {case "COLOR_MATRIX_COEFFICIENTS_BT709": break; default: debugger;};
+	}
+	format_quality_label_arr=["2160p50","1440p50","1080p50","720p","720p50","480p","360p","240p","144p"];
+	/** @arg {QualityLabel} x */
+	parse_format_quality_label(x) {
+		if(!this.format_quality_label_arr.includes(x)) {
+			debugger;
+		}
 	}
 	/** @arg {FormatFps} x */
 	parse_format_fps(x) {
 		if(x!==50) debugger;
 	}
+	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 	/** @arg {FormatQuality} x */
 	parse_format_quality(x) {
-		switch(x) {
-			case "hd2160": break;
-			default: debugger;
+		if(!this.format_quality_arr.includes(x)) {
+			debugger;
 		}
 	}
 	/** @arg {YtRange} x */
 	YtRange(x) {
-		this.z([x.end,x.start],a=>this.primitive_of(a,"string"));
+		this.z([x.end,x.start],a => this.primitive_of(a,"string"));
 	}
 	/** @arg {import("./yt_json_types/VideoQualityPromoData").VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
