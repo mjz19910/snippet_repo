@@ -1470,7 +1470,6 @@ class FilterHandlers {
 	}
 	/** @arg {ApiUrlFormatFull} x */
 	use_template_url(x) {
-		debugger;
 		const res_parse=create_from_parse(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);
