@@ -3348,6 +3348,7 @@ class ECatcherService extends BaseService {
 				[24440901,24443373],
 				[24401504,24422508],
 				[24442137],
+				[24447336],
 			].flat(),
 		},
 	};
@@ -7235,7 +7236,8 @@ class HandleTypes extends BaseService {
 	StreamingData(x) {
 		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
-	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,249,250,251,278,298,299,302,303,308,315];
+	/** @type {FormatItag[]} */
+	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315];
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
