@@ -11,4 +11,5 @@ export type GuideEntryRendererData={
 	serviceEndpoint?: ServiceEndpoint<ReelWatchEndpointPlugin>;
 	entryData?: GuideEntryData;
 	isPrimary?: boolean;
+	targetId?: "library-guide-item";
 };
