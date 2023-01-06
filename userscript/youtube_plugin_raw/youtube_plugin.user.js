@@ -7238,7 +7238,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {FormatItag[]} */
 	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315];
-	/** @template {Format140|Format137} T @arg {T} x */
+	/** @template {FormatLike140} T @arg {T} x */
 	format_140_p1(x) {
 		const {itag: a,url: b,mimeType: c,bitrate: d,...y}=x;
 		if(!this.format_itag_arr.includes(a)) {
@@ -7249,7 +7249,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(d,"number");
 		return y;
 	};
-	/** @template {Format140|Format137} T @template {Omit<T,"url"|"itag"|"mimeType"|"bitrate">} U @arg {U} x @returns {Omit<U,"indexRange"|"initRange">} */
+	/** @template {Omit<FormatLike140,"url"|"itag"|"mimeType"|"bitrate">} T @arg {T} x */
 	format_140_p2(x) {
 		const {initRange,indexRange,...y}=x;
 		this.YtRange(initRange);
@@ -7289,45 +7289,38 @@ class HandleTypes extends BaseService {
 		const {loudnessDb,...y}=p4(c); this.g(y);
 		this.primitive_of(loudnessDb,"number");
 	}
-	/** @arg {Format137} x */
-	v_format_137(x) {
-		console.log("137 like",x.itag);
+	/** @template {FormatLike140} T @arg {T} x */
+	v_format_140_filt(x) {
+		console.log("140 like",x.itag);
 		const a=this.format_140_p1(x);
 		const b=this.format_140_p2(a);
-		/** @arg {typeof b} x */
-		const p1=x => {
-			const {lastModified,contentLength,width,height,...y}=x;
-			this.primitive_of(lastModified,"string");
-			this.primitive_of(contentLength,"string");
-			this.primitive_of(width,"number")
-			this.primitive_of(height,"number");
-			return y;
-		};
-		const c=p1(b); c;
-		/** @arg {typeof c} x */
+		const c=b; c;
+		/** @template {typeof c} T @arg {T} x */
 		const p2=x=> {
-			const {quality,projectionType,averageBitrate,...y}=x;
+			const {quality,projectionType,...y}=x;
 			this.parse_format_quality(quality);
 			if(projectionType!=="RECTANGULAR") debugger;
-			this.primitive_of(averageBitrate,"number");
 			return y;
 		}
-		const d=p2(c); d;
-		/** @arg {typeof d} x */
-		const p3=x=> {
-			const {fps,qualityLabel,approxDurationMs,...y}=x;
-			if(fps!==30) debugger;
-			if(qualityLabel!=="1080p") debugger;
-			this.primitive_of(approxDurationMs,"string");
-			return y;
-		}
-		const y=p3(d); this.g(y);
+		const d=p2(c);
+		const y=d;
+		return y;
+	}
+	/** @arg {Format248} x */
+	v_format_248(x) {
+		const {colorInfo,...a}=x;
+		this.FormatColorInfo(colorInfo);
+		let y=this.v_format_140_filt(a);
+		this.g(y);
+	}
+	/** @template {Extract<AdaptiveFormatItem,{height:number}>} T @arg {T} x */
+	v_format_137(x) {
+		let y=this.v_format_140_filt(x); this.g(y);
 	}
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		if(x.itag===248) {
-			const {colorInfo,...y}=x;
-			return;
+			return this.v_format_248(x);
 		}
 		// 140
 		if("audioSampleRate" in x) {
