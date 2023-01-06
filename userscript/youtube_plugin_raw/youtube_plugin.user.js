@@ -4129,6 +4129,54 @@ class HandleTypes extends BaseService {
 		console.log("pt",x.page,x);
 		debugger;
 	}
+	/** @template {{clickTrackingParams: string}} T @arg {T} x */
+	handle_clickTrackingParams(x) {
+		const {clickTrackingParams: a,...y}=x;
+		if(a!==void 0) this.clickTrackingParams(a);
+		return y;
+	}
+	/** @arg {ResponseReceivedAction} x */
+	ResponseReceivedAction(x) {
+		if("adsControlFlowOpportunityReceivedCommand" in x) {
+			return this.AdsControlFlowOpportunityReceivedCommand(x);
+		} else if("continuationItems" in x) {
+			return this.ReloadContinuationItemsCommandData(x);
+		}
+		debugger;
+	}
+	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
+	AdsControlFlowOpportunityReceivedCommand(x) {
+		let a=this.handle_clickTrackingParams(x);
+		this.w(a,a => this.AdsControlFlowOpportunityReceivedCommandData(a));
+	}
+	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
+	AdsControlFlowOpportunityReceivedCommandData(x) {
+		const {opportunityType: a,adSlotAndLayoutMetadata: b,isInitialLoad: c,enablePacfLoggingWeb: d,...y}=x; this.g(y);
+		if(a!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
+		this.z(b,a => this.AdSlotAndLayoutMetadataItem(a));
+	}
+	/** @arg {AdSlotAndLayoutMetadataItem} x */
+	AdSlotAndLayoutMetadataItem(x) {
+		const {adLayoutMetadata: a,adSlotMetadata: b,...y}=x; this.g(y);
+		this.z(a,a => this.AdLayoutMetadataItem(a));
+	}
+	/** @arg {AdLayoutMetadataItem} x */
+	AdLayoutMetadataItem(x) {
+		const {layoutType: a,layoutId: b,adLayoutLoggingData: c,...y}=x; this.g(y);
+		if(a!=="LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE") debugger;
+		this.parse_layout_id(b);
+		this.AdLayoutLoggingData(c);
+	}
+	/** @arg {string} x */
+	parse_layout_id(x) {
+		console.log("[ad_layout_meta_layout_id]",x);
+	}
+	/** @arg {AdLayoutLoggingData} x */
+	AdLayoutLoggingData(x) {
+		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
+		let dec=decode_b64_proto_obj(a);
+		console.log("[ad_serving_data_entry]",dec);
+	}
 	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
 		this.save_keys("BrowseResponseContent",x,true);
@@ -4934,7 +4982,7 @@ class HandleTypes extends BaseService {
 		switch(x[0]) {
 			case "feed": return this.parse_feed_url(x);
 			case "shorts": return this.parse_shorts_url(x);
-			default: debugger; return
+			default: debugger; return;
 		}
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
@@ -6628,6 +6676,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_video_id(x) {
+		indexed_db.put({v: x});
 		console.log("[video_id]",x);
 	}
 	/** @arg {JsonFeedbackData} x */
@@ -6929,10 +6978,6 @@ class HandleTypes extends BaseService {
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		this.save_keys("EntityBatchUpdate",x,this.TODO_true);
-	}
-	/** @arg {ResponseReceivedAction} x */
-	ResponseReceivedAction(x) {
-		this.save_keys("ResponseReceivedAction",x,this.TODO_true);
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
