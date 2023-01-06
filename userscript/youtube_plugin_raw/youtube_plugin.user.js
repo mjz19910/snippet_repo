@@ -5730,10 +5730,6 @@ class HandleTypes extends BaseService {
 		const {thumbnail,trackingParams,...y}=x; this.g(y);
 		this.Thumbnail(x.thumbnail);
 	}
-	/** @arg {Thumbnail} x */
-	ThumbnailsListData(x) {
-		this.Thumbnail(x);
-	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
 		const {twoColumnWatchNextResults: a,...y}=x;
@@ -7226,9 +7222,22 @@ class HandleTypes extends BaseService {
 	EmojiPickerRenderer(x) {
 		this.g(x.emojiPickerRenderer);
 	}
-	/** @arg {PlayerAttestationRenderer} x */
+	/** @arg {import("./yt_json_types/PlayerAttestationRenderer").PlayerAttestationRenderer} x */
 	PlayerAttestationRenderer(x) {
-		this.g(x.playerAttestationRenderer);
+		this.PlayerAttestation(x.playerAttestationRenderer);
+	}
+	/** @arg {import("./yt_json_types/PlayerAttestation").PlayerAttestation} x */
+	PlayerAttestation(x) {
+		this.BotguardData(x.botguardData);
+	}
+	/** @arg {import("./yt_json_types/BotguardData").BotguardData} x */
+	BotguardData(x) {
+		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
+		this.UrlWrappedValueT(interpreterSafeUrl,a=>a);
+	}
+	/** @template T @arg {import("./yt_json_types/UrlWrappedValueT").UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
+	UrlWrappedValueT(x,f) {
+		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
 	/** @arg {PaidContentOverlayRenderer} x */
 	PaidContentOverlayRenderer(x) {
@@ -7328,8 +7337,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {UrlAndElapsedMediaTime} x */
 	UrlAndElapsedMediaTime(x) {
-		console.log(x.baseUrl);
-		debugger;
+		this.primitive_of(x.baseUrl,"string");
+		if(x.elapsedMediaTimeSeconds===void 0) {
+			debugger;
+		}
 	}
 	/** @arg {DesktopWatchAdsData} x */
 	DesktopWatchAdsData(x) {
