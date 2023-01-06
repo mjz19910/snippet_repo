@@ -1,1 +1,4 @@
-type SearchPyvData={};
+type SearchPyvData={
+	ads: AdSlotRenderer[];
+	trackingParams: string;
+};

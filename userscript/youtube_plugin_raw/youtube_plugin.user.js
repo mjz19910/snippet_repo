@@ -6635,7 +6635,17 @@ class HandleTypes extends BaseService {
 		this.trackingParams(b);
 		this.g(y);
 	}
-	item_section_map=new Map();
+	/** @type {ItemSectionItemMap} */
+	item_section_map={
+		connectedAppRenderer: "ConnectedAppData",
+		pageIntroductionRenderer: "PageIntroductionData",
+		playlistVideoListRenderer: "PlaylistVideoListData",
+		searchPyvRenderer: "SearchPyvData",
+		settingsOptionsRenderer: "SettingsOptionsData",
+		shelfRenderer: "ShelfData",
+		videoRenderer: "VideoData",
+		reelShelfRenderer: "ReelShelfData",
+	};
 	/** @arg {ItemSectionItem} c */
 	ItemSectionItem(c) {
 		let t=this;
@@ -6643,24 +6653,35 @@ class HandleTypes extends BaseService {
 		let [k]=y;
 		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
 		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
-		/** @template {GetMaybeKeys<typeof c>} T @arg {T} v @returns {ItemSectionItemMap[T]} */
-		let q=v => this.item_section_map.get(v);
+		/** @template {keyof ItemSectionItemMap} T @arg {T} v @returns {ItemSectionItemMap[T]} */
+		let q=v => this.item_section_map[v];
 		k="connectedAppRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="pageIntroductionRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="playlistVideoListRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="settingsOptionsRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="shelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		k="searchPyvRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="videoRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
+		k="reelShelfRenderer"; if(k in c) {const {[k]: a,...b}=c; n(this,a,b); return this[q(k)](a);}
 		let m=get_keys_of(c);
 		for(let k of m) {
-			if(this.item_section_map.has(k)) continue;
+			if(k in this.item_section_map) continue;
 			console.log('[new_section_item] [%s]',k);
 			debugger;
 		}
 	}
+	/** @arg {ReelShelfData} x */
+	ReelShelfData(x) {
+		this.g(x);
+	}
 	/** @arg {SearchPyvData} x */
 	SearchPyvData(x) {
-		this.g(x);
+		this.z(x.ads,a=>this.AdSlotRenderer(a));
+		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {AdSlotRenderer} x */
+	AdSlotRenderer(x) {
+		this.AdSlotData(x.adSlotRenderer);
 	}
 	/** @arg {PlayerStoryboardSpecRenderer} x */
 	PlayerStoryboardSpecRenderer(x) {

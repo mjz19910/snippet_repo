@@ -5,4 +5,6 @@ type ItemSectionItem=[
 	SearchPyvRenderer,
 	SettingsOptionRenderer,
 	ShelfRenderer,
+	VideoRenderer,
+	ReelShelfRenderer,
 ][number];

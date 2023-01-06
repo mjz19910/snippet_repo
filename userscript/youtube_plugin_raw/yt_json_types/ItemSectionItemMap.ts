@@ -1,16 +1,6 @@
-type ItemSectionItemMap={
-	connectedAppRenderer: "ConnectedAppData";
-	pageIntroductionRenderer: "PageIntroductionData";
-	playlistVideoListRenderer: "PlaylistVideoListData";
-	searchPyvRenderer: "SearchPyvData";
-	settingsOptionsRenderer: "SettingsOptionsData";
-	shelfRenderer: "ShelfData";
+type ItemSectionItemMap=Done.ItemSectionItemMap&{
+	reelShelfRenderer: "ReelShelfData";
 };
-type ItemSectionItemTypes={
-	connectedAppRenderer: ConnectedAppData;
-	pageIntroductionRenderer: PageIntroductionData;
-	playlistVideoListRenderer: PlaylistVideoListData;
-	searchPyvRenderer: SearchPyvData;
-	settingsOptionsRenderer: SettingsOptionsData;
-	shelfRenderer:ShelfData;
+type ItemSectionItemTypes=Done.ItemSectionItemTypes&{
+	reelShelfRenderer: ReelShelfData;
 };
