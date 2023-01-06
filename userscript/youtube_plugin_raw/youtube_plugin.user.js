@@ -7239,7 +7239,7 @@ class HandleTypes extends BaseService {
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
-			itag,url,mimeType,bitrate,width,height,initRange,indexRange,
+			itag,url,mimeType,bitrate,width: w,height: h,initRange,indexRange,
 			...a
 		}=x;
 		if(!this.format_itag_arr.includes(itag)) {
@@ -7248,16 +7248,22 @@ class HandleTypes extends BaseService {
 		this.primitive_of(url,"string");
 		this.save_string("mime-type",mimeType);
 		this.primitive_of(bitrate,"number");
-		this.primitive_of(width,"number");
-		this.primitive_of(height,"number");
+		if(w) this.primitive_of(w,"number");
+		if(h) this.primitive_of(h,"number");
 		this.YtRange(initRange);
 		this.YtRange(indexRange);
 		const {
 			lastModified,contentLength,quality,fps,
 			qualityLabel: ql,projectionType,averageBitrate,colorInfo: ci,
+			highReplication,
 			approxDurationMs,
 			...y
 		}=a; this.g(y);
+		switch(highReplication) {
+			case true:
+			case void 0: break;
+			default: debugger;
+		}
 		this.primitive_of(lastModified,"string");
 		this.primitive_of(contentLength,"string");
 		this.parse_format_quality(quality);
