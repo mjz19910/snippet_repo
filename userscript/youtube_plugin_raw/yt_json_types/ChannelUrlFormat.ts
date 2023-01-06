@@ -1,1 +1,4 @@
-type ChannelUrlFormat=`/@${string}${""|`/${ChannelSubUrlFormat}`}`;
+type ChannelUrlFormat=[
+	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
+	`/channel/UC${string}`,
+][number];

@@ -4120,8 +4120,14 @@ class YtUrlParser extends BaseService {
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
 	parse_api_url(x) {
-		let [,b]=x;
-		console.log(b);
+		let [,a]=x;
+		let b=split_string_once(a,"/");
+		if(b[0]!=="v1") debugger;
+		let [,c]=b;
+		switch(c) {
+			case "browse": break;
+			default: console.log(a); debugger;
+		}
 	}
 	/** @arg {string} x */
 	parse_video_id(x) {
