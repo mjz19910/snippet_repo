@@ -1,1 +1,1 @@
-type FormatFps=50;
+type FormatFps=25|50|60;

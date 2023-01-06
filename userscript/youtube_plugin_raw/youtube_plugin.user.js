@@ -7254,7 +7254,7 @@ class HandleTypes extends BaseService {
 		this.YtRange(indexRange);
 		const {
 			lastModified,contentLength,quality,fps,
-			qualityLabel: ql,projectionType,averageBitrate,colorInfo,
+			qualityLabel: ql,projectionType,averageBitrate,colorInfo: ci,
 			approxDurationMs,
 			...y
 		}=a; this.g(y);
@@ -7265,7 +7265,7 @@ class HandleTypes extends BaseService {
 		if(ql) this.parse_format_quality_label(ql);
 		if(projectionType!=="RECTANGULAR") debugger;
 		this.primitive_of(averageBitrate,"number");
-		this.FormatColorInfo(colorInfo);
+		if(ci) this.FormatColorInfo(ci);
 		this.primitive_of(approxDurationMs,"string");
 	}
 	/** @arg {FormatColorInfo} x */
@@ -7282,9 +7282,12 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
+	valid_fps_arr=[25,50,60];
 	/** @arg {FormatFps} x */
 	parse_format_fps(x) {
-		if(x!==50) debugger;
+		if(!this.valid_fps_arr.includes(x)) {
+			debugger;
+		}
 	}
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 	/** @arg {FormatQuality} x */
