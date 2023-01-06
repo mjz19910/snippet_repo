@@ -5415,8 +5415,16 @@ class HandleTypes extends BaseService {
 					if(!at_2) continue;
 					let at_1_f=at_1.map(a => this.decode_template_element(a));
 					let at_2_f=at_2.map(a => this.decode_template_element(a));
-					console.log("[template_child_iter_1]",...at_1_f);
-					console.log("[template_child_iter_2]",...at_2_f);
+					at_1_f.forEach(a=>{
+						const {arr,...y}=a;
+						console.log("[template_child_iter_1]",y,arr??[]);
+						a;
+					});
+					at_2_f.forEach(a=>{
+						const {arr,...y}=a;
+						console.log("[template_child_iter_2]",y,arr??[]);
+						a;
+					});
 				} break;
 				default: root_data.push(struct);
 			}
