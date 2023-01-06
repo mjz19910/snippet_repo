@@ -5415,30 +5415,30 @@ class HandleTypes extends BaseService {
 					if(!at_2) continue;
 					let at_1_f=at_1.map(e => this.decode_template_element(e));
 					let at_2_f=at_2.map(e => this.decode_template_element(e)).map(e=>{
-						let index=e[`f_n${1}`];
+						let res={};
+						let unk_2=e.f_n2;
+						if(unk_2!==void 0) res.unk_2=unk_2;
 						let unk_3=e.f_n3;
+						if(unk_3!==void 0) res.unk_3=unk_3;
 						let unk_child_obj=e.f_o4;
 						let r=Object.keys(e);
 						for(let k of r) {
 							switch(k) {
-								case "f_n1": break;
+								case "f_n1": {
+									let index=e.f_n1;
+									if(index===void 0) continue;
+									res.index_unk_1=index;
+								} break;
+								case "f_n2": break;
 								case "f_n3": break;
 								case "f_o4": break;
 								default: debugger;
 							}
 						}
 						if(unk_child_obj!==void 0) {
-							console.log("[unk_child_keys]",Object.keys(unk_child_obj).join());
-							return {
-								index,
-								unk_3,
-								children:unk_child_obj,
-							}
+							res={...res,...unk_child_obj};
 						}
-						return {
-							index,
-							unk_3,
-						};
+						return res;
 					});
 					console.log("[template_child_iter_1]",...at_1_f);
 					console.log("[template_child_iter_2]",...at_2_f);
