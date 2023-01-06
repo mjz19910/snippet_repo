@@ -7348,8 +7348,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GutParams} x */
 	GutParams(x) {
-		console.log(x.tag);
-		debugger;
+		const {tag: a,...y}=x; this.g(y);
+		this.primitive_of(a,"string");
 	}
 	/** @arg {InlineSurveyData} x */
 	InlineSurveyData(x) {
