@@ -2633,7 +2633,7 @@ function get_exports() {
 	return exports;
 }
 //#region
-async function main() {
+function main() {
 	const log_enabled_page_type_change=false;
 	/** @arg {YTNavigateFinishEvent} event */
 	function log_page_type_change(event) {
@@ -2658,25 +2658,14 @@ async function main() {
 	}
 	/** @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
-	const csi_service=new CsiService(resolver_value);
-	const e_catcher_service=new ECatcherService(resolver_value);
-	const g_feedback_service=new GFeedbackService(resolver_value);
-	const guided_help_service=new GuidedHelpService(resolver_value);
-	const service_tracking=new TrackingServices(resolver_value);
+	const services=new Services(resolver_value);
+	const yt_handlers=services.yt_handlers;
 	const yt_plugin=new YtPlugin;
-	const yt_handlers=new HiddenData(new FilterHandlers(resolver_value));
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 
 	// init section
-	const service_resolver=new ServiceResolver({
-		csi_service,
-		e_catcher_service,
-		g_feedback_service,
-		guided_help_service,
-		service_tracking,
-		yt_handlers,
-	},{
+	const service_resolver=new ServiceResolver(services,{
 		log_tracking_params,
 		log_click_tracking_params,
 		noisy_logging: false,
@@ -3482,8 +3471,7 @@ class GFeedbackService extends BaseService {
 	}
 	/** @arg {GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
-		let h=this.x.get("yt_handlers").extract(e => e)?.handle_types;
-		if(!h) return;
+		let h=this.x.get("string_parser");
 		this.data.route=x.value;
 		let route_parts=split_string(x.value,".");
 		switch(route_parts[0]) {
@@ -3564,12 +3552,16 @@ class TrackingServices extends BaseService {
 	}
 }
 class Services {
-	csi_service=new CsiService({value: null});
-	e_catcher_service=new ECatcherService({value: null});
-	g_feedback_service=new GFeedbackService({value: null});
-	guided_help_service=new GuidedHelpService({value: null});
-	service_tracking=new TrackingServices({value: null});
-	yt_handlers=new HiddenData(new FilterHandlers({value: null}));
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		this.csi_service=new CsiService(x);
+		this.e_catcher_service=new ECatcherService(x);
+		this.g_feedback_service=new GFeedbackService(x);
+		this.guided_help_service=new GuidedHelpService(x);
+		this.service_tracking=new TrackingServices(x);
+		this.string_parser=new YtUrlParser(x);
+		this.yt_handlers=new HiddenData(new FilterHandlers(x));
+	}
 }
 //#endregion Service
 //#region decode_entity_key
@@ -4076,6 +4068,322 @@ class IndexedDbAccessor {
 	}
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
+class YtUrlParser extends BaseService {
+	/**
+	* @template {string[]} T
+	* @template {string} U
+	* @arg {U} w
+	* @arg {T} x
+	* @returns {x is [string,`${U}${string}`,...string[]]} */
+	str_starts_with_at_1(x,w) {
+		return this.str_starts_with(x[1],w);
+	}
+	/**
+	* @template {string[]} T
+	* @template {string} U
+	* @arg {U} w
+	* @arg {T} x
+	* @returns {x is [`${U}${string}`,...string[]]} */
+	str_starts_with_at_0(x,w) {
+		return this.str_starts_with(x[0],w);
+	}
+	/** @arg {`query=${string}`} x */
+	parse_channel_search_url(x) {
+		let sp=make_search_params(x);
+		if(!eq_keys(get_keys_of(sp),["query"])) debugger;
+		console.log("[found_search_query]",sp.query);
+	}
+	/** @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
+	parse_channel_section_url(x) {
+		if(!this.str_is_search(x)) {
+			return this.parse_channel_section(x);
+		}
+		let a=split_string(x,"?");
+		switch(a[0]) {
+			case "search": this.parse_channel_search_url(a[1]); break;
+			default: debugger; break;
+		}
+	}
+	/** @arg {ParseUrlStr_3} x */
+	parse_url_3(x) {
+		if(this.str_starts_with_at_0(x,"@")) {
+			this.parse_channel_section_url(x[1]);
+			return;
+		}
+		switch(x[0]) {
+			case "feed": return this.parse_feed_url(x);
+			case "shorts": return this.parse_shorts_url(x);
+			default: debugger; return;
+		}
+	}
+	/** @arg {string} x */
+	parse_video_id(x) {
+		indexed_db.put({v: x});
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
+	parse_shorts_url(x) {
+		this.parse_video_id(x[1]);
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
+	parse_feed_url(x) {
+		let [,a]=x;
+		switch(a) {case "history": return;}
+		switch(a) {case "library": return;}
+		switch(a) {case "subscriptions": return;}
+		switch(a) {
+			case "what_to_watch": return;
+			default: debugger; return;
+		}
+	}
+	/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+	str_is_search(x) {
+		return x.includes("?");
+	}
+	/** @arg {`RD${string}`} x */
+	parse_guide_entry_id(x) {
+		/** @type {YtUrlInfoItem[]} */
+		let arr=[];
+		if(this.str_starts_with(x,"RD")) {
+			arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});
+		} else {
+			console.log(x);
+			debugger;
+		}
+		this.log_url_info_arr(arr);
+	}
+	/** @arg {YtWatchUrlParamsFormat} x */
+	parse_watch_page_url(x) {
+		let vv=split_string(x,"&");
+		/** @type {YtUrlInfoItem[]} */
+		let url_info_arr=[];
+		// spell:ignore RDMM
+		for(let prop of vv) {
+			/** @type {SplitOnce<typeof prop,"=">} */
+			let res=split_string_once(prop,"=");
+			switch(res[0]) {
+				case "v": {
+					let value=res[1];
+					url_info_arr.push({_tag: "video",id: value});
+				} break;
+				case "list": {
+					let v=res[1];
+					if(this.str_starts_with(v,"RD")) {
+						if(this.str_starts_with(v,"RDMM")) {
+							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
+						} else {
+							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
+						}
+					} else if(this.str_starts_with(v,"PL")) {
+						url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});
+					} else {
+						debugger;
+					}
+				} break;
+				case "pp": {
+					this.on_player_params(res[1]);
+				} break;
+				case "start_radio": console.log("[playlist_start_radio]",res[1]); break;
+				case "index": {
+					if(this.cache_playlist_index.includes(res[1])) break;
+					this.cache_playlist_index.push(res[1]);
+					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
+				} break;
+				default: debugger;
+			}
+		}
+		this.log_url_info_arr(url_info_arr);
+	}
+	/** @arg {string} x */
+	on_player_params(x) {
+		let pp_value=x;
+		let pp_dec=decodeURIComponent(pp_value);
+		if(this.cache_player_params.includes(pp_value)) return;
+		this.cache_player_params.push(pp_value);
+		let res_e=decode_b64_proto_obj(pp_dec);
+		if(!res_e) {
+			debugger;
+			return;
+		}
+		/** @type {Map<number,number>} */
+		let param_map=new Map();
+		for(let param of res_e) {
+			switch(param[0]) {
+				case "data32": param_map.set(param[1],param[2]); break;
+				default: debugger; break;
+			}
+		}
+		let map_keys=[...param_map.keys()];
+		if(eq_keys(map_keys,[8,9])) {
+			let p8=param_map.get(8);
+			let p9=param_map.get(9);
+			if(p8!==void 0&&p9!==void 0) {
+				if(p8===1&&p9===1) return;
+			}
+		}
+		console.log("[new_player_params]",Object.fromEntries(param_map.entries()));
+		debugger;
+	}
+	log_enabled_playlist_id=false;
+	/** @type {string[]} */
+	cache_playlist_index=[];
+	/** @type {string[]} */
+	cache_playlist_id=[];
+	/** @type {string[]} */
+	cache_player_params=[];
+	/** @arg {string} x @arg {URL} url */
+	parse_account_google_com_url(x,url) {
+		if(url.pathname==="/AddSession") return;
+		console.log("[parse_url_external_2]",x);
+	}
+	/** @arg {YtUrlFormat} x */
+	parse_url(x) {
+		if(x.startsWith("https://")) {
+			let rem_url=new URL(x);
+			let url_host=rem_url.hostname;
+			if(url_host==="accounts.google.com") {
+				return this.parse_account_google_com_url(x,rem_url);
+			}
+			if(url_host.endsWith("ggpht.com")) return;
+			if(url_host==="i.ytimg.com") return;
+			console.log("[parse_url_external_1]",x);
+			return;
+		}
+		if(x==="/") return;
+		let up=split_string_once(x,"/");
+		if(up[0]!=="") {
+			debugger;
+			return;
+		}
+		this.parse_url_1(up[1]);
+	}
+	/** @arg {ParseUrlStr_1} x */
+	parse_url_1(x) {
+		let v=split_string_once(x,"/");
+		switch(v.length) {
+			case 1: this.parse_url_2(v[0]); break;
+			case 2: this.parse_url_3(v); break;
+		}
+	}
+	log_playlist_index=false;
+	/** @arg {YtUrlInfoPlaylist} x */
+	log_playlist_id(x,critical=false) {
+		if(this.cache_playlist_id.includes(x.id)) return;
+		this.cache_playlist_id.push(x.id);
+		if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
+	}
+	/** @arg {YtUrlInfoItem[]} x */
+	log_url_info_arr(x) {
+		for(let url_info of x) {
+			switch(url_info._tag) {
+				case "playlist": {
+					switch(url_info.id.length) {
+						case 11: this.log_playlist_id(url_info); continue;
+						default: debugger; break;
+					}
+					this.log_playlist_id(url_info,true);
+				} break;
+				case "video": indexed_db.put({v: url_info.id}); break;
+			}
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
+	parse_url_2(x) {
+		if(this.str_is_search(x)) {
+			let a=split_string(x,"?");
+			switch(a[0]) {
+				case "playlist": this.parse_playlist_page_url(a[1]); break;
+				case "watch": this.parse_watch_page_url(a[1]); break;
+			}
+			return;
+		}
+		if(this.str_starts_with(x,"@")) {
+			console.log("[channel_handle]",x);
+			return;
+		}
+		if(this.str_starts_with(x,"account")) {
+			return this.parse_account_url(x);
+		}
+		switch(x) {
+			case "channel_switcher": return;
+			default: debugger; return;
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
+	parse_account_url(x) {
+		let a=split_string(x,"_");
+		if(a.length===1) return;
+		switch(a[1]) {
+			default: debugger; break;
+			case "advanced": break;
+			case "billing": break;
+			case "notifications": break;
+			case "privacy": break;
+			case "sharing": break;
+			case "playback": break;
+		}
+		return;
+	}
+	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
+	str_starts_with(x,v) {
+		return x.startsWith(v);
+	}
+	/** @arg {YtPlaylistUrlParamsFormat} x */
+	parse_playlist_page_url(x) {
+		if(x.includes("&")) debugger;
+		let y=split_string(x,"=");
+		/**
+		 * @arg {YtUrlParser} t
+		 * @template {string[]} T
+		 * @template {string} U
+		 * @arg {U} w
+		 * @arg {T} x
+		 * @returns {x is [string,`${U}${string}`,...string[]]}
+		 */
+		function str_starts_with_at_1(t,x,w) {
+			return t.str_starts_with(x[1],w);
+		}
+		switch(y[0]) {
+			case "list": {
+				if(y[1]==="WL") return;
+				if(str_starts_with_at_1(this,y,"RD")) {
+					if(str_starts_with_at_1(this,y,`RD${"MM"}`)) {
+						return;
+					}
+					console.log(y);
+					debugger;
+					return;
+				};
+				if(str_starts_with_at_1(this,y,"PL")) {
+					let [,v]=y; v;
+					return;
+				};
+				console.log(y);
+				debugger;
+			} break;
+			default: debugger;
+		}
+	}
+	/** @arg {ChanTabStr} x */
+	parse_channel_section(x) {
+		switch(x) {
+			case "featured": break;
+			case "videos": break;
+			case "playlists": break;
+			case "community": break;
+			case "channels": break;
+			case "about": break;
+			case "search": break;
+			case "streams": break;
+			case "shorts": break;
+			default: debugger;
+		}
+	}
+	/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
+	make_search_params(t) {
+		let sp=new URLSearchParams(t);
+		return as_cast(Object.fromEntries(sp.entries()));
+	}
+}
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @private @arg {PlayerResponse} x */
@@ -4168,7 +4476,7 @@ class HandleTypes extends BaseService {
 		if(a!=="browse") debugger;
 		this.yt_endpoint(b);
 		this.save_keys("DataResponsePageType",x,true);
-		this.parse_url(d);
+		this.x.get("string_parser").parse_url(d);
 		this.BrowseResponseContent(c);
 		if(e) this.previousCsn(e);
 		this.g(y);
@@ -4367,6 +4675,10 @@ class HandleTypes extends BaseService {
 		this.parse_url(url);
 		this.save_keys("UrlEndpointRoot",x,true);
 		this.g(y);
+	}
+	/** @arg {YtUrlFormat} x */
+	parse_url(x) {
+		this.x.get("string_parser").parse_url(x);
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommand(x) {
@@ -4883,6 +5195,10 @@ class HandleTypes extends BaseService {
 		this.parse_guide_entry_id(b);
 		this.g(y);
 	}
+	/** @arg {`RD${string}`} x */
+	parse_guide_entry_id(x) {
+		this.x.get("string_parser").parse_guide_entry_id(x);
+	}
 	/** @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
 		const {guideEntryRenderer: a,...y}=x;
@@ -4909,18 +5225,6 @@ class HandleTypes extends BaseService {
 	GuideEntryDataContent(x) {
 		const {guideEntryId: a,...y}=x; this.g(y);
 		this.parse_guide_entry_id(a);
-	}
-	/** @arg {`RD${string}`} x */
-	parse_guide_entry_id(x) {
-		/** @type {YtUrlInfoItem[]} */
-		let arr=[];
-		if(this.str_starts_with(x,"RD")) {
-			arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});
-		} else {
-			console.log(x);
-			debugger;
-		}
-		this.log_url_info_arr(arr);
 	}
 	/** @arg {UpdateNotificationsUnseenCountAction} x */
 	UpdateNotificationsUnseenCountAction(x) {
@@ -4959,304 +5263,6 @@ class HandleTypes extends BaseService {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
-	str_starts_with(x,v) {
-		return x.startsWith(v);
-	}
-	/** @arg {string} x @arg {URL} url */
-	parse_account_google_com_url(x,url) {
-		if(url.pathname==="/AddSession") return;
-		console.log("[parse_url_external_2]",x);
-	}
-	/** @arg {YtUrlFormat} x */
-	parse_url(x) {
-		if(x.startsWith("https://")) {
-			let rem_url=new URL(x);
-			let url_host=rem_url.hostname;
-			if(url_host==="accounts.google.com") {
-				return this.parse_account_google_com_url(x,rem_url);
-			}
-			if(url_host.endsWith("ggpht.com")) return;
-			if(url_host==="i.ytimg.com") return;
-			console.log("[parse_url_external_1]",x);
-			return;
-		}
-		if(x==="/") return;
-		let up=split_string_once(x,"/");
-		if(up[0]!=="") {
-			debugger;
-			return;
-		}
-		this.parse_url_1(up[1]);
-	}
-	/**
-	* @template {string[]} T
-	* @template {string} U
-	* @arg {U} w
-	* @arg {T} x
-	* @returns {x is [string,`${U}${string}`,...string[]]} */
-	str_starts_with_at_1(x,w) {
-		return this.str_starts_with(x[1],w);
-	}
-	/**
-	* @template {string[]} T
-	* @template {string} U
-	* @arg {U} w
-	* @arg {T} x
-	* @returns {x is [`${U}${string}`,...string[]]} */
-	str_starts_with_at_0(x,w) {
-		return this.str_starts_with(x[0],w);
-	}
-	/** @arg {ParseUrlStr_1} x */
-	parse_url_1(x) {
-		let v=split_string_once(x,"/");
-		switch(v.length) {
-			case 1: this.parse_url_2(v[0]); break;
-			case 2: this.parse_url_3(v); break;
-		}
-	}
-	/** @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
-	parse_channel_section_url(x) {
-		if(!this.str_is_search(x)) {
-			return this.parse_channel_section(x);
-		}
-		let a=split_string(x,"?");
-		switch(a[0]) {
-			case "search": this.parse_channel_search_url(a[1]); break;
-			default: debugger; break;
-		}
-	}
-	/** @arg {`query=${string}`} x */
-	parse_channel_search_url(x) {
-		let sp=make_search_params(x);
-		if(!eq_keys(get_keys_of(sp),["query"])) debugger;
-		console.log("[found_search_query]",sp.query);
-	}
-	/** @arg {ParseUrlStr_3} x */
-	parse_url_3(x) {
-		if(this.str_starts_with_at_0(x,"@")) {
-			this.parse_channel_section_url(x[1]);
-			return;
-		}
-		switch(x[0]) {
-			case "feed": return this.parse_feed_url(x);
-			case "shorts": return this.parse_shorts_url(x);
-			default: debugger; return;
-		}
-	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
-	parse_shorts_url(x) {
-		this.parse_video_id(x[1]);
-	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
-	parse_feed_url(x) {
-		let [,a]=x;
-		switch(a) {case "history": return;}
-		switch(a) {case "library": return;}
-		switch(a) {case "subscriptions": return;}
-		switch(a) {
-			case "what_to_watch": return;
-			default: debugger; return;
-		}
-	}
-	/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
-	str_is_search(x) {
-		return x.includes("?");
-	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
-	parse_url_2(x) {
-		if(this.str_is_search(x)) {
-			let a=split_string(x,"?");
-			switch(a[0]) {
-				case "playlist": this.parse_playlist_page_url(a[1]); break;
-				case "watch": this.parse_watch_page_url(a[1]); break;
-			}
-			return;
-		}
-		if(this.str_starts_with(x,"@")) {
-			console.log("[channel_handle]",x);
-			return;
-		}
-		if(this.str_starts_with(x,"account")) {
-			return this.parse_account_url(x);
-		}
-		switch(x) {
-			case "channel_switcher": return;
-			default: debugger; return;
-		}
-	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
-	parse_account_url(x) {
-		let a=split_string(x,"_");
-		if(a.length===1) return;
-		switch(a[1]) {
-			default: debugger; break;
-			case "advanced": break;
-			case "billing": break;
-			case "notifications": break;
-			case "privacy": break;
-			case "sharing": break;
-			case "playback": break;
-		}
-		return;
-	}
-	/** @arg {YtPlaylistUrlParamsFormat} x */
-	parse_playlist_page_url(x) {
-		if(x.includes("&")) debugger;
-		let y=split_string(x,"=");
-		/**
-		 * @arg {HandleTypes} t
-		 * @template {string[]} T
-		 * @template {string} U
-		 * @arg {U} w
-		 * @arg {T} x
-		 * @returns {x is [string,`${U}${string}`,...string[]]}
-		 */
-		function str_starts_with_at_1(t,x,w) {
-			return t.str_starts_with(x[1],w);
-		}
-		switch(y[0]) {
-			case "list": {
-				if(y[1]==="WL") return;
-				if(str_starts_with_at_1(this,y,"RD")) {
-					if(str_starts_with_at_1(this,y,`RD${"MM"}`)) {
-						return;
-					}
-					console.log(y);
-					debugger;
-					return;
-				};
-				if(str_starts_with_at_1(this,y,"PL")) {
-					let [,v]=y; v;
-					return;
-				};
-				console.log(y);
-				debugger;
-			} break;
-			default: debugger;
-		}
-	}
-	/** @arg {ChanTabStr} x */
-	parse_channel_section(x) {
-		switch(x) {
-			case "featured": break;
-			case "videos": break;
-			case "playlists": break;
-			case "community": break;
-			case "channels": break;
-			case "about": break;
-			case "search": break;
-			case "streams": break;
-			case "shorts": break;
-			default: debugger;
-		}
-	}
-	/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
-	make_search_params(t) {
-		let sp=new URLSearchParams(t);
-		return as_cast(Object.fromEntries(sp.entries()));
-	}
-	log_playlist_index=false;
-	log_enabled_playlist_id=false;
-	/** @type {string[]} */
-	cache_playlist_index=[];
-	/** @type {string[]} */
-	cache_playlist_id=[];
-	/** @type {string[]} */
-	cache_player_params=[];
-	/** @arg {YtWatchUrlParamsFormat} x */
-	parse_watch_page_url(x) {
-		let vv=split_string(x,"&");
-		/** @type {YtUrlInfoItem[]} */
-		let url_info_arr=[];
-		// spell:ignore RDMM
-		for(let prop of vv) {
-			/** @type {SplitOnce<typeof prop,"=">} */
-			let res=split_string_once(prop,"=");
-			switch(res[0]) {
-				case "v": {
-					let value=res[1];
-					url_info_arr.push({_tag: "video",id: value});
-				} break;
-				case "list": {
-					let v=res[1];
-					if(this.str_starts_with(v,"RD")) {
-						if(this.str_starts_with(v,"RDMM")) {
-							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
-						} else {
-							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
-						}
-					} else if(this.str_starts_with(v,"PL")) {
-						url_info_arr.push({_tag: "playlist",type: "PL",id: v.slice(2)});
-					} else {
-						debugger;
-					}
-				} break;
-				case "pp": {
-					this.on_player_params(res[1]);
-				} break;
-				case "start_radio": console.log("[playlist_start_radio]",res[1]); break;
-				case "index": {
-					if(this.cache_playlist_index.includes(res[1])) break;
-					this.cache_playlist_index.push(res[1]);
-					if(this.log_playlist_index) console.log("[playlist_index]",res[1]);
-				} break;
-				default: debugger;
-			}
-		}
-		this.log_url_info_arr(url_info_arr);
-	}
-	/** @arg {YtUrlInfoItem[]} x */
-	log_url_info_arr(x) {
-		for(let url_info of x) {
-			switch(url_info._tag) {
-				case "playlist": {
-					switch(url_info.id.length) {
-						case 11: this.log_playlist_id(url_info); continue;
-						default: debugger; break;
-					}
-					this.log_playlist_id(url_info,true);
-				} break;
-				case "video": indexed_db.put({v: url_info.id}); break;
-			}
-		}
-	}
-	/** @arg {string} x */
-	on_player_params(x) {
-		let pp_value=x;
-		let pp_dec=decodeURIComponent(pp_value);
-		if(this.cache_player_params.includes(pp_value)) return;
-		this.cache_player_params.push(pp_value);
-		let res_e=decode_b64_proto_obj(pp_dec);
-		if(!res_e) {
-			debugger;
-			return;
-		}
-		/** @type {Map<number,number>} */
-		let param_map=new Map();
-		for(let param of res_e) {
-			switch(param[0]) {
-				case "data32": param_map.set(param[1],param[2]); break;
-				default: debugger; break;
-			}
-		}
-		let map_keys=[...param_map.keys()];
-		if(eq_keys(map_keys,[8,9])) {
-			let p8=param_map.get(8);
-			let p9=param_map.get(9);
-			if(p8!==void 0&&p9!==void 0) {
-				if(p8===1&&p9===1) return;
-			}
-		}
-		console.log("[new_player_params]",Object.fromEntries(param_map.entries()));
-		debugger;
-	}
-	/** @arg {YtUrlInfoPlaylist} x */
-	log_playlist_id(x,critical=false) {
-		if(this.cache_playlist_id.includes(x.id)) return;
-		this.cache_playlist_id.push(x.id);
-		if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
-	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
 		const {webCommandMetadata: a,resolveUrlCommandMetadata: b,...y}=x;
@@ -5287,6 +5293,7 @@ class HandleTypes extends BaseService {
 	get_yt_url_type(parts,index) {
 		switch(parts.length) {
 			case 4: console.log('get_yt_url_type_4',parts.slice(1)); break;
+			case 3: console.log('get_yt_url_type_3',parts.slice(1)); break;
 			default: console.log(parts.length); debugger;
 		}
 		if(parts[1]!=="v1") {
@@ -6723,11 +6730,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
-		this.parse_video_id(x.videoId);
-	}
-	/** @arg {string} x */
-	parse_video_id(x) {
-		indexed_db.put({v: x});
+		this.x.get("string_parser").parse_video_id(x.videoId);
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
@@ -6919,7 +6922,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GridRenderer} x */
 	GridRenderer(x) {
-		this.z(x.items,a=>this.GridVideoRenderer(a));
+		this.z(x.items,a => this.GridVideoRenderer(a));
 	}
 	/** @arg {GridVideoRenderer} x */
 	GridVideoRenderer(x) {
@@ -6927,11 +6930,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GridVideoData} x */
 	GridVideoData(x) {
-		this.z(x.badges,a=>this.g(a));
+		this.z(x.badges,a => this.g(a));
 	}
 	/** @arg {SettingsOptionsData} x */
 	SettingsOptionsData(x) {
-		this.z(x.options,a=>this.SettingsOptionItem(a));
+		this.z(x.options,a => this.SettingsOptionItem(a));
 	}
 	/** @arg {SettingsOptionItem} x */
 	SettingsOptionItem(x) {
@@ -6985,7 +6988,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {
-		this.z(x.briefStats,a=>this.text_t(a));
+		this.z(x.briefStats,a => this.text_t(a));
 	}
 	/** @arg {CommentThreadData} x */
 	CommentThreadData(x) {
@@ -7042,7 +7045,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {StreamingData} x */
 	StreamingData(x) {
-		this.z(x.adaptiveFormats,a=>this.AdaptiveFormatItem(a))
+		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
@@ -7055,7 +7058,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
-		this.AutoplayTemplate(x.autoplay,a=>this.AutoplayContent(a));
+		this.AutoplayTemplate(x.autoplay,a => this.AutoplayContent(a));
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
 	AutoplayTemplate(x,f) {
@@ -7063,7 +7066,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AutoplayContent} x */
 	AutoplayContent(x) {
-		this.z(x.modifiedSets,a=>this.ModifiedSetItem(a));
+		this.z(x.modifiedSets,a => this.ModifiedSetItem(a));
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
@@ -7087,7 +7090,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EndscreenData} x */
 	EndscreenData(x) {
-		this.z(x.elements,a=>this.EndscreenElementRenderer(a));
+		this.z(x.elements,a => this.EndscreenElementRenderer(a));
 	}
 	/** @arg {EndscreenElementRenderer} x */
 	EndscreenElementRenderer(x) {
@@ -7113,7 +7116,7 @@ class HandleTypes extends BaseService {
 	/** @arg {import("./yt_json_types/EmojiImage").EmojiImage} x */
 	EmojiImage(x) {
 		this.Accessibility(x.accessibility);
-		this.z(x.thumbnails,a=>this.ThumbnailItem(a));
+		this.z(x.thumbnails,a => this.ThumbnailItem(a));
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
@@ -7206,7 +7209,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
-		this.z(x.actions,a=>this.ServiceEndpointAction(a));
+		this.z(x.actions,a => this.ServiceEndpointAction(a));
 	}
 	/** @arg {ServiceEndpointAction} x */
 	ServiceEndpointAction(x) {
@@ -7218,7 +7221,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
-		this.z(x.contents,a=>this.ChipCloudChipRenderer(a));
+		this.z(x.contents,a => this.ChipCloudChipRenderer(a));
 	}
 	/** @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
@@ -7230,7 +7233,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
-		this.z(x.mutations,a=>this.EntityMutationItem(a));
+		this.z(x.mutations,a => this.EntityMutationItem(a));
 		this.TimestampWithNanos(x.timestamp);
 	}
 	/** @arg {TimestampWithNanos} x */
@@ -7245,11 +7248,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
-		this.parse_video_id(x.videoId);
+		this.x.get("string_parser").parse_video_id(x.videoId);
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
-		this.z(x.actions,a=>this.OpenPopupActionData(a));
+		this.z(x.actions,a => this.OpenPopupActionData(a));
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
@@ -7271,7 +7274,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {GuideJsonType} x */
 	GuideJsonType(x) {
-		this.z(x.items,a=>this.GuideItemType(a));
+		this.z(x.items,a => this.GuideItemType(a));
 	}
 	/** @arg {GuideItemType} x */
 	GuideItemType(x) {
@@ -7284,8 +7287,16 @@ class HandleTypes extends BaseService {
 		if(x.formattedTitle) {
 			debugger;
 		}
-		this.z(x.items,a=>this.g(a));
+		this.z(x.items,a => this.GuideSectionItemType(a));
 		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {GuideSectionItemType} x */
+	GuideSectionItemType(x) {
+		if("guideEntryRenderer" in x) {
+			this.GuideEntryRenderer(x);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
