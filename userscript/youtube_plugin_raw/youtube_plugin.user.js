@@ -3996,7 +3996,7 @@ class IndexedDbAccessor {
 				let database_map=new Map;
 				/** @type {Map<string,{v:string}>} */
 				let new_data_map=new Map;
-				database_data.forEach(e=>database_map.set(e.v,e));
+				database_data.forEach(e => database_map.set(e.v,e));
 				for(let data of this.arr) {
 					if(database_map.has(data.v)) {
 						this.committed_data.push(data);
@@ -4016,11 +4016,11 @@ class IndexedDbAccessor {
 						new_data_map.set(data.v,data);
 					}
 				}
-				[...new_data_map.values()].forEach(e=>{
+				[...new_data_map.values()].forEach(e => {
 					this.add_data_to_store(store,e);
 				});
 			}
-		}
+		};
 	}
 	/** @arg {IDBObjectStore} store @arg {{v:string}} data */
 	add_data_to_store(store,data) {
@@ -6315,7 +6315,7 @@ class HandleTypes extends BaseService {
 	AdSlotMetadata(x) {
 		const {slotId: a,slotType: b,slotPhysicalPosition: c,...y}=x;
 		let ss=split_string(a,":");
-		this.z(ss,a=>this.primitive_of(a,"string"));
+		this.z(ss,a => this.primitive_of(a,"string"));
 		this.save_string("AdSlot.slotType",b);
 		this.save_number("AdSlot.slotPhysicalPosition",c);
 		this.g(y);
@@ -7019,7 +7019,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SearchEndpointData} x */
 	SearchEndpointData(x) {
-		this.save_keys("SearchEndpointData",x,this.TODO_true);
+		const {query: a,...y}=x; this.g(y);
+		this.primitive_of(a,"string");
 	}
 	/** @arg {SetSettingEndpointData} x */
 	SetSettingEndpointData(x) {
