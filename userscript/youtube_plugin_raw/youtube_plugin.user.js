@@ -50,26 +50,34 @@ function any_c(value,_constructor_type) {
 	}
 	throw new Error("Failed to cast");
 }
+/** @template {{length:number;[x:number]:T[number]}} T */
+class Iterator {
+	i=0;
+	/** @arg {T} x */
+	constructor(x) {
+		this.x=x;
+	}
+	next() {
+		if(this.i<this.x.length) {
+			let res={
+				value: this.x[this.i],
+				done: false,
+			};
+			this.i++;
+			return res;
+		}
+		return {
+			value: this.x[this.x.length-1],
+			done: true
+		};
+	}
+	[Symbol.iterator]() {
+		return this;
+	}
+}
 /** @template {{length:number;[x:number]:T[number]}} T @arg {T} x */
 function make_iterator(x) {
-	let i=0;
-	return {
-		[Symbol.iterator]() {
-			return {
-				next() {
-					i++;
-					if(i<=x.length) {
-						return {
-							value: x[i-1],
-							done: false,
-						};
-					} else {
-						return {value: x[x.length-1],done: true};
-					}
-				}
-			};
-		}
-	};
+	return new Iterator(x);
 }
 
 function yt_watch_page_loaded_handler() {
