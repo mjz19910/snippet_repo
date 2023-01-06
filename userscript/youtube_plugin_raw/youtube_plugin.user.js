@@ -4111,7 +4111,10 @@ class YtUrlParser extends BaseService {
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
 	parse_channel_url(x) {
-		x;
+		if(this.str_starts_with_at_1(x,"UC")) {
+			return;
+		}
+		console.log("[parse_channel_url]",x);
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
 	parse_api_url(x) {
@@ -4598,22 +4601,32 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_endpoint_params(x) {
-		let any_res=decode_url_b64_proto_obj(x);
-		if(!any_res) {
-			debugger;
-			return;
-		}
-		const [f0]=any_res;
+		let arr=decode_url_b64(x);
+		let reader=new MyReader(arr);
+		let res=reader.try_read_any();
+		if(!res) return;
+		const [f0]=res;
 		if(f0[0]!=="child") {
 			console.log(f0);
 			return;
 		}
-		console.log(any_res);
+		console.log(...res);
 		let [,field_id,data]=f0;
-		console.log(
-			"parsed_endpoint_param field_id=%o result(%o)=\"%s\"",
-			field_id,data.length,decoder.decode(data)
-		);
+		reader.pos=data.byteOffset;
+		let more=reader.try_read_any(data.byteLength);
+		if(more) {
+			const [f0]=more;
+			console.log(
+				"parsed_endpoint_param field_id=%o result(%o)={message}",
+				field_id,data.length
+			);
+			console.log("{message}",f0);
+		} else {
+			console.log(
+				"parsed_endpoint_param field_id=%o result(%o)=\"%s\"",
+				field_id,data.length,decoder.decode(data)
+			);
+		}
 	}
 	/** @arg {BrowseIdType} x */
 	parse_browse_id(x) {
