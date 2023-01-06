@@ -1,4 +1,6 @@
-interface PlayerResponse {
+import {PlayabilityStatus} from "./PlayabilityStatus.js";
+
+export interface PlayerResponse {
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
 	streamingData?: StreamingData;

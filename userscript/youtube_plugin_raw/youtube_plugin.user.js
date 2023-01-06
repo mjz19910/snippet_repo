@@ -1513,7 +1513,7 @@ class FilterHandlers {
 			};
 			case "player": return {
 				type: target[0],
-				/** @type {PlayerResponse} */
+				/** @type {import("./yt_json_types/WatchResponsePlayer").PlayerResponse} */
 				data: cast_as(x),
 			};
 		}
@@ -4397,11 +4397,11 @@ class YtUrlParser extends BaseService {
 }
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	/** @private @arg {PlayerResponse} x */
+	/** @private @arg {import("./yt_json_types/WatchResponsePlayer").PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("PlayerResponse",x,true);
 		let t=this;
-		/** @this {typeof t} @arg {PlayerResponse} x */
+		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
 			const {responseContext: a,annotations: b,attestation: c,adPlacements: d,...y}=x;
 			this.ResponseContext(a);
@@ -6208,7 +6208,7 @@ class HandleTypes extends BaseService {
 		this.z(a,v => this.CompactLinkRenderer(v));
 		this.g(y);
 	}
-	/** @arg {ButtonRenderer} x */
+	/** @arg {import("./yt_json_types/ButtonRenderer").ButtonRenderer} x */
 	ButtonRenderer(x) {
 		const {buttonRenderer,...v}=x;
 		this.ButtonData(x.buttonRenderer);
@@ -7313,7 +7313,7 @@ class HandleTypes extends BaseService {
 	PlayerAnnotationsExpandedData(x) {
 		this.g(x);
 	}
-	/** @arg {PlayabilityStatus} x */
+	/** @arg {import("./yt_json_types/PlayabilityStatus").PlayabilityStatus} x */
 	PlayabilityStatus(x) {
 		decode_url_b64_proto_obj(x.contextParams);
 	}
