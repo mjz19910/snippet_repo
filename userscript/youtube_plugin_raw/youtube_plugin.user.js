@@ -1468,15 +1468,15 @@ class FilterHandlers {
 		whitelist_item("settingsOptionsRenderer");
 		whitelist_item("connectedAppRenderer");
 	}
-	/** @template {string} T @arg {T} x */
+	/** @arg {ApiUrlFormatFull} x */
 	use_template_url(x) {
+		debugger;
 		const res_parse=create_from_parse(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
 		}
-		/** @type {Split<RemoveFirst<typeof res_parse.pathname>,"/">} */
-		let path_parts=res_parse.pathname.slice(1).split("/");
+		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.handle_types.get_url_type(path_parts);
 	}
 	/** @typedef {import("./yt_json_types/ResponseTypes").ResponseTypes} ResponseTypes */
@@ -1673,7 +1673,9 @@ class FilterHandlers {
 			return {url: to_url(req.url)};
 		}
 		let parsed_url=convert_to_url(request).url;
-		let url_res=this.use_template_url(parsed_url.href);
+		/** @type {ApiUrlFormatFull} */
+		let api_url=as_cast(parsed_url.href);
+		let url_res=this.use_template_url(api_url);
 		if(!url_res) {
 			debugger;
 			url_res={name: as_cast(parsed_url.href)};
@@ -2868,22 +2870,6 @@ function main() {
 	// #endregion
 }
 //#endregion
-/** @arg {"account"} base @arg {string[]} parts @arg {number} index */
-function get_account_type(base,parts,index) {
-	let cur_part=parts[index];
-	switch(cur_part) {
-		case "account_menu": break;
-		case "accounts_list": break;
-		case "set_setting": break;
-		default:
-			console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-			return null;
-	}
-	return {
-		/** @type {`${typeof base}.${typeof cur_part}`} */
-		name: `${base}.${cur_part}`
-	};
-}
 /** @template {string} C @template {string} U @template {Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {Split<C,","> extends U[]?C:never} arg1 */
 function has_keys(ok_3,arg1) {
 	return eq_keys(ok_3,arg1.split(","));
@@ -5378,133 +5364,120 @@ class HandleTypes extends BaseService {
 		if(c!==void 0) this.save_root_visual_element(c);
 		this.g(y);
 	}
-	/** @arg {string[]} parts @arg {number} index */
-	get_yt_url_type(parts,index) {
+	/** @arg {string[]} parts @arg {string} cur_part */
+	api_no_handler(parts,cur_part) {
+		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
+		debugger;
+		return null;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} parts */
+	get_yt_url_type(parts) {
 		switch(parts.length) {
 			case 4: console.log('get_yt_url_type_4',parts.slice(1)); break;
 			case 3: console.log('get_yt_url_type_3',parts.slice(1)); break;
-			default: console.log(parts.length); debugger;
+			default: console.log("new_length",parts); debugger;
 		}
 		if(parts[1]!=="v1") {
-			debugger;
+			return this.api_no_handler(parts,parts[1]);
 		}
-		index++;
-		const cur_part=parts[index];
-		switch(cur_part) {
-			case "att": {
-				index++; const next_part=parts[index]; switch(next_part) {
-					case "get": break;
-					case "log": break;
-					default: return null;
-				}
-				return {
-					/** @type {`${typeof cur_part}.${typeof next_part}`} */
-					name: `${cur_part}.${next_part}`
-				};
-			}
+		switch(parts[2]) {
+			case "att": switch(parts[3]) {
+				case "get": break;
+				case "log": break;
+				default: return this.api_no_handler(parts,parts[3]);
+			} return {
+				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+				name: `${parts[2]}.${parts[3]}`
+			};
 			case "notification": {
-				index++; let next_part=parts[index]; switch(next_part) {
+				switch(parts[3]) {
 					case "get_unseen_count": break;
 					case "get_notification_menu": break;
 					case "record_interactions": break;
 					case "modify_channel_preference": break;
-					default:
-						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-						return null;
+					default: return this.api_no_handler(parts,parts[3]);
 				} return {
-					/** @type {`${typeof cur_part}.${typeof next_part}`} */
-					name: `${cur_part}.${next_part}`
+					/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+					name: `${parts[2]}.${parts[3]}`
 				};
 			}
-			case "subscription": {
-				index++; let next_part=parts[index]; switch(next_part) {
-					case "subscribe": break;
-					default:
-						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-						return null;
-				} return {
-					/** @type {`${typeof cur_part}.${typeof next_part}`} */
-					name: `${cur_part}.${next_part}`
-				};
-			}
+			case "subscription": switch(parts[3]) {
+				case "subscribe": break;
+				default: return this.api_no_handler(parts,parts[3]);
+			} return {
+				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+				name: `${parts[2]}.${parts[3]}`
+			};
 			case "browse": break;
 			case "guide": break;
 			case "reel": {
-				index++; let next_part=parts[index]; switch(next_part) {
+				switch(parts[3]) {
 					case "reel_item_watch": break;
 					case "reel_watch_sequence": break;
-					default:
-						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-						return null;
+					default: return this.api_no_handler(parts,parts[3]);
 				}return {
-					/** @type {`${typeof cur_part}.${typeof next_part}`} */
-					name: `${cur_part}.${next_part}`
+					/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+					name: `${parts[2]}.${parts[3]}`
 				};
 			}
 			case "next": break;
 			case "player": break;
-			case "live_chat": index++; return this.get_live_chat_type("live_chat",parts,index);
+			case "live_chat": return this.get_live_chat_type(parts);
 			case "get_transcript": break;
-			case "account": return get_account_type(cur_part,parts,index+1);
+			case "account": return this.get_account_type(parts);
 			case "feedback": break;
-			case "comment": {
-				index++; let next_part=parts[index]; switch(next_part) {
-					case "create_comment": break;
-					default:
-						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-						return null;
-				} return {
-					/** @type {`${typeof cur_part}.${typeof next_part}`} */
-					name: `${cur_part}.${next_part}`
-				};
-			}
-			case "like": {
-				index++; let next_part=parts[index]; switch(next_part) {
-					case "like": break;
-					case "removelike": break;
-					default:
-						console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-						return null;
-				} return {
-					/** @type {`${typeof cur_part}.${typeof next_part}`} */
-					name: `${cur_part}.${next_part}`
-				};
-			}
-			default:
-				console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-				debugger;
-				return null;
+			case "comment": switch(parts[3]) {
+				case "create_comment": break;
+				default: return this.api_no_handler(parts,parts[3]);
+			} return {
+				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+				name: `${parts[2]}.${parts[3]}`
+			};
+			case "like": switch(parts[3]) {
+				case "like": break;
+				case "removelike": break;
+				default: return this.api_no_handler(parts,parts[3]);
+			} return {
+				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+				name: `${parts[2]}.${parts[3]}`
+			};
+			default: return this.api_no_handler(parts,parts[2]);
 		}
-		return {name: cur_part};
+		return {name: parts[2]};
 	}
-	/** @arg {"live_chat"} base @arg {string[]} parts @arg {number} index */
-	get_live_chat_type(base,parts,index) {
-		let cur_part=parts[index];
-		switch(cur_part) {
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} parts */
+	get_account_type(parts) {
+		switch(parts[3]) {
+			case "account_menu": break;
+			case "accounts_list": break;
+			case "set_setting": break;
+			default: return this.api_no_handler(parts,parts[3]);
+		}
+		return {
+			/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+			name: `${parts[2]}.${parts[3]}`
+		};
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} parts */
+	get_live_chat_type(parts) {
+		switch(parts[3]) {
 			case "get_live_chat_replay": break;
-			default:
-				console.log("[no_handler_for] [%o] [%s]",parts,parts[index]);
-				return null;
+			default: return this.api_no_handler(parts,parts[3]);
 		};
 		return {
-			/** @type {`${typeof base}.${typeof cur_part}`} */
-			name: `${base}.${cur_part}`
+			/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+			name: `${parts[2]}.${parts[3]}`
 		};
 	}
-	/** @arg {string[]} parts */
+	/** @arg {Split<ApiUrlFormat,"/">} parts */
 	get_url_type(parts) {
-		let index=0;
-		const cur_part=parts[index];
-		switch(cur_part) {
-			case "youtubei": index++; return this.get_yt_url_type(parts,index);
+		switch(parts[0]) {
+			case "youtubei": return this.get_yt_url_type(parts);
 			case "getDatasyncIdsEndpoint": break;
 			case "getAccountSwitcherEndpoint": break;
-			default: {
-				console.log("get_url_type",cur_part);
-				debugger;
-			} throw new Error("Missing");
+			default: return this.api_no_handler(parts,parts[0]);
 		}
-		return {name: cur_part};
+		return {name: parts[0]};
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
