@@ -5880,9 +5880,6 @@ class HandleTypes extends BaseService {
 					if(!at_2) continue;
 					let at_1_f=at_1.map(a => this.decode_template_element(a));
 					let at_2_f=at_2.map(a => this.decode_template_element(a));
-					saved_data.data??={};
-					saved_data.data.arr??=[];
-					saved_data.data.arr.push([at_1_f,at_2_f]);
 					at_1_f.forEach(a => {
 						const {children,...y}=a;
 						/** @type {[typeof y|typeof children]} */
