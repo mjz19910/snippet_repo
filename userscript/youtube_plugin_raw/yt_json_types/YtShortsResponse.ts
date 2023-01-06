@@ -3,11 +3,6 @@ type YtShortsResponse={
 	endpoint: ReelWatchEndpoint;
 	response: ReelResponse;
 	playerResponse: PlayerResponse;
-	reelWatchSequenceResponse: {
-		responseContext: ResponseContext;
-		entries: CommandTemplate<ReelWatchEndpoint>[];
-		trackingParams: string;
-		continuationEndpoint: ContinuationEndpoint
-	};
+	reelWatchSequenceResponse: ReelWatchSequenceResponse;
 	url: `/shorts/${string}`;
 };

@@ -1,1 +1,5 @@
-type ReelPlayerOverlayData={};
+type ReelPlayerOverlayData={
+	likeButton: {};
+	reelPlayerHeaderSupportedRenderers: {};
+	menu: {};
+};

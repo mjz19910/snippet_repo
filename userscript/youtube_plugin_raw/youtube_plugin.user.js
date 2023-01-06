@@ -4018,8 +4018,8 @@ const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @private @arg {PlayerResponse} x */
-	WatchResponsePlayer(x) {
-		this.save_keys("WatchResponsePlayer",x,true);
+	PlayerResponse(x) {
+		this.save_keys("PlayerResponse",x,true);
 		let t=this;
 		/** @this {typeof t} @arg {PlayerResponse} x */
 		function p1(x) {
@@ -4419,7 +4419,7 @@ class HandleTypes extends BaseService {
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCount(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
-			case "player": return this.WatchResponsePlayer(x.data);
+			case "player": return this.PlayerResponse(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatch(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequence(x.data);
 			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplay(x.data);
@@ -4429,6 +4429,244 @@ class HandleTypes extends BaseService {
 			case "_Generic": return g(x);
 			default: return g(x);
 		}
+	}
+	/** @arg {GetLiveChatReplay} x */
+	GetLiveChatReplay(x) {
+		const {responseContext: a,continuationContents: b,...y}=x;
+		this.ResponseContext(a);
+		this.iter_continuationContents(b);
+		this.g(y);
+	}
+	/** @arg {LiveChatContinuation} x */
+	iter_continuationContents(x) {
+		if("liveChatContinuation" in x) {
+			this.w(x,a => this.LiveChatContinuationData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatContinuationData} x */
+	LiveChatContinuationData(x) {
+		this.z(x.actions,a => this.ReplayChatItemAction(a));
+		this.z(x.continuations,a => this.LiveChatContinuationItem(a));
+	}
+	/** @arg {ReplayChatItemAction} x */
+	ReplayChatItemAction(x) {
+		if("replayChatItemAction" in x) {
+			const {replayChatItemAction: a,...y}=x;
+			this.ReplayChatItemActionData(x.replayChatItemAction);
+			this.empty_object(y);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatContinuationItem} x */
+	LiveChatContinuationItem(x) {
+		if("liveChatReplayContinuationData" in x) {
+			this.w(x,a => this.LiveChatReplayContinuationData(a));
+		} else if("playerSeekContinuationData" in x) {
+			this.w(x,a => this.GenericContinuationData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {GenericContinuationData} x */
+	GenericContinuationData(x) {
+		const {continuation: a,...y}=x;
+		this.primitive_of(a,"string");
+		this.g(y);
+	}
+	/** @arg {LiveChatReplayContinuationData} x */
+	LiveChatReplayContinuationData(x) {
+		this.primitive_of(x.continuation,"string");
+		this.primitive_of(x.timeUntilLastMessageMsec,"number");
+	}
+	/** @arg {ReplayChatItemActionData} x */
+	ReplayChatItemActionData(x) {
+		this.primitive_of(x.videoOffsetTimeMsec,"string");
+		this.z(x.actions,a => this.AddChatItemAction(a));
+	}
+	/** @arg {AddChatItemAction} x */
+	AddChatItemAction(x) {
+		if("addChatItemAction" in x) {
+			const {clickTrackingParams: a,addChatItemAction: b,...y}=x; this.g(y);
+			if(a) this.clickTrackingParams(a);
+			this.AddChatItemActionData(b);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {AddChatItemActionData} x */
+	AddChatItemActionData(x) {
+		const {clientId: a,item: b,...y}=x; this.g(y);
+		if(a) this.primitive_of(a,"string");
+		this.LiveChatTextMessageRenderer(x.item);
+	}
+	/** @arg {LiveChatTextMessageRenderer} x */
+	LiveChatTextMessageRenderer(x) {
+		if("liveChatTextMessageRenderer" in x) {
+			this.w(x,a => this.LiveChatTextMessageData(a));
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {LiveChatTextMessageData} x */
+	LiveChatTextMessageData(x) {
+		const {
+			message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,
+			id: e,timestampUsec: f,authorBadges: g,authorExternalChannelId: h,contextMenuAccessibility: i,
+			timestampText: j,...y
+		}=x;
+		this.z([a,b,j],a => this.text_t(a));
+		this.Thumbnail(c);
+		this.yt_endpoint(d);
+		this.z([e,f],a => this.primitive_of(a,"string"));
+		this.parse_external_channel_id(h);
+		this.Accessibility(i);
+		if(g) this.z(g,a => this.LiveChatAuthorBadgeRenderer(a));
+		this.g(y);
+	}
+	/** @arg {LiveChatAuthorBadgeRenderer} x */
+	LiveChatAuthorBadgeRenderer(x) {
+		if("liveChatAuthorBadgeRenderer" in x) {
+			this.w(x,a => {
+				const {accessibility: b,icon: c,tooltip: d,...y}=a;
+				this.Accessibility(b);
+				this.Icon(c);
+				this.g(y);
+			});
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {`UC${string}`} x */
+	parse_external_channel_id(x) {
+		let chan_parts=split_string_once(x,"UC");
+		if(chan_parts[0]!=="") debugger;
+		let cr=chan_parts[1];
+		if(cr.length===22) return;
+		console.log("[channel_id] %s %s","UC",cr);
+	}
+	/** @arg {LiveChatItemContextMenuEndpointData} x */
+	LiveChatItemContextMenuEndpointData(x) {
+		const {params: a,...y}=x; this.g(y);
+		this.primitive_of(a,"string");
+	}
+	/** @arg {HeartbeatParams} x */
+	HeartbeatParams(x) {
+		const {heartbeatServerData: a,intervalMilliseconds: b,softFailOnError: c,...y}=x; this.g(y);
+		this.z([a,b],a => this.primitive_of(a,"string"));
+		this.primitive_of(c,"boolean");
+	}
+	/** @arg {CardCollectionRenderer} x */
+	CardCollectionRenderer(x) {
+		const {cardCollectionRenderer: a,...y}=x; this.g(y);
+		this.CardCollectionData(a);
+	}
+	/** @arg {CardCollectionData} x */
+	CardCollectionData(x) {
+		const {
+			cards: a,headerText: b,icon: c,closeButton: d,
+			trackingParams: e,allowTeaserDismiss: f,logIconVisibilityUpdates: g,...y
+		}=x; this.g(y);
+		this.z(a,a => a);
+		this.text_t(b);
+		this.z([c,d],a => this.InfoCardIconRenderer(a));
+		this.trackingParams(e);
+		this.z([f,g],a => this.primitive_of(a,"boolean"));
+	}
+	/** @arg {InfoCardIconRenderer} x */
+	InfoCardIconRenderer(x) {
+		const {infoCardIconRenderer: a,...y}=x; this.g(y);
+		this.InfoCardIconData(a);
+	}
+	/** @arg {InfoCardIconData} x */
+	InfoCardIconData(x) {
+		const {trackingParams: a,...y}=x; this.g(y);
+		this.trackingParams(a);
+	}
+	/** @arg {PlayerMicroformatRenderer} x */
+	PlayerMicroformatRenderer(x) {
+		const {playerMicroformatRenderer: a,...y}=x; this.g(y);
+		this.PlayerMicroformatData(a);
+	}
+	/** @arg {PlayerMicroformatData} x */
+	PlayerMicroformatData(x) {
+		let t=this;
+		/** @this {typeof t} @arg {PlayerMicroformatData} x */
+		function p1(x) {
+			const {thumbnail: a,embed: b,title: c,description: d,...y}=x;
+			this.Thumbnail(a);
+			this.MicroformatEmbed(b);
+			this.text_t(c);
+			this.text_t(d);
+			return y;
+		}
+		let a=p1.call(this,x);
+		/** @this {typeof t} @arg {typeof a} x */
+		function p2(x) {
+			const {lengthSeconds: b,ownerProfileUrl: c,externalChannelId: d,isFamilySafe: e,...y}=x;
+			this.primitive_of(b,"string");
+			this.parse_channel_url(c);
+			return y;
+		}
+		let b=p2.call(this,a);
+		/** @this {typeof t} @arg {typeof b} x */
+		function p3(x) {
+			const {availableCountries: a,isUnlisted: c,hasYpcMetadata: d,viewCount: e,...y}=x;
+			this.z(a,a => this.save_string("country_code",a));
+			this.z([c,d],a => this.primitive_of(a,"boolean"));
+			this.primitive_of(e,"string");
+			return y;
+		}
+		let c=p3.call(this,b);
+		/** @this {typeof t} @arg {typeof c} x */
+		function p4(x) {
+			const {category: a,publishDate: b,ownerChannelName: d,liveBroadcastDetails: e,...y}=x;
+			this.save_string("video.category",a);
+			this.z([b,d],a => this.primitive_of(a,"string"));
+			if(e) this.LiveBroadcastDetails(e);
+			return y;
+		}
+		let d=p4.call(this,c);
+		/** @this {typeof t} @arg {typeof d} x */
+		function p5(x) {
+			const {uploadDate: a,...y}=x;
+			this.primitive_of(a,"string");
+			return y;
+		}
+		let y=p5.call(this,d); this.g(y);
+	}
+	/** @arg {LiveBroadcastDetails} x */
+	LiveBroadcastDetails(x) {
+		const {isLiveNow: a,startTimestamp: b,...y}=x; this.g(y);
+		this.primitive_of(a,"boolean");
+		this.primitive_of(b,"string");
+	}
+	log_user_channel_url=false;
+	/** @arg {FullChannelUrlFormat} x */
+	parse_channel_url(x) {
+		let r=create_from_parse(x);
+		let chan_part=split_string_once(r.pathname,"/")[1];
+		let channel_id=split_string_once(chan_part,"/");
+		switch(channel_id[0]) {
+			case "channel": if(channel_id[1].startsWith("UC")) {
+				this.parse_external_channel_id(channel_id[1]);
+			} else {
+				debugger;
+			} break;
+			case "user": {
+				if(this.log_user_channel_url) console.log("[parse_channel_url] [%s]",`${channel_id[0]}/${channel_id[1]}`);
+			} break;
+			default: debugger;
+		}
+	}
+	/** @arg {MicroformatEmbed} x */
+	MicroformatEmbed(x) {
+		const {iframeUrl: a,flashUrl: b,width: c,height: d,flashSecureUrl: e,...y}=x; this.g(y);
+		this.z([a,b,e],a => this.primitive_of(a,"string"));
+		this.primitive_of(x.flashSecureUrl,"string");
+		this.z([c,d],a => this.primitive_of(a,"number"));
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
@@ -5151,7 +5389,7 @@ class HandleTypes extends BaseService {
 	YtWatchPageResponse(x) {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
-		this.WatchResponsePlayer(b);
+		this.PlayerResponse(b);
 		this.yt_endpoint(c);
 		this.WatchNextResponse(d);
 		this.parse_url(e);
@@ -5606,6 +5844,11 @@ class HandleTypes extends BaseService {
 	/** @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {
 		const {page: a,endpoint: b,response: c,playerResponse: d,reelWatchSequenceResponse: e,url: f,...y}=x;
+		if(a!=="shorts") debugger;
+		this.ReelWatchEndpoint(b);
+		this.ReelResponse(c);
+		this.PlayerResponse(d);
+		this.ReelWatchSequenceResponse(e);
 		this.parse_url(f);
 		this.g(y);
 	}
@@ -6685,243 +6928,13 @@ class HandleTypes extends BaseService {
 	GuideJsonType(x) {
 		this.save_keys("GuideJsonType",x,this.TODO_true);
 	}
-	/** @arg {GetLiveChatReplay} x */
-	GetLiveChatReplay(x) {
-		const {responseContext: a,continuationContents: b,...y}=x;
-		this.ResponseContext(a);
-		this.iter_continuationContents(b);
-		this.g(y);
+	/** @arg {ReelWatchSequenceResponse} x */
+	ReelWatchSequenceResponse(x) {
+		x;
 	}
-	/** @arg {LiveChatContinuation} x */
-	iter_continuationContents(x) {
-		if("liveChatContinuation" in x) {
-			this.w(x,a => this.LiveChatContinuationData(a));
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {LiveChatContinuationData} x */
-	LiveChatContinuationData(x) {
-		this.z(x.actions,a => this.ReplayChatItemAction(a));
-		this.z(x.continuations,a => this.LiveChatContinuationItem(a));
-	}
-	/** @arg {ReplayChatItemAction} x */
-	ReplayChatItemAction(x) {
-		if("replayChatItemAction" in x) {
-			const {replayChatItemAction: a,...y}=x;
-			this.ReplayChatItemActionData(x.replayChatItemAction);
-			this.empty_object(y);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {LiveChatContinuationItem} x */
-	LiveChatContinuationItem(x) {
-		if("liveChatReplayContinuationData" in x) {
-			this.w(x,a => this.LiveChatReplayContinuationData(a));
-		} else if("playerSeekContinuationData" in x) {
-			this.w(x,a => this.GenericContinuationData(a));
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {GenericContinuationData} x */
-	GenericContinuationData(x) {
-		const {continuation: a,...y}=x;
-		this.primitive_of(a,"string");
-		this.g(y);
-	}
-	/** @arg {LiveChatReplayContinuationData} x */
-	LiveChatReplayContinuationData(x) {
-		this.primitive_of(x.continuation,"string");
-		this.primitive_of(x.timeUntilLastMessageMsec,"number");
-	}
-	/** @arg {ReplayChatItemActionData} x */
-	ReplayChatItemActionData(x) {
-		this.primitive_of(x.videoOffsetTimeMsec,"string");
-		this.z(x.actions,a => this.AddChatItemAction(a));
-	}
-	/** @arg {AddChatItemAction} x */
-	AddChatItemAction(x) {
-		if("addChatItemAction" in x) {
-			const {clickTrackingParams: a,addChatItemAction: b,...y}=x; this.g(y);
-			if(a) this.clickTrackingParams(a);
-			this.AddChatItemActionData(b);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {AddChatItemActionData} x */
-	AddChatItemActionData(x) {
-		const {clientId: a,item: b,...y}=x; this.g(y);
-		if(a) this.primitive_of(a,"string");
-		this.LiveChatTextMessageRenderer(x.item);
-	}
-	/** @arg {LiveChatTextMessageRenderer} x */
-	LiveChatTextMessageRenderer(x) {
-		if("liveChatTextMessageRenderer" in x) {
-			this.w(x,a => this.LiveChatTextMessageData(a));
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {LiveChatTextMessageData} x */
-	LiveChatTextMessageData(x) {
-		const {
-			message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,
-			id: e,timestampUsec: f,authorBadges: g,authorExternalChannelId: h,contextMenuAccessibility: i,
-			timestampText: j,...y
-		}=x;
-		this.z([a,b,j],a => this.text_t(a));
-		this.Thumbnail(c);
-		this.yt_endpoint(d);
-		this.z([e,f],a => this.primitive_of(a,"string"));
-		this.parse_external_channel_id(h);
-		this.Accessibility(i);
-		if(g) this.z(g,a => this.LiveChatAuthorBadgeRenderer(a));
-		this.g(y);
-	}
-	/** @arg {LiveChatAuthorBadgeRenderer} x */
-	LiveChatAuthorBadgeRenderer(x) {
-		if("liveChatAuthorBadgeRenderer" in x) {
-			this.w(x,a => {
-				const {accessibility: b,icon: c,tooltip: d,...y}=a;
-				this.Accessibility(b);
-				this.Icon(c);
-				this.g(y);
-			});
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {`UC${string}`} x */
-	parse_external_channel_id(x) {
-		let chan_parts=split_string_once(x,"UC");
-		if(chan_parts[0]!=="") debugger;
-		let cr=chan_parts[1];
-		if(cr.length===22) return;
-		console.log("[channel_id] %s %s","UC",cr);
-	}
-	/** @arg {LiveChatItemContextMenuEndpointData} x */
-	LiveChatItemContextMenuEndpointData(x) {
-		const {params: a,...y}=x; this.g(y);
-		this.primitive_of(a,"string");
-	}
-	/** @arg {HeartbeatParams} x */
-	HeartbeatParams(x) {
-		const {heartbeatServerData: a,intervalMilliseconds: b,softFailOnError: c,...y}=x; this.g(y);
-		this.z([a,b],a => this.primitive_of(a,"string"));
-		this.primitive_of(c,"boolean");
-	}
-	/** @arg {CardCollectionRenderer} x */
-	CardCollectionRenderer(x) {
-		const {cardCollectionRenderer: a,...y}=x; this.g(y);
-		this.CardCollectionData(a);
-	}
-	/** @arg {CardCollectionData} x */
-	CardCollectionData(x) {
-		const {
-			cards: a,headerText: b,icon: c,closeButton: d,
-			trackingParams: e,allowTeaserDismiss: f,logIconVisibilityUpdates: g,...y
-		}=x; this.g(y);
-		this.z(a,a => a);
-		this.text_t(b);
-		this.z([c,d],a => this.InfoCardIconRenderer(a));
-		this.trackingParams(e);
-		this.z([f,g],a => this.primitive_of(a,"boolean"));
-	}
-	/** @arg {InfoCardIconRenderer} x */
-	InfoCardIconRenderer(x) {
-		const {infoCardIconRenderer: a,...y}=x; this.g(y);
-		this.InfoCardIconData(a);
-	}
-	/** @arg {InfoCardIconData} x */
-	InfoCardIconData(x) {
-		const {trackingParams: a,...y}=x; this.g(y);
-		this.trackingParams(a);
-	}
-	/** @arg {PlayerMicroformatRenderer} x */
-	PlayerMicroformatRenderer(x) {
-		const {playerMicroformatRenderer: a,...y}=x; this.g(y);
-		this.PlayerMicroformatData(a);
-	}
-	/** @arg {PlayerMicroformatData} x */
-	PlayerMicroformatData(x) {
-		let t=this;
-		/** @this {typeof t} @arg {PlayerMicroformatData} x */
-		function p1(x) {
-			const {thumbnail: a,embed: b,title: c,description: d,...y}=x;
-			this.Thumbnail(a);
-			this.MicroformatEmbed(b);
-			this.text_t(c);
-			this.text_t(d);
-			return y;
-		}
-		let a=p1.call(this,x);
-		/** @this {typeof t} @arg {typeof a} x */
-		function p2(x) {
-			const {lengthSeconds: b,ownerProfileUrl: c,externalChannelId: d,isFamilySafe: e,...y}=x;
-			this.primitive_of(b,"string");
-			this.parse_channel_url(c);
-			return y;
-		}
-		let b=p2.call(this,a);
-		/** @this {typeof t} @arg {typeof b} x */
-		function p3(x) {
-			const {availableCountries: a,isUnlisted: c,hasYpcMetadata: d,viewCount: e,...y}=x;
-			this.z(a,a => this.save_string("country_code",a));
-			this.z([c,d],a => this.primitive_of(a,"boolean"));
-			this.primitive_of(e,"string");
-			return y;
-		}
-		let c=p3.call(this,b);
-		/** @this {typeof t} @arg {typeof c} x */
-		function p4(x) {
-			const {category: a,publishDate: b,ownerChannelName: d,liveBroadcastDetails: e,...y}=x;
-			this.save_string("video.category",a);
-			this.z([b,d],a => this.primitive_of(a,"string"));
-			if(e) this.LiveBroadcastDetails(e);
-			return y;
-		}
-		let d=p4.call(this,c);
-		/** @this {typeof t} @arg {typeof d} x */
-		function p5(x) {
-			const {uploadDate: a,...y}=x;
-			this.primitive_of(a,"string");
-			return y;
-		}
-		let y=p5.call(this,d); this.g(y);
-	}
-	/** @arg {LiveBroadcastDetails} x */
-	LiveBroadcastDetails(x) {
-		const {isLiveNow: a,startTimestamp: b,...y}=x; this.g(y);
-		this.primitive_of(a,"boolean");
-		this.primitive_of(b,"string");
-	}
-	log_user_channel_url=false;
-	/** @arg {FullChannelUrlFormat} x */
-	parse_channel_url(x) {
-		let r=create_from_parse(x);
-		let chan_part=split_string_once(r.pathname,"/")[1];
-		let channel_id=split_string_once(chan_part,"/");
-		switch(channel_id[0]) {
-			case "channel": if(channel_id[1].startsWith("UC")) {
-				this.parse_external_channel_id(channel_id[1]);
-			} else {
-				debugger;
-			} break;
-			case "user": {
-				if(this.log_user_channel_url) console.log("[parse_channel_url] [%s]",`${channel_id[0]}/${channel_id[1]}`);
-			} break;
-			default: debugger;
-		}
-	}
-	/** @arg {MicroformatEmbed} x */
-	MicroformatEmbed(x) {
-		const {iframeUrl: a,flashUrl: b,width: c,height: d,flashSecureUrl: e,...y}=x; this.g(y);
-		this.z([a,b,e],a => this.primitive_of(a,"string"));
-		this.primitive_of(x.flashSecureUrl,"string");
-		this.z([c,d],a => this.primitive_of(a,"number"));
+	/** @arg {ReelResponse} x */
+	ReelResponse(x) {
+		x;
 	}
 }
 //#endregion
