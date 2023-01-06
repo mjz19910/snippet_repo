@@ -7182,7 +7182,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlayerConfig} x */
 	PlayerConfig(x) {
-		this.g(x.audioConfig);
+		this.AudioConfig(x.audioConfig);
+	}
+	/** @arg {AudioConfig} x */
+	AudioConfig(x) {
+		x;
 	}
 	/** @arg {VideoDetails} x */
 	VideoDetails(x) {
