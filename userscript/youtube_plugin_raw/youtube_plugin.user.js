@@ -6326,7 +6326,7 @@ class HandleTypes extends BaseService {
 		this.AccessibilityData(a);
 		this.g(y);
 	}
-	/** @arg {AccessibilityData} x */
+	/** @arg {import("./yt_json_types/AccessibilityData").AccessibilityData} x */
 	AccessibilityData(x) {
 		if(!x) {
 			debugger;
@@ -6683,7 +6683,27 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./yt_json_types/ReelItemData").ReelItemData} x */
 	ReelItemData(x) {
-		this.g(x);
+		this.Accessibility(x.accessibility);
+		this.text_t(x.headline);
+		this.LoggingDirectives(x.loggingDirectives);
+		this.MenuRenderer(x.menu);
+	}
+	/** @arg {import("./yt_json_types/MenuRenderer").MenuRenderer} x */
+	MenuRenderer(x) {
+		this.MenuData(x.menuRenderer);
+	}
+	/** @arg {import("./yt_json_types/MenuData").MenuData} x */
+	MenuData(x) {
+		this.Accessibility(x.accessibility);
+		this.z(x.items,a=>this.MenuServiceItem(a));
+	}
+	/** @arg {import("./yt_json_types/MenuServiceItem").MenuServiceItem} x */
+	MenuServiceItem(x) {
+		this.MenuServiceItemRenderer(x.menuServiceItemRenderer);
+	}
+	/** @arg {import("./yt_json_types/MenuServiceItemRenderer").MenuServiceItemRenderer} x */
+	MenuServiceItemRenderer(x) {
+		x.serviceEndpoint;
 	}
 	/** @arg {SearchPyvData} x */
 	SearchPyvData(x) {

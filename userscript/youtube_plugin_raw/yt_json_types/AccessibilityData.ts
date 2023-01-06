@@ -1,1 +1,1 @@
-type AccessibilityData={label?: string;};
+export type AccessibilityData={label?: string;};
