@@ -4323,6 +4323,10 @@ class YtUrlParser extends BaseService {
 			case "channel_switcher": return;
 			case "gaming": return;
 			case "premium": return;
+			case "reporthistory": return;
+			default:
+		}
+		switch(x) {
 			default: debugger; return;
 		}
 	}
