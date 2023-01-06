@@ -4948,6 +4948,7 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		if(this.str_starts_with(x,"@")) {
+			console.log("[channel_handle]",x);
 			return;
 		}
 		if(this.str_starts_with(x,"account")) {
