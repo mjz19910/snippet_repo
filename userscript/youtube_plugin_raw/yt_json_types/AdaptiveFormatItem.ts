@@ -39,4 +39,23 @@ type Format137={
   averageBitrate: number;
   approxDurationMs: `${number}`;
 };
-type AdaptiveFormatItem=Format140|Format137;
+type Format248={
+  itag: 248;
+  url: string;
+  mimeType: string;
+  bitrate: number;
+  width: number;
+  height: number;
+  initRange: YtRange;
+  indexRange: YtRange;
+  lastModified: `${number}`;
+  contentLength: `${number}`;
+  quality: "hd1080";
+  fps: 30;
+  qualityLabel: "1080p";
+  projectionType: "RECTANGULAR";
+  averageBitrate: number;
+  colorInfo: FormatColorInfo;
+  approxDurationMs: `${number}`;
+};
+type AdaptiveFormatItem=Format140|Format137|Format248;
