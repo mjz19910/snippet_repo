@@ -7264,7 +7264,7 @@ class HandleTypes extends BaseService {
 		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
 		this.UrlWrappedValueT(interpreterSafeUrl,a => a);
 	}
-	/** @template T @arg {import("./yt_json_types/UrlWrappedValueT").UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
+	/** @template {string} T @arg {import("./yt_json_types/UrlWrappedValueT").UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
 	UrlWrappedValueT(x,f) {
 		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
