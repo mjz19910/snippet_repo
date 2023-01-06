@@ -7239,43 +7239,69 @@ class HandleTypes extends BaseService {
 	/** @type {FormatItag[]} */
 	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315];
 	/** @arg {AdaptiveFormatItem} x */
+	v_format_140(x) {
+		/** @arg {AdaptiveFormatItem} x */
+		let p1=(x)=>{
+			const {itag: a,url: b,mimeType: c,bitrate: d,...y}=x;
+			if(!this.format_itag_arr.includes(a)) {
+				debugger;
+			}
+			this.primitive_of(b,"string");
+			this.save_string("mime-type",c);
+			this.primitive_of(d,"number");
+			return y;
+		};
+		let a=p1(x);
+		/** @arg {typeof a} x */
+		let p2=x=>{
+			const {initRange,indexRange,lastModified,contentLength,...y}=x;
+			this.YtRange(initRange);
+			this.YtRange(indexRange);
+			this.primitive_of(lastModified,"string");
+			this.primitive_of(contentLength,"string");
+			return y;
+		};
+		let b=p2(a);
+		/** @arg {typeof b} x */
+		let p3=x=>{
+			const {quality,projectionType,averageBitrate,highReplication,...y}=x;
+			this.parse_format_quality(quality);
+			if(projectionType!=="RECTANGULAR") debugger;
+			this.primitive_of(averageBitrate,"number");
+			switch(highReplication) {
+				case true:
+				case void 0: break;
+				default: debugger;
+			}
+			return y;
+		};
+		let c=p3(b);
+		/** @arg {typeof c} x */
+		let p4=x=>{
+			const {audioQuality: aq,approxDurationMs,audioSampleRate,audioChannels,...y}=x;
+			if(aq) this.parse_audio_quality(aq);
+			this.primitive_of(approxDurationMs,"string");
+			if(audioSampleRate!=="44100") debugger;
+			if(audioChannels!==2) debugger;
+			return y;
+		}
+		const {loudnessDb,...y}=p4(c); this.g(y);
+		this.primitive_of(loudnessDb,"number");
+	}
+	/** @arg {AudioQuality} x */
+	parse_audio_quality(x) {
+		switch(x) {
+			case "AUDIO_QUALITY_MEDIUM": break;
+		}
+	}
+	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
-		const {
-			itag,url,mimeType,bitrate,width: w,height: h,initRange,indexRange,
-			...a
-		}=x;
-		if(!this.format_itag_arr.includes(itag)) {
-			debugger;
-		}
-		this.primitive_of(url,"string");
-		this.save_string("mime-type",mimeType);
-		this.primitive_of(bitrate,"number");
-		if(w) this.primitive_of(w,"number");
-		if(h) this.primitive_of(h,"number");
-		this.YtRange(initRange);
-		this.YtRange(indexRange);
-		const {
-			lastModified,contentLength,quality,fps,
-			qualityLabel: ql,projectionType,averageBitrate,colorInfo: ci,
-			highReplication,
-			audioQuality,
-			approxDurationMs,
-			...y
-		}=a; this.g(y);
-		switch(highReplication) {
-			case true:
-			case void 0: break;
-			default: debugger;
-		}
-		this.primitive_of(lastModified,"string");
-		this.primitive_of(contentLength,"string");
-		this.parse_format_quality(quality);
-		this.parse_format_fps(fps);
-		if(ql) this.parse_format_quality_label(ql);
-		if(projectionType!=="RECTANGULAR") debugger;
-		this.primitive_of(averageBitrate,"number");
-		if(ci) this.FormatColorInfo(ci);
-		this.primitive_of(approxDurationMs,"string");
+		// 140
+		this.v_format_140(x);
+		// if(w) this.primitive_of(w,"number");
+		// if(h) this.primitive_of(h,"number");
+		// this.parse_format_fps(fps);
+		// if(ci) this.FormatColorInfo(ci);
 	}
 	/** @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {

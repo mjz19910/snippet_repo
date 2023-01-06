@@ -1,3 +1,5 @@
+type AudioQuality="AUDIO_QUALITY_MEDIUM";
+
 type AdaptiveFormatItem={
   itag: FormatItag;
   url: string;
@@ -11,7 +13,7 @@ type AdaptiveFormatItem={
   projectionType: "RECTANGULAR";
   averageBitrate: number;
   highReplication: true;
-  audioQuality: "AUDIO_QUALITY_MEDIUM";
+  audioQuality: AudioQuality;
   approxDurationMs: `${number}`;
   audioSampleRate: `${44100}`;
   audioChannels: 2;
