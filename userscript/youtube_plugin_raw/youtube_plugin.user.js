@@ -7292,17 +7292,18 @@ class HandleTypes extends BaseService {
 	/** @arg {Format137} x */
 	v_format_137(x) {
 		console.log("137 like",x.itag);
-		let a=this.format_140_p1(x);
-		/** @type {Format137_Omit4} */
-		const {lastModified,contentLength,...b}=this.format_140_p1(x); b;
-		this.primitive_of(lastModified,"string");
-		this.primitive_of(contentLength,"string");
+		const a=this.format_140_p1(x);
+		const b=this.format_140_p2(a);
 		/** @arg {typeof b} x */
 		const p1=x => {
-			const {width,height,initRange,indexRange,...y}=x;
+			const {lastModified,contentLength,width,height,...y}=x;
+			this.primitive_of(lastModified,"string");
+			this.primitive_of(contentLength,"string");
+			this.primitive_of(width,"number")
+			this.primitive_of(height,"number");
 			return y;
 		};
-		const c=p1(a); c;
+		const c=p1(b); c;
 		/** @arg {typeof c} x */
 		const p2=x=> {
 			const {quality,projectionType,averageBitrate,...y}=x;
