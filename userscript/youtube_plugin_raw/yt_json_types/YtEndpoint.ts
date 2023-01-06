@@ -1,1 +1,1 @@
-interface YtEndpoint extends EndpointTypes {clickTrackingParams: string;}
+interface YtEndpoint extends EndpointTypes,EndpointBase {}

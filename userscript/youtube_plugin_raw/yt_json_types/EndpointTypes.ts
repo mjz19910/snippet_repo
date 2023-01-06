@@ -1,5 +1,4 @@
 type EndpointTypes={
-	commandMetadata?: CommandMetadata;
 	watchEndpoint?: WatchEndpointData;
 	urlEndpoint?: UrlEndpointData;
 	signalServiceEndpoint?: SignalServiceEndpointData;

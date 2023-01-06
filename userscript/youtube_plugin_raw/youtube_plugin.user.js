@@ -4344,10 +4344,8 @@ class HandleTypes extends BaseService {
 		this.save_keys("YtEndpoint",x,true);
 		const {
 			clickTrackingParams: a,
-			...y_
+			...y
 		}=x;
-		/** @type {EndpointTypes} */
-		let y=y_;
 		if(a) this.clickTrackingParams(a);
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
 		let q=(v) => this.endpoint_data_map.get(v);
@@ -6311,11 +6309,52 @@ class HandleTypes extends BaseService {
 		}
 		this.g(y);
 	}
+	/** @template T @arg {CommandTemplate<T>} x @arg {(x:T)=>void} f */
+	CommandTemplate(x,f) {
+		if("command" in x) {
+			const {command: a,trackingParams: b}=x;
+			f(a);
+			this.trackingParams(b);
+		} else {
+			debugger;
+		}
+	}
 	/** @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
 		this.save_keys("ReelWatchSequence",x,true);
-		const {responseContext: a,...y}=x;
+		const {responseContext: a,entries: b,trackingParams,continuationEndpoint,...y}=x;
+		this.ReelWatchEntries(b);
+		this.trackingParams(trackingParams);
+		this.yt_endpoint(continuationEndpoint);
 		this.g(y);
+	}
+	/** @arg {CommandTemplate<ReelWatchEndpoint>[]} x */
+	ReelWatchEntries(x) {
+		this.z(x,a=>this.CommandTemplate(a,a=>this.ReelWatchEndpoint(a)));
+	}
+	/** @template {EndpointBase} T @arg {T} x */
+	handle_common_endpoint(x) {
+		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
+		this.clickTrackingParams(a);
+		if(b) this.CommandMetadata(b);
+		return y;
+	}
+	/** @arg {ReelWatchEndpoint} x */
+	ReelWatchEndpoint(x) {
+		if("reelWatchEndpoint" in x) {
+			const {reelWatchEndpoint,...y}=this.handle_common_endpoint(x); this.g(y);
+			this.ReelWatchEndpointData(reelWatchEndpoint);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {ReelWatchEndpointData} x */
+	ReelWatchEndpointData(x) {
+		this.parse_video_id(x.videoId);
+	}
+	/** @arg {string} x */
+	parse_video_id(x) {
+		console.log("[video_id]",x);
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
