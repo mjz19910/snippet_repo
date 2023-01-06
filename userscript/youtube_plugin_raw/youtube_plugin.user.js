@@ -4113,8 +4113,14 @@ class YtUrlParser extends BaseService {
 		switch(x[0]) {
 			case "feed": return this.parse_feed_url(x);
 			case "shorts": return this.parse_shorts_url(x);
+			case "youtubei": return this.parse_api_url(x);
 			default: debugger; return;
 		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
+	parse_api_url(x) {
+		let [,b]=x;
+		console.log(b);
 	}
 	/** @arg {string} x */
 	parse_video_id(x) {
