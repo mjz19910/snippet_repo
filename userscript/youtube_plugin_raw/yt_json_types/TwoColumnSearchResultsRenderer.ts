@@ -1,0 +1,3 @@
+type TwoColumnSearchResultsRenderer={
+	twoColumnSearchResultsRenderer: TwoColumnSearchResults;
+};
