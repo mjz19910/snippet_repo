@@ -5753,12 +5753,12 @@ class HandleTypes extends BaseService {
 					let at_2_f=at_2.map(a => this.decode_template_element(a));
 					at_1_f.forEach(a => {
 						const {arr,...y}=a;
-						console.log("[template_child_iter_1]",y,arr??[]);
+						console.log("[template_child_iter_1]",y,arr??{});
 						a;
 					});
 					at_2_f.forEach(a => {
 						const {arr,...y}=a;
-						console.log("[template_child_iter_2]",y,arr??[]);
+						console.log("[template_child_iter_2]",y,arr??{});
 						a;
 					});
 				} break;
@@ -5776,8 +5776,8 @@ class HandleTypes extends BaseService {
 	decode_template_element_2(x) {
 		let res_obj={};
 		if(x.f_n1!==void 0) res_obj.index_unk_1=x.f_n1;
-		if(x.f_n2!==void 0) res_obj.unk_2=x.f_n2;
 		if(x.f_n3!==void 0) res_obj.unk_3=x.f_n3;
+		if(x.f_n2!==void 0) res_obj.unk_2=x.f_n2;
 		if(x.f_o4!==void 0) res_obj.arr=x.f_o4;
 		let r=filter_out_keys(get_keys_of(x),split_string("f_n1,f_n2,f_n3,f_o4"));
 		if(r.length>0) debugger;
