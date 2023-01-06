@@ -4907,10 +4907,14 @@ class HandleTypes extends BaseService {
 			case 2: this.parse_url_3(v); break;
 		}
 	}
+	/** @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
 	parse_channel_section_url(x) {
+		if(this.str_is_search(x)) {
+			return;
+		}
 		x;
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any,any]>} x */
+	/** @arg {ParseUrlStr_3} x */
 	parse_url_3(x) {
 		if(this.str_starts_with_at_0(x,"@")) {
 			this.parse_channel_section_url(x[1]);
@@ -4937,13 +4941,13 @@ class HandleTypes extends BaseService {
 			default: debugger; return;
 		}
 	}
+	/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
+	str_is_search(x) {
+		return x.includes("?");
+	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
 	parse_url_2(x) {
-		/** @template {string} T @arg {T} x @returns {x is `${string}?${string}`} */
-		function str_is_search(x) {
-			return x.includes("?");
-		}
-		if(str_is_search(x)) {
+		if(this.str_is_search(x)) {
 			let a=split_string(x,"?");
 			switch(a[0]) {
 				case "playlist": this.parse_playlist_page_url(a[1]); break;
