@@ -3109,7 +3109,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		if(was_known) return;
 		this.new_strings.push([key,x]);
 		this.onDataChange();
-		console.log("store_str [%s]",key,x);
+		console.log("store_str [%s] %o",key,x);
 		debugger;
 	}
 	/** @private @type {[string,number|number[]][]} */
