@@ -2,7 +2,7 @@ type ItemSectionItemMap={
 	connectedAppRenderer: "ConnectedAppData";
 	pageIntroductionRenderer: "PageIntroductionData";
 	playlistVideoListRenderer: "PlaylistVideoListData";
-	searchPyvRenderer: "SearchPyvRendererData";
+	searchPyvRenderer: "SearchPyvData";
 	settingsOptionsRenderer: "SettingsOptionsData";
 	shelfRenderer: "ShelfData";
 };

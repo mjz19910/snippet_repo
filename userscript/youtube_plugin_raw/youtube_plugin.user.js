@@ -6645,6 +6645,10 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
+	/** @arg {SearchPyvData} x */
+	SearchPyvData(x) {
+		this.g(x);
+	}
 	/** @arg {PlayerStoryboardSpecRenderer} x */
 	PlayerStoryboardSpecRenderer(x) {
 		const {playerStoryboardSpecRenderer: a,...y}=x;
