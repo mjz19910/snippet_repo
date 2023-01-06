@@ -5433,16 +5433,12 @@ class HandleTypes extends BaseService {
 		let res_obj={};
 		let unk_3=x.f_n3;
 		if(unk_3!==void 0) res_obj.unk_3=unk_3;
-		let r=Object.keys(x);
-		for(let k of r) {
-			switch(k) {
-				case "f_n1": res_obj.index_unk_1=x.f_n1; break;
-				case "f_n2": res_obj.unk_2=x.f_n2; break;
-				case "f_n3": res_obj.unk_3=x.f_n3; break;
-				case "f_o4": res_obj={...res_obj,...x.f_o4}; break;
-				default: debugger;
-			}
-		}
+		if(x.f_n1!==void 0) res_obj.index_unk_1=x.f_n1;
+		if(x.f_n2!==void 0) res_obj.unk_2=x.f_n2;
+		if(x.f_n3!==void 0) res_obj.unk_3=x.f_n3;
+		if(x.f_o4!==void 0) res_obj.arr=x.f_o4;
+		let r=filter_out_keys(get_keys_of(x),split_string("f_n1,f_n2,f_n3,f_o4"));
+		if(r.length>0) debugger;
 		return res_obj;
 	}
 	/** @arg {DecTypeNum[]} x */
