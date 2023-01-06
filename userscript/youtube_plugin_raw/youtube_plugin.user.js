@@ -6300,7 +6300,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(c,"boolean");
 		this.g(y);
 	}
-	/** @arg {RichShelfData} x */
+	/** @arg {import("./yt_json_types/RichShelfData").RichShelfData} x */
 	RichShelfData(x) {
 		const {icon: a,title: b,...y}=x;
 		this.Icon(a);
@@ -6670,8 +6670,19 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {ReelShelfData} x */
+	/** @arg {import("./yt_json_types/ReelShelfData").ReelShelfData} x */
 	ReelShelfData(x) {
+		this.Icon(x.icon);
+		this.z(x.items,a=>this.ReelItemRenderer(a));
+		this.text_t(x.title);
+		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {import("./yt_json_types/ReelItemRenderer").ReelItemRenderer} x */
+	ReelItemRenderer(x) {
+		this.ReelItemData(x.reelItemRenderer);
+	}
+	/** @arg {import("./yt_json_types/ReelItemData").ReelItemData} x */
+	ReelItemData(x) {
 		this.g(x);
 	}
 	/** @arg {SearchPyvData} x */
