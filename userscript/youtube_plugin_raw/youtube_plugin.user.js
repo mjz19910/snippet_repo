@@ -3434,6 +3434,14 @@ class GFeedbackService extends BaseService {
 	parse_e_param(param) {
 		return param.value.split(",").map(e => parseInt(e,10));
 	}
+	/** @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore['context']>} x */
+	on_context_param(data_target,x) {
+		data_target.context=x;
+		switch(x) {
+			case "yt_web_unknown_form_factor_kevlar_w2w": break;
+			default: debugger; break;
+		}
+	}
 	/** @arg {GFeedbackServiceParamsType} params */
 	on_params(params) {
 		let parsed_e=null;
@@ -3441,10 +3449,7 @@ class GFeedbackService extends BaseService {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
 				case "browse_id": this.handle_types.parse_browse_id(param.value); break;
-				case "context": {
-					if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger;
-					this.data.context=param.value;
-				} break;
+				case "context": this.on_context_param(this.data,param.value); break;
 				case "e": parsed_e=this.data.e=this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
 				case "has_unlimited_entitlement": break;
@@ -3499,7 +3504,7 @@ class GuidedHelpService extends BaseService {
 					if(param.value=="1") {general_service_state.logged_in=true; break;}
 					debugger;
 				} break;
-				case "context": if(param.value!=="yt_web_unknown_form_factor_kevlar_w2w") debugger; this.data.context=param.value; break;
+				case "context": this.x.get("g_feedback_service").on_context_param(this.data,param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
 			}
 		}
