@@ -5775,8 +5775,6 @@ class HandleTypes extends BaseService {
 	/** @arg {TemplateElement} x */
 	decode_template_element_2(x) {
 		let res_obj={};
-		let unk_3=x.f_n3;
-		if(unk_3!==void 0) res_obj.unk_3=unk_3;
 		if(x.f_n1!==void 0) res_obj.index_unk_1=x.f_n1;
 		if(x.f_n2!==void 0) res_obj.unk_2=x.f_n2;
 		if(x.f_n3!==void 0) res_obj.unk_3=x.f_n3;
