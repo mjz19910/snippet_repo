@@ -7256,21 +7256,35 @@ class HandleTypes extends BaseService {
 	AttBgChallenge(x) {
 		console.log("bg_interpreter_url",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
-	/** @private @arg {GuideJsonType} x */
+	/** @arg {GuideJsonType} x */
 	GuideJsonType(x) {
-		this.g(x);
+		this.z(x.items,a=>this.GuideItemType(a));
+	}
+	/** @arg {GuideItemType} x */
+	GuideItemType(x) {
+		if("guideSectionRenderer" in x) {
+			this.GuideSectionData(x.guideSectionRenderer);
+		}
+	}
+	/** @arg {GuideSectionData} x */
+	GuideSectionData(x) {
+		if(x.formattedTitle) {
+			debugger;
+		}
+		this.z(x.items,a=>this.g(a));
+		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		this.g(x);
+		this.ContinuationEndpoint(x.continuationEndpoint);
 	}
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
-		this.g(x);
+		this.DesktopTopbarRenderer(x.desktopTopbar);
 	}
 	/** @arg {CompactLinkData} x */
 	CompactLinkData(x) {
-		this.g(x);
+		console.log(x.navigationEndpoint);
 	}
 }
 //#endregion

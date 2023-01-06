@@ -1,5 +1,5 @@
 type GuideSectionData={
 	items: {}[];
-	trackingParams: {};
+	trackingParams: string;
 	formattedTitle?: {};
 };
