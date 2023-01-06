@@ -1512,7 +1512,7 @@ class FilterHandlers {
 			};
 			case "player": return {
 				type: target[0],
-				/** @type {WatchResponsePlayer} */
+				/** @type {PlayerResponse} */
 				data: cast_as(x),
 			};
 		}
@@ -4017,11 +4017,11 @@ class IndexedDbAccessor {
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 //#region HandleTypes
 class HandleTypes extends BaseService {
-	/** @private @arg {WatchResponsePlayer} x */
+	/** @private @arg {PlayerResponse} x */
 	WatchResponsePlayer(x) {
 		this.save_keys("WatchResponsePlayer",x,true);
 		let t=this;
-		/** @this {typeof t} @arg {WatchResponsePlayer} x */
+		/** @this {typeof t} @arg {PlayerResponse} x */
 		function p1(x) {
 			const {responseContext: a,annotations: b,attestation: c,adPlacements: d,...y}=x;
 			this.ResponseContext(a);

@@ -2,7 +2,7 @@ type YtWatchPageResponse={
 	page: "watch";
 	endpoint: YtEndpoint;
 	response: WatchNextResponse;
-	playerResponse: WatchResponsePlayer;
+	playerResponse: PlayerResponse;
 	url: YtUrlFormat;
 	previousCsn?: string;
 };

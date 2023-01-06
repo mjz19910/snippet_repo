@@ -1,4 +1,4 @@
-interface WatchResponsePlayer {
+interface PlayerResponse {
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
 	streamingData?: StreamingData;
