@@ -1,0 +1,3 @@
+type SearchCommandMetadata={
+	webCommandMetadata: SearchWebCommandMetadata;
+};

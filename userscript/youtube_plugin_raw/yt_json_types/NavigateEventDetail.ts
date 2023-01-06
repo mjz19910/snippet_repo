@@ -1,1 +1,9 @@
-type NavigateEventDetail=PageTypeBrowse|PageTypeWatch|PageTypeChannel|PageTypePlaylist|PageTypeSettings|PageTypeShorts;
+type NavigateEventDetail=[
+	PageTypeBrowse,
+	PageTypeChannel,
+	PageTypePlaylist,
+	PageTypeSettings,
+	PageTypeShorts,
+	PageTypeWatch,
+	PageTypeSearch,
+][number];

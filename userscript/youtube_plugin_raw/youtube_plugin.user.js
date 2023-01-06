@@ -2135,6 +2135,7 @@ function page_type_iter(pageType) {
 		case "browse": case "channel": break;
 		case "playlist": case "settings": break;
 		case "shorts": case "watch": break;
+		case "search": break;
 		default: console.log("[%s]",pageType); debugger;
 	}
 }
@@ -5282,6 +5283,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string[]} parts @arg {number} index */
 	get_yt_url_type(parts,index) {
+		console.log(parts.length);
+		debugger;
 		if(parts[1]!=="v1") {
 			debugger;
 		}
