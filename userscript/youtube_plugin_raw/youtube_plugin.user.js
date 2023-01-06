@@ -4134,6 +4134,9 @@ class YtUrlParser extends BaseService {
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
 		let [,a]=x;
+		if(this.str_is_search(a)) {
+			return;
+		}
 		switch(a) {case "history": return;}
 		switch(a) {case "library": return;}
 		switch(a) {case "subscriptions": return;}
