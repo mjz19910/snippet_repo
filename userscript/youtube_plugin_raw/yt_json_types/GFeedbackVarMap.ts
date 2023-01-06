@@ -5,6 +5,7 @@ type GFeedbackVarMap={
 	e: string;
 	has_alc_entitlement: "false";
 	has_unlimited_entitlement: "False";
+	has_premium_lite_entitlement: "False";
 	ipcc: "0";
 	is_alc_surface: "false";
 	is_casual: "false";

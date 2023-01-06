@@ -3438,7 +3438,12 @@ class GFeedbackService extends BaseService {
 	on_context_param(data_target,x) {
 		data_target.context=x;
 		switch(x) {
-			case "yt_web_unknown_form_factor_kevlar_w2w": break;
+			case "yt_web_search": return;
+			case "yt_web_unknown_form_factor_kevlar_w2w": return;
+			default:
+		}
+		switch(x) {
+			case "": break;
 			default: debugger; break;
 		}
 	}
@@ -3459,6 +3464,7 @@ class GFeedbackService extends BaseService {
 				case "is_monetization_enabled": break;
 				case "is_owner": break;
 				case "is_viewed_live": break;
+				case "has_premium_lite_entitlement": break;
 				case "logged_in": {
 					if(param.value=="0") {general_service_state.logged_in=false; break;}
 					if(param.value=="1") {general_service_state.logged_in=true; break;}
@@ -5279,8 +5285,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string[]} parts @arg {number} index */
 	get_yt_url_type(parts,index) {
-		console.log(parts.length);
-		debugger;
+		switch(parts.length) {
+			case 4: console.log('get_yt_url_type_4',parts.slice(1)); break;
+			default: console.log(parts.length); debugger;
+		}
 		if(parts[1]!=="v1") {
 			debugger;
 		}
