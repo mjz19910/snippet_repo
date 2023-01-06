@@ -4989,7 +4989,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
-		console.log("[shorts_video]",x[1]);
+		this.parse_video_id(x[1]);
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
@@ -6649,8 +6649,25 @@ class HandleTypes extends BaseService {
 		const {responseContext: a,entries: b,trackingParams,continuationEndpoint,...y}=x;
 		this.ReelWatchEntries(b);
 		this.trackingParams(trackingParams);
-		this.yt_endpoint(continuationEndpoint);
+		this.ContinuationEndpoint(continuationEndpoint);
 		this.g(y);
+	}
+	/** @arg {ContinuationEndpoint} x */
+	ContinuationEndpoint(x) {
+		const {commandMetadata: a,continuationCommand: b,...y}=this.handle_clickTrackingParams(x); this.g(y);
+		if(a) this.CommandMetadata(a);
+		this.ContinuationCommand(b);
+	}
+	/** @arg {ContinuationCommand} x */
+	ContinuationCommand(x) {
+		const {request: a,token: b,...y}=x; this.g(y);
+		if(a!=="CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE") debugger;
+		this.decode_continuation_token(b);
+	}
+	/** @arg {EncodedURIComponent} x */
+	decode_continuation_token(x) {
+		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
+		console.log("[continuation_token]",dec);
 	}
 	/** @arg {CommandTemplate<ReelWatchEndpoint>[]} x */
 	ReelWatchEntries(x) {
@@ -6679,7 +6696,6 @@ class HandleTypes extends BaseService {
 	/** @arg {string} x */
 	parse_video_id(x) {
 		indexed_db.put({v: x});
-		console.log("[video_id]",x);
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
