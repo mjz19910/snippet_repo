@@ -7258,6 +7258,7 @@ class HandleTypes extends BaseService {
 			lastModified,contentLength,quality,fps,
 			qualityLabel: ql,projectionType,averageBitrate,colorInfo: ci,
 			highReplication,
+			audioQuality,
 			approxDurationMs,
 			...y
 		}=a; this.g(y);
