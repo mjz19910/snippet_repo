@@ -5400,88 +5400,92 @@ class HandleTypes extends BaseService {
 		console.log('get_yt_url_type_4',x);
 		return null;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} parts */
-	get_yt_url_type(parts) {
-		if(parts[1]!=="v1") {
-			return this.api_no_handler(parts,parts[1]);
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
+	get_yt_url_type(x) {
+		if(x[1]!=="v1") {
+			return this.api_no_handler(x,x[1]);
 		}
-		switch(parts.length) {
-			case 4: this.get_yt_url_type_4(parts); break;
-			case 3: this.get_yt_url_type_3(parts); break;
-			default: console.log("new_length",parts); debugger;
+		switch(x.length) {
+			case 4: this.get_yt_url_type_4(x); break;
+			case 3: this.get_yt_url_type_3(x); break;
+			default: console.log("new_length",x); debugger;
 		}
-		switch(parts[2]) {
-			case "att": switch(parts[3]) {
+		switch(x[2]) {
+			case "att": switch(x[3]) {
 				case "get": break;
 				case "log": break;
-				default: return this.api_no_handler(parts,parts[3]);
+				default: return this.api_no_handler(x,x[3]);
 			} return {
-				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-				name: `${parts[2]}.${parts[3]}`
+				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+				name: `${x[2]}.${x[3]}`
 			};
-			case "notification": switch(parts[3]) {
+			case "notification": switch(x[3]) {
 				case "get_unseen_count": break;
 				case "get_notification_menu": break;
 				case "record_interactions": break;
 				case "modify_channel_preference": break;
-				default: return this.api_no_handler(parts,parts[3]);
+				default: return this.api_no_handler(x,x[3]);
 			} return {
-				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-				name: `${parts[2]}.${parts[3]}`
+				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+				name: `${x[2]}.${x[3]}`
 			};
-			case "subscription": switch(parts[3]) {
+			case "subscription": switch(x[3]) {
 				case "subscribe": break;
-				default: return this.api_no_handler(parts,parts[3]);
+				default: return this.api_no_handler(x,x[3]);
 			} return {
-				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-				name: `${parts[2]}.${parts[3]}`
+				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+				name: `${x[2]}.${x[3]}`
 			};
 			case "browse": break;
 			case "guide": break;
-			case "reel": switch(parts[3]) {
+			case "reel": switch(x[3]) {
 				case "reel_item_watch": break;
 				case "reel_watch_sequence": break;
-				default: return this.api_no_handler(parts,parts[3]);
+				default: return this.api_no_handler(x,x[3]);
 			}return {
-				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-				name: `${parts[2]}.${parts[3]}`
+				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+				name: `${x[2]}.${x[3]}`
 			};
 			case "next": break;
 			case "player": break;
-			case "live_chat": return this.get_live_chat_type(parts);
+			case "live_chat": return this.get_live_chat_type(x);
 			case "get_transcript": break;
-			case "account": return this.get_account_type(parts);
+			case "account": return this.get_account_type(x);
 			case "feedback": break;
-			case "comment": switch(parts[3]) {
+			case "comment": switch(x[3]) {
 				case "create_comment": break;
-				default: return this.api_no_handler(parts,parts[3]);
+				default: return this.api_no_handler(x,x[3]);
 			} return {
-				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-				name: `${parts[2]}.${parts[3]}`
+				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+				name: `${x[2]}.${x[3]}`
 			};
-			case "like": switch(parts[3]) {
+			case "like": switch(x[3]) {
 				case "like": break;
 				case "removelike": break;
-				default: return this.api_no_handler(parts,parts[3]);
+				default: return this.api_no_handler(x,x[3]);
 			} return {
-				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-				name: `${parts[2]}.${parts[3]}`
+				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+				name: `${x[2]}.${x[3]}`
 			};
-			default: return this.api_no_handler(parts,parts[2]);
+			default: return this.api_no_handler(x,x[2]);
 		}
-		return {name: parts[2]};
+		return {name: x[2]};
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} parts */
-	get_account_type(parts) {
-		switch(parts[3]) {
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
+	get_like_type(x) {
+		x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
+	get_account_type(x) {
+		switch(x[3]) {
 			case "account_menu": break;
 			case "accounts_list": break;
 			case "set_setting": break;
-			default: return this.api_no_handler(parts,parts[3]);
+			default: return this.api_no_handler(x,x[3]);
 		}
 		return {
-			/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-			name: `${parts[2]}.${parts[3]}`
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			name: `${x[2]}.${x[3]}`
 		};
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} parts */
@@ -5495,15 +5499,15 @@ class HandleTypes extends BaseService {
 			name: `${parts[2]}.${parts[3]}`
 		};
 	}
-	/** @arg {Split<ApiUrlFormat,"/">} parts */
-	get_url_type(parts) {
-		switch(parts[0]) {
-			case "youtubei": return this.get_yt_url_type(parts);
+	/** @arg {Split<ApiUrlFormat,"/">} x */
+	get_url_type(x) {
+		switch(x[0]) {
+			case "youtubei": return this.get_yt_url_type(x);
 			case "getDatasyncIdsEndpoint": break;
 			case "getAccountSwitcherEndpoint": break;
-			default: return this.api_no_handler(parts,parts[0]);
+			default: return this.api_no_handler(x,x[0]);
 		}
-		return {name: parts[0]};
+		return {name: x[0]};
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
