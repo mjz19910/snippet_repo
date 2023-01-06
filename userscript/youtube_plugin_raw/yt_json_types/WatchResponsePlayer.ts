@@ -1,6 +1,6 @@
 import {PlayabilityStatus} from "./PlayabilityStatus.js";
 import {PlayerAttestationRenderer} from "./PlayerAttestationRenderer.js";
-
+import {PlayerCaptionsTracklistRenderer} from "./PlayerCaptionsTracklistRenderer.js";
 export interface PlayerResponse {
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
