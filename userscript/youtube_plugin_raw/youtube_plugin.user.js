@@ -5232,9 +5232,9 @@ class HandleTypes extends BaseService {
 	/** @template {{}} T @arg {import("./yt_json_types/ServiceEndpoint").ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
 	ServiceEndpoint(x,f) {
 		const {clickTrackingParams:a,commandMetadata:b,...y}=x;
-		/** @type {T} */
-		let c=as_cast(y);
-		f(c);
+		/** @type {any} */
+		let c=y;
+		f(as_cast(c));
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
