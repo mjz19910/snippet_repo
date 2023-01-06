@@ -4070,21 +4070,11 @@ class IndexedDbAccessor {
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class YtUrlParser extends BaseService {
-	/**
-	* @template {string[]} T
-	* @template {string} U
-	* @arg {U} w
-	* @arg {T} x
-	* @returns {x is [string,`${U}${string}`,...string[]]} */
+	/** @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [string,`${U}${string}`,...string[]]} */
 	str_starts_with_at_1(x,w) {
 		return this.str_starts_with(x[1],w);
 	}
-	/**
-	* @template {string[]} T
-	* @template {string} U
-	* @arg {U} w
-	* @arg {T} x
-	* @returns {x is [`${U}${string}`,...string[]]} */
+	/** @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [`${U}${string}`,...string[]]} */
 	str_starts_with_at_0(x,w) {
 		return this.str_starts_with(x[0],w);
 	}
