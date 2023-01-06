@@ -5386,7 +5386,18 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
 	get_yt_url_type_4(x) {
-		console.log('get_yt_url_type_4',x.slice(1));
+		switch(x[2]) {
+			case "account": return null;
+			case "att": return null;
+			case "comment": return null;
+			case "like": return null;
+			case "live_chat": return null;
+			case "notification": return null;
+			case "reel": return null;
+			case "subscription": return null;
+			default: break;
+		}
+		console.log('get_yt_url_type_4',x);
 		return null;
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} parts */
@@ -5408,18 +5419,16 @@ class HandleTypes extends BaseService {
 				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
 				name: `${parts[2]}.${parts[3]}`
 			};
-			case "notification": {
-				switch(parts[3]) {
-					case "get_unseen_count": break;
-					case "get_notification_menu": break;
-					case "record_interactions": break;
-					case "modify_channel_preference": break;
-					default: return this.api_no_handler(parts,parts[3]);
-				} return {
-					/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-					name: `${parts[2]}.${parts[3]}`
-				};
-			}
+			case "notification": switch(parts[3]) {
+				case "get_unseen_count": break;
+				case "get_notification_menu": break;
+				case "record_interactions": break;
+				case "modify_channel_preference": break;
+				default: return this.api_no_handler(parts,parts[3]);
+			} return {
+				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+				name: `${parts[2]}.${parts[3]}`
+			};
 			case "subscription": switch(parts[3]) {
 				case "subscribe": break;
 				default: return this.api_no_handler(parts,parts[3]);
@@ -5429,16 +5438,14 @@ class HandleTypes extends BaseService {
 			};
 			case "browse": break;
 			case "guide": break;
-			case "reel": {
-				switch(parts[3]) {
-					case "reel_item_watch": break;
-					case "reel_watch_sequence": break;
-					default: return this.api_no_handler(parts,parts[3]);
-				}return {
-					/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
-					name: `${parts[2]}.${parts[3]}`
-				};
-			}
+			case "reel": switch(parts[3]) {
+				case "reel_item_watch": break;
+				case "reel_watch_sequence": break;
+				default: return this.api_no_handler(parts,parts[3]);
+			}return {
+				/** @type {`${typeof parts[2]}.${typeof parts[3]}`} */
+				name: `${parts[2]}.${parts[3]}`
+			};
 			case "next": break;
 			case "player": break;
 			case "live_chat": return this.get_live_chat_type(parts);
