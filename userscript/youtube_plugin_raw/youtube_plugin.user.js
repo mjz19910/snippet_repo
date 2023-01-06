@@ -1109,20 +1109,20 @@ class MyReader {
 		this.pos=0;
 		return this.read_any(size);
 	}
+	cur_len=0;
 	/** @private @arg {number} [size] */
 	read_any(size) {
 		this.failed=false;
-		let target_len;
 		if(!size) {
-			target_len=this.len;
+			this.cur_len=this.len;
 		} else {
-			target_len=this.pos+size;
+			this.cur_len=this.pos+size;
 		}
 		/** @type {DataArrType} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
-		for(;this.pos<target_len;loop_count++) {
+		for(;this.pos<this.cur_len;loop_count++) {
 			let cur_byte=this.uint32();
 			let wireType=cur_byte&7;
 			let fieldId=cur_byte>>>3;
@@ -1304,6 +1304,7 @@ class MyReader {
 		let cur_byte=this.uint32();
 		return [cur_byte&7,cur_byte>>>3];
 	}
+	log_range_error=false;
 	/** @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
@@ -1329,11 +1330,14 @@ class MyReader {
 					first_num.push(["error"]);
 					break;
 				}
-				let [,num64,new_pos]=revert_res;
-				if(!num32) {
+				let [success_64,num64,new_pos]=revert_res;
+				if(success_64&&num32===null) {
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
-				} else if(num64!==BigInt(num32)) {
+				} else if(num32===null) {
+					this.failed=true;
+					first_num.push(["error"]);
+				} else if(success_64&&num64!==BigInt(num32)) {
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
 				} else {
@@ -1346,6 +1350,12 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
+				if(this.pos+size > this.cur_len) {
+					if(this.log_range_error) console.log("range error at",this.pos,fieldId, "size is too big", size);
+					first_num.push(["error"]);
+					this.failed=true;
+					break;
+				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				try {
 					this.skip(size);
@@ -5404,7 +5414,32 @@ class HandleTypes extends BaseService {
 					let at_2=struct_map.get(2);
 					if(!at_2) continue;
 					let at_1_f=at_1.map(e => this.decode_template_element(e));
-					let at_2_f=at_2.map(e => this.decode_template_element(e));
+					let at_2_f=at_2.map(e => this.decode_template_element(e)).map(e=>{
+						let index=e[`f_n${1}`];
+						let unk_3=e.f_n3;
+						let unk_child_obj=e.f_o4;
+						let r=Object.keys(e);
+						for(let k of r) {
+							switch(k) {
+								case "f_n1": break;
+								case "f_n3": break;
+								case "f_o4": break;
+								default: debugger;
+							}
+						}
+						if(unk_child_obj!==void 0) {
+							console.log("[unk_child_keys]",Object.keys(unk_child_obj).join());
+							return {
+								index,
+								unk_3,
+								children:unk_child_obj,
+							}
+						}
+						return {
+							index,
+							unk_3,
+						};
+					});
 					console.log("[template_child_iter_1]",...at_1_f);
 					console.log("[template_child_iter_2]",...at_2_f);
 				} break;
@@ -5417,16 +5452,20 @@ class HandleTypes extends BaseService {
 	decode_template_element(x) {
 		/** @type {TemplateElement} */
 		let res_obj={};
-		for(let member of x) {
-			switch(member[0]) {
+		for(let it of x) {
+			switch(it[0]) {
 				case "data32": {
-					let [,f,v]=member;
-					res_obj[`f${f}`]=v;
+					let [,f,v]=it;
+					res_obj[`f_n${f}`]=v;
 				} break;
+				case "data_fixed32": res_obj[`f_n${it[1]}`]=it[2]; break;
+				case "child": res_obj[`f_s${it[1]}`]=decoder.decode(it[2]); break;
 				case "struct": {
-					let [,f,v]=member;
-					res_obj[`s${f}`]=this.decode_template_element(v);
+					let [,f,v]=it;
+					res_obj[`f_o${f}`]=this.decode_template_element(v);
 				} break;
+				case "data64": res_obj[`f_n${it[1]}`]=it[2]; break;
+				case "data_fixed64": res_obj[`f_n${it[1]}`]=it[2]; break;
 				default: debugger;
 			}
 		}
