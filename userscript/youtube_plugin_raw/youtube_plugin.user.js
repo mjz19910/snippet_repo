@@ -5226,12 +5226,15 @@ class HandleTypes extends BaseService {
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
 		let {serviceEndpoint: i,...y}=h;
-		if(i) this.ServiceEndpoint(i);
+		if(i) this.ServiceEndpoint(i,a=>a);
 		this.g(y);
 	}
-	/** @template T @arg {ServiceEndpoint<T>} */
-	ServiceEndpoint(x) {
-
+	/** @template {{}} T @arg {import("./yt_json_types/ServiceEndpoint").ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
+	ServiceEndpoint(x,f) {
+		const {clickTrackingParams:a,commandMetadata:b,...y}=x;
+		/** @type {T} */
+		let c=as_cast(y);
+		f(c);
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
