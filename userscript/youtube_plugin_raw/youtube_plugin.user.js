@@ -6852,7 +6852,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
-		this.x.get("string_parser").parse_video_id(x.videoId);
+		const {videoId: a,playerParams: b,overlay: c,params: d,sequenceProvider: f,inputType: g,...y}=x; this.g(y);
+		let h_=this.x.get("string_parser");
+		if(a) h_.parse_video_id(a);
+		
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
