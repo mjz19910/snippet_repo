@@ -1,3 +1,0 @@
-type AboutThisAdRenderer={
-	url: UrlWrappedValue;
-}

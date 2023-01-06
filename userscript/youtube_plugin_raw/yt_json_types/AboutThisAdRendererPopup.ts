@@ -1,3 +1,0 @@
-type AboutThisAdRendererPopup={
-	aboutThisAdRenderer: AboutThisAdRenderer;
-};
