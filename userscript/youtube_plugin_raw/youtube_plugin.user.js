@@ -4259,6 +4259,7 @@ class YtUrlParser extends BaseService {
 			}
 			if(url_host.endsWith("ggpht.com")) return;
 			if(url_host==="i.ytimg.com") return;
+			if(url_host==="studio.youtube.com") return;
 			console.log("[parse_url_external_1]",x);
 			return;
 		}
@@ -4319,6 +4320,7 @@ class YtUrlParser extends BaseService {
 		}
 		switch(x) {
 			case "channel_switcher": return;
+			case "gaming": return;
 			default: debugger; return;
 		}
 	}
@@ -4616,6 +4618,8 @@ class HandleTypes extends BaseService {
 		let more=reader.try_read_any(data.byteLength);
 		if(more) {
 			const [f0]=more;
+			console.log(more);
+			debugger;
 			console.log(
 				"parsed_endpoint_param field_id=%o result(%o)={message}",
 				field_id,data.length

@@ -9,6 +9,8 @@ type YtUrlFormat=[
 	`/playlist?${YtPlaylistUrlParamsFormat}`,
 	`/results?search_query=${string}`,
 	`/shorts/${string}`,
+	`/gaming`,
+	`/premium`,
 	`/watch?${YtWatchUrlParamsFormat}`,
-	"/youtubei/v1/browse",
+	`/youtubei/v1/browse`,
 ][number];
