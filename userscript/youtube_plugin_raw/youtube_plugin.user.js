@@ -4176,7 +4176,7 @@ class HandleTypes extends BaseService {
 	/** @arg {AdLayoutLoggingData} x */
 	AdLayoutLoggingData(x) {
 		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
-		let dec=decode_b64_proto_obj(a);
+		let dec=decode_url_b64_proto_obj(a);
 		console.log("[ad_serving_data_entry]",dec);
 	}
 	/** @arg {BrowseResponseContent} x */
