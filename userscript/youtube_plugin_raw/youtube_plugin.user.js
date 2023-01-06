@@ -3965,15 +3965,14 @@ class IndexedDbAccessor {
 	/** @arg {IDBTransaction} transaction */
 	consume_data(transaction) {
 		const store=transaction.objectStore("video_id");
-		this.consume_data_with_store(store);
+		this.consume_data_with_store(transaction,store);
 	}
-	/** @arg {IDBObjectStore} store */
-	consume_data_with_store(store) {
+	/** @arg {IDBTransaction} tx @arg {IDBObjectStore} store */
+	consume_data_with_store(tx,store) {
 		const cursor_req=store.openCursor();
 		/** @type {{v: string}|null} */
 		let cursor_data=null;
-		cursor_req.onsuccess=event => {
-			console.log("IDBRequest.IDBCursor: success",event);
+		cursor_req.onsuccess=() => {
 			const cursor=cursor_req.result;
 			if(cursor) {
 				cursor_data=cursor.value;
@@ -3986,22 +3985,19 @@ class IndexedDbAccessor {
 				}
 				cursor.continue();
 			} else {
-				if(cursor_data) return;
+				tx.commit();
 			}
 		}
 		for(let data of this.arr) {
 			data;
 		}
 	}
-	/** @arg {IDBObjectStore} store @arg {{v:string}} data */
-	add_data_to_store(store,data) {
+	/** @arg {IDBTransaction} tx @arg {IDBObjectStore} store @arg {{v:string}} data */
+	add_data_to_store(tx,store,data) {
 		const request=store.add(data);
 		request.onerror=event => console.log("IDBRequest: error",event);
 		request.onsuccess=event => {
 			if(this.log_all_events) console.log("IDBRequest: success",event);
-			if(this.arr.length>0) {
-				this.consume_data_with_store(store);
-			}
 		};
 	}
 	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
