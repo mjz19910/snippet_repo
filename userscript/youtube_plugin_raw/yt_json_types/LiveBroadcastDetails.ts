@@ -1,4 +1,8 @@
 type LiveBroadcastDetails={
-	isLiveNow: boolean;
+	isLiveNow: true;
 	startTimestamp: string;
+}|{
+	isLiveNow: false;
+	startTimestamp: string;
+	endTimestamp: string;
 };

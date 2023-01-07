@@ -5125,9 +5125,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {LiveBroadcastDetails} x */
 	LiveBroadcastDetails(x) {
-		const {isLiveNow: a,startTimestamp: b,...y}=x; this.g(y);
-		this.primitive_of(a,"boolean");
+		const {startTimestamp: b,...y}=x;
 		this.primitive_of(b,"string");
+		if(y.isLiveNow) {
+			const {isLiveNow: {},...a}=y; this.g(a);
+		} else {
+			const {isLiveNow: {},endTimestamp: c,...a}=y; this.g(a);
+		}
 	}
 	log_user_channel_url=false;
 	/** @arg {FullChannelUrlFormat} x */
@@ -7697,13 +7701,13 @@ class HandleTypes extends BaseService {
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_renderer(x,r_name=null) {
 		/** @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string} t_name */
-		function gen_body(x, keys,t_name) {
-			let ret_arr = [];
-			for (let k of keys) {
+		function gen_body(x,keys,t_name) {
+			let ret_arr=[];
+			for(let k of keys) {
 				if(typeof x[k]==='string') {
 					let v=x[k];
 					if(v.startsWith("https:")) {
-					ret_arr.push(`
+						ret_arr.push(`
 					this.primitive_of(x.${k},"string");
 					`.trim());
 						continue;
@@ -7719,7 +7723,7 @@ class HandleTypes extends BaseService {
 					`.trim());
 					continue;
 				}
-				let tn = `${k[0].toUpperCase()}${k.slice(1)}`;
+				let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 				let mn=tn.replace("Renderer","Data");
 				if(mn===t_name) mn+="Data";
 				ret_arr.push(`
@@ -7760,30 +7764,34 @@ class HandleTypes extends BaseService {
 		this.AdPlacementConfig(x.config);
 		this.AdBreakServiceRenderer(x.renderer);
 	}
-  /** @arg {AdPlacementConfig} x */
-  AdPlacementConfig(x) {
-    this.AdPlacementConfigData(x.adPlacementConfig);
-  }
-  /** @arg {AdPlacementConfigData} x */
-  AdPlacementConfigData(x) {
-    if(x.kind!=="AD_PLACEMENT_KIND_END") debugger;
-    this.AdTimeOffset(x.adTimeOffset);
-    if(x.hideCueRangeMarker!==true) debugger;
-  }
-  /** @arg {AdTimeOffset} x */
-  AdTimeOffset(x) {
-    if(x.offsetStartMilliseconds!=="-1") debugger;
-    if(x.offsetEndMilliseconds!=="-1") debugger;
-  }
-  /** @arg {AdBreakServiceRenderer} x */
-  AdBreakServiceRenderer(x) {
-    this.AdBreakServiceData(x.adBreakServiceRenderer);
-  }
-  /** @arg {AdBreakServiceData} x */
-  AdBreakServiceData(x) {
-    if(x.prefetchMilliseconds!=="10000") debugger;
-    this.primitive_of(x.getAdBreakUrl,"string");
-  }
+	/** @arg {AdPlacementConfig} x */
+	AdPlacementConfig(x) {
+		this.AdPlacementConfigData(x.adPlacementConfig);
+	}
+	/** @arg {AdPlacementConfigData} x */
+	AdPlacementConfigData(x) {
+		switch(x.kind) {
+			case "AD_PLACEMENT_KIND_END": break;
+			case "AD_PLACEMENT_KIND_START": break;
+			default: debugger;
+		}
+		this.AdTimeOffset(x.adTimeOffset);
+		if(x.hideCueRangeMarker!==true) debugger;
+	}
+	/** @arg {AdTimeOffset} x */
+	AdTimeOffset(x) {
+		this.primitive_of(x.offsetStartMilliseconds,"string");
+		if(x.offsetEndMilliseconds!=="-1") debugger;
+	}
+	/** @arg {AdBreakServiceRenderer} x */
+	AdBreakServiceRenderer(x) {
+		this.AdBreakServiceData(x.adBreakServiceRenderer);
+	}
+	/** @arg {AdBreakServiceData} x */
+	AdBreakServiceData(x) {
+		if(x.prefetchMilliseconds!=="10000") debugger;
+		this.primitive_of(x.getAdBreakUrl,"string");
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
