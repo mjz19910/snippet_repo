@@ -4,6 +4,6 @@ type VideoPrimaryInfoData={
 	videoActions: {};
 	trackingParams: string;
 	badges: MetadataBadgeRenderer[];
-	dateText: {};
-	relativeDateText: {};
+	dateText: TextT;
+	relativeDateText: TextT;
 };
