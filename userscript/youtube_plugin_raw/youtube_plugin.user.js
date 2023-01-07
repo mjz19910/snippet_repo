@@ -7631,66 +7631,76 @@ class HandleTypes extends BaseService {
 		let d=as_cast(c);
 		f(d);
 	}
+	/** @arg {TwoColumnWatchNextResultsData['results']['results']} x1 */
+	TwoColumnWatchNextResultsData_0(x1) {
+		this.ContentTemplate(x1,x2 => {
+			if("itemSectionRenderer" in x2) {
+				return this.TwoColumnWatchNextResultsData_1(x2);
+			} else if("videoPrimaryInfoRenderer" in x2) {
+				return this.VideoPrimaryInfoRenderer(x2);
+			} else if("videoSecondaryInfoRenderer" in x2) {
+				return this.VideoSecondaryInfoRenderer(x2);
+			}
+			debugger;
+		});
+	}
+	TwoColumnWatchNextResultsData_1(x) {
+		return this.ItemSectionRenderer(x,a => {
+			switch(a[0]) {
+				case "T": switch(a[1]) {
+					case "comment-item-section": return;
+					case "comments-entry-point": return;
+					default: debugger;
+				}
+			}
+			switch(a[0]) {case "U": switch(a[1]) {case "comments-section": return; default: debugger;}}
+			console.log(a);
+			debugger;
+		});
+	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
 		const {results: a,secondaryResults: b,playlist: c,autoplay: d,conversationBar: e,...y}=x; this.g(y);
 		this.ResultsTemplate(a,x1 => {
-			this.ContentTemplate(x1,x2 => {
-				let [k]=get_keys_of(x2);
-				switch(k) {
-					case "itemSectionRenderer": break;
-					case "videoPrimaryInfoRenderer": break;
-					case "videoSecondaryInfoRenderer": break;
-				}
-				if("itemSectionRenderer" in x2) {
-					return this.ItemSectionRenderer(x2,a => {
-						switch(a[0]) {
-							case "T": switch(a[1]) {
-								case "comment-item-section": return;
-								case "comments-entry-point": return;
-								default: debugger;
-							}
-						}
-						switch(a[0]) {case "U": switch(a[1]) {case "comments-section": return; default: debugger;}}
-						console.log(a);
-						debugger;
-					});
-				} else if("videoPrimaryInfoRenderer" in x2) {
-					return this.VideoPrimaryInfoRenderer(x2);
-				} else if("videoSecondaryInfoRenderer" in x2) {
-					return this.VideoSecondaryInfoRenderer(x2);
-				}
-			});
 			let [k]=get_keys_of(x1);
 			switch(k) {
 				case "contents": break;
 				case "trackingParams": break;
+				default: debugger;
 			}
+			this.TwoColumnWatchNextResultsData_0(x1);
 		});
-		this.SecondaryResultsTemplate(b,b1 => {
-			this.ContentTemplate(b1,b2 => {
-				if("itemSectionRenderer" in b2) {
-					return this.ItemSectionRenderer(b2,a => {
-						switch(a[0]) {
-							case "T": switch(a[1]) {
-								default: debugger;
+		this.SecondaryResultsTemplate(b,x1 => {
+			let [k]=get_keys_of(x1);
+			switch(k) {
+				case "contents": break;
+				case "trackingParams": break;
+				default: debugger;
+			}
+			if("contents" in x1)
+				this.ContentTemplate(x1,b2 => {
+					if("itemSectionRenderer" in b2) {
+						return this.ItemSectionRenderer(b2,a => {
+							switch(a[0]) {
+								case "T": switch(a[1]) {
+									default: debugger;
+								}
 							}
-						}
-						switch(a[0]) {
-							case "U": switch(a[1]) {
-								default: debugger;
+							switch(a[0]) {
+								case "U": switch(a[1]) {
+									default: debugger;
+								}
 							}
-						}
-						console.log(a);
-						debugger;
-					});
-				} else if("relatedChipCloudRenderer" in b2) {
-					b2.relatedChipCloudRenderer;
-				}
-				b2;
-				let [k]=get_keys_of(b2);
-				k;
-			});
+							console.log(a);
+							debugger;
+						});
+					} else if("relatedChipCloudRenderer" in b2) {
+						b2.relatedChipCloudRenderer;
+					}
+					b2;
+					let [k]=get_keys_of(b2);
+					k;
+				});
 		});
 		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
@@ -7765,20 +7775,20 @@ class HandleTypes extends BaseService {
 		this.SubscriptionNotificationToggleButtonRenderer(g3);
 		if(g4!=="watch-subscribe") debugger;
 	}
-  /** @arg {SubscriptionNotificationToggleButtonData} x */
-  SubscriptionNotificationToggleButtonData(x) {
-    this.CommandExecutorCommand(x.command);
+	/** @arg {SubscriptionNotificationToggleButtonData} x */
+	SubscriptionNotificationToggleButtonData(x) {
+		this.CommandExecutorCommand(x.command);
 		console.log(x.currentStateId);
 		this.Icon(x.secondaryIcon);
-		this.z(x.states,a=>{
+		this.z(x.states,a => {
 			console.log('[state_id]',[a.stateId,a.nextStateId]);
 			this.ButtonRenderer(a.state);
 		});
-  }
-  /** @arg {SubscriptionNotificationToggleButtonRenderer} x */
-  SubscriptionNotificationToggleButtonRenderer(x) {
-    this.SubscriptionNotificationToggleButtonData(x.subscriptionNotificationToggleButtonRenderer);
-  }
+	}
+	/** @arg {SubscriptionNotificationToggleButtonRenderer} x */
+	SubscriptionNotificationToggleButtonRenderer(x) {
+		this.SubscriptionNotificationToggleButtonData(x.subscriptionNotificationToggleButtonRenderer);
+	}
 	/** @arg {VideoOwnerRenderer} x */
 	VideoOwnerRenderer(x) {
 		this.VideoOwnerData(x.videoOwnerRenderer);
