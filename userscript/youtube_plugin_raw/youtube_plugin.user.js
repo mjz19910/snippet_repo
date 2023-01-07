@@ -8228,7 +8228,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
-		x;
+		this.VssLoggingContextData(x.vssLoggingContext);
+	}
+	/** @private @arg {VssLoggingContextData} x */
+	VssLoggingContextData(x) {
+		console.log(x.serializedContextData);
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
