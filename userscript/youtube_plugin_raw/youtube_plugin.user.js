@@ -4095,6 +4095,20 @@ class IndexedDbAccessor {
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class YtUrlParser extends BaseService {
+	/** @arg {"WL"|`PL${string}`} x */
+	parse_playlist_id(x) {
+		switch(x) {
+			case "WL": return;
+		}
+		if(this.str_starts_with(x,"PL")) {
+			return;
+		}
+		if(this.str_starts_with(x,"RD")) {
+			console.log('radio',x.length,x);
+			return;
+		}
+		debugger;
+	}
 	/** @template {`${U}${string}${U}`} I @template {string} U @arg {I} x @arg {U} _w @returns {I extends `${U}${infer V}${U}`?V:never} */
 	extract_inner(x,_w) {
 		/** @type {any} */
@@ -7456,10 +7470,6 @@ class HandleTypes extends BaseService {
 	PlaylistVideoListData(x) {
 		this.parse_playlist_id(x.playlistId);
 	}
-	/** @arg {"WL"} x */
-	parse_playlist_id(x) {
-		if(x!=="WL") debugger;
-	}
 	/** @arg {PageIntroductionData} x */
 	PageIntroductionData(x) {
 		this.text_t(x.bodyText);
@@ -8229,12 +8239,26 @@ class HandleTypes extends BaseService {
 		x: {
 			let rr=reader.try_read_any();
 			reader.pos=2;
-			if(!rr) break x;
-			if(rr[0][0]!=="child") break x;
+			if(!rr) {
+				console.log(ba);
+				break x;
+			}
+			if(rr[0][0]!=="child") {
+				console.log(rr[0]);
+				break x;
+			}
 			let r2_off=rr[0][2].byteOffset;
 			reader.pos=r2_off;
 			let r2=reader.try_read_any();
-			console.log(r2,decoder.decode(rr[0][2]));
+			if(r2) {
+				if(r2[0][0]!=="child") {
+					console.log(r2[0],decoder.decode(rr[0][2]));
+					break x;
+				}
+				console.log(decoder.decode(r2[0][2]));
+			} else {
+				console.log(decoder.decode(rr[0][2]));
+			}
 		}
 		let ro=reader.try_read_any();
 		if(ro) {
@@ -8275,8 +8299,8 @@ class HandleTypes extends BaseService {
 	WatchEndpointData(x) {
 		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
 		this.x.get("string_parser").parse_video_id(x.videoId);
-		console.log("params",b);
-		console.log("playlist_id",c);
+		b&&console.log("[watch_ep_params]",b);
+		this.parse_playlist_id(c);
 		this.VssLoggingContext(d);
 		e&&this.Html5PlaybackOnesieConfig(e);
 		if(f!==void 0) this.primitive_of(f,"number");
@@ -8288,11 +8312,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommonConfig} x */
 	CommonConfig(x) {
-		const {commonConfig:a,...y}=x; this.g(y);
+		const {commonConfig: a,...y}=x; this.g(y);
 	}
 	/** @arg {CommonConfigData} x */
 	CommonConfigData(x) {
-		const {url:a,...y}=x; this.g(y);
+		const {url: a,...y}=x; this.g(y);
 		this.parse_url(a);
 	}
 	/** @private @arg {VssLoggingContext} x */
