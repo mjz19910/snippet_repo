@@ -7840,6 +7840,11 @@ class HandleTypes extends BaseService {
   StructuredDescriptionContentRenderer(x) {
     this.StructuredDescriptionContentData(x.structuredDescriptionContentRenderer);
   }
+  /** @arg {StructuredDescriptionContentData} x */
+	StructuredDescriptionContentData(x) {
+		x;
+		debugger;
+	}
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);
