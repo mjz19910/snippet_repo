@@ -1,3 +1,3 @@
-type BaseUrl={
-	baseUrl: string;
+type BaseUrl<T extends string>={
+	baseUrl: T;
 };

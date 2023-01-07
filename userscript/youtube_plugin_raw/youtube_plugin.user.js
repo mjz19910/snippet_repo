@@ -7857,7 +7857,13 @@ class HandleTypes extends BaseService {
   }
   /** @arg {ClientForecastingAdData} x */
 	ClientForecastingAdData(x) {
+		this.z(x.impressionUrls,a=>this.BaseUrl(a));
 		console.log(x.impressionUrls);
+		debugger;
+	}
+  /** @template {ParsableBaseUrlFormat} T @arg {BaseUrl<T>} x */
+	BaseUrl(x) {
+		this.parse_url(x.baseUrl);
 		debugger;
 	}
   /** @arg {InstreamVideoAdRenderer} x */
