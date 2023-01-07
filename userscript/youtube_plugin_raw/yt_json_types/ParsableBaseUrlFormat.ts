@@ -1,1 +1,1 @@
-type ParsableBaseUrlFormat=`https://www.youtube.com/api/stats/ads?${string}`;
+type ParsableBaseUrlFormat=`https://www.youtube.com/api/stats/ads?${ApiStatsAdsArgs}`;

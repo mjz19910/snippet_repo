@@ -4131,7 +4131,11 @@ class YtUrlParser extends BaseService {
 	parse_api_stats_url(x) {
 		let a=split_string_once(x,"?");
 		switch(a[0]) {
-			case "ads": debugger; break;
+			case "ads": {
+				let v=make_search_params(a[1]);
+				console.log(v);
+				debugger;
+			} break;
 			default: debugger; break;
 		}
 	}
@@ -7561,7 +7565,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdLayoutMetadata} x */
 	AdLayoutMetadata(x) {
-		this.AdLayoutLoggingData(x.adLayoutLoggingData);
+		this.primitive_of(x.layoutId,"string");
+		switch(x.layoutType) {
+			case "LAYOUT_TYPE_COMPOSITE_PLAYER_BYTES": break;
+			case "LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE": break;
+			default: debugger; break;
+		}
+		if(x.adLayoutLoggingData) this.AdLayoutLoggingData(x.adLayoutLoggingData);
 	}
 	/** @arg {DesktopTopbarData} x */
 	DesktopTopbarData(x) {
@@ -7900,9 +7910,24 @@ class HandleTypes extends BaseService {
   }
   /** @arg {LinearAdSequenceData} x */
 	LinearAdSequenceData(x) {
-		x;
+		this.AdLayoutMetadata(x.adLayoutMetadata);
+		this.z(x.linearAds,a=>this.LinearAdsItem(a));
 		debugger;
 	}
+  /** @arg {LinearAdsItem} x */
+	LinearAdsItem(x) {
+		if("instreamVideoAdRenderer" in x) {
+			this.InstreamVideoAdRenderer(x);
+		} else if("adActionInterstitialRenderer" in x) {
+			this.AdActionInterstitialRenderer(x);
+		} else {
+			debugger;
+		}
+	}
+  /** @arg {AdActionInterstitialRenderer} x */
+  AdActionInterstitialRenderer(x) {
+    this.AdActionInterstitialData(x.adActionInterstitialRenderer);
+  }
   /** @arg {ClientForecastingAdRenderer} x */
   ClientForecastingAdRenderer(x) {
     this.ClientForecastingAdData(x.clientForecastingAdRenderer);
@@ -7933,6 +7958,7 @@ class HandleTypes extends BaseService {
   /** @arg {ActionCompanionAdData} x */
 	ActionCompanionAdData(x) {
 		x;
+		debugger;
 	}
 }
 //#endregion

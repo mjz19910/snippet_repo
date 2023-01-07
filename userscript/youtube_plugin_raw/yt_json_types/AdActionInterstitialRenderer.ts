@@ -1,0 +1,1 @@
+type AdActionInterstitialRenderer={adActionInterstitialRenderer: AdActionInterstitialData;};
