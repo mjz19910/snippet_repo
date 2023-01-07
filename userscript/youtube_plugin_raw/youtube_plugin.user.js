@@ -8418,49 +8418,49 @@ class HandleTypes extends BaseService {
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
+	/** @arg {string[]} req_names @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string|number} t_name */
+	generate_renderer_body(req_names,x,keys,t_name) {
+		let ret_arr=[];
+		for(let k of keys) {
+			if(k==="trackingParams") {
+				ret_arr.push(`
+				this.trackingParams(x.${k});
+				`.trim());
+				continue;
+			}
+			if(typeof x[k]==='string') {
+				let v=x[k];
+				if(v.startsWith("https:")) {
+					ret_arr.push(`
+					this.primitive_of(x.${k},"string");
+					`.trim());
+					continue;
+				}
+				ret_arr.push(`
+				if(x.${k}!=="${x[k]}") debugger;
+				`.trim());
+				continue;
+			}
+			if(typeof x[k]!=='object') {
+				ret_arr.push(`
+				if(x.${k}!==${x[k]}) debugger;
+				`.trim());
+				continue;
+			}
+			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
+			let mn=tn.replace("Renderer","Data");
+			if(mn===t_name) mn+="Data";
+			req_names.push(mn);
+			ret_arr.push(`
+			this.${mn}(x.${k});
+			`.trim());
+		}
+		return ret_arr.join("\nd4!");
+	}
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_renderer(x,r_name=null) {
 		/** @type {string[]} */
 		let req_names=[];
-		/** @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string|number} t_name */
-		function gen_body(x,keys,t_name) {
-			let ret_arr=[];
-			for(let k of keys) {
-				if(k==="trackingParams") {
-					ret_arr.push(`
-					this.trackingParams(x.${k});
-					`.trim());
-					continue;
-				}
-				if(typeof x[k]==='string') {
-					let v=x[k];
-					if(v.startsWith("https:")) {
-						ret_arr.push(`
-						this.primitive_of(x.${k},"string");
-						`.trim());
-						continue;
-					}
-					ret_arr.push(`
-					if(x.${k}!=="${x[k]}") debugger;
-					`.trim());
-					continue;
-				}
-				if(typeof x[k]!=='object') {
-					ret_arr.push(`
-					if(x.${k}!==${x[k]}) debugger;
-					`.trim());
-					continue;
-				}
-				let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
-				let mn=tn.replace("Renderer","Data");
-				if(mn===t_name) mn+="Data";
-				req_names.push(mn);
-				ret_arr.push(`
-				this.${mn}(x.${k});
-				`.trim());
-			}
-			return ret_arr.join("\nd4!");
-		}
 		/** @arg {string} x */
 		function gen_padding(x) {
 			return x.replaceAll(/d(\d)!/g,(_v,g) => {
@@ -8475,7 +8475,7 @@ class HandleTypes extends BaseService {
 		let tmp_1=`
 		d2!/** @arg {${t_name}} x */
 		d2!${t_name}(x) {
-			d4!${gen_body(x,keys,t_name)}
+			d4!${this.generate_renderer_body(req_names,x,keys,t_name)}
 		d2!}
 		`;
 		let ex_names=req_names.map(e => {
@@ -8573,7 +8573,6 @@ class HandleTypes extends BaseService {
 			return s;
 		}
 		tc=one_array_to_any_arr(tc);
-		debugger;
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
 		});
@@ -8581,7 +8580,7 @@ class HandleTypes extends BaseService {
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
 		let ret;
 		if(typeof tn==='number') {
-			ret=`\ntype ArrayItem_${tn}=${tc}\n`;
+			ret=`\ntype ArrayType_${tn}=${tc}\n`;
 		} else {
 			ret=`\ntype ${tn}=${tc}\n`;
 		}
@@ -8731,6 +8730,8 @@ class HandleTypes extends BaseService {
 	VideoDescriptionMusicSectionData(x) {
 		let td=this.generate_typedef(x.carouselLockups,"CLA");
 		console.log(td);
+		let rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
+		console.log(rn);
 		debugger;
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
