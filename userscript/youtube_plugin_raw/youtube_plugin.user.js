@@ -4325,6 +4325,7 @@ class YtUrlParser extends BaseService {
 			case "studio.youtube.com": return;
 			case "music.youtube.com": return;
 			case "www.youtubekids.com": return;
+			case "tv.youtube.com": return;
 			default:
 		}
 		console.log("[parse_url_external_1]",x);
