@@ -8067,8 +8067,19 @@ class HandleTypes extends BaseService {
 		}=x; this.g(y);
 		this.AdLayoutLoggingData(x4);
 		this.ActionCompanionAdInfoRenderers(x3);
-		this.NavigationEndpoint(x2);
+		this.UrlEndpoint(x2,a=>a);
 		this.parse_layout_id(x1);
+	}
+	/**
+	 * @template {BaseUrl<any>[]} T
+	 * @template {WebCommandMetadataTemplateType} U
+	 * @template {{url: string;}} V
+	 * @arg {UrlEndpoint<T,U,V>} x
+	 * @arg {(x:[T,U,V])=>void} f */
+	UrlEndpoint(x,f) {
+		const {clickTrackingParams: a,loggingUrls: T,commandMetadata: U,urlEndpoint: V,...y}=x; this.g(y);
+		this.clickTrackingParams(x.clickTrackingParams);
+		f([T,U,V]);
 	}
 	/** @arg {ActionCompanionAdInfoRenderers} x */
 	ActionCompanionAdInfoRenderers(x) {
