@@ -8421,6 +8421,7 @@ class HandleTypes extends BaseService {
 	/** @arg {string[]} req_names @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x,keys,t_name) {
 		let ret_arr=[];
+		debugger;
 		for(let k of keys) {
 			if(k==="trackingParams") {
 				ret_arr.push(`
@@ -8566,7 +8567,7 @@ class HandleTypes extends BaseService {
 			if(dep<8&&s.match(/\[\s+{/g)) {
 				s=s.replaceAll(/\[\s+{((.|\n)*)}\s+\]/g,(_a,/**@type {string} */v) => {
 					if(v==="") return "{}[]";
-					let vn=v.split("\n").map(e=>e.slice(1)).join("\n");
+					let vn=v.split("\n").map(e => e.slice(1)).join("\n");
 					return `{${one_array_to_any_arr(vn)}}[]`;
 				});
 			}
