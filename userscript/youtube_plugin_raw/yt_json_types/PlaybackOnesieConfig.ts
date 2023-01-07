@@ -1,3 +1,0 @@
-type PlaybackOnesieConfig={
-	commonConfig: CommonConfig;
-};

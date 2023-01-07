@@ -8288,8 +8288,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommonConfig} x */
 	CommonConfig(x) {
-		const {url: a,...y}=x; this.g(y);
-		if(a) this.parse_url(a);
+		const {commonConfig:a,...y}=x; this.g(y);
+	}
+	/** @arg {CommonConfigData} x */
+	CommonConfigData(x) {
+		const {url:a,...y}=x; this.g(y);
+		this.parse_url(a);
 	}
 	/** @private @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
