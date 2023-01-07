@@ -3213,12 +3213,12 @@ class BaseService extends BaseServicePrivate {
 	}
 	// x is reserved for the first arg
 	// y reserved for unpack target
-	/** @protected @template U @arg {U[]|undefined} x @arg {(x:U,i:number)=>void} y  */
+	/** @protected @template U @arg {U[]|undefined} x @arg {(this:this,x:U,i:number)=>void} y  */
 	z(x,y) {
 		if(x===void 0) return;
 		for(let it of x.entries()) {
 			const [i,a]=it;
-			y(a,i);
+			y.call(this,a,i);
 		}
 	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
@@ -5618,7 +5618,7 @@ class HandleTypes extends BaseService {
 		if(d) this.primitive_of(d,"string");
 		if(e) {
 			if("sectionListRenderer" in e) {
-				this.w(e,a => this.SectionListData(a,a=>{
+				this.w(e,a => this.SectionListData(a,a => {
 					console.log(a);
 					debugger;
 				}));
@@ -6800,11 +6800,11 @@ class HandleTypes extends BaseService {
 		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
 		if(sectionIdentifier!==void 0) {
-			if(!f) {debugger;return;}
+			if(!f) {debugger; return;}
 			f(["T",sectionIdentifier]);
 		}
 		if(targetId!==void 0) {
-			if(!f) {debugger;return;}
+			if(!f) {debugger; return;}
 			f(["U",targetId]);
 		}
 		this.g(y);
@@ -7153,7 +7153,7 @@ class HandleTypes extends BaseService {
 	/** @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
 		const {primaryContents: a,...y}=x; this.g(y);
-		this.SectionListRenderer(a,a=>{
+		this.SectionListRenderer(a,a => {
 			console.log(a);
 			debugger;
 		});
@@ -7199,10 +7199,10 @@ class HandleTypes extends BaseService {
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
 		} else if("sectionListRenderer" in x) {
-			return this.SectionListRenderer(x,a=>{
+			return this.SectionListRenderer(x,a => {
 				switch(a[0]) {
-					case "T": switch(a[1]){case "comment-item-section":return;default:}; break;
-					case "U": switch(a[1]){case "engagement-panel-comments-section":return;default:} break;
+					case "T": switch(a[1]) {case "comment-item-section": return; default: }; break;
+					case "U": switch(a[1]) {case "engagement-panel-comments-section": return; default: } break;
 				}
 				console.log(a);
 				debugger;
@@ -7517,10 +7517,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
-		const {results: a,secondaryResults: b,playlist: c,autoplay:d,...y}=x; this.g(y);
-		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
-		this.ResultsTemplate(a,x1=>{
-			this.ContentTemplate(x1,x2=>{
+		const {results: a,secondaryResults: b,playlist: c,autoplay: d,conversationBar: e,...y}=x; this.g(y);
+		this.ResultsTemplate(a,x1 => {
+			this.ContentTemplate(x1,x2 => {
 				let [k]=get_keys_of(x2);
 				switch(k) {
 					case "itemSectionRenderer": break;
@@ -7541,6 +7540,45 @@ class HandleTypes extends BaseService {
 				case "trackingParams": break;
 			}
 		});
+		this.SecondaryResultsTemplate(b);
+		this.PlaylistTemplate(c,a => this.PlaylistContent(a));
+		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
+		if(e) {
+			if("liveChatRenderer" in e) {
+				this.LiveChatRenderer(e);
+			} else {
+				let k=Object.keys(e)[0];
+				let rd = this.generate_renderer(e[k]);
+				console.log(rd);
+				let td = this.generate_typedef(e[k]);
+				console.log(td);
+				console.log("generated [%s]",k,e);
+				debugger;
+			}
+		}
+	}
+	/** @arg {LiveChatRenderer} x */
+	LiveChatRenderer(x) {
+		this.LiveChatData(x.liveChatRenderer);
+	}
+	/** @arg {LiveChatData} x */
+	LiveChatData(x) {
+		x;
+		debugger;
+	}
+	/** @arg {PlaylistContent} x */
+	PlaylistContent(x) {
+		x;
+		debugger;
+	}
+	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
+	PlaylistTemplate(x,f) {
+		f(x.playlist);
+	}
+	/** @arg {SecondaryResultsTemplate<any>} x */
+	SecondaryResultsTemplate(x) {
+		x;
+		debugger;
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
@@ -7549,9 +7587,16 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
-		x;
-		debugger;
+		this.VideoPrimaryInfoData(x.videoPrimaryInfoRenderer);
 	}
+  /** @arg {VideoPrimaryInfoData} x */
+  VideoPrimaryInfoData(x) {
+    this.z(x.badges,this.g);
+		this.z([x.dateText,x.relativeDateText],this.g);
+		this.text_t(x.title);
+		this.trackingParams(x.trackingParams);
+    debugger;
+  }
 	/** @arg {ItemSectionRenderer<never,never>} x */
 	ItemSectionRenderer(x) {
 		this.ItemSectionData(x.itemSectionRenderer);
@@ -7559,7 +7604,7 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentTemplate(x,f) {
 		const {trackingParams,contents,...y}=x; this.g(y);
-		this.z(x.contents,a=>f(a));
+		this.z(x.contents,a => f(a));
 	}
 	/** @template T @arg {ResultsTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsTemplate(x,f) {
@@ -7567,7 +7612,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
 	AutoplayTemplate(x,f) {
-		if(!x) {debugger;return;}
+		if(!x) {debugger; return;}
 		f(x.autoplay);
 	}
 	/** @arg {AutoplayContent} x */
@@ -7884,12 +7929,18 @@ class HandleTypes extends BaseService {
 		function gen_body(x,keys,t_name) {
 			let ret_arr=[];
 			for(let k of keys) {
+				if(k==="trackingParams") {
+					ret_arr.push(`
+					this.trackingParams(x.${k});
+					`.trim());
+					continue;
+				}
 				if(typeof x[k]==='string') {
 					let v=x[k];
 					if(v.startsWith("https:")) {
 						ret_arr.push(`
-					this.primitive_of(x.${k},"string");
-					`.trim());
+						this.primitive_of(x.${k},"string");
+						`.trim());
 						continue;
 					}
 					ret_arr.push(`
@@ -7956,6 +8007,8 @@ class HandleTypes extends BaseService {
 		return `\ntype ${tn}=${JSON.stringify(x,(x,o) => {
 			if(typeof o==="string") return "string";
 			if(typeof o==="number") return o;
+			if(typeof o==="boolean") return o;
+			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
 			if(keys.includes(x)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
@@ -8156,7 +8209,7 @@ class HandleTypes extends BaseService {
 		this.AdLayoutLoggingData(x4);
 		this.ActionCompanionAdInfoRenderers(x3);
 		let uep_data=this.UrlEndpoint(x2);
-		(([T,U,V])=>{
+		(([T,U,V]) => {
 			console.log("urls",T);
 			console.log("meta",U);
 			console.log("ep",V);

@@ -1,3 +1,2 @@
-type VideoPrimaryInfoRenderer={
-	videoPrimaryInfoRenderer: {};
-};
+
+type VideoPrimaryInfoRenderer={videoPrimaryInfoRenderer:VideoPrimaryInfoData}
