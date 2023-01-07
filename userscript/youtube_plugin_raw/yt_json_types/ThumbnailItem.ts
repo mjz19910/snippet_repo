@@ -1,5 +1,5 @@
 type ThumbnailItem={
 	url: YtUrlFormat;
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
 };

@@ -1,2 +1,3 @@
 type ChannelUrlFormat=[
+	`/@${string}`,
 ][number];

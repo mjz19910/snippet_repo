@@ -4529,27 +4529,27 @@ class HandleTypes extends BaseService {
 	YtBrowsePageResponse(x) {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
-		this.BrowseEndpoint(b);
+		this.BrowseEndpoint(b,a=>this.BrowseWebCommandMetadata(a));
 		this.save_keys("DataResponsePageType",x);
 		this.x.get("string_parser").parse_url(d);
 		this.BrowseResponseContent(c);
 		if(e) this.previousCsn(e);
 		this.g(y);
 	}
-	/** @arg {BrowseEndpoint} x */
-	BrowseEndpoint(x) {
+	/** @template {WebCommandMetadataTemplateType} T @arg {BrowseEndpoint<T>} x @arg {(v:T)=>void} f */
+	BrowseEndpoint(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,browseEndpoint: c,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
-		this.BrowseCommandMetadata(b);
+		this.BrowseCommandMetadata(b,f);
 		this.BrowseEndpointData(c);
 	}
-	/** @arg {BrowseCommandMetadata} x */
-	BrowseCommandMetadata(x) {
+	/** @template {WebCommandMetadataTemplateType} T @arg {BrowseCommandMetadata<T>} x @arg {(v:T)=>void} f */
+	BrowseCommandMetadata(x,f) {
 		if("resolveUrlCommandMetadata" in x) {
 			this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
 		}
 		if("webCommandMetadata" in x) {
-			this.BrowseWebCommandMetadata(x.webCommandMetadata);
+			f(x.webCommandMetadata);
 		}
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
@@ -6545,7 +6545,7 @@ class HandleTypes extends BaseService {
 	ThumbnailItem(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
-		this.z([b,c],v => this.primitive_of(v,"number"));
+		this.z([b,c],v => v!==void 0&&this.primitive_of(v,"number"));
 		this.g(y);
 	}
 	/** @arg {import("./yt_json_types/ButtonData").ButtonData} x */
@@ -7861,13 +7861,18 @@ class HandleTypes extends BaseService {
   VideoDescriptionHeaderData(x) {
 		const {channel,channelNavigationEndpoint,channelThumbnail,title,views,publishDate,factoid,...y}=x; this.g(y);
 		this.text_t(channel);
-    this.BrowseEndpoint(channelNavigationEndpoint);
+    this.BrowseEndpoint(channelNavigationEndpoint,a=>{
+			const {url: b,webPageType: c,rootVe: d,apiUrl: e,...z}=a; this.g(z);
+			this.parse_url(b);
+			if(c!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+			if(d!==3611) debugger;
+			if(e!=="/youtubei/v1/browse") debugger;
+		});
 		this.Thumbnail(channelThumbnail);
 		this.text_t(title);
 		this.text_t(views);
 		this.text_t(publishDate);
 		this.z(factoid,a=>this.FactoidRenderer(a));
-    debugger;
   }
   /** @arg {FactoidRenderer} x */
   FactoidRenderer(x) {
@@ -7956,8 +7961,7 @@ class HandleTypes extends BaseService {
   }
   /** @arg {AdActionInterstitialData} x */
 	AdActionInterstitialData(x) {
-		x;
-		debugger;
+		this.save_keys("AdActionInterstitial",x);
 	}
   /** @arg {ClientForecastingAdRenderer} x */
   ClientForecastingAdRenderer(x) {

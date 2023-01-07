@@ -1,5 +1,5 @@
-type BrowseCommandMetadata={
-	webCommandMetadata: BrowseWebCommandMetadata;
+type BrowseCommandMetadata<T extends WebCommandMetadataTemplateType>={
+	webCommandMetadata: T;
 	// parentTrackingParams
 	resolveUrlCommandMetadata: ResolveUrlCommandMetadata;
 };

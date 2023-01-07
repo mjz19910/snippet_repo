@@ -1,6 +1,6 @@
 export type BrowsePageResponse={
 	page: "browse";
-	endpoint: BrowseEndpoint;
+	endpoint: BrowseEndpoint<BrowseWebCommandMetadata>;
 	response: BrowseResponseContent;
 	url: YtUrlFormat;
 	previousCsn?: string;
