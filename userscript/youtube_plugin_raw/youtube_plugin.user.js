@@ -7620,7 +7620,7 @@ class HandleTypes extends BaseService {
 								default: debugger;
 							}
 						}
-						switch(a[0]) {case "U": switch(a[1]) {case "comments-entry-point": return; default: debugger;}}
+						switch(a[0]) {case "U": switch(a[1]) {case "comments-section": return; default: debugger;}}
 						console.log(a);
 						debugger;
 					});
@@ -7636,7 +7636,31 @@ class HandleTypes extends BaseService {
 				case "trackingParams": break;
 			}
 		});
-		this.SecondaryResultsTemplate(b);
+		this.SecondaryResultsTemplate(b,b1 => {
+			this.ContentTemplate(b1,b2 => {
+				if("itemSectionRenderer" in b2) {
+					return this.ItemSectionRenderer(b2,a => {
+						switch(a[0]) {
+							case "T": switch(a[1]) {
+								default: debugger;
+							}
+						}
+						switch(a[0]) {
+							case "U": switch(a[1]) {
+								default: debugger;
+							}
+						}
+						console.log(a);
+						debugger;
+					});
+				} else if("relatedChipCloudRenderer" in b2) {
+					b2.relatedChipCloudRenderer;
+				}
+				b2;
+				let [k]=get_keys_of(b2);
+				k;
+			});
+		});
 		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
 		if(e) {
@@ -7672,16 +7696,17 @@ class HandleTypes extends BaseService {
 		if(!x) {debugger; return;}
 		f(x.playlist);
 	}
-	/** @arg {SecondaryResultsTemplate<any>} x */
-	SecondaryResultsTemplate(x) {
-		x;
-		debugger;
+	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(x:T)=>void} f */
+	SecondaryResultsTemplate(x,f) {
+		f(x.secondaryResults);
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
-		saved_data.data??={};
-		saved_data.data.arr=[];
-		saved_data.data.arr.push(x);
+		this.VideoSecondaryInfoData(x.videoSecondaryInfoRenderer);
+	}
+	/** @arg {VideoSecondaryInfoData} x */
+	VideoSecondaryInfoData(x) {
+		const {owner,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,...y}=x; this.g(y);
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
