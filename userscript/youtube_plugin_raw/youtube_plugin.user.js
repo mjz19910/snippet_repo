@@ -3237,6 +3237,14 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @template {{}} T @arg {string} k @arg {T} x */
 	save_keys(k,x) {
+		if(typeof x!=="object") {
+			this.save_string(`${k}.type`,typeof x);
+			return;
+		}
+		if(x instanceof Array) {
+			this.save_string(`${k}.type`,"array");
+			return;
+		}
 		let keys=get_keys_of(x);
 		if(eq_keys(keys,["type","data"])) {
 			debugger;
