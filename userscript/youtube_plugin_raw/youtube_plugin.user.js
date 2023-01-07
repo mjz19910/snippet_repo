@@ -7923,6 +7923,8 @@ class HandleTypes extends BaseService {
 			return this.LinearAdSequenceRenderer(x);
 		} else if("instreamVideoAdRenderer" in x) {
 			return this.InstreamVideoAdRenderer(x);
+		} else if("actionCompanionAdRenderer" in x) {
+			return this.ActionCompanionAdRenderer(x);
 		} else {
 			debugger;
 		}
@@ -8021,8 +8023,8 @@ class HandleTypes extends BaseService {
   }
   /** @arg {ActionCompanionAdData} x */
 	ActionCompanionAdData(x) {
-		x;
-		debugger;
+		const {headline,description,actionButton,iconImage,bannerImage,navigationEndpoint,trackingParams,adInfoRenderer,adVideoId,impressionPings,adLayoutLoggingData,...y}=x; this.g(y);
+		this.g(navigationEndpoint);
 	}
 }
 //#endregion
