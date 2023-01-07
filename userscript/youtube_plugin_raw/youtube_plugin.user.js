@@ -4133,8 +4133,8 @@ class YtUrlParser extends BaseService {
 		switch(a[0]) {
 			case "ads": {
 				let v=make_search_params(a[1]);
-				console.log(v);
-				debugger;
+				// spell:disable-next
+				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}=v; this.g(y);
 			} break;
 			default: debugger; break;
 		}
@@ -7825,7 +7825,7 @@ class HandleTypes extends BaseService {
 			return gen_padding(tmp1);
 		});
 		console.log("gen renderer for",x);
-		return tmp3+ex_names;
+		return tmp3+ex_names.join("");
 	}
 	/** @arg {{}} x */
 	generate_typedef(x) {
