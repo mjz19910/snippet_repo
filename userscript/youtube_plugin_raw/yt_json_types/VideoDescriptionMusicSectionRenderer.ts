@@ -1,5 +1,11 @@
 type TopicLinkRenderer={
-	topicLinkRenderer: {};
+	topicLinkRenderer: {
+		title: SimpleText;
+		thumbnailDetails: Thumbnail;
+		endpoint: BrowseEndpoint<never>;
+		callToActionIcon: Icon<"CHEVRON_RIGHT">;
+		trackingParams: string;
+	};
 };
 
 type VideoDescriptionMusicSectionData={
@@ -9,11 +15,14 @@ type VideoDescriptionMusicSectionData={
 	premiumUpsellLink: TextT;
 };
 type CarouselLockupData={
-	infoRows: [
-		{
-			infoRowRenderer: {};
-		}
-	];
+	infoRows: InfoRowRenderer[];
+};
+type InfoRowRenderer={
+	infoRowRenderer: {
+		title: SimpleText;
+		defaultMetadata: SimpleText;
+		trackingParams: string;
+	};
 };
 
 type CarouselLockupRenderer={

@@ -8459,10 +8459,9 @@ class HandleTypes extends BaseService {
 		}
 		let keys=Object.keys(x);
 		let k=keys[0];
-		let t_name=`${k[0].toUpperCase()}${k.slice(1)}`;
-		if(r_name) {
-			t_name=r_name;
-		}
+		let tn=k;
+		if(r_name) tn=r_name;
+		let t_name=this.uppercase_first(tn);
 		let tmp_1=`
 		d2!/** @arg {${t_name}} x */
 		d2!${t_name}(x) {
@@ -8485,8 +8484,12 @@ class HandleTypes extends BaseService {
 		console.log("gen renderer for",x);
 		return `\n${tmp3}`;
 	}
-	/** @arg {{[x: string]:{}}} x @arg {string|null} r_name */
-	generate_typedef(x,r_name=null) {
+	/** @arg {string} x */
+	uppercase_first(x) {
+		return x[0].toUpperCase()+x.slice(1);
+	}
+	/** @arg {{[x: string]:{}}} x */
+	get_renderer_key(x) {
 		let keys=Object.keys(x);
 		let k;
 		for(let c of keys) {
@@ -8495,14 +8498,20 @@ class HandleTypes extends BaseService {
 			break;
 		}
 		if(!k) return null;
+		return k;
+	}
+	/** @arg {{[x: string]:{}}} x @arg {string|null} r_name */
+	generate_typedef(x,r_name=null) {
+		let k=this.get_renderer_key(x);
+		if(!k) return null;
+		let t_name=k;
 		if(r_name) {
-			k=r_name;
+			t_name=r_name;
 		}
-		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
+		let tn=this.uppercase_first(t_name);
 		let obj_count=0;
 		let o2=x[k];
-		let keys_2=Object.keys(o2);
-		let wk=keys.concat(keys_2);
+		let keys=Object.keys(x).concat(Object.keys(o2));
 		let tc=JSON.stringify(x,(x,o) => {
 			if(typeof o==="string") return "string";
 			if(typeof o==="number") return o;
@@ -8517,7 +8526,13 @@ class HandleTypes extends BaseService {
 			if(o.thumbnails&&o.thumbnails instanceof Array) {
 				return "TYPE::Thumbnail";
 			}
-			if(wk.includes(x)) {
+			if(o.iconType&&typeof o.iconType==='string') {
+				return `TYPE::Icon<"${o.iconType}">`;
+			}
+			if(o.browseEndpoint) {
+				return `TYPE::BrowseEndpoint<never>`;
+			}
+			if(keys.includes(x)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
 			}
@@ -8541,12 +8556,18 @@ class HandleTypes extends BaseService {
 		}
 		tc=one_array_to_any_arr(tc);
 		tc=tc.replaceAll("\"string\"","string");
-		tc=tc.replaceAll(/"TYPE::(.+?)"/g,(_a,x) => {
-			return x;
+		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
+			return x.replaceAll("\\\"","\"");
 		});
 		tc=tc.replaceAll(",",";");
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
+		let rr=tc.match(/{(.|\n)+}/gm);
+		console.log(rr);
 		return `\ntype ${tn}=${tc}\n`;
+	}
+	/** @arg {{[x: string]:{}}} x */
+	generate_if_branch(x) {
+		x;
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
@@ -8562,7 +8583,13 @@ class HandleTypes extends BaseService {
 			this.VideoDescriptionHeaderRenderer(x);
 		} else if("expandableVideoDescriptionBodyRenderer" in x) {
 			return this.ExpandableVideoDescriptionBodyRenderer(x);
+		} else if("videoDescriptionMusicSectionRenderer" in x) {
+			return this.VideoDescriptionMusicSectionRenderer(x);
 		} else {
+			let rd=this.generate_renderer(x);
+			console.log(rd);
+			let td=this.generate_typedef(x);
+			console.log(td);
 			debugger;
 		}
 	}

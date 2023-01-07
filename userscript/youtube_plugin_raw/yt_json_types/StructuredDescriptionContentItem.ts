@@ -1,1 +1,5 @@
-type StructuredDescriptionContentItem=VideoDescriptionHeaderRenderer|ExpandableVideoDescriptionBodyRenderer;
+type StructuredDescriptionContentItem=[
+	ExpandableVideoDescriptionBodyRenderer,
+	VideoDescriptionHeaderRenderer,
+	VideoDescriptionMusicSectionRenderer,
+][number];
