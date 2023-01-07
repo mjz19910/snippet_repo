@@ -1,0 +1,1 @@
+type LiveChatRenderer={liveChatRenderer: LiveChatData;};

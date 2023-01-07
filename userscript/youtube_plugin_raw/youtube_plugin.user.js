@@ -6823,7 +6823,7 @@ class HandleTypes extends BaseService {
 		if(b) this.Accessibility(b);
 		this.g(y);
 	}
-	/** @template T @template U @arg {SectionListData<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	/** @template T @template U @arg {SectionListData<T,U>} x @arg {(x:T,v:U)=>void} f */
 	SectionListData(x,f) {
 		this.save_keys("SectionListData",x);
 		const {contents: a,trackingParams: b,...y}=x;
@@ -6831,7 +6831,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(b);
 		this.g(y);
 	}
-	/** @template T @template U @arg {SectionListItem<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	/** @template T @template U @arg {SectionListItem<T,U>} x @arg {(x:T,v:U)=>void} f */
 	SectionListItem(x,f) {
 		if("itemSectionRenderer" in x) {
 			this.w(x,a => this.ItemSectionData(a,f));
@@ -6839,22 +6839,13 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @template T @template U @arg {ItemSectionData<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	/** @template T @template U @arg {ItemSectionData<T,U>} x @arg {(x:T,v:U)=>void} f */
 	ItemSectionData(x,f) {
-		// "comment-item-section";
-		// "engagement-panel-comments-section";
 		this.save_keys("SectionListData",x);
 		const {contents: a,trackingParams: b,sectionIdentifier,targetId,...y}=x;
 		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
-		if(sectionIdentifier!==void 0) {
-			if(!f) {debugger; return;}
-			f(["T",sectionIdentifier]);
-		}
-		if(targetId!==void 0) {
-			if(!f) {debugger; return;}
-			f(["U",targetId]);
-		}
+		f(sectionIdentifier,targetId);
 		this.g(y);
 	}
 	/** @type {ItemSectionItemMap} */
@@ -7274,7 +7265,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
-	/** @template T,U @arg {SectionListRenderer<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	/** @template T,U @arg {SectionListRenderer<T,U>} x @arg {(x:T,v:U)=>void} f */
 	SectionListRenderer(x,f) {
 		const {sectionListRenderer: a,...y}=x; this.g(y);
 		this.SectionListData(a,f);
@@ -7315,11 +7306,8 @@ class HandleTypes extends BaseService {
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
 		} else if("sectionListRenderer" in x) {
-			return this.SectionListRenderer(x,a => {
-				switch(a[0]) {
-					case "T": switch(a[1]) {case "comment-item-section": return; default: }; break;
-					case "U": switch(a[1]) {case "engagement-panel-comments-section": return; default: } break;
-				}
+			return this.SectionListRenderer(x,(a,b) => {
+				if(eq_keys([a,b],["comment-item-section","engagement-panel-comments-section"])) return;
 				console.log(a);
 				debugger;
 			});
@@ -7646,15 +7634,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {Extract<TwoColumnWatchNextResultsData['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TwoColumnWatchNextResultsData_1(x) {
-		return this.ItemSectionRenderer(x,a => {
-			switch(a[0]) {
-				case "T": switch(a[1]) {
-					case "comment-item-section": return;
-					case "comments-entry-point": return;
-					default: debugger;
-				}
+		return this.ItemSectionRenderer(x,(a,b) => {
+			switch(a) {
+				case "comment-item-section": if(b!=="comments-section") debugger; return;
+				case "comments-entry-point": if(b!==void 0) debugger; return;
+				default:
 			}
-			switch(a[0]) {case "U": switch(a[1]) {case "comments-section": return; default: debugger;}}
 			console.log(a);
 			debugger;
 		});
@@ -7675,33 +7660,19 @@ class HandleTypes extends BaseService {
 			let [k]=get_keys_of(x1);
 			switch(k) {
 				case "contents": break;
+				case "results": break;
 				case "trackingParams": break;
 				default: debugger;
 			}
-			if("contents" in x1)
-				this.ContentTemplate(x1,b2 => {
-					if("itemSectionRenderer" in b2) {
-						return this.ItemSectionRenderer(b2,a => {
-							switch(a[0]) {
-								case "T": switch(a[1]) {
-									default: debugger;
-								}
-							}
-							switch(a[0]) {
-								case "U": switch(a[1]) {
-									default: debugger;
-								}
-							}
-							console.log(a);
-							debugger;
-						});
-					} else if("relatedChipCloudRenderer" in b2) {
-						b2.relatedChipCloudRenderer;
-					}
-					b2;
-					let [k]=get_keys_of(b2);
-					k;
+			if("contents" in x1) {
+				this.SecondaryResultsContent_0(x1);
+			} else {
+				this.ResultsArrTemplate(x1,x2=>{
+					console.log(x2);
+					debugger;
 				});
+				debugger;
+			}
 		});
 		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
@@ -7718,6 +7689,35 @@ class HandleTypes extends BaseService {
 				debugger;
 			}
 		}
+	}
+	/** @template T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
+	ResultsArrTemplate(x,f) {
+		const {trackingParams: a,results: b,...y}=x; this.g(y);
+		this.trackingParams(a)
+		this.z(b,f);
+	}
+	/** @arg {ContentTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<never,never>>} x1 */
+	SecondaryResultsContent_0(x1) {
+		this.ContentTemplate(x1,this.SecondaryResultsContent_1);
+	}
+	/** @arg {RelatedChipCloudRenderer|ItemSectionRenderer<never,never>} x2 */
+	SecondaryResultsContent_1(x2) {
+		if("itemSectionRenderer" in x2) {
+			return this.SecondaryResultsContent_2(x2);
+		} else if("relatedChipCloudRenderer" in x2) {
+			x2.relatedChipCloudRenderer;
+		}
+		x2;
+		let [k]=get_keys_of(x2);
+		k;
+		debugger;
+	}
+	/** @arg {ItemSectionRenderer<never,never>} x3 */
+	SecondaryResultsContent_2(x3) {
+		return this.ItemSectionRenderer(x3,(a,v) => {
+			console.log([a,v]);
+			debugger;
+		});
 	}
 	/** @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
@@ -7807,7 +7807,7 @@ class HandleTypes extends BaseService {
 	VideoPrimaryInfoRenderer(x) {
 		this.VideoPrimaryInfoData(x.videoPrimaryInfoRenderer);
 	}
-	/** @template T @template U @arg {ItemSectionRenderer<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	/** @template T @template U @arg {ItemSectionRenderer<T,U>} x @arg {(x:T,v:U)=>void} f */
 	ItemSectionRenderer(x,f) {
 		this.ItemSectionData(x.itemSectionRenderer,f);
 	}

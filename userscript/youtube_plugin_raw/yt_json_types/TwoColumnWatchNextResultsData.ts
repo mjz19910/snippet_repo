@@ -15,22 +15,18 @@ type TwoColumnWatchNextResultsData={
 				RelatedChipCloudRenderer,
 				ItemSectionRenderer<never,never>,
 			][number]
+		>|ResultsArrTemplate<
+			[
+				RelatedChipCloudRenderer,
+				ItemSectionRenderer<never,never>,
+			][number]
 		>
 	>;
 	playlist?: PlaylistTemplate<PlaylistContent>;
 	autoplay?: AutoplayTemplate<AutoplayContent>;
 	conversationBar?: ConversationBarTypes;
 };
-type ConversationBarTypes=LiveChatRenderer;
-
-type LiveChatData={
-	continuations: {}[];
-	header: {};
+type ResultsArrTemplate<T>={
+	results: T[];
 	trackingParams: string;
-	clientMessages: {};
-	isReplay: {};
-	initialDisplayState: string;
-	showHideButton: {};
 };
-
-type LiveChatRenderer={liveChatRenderer: LiveChatData;};
