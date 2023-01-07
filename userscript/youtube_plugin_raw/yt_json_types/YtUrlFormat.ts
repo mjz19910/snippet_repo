@@ -17,6 +17,7 @@ type YtUrlFormat=[
 	`${YtDomain|""}/api/stats/ads?${ApiStatsAdsArgs}`,
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
 	`https://music.youtube.com${"/"|""}`,
+	`https://rr5---sn-nx57ynsd.googlevideo.com/initplayback?${string}`,
 	`https://studio.youtube.com${"/"|""}`,
 	`https://tv.youtube.com/?utm_source=youtube_web&utm_medium=ep&utm_campaign=home&ve=34273`,
 	`https://www.youtubekids.com${"/"|""}?source=youtube_web`,

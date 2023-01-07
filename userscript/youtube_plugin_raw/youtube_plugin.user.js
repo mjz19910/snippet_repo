@@ -8283,8 +8283,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
-		x;
+		this.CommonConfig(x.html5PlaybackOnesieConfig);
 		debugger;
+	}
+	/** @arg {CommonConfig} x */
+	CommonConfig(x) {
+		this.parse_url(x.url);
 	}
 	/** @private @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
