@@ -5,6 +5,7 @@ type TwoColumnWatchNextResultsData={
 				VideoPrimaryInfoRenderer,
 				VideoSecondaryInfoRenderer,
 				ItemSectionRenderer<"comments-entry-point",never>,
+				ItemSectionRenderer<"comment-item-section",never>,
 			][number]
 		>
 	>;

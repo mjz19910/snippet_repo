@@ -7613,7 +7613,11 @@ class HandleTypes extends BaseService {
 				}
 				if("itemSectionRenderer" in x2) {
 					return this.ItemSectionRenderer(x2,a=>{
-						switch(a[0]) {case "T": switch(a[1]){case "comments-entry-point": return;default: debugger;}}
+						switch(a[0]) {case "T": switch(a[1]){
+							case "comment-item-section": return;
+							case "comments-entry-point": return;
+							default: debugger;
+						}}
 						switch(a[0]) {case "U": switch(a[1]){case "comments-entry-point": return;default: debugger;}}
 						console.log(a);
 						debugger;
