@@ -8081,8 +8081,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdHoverTextButtonData} x */
 	AdHoverTextButtonData(x) {
-		x;
-		debugger;
+		this.ButtonRenderer(x.button);
+		this.text_t(x.hoverText);
+		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {NavigationEndpointTODO} x */
 	NavigationEndpoint(x) {
