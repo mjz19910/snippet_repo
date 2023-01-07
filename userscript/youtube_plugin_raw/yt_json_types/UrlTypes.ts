@@ -1,1 +1,1 @@
-type UrlTypes=NonNullable<ReturnType<import("../youtube_plugin.user.js").HandleTypes["get_url_type"]>>;
+type UrlTypes=NonNullable<ReturnType<import("../youtube_plugin.user.js").YtUrlParser["get_url_type"]>>;

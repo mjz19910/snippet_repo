@@ -1476,7 +1476,7 @@ class FilterHandlers {
 			throw new Error("unreachable");
 		}
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
-		return this.handle_types.get_url_type(path_parts);
+		return this.handle_types.x.get("string_parser").get_url_type(path_parts);
 	}
 	/** @typedef {import("./yt_json_types/ResponseTypes").ResponseTypes} ResponseTypes */
 	/** @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
@@ -2687,6 +2687,7 @@ function main() {
 		exports.ServiceResolver=ServiceResolver;
 		exports.HandleTypes=HandleTypes;
 		exports.Services=Services;
+		exports.YtUrlParser=YtUrlParser;
 	}
 	resolver_value.value=service_resolver;
 	yt_plugin.init();
@@ -4430,6 +4431,151 @@ class YtUrlParser extends BaseService {
 		let sp=new URLSearchParams(t);
 		return as_cast(Object.fromEntries(sp.entries()));
 	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
+	get_yt_url_type(x) {
+		if(x[1]!=="v1") {
+			return this.api_no_handler(x,x[1]);
+		}
+		switch(x.length) {
+			case 4: return this.get_yt_url_type_4(x);
+			case 3: return this.get_yt_url_type_3(x);
+			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
+		}
+	}
+	/** @arg {string[]} parts @arg {string} cur_part */
+	api_no_handler(parts,cur_part) {
+		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
+		debugger;
+		return null;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
+	get_yt_url_type_3(x) {
+		switch(x[2]) {
+			case "browse": break;
+			case "feedback": break;
+			case "get_transcript": break;
+			case "guide": break;
+			case "next": break;
+			case "player": break;
+			default: this.api_no_handler(x,x[2]);
+		}
+		console.log('get_yt_url_type_3',x.slice(1));
+		return x[2];
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
+	get_yt_url_type_4(x) {
+		switch(x[2]) {
+			case "account": return this.get_account_type(x);
+			case "att": return this.get_att_type(x);
+			case "comment": return this.get_comment_type(x);
+			case "like": return this.get_like_type(x);
+			case "live_chat": return this.get_live_chat_type(x);
+			case "notification": return this.get_notification_type(x);
+			case "reel": return this.get_reel_type(x);
+			case "subscription": return this.get_subscription_type(x);
+			default: return this.api_no_handler(x,x[2]);
+		}
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
+	get_subscription_type(x) {
+		switch(x[3]) {
+			case "subscribe": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string,...string[]]>} x */
+	get_reel_type(x) {
+		switch(x[3]) {
+			case "reel_item_watch": break;
+			case "reel_watch_sequence": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string,...string[]]>} x */
+	get_notification_type(x) {
+		switch(x[3]) {
+			case "get_unseen_count": break;
+			case "get_notification_menu": break;
+			case "record_interactions": break;
+			case "modify_channel_preference": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string,...string[]]>} x */
+	get_comment_type(x) {
+		switch(x[3]) {
+			case "create_comment": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string,...string[]]>} x */
+	get_att_type(x) {
+		switch(x[3]) {
+			case "get": break;
+			case "log": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
+	get_like_type(x) {
+		switch(x[3]) {
+			case "like": break;
+			case "removelike": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
+	get_account_type(x) {
+		switch(x[3]) {
+			case "account_menu": break;
+			case "accounts_list": break;
+			case "set_setting": break;
+			default: return this.api_no_handler(x,x[3]);
+		}
+		return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} x */
+	get_live_chat_type(x) {
+		switch(x[3]) {
+			case "get_live_chat_replay": break;
+			default: return this.api_no_handler(x,x[3]);
+		};
+		return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Split<ApiUrlFormat,"/">} x */
+	get_url_type(x) {
+		switch(x[0]) {
+			case "youtubei": return this.get_yt_url_type(x);
+			case "getDatasyncIdsEndpoint": break;
+			case "getAccountSwitcherEndpoint": break;
+			default: return this.api_no_handler(x,x[0]);
+		}
+		return x[0];
+	}
 }
 //#region HandleTypes
 class HandleTypes extends BaseService {
@@ -5427,151 +5573,6 @@ class HandleTypes extends BaseService {
 		if(b!==void 0) this.parse_page_type(b);
 		if(c!==void 0) this.save_root_visual_element(c);
 		this.g(y);
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
-	get_yt_url_type(x) {
-		if(x[1]!=="v1") {
-			return this.api_no_handler(x,x[1]);
-		}
-		switch(x.length) {
-			case 4: return this.get_yt_url_type_4(x);
-			case 3: return this.get_yt_url_type_3(x);
-			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
-		}
-	}
-	/** @arg {string[]} parts @arg {string} cur_part */
-	api_no_handler(parts,cur_part) {
-		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
-		debugger;
-		return null;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
-	get_yt_url_type_3(x) {
-		switch(x[2]) {
-			case "browse": break;
-			case "feedback": break;
-			case "get_transcript": break;
-			case "guide": break;
-			case "next": break;
-			case "player": break;
-			default: this.api_no_handler(x,x[2]);
-		}
-		console.log('get_yt_url_type_3',x.slice(1));
-		return x[2];
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
-	get_yt_url_type_4(x) {
-		switch(x[2]) {
-			case "account": return this.get_account_type(x);
-			case "att": return this.get_att_type(x);
-			case "comment": return this.get_comment_type(x);
-			case "like": return this.get_like_type(x);
-			case "live_chat": return this.get_live_chat_type(x);
-			case "notification": return this.get_notification_type(x);
-			case "reel": return this.get_reel_type(x);
-			case "subscription": return this.get_subscription_type(x);
-			default: return this.api_no_handler(x,x[2]);
-		}
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
-	get_subscription_type(x) {
-		switch(x[3]) {
-			case "subscribe": break;
-			default: return this.api_no_handler(x,x[3]);
-		} return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string,...string[]]>} x */
-	get_reel_type(x) {
-		switch(x[3]) {
-			case "reel_item_watch": break;
-			case "reel_watch_sequence": break;
-			default: return this.api_no_handler(x,x[3]);
-		} return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string,...string[]]>} x */
-	get_notification_type(x) {
-		switch(x[3]) {
-			case "get_unseen_count": break;
-			case "get_notification_menu": break;
-			case "record_interactions": break;
-			case "modify_channel_preference": break;
-			default: return this.api_no_handler(x,x[3]);
-		} return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string,...string[]]>} x */
-	get_comment_type(x) {
-		switch(x[3]) {
-			case "create_comment": break;
-			default: return this.api_no_handler(x,x[3]);
-		} return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string,...string[]]>} x */
-	get_att_type(x) {
-		switch(x[3]) {
-			case "get": break;
-			case "log": break;
-			default: return this.api_no_handler(x,x[3]);
-		} return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
-	get_like_type(x) {
-		switch(x[3]) {
-			case "like": break;
-			case "removelike": break;
-			default: return this.api_no_handler(x,x[3]);
-		} return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
-	get_account_type(x) {
-		switch(x[3]) {
-			case "account_menu": break;
-			case "accounts_list": break;
-			case "set_setting": break;
-			default: return this.api_no_handler(x,x[3]);
-		}
-		return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} x */
-	get_live_chat_type(x) {
-		switch(x[3]) {
-			case "get_live_chat_replay": break;
-			default: return this.api_no_handler(x,x[3]);
-		};
-		return {
-			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x: `${x[2]}.${x[3]}`
-		}.x;
-	}
-	/** @arg {Split<ApiUrlFormat,"/">} x */
-	get_url_type(x) {
-		switch(x[0]) {
-			case "youtubei": return this.get_yt_url_type(x);
-			case "getDatasyncIdsEndpoint": break;
-			case "getAccountSwitcherEndpoint": break;
-			default: return this.api_no_handler(x,x[0]);
-		}
-		return x[0];
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
