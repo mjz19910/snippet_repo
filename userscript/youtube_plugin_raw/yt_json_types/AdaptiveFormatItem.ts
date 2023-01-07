@@ -1,7 +1,8 @@
+type acv1_codec=`avc1.${string}`;
 type AdaptiveFormatItem={
 	itag: FormatItag;
 	url?: string;
-	mimeType: string;
+	mimeType: `${"video/mp4"}; codecs="${acv1_codec}"`;
 	bitrate: number;
 	width?: number;
 	height?: number;
