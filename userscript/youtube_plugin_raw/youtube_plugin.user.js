@@ -7696,14 +7696,34 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_renderer(x,r_name=null) {
-		/** @arg {{}} x @arg {string[]} keys */
-		function gen_body(x,keys) {
-			x;
-			let ret_arr=[];
-			for(let k of keys) {
-				let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
+		/** @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string} t_name */
+		function gen_body(x, keys,t_name) {
+			let ret_arr = [];
+			for (let k of keys) {
+				if(typeof x[k]==='string') {
+					let v=x[k];
+					if(v.startsWith("https:")) {
+					ret_arr.push(`
+					this.primitive_of(x.${k},"string");
+					`.trim());
+						continue;
+					}
+					ret_arr.push(`
+					if(x.${k}!=="${x[k]}") debugger;
+					`.trim());
+					continue;
+				}
+				if(typeof x[k]!=='object') {
+					ret_arr.push(`
+					if(x.${k}!==${x[k]}) debugger;
+					`.trim());
+					continue;
+				}
+				let tn = `${k[0].toUpperCase()}${k.slice(1)}`;
+				let mn=tn.replace("Renderer","Data");
+				if(mn===t_name) mn+="Data";
 				ret_arr.push(`
-				this.${tn.replace("Renderer","Data")}(x.${k});
+				this.${mn}(x.${k});
 				`.trim());
 			}
 			return ret_arr.join("\nd4!");
@@ -7723,11 +7743,12 @@ class HandleTypes extends BaseService {
 		let tmp_1=`
 		d2!/** @arg {${t_name}} x */
 		d2!${t_name}(x) {
-			d4!${gen_body(x,keys)}
+			d4!${gen_body(x,keys,t_name)}
 		d2!}
 		`;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).join("\n");
 		let tmp3=gen_padding(tmp2);
+		console.log("gen renderer for",x);
 		return tmp3;
 	}
 	/** @arg {AdPlacementRenderer} x */
