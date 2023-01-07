@@ -7656,23 +7656,20 @@ class HandleTypes extends BaseService {
 			}
 			this.TwoColumnWatchNextResultsData_0(x1);
 		});
-		this.SecondaryResultsTemplate(b,x1 => {
-			let [k]=get_keys_of(x1);
+		this.SecondaryResultsTemplate(b,x => {
+			let [k]=get_keys_of(x);
 			switch(k) {
 				case "contents": break;
 				case "results": break;
 				case "trackingParams": break;
 				default: debugger;
 			}
-			if("contents" in x1) {
-				this.SecondaryResultsContent_0(x1);
-			} else {
-				this.ResultsArrTemplate(x1,x2=>{
-					console.log(x2);
-					debugger;
-				});
-				debugger;
+			if("contents" in x) {
+				this.SecondaryResultsContent_0(x);
+			} else if("results" in x) {
+				return this.ResultsArrTemplate(x,this.SecondaryResultsContent_1);
 			}
+			debugger;
 		});
 		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
