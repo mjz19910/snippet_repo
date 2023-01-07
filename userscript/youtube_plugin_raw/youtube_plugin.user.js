@@ -7813,7 +7813,7 @@ class HandleTypes extends BaseService {
 		`;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).join("\n");
 		let tmp3=gen_padding(tmp2);
-		req_names.map(e=>{
+		let ex_names=req_names.map(e=>{
 			let tmp0=`
 			d2!/** @arg {${e}} x */
 			d2!${e}(x) {
@@ -7825,7 +7825,7 @@ class HandleTypes extends BaseService {
 			return gen_padding(tmp1);
 		});
 		console.log("gen renderer for",x);
-		return tmp3;
+		return tmp3+ex_names;
 	}
 	/** @arg {{}} x */
 	generate_typedef(x) {
