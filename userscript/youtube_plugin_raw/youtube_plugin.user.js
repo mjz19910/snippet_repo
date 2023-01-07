@@ -7820,6 +7820,14 @@ class HandleTypes extends BaseService {
 		if(x.prefetchMilliseconds!=="10000") debugger;
 		this.primitive_of(x.getAdBreakUrl,"string");
 	}
+  /** @arg {LinearAdSequenceRenderer} x */
+  LinearAdSequenceRenderer(x) {
+    this.LinearAdSequenceData(x.linearAdSequenceRenderer);
+  }
+  /** @arg {ClientForecastingAdRenderer} x */
+  ClientForecastingAdRenderer(x) {
+    this.ClientForecastingAdData(x.clientForecastingAdRenderer);
+  }
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();

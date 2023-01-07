@@ -1,0 +1,1 @@
+type ClientForecastingAdRenderer={clientForecastingAdRenderer: {impressionUrls: {}[];};};
