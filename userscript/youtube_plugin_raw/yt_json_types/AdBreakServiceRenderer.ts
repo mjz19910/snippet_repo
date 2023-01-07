@@ -1,0 +1,3 @@
+type AdBreakServiceRenderer={
+	adBreakServiceRenderer: AdBreakServiceData;
+};

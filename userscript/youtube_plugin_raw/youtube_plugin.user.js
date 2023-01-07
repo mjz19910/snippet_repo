@@ -7803,7 +7803,17 @@ class HandleTypes extends BaseService {
 	/** @arg {AdPlacementData} x */
 	AdPlacementData(x) {
 		this.AdPlacementConfig(x.config);
-		this.AdBreakServiceRenderer(x.renderer);
+		this.AdPlacementRendererItem(x.renderer);
+	}
+	/** @arg {AdPlacementRendererItem} x */
+	AdPlacementRendererItem(x) {
+		if("clientForecastingAdRenderer" in x) {
+			return this.ClientForecastingAdRenderer(x);
+		} else if("adBreakServiceRenderer" in x) {
+			return this.AdBreakServiceRenderer(x);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {AdPlacementConfig} x */
 	AdPlacementConfig(x) {
@@ -7826,11 +7836,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdBreakServiceRenderer} x */
 	AdBreakServiceRenderer(x) {
-		if("adBreakServiceRenderer" in x) {
-			this.AdBreakServiceData(x.adBreakServiceRenderer);
-		} else {
-			debugger;
-		}
+		this.AdBreakServiceData(x.adBreakServiceRenderer);
 	}
 	/** @arg {AdBreakServiceData} x */
 	AdBreakServiceData(x) {
