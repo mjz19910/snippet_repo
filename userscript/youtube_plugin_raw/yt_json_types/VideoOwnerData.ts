@@ -2,7 +2,7 @@ type VideoOwnerData={
 	thumbnail: Thumbnail;
 	title: TextT;
 	subscriptionButton: SubscriptionButton;
-	navigationEndpoint: BrowseEndpoint<never>;
+	navigationEndpoint: BrowseEndpoint<ChannelNavigationEndpointWebCommandMetadata>;
 	subscriberCountText: SimpleText;
 	trackingParams: string;
 };
