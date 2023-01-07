@@ -2684,8 +2684,6 @@ function main() {
 	});
 	if(typeof exports==="object") {
 		let exports=get_exports();
-		exports.ServiceResolver=ServiceResolver;
-		exports.HandleTypes=HandleTypes;
 		exports.Services=Services;
 		exports.YtUrlParser=YtUrlParser;
 	}
