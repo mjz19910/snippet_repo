@@ -3189,6 +3189,25 @@ class BaseServicePrivate extends KnownDataSaver {
 	#x;
 }
 class BaseService extends BaseServicePrivate {
+	/** @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
+	save_enum(ns,s) {
+		/** @type {"_"|"-"} */
+		let sep;
+		let ns_name="ENUM";
+		if(s.includes("-")) {
+			sep="-";
+			ns_name="ELEMENT";
+		} else {
+			sep="_";
+		}
+		let no_ns=split_string_once(s,ns);
+		if(!no_ns[1]) throw new Error();
+		let nn=split_string_once(no_ns[1],sep);
+		if(!nn[1]) throw new Error();
+		/** @type {SplitOnce<NonNullable<SplitOnce<U,T>[1]>,"">[1]} */
+		let no_ns_part=nn[1];
+		this.save_string(`${ns_name}::${ns}`,no_ns_part);
+	}
 	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
 	v(obj,fn) {
 		if(obj===void 0) return;
@@ -4423,6 +4442,26 @@ class YtUrlParser extends BaseService {
 			default: debugger;
 		}
 	}
+	/** @arg {YtTargetIdType} x */
+	parse_target_id(x) {
+		if(this.str_starts_with(x,"browse-feed")) {
+			return;
+		}
+		if(this.str_starts_with(x,"engagement-panel")) {
+			return this.save_enum("engagement-panel",x);
+		}
+		if(this.str_starts_with(x,"comments")) {
+			return this.save_enum("comments",x);
+		}
+		if(this.str_starts_with(x,"library")) {
+			return this.save_enum("library",x);
+		}
+		if(this.str_starts_with(x,"watch")) {
+			return this.save_enum("watch",x);
+		}
+		console.log("[new_parse_target_id]",x);
+		debugger;
+	}
 	/** @arg {ChanTabStr} x */
 	parse_channel_section(x) {
 		switch(x) {
@@ -5062,6 +5101,10 @@ class HandleTypes extends BaseService {
 	/** @arg {AppendContinuationItemsAction} x */
 	AppendContinuationItemsAction(x) {
 		this.parse_target_id(x.targetId);
+	}
+	/** @arg {YtTargetIdType} x */
+	parse_target_id(x) {
+		this.x.get("string_parser").parse_target_id(x);
 	}
 	/** @type {ResponseTypes['type']|NavigateEventDetail['response']['page']|null} */
 	_current_response_type=null;
@@ -6537,22 +6580,6 @@ class HandleTypes extends BaseService {
 		this.parse_target_id(targetId);
 		this.g(y);
 	}
-	/** @arg {YtTargetIdType} x */
-	parse_target_id(x) {
-		switch(x) {
-			case "browse-feedFEwhat_to_watch": return;
-			case "comments-section": return;
-			case "engagement-panel-comments-section": break;
-			case "engagement-panel-searchable-transcript-search-panel": return;
-			case "engagement-panel-searchable-transcript": return;
-			case "library-guide-item": return;
-			case "watch-next-feed": return;
-			default:
-		}
-		switch(x) {
-			default: debugger; return;
-		}
-	}
 	/** @arg {ChannelSwitcherContent} x */
 	ChannelSwitcherContent(x) {
 		if("accountItemRenderer" in x) {
@@ -6922,13 +6949,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
-		x;
-		debugger;
+		this.save_enum("engagement-panel",x.targetId);
+		this.save_enum("ENGAGEMENT_PANEL_VISIBILITY",x.visibility);
 	}
 	/** @arg {ScrollToEngagementPanelData} x */
 	ScrollToEngagementPanelData(x) {
+		this.save_enum("engagement-panel",x.targetId);
 		this.parse_target_id(x.targetId);
-		debugger;
 	}
 	/** @arg {CommandExecutorAction} x */
 	CommandExecutorData(x) {
@@ -7071,25 +7098,6 @@ class HandleTypes extends BaseService {
 		const {commandMetadata: a,continuationCommand: b,...y}=this.handle_clickTrackingParams(x); this.g(y);
 		if(a) this.CommandMetadata(a);
 		this.ContinuationCommand(b);
-	}
-	/** @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
-	save_enum(ns,s) {
-		/** @type {"_"|"-"} */
-		let sep;
-		let ns_name="ENUM";
-		if(s.includes("-")) {
-			sep="-";
-			ns_name="ELEMENT";
-		} else {
-			sep="_";
-		}
-		let no_ns=split_string_once(s,ns);
-		if(!no_ns[1]) throw new Error();
-		let nn=split_string_once(no_ns[1],sep);
-		if(!nn[1]) throw new Error();
-		/** @type {SplitOnce<NonNullable<SplitOnce<U,T>[1]>,"">[1]} */
-		let no_ns_part=nn[1];
-		this.save_string(`${ns_name}::${ns}`,no_ns_part);
 	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
