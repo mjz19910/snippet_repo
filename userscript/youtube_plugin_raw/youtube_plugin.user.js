@@ -4277,17 +4277,25 @@ class YtUrlParser extends BaseService {
 		if(url.pathname==="/AddSession") return;
 		console.log("[parse_url_external_2]",x);
 	}
-	/** @arg {YtUrlFormat} x */
-	parse_url(x) {
-		if(this.str_starts_with(x,"https://")) {
-			let r=create_from_parse(x);
-			if(r.host==="www.youtube.com") {
+	/** @arg {Extract<YtUrlFormat,`https://${string}`>} x */
+	parse_full_url(x) {
+		let r=create_from_parse(x);
+		switch(r.host) {
+			case "ad.doubleclick.net": return;
+			case "www.googleadservices.com": return;
+			case "www.youtube.com": {
 				this.parse_url(`${r.pathname}${r.search}`);
 				return;
 			}
-			console.log("[parse_url_external_1]",x);
-			debugger;
-			return;
+			default:
+		}
+		console.log("[parse_url_external_1]",x);
+		debugger;
+	}
+	/** @arg {YtUrlFormat} x */
+	parse_url(x) {
+		if(this.str_starts_with(x,"https://")) {
+			return this.parse_full_url(x);
 		}
 		if(x==="/") return;
 		let up=split_string_once(x,"/");
@@ -6616,7 +6624,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AnyIcon} x*/
 	Icon(x) {
-		if(!x) {debugger;return;}
+		if(!x) {debugger; return;}
 		const {iconType: a,...y}=x;
 		this.save_string(`icon_type`,a);
 		this.g(y);
@@ -8012,7 +8020,7 @@ class HandleTypes extends BaseService {
 		/** @arg {string} s */
 		function one_array_to_any_arr(s,dep=0) {
 			if(dep<8&&s.match(/\[{/)) {
-				s=s.replaceAll(/\[{(.+)}\]/,(_a,v)=>{
+				s=s.replaceAll(/\[{(.+)}\]/,(_a,v) => {
 					return `{${one_array_to_any_arr(v)}}[]`;
 				});
 			}
