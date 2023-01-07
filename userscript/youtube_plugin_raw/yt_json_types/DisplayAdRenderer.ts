@@ -4,12 +4,12 @@ type DisplayAdRenderer={
 	image: ThumbnailsList;
 	bodyText: TextT;
 	secondaryText: TextT;
-	badge: MetadataBadgeRenderer;
+	badge: MetadataBadgeData;
 	menu: MenuRenderer;
 	ctaButton: ButtonRenderer;
 	impressionEndpoints: YtEndpoint[];
 	clickCommand: {};
 	mediaHoverOverlay: ButtonRenderer;
-	mediaBadge: MetadataBadgeRenderer;
+	mediaBadge: MetadataBadgeData;
 	trackingParams: string;
 }

@@ -1,6 +1,4 @@
-import {Accessibility} from "./Accessibility.js";
-
-export type EmojiImage={
+type EmojiImage={
 	accessibility: Accessibility;
 	thumbnails: ThumbnailItem[];
 };

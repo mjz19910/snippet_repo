@@ -1,6 +1,4 @@
-import {ButtonRenderer} from "./ButtonRenderer.js";
-import {MiniplayerRenderer} from "./MiniplayerRenderer";
-export type PlayabilityStatus={
+type PlayabilityStatus={
 	status: "OK";
 	playableInEmbed: boolean;
 	offlineability: ButtonRenderer;

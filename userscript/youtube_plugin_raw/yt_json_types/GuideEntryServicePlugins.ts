@@ -1,3 +1,1 @@
-import {ReelWatchEndpointPlugin} from "./ReelWatchEndpointPlugin.js";
-
-export type GuideEntryServicePlugins=ReelWatchEndpointPlugin|SignalServiceEndpointPlugin;
+type GuideEntryServicePlugins=ReelWatchEndpointPlugin|SignalServiceEndpointPlugin;

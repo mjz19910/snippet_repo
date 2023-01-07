@@ -1,3 +1,0 @@
-type MetadataBadgeRenderers={
-	metadataBadgeRenderer: MetadataBadgeRenderer;
-};

@@ -1,6 +1,4 @@
-import {PageTypeWatch} from "./PageTypeWatch.js";
-
-export type NavigateEventDetail=[
+type NavigateEventDetail=[
 	PageTypeBrowse,
 	PageTypeChannel,
 	PageTypePlaylist,

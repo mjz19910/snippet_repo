@@ -1,4 +1,5 @@
 type AnyIconStr=[
 	"SETTINGS"|"DELETE"|"MIX"|"YOUTUBE_SHORTS_BRAND_24",
 	"SORT"|"MIX"|"MODERATOR",
+	"PRIVACY_UNLISTED",
 ][number];

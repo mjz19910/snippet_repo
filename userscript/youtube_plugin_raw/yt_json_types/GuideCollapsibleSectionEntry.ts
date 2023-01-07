@@ -1,5 +1,4 @@
-import {GuideEntryRenderer} from "./GuideEntryRenderer.1";
-export type GuideCollapsibleSectionEntry={
+type GuideCollapsibleSectionEntry={
 	headerEntry: GuideEntryRenderer;
 	expanderIcon: Icon<"EXPAND">;
 	collapserIcon: Icon<"COLLAPSE">;

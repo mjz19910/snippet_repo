@@ -1,3 +1,1 @@
-export type ReelWatchEndpointPlugin={
-	reelWatchEndpoint: ReelWatchEndpointData;
-};
+type ReelWatchEndpointPlugin={reelWatchEndpoint: ReelWatchEndpointData;};

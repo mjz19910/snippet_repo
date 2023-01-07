@@ -1,5 +1,4 @@
-import {BrowsePageResponse} from "./BrowsePageResponse.js";
-export type PageTypeBrowse={
+type PageTypeBrowse={
 	pageType: "browse";
 	endpoint: YtEndpoint;
 	response: BrowsePageResponse;

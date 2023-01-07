@@ -1,6 +1,4 @@
-import {ReelItemRenderer} from "./ReelItemRenderer";
-import {TextT} from "./TextT.js";
-export type ReelShelfData={
+type ReelShelfData={
 	title: TextT;
 	items: ReelItemRenderer[];
 	trackingParams: string;

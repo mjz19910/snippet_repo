@@ -1,6 +1,4 @@
-import {PlayerResponse} from "./WatchResponsePlayer.js";
-
-export type YtWatchPageResponse={
+type YtWatchPageResponse={
 	page: "watch";
 	endpoint: YtEndpoint;
 	response: WatchNextResponse;

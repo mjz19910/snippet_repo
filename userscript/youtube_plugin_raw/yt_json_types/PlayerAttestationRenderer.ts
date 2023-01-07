@@ -1,2 +1,1 @@
-import {PlayerAttestation} from "./PlayerAttestation.js";
-export type PlayerAttestationRenderer={playerAttestationRenderer: PlayerAttestation;};
+type PlayerAttestationRenderer={playerAttestationRenderer: PlayerAttestation;};

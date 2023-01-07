@@ -1,4 +1,1 @@
-
-export type MiniplayerRenderer={
-	miniplayerRenderer: {};
-};
+type MiniplayerRenderer={miniplayerRenderer: MiniplayerData;};

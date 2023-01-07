@@ -1,10 +1,4 @@
-import {Accessibility} from "./Accessibility.js";
-import {MenuRenderer} from "./MenuRenderer.js";
-import {NavigationEndpoint} from "./NavigationEndpoint";
-import {ReelWatchEndpointPlugin} from "./ReelWatchEndpointPlugin";
-import {TextT} from "./TextT.js";
-import {YtVideoId} from "./YtVideoId";
-export type ReelItemData={
+type ReelItemData={
 	videoId: YtVideoId;
 	headline: TextT;
 	thumbnail: Thumbnail;

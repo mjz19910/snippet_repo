@@ -1,6 +1,4 @@
-import {AudioTrackItem} from "./AudioTrackItem.js";
-import {CaptionTrackItem} from "./CaptionTrackItem.js";
-export type PlayerCaptionsTracklistData={
+type PlayerCaptionsTracklistData={
 	captionTracks: CaptionTrackItem[];
 	audioTracks: AudioTrackItem[];
 	translationLanguages: TranslationLanguage[];

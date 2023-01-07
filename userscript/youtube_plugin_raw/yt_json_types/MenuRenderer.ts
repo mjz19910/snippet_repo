@@ -1,2 +1,1 @@
-import {MenuData} from "./MenuData.js";
-export type MenuRenderer={menuRenderer: MenuData;};
+type MenuRenderer={menuRenderer: MenuData;};

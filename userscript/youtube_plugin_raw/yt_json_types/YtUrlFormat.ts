@@ -15,4 +15,5 @@ type YtUrlFormat=[
 	`/watch?${YtWatchUrlParamsFormat}`,
 	`/${ApiUrlFormat}`,
 	`${YtDomain|""}/api/stats/ads?${ApiStatsAdsArgs}`,
+	ParsableBaseUrlFormat,
 ][number];

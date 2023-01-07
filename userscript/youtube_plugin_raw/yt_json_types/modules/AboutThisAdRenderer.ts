@@ -1,3 +1,1 @@
-export type AboutThisAdRenderer={
-	url: UrlWrappedValue;
-};
+type AboutThisAdRenderer={url: UrlWrappedValue;};

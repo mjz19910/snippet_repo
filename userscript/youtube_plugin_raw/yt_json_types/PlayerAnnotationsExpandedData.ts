@@ -1,5 +1,4 @@
-import {FeaturedChannel} from "./FeaturedChannel";
-export type PlayerAnnotationsExpandedData={
+type PlayerAnnotationsExpandedData={
 	featuredChannel: FeaturedChannel;
 	allowSwipeDismiss: boolean;
 	annotationId: string;

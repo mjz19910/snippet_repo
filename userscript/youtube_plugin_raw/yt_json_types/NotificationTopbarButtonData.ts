@@ -1,6 +1,4 @@
-import {Accessibility} from "./Accessibility.js";
-
-export type NotificationTopbarButtonData={
+type NotificationTopbarButtonData={
 	icon: Icon<"NOTIFICATIONS">;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	menuRequest: YtEndpoint;

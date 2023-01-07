@@ -1,1 +1,1 @@
-export type YtVideoId=string&{_tag: "YtVideoId";};
+type YtVideoId=string&{_tag: "YtVideoId";};

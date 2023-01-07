@@ -1,3 +1,3 @@
-export type AudioTrackItem={
+type AudioTrackItem={
 	captionTrackIndices: number[];
 };

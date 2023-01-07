@@ -1,5 +1,4 @@
-import {BotguardData} from "./BotguardData.js";
-export type PlayerAttestation={
+type PlayerAttestation={
 	challenge: string;
 	botguardData: BotguardData;
 };

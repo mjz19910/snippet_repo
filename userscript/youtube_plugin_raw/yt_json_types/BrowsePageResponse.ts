@@ -1,4 +1,4 @@
-export type BrowsePageResponse={
+type BrowsePageResponse={
 	page: "browse";
 	endpoint: BrowseEndpoint<BrowseWebCommandMetadata>;
 	response: BrowseResponseContent;

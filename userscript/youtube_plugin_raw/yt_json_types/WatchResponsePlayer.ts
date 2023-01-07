@@ -1,7 +1,4 @@
-import {PlayabilityStatus} from "./PlayabilityStatus.js";
-import {PlayerAttestationRenderer} from "./PlayerAttestationRenderer.js";
-import {PlayerCaptionsTracklistRenderer} from "./PlayerCaptionsTracklistRenderer.js";
-export interface PlayerResponse {
+interface PlayerResponse {
 	responseContext: ResponseContext;
 	playabilityStatus: PlayabilityStatus;
 	streamingData?: StreamingData;
@@ -22,4 +19,4 @@ export interface PlayerResponse {
 	endscreen?: EndscreenRenderer;
 	paidContentOverlay?: PaidContentOverlay;
 	annotations?: PlayerAnnotationsExpandedRenderer[];
-};
+}

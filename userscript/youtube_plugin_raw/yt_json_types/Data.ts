@@ -1,4 +1,4 @@
-export type Data=
+type Data=
 	ChannelOptionsData|
 	SettingsSwitchData|
 	SettingsCheckboxData|

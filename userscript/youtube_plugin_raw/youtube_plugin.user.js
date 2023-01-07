@@ -1478,7 +1478,6 @@ class FilterHandlers {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.handle_types.x.get("string_parser").get_url_type(path_parts);
 	}
-	/** @typedef {import("./yt_json_types/ResponseTypes").ResponseTypes} ResponseTypes */
 	/** @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_length_1(target,x) {
 		switch(target[0]) {
@@ -1510,7 +1509,7 @@ class FilterHandlers {
 			};
 			case "guide": return {
 				type: target[0],
-				/** @type {import("./yt_json_types/GuideJsonType").GuideJsonType} */
+				/** @type {GuideJsonType} */
 				data: cast_as(x),
 			};
 			case "next": return {
@@ -1520,7 +1519,7 @@ class FilterHandlers {
 			};
 			case "player": return {
 				type: target[0],
-				/** @type {import("./yt_json_types/WatchResponsePlayer").PlayerResponse} */
+				/** @type {PlayerResponse} */
 				data: cast_as(x),
 			};
 		}
@@ -1690,13 +1689,12 @@ class FilterHandlers {
 	/** @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @type {import("./yt_json_types/AnySavedData").AnySavedData} */
+		/** @type {AnySavedData} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @typedef {import("./yt_json_types/NavigateEventDetail").NavigateEventDetail} NavigateEventDetail */
 	/** @arg {[()=>NavigateEventDetail['response'], object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @type {NavigateEventDetail['response']} */
@@ -2822,7 +2820,6 @@ function main() {
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
 	}
-	/** @typedef {import("./yt_json_types/BrowsePageResponse").BrowsePageResponse} BrowsePageResponse */
 	/** @arg {[()=>BrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
@@ -4283,20 +4280,13 @@ class YtUrlParser extends BaseService {
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
 		if(this.str_starts_with(x,"https://")) {
-			let rem_url=new URL(x);
-			let url_host=rem_url.hostname;
-			if(url_host==="accounts.google.com") {
-				return this.parse_account_google_com_url(x,rem_url);
-			}
-			if(url_host.endsWith("ggpht.com")) return;
-			if(url_host==="i.ytimg.com") return;
-			if(url_host==="studio.youtube.com") return;
-			if(url_host==="www.youtube.com") {
-				let r=create_from_parse(x);
+			let r=create_from_parse(x);
+			if(r.host==="www.youtube.com") {
 				this.parse_url(`${r.pathname}${r.search}`);
 				return;
 			}
 			console.log("[parse_url_external_1]",x);
+			debugger;
 			return;
 		}
 		if(x==="/") return;
@@ -4587,7 +4577,7 @@ class HandleTypes extends BaseService {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
 	}
-	/** @private @arg {import("./yt_json_types/WatchResponsePlayer").PlayerResponse} x */
+	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("PlayerResponse",x);
 		let t=this;
@@ -4643,7 +4633,7 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof d} x */
 		function p5(x) {
 			const {captions: a,cards: b,frameworkUpdates: c,microformat: e,...y}=x;
-			if(a) this.CaptionsRenderer(a);
+			if(a) this.PlayerCaptionsTracklistRenderer(a);
 			if(b) this.CardCollectionRenderer(b);
 			this.FrameworkUpdates(c);
 			if(e) this.PlayerMicroformatRenderer(e);
@@ -4671,7 +4661,7 @@ class HandleTypes extends BaseService {
 		const {spec: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {import("./yt_json_types/BrowsePageResponse").BrowsePageResponse} x */
+	/** @arg {BrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
@@ -5467,7 +5457,7 @@ class HandleTypes extends BaseService {
 		this.GuideEntryRendererData(a);
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/GuideEntryRendererData").GuideEntryRendererData} x */
+	/** @arg {GuideEntryRendererData} x */
 	GuideEntryRendererData(x) {
 		const {
 			accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,isPrimary: g,
@@ -5485,7 +5475,7 @@ class HandleTypes extends BaseService {
 		if(j) this.parse_target_id(j);
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/GuideEntryServicePlugins").GuideEntryServicePlugins} x */
+	/** @arg {GuideEntryServicePlugins} x */
 	ServiceEndpointPlugin(x) {
 		if("reelWatchEndpoint" in x) {
 			const {reelWatchEndpoint: a,...y}=x; this.g(y);
@@ -5687,7 +5677,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(c,"string");
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/YtWatchPageResponse").YtWatchPageResponse} x */
+	/** @arg {YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
@@ -6462,7 +6452,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(c,"boolean");
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/RichShelfData").RichShelfData} x */
+	/** @arg {RichShelfData} x */
 	RichShelfData(x) {
 		const {icon: a,title: b,...y}=x;
 		this.Icon(a);
@@ -6626,10 +6616,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AnyIcon} x*/
 	Icon(x) {
-		if(!x) {
-			debugger;
-			return;
-		}
+		if(!x) {debugger;return;}
 		const {iconType: a,...y}=x;
 		this.save_string(`icon_type`,a);
 		this.g(y);
@@ -6879,45 +6866,47 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./yt_json_types/ReelShelfData").ReelShelfData} x */
+	/** @arg {ReelShelfData} x */
 	ReelShelfData(x) {
 		this.Icon(x.icon);
 		this.z(x.items,a => this.ReelItemRenderer(a));
 		this.text_t(x.title);
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {import("./yt_json_types/ReelItemRenderer").ReelItemRenderer} x */
+	/** @arg {ReelItemRenderer} x */
 	ReelItemRenderer(x) {
 		this.ReelItemData(x.reelItemRenderer);
 	}
-	/** @arg {import("./yt_json_types/ReelItemData").ReelItemData} x */
+	/** @arg {ReelItemData} x */
 	ReelItemData(x) {
 		this.Accessibility(x.accessibility);
 		this.text_t(x.headline);
 		this.LoggingDirectives(x.loggingDirectives);
 		this.MenuRenderer(x.menu);
 	}
-	/** @arg {import("./yt_json_types/MenuRenderer").MenuRenderer} x */
+	/** @arg {MenuRenderer} x */
 	MenuRenderer(x) {
 		this.MenuData(x.menuRenderer);
 	}
-	/** @arg {import("./yt_json_types/MenuData").MenuData} x */
+	/** @arg {MenuData} x */
 	MenuData(x) {
 		this.Accessibility(x.accessibility);
 		this.z(x.items,a => this.MenuServiceItem(a));
 	}
-	/** @arg {import("./yt_json_types/MenuServiceItem").MenuServiceItem} x */
+	/** @arg {MenuServiceItem} x */
 	MenuServiceItem(x) {
 		this.MenuServiceItemRenderer(x.menuServiceItemRenderer);
 	}
-	/** @arg {import("./yt_json_types/MenuServiceItemRenderer").MenuServiceItemRenderer} x */
+	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
-		x.serviceEndpoint;
+		console.log(x.serviceEndpoint);
+		debugger;
 	}
 	/** @arg {SearchPyvData} x */
 	SearchPyvData(x) {
-		this.z(x.ads,a => this.AdSlotRenderer(a));
-		this.trackingParams(x.trackingParams);
+		const {ads,trackingParams,...y}=x; this.g(y);
+		this.z(ads,a => this.AdSlotRenderer(a));
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {AdSlotRenderer} x */
 	AdSlotRenderer(x) {
@@ -7285,7 +7274,7 @@ class HandleTypes extends BaseService {
 			this.ChannelOptionsData(x.channelOptionsRenderer);
 		}
 	}
-	/** @arg {import("./yt_json_types/ChannelOptionsData").ChannelOptionsData} x */
+	/** @arg {ChannelOptionsData} x */
 	ChannelOptionsData(x) {
 		this.Thumbnail(x.avatar);
 		this.Accessibility(x.avatarAccessibility);
@@ -7619,15 +7608,15 @@ class HandleTypes extends BaseService {
 	EmojiPickerRenderer(x) {
 		this.g(x.emojiPickerRenderer);
 	}
-	/** @arg {import("./yt_json_types/PlayerAttestationRenderer").PlayerAttestationRenderer} x */
+	/** @arg {PlayerAttestationRenderer} x */
 	PlayerAttestationRenderer(x) {
 		this.PlayerAttestation(x.playerAttestationRenderer);
 	}
-	/** @arg {import("./yt_json_types/PlayerAttestation").PlayerAttestation} x */
+	/** @arg {PlayerAttestation} x */
 	PlayerAttestation(x) {
 		this.BotguardData(x.botguardData);
 	}
-	/** @arg {import("./yt_json_types/BotguardData").BotguardData} x */
+	/** @arg {BotguardData} x */
 	BotguardData(x) {
 		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
 		this.UrlWrappedValueT(interpreterSafeUrl,a => a);
@@ -7656,11 +7645,11 @@ class HandleTypes extends BaseService {
 	EndscreenElementData(x) {
 		this.primitive_of(x.aspectRatio,"number");
 	}
-	/** @arg {import("./yt_json_types/PlayerCaptionsTracklistRenderer").PlayerCaptionsTracklistRenderer} x */
-	CaptionsRenderer(x) {
+	/** @arg {PlayerCaptionsTracklistRenderer} x */
+	PlayerCaptionsTracklistRenderer(x) {
 		this.PlayerCaptionsTracklistData(x.playerCaptionsTracklistRenderer);
 	}
-	/** @arg {import("./yt_json_types/PlayerCaptionsTracklistData").PlayerCaptionsTracklistData} x */
+	/** @arg {PlayerCaptionsTracklistData} x */
 	PlayerCaptionsTracklistData(x) {
 		this.z(x.audioTracks,a => {
 			this.z(a.captionTrackIndices,a => {
@@ -7675,13 +7664,13 @@ class HandleTypes extends BaseService {
 		x.defaultAudioTrackIndex;
 		this.z(x.translationLanguages,a => a);
 	}
-	/** @arg {import("./yt_json_types/TranslationLanguage").TranslationLanguage} x */
+	/** @arg {TranslationLanguage} x */
 	TranslationLanguage(x) {
 		const {languageCode: a,languageName: {simpleText: b},...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 		this.primitive_of(b,"string");
 	}
-	/** @arg {import("./yt_json_types/ActionSetPlaylistVideoOrder").ActionSetPlaylistVideoOrder} x */
+	/** @arg {ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
 		this.Accessibility(x.accessibility);
 	}
@@ -7690,7 +7679,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(x.emojiId,"string");
 		this.EmojiImage(x.image);
 	}
-	/** @arg {import("./yt_json_types/EmojiImage").EmojiImage} x */
+	/** @arg {EmojiImage} x */
 	EmojiImage(x) {
 		this.Accessibility(x.accessibility);
 		this.z(x.thumbnails,a => this.ThumbnailItem(a));
@@ -7747,11 +7736,11 @@ class HandleTypes extends BaseService {
 	PlayerAnnotationsExpandedRenderer(x) {
 		this.PlayerAnnotationsExpandedData(x.playerAnnotationsExpandedRenderer);
 	}
-	/** @arg {import("./yt_json_types/PlayerAnnotationsExpandedData").PlayerAnnotationsExpandedData} x */
+	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
 		x;
 	}
-	/** @arg {import("./yt_json_types/PlayabilityStatus").PlayabilityStatus} x */
+	/** @arg {PlayabilityStatus} x */
 	PlayabilityStatus(x) {
 		decode_url_b64_proto_obj(x.contextParams);
 	}
@@ -7870,17 +7859,17 @@ class HandleTypes extends BaseService {
 		});
 		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
-	/** @arg {import("./yt_json_types/GuideJsonType").GuideJsonType} x */
+	/** @arg {GuideJsonType} x */
 	GuideJsonType(x) {
 		this.z(x.items,a => this.GuideItemType(a));
 	}
-	/** @arg {import("./yt_json_types/GuideItemType").GuideItemType} x */
+	/** @arg {GuideItemType} x */
 	GuideItemType(x) {
 		if("guideSectionRenderer" in x) {
 			this.GuideSectionData(x.guideSectionRenderer);
 		}
 	}
-	/** @arg {import("./yt_json_types/GuideSectionData").GuideSectionData} x */
+	/** @arg {GuideSectionData} x */
 	GuideSectionData(x) {
 		this.z(x.items,a => this.GuideSectionItemType(a));
 		this.trackingParams(x.trackingParams);
@@ -7896,7 +7885,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {import("./yt_json_types/GuideCollapsibleSectionEntry").GuideCollapsibleSectionEntry} x */
+	/** @arg {GuideCollapsibleSectionEntry} x */
 	GuideCollapsibleSectionEntry(x) {
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
 		this.GuideEntryRenderer(headerEntry);
@@ -8223,6 +8212,7 @@ class HandleTypes extends BaseService {
 		this.ActionCompanionAdInfoRenderers(x3);
 		let uep_data=this.UrlEndpoint(x2);
 		(([T,U,V]) => {
+			this.z(T,this.BaseUrl);
 			console.log("urls",T);
 			console.log("meta",U);
 			console.log("ep",V);
@@ -8269,9 +8259,11 @@ class HandleTypes extends BaseService {
 		this.trackingParams(x.trackingParams);
 		debugger;
 	}
-	/** @arg {MetadataBadgeRenderer} x */
+	/** @arg {MetadataBadgeData} x */
 	MetadataBadgeRenderer(x) {
-		x;
+		const {icon: a,style: b,label: c,tooltip: d,trackingParams: e,accessibilityData: f,...y}=x; this.g(y);
+		this.Icon(a);
+		this.save_enum("BADGE_STYLE_TYPE",b);
 		debugger;
 	}
 }

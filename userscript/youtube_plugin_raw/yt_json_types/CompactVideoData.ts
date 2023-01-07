@@ -16,5 +16,5 @@ type CompactVideoData={
 	thumbnailOverlays: {};
 	accessibility: Accessibility;
 	richThumbnail: {};
-	badges?: MetadataBadgeRenderers[];
+	badges?: MetadataBadgeRenderer[];
 };

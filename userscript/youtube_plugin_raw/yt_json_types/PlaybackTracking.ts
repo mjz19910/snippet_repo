@@ -1,11 +1,11 @@
 type PlaybackTracking={
 	atrUrl: UrlAndElapsedMediaTime;
-	ptrackingUrl: BaseUrl;
-	qoeUrl: BaseUrl
+	ptrackingUrl: BaseUrl<never>;
+	qoeUrl: BaseUrl<never>;
 	videostatsDefaultFlushIntervalSeconds: 40;
 	videostatsDelayplayUrl: UrlAndElapsedMediaTime;
-	videostatsPlaybackUrl: BaseUrl
+	videostatsPlaybackUrl: BaseUrl<never>;
 	videostatsScheduledFlushWalltimeSeconds: [10,20,30];
-	videostatsWatchtimeUrl: BaseUrl;
-	youtubeRemarketingUrl?: {};
+	videostatsWatchtimeUrl: BaseUrl<never>;
+	youtubeRemarketingUrl?: BaseUrl<never>;
 };

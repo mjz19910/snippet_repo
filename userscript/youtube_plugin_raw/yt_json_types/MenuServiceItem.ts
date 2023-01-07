@@ -1,5 +1,1 @@
-import {MenuServiceItemRenderer} from "./MenuServiceItemRenderer.js";
-
-export type MenuServiceItem={
-	menuServiceItemRenderer: MenuServiceItemRenderer;
-};
+type MenuServiceItem={menuServiceItemRenderer: MenuServiceItemRenderer;};
