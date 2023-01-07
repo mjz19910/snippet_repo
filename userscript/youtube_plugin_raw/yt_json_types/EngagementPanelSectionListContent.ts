@@ -1,6 +1,6 @@
 type EngagementPanelSectionListContent=[
 	AdsEngagementPanelContentRenderer,
 	ClipSectionRenderer,
-	SectionListRenderer,
+	SectionListRenderer<"comment-item-section","engagement-panel-comments-section">,
 	StructuredDescriptionContentRenderer,
 ][number];

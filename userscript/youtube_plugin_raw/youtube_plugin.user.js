@@ -2875,6 +2875,7 @@ function has_keys(ok_3,arg1) {
 }
 /** @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 function split_string(x,s=cast_as(",")) {
+	if(!x) {debugger;}
 	let r=x.split(s);
 	return cast_as(r);
 }
@@ -5617,7 +5618,10 @@ class HandleTypes extends BaseService {
 		if(d) this.primitive_of(d,"string");
 		if(e) {
 			if("sectionListRenderer" in e) {
-				this.w(e,a => this.SectionListData(a));
+				this.w(e,a => this.SectionListData(a,a=>{
+					console.log(a);
+					debugger;
+				}));
 			} else debugger;
 		}
 		return this.g(y);
@@ -6771,18 +6775,18 @@ class HandleTypes extends BaseService {
 		if(b) this.Accessibility(b);
 		this.g(y);
 	}
-	/** @arg {SectionListData} x */
-	SectionListData(x) {
+	/** @template T @template U @arg {SectionListData<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
+	SectionListData(x,f) {
 		this.save_keys("SectionListData",x);
 		const {contents: a,trackingParams: b,...y}=x;
-		this.z(a,a => this.SectionListItem(a));
+		this.z(a,a => this.SectionListItem(a,f));
 		this.trackingParams(b);
 		this.g(y);
 	}
-	/** @arg {SectionListItem} x */
-	SectionListItem(x) {
+	/** @template T @template U @arg {SectionListItem<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
+	SectionListItem(x,f=null) {
 		if("itemSectionRenderer" in x) {
-			this.w(x,a => this.ItemSectionData(a));
+			this.w(x,a => this.ItemSectionData(a,f));
 		} else {
 			debugger;
 		}
@@ -6960,15 +6964,24 @@ class HandleTypes extends BaseService {
 		if(a) this.CommandMetadata(a);
 		this.ContinuationCommand(b);
 	}
-	/** @template {string} T @template {string} U @arg {T} ns @arg {U} s */
+	/** @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
+		/** @type {"_"|"-"} */
+		let sep;
+		let ns_name="ENUM";
+		if(s.includes("-")) {
+			sep="-";
+			ns_name="ELEMENT";
+		} else {
+			sep="_";
+		}
 		let no_ns=split_string_once(s,ns);
 		if(!no_ns[1]) throw new Error();
-		let nn=split_string_once(no_ns[1],"_");
+		let nn=split_string_once(no_ns[1],sep);
 		if(!nn[1]) throw new Error();
 		/** @type {SplitOnce<NonNullable<SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
-		this.save_string(ns,no_ns_part);
+		this.save_string(`${ns_name}::${ns}`,no_ns_part);
 	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
@@ -7140,12 +7153,15 @@ class HandleTypes extends BaseService {
 	/** @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
 		const {primaryContents: a,...y}=x; this.g(y);
-		this.SectionListRenderer(a);
+		this.SectionListRenderer(a,a=>{
+			console.log(a);
+			debugger;
+		});
 	}
-	/** @arg {SectionListRenderer} x */
-	SectionListRenderer(x) {
+	/** @template T,U @arg {SectionListRenderer<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
+	SectionListRenderer(x,f) {
 		const {sectionListRenderer: a,...y}=x; this.g(y);
-		this.SectionListData(a);
+		this.SectionListData(a,f);
 	}
 	/** @arg {SearchEndpoint} x */
 	SearchEndpoint(x) {
@@ -7170,13 +7186,8 @@ class HandleTypes extends BaseService {
 	EngagementPanelSectionListData(x) {
 		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
 		this.EngagementPanelSectionListContent(a);
-		switch(b) {
-			case "engagement-panel-ads": break;
-			case "engagement-panel-clip-create": break;
-			case "engagement-panel-structured-description": break;
-			default: debugger;
-		}
-		if(c!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+		this.save_enum("engagement-panel",b);
+		this.save_enum("ENGAGEMENT_PANEL_VISIBILITY",c);
 		this.LoggingDirectives(d);
 	}
 	/** @arg {EngagementPanelSectionListContent} x */
@@ -7188,7 +7199,14 @@ class HandleTypes extends BaseService {
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
 		} else if("sectionListRenderer" in x) {
-			return this.SectionListRenderer(x);
+			return this.SectionListRenderer(x,a=>{
+				switch(a[0]) {
+					case "T": switch(a[1]){case "comment-item-section":return;default:}; break;
+					case "U": switch(a[1]){case "engagement-panel-comments-section":return;default:} break;
+				}
+				console.log(a);
+				debugger;
+			});
 		}
 		console.log(x);
 		debugger;
@@ -7499,10 +7517,57 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
-		this.AutoplayTemplate(x.autoplay,a => this.AutoplayContent(a));
+		const {results: a,secondaryResults: b,playlist: c,autoplay:d,...y}=x; this.g(y);
+		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
+		this.ResultsTemplate(a,x1=>{
+			this.ContentTemplate(x1,x2=>{
+				let [k]=get_keys_of(x2);
+				switch(k) {
+					case "itemSectionRenderer": break;
+					case "videoPrimaryInfoRenderer": break;
+					case "videoSecondaryInfoRenderer": break;
+				}
+				if("itemSectionRenderer" in x2) {
+					return this.ItemSectionRenderer(x2);
+				} else if("videoPrimaryInfoRenderer" in x2) {
+					return this.VideoPrimaryInfoRenderer(x2);
+				} else if("videoSecondaryInfoRenderer" in x2) {
+					return this.VideoSecondaryInfoRenderer(x2);
+				}
+			});
+			let [k]=get_keys_of(x1);
+			switch(k) {
+				case "contents": break;
+				case "trackingParams": break;
+			}
+		});
+	}
+	/** @arg {VideoSecondaryInfoRenderer} x */
+	VideoSecondaryInfoRenderer(x) {
+		x;
+		debugger;
+	}
+	/** @arg {VideoPrimaryInfoRenderer} x */
+	VideoPrimaryInfoRenderer(x) {
+		x;
+		debugger;
+	}
+	/** @arg {ItemSectionRenderer<never,never>} x */
+	ItemSectionRenderer(x) {
+		this.ItemSectionData(x.itemSectionRenderer);
+	}
+	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
+	ContentTemplate(x,f) {
+		const {trackingParams,contents,...y}=x; this.g(y);
+		this.z(x.contents,a=>f(a));
+	}
+	/** @template T @arg {ResultsTemplate<T>} x @arg {(x:T)=>void} f */
+	ResultsTemplate(x,f) {
+		f(x.results);
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
 	AutoplayTemplate(x,f) {
+		if(!x) {debugger;return;}
 		f(x.autoplay);
 	}
 	/** @arg {AutoplayContent} x */
