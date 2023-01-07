@@ -8626,38 +8626,56 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {{}} x @arg {string|null} r_name */
 	use_generated_members(x,r_name=null) {
+		let t=this;
 		let td=new class Generate {
 			/** @type {(Map<string,string>|null)[]} */
 			out_arr=[];
 			/** @type {(string|undefined)[]} */
 			str_arr=[];
-			/** @arg {HandleTypes} pc */
-			constructor(pc) {
-				this.typedef_str=pc.generate_typedef(x,r_name);
+			constructor() {
 				/** @type {Map<string,string>|null} */
 				this.out=null;
 				/** @type {string|null} */
 				this.out_2=null;
+				this.d_idx=0;
+				this.s_idx=0;
 			}
-		}(this);
-		if(!td.typedef_str) return td;
-		td.out=this.generate_depth(td.typedef_str);
-		if(!td.out) return td;
-		let fg=td.out&&td.out.get("carouselLockupRenderer");
-		if(!fg) return td;
-		let dg=this.generate_depth(fg);
-		if(!dg) return td;
-		let info_rows=dg.get("infoRows");
-		if(!info_rows) return td;
-		td.out_2=info_rows.replaceAll(/^\s|;$/g,"");
+			get gen_d() {
+				let ret=this.d_idx;
+				this.d_idx++;
+				return ret;
+			}
+			get gen_s() {
+				let ret=this.s_idx;
+				this.s_idx++;
+				return ret;
+			}
+			/** @arg {string} [x] */
+			generate_depth(x) {
+				if(!x) return;
+				td.out_arr[td.gen_d]=t.generate_depth(x);
+			}
+			get cur_str() {
+				return this.str_arr[td.s_idx];
+			}
+			get cur_obj() {
+				return this.out_arr[td.d_idx];
+			}
+			/** @arg {string} x */
+			trimmed_item(x) {
+				td.str_arr[td.gen_s]=td.cur_obj?.get(x);
+				td.str_arr[td.gen_s]=td.cur_str?.replaceAll(/^\s|;$/g,"");
+			}
+		};
 		td.out_arr=[];
-		td.out_arr[0]??=this.generate_depth(td.out_2);
-		if(!td.out_arr[0]) return td;
-		let irr=td.out_arr[0].get("infoRowRenderer");
-		if(!irr) return td;
-		td.str_arr[0]=irr.replaceAll(/^\s|;$/g,"");
-		if(!td.str_arr[0]) return td;
-		td.out_arr[1]=this.generate_depth(td.str_arr[0]);
+		td.str_arr[td.gen_s]=this.generate_typedef(x,r_name)??"";
+		td.generate_depth(td.cur_str);
+		td.trimmed_item("carouselLockupRenderer");
+		td.generate_depth(td.cur_str);
+		td.trimmed_item("infoRows");
+		td.generate_depth(td.cur_str);
+		td.trimmed_item("infoRowRenderer");
+		td.generate_depth(td.cur_str);
 		return td;
 	}
 	/** @arg {{[x: string]:{}}} x */
