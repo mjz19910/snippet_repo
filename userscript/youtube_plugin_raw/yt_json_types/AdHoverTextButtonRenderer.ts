@@ -1,0 +1,1 @@
+type AdHoverTextButtonRenderer={adHoverTextButtonRenderer: AdHoverTextButtonData;};

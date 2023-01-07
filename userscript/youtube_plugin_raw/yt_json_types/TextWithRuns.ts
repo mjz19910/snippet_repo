@@ -1,0 +1,3 @@
+type TextWithRuns={
+	runs: TextRun[];
+};

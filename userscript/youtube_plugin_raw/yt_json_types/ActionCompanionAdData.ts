@@ -1,13 +1,13 @@
 type ActionCompanionAdData={
-	headline: {};
-	description: {};
-	actionButton: {};
-	iconImage: {};
-	bannerImage: {};
-	navigationEndpoint: {};
+	headline: TemplatedText;
+	description: TemplatedText;
+	actionButton: ButtonRenderer;
+	iconImage: ThumbnailsList;
+	bannerImage: ThumbnailsList;
+	navigationEndpoint: NavigationEndpointTODO;
 	trackingParams: string;
-	adInfoRenderer: {};
+	adInfoRenderer: ActionCompanionAdInfoRenderers;
 	adVideoId: string;
-	impressionPings: {}[];
-	adLayoutLoggingData: {};
+	impressionPings: BaseUrl<`https://www.youtube.com/pagead/interaction/?${string}`>[];
+	adLayoutLoggingData: AdLayoutLoggingData;
 };

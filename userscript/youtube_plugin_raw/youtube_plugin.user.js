@@ -8049,7 +8049,30 @@ class HandleTypes extends BaseService {
 	/** @arg {ActionCompanionAdData} x */
 	ActionCompanionAdData(x) {
 		const {headline,description,actionButton,iconImage,bannerImage,navigationEndpoint,trackingParams,adInfoRenderer,adVideoId,impressionPings,adLayoutLoggingData,...y}=x; this.g(y);
+    this.AdLayoutLoggingData(x.adLayoutLoggingData);
+    this.ActionCompanionAdInfoRenderers(x.adInfoRenderer);
+    this.NavigationEndpoint(x.navigationEndpoint);
 		this.g(navigationEndpoint);
+	}
+  /** @arg {ActionCompanionAdInfoRenderers} x */
+	ActionCompanionAdInfoRenderers(x) {
+		if("adHoverTextButtonRenderer" in x) {
+			return this.AdHoverTextButtonRenderer(x);
+		}
+		debugger;
+	}
+  /** @arg {AdHoverTextButtonRenderer} x */
+  AdHoverTextButtonRenderer(x) {
+    this.AdHoverTextButtonData(x.adHoverTextButtonRenderer);
+  }
+  /** @arg {AdHoverTextButtonData} x */
+  AdHoverTextButtonData(x) {
+    x;
+    debugger;
+  }
+	/** @arg {NavigationEndpointTODO} x */
+	NavigationEndpoint(x) {
+		this.g(x);
 	}
 }
 //#endregion

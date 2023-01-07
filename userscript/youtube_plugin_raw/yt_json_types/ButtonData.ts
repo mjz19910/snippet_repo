@@ -1,7 +1,4 @@
-import {Accessibility} from "./Accessibility.js";
-import {TextT} from "./TextT.js";
-
-export type ButtonData={
+type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
 	accessibilityData?: Accessibility|AccessibilityData;
 	command?: YtEndpoint;
