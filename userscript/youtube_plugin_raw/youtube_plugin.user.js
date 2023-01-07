@@ -5032,7 +5032,7 @@ class HandleTypes extends BaseService {
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="liveChatItemContextMenuEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="openPopupAction";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} 
+		{const {[k]: a}=y; if(a) return this[q(k)](a);}
 		let yc=get_keys_of(y);
 		for(let ya of yc) {
 			/** @type {endpoint_data_handler_names} */
