@@ -1,0 +1,1 @@
+type EntityMutationPayload=OfflineabilityEntity|SubscriptionStateEntity;

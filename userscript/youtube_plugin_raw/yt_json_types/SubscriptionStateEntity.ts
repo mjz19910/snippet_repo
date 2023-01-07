@@ -1,0 +1,1 @@
+type SubscriptionStateEntity={subscriptionStateEntity: SubscriptionStateData;};

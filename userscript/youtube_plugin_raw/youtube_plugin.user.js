@@ -6916,12 +6916,22 @@ class HandleTypes extends BaseService {
 			const {[k]: a,...b}=x; n(this,a,b);
 			return this.CommentsEntryPointHeaderData(a);
 		}
+		k="compactPlaylistRenderer";
+		/** @type {ItemSectionItem} */
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
+			return this.CompactPlaylistData(a);
+		}
 		let m=get_keys_of(x);
 		for(let k of m) {
 			if(k in this.item_section_map) continue;
 			console.log('[new_section_item] [%s]',k);
 			debugger;
 		}
+	}
+	/** @arg {CompactPlaylistData} x */
+	CompactPlaylistData(x) {
+		x;
 	}
 	/** @arg {CommentsEntryPointHeaderData} x */
 	CommentsEntryPointHeaderData(x) {
@@ -8115,19 +8125,37 @@ class HandleTypes extends BaseService {
 		this.save_enum("ENTITY_MUTATION_TYPE",x.type);
 		switch(x.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": {
-				const {type:{},entityKey:a,options:b,...y}=x; this.g(y);
+				const {type: {},entityKey: a,options: b,...y}=x; this.g(y);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
 				this.EntityMutationOptions(b);
 				console.log("[entity_del]",dec);
 			} break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
-				const {type:{},entityKey:a,payload:b,...y}=x; this.g(y);
+				const {type: {},entityKey: a,payload: b,...y}=x; this.g(y);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
-				this.OfflineabilityEntity(b);
+				this.EntityMutationPayload(b);
 				console.log("[entity_replace]",dec);
 			} break;
 			default: debugger;
 		}
+	}
+	/** @arg {EntityMutationPayload} x */
+	EntityMutationPayload(x) {
+		if("offlineabilityEntity" in x) {
+			return this.OfflineabilityEntity(x);
+		} else if("subscriptionStateEntity" in x) {
+			return this.SubscriptionStateEntity(x);
+		}
+		debugger;
+	}
+	/** @arg {SubscriptionStateEntity} x */
+	SubscriptionStateEntity(x) {
+		this.SubscriptionStateData(x.subscriptionStateEntity);
+	}
+	/** @arg {SubscriptionStateData} x */
+	SubscriptionStateData(x) {
+		console.log("[SubscriptionState]",x.key);
+		this.primitive_of(x.subscribed,"boolean");
 	}
 	/** @arg {OfflineabilityEntity} x */
 	OfflineabilityEntity(x) {
@@ -8135,7 +8163,21 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {OfflineabilityEntityData} x */
 	OfflineabilityEntityData(x) {
+		if(!x) {debugger; return;}
 		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
+		let ba=base64_dec.decodeByteArray(decodeURIComponent(a));
+		let reader=new MyReader(ba);
+		x: {
+			let rr=reader.try_read_any();
+			reader.pos=2;
+			if(!rr) break x;
+			if(rr[0][0]!=="child") break x;
+			console.log(decoder.decode(rr[0][2]));
+		}
+		let ro=reader.try_read_any();
+		if(ro) {
+			console.log(ro[1]);
+		}
 		let ret=decode_entity_key(a);
 		console.log('offline_entity_key',ret);
 		this.InnertubeCommand(b);
@@ -8145,20 +8187,19 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		};
 		this.LoggingDirectives(f);
-		debugger;
 	}
-  /** @arg {InnertubeCommand} x */
-  InnertubeCommand(x) {
+	/** @arg {InnertubeCommand} x */
+	InnertubeCommand(x) {
 		this.InnertubeCommandData(x.innertubeCommand);
-  }
-  /** @arg {InnertubeCommandData} x */
-  InnertubeCommandData(x) {
+	}
+	/** @arg {InnertubeCommandData} x */
+	InnertubeCommandData(x) {
 		if("ypcGetOfflineUpsellEndpoint" in x) {
-    	return this.YpcGetOfflineUpsellEndpoint(x);
+			return this.YpcGetOfflineUpsellEndpoint(x);
 		}
 		debugger;
-  }
-  /** @arg {YpcGetOfflineUpsellEndpoint} x */
+	}
+	/** @arg {YpcGetOfflineUpsellEndpoint} x */
 	YpcGetOfflineUpsellEndpoint(x) {
 		const {clickTrackingParams,ypcGetOfflineUpsellEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
