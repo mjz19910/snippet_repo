@@ -1,5 +1,5 @@
 type AdPlacementConfigData={
-	kind: "AD_PLACEMENT_KIND_END"|"AD_PLACEMENT_KIND_START";
+	kind: AdPlacementKindEnum;
 	adTimeOffset: AdTimeOffset;
 	hideCueRangeMarker: true;
 };

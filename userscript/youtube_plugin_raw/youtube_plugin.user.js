@@ -7929,6 +7929,7 @@ class HandleTypes extends BaseService {
 		switch(x.kind) {
 			case "AD_PLACEMENT_KIND_END": break;
 			case "AD_PLACEMENT_KIND_START": break;
+			case "AD_PLACEMENT_KIND_SELF_START": break;
 			default: debugger;
 		}
 		this.AdTimeOffset(x.adTimeOffset);
