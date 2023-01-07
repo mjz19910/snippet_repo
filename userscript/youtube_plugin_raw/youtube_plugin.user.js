@@ -6078,7 +6078,7 @@ class HandleTypes extends BaseService {
 		if(c) this.yt_endpoint(c);
 		this.g(y);
 	}
-	/** @private @arg {import("./yt_json_types/TextT").TextT} x */
+	/** @private @arg {TextT} x */
 	text_t(x) {
 		if(!x) {
 			debugger;
@@ -6431,7 +6431,7 @@ class HandleTypes extends BaseService {
 		this.save_number("AdSlot.slotPhysicalPosition",c);
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/Accessibility").Accessibility} x */
+	/** @arg {Accessibility} x */
 	Accessibility(x) {
 		if(!x) {
 			debugger;
@@ -6441,7 +6441,7 @@ class HandleTypes extends BaseService {
 		this.AccessibilityData(a);
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/AccessibilityData").AccessibilityData} x */
+	/** @arg {AccessibilityData} x */
 	AccessibilityData(x) {
 		if(!x) {
 			debugger;
@@ -7395,9 +7395,33 @@ class HandleTypes extends BaseService {
 	YtRange(x) {
 		this.z([x.end,x.start],a => this.primitive_of(a,"string"));
 	}
-	/** @arg {import("./yt_json_types/VideoQualityPromoData").VideoQualityPromoData} x */
+	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
+		this.EndpointTemplate(x.endpoint,a=>this.w(a,a=>this.UrlEndpointData(a)));
 		console.log("VideoQualityPromo.endpoint",x.endpoint);
+	}
+	/** @arg {UrlEndpointData} x */
+	UrlEndpointData(x) {
+		const {url,...y}=x;
+		this.parse_url(url);
+		if("target" in y) {
+			const {target,...z}=y;
+			if(target!=="TARGET_NEW_WINDOW") debugger;
+			this.g(z);
+		} else {
+			this.g(y);
+		}
+	}
+	/** @template T @arg {EndpointTemplate<T>} x @arg {(x:T)=>void} f */
+	EndpointTemplate(x,f) {
+		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
+		this.clickTrackingParams(a);
+		this.CommandMetadata(b);
+		/** @type {any} */
+		let c=y;
+		/** @type {T} */
+		let d=as_cast(c);
+		f(d);
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
@@ -7785,7 +7809,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdBreakServiceRenderer} x */
 	AdBreakServiceRenderer(x) {
-		this.AdBreakServiceData(x.adBreakServiceRenderer);
+		if("adBreakServiceRenderer" in x) {
+			this.AdBreakServiceData(x.adBreakServiceRenderer);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {AdBreakServiceData} x */
 	AdBreakServiceData(x) {

@@ -1,4 +1,4 @@
-export type EndpointTemplate<T>={
+type EndpointTemplate<T>={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 }&T;
