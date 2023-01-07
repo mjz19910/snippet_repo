@@ -6,7 +6,7 @@ type endpoint_data_handler_names={
 	searchEndpoint: "SearchEndpointData";
 	setSettingEndpoint: "SetSettingEndpointData";
 	signalServiceEndpoint: "SignalServiceEndpointData";
-	urlEndpoint: "UrlEndpointRoot";
+	urlEndpoint: "UrlEndpointData";
 	signalNavigationEndpoint: "SignalNavigationEndpointData";
 	signOutEndpoint: "SignOutEndpointData";
 	getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData";

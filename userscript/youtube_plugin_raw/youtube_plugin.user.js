@@ -5026,11 +5026,11 @@ class HandleTypes extends BaseService {
 		this.g(y);
 	}
 	/** @arg {UrlEndpointData} x */
-	UrlEndpointRoot(x) {
+	UrlEndpointData(x) {
 		const {url: a,target: b,nofollow: c,...y}=x;
 		if(b&&b!=="TARGET_NEW_WINDOW") debugger;
 		this.parse_url(a);
-		this.save_keys("UrlEndpointRoot",x);
+		this.save_keys("UrlEndpointData",x);
 		if(c) this.primitive_of(c,"boolean");
 		this.g(y);
 	}
@@ -5086,7 +5086,7 @@ class HandleTypes extends BaseService {
 			searchEndpoint: "SearchEndpointData",
 			setSettingEndpoint: "SetSettingEndpointData",
 			signalServiceEndpoint: "SignalServiceEndpointData",
-			urlEndpoint: "UrlEndpointRoot",
+			urlEndpoint: "UrlEndpointData",
 			signalNavigationEndpoint: "SignalNavigationEndpointData",
 			signOutEndpoint: "SignOutEndpointData",
 			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData",
@@ -7691,18 +7691,6 @@ class HandleTypes extends BaseService {
 	VideoQualityPromoData(x) {
 		this.EndpointTemplate(x.endpoint,a => this.w(a,a => this.UrlEndpointData(a)));
 		console.log("VideoQualityPromo.endpoint",x.endpoint);
-	}
-	/** @arg {UrlEndpointData} x */
-	UrlEndpointData(x) {
-		const {url,...y}=x;
-		this.parse_url(url);
-		if("target" in y) {
-			const {target,...z}=y;
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			this.g(z);
-		} else {
-			this.g(y);
-		}
 	}
 	/** @template T @arg {EndpointTemplate<T>} x @arg {(x:T)=>void} f */
 	EndpointTemplate(x,f) {
