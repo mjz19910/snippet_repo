@@ -8422,7 +8422,7 @@ class HandleTypes extends BaseService {
 	generate_renderer(x,r_name=null) {
 		/** @type {string[]} */
 		let req_names=[];
-		/** @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string} t_name */
+		/** @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string|number} t_name */
 		function gen_body(x,keys,t_name) {
 			let ret_arr=[];
 			for(let k of keys) {
@@ -8494,11 +8494,12 @@ class HandleTypes extends BaseService {
 		console.log("gen renderer for",x);
 		return `\n${tmp3}`;
 	}
-	/** @arg {string} x */
+	/** @arg {string|number} x */
 	uppercase_first(x) {
+		if(typeof x==='number') return x;
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @arg {{[x: string]:{}}} x */
+	/** @arg {{[x: string]:{}}|{[x: number]:{}}} x */
 	get_renderer_key(x) {
 		let keys=Object.keys(x);
 		let k;
@@ -8508,9 +8509,11 @@ class HandleTypes extends BaseService {
 			break;
 		}
 		if(!k) return null;
-		return k;
+		let iv=parseInt(k,10);
+		if(Number.isNaN(iv)) return k;
+		return iv;
 	}
-	/** @arg {{[x: string]:{}}} x @arg {string|null} r_name */
+	/** @arg {{}} x @arg {string|null} r_name */
 	generate_typedef(x,r_name=null) {
 		let k=this.get_renderer_key(x);
 		if(!k) return null;
@@ -8520,7 +8523,9 @@ class HandleTypes extends BaseService {
 		}
 		let tn=this.uppercase_first(t_name);
 		let obj_count=0;
-		let o2=x[k];
+		/** @type {{[x: number|string]:{}}} */
+		let xa=x;
+		let o2=xa[k];
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let tc=JSON.stringify(x,(x,o) => {
 			if(typeof o==="string") return "string";
@@ -8593,7 +8598,7 @@ class HandleTypes extends BaseService {
 			return o;
 		};
 		let depth_state={
-			ld:0,
+			ld: 0,
 		};
 		let da=make_depth_arr(x);
 		/** @type {string[]} */
@@ -8646,7 +8651,7 @@ class HandleTypes extends BaseService {
 				return ret;
 			}
 			get gen_s() {
-				let ret=this.s_idx;
+				let ret=this.s_idx++;
 				this.s_idx++;
 				return ret;
 			}
@@ -8717,7 +8722,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {
-		x;
+		this.generate_typedef(x.carouselLockups,"CLA");
 		debugger;
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
