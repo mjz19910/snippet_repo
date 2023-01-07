@@ -4289,9 +4289,9 @@ class YtUrlParser extends BaseService {
 			default:
 		}
 		/** @template {UrlParseRes_noSearch<any,string,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
-		let host_starts_with=(x,v)=>{
+		let host_starts_with=(x,v) => {
 			return this.str_starts_with(x.host,v);
-		}
+		};
 		if(host_starts_with(r,"yt")) {
 			let c=split_string(r.pathname,"=");
 			let v=split_string(c[1],"-");
@@ -6907,7 +6907,7 @@ class HandleTypes extends BaseService {
 	CommandExecutorCommand(x) {
 		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.CommandsTemplate(x.commandExecutorCommand,a=>this.CommandExecutorData(a));
+		this.CommandsTemplate(x.commandExecutorCommand,a => this.CommandExecutorData(a));
 	}
 	/** @arg {CommandExecutorAction} x */
 	CommandExecutorData(x) {
@@ -6930,17 +6930,17 @@ class HandleTypes extends BaseService {
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}
-  /** @arg {CommentsEntryPointTeaserRenderer} x */
-  CommentsEntryPointTeaserRenderer(x) {
-    this.CommentsEntryPointTeaserData(x.commentsEntryPointTeaserRenderer);
-  }
-  /** @arg {CommentsEntryPointTeaserData} x */
-  CommentsEntryPointTeaserData(x) {
+	/** @arg {CommentsEntryPointTeaserRenderer} x */
+	CommentsEntryPointTeaserRenderer(x) {
+		this.CommentsEntryPointTeaserData(x.commentsEntryPointTeaserRenderer);
+	}
+	/** @arg {CommentsEntryPointTeaserData} x */
+	CommentsEntryPointTeaserData(x) {
 		const {teaserAvatar: a,teaserContent: b,trackingParams: c,...y}=x; this.g(y);
-    this.Thumbnail(a);
-    this.text_t(b);
-    this.trackingParams(c);
-  }
+		this.Thumbnail(a);
+		this.text_t(b);
+		this.trackingParams(c);
+	}
 	/** @arg {ReelShelfData} x */
 	ReelShelfData(x) {
 		const {icon: a,items: b,title: c,trackingParams: d,...y}=x; this.g(y);
@@ -6951,13 +6951,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelItemRenderer} x */
 	ReelItemRenderer(x) {
-		const {reelItemRenderer:a,...y}=x; this.g(y);
+		const {reelItemRenderer: a,...y}=x; this.g(y);
 		this.ReelItemData(a);
 	}
 	/** @arg {ReelItemData} x */
 	ReelItemData(x) {
 		const {
-			accessibility:a,headline: b,loggingDirectives: c,menu: d,videoId: e,thumbnail: f,
+			accessibility: a,headline: b,loggingDirectives: c,menu: d,videoId: e,thumbnail: f,
 			viewCountText: g,navigationEndpoint: h,trackingParams: i,style: j,videoType: k,
 			...y
 		}=x; this.g(y);
@@ -6968,7 +6968,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(e,"string");
 		this.Thumbnail(f);
 		this.text_t(g);
-		this.NavigationEndpoint(h,a=>this.w(a,a=>this.ReelWatchEndpointData(a)));
+		this.NavigationEndpoint(h,a => this.w(a,a => this.ReelWatchEndpointData(a)));
 		this.trackingParams(i);
 		this.save_enum("REEL_ITEM_STYLE",j);
 		this.save_enum("REEL_VIDEO_TYPE",k);
@@ -7612,13 +7612,15 @@ class HandleTypes extends BaseService {
 					case "videoSecondaryInfoRenderer": break;
 				}
 				if("itemSectionRenderer" in x2) {
-					return this.ItemSectionRenderer(x2,a=>{
-						switch(a[0]) {case "T": switch(a[1]){
-							case "comment-item-section": return;
-							case "comments-entry-point": return;
-							default: debugger;
-						}}
-						switch(a[0]) {case "U": switch(a[1]){case "comments-entry-point": return;default: debugger;}}
+					return this.ItemSectionRenderer(x2,a => {
+						switch(a[0]) {
+							case "T": switch(a[1]) {
+								case "comment-item-section": return;
+								case "comments-entry-point": return;
+								default: debugger;
+							}
+						}
+						switch(a[0]) {case "U": switch(a[1]) {case "comments-entry-point": return; default: debugger;}}
 						console.log(a);
 						debugger;
 					});
@@ -7667,7 +7669,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
 	PlaylistTemplate(x,f) {
-		if(!x) {debugger;return;}
+		if(!x) {debugger; return;}
 		f(x.playlist);
 	}
 	/** @arg {SecondaryResultsTemplate<any>} x */
@@ -8141,7 +8143,7 @@ class HandleTypes extends BaseService {
 			return x;
 		});
 		tc=tc.replaceAll(",",";");
-		tc=tc.replaceAll(/[^[{;]$/gm,a=>`${a};`);
+		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
 		return `\ntype ${tn}=${tc}\n`;
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
