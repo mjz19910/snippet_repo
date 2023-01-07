@@ -11,7 +11,7 @@ type ApiUrlFormat=[
 	`youtubei/v1/get_transcript`,
 	`youtubei/v1/account/${"account_menu"|"accounts_list"|"set_setting"}`,
 	`youtubei/v1/feedback`,
-	`youtubei/v1/comment/create_comment`
+	`youtubei/v1/comment/create_comment`,
 ][number];
 type ApiUrlFormatFull=`https://www.youtube.com/${ApiUrlFormat}`;
 type ApiFormatObj=[

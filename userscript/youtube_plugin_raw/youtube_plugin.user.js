@@ -4154,6 +4154,7 @@ class YtUrlParser extends BaseService {
 		let [,c]=b;
 		switch(c) {
 			case "browse": break;
+			case "next": break;
 			default: console.log(a); debugger;
 		}
 	}
@@ -5022,16 +5023,16 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-  /** @arg {LiveChatPlaceholderItemRenderer} x */
-  LiveChatPlaceholderItemRenderer(x) {
-    this.LiveChatPlaceholderItemData(x.liveChatPlaceholderItemRenderer);
-  }
-  /** @arg {LiveChatPlaceholderItemData} x */
-  LiveChatPlaceholderItemData(x) {
+	/** @arg {LiveChatPlaceholderItemRenderer} x */
+	LiveChatPlaceholderItemRenderer(x) {
+		this.LiveChatPlaceholderItemData(x.liveChatPlaceholderItemRenderer);
+	}
+	/** @arg {LiveChatPlaceholderItemData} x */
+	LiveChatPlaceholderItemData(x) {
 		const {id: a,timestampUsec: b,...y}=x; this.g(y);
-    this.primitive_of(a,"string");
-    this.primitive_of(b,"string");
-  }
+		this.primitive_of(a,"string");
+		this.primitive_of(b,"string");
+	}
 	/** @arg {LiveChatTextMessageRenderer} x */
 	LiveChatTextMessageRenderer(x) {
 		this.w(x,a => this.LiveChatTextMessageData(a));
@@ -5433,70 +5434,10 @@ class HandleTypes extends BaseService {
 			return this.api_no_handler(x,x[1]);
 		}
 		switch(x.length) {
-			case 4: this.get_yt_url_type_4(x); break;
-			case 3: this.get_yt_url_type_3(x); break;
-			default: console.log("new_length",x); debugger;
+			case 4: return this.get_yt_url_type_4(x);
+			case 3: return this.get_yt_url_type_3(x);
+			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
-		switch(x[2]) {
-			case "att": switch(x[3]) {
-				case "get": break;
-				case "log": break;
-				default: return this.api_no_handler(x,x[3]);
-			} return {
-				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-				name: `${x[2]}.${x[3]}`
-			}.name;
-			case "notification": switch(x[3]) {
-				case "get_unseen_count": break;
-				case "get_notification_menu": break;
-				case "record_interactions": break;
-				case "modify_channel_preference": break;
-				default: return this.api_no_handler(x,x[3]);
-			} return {
-				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-				name: `${x[2]}.${x[3]}`
-			}.name;
-			case "subscription": switch(x[3]) {
-				case "subscribe": break;
-				default: return this.api_no_handler(x,x[3]);
-			} return {
-				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-				name: `${x[2]}.${x[3]}`
-			}.name;
-			case "browse": break;
-			case "guide": break;
-			case "reel": switch(x[3]) {
-				case "reel_item_watch": break;
-				case "reel_watch_sequence": break;
-				default: return this.api_no_handler(x,x[3]);
-			}return {
-				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-				name: `${x[2]}.${x[3]}`
-			}.name;
-			case "next": break;
-			case "player": break;
-			case "live_chat": return this.get_live_chat_type(x);
-			case "get_transcript": break;
-			case "account": return this.get_account_type(x);
-			case "feedback": break;
-			case "comment": switch(x[3]) {
-				case "create_comment": break;
-				default: return this.api_no_handler(x,x[3]);
-			} return {
-				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-				x: `${x[2]}.${x[3]}`
-			}.x;
-			case "like": switch(x[3]) {
-				case "like": break;
-				case "removelike": break;
-				default: return this.api_no_handler(x,x[3]);
-			} return {
-				/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-				x: `${x[2]}.${x[3]}`
-			}.x;
-			default: return this.api_no_handler(x,x[2]);
-		}
-		return x[2];
 	}
 	/** @arg {string[]} parts @arg {string} cur_part */
 	api_no_handler(parts,cur_part) {
@@ -5516,30 +5457,87 @@ class HandleTypes extends BaseService {
 			default: this.api_no_handler(x,x[2]);
 		}
 		console.log('get_yt_url_type_3',x.slice(1));
-		return null;
+		return x[2];
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
 	get_yt_url_type_4(x) {
 		switch(x[2]) {
-			case "account": break;
-			case "att": break;
-			case "comment": break;
-			case "like": break;
-			case "live_chat": break;
-			case "notification": break;
-			case "reel": break;
-			case "subscription": break;
+			case "account": return this.get_account_type(x);
+			case "att": return this.get_att_type(x);
+			case "comment": return this.get_comment_type(x);
+			case "like": return this.get_like_type(x);
+			case "live_chat": return this.get_live_chat_type(x);
+			case "notification": return this.get_notification_type(x);
+			case "reel": return this.get_reel_type(x);
+			case "subscription": return this.get_subscription_type(x);
 			default: return this.api_no_handler(x,x[2]);
 		}
-		return x[2];
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
+	get_subscription_type(x) {
+		switch(x[3]) {
+			case "subscribe": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string,...string[]]>} x */
+	get_reel_type(x) {
+		switch(x[3]) {
+			case "reel_item_watch": break;
+			case "reel_watch_sequence": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string,...string[]]>} x */
+	get_notification_type(x) {
+		switch(x[3]) {
+			case "get_unseen_count": break;
+			case "get_notification_menu": break;
+			case "record_interactions": break;
+			case "modify_channel_preference": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
+	}
+	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string,...string[]]>} x */
+	get_comment_type(x) {
+		switch(x[3]) {
+			case "create_comment": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string,...string[]]>} x */
 	get_att_type(x) {
-		x;
+		switch(x[3]) {
+			case "get": break;
+			case "log": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
 	get_like_type(x) {
-		x;
+		switch(x[3]) {
+			case "like": break;
+			case "removelike": break;
+			default: return this.api_no_handler(x,x[3]);
+		} return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
 	get_account_type(x) {
@@ -6850,6 +6848,11 @@ class HandleTypes extends BaseService {
 			const {[k]: a,...b}=c; n(this,a,b);
 			return this.ReelShelfData(a);
 		}
+		k="continuationItemRenderer";
+		if(k in c) {
+			const {[k]: a,...b}=c; n(this,a,b);
+			return this.ContinuationItemData(a);
+		}
 		let m=get_keys_of(c);
 		for(let k of m) {
 			if(k in this.item_section_map) continue;
@@ -8046,30 +8049,41 @@ class HandleTypes extends BaseService {
 	ActionCompanionAdRenderer(x) {
 		this.ActionCompanionAdData(x.actionCompanionAdRenderer);
 	}
+	/** @arg {`${string}-0000-${string}-${string}-${string}`} x */
+	parse_layout_id(x) {
+		let v=split_string(x,"-");
+		if(v[1]!=="0000") debugger;
+	}
 	/** @arg {ActionCompanionAdData} x */
 	ActionCompanionAdData(x) {
-		const {headline,description,actionButton,iconImage,bannerImage,navigationEndpoint,trackingParams,adInfoRenderer,adVideoId,impressionPings,adLayoutLoggingData,...y}=x; this.g(y);
-    this.AdLayoutLoggingData(x.adLayoutLoggingData);
-    this.ActionCompanionAdInfoRenderers(x.adInfoRenderer);
-    this.NavigationEndpoint(x.navigationEndpoint);
-		this.g(navigationEndpoint);
+		const {
+			headline,description,actionButton,iconImage,bannerImage,
+			navigationEndpoint: x2,trackingParams,adInfoRenderer: x3,
+			adVideoId,impressionPings,adLayoutLoggingData: x4,
+			associatedCompositePlayerBytesLayoutId: x1,
+			...y
+		}=x; this.g(y);
+		this.AdLayoutLoggingData(x4);
+		this.ActionCompanionAdInfoRenderers(x3);
+		this.NavigationEndpoint(x2);
+		this.parse_layout_id(x1);
 	}
-  /** @arg {ActionCompanionAdInfoRenderers} x */
+	/** @arg {ActionCompanionAdInfoRenderers} x */
 	ActionCompanionAdInfoRenderers(x) {
 		if("adHoverTextButtonRenderer" in x) {
 			return this.AdHoverTextButtonRenderer(x);
 		}
 		debugger;
 	}
-  /** @arg {AdHoverTextButtonRenderer} x */
-  AdHoverTextButtonRenderer(x) {
-    this.AdHoverTextButtonData(x.adHoverTextButtonRenderer);
-  }
-  /** @arg {AdHoverTextButtonData} x */
-  AdHoverTextButtonData(x) {
-    x;
-    debugger;
-  }
+	/** @arg {AdHoverTextButtonRenderer} x */
+	AdHoverTextButtonRenderer(x) {
+		this.AdHoverTextButtonData(x.adHoverTextButtonRenderer);
+	}
+	/** @arg {AdHoverTextButtonData} x */
+	AdHoverTextButtonData(x) {
+		x;
+		debugger;
+	}
 	/** @arg {NavigationEndpointTODO} x */
 	NavigationEndpoint(x) {
 		this.g(x);

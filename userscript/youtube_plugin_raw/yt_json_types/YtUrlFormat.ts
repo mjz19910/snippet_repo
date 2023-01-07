@@ -13,6 +13,6 @@ type YtUrlFormat=[
 	`/results?search_query=${string}`,
 	`/shorts/${string}`,
 	`/watch?${YtWatchUrlParamsFormat}`,
-	`/youtubei/v1/browse`,
+	`/${ApiUrlFormat}`,
 	`${YtDomain|""}/api/stats/ads?${ApiStatsAdsArgs}`,
 ][number];
