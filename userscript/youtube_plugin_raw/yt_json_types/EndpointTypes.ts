@@ -15,4 +15,5 @@ type EndpointTypes={
 	confirmDialogEndpoint?: ConfirmDialogEndpointData;
 	appendContinuationItemsAction?: AppendContinuationItemsAction;
 	liveChatItemContextMenuEndpoint?: LiveChatItemContextMenuEndpointData;
+	openPopupAction?: OpenPopupActionData;
 };

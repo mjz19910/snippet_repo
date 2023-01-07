@@ -16,4 +16,5 @@ type endpoint_data_handler_names={
 	reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData";
 	appendContinuationItemsAction: "AppendContinuationItemsAction";
 	liveChatItemContextMenuEndpoint: "LiveChatItemContextMenuEndpointData";
+	openPopupAction: "OpenPopupActionData",
 };

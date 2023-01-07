@@ -4978,6 +4978,7 @@ class HandleTypes extends BaseService {
 			reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData",
 			appendContinuationItemsAction: "AppendContinuationItemsAction",
 			liveChatItemContextMenuEndpoint: "LiveChatItemContextMenuEndpointData",
+			openPopupAction: "OpenPopupActionData",
 		};
 		/** @template {keyof endpoint_data_handler_names} T @arg {T} k */
 		has_key(k) {
@@ -5030,7 +5031,8 @@ class HandleTypes extends BaseService {
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="reloadContinuationItemsCommand";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="liveChatItemContextMenuEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);}
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="openPopupAction";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} 
 		let yc=get_keys_of(y);
 		for(let ya of yc) {
 			/** @type {endpoint_data_handler_names} */
