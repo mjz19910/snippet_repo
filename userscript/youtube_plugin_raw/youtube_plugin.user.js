@@ -4961,6 +4961,7 @@ class HandleTypes extends BaseService {
 		}
 		/** @type {endpoint_data_handler_names} */
 		_obj_map={
+			continuationCommand: "ContinuationCommand",
 			commandMetadata: "CommandMetadata",
 			watchEndpoint: "WatchEndpointData",
 			browseEndpoint: "BrowseEndpointData",
@@ -5032,6 +5033,8 @@ class HandleTypes extends BaseService {
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="liveChatItemContextMenuEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="openPopupAction";
+		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="continuationCommand";
+		/** @type {[YtEndpoint,endpoint_data_handler_names]} */
 		{const {[k]: a}=y; if(a) return this[q(k)](a);}
 		let yc=get_keys_of(y);
 		for(let ya of yc) {
@@ -8067,7 +8070,12 @@ class HandleTypes extends BaseService {
 		}=x; this.g(y);
 		this.AdLayoutLoggingData(x4);
 		this.ActionCompanionAdInfoRenderers(x3);
-		this.UrlEndpoint(x2,a=>a);
+		let uep_data=this.UrlEndpoint(x2);
+		(([T,U,V])=>{
+			console.log("urls",T);
+			console.log("meta",U);
+			console.log("ep",V);
+		})(uep_data);
 		this.parse_layout_id(x1);
 	}
 	/**
@@ -8075,11 +8083,11 @@ class HandleTypes extends BaseService {
 	 * @template {WebCommandMetadataTemplateType} U
 	 * @template {{url: string;}} V
 	 * @arg {UrlEndpoint<T,U,V>} x
-	 * @arg {(x:[T,U,V])=>void} f */
-	UrlEndpoint(x,f) {
+	 * @returns {[T,U,V]} */
+	UrlEndpoint(x) {
 		const {clickTrackingParams: a,loggingUrls: T,commandMetadata: U,urlEndpoint: V,...y}=x; this.g(y);
 		this.clickTrackingParams(x.clickTrackingParams);
-		f([T,U,V]);
+		return [T,U,V];
 	}
 	/** @arg {ActionCompanionAdInfoRenderers} x */
 	ActionCompanionAdInfoRenderers(x) {

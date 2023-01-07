@@ -1,4 +1,5 @@
 type endpoint_data_handler_names={
+	continuationCommand: "ContinuationCommand";
 	commandMetadata: "CommandMetadata";
 	watchEndpoint: "WatchEndpointData";
 	browseEndpoint: "BrowseEndpointData";

@@ -16,4 +16,5 @@ type EndpointTypes={
 	appendContinuationItemsAction?: AppendContinuationItemsAction;
 	liveChatItemContextMenuEndpoint?: LiveChatItemContextMenuEndpointData;
 	openPopupAction?: OpenPopupActionData;
+	continuationCommand?: ContinuationCommand;
 };
