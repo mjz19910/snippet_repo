@@ -3642,9 +3642,9 @@ function LUa(x) {
 	let res=decoder.decode(x);
 	if(!is_in_arr(lua_strs,res)) {
 		console.log("[new_lua_str] [%s]",res);
-		debugger;
-		throw new Error();
+		lua_strs.push(as_cast(res));
 	}
+	if(!is_in_arr(lua_strs,res)) throw 1;
 	return res;
 }
 /** @template {any[]} T @arg {T} arr @arg {string} x @returns {x is T[number]} */
@@ -7716,24 +7716,47 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SubscribeButtonData} x */
 	SubscribeButtonData(x) {
-		const {buttonText: a,subscribed: b,enabled: c,type: d,channelId: e,showPreferences: f,trackingParams: g,...y}=x; this.g(y);
-		this.text_t(a);
-		if(b!==false) debugger;
+		const {
+			buttonText: a,subscribed: b,enabled: c,type: d,channelId: e,showPreferences: f1,trackingParams: f2,
+			subscribeAccessibility: f3,subscribedButtonText: f4,subscribedEntityKey: f5,onSubscribeEndpoints: f6,
+			unsubscribeAccessibility: f7,unsubscribeButtonText: f8,unsubscribedButtonText: g1,onUnsubscribeEndpoints: g2,
+			notificationPreferenceButton: g3,targetId: g4,
+			...y
+		}=x; this.g(y);
+		this.primitive_of(b,"boolean");
 		if(c!==true) debugger;
 		if(d!=="FREE") debugger;
 		this.parse_channel_id(e);
-		if(f!==false) debugger;
-		this.trackingParams(g);
+		if(f1!==false) debugger;
+		this.trackingParams(f2);
+		this.Accessibility(f3);
+		this.z([a,f4,f8,g1],this.text_t);
+		this.SubscriptionNotificationToggleButtonRenderer(g3);
+		if(g4!=="watch-subscribe") debugger;
 	}
+  /** @arg {SubscriptionNotificationToggleButtonData} x */
+  SubscriptionNotificationToggleButtonData(x) {
+    this.CommandExecutorCommand(x.command);
+		console.log(x.currentStateId);
+		this.Icon(x.secondaryIcon);
+		this.z(x.states,a=>{
+			console.log(['[state_id]',a.stateId,a.nextStateId]);
+			this.ButtonRenderer(a.state);
+		});
+  }
+  /** @arg {SubscriptionNotificationToggleButtonRenderer} x */
+  SubscriptionNotificationToggleButtonRenderer(x) {
+    this.SubscriptionNotificationToggleButtonData(x.subscriptionNotificationToggleButtonRenderer);
+  }
 	/** @arg {VideoOwnerRenderer} x */
 	VideoOwnerRenderer(x) {
 		this.VideoOwnerData(x.videoOwnerRenderer);
 	}
 	/** @arg {VideoOwnerData} x */
 	VideoOwnerData(x) {
-		this.BrowseEndpoint(x.navigationEndpoint,a=>{
+		this.BrowseEndpoint(x.navigationEndpoint,a => {
 			if(a.apiUrl!=="/youtubei/v1/browse") debugger;
-			if(a.rootVe!==3611) {console.log(a);debugger;}
+			if(a.rootVe!==3611) {console.log(a); debugger;}
 			this.parse_url(a.url);
 			if(a.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		});
@@ -8150,7 +8173,13 @@ class HandleTypes extends BaseService {
 	/** @arg {{[x: string]:{}}} x */
 	generate_typedef(x) {
 		let keys=Object.keys(x);
-		let k=keys[0];
+		let k;
+		for(let c of keys) {
+			if(c==="clickTrackingParams") continue;
+			k=c;
+			break;
+		}
+		if(!k) return null;
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let obj_count=0;
 		let o2=x[k];

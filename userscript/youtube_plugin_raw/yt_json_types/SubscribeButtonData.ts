@@ -5,5 +5,15 @@ type SubscribeButtonData={
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
+	subscribedButtonText: TextT;
+	unsubscribedButtonText: TextT;
 	trackingParams: string;
+	unsubscribeButtonText: TextT;
+	subscribeAccessibility: Accessibility;
+	unsubscribeAccessibility: Accessibility;
+	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;
+	targetId: "watch-subscribe";
+	subscribedEntityKey: string;
+	onSubscribeEndpoints: {}[];
+	onUnsubscribeEndpoints: {}[];
 };
