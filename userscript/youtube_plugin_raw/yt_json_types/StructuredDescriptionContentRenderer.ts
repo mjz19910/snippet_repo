@@ -1,0 +1,1 @@
+type StructuredDescriptionContentRenderer={structuredDescriptionContentRenderer: {items: {}[];};};

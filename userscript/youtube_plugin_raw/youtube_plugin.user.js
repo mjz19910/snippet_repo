@@ -4115,8 +4115,24 @@ class YtUrlParser extends BaseService {
 			case "feed": return this.parse_feed_url(x);
 			case "shorts": return this.parse_shorts_url(x);
 			case "channel": return this.parse_channel_url(x);
-			case "youtubei": return this.parse_api_url(x);
+			case "youtubei": return this.parse_youtubei_api_url(x);
+			case "api": return this.parse_api_url(x);
 			default: debugger; return;
+		}
+	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["api",...any]>} x */
+	parse_api_url(x) {
+		let a=split_string_once(x[1],"/");
+		switch(a[0]) {
+			case "stats": this.parse_api_stats_url(a[1]); break;
+		}
+	}
+	/** @arg {ParseApiUrlStr} x */
+	parse_api_stats_url(x) {
+		let a=split_string_once(x,"?");
+		switch(a[0]) {
+			case "ads": debugger; break;
+			default: debugger; break;
 		}
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
@@ -4127,7 +4143,7 @@ class YtUrlParser extends BaseService {
 		console.log("[parse_channel_url]",x);
 	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
-	parse_api_url(x) {
+	parse_youtubei_api_url(x) {
 		let [,a]=x;
 		let b=split_string_once(a,"/");
 		if(b[0]!=="v1") debugger;
@@ -4261,7 +4277,7 @@ class YtUrlParser extends BaseService {
 	}
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
-		if(x.startsWith("https://")) {
+		if(this.str_starts_with(x,"https://")) {
 			let rem_url=new URL(x);
 			let url_host=rem_url.hostname;
 			if(url_host==="accounts.google.com") {
@@ -4270,6 +4286,11 @@ class YtUrlParser extends BaseService {
 			if(url_host.endsWith("ggpht.com")) return;
 			if(url_host==="i.ytimg.com") return;
 			if(url_host==="studio.youtube.com") return;
+			if(url_host==="www.youtube.com") {
+				let r=create_from_parse(x);
+				this.parse_url(`${r.pathname}${r.search}`);
+				return;
+			}
 			console.log("[parse_url_external_1]",x);
 			return;
 		}
@@ -7101,7 +7122,11 @@ class HandleTypes extends BaseService {
 	EngagementPanelSectionListData(x) {
 		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
 		this.EngagementPanelSectionListContent(a);
-		if(b!=="engagement-panel-ads") debugger;
+		switch(b) {
+			case "engagement-panel-ads": break;
+			case "engagement-panel-clip-create": break;
+			default: debugger;
+		}
 		if(c!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.LoggingDirectives(d);
 	}
@@ -7723,6 +7748,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_renderer(x,r_name=null) {
+		/** @type {string[]} */
+		let req_names=[];
 		/** @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string} t_name */
 		function gen_body(x,keys,t_name) {
 			let ret_arr=[];
@@ -7749,6 +7776,7 @@ class HandleTypes extends BaseService {
 				let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 				let mn=tn.replace("Renderer","Data");
 				if(mn===t_name) mn+="Data";
+				req_names.push(mn);
 				ret_arr.push(`
 				this.${mn}(x.${k});
 				`.trim());
@@ -7775,6 +7803,17 @@ class HandleTypes extends BaseService {
 		`;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).join("\n");
 		let tmp3=gen_padding(tmp2);
+		req_names.map(e=>{
+			let tmp0=`
+			d2!/** @arg {${e}} x */
+			d2!${e}(x) {
+				d4!x;
+				d4!debugger;
+			d2!}
+			`;
+			let tmp1=tmp0.split("\n").map(e => e.trim()).join("\n");
+			return gen_padding(tmp1);
+		});
 		console.log("gen renderer for",x);
 		return tmp3;
 	}
@@ -7784,9 +7823,10 @@ class HandleTypes extends BaseService {
 		let k = keys[0];
 		let tn = `${k[0].toUpperCase()}${k.slice(1)}`;
 		let obj_count=0;
-		return `type ${tn}=${JSON.stringify(x,(_x,o)=>{
+		return `\ntype ${tn}=${JSON.stringify(x,(_x,o)=>{
 			if(typeof o==='string') return "string";
 			obj_count++;
+			if(o instanceof Array) [o[0]];
 			if(obj_count<3) return o;
 			if(o instanceof Array) return [{}];
 			return {};
@@ -7794,8 +7834,12 @@ class HandleTypes extends BaseService {
 		return g+":";
 		})
 			.replaceAll("[{}]","{}[]")
-			.replaceAll("\"string\"","string")}`;
+			.replaceAll("\"string\"","string")}\n`;
 	}
+  /** @arg {StructuredDescriptionContentRenderer} x */
+  StructuredDescriptionContentRenderer(x) {
+    this.StructuredDescriptionContentData(x.structuredDescriptionContentRenderer);
+  }
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);

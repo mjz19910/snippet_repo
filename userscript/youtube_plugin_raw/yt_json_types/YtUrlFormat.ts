@@ -14,5 +14,5 @@ type YtUrlFormat=[
 	`/shorts/${string}`,
 	`/watch?${YtWatchUrlParamsFormat}`,
 	`/youtubei/v1/browse`,
-	`${YtDomain}/api/stats/ads?${string}`,
+	`${YtDomain|""}/api/stats/ads?${string}`,
 ][number];
