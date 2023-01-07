@@ -1,0 +1,1 @@
+type InstreamVideoAdRenderer={instreamVideoAdRenderer: InstreamVideoAdData;};

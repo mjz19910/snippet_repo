@@ -7099,7 +7099,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EngagementPanelSectionListData} x */
 	EngagementPanelSectionListData(x) {
-		this.save_keys("ListData",x);
 		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
 		this.EngagementPanelSectionListContent(a);
 		if(b!=="engagement-panel-ads") debugger;
@@ -7820,14 +7819,39 @@ class HandleTypes extends BaseService {
 		if(x.prefetchMilliseconds!=="10000") debugger;
 		this.primitive_of(x.getAdBreakUrl,"string");
 	}
-  /** @arg {LinearAdSequenceRenderer} x */
+  /** @arg {{linearAdSequenceRenderer: {}}} x */
   LinearAdSequenceRenderer(x) {
     this.LinearAdSequenceData(x.linearAdSequenceRenderer);
   }
+  /** @arg {{}} x */
+	LinearAdSequenceData(x) {
+		x;
+	}
   /** @arg {ClientForecastingAdRenderer} x */
   ClientForecastingAdRenderer(x) {
     this.ClientForecastingAdData(x.clientForecastingAdRenderer);
   }
+  /** @arg {ClientForecastingAdData} x */
+	ClientForecastingAdData(x) {
+		console.log(x.impressionUrls);
+		debugger;
+	}
+  /** @arg {InstreamVideoAdRenderer} x */
+  InstreamVideoAdRenderer(x) {
+    this.InstreamVideoAdData(x.instreamVideoAdRenderer);
+  }
+  /** @arg {InstreamVideoAdData} x */
+	InstreamVideoAdData(x) {
+		x;
+	}
+  /** @arg {ActionCompanionAdRenderer} x */
+  ActionCompanionAdRenderer(x) {
+    this.ActionCompanionAdData(x.actionCompanionAdRenderer);
+  }
+  /** @arg {ActionCompanionAdData} x */
+	ActionCompanionAdData(x) {
+		x;
+	}
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
