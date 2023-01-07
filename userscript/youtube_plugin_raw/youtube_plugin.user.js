@@ -4289,14 +4289,20 @@ class YtUrlParser extends BaseService {
 			}
 			default:
 		}
+		/** @template {UrlParseRes_noSearch<any,string,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
+		let host_starts_with=(x,v)=>{
+			return this.str_starts_with(x.host,v);
+		}
+		if(host_starts_with(r,"yt")) {
+			let c=split_string(r.pathname,"=");
+			let v=split_string(c[1],"-");
+			let h=split_string(r.host,".");
+			console.log('yt_ggpht_url',h[0],c[0],v);
+			return;
+		}
 		switch(r.host) {
 			case "www.google.com": return;
 			case "i.ytimg.com": return;
-			case "yt3.ggpht.com": {
-				let c=split_string(r.pathname,"=");
-				let v=split_string(c[1],"-");
-				console.log('yt3_url',c[0],v);
-			} return;
 			default:
 		}
 		console.log("[parse_url_external_1]",x);
@@ -4389,7 +4395,7 @@ class YtUrlParser extends BaseService {
 		}
 		return;
 	}
-	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
+	/** @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${U}${string}`>} */
 	str_starts_with(x,v) {
 		return x.startsWith(v);
 	}

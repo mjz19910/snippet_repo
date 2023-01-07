@@ -1,6 +1,6 @@
 type YtUrlFormat=[
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
-	`https://yt3.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`,
+	`https://yt${number}.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`,
 	"/",
 	"/channel_switcher",
 	`/@${string}${""|`/${ChannelSubUrlFormat}`}`,
