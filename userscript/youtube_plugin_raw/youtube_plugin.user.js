@@ -3199,11 +3199,17 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn(e[0],e[1]));
 	}
-	/** @protected @template {{}} T @template U @arg {T|undefined} x @arg {(v:T[MaybeKeysArray<T>[0]])=>U} y */
+	/** @template {{}} T @arg {T|undefined} x @arg {(v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
 	w(x,y) {
 		if(x===void 0) return;
-		let [k]=get_keys_of_one(x);
-		return y(x[k]);
+		let keys=get_keys_of(x);
+		if(keys.length===0) {
+			debugger;
+			return;
+		}
+		for(let k of keys) {
+			y(x[k],k);
+		}
 	}
 	// x is reserved for the first arg
 	// y reserved for unpack target
@@ -7081,10 +7087,35 @@ class HandleTypes extends BaseService {
 	EngagementPanelSectionListData(x) {
 		this.save_keys("ListData",x,true);
 		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
-		this.AdsEngagementPanelContentRenderer(a);
+		this.EngagementPanelSectionListContent(a);
 		if(b!=="engagement-panel-ads") debugger;
 		if(c!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.LoggingDirectives(d);
+	}
+	/** @arg {EngagementPanelSectionListContent} x */
+	EngagementPanelSectionListContent(x) {
+		/** @type {AdsEngagementPanelContentRenderer} */
+		let y=as_cast({});
+		y.adsEngagementPanelContentRenderer;
+		if("adsEngagementPanelContentRenderer" in x) {
+			return this.w(x,a=>this.AdsEngagementPanelContentData(a));
+		} else if("clipSectionRenderer" in x) {
+			return this.w(x,a=>this.ClipSection(a));
+		}
+		console.log(x);
+		debugger;
+	}
+	/** @arg {ClipSection} x */
+	ClipSection(x) {
+		this.z(x.contents,a=>this.ClipCreationRenderer(a));
+	}
+	/** @arg {ClipCreationRenderer} x */
+	ClipCreationRenderer(x) {
+		this.ClipCreationData(x.clipCreationRenderer);
+	}
+	/** @arg {ClipCreationData} x */
+	ClipCreationData(x) {
+		this.w(x,(a,k)=>this.save_keys(`ClipCreationData.${k}`,a));
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
