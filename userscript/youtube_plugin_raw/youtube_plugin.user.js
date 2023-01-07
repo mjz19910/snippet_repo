@@ -4095,6 +4095,22 @@ class IndexedDbAccessor {
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class YtUrlParser extends BaseService {
+	/** @template {`${U}${string}${U}`} I @template {string} U @arg {I} x @arg {U} _w @returns {I extends `${U}${infer V}${U}`?V:never} */
+	extract_inner(x,_w) {
+		/** @type {any} */
+		let ac=x.slice(1,-1);
+		return ac;
+	}
+	/** @arg {MimeTypeFormat} x */
+	parse_mime_type(x) {
+		let vv=split_string(x,";");
+		let vns=split_string(vv[1]," ")[1];
+		this.save_string("mime-type",vv[0]);
+		let v1=split_string(vns,"=")[1];
+		let in_codec=this.extract_inner(v1,"\"");
+		console.log(vv[0],in_codec);
+		debugger;
+	}
 	/** @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [string,`${U}${string}`,...string[]]} */
 	str_starts_with_at_1(x,w) {
 		return this.str_starts_with(x[1],w);
@@ -7537,7 +7553,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if(url) this.primitive_of(url,"string");
-		this.save_string("mime-type",mimeType);
+		this.x.get("string_parser").parse_mime_type(mimeType);
 		this.primitive_of(bitrate,"number");
 		if(w) this.primitive_of(w,"number");
 		if(h) this.primitive_of(h,"number");

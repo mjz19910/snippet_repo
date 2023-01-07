@@ -1,7 +1,7 @@
 type AdaptiveFormatItem={
 	itag: FormatItag;
 	url?: string;
-	mimeType: `${"video/mp4"}; codecs="${acv1_codec}"`;
+	mimeType: MimeTypeFormat;
 	bitrate: number;
 	width?: number;
 	height?: number;
