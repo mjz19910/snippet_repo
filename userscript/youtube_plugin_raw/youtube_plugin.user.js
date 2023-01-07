@@ -8529,7 +8529,7 @@ class HandleTypes extends BaseService {
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let tc=JSON.stringify(x,(x,o) => {
 			if(x==="") return o;
-			if(typeof o==="string") return "string";
+			if(typeof o==="string") return "TYPE::string";
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
@@ -8574,7 +8574,6 @@ class HandleTypes extends BaseService {
 		}
 		tc=one_array_to_any_arr(tc);
 		debugger;
-		tc=tc.replaceAll("\"string\"","string");
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
 		});
