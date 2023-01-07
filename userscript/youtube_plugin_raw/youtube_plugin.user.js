@@ -8572,8 +8572,6 @@ class HandleTypes extends BaseService {
 		});
 		tc=tc.replaceAll(",",";");
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
-		let rr=tc.match(/{((?:\s|.)+)}/g);
-		if(rr) console.log(rr);
 		let ret=`\ntype ${tn}=${tc}\n`;
 		return ret;
 	}
