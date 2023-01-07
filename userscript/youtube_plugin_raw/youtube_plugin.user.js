@@ -7528,9 +7528,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./yt_json_types/TranslationLanguage").TranslationLanguage} x */
 	TranslationLanguage(x) {
-		const {languageCode,languageName: {simpleText},...y}=x; this.g(y);
-		this.primitive_of(languageCode,"string");
-		this.primitive_of(simpleText,"string");
+		const {languageCode: a,languageName: {simpleText: b},...y}=x; this.g(y);
+		this.primitive_of(a,"string");
+		this.primitive_of(b,"string");
 	}
 	/** @arg {import("./yt_json_types/ActionSetPlaylistVideoOrder").ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
@@ -7859,8 +7859,25 @@ class HandleTypes extends BaseService {
   }
   /** @arg {VideoDescriptionHeaderData} x */
   VideoDescriptionHeaderData(x) {
-    x;
+		const {channel,channelNavigationEndpoint,channelThumbnail,title,views,publishDate,factoid,...y}=x; this.g(y);
+		this.text_t(channel);
+    this.BrowseEndpoint(channelNavigationEndpoint);
+		this.Thumbnail(channelThumbnail);
+		this.text_t(title);
+		this.text_t(views);
+		this.text_t(publishDate);
+		this.z(factoid,a=>this.FactoidRenderer(a));
     debugger;
+  }
+  /** @arg {FactoidRenderer} x */
+  FactoidRenderer(x) {
+    this.FactoidData(x.factoidRenderer);
+  }
+  /** @arg {FactoidData} x */
+  FactoidData(x) {
+		this.primitive_of(x.accessibilityText,"string");
+		this.text_t(x.label);
+		this.text_t(x.value);
   }
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
@@ -7960,8 +7977,8 @@ class HandleTypes extends BaseService {
   }
   /** @arg {InstreamVideoAdData} x */
 	InstreamVideoAdData(x) {
-		x;
-		debugger;
+		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=x;
+		this.g(y);
 	}
   /** @arg {ActionCompanionAdRenderer} x */
   ActionCompanionAdRenderer(x) {

@@ -1,4 +1,5 @@
 type InstreamVideoAdData={
+	skipOffsetMilliseconds: number;
 	pings: {};
 	clickthroughEndpoint: {};
 	csiParameters: {}[];
