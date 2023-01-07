@@ -5,7 +5,7 @@ type ButtonData={
 	icon?: Icon<
 		[
 			"SETTINGS"|"DELETE",
-			"NOTIFICATIONS_ACTIVE"|"NOTIFICATIONS_NONE"
+			"NOTIFICATIONS_ACTIVE"|"NOTIFICATIONS_NONE"|"NOTIFICATIONS_OFF"
 		][number]
 	>;
 	isDisabled?: boolean;

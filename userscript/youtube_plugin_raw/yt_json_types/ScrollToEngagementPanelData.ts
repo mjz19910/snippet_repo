@@ -1,3 +1,1 @@
-type ScrollToEngagementPanelData={
-	targetId: string;
-};
+type ScrollToEngagementPanelData={targetId: "engagement-panel-comments-section";};

@@ -1,1 +1,1 @@
-type AnyIcon=Icon<AnyIconStr>;
+type AnyIcon=Icon<AnyIconStr>|NonNullable<ButtonData['icon']>;

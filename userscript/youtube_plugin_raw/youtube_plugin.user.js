@@ -6542,10 +6542,11 @@ class HandleTypes extends BaseService {
 		switch(x) {
 			case "browse-feedFEwhat_to_watch": return;
 			case "comments-section": return;
+			case "engagement-panel-comments-section": break;
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "engagement-panel-searchable-transcript": return;
-			case "watch-next-feed": return;
 			case "library-guide-item": return;
+			case "watch-next-feed": return;
 			default:
 		}
 		switch(x) {
@@ -6621,6 +6622,7 @@ class HandleTypes extends BaseService {
 				case "DELETE": break;
 				case "NOTIFICATIONS_ACTIVE": break;
 				case "NOTIFICATIONS_NONE": break;
+				case "NOTIFICATIONS_OFF": break;
 				case "SETTINGS": break;
 				default: debugger; break;
 			}

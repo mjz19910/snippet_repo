@@ -5,4 +5,5 @@ type YtTargetIdType=[
 	UpdateEngagementPanelData['targetId'],
 	TranscriptSearchPanelData['targetId'],
 	"library-guide-item",
+	"engagement-panel-comments-section",
 ][number];
