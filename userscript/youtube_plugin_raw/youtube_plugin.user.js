@@ -8619,8 +8619,48 @@ class HandleTypes extends BaseService {
 		},[""]);
 		let trimmed_r2=r2.map(e => e.trim());
 		let no_empty_r2=trimmed_r2.filter(e => e);
-		let typedef_members=no_empty_r2.map(e => split_string_once(e,":"));
-		return typedef_members[0];
+		let typedef_members=no_empty_r2.map(e => {
+			let ss=split_string_once(e,":");
+			if(ss.length==1) throw new Error();
+			return ss;
+		});
+		return new Map(typedef_members);
+	}
+	/** @arg {{}} x @arg {string|null} r_name */
+	use_generated_members(x,r_name=null) {
+		let td=new class Generate {
+			/** @type {(Map<string,string>|null)[]} */
+			out_arr=[];
+			/** @type {(string|undefined)[]} */
+			str_arr=[];
+			/** @arg {HandleTypes} pc */
+			constructor(pc) {
+				this.typedef_str=pc.generate_typedef(x,r_name);
+				/** @type {Map<string,string>|null} */
+				this.out=null;
+				/** @type {string|null} */
+				this.out_2=null;
+			}
+		}(this);
+		if(!td.typedef_str) return td;
+		td.out=this.generate_depth(td.typedef_str);
+		if(!td.out) return td;
+		let fg=td.out&&td.out.get("carouselLockupRenderer");
+		if(!fg) return td;
+		let dg=this.generate_depth(fg);
+		if(!dg) return td;
+		let info_rows=dg.get("infoRows");
+		if(!info_rows) return td;
+		td.out_2=info_rows.replaceAll(/^\s|;$/g,"");
+		td.out_arr=[];
+		td.out_arr[0]??=this.generate_depth(td.out_2);
+		if(!td.out_arr[0]) return td;
+		let irr=td.out_arr[0].get("infoRowRenderer");
+		if(!irr) return td;
+		td.str_arr[0]=irr.replaceAll(/^\s|;$/g,"");
+		if(!td.str_arr[0]) return td;
+		td.out_arr[1]=this.generate_depth(td.str_arr[0]);
+		return td;
 	}
 	/** @arg {{[x: string]:{}}} x */
 	generate_if_branch(x) {
