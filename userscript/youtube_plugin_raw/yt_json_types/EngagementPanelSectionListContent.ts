@@ -1,1 +1,5 @@
-type EngagementPanelSectionListContent=AdsEngagementPanelContentRenderer|ClipSectionRenderer;
+type EngagementPanelSectionListContent=[
+	AdsEngagementPanelContentRenderer,
+	ClipSectionRenderer,
+	StructuredDescriptionContentRenderer,
+][number];

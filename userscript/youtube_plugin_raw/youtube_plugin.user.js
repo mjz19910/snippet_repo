@@ -7136,13 +7136,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EngagementPanelSectionListContent} x */
 	EngagementPanelSectionListContent(x) {
-		/** @type {AdsEngagementPanelContentRenderer} */
-		let y=as_cast({});
-		y.adsEngagementPanelContentRenderer;
 		if("adsEngagementPanelContentRenderer" in x) {
 			return this.w(x,a => this.AdsEngagementPanelContentData(a));
 		} else if("clipSectionRenderer" in x) {
 			return this.w(x,a => this.ClipSection(a));
+		} else if("structuredDescriptionContentRenderer" in x) {
+			return this.StructuredDescriptionContentRenderer(x);
 		}
 		console.log(x);
 		debugger;
@@ -7811,8 +7810,6 @@ class HandleTypes extends BaseService {
 			d4!${gen_body(x,keys,t_name)}
 		d2!}
 		`;
-		let tmp2=tmp_1.split("\n").map(e => e.trim()).join("\n");
-		let tmp3=gen_padding(tmp2);
 		let ex_names=req_names.map(e=>{
 			let tmp0=`
 			d2!/** @arg {${e}} x */
@@ -7821,11 +7818,13 @@ class HandleTypes extends BaseService {
 				d4!debugger;
 			d2!}
 			`;
-			let tmp1=tmp0.split("\n").map(e => e.trim()).join("\n");
-			return gen_padding(tmp1);
+			return tmp0;
 		});
+		tmp_1+=ex_names.join("");
+		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e=>e).join("\n");
+		let tmp3=gen_padding(tmp2);
 		console.log("gen renderer for",x);
-		return tmp3+ex_names.join("");
+		return `\n${tmp3}`;
 	}
 	/** @arg {{}} x */
 	generate_typedef(x) {
@@ -7939,9 +7938,8 @@ class HandleTypes extends BaseService {
   }
   /** @arg {ClientForecastingAdData} x */
 	ClientForecastingAdData(x) {
-		this.z(x.impressionUrls,a=>this.BaseUrl(a));
-		console.log(x.impressionUrls);
-		debugger;
+		const {impressionUrls: a,...y}=x; this.g(y);
+		this.z(a,a=>this.BaseUrl(a));
 	}
   /** @template {ParsableBaseUrlFormat} T @arg {BaseUrl<T>} x */
 	BaseUrl(x) {
@@ -7955,6 +7953,7 @@ class HandleTypes extends BaseService {
   /** @arg {InstreamVideoAdData} x */
 	InstreamVideoAdData(x) {
 		x;
+		debugger;
 	}
   /** @arg {ActionCompanionAdRenderer} x */
   ActionCompanionAdRenderer(x) {
