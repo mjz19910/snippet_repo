@@ -7707,6 +7707,33 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
 		const {owner,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,...y}=x; this.g(y);
+		this.VideoOwnerRenderer(owner);
+		this.SubscribeButtonRenderer(subscribeButton);
+	}
+	/** @arg {SubscribeButtonRenderer} x */
+	SubscribeButtonRenderer(x) {
+		this.SubscribeButtonData(x.subscribeButtonRenderer);
+	}
+	/** @arg {SubscribeButtonData} x */
+	SubscribeButtonData(x) {
+		const {buttonText: a,subscribed: b,enabled: c,type: d,channelId: e,showPreferences: f,trackingParams: g,...y}=x; this.g(y);
+		this.text_t(a);
+		if(b!==false) debugger;
+		if(c!==true) debugger;
+		this.parse_channel_id(e);
+		if(f!==false) debugger;
+		this.trackingParams(g);
+	}
+	/** @arg {VideoOwnerRenderer} x */
+	VideoOwnerRenderer(x) {
+		this.VideoOwnerData(x.videoOwnerRenderer);
+	}
+	/** @arg {VideoOwnerData} x */
+	VideoOwnerData(x) {
+		this.BrowseEndpoint(x.navigationEndpoint,a=>{
+			console.log(a);
+			debugger;
+		});
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
