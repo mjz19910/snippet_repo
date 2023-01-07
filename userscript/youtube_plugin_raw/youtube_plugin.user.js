@@ -6315,7 +6315,7 @@ class HandleTypes extends BaseService {
 		this.z(a,v => this.CompactLinkRenderer(v));
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/ButtonRenderer").ButtonRenderer} x */
+	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
 		const {buttonRenderer,...v}=x;
 		this.ButtonData(x.buttonRenderer);
@@ -6564,7 +6564,7 @@ class HandleTypes extends BaseService {
 		this.z([b,c],v => v!==void 0&&this.primitive_of(v,"number"));
 		this.g(y);
 	}
-	/** @arg {import("./yt_json_types/ButtonData").ButtonData} x */
+	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("ButtonData",x);
 		const {
