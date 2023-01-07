@@ -7621,7 +7621,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResultsData['results']['results']} x1 */
 	TwoColumnWatchNextResultsData_0(x1) {
-		this.ContentTemplate(x1,x2 => {
+		this.ContentsTemplate(x1,x2 => {
 			if("itemSectionRenderer" in x2) {
 				return this.TwoColumnWatchNextResultsData_1(x2);
 			} else if("videoPrimaryInfoRenderer" in x2) {
@@ -7695,19 +7695,29 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<never,never>>} x1 */
 	SecondaryResultsContent_0(x1) {
-		this.ContentTemplate(x1,this.SecondaryResultsContent_1);
+		this.ContentsTemplate(x1,this.SecondaryResultsContent_1);
 	}
-	/** @arg {RelatedChipCloudRenderer|ItemSectionRenderer<never,never>} x2 */
-	SecondaryResultsContent_1(x2) {
-		if("itemSectionRenderer" in x2) {
-			return this.SecondaryResultsContent_2(x2);
-		} else if("relatedChipCloudRenderer" in x2) {
-			x2.relatedChipCloudRenderer;
+	/** @arg {RelatedChipCloudRenderer|ItemSectionRenderer<never,never>} x */
+	SecondaryResultsContent_1(x) {
+		if("itemSectionRenderer" in x) {
+			return this.SecondaryResultsContent_2(x);
+		} else if("relatedChipCloudRenderer" in x) {
+			return this.RelatedChipCloudRenderer(x);
 		}
-		x2;
-		let [k]=get_keys_of(x2);
-		k;
+		console.log(x);
 		debugger;
+	}
+	/** @arg {RelatedChipCloudRenderer} x */
+	RelatedChipCloudRenderer(x) {
+		x;
+	}
+	/** @arg {ContentTemplate<ChipCloudRenderer>} x */
+	RelatedChipCloudData(x) {
+		this.ContentTemplate(x,this.ChipCloudRenderer);
+	}
+	/** @arg {ChipCloudRenderer} x */
+	ChipCloudRenderer(x) {
+		this.ChipCloudData(x.chipCloudRenderer);
 	}
 	/** @arg {ItemSectionRenderer<never,never>} x3 */
 	SecondaryResultsContent_2(x3) {
@@ -7809,9 +7819,14 @@ class HandleTypes extends BaseService {
 		this.ItemSectionData(x.itemSectionRenderer,f);
 	}
 	/** @template T @arg {ContentsTemplate<T>} x @arg {(x:T)=>void} f */
-	ContentTemplate(x,f) {
+	ContentsTemplate(x,f) {
 		const {trackingParams,contents,...y}=x; this.g(y);
 		this.z(x.contents,a => f(a));
+	}
+	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
+	ContentTemplate(x,f) {
+		const {content,...y}=x; this.g(y);
+		f(x.content);
 	}
 	/** @template T @arg {ResultsTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsTemplate(x,f) {
@@ -8033,9 +8048,19 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
-		const {...y}=x; this.g(y);
-		x.isSelected;
-		this.RelatedChipCommand(x.navigationEndpoint);
+		const {style: a,text: b,navigationEndpoint: c,trackingParams: d,isSelected: e,...y}=x; this.g(y);
+		this.ChipCloudStyle(a);
+		this.RelatedChipCommand(c);
+		this.trackingParams(d);
+		this.primitive_of(e,"boolean");
+	}
+	/** @arg {ChipCloudStyle} x */
+	ChipCloudStyle(x) {
+		const {styleType: a,...y}=x; this.g(y);
+		switch(a) {
+			case "STYLE_DEFAULT": break;
+			default: debugger;
+		}
 	}
 	/** @arg {RelatedChipCommand} x */
 	RelatedChipCommand(x) {
@@ -8050,31 +8075,64 @@ class HandleTypes extends BaseService {
 			case "sid-wn-chips": break;
 			default: debugger;
 		}
-		if(!b) debugger;
+		if(b!==true) debugger;
 	}
 	/** @arg {ChipCloudData} x */
 	ChipCloudData(x) {
-		x;
-		debugger;
+		const {chips: a,trackingParams: b,horizontalScrollable: c,nextButton: d,previousButton: e,...y}=x; this.g(y);
+		this.ChipCloudChipRenderer(a);
+		this.trackingParams(b);
+		this.primitive_of(c,"boolean");
+		this.z([d,e],d => this.ButtonRenderer(d));
 	}
 	/** @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {
-		this.text_t(x.title);
+		const {title: a,...y}=x; this.g(y);
+		this.text_t(a);
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
-		this.z(x.mutations,a => this.EntityMutationItem(a));
-		this.TimestampWithNanos(x.timestamp);
+		const {mutations: a,timestamp: b,...y}=x; this.g(y);
+		this.z(a,a => this.EntityMutationItem(a));
+		this.TimestampWithNanos(b);
 	}
 	/** @arg {TimestampWithNanos} x */
 	TimestampWithNanos(x) {
-		this.primitive_of(x.nanos,"number");
-		this.primitive_of(x.seconds,"string");
+		const {nanos: a,seconds: b,...y}=x; this.g(y);
+		this.primitive_of(a,"number");
+		this.primitive_of(b,"string");
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
-		let dec=decode_url_b64_proto_obj(decodeURIComponent(x.entityKey));
-		dec;
+		switch(x.type) {
+			case "ENTITY_MUTATION_TYPE_DELETE": {
+				const {type:{},entityKey:a,options:b,...y}=x; this.g(y);
+				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
+				switch(b.persistenceOption) {
+					case "ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST": break;
+					default: debugger;
+				}
+				console.log("[entity_del]",dec);
+			} break;
+			case "ENTITY_MUTATION_TYPE_REPLACE": {
+				const {type:{},entityKey:a,payload:b,...y}=x; this.g(y);
+				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
+				this.EntityMutationPayload(b);
+				console.log("[entity_replace]",dec);
+			} break;
+		}
+	}
+	/** @arg {EntityMutationPayload} x */
+	EntityMutationPayload(x) {
+		this.OfflineabilityEntity(x.offlineabilityEntity);
+	}
+	/** @arg {OfflineabilityEntity} x */
+	OfflineabilityEntity(x) {
+		switch(x.addToOfflineButtonState) {
+			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
+			default: debugger;
+		};
+		console.log('offline_entity_key',x.key);
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
