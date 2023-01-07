@@ -35,7 +35,7 @@ let ytd_app=void 0;
 let created_blobs=new Map;
 /** @type {Set<string>} */
 let active_blob_set=new Set;
-/** @type {import("./yt_json_types/SavedData").SavedData} */
+/** @type {SavedData} */
 let saved_data=cast_as({});
 const is_yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
@@ -5488,7 +5488,7 @@ class HandleTypes extends BaseService {
 		}
 		x.signalServiceEndpoint;
 	}
-	/** @template {{}} T @arg {import("./yt_json_types/ServiceEndpoint").ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
 	ServiceEndpoint(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		/** @type {any} */
@@ -7875,7 +7875,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(x.trackingParams);
 		if(x.formattedTitle) this.text_t(x.formattedTitle);
 	}
-	/** @arg {import("./yt_json_types/GuideSectionItemType").GuideSectionItemType} x */
+	/** @arg {GuideSectionItemType} x */
 	GuideSectionItemType(x) {
 		if("guideEntryRenderer" in x) {
 			this.GuideEntryRenderer(x);

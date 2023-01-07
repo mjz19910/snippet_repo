@@ -1,1 +1,1 @@
-type TwoColumnSearchResults={primaryContents: SectionListRenderer;};
+type TwoColumnSearchResults={primaryContents: SectionListRenderer<never,never>;};

@@ -1,5 +1,5 @@
 type EngagementPanelSectionShortsComments={
-	content: SectionListRenderer;
+	content: SectionListRenderer<never,never>;
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
 	identifier: {

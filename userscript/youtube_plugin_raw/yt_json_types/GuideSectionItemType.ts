@@ -1,3 +1,1 @@
-import {GuideCollapsibleSectionEntryRenderer} from "./GuideCollapsibleSectionEntryRenderer.js";
-
-export type GuideSectionItemType=GuideEntryRenderer|GuideCollapsibleSectionEntryRenderer;
+type GuideSectionItemType=GuideEntryRenderer|GuideCollapsibleSectionEntryRenderer;

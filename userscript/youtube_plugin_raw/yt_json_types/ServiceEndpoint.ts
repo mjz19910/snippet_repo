@@ -1,4 +1,4 @@
-export type ServiceEndpoint<T extends {}>={
+type ServiceEndpoint<T extends {}>={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
 }&T;

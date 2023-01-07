@@ -1,5 +1,5 @@
 type TabData={
-	content: SectionListRenderer|RichGridRenderer;
+	content: SectionListRenderer<never,never>|RichGridRenderer;
 	selected: true;
 	trackingParams: string;
 }|{

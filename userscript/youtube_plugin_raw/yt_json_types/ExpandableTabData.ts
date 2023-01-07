@@ -3,5 +3,5 @@ type ExpandableTabData={
 	title: string;
 	selected: boolean;
 	expandedText?: string;
-	content?: SectionListRenderer;
+	content?: SectionListRenderer<never,never>;
 };
