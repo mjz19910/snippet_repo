@@ -7928,6 +7928,11 @@ class HandleTypes extends BaseService {
   AdActionInterstitialRenderer(x) {
     this.AdActionInterstitialData(x.adActionInterstitialRenderer);
   }
+  /** @arg {AdActionInterstitialData} x */
+	AdActionInterstitialData(x) {
+		x;
+		debugger;
+	}
   /** @arg {ClientForecastingAdRenderer} x */
   ClientForecastingAdRenderer(x) {
     this.ClientForecastingAdData(x.clientForecastingAdRenderer);
@@ -7940,8 +7945,8 @@ class HandleTypes extends BaseService {
 	}
   /** @template {ParsableBaseUrlFormat} T @arg {BaseUrl<T>} x */
 	BaseUrl(x) {
-		this.parse_url(x.baseUrl);
-		debugger;
+		const {baseUrl: a,...y}=x; this.g(y);
+		this.parse_url(a);
 	}
   /** @arg {InstreamVideoAdRenderer} x */
   InstreamVideoAdRenderer(x) {
