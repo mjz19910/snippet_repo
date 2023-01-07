@@ -7778,6 +7778,24 @@ class HandleTypes extends BaseService {
 		console.log("gen renderer for",x);
 		return tmp3;
 	}
+	/** @arg {{}} x */
+	generate_typedef(x) {
+		let keys = Object.keys(x);
+		let k = keys[0];
+		let tn = `${k[0].toUpperCase()}${k.slice(1)}`;
+		let obj_count=0;
+		return `type ${tn}=${JSON.stringify(x,(_x,o)=>{
+			if(typeof o==='string') return "string";
+			obj_count++;
+			if(obj_count<3) return o;
+			if(o instanceof Array) return [{}];
+			return {};
+		}).replaceAll(/\"(\w+)\":/g,(_a,g)=>{
+		return g+":";
+		})
+			.replaceAll("[{}]","{}[]")
+			.replaceAll("\"string\"","string")}`;
+	}
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);
