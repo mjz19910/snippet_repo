@@ -6787,12 +6787,22 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {ItemSectionData} x */
-	ItemSectionData(x) {
+	/** @template T @template U @arg {ItemSectionData<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
+	ItemSectionData(x,f=null) {
+		// "comment-item-section";
+		// "engagement-panel-comments-section";
 		this.save_keys("SectionListData",x);
-		const {contents: a,trackingParams: b,...y}=x;
+		const {contents: a,trackingParams: b,sectionIdentifier,targetId,...y}=x;
 		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
+		if(sectionIdentifier!==void 0) {
+			if(!f) {debugger;return;}
+			f(["T",sectionIdentifier]);
+		}
+		if(targetId!==void 0) {
+			if(!f) {debugger;return;}
+			f(["U",targetId]);
+		}
 		this.g(y);
 	}
 	/** @type {ItemSectionItemMap} */
@@ -6950,10 +6960,20 @@ class HandleTypes extends BaseService {
 		if(a) this.CommandMetadata(a);
 		this.ContinuationCommand(b);
 	}
+	/** @template {string} T @template {string} U @arg {T} ns @arg {U} s */
+	save_enum(ns,s) {
+		let no_ns=split_string_once(s,ns);
+		if(!no_ns[1]) throw new Error();
+		let nn=split_string_once(no_ns[1],"_");
+		if(!nn[1]) throw new Error();
+		/** @type {SplitOnce<NonNullable<SplitOnce<U,T>[1]>,"">[1]} */
+		let no_ns_part=nn[1];
+		this.save_string(ns,no_ns_part);
+	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
 		const {request: a,token: b,...y}=x; this.g(y);
-		if(a!=="CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE") debugger;
+		this.save_enum("CONTINUATION_REQUEST_TYPE",a);
 		this.decode_continuation_token(b);
 	}
 	/** @arg {EncodedURIComponent} x */
