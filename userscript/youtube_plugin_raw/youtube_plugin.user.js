@@ -8485,8 +8485,8 @@ class HandleTypes extends BaseService {
 		console.log("gen renderer for",x);
 		return `\n${tmp3}`;
 	}
-	/** @arg {{[x: string]:{}}} x */
-	generate_typedef(x) {
+	/** @arg {{[x: string]:{}}} x @arg {string|null} r_name */
+	generate_typedef(x,r_name=null) {
 		let keys=Object.keys(x);
 		let k;
 		for(let c of keys) {
@@ -8495,6 +8495,9 @@ class HandleTypes extends BaseService {
 			break;
 		}
 		if(!k) return null;
+		if(r_name) {
+			k=r_name;
+		}
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let obj_count=0;
 		let o2=x[k];
@@ -8563,6 +8566,24 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
+  /** @arg {CarouselLockupData} x */
+  CarouselLockupData(x) {
+    x;
+    debugger;
+  }
+  /** @arg {CarouselLockupRenderer} x */
+  CarouselLockupRenderer(x) {
+    this.CarouselLockupData(x.carouselLockupRenderer);
+  }
+  /** @arg {VideoDescriptionMusicSectionData} x */
+  VideoDescriptionMusicSectionData(x) {
+    x;
+    debugger;
+  }
+  /** @arg {VideoDescriptionMusicSectionRenderer} x */
+  VideoDescriptionMusicSectionRenderer(x) {
+    this.VideoDescriptionMusicSectionData(x.videoDescriptionMusicSectionRenderer);
+  }
 	/** @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
 	ExpandableVideoDescriptionBodyData_x(x) {
 		const {descriptionBodyText: a,showMoreText: b,showLessText: c,...y}=x; this.g(y);
