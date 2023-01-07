@@ -7644,6 +7644,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
+	/** @arg {Extract<TwoColumnWatchNextResultsData['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	TwoColumnWatchNextResultsData_1(x) {
 		return this.ItemSectionRenderer(x,a => {
 			switch(a[0]) {
