@@ -1,0 +1,1 @@
+type LinearAdSequenceRenderer={linearAdSequenceRenderer: LinearAdSequenceData;};

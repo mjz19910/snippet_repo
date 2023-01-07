@@ -7811,6 +7811,8 @@ class HandleTypes extends BaseService {
 			return this.ClientForecastingAdRenderer(x);
 		} else if("adBreakServiceRenderer" in x) {
 			return this.AdBreakServiceRenderer(x);
+		} else if("linearAdSequenceRenderer" in x) {
+			return this.LinearAdSequenceRenderer(x);
 		} else {
 			debugger;
 		}
@@ -7843,13 +7845,14 @@ class HandleTypes extends BaseService {
 		if(x.prefetchMilliseconds!=="10000") debugger;
 		this.primitive_of(x.getAdBreakUrl,"string");
 	}
-  /** @arg {{linearAdSequenceRenderer: {}}} x */
+  /** @arg {LinearAdSequenceRenderer} x */
   LinearAdSequenceRenderer(x) {
     this.LinearAdSequenceData(x.linearAdSequenceRenderer);
   }
-  /** @arg {{}} x */
+  /** @arg {LinearAdSequenceData} x */
 	LinearAdSequenceData(x) {
 		x;
+		debugger;
 	}
   /** @arg {ClientForecastingAdRenderer} x */
   ClientForecastingAdRenderer(x) {
