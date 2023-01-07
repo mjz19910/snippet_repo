@@ -1,4 +1,4 @@
 type CommandExecutorCommand={
 	clickTrackingParams: string;
-	commandExecutorCommand: CommandExecutorCommandData;
+	commandExecutorCommand: CommandExecutorData;
 };

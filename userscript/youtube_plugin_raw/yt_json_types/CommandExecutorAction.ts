@@ -1,0 +1,1 @@
+type CommandExecutorAction=ChangeEngagementPanelVisibilityAction|ScrollToEngagementPanelCommand;

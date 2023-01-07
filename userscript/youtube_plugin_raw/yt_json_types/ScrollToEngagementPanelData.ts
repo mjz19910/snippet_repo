@@ -1,0 +1,3 @@
+type ScrollToEngagementPanelData={
+	targetId: string;
+};

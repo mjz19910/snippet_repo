@@ -6905,23 +6905,42 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
-		this.clickTrackingParams(x.clickTrackingParams);
-		this.CommandExecutorCommandData(x.commandExecutorCommand);
+		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandsTemplate(x.commandExecutorCommand,a=>this.CommandExecutorData(a));
 	}
-	/** @arg {CommandExecutorCommandData} x */
-	CommandExecutorCommandData(x) {
-		x.clickTrackingParams;
-		this.CommandsTemplate(x.commandExecutorCommand,a=>a);
+	/** @arg {CommandExecutorAction} x */
+	CommandExecutorData(x) {
+		const {clickTrackingParams,...y}=x;
+		if("changeEngagementPanelVisibilityAction" in y) {
+			y.changeEngagementPanelVisibilityAction;
+		} else if("scrollToEngagementPanelCommand" in y) {
+			y.scrollToEngagementPanelCommand;
+		} else {
+			let td=this.generate_typedef(x);
+			console.log(td);
+			debugger;
+		}
+	}
+	/** @arg {ChangeEngagementPanelVisibilityAction} x */
+	ChangeEngagementPanelVisibilityAction(x) {
+		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y);
 	}
 	/** @template T @arg {CommandsTemplate<T>} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}
-	/** @arg {CommentsEntryPointTeaserRenderer} x */
-	CommentsEntryPointTeaserRenderer(x) {
-		x;
-		debugger;
-	}
+  /** @arg {CommentsEntryPointTeaserRenderer} x */
+  CommentsEntryPointTeaserRenderer(x) {
+    this.CommentsEntryPointTeaserData(x.commentsEntryPointTeaserRenderer);
+  }
+  /** @arg {CommentsEntryPointTeaserData} x */
+  CommentsEntryPointTeaserData(x) {
+		const {teaserAvatar: a,teaserContent: b,trackingParams: c,...y}=x; this.g(y);
+    this.Thumbnail(a);
+    this.text_t(b);
+    this.trackingParams(c);
+  }
 	/** @arg {ReelShelfData} x */
 	ReelShelfData(x) {
 		this.Icon(x.icon);
@@ -7586,7 +7605,7 @@ class HandleTypes extends BaseService {
 			}
 		});
 		this.SecondaryResultsTemplate(b);
-		this.PlaylistTemplate(c,a => this.PlaylistContent(a));
+		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
 		if(e) {
 			if("liveChatRenderer" in e) {
