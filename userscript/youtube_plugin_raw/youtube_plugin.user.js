@@ -8136,15 +8136,37 @@ class HandleTypes extends BaseService {
 	/** @arg {OfflineabilityEntityData} x */
 	OfflineabilityEntityData(x) {
 		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
-		switch(x.addToOfflineButtonState) {
+		let ret=decode_entity_key(a);
+		console.log('offline_entity_key',ret);
+		this.InnertubeCommand(b);
+		switch(c) {
 			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
 			case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED": break;
 			default: debugger;
 		};
-		let ret=decode_entity_key(a);
-		console.log('offline_entity_key',ret);
 		this.LoggingDirectives(f);
 		debugger;
+	}
+  /** @arg {InnertubeCommand} x */
+  InnertubeCommand(x) {
+		this.InnertubeCommandData(x.innertubeCommand);
+  }
+  /** @arg {InnertubeCommandData} x */
+  InnertubeCommandData(x) {
+		if("ypcGetOfflineUpsellEndpoint" in x) {
+    	return this.YpcGetOfflineUpsellEndpoint(x);
+		}
+		debugger;
+  }
+  /** @arg {YpcGetOfflineUpsellEndpoint} x */
+	YpcGetOfflineUpsellEndpoint(x) {
+		const {clickTrackingParams,ypcGetOfflineUpsellEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.YpcGetOfflineUpsell(ypcGetOfflineUpsellEndpoint);
+	}
+	/** @arg {YpcGetOfflineUpsell} x */
+	YpcGetOfflineUpsell(x) {
+		console.log("[ypc_upsell]",x.params);
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {

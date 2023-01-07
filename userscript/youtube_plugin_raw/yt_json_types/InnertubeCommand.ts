@@ -1,3 +1,1 @@
-type InnertubeCommand={
-	innertubeCommand: YpcGetOfflineUpsellEndpoint;
-};
+type InnertubeCommand={innertubeCommand: InnertubeCommandData;};
