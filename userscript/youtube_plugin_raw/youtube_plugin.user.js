@@ -5911,6 +5911,14 @@ class HandleTypes extends BaseService {
 						/** @type {[typeof y|typeof children]} */
 						let out=[y];
 						if(children) out.push(children);
+						iterate_template_element(children);
+						/** @arg {TemplateElement} x */
+						function iterate_template_element(x) {
+							let res=Object.entries(x);
+							for(let i of res) {
+								console.log('template_iter',i);
+							}
+						}
 						console.log("[template_child_iter_2]",...out);
 						a;
 					});
@@ -7354,7 +7362,11 @@ class HandleTypes extends BaseService {
 		switch(c) {case "COLOR_MATRIX_COEFFICIENTS_BT709": break; default: debugger;};
 	}
 	/** @type {QualArr} */
-	format_quality_label_arr=["2160p50","1440p50","1080p50","720p50","1080p","720p","480p","360p","240p","144p"];
+	format_quality_label_arr=[
+		"2160p50","1440p50","1080p50","720p50",
+		"2160p60","1440p60","1080p60","720p60",
+		"1080p","720p","480p","360p","240p","144p"
+	];
 	/** @arg {QualityLabel} x */
 	parse_format_quality_label(x) {
 		if(!this.format_quality_label_arr.includes(x)) {
@@ -7682,10 +7694,45 @@ class HandleTypes extends BaseService {
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
+	/** @arg {{}} x @arg {string|null} r_name */
+	generate_renderer(x,r_name=null) {
+		/** @arg {{}} x @arg {string[]} keys */
+		function gen_body(x,keys) {
+			x;
+			let ret_arr=[];
+			for(let k of keys) {
+				let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
+				ret_arr.push(`
+				this.${tn.replace("Renderer","Data")}(x.${k});
+				`.trim());
+			}
+			return ret_arr.join("\nd4!");
+		}
+		/** @arg {string} x */
+		function gen_padding(x) {
+			return x.replaceAll(/d(\d)!/g,(_v,g) => {
+				return " ".repeat(g);
+			});
+		}
+		let keys=Object.keys(x);
+		let k=keys[0];
+		let t_name=`${k[0].toUpperCase()}${k.slice(1)}`;
+		if(r_name) {
+			t_name=r_name;
+		}
+		let tmp_1=`
+		d2!/** @arg {${t_name}} x */
+		d2!${t_name}(x) {
+			d4!${gen_body(x,keys)}
+		d2!}
+		`;
+		let tmp2=tmp_1.split("\n").map(e => e.trim()).join("\n");
+		let tmp3=gen_padding(tmp2);
+		return tmp3;
+	}
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
-		console.log(x.adPlacementRenderer.config);
-		console.log(x.adPlacementRenderer.renderer);
+		this.AdPlacementData(x.adPlacementRenderer);
 	}
 }
 //#endregion
