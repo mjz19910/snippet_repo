@@ -1,6 +1,7 @@
 type ButtonStyleType=[
 	"STYLE_DEFAULT",
-	"STYLE_SUGGESTIVE",
 	"STYLE_PRIMARY",
+	"STYLE_SUGGESTIVE",
 	"STYLE_TEXT",
+	"STYLE_UNKNOWN",
 ][number];
