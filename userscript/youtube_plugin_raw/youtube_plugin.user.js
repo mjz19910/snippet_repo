@@ -6619,10 +6619,11 @@ class HandleTypes extends BaseService {
 		if(c) {
 			switch(c.iconType) {
 				case "DELETE": break;
+				case "NOTIFICATIONS_ACTIVE": break;
+				case "NOTIFICATIONS_NONE": break;
 				case "SETTINGS": break;
 				default: debugger; break;
 			}
-			/** @type {AnyIcon} @type {AnyIconStr} */
 			this.Icon(c);
 		}
 		if(d) this.primitive_of(d,"boolean");
