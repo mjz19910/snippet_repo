@@ -7732,8 +7732,10 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoOwnerData} x */
 	VideoOwnerData(x) {
 		this.BrowseEndpoint(x.navigationEndpoint,a=>{
-			console.log(a);
-			debugger;
+			if(a.apiUrl!=="/youtubei/v1/browse") debugger;
+			if(a.rootVe!==3611) {console.log(a);debugger;}
+			this.parse_url(a.url);
+			if(a.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		});
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
