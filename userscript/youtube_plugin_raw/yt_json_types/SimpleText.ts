@@ -1,1 +1,1 @@
-export type SimpleText={simpleText: string;};
+type SimpleText={simpleText: string;};

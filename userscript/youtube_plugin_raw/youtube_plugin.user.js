@@ -6745,7 +6745,7 @@ class HandleTypes extends BaseService {
 	ProfileColumnUserInfoData(x) {
 		this.Thumbnail(x.thumbnail);
 	}
-	/** @arg {import("./yt_json_types/Thumbnail").Thumbnail} x */
+	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
 		const {thumbnails: a,accessibility: b,...y}=x;
 		this.z(a,a => this.ThumbnailItem(a));
@@ -7835,7 +7835,7 @@ class HandleTypes extends BaseService {
 		return `\ntype ${tn}=${JSON.stringify(x,(_x,o)=>{
 			if(typeof o==='string') return "string";
 			obj_count++;
-			if(o instanceof Array) [o[0]];
+			if(o instanceof Array) return [o[0]];
 			if(obj_count<3) return o;
 			if(o instanceof Array) return [{}];
 			return {};
@@ -7851,9 +7851,17 @@ class HandleTypes extends BaseService {
   }
   /** @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
-		x;
-		debugger;
+		this.z(x.items,a=>this.VideoDescriptionHeaderRenderer(a));
 	}
+  /** @arg {VideoDescriptionHeaderRenderer} x */
+  VideoDescriptionHeaderRenderer(x) {
+    this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
+  }
+  /** @arg {VideoDescriptionHeaderData} x */
+  VideoDescriptionHeaderData(x) {
+    x;
+    debugger;
+  }
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);

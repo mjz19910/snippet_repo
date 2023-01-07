@@ -1,3 +1,1 @@
-type StructuredDescriptionContentData={
-	items: {}[];
-};
+type StructuredDescriptionContentData={items: VideoDescriptionHeaderRenderer[];};

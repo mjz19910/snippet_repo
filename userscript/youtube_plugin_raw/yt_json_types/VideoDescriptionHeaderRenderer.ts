@@ -1,0 +1,1 @@
+type VideoDescriptionHeaderRenderer={videoDescriptionHeaderRenderer: VideoDescriptionHeaderData;};

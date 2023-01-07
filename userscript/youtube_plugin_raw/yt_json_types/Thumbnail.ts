@@ -1,6 +1,4 @@
-import {Accessibility} from "./Accessibility.js";
-
-export type Thumbnail={
+type Thumbnail={
 	thumbnails: ThumbnailItem[];
 	accessibility?: Accessibility;
 };
