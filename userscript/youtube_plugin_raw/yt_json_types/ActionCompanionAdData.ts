@@ -15,5 +15,5 @@ type ActionCompanionAdData={
 	adVideoId: string;
 	impressionPings: BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: AdLayoutLoggingData;
-	associatedCompositePlayerBytesLayoutId: `${string}-0000-${string}-${string}-${string}`;
+	associatedCompositePlayerBytesLayoutId?: `${string}-0000-${string}-${string}-${string}`;
 };

@@ -7548,9 +7548,9 @@ class HandleTypes extends BaseService {
 				this.LiveChatRenderer(e);
 			} else {
 				let k=Object.keys(e)[0];
-				let rd = this.generate_renderer(e[k]);
+				let rd=this.generate_renderer(e[k]);
 				console.log(rd);
-				let td = this.generate_typedef(e[k]);
+				let td=this.generate_typedef(e[k]);
 				console.log(td);
 				console.log("generated [%s]",k,e);
 				debugger;
@@ -7589,14 +7589,6 @@ class HandleTypes extends BaseService {
 	VideoPrimaryInfoRenderer(x) {
 		this.VideoPrimaryInfoData(x.videoPrimaryInfoRenderer);
 	}
-  /** @arg {VideoPrimaryInfoData} x */
-  VideoPrimaryInfoData(x) {
-    this.z(x.badges,this.g);
-		this.z([x.dateText,x.relativeDateText],this.g);
-		this.text_t(x.title);
-		this.trackingParams(x.trackingParams);
-    debugger;
-  }
 	/** @arg {ItemSectionRenderer<never,never>} x */
 	ItemSectionRenderer(x) {
 		this.ItemSectionData(x.itemSectionRenderer);
@@ -7992,7 +7984,7 @@ class HandleTypes extends BaseService {
 			`;
 			return tmp0;
 		});
-		tmp_1+=ex_names.join("");
+		tmp_1=ex_names.join("")+tmp_1;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
 		let tmp3=gen_padding(tmp2);
 		console.log("gen renderer for",x);
@@ -8004,11 +7996,17 @@ class HandleTypes extends BaseService {
 		let k=keys[0];
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let obj_count=0;
-		return `\ntype ${tn}=${JSON.stringify(x,(x,o) => {
+		let tc=JSON.stringify(x,(x,o) => {
 			if(typeof o==="string") return "string";
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
+			if(o.runs&&o.runs instanceof Array) {
+				return "TYPE::TextT";
+			}
+			if(o.simpleText&&typeof o.simpleText==='string') {
+				return "TYPE::SimpleText";
+			}
 			if(keys.includes(x)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
@@ -8018,11 +8016,26 @@ class HandleTypes extends BaseService {
 			if(obj_count<3) return o;
 			if(o instanceof Array) return [{}];
 			return {};
-		}).replaceAll(/\"(\w+)\":/g,(_a,g) => {
+		});
+		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
-		})
-			.replaceAll("[{}]","{}[]")
-			.replaceAll("\"string\"","string")}\n`;
+		});
+		/** @arg {string} s */
+		function one_array_to_any_arr(s,dep=0) {
+			if(dep<8&&s.match(/\[{/)) {
+				s=s.replaceAll(/\[{(.+)}\]/,(_a,v)=>{
+					return `{${one_array_to_any_arr(v)}}[]`;
+				});
+			}
+			return s;
+		}
+		tc=one_array_to_any_arr(tc);
+		tc=tc.replaceAll("\"string\"","string");
+		tc=tc.replaceAll(/"TYPE::(.+?)"/g,(_a,x) => {
+			return x;
+		});
+		tc=tc.replaceAll(",",";\n");
+		return `\ntype ${tn}=${tc}\n`;
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
@@ -8214,7 +8227,7 @@ class HandleTypes extends BaseService {
 			console.log("meta",U);
 			console.log("ep",V);
 		})(uep_data);
-		this.parse_layout_id(x1);
+		if(x1) this.parse_layout_id(x1);
 	}
 	/**
 	 * @template {BaseUrl<any>[]} T
@@ -8247,6 +8260,19 @@ class HandleTypes extends BaseService {
 	/** @arg {NavigationEndpointTODO} x */
 	NavigationEndpoint(x) {
 		this.g(x);
+	}
+	/** @arg {VideoPrimaryInfoData} x */
+	VideoPrimaryInfoData(x) {
+		this.z(x.badges,this.MetadataBadgeRenderer);
+		this.z([x.dateText,x.relativeDateText],this.g);
+		this.text_t(x.title);
+		this.trackingParams(x.trackingParams);
+		debugger;
+	}
+	/** @arg {MetadataBadgeRenderer} x */
+	MetadataBadgeRenderer(x) {
+		x;
+		debugger;
 	}
 }
 //#endregion
