@@ -4389,7 +4389,7 @@ class YtUrlParser extends BaseService {
 			default:
 		}
 		let s_host=split_string_once(r.host,".");
-		switch(s_host[1 ]) {
+		switch(s_host[1]) {
 			case "googlevideo.com": return;
 			default:
 		}
@@ -5027,16 +5027,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {UrlEndpointData} x */
 	UrlEndpointRoot(x) {
-		if("target" in x) {
-			const {url,target,...y}=x;
-			this.parse_url(url);
-			if(target!=="TARGET_NEW_WINDOW") debugger;
-			this.g(y);
-			return;
-		}
-		const {url,...y}=x;
-		this.parse_url(url);
+		const {url: a,target: b,nofollow: c,...y}=x;
+		if(b&&b!=="TARGET_NEW_WINDOW") debugger;
+		this.parse_url(a);
 		this.save_keys("UrlEndpointRoot",x);
+		if(c) this.primitive_of(c,"boolean");
 		this.g(y);
 	}
 	/** @arg {YtUrlFormat} x */
@@ -8580,23 +8575,23 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-  /** @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
-  ExpandableVideoDescriptionBodyData_x(x) {
-		const {descriptionBodyText: a,showMoreText:b,showLessText:c,...y}=x; this.g(y);
-		this.z([a,b,c],a=>this.text_t(a));
-  }
-  /** @arg {ExpandableVideoDescriptionBodyData} x */
-  ExpandableVideoDescriptionBodyData(x) {
+	/** @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
+	ExpandableVideoDescriptionBodyData_x(x) {
+		const {descriptionBodyText: a,showMoreText: b,showLessText: c,...y}=x; this.g(y);
+		this.z([a,b,c],a => this.text_t(a));
+	}
+	/** @arg {ExpandableVideoDescriptionBodyData} x */
+	ExpandableVideoDescriptionBodyData(x) {
 		if("descriptionBodyText" in x) {
 			return this.ExpandableVideoDescriptionBodyData_x(x);
 		}
 		let k=get_keys_of(x);
 		if(k.length>0) debugger;
-  }
-  /** @arg {ExpandableVideoDescriptionBodyRenderer} x */
-  ExpandableVideoDescriptionBodyRenderer(x) {
-    this.ExpandableVideoDescriptionBodyData(x.expandableVideoDescriptionBodyRenderer);
-  }
+	}
+	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
+	ExpandableVideoDescriptionBodyRenderer(x) {
+		this.ExpandableVideoDescriptionBodyData(x.expandableVideoDescriptionBodyRenderer);
+	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
