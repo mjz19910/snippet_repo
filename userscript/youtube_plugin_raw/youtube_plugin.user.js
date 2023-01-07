@@ -6943,21 +6943,42 @@ class HandleTypes extends BaseService {
   }
 	/** @arg {ReelShelfData} x */
 	ReelShelfData(x) {
-		this.Icon(x.icon);
-		this.z(x.items,a => this.ReelItemRenderer(a));
-		this.text_t(x.title);
-		this.trackingParams(x.trackingParams);
+		const {icon: a,items: b,title: c,trackingParams: d,...y}=x; this.g(y);
+		this.Icon(a);
+		this.z(b,a => this.ReelItemRenderer(a));
+		this.text_t(c);
+		this.trackingParams(d);
 	}
 	/** @arg {ReelItemRenderer} x */
 	ReelItemRenderer(x) {
-		this.ReelItemData(x.reelItemRenderer);
+		const {reelItemRenderer:a,...y}=x; this.g(y);
+		this.ReelItemData(a);
 	}
 	/** @arg {ReelItemData} x */
 	ReelItemData(x) {
-		this.Accessibility(x.accessibility);
-		this.text_t(x.headline);
-		this.LoggingDirectives(x.loggingDirectives);
-		this.MenuRenderer(x.menu);
+		const {
+			accessibility:a,headline: b,loggingDirectives: c,menu: d,videoId: e,thumbnail: f,
+			viewCountText: g,navigationEndpoint: h,trackingParams: i,style: j,videoType: k,
+			...y
+		}=x; this.g(y);
+		this.Accessibility(a);
+		this.text_t(b);
+		this.LoggingDirectives(c);
+		this.MenuRenderer(d);
+		this.primitive_of(e,"string");
+		this.Thumbnail(f);
+		this.text_t(g);
+		this.NavigationEndpoint(h,a=>this.w(a,a=>this.ReelWatchEndpointData(a)));
+		this.trackingParams(i);
+		this.save_enum("REEL_ITEM_STYLE",j);
+		this.save_enum("REEL_VIDEO_TYPE",k);
+	}
+	/** @template T @arg {NavigationEndpoint<T>} x @arg {(x:Omit<NavigationEndpoint<T>,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	NavigationEndpoint(x,f) {
+		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
+		this.clickTrackingParams(a);
+		this.CommandMetadata(b);
+		f(y);
 	}
 	/** @arg {MenuRenderer} x */
 	MenuRenderer(x) {
