@@ -1,0 +1,1 @@
+type LiveChatPlaceholderItemRenderer={liveChatPlaceholderItemRenderer: LiveChatPlaceholderItemData;};

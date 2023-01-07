@@ -1,6 +1,6 @@
 type EngagementPanelSectionListData={
 	panelIdentifier?: "engagement-panel-clip-create";
-	header?: engagementPanelTitleHeaderRenderer;
+	header?: EngagementPanelTitleHeaderRenderer;
 	content: EngagementPanelSectionListContent;
 	targetId: EngagementPanelSectionTargetIds;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
@@ -8,13 +8,21 @@ type EngagementPanelSectionListData={
 		changeEngagementPanelVisibilityAction,showEngagementPanelScrimAction
 	];
 	loggingDirectives: LoggingDirectives;
+}|{
+	panelIdentifier: "comment-item-section",
+	header: EngagementPanelTitleHeaderRenderer;
+	content: EngagementPanelSectionListContent;
+	veType: 76278;
+	targetId: "";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	loggingDirectives: LoggingDirectives;
 };
 type EngagementPanelSectionTargetIds=MakeTargetId<
-"engagement-panel",
-[
-	"ads",
-	"clip-create",
-	"structured-description",
-][number]
+	"engagement-panel",
+	[
+		"ads",
+		"clip-create",
+		"structured-description",
+	][number]
 >;
 type MakeTargetId<T extends string,U extends string>=`${T}-${U}`;

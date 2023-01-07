@@ -4529,7 +4529,7 @@ class HandleTypes extends BaseService {
 	YtBrowsePageResponse(x) {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
-		this.BrowseEndpoint(b,a=>this.BrowseWebCommandMetadata(a));
+		this.BrowseEndpoint(b,a => this.BrowseWebCommandMetadata(a));
 		this.save_keys("DataResponsePageType",x);
 		this.x.get("string_parser").parse_url(d);
 		this.BrowseResponseContent(c);
@@ -5009,16 +5009,32 @@ class HandleTypes extends BaseService {
 	/** @arg {AddChatItemActionData} x */
 	AddChatItemActionData(x) {
 		const {clientId: a,item: b,...y}=x; this.g(y);
-		if(a) this.primitive_of(a,"string");
-		this.LiveChatTextMessageRenderer(x.item);
+		this.primitive_of(a,"string");
+		this.LiveChatItem(x.item);
 	}
-	/** @arg {LiveChatTextMessageRenderer} x */
-	LiveChatTextMessageRenderer(x) {
+	/** @arg {LiveChatItem} x */
+	LiveChatItem(x) {
 		if("liveChatTextMessageRenderer" in x) {
-			this.w(x,a => this.LiveChatTextMessageData(a));
+			this.LiveChatTextMessageRenderer(x);
+		} else if("liveChatPlaceholderItemRenderer" in x) {
+			this.LiveChatPlaceholderItemRenderer(x);
 		} else {
 			debugger;
 		}
+	}
+  /** @arg {LiveChatPlaceholderItemRenderer} x */
+  LiveChatPlaceholderItemRenderer(x) {
+    this.LiveChatPlaceholderItemData(x.liveChatPlaceholderItemRenderer);
+  }
+  /** @arg {LiveChatPlaceholderItemData} x */
+  LiveChatPlaceholderItemData(x) {
+		const {id: a,timestampUsec: b,...y}=x; this.g(y);
+    this.primitive_of(a,"string");
+    this.primitive_of(b,"string");
+  }
+	/** @arg {LiveChatTextMessageRenderer} x */
+	LiveChatTextMessageRenderer(x) {
+		this.w(x,a => this.LiveChatTextMessageData(a));
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
@@ -7427,7 +7443,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
-		this.EndpointTemplate(x.endpoint,a=>this.w(a,a=>this.UrlEndpointData(a)));
+		this.EndpointTemplate(x.endpoint,a => this.w(a,a => this.UrlEndpointData(a)));
 		console.log("VideoQualityPromo.endpoint",x.endpoint);
 	}
 	/** @arg {UrlEndpointData} x */
@@ -7718,10 +7734,10 @@ class HandleTypes extends BaseService {
 	att_log_debug=false;
 	/** @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
-		this.t_url_unwrap(x.interpreterUrl,a=>{
+		this.t_url_unwrap(x.interpreterUrl,a => {
 			// spell:disable-next-line
 			if(a!=="//www.google.com/js/th/G-wi0KRrIjmTWIDOn44AFVMvZ_aKLO1c96DfwAE3d4M.js") debugger;
-		})
+		});
 		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
 	/** @arg {import("./yt_json_types/GuideJsonType").GuideJsonType} x */
@@ -7822,7 +7838,7 @@ class HandleTypes extends BaseService {
 			d4!${gen_body(x,keys,t_name)}
 		d2!}
 		`;
-		let ex_names=req_names.map(e=>{
+		let ex_names=req_names.map(e => {
 			let tmp0=`
 			d2!/** @arg {${e}} x */
 			d2!${e}(x) {
@@ -7833,39 +7849,44 @@ class HandleTypes extends BaseService {
 			return tmp0;
 		});
 		tmp_1+=ex_names.join("");
-		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e=>e).join("\n");
+		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
 		let tmp3=gen_padding(tmp2);
 		console.log("gen renderer for",x);
 		return `\n${tmp3}`;
 	}
 	/** @arg {{}} x */
 	generate_typedef(x) {
-		let keys = Object.keys(x);
-		let k = keys[0];
-		let tn = `${k[0].toUpperCase()}${k.slice(1)}`;
+		let keys=Object.keys(x);
+		let k=keys[0];
+		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let obj_count=0;
-		return `\ntype ${tn}=${JSON.stringify(x,(_x,o)=>{
-			if(typeof o==='string') return "string";
+		return `\ntype ${tn}=${JSON.stringify(x,(x,o) => {
+			if(typeof o==="string") return "string";
+			if(typeof o==="number") return o;
+			if(keys.includes(x)) {
+				if(o instanceof Array) return [o[0]];
+				return o;
+			}
 			obj_count++;
 			if(o instanceof Array) return [o[0]];
 			if(obj_count<3) return o;
 			if(o instanceof Array) return [{}];
 			return {};
-		}).replaceAll(/\"(\w+)\":/g,(_a,g)=>{
-		return g+":";
+		}).replaceAll(/\"(\w+)\":/g,(_a,g) => {
+			return g+":";
 		})
 			.replaceAll("[{}]","{}[]")
 			.replaceAll("\"string\"","string")}\n`;
 	}
-  /** @arg {StructuredDescriptionContentRenderer} x */
-  StructuredDescriptionContentRenderer(x) {
-    this.StructuredDescriptionContentData(x.structuredDescriptionContentRenderer);
-  }
-  /** @arg {StructuredDescriptionContentData} x */
-	StructuredDescriptionContentData(x) {
-		this.z(x.items,a=>this.StructuredDescriptionContentItem(a));
+	/** @arg {StructuredDescriptionContentRenderer} x */
+	StructuredDescriptionContentRenderer(x) {
+		this.StructuredDescriptionContentData(x.structuredDescriptionContentRenderer);
 	}
-  /** @arg {StructuredDescriptionContentItem} x */
+	/** @arg {StructuredDescriptionContentData} x */
+	StructuredDescriptionContentData(x) {
+		this.z(x.items,a => this.StructuredDescriptionContentItem(a));
+	}
+	/** @arg {StructuredDescriptionContentItem} x */
 	StructuredDescriptionContentItem(x) {
 		if("videoDescriptionHeaderRenderer" in x) {
 			this.VideoDescriptionHeaderRenderer(x);
@@ -7876,15 +7897,15 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-  /** @arg {VideoDescriptionHeaderRenderer} x */
-  VideoDescriptionHeaderRenderer(x) {
+	/** @arg {VideoDescriptionHeaderRenderer} x */
+	VideoDescriptionHeaderRenderer(x) {
 		this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
-  }
-  /** @arg {VideoDescriptionHeaderData} x */
-  VideoDescriptionHeaderData(x) {
+	}
+	/** @arg {VideoDescriptionHeaderData} x */
+	VideoDescriptionHeaderData(x) {
 		const {channel,channelNavigationEndpoint,channelThumbnail,title,views,publishDate,factoid,...y}=x; this.g(y);
 		this.text_t(channel);
-    this.BrowseEndpoint(channelNavigationEndpoint,a=>{
+		this.BrowseEndpoint(channelNavigationEndpoint,a => {
 			const {url: b,webPageType: c,rootVe: d,apiUrl: e,...z}=a; this.g(z);
 			this.parse_url(b);
 			if(c!=="WEB_PAGE_TYPE_CHANNEL") debugger;
@@ -7895,18 +7916,18 @@ class HandleTypes extends BaseService {
 		this.text_t(title);
 		this.text_t(views);
 		this.text_t(publishDate);
-		this.z(factoid,a=>this.FactoidRenderer(a));
-  }
-  /** @arg {FactoidRenderer} x */
-  FactoidRenderer(x) {
-    this.FactoidData(x.factoidRenderer);
-  }
-  /** @arg {FactoidData} x */
-  FactoidData(x) {
+		this.z(factoid,a => this.FactoidRenderer(a));
+	}
+	/** @arg {FactoidRenderer} x */
+	FactoidRenderer(x) {
+		this.FactoidData(x.factoidRenderer);
+	}
+	/** @arg {FactoidData} x */
+	FactoidData(x) {
 		this.primitive_of(x.accessibilityText,"string");
 		this.text_t(x.label);
 		this.text_t(x.value);
-  }
+	}
 	/** @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);
@@ -7945,6 +7966,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdPlacementConfigData} x */
 	AdPlacementConfigData(x) {
+		const {kind: rk,adTimeOffset: ato,hideCueRangeMarker: hcr,...y}=x; this.g(y);
 		let kind=this.parse_enum("AD_PLACEMENT_KIND",x.kind);
 		switch(kind) {
 			case "END": break;
@@ -7952,8 +7974,8 @@ class HandleTypes extends BaseService {
 			case "SELF_START": break;
 			default: debugger;
 		}
-		this.AdTimeOffset(x.adTimeOffset);
-		if(x.hideCueRangeMarker!==true) debugger;
+		if(ato) this.AdTimeOffset(ato);
+		if(hcr!==true) debugger;
 	}
 	/** @arg {AdTimeOffset} x */
 	AdTimeOffset(x) {
@@ -7969,17 +7991,17 @@ class HandleTypes extends BaseService {
 		if(x.prefetchMilliseconds!=="10000") debugger;
 		this.primitive_of(x.getAdBreakUrl,"string");
 	}
-  /** @arg {LinearAdSequenceRenderer} x */
-  LinearAdSequenceRenderer(x) {
-    this.LinearAdSequenceData(x.linearAdSequenceRenderer);
-  }
-  /** @arg {LinearAdSequenceData} x */
+	/** @arg {LinearAdSequenceRenderer} x */
+	LinearAdSequenceRenderer(x) {
+		this.LinearAdSequenceData(x.linearAdSequenceRenderer);
+	}
+	/** @arg {LinearAdSequenceData} x */
 	LinearAdSequenceData(x) {
 		const {linearAds: a,adLayoutMetadata: b,...y}=x; this.g(y);
-		this.z(a,a=>this.LinearAdsItem(a));
+		this.z(a,a => this.LinearAdsItem(a));
 		this.AdLayoutMetadata(b);
 	}
-  /** @arg {LinearAdsItem} x */
+	/** @arg {LinearAdsItem} x */
 	LinearAdsItem(x) {
 		if("instreamVideoAdRenderer" in x) {
 			this.InstreamVideoAdRenderer(x);
@@ -7989,42 +8011,42 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-  /** @arg {AdActionInterstitialRenderer} x */
-  AdActionInterstitialRenderer(x) {
-    this.AdActionInterstitialData(x.adActionInterstitialRenderer);
-  }
-  /** @arg {AdActionInterstitialData} x */
+	/** @arg {AdActionInterstitialRenderer} x */
+	AdActionInterstitialRenderer(x) {
+		this.AdActionInterstitialData(x.adActionInterstitialRenderer);
+	}
+	/** @arg {AdActionInterstitialData} x */
 	AdActionInterstitialData(x) {
 		this.save_keys("AdActionInterstitial",x);
 	}
-  /** @arg {ClientForecastingAdRenderer} x */
-  ClientForecastingAdRenderer(x) {
-    this.ClientForecastingAdData(x.clientForecastingAdRenderer);
-  }
-  /** @arg {ClientForecastingAdData} x */
+	/** @arg {ClientForecastingAdRenderer} x */
+	ClientForecastingAdRenderer(x) {
+		this.ClientForecastingAdData(x.clientForecastingAdRenderer);
+	}
+	/** @arg {ClientForecastingAdData} x */
 	ClientForecastingAdData(x) {
 		const {impressionUrls: a,...y}=x; this.g(y);
-		this.z(a,a=>this.BaseUrl(a));
+		this.z(a,a => this.BaseUrl(a));
 	}
-  /** @template {ParsableBaseUrlFormat} T @arg {BaseUrl<T>} x */
+	/** @template {ParsableBaseUrlFormat} T @arg {BaseUrl<T>} x */
 	BaseUrl(x) {
 		const {baseUrl: a,...y}=x; this.g(y);
 		this.parse_url(a);
 	}
-  /** @arg {InstreamVideoAdRenderer} x */
-  InstreamVideoAdRenderer(x) {
-    this.InstreamVideoAdData(x.instreamVideoAdRenderer);
-  }
-  /** @arg {InstreamVideoAdData} x */
+	/** @arg {InstreamVideoAdRenderer} x */
+	InstreamVideoAdRenderer(x) {
+		this.InstreamVideoAdData(x.instreamVideoAdRenderer);
+	}
+	/** @arg {InstreamVideoAdData} x */
 	InstreamVideoAdData(x) {
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=x;
 		this.g(y);
 	}
-  /** @arg {ActionCompanionAdRenderer} x */
-  ActionCompanionAdRenderer(x) {
-    this.ActionCompanionAdData(x.actionCompanionAdRenderer);
-  }
-  /** @arg {ActionCompanionAdData} x */
+	/** @arg {ActionCompanionAdRenderer} x */
+	ActionCompanionAdRenderer(x) {
+		this.ActionCompanionAdData(x.actionCompanionAdRenderer);
+	}
+	/** @arg {ActionCompanionAdData} x */
 	ActionCompanionAdData(x) {
 		const {headline,description,actionButton,iconImage,bannerImage,navigationEndpoint,trackingParams,adInfoRenderer,adVideoId,impressionPings,adLayoutLoggingData,...y}=x; this.g(y);
 		this.g(navigationEndpoint);

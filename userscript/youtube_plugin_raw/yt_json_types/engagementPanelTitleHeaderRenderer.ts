@@ -1,3 +1,3 @@
-type engagementPanelTitleHeaderRenderer={
+type EngagementPanelTitleHeaderRenderer={
 	engagementPanelTitleHeaderRenderer: {};
 };

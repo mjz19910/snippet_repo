@@ -1,4 +1,5 @@
 type AddChatItemActionData={
-	item: LiveChatTextMessageRenderer;
-	clientId?: string;
+	item: LiveChatItem;
+	clientId: string;
 };
+type LiveChatItem=LiveChatTextMessageRenderer|LiveChatPlaceholderItemRenderer;
