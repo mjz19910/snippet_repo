@@ -6785,7 +6785,7 @@ class HandleTypes extends BaseService {
 		if(b) this.Accessibility(b);
 		this.g(y);
 	}
-	/** @template T @template U @arg {SectionListData<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
+	/** @template T @template U @arg {SectionListData<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
 	SectionListData(x,f) {
 		this.save_keys("SectionListData",x);
 		const {contents: a,trackingParams: b,...y}=x;
@@ -6793,16 +6793,16 @@ class HandleTypes extends BaseService {
 		this.trackingParams(b);
 		this.g(y);
 	}
-	/** @template T @template U @arg {SectionListItem<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
-	SectionListItem(x,f=null) {
+	/** @template T @template U @arg {SectionListItem<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	SectionListItem(x,f) {
 		if("itemSectionRenderer" in x) {
 			this.w(x,a => this.ItemSectionData(a,f));
 		} else {
 			debugger;
 		}
 	}
-	/** @template T @template U @arg {ItemSectionData<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
-	ItemSectionData(x,f=null) {
+	/** @template T @template U @arg {ItemSectionData<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	ItemSectionData(x,f) {
 		// "comment-item-section";
 		// "engagement-panel-comments-section";
 		this.save_keys("SectionListData",x);
@@ -7243,7 +7243,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
-	/** @template T,U @arg {SectionListRenderer<T,U>} x @arg {((x:["T",T]|["U",U])=>void)|null} f */
+	/** @template T,U @arg {SectionListRenderer<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
 	SectionListRenderer(x,f) {
 		const {sectionListRenderer: a,...y}=x; this.g(y);
 		this.SectionListData(a,f);
@@ -7612,7 +7612,12 @@ class HandleTypes extends BaseService {
 					case "videoSecondaryInfoRenderer": break;
 				}
 				if("itemSectionRenderer" in x2) {
-					return this.ItemSectionRenderer(x2);
+					return this.ItemSectionRenderer(x2,a=>{
+						switch(a[0]) {case "T": switch(a[1]){case "comments-entry-point": return;default: debugger;}}
+						switch(a[0]) {case "U": switch(a[1]){case "comments-entry-point": return;default: debugger;}}
+						console.log(a);
+						debugger;
+					});
 				} else if("videoPrimaryInfoRenderer" in x2) {
 					return this.VideoPrimaryInfoRenderer(x2);
 				} else if("videoSecondaryInfoRenderer" in x2) {
@@ -7676,9 +7681,9 @@ class HandleTypes extends BaseService {
 	VideoPrimaryInfoRenderer(x) {
 		this.VideoPrimaryInfoData(x.videoPrimaryInfoRenderer);
 	}
-	/** @arg {ItemSectionRenderer<never,never>} x */
-	ItemSectionRenderer(x) {
-		this.ItemSectionData(x.itemSectionRenderer);
+	/** @template T @template U @arg {ItemSectionRenderer<T,U>} x @arg {(x:["T",T]|["U",U])=>void} f */
+	ItemSectionRenderer(x,f) {
+		this.ItemSectionData(x.itemSectionRenderer,f);
 	}
 	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentTemplate(x,f) {

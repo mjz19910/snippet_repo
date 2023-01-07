@@ -1,5 +1,13 @@
 type TwoColumnWatchNextResultsData={
-	results: ResultsTemplate<ContentTemplate<VideoPrimaryInfoRenderer|VideoSecondaryInfoRenderer|ItemSectionRenderer<never,never>>>;
+	results: ResultsTemplate<
+		ContentTemplate<
+			[
+				VideoPrimaryInfoRenderer,
+				VideoSecondaryInfoRenderer,
+				ItemSectionRenderer<"comments-entry-point",never>,
+			][number]
+		>
+	>;
 	secondaryResults: SecondaryResultsTemplate<ContentTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<never,never>>>;
 	playlist?: PlaylistTemplate<PlaylistContent>;
 	autoplay?: AutoplayTemplate<AutoplayContent>;
@@ -17,4 +25,4 @@ type LiveChatData={
 	showHideButton: {};
 };
 
-type LiveChatRenderer={liveChatRenderer:LiveChatData}
+type LiveChatRenderer={liveChatRenderer: LiveChatData;};
