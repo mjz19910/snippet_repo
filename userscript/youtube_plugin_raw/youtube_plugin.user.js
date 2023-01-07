@@ -6616,7 +6616,15 @@ class HandleTypes extends BaseService {
 			}
 		}
 		if(b) this.yt_endpoint(b);
-		if(c) this.Icon(c);
+		if(c) {
+			switch(c.iconType) {
+				case "DELETE": break;
+				case "SETTINGS": break;
+				default: debugger; break;
+			}
+			/** @type {AnyIcon} @type {AnyIconStr} */
+			this.Icon(c);
+		}
 		if(d) this.primitive_of(d,"boolean");
 		if(e) this.yt_endpoint(e);
 		if(i) this.trackingParams(i);
@@ -6909,13 +6917,25 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandsTemplate(x.commandExecutorCommand,a => this.CommandExecutorData(a));
 	}
+	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
+	ChangeEngagementPanelVisibilityActionData(x) {
+		x;
+		debugger;
+	}
+	/** @arg {ScrollToEngagementPanelData} x */
+	ScrollToEngagementPanelData(x) {
+		this.parse_target_id(x.targetId);
+		debugger;
+	}
 	/** @arg {CommandExecutorAction} x */
 	CommandExecutorData(x) {
 		const {clickTrackingParams,...y}=x;
 		if("changeEngagementPanelVisibilityAction" in y) {
-			y.changeEngagementPanelVisibilityAction;
+			this.ChangeEngagementPanelVisibilityActionData(y.changeEngagementPanelVisibilityAction);
 		} else if("scrollToEngagementPanelCommand" in y) {
-			y.scrollToEngagementPanelCommand;
+			this.ScrollToEngagementPanelData(y.scrollToEngagementPanelCommand);
+		} else if("openPopupAction" in y) {
+			this.OpenPopupActionData(y.openPopupAction);
 		} else {
 			let td=this.generate_typedef(x);
 			console.log(td);
@@ -7740,7 +7760,7 @@ class HandleTypes extends BaseService {
 		console.log(x.currentStateId);
 		this.Icon(x.secondaryIcon);
 		this.z(x.states,a=>{
-			console.log(['[state_id]',a.stateId,a.nextStateId]);
+			console.log('[state_id]',[a.stateId,a.nextStateId]);
 			this.ButtonRenderer(a.state);
 		});
   }

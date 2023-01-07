@@ -2,7 +2,7 @@ type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
 	accessibilityData?: Accessibility|AccessibilityData;
 	command?: YtEndpoint;
-	icon?: Icon<"SETTINGS">|Icon<"DELETE">;
+	icon?: Icon<"SETTINGS">|Icon<"DELETE">|Icon<"NOTIFICATIONS_ACTIVE">;
 	isDisabled?: boolean;
 	serviceEndpoint?: YtEndpoint;
 	navigationEndpoint?: YtEndpoint;

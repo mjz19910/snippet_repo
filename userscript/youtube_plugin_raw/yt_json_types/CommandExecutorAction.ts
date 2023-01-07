@@ -1,1 +1,5 @@
-type CommandExecutorAction=ChangeEngagementPanelVisibilityAction|ScrollToEngagementPanelCommand;
+type CommandExecutorAction=[
+	ChangeEngagementPanelVisibilityAction,
+	ScrollToEngagementPanelCommand,
+	OpenPopupAction,
+][number];
