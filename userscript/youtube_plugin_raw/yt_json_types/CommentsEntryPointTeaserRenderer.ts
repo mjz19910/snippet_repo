@@ -1,0 +1,3 @@
+type CommentsEntryPointTeaserRenderer={
+	commentsEntryPointTeaserRenderer: CommentsEntryPointTeaserData;
+};

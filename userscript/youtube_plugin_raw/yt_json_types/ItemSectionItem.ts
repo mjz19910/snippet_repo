@@ -1,4 +1,5 @@
 type ItemSectionItem=[
+	CommentsEntryPointHeaderRenderer,
 	ConnectedAppRenderer,
 	ContinuationItemRenderer,
 	PageIntroductionRenderer,

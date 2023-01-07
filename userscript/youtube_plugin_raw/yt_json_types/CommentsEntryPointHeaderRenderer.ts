@@ -1,0 +1,3 @@
+type CommentsEntryPointHeaderRenderer={
+	commentsEntryPointHeaderRenderer: CommentsEntryPointHeaderData;
+};

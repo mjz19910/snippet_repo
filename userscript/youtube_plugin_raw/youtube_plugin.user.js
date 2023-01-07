@@ -1440,7 +1440,6 @@ class FilterHandlers {
 			["channelFeaturedContentRenderer",false],
 			["channelRenderer",false],
 			["commentsEntryPointHeaderRenderer",false],
-			["commentsEntryPointHeaderRenderer",false],
 			["compactPlaylistRenderer",false],
 			["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
 			["compactRadioRenderer",false],
@@ -6831,64 +6830,75 @@ class HandleTypes extends BaseService {
 		videoRenderer: "VideoData",
 		reelShelfRenderer: "ReelShelfData",
 	};
-	/** @arg {ItemSectionItem} c */
-	ItemSectionItem(c) {
+	/** @arg {ItemSectionItem} x */
+	ItemSectionItem(x) {
 		let t=this;
-		let y=get_keys_of(c);
+		let y=get_keys_of(x);
 		let [k]=y;
-		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts c is T} */
+		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
 		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
 		k="connectedAppRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.ConnectedAppData(a);
 		}
 		k="pageIntroductionRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.PageIntroductionData(a);
 		}
 		k="playlistVideoListRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.PlaylistVideoListData(a);
 		}
 		k="settingsOptionsRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.SettingsOptionsData(a);
 		}
 		k="shelfRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.ShelfData(a);
 		}
 		k="searchPyvRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.SearchPyvData(a);
 		}
 		k="videoRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.VideoData(a);
 		}
 		k="reelShelfRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.ReelShelfData(a);
 		}
 		k="continuationItemRenderer";
-		if(k in c) {
-			const {[k]: a,...b}=c; n(this,a,b);
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
 			return this.ContinuationItemData(a);
 		}
-		let m=get_keys_of(c);
+		k="commentsEntryPointHeaderRenderer";
+		if(k in x) {
+			const {[k]: a,...b}=x; n(this,a,b);
+			return this.CommentsEntryPointHeaderData(a);
+		}
+		let m=get_keys_of(x);
 		for(let k of m) {
 			if(k in this.item_section_map) continue;
 			console.log('[new_section_item] [%s]',k);
 			debugger;
 		}
+	}
+	/** @arg {CommentsEntryPointHeaderData} x */
+	CommentsEntryPointHeaderData(x) {
+		const {commentCount: a,trackingParams: b,targetId,...y}=x;
+		this.text_t(x.commentCount);
+		this.CommentsEntryPointTeaserRenderer(x.contentRenderer);
 	}
 	/** @arg {ReelShelfData} x */
 	ReelShelfData(x) {
@@ -7596,8 +7606,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
-		x;
-		debugger;
+		saved_data.data??={};
+		saved_data.data.arr=[];
+		saved_data.data.arr.push(x);
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
@@ -7879,8 +7890,12 @@ class HandleTypes extends BaseService {
 	/** @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
 		this.t_url_unwrap(x.interpreterUrl,a => {
+			let c=a;
 			// spell:disable-next-line
-			if(a!=="//www.google.com/js/th/G-wi0KRrIjmTWIDOn44AFVMvZ_aKLO1c96DfwAE3d4M.js") debugger;
+			if(a!=="//www.google.com/js/th/G-wi0KRrIjmTWIDOn44AFVMvZ_aKLO1c96DfwAE3d4M.js") {
+				/** @type {TrayrideJsHash} */
+				console.log("new trayride interpreter",c.split("/").slice(5)[0].split(".")[0]);
+			}
 		});
 		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
@@ -8004,12 +8019,15 @@ class HandleTypes extends BaseService {
 		console.log("gen renderer for",x);
 		return `\n${tmp3}`;
 	}
-	/** @arg {{}} x */
+	/** @arg {{[x: string]:{}}} x */
 	generate_typedef(x) {
 		let keys=Object.keys(x);
 		let k=keys[0];
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let obj_count=0;
+		let o2=x[k];
+		let keys_2=Object.keys(o2);
+		let wk=keys.concat(keys_2);
 		let tc=JSON.stringify(x,(x,o) => {
 			if(typeof o==="string") return "string";
 			if(typeof o==="number") return o;
@@ -8021,23 +8039,26 @@ class HandleTypes extends BaseService {
 			if(o.simpleText&&typeof o.simpleText==='string') {
 				return "TYPE::SimpleText";
 			}
-			if(keys.includes(x)) {
+			if(o.thumbnails&&o.thumbnails instanceof Array) {
+				return "TYPE::Thumbnail";
+			}
+			if(wk.includes(x)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
 			}
-			obj_count++;
 			if(o instanceof Array) return [o[0]];
-			if(obj_count<3) return o;
+			obj_count++;
+			if(obj_count<2) return o;
 			if(o instanceof Array) return [{}];
 			return {};
-		});
+		},"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
 		/** @arg {string} s */
 		function one_array_to_any_arr(s,dep=0) {
-			if(dep<8&&s.match(/\[{/)) {
-				s=s.replaceAll(/\[{(.+)}\]/g,(_a,v) => {
+			if(dep<8&&s.match(/\[\s+{/)) {
+				s=s.replaceAll(/\[\s+{(.+)}\s+\]/g,(_a,v) => {
 					return `{${one_array_to_any_arr(v)}}[]`;
 				});
 			}
@@ -8048,7 +8069,8 @@ class HandleTypes extends BaseService {
 		tc=tc.replaceAll(/"TYPE::(.+?)"/g,(_a,x) => {
 			return x;
 		});
-		tc=tc.replaceAll(",",";\n");
+		tc=tc.replaceAll(",",";");
+		tc=tc.replaceAll(/[^[{;]$/gm,a=>`${a};`);
 		return `\ntype ${tn}=${tc}\n`;
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
@@ -8279,7 +8301,6 @@ class HandleTypes extends BaseService {
 		this.z([x.dateText,x.relativeDateText],this.text_t);
 		this.text_t(x.title);
 		this.trackingParams(x.trackingParams);
-		debugger;
 	}
 	/** @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {
