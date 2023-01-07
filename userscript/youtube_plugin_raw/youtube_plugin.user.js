@@ -8102,16 +8102,21 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"number");
 		this.primitive_of(b,"string");
 	}
+	/** @arg {EntityMutationOptions} x */
+	EntityMutationOptions(x) {
+		const {persistenceOption: a,...y}=x; this.g(y);
+		switch(a) {
+			case "ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST": break;
+			default: debugger;
+		}
+	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		switch(x.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": {
 				const {type:{},entityKey:a,options:b,...y}=x; this.g(y);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
-				switch(b.persistenceOption) {
-					case "ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST": break;
-					default: debugger;
-				}
+				this.EntityMutationOptions(b);
 				console.log("[entity_del]",dec);
 			} break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
@@ -8120,6 +8125,7 @@ class HandleTypes extends BaseService {
 				this.EntityMutationPayload(b);
 				console.log("[entity_replace]",dec);
 			} break;
+			default: debugger;
 		}
 	}
 	/** @arg {EntityMutationPayload} x */
