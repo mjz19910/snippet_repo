@@ -4307,7 +4307,7 @@ class YtUrlParser extends BaseService {
 			}
 			default:
 		}
-		/** @template {UrlParseRes_noSearch<any,string,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
+		/** @template {UrlParseRes_noSearch<any,string,any,any>|UrlParseRes<any,string,any,any,any>} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,{host:`${U}${string}`}>} */
 		let host_starts_with=(x,v) => {
 			return this.str_starts_with(x.host,v);
 		};
@@ -4316,11 +4316,15 @@ class YtUrlParser extends BaseService {
 			let v=split_string(c[1],"-");
 			let h=split_string(r.host,".");
 			console.log('yt_ggpht_url',h[0],c[0],v);
+			/** @type {YtUrlFormat} */
 			return;
 		}
 		switch(r.host) {
 			case "www.google.com": return;
 			case "i.ytimg.com": return;
+			case "studio.youtube.com": return;
+			case "music.youtube.com": return;
+			case "www.youtubekids.com": return;
 			default:
 		}
 		console.log("[parse_url_external_1]",x);
