@@ -4,7 +4,10 @@ type ActionCompanionAdData={
 	actionButton: ButtonRenderer;
 	iconImage: ThumbnailsList;
 	bannerImage: ThumbnailsList;
-	navigationEndpoint: UrlEndpoint;
+	navigationEndpoint: UrlEndpoint<ExternalUrlEndpointData,[
+		BaseUrl<`${"https"}://www.googleadservices.com/pagead/aclk?${string}`>,
+		BaseUrl<`${"https"}://ad.doubleclick.net/ddm/trackclk/${string}`>,
+	]>;
 	trackingParams: string;
 	adInfoRenderer: ActionCompanionAdInfoRenderers;
 	adVideoId: string;
@@ -12,7 +15,3 @@ type ActionCompanionAdData={
 	adLayoutLoggingData: AdLayoutLoggingData;
 	associatedCompositePlayerBytesLayoutId: `${string}-0000-${string}-${string}-${string}`;
 };
-type UrlEndpoint={
-	clickTrackingParams:string;
-	loggingUrls:BaseUrl<`${"https"}://www.googleadservices.com/pagead/aclk?${string}`>[];
-	commandMetadata:{webCommandMetadata:{}},urlEndpoint:{url:string,target:string}}
