@@ -4388,6 +4388,11 @@ class YtUrlParser extends BaseService {
 			case "tv.youtube.com": return;
 			default:
 		}
+		let s_host=split_string_once(r.host,".");
+		switch(s_host[1 ]) {
+			case "googlevideo.com": return;
+			default:
+		}
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
@@ -8323,11 +8328,11 @@ class HandleTypes extends BaseService {
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
 		this.CommonConfig(x.html5PlaybackOnesieConfig);
-		debugger;
 	}
 	/** @arg {CommonConfig} x */
 	CommonConfig(x) {
 		const {commonConfig: a,...y}=x; this.g(y);
+		this.CommonConfigData(a);
 	}
 	/** @arg {CommonConfigData} x */
 	CommonConfigData(x) {
@@ -8570,12 +8575,28 @@ class HandleTypes extends BaseService {
 		if("videoDescriptionHeaderRenderer" in x) {
 			this.VideoDescriptionHeaderRenderer(x);
 		} else if("expandableVideoDescriptionBodyRenderer" in x) {
-			let k=get_keys_of(x.expandableVideoDescriptionBodyRenderer);
-			if(k.length>0) debugger;
+			return this.ExpandableVideoDescriptionBodyRenderer(x);
 		} else {
 			debugger;
 		}
 	}
+  /** @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
+  ExpandableVideoDescriptionBodyData_x(x) {
+		const {descriptionBodyText: a,showMoreText:b,showLessText:c,...y}=x; this.g(y);
+		this.z([a,b,c],a=>this.text_t(a));
+  }
+  /** @arg {ExpandableVideoDescriptionBodyData} x */
+  ExpandableVideoDescriptionBodyData(x) {
+		if("descriptionBodyText" in x) {
+			return this.ExpandableVideoDescriptionBodyData_x(x);
+		}
+		let k=get_keys_of(x);
+		if(k.length>0) debugger;
+  }
+  /** @arg {ExpandableVideoDescriptionBodyRenderer} x */
+  ExpandableVideoDescriptionBodyRenderer(x) {
+    this.ExpandableVideoDescriptionBodyData(x.expandableVideoDescriptionBodyRenderer);
+  }
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
