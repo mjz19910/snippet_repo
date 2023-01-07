@@ -6897,15 +6897,26 @@ class HandleTypes extends BaseService {
 	/** @arg {CommentsEntryPointHeaderData} x */
 	CommentsEntryPointHeaderData(x) {
 		const {headerText: a,onTap: b,trackingParams: c,commentCount: d,contentRenderer: e,targetId: f,...y}=x; this.g(y);
-		this.text_t(a);
+		this.z([a,d],this.text_t);
 		this.CommandExecutorCommand(b);
 		this.trackingParams(c);
-		this.text_t(d);
 		this.CommentsEntryPointTeaserRenderer(e);
 		if(f!=="comments-entry-point-header-identifier") debugger;
 	}
 	/** @arg {CommandExecutorCommand} x */
-	CommandExecutorCommand(x) {debugger;x;}
+	CommandExecutorCommand(x) {
+		this.clickTrackingParams(x.clickTrackingParams);
+		this.CommandExecutorCommandData(x.commandExecutorCommand);
+	}
+	/** @arg {CommandExecutorCommandData} x */
+	CommandExecutorCommandData(x) {
+		x.clickTrackingParams;
+		this.CommandsTemplate(x.commandExecutorCommand,a=>a);
+	}
+	/** @template T @arg {CommandsTemplate<T>} x @arg {(x:T)=>void} f */
+	CommandsTemplate(x,f) {
+		this.z(x.commands,f);
+	}
 	/** @arg {CommentsEntryPointTeaserRenderer} x */
 	CommentsEntryPointTeaserRenderer(x) {
 		x;
