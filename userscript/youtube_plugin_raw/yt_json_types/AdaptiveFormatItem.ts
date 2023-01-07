@@ -1,6 +1,6 @@
 type AdaptiveFormatItem={
 	itag: FormatItag;
-	url: string;
+	url?: string;
 	mimeType: string;
 	bitrate: number;
 	width?: number;
@@ -15,10 +15,11 @@ type AdaptiveFormatItem={
 	projectionType: "RECTANGULAR";
 	averageBitrate: number;
 	colorInfo?: FormatColorInfo;
-  highReplication?: true,
-  audioQuality?: "AUDIO_QUALITY_MEDIUM";
+	highReplication?: true,
+	audioQuality?: "AUDIO_QUALITY_MEDIUM";
 	approxDurationMs: `${number}`;
-  audioSampleRate?: `${AudioSampleRate}`;
-  audioChannels?: 2;
-  loudnessDb?: number;
+	audioSampleRate?: `${AudioSampleRate}`;
+	audioChannels?: 2;
+	loudnessDb?: number;
+	signatureCipher?: `s=${string}&sp=${"sig"}&url=${string}`;
 };

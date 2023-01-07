@@ -7536,7 +7536,7 @@ class HandleTypes extends BaseService {
 		if(!this.format_itag_arr.includes(itag)) {
 			debugger;
 		}
-		this.primitive_of(url,"string");
+		if(url) this.primitive_of(url,"string");
 		this.save_string("mime-type",mimeType);
 		this.primitive_of(bitrate,"number");
 		if(w) this.primitive_of(w,"number");
@@ -7550,8 +7550,8 @@ class HandleTypes extends BaseService {
 			audioQuality,
 			approxDurationMs,
 			audioSampleRate,audioChannels,loudnessDb,
-			...y
-		}=a; this.g(y);
+			...b
+		}=a;
 		switch(highReplication) {
 			case true:
 			case void 0: break;
@@ -7569,6 +7569,19 @@ class HandleTypes extends BaseService {
 		if(audioSampleRate) this.parse_audio_sample_rate(audioSampleRate);
 		if(audioChannels&&audioChannels!==2) debugger;
 		if(loudnessDb) this.primitive_of(loudnessDb,"number");
+		const {signatureCipher:sc,...y}=b; this.g(y);
+		if(sc) {
+			let r=make_search_params(sc);
+			let k=get_keys_of(r);
+			for(let v of k) {
+				switch(v) {
+					case "s": break;
+					case "sp": break;
+					case "url": break
+					default: debugger;	
+				}
+			}
+		}
 	}
 	/** @arg {`${AudioSampleRate}`} x */
 	parse_audio_sample_rate(x) {
