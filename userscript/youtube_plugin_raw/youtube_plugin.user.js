@@ -7896,6 +7896,8 @@ class HandleTypes extends BaseService {
 			return this.AdBreakServiceRenderer(x);
 		} else if("linearAdSequenceRenderer" in x) {
 			return this.LinearAdSequenceRenderer(x);
+		} else if("instreamVideoAdRenderer" in x) {
+			return this.InstreamVideoAdRenderer(x);
 		} else {
 			debugger;
 		}

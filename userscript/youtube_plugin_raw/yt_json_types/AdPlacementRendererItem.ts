@@ -1,5 +1,6 @@
 type AdPlacementRendererItem=[
 	AdBreakServiceRenderer,
 	ClientForecastingAdRenderer,
-	LinearAdSequenceRenderer
+	InstreamVideoAdRenderer,
+	LinearAdSequenceRenderer,
 ][number];
