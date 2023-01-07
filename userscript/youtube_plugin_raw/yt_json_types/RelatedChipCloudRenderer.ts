@@ -1,3 +1,1 @@
-type RelatedChipCloudRenderer={
-	relatedChipCloudRenderer: {};
-};
+type RelatedChipCloudRenderer={relatedChipCloudRenderer: ContentTemplate<ChipCloudRenderer>;};

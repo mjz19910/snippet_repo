@@ -1,6 +1,6 @@
 type TwoColumnWatchNextResultsData={
 	results: ResultsTemplate<
-		ContentTemplate<
+		ContentsTemplate<
 			[
 				VideoPrimaryInfoRenderer,
 				VideoSecondaryInfoRenderer,
@@ -10,7 +10,7 @@ type TwoColumnWatchNextResultsData={
 		>
 	>;
 	secondaryResults: SecondaryResultsTemplate<
-		ContentTemplate<
+		ContentsTemplate<
 			[
 				RelatedChipCloudRenderer,
 				ItemSectionRenderer<never,never>,

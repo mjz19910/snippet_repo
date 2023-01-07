@@ -7665,7 +7665,7 @@ class HandleTypes extends BaseService {
 				default: debugger;
 			}
 			if("contents" in x) {
-				this.SecondaryResultsContent_0(x);
+				return this.SecondaryResultsContent_0(x);
 			} else if("results" in x) {
 				return this.ResultsArrTemplate(x,this.SecondaryResultsContent_1);
 			}
@@ -7690,10 +7690,10 @@ class HandleTypes extends BaseService {
 	/** @template T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsArrTemplate(x,f) {
 		const {trackingParams: a,results: b,...y}=x; this.g(y);
-		this.trackingParams(a)
+		this.trackingParams(a);
 		this.z(b,f);
 	}
-	/** @arg {ContentTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<never,never>>} x1 */
+	/** @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<never,never>>} x1 */
 	SecondaryResultsContent_0(x1) {
 		this.ContentTemplate(x1,this.SecondaryResultsContent_1);
 	}
@@ -7808,7 +7808,7 @@ class HandleTypes extends BaseService {
 	ItemSectionRenderer(x,f) {
 		this.ItemSectionData(x.itemSectionRenderer,f);
 	}
-	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template T @arg {ContentsTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentTemplate(x,f) {
 		const {trackingParams,contents,...y}=x; this.g(y);
 		this.z(x.contents,a => f(a));
@@ -8029,7 +8029,32 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
-		this.g(x.chipCloudChipRenderer);
+		this.ChipCloudChipData(x.chipCloudChipRenderer);
+	}
+	/** @arg {ChipCloudChipData} x */
+	ChipCloudChipData(x) {
+		x.isSelected;
+		this.RelatedChipCommand(x.navigationEndpoint);
+	}
+	/** @arg {RelatedChipCommand} x */
+	RelatedChipCommand(x) {
+		const {clickTrackingParams: a,relatedChipCommand: b,...y}=x; this.g(y);
+		this.clickTrackingParams(a);
+		this.RelatedChipCommandData(b);
+	}
+	/** @arg {RelatedChipCommandData} x */
+	RelatedChipCommandData(x) {
+		const {...y}=x; this.g(y);
+		switch(x.targetSectionIdentifier) {
+			case "sid-wn-chips": break;
+			default: debugger;
+		}
+		if(!x.loadCached) debugger;
+	}
+	/** @arg {ChipCloudData} x */
+	ChipCloudData(x) {
+		x;
+		debugger;
 	}
 	/** @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {

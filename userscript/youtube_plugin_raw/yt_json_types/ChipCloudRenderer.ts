@@ -1,0 +1,3 @@
+type ChipCloudRenderer={
+	chipCloudRenderer: ChipCloudData;
+};

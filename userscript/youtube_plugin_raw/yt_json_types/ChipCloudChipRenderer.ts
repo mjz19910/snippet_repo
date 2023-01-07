@@ -1,3 +1,1 @@
-type ChipCloudChipRenderer={
-	chipCloudChipRenderer: {};
-};
+type ChipCloudChipRenderer={chipCloudChipRenderer: ChipCloudChipData;};
