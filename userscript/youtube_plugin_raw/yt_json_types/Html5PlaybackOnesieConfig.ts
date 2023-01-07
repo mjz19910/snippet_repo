@@ -1,3 +1,1 @@
-type Html5PlaybackOnesieConfig={
-	html5PlaybackOnesieConfig: {};
-};
+type Html5PlaybackOnesieConfig={html5PlaybackOnesieConfig: CommonConfig;};

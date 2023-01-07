@@ -4101,6 +4101,10 @@ class YtUrlParser extends BaseService {
 		let ac=x.slice(1,-1);
 		return ac;
 	}
+	/** @template {string} T @template {string} U @arg {T} x @arg {U} u @returns {x is `${string}${U}${string}`|`${U}${string}`|`${string}${U}`} */
+	str_has_sep(x,u) {
+		return x.includes(u);
+	}
 	/** @arg {MimeTypeFormat} x */
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
@@ -4108,8 +4112,20 @@ class YtUrlParser extends BaseService {
 		this.save_string("mime-type",vv[0]);
 		let v1=split_string(vns,"=")[1];
 		let in_codec=this.extract_inner(v1,"\"");
+		if(this.str_has_sep(in_codec,".")) {
+			let avc_codec_desc=split_string_once(in_codec,".");
+			switch(avc_codec_desc[0]) {
+				case "avc1": return;
+				case "mp4a": return;
+				default: debugger;
+			};
+			return;
+		}
+		switch(in_codec) {
+			case "vp9": return;
+			default:
+		}
 		console.log(vv[0],in_codec);
-		debugger;
 	}
 	/** @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [string,`${U}${string}`,...string[]]} */
 	str_starts_with_at_1(x,w) {
@@ -7585,7 +7601,7 @@ class HandleTypes extends BaseService {
 		if(audioSampleRate) this.parse_audio_sample_rate(audioSampleRate);
 		if(audioChannels&&audioChannels!==2) debugger;
 		if(loudnessDb) this.primitive_of(loudnessDb,"number");
-		const {signatureCipher:sc,...y}=b; this.g(y);
+		const {signatureCipher: sc,...y}=b; this.g(y);
 		if(sc) {
 			let r=make_search_params(sc);
 			let k=get_keys_of(r);
@@ -7593,8 +7609,8 @@ class HandleTypes extends BaseService {
 				switch(v) {
 					case "s": break;
 					case "sp": break;
-					case "url": break
-					default: debugger;	
+					case "url": break;
+					default: debugger;
 				}
 			}
 		}
@@ -8215,7 +8231,10 @@ class HandleTypes extends BaseService {
 			reader.pos=2;
 			if(!rr) break x;
 			if(rr[0][0]!=="child") break x;
-			console.log(decoder.decode(rr[0][2]));
+			let r2_off=rr[0][2].byteOffset;
+			reader.pos=r2_off;
+			let r2=reader.try_read_any();
+			console.log(r2,decoder.decode(rr[0][2]));
 		}
 		let ro=reader.try_read_any();
 		if(ro) {
@@ -8254,11 +8273,18 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
-		const {videoId:a,params:b,playlistId:c,loggingContext:d,watchEndpointSupportedOnesieConfig:e,...y}=x; this.g(y);
+		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
 		this.x.get("string_parser").parse_video_id(x.videoId);
 		console.log("params",b);
 		console.log("playlist_id",c);
 		this.VssLoggingContext(d);
+		e&&this.Html5PlaybackOnesieConfig(e);
+		if(f!==void 0) this.primitive_of(f,"number");
+	}
+	/** @arg {Html5PlaybackOnesieConfig} x */
+	Html5PlaybackOnesieConfig(x) {
+		x;
+		debugger;
 	}
 	/** @private @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
@@ -8707,10 +8733,11 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
 		const {title,viewCount,videoActions,trackingParams,badges,dateText,relativeDateText,...y}=x; this.g(y);
-		this.z(x.badges,this.MetadataBadgeRenderer);
-		this.z([x.dateText,x.relativeDateText],this.text_t);
-		this.text_t(x.title);
-		this.trackingParams(x.trackingParams);
+		this.z(badges,this.MetadataBadgeRenderer);
+		this.z([dateText,relativeDateText],this.text_t);
+		this.text_t(title);
+		this.trackingParams(trackingParams);
+		debugger;
 	}
 	/** @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {
