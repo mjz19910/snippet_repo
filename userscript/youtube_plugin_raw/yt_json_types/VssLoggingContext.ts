@@ -1,3 +1,1 @@
-type VssLoggingContext={
-	vssLoggingContext: {};
-};
+type VssLoggingContext={vssLoggingContext: VssLoggingContextData;};

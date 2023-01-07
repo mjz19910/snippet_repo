@@ -6931,7 +6931,16 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CompactPlaylistData} x */
 	CompactPlaylistData(x) {
-		x;
+		this.text_t(x.longBylineText);
+		this.MenuRenderer(x.menu);
+		this.WatchEndpoint(x.navigationEndpoint);
+	}
+	/** @arg {WatchEndpoint} x */
+	WatchEndpoint(x) {
+		const {clickTrackingParams: a,commandMetadata: b,watchEndpoint: c,...y}=x; this.g(y);
+		this.clickTrackingParams(a);
+		this.CommandMetadata(b);
+		this.WatchEndpointData(c);
 	}
 	/** @arg {CommentsEntryPointHeaderData} x */
 	CommentsEntryPointHeaderData(x) {
@@ -8211,7 +8220,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
+		const {videoId:a,params:b,playlistId:c,loggingContext:d,watchEndpointSupportedOnesieConfig:e,...y}=x; this.g(y);
 		this.x.get("string_parser").parse_video_id(x.videoId);
+		console.log("params",b);
+		console.log("playlist_id",c);
+		this.VssLoggingContext(d);
+	}
+	/** @private @arg {VssLoggingContext} x */
+	VssLoggingContext(x) {
+		x;
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
