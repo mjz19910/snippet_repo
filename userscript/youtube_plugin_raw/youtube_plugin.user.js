@@ -7483,7 +7483,7 @@ class HandleTypes extends BaseService {
 		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
 		this.UrlWrappedValueT(interpreterSafeUrl,a => a);
 	}
-	/** @template {string} T @arg {import("./yt_json_types/UrlWrappedValueT").UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
+	/** @template {string} T @arg {UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
 	UrlWrappedValueT(x,f) {
 		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
@@ -7708,9 +7708,18 @@ class HandleTypes extends BaseService {
 	AttGet(x) {
 		this.AttBgChallenge(x.bgChallenge);
 	}
+	/** @template {string} T  @arg {UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
+	t_url_unwrap(x,f) {
+		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
+	}
+	att_log_debug=false;
 	/** @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
-		console.log("bg_interpreter_url",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
+		this.t_url_unwrap(x.interpreterUrl,a=>{
+			// spell:disable-next-line
+			if(a!=="//www.google.com/js/th/G-wi0KRrIjmTWIDOn44AFVMvZ_aKLO1c96DfwAE3d4M.js") debugger;
+		})
+		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
 	/** @arg {import("./yt_json_types/GuideJsonType").GuideJsonType} x */
 	GuideJsonType(x) {
@@ -7855,7 +7864,11 @@ class HandleTypes extends BaseService {
 	}
   /** @arg {VideoDescriptionHeaderRenderer} x */
   VideoDescriptionHeaderRenderer(x) {
-    this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
+		if("videoDescriptionHeaderRenderer" in x) {
+    	this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
+		} else {
+			debugger;
+		}
   }
   /** @arg {VideoDescriptionHeaderData} x */
   VideoDescriptionHeaderData(x) {
@@ -7941,9 +7954,9 @@ class HandleTypes extends BaseService {
   }
   /** @arg {LinearAdSequenceData} x */
 	LinearAdSequenceData(x) {
-		this.AdLayoutMetadata(x.adLayoutMetadata);
-		this.z(x.linearAds,a=>this.LinearAdsItem(a));
-		debugger;
+		const {linearAds: a,adLayoutMetadata: b,...y}=x; this.g(y);
+		this.z(a,a=>this.LinearAdsItem(a));
+		this.AdLayoutMetadata(b);
 	}
   /** @arg {LinearAdsItem} x */
 	LinearAdsItem(x) {
