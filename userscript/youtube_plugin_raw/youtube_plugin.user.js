@@ -8278,11 +8278,9 @@ class HandleTypes extends BaseService {
 			}
 		}
 		let ro=reader.try_read_any();
-		if(ro) {
+		if(ro&&ro[1]) {
 			console.log(ro[1]);
 		}
-		let ret=decode_entity_key(a);
-		console.log('offline_entity_key',ret);
 		this.InnertubeCommand(b);
 		switch(c) {
 			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
