@@ -1,1 +1,6 @@
-type PlaylistId=YtInfinitePlaylistFormat|YtGeneralPlaylistFormat|"WL";
+type PlaylistId=[
+	`RD${string}`,
+	`RDMM${string}`,
+	`PL${string}`,
+	"WL",
+][number];

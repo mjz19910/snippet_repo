@@ -4095,16 +4095,30 @@ class IndexedDbAccessor {
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class YtUrlParser extends BaseService {
-	/** @arg {"WL"|`PL${string}`} x */
+	/** @arg {PlaylistId} x */
 	parse_playlist_id(x) {
-		switch(x) {
-			case "WL": return;
+		x: {
+			switch(x) {
+				case "WL": {
+					console.log('[parse_playlist_static]',x);
+				} break;
+				default: break x;
+			}
+			return;
 		}
 		if(this.str_starts_with(x,"PL")) {
+			let pl=x.slice(2);
+			console.log('[parse_playlist]',pl.length,pl);
+			return;
+		}
+		if(this.str_starts_with(x,"RDMM")) {
+			let pl=x.slice(4);
+			console.log('[parse_playlist_radio_mm]',pl.length,pl);
 			return;
 		}
 		if(this.str_starts_with(x,"RD")) {
-			console.log('radio',x.length,x);
+			let pl=x.slice(2);
+			console.log('[parse_playlist_radio]',pl.length,pl);
 			return;
 		}
 		debugger;
@@ -4780,7 +4794,7 @@ class HandleTypes extends BaseService {
 		if(a!=="browse") debugger;
 		this.BrowseEndpoint(b,a => this.BrowseWebCommandMetadata(a));
 		this.save_keys("DataResponsePageType",x);
-		this.x.get("string_parser").parse_url(d);
+		this.s_parser.parse_url(d);
 		this.BrowseResponseContent(c);
 		if(e) this.previousCsn(e);
 		this.g(y);
@@ -5022,7 +5036,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtUrlFormat} x */
 	parse_url(x) {
-		this.x.get("string_parser").parse_url(x);
+		this.s_parser.parse_url(x);
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommand(x) {
@@ -5155,7 +5169,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtTargetIdType} x */
 	parse_target_id(x) {
-		this.x.get("string_parser").parse_target_id(x);
+		this.s_parser.parse_target_id(x);
 	}
 	/** @type {ResponseTypes['type']|NavigateEventDetail['response']['page']|null} */
 	_current_response_type=null;
@@ -5566,7 +5580,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
-		this.x.get("string_parser").parse_guide_entry_id(x);
+		this.s_parser.parse_guide_entry_id(x);
 	}
 	/** @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
@@ -7468,7 +7482,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlaylistVideoListData} x */
 	PlaylistVideoListData(x) {
-		this.parse_playlist_id(x.playlistId);
+		this.s_parser.parse_playlist_id(x.playlistId);
+	}
+	get s_parser() {
+		return this.x.get("string_parser");
 	}
 	/** @arg {PageIntroductionData} x */
 	PageIntroductionData(x) {
@@ -7579,7 +7596,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 		if(url) this.primitive_of(url,"string");
-		this.x.get("string_parser").parse_mime_type(mimeType);
+		this.s_parser.parse_mime_type(mimeType);
 		this.primitive_of(bitrate,"number");
 		if(w) this.primitive_of(w,"number");
 		if(h) this.primitive_of(h,"number");
@@ -8298,9 +8315,9 @@ class HandleTypes extends BaseService {
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
 		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
-		this.x.get("string_parser").parse_video_id(x.videoId);
+		this.s_parser.parse_video_id(x.videoId);
 		b&&console.log("[watch_ep_params]",b);
-		this.parse_playlist_id(c);
+		this.s_parser.parse_playlist_id(c);
 		this.VssLoggingContext(d);
 		e&&this.Html5PlaybackOnesieConfig(e);
 		if(f!==void 0) this.primitive_of(f,"number");
