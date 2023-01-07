@@ -8112,6 +8112,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
+		this.save_enum("ENTITY_MUTATION_TYPE",x.type);
 		switch(x.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": {
 				const {type:{},entityKey:a,options:b,...y}=x; this.g(y);
@@ -8122,23 +8123,28 @@ class HandleTypes extends BaseService {
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
 				const {type:{},entityKey:a,payload:b,...y}=x; this.g(y);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
-				this.EntityMutationPayload(b);
+				this.OfflineabilityEntity(b);
 				console.log("[entity_replace]",dec);
 			} break;
 			default: debugger;
 		}
 	}
-	/** @arg {EntityMutationPayload} x */
-	EntityMutationPayload(x) {
-		this.OfflineabilityEntity(x.offlineabilityEntity);
-	}
 	/** @arg {OfflineabilityEntity} x */
 	OfflineabilityEntity(x) {
+		this.OfflineabilityEntityData(x.offlineabilityEntity);
+	}
+	/** @arg {OfflineabilityEntityData} x */
+	OfflineabilityEntityData(x) {
+		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
 		switch(x.addToOfflineButtonState) {
 			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
+			case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED": break;
 			default: debugger;
 		};
-		console.log('offline_entity_key',x.key);
+		let ret=decode_entity_key(a);
+		console.log('offline_entity_key',ret);
+		this.LoggingDirectives(f);
+		debugger;
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {

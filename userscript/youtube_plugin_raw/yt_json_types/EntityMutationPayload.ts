@@ -1,3 +1,0 @@
-type EntityMutationPayload={
-	offlineabilityEntity: OfflineabilityEntity;
-};
