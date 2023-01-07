@@ -3235,14 +3235,13 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @protected @template {{}} T @arg {string} key @arg {T} obj @arg {boolean} [handled] */
-	save_keys(key,obj,handled) {
-		if(handled===void 0) debugger;
-		let keys=get_keys_of(obj);
+	/** @template {{}} T @arg {string} k @arg {T} x */
+	save_keys(k,x) {
+		let keys=get_keys_of(x);
 		if(eq_keys(keys,["type","data"])) {
 			debugger;
 		}
-		this.save_string(key,keys.join());
+		this.save_string(k,keys.join());
 	}
 }
 class CsiService extends BaseService {
@@ -4411,7 +4410,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {import("./yt_json_types/WatchResponsePlayer").PlayerResponse} x */
 	PlayerResponse(x) {
-		this.save_keys("PlayerResponse",x,true);
+		this.save_keys("PlayerResponse",x);
 		let t=this;
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
@@ -4422,7 +4421,7 @@ class HandleTypes extends BaseService {
 				this.PlayerAnnotationsExpandedRenderer(a);
 			});
 			if(c) this.PlayerAttestationRenderer(c);
-			this.z(d,a => this.maybe(a,a=>this.AdPlacementRenderer(a)));
+			this.z(d,a => this.maybe(a,a => this.AdPlacementRenderer(a)));
 			return y;
 		}
 		let a=p1.call(this,x);
@@ -4498,7 +4497,7 @@ class HandleTypes extends BaseService {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
 		this.BrowseEndpoint(b);
-		this.save_keys("DataResponsePageType",x,true);
+		this.save_keys("DataResponsePageType",x);
 		this.x.get("string_parser").parse_url(d);
 		this.BrowseResponseContent(c);
 		if(e) this.previousCsn(e);
@@ -4598,7 +4597,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
-		this.save_keys("BrowseResponseContent",x,true);
+		this.save_keys("BrowseResponseContent",x);
 		const {
 			trackingParams: a,
 			responseContext: res_ctx,contents: cont,
@@ -4722,7 +4721,7 @@ class HandleTypes extends BaseService {
 		const {params: a,browseId: b,canonicalBaseUrl: c,...y}=x;
 		if(a) this.parse_endpoint_params(decodeURIComponent(a));
 		if(b) this.parse_browse_id(b);
-		this.save_keys("BrowseEndpointData",x,true);
+		this.save_keys("BrowseEndpointData",x);
 		this.g(y);
 	}
 	/** @arg {UrlEndpointData} x */
@@ -4736,7 +4735,7 @@ class HandleTypes extends BaseService {
 		}
 		const {url,...y}=x;
 		this.parse_url(url);
-		this.save_keys("UrlEndpointRoot",x,true);
+		this.save_keys("UrlEndpointRoot",x);
 		this.g(y);
 	}
 	/** @arg {YtUrlFormat} x */
@@ -4824,7 +4823,7 @@ class HandleTypes extends BaseService {
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		if(!x) {debugger; return;}
-		this.save_keys("YtEndpoint",x,true);
+		this.save_keys("YtEndpoint",x);
 		const {
 			clickTrackingParams: a,
 			...y
@@ -4876,15 +4875,10 @@ class HandleTypes extends BaseService {
 	/** @arg {ResponseTypes} x */
 	ResponseTypes(x) {
 		this._current_response_type=x.type;
-		this.save_keys(`ResponseTypes.${x.type}`,x.data,true);
-		if("responseContext" in x.data&&x.data.responseContext) {
-			this.ResponseContext(x.data.responseContext);
-		}
-		let t=this;
 		/** @arg {{type:string}} x */
-		function g(x) {
-			return t.save_string("need_api_type",x.type);
-		}
+		let g=x => {
+			return this.save_string("need_api_type",x.type);
+		};
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuJson(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
@@ -5158,7 +5152,7 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(responseContext);
 		this.z(actions,a => this.OpenPopupAction(a));
 		this.trackingParams(trackingParams);
-		this.save_keys("GetNotificationMenuJson",x,true);
+		this.save_keys("GetNotificationMenuJson",x);
 		this.g(y);
 	}
 	/** @private @arg {YtApiNext} x */
@@ -5190,14 +5184,14 @@ class HandleTypes extends BaseService {
 			this.ResponseContext(responseContext);
 			this.trackingParams(trackingParams);
 		}
-		this.save_keys("api_next",x,true);
+		this.save_keys("api_next",x);
 		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCount(x) {
 		const {responseContext: a,...y}=x;
 		this.ResponseContext(a);
-		this.save_keys("GetUnseenCount",x,true);
+		this.save_keys("GetUnseenCount",x);
 		if("actions" in x) {
 			this.ResponseWithActions(x);
 		} else if("unseenCount" in y) {
@@ -5535,7 +5529,7 @@ class HandleTypes extends BaseService {
 		}
 		const {twoColumnBrowseResultsRenderer,...y}=x;
 		this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
-		this.save_keys("TwoColumnBrowseResultsRenderer",x,true);
+		this.save_keys("TwoColumnBrowseResultsRenderer",x);
 		this.g(y);
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
@@ -5596,7 +5590,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
-		this.save_keys("ResponseContext",x,true);
+		this.save_keys("ResponseContext",x);
 		const {
 			mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,
 			maxAgeSeconds: d,stateTags: e,consistencyTokenJar: f,
@@ -6443,7 +6437,7 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(a);
 		this.text_t(b);
 		this.z(c,v => this.UpdateChannelSwitcherPageAction(v));
-		this.save_keys("AccountsListResponse",x,true);
+		this.save_keys("AccountsListResponse",x);
 		this.g(y);
 	}
 	/** @arg {UpdateChannelSwitcherPageAction} x */
@@ -6511,7 +6505,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {import("./yt_json_types/ButtonData").ButtonData} x */
 	ButtonData(x) {
-		this.save_keys("ButtonData",x,true);
+		this.save_keys("ButtonData",x);
 		const {
 			accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
 			navigationEndpoint: j,
@@ -6574,7 +6568,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommentsHeaderData} x */
 	CommentsHeaderData(x) {
-		this.save_keys("CommentsHeaderRenderer",x,true);
+		this.save_keys("CommentsHeaderRenderer",x);
 		const {
 			countText: a,createRenderer: b,sortMenu: c,trackingParams: d,titleText: e,commentsCount: f,
 			showSeparator: g,customEmojis: h,unicodeEmojisUrl: i,loggingDirectives: j,
@@ -6607,7 +6601,7 @@ class HandleTypes extends BaseService {
 	ResolveUrlCommandMetadata(x) {
 		const {isVanityUrl: a,parentTrackingParams: b,...y}=x;
 		if(a) this.primitive_of(a,"boolean");
-		this.save_keys("resolveUrlCommandMetadata",x,true);
+		this.save_keys("resolveUrlCommandMetadata",x);
 		if(b) this.trackingParams(b);
 		this.g(y);
 	}
@@ -6625,7 +6619,7 @@ class HandleTypes extends BaseService {
 		this.save_string("avatarSizeEnum",f);
 		this.EmojiPickerRenderer(h);
 		this.primitive_of(i,"string");
-		this.save_keys("CommentSimpleboxData",x,true);
+		this.save_keys("CommentSimpleboxData",x);
 		this.g(y);
 	}
 	/** @arg {ReelItemWatch} x */
@@ -6649,7 +6643,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
-		this.save_keys("SecondaryContents",x,true);
+		this.save_keys("SecondaryContents",x);
 		if("profileColumnRenderer" in x) {
 			this.w(x,a => this.ProfileColumnData(a));
 		} else if("browseFeedActionsRenderer" in x) {
@@ -6715,7 +6709,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
-		this.save_keys("SectionListData",x,true);
+		this.save_keys("SectionListData",x);
 		const {contents: a,trackingParams: b,...y}=x;
 		this.z(a,a => this.SectionListItem(a));
 		this.trackingParams(b);
@@ -6731,7 +6725,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
-		this.save_keys("SectionListData",x,true);
+		this.save_keys("SectionListData",x);
 		const {contents: a,trackingParams: b,...y}=x;
 		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
@@ -6854,7 +6848,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
-		this.save_keys("AccountSetSetting",x,true);
+		this.save_keys("AccountSetSetting",x);
 		const {responseContext: a,settingItemId: b,...y}=x;
 		switch(b) {
 			case "407": break;
@@ -6874,7 +6868,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
-		this.save_keys("ReelWatchSequence",x,true);
+		this.save_keys("ReelWatchSequence",x);
 		const {responseContext: a,entries: b,trackingParams,continuationEndpoint,...y}=x;
 		this.ReelWatchEntries(b);
 		this.trackingParams(trackingParams);
@@ -6931,13 +6925,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
-		this.save_keys("JsonFeedbackData",x,true);
+		this.save_keys("JsonFeedbackData",x);
 		const {responseContext: a,...y}=x;
 		this.g(y);
 	}
 	/** @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
-		this.save_keys("JsonGetTranscriptData",x,true);
+		this.save_keys("JsonGetTranscriptData",x);
 		const {responseContext: a,actions: b,trackingParams: c,...y}=x;
 		this.ResponseContext(a);
 		this.z(b,a => this.UpdateEngagementPanelAction(a));
@@ -7085,7 +7079,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EngagementPanelSectionListData} x */
 	EngagementPanelSectionListData(x) {
-		this.save_keys("ListData",x,true);
+		this.save_keys("ListData",x);
 		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
 		this.EngagementPanelSectionListContent(a);
 		if(b!=="engagement-panel-ads") debugger;
@@ -7098,16 +7092,16 @@ class HandleTypes extends BaseService {
 		let y=as_cast({});
 		y.adsEngagementPanelContentRenderer;
 		if("adsEngagementPanelContentRenderer" in x) {
-			return this.w(x,a=>this.AdsEngagementPanelContentData(a));
+			return this.w(x,a => this.AdsEngagementPanelContentData(a));
 		} else if("clipSectionRenderer" in x) {
-			return this.w(x,a=>this.ClipSection(a));
+			return this.w(x,a => this.ClipSection(a));
 		}
 		console.log(x);
 		debugger;
 	}
 	/** @arg {ClipSection} x */
 	ClipSection(x) {
-		this.z(x.contents,a=>this.ClipCreationRenderer(a));
+		this.z(x.contents,a => this.ClipCreationRenderer(a));
 	}
 	/** @arg {ClipCreationRenderer} x */
 	ClipCreationRenderer(x) {
@@ -7115,7 +7109,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ClipCreationData} x */
 	ClipCreationData(x) {
-		this.w(x,(a,k)=>this.save_keys(`ClipCreationData.${k}`,a));
+		this.w(x,(a,k) => this.save_keys(`ClipCreationData.${k}`,a));
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
