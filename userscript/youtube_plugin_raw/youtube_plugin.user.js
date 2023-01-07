@@ -8033,6 +8033,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
+		const {...y}=x; this.g(y);
 		x.isSelected;
 		this.RelatedChipCommand(x.navigationEndpoint);
 	}
@@ -8044,12 +8045,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {RelatedChipCommandData} x */
 	RelatedChipCommandData(x) {
-		const {...y}=x; this.g(y);
-		switch(x.targetSectionIdentifier) {
+		const {targetSectionIdentifier: a,loadCached: b,...y}=x; this.g(y);
+		switch(a) {
 			case "sid-wn-chips": break;
 			default: debugger;
 		}
-		if(!x.loadCached) debugger;
+		if(!b) debugger;
 	}
 	/** @arg {ChipCloudData} x */
 	ChipCloudData(x) {
