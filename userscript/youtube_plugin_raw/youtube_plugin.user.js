@@ -4394,6 +4394,15 @@ class YtUrlParser extends BaseService {
 }
 //#region HandleTypes
 class HandleTypes extends BaseService {
+	/** @template {{}} T @arg {Maybe<T>} x @returns {x is T} */
+	maybe_has_value(x) {
+		return Object.keys(x).length>0;
+	}
+	/** @template {{}} T @arg {Maybe<T>} x @arg {(x:T)=>void} f */
+	maybe(x,f) {
+		if(!this.maybe_has_value(x)) return;
+		f(x);
+	}
 	/** @private @arg {import("./yt_json_types/WatchResponsePlayer").PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("PlayerResponse",x,true);
@@ -4407,7 +4416,7 @@ class HandleTypes extends BaseService {
 				this.PlayerAnnotationsExpandedRenderer(a);
 			});
 			if(c) this.PlayerAttestationRenderer(c);
-			this.z(d,a => this.empty_object(a));
+			this.z(d,a => this.maybe(a,a=>this.AdPlacementRenderer(a)));
 			return y;
 		}
 		let a=p1.call(this,x);
@@ -7070,7 +7079,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {EngagementPanelSectionListData} x */
 	EngagementPanelSectionListData(x) {
-		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; this.g(y);
+		this.save_keys("ListData",x,true);
+		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
 		this.AdsEngagementPanelContentRenderer(a);
 		if(b!=="engagement-panel-ads") debugger;
 		if(c!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -7638,6 +7648,11 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactLinkData} x */
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
+	}
+	/** @arg {AdPlacementRenderer} x */
+	AdPlacementRenderer(x) {
+		console.log(x.adPlacementRenderer.config);
+		console.log(x.adPlacementRenderer.renderer);
 	}
 }
 //#endregion

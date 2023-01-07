@@ -1,0 +1,1 @@
+type AdPlacementRenderer={adPlacementRenderer: AdPlacementData;};
