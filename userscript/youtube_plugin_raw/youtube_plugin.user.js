@@ -7860,15 +7860,22 @@ class HandleTypes extends BaseService {
   }
   /** @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
-		this.z(x.items,a=>this.VideoDescriptionHeaderRenderer(a));
+		this.z(x.items,a=>this.StructuredDescriptionContentItem(a));
 	}
-  /** @arg {VideoDescriptionHeaderRenderer} x */
-  VideoDescriptionHeaderRenderer(x) {
+  /** @arg {StructuredDescriptionContentItem} x */
+	StructuredDescriptionContentItem(x) {
 		if("videoDescriptionHeaderRenderer" in x) {
-    	this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
+			this.VideoDescriptionHeaderRenderer(x);
+		} else if("expandableVideoDescriptionBodyRenderer" in x) {
+			let k=get_keys_of(x.expandableVideoDescriptionBodyRenderer);
+			if(k.length>0) debugger;
 		} else {
 			debugger;
 		}
+	}
+  /** @arg {VideoDescriptionHeaderRenderer} x */
+  VideoDescriptionHeaderRenderer(x) {
+		this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
   }
   /** @arg {VideoDescriptionHeaderData} x */
   VideoDescriptionHeaderData(x) {
@@ -7924,12 +7931,20 @@ class HandleTypes extends BaseService {
 	AdPlacementConfig(x) {
 		this.AdPlacementConfigData(x.adPlacementConfig);
 	}
+	/** @template {string} T @template {`${T}_${string}`} U @arg {T} ns @arg {U} x @returns {SplitOnce<SplitOnce<U,T>[1],"_">[1]} */
+	parse_enum(ns,x) {
+		let r=split_string_once(x,ns);
+		if(!r[1]) throw new Error("Invalid enum");
+		let q=split_string_once(r[1],"_");
+		return q[1];
+	}
 	/** @arg {AdPlacementConfigData} x */
 	AdPlacementConfigData(x) {
-		switch(x.kind) {
-			case "AD_PLACEMENT_KIND_END": break;
-			case "AD_PLACEMENT_KIND_START": break;
-			case "AD_PLACEMENT_KIND_SELF_START": break;
+		let kind=this.parse_enum("AD_PLACEMENT_KIND",x.kind);
+		switch(kind) {
+			case "END": break;
+			case "START": break;
+			case "SELF_START": break;
 			default: debugger;
 		}
 		this.AdTimeOffset(x.adTimeOffset);

@@ -1,0 +1,3 @@
+type ExpandableVideoDescriptionBodyRenderer={
+	expandableVideoDescriptionBodyRenderer: ExpandableVideoDescriptionBodyData;
+};
