@@ -4289,6 +4289,16 @@ class YtUrlParser extends BaseService {
 			}
 			default:
 		}
+		switch(r.host) {
+			case "www.google.com": return;
+			case "i.ytimg.com": return;
+			case "yt3.ggpht.com": {
+				let c=split_string(r.pathname,"=");
+				let v=split_string(c[1],"-");
+				console.log('yt3_url',c[0],v);
+			} return;
+			default:
+		}
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
@@ -7570,6 +7580,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
 	PlaylistTemplate(x,f) {
+		if(!x) {debugger;return;}
 		f(x.playlist);
 	}
 	/** @arg {SecondaryResultsTemplate<any>} x */
@@ -8255,10 +8266,6 @@ class HandleTypes extends BaseService {
 		this.text_t(x.hoverText);
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {NavigationEndpointTODO} x */
-	NavigationEndpoint(x) {
-		this.g(x);
-	}
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
 		this.z(x.badges,this.MetadataBadgeRenderer);
@@ -8267,12 +8274,20 @@ class HandleTypes extends BaseService {
 		this.trackingParams(x.trackingParams);
 		debugger;
 	}
-	/** @arg {MetadataBadgeData} x */
+	/** @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {
+		const {metadataBadgeRenderer: a,...y}=x; this.g(y);
+		this.MetadataBadgeData(a);
+	}
+	/** @arg {MetadataBadgeData} x */
+	MetadataBadgeData(x) {
 		const {icon: a,style: b,label: c,tooltip: d,trackingParams: e,accessibilityData: f,...y}=x; this.g(y);
 		this.Icon(a);
 		this.save_enum("BADGE_STYLE_TYPE",b);
-		debugger;
+		console.log("meta label",c);
+		if(d) console.log("meta tooltip",d);
+		this.trackingParams(e);
+		if(f) this.AccessibilityData(f);
 	}
 }
 //#endregion
