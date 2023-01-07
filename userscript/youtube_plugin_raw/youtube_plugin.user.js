@@ -8516,7 +8516,7 @@ class HandleTypes extends BaseService {
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_typedef(x,r_name=null) {
 		let k=this.get_renderer_key(x);
-		if(!k) return null;
+		if(k===null) return null;
 		let t_name=k;
 		if(r_name) {
 			t_name=r_name;
@@ -8528,6 +8528,7 @@ class HandleTypes extends BaseService {
 		let o2=xa[k];
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		let tc=JSON.stringify(x,(x,o) => {
+			if(x==="") return o;
 			if(typeof o==="string") return "string";
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
@@ -8563,21 +8564,28 @@ class HandleTypes extends BaseService {
 		/** @arg {string} s */
 		function one_array_to_any_arr(s,dep=0) {
 			if(dep<8&&s.match(/\[\s+{/g)) {
-				s=s.replaceAll(/\[\s+{((.|\n)*)}\s+\]/g,(_a,v) => {
+				s=s.replaceAll(/\[\s+{((.|\n)*)}\s+\]/g,(_a,/**@type {string} */v) => {
 					if(v==="") return "{}[]";
-					return `{${one_array_to_any_arr(v)}}[]`;
+					let vn=v.split("\n").map(e=>e.slice(1)).join("\n");
+					return `{${one_array_to_any_arr(vn)}}[]`;
 				});
 			}
 			return s;
 		}
 		tc=one_array_to_any_arr(tc);
+		debugger;
 		tc=tc.replaceAll("\"string\"","string");
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
 		});
 		tc=tc.replaceAll(",",";");
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
-		let ret=`\ntype ${tn}=${tc}\n`;
+		let ret;
+		if(typeof tn==='number') {
+			ret=`\ntype ArrayItem_${tn}=${tc}\n`;
+		} else {
+			ret=`\ntype ${tn}=${tc}\n`;
+		}
 		return ret;
 	}
 	/** @arg {string} x1 */
@@ -8722,7 +8730,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {
-		this.generate_typedef(x.carouselLockups,"CLA");
+		let td=this.generate_typedef(x.carouselLockups,"CLA");
+		console.log(td);
 		debugger;
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
