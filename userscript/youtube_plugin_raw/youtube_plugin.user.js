@@ -4139,21 +4139,30 @@ class YtUrlParser extends BaseService {
 		let vns=split_string(vv[1]," ")[1];
 		this.save_string("mime-type",vv[0]);
 		let v1=split_string(vns,"=")[1];
-		let in_codec=this.extract_inner(v1,"\"");
-		if(this.str_has_sep(in_codec,".")) {
-			let avc_codec_desc=split_string_once(in_codec,".");
-			switch(avc_codec_desc[0]) {
-				case "avc1": return;
-				case "mp4a": return;
-				default: debugger;
-			};
+		let codec_type_raw=this.extract_inner(v1,"\"");
+		if(this.str_has_sep(codec_type_raw,".")) {
+			let [codec_type]=split_string_once(codec_type_raw,".");
+			let h=this.parse_codec_str(codec_type);
+			if(h) return;
+			console.log(vv[0],codec_type_raw);
+			debugger;
 			return;
 		}
-		switch(in_codec) {
-			case "vp9": return;
-			default:
+		let h=this.parse_codec_str(codec_type_raw);
+		if(h) return;
+		console.log(vv[0],codec_type_raw);
+		debugger;
+	}
+	/** @arg {CodecType} x */
+	parse_codec_str(x) {
+		switch(x) {
+			case "avc1": break;
+			case "mp4a": break;
+			case "vp9": break;
+			case "opus": break;
+			default: return false;
 		}
-		console.log(vv[0],in_codec);
+		return true;
 	}
 	/** @template {string[]} T @template {string} U @arg {U} w @arg {T} x @returns {x is [string,`${U}${string}`,...string[]]} */
 	str_starts_with_at_1(x,w) {
@@ -8294,9 +8303,10 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(clickTrackingParams);
 		this.YpcGetOfflineUpsell(ypcGetOfflineUpsellEndpoint);
 	}
+	log_ypc_upsell=false;
 	/** @arg {YpcGetOfflineUpsell} x */
 	YpcGetOfflineUpsell(x) {
-		console.log("[ypc_upsell]",x.params);
+		if(this.log_ypc_upsell) console.log("[ypc_upsell]",x.params);
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
@@ -8547,8 +8557,9 @@ class HandleTypes extends BaseService {
 		});
 		/** @arg {string} s */
 		function one_array_to_any_arr(s,dep=0) {
-			if(dep<8&&s.match(/\[\s+{/)) {
-				s=s.replaceAll(/\[\s+{(.+)}\s+\]/g,(_a,v) => {
+			if(dep<8&&s.match(/\[\s+{/g)) {
+				s=s.replaceAll(/\[\s+{((.|\n)*)}\s+\]/g,(_a,v) => {
+					if(v==="") return "{}[]";
 					return `{${one_array_to_any_arr(v)}}[]`;
 				});
 			}
@@ -8561,9 +8572,55 @@ class HandleTypes extends BaseService {
 		});
 		tc=tc.replaceAll(",",";");
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
-		let rr=tc.match(/{(.|\n)+}/gm);
-		console.log(rr);
-		return `\ntype ${tn}=${tc}\n`;
+		let rr=tc.match(/{((?:\s|.)+)}/g);
+		if(rr) console.log(rr);
+		let ret=`\ntype ${tn}=${tc}\n`;
+		return ret;
+	}
+	/** @arg {string} x1 */
+	generate_depth(x1) {
+		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
+		if(!rxr?.groups) return null;
+		let x=rxr.groups.x.trim().split(/([;{}])/).filter(e => e);
+		/** @arg {string[]} x */
+		function make_depth_arr(x) {
+			/** @type {[number,string][]} */
+			let o=[];
+			let depth=0;
+			for(let v of x) {
+				if(v==="{}"[0]) depth++;
+				o.push([depth,v]);
+				if(v==="{}"[1]) depth--;
+			};
+			return o;
+		};
+		let depth_state={
+			ld:0,
+		};
+		let da=make_depth_arr(x);
+		/** @type {string[]} */
+		let r1=da.reduce((a,c) => {
+			if(c[0]===0) {
+				a.push(c[1]);
+				return a;
+			};
+			if(depth_state.ld<1) a.push(c[1]);
+			else a.push(a.pop()+c[1]);
+			depth_state.ld=c[0];
+			return a;
+		},[""]);
+		let r2=r1.reduce((a,c) => {
+			if(c===";") {
+				a.push(a.pop()+";","");
+				return a;
+			};
+			a.push(a.pop()+c);
+			return a;
+		},[""]);
+		let trimmed_r2=r2.map(e => e.trim());
+		let no_empty_r2=trimmed_r2.filter(e => e);
+		let typedef_members=no_empty_r2.map(e => split_string_once(e,":"));
+		return typedef_members[0];
 	}
 	/** @arg {{[x: string]:{}}} x */
 	generate_if_branch(x) {
@@ -8593,24 +8650,24 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-  /** @arg {CarouselLockupData} x */
-  CarouselLockupData(x) {
-    x;
-    debugger;
-  }
-  /** @arg {CarouselLockupRenderer} x */
-  CarouselLockupRenderer(x) {
-    this.CarouselLockupData(x.carouselLockupRenderer);
-  }
-  /** @arg {VideoDescriptionMusicSectionData} x */
-  VideoDescriptionMusicSectionData(x) {
-    x;
-    debugger;
-  }
-  /** @arg {VideoDescriptionMusicSectionRenderer} x */
-  VideoDescriptionMusicSectionRenderer(x) {
-    this.VideoDescriptionMusicSectionData(x.videoDescriptionMusicSectionRenderer);
-  }
+	/** @arg {CarouselLockupData} x */
+	CarouselLockupData(x) {
+		x;
+		debugger;
+	}
+	/** @arg {CarouselLockupRenderer} x */
+	CarouselLockupRenderer(x) {
+		this.CarouselLockupData(x.carouselLockupRenderer);
+	}
+	/** @arg {VideoDescriptionMusicSectionData} x */
+	VideoDescriptionMusicSectionData(x) {
+		x;
+		debugger;
+	}
+	/** @arg {VideoDescriptionMusicSectionRenderer} x */
+	VideoDescriptionMusicSectionRenderer(x) {
+		this.VideoDescriptionMusicSectionData(x.videoDescriptionMusicSectionRenderer);
+	}
 	/** @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
 	ExpandableVideoDescriptionBodyData_x(x) {
 		const {descriptionBodyText: a,showMoreText: b,showLessText: c,...y}=x; this.g(y);
