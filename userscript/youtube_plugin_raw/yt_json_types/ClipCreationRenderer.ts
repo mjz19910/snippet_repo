@@ -1,0 +1,3 @@
+type ClipCreationRenderer={
+	clipCreationRenderer: ClipCreationData;
+};

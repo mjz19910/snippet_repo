@@ -1,0 +1,3 @@
+type ClipSectionRenderer={
+	clipSectionRenderer: ClipSection;
+};
