@@ -7734,6 +7734,35 @@ class HandleTypes extends BaseService {
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);
 	}
+	/** @arg {AdPlacementData} x */
+	AdPlacementData(x) {
+		this.AdPlacementConfig(x.config);
+		this.AdBreakServiceRenderer(x.renderer);
+	}
+  /** @arg {AdPlacementConfig} x */
+  AdPlacementConfig(x) {
+    this.AdPlacementConfigData(x.adPlacementConfig);
+  }
+  /** @arg {AdPlacementConfigData} x */
+  AdPlacementConfigData(x) {
+    if(x.kind!=="AD_PLACEMENT_KIND_END") debugger;
+    this.AdTimeOffset(x.adTimeOffset);
+    if(x.hideCueRangeMarker!==true) debugger;
+  }
+  /** @arg {AdTimeOffset} x */
+  AdTimeOffset(x) {
+    if(x.offsetStartMilliseconds!=="-1") debugger;
+    if(x.offsetEndMilliseconds!=="-1") debugger;
+  }
+  /** @arg {AdBreakServiceRenderer} x */
+  AdBreakServiceRenderer(x) {
+    this.AdBreakServiceData(x.adBreakServiceRenderer);
+  }
+  /** @arg {AdBreakServiceData} x */
+  AdBreakServiceData(x) {
+    if(x.prefetchMilliseconds!=="10000") debugger;
+    this.primitive_of(x.getAdBreakUrl,"string");
+  }
 }
 //#endregion
 console=typeof window==="undefined"? console:(() => window.console)();
