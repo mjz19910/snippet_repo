@@ -8037,7 +8037,7 @@ class HandleTypes extends BaseService {
 		/** @arg {string} s */
 		function one_array_to_any_arr(s,dep=0) {
 			if(dep<8&&s.match(/\[{/)) {
-				s=s.replaceAll(/\[{(.+)}\]/,(_a,v) => {
+				s=s.replaceAll(/\[{(.+)}\]/g,(_a,v) => {
 					return `{${one_array_to_any_arr(v)}}[]`;
 				});
 			}
@@ -8274,8 +8274,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
+		const {title,viewCount,videoActions,trackingParams,badges,dateText,relativeDateText,...y}=x; this.g(y);
 		this.z(x.badges,this.MetadataBadgeRenderer);
-		this.z([x.dateText,x.relativeDateText],this.g);
+		this.z([x.dateText,x.relativeDateText],this.text_t);
 		this.text_t(x.title);
 		this.trackingParams(x.trackingParams);
 		debugger;
