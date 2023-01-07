@@ -7720,6 +7720,7 @@ class HandleTypes extends BaseService {
 		this.text_t(a);
 		if(b!==false) debugger;
 		if(c!==true) debugger;
+		if(d!=="FREE") debugger;
 		this.parse_channel_id(e);
 		if(f!==false) debugger;
 		this.trackingParams(g);
