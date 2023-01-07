@@ -7129,6 +7129,7 @@ class HandleTypes extends BaseService {
 		switch(b) {
 			case "engagement-panel-ads": break;
 			case "engagement-panel-clip-create": break;
+			case "engagement-panel-structured-description": break;
 			default: debugger;
 		}
 		if(c!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -7142,6 +7143,8 @@ class HandleTypes extends BaseService {
 			return this.w(x,a => this.ClipSection(a));
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
+		} else if("sectionListRenderer" in x) {
+			return this.SectionListRenderer(x);
 		}
 		console.log(x);
 		debugger;
