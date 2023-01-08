@@ -2713,7 +2713,6 @@ function main() {
 		if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
 			return original_fetch(user_request,request_init);
 		}
-		debugger;
 		let ret=original_fetch(user_request,request_init);
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
@@ -2752,6 +2751,12 @@ function main() {
 		original_fetch=fetch;
 		window.fetch=fetch_inject;
 		fetch_inject.__proxy_target__=original_fetch;
+		window.Request=new Proxy(window.Request,{
+			construct(t,args,nf) {
+				console.log(t,args,nf);
+				return {};
+			}
+		})
 		let navigator_sendBeacon=navigator.sendBeacon;
 		navigator.sendBeacon=function(...args) {
 			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
