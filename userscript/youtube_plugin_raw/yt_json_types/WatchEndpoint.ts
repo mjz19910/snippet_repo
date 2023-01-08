@@ -1,5 +1,5 @@
 type WatchEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: CommandMetadataTemplate;
 	watchEndpoint: WatchEndpointData;
 };

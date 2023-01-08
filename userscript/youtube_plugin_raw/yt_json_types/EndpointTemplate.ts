@@ -1,4 +1,4 @@
 type EndpointTemplate<T>={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: CommandMetadataTemplate;
 }&T;

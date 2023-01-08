@@ -11,6 +11,12 @@ interface WatchNextResponse {
 	frameworkUpdates?: FrameworkUpdates;
 };
 type SignalServiceEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: {
+			sendPost: true;
+		}
+	};
 	signalServiceEndpoint: SignalServiceEndpointData;
 };
 

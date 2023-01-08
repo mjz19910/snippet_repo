@@ -5267,7 +5267,7 @@ class HandleTypes extends BaseService {
 		if(m.length===0) return;
 		let [k]=m;
 		k="commandMetadata";
-		{const {[k]: a}=y; if(a) this[q(k)](a);}
+		{const {[k]: a}=y; if(a) this.CommandMetadataTemplate(a);}
 		k="browseEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="searchEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="setSettingEndpoint";
@@ -5810,8 +5810,8 @@ class HandleTypes extends BaseService {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @template {keyof VEMap} T @arg {CommandMetadata<T>} x */
-	CommandMetadata(x) {
+	/** @template {keyof VEMap} T @arg {CommandMetadataTemplate<T>} x */
+	CommandMetadataTemplate(x) {
 		const {webCommandMetadata: a}=x;
 		this.WebCommandMetadata(a);
 		// this.g(y);
@@ -5825,7 +5825,7 @@ class HandleTypes extends BaseService {
 			default: console.log("[new_page_type] [%s]",x); debugger; break;
 		}
 	}
-	/** @template {keyof VEMap} T @arg {CommandMetadata<T>['webCommandMetadata']} x */
+	/** @template {keyof VEMap} T @arg {CommandMetadataTemplate<T>['webCommandMetadata']} x */
 	WebCommandMetadata(x) {
 		const {rootVe: a}=x;
 		this.on_root_visual_element(a);
@@ -5987,9 +5987,7 @@ class HandleTypes extends BaseService {
 			console.log(`[Video.Endpoint.${this.#get_renderer_key(a)}]`,a);
 			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
 			if(c) this.FrameworkUpdates(c);
-			this.z(d,a => {
-				this.ResponseReceivedEndpointItem(a);
-			});
+			this.z(d,this.ResponseReceivedEndpointItem);
 			return y;
 		}
 		/** @this {typeof t} @arg {typeof x} x */
@@ -6009,13 +6007,24 @@ class HandleTypes extends BaseService {
 		if("signalServiceEndpoint" in x) {
 			return this.SignalServiceEndpoint(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
-
+			return;
+		} else if("loadMarkersCommand" in x) {
+			return;
 		}
-	}
-	/** @arg {{signalServiceEndpoint:SignalServiceEndpointData}} x */
-	SignalServiceEndpoint(x) {
-		x;
 		debugger;
+	}
+	/** @arg {SignalServiceEndpoint} x */
+	SignalServiceEndpoint(x) {
+		this.clickTrackingParams(x.clickTrackingParams);
+		this.CommandMetadata(x.commandMetadata,a=>{
+			this.save_keys("[SignalServiceEndpoint.web_command_metadata]",a);
+		});
+		this.SignalServiceEndpointData(x.signalServiceEndpoint);
+		debugger;
+	}
+	/** @template T @arg {{webCommandMetadata: T}} x @arg {(x:T)=>void} f */
+	CommandMetadata(x,f) {
+		f(x.webCommandMetadata);
 	}
 	/** @arg {CinematicContainerRenderer} x */
 	CinematicContainerRenderer(x) {
@@ -7247,7 +7256,7 @@ class HandleTypes extends BaseService {
 	WatchEndpoint(x) {
 		const {clickTrackingParams: a,commandMetadata: b,watchEndpoint: c,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
-		this.CommandMetadata(b);
+		this.CommandMetadataTemplate(b);
 		this.WatchEndpointData_1(c);
 	}
 	/** @arg {CommentsEntryPointHeaderData} x */
@@ -7349,7 +7358,7 @@ class HandleTypes extends BaseService {
 	NavigationEndpoint(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
-		this.CommandMetadata(b);
+		this.CommandMetadataTemplate(b);
 		f(y);
 	}
 	/** @arg {MenuRenderer} x */
@@ -7423,7 +7432,7 @@ class HandleTypes extends BaseService {
 	/** @arg {ContinuationEndpoint} x */
 	ContinuationEndpoint(x) {
 		const {commandMetadata: a,continuationCommand: b,...y}=this.handle_clickTrackingParams(x); this.g(y);
-		if(a) this.CommandMetadata(a);
+		if(a) this.CommandMetadataTemplate(a);
 		this.ContinuationCommand(b);
 	}
 	/** @arg {ContinuationCommand} x */
@@ -7446,7 +7455,7 @@ class HandleTypes extends BaseService {
 	handle_common_endpoint(x) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
-		if(b) this.CommandMetadata(b);
+		if(b) this.CommandMetadataTemplate(b);
 		return y;
 	}
 	/** @arg {ReelWatchEndpoint} x */
@@ -7973,7 +7982,7 @@ class HandleTypes extends BaseService {
 	EndpointTemplate(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
-		this.CommandMetadata(b);
+		this.CommandMetadataTemplate(b);
 		/** @type {any} */
 		let c=y;
 		/** @type {T} */
@@ -8239,7 +8248,7 @@ class HandleTypes extends BaseService {
 	/** @arg {WatchPlaylistEndpoint} x */
 	WatchPlaylistEndpoint(x) {
 		this.clickTrackingParams(x.clickTrackingParams);
-		this.CommandMetadata(x.commandMetadata);
+		this.CommandMetadataTemplate(x.commandMetadata);
 		this.WatchPlaylistEndpointData(x.watchPlaylistEndpoint);
 	}
 	/** @arg {WatchPlaylistEndpointData} x */

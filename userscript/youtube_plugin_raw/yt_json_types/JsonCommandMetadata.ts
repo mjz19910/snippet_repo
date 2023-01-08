@@ -1,1 +1,1 @@
-type JsonCommandMetadata=CommandMetadata;
+type JsonCommandMetadata=CommandMetadataTemplate;

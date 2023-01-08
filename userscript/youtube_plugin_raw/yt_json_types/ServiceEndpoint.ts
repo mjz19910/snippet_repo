@@ -1,4 +1,4 @@
 type ServiceEndpoint<T extends {}>={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: CommandMetadataTemplate;
 }&T;

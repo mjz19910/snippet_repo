@@ -1,3 +1,3 @@
 type ServiceEndpointGeneral={
-	commandMetadata: CommandMetadata;
+	commandMetadata: CommandMetadataTemplate;
 };
