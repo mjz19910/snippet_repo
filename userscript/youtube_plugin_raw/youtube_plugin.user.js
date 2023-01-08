@@ -6893,7 +6893,7 @@ class HandleTypes extends BaseService {
 			console.log(`[Button.navigationEndpoint.${this.#get_renderer_key(navigationEndpoint)}]`,navigationEndpoint);
 		}
 		const {accessibilityData: b,...z}=y;
-		if(b) this.AccessibilityData(b);
+		if(b) this.Accessibility(b);
 		this.g(z);
 	}
 	/** @arg {AnyIcon} x */
