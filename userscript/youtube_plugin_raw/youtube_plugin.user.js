@@ -4419,6 +4419,7 @@ class YtUrlParser extends BaseService {
 			case "googlevideo.com": return;
 			default:
 		}
+		/** @type {YtUrlFormat} */
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
@@ -8971,7 +8972,7 @@ class HandleTypes extends BaseService {
 		const {impressionUrls: a,...y}=x; this.g(y);
 		this.z(a,a => this.BaseUrl(a));
 	}
-	/** @template {ParsableBaseUrlFormat} T @arg {BaseUrl<T>} x */
+	/** @template {YtUrlFormat} T @arg {BaseUrl<T>} x */
 	BaseUrl(x) {
 		const {baseUrl: a,...y}=x; this.g(y);
 		this.parse_url(a);
