@@ -8496,6 +8496,10 @@ class HandleTypes extends BaseService {
 				ret_arr.push(`this.Thumbnail(x.${k});`);
 				continue;
 			}
+			if("browseEndpoint" in x2) {
+				ret_arr.push(`this.BrowseEndpoint(x.${k});`);
+				continue;
+			}
 			let c=this.get_renderer_key(x2);
 			if(!c||typeof c==='number') {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
