@@ -4029,6 +4029,7 @@ class IndexedDbAccessor {
 		}
 		if(this.arr.length>0) {
 			console.log("transaction done, but not all data was committed");
+			console.log("[new_data_after_tx_complete]",this.arr);
 		} else {
 			this.committed_data.length=0;
 		}
