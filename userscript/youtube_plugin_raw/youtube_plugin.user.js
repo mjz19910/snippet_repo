@@ -5254,6 +5254,7 @@ class HandleTypes extends BaseService {
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		if(!x) {debugger; return;}
+		console.log(`[default.Endpoint.${this.#get_renderer_key(x)}]`,x);
 		this.save_keys("[YtEndpoint]",x);
 		const {
 			clickTrackingParams: a,
@@ -5826,14 +5827,31 @@ class HandleTypes extends BaseService {
 	}
 	/** @template {keyof VEMap} T @arg {CommandMetadata<T>['webCommandMetadata']} x */
 	WebCommandMetadata(x) {
-		const {rootVe: c}=x;
+		const {rootVe: a}=x;
+		this.on_root_visual_element(a);
 		// if(e) this.primitive_of(e,"boolean");
 		// if(f) this.primitive_of(f,"boolean");
 		// if(a!==void 0) this.parse_url(a);
 		// if(d!==void 0) this.parse_url(d);
 		// if(b!==void 0) this.parse_page_type(b);
-		this.save_root_visual_element(c);
 		// this.g(y);
+	}
+	/** @arg {keyof VEMap} x */
+	on_root_visual_element(x) {
+		this.save_root_visual_element(x);
+		/** @type {`${typeof x}`} */
+		let ss=`${x}`;
+		switch(ss) {
+			case "3611": break;
+			case "3832": break;
+			case "3854": break;
+			case "6827": break;
+			case "11487": break;
+			case "23462": break;
+			case "83769": break;
+			case "96368": break;
+			default: debugger;
+		}
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
@@ -5966,11 +5984,11 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
-			console.log(a);
+			console.log(`[Endpoint.${this.#get_renderer_key(a)}]`,a);
 			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
 			if(c) this.FrameworkUpdates(c);
 			this.z(d,a => {
-				console.log(a);
+				console.log(`[Response.Endpoint.${this.#get_renderer_key(a)}]`,a);
 			});
 			return y;
 		}
@@ -6626,7 +6644,7 @@ class HandleTypes extends BaseService {
 			case "CONTINUATION_TRIGGER_ON_ITEM_SHOWN": break;
 			default: debugger;
 		}
-		console.log(b.commandMetadata.webCommandMetadata.rootVe);
+		console.log(`[Endpoint.${this.#get_renderer_key(b)}]`,b);
 		if(c) this.ButtonRenderer(c);
 		if(d) this.GhostGridRenderer(d);
 		this.g(y);
@@ -6816,7 +6834,7 @@ class HandleTypes extends BaseService {
 	ButtonData(x) {
 		this.save_keys("[ButtonData]",x);
 		const {
-			accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
+			accessibility: a,command,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
 			navigationEndpoint: j,
 			...y
 		}=x;
@@ -6844,7 +6862,7 @@ class HandleTypes extends BaseService {
 				this.AccessibilityData(a);
 			}
 		}
-		if(b) console.log(b);
+		if(command) console.log(`[Endpoint.${this.#get_renderer_key(command)}]`,command);
 		if(c) {
 			switch(c.iconType) {
 				case "DELETE": break;
@@ -8012,16 +8030,6 @@ class HandleTypes extends BaseService {
 		}
 		debugger;
 	}
-	/** @arg {{a:1}} x */
-	auto_generate_renderer(x) {
-		if("a" in x) return;
-		let k=this.#get_renderer_key(x);
-		if(!k||typeof k=="number") {debugger; return;}
-		let rd=this.#generate_renderer(x[k],k);
-		console.log(rd);
-		let td=this.#generate_typedef(x[k],k);
-		console.log(td);
-	}
 	/** @template {{}} T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsArrTemplate(x,f) {
 		const {trackingParams: a,results: b,...y}=x; this.g(y);
@@ -8209,7 +8217,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
-		const {previousButtonVideo:a}=x;
+		const {previousButtonVideo: a}=x;
 		this.WatchPlaylistEndpoint(x.autoplayVideo);
 		this.WatchPlaylistEndpoint(x.nextButtonVideo);
 		if(a) this.WatchPlaylistEndpoint(a);
@@ -8832,8 +8840,8 @@ class HandleTypes extends BaseService {
 		/** @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
-			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`);continue;}
-			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`);continue;}
+			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
+			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
@@ -8959,16 +8967,12 @@ class HandleTypes extends BaseService {
 	/** @arg {unknown} x */
 	#get_renderer_key(x) {
 		let keys=Object.keys(as_cast(x));
-		let k;
 		for(let c of keys) {
 			if(c==="clickTrackingParams") continue;
-			k=c;
-			break;
+			if(c==="commandMetadata") continue;
+			return c;
 		}
-		if(!k) return null;
-		let iv=parseInt(k,10);
-		if(Number.isNaN(iv)) return k;
-		return iv;
+		return null;
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
 	generate_typedef_log(x,r_name) {
