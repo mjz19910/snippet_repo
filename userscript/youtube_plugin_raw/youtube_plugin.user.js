@@ -12,12 +12,10 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
-
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
-function cast_as(e,x=e) {
+function as(e,x=e) {
 	return x;
 }
-const as_cast=cast_as;
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==='object') {
@@ -25,13 +23,13 @@ function export_(fn) {
 	}
 }
 /** @type {YtdAppElement} */
-const YtdAppElement=cast_as({});
+const YtdAppElement=as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
 // #region
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
-	let inject_api=window.inject_api??as_cast({});
+	let inject_api=window.inject_api??as({});
 	window.inject_api=inject_api;
 }
 /** @type {Map<string, Blob|MediaSource>} */
@@ -39,7 +37,7 @@ let created_blobs=new Map;
 /** @type {Set<string>} */
 let active_blob_set=new Set;
 /** @type {SavedData} */
-let saved_data=cast_as({});
+let saved_data=as({});
 const is_yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
@@ -87,7 +85,7 @@ function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
 		return;
 	}
-	if(!has_ytd_page_mgr()) {
+	if(ytd_page_manager===null) {
 		console.log("no ytd-page-manager");
 		return;
 	}
@@ -712,7 +710,7 @@ class IterateApiResultBase {
 			}
 			const state={t,path: `${path}.${key}`};
 			if(rk!==void 0&&this.iterate_target[rk]) {
-				this.iterate_target[rk](state,cast_as(value));
+				this.iterate_target[rk](state,as(value));
 			} else {
 				this.default_iter(state,value);
 			}
@@ -833,7 +831,7 @@ class HandleRendererContentItemArray {
 	}
 	/** @public @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {T} arr @returns {T} */
 	replace_array(base,arr) {
-		return cast_as(arr.filter((/** @type {typeof arr[number]} */content_item) => {
+		return as(arr.filter((/** @type {typeof arr[number]} */content_item) => {
 			let keys=get_keys_of(content_item);
 			if("richItemRenderer" in content_item) {
 				return this.filter_for_rich_item_renderer(base,content_item);
@@ -1322,42 +1320,42 @@ class FilterHandlers {
 			case "browse": return {
 				type: target[0],
 				/** @type {BrowseResponseContent} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "feedback": debugger; return {
 				type: target[0],
 				/** @type {JsonFeedbackData} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "getDatasyncIdsEndpoint": return {
 				type: target[0],
 				/** @type {DatasyncIdsResponse} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "getAccountSwitcherEndpoint": return {
 				type: target[0],
 				/** @type {GetAccountSwitcherEndpointResponse} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "get_transcript": return {
 				type: target[0],
 				/** @type {JsonGetTranscriptData} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "guide": return {
 				type: target[0],
 				/** @type {GuideJsonType} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "next": return {
 				type: target[0],
 				/** @type {NextResponse} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "player": return {
 				type: target[0],
 				/** @type {PlayerResponse} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 		return null;
@@ -1382,12 +1380,12 @@ class FilterHandlers {
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {ReelItemWatch} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "reel_watch_sequence": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {ReelWatchSequence} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 	}
@@ -1398,17 +1396,17 @@ class FilterHandlers {
 			case "get_notification_menu": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {GetNotificationMenuJson} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "get_unseen_count": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {NotificationGetUnseenCount} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "record_interactions": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {YtSuccessResponse} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 	}
@@ -1419,7 +1417,7 @@ class FilterHandlers {
 			case "get_live_chat_replay": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {GetLiveChatReplay} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 		return null;
@@ -1431,7 +1429,7 @@ class FilterHandlers {
 			case "get": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {AttGet} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 		return null;
@@ -1443,17 +1441,17 @@ class FilterHandlers {
 			case "account_menu": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {AccountMenuJson} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "accounts_list": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {AccountsListResponse} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "set_setting": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {AccountSetSetting} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 		return null;
@@ -1465,12 +1463,12 @@ class FilterHandlers {
 			case "like": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {ResponseWithActions} */
-				data: cast_as(x),
+				data: as(x),
 			};
 			case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @type {ResponseWithActions} */
-				data: cast_as(x),
+				data: as(x),
 			};
 		}
 		return null;
@@ -1509,12 +1507,12 @@ class FilterHandlers {
 		}
 		let parsed_url=convert_to_url(request).url;
 		/** @type {ApiUrlFormatFull} */
-		let api_url=as_cast(parsed_url.href);
+		let api_url=as(parsed_url.href);
 		let url_type=this.use_template_url(api_url);
 		if(!url_type) {
 			debugger;
 			/** @type {UrlTypes} */
-			let url_h=as_cast(parsed_url.href);
+			let url_h=as(parsed_url.href);
 			url_type=url_h;
 		}
 		if(!url_type) throw new Error("Unreachable");
@@ -1544,7 +1542,7 @@ class FilterHandlers {
 			debugger;
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
-		this.handle_any_data(`page_type_${ret.page}`,cast_as(ret));
+		this.handle_any_data(`page_type_${ret.page}`,as(ret));
 		this.handle_types.DataResponsePageType(ret);
 		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
@@ -1790,7 +1788,6 @@ class CustomEventTarget {
 		}
 	}
 }
-
 class DomObserver extends CustomEventTarget {
 	/** @arg {null} _v */
 	notify_fn(_v) {};
@@ -1838,27 +1835,18 @@ class DomObserver extends CustomEventTarget {
 	/** @private @arg {MessagePort} port @arg {number} count */
 	next_tick_action(port,count) {
 		if(this.trace) console.log("tick_trace",count);
-		// port.postMessage() -> on_port_message;
 		port.postMessage(count);
 	}
 }
 let dom_observer=new DomObserver;
-
-
 class YtdPageManagerElement extends HTMLElement {
 	/** @returns {YtCurrentPage|undefined} */
 	getCurrentPage() {throw 1;}
 }
-
 /** @type {string[]} */
 let playlist_arr=[];
 /** @type {YtdPageManagerElement|null} */
 let ytd_page_manager=null;
-
-function has_ytd_page_mgr() {
-	return ytd_page_manager!==null;
-}
-
 /** @private @arg {HTMLElement} element */
 function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
@@ -1899,7 +1887,6 @@ function page_changed_next_frame() {
 	if(!ytd_page_manager) return;
 	ytd_page_manager.getCurrentPage()?.append(as_node(plugin_overlay_element));
 }
-
 /** @type {Map<string, HTMLElement>} */
 let element_map=new Map;
 /** @type {Map<string, HTMLVideoElementArrayBox>} */
@@ -1918,7 +1905,6 @@ function on_ytd_player(element) {
 	ytd_player=element_type;
 	window.ytd_player=element;
 }
-
 // visibilitychange handler (resume video when page is visible again)
 function fire_on_visibility_change_restart_video_playback() {
 	if(!is_watch_page_active()) return;
@@ -1927,7 +1913,6 @@ function fire_on_visibility_change_restart_video_playback() {
 	ytd_player.pause();
 	ytd_player.play();
 }
-
 class HTMLVideoElementArrayBox {
 	/** @readonly */
 	type="HTMLVideoElementArrayBox";
@@ -1936,7 +1921,6 @@ class HTMLVideoElementArrayBox {
 		this.value=value;
 	}
 }
-
 class YTNavigateFinishEvent {
 	/** @arg {Event} value @return {YTNavigateFinishEvent} */
 	static cast(value) {
@@ -1945,12 +1929,10 @@ class YTNavigateFinishEvent {
 		return ret;
 	}
 	/** @type {NavigateEventDetail} */
-	detail=cast_as({});
+	detail=as({});
 }
-
 /** @type {((event:YTNavigateFinishEvent)=>void)[]} */
 let on_yt_navigate_finish=[];
-
 /** @private @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
 function eq_keys(src,target) {
 	if(src.length!==target.length) return false;
@@ -2211,7 +2193,7 @@ function on_yt_action(event) {
 		title_text_overlay_update();
 	}
 }
-document.addEventListener("yt-action",cast_as(on_yt_action));
+document.addEventListener("yt-action",as(on_yt_action));
 
 function title_display_toggle() {
 	title_on=!title_on;
@@ -2603,7 +2585,7 @@ function main() {
 			/** @private @arg {keyof Response} key */
 			get(_obj,key,_proxy) {
 				/** @type {string} */
-				let ks=cast_as(key);
+				let ks=as(key);
 				if(ks==="then") {
 					return void 0;
 				}
@@ -2678,19 +2660,19 @@ function main() {
 }
 //#endregion
 /** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
-function split_string(x,s=cast_as(",")) {
+function split_string(x,s=as(",")) {
 	if(!x) {debugger;}
 	let r=x.split(s);
-	return cast_as(r);
+	return as(r);
 }
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
-function split_string_once(s,d=cast_as(",")) {
+function split_string_once(s,d=as(",")) {
 	if(s==="") {
 		/** @type {[]} */
 		let r=[];
 		/** @type {any} */
 		let q=r;
-		return cast_as(q);
+		return as(q);
 	}
 	let i=s.indexOf(d);
 	if(i===-1) {
@@ -2698,7 +2680,7 @@ function split_string_once(s,d=cast_as(",")) {
 		let r=[s];
 		/** @type {any} */
 		let q=r;
-		return cast_as(q);
+		return as(q);
 	}
 	let a=s.slice(0,i);
 	let b=s.slice(i+d.length);
@@ -2706,7 +2688,7 @@ function split_string_once(s,d=cast_as(",")) {
 	let r=[a,b];
 	/** @type {any} */
 	let q=r;
-	return cast_as(q);
+	return as(q);
 }
 const seen_map=new Set;
 const general_service_state={
@@ -4430,11 +4412,11 @@ class HandleTypes extends BaseService {
 		/** @typedef {ExtractAfterStr<typeof x,"FE">} KnownParts */
 		/** @typedef {ExtractAfterStr<typeof x,"VL"|"UC">} KnownParts_VL */
 		/** @type {StartPart} */
-		let v_2c=cast_as(x.slice(0,2));
+		let v_2c=as(x.slice(0,2));
 		x: switch(v_2c) {
 			case "FE": {
 				/** @type {KnownParts} */
-				let v_ac=cast_as(x.slice(2));
+				let v_ac=as(x.slice(2));
 				switch(v_ac) {
 					case "history": break x;
 					case "library": break x;
@@ -4785,7 +4767,7 @@ class HandleTypes extends BaseService {
 	/** @arg {string[]} req_names @arg {unknown} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @type {{[x:string]:{}}} */
-		let x1=as_cast(x);
+		let x1=as(x);
 		/** @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
@@ -4861,7 +4843,7 @@ class HandleTypes extends BaseService {
 		if(x[0]===null) return;
 		let ret_arr=out;
 		/** @type {{[x:string]:{};[x:number]:{};}} */
-		let io=as_cast(x[0]);
+		let io=as(x[0]);
 		let c=this.#get_renderer_key(io);
 		if(c) {
 			let ic=this.#uppercase_first(c);
@@ -4885,7 +4867,7 @@ class HandleTypes extends BaseService {
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		let t_name=this.#uppercase_first(k);
-		let keys=Object.keys(as_cast(x));
+		let keys=Object.keys(as(x));
 		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
 		d1!/** @private @arg {${t_name}} x */
@@ -4914,7 +4896,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {unknown} x */
 	#get_renderer_key(x) {
-		let keys=Object.keys(as_cast(x));
+		let keys=Object.keys(as(x));
 		for(let c of keys) {
 			if(c==="clickTrackingParams") continue;
 			if(c==="commandMetadata") continue;
@@ -4933,9 +4915,9 @@ class HandleTypes extends BaseService {
 		tn=this.#uppercase_first(tn);
 		let obj_count=0;
 		/** @type {{[x: number|string]:{}}} */
-		let xa=as_cast(x);
+		let xa=as(x);
 		let o2=xa[k];
-		let keys=Object.keys(as_cast(x)).concat(Object.keys(o2));
+		let keys=Object.keys(as(x)).concat(Object.keys(o2));
 		const max_str_len=40;
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
