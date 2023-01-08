@@ -1,12 +1,14 @@
 interface WatchNextResponse {
-	onResponseReceivedEndpoints: YtEndpoint[];
+	onResponseReceivedEndpoints: ResponseReceivedEndpoints[];
 	responseContext: ResponseContext;
 	trackingParams: string;
 	engagementPanels: EngagementPanel[];
-	currentVideoEndpoint: YtEndpoint;
+	currentVideoEndpoint: CurrentVideoEndpoint;
 	contents?: TwoColumnWatchNextResults;
 	playerOverlays: PlayerOverlayRenderer;
 	topbar: DesktopTopbarRenderer;
 	pageVisualEffects: CinematicContainerRenderer[];
 	frameworkUpdates?: FrameworkUpdates;
-}
+};
+type ResponseReceivedEndpoints={};
+type CurrentVideoEndpoint={};

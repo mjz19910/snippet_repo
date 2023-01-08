@@ -5167,9 +5167,9 @@ class HandleTypes extends BaseService {
 		if(c) this.primitive_of(c,"boolean");
 		this.g(y);
 	}
-	/** @arg {YtUrlFormat} x */
+	/** @arg {string} x */
 	parse_url(x) {
-		this.s_parser.parse_url(x);
+		this.s_parser.parse_url(as_cast(x));
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommand(x) {
@@ -5809,11 +5809,11 @@ class HandleTypes extends BaseService {
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
 	}
-	/** @arg {CommandMetadata} x */
+	/** @template {keyof VEMap} T @arg {CommandMetadata<T>} x */
 	CommandMetadata(x) {
-		const {webCommandMetadata: a,...y}=x;
+		const {webCommandMetadata: a}=x;
 		this.WebCommandMetadata(a);
-		this.g(y);
+		// this.g(y);
 	}
 	/** @arg {YtPageTypeEnum} x */
 	parse_page_type(x) {
@@ -5824,16 +5824,16 @@ class HandleTypes extends BaseService {
 			default: console.log("[new_page_type] [%s]",x); debugger; break;
 		}
 	}
-	/** @arg {WebCommandMetadata} x */
+	/** @template {keyof VEMap} T @arg {CommandMetadata<T>['webCommandMetadata']} x */
 	WebCommandMetadata(x) {
-		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,ignoreNavigation: f,...y}=x;
-		if(e) this.primitive_of(e,"boolean");
-		if(f) this.primitive_of(f,"boolean");
-		if(a!==void 0) this.parse_url(a);
-		if(d!==void 0) this.parse_url(d);
-		if(b!==void 0) this.parse_page_type(b);
-		if(c!==void 0) this.save_root_visual_element(c);
-		this.g(y);
+		const {rootVe: c}=x;
+		// if(e) this.primitive_of(e,"boolean");
+		// if(f) this.primitive_of(f,"boolean");
+		// if(a!==void 0) this.parse_url(a);
+		// if(d!==void 0) this.parse_url(d);
+		// if(b!==void 0) this.parse_page_type(b);
+		this.save_root_visual_element(c);
+		// this.g(y);
 	}
 	/** @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
@@ -5966,10 +5966,12 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
-			this.yt_endpoint(a);
+			console.log(a);
 			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
 			if(c) this.FrameworkUpdates(c);
-			this.z(d,a => this.yt_endpoint(a));
+			this.z(d,a => {
+				console.log(a);
+			});
 			return y;
 		}
 		/** @this {typeof t} @arg {typeof x} x */
@@ -6624,7 +6626,7 @@ class HandleTypes extends BaseService {
 			case "CONTINUATION_TRIGGER_ON_ITEM_SHOWN": break;
 			default: debugger;
 		}
-		this.yt_endpoint(b);
+		console.log(b.commandMetadata.webCommandMetadata.rootVe);
 		if(c) this.ButtonRenderer(c);
 		if(d) this.GhostGridRenderer(d);
 		this.g(y);
@@ -6842,7 +6844,7 @@ class HandleTypes extends BaseService {
 				this.AccessibilityData(a);
 			}
 		}
-		if(b) this.yt_endpoint(b);
+		if(b) console.log(b);
 		if(c) {
 			switch(c.iconType) {
 				case "DELETE": break;
@@ -8207,11 +8209,20 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
-		console.log("ModifiedSetItem.autoplayVideo",x.autoplayVideo);
-		console.log("ModifiedSetItem.nextButtonVideo",x.nextButtonVideo);
-		this.AutoplayVideo(x.autoplayVideo);
-		this.NextButtonVideo(x.nextButtonVideo);
-		this.PreviousButtonVideo(x.previousButtonVideo);
+		const {previousButtonVideo:a}=x;
+		this.WatchPlaylistEndpoint(x.autoplayVideo);
+		this.WatchPlaylistEndpoint(x.nextButtonVideo);
+		if(a) this.WatchPlaylistEndpoint(a);
+	}
+	/** @arg {WatchPlaylistEndpoint} x */
+	WatchPlaylistEndpoint(x) {
+		this.clickTrackingParams(x.clickTrackingParams);
+		this.CommandMetadata(x.commandMetadata);
+		this.WatchPlaylistEndpointData(x.watchPlaylistEndpoint);
+	}
+	/** @arg {WatchPlaylistEndpointData} x */
+	WatchPlaylistEndpointData(x) {
+		x;
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
