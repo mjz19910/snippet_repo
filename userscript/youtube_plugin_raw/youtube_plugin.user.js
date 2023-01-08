@@ -8324,12 +8324,12 @@ class HandleTypes extends BaseService {
 		let dec_3=sub_reader.try_read_any();
 		if(!dec_3) {debugger; return;}
 		let err=dec_3.find(e => e[0]==="error");
-		let entityTypeFieldNumber=dec[1][2];
+		let entity_replace_field_num=dec[1][2];
 		if(err) {
 			const entityVideoId=decoder.decode(dec[0][2]);
-			if(!is_keyof_RUa(entityTypeFieldNumber)) {
+			if(!is_keyof_RUa(entity_replace_field_num)) {
 				const target={
-					entityTypeFieldNumber,
+					entity_replace_field_num,
 					entityType: null,
 					entityVideoId,
 				};
@@ -8341,9 +8341,9 @@ class HandleTypes extends BaseService {
 				if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
 				return;
 			}
-			const entityType=RUa[entityTypeFieldNumber];
+			const entityType=RUa[entity_replace_field_num];
 			const target={
-				entityTypeFieldNumber,
+				entity_replace_field_num,
 				entityType,
 				entityVideoId,
 			};
@@ -8352,9 +8352,9 @@ class HandleTypes extends BaseService {
 		}
 		if(dec_3[0][0]!=="child") {debugger; return;}
 		const entityVideoId=decoder.decode(dec_3[0][2]);
-		if(!is_keyof_RUa(entityTypeFieldNumber)) {
+		if(!is_keyof_RUa(entity_replace_field_num)) {
 			const target={
-				entityTypeFieldNumber,
+				entity_replace_field_num,
 				entityType: null,
 				entityVideoId,
 			};
@@ -8362,8 +8362,8 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const target={
-			entityTypeFieldNumber,
-			entityType: RUa[entityTypeFieldNumber],
+			entity_replace_field_num,
+			entityType: RUa[entity_replace_field_num],
 			entityVideoId,
 		};
 		if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
@@ -8378,12 +8378,12 @@ class HandleTypes extends BaseService {
 		if(!dec) {debugger; return;}
 		if(dec[0][0]!=="child") {debugger; return;}
 		if(dec[1][0]!=="data32") {debugger; return;}
-		let entityTypeFieldNumber=dec[1][2];
-		if(!is_keyof_RUa(entityTypeFieldNumber)) {debugger; return;}
+		let delete_field_num=dec[1][2];
+		if(!is_keyof_RUa(delete_field_num)) {debugger; return;}
 		const entityId=decoder.decode(dec[0][2]);
 		const x1={
-			entityTypeFieldNumber,
-			entityType: RUa[entityTypeFieldNumber],
+			delete_field_num,
+			entityType: RUa[delete_field_num],
 			entityId,
 		};
 		this.save_string("mutation.target_id",entityId);
