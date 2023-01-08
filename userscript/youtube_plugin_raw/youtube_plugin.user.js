@@ -5152,7 +5152,7 @@ class HandleTypes extends BaseService {
 		_obj_map={
 			continuationCommand: "ContinuationCommand",
 			commandMetadata: "CommandMetadata",
-			watchEndpoint: "WatchEndpointData",
+			watchEndpoint: "WatchEndpointData_1",
 			browseEndpoint: "BrowseEndpointData",
 			searchEndpoint: "SearchEndpointData",
 			setSettingEndpoint: "SetSettingEndpointData",
@@ -7148,7 +7148,7 @@ class HandleTypes extends BaseService {
 		const {clickTrackingParams: a,commandMetadata: b,watchEndpoint: c,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
 		this.CommandMetadata(b);
-		this.WatchEndpointData(c);
+		this.WatchEndpointData_1(c);
 	}
 	/** @arg {CommentsEntryPointHeaderData} x */
 	CommentsEntryPointHeaderData(x) {
@@ -8596,7 +8596,7 @@ class HandleTypes extends BaseService {
 	}
 	log_watch_endpoint_params=false;
 	/** @arg {WatchEndpointData} x */
-	WatchEndpointData(x) {
+	WatchEndpointData_1(x) {
 		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
 		this.s_parser.parse_video_id(x.videoId);
 		if(b&&this.log_watch_endpoint_params) {
