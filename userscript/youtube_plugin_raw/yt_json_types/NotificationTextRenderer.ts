@@ -1,0 +1,3 @@
+type NotificationTextRenderer={
+	notificationTextRenderer: NotificationTextData;
+};

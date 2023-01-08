@@ -1,0 +1,3 @@
+type FeedbackEndpointPlugin={
+	feedbackEndpoint: FeedbackEndpointData;
+};

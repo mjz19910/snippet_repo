@@ -7255,9 +7255,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
-		const {text: a,serviceEndpoint: b,...y}=x; this.g(y);
-		this.text_t(x.text);
 		this.save_keys("MenuServiceItemData",x);
+		const {text: a,icon: b,serviceEndpoint: x3,trackingParams: x4,...y}=x; this.g(y);
+		this.text_t(a);
+		this.Icon(b);
 		this.save_keys("MenuServiceItem.endpoint",x.serviceEndpoint);
 	}
 	/** @arg {SearchPyvData} x */
@@ -8880,6 +8881,7 @@ class HandleTypes extends BaseService {
 					}
 				}
 				if(k1=="trackingParams") return "TYPE::string";
+				if(k1=="clickTrackingParams") return "TYPE::string";
 				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 				return o;
 			}
