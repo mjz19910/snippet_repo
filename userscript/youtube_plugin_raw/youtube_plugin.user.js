@@ -18,7 +18,7 @@ function cast_as(e,x=e) {
 	return x;
 }
 const as_cast=cast_as;
-/** @arg {(x:typeof exports)=>void} fn */
+/** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==='object') {
 		fn(exports);
@@ -190,7 +190,7 @@ function iterate_ytd_app() {
 	on_ytd_app(target_element);
 	return true;
 }
-/** @arg {HTMLElement} element */
+/** @private @arg {HTMLElement} element */
 function on_ytd_app(element) {
 	const element_id="ytd-app";
 	if(is_yt_debug_enabled||is_ytd_app_debug_enabled) console.log(`on ${element_id}`);
@@ -245,7 +245,7 @@ function on_ytd_app(element) {
 /** @type {Element|null} */
 let main_page_app=null;
 
-/** @arg {CustomEventType} event */
+/** @private @arg {CustomEventType} event */
 async function async_plugin_init(event) {
 	if(event.type!=="async-plugin-init") return;
 	let plugin_state={};
@@ -462,7 +462,7 @@ class VolumeRange {
 			ytd_app.volume_range=volume_range;
 		}
 	}
-	/** @arg {number} min @arg {number} max @arg {number} overdrive @arg {AudioGainController} gain_controller */
+	/** @private @arg {number} min @arg {number} max @arg {number} overdrive @arg {AudioGainController} gain_controller */
 	constructor(min,max,overdrive,gain_controller) {
 		this.use_cache=true;
 		this.max=max;
@@ -470,7 +470,7 @@ class VolumeRange {
 		this.overdrive=overdrive;
 		this.gain_controller=gain_controller;
 	}
-	/** @arg {number} gain */
+	/** @private @arg {number} gain */
 	setGain(gain) {
 		this.updateRangeElement(gain);
 		this.gain_controller.setGain(gain);
@@ -492,7 +492,7 @@ class VolumeRange {
 		return c_gain_1;
 	}
 	max_compressor_reduction=-0.00011033167538698763;
-	/** @arg {KeyboardEvent} event */
+	/** @private @arg {KeyboardEvent} event */
 	onKeyDown(event) {
 		if(!this.range_element) return;
 		this.gain_controller.last_event=event;
@@ -511,22 +511,12 @@ class VolumeRange {
 			this.setGain(new_gain);
 		}
 	}
-	/** @arg {number} new_gain */
+	/** @private @arg {number} new_gain */
 	updateRangeElement(new_gain) {
 		if(!this.range_element) return;
 		this.range_element.value=""+Math.floor(this.max*new_gain);
 	}
-	/** @arg {CustomEvent<{filter_gain: number|undefined}>} event */
-	onStateChange(event) {
-		if(event.detail.filter_gain==void 0) {
-			this.gain_controller.setGain(1);
-			this.updateRangeElement(1);
-			return;
-		}
-		this.gain_controller.setGain(event.detail.filter_gain);
-		this.updateRangeElement(event.detail.filter_gain);
-	}
-	/** @arg {Element} view_parent */
+	/** @private @arg {Element} view_parent */
 	attach_to_element(view_parent) {
 		if(!this.view_div) {
 			let element=document.getElementById("rh_css");
@@ -568,7 +558,7 @@ if(typeof exports==="object") {
 	let exports=get_exports();
 	exports.VolumeRange=VolumeRange;
 }
-/** @arg {string|URL} url */
+/** @private @arg {string|URL} url */
 function to_url(url) {
 	if(url instanceof URL) {
 		return url;
@@ -576,7 +566,7 @@ function to_url(url) {
 		return new URL(url);
 	}
 }
-/** @arg {Error} rejection @returns {Promise<Response>} */
+/** @private @arg {Error} rejection @returns {Promise<Response>} */
 function fetch_rejection_handler(rejection) {
 	if(rejection instanceof DOMException) {
 		if(rejection.name==="AbortError") {
@@ -637,7 +627,7 @@ class PropertyHandler {
 		}
 	}
 }
-/** @arg {{}} object @arg {PropertyKey} property @arg {PropertyHandler} property_handler */
+/** @private @arg {{}} object @arg {PropertyKey} property @arg {PropertyHandler} property_handler */
 function override_prop(object,property,property_handler) {
 	Object.defineProperty(object,property,{
 		get() {
@@ -826,7 +816,7 @@ class YtIterateTarget {
 		state.t.iteration.default_iter(state,renderer);
 	}
 }
-/** @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag */
+/** @private @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag */
 function check_item_keys(real_path,path,keys) {
 	let real_path_arr=real_path.split(".");
 	let real_path_arr_dyn={
@@ -915,7 +905,7 @@ function check_item_keys(real_path,path,keys) {
 }
 class HandleRendererContentItemArray {
 	debug=false;
-	/** @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
+	/** @private @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
 	filter_for_rich_item_renderer(path,base,content_item) {
 		let debug_flag_value=false;
 		if("filter_handler_debug" in base) {
@@ -935,7 +925,7 @@ class HandleRendererContentItemArray {
 		}
 		return true;
 	}
-	/** @arg {RichSectionRenderer} content_item */
+	/** @private @arg {RichSectionRenderer} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
 		if("inlineSurveyRenderer" in renderer.content) {
@@ -1040,12 +1030,12 @@ class Base64Binary {
 		this.decode(input,byte_arr);
 		return byte_arr;
 	}
-	/** @arg {string} input */
+	/** @public @arg {string} input */
 	decode_str(input) {
 		let y=this.decodeByteArray(input);
 		return decoder.decode(y);
 	}
-	/** @arg {string} input @arg {Uint8Array} binary_arr */
+	/** @private @arg {string} input @arg {Uint8Array} binary_arr */
 	decode(input,binary_arr) {
 		var byte_len=(input.length/4)*3|0;
 		var chr1,chr2,chr3;
@@ -1094,7 +1084,7 @@ class LongBits {
 		return bigint_buf[0];
 	}
 }
-/** @arg {MyReader} reader @arg {number} [writeLength] */
+/** @private @arg {MyReader} reader @arg {number} [writeLength] */
 function indexOutOfRange(reader,writeLength) {
 	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 }
@@ -1121,7 +1111,7 @@ class MyReader {
 		return this.read_any(size);
 	}
 	cur_len=0;
-	/** @arg {number} [size] */
+	/** @private @arg {number} [size] */
 	read_any(size) {
 		this.failed=false;
 		if(!size) {
@@ -1177,7 +1167,7 @@ class MyReader {
 		this.pos=prev_pos;
 		return ret;
 	}
-	/** @arg {number} [length] */
+	/** @private @arg {number} [length] */
 	skip(length) {
 		this.last_pos=this.pos;
 		let start_pos=this.pos;
@@ -1288,7 +1278,7 @@ class MyReader {
 			this.readFixed32_end(this.buf,this.pos+=4)
 		).toBigInt();
 	}
-	/** @arg {Uint8Array} buf @arg {number} end */
+	/** @private @arg {Uint8Array} buf @arg {number} end */
 	readFixed32_end(buf,end) {
 		return (buf[end-4]
 			|buf[end-3]<<8
@@ -1299,7 +1289,7 @@ class MyReader {
 		this.last_pos=this.pos;
 		return this.readFixed64();
 	}
-	/** @arg {number} writeLength */
+	/** @private @arg {number} writeLength */
 	indexOutOfRange(writeLength) {
 		return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
 	}
@@ -1316,7 +1306,7 @@ class MyReader {
 		return [cur_byte&7,cur_byte>>>3];
 	}
 	log_range_error=false;
-	/** @arg {number} fieldId @arg {number} wireType */
+	/** @private @arg {number} fieldId @arg {number} wireType */
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
@@ -1395,18 +1385,18 @@ class MyReader {
 	}
 }
 const base64_dec=new Base64Binary();
-/** @arg {string} str */
+/** @private @arg {string} str */
 function decode_b64_proto_obj(str) {
 	let buffer=base64_dec.decodeByteArray(str);
 	let reader=new MyReader(buffer);
 	return reader.try_read_any();
 }
-/** @arg {string} x */
+/** @private @arg {string} x */
 function decode_url_b64(x) {
 	x=x.replaceAll("_","/").replaceAll("-","+");
 	return base64_dec.decodeByteArray(x);
 }
-/** @arg {string} x */
+/** @private @arg {string} x */
 function decode_url_b64_proto_obj(x) {
 	x=x.replaceAll("_","/").replaceAll("-","+");
 	let ba=base64_dec.decodeByteArray(x);
@@ -1428,7 +1418,7 @@ function create_from_parse(str) {
 	return ret;
 }
 class FilterHandlers {
-	/** @arg {ResolverT<Services,ServiceOptions>} res */
+	/** @public @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
@@ -1462,7 +1452,7 @@ class FilterHandlers {
 			["videoRenderer",false],
 		]);
 		let t=this;
-		/** @arg {string} value */
+		/** @private @arg {string} value */
 		function whitelist_item(value) {
 			t.blacklisted_item_sections.set(value,false);
 		}
@@ -1470,7 +1460,7 @@ class FilterHandlers {
 		whitelist_item("settingsOptionsRenderer");
 		whitelist_item("connectedAppRenderer");
 	}
-	/** @arg {ApiUrlFormatFull} x */
+	/** @private @arg {ApiUrlFormatFull} x */
 	use_template_url(x) {
 		const res_parse=create_from_parse(x);
 		if("_tag" in res_parse) {
@@ -1480,7 +1470,7 @@ class FilterHandlers {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.handle_types.x.get("string_parser").get_url_type(path_parts);
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -1527,7 +1517,7 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,[any,any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,[any,any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_length_2(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -1540,7 +1530,7 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
 	convert_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -1556,7 +1546,7 @@ class FilterHandlers {
 			};
 		}
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
 	convert_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -1577,7 +1567,7 @@ class FilterHandlers {
 			};
 		}
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -1589,7 +1579,7 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -1601,7 +1591,7 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -1623,7 +1613,7 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -1640,7 +1630,7 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @arg {UrlTypes} url_type @arg {{}} x @returns {ResponseTypes} */
+	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {ResponseTypes} */
 	get_res_data(url_type,x) {
 		/** @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
@@ -1660,9 +1650,9 @@ class FilterHandlers {
 			data: x,
 		};
 	}
-	/** @arg {string|URL|Request} request @arg {{}} data */
+	/** @public @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {
-		/** @arg {string|URL|Request} req */
+		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
 			if(typeof req=="string") {
 				return {url: to_url(req)};
@@ -1688,7 +1678,7 @@ class FilterHandlers {
 		this.handle_types.ResponseTypes(res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
+	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @type {AnySavedData} */
@@ -1697,7 +1687,7 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @arg {[()=>NavigateEventDetail["response"], object, []]} apply_args */
+	/** @public @arg {[()=>NavigateEventDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @type {NavigateEventDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
@@ -1803,7 +1793,7 @@ class OnWindowProperty {
 		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
 	}
 }
-/** @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
+/** @private @arg {{ value?: any; value_tr?: any; value_of?: any; noisy_flag?: any; }} cc @arg {string} ms @arg {{}} obj @arg {string} [mc] */
 function walk_key_path(cc,ms,obj,mc) {
 	let fs;
 	let mt=ms.match(cc.value_tr);
@@ -1830,7 +1820,7 @@ function walk_key_path(cc,ms,obj,mc) {
 	throw 1;
 }
 let win_watch=new OnWindowProperty;
-/** @arg {any} val @arg {MKState} cc */
+/** @private @arg {any} val @arg {MKState} cc */
 function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
@@ -1842,7 +1832,7 @@ function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	}
 	return ret;
 }
-/** @arg {MKState} cc */
+/** @private @arg {MKState} cc */
 function on_mk_function_property(cc) {
 	/** @this {{}} */
 	function with_this(/** @type {any} */ ...args) {
@@ -1875,7 +1865,7 @@ class MKState {
 	function_value=null;
 	noisy=false;
 }
-/** @arg {MKState} cc @arg {{}} obj */
+/** @private @arg {MKState} cc @arg {{}} obj */
 function on_mk_new_property(cc,obj) {
 	if(obj instanceof Function) {
 		cc.function_value=obj;
@@ -1892,7 +1882,7 @@ function on_mk_new_property(cc,obj) {
 		cc.value=obj;
 	}
 }
-/** @arg {MKState} cc @arg {{}} obj */
+/** @private @arg {MKState} cc @arg {{}} obj */
 function on_mk_property_set(cc,obj) {
 	if(ud_func.has(obj)) cc.value=obj;
 	if(any_c(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
@@ -1901,7 +1891,7 @@ function on_mk_property_set(cc,obj) {
 		cc.value=obj;
 	}
 }
-/** @arg {MKState} cc */
+/** @private @arg {MKState} cc */
 function mk_run(cc) {
 	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {
 		return cc;
@@ -2001,7 +1991,7 @@ class DomObserver extends CustomEventTarget {
 		});
 	}
 	trace=false;
-	/** @arg {MessagePort} port @arg {number} count */
+	/** @private @arg {MessagePort} port @arg {number} count */
 	next_tick_action(port,count) {
 		if(this.trace) console.log("tick_trace",count);
 		// port.postMessage() -> on_port_message;
@@ -2025,7 +2015,7 @@ function has_ytd_page_mgr() {
 	return ytd_page_manager!==null;
 }
 
-/** @arg {HTMLElement} element */
+/** @private @arg {HTMLElement} element */
 function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2035,7 +2025,7 @@ function on_ytd_page_manager(element) {
 }
 /** @type {HTMLElement|null} */
 let ytd_watch_flexy=null;
-/** @arg {HTMLElement} element */
+/** @private @arg {HTMLElement} element */
 function on_ytd_watch_flexy(element) {
 	const element_id="ytd-watch-flexy";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2056,7 +2046,7 @@ function is_watch_page_active() {
 	}
 	return ytd_page_manager.getCurrentPage()?.tagName.toLowerCase()==="ytd-watch-flexy";
 }
-/** @arg {Node} value */
+/** @private @arg {Node} value */
 function as_node(value) {
 	return value;
 }
@@ -2072,7 +2062,7 @@ let element_map=new Map;
 let box_map=new Map;
 /** @type {YtdPlayerElement|null} */
 let ytd_player=null;
-/** @arg {HTMLElement} element */
+/** @private @arg {HTMLElement} element */
 function on_ytd_player(element) {
 	const element_id="ytd-player";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2141,7 +2131,7 @@ function filter_out_keys(keys,to_remove) {
 	}
 	return ok_e;
 }
-/** @arg {NavigateEventDetail["pageType"]} pageType */
+/** @private @arg {NavigateEventDetail["pageType"]} pageType */
 function page_type_iter(pageType) {
 	switch(pageType) {
 		case "browse": case "channel": break;
@@ -2160,7 +2150,7 @@ let css_str=`
 	}
 	/*# sourceURL=yt_css_user */
 `;
-/** @arg {string} css_content */
+/** @private @arg {string} css_content */
 function createStyleElement(css_content) {
 	let style=document.createElement("style");
 	style.innerHTML=css_content;
@@ -2181,7 +2171,7 @@ function ui_css_toggle_click_handler() {
 
 with_ytd_scope();
 
-/** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
+/** @private @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 function get_new_video_element_list(element_list,list_box) {
 	let new_video_elements=[];
 	for(let i=0;i<element_list.length;i++) {
@@ -2197,7 +2187,7 @@ function get_new_video_element_list(element_list,list_box) {
 
 /** @type {HTMLElement|null} */
 let yt_playlist_manager=null;
-/** @arg {HTMLElement} element */
+/** @private @arg {HTMLElement} element */
 function on_yt_playlist_manager(element) {
 	const element_id="yt-playlist-manager";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
@@ -2206,7 +2196,7 @@ function on_yt_playlist_manager(element) {
 	window.yt_playlist_manager=element;
 }
 
-/** @arg {number} value @returns {ReturnType<typeof setTimeout>} */
+/** @private @arg {number} value @returns {ReturnType<typeof setTimeout>} */
 function as_timeout_type(value) {
 	/** @type {any} */
 	let value_any=value;
@@ -2227,7 +2217,7 @@ let port_state=new MessagePortState;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
-/** @arg {MessageEvent<number>} event */
+/** @private @arg {MessageEvent<number>} event */
 function on_port_message(event) {
 	if(is_yt_debug_enabled) console.log("msg_port:message %o",event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
@@ -2263,7 +2253,7 @@ class Future {
 	}
 }
 
-/** @arg {HiddenData<FilterHandlers>} yt_handlers */
+/** @private @arg {HiddenData<FilterHandlers>} yt_handlers */
 function start_message_channel_loop(yt_handlers) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
@@ -2278,7 +2268,7 @@ function start_message_channel_loop(yt_handlers) {
 	}
 }
 
-/** @arg {Document|Element} node @arg {string} child_node_tag_name */
+/** @private @arg {Document|Element} node @arg {string} child_node_tag_name */
 function get_html_elements(node,child_node_tag_name) {
 	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
 }
@@ -2292,7 +2282,7 @@ async function wait_for_yt_player() {
 	}
 	await ytd_player.playerResolver_.promise;
 }
-/** @arg {HTMLElement} element */
+/** @private @arg {HTMLElement} element */
 function sumOffset(element) {
 	let cache={
 		top_offset: 0,
@@ -2392,7 +2382,7 @@ function title_text_overlay_update() {
 function is_yt_fullscreen_change_action(detail) {
 	return detail.actionName==="yt-fullscreen-change-action";
 }
-/** @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
+/** @private @arg {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event */
 function on_yt_action(event) {
 	let {detail}=event;
 	if(is_yt_fullscreen_change_action(detail)) {
@@ -2515,13 +2505,13 @@ class AudioGainController {
 			this.audioCtx.destination,
 		]);
 	}
-	/** @arg {AudioNode[]} node_chain */
+	/** @private @arg {AudioNode[]} node_chain */
 	init_node_chain(node_chain) {
 		for(let i=0;i<node_chain.length-1;i++) {
 			node_chain[i].connect(node_chain[i+1]);
 		}
 	}
-	/** @arg {DynamicsCompressorNode} node */
+	/** @private @arg {DynamicsCompressorNode} node */
 	initCompressor(node) {
 		node.knee.value=27;
 		node.attack.value=1;
@@ -2647,7 +2637,7 @@ function get_exports() {
 //#region
 function main() {
 	const log_enabled_page_type_change=false;
-	/** @arg {YTNavigateFinishEvent} event */
+	/** @private @arg {YTNavigateFinishEvent} event */
 	function log_page_type_change(event) {
 		let {detail}=event;
 		if(!detail) return;
@@ -2706,11 +2696,11 @@ function main() {
 	start_message_channel_loop(yt_handlers);
 	return;
 	// #region hoisted functions below
-	/** @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
+	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
 		yt_handlers.extract(h => h.on_handle_api(request,response_obj));
 	}
-	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
 		let original_json_parse=JSON.parse;
@@ -2746,13 +2736,13 @@ function main() {
 		}
 		return ret;
 	}
-	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
 	function bind_promise_handler(request,options,onfulfilled,onrejected) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
 		let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 		return ret;
 	}
-	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Promise<any>} ov @return {Promise<any>} */
+	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Promise<any>} ov @return {Promise<any>} */
 	function handle_fetch_response_2(request,options,ov) {
 		return {
 			/** @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
@@ -2769,7 +2759,7 @@ function main() {
 			[Symbol.toStringTag]: "Promise",
 		};
 	}
-	/** @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
+	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
 	function fetch_promise_handler(request,options,response) {
 		class FakeResponse {
 			text() {
@@ -2792,7 +2782,7 @@ function main() {
 		/** @type {Response} */
 		let fake_res_t=any_x;
 		return new Proxy(fake_res_t,{
-			/** @arg {keyof Response} key */
+			/** @private @arg {keyof Response} key */
 			get(_obj,key,_proxy) {
 				/** @type {string} */
 				let ks=cast_as(key);
@@ -2809,7 +2799,7 @@ function main() {
 			}
 		});
 	}
-	/** @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>} */
+	/** @private @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>} */
 	function fetch_inject(user_request,request_init) {
 		if(!original_fetch) throw new Error("No original fetch");
 		x: if(request_init) {
@@ -2819,17 +2809,18 @@ function main() {
 		if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
 			return original_fetch(user_request,request_init);
 		}
+		debugger;
 		let ret=original_fetch(user_request,request_init);
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
 	}
-	/** @arg {[()=>BrowsePageResponse, object, []]} apply_args */
+	/** @private @arg {[()=>BrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
 	function modify_global_env() {
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
-			/** @arg {typeof URL["createObjectURL"]} target
+			/** @private @arg {typeof URL["createObjectURL"]} target
 			 @arg {typeof URL} thisArg
 			 @arg {[Blob|MediaSource]} args */
 			apply(target,thisArg,args) {
@@ -2845,7 +2836,7 @@ function main() {
 			}
 		});
 		URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
-			/** @arg {typeof URL["revokeObjectURL"]} target
+			/** @private @arg {typeof URL["revokeObjectURL"]} target
 			 @arg {typeof URL} thisArg
 			 @arg {[string]} args */
 			apply(target,thisArg,args) {
@@ -2920,7 +2911,7 @@ class KnownDataSaver {
 		this.load_data();
 		this.store_data();
 	}
-	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} */
+	/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} */
 	parse_data(str) {
 		return JSON.parse(str);
 	}
@@ -2961,7 +2952,7 @@ class KnownDataSaver {
 			seen_booleans,
 		};
 	}
-	/** @arg {string} seen_data */
+	/** @private @arg {string} seen_data */
 	save_local_storage(seen_data) {
 		if(no_storage_access) {
 			this.seen_data_json_str=seen_data;
@@ -2974,7 +2965,7 @@ class KnownDataSaver {
 		if(no_storage_access) return this.seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
-	/** @arg {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} x */
+	/** @private @arg {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} x */
 	push_data_to_parent(x) {
 		const {
 			seen_root_visual_elements,seen_strings,seen_booleans,
@@ -3043,7 +3034,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	onDataChange() {
 		this.onDataChangeAction();
 	}
-	/** @arg {string} key */
+	/** @public @arg {string} key */
 	delete_old_string_values(key) {
 		let p=this.get_seen_string_item(key);
 		if(!p) return;
@@ -3121,7 +3112,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	}
 	/** @type {[string,number|number[]][]} */
 	new_numbers=[];
-	/** @arg {string} key @arg {number|number[]} x */
+	/** @public @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(x===void 0) {
 			debugger;
@@ -3171,7 +3162,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	}
 	/** @type {[string,{t:boolean;f:boolean}][]} */
 	new_booleans=[];
-	/** @arg {string} key @arg {boolean} bool */
+	/** @public @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
 		let krc=this.seen_booleans.find(e => e[0]===key);
 		if(!krc) {
@@ -3195,7 +3186,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	}
 	/** @type {number[]} */
 	new_root_visual_elements=[];
-	/** @arg {number} x */
+	/** @public @arg {number} x */
 	save_root_visual_element(x) {
 		if(x===void 0) {
 			debugger;
@@ -3351,7 +3342,7 @@ class CsiService extends BaseService {
 			this.rid[x]=void 0;
 		}
 	}
-	/** @arg {BrowseEndpointPages} value */
+	/** @private @arg {BrowseEndpointPages} value */
 	verify_param_yt_fn(value) {
 		switch(value) {
 			case "history":
@@ -3427,7 +3418,7 @@ class ECatcherService extends BaseService {
 	};
 	/** @type {number[]} */
 	seen_new_expected=[];
-	/** @arg {number[]} x */
+	/** @public @arg {number[]} x */
 	iterate_fexp(x) {
 		let expected=this.data.expected_client_values.fexp;
 		/** @type {number[]} */
@@ -3447,7 +3438,7 @@ class ECatcherService extends BaseService {
 		}
 		this.data.expected_client_values.fexp;
 	}
-	/** @arg {ECatcherServiceParams["params"]} params */
+	/** @public @arg {ECatcherServiceParams["params"]} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3471,7 +3462,7 @@ class ECatcherService extends BaseService {
 			console.log({name: prev_client.name},{name: this.data.client.name});
 		}
 	}
-	/** @arg {NonNullable<this["data"]["client"]>} client */
+	/** @private @arg {NonNullable<this["data"]["client"]>} client */
 	update_client(client) {
 		this.data.client=client;
 	}
@@ -3490,11 +3481,11 @@ class GFeedbackService extends BaseService {
 		if(!res) throw new Error();
 		return res;
 	}
-	/** @arg {Extract<ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
+	/** @private @arg {Extract<ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
 	parse_e_param(param) {
 		return param.value.split(",").map(e => parseInt(e,10));
 	}
-	/** @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
+	/** @public @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
 	on_context_param(data_target,x) {
 		data_target.context=x;
 		switch(x) {
@@ -3507,7 +3498,7 @@ class GFeedbackService extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @arg {GFeedbackServiceParamsType} params */
+	/** @public @arg {GFeedbackServiceParamsType} params */
 	on_params(params) {
 		let parsed_e=null;
 		for(let param of params) {
@@ -3540,7 +3531,7 @@ class GFeedbackService extends BaseService {
 			if(parsed_e) this.maybe_new_e();
 		}
 	}
-	/** @arg {GFeedbackServiceRouteParam} x */
+	/** @private @arg {GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
 		let h=this.x.get("string_parser");
 		this.data.route=x.value;
@@ -3560,7 +3551,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {GuidedHelpServiceParams["params"]} params */
+	/** @public @arg {GuidedHelpServiceParams["params"]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3576,19 +3567,19 @@ class GuidedHelpService extends BaseService {
 	}
 }
 class TrackingServices extends BaseService {
-	/** @arg {CsiServiceParams} service */
+	/** @private @arg {CsiServiceParams} service */
 	on_csi_service(service) {
 		this.x.get("csi_service").on_params(service.params);
 	}
-	/** @arg {ECatcherServiceParams} service */
+	/** @private @arg {ECatcherServiceParams} service */
 	on_e_catcher_service(service) {
 		this.x.get("e_catcher_service").on_params(service.params);
 	}
-	/** @arg {GFeedbackServiceParams} service */
+	/** @private @arg {GFeedbackServiceParams} service */
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
-	/** @arg {GuidedHelpServiceParams} service */
+	/** @private @arg {GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
@@ -3597,7 +3588,7 @@ class TrackingServices extends BaseService {
 		if(!res) throw new Error();
 		return res;
 	}
-	/** @arg {GoogleHelpServiceParams} service */
+	/** @private @arg {GoogleHelpServiceParams} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -3607,7 +3598,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @arg {AllServiceTrackingParams} service_arg */
+	/** @public @arg {AllServiceTrackingParams} service_arg */
 	set_service_params(service_arg) {
 		switch(service_arg.service) {
 			case "CSI": this.on_csi_service(service_arg); break;
@@ -3732,7 +3723,7 @@ class YtPlugin {
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
 	}
-	/** @arg {string} key @arg {Map<string, {}>} map */
+	/** @private @arg {string} key @arg {Map<string, {}>} map */
 	save_new_map(key,map) {
 		if(!this.saved_maps) return;
 		this.saved_maps.set(key,map);
@@ -3741,27 +3732,15 @@ class YtPlugin {
 	set_yt_handlers(value) {
 		this.yt_handlers=value;
 	}
-	/** @arg {{name:string}} function_obj */
+	/** @public @arg {{name:string}} function_obj */
 	add_function(function_obj) {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
-	/** @arg {AppendContinuationItemsAction} o @returns {o is WatchNextContinuationAction} */
-	is_watch_next_feed_target(o) {
-		return o.targetId==="watch-next-feed";
-	}
-	/** @arg {AppendContinuationItemsAction} o @returns {o is CommentsSectionContinuationAction} */
-	is_comments_section_next(o) {
-		return o.targetId==="comments-section";
-	}
-	/** @arg {AppendContinuationItemsAction} o @returns {o is BrowseFeedAction} */
-	is_what_to_watch_section(o) {
-		return o.targetId==="browse-feedFEwhat_to_watch";
-	}
 }
 //#endregion
 class IndexedDbAccessor {
-	/** @arg {string} db_name */
+	/** @public @arg {string} db_name */
 	constructor(db_name,version=1) {
 		this.db_args={
 			name: db_name,
@@ -3793,7 +3772,7 @@ class IndexedDbAccessor {
 		const request=indexedDB.open(name,version);
 		this.onOpenRequest(request);
 	}
-	/** @arg {IDBOpenDBRequest} request */
+	/** @private @arg {IDBOpenDBRequest} request */
 	onOpenRequest(request) {
 		request.onsuccess=event => this.onSuccess(request,event);
 		request.onerror=event => this.onError(event);
@@ -3801,32 +3780,32 @@ class IndexedDbAccessor {
 	}
 	log_all_events=false;
 	close_db_on_transaction_complete=false;
-	/** @arg {IDBOpenDBRequest} request @arg {Event} event */
+	/** @private @arg {IDBOpenDBRequest} request @arg {Event} event */
 	onSuccess(request,event) {
 		if(this.log_all_events) console.log("OpenDBRequest success",event);
 		this.onDatabaseReady(request.result);
 	}
-	/** @arg {IDBDatabase} db */
+	/** @private @arg {IDBDatabase} db */
 	onDatabaseReady(db) {
 		this.database_opening=false;
 		this.database_open=true;
 		this.onDatabaseResult(db);
 		this.start_transaction(db);
 	}
-	/** @arg {IDBDatabase} db */
+	/** @private @arg {IDBDatabase} db */
 	onDatabaseResult(db) {
 		db.onerror=event => console.log("IDBDatabase: error",event);
 		db.onabort=event => console.log("IDBDatabase: abort",event);
 		db.onclose=event => console.log("IDBDatabase: close",event);
 		db.onversionchange=event => this.onDatabaseVersionChange(db,event);
 	}
-	/** @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
+	/** @private @arg {IDBDatabase} db @arg {IDBVersionChangeEvent} event */
 	onDatabaseVersionChange(db,event) {
 		this.database_open=false;
 		console.log("IDBDatabase: version_change",event);
 		db.close();
 	}
-	/** @arg {IDBDatabase} db */
+	/** @private @arg {IDBDatabase} db */
 	start_transaction(db) {
 		const transaction=db.transaction("video_id","readwrite");
 		transaction.onerror=event => console.log("IDBTransaction: error",event);
@@ -3834,7 +3813,7 @@ class IndexedDbAccessor {
 		transaction.oncomplete=event => this.onTransactionComplete(db,event);
 		if(this.arr.length>0) this.consume_data(transaction);
 	}
-	/** @arg {IDBDatabase} db @arg {Event} event */
+	/** @private @arg {IDBDatabase} db @arg {Event} event */
 	onTransactionComplete(db,event) {
 		if(this.log_all_events) console.log("IDBTransaction: complete",event);
 		for(let i=this.arr.length-1;i>=0;i--) {
@@ -3850,12 +3829,12 @@ class IndexedDbAccessor {
 		this.database_open=false;
 		db.close();
 	}
-	/** @arg {IDBTransaction} transaction */
+	/** @private @arg {IDBTransaction} transaction */
 	consume_data(transaction) {
 		const store=transaction.objectStore("video_id");
 		this.consume_data_with_store(store);
 	}
-	/** @arg {IDBObjectStore} store */
+	/** @private @arg {IDBObjectStore} store */
 	consume_data_with_store(store) {
 		const cursor_req=store.openCursor();
 		/** @type {{v: string}[]} */
@@ -3896,7 +3875,7 @@ class IndexedDbAccessor {
 			}
 		};
 	}
-	/** @arg {IDBObjectStore} store @arg {{v:string}} data */
+	/** @private @arg {IDBObjectStore} store @arg {{v:string}} data */
 	add_data_to_store(store,data) {
 		const request=store.add(data);
 		request.onerror=event => console.log("IDBRequest: error",event);
@@ -3905,7 +3884,7 @@ class IndexedDbAccessor {
 			this.committed_data.push(data);
 		};
 	}
-	/** @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
+	/** @private @arg {IDBOpenDBRequest} request @arg {IDBVersionChangeEvent} event */
 	onUpgradeNeeded(request,event) {
 		if(event.oldVersion===0) {
 			this.createLatestDatabaseVersion(request,[]);
@@ -3927,13 +3906,13 @@ class IndexedDbAccessor {
 			};
 		}
 	}
-	/** @arg {IDBOpenDBRequest} request @arg {{v:string}[]} data_source */
+	/** @private @arg {IDBOpenDBRequest} request @arg {{v:string}[]} data_source */
 	createLatestDatabaseVersion(request,data_source) {
 		const db=request.result;
 		const store=db.createObjectStore("video_id",{keyPath: "v"});
 		for(let x of data_source) store.put(x);
 	}
-	/** @arg {Event} event */
+	/** @private @arg {Event} event */
 	onError(event) {
 		console.log("idb error",event);
 	}
@@ -3941,7 +3920,7 @@ class IndexedDbAccessor {
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class YtUrlParser extends BaseService {
 	log_playlist_parse=false;
-	/** @arg {PlaylistId} x */
+	/** @public @arg {PlaylistId} x */
 	parse_playlist_id(x) {
 		if(x===void 0) {debugger; return;}
 		x: {
@@ -3983,7 +3962,7 @@ class YtUrlParser extends BaseService {
 	str_has_sep(x,u) {
 		return x.includes(u);
 	}
-	/** @arg {MimeTypeFormat} x */
+	/** @public @arg {MimeTypeFormat} x */
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
@@ -4003,7 +3982,7 @@ class YtUrlParser extends BaseService {
 		console.log(vv[0],codec_type_raw);
 		debugger;
 	}
-	/** @arg {CodecType} x */
+	/** @private @arg {CodecType} x */
 	parse_codec_str(x) {
 		switch(x) {
 			case "av01": break;
@@ -4023,13 +4002,13 @@ class YtUrlParser extends BaseService {
 	str_starts_with_at_0(x,w) {
 		return this.str_starts_with(x[0],w);
 	}
-	/** @arg {`query=${string}`} x */
+	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
 		let sp=make_search_params(x);
 		if(!eq_keys(get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
-	/** @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
+	/** @private @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
 	parse_channel_section_url(x) {
 		if(!this.str_is_search(x)) {
 			return this.parse_channel_section(x);
@@ -4040,7 +4019,7 @@ class YtUrlParser extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @arg {ParseUrlStr_3} x */
+	/** @private @arg {ParseUrlStr_3} x */
 	parse_url_3(x) {
 		if(this.str_starts_with_at_0(x,"@")) {
 			this.parse_channel_section_url(x[1]);
@@ -4055,14 +4034,14 @@ class YtUrlParser extends BaseService {
 			default: debugger; return;
 		}
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["api",...any]>} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["api",...any]>} x */
 	parse_api_url(x) {
 		let a=split_string_once(x[1],"/");
 		switch(a[0]) {
 			case "stats": this.parse_api_stats_url(a[1]); break;
 		}
 	}
-	/** @arg {ParseApiUrlStr} x */
+	/** @private @arg {ParseApiUrlStr} x */
 	parse_api_stats_url(x) {
 		let a=split_string_once(x,"?");
 		switch(a[0]) {
@@ -4074,21 +4053,21 @@ class YtUrlParser extends BaseService {
 			default: debugger; break;
 		}
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["channel",...any]>} x */
 	parse_channel_url(x) {
 		if(this.str_starts_with_at_1(x,"UC")) {
 			return;
 		}
 		console.log("[parse_channel_url]",x);
 	}
-	/** @arg {`UC${string}`} x */
+	/** @public @arg {`UC${string}`} x */
 	parse_channel_id(x) {
 		if(this.str_starts_with(x,"UC")) {
 			return;
 		}
 		debugger;
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
 	parse_youtubei_api_url(x) {
 		let [,a]=x;
 		let b=split_string_once(a,"/");
@@ -4100,15 +4079,15 @@ class YtUrlParser extends BaseService {
 			default: console.log(a); debugger;
 		}
 	}
-	/** @arg {string} x */
+	/** @public @arg {string} x */
 	parse_video_id(x) {
 		indexed_db.put({v: x});
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
 		this.parse_video_id(x[1]);
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
 		let [,a]=x;
 		if(this.str_is_search(a)) {
@@ -4126,7 +4105,7 @@ class YtUrlParser extends BaseService {
 	str_is_search(x) {
 		return x.includes("?");
 	}
-	/** @arg {`RD${string}`} x */
+	/** @public @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
 		/** @type {YtUrlInfoItem[]} */
 		let arr=[];
@@ -4139,7 +4118,7 @@ class YtUrlParser extends BaseService {
 		this.log_url_info_arr(arr);
 	}
 	log_start_radio=false;
-	/** @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url(x) {
 		let vv=split_string(x,"&");
 		/** @type {YtUrlInfoItem[]} */
@@ -4186,7 +4165,7 @@ class YtUrlParser extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	on_player_params(x) {
 		let pp_value=x;
 		let pp_dec=decodeURIComponent(pp_value);
@@ -4223,12 +4202,7 @@ class YtUrlParser extends BaseService {
 	cache_playlist_id=[];
 	/** @type {string[]} */
 	cache_player_params=[];
-	/** @arg {string} x @arg {URL} url */
-	parse_account_google_com_url(x,url) {
-		if(url.pathname==="/AddSession") return;
-		console.log("[parse_url_external_2]",x);
-	}
-	/** @arg {Extract<YtUrlFormat,`https://${string}`>} x */
+	/** @private @arg {Extract<YtUrlFormat,`https://${string}`>} x */
 	parse_full_url(x) {
 		let r=create_from_parse(x);
 		switch(r.host) {
@@ -4278,7 +4252,7 @@ class YtUrlParser extends BaseService {
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @arg {YtUrlFormat} x */
+	/** @public @arg {YtUrlFormat} x */
 	parse_url(x) {
 		if(this.str_starts_with(x,"https://")) {
 			return this.parse_full_url(x);
@@ -4291,7 +4265,7 @@ class YtUrlParser extends BaseService {
 		}
 		this.parse_url_1(up[1]);
 	}
-	/** @arg {ParseUrlStr_1} x */
+	/** @private @arg {ParseUrlStr_1} x */
 	parse_url_1(x) {
 		let v=split_string_once(x,"/");
 		switch(v.length) {
@@ -4300,13 +4274,13 @@ class YtUrlParser extends BaseService {
 		}
 	}
 	log_playlist_index=false;
-	/** @arg {YtUrlInfoPlaylist} x */
+	/** @private @arg {YtUrlInfoPlaylist} x */
 	log_playlist_id(x,critical=false) {
 		if(this.cache_playlist_id.includes(x.id)) return;
 		this.cache_playlist_id.push(x.id);
 		if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
 	}
-	/** @arg {YtUrlInfoItem[]} x */
+	/** @private @arg {YtUrlInfoItem[]} x */
 	log_url_info_arr(x) {
 		for(let url_info of x) {
 			switch(url_info._tag) {
@@ -4324,7 +4298,7 @@ class YtUrlParser extends BaseService {
 			}
 		}
 	}
-	/** @arg {ParseUrlWithSearchIn} x */
+	/** @private @arg {ParseUrlWithSearchIn} x */
 	parse_url_with_search(x) {
 		let a=split_string(x,"?");
 		switch(a[0]) {
@@ -4334,7 +4308,7 @@ class YtUrlParser extends BaseService {
 	}
 	log_channel_handles=false;
 	/** @type {YtUrlFormat} */
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
 	parse_url_2(x) {
 		if(this.str_is_search(x)) return this.parse_url_with_search(x);
 		if(this.str_starts_with(x,"@")) {
@@ -4363,7 +4337,7 @@ class YtUrlParser extends BaseService {
 			default: debugger; return;
 		}
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
+	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`account${string}`]>[0]} x */
 	parse_account_url(x) {
 		let a=split_string(x,"_");
 		if(a.length===1) return;
@@ -4382,7 +4356,7 @@ class YtUrlParser extends BaseService {
 	str_starts_with(x,v) {
 		return x.startsWith(v);
 	}
-	/** @arg {YtPlaylistUrlParamsFormat} x */
+	/** @private @arg {YtPlaylistUrlParamsFormat} x */
 	parse_playlist_page_url(x) {
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
@@ -4407,7 +4381,7 @@ class YtUrlParser extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {YtTargetIdType} x */
+	/** @public @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		if(this.str_starts_with(x,"browse-feed")) {
 			return this.save_enum_with_sep("browse-feed",x,"");
@@ -4427,7 +4401,7 @@ class YtUrlParser extends BaseService {
 		console.log("[new_parse_target_id]",x);
 		debugger;
 	}
-	/** @arg {ChanTabStr} x */
+	/** @public @arg {ChanTabStr} x */
 	parse_channel_section(x) {
 		switch(x) {
 			case "featured": break;
@@ -4447,7 +4421,7 @@ class YtUrlParser extends BaseService {
 		let sp=new URLSearchParams(t);
 		return as_cast(Object.fromEntries(sp.entries()));
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
 	get_yt_url_type(x) {
 		if(x[1]!=="v1") {
 			return this.api_no_handler(x,x[1]);
@@ -4458,13 +4432,13 @@ class YtUrlParser extends BaseService {
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
 	}
-	/** @arg {string[]} parts @arg {string} cur_part */
+	/** @private @arg {string[]} parts @arg {string} cur_part */
 	api_no_handler(parts,cur_part) {
 		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
 		debugger;
 		return null;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
 	get_yt_url_type_3(x) {
 		switch(x[2]) {
 			case "browse": break;
@@ -4477,7 +4451,7 @@ class YtUrlParser extends BaseService {
 		}
 		return x[2];
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
 	get_yt_url_type_4(x) {
 		switch(x[2]) {
 			case "account": return this.get_account_type(x);
@@ -4491,7 +4465,7 @@ class YtUrlParser extends BaseService {
 			default: return this.api_no_handler(x,x[2]);
 		}
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
 	get_subscription_type(x) {
 		switch(x[3]) {
 			case "subscribe": break;
@@ -4501,7 +4475,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string,...string[]]>} x */
 	get_reel_type(x) {
 		switch(x[3]) {
 			case "reel_item_watch": break;
@@ -4512,7 +4486,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string,...string[]]>} x */
 	get_notification_type(x) {
 		switch(x[3]) {
 			case "get_unseen_count": break;
@@ -4525,7 +4499,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string,...string[]]>} x */
 	get_comment_type(x) {
 		switch(x[3]) {
 			case "create_comment": break;
@@ -4535,7 +4509,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string,...string[]]>} x */
 	get_att_type(x) {
 		switch(x[3]) {
 			case "get": break;
@@ -4546,7 +4520,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
 	get_like_type(x) {
 		switch(x[3]) {
 			case "like": break;
@@ -4557,7 +4531,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
 	get_account_type(x) {
 		switch(x[3]) {
 			case "account_menu": break;
@@ -4570,7 +4544,7 @@ class YtUrlParser extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} x */
 	get_live_chat_type(x) {
 		switch(x[3]) {
 			case "get_live_chat_replay": break;
@@ -4598,7 +4572,7 @@ let sizeof_cache=new Map;
 sizeof_cache.set(null,1);
 sizeof_cache.set(undefined,1);
 let count=0;
-/** @arg {unknown} obj */
+/** @private @arg {unknown} obj */
 function sizeof_js(obj) {
 	let cache=sizeof_cache.get(obj);
 	if(cache!==void 0) return cache;
@@ -4653,7 +4627,7 @@ class HandleTypes extends BaseService {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
 	}
-	/** @arg {PlayerResponse} x */
+	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
 		let t=this;
@@ -4717,7 +4691,7 @@ class HandleTypes extends BaseService {
 		}
 		let y=p5.call(this,d); this.g(y);
 	}
-	/** @arg {PlayerStoryboardSpecRenderer|PlayerLiveStoryboardSpecRenderer} x */
+	/** @private @arg {PlayerStoryboardSpecRenderer|PlayerLiveStoryboardSpecRenderer} x */
 	storyboards(x) {
 		if("playerStoryboardSpecRenderer" in x) {
 			this.PlayerStoryboardSpecRenderer(x);
@@ -4727,17 +4701,17 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {PlayerLiveStoryboardSpecRenderer} x */
+	/** @private @arg {PlayerLiveStoryboardSpecRenderer} x */
 	PlayerLiveStoryboardSpecRenderer(x) {
 		const {playerLiveStoryboardSpecRenderer: a,...y}=x; this.g(y);
 		this.PlayerLiveStoryboardSpecData(a);
 	}
-	/** @arg {PlayerLiveStoryboardSpecData} x */
+	/** @private @arg {PlayerLiveStoryboardSpecData} x */
 	PlayerLiveStoryboardSpecData(x) {
 		const {spec: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {BrowsePageResponse} x */
+	/** @private @arg {BrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
@@ -4764,7 +4738,7 @@ class HandleTypes extends BaseService {
 			f.call(this,x.webCommandMetadata);
 		}
 	}
-	/** @arg {BrowseWebCommandMetadata} x */
+	/** @private @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		if(x.url!=="/") debugger;
@@ -4795,7 +4769,7 @@ class HandleTypes extends BaseService {
 		if(a!==void 0) this.clickTrackingParams(a);
 		return y;
 	}
-	/** @arg {ResponseReceivedAction} x */
+	/** @private @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
 		if("adsControlFlowOpportunityReceivedCommand" in x) {
 			return this.AdsControlFlowOpportunityReceivedCommand(x);
@@ -4804,43 +4778,43 @@ class HandleTypes extends BaseService {
 		}
 		debugger;
 	}
-	/** @arg {ReloadContinuationItemsCommand} x */
+	/** @private @arg {ReloadContinuationItemsCommand} x */
 	ReloadContinuationItemsCommand(x) {
 		const {clickTrackingParams: a,reloadContinuationItemsCommand: b,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
 		this.ReloadContinuationItemsCommandData(b);
 	}
-	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
+	/** @private @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
 		let a=this.handle_clickTrackingParams(x);
 		this.w(a,a => this.AdsControlFlowOpportunityReceivedCommandData(a));
 	}
-	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
+	/** @private @arg {AdsControlFlowOpportunityReceivedCommandData} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
 		const {opportunityType: a,adSlotAndLayoutMetadata: b,isInitialLoad: c,enablePacfLoggingWeb: d,...y}=x; this.g(y);
 		if(a!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
 		this.z(b,a => this.AdSlotAndLayoutMetadataItem(a));
 		this.z([c,d],a => this.primitive_of(a,"boolean"));
 	}
-	/** @arg {AdSlotAndLayoutMetadataItem} x */
+	/** @private @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		const {adLayoutMetadata: a,adSlotMetadata: b,...y}=x; this.g(y);
 		this.z(a,a => this.AdLayoutMetadataItem(a));
 		this.AdSlotMetadata(b);
 	}
-	/** @arg {AdLayoutMetadataItem} x */
+	/** @private @arg {AdLayoutMetadataItem} x */
 	AdLayoutMetadataItem(x) {
 		const {layoutType: a,layoutId: b,adLayoutLoggingData: c,...y}=x; this.g(y);
 		if(a!=="LAYOUT_TYPE_DISPLAY_TOP_LANDSCAPE_IMAGE") debugger;
 		this.primitive_of(b,"string");
 		this.AdLayoutLoggingData(c);
 	}
-	/** @arg {AdLayoutLoggingData} x */
+	/** @private @arg {AdLayoutLoggingData} x */
 	AdLayoutLoggingData(x) {
 		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {BrowseResponseContent} x */
+	/** @private @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
 		this.save_keys("[BrowseResponseContent]",x);
 		const {
@@ -4884,7 +4858,7 @@ class HandleTypes extends BaseService {
 		if(cm) this.CacheMetadata(cm);
 		this.g(y);
 	}
-	/** @arg {BrowseContents} x */
+	/** @private @arg {BrowseContents} x */
 	BrowseContents(x) {
 		if("twoColumnBrowseResultsRenderer" in x) {
 			return this.TwoColumnBrowseResultsRenderer(x);
@@ -4893,7 +4867,7 @@ class HandleTypes extends BaseService {
 			return this.FeedFilterChipBarRenderer(x);
 		}
 	}
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	parse_endpoint_params(x) {
 		let arr=decode_url_b64(x);
 		let reader=new MyReader(arr);
@@ -4922,7 +4896,7 @@ class HandleTypes extends BaseService {
 			);
 		}
 	}
-	/** @arg {BrowseIdType} x */
+	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
 		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
 		/** @typedef {ExtractAfterStr<typeof x,"FE">} KnownParts */
@@ -4961,7 +4935,7 @@ class HandleTypes extends BaseService {
 			default: console.log("[param_value_needed]",v_2c,x); break;
 		}
 	}
-	/** @arg {BrowseEndpointData} x */
+	/** @private @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
 		const {params: a,browseId: b,canonicalBaseUrl: c,...y}=x;
 		if(a) this.parse_endpoint_params(decodeURIComponent(a));
@@ -4969,7 +4943,7 @@ class HandleTypes extends BaseService {
 		this.save_keys("[BrowseEndpointData]",x);
 		this.g(y);
 	}
-	/** @arg {UrlEndpointData} x */
+	/** @private @arg {UrlEndpointData} x */
 	UrlEndpointData(x) {
 		const {url: a,target: b,nofollow: c,...y}=x;
 		if(b&&b!=="TARGET_NEW_WINDOW") debugger;
@@ -4978,11 +4952,11 @@ class HandleTypes extends BaseService {
 		if(c) this.primitive_of(c,"boolean");
 		this.g(y);
 	}
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	parse_url(x) {
 		this.s_parser.parse_url(as_cast(x));
 	}
-	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
+	/** @private @arg {ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommand(x) {
 		const {clickTrackingParams: params,changeKeyedMarkersVisibilityCommand: {isVisible,key,...v}}=x;
 		this.clickTrackingParams(params);
@@ -4990,7 +4964,7 @@ class HandleTypes extends BaseService {
 		if(key!=="HEATSEEKER") debugger;
 		this.g(v);
 	}
-	/** @arg {LoadMarkersCommand} c */
+	/** @private @arg {LoadMarkersCommand} c */
 	LoadMarkersCommand(c) {
 		const {clickTrackingParams,loadMarkersCommand: {entityKeys: a,...y},...u}=c;
 		this.clickTrackingParams(clickTrackingParams);
@@ -4999,7 +4973,7 @@ class HandleTypes extends BaseService {
 		});
 		this.g(y); this.g(u);
 	}
-	/** @arg {CreateCommentEndpointData} x */
+	/** @private @arg {CreateCommentEndpointData} x */
 	CreateCommentEndpointData(x) {
 		let res=decode_url_b64_proto_obj(decodeURIComponent(x.createCommentParams));
 		if(!res) {
@@ -5057,7 +5031,7 @@ class HandleTypes extends BaseService {
 			return as_cast(key);
 		}
 	};
-	/** @arg {YtEndpoint} x */
+	/** @private @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		if(!x) {debugger; return;}
 		console.log(`[default.Endpoint.${this.#get_renderer_key(x)}]`,x);
@@ -5103,11 +5077,11 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @arg {AppendContinuationItemsAction} x */
+	/** @private @arg {AppendContinuationItemsAction} x */
 	AppendContinuationItemsAction(x) {
 		this.parse_target_id(x.targetId);
 	}
-	/** @arg {YtTargetIdType} x */
+	/** @private @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		this.s_parser.parse_target_id(x);
 	}
@@ -5120,7 +5094,7 @@ class HandleTypes extends BaseService {
 	/** @arg {ResponseTypes} x */
 	ResponseTypes(x) {
 		this._current_response_type=x.type;
-		/** @arg {{type:string}} x */
+		/** @private @arg {{type:string}} x */
 		let g=x => {
 			return this.save_string("need_api_type",x.type);
 		};
@@ -5152,14 +5126,14 @@ class HandleTypes extends BaseService {
 			default: return g(x);
 		}
 	}
-	/** @arg {GetLiveChatReplay} x */
+	/** @private @arg {GetLiveChatReplay} x */
 	GetLiveChatReplay(x) {
 		const {responseContext: a,continuationContents: b,...y}=x;
 		this.ResponseContext(a);
 		this.iter_continuationContents(b);
 		this.g(y);
 	}
-	/** @arg {LiveChatContinuation} x */
+	/** @private @arg {LiveChatContinuation} x */
 	iter_continuationContents(x) {
 		if("liveChatContinuation" in x) {
 			this.w(x,a => this.LiveChatContinuationData(a));
@@ -5167,12 +5141,12 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {LiveChatContinuationData} x */
+	/** @private @arg {LiveChatContinuationData} x */
 	LiveChatContinuationData(x) {
 		this.z(x.actions,a => this.ReplayChatItemAction(a));
 		this.z(x.continuations,a => this.LiveChatContinuationItem(a));
 	}
-	/** @arg {ReplayChatItemAction} x */
+	/** @private @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
 		if("replayChatItemAction" in x) {
 			const {replayChatItemAction: a,...y}=x;
@@ -5182,7 +5156,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {LiveChatContinuationItem} x */
+	/** @private @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {
 		if("liveChatReplayContinuationData" in x) {
 			this.w(x,a => this.LiveChatReplayContinuationData(a));
@@ -5192,23 +5166,23 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {GenericContinuationData} x */
+	/** @private @arg {GenericContinuationData} x */
 	GenericContinuationData(x) {
 		const {continuation: a,...y}=x;
 		this.primitive_of(a,"string");
 		this.g(y);
 	}
-	/** @arg {LiveChatReplayContinuationData} x */
+	/** @private @arg {LiveChatReplayContinuationData} x */
 	LiveChatReplayContinuationData(x) {
 		this.primitive_of(x.continuation,"string");
 		this.primitive_of(x.timeUntilLastMessageMsec,"number");
 	}
-	/** @arg {ReplayChatItemActionData} x */
+	/** @private @arg {ReplayChatItemActionData} x */
 	ReplayChatItemActionData(x) {
 		this.primitive_of(x.videoOffsetTimeMsec,"string");
 		this.z(x.actions,a => this.AddChatItemAction(a));
 	}
-	/** @arg {AddChatItemAction} x */
+	/** @private @arg {AddChatItemAction} x */
 	AddChatItemAction(x) {
 		if("addChatItemAction" in x) {
 			const {clickTrackingParams: a,addChatItemAction: b,...y}=x; this.g(y);
@@ -5218,13 +5192,13 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {AddChatItemActionData} x */
+	/** @private @arg {AddChatItemActionData} x */
 	AddChatItemActionData(x) {
 		const {clientId: a,item: b,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 		this.LiveChatItem(x.item);
 	}
-	/** @arg {LiveChatItem} x */
+	/** @private @arg {LiveChatItem} x */
 	LiveChatItem(x) {
 		if("liveChatTextMessageRenderer" in x) {
 			this.LiveChatTextMessageRenderer(x);
@@ -5234,21 +5208,21 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {LiveChatPlaceholderItemRenderer} x */
+	/** @private @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
 		this.LiveChatPlaceholderItemData(x.liveChatPlaceholderItemRenderer);
 	}
-	/** @arg {LiveChatPlaceholderItemData} x */
+	/** @private @arg {LiveChatPlaceholderItemData} x */
 	LiveChatPlaceholderItemData(x) {
 		const {id: a,timestampUsec: b,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 		this.primitive_of(b,"string");
 	}
-	/** @arg {LiveChatTextMessageRenderer} x */
+	/** @private @arg {LiveChatTextMessageRenderer} x */
 	LiveChatTextMessageRenderer(x) {
 		this.w(x,a => this.LiveChatTextMessageData(a));
 	}
-	/** @arg {LiveChatTextMessageData} x */
+	/** @private @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
 		const {
 			message: a,authorName: b,authorPhoto: c,contextMenuEndpoint: d,
@@ -5266,7 +5240,7 @@ class HandleTypes extends BaseService {
 		if(g) this.z(g,a => this.LiveChatAuthorBadgeRenderer(a));
 		this.g(y);
 	}
-	/** @arg {LiveChatAuthorBadgeRenderer} x */
+	/** @private @arg {LiveChatAuthorBadgeRenderer} x */
 	LiveChatAuthorBadgeRenderer(x) {
 		if("liveChatAuthorBadgeRenderer" in x) {
 			this.w(x,a => {
@@ -5279,7 +5253,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {`UC${string}`} x */
+	/** @private @arg {`UC${string}`} x */
 	parse_external_channel_id(x) {
 		let chan_parts=split_string_once(x,"UC");
 		if(chan_parts[0]!=="") debugger;
@@ -5287,23 +5261,23 @@ class HandleTypes extends BaseService {
 		if(cr.length===22) return;
 		console.log("[channel_id] %s %s","UC",cr);
 	}
-	/** @arg {LiveChatItemContextMenuEndpointData} x */
+	/** @private @arg {LiveChatItemContextMenuEndpointData} x */
 	LiveChatItemContextMenuEndpointData(x) {
 		const {params: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {HeartbeatParams} x */
+	/** @private @arg {HeartbeatParams} x */
 	HeartbeatParams(x) {
 		const {heartbeatServerData: a,intervalMilliseconds: b,softFailOnError: c,...y}=x; this.g(y);
 		this.z([a,b],a => this.primitive_of(a,"string"));
 		this.primitive_of(c,"boolean");
 	}
-	/** @arg {CardCollectionRenderer} x */
+	/** @private @arg {CardCollectionRenderer} x */
 	CardCollectionRenderer(x) {
 		const {cardCollectionRenderer: a,...y}=x; this.g(y);
 		this.CardCollectionData(a);
 	}
-	/** @arg {CardCollectionData} x */
+	/** @private @arg {CardCollectionData} x */
 	CardCollectionData(x) {
 		const {
 			cards: a,headerText: b,icon: c,closeButton: d,
@@ -5315,22 +5289,22 @@ class HandleTypes extends BaseService {
 		this.trackingParams(e);
 		this.z([f,g],a => this.primitive_of(a,"boolean"));
 	}
-	/** @arg {InfoCardIconRenderer} x */
+	/** @private @arg {InfoCardIconRenderer} x */
 	InfoCardIconRenderer(x) {
 		const {infoCardIconRenderer: a,...y}=x; this.g(y);
 		this.InfoCardIconData(a);
 	}
-	/** @arg {InfoCardIconData} x */
+	/** @private @arg {InfoCardIconData} x */
 	InfoCardIconData(x) {
 		const {trackingParams: a,...y}=x; this.g(y);
 		this.trackingParams(a);
 	}
-	/** @arg {PlayerMicroformatRenderer} x */
+	/** @private @arg {PlayerMicroformatRenderer} x */
 	PlayerMicroformatRenderer(x) {
 		const {playerMicroformatRenderer: a,...y}=x; this.g(y);
 		this.PlayerMicroformatData(a);
 	}
-	/** @arg {PlayerMicroformatData} x */
+	/** @private @arg {PlayerMicroformatData} x */
 	PlayerMicroformatData(x) {
 		let t=this;
 		/** @this {typeof t} @arg {PlayerMicroformatData} x */
@@ -5378,7 +5352,7 @@ class HandleTypes extends BaseService {
 		}
 		let y=p5.call(this,d); this.g(y);
 	}
-	/** @arg {LiveBroadcastDetails} x */
+	/** @private @arg {LiveBroadcastDetails} x */
 	LiveBroadcastDetails(x) {
 		const {startTimestamp: b,...y}=x;
 		this.primitive_of(b,"string");
@@ -5389,7 +5363,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	log_user_channel_url=false;
-	/** @arg {FullChannelUrlFormat} x */
+	/** @private @arg {FullChannelUrlFormat} x */
 	parse_channel_url(x) {
 		let r=create_from_parse(x);
 		let chan_part=split_string_once(r.pathname,"/")[1];
@@ -5406,14 +5380,14 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {MicroformatEmbed} x */
+	/** @private @arg {MicroformatEmbed} x */
 	MicroformatEmbed(x) {
 		const {iframeUrl: a,flashUrl: b,width: c,height: d,flashSecureUrl: e,...y}=x; this.g(y);
 		this.z([a,b,e],a => this.primitive_of(a,"string"));
 		this.primitive_of(x.flashSecureUrl,"string");
 		this.z([c,d],a => this.primitive_of(a,"number"));
 	}
-	/** @arg {GetNotificationMenuJson} x */
+	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
 		this.ResponseContext(responseContext);
@@ -5422,12 +5396,12 @@ class HandleTypes extends BaseService {
 		this.save_keys("[GetNotificationMenuJson]",x);
 		this.g(y);
 	}
-	/** @arg {YtApiNext} x */
+	/** @private @arg {YtApiNext} x */
 	YtApiNext(x) {
 		debugger;
 		this.save_keys("[api_next]",x);
 	}
-	/** @arg {NotificationGetUnseenCount} x */
+	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCount(x) {
 		const {responseContext: a,...y}=x;
 		this.ResponseContext(a);
@@ -5438,14 +5412,14 @@ class HandleTypes extends BaseService {
 			this.notification_unseenCount(y);
 		}
 	}
-	/** @arg {ResponseWithActions} x */
+	/** @private @arg {ResponseWithActions} x */
 	ResponseWithActions(x) {
 		const {responseContext: a,actions: b,...c}=x;
 		this.ResponseContext(a);
 		this.z(b,a => this.ResponseActions(a));
 		this.g(c);
 	}
-	/** @arg {ResponseActions} x */
+	/** @private @arg {ResponseActions} x */
 	ResponseActions(x) {
 		if("updateNotificationsUnseenCountAction" in x) {
 			this.UpdateNotificationsUnseenCountAction(x);
@@ -5459,14 +5433,14 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {AddToGuideSectionAction} x */
+	/** @private @arg {AddToGuideSectionAction} x */
 	AddToGuideSectionAction(x) {
 		const {addToGuideSectionAction: a,clickTrackingParams: b,...y}=x;
 		this.AddToGuideSectionActionData(a);
 		this.clickTrackingParams(b);
 		this.g(y);
 	}
-	/** @arg {AddToGuideSectionActionData} x */
+	/** @private @arg {AddToGuideSectionActionData} x */
 	AddToGuideSectionActionData(x) {
 		const {handlerData: a,items: b,...y}=x;
 		switch(a) {
@@ -5476,14 +5450,14 @@ class HandleTypes extends BaseService {
 		this.z(b,a => this.GuideEntryRenderer(a));
 		this.g(y);
 	}
-	/** @arg {RemoveFromGuideSectionAction} x */
+	/** @private @arg {RemoveFromGuideSectionAction} x */
 	RemoveFromGuideSectionAction(x) {
 		const {removeFromGuideSectionAction: a,clickTrackingParams: b,...y}=x;
 		this.RemoveFromGuideSectionActionData(a);
 		this.clickTrackingParams(b);
 		this.g(y);
 	}
-	/** @arg {RemoveFromGuideSectionActionData} x */
+	/** @private @arg {RemoveFromGuideSectionActionData} x */
 	RemoveFromGuideSectionActionData(x) {
 		const {handlerData: a,guideEntryId: b,...y}=x;
 		switch(a) {
@@ -5493,21 +5467,22 @@ class HandleTypes extends BaseService {
 		this.parse_guide_entry_id(b);
 		this.g(y);
 	}
-	/** @arg {`RD${string}`} x */
+	/** @private @arg {`RD${string}`} x */
 	parse_guide_entry_id(x) {
 		this.s_parser.parse_guide_entry_id(x);
 	}
-	/** @arg {GuideEntryRenderer} x */
+	/** @private @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
 		const {guideEntryRenderer: a,...y}=x;
 		this.GuideEntryRendererData(a);
 		this.g(y);
 	}
-	/** @arg {GuideEntryRendererData} x */
+	/** @private @arg {GuideEntryRendererData} x */
 	GuideEntryRendererData(x) {
 		const {
 			accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,isPrimary: g,
-			...h
+			serviceEndpoint,targetId,
+			...y
 		}=x;
 		this.Accessibility(a);
 		if(b) this.yt_endpoint(b);
@@ -5516,65 +5491,55 @@ class HandleTypes extends BaseService {
 		this.text_t(e);
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
-		let {serviceEndpoint: i,targetId: j,...y}=h;
-		if(i) this.ServiceEndpoint(i,a => {
-			a;
-			debugger;
-		});
-		if(j) this.parse_target_id(j);
+		if(serviceEndpoint) {
+			let x=serviceEndpoint;
+			if("signalServiceEndpoint" in x) {
+				this.SignalServiceEndpointData(x.signalServiceEndpoint);
+				return;
+			} else if("reelWatchEndpoint" in x) {
+				this.ReelWatchEndpoint(x);
+				return;
+			}
+			console.log(`[missing.Endpoint.${this.#get_renderer_key(x)}]`,x);
+		};
+		if(targetId) this.parse_target_id(targetId);
 		this.g(y);
 	}
-	/** @arg {GuideEntryServicePlugins} x */
-	GuideEntryServicePlugins(x) {
-		if("reelWatchEndpoint" in x) {
-			const {reelWatchEndpoint: a,...y}=x; this.g(y);
-			return this.ReelWatchEndpointData(a);
-		} else if("signalServiceEndpoint" in x) {
-			const {signalServiceEndpoint: a,...y}=x; this.g(y);
-			return this.SignalServiceEndpointData(a);
-		}
-		debugger;
-	}
-	/** @template {{}} T @template {keyof VEMap} U @arg {ServiceEndpoint<T,U>} x @arg {(x:ServiceEndpoint_Omit<T,U>)=>void} f */
-	ServiceEndpoint(x,f) {
-		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
-		f(y);
-	}
-	/** @arg {GuideEntryData} x */
+	/** @private @arg {GuideEntryData} x */
 	GuideEntryData(x) {
 		if(!x) {debugger; return;}
 		const {guideEntryData: a,...y}=x; this.g(y);
 		this.GuideEntryDataContent(a);
 	}
-	/** @arg {GuideEntryDataContent} x */
+	/** @private @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
 		const {guideEntryId: a,...y}=x; this.g(y);
 		this.parse_guide_entry_id(a);
 	}
-	/** @arg {UpdateNotificationsUnseenCountAction} x */
+	/** @private @arg {UpdateNotificationsUnseenCountAction} x */
 	UpdateNotificationsUnseenCountAction(x) {
 		const {clickTrackingParams: a,updateNotificationsUnseenCountAction: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.UpdateNotificationsUnseenCount(b);
 		this.g(y);
 	}
-	/** @arg {{unseenCount:number}} x */
+	/** @private @arg {{unseenCount:number}} x */
 	notification_unseenCount(x) {
 		const {unseenCount: a,...c}=x;
 		this.save_number("notification.unseenCount",a);
 		this.g(c);
 	}
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	clickTrackingParams(x) {
 		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",x);
 		this.primitive_of(x,"string");
 	}
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	trackingParams(x) {
 		if(this.x.get_param("log_tracking_params")) console.log("tp",x);
 		this.primitive_of(x,"string");
 	}
-	/** @arg {UpdateNotificationsUnseenCount} x */
+	/** @private @arg {UpdateNotificationsUnseenCount} x */
 	UpdateNotificationsUnseenCount(x) {
 		const {handlerData,timeoutMs,...y}=x;
 		switch(handlerData) {
@@ -5594,15 +5559,6 @@ class HandleTypes extends BaseService {
 		this.WebCommandMetadata(a);
 		// this.g(y);
 	}
-	/** @arg {YtPageTypeEnum} x */
-	parse_page_type(x) {
-		switch(x) {
-			case "WEB_PAGE_TYPE_BROWSE": case "WEB_PAGE_TYPE_CHANNEL": case "WEB_PAGE_TYPE_PLAYLIST": case "WEB_PAGE_TYPE_SEARCH":
-			case "WEB_PAGE_TYPE_SETTINGS": case "WEB_PAGE_TYPE_SHORTS": case "WEB_PAGE_TYPE_WATCH":
-			case "WEB_PAGE_TYPE_UNKNOWN": break;
-			default: console.log("[new_page_type] [%s]",x); debugger; break;
-		}
-	}
 	/** @template {keyof VEMap} T @arg {CommandMetadataTemplate<T>['webCommandMetadata']} x */
 	WebCommandMetadata(x) {
 		const {rootVe: a}=x;
@@ -5614,7 +5570,7 @@ class HandleTypes extends BaseService {
 		// if(b!==void 0) this.parse_page_type(b);
 		// this.g(y);
 	}
-	/** @arg {keyof VEMap} x */
+	/** @private @arg {keyof VEMap} x */
 	on_root_visual_element(x) {
 		this.save_root_visual_element(x);
 		/** @type {`${typeof x}`} */
@@ -5631,7 +5587,7 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {TwoColumnBrowseResultsRenderer} x */
+	/** @private @arg {TwoColumnBrowseResultsRenderer} x */
 	TwoColumnBrowseResultsRenderer(x) {
 		if(!x) {
 			debugger;
@@ -5641,14 +5597,14 @@ class HandleTypes extends BaseService {
 		this.save_keys("[TwoColumnBrowseResultsRenderer]",x);
 		this.g(y);
 	}
-	/** @arg {TwoColumnBrowseResultsData} x */
+	/** @private @arg {TwoColumnBrowseResultsData} x */
 	TwoColumnBrowseResultsData(x) {
 		const {tabs: a,secondaryContents: b,...y}=x;
 		this.z(a,a => this.ResultRenderer(a));
 		if(b) this.SecondaryContents(b);
 		this.g(y);
 	}
-	/** @arg {ResultRenderer} x */
+	/** @private @arg {ResultRenderer} x */
 	ResultRenderer(x) {
 		if("tabRenderer" in x) {
 			const {tabRenderer: a,...y}=x;
@@ -5662,7 +5618,7 @@ class HandleTypes extends BaseService {
 		}
 		debugger;
 	}
-	/** @arg {ExpandableTabData} x */
+	/** @private @arg {ExpandableTabData} x */
 	ExpandableTabData(x) {
 		const {endpoint: a,title: b,selected: c,expandedText: d,content: e,...y}=x;
 		this.yt_endpoint(a);
@@ -5679,7 +5635,7 @@ class HandleTypes extends BaseService {
 		}
 		return this.g(y);
 	}
-	/** @arg {TabData} x */
+	/** @private @arg {TabData} x */
 	TabRenderer(x) {
 		if("content" in x) {
 			const {content: a,selected: b,trackingParams: c,...y}=x;
@@ -5700,7 +5656,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(c);
 		this.g(y);
 	}
-	/** @arg {ResponseContext} x */
+	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("[ResponseContext]",x);
 		const {
@@ -5718,12 +5674,12 @@ class HandleTypes extends BaseService {
 		f&&this.ConsistencyTokenJarData(f);
 		this.g(y);
 	}
-	/** @arg {MainAppWebResponseContextData} x */
+	/** @private @arg {MainAppWebResponseContextData} x */
 	MainAppWebResponseContextData(x) {
 		const {datasyncId,loggedOut,...y}=x;
 		this.g(y);
 	}
-	/** @arg {WebResponseContextExtensionData} x */
+	/** @private @arg {WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {
 		const {ytConfigData: a,webPrefetchData: b,hasDecorated: c,...y}=x;
 		if(a) this.YtConfigData(a);
@@ -5731,7 +5687,7 @@ class HandleTypes extends BaseService {
 		if(c!==void 0) this.primitive_of(c,"boolean");
 		this.g(y);
 	}
-	/** @arg {YtConfigData} x */
+	/** @private @arg {YtConfigData} x */
 	YtConfigData(x) {
 		const {rootVisualElementType: a,sessionIndex: b,visitorData: c,...y}=x;
 		this.save_root_visual_element(a);
@@ -5740,7 +5696,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(c,"string");
 		this.g(y);
 	}
-	/** @arg {YtWatchPageResponse} x */
+	/** @private @arg {YtWatchPageResponse} x */
 	YtWatchPageResponse(x) {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
@@ -5751,12 +5707,12 @@ class HandleTypes extends BaseService {
 		if(f) this.previousCsn(f);
 		this.g(y);
 	}
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	previousCsn(x) {
 		let csn=base64_dec.decode_str(x.replaceAll(".","="));
 		console.log("[prev_csn]",csn);
 	}
-	/** @arg {WatchNextResponse} x */
+	/** @private @arg {WatchNextResponse} x */
 	WatchNextResponse(x) {
 		let t=this;
 		/** @this {typeof t} @arg {typeof x} x */
@@ -5779,7 +5735,7 @@ class HandleTypes extends BaseService {
 		if(b) this.TwoColumnWatchNextResults(b);
 		this.g(y);
 	}
-	/** @arg {ResponseReceivedEndpointItem} x */
+	/** @private @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {
 		console.log(`[ResponseReceivedEndpointItem.${this.#get_renderer_key(x)}]`,x);
 		if("signalServiceEndpoint" in x) {
@@ -5791,7 +5747,7 @@ class HandleTypes extends BaseService {
 		}
 		debugger;
 	}
-	/** @arg {SignalServiceEndpoint} x */
+	/** @private @arg {SignalServiceEndpoint} x */
 	SignalServiceEndpoint(x) {
 		this.clickTrackingParams(x.clickTrackingParams);
 		this.CommandMetadata(x.commandMetadata,a => {
@@ -5803,14 +5759,14 @@ class HandleTypes extends BaseService {
 	CommandMetadata(x,f) {
 		f(x.webCommandMetadata);
 	}
-	/** @arg {CinematicContainerRenderer} x */
+	/** @private @arg {CinematicContainerRenderer} x */
 	CinematicContainerRenderer(x) {
 		if("cinematicContainerRenderer" in x) {
 			return this.w(x,a => this.CinematicContainerData(a));
 		}
 		debugger;
 	}
-	/** @arg {CinematicContainerData} x */
+	/** @private @arg {CinematicContainerData} x */
 	CinematicContainerData(x) {
 		const {backgroundImageConfig: a,gradientColorConfig: b,presentationStyle: c,config: d,...y}=x; this.g(y);
 		if(a) this.ThumbnailsList(a);
@@ -5825,21 +5781,21 @@ class HandleTypes extends BaseService {
 		}
 		this.PageVisualEffectsConfig(d);
 	}
-	/** @arg {GradientColorConfigEnd} x */
+	/** @private @arg {GradientColorConfigEnd} x */
 	GradientColorConfigEnd(x) {
 		if(x.darkThemeColor!==0xff000000) debugger;
 		if(x.startLocation!==1) debugger;
 	}
-	/** @arg {GradientColorConfigMid} x */
+	/** @private @arg {GradientColorConfigMid} x */
 	GradientColorConfigMid(x) {
 		if(x.darkThemeColor!==0x7f000000) debugger;
 	}
-	/** @arg {GradientColorConfigStart} x */
+	/** @private @arg {GradientColorConfigStart} x */
 	GradientColorConfigStart(x) {
 		if(x.darkThemeColor!==0x99000000) debugger;
 		if(x.startLocation!==0) debugger;
 	}
-	/** @arg {PageVisualEffectsConfig} x */
+	/** @private @arg {PageVisualEffectsConfig} x */
 	PageVisualEffectsConfig(x) {
 		let a=this.parse_theme_background_vars(x);
 		let b=this.parse_color_source_vars(a);
@@ -5848,7 +5804,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(d,"boolean");
 		if(e!==5) debugger;
 	}
-	/** @arg {AnimationConfig} x */
+	/** @private @arg {AnimationConfig} x */
 	AnimationConfig(x) {
 		const {minImageUpdateIntervalMs: a,crossfadeDurationMs: b,crossfadeStartOffset: c,maxFrameRate: d,...y}=x; this.g(y);
 		switch(a) {
@@ -5899,35 +5855,24 @@ class HandleTypes extends BaseService {
 		if(e!==260) debugger;
 		return y;
 	}
-	/** @arg {GradientColorConfigItem} x */
-	GradientColorConfigItem(x) {
-		if("startLocation" in x) {
-			const {darkThemeColor: b,startLocation: c,...z}=x; this.g(z);
-			console.log("gradient dark theme color",b.toString(16));
-			console.log("gradient start location",c);
-			return;
-		}
-		const {darkThemeColor: b,...y}=x; this.g(y);
-		console.log("gradient dark theme color",b.toString(16));
-	}
-	/** @arg {ThumbnailsList} x */
+	/** @private @arg {ThumbnailsList} x */
 	ThumbnailsList(x) {
 		const {thumbnail,trackingParams,...y}=x; this.g(y);
 		this.Thumbnail(x.thumbnail,this.g);
 	}
-	/** @arg {TwoColumnWatchNextResults} x */
+	/** @private @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
 		const {twoColumnWatchNextResults: a,...y}=x;
 		this.TwoColumnWatchNextResultsData(a);
 		this.g(y);
 	}
-	/** @arg {EngagementPanelSectionListRenderer} x */
+	/** @private @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanelSectionListRenderer(x) {
 		const {engagementPanelSectionListRenderer: a,...y}=x;
 		this.EngagementPanelSectionListData(a);
 		this.g(y);
 	}
-	/** @arg {FrameworkUpdates} x */
+	/** @private @arg {FrameworkUpdates} x */
 	FrameworkUpdates(x) {
 		if(!x) {debugger; return;}
 		const {entityBatchUpdate: a,elementUpdate: b,...y}=x;
@@ -5935,13 +5880,13 @@ class HandleTypes extends BaseService {
 		if(b) this.ElementUpdate(b);
 		this.g(y);
 	}
-	/** @arg {ElementUpdate} x */
+	/** @private @arg {ElementUpdate} x */
 	ElementUpdate(x) {
 		const {updates: a,...y}=x;
 		this.z(a,a => this.ElementUpdateItem(a));
 		this.g(y);
 	}
-	/** @arg {ElementUpdateItem} x */
+	/** @private @arg {ElementUpdateItem} x */
 	ElementUpdateItem(x) {
 		if("templateUpdate" in x) {
 			const {templateUpdate: a,...y}=x; this.g(y);
@@ -5953,7 +5898,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {TemplateUpdateData} x */
+	/** @private @arg {TemplateUpdateData} x */
 	TemplateUpdateData(x) {
 		const {identifier: a,serializedTemplateConfig: b,dependencies: c,...y}=x; this.g(y);
 		let id=a.split("|");
@@ -5965,7 +5910,7 @@ class HandleTypes extends BaseService {
 		});
 		this.g(y);
 	}
-	/** @arg {MyReader} reader @arg {DecTypeNum[]} results */
+	/** @private @arg {MyReader} reader @arg {DecTypeNum[]} results */
 	unpack_children_reader_result(reader,results) {
 		/** @type {DecTypeNum[]} */
 		let out=[];
@@ -5989,7 +5934,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @type {Map<string,(number|bigint)[]>} */
 	follow_map=new Map;
-	/** @arg {TemplateElement} x @arg {(number|bigint)[]} p */
+	/** @private @arg {TemplateElement} x @arg {(number|bigint)[]} p */
 	iterate_template_element(x,p) {
 		for(let i of x.map.entries()) {
 			let pa=p.slice(-4);
@@ -6045,7 +5990,7 @@ class HandleTypes extends BaseService {
 	do_decode_template_protobuf=false;
 	/** @type {this['follow_map'][]} */
 	follow_maps=[];
-	/** @arg {string} x */
+	/** @private @arg {string} x */
 	decode_template_protobuf(x) {
 		if(!this.do_decode_template_protobuf) return;
 		let binary=decode_url_b64(x);
@@ -6114,12 +6059,12 @@ class HandleTypes extends BaseService {
 		}
 		console.log("template_root_data",...root_data);
 	}
-	/** @arg {DecTypeNum[]} x */
+	/** @private @arg {DecTypeNum[]} x */
 	decode_template_element(x) {
 		let a=this.decode_template_element_1(x);
 		return this.decode_template_element_2(a);
 	}
-	/** @arg {TemplateElement} x */
+	/** @private @arg {TemplateElement} x */
 	decode_template_element_2(x) {
 		let res_obj={};
 		if(x.f_n1!==void 0) res_obj.index_unk_1=x.f_n1;
@@ -6130,7 +6075,7 @@ class HandleTypes extends BaseService {
 		if(r.length>0) debugger;
 		return res_obj;
 	}
-	/** @arg {DecTypeNum[]} x */
+	/** @private @arg {DecTypeNum[]} x */
 	decode_template_element_1(x) {
 		/** @type {TemplateElement} */
 		let res_obj={
@@ -6203,7 +6148,7 @@ class HandleTypes extends BaseService {
 		}
 		return res_obj;
 	}
-	/** @arg {ResourceStatusInResponseCheckData} x */
+	/** @private @arg {ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
 		const {resourceStatuses: a,serverBuildLabel: b,...y}=x; this.g(y);
 		this.z(a,a => this.ElementResourceStatus(a));
@@ -6215,25 +6160,25 @@ class HandleTypes extends BaseService {
 		let ver=split_string(pp_ver,".");
 		console.log("[server_build]",`${ver[0]}.${ver[1]}_${pp[3]}`);
 	}
-	/** @arg {ElementResourceStatus} x */
+	/** @private @arg {ElementResourceStatus} x */
 	ElementResourceStatus(x) {
 		if(x.status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		console.log("[ElementResourceStatus_identifier]",split_string_once(x.identifier,"|"));
 	}
-	/** @arg {OpenPopupAction} x */
+	/** @private @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
 		const {clickTrackingParams: a,openPopupAction: b,...y}=x;
 		this.clickTrackingParams(a);
 		this.OpenPopupActionData(b);
 		this.g(y);
 	}
-	/** @arg {OpenPopupActionData} x */
+	/** @private @arg {OpenPopupActionData} x */
 	OpenPopupActionData(x) {
 		const {popup: a,popupType: b,...y}=x;
 		x.popup;
 		this.g(y);
 	}
-	/** @arg {YtChannelPageResponse} x */
+	/** @private @arg {YtChannelPageResponse} x */
 	YtChannelPageResponse(x) {
 		const {page,endpoint,response,url,...y}=x;
 		this.yt_endpoint(endpoint);
@@ -6241,7 +6186,7 @@ class HandleTypes extends BaseService {
 		this.parse_url(url);
 		this.g(y);
 	}
-	/** @arg {YtPlaylistPageResponse} x */
+	/** @private @arg {YtPlaylistPageResponse} x */
 	YtPlaylistPageResponse(x) {
 		const {page,endpoint,response,url,...y}=x;
 		if(page!=="playlist") debugger;
@@ -6250,7 +6195,7 @@ class HandleTypes extends BaseService {
 		this.parse_url(url);
 		this.g(y);
 	}
-	/** @arg {PlaylistResponse} x */
+	/** @private @arg {PlaylistResponse} x */
 	PlaylistResponse(x) {
 		const {responseContext: a,contents: b,header: c,metadata: d,trackingParams: e,topbar: f,microformat: g,sidebar: h,...y}=x;
 		this.ResponseContext(a);
@@ -6263,9 +6208,9 @@ class HandleTypes extends BaseService {
 		this.PlaylistSidebarRenderer(h);
 		y;
 	}
-	/** @arg {DesktopTopbarRenderer} x */
+	/** @private @arg {DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {this.w(x,a => this.DesktopTopbarData(a));}
-	/** @arg {YtSettingsPageResponse} x */
+	/** @private @arg {YtSettingsPageResponse} x */
 	YtSettingsPageResponse(x) {
 		const {page: {},endpoint: a,response: b,url: c,...y}=x;
 		this.yt_endpoint(a);
@@ -6273,7 +6218,7 @@ class HandleTypes extends BaseService {
 		this.parse_url(c);
 		this.g(y);
 	}
-	/** @arg {SettingsResponseContent} x */
+	/** @private @arg {SettingsResponseContent} x */
 	SettingsResponseContent(x) {
 		const {
 			responseContext: a,contents: b,trackingParams: tp,topbar: c,sidebar: d,
@@ -6289,14 +6234,14 @@ class HandleTypes extends BaseService {
 		this.trackingParams(tp);
 		this.g(y);
 	}
-	/** @arg {SettingsSidebarData} x */
+	/** @private @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
 		const {items: a,title: b,...y}=x;
 		this.z(a,a => this.CompactLinkRenderer(a));
 		this.text_t(b);
 		this.g(y);
 	}
-	/** @arg {TextRun} x */
+	/** @private @arg {TextRun} x */
 	TextRun(x) {
 		const {text: a,bold: b,navigationEndpoint: c,...y}=x;
 		this.primitive_of(a,"string");
@@ -6329,7 +6274,7 @@ class HandleTypes extends BaseService {
 		}
 		this.g(y);
 	}
-	/** @arg {TextT} x */
+	/** @private @arg {TextT} x */
 	text_t(x) {
 		if(!x) {debugger; return;}
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
@@ -6338,13 +6283,13 @@ class HandleTypes extends BaseService {
 		if(c) this.primitive_of(c,"string");
 		this.g(y);
 	}
-	/** @arg {CompactLinkRenderer} x */
+	/** @private @arg {CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
 		const {compactLinkRenderer,...y}=x;
 		this.CompactLinkData(x.compactLinkRenderer);
 		this.g(y);
 	}
-	/** @arg {GeneralRenderer} x */
+	/** @private @arg {GeneralRenderer} x */
 	renderer(x) {
 		if("settingsSidebarRenderer" in x) {
 			const {settingsSidebarRenderer: a,...y}=x;
@@ -6352,7 +6297,7 @@ class HandleTypes extends BaseService {
 			this.g(y);
 		}
 	}
-	/** @arg {YtShortsResponse} x */
+	/** @private @arg {YtShortsResponse} x */
 	YtShortsResponse(x) {
 		const {page: a,endpoint: b,response: c,playerResponse: d,reelWatchSequenceResponse: e,url: f,...y}=x;
 		if(a!=="shorts") debugger;
@@ -6363,13 +6308,13 @@ class HandleTypes extends BaseService {
 		this.parse_url(f);
 		this.g(y);
 	}
-	/** @arg {RelevantStateTags} x */
+	/** @private @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const {relevantStateTags: a,...y}=x;
 		this.z(a,a => this.StateTag(a));
 		this.g(y);
 	}
-	/** @arg {StateTag} x */
+	/** @private @arg {StateTag} x */
 	StateTag(x) {
 		if("onStateTagModified" in x) {
 			const {stateTag: a,onStateTagModified: b,...y}=x;
@@ -6391,7 +6336,7 @@ class HandleTypes extends BaseService {
 		}
 		this.g(y);
 	}
-	/** @arg {ConsistencyTokenJarData} x */
+	/** @private @arg {ConsistencyTokenJarData} x */
 	ConsistencyTokenJarData(x) {
 		const {encryptedTokenJarContents: a,expirationSeconds: b,...y}=x;
 		this.primitive_of(a,"string");
@@ -6403,7 +6348,7 @@ class HandleTypes extends BaseService {
 	my_main_channel_id=null;
 	/** @type {[string,string][]} */
 	alt_channel_ids=[];
-	/** @arg {DatasyncIdsResponse} x */
+	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
 		const {responseContext: a,datasyncIds: b,...y}=x;
 		this.ResponseContext(a);
@@ -6434,7 +6379,7 @@ class HandleTypes extends BaseService {
 		}
 		this.g(y);
 	}
-	/** @arg {GetAccountSwitcherEndpointResult} x */
+	/** @private @arg {GetAccountSwitcherEndpointResult} x */
 	GetAccountSwitcherEndpointResult(x) {
 		if(x.code!=="SUCCESS") {
 			console.log("request failed",x);
@@ -6444,7 +6389,7 @@ class HandleTypes extends BaseService {
 		this.GetAccountSwitcherEndpointResponse(a);
 		this.g(y);
 	}
-	/** @arg {GetAccountSwitcherEndpointResponse} x */
+	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
 		const {responseContext: a,actions: b,selectText: c,...y}=x;
 		this.ResponseContext(a);
@@ -6453,23 +6398,23 @@ class HandleTypes extends BaseService {
 		this.text_t(c);
 		this.g(y);
 	}
-	/** @arg {GetMultiPageMenuAction} x */
+	/** @private @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
 		const {getMultiPageMenuAction: a,...y}=x;
 		this.GetMultiPageMenuActionData(a);
 		this.g(y);
 	}
-	/** @arg {GetMultiPageMenuActionData} x */
+	/** @private @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
 		const {menu: a,...y}=x;
 		this.MultiPageMenuRenderer(a);
 		this.g(y);
 	}
-	/** @arg {MultiPageMenuRenderer} x */
+	/** @private @arg {MultiPageMenuRenderer} x */
 	MultiPageMenuRenderer(x) {
 		this.MultiPageMenuData_1(x.multiPageMenuRenderer);
 	}
-	/** @arg {MultiPageMenuData} x */
+	/** @private @arg {MultiPageMenuData} x */
 	MultiPageMenuData_1(x) {
 		if(x.style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 		const {header: a,sections: b,footer: c,style: {},...y}=x;
@@ -6478,69 +6423,84 @@ class HandleTypes extends BaseService {
 		this.MultiPageMenuSectionRenderer(c);
 		this.g(y);
 	}
-	/** @arg {SimpleMenuHeaderRenderer} x */
+	/** @private @arg {SimpleMenuHeaderRenderer} x */
 	SimpleMenuHeaderRenderer(x) {
 		this.SimpleMenuHeaderData(x.simpleMenuHeaderRenderer);
 	}
-	/** @arg {SimpleMenuHeaderData} x */
+	/** @private @arg {SimpleMenuHeaderData} x */
 	SimpleMenuHeaderData(x) {
 		const {buttons: a,title: b,...y}=x;
 		this.z(a,a => this.ButtonRenderer(a));
 		this.text_t(b);
 		this.g(y);
 	}
-	/** @arg {AccountSectionListRenderer} x */
+	/** @private @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
+		this.w(x,a=>this.w1(a,a=>this.w(a,a=>this.w1(a,a=>{
+			if("accountItem" in a) {
+				return this.AccountItemData(a.accountItem);
+			} else if("compactLinkRenderer" in a) {
+				return this.CompactLinkData(a.compactLinkRenderer);
+			}
+			debugger;
+			let na=get_keys_of(a);
+			na;
+		}))))
 		this.AccountSectionListData(x.accountSectionListRenderer);
 	}
-	/** @arg {AccountSectionListData} x */
+	/** @private @arg {AccountSectionListData} x */
 	AccountSectionListData(x) {
 		this.z(x.contents,v => this.AccountItemSectionRenderer(v));
 	}
-	/** @arg {AccountItemSectionRenderer} x */
+	/** @private @arg {AccountItemSectionRenderer} x */
 	AccountItemSectionRenderer(x) {
-		this.AccountItemSectionData(x.accountItemSectionRenderer);
-	}
-	/** @arg {AccountItemSectionData} x */
-	AccountItemSectionData(x) {
-		this.z(x.contents,v => {
-			if("accountItem" in v) return this.AccountItem(v);
-			this.CompactLinkData(v.compactLinkRenderer);
+		this.w1(x.accountItemSectionRenderer,a => {
+			if("accountItem" in a) return this.AccountItem(a);
+			if("compactLinkRenderer" in a) return this.CompactLinkData(a.compactLinkRenderer);
+			debugger;
 		});
 	}
-	/** @arg {AccountItem} x */
+	/** @template {{}} T @arg {ContentsArrTemplate<T>} x @arg {(x:T)=>void} f */
+	w1(x,f) {
+		const {contents:a,...y}=x; this.g(y);
+		this.z(a,f);
+	}
+	/** @private @arg {AccountItem} x */
 	AccountItem(x) {
 		this.AccountItemData(x.accountItem);
 	}
-	/** @arg {MultiPageMenuSectionRenderer} x */
+	/** @private @arg {MultiPageMenuSectionRenderer} x */
 	MultiPageMenuSectionRenderer(x) {
 		this.MultiPageMenuSectionData(x.multiPageMenuSectionRenderer);
 	}
-	/** @arg {MultiPageMenuSectionData} x */
-	MultiPageMenuSectionData(x) {
-		const {items: a,...y}=x;
-		this.z(a,v => this.CompactLinkRenderer(v));
-		this.g(y);
+	/** @template {{}} T @arg {{items:T[]}} x @arg {(x:T)=>void} f */
+	w2(x,f) {
+		const {items:a,...y}=x; this.g(y);
+		this.z(a,f);
 	}
-	/** @arg {ButtonRenderer} x */
+	/** @private @arg {MultiPageMenuSectionData} x */
+	MultiPageMenuSectionData(x) {
+		this.w2(x,a=>this.w(a,this.CompactLinkData));
+	}
+	/** @private @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
 		const {buttonRenderer,...v}=x;
 		this.ButtonData(x.buttonRenderer);
 		this.g(v);
 	}
-	/** @arg {WebPrefetchData} x */
+	/** @private @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
 		const {navigationEndpoints: a,...y}=x;
 		this.z(a,v => this.yt_endpoint(v));
 		this.g(y);
 	}
-	/** @arg {ReloadContinuationItemsCommandData} x */
+	/** @private @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
 		this.z(x.continuationItems,v => {
 			this.SectionItem(v);
 		});
 	}
-	/** @arg {SectionItem} x */
+	/** @private @arg {SectionItem} x */
 	SectionItem(x) {
 		if("richItemRenderer" in x) {
 			const {richItemRenderer,...y}=x;
@@ -6564,7 +6524,7 @@ class HandleTypes extends BaseService {
 			this.g(x);
 		}
 	}
-	/** @arg {ContinuationItemData} x */
+	/** @private @arg {ContinuationItemData} x */
 	ContinuationItemData(x) {
 		const {trigger: a,continuationEndpoint: b,button: c,ghostCards: d,...y}=x;
 		switch(a) {
@@ -6576,19 +6536,19 @@ class HandleTypes extends BaseService {
 		if(d) this.GhostGridRenderer(d);
 		this.g(y);
 	}
-	/** @arg {GhostGridRenderer} x */
+	/** @private @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
 		const {ghostGridRenderer: a,...y}=x; this.g(y);
 		this.GhostGridData(a);
 	}
-	/** @arg {GhostGridData} x */
+	/** @private @arg {GhostGridData} x */
 	GhostGridData(x) {
 		const {rows: a,...y}=x; this.g(y);
 		switch(a) {
 			default: debugger;
 		}
 	}
-	/** @arg {RichItemData} x */
+	/** @private @arg {RichItemData} x */
 	RichItemData(x) {
 		const {content: a,rowIndex: b,colIndex: c,...y}=x;
 		this.RichItemContent(a);
@@ -6596,7 +6556,7 @@ class HandleTypes extends BaseService {
 		if(c!==void 0) this.primitive_of(c,"number");
 		this.g(y);
 	}
-	/** @arg {RichItemContent} x */
+	/** @private @arg {RichItemContent} x */
 	RichItemContent(x) {
 		if("adSlotRenderer" in x) {
 			const {adSlotRenderer: a,...y}=x;
@@ -6618,17 +6578,17 @@ class HandleTypes extends BaseService {
 		}
 		this.g(x);
 	}
-	/** @arg {RadioData} x */
+	/** @private @arg {RadioData} x */
 	RadioData(x) {
 		const {...y}=x;
 		this.g(y);
 	}
-	/** @arg {VideoData} x */
+	/** @private @arg {VideoData} x */
 	VideoData(x) {
 		const {...y}=x;
 		this.g(y);
 	}
-	/** @arg {RichSectionData} x */
+	/** @private @arg {RichSectionData} x */
 	RichSectionData(x) {
 		const {content: a,...y}=x;
 		this.RichSectionContent(a);
@@ -6639,7 +6599,7 @@ class HandleTypes extends BaseService {
 		const {page: a,...y}=x; this.g(y);
 		f(a);
 	}
-	/** @arg {RichSectionContent} x */
+	/** @private @arg {RichSectionContent} x */
 	RichSectionContent(x) {
 		if("richShelfRenderer" in x) {
 			const {richShelfRenderer: a,...y}=x;
@@ -6655,7 +6615,7 @@ class HandleTypes extends BaseService {
 		}
 		this.g(x);
 	}
-	/** @arg {AdSlotData} x */
+	/** @private @arg {AdSlotData} x */
 	AdSlotData(x) {
 		const {adSlotMetadata: a,fulfillmentContent: b,enablePacfLoggingWeb: c,...y}=x;
 		this.AdSlotMetadata(a);
@@ -6663,14 +6623,14 @@ class HandleTypes extends BaseService {
 		this.primitive_of(c,"boolean");
 		this.g(y);
 	}
-	/** @arg {RichShelfData} x */
+	/** @private @arg {RichShelfData} x */
 	RichShelfData(x) {
 		const {icon: a,title: b,...y}=x;
 		this.Icon(a);
 		this.text_t(b);
 		this.g(y);
 	}
-	/** @arg {AdSlotMetadata} x */
+	/** @private @arg {AdSlotMetadata} x */
 	AdSlotMetadata(x) {
 		const {slotId: a,slotType: b,slotPhysicalPosition: c,...y}=x;
 		let ss=split_string(a,":");
@@ -6679,7 +6639,7 @@ class HandleTypes extends BaseService {
 		this.save_number("AdSlot.slotPhysicalPosition",c);
 		this.g(y);
 	}
-	/** @arg {Accessibility} x */
+	/** @private @arg {Accessibility} x */
 	Accessibility(x) {
 		if(!x) {
 			debugger;
@@ -6689,7 +6649,7 @@ class HandleTypes extends BaseService {
 		this.AccessibilityData(a);
 		this.g(y);
 	}
-	/** @arg {AccessibilityData} x */
+	/** @private @arg {AccessibilityData} x */
 	AccessibilityData(x) {
 		if(!x) {
 			debugger;
@@ -6699,7 +6659,7 @@ class HandleTypes extends BaseService {
 		if(a) this.primitive_of(a,"string");
 		this.g(y);
 	}
-	/** @arg {AccountsListResponse} x */
+	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
 		const {responseContext: a,selectText: b,actions: c,...y}=x;
 		this.ResponseContext(a);
@@ -6708,24 +6668,24 @@ class HandleTypes extends BaseService {
 		this.save_keys("[AccountsListResponse]",x);
 		this.g(y);
 	}
-	/** @arg {UpdateChannelSwitcherPageAction} x */
+	/** @private @arg {UpdateChannelSwitcherPageAction} x */
 	UpdateChannelSwitcherPageAction(x) {
 		const {updateChannelSwitcherPageAction: a,...y}=x; this.g(y);
 		this.PageAction(a,a => this.ChannelSwitcherPageRenderer(a));
 	}
-	/** @arg {ChannelSwitcherPageRenderer} x */
+	/** @private @arg {ChannelSwitcherPageRenderer} x */
 	ChannelSwitcherPageRenderer(x) {
 		const {channelSwitcherPageRenderer: a,...y}=x; this.g(y);
 		this.ChannelSwitcherPage(a);
 	}
-	/** @arg {ChannelSwitcherPage} x */
+	/** @private @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
-		const {contents,header,targetId,...y}=x;
-		this.z(x.contents,a => this.ChannelSwitcherContent(a));
+		const {contents:{},header,targetId,...y}=x;
+		this.w1(x,this.ChannelSwitcherContent);
 		this.parse_target_id(targetId);
 		this.g(y);
 	}
-	/** @arg {ChannelSwitcherContent} x */
+	/** @private @arg {ChannelSwitcherContent} x */
 	ChannelSwitcherContent(x) {
 		if("accountItemRenderer" in x) {
 			this.w(x,a => this.AccountItemData(a));
@@ -6735,7 +6695,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {AccountItemData} x */
+	/** @private @arg {AccountItemData} x */
 	AccountItemData(x) {
 		const {
 			accountName: a,accountPhoto: b,isSelected: c,isDisabled: d,hasChannel: e,
@@ -6749,7 +6709,7 @@ class HandleTypes extends BaseService {
 		this.Thumbnail(b,this.g);
 		this.g(y);
 	}
-	/** @arg {ThumbnailItem} x */
+	/** @private @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
@@ -6757,7 +6717,7 @@ class HandleTypes extends BaseService {
 		c!==void 0&&this.primitive_of(c,"number");
 		this.g(y);
 	}
-	/** @arg {ButtonData} x */
+	/** @private @arg {ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("[ButtonData]",x);
 		const {
@@ -6808,14 +6768,14 @@ class HandleTypes extends BaseService {
 		if(b) this.Accessibility(b);
 		this.g(z);
 	}
-	/** @arg {AnyIcon} x */
+	/** @private @arg {AnyIcon} x */
 	Icon(x) {
 		if(!x) return;
 		const {iconType: a,...y}=x;
 		this.save_string(`icon_type`,a);
 		this.g(y);
 	}
-	/** @arg {CommentsHeaderData} x */
+	/** @private @arg {CommentsHeaderData} x */
 	CommentsHeaderData(x) {
 		this.save_keys("[CommentsHeaderRenderer]",x);
 		const {
@@ -6835,7 +6795,7 @@ class HandleTypes extends BaseService {
 		this.LoggingDirectives(j);
 		this.g(y);
 	}
-	/** @arg {SortFilterSubMenuData} x */
+	/** @private @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuData_3(x) {
 		const {subMenuItems: a,title: b,icon: c,accessibility: d,tooltip: e,trackingParams: f,...y}=x;
 		this.z(a,v => this.ActionSetPlaylistVideoOrder(v));
@@ -6846,7 +6806,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(f);
 		this.g(y);
 	}
-	/** @arg {ResolveUrlCommandMetadata} x */
+	/** @private @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
 		const {isVanityUrl: a,parentTrackingParams: b,...y}=x;
 		if(a) this.primitive_of(a,"boolean");
@@ -6854,7 +6814,7 @@ class HandleTypes extends BaseService {
 		if(b) this.trackingParams(b);
 		this.g(y);
 	}
-	/** @arg {CommentSimpleboxData} x */
+	/** @private @arg {CommentSimpleboxData} x */
 	CommentSimpleboxData(x) {
 		const {
 			submitButton: a,cancelButton: b,authorThumbnail: c,
@@ -6871,7 +6831,7 @@ class HandleTypes extends BaseService {
 		this.save_keys("[CommentSimpleboxData]",x);
 		this.g(y);
 	}
-	/** @arg {ReelItemWatch} x */
+	/** @private @arg {ReelItemWatch} x */
 	ReelItemWatch(x) {
 		const {responseContext: a,overlay: b,status: c,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x;
 		this.ResponseContext(a);
@@ -6882,15 +6842,7 @@ class HandleTypes extends BaseService {
 		}
 		this.g(y);
 	}
-	/** @arg {EngagementPanelSectionListRenderer} x */
-	EngagementPanel(x) {
-		if("engagementPanelSectionListRenderer" in x) {
-			this.w(x,a => this.EngagementPanelSectionListData(a));
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {SecondaryContents} x */
+	/** @private @arg {SecondaryContents} x */
 	SecondaryContents(x) {
 		this.save_keys("[SecondaryContents]",x);
 		if("profileColumnRenderer" in x) {
@@ -6901,12 +6853,12 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {BrowseFeedActions} x */
+	/** @private @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {
 		if(get_keys_of_one(x)[0]!=="contents") debugger;
 		this.w(x,a => this.z(a,a => this.BrowseFeedContent(a)));
 	}
-	/** @arg {BrowseFeedContent} x */
+	/** @private @arg {BrowseFeedContent} x */
 	BrowseFeedContent(x) {
 		let [k]=get_keys_of(x);
 		if("buttonRenderer" in x) {
@@ -6916,7 +6868,7 @@ class HandleTypes extends BaseService {
 			case "buttonRenderer": break;
 		}
 	}
-	/** @arg {ProfileColumnData} x */
+	/** @private @arg {ProfileColumnData} x */
 	ProfileColumnData(x) {
 		if(get_keys_of_one(x)[0]!=="items") debugger;
 		this.w(x,a => this.z(a,b => {
@@ -6931,7 +6883,7 @@ class HandleTypes extends BaseService {
 			}
 		}));
 	}
-	/** @arg {ProfileColumnStatsData} x */
+	/** @private @arg {ProfileColumnStatsData} x */
 	ProfileColumnStatsData(x) {
 		if(get_keys_of_one(x)[0]!=="items") debugger;
 		this.w(x,d => this.z(d,e => {
@@ -6939,13 +6891,13 @@ class HandleTypes extends BaseService {
 			this.w(e,f => this.ProfileColumnStatsEntryData(f));
 		}));
 	}
-	/** @arg {ProfileColumnStatsEntryData} x */
+	/** @private @arg {ProfileColumnStatsEntryData} x */
 	ProfileColumnStatsEntryData(x) {
 		const {label: a,value: b,...y}=x;
 		this.z([a,b],a => this.text_t(a));
 		this.g(y);
 	}
-	/** @arg {ProfileColumnUserInfoData} x */
+	/** @private @arg {ProfileColumnUserInfoData} x */
 	ProfileColumnUserInfoData(x) {
 		this.Thumbnail(x.thumbnail,this.g);
 	}
@@ -6991,12 +6943,12 @@ class HandleTypes extends BaseService {
 		videoRenderer: "VideoData",
 		reelShelfRenderer: "ReelShelfData",
 	};
-	/** @arg {ItemSectionItem} x */
+	/** @private @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
 		let t=this;
 		let y=get_keys_of(x);
 		let [k]=y;
-		/** @arg {{}} b */
+		/** @private @arg {{}} b */
 		let n=b => {t.g(b);};
 		k="connectedAppRenderer";
 		if(k in x) {
@@ -7071,11 +7023,11 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {ThumbnailColor} x */
+	/** @private @arg {ThumbnailColor} x */
 	ThumbnailColor(x) {
 		this.z([x.red,x.green,x.blue],a => this.primitive_of(a,"number"));
 	}
-	/** @arg {CompactRadioData} x */
+	/** @private @arg {CompactRadioData} x */
 	CompactRadioData(x) {
 		const {
 			playlistId,thumbnail,title,navigationEndpoint,
@@ -7099,7 +7051,7 @@ class HandleTypes extends BaseService {
 		this.MenuRenderer(menu);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 	}
-	/** @arg {ThumbnailOverlayItem} x */
+	/** @private @arg {ThumbnailOverlayItem} x */
 	ThumbnailOverlayItem(x) {
 		if("thumbnailOverlayHoverTextRenderer" in x) {
 			return this.ThumbnailOverlayHoverTextRenderer(x);
@@ -7111,46 +7063,46 @@ class HandleTypes extends BaseService {
 			this.save_keys("[ThumbnailOverlayItem]",x);
 		}
 	}
-	/** @arg {ThumbnailOverlayNowPlayingData} x */
+	/** @private @arg {ThumbnailOverlayNowPlayingData} x */
 	ThumbnailOverlayNowPlayingData(x) {
 		this.save_keys("[ThumbnailOverlayNowPlayingData]",x);
 	}
-	/** @arg {ThumbnailOverlayNowPlayingRenderer} x */
+	/** @private @arg {ThumbnailOverlayNowPlayingRenderer} x */
 	ThumbnailOverlayNowPlayingRenderer(x) {
 		this.ThumbnailOverlayNowPlayingData(x.thumbnailOverlayNowPlayingRenderer);
 	}
-	/** @arg {ThumbnailOverlayBottomPanelData} x */
+	/** @private @arg {ThumbnailOverlayBottomPanelData} x */
 	ThumbnailOverlayBottomPanelData(x) {
 		this.Icon(x.icon);
 		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
 	}
-	/** @arg {ThumbnailOverlayBottomPanelRenderer} x */
+	/** @private @arg {ThumbnailOverlayBottomPanelRenderer} x */
 	ThumbnailOverlayBottomPanelRenderer(x) {
 		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
 	}
-	/** @arg {ThumbnailOverlayHoverTextData} x */
+	/** @private @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
 		this.Icon(x.icon);
 		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
 	}
-	/** @arg {ThumbnailOverlayHoverTextRenderer} x */
+	/** @private @arg {ThumbnailOverlayHoverTextRenderer} x */
 	ThumbnailOverlayHoverTextRenderer(x) {
 		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
 	}
-	/** @arg {CompactPlaylistData} x */
+	/** @private @arg {CompactPlaylistData} x */
 	CompactPlaylistData(x) {
 		this.text_t(x.longBylineText);
 		this.MenuRenderer(x.menu);
 		this.WatchEndpoint(x.navigationEndpoint);
 	}
-	/** @arg {WatchEndpoint} x */
+	/** @private @arg {WatchEndpoint} x */
 	WatchEndpoint(x) {
 		const {clickTrackingParams: a,commandMetadata: b,watchEndpoint: c,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
 		this.CommandMetadataTemplate(b);
 		this.WatchEndpointData_1(c);
 	}
-	/** @arg {CommentsEntryPointHeaderData} x */
+	/** @private @arg {CommentsEntryPointHeaderData} x */
 	CommentsEntryPointHeaderData(x) {
 		const {headerText: a,onTap: b,trackingParams: c,commentCount: d,contentRenderer: e,targetId: f,...y}=x; this.g(y);
 		this.z([a,d],this.text_t);
@@ -7163,23 +7115,23 @@ class HandleTypes extends BaseService {
 		}
 		if(f!=="comments-entry-point-header-identifier") debugger;
 	}
-	/** @arg {CommandExecutorCommand} x */
+	/** @private @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
 		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandsTemplate(x.commandExecutorCommand,a => this.CommandExecutorData(a));
 	}
-	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
+	/** @private @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		this.save_enum("engagement-panel",x.targetId);
 		this.save_enum("ENGAGEMENT_PANEL_VISIBILITY",x.visibility);
 	}
-	/** @arg {ScrollToEngagementPanelData} x */
+	/** @private @arg {ScrollToEngagementPanelData} x */
 	ScrollToEngagementPanelData(x) {
 		this.save_enum("engagement-panel",x.targetId);
 		this.parse_target_id(x.targetId);
 	}
-	/** @arg {CommandExecutorAction} x */
+	/** @private @arg {CommandExecutorAction} x */
 	CommandExecutorData(x) {
 		const {clickTrackingParams,...y}=x;
 		if("changeEngagementPanelVisibilityAction" in y) {
@@ -7194,7 +7146,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {ChangeEngagementPanelVisibilityAction} x */
+	/** @private @arg {ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y);
 	}
@@ -7202,22 +7154,22 @@ class HandleTypes extends BaseService {
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}
-	/** @arg {CommentsEntryPointTeaserRenderer} x */
+	/** @private @arg {CommentsEntryPointTeaserRenderer} x */
 	CommentsEntryPointTeaserRenderer(x) {
 		this.CommentsEntryPointTeaserData(x.commentsEntryPointTeaserRenderer);
 	}
-	/** @arg {{accessibility:Accessibility}} a0 */
+	/** @private @arg {{accessibility:Accessibility}} a0 */
 	destructure_accessibility({accessibility: a,...y}) {
 		this.Accessibility(a); this.g(y);
 	}
-	/** @arg {CommentsEntryPointTeaserData} x */
+	/** @private @arg {CommentsEntryPointTeaserData} x */
 	CommentsEntryPointTeaserData(x) {
 		const {teaserAvatar: a,teaserContent: b,trackingParams: c,...y}=x; this.g(y);
 		this.Thumbnail(a,this.destructure_accessibility);
 		this.text_t(b);
 		this.trackingParams(c);
 	}
-	/** @arg {ReelShelfData} x */
+	/** @private @arg {ReelShelfData} x */
 	ReelShelfData(x) {
 		const {icon: a,items: b,title: c,trackingParams: d,...y}=x; this.g(y);
 		this.Icon(a);
@@ -7225,12 +7177,12 @@ class HandleTypes extends BaseService {
 		this.text_t(c);
 		this.trackingParams(d);
 	}
-	/** @arg {ReelItemRenderer} x */
+	/** @private @arg {ReelItemRenderer} x */
 	ReelItemRenderer(x) {
 		const {reelItemRenderer: a,...y}=x; this.g(y);
 		this.ReelItemData(a);
 	}
-	/** @arg {ReelItemData} x */
+	/** @private @arg {ReelItemData} x */
 	ReelItemData(x) {
 		const {
 			accessibility: a,headline: b,loggingDirectives: c,menu: d,videoId: e,thumbnail: f,
@@ -7256,22 +7208,23 @@ class HandleTypes extends BaseService {
 		this.CommandMetadataTemplate(b);
 		f(y);
 	}
-	/** @arg {MenuRenderer} x */
+	/** @private @arg {MenuRenderer} x */
 	MenuRenderer(x) {
 		this.MenuData_0(x.menuRenderer);
 	}
-	/** @arg {MenuData} x */
+	/** @private @arg {MenuData} x */
 	MenuData_0(x) {
 		const {trackingParams: a,accessibility: b,items: c,targetId: d,...y}=x; this.g(y);
 		this.Accessibility(x.accessibility);
+		this.w2(x,this.MenuServiceItemRenderer);
 		this.z(x.items,a => this.MenuServiceItemRenderer(a));
 		if(d) this.parse_target_id(as_cast(d));
 	}
-	/** @arg {MenuServiceItemRenderer} x */
+	/** @private @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
 		this.MenuServiceItemData(x.menuServiceItemRenderer);
 	}
-	/** @arg {MenuServiceItemData} x */
+	/** @private @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
 		this.save_keys("[MenuServiceItemData]",x);
 		const {text: a,icon: b,serviceEndpoint: x3,trackingParams: x4,...y}=x; this.g(y);
@@ -7279,23 +7232,23 @@ class HandleTypes extends BaseService {
 		this.Icon(b);
 		this.save_keys("[MenuServiceItem.endpoint]",x.serviceEndpoint);
 	}
-	/** @arg {SearchPyvData} x */
+	/** @private @arg {SearchPyvData} x */
 	SearchPyvData(x) {
 		const {ads,trackingParams,...y}=x; this.g(y);
 		this.z(ads,a => this.AdSlotRenderer(a));
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {AdSlotRenderer} x */
+	/** @private @arg {AdSlotRenderer} x */
 	AdSlotRenderer(x) {
 		this.AdSlotData(x.adSlotRenderer);
 	}
-	/** @arg {PlayerStoryboardSpecRenderer} x */
+	/** @private @arg {PlayerStoryboardSpecRenderer} x */
 	PlayerStoryboardSpecRenderer(x) {
 		const {playerStoryboardSpecRenderer: a,...y}=x;
 		this.PlayerStoryboardSpecData(a);
 		this.g(y);
 	}
-	/** @arg {AccountSetSetting} x */
+	/** @private @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
 		this.save_keys("[AccountSetSetting]",x);
 		const {responseContext: a,settingItemId: b,...y}=x;
@@ -7315,7 +7268,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {ReelWatchSequence} x */
+	/** @private @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
 		this.save_keys("[ReelWatchSequence]",x);
 		const {responseContext: a,entries: b,trackingParams,continuationEndpoint,...y}=x;
@@ -7324,45 +7277,38 @@ class HandleTypes extends BaseService {
 		this.ContinuationEndpoint(continuationEndpoint);
 		this.g(y);
 	}
-	/** @arg {ContinuationEndpoint} x */
+	/** @private @arg {ContinuationEndpoint} x */
 	ContinuationEndpoint(x) {
 		const {commandMetadata: a,continuationCommand: b,...y}=this.handle_clickTrackingParams(x); this.g(y);
 		if(a) this.CommandMetadataTemplate(a);
 		this.ContinuationCommand(b);
 	}
-	/** @arg {ContinuationCommand} x */
+	/** @private @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
 		const {request: a,token: b,...y}=x; this.g(y);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",a);
 		if(this.TODO_true) return;
 		this.decode_continuation_token(b);
 	}
-	/** @arg {EncodedURIComponent} x */
+	/** @private @arg {EncodedURIComponent} x */
 	decode_continuation_token(x) {
 		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
 		console.log("[continuation_token]",dec);
 	}
-	/** @arg {CommandTemplate<ReelWatchEndpoint>[]} x */
+	/** @private @arg {CommandTemplate<ReelWatchEndpoint>[]} x */
 	ReelWatchEntries(x) {
 		this.z(x,a => this.CommandTemplate(a,a => this.ReelWatchEndpoint(a)));
 	}
-	/** @template {EndpointBase} T @arg {T} x */
-	handle_common_endpoint(x) {
-		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
-		this.clickTrackingParams(a);
-		if(b) this.CommandMetadataTemplate(b);
-		return y;
-	}
-	/** @arg {ReelWatchEndpoint} x */
+	/** @private @arg {ReelWatchEndpoint} x */
 	ReelWatchEndpoint(x) {
 		if("reelWatchEndpoint" in x) {
-			const {reelWatchEndpoint,...y}=this.handle_common_endpoint(x); this.g(y);
+			const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
 			this.ReelWatchEndpointData(reelWatchEndpoint);
 		} else {
 			debugger;
 		}
 	}
-	/** @arg {ReelWatchEndpointData} x */
+	/** @private @arg {ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
 		const {videoId: a,playerParams: b,overlay: c,params: d,sequenceProvider: f,inputType: g,...y}=x; this.g(y);
 		let h_=this.x.get("string_parser");
@@ -7371,15 +7317,14 @@ class HandleTypes extends BaseService {
 		if(dec_1) console.log("[reel_watch_endpoint_player_params]",...dec_1);
 		let dec_2=decode_url_b64_proto_obj(decodeURIComponent(d));
 		if(dec_2) console.log("[reel_watch_endpoint_params]",...dec_2);
-
 	}
-	/** @arg {JsonFeedbackData} x */
+	/** @private @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
 		this.save_keys("[JsonFeedbackData]",x);
 		const {responseContext: a,...y}=x;
 		this.g(y);
 	}
-	/** @arg {JsonGetTranscriptData} x */
+	/** @private @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
 		this.save_keys("[JsonGetTranscriptData]",x);
 		const {responseContext: a,actions: b,trackingParams: c,...y}=x;
@@ -7388,35 +7333,35 @@ class HandleTypes extends BaseService {
 		this.trackingParams(c);
 		this.g(y);
 	}
-	/** @arg {UpdateEngagementPanelAction} x */
+	/** @private @arg {UpdateEngagementPanelAction} x */
 	UpdateEngagementPanelAction(x) {
 		const {clickTrackingParams: a,updateEngagementPanelAction: b,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
 		this.UpdateEngagementPanelData(b);
 	}
-	/** @arg {UpdateEngagementPanelData} x */
+	/** @private @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
 		const {content: a,targetId: b,...y}=x; this.g(y);
 		this.TranscriptRenderer(a);
 		this.parse_target_id(b);
 	}
-	/** @arg {TranscriptRenderer} x */
+	/** @private @arg {TranscriptRenderer} x */
 	TranscriptRenderer(x) {
 		const {transcriptRenderer: a,...y}=x; this.g(y);
 		this.TranscriptData(a);
 	}
-	/** @arg {TranscriptData} x */
+	/** @private @arg {TranscriptData} x */
 	TranscriptData(x) {
 		const {content: a,trackingParams: b,...y}=x; this.g(y);
 		this.TranscriptSearchPanelRenderer(a);
 		this.trackingParams(b);
 	}
-	/** @arg {TranscriptSearchPanelRenderer} x */
+	/** @private @arg {TranscriptSearchPanelRenderer} x */
 	TranscriptSearchPanelRenderer(x) {
 		const {transcriptSearchPanelRenderer: a,...y}=x; this.g(y);
 		this.TranscriptSearchPanelData(a);
 	}
-	/** @arg {TranscriptSearchPanelData} x */
+	/** @private @arg {TranscriptSearchPanelData} x */
 	TranscriptSearchPanelData(x) {
 		const {body: a,footer: b,trackingParams: c,targetId: d,...y}=x; this.g(y);
 		this.TranscriptSegmentListRenderer(a);
@@ -7424,34 +7369,34 @@ class HandleTypes extends BaseService {
 		this.trackingParams(c);
 		this.parse_target_id(d);
 	}
-	/** @arg {TranscriptFooterRenderer} x */
+	/** @private @arg {TranscriptFooterRenderer} x */
 	TranscriptFooterRenderer(x) {
 		const {transcriptFooterRenderer: a,...y}=x; this.g(y);
 		this.TranscriptFooterData(a);
 	}
-	/** @arg {TranscriptFooterData} x */
+	/** @private @arg {TranscriptFooterData} x */
 	TranscriptFooterData(x) {
 		const {languageMenu: a,...y}=x; this.g(y);
 		this.SortFilterSubMenuRenderer(a);
 	}
-	/** @arg {SortFilterSubMenuRenderer} x */
+	/** @private @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
 		const {sortFilterSubMenuRenderer: a,...y}=x; this.g(y);
 		this.SortFilterSubMenuData_3(a);
 	}
-	/** @arg {TranscriptSegmentListRenderer} x */
+	/** @private @arg {TranscriptSegmentListRenderer} x */
 	TranscriptSegmentListRenderer(x) {
 		const {transcriptSegmentListRenderer: a,...y}=x; this.g(y);
 		this.TranscriptSegmentListData(a);
 	}
-	/** @arg {TranscriptSegmentListData} x */
+	/** @private @arg {TranscriptSegmentListData} x */
 	TranscriptSegmentListData(x) {
 		const {initialSegments: a,noResultLabel: b,retryLabel: c,touchCaptionsEnabled: d,...y}=x; this.g(y);
 		this.z(a,a => this.TranscriptSegmentRenderer(a));
 		this.z([b,c],a => this.text_t(a));
 		this.primitive_of(d,"boolean");
 	}
-	/** @arg {TranscriptSegmentRenderer} x */
+	/** @private @arg {TranscriptSegmentRenderer} x */
 	TranscriptSegmentRenderer(x) {
 		if("transcriptSegmentRenderer" in x) {
 			this.w(x,a => this.TranscriptSegmentData(a));
@@ -7459,7 +7404,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {TranscriptSegmentData} x */
+	/** @private @arg {TranscriptSegmentData} x */
 	TranscriptSegmentData(x) {
 		const {startMs: a,endMs: b,snippet: c,startTimeText: d,trackingParams: e,accessibility: f,...y}=x; this.g(y);
 		this.z([a,b],a => this.primitive_of(a,"string"));
@@ -7467,7 +7412,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(e);
 		this.Accessibility(f);
 	}
-	/** @arg {PlayerStoryboardSpecData} x */
+	/** @private @arg {PlayerStoryboardSpecData} x */
 	PlayerStoryboardSpecData(x) {
 		if(!x) {
 			debugger;
@@ -7477,7 +7422,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"string");
 		this.g(y);
 	}
-	/** @arg {SearchPageResponse} x */
+	/** @private @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
 		const {page: a,endpoint: b,response: c,url: d,...y}=x; this.g(y);
 		if(a!=="search") debugger;
@@ -7485,7 +7430,7 @@ class HandleTypes extends BaseService {
 		this.SearchResponse(c);
 		this.parse_url(d);
 	}
-	/** @arg {SearchResponse} x */
+	/** @private @arg {SearchResponse} x */
 	SearchResponse(x) {
 		const {responseContext: a,estimatedResults: b,contents: c,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y);
 		this.ResponseContext(a);
@@ -7493,12 +7438,12 @@ class HandleTypes extends BaseService {
 		this.TwoColumnSearchResultsRenderer(c);
 		if(targetId!=="search-page") debugger;
 	}
-	/** @arg {TwoColumnSearchResultsRenderer} x */
+	/** @private @arg {TwoColumnSearchResultsRenderer} x */
 	TwoColumnSearchResultsRenderer(x) {
 		const {twoColumnSearchResultsRenderer: a,...y}=x; this.g(y);
 		this.TwoColumnSearchResults(a);
 	}
-	/** @arg {TwoColumnSearchResults} x */
+	/** @private @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
 		const {primaryContents: a,...y}=x; this.g(y);
 		this.SectionListRenderer(a,a => {
@@ -7511,26 +7456,26 @@ class HandleTypes extends BaseService {
 		const {sectionListRenderer: a,...y}=x; this.g(y);
 		this.SectionListData(a,f);
 	}
-	/** @arg {SearchEndpoint} x */
+	/** @private @arg {SearchEndpoint} x */
 	SearchEndpoint(x) {
 		let a=this.handle_clickTrackingParams(x);
 		const {commandMetadata: b,searchEndpoint: c,...y}=a; this.g(y);
 		this.SearchCommandMetadata(b);
 		this.SearchEndpointData(c);
 	}
-	/** @arg {SearchCommandMetadata} x */
+	/** @private @arg {SearchCommandMetadata} x */
 	SearchCommandMetadata(x) {
 		const {webCommandMetadata: a,...y}=x; this.g(y);
 		this.SearchWebCommandMetadata(a);
 	}
-	/** @arg {SearchWebCommandMetadata} x */
+	/** @private @arg {SearchWebCommandMetadata} x */
 	SearchWebCommandMetadata(x) {
 		const {url: a,webPageType: b,rootVe: c,...y}=x; this.g(y);
 		this.parse_url(a);
 		if(b!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		this.save_root_visual_element(c);
 	}
-	/** @arg {EngagementPanelSectionListData} x */
+	/** @private @arg {EngagementPanelSectionListData} x */
 	EngagementPanelSectionListData(x) {
 		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
 		this.EngagementPanelSectionListContent(a);
@@ -7538,12 +7483,12 @@ class HandleTypes extends BaseService {
 		this.save_enum("ENGAGEMENT_PANEL_VISIBILITY",c);
 		this.LoggingDirectives(d);
 	}
-	/** @arg {EngagementPanelSectionListContent} x */
+	/** @private @arg {EngagementPanelSectionListContent} x */
 	EngagementPanelSectionListContent(x) {
 		if("adsEngagementPanelContentRenderer" in x) {
 			return this.w(x,a => this.AdsEngagementPanelContentData(a));
 		} else if("clipSectionRenderer" in x) {
-			return this.w(x,a => this.ClipSection(a));
+			return this.w(x,a => this.w1(a,a=>this.ClipCreationData(a.clipCreationRenderer)));
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
 		} else if("sectionListRenderer" in x) {
@@ -7557,51 +7502,31 @@ class HandleTypes extends BaseService {
 		}
 		this.save_keys("[EngagementPanelSectionList.item]",x);
 	}
-	/** @arg {ContinuationItemRenderer} x */
+	/** @private @arg {ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {
 		const {continuationItemRenderer: renderer_data}=x;
 		this.ContinuationItemData(renderer_data);
 	}
-	/** @arg {ClipSection} x */
-	ClipSection(x) {
-		this.z(x.contents,a => this.ClipCreationRenderer(a));
-	}
-	/** @arg {ClipCreationRenderer} x */
-	ClipCreationRenderer(x) {
-		this.ClipCreationData(x.clipCreationRenderer);
-	}
-	/** @arg {ClipCreationData} x */
+	/** @private @arg {ClipCreationData} x */
 	ClipCreationData(x) {
 		this.w(x,(a,k) => this.save_keys(`[ClipCreationData.${k}]`,a));
 	}
-	/** @arg {AdsEngagementPanelContentRenderer} x */
-	AdsEngagementPanelContentRenderer(x) {
-		if("adsEngagementPanelContentRenderer" in x) {
-			this.AdsEngagementPanelContentData(x.adsEngagementPanelContentRenderer);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {AdsEngagementPanelContentData} x */
+	/** @private @arg {AdsEngagementPanelContentData} x */
 	AdsEngagementPanelContentData(x) {
 		if("hack" in x) return;
 		debugger;
 	}
-	/** @arg {ModifyChannelPreference} x */
-	ModifyChannelPreference(x) {
-		this.g(x);
-	}
-	/** @arg {SettingsSidebarRenderer} x */
+	/** @private @arg {SettingsSidebarRenderer} x */
 	SettingsSidebarRenderer(x) {
 		const {settingsSidebarRenderer: a,...y}=x; this.g(y);
 		this.SettingsSidebarData(a);
 	}
-	/** @arg {CacheMetadata} x */
+	/** @private @arg {CacheMetadata} x */
 	CacheMetadata(x) {
 		const {isCacheHit: a,...y}=x; this.g(y);
 		this.primitive_of(a,"boolean");
 	}
-	/** @arg {ShelfData} x */
+	/** @private @arg {ShelfData} x */
 	ShelfData(x) {
 		const {title: a,content: b,trackingParams: c,menu: d,subscribeButton: e,...y}=x; this.g(y);
 		this.g(a);
@@ -7610,146 +7535,146 @@ class HandleTypes extends BaseService {
 		if(d) this.g(d);
 		if(e) this.g(e);
 	}
-	/** @arg {ShelfItem} x */
+	/** @private @arg {ShelfItem} x */
 	ShelfItem(x) {
 		this.GridRenderer(x.gridRenderer);
 	}
-	/** @arg {GridRenderer} x */
+	/** @private @arg {GridRenderer} x */
 	GridRenderer(x) {
 		this.z(x.items,a => this.GridVideoRenderer(a));
 	}
-	/** @arg {GridVideoRenderer} x */
+	/** @private @arg {GridVideoRenderer} x */
 	GridVideoRenderer(x) {
 		this.GridVideoData(x.gridVideoRenderer);
 	}
-	/** @arg {GridVideoData} x */
+	/** @private @arg {GridVideoData} x */
 	GridVideoData(x) {
 		this.z(x.badges,a => this.g(a));
 	}
-	/** @arg {SettingsOptionsData} x */
+	/** @private @arg {SettingsOptionsData} x */
 	SettingsOptionsData(x) {
 		this.z(x.options,a => this.SettingsOptionItem(a));
 	}
-	/** @arg {SettingsOptionItem} x */
+	/** @private @arg {SettingsOptionItem} x */
 	SettingsOptionItem(x) {
 		if("channelOptionsRenderer" in x) {
 			this.ChannelOptionsData(x.channelOptionsRenderer);
 		}
 	}
-	/** @arg {ChannelOptionsData} x */
+	/** @private @arg {ChannelOptionsData} x */
 	ChannelOptionsData(x) {
 		this.Thumbnail(x.avatar,this.g);
 		this.Accessibility(x.avatarAccessibility);
 		console.log(x.avatarEndpoint);
 		debugger;
 	}
-	/** @arg {PlaylistVideoListData} x */
+	/** @private @arg {PlaylistVideoListData} x */
 	PlaylistVideoListData(x) {
 		this.s_parser.parse_playlist_id(x.playlistId);
 	}
 	get s_parser() {
 		return this.x.get("string_parser");
 	}
-	/** @arg {PageIntroductionData} x */
+	/** @private @arg {PageIntroductionData} x */
 	PageIntroductionData(x) {
 		this.text_t(x.bodyText);
 		debugger;
 	}
-	/** @arg {ReelPlayerOverlayData} x */
+	/** @private @arg {ReelPlayerOverlayData} x */
 	ReelPlayerOverlayData(x) {
 		const {style: a,trackingParams: b,reelPlayerNavigationModel: c,...y}=x; this.g(y);
 		if(a!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.trackingParams(b);
 		if(c!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
 	}
-	/** @arg {ConnectedAppData} x */
+	/** @private @arg {ConnectedAppData} x */
 	ConnectedAppData(x) {
 		this.ButtonRenderer(x.connectButton);
 	}
-	/** @arg {PlaylistSidebarRenderer} x */
+	/** @private @arg {PlaylistSidebarRenderer} x */
 	PlaylistSidebarRenderer(x) {
 		this.g(x.playlistSidebarRenderer);
 	}
-	/** @arg {MicroformatDataRenderer} x */
+	/** @private @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {
 		this.g(x.microformatDataRenderer);
 	}
-	/** @arg {PlaylistMetadataRenderer} x */
+	/** @private @arg {PlaylistMetadataRenderer} x */
 	PlaylistMetadataRenderer(x) {
 		this.g(x.playlistMetadataRenderer);
 	}
-	/** @arg {PlaylistHeaderRenderer} x */
+	/** @private @arg {PlaylistHeaderRenderer} x */
 	PlaylistHeaderRenderer(x) {
 		this.PlaylistHeader(x.playlistHeaderRenderer);
 	}
-	/** @arg {PlaylistHeader} x */
+	/** @private @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {
 		this.z(x.briefStats,a => this.text_t(a));
 	}
-	/** @arg {CommentThreadData} x */
+	/** @private @arg {CommentThreadData} x */
 	CommentThreadData(x) {
 		this.CommentRenderer(x.comment);
 	}
-	/** @arg {CommentRenderer} x */
+	/** @private @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.CommentData(x.commentRenderer);
 	}
-	/** @arg {CommentData} x */
+	/** @private @arg {CommentData} x */
 	CommentData(x) {
 		this.CommentActionButtonsRenderer(x.actionButtons);
 	}
-	/** @arg {CommentActionButtonsRenderer} x */
+	/** @private @arg {CommentActionButtonsRenderer} x */
 	CommentActionButtonsRenderer(x) {
 		this.CommentActionButtonsData(x.commentActionButtonsRenderer);
 	}
-	/** @arg {CommentActionButtonsData} x */
+	/** @private @arg {CommentActionButtonsData} x */
 	CommentActionButtonsData(x) {
 		this.g(x);
 	}
-	/** @arg {C4TabbedHeaderData} x */
+	/** @private @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
 		this.parse_channel_id(x.channelId);
 	}
-	/** @arg {`UC${string}`} x */
+	/** @private @arg {`UC${string}`} x */
 	parse_channel_id(x) {
 		let r=split_string_once(x,"UC");
 		if(r[0]!=="") debugger;
 	}
-	/** @arg {ConfirmDialogEndpointData} x */
+	/** @private @arg {ConfirmDialogEndpointData} x */
 	ConfirmDialogEndpointData(x) {
 		this.ConfirmDialogRenderer(x.content);
 	}
-	/** @arg {ConfirmDialogRenderer} x */
+	/** @private @arg {ConfirmDialogRenderer} x */
 	ConfirmDialogRenderer(x) {
 		this.ConfirmDialogData(x.confirmDialogRenderer);
 	}
-	/** @arg {ConfirmDialogData} x */
+	/** @private @arg {ConfirmDialogData} x */
 	ConfirmDialogData(x) {
 		this.ButtonRenderer(x.cancelButton);
 	}
-	/** @arg {CompactVideoData} x */
+	/** @private @arg {CompactVideoData} x */
 	CompactVideoData(x) {
 		this.Accessibility(x.accessibility);
 	}
-	/** @arg {PlayerConfig} x */
+	/** @private @arg {PlayerConfig} x */
 	PlayerConfig(x) {
 		this.AudioConfig(x.audioConfig);
 	}
-	/** @arg {AudioConfig} x */
+	/** @private @arg {AudioConfig} x */
 	AudioConfig(x) {
 		x;
 	}
-	/** @arg {VideoDetails} x */
+	/** @private @arg {VideoDetails} x */
 	VideoDetails(x) {
 		this.primitive_of(x.author,"string");
 	}
-	/** @arg {StreamingData} x */
+	/** @private @arg {StreamingData} x */
 	StreamingData(x) {
 		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
 	/** @type {FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399];
-	/** @arg {AdaptiveFormatItem} x */
+	/** @private @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
 			itag,url,mimeType,bitrate,width: w,height: h,initRange,indexRange,
@@ -7805,7 +7730,7 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
-	/** @arg {`${AudioSampleRate}`} x */
+	/** @private @arg {`${AudioSampleRate}`} x */
 	parse_audio_sample_rate(x) {
 		switch(x) {
 			case "44100": break;
@@ -7813,7 +7738,7 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {FormatColorInfo} x */
+	/** @private @arg {FormatColorInfo} x */
 	FormatColorInfo(x) {
 		const {primaries: a,transferCharacteristics: b,matrixCoefficients: c,...y}=x; this.g(y);
 		switch(a) {case "COLOR_PRIMARIES_BT709": break; default: debugger;};
@@ -7826,31 +7751,31 @@ class HandleTypes extends BaseService {
 		"2160p60","1440p60","1080p60","720p60",
 		"1080p","720p","480p","360p","240p","144p"
 	];
-	/** @arg {QualityLabel} x */
+	/** @private @arg {QualityLabel} x */
 	parse_format_quality_label(x) {
 		if(!this.format_quality_label_arr.includes(x)) {
 			debugger;
 		}
 	}
 	valid_fps_arr=[13,25,30,50,60];
-	/** @arg {FormatFps} x */
+	/** @private @arg {FormatFps} x */
 	parse_format_fps(x) {
 		if(!this.valid_fps_arr.includes(x)) {
 			debugger;
 		}
 	}
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
-	/** @arg {FormatQuality} x */
+	/** @private @arg {FormatQuality} x */
 	parse_format_quality(x) {
 		if(!this.format_quality_arr.includes(x)) {
 			debugger;
 		}
 	}
-	/** @arg {YtRange} x */
+	/** @private @arg {YtRange} x */
 	YtRange(x) {
 		this.z([x.end,x.start],a => this.primitive_of(a,"string"));
 	}
-	/** @arg {VideoQualityPromoData} x */
+	/** @private @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=x; this.g(y);
 		this.TriggerCriteria(triggerCriteria);
@@ -7859,7 +7784,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(x.trackingParams);
 		this.NotificationActionRenderer(x.snackbar);
 	}
-	/** @arg {TriggerCriteria} x */
+	/** @private @arg {TriggerCriteria} x */
 	TriggerCriteria(x) {
 		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=x;
 		this.g(y);
@@ -7869,13 +7794,13 @@ class HandleTypes extends BaseService {
 		if(x.watchTimeWindowSeconds!==180) debugger;
 		if(x.refractorySeconds!==2592000) debugger;
 	}
-	/** @arg {NotificationActionData} x */
+	/** @private @arg {NotificationActionData} x */
 	NotificationActionData(x) {
 		this.text_t(x.responseText);
 		this.ButtonRenderer(x.actionButton);
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {NotificationActionRenderer} x */
+	/** @private @arg {NotificationActionRenderer} x */
 	NotificationActionRenderer(x) {
 		this.NotificationActionData(x.notificationActionRenderer);
 	}
@@ -7890,7 +7815,7 @@ class HandleTypes extends BaseService {
 		let d=as_cast(c);
 		f(d);
 	}
-	/** @arg {TwoColumnWatchNextResultsData["results"]["results"]} x1 */
+	/** @private @arg {TwoColumnWatchNextResultsData["results"]["results"]} x1 */
 	TwoColumnWatchNextResultsData_0(x1) {
 		this.ContentsTemplate(x1,x2 => {
 			if("itemSectionRenderer" in x2) {
@@ -7903,7 +7828,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
-	/** @arg {Extract<TwoColumnWatchNextResultsData["results"]["results"]["contents"][number],{itemSectionRenderer:any}>} x */
+	/** @private @arg {Extract<TwoColumnWatchNextResultsData["results"]["results"]["contents"][number],{itemSectionRenderer:any}>} x */
 	TwoColumnWatchNextResultsData_1(x) {
 		return this.ItemSectionRenderer(x,(a,b) => {
 			switch(a) {
@@ -7915,7 +7840,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
-	/** @arg {TwoColumnWatchNextResultsData} x */
+	/** @private @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
 		const {results: a,secondaryResults: b,playlist: c,autoplay: d,conversationBar: e,...y}=x; this.g(y);
 		this.ResultsTemplate(a,x1 => {
@@ -7946,7 +7871,7 @@ class HandleTypes extends BaseService {
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
 		this.ConversationBar(e);
 	}
-	/** @arg {TwoColumnWatchNextResultsData["conversationBar"]} x */
+	/** @private @arg {TwoColumnWatchNextResultsData["conversationBar"]} x */
 	ConversationBar(x) {
 		if(!x) return;
 		if("liveChatRenderer" in x) {
@@ -7960,11 +7885,11 @@ class HandleTypes extends BaseService {
 		this.trackingParams(a);
 		this.z(b,f);
 	}
-	/** @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">>} x1 */
+	/** @private @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">>} x1 */
 	SecondaryResultsContent_0(x1) {
 		this.ContentsTemplate(x1,this.SecondaryResultsContent_1);
 	}
-	/** @arg {RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x */
+	/** @private @arg {RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x */
 	SecondaryResultsContent_1(x) {
 		if("itemSectionRenderer" in x) {
 			return this.SecondaryResultsContent_2(x);
@@ -7974,19 +7899,11 @@ class HandleTypes extends BaseService {
 		console.log(x);
 		debugger;
 	}
-	/** @arg {RelatedChipCloudRenderer} x */
+	/** @private @arg {RelatedChipCloudRenderer} x */
 	RelatedChipCloudRenderer(x) {
 		x;
 	}
-	/** @arg {ContentTemplate<ChipCloudRenderer>} x */
-	RelatedChipCloudData(x) {
-		this.ContentTemplate(x,this.ChipCloudRenderer);
-	}
-	/** @arg {ChipCloudRenderer} x */
-	ChipCloudRenderer(x) {
-		this.ChipCloudData(x.chipCloudRenderer);
-	}
-	/** @arg {ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x3 */
+	/** @private @arg {ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x3 */
 	SecondaryResultsContent_2(x3) {
 		return this.ItemSectionRenderer(x3,(a,b) => {
 			if(a==="sid-wn-chips"&&b==="watch-next-feed") return;
@@ -7994,15 +7911,15 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
-	/** @arg {LiveChatRenderer} x */
+	/** @private @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
 		this.LiveChatData(x.liveChatRenderer);
 	}
-	/** @arg {LiveChatData} x */
+	/** @private @arg {LiveChatData} x */
 	LiveChatData(x) {
 		this.save_keys("[LiveChatData]",x);
 	}
-	/** @arg {PlaylistContent} x */
+	/** @private @arg {PlaylistContent} x */
 	PlaylistContent(x) {
 		this.save_keys("[PlaylistContent]",x);
 	}
@@ -8015,11 +7932,11 @@ class HandleTypes extends BaseService {
 	SecondaryResultsTemplate(x,f) {
 		f(x.secondaryResults);
 	}
-	/** @arg {VideoSecondaryInfoRenderer} x */
+	/** @private @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
 		this.VideoSecondaryInfoData(x.videoSecondaryInfoRenderer);
 	}
-	/** @arg {VideoSecondaryInfoData} x */
+	/** @private @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
 		const {
 			owner: a,description: b,subscribeButton,metadataRowContainer,
@@ -8040,22 +7957,22 @@ class HandleTypes extends BaseService {
 		if(x1) this.CommandExecutorCommand(x1);
 		if(x2) this.ChangeEngagementPanelVisibilityAction(x2);
 	}
-	/** @arg {MetadataRowContainerData} x */
+	/** @private @arg {MetadataRowContainerData} x */
 	MetadataRowContainerData(x) {
 		const {rows: a,collapsedItemCount: b,trackingParams: c,...y}=x; this.g(y);
 		if(a) console.log(this.#generate_typedef(x,"MetadataRowContainerData"));
 		this.primitive_of(b,"number");
 		this.trackingParams(c);
 	}
-	/** @arg {MetadataRowContainerRenderer} x */
+	/** @private @arg {MetadataRowContainerRenderer} x */
 	MetadataRowContainerRenderer(x) {
 		this.MetadataRowContainerData(x.metadataRowContainerRenderer);
 	}
-	/** @arg {SubscribeButtonRenderer} x */
+	/** @private @arg {SubscribeButtonRenderer} x */
 	SubscribeButtonRenderer(x) {
 		this.SubscribeButtonData(x.subscribeButtonRenderer);
 	}
-	/** @arg {SubscribeButtonData} x */
+	/** @private @arg {SubscribeButtonData} x */
 	SubscribeButtonData(x) {
 		const {
 			buttonText: a,subscribed: b,enabled: c,type: d,channelId: e,showPreferences: f1,trackingParams: f2,
@@ -8077,7 +7994,7 @@ class HandleTypes extends BaseService {
 	}
 	log_state_ids=false;
 	log_subscription_notification_toggle_cur_state=false;
-	/** @arg {SubscriptionNotificationToggleButtonData} x */
+	/** @private @arg {SubscriptionNotificationToggleButtonData} x */
 	SubscriptionNotificationToggleButtonData(x) {
 		this.CommandExecutorCommand(x.command);
 		let lf=this.log_subscription_notification_toggle_cur_state;
@@ -8088,19 +8005,19 @@ class HandleTypes extends BaseService {
 			this.ButtonRenderer(a.state);
 		});
 	}
-	/** @arg {SubscriptionNotificationToggleButtonRenderer} x */
+	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
 	SubscriptionNotificationToggleButtonRenderer(x) {
 		this.SubscriptionNotificationToggleButtonData(x.subscriptionNotificationToggleButtonRenderer);
 	}
-	/** @arg {VideoOwnerRenderer} x */
+	/** @private @arg {VideoOwnerRenderer} x */
 	VideoOwnerRenderer(x) {
 		this.VideoOwnerData(x.videoOwnerRenderer);
 	}
-	/** @arg {VideoOwnerData} x */
+	/** @private @arg {VideoOwnerData} x */
 	VideoOwnerData(x) {
 		this.BrowseEndpoint(x.navigationEndpoint,this.ChannelNavigationEndpointWebCommandMetadata);
 	}
-	/** @arg {ChannelNavigationEndpointWebCommandMetadata} x */
+	/** @private @arg {ChannelNavigationEndpointWebCommandMetadata} x */
 	ChannelNavigationEndpointWebCommandMetadata(x) {
 		const {url: a,webPageType: b,rootVe: c,apiUrl: d,...y}=x; this.g(y);
 		this.parse_url(a);
@@ -8108,7 +8025,7 @@ class HandleTypes extends BaseService {
 		if(c!==3611) {console.log("[wrong_root_ve]",x); debugger;}
 		if(d!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {VideoPrimaryInfoRenderer} x */
+	/** @private @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
 		this.VideoPrimaryInfoData(x.videoPrimaryInfoRenderer);
 	}
@@ -8118,8 +8035,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @template {{}} T @arg {ContentsTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentsTemplate(x,f) {
-		const {trackingParams,contents,...y}=x; this.g(y);
-		this.z(x.contents,a => f(a));
+		const {trackingParams:a,contents:b,...y}=x; this.g(y);
+		this.z(b,a => f(a));
 	}
 	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentTemplate(x,f) {
@@ -8135,40 +8052,40 @@ class HandleTypes extends BaseService {
 		if(!x) {debugger; return;}
 		f(x.autoplay);
 	}
-	/** @arg {AutoplayContent} x */
+	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		this.z(x.modifiedSets,a => this.ModifiedSetItem(a));
 	}
-	/** @arg {ModifiedSetItem} x */
+	/** @private @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
 		const {previousButtonVideo: a}=x;
 		this.WatchPlaylistEndpoint(x.autoplayVideo);
 		this.WatchPlaylistEndpoint(x.nextButtonVideo);
 		if(a) this.WatchPlaylistEndpoint(a);
 	}
-	/** @arg {WatchPlaylistEndpoint} x */
+	/** @private @arg {WatchPlaylistEndpoint} x */
 	WatchPlaylistEndpoint(x) {
 		this.clickTrackingParams(x.clickTrackingParams);
 		this.CommandMetadataTemplate(x.commandMetadata);
 		this.WatchPlaylistEndpointData(x.watchPlaylistEndpoint);
 	}
-	/** @arg {WatchPlaylistEndpointData} x */
+	/** @private @arg {WatchPlaylistEndpointData} x */
 	WatchPlaylistEndpointData(x) {
 		x;
 	}
-	/** @arg {EmojiPickerRenderer} x */
+	/** @private @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		this.g(x.emojiPickerRenderer);
 	}
-	/** @arg {PlayerAttestationRenderer} x */
+	/** @private @arg {PlayerAttestationRenderer} x */
 	PlayerAttestationRenderer(x) {
 		this.PlayerAttestation(x.playerAttestationRenderer);
 	}
-	/** @arg {PlayerAttestation} x */
+	/** @private @arg {PlayerAttestation} x */
 	PlayerAttestation(x) {
 		this.BotguardData(x.botguardData);
 	}
-	/** @arg {BotguardData} x */
+	/** @private @arg {BotguardData} x */
 	BotguardData(x) {
 		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
 		this.UrlWrappedValueT(interpreterSafeUrl,a => a);
@@ -8177,31 +8094,31 @@ class HandleTypes extends BaseService {
 	UrlWrappedValueT(x,f) {
 		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
-	/** @arg {PaidContentOverlayRenderer} x */
+	/** @private @arg {PaidContentOverlayRenderer} x */
 	PaidContentOverlayRenderer(x) {
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {EndscreenRenderer} x */
+	/** @private @arg {EndscreenRenderer} x */
 	EndscreenRenderer(x) {
 		this.EndscreenData(x.endscreenRenderer);
 	}
-	/** @arg {EndscreenData} x */
+	/** @private @arg {EndscreenData} x */
 	EndscreenData(x) {
 		this.z(x.elements,a => this.EndscreenElementRenderer(a));
 	}
-	/** @arg {EndscreenElementRenderer} x */
+	/** @private @arg {EndscreenElementRenderer} x */
 	EndscreenElementRenderer(x) {
 		this.EndscreenElementData(x.endscreenElementRenderer);
 	}
-	/** @arg {EndscreenElementData} x */
+	/** @private @arg {EndscreenElementData} x */
 	EndscreenElementData(x) {
 		this.primitive_of(x.aspectRatio,"number");
 	}
-	/** @arg {PlayerCaptionsTracklistRenderer} x */
+	/** @private @arg {PlayerCaptionsTracklistRenderer} x */
 	PlayerCaptionsTracklistRenderer(x) {
 		this.PlayerCaptionsTracklistData(x.playerCaptionsTracklistRenderer);
 	}
-	/** @arg {PlayerCaptionsTracklistData} x */
+	/** @private @arg {PlayerCaptionsTracklistData} x */
 	PlayerCaptionsTracklistData(x) {
 		this.z(x.audioTracks,a => {
 			this.z(a.captionTrackIndices,a => {
@@ -8216,43 +8133,37 @@ class HandleTypes extends BaseService {
 		x.defaultAudioTrackIndex;
 		this.z(x.translationLanguages,a => a);
 	}
-	/** @arg {TranslationLanguage} x */
-	TranslationLanguage(x) {
-		const {languageCode: a,languageName: {simpleText: b},...y}=x; this.g(y);
-		this.primitive_of(a,"string");
-		this.primitive_of(b,"string");
-	}
-	/** @arg {ActionSetPlaylistVideoOrder} x */
+	/** @private @arg {ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
 		this.Accessibility(x.accessibility);
 	}
-	/** @arg {CustomEmoji} x */
+	/** @private @arg {CustomEmoji} x */
 	CustomEmoji(x) {
 		this.primitive_of(x.emojiId,"string");
 		this.EmojiImage(x.image);
 	}
-	/** @arg {EmojiImage} x */
+	/** @private @arg {EmojiImage} x */
 	EmojiImage(x) {
 		this.Accessibility(x.accessibility);
 		this.z(x.thumbnails,a => this.ThumbnailItem(a));
 	}
-	/** @arg {LoggingDirectives} x */
+	/** @private @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
 		this.primitive_of(x.enableDisplayloggerExperiment,"boolean");
 	}
-	/** @arg {FulfillmentContent} x */
+	/** @private @arg {FulfillmentContent} x */
 	FulfillmentContent(x) {
 		this.FulfilledLayout(x.fulfilledLayout);
 	}
-	/** @arg {FulfilledLayout} x */
+	/** @private @arg {FulfilledLayout} x */
 	FulfilledLayout(x) {
 		this.InFeedAdLayoutData(x.inFeedAdLayoutRenderer);
 	}
-	/** @arg {InFeedAdLayoutData} x */
+	/** @private @arg {InFeedAdLayoutData} x */
 	InFeedAdLayoutData(x) {
 		this.AdLayoutMetadata(x.adLayoutMetadata);
 	}
-	/** @arg {AdLayoutMetadata} x */
+	/** @private @arg {AdLayoutMetadata} x */
 	AdLayoutMetadata(x) {
 		this.primitive_of(x.layoutId,"string");
 		switch(x.layoutType) {
@@ -8262,102 +8173,122 @@ class HandleTypes extends BaseService {
 		}
 		if(x.adLayoutLoggingData) this.AdLayoutLoggingData(x.adLayoutLoggingData);
 	}
-	/** @arg {DesktopTopbarData} x */
+	/** @private @arg {DesktopTopbarData} x */
 	DesktopTopbarData(x) {
 		this.ButtonRenderer(x.a11ySkipNavigationButton);
 	}
-	/** @arg {SignalNavigationEndpointData} x */
+	/** @private @arg {SignalNavigationEndpointData} x */
 	SignalNavigationEndpointData(x) {
 		switch(x.signal) {
 			case "CHANNEL_SWITCHER": break;
 			default: debugger;
 		}
 	}
-	/** @arg {SignOutEndpointData} x */
+	/** @private @arg {SignOutEndpointData} x */
 	SignOutEndpointData(x) {
 		this.primitive_of(x.hack,"boolean");
 	}
-	/** @arg {GetAccountsListInnertubeEndpointData} x */
+	/** @private @arg {GetAccountsListInnertubeEndpointData} x */
 	GetAccountsListInnertubeEndpointData(x) {
 		switch(x.requestType) {
 			case "ACCOUNTS_LIST_REQUEST_TYPE_CHANNEL_SWITCHER": break;
 			default: debugger;
 		}
 	}
-	/** @arg {PlayerAnnotationsExpandedRenderer} x */
+	/** @private @arg {PlayerAnnotationsExpandedRenderer} x */
 	PlayerAnnotationsExpandedRenderer(x) {
 		this.PlayerAnnotationsExpandedData(x.playerAnnotationsExpandedRenderer);
 	}
-	/** @arg {PlayerAnnotationsExpandedData} x */
+	/** @private @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
 		x;
 	}
-	/** @arg {PlayabilityStatus} x */
+	/** @private @arg {PlayabilityStatus} x */
 	PlayabilityStatus(x) {
 		decode_url_b64_proto_obj(x.contextParams);
 	}
-	/** @arg {PlaybackTracking} x */
+	/** @private @arg {PlaybackTracking} x */
 	PlaybackTracking(x) {
 		this.UrlAndElapsedMediaTime(x.atrUrl);
 	}
-	/** @arg {UrlAndElapsedMediaTime} x */
+	/** @private @arg {UrlAndElapsedMediaTime} x */
 	UrlAndElapsedMediaTime(x) {
 		this.primitive_of(x.baseUrl,"string");
 		if(x.elapsedMediaTimeSeconds===void 0) {
 			debugger;
 		}
 	}
-	/** @arg {DesktopWatchAdsData} x */
+	/** @private @arg {DesktopWatchAdsData} x */
 	DesktopWatchAdsData(x) {
 		this.GutParams(x.gutParams);
 	}
-	/** @arg {GutParams} x */
+	/** @private @arg {GutParams} x */
 	GutParams(x) {
 		const {tag: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {InlineSurveyData} x */
+	/** @private @arg {InlineSurveyData} x */
 	InlineSurveyData(x) {
 		console.log(x.dismissalEndpoint);
 		debugger;
 	}
-	/** @arg {ChannelResponse} x */
+	/** @private @arg {ChannelResponse} x */
 	ChannelResponse(x) {
+		const {responseContext:a,contents:b,header,metadata,trackingParams:c,topbar,microformat,onResponseReceivedActions,...y}=x; this.g(y);
+		this.ResponseContext(x.responseContext);
 		this.TwoColumnBrowseResultsRenderer(x.contents);
+		this.C4TabbedHeaderRenderer(header);
+		this.ChannelMetadataRenderer(metadata);
+		this.DesktopTopbarRenderer(topbar);
+		this.MicroformatDataRenderer(microformat);
+		this.z(onResponseReceivedActions,a=>{
+			a;
+			debugger;
+		})
 	}
-	/** @arg {SearchEndpointData} x */
+	/** @private @arg {ChannelMetadataRenderer} x */
+	ChannelMetadataRenderer(x) {
+		x;
+		debugger;
+	}
+	/** @private @arg {C4TabbedHeaderRenderer} x */
+	C4TabbedHeaderRenderer(x) {
+		x;
+		debugger;
+	}
+	/** @private @arg {SearchEndpointData} x */
 	SearchEndpointData(x) {
 		const {query: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
 	}
-	/** @arg {SetSettingEndpointData} x */
+	/** @private @arg {SetSettingEndpointData} x */
 	SetSettingEndpointData(x) {
 		if(x.boolValue!==void 0) {
 			this.primitive_of(x.boolValue,"boolean");
 		}
 		console.log("[setting_item_id]",x.settingItemId);
 	}
-	/** @arg {SignalServiceEndpointData} x */
+	/** @private @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
 		this.z(x.actions,a => this.ServiceEndpointAction(a));
 	}
-	/** @arg {ServiceEndpointAction} x */
+	/** @private @arg {ServiceEndpointAction} x */
 	ServiceEndpointAction(x) {
 		this.clickTrackingParams(x.clickTrackingParams);
 	}
-	/** @arg {FeedFilterChipBarRenderer} x */
+	/** @private @arg {FeedFilterChipBarRenderer} x */
 	FeedFilterChipBarRenderer(x) {
 		this.FeedFilterChipBarData(x.feedFilterChipBarRenderer);
 	}
-	/** @arg {FeedFilterChipBarData} x */
+	/** @private @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
-		this.z(x.contents,a => this.ChipCloudChipRenderer(a));
+		this.w1(x,a=>this.ChipCloudChipData(a.chipCloudChipRenderer));
 	}
-	/** @arg {ChipCloudChipRenderer} x */
+	/** @private @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
 		this.ChipCloudChipData(x.chipCloudChipRenderer);
 	}
-	/** @arg {ChipCloudChipData} x */
+	/** @private @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
 		const {style: a,text: b,navigationEndpoint: c,trackingParams: d,isSelected: e,...y}=x; this.g(y);
 		this.ChipCloudStyle(a);
@@ -8365,7 +8296,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(d);
 		this.primitive_of(e,"boolean");
 	}
-	/** @arg {ChipCloudStyle} x */
+	/** @private @arg {ChipCloudStyle} x */
 	ChipCloudStyle(x) {
 		const {styleType: a,...y}=x; this.g(y);
 		switch(a) {
@@ -8373,13 +8304,13 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {RelatedChipCommand} x */
+	/** @private @arg {RelatedChipCommand} x */
 	RelatedChipCommand(x) {
 		const {clickTrackingParams: a,relatedChipCommand: b,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
 		this.RelatedChipCommandData(b);
 	}
-	/** @arg {RelatedChipCommandData} x */
+	/** @private @arg {RelatedChipCommandData} x */
 	RelatedChipCommandData(x) {
 		const {targetSectionIdentifier: a,loadCached: b,...y}=x; this.g(y);
 		switch(a) {
@@ -8388,32 +8319,24 @@ class HandleTypes extends BaseService {
 		}
 		if(b!==true) debugger;
 	}
-	/** @arg {ChipCloudData} x */
-	ChipCloudData(x) {
-		const {chips: a,trackingParams: b,horizontalScrollable: c,nextButton: d,previousButton: e,...y}=x; this.g(y);
-		this.ChipCloudChipRenderer(a);
-		this.trackingParams(b);
-		this.primitive_of(c,"boolean");
-		this.z([d,e],d => this.ButtonRenderer(d));
-	}
-	/** @arg {FeedTabbedHeaderData} x */
+	/** @private @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {
 		const {title: a,...y}=x; this.g(y);
 		this.text_t(a);
 	}
-	/** @arg {EntityBatchUpdateData} x */
+	/** @private @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		const {mutations: a,timestamp: b,...y}=x; this.g(y);
 		this.z(a,a => this.EntityMutationItem(a));
 		this.TimestampWithNanos(b);
 	}
-	/** @arg {TimestampWithNanos} x */
+	/** @private @arg {TimestampWithNanos} x */
 	TimestampWithNanos(x) {
 		const {nanos: a,seconds: b,...y}=x; this.g(y);
 		this.primitive_of(a,"number");
 		this.primitive_of(b,"string");
 	}
-	/** @arg {EntityMutationOptions} x */
+	/** @private @arg {EntityMutationOptions} x */
 	EntityMutationOptions(x) {
 		const {persistenceOption: a,...y}=x; this.g(y);
 		switch(a) {
@@ -8427,7 +8350,7 @@ class HandleTypes extends BaseService {
 		["replace",false],
 	]);
 	replace_path_handler=[315];
-	/** @arg {EntityMutationReplace} x */
+	/** @private @arg {EntityMutationReplace} x */
 	EntityMutationReplace(x) {
 		const {type: ty,entityKey: a,payload: b,...y}=x; this.g(y);
 		if(ty!=="ENTITY_MUTATION_TYPE_REPLACE") throw new Error();
@@ -8506,7 +8429,7 @@ class HandleTypes extends BaseService {
 		};
 		if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
 	}
-	/** @arg {EntityMutationDelete} x */
+	/** @private @arg {EntityMutationDelete} x */
 	EntityMutationDelete(x) {
 		const {type: ty,entityKey: a,options: b,...y}=x; this.g(y);
 		if(ty!=="ENTITY_MUTATION_TYPE_DELETE") throw new Error();
@@ -8527,7 +8450,7 @@ class HandleTypes extends BaseService {
 		this.save_string("mutation.target_id",entityId);
 		if(log_flag) console.log("[entity_del]",x1);
 	}
-	/** @arg {EntityMutationItem} x */
+	/** @private @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		this.save_enum("ENTITY_MUTATION_TYPE",x.type);
 		switch(x.type) {
@@ -8536,7 +8459,7 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @arg {EntityMutationPayload} x */
+	/** @private @arg {EntityMutationPayload} x */
 	EntityMutationPayload(x) {
 		if("offlineabilityEntity" in x) {
 			return this.OfflineabilityEntity(x);
@@ -8551,49 +8474,49 @@ class HandleTypes extends BaseService {
 		}
 		debugger;
 	}
-	/** @arg {TranscriptSearchBoxStateEntityData} x */
+	/** @private @arg {TranscriptSearchBoxStateEntityData} x */
 	TranscriptSearchBoxStateEntityData(x) {
 		this.primitive_of(x.key,"string");
 		this.primitive_of(x.isHidden,"boolean");
 	}
-	/** @arg {TranscriptSearchBoxStateEntity} x */
+	/** @private @arg {TranscriptSearchBoxStateEntity} x */
 	TranscriptSearchBoxStateEntity(x) {
 		this.TranscriptSearchBoxStateEntityData(x.transcriptSearchBoxStateEntity);
 	}
-	/** @arg {TranscriptTrackSelectionEntity} x */
+	/** @private @arg {TranscriptTrackSelectionEntity} x */
 	TranscriptTrackSelectionEntity(x) {
 		this.TranscriptTrackSelectionEntityData(x.transcriptTrackSelectionEntity);
 	}
-	/** @arg {TranscriptTrackSelectionEntityData} x */
+	/** @private @arg {TranscriptTrackSelectionEntityData} x */
 	TranscriptTrackSelectionEntityData(x) {
 		this.primitive_of(x.key,"string");
 		this.primitive_of(x.selectedTrackIndex,"number");
 		this.primitive_of(x.serializedParams,"string");
 	}
-	/** @arg {PlaylistLoopStateEntityData} x */
+	/** @private @arg {PlaylistLoopStateEntityData} x */
 	PlaylistLoopStateEntityData(x) {
 		this.primitive_of(x.key,"string");
 		this.save_enum("PLAYLIST_LOOP_STATE",x.state);
 	}
-	/** @arg {PlaylistLoopStateEntity} x */
+	/** @private @arg {PlaylistLoopStateEntity} x */
 	PlaylistLoopStateEntity(x) {
 		this.PlaylistLoopStateEntityData(x.playlistLoopStateEntity);
 	}
-	/** @arg {SubscriptionStateEntity} x */
+	/** @private @arg {SubscriptionStateEntity} x */
 	SubscriptionStateEntity(x) {
 		this.SubscriptionStateData(x.subscriptionStateEntity);
 	}
-	/** @arg {SubscriptionStateData} x */
+	/** @private @arg {SubscriptionStateData} x */
 	SubscriptionStateData(x) {
 		this.parse_state_key("SubscriptionState",x.key);
 		this.primitive_of(x.subscribed,"boolean");
 	}
-	/** @arg {OfflineabilityEntity} x */
+	/** @private @arg {OfflineabilityEntity} x */
 	OfflineabilityEntity(x) {
 		this.OfflineabilityEntityData(x.offlineabilityEntity);
 	}
 	log_parsed_state_keys=false;
-	/** @arg {string} section @arg {string} x */
+	/** @private @arg {string} section @arg {string} x */
 	parse_state_key(section,x) {
 		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
 		if(!dec) {debugger; return;}
@@ -8639,7 +8562,7 @@ class HandleTypes extends BaseService {
 		};
 		if(lf) console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
 	}
-	/** @arg {OfflineabilityEntityData} x */
+	/** @private @arg {OfflineabilityEntityData} x */
 	OfflineabilityEntityData(x) {
 		if(!x) {debugger; return;}
 		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
@@ -8652,41 +8575,41 @@ class HandleTypes extends BaseService {
 		};
 		if(f) this.LoggingDirectives(f);
 	}
-	/** @arg {InnertubeCommand} x */
+	/** @private @arg {InnertubeCommand} x */
 	InnertubeCommand(x) {
 		if(!x) {debugger; return;}
 		this.InnertubeCommandData(x.innertubeCommand);
 	}
-	/** @arg {InnertubeCommandData} x */
+	/** @private @arg {InnertubeCommandData} x */
 	InnertubeCommandData(x) {
 		if("ypcGetOfflineUpsellEndpoint" in x) {
 			return this.YpcGetOfflineUpsellEndpoint(x);
 		}
 		debugger;
 	}
-	/** @arg {YpcGetOfflineUpsellEndpoint} x */
+	/** @private @arg {YpcGetOfflineUpsellEndpoint} x */
 	YpcGetOfflineUpsellEndpoint(x) {
 		const {clickTrackingParams,ypcGetOfflineUpsellEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
 		this.YpcGetOfflineUpsell(ypcGetOfflineUpsellEndpoint);
 	}
 	log_ypc_upsell=false;
-	/** @arg {YpcGetOfflineUpsell} x */
+	/** @private @arg {YpcGetOfflineUpsell} x */
 	YpcGetOfflineUpsell(x) {
 		if(this.log_ypc_upsell) console.log("[ypc_upsell]",x.params);
 	}
 	log_watch_endpoint_params=false;
-	/** @arg {PrefetchHintConfigData} x */
+	/** @private @arg {PrefetchHintConfigData} x */
 	PrefetchHintConfigData(x) {
 		const {prefetchPriority: a,playbackRelativeSecondsPrefetchCondition: b,...y}=x; this.g(y);
 		this.save_number("prefetch.priority",x.prefetchPriority);
 		this.save_number("prefetch.playback_rel_condition",x.playbackRelativeSecondsPrefetchCondition);
 	}
-	/** @arg {PrefetchHintConfig} x */
+	/** @private @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
 		this.PrefetchHintConfigData(x.prefetchHintConfig);
 	}
-	/** @arg {WatchEndpointData} x */
+	/** @private @arg {WatchEndpointData} x */
 	WatchEndpointData_1(x) {
 		const {
 			videoId: a0,params: a1,continuePlayback: a2,playlistId: a3,
@@ -8708,25 +8631,25 @@ class HandleTypes extends BaseService {
 		b1&&this.Html5PlaybackOnesieConfig(b1);
 		if(c0!==void 0) this.primitive_of(c0,"number");
 	}
-	/** @arg {Html5PlaybackOnesieConfig} x */
+	/** @private @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
 		this.CommonConfig(x.html5PlaybackOnesieConfig);
 	}
-	/** @arg {CommonConfig} x */
+	/** @private @arg {CommonConfig} x */
 	CommonConfig(x) {
 		const {commonConfig: a,...y}=x; this.g(y);
 		this.CommonConfigData(a);
 	}
-	/** @arg {CommonConfigData} x */
+	/** @private @arg {CommonConfigData} x */
 	CommonConfigData(x) {
 		const {url: a,...y}=x; this.g(y);
 		this.parse_url(a);
 	}
-	/** @arg {VssLoggingContext} x */
+	/** @private @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
 		this.VssLoggingContextData(x.vssLoggingContext);
 	}
-	/** @arg {VssLoggingContextData} x */
+	/** @private @arg {VssLoggingContextData} x */
 	VssLoggingContextData(x) {
 		const {serializedContextData: a,...y}=x; this.g(y);
 		let dec_=decode_url_b64_proto_obj(a);
@@ -8736,7 +8659,7 @@ class HandleTypes extends BaseService {
 		let dec2=decoder.decode(dec[2]);
 		this.s_parser.parse_playlist_id(as_cast(dec2));
 	}
-	/** @arg {AccountMenuJson} x */
+	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
 		this.z(x.actions,a => this.OpenPopupActionData(a));
 	}
@@ -8746,11 +8669,11 @@ class HandleTypes extends BaseService {
 			case "browse": x.response; break;
 		};
 	}
-	/** @arg {YtSuccessResponse} x */
+	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
 		this.ResponseContext(x.responseContext);
 	}
-	/** @arg {AttGet} x */
+	/** @private @arg {AttGet} x */
 	AttGet(x) {
 		this.AttBgChallenge(x.bgChallenge);
 	}
@@ -8759,7 +8682,7 @@ class HandleTypes extends BaseService {
 		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
 	att_log_debug=false;
-	/** @arg {AttBgChallenge} x */
+	/** @private @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
 		this.t_url_unwrap(x.interpreterUrl,a => {
 			// spell:disable-next-line
@@ -8770,23 +8693,23 @@ class HandleTypes extends BaseService {
 		});
 		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
-	/** @arg {GuideJsonType} x */
+	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
 		this.z(x.items,a => this.GuideItemType(a));
 	}
-	/** @arg {GuideItemType} x */
+	/** @private @arg {GuideItemType} x */
 	GuideItemType(x) {
 		if("guideSectionRenderer" in x) {
 			this.GuideSectionData(x.guideSectionRenderer);
 		}
 	}
-	/** @arg {GuideSectionData} x */
+	/** @private @arg {GuideSectionData} x */
 	GuideSectionData(x) {
 		this.z(x.items,a => this.GuideSectionItemType(a));
 		this.trackingParams(x.trackingParams);
 		if(x.formattedTitle) this.text_t(x.formattedTitle);
 	}
-	/** @arg {GuideSectionItemType} x */
+	/** @private @arg {GuideSectionItemType} x */
 	GuideSectionItemType(x) {
 		if("guideEntryRenderer" in x) {
 			this.GuideEntryRenderer(x);
@@ -8796,20 +8719,20 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {GuideCollapsibleSectionEntry} x */
+	/** @private @arg {GuideCollapsibleSectionEntry} x */
 	GuideCollapsibleSectionEntry(x) {
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
 		this.GuideEntryRenderer(headerEntry);
 	}
-	/** @arg {ReelWatchSequenceResponse} x */
+	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
 		this.ContinuationEndpoint(x.continuationEndpoint);
 	}
-	/** @arg {ReelResponse} x */
+	/** @private @arg {ReelResponse} x */
 	ReelResponse(x) {
 		this.DesktopTopbarRenderer(x.desktopTopbar);
 	}
-	/** @arg {CompactLinkData} x */
+	/** @private @arg {CompactLinkData} x */
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
@@ -8914,7 +8837,7 @@ class HandleTypes extends BaseService {
 		console.log("gen renderer for",x);
 		/** @type {string[]} */
 		let req_names=[];
-		/** @arg {string} x */
+		/** @private @arg {string} x */
 		function gen_padding(x) {
 			return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
 				return "\t".repeat(g);
@@ -8927,14 +8850,14 @@ class HandleTypes extends BaseService {
 		let keys=Object.keys(as_cast(x));
 		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
-		d1!/** @arg {${t_name}} x */
+		d1!/** @private @arg {${t_name}} x */
 		d1!${t_name}(x) {
 			d2!${body}
 		d1!}
 		`;
 		let ex_names=req_names.map(e => {
 			let tmp0=`
-			d1!/** @arg {${e}} x */
+			d1!/** @private @arg {${e}} x */
 			d1!${e}(x) {
 				d2!x;
 				d2!debugger;
@@ -8961,16 +8884,6 @@ class HandleTypes extends BaseService {
 			return c;
 		}
 		return null;
-	}
-	/** @arg {unknown} x @arg {string|null} r_name */
-	generate_typedef_log(x,r_name) {
-		let rd=this.#generate_typedef(x,r_name);
-		console.log(rd);
-	}
-	/** @arg {unknown} x @arg {string|null} r_name */
-	generate_obj_log(x,r_name) {
-		let str=this.#generate_renderer(x,r_name);
-		console.log(str);
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
 	#generate_typedef(x,r_name=null) {
@@ -9047,7 +8960,7 @@ class HandleTypes extends BaseService {
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
-		/** @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
+		/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
 		function replace_until_same(s,rx,fn) {
 			let i=0;
 			let ps=s;
@@ -9082,7 +8995,7 @@ class HandleTypes extends BaseService {
 		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
 		if(!rxr?.groups) return null;
 		let x=rxr.groups.x.trim().split(/([;{}])/).filter(e => e);
-		/** @arg {string[]} x */
+		/** @private @arg {string[]} x */
 		function make_depth_arr(x) {
 			/** @type {[number,string][]} */
 			let o=[];
@@ -9126,7 +9039,7 @@ class HandleTypes extends BaseService {
 		});
 		return new Map(typedef_members);
 	}
-	/** @arg {{}} x @arg {string|null} r_name */
+	/** @public @arg {{}} x @arg {string|null} r_name */
 	use_generated_members(x,r_name=null) {
 		let t=this;
 		let td=new class Generate {
@@ -9152,7 +9065,7 @@ class HandleTypes extends BaseService {
 				this.s_idx++;
 				return ret;
 			}
-			/** @arg {string} [x] */
+			/** @public @arg {string} [x] */
 			generate_depth(x) {
 				if(!x) return;
 				td.out_arr[td.gen_d]=t.#generate_depth(x);
@@ -9163,7 +9076,7 @@ class HandleTypes extends BaseService {
 			get cur_obj() {
 				return this.out_arr[td.d_idx];
 			}
-			/** @arg {string} x */
+			/** @public @arg {string} x */
 			trimmed_item(x) {
 				td.str_arr[td.gen_s]=td.cur_obj?.get(x);
 				td.str_arr[td.gen_s]=td.cur_str?.replaceAll(/^\s|;$/g,"");
@@ -9180,19 +9093,15 @@ class HandleTypes extends BaseService {
 		td.generate_depth(td.cur_str);
 		return td;
 	}
-	/** @arg {unknown} x */
-	generate_if_branch(x) {
-		x;
-	}
-	/** @arg {StructuredDescriptionContentRenderer} x */
+	/** @private @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
 		this.StructuredDescriptionContentData(x.structuredDescriptionContentRenderer);
 	}
-	/** @arg {StructuredDescriptionContentData} x */
+	/** @private @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
 		this.z(x.items,a => this.StructuredDescriptionContentItem(a));
 	}
-	/** @arg {StructuredDescriptionContentItem} x */
+	/** @private @arg {StructuredDescriptionContentItem} x */
 	StructuredDescriptionContentItem(x) {
 		if("videoDescriptionHeaderRenderer" in x) {
 			this.VideoDescriptionHeaderRenderer(x);
@@ -9208,36 +9117,36 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {CarouselLockupData} x */
+	/** @private @arg {CarouselLockupData} x */
 	CarouselLockupData(x) {
 		const {infoRows: a,...y}=x; this.g(y);
 		this.z(a,this.InfoRowRenderer);
 	}
-	/** @arg {InfoRowRenderer} x */
+	/** @private @arg {InfoRowRenderer} x */
 	InfoRowRenderer(x) {
 		this.InfoRowData(x.infoRowRenderer);
 	}
-	/** @arg {CarouselLockupRenderer} x */
+	/** @private @arg {CarouselLockupRenderer} x */
 	CarouselLockupRenderer(x) {
 		this.CarouselLockupData(x.carouselLockupRenderer);
 	}
-	/** @arg {VideoDescriptionMusicSectionData} x */
+	/** @private @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {
 		this.text_t(x.sectionTitle);
 		this.z(x.carouselLockups,this.CarouselLockupRenderer);
 		this.TopicLinkRenderer(x.topicLink);
 		this.text_t(x.premiumUpsellLink);
 	}
-	/** @arg {VideoDescriptionMusicSectionRenderer} x */
+	/** @private @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
 		this.VideoDescriptionMusicSectionData(x.videoDescriptionMusicSectionRenderer);
 	}
-	/** @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
+	/** @private @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
 	ExpandableVideoDescriptionBodyData_x(x) {
 		const {descriptionBodyText: a,showMoreText: b,showLessText: c,...y}=x; this.g(y);
 		this.z([a,b,c],a => this.text_t(a));
 	}
-	/** @arg {ExpandableVideoDescriptionBodyData} x */
+	/** @private @arg {ExpandableVideoDescriptionBodyData} x */
 	ExpandableVideoDescriptionBodyData(x) {
 		if("descriptionBodyText" in x) {
 			return this.ExpandableVideoDescriptionBodyData_x(x);
@@ -9245,15 +9154,15 @@ class HandleTypes extends BaseService {
 		let k=get_keys_of(x);
 		if(k.length>0) debugger;
 	}
-	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
+	/** @private @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
 		this.ExpandableVideoDescriptionBodyData(x.expandableVideoDescriptionBodyRenderer);
 	}
-	/** @arg {VideoDescriptionHeaderRenderer} x */
+	/** @private @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
 	}
-	/** @arg {VideoDescriptionHeaderData} x */
+	/** @private @arg {VideoDescriptionHeaderData} x */
 	VideoDescriptionHeaderData(x) {
 		const {channel,channelNavigationEndpoint,channelThumbnail,title,views,publishDate,factoid,...y}=x; this.g(y);
 		this.text_t(channel);
@@ -9270,26 +9179,26 @@ class HandleTypes extends BaseService {
 		this.text_t(publishDate);
 		this.z(factoid,a => this.FactoidRenderer(a));
 	}
-	/** @arg {FactoidRenderer} x */
+	/** @private @arg {FactoidRenderer} x */
 	FactoidRenderer(x) {
 		this.FactoidData(x.factoidRenderer);
 	}
-	/** @arg {FactoidData} x */
+	/** @private @arg {FactoidData} x */
 	FactoidData(x) {
 		this.primitive_of(x.accessibilityText,"string");
 		this.text_t(x.label);
 		this.text_t(x.value);
 	}
-	/** @arg {AdPlacementRenderer} x */
+	/** @private @arg {AdPlacementRenderer} x */
 	AdPlacementRenderer(x) {
 		this.AdPlacementData(x.adPlacementRenderer);
 	}
-	/** @arg {AdPlacementData} x */
+	/** @private @arg {AdPlacementData} x */
 	AdPlacementData(x) {
 		this.AdPlacementConfig(x.config);
 		this.AdPlacementRendererItem(x.renderer);
 	}
-	/** @arg {AdPlacementRendererItem} x */
+	/** @private @arg {AdPlacementRendererItem} x */
 	AdPlacementRendererItem(x) {
 		if("clientForecastingAdRenderer" in x) {
 			return this.ClientForecastingAdRenderer(x);
@@ -9305,7 +9214,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {AdPlacementConfig} x */
+	/** @private @arg {AdPlacementConfig} x */
 	AdPlacementConfig(x) {
 		this.AdPlacementConfigData(x.adPlacementConfig);
 	}
@@ -9316,7 +9225,7 @@ class HandleTypes extends BaseService {
 		let q=split_string_once(r[1],"_");
 		return q[1];
 	}
-	/** @arg {AdPlacementConfigData} x */
+	/** @private @arg {AdPlacementConfigData} x */
 	AdPlacementConfigData(x) {
 		const {kind: rk,adTimeOffset: ato,hideCueRangeMarker: hcr,...y}=x; this.g(y);
 		let kind=this.parse_enum("AD_PLACEMENT_KIND",x.kind);
@@ -9329,31 +9238,31 @@ class HandleTypes extends BaseService {
 		if(ato) this.AdTimeOffset(ato);
 		if(hcr!==true) debugger;
 	}
-	/** @arg {AdTimeOffset} x */
+	/** @private @arg {AdTimeOffset} x */
 	AdTimeOffset(x) {
 		this.primitive_of(x.offsetStartMilliseconds,"string");
 		if(x.offsetEndMilliseconds!=="-1") debugger;
 	}
-	/** @arg {AdBreakServiceRenderer} x */
+	/** @private @arg {AdBreakServiceRenderer} x */
 	AdBreakServiceRenderer(x) {
 		this.AdBreakServiceData(x.adBreakServiceRenderer);
 	}
-	/** @arg {AdBreakServiceData} x */
+	/** @private @arg {AdBreakServiceData} x */
 	AdBreakServiceData(x) {
 		if(x.prefetchMilliseconds!=="10000") debugger;
 		this.primitive_of(x.getAdBreakUrl,"string");
 	}
-	/** @arg {LinearAdSequenceRenderer} x */
+	/** @private @arg {LinearAdSequenceRenderer} x */
 	LinearAdSequenceRenderer(x) {
 		this.LinearAdSequenceData(x.linearAdSequenceRenderer);
 	}
-	/** @arg {LinearAdSequenceData} x */
+	/** @private @arg {LinearAdSequenceData} x */
 	LinearAdSequenceData(x) {
 		const {linearAds: a,adLayoutMetadata: b,...y}=x; this.g(y);
 		this.z(a,a => this.LinearAdsItem(a));
 		this.AdLayoutMetadata(b);
 	}
-	/** @arg {LinearAdsItem} x */
+	/** @private @arg {LinearAdsItem} x */
 	LinearAdsItem(x) {
 		if("instreamVideoAdRenderer" in x) {
 			this.InstreamVideoAdRenderer(x);
@@ -9363,19 +9272,19 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @arg {AdActionInterstitialRenderer} x */
+	/** @private @arg {AdActionInterstitialRenderer} x */
 	AdActionInterstitialRenderer(x) {
 		this.AdActionInterstitialData(x.adActionInterstitialRenderer);
 	}
-	/** @arg {AdActionInterstitialData} x */
+	/** @private @arg {AdActionInterstitialData} x */
 	AdActionInterstitialData(x) {
 		this.save_keys("[AdActionInterstitial]",x);
 	}
-	/** @arg {ClientForecastingAdRenderer} x */
+	/** @private @arg {ClientForecastingAdRenderer} x */
 	ClientForecastingAdRenderer(x) {
 		this.ClientForecastingAdData(x.clientForecastingAdRenderer);
 	}
-	/** @arg {ClientForecastingAdData} x */
+	/** @private @arg {ClientForecastingAdData} x */
 	ClientForecastingAdData(x) {
 		const {impressionUrls: a,...y}=x; this.g(y);
 		this.z(a,a => this.BaseUrl(a));
@@ -9385,25 +9294,25 @@ class HandleTypes extends BaseService {
 		const {baseUrl: a,...y}=x; this.g(y);
 		this.parse_url(a);
 	}
-	/** @arg {InstreamVideoAdRenderer} x */
+	/** @private @arg {InstreamVideoAdRenderer} x */
 	InstreamVideoAdRenderer(x) {
 		this.InstreamVideoAdData(x.instreamVideoAdRenderer);
 	}
-	/** @arg {InstreamVideoAdData} x */
+	/** @private @arg {InstreamVideoAdData} x */
 	InstreamVideoAdData(x) {
 		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=x;
 		this.g(y);
 	}
-	/** @arg {ActionCompanionAdRenderer} x */
+	/** @private @arg {ActionCompanionAdRenderer} x */
 	ActionCompanionAdRenderer(x) {
 		this.ActionCompanionAdData(x.actionCompanionAdRenderer);
 	}
-	/** @arg {`${string}-0000-${string}-${string}-${string}`} x */
+	/** @private @arg {`${string}-0000-${string}-${string}-${string}`} x */
 	parse_layout_id(x) {
 		let v=split_string(x,"-");
 		if(v[1]!=="0000") debugger;
 	}
-	/** @arg {ActionCompanionAdData} x */
+	/** @private @arg {ActionCompanionAdData} x */
 	ActionCompanionAdData(x) {
 		const {
 			headline,description,actionButton,iconImage,bannerImage,
@@ -9434,24 +9343,24 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(x.clickTrackingParams);
 		return [T,U,V];
 	}
-	/** @arg {ActionCompanionAdInfoRenderers} x */
+	/** @private @arg {ActionCompanionAdInfoRenderers} x */
 	ActionCompanionAdInfoRenderers(x) {
 		if("adHoverTextButtonRenderer" in x) {
 			return this.AdHoverTextButtonRenderer(x);
 		}
 		debugger;
 	}
-	/** @arg {AdHoverTextButtonRenderer} x */
+	/** @private @arg {AdHoverTextButtonRenderer} x */
 	AdHoverTextButtonRenderer(x) {
 		this.AdHoverTextButtonData(x.adHoverTextButtonRenderer);
 	}
-	/** @arg {AdHoverTextButtonData} x */
+	/** @private @arg {AdHoverTextButtonData} x */
 	AdHoverTextButtonData(x) {
 		this.ButtonRenderer(x.button);
 		this.text_t(x.hoverText);
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {VideoPrimaryInfoData} x */
+	/** @private @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
 		const {title,viewCount,videoActions,trackingParams,badges: a,dateText,relativeDateText,...y}=x; this.g(y);
 		this.text_t(title);
@@ -9460,21 +9369,21 @@ class HandleTypes extends BaseService {
 		this.z([dateText,relativeDateText],this.text_t);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {VideoViewCountData} x */
+	/** @private @arg {VideoViewCountData} x */
 	VideoViewCountData(x) {
 		this.text_t(x.viewCount);
 		this.text_t(x.shortViewCount);
 	}
-	/** @arg {VideoViewCountRenderer} x */
+	/** @private @arg {VideoViewCountRenderer} x */
 	VideoViewCountRenderer(x) {
 		this.VideoViewCountData(x.videoViewCountRenderer);
 	}
-	/** @arg {MetadataBadgeRenderer} x */
+	/** @private @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {
 		const {metadataBadgeRenderer: a,...y}=x; this.g(y);
 		this.MetadataBadgeData(a);
 	}
-	/** @arg {MetadataBadgeData} x */
+	/** @private @arg {MetadataBadgeData} x */
 	MetadataBadgeData(x) {
 		const {icon: a,style: b,label: c,tooltip: d,trackingParams: e,accessibilityData: f,...y}=x; this.g(y);
 		this.Icon(a);
@@ -9484,7 +9393,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(e);
 		if(f) this.AccessibilityData(f);
 	}
-	/** @arg {TopicLinkData} x */
+	/** @private @arg {TopicLinkData} x */
 	TopicLinkData(x) {
 		const {title,thumbnailDetails,endpoint,callToActionIcon,trackingParams,...y}=x; this.g(y);
 		this.text_t(x.title);
@@ -9493,7 +9402,7 @@ class HandleTypes extends BaseService {
 		this.Icon(x.callToActionIcon);
 		this.trackingParams(x.trackingParams);
 	}
-	/** @arg {InfoRowData} x */
+	/** @private @arg {InfoRowData} x */
 	InfoRowData(x) {
 		const {title: a,defaultMetadata: b,expandedMetadata: c,expandIcon: d,trackingParams: e,infoRowExpandStatusKey: f,...y}=x; this.g(y);
 		this.text_t(a);
@@ -9503,7 +9412,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(e);
 		if(f) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],f);
 	}
-	/** @arg {TopicLinkRenderer} x */
+	/** @private @arg {TopicLinkRenderer} x */
 	TopicLinkRenderer(x) {
 		this.TopicLinkData(x.topicLinkRenderer);
 	}

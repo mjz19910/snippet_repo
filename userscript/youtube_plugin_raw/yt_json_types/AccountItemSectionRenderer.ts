@@ -1,3 +1,3 @@
 type AccountItemSectionRenderer={
-	accountItemSectionRenderer: AccountItemSectionData;
+	accountItemSectionRenderer: ContentsArrTemplate<AccountItemSectionContent>;
 };

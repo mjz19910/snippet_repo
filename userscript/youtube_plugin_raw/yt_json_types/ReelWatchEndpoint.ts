@@ -1,5 +1,5 @@
 type ReelWatchEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadataTemplate;
+	commandMetadata: {};
 	reelWatchEndpoint: ReelWatchEndpointData;
 }
