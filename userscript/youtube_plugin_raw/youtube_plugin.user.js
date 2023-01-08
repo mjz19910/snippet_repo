@@ -8284,7 +8284,7 @@ class HandleTypes extends BaseService {
 					entityVideoId,
 				};
 				if("subscriptionStateEntity" in x.payload) {
-					this.s_parser.parse_channel_url(["channel",as_cast(target.entityVideoId)]);
+					this.s_parser.parse_channel_id(as_cast(target.entityVideoId));
 					return;
 				}
 				this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
