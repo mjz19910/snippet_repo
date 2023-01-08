@@ -3069,9 +3069,16 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
+	save_key_objs=new Map;
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
+		if(!this.save_key_objs.has(ki)) this.save_key_objs.set(ki,{
+			arr:[],
+			/** @arg {{}} o */
+			set(o){this.arr.push(o)}
+		});
+		this.save_key_objs.get(ki)?.set(x);
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let keys=get_keys_of(x);
