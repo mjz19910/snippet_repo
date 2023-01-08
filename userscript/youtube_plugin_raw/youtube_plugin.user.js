@@ -4799,18 +4799,24 @@ class HandleTypes extends ServiceData {
 		if(this.auto_depth===0) {
 			if(this.target_element) this.target_element.remove();
 			this.target_element=document.createElement("div");
+			this.target_element.style.whiteSpace="pre";
 			document.body.append(this.target_element);
 			this.target_element.append(this.auto_dom);
 		}
 	}
 	auto_depth=0;
+	/** @arg {string} x */
+	append_dom_log(x) {
+		const li = document.createElement('li');
+		li.textContent = x;
+		this.auto_dom.append(li);
+
+	}
 	/** @arg {[any, any]} a */
 	auto_entry(a) {
 		let [k,v]=a;
-		const li = document.createElement('li');
-		li.textContent = " ".repeat(this.auto_depth)+"[enter_auto_entry]"+k;
+		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]"+k);
 		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
-		this.auto_dom.append(li);
 		let ret=this.auto_any(v);
 		return ret;
 	}
@@ -4820,7 +4826,8 @@ class HandleTypes extends ServiceData {
 		if(typeof x!=="object") return;
 		if(x instanceof Array) {
 			let ret=this.z(x,(a,i)=>{
-				console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
+				this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx] "+i);
+				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
 				let ret=this.auto_any(a);
 				return ret;
 			});
@@ -4828,6 +4835,7 @@ class HandleTypes extends ServiceData {
 		}
 		let name=this.get_name_from_keys(x);
 		indexed_db.put({v: "name-list-"+name});
+		this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}] ${Object.keys(x).join()}`);
 		console.log(" ".repeat(this.auto_depth)+name,x);
 		this.auto(x);
 	}
