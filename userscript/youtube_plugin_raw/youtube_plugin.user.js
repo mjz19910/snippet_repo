@@ -1587,7 +1587,6 @@ class FilterHandlers {
 			debugger;
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
-		page_type_iter(ret.page);
 		this.handle_any_data(`page_type_${ret.page}`,cast_as(ret));
 		this.handle_types.DataResponsePageType(ret);
 		this.iteration.default_iter({t: this,path: ret.page},ret);
@@ -2019,17 +2018,6 @@ function filter_out_keys(keys,to_remove) {
 	}
 	return ok_e;
 }
-/** @private @arg {NavigateEventDetail["pageType"]} pageType */
-function page_type_iter(pageType) {
-	switch(pageType) {
-		case "browse": case "channel": break;
-		case "playlist": case "settings": break;
-		case "shorts": case "watch": break;
-		case "search": break;
-		default: console.log("[%s]",pageType); debugger;
-	}
-}
-
 let vis_imm=false;
 let css_str=`
 	ytd-watch-next-secondary-results-renderer {
