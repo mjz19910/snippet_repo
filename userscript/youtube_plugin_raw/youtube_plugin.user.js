@@ -5984,11 +5984,11 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
-			console.log(`[Endpoint.${this.#get_renderer_key(a)}]`,a);
+			console.log(`[Video.Endpoint.${this.#get_renderer_key(a)}]`,a);
 			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
 			if(c) this.FrameworkUpdates(c);
 			this.z(d,a => {
-				console.log(`[Response.Endpoint.${this.#get_renderer_key(a)}]`,a);
+				this.ResponseReceivedEndpointItem(a);
 			});
 			return y;
 		}
@@ -6002,6 +6002,20 @@ class HandleTypes extends BaseService {
 		this.trackingParams(a);
 		if(b) this.TwoColumnWatchNextResults(b);
 		this.g(y);
+	}
+	/** @arg {ResponseReceivedEndpointItem} x */
+	ResponseReceivedEndpointItem(x) {
+		console.log(`[ResponseReceivedEndpointItem.${this.#get_renderer_key(x)}]`,x);
+		if("signalServiceEndpoint" in x) {
+			return this.SignalServiceEndpoint(x);
+		} else if("changeKeyedMarkersVisibilityCommand" in x) {
+
+		}
+	}
+	/** @arg {{signalServiceEndpoint:SignalServiceEndpointData}} x */
+	SignalServiceEndpoint(x) {
+		x;
+		debugger;
 	}
 	/** @arg {CinematicContainerRenderer} x */
 	CinematicContainerRenderer(x) {

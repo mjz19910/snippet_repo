@@ -1,5 +1,5 @@
 interface WatchNextResponse {
-	onResponseReceivedEndpoints: ResponseReceivedEndpoints[];
+	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];
 	responseContext: ResponseContext;
 	trackingParams: string;
 	engagementPanels: EngagementPanel[];
@@ -10,5 +10,9 @@ interface WatchNextResponse {
 	pageVisualEffects: CinematicContainerRenderer[];
 	frameworkUpdates?: FrameworkUpdates;
 };
-type ResponseReceivedEndpoints={};
+type SignalServiceEndpoint={
+	signalServiceEndpoint: SignalServiceEndpointData;
+};
+
+type ResponseReceivedEndpointItem=SignalServiceEndpoint;
 type CurrentVideoEndpoint={};
