@@ -4304,6 +4304,7 @@ class YtUrlParser extends BaseService {
 		}
 		this.log_url_info_arr(arr);
 	}
+	log_start_radio=false;
 	/** @arg {YtWatchUrlParamsFormat} x */
 	parse_watch_page_url(x) {
 		let vv=split_string(x,"&");
@@ -4335,7 +4336,9 @@ class YtUrlParser extends BaseService {
 				case "pp": {
 					this.on_player_params(res[1]);
 				} break;
-				case "start_radio": console.log("[playlist_start_radio]",res[1]); break;
+				case "start_radio": {
+					if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);
+				} break;
 				case "index": {
 					if(this.cache_playlist_index.includes(res[1])) break;
 					this.cache_playlist_index.push(res[1]);
@@ -4388,6 +4391,9 @@ class YtUrlParser extends BaseService {
 		if(url.pathname==="/AddSession") return;
 		console.log("[parse_url_external_2]",x);
 	}
+	get TODO_true() {
+		return true;
+	}
 	/** @arg {Extract<YtUrlFormat,`https://${string}`>} x */
 	parse_full_url(x) {
 		let r=create_from_parse(x);
@@ -4427,6 +4433,7 @@ class YtUrlParser extends BaseService {
 			case "googlevideo.com": {
 				let x0=split_string_once(s_host[0],"---");
 				let x1=split_string_once(x0[0],"rr");
+				if(this.TODO_true) return;
 				/** @type {GoogleVideoSubDomain} */
 				console.log("google video sub domain",`rr${x1[1]}`);
 			} return;
@@ -7897,10 +7904,33 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
-		const {owner,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,...y}=x; this.g(y);
-		this.VideoOwnerRenderer(owner);
-		this.SubscribeButtonRenderer(subscribeButton);
+		const {
+			owner:a,description:b,subscribeButton,metadataRowContainer,
+			showMoreText,showLessText,trackingParams,
+			defaultExpanded,descriptionCollapsedLines,
+			showMoreCommand: x1,showLessCommand: x2,
+			...y
+		}=x; this.g(y);
+		this.VideoOwnerRenderer(x.owner);
+		if(b) this.text_t(b);
+		this.SubscribeButtonRenderer(x.subscribeButton);
+		this.MetadataRowContainerRenderer(x.metadataRowContainer);
+		this.text_t(x.showMoreText);
+		this.text_t(x.showLessText);
+		this.trackingParams(x.trackingParams);
+		if(x.defaultExpanded!==false) debugger;
+		this.primitive_of(x.descriptionCollapsedLines,"number");
+		if(x1) this.CommandExecutorCommand(x1);
+		if(x2) this.ChangeEngagementPanelVisibilityAction(x2);
+	}
+	/** @arg {MetadataRowContainerData} x */
+	MetadataRowContainerData(x) {
+		console.log(this.generate_typedef(x,"MetadataRowContainerData"));
 		debugger;
+	}
+	/** @arg {MetadataRowContainerRenderer} x */
+	MetadataRowContainerRenderer(x) {
+		this.MetadataRowContainerData(x.metadataRowContainerRenderer);
 	}
 	/** @arg {SubscribeButtonRenderer} x */
 	SubscribeButtonRenderer(x) {
@@ -7926,13 +7956,14 @@ class HandleTypes extends BaseService {
 		this.SubscriptionNotificationToggleButtonRenderer(g3);
 		if(g4!=="watch-subscribe") debugger;
 	}
+	log_state_ids=false;
 	/** @arg {SubscriptionNotificationToggleButtonData} x */
 	SubscriptionNotificationToggleButtonData(x) {
 		this.CommandExecutorCommand(x.command);
 		console.log(x.currentStateId);
 		this.Icon(x.secondaryIcon);
 		this.z(x.states,a => {
-			console.log("[state_id]",[a.stateId,a.nextStateId]);
+			if(this.log_state_ids) console.log("[state_id]",[a.stateId,a.nextStateId]);
 			this.ButtonRenderer(a.state);
 		});
 	}

@@ -1,5 +1,6 @@
 type VideoSecondaryInfoData={
 	owner: VideoOwnerRenderer;
+	description?: TextT;
 	subscribeButton: SubscribeButtonRenderer;
 	metadataRowContainer: MetadataRowContainerRenderer;
 	showMoreText: SimpleText;
@@ -7,4 +8,6 @@ type VideoSecondaryInfoData={
 	trackingParams: string;
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;
+	showMoreCommand?: CommandExecutorCommand;
+	showLessCommand?: ChangeEngagementPanelVisibilityAction;
 };

@@ -1,9 +1,1 @@
-type MetadataRowContainerRenderer={
-	metadataRowContainerRenderer: {
-		rows: [
-			{}
-		];
-		collapsedItemCount: 2;
-		trackingParams: string;
-	};
-};
+type MetadataRowContainerRenderer={metadataRowContainerRenderer: MetadataRowContainerData;};
