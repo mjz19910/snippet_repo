@@ -7959,10 +7959,12 @@ class HandleTypes extends BaseService {
 		if(g4!=="watch-subscribe") debugger;
 	}
 	log_state_ids=false;
+	log_subscription_notification_toggle_cur_state=false;
 	/** @arg {SubscriptionNotificationToggleButtonData} x */
 	SubscriptionNotificationToggleButtonData(x) {
 		this.CommandExecutorCommand(x.command);
-		console.log(x.currentStateId);
+		let lf=this.log_subscription_notification_toggle_cur_state;
+		if(lf) console.log("[subscription_notification_toggle_cur_state]",x.currentStateId);
 		this.Icon(x.secondaryIcon);
 		this.z(x.states,a => {
 			if(this.log_state_ids) console.log("[state_id]",[a.stateId,a.nextStateId]);
@@ -8784,8 +8786,8 @@ class HandleTypes extends BaseService {
 		let o2=xa[k];
 		let keys=Object.keys(x).concat(Object.keys(o2));
 		const max_str_len=40;
-		let tc=JSON.stringify(x,(x,o) => {
-			if(x==="") return o;
+		let tc=JSON.stringify(x,(k1,o) => {
+			if(k1==="") return o;
 			if(typeof o==="string") {
 				if(o.length>max_str_len) {
 					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
@@ -8797,8 +8799,8 @@ class HandleTypes extends BaseService {
 						return "TYPE::string";
 					}
 				}
-				if(k=="trackingParams") return "TYPE::string";
-				console.log("[unique_chars_count]",k,[...new Set(o.split("").sort())].join("").length);
+				if(k1=="trackingParams") return "TYPE::string";
+				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 				return o;
 			}
 			if(typeof o==="number") return o;
@@ -8819,7 +8821,7 @@ class HandleTypes extends BaseService {
 			if(o.browseEndpoint) {
 				return `TYPE::BrowseEndpoint<never>`;
 			}
-			if(keys.includes(x)) {
+			if(keys.includes(k1)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
 			}
