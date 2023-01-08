@@ -9054,8 +9054,6 @@ class HandleTypes extends BaseService {
 		this.text_t(b);
 		this.trackingParams(c);
 		if(d) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],d);
-		if(x.infoRowExpandStatusKey!=="structured-description-music-section-artists-row-state-id") debugger;
-		if(x.infoRowExpandStatusKey!=="structured-description-music-section-licenses-row-state-id") debugger;
 	}
 }
 //#endregion
