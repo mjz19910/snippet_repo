@@ -7771,19 +7771,21 @@ class HandleTypes extends BaseService {
 		});
 		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
-		if(e) {
-			if("liveChatRenderer" in e) {
-				this.LiveChatRenderer(e);
-			} else {
-				let k=Object.keys(e)[0];
-				let rd=this.generate_renderer(e[k]);
-				console.log(rd);
-				let td=this.generate_typedef(e[k]);
-				console.log(td);
-				console.log("generated [%s]",k,e);
-				debugger;
-			}
+		this.ConversationBar(e);
+	}
+	/** @arg {TwoColumnWatchNextResultsData['conversationBar']} x */
+	ConversationBar(x) {
+		if(!x) return;
+		if("liveChatRenderer" in x) {
+			return this.LiveChatRenderer(x);
 		}
+		let k=this.get_renderer_key(x);
+		if(!k||typeof k=='number') {debugger;return;}
+		let rd=this.generate_renderer(x[k],k);
+		console.log(rd);
+		let td=this.generate_typedef(x[k],k);
+		console.log(td);
+		debugger;
 	}
 	/** @template T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsArrTemplate(x,f) {
@@ -8771,12 +8773,6 @@ class HandleTypes extends BaseService {
 	InfoRowRenderer(x) {
 		this.InfoRowData(x.infoRowRenderer);
 	}
-	/** @arg {InfoRowData} x */
-	InfoRowData(x) {
-		let rd=this.generate_renderer(x,"InfoRowData");
-		console.log(rd);
-		debugger;
-	}
 	/** @arg {CarouselLockupRenderer} x */
 	CarouselLockupRenderer(x) {
 		this.CarouselLockupData(x.carouselLockupRenderer);
@@ -9043,6 +9039,12 @@ class HandleTypes extends BaseService {
 	TopicLinkData(x) {
 		let rn=this.generate_renderer(x,"TopicLinkData");
 		console.log(rn);
+		debugger;
+	}
+	/** @arg {InfoRowData} x */
+	InfoRowData(x) {
+		let rd=this.generate_renderer(x,"InfoRowData");
+		console.log(rd);
 		debugger;
 	}
 }
