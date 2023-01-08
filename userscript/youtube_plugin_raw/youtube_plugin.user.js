@@ -8761,13 +8761,22 @@ class HandleTypes extends BaseService {
 	CarouselLockupRenderer(x) {
 		this.CarouselLockupData(x.carouselLockupRenderer);
 	}
+	// let td=this.generate_typedef(x,"CLA");
+	// let rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 	/** @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {
-		let td=this.generate_typedef(x.carouselLockups,"CLA");
-		console.log(td);
-		let rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
-		console.log(rn);
+    this.text_t(x.sectionTitle);
+    this.z(x.carouselLockups,this.CarouselLockupRenderer);
+    this.TopicLinkRenderer(x.topicLink);
+    this.text_t(x.premiumUpsellLink);
 		debugger;
+	}
+	/** @arg {TopicLinkRenderer} x */
+	TopicLinkRenderer(x) {
+		let td=this.generate_typedef(x);
+		console.log(td);
+		let rn=this.generate_renderer(x);
+		console.log(rn);
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
