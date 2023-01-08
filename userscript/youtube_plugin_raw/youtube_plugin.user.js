@@ -3103,7 +3103,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.new_strings.push([key,x]);
 		this.onDataChange();
 		console.log("store_str [%s] %o",key,x);
-		let bitmap
+		let bitmap;
 		if(cur[0]==="many") {
 			console.log("[generate_bitmap] for many type");
 		} else if(cur[0]==="one") {
@@ -5987,6 +5987,14 @@ class HandleTypes extends BaseService {
 		}
 		return out;
 	}
+	/** @arg {TemplateElement} x */
+	iterate_template_element(x) {
+		for(let i of x.map.entries()) {
+			let value=x[`${i[1]}${i[0]}`];
+			switch(i[1]) {case "f_o": this.iterate_template_element(x[`${i[1]}${i[0]}`]); break;}
+			console.log("[template_iter]",i[0],value);
+		}
+	}
 	/** @arg {string} x */
 	decode_template_protobuf(x) {
 		let binary=decode_url_b64(x);
@@ -6039,14 +6047,8 @@ class HandleTypes extends BaseService {
 						/** @type {[typeof y|typeof children]} */
 						let out=[y];
 						if(children) {
-							iterate_template_element(children);
+							this.iterate_template_element(children);
 							out.push(children);
-						}
-						/** @arg {TemplateElement} x */
-						function iterate_template_element(x) {
-							for(let i of x.map.entries()) {
-								console.log("[template_iter]",i);
-							}
 						}
 						console.log("[template_child_iter_2]",...out);
 						a;
