@@ -3208,10 +3208,19 @@ class BaseService extends BaseServicePrivate {
 		let no_ns_part=nn[1];
 		this.save_string(`${ns_name}::${ns}`,no_ns_part);
 	}
+	/** @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
+	drop_separator(x,sep) {
+		let v=split_string_once(x,sep);
+		if(v[0]) return v[0];
+		return v[1]??null;
+	}
 	/** @template {[string,null,string]} T @template {`${T[0]}-${string}-${T[2]}`} U @arg {T} ns_arr @arg {U} s */
 	save_enum_path(ns_arr,s) {
+		// ['', '-artists-row-state-id']
 		let no_ns=split_string_once(s,ns_arr[0]);
-		no_ns;
+		if(!no_ns[1]) throw new Error();
+		let nn=this.drop_separator(no_ns[1],"-");
+		console.log(nn);
 		debugger;
 	}
 	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
