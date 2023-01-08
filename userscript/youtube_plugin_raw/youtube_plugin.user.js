@@ -4186,10 +4186,11 @@ class YtUrlParser extends BaseService {
 	/** @arg {CodecType} x */
 	parse_codec_str(x) {
 		switch(x) {
+			case "av01": break;
 			case "avc1": break;
 			case "mp4a": break;
-			case "vp9": break;
 			case "opus": break;
+			case "vp9": break;
 			default: return false;
 		}
 		return true;
