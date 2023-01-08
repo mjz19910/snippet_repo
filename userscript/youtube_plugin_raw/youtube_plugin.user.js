@@ -2686,6 +2686,7 @@ function main() {
 		let exports=get_exports();
 		exports.Services=Services;
 		exports.YtUrlParser=YtUrlParser;
+		exports.HandleTypes=HandleTypes;
 	}
 	resolver_value.value=service_resolver;
 	yt_plugin.init();
@@ -5186,10 +5187,7 @@ class HandleTypes extends BaseService {
 		this.z(a,a => {
 			let res=decode_b64_proto_obj(decodeURIComponent(a));
 			let res_2=decode_entity_key(a);
-			if(!res_2) {
-				debugger;
-				return;
-			}
+			if(!res_2) {debugger;return;}
 			if(lua_strs.includes(res_2.entityId)) return;
 			console.log("[entity_key]",res_2,res);
 		});
@@ -6880,12 +6878,8 @@ class HandleTypes extends BaseService {
 		}
 		if(accessibility) {
 			if("accessibilityData" in accessibility) {
-				console.log("Button.accessibility.accessibilityData");
-				this.save_string("button_accessibility","accessibility_Accessibility");
-				this.Accessibility(accessibility);
+				debugger;
 			} else {
-				console.log("Button.accessibility.!accessibilityData");
-				this.save_string("button_accessibility","accessibility_AccessibilityData");
 				this.AccessibilityData(accessibility);
 			}
 		}
