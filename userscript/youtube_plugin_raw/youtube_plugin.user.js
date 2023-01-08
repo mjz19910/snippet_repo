@@ -8610,8 +8610,8 @@ class HandleTypes extends BaseService {
 			console.log("[watch_ep_params]",b);
 		}
 		if(c!==void 0&&c!==true) debugger;
-		if(d) this.s_parser.parse_playlist_id(d);
-		if(e) this.VssLoggingContext(e);
+		d&&this.s_parser.parse_playlist_id(d);
+		e&&this.VssLoggingContext(e);
 		f&&this.Html5PlaybackOnesieConfig(f);
 		if(g!==void 0) this.primitive_of(g,"number");
 	}
