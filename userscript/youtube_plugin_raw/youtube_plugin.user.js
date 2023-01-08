@@ -8253,95 +8253,85 @@ class HandleTypes extends BaseService {
 		["delete",false],
 		["replace",false],
 	]);
+	/** @arg {EntityMutationReplace} x */
+	EntityMutationReplace(x) {
+		const {type: ty,entityKey: a,payload: b,...y}=x; this.g(y);
+		if(ty!=="ENTITY_MUTATION_TYPE_REPLACE") throw new Error();
+		this.EntityMutationPayload(b);
+		let log_flag=this.log_entity_mutations.get("replace");
+		let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
+		if(!dec) {debugger; return;}
+		if(dec[1][0]!=="data32") {debugger; return;}
+		if(dec[0][0]!=="child") {debugger; return;}
+		let sub_reader=new MyReader(dec[0][2]);
+		let dec_3=sub_reader.try_read_any();
+		if(!dec_3) {debugger; return;}
+		let entityTypeFieldNumber=dec[1][2];
+		if(dec_3[0][0]==="error") {
+			const target={
+				entityTypeFieldNumber,
+				entityType: null,
+				entityVideoId: decoder.decode(dec[0][2]),
+			};
+			if(!is_keyof_RUa(entityTypeFieldNumber)) {
+				this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
+			} else {
+				const entityType=RUa[entityTypeFieldNumber];
+				const target={
+					entityTypeFieldNumber,
+					entityType,
+					entityVideoId: decoder.decode(dec[0][2]),
+				};
+				if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
+				return;
+			}
+			if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
+			return;
+		}
+		if(dec_3[0][0]!=="child") {debugger;return;}
+		if(!is_keyof_RUa(entityTypeFieldNumber)) {
+			const target={
+				entityTypeFieldNumber,
+				entityType: null,
+				entityVideoId: decoder.decode(dec_3[0][2]),
+			};
+			if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+			return;
+		}
+		const target={
+			entityTypeFieldNumber,
+			entityType: RUa[entityTypeFieldNumber],
+			entityVideoId: decoder.decode(dec_3[0][2]),
+		};
+		if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+	}
+	/** @arg {EntityMutationDelete} x */
+	EntityMutationDelete(x) {
+		const {type: ty,entityKey: a,options: b,...y}=x; this.g(y);
+		if(ty!=="ENTITY_MUTATION_TYPE_DELETE") throw new Error();
+		this.EntityMutationOptions(b);
+		let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
+		let log_flag=this.log_entity_mutations.get("delete");
+		if(!dec) {debugger;return;}
+		if(dec[0][0]!=="child") {debugger; return;}
+		if(dec[1][0]!=="data32") {debugger; return;}
+		let entityTypeFieldNumber=dec[1][2];
+		if(!is_keyof_RUa(entityTypeFieldNumber)) {debugger;return;}
+		const entityId=decoder.decode(dec[0][2]);
+		const x1={
+			entityTypeFieldNumber,
+			entityType: RUa[entityTypeFieldNumber],
+			entityId,
+		};
+		this.save_string("mutation.target_id",entityId);
+		if(log_flag) console.log("[entity_del]",x1);
+	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		this.save_enum("ENTITY_MUTATION_TYPE",x.type);
 		switch(x.type) {
-			case "ENTITY_MUTATION_TYPE_DELETE": {
-				const {type: {},entityKey: a,options: b,...y}=x; this.g(y);
-				this.EntityMutationOptions(b);
-				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
-				let log_flag=this.log_entity_mutations.get("delete");
-				if(!dec) {
-					console.log("[entity_replace_failed]",a);
-					debugger;
-					break;
-				}
-				if(dec[0][0]!=="child") {debugger; break;}
-				if(dec[1][0]!=="data32") {debugger; break;}
-				let entityTypeFieldNumber=dec[1][2];
-				if(!is_keyof_RUa(entityTypeFieldNumber)) break;
-				const target={
-					entityTypeFieldNumber: dec[1][2],
-					entityType: RUa[entityTypeFieldNumber],
-					entityId: decoder.decode(dec[0][2]),
-				};
-				if(log_flag) console.log("[entity_del]",target);
-			} break;
-			case "ENTITY_MUTATION_TYPE_REPLACE": {
-				const {type: {},entityKey: a,payload: b,...y}=x; this.g(y);
-				this.EntityMutationPayload(b);
-				let log_flag=this.log_entity_mutations.get("replace");
-				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
-				if(!dec) {
-					console.log("[entity_replace_failed]",a);
-					debugger;
-					break;
-				}
-				if(dec[1][0]!=="data32") {
-					debugger;
-					break;
-				}
-				if(dec[0][0]!=="child") {debugger; break;}
-				let sub_reader=new MyReader(dec[0][2]);
-				let dec_3=sub_reader.try_read_any();
-				if(!dec_3) {
-					console.log("[entity_replace_sub_reader_failed]",...dec);
-					debugger;
-					break;
-				}
-				let entityTypeFieldNumber=dec[1][2];
-				if(dec_3[0][0]==="error") {
-					const target={
-						entityTypeFieldNumber,
-						entityType: null,
-						entityVideoId: decoder.decode(dec[0][2]),
-					};
-					if(!is_keyof_RUa(entityTypeFieldNumber)) {
-						this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
-					} else {
-						const entityType=RUa[entityTypeFieldNumber];
-						const target={
-							entityTypeFieldNumber,
-							entityType,
-							entityVideoId: decoder.decode(dec[0][2]),
-						};
-						if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
-						break;
-					}
-					if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
-					break;
-				}
-				if(dec_3[0][0]!=="child") {
-					debugger;
-					break;
-				}
-				if(!is_keyof_RUa(entityTypeFieldNumber)) {
-					const target={
-						entityTypeFieldNumber,
-						entityType: null,
-						entityVideoId: decoder.decode(dec_3[0][2]),
-					};
-					if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
-					break;
-				}
-				const target={
-					entityTypeFieldNumber,
-					entityType: RUa[entityTypeFieldNumber],
-					entityVideoId: decoder.decode(dec_3[0][2]),
-				};
-				if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
-			} break;
+			case "ENTITY_MUTATION_TYPE_DELETE": this.EntityMutationDelete(x); break;
+			case "ENTITY_MUTATION_TYPE_REPLACE": this.EntityMutationReplace(x); break;
 			default: debugger;
 		}
 	}
