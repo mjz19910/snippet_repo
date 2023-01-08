@@ -4806,6 +4806,12 @@ class HandleTypes extends ServiceData {
 		if(!this._target_element) {
 			this._target_element=this.make_dom_log_part();
 		}
+		if(this.auto_depth===0&&this.root_element) {
+			this._target_element.remove();
+			let container_element=document.createElement("div");
+			this._target_element=container_element;
+			this.root_element.append(container_element);
+		}
 		this.auto_depth++;
 		this.z_async(Object.entries(x),this.auto_entry);
 		this.auto_depth--;
@@ -4813,7 +4819,10 @@ class HandleTypes extends ServiceData {
 			this._target_element.append(this.auto_dom);
 		}
 	}
+	/** @type {HTMLDivElement|null} */
+	root_element=null;
 	make_dom_log_part() {
+		let container_element=document.createElement("div");
 		let root_element=document.createElement("div");
 		root_element.style.whiteSpace="pre";
 		let fc=document.body.firstChild;
@@ -4822,7 +4831,9 @@ class HandleTypes extends ServiceData {
 		} else {
 			document.body.append(root_element);
 		}
-		return root_element;
+		root_element.append(container_element);
+		this.root_element=root_element;
+		return container_element;
 	}
 	item_count=0;
 	auto_depth=0;
@@ -4865,7 +4876,7 @@ class HandleTypes extends ServiceData {
 		let name=this.get_name_from_keys(x);
 		indexed_db.put({v: "name-list-"+name});
 		this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}] ${Object.keys(x).join()}`);
-		console.log(" ".repeat(this.auto_depth)+name,x);
+		// console.log(" ".repeat(this.auto_depth)+name,x);
 		return this.auto(x);
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
