@@ -1,4 +1,4 @@
-type NotificationGetUnseenCount=[
+type NotificationGetUnseenCountResponse=[
 	ResponseWithActions,
 	NotificationGetUnseenCountDirect,
 ][number];

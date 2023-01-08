@@ -1374,7 +1374,7 @@ class FilterHandlers {
 			default: debugger; break;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ReelItemWatch} */
+				/** @private @type {ReelItemWatchResponse} */
 				data: as(x),
 			};
 			case "reel_watch_sequence": return {
@@ -1395,7 +1395,7 @@ class FilterHandlers {
 			};
 			case "get_unseen_count": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {NotificationGetUnseenCount} */
+				/** @private @type {NotificationGetUnseenCountResponse} */
 				data: as(x),
 			};
 			case "record_interactions": return {
@@ -4865,25 +4865,25 @@ class HandleTypes extends ServiceData {
 	NextResponse(x) {
 		this.save_keys("[NextResponse]",x);
 	}
-	/** @private @arg {NotificationGetUnseenCount} x */
+	/** @private @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		this.save_keys("[DatasyncIdsResponse]",x);
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
-		this.save_keys("[GetAccountSwitcherEndpointResult]",x);
+		this.save_keys("[GetAccountSwitcherEndpointResponse]",x);
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
 		this.save_keys("[AccountsListResponse]",x);
 	}
-	/** @private @arg {ReelItemWatch} x */
+	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		this.save_keys("[ReelItemWatchResponse]",x);
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {
