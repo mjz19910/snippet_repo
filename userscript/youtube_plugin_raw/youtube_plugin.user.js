@@ -8566,8 +8566,9 @@ class HandleTypes extends BaseService {
 	log_watch_endpoint_params=false;
 	/** @arg {PrefetchHintConfigData} x */
 	PrefetchHintConfigData(x) {
-		x;
-		debugger;
+		const {prefetchPriority: a,playbackRelativeSecondsPrefetchCondition: b,...y}=x; this.g(y);
+		this.save_number("prefetch.priority",x.prefetchPriority);
+		this.save_number("prefetch.playback_rel_condition",x.playbackRelativeSecondsPrefetchCondition);
 	}
 	/** @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
