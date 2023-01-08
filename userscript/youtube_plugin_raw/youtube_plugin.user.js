@@ -8563,6 +8563,7 @@ class HandleTypes extends BaseService {
 					ret_arr.push(`this.primitive_of(x.${k},"string");`);
 					continue;
 				}
+				console.log("[unique_chars_count]",[...new Set(x2.split("").sort())].join("").length)
 				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
 				continue;
 			}
