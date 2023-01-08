@@ -8300,6 +8300,9 @@ class HandleTypes extends BaseService {
 					debugger;
 					break;
 				}
+				if(dec_3[0][0]==="error") {
+					break;
+				}
 				if(dec_3[0][0]!=="child") {
 					debugger;
 					break;
@@ -8337,8 +8340,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {PlaylistLoopStateEntityData} x */
 	PlaylistLoopStateEntityData(x) {
-		x;
-		debugger;
+		this.primitive_of(x.key,"string");
+		this.save_enum("PLAYLIST_LOOP_STATE",x.state);
 	}
 	/** @arg {PlaylistLoopStateEntity} x */
 	PlaylistLoopStateEntity(x) {
@@ -8563,7 +8566,14 @@ class HandleTypes extends BaseService {
 					ret_arr.push(`this.primitive_of(x.${k},"string");`);
 					continue;
 				}
-				console.log("[unique_chars_count]",[...new Set(x2.split("").sort())].join("").length)
+				let u_count=[...new Set(x2.split("").sort())].join("").length;
+				if(x2.includes("%")) {
+					if(u_count>13) {
+						ret_arr.push(`this.primitive_of(x.${k},"string");`);
+						continue;
+					}
+				}
+				console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
 				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
 				continue;
 			}
@@ -8696,9 +8706,23 @@ class HandleTypes extends BaseService {
 		let xa=x;
 		let o2=xa[k];
 		let keys=Object.keys(x).concat(Object.keys(o2));
+		const max_str_len=40;
 		let tc=JSON.stringify(x,(x,o) => {
 			if(x==="") return o;
-			if(typeof o==="string") return "TYPE::string";
+			if(typeof o==="string") {
+				if(o.length>max_str_len) {
+					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
+					return "TYPE::string";
+				}
+				let u_count=[...new Set(o.split("").sort())].join("").length;
+				if(o.includes("%")) {
+					if(u_count>13) {
+						return "TYPE::string";
+					}
+				}
+				console.log("[unique_chars_count]",k,[...new Set(o.split("").sort())].join("").length);
+				return o;
+			}
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
