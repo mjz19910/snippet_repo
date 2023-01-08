@@ -7940,11 +7940,11 @@ class HandleTypes extends BaseService {
 		this.trackingParams(a);
 		this.z(b,f);
 	}
-	/** @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<never,never>>} x1 */
+	/** @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">>} x1 */
 	SecondaryResultsContent_0(x1) {
 		this.ContentsTemplate(x1,this.SecondaryResultsContent_1);
 	}
-	/** @arg {RelatedChipCloudRenderer|ItemSectionRenderer<never,never>} x */
+	/** @arg {RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x */
 	SecondaryResultsContent_1(x) {
 		if("itemSectionRenderer" in x) {
 			return this.SecondaryResultsContent_2(x);
@@ -7966,10 +7966,11 @@ class HandleTypes extends BaseService {
 	ChipCloudRenderer(x) {
 		this.ChipCloudData(x.chipCloudRenderer);
 	}
-	/** @arg {ItemSectionRenderer<never,never>} x3 */
+	/** @arg {ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x3 */
 	SecondaryResultsContent_2(x3) {
-		return this.ItemSectionRenderer(x3,(a,v) => {
-			console.log([a,v]);
+		return this.ItemSectionRenderer(x3,(a,b) => {
+			if(a==="sid-wn-chips"&&b==="watch-next-feed") return;
+			console.log([a,b]);
 			debugger;
 		});
 	}

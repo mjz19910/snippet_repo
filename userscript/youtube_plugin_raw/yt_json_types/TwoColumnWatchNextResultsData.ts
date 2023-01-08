@@ -13,7 +13,7 @@ type TwoColumnWatchNextResultsData={
 		ContentsTemplate<
 			[
 				RelatedChipCloudRenderer,
-				ItemSectionRenderer<never,never>,
+				ItemSectionRenderer<"sid-wn-chips","watch-next-feed">,
 			][number]
 		>|ResultsArrTemplate<
 			[
@@ -30,3 +30,4 @@ type ResultsArrTemplate<T>={
 	results: T[];
 	trackingParams: string;
 };
+type WatchNextResultsItemSectionRenderer=Extract<TwoColumnWatchNextResultsData['secondaryResults']['secondaryResults'],{contents:any}>['contents'][number];
