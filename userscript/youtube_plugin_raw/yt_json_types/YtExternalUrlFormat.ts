@@ -1,4 +1,4 @@
-// spell:ignore nx57ynsd trackclk aclk 57ynsd
+// spell:ignore trackclk aclk
 type YtExternalUrlFormat=[
 	`https://ad.doubleclick.net/ddm/trackclk/${string}`,
 	`https://i.ytimg.com/vi/${string}/maxresdefault.jpg`,
@@ -12,7 +12,4 @@ type YtExternalUrlFormat=[
 	`https://www.youtubekids.com${"/"|""}?source=youtube_web`,
 	`https://yt${number}.ggpht.com/${string}=s88-c-k-c0x00ffffff-no-rj`,
 	`https://www.gstatic.com/youtube/img/watch/yt_music_channel.jpeg`
-][number];
-type GoogleVideoSubDomain=[
-	`rr${number}---${"sn-nx"}${string}`,
 ][number];

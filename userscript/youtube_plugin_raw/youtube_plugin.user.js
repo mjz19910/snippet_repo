@@ -8330,8 +8330,19 @@ class HandleTypes extends BaseService {
 			return this.OfflineabilityEntity(x);
 		} else if("subscriptionStateEntity" in x) {
 			return this.SubscriptionStateEntity(x);
+		} else if("playlistLoopStateEntity" in x) {
+			return this.PlaylistLoopStateEntity(x);
 		}
 		debugger;
+	}
+	/** @arg {PlaylistLoopStateEntityData} x */
+	PlaylistLoopStateEntityData(x) {
+		x;
+		debugger;
+	}
+	/** @arg {PlaylistLoopStateEntity} x */
+	PlaylistLoopStateEntity(x) {
+		this.PlaylistLoopStateEntityData(x.playlistLoopStateEntity);
 	}
 	/** @arg {SubscriptionStateEntity} x */
 	SubscriptionStateEntity(x) {
