@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	youtube plugin
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.2.17
+// @version	0.1.2.18
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
@@ -6457,10 +6457,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MultiPageMenuRenderer} x */
 	MultiPageMenuRenderer(x) {
-		this.MultiPageMenuData(x.multiPageMenuRenderer);
+		this.MultiPageMenuData_1(x.multiPageMenuRenderer);
 	}
 	/** @arg {MultiPageMenuData} x */
-	MultiPageMenuData(x) {
+	MultiPageMenuData_1(x) {
 		if(x.style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 		const {header: a,sections: b,footer: c,style: {},...y}=x;
 		this.SimpleMenuHeaderRenderer(a);
@@ -6829,7 +6829,7 @@ class HandleTypes extends BaseService {
 		if(get_keys_of_one(b)[0]!=="commentSimpleboxRenderer") debugger;
 		this.w(b,b => this.CommentSimpleboxData(b));
 		if(get_keys_of_one(c)[0]!=="sortFilterSubMenuRenderer") debugger;
-		this.w(c,c => this.SortFilterSubMenuData(c));
+		this.w(c,c => this.SortFilterSubMenuData_3(c));
 		this.trackingParams(d);
 		this.primitive_of(g,"boolean");
 		this.z(h,v => this.CustomEmoji(v));
@@ -6838,7 +6838,7 @@ class HandleTypes extends BaseService {
 		this.g(y);
 	}
 	/** @arg {SortFilterSubMenuData} x */
-	SortFilterSubMenuData(x) {
+	SortFilterSubMenuData_3(x) {
 		const {subMenuItems: a,title: b,icon: c,accessibility: d,tooltip: e,trackingParams: f,...y}=x;
 		this.z(a,v => this.ActionSetPlaylistVideoOrder(v));
 		this.primitive_of(b,"string");
@@ -7254,14 +7254,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MenuRenderer} x */
 	MenuRenderer(x) {
-		this.MenuData(x.menuRenderer);
+		this.MenuData_0(x.menuRenderer);
 	}
 	/** @arg {MenuData} x */
-	MenuData(x) {
+	MenuData_0(x) {
 		const {trackingParams: a,accessibility: b,items: c,targetId: d,...y}=x; this.g(y);
 		this.Accessibility(x.accessibility);
 		this.z(x.items,a => this.MenuServiceItemRenderer(a));
-		this.parse_target_id(as_cast(d));
+		if(d) this.parse_target_id(as_cast(d));
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
@@ -7433,7 +7433,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
 		const {sortFilterSubMenuRenderer: a,...y}=x; this.g(y);
-		this.SortFilterSubMenuData(a);
+		this.SortFilterSubMenuData_3(a);
 	}
 	/** @arg {TranscriptSegmentListRenderer} x */
 	TranscriptSegmentListRenderer(x) {
