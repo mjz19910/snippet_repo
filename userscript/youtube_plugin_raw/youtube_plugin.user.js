@@ -3208,6 +3208,12 @@ class BaseService extends BaseServicePrivate {
 		let no_ns_part=nn[1];
 		this.save_string(`${ns_name}::${ns}`,no_ns_part);
 	}
+	/** @template {[string,null,string]} T @template {`${T[0]}-${string}-${T[2]}`} U @arg {T} ns_arr @arg {U} s */
+	save_enum_path(ns_arr,s) {
+		let no_ns=split_string_once(s,ns_arr[0]);
+		no_ns;
+		debugger;
+	}
 	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
 	v(obj,fn) {
 		if(obj===void 0) return;
@@ -9043,9 +9049,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {InfoRowData} x */
 	InfoRowData(x) {
-		this.text_t(x.title);
-		this.text_t(x.defaultMetadata);
-		this.trackingParams(x.trackingParams);
+		const {title: a,defaultMetadata:b,trackingParams:c,infoRowExpandStatusKey:d,...y}=x; this.g(y);
+		this.text_t(a);
+		this.text_t(b);
+		this.trackingParams(c);
+		if(d) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],d);
+		if(x.infoRowExpandStatusKey!=="structured-description-music-section-artists-row-state-id") debugger;
+		if(x.infoRowExpandStatusKey!=="structured-description-music-section-licenses-row-state-id") debugger;
 	}
 }
 //#endregion
