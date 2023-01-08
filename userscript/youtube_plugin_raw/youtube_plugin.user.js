@@ -3032,18 +3032,22 @@ class BaseServicePrivate extends KnownDataSaver {
 	onDataChange() {
 		this.onDataChangeAction();
 	}
+	strings_key_index_map=new Map;
+	/** @arg {string} key */
+	get_seen_string_item(key) {
+		let index=this.strings_key_index_map.get(key);
+		if(index) return this.seen_strings[index];
+		index=this.seen_strings.findIndex(e => e[0]===key);
+		if(index<0) return;
+		this.strings_key_index_map.set(key,index);
+		return this.seen_strings[index];
+	}
 	/** @arg {string} key */
 	delete_old_string_values(key) {
-		let p=this.seen_strings.find(e => e[0]===key);
+		let p=this.get_seen_string_item(key);
 		if(!p) return;
-		let [,cur]=p;
-		/** @arg {["one", string[]]|["many", string[][]]} x */
-		function to_obj(x) {return {key: x[0],values: x[1]};}
-		let obj=to_obj(cur);
-		switch(obj.key) {
-			case "one": obj.values.length=0; break;
-			case "many": throw new Error("Tried to delete key with many for each value");
-		};
+		let [,[,values]]=p;
+		values.length=0;
 	}
 	/** @type {[string,string|string[]][]} */
 	new_strings=[];
@@ -3060,10 +3064,11 @@ class BaseServicePrivate extends KnownDataSaver {
 		let was_known=true;
 		/** @type {["one", string[]]|["many",string[][]]} */
 		let cur;
-		let p=this.seen_strings.find(e => e[0]===key);
+		let p=this.get_seen_string_item(key);
 		if(!p) {
 			p=[key,cur=["one",[]]];
-			this.seen_strings.push(p);
+			let nk=this.seen_strings.push(p)-1;
+			this.strings_key_index_map.set(key,nk);
 		} else {
 			cur=p[1];
 		}
@@ -6215,6 +6220,10 @@ class HandleTypes extends BaseService {
 				break x;
 			}
 			let c1=c.browseEndpoint;
+			if(eq_keys(get_keys_of(c1),["browseId"])) {
+				if(!c1.browseId.startsWith("SP")) debugger;
+				break x;
+			}
 			if(!eq_keys(get_keys_of(c1),["browseId","canonicalBaseUrl"])) debugger;
 			if(!c1.browseId.startsWith("UC")) debugger;
 			if(!c1.canonicalBaseUrl.startsWith("/@")) debugger;
