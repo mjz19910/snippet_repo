@@ -8374,16 +8374,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SubscriptionStateData} x */
 	SubscriptionStateData(x) {
-		this.parse_state_key(x.key);
-		console.log("[SubscriptionState]",x.key);
+		this.parse_state_key("SubscriptionState",x.key);
 		this.primitive_of(x.subscribed,"boolean");
 	}
 	/** @arg {OfflineabilityEntity} x */
 	OfflineabilityEntity(x) {
 		this.OfflineabilityEntityData(x.offlineabilityEntity);
 	}
-	/** @arg {string} x */
-	parse_state_key(x) {
+	/** @arg {string} section @arg {string} x */
+	parse_state_key(section,x) {
 		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
 		if(!dec) {debugger; return;}
 		if(dec[1][0]!=="data32") {debugger; return;}
@@ -8417,7 +8416,7 @@ class HandleTypes extends BaseService {
 				entityType: null,
 				entityVideoId,
 			};
-			console.log("[state_key] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+			console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
 			return;
 		}
 		const target={
@@ -8425,13 +8424,13 @@ class HandleTypes extends BaseService {
 			entityType: RUa[entityTypeFieldNumber],
 			entityVideoId,
 		};
-		console.log("[state_key] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+		console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
 	}
 	/** @arg {OfflineabilityEntityData} x */
 	OfflineabilityEntityData(x) {
 		if(!x) {debugger; return;}
 		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
-		this.parse_state_key(a);
+		this.parse_state_key("OfflineabilityEntity",a);
 		this.InnertubeCommand(b);
 		switch(c) {
 			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
@@ -8752,12 +8751,13 @@ class HandleTypes extends BaseService {
 					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
 					return "TYPE::string";
 				}
-				let u_count=[...new Set(o.split("").sort())].join("").length;
+				let u_ty_count=[...new Set(o.split("").sort())].join("").length;
 				if(o.includes("%")) {
-					if(u_count>13) {
+					if(u_ty_count>13) {
 						return "TYPE::string";
 					}
 				}
+				if(k=="trackingParams") return "TYPE::string";
 				console.log("[unique_chars_count]",k,[...new Set(o.split("").sort())].join("").length);
 				return o;
 			}
@@ -9194,11 +9194,20 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
 		const {title,viewCount,videoActions,trackingParams,badges,dateText,relativeDateText,...y}=x; this.g(y);
-		this.z(badges,this.MetadataBadgeRenderer);
-		this.z([dateText,relativeDateText],this.text_t);
 		this.text_t(title);
+		this.z(badges,this.MetadataBadgeRenderer);
+		this.VideoViewCountRenderer(x.viewCount);
+		this.z([dateText,relativeDateText],this.text_t);
 		this.trackingParams(trackingParams);
-		debugger;
+	}
+	/** @arg {VideoViewCountData} x */
+	VideoViewCountData(x) {
+		this.text_t(x.viewCount);
+		this.text_t(x.shortViewCount);
+	}
+	/** @arg {VideoViewCountRenderer} x */
+	VideoViewCountRenderer(x) {
+		this.VideoViewCountData(x.videoViewCountRenderer);
 	}
 	/** @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {

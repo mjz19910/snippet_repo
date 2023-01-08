@@ -1,7 +1,7 @@
 type VideoPrimaryInfoData={
 	title: TextT;
-	viewCount: {};
-	videoActions: {};
+	viewCount: VideoViewCountRenderer;
+	videoActions: MenuRenderer;
 	trackingParams: string;
 	badges: MetadataBadgeRenderer[];
 	dateText: TextT;
