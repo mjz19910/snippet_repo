@@ -1,0 +1,3 @@
+type CarouselLockupData={
+	infoRows: InfoRowRenderer[];
+};

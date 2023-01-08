@@ -8787,9 +8787,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TopicLinkRenderer} x */
 	TopicLinkRenderer(x) {
-		let td=this.generate_typedef(x);
-		console.log(td);
-		let rn=this.generate_renderer(x);
+		this.TopicLinkData(x.topicLinkRenderer);
+	}
+	/** @arg {TopicLinkData} x */
+	TopicLinkData(x) {
+		let rn=this.generate_renderer(x,"TopicLinkData");
 		console.log(rn);
 		debugger;
 	}

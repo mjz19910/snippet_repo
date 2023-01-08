@@ -1,0 +1,3 @@
+type InfoRowRenderer={
+	infoRowRenderer: InfoRowData;
+};

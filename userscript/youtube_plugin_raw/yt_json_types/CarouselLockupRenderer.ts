@@ -1,0 +1,3 @@
+type CarouselLockupRenderer={
+	carouselLockupRenderer: CarouselLockupData;
+};
