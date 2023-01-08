@@ -8418,57 +8418,78 @@ class HandleTypes extends BaseService {
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
-	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x @arg {string[]} keys @arg {string|number} t_name */
-	generate_renderer_body(req_names,x,keys,t_name) {
+	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x1 @arg {string[]} keys @arg {string|number} t_name */
+	generate_renderer_body(req_names,x1,keys,t_name) {
 		let ret_arr=[];
 		for(let k of keys) {
 			if(k==="trackingParams") {
 				ret_arr.push(`this.trackingParams(x.${k});`);
 				continue;
 			}
-			let in_o=x[k];
-			if(typeof in_o==='string') {
-				if(in_o.startsWith("https:")) {
+			let x2=x1[k];
+			if(typeof x2==='string') {
+				if(x2.startsWith("https:")) {
 					ret_arr.push(`this.primitive_of(x.${k},"string");`);
 					continue;
 				}
-				ret_arr.push(`if(x.${k}!=="${in_o}") debugger;`);
+				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
 				continue;
 			}
-			if(typeof in_o=='boolean') {
-				ret_arr.push(`if(x.${k}!==${in_o}) debugger;`.trim());
+			if(typeof x2=='boolean') {
+				ret_arr.push(`if(x.${k}!==${x2}) debugger;`);
 				continue;
 			}
-			if(typeof in_o!=='object') {
+			if(typeof x2!=='object') {
 				debugger;
 			}
-			if("simpleText" in in_o) {
-				ret_arr.push(`this.text_t(x.${k});`.trim());
+			if("simpleText" in x2) {
+				ret_arr.push(`this.text_t(x.${k});`);
 				continue;
 			};
-			if("runs" in in_o&&in_o.runs instanceof Array) {
-				ret_arr.push(`this.text_t(x.${k});`.trim());
+			if("runs" in x2&&x2.runs instanceof Array) {
+				ret_arr.push(`this.text_t(x.${k});`);
 				continue;
 			};
-			if(in_o instanceof Array) {
-				ret_arr.push(`
-				this.z(x.${k},a=>{
-					d6!console.log(a);
-					d6!debugger;
-				});
-				`);
-				let c=this.get_renderer_key(in_o[0]);
-				console.log(c);
-				debugger;
+			if(x2 instanceof Array) {
+				this.generate_body_array_item(k,x2,ret_arr);
 				continue;
 			}
-			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
-			let mn=tn.replace("Renderer","Data");
-			if(mn===t_name) mn+="Data";
-			req_names.push(mn);
-			ret_arr.push(`this.${mn}(x.${k});`);
+			let c=this.get_renderer_key(x2);
+			if(!c||typeof c==='number') {
+				this.generate_body_default_item(k,ret_arr,req_names,t_name);
+				continue;
+			}
+			if(c.endsWith("Renderer")) {
+				let ic=this.uppercase_first(c);
+				ret_arr.push(`this.${ic}(x.${k});`);
+				continue;
+			}
+			debugger;
 		}
 		return ret_arr.join("\nd4!");
+	}
+	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
+	generate_body_default_item(k,out,env_names,def_name) {
+		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
+		let mn=tn.replace("Renderer","Data");
+		if(mn===def_name) mn+="Data";
+		env_names.push(mn);
+		out.push(`this.${mn}(x.${k});`);
+	}
+	/** @arg {string} k @arg {unknown[]} x @arg {string[]} out */
+	generate_body_array_item(k,x,out) {
+		if(typeof x[0]!=='object') return;
+		if(x[0]===null) return;
+		let ret_arr=out;
+		/** @type {{[x:string]:{};[x:number]:{};}} */
+		let io=as_cast(x[0]);
+		let c=this.get_renderer_key(io);
+		if(c) {
+			let ic=this.uppercase_first(c);
+			console.log("array key",c);
+			ret_arr.push(`this.z(x.${k},this.${ic});`);
+		}
+		x;
 	}
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_renderer(x,r_name=null) {
@@ -8513,7 +8534,7 @@ class HandleTypes extends BaseService {
 		if(typeof x==='number') return x;
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @arg {{[x: string]:{}}|{[x: number]:{}}} x */
+	/** @arg {{[x:string|number]:{}}} x */
 	get_renderer_key(x) {
 		let keys=Object.keys(x);
 		let k;
