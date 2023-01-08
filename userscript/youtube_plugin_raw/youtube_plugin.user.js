@@ -3017,6 +3017,16 @@ class KnownDataSaver {
 	onDataChangeAction() {this.store_data();}
 	/** @protected */
 	onDataClearAction() {this.delete_data();}
+	strings_key_index_map=new Map;
+	/** @arg {string} key */
+	get_seen_string_item(key) {
+		let index=this.strings_key_index_map.get(key);
+		if(index) return this.seen_strings[index];
+		index=this.seen_strings.findIndex(e => e[0]===key);
+		if(index<0) return;
+		this.strings_key_index_map.set(key,index);
+		return this.seen_strings[index];
+	}
 }
 class BaseServicePrivate extends KnownDataSaver {
 	// #region Public
@@ -3031,16 +3041,6 @@ class BaseServicePrivate extends KnownDataSaver {
 	}
 	onDataChange() {
 		this.onDataChangeAction();
-	}
-	strings_key_index_map=new Map;
-	/** @arg {string} key */
-	get_seen_string_item(key) {
-		let index=this.strings_key_index_map.get(key);
-		if(index) return this.seen_strings[index];
-		index=this.seen_strings.findIndex(e => e[0]===key);
-		if(index<0) return;
-		this.strings_key_index_map.set(key,index);
-		return this.seen_strings[index];
 	}
 	/** @arg {string} key */
 	delete_old_string_values(key) {
