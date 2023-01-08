@@ -3443,26 +3443,25 @@ class IndexedDbAccessor {
 	/** @public @template {{v: string}} T @arg {T} obj */
 	put(obj) {
 		if(this.database_open) {
-			if(this.keys.includes(obj.v)) {
-				let idx=this.arr.findIndex(e => e.v===obj.v);
-				if(idx>=0) {
-					this.arr[idx]=obj;
-					return;
-				} else {
-					this.arr.push(obj);
-					return;
-				}
-			}
-			this.keys.push(obj.v);
-			this.arr.push(obj);
+			this.push_waiting_obj(obj);
 			return;
 		}
 		this.requestOpen();
+		this.push_waiting_obj(obj);
+	}
+	/** @public @template {{v: string}} T @arg {T} obj */
+	push_waiting_obj(obj) {
 		if(this.keys.includes(obj.v)) {
 			let idx=this.arr.findIndex(e => e.v===obj.v);
-			this.arr[idx]=obj;
-			return;
+			if(idx>=0) {
+				this.arr[idx]=obj;
+				return;
+			} else {
+				this.arr.push(obj);
+				return;
+			}
 		}
+		this.keys.push(obj.v);
 		this.arr.push(obj);
 	}
 	requestOpen() {
