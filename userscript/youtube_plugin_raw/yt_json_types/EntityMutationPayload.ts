@@ -15,3 +15,12 @@ type EntityMutationPayload=
 |PlaylistLoopStateEntity
 |TranscriptTrackSelectionEntity
 ;
+
+type TranscriptSearchBoxStateEntityData={
+	key: string;
+	isHidden: false;
+};
+
+type TranscriptSearchBoxStateEntity={
+	transcriptSearchBoxStateEntity: TranscriptSearchBoxStateEntityData;
+};

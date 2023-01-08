@@ -8325,6 +8325,11 @@ class HandleTypes extends BaseService {
 		if(!dec_3) {debugger; return;}
 		let err=dec_3.find(e => e[0]==="error");
 		let entity_replace_field_num=dec[1][2];
+		if(entity_replace_field_num===315) {
+			const entity_path=decoder.decode(dec[0][2]);
+			console.log("[replace_entity_path] [%s]",entity_path);
+			return;
+		}
 		if(err) {
 			const entityVideoId=decoder.decode(dec[0][2]);
 			if(!is_keyof_RUa(entity_replace_field_num)) {
@@ -8408,8 +8413,19 @@ class HandleTypes extends BaseService {
 			return this.PlaylistLoopStateEntity(x);
 		} else if("transcriptTrackSelectionEntity" in x) {
 			return this.TranscriptTrackSelectionEntity(x);
+		} else if("transcriptSearchBoxStateEntity" in x) {
+			return this.TranscriptSearchBoxStateEntity(x);
 		}
 		debugger;
+	}
+	/** @arg {TranscriptSearchBoxStateEntityData} x */
+	TranscriptSearchBoxStateEntityData(x) {
+		this.primitive_of(x.key,"string");
+		this.primitive_of(x.isHidden,"boolean");
+	}
+	/** @arg {TranscriptSearchBoxStateEntity} x */
+	TranscriptSearchBoxStateEntity(x) {
+		this.TranscriptSearchBoxStateEntityData(x.transcriptSearchBoxStateEntity);
 	}
 	/** @arg {TranscriptTrackSelectionEntity} x */
 	TranscriptTrackSelectionEntity(x) {
