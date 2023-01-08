@@ -8646,7 +8646,7 @@ class HandleTypes extends BaseService {
 		this.t_url_unwrap(x.interpreterUrl,a => {
 			let c=a;
 			// spell:disable-next-line
-			if(a!=="//www.google.com/js/th/G-wi0KRrIjmTWIDOn44AFVMvZ_aKLO1c96DfwAE3d4M.js") {
+			if(a!=="//www.google.com/js/th/YkfklCtf3s5-_1quWHAnTHHVaBZ-i7ToAeXFpu3i2Ro.js") {
 				/** @type {TrayrideJsHash} */
 				console.log("new trayride interpreter",c.split("/").slice(5)[0].split(".")[0]);
 			}
