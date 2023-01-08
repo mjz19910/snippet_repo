@@ -4417,7 +4417,9 @@ class YtUrlParser extends BaseService {
 		}
 		let s_host=split_string_once(r.host,".");
 		switch(s_host[1]) {
-			case "googlevideo.com": return;
+			case "googlevideo.com": {
+				console.log("google video sub domain",s_host[0]);
+			} return;
 			default:
 		}
 		/** @type {YtUrlFormat} */
@@ -7933,12 +7935,15 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoOwnerData} x */
 	VideoOwnerData(x) {
-		this.BrowseEndpoint(x.navigationEndpoint,a => {
-			if(a.apiUrl!=="/youtubei/v1/browse") debugger;
-			if(a.rootVe!==3611) {console.log(a); debugger;}
-			this.parse_url(a.url);
-			if(a.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		});
+		this.BrowseEndpoint(x.navigationEndpoint,this.ChannelNavigationEndpointWebCommandMetadata);
+	}
+	/** @arg {ChannelNavigationEndpointWebCommandMetadata} x */
+	ChannelNavigationEndpointWebCommandMetadata(x) {
+		const {url: a,webPageType: b,rootVe: c,apiUrl: d,...y}=x; this.g(y);
+		this.parse_url(a);
+		if(b!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(c!==3611) {console.log('[wrong_root_ve]',x); debugger;}
+		if(d!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
@@ -9072,9 +9077,7 @@ class HandleTypes extends BaseService {
 	TopicLinkData(x) {
 		this.text_t(x.title);
 		this.Thumbnail(x.thumbnailDetails);
-		this.BrowseEndpoint(x.endpoint,a => {
-			a; debugger;
-		});
+		this.BrowseEndpoint(x.endpoint,this.ChannelNavigationEndpointWebCommandMetadata);
 		this.Icon(x.callToActionIcon);
 		this.trackingParams(x.trackingParams);
 		let rn=this.generate_renderer(x,"TopicLinkData");
