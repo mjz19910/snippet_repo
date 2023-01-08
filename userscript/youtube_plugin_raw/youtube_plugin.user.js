@@ -8471,7 +8471,7 @@ class HandleTypes extends BaseService {
 			console.log("default for",k,x2);
 			this.generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
-		return ret_arr.join("\nd4!");
+		return ret_arr.join("\nd2!");
 	}
 	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
 	generate_body_default_item(k,out,env_names,def_name) {
@@ -8504,7 +8504,7 @@ class HandleTypes extends BaseService {
 		/** @arg {string} x */
 		function gen_padding(x) {
 			return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
-				return " ".repeat(g);
+				return "\t".repeat(g);
 			});
 		}
 		let k=this.get_renderer_key(x);
@@ -8514,18 +8514,18 @@ class HandleTypes extends BaseService {
 		let keys=Object.keys(x);
 		let body=this.generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
-		d2!/** @arg {${t_name}} x */
-		d2!${t_name}(x) {
-			d4!${body}
-		d2!}
+		d1!/** @arg {${t_name}} x */
+		d1!${t_name}(x) {
+			d2!${body}
+		d1!}
 		`;
 		let ex_names=req_names.map(e => {
 			let tmp0=`
-			d2!/** @arg {${e}} x */
-			d2!${e}(x) {
-				d4!x;
-				d4!debugger;
-			d2!}
+			d1!/** @arg {${e}} x */
+			d1!${e}(x) {
+				d2!x;
+				d2!debugger;
+			d1!}
 			`;
 			return tmp0;
 		});
