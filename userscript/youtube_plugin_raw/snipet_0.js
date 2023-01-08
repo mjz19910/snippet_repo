@@ -16,9 +16,4 @@ export class Snippet_0_tmp extends (await import("./youtube_plugin.user.js")).Ha
 		rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 		console.log(rn);
 	}
-	disabled() {
-		console.log("Button.accessibility.accessibilityData");
-		this.save_string("button_accessibility","accessibility_Accessibility");
-		this.Accessibility(accessibility);
-	}
 }

@@ -1,6 +1,6 @@
 type ButtonData={
-	accessibility?: Accessibility|AccessibilityData;
-	accessibilityData?: Accessibility|AccessibilityData;
+	accessibility?: AccessibilityData;
+	accessibilityData?: AccessibilityData;
 	command?: CommandEndpoint;
 	icon?: Icon<
 		[

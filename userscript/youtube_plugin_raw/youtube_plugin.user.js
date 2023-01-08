@@ -5629,18 +5629,18 @@ class HandleTypes extends BaseService {
 			return x;
 		};
 		if("currentVideoEndpoint" in x) {
-			const v=this.filter_response_endpoints(g(x));
+			const v=g(x);
 			const {
 				responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,topbar,pageVisualEffects,frameworkUpdates,
 				...y
 			}=v; z=y;
 			this.ResponseContext(responseContext);
 		} else if("engagementPanels" in x) {
-			const v=this.filter_response_endpoints(g(x));
+			const v=g(x);
 			const {responseContext,trackingParams,...y}=v; z=y;
 			this.ResponseContext(responseContext);
 		} else {
-			const v=this.filter_response_endpoints(g(x));
+			const v=g(x);
 			const {responseContext,trackingParams,...y}=v; z=y;
 			this.ResponseContext(responseContext);
 			this.trackingParams(trackingParams);
@@ -6386,20 +6386,14 @@ class HandleTypes extends BaseService {
 		this.parse_url(c);
 		this.g(y);
 	}
-	/** @template {{onResponseReceivedEndpoints: YtEndpoint[]}|{}} T @arg {T} x @returns {Omit<T,"onResponseReceivedEndpoints">} */
-	filter_response_endpoints(x) {
-		if("onResponseReceivedEndpoints" in x) {
-			const {onResponseReceivedEndpoints: a,...y}=x;
-			this.z(a,ep => this.yt_endpoint(ep));
-			return y;
-		}
-		return x;
-	}
 	/** @arg {SettingsResponseContent} x */
 	SettingsResponseContent(x) {
 		const {
-			responseContext: a,contents: b,trackingParams: tp,topbar: c,sidebar: d,...y
-		}=this.filter_response_endpoints(x);
+			responseContext: a,contents: b,trackingParams: tp,topbar: c,sidebar: d,
+			onResponseReceivedEndpoints,
+			...y
+		}=x;
+		console.log(onResponseReceivedEndpoints);
 		this.ResponseContext(a);
 		this.TwoColumnBrowseResultsRenderer(b);
 		if(get_keys_of_one(c)[0]!=="desktopTopbarRenderer") debugger;
@@ -6876,13 +6870,7 @@ class HandleTypes extends BaseService {
 			case void 0: break;
 			default: debugger;
 		}
-		if(accessibility) {
-			if("accessibilityData" in accessibility) {
-				debugger;
-			} else {
-				this.AccessibilityData(accessibility);
-			}
-		}
+		if(accessibility) this.AccessibilityData(accessibility);
 		if(command) {
 			console.log(`[Button.command.Endpoint.${this.#get_renderer_key(command)}]`,command);
 		}
@@ -6906,15 +6894,7 @@ class HandleTypes extends BaseService {
 		}
 		{
 			const {accessibilityData: b,...z}=y;
-			if(b) {
-				if("accessibilityData" in b) {
-					this.save_string("button_accessibility","accessibilityData_Accessibility");
-					this.Accessibility(b);
-				} else {
-					this.save_string("button_accessibility","accessibilityData_AccessibilityData");
-					this.AccessibilityData(b);
-				}
-			}
+			if(b) this.AccessibilityData(b);
 			this.g(z);
 		}
 	}
