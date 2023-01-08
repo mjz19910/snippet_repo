@@ -1,1 +1,3 @@
-type V2=Replace<V1,"%2F","/">;
+namespace Replace {
+	export type V2=Replace<V1,"%2F","/">;
+}

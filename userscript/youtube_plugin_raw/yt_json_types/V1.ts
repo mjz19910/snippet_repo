@@ -1,1 +1,3 @@
-type V1=Replace<G1,"%3A",":">;
+namespace Replace {
+	export type V1=Replace<G1,"%3A",":">;
+}
