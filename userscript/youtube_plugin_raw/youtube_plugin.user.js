@@ -1582,6 +1582,15 @@ class FilterHandlers {
 		this.handle_types.ResponseTypes(res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
+	/** @arg {string|URL|Request} request @arg {RequestInit} [init_args] */
+	on_api_request(request,init_args) {
+		console.log(request,init_args);
+		if(!("request_arr" in window)) define_property_as_value(window,"request_arr",[]);
+		if(!("request_arr" in window)) throw 1;
+		/** @type {any[]} */
+		let arr=as_cast(window.request_arr);
+		arr.push([request,init_args]);
+	}
 	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
@@ -2538,6 +2547,15 @@ class HiddenData {
 function get_exports() {
 	return exports;
 }
+/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
+function define_property_as_value(obj,key,value) {
+	Object.defineProperty(obj,key,{
+		configurable: true,
+		enumerable: true,
+		writable: true,
+		value: value,
+	});
+}
 //#region
 function main() {
 	const log_enabled_page_type_change=false;
@@ -2713,6 +2731,7 @@ function main() {
 		if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
 			return original_fetch(user_request,request_init);
 		}
+		yt_handlers.extract(h => h.on_api_request(user_request,request_init));
 		let ret=original_fetch(user_request,request_init);
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
@@ -2720,15 +2739,6 @@ function main() {
 	/** @private @arg {[()=>BrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
-	}
-	/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
-	function define_property_as_value(obj,key,value) {
-		Object.defineProperty(obj,key,{
-			configurable: true,
-			enumerable: true,
-			writable: true,
-			value: value,
-		});
 	}
 	function modify_global_env() {
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
