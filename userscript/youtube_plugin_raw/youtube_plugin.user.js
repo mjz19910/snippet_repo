@@ -7246,7 +7246,7 @@ class HandleTypes extends BaseService {
 		} else if("openPopupAction" in y) {
 			this.OpenPopupActionData(y.openPopupAction);
 		} else {
-			let td=this.generate_typedef(x);
+			let td=this.#generate_typedef(x);
 			console.log(td);
 			debugger;
 		}
@@ -7984,11 +7984,11 @@ class HandleTypes extends BaseService {
 	/** @arg {{a:1}} x */
 	auto_generate_renderer(x) {
 		if("a" in x) return;
-		let k=this.get_renderer_key(x);
+		let k=this.#get_renderer_key(x);
 		if(!k||typeof k=="number") {debugger; return;}
-		let rd=this.generate_renderer(x[k],k);
+		let rd=this.#generate_renderer(x[k],k);
 		console.log(rd);
-		let td=this.generate_typedef(x[k],k);
+		let td=this.#generate_typedef(x[k],k);
 		console.log(td);
 	}
 	/** @template T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
@@ -8080,7 +8080,7 @@ class HandleTypes extends BaseService {
 	/** @arg {MetadataRowContainerData} x */
 	MetadataRowContainerData(x) {
 		const {rows: a,collapsedItemCount: b,trackingParams: c,...y}=x; this.g(y);
-		if(a) console.log(this.generate_typedef(x,"MetadataRowContainerData"));
+		if(a) console.log(this.#generate_typedef(x,"MetadataRowContainerData"));
 		this.primitive_of(b,"number");
 		this.trackingParams(c);
 	}
@@ -8774,15 +8774,15 @@ class HandleTypes extends BaseService {
 		console.log(x.navigationEndpoint);
 	}
 	/** @arg {{}} x2 */
-	is_Thumbnail(x2) {
+	#is_Thumbnail(x2) {
 		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
 	}
 	/** @arg {{}} x2 */
-	is_TextT(x2) {
+	#is_TextT(x2) {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
 	/** @arg {string[]} req_names @arg {{[x:string]:unknown}} x1 @arg {string[]} keys @arg {string|number} t_name */
-	generate_renderer_body(req_names,x1,keys,t_name) {
+	#generate_renderer_body(req_names,x1,keys,t_name) {
 		/** @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
@@ -8811,9 +8811,9 @@ class HandleTypes extends BaseService {
 			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
 			if(x2===null) {ret_arr.push(`if(x.${k}!==null) debugger;`); continue;}
-			if(this.is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
-			if(x2 instanceof Array) {this.generate_body_array_item(k,x2,ret_arr); continue;}
-			if(this.is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
+			if(this.#is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
+			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
+			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
 			if("browseEndpoint" in x2) {
 				ret_arr.push(`
@@ -8825,29 +8825,29 @@ class HandleTypes extends BaseService {
 			}
 			/** @type {{}} */
 			let o3=x2;
-			let c=this.get_renderer_key(o3);
+			let c=this.#get_renderer_key(o3);
 			if(!c||typeof c==="number") {
-				this.generate_body_default_item(k,ret_arr,req_names,t_name);
+				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
 			}
 			if(c.endsWith("Renderer")) {
-				let ic=this.uppercase_first(c);
+				let ic=this.#uppercase_first(c);
 				ret_arr.push(`this.${ic}(x.${k});`);
 				continue;
 			}
 			if(k.endsWith("Renderer")) {
-				this.generate_body_default_item(k,ret_arr,req_names,t_name);
+				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
 			}
 			console.log("[gen_body_default_for] [%s]",k,x2);
 			debugger;
-			this.generate_body_default_item(k,ret_arr,req_names,t_name);
+			this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
 		let no_pad_arr=ret_arr.map(e => e.trim());
 		return no_pad_arr.join("\nd2!");
 	}
 	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
-	generate_body_default_item(k,out,env_names,def_name) {
+	#generate_body_default_item(k,out,env_names,def_name) {
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 		let mn=tn.replace("Renderer","Data");
 		if(mn===def_name) mn+="Data";
@@ -8855,22 +8855,22 @@ class HandleTypes extends BaseService {
 		out.push(`this.${mn}(x.${k});`);
 	}
 	/** @arg {string} k @arg {unknown[]} x @arg {string[]} out */
-	generate_body_array_item(k,x,out) {
+	#generate_body_array_item(k,x,out) {
 		if(typeof x[0]!=="object") return;
 		if(x[0]===null) return;
 		let ret_arr=out;
 		/** @type {{[x:string]:{};[x:number]:{};}} */
 		let io=as_cast(x[0]);
-		let c=this.get_renderer_key(io);
+		let c=this.#get_renderer_key(io);
 		if(c) {
-			let ic=this.uppercase_first(c);
+			let ic=this.#uppercase_first(c);
 			console.log("array key",c);
 			ret_arr.push(`this.z(x.${k},this.${ic});`);
 		}
 		x;
 	}
 	/** @arg {{}} x @arg {string|null} r_name */
-	generate_renderer(x,r_name=null) {
+	#generate_renderer(x,r_name=null) {
 		console.log("gen renderer for",x);
 		/** @type {string[]} */
 		let req_names=[];
@@ -8880,12 +8880,12 @@ class HandleTypes extends BaseService {
 				return "\t".repeat(g);
 			});
 		}
-		let k=this.get_renderer_key(x);
+		let k=this.#get_renderer_key(x);
 		if(r_name) k=r_name;
 		if(k===null) return null;
-		let t_name=this.uppercase_first(k);
+		let t_name=this.#uppercase_first(k);
 		let keys=Object.keys(x);
-		let body=this.generate_renderer_body(req_names,x,keys,t_name);
+		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
 		d1!/** @arg {${t_name}} x */
 		d1!${t_name}(x) {
@@ -8908,12 +8908,12 @@ class HandleTypes extends BaseService {
 		return `\n${tmp3}`;
 	}
 	/** @arg {string|number} x */
-	uppercase_first(x) {
+	#uppercase_first(x) {
 		if(typeof x==="number") return x;
 		return x[0].toUpperCase()+x.slice(1);
 	}
 	/** @arg {unknown} x */
-	get_renderer_key(x) {
+	#get_renderer_key(x) {
 		let keys=Object.keys(as_cast(x));
 		let k;
 		for(let c of keys) {
@@ -8928,18 +8928,18 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
 	generate_typedef_log(x,r_name) {
-		let rd=this.generate_typedef(x,r_name);
+		let rd=this.#generate_typedef(x,r_name);
 		console.log(rd);
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
-	generate_typedef(x,r_name=null) {
-		let k=this.get_renderer_key(x);
+	#generate_typedef(x,r_name=null) {
+		let k=this.#get_renderer_key(x);
 		if(k===null) return null;
 		let t_name=k;
 		if(r_name) {
 			t_name=r_name;
 		}
-		let tn=this.uppercase_first(t_name);
+		let tn=this.#uppercase_first(t_name);
 		let obj_count=0;
 		/** @type {{[x: number|string]:{}}} */
 		let xa=as_cast(x);
@@ -9037,7 +9037,7 @@ class HandleTypes extends BaseService {
 		return ret;
 	}
 	/** @arg {string} x1 */
-	generate_depth(x1) {
+	#generate_depth(x1) {
 		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
 		if(!rxr?.groups) return null;
 		let x=rxr.groups.x.trim().split(/([;{}])/).filter(e => e);
@@ -9114,7 +9114,7 @@ class HandleTypes extends BaseService {
 			/** @arg {string} [x] */
 			generate_depth(x) {
 				if(!x) return;
-				td.out_arr[td.gen_d]=t.generate_depth(x);
+				td.out_arr[td.gen_d]=t.#generate_depth(x);
 			}
 			get cur_str() {
 				return this.str_arr[td.s_idx];
@@ -9129,7 +9129,7 @@ class HandleTypes extends BaseService {
 			}
 		};
 		td.out_arr=[];
-		td.str_arr[td.gen_s]=this.generate_typedef(x,r_name)??"";
+		td.str_arr[td.gen_s]=this.#generate_typedef(x,r_name)??"";
 		td.generate_depth(td.cur_str);
 		td.trimmed_item("carouselLockupRenderer");
 		td.generate_depth(td.cur_str);
@@ -9139,7 +9139,7 @@ class HandleTypes extends BaseService {
 		td.generate_depth(td.cur_str);
 		return td;
 	}
-	/** @arg {{[x: string]:{}}} x */
+	/** @arg {unknown} x */
 	generate_if_branch(x) {
 		x;
 	}
@@ -9160,9 +9160,9 @@ class HandleTypes extends BaseService {
 		} else if("videoDescriptionMusicSectionRenderer" in x) {
 			return this.VideoDescriptionMusicSectionRenderer(x);
 		} else {
-			let rd=this.generate_renderer(x);
+			let rd=this.#generate_renderer(x);
 			console.log(rd);
-			let td=this.generate_typedef(x);
+			let td=this.#generate_typedef(x);
 			console.log(td);
 			debugger;
 		}
@@ -9453,7 +9453,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(x.trackingParams);
 		let k=get_keys_of(y);
 		if(!k.length) return;
-		let rn=this.generate_renderer(x,"TopicLinkData");
+		let rn=this.#generate_renderer(x,"TopicLinkData");
 		console.log(rn);
 		debugger;
 	}
