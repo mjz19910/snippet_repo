@@ -1559,8 +1559,6 @@ class FilterHandlers {
 	on_page_type_changed(detail) {
 		const {response,endpoint,...y}=detail;
 		this.handle_types.DataResponsePageType(response);
-		this.handle_types.auto(endpoint);
-		this.handle_types.auto(y);
 		console.log(y);
 	}
 
@@ -4773,7 +4771,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		this.save_keys("[BrowsePageResponse]",x);
-		this.auto(x);
 	}
 	/** @private @arg {BrowseResponse} x */
 	BrowseResponseContent(x) {
@@ -4801,58 +4798,6 @@ class HandleTypes extends ServiceData {
 	GetLiveChatReplayResponse(x) {
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
-	/** @type {DocumentFragment} */
-	auto_dom=new DocumentFragment();
-	uu=this.z;
-	/** @type {HTMLDivElement|null} */
-	_target_element=null;
-	/** @public @template U @arg {U[]} x @arg {number} id @arg {(this:this,x:U,i:number,id:number)=>Promise<void>} f  */
-	async z_async(x,f,id) {
-		for(let it of x.entries()) {
-			const [i,a]=it;
-			await f.call(this,a,i,id);
-		}
-	}
-	/** @type {[promise:Promise<void>|null,id:number]} */
-	running_auto=[null,-1];
-	auto_id_count=0;
-	/** @arg {{}} x  @arg {number|null} id */
-	async auto(x,id=null) {
-		if(this.running_auto[1]!==id&&this.running_auto[0]) {
-			await this.running_auto[0];
-		}
-		if(id===null) {
-			id=this.auto_id_count;
-			this.auto_id_count++;
-		}
-		if(!this._target_element) {
-			this._target_element=this.make_dom_log_part();
-		}
-		if(this.auto_depth===0&&this.root_element&&this.item_count>1024) {
-			this._target_element.remove();
-			let container_element=document.createElement("div");
-			this._target_element=container_element;
-			this.root_element.append(container_element);
-			this.item_count=0;
-		}
-		let has_running_var=false;
-		let p=this.z_async(Object.entries(x),this.auto_entry,id);
-		if(this.auto_depth===1&&this.running_auto[0]===null) {
-			has_running_var=true;
-			console.log("[auto_start] [%o]",id,this.auto_depth);
-			this.running_auto=[p,id];
-		}
-		this.auto_depth++;
-		await p;
-		this.auto_depth--;
-		if(has_running_var) {
-			console.log("[auto_done] [%o]",id,this.auto_depth);
-			this.running_auto=[null,-1];
-		}
-		if(this.auto_depth===0) {
-			this._target_element.append(this.auto_dom);
-		}
-	}
 	/** @type {HTMLDivElement|null} */
 	root_element=null;
 	make_dom_log_part() {
@@ -4873,78 +4818,21 @@ class HandleTypes extends ServiceData {
 		this.root_element=root_element;
 		return container_element;
 	}
-	item_count=0;
-	auto_depth=0;
-	/** @arg {string} x */
-	append_dom_log(x) {
-		const msg_container=document.createElement('div');
-		msg_container.textContent=x;
-		this.auto_dom.append(msg_container);
-	}
-	/** @arg {[any, any]} a @arg {number} _i @arg {number} id */
-	async auto_entry(a,_i,id) {
-		let [k,x]=a;
-		if(typeof x==="string") return;
-		if(typeof x!=="object") return;
-		if(x===null) return;
-		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]  "+k);
-		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
-		let ret=await this.auto_any(x,id);
-		return ret;
-	}
-	get target_element() {
-		if(!this._target_element) throw new Error();
-		return this._target_element;
-	}
-	/** @arg {unknown} x @arg {number} id @returns {Promise<void>} */
-	async auto_any(x,id) {
-		if(typeof x==="string") return;
-		if(typeof x!=="object") return;
-		if(x===null) return;
-		this.item_count++;
-		if(this.item_count%128===0) {
-			this.target_element.append(this.auto_dom);
-			await new Promise(a => setTimeout(a,50));
-		}
-		if(x instanceof Array) {
-			let ret=await this.z_async(x,async (a,_i,id) => {
-				// this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx]  "+i);
-				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
-				let ret=await this.auto_any(a,id);
-				return ret;
-			},id);
-			return ret;
-		}
-		let name=this.get_name_from_keys(x);
-		indexed_db.put({v: "name-list-"+name});
-		if("rootVe" in x) {
-			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}]  RootVe:${x.rootVe}`);
-		} else {
-			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}]`);
-		}
-		// console.log(" ".repeat(this.auto_depth)+name,x);
-		await this.auto(x,id);
-		return;
-	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
-		this.auto(x);
 	}
 	/** @private @arg {NextResponse} x */
 	WatchNextResponse(x) {
 		this.save_keys("[WatchNextResponse]",x);
-		this.auto(x);
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
-		this.auto(x);
 	}
 	/** @private @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
-		this.auto(x);
 	}
 	/** @private @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
