@@ -1,4 +1,4 @@
-type ServiceEndpoint<T extends {}>={
+type ServiceEndpoint<T extends {},U extends keyof VEMap>={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadataTemplate;
+	commandMetadata: CommandMetadataTemplate<U>;
 }&T;

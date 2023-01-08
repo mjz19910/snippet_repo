@@ -9,8 +9,8 @@ type ButtonData={
 		][number]
 	>;
 	isDisabled?: boolean;
-	serviceEndpoint?: YtEndpoint;
-	navigationEndpoint?: YtEndpoint;
+	serviceEndpoint?: ServiceEndpoint<{},never>;
+	navigationEndpoint?: NavigationEndpoint<{},never>;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
 	text?: TextT;

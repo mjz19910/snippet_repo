@@ -5738,12 +5738,15 @@ class HandleTypes extends BaseService {
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
 		let {serviceEndpoint: i,targetId: j,...y}=h;
-		if(i) this.ServiceEndpoint(i,a => this.ServiceEndpointPlugin(a));
+		if(i) this.ServiceEndpoint(i,a=>{
+			a;
+			debugger;
+		});
 		if(j) this.parse_target_id(j);
 		this.g(y);
 	}
 	/** @arg {GuideEntryServicePlugins} x */
-	ServiceEndpointPlugin(x) {
+	GuideEntryServicePlugins(x) {
 		if("reelWatchEndpoint" in x) {
 			const {reelWatchEndpoint: a,...y}=x; this.g(y);
 			return this.ReelWatchEndpointData(a);
@@ -5755,12 +5758,10 @@ class HandleTypes extends BaseService {
 		}
 		x.signalServiceEndpoint;
 	}
-	/** @template {{}} T @arg {ServiceEndpoint<T>} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @template {keyof VEMap} U @arg {ServiceEndpoint<T,U>} x @arg {(x:ServiceEndpoint_Omit<T,U>)=>void} f */
 	ServiceEndpoint(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
-		/** @type {any} */
-		let c=y;
-		f(as_cast(c));
+		f(y);
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
@@ -6020,7 +6021,6 @@ class HandleTypes extends BaseService {
 			this.save_keys("[SignalServiceEndpoint.web_command_metadata]",a);
 		});
 		this.SignalServiceEndpointData(x.signalServiceEndpoint);
-		debugger;
 	}
 	/** @template T @arg {{webCommandMetadata: T}} x @arg {(x:T)=>void} f */
 	CommandMetadata(x,f) {
@@ -7354,7 +7354,7 @@ class HandleTypes extends BaseService {
 		this.save_enum("REEL_ITEM_STYLE",j);
 		this.save_enum("REEL_VIDEO_TYPE",k);
 	}
-	/** @template T @arg {NavigationEndpoint<T>} x @arg {(x:Omit<NavigationEndpoint<T>,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	/** @template T @template {keyof VEMap} U @arg {NavigationEndpoint<T,U>} x @arg {(x:Omit<NavigationEndpoint<T,U>,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	NavigationEndpoint(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
 		this.clickTrackingParams(a);
