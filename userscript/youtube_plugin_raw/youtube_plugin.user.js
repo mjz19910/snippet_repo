@@ -1399,7 +1399,7 @@ class FilterHandlers {
 			};
 			case "next": return {
 				type: target[0],
-				/** @type {YtApiNext} */
+				/** @type {NextResponse} */
 				data: cast_as(x),
 			};
 			case "player": return {
@@ -4470,7 +4470,7 @@ class HandleTypes extends BaseService {
 		this.save_keys("[PlayerResponse]",x);
 	}
 	/** @private @arg {BrowsePageResponse} x */
-	YtBrowsePageResponse(x) {
+	BrowsePageResponse(x) {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
 		this.BrowseEndpoint(b,a => this.BrowseWebCommandMetadata(a));
@@ -4509,23 +4509,17 @@ class HandleTypes extends BaseService {
 		let mt=x;
 		this._current_response_type=x.page;
 		switch(mt.page) {
-			case "browse": return this.YtBrowsePageResponse(mt);
-			case "watch": return this.YtWatchPageResponse(mt);
-			case "channel": return this.YtChannelPageResponse(mt);
-			case "playlist": return this.YtPlaylistPageResponse(mt);
-			case "settings": return this.YtSettingsPageResponse(mt);
-			case "shorts": return this.YtShortsResponse(mt);
+			case "browse": return this.BrowsePageResponse(mt);
+			case "watch": return this.WatchPageResponse(mt);
+			case "channel": return this.ChannelPageResponse(mt);
+			case "playlist": return this.PlaylistPageResponse(mt);
+			case "settings": return this.SettingsPageResponse(mt);
+			case "shorts": return this.ShortsPageResponse(mt);
 			case "search": return this.SearchPageResponse(mt);
 			default: break;
 		}
 		console.log("pt",x.page,x);
 		debugger;
-	}
-	/** @template {{clickTrackingParams: string}} T @arg {T} x */
-	handle_clickTrackingParams(x) {
-		const {clickTrackingParams: a,...y}=x;
-		if(a!==void 0) this.clickTrackingParams(a);
-		return y;
 	}
 	/** @private @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
@@ -4656,16 +4650,6 @@ class HandleTypes extends BaseService {
 			return as_cast(key);
 		}
 	};
-	/** @private @arg {YtEndpoint} x */
-	yt_endpoint(x) {
-		if(!x) {debugger; return;}
-		console.log(`[default.Endpoint.${this.#get_renderer_key(x)}]`,x);
-		this.save_keys("[YtEndpoint]",x);
-	}
-	/** @private @arg {YtTargetIdType} x */
-	parse_target_id(x) {
-		this.s_parser.parse_target_id(x);
-	}
 	/** @type {ResponseTypes["type"]|NavigateEventDetail["response"]["page"]|null} */
 	_current_response_type=null;
 	get current_response_type() {
@@ -4692,7 +4676,7 @@ class HandleTypes extends BaseService {
 			case "guide": return this.GuideJsonType(x.data);
 			case "like.like": return this.ResponseWithActions(x.data);
 			case "like.removelike": return this.ResponseWithActions(x.data);
-			case "next": return this.YtApiNext(x.data);
+			case "next": return this.WatchNextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuJson(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCount(x.data);
 			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
@@ -4707,18 +4691,22 @@ class HandleTypes extends BaseService {
 			default: return g(x);
 		}
 	}
+	/** @private @arg {ReelWatchSequence} x */
+	ReelWatchSequence(x) {
+		this.save_keys("[ReelWatchSequence]",x);
+	}
 	/** @private @arg {GetLiveChatReplay} x */
 	GetLiveChatReplay(x) {
-		x;
+		this.save_keys("[GetLiveChatReplay]",x);
 	}
 	log_user_channel_url=false;
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
 	}
-	/** @private @arg {YtApiNext} x */
-	YtApiNext(x) {
-		this.save_keys("[YtApiNext]",x);
+	/** @private @arg {NextResponse} x */
+	WatchNextResponse(x) {
+		this.save_keys("[WatchNextResponse]",x);
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCount(x) {
@@ -4728,54 +4716,9 @@ class HandleTypes extends BaseService {
 	ResponseWithActions(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
 	}
-	/** @private @arg {`RD${string}`} x */
-	parse_guide_entry_id(x) {
-		this.s_parser.parse_guide_entry_id(x);
-	}
 	/** @private @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
-		const {guideEntryRenderer: a,...y}=x;
-		this.GuideEntryRendererData(a);
-		this.g(y);
-	}
-	/** @private @arg {GuideEntryRendererData} x */
-	GuideEntryRendererData(x) {
-		const {
-			accessibility: a,navigationEndpoint: b,icon: c,trackingParams: d,formattedTitle: e,entryData: f,isPrimary: g,
-			serviceEndpoint,targetId,
-			...y
-		}=x;
-		this.Accessibility(a);
-		if(b) this.yt_endpoint(b);
-		this.Icon(c);
-		this.trackingParams(d);
-		this.text_t(e);
-		if(f) this.GuideEntryData(f);
-		if(g) this.primitive_of(g,"boolean");
-		if(serviceEndpoint) {
-			let x=serviceEndpoint;
-			if("signalServiceEndpoint" in x) {
-				this.SignalServiceEndpointData(x.signalServiceEndpoint);
-				return;
-			} else if("reelWatchEndpoint" in x) {
-				this.ReelWatchEndpoint(x);
-				return;
-			}
-			console.log(`[missing.Endpoint.${this.#get_renderer_key(x)}]`,x);
-		};
-		if(targetId) this.parse_target_id(targetId);
-		this.g(y);
-	}
-	/** @private @arg {GuideEntryData} x */
-	GuideEntryData(x) {
-		if(!x) {debugger; return;}
-		const {guideEntryData: a,...y}=x; this.g(y);
-		this.GuideEntryDataContent(a);
-	}
-	/** @private @arg {GuideEntryDataContent} x */
-	GuideEntryDataContent(x) {
-		const {guideEntryId: a,...y}=x; this.g(y);
-		this.parse_guide_entry_id(a);
+		this.save_keys("[GuideEntryRenderer]",x);
 	}
 	/** @private @arg {string} x */
 	clickTrackingParams(x) {
@@ -4819,7 +4762,7 @@ class HandleTypes extends BaseService {
 		}
 	}
 	/** @private @arg {YtWatchPageResponse} x */
-	YtWatchPageResponse(x) {
+	WatchPageResponse(x) {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
 		this.PlayerResponse(b);
@@ -4833,12 +4776,6 @@ class HandleTypes extends BaseService {
 	previousCsn(x) {
 		let csn=base64_dec.decode_str(x.replaceAll(".","="));
 		console.log("[prev_csn]",csn);
-	}
-	/** @private @arg {WatchNextResponse} x */
-	WatchNextResponse(x) {
-		const {currentVideoEndpoint: a,onResponseReceivedEndpoints: d,...y}=x;
-		console.log(`[Response.watch.currentVideoEndpoint.${this.#get_renderer_key(a)}]`,a);
-		console.log("[handle]",get_keys_of(y)[0]);
 	}
 	/** @template T @arg {{webCommandMetadata: T}} x @arg {(x:T)=>void} f */
 	CommandMetadata(x,f) {
@@ -4888,98 +4825,21 @@ class HandleTypes extends BaseService {
 	do_decode_template_protobuf=false;
 	/** @type {this['follow_map'][]} */
 	follow_maps=[];
-	/** @private @arg {OpenPopupActionData} x */
-	OpenPopupActionData(x) {
-		const {popup: a,popupType: b,...y}=x;
-		x.popup;
-		this.g(y);
-	}
 	/** @private @arg {YtChannelPageResponse} x */
-	YtChannelPageResponse(x) {
-		const {page,endpoint,response,url,...y}=x;
-		this.yt_endpoint(endpoint);
-		this.parse_url(url);
-		this.g(y);
+	ChannelPageResponse(x) {
+		this.save_keys("[YtChannelPageResponse]",x);
 	}
 	/** @private @arg {YtPlaylistPageResponse} x */
-	YtPlaylistPageResponse(x) {
-		const {page,endpoint,response,url,...y}=x;
-		if(page!=="playlist") debugger;
-		this.yt_endpoint(endpoint);
-		this.PlaylistResponse(response);
-		this.parse_url(url);
-		this.g(y);
+	PlaylistPageResponse(x) {
+		this.save_keys("[YtPlaylistPageResponse]",x);
 	}
-	/** @private @arg {PlaylistResponse} x */
-	PlaylistResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-	/** @private @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {this.w(x,a => this.DesktopTopbarData(a));}
 	/** @private @arg {YtSettingsPageResponse} x */
-	YtSettingsPageResponse(x) {
-		const {page: {},endpoint: a,response: b,url: c,...y}=x;
-		this.yt_endpoint(a);
-		this.SettingsResponseContent(b);
-		this.parse_url(c);
-		this.g(y);
-	}
-	/** @private @arg {SettingsResponseContent} x */
-	SettingsResponseContent(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-	/** @private @arg {TextRun} x */
-	TextRun(x) {
-		const {text: a,bold: b,navigationEndpoint: c,...y}=x;
-		this.primitive_of(a,"string");
-		if(b) this.primitive_of(b,"boolean");
-		x: if(c) {
-			console.log(`[TextRun:{navigationEndpoint:${this.#get_renderer_key(c)}}]`,c);
-			if("urlEndpoint" in c) {
-				let c1=c.urlEndpoint;
-				if(c1.nofollow!==true) debugger;
-				if(c1.target!=="TARGET_NEW_WINDOW") debugger;
-				if(!c1.url.startsWith("https://www.youtube.com/redirect?")) debugger;
-				break x;
-			}
-			if("watchEndpoint" in c) {
-				console.log(`[TextRun:{navigationEndpoint:{watchEndpoint:${this.#get_renderer_key(c.watchEndpoint)}}}]`,c.watchEndpoint);
-				return;
-			}
-			if(!("browseEndpoint" in c)) {
-				debugger;
-				break x;
-			}
-			let c1=c.browseEndpoint;
-			if(eq_keys(get_keys_of(c1),["browseId"])) {
-				if(!c1.browseId.startsWith("SP")) debugger;
-				break x;
-			}
-			if(!eq_keys(get_keys_of(c1),["browseId","canonicalBaseUrl"])) debugger;
-			if(!c1.browseId.startsWith("UC")) debugger;
-			if(!c1.canonicalBaseUrl.startsWith("/@")) debugger;
-		}
-		this.g(y);
-	}
-	/** @private @arg {TextT} x */
-	text_t(x) {
-		if(!x) {debugger; return;}
-		const {runs: a,accessibility: b,simpleText: c,...y}=x;
-		if(a) this.z(a,a => this.TextRun(a));
-		if(b) this.Accessibility(b);
-		if(c) this.primitive_of(c,"string");
-		this.g(y);
+	SettingsPageResponse(x) {
+		this.save_keys("[YtSettingsPageResponse]",x);
 	}
 	/** @private @arg {YtShortsResponse} x */
-	YtShortsResponse(x) {
-		const {page: a,endpoint: b,response: c,playerResponse: d,reelWatchSequenceResponse: e,url: f,...y}=x;
-		if(a!=="shorts") debugger;
-		this.ReelWatchEndpoint(b);
-		this.ReelResponse(c);
-		this.PlayerResponse(d);
-		this.ReelWatchSequenceResponse(e);
-		this.parse_url(f);
-		this.g(y);
+	ShortsPageResponse(x) {
+		this.save_keys("[YtShortsResponse]",x);
 	}
 	/** @type {string|null} */
 	my_main_channel_id=null;
@@ -4991,50 +4851,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResult} x */
 	GetAccountSwitcherEndpointResult(x) {
-		if(x.code!=="SUCCESS") {
-			console.log("request failed",x);
-			return;
-		}
-		const {code: {},data: a,...y}=x;
-		this.GetAccountSwitcherEndpointResponse(a);
-		this.g(y);
-	}
-	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
-	GetAccountSwitcherEndpointResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-	/** @private @arg {ButtonRenderer} x */
-	ButtonRenderer(x) {
-		this.w(x,this.ButtonData);
-	}
-	/** @template T @arg {PageAction<T>} x @arg {(x:T)=>void} f */
-	PageAction(x,f) {
-		const {page: a,...y}=x; this.g(y);
-		f(a);
-	}
-	/** @private @arg {Accessibility} x */
-	Accessibility(x) {
-		if(!x) {
-			debugger;
-			return;
-		}
-		const {accessibilityData: a,...y}=x;
-		this.AccessibilityData(a);
-		this.g(y);
-	}
-	/** @private @arg {AccessibilityData} x */
-	AccessibilityData(x) {
-		if(!x) {
-			debugger;
-			return;
-		}
-		const {label: a,...y}=x;
-		if(a) this.primitive_of(a,"string");
-		this.g(y);
+		this.save_keys("[GetAccountSwitcherEndpointResult]",x);
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		this.save_keys("[AccountsListResponse]",x);
 	}
 	/** @private @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
@@ -5042,64 +4863,6 @@ class HandleTypes extends BaseService {
 		this.parse_url(a);
 		b!==void 0&&this.primitive_of(b,"number");
 		c!==void 0&&this.primitive_of(c,"number");
-		this.g(y);
-	}
-	/** @private @arg {ButtonData} x */
-	ButtonData(x) {
-		this.save_keys("[ButtonData]",x);
-		const {
-			accessibility,command,icon,isDisabled,
-			serviceEndpoint,navigationEndpoint,size,
-			style,targetId,text,trackingParams,
-			...y
-		}=x;
-		switch(style) {
-			case "STYLE_DEFAULT": break;
-			case "STYLE_SUGGESTIVE": break;
-			case "STYLE_PRIMARY": break;
-			case "STYLE_TEXT": break;
-			case "STYLE_UNKNOWN": break;
-			case void 0: break;
-			default: debugger;
-		}
-		if(targetId) this.parse_target_id(targetId);
-		switch(size) {
-			case "SIZE_DEFAULT": break;
-			case "SIZE_SMALL": break;
-			case void 0: break;
-			default: debugger;
-		}
-		if(accessibility) this.AccessibilityData(accessibility);
-		if(command) {
-			console.log(`[Button.command.${this.#get_renderer_key(command)}]`,command);
-		}
-		if(icon) {
-			switch(icon.iconType) {
-				case "DELETE": break;
-				case "NOTIFICATIONS_ACTIVE": break;
-				case "NOTIFICATIONS_NONE": break;
-				case "NOTIFICATIONS_OFF": break;
-				case "SETTINGS": break;
-				default: debugger; break;
-			}
-			this.Icon(icon);
-		}
-		if(isDisabled) this.primitive_of(isDisabled,"boolean");
-		if(serviceEndpoint) this.yt_endpoint(serviceEndpoint);
-		if(trackingParams) this.trackingParams(trackingParams);
-		if(text) this.text_t(text);
-		if(navigationEndpoint) {
-			console.log(`[Button.navigationEndpoint.${this.#get_renderer_key(navigationEndpoint)}]`,navigationEndpoint);
-		}
-		const {accessibilityData: b,...z}=y;
-		if(b) this.Accessibility(b);
-		this.g(z);
-	}
-	/** @private @arg {AnyIcon} x */
-	Icon(x) {
-		if(!x) return;
-		const {iconType: a,...y}=x;
-		this.save_string(`icon_type`,a);
 		this.g(y);
 	}
 	/** @private @arg {ResolveUrlCommandMetadata} x */
@@ -5144,56 +4907,6 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @private @arg {ReelWatchSequence} x */
-	ReelWatchSequence(x) {
-		this.save_keys("[ReelWatchSequence]",x);
-		const {responseContext: a,entries: b,trackingParams,continuationEndpoint,...y}=x;
-		this.ReelWatchEntries(b);
-		this.trackingParams(trackingParams);
-		this.ContinuationEndpoint(continuationEndpoint);
-		this.g(y);
-	}
-	/** @private @arg {ContinuationEndpoint} x */
-	ContinuationEndpoint(x) {
-		const {commandMetadata: a,continuationCommand: b,...y}=this.handle_clickTrackingParams(x); this.g(y);
-		if(a) this.CommandMetadataTemplate(a);
-		this.ContinuationCommand(b);
-	}
-	/** @private @arg {ContinuationCommand} x */
-	ContinuationCommand(x) {
-		const {request: a,token: b,...y}=x; this.g(y);
-		this.save_enum("CONTINUATION_REQUEST_TYPE",a);
-		if(this.TODO_true) return;
-		this.decode_continuation_token(b);
-	}
-	/** @private @arg {EncodedURIComponent} x */
-	decode_continuation_token(x) {
-		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
-		console.log("[continuation_token]",dec);
-	}
-	/** @private @arg {CommandTemplate<ReelWatchEndpoint>[]} x */
-	ReelWatchEntries(x) {
-		this.z(x,a => this.CommandTemplate(a,a => this.ReelWatchEndpoint(a)));
-	}
-	/** @private @arg {ReelWatchEndpoint} x */
-	ReelWatchEndpoint(x) {
-		if("reelWatchEndpoint" in x) {
-			const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
-			this.ReelWatchEndpointData(reelWatchEndpoint);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {ReelWatchEndpointData} x */
-	ReelWatchEndpointData(x) {
-		const {videoId: a,playerParams: b,overlay: c,params: d,sequenceProvider: f,inputType: g,...y}=x; this.g(y);
-		let h_=this.x.get("string_parser");
-		if(a) h_.parse_video_id(a);
-		let dec_1=decode_url_b64_proto_obj(b);
-		if(dec_1) console.log("[reel_watch_endpoint_player_params]",...dec_1);
-		let dec_2=decode_url_b64_proto_obj(decodeURIComponent(d));
-		if(dec_2) console.log("[reel_watch_endpoint_params]",...dec_2);
-	}
 	/** @private @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
 		this.save_keys("[JsonFeedbackData]",x);
@@ -5221,40 +4934,6 @@ class HandleTypes extends BaseService {
 	];
 	valid_fps_arr=[13,25,30,50,60];
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
-	/** @template T @arg {EndpointTemplate<T>} x @arg {(x:T)=>void} f */
-	EndpointTemplate(x,f) {
-		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
-		this.clickTrackingParams(a);
-		this.CommandMetadataTemplate(b);
-		/** @type {any} */
-		let c=y;
-		/** @type {T} */
-		let d=as_cast(c);
-		f(d);
-	}
-	/** @template {{}} T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
-	ResultsArrTemplate(x,f) {
-		const {trackingParams: a,results: b,...y}=x; this.g(y);
-		this.trackingParams(a);
-		this.z(b,f);
-	}
-	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
-	PlaylistTemplate(x,f) {
-		if(!x) {debugger; return;}
-		f(x.playlist);
-	}
-	/** @private @arg {DesktopTopbarData} x */
-	DesktopTopbarData(x) {
-		this.ButtonRenderer(x.a11ySkipNavigationButton);
-	}
-	/** @private @arg {SignalServiceEndpointData} x */
-	SignalServiceEndpointData(x) {
-		this.z(x.actions,a => this.ServiceEndpointAction(a));
-	}
-	/** @private @arg {ServiceEndpointAction} x */
-	ServiceEndpointAction(x) {
-		this.clickTrackingParams(x.clickTrackingParams);
-	}
 	/** @type {Map<"delete"|"replace",boolean>} */
 	log_entity_mutations=new Map([
 		["delete",false],
@@ -5266,7 +4945,7 @@ class HandleTypes extends BaseService {
 	log_watch_endpoint_params=false;
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
-		this.z(x.actions,a => this.OpenPopupActionData(a));
+		this.save_keys("[AccountMenuJson]",x);
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
@@ -5276,7 +4955,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		this.save_keys("[YtSuccessResponse]",x);
 	}
 	/** @private @arg {AttGet} x */
 	AttGet(x) {
@@ -5312,7 +4991,6 @@ class HandleTypes extends BaseService {
 	GuideSectionData(x) {
 		this.z(x.items,a => this.GuideSectionItemType(a));
 		this.trackingParams(x.trackingParams);
-		if(x.formattedTitle) this.text_t(x.formattedTitle);
 	}
 	/** @private @arg {GuideSectionItemType} x */
 	GuideSectionItemType(x) {
@@ -5328,14 +5006,6 @@ class HandleTypes extends BaseService {
 	GuideCollapsibleSectionEntry(x) {
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
 		this.GuideEntryRenderer(headerEntry);
-	}
-	/** @private @arg {ReelWatchSequenceResponse} x */
-	ReelWatchSequenceResponse(x) {
-		this.ContinuationEndpoint(x.continuationEndpoint);
-	}
-	/** @private @arg {ReelResponse} x */
-	ReelResponse(x) {
-		this.DesktopTopbarRenderer(x.desktopTopbar);
 	}
 	/** @arg {{}} x2 */
 	#is_Thumbnail(x2) {

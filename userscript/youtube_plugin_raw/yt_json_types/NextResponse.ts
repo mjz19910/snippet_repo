@@ -1,4 +1,4 @@
-interface WatchNextResponse {
+interface NextResponse {
 	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];
 	responseContext: ResponseContext;
 	trackingParams: string;

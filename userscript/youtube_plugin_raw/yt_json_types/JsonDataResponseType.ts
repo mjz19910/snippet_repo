@@ -1,1 +1,1 @@
-type JsonDataResponseType=ReelItemWatch|ChannelResponse|WatchNextResponse|BrowseResponseContent|SettingsResponseContent|PageResponseContent;
+type JsonDataResponseType=ReelItemWatch|ChannelResponse|NextResponse|BrowseResponseContent|SettingsResponseContent|PageResponseContent;
