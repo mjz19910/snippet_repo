@@ -3279,14 +3279,15 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @template {{}} T @arg {string} k @arg {T} x */
+	/** @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
+		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
 		if(typeof x!=="object") {
-			this.save_string(`${k}.type`,typeof x);
+			this.save_string(`${ki}.type`,typeof x);
 			return;
 		}
 		if(x instanceof Array) {
-			this.save_string(`${k}.type`,"array");
+			this.save_string(`${ki}.type`,"array");
 			return;
 		}
 		let keys=get_keys_of(x);
@@ -4782,7 +4783,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
-		this.save_keys("PlayerResponse",x);
+		this.save_keys("[PlayerResponse]",x);
 		let t=this;
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
@@ -4869,7 +4870,7 @@ class HandleTypes extends BaseService {
 		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
 		if(a!=="browse") debugger;
 		this.BrowseEndpoint(b,a => this.BrowseWebCommandMetadata(a));
-		this.save_keys("DataResponsePageType",x);
+		this.save_keys("[DataResponsePageType]",x);
 		this.s_parser.parse_url(d);
 		this.BrowseResponseContent(c);
 		if(e) this.previousCsn(e);
@@ -4969,7 +4970,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
-		this.save_keys("BrowseResponseContent",x);
+		this.save_keys("[BrowseResponseContent]",x);
 		const {
 			trackingParams: a,
 			responseContext: res_ctx,contents: cont,
@@ -5093,7 +5094,7 @@ class HandleTypes extends BaseService {
 		const {params: a,browseId: b,canonicalBaseUrl: c,...y}=x;
 		if(a) this.parse_endpoint_params(decodeURIComponent(a));
 		if(b) this.parse_browse_id(b);
-		this.save_keys("BrowseEndpointData",x);
+		this.save_keys("[BrowseEndpointData]",x);
 		this.g(y);
 	}
 	/** @arg {UrlEndpointData} x */
@@ -5101,7 +5102,7 @@ class HandleTypes extends BaseService {
 		const {url: a,target: b,nofollow: c,...y}=x;
 		if(b&&b!=="TARGET_NEW_WINDOW") debugger;
 		this.parse_url(a);
-		this.save_keys("UrlEndpointData",x);
+		this.save_keys("[UrlEndpointData]",x);
 		if(c) this.primitive_of(c,"boolean");
 		this.g(y);
 	}
@@ -5192,7 +5193,7 @@ class HandleTypes extends BaseService {
 	/** @arg {YtEndpoint} x */
 	yt_endpoint(x) {
 		if(!x) {debugger; return;}
-		this.save_keys("YtEndpoint",x);
+		this.save_keys("[YtEndpoint]",x);
 		const {
 			clickTrackingParams: a,
 			...y
@@ -5550,7 +5551,7 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(responseContext);
 		this.z(actions,a => this.OpenPopupAction(a));
 		this.trackingParams(trackingParams);
-		this.save_keys("GetNotificationMenuJson",x);
+		this.save_keys("[GetNotificationMenuJson]",x);
 		this.g(y);
 	}
 	/** @private @arg {YtApiNext} x */
@@ -5582,14 +5583,14 @@ class HandleTypes extends BaseService {
 			this.ResponseContext(responseContext);
 			this.trackingParams(trackingParams);
 		}
-		this.save_keys("api_next",x);
+		this.save_keys("[api_next]",x);
 		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCount(x) {
 		const {responseContext: a,...y}=x;
 		this.ResponseContext(a);
-		this.save_keys("GetUnseenCount",x);
+		this.save_keys("[GetUnseenCount]",x);
 		if("actions" in x) {
 			this.ResponseWithActions(x);
 		} else if("unseenCount" in y) {
@@ -5779,7 +5780,7 @@ class HandleTypes extends BaseService {
 		}
 		const {twoColumnBrowseResultsRenderer,...y}=x;
 		this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
-		this.save_keys("TwoColumnBrowseResultsRenderer",x);
+		this.save_keys("[TwoColumnBrowseResultsRenderer]",x);
 		this.g(y);
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
@@ -5843,7 +5844,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ResponseContext} x */
 	ResponseContext(x) {
-		this.save_keys("ResponseContext",x);
+		this.save_keys("[ResponseContext]",x);
 		const {
 			mainAppWebResponseContext: a,serviceTrackingParams: b,webResponseContextExtensionData: c,
 			maxAgeSeconds: d,stateTags: e,consistencyTokenJar: f,
@@ -6695,7 +6696,7 @@ class HandleTypes extends BaseService {
 		this.ResponseContext(a);
 		this.text_t(b);
 		this.z(c,v => this.UpdateChannelSwitcherPageAction(v));
-		this.save_keys("AccountsListResponse",x);
+		this.save_keys("[AccountsListResponse]",x);
 		this.g(y);
 	}
 	/** @arg {UpdateChannelSwitcherPageAction} x */
@@ -6748,7 +6749,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
-		this.save_keys("ButtonData",x);
+		this.save_keys("[ButtonData]",x);
 		const {
 			accessibility: a,command: b,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
 			navigationEndpoint: j,
@@ -6819,7 +6820,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CommentsHeaderData} x */
 	CommentsHeaderData(x) {
-		this.save_keys("CommentsHeaderRenderer",x);
+		this.save_keys("[CommentsHeaderRenderer]",x);
 		const {
 			countText: a,createRenderer: b,sortMenu: c,trackingParams: d,titleText: e,commentsCount: f,
 			showSeparator: g,customEmojis: h,unicodeEmojisUrl: i,loggingDirectives: j,
@@ -6852,7 +6853,7 @@ class HandleTypes extends BaseService {
 	ResolveUrlCommandMetadata(x) {
 		const {isVanityUrl: a,parentTrackingParams: b,...y}=x;
 		if(a) this.primitive_of(a,"boolean");
-		this.save_keys("resolveUrlCommandMetadata",x);
+		this.save_keys("[resolveUrlCommandMetadata]",x);
 		if(b) this.trackingParams(b);
 		this.g(y);
 	}
@@ -6870,7 +6871,7 @@ class HandleTypes extends BaseService {
 		this.save_string("avatarSizeEnum",f);
 		this.EmojiPickerRenderer(h);
 		this.primitive_of(i,"string");
-		this.save_keys("CommentSimpleboxData",x);
+		this.save_keys("[CommentSimpleboxData]",x);
 		this.g(y);
 	}
 	/** @arg {ReelItemWatch} x */
@@ -6894,7 +6895,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
-		this.save_keys("SecondaryContents",x);
+		this.save_keys("[SecondaryContents]",x);
 		if("profileColumnRenderer" in x) {
 			this.w(x,a => this.ProfileColumnData(a));
 		} else if("browseFeedActionsRenderer" in x) {
@@ -6959,7 +6960,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @template U @arg {SectionListData<T,U>} x @arg {(x:T,v:U)=>void} f */
 	SectionListData(x,f) {
-		this.save_keys("SectionListData",x);
+		this.save_keys("[SectionListData]",x);
 		const {contents: a,trackingParams: b,...y}=x;
 		this.z(a,a => this.SectionListItem(a,f));
 		this.trackingParams(b);
@@ -6975,7 +6976,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template T @template U @arg {ItemSectionData<T,U>} x @arg {(x:T,v:U)=>void} f */
 	ItemSectionData(x,f) {
-		this.save_keys("SectionListData",x);
+		this.save_keys("[SectionListData]",x);
 		const {contents: a,trackingParams: b,sectionIdentifier,targetId,...y}=x;
 		this.z(a,a => this.ItemSectionItem(a));
 		this.trackingParams(b);
@@ -7110,12 +7111,12 @@ class HandleTypes extends BaseService {
 		} else if("thumbnailOverlayNowPlayingRenderer" in x) {
 			return this.ThumbnailOverlayNowPlayingRenderer(x);
 		} else {
-			this.save_keys("ThumbnailOverlayItem",x);
+			this.save_keys("[ThumbnailOverlayItem]",x);
 		}
 	}
 	/** @arg {ThumbnailOverlayNowPlayingData} x */
 	ThumbnailOverlayNowPlayingData(x) {
-		this.save_keys("ThumbnailOverlayNowPlayingData",x);
+		this.save_keys("[ThumbnailOverlayNowPlayingData]",x);
 	}
 	/** @arg {ThumbnailOverlayNowPlayingRenderer} x */
 	ThumbnailOverlayNowPlayingRenderer(x) {
@@ -7123,7 +7124,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ThumbnailOverlayBottomPanelData} x */
 	ThumbnailOverlayBottomPanelData(x) {
-		this.save_keys("ThumbnailOverlayBottomPanelData",x);
+		this.Icon(x.icon);
+		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
 	}
 	/** @arg {ThumbnailOverlayBottomPanelRenderer} x */
 	ThumbnailOverlayBottomPanelRenderer(x) {
@@ -7131,7 +7133,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
-		this.save_keys("ThumbnailOverlayHoverTextData",x);
+		this.Icon(x.icon);
+		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
 	}
 	/** @arg {ThumbnailOverlayHoverTextRenderer} x */
 	ThumbnailOverlayHoverTextRenderer(x) {
@@ -7269,11 +7272,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
-		this.save_keys("MenuServiceItemData",x);
+		this.save_keys("[MenuServiceItemData]",x);
 		const {text: a,icon: b,serviceEndpoint: x3,trackingParams: x4,...y}=x; this.g(y);
 		this.text_t(a);
 		this.Icon(b);
-		this.save_keys("MenuServiceItem.endpoint",x.serviceEndpoint);
+		this.save_keys("[MenuServiceItem.endpoint]",x.serviceEndpoint);
 	}
 	/** @arg {SearchPyvData} x */
 	SearchPyvData(x) {
@@ -7293,7 +7296,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
-		this.save_keys("AccountSetSetting",x);
+		this.save_keys("[AccountSetSetting]",x);
 		const {responseContext: a,settingItemId: b,...y}=x;
 		switch(b) {
 			case "407": break;
@@ -7313,7 +7316,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ReelWatchSequence} x */
 	ReelWatchSequence(x) {
-		this.save_keys("ReelWatchSequence",x);
+		this.save_keys("[ReelWatchSequence]",x);
 		const {responseContext: a,entries: b,trackingParams,continuationEndpoint,...y}=x;
 		this.ReelWatchEntries(b);
 		this.trackingParams(trackingParams);
@@ -7371,13 +7374,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
-		this.save_keys("JsonFeedbackData",x);
+		this.save_keys("[JsonFeedbackData]",x);
 		const {responseContext: a,...y}=x;
 		this.g(y);
 	}
 	/** @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
-		this.save_keys("JsonGetTranscriptData",x);
+		this.save_keys("[JsonGetTranscriptData]",x);
 		const {responseContext: a,actions: b,trackingParams: c,...y}=x;
 		this.ResponseContext(a);
 		this.z(b,a => this.UpdateEngagementPanelAction(a));
@@ -7562,7 +7565,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ClipCreationData} x */
 	ClipCreationData(x) {
-		this.w(x,(a,k) => this.save_keys(`ClipCreationData.${k}`,a));
+		this.w(x,(a,k) => this.save_keys(`[ClipCreationData.${k}]`,a));
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
@@ -9248,7 +9251,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {AdActionInterstitialData} x */
 	AdActionInterstitialData(x) {
-		this.save_keys("AdActionInterstitial",x);
+		this.save_keys("[AdActionInterstitial]",x);
 	}
 	/** @arg {ClientForecastingAdRenderer} x */
 	ClientForecastingAdRenderer(x) {

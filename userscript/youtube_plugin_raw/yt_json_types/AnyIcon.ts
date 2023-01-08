@@ -4,4 +4,5 @@ type AnyIcon=NonNullable<[
 	InfoRowData['expandIcon'],
 	TopicLinkData['callToActionIcon'],
 	MenuServiceItemData['icon'],
+	ThumbnailOverlayHoverTextData['icon'],
 ][number]>;
