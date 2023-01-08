@@ -7254,7 +7254,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
-		this.save_keys("MenuServiceItem",x.serviceEndpoint);
+		const {text: a,serviceEndpoint: b,...y}=x; this.g(y);
+		this.text_t(x.text);
+		this.save_keys("MenuServiceItemData",x);
+		this.save_keys("MenuServiceItem.endpoint",x.serviceEndpoint);
 	}
 	/** @arg {SearchPyvData} x */
 	SearchPyvData(x) {
