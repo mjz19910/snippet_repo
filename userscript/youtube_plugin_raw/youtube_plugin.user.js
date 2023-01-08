@@ -5778,7 +5778,7 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {typeof x} x */
 		function p1(x) {
 			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
-			console.log(`[Video.Endpoint.${this.#get_renderer_key(a)}]`,a);
+			console.log(`[Response.watch.currentVideoEndpoint.${this.#get_renderer_key(a)}]`,a);
 			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
 			if(c) this.FrameworkUpdates(c);
 			this.z(d,this.ResponseReceivedEndpointItem);
@@ -5975,7 +5975,7 @@ class HandleTypes extends BaseService {
 		let id=a.split("|");
 		console.log(id);
 		this.decode_template_protobuf(b);
-		this.z(c,a => {
+		if(c) this.z(c,a => {
 			let id=a.split("|");
 			console.log(id);
 		});
@@ -6461,7 +6461,7 @@ class HandleTypes extends BaseService {
 			case "CONTINUATION_TRIGGER_ON_ITEM_SHOWN": break;
 			default: debugger;
 		}
-		console.log(`[Endpoint.${this.#get_renderer_key(b)}]`,b);
+		console.log(`[ContinuationItem.continuationEndpoint.${this.#get_renderer_key(b)}]`,b);
 		if(c) this.ButtonRenderer(c);
 		if(d) this.GhostGridRenderer(d);
 		this.g(y);
@@ -6674,7 +6674,7 @@ class HandleTypes extends BaseService {
 		}
 		if(accessibility) this.AccessibilityData(accessibility);
 		if(command) {
-			console.log(`[Button.command.Endpoint.${this.#get_renderer_key(command)}]`,command);
+			console.log(`[Button.command.${this.#get_renderer_key(command)}]`,command);
 		}
 		if(icon) {
 			switch(icon.iconType) {
