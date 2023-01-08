@@ -6082,10 +6082,42 @@ class HandleTypes extends BaseService {
 		let res_obj={
 			map: new Map,
 			set_key(a) {
+				let count=f_counts.get(a[1])??1;
+				if(count>1) debugger;
 				switch(a[0]) {
-					case "f_n": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
-					case "f_s": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
-					case "f_o": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
+					case "f_n": {
+						let [l,x,y]=a;
+						if(count>1) {
+							res_obj.map.set(x,"f_rep_n");
+							this[`f_rep_n${x}`]??=[];
+							this[`f_rep_n${x}`].push(y);
+							break;
+						}
+						res_obj.map.set(x,l);
+						this[`${l}${x}`]=y;
+					} break;
+					case "f_s": {
+						let [l,x,y]=a;
+						if(count>1) {
+							res_obj.map.set(x,"f_rep_s");
+							this[`f_rep_s${x}`]??=[];
+							this[`f_rep_s${x}`].push(y);
+							break;
+						}
+						res_obj.map.set(x,l);
+						this[`${l}${x}`]=y;
+					} break;
+					case "f_o": {
+						let [l,x,y]=a;
+						if(count>1) {
+							res_obj.map.set(x,"f_rep_o");
+							this[`f_rep_o${x}`]??=[];
+							this[`f_rep_o${x}`].push(y);
+							break;
+						}
+						res_obj.map.set(x,l);
+						this[`${l}${x}`]=y;
+					} break;
 				}
 			}
 		};
@@ -6103,7 +6135,6 @@ class HandleTypes extends BaseService {
 			f_counts.set(it[1],n+1);
 		}
 		for(let it of x) {
-			if(f_counts.get(it[1])??0>1) debugger;
 			switch(it[0]) {
 				case "data32": res_obj.set_key(["f_n",it[1],it[2]]); break;
 				case "data_fixed32": res_obj.set_key(["f_n",it[1],it[2]]); break;
