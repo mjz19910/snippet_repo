@@ -1483,7 +1483,6 @@ class FilterHandlers {
 		console.log("[log_get_res_data]",target,x);
 		debugger;
 		return {
-			_tag: "_Generic",
 			type: "_Generic",
 			data: x,
 		};
