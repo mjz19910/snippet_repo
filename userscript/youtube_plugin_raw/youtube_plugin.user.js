@@ -4365,6 +4365,28 @@ function sizeof_js(obj) {
 	return size;
 }
 export_(exports => exports.sizeof_js=sizeof_js);
+class Generate {
+	/** @type {Map<string,string>[]} */
+	out_arr=[];
+	/** @type {string[]} */
+	str_arr=[];
+	/** @arg {HandleTypes} parent */
+	constructor(parent) {
+		this.parent=parent;
+	}
+	get x() {
+		return this.parent;
+	}
+	/** @public @arg {unknown} x @arg {string|null} r */
+	generate_typedef_and_depth(x,r) {
+		let gen=this.x.generate_typedef(x,r);
+		if(!gen) return;
+		this.str_arr.push(gen);
+		let gd=this.x.generate_depth(gen);
+		if(!gd) return;
+		this.out_arr.push(gd);
+	}
+}
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @public @arg {unknown} x @arg {string|null} r */
@@ -5112,68 +5134,11 @@ class HandleTypes extends BaseService {
 		});
 		return new Map(typedef_members);
 	}
-	/** @public @arg {{}} x @arg {string|null} r_name */
-	use_generated_members(x,r_name=null) {
+	/** @public @arg {{}} x @arg {string|null} r */
+	use_generated_members(x,r=null) {
 		let td=new Generate(this);
-		td.out_arr=[];
-		td.str_arr[td.gen_s]=this.generate_typedef(x,r_name)??"";
-		td.generate_depth(td.cur_str);
-		td.trimmed_item("carouselLockupRenderer");
-		td.generate_depth(td.cur_str);
-		td.trimmed_item("infoRows");
-		td.generate_depth(td.cur_str);
-		td.trimmed_item("infoRowRenderer");
-		td.generate_depth(td.cur_str);
+		td.generate_typedef_and_depth(x,r);
 		return td;
-	}
-}class Generate {
-	/** @type {(Map<string,string>|null)[]} */
-	out_arr=[];
-	/** @type {(string|undefined)[]} */
-	str_arr=[];
-	/** @arg {HandleTypes} parent */
-	constructor(parent) {
-		this.parent=parent;
-		/** @type {Map<string,string>|null} */
-		this.out=null;
-		/** @type {string|null} */
-		this.out_2=null;
-		this.d_idx=0;
-		this.s_idx=0;
-	}
-	get x() {
-		return this.parent;
-	}
-	get gen_d() {
-		let ret=this.d_idx;
-		this.d_idx++;
-		return ret;
-	}
-	get gen_s() {
-		let ret=this.s_idx++;
-		this.s_idx++;
-		return ret;
-	}
-	/** @public @arg {string} [x] */
-	generate_depth(x) {
-		if(!x) return;
-		this.out_arr[this.gen_d]=this.parent.generate_depth(x);
-	}
-	get cur_str() {
-		return this.str_arr[this.s_idx];
-	}
-	get cur_obj() {
-		return this.out_arr[this.d_idx];
-	}
-	/** @public @arg {string} x */
-	trimmed_item(x) {
-		this.str_arr[this.gen_s]=this.cur_obj?.get(x);
-		this.str_arr[this.gen_s]=this.cur_str?.replaceAll(/^\s|;$/g,"");
-	}
-	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_typedef(x,r) {
-		let gen=this.x.generate_typedef(x,r);
-		if(!gen) return;
 	}
 }
 //#endregion
