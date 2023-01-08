@@ -2752,9 +2752,12 @@ function main() {
 		window.fetch=fetch_inject;
 		fetch_inject.__proxy_target__=original_fetch;
 		window.Request=new Proxy(window.Request,{
+			/** @arg {[any]} args */
 			construct(t,args,nf) {
 				console.log(t,args,nf);
-				return {};
+				let req=new t(...args);
+				define_property_as_value(req,"original_args",args);
+				return req;
 			}
 		})
 		let navigator_sendBeacon=navigator.sendBeacon;
