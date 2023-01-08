@@ -7907,7 +7907,7 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
 		const {
-			owner:a,description:b,subscribeButton,metadataRowContainer,
+			owner: a,description: b,subscribeButton,metadataRowContainer,
 			showMoreText,showLessText,trackingParams,
 			defaultExpanded,descriptionCollapsedLines,
 			showMoreCommand: x1,showLessCommand: x2,
@@ -7927,8 +7927,10 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MetadataRowContainerData} x */
 	MetadataRowContainerData(x) {
-		console.log(this.generate_typedef(x,"MetadataRowContainerData"));
-		debugger;
+		const {rows: a,collapsedItemCount: b,trackingParams: c,...y}=x; this.g(y);
+		if(a) console.log(this.generate_typedef(x,"MetadataRowContainerData"));
+		this.primitive_of(b,"number");
+		this.trackingParams(c);
 	}
 	/** @arg {MetadataRowContainerRenderer} x */
 	MetadataRowContainerRenderer(x) {
@@ -8655,7 +8657,7 @@ class HandleTypes extends BaseService {
 			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(x.${k},"number");`);}
 			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
-			if(x2===null){ret_arr.push(`if(x.${k}!==null) debugger;`);continue;}
+			if(x2===null) {ret_arr.push(`if(x.${k}!==null) debugger;`); continue;}
 			if(this.is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
 			if(x2 instanceof Array) {this.generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}

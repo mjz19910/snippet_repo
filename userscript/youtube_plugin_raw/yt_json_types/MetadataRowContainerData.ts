@@ -1,5 +1,5 @@
 type MetadataRowContainerData={
-	rows: {}[];
+	rows?: {}[];
 	collapsedItemCount: number;
 	trackingParams: string;
 };
