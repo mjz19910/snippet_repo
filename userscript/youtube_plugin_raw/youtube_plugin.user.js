@@ -5478,12 +5478,6 @@ class HandleTypes extends BaseService {
 	WebCommandMetadata(x) {
 		const {rootVe: a}=x;
 		this.on_root_visual_element(a);
-		// if(e) this.primitive_of(e,"boolean");
-		// if(f) this.primitive_of(f,"boolean");
-		// if(a!==void 0) this.parse_url(a);
-		// if(d!==void 0) this.parse_url(d);
-		// if(b!==void 0) this.parse_page_type(b);
-		// this.g(y);
 	}
 	/** @private @arg {keyof VEMap} x */
 	on_root_visual_element(x) {
