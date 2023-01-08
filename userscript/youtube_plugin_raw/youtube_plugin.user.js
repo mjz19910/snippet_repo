@@ -8248,6 +8248,11 @@ class HandleTypes extends BaseService {
 			default: debugger;
 		}
 	}
+	/** @type {Map<"delete"|"replace",boolean>} */
+	log_entity_mutations=new Map([
+		["delete",false],
+		["replace",false],
+	]);
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		this.save_enum("ENTITY_MUTATION_TYPE",x.type);
@@ -8256,13 +8261,14 @@ class HandleTypes extends BaseService {
 				const {type: {},entityKey: a,options: b,...y}=x; this.g(y);
 				this.EntityMutationOptions(b);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
+				let log_flag=this.log_entity_mutations.get("delete");
 				if(!dec) {
 					console.log("[entity_replace_failed]",a);
 					debugger;
 					break;
 				}
-				if(dec[0][0]!=="child") {debugger;break;}
-				if(dec[1][0]!=="data32") {debugger;break;}
+				if(dec[0][0]!=="child") {debugger; break;}
+				if(dec[1][0]!=="data32") {debugger; break;}
 				let entityTypeFieldNumber=dec[1][2];
 				if(!is_keyof_RUa(entityTypeFieldNumber)) break;
 				const target={
@@ -8270,11 +8276,12 @@ class HandleTypes extends BaseService {
 					entityType: RUa[entityTypeFieldNumber],
 					entityId: decoder.decode(dec[0][2]),
 				};
-				console.log("[entity_del]",target);
+				if(log_flag) console.log("[entity_del]",target);
 			} break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
 				const {type: {},entityKey: a,payload: b,...y}=x; this.g(y);
 				this.EntityMutationPayload(b);
+				let log_flag=this.log_entity_mutations.get("replace");
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
 				if(!dec) {
 					console.log("[entity_replace_failed]",a);
@@ -8285,12 +8292,7 @@ class HandleTypes extends BaseService {
 					debugger;
 					break;
 				}
-				let entityTypeFieldNumber=dec[1][2];
-				if(!is_keyof_RUa(entityTypeFieldNumber)) break;
-				if(dec[0][0]!=="child") {
-					debugger;
-					break;
-				}
+				if(dec[0][0]!=="child") {debugger; break;}
 				let sub_reader=new MyReader(dec[0][2]);
 				let dec_3=sub_reader.try_read_any();
 				if(!dec_3) {
@@ -8302,8 +8304,18 @@ class HandleTypes extends BaseService {
 					debugger;
 					break;
 				}
+				let entityTypeFieldNumber=dec[1][2];
+				if(!is_keyof_RUa(entityTypeFieldNumber)) {
+					const target={
+						entityTypeFieldNumber,
+						entityType: null,
+						entityVideoId: decoder.decode(dec_3[0][2]),
+					};
+					if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+					break;
+				}
 				const target={
-					entityTypeFieldNumber: dec[1][2],
+					entityTypeFieldNumber,
 					entityType: RUa[entityTypeFieldNumber],
 					entityVideoId: decoder.decode(dec_3[0][2]),
 				};
@@ -8431,7 +8443,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {VssLoggingContextData} x */
 	VssLoggingContextData(x) {
-		console.log(x.serializedContextData);
+		const {serializedContextData: a,...y}=x; this.g(y);
+		let dec_=decode_url_b64_proto_obj(a);
+		if(!dec_) {console.log("[vss_context_failed]",a); debugger; return;}
+		let [dec]=dec_;
+		if(dec[0]!=="child") {console.log("[vss_context_no_msg]",dec); debugger; return;}
+		let dec2=decoder.decode(dec[2]);
+		this.s_parser.parse_playlist_id(as_cast(dec2));
 	}
 	/** @private @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
