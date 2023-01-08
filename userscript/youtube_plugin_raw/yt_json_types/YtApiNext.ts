@@ -1,1 +1,1 @@
-type YtApiNext=SimpleNextResponse|NextResponseWithEngagementPanels|WatchNextResponse;
+type YtApiNext=WatchNextResponse;
