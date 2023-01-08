@@ -3259,12 +3259,12 @@ class BaseService extends BaseServicePrivate {
 			y(x[k],k);
 		}
 	}
-	/** @template U @arg {U[]|undefined} x @arg {(this:this,x:Exclude<U&({}|null),undefined>,i:number)=>void} y  */
+	/** @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} y  */
 	z(x,y) {
-		if(x===void 0) return;
+		if(x===void 0) {debugger; return;}
 		for(let it of x.entries()) {
 			const [i,a]=it;
-			if(a===void 0) continue;
+			if(a===void 0) {debugger; continue;}
 			y.call(this,a,i);
 		}
 	}
@@ -4850,12 +4850,12 @@ class HandleTypes extends BaseService {
 		function p1(x) {
 			const {responseContext: a,annotations: b,attestation: c,adPlacements: d,...y}=x;
 			this.ResponseContext(a);
-			this.z(b,a => {
+			if(b) this.z(b,a => {
 				if(get_keys_of_one(a)[0]!=="playerAnnotationsExpandedRenderer") debugger;
 				this.PlayerAnnotationsExpandedRenderer(a);
 			});
 			if(c) this.PlayerAttestationRenderer(c);
-			this.z(d,a => this.maybe(a,a => this.AdPlacementRenderer(a)));
+			if(d) this.z(d,a => this.maybe(a,a => this.AdPlacementRenderer(a)));
 			return y;
 		}
 		let a=p1.call(this,x);
@@ -4864,7 +4864,7 @@ class HandleTypes extends BaseService {
 			const {playabilityStatus: b,playbackTracking: c,playerAds: d,playerConfig: e,...y}=x;
 			this.PlayabilityStatus(b);
 			if(c) this.PlaybackTracking(c);
-			this.z(d,a => {
+			if(d) this.z(d,a => {
 				if(get_keys_of_one(a)[0]!=="playerLegacyDesktopWatchAdsRenderer") debugger;
 				this.w(a,a => this.DesktopWatchAdsData(a));
 			});
@@ -5044,7 +5044,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(a);
 		this.ResponseContext(res_ctx);
 		this.z(act_arr,a => this.ResponseReceivedAction(a));
-		this.z(ost,a => this.StateTag(a));
+		if(ost) this.z(ost,a => this.StateTag(a));
 		if(cont) this.BrowseContents(cont);
 		if(hd) {
 			if("feedTabbedHeaderRenderer" in hd) {
@@ -5827,7 +5827,8 @@ class HandleTypes extends BaseService {
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		const {url: a,webPageType: b,rootVe: c,apiUrl: d,sendPost: e,ignoreNavigation: f,...y}=x;
-		this.z([e,f],a => a!==void 0? this.primitive_of(a,"boolean"):0);
+		if(e) this.primitive_of(e,"boolean");
+		if(f) this.primitive_of(f,"boolean");
 		if(a!==void 0) this.parse_url(a);
 		if(d!==void 0) this.parse_url(d);
 		if(b!==void 0) this.parse_page_type(b);
@@ -6805,7 +6806,8 @@ class HandleTypes extends BaseService {
 	ThumbnailItem(x) {
 		const {url: a,width: b,height: c,...y}=x;
 		this.parse_url(a);
-		this.z([b,c],v => v!==void 0&&this.primitive_of(v,"number"));
+		b!==void 0&&this.primitive_of(b,"number");
+		c!==void 0&&this.primitive_of(c,"number");
 		this.g(y);
 	}
 	/** @arg {ButtonData} x */
@@ -7258,7 +7260,7 @@ class HandleTypes extends BaseService {
 	ChangeEngagementPanelVisibilityAction(x) {
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y);
 	}
-	/** @template T @arg {CommandsTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}
@@ -7907,8 +7909,31 @@ class HandleTypes extends BaseService {
 	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
 		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=x; this.g(y);
+		this.TriggerCriteria(triggerCriteria);
+		this.text_t(x.text);
 		this.EndpointTemplate(x.endpoint,a => this.w(a,a => this.UrlEndpointData(a)));
-		debugger;
+		this.trackingParams(x.trackingParams);
+		this.NotificationActionRenderer(x.snackbar);
+	}
+	/** @arg {TriggerCriteria} x */
+	TriggerCriteria(x) {
+		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=x;
+		this.g(y);
+		if(!eq_keys(x.connectionWhitelist,["WIFI"])) debugger;
+		if(x.joinLatencySeconds!==15) debugger;
+		if(x.rebufferTimeSeconds!==10) debugger;
+		if(x.watchTimeWindowSeconds!==180) debugger;
+		if(x.refractorySeconds!==2592000) debugger;
+	}
+	/** @arg {NotificationActionData} x */
+	NotificationActionData(x) {
+		this.text_t(x.responseText);
+		this.ButtonRenderer(x.actionButton);
+		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {NotificationActionRenderer} x */
+	NotificationActionRenderer(x) {
+		this.NotificationActionData(x.notificationActionRenderer);
 	}
 	/** @template T @arg {EndpointTemplate<T>} x @arg {(x:T)=>void} f */
 	EndpointTemplate(x,f) {
@@ -7996,7 +8021,7 @@ class HandleTypes extends BaseService {
 		let td=this.#generate_typedef(x[k],k);
 		console.log(td);
 	}
-	/** @template T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsArrTemplate(x,f) {
 		const {trackingParams: a,results: b,...y}=x; this.g(y);
 		this.trackingParams(a);
@@ -8158,7 +8183,7 @@ class HandleTypes extends BaseService {
 	ItemSectionRenderer(x,f) {
 		this.ItemSectionData(x.itemSectionRenderer,f);
 	}
-	/** @template T @arg {ContentsTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {ContentsTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentsTemplate(x,f) {
 		const {trackingParams,contents,...y}=x; this.g(y);
 		this.z(x.contents,a => f(a));
@@ -9472,7 +9497,9 @@ class HandleTypes extends BaseService {
 	/** @arg {InfoRowData} x */
 	InfoRowData(x) {
 		const {title: a,defaultMetadata: b,expandedMetadata: c,expandIcon: d,trackingParams: e,infoRowExpandStatusKey: f,...y}=x; this.g(y);
-		this.z([a,b,c],this.text_t);
+		this.text_t(a);
+		if(b) this.text_t(b);
+		if(c) this.text_t(c);
 		if(d) this.Icon(d);
 		this.trackingParams(e);
 		if(f) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],f);

@@ -1,5 +1,5 @@
 type TriggerCriteria={
-	connectionWhitelist: ConnectionWhitelistItem[];
+	connectionWhitelist: [ConnectionWhitelistItem];
 	joinLatencySeconds: 15;
 	rebufferTimeSeconds: 10;
 	watchTimeWindowSeconds: 180;
