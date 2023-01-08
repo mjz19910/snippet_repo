@@ -3165,11 +3165,11 @@ class BaseService extends BaseServicePrivate {
 		if(!n3) throw new Error();
 		this.save_string(`ELEMENT::${ns_arr[0]}::@::${ns_arr[2]}`,n3);
 	}
-	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
+	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(this:this,k:string,v: {})=>void} fn */
 	v(obj,fn) {
 		if(obj===void 0) return;
 		let arr=Object.entries(obj);
-		this.z(arr,e => fn(e[0],e[1]));
+		this.z(arr,e => fn.call(this,e[0],e[1]));
 	}
 	/** @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
 	w(x,y) {
@@ -3192,14 +3192,27 @@ class BaseService extends BaseServicePrivate {
 			y.call(this,a,i);
 		}
 	}
+	/** @template {{}} T @arg {ContentsArrTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	w1(x,f) {
+		const {contents:a,...y}=x; this.g(y);
+		this.z(a,f);
+	}
+	/** @template {{}} T @arg {{items:T[]}} x @arg {(this:this,x:T)=>void} f */
+	w2(x,f) {
+		const {items:a,...y}=x; this.g(y);
+		this.z(a,f);
+	}
+	/** @template {{}} T @arg {{contents:T}} x @arg {(this:this,x:T)=>void} f */
+	w3(x,f) {
+		f.call(this,x.contents);
+	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
-	empty_object(x) {
+	g(x) {
 		let keys=get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s]",keys.join());
 		debugger;
 	}
-	g=this.empty_object;
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
 		let keys=get_keys_of(x);
@@ -6368,11 +6381,6 @@ class HandleTypes extends BaseService {
 			debugger;
 		})));
 	}
-	/** @template {{}} T @arg {ContentsArrTemplate<T>} x @arg {(x:T)=>void} f */
-	w1(x,f) {
-		const {contents:a,...y}=x; this.g(y);
-		this.z(a,f);
-	}
 	/** @private @arg {AccountItem} x */
 	AccountItem(x) {
 		this.AccountItemData(x.accountItem);
@@ -6380,11 +6388,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {MultiPageMenuSectionRenderer} x */
 	MultiPageMenuSectionRenderer(x) {
 		this.MultiPageMenuSectionData(x.multiPageMenuSectionRenderer);
-	}
-	/** @template {{}} T @arg {{items:T[]}} x @arg {(x:T)=>void} f */
-	w2(x,f) {
-		const {items:a,...y}=x; this.g(y);
-		this.z(a,f);
 	}
 	/** @private @arg {MultiPageMenuSectionData} x */
 	MultiPageMenuSectionData(x) {
@@ -8137,10 +8140,6 @@ class HandleTypes extends BaseService {
 	InlineSurveyData(x) {
 		console.log(x.dismissalEndpoint);
 		debugger;
-	}
-	/** @template {{}} T @arg {{contents:T}} x @arg {(x:T)=>void} f */
-	w3(x,f) {
-		f(x.contents);
 	}
 	/** @private @arg {ChannelResponse} x */
 	ChannelResponse(x) {
