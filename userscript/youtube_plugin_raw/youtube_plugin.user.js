@@ -8576,24 +8576,24 @@ class HandleTypes extends BaseService {
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData_1(x) {
 		const {
-			videoId: a,params: b,continuePlayback: c,playlistId: d,
-			loggingContext: e,watchEndpointSupportedOnesieConfig: f,
-			index: g,watchEndpointSupportedPrefetchConfig,playerParams,
+			videoId: a0,params: a1,continuePlayback: a2,playlistId: a3,
+			loggingContext: b0,watchEndpointSupportedOnesieConfig: b1,
+			index: c0,watchEndpointSupportedPrefetchConfig: c1,playerParams: c2,
 			...y
 		}=x; this.g(y);
-		if(watchEndpointSupportedPrefetchConfig) {
-			this.PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+		if(c1) {
+			this.PrefetchHintConfig(c1);
 		}
-		if(playerParams) this.primitive_of(playerParams,"string");
+		if(c2) this.primitive_of(c2,"string");
 		this.s_parser.parse_video_id(x.videoId);
-		if(b&&this.log_watch_endpoint_params) {
-			console.log("[watch_ep_params]",b);
+		if(a1&&this.log_watch_endpoint_params) {
+			console.log("[watch_ep_params]",a1);
 		}
-		if(c!==void 0&&c!==true) debugger;
-		d&&this.s_parser.parse_playlist_id(d);
-		e&&this.VssLoggingContext(e);
-		f&&this.Html5PlaybackOnesieConfig(f);
-		if(g!==void 0) this.primitive_of(g,"number");
+		if(a2!==void 0&&a2!==true) debugger;
+		a3&&this.s_parser.parse_playlist_id(a3);
+		b0&&this.VssLoggingContext(b0);
+		b1&&this.Html5PlaybackOnesieConfig(b1);
+		if(c0!==void 0) this.primitive_of(c0,"number");
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
