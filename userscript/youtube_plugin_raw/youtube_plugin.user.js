@@ -6054,8 +6054,10 @@ class HandleTypes extends BaseService {
 						const {children,...y}=a;
 						/** @type {[typeof y|typeof children]} */
 						let out=[y];
-						if(children) out.push(children);
-						iterate_template_element(children);
+						if(children) {
+							iterate_template_element(children);
+							out.push(children);
+						}
 						/** @arg {TemplateElement} x */
 						function iterate_template_element(x) {
 							let res=Object.entries(x);
@@ -8310,6 +8312,7 @@ class HandleTypes extends BaseService {
 		["delete",false],
 		["replace",false],
 	]);
+	replace_path_handler=[315];
 	/** @arg {EntityMutationReplace} x */
 	EntityMutationReplace(x) {
 		const {type: ty,entityKey: a,payload: b,...y}=x; this.g(y);
@@ -8325,13 +8328,23 @@ class HandleTypes extends BaseService {
 		if(!dec_3) {debugger; return;}
 		let err=dec_3.find(e => e[0]==="error");
 		let entity_replace_field_num=dec[1][2];
-		if(entity_replace_field_num===315) {
+		if(entity_replace_field_num==315) {
 			const entity_path=decoder.decode(dec[0][2]);
 			console.log("[replace_entity_path] [%s]",entity_path);
 			return;
 		}
+		if(entity_replace_field_num==341) {
+			const str=decoder.decode(dec[0][2]);
+			console.log("[replace_entity_341] [%s]",str);
+			return;
+		}
 		if(err) {
 			const entityVideoId=decoder.decode(dec[0][2]);
+			if(entityVideoId===".transcript.track.selection.key") {
+				console.log("update replace_path_handler",entity_replace_field_num);
+				debugger;
+				return;
+			}
 			if(!is_keyof_RUa(entity_replace_field_num)) {
 				const target={
 					entity_replace_field_num,
