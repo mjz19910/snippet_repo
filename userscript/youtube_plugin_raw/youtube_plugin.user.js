@@ -1113,7 +1113,7 @@ class MyReader {
 		}
 	}
 	/** @arg {number} [size] */
-	read_any_new(size) {
+	reset_and_read_any(size) {
 		this.pos=0;
 		return this.read_any(size);
 	}
@@ -3780,6 +3780,10 @@ const RUa={
 	393: "emojiFountainDataEntity",
 	406: "continuationTokenEntity"
 };
+/** @template {number} T @arg {T} v @returns {v is keyof typeof RUa} */
+function is_keyof_RUa(v) {
+	return v in RUa;
+}
 /** @type {(this:number,...c: any[])=>any[]} @this {number} */
 function za() {
 	for(var a=Number(this),b=[],c=a;c<arguments.length;c++)
@@ -3845,10 +3849,6 @@ function decode_entity_key(...gs) {
 	b=b? LUa(b):void 0;
 	a=PUa(a,4)? Zs(a):void 0;
 	if(!a) throw new Error("Invalid state");
-	/** @template {number} T @arg {T} v @returns {v is keyof typeof RUa} */
-	function is_keyof_RUa(v) {
-		return v in RUa;
-	}
 	if(!b) return null;
 	if(!is_keyof_RUa(a)) {
 		if(!lua_strs.includes(b)) {
@@ -4418,11 +4418,14 @@ class YtUrlParser extends BaseService {
 		let s_host=split_string_once(r.host,".");
 		switch(s_host[1]) {
 			case "googlevideo.com": {
-				console.log("google video sub domain",s_host[0]);
+				let x0=split_string_once(s_host[0],"---");
+				let x1=split_string_once(x0[0],"rr");
+				/** @type {GoogleVideoSubDomain} */
+				console.log("google video sub domain",`rr${x1[1]}`);
 			} return;
 			default:
 		}
-		/** @type {YtUrlFormat} */
+		/** @type {YtUrlFormat|YtExternalUrlFormat} */
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
@@ -8254,12 +8257,45 @@ class HandleTypes extends BaseService {
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
 				this.EntityMutationOptions(b);
 				console.log("[entity_del]",dec);
+				debugger;
 			} break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
 				const {type: {},entityKey: a,payload: b,...y}=x; this.g(y);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
-				this.EntityMutationPayload(b);
+				if(!dec) {
+					console.log("[entity_replace_failed]",a);
+					debugger;
+					break;
+				}
 				console.log("[entity_replace]",dec);
+				this.EntityMutationPayload(b);
+				if(dec[1][0]!=="data32") {
+					debugger;
+					break;
+				}
+				let entityTypeFieldNumber=dec[1][2];
+				if(!is_keyof_RUa(entityTypeFieldNumber)) break;
+				if(dec[0][0]!=="child") {
+					debugger;
+					break;
+				}
+				let sub_reader=new MyReader(dec[0][2]);
+				let dec_3=sub_reader.try_read_any();
+				if(!dec_3) {
+					console.log("[entity_replace_sub_reader_failed]",...dec);
+					debugger;
+					break;
+				}
+				if(dec_3[0][0]!=="child") {
+					debugger;
+					break;
+				}
+				const target={
+					entityTypeFieldNumber: dec[1][2],
+					entityType: RUa[entityTypeFieldNumber],
+					entityVideoId: decoder.decode(dec_3[0][2]),
+				};
+				console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
 			} break;
 			default: debugger;
 		}
@@ -8521,7 +8557,7 @@ class HandleTypes extends BaseService {
 			debugger;
 			this.generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
-		let no_pad_arr=ret_arr.map(e=>e.trim());
+		let no_pad_arr=ret_arr.map(e => e.trim());
 		return no_pad_arr.join("\nd2!");
 	}
 	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
@@ -9077,11 +9113,14 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TopicLinkData} x */
 	TopicLinkData(x) {
+		const {title,thumbnailDetails,endpoint,callToActionIcon,trackingParams,...y}=x;
 		this.text_t(x.title);
 		this.Thumbnail(x.thumbnailDetails);
 		this.BrowseEndpoint(x.endpoint,this.ChannelNavigationEndpointWebCommandMetadata);
 		this.Icon(x.callToActionIcon);
 		this.trackingParams(x.trackingParams);
+		let k=get_keys_of(y);
+		if(!k.length) return;
 		let rn=this.generate_renderer(x,"TopicLinkData");
 		console.log(rn);
 		debugger;
