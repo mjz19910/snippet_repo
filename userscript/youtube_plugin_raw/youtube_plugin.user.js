@@ -6086,6 +6086,11 @@ class HandleTypes extends BaseService {
 				}
 			}
 		};
+		let pd=Object.getOwnPropertyDescriptors(res_obj);
+		for(let x of Object.values(pd)) {
+			x.enumerable=false;
+		}
+		Object.defineProperties(res_obj,pd);
 		for(let it of x) {
 			switch(it[0]) {
 				case "data32": {
