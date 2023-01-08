@@ -2888,9 +2888,9 @@ class BaseServicePrivate extends KnownDataSaver {
 			let index_map=[...new Set([...cur[1].map(e => e.split(",")).flat()])].sort();
 			bitmap="\n"+cur[1].map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
 				let ta=new Array(index_map.length);
-				ta.fill(1);
+				ta.fill(0);
 				for(let x of e) {
-					ta[x]=0;
+					ta[x]=1;
 				}
 				return ta.join("");
 			}).sort().join("\n")+"\n";
