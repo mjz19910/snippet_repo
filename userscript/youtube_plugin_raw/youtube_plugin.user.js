@@ -4842,7 +4842,7 @@ class HandleTypes extends ServiceData {
 		this.auto_depth++;
 		let has_running_var=false;
 		let p=this.z_async(Object.entries(x),this.auto_entry,id);
-		if(this.running_auto===null) {
+		if(this.running_auto[0]===null) {
 			has_running_var=true;
 			console.log("[auto_start]");
 			this.running_auto=[p,id];
