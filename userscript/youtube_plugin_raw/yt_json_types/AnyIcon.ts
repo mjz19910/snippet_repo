@@ -1,5 +1,6 @@
-type AnyIcon=[
+type AnyIcon=NonNullable<[
 	Icon<AnyIconStr>,
-	NonNullable<ButtonData['icon']>,
-	NonNullable<InfoRowData['expandIcon']>,
-][number];
+	ButtonData['icon'],
+	InfoRowData['expandIcon'],
+	TopicLinkData['callToActionIcon'],
+][number]>;

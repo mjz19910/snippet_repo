@@ -8456,6 +8456,10 @@ class HandleTypes extends BaseService {
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
+	/** @arg {{}} x */
+	is_Thumbnail(x) {
+		return "thumbnails" in x&&x.thumbnails instanceof Array&&"url" in x.thumbnails[0]&&typeof x.thumbnails[0].url==='string'
+	}
 	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x1 @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x1,keys,t_name) {
 		let ret_arr=[];
@@ -8492,14 +8496,12 @@ class HandleTypes extends BaseService {
 				this.generate_body_array_item(k,x2,ret_arr);
 				continue;
 			}
-			if("thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==='string') {
+			if(this.is_Thumbnail(x2)) {
 				ret_arr.push(`this.Thumbnail(x.${k});`);
 				continue;
 			}
-			if("browseEndpoint" in x2) {
-				ret_arr.push(`this.BrowseEndpoint(x.${k});`);
-				continue;
-			}
+			if("browseEndpoint" in x2) {ret_arr.push(`this.BrowseEndpoint(x.${k});`);continue;}
+			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
 			let c=this.get_renderer_key(x2);
 			if(!c||typeof c==='number') {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
@@ -9073,6 +9075,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TopicLinkData} x */
 	TopicLinkData(x) {
+		this.text_t(x.title);
+		this.Thumbnail(x.thumbnailDetails);
+		this.BrowseEndpoint(x.endpoint);
+		this.Icon(x.callToActionIcon);
+		this.trackingParams(x.trackingParams);
 		let rn=this.generate_renderer(x,"TopicLinkData");
 		console.log(rn);
 		debugger;
