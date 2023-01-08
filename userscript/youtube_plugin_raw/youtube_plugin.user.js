@@ -8775,8 +8775,6 @@ class HandleTypes extends BaseService {
 	InfoRowData(x) {
 		let rd=this.generate_renderer(x,"InfoRowData");
 		console.log(rd);
-		let td=this.generate_typedef(x,"InfoRowData");
-		console.log(td);
 		debugger;
 	}
 	/** @arg {CarouselLockupRenderer} x */
