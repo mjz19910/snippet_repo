@@ -5177,7 +5177,7 @@ class HandleTypes extends BaseService {
 		this.clickTrackingParams(params);
 		this.primitive_of(isVisible,"boolean");
 		if(key!=="HEATSEEKER") debugger;
-		this.empty_object(v);
+		this.g(v);
 	}
 	/** @arg {LoadMarkersCommand} c */
 	LoadMarkersCommand(c) {
@@ -5374,7 +5374,7 @@ class HandleTypes extends BaseService {
 		if("replayChatItemAction" in x) {
 			const {replayChatItemAction: a,...y}=x;
 			this.ReplayChatItemActionData(x.replayChatItemAction);
-			this.empty_object(y);
+			this.g(y);
 		} else {
 			debugger;
 		}
@@ -5667,7 +5667,7 @@ class HandleTypes extends BaseService {
 		const {responseContext: a,actions: b,...c}=x;
 		this.ResponseContext(a);
 		this.z(b,a => this.ResponseActions(a));
-		this.empty_object(c);
+		this.g(c);
 	}
 	/** @arg {ResponseActions} x */
 	ResponseActions(x) {
@@ -5786,7 +5786,7 @@ class HandleTypes extends BaseService {
 	notification_unseenCount(x) {
 		const {unseenCount: a,...c}=x;
 		this.save_number("notification.unseenCount",a);
-		this.empty_object(c);
+		this.g(c);
 	}
 	/** @private @arg {string} x */
 	clickTrackingParams(x) {
@@ -6188,7 +6188,7 @@ class HandleTypes extends BaseService {
 			let id=a.split("|");
 			console.log(id);
 		});
-		this.empty_object(y);
+		this.g(y);
 	}
 	/** @arg {MyReader} reader @arg {DecTypeNum[]} results */
 	unpack_children_reader_result(reader,results) {
@@ -6624,7 +6624,7 @@ class HandleTypes extends BaseService {
 	ButtonRenderer(x) {
 		const {buttonRenderer,...v}=x;
 		this.ButtonData(x.buttonRenderer);
-		this.empty_object(v);
+		this.g(v);
 	}
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
@@ -6714,7 +6714,7 @@ class HandleTypes extends BaseService {
 			this.g(y);
 			return;
 		}
-		this.empty_object(x);
+		this.g(x);
 	}
 	/** @arg {RadioData} x */
 	RadioData(x) {
@@ -6751,7 +6751,7 @@ class HandleTypes extends BaseService {
 			this.g(y);
 			return;
 		}
-		this.empty_object(x);
+		this.g(x);
 	}
 	/** @arg {AdSlotData} x */
 	AdSlotData(x) {
@@ -6923,7 +6923,7 @@ class HandleTypes extends BaseService {
 					this.AccessibilityData(b);
 				}
 			}
-			this.empty_object(z);
+			this.g(z);
 		}
 	}
 	/** @arg {AnyIcon} x */
