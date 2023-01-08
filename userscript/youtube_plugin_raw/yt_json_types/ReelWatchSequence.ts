@@ -1,4 +1,4 @@
-type ReelWatchSequence={
+type ReelWatchSequenceResponse={
 	responseContext: ResponseContext;
 	entries: CommandTemplate<ReelWatchEndpoint>[];
 	trackingParams: string;

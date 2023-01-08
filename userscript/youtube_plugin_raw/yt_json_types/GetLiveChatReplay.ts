@@ -1,4 +1,4 @@
-type GetLiveChatReplay={
+type GetLiveChatReplayResponse={
 	responseContext: ResponseContext;
 	continuationContents: LiveChatContinuation;
 };

@@ -1379,7 +1379,7 @@ class FilterHandlers {
 			};
 			case "reel_watch_sequence": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ReelWatchSequence} */
+				/** @private @type {ReelWatchSequenceResponse} */
 				data: as(x),
 			};
 		}
@@ -1390,7 +1390,7 @@ class FilterHandlers {
 			default: debugger; break;
 			case "get_notification_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetNotificationMenuJson} */
+				/** @private @type {GetNotificationMenuResponse} */
 				data: as(x),
 			};
 			case "get_unseen_count": return {
@@ -1411,7 +1411,7 @@ class FilterHandlers {
 			default: debugger; break;
 			case "get_live_chat_replay": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChatReplay} */
+				/** @private @type {GetLiveChatReplayResponse} */
 				data: as(x),
 			};
 		}
@@ -4814,7 +4814,7 @@ class HandleTypes extends ServiceData {
 			case "guide": return this.GuideResponse(x.data);
 			case "like.like": return this.LikeLikeResponse(x.data);
 			case "like.removelike": return this.LikeRemoveLikeResponse(x.data);
-			case "next": return this.WatchNextResponse(x.data);
+			case "next": return this.NextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuResponse(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountResponse(x.data);
 			case "notification.record_interactions": return this.SuccessResponse(x.data);
@@ -4849,21 +4849,21 @@ class HandleTypes extends ServiceData {
 		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
-	/** @private @arg {ReelWatchSequence} x */
+	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
 		this.save_keys("[ReelWatchSequence]",x);
 	}
-	/** @private @arg {GetLiveChatReplay} x */
+	/** @private @arg {GetLiveChatReplayResponse} x */
 	GetLiveChatReplayResponse(x) {
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
-	/** @private @arg {GetNotificationMenuJson} x */
+	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		this.save_keys("[GetNotificationMenuResponse]",x);
 	}
 	/** @private @arg {NextResponse} x */
-	WatchNextResponse(x) {
-		this.save_keys("[WatchNextResponse]",x);
+	NextResponse(x) {
+		this.save_keys("[NextResponse]",x);
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountResponse(x) {
