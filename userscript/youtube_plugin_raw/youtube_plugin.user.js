@@ -3386,6 +3386,7 @@ class Services {
 		this.service_tracking=new TrackingServices(x);
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new HiddenData(new FilterHandlers(x));
+		this.codegen=new CodegenService(x);
 	}
 }
 //#endregion Service
@@ -3588,6 +3589,321 @@ class IndexedDbAccessor {
 	}
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
+class CodegenService extends BaseService {
+	
+	/** @arg {{}} x2 */
+	#is_Thumbnail(x2) {
+		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
+	}
+	/** @arg {{}} x2 */
+	#is_TextT(x2) {
+		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
+	}
+	/** @arg {string[]} req_names @arg {unknown} x @arg {string[]} keys @arg {string|number} t_name */
+	#generate_renderer_body(req_names,x,keys,t_name) {
+		/** @private @type {{[x:string]:{}}} */
+		let x1=as(x);
+		/** @private @type {string[]} */
+		let ret_arr=[];
+		for(let k of keys) {
+			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
+			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
+			let x2=x1[k];
+			if(typeof x2==="string") {
+				if(x2.startsWith("https:")) {
+					ret_arr.push(`this.primitive_of(x.${k},"string");`);
+					continue;
+				}
+				let u_count=[...new Set(x2.split("").sort())].join("").length;
+				if(x2.includes("%")) {
+					if(u_count>13) {
+						ret_arr.push(`this.primitive_of(x.${k},"string");`);
+						continue;
+					}
+				}
+				console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
+				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
+				continue;
+			}
+			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(x.${k},"number");`);}
+			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
+			if(typeof x2!=="object") {debugger; continue;}
+			if(x2===null) {ret_arr.push(`if(x.${k}!==null) debugger;`); continue;}
+			if(this.#is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
+			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
+			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
+			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
+			if("browseEndpoint" in x2) {
+				ret_arr.push(`
+				this.BrowseEndpoint(x.${k},a=>{
+					d3!a; debugger;
+				d2!});
+				`);
+				continue;
+			}
+			/** @private @type {{}} */
+			let o3=x2;
+			let c=this.#get_renderer_key(o3);
+			if(!c||typeof c==="number") {
+				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
+				continue;
+			}
+			if(c.endsWith("Renderer")) {
+				let ic=this.#uppercase_first(c);
+				ret_arr.push(`this.${ic}(x.${k});`);
+				continue;
+			}
+			if(k.endsWith("Renderer")) {
+				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
+				continue;
+			}
+			console.log("[gen_body_default_for] [%s]",k,x2);
+			debugger;
+			this.#generate_body_default_item(k,ret_arr,req_names,t_name);
+		}
+		let no_pad_arr=ret_arr.map(e => e.trim());
+		return no_pad_arr.join("\nd2!");
+	}
+	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
+	#generate_body_default_item(k,out,env_names,def_name) {
+		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
+		let mn=tn.replace("Renderer","Data");
+		if(mn===def_name) mn+="Data";
+		env_names.push(mn);
+		out.push(`this.${mn}(x.${k});`);
+	}
+	/** @arg {string} k @arg {unknown[]} x @arg {string[]} out */
+	#generate_body_array_item(k,x,out) {
+		if(typeof x[0]!=="object") return;
+		if(x[0]===null) return;
+		let ret_arr=out;
+		/** @private @type {{[x:string]:{};[x:number]:{};}} */
+		let io=as(x[0]);
+		let c=this.#get_renderer_key(io);
+		if(c) {
+			let ic=this.#uppercase_first(c);
+			console.log("array key",c);
+			ret_arr.push(`this.z(x.${k},this.${ic});`);
+		}
+		x;
+	}
+	/** @arg {unknown} x @arg {string|null} r_name */
+	#generate_renderer(x,r_name=null) {
+		console.log("gen renderer for",x);
+		/** @private @type {string[]} */
+		let req_names=[];
+		/** @private @arg {string} x */
+		function gen_padding(x) {
+			return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
+				return "\t".repeat(g);
+			});
+		}
+		let k=this.#get_renderer_key(x);
+		if(r_name) k=r_name;
+		if(k===null) return null;
+		let t_name=this.#uppercase_first(k);
+		let keys=Object.keys(as(x));
+		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
+		let tmp_1=`
+		d1!/** @private @arg {${t_name}} x */
+		d1!${t_name}(x) {
+			d2!${body}
+		d1!}
+		`;
+		let ex_names=req_names.map(e => {
+			let tmp0=`
+			d1!/** @private @arg {${e}} x */
+			d1!${e}(x) {
+				d2!x;
+				d2!debugger;
+			d1!}
+			`;
+			return tmp0;
+		});
+		tmp_1=ex_names.join("")+tmp_1;
+		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
+		let tmp3=gen_padding(tmp2);
+		return `\n${tmp3}`;
+	}
+	/** @arg {string} x */
+	#uppercase_first(x) {
+		return x[0].toUpperCase()+x.slice(1);
+	}
+	/** @arg {unknown} x */
+	#get_renderer_key(x) {
+		let keys=Object.keys(as(x));
+		for(let c of keys) {
+			if(c==="clickTrackingParams") continue;
+			if(c==="commandMetadata") continue;
+			return c;
+		}
+		return null;
+	}
+	/** @public @arg {unknown} x @arg {string|null} r */
+	generate_typedef(x,r=null) {
+		let k=this.#get_renderer_key(x);
+		if(k===null) return null;
+		let tn=k;
+		if(r) {
+			tn=r;
+		}
+		tn=this.#uppercase_first(tn);
+		let obj_count=0;
+		/** @private @type {{[x: number|string]:{}}} */
+		let xa=as(x);
+		let o2=xa[k];
+		let keys=Object.keys(as(x)).concat(Object.keys(o2));
+		const max_str_len=40;
+		let tc=JSON.stringify(x,(k1,o) => {
+			if(k1==="") return o;
+			if(typeof o==="string") {
+				if(o.length>max_str_len) {
+					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
+					return "TYPE::string";
+				}
+				let u_ty_count=[...new Set(o.split("").sort())].join("").length;
+				if(o.includes("%")) {
+					if(u_ty_count>13) {
+						return "TYPE::string";
+					}
+				}
+				if(k1=="trackingParams") return "TYPE::string";
+				if(k1=="clickTrackingParams") return "TYPE::string";
+				if(k1=="playlistId") {
+					if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
+					if(o.startsWith("RD")) return `TYPE::\`RD$\{string}\``;
+					if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
+					debugger;
+					return "TYPE::string";
+				}
+				if(k1=="videoId") {
+					console.log("[video_id_json]",o);
+					return "TYPE::string";
+				}
+				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
+				return o;
+			}
+			if(typeof o==="number") return o;
+			if(typeof o==="boolean") return o;
+			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
+			if(o.runs&&o.runs instanceof Array) {
+				return "TYPE::TextT";
+			}
+			if(o.simpleText&&typeof o.simpleText==="string") {
+				return "TYPE::SimpleText";
+			}
+			if(o.thumbnails&&o.thumbnails instanceof Array) {
+				return "TYPE::Thumbnail";
+			}
+			if(o.iconType&&typeof o.iconType==="string") {
+				return `TYPE::Icon<"${o.iconType}">`;
+			}
+			if(o.browseEndpoint) {
+				return `TYPE::BrowseEndpoint<never>`;
+			}
+			if(keys.includes(k1)) {
+				if(o instanceof Array) return [o[0]];
+				return o;
+			}
+			if(o instanceof Array) return [o[0]];
+			obj_count++;
+			if(obj_count<2) return o;
+			if(o instanceof Array) return [{}];
+			return {};
+		},"\t");
+		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
+			return g+":";
+		});
+		/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
+		function replace_until_same(s,rx,fn) {
+			let i=0;
+			let ps=s;
+			do {
+				let p=s;
+				s=s.replaceAll(rx,fn);
+				ps=p;
+				if(i>12) break;
+			} while(ps!==s);
+			return s;
+		}
+		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
+			return `{${vi}}:ARRAY_TAG`;
+		});
+		tc=tc.replaceAll(":ARRAY_TAG","[]");
+		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
+			return x.replaceAll("\\\"","\"");
+		});
+		tc=tc.replaceAll(",",";");
+		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
+		let ret;
+		if(typeof tn==="number") {
+			ret=`\ntype ArrayType_${tn}=${tc}\n`;
+		} else {
+			ret=`\ntype ${tn}=${tc}\n`;
+		}
+		return ret;
+	}
+	/** @public @arg {string} x1 */
+	generate_depth(x1) {
+		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
+		if(!rxr?.groups) return null;
+		let x=rxr.groups.x.trim().split(/([;{}])/).filter(e => e);
+		/** @private @arg {string[]} x */
+		function make_depth_arr(x) {
+			/** @private @type {[number,string][]} */
+			let o=[];
+			let depth=0;
+			for(let v of x) {
+				if(v==="{}"[0]) depth++;
+				o.push([depth,v]);
+				if(v==="{}"[1]) depth--;
+			};
+			return o;
+		};
+		let depth_state={
+			ld: 0,
+		};
+		let da=make_depth_arr(x);
+		/** @private @type {string[]} */
+		let r1=da.reduce((a,c) => {
+			if(c[0]===0) {
+				a.push(c[1]);
+				return a;
+			};
+			if(depth_state.ld<1) a.push(c[1]);
+			else a.push(a.pop()+c[1]);
+			depth_state.ld=c[0];
+			return a;
+		},[""]);
+		let r2=r1.reduce((a,c) => {
+			if(c===";") {
+				a.push(a.pop()+";","");
+				return a;
+			};
+			a.push(a.pop()+c);
+			return a;
+		},[""]);
+		let trimmed_r2=r2.map(e => e.trim());
+		let no_empty_r2=trimmed_r2.filter(e => e);
+		let typedef_members=no_empty_r2.map(e => {
+			let ss=split_string_once(e,":");
+			if(ss.length==1) throw new Error();
+			return ss;
+		});
+		return new Map(typedef_members);
+	}
+	/** @public @arg {{}} x @arg {string|null} r */
+	use_generated_members(x,r=null) {
+		let td=new Generate(this);
+		td.generate_typedef_and_depth(x,r);
+		return td;
+	}
+	/** @public @arg {unknown} x @arg {string|null} r */
+	generate_renderer(x,r) {
+		this.#generate_renderer(x,r);
+	}
+}
 class ParserService extends BaseService {
 	log_playlist_parse=false;
 	/** @public @arg {PlaylistId} x */
@@ -4325,7 +4641,7 @@ class Generate {
 	out_arr=[];
 	/** @private @type {string[]} */
 	str_arr=[];
-	/** @arg {HandleTypes} parent */
+	/** @arg {CodegenService} parent */
 	constructor(parent) {
 		this.parent=parent;
 	}
@@ -4373,18 +4689,6 @@ class ServiceData extends BaseService {
 	}
 }
 class HandleTypes extends ServiceData {
-	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_renderer(x,r) {
-		this.#generate_renderer(x,r);
-	}
-	/** @private @arg {PlayerResponse} x */
-	PlayerResponse(x) {
-		this.save_keys("[PlayerResponse]",x);
-	}
-	/** @private @arg {BrowsePageResponse} x */
-	BrowsePageResponse(x) {
-		this.save_keys("[BrowsePageResponse]",x);
-	}
 	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
 		let mt=x;
@@ -4400,21 +4704,6 @@ class HandleTypes extends ServiceData {
 			default: break;
 		}
 		console.log("pt",x.page,x);
-		debugger;
-	}
-	/** @private @arg {BrowseResponseContent} x */
-	BrowseResponseContent(x) {
-		this.save_keys("[BrowseResponseContent]",x);
-	}
-	/** @arg {{}} x */
-	LikeLikeResponse(x) {
-		x;
-		debugger;
-	}
-	/** @arg {{}} x */
-	LikeRemoveLikeResponse(x) {
-		let ren=this.generate_renderer(x,null);
-		console.log(ren);
 		debugger;
 	}
 	/** @arg {ResponseTypes} x */
@@ -4451,6 +4740,32 @@ class HandleTypes extends ServiceData {
 			case "_Generic": return g(x);
 			default: return g(x);
 		}
+	}
+	/** @private @arg {PlayerResponse} x */
+	PlayerResponse(x) {
+		this.save_keys("[PlayerResponse]",x);
+	}
+	/** @private @arg {BrowsePageResponse} x */
+	BrowsePageResponse(x) {
+		this.save_keys("[BrowsePageResponse]",x);
+	}
+	/** @private @arg {BrowseResponseContent} x */
+	BrowseResponseContent(x) {
+		this.save_keys("[BrowseResponseContent]",x);
+	}
+	/** @arg {{}} x */
+	LikeLikeResponse(x) {
+		let cg=this.x.get("codegen");
+		let ren=cg.generate_renderer(x,null);
+		console.log(ren);
+		debugger;
+	}
+	/** @arg {{}} x */
+	LikeRemoveLikeResponse(x) {
+		let cg=this.x.get("codegen");
+		let ren=cg.generate_renderer(x,null);
+		console.log(ren);
+		debugger;
 	}
 	/** @private @arg {ReelWatchSequence} x */
 	ReelWatchSequenceResponse(x) {
@@ -4568,314 +4883,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
 		this.save_keys("[GuideJsonType]",x);
-	}
-	/** @arg {{}} x2 */
-	#is_Thumbnail(x2) {
-		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
-	}
-	/** @arg {{}} x2 */
-	#is_TextT(x2) {
-		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
-	}
-	/** @arg {string[]} req_names @arg {unknown} x @arg {string[]} keys @arg {string|number} t_name */
-	#generate_renderer_body(req_names,x,keys,t_name) {
-		/** @private @type {{[x:string]:{}}} */
-		let x1=as(x);
-		/** @private @type {string[]} */
-		let ret_arr=[];
-		for(let k of keys) {
-			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
-			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
-			let x2=x1[k];
-			if(typeof x2==="string") {
-				if(x2.startsWith("https:")) {
-					ret_arr.push(`this.primitive_of(x.${k},"string");`);
-					continue;
-				}
-				let u_count=[...new Set(x2.split("").sort())].join("").length;
-				if(x2.includes("%")) {
-					if(u_count>13) {
-						ret_arr.push(`this.primitive_of(x.${k},"string");`);
-						continue;
-					}
-				}
-				console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
-				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
-				continue;
-			}
-			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(x.${k},"number");`);}
-			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
-			if(typeof x2!=="object") {debugger; continue;}
-			if(x2===null) {ret_arr.push(`if(x.${k}!==null) debugger;`); continue;}
-			if(this.#is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
-			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
-			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
-			if("browseEndpoint" in x2) {
-				ret_arr.push(`
-				this.BrowseEndpoint(x.${k},a=>{
-					d3!a; debugger;
-				d2!});
-				`);
-				continue;
-			}
-			/** @private @type {{}} */
-			let o3=x2;
-			let c=this.#get_renderer_key(o3);
-			if(!c||typeof c==="number") {
-				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-				continue;
-			}
-			if(c.endsWith("Renderer")) {
-				let ic=this.#uppercase_first(c);
-				ret_arr.push(`this.${ic}(x.${k});`);
-				continue;
-			}
-			if(k.endsWith("Renderer")) {
-				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-				continue;
-			}
-			console.log("[gen_body_default_for] [%s]",k,x2);
-			debugger;
-			this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-		}
-		let no_pad_arr=ret_arr.map(e => e.trim());
-		return no_pad_arr.join("\nd2!");
-	}
-	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
-	#generate_body_default_item(k,out,env_names,def_name) {
-		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
-		let mn=tn.replace("Renderer","Data");
-		if(mn===def_name) mn+="Data";
-		env_names.push(mn);
-		out.push(`this.${mn}(x.${k});`);
-	}
-	/** @arg {string} k @arg {unknown[]} x @arg {string[]} out */
-	#generate_body_array_item(k,x,out) {
-		if(typeof x[0]!=="object") return;
-		if(x[0]===null) return;
-		let ret_arr=out;
-		/** @private @type {{[x:string]:{};[x:number]:{};}} */
-		let io=as(x[0]);
-		let c=this.#get_renderer_key(io);
-		if(c) {
-			let ic=this.#uppercase_first(c);
-			console.log("array key",c);
-			ret_arr.push(`this.z(x.${k},this.${ic});`);
-		}
-		x;
-	}
-	/** @arg {unknown} x @arg {string|null} r_name */
-	#generate_renderer(x,r_name=null) {
-		console.log("gen renderer for",x);
-		/** @private @type {string[]} */
-		let req_names=[];
-		/** @private @arg {string} x */
-		function gen_padding(x) {
-			return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
-				return "\t".repeat(g);
-			});
-		}
-		let k=this.#get_renderer_key(x);
-		if(r_name) k=r_name;
-		if(k===null) return null;
-		let t_name=this.#uppercase_first(k);
-		let keys=Object.keys(as(x));
-		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
-		let tmp_1=`
-		d1!/** @private @arg {${t_name}} x */
-		d1!${t_name}(x) {
-			d2!${body}
-		d1!}
-		`;
-		let ex_names=req_names.map(e => {
-			let tmp0=`
-			d1!/** @private @arg {${e}} x */
-			d1!${e}(x) {
-				d2!x;
-				d2!debugger;
-			d1!}
-			`;
-			return tmp0;
-		});
-		tmp_1=ex_names.join("")+tmp_1;
-		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
-		let tmp3=gen_padding(tmp2);
-		return `\n${tmp3}`;
-	}
-	/** @arg {string} x */
-	#uppercase_first(x) {
-		return x[0].toUpperCase()+x.slice(1);
-	}
-	/** @arg {unknown} x */
-	#get_renderer_key(x) {
-		let keys=Object.keys(as(x));
-		for(let c of keys) {
-			if(c==="clickTrackingParams") continue;
-			if(c==="commandMetadata") continue;
-			return c;
-		}
-		return null;
-	}
-	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_typedef(x,r=null) {
-		let k=this.#get_renderer_key(x);
-		if(k===null) return null;
-		let tn=k;
-		if(r) {
-			tn=r;
-		}
-		tn=this.#uppercase_first(tn);
-		let obj_count=0;
-		/** @private @type {{[x: number|string]:{}}} */
-		let xa=as(x);
-		let o2=xa[k];
-		let keys=Object.keys(as(x)).concat(Object.keys(o2));
-		const max_str_len=40;
-		let tc=JSON.stringify(x,(k1,o) => {
-			if(k1==="") return o;
-			if(typeof o==="string") {
-				if(o.length>max_str_len) {
-					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
-					return "TYPE::string";
-				}
-				let u_ty_count=[...new Set(o.split("").sort())].join("").length;
-				if(o.includes("%")) {
-					if(u_ty_count>13) {
-						return "TYPE::string";
-					}
-				}
-				if(k1=="trackingParams") return "TYPE::string";
-				if(k1=="clickTrackingParams") return "TYPE::string";
-				if(k1=="playlistId") {
-					if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
-					if(o.startsWith("RD")) return `TYPE::\`RD$\{string}\``;
-					if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
-					debugger;
-					return "TYPE::string";
-				}
-				if(k1=="videoId") {
-					console.log("[video_id_json]",o);
-					return "TYPE::string";
-				}
-				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
-				return o;
-			}
-			if(typeof o==="number") return o;
-			if(typeof o==="boolean") return o;
-			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
-			if(o.runs&&o.runs instanceof Array) {
-				return "TYPE::TextT";
-			}
-			if(o.simpleText&&typeof o.simpleText==="string") {
-				return "TYPE::SimpleText";
-			}
-			if(o.thumbnails&&o.thumbnails instanceof Array) {
-				return "TYPE::Thumbnail";
-			}
-			if(o.iconType&&typeof o.iconType==="string") {
-				return `TYPE::Icon<"${o.iconType}">`;
-			}
-			if(o.browseEndpoint) {
-				return `TYPE::BrowseEndpoint<never>`;
-			}
-			if(keys.includes(k1)) {
-				if(o instanceof Array) return [o[0]];
-				return o;
-			}
-			if(o instanceof Array) return [o[0]];
-			obj_count++;
-			if(obj_count<2) return o;
-			if(o instanceof Array) return [{}];
-			return {};
-		},"\t");
-		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
-			return g+":";
-		});
-		/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
-		function replace_until_same(s,rx,fn) {
-			let i=0;
-			let ps=s;
-			do {
-				let p=s;
-				s=s.replaceAll(rx,fn);
-				ps=p;
-				if(i>12) break;
-			} while(ps!==s);
-			return s;
-		}
-		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
-			return `{${vi}}:ARRAY_TAG`;
-		});
-		tc=tc.replaceAll(":ARRAY_TAG","[]");
-		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
-			return x.replaceAll("\\\"","\"");
-		});
-		tc=tc.replaceAll(",",";");
-		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
-		let ret;
-		if(typeof tn==="number") {
-			ret=`\ntype ArrayType_${tn}=${tc}\n`;
-		} else {
-			ret=`\ntype ${tn}=${tc}\n`;
-		}
-		return ret;
-	}
-	/** @public @arg {string} x1 */
-	generate_depth(x1) {
-		let rxr=/{(?<x>(\s|.)+)}/g.exec(x1);
-		if(!rxr?.groups) return null;
-		let x=rxr.groups.x.trim().split(/([;{}])/).filter(e => e);
-		/** @private @arg {string[]} x */
-		function make_depth_arr(x) {
-			/** @private @type {[number,string][]} */
-			let o=[];
-			let depth=0;
-			for(let v of x) {
-				if(v==="{}"[0]) depth++;
-				o.push([depth,v]);
-				if(v==="{}"[1]) depth--;
-			};
-			return o;
-		};
-		let depth_state={
-			ld: 0,
-		};
-		let da=make_depth_arr(x);
-		/** @private @type {string[]} */
-		let r1=da.reduce((a,c) => {
-			if(c[0]===0) {
-				a.push(c[1]);
-				return a;
-			};
-			if(depth_state.ld<1) a.push(c[1]);
-			else a.push(a.pop()+c[1]);
-			depth_state.ld=c[0];
-			return a;
-		},[""]);
-		let r2=r1.reduce((a,c) => {
-			if(c===";") {
-				a.push(a.pop()+";","");
-				return a;
-			};
-			a.push(a.pop()+c);
-			return a;
-		},[""]);
-		let trimmed_r2=r2.map(e => e.trim());
-		let no_empty_r2=trimmed_r2.filter(e => e);
-		let typedef_members=no_empty_r2.map(e => {
-			let ss=split_string_once(e,":");
-			if(ss.length==1) throw new Error();
-			return ss;
-		});
-		return new Map(typedef_members);
-	}
-	/** @public @arg {{}} x @arg {string|null} r */
-	use_generated_members(x,r=null) {
-		let td=new Generate(this);
-		td.generate_typedef_and_depth(x,r);
-		return td;
 	}
 }
 //#endregion
