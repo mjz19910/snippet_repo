@@ -3245,11 +3245,12 @@ class BaseService extends BaseServicePrivate {
 	}
 	// x is reserved for the first arg
 	// y reserved for unpack target
-	/** @protected @template U @arg {U[]|undefined} x @arg {(this:this,x:U,i:number)=>void} y  */
+	/** @protected @template U @arg {(U|undefined)[]|undefined} x @arg {(this:this,x:U,i:number)=>void} y  */
 	z(x,y) {
 		if(x===void 0) return;
 		for(let it of x.entries()) {
 			const [i,a]=it;
+			if(!a) continue;
 			y.call(this,a,i);
 		}
 	}
@@ -7797,7 +7798,7 @@ class HandleTypes extends BaseService {
 			return this.LiveChatRenderer(x);
 		}
 		let k=this.get_renderer_key(x);
-		if(!k||typeof k=='number') {debugger;return;}
+		if(!k||typeof k=='number') {debugger; return;}
 		let rd=this.generate_renderer(x[k],k);
 		console.log(rd);
 		let td=this.generate_typedef(x[k],k);
@@ -9060,11 +9061,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {InfoRowData} x */
 	InfoRowData(x) {
-		const {title: a,defaultMetadata:b,trackingParams:c,infoRowExpandStatusKey:d,...y}=x; this.g(y);
-		this.text_t(a);
-		this.text_t(b);
-		this.trackingParams(c);
-		if(d) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],d);
+		const {title: a,defaultMetadata: b,expandedMetadata: c,expandIcon: d,trackingParams: e,infoRowExpandStatusKey: f,...y}=x; this.g(y);
+		this.z([a,b,c],this.text_t);
+		this.Icon(d);
+		this.trackingParams(e);
+		if(f) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],f);
 	}
 }
 //#endregion
