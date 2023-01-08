@@ -7906,8 +7906,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoQualityPromoData} x */
 	VideoQualityPromoData(x) {
+		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=x; this.g(y);
 		this.EndpointTemplate(x.endpoint,a => this.w(a,a => this.UrlEndpointData(a)));
-		console.log("VideoQualityPromo.endpoint",x.endpoint);
+		debugger;
 	}
 	/** @template T @arg {EndpointTemplate<T>} x @arg {(x:T)=>void} f */
 	EndpointTemplate(x,f) {
@@ -7947,6 +7948,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
+		debugger;
 		const {results: a,secondaryResults: b,playlist: c,autoplay: d,conversationBar: e,...y}=x; this.g(y);
 		this.ResultsTemplate(a,x1 => {
 			let [k]=get_keys_of(x1);
@@ -8784,8 +8786,10 @@ class HandleTypes extends BaseService {
 	#is_TextT(x2) {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
-	/** @arg {string[]} req_names @arg {{[x:string]:unknown}} x1 @arg {string[]} keys @arg {string|number} t_name */
-	#generate_renderer_body(req_names,x1,keys,t_name) {
+	/** @arg {string[]} req_names @arg {unknown} x @arg {string[]} keys @arg {string|number} t_name */
+	#generate_renderer_body(req_names,x,keys,t_name) {
+		/** @type {{[x:string]:{}}} */
+		let x1=as_cast(x);
 		/** @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
@@ -8872,7 +8876,7 @@ class HandleTypes extends BaseService {
 		}
 		x;
 	}
-	/** @arg {{}} x @arg {string|null} r_name */
+	/** @arg {unknown} x @arg {string|null} r_name */
 	#generate_renderer(x,r_name=null) {
 		console.log("gen renderer for",x);
 		/** @type {string[]} */
@@ -8887,7 +8891,7 @@ class HandleTypes extends BaseService {
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		let t_name=this.#uppercase_first(k);
-		let keys=Object.keys(x);
+		let keys=Object.keys(as_cast(x));
 		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
 		d1!/** @arg {${t_name}} x */
@@ -8933,6 +8937,11 @@ class HandleTypes extends BaseService {
 	generate_typedef_log(x,r_name) {
 		let rd=this.#generate_typedef(x,r_name);
 		console.log(rd);
+	}
+	/** @arg {unknown} x @arg {string|null} r_name */
+	generate_obj_log(x,r_name) {
+		let str=this.#generate_renderer(x,r_name);
+		console.log(str);
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
 	#generate_typedef(x,r_name=null) {
