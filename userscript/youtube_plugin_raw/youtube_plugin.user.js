@@ -3217,10 +3217,13 @@ class BaseService extends BaseServicePrivate {
 	/** @template {[string,null,string]} T @template {`${T[0]}-${string}-${T[2]}`} U @arg {T} ns_arr @arg {U} s */
 	save_enum_path(ns_arr,s) {
 		// ['', '-artists-row-state-id']
-		let no_ns=split_string_once(s,ns_arr[0]);
-		if(!no_ns[1]) throw new Error();
-		let nn=this.drop_separator(no_ns[1],"-");
-		console.log(nn);
+		let n1=split_string_once(s,ns_arr[0]);
+		if(!n1[1]) throw new Error();
+		let n2=this.drop_separator(n1[1],"-");
+		if(!n2) throw new Error();
+		let n3=this.drop_separator(split_string_once(n2,ns_arr[2])[0],"-");
+		if(!n3) throw new Error();
+		this.save_string(`ELEMENT::${ns_arr[0]}::@::${ns_arr[2]}`,n3);
 		debugger;
 	}
 	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(k:string,v: {})=>void} fn */
