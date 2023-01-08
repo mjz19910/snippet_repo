@@ -7721,8 +7721,8 @@ class HandleTypes extends BaseService {
 	StreamingData(x) {
 		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
-	/** @type {FormatItag[]} */
-	format_itag_arr=[133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315];
+	/** @type {FormatItagArr} */
+	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399];
 	/** @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
