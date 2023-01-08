@@ -12,6 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+// #region
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {
 	return x;
@@ -26,7 +27,6 @@ function export_(fn) {
 const YtdAppElement=as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
-// #region
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 	let inject_api=window.inject_api??as({});
