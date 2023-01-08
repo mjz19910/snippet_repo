@@ -6414,8 +6414,9 @@ class HandleTypes extends BaseService {
 		const {text: a,bold: b,navigationEndpoint: c,...y}=x;
 		this.primitive_of(a,"string");
 		if(b) this.primitive_of(b,"boolean");
-		if(c) {
+		x: if(c) {
 			console.log(`[TextRun.navigationEndpoint.${this.#get_renderer_key(c)}]`,c);
+			if(!("browseEndpoint" in c)) break x;
 			let c1=c.browseEndpoint;
 			console.log(`[TextRun..${this.#get_renderer_key(c1)}]`,c1);
 		}
@@ -8610,8 +8611,20 @@ class HandleTypes extends BaseService {
 			return this.SubscriptionStateEntity(x);
 		} else if("playlistLoopStateEntity" in x) {
 			return this.PlaylistLoopStateEntity(x);
+		} else if("transcriptTrackSelectionEntity" in x) {
+			return this.TranscriptTrackSelectionEntity(x);
 		}
 		debugger;
+	}
+	/** @arg {TranscriptTrackSelectionEntity} x */
+	TranscriptTrackSelectionEntity(x) {
+		this.TranscriptTrackSelectionEntityData(x.transcriptTrackSelectionEntity);
+	}
+	/** @arg {TranscriptTrackSelectionEntityData} x */
+	TranscriptTrackSelectionEntityData(x) {
+		this.primitive_of(x.key,"string");
+		this.primitive_of(x.selectedTrackIndex,"number");
+		this.primitive_of(x.serializedParams,"string");
 	}
 	/** @arg {PlaylistLoopStateEntityData} x */
 	PlaylistLoopStateEntityData(x) {
