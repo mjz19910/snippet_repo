@@ -8254,10 +8254,23 @@ class HandleTypes extends BaseService {
 		switch(x.type) {
 			case "ENTITY_MUTATION_TYPE_DELETE": {
 				const {type: {},entityKey: a,options: b,...y}=x; this.g(y);
-				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
 				this.EntityMutationOptions(b);
-				console.log("[entity_del]",dec);
-				debugger;
+				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
+				if(!dec) {
+					console.log("[entity_replace_failed]",a);
+					debugger;
+					break;
+				}
+				if(dec[0][0]!=="child") {debugger;break;}
+				if(dec[1][0]!=="data32") {debugger;break;}
+				let entityTypeFieldNumber=dec[1][2];
+				if(!is_keyof_RUa(entityTypeFieldNumber)) break;
+				const target={
+					entityTypeFieldNumber: dec[1][2],
+					entityType: RUa[entityTypeFieldNumber],
+					entityId: decoder.decode(dec[0][2]),
+				};
+				console.log("[entity_del]",target);
 			} break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
 				const {type: {},entityKey: a,payload: b,...y}=x; this.g(y);
