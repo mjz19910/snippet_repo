@@ -4792,12 +4792,10 @@ class HandleTypes extends ServiceData {
 	uu=this.z;
 	/** @type {HTMLDivElement|null} */
 	_target_element=null;
-	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>Promise<void>} f  */
+	/** @public @template U @arg {U[]} x @arg {(this:this,x:U,i:number)=>Promise<void>} f  */
 	async z_async(x,f) {
-		if(x===void 0) {debugger; return;}
 		for(let it of x.entries()) {
 			const [i,a]=it;
-			if(a===void 0) {debugger; continue;}
 			await f.call(this,a,i);
 		}
 	}
@@ -4806,14 +4804,15 @@ class HandleTypes extends ServiceData {
 		if(!this._target_element) {
 			this._target_element=this.make_dom_log_part();
 		}
-		if(this.auto_depth===0&&this.root_element) {
+		if(this.auto_depth===0&&this.root_element&&this.item_count>1024) {
 			this._target_element.remove();
 			let container_element=document.createElement("div");
 			this._target_element=container_element;
 			this.root_element.append(container_element);
+			this.item_count=0;
 		}
 		this.auto_depth++;
-		this.z_async(Object.entries(x),this.auto_entry);
+		await this.z_async(Object.entries(x),this.auto_entry);
 		this.auto_depth--;
 		if(this.auto_depth===0) {
 			this._target_element.append(this.auto_dom);
@@ -4824,7 +4823,7 @@ class HandleTypes extends ServiceData {
 	make_dom_log_part() {
 		let container_element=document.createElement("div");
 		let root_element=document.createElement("div");
-		root_element.style.whiteSpace="pre";
+		root_element.setAttribute("style","white-space:pre;font-size:1.4rem;color:#f1f1f1;position:absolute;top:54px;z-index:1;padding:4px;");
 		let fc=document.body.firstChild;
 		if(fc) {
 			document.body.insertBefore(root_element,fc);
@@ -4839,45 +4838,54 @@ class HandleTypes extends ServiceData {
 	auto_depth=0;
 	/** @arg {string} x */
 	append_dom_log(x) {
-		const li = document.createElement('li');
-		li.textContent = x;
-		this.auto_dom.append(li);
+		const msg_container = document.createElement('div');
+		msg_container.textContent = x;
+		this.auto_dom.append(msg_container);
 	}
 	/** @arg {[any, any]} a */
 	async auto_entry(a) {
-		let [k,v]=a;
+		let [k,x]=a;
+		if(typeof x==="string") return;
+		if(typeof x!=="object") return;
+		if(x===null) return;
 		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]"+k);
 		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
-		let ret=this.auto_any(v);
+		let ret=await this.auto_any(x);
 		return ret;
 	}
 	get target_element(){
 		if(!this._target_element) throw new Error();
-		return this._target_element
+		return this._target_element;
 	}
-	/** @arg {any} x @returns {Promise<void>} */
+	/** @arg {unknown} x @returns {Promise<void>} */
 	async auto_any(x) {
 		if(typeof x==="string") return;
 		if(typeof x!=="object") return;
+		if(x===null) return;
 		this.item_count++;
 		if(this.item_count%128===0) {
 			this.target_element.append(this.auto_dom);
 			await new Promise(a=>setTimeout(a,50));
 		}
 		if(x instanceof Array) {
-			let ret=this.z_async(x,async (a,i)=>{
+			let ret=await this.z_async(x,async (a,i)=>{
 				this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx] "+i);
 				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
-				let ret=this.auto_any(a);
+				let ret=await this.auto_any(a);
 				return ret;
 			});
 			return ret;
 		}
 		let name=this.get_name_from_keys(x);
 		indexed_db.put({v: "name-list-"+name});
-		this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}] ${Object.keys(x).join()}`);
+		if("rootVe" in x) {
+			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}] RootVe:${x.rootVe}`);
+		} else {
+			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}]`);
+		}
 		// console.log(" ".repeat(this.auto_depth)+name,x);
-		return this.auto(x);
+		await this.auto(x);
+		return;
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
