@@ -6044,8 +6044,7 @@ class HandleTypes extends BaseService {
 						}
 						/** @arg {TemplateElement} x */
 						function iterate_template_element(x) {
-							let res=Object.entries(x);
-							for(let i of res) {
+							for(let i of x.map.entries()) {
 								console.log("[template_iter]",i);
 							}
 						}
@@ -6083,6 +6082,7 @@ class HandleTypes extends BaseService {
 				switch(a[0]) {
 					case "f_n": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
 					case "f_s": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
+					case "f_o": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
 				}
 			}
 		};
@@ -6093,18 +6093,15 @@ class HandleTypes extends BaseService {
 		Object.defineProperties(res_obj,pd);
 		for(let it of x) {
 			switch(it[0]) {
-				case "data32": {
-					let [,f,v]=it;
-					res_obj[`f_n${f}`]=v;
-				} break;
+				case "data32": res_obj.set_key(["f_n",it[1],it[2]]); break;
 				case "data_fixed32": res_obj.set_key(["f_n",it[1],it[2]]); break;
-				case "child": res_obj.set_key(["f_s",it[1],decoder.decode(it[2])]); res_obj[`f_s${it[1]}`]=decoder.decode(it[2]); break;
+				case "child": res_obj.set_key(["f_s",it[1],decoder.decode(it[2])]); break;
 				case "struct": {
-					let [,f,v]=it;
-					res_obj[`f_o${f}`]=this.decode_template_element_1(v);
+					let v1=this.decode_template_element_1(it[2]);
+					res_obj.set_key(["f_o",it[1],v1]);
 				} break;
-				case "data64": res_obj[`f_n${it[1]}`]=it[2]; break;
-				case "data_fixed64": res_obj[`f_n${it[1]}`]=it[2]; break;
+				case "data64": res_obj.set_key(["f_n",it[1],it[2]]); break;
+				case "data_fixed64": res_obj.set_key(["f_n",it[1],it[2]]); break;
 				default: debugger;
 			}
 		}
