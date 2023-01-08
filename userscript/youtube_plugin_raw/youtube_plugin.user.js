@@ -8451,7 +8451,18 @@ class HandleTypes extends BaseService {
 			if(typeof in_o!=='object') {
 				debugger;
 			}
-			in_o;
+			if("simpleText" in in_o) {
+				ret_arr.push(`
+				this.text_t(x.${k});
+				`.trim());
+				continue;
+			};
+			if("runs" in in_o&&in_o.runs instanceof Array) {
+				ret_arr.push(`
+				this.text_t(x.${k});
+				`.trim());
+				continue;
+			};
 			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 			let mn=tn.replace("Renderer","Data");
 			if(mn===t_name) mn+="Data";
