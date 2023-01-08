@@ -8418,7 +8418,7 @@ class HandleTypes extends BaseService {
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
-	/** @arg {string[]} req_names @arg {{[x:string]:any}} x @arg {string[]} keys @arg {string|number} t_name */
+	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x,keys,t_name) {
 		let ret_arr=[];
 		debugger;
@@ -8429,25 +8429,33 @@ class HandleTypes extends BaseService {
 				`.trim());
 				continue;
 			}
-			if(typeof x[k]==='string') {
-				let v=x[k];
-				if(v.startsWith("https:")) {
+			let in_o=x[k];
+			if(typeof in_o==='string') {
+				if(in_o.startsWith("https:")) {
 					ret_arr.push(`
 					this.primitive_of(x.${k},"string");
 					`.trim());
 					continue;
 				}
 				ret_arr.push(`
-				if(x.${k}!=="${x[k]}") debugger;
+				if(x.${k}!=="${in_o}") debugger;
 				`.trim());
 				continue;
 			}
-			if(typeof x[k]!=='object') {
+			if(typeof in_o=='boolean') {
 				ret_arr.push(`
-				if(x.${k}!==${x[k]}) debugger;
+				if(x.${k}!==${in_o}) debugger;
 				`.trim());
 				continue;
 			}
+			if(typeof in_o!=='object') {
+				ret_arr.push(`
+				if(x.${k}!==${in_o}) debugger;
+				`.trim());
+				debugger;
+				continue;
+			}
+			in_o;
 			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 			let mn=tn.replace("Renderer","Data");
 			if(mn===t_name) mn+="Data";
