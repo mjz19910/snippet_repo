@@ -5752,11 +5752,9 @@ class HandleTypes extends BaseService {
 			return this.ReelWatchEndpointData(a);
 		} else if("signalServiceEndpoint" in x) {
 			const {signalServiceEndpoint: a,...y}=x; this.g(y);
-			this.SignalServiceEndpointData(a);
-		} else {
-			debugger;
+			return this.SignalServiceEndpointData(a);
 		}
-		x.signalServiceEndpoint;
+		debugger;
 	}
 	/** @template {{}} T @template {keyof VEMap} U @arg {ServiceEndpoint<T,U>} x @arg {(x:ServiceEndpoint_Omit<T,U>)=>void} f */
 	ServiceEndpoint(x,f) {
