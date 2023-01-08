@@ -3444,9 +3444,14 @@ class IndexedDbAccessor {
 	put(obj) {
 		if(this.database_open) {
 			if(this.keys.includes(obj.v)) {
-				let idx=this.arr.findIndex(e=>e.v===obj.v);
-				this.arr[idx]=obj;
-				return;
+				let idx=this.arr.findIndex(e => e.v===obj.v);
+				if(idx>=0) {
+					this.arr[idx]=obj;
+					return;
+				} else {
+					this.arr.push(obj);
+					return;
+				}
 			}
 			this.keys.push(obj.v);
 			this.arr.push(obj);
@@ -3454,7 +3459,7 @@ class IndexedDbAccessor {
 		}
 		this.requestOpen();
 		if(this.keys.includes(obj.v)) {
-			let idx=this.arr.findIndex(e=>e.v===obj.v);
+			let idx=this.arr.findIndex(e => e.v===obj.v);
 			this.arr[idx]=obj;
 			return;
 		}
@@ -4855,8 +4860,8 @@ class HandleTypes extends ServiceData {
 	auto_depth=0;
 	/** @arg {string} x */
 	append_dom_log(x) {
-		const msg_container = document.createElement('div');
-		msg_container.textContent = x;
+		const msg_container=document.createElement('div');
+		msg_container.textContent=x;
 		this.auto_dom.append(msg_container);
 	}
 	/** @arg {[any, any]} a */
@@ -4870,7 +4875,7 @@ class HandleTypes extends ServiceData {
 		let ret=await this.auto_any(x);
 		return ret;
 	}
-	get target_element(){
+	get target_element() {
 		if(!this._target_element) throw new Error();
 		return this._target_element;
 	}
@@ -4882,10 +4887,10 @@ class HandleTypes extends ServiceData {
 		this.item_count++;
 		if(this.item_count%128===0) {
 			this.target_element.append(this.auto_dom);
-			await new Promise(a=>setTimeout(a,50));
+			await new Promise(a => setTimeout(a,50));
 		}
 		if(x instanceof Array) {
-			let ret=await this.z_async(x,async (a,_i)=>{
+			let ret=await this.z_async(x,async (a,_i) => {
 				// this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx]  "+i);
 				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
 				let ret=await this.auto_any(a);
