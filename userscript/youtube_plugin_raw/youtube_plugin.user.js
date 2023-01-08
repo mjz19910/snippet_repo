@@ -1557,8 +1557,10 @@ class FilterHandlers {
 	}
 	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
-		const {response,...y}=detail;
+		const {response,endpoint,...y}=detail;
 		this.handle_types.DataResponsePageType(response);
+		this.handle_types.auto(endpoint);
+		this.handle_types.auto(y);
 		console.log(y);
 	}
 

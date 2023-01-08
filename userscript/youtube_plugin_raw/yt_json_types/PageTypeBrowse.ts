@@ -1,6 +1,6 @@
 type PageTypeBrowse={
 	pageType: "browse";
-	endpoint: YtEndpoint;
+	endpoint: BrowseEndpoint<{}>;
 	response: BrowsePageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
