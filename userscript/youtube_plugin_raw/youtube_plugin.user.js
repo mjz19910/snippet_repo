@@ -3049,13 +3049,13 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn.call(this,e[0],e[1]));
 	}
-	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} y  */
-	z(x,y) {
+	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} f  */
+	z(x,f) {
 		if(x===void 0) {debugger; return;}
 		for(let it of x.entries()) {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
-			y.call(this,a,i);
+			f.call(this,a,i);
 		}
 	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
@@ -4789,43 +4789,72 @@ class HandleTypes extends ServiceData {
 	}
 	/** @type {DocumentFragment} */
 	auto_dom=new DocumentFragment();
+	uu=this.z;
 	/** @type {HTMLDivElement|null} */
-	target_element=null;
-	/** @arg {{}} x */
-	auto(x) {
-		this.auto_depth++;
-		this.z(Object.entries(x),this.auto_entry);
-		this.auto_depth--;
-		if(this.auto_depth===0) {
-			if(this.target_element) this.target_element.remove();
-			this.target_element=document.createElement("div");
-			this.target_element.style.whiteSpace="pre";
-			document.body.append(this.target_element);
-			this.target_element.append(this.auto_dom);
+	_target_element=null;
+	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>Promise<void>} f  */
+	async z_async(x,f) {
+		if(x===void 0) {debugger; return;}
+		for(let it of x.entries()) {
+			const [i,a]=it;
+			if(a===void 0) {debugger; continue;}
+			await f.call(this,a,i);
 		}
 	}
+	/** @arg {{}} x */
+	async auto(x) {
+		if(!this._target_element) {
+			this._target_element=this.make_dom_log_part();
+		}
+		this.auto_depth++;
+		this.z_async(Object.entries(x),this.auto_entry);
+		this.auto_depth--;
+		if(this.auto_depth===0) {
+			this._target_element.append(this.auto_dom);
+		}
+	}
+	make_dom_log_part() {
+		let root_element=document.createElement("div");
+		root_element.style.whiteSpace="pre";
+		let fc=document.body.firstChild;
+		if(fc) {
+			document.body.insertBefore(root_element,fc);
+		} else {
+			document.body.append(root_element);
+		}
+		return root_element;
+	}
+	item_count=0;
 	auto_depth=0;
 	/** @arg {string} x */
 	append_dom_log(x) {
 		const li = document.createElement('li');
 		li.textContent = x;
 		this.auto_dom.append(li);
-
 	}
 	/** @arg {[any, any]} a */
-	auto_entry(a) {
+	async auto_entry(a) {
 		let [k,v]=a;
 		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]"+k);
 		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
 		let ret=this.auto_any(v);
 		return ret;
 	}
-	/** @arg {any} x @returns {void} */
-	auto_any(x) {
+	get target_element(){
+		if(!this._target_element) throw new Error();
+		return this._target_element
+	}
+	/** @arg {any} x @returns {Promise<void>} */
+	async auto_any(x) {
 		if(typeof x==="string") return;
 		if(typeof x!=="object") return;
+		this.item_count++;
+		if(this.item_count%128===0) {
+			this.target_element.append(this.auto_dom);
+			await new Promise(a=>setTimeout(a,50));
+		}
 		if(x instanceof Array) {
-			let ret=this.z(x,(a,i)=>{
+			let ret=this.z_async(x,async (a,i)=>{
 				this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx] "+i);
 				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
 				let ret=this.auto_any(a);
@@ -4837,7 +4866,7 @@ class HandleTypes extends ServiceData {
 		indexed_db.put({v: "name-list-"+name});
 		this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}] ${Object.keys(x).join()}`);
 		console.log(" ".repeat(this.auto_depth)+name,x);
-		this.auto(x);
+		return this.auto(x);
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
