@@ -7973,7 +7973,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
-		debugger;
 		const {results: a,secondaryResults: b,playlist: c,autoplay: d,conversationBar: e,...y}=x; this.g(y);
 		this.ResultsTemplate(a,x1 => {
 			let [k]=get_keys_of(x1);
@@ -8209,6 +8208,10 @@ class HandleTypes extends BaseService {
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
 		console.log("ModifiedSetItem.autoplayVideo",x.autoplayVideo);
+		console.log("ModifiedSetItem.nextButtonVideo",x.nextButtonVideo);
+		this.AutoplayVideo(x.autoplayVideo);
+		this.NextButtonVideo(x.nextButtonVideo);
+		this.PreviousButtonVideo(x.previousButtonVideo);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
@@ -8818,10 +8821,8 @@ class HandleTypes extends BaseService {
 		/** @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
-			if(k==="trackingParams") {
-				ret_arr.push(`this.trackingParams(x.${k});`);
-				continue;
-			}
+			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`);continue;}
+			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`);continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
@@ -9449,9 +9450,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
-		const {title,viewCount,videoActions,trackingParams,badges,dateText,relativeDateText,...y}=x; this.g(y);
+		const {title,viewCount,videoActions,trackingParams,badges: a,dateText,relativeDateText,...y}=x; this.g(y);
 		this.text_t(title);
-		this.z(badges,this.MetadataBadgeRenderer);
+		if(a) this.z(a,this.MetadataBadgeRenderer);
 		this.VideoViewCountRenderer(x.viewCount);
 		this.z([dateText,relativeDateText],this.text_t);
 		this.trackingParams(trackingParams);

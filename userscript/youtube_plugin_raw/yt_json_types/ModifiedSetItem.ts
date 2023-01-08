@@ -1,4 +1,5 @@
 type ModifiedSetItem={
-	autoplayVideo: YtEndpoint;
-	nextButtonVideo: YtEndpoint;
+	autoplayVideo: WatchPlaylistEndpoint;
+	nextButtonVideo: WatchPlaylistEndpoint;
+	previousButtonVideo?: WatchPlaylistEndpoint;
 };
