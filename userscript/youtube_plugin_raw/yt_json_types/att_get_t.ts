@@ -1,1 +1,1 @@
-type att_get_t={type: "att.get";data: AttGet;};
+type att_get_t={type: "att.get";data: AttGetResponse;};

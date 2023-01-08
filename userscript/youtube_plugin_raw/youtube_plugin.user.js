@@ -1251,11 +1251,6 @@ function decode_b64_proto_obj(str) {
 	let reader=new MyReader(buffer);
 	return reader.try_read_any();
 }
-/** @private @arg {string} x */
-function decode_url_b64(x) {
-	x=x.replaceAll("_","/").replaceAll("-","+");
-	return base64_dec.decodeByteArray(x);
-}
 /** @private @template {string} T @arg {T} str @returns {UrlParse<T>} */
 function create_from_parse(str) {
 	let s=new URL(str);
@@ -1405,7 +1400,7 @@ class FilterHandlers {
 			};
 			case "record_interactions": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {YtSuccessResponse} */
+				/** @type {SuccessResponse} */
 				data: as(x),
 			};
 		}
@@ -1428,7 +1423,7 @@ class FilterHandlers {
 			default: debugger; break;
 			case "get": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {AttGet} */
+				/** @type {AttGetResponse} */
 				data: as(x),
 			};
 		}
@@ -1440,7 +1435,7 @@ class FilterHandlers {
 			default: debugger; break;
 			case "account_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {AccountMenuJson} */
+				/** @type {AccountMenuResponse} */
 				data: as(x),
 			};
 			case "accounts_list": return {
@@ -4323,38 +4318,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
-		let {page: a,endpoint: b,response: c,url: d,previousCsn: e,...y}=x;
-		if(a!=="browse") debugger;
-		this.BrowseEndpoint(b,a => this.BrowseWebCommandMetadata(a));
 		this.save_keys("[DataResponsePageType]",x);
-		this.s_parser.parse_url(d);
-		this.BrowseResponseContent(c);
-		if(e) this.previousCsn(e);
-		this.g(y);
-	}
-	/** @private @template {WebCommandMetadataTemplateType} T @arg {BrowseEndpoint<T>} x @arg {(this:this,v:T)=>void} f */
-	BrowseEndpoint(x,f) {
-		const {clickTrackingParams: a,commandMetadata: b,browseEndpoint: c,...y}=x; this.g(y);
-		this.clickTrackingParams(a);
-		this.BrowseCommandMetadata(b,f);
-		this.BrowseEndpointData(c);
-	}
-	/** @private @template {WebCommandMetadataTemplateType} T @arg {BrowseCommandMetadata<T>} x @arg {(this:this,v:T)=>void} f */
-	BrowseCommandMetadata(x,f) {
-		if("resolveUrlCommandMetadata" in x) {
-			this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
-		}
-		if("webCommandMetadata" in x) {
-			f.call(this,x.webCommandMetadata);
-		}
-	}
-	/** @private @arg {BrowseWebCommandMetadata} x */
-	BrowseWebCommandMetadata(x) {
-		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		if(x.url!=="/") debugger;
-		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(x.rootVe!==3854) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
@@ -4376,35 +4340,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
 		this.save_keys("[BrowseResponseContent]",x);
-	}
-	/** @private @arg {string} x */
-	parse_endpoint_params(x) {
-		let arr=decode_url_b64(x);
-		let reader=new MyReader(arr);
-		let res=reader.try_read_any();
-		if(!res) return;
-		const [f0]=res;
-		if(f0[0]!=="child") {
-			console.log(f0);
-			return;
-		}
-		console.log(...res);
-		let [,field_id,data]=f0;
-		reader.pos=data.byteOffset;
-		let more=reader.try_read_any(data.byteLength);
-		if(more&&!more.find(e => e[0]==="error")) {
-			const [f0]=more;
-			console.log(
-				"parsed_endpoint_param field_id=%o result(%o)={message}",
-				field_id,data.length
-			);
-			console.log("{message}",f0);
-		} else {
-			console.log(
-				"parsed_endpoint_param field_id=%o result(%o)=\"%s\"",
-				field_id,data.length,decoder.decode(data)
-			);
-		}
 	}
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
@@ -4445,47 +4380,8 @@ class HandleTypes extends BaseService {
 			default: console.log("[param_value_needed]",v_2c,x); break;
 		}
 	}
-	/** @private @arg {BrowseEndpointData} x */
-	BrowseEndpointData(x) {
-		const {params: a,browseId: b,canonicalBaseUrl: c,...y}=x;
-		if(a) this.parse_endpoint_params(decodeURIComponent(a));
-		if(b) this.parse_browse_id(b);
-		this.save_keys("[BrowseEndpointData]",x);
-		this.g(y);
-	}
-	endpoint_data_map=new class {
-		constructor() {
-			this._map=new Map(Object.entries(this._obj_map));
-		}
-		/** @type {endpoint_data_handler_names} */
-		_obj_map={
-			continuationCommand: "ContinuationCommand",
-			commandMetadata: "CommandMetadata",
-			watchEndpoint: "WatchEndpointData_1",
-			browseEndpoint: "BrowseEndpointData",
-			searchEndpoint: "SearchEndpointData",
-			setSettingEndpoint: "SetSettingEndpointData",
-			signalServiceEndpoint: "SignalServiceEndpointData",
-			urlEndpoint: "UrlEndpointData",
-			signalNavigationEndpoint: "SignalNavigationEndpointData",
-			signOutEndpoint: "SignOutEndpointData",
-			getAccountsListInnertubeEndpoint: "GetAccountsListInnertubeEndpointData",
-			loadMarkersCommand: "LoadMarkersCommand",
-			changeKeyedMarkersVisibilityCommand: "ChangeKeyedMarkersVisibilityCommand",
-			createCommentEndpoint: "CreateCommentEndpointData",
-			confirmDialogEndpoint: "ConfirmDialogEndpointData",
-			reloadContinuationItemsCommand: "ReloadContinuationItemsCommandData",
-			appendContinuationItemsAction: "AppendContinuationItemsAction",
-			liveChatItemContextMenuEndpoint: "LiveChatItemContextMenuEndpointData",
-			openPopupAction: "OpenPopupActionData",
-		};
-	};
 	/** @type {ResponseTypes["type"]|NavigateEventDetail["response"]["page"]|null} */
 	_current_response_type=null;
-	get current_response_type() {
-		if(!this._current_response_type) throw 1;
-		return this._current_response_type;
-	}
 	/** @arg {{}} x */
 	LikeLikeResponse(x) {
 		x;
@@ -4505,10 +4401,10 @@ class HandleTypes extends BaseService {
 			return this.save_string("need_api_type",x.type);
 		};
 		switch(x.type) {
-			case "account.account_menu": return this.AccountMenuJson(x.data);
+			case "account.account_menu": return this.AccountMenuResponse(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			case "account.set_setting": return this.AccountSetSetting(x.data);
-			case "att.get": return this.AttGet(x.data);
+			case "att.get": return this.AttGetResponse(x.data);
 			case "browse": return this.BrowseResponseContent(x.data);
 			case "feedback": return this.JsonFeedbackData(x.data);
 			case "get_transcript": return this.JsonGetTranscriptData(x.data);
@@ -4520,7 +4416,7 @@ class HandleTypes extends BaseService {
 			case "next": return this.WatchNextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuResponse(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountResponse(x.data);
-			case "notification.record_interactions": return this.YtSuccessResponse(x.data);
+			case "notification.record_interactions": return this.SuccessResponse(x.data);
 			case "player": return this.PlayerResponse(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatchResponse(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequenceResponse(x.data);
@@ -4540,7 +4436,6 @@ class HandleTypes extends BaseService {
 	GetLiveChatReplayResponse(x) {
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
-	log_user_channel_url=false;
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
@@ -4552,24 +4447,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-	/** @private @arg {GuideEntryRenderer} x */
-	GuideEntryRenderer(x) {
-		this.save_keys("[GuideEntryRenderer]",x);
-	}
-	/** @private @arg {string} x */
-	clickTrackingParams(x) {
-		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",x);
-		this.primitive_of(x,"string");
-	}
-	/** @private @arg {string} x */
-	trackingParams(x) {
-		if(this.x.get_param("log_tracking_params")) console.log("tp",x);
-		this.primitive_of(x,"string");
-	}
-	/** @private @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
-	primitive_of(x,y) {
-		if(typeof x!==y) debugger;
 	}
 	/** @public @arg {keyof VEMap} x */
 	on_root_visual_element(x) {
@@ -4591,11 +4468,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
-	}
-	/** @private @arg {string} x */
-	previousCsn(x) {
-		let csn=base64_dec.decode_str(x.replaceAll(".","="));
-		console.log("[prev_csn]",csn);
 	}
 	/** @type {Map<string,(number|bigint)[]>} */
 	follow_map=new Map;
@@ -4634,14 +4506,6 @@ class HandleTypes extends BaseService {
 	AccountsListResponse(x) {
 		this.save_keys("[AccountsListResponse]",x);
 	}
-	/** @private @arg {ResolveUrlCommandMetadata} x */
-	ResolveUrlCommandMetadata(x) {
-		const {isVanityUrl: a,parentTrackingParams: b,...y}=x;
-		if(a) this.primitive_of(a,"boolean");
-		this.save_keys("[resolveUrlCommandMetadata]",x);
-		if(b) this.trackingParams(b);
-		this.g(y);
-	}
 	/** @private @arg {ReelItemWatch} x */
 	ReelItemWatchResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
@@ -4670,9 +4534,6 @@ class HandleTypes extends BaseService {
 	SearchPageResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
 	}
-	get s_parser() {
-		return this.x.get("string_parser");
-	}
 	/** @type {FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @type {QualArr} */
@@ -4683,18 +4544,9 @@ class HandleTypes extends BaseService {
 	];
 	valid_fps_arr=[13,25,30,50,60];
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
-	/** @type {Map<"delete"|"replace",boolean>} */
-	log_entity_mutations=new Map([
-		["delete",false],
-		["replace",false],
-	]);
-	replace_path_handler=[315];
-	log_parsed_state_keys=false;
-	log_ypc_upsell=false;
-	log_watch_endpoint_params=false;
-	/** @private @arg {AccountMenuJson} x */
-	AccountMenuJson(x) {
-		this.save_keys("[AccountMenuJson]",x);
+	/** @private @arg {AccountMenuResponse} x */
+	AccountMenuResponse(x) {
+		this.save_keys("[AccountMenuResponse]",x);
 	}
 	/** @arg {NavigateEventDetail} x */
 	YtPageState(x) {
@@ -4702,59 +4554,17 @@ class HandleTypes extends BaseService {
 			case "browse": x.response; break;
 		};
 	}
-	/** @private @arg {YtSuccessResponse} x */
-	YtSuccessResponse(x) {
-		this.save_keys("[YtSuccessResponse]",x);
+	/** @private @arg {SuccessResponse} x */
+	SuccessResponse(x) {
+		this.save_keys("[SuccessResponse]",x);
 	}
-	/** @private @arg {AttGet} x */
-	AttGet(x) {
-		this.AttBgChallenge(x.bgChallenge);
-	}
-	/** @private @template {string} T  @arg {UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
-	t_url_unwrap(x,f) {
-		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
-	}
-	att_log_debug=false;
-	/** @private @arg {AttBgChallenge} x */
-	AttBgChallenge(x) {
-		this.t_url_unwrap(x.interpreterUrl,a => {
-			// spell:disable-next-line
-			if(this.s_parser.str_starts_with(a,"//www.google.com/js/th/")) {
-				return indexed_db.put({v: "trayride-interpreter",hash: split_string_once(split_string_once(a,"th/")[1],".js")[0]});
-			}
-			debugger;
-		});
-		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
+	/** @private @arg {AttGetResponse} x */
+	AttGetResponse(x) {
+		this.save_keys("[AttGetResponse]",x);
 	}
 	/** @private @arg {GuideJsonType} x */
 	GuideJsonType(x) {
-		this.z(x.items,a => this.GuideItemType(a));
-	}
-	/** @private @arg {GuideItemType} x */
-	GuideItemType(x) {
-		if("guideSectionRenderer" in x) {
-			this.GuideSectionData(x.guideSectionRenderer);
-		}
-	}
-	/** @private @arg {GuideSectionData} x */
-	GuideSectionData(x) {
-		this.z(x.items,a => this.GuideSectionItemType(a));
-		this.trackingParams(x.trackingParams);
-	}
-	/** @private @arg {GuideSectionItemType} x */
-	GuideSectionItemType(x) {
-		if("guideEntryRenderer" in x) {
-			this.GuideEntryRenderer(x);
-		} else if("guideCollapsibleSectionEntryRenderer" in x) {
-			this.GuideCollapsibleSectionEntry(x.guideCollapsibleSectionEntryRenderer);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {GuideCollapsibleSectionEntry} x */
-	GuideCollapsibleSectionEntry(x) {
-		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
-		this.GuideEntryRenderer(headerEntry);
+		this.save_keys("[GuideJsonType]",x);
 	}
 	/** @arg {{}} x2 */
 	#is_Thumbnail(x2) {

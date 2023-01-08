@@ -15,11 +15,6 @@ class LongBits {
 	}
 }
 
-/** @arg {MyReader} reader @arg {number} [writeLength] */
-function indexOutOfRange(reader,writeLength) {
-	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
-}
-
 class MyReader {
 	noisy_log_level=false;
 	/** @arg {Uint8Array} buf  */
@@ -106,13 +101,13 @@ class MyReader {
 		if(typeof length==="number") {
 			/* istanbul ignore if */
 			if(this.pos+length>this.len)
-				throw indexOutOfRange(this,length);
+				throw this.indexOutOfRange(length);
 			this.pos+=length;
 		} else {
 			do {
 				/* istanbul ignore if */
 				if(this.pos>=this.len)
-					throw indexOutOfRange(this);
+					throw this.indexOutOfRange(1);
 			} while(this.buf[this.pos++]&128);
 		}
 		if(length!==void 0) {
@@ -204,7 +199,7 @@ class MyReader {
 	}
 	readFixed64() {
 		if(this.pos+8>this.len)
-			throw indexOutOfRange(this,8);
+			throw this.indexOutOfRange(8);
 		return new LongBits(
 			this.readFixed32_end(this.buf,this.pos+=4),
 			this.readFixed32_end(this.buf,this.pos+=4)
@@ -223,7 +218,7 @@ class MyReader {
 	}
 	/** @private @arg {number} writeLength */
 	indexOutOfRange(writeLength) {
-		return RangeError("index out of range: "+this.pos+" + "+(writeLength||1)+" > "+this.len);
+		return RangeError("index out of range: "+this.pos+" + "+writeLength+" > "+this.len);
 	}
 	fixed32() {
 		/* istanbul ignore if */
@@ -318,6 +313,52 @@ class MyReader {
 }
 
 export class Snippet_0_tmp {
+	/** @public @arg {string} x */
+	trackingParams(x) {
+		this.primitive_of(x,"string");
+	}
+	/** @private @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
+	primitive_of(x,y) {
+		if(typeof x!==y) debugger;
+	}
+	/** @public @arg {string} x */
+	clickTrackingParams(x) {
+		this.primitive_of(x,"string");
+	}
+	/** @private @arg {string} x */
+	decode_url_b64(x) {
+		x=x.replaceAll("_","/").replaceAll("-","+");
+		return base64_dec.decodeByteArray(x);
+	}
+	/** @public @arg {string} x */
+	parse_endpoint_params(x) {
+		let arr=this.decode_url_b64(x);
+		let reader=new MyReader(arr);
+		let res=reader.try_read_any();
+		if(!res) return;
+		const [f0]=res;
+		if(f0[0]!=="child") {
+			console.log(f0);
+			return;
+		}
+		console.log(...res);
+		let [,field_id,data]=f0;
+		reader.pos=data.byteOffset;
+		let more=reader.try_read_any(data.byteLength);
+		if(more&&!more.find(e => e[0]==="error")) {
+			const [f0]=more;
+			console.log(
+				"parsed_endpoint_param field_id=%o result(%o)={message}",
+				field_id,data.length
+			);
+			console.log("{message}",f0);
+		} else {
+			console.log(
+				"parsed_endpoint_param field_id=%o result(%o)=\"%s\"",
+				field_id,data.length,decoder.decode(data)
+			);
+		}
+	}
 	/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
 	split_string_once(s,d=cast_as(",")) {
 		if(s==="") {
@@ -601,4 +642,4 @@ export {
 	filter_out_keys,
 	decode_url_b64_proto_obj,
 	has_keys,
-}
+};

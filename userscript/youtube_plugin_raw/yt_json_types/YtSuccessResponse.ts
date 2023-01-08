@@ -1,4 +1,4 @@
-type YtSuccessResponse={
+type SuccessResponse={
 	responseContext: ResponseContext;
 	success: boolean;
 };
