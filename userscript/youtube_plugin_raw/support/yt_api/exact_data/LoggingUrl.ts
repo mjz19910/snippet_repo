@@ -4,7 +4,7 @@ namespace test {
 	}
 	export interface ImpressionEndpoint {
 		loggingUrls: [LoggingUrl];
-		pingingEndpoint: YtEndpoint;
+		pingingEndpoint: {};
 	}
 	type Pu=UrlParse<LoggingUrl["baseUrl"]>["search"];
 	export type LoggingUrlBaseUrlParseSearchParams=Decay<ParseUrlSearchParams<Pu>>;

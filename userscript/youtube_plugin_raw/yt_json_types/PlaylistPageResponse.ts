@@ -1,6 +1,6 @@
 type PlaylistPageResponse={
 	page: "playlist";
-	endpoint: YtEndpoint;
+	endpoint: PlaylistEndpoint;
 	response: PlaylistResponse;
 	url: YtUrlFormat;
 };

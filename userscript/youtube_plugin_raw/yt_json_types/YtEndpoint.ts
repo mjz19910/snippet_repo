@@ -1,1 +1,0 @@
-interface YtEndpoint extends EndpointTypes,EndpointBase {}
