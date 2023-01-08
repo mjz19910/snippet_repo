@@ -6036,9 +6036,6 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
-		let td=this.generate_typedef(x);
-		console.log(td);
-		debugger;
 		const {twoColumnWatchNextResults: a,...y}=x;
 		this.TwoColumnWatchNextResultsData(a);
 		this.g(y);
@@ -8912,6 +8909,10 @@ class HandleTypes extends BaseService {
 					debugger;
 					return "TYPE::string";
 				}
+				if(k1=="videoId") {
+					console.log("[video_id_json]",o);
+					return "TYPE::string";
+				}
 				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 				return o;
 			}
@@ -8946,18 +8947,6 @@ class HandleTypes extends BaseService {
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
-		// /** @arg {string} s */
-		// function one_array_to_any_arr(s,dep=0) {
-		// 	if(dep<8&&s.match(/\[\s+{/g)) {
-		// 		s=s.replaceAll(/\[\s+{([^{}]*)}\s+\]/g,(_a,/**@type {string} */v) => {
-		// 			if(v==="") return "{}[]";
-		// 			debugger;
-		// 			return `{${one_array_to_any_arr(v,dep+1)}}[]`;
-		// 		});
-		// 	}
-		// 	return s;
-		// }
-		// tc=one_array_to_any_arr(tc);
 		tc=tc.replaceAll(/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v)=>{
 			let vi=v.split("\n").map(e=>`${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}[]`;
