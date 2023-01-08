@@ -8492,6 +8492,10 @@ class HandleTypes extends BaseService {
 				this.generate_body_array_item(k,x2,ret_arr);
 				continue;
 			}
+			if("thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==='string') {
+				ret_arr.push(`this.Thumbnail(x.${k});`);
+				continue;
+			}
 			let c=this.get_renderer_key(x2);
 			if(!c||typeof c==='number') {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
@@ -8506,7 +8510,8 @@ class HandleTypes extends BaseService {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
 			}
-			console.log("default for",k,x2);
+			console.log("[gen_body_default_for] [%s]",k,x2);
+			debugger;
 			this.generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
 		return ret_arr.join("\nd2!");
@@ -8815,10 +8820,6 @@ class HandleTypes extends BaseService {
 		this.TopicLinkRenderer(x.topicLink);
 		this.text_t(x.premiumUpsellLink);
 	}
-	/** @arg {TopicLinkRenderer} x */
-	TopicLinkRenderer(x) {
-		this.TopicLinkData(x.topicLinkRenderer);
-	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
 		this.VideoDescriptionMusicSectionData(x.videoDescriptionMusicSectionRenderer);
@@ -9079,6 +9080,10 @@ class HandleTypes extends BaseService {
 		if(d) this.Icon(d);
 		this.trackingParams(e);
 		if(f) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],f);
+	}
+	/** @arg {TopicLinkRenderer} x */
+	TopicLinkRenderer(x) {
+		this.TopicLinkData(x.topicLinkRenderer);
 	}
 }
 //#endregion
