@@ -4779,19 +4779,17 @@ class ServiceData extends BaseService {
 class HandleTypes extends ServiceData {
 	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
-		let mt=x;
-		this._current_response_type=x.page;
-		switch(mt.page) {
-			case "browse": return this.c1.BrowsePageResponse(mt);
-			case "watch": return this.c2.WatchPageResponse(mt);
-			case "channel": return this.c3.ChannelPageResponse(mt);
-			case "playlist": return this.c4.PlaylistPageResponse(mt);
-			case "settings": return this.c5.SettingsPageResponse(mt);
-			case "shorts": return this.c6.ShortsPageResponse(mt);
-			case "search": return this.c7.SearchPageResponse(mt);
+		switch(x.page) {
+			case "browse": return this.c1.BrowsePageResponse(x);
+			case "watch": return this.c2.WatchPageResponse(x);
+			case "channel": return this.c3.ChannelPageResponse(x);
+			case "playlist": return this.c4.PlaylistPageResponse(x);
+			case "settings": return this.c5.SettingsPageResponse(x);
+			case "shorts": return this.c6.ShortsPageResponse(x);
+			case "search": return this.c7.SearchPageResponse(x);
 			default: break;
 		}
-		console.log("pt",x.page,x);
+		console.log("pt",x);
 		debugger;
 	}
 	/** @arg {ResponseTypes} x */
