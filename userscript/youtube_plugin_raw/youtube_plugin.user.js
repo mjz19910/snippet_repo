@@ -5173,13 +5173,16 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommand(x) {
-		const {isVisible,key,...v}=x;
+		const {clickTrackingParams: params,changeKeyedMarkersVisibilityCommand: {isVisible,key,...v}}=x;
+		this.clickTrackingParams(params);
 		this.primitive_of(isVisible,"boolean");
 		if(key!=="HEATSEEKER") debugger;
 		this.empty_object(v);
 	}
-	/** @arg {LoadMarkersCommandData} x */
-	LoadMarkersCommand(x) {
+	/** @arg {LoadMarkersCommand} c */
+	LoadMarkersCommand(c) {
+		this.clickTrackingParams(c.clickTrackingParams);
+		const x=c.loadMarkersCommand;
 		const {entityKeys: a,...y}=x;
 		this.z(a,a => {
 			let res=decode_b64_proto_obj(decodeURIComponent(a));
@@ -5278,8 +5281,8 @@ class HandleTypes extends BaseService {
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signOutEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="getAccountsListInnertubeEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="changeKeyedMarkersVisibilityCommand";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="loadMarkersCommand";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="createCommentEndpoint";
+		{const {[k]: a}=y; if(a) debugger;} k="loadMarkersCommand";
+		{const {[k]: a}=y; if(a) debugger;} k="createCommentEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="confirmDialogEndpoint";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="reloadContinuationItemsCommand";
 		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
@@ -5738,7 +5741,7 @@ class HandleTypes extends BaseService {
 		if(f) this.GuideEntryData(f);
 		if(g) this.primitive_of(g,"boolean");
 		let {serviceEndpoint: i,targetId: j,...y}=h;
-		if(i) this.ServiceEndpoint(i,a=>{
+		if(i) this.ServiceEndpoint(i,a => {
 			a;
 			debugger;
 		});
@@ -6016,7 +6019,7 @@ class HandleTypes extends BaseService {
 	/** @arg {SignalServiceEndpoint} x */
 	SignalServiceEndpoint(x) {
 		this.clickTrackingParams(x.clickTrackingParams);
-		this.CommandMetadata(x.commandMetadata,a=>{
+		this.CommandMetadata(x.commandMetadata,a => {
 			this.save_keys("[SignalServiceEndpoint.web_command_metadata]",a);
 		});
 		this.SignalServiceEndpointData(x.signalServiceEndpoint);

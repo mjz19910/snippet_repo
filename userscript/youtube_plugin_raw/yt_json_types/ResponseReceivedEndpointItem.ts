@@ -1,1 +1,5 @@
 type ResponseReceivedEndpointItem=SignalServiceEndpoint|ChangeKeyedMarkersVisibilityCommand|LoadMarkersCommand;
+type ChangeKeyedMarkersVisibilityCommand={
+	clickTrackingParams: string;
+	changeKeyedMarkersVisibilityCommand: ChangeKeyedMarkersVisibilityCommandData;
+};

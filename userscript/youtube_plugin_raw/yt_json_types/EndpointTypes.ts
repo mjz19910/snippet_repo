@@ -9,7 +9,7 @@ type EndpointTypes={
 	signOutEndpoint?: SignOutEndpointData;
 	getAccountsListInnertubeEndpoint?: GetAccountsListInnertubeEndpointData;
 	loadMarkersCommand?: LoadMarkersCommandData;
-	changeKeyedMarkersVisibilityCommand?: ChangeKeyedMarkersVisibilityCommand;
+	changeKeyedMarkersVisibilityCommand?: ChangeKeyedMarkersVisibilityCommandData;
 	reloadContinuationItemsCommand?: ReloadContinuationItemsCommandData;
 	createCommentEndpoint?: CreateCommentEndpointData;
 	confirmDialogEndpoint?: ConfirmDialogEndpointData;
