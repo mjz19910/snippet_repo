@@ -3305,8 +3305,8 @@ class BaseService extends BaseServicePrivate {
 	/** @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
-		if(typeof x!=="object") {this.save_string(`${ki}.type`,typeof x);return;}
-		if(x instanceof Array) {this.save_string(`${ki}.type`,"array");return;}
+		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
+		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let keys=get_keys_of(x);
 		this.save_string(ki,keys.join());
 	}
