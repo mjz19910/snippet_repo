@@ -19,7 +19,7 @@ function as(e,x=e) {
 }
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
-	if(typeof exports==='object') {
+	if(typeof exports==="object") {
 		fn(exports);
 	}
 }
@@ -4604,11 +4604,11 @@ function sizeof_js(obj) {
 	}
 	let size=0;
 	x: {
-		if(typeof obj=='string') {
+		if(typeof obj=="string") {
 			size=text_encoder.encode(obj).length;
 			break x;
 		}
-		if(typeof obj=='number') {
+		if(typeof obj=="number") {
 			size=1;
 			break x;
 		}
@@ -4626,7 +4626,7 @@ function sizeof_js(obj) {
 		try {
 			ent=Object.entries(obj);
 		} catch(e) {
-			console.log('err',e,obj);
+			console.log("failed_to_get_entries",e,obj);
 			size=1;
 			break x;
 		}
@@ -4789,7 +4789,8 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {any} x @returns {void} */
 	auto_any(x) {
-		if(typeof x==='string') return;
+		if(typeof x==="string") return;
+		if(typeof x!=="object") return;
 		if(x instanceof Array) {
 			return this.z(x,this.auto_any);
 		}
