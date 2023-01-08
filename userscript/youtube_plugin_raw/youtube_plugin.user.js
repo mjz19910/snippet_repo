@@ -8421,7 +8421,6 @@ class HandleTypes extends BaseService {
 	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x,keys,t_name) {
 		let ret_arr=[];
-		debugger;
 		for(let k of keys) {
 			if(k==="trackingParams") {
 				ret_arr.push(`this.trackingParams(x.${k});`);
