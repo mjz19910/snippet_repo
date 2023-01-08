@@ -4354,6 +4354,23 @@ class ServiceData extends BaseService {
 	];
 	valid_fps_arr=[13,25,30,50,60];
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
+	/** @public @arg {keyof VEMap} x */
+	on_root_visual_element(x) {
+		this.save_root_visual_element(x);
+		/** @private @type {`${typeof x}`} */
+		let ss=`${x}`;
+		switch(ss) {
+			case "3611": break;
+			case "3832": break;
+			case "3854": break;
+			case "6827": break;
+			case "11487": break;
+			case "23462": break;
+			case "83769": break;
+			case "96368": break;
+			default: debugger;
+		}
+	}
 }
 class HandleTypes extends ServiceData {
 	/** @public @arg {unknown} x @arg {string|null} r */
@@ -4443,38 +4460,36 @@ class HandleTypes extends ServiceData {
 	GetLiveChatReplayResponse(x) {
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
+	/** @arg {{}} x */
+	auto(x) {
+		this.z(Object.entries(x),a=>{
+			let [_k,v]=a;
+			if(typeof v==='string') return;
+			if(v instanceof Array) {
+				this.z(v,a=>a);
+			}
+			console.log(v);
+		});
+	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
+		this.auto(x);
 	}
 	/** @private @arg {NextResponse} x */
 	WatchNextResponse(x) {
 		this.save_keys("[WatchNextResponse]",x);
+		this.auto(x);
 	}
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-	/** @public @arg {keyof VEMap} x */
-	on_root_visual_element(x) {
-		this.save_root_visual_element(x);
-		/** @private @type {`${typeof x}`} */
-		let ss=`${x}`;
-		switch(ss) {
-			case "3611": break;
-			case "3832": break;
-			case "3854": break;
-			case "6827": break;
-			case "11487": break;
-			case "23462": break;
-			case "83769": break;
-			case "96368": break;
-			default: debugger;
-		}
+		this.auto(x);
 	}
 	/** @private @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
+		this.auto(x);
 	}
 	/** @private @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
