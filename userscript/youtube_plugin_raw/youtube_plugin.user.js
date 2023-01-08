@@ -4787,24 +4787,49 @@ class HandleTypes extends ServiceData {
 	GetLiveChatReplayResponse(x) {
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
+	/** @type {DocumentFragment} */
+	auto_dom=new DocumentFragment();
+	/** @type {HTMLDivElement|null} */
+	target_element=null;
 	/** @arg {{}} x */
 	auto(x) {
+		this.auto_depth++;
 		this.z(Object.entries(x),this.auto_entry);
+		this.auto_depth--;
+		if(this.auto_depth===0) {
+			if(this.target_element) this.target_element.remove();
+			this.target_element=document.createElement("div");
+			document.body.append(this.target_element);
+			this.target_element.append(this.auto_dom);
+		}
 	}
+	auto_depth=0;
 	/** @arg {[any, any]} a */
 	auto_entry(a) {
-		let [_k,v]=a;
-		return this.auto_any(v);
+		let [k,v]=a;
+		const li = document.createElement('li');
+		li.textContent = " ".repeat(this.auto_depth)+"[enter_auto_entry]"+k;
+		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
+		this.auto_dom.append(li);
+		let ret=this.auto_any(v);
+		return ret;
 	}
 	/** @arg {any} x @returns {void} */
 	auto_any(x) {
 		if(typeof x==="string") return;
 		if(typeof x!=="object") return;
 		if(x instanceof Array) {
-			return this.z(x,this.auto_any);
+			let ret=this.z(x,(a,i)=>{
+				console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
+				let ret=this.auto_any(a);
+				return ret;
+			});
+			return ret;
 		}
-		let name=this.get_name_from_keys(x)
-		console.log(name,x);
+		let name=this.get_name_from_keys(x);
+		indexed_db.put({v: "name-list-"+name});
+		console.log(" ".repeat(this.auto_depth)+name,x);
+		this.auto(x);
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
