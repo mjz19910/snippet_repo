@@ -1,11 +1,19 @@
 type PlaylistContent={
 	title: string;
-	contents: {}[];
+	contents: PlaylistPanelVideoRenderer[];
 	currentIndex: number;
 	playlistId: PlaylistId;
-	ownerName: {};
+	ownerName: SimpleText;
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
 	shortBylineText: TextT;
 	longBylineText: TextT;
+	trackingParams: string;
+	titleText: SimpleText;
+	isEditable: true;
+	menu: MenuRenderer;
+	localCurrentIndex: 25;
+	playlistButtons: MenuRenderer;
+	isCourse: false;
+	nextVideoLabel: SimpleText;
 };

@@ -8947,10 +8947,23 @@ class HandleTypes extends BaseService {
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
-		tc=tc.replaceAll(/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v)=>{
+		/** @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
+		function replace_until_same(s,rx,fn) {
+			let i=0;
+			let ps=s;
+			do {
+				let p=s;
+				s=s.replaceAll(rx,fn);
+				ps=p;
+				if(i>12) break;
+			} while(ps!==s);
+			return s;
+		}
+		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v)=>{
 			let vi=v.split("\n").map(e=>`${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
-			return `{${vi}}[]`;
+			return `{${vi}}:ARRAY_TAG`;
 		});
+		tc=tc.replaceAll(":ARRAY_TAG","[]");
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
 		});
