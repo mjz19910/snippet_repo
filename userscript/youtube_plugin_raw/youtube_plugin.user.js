@@ -1330,9 +1330,11 @@ class FilterHandlers {
 			["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
 			["compactRadioRenderer",false],
 			["compactVideoRenderer",false],
+			["connectedAppRenderer",false],
 			["continuationItemRenderer",false],
 			["gridRenderer",false],
 			["messageRenderer",false],
+			["pageIntroductionRenderer",false],
 			["playlistRenderer",false],
 			["playlistVideoListRenderer",false],
 			["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
@@ -1340,18 +1342,11 @@ class FilterHandlers {
 			["recognitionShelfRenderer",false],
 			["reelShelfRenderer",false],
 			["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
+			["settingsOptionsRenderer",false],
 			["shelfRenderer",false],
 			["shelfRenderer",false],
 			["videoRenderer",false],
 		]);
-		let t=this;
-		/** @private @arg {string} value */
-		function whitelist_item(value) {
-			t.blacklisted_item_sections.set(value,false);
-		}
-		whitelist_item("pageIntroductionRenderer");
-		whitelist_item("settingsOptionsRenderer");
-		whitelist_item("connectedAppRenderer");
 	}
 	/** @private @arg {ApiUrlFormatFull} x */
 	use_template_url(x) {
