@@ -7803,13 +7803,17 @@ class HandleTypes extends BaseService {
 		if("liveChatRenderer" in x) {
 			return this.LiveChatRenderer(x);
 		}
+		debugger;
+	}
+	/** @arg {{a:1}} x */
+	auto_generate_renderer(x) {
+		if("a" in x) return;
 		let k=this.get_renderer_key(x);
 		if(!k||typeof k=='number') {debugger; return;}
 		let rd=this.generate_renderer(x[k],k);
 		console.log(rd);
 		let td=this.generate_typedef(x[k],k);
 		console.log(td);
-		debugger;
 	}
 	/** @template T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsArrTemplate(x,f) {
