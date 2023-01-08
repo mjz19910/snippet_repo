@@ -8274,14 +8274,13 @@ class HandleTypes extends BaseService {
 			} break;
 			case "ENTITY_MUTATION_TYPE_REPLACE": {
 				const {type: {},entityKey: a,payload: b,...y}=x; this.g(y);
+				this.EntityMutationPayload(b);
 				let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
 				if(!dec) {
 					console.log("[entity_replace_failed]",a);
 					debugger;
 					break;
 				}
-				console.log("[entity_replace]",dec);
-				this.EntityMutationPayload(b);
 				if(dec[1][0]!=="data32") {
 					debugger;
 					break;
