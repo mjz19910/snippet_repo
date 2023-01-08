@@ -8659,13 +8659,13 @@ class HandleTypes extends BaseService {
 		let dec_3=sub_reader.try_read_any();
 		if(!dec_3) {debugger; return;}
 		let err=dec_3.find(e => e[0]==="error");
-		let entityTypeFieldNumber=dec[1][2];
+		let entity_type_num=dec[1][2];
 		let lf=this.log_parsed_state_keys;
 		if(err) {
 			const entityVideoId=decoder.decode(dec[0][2]);
-			if(!is_keyof_RUa(entityTypeFieldNumber)) {
+			if(!is_keyof_RUa(entity_type_num)) {
 				const target={
-					entityTypeFieldNumber,
+					entity_type_num,
 					entityType: null,
 					entityVideoId,
 				};
@@ -8679,9 +8679,9 @@ class HandleTypes extends BaseService {
 		}
 		if(dec_3[0][0]!=="child") {debugger; return;}
 		const entityVideoId=decoder.decode(dec_3[0][2]);
-		if(!is_keyof_RUa(entityTypeFieldNumber)) {
+		if(!is_keyof_RUa(entity_type_num)) {
 			const target={
-				entityTypeFieldNumber,
+				entity_type_num,
 				entityType: null,
 				entityVideoId,
 			};
@@ -8689,8 +8689,8 @@ class HandleTypes extends BaseService {
 			return;
 		}
 		const target={
-			entityTypeFieldNumber,
-			entityType: RUa[entityTypeFieldNumber],
+			entity_type_num,
+			entityType: RUa[entity_type_num],
 			entityVideoId,
 		};
 		if(lf) console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
