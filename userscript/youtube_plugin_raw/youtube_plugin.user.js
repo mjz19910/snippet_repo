@@ -4247,6 +4247,13 @@ class YtUrlParser extends BaseService {
 		}
 		console.log("[parse_channel_url]",x);
 	}
+	/** @arg {`UC${string}`} x */
+	parse_channel_id(x) {
+		if(this.str_starts_with(x,"UC")) {
+			return;
+		}
+		debugger;
+	}
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
 	parse_youtubei_api_url(x) {
 		let [,a]=x;
@@ -8266,34 +8273,40 @@ class HandleTypes extends BaseService {
 		let sub_reader=new MyReader(dec[0][2]);
 		let dec_3=sub_reader.try_read_any();
 		if(!dec_3) {debugger; return;}
+		let err=dec_3.find(e => e[0]==="error");
 		let entityTypeFieldNumber=dec[1][2];
-		if(dec_3[0][0]==="error") {
-			const target={
-				entityTypeFieldNumber,
-				entityType: null,
-				entityVideoId: decoder.decode(dec[0][2]),
-			};
+		if(err) {
+			const entityVideoId=decoder.decode(dec[0][2]);
 			if(!is_keyof_RUa(entityTypeFieldNumber)) {
-				this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
-			} else {
-				const entityType=RUa[entityTypeFieldNumber];
 				const target={
 					entityTypeFieldNumber,
-					entityType,
-					entityVideoId: decoder.decode(dec[0][2]),
+					entityType: null,
+					entityVideoId,
 				};
+				if("subscriptionStateEntity" in x.payload) {
+					this.s_parser.parse_channel_url(["channel",as_cast(target.entityVideoId)]);
+					return;
+				}
+				this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
 				if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
 				return;
 			}
+			const entityType=RUa[entityTypeFieldNumber];
+			const target={
+				entityTypeFieldNumber,
+				entityType,
+				entityVideoId,
+			};
 			if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
 			return;
 		}
-		if(dec_3[0][0]!=="child") {debugger;return;}
+		if(dec_3[0][0]!=="child") {debugger; return;}
+		const entityVideoId=decoder.decode(dec_3[0][2]);
 		if(!is_keyof_RUa(entityTypeFieldNumber)) {
 			const target={
 				entityTypeFieldNumber,
 				entityType: null,
-				entityVideoId: decoder.decode(dec_3[0][2]),
+				entityVideoId,
 			};
 			if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
 			return;
@@ -8301,7 +8314,7 @@ class HandleTypes extends BaseService {
 		const target={
 			entityTypeFieldNumber,
 			entityType: RUa[entityTypeFieldNumber],
-			entityVideoId: decoder.decode(dec_3[0][2]),
+			entityVideoId,
 		};
 		if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
 	}
@@ -8312,11 +8325,11 @@ class HandleTypes extends BaseService {
 		this.EntityMutationOptions(b);
 		let dec=decode_url_b64_proto_obj(decodeURIComponent(a));
 		let log_flag=this.log_entity_mutations.get("delete");
-		if(!dec) {debugger;return;}
+		if(!dec) {debugger; return;}
 		if(dec[0][0]!=="child") {debugger; return;}
 		if(dec[1][0]!=="data32") {debugger; return;}
 		let entityTypeFieldNumber=dec[1][2];
-		if(!is_keyof_RUa(entityTypeFieldNumber)) {debugger;return;}
+		if(!is_keyof_RUa(entityTypeFieldNumber)) {debugger; return;}
 		const entityId=decoder.decode(dec[0][2]);
 		const x1={
 			entityTypeFieldNumber,
@@ -8361,6 +8374,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {SubscriptionStateData} x */
 	SubscriptionStateData(x) {
+		this.parse_state_key(x.key);
 		console.log("[SubscriptionState]",x.key);
 		this.primitive_of(x.subscribed,"boolean");
 	}
@@ -8368,11 +8382,9 @@ class HandleTypes extends BaseService {
 	OfflineabilityEntity(x) {
 		this.OfflineabilityEntityData(x.offlineabilityEntity);
 	}
-	/** @arg {OfflineabilityEntityData} x */
-	OfflineabilityEntityData(x) {
-		if(!x) {debugger; return;}
-		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
-		let ba=base64_dec.decodeByteArray(decodeURIComponent(a));
+	/** @arg {string} x */
+	parse_state_key(x) {
+		let ba=base64_dec.decodeByteArray(decodeURIComponent(x));
 		let reader=new MyReader(ba);
 		x: {
 			let rr=reader.try_read_any();
@@ -8402,6 +8414,12 @@ class HandleTypes extends BaseService {
 		if(ro&&ro[1]) {
 			console.log(ro[1]);
 		}
+	}
+	/** @arg {OfflineabilityEntityData} x */
+	OfflineabilityEntityData(x) {
+		if(!x) {debugger; return;}
+		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
+		this.parse_state_key(a);
 		this.InnertubeCommand(b);
 		switch(c) {
 			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
