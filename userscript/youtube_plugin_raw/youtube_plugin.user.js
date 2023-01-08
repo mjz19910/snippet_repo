@@ -8424,55 +8424,50 @@ class HandleTypes extends BaseService {
 		debugger;
 		for(let k of keys) {
 			if(k==="trackingParams") {
-				ret_arr.push(`
-				this.trackingParams(x.${k});
-				`.trim());
+				ret_arr.push(`this.trackingParams(x.${k});`);
 				continue;
 			}
 			let in_o=x[k];
 			if(typeof in_o==='string') {
 				if(in_o.startsWith("https:")) {
-					ret_arr.push(`
-					this.primitive_of(x.${k},"string");
-					`.trim());
+					ret_arr.push(`this.primitive_of(x.${k},"string");`);
 					continue;
 				}
-				ret_arr.push(`
-				if(x.${k}!=="${in_o}") debugger;
-				`.trim());
+				ret_arr.push(`if(x.${k}!=="${in_o}") debugger;`);
 				continue;
 			}
 			if(typeof in_o=='boolean') {
-				ret_arr.push(`
-				if(x.${k}!==${in_o}) debugger;
-				`.trim());
+				ret_arr.push(`if(x.${k}!==${in_o}) debugger;`.trim());
 				continue;
 			}
 			if(typeof in_o!=='object') {
 				debugger;
 			}
 			if("simpleText" in in_o) {
-				ret_arr.push(`
-				this.text_t(x.${k});
-				`.trim());
+				ret_arr.push(`this.text_t(x.${k});`.trim());
 				continue;
 			};
 			if("runs" in in_o&&in_o.runs instanceof Array) {
-				ret_arr.push(`
-				this.text_t(x.${k});
-				`.trim());
+				ret_arr.push(`this.text_t(x.${k});`.trim());
 				continue;
 			};
 			if(in_o instanceof Array) {
+				ret_arr.push(`
+				this.z(x.${k},a=>{
+					d6!console.log(a);
+					d6!debugger;
+				});
+				`);
+				let c=this.get_renderer_key(in_o[0]);
+				console.log(c);
+				debugger;
 				continue;
 			}
 			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 			let mn=tn.replace("Renderer","Data");
 			if(mn===t_name) mn+="Data";
 			req_names.push(mn);
-			ret_arr.push(`
-			this.${mn}(x.${k});
-			`.trim());
+			ret_arr.push(`this.${mn}(x.${k});`);
 		}
 		return ret_arr.join("\nd4!");
 	}
@@ -8482,19 +8477,20 @@ class HandleTypes extends BaseService {
 		let req_names=[];
 		/** @arg {string} x */
 		function gen_padding(x) {
-			return x.replaceAll(/d(\d)!/g,(_v,g) => {
+			return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
 				return " ".repeat(g);
 			});
 		}
-		let keys=Object.keys(x);
 		let k=this.get_renderer_key(x);
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		let t_name=this.uppercase_first(k);
+		let keys=Object.keys(x);
+		let body=this.generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
 		d2!/** @arg {${t_name}} x */
 		d2!${t_name}(x) {
-			d4!${this.generate_renderer_body(req_names,x,keys,t_name)}
+			d4!${body}
 		d2!}
 		`;
 		let ex_names=req_names.map(e => {
