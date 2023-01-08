@@ -2629,17 +2629,6 @@ class ReversePrototypeChain {
 	}
 }
 ReversePrototypeChain.attach_to_api();
-
-/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
-function define_property_as_value(obj,key,value) {
-	Object.defineProperty(obj,key,{
-		configurable: true,
-		enumerable: true,
-		writable: true,
-		value: value,
-	});
-}
-
 /** @arg {AddEventListenerExtension} obj */
 function overwrite_addEventListener(obj) {
 	/** @type {arg_list_item_type[][]} */
@@ -2692,6 +2681,15 @@ function overwrite_addEventListener(obj) {
 	});
 	prototype.addEventListener=new_target;
 	proxyTargetMap.weak_map.set(new_target,target);
+	/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
+	function define_property_as_value(obj,key,value) {
+		Object.defineProperty(obj,key,{
+			configurable: true,
+			enumerable: true,
+			writable: true,
+			value: value,
+		});
+	}
 	define_property_as_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
 }
 
@@ -2863,6 +2861,15 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {unknown[]} real_value @arg {number} key @arg {{}|CallableFunction} val @arg {string} namespace */
 	convert_to_id_key(real_value,key,val,namespace) {
+		/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
+		function define_property_as_value(obj,key,value) {
+			Object.defineProperty(obj,key,{
+				configurable: true,
+				enumerable: true,
+				writable: true,
+				value: value,
+			});
+		}
 		define_property_as_value(val,this.namespace_key,namespace);
 		this.convert_to_namespaced_string(real_value,val,key,this.add_object_id(val));
 	}
@@ -3697,7 +3704,7 @@ function run_modules_plugin() {
 		if(!inject_api.function_as_string_vec) throw 1;
 		let ret;
 		switch(argArray.length) {
-			case 3:let [a,b,c]=argArray; module_load_dbg.evaluate_len_3(thisArg,[a,b,c]); break;
+			case 3: let [a,b,c]=argArray; module_load_dbg.evaluate_len_3(thisArg,[a,b,c]); break;
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}

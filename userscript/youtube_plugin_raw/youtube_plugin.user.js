@@ -2721,6 +2721,15 @@ function main() {
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
 	}
+	/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
+	function define_property_as_value(obj,key,value) {
+		Object.defineProperty(obj,key,{
+			configurable: true,
+			enumerable: true,
+			writable: true,
+			value: value,
+		});
+	}
 	function modify_global_env() {
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
 			/** @private @arg {typeof URL["createObjectURL"]} target
@@ -2753,13 +2762,12 @@ function main() {
 		fetch_inject.__proxy_target__=original_fetch;
 		window.Request=new Proxy(window.Request,{
 			/** @arg {[any]} args */
-			construct(t,args,nf) {
-				console.log(t,args,nf);
+			construct(t,args,_nf) {
 				let req=new t(...args);
 				define_property_as_value(req,"original_args",args);
 				return req;
 			}
-		})
+		});
 		let navigator_sendBeacon=navigator.sendBeacon;
 		navigator.sendBeacon=function(...args) {
 			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
@@ -3194,12 +3202,12 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @template {{}} T @arg {ContentsArrTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	w1(x,f) {
-		const {contents:a,...y}=x; this.g(y);
+		const {contents: a,...y}=x; this.g(y);
 		this.z(a,f);
 	}
 	/** @template {{}} T @arg {{items:T[]}} x @arg {(this:this,x:T)=>void} f */
 	w2(x,f) {
-		const {items:a,...y}=x; this.g(y);
+		const {items: a,...y}=x; this.g(y);
 		this.z(a,f);
 	}
 	/** @template {{}} T @arg {{contents:T}} x @arg {(this:this,x:T)=>void} f */
@@ -6361,7 +6369,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
-		this.w(x,a=>this.w1(a,a=>this.w(a,a=>this.w1(a,a=>{
+		this.w(x,a => this.w1(a,a => this.w(a,a => this.w1(a,a => {
 			if("accountItem" in a) {
 				return this.AccountItemData(a.accountItem);
 			} else if("compactLinkRenderer" in a) {
@@ -6370,12 +6378,12 @@ class HandleTypes extends BaseService {
 			debugger;
 			let na=get_keys_of(a);
 			na;
-		}))))
+		}))));
 		this.AccountSectionListData(x.accountSectionListRenderer);
 	}
 	/** @private @arg {AccountSectionListData} x */
 	AccountSectionListData(x) {
-		this.w1(x,x=>this.w(x,x=>this.w1(x,x => {
+		this.w1(x,x => this.w(x,x => this.w1(x,x => {
 			if("accountItem" in x) return this.AccountItem(x);
 			if("compactLinkRenderer" in x) return this.CompactLinkData(x.compactLinkRenderer);
 			debugger;
@@ -6391,7 +6399,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {MultiPageMenuSectionData} x */
 	MultiPageMenuSectionData(x) {
-		this.w2(x,a=>this.w(a,this.CompactLinkData));
+		this.w2(x,a => this.w(a,this.CompactLinkData));
 	}
 	/** @private @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
@@ -6589,7 +6597,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
-		const {contents:{},header,targetId,...y}=x;
+		const {contents: {},header,targetId,...y}=x;
 		this.w1(x,this.ChannelSwitcherContent);
 		this.parse_target_id(targetId);
 		this.g(y);
@@ -7397,7 +7405,7 @@ class HandleTypes extends BaseService {
 		if("adsEngagementPanelContentRenderer" in x) {
 			return this.w(x,a => this.AdsEngagementPanelContentData(a));
 		} else if("clipSectionRenderer" in x) {
-			return this.w(x,a => this.w1(a,a=>this.ClipCreationData(a.clipCreationRenderer)));
+			return this.w(x,a => this.w1(a,a => this.ClipCreationData(a.clipCreationRenderer)));
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
 		} else if("sectionListRenderer" in x) {
@@ -7944,7 +7952,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @template {{}} T @arg {ContentsTemplate<T>} x @arg {(x:T)=>void} f */
 	ContentsTemplate(x,f) {
-		const {trackingParams:a,contents:b,...y}=x; this.g(y);
+		const {trackingParams: a,contents: b,...y}=x; this.g(y);
 		this.z(b,a => f(a));
 	}
 	/** @template T @arg {ContentTemplate<T>} x @arg {(x:T)=>void} f */
@@ -8143,17 +8151,17 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ChannelResponse} x */
 	ChannelResponse(x) {
-		const {responseContext:a,contents:b,header,metadata,trackingParams:c,topbar,microformat,onResponseReceivedActions,...y}=x; this.g(y);
+		const {responseContext: a,contents: b,header,metadata,trackingParams: c,topbar,microformat,onResponseReceivedActions,...y}=x; this.g(y);
 		this.ResponseContext(x.responseContext);
-		this.w3(x,a=>this.w(a,this.TwoColumnBrowseResultsData))
+		this.w3(x,a => this.w(a,this.TwoColumnBrowseResultsData));
 		this.C4TabbedHeaderRenderer(header);
 		this.ChannelMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.MicroformatDataRenderer(microformat);
-		this.z(onResponseReceivedActions,a=>{
+		this.z(onResponseReceivedActions,a => {
 			a;
 			debugger;
-		})
+		});
 	}
 	/** @private @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
@@ -8191,7 +8199,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
-		this.w1(x,a=>this.ChipCloudChipData(a.chipCloudChipRenderer));
+		this.w1(x,a => this.ChipCloudChipData(a.chipCloudChipRenderer));
 	}
 	/** @private @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
