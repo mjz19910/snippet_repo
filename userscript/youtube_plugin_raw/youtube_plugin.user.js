@@ -8548,13 +8548,13 @@ class HandleTypes extends BaseService {
 		if(!x) {debugger; return;}
 		const {key: a,command: b,addToOfflineButtonState: c,contentCheckOk: d,racyCheckOk: e,loggingDirectives: f,...y}=x; this.g(y);
 		this.parse_state_key("OfflineabilityEntity",a);
-		this.InnertubeCommand(b);
+		if(b) this.InnertubeCommand(b);
 		switch(c) {
 			case "ADD_TO_OFFLINE_BUTTON_STATE_UNKNOWN": break;
 			case "ADD_TO_OFFLINE_BUTTON_STATE_ENABLED": break;
 			default: debugger;
 		};
-		this.LoggingDirectives(f);
+		if(f) this.LoggingDirectives(f);
 	}
 	/** @arg {InnertubeCommand} x */
 	InnertubeCommand(x) {

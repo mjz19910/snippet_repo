@@ -1,8 +1,8 @@
 type OfflineabilityEntityData={
 	key: string;
-	command: InnertubeCommand;
+	command?: InnertubeCommand;
 	addToOfflineButtonState: AddToOfflineButtonStateEnum;
-	contentCheckOk: false;
-	racyCheckOk: false;
-	loggingDirectives: LoggingDirectives;
+	contentCheckOk?: false;
+	racyCheckOk?: false;
+	loggingDirectives?: LoggingDirectives;
 };
