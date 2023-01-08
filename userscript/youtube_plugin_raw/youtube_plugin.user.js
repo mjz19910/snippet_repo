@@ -2996,6 +2996,16 @@ class BaseService extends BaseServicePrivate {
 	get TODO_true() {
 		return true;
 	}
+	/** @public @arg {unknown} x */
+	get_name_from_keys(x) {
+		let keys=Object.keys(as(x));
+		for(let c of keys) {
+			if(c==="clickTrackingParams") continue;
+			if(c==="commandMetadata") continue;
+			return c;
+		}
+		return null;
+	}
 	/** @public @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
 		/** @private @type {"_"|"-"} */
@@ -3644,7 +3654,7 @@ class CodegenService extends BaseService {
 			}
 			/** @private @type {{}} */
 			let o3=x2;
-			let c=this.#get_renderer_key(o3);
+			let c=this.get_name_from_keys(o3);
 			if(!c||typeof c==="number") {
 				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
@@ -3680,7 +3690,7 @@ class CodegenService extends BaseService {
 		let ret_arr=out;
 		/** @private @type {{[x:string]:{};[x:number]:{};}} */
 		let io=as(x[0]);
-		let c=this.#get_renderer_key(io);
+		let c=this.get_name_from_keys(io);
 		if(c) {
 			let ic=this.#uppercase_first(c);
 			console.log("array key",c);
@@ -3699,7 +3709,7 @@ class CodegenService extends BaseService {
 				return "\t".repeat(g);
 			});
 		}
-		let k=this.#get_renderer_key(x);
+		let k=this.get_name_from_keys(x);
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		let t_name=this.#uppercase_first(k);
@@ -3730,19 +3740,9 @@ class CodegenService extends BaseService {
 	#uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @arg {unknown} x */
-	#get_renderer_key(x) {
-		let keys=Object.keys(as(x));
-		for(let c of keys) {
-			if(c==="clickTrackingParams") continue;
-			if(c==="commandMetadata") continue;
-			return c;
-		}
-		return null;
-	}
 	/** @public @arg {unknown} x @arg {string|null} r */
 	generate_typedef(x,r=null) {
-		let k=this.#get_renderer_key(x);
+		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		let tn=k;
 		if(r) {
