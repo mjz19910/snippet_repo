@@ -8498,6 +8498,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {{}} x @arg {string|null} r_name */
 	generate_renderer(x,r_name=null) {
+		console.log("gen renderer for",x);
 		/** @type {string[]} */
 		let req_names=[];
 		/** @arg {string} x */
@@ -8531,7 +8532,6 @@ class HandleTypes extends BaseService {
 		tmp_1=ex_names.join("")+tmp_1;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
 		let tmp3=gen_padding(tmp2);
-		console.log("gen renderer for",x);
 		return `\n${tmp3}`;
 	}
 	/** @arg {string|number} x */
