@@ -3960,7 +3960,7 @@ class IndexedDbAccessor {
 	arr=[];
 	/** @type {{v: string}[]} */
 	committed_data=[];
-	/** @arg {{v: string}} obj */
+	/** @template {{v: string}} T @arg {T} obj */
 	put(obj) {
 		if(this.database_open) {
 			this.arr.push(obj);
@@ -7980,13 +7980,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {LiveChatData} x */
 	LiveChatData(x) {
-		x;
-		debugger;
+		this.save_keys("[LiveChatData]",x);
 	}
 	/** @arg {PlaylistContent} x */
 	PlaylistContent(x) {
-		x;
-		debugger;
+		this.save_keys("[PlaylistContent]",x);
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
 	PlaylistTemplate(x,f) {
@@ -8669,8 +8667,8 @@ class HandleTypes extends BaseService {
 		this.t_url_unwrap(x.interpreterUrl,a => {
 			let c=a;
 			// spell:disable-next-line
-			if(a!=="//www.google.com/js/th/YkfklCtf3s5-_1quWHAnTHHVaBZ-i7ToAeXFpu3i2Ro.js") {
-				/** @type {TrayrideJsHash} */
+			if(this.s_parser.str_starts_with(a,"//www.google.com/js/th/")) {
+				indexed_db.put({v: "trayride-interpreter",hash:split_string_once(split_string_once(a,"th/")[1],".js")[0]});
 				console.log("new trayride interpreter",c.split("/").slice(5)[0].split(".")[0]);
 			}
 		});
