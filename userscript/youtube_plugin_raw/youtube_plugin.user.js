@@ -4701,7 +4701,6 @@ class C2 extends BaseService {
 	/** @public @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
-		x.endpoint;
 	}
 }
 class C3 extends BaseService {
