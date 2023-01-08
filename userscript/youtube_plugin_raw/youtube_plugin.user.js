@@ -5987,16 +5987,36 @@ class HandleTypes extends BaseService {
 		}
 		return out;
 	}
+	/** @type {Map<string,(number|bigint)[]>} */
+	follow_map=new Map;
 	/** @arg {TemplateElement} x @arg {(number|bigint)[]} p */
 	iterate_template_element(x,p) {
 		for(let i of x.map.entries()) {
-			let value=x[`${i[1]}${i[0]}`];
+			let pa=p.slice(-2);
+			if(pa) {
+				let im=this.follow_map.get(pa.join(":"));
+				if(pa&&im) {
+					if(!im.includes(i[0])) im.push(i[0]);
+				} else this.follow_map.set(pa.join(":"),[i[0]]);
+			}
+			let value=x[`${i[1]}${i[0]}`]; value;
 			switch(i[1]) {
-				case "f_o": this.iterate_template_element(x[`${i[1]}${i[0]}`],[...p,i[0]]); break;
-				case "f_rep_n":
+				case "f_o": {
+					this.iterate_template_element(x[`${i[1]}${i[0]}`],[...p,i[0]]);
+				} break;
+				case "f_rep_n": {
+					let value=x[`${i[1]}${i[0]}`];
+					for(let x1 in value) {
+						x1;
+						// console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
+						// console.log("[template_iter]",i[0],value[x1]);
+						continue;
+					}
+				} break;
 				case "f_rep_s": {
 					let value=x[`${i[1]}${i[0]}`];
 					for(let x1 in value) {
+						x1;
 						console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
 						console.log("[template_iter]",i[0],value[x1]);
 						continue;
@@ -6006,14 +6026,18 @@ class HandleTypes extends BaseService {
 					let value=x[`${i[1]}${i[0]}`];
 					for(let x1=0;x1<value.length;x1++) {
 						this.iterate_template_element(value[x1],[...p,i[0],x1]);
-						console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
-						console.log("[template_iter]",i[0],value[x1]);
+						// console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
+						// console.log("[template_iter]",i[0],value[x1]);
 						continue;
 					}
 				} break;
-				default: {
+				case "f_s": {
 					console.log("[template_iter_path]",[...p,i[0]].join(" "));
 					console.log("[template_iter]",i[0],value);
+				} break;
+				default: {
+					// console.log("[template_iter_path]",[...p,i[0]].join(" "));
+					// console.log("[template_iter]",i[0],value);
 				} break;
 			}
 		}
@@ -6071,6 +6095,7 @@ class HandleTypes extends BaseService {
 						let out=[y];
 						if(children) {
 							this.iterate_template_element(children,[y.index_unk_1]);
+							debugger;
 							out.push(children);
 						}
 						console.log("[template_child_iter_2]",...out);
