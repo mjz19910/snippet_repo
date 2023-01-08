@@ -7647,8 +7647,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {
-		const {continuationItemRenderer: renderer}=x;
-		this.ContinuationItemData(renderer);
+		const {continuationItemRenderer: renderer_data}=x;
+		this.ContinuationItemData(renderer_data);
 	}
 	/** @arg {ClipSection} x */
 	ClipSection(x) {
