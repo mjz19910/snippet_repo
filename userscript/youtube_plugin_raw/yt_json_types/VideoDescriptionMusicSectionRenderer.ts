@@ -17,12 +17,14 @@ type VideoDescriptionMusicSectionData={
 type CarouselLockupData={
 	infoRows: InfoRowRenderer[];
 };
+type InfoRowData={
+	title: SimpleText;
+	defaultMetadata: SimpleText;
+	trackingParams: string;
+};
+
 type InfoRowRenderer={
-	infoRowRenderer: {
-		title: SimpleText;
-		defaultMetadata: SimpleText;
-		trackingParams: string;
-	};
+	infoRowRenderer: InfoRowData;
 };
 
 type CarouselLockupRenderer={

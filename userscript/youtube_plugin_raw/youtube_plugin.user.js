@@ -8754,9 +8754,19 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CarouselLockupData} x */
 	CarouselLockupData(x) {
-		x;
-		debugger;
+		let rd=this.generate_renderer(x,"CarouselLockupData");
+		console.log(rd);
+		let td=this.generate_typedef(x,"CarouselLockupData");
+		console.log(td);
+    this.z(x.infoRows,this.InfoRowRenderer);
 	}
+  /** @arg {InfoRowRenderer} x */
+  InfoRowRenderer(x) {
+		let rd=this.generate_renderer(x);
+		console.log(rd);
+		let td=this.generate_typedef(x);
+		console.log(td);
+  }
 	/** @arg {CarouselLockupRenderer} x */
 	CarouselLockupRenderer(x) {
 		this.CarouselLockupData(x.carouselLockupRenderer);
@@ -8769,7 +8779,6 @@ class HandleTypes extends BaseService {
     this.z(x.carouselLockups,this.CarouselLockupRenderer);
     this.TopicLinkRenderer(x.topicLink);
     this.text_t(x.premiumUpsellLink);
-		debugger;
 	}
 	/** @arg {TopicLinkRenderer} x */
 	TopicLinkRenderer(x) {
@@ -8777,6 +8786,7 @@ class HandleTypes extends BaseService {
 		console.log(td);
 		let rn=this.generate_renderer(x);
 		console.log(rn);
+		debugger;
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
