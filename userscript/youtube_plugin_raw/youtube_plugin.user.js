@@ -8558,6 +8558,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {InnertubeCommand} x */
 	InnertubeCommand(x) {
+		if(!x) {debugger; return;}
 		this.InnertubeCommandData(x.innertubeCommand);
 	}
 	/** @arg {InnertubeCommandData} x */
