@@ -19,3 +19,4 @@ type YtUrlFormat=[
 	YtExternalUrlFormat,
 	ParsableBaseUrlFormat,
 ][number];
+type ParseUrlWithSearchIn=Extract<SplitOnce<ParseUrlStr_1,"/">,[`${string}?${string}`]>[0];

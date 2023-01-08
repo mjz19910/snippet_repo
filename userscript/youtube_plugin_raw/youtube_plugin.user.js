@@ -4319,7 +4319,7 @@ class YtUrlParser extends BaseService {
 		this.log_url_info_arr(arr);
 	}
 	log_start_radio=false;
-	/** @arg {YtWatchUrlParamsFormat} x */
+	/** @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
 	parse_watch_page_url(x) {
 		let vv=split_string(x,"&");
 		/** @type {YtUrlInfoItem[]} */
@@ -4347,6 +4347,7 @@ class YtUrlParser extends BaseService {
 						debugger;
 					}
 				} break;
+				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
 				case "pp": {
 					this.on_player_params(res[1]);
 				} break;
@@ -4495,10 +4496,11 @@ class YtUrlParser extends BaseService {
 					this.log_playlist_id(url_info,true);
 				} break;
 				case "video": indexed_db.put({v: url_info.id}); break;
+				case "video-referral": indexed_db.put({v: url_info.id}); break;
 			}
 		}
 	}
-	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`${string}?${string}`]>[0]} x */
+	/** @arg {ParseUrlWithSearchIn} x */
 	parse_url_with_search(x) {
 		let a=split_string(x,"?");
 		switch(a[0]) {
