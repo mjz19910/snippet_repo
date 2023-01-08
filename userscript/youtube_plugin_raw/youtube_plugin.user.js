@@ -1582,15 +1582,6 @@ class FilterHandlers {
 		this.handle_types.ResponseTypes(res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @arg {string|URL|Request} request @arg {RequestInit} [init_args] */
-	on_api_request(request,init_args) {
-		console.log(request,init_args);
-		if(!("request_arr" in window)) define_property_as_value(window,"request_arr",[]);
-		if(!("request_arr" in window)) throw 1;
-		/** @type {any[]} */
-		let arr=as_cast(window.request_arr);
-		arr.push([request,init_args]);
-	}
 	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
@@ -2547,15 +2538,6 @@ class HiddenData {
 function get_exports() {
 	return exports;
 }
-/** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
-function define_property_as_value(obj,key,value) {
-	Object.defineProperty(obj,key,{
-		configurable: true,
-		enumerable: true,
-		writable: true,
-		value: value,
-	});
-}
 //#region
 function main() {
 	const log_enabled_page_type_change=false;
@@ -2563,7 +2545,6 @@ function main() {
 	function log_page_type_change(event) {
 		let {detail}=event;
 		if(!detail) return;
-		yt_handlers.extract(h => h.on_page_type_changed(detail));
 		if(!ytd_page_manager) {
 			const target_element=get_html_elements(document,"ytd-page-manager")[0];
 			if(!target_element) {
@@ -2573,6 +2554,7 @@ function main() {
 			}
 		}
 		if(!ytd_page_manager) throw new Error("Invalid state");
+		yt_handlers.extract(h => h.on_page_type_changed(detail));
 		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
 		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 		if(nav_load_str===current_page_type) return;
@@ -2731,7 +2713,6 @@ function main() {
 		if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
 			return original_fetch(user_request,request_init);
 		}
-		yt_handlers.extract(h => h.on_api_request(user_request,request_init));
 		let ret=original_fetch(user_request,request_init);
 		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
 		return ret_1;
@@ -2770,14 +2751,6 @@ function main() {
 		original_fetch=fetch;
 		window.fetch=fetch_inject;
 		fetch_inject.__proxy_target__=original_fetch;
-		window.Request=new Proxy(window.Request,{
-			/** @arg {[any]} args */
-			construct(t,args,_nf) {
-				let req=new t(...args);
-				define_property_as_value(req,"original_args",args);
-				return req;
-			}
-		});
 		let navigator_sendBeacon=navigator.sendBeacon;
 		navigator.sendBeacon=function(...args) {
 			if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
@@ -7600,7 +7573,7 @@ class HandleTypes extends BaseService {
 		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
 	}
 	/** @type {FormatItagArr} */
-	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399];
+	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @private @arg {AdaptiveFormatItem} x */
 	AdaptiveFormatItem(x) {
 		const {
