@@ -5473,7 +5473,6 @@ class HandleTypes extends BaseService {
 	CommandMetadataTemplate(x) {
 		const {webCommandMetadata: a}=x;
 		this.WebCommandMetadata(a);
-		// this.g(y);
 	}
 	/** @template {keyof VEMap} T @arg {CommandMetadataTemplate<T>['webCommandMetadata']} x */
 	WebCommandMetadata(x) {
