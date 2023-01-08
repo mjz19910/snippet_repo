@@ -5987,11 +5987,12 @@ class HandleTypes extends BaseService {
 		}
 		return out;
 	}
-	/** @arg {TemplateElement} x */
-	iterate_template_element(x) {
+	/** @arg {TemplateElement} x @arg {(number|bigint)[]} p */
+	iterate_template_element(x,p) {
 		for(let i of x.map.entries()) {
 			let value=x[`${i[1]}${i[0]}`];
-			switch(i[1]) {case "f_o": this.iterate_template_element(x[`${i[1]}${i[0]}`]); break;}
+			switch(i[1]) {case "f_o": this.iterate_template_element(x[`${i[1]}${i[0]}`],[...p,i[0]]); break;}
+			console.log("[template_iter_path]",p.join(" "));
 			console.log("[template_iter]",i[0],value);
 		}
 	}
@@ -6047,7 +6048,7 @@ class HandleTypes extends BaseService {
 						/** @type {[typeof y|typeof children]} */
 						let out=[y];
 						if(children) {
-							this.iterate_template_element(children);
+							this.iterate_template_element(children,[y.index_unk_1]);
 							out.push(children);
 						}
 						console.log("[template_child_iter_2]",...out);
@@ -8345,8 +8346,12 @@ class HandleTypes extends BaseService {
 		if(dec[0][0]!=="child") {debugger; return;}
 		let sub_reader=new MyReader(dec[0][2]);
 		let dec_3=sub_reader.try_read_any();
-		if(!dec_3) {debugger; return;}
-		let err=dec_3.find(e => e[0]==="error");
+		let err;
+		if(!dec_3) {
+			err=true;
+		} else {
+			err=dec_3.find(e => e[0]==="error");
+		}
 		let entity_replace_field_num=dec[1][2];
 		if(entity_replace_field_num==315) {
 			const entity_path=decoder.decode(dec[0][2]);
@@ -8388,6 +8393,7 @@ class HandleTypes extends BaseService {
 			if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
 			return;
 		}
+		if(!dec_3) throw new Error();
 		if(dec_3[0][0]!=="child") {debugger; return;}
 		const entityVideoId=decoder.decode(dec_3[0][2]);
 		if(!is_keyof_RUa(entity_replace_field_num)) {
