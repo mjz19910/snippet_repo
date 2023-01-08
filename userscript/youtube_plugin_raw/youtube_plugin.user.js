@@ -5086,8 +5086,12 @@ class HandleTypes extends BaseService {
 		}
 		x;
 	}
+	/** @arg {unknown} x @arg {string|null} r */
+	generate_renderer(x,r) {
+		this.#generate_renderer(x,r);
+	}
 	/** @arg {unknown} x @arg {string|null} r_name */
-	generate_renderer(x,r_name=null) {
+	#generate_renderer(x,r_name=null) {
 		console.log("gen renderer for",x);
 		/** @type {string[]} */
 		let req_names=[];
