@@ -3920,9 +3920,12 @@ class CodegenService extends BaseService {
 		td.generate_typedef_and_depth(x,r);
 		return td;
 	}
-	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_renderer(x,r) {
-		this.#generate_renderer(x,r);
+	/** @public @arg {unknown} x @arg {string|null} r @arg {boolean} [w] */
+	generate_renderer(x,r,w) {
+		let gen_obj=this.#generate_renderer(x,r);
+		if(w) return gen_obj;
+		console.log(gen_obj);
+		return null;
 	}
 }
 class ParserService extends BaseService {
@@ -4528,6 +4531,7 @@ class ParserService extends BaseService {
 	get_like_type(x) {
 		switch(x[3]) {
 			case "like": break;
+			case "dislike": break;
 			case "removelike": break;
 			default: return this.api_no_handler(x,x[3]);
 		} return {
@@ -4778,16 +4782,12 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {{}} x */
 	LikeLikeResponse(x) {
-		let cg=this.x.get("codegen");
-		let ren=cg.generate_renderer(x,null);
-		console.log(ren);
+		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
 	/** @arg {{}} x */
 	LikeRemoveLikeResponse(x) {
-		let cg=this.x.get("codegen");
-		let ren=cg.generate_renderer(x,null);
-		console.log(ren);
+		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
 	/** @private @arg {ReelWatchSequence} x */
