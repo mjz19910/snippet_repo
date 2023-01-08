@@ -8585,11 +8585,11 @@ class HandleTypes extends BaseService {
 	is_Thumbnail(x2) {
 		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
 	}
-	/** @arg {{}|number} x2 */
+	/** @arg {{}} x2 */
 	is_TextT(x2) {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
-	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x1 @arg {string[]} keys @arg {string|number} t_name */
+	/** @arg {string[]} req_names @arg {{[x:string]:unknown}} x1 @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x1,keys,t_name) {
 		/** @type {string[]} */
 		let ret_arr=[];
@@ -8617,7 +8617,8 @@ class HandleTypes extends BaseService {
 			}
 			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(x.${k},"number");`);}
 			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
-			if(typeof x2!=="object") debugger;
+			if(typeof x2!=="object") {debugger; continue;}
+			if(x2===null){ret_arr.push(`if(x.${k}!==null) debugger;`);continue;}
 			if(this.is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
 			if(x2 instanceof Array) {this.generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
@@ -8630,7 +8631,9 @@ class HandleTypes extends BaseService {
 				`);
 				continue;
 			}
-			let c=this.get_renderer_key(x2);
+			/** @type {{}} */
+			let o3=x2;
+			let c=this.get_renderer_key(o3);
 			if(!c||typeof c==="number") {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
