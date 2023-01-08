@@ -8300,14 +8300,32 @@ class HandleTypes extends BaseService {
 					debugger;
 					break;
 				}
+				let entityTypeFieldNumber=dec[1][2];
 				if(dec_3[0][0]==="error") {
+					const target={
+						entityTypeFieldNumber,
+						entityType: null,
+						entityVideoId: decoder.decode(dec[0][2]),
+					};
+					if(!is_keyof_RUa(entityTypeFieldNumber)) {
+						this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
+					} else {
+						const entityType=RUa[entityTypeFieldNumber];
+						const target={
+							entityTypeFieldNumber,
+							entityType,
+							entityVideoId: decoder.decode(dec[0][2]),
+						};
+						if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
+						break;
+					}
+					if(log_flag) console.log("[entity_replace] zero_field=[%s]",dec[0][1].toString(),target);
 					break;
 				}
 				if(dec_3[0][0]!=="child") {
 					debugger;
 					break;
 				}
-				let entityTypeFieldNumber=dec[1][2];
 				if(!is_keyof_RUa(entityTypeFieldNumber)) {
 					const target={
 						entityTypeFieldNumber,
@@ -8322,7 +8340,7 @@ class HandleTypes extends BaseService {
 					entityType: RUa[entityTypeFieldNumber],
 					entityVideoId: decoder.decode(dec_3[0][2]),
 				};
-				console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+				if(log_flag) console.log("[entity_replace] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
 			} break;
 			default: debugger;
 		}
