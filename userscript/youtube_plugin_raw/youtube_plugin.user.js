@@ -4546,86 +4546,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
-		let t=this;
-		/** @this {typeof t} @arg {typeof x} x */
-		function p1(x) {
-			const {responseContext: a,annotations: b,attestation: c,adPlacements: d,...y}=x;
-			this.ResponseContext(a);
-			if(b) this.z(b,a => {
-				if(get_keys_of_one(a)[0]!=="playerAnnotationsExpandedRenderer") debugger;
-				this.PlayerAnnotationsExpandedRenderer(a);
-			});
-			if(c) this.PlayerAttestationRenderer(c);
-			if(d) this.z(d,a => this.maybe(a,a => this.AdPlacementRenderer(a)));
-			return y;
-		}
-		let a=p1.call(this,x);
-		/** @this {typeof t} @arg {typeof a} x */
-		function p2(x) {
-			const {playabilityStatus: b,playbackTracking: c,playerAds: d,playerConfig: e,...y}=x;
-			this.PlayabilityStatus(b);
-			if(c) this.PlaybackTracking(c);
-			if(d) this.z(d,a => {
-				if(get_keys_of_one(a)[0]!=="playerLegacyDesktopWatchAdsRenderer") debugger;
-				this.w(a,a => this.DesktopWatchAdsData(a));
-			});
-			if(e) this.PlayerConfig(e);
-			return y;
-		}
-		let b=p2.call(this,a);
-		/** @this {typeof t} @arg {typeof b} x */
-		function p3(x) {
-			const {paidContentOverlay: a,trackingParams: c,videoQualityPromoSupportedRenderers: d,endscreen: e,...y}=x;
-			if(a) {
-				if(get_keys_of_one(a)[0]!=="paidContentOverlayRenderer") debugger;
-				this.w(a,a => this.PaidContentOverlayRenderer(a));
-			}
-			this.trackingParams(c);
-			this.w(d,a => this.VideoQualityPromoData(a));
-			if(e) this.EndscreenRenderer(e);
-			return y;
-		}
-		let c=p3.call(this,b);
-		/** @this {typeof t} @arg {typeof c} x */
-		function p4(x) {
-			const {videoDetails: a,storyboards: b,streamingData: d,heartbeatParams: e,...y}=x;
-			if(a) this.VideoDetails(a);
-			if(b) this.storyboards(b);
-			if(d) this.StreamingData(d);
-			if(e) this.HeartbeatParams(e);
-			return y;
-		}
-		let d=p4.call(this,c);
-		/** @this {typeof t} @arg {typeof d} x */
-		function p5(x) {
-			const {captions: a,cards: b,frameworkUpdates: c,microformat: e,...y}=x;
-			if(a) this.PlayerCaptionsTracklistRenderer(a);
-			if(b) this.CardCollectionRenderer(b);
-			this.FrameworkUpdates(c);
-			if(e) this.PlayerMicroformatRenderer(e);
-			return y;
-		}
-		let y=p5.call(this,d); this.g(y);
-	}
-	/** @private @arg {PlayerStoryboardSpecRenderer|PlayerLiveStoryboardSpecRenderer} x */
-	storyboards(x) {
-		if("playerStoryboardSpecRenderer" in x) {
-			this.PlayerStoryboardSpecRenderer(x);
-		} else if("playerLiveStoryboardSpecRenderer" in x) {
-			this.PlayerLiveStoryboardSpecRenderer(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {PlayerLiveStoryboardSpecRenderer} x */
-	PlayerLiveStoryboardSpecRenderer(x) {
-		const {playerLiveStoryboardSpecRenderer: a,...y}=x; this.g(y);
-		this.PlayerLiveStoryboardSpecData(a);
-	}
-	/** @private @arg {PlayerLiveStoryboardSpecData} x */
-	PlayerLiveStoryboardSpecData(x) {
-		const {spec: a,...y}=x; this.g(y);
-		this.primitive_of(a,"string");
 	}
 	/** @private @arg {BrowsePageResponse} x */
 	YtBrowsePageResponse(x) {
@@ -4859,48 +4779,9 @@ class HandleTypes extends BaseService {
 		this.save_keys("[BrowseEndpointData]",x);
 		this.g(y);
 	}
-	/** @private @arg {UrlEndpointData} x */
-	UrlEndpointData(x) {
-		const {url: a,target: b,nofollow: c,...y}=x;
-		if(b&&b!=="TARGET_NEW_WINDOW") debugger;
-		this.parse_url(a);
-		this.save_keys("[UrlEndpointData]",x);
-		if(c) this.primitive_of(c,"boolean");
-		this.g(y);
-	}
 	/** @private @arg {string} x */
 	parse_url(x) {
 		this.s_parser.parse_url(as_cast(x));
-	}
-	/** @private @arg {ChangeKeyedMarkersVisibilityCommand} x */
-	ChangeKeyedMarkersVisibilityCommand(x) {
-		const {clickTrackingParams: params,changeKeyedMarkersVisibilityCommand: {isVisible,key,...v}}=x;
-		this.clickTrackingParams(params);
-		this.primitive_of(isVisible,"boolean");
-		if(key!=="HEATSEEKER") debugger;
-		this.g(v);
-	}
-	/** @private @arg {LoadMarkersCommand} c */
-	LoadMarkersCommand(c) {
-		const {clickTrackingParams,loadMarkersCommand: {entityKeys: a,...y},...u}=c;
-		this.clickTrackingParams(clickTrackingParams);
-		this.z(a,a => {
-			a;
-		});
-		this.g(y); this.g(u);
-	}
-	/** @private @arg {CreateCommentEndpointData} x */
-	CreateCommentEndpointData(x) {
-		let res=decode_url_b64_proto_obj(decodeURIComponent(x.createCommentParams));
-		if(!res) {
-			console.log("failed to decode create_comment_params");
-			return;
-		}
-		if(res[0][0]==="child"&&res[0][1]===2) {
-			console.log("fieldId",res[0][1],"str",decoder.decode(res[0][2]),"rest",res.slice(1));
-		} else {
-			console.log(res);
-		}
 	}
 	endpoint_data_map=new class {
 		constructor() {
@@ -4952,50 +4833,6 @@ class HandleTypes extends BaseService {
 		if(!x) {debugger; return;}
 		console.log(`[default.Endpoint.${this.#get_renderer_key(x)}]`,x);
 		this.save_keys("[YtEndpoint]",x);
-		const {
-			clickTrackingParams: a,
-			...y
-		}=x;
-		if(a) this.clickTrackingParams(a);
-		/** @template {keyof endpoint_data_handler_names} T @arg {T} v @returns {endpoint_data_handler_names[T]} */
-		let q=(v) => this.endpoint_data_map.get(v);
-		let m=get_keys_of(y);
-		if(m.length===0) return;
-		let [k]=m;
-		k="commandMetadata";
-		{const {[k]: a}=y; if(a) this.CommandMetadataTemplate(a);}
-		k="browseEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="searchEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="setSettingEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signalServiceEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="urlEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="watchEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signalNavigationEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="signOutEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="getAccountsListInnertubeEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="changeKeyedMarkersVisibilityCommand";
-		{const {[k]: a}=y; if(a) debugger;} k="loadMarkersCommand";
-		{const {[k]: a}=y; if(a) debugger;} k="createCommentEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="confirmDialogEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="reloadContinuationItemsCommand";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="appendContinuationItemsAction";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="liveChatItemContextMenuEndpoint";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="openPopupAction";
-		{const {[k]: a}=y; if(a) return this[q(k)](a);} k="continuationCommand";
-		/** @type {[YtEndpoint,endpoint_data_handler_names]} */
-		{const {[k]: a}=y; if(a) return this[q(k)](a);}
-		let yc=get_keys_of(y);
-		for(let ya of yc) {
-			/** @type {endpoint_data_handler_names} */
-			if(!this.endpoint_data_map.has_key(ya)) {
-				console.log("[new_ep_data] [%s]",ya);
-				debugger;
-			}
-		}
-	}
-	/** @private @arg {AppendContinuationItemsAction} x */
-	AppendContinuationItemsAction(x) {
-		this.parse_target_id(x.targetId);
 	}
 	/** @private @arg {YtTargetIdType} x */
 	parse_target_id(x) {
@@ -5177,132 +5014,7 @@ class HandleTypes extends BaseService {
 		if(cr.length===22) return;
 		console.log("[channel_id] %s %s","UC",cr);
 	}
-	/** @private @arg {LiveChatItemContextMenuEndpointData} x */
-	LiveChatItemContextMenuEndpointData(x) {
-		const {params: a,...y}=x; this.g(y);
-		this.primitive_of(a,"string");
-	}
-	/** @private @arg {HeartbeatParams} x */
-	HeartbeatParams(x) {
-		const {heartbeatServerData: a,intervalMilliseconds: b,softFailOnError: c,...y}=x; this.g(y);
-		this.z([a,b],a => this.primitive_of(a,"string"));
-		this.primitive_of(c,"boolean");
-	}
-	/** @private @arg {CardCollectionRenderer} x */
-	CardCollectionRenderer(x) {
-		const {cardCollectionRenderer: a,...y}=x; this.g(y);
-		this.CardCollectionData(a);
-	}
-	/** @private @arg {CardCollectionData} x */
-	CardCollectionData(x) {
-		const {
-			cards: a,headerText: b,icon: c,closeButton: d,
-			trackingParams: e,allowTeaserDismiss: f,logIconVisibilityUpdates: g,...y
-		}=x; this.g(y);
-		this.z(a,a => a);
-		this.text_t(b);
-		this.z([c,d],a => this.InfoCardIconRenderer(a));
-		this.trackingParams(e);
-		this.z([f,g],a => this.primitive_of(a,"boolean"));
-	}
-	/** @private @arg {InfoCardIconRenderer} x */
-	InfoCardIconRenderer(x) {
-		const {infoCardIconRenderer: a,...y}=x; this.g(y);
-		this.InfoCardIconData(a);
-	}
-	/** @private @arg {InfoCardIconData} x */
-	InfoCardIconData(x) {
-		const {trackingParams: a,...y}=x; this.g(y);
-		this.trackingParams(a);
-	}
-	/** @private @arg {PlayerMicroformatRenderer} x */
-	PlayerMicroformatRenderer(x) {
-		const {playerMicroformatRenderer: a,...y}=x; this.g(y);
-		this.PlayerMicroformatData(a);
-	}
-	/** @private @arg {PlayerMicroformatData} x */
-	PlayerMicroformatData(x) {
-		let t=this;
-		/** @this {typeof t} @arg {PlayerMicroformatData} x */
-		function p1(x) {
-			const {thumbnail: a,embed: b,title: c,description: d,...y}=x;
-			this.Thumbnail(a,this.g);
-			this.MicroformatEmbed(b);
-			this.text_t(c);
-			if(d) this.text_t(d);
-			return y;
-		}
-		let a=p1.call(this,x);
-		/** @this {typeof t} @arg {typeof a} x */
-		function p2(x) {
-			const {lengthSeconds: b,ownerProfileUrl: c,externalChannelId: d,isFamilySafe: e,...y}=x;
-			this.primitive_of(b,"string");
-			this.parse_channel_url(c);
-			return y;
-		}
-		let b=p2.call(this,a);
-		/** @this {typeof t} @arg {typeof b} x */
-		function p3(x) {
-			const {availableCountries: a,isUnlisted: c,hasYpcMetadata: d,viewCount: e,...y}=x;
-			this.z(a,a => this.save_string("country_code",a));
-			this.z([c,d],a => this.primitive_of(a,"boolean"));
-			this.primitive_of(e,"string");
-			return y;
-		}
-		let c=p3.call(this,b);
-		/** @this {typeof t} @arg {typeof c} x */
-		function p4(x) {
-			const {category: a,publishDate: b,ownerChannelName: d,liveBroadcastDetails: e,...y}=x;
-			/** @type {YtCategoryStr} */
-			this.save_string("video.category",a);
-			this.z([b,d],a => this.primitive_of(a,"string"));
-			if(e) this.LiveBroadcastDetails(e);
-			return y;
-		}
-		let d=p4.call(this,c);
-		/** @this {typeof t} @arg {typeof d} x */
-		function p5(x) {
-			const {uploadDate: a,...y}=x;
-			this.primitive_of(a,"string");
-			return y;
-		}
-		let y=p5.call(this,d); this.g(y);
-	}
-	/** @private @arg {LiveBroadcastDetails} x */
-	LiveBroadcastDetails(x) {
-		const {startTimestamp: b,...y}=x;
-		this.primitive_of(b,"string");
-		if(y.isLiveNow) {
-			const {isLiveNow: {},...a}=y; this.g(a);
-		} else {
-			const {isLiveNow: {},endTimestamp: c,...a}=y; this.g(a);
-		}
-	}
 	log_user_channel_url=false;
-	/** @private @arg {FullChannelUrlFormat} x */
-	parse_channel_url(x) {
-		let r=create_from_parse(x);
-		let chan_part=split_string_once(r.pathname,"/")[1];
-		let channel_id=split_string_once(chan_part,"/");
-		switch(channel_id[0]) {
-			case "channel": if(channel_id[1].startsWith("UC")) {
-				this.parse_external_channel_id(channel_id[1]);
-			} else {
-				debugger;
-			} break;
-			case "user": {
-				if(this.log_user_channel_url) console.log("[parse_channel_url] [%s]",`${channel_id[0]}/${channel_id[1]}`);
-			} break;
-			default: debugger;
-		}
-	}
-	/** @private @arg {MicroformatEmbed} x */
-	MicroformatEmbed(x) {
-		const {iframeUrl: a,flashUrl: b,width: c,height: d,flashSecureUrl: e,...y}=x; this.g(y);
-		this.z([a,b,e],a => this.primitive_of(a,"string"));
-		this.primitive_of(x.flashSecureUrl,"string");
-		this.z([c,d],a => this.primitive_of(a,"number"));
-	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
@@ -5623,107 +5335,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {WatchNextResponse} x */
 	WatchNextResponse(x) {
-		let t=this;
-		/** @this {typeof t} @arg {typeof x} x */
-		function p1(x) {
-			const {currentVideoEndpoint: a,engagementPanels: b,frameworkUpdates: c,onResponseReceivedEndpoints: d,...y}=x;
-			console.log(`[Response.watch.currentVideoEndpoint.${this.#get_renderer_key(a)}]`,a);
-			this.z(b,a => this.EngagementPanelSectionListRenderer(a));
-			if(c) this.FrameworkUpdates(c);
-			this.z(d,this.ResponseReceivedEndpointItem);
-			return y;
-		}
-		/** @this {typeof t} @arg {typeof x} x */
-		function p2(x) {
-			const {pageVisualEffects: b,playerOverlays: c,responseContext: d,topbar: e,...y}=p1.call(this,x);
-			this.z(b,a => this.CinematicContainerRenderer(a));
-			return y;
-		}
-		const {trackingParams: a,contents: b,...y}=p2.call(this,x);
-		this.trackingParams(a);
-		if(b) this.TwoColumnWatchNextResults(b);
-		this.g(y);
-	}
-	/** @private @arg {ResponseReceivedEndpointItem} x */
-	ResponseReceivedEndpointItem(x) {
-		console.log(`[ResponseReceivedEndpointItem.${this.#get_renderer_key(x)}]`,x);
-		if("signalServiceEndpoint" in x) {
-			return this.SignalServiceEndpoint(x);
-		} else if("changeKeyedMarkersVisibilityCommand" in x) {
-			return this.ChangeKeyedMarkersVisibilityCommand(x);
-		} else if("loadMarkersCommand" in x) {
-			return this.LoadMarkersCommand(x);
-		}
-		debugger;
-	}
-	/** @private @arg {SignalServiceEndpoint} x */
-	SignalServiceEndpoint(x) {
-		this.clickTrackingParams(x.clickTrackingParams);
-		this.CommandMetadata(x.commandMetadata,a => {
-			this.save_keys("[SignalServiceEndpoint.web_command_metadata]",a);
-		});
-		this.SignalServiceEndpointData(x.signalServiceEndpoint);
+		const {currentVideoEndpoint: a,onResponseReceivedEndpoints: d,...y}=x;
+		console.log(`[Response.watch.currentVideoEndpoint.${this.#get_renderer_key(a)}]`,a);
+		console.log("[handle]",get_keys_of(y)[0]);
 	}
 	/** @template T @arg {{webCommandMetadata: T}} x @arg {(x:T)=>void} f */
 	CommandMetadata(x,f) {
 		f(x.webCommandMetadata);
-	}
-	/** @private @arg {CinematicContainerRenderer} x */
-	CinematicContainerRenderer(x) {
-		if("cinematicContainerRenderer" in x) {
-			return this.w(x,a => this.CinematicContainerData(a));
-		}
-		debugger;
-	}
-	/** @private @arg {CinematicContainerData} x */
-	CinematicContainerData(x) {
-		const {backgroundImageConfig: a,gradientColorConfig: b,presentationStyle: c,config: d,...y}=x; this.g(y);
-		if(a) this.ThumbnailsList(a);
-		this.GradientColorConfigStart(b[0]);
-		this.GradientColorConfigMid(b[1]);
-		this.GradientColorConfigEnd(b[2]);
-		if(b.length!==3) debugger;
-		switch(c) {
-			case "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED": break;
-			case void 0: break;
-			default: debugger;
-		}
-		this.PageVisualEffectsConfig(d);
-	}
-	/** @private @arg {GradientColorConfigEnd} x */
-	GradientColorConfigEnd(x) {
-		if(x.darkThemeColor!==0xff000000) debugger;
-		if(x.startLocation!==1) debugger;
-	}
-	/** @private @arg {GradientColorConfigMid} x */
-	GradientColorConfigMid(x) {
-		if(x.darkThemeColor!==0x7f000000) debugger;
-	}
-	/** @private @arg {GradientColorConfigStart} x */
-	GradientColorConfigStart(x) {
-		if(x.darkThemeColor!==0x99000000) debugger;
-		if(x.startLocation!==0) debugger;
-	}
-	/** @private @arg {PageVisualEffectsConfig} x */
-	PageVisualEffectsConfig(x) {
-		let a=this.parse_theme_background_vars(x);
-		let b=this.parse_color_source_vars(a);
-		const {animationConfig: c,applyClientImageBlur: d,blurStrength: e,...y}=b; this.g(y);
-		this.AnimationConfig(c);
-		this.primitive_of(d,"boolean");
-		if(e!==5) debugger;
-	}
-	/** @private @arg {AnimationConfig} x */
-	AnimationConfig(x) {
-		const {minImageUpdateIntervalMs: a,crossfadeDurationMs: b,crossfadeStartOffset: c,maxFrameRate: d,...y}=x; this.g(y);
-		switch(a) {
-			case 10000: break;
-			case 5000: break;
-			default: debugger;
-		}
-		if(b!==5000) debugger;
-		if(c!==1) debugger;
-		if(d!==30) debugger;
 	}
 	/** @template {ThemeBackgroundVars} T @arg {T} x @returns {Omit<T,keyof ThemeBackgroundVars>} */
 	parse_theme_background_vars(x) {
@@ -5764,316 +5382,11 @@ class HandleTypes extends BaseService {
 		if(e!==260) debugger;
 		return y;
 	}
-	/** @private @arg {ThumbnailsList} x */
-	ThumbnailsList(x) {
-		const {thumbnail,trackingParams,...y}=x; this.g(y);
-		this.Thumbnail(x.thumbnail,this.g);
-	}
-	/** @private @arg {TwoColumnWatchNextResults} x */
-	TwoColumnWatchNextResults(x) {
-		const {twoColumnWatchNextResults: a,...y}=x;
-		this.TwoColumnWatchNextResultsData(a);
-		this.g(y);
-	}
-	/** @private @arg {EngagementPanelSectionListRenderer} x */
-	EngagementPanelSectionListRenderer(x) {
-		const {engagementPanelSectionListRenderer: a,...y}=x;
-		this.EngagementPanelSectionListData(a);
-		this.g(y);
-	}
-	/** @private @arg {FrameworkUpdates} x */
-	FrameworkUpdates(x) {
-		if(!x) {debugger; return;}
-		const {entityBatchUpdate: a,elementUpdate: b,...y}=x;
-		this.EntityBatchUpdateData(a);
-		if(b) this.ElementUpdate(b);
-		this.g(y);
-	}
-	/** @private @arg {ElementUpdate} x */
-	ElementUpdate(x) {
-		const {updates: a,...y}=x;
-		this.z(a,a => this.ElementUpdateItem(a));
-		this.g(y);
-	}
-	/** @private @arg {ElementUpdateItem} x */
-	ElementUpdateItem(x) {
-		if("templateUpdate" in x) {
-			const {templateUpdate: a,...y}=x; this.g(y);
-			this.TemplateUpdateData(a);
-		} else if("resourceStatusInResponseCheck" in x) {
-			const {resourceStatusInResponseCheck: a,...y}=x; this.g(y);
-			this.ResourceStatusInResponseCheckData(a);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {TemplateUpdateData} x */
-	TemplateUpdateData(x) {
-		const {identifier: a,serializedTemplateConfig: b,dependencies: c,...y}=x; this.g(y);
-		let id=a.split("|");
-		console.log(id);
-		this.decode_template_protobuf(b);
-		if(c) this.z(c,a => {
-			let id=a.split("|");
-			console.log(id);
-		});
-		this.g(y);
-	}
-	/** @private @arg {MyReader} reader @arg {DecTypeNum[]} results */
-	unpack_children_reader_result(reader,results) {
-		/** @type {DecTypeNum[]} */
-		let out=[];
-		for(let item of results) {
-			switch(item[0]) {
-				case "child": {
-					let buffer=item[2];
-					reader.pos=buffer.byteOffset;
-					let res=reader.try_read_any(buffer.byteLength);
-					if(!res) {out.push(item); break;}
-					let unpack=this.unpack_children_reader_result(reader,res);
-					if(!unpack) {out.push(item); break;}
-					out.push(["struct",item[1],unpack]);
-				} break;
-				case "info": break;
-				default: out.push(item); break;
-				case "error": return null;
-			}
-		}
-		return out;
-	}
 	/** @type {Map<string,(number|bigint)[]>} */
 	follow_map=new Map;
-	/** @private @arg {TemplateElement} x @arg {(number|bigint)[]} p */
-	iterate_template_element(x,p) {
-		for(let i of x.map.entries()) {
-			let pa=p.slice(-4);
-			if(pa) {
-				let im=this.follow_map.get(pa.join(":"));
-				if(pa&&im) {
-					if(!im.includes(i[0])) im.push(i[0]);
-				} else this.follow_map.set(pa.join(":"),[i[0]]);
-			}
-			let value=x[`${i[1]}${i[0]}`]; value;
-			switch(i[1]) {
-				case "f_o": {
-					this.iterate_template_element(x[`${i[1]}${i[0]}`],[...p,i[0]]);
-				} break;
-				case "f_rep_n": {
-					let value=x[`${i[1]}${i[0]}`];
-					for(let x1 in value) {
-						x1;
-						// console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
-						// console.log("[template_iter]",i[0],value[x1]);
-						continue;
-					}
-				} break;
-				case "f_rep_s": {
-					let value=x[`${i[1]}${i[0]}`];
-					for(let x1 in value) {
-						x1;
-						console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
-						console.log("[template_iter]",i[0],value[x1]);
-						continue;
-					}
-				} break;
-				case "f_rep_o": {
-					let value=x[`${i[1]}${i[0]}`];
-					for(let x1=0;x1<value.length;x1++) {
-						this.iterate_template_element(value[x1],[...p,i[0],x1]);
-						// console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
-						// console.log("[template_iter]",i[0],value[x1]);
-						continue;
-					}
-				} break;
-				case "f_s": {
-					console.log("[template_iter_path]",[...p,i[0]].join(" "));
-					console.log("[template_iter]",i[0],value);
-				} break;
-				default: {
-					// console.log("[template_iter_path]",[...p,i[0]].join(" "));
-					// console.log("[template_iter]",i[0],value);
-				} break;
-			}
-		}
-	}
 	do_decode_template_protobuf=false;
 	/** @type {this['follow_map'][]} */
 	follow_maps=[];
-	/** @private @arg {string} x */
-	decode_template_protobuf(x) {
-		if(!this.do_decode_template_protobuf) return;
-		let binary=decode_url_b64(x);
-		let reader=new MyReader(binary);
-		reader.pos=7;
-		let packed_reader_results=reader.try_read_any();
-		if(!packed_reader_results) return;
-		let no_children=this.unpack_children_reader_result(reader,packed_reader_results);
-		if(!no_children) return;
-		let root_data=[];
-		for(let struct of no_children) {
-			switch(struct[0]) {
-				case "child": {
-					let res=struct[2];
-					console.log("[template_child_iter_child]",res);
-				} break;
-				case "struct": {
-					/** @type {Map<number,DecTypeNum[][]>} */
-					let struct_map=new Map;
-					let res=struct[2];
-					for(let member of res) {
-						if(member[0]!=="struct") {
-							console.log(member);
-							continue;
-						}
-						let [,field,value]=member;
-						let cur=struct_map.get(field);
-						if(cur) {
-							cur.push(value);
-							continue;
-						}
-						struct_map.set(field,[value]);
-					}
-					let at_1=struct_map.get(1);
-					if(!at_1) continue;
-					let at_2=struct_map.get(2);
-					if(!at_2) continue;
-					let at_1_f=at_1.map(a => this.decode_template_element(a));
-					let at_2_f=at_2.map(a => this.decode_template_element(a));
-					at_1_f.forEach(a => {
-						const {children,...y}=a;
-						/** @type {[typeof y|typeof children]} */
-						let out=[y];
-						if(children) out.push(children);
-						console.log("[template_child_iter_1]",...out);
-						a;
-					});
-					at_2_f.forEach(a => {
-						const {children,...y}=a;
-						/** @type {[typeof y|typeof children]} */
-						let out=[y];
-						if(children) {
-							this.iterate_template_element(children,[y.index_unk_1]);
-							out.push(children);
-						}
-						console.log("[template_child_iter_2]",...out);
-						a;
-					});
-					debugger;
-					let cm=this.follow_map;
-					this.follow_map=new Map;
-					this.follow_maps.push(cm);
-				} break;
-				default: root_data.push(struct);
-			}
-		}
-		console.log("template_root_data",...root_data);
-	}
-	/** @private @arg {DecTypeNum[]} x */
-	decode_template_element(x) {
-		let a=this.decode_template_element_1(x);
-		return this.decode_template_element_2(a);
-	}
-	/** @private @arg {TemplateElement} x */
-	decode_template_element_2(x) {
-		let res_obj={};
-		if(x.f_n1!==void 0) res_obj.index_unk_1=x.f_n1;
-		if(x.f_n3!==void 0) res_obj.type_enum_3=x.f_n3;
-		if(x.f_n2!==void 0) res_obj.attr_enum_2=x.f_n2;
-		if(x.f_o4!==void 0) res_obj.children=x.f_o4;
-		let r=filter_out_keys(get_keys_of(x),split_string("f_n1,f_n2,f_n3,f_o4,map,set_key"));
-		if(r.length>0) debugger;
-		return res_obj;
-	}
-	/** @private @arg {DecTypeNum[]} x */
-	decode_template_element_1(x) {
-		/** @type {TemplateElement} */
-		let res_obj={
-			map: new Map,
-			set_key(a) {
-				let count=f_counts.get(a[1])??1;
-				switch(a[0]) {
-					case "f_n": {
-						let [l,x,y]=a;
-						if(count>1) {
-							res_obj.map.set(x,"f_rep_n");
-							this[`f_rep_n${x}`]??=[];
-							this[`f_rep_n${x}`].push(y);
-							break;
-						}
-						res_obj.map.set(x,l);
-						this[`${l}${x}`]=y;
-					} break;
-					case "f_s": {
-						let [l,x,y]=a;
-						if(count>1) {
-							res_obj.map.set(x,"f_rep_s");
-							this[`f_rep_s${x}`]??=[];
-							this[`f_rep_s${x}`].push(y);
-							break;
-						}
-						res_obj.map.set(x,l);
-						this[`${l}${x}`]=y;
-					} break;
-					case "f_o": {
-						let [l,x,y]=a;
-						if(count>1) {
-							res_obj.map.set(x,"f_rep_o");
-							this[`f_rep_o${x}`]??=[];
-							this[`f_rep_o${x}`].push(y);
-							break;
-						}
-						res_obj.map.set(x,l);
-						this[`${l}${x}`]=y;
-					} break;
-				}
-			}
-		};
-		let pd=Object.getOwnPropertyDescriptors(res_obj);
-		for(let x of Object.values(pd)) {
-			x.enumerable=false;
-		}
-		Object.defineProperties(res_obj,pd);
-		/** @type {Map<number,number>} */
-		let f_counts=new Map;
-		for(let it of x) {
-			if(it[0]==="error") continue;
-			if(it[0]==="group") continue;
-			let n=f_counts.get(it[1])??0;
-			f_counts.set(it[1],n+1);
-		}
-		for(let it of x) {
-			switch(it[0]) {
-				case "data32": res_obj.set_key(["f_n",it[1],it[2]]); break;
-				case "data_fixed32": res_obj.set_key(["f_n",it[1],it[2]]); break;
-				case "child": res_obj.set_key(["f_s",it[1],decoder.decode(it[2])]); break;
-				case "struct": {
-					let v1=this.decode_template_element_1(it[2]);
-					res_obj.set_key(["f_o",it[1],v1]);
-				} break;
-				case "data64": res_obj.set_key(["f_n",it[1],it[2]]); break;
-				case "data_fixed64": res_obj.set_key(["f_n",it[1],it[2]]); break;
-				default: debugger;
-			}
-		}
-		return res_obj;
-	}
-	/** @private @arg {ResourceStatusInResponseCheckData} x */
-	ResourceStatusInResponseCheckData(x) {
-		const {resourceStatuses: a,serverBuildLabel: b,...y}=x; this.g(y);
-		this.z(a,a => this.ElementResourceStatus(a));
-		let pp=split_string(b,"_");
-		if(pp.length!==4) debugger;
-		if(pp[0]!=="boq") debugger;
-		if(pp[1]!=="youtube-watch-ui") debugger;
-		let pp_ver=pp[2];
-		let ver=split_string(pp_ver,".");
-		console.log("[server_build]",`${ver[0]}.${ver[1]}_${pp[3]}`);
-	}
-	/** @private @arg {ElementResourceStatus} x */
-	ElementResourceStatus(x) {
-		if(x.status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
-		console.log("[ElementResourceStatus_identifier]",split_string_once(x.identifier,"|"));
-	}
 	/** @private @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
 		const {clickTrackingParams: a,openPopupAction: b,...y}=x;
@@ -7039,10 +6352,6 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	/** @private @arg {ChangeEngagementPanelVisibilityAction} x */
-	ChangeEngagementPanelVisibilityAction(x) {
-		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y);
-	}
 	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
@@ -7134,12 +6443,6 @@ class HandleTypes extends BaseService {
 	/** @private @arg {AdSlotRenderer} x */
 	AdSlotRenderer(x) {
 		this.AdSlotData(x.adSlotRenderer);
-	}
-	/** @private @arg {PlayerStoryboardSpecRenderer} x */
-	PlayerStoryboardSpecRenderer(x) {
-		const {playerStoryboardSpecRenderer: a,...y}=x;
-		this.PlayerStoryboardSpecData(a);
-		this.g(y);
 	}
 	/** @private @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
@@ -7305,16 +6608,6 @@ class HandleTypes extends BaseService {
 		this.trackingParams(e);
 		this.Accessibility(f);
 	}
-	/** @private @arg {PlayerStoryboardSpecData} x */
-	PlayerStoryboardSpecData(x) {
-		if(!x) {
-			debugger;
-			return;
-		}
-		const {spec: a,...y}=x;
-		this.primitive_of(a,"string");
-		this.g(y);
-	}
 	/** @private @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
 		const {page: a,endpoint: b,response: c,url: d,...y}=x; this.g(y);
@@ -7367,47 +6660,6 @@ class HandleTypes extends BaseService {
 		this.parse_url(a);
 		if(b!=="WEB_PAGE_TYPE_SEARCH") debugger;
 		this.save_root_visual_element(c);
-	}
-	/** @private @arg {EngagementPanelSectionListData} x */
-	EngagementPanelSectionListData(x) {
-		const {content: a,targetId: b,visibility: c,loggingDirectives: d,...y}=x; y;
-		this.EngagementPanelSectionListContent(a);
-		this.save_enum("engagement-panel",b);
-		this.save_enum("ENGAGEMENT_PANEL_VISIBILITY",c);
-		this.LoggingDirectives(d);
-	}
-	/** @private @arg {EngagementPanelSectionListContent} x */
-	EngagementPanelSectionListContent(x) {
-		if("adsEngagementPanelContentRenderer" in x) {
-			return this.w(x,a => this.AdsEngagementPanelContentData(a));
-		} else if("clipSectionRenderer" in x) {
-			return this.w(x,a => this.w1(a,a => this.ClipCreationData(a.clipCreationRenderer)));
-		} else if("structuredDescriptionContentRenderer" in x) {
-			return this.StructuredDescriptionContentRenderer(x);
-		} else if("sectionListRenderer" in x) {
-			return this.SectionListRenderer(x,(a,b) => {
-				if(eq_keys([a,b],["comment-item-section","engagement-panel-comments-section"])) return;
-				console.log(a);
-				debugger;
-			});
-		} else if("continuationItemRenderer" in x) {
-			return this.ContinuationItemRenderer(x);
-		}
-		this.save_keys("[EngagementPanelSectionList.item]",x);
-	}
-	/** @private @arg {ContinuationItemRenderer} x */
-	ContinuationItemRenderer(x) {
-		const {continuationItemRenderer: renderer_data}=x;
-		this.ContinuationItemData(renderer_data);
-	}
-	/** @private @arg {ClipCreationData} x */
-	ClipCreationData(x) {
-		this.w(x,(a,k) => this.save_keys(`[ClipCreationData.${k}]`,a));
-	}
-	/** @private @arg {AdsEngagementPanelContentData} x */
-	AdsEngagementPanelContentData(x) {
-		if("hack" in x) return;
-		debugger;
 	}
 	/** @private @arg {SettingsSidebarRenderer} x */
 	SettingsSidebarRenderer(x) {
@@ -7533,170 +6785,20 @@ class HandleTypes extends BaseService {
 		let r=split_string_once(x,"UC");
 		if(r[0]!=="") debugger;
 	}
-	/** @private @arg {ConfirmDialogEndpointData} x */
-	ConfirmDialogEndpointData(x) {
-		this.ConfirmDialogRenderer(x.content);
-	}
-	/** @private @arg {ConfirmDialogRenderer} x */
-	ConfirmDialogRenderer(x) {
-		this.ConfirmDialogData(x.confirmDialogRenderer);
-	}
-	/** @private @arg {ConfirmDialogData} x */
-	ConfirmDialogData(x) {
-		this.ButtonRenderer(x.cancelButton);
-	}
 	/** @private @arg {CompactVideoData} x */
 	CompactVideoData(x) {
 		this.Accessibility(x.accessibility);
 	}
-	/** @private @arg {PlayerConfig} x */
-	PlayerConfig(x) {
-		this.AudioConfig(x.audioConfig);
-	}
-	/** @private @arg {AudioConfig} x */
-	AudioConfig(x) {
-		x;
-	}
-	/** @private @arg {VideoDetails} x */
-	VideoDetails(x) {
-		this.primitive_of(x.author,"string");
-	}
-	/** @private @arg {StreamingData} x */
-	StreamingData(x) {
-		this.z(x.adaptiveFormats,a => this.AdaptiveFormatItem(a));
-	}
 	/** @type {FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
-	/** @private @arg {AdaptiveFormatItem} x */
-	AdaptiveFormatItem(x) {
-		const {
-			itag,url,mimeType,bitrate,width: w,height: h,initRange,indexRange,
-			...a
-		}=x;
-		if(!this.format_itag_arr.includes(itag)) {
-			debugger;
-		}
-		if(url) this.primitive_of(url,"string");
-		this.s_parser.parse_mime_type(mimeType);
-		this.primitive_of(bitrate,"number");
-		if(w) this.primitive_of(w,"number");
-		if(h) this.primitive_of(h,"number");
-		this.YtRange(initRange);
-		this.YtRange(indexRange);
-		const {
-			lastModified,contentLength,quality,fps,
-			qualityLabel: ql,projectionType,averageBitrate,colorInfo: ci,
-			highReplication,
-			audioQuality,
-			approxDurationMs,
-			audioSampleRate,audioChannels,loudnessDb,
-			...b
-		}=a;
-		switch(highReplication) {
-			case true:
-			case void 0: break;
-			default: debugger;
-		}
-		this.primitive_of(lastModified,"string");
-		this.primitive_of(contentLength,"string");
-		this.parse_format_quality(quality);
-		if(fps) this.parse_format_fps(fps);
-		if(ql) this.parse_format_quality_label(ql);
-		if(projectionType!=="RECTANGULAR") debugger;
-		this.primitive_of(averageBitrate,"number");
-		if(ci) this.FormatColorInfo(ci);
-		this.primitive_of(approxDurationMs,"string");
-		if(audioSampleRate) this.parse_audio_sample_rate(audioSampleRate);
-		if(audioChannels&&audioChannels!==2) debugger;
-		if(loudnessDb) this.primitive_of(loudnessDb,"number");
-		const {signatureCipher: sc,...y}=b; this.g(y);
-		if(sc) {
-			let r=make_search_params(sc);
-			let k=get_keys_of(r);
-			for(let v of k) {
-				switch(v) {
-					case "s": break;
-					case "sp": break;
-					case "url": break;
-					default: debugger;
-				}
-			}
-		}
-	}
-	/** @private @arg {`${AudioSampleRate}`} x */
-	parse_audio_sample_rate(x) {
-		switch(x) {
-			case "44100": break;
-			case "48000": break;
-			default: debugger;
-		}
-	}
-	/** @private @arg {FormatColorInfo} x */
-	FormatColorInfo(x) {
-		const {primaries: a,transferCharacteristics: b,matrixCoefficients: c,...y}=x; this.g(y);
-		switch(a) {case "COLOR_PRIMARIES_BT709": break; default: debugger;};
-		switch(b) {case "COLOR_TRANSFER_CHARACTERISTICS_BT709": break; default: debugger;};
-		switch(c) {case "COLOR_MATRIX_COEFFICIENTS_BT709": break; default: debugger;};
-	}
 	/** @type {QualArr} */
 	format_quality_label_arr=[
 		"2160p50","1440p50","1080p50","720p50",
 		"2160p60","1440p60","1080p60","720p60",
 		"1080p","720p","480p","360p","240p","144p"
 	];
-	/** @private @arg {QualityLabel} x */
-	parse_format_quality_label(x) {
-		if(!this.format_quality_label_arr.includes(x)) {
-			debugger;
-		}
-	}
 	valid_fps_arr=[13,25,30,50,60];
-	/** @private @arg {FormatFps} x */
-	parse_format_fps(x) {
-		if(!this.valid_fps_arr.includes(x)) {
-			debugger;
-		}
-	}
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
-	/** @private @arg {FormatQuality} x */
-	parse_format_quality(x) {
-		if(!this.format_quality_arr.includes(x)) {
-			debugger;
-		}
-	}
-	/** @private @arg {YtRange} x */
-	YtRange(x) {
-		this.z([x.end,x.start],a => this.primitive_of(a,"string"));
-	}
-	/** @private @arg {VideoQualityPromoData} x */
-	VideoQualityPromoData(x) {
-		const {triggerCriteria,text,endpoint,trackingParams,snackbar,...y}=x; this.g(y);
-		this.TriggerCriteria(triggerCriteria);
-		this.text_t(x.text);
-		this.EndpointTemplate(x.endpoint,a => this.w(a,a => this.UrlEndpointData(a)));
-		this.trackingParams(x.trackingParams);
-		this.NotificationActionRenderer(x.snackbar);
-	}
-	/** @private @arg {TriggerCriteria} x */
-	TriggerCriteria(x) {
-		const {connectionWhitelist,joinLatencySeconds,rebufferTimeSeconds,watchTimeWindowSeconds,refractorySeconds,...y}=x;
-		this.g(y);
-		if(!eq_keys(x.connectionWhitelist,["WIFI"])) debugger;
-		if(x.joinLatencySeconds!==15) debugger;
-		if(x.rebufferTimeSeconds!==10) debugger;
-		if(x.watchTimeWindowSeconds!==180) debugger;
-		if(x.refractorySeconds!==2592000) debugger;
-	}
-	/** @private @arg {NotificationActionData} x */
-	NotificationActionData(x) {
-		this.text_t(x.responseText);
-		this.ButtonRenderer(x.actionButton);
-		this.trackingParams(x.trackingParams);
-	}
-	/** @private @arg {NotificationActionRenderer} x */
-	NotificationActionRenderer(x) {
-		this.NotificationActionData(x.notificationActionRenderer);
-	}
 	/** @template T @arg {EndpointTemplate<T>} x @arg {(x:T)=>void} f */
 	EndpointTemplate(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,...y}=x;
@@ -7708,113 +6810,11 @@ class HandleTypes extends BaseService {
 		let d=as_cast(c);
 		f(d);
 	}
-	/** @private @arg {TwoColumnWatchNextResultsData["results"]["results"]} x1 */
-	TwoColumnWatchNextResultsData_0(x1) {
-		this.ContentsTemplate(x1,x2 => {
-			if("itemSectionRenderer" in x2) {
-				return this.TwoColumnWatchNextResultsData_1(x2);
-			} else if("videoPrimaryInfoRenderer" in x2) {
-				return this.VideoPrimaryInfoRenderer(x2);
-			} else if("videoSecondaryInfoRenderer" in x2) {
-				return this.VideoSecondaryInfoRenderer(x2);
-			}
-			debugger;
-		});
-	}
-	/** @private @arg {Extract<TwoColumnWatchNextResultsData["results"]["results"]["contents"][number],{itemSectionRenderer:any}>} x */
-	TwoColumnWatchNextResultsData_1(x) {
-		return this.ItemSectionRenderer(x,(a,b) => {
-			switch(a) {
-				case "comment-item-section": if(b!=="comments-section") debugger; return;
-				case "comments-entry-point": if(b!==void 0) debugger; return;
-				default:
-			}
-			console.log(a);
-			debugger;
-		});
-	}
-	/** @private @arg {TwoColumnWatchNextResultsData} x */
-	TwoColumnWatchNextResultsData(x) {
-		const {results: a,secondaryResults: b,playlist: c,autoplay: d,conversationBar: e,...y}=x; this.g(y);
-		this.ResultsTemplate(a,x1 => {
-			let [k]=get_keys_of(x1);
-			switch(k) {
-				case "contents": break;
-				case "trackingParams": break;
-				default: debugger;
-			}
-			this.TwoColumnWatchNextResultsData_0(x1);
-		});
-		this.SecondaryResultsTemplate(b,x => {
-			let [k]=get_keys_of(x);
-			switch(k) {
-				case "contents": break;
-				case "results": break;
-				case "trackingParams": break;
-				default: debugger;
-			}
-			if("contents" in x) {
-				return this.SecondaryResultsContent_0(x);
-			} else if("results" in x) {
-				return this.ResultsArrTemplate(x,this.SecondaryResultsContent_1);
-			}
-			debugger;
-		});
-		if(c) this.PlaylistTemplate(c,a => this.PlaylistContent(a));
-		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
-		this.ConversationBar(e);
-	}
-	/** @private @arg {TwoColumnWatchNextResultsData["conversationBar"]} x */
-	ConversationBar(x) {
-		if(!x) return;
-		if("liveChatRenderer" in x) {
-			return this.LiveChatRenderer(x);
-		}
-		debugger;
-	}
 	/** @template {{}} T @arg {ResultsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsArrTemplate(x,f) {
 		const {trackingParams: a,results: b,...y}=x; this.g(y);
 		this.trackingParams(a);
 		this.z(b,f);
-	}
-	/** @private @arg {ContentsTemplate<RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">>} x1 */
-	SecondaryResultsContent_0(x1) {
-		this.ContentsTemplate(x1,this.SecondaryResultsContent_1);
-	}
-	/** @private @arg {RelatedChipCloudRenderer|ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x */
-	SecondaryResultsContent_1(x) {
-		if("itemSectionRenderer" in x) {
-			return this.SecondaryResultsContent_2(x);
-		} else if("relatedChipCloudRenderer" in x) {
-			return this.RelatedChipCloudRenderer(x);
-		}
-		console.log(x);
-		debugger;
-	}
-	/** @private @arg {RelatedChipCloudRenderer} x */
-	RelatedChipCloudRenderer(x) {
-		x;
-	}
-	/** @private @arg {ItemSectionRenderer<"sid-wn-chips","watch-next-feed">} x3 */
-	SecondaryResultsContent_2(x3) {
-		return this.ItemSectionRenderer(x3,(a,b) => {
-			if(a==="sid-wn-chips"&&b==="watch-next-feed") return;
-			console.log([a,b]);
-			debugger;
-		});
-	}
-	/** @private @arg {LiveChatRenderer} x */
-	LiveChatRenderer(x) {
-		this.LiveChatData(x.liveChatRenderer);
-	}
-	/** @private @arg {LiveChatData} x */
-	LiveChatData(x) {
-		this.save_keys("[LiveChatData]",x);
-	}
-	/** @private @arg {PlaylistContent} x */
-	PlaylistContent(x) {
-		this.save_keys("[PlaylistContent]",x);
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
 	PlaylistTemplate(x,f) {
@@ -7825,103 +6825,8 @@ class HandleTypes extends BaseService {
 	SecondaryResultsTemplate(x,f) {
 		f(x.secondaryResults);
 	}
-	/** @private @arg {VideoSecondaryInfoRenderer} x */
-	VideoSecondaryInfoRenderer(x) {
-		this.VideoSecondaryInfoData(x.videoSecondaryInfoRenderer);
-	}
-	/** @private @arg {VideoSecondaryInfoData} x */
-	VideoSecondaryInfoData(x) {
-		const {
-			owner: a,description: b,subscribeButton,metadataRowContainer,
-			showMoreText,showLessText,trackingParams,
-			defaultExpanded,descriptionCollapsedLines,
-			showMoreCommand: x1,showLessCommand: x2,
-			...y
-		}=x; this.g(y);
-		this.VideoOwnerRenderer(x.owner);
-		if(b) this.text_t(b);
-		this.SubscribeButtonRenderer(x.subscribeButton);
-		this.MetadataRowContainerRenderer(x.metadataRowContainer);
-		this.text_t(x.showMoreText);
-		this.text_t(x.showLessText);
-		this.trackingParams(x.trackingParams);
-		if(x.defaultExpanded!==false) debugger;
-		this.primitive_of(x.descriptionCollapsedLines,"number");
-		if(x1) this.CommandExecutorCommand(x1);
-		if(x2) this.ChangeEngagementPanelVisibilityAction(x2);
-	}
-	/** @private @arg {MetadataRowContainerData} x */
-	MetadataRowContainerData(x) {
-		const {rows: a,collapsedItemCount: b,trackingParams: c,...y}=x; this.g(y);
-		if(a) console.log(this.#generate_typedef(x,"MetadataRowContainerData"));
-		this.primitive_of(b,"number");
-		this.trackingParams(c);
-	}
-	/** @private @arg {MetadataRowContainerRenderer} x */
-	MetadataRowContainerRenderer(x) {
-		this.MetadataRowContainerData(x.metadataRowContainerRenderer);
-	}
-	/** @private @arg {SubscribeButtonRenderer} x */
-	SubscribeButtonRenderer(x) {
-		this.SubscribeButtonData(x.subscribeButtonRenderer);
-	}
-	/** @private @arg {SubscribeButtonData} x */
-	SubscribeButtonData(x) {
-		const {
-			buttonText: a,subscribed: b,enabled: c,type: d,channelId: e,showPreferences: f1,trackingParams: f2,
-			subscribeAccessibility: f3,subscribedButtonText: f4,subscribedEntityKey: f5,onSubscribeEndpoints: f6,
-			unsubscribeAccessibility: f7,unsubscribeButtonText: f8,unsubscribedButtonText: g1,onUnsubscribeEndpoints: g2,
-			notificationPreferenceButton: g3,targetId: g4,
-			...y
-		}=x; this.g(y);
-		this.primitive_of(b,"boolean");
-		if(c!==true) debugger;
-		if(d!=="FREE") debugger;
-		this.parse_channel_id(e);
-		if(f1!==false) debugger;
-		this.trackingParams(f2);
-		this.Accessibility(f3);
-		this.z([a,f4,f8,g1],this.text_t);
-		this.SubscriptionNotificationToggleButtonRenderer(g3);
-		if(g4!=="watch-subscribe") debugger;
-	}
 	log_state_ids=false;
 	log_subscription_notification_toggle_cur_state=false;
-	/** @private @arg {SubscriptionNotificationToggleButtonData} x */
-	SubscriptionNotificationToggleButtonData(x) {
-		this.CommandExecutorCommand(x.command);
-		let lf=this.log_subscription_notification_toggle_cur_state;
-		if(lf) console.log("[subscription_notification_toggle_cur_state]",x.currentStateId);
-		this.Icon(x.secondaryIcon);
-		this.z(x.states,a => {
-			if(this.log_state_ids) console.log("[state_id]",[a.stateId,a.nextStateId]);
-			this.ButtonRenderer(a.state);
-		});
-	}
-	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
-	SubscriptionNotificationToggleButtonRenderer(x) {
-		this.SubscriptionNotificationToggleButtonData(x.subscriptionNotificationToggleButtonRenderer);
-	}
-	/** @private @arg {VideoOwnerRenderer} x */
-	VideoOwnerRenderer(x) {
-		this.VideoOwnerData(x.videoOwnerRenderer);
-	}
-	/** @private @arg {VideoOwnerData} x */
-	VideoOwnerData(x) {
-		this.BrowseEndpoint(x.navigationEndpoint,this.ChannelNavigationEndpointWebCommandMetadata);
-	}
-	/** @private @arg {ChannelNavigationEndpointWebCommandMetadata} x */
-	ChannelNavigationEndpointWebCommandMetadata(x) {
-		const {url: a,webPageType: b,rootVe: c,apiUrl: d,...y}=x; this.g(y);
-		this.parse_url(a);
-		if(b!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(c!==3611) {console.log("[wrong_root_ve]",x); debugger;}
-		if(d!=="/youtubei/v1/browse") debugger;
-	}
-	/** @private @arg {VideoPrimaryInfoRenderer} x */
-	VideoPrimaryInfoRenderer(x) {
-		this.VideoPrimaryInfoData(x.videoPrimaryInfoRenderer);
-	}
 	/** @template T @template U @arg {ItemSectionRenderer<T,U>} x @arg {(x:T,v:U)=>void} f */
 	ItemSectionRenderer(x,f) {
 		this.ItemSectionData(x.itemSectionRenderer,f);
@@ -7945,86 +6850,13 @@ class HandleTypes extends BaseService {
 		if(!x) {debugger; return;}
 		f(x.autoplay);
 	}
-	/** @private @arg {AutoplayContent} x */
-	AutoplayContent(x) {
-		this.z(x.modifiedSets,a => this.ModifiedSetItem(a));
-	}
-	/** @private @arg {ModifiedSetItem} x */
-	ModifiedSetItem(x) {
-		const {previousButtonVideo: a}=x;
-		this.WatchPlaylistEndpoint(x.autoplayVideo);
-		this.WatchPlaylistEndpoint(x.nextButtonVideo);
-		if(a) this.WatchPlaylistEndpoint(a);
-	}
-	/** @private @arg {WatchPlaylistEndpoint} x */
-	WatchPlaylistEndpoint(x) {
-		this.clickTrackingParams(x.clickTrackingParams);
-		this.CommandMetadataTemplate(x.commandMetadata);
-		this.WatchPlaylistEndpointData(x.watchPlaylistEndpoint);
-	}
-	/** @private @arg {WatchPlaylistEndpointData} x */
-	WatchPlaylistEndpointData(x) {
-		x;
-	}
 	/** @private @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		this.g(x.emojiPickerRenderer);
 	}
-	/** @private @arg {PlayerAttestationRenderer} x */
-	PlayerAttestationRenderer(x) {
-		this.PlayerAttestation(x.playerAttestationRenderer);
-	}
-	/** @private @arg {PlayerAttestation} x */
-	PlayerAttestation(x) {
-		this.BotguardData(x.botguardData);
-	}
-	/** @private @arg {BotguardData} x */
-	BotguardData(x) {
-		const {program,interpreterSafeUrl,serverEnvironment,...y}=x; this.g(y);
-		this.UrlWrappedValueT(interpreterSafeUrl,a => a);
-	}
 	/** @template {string} T @arg {UrlWrappedValueT<T>} x @arg {(x:T)=>void} f */
 	UrlWrappedValueT(x,f) {
 		f(x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
-	}
-	/** @private @arg {PaidContentOverlayRenderer} x */
-	PaidContentOverlayRenderer(x) {
-		this.trackingParams(x.trackingParams);
-	}
-	/** @private @arg {EndscreenRenderer} x */
-	EndscreenRenderer(x) {
-		this.EndscreenData(x.endscreenRenderer);
-	}
-	/** @private @arg {EndscreenData} x */
-	EndscreenData(x) {
-		this.z(x.elements,a => this.EndscreenElementRenderer(a));
-	}
-	/** @private @arg {EndscreenElementRenderer} x */
-	EndscreenElementRenderer(x) {
-		this.EndscreenElementData(x.endscreenElementRenderer);
-	}
-	/** @private @arg {EndscreenElementData} x */
-	EndscreenElementData(x) {
-		this.primitive_of(x.aspectRatio,"number");
-	}
-	/** @private @arg {PlayerCaptionsTracklistRenderer} x */
-	PlayerCaptionsTracklistRenderer(x) {
-		this.PlayerCaptionsTracklistData(x.playerCaptionsTracklistRenderer);
-	}
-	/** @private @arg {PlayerCaptionsTracklistData} x */
-	PlayerCaptionsTracklistData(x) {
-		this.z(x.audioTracks,a => {
-			this.z(a.captionTrackIndices,a => {
-				this.primitive_of(a,"number");
-			});
-		});
-		this.z(x.captionTracks,a => {
-			this.primitive_of(a.baseUrl,"string");
-			this.save_string("caption_tracks.vss.id",a.vssId);
-			this.text_t(a.name);
-		});
-		x.defaultAudioTrackIndex;
-		this.z(x.translationLanguages,a => a);
 	}
 	/** @private @arg {ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
@@ -8070,56 +6902,6 @@ class HandleTypes extends BaseService {
 	DesktopTopbarData(x) {
 		this.ButtonRenderer(x.a11ySkipNavigationButton);
 	}
-	/** @private @arg {SignalNavigationEndpointData} x */
-	SignalNavigationEndpointData(x) {
-		switch(x.signal) {
-			case "CHANNEL_SWITCHER": break;
-			default: debugger;
-		}
-	}
-	/** @private @arg {SignOutEndpointData} x */
-	SignOutEndpointData(x) {
-		this.primitive_of(x.hack,"boolean");
-	}
-	/** @private @arg {GetAccountsListInnertubeEndpointData} x */
-	GetAccountsListInnertubeEndpointData(x) {
-		switch(x.requestType) {
-			case "ACCOUNTS_LIST_REQUEST_TYPE_CHANNEL_SWITCHER": break;
-			default: debugger;
-		}
-	}
-	/** @private @arg {PlayerAnnotationsExpandedRenderer} x */
-	PlayerAnnotationsExpandedRenderer(x) {
-		this.PlayerAnnotationsExpandedData(x.playerAnnotationsExpandedRenderer);
-	}
-	/** @private @arg {PlayerAnnotationsExpandedData} x */
-	PlayerAnnotationsExpandedData(x) {
-		x;
-	}
-	/** @private @arg {PlayabilityStatus} x */
-	PlayabilityStatus(x) {
-		decode_url_b64_proto_obj(x.contextParams);
-	}
-	/** @private @arg {PlaybackTracking} x */
-	PlaybackTracking(x) {
-		this.UrlAndElapsedMediaTime(x.atrUrl);
-	}
-	/** @private @arg {UrlAndElapsedMediaTime} x */
-	UrlAndElapsedMediaTime(x) {
-		this.primitive_of(x.baseUrl,"string");
-		if(x.elapsedMediaTimeSeconds===void 0) {
-			debugger;
-		}
-	}
-	/** @private @arg {DesktopWatchAdsData} x */
-	DesktopWatchAdsData(x) {
-		this.GutParams(x.gutParams);
-	}
-	/** @private @arg {GutParams} x */
-	GutParams(x) {
-		const {tag: a,...y}=x; this.g(y);
-		this.primitive_of(a,"string");
-	}
 	/** @private @arg {InlineSurveyData} x */
 	InlineSurveyData(x) {
 		console.log(x.dismissalEndpoint);
@@ -8153,13 +6935,6 @@ class HandleTypes extends BaseService {
 	SearchEndpointData(x) {
 		const {query: a,...y}=x; this.g(y);
 		this.primitive_of(a,"string");
-	}
-	/** @private @arg {SetSettingEndpointData} x */
-	SetSettingEndpointData(x) {
-		if(x.boolValue!==void 0) {
-			this.primitive_of(x.boolValue,"boolean");
-		}
-		console.log("[setting_item_id]",x.settingItemId);
 	}
 	/** @private @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
@@ -8722,7 +7497,7 @@ class HandleTypes extends BaseService {
 		x;
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
-	#generate_renderer(x,r_name=null) {
+	generate_renderer(x,r_name=null) {
 		console.log("gen renderer for",x);
 		/** @type {string[]} */
 		let req_names=[];
@@ -8982,329 +7757,12 @@ class HandleTypes extends BaseService {
 		td.generate_depth(td.cur_str);
 		return td;
 	}
-	/** @private @arg {StructuredDescriptionContentRenderer} x */
-	StructuredDescriptionContentRenderer(x) {
-		this.StructuredDescriptionContentData(x.structuredDescriptionContentRenderer);
-	}
-	/** @private @arg {StructuredDescriptionContentData} x */
-	StructuredDescriptionContentData(x) {
-		this.z(x.items,a => this.StructuredDescriptionContentItem(a));
-	}
-	/** @private @arg {StructuredDescriptionContentItem} x */
-	StructuredDescriptionContentItem(x) {
-		if("videoDescriptionHeaderRenderer" in x) {
-			this.VideoDescriptionHeaderRenderer(x);
-		} else if("expandableVideoDescriptionBodyRenderer" in x) {
-			return this.ExpandableVideoDescriptionBodyRenderer(x);
-		} else if("videoDescriptionMusicSectionRenderer" in x) {
-			return this.VideoDescriptionMusicSectionRenderer(x);
-		} else {
-			let rd=this.#generate_renderer(x);
-			console.log(rd);
-			let td=this.#generate_typedef(x);
-			console.log(td);
-			debugger;
-		}
-	}
-	/** @private @arg {CarouselLockupData} x */
-	CarouselLockupData(x) {
-		const {infoRows: a,...y}=x; this.g(y);
-		this.z(a,this.InfoRowRenderer);
-	}
-	/** @private @arg {InfoRowRenderer} x */
-	InfoRowRenderer(x) {
-		this.InfoRowData(x.infoRowRenderer);
-	}
-	/** @private @arg {CarouselLockupRenderer} x */
-	CarouselLockupRenderer(x) {
-		this.CarouselLockupData(x.carouselLockupRenderer);
-	}
-	/** @private @arg {VideoDescriptionMusicSectionData} x */
-	VideoDescriptionMusicSectionData(x) {
-		this.text_t(x.sectionTitle);
-		this.z(x.carouselLockups,this.CarouselLockupRenderer);
-		this.TopicLinkRenderer(x.topicLink);
-		this.text_t(x.premiumUpsellLink);
-	}
-	/** @private @arg {VideoDescriptionMusicSectionRenderer} x */
-	VideoDescriptionMusicSectionRenderer(x) {
-		this.VideoDescriptionMusicSectionData(x.videoDescriptionMusicSectionRenderer);
-	}
-	/** @private @arg {Extract<ExpandableVideoDescriptionBodyData,{descriptionBodyText:any}>} x */
-	ExpandableVideoDescriptionBodyData_x(x) {
-		const {descriptionBodyText: a,showMoreText: b,showLessText: c,...y}=x; this.g(y);
-		this.z([a,b,c],a => this.text_t(a));
-	}
-	/** @private @arg {ExpandableVideoDescriptionBodyData} x */
-	ExpandableVideoDescriptionBodyData(x) {
-		if("descriptionBodyText" in x) {
-			return this.ExpandableVideoDescriptionBodyData_x(x);
-		}
-		let k=get_keys_of(x);
-		if(k.length>0) debugger;
-	}
-	/** @private @arg {ExpandableVideoDescriptionBodyRenderer} x */
-	ExpandableVideoDescriptionBodyRenderer(x) {
-		this.ExpandableVideoDescriptionBodyData(x.expandableVideoDescriptionBodyRenderer);
-	}
-	/** @private @arg {VideoDescriptionHeaderRenderer} x */
-	VideoDescriptionHeaderRenderer(x) {
-		this.VideoDescriptionHeaderData(x.videoDescriptionHeaderRenderer);
-	}
-	/** @private @arg {VideoDescriptionHeaderData} x */
-	VideoDescriptionHeaderData(x) {
-		const {channel,channelNavigationEndpoint,channelThumbnail,title,views,publishDate,factoid,...y}=x; this.g(y);
-		this.text_t(channel);
-		this.BrowseEndpoint(channelNavigationEndpoint,a => {
-			const {url: b,webPageType: c,rootVe: d,apiUrl: e,...z}=a; this.g(z);
-			this.parse_url(b);
-			if(c!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-			if(d!==3611) debugger;
-			if(e!=="/youtubei/v1/browse") debugger;
-		});
-		this.Thumbnail(channelThumbnail,this.g);
-		this.text_t(title);
-		this.text_t(views);
-		this.text_t(publishDate);
-		this.z(factoid,a => this.FactoidRenderer(a));
-	}
-	/** @private @arg {FactoidRenderer} x */
-	FactoidRenderer(x) {
-		this.FactoidData(x.factoidRenderer);
-	}
-	/** @private @arg {FactoidData} x */
-	FactoidData(x) {
-		this.primitive_of(x.accessibilityText,"string");
-		this.text_t(x.label);
-		this.text_t(x.value);
-	}
-	/** @private @arg {AdPlacementRenderer} x */
-	AdPlacementRenderer(x) {
-		this.AdPlacementData(x.adPlacementRenderer);
-	}
-	/** @private @arg {AdPlacementData} x */
-	AdPlacementData(x) {
-		this.AdPlacementConfig(x.config);
-		this.AdPlacementRendererItem(x.renderer);
-	}
-	/** @private @arg {AdPlacementRendererItem} x */
-	AdPlacementRendererItem(x) {
-		if("clientForecastingAdRenderer" in x) {
-			return this.ClientForecastingAdRenderer(x);
-		} else if("adBreakServiceRenderer" in x) {
-			return this.AdBreakServiceRenderer(x);
-		} else if("linearAdSequenceRenderer" in x) {
-			return this.LinearAdSequenceRenderer(x);
-		} else if("instreamVideoAdRenderer" in x) {
-			return this.InstreamVideoAdRenderer(x);
-		} else if("actionCompanionAdRenderer" in x) {
-			return this.ActionCompanionAdRenderer(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {AdPlacementConfig} x */
-	AdPlacementConfig(x) {
-		this.AdPlacementConfigData(x.adPlacementConfig);
-	}
 	/** @template {string} T @template {`${T}_${string}`} U @arg {T} ns @arg {U} x @returns {SplitOnce<SplitOnce<U,T>[1],"_">[1]} */
 	parse_enum(ns,x) {
 		let r=split_string_once(x,ns);
 		if(!r[1]) throw new Error("Invalid enum");
 		let q=split_string_once(r[1],"_");
 		return q[1];
-	}
-	/** @private @arg {AdPlacementConfigData} x */
-	AdPlacementConfigData(x) {
-		const {kind: rk,adTimeOffset: ato,hideCueRangeMarker: hcr,...y}=x; this.g(y);
-		let kind=this.parse_enum("AD_PLACEMENT_KIND",x.kind);
-		switch(kind) {
-			case "END": break;
-			case "START": break;
-			case "SELF_START": break;
-			default: debugger;
-		}
-		if(ato) this.AdTimeOffset(ato);
-		if(hcr!==true) debugger;
-	}
-	/** @private @arg {AdTimeOffset} x */
-	AdTimeOffset(x) {
-		this.primitive_of(x.offsetStartMilliseconds,"string");
-		if(x.offsetEndMilliseconds!=="-1") debugger;
-	}
-	/** @private @arg {AdBreakServiceRenderer} x */
-	AdBreakServiceRenderer(x) {
-		this.AdBreakServiceData(x.adBreakServiceRenderer);
-	}
-	/** @private @arg {AdBreakServiceData} x */
-	AdBreakServiceData(x) {
-		if(x.prefetchMilliseconds!=="10000") debugger;
-		this.primitive_of(x.getAdBreakUrl,"string");
-	}
-	/** @private @arg {LinearAdSequenceRenderer} x */
-	LinearAdSequenceRenderer(x) {
-		this.LinearAdSequenceData(x.linearAdSequenceRenderer);
-	}
-	/** @private @arg {LinearAdSequenceData} x */
-	LinearAdSequenceData(x) {
-		const {linearAds: a,adLayoutMetadata: b,...y}=x; this.g(y);
-		this.z(a,a => this.LinearAdsItem(a));
-		this.AdLayoutMetadata(b);
-	}
-	/** @private @arg {LinearAdsItem} x */
-	LinearAdsItem(x) {
-		if("instreamVideoAdRenderer" in x) {
-			this.InstreamVideoAdRenderer(x);
-		} else if("adActionInterstitialRenderer" in x) {
-			this.AdActionInterstitialRenderer(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {AdActionInterstitialRenderer} x */
-	AdActionInterstitialRenderer(x) {
-		this.AdActionInterstitialData(x.adActionInterstitialRenderer);
-	}
-	/** @private @arg {AdActionInterstitialData} x */
-	AdActionInterstitialData(x) {
-		this.save_keys("[AdActionInterstitial]",x);
-	}
-	/** @private @arg {ClientForecastingAdRenderer} x */
-	ClientForecastingAdRenderer(x) {
-		this.ClientForecastingAdData(x.clientForecastingAdRenderer);
-	}
-	/** @private @arg {ClientForecastingAdData} x */
-	ClientForecastingAdData(x) {
-		const {impressionUrls: a,...y}=x; this.g(y);
-		this.z(a,a => this.BaseUrl(a));
-	}
-	/** @template {YtUrlFormat} T @arg {BaseUrl<T>} x */
-	BaseUrl(x) {
-		const {baseUrl: a,...y}=x; this.g(y);
-		this.parse_url(a);
-	}
-	/** @private @arg {InstreamVideoAdRenderer} x */
-	InstreamVideoAdRenderer(x) {
-		this.InstreamVideoAdData(x.instreamVideoAdRenderer);
-	}
-	/** @private @arg {InstreamVideoAdData} x */
-	InstreamVideoAdData(x) {
-		const {skipOffsetMilliseconds,pings,clickthroughEndpoint,csiParameters,playerVars,playerOverlay,elementId,trackingParams,legacyInfoCardVastExtension,sodarExtensionData,externalVideoId,adLayoutLoggingData,layoutId,...y}=x;
-		this.g(y);
-	}
-	/** @private @arg {ActionCompanionAdRenderer} x */
-	ActionCompanionAdRenderer(x) {
-		this.ActionCompanionAdData(x.actionCompanionAdRenderer);
-	}
-	/** @private @arg {`${string}-0000-${string}-${string}-${string}`} x */
-	parse_layout_id(x) {
-		let v=split_string(x,"-");
-		if(v[1]!=="0000") debugger;
-	}
-	/** @private @arg {ActionCompanionAdData} x */
-	ActionCompanionAdData(x) {
-		const {
-			headline,description,actionButton,iconImage,bannerImage,
-			navigationEndpoint: x2,trackingParams,adInfoRenderer: x3,
-			adVideoId,impressionPings,adLayoutLoggingData: x4,
-			associatedCompositePlayerBytesLayoutId: x1,
-			...y
-		}=x; this.g(y);
-		this.AdLayoutLoggingData(x4);
-		this.ActionCompanionAdInfoRenderers(x3);
-		let uep_data=this.UrlEndpoint(x2);
-		(([T,U,V]) => {
-			this.z(T,this.BaseUrl);
-			console.log("urls",T);
-			console.log("meta",U);
-			console.log("ep",V);
-		})(uep_data);
-		if(x1) this.parse_layout_id(x1);
-	}
-	/**
-	 * @template {BaseUrl<any>[]} T
-	 * @template {WebCommandMetadataTemplateType} U
-	 * @template {{url: string;}} V
-	 * @arg {UrlEndpoint<T,U,V>} x
-	 * @returns {[T,U,V]} */
-	UrlEndpoint(x) {
-		const {clickTrackingParams: a,loggingUrls: T,commandMetadata: U,urlEndpoint: V,...y}=x; this.g(y);
-		this.clickTrackingParams(x.clickTrackingParams);
-		return [T,U,V];
-	}
-	/** @private @arg {ActionCompanionAdInfoRenderers} x */
-	ActionCompanionAdInfoRenderers(x) {
-		if("adHoverTextButtonRenderer" in x) {
-			return this.AdHoverTextButtonRenderer(x);
-		}
-		debugger;
-	}
-	/** @private @arg {AdHoverTextButtonRenderer} x */
-	AdHoverTextButtonRenderer(x) {
-		this.w(x,this.ButtonData);
-		this.AdHoverTextButtonData(x.adHoverTextButtonRenderer);
-	}
-	/** @private @arg {AdHoverTextButtonData} x */
-	AdHoverTextButtonData(x) {
-		this.ButtonRenderer(x.button);
-		this.text_t(x.hoverText);
-		this.trackingParams(x.trackingParams);
-	}
-	/** @private @arg {VideoPrimaryInfoData} x */
-	VideoPrimaryInfoData(x) {
-		const {title,viewCount,videoActions,trackingParams,badges: a,dateText,relativeDateText,...y}=x; this.g(y);
-		this.text_t(title);
-		if(a) this.z(a,this.MetadataBadgeRenderer);
-		this.VideoViewCountRenderer(x.viewCount);
-		this.z([dateText,relativeDateText],this.text_t);
-		this.trackingParams(trackingParams);
-	}
-	/** @private @arg {VideoViewCountData} x */
-	VideoViewCountData(x) {
-		this.text_t(x.viewCount);
-		this.text_t(x.shortViewCount);
-	}
-	/** @private @arg {VideoViewCountRenderer} x */
-	VideoViewCountRenderer(x) {
-		this.VideoViewCountData(x.videoViewCountRenderer);
-	}
-	/** @private @arg {MetadataBadgeRenderer} x */
-	MetadataBadgeRenderer(x) {
-		const {metadataBadgeRenderer: a,...y}=x; this.g(y);
-		this.MetadataBadgeData(a);
-	}
-	/** @private @arg {MetadataBadgeData} x */
-	MetadataBadgeData(x) {
-		const {icon: a,style: b,label: c,tooltip: d,trackingParams: e,accessibilityData: f,...y}=x; this.g(y);
-		this.Icon(a);
-		this.save_enum("BADGE_STYLE_TYPE",b);
-		console.log("meta label",c);
-		if(d) console.log("meta tooltip",d);
-		this.trackingParams(e);
-		if(f) this.AccessibilityData(f);
-	}
-	/** @private @arg {TopicLinkData} x */
-	TopicLinkData(x) {
-		const {title,thumbnailDetails,endpoint,callToActionIcon,trackingParams,...y}=x; this.g(y);
-		this.text_t(x.title);
-		this.Thumbnail(x.thumbnailDetails,this.g);
-		this.BrowseEndpoint(x.endpoint,this.ChannelNavigationEndpointWebCommandMetadata);
-		this.Icon(x.callToActionIcon);
-		this.trackingParams(x.trackingParams);
-	}
-	/** @private @arg {InfoRowData} x */
-	InfoRowData(x) {
-		const {title: a,defaultMetadata: b,expandedMetadata: c,expandIcon: d,trackingParams: e,infoRowExpandStatusKey: f,...y}=x; this.g(y);
-		this.text_t(a);
-		if(b) this.text_t(b);
-		if(c) this.text_t(c);
-		if(d) this.Icon(d);
-		this.trackingParams(e);
-		if(f) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],f);
-	}
-	/** @private @arg {TopicLinkRenderer} x */
-	TopicLinkRenderer(x) {
-		this.TopicLinkData(x.topicLinkRenderer);
 	}
 }
 //#endregion
