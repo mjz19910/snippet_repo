@@ -3294,7 +3294,7 @@ class BaseService extends BaseServicePrivate {
 		if(eq_keys(keys,["type","data"])) {
 			debugger;
 		}
-		this.save_string(k,keys.join());
+		this.save_string(ki,keys.join());
 	}
 }
 class CsiService extends BaseService {
@@ -4489,13 +4489,14 @@ class YtUrlParser extends BaseService {
 	log_url_info_arr(x) {
 		for(let url_info of x) {
 			switch(url_info._tag) {
-				case "playlist": {
+				case "playlist": x: {
 					switch(url_info.id.length) {
-						case 11: this.log_playlist_id(url_info); continue;
-						default: debugger; break;
+						case 11: break;
+						case 32: break;
+						default: debugger; break x;
 					}
-					this.log_playlist_id(url_info,true);
-				} break;
+					this.log_playlist_id(url_info);
+				} this.log_playlist_id(url_info,true); break;
 				case "video": indexed_db.put({v: url_info.id}); break;
 				case "video-referral": indexed_db.put({v: url_info.id}); break;
 			}
