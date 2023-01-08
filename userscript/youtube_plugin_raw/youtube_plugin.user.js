@@ -5181,9 +5181,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {LoadMarkersCommand} c */
 	LoadMarkersCommand(c) {
-		this.clickTrackingParams(c.clickTrackingParams);
-		const x=c.loadMarkersCommand;
-		const {entityKeys: a,...y}=x;
+		const {clickTrackingParams,loadMarkersCommand:{entityKeys: a,...y},...u}=c;
+		this.clickTrackingParams(clickTrackingParams);
 		this.z(a,a => {
 			let res=decode_b64_proto_obj(decodeURIComponent(a));
 			let res_2=decode_entity_key(a);
@@ -5194,7 +5193,7 @@ class HandleTypes extends BaseService {
 			if(lua_strs.includes(res_2.entityId)) return;
 			console.log("[entity_key]",res_2,res);
 		});
-		this.g(y);
+		this.g(y); this.g(u);
 	}
 	/** @arg {CreateCommentEndpointData} x */
 	CreateCommentEndpointData(x) {
@@ -6011,7 +6010,6 @@ class HandleTypes extends BaseService {
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
 			return this.ChangeKeyedMarkersVisibilityCommand(x);
 		} else if("loadMarkersCommand" in x) {
-			debugger;
 			return this.LoadMarkersCommand(x);
 		}
 		debugger;
