@@ -4810,15 +4810,25 @@ class HandleTypes extends ServiceData {
 	uu=this.z;
 	/** @type {HTMLDivElement|null} */
 	_target_element=null;
-	/** @public @template U @arg {U[]} x @arg {(this:this,x:U,i:number)=>Promise<void>} f  */
-	async z_async(x,f) {
+	/** @public @template U @arg {U[]} x @arg {number} id @arg {(this:this,x:U,i:number,id:number)=>Promise<void>} f  */
+	async z_async(x,f,id) {
 		for(let it of x.entries()) {
 			const [i,a]=it;
-			await f.call(this,a,i);
+			await f.call(this,a,i,id);
 		}
 	}
-	/** @arg {{}} x */
-	async auto(x) {
+	/** @type {[promise:Promise<void>|null,id:number]} */
+	running_auto=[null,-1];
+	auto_id_count=0;
+	/** @arg {{}} x  @arg {number|null} id */
+	async auto(x,id=null) {
+		if(this.running_auto[1]!==id&&this.running_auto[0]) {
+			await this.running_auto[0];
+		}
+		if(id===null) {
+			id=this.auto_id_count;
+			this.auto_id_count++;
+		}
 		if(!this._target_element) {
 			this._target_element=this.make_dom_log_part();
 		}
@@ -4830,7 +4840,18 @@ class HandleTypes extends ServiceData {
 			this.item_count=0;
 		}
 		this.auto_depth++;
-		await this.z_async(Object.entries(x),this.auto_entry);
+		let has_running_var=false;
+		let p=this.z_async(Object.entries(x),this.auto_entry,id);
+		if(this.running_auto===null) {
+			has_running_var=true;
+			console.log("[auto_start]");
+			this.running_auto=[p,id];
+		}
+		await p;
+		if(has_running_var) {
+			console.log("[auto_done]");
+			this.running_auto=[null,-1];
+		}
 		this.auto_depth--;
 		if(this.auto_depth===0) {
 			this._target_element.append(this.auto_dom);
@@ -4864,23 +4885,23 @@ class HandleTypes extends ServiceData {
 		msg_container.textContent=x;
 		this.auto_dom.append(msg_container);
 	}
-	/** @arg {[any, any]} a */
-	async auto_entry(a) {
+	/** @arg {[any, any]} a @arg {number} _i @arg {number} id */
+	async auto_entry(a,_i,id) {
 		let [k,x]=a;
 		if(typeof x==="string") return;
 		if(typeof x!=="object") return;
 		if(x===null) return;
 		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]  "+k);
 		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
-		let ret=await this.auto_any(x);
+		let ret=await this.auto_any(x,id);
 		return ret;
 	}
 	get target_element() {
 		if(!this._target_element) throw new Error();
 		return this._target_element;
 	}
-	/** @arg {unknown} x @returns {Promise<void>} */
-	async auto_any(x) {
+	/** @arg {unknown} x @arg {number} id @returns {Promise<void>} */
+	async auto_any(x,id) {
 		if(typeof x==="string") return;
 		if(typeof x!=="object") return;
 		if(x===null) return;
@@ -4890,12 +4911,12 @@ class HandleTypes extends ServiceData {
 			await new Promise(a => setTimeout(a,50));
 		}
 		if(x instanceof Array) {
-			let ret=await this.z_async(x,async (a,_i) => {
+			let ret=await this.z_async(x,async (a,_i,id) => {
 				// this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx]  "+i);
 				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
-				let ret=await this.auto_any(a);
+				let ret=await this.auto_any(a,id);
 				return ret;
-			});
+			},id);
 			return ret;
 		}
 		let name=this.get_name_from_keys(x);
@@ -4906,7 +4927,7 @@ class HandleTypes extends ServiceData {
 			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}]`);
 		}
 		// console.log(" ".repeat(this.auto_depth)+name,x);
-		await this.auto(x);
+		await this.auto(x,id);
 		return;
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
