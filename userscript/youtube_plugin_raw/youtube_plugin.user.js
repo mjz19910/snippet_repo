@@ -1372,7 +1372,7 @@ class MyReader {
 					first_num.push(["error"]);
 					this.failed=true;
 				}
-				first_num.push(['child',fieldId,sub_buffer]);
+				first_num.push(["child",fieldId,sub_buffer]);
 			} break;
 			case 3: {
 				let res;
@@ -1694,9 +1694,9 @@ class FilterHandlers {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @arg {[()=>NavigateEventDetail['response'], object, []]} apply_args */
+	/** @arg {[()=>NavigateEventDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
-		/** @type {NavigateEventDetail['response']} */
+		/** @type {NavigateEventDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
 		if(!("page" in ret)) {
 			return ret;
@@ -2374,7 +2374,7 @@ let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
 function title_text_overlay_update() {
 	if(title_text_overlay_enabled) {
-		overlay_hide_ui_input.style.color='';
+		overlay_hide_ui_input.style.color="";
 		if(title_on) {
 			overlay_content_div.style.display="";
 		} else {
@@ -2916,7 +2916,7 @@ class KnownDataSaver {
 		this.load_data();
 		this.store_data();
 	}
-	/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} */
+	/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} */
 	parse_data(str) {
 		return JSON.parse(str);
 	}
@@ -2970,7 +2970,7 @@ class KnownDataSaver {
 		if(no_storage_access) return this.seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
-	/** @private @arg {Partial<ReturnType<KnownDataSaver['pull_data_from_parent']>>} x */
+	/** @private @arg {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} x */
 	push_data_to_parent(x) {
 		const {
 			seen_root_visual_elements,seen_strings,seen_booleans,
@@ -3003,9 +3003,9 @@ class KnownDataSaver {
 	loaded_from_storage=false;
 	/** @protected @type {number[]} */
 	seen_root_visual_elements=[];
-	/** @protected @type {[string,['one',string[]]|['many',string[][]]][]} */
+	/** @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
 	seen_strings=[];
-	/** @protected @type {[string,['one',number[]]|['many',number[][]]][]} */
+	/** @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
 	seen_numbers=[];
 	/** @protected @type {[string,{t:boolean;f:boolean}][]} */
 	seen_booleans=[];
@@ -3058,14 +3058,14 @@ class BaseServicePrivate extends KnownDataSaver {
 		let cur;
 		let p=this.seen_strings.find(e => e[0]===key);
 		if(!p) {
-			p=[key,cur=['one',[]]];
+			p=[key,cur=["one",[]]];
 			this.seen_strings.push(p);
 		} else {
 			cur=p[1];
 		}
 		if(x instanceof Array) {
 			let target=p[1];
-			if(target[0]==='one') {
+			if(target[0]==="one") {
 				let inner=target[1].map(e => [e]);
 				target=["many",inner];
 				p[1]=target;
@@ -3076,12 +3076,12 @@ class BaseServicePrivate extends KnownDataSaver {
 				target[1].push(x);
 			}
 		} else {
-			if(cur[0]==='one') {
+			if(cur[0]==="one") {
 				if(!cur[1].includes(x)) {
 					was_known=false;
 					cur[1].push(x);
 				}
-			} else if(cur[0]==='many') {
+			} else if(cur[0]==="many") {
 				let res=cur[1].find(([e,...r]) => !r.length&&e===x);
 				if(!res) {
 					was_known=false;
@@ -3108,7 +3108,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		let cur;
 		let p=this.seen_numbers.find(e => e[0]===key);
 		if(!p) {
-			cur=['one',[]];
+			cur=["one",[]];
 			p=[key,cur];
 			this.seen_numbers.push(p);
 		} else {
@@ -3116,7 +3116,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		}
 		if(x instanceof Array) {
 			let target=p[1];
-			if(target[0]==='one') {
+			if(target[0]==="one") {
 				let inner=target[1].map(e => [e]);
 				target=["many",inner];
 				p[1]=target;
@@ -3127,12 +3127,12 @@ class BaseServicePrivate extends KnownDataSaver {
 				target[1].push(x);
 			}
 		} else {
-			if(cur[0]==='one') {
+			if(cur[0]==="one") {
 				if(!cur[1].includes(x)) {
 					was_known=false;
 					cur[1].push(x);
 				}
-			} else if(cur[0]==='many') {
+			} else if(cur[0]==="many") {
 				let res=cur[1].find(([e,...r]) => !r.length&&e===x);
 				if(!res) {
 					was_known=false;
@@ -3216,7 +3216,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @template {[string,null,string]} T @template {`${T[0]}-${string}-${T[2]}`} U @arg {T} ns_arr @arg {U} s */
 	save_enum_path(ns_arr,s) {
-		// ['', '-artists-row-state-id']
+		// ["", "-artists-row-state-id"]
 		let n1=split_string_once(s,ns_arr[0]);
 		if(!n1[1]) throw new Error();
 		let n2=this.drop_separator(n1[1],"-");
@@ -3289,7 +3289,7 @@ class CsiService extends BaseService {
 		yt_fn: null,
 		/** @type {"WEB"|null} */
 		c: null,
-		/** @type {CsiVarTypes['cver']|null} */
+		/** @type {CsiVarTypes["cver"]|null} */
 		cver: null,
 		/** @type {"1"|null} */
 		yt_li: null,
@@ -3380,7 +3380,7 @@ class CsiService extends BaseService {
 }
 class ECatcherService extends BaseService {
 	data={
-		/** @type {{name: "WEB";fexp:number[];version: SomeVer<CsiVarTypes['cver']>}|null} */
+		/** @type {{name: "WEB";fexp:number[];version: SomeVer<CsiVarTypes["cver"]>}|null} */
 		client: null,
 		expected_client_values: {
 			/** @type {number[]} */
@@ -3418,7 +3418,7 @@ class ECatcherService extends BaseService {
 		}
 		this.data.expected_client_values.fexp;
 	}
-	/** @arg {ECatcherServiceParams['params']} params */
+	/** @arg {ECatcherServiceParams["params"]} params */
 	on_params(params) {
 		/** @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3453,7 +3453,7 @@ class GFeedbackService extends BaseService {
 		e: null,
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
-		/** @type {GFeedbackServiceRouteParam['value']|null} */
+		/** @type {GFeedbackServiceRouteParam["value"]|null} */
 		route: null,
 	};
 	get handle_types() {
@@ -3465,7 +3465,7 @@ class GFeedbackService extends BaseService {
 	parse_e_param(param) {
 		return param.value.split(",").map(e => parseInt(e,10));
 	}
-	/** @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore['context']>} x */
+	/** @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
 	on_context_param(data_target,x) {
 		data_target.context=x;
 		switch(x) {
@@ -3531,7 +3531,7 @@ class GuidedHelpService extends BaseService {
 		/** @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @arg {GuidedHelpServiceParams['params']} params */
+	/** @arg {GuidedHelpServiceParams["params"]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -4106,7 +4106,7 @@ class IndexedDbAccessor {
 	}
 	/** @arg {Event} event */
 	onError(event) {
-		console.log('idb error',event);
+		console.log("idb error",event);
 	}
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
@@ -4117,7 +4117,7 @@ class YtUrlParser extends BaseService {
 		x: {
 			switch(x) {
 				case "WL": {
-					console.log('[parse_playlist_static]',x);
+					console.log("[parse_playlist_static]",x);
 				} break;
 				default: break x;
 			}
@@ -4125,17 +4125,17 @@ class YtUrlParser extends BaseService {
 		}
 		if(this.str_starts_with(x,"PL")) {
 			let pl=x.slice(2);
-			console.log('[parse_playlist]',pl.length,pl);
+			console.log("[parse_playlist]",pl.length,pl);
 			return;
 		}
 		if(this.str_starts_with(x,"RDMM")) {
 			let pl=x.slice(4);
-			console.log('[parse_playlist_radio_mm]',pl.length,pl);
+			console.log("[parse_playlist_radio_mm]",pl.length,pl);
 			return;
 		}
 		if(this.str_starts_with(x,"RD")) {
 			let pl=x.slice(2);
-			if(this.log_playlist_parse) console.log('[parse_playlist_radio]',pl.length,pl);
+			if(this.log_playlist_parse) console.log("[parse_playlist_radio]",pl.length,pl);
 			return;
 		}
 		debugger;
@@ -4408,7 +4408,7 @@ class YtUrlParser extends BaseService {
 			let c=split_string(r.pathname,"=");
 			let v=split_string(c[1],"-");
 			let h=split_string(r.host,".");
-			console.log('yt_ggpht_url',h[0],c[0],v);
+			console.log("yt_ggpht_url",h[0],c[0],v);
 			/** @type {YtUrlFormat} */
 			return;
 		}
@@ -4630,7 +4630,7 @@ class YtUrlParser extends BaseService {
 			case "player": break;
 			default: this.api_no_handler(x,x[2]);
 		}
-		console.log('get_yt_url_type_3',x.slice(1));
+		console.log("get_yt_url_type_3",x.slice(1));
 		return x[2];
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
@@ -4878,7 +4878,7 @@ class HandleTypes extends BaseService {
 		if(x.rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {NavigateEventDetail['response']} x */
+	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
 		let mt=x;
 		this._current_response_type=x.page;
@@ -5208,7 +5208,7 @@ class HandleTypes extends BaseService {
 		for(let ya of yc) {
 			/** @type {endpoint_data_handler_names} */
 			if(!this.endpoint_data_map.has_key(ya)) {
-				console.log('[new_ep_data] [%s]',ya);
+				console.log("[new_ep_data] [%s]",ya);
 				debugger;
 			}
 		}
@@ -5221,7 +5221,7 @@ class HandleTypes extends BaseService {
 	parse_target_id(x) {
 		this.s_parser.parse_target_id(x);
 	}
-	/** @type {ResponseTypes['type']|NavigateEventDetail['response']['page']|null} */
+	/** @type {ResponseTypes["type"]|NavigateEventDetail["response"]["page"]|null} */
 	_current_response_type=null;
 	get current_response_type() {
 		if(!this._current_response_type) throw 1;
@@ -6138,7 +6138,7 @@ class HandleTypes extends BaseService {
 						function iterate_template_element(x) {
 							let res=Object.entries(x);
 							for(let i of res) {
-								console.log('template_iter',i);
+								console.log("template_iter",i);
 							}
 						}
 						console.log("[template_child_iter_2]",...out);
@@ -6199,7 +6199,7 @@ class HandleTypes extends BaseService {
 		if(pp[1]!=="youtube-watch-ui") debugger;
 		let pp_ver=pp[2];
 		let ver=split_string(pp_ver,".");
-		console.log('[server_build]',`${ver[0]}.${ver[1]}_${pp[3]}`);
+		console.log("[server_build]",`${ver[0]}.${ver[1]}_${pp[3]}`);
 	}
 	/** @arg {ElementResourceStatus} x */
 	ElementResourceStatus(x) {
@@ -7042,7 +7042,7 @@ class HandleTypes extends BaseService {
 		let m=get_keys_of(x);
 		for(let k of m) {
 			if(k in this.item_section_map) continue;
-			console.log('[new_section_item] [%s]',k);
+			console.log("[new_section_item] [%s]",k);
 			debugger;
 		}
 	}
@@ -7755,7 +7755,7 @@ class HandleTypes extends BaseService {
 		let d=as_cast(c);
 		f(d);
 	}
-	/** @arg {TwoColumnWatchNextResultsData['results']['results']} x1 */
+	/** @arg {TwoColumnWatchNextResultsData["results"]["results"]} x1 */
 	TwoColumnWatchNextResultsData_0(x1) {
 		this.ContentsTemplate(x1,x2 => {
 			if("itemSectionRenderer" in x2) {
@@ -7768,7 +7768,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		});
 	}
-	/** @arg {Extract<TwoColumnWatchNextResultsData['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
+	/** @arg {Extract<TwoColumnWatchNextResultsData["results"]["results"]["contents"][number],{itemSectionRenderer:any}>} x */
 	TwoColumnWatchNextResultsData_1(x) {
 		return this.ItemSectionRenderer(x,(a,b) => {
 			switch(a) {
@@ -7811,7 +7811,7 @@ class HandleTypes extends BaseService {
 		if(d) this.AutoplayTemplate(d,a => this.AutoplayContent(a));
 		this.ConversationBar(e);
 	}
-	/** @arg {TwoColumnWatchNextResultsData['conversationBar']} x */
+	/** @arg {TwoColumnWatchNextResultsData["conversationBar"]} x */
 	ConversationBar(x) {
 		if(!x) return;
 		if("liveChatRenderer" in x) {
@@ -7823,7 +7823,7 @@ class HandleTypes extends BaseService {
 	auto_generate_renderer(x) {
 		if("a" in x) return;
 		let k=this.get_renderer_key(x);
-		if(!k||typeof k=='number') {debugger; return;}
+		if(!k||typeof k=="number") {debugger; return;}
 		let rd=this.generate_renderer(x[k],k);
 		console.log(rd);
 		let td=this.generate_typedef(x[k],k);
@@ -7900,6 +7900,7 @@ class HandleTypes extends BaseService {
 		const {owner,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,...y}=x; this.g(y);
 		this.VideoOwnerRenderer(owner);
 		this.SubscribeButtonRenderer(subscribeButton);
+		debugger;
 	}
 	/** @arg {SubscribeButtonRenderer} x */
 	SubscribeButtonRenderer(x) {
@@ -7931,7 +7932,7 @@ class HandleTypes extends BaseService {
 		console.log(x.currentStateId);
 		this.Icon(x.secondaryIcon);
 		this.z(x.states,a => {
-			console.log('[state_id]',[a.stateId,a.nextStateId]);
+			console.log("[state_id]",[a.stateId,a.nextStateId]);
 			this.ButtonRenderer(a.state);
 		});
 	}
@@ -7952,7 +7953,7 @@ class HandleTypes extends BaseService {
 		const {url: a,webPageType: b,rootVe: c,apiUrl: d,...y}=x; this.g(y);
 		this.parse_url(a);
 		if(b!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(c!==3611) {console.log('[wrong_root_ve]',x); debugger;}
+		if(c!==3611) {console.log("[wrong_root_ve]",x); debugger;}
 		if(d!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
@@ -8582,11 +8583,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {{}} x2 */
 	is_Thumbnail(x2) {
-		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==='string';
+		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
 	}
-	/** @arg {{}} x2 */
+	/** @arg {{}|number} x2 */
 	is_TextT(x2) {
-		return "simpleText" in x2||("runs" in x2&&x2.runs instanceof Array);
+		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
 	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x1 @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x1,keys,t_name) {
@@ -8598,7 +8599,7 @@ class HandleTypes extends BaseService {
 				continue;
 			}
 			let x2=x1[k];
-			if(typeof x2==='string') {
+			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
 					ret_arr.push(`this.primitive_of(x.${k},"string");`);
 					continue;
@@ -8614,8 +8615,9 @@ class HandleTypes extends BaseService {
 				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
 				continue;
 			}
-			if(typeof x2=='boolean') {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
-			if(typeof x2!=='object') debugger;
+			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(x.${k},"number");`);}
+			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
+			if(typeof x2!=="object") debugger;
 			if(this.is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
 			if(x2 instanceof Array) {this.generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
@@ -8629,7 +8631,7 @@ class HandleTypes extends BaseService {
 				continue;
 			}
 			let c=this.get_renderer_key(x2);
-			if(!c||typeof c==='number') {
+			if(!c||typeof c==="number") {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
 			}
@@ -8659,7 +8661,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} k @arg {unknown[]} x @arg {string[]} out */
 	generate_body_array_item(k,x,out) {
-		if(typeof x[0]!=='object') return;
+		if(typeof x[0]!=="object") return;
 		if(x[0]===null) return;
 		let ret_arr=out;
 		/** @type {{[x:string]:{};[x:number]:{};}} */
@@ -8712,7 +8714,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string|number} x */
 	uppercase_first(x) {
-		if(typeof x==='number') return x;
+		if(typeof x==="number") return x;
 		return x[0].toUpperCase()+x.slice(1);
 	}
 	/** @arg {{[x:string|number]:{}}} x */
@@ -8767,13 +8769,13 @@ class HandleTypes extends BaseService {
 			if(o.runs&&o.runs instanceof Array) {
 				return "TYPE::TextT";
 			}
-			if(o.simpleText&&typeof o.simpleText==='string') {
+			if(o.simpleText&&typeof o.simpleText==="string") {
 				return "TYPE::SimpleText";
 			}
 			if(o.thumbnails&&o.thumbnails instanceof Array) {
 				return "TYPE::Thumbnail";
 			}
-			if(o.iconType&&typeof o.iconType==='string') {
+			if(o.iconType&&typeof o.iconType==="string") {
 				return `TYPE::Icon<"${o.iconType}">`;
 			}
 			if(o.browseEndpoint) {
@@ -8810,7 +8812,7 @@ class HandleTypes extends BaseService {
 		tc=tc.replaceAll(",",";");
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
 		let ret;
-		if(typeof tn==='number') {
+		if(typeof tn==="number") {
 			ret=`\ntype ArrayType_${tn}=${tc}\n`;
 		} else {
 			ret=`\ntype ${tn}=${tc}\n`;
