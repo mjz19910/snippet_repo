@@ -6006,8 +6006,10 @@ class HandleTypes extends BaseService {
 		if("signalServiceEndpoint" in x) {
 			return this.SignalServiceEndpoint(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
+			debugger;
 			return;
 		} else if("loadMarkersCommand" in x) {
+			debugger;
 			return;
 		}
 		debugger;
@@ -6883,7 +6885,9 @@ class HandleTypes extends BaseService {
 				this.AccessibilityData(a);
 			}
 		}
-		if(command) console.log(`[Endpoint.${this.#get_renderer_key(command)}]`,command);
+		if(command) {
+			console.log(`[Button.command.Endpoint.${this.#get_renderer_key(command)}]`,command);
+		}
 		if(c) {
 			switch(c.iconType) {
 				case "DELETE": break;
@@ -6899,7 +6903,9 @@ class HandleTypes extends BaseService {
 		if(e) this.yt_endpoint(e);
 		if(i) this.trackingParams(i);
 		if(h) this.text_t(h);
-		if(j) this.yt_endpoint(j);
+		if(j) {
+			console.log(`[Button.navigationEndpoint.${this.#get_renderer_key(j)}]`,j);
+		}
 		{
 			const {targetId: a,accessibilityData: b,...z}=y;
 			if(a) this.parse_target_id(a);

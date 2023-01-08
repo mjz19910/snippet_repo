@@ -1,7 +1,7 @@
 type ButtonData={
 	accessibility?: Accessibility|AccessibilityData;
 	accessibilityData?: Accessibility|AccessibilityData;
-	command?: YtEndpoint;
+	command?: CommandEndpoint;
 	icon?: Icon<
 		[
 			"SETTINGS"|"DELETE",
@@ -17,3 +17,4 @@ type ButtonData={
 	trackingParams?: string;
 	targetId?: YtTargetIdType;
 };
+type CommandEndpoint={};
