@@ -8464,7 +8464,12 @@ class HandleTypes extends BaseService {
 				ret_arr.push(`this.${ic}(x.${k});`);
 				continue;
 			}
-			debugger;
+			if(k.endsWith("Renderer")) {
+				this.generate_body_default_item(k,ret_arr,req_names,t_name);
+				continue;
+			}
+			console.log("default for",k,x2);
+			this.generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
 		return ret_arr.join("\nd4!");
 	}
