@@ -4844,20 +4844,20 @@ class HandleTypes extends BaseService {
 		if(e) this.previousCsn(e);
 		this.g(y);
 	}
-	/** @template {WebCommandMetadataTemplateType} T @arg {BrowseEndpoint<T>} x @arg {(v:T)=>void} f */
+	/** @template {WebCommandMetadataTemplateType} T @arg {BrowseEndpoint<T>} x @arg {(this:this,v:T)=>void} f */
 	BrowseEndpoint(x,f) {
 		const {clickTrackingParams: a,commandMetadata: b,browseEndpoint: c,...y}=x; this.g(y);
 		this.clickTrackingParams(a);
 		this.BrowseCommandMetadata(b,f);
 		this.BrowseEndpointData(c);
 	}
-	/** @template {WebCommandMetadataTemplateType} T @arg {BrowseCommandMetadata<T>} x @arg {(v:T)=>void} f */
+	/** @template {WebCommandMetadataTemplateType} T @arg {BrowseCommandMetadata<T>} x @arg {(this:this,v:T)=>void} f */
 	BrowseCommandMetadata(x,f) {
 		if("resolveUrlCommandMetadata" in x) {
 			this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
 		}
 		if("webCommandMetadata" in x) {
-			f(x.webCommandMetadata);
+			f.call(this,x.webCommandMetadata);
 		}
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
@@ -8473,6 +8473,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x1 @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x1,keys,t_name) {
+		/** @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
 			if(k==="trackingParams") {
@@ -8520,7 +8521,8 @@ class HandleTypes extends BaseService {
 			debugger;
 			this.generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
-		return ret_arr.join("\nd2!");
+		let no_pad_arr=ret_arr.map(e=>e.trim());
+		return no_pad_arr.join("\nd2!");
 	}
 	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
 	generate_body_default_item(k,out,env_names,def_name) {
