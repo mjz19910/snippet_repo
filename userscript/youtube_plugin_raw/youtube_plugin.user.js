@@ -8384,36 +8384,48 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {string} x */
 	parse_state_key(x) {
-		let ba=base64_dec.decodeByteArray(decodeURIComponent(x));
-		let reader=new MyReader(ba);
-		x: {
-			let rr=reader.try_read_any();
-			reader.pos=2;
-			if(!rr) {
-				console.log(ba);
-				break x;
-			}
-			if(rr[0][0]!=="child") {
-				console.log(rr[0]);
-				break x;
-			}
-			let r2_off=rr[0][2].byteOffset;
-			reader.pos=r2_off;
-			let r2=reader.try_read_any();
-			if(r2) {
-				if(r2[0][0]!=="child") {
-					console.log(r2[0],decoder.decode(rr[0][2]));
-					break x;
+		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
+		if(!dec) {debugger; return;}
+		if(dec[1][0]!=="data32") {debugger; return;}
+		if(dec[0][0]!=="child") {debugger; return;}
+		let sub_reader=new MyReader(dec[0][2]);
+		let dec_3=sub_reader.try_read_any();
+		if(!dec_3) {debugger; return;}
+		let err=dec_3.find(e => e[0]==="error");
+		let entityTypeFieldNumber=dec[1][2];
+		if(err) {
+			const entityVideoId=decoder.decode(dec[0][2]);
+			if(!is_keyof_RUa(entityTypeFieldNumber)) {
+				const target={
+					entityTypeFieldNumber,
+					entityType: null,
+					entityVideoId,
+				};
+				let str=target.entityVideoId;
+				if(this.s_parser.str_starts_with(str,"UC")) {
+					this.s_parser.parse_channel_id(as_cast(target.entityVideoId));
+					return;
 				}
-				console.log(decoder.decode(r2[0][2]));
-			} else {
-				console.log(decoder.decode(rr[0][2]));
+				this.s_parser.parse_playlist_id(as_cast(target.entityVideoId));
 			}
 		}
-		let ro=reader.try_read_any();
-		if(ro&&ro[1]) {
-			console.log(ro[1]);
+		if(dec_3[0][0]!=="child") {debugger; return;}
+		const entityVideoId=decoder.decode(dec_3[0][2]);
+		if(!is_keyof_RUa(entityTypeFieldNumber)) {
+			const target={
+				entityTypeFieldNumber,
+				entityType: null,
+				entityVideoId,
+			};
+			console.log("[state_key] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
+			return;
 		}
+		const target={
+			entityTypeFieldNumber,
+			entityType: RUa[entityTypeFieldNumber],
+			entityVideoId,
+		};
+		console.log("[state_key] zero_field=[%s,%s]",dec[0][1].toString(),dec_3[0][1],target);
 	}
 	/** @arg {OfflineabilityEntityData} x */
 	OfflineabilityEntityData(x) {
