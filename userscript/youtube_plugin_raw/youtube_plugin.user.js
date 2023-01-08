@@ -3434,6 +3434,8 @@ class IndexedDbAccessor {
 	}
 	database_opening=false;
 	database_open=false;
+	/** @type {string[]} */
+	keys=[];
 	/** @private @type {{v: string}[]} */
 	arr=[];
 	/** @private @type {{v: string}[]} */
@@ -3441,10 +3443,21 @@ class IndexedDbAccessor {
 	/** @public @template {{v: string}} T @arg {T} obj */
 	put(obj) {
 		if(this.database_open) {
+			if(this.keys.includes(obj.v)) {
+				let idx=this.arr.findIndex(e=>e.v===obj.v);
+				this.arr[idx]=obj;
+				return;
+			}
+			this.keys.push(obj.v);
 			this.arr.push(obj);
 			return;
 		}
 		this.requestOpen();
+		if(this.keys.includes(obj.v)) {
+			let idx=this.arr.findIndex(e=>e.v===obj.v);
+			this.arr[idx]=obj;
+			return;
+		}
 		this.arr.push(obj);
 	}
 	requestOpen() {
@@ -4872,8 +4885,8 @@ class HandleTypes extends ServiceData {
 			await new Promise(a=>setTimeout(a,50));
 		}
 		if(x instanceof Array) {
-			let ret=await this.z_async(x,async (a,i)=>{
-				this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx]  "+i);
+			let ret=await this.z_async(x,async (a,_i)=>{
+				// this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx]  "+i);
 				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
 				let ret=await this.auto_any(a);
 				return ret;
