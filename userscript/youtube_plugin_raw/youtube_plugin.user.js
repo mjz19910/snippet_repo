@@ -3171,7 +3171,7 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn(e[0],e[1]));
 	}
-	/** @template {{}} T @arg {T|undefined} x @arg {(v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
+	/** @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
 	w(x,y) {
 		if(x===void 0) return;
 		let keys=get_keys_of(x);
@@ -3180,7 +3180,7 @@ class BaseService extends BaseServicePrivate {
 			return;
 		}
 		for(let k of keys) {
-			y(x[k],k);
+			y.call(this,x[k],k);
 		}
 	}
 	/** @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} y  */
