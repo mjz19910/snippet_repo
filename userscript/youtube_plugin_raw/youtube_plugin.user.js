@@ -2891,9 +2891,11 @@ class BaseServicePrivate extends KnownDataSaver {
 					ta[x]=0;
 				}
 				return ta.join("");
-			}).sort().join("\n")+"\n"; bitmap;
+			}).sort().join("\n")+"\n";
+			console.log(` --------- ${key} --------- `);
+			console.log(index_map.join(","));
+			console.log(bitmap);
 		}
-		debugger;
 	}
 	/** @private @type {[string,number|number[]][]} */
 	new_numbers=[];
