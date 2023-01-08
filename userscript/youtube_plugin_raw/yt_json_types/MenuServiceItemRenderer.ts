@@ -1,1 +1,1 @@
-type MenuServiceItemRenderer={serviceEndpoint: {};text: TextT;};
+type MenuServiceItemRenderer={menuServiceItemRenderer: MenuServiceItemData;};

@@ -3211,6 +3211,16 @@ class BaseService extends BaseServicePrivate {
 		let no_ns_part=nn[1];
 		this.save_string(`${ns_name}::${ns}`,no_ns_part);
 	}
+	/** @template {string} T @template {string} Sep @template {`${T[0]}-${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
+	save_enum_with_sep(enum_base,enum_str,sep) {
+		const ns_name="ELEMENT";
+		debugger;
+		let n1=split_string_once(enum_str,enum_base);
+		if(!n1[1]) throw new Error();
+		let n2=this.drop_separator(n1[1],sep);
+		if(!n2) throw new Error();
+		this.save_string(`${ns_name}::${enum_base}`,n2[0]);
+	}
 	/** @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
 		let v=split_string_once(x,sep);
@@ -4573,7 +4583,7 @@ class YtUrlParser extends BaseService {
 	/** @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		if(this.str_starts_with(x,"browse-feed")) {
-			return;
+			return this.save_enum_with_sep("browse-feed",x,"");
 		}
 		if(this.str_starts_with(x,"engagement-panel")) {
 			return this.save_enum("engagement-panel",x);
@@ -7037,7 +7047,6 @@ class HandleTypes extends BaseService {
 			return this.CommentsEntryPointHeaderData(a);
 		}
 		k="compactPlaylistRenderer";
-		/** @type {ItemSectionItem} */
 		if(k in x) {
 			const {[k]: a,...b}=x; n(b);
 			return this.CompactPlaylistData(a);
@@ -7047,12 +7056,70 @@ class HandleTypes extends BaseService {
 			const {[k]: a,...b}=x; n(b);
 			return this.CompactVideoData(a);
 		}
+		k="compactRadioRenderer";
+		if(k in x) {
+			const {[k]: a,...b}=x; n(b);
+			return this.CompactRadioData(a);
+		}
 		let m=get_keys_of(x);
+		/** @type {ItemSectionItem} */
 		for(let k of m) {
 			if(k in this.item_section_map) continue;
 			console.log("[new_section_item] [%s]",k);
 			debugger;
 		}
+	}
+	/** @arg {CompactRadioData} x */
+	CompactRadioData(x) {
+		this.primitive_of(x.playlistId,"string");
+		this.Thumbnail(x.thumbnail);
+		this.text_t(x.title);
+		this.WatchEndpoint(x.navigationEndpoint);
+		this.text_t(x.videoCountText);
+		this.WatchEndpoint(x.secondaryNavigationEndpoint);
+		this.text_t(x.longBylineText);
+		this.trackingParams(x.trackingParams);
+		this.text_t(x.thumbnailText);
+		this.text_t(x.videoCountShortText);
+		this.primitive_of(x.shareUrl,"string");
+		this.MenuRenderer(x.menu);
+		this.z(x.thumbnailOverlays,this.ThumbnailOverlayItem);
+	}
+	/** @arg {ThumbnailOverlayItem} x */
+	ThumbnailOverlayItem(x) {
+		if("thumbnailOverlayHoverTextRenderer" in x) {
+			return this.ThumbnailOverlayHoverTextRenderer(x);
+		} else if("thumbnailOverlayBottomPanelRenderer" in x) {
+			return this.ThumbnailOverlayBottomPanelRenderer(x);
+		} else if("thumbnailOverlayNowPlayingRenderer" in x) {
+			return this.ThumbnailOverlayNowPlayingRenderer(x);
+		} else {
+			this.save_keys("ThumbnailOverlayItem",x);
+		}
+	}
+	/** @arg {ThumbnailOverlayNowPlayingData} x */
+	ThumbnailOverlayNowPlayingData(x) {
+		this.save_keys("ThumbnailOverlayNowPlayingData",x);
+	}
+	/** @arg {ThumbnailOverlayNowPlayingRenderer} x */
+	ThumbnailOverlayNowPlayingRenderer(x) {
+		this.ThumbnailOverlayNowPlayingData(x.thumbnailOverlayNowPlayingRenderer);
+	}
+	/** @arg {ThumbnailOverlayBottomPanelData} x */
+	ThumbnailOverlayBottomPanelData(x) {
+		this.save_keys("ThumbnailOverlayBottomPanelData",x);
+	}
+	/** @arg {ThumbnailOverlayBottomPanelRenderer} x */
+	ThumbnailOverlayBottomPanelRenderer(x) {
+		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
+	}
+	/** @arg {ThumbnailOverlayHoverTextData} x */
+	ThumbnailOverlayHoverTextData(x) {
+		this.save_keys("ThumbnailOverlayHoverTextData",x);
+	}
+	/** @arg {ThumbnailOverlayHoverTextRenderer} x */
+	ThumbnailOverlayHoverTextRenderer(x) {
+		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
 	}
 	/** @arg {CompactPlaylistData} x */
 	CompactPlaylistData(x) {
@@ -7171,15 +7238,17 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {MenuData} x */
 	MenuData(x) {
+		const {trackingParams: a,accessibility: b,items: c,targetId: d,...y}=x; this.g(y);
 		this.Accessibility(x.accessibility);
-		this.z(x.items,a => this.MenuServiceItem(a));
-	}
-	/** @arg {MenuServiceItem} x */
-	MenuServiceItem(x) {
-		this.MenuServiceItemRenderer(x.menuServiceItemRenderer);
+		this.z(x.items,a => this.MenuServiceItemRenderer(a));
+		this.parse_target_id(as_cast(d));
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
+		this.MenuServiceItemData(x.menuServiceItemRenderer);
+	}
+	/** @arg {MenuServiceItemData} x */
+	MenuServiceItemData(x) {
 		console.log(x.serviceEndpoint);
 		debugger;
 	}

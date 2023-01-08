@@ -1,0 +1,5 @@
+type ThumbnailOverlayItem=
+	|ThumbnailOverlayBottomPanelRenderer
+	|ThumbnailOverlayHoverTextRenderer
+	|ThumbnailOverlayNowPlayingRenderer
+	;

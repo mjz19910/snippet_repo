@@ -1,0 +1,1 @@
+type ThumbnailOverlayBottomPanelRenderer={thumbnailOverlayBottomPanelRenderer: ThumbnailOverlayBottomPanelData;};

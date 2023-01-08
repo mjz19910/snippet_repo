@@ -1,0 +1,1 @@
+type ThumbnailOverlayBottomPanelData={icon: Icon<"MIX">;};

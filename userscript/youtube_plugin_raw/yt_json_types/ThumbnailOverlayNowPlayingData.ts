@@ -1,0 +1,1 @@
+type ThumbnailOverlayNowPlayingData={text: TextT;};

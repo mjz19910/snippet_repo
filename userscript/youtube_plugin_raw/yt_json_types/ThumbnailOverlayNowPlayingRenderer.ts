@@ -1,3 +1,1 @@
-type ThumbnailOverlayNowPlayingRenderer={
-	text: TextT;
-};
+type ThumbnailOverlayNowPlayingRenderer={thumbnailOverlayNowPlayingRenderer: ThumbnailOverlayNowPlayingData;};

@@ -1,1 +1,0 @@
-type MenuServiceItem={menuServiceItemRenderer: MenuServiceItemRenderer;};

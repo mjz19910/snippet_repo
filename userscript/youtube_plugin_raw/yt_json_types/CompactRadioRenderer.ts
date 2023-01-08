@@ -1,0 +1,3 @@
+type CompactRadioRenderer={
+	compactRadioRenderer: CompactRadioData;
+};

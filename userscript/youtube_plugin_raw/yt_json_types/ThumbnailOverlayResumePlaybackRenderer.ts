@@ -1,3 +1,0 @@
-type ThumbnailOverlayResumePlaybackRenderer={
-	percentDurationWatched: number;
-};
