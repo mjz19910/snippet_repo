@@ -4349,7 +4349,6 @@ class YtUrlParser extends BaseService {
 							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
 						} else if(this.str_starts_with(v,"RDGM")) {
 							url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)});
-
 						} else {
 							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
 						}
@@ -4503,6 +4502,7 @@ class YtUrlParser extends BaseService {
 				case "playlist": x: {
 					switch(url_info.id.length) {
 						case 11: break;
+						case 24: break;
 						case 32: break;
 						default: debugger; break x;
 					}
