@@ -1,6 +1,6 @@
 type PageTypePlaylist={
 	pageType: "playlist";
-	endpoint: YtEndpoint;
+	endpoint: PlaylistEndpoint;
 	response: PlaylistPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

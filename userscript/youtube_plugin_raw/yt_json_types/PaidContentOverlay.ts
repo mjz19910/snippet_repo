@@ -1,3 +1,0 @@
-type PaidContentOverlay={
-	paidContentOverlayRenderer: PaidContentOverlayRenderer;
-};

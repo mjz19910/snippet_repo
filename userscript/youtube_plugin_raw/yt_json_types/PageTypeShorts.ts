@@ -1,6 +1,6 @@
 type PageTypeShorts={
 	pageType: "shorts";
-	endpoint: ReelWatchEndpointData;
+	endpoint: ShortsEndpoint;
 	response: ShortsPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

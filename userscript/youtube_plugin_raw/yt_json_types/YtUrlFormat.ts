@@ -16,8 +16,6 @@ type YtUrlFormat=[
 	`/watch?${YtWatchVideoUrlFormat}`,
 	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
-	`${YtDomain|""}/api/stats/ads?${ApiStatsAdsArgs}`,
+	`/api/stats/ads?${string}`,
 	YtExternalUrlFormat,
-	ParsableBaseUrlFormat,
 ][number];
-type ParseUrlWithSearchIn=Extract<SplitOnce<ParseUrlStr_1,"/">,[`${string}?${string}`]>[0];

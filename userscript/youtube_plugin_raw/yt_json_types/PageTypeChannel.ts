@@ -1,6 +1,6 @@
 type PageTypeChannel={
 	pageType: "channel";
-	endpoint: YtEndpoint;
+	endpoint: ChannelEndpoint;
 	response: ChannelPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

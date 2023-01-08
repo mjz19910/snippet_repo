@@ -4041,7 +4041,9 @@ class ParserService extends BaseService {
 		let a=split_string_once(x,"?");
 		switch(a[0]) {
 			case "ads": {
-				let v=make_search_params(a[1]);
+				/** @type {ApiStatsAdsArgs} */
+				let sp=as(a[1]);
+				let v=make_search_params(sp);
 				// spell:disable-next
 				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}=v; this.g(y);
 			} break;

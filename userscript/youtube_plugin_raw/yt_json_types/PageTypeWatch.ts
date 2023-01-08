@@ -1,6 +1,6 @@
 type PageTypeWatch={
 	pageType: "watch";
-	endpoint: YtEndpoint;
+	endpoint: WatchEndpoint;
 	response: WatchPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
