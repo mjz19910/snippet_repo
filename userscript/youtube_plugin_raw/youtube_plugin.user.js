@@ -3074,9 +3074,9 @@ class BaseService extends BaseServicePrivate {
 	save_keys(k,x) {
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
 		if(!this.save_key_objs.has(ki)) this.save_key_objs.set(ki,{
-			arr:[],
+			arr: [],
 			/** @arg {{}} o */
-			set(o){this.arr.push(o)}
+			set(o) {this.arr.push(o);}
 		});
 		this.save_key_objs.get(ki)?.set(x);
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
@@ -4692,8 +4692,62 @@ class Generate {
 		this.out_arr.push(gd);
 	}
 }
+class C1 extends BaseService {
+	/** @public @arg {BrowsePageResponse} x */
+	BrowsePageResponse(x) {
+		this.save_keys("[BrowsePageResponse]",x);
+	}
+}
+class C2 extends BaseService {
+	/** @public @arg {WatchPageResponse} x */
+	WatchPageResponse(x) {
+		this.save_keys("[WatchPageResponse]",x);
+		x.endpoint;
+	}
+}
+class C3 extends BaseService {
+	/** @public @arg {ChannelPageResponse} x */
+	ChannelPageResponse(x) {
+		this.save_keys("[ChannelPageResponse]",x);
+	}
+}
+class C4 extends BaseService {
+	/** @public @arg {PlaylistPageResponse} x */
+	PlaylistPageResponse(x) {
+		this.save_keys("[PlaylistPageResponse]",x);
+	}
+}
+class C5 extends BaseService {
+	/** @public @arg {SettingsPageResponse} x */
+	SettingsPageResponse(x) {
+		this.save_keys("[SettingsPageResponse]",x);
+	}
+}
+class C6 extends BaseService {
+	/** @public @arg {ShortsPageResponse} x */
+	ShortsPageResponse(x) {
+		this.save_keys("[ShortsResponse]",x);
+	}
+}
+class C7 extends BaseService {
+	/** @public @arg {SearchPageResponse} x */
+	SearchPageResponse(x) {
+		this.save_keys("[GetNotificationMenuJson]",x);
+	}
+}
 //#region HandleTypes
 class ServiceData extends BaseService {
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+		this.c1=new C1(x);
+		this.c2=new C2(x);
+		this.c3=new C3(x);
+		this.c4=new C4(x);
+		this.c5=new C5(x);
+		this.c6=new C6(x);
+		this.c7=new C7(x);
+	}
 	/** @protected @type {FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @protected @type {QualArr} */
@@ -4728,13 +4782,13 @@ class HandleTypes extends ServiceData {
 		let mt=x;
 		this._current_response_type=x.page;
 		switch(mt.page) {
-			case "browse": return this.BrowsePageResponse(mt);
-			case "watch": return this.WatchPageResponse(mt);
-			case "channel": return this.ChannelPageResponse(mt);
-			case "playlist": return this.PlaylistPageResponse(mt);
-			case "settings": return this.SettingsPageResponse(mt);
-			case "shorts": return this.ShortsPageResponse(mt);
-			case "search": return this.SearchPageResponse(mt);
+			case "browse": return this.c1.BrowsePageResponse(mt);
+			case "watch": return this.c2.WatchPageResponse(mt);
+			case "channel": return this.c3.ChannelPageResponse(mt);
+			case "playlist": return this.c4.PlaylistPageResponse(mt);
+			case "settings": return this.c5.SettingsPageResponse(mt);
+			case "shorts": return this.c6.ShortsPageResponse(mt);
+			case "search": return this.c7.SearchPageResponse(mt);
 			default: break;
 		}
 		console.log("pt",x.page,x);
@@ -4779,10 +4833,6 @@ class HandleTypes extends ServiceData {
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
 	}
-	/** @private @arg {BrowsePageResponse} x */
-	BrowsePageResponse(x) {
-		this.save_keys("[BrowsePageResponse]",x);
-	}
 	/** @private @arg {BrowseResponse} x */
 	BrowseResponseContent(x) {
 		this.save_keys("[BrowseResponseContent]",x);
@@ -4805,26 +4855,6 @@ class HandleTypes extends ServiceData {
 	GetLiveChatReplayResponse(x) {
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
-	/** @type {HTMLDivElement|null} */
-	root_element=null;
-	make_dom_log_part() {
-		let container_element=document.createElement("div");
-		let root_element=document.createElement("div");
-		root_element.setAttribute("style",`
-		white-space:pre;font-size:1.4rem;color:#f1f1f1;
-		position:absolute;top:54px;padding:4px;
-		z-index:1;pointer-events:none;
-		`);
-		let fc=document.body.firstChild;
-		if(fc) {
-			document.body.insertBefore(root_element,fc);
-		} else {
-			document.body.append(root_element);
-		}
-		root_element.append(container_element);
-		this.root_element=root_element;
-		return container_element;
-	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
@@ -4836,26 +4866,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-	/** @private @arg {WatchPageResponse} x */
-	WatchPageResponse(x) {
-		this.save_keys("[WatchPageResponse]",x);
-	}
-	/** @private @arg {ChannelPageResponse} x */
-	ChannelPageResponse(x) {
-		this.save_keys("[ChannelPageResponse]",x);
-	}
-	/** @private @arg {PlaylistPageResponse} x */
-	PlaylistPageResponse(x) {
-		this.save_keys("[PlaylistPageResponse]",x);
-	}
-	/** @private @arg {SettingsPageResponse} x */
-	SettingsPageResponse(x) {
-		this.save_keys("[SettingsPageResponse]",x);
-	}
-	/** @private @arg {ShortsPageResponse} x */
-	ShortsPageResponse(x) {
-		this.save_keys("[ShortsResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
@@ -4884,10 +4894,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {GetTranscriptResponse} x */
 	JsonGetTranscriptData(x) {
 		this.save_keys("[JsonGetTranscriptData]",x);
-	}
-	/** @private @arg {SearchPageResponse} x */
-	SearchPageResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
