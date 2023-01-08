@@ -8456,9 +8456,13 @@ class HandleTypes extends BaseService {
 	CompactLinkData(x) {
 		console.log(x.navigationEndpoint);
 	}
-	/** @arg {{}} x */
-	is_Thumbnail(x) {
-		return "thumbnails" in x&&x.thumbnails instanceof Array&&"url" in x.thumbnails[0]&&typeof x.thumbnails[0].url==='string'
+	/** @arg {{}} x2 */
+	is_Thumbnail(x2) {
+		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==='string';
+	}
+	/** @arg {{}} x2 */
+	is_TextT(x2) {
+		return "simpleText" in x2||("runs" in x2&&x2.runs instanceof Array);
 	}
 	/** @arg {string[]} req_names @arg {{[x:string]:{}|string|boolean}} x1 @arg {string[]} keys @arg {string|number} t_name */
 	generate_renderer_body(req_names,x1,keys,t_name) {
@@ -8477,31 +8481,20 @@ class HandleTypes extends BaseService {
 				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
 				continue;
 			}
-			if(typeof x2=='boolean') {
-				ret_arr.push(`if(x.${k}!==${x2}) debugger;`);
-				continue;
-			}
-			if(typeof x2!=='object') {
-				debugger;
-			}
-			if("simpleText" in x2) {
-				ret_arr.push(`this.text_t(x.${k});`);
-				continue;
-			};
-			if("runs" in x2&&x2.runs instanceof Array) {
-				ret_arr.push(`this.text_t(x.${k});`);
-				continue;
-			};
-			if(x2 instanceof Array) {
-				this.generate_body_array_item(k,x2,ret_arr);
-				continue;
-			}
-			if(this.is_Thumbnail(x2)) {
-				ret_arr.push(`this.Thumbnail(x.${k});`);
-				continue;
-			}
-			if("browseEndpoint" in x2) {ret_arr.push(`this.BrowseEndpoint(x.${k});`);continue;}
+			if(typeof x2=='boolean') {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
+			if(typeof x2!=='object') debugger;
+			if(this.is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
+			if(x2 instanceof Array) {this.generate_body_array_item(k,x2,ret_arr); continue;}
+			if(this.is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
+			if("browseEndpoint" in x2) {
+				ret_arr.push(`
+				this.BrowseEndpoint(x.${k},a=>{
+					d3!a; debugger;
+				});
+				`);
+				continue;
+			}
 			let c=this.get_renderer_key(x2);
 			if(!c||typeof c==='number') {
 				this.generate_body_default_item(k,ret_arr,req_names,t_name);
