@@ -8499,7 +8499,7 @@ class HandleTypes extends BaseService {
 				ret_arr.push(`
 				this.BrowseEndpoint(x.${k},a=>{
 					d3!a; debugger;
-				});
+				d2!});
 				`);
 				continue;
 			}
