@@ -6938,63 +6938,68 @@ class HandleTypes extends BaseService {
 		let t=this;
 		let y=get_keys_of(x);
 		let [k]=y;
-		/** @arg {typeof t} t @template T @arg {T|undefined} x @arg {{}} b @returns {asserts x is T} */
-		let n=(t,x,b) => {if(!x) throw new Error(); t.g(b);};
+		/** @arg {{}} b */
+		let n=b => {t.g(b);};
 		k="connectedAppRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.ConnectedAppData(a);
 		}
 		k="pageIntroductionRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.PageIntroductionData(a);
 		}
 		k="playlistVideoListRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.PlaylistVideoListData(a);
 		}
 		k="settingsOptionsRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.SettingsOptionsData(a);
 		}
 		k="shelfRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.ShelfData(a);
 		}
 		k="searchPyvRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.SearchPyvData(a);
 		}
 		k="videoRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.VideoData(a);
 		}
 		k="reelShelfRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.ReelShelfData(a);
 		}
 		k="continuationItemRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.ContinuationItemData(a);
 		}
 		k="commentsEntryPointHeaderRenderer";
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.CommentsEntryPointHeaderData(a);
 		}
 		k="compactPlaylistRenderer";
 		/** @type {ItemSectionItem} */
 		if(k in x) {
-			const {[k]: a,...b}=x; n(this,a,b);
+			const {[k]: a,...b}=x; n(b);
 			return this.CompactPlaylistData(a);
+		}
+		k="compactVideoRenderer";
+		if(k in x) {
+			const {[k]: a,...b}=x; n(b);
+			return this.CompactVideoData(a);
 		}
 		let m=get_keys_of(x);
 		for(let k of m) {

@@ -1,6 +1,7 @@
 type ItemSectionItem=[
 	CommentsEntryPointHeaderRenderer,
 	CompactPlaylistRenderer,
+	CompactVideoRenderer,
 	ConnectedAppRenderer,
 	ContinuationItemRenderer,
 	PageIntroductionRenderer,
