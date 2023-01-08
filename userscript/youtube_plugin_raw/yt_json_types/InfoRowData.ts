@@ -2,7 +2,7 @@ type InfoRowData={
 	title: SimpleText;
 	defaultMetadata?: SimpleText;
 	expandedMetadata?: SimpleText;
-	expandIcon: Icon<"EXPAND">;
+	expandIcon?: Icon<"EXPAND">;
 	trackingParams: string;
 	infoRowExpandStatusKey?: "structured-description-music-section-artists-row-state-id"|"structured-description-music-section-licenses-row-state-id";
 };
