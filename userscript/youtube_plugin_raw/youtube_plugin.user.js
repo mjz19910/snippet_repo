@@ -4347,6 +4347,9 @@ class YtUrlParser extends BaseService {
 					if(this.str_starts_with(v,"RD")) {
 						if(this.str_starts_with(v,"RDMM")) {
 							url_info_arr.push({_tag: "playlist",type: "RDMM",id: v.slice(4)});
+						} else if(this.str_starts_with(v,"RDGM")) {
+							url_info_arr.push({_tag: "playlist",type: "RDGM",id: v.slice(4)});
+
 						} else {
 							url_info_arr.push({_tag: "playlist",type: "RD",id: v.slice(2)});
 						}
@@ -4827,7 +4830,7 @@ function sizeof_js(obj) {
 	sizeof_cache.set(obj,size);
 	return size;
 }
-export_(exports=>exports.sizeof_js=sizeof_js);
+export_(exports => exports.sizeof_js=sizeof_js);
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @template {{}} T @arg {Maybe<T>} x @returns {x is T} */

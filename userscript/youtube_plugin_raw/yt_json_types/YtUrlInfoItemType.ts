@@ -1,2 +1,6 @@
-// spell:ignore RDMM
-type YtUrlInfoItemType="RD"|"RDMM"|"PL";
+type YtUrlInfoItemType=[
+	"PL",
+	"RD",
+	"RDGM",
+	"RDMM",
+][number];
