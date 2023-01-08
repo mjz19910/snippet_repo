@@ -8764,18 +8764,20 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CarouselLockupData} x */
 	CarouselLockupData(x) {
-		let rd=this.generate_renderer(x,"CarouselLockupData");
-		console.log(rd);
-		let td=this.generate_typedef(x,"CarouselLockupData");
-		console.log(td);
-		this.z(x.infoRows,this.InfoRowRenderer);
+		const {infoRows: a,...y}=x; this.g(y);
+		this.z(a,this.InfoRowRenderer);
 	}
 	/** @arg {InfoRowRenderer} x */
 	InfoRowRenderer(x) {
-		let rd=this.generate_renderer(x);
+		this.InfoRowData(x.infoRowRenderer);
+	}
+	/** @arg {InfoRowData} x */
+	InfoRowData(x) {
+		let rd=this.generate_renderer(x,"InfoRowData");
 		console.log(rd);
-		let td=this.generate_typedef(x);
+		let td=this.generate_typedef(x,"InfoRowData");
 		console.log(td);
+		debugger;
 	}
 	/** @arg {CarouselLockupRenderer} x */
 	CarouselLockupRenderer(x) {
