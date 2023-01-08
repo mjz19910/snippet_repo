@@ -6422,7 +6422,7 @@ class HandleTypes extends BaseService {
 		const {text: a,bold: b,navigationEndpoint: c,...y}=x;
 		this.primitive_of(a,"string");
 		if(b) this.primitive_of(b,"boolean");
-		if(c) this.yt_endpoint(c);
+		if(c) console.log(`[TextRun.navigationEndpoint.${this.#get_renderer_key(c)}]`,c);
 		this.g(y);
 	}
 	/** @arg {TextT} x */
