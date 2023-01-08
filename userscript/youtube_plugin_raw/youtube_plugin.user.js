@@ -8597,15 +8597,16 @@ class HandleTypes extends BaseService {
 	log_watch_endpoint_params=false;
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData_1(x) {
-		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
+		const {videoId: a,params: b,continuePlayback:c,playlistId: d,loggingContext: e,watchEndpointSupportedOnesieConfig: f,index: g,...y}=x; this.g(y);
 		this.s_parser.parse_video_id(x.videoId);
 		if(b&&this.log_watch_endpoint_params) {
 			console.log("[watch_ep_params]",b);
 		}
-		this.s_parser.parse_playlist_id(c);
-		this.VssLoggingContext(d);
-		e&&this.Html5PlaybackOnesieConfig(e);
-		if(f!==void 0) this.primitive_of(f,"number");
+		if(c!==void 0&&c!==true) debugger;
+		this.s_parser.parse_playlist_id(d);
+		this.VssLoggingContext(e);
+		f&&this.Html5PlaybackOnesieConfig(f);
+		if(g!==void 0) this.primitive_of(g,"number");
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
