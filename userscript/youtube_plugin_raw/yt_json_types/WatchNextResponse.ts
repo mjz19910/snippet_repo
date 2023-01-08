@@ -10,15 +10,3 @@ interface WatchNextResponse {
 	pageVisualEffects: CinematicContainerRenderer[];
 	frameworkUpdates?: FrameworkUpdates;
 };
-type SignalServiceEndpoint={
-	clickTrackingParams: string;
-	commandMetadata: {
-		webCommandMetadata: {
-			sendPost: true;
-		}
-	};
-	signalServiceEndpoint: SignalServiceEndpointData;
-};
-
-type ResponseReceivedEndpointItem=SignalServiceEndpoint;
-type CurrentVideoEndpoint={};

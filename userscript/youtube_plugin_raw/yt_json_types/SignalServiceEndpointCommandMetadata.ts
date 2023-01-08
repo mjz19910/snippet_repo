@@ -1,0 +1,3 @@
+type SignalServiceEndpointCommandMetadata={
+	webCommandMetadata: SignalServiceEndpointWebCommandMetadata;
+};

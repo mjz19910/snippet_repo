@@ -6006,11 +6006,10 @@ class HandleTypes extends BaseService {
 		if("signalServiceEndpoint" in x) {
 			return this.SignalServiceEndpoint(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
-			debugger;
-			return;
+			return this.ChangeKeyedMarkersVisibilityCommand(x);
 		} else if("loadMarkersCommand" in x) {
 			debugger;
-			return;
+			return this.LoadMarkersCommand(x);
 		}
 		debugger;
 	}

@@ -1,0 +1,3 @@
+type SignalServiceEndpointWebCommandMetadata={
+	sendPost: true;
+};
