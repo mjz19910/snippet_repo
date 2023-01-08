@@ -4493,6 +4493,11 @@ class YtUrlParser extends BaseService {
 			default:
 		}
 		switch(x) {
+			case "getAccountSwitcherEndpoint": return;
+			case "getDatasyncIdsEndpoint": return;
+			default:
+		}
+		switch(x) {
 			default: debugger; return;
 		}
 	}
