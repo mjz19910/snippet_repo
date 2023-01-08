@@ -478,7 +478,7 @@ class VolumeRange {
 	getGain() {
 		return this.gain_controller.getGain();
 	}
-	/** @private */
+	/** */
 	calculateGain() {
 		if(!this.use_cache) return 1;
 		let c_gain=this.getGain();
@@ -1121,7 +1121,7 @@ class MyReader {
 		return this.read_any(size);
 	}
 	cur_len=0;
-	/** @private @arg {number} [size] */
+	/** @arg {number} [size] */
 	read_any(size) {
 		this.failed=false;
 		if(!size) {
@@ -2920,11 +2920,11 @@ class KnownDataSaver {
 		this.load_data();
 		this.store_data();
 	}
-	/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} */
+	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} */
 	parse_data(str) {
 		return JSON.parse(str);
 	}
-	/** @private */
+	/** */
 	store_data() {
 		let data=this.pull_data_from_parent();
 		for(let v=0;v<data.seen_numbers.length;v++) {
@@ -2940,7 +2940,7 @@ class KnownDataSaver {
 		let json_str=JSON.stringify(data);
 		this.save_local_storage(json_str);
 	}
-	/** @private */
+	/** */
 	load_data() {
 		if(this.loaded_from_storage) return;
 		let json_str=this.get_local_storage();
@@ -2950,7 +2950,7 @@ class KnownDataSaver {
 			this.loaded_from_storage=true;
 		}
 	}
-	/** @private */
+	/** */
 	pull_data_from_parent() {
 		const {
 			seen_root_visual_elements,seen_strings,seen_booleans,
@@ -2961,7 +2961,7 @@ class KnownDataSaver {
 			seen_booleans,
 		};
 	}
-	/** @private @arg {string} seen_data */
+	/** @arg {string} seen_data */
 	save_local_storage(seen_data) {
 		if(no_storage_access) {
 			this.seen_data_json_str=seen_data;
@@ -2969,12 +2969,12 @@ class KnownDataSaver {
 		}
 		localStorage.seen_data=seen_data;
 	}
-	/** @private */
+	/** */
 	get_local_storage() {
 		if(no_storage_access) return this.seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
-	/** @private @arg {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} x */
+	/** @arg {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} x */
 	push_data_to_parent(x) {
 		const {
 			seen_root_visual_elements,seen_strings,seen_booleans,
@@ -2993,7 +2993,7 @@ class KnownDataSaver {
 			this.seen_numbers=seen_numbers;
 		}
 	}
-	/** @private */
+	/** */
 	delete_data() {
 		if(no_storage_access) {
 			this.seen_data_json_str=null;
@@ -3001,9 +3001,9 @@ class KnownDataSaver {
 		}
 		localStorage.removeItem("seen_data");
 	}
-	/** @private @type {string|null} */
+	/** @type {string|null} */
 	seen_data_json_str=null;
-	/** @private */
+	/** */
 	loaded_from_storage=false;
 	/** @protected @type {number[]} */
 	seen_root_visual_elements=[];
@@ -3045,7 +3045,7 @@ class BaseServicePrivate extends KnownDataSaver {
 			case "many": throw new Error("Tried to delete key with many for each value");
 		};
 	}
-	/** @private @type {[string,string|string[]][]} */
+	/** @type {[string,string|string[]][]} */
 	new_strings=[];
 	/** @arg {string} key @arg {string|string[]} x */
 	save_string(key,x) {
@@ -3097,9 +3097,22 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.new_strings.push([key,x]);
 		this.onDataChange();
 		console.log("store_str [%s] %o",key,x);
+		if(cur[0]==="many") {
+			console.log("[generate_bitmap] for many type");
+		} else if(cur[0]==="one") {
+			let index_map=[...new Set([...cur[1].map(e => e.split(",")).flat()])].sort();
+			let bitmap="\n"+cur[1].map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
+				let ta=new Array(index_map.length);
+				ta.fill(1);
+				for(let x of e) {
+					ta[x]=0;
+				}
+				return ta.join("");
+			}).sort().join("\n")+"\n"; bitmap;
+		}
 		debugger;
 	}
-	/** @private @type {[string,number|number[]][]} */
+	/** @type {[string,number|number[]][]} */
 	new_numbers=[];
 	/** @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
@@ -3149,7 +3162,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.onDataChange();
 		console.log("store_num [%s]",key,x);
 	}
-	/** @private @type {[string,{t:boolean;f:boolean}][]} */
+	/** @type {[string,{t:boolean;f:boolean}][]} */
 	new_booleans=[];
 	/** @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
@@ -3173,7 +3186,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.new_booleans.push([key,kc]);
 		this.onDataChange();
 	}
-	/** @private @type {number[]} */
+	/** @type {number[]} */
 	new_root_visual_elements=[];
 	/** @arg {number} x */
 	save_root_visual_element(x) {
@@ -3188,7 +3201,7 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.onDataChange();
 	}
 	// #endregion
-	/** @private */
+	/** */
 	log_skipped_strings=false;
 	#x;
 }
@@ -4642,7 +4655,7 @@ class HandleTypes extends BaseService {
 		if(!this.maybe_has_value(x)) return;
 		f(x);
 	}
-	/** @private @arg {PlayerResponse} x */
+	/** @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
 		let t=this;
@@ -5402,7 +5415,7 @@ class HandleTypes extends BaseService {
 		this.primitive_of(x.flashSecureUrl,"string");
 		this.z([c,d],a => this.primitive_of(a,"number"));
 	}
-	/** @private @arg {GetNotificationMenuJson} x */
+	/** @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuJson(x) {
 		const {responseContext,actions,trackingParams,...y}=x;
 		this.ResponseContext(responseContext);
@@ -5411,39 +5424,11 @@ class HandleTypes extends BaseService {
 		this.save_keys("[GetNotificationMenuJson]",x);
 		this.g(y);
 	}
-	/** @private @arg {YtApiNext} x */
+	/** @arg {YtApiNext} x */
 	YtApiNext(x) {
-		let z;
-		/** @template {YtApiNext} T @arg {T} x @returns {Omit<T,"engagementPanels">} */
-		let g=x => {
-			if("engagementPanels" in x) {
-				const {engagementPanels: a,...y}=x;
-				this.z(a,a => this.EngagementPanel(a));
-				return y;
-			}
-			return x;
-		};
-		if("currentVideoEndpoint" in x) {
-			const v=g(x);
-			const {
-				responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,topbar,pageVisualEffects,frameworkUpdates,
-				...y
-			}=v; z=y;
-			this.ResponseContext(responseContext);
-		} else if("engagementPanels" in x) {
-			const v=g(x);
-			const {responseContext,trackingParams,...y}=v; z=y;
-			this.ResponseContext(responseContext);
-		} else {
-			const v=g(x);
-			const {responseContext,trackingParams,...y}=v; z=y;
-			this.ResponseContext(responseContext);
-			this.trackingParams(trackingParams);
-		}
 		this.save_keys("[api_next]",x);
-		if(!this.is_empty_object(z)) console.log("[api_next] [%s]",Object.keys(x).join());
 	}
-	/** @private @arg {NotificationGetUnseenCount} x */
+	/** @arg {NotificationGetUnseenCount} x */
 	NotificationGetUnseenCount(x) {
 		const {responseContext: a,...y}=x;
 		this.ResponseContext(a);
@@ -5580,7 +5565,7 @@ class HandleTypes extends BaseService {
 		this.save_number("notification.unseenCount",a);
 		this.g(c);
 	}
-	/** @private @arg {string} x */
+	/** @arg {string} x */
 	clickTrackingParams(x) {
 		if(this.x.get_param("log_click_tracking_params")) console.log("ctp",x);
 		this.primitive_of(x,"string");
@@ -5716,7 +5701,7 @@ class HandleTypes extends BaseService {
 		this.trackingParams(c);
 		this.g(y);
 	}
-	/** @private @arg {ResponseContext} x */
+	/** @arg {ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("[ResponseContext]",x);
 		const {
@@ -7066,7 +7051,11 @@ class HandleTypes extends BaseService {
 		this.z([a,d],this.text_t);
 		this.CommandExecutorCommand(b);
 		this.trackingParams(c);
-		this.CommentsEntryPointTeaserRenderer(e);
+		if("commentsEntryPointTeaserRenderer" in e) {
+			this.CommentsEntryPointTeaserRenderer(e);
+		} else {
+			debugger;
+		}
 		if(f!=="comments-entry-point-header-identifier") debugger;
 	}
 	/** @arg {CommandExecutorCommand} x */
@@ -8622,11 +8611,11 @@ class HandleTypes extends BaseService {
 		const {url: a,...y}=x; this.g(y);
 		this.parse_url(a);
 	}
-	/** @private @arg {VssLoggingContext} x */
+	/** @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
 		this.VssLoggingContextData(x.vssLoggingContext);
 	}
-	/** @private @arg {VssLoggingContextData} x */
+	/** @arg {VssLoggingContextData} x */
 	VssLoggingContextData(x) {
 		const {serializedContextData: a,...y}=x; this.g(y);
 		let dec_=decode_url_b64_proto_obj(a);
@@ -8636,7 +8625,7 @@ class HandleTypes extends BaseService {
 		let dec2=decoder.decode(dec[2]);
 		this.s_parser.parse_playlist_id(as_cast(dec2));
 	}
-	/** @private @arg {AccountMenuJson} x */
+	/** @arg {AccountMenuJson} x */
 	AccountMenuJson(x) {
 		this.z(x.actions,a => this.OpenPopupActionData(a));
 	}
@@ -8646,7 +8635,7 @@ class HandleTypes extends BaseService {
 			case "browse": x.response; break;
 		};
 	}
-	/** @private @arg {YtSuccessResponse} x */
+	/** @arg {YtSuccessResponse} x */
 	YtSuccessResponse(x) {
 		this.ResponseContext(x.responseContext);
 	}
