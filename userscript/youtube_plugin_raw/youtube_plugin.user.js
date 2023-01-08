@@ -18,13 +18,16 @@ function cast_as(e,x=e) {
 	return x;
 }
 const as_cast=cast_as;
-
+/** @arg {(x:typeof exports)=>void} fn */
+function export_(fn) {
+	if(typeof exports==='object') {
+		fn(exports);
+	}
+}
 /** @type {YtdAppElement} */
 const YtdAppElement=cast_as({});
 /** @type {InstanceType<typeof YtdAppElement>|undefined} */
 let ytd_app=void 0;
-// #region Use module types
-// #endregion
 // #region
 {
 	/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
@@ -79,7 +82,7 @@ class Iterator {
 function make_iterator(x) {
 	return new Iterator(x);
 }
-
+//#endregion
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
 		return;
@@ -4775,6 +4778,56 @@ class YtUrlParser extends BaseService {
 		return x[0];
 	}
 }
+let text_encoder=new TextEncoder;
+/** @type {Map<unknown,number>} */
+let sizeof_cache=new Map;
+sizeof_cache.set(null,1);
+sizeof_cache.set(undefined,1);
+let count=0;
+/** @arg {unknown} obj */
+function sizeof_js(obj) {
+	let cache=sizeof_cache.get(obj);
+	if(cache!==void 0) return cache;
+	count++;
+	if(count>1024) {
+		throw new Error("Too big");
+	}
+	let size=0;
+	x: {
+		if(typeof obj=='string') {
+			size=text_encoder.encode(obj).length;
+			break x;
+		}
+		if(typeof obj=='number') {
+			size=1;
+			break x;
+		}
+		if(obj instanceof EventTarget) {
+			size=1;
+			break x;
+		}
+		if(obj instanceof Storage) {
+			size=1;
+			break x;
+		}
+		if(typeof obj!=="object") {debugger; return 1;}
+		if(obj===null) return 1;
+		let ent;
+		try {
+			ent=Object.entries(obj);
+		} catch(e) {
+			console.log('err',e,obj);
+			size=1;
+			break x;
+		}
+		for(let x of ent) {
+			size+=sizeof_js(x[1]);
+		}
+	}
+	sizeof_cache.set(obj,size);
+	return size;
+}
+export_(exports=>exports.sizeof_js=sizeof_js);
 //#region HandleTypes
 class HandleTypes extends BaseService {
 	/** @template {{}} T @arg {Maybe<T>} x @returns {x is T} */
@@ -8859,9 +8912,9 @@ class HandleTypes extends BaseService {
 		if(typeof x==="number") return x;
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @arg {{[x:string|number]:{}}} x */
+	/** @arg {unknown} x */
 	get_renderer_key(x) {
-		let keys=Object.keys(x);
+		let keys=Object.keys(as_cast(x));
 		let k;
 		for(let c of keys) {
 			if(c==="clickTrackingParams") continue;
@@ -8873,7 +8926,12 @@ class HandleTypes extends BaseService {
 		if(Number.isNaN(iv)) return k;
 		return iv;
 	}
-	/** @arg {{}} x @arg {string|null} r_name */
+	/** @arg {unknown} x @arg {string|null} r_name */
+	generate_typedef_log(x,r_name) {
+		let rd=this.generate_typedef(x,r_name);
+		console.log(rd);
+	}
+	/** @arg {unknown} x @arg {string|null} r_name */
 	generate_typedef(x,r_name=null) {
 		let k=this.get_renderer_key(x);
 		if(k===null) return null;
@@ -8884,9 +8942,9 @@ class HandleTypes extends BaseService {
 		let tn=this.uppercase_first(t_name);
 		let obj_count=0;
 		/** @type {{[x: number|string]:{}}} */
-		let xa=x;
+		let xa=as_cast(x);
 		let o2=xa[k];
-		let keys=Object.keys(x).concat(Object.keys(o2));
+		let keys=Object.keys(as_cast(x)).concat(Object.keys(o2));
 		const max_str_len=40;
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
