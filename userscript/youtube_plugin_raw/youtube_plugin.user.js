@@ -9070,7 +9070,9 @@ class HandleTypes extends BaseService {
 	TopicLinkData(x) {
 		this.text_t(x.title);
 		this.Thumbnail(x.thumbnailDetails);
-		this.BrowseEndpoint(x.endpoint);
+		this.BrowseEndpoint(x.endpoint,a => {
+			a; debugger;
+		});
 		this.Icon(x.callToActionIcon);
 		this.trackingParams(x.trackingParams);
 		let rn=this.generate_renderer(x,"TopicLinkData");
