@@ -3243,11 +3243,12 @@ class BaseService extends BaseServicePrivate {
 			y(x[k],k);
 		}
 	}
-	/** @template U @arg {U[]|undefined} x @arg {(this:this,x:U,i:number)=>void} y  */
+	/** @template U @arg {U[]|undefined} x @arg {(this:this,x:Exclude<U&({}|null),undefined>,i:number)=>void} y  */
 	z(x,y) {
 		if(x===void 0) return;
 		for(let it of x.entries()) {
 			const [i,a]=it;
+			if(a===void 0) continue;
 			y.call(this,a,i);
 		}
 	}
@@ -6270,9 +6271,9 @@ class HandleTypes extends BaseService {
 		if(c) this.yt_endpoint(c);
 		this.g(y);
 	}
-	/** @private @arg {TextT} [x] */
+	/** @arg {TextT} x */
 	text_t(x) {
-		if(!x) return;
+		if(!x) {debugger; return;}
 		const {runs: a,accessibility: b,simpleText: c,...y}=x;
 		if(a) this.z(a,a => this.TextRun(a));
 		if(b) this.Accessibility(b);
@@ -6761,7 +6762,7 @@ class HandleTypes extends BaseService {
 			this.empty_object(z);
 		}
 	}
-	/** @arg {AnyIcon|undefined} x*/
+	/** @arg {AnyIcon} x */
 	Icon(x) {
 		if(!x) return;
 		const {iconType: a,...y}=x;
@@ -9057,7 +9058,7 @@ class HandleTypes extends BaseService {
 	InfoRowData(x) {
 		const {title: a,defaultMetadata: b,expandedMetadata: c,expandIcon: d,trackingParams: e,infoRowExpandStatusKey: f,...y}=x; this.g(y);
 		this.z([a,b,c],this.text_t);
-		this.Icon(d);
+		if(d) this.Icon(d);
 		this.trackingParams(e);
 		if(f) this.save_enum_path(["structured-description-music-section",null,"row-state-id"],f);
 	}
