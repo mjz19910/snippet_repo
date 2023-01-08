@@ -4129,6 +4129,7 @@ class YtUrlParser extends BaseService {
 	log_playlist_parse=false;
 	/** @arg {PlaylistId} x */
 	parse_playlist_id(x) {
+		if(x===void 0) {debugger; return;}
 		x: {
 			switch(x) {
 				case "WL": {
@@ -4657,7 +4658,6 @@ class YtUrlParser extends BaseService {
 			case "player": break;
 			default: this.api_no_handler(x,x[2]);
 		}
-		console.log("get_yt_url_type_3",x.slice(1));
 		return x[2];
 	}
 	/** @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
@@ -8610,8 +8610,8 @@ class HandleTypes extends BaseService {
 			console.log("[watch_ep_params]",b);
 		}
 		if(c!==void 0&&c!==true) debugger;
-		this.s_parser.parse_playlist_id(d);
-		this.VssLoggingContext(e);
+		if(d) this.s_parser.parse_playlist_id(d);
+		if(e) this.VssLoggingContext(e);
 		f&&this.Html5PlaybackOnesieConfig(f);
 		if(g!==void 0) this.primitive_of(g,"number");
 	}
@@ -8671,7 +8671,7 @@ class HandleTypes extends BaseService {
 		this.t_url_unwrap(x.interpreterUrl,a => {
 			// spell:disable-next-line
 			if(this.s_parser.str_starts_with(a,"//www.google.com/js/th/")) {
-				return indexed_db.put({v: "trayride-interpreter",hash:split_string_once(split_string_once(a,"th/")[1],".js")[0]});
+				return indexed_db.put({v: "trayride-interpreter",hash: split_string_once(split_string_once(a,"th/")[1],".js")[0]});
 			}
 			debugger;
 		});
@@ -8960,8 +8960,8 @@ class HandleTypes extends BaseService {
 			} while(ps!==s);
 			return s;
 		}
-		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v)=>{
-			let vi=v.split("\n").map(e=>`${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
+		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(":ARRAY_TAG","[]");
