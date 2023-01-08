@@ -6036,6 +6036,8 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
+		debugger;
+		let td=this.generate_typedef(x);
 		const {twoColumnWatchNextResults: a,...y}=x;
 		this.TwoColumnWatchNextResultsData(a);
 		this.g(y);
