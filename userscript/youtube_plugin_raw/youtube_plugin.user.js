@@ -5140,7 +5140,7 @@ class HandleTypes extends BaseService {
 		return null;
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
-	#generate_typedef(x,r_name=null) {
+	generate_typedef(x,r_name=null) {
 		let k=this.#get_renderer_key(x);
 		if(k===null) return null;
 		let t_name=k;
@@ -5337,7 +5337,7 @@ class HandleTypes extends BaseService {
 			}
 		};
 		td.out_arr=[];
-		td.str_arr[td.gen_s]=this.#generate_typedef(x,r_name)??"";
+		td.str_arr[td.gen_s]=this.generate_typedef(x,r_name)??"";
 		td.generate_depth(td.cur_str);
 		td.trimmed_item("carouselLockupRenderer");
 		td.generate_depth(td.cur_str);
