@@ -3592,7 +3592,6 @@ class IndexedDbAccessor {
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class CodegenService extends BaseService {
-	
 	/** @arg {{}} x2 */
 	#is_Thumbnail(x2) {
 		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
