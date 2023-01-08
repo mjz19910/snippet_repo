@@ -3740,8 +3740,14 @@ class CodegenService extends BaseService {
 	#uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @public @arg {unknown} x @arg {string|null} r */
-	generate_typedef(x,r=null) {
+	/** @public @arg {unknown} x @arg {string|null} r @arg {boolean} [ret_val] @returns {string|null|void} */
+	generate_typedef(x,r,ret_val) {
+		let cg=this.#generate_typedef(x,r);
+		if(ret_val) return cg;
+		console.log(cg);
+	}
+	/** @arg {unknown} x @arg {string|null} r */
+	#generate_typedef(x,r=null) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		let tn=k;
@@ -4651,7 +4657,7 @@ class Generate {
 	}
 	/** @public @arg {unknown} x @arg {string|null} r */
 	generate_typedef_and_depth(x,r) {
-		let gen=this.x.generate_typedef(x,r);
+		let gen=this.x.generate_typedef(x,r,true);
 		if(!gen) return;
 		this.str_arr.push(gen);
 		let gd=this.x.generate_depth(gen);
@@ -4793,7 +4799,8 @@ class HandleTypes extends ServiceData {
 		if(x instanceof Array) {
 			return this.z(x,this.auto_any);
 		}
-		console.log(x);
+		let name=this.get_name_from_keys(x)
+		console.log(name,x);
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
