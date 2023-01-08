@@ -4472,7 +4472,6 @@ class YtUrlParser extends BaseService {
 			case "playlist": this.parse_playlist_page_url(a[1]); break;
 			case "watch": this.parse_watch_page_url(a[1]); break;
 		}
-
 	}
 	log_channel_handles=false;
 	/** @type {YtUrlFormat} */
