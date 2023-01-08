@@ -8449,11 +8449,7 @@ class HandleTypes extends BaseService {
 				continue;
 			}
 			if(typeof in_o!=='object') {
-				ret_arr.push(`
-				if(x.${k}!==${in_o}) debugger;
-				`.trim());
 				debugger;
-				continue;
 			}
 			in_o;
 			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
