@@ -1,4 +1,1 @@
-type Thumbnail={
-	thumbnails: ThumbnailItem[];
-	accessibility?: Accessibility;
-};
+type Thumbnail<T>=T&{thumbnails: ThumbnailItem[];};

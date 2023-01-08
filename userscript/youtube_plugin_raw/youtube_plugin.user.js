@@ -5384,7 +5384,9 @@ class HandleTypes extends BaseService {
 			timestampText: j,...y
 		}=x;
 		this.z([a,b,j],a => this.text_t(a));
-		this.Thumbnail(c);
+		this.Thumbnail(c,a=>{
+			if(!get_keys_of(a).length) debugger;
+		});
 		this.yt_endpoint(d);
 		this.z([e,f],a => this.primitive_of(a,"string"));
 		this.parse_external_channel_id(h);
@@ -5462,7 +5464,7 @@ class HandleTypes extends BaseService {
 		/** @this {typeof t} @arg {PlayerMicroformatData} x */
 		function p1(x) {
 			const {thumbnail: a,embed: b,title: c,description: d,...y}=x;
-			this.Thumbnail(a);
+			this.Thumbnail(a,_a=>{debugger;});
 			this.MicroformatEmbed(b);
 			this.text_t(c);
 			if(d) this.text_t(d);
@@ -6025,7 +6027,7 @@ class HandleTypes extends BaseService {
 	/** @arg {ThumbnailsList} x */
 	ThumbnailsList(x) {
 		const {thumbnail,trackingParams,...y}=x; this.g(y);
-		this.Thumbnail(x.thumbnail);
+		this.Thumbnail(x.thumbnail,_a=>{debugger;});
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
@@ -6731,7 +6733,7 @@ class HandleTypes extends BaseService {
 		this.z([c,d,e],a => this.primitive_of(a,"boolean"));
 		this.yt_endpoint(f);
 		if(get_keys_of_one(b)[0]!=="thumbnails") debugger;
-		this.Thumbnail(b);
+		this.Thumbnail(b,_a=>{debugger;});
 		this.g(y);
 	}
 	/** @arg {ThumbnailItem} x */
@@ -6944,14 +6946,13 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ProfileColumnUserInfoData} x */
 	ProfileColumnUserInfoData(x) {
-		this.Thumbnail(x.thumbnail);
+		this.Thumbnail(x.thumbnail,_a=>{debugger;});
 	}
-	/** @arg {Thumbnail} x */
-	Thumbnail(x) {
-		const {thumbnails: a,accessibility: b,...y}=x;
+	/** @template T @arg {Thumbnail<T>} x @arg {(x:Omit<Thumbnail<T>,"thumbnails">)=>void} f */
+	Thumbnail(x,f) {
+		const {thumbnails: a,...y}=x;
 		this.z(a,a => this.ThumbnailItem(a));
-		if(b) this.Accessibility(b);
-		this.g(y);
+		f(y);
 	}
 	/** @template T @template U @arg {SectionListData<T,U>} x @arg {(x:T,v:U)=>void} f */
 	SectionListData(x,f) {
@@ -7072,7 +7073,7 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactRadioData} x */
 	CompactRadioData(x) {
 		this.primitive_of(x.playlistId,"string");
-		this.Thumbnail(x.thumbnail);
+		this.Thumbnail(x.thumbnail,_a=>{debugger;});
 		this.text_t(x.title);
 		this.WatchEndpoint(x.navigationEndpoint);
 		this.text_t(x.videoCountText);
@@ -7189,7 +7190,7 @@ class HandleTypes extends BaseService {
 	/** @arg {CommentsEntryPointTeaserData} x */
 	CommentsEntryPointTeaserData(x) {
 		const {teaserAvatar: a,teaserContent: b,trackingParams: c,...y}=x; this.g(y);
-		this.Thumbnail(a);
+		this.Thumbnail(a,_a=>{debugger;});
 		this.text_t(b);
 		this.trackingParams(c);
 	}
@@ -7218,7 +7219,7 @@ class HandleTypes extends BaseService {
 		this.LoggingDirectives(c);
 		this.MenuRenderer(d);
 		this.primitive_of(e,"string");
-		this.Thumbnail(f);
+		this.Thumbnail(f,_a=>{debugger;});
 		this.text_t(g);
 		this.NavigationEndpoint(h,a => this.w(a,a => this.ReelWatchEndpointData(a)));
 		this.trackingParams(i);
@@ -7605,7 +7606,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ChannelOptionsData} x */
 	ChannelOptionsData(x) {
-		this.Thumbnail(x.avatar);
+		this.Thumbnail(x.avatar,_a=>{debugger;});
 		this.Accessibility(x.avatarAccessibility);
 		console.log(x.avatarEndpoint);
 		debugger;
@@ -9117,7 +9118,7 @@ class HandleTypes extends BaseService {
 			if(d!==3611) debugger;
 			if(e!=="/youtubei/v1/browse") debugger;
 		});
-		this.Thumbnail(channelThumbnail);
+		this.Thumbnail(channelThumbnail,_a=>{debugger;});
 		this.text_t(title);
 		this.text_t(views);
 		this.text_t(publishDate);
@@ -9341,7 +9342,7 @@ class HandleTypes extends BaseService {
 	TopicLinkData(x) {
 		const {title,thumbnailDetails,endpoint,callToActionIcon,trackingParams,...y}=x;
 		this.text_t(x.title);
-		this.Thumbnail(x.thumbnailDetails);
+		this.Thumbnail(x.thumbnailDetails,_a=>{debugger;});
 		this.BrowseEndpoint(x.endpoint,this.ChannelNavigationEndpointWebCommandMetadata);
 		this.Icon(x.callToActionIcon);
 		this.trackingParams(x.trackingParams);

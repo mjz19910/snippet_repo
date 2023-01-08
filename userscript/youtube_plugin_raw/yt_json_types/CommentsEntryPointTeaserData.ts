@@ -1,5 +1,5 @@
 type CommentsEntryPointTeaserData={
-	teaserAvatar: Thumbnail;
+	teaserAvatar: Thumbnail<{}>;
 	teaserContent: SimpleText;
 	trackingParams: string;
 };
