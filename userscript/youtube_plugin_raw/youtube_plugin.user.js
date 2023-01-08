@@ -8334,8 +8334,8 @@ class HandleTypes extends BaseService {
 	WatchEndpointData(x) {
 		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
 		this.s_parser.parse_video_id(x.videoId);
-		if(b) {
-			if(this.log_watch_endpoint_params) console.log("[watch_ep_params]",b);
+		if(b&&this.log_watch_endpoint_params) {
+			console.log("[watch_ep_params]",b);
 		}
 		this.s_parser.parse_playlist_id(c);
 		this.VssLoggingContext(d);
