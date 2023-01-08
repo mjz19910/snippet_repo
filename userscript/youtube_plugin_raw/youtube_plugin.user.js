@@ -3189,6 +3189,9 @@ class BaseServicePrivate extends KnownDataSaver {
 	#x;
 }
 class BaseService extends BaseServicePrivate {
+	get TODO_true() {
+		return true;
+	}
 	/** @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
 		/** @type {"_"|"-"} */
@@ -4391,9 +4394,6 @@ class YtUrlParser extends BaseService {
 		if(url.pathname==="/AddSession") return;
 		console.log("[parse_url_external_2]",x);
 	}
-	get TODO_true() {
-		return true;
-	}
 	/** @arg {Extract<YtUrlFormat,`https://${string}`>} x */
 	parse_full_url(x) {
 		let r=create_from_parse(x);
@@ -4414,6 +4414,7 @@ class YtUrlParser extends BaseService {
 			let c=split_string(r.pathname,"=");
 			let v=split_string(c[1],"-");
 			let h=split_string(r.host,".");
+			if(this.TODO_true) return;
 			console.log("yt_ggpht_url",h[0],c[0],v);
 			/** @type {YtUrlFormat} */
 			return;
@@ -7237,6 +7238,7 @@ class HandleTypes extends BaseService {
 	ContinuationCommand(x) {
 		const {request: a,token: b,...y}=x; this.g(y);
 		this.save_enum("CONTINUATION_REQUEST_TYPE",a);
+		if(this.TODO_true) return;
 		this.decode_continuation_token(b);
 	}
 	/** @arg {EncodedURIComponent} x */
@@ -8413,6 +8415,7 @@ class HandleTypes extends BaseService {
 	OfflineabilityEntity(x) {
 		this.OfflineabilityEntityData(x.offlineabilityEntity);
 	}
+	log_parsed_state_keys=false;
 	/** @arg {string} section @arg {string} x */
 	parse_state_key(section,x) {
 		let dec=decode_url_b64_proto_obj(decodeURIComponent(x));
@@ -8424,6 +8427,7 @@ class HandleTypes extends BaseService {
 		if(!dec_3) {debugger; return;}
 		let err=dec_3.find(e => e[0]==="error");
 		let entityTypeFieldNumber=dec[1][2];
+		let lf=this.log_parsed_state_keys;
 		if(err) {
 			const entityVideoId=decoder.decode(dec[0][2]);
 			if(!is_keyof_RUa(entityTypeFieldNumber)) {
@@ -8448,7 +8452,7 @@ class HandleTypes extends BaseService {
 				entityType: null,
 				entityVideoId,
 			};
-			console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
+			if(lf) console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
 			return;
 		}
 		const target={
@@ -8456,7 +8460,7 @@ class HandleTypes extends BaseService {
 			entityType: RUa[entityTypeFieldNumber],
 			entityVideoId,
 		};
-		console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
+		if(lf) console.log("[state_key.%s] zero_field=[%s,%s]",section,dec[0][1].toString(),dec_3[0][1],target);
 	}
 	/** @arg {OfflineabilityEntityData} x */
 	OfflineabilityEntityData(x) {
