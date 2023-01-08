@@ -1,5 +1,5 @@
 type TextRun={
 	text: string;
-	navigationEndpoint?: YtEndpoint;
+	navigationEndpoint?: NavigationEndpoint<{},never>;
 	bold?: boolean;
 };

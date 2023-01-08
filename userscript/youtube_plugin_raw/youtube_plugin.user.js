@@ -6857,11 +6857,12 @@ class HandleTypes extends BaseService {
 	ButtonData(x) {
 		this.save_keys("[ButtonData]",x);
 		const {
-			accessibility: a,command,icon: c,isDisabled: d,serviceEndpoint: e,size: f,style: g,text: h,trackingParams: i,
-			navigationEndpoint: j,
+			accessibility,command,icon,isDisabled,
+			serviceEndpoint,navigationEndpoint,size,
+			style,targetId,text,trackingParams,
 			...y
 		}=x;
-		switch(g) {
+		switch(style) {
 			case "STYLE_DEFAULT": break;
 			case "STYLE_SUGGESTIVE": break;
 			case "STYLE_PRIMARY": break;
@@ -6870,26 +6871,29 @@ class HandleTypes extends BaseService {
 			case void 0: break;
 			default: debugger;
 		}
-		switch(f) {
+		if(targetId) this.parse_target_id(targetId);
+		switch(size) {
 			case "SIZE_DEFAULT": break;
 			case "SIZE_SMALL": break;
 			case void 0: break;
 			default: debugger;
 		}
-		if(a) {
-			if("accessibilityData" in a) {
+		if(accessibility) {
+			if("accessibilityData" in accessibility) {
+				console.log("Button.accessibility.accessibilityData");
 				this.save_string("button_accessibility","accessibility_Accessibility");
-				this.Accessibility(a);
+				this.Accessibility(accessibility);
 			} else {
+				console.log("Button.accessibility.!accessibilityData");
 				this.save_string("button_accessibility","accessibility_AccessibilityData");
-				this.AccessibilityData(a);
+				this.AccessibilityData(accessibility);
 			}
 		}
 		if(command) {
 			console.log(`[Button.command.Endpoint.${this.#get_renderer_key(command)}]`,command);
 		}
-		if(c) {
-			switch(c.iconType) {
+		if(icon) {
+			switch(icon.iconType) {
 				case "DELETE": break;
 				case "NOTIFICATIONS_ACTIVE": break;
 				case "NOTIFICATIONS_NONE": break;
@@ -6897,18 +6901,17 @@ class HandleTypes extends BaseService {
 				case "SETTINGS": break;
 				default: debugger; break;
 			}
-			this.Icon(c);
+			this.Icon(icon);
 		}
-		if(d) this.primitive_of(d,"boolean");
-		if(e) this.yt_endpoint(e);
-		if(i) this.trackingParams(i);
-		if(h) this.text_t(h);
-		if(j) {
-			console.log(`[Button.navigationEndpoint.${this.#get_renderer_key(j)}]`,j);
+		if(isDisabled) this.primitive_of(isDisabled,"boolean");
+		if(serviceEndpoint) this.yt_endpoint(serviceEndpoint);
+		if(trackingParams) this.trackingParams(trackingParams);
+		if(text) this.text_t(text);
+		if(navigationEndpoint) {
+			console.log(`[Button.navigationEndpoint.${this.#get_renderer_key(navigationEndpoint)}]`,navigationEndpoint);
 		}
 		{
-			const {targetId: a,accessibilityData: b,...z}=y;
-			if(a) this.parse_target_id(a);
+			const {accessibilityData: b,...z}=y;
 			if(b) {
 				if("accessibilityData" in b) {
 					this.save_string("button_accessibility","accessibilityData_Accessibility");
