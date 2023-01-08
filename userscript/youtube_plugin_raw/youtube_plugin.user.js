@@ -4835,20 +4835,20 @@ class HandleTypes extends ServiceData {
 			this.root_element.append(container_element);
 			this.item_count=0;
 		}
-		this.auto_depth++;
 		let has_running_var=false;
 		let p=this.z_async(Object.entries(x),this.auto_entry,id);
-		if(this.running_auto[0]===null) {
+		if(this.auto_depth===1&&this.running_auto[0]===null) {
 			has_running_var=true;
-			console.log("[auto_start] [%o]",id);
+			console.log("[auto_start] [%o]",id,this.auto_depth);
 			this.running_auto=[p,id];
 		}
+		this.auto_depth++;
 		await p;
+		this.auto_depth--;
 		if(has_running_var) {
-			console.log("[auto_done] [%o]",id);
+			console.log("[auto_done] [%o]",id,this.auto_depth);
 			this.running_auto=[null,-1];
 		}
-		this.auto_depth--;
 		if(this.auto_depth===0) {
 			this._target_element.append(this.auto_dom);
 		}
