@@ -1557,7 +1557,9 @@ class FilterHandlers {
 	}
 	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
-		this.handle_types.DataResponsePageType(detail.response);
+		const {response,...y}=detail;
+		this.handle_types.DataResponsePageType(response);
+		console.log(y);
 	}
 
 }
@@ -4808,19 +4810,19 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
-		this.save_keys("[YtChannelPageResponse]",x);
+		this.save_keys("[ChannelPageResponse]",x);
 	}
 	/** @private @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
-		this.save_keys("[YtPlaylistPageResponse]",x);
+		this.save_keys("[PlaylistPageResponse]",x);
 	}
 	/** @private @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
-		this.save_keys("[YtSettingsPageResponse]",x);
+		this.save_keys("[SettingsPageResponse]",x);
 	}
 	/** @private @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
-		this.save_keys("[YtShortsResponse]",x);
+		this.save_keys("[ShortsResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
@@ -4841,18 +4843,10 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {AccountSetSetting} x */
 	AccountSetSetting(x) {
 		this.save_keys("[AccountSetSetting]",x);
-		const {responseContext: a,settingItemId: b,...y}=x;
-		switch(b) {
-			case "407": break;
-			default: debugger; break;
-		}
-		this.g(y);
 	}
 	/** @private @arg {JsonFeedbackData} x */
 	JsonFeedbackData(x) {
 		this.save_keys("[JsonFeedbackData]",x);
-		const {responseContext: a,...y}=x;
-		this.g(y);
 	}
 	/** @private @arg {JsonGetTranscriptData} x */
 	JsonGetTranscriptData(x) {
@@ -4865,12 +4859,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
 		this.save_keys("[AccountMenuResponse]",x);
-	}
-	/** @arg {NavigateEventDetail} x */
-	YtPageState(x) {
-		switch(x.pageType) {
-			case "browse": x.response; break;
-		};
 	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
