@@ -9,7 +9,7 @@ type ButtonData={
 		][number]
 	>;
 	isDisabled?: boolean;
-	serviceEndpoint?: ServiceEndpoint<{},never>;
+	serviceEndpoint?: ServiceEndpoint<{}>;
 	navigationEndpoint?: NavigationEndpoint<{},never>;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;

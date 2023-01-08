@@ -6450,15 +6450,11 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AccountSectionListData} x */
 	AccountSectionListData(x) {
-		this.z(x.contents,v => this.AccountItemSectionRenderer(v));
-	}
-	/** @private @arg {AccountItemSectionRenderer} x */
-	AccountItemSectionRenderer(x) {
-		this.w1(x.accountItemSectionRenderer,a => {
-			if("accountItem" in a) return this.AccountItem(a);
-			if("compactLinkRenderer" in a) return this.CompactLinkData(a.compactLinkRenderer);
+		this.w1(x,x=>this.w(x,x=>this.w1(x,x => {
+			if("accountItem" in x) return this.AccountItem(x);
+			if("compactLinkRenderer" in x) return this.CompactLinkData(x.compactLinkRenderer);
 			debugger;
-		});
+		})));
 	}
 	/** @template {{}} T @arg {ContentsArrTemplate<T>} x @arg {(x:T)=>void} f */
 	w1(x,f) {
@@ -6484,9 +6480,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
-		const {buttonRenderer,...v}=x;
-		this.ButtonData(x.buttonRenderer);
-		this.g(v);
+		this.w(x,this.ButtonData);
 	}
 	/** @private @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
@@ -8232,11 +8226,15 @@ class HandleTypes extends BaseService {
 		console.log(x.dismissalEndpoint);
 		debugger;
 	}
+	/** @template {{}} T @arg {{contents:T}} x @arg {(x:T)=>void} f */
+	w3(x,f) {
+		f(x.contents);
+	}
 	/** @private @arg {ChannelResponse} x */
 	ChannelResponse(x) {
 		const {responseContext:a,contents:b,header,metadata,trackingParams:c,topbar,microformat,onResponseReceivedActions,...y}=x; this.g(y);
 		this.ResponseContext(x.responseContext);
-		this.TwoColumnBrowseResultsRenderer(x.contents);
+		this.w3(x,a=>this.w(a,this.TwoColumnBrowseResultsData))
 		this.C4TabbedHeaderRenderer(header);
 		this.ChannelMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
@@ -9348,6 +9346,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @private @arg {AdHoverTextButtonRenderer} x */
 	AdHoverTextButtonRenderer(x) {
+		this.w(x,this.ButtonData);
 		this.AdHoverTextButtonData(x.adHoverTextButtonRenderer);
 	}
 	/** @private @arg {AdHoverTextButtonData} x */
