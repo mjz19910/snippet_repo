@@ -4840,12 +4840,12 @@ class HandleTypes extends ServiceData {
 		let p=this.z_async(Object.entries(x),this.auto_entry,id);
 		if(this.running_auto[0]===null) {
 			has_running_var=true;
-			console.log("[auto_start]");
+			console.log("[auto_start] [%o]",id);
 			this.running_auto=[p,id];
 		}
 		await p;
 		if(has_running_var) {
-			console.log("[auto_done]");
+			console.log("[auto_done] [%o]",id);
 			this.running_auto=[null,-1];
 		}
 		this.auto_depth--;
