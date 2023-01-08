@@ -1258,18 +1258,6 @@ function decode_url_b64(x) {
 	x=x.replaceAll("_","/").replaceAll("-","+");
 	return base64_dec.decodeByteArray(x);
 }
-/** @private @arg {string} x */
-function decode_url_b64_proto_obj(x) {
-	x=x.replaceAll("_","/").replaceAll("-","+");
-	let ba=base64_dec.decodeByteArray(x);
-	let reader=new MyReader(ba);
-	return reader.try_read_any();
-}
-/** @private @template T @arg {T|undefined} val @returns {T} */
-function non_null(val) {
-	if(val===void 0) throw new Error();
-	return val;
-}
 /** @private @template {string} T @arg {T} str @returns {UrlParse<T>} */
 function create_from_parse(str) {
 	let s=new URL(str);
@@ -1972,21 +1960,6 @@ function eq_keys(src,target) {
 	}
 	return true;
 }
-/** @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]} */
-function filter_out_keys(keys,to_remove) {
-	to_remove=cast_as(to_remove.slice());
-	/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-	let ok_e=[];
-	for(let i=0;i<keys.length;i++) {
-		if(to_remove.includes(keys[i])) {
-			let rm_i=to_remove.indexOf(keys[i]);
-			to_remove.splice(rm_i,1);
-			continue;
-		}
-		ok_e.push(cast_as(keys[i]));
-	}
-	return ok_e;
-}
 let vis_imm=false;
 let css_str=`
 	ytd-watch-next-secondary-results-renderer {
@@ -2525,7 +2498,6 @@ function main() {
 		exports.ServiceResolver=ServiceResolver;
 	}
 	resolver_value.value=service_resolver;
-	yt_plugin.init();
 	yt_plugin.set_yt_handlers(yt_handlers);
 	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
@@ -2705,10 +2677,6 @@ function main() {
 	// #endregion
 }
 //#endregion
-/** @private @template {string} C @template {string} U @template {Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {Split<C,","> extends U[]?C:never} arg1 */
-function has_keys(ok_3,arg1) {
-	return eq_keys(ok_3,arg1.split(","));
-}
 /** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 function split_string(x,s=cast_as(",")) {
 	if(!x) {debugger;}
@@ -3453,34 +3421,8 @@ class YtPlugin {
 	/** @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
 	constructor() {
-		this.created_blobs=created_blobs;
-		this.active_blob_set=active_blob_set;
-		this.saved_maps=new Map;
-		this.saved_data=saved_data;
-		this.PropertyHandler=PropertyHandler;
-		this.make_search_params=make_search_params;
-		this.decode_b64_proto_obj=decode_url_b64_proto_obj;
-		this.blob_create_args_arr=blob_create_args_arr;
-		this.dom_observer=dom_observer;
-		this.playlist_arr=playlist_arr;
-		this.page_type_changes=page_type_changes;
-		this.filter_out_keys=filter_out_keys;
-		this.port_state=port_state;
-		this.plugin_overlay_element=plugin_overlay_element;
-		this.AudioGainController=AudioGainController;
-		this.audio_gain_controller=audio_gain_controller;
-		this.has_keys=has_keys;
-	}
-	init() {
-		this.add_function(non_null);
-		this.save_new_map("box_map",box_map);
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
-	}
-	/** @private @arg {string} key @arg {Map<string, {}>} map */
-	save_new_map(key,map) {
-		if(!this.saved_maps) return;
-		this.saved_maps.set(key,map);
 	}
 	/** @arg {HiddenData<FilterHandlers>} value */
 	set_yt_handlers(value) {

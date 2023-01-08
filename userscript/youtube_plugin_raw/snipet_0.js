@@ -1,5 +1,6 @@
-let bigint_val_32=new Uint32Array(2);
-let bigint_buf=new BigUint64Array(bigint_val_32.buffer);
+const decoder=new TextDecoder();
+const bigint_val_32=new Uint32Array(2);
+const bigint_buf=new BigUint64Array(bigint_val_32.buffer);
 
 class LongBits {
 	/** @arg {number} a @arg {number} b */
@@ -13,7 +14,8 @@ class LongBits {
 		return bigint_buf[0];
 	}
 }
-/** @private @arg {MyReader} reader @arg {number} [writeLength] */
+
+/** @arg {MyReader} reader @arg {number} [writeLength] */
 function indexOutOfRange(reader,writeLength) {
 	return RangeError("index out of range: "+reader.pos+" + "+(writeLength||1)+" > "+reader.len);
 }
@@ -499,4 +501,104 @@ export class Snippet_0_tmp {
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}
+}
+class Base64Binary {
+	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	/* will return a  Uint8Array type */
+	/** @arg {string} input */
+	decodeByteArray(input) {
+		let real_len=input.length-1;
+		while(real_len>=0&&input[real_len]==="=") real_len--;
+		var byte_len=((real_len+1)/4)*3|0;
+		var ab=new ArrayBuffer(byte_len);
+		let byte_arr=new Uint8Array(ab);
+		this.decode(input,byte_arr);
+		return byte_arr;
+	}
+	/** @public @arg {string} input */
+	decode_str(input) {
+		let y=this.decodeByteArray(input);
+		return decoder.decode(y);
+	}
+	/** @private @arg {string} input @arg {Uint8Array} binary_arr */
+	decode(input,binary_arr) {
+		var byte_len=(input.length/4)*3|0;
+		var chr1,chr2,chr3;
+		var enc1,enc2,enc3,enc4;
+		var i=0;
+		var j=0;
+
+		let prev_len=input.length;
+		input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
+		if(prev_len!==input.length) {
+			console.log("removed %o non base64 chars",prev_len-input.length);
+			debugger;
+			throw new Error("Bad");
+		}
+
+		for(i=0;i<byte_len;i+=3) {
+			//get the 3 octets in 4 ascii chars
+			enc1=this._keyStr.indexOf(input.charAt(j++));
+			enc2=this._keyStr.indexOf(input.charAt(j++));
+			enc3=this._keyStr.indexOf(input.charAt(j++));
+			enc4=this._keyStr.indexOf(input.charAt(j++));
+
+			chr1=(enc1<<2)|(enc2>>4);
+			chr2=((enc2&15)<<4)|(enc3>>2);
+			chr3=((enc3&3)<<6)|enc4;
+
+			binary_arr[i]=chr1;
+			if(enc3!=64) binary_arr[i+1]=chr2;
+			if(enc4!=64) binary_arr[i+2]=chr3;
+		}
+
+		return binary_arr;
+	}
+}
+const base64_dec=new Base64Binary();
+/** @private @arg {string} x */
+function decode_url_b64_proto_obj(x) {
+	x=x.replaceAll("_","/").replaceAll("-","+");
+	let ba=base64_dec.decodeByteArray(x);
+	let reader=new MyReader(ba);
+	return reader.try_read_any();
+}
+/** @private @template T @arg {T|undefined} val @returns {T} */
+function non_null(val) {
+	if(val===void 0) throw new Error();
+	return val;
+}
+/** @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]} */
+function filter_out_keys(keys,to_remove) {
+	to_remove=cast_as(to_remove.slice());
+	/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+	let ok_e=[];
+	for(let i=0;i<keys.length;i++) {
+		if(to_remove.includes(keys[i])) {
+			let rm_i=to_remove.indexOf(keys[i]);
+			to_remove.splice(rm_i,1);
+			continue;
+		}
+		ok_e.push(cast_as(keys[i]));
+	}
+	return ok_e;
+}
+/** @private @template {string} C @template {string} U @template {Split<C,",">[number]} _V @template {_V extends U?U[]:never} T @arg {T} ok_3 @arg {Split<C,","> extends U[]?C:never} arg1 */
+function has_keys(ok_3,arg1) {
+	return eq_keys(ok_3,arg1.split(","));
+}
+/** @private @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
+function eq_keys(src,target) {
+	if(src.length!==target.length) return false;
+	for(let i=0;i<src.length;i++) {
+		let a=src[i];
+		if(!target.includes(a)) return false;
+	}
+	return true;
+}
+export {
+	non_null,
+	filter_out_keys,
+	decode_url_b64_proto_obj,
+	has_keys,
 }
