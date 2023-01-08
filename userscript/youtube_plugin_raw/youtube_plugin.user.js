@@ -6892,11 +6892,9 @@ class HandleTypes extends BaseService {
 		if(navigationEndpoint) {
 			console.log(`[Button.navigationEndpoint.${this.#get_renderer_key(navigationEndpoint)}]`,navigationEndpoint);
 		}
-		{
-			const {accessibilityData: b,...z}=y;
-			if(b) this.AccessibilityData(b);
-			this.g(z);
-		}
+		const {accessibilityData: b,...z}=y;
+		if(b) this.AccessibilityData(b);
+		this.g(z);
 	}
 	/** @arg {AnyIcon} x */
 	Icon(x) {
