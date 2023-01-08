@@ -757,35 +757,31 @@ class IterateApiResultBase {
 class YtIterateTarget {
 	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
 	appendContinuationItemsAction(state,action) {
-		check_item_keys(state.path,"appendContinuationItemsAction",get_keys_of(action));
 		if(!action.continuationItems) {
 			debugger;
 		}
-		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,"appendContinuationItemsAction.continuationItems",action.continuationItems);
+		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,action.continuationItems);
 		if(filtered.length>0) {
 			action.continuationItems=filtered;
 		}
 	}
 	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
-	reloadContinuationItemsCommand({t: state,path},command) {
-		check_item_keys(path,"reloadContinuationItemsCommand",get_keys_of(command));
+	reloadContinuationItemsCommand({t: state},command) {
 		if(!command.continuationItems) {
 			debugger;
 		}
-		let filtered=state.handlers.renderer_content_item_array.replace_array(state,"reloadContinuationItemsCommand.continuationItems",command.continuationItems);
+		let filtered=state.handlers.renderer_content_item_array.replace_array(state,command.continuationItems);
 		if(filtered.length>0) {
 			command.continuationItems=filtered;
 		}
 	}
 	/** @arg {ApiIterateState} state @arg {ItemSectionData} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
-		let {t,path}=state;
-		check_item_keys(path,"itemSectionRenderer",get_keys_of(renderer));
+		let {t}=state;
 		t.iteration.default_iter(state,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=get_keys_of(item);
-			check_item_keys(path,"itemSectionRenderer.contents[]",keys);
 			for(let key of keys) {
 				let is_blacklisted=t.blacklisted_item_sections.get(key);
 				if(is_blacklisted!==void 0) return !is_blacklisted;
@@ -816,97 +812,10 @@ class YtIterateTarget {
 		state.t.iteration.default_iter(state,renderer);
 	}
 }
-/** @private @arg {string} real_path @arg {string[]} keys @arg {string} path @return {void} @log item_keys_tag */
-function check_item_keys(real_path,path,keys) {
-	let real_path_arr=real_path.split(".");
-	let real_path_arr_dyn={
-		get arr() {
-			return real_path_arr;
-		}
-	};
-	switch(path) {
-		default: console.log("item_keys_tag [ci_1_1_]: new path=%o",path,real_path_arr_dyn); break;
-		case "appendContinuationItemsAction.continuationItems[]": break;
-		case "appendContinuationItemsAction": break;
-		case "itemSectionRenderer.contents[]": break;
-		case "itemSectionRenderer": break;
-		case "reloadContinuationItemsCommand.continuationItems[]": break;
-		case "reloadContinuationItemsCommand": break;
-		case "richGridRenderer.contents[]": break;
-		case "richGridRenderer.masthead": break;
-		case "richGridRenderer": break;
-		case "richItemRenderer.content": break;
-		case "richItemRenderer": break;
-	}
-	let mode=null;
-	switch(path) {
-		default: console.log("item_keys_tag [ci_2_1_]: content path",path,real_path_arr_dyn); break;
-		case "appendContinuationItemsAction.continuationItems[]": mode="items"; break;
-		case "appendContinuationItemsAction": mode="action"; break;
-		case "richItemRenderer.content": mode="items"; break;
-		case "richItemRenderer": mode="renderer"; break;
-		case "richGridRenderer.contents[]": mode="items"; break;
-		case "richGridRenderer.masthead": mode="renderer"; break;
-		case "richGridRenderer": mode="action"; break;
-		case "itemSectionRenderer.contents[]": mode="items"; break;
-		case "itemSectionRenderer": mode="action"; break;
-		case "reloadContinuationItemsCommand.continuationItems[]": mode="items"; break;
-		case "reloadContinuationItemsCommand": mode="action"; break;
-	}
-	if(mode==="items") for(let key of keys) switch(key) {
-		default: console.log("item_keys_tag [ci_3_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-		case "backstagePostThreadRenderer": break;
-		case "channelAboutFullMetadataRenderer": break;
-		case "channelFeaturedContentRenderer": break;
-		case "channelRenderer": break;
-		case "commentsEntryPointHeaderRenderer": break;
-		case "compactPlaylistRenderer": break;
-		case "compactRadioRenderer": break;
-		case "compactVideoRenderer": break;
-		case "connectedAppRenderer": break;
-		case "continuationItemRenderer": break;
-		case "gridRenderer": break;
-		case "messageRenderer": break;
-		case "pageIntroductionRenderer": break;
-		case "playlistVideoListRenderer": break;
-		case "promotedSparklesWebRenderer": break;
-		case "reelShelfRenderer": break;
-		case "searchPyvRenderer": break;
-		case "settingsOptionsRenderer": break;
-		case "shelfRenderer": break;
-		case "videoRenderer": break;
-		// richGridRenderer.contents[]
-		case "richItemRenderer": break;
-		case "richSectionRenderer": break;
-		// richItemRenderer.content
-		case "adSlotRenderer": break;
-		case "radioRenderer": break;
-		// comments
-		case "commentThreadRenderer": break;
-		case "commentsHeaderRenderer": break;
-		case "feedFilterChipBarRenderer": break;
-		case "reelItemRenderer": break;
-	}
-	keys=keys.filter(e => e!=="trackingParams");
-	if(mode==="action") for(let key of keys) switch(key) {
-		default: console.log("item_keys_tag [ci_4_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-		case "contents": break;
-		case "header": break;
-		case "targetId": break;
-		case "reflowOptions": break;
-		case "continuationItems": break;
-		case "slot": break;
-		case "style": break;
-	}
-	if(mode==="renderer") for(let key of keys) switch(key) {
-		default: console.log("item_keys_tag [ci_5_0_]: iter content key "+path+" ["+key+"]",real_path_arr_dyn); break;
-		case "content": break;
-	}
-}
 class HandleRendererContentItemArray {
 	debug=false;
-	/** @private @arg {string} path @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
-	filter_for_rich_item_renderer(path,base,content_item) {
+	/** @private @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
+	filter_for_rich_item_renderer(base,content_item) {
 		let debug_flag_value=false;
 		if("filter_handler_debug" in base) {
 			if(base.filter_handler_debug) debug_flag_value=base.filter_handler_debug;
@@ -916,9 +825,7 @@ class HandleRendererContentItemArray {
 			debugger;
 		}
 		let renderer=content_item.richItemRenderer;
-		check_item_keys(path,"richItemRenderer",get_keys_of(renderer));
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
-		check_item_keys(path,"richItemRenderer.content",get_keys_of(renderer.content));
 		if("adSlotRenderer" in renderer.content) {
 			if(debug_flag_value) console.log("adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
@@ -958,13 +865,12 @@ class HandleRendererContentItemArray {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {string} path @arg {T} arr @returns {T} */
-	replace_array(base,path,arr) {
+	/** @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {T} arr @returns {T} */
+	replace_array(base,arr) {
 		return cast_as(arr.filter((/** @type {typeof arr[number]} */content_item) => {
 			let keys=get_keys_of(content_item);
-			check_item_keys(path,`${path}[]`,keys);
 			if("richItemRenderer" in content_item) {
-				return this.filter_for_rich_item_renderer(path,base,content_item);
+				return this.filter_for_rich_item_renderer(base,content_item);
 			}
 			if("commentThreadRenderer" in content_item) return true;
 			if("commentsHeaderRenderer" in content_item) return true;
@@ -989,10 +895,8 @@ class HandleRichGridRenderer {
 	rendererContentItemArray=new HandleRendererContentItemArray;
 	/** @arg {string} path @arg {RichGridData} renderer */
 	richGridRenderer(path,renderer) {
-		check_item_keys(path,"richGridRenderer",get_keys_of(renderer));
 		if(this.debug) console.log("run handler richGridRenderer");
 		if(renderer.masthead) {
-			check_item_keys(path,"richGridRenderer.masthead",get_keys_of(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				/** @type {{masthead: {}}&Omit<typeof renderer,"masthead">} */
@@ -1003,7 +907,7 @@ class HandleRichGridRenderer {
 		}
 		if(renderer.contents) {
 			if(this.debug) console.log("on_contents",path);
-			let filtered=this.rendererContentItemArray.replace_array(this,"richGridRenderer.contents",renderer.contents);
+			let filtered=this.rendererContentItemArray.replace_array(this,renderer.contents);
 			if(filtered.length>0) {
 				renderer.contents=filtered;
 			}
