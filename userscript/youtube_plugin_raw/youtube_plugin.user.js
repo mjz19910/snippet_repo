@@ -3625,116 +3625,7 @@ class Services {
 }
 //#endregion Service
 //#region decode_entity_key
-/** @name Ys */
-class ServiceArrayViewType {
-	/** @arg {Uint8Array[]} v */
-	constructor(v) {
-		this.arrays=v;
-		this.arrayIdx=0;
-		this.arrayPos=0;
-		this.totalLength=0;
-		v.forEach(c => this.append(c));
-	}
-	/** @arg {number} a */
-	isFocused(a) {
-		return a>=this.arrayPos&&a<this.arrayPos+this.arrays[this.arrayIdx].length;
-	}
-	/** @arg {number} a */
-	focus(a) {
-		if(!this.isFocused(a))
-			for(a<this.arrayPos&&(this.arrayPos=this.arrayIdx=0);this.arrayPos+this.arrays[this.arrayIdx].length<=a&&this.arrayIdx<this.arrays.length;)
-				this.arrayPos+=this.arrays[this.arrayIdx].length,
-					this.arrayIdx+=1;
-	}
-	/** @arg {Uint8Array} a */
-	append(a) {
-		/** @type {boolean|Uint8Array} */
-		var b=0===this.arrays.length? !1:(b=this.arrays[this.arrays.length-1])&&b.buffer===a.buffer&&b.byteOffset+b.length===a.byteOffset;
-		b? (b=this.arrays[this.arrays.length-1],
-			this.arrays[this.arrays.length-1]=new Uint8Array(b.buffer,b.byteOffset,b.length+a.length),
-			this.arrayPos=this.arrayIdx=0):this.arrays.push(a);
-		this.totalLength+=a.length;
-	}
-}
-/** @name OUa */
-class EntityKeyReader {
-	/** @arg {ServiceArrayViewType} v */
-	constructor(v) {
-		this.arrayView=v;
-		this.pos=0;
-		this.pendingTagAndType=-1;
-	}
-}
-/** @arg {ServiceArrayViewType} a @arg {number} b */
-function IUa(a,b) {
-	a.focus(b);
-	return a.arrays[a.arrayIdx][b-a.arrayPos];
-}
-/** @arg {EntityKeyReader} a */
-function Zs(a) {
-	var b=IUa(a.arrayView,a.pos);
-	++a.pos;
-	if(128>b)
-		return b;
-	for(var c=b&127,d=1;128<=b;)
-		b=IUa(a.arrayView,a.pos),
-			++a.pos,
-			d*=128,
-			c+=(b&127)*d;
-	return c;
-}
-/** @arg {string} x @name Rd */
-function base64_to_array(x) {
-	return base64_dec.decodeByteArray(x);
-}
 const decoder=new TextDecoder();
-/** @type {lua_strs} */
-const lua_strs=["AUTO_CHAPTERS","HEATSEEKER","DESCRIPTION_CHAPTERS","topbar"];
-/** @arg {BufferSource} x */
-function LUa(x) {
-	let res=decoder.decode(x);
-	if(!is_in_arr(lua_strs,res)) {
-		console.log("[new_lua_str] [%s]",res);
-		lua_strs.push(as_cast(res));
-	}
-	if(!is_in_arr(lua_strs,res)) throw 1;
-	return res;
-}
-/** @template {any[]} T @arg {T} arr @arg {string} x @returns {x is T[number]} */
-function is_in_arr(arr,x) {
-	return arr.includes(x);
-}
-/** @arg {EntityKeyReader} a @arg {number} b */
-function PUa(a,b) {
-	var c=a.pendingTagAndType;
-	for(a.pendingTagAndType=-1;a.pos+1<=a.arrayView.totalLength;) {
-		0>c&&(c=Zs(a));
-		var d=c>>3
-			,f=c&7;
-		if(d===b)
-			return !0;
-		if(d>b) {
-			a.pendingTagAndType=c;
-			break;
-		}
-		c=-1;
-		switch(f) {
-			case 0:
-				Zs(a);
-				break;
-			case 1:
-				a.pos+=8;
-				break;
-			case 2:
-				d=Zs(a);
-				a.pos+=d;
-				break;
-			case 5:
-				a.pos+=4;
-		}
-	}
-	return !1;
-}
 /** @type {RUa_from_enum_map} */
 const RUa={
 	2: "fakeChannel",
@@ -3802,97 +3693,6 @@ const RUa={
 function is_keyof_RUa(v) {
 	return v in RUa;
 }
-/** @type {(this:number,...c: any[])=>any[]} @this {number} */
-function za() {
-	for(var a=Number(this),b=[],c=a;c<arguments.length;c++)
-		b[c-a]=arguments[c];
-	return b;
-};
-class Bl extends Error {
-	/** @arg {string} [a] */
-	constructor(a) {
-		var b=za.apply(1,arguments);
-		super(a);
-		this.args=b.slice();
-	}
-};
-/** @arg {Bl} exception */
-function $n(exception) {
-	console.log("report error");
-	console.log(exception);
-}
-/** @arg {[string]} gs */
-function decode_entity_key(...gs) {
-	/** @type {[Bl|string|number|EntityKeyReader|undefined]} */
-	let [a]=gs;
-	// a = new OUa(new Ys([Rd(decodeURIComponent(a))]));
-	a=new EntityKeyReader(new ServiceArrayViewType([base64_to_array(decodeURIComponent(a))]));
-	if(PUa(a,2)) {
-		/** @type {ReturnType<typeof LUa>|number|Uint8Array|undefined} */
-		var b=Zs(a);
-		var c=a.pos;
-		/** @type {ServiceArrayViewType|DataView|Uint8Array|string} */
-		var d=a.arrayView;
-		c=void 0===c? 0:c;
-		var f=void 0===b? -1:b;
-		c=void 0===c? 0:c;
-		f=void 0===f? -1:f;
-		if(d.totalLength&&f) {
-			0>f&&(f=d.totalLength-c);
-			d.focus(c);
-			if(!(c-d.arrayPos+f<=d.arrays[d.arrayIdx].length)) {
-				/** @type {number|Uint8Array} */
-				var h=d.arrayIdx,
-					/** @type {number|Uint8Array} */
-					l=d.arrayPos;
-				d.focus(c+f-1);
-				l=new Uint8Array(d.arrayPos+d.arrays[d.arrayIdx].length-l);
-				for(var n=0,p=h;p<=d.arrayIdx;p++)
-					l.set(d.arrays[p],n),
-						n+=d.arrays[p].length;
-				d.arrays.splice(h,d.arrayIdx-h+1,l);
-				d.arrayIdx=0;
-				d.arrayPos=0;
-				d.focus(c);
-			}
-			h=d.arrays[d.arrayIdx];
-			d=new DataView(h.buffer,h.byteOffset+c-d.arrayPos,f);
-		} else
-			d=new DataView(new ArrayBuffer(0));
-		d=new Uint8Array(d.buffer,d.byteOffset,d.byteLength);
-		a.pos+=b;
-		b=d;
-	} else
-		b=void 0;
-	b=b? LUa(b):void 0;
-	a=PUa(a,4)? Zs(a):void 0;
-	if(!a) throw new Error("Invalid state");
-	if(!b) return null;
-	if(!is_keyof_RUa(a)) {
-		if(!lua_strs.includes(b)) {
-			debugger;
-			return null;
-		}
-		return {
-			entityTypeFieldNumber: a,
-			entityType: null,
-			entityId: b
-		};
-	}
-	d=RUa[a];
-	if("undefined"===typeof d)
-		throw a=new Bl("Failed to recognize field number",{
-			name: "EntityKeyHelperError",
-			fieldNumber: a
-		}),
-		$n(a),
-		a;
-	return {
-		entityTypeFieldNumber: a,
-		entityType: d,
-		entityId: b
-	};
-}
 class YtPlugin {
 	/** @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
@@ -3914,7 +3714,6 @@ class YtPlugin {
 		this.AudioGainController=AudioGainController;
 		this.audio_gain_controller=audio_gain_controller;
 		this.has_keys=has_keys;
-		this.decode_entity_key=decode_entity_key;
 	}
 	init() {
 		this.add_function(non_null);
@@ -5185,11 +4984,7 @@ class HandleTypes extends BaseService {
 		const {clickTrackingParams,loadMarkersCommand: {entityKeys: a,...y},...u}=c;
 		this.clickTrackingParams(clickTrackingParams);
 		this.z(a,a => {
-			let res=decode_b64_proto_obj(decodeURIComponent(a));
-			let res_2=decode_entity_key(a);
-			if(!res_2) {debugger; return;}
-			if(lua_strs.includes(res_2.entityId)) return;
-			console.log("[entity_key]",res_2,res);
+			a;
 		});
 		this.g(y); this.g(u);
 	}
