@@ -7077,7 +7077,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {ThumbnailColor} x */
 	ThumbnailColor(x) {
-		this.z([x.red,x.green,x.blue],a=>this.primitive_of(a,"number"));
+		this.z([x.red,x.green,x.blue],a => this.primitive_of(a,"number"));
 	}
 	/** @arg {CompactRadioData} x */
 	CompactRadioData(x) {
@@ -8601,7 +8601,7 @@ class HandleTypes extends BaseService {
 	log_watch_endpoint_params=false;
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData_1(x) {
-		const {videoId: a,params: b,continuePlayback:c,playlistId: d,loggingContext: e,watchEndpointSupportedOnesieConfig: f,index: g,...y}=x; this.g(y);
+		const {videoId: a,params: b,continuePlayback: c,playlistId: d,loggingContext: e,watchEndpointSupportedOnesieConfig: f,index: g,...y}=x; this.g(y);
 		this.s_parser.parse_video_id(x.videoId);
 		if(b&&this.log_watch_endpoint_params) {
 			console.log("[watch_ep_params]",b);
