@@ -1557,7 +1557,7 @@ class FilterHandlers {
 	}
 	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
-		this.handle_types.YtPageState(detail);
+		this.handle_types.DataResponsePageType(detail.response);
 	}
 
 }
