@@ -3307,11 +3307,7 @@ class BaseService extends BaseServicePrivate {
 			this.save_string(`${ki}.type`,"array");
 			return;
 		}
-		let keys=get_keys_of(x);
-		if(eq_keys(keys,["type","data"])) {
-			debugger;
-		}
-		this.save_string(ki,keys.join());
+		this.save_string(ki,get_keys_of(x).join());
 	}
 }
 class CsiService extends BaseService {
@@ -5426,6 +5422,7 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {YtApiNext} x */
 	YtApiNext(x) {
+		debugger;
 		this.save_keys("[api_next]",x);
 	}
 	/** @arg {NotificationGetUnseenCount} x */
