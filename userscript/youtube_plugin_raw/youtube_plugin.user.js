@@ -8284,10 +8284,6 @@ class HandleTypes extends BaseService {
 	FeedFilterChipBarData(x) {
 		this.w1(x,a=>this.ChipCloudChipData(a.chipCloudChipRenderer));
 	}
-	/** @private @arg {ChipCloudChipRenderer} x */
-	ChipCloudChipRenderer(x) {
-		this.ChipCloudChipData(x.chipCloudChipRenderer);
-	}
 	/** @private @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
 		const {style: a,text: b,navigationEndpoint: c,trackingParams: d,isSelected: e,...y}=x; this.g(y);
