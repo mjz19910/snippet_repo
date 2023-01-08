@@ -2,7 +2,7 @@ type ResponseTypes=[
 	account_account_menu_t,
 	account_set_setting_t,
 	accounts_list_t,
-	att_get_response,
+	att_get_t,
 	browse_t,
 	feedback_t,
 	get_notification_menu_t,

@@ -4497,6 +4497,9 @@ class YtUrlParser extends BaseService {
 			case "getDatasyncIdsEndpoint": return;
 			default:
 		}
+		/** @template T @arg {T} x @arg {T} y @returns {[T,T]} */
+		function assert_equal_type(x,y) {return [x,y];}
+		assert_equal_type(x,{});
 		switch(x) {
 			default: debugger; return;
 		}
