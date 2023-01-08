@@ -3103,11 +3103,12 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.new_strings.push([key,x]);
 		this.onDataChange();
 		console.log("store_str [%s] %o",key,x);
+		let bitmap
 		if(cur[0]==="many") {
 			console.log("[generate_bitmap] for many type");
 		} else if(cur[0]==="one") {
 			let index_map=[...new Set([...cur[1].map(e => e.split(",")).flat()])].sort();
-			let bitmap="\n"+cur[1].map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
+			bitmap="\n"+cur[1].map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
 				let ta=new Array(index_map.length);
 				ta.fill(1);
 				for(let x of e) {
@@ -6203,13 +6204,17 @@ class HandleTypes extends BaseService {
 		this.primitive_of(a,"string");
 		if(b) this.primitive_of(b,"boolean");
 		x: if(c) {
-			console.log(`[TextRun.navigationEndpoint.${this.#get_renderer_key(c)}]`,c);
+			console.log(`[TextRun:{navigationEndpoint:${this.#get_renderer_key(c)}}]`,c);
 			if("urlEndpoint" in c) {
 				let c1=c.urlEndpoint;
 				if(c1.nofollow!==true) debugger;
 				if(c1.target!=="TARGET_NEW_WINDOW") debugger;
 				if(!c1.url.startsWith("https://www.youtube.com/redirect?")) debugger;
 				break x;
+			}
+			if("watchEndpoint" in c) {
+				console.log(`[TextRun:{navigationEndpoint:{watchEndpoint:${this.#get_renderer_key(c.watchEndpoint)}}}]`,c.watchEndpoint);
+				return;
 			}
 			if(!("browseEndpoint" in c)) {
 				debugger;
@@ -9377,17 +9382,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {TopicLinkData} x */
 	TopicLinkData(x) {
-		const {title,thumbnailDetails,endpoint,callToActionIcon,trackingParams,...y}=x;
+		const {title,thumbnailDetails,endpoint,callToActionIcon,trackingParams,...y}=x; this.g(y);
 		this.text_t(x.title);
 		this.Thumbnail(x.thumbnailDetails,this.g);
 		this.BrowseEndpoint(x.endpoint,this.ChannelNavigationEndpointWebCommandMetadata);
 		this.Icon(x.callToActionIcon);
 		this.trackingParams(x.trackingParams);
-		let k=get_keys_of(y);
-		if(!k.length) return;
-		let rn=this.#generate_renderer(x,"TopicLinkData");
-		console.log(rn);
-		debugger;
 	}
 	/** @arg {InfoRowData} x */
 	InfoRowData(x) {
