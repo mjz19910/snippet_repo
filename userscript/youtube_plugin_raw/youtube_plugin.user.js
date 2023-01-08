@@ -4412,6 +4412,7 @@ class YtUrlParser extends BaseService {
 			case "music.youtube.com": return;
 			case "www.youtubekids.com": return;
 			case "tv.youtube.com": return;
+			case "www.gstatic.com": return;
 			default:
 		}
 		let s_host=split_string_once(r.host,".");
