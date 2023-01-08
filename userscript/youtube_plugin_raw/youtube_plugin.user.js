@@ -6042,10 +6042,12 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
+	do_decode_template_protobuf=false;
 	/** @type {this['follow_map'][]} */
 	follow_maps=[];
 	/** @arg {string} x */
 	decode_template_protobuf(x) {
+		if(!this.do_decode_template_protobuf) return;
 		let binary=decode_url_b64(x);
 		let reader=new MyReader(binary);
 		reader.pos=7;
