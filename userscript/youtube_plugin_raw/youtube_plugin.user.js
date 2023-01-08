@@ -4750,6 +4750,7 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		this.save_keys("[BrowsePageResponse]",x);
+		this.auto(x);
 	}
 	/** @private @arg {BrowseResponseContent} x */
 	BrowseResponseContent(x) {
@@ -4779,14 +4780,20 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {{}} x */
 	auto(x) {
-		this.z(Object.entries(x),a=>{
-			let [_k,v]=a;
-			if(typeof v==='string') return;
-			if(v instanceof Array) {
-				this.z(v,a=>a);
-			}
-			console.log(v);
-		});
+		this.z(Object.entries(x),this.auto_entry);
+	}
+	/** @arg {[any, any]} a */
+	auto_entry(a) {
+		let [_k,v]=a;
+		return this.auto_any(v);
+	}
+	/** @arg {any} x @returns {void} */
+	auto_any(x) {
+		if(typeof x==='string') return;
+		if(x instanceof Array) {
+			return this.z(x,this.auto_any);
+		}
+		console.log(x);
 	}
 	/** @private @arg {GetNotificationMenuJson} x */
 	GetNotificationMenuResponse(x) {
