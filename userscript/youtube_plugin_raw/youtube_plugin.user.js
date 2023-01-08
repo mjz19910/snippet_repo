@@ -4823,7 +4823,11 @@ class HandleTypes extends ServiceData {
 	make_dom_log_part() {
 		let container_element=document.createElement("div");
 		let root_element=document.createElement("div");
-		root_element.setAttribute("style","white-space:pre;font-size:1.4rem;color:#f1f1f1;position:absolute;top:54px;z-index:1;padding:4px;");
+		root_element.setAttribute("style",`
+		white-space:pre;font-size:1.4rem;color:#f1f1f1;
+		position:absolute;top:54px;padding:4px;
+		z-index:1;pointer-events:none;
+		`);
 		let fc=document.body.firstChild;
 		if(fc) {
 			document.body.insertBefore(root_element,fc);
@@ -4848,7 +4852,7 @@ class HandleTypes extends ServiceData {
 		if(typeof x==="string") return;
 		if(typeof x!=="object") return;
 		if(x===null) return;
-		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]"+k);
+		this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_entry]  "+k);
 		// console.log(" ".repeat(this.auto_depth)+"[enter_auto_entry]",k);
 		let ret=await this.auto_any(x);
 		return ret;
@@ -4869,7 +4873,7 @@ class HandleTypes extends ServiceData {
 		}
 		if(x instanceof Array) {
 			let ret=await this.z_async(x,async (a,i)=>{
-				this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx] "+i);
+				this.append_dom_log(" ".repeat(this.auto_depth)+"[enter_auto_idx]  "+i);
 				// console.log(" ".repeat(this.auto_depth)+"[enter_auto_idx]",i);
 				let ret=await this.auto_any(a);
 				return ret;
@@ -4879,7 +4883,7 @@ class HandleTypes extends ServiceData {
 		let name=this.get_name_from_keys(x);
 		indexed_db.put({v: "name-list-"+name});
 		if("rootVe" in x) {
-			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}] RootVe:${x.rootVe}`);
+			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}]  RootVe:${x.rootVe}`);
 		} else {
 			this.append_dom_log(`${" ".repeat(this.auto_depth)}[${name}]`);
 		}
