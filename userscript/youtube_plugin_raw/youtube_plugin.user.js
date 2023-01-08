@@ -7071,6 +7071,10 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
+	/** @arg {ThumbnailColor} x */
+	ThumbnailColor(x) {
+		this.z([x.red,x.green,x.blue],a=>this.primitive_of(a,"number"));
+	}
 	/** @arg {CompactRadioData} x */
 	CompactRadioData(x) {
 		const {
@@ -7082,7 +7086,7 @@ class HandleTypes extends BaseService {
 			...y
 		}=x; this.g(y);
 		this.primitive_of(playlistId,"string");
-		this.Thumbnail(thumbnail,({sampledThumbnailColor: a,...y}) => {debugger; this.g(y);});
+		this.Thumbnail(thumbnail,({sampledThumbnailColor: a,...y}) => {this.ThumbnailColor(a); this.g(y);});
 		this.text_t(title);
 		this.WatchEndpoint(navigationEndpoint);
 		this.text_t(videoCountText);
