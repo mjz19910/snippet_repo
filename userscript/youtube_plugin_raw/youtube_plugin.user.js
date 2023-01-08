@@ -5992,7 +5992,7 @@ class HandleTypes extends BaseService {
 	/** @arg {TemplateElement} x @arg {(number|bigint)[]} p */
 	iterate_template_element(x,p) {
 		for(let i of x.map.entries()) {
-			let pa=p.slice(-2);
+			let pa=p.slice(-4);
 			if(pa) {
 				let im=this.follow_map.get(pa.join(":"));
 				if(pa&&im) {
@@ -6042,6 +6042,8 @@ class HandleTypes extends BaseService {
 			}
 		}
 	}
+	/** @type {this['follow_map'][]} */
+	follow_maps=[];
 	/** @arg {string} x */
 	decode_template_protobuf(x) {
 		let binary=decode_url_b64(x);
@@ -6095,12 +6097,15 @@ class HandleTypes extends BaseService {
 						let out=[y];
 						if(children) {
 							this.iterate_template_element(children,[y.index_unk_1]);
-							debugger;
 							out.push(children);
 						}
 						console.log("[template_child_iter_2]",...out);
 						a;
 					});
+					debugger;
+					let cm=this.follow_map;
+					this.follow_map=new Map;
+					this.follow_maps.push(cm);
 				} break;
 				default: root_data.push(struct);
 			}
