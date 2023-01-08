@@ -7073,19 +7073,27 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {CompactRadioData} x */
 	CompactRadioData(x) {
-		this.primitive_of(x.playlistId,"string");
-		this.Thumbnail(x.thumbnail,({sampledThumbnailColor: a,...y}) => {debugger; this.g(y);});
-		this.text_t(x.title);
-		this.WatchEndpoint(x.navigationEndpoint);
-		this.text_t(x.videoCountText);
-		this.WatchEndpoint(x.secondaryNavigationEndpoint);
-		this.text_t(x.longBylineText);
-		this.trackingParams(x.trackingParams);
-		this.text_t(x.thumbnailText);
-		this.text_t(x.videoCountShortText);
-		this.primitive_of(x.shareUrl,"string");
-		this.MenuRenderer(x.menu);
-		this.z(x.thumbnailOverlays,this.ThumbnailOverlayItem);
+		const {
+			playlistId,thumbnail,title,navigationEndpoint,
+			videoCountText,secondaryNavigationEndpoint,
+			longBylineText,trackingParams,
+			thumbnailText,videoCountShortText,
+			shareUrl,menu,thumbnailOverlays,
+			...y
+		}=x; this.g(y);
+		this.primitive_of(playlistId,"string");
+		this.Thumbnail(thumbnail,({sampledThumbnailColor: a,...y}) => {debugger; this.g(y);});
+		this.text_t(title);
+		this.WatchEndpoint(navigationEndpoint);
+		this.text_t(videoCountText);
+		this.WatchEndpoint(secondaryNavigationEndpoint);
+		this.text_t(longBylineText);
+		this.trackingParams(trackingParams);
+		this.text_t(thumbnailText);
+		this.text_t(videoCountShortText);
+		this.primitive_of(shareUrl,"string");
+		this.MenuRenderer(menu);
+		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 	}
 	/** @arg {ThumbnailOverlayItem} x */
 	ThumbnailOverlayItem(x) {
