@@ -6086,7 +6086,7 @@ class HandleTypes extends BaseService {
 		if(x.f_n3!==void 0) res_obj.type_enum_3=x.f_n3;
 		if(x.f_n2!==void 0) res_obj.attr_enum_2=x.f_n2;
 		if(x.f_o4!==void 0) res_obj.children=x.f_o4;
-		let r=filter_out_keys(get_keys_of(x),split_string("f_n1,f_n2,f_n3,f_o4"));
+		let r=filter_out_keys(get_keys_of(x),split_string("f_n1,f_n2,f_n3,f_o4,map,set_key"));
 		if(r.length>0) debugger;
 		return res_obj;
 	}
@@ -6221,9 +6221,21 @@ class HandleTypes extends BaseService {
 		if(b) this.primitive_of(b,"boolean");
 		x: if(c) {
 			console.log(`[TextRun.navigationEndpoint.${this.#get_renderer_key(c)}]`,c);
-			if(!("browseEndpoint" in c)) break x;
+			if("urlEndpoint" in c) {
+				let c1=c.urlEndpoint;
+				if(c1.nofollow!==true) debugger;
+				if(c1.target!=="TARGET_NEW_WINDOW") debugger;
+				if(!c1.url.startsWith("https://www.youtube.com/redirect?")) debugger;
+				break x;
+			}
+			if(!("browseEndpoint" in c)) {
+				debugger;
+				break x;
+			}
 			let c1=c.browseEndpoint;
-			console.log(`[TextRun..${this.#get_renderer_key(c1)}]`,c1);
+			if(!eq_keys(get_keys_of(c1),["browseId","canonicalBaseUrl"])) debugger;
+			if(!c1.browseId.startsWith("UC")) debugger;
+			if(!c1.canonicalBaseUrl.startsWith("/@")) debugger;
 		}
 		this.g(y);
 	}
@@ -8104,7 +8116,7 @@ class HandleTypes extends BaseService {
 		});
 		this.z(x.captionTracks,a => {
 			this.primitive_of(a.baseUrl,"string");
-			if(a.vssId!=="a.en") debugger;
+			this.save_string("caption_tracks.vss.id",a.vssId);
 			this.text_t(a.name);
 		});
 		x.defaultAudioTrackIndex;
