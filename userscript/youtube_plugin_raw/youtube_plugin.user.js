@@ -4465,19 +4465,22 @@ class YtUrlParser extends BaseService {
 			}
 		}
 	}
+	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[`${string}?${string}`]>[0]} x */
+	parse_url_with_search(x) {
+		let a=split_string(x,"?");
+		switch(a[0]) {
+			case "playlist": this.parse_playlist_page_url(a[1]); break;
+			case "watch": this.parse_watch_page_url(a[1]); break;
+		}
+
+	}
+	log_channel_handles=false;
 	/** @type {YtUrlFormat} */
 	/** @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
 	parse_url_2(x) {
-		if(this.str_is_search(x)) {
-			let a=split_string(x,"?");
-			switch(a[0]) {
-				case "playlist": this.parse_playlist_page_url(a[1]); break;
-				case "watch": this.parse_watch_page_url(a[1]); break;
-			}
-			return;
-		}
+		if(this.str_is_search(x)) return this.parse_url_with_search(x);
 		if(this.str_starts_with(x,"@")) {
-			console.log("[channel_handle]",x);
+			if(this.log_channel_handles) console.log("[channel_handle]",x);
 			return;
 		}
 		if(this.str_starts_with(x,"account")) {
