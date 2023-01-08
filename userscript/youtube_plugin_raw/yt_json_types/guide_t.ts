@@ -1,1 +1,1 @@
-type guide_t={type: "guide";data: GuideJsonType;};
+type guide_t={type: "guide";data: GuideResponse;};

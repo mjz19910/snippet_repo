@@ -1314,12 +1314,12 @@ class FilterHandlers {
 			default: debugger; break;
 			case "browse": return {
 				type: target[0],
-				/** @private @type {BrowseResponseContent} */
+				/** @private @type {BrowseResponse} */
 				data: as(x),
 			};
-			case "feedback": debugger; return {
+			case "feedback": return {
 				type: target[0],
-				/** @private @type {JsonFeedbackData} */
+				/** @private @type {FeedbackResponse} */
 				data: as(x),
 			};
 			case "getDatasyncIdsEndpoint": return {
@@ -1334,12 +1334,12 @@ class FilterHandlers {
 			};
 			case "get_transcript": return {
 				type: target[0],
-				/** @private @type {JsonGetTranscriptData} */
+				/** @private @type {GetTranscriptResponse} */
 				data: as(x),
 			};
 			case "guide": return {
 				type: target[0],
-				/** @private @type {GuideJsonType} */
+				/** @private @type {GuideResponse} */
 				data: as(x),
 			};
 			case "next": return {
@@ -4757,7 +4757,7 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[BrowsePageResponse]",x);
 		this.auto(x);
 	}
-	/** @private @arg {BrowseResponseContent} x */
+	/** @private @arg {BrowseResponse} x */
 	BrowseResponseContent(x) {
 		this.save_keys("[BrowseResponseContent]",x);
 	}
@@ -4858,11 +4858,11 @@ class HandleTypes extends ServiceData {
 	AccountSetSetting(x) {
 		this.save_keys("[AccountSetSetting]",x);
 	}
-	/** @private @arg {JsonFeedbackData} x */
+	/** @private @arg {FeedbackResponse} x */
 	JsonFeedbackData(x) {
 		this.save_keys("[JsonFeedbackData]",x);
 	}
-	/** @private @arg {JsonGetTranscriptData} x */
+	/** @private @arg {GetTranscriptResponse} x */
 	JsonGetTranscriptData(x) {
 		this.save_keys("[JsonGetTranscriptData]",x);
 	}
@@ -4882,7 +4882,7 @@ class HandleTypes extends ServiceData {
 	AttGetResponse(x) {
 		this.save_keys("[AttGetResponse]",x);
 	}
-	/** @private @arg {GuideJsonType} x */
+	/** @private @arg {GuideResponse} x */
 	GuideJsonType(x) {
 		this.save_keys("[GuideJsonType]",x);
 	}

@@ -1,4 +1,4 @@
-type BrowseResponseContent={
+type BrowseResponse={
 	responseContext: ResponseContext;
 	trackingParams: string;
 	onResponseReceivedActions: ResponseReceivedAction[];

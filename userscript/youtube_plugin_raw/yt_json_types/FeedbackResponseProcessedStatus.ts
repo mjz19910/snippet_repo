@@ -1,0 +1,3 @@
+type FeedbackResponseProcessedStatus={
+	isProcessed: true;
+};

@@ -1,3 +1,4 @@
-type JsonFeedbackData={
+type FeedbackResponse={
 	responseContext: ResponseContext;
+	feedbackResponses: FeedbackResponseItem[];
 };
