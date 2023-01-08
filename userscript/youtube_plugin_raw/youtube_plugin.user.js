@@ -1338,7 +1338,7 @@ class MyReader {
 				} catch {
 					if(revert_res[0]) break x;
 					this.failed=true;
-					first_num.push(["error"]);
+					first_num.push(["error",fieldId]);
 					break;
 				}
 				let [success_64,num64,new_pos]=revert_res;
@@ -1347,7 +1347,7 @@ class MyReader {
 					this.pos=new_pos;
 				} else if(num32===null) {
 					this.failed=true;
-					first_num.push(["error"]);
+					first_num.push(["error",fieldId]);
 				} else if(success_64&&num64!==BigInt(num32)) {
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
@@ -1363,7 +1363,7 @@ class MyReader {
 				let size=this.uint32();
 				if(this.pos+size>this.cur_len) {
 					if(this.log_range_error) console.log("range error at",this.pos,fieldId,"size is too big",size);
-					first_num.push(["error"]);
+					first_num.push(["error",fieldId]);
 					this.failed=true;
 					break;
 				}
@@ -1372,7 +1372,7 @@ class MyReader {
 					this.skip(size);
 				} catch {
 					console.log("skip failed at",this.pos,fieldId);
-					first_num.push(["error"]);
+					first_num.push(["error",fieldId]);
 					this.failed=true;
 				}
 				first_num.push(["child",fieldId,sub_buffer]);
@@ -1381,11 +1381,11 @@ class MyReader {
 				let res;
 				while((wireType=(res=this.uint32())&7)!==4) {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
-					first_num.push(["group",skip_res]);
+					first_num.push(["group",fieldId,skip_res]);
 				}
 			} break;
 			case 4: {
-				first_num.push(["error"]);
+				first_num.push(["error",fieldId]);
 				this.failed=true;
 			} break;
 			case 5: first_num.push(["data_fixed32",fieldId,this.fixed32()]); break;
@@ -6094,7 +6094,16 @@ class HandleTypes extends BaseService {
 			x.enumerable=false;
 		}
 		Object.defineProperties(res_obj,pd);
+		/** @type {Map<number,number>} */
+		let f_counts=new Map;
 		for(let it of x) {
+			if(it[0]==="error") continue;
+			if(it[0]==="group") continue;
+			let n=f_counts.get(it[1])??0;
+			f_counts.set(it[1],n+1);
+		}
+		for(let it of x) {
+			if(f_counts.get(it[1])??0>1) debugger;
 			switch(it[0]) {
 				case "data32": res_obj.set_key(["f_n",it[1],it[2]]); break;
 				case "data_fixed32": res_obj.set_key(["f_n",it[1],it[2]]); break;
@@ -8346,11 +8355,12 @@ class HandleTypes extends BaseService {
 		if(dec[0][0]!=="child") {debugger; return;}
 		let sub_reader=new MyReader(dec[0][2]);
 		let dec_3=sub_reader.try_read_any();
+		/** @type {boolean} */
 		let err;
 		if(!dec_3) {
 			err=true;
 		} else {
-			err=dec_3.find(e => e[0]==="error");
+			err=!!dec_3.find(e => e[0]==="error");
 		}
 		let entity_replace_field_num=dec[1][2];
 		if(entity_replace_field_num==315) {

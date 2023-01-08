@@ -6,5 +6,5 @@ type DecTypeNum=
 	["info",number,number]|
 	["child",number,Uint8Array]|
 	["struct",number,DecTypeNum[]]|
-	["group",DecTypeNum[]]|
-	["error"];
+	["group",number,DecTypeNum[]]|
+	["error",number];
