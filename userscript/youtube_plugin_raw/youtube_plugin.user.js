@@ -7074,7 +7074,7 @@ class HandleTypes extends BaseService {
 	/** @arg {CompactRadioData} x */
 	CompactRadioData(x) {
 		this.primitive_of(x.playlistId,"string");
-		this.Thumbnail(x.thumbnail,this.g);
+		this.Thumbnail(x.thumbnail,({sampledThumbnailColor: a,...y}) => {debugger; this.g(y);});
 		this.text_t(x.title);
 		this.WatchEndpoint(x.navigationEndpoint);
 		this.text_t(x.videoCountText);
