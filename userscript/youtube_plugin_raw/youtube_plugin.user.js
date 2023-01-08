@@ -4139,6 +4139,9 @@ class YtUrlParser extends BaseService {
 		}
 		if(this.str_starts_with(x,"PL")) {
 			let pl=x.slice(2);
+			switch(pl.length) {
+				case 32: return;
+			}
 			console.log("[parse_playlist]",pl.length,pl);
 			return;
 		}
@@ -8665,12 +8668,11 @@ class HandleTypes extends BaseService {
 	/** @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
 		this.t_url_unwrap(x.interpreterUrl,a => {
-			let c=a;
 			// spell:disable-next-line
 			if(this.s_parser.str_starts_with(a,"//www.google.com/js/th/")) {
-				indexed_db.put({v: "trayride-interpreter",hash:split_string_once(split_string_once(a,"th/")[1],".js")[0]});
-				console.log("new trayride interpreter",c.split("/").slice(5)[0].split(".")[0]);
+				return indexed_db.put({v: "trayride-interpreter",hash:split_string_once(split_string_once(a,"th/")[1],".js")[0]});
 			}
+			debugger;
 		});
 		if(this.att_log_debug) console.log("[bg_interpreter_url]",x.interpreterUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue);
 	}
