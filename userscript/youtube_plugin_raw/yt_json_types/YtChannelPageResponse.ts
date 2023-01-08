@@ -1,4 +1,4 @@
-type YtChannelPageResponse={
+type ChannelPageResponse={
 	page: "channel";
 	endpoint: YtEndpoint;
 	response: ChannelResponse;

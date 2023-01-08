@@ -1,4 +1,4 @@
-type YtShortsResponse={
+type ShortsPageResponse={
 	page: "shorts";
 	endpoint: ReelWatchEndpoint;
 	response: ReelResponse;

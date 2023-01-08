@@ -1,7 +1,7 @@
 type PageTypeSettings={
 	pageType: "settings";
 	endpoint: YtEndpoint;
-	response: YtSettingsPageResponse;
+	response: SettingsPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

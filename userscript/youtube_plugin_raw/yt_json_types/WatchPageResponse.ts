@@ -1,4 +1,4 @@
-type YtWatchPageResponse={
+type WatchPageResponse={
 	page: "watch";
 	endpoint: WatchEndpoint;
 	response: NextResponse;

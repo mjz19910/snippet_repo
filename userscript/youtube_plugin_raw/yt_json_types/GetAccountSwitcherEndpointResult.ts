@@ -1,4 +1,4 @@
-type GetAccountSwitcherEndpointResult={
+type GetAccountSwitcherEndpointResponse={
 	code: "SUCCESS";
 	data: GetAccountSwitcherEndpointResponse;
 };

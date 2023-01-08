@@ -1,4 +1,4 @@
-type YtPlaylistPageResponse={
+type PlaylistPageResponse={
 	page: "playlist";
 	endpoint: YtEndpoint;
 	response: PlaylistResponse;
