@@ -4804,14 +4804,14 @@ class HandleTypes extends ServiceData {
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuResponse(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
-			case "account.set_setting": return this.AccountSetSetting(x.data);
+			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
-			case "browse": return this.BrowseResponseContent(x.data);
-			case "feedback": return this.JsonFeedbackData(x.data);
-			case "get_transcript": return this.JsonGetTranscriptData(x.data);
+			case "browse": return this.BrowseResponse(x.data);
+			case "feedback": return this.FeedbackResponse(x.data);
+			case "get_transcript": return this.GetTranscriptResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);
 			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
-			case "guide": return this.GuideJsonType(x.data);
+			case "guide": return this.GuideResponse(x.data);
 			case "like.like": return this.LikeLikeResponse(x.data);
 			case "like.removelike": return this.LikeRemoveLikeResponse(x.data);
 			case "next": return this.WatchNextResponse(x.data);
@@ -4834,7 +4834,7 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[PlayerResponse]",x);
 	}
 	/** @private @arg {BrowseResponse} x */
-	BrowseResponseContent(x) {
+	BrowseResponse(x) {
 		this.save_keys("[BrowseResponseContent]",x);
 	}
 	/** @arg {{}} x */
@@ -4884,16 +4884,16 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[GetNotificationMenuJson]",x);
 	}
 	/** @private @arg {AccountSetSetting} x */
-	AccountSetSetting(x) {
+	SetSettingResponse(x) {
 		this.save_keys("[AccountSetSetting]",x);
 	}
 	/** @private @arg {FeedbackResponse} x */
-	JsonFeedbackData(x) {
-		this.save_keys("[JsonFeedbackData]",x);
+	FeedbackResponse(x) {
+		this.save_keys("[FeedbackResponse]",x);
 	}
 	/** @private @arg {GetTranscriptResponse} x */
-	JsonGetTranscriptData(x) {
-		this.save_keys("[JsonGetTranscriptData]",x);
+	GetTranscriptResponse(x) {
+		this.save_keys("[GetTranscriptResponse]",x);
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
@@ -4908,8 +4908,8 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[AttGetResponse]",x);
 	}
 	/** @private @arg {GuideResponse} x */
-	GuideJsonType(x) {
-		this.save_keys("[GuideJsonType]",x);
+	GuideResponse(x) {
+		this.save_keys("[GuideResponse]",x);
 	}
 }
 //#endregion
