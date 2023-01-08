@@ -8781,8 +8781,6 @@ class HandleTypes extends BaseService {
 	CarouselLockupRenderer(x) {
 		this.CarouselLockupData(x.carouselLockupRenderer);
 	}
-	// let td=this.generate_typedef(x,"CLA");
-	// let rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 	/** @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {
 		this.text_t(x.sectionTitle);
@@ -8793,12 +8791,6 @@ class HandleTypes extends BaseService {
 	/** @arg {TopicLinkRenderer} x */
 	TopicLinkRenderer(x) {
 		this.TopicLinkData(x.topicLinkRenderer);
-	}
-	/** @arg {TopicLinkData} x */
-	TopicLinkData(x) {
-		let rn=this.generate_renderer(x,"TopicLinkData");
-		console.log(rn);
-		debugger;
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
@@ -9046,6 +9038,12 @@ class HandleTypes extends BaseService {
 		if(d) console.log("meta tooltip",d);
 		this.trackingParams(e);
 		if(f) this.AccessibilityData(f);
+	}
+	/** @arg {TopicLinkData} x */
+	TopicLinkData(x) {
+		let rn=this.generate_renderer(x,"TopicLinkData");
+		console.log(rn);
+		debugger;
 	}
 }
 //#endregion
