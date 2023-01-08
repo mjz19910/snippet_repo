@@ -5991,9 +5991,31 @@ class HandleTypes extends BaseService {
 	iterate_template_element(x,p) {
 		for(let i of x.map.entries()) {
 			let value=x[`${i[1]}${i[0]}`];
-			switch(i[1]) {case "f_o": this.iterate_template_element(x[`${i[1]}${i[0]}`],[...p,i[0]]); break;}
-			console.log("[template_iter_path]",p.join(" "));
-			console.log("[template_iter]",i[0],value);
+			switch(i[1]) {
+				case "f_o": this.iterate_template_element(x[`${i[1]}${i[0]}`],[...p,i[0]]); break;
+				case "f_rep_n":
+				case "f_rep_s": {
+					let value=x[`${i[1]}${i[0]}`];
+					for(let x1 in value) {
+						console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
+						console.log("[template_iter]",i[0],value[x1]);
+						continue;
+					}
+				} break;
+				case "f_rep_o": {
+					let value=x[`${i[1]}${i[0]}`];
+					for(let x1=0;x1<value.length;x1++) {
+						this.iterate_template_element(value[x1],[...p,i[0],x1]);
+						console.log("[template_iter_path]",[...p,i[0],x1].join(" "));
+						console.log("[template_iter]",i[0],value[x1]);
+						continue;
+					}
+				} break;
+				default: {
+					console.log("[template_iter_path]",[...p,i[0]].join(" "));
+					console.log("[template_iter]",i[0],value);
+				} break;
+			}
 		}
 	}
 	/** @arg {string} x */
@@ -6083,7 +6105,6 @@ class HandleTypes extends BaseService {
 			map: new Map,
 			set_key(a) {
 				let count=f_counts.get(a[1])??1;
-				if(count>1) debugger;
 				switch(a[0]) {
 					case "f_n": {
 						let [l,x,y]=a;
