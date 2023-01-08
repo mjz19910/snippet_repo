@@ -6062,7 +6062,7 @@ class HandleTypes extends BaseService {
 						function iterate_template_element(x) {
 							let res=Object.entries(x);
 							for(let i of res) {
-								console.log("template_iter",i);
+								console.log("[template_iter]",i);
 							}
 						}
 						console.log("[template_child_iter_2]",...out);
@@ -6093,15 +6093,23 @@ class HandleTypes extends BaseService {
 	/** @arg {DecTypeNum[]} x */
 	decode_template_element_1(x) {
 		/** @type {TemplateElement} */
-		let res_obj={};
+		let res_obj={
+			map: new Map,
+			set_key(a) {
+				switch(a[0]) {
+					case "f_n": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
+					case "f_s": {let [l,x,y]=a; res_obj.map.set(x,l); this[`${l}${x}`]=y;} break;
+				}
+			}
+		};
 		for(let it of x) {
 			switch(it[0]) {
 				case "data32": {
 					let [,f,v]=it;
 					res_obj[`f_n${f}`]=v;
 				} break;
-				case "data_fixed32": res_obj[`f_n${it[1]}`]=it[2]; break;
-				case "child": res_obj[`f_s${it[1]}`]=decoder.decode(it[2]); break;
+				case "data_fixed32": res_obj.set_key(["f_n",it[1],it[2]]); break;
+				case "child": res_obj.set_key(["f_s",it[1],decoder.decode(it[2])]); res_obj[`f_s${it[1]}`]=decoder.decode(it[2]); break;
 				case "struct": {
 					let [,f,v]=it;
 					res_obj[`f_o${f}`]=this.decode_template_element_1(v);
@@ -7718,7 +7726,7 @@ class HandleTypes extends BaseService {
 			debugger;
 		}
 	}
-	valid_fps_arr=[25,30,50,60];
+	valid_fps_arr=[13,25,30,50,60];
 	/** @arg {FormatFps} x */
 	parse_format_fps(x) {
 		if(!this.valid_fps_arr.includes(x)) {
@@ -8556,9 +8564,27 @@ class HandleTypes extends BaseService {
 		if(this.log_ypc_upsell) console.log("[ypc_upsell]",x.params);
 	}
 	log_watch_endpoint_params=false;
+	/** @arg {PrefetchHintConfigData} x */
+	PrefetchHintConfigData(x) {
+		x;
+		debugger;
+	}
+	/** @arg {PrefetchHintConfig} x */
+	PrefetchHintConfig(x) {
+		this.PrefetchHintConfigData(x.prefetchHintConfig);
+	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData_1(x) {
-		const {videoId: a,params: b,continuePlayback: c,playlistId: d,loggingContext: e,watchEndpointSupportedOnesieConfig: f,index: g,...y}=x; this.g(y);
+		const {
+			videoId: a,params: b,continuePlayback: c,playlistId: d,
+			loggingContext: e,watchEndpointSupportedOnesieConfig: f,
+			index: g,watchEndpointSupportedPrefetchConfig,playerParams,
+			...y
+		}=x; this.g(y);
+		if(watchEndpointSupportedPrefetchConfig) {
+			this.PrefetchHintConfig(watchEndpointSupportedPrefetchConfig);
+		}
+		if(playerParams) this.primitive_of(playerParams,"string");
 		this.s_parser.parse_video_id(x.videoId);
 		if(b&&this.log_watch_endpoint_params) {
 			console.log("[watch_ep_params]",b);

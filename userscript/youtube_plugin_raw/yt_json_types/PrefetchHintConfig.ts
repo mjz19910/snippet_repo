@@ -1,0 +1,3 @@
+type PrefetchHintConfig={
+	prefetchHintConfig: PrefetchHintConfigData;
+};

@@ -6,4 +6,6 @@ type WatchEndpointData={
 	continuePlayback?: true;
 	loggingContext?: VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
+	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
+	playerParams?: string;
 };
