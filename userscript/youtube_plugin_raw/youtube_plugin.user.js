@@ -9043,9 +9043,9 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {InfoRowData} x */
 	InfoRowData(x) {
-		let rd=this.generate_renderer(x,"InfoRowData");
-		console.log(rd);
-		debugger;
+		this.text_t(x.title);
+		this.text_t(x.defaultMetadata);
+		this.trackingParams(x.trackingParams);
 	}
 }
 //#endregion
