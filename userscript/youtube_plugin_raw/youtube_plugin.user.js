@@ -8463,6 +8463,9 @@ class HandleTypes extends BaseService {
 				`.trim());
 				continue;
 			};
+			if(in_o instanceof Array) {
+				continue;
+			}
 			let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
 			let mn=tn.replace("Renderer","Data");
 			if(mn===t_name) mn+="Data";
@@ -8484,10 +8487,10 @@ class HandleTypes extends BaseService {
 			});
 		}
 		let keys=Object.keys(x);
-		let k=keys[0];
-		let tn=k;
-		if(r_name) tn=r_name;
-		let t_name=this.uppercase_first(tn);
+		let k=this.get_renderer_key(x);
+		if(r_name) k=r_name;
+		if(k===null) return null;
+		let t_name=this.uppercase_first(k);
 		let tmp_1=`
 		d2!/** @arg {${t_name}} x */
 		d2!${t_name}(x) {
