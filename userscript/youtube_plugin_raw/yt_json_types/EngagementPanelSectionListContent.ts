@@ -3,4 +3,5 @@ type EngagementPanelSectionListContent=[
 	ClipSectionRenderer,
 	SectionListRenderer<"comment-item-section","engagement-panel-comments-section">,
 	StructuredDescriptionContentRenderer,
+	ContinuationItemRenderer,
 ][number];

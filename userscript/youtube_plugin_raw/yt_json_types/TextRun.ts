@@ -1,5 +1,7 @@
 type TextRun={
 	text: string;
-	navigationEndpoint?: NavigationEndpoint<{},never>;
+	navigationEndpoint?: NavigationEndpoint<{
+		browseEndpoint: {};
+	},never>;
 	bold?: boolean;
 };

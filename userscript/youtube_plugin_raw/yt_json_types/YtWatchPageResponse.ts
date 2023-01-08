@@ -1,6 +1,6 @@
 type YtWatchPageResponse={
 	page: "watch";
-	endpoint: YtEndpoint;
+	endpoint: WatchEndpoint;
 	response: WatchNextResponse;
 	playerResponse: PlayerResponse;
 	url: YtUrlFormat;

@@ -5182,12 +5182,12 @@ class HandleTypes extends BaseService {
 	}
 	/** @arg {LoadMarkersCommand} c */
 	LoadMarkersCommand(c) {
-		const {clickTrackingParams,loadMarkersCommand:{entityKeys: a,...y},...u}=c;
+		const {clickTrackingParams,loadMarkersCommand: {entityKeys: a,...y},...u}=c;
 		this.clickTrackingParams(clickTrackingParams);
 		this.z(a,a => {
 			let res=decode_b64_proto_obj(decodeURIComponent(a));
 			let res_2=decode_entity_key(a);
-			if(!res_2) {debugger;return;}
+			if(!res_2) {debugger; return;}
 			if(lua_strs.includes(res_2.entityId)) return;
 			console.log("[entity_key]",res_2,res);
 		});
@@ -5966,7 +5966,7 @@ class HandleTypes extends BaseService {
 		const {page: a,playerResponse: b,endpoint: c,response: d,url: e,previousCsn: f,...y}=x;
 		if(a!=="watch") debugger;
 		this.PlayerResponse(b);
-		this.yt_endpoint(c);
+		console.log(`[Response.watch.${this.#get_renderer_key(c)}]`,c);
 		this.WatchNextResponse(d);
 		this.parse_url(e);
 		if(f) this.previousCsn(f);
@@ -6414,7 +6414,11 @@ class HandleTypes extends BaseService {
 		const {text: a,bold: b,navigationEndpoint: c,...y}=x;
 		this.primitive_of(a,"string");
 		if(b) this.primitive_of(b,"boolean");
-		if(c) console.log(`[TextRun.navigationEndpoint.${this.#get_renderer_key(c)}]`,c);
+		if(c) {
+			console.log(`[TextRun.navigationEndpoint.${this.#get_renderer_key(c)}]`,c);
+			let c1=c.browseEndpoint;
+			console.log(`[TextRun..${this.#get_renderer_key(c1)}]`,c1);
+		}
 		this.g(y);
 	}
 	/** @arg {TextT} x */
@@ -7636,9 +7640,15 @@ class HandleTypes extends BaseService {
 				console.log(a);
 				debugger;
 			});
+		} else if("continuationItemRenderer" in x) {
+			return this.ContinuationItemRenderer(x);
 		}
-		console.log(x);
-		debugger;
+		this.save_keys("[EngagementPanelSectionList.item]",x);
+	}
+	/** @arg {ContinuationItemRenderer} x */
+	ContinuationItemRenderer(x) {
+		const {continuationItemRenderer: renderer}=x;
+		this.ContinuationItemData(renderer);
 	}
 	/** @arg {ClipSection} x */
 	ClipSection(x) {
