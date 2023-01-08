@@ -4111,6 +4111,7 @@ class IndexedDbAccessor {
 }
 const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class YtUrlParser extends BaseService {
+	log_playlist_parse=false;
 	/** @arg {PlaylistId} x */
 	parse_playlist_id(x) {
 		x: {
@@ -4134,7 +4135,7 @@ class YtUrlParser extends BaseService {
 		}
 		if(this.str_starts_with(x,"RD")) {
 			let pl=x.slice(2);
-			console.log('[parse_playlist_radio]',pl.length,pl);
+			if(this.log_playlist_parse) console.log('[parse_playlist_radio]',pl.length,pl);
 			return;
 		}
 		debugger;
@@ -8328,11 +8329,14 @@ class HandleTypes extends BaseService {
 	YpcGetOfflineUpsell(x) {
 		if(this.log_ypc_upsell) console.log("[ypc_upsell]",x.params);
 	}
+	log_watch_endpoint_params=false;
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
 		const {videoId: a,params: b,playlistId: c,loggingContext: d,watchEndpointSupportedOnesieConfig: e,index: f,...y}=x; this.g(y);
 		this.s_parser.parse_video_id(x.videoId);
-		b&&console.log("[watch_ep_params]",b);
+		if(b) {
+			if(this.log_watch_endpoint_params) console.log("[watch_ep_params]",b);
+		}
 		this.s_parser.parse_playlist_id(c);
 		this.VssLoggingContext(d);
 		e&&this.Html5PlaybackOnesieConfig(e);
