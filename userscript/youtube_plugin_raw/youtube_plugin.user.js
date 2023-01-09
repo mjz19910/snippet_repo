@@ -2551,7 +2551,7 @@ class YtHandlers extends BaseService {
 			rich_grid: new HandleRichGridRenderer(res),
 			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
-		this.iteration=new IterateApiResultBase(res,new YtIterateTarget(res));
+		this.iteration=new IterateApiResultBase(res,new YtIterateTarget);
 		this.blacklisted_item_sections=new Map([
 			["backstagePostThreadRenderer",false],
 			["channelAboutFullMetadataRenderer",false],
@@ -2930,23 +2930,23 @@ class HandleRendererContentItemArray extends BaseService {
 	}
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
-class YtIterateTarget extends BaseService {
-	/** @arg {ApiIterateState} _state @arg {AppendContinuationItemsAction} action */
-	appendContinuationItemsAction(_state,action) {
+class YtIterateTarget {
+	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
+	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
 		}
-		let filtered=this.x.get("yt_handlers").handlers.renderer_content_item_array.replace_array(action.continuationItems);
+		let filtered=state.t.handlers.renderer_content_item_array.replace_array(action.continuationItems);
 		if(filtered.length>0) {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} _state @arg  {ReloadContinuationItemsCommandData} command */
-	reloadContinuationItemsCommand(_state,command) {
+	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
+	reloadContinuationItemsCommand({t: state},command) {
 		if(!command.continuationItems) {
 			debugger;
 		}
-		let filtered=this.x.get("yt_handlers").handlers.renderer_content_item_array.replace_array(command.continuationItems);
+		let filtered=state.handlers.renderer_content_item_array.replace_array(command.continuationItems);
 		if(filtered.length>0) {
 			command.continuationItems=filtered;
 		}
@@ -2957,7 +2957,7 @@ class YtIterateTarget extends BaseService {
 		t.iteration.default_iter(state,renderer);
 		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
-			let keys=this.get_keys_of(item);
+			let keys=state.t.get_keys_of(item);
 			for(let key of keys) {
 				let is_blacklisted=t.blacklisted_item_sections.get(key);
 				if(is_blacklisted!==void 0) return !is_blacklisted;
@@ -3022,21 +3022,19 @@ class IterateApiResultBase extends BaseService {
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
 			/** @type {any} */
-			let ak=this.iterate_target;
-			/** @type {{[U in keyof YtIterateTarget]: (x:{},u:{})=>void;}} */
-			let itt=ak;
-			if(rk===void 0&&key in this.iterate_target) {
-				console.log("update keys map new key",key);
-				debugger;
-			}
-			if(rk!==void 0&&this.iterate_target[rk]===void 0) {
-				console.log("update keys map remove",key);
-				debugger;
-			}
+			let iter_target=this.iterate_target;
 			const state={t,path: `${path}.${key}`};
-			if(rk!==void 0&&itt[rk]) {
-				itt[rk](state,as(value));
+			if(rk!==void 0) {
+				if(this.iterate_target[rk]===void 0) {
+					console.log("update keys map remove",key);
+					debugger;
+				}
+				iter_target[rk](state,as(value));
 			} else {
+				if(key in this.iterate_target) {
+					console.log("update keys map new key",key);
+					debugger;
+				}
 				this.default_iter(state,value);
 			}
 		}
