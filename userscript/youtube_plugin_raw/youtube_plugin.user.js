@@ -1356,9 +1356,7 @@ class FilterHandlers {
 	}
 	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
-		const {response,endpoint,...y}=detail;
-		this.handle_types.DataResponsePageType(response);
-		console.log(y);
+		this.handle_types.NavigateEventDetail(detail);
 	}
 
 }
@@ -1729,15 +1727,6 @@ class YTNavigateFinishEvent {
 }
 /** @private @type {((event:YTNavigateFinishEvent)=>void)[]} */
 let on_yt_navigate_finish=[];
-/** @private @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
-function eq_keys(src,target) {
-	if(src.length!==target.length) return false;
-	for(let i=0;i<src.length;i++) {
-		let a=src[i];
-		if(!target.includes(a)) return false;
-	}
-	return true;
-}
 let vis_imm=false;
 let css_str=`
 	ytd-watch-next-secondary-results-renderer {
@@ -2491,9 +2480,21 @@ const general_service_state={
 	/** @private @type {"non_member"|null} */
 	premium_membership: null,
 };
+class ApiBase {
+	/** @protected @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
+	eq_keys(src,target) {
+		if(src.length!==target.length) return false;
+		for(let i=0;i<src.length;i++) {
+			let a=src[i];
+			if(!target.includes(a)) return false;
+		}
+		return true;
+	}
+}
 // #region Service
-class KnownDataSaver {
+class KnownDataSaver extends ApiBase {
 	constructor() {
+		super();
 		this.#load_data();
 		this.#store_data();
 	}
@@ -2618,7 +2619,7 @@ class KnownDataSaver {
 				target=["many",inner];
 				p[1]=target;
 			}
-			let found=target[1].find(e => eq_keys(e,x));
+			let found=target[1].find(e => this.eq_keys(e,x));
 			if(!found) {
 				was_known=false;
 				target[1].push(x);
@@ -2694,7 +2695,7 @@ class KnownDataSaver {
 				target=["many",inner];
 				p[1]=target;
 			}
-			let found=target[1].find(e => eq_keys(e,x));
+			let found=target[1].find(e => this.eq_keys(e,x));
 			if(!found) {
 				was_known=false;
 				target[1].push(x);
@@ -2758,10 +2759,11 @@ class KnownDataSaver {
 	}
 }
 const data_saver=new KnownDataSaver;
-class BaseServicePrivate {
+class BaseServicePrivate extends ApiBase {
 	// #region Public
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
 	constructor(x) {
+		super();
 		this.#x=x;
 		this.ds=data_saver;
 	}
@@ -3560,7 +3562,7 @@ class IndexedDbAccessor extends BaseService {
 						let in_db=database_map.get(data.v);
 						if(!in_db) continue;
 						let ok_db=this.get_keys_of(in_db);
-						if(eq_keys(ok,ok_db)) continue;
+						if(this.eq_keys(ok,ok_db)) continue;
 						console.log("[database_needs_obj_merge]");
 						console.log("[obj_merge_new]",data);
 						console.log("[obj_merge_cur]",in_db);
@@ -4021,7 +4023,7 @@ class ParserService extends BaseService {
 	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
 		let sp=make_search_params(x);
-		if(!eq_keys(this.get_keys_of(sp),["query"])) debugger;
+		if(!this.eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
 	/** @private @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
@@ -4203,7 +4205,7 @@ class ParserService extends BaseService {
 			}
 		}
 		let map_keys=[...param_map.keys()];
-		if(eq_keys(map_keys,[8,9])) {
+		if(this.eq_keys(map_keys,[8,9])) {
 			let p8=param_map.get(8);
 			let p9=param_map.get(9);
 			if(p8!==void 0&&p9!==void 0) {
@@ -4715,7 +4717,12 @@ class C1 extends BaseService {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
-		if(x.browseId) this.x.get("parser_service").parse_browse_id(x.browseId);
+		if(x.browseId) this.parse_browse_id(x.browseId);
+		this.save_keys("[BrowseEndpointData]",x);
+	}
+	/** @arg {BrowseIdType} x */
+	parse_browse_id(x) {
+		this.x.get("parser_service").parse_browse_id(x);
 	}
 	/** @arg {ResponseContext} x */
 	BrowseResponseContext(x) {
@@ -4803,6 +4810,14 @@ class ServiceData extends BaseService {
 	}
 }
 class HandleTypes extends ServiceData {
+	/** @arg {NavigateEventDetail} x */
+	NavigateEventDetail(x) {
+		const {response,endpoint,...y}=x;
+		this.DataResponsePageType(response);
+		if(!this.eq_keys(this.get_keys_of(y),["pageType","fromHistory","navigationDoneMs"])) {
+			console.log(y);
+		}
+	}
 	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
 		switch(x.page) {
