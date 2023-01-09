@@ -3032,7 +3032,8 @@ class CsiService extends BaseService {
 	/** @private @type {(RidFormat<string>)[]} */
 	rid_keys=[
 		"GetAccountAdvanced_rid","GetAccountBilling_rid","GetAccountDownloads_rid","GetAccountMenu_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountSharing_rid","GetAccountsList_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetHistory_rid","GetHome_rid","GetLibrary_rid","GetLiveChatReplay_rid","GetNotificationsMenu_rid","GetPlayer_rid","GetPlaylist_rid","GetReelItemWatch_rid","GetReelWatchSequence_rid","GetSubscriptions_rid","GetUnseenNotificationCount_rid","GetVideoTranscript_rid","GetWatchNext_rid","GetWatchPageWebCommentReplies_rid","GetWatchPageWebTopLevelComments_rid","GetWebMainAppGuide_rid","RecordNotificationInteractions_rid","RemoveLike_rid",
-		"SetSetting_rid"
+		"SetSetting_rid",
+		"Like_rid",
 	];
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
@@ -3044,7 +3045,7 @@ class CsiService extends BaseService {
 		} else if(this.str_starts_with(x.key,"Set")) {
 			console.log("[new_set_rid][%s][%s]",x.key,x.value);
 		} else {
-			console.log("[new_rid_section][%s]",x.key);
+			console.log("[new_generic_rid][%s][%s]",x.key,x.value);
 		}
 	}
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} param */
