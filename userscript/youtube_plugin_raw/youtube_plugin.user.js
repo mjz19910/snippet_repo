@@ -4695,6 +4695,7 @@ class C1 extends BaseService {
 	/** @public @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		this.save_keys("[BrowsePageResponse]",x);
+		x.endpoint;
 	}
 }
 class C2 extends BaseService {

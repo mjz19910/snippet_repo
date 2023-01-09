@@ -1,5 +1,5 @@
-type BrowseEndpoint<T extends WebCommandMetadataTemplateType>={
+type BrowseEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: BrowseCommandMetadata<T>;
+	commandMetadata: BrowseCommandMetadata;
 	browseEndpoint: BrowseEndpointData;
 };
