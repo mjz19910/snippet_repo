@@ -2533,6 +2533,11 @@ class KnownDataSaver {
 			seen_booleans: this.#seen_booleans,
 		};
 	}
+	get_debug_data() {
+		return {
+			strings_key_index_map: this.#strings_key_index_map,
+		};
+	}
 	/** @arg {string} seen_data */
 	#save_local_storage(seen_data) {
 		if(no_storage_access) {
@@ -2576,15 +2581,15 @@ class KnownDataSaver {
 	/** @type {[string,{t:boolean;f:boolean}][]} */
 	#seen_booleans=[];
 	#onDataChangeAction() {this.#store_data();}
-	/** @type {Map<string,number>} */
-	#strings_key_index_map=new Map;
+	/** @type {{[x:string]:number}} */
+	#strings_key_index_map={};
 	/** @arg {string} key */
 	#get_seen_string_item(key) {
-		let index=this.#strings_key_index_map.get(key);
+		let index=this.#strings_key_index_map[key];
 		if(index) return this.#seen_strings[index];
 		index=this.#seen_strings.findIndex(e => e[0]===key);
 		if(index<0) return;
-		this.#strings_key_index_map.set(key,index);
+		this.#strings_key_index_map[key]=index;
 		return this.#seen_strings[index];
 	}
 	#onDataChange() {
@@ -2602,7 +2607,7 @@ class KnownDataSaver {
 		if(!p) {
 			p=[k,cur=["one",[]]];
 			let nk=this.#seen_strings.push(p)-1;
-			this.#strings_key_index_map.set(k,nk);
+			this.#strings_key_index_map[k]=nk;
 		} else {
 			cur=p[1];
 		}
