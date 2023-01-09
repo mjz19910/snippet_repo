@@ -3093,21 +3093,22 @@ class CsiService extends BaseService {
 	];
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
-		let section=this.get_rid_section(x);
-		console.log(`[new_${section}_rid][${x.key}][${x.value}]`);
+		this.decode_rid_section(x);
+		this.save_string("rid_key",x.key);
 	}
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
-	get_rid_section(x) {
+	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
 			this.save_string("section_id",section_id);
-			return section_id;
+		} else {
+			debugger;
 		}
-		return "generic";
 	}
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} param */
 	parse_rid_param(param) {
+		this.decode_rid_param_key(param);
 		if(param.key in this.rid) {
 			/** @private @type {RidFormat<string>} */
 			let rid_key=param.key;
@@ -3119,7 +3120,6 @@ class CsiService extends BaseService {
 			debugger;
 			return;
 		}
-		this.decode_rid_param_key(param);
 		this.rid[param.key]=param.value;
 	}
 	/** @private @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
