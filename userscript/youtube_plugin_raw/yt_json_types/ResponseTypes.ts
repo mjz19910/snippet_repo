@@ -1,4 +1,5 @@
 type ResponseTypes=
+	|_GenericResponseType
 	|account_account_menu_t
 	|account_set_setting_t
 	|accounts_list_t
@@ -22,5 +23,4 @@ type ResponseTypes=
 	|reel_reel_item_watch_t
 	|reel_reel_watch_sequence_t
 	|subscription_subscribe_t
-	|GenericResponseType
 	;

@@ -1,4 +1,4 @@
-type GenericResponseType={
+type _GenericResponseType={
 	type: "_Generic";
 	data: {};
 };
