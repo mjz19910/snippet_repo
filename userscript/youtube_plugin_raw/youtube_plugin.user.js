@@ -3640,6 +3640,7 @@ class CodegenService extends BaseService {
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
+			if(k=="responseContext") {console.log("responseContext",x);continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
