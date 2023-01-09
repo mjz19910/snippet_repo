@@ -2805,7 +2805,7 @@ class YtHandlers extends BaseService {
 			case 2: switch(t[1]) {
 				case "edit_playlist": return {
 					type: `${t[0]}.${t[1]}`,
-					/** @private @type {LikeRemoveLikeResponse} */
+					/** @private @type {BrowseEditPlaylistResponse} */
 					data: as(x),
 				};
 			}
@@ -4691,7 +4691,9 @@ class Generate {
 class C1 extends BaseService {
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
-		this.save_keys("[BrowseEditPlaylistResponse]",x);
+		const name="BrowseEditPlaylistResponse";
+		this.z(x.actions,a=>this.x.get("handle_types").default.Action([name],a));
+		this.save_keys(`[${name}]`,x);
 	}
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
