@@ -15,7 +15,7 @@ export class HTMLMediaElementGainController {
 		let dynamics_compressor=this.audioCtx.createDynamicsCompressor()
 		dynamics_compressor.connect(this.gain_node)
 		this.dynamics_compressor=dynamics_compressor
-		 function init_dynamics_compressor(dyn:DynamicsCompressorNode) {
+		function init_dynamics_compressor(dyn:DynamicsCompressorNode) {
 			let {knee,attack,release,ratio,threshold}=dyn
 			knee.value=27
 			attack.value=1

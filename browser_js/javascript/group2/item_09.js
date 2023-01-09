@@ -1,9 +1,6 @@
 {
 	let i=0;
-	/**
-	 * @param {any[]} v
-	 * @param {() => void} target
-	 */
+	/** @param {any[]} v @param {() => void} target */
 	function process_one(v,target) {
 		let [e,j]=v;
 		if(j===null) {
@@ -35,15 +32,7 @@
 		let _prototype=Object.getPrototypeOf(j);
 		let r=Object.getOwnPropertyDescriptors(j);
 		let res={};
-		/**
-		 * @template {string} U
-		 * @template {{}} T
-		 * @template {{[C in U]?: any}} R
-		 * @arg {T} x
-		 * @arg {R|null} _q
-		 * @param {string} v
-		 * @returns {x is R}
-		 */
+		/** @template {string} U @template {{}} T @template {{[C in U]?: any}} R @arg {T} x @arg {R|null} _q @param {string} v @returns {x is R} */
 		function has_key(x,v,_q) {
 			return v in x;
 		}

@@ -1576,7 +1576,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			return [false,null,0];
 		}
 		/* TODO: SourceCharacter is too complex for js
-				 It requires handling all of unicode */
+				It requires handling all of unicode */
 		return [true,"TemplateCharacter",1];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
@@ -2128,6 +2128,6 @@ function parse_javascript_str(code_str) {
 
 if(typeof exports==='object') {
 	exports.parse_javascript_str=parse_javascript_str;
-} else if(window.inject_api!==void 0) {
-	window.inject_api.parse_javascript_str=parse_javascript_str;
+} else if(window.g_api!==void 0) {
+	window.g_api.parse_javascript_str=parse_javascript_str;
 }

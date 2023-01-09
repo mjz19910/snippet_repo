@@ -27,13 +27,9 @@ x: {
 			fw[e];
 		})
 		.filter(e => typeof e=='object'&&e!==null);
-	/**
-	 * @type {any[]}
-	 */
+	/** @type {any[]} */
 	let seen=[];
-	/**
-	 * @param {any} value
-	 */
+	/** @param {any} value */
 	function inf_depth_iter(value) {
 		if(value===inject_api) {
 			return;
@@ -51,16 +47,12 @@ x: {
 		} catch {}
 	}
 	inf_depth_iter(all_window_begin);
-	/**
-	 * @param {{ (): { done: boolean; value: Element}}} next
-	 */
+	/** @param {{ (): { done: boolean; value: Element}}} next */
 	function make_iterator_with(next) {
 		return {[Symbol.iterator]: () => ({next})};
 	}
 	// first_level_iter(all_window_begin);
-	/**
-	 * @param {HTMLAllCollection} html_col
-	 */
+	/** @param {HTMLAllCollection} html_col */
 	function html_iterator(html_col) {
 		let i=0;
 		return make_iterator_with(() => {
@@ -78,9 +70,7 @@ x: {
 			};
 		});
 	}
-	/**
-	 * @param {HTMLAllCollection} all_array
-	 */
+	/** @param {HTMLAllCollection} all_array */
 	function first_level_iter(all_array) {
 		for(let x of html_iterator(all_array)) {
 			if(typeof x==='number')
