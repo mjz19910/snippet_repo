@@ -2,6 +2,7 @@ import {init_blob_logger} from "./blob_logger/init_blob_logger.js";
 import {dom_observer} from "./dom_observer/dom_observer.js";
 import {start_message_channel_loop} from "./dom_observer/start_message_channel_loop.js";
 import {init_fetch_plugin} from "./fetch_plugin/init_fetch_plugin.js";
+import {GApiType} from "./GApiType.js";
 import {init_Image_plugin} from "./init_Image_plugin.js";
 import {init_navigator_sendBeacon_plugin} from "./init_navigator_sendBeacon_plugin.js";
 import {init_override_getInitialData} from "./init_override_getInitialData.js";
@@ -20,6 +21,7 @@ export function entry_point() {
 	ui_plugin_attach_to_dom_observer(dom_observer);
 	if(globalThis.window) {
 		init_fetch_plugin();
+		GApiType.prototype.real_create();
 	}
 	if(globalThis.Image) {
 		init_Image_plugin();
