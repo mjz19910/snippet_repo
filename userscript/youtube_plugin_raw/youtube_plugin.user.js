@@ -2748,6 +2748,7 @@ class YtHandlers extends BaseService {
 			case "live_chat": res=this.convert_live_chat(target,x); break;
 			case "notification": res=this.convert_notification(target,x); break;
 			case "reel": res=this.convert_reel(target,x); break;
+			case "subscription": res=this.convert_subscription(target,x); break;
 		}
 		switch(target.length) {
 			case 1: res=this.convert_length_1(target,x); break;
@@ -2759,6 +2760,16 @@ class YtHandlers extends BaseService {
 			type: "_Generic",
 			data: x,
 		};
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	convert_subscription(t,x) {
+		switch(t[1]) {
+			case "subscribe": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {SubscribeResponse} */
+				data: as(x),
+			};
+		}
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
 	convert_browse(t,x) {

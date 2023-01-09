@@ -1,0 +1,3 @@
+type SubscribeResponse={
+	responseContext: ResponseContext;
+};
