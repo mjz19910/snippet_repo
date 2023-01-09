@@ -3194,6 +3194,7 @@ class ECatcherService extends BaseService {
 				[24401504,24422508],
 				[24442137],
 				[24447336],
+				[24408888],
 			].flat(),
 		},
 	};
