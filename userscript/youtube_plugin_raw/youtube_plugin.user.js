@@ -4868,7 +4868,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
-		x;
+		this.save_keys("[ModifyChannelPreferenceResponse]",x);
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
