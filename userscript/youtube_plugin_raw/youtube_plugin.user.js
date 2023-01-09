@@ -1835,27 +1835,6 @@ function export_(fn) {
 }
 function main() {
 	const log_enabled_page_type_change=false;
-	/** @private @arg {YTNavigateFinishEvent} event */
-	function log_page_type_change(event) {
-		let {detail}=event;
-		if(!detail) return;
-		if(!ytd_page_manager) {
-			const target_element=get_html_elements(document,"ytd-page-manager")[0];
-			if(!target_element) {
-				throw new Error("Missing ytd_page_manager");
-			} else {
-				on_ytd_page_manager(target_element);
-			}
-		}
-		if(!ytd_page_manager) throw new Error("Invalid state");
-		yt_handlers.on_page_type_changed(detail);
-		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
-		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
-		if(nav_load_str===current_page_type) return;
-		current_page_type=nav_load_str;
-		page_type_changes.push(nav_load_str);
-		if(log_enabled_page_type_change) console.log(nav_load_str);
-	}
 	/** @private @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
 	const services=new Services(resolver_value);
@@ -1880,7 +1859,6 @@ function main() {
 		exports.services=services;
 	});
 	resolver_value.value=service_resolver;
-	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
@@ -1893,8 +1871,6 @@ function main() {
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types);
-	return;
-	// #region hoisted functions below
 	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
 		yt_handlers.on_handle_api(request,response_obj);
@@ -2054,6 +2030,28 @@ function main() {
 			console.log("send_beacon",args[0]);
 			return navigator_sendBeacon.call(this,...args);
 		};
+	}
+	let current_page_type="";
+	/** @private @arg {YTNavigateFinishEvent} event */
+	function log_page_type_change(event) {
+		let {detail}=event;
+		if(!detail) return;
+		if(!ytd_page_manager) {
+			const target_element=get_html_elements(document,"ytd-page-manager")[0];
+			if(!target_element) {
+				throw new Error("Missing ytd_page_manager");
+			} else {
+				on_ytd_page_manager(target_element);
+			}
+		}
+		if(!ytd_page_manager) throw new Error("Invalid state");
+		yt_handlers.on_page_type_changed(detail);
+		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
+		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+		if(nav_load_str===current_page_type) return;
+		current_page_type=nav_load_str;
+		page_type_changes.push(nav_load_str);
+		if(log_enabled_page_type_change) console.log(nav_load_str);
 	}
 	// #endregion
 }
