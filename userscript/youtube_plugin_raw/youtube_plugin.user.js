@@ -2494,16 +2494,15 @@ const general_service_state={
 // #region Service
 class KnownDataSaver {
 	constructor() {
-		this.load_data();
-		this.store_data();
+		this.#load_data();
+		this.#store_data();
 	}
-	/** @private @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} */
-	parse_data(str) {
+	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
+	#parse_data(str) {
 		return JSON.parse(str);
 	}
-	/** */
-	store_data() {
-		let data=this.pull_data_from_parent();
+	#store_data() {
+		let data=this.pull_data();
 		for(let v=0;v<data.seen_numbers.length;v++) {
 			const j=data.seen_numbers[v];
 			const [_n,[_k,c]]=j;
@@ -2515,109 +2514,95 @@ class KnownDataSaver {
 			}
 		}
 		let json_str=JSON.stringify(data);
-		this.save_local_storage(json_str);
+		this.#save_local_storage(json_str);
 	}
-	/** */
-	load_data() {
-		if(this.loaded_from_storage) return;
-		let json_str=this.get_local_storage();
+	#load_data() {
+		if(this.#loaded_from_storage) return;
+		let json_str=this.#get_local_storage();
 		if(json_str) {
-			let ret=this.parse_data(json_str);
-			this.push_data_to_parent(ret);
-			this.loaded_from_storage=true;
+			let ret=this.#parse_data(json_str);
+			this.#push_data_to_parent(ret);
+			this.#loaded_from_storage=true;
 		}
 	}
-	/** */
-	pull_data_from_parent() {
-		const {
-			seen_root_visual_elements,seen_strings,seen_booleans,
-			seen_numbers
-		}=this;
+	pull_data() {
 		return {
-			seen_root_visual_elements,seen_strings,seen_numbers,
-			seen_booleans,
+			seen_root_visual_elements: this.#seen_root_visual_elements,
+			seen_strings: this.#seen_strings,
+			seen_numbers: this.#seen_numbers,
+			seen_booleans: this.#seen_booleans,
 		};
 	}
-	/** @private @arg {string} seen_data */
-	save_local_storage(seen_data) {
+	/** @arg {string} seen_data */
+	#save_local_storage(seen_data) {
 		if(no_storage_access) {
-			this.seen_data_json_str=seen_data;
+			this.#seen_data_json_str=seen_data;
 			return;
 		}
 		localStorage.seen_data=seen_data;
 	}
-	/** */
-	get_local_storage() {
-		if(no_storage_access) return this.seen_data_json_str;
+	#get_local_storage() {
+		if(no_storage_access) return this.#seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
-	/** @private @arg {Partial<ReturnType<KnownDataSaver["pull_data_from_parent"]>>} x */
-	push_data_to_parent(x) {
+	/** @arg {Partial<ReturnType<KnownDataSaver["pull_data"]>>} x */
+	#push_data_to_parent(x) {
 		const {
 			seen_root_visual_elements,seen_strings,seen_booleans,
 			seen_numbers,
 		}=x;
 		if(seen_root_visual_elements) {
-			this.seen_root_visual_elements=seen_root_visual_elements;
+			this.#seen_root_visual_elements=seen_root_visual_elements;
 		}
 		if(seen_strings) {
-			this.seen_strings=seen_strings;
+			this.#seen_strings=seen_strings;
 		}
 		if(seen_booleans) {
-			this.seen_booleans=seen_booleans;
+			this.#seen_booleans=seen_booleans;
 		}
 		if(seen_numbers) {
-			this.seen_numbers=seen_numbers;
+			this.#seen_numbers=seen_numbers;
 		}
 	}
-	/** */
-	delete_data() {
-		if(no_storage_access) {
-			this.seen_data_json_str=null;
-			return;
-		}
-		localStorage.removeItem("seen_data");
-	}
-	/** @private @type {string|null} */
-	seen_data_json_str=null;
-	loaded_from_storage=false;
+	/** @type {string|null} */
+	#seen_data_json_str=null;
+	#loaded_from_storage=false;
 	/** @type {number[]} */
-	seen_root_visual_elements=[];
+	#seen_root_visual_elements=[];
 	/** @type {[string,["one",string[]]|["many",string[][]]][]} */
-	seen_strings=[];
+	#seen_strings=[];
 	/** @type {[string,["one",number[]]|["many",number[][]]][]} */
-	seen_numbers=[];
+	#seen_numbers=[];
 	/** @type {[string,{t:boolean;f:boolean}][]} */
-	seen_booleans=[];
-	onDataChangeAction() {this.store_data();}
-	onDataClearAction() {this.delete_data();}
-	/** @public @type {Map<string,number>} */
-	strings_key_index_map=new Map;
+	#seen_booleans=[];
+	#onDataChangeAction() {this.#store_data();}
+	/** @type {Map<string,number>} */
+	#strings_key_index_map=new Map;
 	/** @arg {string} key */
-	get_seen_string_item(key) {
-		let index=this.strings_key_index_map.get(key);
-		if(index) return this.seen_strings[index];
-		index=this.seen_strings.findIndex(e => e[0]===key);
+	#get_seen_string_item(key) {
+		let index=this.#strings_key_index_map.get(key);
+		if(index) return this.#seen_strings[index];
+		index=this.#seen_strings.findIndex(e => e[0]===key);
 		if(index<0) return;
-		this.strings_key_index_map.set(key,index);
-		return this.seen_strings[index];
+		this.#strings_key_index_map.set(key,index);
+		return this.#seen_strings[index];
 	}
-	onDataChange() {
-		this.onDataChangeAction();
+	#onDataChange() {
+		this.#onDataChangeAction();
 	}
-	/** @private @type {[string,string|string[]][]} */
-	new_strings=[];
+	/** @type {[string,string|string[]][]} */
+	#new_strings=[];
 	/** @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {
 		if(x===void 0) {debugger; return;}
 		let was_known=true;
 		/** @private @type {["one", string[]]|["many",string[][]]} */
 		let cur;
-		let p=this.get_seen_string_item(k);
+		let p=this.#get_seen_string_item(k);
 		if(!p) {
 			p=[k,cur=["one",[]]];
-			let nk=this.seen_strings.push(p)-1;
-			this.strings_key_index_map.set(k,nk);
+			let nk=this.#seen_strings.push(p)-1;
+			this.#strings_key_index_map.set(k,nk);
 		} else {
 			cur=p[1];
 		}
@@ -2648,8 +2633,8 @@ class KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_strings.push([k,x]);
-		this.onDataChange();
+		this.#new_strings.push([k,x]);
+		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
 		let bitmap;
 		if(cur[0]==="many") {
@@ -2669,19 +2654,19 @@ class KnownDataSaver {
 			console.log(bitmap);
 		}
 	}
-	/** @private @type {[string,number|number[]][]} */
-	new_numbers=[];
+	/** @type {[string,number|number[]][]} */
+	#new_numbers=[];
 	/** @public @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(x===void 0) {debugger; return;}
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
-		let p=this.seen_numbers.find(e => e[0]===key);
+		let p=this.#seen_numbers.find(e => e[0]===key);
 		if(!p) {
 			cur=["one",[]];
 			p=[key,cur];
-			this.seen_numbers.push(p);
+			this.#seen_numbers.push(p);
 		} else {
 			cur=p[1];
 		}
@@ -2712,18 +2697,18 @@ class KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_numbers.push([key,x]);
-		this.onDataChange();
+		this.#new_numbers.push([key,x]);
+		this.#onDataChange();
 		console.log("store_num [%s]",key,x);
 	}
-	/** @private @type {[string,{t:boolean;f:boolean}][]} */
-	new_booleans=[];
+	/** @type {[string,{t:boolean;f:boolean}][]} */
+	#new_booleans=[];
 	/** @public @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
-		let krc=this.seen_booleans.find(e => e[0]===key);
+		let krc=this.#seen_booleans.find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];
-			this.seen_booleans.push(krc);
+			this.#seen_booleans.push(krc);
 		}
 		let [,kc]=krc;
 		if(bool) {
@@ -2737,22 +2722,22 @@ class KnownDataSaver {
 			}
 			kc.f=true;
 		}
-		this.new_booleans.push([key,kc]);
-		this.onDataChange();
+		this.#new_booleans.push([key,kc]);
+		this.#onDataChange();
 	}
-	/** @private @type {number[]} */
-	new_root_visual_elements=[];
+	/** @type {number[]} */
+	#new_root_visual_elements=[];
 	/** @public @arg {number} x */
 	save_root_visual_element(x) {
 		if(x===void 0) {
 			debugger;
 			return;
 		}
-		if(this.seen_root_visual_elements.includes(x)) return;
+		if(this.#seen_root_visual_elements.includes(x)) return;
 		console.log("store [root_visual_element]",x);
-		this.seen_root_visual_elements.push(x);
-		this.new_root_visual_elements.push(x);
-		this.onDataChange();
+		this.#seen_root_visual_elements.push(x);
+		this.#new_root_visual_elements.push(x);
+		this.#onDataChange();
 	}
 }
 const data_saver=new KnownDataSaver;
