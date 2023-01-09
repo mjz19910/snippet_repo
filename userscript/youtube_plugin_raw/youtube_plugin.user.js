@@ -2794,6 +2794,14 @@ class BaseServicePrivate extends ApiBase {
 	#x;
 }
 class BaseService extends BaseServicePrivate {
+	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
+	str_ends_with(x,v) {
+		return x.endsWith(v);
+	}
+	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${U}${string}`>} */
+	str_starts_with(x,v) {
+		return x.startsWith(v);
+	}
 	get TODO_true() {
 		return true;
 	}
@@ -2963,6 +2971,7 @@ class HandleRendererContentItemArray extends BaseService {
 			if("compactVideoRenderer" in content_item) return true;
 			if("compactPlaylistRenderer" in content_item) return true;
 			if("feedFilterChipBarRenderer" in content_item) return true;
+			if("commentRenderer" in content_item) return true;
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
 				return true;
@@ -3100,7 +3109,21 @@ class CsiService extends BaseService {
 	/** @private @type {(RidFormat<string>)[]} */
 	rid_keys=[
 		"RecordNotificationInteractions_rid","SetSetting_rid","GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid","GetNotificationsMenu_rid","GetUnseenNotificationCount_rid","GetHome_rid","GetPlayer_rid","GetPlaylist_rid","GetSubscriptions_rid","GetReelItemWatch_rid","GetWatchNext_rid","GetWebMainAppGuide_rid","GetWatchPageWebTopLevelComments_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetAccountsList_rid","GetReelWatchSequence_rid","GetLibrary_rid","GetHistory_rid","RemoveLike_rid","GetLiveChatReplay_rid","GetAccountDownloads_rid","GetVideoTranscript_rid",
+		"GetWatchPageWebCommentReplies_rid",
 	];
+	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
+	decode_rid_param_key(x) {
+		if(this.str_starts_with(x.key,"Get")) {
+			console.log("[new_get_rid][%s][%s]",x.key,x.value);
+			x.key;
+		} else if(this.str_starts_with(x.key,"Record")) {
+			console.log("[new_record_rid][%s][%s]",x.key,x.value);
+		} else if(this.str_starts_with(x.key,"Set")) {
+			console.log("[new_set_rid][%s][%s]",x.key,x.value);
+		} else {
+			console.log("[new_rid_section][%s]",x.key);
+		}
+	}
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} param */
 	parse_rid_param(param) {
 		if(param.key in this.rid) {
@@ -3109,26 +3132,13 @@ class CsiService extends BaseService {
 			this.rid[rid_key]=param.value;
 			return;
 		}
-		if(!get_ends_with(param.key)) {
+		if(!this.str_ends_with(param.key,"_rid")) {
 			console.log("new csi param",param);
 			debugger;
 			return;
 		}
-		if(get_starts_with(param.key,"Get")) {
-			console.log("[new_get_rid][%s][%s]",param.key,param.value);
-			param.key;
-		} else if(get_starts_with(param.key,"Record")) {
-			console.log("[new_record_rid][%s][%s]",param.key,param.value);
-		} else if(get_starts_with(param.key,"Set")) {
-			console.log("[new_set_rid][%s][%s]",param.key,param.value);
-		} else {
-			console.log("[new_rid_section][%s]",param.key);
-		}
+		this.decode_rid_param_key(param);
 		this.rid[param.key]=param.value;
-		/** @private @template {string} T @arg {T} x @returns {x is `${string}_rid`} */
-		function get_ends_with(x) {x; return x.endsWith("_rid");}
-		/** @private @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}_rid`} */
-		function get_starts_with(x,v) {x; return x.startsWith(v);}
 	}
 	/** @private @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
@@ -3186,6 +3196,7 @@ class ECatcherService extends BaseService {
 				[24442137],
 				[24447336],
 				[24408888],
+				[39321827,39322870],
 			].flat(),
 		},
 	};
@@ -4364,10 +4375,6 @@ class ParserService extends BaseService {
 			case "playback": break;
 		}
 		return;
-	}
-	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${U}${string}`>} */
-	str_starts_with(x,v) {
-		return x.startsWith(v);
 	}
 	/** @private @arg {YtPlaylistUrlParamsFormat} x */
 	parse_playlist_page_url(x) {
