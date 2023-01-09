@@ -2269,11 +2269,12 @@ class KnownDataSaver extends ApiBase {
 		let cur=p[1];
 		if(cur[0]==="many") {
 			let src_data=cur[1];
-			for(let bitmap_src_idx=0;bitmap_src_idx<src_data.length;bitmap_src_idx++) {
-				let bitmap_src=src_data[bitmap_src_idx];
+			let max_len=src_data.map(e => e.length).reduce((a,b) => Math.max(a,b));
+			for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
+				let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
 				let {bitmap,index_map}=this.generate_bitmap(bitmap_src);
 				console.log(` --------- [store["${k}"][${bitmap_src_idx}]] --------- `);
-				console.log(index_map.map(e=>`"${e}"`).join(","));
+				console.log(index_map.map(e => `"${e}"`).join(","));
 				console.log(bitmap);
 			}
 			return;
@@ -3132,7 +3133,9 @@ class ECatcherService extends BaseService {
 		client: null,
 		expected_client_values: {
 			/** @private @type {number[]} */
-			fexp: fexp_static.concat([])
+			fexp: fexp_static.concat([
+				24426636,24434209
+			])
 		},
 	};
 	/** @private @type {number[]} */
