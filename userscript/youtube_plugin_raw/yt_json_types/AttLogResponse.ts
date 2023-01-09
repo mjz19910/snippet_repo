@@ -1,0 +1,3 @@
+type AttLogResponse={
+	responseContext: ResponseContext;
+};

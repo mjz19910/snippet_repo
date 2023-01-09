@@ -4,6 +4,7 @@ type ResponseTypes=
 	|account_set_setting_t
 	|accounts_list_t
 	|att_get_t
+	|att_log_t
 	|browse_edit_playlist_t
 	|browse_t
 	|feedback_t

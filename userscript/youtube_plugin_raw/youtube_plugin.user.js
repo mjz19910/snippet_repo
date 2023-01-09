@@ -2689,7 +2689,12 @@ class YtHandlers extends BaseService {
 			default: debugger; break;
 			case "get": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AttGetResponse} */
+				/** @type {AttGetResponse} */
+				data: as(x),
+			};
+			case "log": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {AttLogResponse} */
 				data: as(x),
 			};
 		}
