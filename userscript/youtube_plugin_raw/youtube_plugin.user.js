@@ -647,216 +647,16 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-/** @private @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
-function get_keys_of(obj) {
-	if(!obj) {
-		debugger;
-	}
-	let rq=Object.keys(obj);
-	/** @private @type {any} */
-	let ra=rq;
-	return ra;
-}
-/** @private @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
-function get_keys_of_ex(obj) {
-	let pd=Object.getOwnPropertyDescriptors(obj);
-	let l1_pk=get_keys_of(pd);
-	/** @private @type {T} */
-	let obj_proto=Object.getPrototypeOf(obj);
-	let l2_pd=Object.getOwnPropertyDescriptors(obj_proto);
-	let l2_pk=get_keys_of(l2_pd);
-	let rq=l1_pk.concat(l2_pk);
-	return rq;
-}
-class IterateApiResultBase {
-	iterate_target;
-	/** @private @type {Map<string,keyof YtIterateTarget>} */
-	keys_map=new Map;
-	/** @arg {YtIterateTarget} iterate */
-	constructor(iterate) {
-		this.iterate_target=iterate;
-		let keys=get_keys_of_ex(iterate);
-		for(let i of keys) {
-			this.keys_map.set(i,i);
-		}
-	}
-	/** @arg {ApiIterateState} state @arg {{}} data */
-	default_iter(state,data) {
-		if(data===void 0) {
-			return;
-		}
-		if(typeof data==="string") {
-			return;
-		}
-		let {t,path}=state;
-		if(data instanceof Array) {
-			for(let [key,value] of data.entries()) {
-				this.default_iter({t,path: `${path}[${key}]`},value);
-			}
-			return;
-		}
-		for(let key in data) {
-			/** @private @type {{[x: string]: {}}} */
-			let wk=data;
-			let value=wk[key];
-			let rk=this.keys_map.get(key);
-			if(rk===void 0&&key in this.iterate_target) {
-				console.log("update keys map new key",key);
-				debugger;
-			}
-			if(rk!==void 0&&this.iterate_target[rk]===void 0) {
-				console.log("update keys map remove",key);
-				debugger;
-			}
-			const state={t,path: `${path}.${key}`};
-			if(rk!==void 0&&this.iterate_target[rk]) {
-				this.iterate_target[rk](state,as(value));
-			} else {
-				this.default_iter(state,value);
-			}
-		}
-	}
-}
-/** @typedef {{t:FilterHandlers;path:string}} ApiIterateState */
-class YtIterateTarget {
-	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
-	appendContinuationItemsAction(state,action) {
-		if(!action.continuationItems) {
-			debugger;
-		}
-		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,action.continuationItems);
-		if(filtered.length>0) {
-			action.continuationItems=filtered;
-		}
-	}
-	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
-	reloadContinuationItemsCommand({t: state},command) {
-		if(!command.continuationItems) {
-			debugger;
-		}
-		let filtered=state.handlers.renderer_content_item_array.replace_array(state,command.continuationItems);
-		if(filtered.length>0) {
-			command.continuationItems=filtered;
-		}
-	}
-	/** @arg {ApiIterateState} state @arg {ItemSectionData} renderer */
-	itemSectionRenderer_with_state(state,renderer) {
-		let {t}=state;
-		t.iteration.default_iter(state,renderer);
-		if(renderer.contents===void 0) return;
-		renderer.contents=renderer.contents.filter((item) => {
-			let keys=get_keys_of(item);
-			for(let key of keys) {
-				let is_blacklisted=t.blacklisted_item_sections.get(key);
-				if(is_blacklisted!==void 0) return !is_blacklisted;
-				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
-			}
-			return true;
-		});
-	}
-	/** @arg {ApiIterateState} state @arg {RichGridData} renderer */
-	richGridRenderer(state,renderer) {
-		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
-		state.path="richGridRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-	/** @arg {ApiIterateState} state @arg {{}} renderer */
-	compactVideoRenderer(state,renderer) {
-		state.path="compactVideoRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-	/** @arg {ApiIterateState} state @arg {{}} renderer */
-	thumbnailOverlayToggleButtonRenderer(state,renderer) {
-		state.path="thumbnailOverlayToggleButtonRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-	/** @arg {ApiIterateState} state @arg {{}} renderer */
-	videoRenderer(state,renderer) {
-		state.path="videoRenderer";
-		state.t.iteration.default_iter(state,renderer);
-	}
-}
-class HandleRendererContentItemArray {
-	debug=false;
-	/** @private @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
-	filter_for_rich_item_renderer(base,content_item) {
-		let debug_flag_value=false;
-		if("filter_handler_debug" in base) {
-			if(base.filter_handler_debug) debug_flag_value=base.filter_handler_debug;
-		} else if("debug" in base) {
-			debug_flag_value=base.debug;
-		} else {
-			debugger;
-		}
-		let renderer=content_item.richItemRenderer;
-		console.assert(renderer.content!=void 0,"richItemRenderer has content");
-		if("adSlotRenderer" in renderer.content) {
-			if(debug_flag_value) console.log("adSlotRenderer=",renderer.content.adSlotRenderer);
-			return false;
-		}
-		return true;
-	}
-	/** @private @arg {RichSectionRenderer} content_item */
-	handle_rich_section_renderer(content_item) {
-		let renderer=content_item.richSectionRenderer;
-		if("inlineSurveyRenderer" in renderer.content) {
-			renderer.content.inlineSurveyRenderer;
-			return true;
-		}
-		if(!("richShelfRenderer" in renderer.content)) {
-			console.log("rich section content",renderer.content);
-			return true;
-		}
-		let rich_shelf=renderer.content.richShelfRenderer;
-		if(rich_shelf.icon) {
-			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
-				return false;
-			}
-			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
-			return true;
-		}
-		if(!rich_shelf.title.runs) {
-			if(this.debug) console.log("rich shelf title",rich_shelf.title);
-			return true;
-		}
-		if(rich_shelf.title.runs[0]) {
-			if(rich_shelf.title.runs[0].text==="Breaking news") {
-				return false;
-			}
-			if(this.debug) console.log("rich shelf title",rich_shelf.title.runs[0]);
-			return true;
-		}
-		console.log("rich shelf",rich_shelf);
-		return true;
-	}
-	/** @public @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {T} arr @returns {T} */
-	replace_array(base,arr) {
-		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
-			let keys=get_keys_of(content_item);
-			if("richItemRenderer" in content_item) {
-				return this.filter_for_rich_item_renderer(base,content_item);
-			}
-			if("commentThreadRenderer" in content_item) return true;
-			if("commentsHeaderRenderer" in content_item) return true;
-			if("continuationItemRenderer" in content_item) return true;
-			if("compactVideoRenderer" in content_item) return true;
-			if("compactPlaylistRenderer" in content_item) return true;
-			if("feedFilterChipBarRenderer" in content_item) return true;
-			if(!("richSectionRenderer" in content_item)) {
-				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
-				return true;
-			};
-			return this.handle_rich_section_renderer(content_item);
-		}));
-	}
-}
 class HandleRichGridRenderer {
 	debug=false;
 	/** @readonly */
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
 	entry="richGridRenderer";
-	rendererContentItemArray=new HandleRendererContentItemArray;
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
+	}
 	/** @arg {string} path @arg {RichGridData} renderer */
 	richGridRenderer(path,renderer) {
 		if(this.debug) console.log("run handler richGridRenderer");
@@ -1266,10 +1066,10 @@ class FilterHandlers {
 		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
 		this.handlers={
-			rich_grid: new HandleRichGridRenderer,
-			renderer_content_item_array: new HandleRendererContentItemArray,
+			rich_grid: new HandleRichGridRenderer(res),
+			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
-		this.iteration=new IterateApiResultBase(new YtIterateTarget);
+		this.iteration=new IterateApiResultBase(res,new YtIterateTarget(res));
 		this.blacklisted_item_sections=new Map([
 			["backstagePostThreadRenderer",false],
 			["channelAboutFullMetadataRenderer",false],
@@ -2809,7 +2609,7 @@ class KnownDataSaver {
 	new_strings=[];
 	/** @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {
-		if(x===void 0) {debugger;return;}
+		if(x===void 0) {debugger; return;}
 		let was_known=true;
 		/** @private @type {["one", string[]]|["many",string[][]]} */
 		let cur;
@@ -2873,7 +2673,7 @@ class KnownDataSaver {
 	new_numbers=[];
 	/** @public @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
-		if(x===void 0) {debugger;return;}
+		if(x===void 0) {debugger; return;}
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
@@ -2967,12 +2767,15 @@ class BaseServicePrivate {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
-	/** @public @arg {string} key */
-	delete_old_string_values(key) {
-		let p=this.ds.get_seen_string_item(key);
-		if(!p) return;
-		let [,[,values]]=p;
-		values.length=0;
+	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	get_keys_of(obj) {
+		if(!obj) {
+			debugger;
+		}
+		let rq=Object.keys(obj);
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
 	}
 	/** @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {
@@ -2983,7 +2786,6 @@ class BaseServicePrivate {
 		this.ds.save_number(k,x);
 	}
 	// #endregion
-	/** */
 	log_skipped_strings=false;
 	#x;
 }
@@ -3036,6 +2838,17 @@ class BaseService extends BaseServicePrivate {
 		if(v[0]) return v[0];
 		return v[1]??null;
 	}
+	/** @public @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
+	get_keys_of_ex(obj) {
+		let pd=Object.getOwnPropertyDescriptors(obj);
+		let l1_pk=this.get_keys_of(pd);
+		/** @private @type {T} */
+		let obj_proto=Object.getPrototypeOf(obj);
+		let l2_pd=Object.getOwnPropertyDescriptors(obj_proto);
+		let l2_pk=this.get_keys_of(l2_pd);
+		let rq=l1_pk.concat(l2_pk);
+		return rq;
+	}
 	/** @protected @name iterate_obj @arg {{}|undefined} obj @arg {(this:this,k:string,v: {})=>void} fn */
 	v(obj,fn) {
 		if(obj===void 0) return;
@@ -3053,13 +2866,13 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
-		let keys=get_keys_of(x);
+		let keys=this.get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s]",keys.join());
 	}
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
-		let keys=get_keys_of(x);
+		let keys=this.get_keys_of(x);
 		if(!keys.length) return true;
 		return false;
 	}
@@ -3076,8 +2889,195 @@ class BaseService extends BaseServicePrivate {
 		this.save_key_objs[ki]?.set(x);
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
-		let keys=get_keys_of(x);
+		let keys=this.get_keys_of(x);
 		this.save_string(ki,keys.join());
+	}
+}
+class HandleRendererContentItemArray extends BaseService {
+	debug=false;
+	/** @private @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
+	filter_for_rich_item_renderer(base,content_item) {
+		let debug_flag_value=false;
+		if("filter_handler_debug" in base) {
+			if(base.filter_handler_debug) debug_flag_value=base.filter_handler_debug;
+		} else if("debug" in base) {
+			debug_flag_value=base.debug;
+		} else {
+			debugger;
+		}
+		let renderer=content_item.richItemRenderer;
+		console.assert(renderer.content!=void 0,"richItemRenderer has content");
+		if("adSlotRenderer" in renderer.content) {
+			if(debug_flag_value) console.log("adSlotRenderer=",renderer.content.adSlotRenderer);
+			return false;
+		}
+		return true;
+	}
+	/** @private @arg {RichSectionRenderer} content_item */
+	handle_rich_section_renderer(content_item) {
+		let renderer=content_item.richSectionRenderer;
+		if("inlineSurveyRenderer" in renderer.content) {
+			renderer.content.inlineSurveyRenderer;
+			return true;
+		}
+		if(!("richShelfRenderer" in renderer.content)) {
+			console.log("rich section content",renderer.content);
+			return true;
+		}
+		let rich_shelf=renderer.content.richShelfRenderer;
+		if(rich_shelf.icon) {
+			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
+				return false;
+			}
+			console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
+			return true;
+		}
+		if(!rich_shelf.title.runs) {
+			if(this.debug) console.log("rich shelf title",rich_shelf.title);
+			return true;
+		}
+		if(rich_shelf.title.runs[0]) {
+			if(rich_shelf.title.runs[0].text==="Breaking news") {
+				return false;
+			}
+			if(this.debug) console.log("rich shelf title",rich_shelf.title.runs[0]);
+			return true;
+		}
+		console.log("rich shelf",rich_shelf);
+		return true;
+	}
+	/** @public @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {T} arr @returns {T} */
+	replace_array(base,arr) {
+		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
+			let keys=this.get_keys_of(content_item);
+			if("richItemRenderer" in content_item) {
+				return this.filter_for_rich_item_renderer(base,content_item);
+			}
+			if("commentThreadRenderer" in content_item) return true;
+			if("commentsHeaderRenderer" in content_item) return true;
+			if("continuationItemRenderer" in content_item) return true;
+			if("compactVideoRenderer" in content_item) return true;
+			if("compactPlaylistRenderer" in content_item) return true;
+			if("feedFilterChipBarRenderer" in content_item) return true;
+			if(!("richSectionRenderer" in content_item)) {
+				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
+				return true;
+			};
+			return this.handle_rich_section_renderer(content_item);
+		}));
+	}
+}
+/** @typedef {{t:FilterHandlers;path:string}} ApiIterateState */
+class YtIterateTarget extends BaseService {
+	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
+	appendContinuationItemsAction(state,action) {
+		if(!action.continuationItems) {
+			debugger;
+		}
+		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,action.continuationItems);
+		if(filtered.length>0) {
+			action.continuationItems=filtered;
+		}
+	}
+	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
+	reloadContinuationItemsCommand({t: state},command) {
+		if(!command.continuationItems) {
+			debugger;
+		}
+		let filtered=state.handlers.renderer_content_item_array.replace_array(state,command.continuationItems);
+		if(filtered.length>0) {
+			command.continuationItems=filtered;
+		}
+	}
+	/** @arg {ApiIterateState} state @arg {ItemSectionData} renderer */
+	itemSectionRenderer_with_state(state,renderer) {
+		let {t}=state;
+		t.iteration.default_iter(state,renderer);
+		if(renderer.contents===void 0) return;
+		renderer.contents=renderer.contents.filter((item) => {
+			let keys=this.get_keys_of(item);
+			for(let key of keys) {
+				let is_blacklisted=t.blacklisted_item_sections.get(key);
+				if(is_blacklisted!==void 0) return !is_blacklisted;
+				console.log("filter_handlers: new item section at itemSectionRenderer.contents[]: ",key);
+			}
+			return true;
+		});
+	}
+	/** @arg {ApiIterateState} state @arg {RichGridData} renderer */
+	richGridRenderer(state,renderer) {
+		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
+		state.path="richGridRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/** @arg {ApiIterateState} state @arg {{}} renderer */
+	compactVideoRenderer(state,renderer) {
+		state.path="compactVideoRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/** @arg {ApiIterateState} state @arg {{}} renderer */
+	thumbnailOverlayToggleButtonRenderer(state,renderer) {
+		state.path="thumbnailOverlayToggleButtonRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+	/** @arg {ApiIterateState} state @arg {{}} renderer */
+	videoRenderer(state,renderer) {
+		state.path="videoRenderer";
+		state.t.iteration.default_iter(state,renderer);
+	}
+}
+class IterateApiResultBase extends BaseService {
+	iterate_target;
+	/** @private @type {Map<string,keyof YtIterateTarget>} */
+	keys_map=new Map;
+	/** @arg {ResolverT<Services, ServiceOptions>} x @arg {YtIterateTarget} iterate */
+	constructor(x,iterate) {
+		super(x);
+		this.iterate_target=iterate;
+		let keys=this.get_keys_of_ex(iterate);
+		for(let i of keys) {
+			this.keys_map.set(i,i);
+		}
+	}
+	/** @arg {ApiIterateState} state @arg {{}} data */
+	default_iter(state,data) {
+		if(data===void 0) {
+			return;
+		}
+		if(typeof data==="string") {
+			return;
+		}
+		let {t,path}=state;
+		if(data instanceof Array) {
+			for(let [key,value] of data.entries()) {
+				this.default_iter({t,path: `${path}[${key}]`},value);
+			}
+			return;
+		}
+		for(let key in data) {
+			/** @private @type {{[x: string]: {}}} */
+			let wk=data;
+			let value=wk[key];
+			let rk=this.keys_map.get(key);
+			/** @type {any} */
+			let ak=this.iterate_target;
+			/** @type {{[U in keyof YtIterateTarget]: (x:{},u:{})=>void;}} */
+			let itt=ak;
+			if(rk===void 0&&key in this.iterate_target) {
+				console.log("update keys map new key",key);
+				debugger;
+			}
+			if(rk!==void 0&&this.iterate_target[rk]===void 0) {
+				console.log("update keys map remove",key);
+				debugger;
+			}
+			const state={t,path: `${path}.${key}`};
+			if(rk!==void 0&&itt[rk]) {
+				itt[rk](state,as(value));
+			} else {
+				this.default_iter(state,value);
+			}
+		}
 	}
 }
 class CsiService extends BaseService {
@@ -3401,6 +3401,7 @@ class Services {
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new HiddenData(new FilterHandlers(x));
 		this.codegen=new CodegenService(x);
+		this.indexed_db=new IndexedDbAccessor(x,"yt_plugin",2);
 	}
 }
 //#endregion Service
@@ -3424,9 +3425,10 @@ class YtPlugin {
 	}
 }
 //#endregion
-class IndexedDbAccessor {
-	/** @public @arg {string} db_name */
-	constructor(db_name,version=1) {
+class IndexedDbAccessor extends BaseService {
+	/** @public @arg {ResolverT<Services, ServiceOptions>} x @arg {string} db_name */
+	constructor(x,db_name,version=1) {
+		super(x);
 		this.db_args={
 			name: db_name,
 			version,
@@ -3552,10 +3554,10 @@ class IndexedDbAccessor {
 				for(let data of this.arr) {
 					if(database_map.has(data.v)) {
 						this.committed_data.push(data);
-						let ok=get_keys_of(data);
+						let ok=this.get_keys_of(data);
 						let in_db=database_map.get(data.v);
 						if(!in_db) continue;
-						let ok_db=get_keys_of(in_db);
+						let ok_db=this.get_keys_of(in_db);
 						if(eq_keys(ok,ok_db)) continue;
 						console.log("[database_needs_obj_merge]");
 						console.log("[obj_merge_new]",data);
@@ -3616,7 +3618,6 @@ class IndexedDbAccessor {
 		console.log("idb error",event);
 	}
 }
-const indexed_db=new IndexedDbAccessor("yt_plugin",2);
 class CodegenService extends BaseService {
 	/** @arg {{}} x2 */
 	#is_Thumbnail(x2) {
@@ -4019,7 +4020,7 @@ class ParserService extends BaseService {
 	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
 		let sp=make_search_params(x);
-		if(!eq_keys(get_keys_of(sp),["query"])) debugger;
+		if(!eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
 	/** @private @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
@@ -4097,7 +4098,7 @@ class ParserService extends BaseService {
 	}
 	/** @public @arg {string} x */
 	parse_video_id(x) {
-		indexed_db.put({v: x});
+		this.x.get("indexed_db").put({v: x});
 	}
 	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
@@ -4309,8 +4310,8 @@ class ParserService extends BaseService {
 					}
 					this.log_playlist_id(url_info);
 				} this.log_playlist_id(url_info,true); break;
-				case "video": indexed_db.put({v: url_info.id}); break;
-				case "video-referral": indexed_db.put({v: url_info.id}); break;
+				case "video": this.x.get("indexed_db").put({v: url_info.id}); break;
+				case "video-referral": this.x.get("indexed_db").put({v: url_info.id}); break;
 			}
 		}
 	}
@@ -4693,12 +4694,12 @@ class C1 extends BaseService {
 	/** @public @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
-		this.save_number("BrowsePageResponse.rootVe",rootVe);
-		console.log("browse_url",url);
+		if(rootVe) this.save_number("BrowsePageResponse.rootVe",rootVe);
+		console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.BrowseEndpoint(x.endpoint);
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
-		console.log("[BrowsePageResponse.expirationTime]",expirationTime);
+		if(expirationTime) console.log("[BrowsePageResponse.expirationTime]",expirationTime);
 		this.save_keys("[BrowsePageResponse]",x);
 	}
 	/** @public @arg {BrowseResponse} x */
@@ -4841,6 +4842,24 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
+		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
+	}
+	/** @public @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
+	w(x,y) {
+		if(x===void 0) return;
+		let keys=this.get_keys_of(x);
+		if(keys.length===0) {
+			debugger;
+			return;
+		}
+		for(let k of keys) {
+			y.call(this,x[k],k);
+		}
+	}
+	/** @template {{}} T @arg {T|undefined} x @arg {(x:T)=>void} f */
+	t(x,f) {
+		if(!x) return;
+		f(x);
 	}
 	/** @arg {{}} x */
 	LikeLikeResponse(x) {
