@@ -1,6 +1,6 @@
 type SettingsPageResponse={
 	page: "settings";
-	endpoint: YtEndpoint;
+	endpoint: {};
 	response: SettingsResponseContent;
 	url: YtUrlFormat;
 };

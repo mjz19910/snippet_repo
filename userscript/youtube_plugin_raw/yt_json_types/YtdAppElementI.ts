@@ -7,8 +7,6 @@ interface YtdAppElementI extends HTMLElement {
 	app_is_visible?: boolean;
 	/** @type {ReturnType<typeof setInterval>|undefined} */
 	ytp_click_cint?: number;
-	/** @type {PagePreparer} */
-	pagePreparer?: PagePreparer;
 	/** @type {YtdShadyChildrenOfYtdApp} */
 	__shady_children: YtdShadyChildrenOfYtdApp;
 	hasNavigated: boolean;

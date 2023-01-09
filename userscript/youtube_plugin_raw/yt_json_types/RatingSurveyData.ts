@@ -3,5 +3,5 @@ type RatingSurveyData={
 	trackingParams: string;
 	notSureButton: ButtonRenderer;
 	undoButton: ButtonRenderer;
-	notSureEndpoint: YtEndpoint;
+	notSureEndpoint: {};
 };

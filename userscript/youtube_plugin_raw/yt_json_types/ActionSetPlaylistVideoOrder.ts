@@ -1,7 +1,7 @@
 type ActionSetPlaylistVideoOrder={
 	title: string;
 	selected: false;
-	serviceEndpoint: YtEndpoint;
+	serviceEndpoint: {};
 	accessibility: Accessibility;
 	trackingParams: string;
 };

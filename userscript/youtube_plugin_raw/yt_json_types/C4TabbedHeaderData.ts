@@ -1,7 +1,7 @@
 type C4TabbedHeaderData={
 	channelId: `UC${string}`;
 	title: string;
-	navigationEndpoint: YtEndpoint;
+	navigationEndpoint: {};
 	avatar: {};
 	banner: {};
 	headerLinks: {};

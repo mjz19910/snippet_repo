@@ -1,5 +1,5 @@
 type SearchBox={
-	endpoint: YtEndpoint;
+	endpoint: {};
 	searchButton: ButtonRenderer;
 	clearButton: ButtonRenderer;
 	placeholderText: TextT;

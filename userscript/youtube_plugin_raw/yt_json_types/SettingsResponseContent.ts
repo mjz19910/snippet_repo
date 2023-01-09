@@ -3,6 +3,6 @@ type SettingsResponseContent={
 	contents: TwoColumnBrowseResultsRenderer;
 	trackingParams: string;
 	topbar: DesktopTopbarRenderer;
-	onResponseReceivedEndpoints?: YtEndpoint[];
+	onResponseReceivedEndpoints?: {}[];
 	sidebar: SettingsSidebarRenderer;
 };

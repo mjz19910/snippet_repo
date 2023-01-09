@@ -1,5 +1,5 @@
 type ExpandableTabData={
-	endpoint: YtEndpoint;
+	endpoint: {};
 	title: string;
 	selected: boolean;
 	expandedText?: string;

@@ -3,7 +3,7 @@ type NotificationData={
 	videoThumbnail: {};
 	shortMessage: {};
 	sentTimeText: {};
-	navigationEndpoint: YtEndpoint;
+	navigationEndpoint: {};
 	accessibilityData: {};
 	icon: {};
 	tooltip: "Settings";

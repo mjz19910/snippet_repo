@@ -6,7 +6,7 @@ type CompactVideoData={
 	publishedTimeText: TextT;
 	viewCountText: TextT;
 	lengthText: TextT;
-	navigationEndpoint: YtEndpoint;
+	navigationEndpoint: {};
 	shortBylineText: TextT;
 	channelThumbnail: {};
 	ownerBadges?: {};

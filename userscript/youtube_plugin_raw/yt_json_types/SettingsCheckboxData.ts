@@ -2,7 +2,7 @@ type SettingsCheckboxData={
 	title: TextT;
 	helpText?: TextT;
 	enabled: boolean;
-	enableServiceEndpoint: YtEndpoint;
-	disableServiceEndpoint: YtEndpoint;
+	enableServiceEndpoint: {};
+	disableServiceEndpoint: {};
 	disabled: boolean;
 };

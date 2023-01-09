@@ -2,7 +2,7 @@ type GridVideoData={
 	badges: {}[];
 	channelThumbnail: Thumbnail<{}>;
 	menu: MenuRenderer;
-	navigationEndpoint: YtEndpoint;
+	navigationEndpoint: {};
 	shortBylineText: TextT;
 	shortViewCountText: TextT;
 	thumbnail: Thumbnail<{}>;

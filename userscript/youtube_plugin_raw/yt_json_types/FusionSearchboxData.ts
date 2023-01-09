@@ -3,6 +3,6 @@ type FusionSearchboxData={
 	placeholderText: TextT;
 	config: SearchboxConfig;
 	trackingParams: string;
-	searchEndpoint: YtEndpoint;
+	searchEndpoint: {};
 	clearButton: ButtonRenderer;
 };

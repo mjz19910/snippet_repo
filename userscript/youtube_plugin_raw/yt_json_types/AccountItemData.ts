@@ -4,7 +4,7 @@ type AccountItemData={
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;
-	serviceEndpoint: YtEndpoint;
+	serviceEndpoint: {};
 	accountByline: TextT;
 	channelHandle: TextT;
 };

@@ -1,6 +1,6 @@
 type SubFeedOption={
 	name: TextT;
 	isSelected: boolean;
-	navigationEndpoint: YtEndpoint;
+	navigationEndpoint: {};
 	trackingParams: string;
 };

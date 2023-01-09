@@ -289,10 +289,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					let did_run=event.detail.handle_types_fut.run_with(v => v.save_string("body_element",fut_data));
-					if(!did_run) {
-						console.log("fut failed",...fut_data);
-					}
+					event.detail.handle_types_fut.run_with(v => v.save_string("body_element",fut_data));
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -1830,24 +1827,19 @@ function fire_observer_event() {
 
 /** @private @template T,U */
 class Future {
-	/** @arg {HiddenData<T>} v @arg {(x:T)=>U} f */
+	/** @arg {T} v @arg {(x:T)=>U} f */
 	constructor(v,f) {
 		this.v=v;
 		this.f=f;
 	}
 	/** @public @template V @arg {(x:U)=>V} f */
 	run_with(f) {
-		let res=this.v.extract(e => {
-			let inner=this.f(e);
-			f(inner);
-			return true;
-		});
-		if(res===null) return false;
-		return res;
+		let inner=this.f(this.v);
+		return f(inner);
 	}
 }
 
-/** @private @arg {HiddenData<FilterHandlers>} yt_handlers */
+/** @private @arg {FilterHandlers} yt_handlers */
 function start_message_channel_loop(yt_handlers) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
@@ -2201,34 +2193,6 @@ class ServiceResolver {
 	}
 }
 
-/** @private @template T */
-class HiddenData {
-	#value;
-	/** @arg {T} value */
-	constructor(value) {
-		this.#value=value;
-	}
-	/** @public @template U @arg {(v:T)=>U|null} v */
-	extract(v) {
-		try {
-			return v(this.#value);
-		} catch(e) {
-			console.log("target error");
-			console.log(e);
-			return null;
-		}
-	}
-	/** @public @template U @arg {(v:T)=>U} v @arg {()=>U} def */
-	extract_default(v,def) {
-		try {
-			return v(this.#value);
-		} catch(e) {
-			console.log("target error");
-			console.log(e);
-			return def();
-		}
-	}
-}
 function get_exports() {
 	return exports;
 }
@@ -2248,7 +2212,7 @@ function main() {
 			}
 		}
 		if(!ytd_page_manager) throw new Error("Invalid state");
-		yt_handlers.extract(h => h.on_page_type_changed(detail));
+		yt_handlers.on_page_type_changed(detail);
 		let page_manager_current_tag_name=ytd_page_manager.getCurrentPage()?.tagName.toLowerCase();
 		let nav_load_str=`page_type_change: {current_page_element_tagName: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 		if(nav_load_str===current_page_type) return;
@@ -2297,7 +2261,7 @@ function main() {
 	// #region hoisted functions below
 	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
-		yt_handlers.extract(h => h.on_handle_api(request,response_obj));
+		yt_handlers.on_handle_api(request,response_obj);
 	}
 	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
@@ -2414,7 +2378,7 @@ function main() {
 	}
 	/** @private @arg {[()=>BrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
-		return yt_handlers.extract_default((h) => h.on_initial_data(apply_args),() => Reflect.apply(...apply_args));
+		return yt_handlers.on_initial_data(apply_args);
 	}
 	function modify_global_env() {
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
@@ -3277,7 +3241,7 @@ class GFeedbackService extends BaseService {
 		route: null,
 	};
 	get handle_types() {
-		let res=this.x.get("yt_handlers").extract(e => e)?.handle_types;
+		let res=this.x.get("yt_handlers").handle_types;
 		if(!res) throw new Error();
 		return res;
 	}
@@ -3384,7 +3348,7 @@ class TrackingServices extends BaseService {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
 	get handle_types() {
-		let res=this.x.get("yt_handlers").extract(e => e)?.handle_types;
+		let res=this.x.get("yt_handlers").handle_types;
 		if(!res) throw new Error();
 		return res;
 	}
@@ -3422,7 +3386,7 @@ class Services {
 		this.guided_help_service=new GuidedHelpService(x);
 		this.service_tracking=new TrackingServices(x);
 		this.parser_service=new ParserService(x);
-		this.yt_handlers=new HiddenData(new FilterHandlers(x));
+		this.yt_handlers=new FilterHandlers(x);
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new IndexedDbAccessor(x,"yt_plugin",2);
 	}
@@ -3437,7 +3401,7 @@ class YtPlugin {
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
 	}
-	/** @arg {HiddenData<FilterHandlers>} value */
+	/** @arg {FilterHandlers} value */
 	set_yt_handlers(value) {
 		this.yt_handlers=value;
 	}

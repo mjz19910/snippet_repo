@@ -3,7 +3,7 @@ type TabData={
 	selected: true;
 	trackingParams: string;
 }|{
-	endpoint: YtEndpoint;
+	endpoint: {};
 	title: string;
 	trackingParams: string;
 };

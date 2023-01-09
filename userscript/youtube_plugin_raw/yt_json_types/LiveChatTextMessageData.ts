@@ -2,7 +2,7 @@ type LiveChatTextMessageData={
 	message: TextT;
 	authorName: TextT;
 	authorPhoto: Thumbnail<{}>;
-	contextMenuEndpoint: YtEndpoint;
+	contextMenuEndpoint: {};
 	id: string;
 	authorBadges?: LiveChatAuthorBadgeRenderer[];
 	timestampUsec: `${number}`;

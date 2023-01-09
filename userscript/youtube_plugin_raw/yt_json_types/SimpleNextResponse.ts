@@ -1,5 +1,5 @@
 type SimpleNextResponse={
-	onResponseReceivedEndpoints: YtEndpoint[];
+	onResponseReceivedEndpoints: {}[];
 	responseContext: ResponseContext;
 	trackingParams: string;
 };

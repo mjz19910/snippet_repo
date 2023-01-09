@@ -1,5 +1,5 @@
 type NextResponseWithEngagementPanels={
-	onResponseReceivedEndpoints: YtEndpoint[];
+	onResponseReceivedEndpoints: {}[];
 	responseContext: ResponseContext;
 	trackingParams: string;
 	engagementPanels: EngagementPanel[];

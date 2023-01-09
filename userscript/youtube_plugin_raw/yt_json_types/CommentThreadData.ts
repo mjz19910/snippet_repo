@@ -1,7 +1,7 @@
 type CommentData={
 	authorText: TextT;
 	authorThumbnail: Thumbnail<{}>;
-	authorEndpoint: YtEndpoint;
+	authorEndpoint: {};
 	contentText: TextT;
 	publishedTimeText: TextT;
 	isLiked: boolean;

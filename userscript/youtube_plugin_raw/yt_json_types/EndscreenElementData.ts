@@ -9,7 +9,7 @@ type EndscreenElementData={
 	endMs: `${number}`,
 	title: {},
 	metadata: {},
-	endpoint: YtEndpoint,
+	endpoint: {},
 	trackingParams: string,
 	id: string;
 	thumbnailOverlays: {}[];

@@ -1,6 +1,6 @@
 type ChannelPageResponse={
 	page: "channel";
-	endpoint: YtEndpoint;
+	endpoint: {};
 	response: ChannelResponse;
 	url: YtUrlFormat;
 };

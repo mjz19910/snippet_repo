@@ -7,7 +7,7 @@ type DisplayAdRenderer={
 	badge: MetadataBadgeData;
 	menu: MenuRenderer;
 	ctaButton: ButtonRenderer;
-	impressionEndpoints: YtEndpoint[];
+	impressionEndpoints: {}[];
 	clickCommand: {};
 	mediaHoverOverlay: ButtonRenderer;
 	mediaBadge: MetadataBadgeData;

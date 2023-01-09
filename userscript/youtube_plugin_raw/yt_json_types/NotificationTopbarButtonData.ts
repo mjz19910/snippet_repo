@@ -1,11 +1,11 @@
 type NotificationTopbarButtonData={
 	icon: Icon<"NOTIFICATIONS">;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
-	menuRequest: YtEndpoint;
+	menuRequest: {};
 	trackingParams: string;
 	accessibility: Accessibility;
 	tooltip: string;
-	updateUnseenCountEndpoint: YtEndpoint;
+	updateUnseenCountEndpoint: {};
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };

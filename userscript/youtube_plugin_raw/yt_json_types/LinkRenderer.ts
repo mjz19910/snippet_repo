@@ -1,7 +1,7 @@
 type CompactLinkData={
 	icon: Icon<"PERSON_ADD">;
 	title: TextT;
-	navigationEndpoint: YtEndpoint;
+	navigationEndpoint: {};
 	trackingParams: string;
 	style: CompactLinkStyle;
 };

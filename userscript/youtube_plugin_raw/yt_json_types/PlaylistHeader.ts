@@ -8,13 +8,13 @@ type PlaylistHeader={
 	shareData: {};
 	isEditable: boolean;
 	privacy: string;
-	ownerEndpoint: YtEndpoint;
+	ownerEndpoint: {};
 	editableDetails: {};
 	trackingParams: string;
-	serviceEndpoints: YtEndpoint[];
+	serviceEndpoints: {}[];
 	stats: TextT[];
 	briefStats: TextT[];
-	editorEndpoint: YtEndpoint;
+	editorEndpoint: {};
 	playlistHeaderBanner: {};
 	moreActionsMenu: MenuRenderer;
 	playButton: ButtonRenderer;

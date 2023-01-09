@@ -1,5 +1,5 @@
 type GuideEntryRendererData={
-	navigationEndpoint?: YtEndpoint;
+	navigationEndpoint?: {};
 	icon: Icon<"MIX">;
 	trackingParams: string;
 	formattedTitle: TextT;
