@@ -2273,7 +2273,7 @@ class KnownDataSaver extends ApiBase {
 				let bitmap_src=src_data[bitmap_src_idx];
 				let {bitmap,index_map}=this.generate_bitmap(bitmap_src);
 				console.log(` --------- [store["${k}"][${bitmap_src_idx}]] --------- `);
-				console.log(index_map.join(","));
+				console.log(index_map.map(e=>`"${e}"`).join(","));
 				console.log(bitmap);
 			}
 			return;
