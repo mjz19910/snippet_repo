@@ -2780,19 +2780,16 @@ class KnownDataSaver {
 	}
 	/** @private @type {string|null} */
 	seen_data_json_str=null;
-	/** */
 	loaded_from_storage=false;
-	/** @protected @type {number[]} */
+	/** @type {number[]} */
 	seen_root_visual_elements=[];
-	/** @protected @type {[string,["one",string[]]|["many",string[][]]][]} */
+	/** @type {[string,["one",string[]]|["many",string[][]]][]} */
 	seen_strings=[];
-	/** @protected @type {[string,["one",number[]]|["many",number[][]]][]} */
+	/** @type {[string,["one",number[]]|["many",number[][]]][]} */
 	seen_numbers=[];
-	/** @protected @type {[string,{t:boolean;f:boolean}][]} */
+	/** @type {[string,{t:boolean;f:boolean}][]} */
 	seen_booleans=[];
-	/** @protected */
 	onDataChangeAction() {this.store_data();}
-	/** @protected */
 	onDataClearAction() {this.delete_data();}
 	/** @public @type {Map<string,number>} */
 	strings_key_index_map=new Map;
@@ -2805,48 +2802,22 @@ class KnownDataSaver {
 		this.strings_key_index_map.set(key,index);
 		return this.seen_strings[index];
 	}
-}
-class BaseServicePrivate extends KnownDataSaver {
-	// #region Public
-	/** @arg {ResolverT<Services,ServiceOptions>} x */
-	constructor(x) {
-		super();
-		this.#x=x;
-	}
-	get x() {
-		if(!this.#x.value) throw 1;
-		return this.#x.value;
-	}
 	onDataChange() {
 		this.onDataChangeAction();
 	}
-	/** @public @arg {string} key */
-	delete_old_string_values(key) {
-		let p=this.get_seen_string_item(key);
-		if(!p) return;
-		let [,[,values]]=p;
-		values.length=0;
-	}
 	/** @private @type {[string,string|string[]][]} */
 	new_strings=[];
-	/** @arg {string} key @arg {string|string[]} x */
-	save_string(key,x) {
-		if(x===void 0) {
-			debugger;
-			return;
-		}
-		if(!(x instanceof Array)&&x.startsWith("http://www.youtube.com/channel/UC")) {
-			if(this.log_skipped_strings) console.log("skip channel like",key,x);
-			return;
-		}
+	/** @arg {string} k @arg {string|string[]} x */
+	save_string(k,x) {
+		if(x===void 0) {debugger;return;}
 		let was_known=true;
 		/** @private @type {["one", string[]]|["many",string[][]]} */
 		let cur;
-		let p=this.get_seen_string_item(key);
+		let p=this.get_seen_string_item(k);
 		if(!p) {
-			p=[key,cur=["one",[]]];
+			p=[k,cur=["one",[]]];
 			let nk=this.seen_strings.push(p)-1;
-			this.strings_key_index_map.set(key,nk);
+			this.strings_key_index_map.set(k,nk);
 		} else {
 			cur=p[1];
 		}
@@ -2877,9 +2848,9 @@ class BaseServicePrivate extends KnownDataSaver {
 			}
 		}
 		if(was_known) return;
-		this.new_strings.push([key,x]);
+		this.new_strings.push([k,x]);
 		this.onDataChange();
-		console.log("store_str [%s] %o",key,x);
+		console.log("store_str [%s] %o",k,x);
 		let bitmap;
 		if(cur[0]==="many") {
 			console.log("[generate_bitmap] for many type");
@@ -2893,7 +2864,7 @@ class BaseServicePrivate extends KnownDataSaver {
 				}
 				return ta.join("");
 			}).sort().join("\n")+"\n";
-			console.log(` --------- ${key} --------- `);
+			console.log(` --------- ${k} --------- `);
 			console.log(index_map.join(","));
 			console.log(bitmap);
 		}
@@ -2982,6 +2953,34 @@ class BaseServicePrivate extends KnownDataSaver {
 		this.seen_root_visual_elements.push(x);
 		this.new_root_visual_elements.push(x);
 		this.onDataChange();
+	}
+}
+const data_saver=new KnownDataSaver;
+class BaseServicePrivate {
+	// #region Public
+	/** @arg {ResolverT<Services,ServiceOptions>} x */
+	constructor(x) {
+		this.#x=x;
+		this.ds=data_saver;
+	}
+	get x() {
+		if(!this.#x.value) throw 1;
+		return this.#x.value;
+	}
+	/** @public @arg {string} key */
+	delete_old_string_values(key) {
+		let p=this.ds.get_seen_string_item(key);
+		if(!p) return;
+		let [,[,values]]=p;
+		values.length=0;
+	}
+	/** @arg {string} k @arg {string|string[]} x */
+	save_string(k,x) {
+		this.ds.save_string(k,x);
+	}
+	/** @arg {string} k @arg {number|number[]} x */
+	save_number(k,x) {
+		this.ds.save_number(k,x);
 	}
 	// #endregion
 	/** */
@@ -4772,7 +4771,7 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 	/** @public @arg {keyof VEMap} x */
 	on_root_visual_element(x) {
-		this.save_root_visual_element(x);
+		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
 		let ss=`${x}`;
 		switch(ss) {
