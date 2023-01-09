@@ -1257,12 +1257,12 @@ class FilterHandlers {
 			default: debugger; break;
 			case "like": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ResponseWithActions} */
+				/** @private @type {LikeLikeResponse} */
 				data: as(x),
 			};
 			case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ResponseWithActions} */
+				/** @private @type {LikeRemoveLikeResponse} */
 				data: as(x),
 			};
 		}
@@ -4893,10 +4893,12 @@ class HandleTypes extends ServiceData {
 		if(!x) return;
 		f(x);
 	}
-	/** @arg {{responseContext: ResponseContext}} x */
+	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
+		const {actions,...y}=x;
 		this.save_keys("[LikeLikeResponse]",x);
-		if(!this.eq_keys(this.get_keys_of(x),["responseContext"])) debugger;
+		if("actions" in x) {}
+		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
