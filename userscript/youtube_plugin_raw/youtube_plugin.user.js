@@ -2307,7 +2307,7 @@ class KnownDataSaver extends ApiBase {
 			return;
 		} else {
 			let bitmap_src=cur[1];
-			let linear_map=bitmap_src.every(e=>!e.includes(","));
+			let linear_map=bitmap_src.every(e => !e.includes(","));
 			if(linear_map) {
 				console.log(` --------- [linear.${k}] --------- `);
 				console.log(bitmap_src.join(":"));
@@ -2743,7 +2743,7 @@ class YtHandlers extends BaseService {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {DislikeResponse} */
 				data: as(x),
-			}
+			};
 			case "like": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {LikeLikeResponse} */
@@ -4470,7 +4470,7 @@ class ParserService extends BaseService {
 		}
 		return {
 			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
-			x:`${x[2]}.${x[3]}`,
+			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","browse",...string[]]>} x */
@@ -4702,7 +4702,7 @@ class C1 extends BaseService {
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const name="BrowseEditPlaylistResponse";
-		this.z(x.actions,a=>this.x.get("handle_types").default.Action([name],a));
+		this.z(x.actions,a => this.x.get("handle_types").default.Action([name],a));
 		this.save_keys(`[${name}]`,x);
 	}
 	/** @arg {BrowsePageResponse} x */
@@ -4819,7 +4819,7 @@ class DefaultHandlers extends ApiBase {
 		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
 		let ok_e=[];
 		for(let i=0;i<keys.length;i++) {
-			let rm_idx=to_remove.findIndex(e=>e===keys[i]);
+			let rm_idx=to_remove.findIndex(e => e===keys[i]);
 			if(rm_idx>=0) {
 				to_remove.splice(rm_idx,1);
 				continue;
@@ -4837,7 +4837,7 @@ class DefaultHandlers extends ApiBase {
 	}
 }
 class HandleTypes extends ServiceData {
-	default=new DefaultHandlers
+	default=new DefaultHandlers;
 	/** @arg {NavigateEventDetail} x */
 	NavigateEventDetail(x) {
 		const {response,endpoint,...y}=x;
@@ -4960,7 +4960,7 @@ class HandleTypes extends ServiceData {
 		const {actions,...y}=x;
 		this.save_keys(`[${name}]`,x);
 		if(actions) {
-			this.z(actions,a=>this.default.Action([name],a));
+			this.z(actions,a => this.default.Action([name],a));
 		}
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
 	}
@@ -4968,7 +4968,7 @@ class HandleTypes extends ServiceData {
 	LikeRemoveLikeResponse(x) {
 		const name="LikeRemoveLikeResponse";
 		const {actions,...y}=x;
-		if(actions) this.z(actions,a=>this.default.Action([name],a));
+		if(actions) this.z(actions,a => this.default.Action([name],a));
 		this.save_keys(`[${name}]`,x);
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) {
 			this.x.get("codegen").generate_renderer(x,null);
@@ -4979,7 +4979,7 @@ class HandleTypes extends ServiceData {
 	ReelWatchSequenceResponse(x) {
 		const name="ReelWatchSequenceResponse";
 		if("actions" in x) debugger;
-		if("actions" in x&&x.actions instanceof Array) this.z(x.actions,a=>{
+		if("actions" in x&&x.actions instanceof Array) this.z(x.actions,a => {
 			this.default.Action([name],a);
 		});
 		this.save_keys(`[${name}]`,x);
