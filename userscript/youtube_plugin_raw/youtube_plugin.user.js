@@ -4434,6 +4434,10 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",...string[]]>} x */
 	get_playlist_type(x) {
+		switch(x[3]) {
+			case "get_add_to_playlist": break;
+			default: return this.api_no_handler(x,x[3]);
+		}
 		return {
 			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
 			x:`${x[2]}.${x[3]}`,
