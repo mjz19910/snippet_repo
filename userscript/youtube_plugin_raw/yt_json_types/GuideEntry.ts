@@ -1,1 +1,3 @@
-type GuideEntry={navigationEndpoint: NavigationEndpoint<BrowseEndpointPlugin>;};
+type GuideEntry={
+	navigationEndpoint: {};
+};

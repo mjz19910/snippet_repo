@@ -1,7 +1,8 @@
 type TopicLinkData={
 	title: SimpleText;
 	thumbnailDetails: Thumbnail<{}>;
-	endpoint: BrowseEndpoint<ChannelNavigationEndpointWebCommandMetadata>;
+	// ChannelNavigationEndpointWebCommandMetadata
+	endpoint: BrowseEndpoint;
 	callToActionIcon: Icon<"CHEVRON_RIGHT">;
 	trackingParams: string;
 };

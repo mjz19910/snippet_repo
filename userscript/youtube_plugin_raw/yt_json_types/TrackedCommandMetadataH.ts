@@ -1,3 +1,0 @@
-interface TrackedCommandMetadataH {
-	commandMetadata: CommandMetadataTemplate;
-};
