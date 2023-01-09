@@ -2103,6 +2103,16 @@ class ApiBase {
 		}
 		return true;
 	}
+	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	get_keys_of(obj) {
+		if(!obj) {
+			debugger;
+		}
+		let rq=Object.keys(obj);
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
+	}
 }
 // #region Service
 class KnownDataSaver extends ApiBase {
@@ -2113,6 +2123,20 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
+	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
+	save_keys(k,x) {
+		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
+		if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
+			arr: [],
+			/** @arg {{}} o */
+			set(o) {this.arr.push(o);}
+		};
+		this.save_key_objs[ki]?.set(x);
+		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
+		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
+		let keys=this.get_keys_of(x);
+		this.save_string(ki,keys.join());
+	}
 	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
 	#parse_data(str) {
 		return JSON.parse(str);
@@ -2401,16 +2425,6 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw 1;
 		return this.#x.value;
 	}
-	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
-	get_keys_of(obj) {
-		if(!obj) {
-			debugger;
-		}
-		let rq=Object.keys(obj);
-		/** @private @type {any} */
-		let ra=rq;
-		return ra;
-	}
 	/** @arg {string} k @arg {string|string[]} x */
 	save_string(k,x) {
 		this.ds.save_string(k,x);
@@ -2520,17 +2534,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
-		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
-		if(!(ki in this.ds.save_key_objs)) this.ds.save_key_objs[ki]={
-			arr: [],
-			/** @arg {{}} o */
-			set(o) {this.arr.push(o);}
-		};
-		this.ds.save_key_objs[ki]?.set(x);
-		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
-		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
-		let keys=this.get_keys_of(x);
-		this.save_string(ki,keys.join());
+		this.ds.save_keys(k,x);
 	}
 }
 
@@ -4763,7 +4767,16 @@ class ServiceData extends BaseService {
 		}
 	}
 }
+class DefaultHandlers extends ApiBase {
+	/** @arg {AllActions} x */
+	Action(x) {
+		let keys_arr=this.get_keys_of(x);
+		if(keys_arr.length!==1) debugger;
+		data_saver.save_keys(`[default.Action.${keys_arr[0]}]`,x);
+	}
+}
 class HandleTypes extends ServiceData {
+	default=new DefaultHandlers
 	/** @arg {NavigateEventDetail} x */
 	NavigateEventDetail(x) {
 		const {response,endpoint,...y}=x;
@@ -4806,6 +4819,7 @@ class HandleTypes extends ServiceData {
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
+			case "att.log": return this.AttLogResponse(x.data);
 			case "browse.edit_playlist": return this.c1.BrowseEditPlaylistResponse(x.data);
 			case "browse": return this.c1.BrowseResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
@@ -4828,6 +4842,10 @@ class HandleTypes extends ServiceData {
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {AttLogResponse} x */
+	AttLogResponse(x) {
+		this.save_keys("[AttLogResponse]",x);
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
@@ -4874,7 +4892,9 @@ class HandleTypes extends ServiceData {
 	LikeLikeResponse(x) {
 		const {actions,...y}=x;
 		this.save_keys("[LikeLikeResponse]",x);
-		if("actions" in x) {}
+		if(actions) {
+			this.z(actions,this.default.Action);
+		}
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
