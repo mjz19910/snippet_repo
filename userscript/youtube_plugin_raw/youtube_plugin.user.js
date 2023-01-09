@@ -1566,10 +1566,10 @@ overlay_hide_ui_input.style.clear="left";
 overlay_hide_ui_input.innerHTML="H";
 overlay_hide_ui_input.onclick=title_display_toggle;
 plugin_overlay_element.id="mz_overlay";
+plugin_overlay_element.setAttribute("style",player_overlay_style_str);
 plugin_overlay_element.append(overlay_content_div);
 plugin_overlay_element.append(input_modify_css_style);
 plugin_overlay_element.append(overlay_hide_ui_input);
-plugin_overlay_element.setAttribute("style",player_overlay_style_str);
 function fix_offset() {
 	if(!ytd_player) return;
 	let player_offset=sumOffset(ytd_player);
