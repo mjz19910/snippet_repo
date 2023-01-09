@@ -1,0 +1,3 @@
+type LikeLikeResponse={
+	responseContext: ResponseContext;
+};

@@ -1,0 +1,3 @@
+type LikeRemoveLikeResponse={
+	responseContext: ResponseContext;
+};

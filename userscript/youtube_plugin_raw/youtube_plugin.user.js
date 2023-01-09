@@ -4707,7 +4707,6 @@ class C1 extends BaseService {
 	}
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
-		this.BrowseResponseContext(x.responseContext);
 		this.save_keys("[BrowseResponse]",x);
 	}
 	/** @arg {BrowseEndpoint} x */
@@ -4723,13 +4722,6 @@ class C1 extends BaseService {
 	/** @arg {BrowseIdType} x */
 	parse_browse_id(x) {
 		this.x.get("parser_service").parse_browse_id(x);
-	}
-	/** @arg {ResponseContext} x */
-	BrowseResponseContext(x) {
-		let tracking_handler=this.x.get("service_tracking");
-		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
-		tracking_handler.on_complete_set_service_params();
-		this.save_keys("[BrowseResponseContext]",x);
 	}
 }
 class C2 extends BaseService {
@@ -4820,6 +4812,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
+		this.ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.c1.BrowsePageResponse(x);
 			case "watch": return this.c2.WatchPageResponse(x);
@@ -4843,6 +4836,9 @@ class HandleTypes extends ServiceData {
 			case "_Generic": return g(x);
 		}
 		this._current_response_type=x.type;
+		/** @type {{data:{responseContext:ResponseContext;}}} */
+		let v=x;
+		this.ResponseContext(v.data.responseContext);
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuResponse(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
@@ -4869,7 +4865,6 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[PlayerResponse]",x);
 		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
 	}
@@ -4899,96 +4894,78 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {{responseContext: ResponseContext}} x */
 	LikeLikeResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[LikeLikeResponse]",x);
 		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
-	/** @arg {{responseContext: ResponseContext}} x */
+	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[LikeRemoveLikeResponse]",x);
 		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[ReelWatchSequence]",x);
 	}
 	/** @private @arg {GetLiveChatReplayResponse} x */
 	GetLiveChatReplayResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetNotificationMenuResponse]",x);
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[NextResponse]",x);
 	}
 	/** @private @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[DatasyncIdsResponse]",x);
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetAccountSwitcherEndpointResponse]",x);
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[AccountsListResponse]",x);
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[ReelItemWatchResponse]",x);
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[AccountSetSetting]",x);
 	}
 	/** @private @arg {FeedbackResponse} x */
 	FeedbackResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[FeedbackResponse]",x);
 	}
 	/** @private @arg {GetTranscriptResponse} x */
 	GetTranscriptResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetTranscriptResponse]",x);
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[AccountMenuResponse]",x);
 	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[SuccessResponse]",x);
 	}
 	/** @private @arg {AttGetResponse} x */
 	AttGetResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[AttGetResponse]",x);
 	}
 	/** @private @arg {GuideResponse} x */
 	GuideResponse(x) {
-		this.ResponseContext(x.responseContext);
 		this.save_keys("[GuideResponse]",x);
 	}
 }
