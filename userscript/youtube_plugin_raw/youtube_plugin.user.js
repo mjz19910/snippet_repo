@@ -289,7 +289,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					event.detail.handle_types_fut.run_with(v => v.save_string("body_element",fut_data));
+					event.detail.handle_types.save_string("body_element",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -1505,31 +1505,15 @@ let message_channel=new MessageChannel();
 function fire_observer_event() {
 	dom_observer.notify_with_port(message_channel.port1);
 }
-
-/** @private @template T,U */
-class Future {
-	/** @arg {T} v @arg {(x:T)=>U} f */
-	constructor(v,f) {
-		this.v=v;
-		this.f=f;
-	}
-	/** @public @template V @arg {(x:U)=>V} f */
-	run_with(f) {
-		let inner=this.f(this.v);
-		return f(inner);
-	}
-}
-
-/** @private @arg {FilterHandlers} yt_handlers */
-function start_message_channel_loop(yt_handlers) {
+/** @private @arg {HandleTypes} handle_types */
+function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
-		const handle_types_fut=new Future(yt_handlers,v => v.handle_types);
-		if(typeof exports==="object") exports.handle_types_fut=handle_types_fut;
+		if(typeof exports==="object") exports.handle_types=handle_types;
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
-			detail: {handle_types_fut},
+			detail: {handle_types},
 			port: message_channel.port1,
 		});
 	}
@@ -1937,7 +1921,7 @@ function main() {
 	modify_global_env();
 
 	// wait for plugin requirements
-	start_message_channel_loop(yt_handlers);
+	start_message_channel_loop(services.handle_types);
 	return;
 	// #region hoisted functions below
 	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
@@ -2574,7 +2558,6 @@ class FilterHandlers extends BaseService {
 	/** @public @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		super(res);
-		this.handle_types=new HandleTypes(res);
 		this.filter_handler_debug=false;
 		this.handlers={
 			rich_grid: new HandleRichGridRenderer(res),
@@ -2617,7 +2600,7 @@ class FilterHandlers extends BaseService {
 			throw new Error("unreachable");
 		}
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
-		return this.handle_types.x.get("parser_service").get_url_type(path_parts);
+		return this.x.get("parser_service").get_url_type(path_parts);
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_length_1(target,x) {
@@ -2842,7 +2825,7 @@ class FilterHandlers extends BaseService {
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
-		this.handle_types.ResponseTypes(res);
+		this.x.get("handle_types").ResponseTypes(res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
@@ -2867,7 +2850,7 @@ class FilterHandlers extends BaseService {
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		this.handle_types.DataResponsePageType(ret);
+		this.x.get("handle_types").DataResponsePageType(ret);
 		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
@@ -2886,7 +2869,7 @@ class FilterHandlers extends BaseService {
 	}
 	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
-		this.handle_types.NavigateEventDetail(detail);
+		this.x.get("handle_types").NavigateEventDetail(detail);
 	}
 
 }
@@ -3243,9 +3226,7 @@ class GFeedbackService extends BaseService {
 		route: null,
 	};
 	get handle_types() {
-		let res=this.x.get("yt_handlers").handle_types;
-		if(!res) throw new Error();
-		return res;
+		return this.x.get("handle_types");
 	}
 	/** @private @arg {Extract<ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
 	parse_e_param(param) {
@@ -3350,9 +3331,7 @@ class TrackingServices extends BaseService {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
 	get handle_types() {
-		let res=this.x.get("yt_handlers").handle_types;
-		if(!res) throw new Error();
-		return res;
+		return this.x.get("handle_types");
 	}
 	/** @private @arg {GoogleHelpServiceParams} service */
 	on_google_help_service(service) {
@@ -3389,6 +3368,7 @@ class Services {
 		this.service_tracking=new TrackingServices(x);
 		this.parser_service=new ParserService(x);
 		this.yt_handlers=new FilterHandlers(x);
+		this.handle_types=new HandleTypes(x);
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new IndexedDbAccessor(x,"yt_plugin",2);
 	}
