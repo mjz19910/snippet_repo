@@ -1,4 +1,5 @@
-type AllActions=[
-	OpenPopupAction,
-	AddToGuideSectionAction,
-][number];
+type AllActions=
+	|OpenPopupAction
+	|AddToGuideSectionAction
+	|RemoveFromGuideSectionAction
+	;

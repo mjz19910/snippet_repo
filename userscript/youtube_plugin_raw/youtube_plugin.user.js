@@ -4768,11 +4768,11 @@ class ServiceData extends BaseService {
 	}
 }
 class DefaultHandlers extends ApiBase {
-	/** @arg {AllActions} x */
-	Action(x) {
+	/** @arg {string[]} path @arg {AllActions} x */
+	Action(path,x) {
 		let keys_arr=this.get_keys_of(x);
 		if(keys_arr.length!==1) debugger;
-		data_saver.save_keys(`[default.Action.${keys_arr[0]}]`,x);
+		data_saver.save_keys(`[${path.join(".")}.default.Action.${keys_arr[0]}]`,x);
 	}
 }
 class HandleTypes extends ServiceData {
@@ -4890,17 +4890,20 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
+		const name="LikeLikeResponse";
 		const {actions,...y}=x;
-		this.save_keys("[LikeLikeResponse]",x);
+		this.save_keys(`[${name}]`,x);
 		if(actions) {
-			this.z(actions,this.default.Action);
+			this.z(actions,a=>this.default.Action([name],a));
 		}
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
+		const name="LikeRemoveLikeResponse";
 		const {actions,...y}=x;
-		this.save_keys("[LikeRemoveLikeResponse]",x);
+		if(actions) this.z(actions,a=>this.default.Action([name],a));
+		this.save_keys(`[${name}]`,x);
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) {
 			this.x.get("codegen").generate_renderer(x,null);
 			debugger;
@@ -4908,6 +4911,9 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
+		if("actions" in x&&x.actions instanceof Array) this.z(x.actions,a=>{
+			this.default.Action(["ReelWatchSequenceResponse"],a);
+		});
 		this.save_keys("[ReelWatchSequence]",x);
 	}
 	/** @private @arg {GetLiveChatReplayResponse} x */
