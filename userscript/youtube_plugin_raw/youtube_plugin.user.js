@@ -3181,7 +3181,8 @@ class ECatcherService extends BaseService {
 		expected_client_values: {
 			/** @private @type {number[]} */
 			fexp: fexp_static.concat([
-				24426636,24434209
+				24426636,24434209,
+				24424806,
 			])
 		},
 	};
