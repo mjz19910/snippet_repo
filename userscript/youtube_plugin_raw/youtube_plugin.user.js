@@ -4896,14 +4896,15 @@ class HandleTypes extends ServiceData {
 	/** @arg {{responseContext: ResponseContext}} x */
 	LikeLikeResponse(x) {
 		this.save_keys("[LikeLikeResponse]",x);
-		this.x.get("codegen").generate_renderer(x,null);
-		debugger;
+		if(!this.eq_keys(this.get_keys_of(x),["responseContext"])) debugger;
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
 		this.save_keys("[LikeRemoveLikeResponse]",x);
-		this.x.get("codegen").generate_renderer(x,null);
-		debugger;
+		if(!this.eq_keys(this.get_keys_of(x),["responseContext"])) {
+			this.x.get("codegen").generate_renderer(x,null);
+			debugger;
+		}
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
