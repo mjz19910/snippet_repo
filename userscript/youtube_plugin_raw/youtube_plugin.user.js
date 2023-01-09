@@ -4801,8 +4801,8 @@ class HandleTypes extends ServiceData {
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
-			case "browse": return this.c1.BrowseResponse(x.data);
 			case "browse.edit_playlist": return this.c1.BrowseEditPlaylistResponse(x.data);
+			case "browse": return this.c1.BrowseResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
 			case "get_transcript": return this.GetTranscriptResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);
@@ -4810,6 +4810,7 @@ class HandleTypes extends ServiceData {
 			case "guide": return this.GuideResponse(x.data);
 			case "like.like": return this.LikeLikeResponse(x.data);
 			case "like.removelike": return this.LikeRemoveLikeResponse(x.data);
+			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplayResponse(x.data);
 			case "next": return this.NextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuResponse(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountResponse(x.data);
@@ -4818,7 +4819,7 @@ class HandleTypes extends ServiceData {
 			case "player": return this.PlayerResponse(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatchResponse(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequenceResponse(x.data);
-			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplayResponse(x.data);
+			case "subscription.subscribe": break;
 			default: debugger; return g(x);
 		}
 	}
