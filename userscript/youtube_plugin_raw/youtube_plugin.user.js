@@ -4718,6 +4718,10 @@ class Generate {
 	}
 }
 class C1 extends BaseService {
+	/** @arg {BrowseEditPlaylistResponse} x */
+	BrowseEditPlaylistResponse(x) {
+		this.save_keys("[BrowseEditPlaylistResponse]",x);
+	}
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
@@ -4869,6 +4873,7 @@ class HandleTypes extends ServiceData {
 			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
 			case "browse": return this.c1.BrowseResponse(x.data);
+			case "browse.edit_playlist": return this.c1.BrowseEditPlaylistResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
 			case "get_transcript": return this.GetTranscriptResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);

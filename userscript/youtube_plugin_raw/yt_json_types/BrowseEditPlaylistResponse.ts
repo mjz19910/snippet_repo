@@ -1,0 +1,3 @@
+type BrowseEditPlaylistResponse={
+	responseContext: ResponseContext;
+};
