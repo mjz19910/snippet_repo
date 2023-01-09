@@ -2641,23 +2641,35 @@ class KnownDataSaver {
 		this.#new_strings.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
+		let idx=this.#seen_strings.indexOf(p);
+		if(idx<0) {debugger; return;}
+		this.show_strings_bitmap(idx);
+	}
+	/** @arg {number} idx */
+	show_strings_bitmap(idx) {
+		let p=this.#seen_strings[idx];
+		if(!p) return;
+		let k=p[0];
+		let cur=p[1];
 		let bitmap;
+		let bitmap_src;
 		if(cur[0]==="many") {
-			console.log("[generate_bitmap] for many type");
-		} else if(cur[0]==="one") {
-			let index_map=[...new Set([...cur[1].map(e => e.split(",")).flat()])].sort();
-			bitmap="\n"+cur[1].map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
-				let ta=new Array(index_map.length);
-				ta.fill(0);
-				for(let x of e) {
-					ta[x]=1;
-				}
-				return ta.join("");
-			}).sort().join("\n")+"\n";
-			console.log(` --------- ${k} --------- `);
-			console.log(index_map.join(","));
-			console.log(bitmap);
+			bitmap_src=cur[1].map(e => e.join("::"));
+		} else {
+			bitmap_src=cur[1];
 		}
+		let index_map=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])].sort();
+		bitmap="\n"+bitmap_src.map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
+			let ta=new Array(index_map.length);
+			ta.fill(0);
+			for(let x of e) {
+				ta[x]=1;
+			}
+			return ta.join("");
+		}).sort().join("\n")+"\n";
+		console.log(` --------- [${k}] --------- `);
+		console.log(index_map.join(","));
+		console.log(bitmap);
 	}
 	/** @type {[string,number|number[]][]} */
 	#new_numbers=[];
