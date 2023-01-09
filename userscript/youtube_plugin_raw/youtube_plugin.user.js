@@ -3095,7 +3095,6 @@ class CsiService extends BaseService {
 	decode_rid_param_key(x) {
 		if(this.str_starts_with(x.key,"Get")) {
 			console.log("[new_get_rid][%s][%s]",x.key,x.value);
-			x.key;
 		} else if(this.str_starts_with(x.key,"Record")) {
 			console.log("[new_record_rid][%s][%s]",x.key,x.value);
 		} else if(this.str_starts_with(x.key,"Set")) {
