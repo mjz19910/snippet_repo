@@ -2125,7 +2125,6 @@ class KnownDataSaver extends ApiBase {
 	save_key_objs={};
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
-		if("actions" in x) debugger;
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
 		if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
 			arr: [],
@@ -2136,7 +2135,9 @@ class KnownDataSaver extends ApiBase {
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let keys=this.get_keys_of(x);
-		this.save_string(ki,keys.join());
+		let ret=this.save_string(ki,keys.join());
+		if(ret&&"actions" in x) debugger;
+		return ret;
 	}
 	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
 	#parse_data(str) {
@@ -2278,13 +2279,14 @@ class KnownDataSaver extends ApiBase {
 				}
 			}
 		}
-		if(was_known) return;
+		if(was_known) return false;
 		this.#new_strings.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
 		let idx=this.#seen_strings.indexOf(p);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(idx);
+		return true;
 	}
 	/** @arg {number} idx */
 	show_strings_bitmap(idx) {
@@ -2305,6 +2307,12 @@ class KnownDataSaver extends ApiBase {
 			return;
 		} else {
 			let bitmap_src=cur[1];
+			let linear_map=bitmap_src.every(e=>!e.includes(","));
+			if(linear_map) {
+				console.log(` --------- [linear.${k}] --------- `);
+				console.log(bitmap_src.join(":"));
+				return;
+			}
 			let {bitmap,index_map}=this.generate_bitmap(bitmap_src);
 			console.log(` --------- [${k}] --------- `);
 			console.log(index_map.join(","));
@@ -2731,6 +2739,11 @@ class YtHandlers extends BaseService {
 	convert_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
+			case "dislike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {DislikeResponse} */
+				data: as(x),
+			}
 			case "like": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {LikeLikeResponse} */

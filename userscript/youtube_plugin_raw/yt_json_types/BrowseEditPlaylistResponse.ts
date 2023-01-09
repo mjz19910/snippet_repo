@@ -5,7 +5,3 @@ type BrowseEditPlaylistResponse={
 	playlistEditResults: {}[];
 	trackingParams: string;
 };
-type RefreshPlaylistCommand={
-	clickTrackingParams: string;
-	refreshPlaylistCommand: {};
-};

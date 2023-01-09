@@ -1,0 +1,3 @@
+type DislikeResponse={
+	responseContext: ResponseContext;
+};
