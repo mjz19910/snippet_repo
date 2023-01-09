@@ -1518,13 +1518,10 @@ function start_message_channel_loop(handle_types) {
 		});
 	}
 }
-
 /** @private @arg {Document|Element} node @arg {string} child_node_tag_name */
 function get_html_elements(node,child_node_tag_name) {
 	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
 }
-
-
 /** @private @type {((event:{})=>void)[]} */
 var on_yt_navigate=[];
 async function wait_for_yt_player() {
@@ -1555,21 +1552,19 @@ function sumOffset(element) {
 	}
 	return cache;
 }
-
 let overlay_content_div=document.createElement("div");
+let input_modify_css_style=document.createElement("div");
+let overlay_hide_ui_input=document.createElement("div");
+let plugin_overlay_element=document.createElement("div");
 overlay_content_div.style.userSelect="all";
 overlay_content_div.style.width="max-content";
-
-let input_modify_css_style=document.createElement("div");
 input_modify_css_style.style.float="left";
 input_modify_css_style.innerHTML="C";
 input_modify_css_style.onclick=ui_css_toggle_click_handler;
-let overlay_hide_ui_input=document.createElement("div");
 overlay_hide_ui_input.style.float="left";
 overlay_hide_ui_input.style.clear="left";
 overlay_hide_ui_input.innerHTML="H";
 overlay_hide_ui_input.onclick=title_display_toggle;
-let plugin_overlay_element=document.createElement("div");
 plugin_overlay_element.id="mz_overlay";
 plugin_overlay_element.append(overlay_content_div);
 plugin_overlay_element.append(input_modify_css_style);
