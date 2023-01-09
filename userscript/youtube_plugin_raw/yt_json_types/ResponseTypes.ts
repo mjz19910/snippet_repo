@@ -21,6 +21,7 @@ type ResponseTypes=
 	|notification_modify_channel_preference_t
 	|notification_record_interactions
 	|player_t
+	|playlist_get_add_to_playlist_t
 	|reel_reel_item_watch_t
 	|reel_reel_watch_sequence_t
 	|subscription_subscribe_t

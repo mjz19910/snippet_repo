@@ -2759,6 +2759,7 @@ class YtHandlers extends BaseService {
 			case "notification": res=this.convert_notification(target,x); break;
 			case "reel": res=this.convert_reel(target,x); break;
 			case "subscription": res=this.convert_subscription(target,x); break;
+			case "playlist": res=this.convert_playlist(target,x); break;
 		}
 		switch(target.length) {
 			case 1: res=this.convert_length_1(target,x); break;
@@ -2770,6 +2771,17 @@ class YtHandlers extends BaseService {
 			type: "_Generic",
 			data: x,
 		};
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	convert_playlist(t,x) {
+		switch(t[1]) {
+			case "get_add_to_playlist": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {GetAddToPlaylistResponse} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
 	convert_subscription(t,x) {
