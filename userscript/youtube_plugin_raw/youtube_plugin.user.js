@@ -3101,11 +3101,7 @@ class CsiService extends BaseService {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
-			switch(section_id) {
-				case "get": break;
-				case "generic": break;
-				default: debugger; return "generic";
-			}
+			this.save_string("section_id",section_id);
 			return section_id;
 		}
 		return "generic";
@@ -4804,9 +4800,25 @@ class ServiceData extends BaseService {
 	}
 }
 class DefaultHandlers extends ApiBase {
+	/** @type {<T extends string,U extends T>(k:string[] extends T?never:T[],r:U[])=>Exclude<T,U>[]} */
+	filter_out_keys(keys,to_remove) {
+		to_remove=to_remove.slice();
+		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		let ok_e=[];
+		for(let i=0;i<keys.length;i++) {
+			let rm_idx=to_remove.findIndex(e=>e===keys[i]);
+			if(rm_idx>=0) {
+				to_remove.splice(rm_idx,1);
+				continue;
+			}
+			ok_e.push(cast_as(keys[i]));
+		}
+		return ok_e;
+	}
 	/** @arg {string[]} path @arg {AllActions} x */
 	Action(path,x) {
 		let keys_arr=this.get_keys_of(x);
+		keys_arr=this.filter_out_keys(keys_arr,["clickTrackingParams"]);
 		if(keys_arr.length!==1) debugger;
 		data_saver.save_keys(`[${path.join(".")}.default.Action.${keys_arr[0]}]`,x);
 	}
