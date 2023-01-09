@@ -668,7 +668,7 @@ class HandleRichGridRenderer {
 		}
 		if(renderer.contents) {
 			if(this.debug) console.log("on_contents",path);
-			let filtered=this.rendererContentItemArray.replace_array(this,renderer.contents);
+			let filtered=this.rendererContentItemArray.replace_array(renderer.contents);
 			if(filtered.length>0) {
 				renderer.contents=filtered;
 			}
@@ -1583,14 +1583,12 @@ try {
 } catch {
 	no_storage_access=true;
 }
-
 if(!title_save) {
 	title_save="{\"value\":false}";
 	if(!no_storage_access) {
 		localStorage.setItem("title_save_data",title_save);
 	}
 }
-
 function log_current_video_data() {
 	if(!ytd_player) return;
 	if(!ytd_player.player_) {
@@ -1608,7 +1606,6 @@ function log_current_video_data() {
 	overlay_content_div.innerText=`[${video_id}] ${title}`;
 }
 on_yt_navigate_finish.push(log_current_video_data);
-
 let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
 function title_text_overlay_update() {
@@ -1640,7 +1637,6 @@ function on_yt_action(event) {
 	}
 }
 document.addEventListener("yt-action",as(on_yt_action));
-
 function title_display_toggle() {
 	title_on=!title_on;
 	title_text_overlay_update();
@@ -1733,7 +1729,6 @@ let volume_plugin_style_source=`
 	}
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
 `;
-
 class AudioGainController {
 	/** @private @type {(HTMLVideoElement|HTMLAudioElement)[]} */
 	attached_element_list=[];
@@ -1792,7 +1787,6 @@ class AudioGainController {
 }
 /** @private @type {AudioGainController|null} */
 let audio_gain_controller=new AudioGainController;
-
 /** @private @template {string} T @template {{}} U @template {Split<T, ",">} C @returns {{[I in Exclude<keyof U,C[number]>]:U[I]}} @type {__ia_excludeKeysS} */
 Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|ArrayLike<any>} */ target,/** @private @type {string} */ ex_keys_str) {
 	/** @private @type {any} */
@@ -1801,8 +1795,8 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 	let ex_keys=ex_keys_any;
 	/** @private @type {C[number]} */
 	var key;
-	var rest,i=0,
-		obj=Object.fromEntries(Object.entries(target));
+	var rest,i=0;
+	var obj=Object.fromEntries(Object.entries(target));
 	for(;i<ex_keys.length;i++) {
 		{
 			key=ex_keys[i];
@@ -1852,7 +1846,6 @@ class ServiceResolver {
 		return this.services[key];
 	}
 }
-
 function get_exports() {
 	return exports;
 }
@@ -2549,7 +2542,7 @@ class BaseService extends BaseServicePrivate {
 	}
 }
 
-class FilterHandlers extends BaseService {
+class YtHandlers extends BaseService {
 	/** @public @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
 		super(res);
@@ -2870,16 +2863,9 @@ class FilterHandlers extends BaseService {
 }
 class HandleRendererContentItemArray extends BaseService {
 	debug=false;
-	/** @private @arg {HandleRichGridRenderer|FilterHandlers} base @arg {RichItemRenderer} content_item */
-	filter_for_rich_item_renderer(base,content_item) {
-		let debug_flag_value=false;
-		if("filter_handler_debug" in base) {
-			if(base.filter_handler_debug) debug_flag_value=base.filter_handler_debug;
-		} else if("debug" in base) {
-			debug_flag_value=base.debug;
-		} else {
-			debugger;
-		}
+	/** @private @arg {RichItemRenderer} content_item */
+	filter_for_rich_item_renderer(content_item) {
+		let debug_flag_value=this.x.get_param("noisy_logging");
 		let renderer=content_item.richItemRenderer;
 		console.assert(renderer.content!=void 0,"richItemRenderer has content");
 		if("adSlotRenderer" in renderer.content) {
@@ -2921,12 +2907,12 @@ class HandleRendererContentItemArray extends BaseService {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @public @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {HandleRichGridRenderer|FilterHandlers} base @arg {T} arr @returns {T} */
-	replace_array(base,arr) {
+	/** @public @template {BrowseFeedItem[]|WatchNextItem[]|CommentsSectionItem[]|SectionItem[]} T @arg {T} arr @returns {T} */
+	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			let keys=this.get_keys_of(content_item);
 			if("richItemRenderer" in content_item) {
-				return this.filter_for_rich_item_renderer(base,content_item);
+				return this.filter_for_rich_item_renderer(content_item);
 			}
 			if("commentThreadRenderer" in content_item) return true;
 			if("commentsHeaderRenderer" in content_item) return true;
@@ -2943,14 +2929,14 @@ class HandleRendererContentItemArray extends BaseService {
 		}));
 	}
 }
-/** @typedef {{t:FilterHandlers;path:string}} ApiIterateState */
+/** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtIterateTarget extends BaseService {
-	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
-	appendContinuationItemsAction(state,action) {
+	/** @arg {ApiIterateState} _state @arg {AppendContinuationItemsAction} action */
+	appendContinuationItemsAction(_state,action) {
 		if(!action.continuationItems) {
 			debugger;
 		}
-		let filtered=state.t.handlers.renderer_content_item_array.replace_array(state.t,action.continuationItems);
+		let filtered=this.x.get("yt_handlers").handlers.renderer_content_item_array.replace_array(action.continuationItems);
 		if(filtered.length>0) {
 			action.continuationItems=filtered;
 		}
@@ -2960,7 +2946,7 @@ class YtIterateTarget extends BaseService {
 		if(!command.continuationItems) {
 			debugger;
 		}
-		let filtered=state.handlers.renderer_content_item_array.replace_array(state,command.continuationItems);
+		let filtered=state.handlers.renderer_content_item_array.replace_array(command.continuationItems);
 		if(filtered.length>0) {
 			command.continuationItems=filtered;
 		}
@@ -3362,7 +3348,7 @@ class Services {
 		this.guided_help_service=new GuidedHelpService(x);
 		this.service_tracking=new TrackingServices(x);
 		this.parser_service=new ParserService(x);
-		this.yt_handlers=new FilterHandlers(x);
+		this.yt_handlers=new YtHandlers(x);
 		this.handle_types=new HandleTypes(x);
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new IndexedDbAccessor(x,"yt_plugin",2);
@@ -3375,10 +3361,12 @@ class YtPlugin {
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
 	constructor() {
+		/** @type {YtHandlers|null} */
+		this.yt_handlers=null;
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
 	}
-	/** @arg {FilterHandlers} value */
+	/** @arg {YtHandlers} value */
 	set_yt_handlers(value) {
 		this.yt_handlers=value;
 	}
