@@ -95,11 +95,9 @@ function yt_watch_page_loaded_handler() {
 	ytd_player.active_nav=false;
 	ytd_player.init_nav=true;
 }
-
 let waiting_for_ytd_player=false;
 /** @private @type {number|null} */
 let current_timeout=null;
-
 function init_ui_plugin() {
 	if(waiting_for_ytd_player) return;
 	if(current_timeout===null)
@@ -132,7 +130,6 @@ function init_ui_plugin() {
 	}
 	current_timeout=setTimeout(activate_nav,0);
 }
-
 function activate_nav() {
 	if(is_yt_debug_enabled) console.log("activate_nav:fire");
 	if(!ytd_player) return;
@@ -156,7 +153,6 @@ function activate_nav() {
 		requestAnimationFrame(page_changed_next_frame);
 	});
 }
-
 function do_find_video() {
 	if(!audio_gain_controller) return;
 	const element_list=get_html_elements(document,"video");
@@ -239,10 +235,8 @@ function on_ytd_app(element) {
 		}
 	});
 }
-
 /** @private @type {Element|null} */
 let main_page_app=null;
-
 /** @private @arg {CustomEventType} event */
 async function async_plugin_init(event) {
 	if(event.type!=="async-plugin-init") return;
@@ -398,12 +392,9 @@ async function async_plugin_init(event) {
 		console.log("had error in async init",e);
 	}
 }
-
 let found_element_count=0;
 let expected_element_count=6;
 async_plugin_init.__debug=false;
-
-// spell:words monospace
 let player_overlay_style_str=`
 position: absolute;
 top: 80px;
@@ -548,10 +539,6 @@ class VolumeRange {
 		}
 		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
-}
-if(typeof exports==="object") {
-	let exports=get_exports();
-	exports.VolumeRange=VolumeRange;
 }
 /** @private @arg {string|URL} url */
 function to_url(url) {
@@ -1894,6 +1881,7 @@ function main() {
 		exports.HandleTypes=HandleTypes;
 		exports.ServiceResolver=ServiceResolver;
 		exports.YtPlugin=YtPlugin;
+		exports.VolumeRange=VolumeRange;
 	}
 	resolver_value.value=service_resolver;
 	yt_plugin.set_yt_handlers(yt_handlers);
