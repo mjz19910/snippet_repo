@@ -4902,8 +4902,9 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
+		const {actions,...y}=x;
 		this.save_keys("[LikeRemoveLikeResponse]",x);
-		if(!this.eq_keys(this.get_keys_of(x),["responseContext"])) {
+		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) {
 			this.x.get("codegen").generate_renderer(x,null);
 			debugger;
 		}
