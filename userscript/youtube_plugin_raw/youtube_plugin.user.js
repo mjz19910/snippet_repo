@@ -1994,9 +1994,7 @@ function main() {
 	}
 	function modify_global_env() {
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
-			/** @private @arg {typeof URL["createObjectURL"]} target
-			 @arg {typeof URL} thisArg
-			 @arg {[Blob|MediaSource]} args */
+			/** @private @arg {typeof URL["createObjectURL"]} target @arg {typeof URL} thisArg @arg {[Blob|MediaSource]} args */
 			apply(target,thisArg,args) {
 				let [url_source,...rest]=args;
 				if(rest.length>0) {
@@ -2010,9 +2008,7 @@ function main() {
 			}
 		});
 		URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
-			/** @private @arg {typeof URL["revokeObjectURL"]} target
-			 @arg {typeof URL} thisArg
-			 @arg {[string]} args */
+			/** @private @arg {typeof URL["revokeObjectURL"]} target @arg {typeof URL} thisArg @arg {[string]} args */
 			apply(target,thisArg,args) {
 				let val=args[0];
 				active_blob_set.delete(val);
