@@ -1,7 +1,8 @@
 type BrowsePageResponse={
-	page: "browse";
+	rootVe: number;
+	url: string;
 	endpoint: BrowseEndpoint;
+	page: "browse";
 	response: BrowseResponse;
-	url: YtUrlFormat;
-	previousCsn?: string;
+	expirationTime: {};
 };

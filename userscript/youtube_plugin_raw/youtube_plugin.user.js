@@ -2902,10 +2902,7 @@ class BaseServicePrivate extends KnownDataSaver {
 	new_numbers=[];
 	/** @public @arg {string} key @arg {number|number[]} x */
 	save_number(key,x) {
-		if(x===void 0) {
-			debugger;
-			return;
-		}
+		if(x===void 0) {debugger;return;}
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
@@ -3060,7 +3057,6 @@ class BaseService extends BaseServicePrivate {
 		let keys=get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s]",keys.join());
-		debugger;
 	}
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
@@ -3068,16 +3064,17 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	save_key_objs=new Map;
+	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
+	save_key_objs={};
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
-		if(!this.save_key_objs.has(ki)) this.save_key_objs.set(ki,{
+		if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
 			arr: [],
 			/** @arg {{}} o */
 			set(o) {this.arr.push(o);}
-		});
-		this.save_key_objs.get(ki)?.set(x);
+		};
+		this.save_key_objs[ki]?.set(x);
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let keys=get_keys_of(x);
@@ -3774,12 +3771,14 @@ class CodegenService extends BaseService {
 		if(r) {
 			tn=r;
 		}
+		if(x===null) return;
+		if(x===void 0) return;
 		tn=this.#uppercase_first(tn);
 		let obj_count=0;
 		/** @private @type {{[x: number|string]:{}}} */
 		let xa=as(x);
 		let o2=xa[k];
-		let keys=Object.keys(as(x)).concat(Object.keys(o2));
+		let keys=Object.keys(x).concat(Object.keys(o2));
 		const max_str_len=40;
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
@@ -4694,8 +4693,22 @@ class Generate {
 class C1 extends BaseService {
 	/** @public @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
+		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
+		this.save_number("BrowsePageResponse.rootVe",rootVe);
+		console.log("browse_url",url);
+		this.BrowseEndpoint(x.endpoint);
+		if(page!=="browse") debugger;
+		this.BrowseResponse(response);
+		console.log("[BrowsePageResponse.expirationTime]",expirationTime);
 		this.save_keys("[BrowsePageResponse]",x);
-		x.endpoint;
+	}
+	/** @public @arg {BrowseResponse} x */
+	BrowseResponse(x) {
+		this.save_keys("[BrowseResponse]",x);
+	}
+	/** @private @arg {BrowseEndpoint} x */
+	BrowseEndpoint(x) {
+		this.save_keys("[BrowseEndpoint]",x);
 	}
 }
 class C2 extends BaseService {
@@ -4803,7 +4816,7 @@ class HandleTypes extends ServiceData {
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
 			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
-			case "browse": return this.BrowseResponse(x.data);
+			case "browse": return this.c1.BrowseResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
 			case "get_transcript": return this.GetTranscriptResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);
@@ -4829,10 +4842,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
-	}
-	/** @private @arg {BrowseResponse} x */
-	BrowseResponse(x) {
-		this.save_keys("[BrowseResponseContent]",x);
 	}
 	/** @arg {{}} x */
 	LikeLikeResponse(x) {
