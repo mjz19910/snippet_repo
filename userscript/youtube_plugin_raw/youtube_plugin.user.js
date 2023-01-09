@@ -2111,6 +2111,8 @@ class KnownDataSaver extends ApiBase {
 		this.#load_data();
 		this.#store_data();
 	}
+	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
+	save_key_objs={};
 	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
 	#parse_data(str) {
 		return JSON.parse(str);
@@ -2501,17 +2503,15 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
-	save_key_objs={};
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
-		if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
+		if(!(ki in this.ds.save_key_objs)) this.ds.save_key_objs[ki]={
 			arr: [],
 			/** @arg {{}} o */
 			set(o) {this.arr.push(o);}
 		};
-		this.save_key_objs[ki]?.set(x);
+		this.ds.save_key_objs[ki]?.set(x);
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let keys=this.get_keys_of(x);
