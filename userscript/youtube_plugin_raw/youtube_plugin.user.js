@@ -3423,8 +3423,8 @@ class IndexedDbAccessor extends BaseService {
 	}
 	database_opening=false;
 	database_open=false;
-	/** @type {string[]} */
-	keys=[];
+	/** @type {Map<string,number>} */
+	index=new Map;
 	/** @private @type {{v: string}[]} */
 	arr=[];
 	/** @private @type {{v: string}[]} */
@@ -3437,18 +3437,13 @@ class IndexedDbAccessor extends BaseService {
 	}
 	/** @public @template {{v: string}} T @arg {T} obj */
 	push_waiting_obj(obj) {
-		if(this.keys.includes(obj.v)) {
-			let idx=this.arr.findIndex(e => e.v===obj.v);
-			if(idx>=0) {
-				this.arr[idx]=obj;
-				return;
-			} else {
-				this.arr.push(obj);
-				return;
-			}
+		let idx=this.index.get(obj.v);
+		if(idx!=null) {
+			this.arr[idx]=obj;
+			return;
 		}
-		this.keys.push(obj.v);
-		this.arr.push(obj);
+		idx=this.arr.push(obj)-1;
+		this.index.set(obj.v,idx);
 	}
 	requestOpen() {
 		if(this.database_opening||this.database_open) return;
