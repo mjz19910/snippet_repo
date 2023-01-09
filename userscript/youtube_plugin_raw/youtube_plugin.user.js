@@ -2125,6 +2125,7 @@ class KnownDataSaver extends ApiBase {
 	save_key_objs={};
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
+		if("actions" in x) debugger;
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
 		if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
 			arr: [],
@@ -4405,11 +4406,16 @@ class ParserService extends BaseService {
 			case "notification": return this.get_notification_type(x);
 			case "reel": return this.get_reel_type(x);
 			case "subscription": return this.get_subscription_type(x);
+			case "playlist": return this.get_playlist_type(x);
 		}
 		switch(x.length) {
 			case 3: return this.get_yt_url_type_3(x);
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
+	}
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",...string[]]>} x */
+	get_playlist_type(x) {
+		x;
 	}
 	/** @private @arg {string[]} parts @arg {string} cur_part */
 	api_no_handler(parts,cur_part) {
@@ -4911,10 +4917,12 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
+		const name="ReelWatchSequenceResponse";
+		if("actions" in x) debugger;
 		if("actions" in x&&x.actions instanceof Array) this.z(x.actions,a=>{
-			this.default.Action(["ReelWatchSequenceResponse"],a);
+			this.default.Action([name],a);
 		});
-		this.save_keys("[ReelWatchSequence]",x);
+		this.save_keys(`[${name}]`,x);
 	}
 	/** @private @arg {GetLiveChatReplayResponse} x */
 	GetLiveChatReplayResponse(x) {
