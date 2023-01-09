@@ -3099,21 +3099,37 @@ class CsiService extends BaseService {
 	};
 	/** @private @type {(RidFormat<string>)[]} */
 	rid_keys=[
-		/* `Record${string}_rid` */"RecordNotificationInteractions_rid",
-		// settings
-		"SetSetting_rid",
-		/* `Get${string}_rid` & settings*/"GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid",
-		/* Notification */"GetNotificationsMenu_rid","GetUnseenNotificationCount_rid",
-		/* one word after section */"GetHome_rid","GetPlayer_rid","GetPlaylist_rid","GetSubscriptions_rid",
-		/* other*/"GetReelItemWatch_rid","GetWatchNext_rid","GetWebMainAppGuide_rid","GetWatchPageWebTopLevelComments_rid","GetAttestationChallenge_rid",
-		/* destinations */ "GetGamingDestination_rid",
-		"GetAccountsList_rid",
-		/*reel_watch*/"GetReelWatchSequence_rid",
-		"GetLibrary_rid","GetHistory_rid",
-		/*`Remove${string}_rid`*/"RemoveLike_rid",
-		"GetLiveChatReplay_rid",
-		"GetAccountDownloads_rid",
+		"RecordNotificationInteractions_rid","SetSetting_rid","GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid","GetNotificationsMenu_rid","GetUnseenNotificationCount_rid","GetHome_rid","GetPlayer_rid","GetPlaylist_rid","GetSubscriptions_rid","GetReelItemWatch_rid","GetWatchNext_rid","GetWebMainAppGuide_rid","GetWatchPageWebTopLevelComments_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetAccountsList_rid","GetReelWatchSequence_rid","GetLibrary_rid","GetHistory_rid","RemoveLike_rid","GetLiveChatReplay_rid","GetAccountDownloads_rid","GetVideoTranscript_rid",
 	];
+	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} param */
+	parse_rid_param(param) {
+		if(param.key in this.rid) {
+			/** @private @type {RidFormat<string>} */
+			let rid_key=param.key;
+			this.rid[rid_key]=param.value;
+			return;
+		}
+		if(!get_ends_with(param.key)) {
+			console.log("new csi param",param);
+			debugger;
+			return;
+		}
+		if(get_starts_with(param.key,"Get")) {
+			console.log("[new_get_rid][%s][%s]",param.key,param.value);
+			param.key;
+		} else if(get_starts_with(param.key,"Record")) {
+			console.log("[new_record_rid][%s][%s]",param.key,param.value);
+		} else if(get_starts_with(param.key,"Set")) {
+			console.log("[new_set_rid][%s][%s]",param.key,param.value);
+		} else {
+			console.log("[new_rid_section][%s]",param.key);
+		}
+		this.rid[param.key]=param.value;
+		/** @private @template {string} T @arg {T} x @returns {x is `${string}_rid`} */
+		function get_ends_with(x) {x; return x.endsWith("_rid");}
+		/** @private @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}_rid`} */
+		function get_starts_with(x,v) {x; return x.startsWith(v);}
+	}
 	/** @private @type {{[x: RidFormat<string>]: `0x${string}`|undefined;}} */
 	rid={};
 	/** @arg {ResolverT<Services,ServiceOptions>} x */
@@ -3150,32 +3166,7 @@ class CsiService extends BaseService {
 				case "yt_ad": if(param.value!=="1") debugger; this.data[param.key]=param.value; continue;
 				case "yt_fn": if(!this.verify_param_yt_fn(param.value)) debugger; this.data[param.key]=param.value; continue;
 			}
-			/** @private @template {string} T @arg {T} x @returns {x is `${string}_rid`} */
-			function get_ends_with(x) {x; return x.endsWith("_rid");}
-			/** @private @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}_rid`} */
-			function get_starts_with(x,v) {x; return x.startsWith(v);}
-			if(param.key in this.rid) {
-				/** @private @type {RidFormat<string>} */
-				let rid_key=param.key;
-				this.rid[rid_key]=param.value;
-				continue;
-			} else if(get_ends_with(param.key)) {
-				if(get_starts_with(param.key,"Get")) {
-					console.log("[new_get_rid][%s][%s]",param.key,param.value);
-					param.key;
-				} else if(get_starts_with(param.key,"Record")) {
-					console.log("[new_record_rid][%s][%s]",param.key,param.value);
-				} else if(get_starts_with(param.key,"Set")) {
-					console.log("[new_set_rid][%s][%s]",param.key,param.value);
-				} else {
-					console.log("[new_rid_section][%s]",param.key);
-				}
-				this.rid[param.key]=param.value;
-				continue;
-			} else {
-				console.log("new csi param",param);
-			}
-			console.log("new csi param",param); debugger;
+			this.parse_rid_param(param);
 		}
 	}
 }
@@ -3641,7 +3632,7 @@ class CodegenService extends BaseService {
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
-			if(k=="responseContext") {console.log("responseContext",x);continue;}
+			if(k=="responseContext") {console.log("responseContext",x); continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
