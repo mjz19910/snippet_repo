@@ -1114,42 +1114,42 @@ class FilterHandlers {
 			default: debugger; break;
 			case "browse": return {
 				type: target[0],
-				/** @private @type {BrowseResponse} */
+				/** @type {BrowseResponse} */
 				data: as(x),
 			};
 			case "feedback": return {
 				type: target[0],
-				/** @private @type {FeedbackResponse} */
+				/** @type {FeedbackResponse} */
 				data: as(x),
 			};
 			case "getDatasyncIdsEndpoint": return {
 				type: target[0],
-				/** @private @type {DatasyncIdsResponse} */
+				/** @type {DatasyncIdsResponse} */
 				data: as(x),
 			};
 			case "getAccountSwitcherEndpoint": return {
 				type: target[0],
-				/** @private @type {GetAccountSwitcherEndpointResponse} */
+				/** @type {GetAccountSwitcherEndpointResponse} */
 				data: as(x),
 			};
 			case "get_transcript": return {
 				type: target[0],
-				/** @private @type {GetTranscriptResponse} */
+				/** @type {GetTranscriptResponse} */
 				data: as(x),
 			};
 			case "guide": return {
 				type: target[0],
-				/** @private @type {GuideResponse} */
+				/** @type {GuideResponse} */
 				data: as(x),
 			};
 			case "next": return {
 				type: target[0],
-				/** @private @type {NextResponse} */
+				/** @type {NextResponse} */
 				data: as(x),
 			};
 			case "player": return {
 				type: target[0],
-				/** @private @type {PlayerResponse} */
+				/** @type {PlayerResponse} */
 				data: as(x),
 			};
 		}
@@ -4705,11 +4705,19 @@ class C1 extends BaseService {
 	}
 	/** @public @arg {BrowseResponse} x */
 	BrowseResponse(x) {
+		this.BrowseResponseContext(x.responseContext);
 		this.save_keys("[BrowseResponse]",x);
 	}
 	/** @private @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
 		this.save_keys("[BrowseEndpoint]",x);
+	}
+	/** @private @arg {ResponseContext} x */
+	BrowseResponseContext(x) {
+		let tracking_handler=this.x.get("service_tracking");
+		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
+		tracking_handler.on_complete_set_service_params();
+		this.save_keys("[BrowseResponseContext]",x);
 	}
 }
 class C2 extends BaseService {
@@ -4807,11 +4815,14 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {ResponseTypes} x */
 	ResponseTypes(x) {
-		this._current_response_type=x.type;
 		/** @private @arg {{type:string}} x */
 		let g=x => {
 			return this.save_string("need_api_type",x.type);
 		};
+		switch(x.type) {
+			case "_Generic": return g(x);
+		}
+		this._current_response_type=x.type;
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuResponse(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);
@@ -4833,11 +4844,7 @@ class HandleTypes extends ServiceData {
 			case "reel.reel_item_watch": return this.ReelItemWatchResponse(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequenceResponse(x.data);
 			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplayResponse(x.data);
-			default: debugger; break;
-		}
-		switch(x.type) {
-			case "_Generic": return g(x);
-			default: return g(x);
+			default: debugger; return g(x);
 		}
 	}
 	/** @private @arg {PlayerResponse} x */
@@ -4870,80 +4877,98 @@ class HandleTypes extends ServiceData {
 		if(!x) return;
 		f(x);
 	}
-	/** @arg {{}} x */
+	/** @arg {{responseContext: ResponseContext}} x */
 	LikeLikeResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[LikeLikeResponse]",x);
 		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
-	/** @arg {{}} x */
+	/** @arg {{responseContext: ResponseContext}} x */
 	LikeRemoveLikeResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[LikeRemoveLikeResponse]",x);
 		this.x.get("codegen").generate_renderer(x,null);
 		debugger;
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[ReelWatchSequence]",x);
 	}
 	/** @private @arg {GetLiveChatReplayResponse} x */
 	GetLiveChatReplayResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetLiveChatReplay]",x);
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetNotificationMenuResponse]",x);
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[NextResponse]",x);
 	}
 	/** @private @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[DatasyncIdsResponse]",x);
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetAccountSwitcherEndpointResponse]",x);
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[AccountsListResponse]",x);
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[ReelItemWatchResponse]",x);
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[AccountSetSetting]",x);
 	}
 	/** @private @arg {FeedbackResponse} x */
 	FeedbackResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[FeedbackResponse]",x);
 	}
 	/** @private @arg {GetTranscriptResponse} x */
 	GetTranscriptResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[GetTranscriptResponse]",x);
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[AccountMenuResponse]",x);
 	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[SuccessResponse]",x);
 	}
 	/** @private @arg {AttGetResponse} x */
 	AttGetResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[AttGetResponse]",x);
 	}
 	/** @private @arg {GuideResponse} x */
 	GuideResponse(x) {
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[GuideResponse]",x);
 	}
 }
