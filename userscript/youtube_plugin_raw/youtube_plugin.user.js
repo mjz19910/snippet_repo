@@ -2654,12 +2654,12 @@ class KnownDataSaver {
 		let bitmap;
 		let bitmap_src;
 		if(cur[0]==="many") {
-			bitmap_src=cur[1].map(e => e.join("::"));
+			bitmap_src=cur[1].map(e => e.join(","));
 		} else {
 			bitmap_src=cur[1];
 		}
-		let index_map=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])].sort();
-		bitmap="\n"+bitmap_src.map(e => e.split(",").sort().map(e => index_map.indexOf(e))).map(e => {
+		let index_map=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
+		bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => index_map.indexOf(e))).map(e => {
 			let ta=new Array(index_map.length);
 			ta.fill(0);
 			for(let x of e) {
@@ -4843,6 +4843,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
+		x.responseContext;
 		this.save_keys("[PlayerResponse]",x);
 		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
 	}

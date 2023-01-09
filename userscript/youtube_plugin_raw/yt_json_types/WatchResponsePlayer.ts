@@ -17,6 +17,6 @@ interface PlayerResponse {
 	adPlacements?: Maybe<AdPlacementRenderer>[];
 	frameworkUpdates: FrameworkUpdates;
 	endscreen?: EndscreenRenderer;
-	paidContentOverlay?: PaidContentOverlay;
+	paidContentOverlay?: {};
 	annotations?: PlayerAnnotationsExpandedRenderer[];
 }
