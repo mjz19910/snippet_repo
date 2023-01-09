@@ -3431,9 +3431,8 @@ class IndexedDbAccessor extends BaseService {
 	committed_data=[];
 	/** @public @template {{v: string}} T @arg {T} obj */
 	put(obj) {
+		if(!this.database_open) this.requestOpen();
 		this.push_waiting_obj(obj);
-		if(this.database_open) return;
-		this.requestOpen();
 	}
 	/** @public @template {{v: string}} T @arg {T} obj */
 	push_waiting_obj(obj) {
