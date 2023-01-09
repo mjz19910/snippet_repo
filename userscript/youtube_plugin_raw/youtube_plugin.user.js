@@ -4819,9 +4819,18 @@ class HandleTypes extends ServiceData {
 			case "player": return this.PlayerResponse(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatchResponse(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequenceResponse(x.data);
-			case "subscription.subscribe": break;
+			case "subscription.subscribe": return this.SubscribeResponse(x.data);
+			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {SubscribeResponse} x */
+	SubscribeResponse(x) {
+		this.save_keys("[SubscribeResponse]",x);
+	}
+	/** @arg {UnsubscribeResponse} x */
+	UnsubscribeResponse(x) {
+		this.save_keys("[UnsubscribeResponse]",x);
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
