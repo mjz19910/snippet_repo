@@ -1827,6 +1827,12 @@ class ServiceResolver {
 	}
 }
 //#region
+/** @private @arg {(x:typeof exports)=>void} fn */
+function export_(fn) {
+	if(typeof exports==="object") {
+		fn(exports);
+	}
+}
 function main() {
 	const log_enabled_page_type_change=false;
 	/** @private @arg {YTNavigateFinishEvent} event */
@@ -1864,12 +1870,6 @@ function main() {
 		log_click_tracking_params,
 		noisy_logging: false,
 	});
-	/** @private @arg {(x:typeof exports)=>void} fn */
-	function export_(fn) {
-		if(typeof exports==="object") {
-			fn(exports);
-		}
-	}
 	export_((exports) => {
 		exports.Services=Services;
 		exports.ParserService=ParserService;
