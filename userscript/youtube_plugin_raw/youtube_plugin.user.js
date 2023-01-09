@@ -2303,7 +2303,7 @@ class KnownDataSaver extends ApiBase {
 				ta[x]=1;
 			}
 			return ta.join("");
-		}).sort((a,b)=>b.split("0").length-a.split("0").length).join("\n")+"\n";
+		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
 		console.log(` --------- [${k}] --------- `);
 		console.log(index_map.join(","));
 		console.log(bitmap);
@@ -3054,8 +3054,8 @@ class CsiService extends BaseService {
 	};
 	/** @private @type {(RidFormat<string>)[]} */
 	rid_keys=[
-		"RecordNotificationInteractions_rid","SetSetting_rid","GetAccountMenu_rid","GetAccountSharing_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountBilling_rid","GetAccountAdvanced_rid","GetNotificationsMenu_rid","GetUnseenNotificationCount_rid","GetHome_rid","GetPlayer_rid","GetPlaylist_rid","GetSubscriptions_rid","GetReelItemWatch_rid","GetWatchNext_rid","GetWebMainAppGuide_rid","GetWatchPageWebTopLevelComments_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetAccountsList_rid","GetReelWatchSequence_rid","GetLibrary_rid","GetHistory_rid","RemoveLike_rid","GetLiveChatReplay_rid","GetAccountDownloads_rid","GetVideoTranscript_rid",
-		"GetWatchPageWebCommentReplies_rid",
+		"GetAccountAdvanced_rid","GetAccountBilling_rid","GetAccountDownloads_rid","GetAccountMenu_rid","GetAccountNotifications_rid","GetAccountOverview_rid","GetAccountPlayback_rid","GetAccountPrivacy_rid","GetAccountSharing_rid","GetAccountsList_rid","GetAttestationChallenge_rid","GetGamingDestination_rid","GetHistory_rid","GetHome_rid","GetLibrary_rid","GetLiveChatReplay_rid","GetNotificationsMenu_rid","GetPlayer_rid","GetPlaylist_rid","GetReelItemWatch_rid","GetReelWatchSequence_rid","GetSubscriptions_rid","GetUnseenNotificationCount_rid","GetVideoTranscript_rid","GetWatchNext_rid","GetWatchPageWebCommentReplies_rid","GetWatchPageWebTopLevelComments_rid","GetWebMainAppGuide_rid","RecordNotificationInteractions_rid","RemoveLike_rid",
+		"SetSetting_rid"
 	];
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
