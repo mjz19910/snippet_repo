@@ -4391,6 +4391,25 @@ class ParserService extends BaseService {
 			default: debugger;
 		}
 	}
+	/** @private @arg {string[]} parts @arg {string} cur_part */
+	api_no_handler(parts,cur_part) {
+		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
+		debugger;
+		return null;
+	}
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
+	get_yt_url_type_3(x) {
+		switch(x[2]) {
+			case "browse": break;
+			case "feedback": break;
+			case "get_transcript": break;
+			case "guide": break;
+			case "next": break;
+			case "player": break;
+			default: this.api_no_handler(x,x[2]);
+		}
+		return x[2];
+	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
 	get_yt_url_type(x) {
 		if(x[1]!=="v1") {
@@ -4415,26 +4434,10 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",...string[]]>} x */
 	get_playlist_type(x) {
-		x;
-	}
-	/** @private @arg {string[]} parts @arg {string} cur_part */
-	api_no_handler(parts,cur_part) {
-		console.log("[no_handler_for] [%o] [%s]",parts,cur_part);
-		debugger;
-		return null;
-	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
-	get_yt_url_type_3(x) {
-		switch(x[2]) {
-			case "browse": break;
-			case "feedback": break;
-			case "get_transcript": break;
-			case "guide": break;
-			case "next": break;
-			case "player": break;
-			default: this.api_no_handler(x,x[2]);
-		}
-		return x[2];
+		return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x:`${x[2]}.${x[3]}`,
+		}.x;
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","browse",...string[]]>} x */
 	get_browse_type(x) {
