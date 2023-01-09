@@ -2941,12 +2941,12 @@ class YtIterateTarget extends BaseService {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
-	reloadContinuationItemsCommand({t: state},command) {
+	/** @arg {ApiIterateState} _state @arg  {ReloadContinuationItemsCommandData} command */
+	reloadContinuationItemsCommand(_state,command) {
 		if(!command.continuationItems) {
 			debugger;
 		}
-		let filtered=state.handlers.renderer_content_item_array.replace_array(command.continuationItems);
+		let filtered=this.x.get("yt_handlers").handlers.renderer_content_item_array.replace_array(command.continuationItems);
 		if(filtered.length>0) {
 			command.continuationItems=filtered;
 		}
