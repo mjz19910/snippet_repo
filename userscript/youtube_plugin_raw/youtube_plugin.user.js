@@ -3093,15 +3093,22 @@ class CsiService extends BaseService {
 	];
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
-		if(this.str_starts_with(x.key,"Get")) {
-			console.log("[new_get_rid][%s][%s]",x.key,x.value);
-		} else if(this.str_starts_with(x.key,"Record")) {
-			console.log("[new_record_rid][%s][%s]",x.key,x.value);
-		} else if(this.str_starts_with(x.key,"Set")) {
-			console.log("[new_set_rid][%s][%s]",x.key,x.value);
-		} else {
-			console.log("[new_generic_rid][%s][%s]",x.key,x.value);
+		let section=this.get_rid_section(x);
+		console.log(`[new_${section}_rid][${x.key}][${x.value}]`);
+	}
+	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
+	get_rid_section(x) {
+		let section=/[A-Z][a-z]+/.exec(x.key);
+		if(section) {
+			let section_id=section[0].toLowerCase();
+			switch(section_id) {
+				case "get": break;
+				case "generic": break;
+				default: debugger; return "generic";
+			}
+			return section_id;
 		}
+		return "generic";
 	}
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} param */
 	parse_rid_param(param) {
