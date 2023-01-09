@@ -1860,7 +1860,6 @@ function main() {
 	const resolver_value={value: null};
 	const services=new Services(resolver_value);
 	const yt_handlers=services.yt_handlers;
-	const yt_plugin=new YtPlugin;
 	const log_tracking_params=false;
 	const log_click_tracking_params=false;
 
@@ -1881,12 +1880,12 @@ function main() {
 		exports.services=services;
 	});
 	resolver_value.value=service_resolver;
-	yt_plugin.set_yt_handlers(yt_handlers);
+	services.yt_plugin.set_yt_handlers(yt_handlers);
 	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
 	// modify global section
-	window.yt_plugin=yt_plugin;
+	window.yt_plugin=services.yt_plugin;
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
 	/** @private @type {typeof fetch|null} */
 	let original_fetch=null;
@@ -3334,15 +3333,18 @@ class Services {
 		this.handle_types=new HandleTypes(x);
 		this.codegen=new CodegenService(x);
 		this.indexed_db=new IndexedDbAccessor(x,"yt_plugin",2);
+		this.yt_plugin=new YtPlugin(x);
 	}
 }
 //#endregion Service
 //#region decode_entity_key
 const decoder=new TextDecoder();
-class YtPlugin {
+class YtPlugin extends BaseService {
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
-	constructor() {
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		super(x);
 		/** @type {YtHandlers|null} */
 		this.yt_handlers=null;
 		inject_api.modules??=new Map;
