@@ -3089,6 +3089,7 @@ class CsiService extends BaseService {
 		"SetSetting_rid",
 		"Like_rid",
 		"GetAddToPlaylist_rid",
+		"EditPlaylist_rid",
 	];
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
