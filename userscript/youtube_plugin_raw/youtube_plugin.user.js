@@ -1491,7 +1491,6 @@ function start_message_channel_loop(handle_types) {
 	message_channel=new MessageChannel();
 	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
-		if(typeof exports==="object") exports.handle_types=handle_types;
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {handle_types},
@@ -1827,9 +1826,6 @@ class ServiceResolver {
 		return this.services[key];
 	}
 }
-function get_exports() {
-	return exports;
-}
 //#region
 function main() {
 	const log_enabled_page_type_change=false;
@@ -1882,6 +1878,7 @@ function main() {
 		exports.YtPlugin=YtPlugin;
 		exports.VolumeRange=VolumeRange;
 		exports.sizeof_js=sizeof_js;
+		exports.services=services;
 	});
 	resolver_value.value=service_resolver;
 	yt_plugin.set_yt_handlers(yt_handlers);
