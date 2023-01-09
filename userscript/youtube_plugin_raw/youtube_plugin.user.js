@@ -4692,7 +4692,7 @@ class Generate {
 	}
 }
 class C1 extends BaseService {
-	/** @public @arg {BrowsePageResponse} x */
+	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
 		if(rootVe) this.save_number("BrowsePageResponse.rootVe",rootVe);
@@ -4703,16 +4703,21 @@ class C1 extends BaseService {
 		if(expirationTime) console.log("[BrowsePageResponse.expirationTime]",expirationTime);
 		this.save_keys("[BrowsePageResponse]",x);
 	}
-	/** @public @arg {BrowseResponse} x */
+	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
 		this.BrowseResponseContext(x.responseContext);
 		this.save_keys("[BrowseResponse]",x);
 	}
-	/** @private @arg {BrowseEndpoint} x */
+	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
+		this.BrowseEndpointData(x.browseEndpoint);
 		this.save_keys("[BrowseEndpoint]",x);
 	}
-	/** @private @arg {ResponseContext} x */
+	/** @arg {BrowseEndpointData} x */
+	BrowseEndpointData(x) {
+		x;
+	}
+	/** @arg {ResponseContext} x */
 	BrowseResponseContext(x) {
 		let tracking_handler=this.x.get("service_tracking");
 		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
