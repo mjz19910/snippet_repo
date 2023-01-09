@@ -3688,7 +3688,6 @@ class CodegenService extends BaseService {
 				continue;
 			}
 			console.log("[gen_body_default_for] [%s]",k,x2);
-			debugger;
 			this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 		}
 		let no_pad_arr=ret_arr.map(e => e.trim());
@@ -4843,9 +4842,16 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
-		x.responseContext;
+		this.ResponseContext(x.responseContext);
 		this.save_keys("[PlayerResponse]",x);
 		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
+	}
+	/** @private @arg {ResponseContext} x */
+	ResponseContext(x) {
+		let tracking_handler=this.x.get("service_tracking");
+		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
+		tracking_handler.on_complete_set_service_params();
+		this.save_keys("[ResponseContext]",x);
 	}
 	/** @public @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
 	w(x,y) {
