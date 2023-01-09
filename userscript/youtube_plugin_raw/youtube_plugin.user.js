@@ -1057,325 +1057,6 @@ function create_from_parse(str) {
 	let ret=a;
 	return ret;
 }
-class FilterHandlers {
-	/** @public @arg {ResolverT<Services,ServiceOptions>} res */
-	constructor(res) {
-		this.handle_types=new HandleTypes(res);
-		this.filter_handler_debug=false;
-		this.handlers={
-			rich_grid: new HandleRichGridRenderer(res),
-			renderer_content_item_array: new HandleRendererContentItemArray(res),
-		};
-		this.iteration=new IterateApiResultBase(res,new YtIterateTarget(res));
-		this.blacklisted_item_sections=new Map([
-			["backstagePostThreadRenderer",false],
-			["channelAboutFullMetadataRenderer",false],
-			["channelFeaturedContentRenderer",false],
-			["channelRenderer",false],
-			["commentsEntryPointHeaderRenderer",false],
-			["compactPlaylistRenderer",false],
-			["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
-			["compactRadioRenderer",false],
-			["compactVideoRenderer",false],
-			["connectedAppRenderer",false],
-			["continuationItemRenderer",false],
-			["gridRenderer",false],
-			["messageRenderer",false],
-			["pageIntroductionRenderer",false],
-			["playlistRenderer",false],
-			["playlistVideoListRenderer",false],
-			["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
-			["radioRenderer",false],
-			["recognitionShelfRenderer",false],
-			["reelShelfRenderer",false],
-			["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
-			["settingsOptionsRenderer",false],
-			["shelfRenderer",false],
-			["shelfRenderer",false],
-			["videoRenderer",false],
-		]);
-	}
-	/** @private @arg {ApiUrlFormatFull} x */
-	use_template_url(x) {
-		const res_parse=create_from_parse(x);
-		if("_tag" in res_parse) {
-			console.log("parse failed (should never happen)",x,res_parse);
-			throw new Error("unreachable");
-		}
-		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
-		return this.handle_types.x.get("parser_service").get_url_type(path_parts);
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_length_1(target,x) {
-		switch(target[0]) {
-			default: debugger; break;
-			case "browse": return {
-				type: target[0],
-				/** @type {BrowseResponse} */
-				data: as(x),
-			};
-			case "feedback": return {
-				type: target[0],
-				/** @type {FeedbackResponse} */
-				data: as(x),
-			};
-			case "getDatasyncIdsEndpoint": return {
-				type: target[0],
-				/** @type {DatasyncIdsResponse} */
-				data: as(x),
-			};
-			case "getAccountSwitcherEndpoint": return {
-				type: target[0],
-				/** @type {GetAccountSwitcherEndpointResponse} */
-				data: as(x),
-			};
-			case "get_transcript": return {
-				type: target[0],
-				/** @type {GetTranscriptResponse} */
-				data: as(x),
-			};
-			case "guide": return {
-				type: target[0],
-				/** @type {GuideResponse} */
-				data: as(x),
-			};
-			case "next": return {
-				type: target[0],
-				/** @type {NextResponse} */
-				data: as(x),
-			};
-			case "player": return {
-				type: target[0],
-				/** @type {PlayerResponse} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_reel(target,x) {
-		switch(target[1]) {
-			default: debugger; return null;
-			case "reel_item_watch": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ReelItemWatchResponse} */
-				data: as(x),
-			};
-			case "reel_watch_sequence": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ReelWatchSequenceResponse} */
-				data: as(x),
-			};
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_notification(target,x) {
-		switch(target[1]) {
-			default: debugger; return null;
-			case "get_notification_menu": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetNotificationMenuResponse} */
-				data: as(x),
-			};
-			case "get_unseen_count": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {NotificationGetUnseenCountResponse} */
-				data: as(x),
-			};
-			case "modify_channel_preference": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ModifyChannelPreferenceResponse} */
-				data: as(x),
-			};
-			case "record_interactions": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {SuccessResponse} */
-				data: as(x),
-			};
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_live_chat(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "get_live_chat_replay": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChatReplayResponse} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_res_att(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "get": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AttGetResponse} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_account(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "account_menu": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountMenuResponse} */
-				data: as(x),
-			};
-			case "accounts_list": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountsListResponse} */
-				data: as(x),
-			};
-			case "set_setting": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountSetSetting} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_like(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "like": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {LikeLikeResponse} */
-				data: as(x),
-			};
-			case "removelike": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {LikeRemoveLikeResponse} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {ResponseTypes} */
-	get_res_data(url_type,x) {
-		/** @private @type {Split<UrlTypes, ".">} */
-		let target=split_string(url_type,".");
-		/** @private @type {ResponseTypes|null} */
-		let res=null;
-		switch(target[0]) {
-			case "account": res=this.convert_account(target,x); break;
-			case "att": res=this.convert_res_att(target,x); break;
-			case "browse": res=this.convert_browse(target,x); break;
-			case "like": res=this.convert_like(target,x); break;
-			case "live_chat": res=this.convert_live_chat(target,x); break;
-			case "notification": res=this.convert_notification(target,x); break;
-			case "reel": res=this.convert_reel(target,x); break;
-		}
-		switch(target.length) {
-			case 1: res=this.convert_length_1(target,x); break;
-		}
-		if(res) return res;
-		console.log("[log_get_res_data]",target,x);
-		debugger;
-		return {
-			type: "_Generic",
-			data: x,
-		};
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
-	convert_browse(t,x) {
-		switch(t.length) {
-			case 2: switch(t[1]) {
-				case "edit_playlist": return {
-					type: `${t[0]}.${t[1]}`,
-					/** @private @type {LikeRemoveLikeResponse} */
-					data: as(x),
-				};
-			}
-			case 1: break;
-		}
-		switch(t[0]) {
-			case "browse": return {
-				type: t[0],
-				/** @type {BrowseResponse} */
-				data: as(x),
-			};
-		}
-	}
-	/** @public @arg {string|URL|Request} request @arg {{}} data */
-	on_handle_api(request,data) {
-		/** @private @arg {string|URL|Request} req */
-		function convert_to_url(req) {
-			if(typeof req=="string") {
-				return {url: to_url(req)};
-			}
-			if(req instanceof URL) {
-				return {url: req};
-			}
-			return {url: to_url(req.url)};
-		}
-		let parsed_url=convert_to_url(request).url;
-		/** @private @type {ApiUrlFormatFull} */
-		let api_url=as(parsed_url.href);
-		let url_type=this.use_template_url(api_url);
-		if(!url_type) {
-			debugger;
-			/** @private @type {UrlTypes} */
-			let url_h=as(parsed_url.href);
-			url_type=url_h;
-		}
-		if(!url_type) throw new Error("Unreachable");
-		this.handle_any_data(url_type,data);
-		let res=this.get_res_data(url_type,data);
-		this.handle_types.ResponseTypes(res);
-		this.iteration.default_iter({t: this,path: url_type},data);
-	}
-	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
-	handle_any_data(path,data) {
-		saved_data.any_data??={};
-		/** @private @type {AnySavedData} */
-		let merge_obj={[path]: data};
-		saved_data.any_data={...saved_data.any_data,...merge_obj};
-		this.iteration.default_iter({t: this,path},data);
-	}
-	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @public @arg {[()=>NavigateEventDetail["response"], object, []]} apply_args */
-	on_initial_data(apply_args) {
-		/** @private @type {NavigateEventDetail["response"]} */
-		let ret=Reflect.apply(...apply_args);
-		if(!("page" in ret)) {
-			return ret;
-		}
-		if(!ret.response) {
-			console.log("[unhandled_return_value]",ret);
-			debugger;
-		}
-		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
-		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		this.handle_types.DataResponsePageType(ret);
-		this.iteration.default_iter({t: this,path: ret.page},ret);
-		let page_type=window.ytPageType;
-		if(!page_type) {
-			debugger;
-			return ret;
-		}
-		/** @private @template {U[]} T @template U @arg {T} a @arg {U} t */
-		function includes(a,t) {
-			return a.includes(t);
-		}
-		if(!includes(this.known_page_types,page_type)) {
-			console.log("unknown page type",page_type);
-			debugger;
-		}
-		return ret;
-	}
-	/** @arg {NavigateEventDetail} detail */
-	on_page_type_changed(detail) {
-		this.handle_types.NavigateEventDetail(detail);
-	}
-
-}
 /** @private @type {any[]} */
 let blob_create_args_arr=[];
 let leftover_args=[];
@@ -2650,7 +2331,7 @@ class KnownDataSaver extends ApiBase {
 				ta[x]=1;
 			}
 			return ta.join("");
-		}).sort().join("\n")+"\n";
+		}).sort((a,b)=>b.split("0").length-a.split("0").length).join("\n")+"\n";
 		console.log(` --------- [${k}] --------- `);
 		console.log(index_map.join(","));
 		console.log(bitmap);
@@ -2887,6 +2568,327 @@ class BaseService extends BaseServicePrivate {
 		let keys=this.get_keys_of(x);
 		this.save_string(ki,keys.join());
 	}
+}
+
+class FilterHandlers extends BaseService {
+	/** @public @arg {ResolverT<Services,ServiceOptions>} res */
+	constructor(res) {
+		super(res);
+		this.handle_types=new HandleTypes(res);
+		this.filter_handler_debug=false;
+		this.handlers={
+			rich_grid: new HandleRichGridRenderer(res),
+			renderer_content_item_array: new HandleRendererContentItemArray(res),
+		};
+		this.iteration=new IterateApiResultBase(res,new YtIterateTarget(res));
+		this.blacklisted_item_sections=new Map([
+			["backstagePostThreadRenderer",false],
+			["channelAboutFullMetadataRenderer",false],
+			["channelFeaturedContentRenderer",false],
+			["channelRenderer",false],
+			["commentsEntryPointHeaderRenderer",false],
+			["compactPlaylistRenderer",false],
+			["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
+			["compactRadioRenderer",false],
+			["compactVideoRenderer",false],
+			["connectedAppRenderer",false],
+			["continuationItemRenderer",false],
+			["gridRenderer",false],
+			["messageRenderer",false],
+			["pageIntroductionRenderer",false],
+			["playlistRenderer",false],
+			["playlistVideoListRenderer",false],
+			["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
+			["radioRenderer",false],
+			["recognitionShelfRenderer",false],
+			["reelShelfRenderer",false],
+			["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
+			["settingsOptionsRenderer",false],
+			["shelfRenderer",false],
+			["shelfRenderer",false],
+			["videoRenderer",false],
+		]);
+	}
+	/** @private @arg {ApiUrlFormatFull} x */
+	use_template_url(x) {
+		const res_parse=create_from_parse(x);
+		if("_tag" in res_parse) {
+			console.log("parse failed (should never happen)",x,res_parse);
+			throw new Error("unreachable");
+		}
+		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
+		return this.handle_types.x.get("parser_service").get_url_type(path_parts);
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_length_1(target,x) {
+		switch(target[0]) {
+			default: debugger; break;
+			case "browse": return {
+				type: target[0],
+				/** @type {BrowseResponse} */
+				data: as(x),
+			};
+			case "feedback": return {
+				type: target[0],
+				/** @type {FeedbackResponse} */
+				data: as(x),
+			};
+			case "getDatasyncIdsEndpoint": return {
+				type: target[0],
+				/** @type {DatasyncIdsResponse} */
+				data: as(x),
+			};
+			case "getAccountSwitcherEndpoint": return {
+				type: target[0],
+				/** @type {GetAccountSwitcherEndpointResponse} */
+				data: as(x),
+			};
+			case "get_transcript": return {
+				type: target[0],
+				/** @type {GetTranscriptResponse} */
+				data: as(x),
+			};
+			case "guide": return {
+				type: target[0],
+				/** @type {GuideResponse} */
+				data: as(x),
+			};
+			case "next": return {
+				type: target[0],
+				/** @type {NextResponse} */
+				data: as(x),
+			};
+			case "player": return {
+				type: target[0],
+				/** @type {PlayerResponse} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_reel(target,x) {
+		switch(target[1]) {
+			default: debugger; return null;
+			case "reel_item_watch": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {ReelItemWatchResponse} */
+				data: as(x),
+			};
+			case "reel_watch_sequence": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {ReelWatchSequenceResponse} */
+				data: as(x),
+			};
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_notification(target,x) {
+		switch(target[1]) {
+			default: debugger; return null;
+			case "get_notification_menu": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {GetNotificationMenuResponse} */
+				data: as(x),
+			};
+			case "get_unseen_count": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {NotificationGetUnseenCountResponse} */
+				data: as(x),
+			};
+			case "modify_channel_preference": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {ModifyChannelPreferenceResponse} */
+				data: as(x),
+			};
+			case "record_interactions": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {SuccessResponse} */
+				data: as(x),
+			};
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_live_chat(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get_live_chat_replay": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {GetLiveChatReplayResponse} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_res_att(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {AttGetResponse} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_account(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "account_menu": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {AccountMenuResponse} */
+				data: as(x),
+			};
+			case "accounts_list": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {AccountsListResponse} */
+				data: as(x),
+			};
+			case "set_setting": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {AccountSetSetting} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	convert_like(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "like": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {LikeLikeResponse} */
+				data: as(x),
+			};
+			case "removelike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {LikeRemoveLikeResponse} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {ResponseTypes} */
+	get_res_data(url_type,x) {
+		/** @private @type {Split<UrlTypes, ".">} */
+		let target=split_string(url_type,".");
+		/** @private @type {ResponseTypes|null} */
+		let res=null;
+		switch(target[0]) {
+			case "account": res=this.convert_account(target,x); break;
+			case "att": res=this.convert_res_att(target,x); break;
+			case "browse": res=this.convert_browse(target,x); break;
+			case "like": res=this.convert_like(target,x); break;
+			case "live_chat": res=this.convert_live_chat(target,x); break;
+			case "notification": res=this.convert_notification(target,x); break;
+			case "reel": res=this.convert_reel(target,x); break;
+		}
+		switch(target.length) {
+			case 1: res=this.convert_length_1(target,x); break;
+		}
+		if(res) return res;
+		console.log("[log_get_res_data]",target,x);
+		debugger;
+		return {
+			type: "_Generic",
+			data: x,
+		};
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	convert_browse(t,x) {
+		switch(t.length) {
+			case 2: switch(t[1]) {
+				case "edit_playlist": return {
+					type: `${t[0]}.${t[1]}`,
+					/** @private @type {LikeRemoveLikeResponse} */
+					data: as(x),
+				};
+			}
+			case 1: break;
+		}
+		switch(t[0]) {
+			case "browse": return {
+				type: t[0],
+				/** @type {BrowseResponse} */
+				data: as(x),
+			};
+		}
+	}
+	/** @public @arg {string|URL|Request} request @arg {{}} data */
+	on_handle_api(request,data) {
+		/** @private @arg {string|URL|Request} req */
+		function convert_to_url(req) {
+			if(typeof req=="string") {
+				return {url: to_url(req)};
+			}
+			if(req instanceof URL) {
+				return {url: req};
+			}
+			return {url: to_url(req.url)};
+		}
+		let parsed_url=convert_to_url(request).url;
+		/** @private @type {ApiUrlFormatFull} */
+		let api_url=as(parsed_url.href);
+		let url_type=this.use_template_url(api_url);
+		if(!url_type) {
+			debugger;
+			/** @private @type {UrlTypes} */
+			let url_h=as(parsed_url.href);
+			url_type=url_h;
+		}
+		if(!url_type) throw new Error("Unreachable");
+		this.handle_any_data(url_type,data);
+		let res=this.get_res_data(url_type,data);
+		this.handle_types.ResponseTypes(res);
+		this.iteration.default_iter({t: this,path: url_type},data);
+	}
+	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
+	handle_any_data(path,data) {
+		saved_data.any_data??={};
+		/** @private @type {AnySavedData} */
+		let merge_obj={[path]: data};
+		saved_data.any_data={...saved_data.any_data,...merge_obj};
+		this.iteration.default_iter({t: this,path},data);
+	}
+	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
+	/** @public @arg {[()=>NavigateEventDetail["response"], object, []]} apply_args */
+	on_initial_data(apply_args) {
+		/** @private @type {NavigateEventDetail["response"]} */
+		let ret=Reflect.apply(...apply_args);
+		if(!("page" in ret)) {
+			return ret;
+		}
+		if(!ret.response) {
+			console.log("[unhandled_return_value]",ret);
+			debugger;
+		}
+		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
+		this.handle_any_data(`page_type_${ret.page}`,as(ret));
+		this.handle_types.DataResponsePageType(ret);
+		this.iteration.default_iter({t: this,path: ret.page},ret);
+		let page_type=window.ytPageType;
+		if(!page_type) {
+			debugger;
+			return ret;
+		}
+		/** @private @template {U[]} T @template U @arg {T} a @arg {U} t */
+		function includes(a,t) {
+			return a.includes(t);
+		}
+		if(!includes(this.known_page_types,page_type)) {
+			console.log("unknown page type",page_type);
+			debugger;
+		}
+		return ret;
+	}
+	/** @arg {NavigateEventDetail} detail */
+	on_page_type_changed(detail) {
+		this.handle_types.NavigateEventDetail(detail);
+	}
+
 }
 class HandleRendererContentItemArray extends BaseService {
 	debug=false;
