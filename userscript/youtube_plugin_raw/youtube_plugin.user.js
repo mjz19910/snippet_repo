@@ -1155,23 +1155,10 @@ class FilterHandlers {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,[any,any]>} target @arg {{}} x @returns {ResponseTypes|null} */
-	convert_length_2(target,x) {
-		switch(target[0]) {
-			default: debugger; break;
-			case "like": return this.convert_like(target,x);
-			case "account": return this.convert_account(target,x);
-			case "att": return this.convert_res_att(target,x);
-			case "live_chat": return this.convert_live_chat(target,x);
-			case "notification": return this.convert_notification(target,x)??null;
-			case "reel": return this.convert_reel(target,x)??null;
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_reel(target,x) {
 		switch(target[1]) {
-			default: debugger; break;
+			default: debugger; return null;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {ReelItemWatchResponse} */
@@ -1184,10 +1171,10 @@ class FilterHandlers {
 			};
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|void} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
 	convert_notification(target,x) {
 		switch(target[1]) {
-			default: debugger; break;
+			default: debugger; return null;
 			case "get_notification_menu": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {GetNotificationMenuResponse} */
@@ -1279,10 +1266,17 @@ class FilterHandlers {
 		let target=split_string(url_type,".");
 		/** @private @type {ResponseTypes|null} */
 		let res=null;
+		switch(target[0]) {
+			case "account": res=this.convert_account(target,x); break;
+			case "att": res=this.convert_res_att(target,x); break;
+			case "browse": res=this.convert_browse(target,x); break;
+			case "like": res=this.convert_like(target,x); break;
+			case "live_chat": res=this.convert_live_chat(target,x); break;
+			case "notification": res=this.convert_notification(target,x); break;
+			case "reel": res=this.convert_reel(target,x); break;
+		}
 		switch(target.length) {
-			default: debugger; break;
 			case 1: res=this.convert_length_1(target,x); break;
-			case 2: res=this.convert_length_2(target,x); break;
 		}
 		if(res) return res;
 		console.log("[log_get_res_data]",target,x);
@@ -1291,6 +1285,26 @@ class FilterHandlers {
 			type: "_Generic",
 			data: x,
 		};
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	convert_browse(t,x) {
+		switch(t.length) {
+			case 2: switch(t[1]) {
+				case "edit_playlist": return {
+					type: `${t[0]}.${t[1]}`,
+					/** @private @type {LikeRemoveLikeResponse} */
+					data: as(x),
+				};
+			}
+			case 1: break;
+		}
+		switch(t[0]) {
+			case "browse": return {
+				type: t[0],
+				/** @type {BrowseResponse} */
+				data: as(x),
+			};
+		}
 	}
 	/** @public @arg {string|URL|Request} request @arg {{}} data */
 	on_handle_api(request,data) {

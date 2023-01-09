@@ -1,13 +1,9 @@
-type notification_modify_channel_preference_t={
-	type: "notification.modify_channel_preference";
-	data: ModifyChannelPreferenceResponse;
-};
-
 type ResponseTypes=[
 	account_account_menu_t,
 	account_set_setting_t,
 	accounts_list_t,
 	att_get_t,
+	browse_edit_playlist_t,
 	browse_t,
 	feedback_t,
 	get_notification_menu_t,
