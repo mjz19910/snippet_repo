@@ -4715,7 +4715,7 @@ class C1 extends BaseService {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
-		x;
+		if(x.browseId) this.x.get("parser_service").parse_browse_id(x.browseId)
 	}
 	/** @arg {ResponseContext} x */
 	BrowseResponseContext(x) {
