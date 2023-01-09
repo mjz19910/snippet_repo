@@ -1880,7 +1880,6 @@ function main() {
 		exports.services=services;
 	});
 	resolver_value.value=service_resolver;
-	services.yt_plugin.set_yt_handlers(yt_handlers);
 	let current_page_type="";
 	on_yt_navigate_finish.push(log_page_type_change);
 
@@ -3345,14 +3344,8 @@ class YtPlugin extends BaseService {
 	/** @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
-		/** @type {YtHandlers|null} */
-		this.yt_handlers=null;
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
-	}
-	/** @arg {YtHandlers} value */
-	set_yt_handlers(value) {
-		this.yt_handlers=value;
 	}
 	/** @public @arg {{name:string}} function_obj */
 	add_function(function_obj) {
