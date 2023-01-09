@@ -2551,7 +2551,7 @@ class YtHandlers extends BaseService {
 			rich_grid: new HandleRichGridRenderer(res),
 			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
-		this.iteration=new IterateApiResultBase(res,new YtIterateTarget);
+		this.iteration=new IterateApiResultBase(res,new YtObjectVisitor);
 		this.blacklisted_item_sections=new Map([
 			["backstagePostThreadRenderer",false],
 			["channelAboutFullMetadataRenderer",false],
@@ -2930,7 +2930,7 @@ class HandleRendererContentItemArray extends BaseService {
 	}
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
-class YtIterateTarget {
+class YtObjectVisitor {
 	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
@@ -2989,14 +2989,14 @@ class YtIterateTarget {
 	}
 }
 class IterateApiResultBase extends BaseService {
-	iterate_target;
-	/** @private @type {Map<string,keyof YtIterateTarget>} */
+	obj_visitor;
+	/** @private @type {Map<string,keyof YtObjectVisitor>} */
 	keys_map=new Map;
-	/** @arg {ResolverT<Services, ServiceOptions>} x @arg {YtIterateTarget} iterate */
-	constructor(x,iterate) {
+	/** @arg {ResolverT<Services, ServiceOptions>} x @arg {YtObjectVisitor} obj_visitor */
+	constructor(x,obj_visitor) {
 		super(x);
-		this.iterate_target=iterate;
-		let keys=this.get_keys_of_ex(iterate);
+		this.obj_visitor=obj_visitor;
+		let keys=this.get_keys_of_ex(obj_visitor);
 		for(let i of keys) {
 			this.keys_map.set(i,i);
 		}
@@ -3021,16 +3021,16 @@ class IterateApiResultBase extends BaseService {
 			let wk=data;
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
-			let iter_target=this.iterate_target;
+			let iter_target=this.obj_visitor;
 			const state={t,path: `${path}.${key}`};
 			if(rk!==void 0) {
-				if(this.iterate_target[rk]===void 0) {
+				if(this.obj_visitor[rk]===void 0) {
 					console.log("update keys map remove",key);
 					debugger;
 				}
 				iter_target[rk](state,as(value));
 			} else {
-				if(key in this.iterate_target) {
+				if(key in this.obj_visitor) {
 					console.log("update keys map new key",key);
 					debugger;
 				}
