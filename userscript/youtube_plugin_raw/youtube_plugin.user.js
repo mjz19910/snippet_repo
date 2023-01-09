@@ -1570,7 +1570,7 @@ plugin_overlay_element.setAttribute("style",player_overlay_style_str);
 plugin_overlay_element.append(overlay_content_div);
 plugin_overlay_element.append(input_modify_css_style);
 plugin_overlay_element.append(overlay_hide_ui_input);
-function fix_offset() {
+function update_plugin_overlay_location() {
 	if(!ytd_player) return;
 	let player_offset=sumOffset(ytd_player);
 	plugin_overlay_element.style.top=player_offset.top_offset+"px";
@@ -1633,8 +1633,8 @@ function on_yt_action(event) {
 	let {detail}=event;
 	if(is_yt_fullscreen_change_action(detail)) {
 		let {args}=detail;
-		fix_offset();
-		setTimeout(fix_offset);
+		update_plugin_overlay_location();
+		setTimeout(update_plugin_overlay_location);
 		title_text_overlay_enabled=!args[0];
 		title_text_overlay_update();
 	}
