@@ -1,4 +1,4 @@
-type getAccountSwitcherEndpoint_t={
+type GetAccountSwitcherEndpoint_t={
 	type: "getAccountSwitcherEndpoint";
 	data: GetAccountSwitcherEndpointResponse;
 };

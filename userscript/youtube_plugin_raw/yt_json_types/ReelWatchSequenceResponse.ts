@@ -1,5 +1,6 @@
-export type ReelWatchSequenceResponse={
-	responseContext: {};
-	entries: {}[];
+type ReelWatchSequenceResponse={
+	responseContext: ResponseContext;
+	entries: CommandTemplate<ReelWatchEndpoint>[];
 	trackingParams: string;
+	continuationEndpoint?: ContinuationEndpoint;
 };

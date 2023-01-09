@@ -8,7 +8,7 @@ type ResponseTypes=[
 	feedback_t,
 	get_notification_menu_t,
 	get_transcript_t,
-	getAccountSwitcherEndpoint_t,
+	GetAccountSwitcherEndpoint_t,
 	getDatasyncIdsEndpoint_t,
 	guide_t,
 	like_like_t,

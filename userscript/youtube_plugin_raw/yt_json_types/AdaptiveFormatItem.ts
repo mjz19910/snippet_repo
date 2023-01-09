@@ -1,5 +1,5 @@
 type AdaptiveFormatItem={
-	itag: FormatItag;
+	itag: number;
 	url?: string;
 	mimeType: MimeTypeFormat;
 	bitrate: number;
