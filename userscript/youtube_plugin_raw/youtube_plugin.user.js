@@ -2267,15 +2267,28 @@ class KnownDataSaver extends ApiBase {
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
-		let bitmap;
-		let bitmap_src;
 		if(cur[0]==="many") {
-			bitmap_src=cur[1].map(e => e.join(","));
+			let src_data=cur[1];
+			for(let bitmap_src_idx=0;bitmap_src_idx<src_data.length;bitmap_src_idx++) {
+				let bitmap_src=src_data[bitmap_src_idx];
+				let {bitmap,index_map}=this.generate_bitmap(bitmap_src);
+				console.log(` --------- [store["${k}"][${bitmap_src_idx}]] --------- `);
+				console.log(index_map.join(","));
+				console.log(bitmap);
+			}
+			return;
 		} else {
-			bitmap_src=cur[1];
+			let bitmap_src=cur[1];
+			let {bitmap,index_map}=this.generate_bitmap(bitmap_src);
+			console.log(` --------- [${k}] --------- `);
+			console.log(index_map.join(","));
+			console.log(bitmap);
 		}
+	}
+	/** @arg {string[]} bitmap_src */
+	generate_bitmap(bitmap_src) {
 		let index_map=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
-		bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => index_map.indexOf(e))).map(e => {
+		let bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => index_map.indexOf(e))).map(e => {
 			let ta=new Array(index_map.length);
 			ta.fill(0);
 			for(let x of e) {
@@ -2283,9 +2296,10 @@ class KnownDataSaver extends ApiBase {
 			}
 			return ta.join("");
 		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
-		console.log(` --------- [${k}] --------- `);
-		console.log(index_map.join(","));
-		console.log(bitmap);
+		return {
+			index_map,
+			bitmap
+		};
 	}
 	/** @type {[string,number|number[]][]} */
 	#new_numbers=[];
