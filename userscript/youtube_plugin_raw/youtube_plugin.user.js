@@ -17,12 +17,6 @@
 function as(e,x=e) {
 	return x;
 }
-/** @private @arg {(x:typeof exports)=>void} fn */
-function export_(fn) {
-	if(typeof exports==="object") {
-		fn(exports);
-	}
-}
 /** @private @type {YtdAppElement} */
 const YtdAppElement=as({});
 /** @private @type {InstanceType<typeof YtdAppElement>|undefined} */
@@ -1874,15 +1868,21 @@ function main() {
 		log_click_tracking_params,
 		noisy_logging: false,
 	});
-	if(typeof exports==="object") {
-		let exports=get_exports();
+	/** @private @arg {(x:typeof exports)=>void} fn */
+	function export_(fn) {
+		if(typeof exports==="object") {
+			fn(exports);
+		}
+	}
+	export_((exports) => {
 		exports.Services=Services;
 		exports.ParserService=ParserService;
 		exports.HandleTypes=HandleTypes;
 		exports.ServiceResolver=ServiceResolver;
 		exports.YtPlugin=YtPlugin;
 		exports.VolumeRange=VolumeRange;
-	}
+		exports.sizeof_js=sizeof_js;
+	});
 	resolver_value.value=service_resolver;
 	yt_plugin.set_yt_handlers(yt_handlers);
 	let current_page_type="";
@@ -4602,7 +4602,6 @@ function sizeof_js(obj) {
 	sizeof_cache.set(obj,size);
 	return size;
 }
-export_(exports => exports.sizeof_js=sizeof_js);
 class Generate {
 	/** @private @type {Map<string,string>[]} */
 	out_arr=[];
