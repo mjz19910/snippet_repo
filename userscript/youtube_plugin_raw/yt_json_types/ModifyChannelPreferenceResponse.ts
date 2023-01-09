@@ -1,0 +1,3 @@
+type ModifyChannelPreferenceResponse={
+	responseContext: ResponseContext;
+};

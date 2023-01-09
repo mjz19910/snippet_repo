@@ -1,3 +1,8 @@
+type notification_modify_channel_preference_t={
+	type: "notification.modify_channel_preference";
+	data: ModifyChannelPreferenceResponse;
+};
+
 type ResponseTypes=[
 	account_account_menu_t,
 	account_set_setting_t,
@@ -15,15 +20,9 @@ type ResponseTypes=[
 	live_chat_get_live_chat_replay_t,
 	next_t,
 	notification_get_unseen_count_t,
+	notification_modify_channel_preference_t,
 	notification_record_interactions,
 	player_t,
 	reel_reel_item_watch_t,
 	reel_reel_watch_sequence_t,
-	{
-		type: "notification.modify_channel_preference";
-		data: NotificationModifyChannelPreferenceResponse;
-	}
 ][number]|GenericResponseType;
-type NotificationModifyChannelPreferenceResponse={
-	responseContext: ResponseContext;
-}

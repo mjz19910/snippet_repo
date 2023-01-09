@@ -1200,7 +1200,7 @@ class FilterHandlers {
 			};
 			case "modify_channel_preference": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {NotificationModifyChannelPreferenceResponse} */
+				/** @private @type {ModifyChannelPreferenceResponse} */
 				data: as(x),
 			};
 			case "record_interactions": return {
@@ -4857,6 +4857,7 @@ class HandleTypes extends ServiceData {
 			case "next": return this.NextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuResponse(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountResponse(x.data);
+			case "notification.modify_channel_preference": return this.ModifyChannelPreferenceResponse(x.data);
 			case "notification.record_interactions": return this.SuccessResponse(x.data);
 			case "player": return this.PlayerResponse(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatchResponse(x.data);
@@ -4864,6 +4865,10 @@ class HandleTypes extends ServiceData {
 			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplayResponse(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {ModifyChannelPreferenceResponse} x */
+	ModifyChannelPreferenceResponse(x) {
+		x;
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
