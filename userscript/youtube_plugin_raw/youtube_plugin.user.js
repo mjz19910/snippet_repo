@@ -1198,6 +1198,11 @@ class FilterHandlers {
 				/** @private @type {NotificationGetUnseenCountResponse} */
 				data: as(x),
 			};
+			case "modify_channel_preference": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {NotificationModifyChannelPreferenceResponse} */
+				data: as(x),
+			};
 			case "record_interactions": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {SuccessResponse} */

@@ -19,4 +19,11 @@ type ResponseTypes=[
 	player_t,
 	reel_reel_item_watch_t,
 	reel_reel_watch_sequence_t,
+	{
+		type: "notification.modify_channel_preference";
+		data: NotificationModifyChannelPreferenceResponse;
+	}
 ][number]|GenericResponseType;
+type NotificationModifyChannelPreferenceResponse={
+	responseContext: ResponseContext;
+}
