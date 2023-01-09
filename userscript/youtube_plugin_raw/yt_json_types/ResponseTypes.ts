@@ -23,4 +23,5 @@ type ResponseTypes=
 	|reel_reel_item_watch_t
 	|reel_reel_watch_sequence_t
 	|subscription_subscribe_t
+	|subscription_unsubscribe_t
 	;

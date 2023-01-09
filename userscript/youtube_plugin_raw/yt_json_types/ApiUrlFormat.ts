@@ -3,7 +3,7 @@ type ApiUrlFormat=[
 	"getAccountSwitcherEndpoint",
 	`youtubei/v1/att/${"get"|"log"}`,
 	`youtubei/v1/notification/${ApiNotificationLast}`,
-	`youtubei/v1/subscription/${"subscribe"}`,
+	`youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`,
 	`youtubei/v1/reel/${"reel_item_watch"|"reel_watch_sequence"}`,
 	`youtubei/v1/like/${"like"|"dislike"|"removelike"}`,
 	`youtubei/v1/${"browse"|"guide"|"next"|"player"}`,

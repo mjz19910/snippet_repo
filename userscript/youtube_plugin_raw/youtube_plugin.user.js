@@ -2769,6 +2769,12 @@ class YtHandlers extends BaseService {
 				/** @private @type {SubscribeResponse} */
 				data: as(x),
 			};
+			case "unsubscribe": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {UnsubscribeResponse} */
+				data: as(x),
+			};
+			default: debugger; return null;
 		}
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
@@ -4431,6 +4437,7 @@ class ParserService extends BaseService {
 	get_subscription_type(x) {
 		switch(x[3]) {
 			case "subscribe": break;
+			case "unsubscribe": break;
 			default: return this.api_no_handler(x,x[3]);
 		} return {
 			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
