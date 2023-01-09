@@ -4443,8 +4443,18 @@ class ParserService extends BaseService {
 		if(x[1]!=="v1") {
 			return this.api_no_handler(x,x[1]);
 		}
+		switch(x[2]) {
+			case "account": return this.get_account_type(x);
+			case "att": return this.get_att_type(x);
+			case "browse": return this.get_browse_type(x);
+			case "comment": return this.get_comment_type(x);
+			case "like": return this.get_like_type(x);
+			case "live_chat": return this.get_live_chat_type(x);
+			case "notification": return this.get_notification_type(x);
+			case "reel": return this.get_reel_type(x);
+			case "subscription": return this.get_subscription_type(x);
+		}
 		switch(x.length) {
-			case 4: return this.get_yt_url_type_4(x);
 			case 3: return this.get_yt_url_type_3(x);
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
@@ -4468,19 +4478,17 @@ class ParserService extends BaseService {
 		}
 		return x[2];
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string,string]>} x */
-	get_yt_url_type_4(x) {
-		switch(x[2]) {
-			case "account": return this.get_account_type(x);
-			case "att": return this.get_att_type(x);
-			case "comment": return this.get_comment_type(x);
-			case "like": return this.get_like_type(x);
-			case "live_chat": return this.get_live_chat_type(x);
-			case "notification": return this.get_notification_type(x);
-			case "reel": return this.get_reel_type(x);
-			case "subscription": return this.get_subscription_type(x);
-			default: return this.api_no_handler(x,x[2]);
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","browse",...string[]]>} x */
+	get_browse_type(x) {
+		if(x.length===3) return "browse";
+		switch(x[3]) {
+			case "edit_playlist": break;
+			default: return this.api_no_handler(x,x[3]);
 		}
+		return {
+			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`
+		}.x;
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
 	get_subscription_type(x) {
