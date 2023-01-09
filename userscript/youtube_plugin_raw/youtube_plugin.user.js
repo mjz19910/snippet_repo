@@ -3021,7 +3021,6 @@ class IterateApiResultBase extends BaseService {
 			let wk=data;
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
-			/** @type {any} */
 			let iter_target=this.iterate_target;
 			const state={t,path: `${path}.${key}`};
 			if(rk!==void 0) {
