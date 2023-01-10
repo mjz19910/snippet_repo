@@ -2921,15 +2921,21 @@ class HandleRendererContentItemArray extends BaseService {
 	/** @private @arg {RichSectionRenderer} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
-		if("inlineSurveyRenderer" in renderer.content) {
-			renderer.content.inlineSurveyRenderer;
+		/** @type {RichSectionContent} */
+		let content=renderer.content;
+		if("inlineSurveyRenderer" in content) {
+			content.inlineSurveyRenderer;
 			return true;
 		}
-		if(!("richShelfRenderer" in renderer.content)) {
-			console.log("rich section content",renderer.content);
+		if("sourcePivotHeaderRenderer" in content) {
+			content.sourcePivotHeaderRenderer;
 			return true;
 		}
-		let rich_shelf=renderer.content.richShelfRenderer;
+		if(!("richShelfRenderer" in content)) {
+			console.log("rich section content",content);
+			return true;
+		}
+		let rich_shelf=content.richShelfRenderer;
 		if(rich_shelf.icon) {
 			if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
 				return false;
