@@ -2114,6 +2114,10 @@ const general_service_state={
 	premium_membership: null,
 };
 class ApiBase {
+	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
+	primitive_of(x,y) {
+		if(typeof x!==y) debugger;
+	}
 	/** @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
 		/** @type {Partial<B>} */
@@ -4781,7 +4785,7 @@ class C1 extends BaseService {
 		this.BrowseEndpoint(x.endpoint);
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
-		if(expirationTime) console.log("[BrowsePageResponse.expirationTime]",expirationTime);
+		if(expirationTime) this.primitive_of(expirationTime,"number");
 		this.save_keys("[BrowsePageResponse]",x);
 	}
 	/** @arg {BrowseResponse} x */

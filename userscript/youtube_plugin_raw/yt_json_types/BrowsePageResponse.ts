@@ -4,5 +4,5 @@ type BrowsePageResponse={
 	endpoint: BrowseEndpoint;
 	page: "browse";
 	response: BrowseResponse;
-	expirationTime?: {};
+	expirationTime?: number;
 };
