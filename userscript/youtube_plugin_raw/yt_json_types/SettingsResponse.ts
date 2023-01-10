@@ -2,5 +2,5 @@ type SettingsPageResponse={
 	page: "settings";
 	endpoint: {};
 	response: SettingsResponseContent;
-	url: YtUrlFormat;
+	url: string;
 };

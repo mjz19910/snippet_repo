@@ -4730,7 +4730,7 @@ class C1 extends BaseService {
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const name="BrowseEditPlaylistResponse";
-		this.z(x.actions,a => this.x.get("handle_types").default.Action([name],a));
+		this.z(x.actions,a => this.x.get("handle_types").default.Action(a));
 		this.save_keys(`[${name}]`,x);
 	}
 	/** @arg {BrowsePageResponse} x */
@@ -4856,12 +4856,12 @@ class DefaultHandlers extends ApiBase {
 		}
 		return ok_e;
 	}
-	/** @arg {string[]} path @arg {AllActions} x */
-	Action(path,x) {
+	/** @arg {AllActions} x */
+	Action(x) {
 		let keys_arr=this.get_keys_of(x);
 		keys_arr=this.filter_out_keys(keys_arr,["clickTrackingParams"]);
 		if(keys_arr.length!==1) debugger;
-		data_saver.save_keys(`[${path.join(".")}.default.Action.${keys_arr[0]}]`,x);
+		data_saver.save_keys(`[Action.${keys_arr[0]}]`,x);
 	}
 }
 class HandleTypes extends ServiceData {
@@ -4942,7 +4942,7 @@ class HandleTypes extends ServiceData {
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
 		const cf="GetSharePanel";
-		if(x.actions) this.z(x.actions,a => this.default.Action([cf],a));
+		if(x.actions) this.z(x.actions,a => this.default.Action(a));
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
@@ -5000,7 +5000,7 @@ class HandleTypes extends ServiceData {
 		const {actions,...y}=x;
 		this.save_keys(`[${name}]`,x);
 		if(actions) {
-			this.z(actions,a => this.default.Action([name],a));
+			this.z(actions,a => this.default.Action(a));
 		}
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
 	}
@@ -5008,7 +5008,7 @@ class HandleTypes extends ServiceData {
 	LikeRemoveLikeResponse(x) {
 		const cf="LikeRemoveLikeResponse";
 		const {responseContext,actions,...y}=x; this.g(y);
-		if(actions) this.z(actions,a => this.default.Action([cf],a));
+		if(actions) this.z(actions,a => this.default.Action(a));
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
@@ -5024,7 +5024,7 @@ class HandleTypes extends ServiceData {
 	GetNotificationMenuResponse(x) {
 		const cf="GetNotificationMenuResponse";
 		this.z(x.actions,a => {
-			this.default.Action([cf],a);
+			this.default.Action(a);
 		});
 		this.save_keys(`[${cf}]`,x);
 	}

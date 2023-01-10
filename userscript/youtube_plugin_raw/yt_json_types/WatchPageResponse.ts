@@ -3,6 +3,6 @@ type WatchPageResponse={
 	endpoint: WatchEndpoint;
 	response: NextResponse;
 	playerResponse: PlayerResponse;
-	url: YtUrlFormat;
+	url: string;
 	previousCsn?: string;
 };
