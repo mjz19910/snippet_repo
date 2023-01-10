@@ -2344,7 +2344,6 @@ class ecma_root {
 		this.index_stack=[];
 	}
 }
-/** @typedef {{str:string;index:number}} JsLexerInputState */
 class js_token_generator {
 	get index() {
 		return this.root.index;
