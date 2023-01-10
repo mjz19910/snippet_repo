@@ -1873,7 +1873,12 @@ function main() {
 	start_message_channel_loop(services.handle_types);
 	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
-		yt_handlers.on_handle_api(request,response_obj);
+		try{
+			yt_handlers.on_handle_api(request,response_obj);
+		} catch (e) {
+			console.log("plugin error");
+			console.log(e);
+		}
 	}
 	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
 	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
