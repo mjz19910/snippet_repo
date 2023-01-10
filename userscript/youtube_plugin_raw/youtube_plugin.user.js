@@ -4928,9 +4928,9 @@ class HandleTypes extends ServiceData {
 			case "playlist.get_add_to_playlist": return this.GetAddToPlaylistResponse(x.data);
 			case "reel.reel_item_watch": return this.ReelItemWatchResponse(x.data);
 			case "reel.reel_watch_sequence": return this.ReelWatchSequenceResponse(x.data);
+			case "share.get_share_panel": return this.GetSharePanel(x.data);
 			case "subscription.subscribe": return this.SubscribeResponse(x.data);
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
-			case "share.get_share_panel": return this.GetSharePanel(x.data);
 			default: debugger; return g(x);
 		}
 	}
