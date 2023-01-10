@@ -4456,11 +4456,23 @@ class ParserService extends BaseService {
 			case "reel": return this.get_reel_type(x);
 			case "subscription": return this.get_subscription_type(x);
 			case "playlist": return this.get_playlist_type(x);
+			case "share": return this.get_share_type(x);
 		}
 		switch(x.length) {
 			case 3: return this.get_yt_url_type_3(x);
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
+	}
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","share",...string[]]>} x */
+	get_share_type(x) {
+		switch(x[3]) {
+			case "get_share_panel": break;
+			default: return this.api_no_handler(x,x[3]);
+		}
+		return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`,
+		}.x;
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",...string[]]>} x */
 	get_playlist_type(x) {
