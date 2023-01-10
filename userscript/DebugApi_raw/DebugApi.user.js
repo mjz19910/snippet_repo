@@ -3628,25 +3628,25 @@ function run_modules_plugin() {
 	let function_prototype_apply=function_prototype.apply;
 	let function_prototype_bind=function_prototype.bind;
 
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_call=function_prototype_call.bind(function_prototype_call);
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_apply=function_prototype_call.bind(function_prototype_apply);
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_bind=function_prototype_call.bind(function_prototype_bind);
 
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_call=function_prototype_bind.bind(function_prototype_call);
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_apply=function_prototype_bind.bind(function_prototype_apply);
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, bindThisArg:any, ...argArray:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_bind=function_prototype_bind.bind(function_prototype_bind);
 
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_apply_call=function_prototype_apply.bind(function_prototype_call);
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>any} */
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, argArray?:any])=>any} */
 	let bound_apply_apply=function_prototype_apply.bind(function_prototype_apply);
-	/** @type {(selfThisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
+	/** @type {(thisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
 	let bound_apply_bind=function_prototype_apply.bind(function_prototype_bind);
 
 	let safe_function_prototype={
@@ -3655,7 +3655,6 @@ function run_modules_plugin() {
 		call: function_prototype.call,
 	};
 	console.log(safe_function_prototype);
-	debugger;
 
 	let info=gen_function_prototype_use(safe_function_prototype);
 	console.log(info);
@@ -3676,8 +3675,7 @@ function run_modules_plugin() {
 	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
 		if(!inject_api.function_as_string_vec) throw 1;
-		let ret;
-		ret=bound_apply_call(this,[thisArg,argArray]);
+		let ret=bound_apply_call(this,[thisArg,...argArray]);
 		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
 			inject_api.function_as_string_vec.push(this.toString());
 		}
@@ -3686,7 +3684,8 @@ function run_modules_plugin() {
 	/** @this {()=>void} @arg {any} tv @arg {any} r */
 	function function_prototype_apply_inject(tv,r) {
 		if(!inject_api.function_as_string_vec) throw 1;
-		let ret=bound_apply_call(this,[tv,r]);
+		if(r===void 0||r===null) r=[];
+		let ret=bound_apply_call(this,[tv,...r]);
 		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
 			inject_api.function_as_string_vec.push(this.toString());
 		}
