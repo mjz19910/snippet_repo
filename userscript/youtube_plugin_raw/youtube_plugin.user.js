@@ -4826,17 +4826,6 @@ class C7 extends BaseService {
 }
 //#region HandleTypes
 class ServiceData extends BaseService {
-	/** @arg {ResolverT<Services, ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		this.c1=new C1(x);
-		this.c2=new C2(x);
-		this.c3=new C3(x);
-		this.c4=new C4(x);
-		this.c5=new C5(x);
-		this.c6=new C6(x);
-		this.c7=new C7(x);
-	}
 	/** @protected @type {FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
 	/** @protected @type {QualArr} */
@@ -4889,7 +4878,28 @@ class DefaultHandlers extends ApiBase {
 		data_saver.save_keys(`[Action.${keys_arr[0]}]`,x);
 	}
 }
+class RC extends BaseService {
+	/** @public @arg {ResponseContext} x */
+	ResponseContext(x) {
+		let tracking_handler=this.x.get("service_tracking");
+		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
+		tracking_handler.on_complete_set_service_params();
+		this.save_keys("[ResponseContext]",x);
+	}
+}
 class HandleTypes extends ServiceData {
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+		this.c1=new C1(x);
+		this.c2=new C2(x);
+		this.c3=new C3(x);
+		this.c4=new C4(x);
+		this.c5=new C5(x);
+		this.c6=new C6(x);
+		this.c7=new C7(x);
+		this.rc=new RC(x);
+	}
 	default=new DefaultHandlers;
 	/** @arg {NavigateEventDetail} x */
 	NavigateEventDetail(x) {
@@ -4901,7 +4911,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {NavigateEventDetail["response"]} x */
 	DataResponsePageType(x) {
-		this.ResponseContext(x.response.responseContext);
+		this.rc.ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.c1.BrowsePageResponse(x);
 			case "watch": return this.c2.WatchPageResponse(x);
@@ -4927,7 +4937,7 @@ class HandleTypes extends ServiceData {
 		this._current_response_type=x.type;
 		/** @type {{data:{responseContext:ResponseContext;}}} */
 		let v=x;
-		this.ResponseContext(v.data.responseContext);
+		this.rc.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="notification.get_notification_menu") break x;
@@ -4994,13 +5004,6 @@ class HandleTypes extends ServiceData {
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
 		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
-	}
-	/** @private @arg {ResponseContext} x */
-	ResponseContext(x) {
-		let tracking_handler=this.x.get("service_tracking");
-		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
-		tracking_handler.on_complete_set_service_params();
-		this.save_keys("[ResponseContext]",x);
 	}
 	/** @public @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
 	w(x,y) {
