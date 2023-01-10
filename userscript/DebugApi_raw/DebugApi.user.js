@@ -3394,9 +3394,11 @@ class DisabledMulCompression extends MulCompression {
 	}
 }
 inject_api.DisabledMulCompression=DisabledMulCompression;
-
 /** @type {HTMLIFrameElement|null} */
 let cached_iframe=null;
+/** @type {string[]} */
+let function_as_string_vec=[];
+inject_api.function_as_string_vec=function_as_string_vec
 
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {
@@ -3653,6 +3655,7 @@ function run_modules_plugin() {
 		call: function_prototype.call,
 	};
 	console.log(safe_function_prototype);
+	debugger;
 
 	let info=gen_function_prototype_use(safe_function_prototype);
 	console.log(info);
