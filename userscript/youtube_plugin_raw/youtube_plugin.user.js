@@ -3372,9 +3372,12 @@ class GFeedbackService extends BaseService {
 	parse_route_param(x) {
 		let h=this.x.get("parser_service");
 		this.data.route=x.value;
-		let route_parts=split_string(x.value,".");
+		let route_parts=split_string_once(x.value,".");
 		switch(route_parts[0]) {
-			case "channel": h.parse_channel_section(route_parts[1]); break;
+			case "channel": {
+				if(route_parts[1]==="") return;
+				h.parse_channel_section(route_parts);
+			} break;
 			default: debugger;
 		}
 	}
@@ -4078,7 +4081,7 @@ class ParserService extends BaseService {
 	/** @private @arg {Extract<ParseUrlStr_3,[`@${string}`,any]>[1]} x */
 	parse_channel_section_url(x) {
 		if(!this.str_is_search(x)) {
-			return this.parse_channel_section(x);
+			return this.parse_channel_section(["channel",x]);
 		}
 		let a=split_string(x,"?");
 		switch(a[0]) {
@@ -4466,18 +4469,19 @@ class ParserService extends BaseService {
 		console.log("[new_parse_target_id]",x);
 		debugger;
 	}
-	/** @public @arg {ChanTabStr} x */
+	/** @public @arg {SplitOnce<ChanLoc,".">} x */
 	parse_channel_section(x) {
-		switch(x) {
-			case "featured": break;
-			case "videos": break;
-			case "playlists": break;
-			case "community": break;
-			case "channels": break;
+ 		switch(x[1]) {
+			case "": break;
 			case "about": break;
+			case "channels": break;
+			case "community": break;
+			case "featured": break;
+			case "playlists": break;
 			case "search": break;
-			case "streams": break;
 			case "shorts": break;
+			case "streams": break;
+			case "videos": break;
 			default: debugger;
 		}
 	}
