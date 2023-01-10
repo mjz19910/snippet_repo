@@ -2595,7 +2595,7 @@ class YtHandlers extends BaseService {
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
 		return this.x.get("parser_service").get_url_type(path_parts);
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_length_1(target,x) {
 		switch(target[0]) {
 			default: debugger; break;
@@ -2642,7 +2642,7 @@ class YtHandlers extends BaseService {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_reel(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -2658,7 +2658,7 @@ class YtHandlers extends BaseService {
 			};
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_notification(target,x) {
 		switch(target[1]) {
 			default: debugger; return null;
@@ -2684,7 +2684,7 @@ class YtHandlers extends BaseService {
 			};
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_live_chat(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2696,7 +2696,7 @@ class YtHandlers extends BaseService {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_res_att(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2713,7 +2713,7 @@ class YtHandlers extends BaseService {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_account(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2735,7 +2735,7 @@ class YtHandlers extends BaseService {
 		}
 		return null;
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_like(target,x) {
 		switch(target[1]) {
 			default: debugger; break;
@@ -2757,11 +2757,11 @@ class YtHandlers extends BaseService {
 		}
 		return null;
 	}
-	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {ResponseTypes} */
+	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {_ResponseTypes} */
 	get_res_data(url_type,x) {
 		/** @private @type {Split<UrlTypes, ".">} */
 		let target=split_string(url_type,".");
-		/** @private @type {ResponseTypes|null} */
+		/** @private @type {_ResponseTypes|null} */
 		let res=null;
 		switch(target[0]) {
 			case "account": res=this.convert_account(target,x); break;
@@ -2773,6 +2773,7 @@ class YtHandlers extends BaseService {
 			case "reel": res=this.convert_reel(target,x); break;
 			case "subscription": res=this.convert_subscription(target,x); break;
 			case "playlist": res=this.convert_playlist(target,x); break;
+			case "share": res=this.convert_share(target,x); break;
 		}
 		switch(target.length) {
 			case 1: res=this.convert_length_1(target,x); break;
@@ -2785,7 +2786,18 @@ class YtHandlers extends BaseService {
 			data: x,
 		};
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_share(t,x) {
+		switch(t[1]) {
+			case "get_share_panel": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {GetSharePanel} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_playlist(t,x) {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
@@ -2796,7 +2808,7 @@ class YtHandlers extends BaseService {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_subscription(t,x) {
 		switch(t[1]) {
 			case "subscribe": return {
@@ -2812,7 +2824,7 @@ class YtHandlers extends BaseService {
 			default: debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {ResponseTypes|null} */
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_browse(t,x) {
 		switch(t.length) {
 			case 2: switch(t[1]) {
@@ -4874,7 +4886,7 @@ class HandleTypes extends ServiceData {
 		console.log("pt",x);
 		debugger;
 	}
-	/** @arg {ResponseTypes} x */
+	/** @arg {_ResponseTypes} x */
 	ResponseTypes(x) {
 		/** @private @arg {{type:string}} x */
 		let g=x => {
@@ -4887,6 +4899,9 @@ class HandleTypes extends ServiceData {
 		/** @type {{data:{responseContext:ResponseContext;}}} */
 		let v=x;
 		this.ResponseContext(v.data.responseContext);
+		if("actions" in x.data) {
+			debugger;
+		}
 		switch(x.type) {
 			case "account.account_menu": return this.AccountMenuResponse(x.data);
 			case "account.accounts_list": return this.AccountsListResponse(x.data);

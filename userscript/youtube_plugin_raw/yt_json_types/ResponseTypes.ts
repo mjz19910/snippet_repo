@@ -1,4 +1,4 @@
-type ResponseTypes=
+type _ResponseTypes=
 	|_GenericResponseType
 	|account_account_menu_t
 	|account_set_setting_t
@@ -25,6 +25,7 @@ type ResponseTypes=
 	|playlist_get_add_to_playlist_t
 	|reel_reel_item_watch_t
 	|reel_reel_watch_sequence_t
+	|share_get_share_panel_t
 	|subscription_subscribe_t
 	|subscription_unsubscribe_t
 	;
