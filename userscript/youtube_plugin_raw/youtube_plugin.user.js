@@ -5020,6 +5020,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {UnsubscribeResponse} x */
 	UnsubscribeResponse(x) {
+		if(x.actions) this.z(x.actions,a => this.default.Action(a));
 		this.save_keys("[UnsubscribeResponse]",x);
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */

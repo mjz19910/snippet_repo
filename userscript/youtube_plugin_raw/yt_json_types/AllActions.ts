@@ -1,6 +1,7 @@
 type AllActions=
-	|OpenPopupAction
 	|AddToGuideSectionAction
-	|RemoveFromGuideSectionAction
+	|OpenPopupAction
 	|RefreshPlaylistCommand
+	|RemoveFromGuideSectionAction
+	|UpdateSubscribeButtonAction
 	;
