@@ -39,7 +39,7 @@ function cast2_c(value,_constructor_type) {
 	return true;
 }
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X} */
-function any_c(value,_constructor_type) {
+function as_instance(value,_constructor_type) {
 	if(cast2_c(value,_constructor_type)) {
 		return value;
 	}
@@ -184,7 +184,7 @@ function on_ytd_app(element) {
 	if(is_yt_debug_enabled||is_ytd_app_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	window.ytd_app=element;
-	ytd_app=any_c(element,YtdAppElement);
+	ytd_app=as_instance(element,YtdAppElement);
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		const target_element=get_html_elements(document,"ytd-page-manager")[0];
 		if(!target_element) throw new Error("Missing ytd-page-manager when we have ytd-app");
@@ -1199,7 +1199,7 @@ function on_mk_new_property(cc,obj) {
 /** @private @arg {MKState} cc @arg {{}} obj */
 function on_mk_property_set(cc,obj) {
 	if(ud_func.has(obj)) cc.value=obj;
-	if(any_c(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
+	if(as_instance(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
 		on_mk_new_property(cc,obj);
 	} else {
 		cc.value=obj;
@@ -1324,7 +1324,7 @@ function on_ytd_page_manager(element) {
 	const element_id="ytd-page-manager";
 	if(is_yt_debug_enabled) console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	ytd_page_manager=any_c(element,YtdPageManagerElement);
+	ytd_page_manager=as_instance(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
 }
 /** @private @type {HTMLElement|null} */

@@ -50,13 +50,13 @@ export class Snippet_0_tmp {
 		}
 	}
 	/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
-	split_string_once(s,d=as(",")) {
+	split_string_once(s,d=this.as(",")) {
 		if(s==="") {
 			/** @type {[]} */
 			let r=[];
 			/** @type {any} */
 			let q=r;
-			return as(q);
+			return this.as(q);
 		}
 		let i=s.indexOf(d);
 		if(i===-1) {
@@ -64,7 +64,7 @@ export class Snippet_0_tmp {
 			let r=[s];
 			/** @type {any} */
 			let q=r;
-			return as(q);
+			return this.as(q);
 		}
 		let a=s.slice(0,i);
 		let b=s.slice(i+d.length);
@@ -72,7 +72,7 @@ export class Snippet_0_tmp {
 		let r=[a,b];
 		/** @type {any} */
 		let q=r;
-		return as(q);
+		return this.as(q);
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
@@ -246,7 +246,7 @@ export class Snippet_0_tmp {
 	}
 	/** @type {<T extends string[],U extends string[]>(k:string[] extends T?never:T,r:U)=>Exclude<T[number],U[number]>[]} */
 	filter_out_keys(keys,to_remove) {
-		to_remove=as(to_remove.slice());
+		to_remove=this.as(to_remove.slice());
 		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
 		let ok_e=[];
 		for(let i=0;i<keys.length;i++) {
@@ -255,7 +255,7 @@ export class Snippet_0_tmp {
 				to_remove.splice(rm_i,1);
 				continue;
 			}
-			ok_e.push(as(keys[i]));
+			ok_e.push(this.as(keys[i]));
 		}
 		return ok_e;
 	}
