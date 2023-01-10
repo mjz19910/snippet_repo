@@ -4937,9 +4937,7 @@ class HandleTypes extends ServiceData {
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
 		const cf="GetSharePanel";
-		if(x.actions) {
-			this.z(x.actions,a => this.default.Action([cf],a));
-		}
+		if(x.actions) this.z(x.actions,a => this.default.Action([cf],a));
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
