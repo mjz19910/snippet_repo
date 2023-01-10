@@ -1,1 +1,1 @@
-type RichSectionContent=RichShelfRenderer|InlineSurveyRenderer;
+type RichSectionContent=RichShelfRenderer|InlineSurveyRenderer|SourcePivotHeaderRenderer;

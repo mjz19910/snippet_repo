@@ -1,5 +1,4 @@
-type EngagementPanelSectionShortsComments={
-	content: SectionListRenderer<never,never>;
+type EngagementPanelSectionShortsComments=ContentTemplate<SectionListRenderer<never,never>>&{
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
 	identifier: {

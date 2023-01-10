@@ -1,5 +1,4 @@
-type EngagementPanelStructuredDescription={
-	content: {};
+type EngagementPanelStructuredDescription=ContentTemplate<{}>&{
 	header: {};
 	identifier: {
 		surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";

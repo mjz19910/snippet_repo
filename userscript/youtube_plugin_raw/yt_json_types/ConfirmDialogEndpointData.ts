@@ -1,1 +1,1 @@
-type ConfirmDialogEndpointData={content: ConfirmDialogRenderer;};
+type ConfirmDialogEndpointData=ContentTemplate<ConfirmDialogRenderer>;

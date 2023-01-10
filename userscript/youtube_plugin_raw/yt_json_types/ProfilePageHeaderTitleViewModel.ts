@@ -1,0 +1,3 @@
+type ProfilePageHeaderTitleViewModel={
+	profilePageHeaderTitleViewModel: ProfilePageHeaderTitle;
+};

@@ -1,0 +1,3 @@
+type SourcePivotHeaderRenderer={
+	sourcePivotHeaderRenderer: SourcePivotHeaderData;
+};

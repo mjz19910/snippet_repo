@@ -1,6 +1,5 @@
-type ShelfData={
+type ShelfData=ContentTemplate<ShelfItem>&{
 	title: {};
-	content: ShelfItem;
 	trackingParams: string;
 	menu?: {};
 	subscribeButton?: {};

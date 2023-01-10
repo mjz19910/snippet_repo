@@ -1,0 +1,3 @@
+type profilePageHeaderThumbnailViewModel={
+	profilePageHeaderThumbnailViewModel: {};
+};

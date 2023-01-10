@@ -1,1 +1,1 @@
-type RichSectionData={content: RichSectionContent;};
+type RichSectionData=ContentTemplate<RichSectionContent>;

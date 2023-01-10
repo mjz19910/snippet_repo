@@ -1,3 +1,1 @@
-type ContentTemplate<T>={
-	content: T;
-};
+type ContentTemplate<T>={content: T;};

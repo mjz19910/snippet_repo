@@ -1,4 +1,3 @@
-type TranscriptData={
+type TranscriptData=ContentTemplate<TranscriptSearchPanelRenderer>&{
 	trackingParams: string;
-	content: TranscriptSearchPanelRenderer;
 };

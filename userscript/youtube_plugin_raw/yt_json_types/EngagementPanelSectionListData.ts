@@ -1,20 +1,12 @@
-type EngagementPanelSectionListData={
+type EngagementPanelSectionListData=ContentTemplate<EngagementPanelSectionListContent>&{
 	panelIdentifier?: "engagement-panel-clip-create";
 	header?: EngagementPanelTitleHeaderRenderer;
-	content: EngagementPanelSectionListContent;
+	veType?: 76278;
 	targetId: EngagementPanelSectionTargetIds;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	onShowCommands: [
 		changeEngagementPanelVisibilityAction,showEngagementPanelScrimAction
 	];
-	loggingDirectives: LoggingDirectives;
-}|{
-	panelIdentifier: "comment-item-section",
-	header: EngagementPanelTitleHeaderRenderer;
-	content: EngagementPanelSectionListContent;
-	veType: 76278;
-	targetId: "engagement-panel-comments-section";
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: LoggingDirectives;
 };
 type EngagementPanelSectionTargetIds=MakeTargetId<
@@ -23,6 +15,7 @@ type EngagementPanelSectionTargetIds=MakeTargetId<
 		"ads",
 		"clip-create",
 		"structured-description",
+		"comments-section",
 	][number]
 >;
 type MakeTargetId<T extends string,U extends string>=`${T}-${U}`;
