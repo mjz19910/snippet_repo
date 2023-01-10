@@ -2914,6 +2914,7 @@ class YtHandlers extends BaseService {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
+	do_initial_data_trace=false;
 	/** @public @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
 		/** @private @type {YTNavigateFinishDetail["response"]} */
@@ -2925,8 +2926,10 @@ class YtHandlers extends BaseService {
 			console.log("[unhandled_return_value]",ret);
 			debugger;
 		}
-		this.upgrade_obj(ret,{is_initial_data:true}).is_initial_data=true;
-		this.upgrade_obj(ret.endpoint,{is_initial_endpoint:true}).is_initial_endpoint=true;
+		if(this.do_initial_data_trace) {
+			this.upgrade_obj(ret,{is_initial_data: true}).is_initial_data=true;
+			this.upgrade_obj(ret.endpoint,{is_initial_endpoint: true}).is_initial_endpoint=true;
+		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
 		this.x.get("handle_types").ptc.DataResponsePageType(ret);
@@ -2949,7 +2952,7 @@ class YtHandlers extends BaseService {
 	/** @arg {YTNavigateFinishDetail} detail */
 	on_page_type_changed(detail) {
 		try {
-			console.log('ptc detail',detail);
+			if(this.do_initial_data_trace) console.log('ptc detail',detail);
 			this.x.get("handle_types").ptc.YTNavigateFinishDetail(detail);
 		} catch(e) {
 			console.log("plugin error");
