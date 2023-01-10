@@ -1415,7 +1415,7 @@ class YTNavigateFinishEvent {
 		let ret=value;
 		return ret;
 	}
-	/** @public @type {NavigateEventDetail} */
+	/** @public @type {YTNavigateFinishDetail} */
 	detail=as({});
 }
 /** @private @type {((event:YTNavigateFinishEvent)=>void)[]} */
@@ -2246,10 +2246,10 @@ class KnownDataSaver extends ApiBase {
 	#idle_id=null;
 	#onDataChange() {
 		if(this.#idle_id!==null) return;
-		this.#idle_id=requestIdleCallback(()=>{
+		this.#idle_id=requestIdleCallback(() => {
 			this.#idle_id=null;
-			this.#store_data()
-		})
+			this.#store_data();
+		});
 	}
 	/** @type {{[x:string]:number}} */
 	#strings_key_index_map={};
@@ -2897,7 +2897,7 @@ class YtHandlers extends BaseService {
 		this.x.get("handle_types").ResponseTypes(res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @private @arg {UrlTypes|`page_type_${NavigateEventDetail["pageType"]}`} path @arg {SavedDataItem} data */
+	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
 		/** @private @type {AnySavedData} */
@@ -2906,9 +2906,9 @@ class YtHandlers extends BaseService {
 		this.iteration.default_iter({t: this,path},data);
 	}
 	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
-	/** @public @arg {[()=>NavigateEventDetail["response"], object, []]} apply_args */
+	/** @public @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
-		/** @private @type {NavigateEventDetail["response"]} */
+		/** @private @type {YTNavigateFinishDetail["response"]} */
 		let ret=Reflect.apply(...apply_args);
 		if(!("page" in ret)) {
 			return ret;
@@ -2919,7 +2919,7 @@ class YtHandlers extends BaseService {
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		this.x.get("handle_types").DataResponsePageType(ret);
+		this.x.get("handle_types").ptc.DataResponsePageType(ret);
 		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
@@ -2936,10 +2936,10 @@ class YtHandlers extends BaseService {
 		}
 		return ret;
 	}
-	/** @arg {NavigateEventDetail} detail */
+	/** @arg {YTNavigateFinishDetail} detail */
 	on_page_type_changed(detail) {
 		try {
-			this.x.get("handle_types").NavigateEventDetail(detail);
+			this.x.get("handle_types").ptc.YTNavigateFinishDetail(detail);
 		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
@@ -4887,7 +4887,7 @@ class RC extends BaseService {
 		this.save_keys("[ResponseContext]",x);
 	}
 }
-class HandleTypes extends ServiceData {
+class PTC extends BaseService {
 	/** @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
 		super(x);
@@ -4900,16 +4900,15 @@ class HandleTypes extends ServiceData {
 		this.c7=new C7(x);
 		this.rc=new RC(x);
 	}
-	default=new DefaultHandlers;
-	/** @arg {NavigateEventDetail} x */
-	NavigateEventDetail(x) {
+	/** @arg {YTNavigateFinishDetail} x */
+	YTNavigateFinishDetail(x) {
 		const {response,endpoint,...y}=x;
 		this.DataResponsePageType(response);
 		if(!this.eq_keys(this.get_keys_of(y),["pageType","fromHistory","navigationDoneMs"])) {
 			console.log(y);
 		}
 	}
-	/** @arg {NavigateEventDetail["response"]} x */
+	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
 		this.rc.ResponseContext(x.response.responseContext);
 		switch(x.page) {
@@ -4925,6 +4924,14 @@ class HandleTypes extends ServiceData {
 		console.log("pt",x);
 		debugger;
 	}
+}
+class HandleTypes extends ServiceData {
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+		this.ptc=new PTC(x);
+	}
+	default=new DefaultHandlers;
 	/** @arg {_ResponseTypes} x */
 	ResponseTypes(x) {
 		/** @private @arg {{type:string}} x */
@@ -4937,7 +4944,7 @@ class HandleTypes extends ServiceData {
 		this._current_response_type=x.type;
 		/** @type {{data:{responseContext:ResponseContext;}}} */
 		let v=x;
-		this.rc.ResponseContext(v.data.responseContext);
+		this.ptc.rc.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="notification.get_notification_menu") break x;
@@ -4949,8 +4956,8 @@ class HandleTypes extends ServiceData {
 			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
 			case "att.log": return this.AttLogResponse(x.data);
-			case "browse.edit_playlist": return this.c1.BrowseEditPlaylistResponse(x.data);
-			case "browse": return this.c1.BrowseResponse(x.data);
+			case "browse.edit_playlist": return this.ptc.c1.BrowseEditPlaylistResponse(x.data);
+			case "browse": return this.ptc.c1.BrowseResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
 			case "get_transcript": return this.GetTranscriptResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);

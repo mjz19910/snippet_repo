@@ -1,1 +1,1 @@
-type SavedDataUrlTypes=`page_type_${NavigateEventDetail["pageType"]}`|UrlTypes;
+type SavedDataUrlTypes=`page_type_${YTNavigateFinishDetail["pageType"]}`|UrlTypes;

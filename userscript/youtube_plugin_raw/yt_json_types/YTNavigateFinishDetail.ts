@@ -1,4 +1,4 @@
-type NavigateEventDetail=[
+type YTNavigateFinishDetail=[
 	PageTypeBrowse,
 	PageTypeChannel,
 	PageTypePlaylist,
