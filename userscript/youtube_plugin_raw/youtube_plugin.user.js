@@ -4973,6 +4973,7 @@ class HandleTypes extends ServiceData {
 			if(x.type==="notification.get_notification_menu") break x;
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
+			if(x.type==="notification.modify_channel_preference") break x;
 			debugger;
 		}
 		switch(x.type) {
@@ -5032,6 +5033,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
+		if(x.actions) this.z(x.actions,a => this.default.Action(a));
 		this.save_keys("[ModifyChannelPreferenceResponse]",x);
 	}
 	/** @private @arg {PlayerResponse} x */
