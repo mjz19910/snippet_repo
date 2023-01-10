@@ -4853,7 +4853,7 @@ class DefaultHandlers extends ApiBase {
 				to_remove.splice(rm_idx,1);
 				continue;
 			}
-			ok_e.push(cast_as(keys[i]));
+			ok_e.push(as(keys[i]));
 		}
 		return ok_e;
 	}
