@@ -2917,7 +2917,12 @@ class YtHandlers extends BaseService {
 	}
 	/** @arg {NavigateEventDetail} detail */
 	on_page_type_changed(detail) {
-		this.x.get("handle_types").NavigateEventDetail(detail);
+		try {
+			this.x.get("handle_types").NavigateEventDetail(detail);
+		} catch(e) {
+			console.log("plugin error");
+			console.log(e);
+		}
 	}
 
 }
