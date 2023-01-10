@@ -1,1 +1,1 @@
-type RunAttestationCommand={};
+type RunAttestationCommand={runAttestationCommand: RunAttestationCommandData;};

@@ -4471,7 +4471,7 @@ class ParserService extends BaseService {
 	}
 	/** @public @arg {SplitOnce<ChanLoc,".">} x */
 	parse_channel_section(x) {
- 		switch(x[1]) {
+		switch(x[1]) {
 			case "": break;
 			case "about": break;
 			case "channels": break;
@@ -5020,6 +5020,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
+		if(x.actions) this.z(x.actions,a => this.default.Action(a));
 		this.save_keys("[SubscribeResponse]",x);
 	}
 	/** @arg {UnsubscribeResponse} x */

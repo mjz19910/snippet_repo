@@ -3,5 +3,6 @@ type AllActions=
 	|OpenPopupAction
 	|RefreshPlaylistCommand
 	|RemoveFromGuideSectionAction
+	|RunAttestationCommand
 	|UpdateSubscribeButtonAction
 	;
