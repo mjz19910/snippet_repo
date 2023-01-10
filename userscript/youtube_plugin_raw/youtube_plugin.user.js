@@ -2924,7 +2924,6 @@ class YtHandlers extends BaseService {
 			console.log(e);
 		}
 	}
-
 }
 class HandleRendererContentItemArray extends BaseService {
 	debug=false;
