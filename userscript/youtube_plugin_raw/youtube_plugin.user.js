@@ -4971,6 +4971,8 @@ class HandleTypes extends ServiceData {
 		x: if("actions" in x.data) {
 			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="notification.get_notification_menu") break x;
+			if(x.type==="subscription.subscribe") break x;
+			if(x.type==="subscription.unsubscribe") break x;
 			debugger;
 		}
 		switch(x.type) {
