@@ -2114,6 +2114,14 @@ const general_service_state={
 	premium_membership: null,
 };
 class ApiBase {
+	/** @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
+	upgrade_obj(x,_b) {
+		/** @type {Partial<B>} */
+		let cd=x;
+		/** @type {Partial<U|B>} */
+		let id=cd;
+		return id;
+	}
 	/** @protected @template {string|number} U @template {U[]} T @arg {T} src @arg {T} target */
 	eq_keys(src,target) {
 		if(src.length!==target.length) return false;
@@ -2917,6 +2925,8 @@ class YtHandlers extends BaseService {
 			console.log("[unhandled_return_value]",ret);
 			debugger;
 		}
+		this.upgrade_obj(ret,{is_initial_data:true}).is_initial_data=true;
+		this.upgrade_obj(ret.endpoint,{is_initial_endpoint:true}).is_initial_endpoint=true;
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
 		this.x.get("handle_types").ptc.DataResponsePageType(ret);
@@ -2939,6 +2949,7 @@ class YtHandlers extends BaseService {
 	/** @arg {YTNavigateFinishDetail} detail */
 	on_page_type_changed(detail) {
 		try {
+			console.log('ptc detail',detail);
 			this.x.get("handle_types").ptc.YTNavigateFinishDetail(detail);
 		} catch(e) {
 			console.log("plugin error");
