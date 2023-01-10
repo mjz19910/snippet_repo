@@ -5,7 +5,7 @@
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
-// @match	https://www.youtube.com/*
+// @match	https://*.youtube.com/*
 // @grant	none
 // @run-at	document-start
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.meta.js
@@ -19,8 +19,10 @@ function as(e,x=e) {
 }
 /** @private @type {YtdAppElement} */
 const YtdAppElement=as({});
-/** @private @type {InstanceType<typeof YtdAppElement>|undefined} */
-let ytd_app=void 0;
+/** @private @type {InstanceType<typeof YtdAppElement>|null} */
+let ytd_app=null;
+/** @private @type {Element|null} */
+let ytcp_app=null;
 {
 	/** @private @type {Exclude<typeof window[InjectApiStr],undefined>} */
 	let inject_api=window.inject_api??as({});
@@ -170,6 +172,11 @@ function do_find_video() {
 		if(async_plugin_init.__debug) console.log("found extra video elements",new_elements);
 	}
 }
+/** @arg {HTMLElement} element */
+function on_ytcp_app(element) {
+	ytcp_app=element;
+	window.ytcp_app=element;
+}
 function iterate_ytd_app() {
 	if(ytd_app) return false;
 	const target_element=get_html_elements(document,"ytd-app")[0];
@@ -295,7 +302,16 @@ async function async_plugin_init(event) {
 					found_element_count++;
 				}
 			}
+			x: {
+				if(ytcp_app) break x;
+				const target_element=get_html_elements(document,"ytcp-app")[0];
+				if(!target_element) break x;
+				found_element_count++;
+				on_ytcp_app(target_element);
+			}
+			if(ytcp_app) break;
 			if(main_page_app&&!ytd_app) {
+				console.log("found main_page_app",main_page_app);
 				break;
 			}
 			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
