@@ -4899,7 +4899,8 @@ class HandleTypes extends ServiceData {
 		/** @type {{data:{responseContext:ResponseContext;}}} */
 		let v=x;
 		this.ResponseContext(v.data.responseContext);
-		if("actions" in x.data) {
+		x: if("actions" in x.data) {
+			if(x.type==="share.get_share_panel") break x;
 			debugger;
 		}
 		switch(x.type) {
@@ -4929,8 +4930,17 @@ class HandleTypes extends ServiceData {
 			case "reel.reel_watch_sequence": return this.ReelWatchSequenceResponse(x.data);
 			case "subscription.subscribe": return this.SubscribeResponse(x.data);
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
+			case "share.get_share_panel": return this.GetSharePanel(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {GetSharePanel} x */
+	GetSharePanel(x) {
+		const cf="GetSharePanel";
+		if(x.actions) {
+			this.z(x.actions,a => this.default.Action([cf],a));
+		}
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
 	GetAddToPlaylistResponse(x) {
