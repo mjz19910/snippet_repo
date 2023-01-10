@@ -2202,6 +2202,7 @@ class ecma_root {
 	InputElementDiv() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, RightBracePunctuator
+		/** @type {JsLexerOutputState} */
 		let out_state={
 			type: null,
 			item: null,
