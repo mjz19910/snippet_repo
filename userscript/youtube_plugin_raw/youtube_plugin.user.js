@@ -3247,6 +3247,7 @@ class ECatcherService extends BaseService {
 			fexp: fexp_static.concat([
 				24426636,24434209,
 				24424806,
+				24448074,
 			])
 		},
 	};
