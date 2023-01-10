@@ -1,18 +1,8 @@
 import {IDValue_0 as IDValue_0_import} from "./support/IDValueI_0.js";
-import {Nullable_} from "./support/Nullable.js";
-import {RecordKey_} from "./support/RecordKey.js";
 
 declare global {
 	type IDValue_0=IDValue_0_import;
 	var IDValue_0: typeof IDValue_0_import;
-}
-
-declare global {
-	type Nullable<T>=Nullable_<T>;
-}
-
-declare global {
-	type RecordKey<T>=RecordKey_<T>;
 }
 
 declare global {
@@ -180,10 +170,6 @@ declare global {
 		type: "string",
 		useCapture: boolean,
 	};
-}
-
-declare global {
-	type Constructor=new (...x: any[]) => any;
 }
 
 declare global {

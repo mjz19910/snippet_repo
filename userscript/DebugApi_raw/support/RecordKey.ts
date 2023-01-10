@@ -1,5 +1,3 @@
-import {Constructor} from "./Constructor";
-
-export interface RecordKey_<T> extends Constructor {
+interface RecordKey<T> extends Constructor {
 	key: T;
 }

@@ -2242,7 +2242,15 @@ class KnownDataSaver extends ApiBase {
 	#seen_numbers=[];
 	/** @type {[string,{t:boolean;f:boolean}][]} */
 	#seen_booleans=[];
-	#onDataChangeAction() {this.#store_data();}
+	/** @type {number|null|Nullable<{}>} */
+	#idle_id=null;
+	#onDataChange() {
+		if(this.#idle_id!==null) return;
+		this.#idle_id=requestIdleCallback(()=>{
+			this.#idle_id=null;
+			this.#store_data()
+		})
+	}
 	/** @type {{[x:string]:number}} */
 	#strings_key_index_map={};
 	/** @arg {string} key */
@@ -2253,9 +2261,6 @@ class KnownDataSaver extends ApiBase {
 		if(index<0) return;
 		this.#strings_key_index_map[key]=index;
 		return this.#seen_strings[index];
-	}
-	#onDataChange() {
-		this.#onDataChangeAction();
 	}
 	/** @type {[string,string|string[]][]} */
 	#new_strings=[];

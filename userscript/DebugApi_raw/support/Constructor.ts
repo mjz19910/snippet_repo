@@ -1,1 +1,1 @@
-export type Constructor=new () => any;
+type Constructor=new (...x: any[]) => any;
