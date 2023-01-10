@@ -2923,14 +2923,8 @@ class HandleRendererContentItemArray extends BaseService {
 		let renderer=content_item.richSectionRenderer;
 		/** @type {RichSectionContent} */
 		let content=renderer.content;
-		if("inlineSurveyRenderer" in content) {
-			content.inlineSurveyRenderer;
-			return true;
-		}
-		if("sourcePivotHeaderRenderer" in content) {
-			content.sourcePivotHeaderRenderer;
-			return true;
-		}
+		if("inlineSurveyRenderer" in content) return true;
+		if("sourcePivotHeaderRenderer" in content) return true;
 		if(!("richShelfRenderer" in content)) {
 			console.log("rich section content",content);
 			return true;
