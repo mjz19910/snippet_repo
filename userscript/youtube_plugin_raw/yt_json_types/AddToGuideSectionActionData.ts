@@ -1,4 +1,4 @@
 type AddToGuideSectionActionData={
-	handlerData: "GUIDE_ACTION_ADD_TO_PLAYLISTS";
+	handlerData: AddToGuideSectionHandlerDataEnum;
 	items: GuideEntryRenderer[];
 };

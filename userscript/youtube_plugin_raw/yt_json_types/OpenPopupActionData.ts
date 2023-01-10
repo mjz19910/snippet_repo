@@ -1,10 +1,10 @@
 type OpenPopupActionData={
-	popup: MultiPageMenuRenderer|ConfirmDialogRenderer;
-	popupType: PopupTypeList[number];
+	popup: MultiPageMenuRenderer|ConfirmDialogRenderer|NotificationActionRenderer;
+	popupType: PopupTypeList;
 };
 type PopupTypeList=[
 	"DROPDOWN",
 	"DIALOG",
 	"TOAST",
 	"TOP_ALIGNED_DIALOG",
-];
+][number];
