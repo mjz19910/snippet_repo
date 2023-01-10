@@ -33,7 +33,6 @@ declare global {
 		// run_wasm_plugin
 		run_modules_plugin?: VoidCallbackWith<() => void>;
 		run_wasm_plugin?: VoidCallbackWith<() => void>;
-		ModuleLoadDbg?: {};
 		function_as_string_vec?: string[];
 		CompressionStatsCalculator?: {};
 		range_matches?: {};

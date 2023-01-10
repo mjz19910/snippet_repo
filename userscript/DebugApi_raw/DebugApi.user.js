@@ -3395,11 +3395,6 @@ class DisabledMulCompression extends MulCompression {
 }
 inject_api.DisabledMulCompression=DisabledMulCompression;
 
-/** @arg {any} a @arg {any} c @arg {any} m_require */
-function found_modules(a,c,m_require) {
-	void a,c,m_require;
-};
-
 /** @type {HTMLIFrameElement|null} */
 let cached_iframe=null;
 
@@ -3623,26 +3618,6 @@ function gen_function_prototype_use(safe_function_prototype) {
 	return {funcs,bound_funcs};
 }
 
-class ModuleLoadDbg {
-	/** @arg {any} thisArg @arg {[any,any,any]} argArray */
-	evaluate_len_3(thisArg,argArray) {
-		if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-			var ars=Object.entries(argArray[1]).filter(([,e]) => e instanceof Array);
-			var ars_i=ars[0][1].indexOf(this);
-			if(ars[0][1].indexOf(this)>-1) {
-				console.log("found module array:","require."+ars[0][0]);
-				var mods=Object.entries(argArray[1]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
-				if(mods.length>0) {
-					console.log("found module cache:","require."+mods[0][0]);
-					found_modules(ars[0][1],mods[0][1],argArray[2]);
-				}
-			}
-		}
-	}
-}
-/** @typedef {typeof ModuleLoadDbg} ModuleLoadDbgT */
-inject_api.ModuleLoadDbg=ModuleLoadDbg;
-
 function run_modules_plugin() {
 	if(!inject_api.function_as_string_vec) throw 1;
 	let function_prototype=resolve_function_constructor().prototype;
@@ -3694,17 +3669,12 @@ function run_modules_plugin() {
 		[function_prototype_bind,function_prototype_bind,bound_bind_bind],
 	];
 	console.log(bound_function_prototype_vec);
-	let module_load_dbg=new ModuleLoadDbg;
 	Function.prototype.call=function_prototype_call_inject;
 	/** @this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
 		if(!inject_api.function_as_string_vec) throw 1;
 		let ret;
-		switch(argArray.length) {
-			case 3: let [a,b,c]=argArray; module_load_dbg.evaluate_len_3(thisArg,[a,b,c]); break;
-			default:
-				ret=bound_apply_call(this,[thisArg,argArray]);
-		}
+		ret=bound_apply_call(this,[thisArg,argArray]);
 		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
 			inject_api.function_as_string_vec.push(this.toString());
 		}
