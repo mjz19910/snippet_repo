@@ -1872,9 +1872,9 @@ function main() {
 	start_message_channel_loop(services.handle_types);
 	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
 	function fetch_filter_text_then_data_url(request,response_obj) {
-		try{
+		try {
 			yt_handlers.on_handle_api(request,response_obj);
-		} catch (e) {
+		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
 		}
@@ -4905,6 +4905,7 @@ class HandleTypes extends ServiceData {
 		this.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="share.get_share_panel") break x;
+			if(x.type==="notification.get_notification_menu") break x;
 			debugger;
 		}
 		switch(x.type) {
@@ -5005,23 +5006,15 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
-		const name="LikeRemoveLikeResponse";
-		const {actions,...y}=x;
-		if(actions) this.z(actions,a => this.default.Action([name],a));
-		this.save_keys(`[${name}]`,x);
-		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) {
-			this.x.get("codegen").generate_renderer(x,null);
-			debugger;
-		}
+		const cf="LikeRemoveLikeResponse";
+		const {responseContext,actions,...y}=x; this.g(y);
+		if(actions) this.z(actions,a => this.default.Action([cf],a));
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		const name="ReelWatchSequenceResponse";
-		if("actions" in x) debugger;
-		if("actions" in x&&x.actions instanceof Array) this.z(x.actions,a => {
-			this.default.Action([name],a);
-		});
-		this.save_keys(`[${name}]`,x);
+		const cf="ReelWatchSequenceResponse";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {GetLiveChatReplayResponse} x */
 	GetLiveChatReplayResponse(x) {
@@ -5029,7 +5022,11 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
-		this.save_keys("[GetNotificationMenuResponse]",x);
+		const cf="GetNotificationMenuResponse";
+		this.z(x.actions,a => {
+			this.default.Action([cf],a);
+		});
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
