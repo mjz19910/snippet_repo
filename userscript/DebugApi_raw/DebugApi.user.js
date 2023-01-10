@@ -2203,9 +2203,7 @@ class ecma_root {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, RightBracePunctuator
 		let out_state={
-			/** @type {string|null} */
 			type: null,
-			/** @type {string|null} */
 			item: null,
 			length: 0,
 		};
@@ -2346,7 +2344,6 @@ class ecma_root {
 	}
 }
 /** @typedef {{str:string;index:number}} JsLexerInputState */
-/** @typedef {Nullable<{type:string;item:string}>&{length:number}} JsLexerOutputState */
 class js_token_generator {
 	get index() {
 		return this.root.index;
