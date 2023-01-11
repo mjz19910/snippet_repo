@@ -2484,6 +2484,10 @@ class BaseServicePrivate extends ApiBase {
 	#x;
 }
 class BaseService extends BaseServicePrivate {
+	/** @public @arg {string} x */
+	trackingParams(x) {
+		this.primitive_of(x,"string");
+	}
 	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
 	str_ends_with(x,v) {
 		return x.endsWith(v);
@@ -4793,9 +4797,58 @@ class C1 extends BaseService {
 		if(expirationTime) this.primitive_of(expirationTime,"number");
 		this.save_keys("[BrowsePageResponse]",x);
 	}
+	rc=this.x.get("handle_types").ptc.rc;
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
+		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y}=x;
+		this.rc.ResponseContext(responseContext);
+		if(header) {
+			if("feedTabbedHeaderRenderer" in header) {
+				this.FeedTabbedHeaderRenderer(header);
+			}
+		}
+		this.trackingParams(trackingParams);
+		this.z(onResponseReceivedActions,a=>this.ResponseReceivedAction(a));
+		if(contents) this.BrowseContents(contents);
 		this.save_keys("[BrowseResponse]",x);
+		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y; this.g(y1);
+		if(topbar) this.DesktopTopbarRenderer(topbar);
+		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
+		if(sidebar) this.SettingsSidebarRenderer(sidebar);
+		if(observedStateTags) this.z(observedStateTags,a=>this.StateTag(a));
+		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
+	}
+	/** @arg {CacheMetadata} x */
+	CacheMetadata(x) {
+		this.save_keys("[CacheMetadata]",x);
+	}
+	/** @arg {StateTag} x */
+	StateTag(x) {
+		this.save_keys("[StateTag]",x);
+	}
+	/** @arg {SettingsSidebarRenderer} x */
+	SettingsSidebarRenderer(x) {
+		this.save_keys("[SettingsSidebarRenderer]",x);
+	}
+	/** @arg {EntityBatchUpdate} x */
+	EntityBatchUpdate(x) {
+		this.save_keys("[EntityBatchUpdate]",x);
+	}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {
+		this.save_keys("[DesktopTopbarRenderer]",x);
+	}
+	/** @arg {BrowseContents} x */
+	BrowseContents(x) {
+		this.save_keys("[BrowseContents]",x);
+	}
+	/** @arg {FeedTabbedHeaderRenderer} x */
+	FeedTabbedHeaderRenderer(x) {
+		this.save_keys("[FeedTabbedHeaderRenderer]",x);
+	}
+	/** @arg {ResponseReceivedAction} x */
+	ResponseReceivedAction(x) {
+		this.save_keys("[ResponseReceivedAction]",x);
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
