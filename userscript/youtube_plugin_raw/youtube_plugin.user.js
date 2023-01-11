@@ -237,9 +237,9 @@ function on_ytd_app(element) {
 }
 /** @private @arg {CustomEventType} event */
 function plugin_init(event) {
-	async_plugin_init(event).then(()=>{},(e)=>{
+	async_plugin_init(event).then(() => {},(e) => {
 		console.log("async error",e);
-	})
+	});
 }
 /** @private @type {Element|null} */
 let main_page_app=null;
@@ -2161,15 +2161,18 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
+	do_save_keys_obj=false;
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
-		if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
-			arr: [],
-			/** @arg {{}} o */
-			set(o) {this.arr.push(o);}
-		};
-		this.save_key_objs[ki]?.set(x);
+		if(this.do_save_keys_obj) {
+			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
+				arr: [],
+				/** @arg {{}} o */
+				set(o) {this.arr.push(o);}
+			};
+			this.save_key_objs[ki]?.set(x);
+		}
 		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
 		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
 		let keys=this.get_keys_of(x);
@@ -4818,13 +4821,13 @@ class C1 extends BaseService {
 		this.ResponseContext(responseContext);
 		if(header) this.BrowseHeader(header);
 		this.trackingParams(trackingParams);
-		this.z(onResponseReceivedActions,a=>this.ResponseReceivedAction(a));
+		this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
 		if(contents) this.BrowseContents(contents);
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y; this.g(y1);
 		if(topbar) this.DesktopTopbarRenderer(topbar);
 		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
-		if(observedStateTags) this.z(observedStateTags,a=>this.StateTag(a));
+		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
 	}
 	/** @arg {BrowseHeader} x */
