@@ -2367,9 +2367,7 @@ class KnownDataSaver extends ApiBase {
 		let index_map=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
 		let bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => index_map.indexOf(e))).map(e => {
 			let ta=new Array(index_map.length).fill(0);
-			for(let x of e) {
-				ta[x]=1;
-			}
+			for(let x of e) ta[x]=1;
 			return ta.join("");
 		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
 		return {
