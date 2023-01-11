@@ -4800,6 +4800,7 @@ class C1 extends BaseService {
 	rc=this.x.get("handle_types").ptc.rc;
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
+		this.save_keys("[BrowseResponse]",x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y}=x;
 		this.rc.ResponseContext(responseContext);
 		if(header) {
@@ -4810,7 +4811,6 @@ class C1 extends BaseService {
 		this.trackingParams(trackingParams);
 		this.z(onResponseReceivedActions,a=>this.ResponseReceivedAction(a));
 		if(contents) this.BrowseContents(contents);
-		this.save_keys("[BrowseResponse]",x);
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y; this.g(y1);
 		if(topbar) this.DesktopTopbarRenderer(topbar);
 		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
