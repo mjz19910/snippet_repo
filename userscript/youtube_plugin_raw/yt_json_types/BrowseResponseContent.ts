@@ -3,10 +3,11 @@ type BrowseResponse={
 	trackingParams: string;
 	onResponseReceivedActions: ResponseReceivedAction[];
 	contents?: BrowseContents;
-	header?: FeedTabbedHeaderRenderer|C4TabbedHeaderRenderer;
+	header?: BrowseHeader;
 	topbar?: DesktopTopbarRenderer;
 	frameworkUpdates?: EntityBatchUpdate;
 	sidebar?: SettingsSidebarRenderer;
 	observedStateTags?: StateTag[];
 	cacheMetadata?: CacheMetadata;
 };
+type BrowseHeader=FeedTabbedHeaderRenderer|C4TabbedHeaderRenderer;

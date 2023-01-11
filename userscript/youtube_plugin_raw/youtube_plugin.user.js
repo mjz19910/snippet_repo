@@ -4803,11 +4803,7 @@ class C1 extends BaseService {
 		this.save_keys("[BrowseResponse]",x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y}=x;
 		this.rc.ResponseContext(responseContext);
-		if(header) {
-			if("feedTabbedHeaderRenderer" in header) {
-				this.FeedTabbedHeaderRenderer(header);
-			}
-		}
+		if(header) this.BrowseHeader(header);
 		this.trackingParams(trackingParams);
 		this.z(onResponseReceivedActions,a=>this.ResponseReceivedAction(a));
 		if(contents) this.BrowseContents(contents);
@@ -4817,6 +4813,10 @@ class C1 extends BaseService {
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a=>this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
+	}
+	/** @arg {BrowseHeader} x */
+	BrowseHeader(x) {
+		this.save_keys("[BrowseHeader]",x);
 	}
 	/** @arg {CacheMetadata} x */
 	CacheMetadata(x) {
@@ -4841,10 +4841,6 @@ class C1 extends BaseService {
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
 		this.save_keys("[BrowseContents]",x);
-	}
-	/** @arg {FeedTabbedHeaderRenderer} x */
-	FeedTabbedHeaderRenderer(x) {
-		this.save_keys("[FeedTabbedHeaderRenderer]",x);
 	}
 	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
