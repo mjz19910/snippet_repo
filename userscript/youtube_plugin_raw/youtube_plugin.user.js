@@ -235,6 +235,12 @@ function on_ytd_app(element) {
 		}
 	});
 }
+/** @private @arg {CustomEventType} event */
+function plugin_init(event) {
+	async_plugin_init(event).then(()=>{},(e)=>{
+		console.log("async error",e);
+	})
+}
 /** @private @type {Element|null} */
 let main_page_app=null;
 /** @private @arg {CustomEventType} event */
@@ -434,7 +440,7 @@ width: 10px;
 `;
 function with_ytd_scope() {
 	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
-	dom_observer.addEventListener("async-plugin-init",async_plugin_init);
+	dom_observer.addEventListener("async-plugin-init",plugin_init);
 }
 const is_ytd_app_debug_enabled=false;
 class VolumeRange {
@@ -1146,7 +1152,7 @@ function walk_key_path(cc,ms,obj,mc) {
 		new MKState({},obj,pq,`${cc.value_tr}.${pq}`,cc.noisy_flag).run();
 		return cc.value_tr+"."+pq;
 	}
-	throw 1;
+	throw new Error();
 }
 let win_watch=new OnWindowProperty;
 /** @private @arg {any} val @arg {MKState} cc */
@@ -1328,7 +1334,7 @@ class DomObserver extends CustomEventTarget {
 let dom_observer=new DomObserver;
 class YtdPageManagerElement extends HTMLElement {
 	/** @returns {YtCurrentPage|undefined} */
-	getCurrentPage() {throw 1;}
+	getCurrentPage() {throw new Error();}
 }
 /** @private @type {string[]} */
 let playlist_arr=[];
@@ -2468,7 +2474,7 @@ class BaseServicePrivate extends ApiBase {
 		this.ds=data_saver;
 	}
 	get x() {
-		if(!this.#x.value) throw 1;
+		if(!this.#x.value) throw new Error();
 		return this.#x.value;
 	}
 	/** @arg {string} k @arg {string|string[]} x */
@@ -2585,6 +2591,13 @@ class BaseService extends BaseServicePrivate {
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
+	}
+	/** @public @arg {ResponseContext} x */
+	ResponseContext(x) {
+		let tracking_handler=this.x.get("service_tracking");
+		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
+		tracking_handler.on_complete_set_service_params();
+		this.save_keys("[ResponseContext]",x);
 	}
 }
 
@@ -4779,6 +4792,10 @@ class Generate {
 	}
 }
 class C1 extends BaseService {
+	/** @arg {ResolverT<Services,ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const name="BrowseEditPlaylistResponse";
@@ -4797,12 +4814,11 @@ class C1 extends BaseService {
 		if(expirationTime) this.primitive_of(expirationTime,"number");
 		this.save_keys("[BrowsePageResponse]",x);
 	}
-	rc=this.x.get("handle_types").ptc.rc;
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
 		this.save_keys("[BrowseResponse]",x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y}=x;
-		this.rc.ResponseContext(responseContext);
+		this.ResponseContext(responseContext);
 		if(header) this.BrowseHeader(header);
 		this.trackingParams(trackingParams);
 		this.z(onResponseReceivedActions,a=>this.ResponseReceivedAction(a));
@@ -4952,13 +4968,6 @@ class DefaultHandlers extends ApiBase {
 	}
 }
 class RC extends BaseService {
-	/** @public @arg {ResponseContext} x */
-	ResponseContext(x) {
-		let tracking_handler=this.x.get("service_tracking");
-		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
-		tracking_handler.on_complete_set_service_params();
-		this.save_keys("[ResponseContext]",x);
-	}
 }
 class PTC extends BaseService {
 	/** @arg {ResolverT<Services, ServiceOptions>} x */
@@ -4983,7 +4992,7 @@ class PTC extends BaseService {
 	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
-		this.rc.ResponseContext(x.response.responseContext);
+		this.ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.c1.BrowsePageResponse(x);
 			case "watch": return this.c2.WatchPageResponse(x);
@@ -5017,7 +5026,7 @@ class HandleTypes extends ServiceData {
 		this._current_response_type=x.type;
 		/** @type {{data:{responseContext:ResponseContext;}}} */
 		let v=x;
-		this.ptc.rc.ResponseContext(v.data.responseContext);
+		this.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="notification.get_notification_menu") break x;
