@@ -4781,11 +4781,12 @@ class C1 extends BaseService {
 		this.z(x.actions,a => this.x.get("handle_types").default.Action(a));
 		this.save_keys(`[${name}]`,x);
 	}
+	log_url=false;
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
 		if(rootVe) this.save_number("BrowsePageResponse.rootVe",rootVe);
-		console.log("[browse_url] [%s]",JSON.stringify(url));
+		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.BrowseEndpoint(x.endpoint);
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
