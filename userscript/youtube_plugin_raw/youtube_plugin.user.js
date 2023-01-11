@@ -2352,8 +2352,8 @@ class KnownDataSaver extends ApiBase {
 			let bitmap_src=cur[1];
 			let linear_map=bitmap_src.every(e => !e.includes(","));
 			if(linear_map) {
-				console.log(` --------- [linear.${k}] --------- `);
-				console.log(bitmap_src.join(":"));
+				console.log(` --------- [${k}] --------- `);
+				console.log(bitmap_src.join(","));
 				return;
 			}
 			let {bitmap,index_map}=this.generate_bitmap(bitmap_src);
