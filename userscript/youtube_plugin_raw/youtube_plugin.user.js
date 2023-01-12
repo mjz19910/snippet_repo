@@ -2084,6 +2084,12 @@ function split_string(x,s=as(",")) {
 	let r=x.split(s);
 	return as(r);
 }
+/** @private @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
+function join_string(x,s) {
+	if(!x) {debugger;}
+	let r=x.join(s);
+	return as(r);
+}
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {
@@ -2914,10 +2920,20 @@ class YtHandlers extends BaseService {
 		/** @private @type {ApiUrlFormatFull} */
 		let api_url=as(parsed_url.href);
 		let url_type=this.use_template_url(api_url);
+		const res_parse=create_from_parse(api_url);
+		let ss1=split_string_once(res_parse.pathname,"/")[1];
+		let get_ss2=() => {
+			if(this.str_starts_with(ss1,"youtubei/v1/")) {
+				return split_string_once(ss1,"youtubei/v1/")[1];
+			} else {
+				return ss1;
+			}
+		};
+		let ss2=get_ss2();
 		if(!url_type) {
 			debugger;
 			/** @private @type {UrlTypes} */
-			let url_h=as(parsed_url.href);
+			let url_h=as(join_string(split_string(ss2,"/"),"."));
 			url_type=url_h;
 		}
 		if(!url_type) throw new Error("Unreachable");
@@ -3269,6 +3285,10 @@ class ECatcherService extends BaseService {
 				24426636,24434209,
 				24424806,
 				24448074,
+				24440903,
+				24450571,
+				24407190,
+				24448246,
 			])
 		},
 	};
@@ -4559,6 +4579,7 @@ class ParserService extends BaseService {
 	get_playlist_type(x) {
 		switch(x[3]) {
 			case "get_add_to_playlist": break;
+			case "create": break;
 			default: return this.api_no_handler(x,x[3]);
 		}
 		return {
