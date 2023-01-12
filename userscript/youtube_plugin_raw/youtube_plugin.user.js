@@ -3309,7 +3309,6 @@ class ECatcherService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "client.version": {
-					if(param.value!=="2.20230104") {debugger; break;};
 					new_client.version=param.value;
 				} break;
 				case "client.name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
