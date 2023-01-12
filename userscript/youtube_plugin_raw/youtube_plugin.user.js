@@ -4980,8 +4980,6 @@ class DefaultHandlers extends ApiBase {
 		data_saver.save_keys(`[Action.${name_from_keys}]`,x);
 	}
 }
-class RC extends BaseService {
-}
 class PTC extends BaseService {
 	/** @arg {ResolverT<Services, ServiceOptions>} x */
 	constructor(x) {
@@ -4993,7 +4991,6 @@ class PTC extends BaseService {
 		this.c5=new C5(x);
 		this.c6=new C6(x);
 		this.c7=new C7(x);
-		this.rc=new RC(x);
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
