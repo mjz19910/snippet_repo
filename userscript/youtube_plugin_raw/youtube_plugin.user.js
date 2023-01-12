@@ -2114,6 +2114,22 @@ const general_service_state={
 	premium_membership: null,
 };
 class ApiBase {
+	/** @arg {string} x */
+	uppercase_first(x) {
+		return x[0].toUpperCase()+x.slice(1);
+	}
+	/** @public @arg {unknown} x */
+	get_name_from_keys(x) {
+		if(typeof x!=='object') return null;
+		if(x===null) return null;
+		let keys=Object.keys(x);
+		for(let c of keys) {
+			if(c==="clickTrackingParams") continue;
+			if(c==="commandMetadata") continue;
+			return c;
+		}
+		return null;
+	}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
 		if(typeof x!==y) debugger;
@@ -2498,16 +2514,6 @@ class BaseService extends BaseServicePrivate {
 	}
 	get TODO_true() {
 		return true;
-	}
-	/** @public @arg {unknown} x */
-	get_name_from_keys(x) {
-		let keys=Object.keys(as(x));
-		for(let c of keys) {
-			if(c==="clickTrackingParams") continue;
-			if(c==="commandMetadata") continue;
-			return c;
-		}
-		return null;
 	}
 	/** @public @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
@@ -4967,10 +4973,9 @@ class DefaultHandlers extends ApiBase {
 	}
 	/** @arg {AllActions} x */
 	Action(x) {
-		let keys_arr=this.get_keys_of(x);
-		keys_arr=this.filter_out_keys(keys_arr,["clickTrackingParams"]);
-		if(keys_arr.length!==1) debugger;
-		data_saver.save_keys(`[Action.${keys_arr[0]}]`,x);
+		let name_from_keys=this.get_name_from_keys(x);
+		if(!name_from_keys) {debugger;return;}
+		data_saver.save_keys(`[Action.${name_from_keys}]`,x);
 	}
 }
 class RC extends BaseService {
