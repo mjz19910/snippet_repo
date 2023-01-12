@@ -3308,9 +3308,7 @@ class ECatcherService extends BaseService {
 		let new_client={};
 		for(let param of params) {
 			switch(param.key) {
-				case "client.version": {
-					new_client.version=param.value;
-				} break;
+				case "client.version": new_client.version=param.value; break;
 				case "client.name": if(param.value==="WEB") new_client.name=param.value; else debugger; break;
 				case "client.fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
 				default: console.log("[new_param_part]",param); debugger;
