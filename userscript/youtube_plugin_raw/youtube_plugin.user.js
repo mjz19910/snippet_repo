@@ -3710,10 +3710,10 @@ class CodegenService extends BaseService {
 	#is_TextT(x2) {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
-	/** @arg {string[]} req_names @arg {unknown} x @arg {string[]} keys @arg {string|number} t_name */
+	/** @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
-		let x1=as(x);
+		let x1=x;
 		/** @private @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
@@ -3800,6 +3800,8 @@ class CodegenService extends BaseService {
 	}
 	/** @arg {unknown} x @arg {string|null} r_name */
 	#generate_renderer(x,r_name=null) {
+		if(typeof x!=='object') return null;
+		if(x===null) return null;
 		console.log("gen renderer for",x);
 		/** @private @type {string[]} */
 		let req_names=[];
@@ -3813,7 +3815,7 @@ class CodegenService extends BaseService {
 		if(r_name) k=r_name;
 		if(k===null) return null;
 		let t_name=this.#uppercase_first(k);
-		let keys=Object.keys(as(x));
+		let keys=Object.keys(x);
 		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
 		d1!/** @private @arg {${t_name}} x */
