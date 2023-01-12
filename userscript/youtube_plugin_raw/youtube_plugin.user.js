@@ -5039,6 +5039,7 @@ class HandleTypes extends ServiceData {
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
 			if(x.type==="notification.modify_channel_preference") break x;
+			if(x.type==="notification.get_unseen_count") break x;
 			debugger;
 		}
 		switch(x.type) {
