@@ -3798,6 +3798,12 @@ class CodegenService extends BaseService {
 		}
 		x;
 	}
+	/** @arg {string} x */
+	#generate_padding(x) {
+		return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
+			return "\t".repeat(g);
+		});
+	}
 	/** @arg {unknown} x @arg {string|null} r_name */
 	#generate_renderer(x,r_name=null) {
 		if(typeof x!=='object') return null;
@@ -3805,12 +3811,6 @@ class CodegenService extends BaseService {
 		console.log("gen renderer for",x);
 		/** @private @type {string[]} */
 		let req_names=[];
-		/** @private @arg {string} x */
-		function gen_padding(x) {
-			return x.replaceAll(/(?:d\d!)*d(\d)!/g,(_v,g) => {
-				return "\t".repeat(g);
-			});
-		}
 		let k=this.get_name_from_keys(x);
 		if(r_name) k=r_name;
 		if(k===null) return null;
@@ -3835,7 +3835,7 @@ class CodegenService extends BaseService {
 		});
 		tmp_1=ex_names.join("")+tmp_1;
 		let tmp2=tmp_1.split("\n").map(e => e.trim()).filter(e => e).join("\n");
-		let tmp3=gen_padding(tmp2);
+		let tmp3=this.#generate_padding(tmp2);
 		return `\n${tmp3}`;
 	}
 	/** @arg {string} x */
