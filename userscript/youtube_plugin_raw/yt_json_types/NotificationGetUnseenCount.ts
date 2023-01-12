@@ -1,4 +1,5 @@
-type NotificationGetUnseenCountResponse=[
-	ResponseWithActions,
-	NotificationGetUnseenCountDirect,
-][number];
+type NotificationGetUnseenCountResponse={
+	responseContext: ResponseContext;
+	actions?: [UpdateNotificationsUnseenCountAction];
+	unseenCount?: number;
+};

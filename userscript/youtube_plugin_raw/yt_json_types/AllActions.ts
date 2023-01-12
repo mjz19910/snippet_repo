@@ -5,4 +5,5 @@ type AllActions=
 	|RemoveFromGuideSectionAction
 	|RunAttestationCommand
 	|UpdateSubscribeButtonAction
+	|UpdateNotificationsUnseenCountAction
 	;

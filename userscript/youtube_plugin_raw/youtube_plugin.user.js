@@ -5163,6 +5163,10 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
+		if(x.actions) {
+			if(x.actions.length!==1) debugger;
+			this.z(x.actions,a=>this.default.Action(a));
+		}
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
