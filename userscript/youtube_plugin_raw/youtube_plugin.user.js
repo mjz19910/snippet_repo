@@ -4946,6 +4946,10 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
+		if(x.url!=="/") debugger;
+		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(x.rootVe!==3854) debugger;
+		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
 		this.save_keys("[BrowseWebCommandMetadata]",x);
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
