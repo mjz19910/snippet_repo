@@ -4959,11 +4959,15 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
-		this.save_keys("[SectionListData]",x);
-		const {contents,continuations,trackingParams,...y}=x; this.g(y);
+		const cf="SectionListData";
+		this.save_keys(`[${cf}]`,x);
+		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=x; this.g(y);
 		this.z(contents,a => this.SectionListItem(a));
 		if(continuations) this.z(continuations,a => this.NextContinuationData(a));
 		this.trackingParams(trackingParams);
+		if(subMenu) this.save_keys(`[${cf}.subMenu]`,subMenu);
+		if(hideBottomSeparator!==void 0) this.save_keys(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+		if(targetId) this.save_keys(`[${cf}.targetId]`,targetId);
 	}
 	/** @arg {NextContinuationData} x */
 	NextContinuationData(x) {

@@ -11,4 +11,7 @@ type SectionListData={
 	contents: SectionListItem[];
 	continuations?: NextContinuationData[];
 	trackingParams: string;
+	subMenu?: {};
+	hideBottomSeparator?: boolean;
+	targetId?: "search-feed";
 };
