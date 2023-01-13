@@ -1,5 +1,9 @@
+type VE6827_PageUrl=
+|`/feed/trending?${string}`
+|`/feed/storefront?${string}`
+;
 type VE6827_WebCommandMetadata={
-	url: `/feed/trending?${string}`;
+	url: VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";

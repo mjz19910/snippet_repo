@@ -4959,6 +4959,15 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {VE6827_WebCommandMetadata} x */
 	VE6827_WebCommandMetadata(x) {
+		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
+		let su=split_string_once(x.url,"/")[1];
+		let su1=split_string(su,"/");
+		let [pt]=split_string_once(su1[1],"?");
+		switch(pt) {
+			case "trending": break;
+			case "storefront": break;
+			default: debugger; break;
+		}
 		if(!this.str_starts_with(x.url,"/feed/trending?")) debugger;
 		if(x.rootVe!==6827) debugger;
 	}
