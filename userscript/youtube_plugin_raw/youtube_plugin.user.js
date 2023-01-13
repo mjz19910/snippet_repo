@@ -318,7 +318,7 @@ async function async_plugin_init(event) {
 			}
 			if(ytcp_app) break;
 			if(main_page_app&&!ytd_app) {
-				console.log("found main_page_app",main_page_app);
+				console.log("[found.main_page_app]",main_page_app);
 				break;
 			}
 			// END(ytd-app): obj.dispatchEvent({type: "ytd-app",detail,port});
@@ -5245,10 +5245,11 @@ class HandleTypes extends ServiceData {
 	SearchApiResponse(x) {
 		const cf="SearchApiResponse";
 		this.save_keys(`[${cf}]`,x);
-		const {responseContext: {},contents,trackingParams}=x;
-		this.TabbedSearchResultsRenderer(contents);
-		this.save_keys(`[${cf}.contents]`,contents);
+		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y);
+		if(contents) this.TabbedSearchResultsRenderer(contents);
+		if(continuationContents) this.save_keys(`[${cf}.continuationContents]`,continuationContents);
 		this.trackingParams(trackingParams);
+		if(header) this.save_keys(`[${cf}.header]`,header);
 	}
 	/** @arg {TabbedSearchResultsRenderer} x */
 	TabbedSearchResultsRenderer(x) {
@@ -5261,7 +5262,7 @@ class HandleTypes extends ServiceData {
 		const cf="TabbedSearchResults";
 		this.save_keys(`[${cf}]`,x);
 		const {tabs: a,...y}=x; this.g(y);
-		this.z(a,a=>this.SearchResultsTabRenderer(a));
+		this.z(a,a => this.SearchResultsTabRenderer(a));
 	}
 	/** @arg {SearchResultsTabRenderer} x */
 	SearchResultsTabRenderer(x) {

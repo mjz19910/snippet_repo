@@ -1,5 +1,7 @@
 type SearchApiResponse={
 	responseContext: ResponseContext;
-	contents: TabbedSearchResultsRenderer;
+	contents?: TabbedSearchResultsRenderer;
+	continuationContents?: {};
 	trackingParams: string;
+	header?: {};
 };
