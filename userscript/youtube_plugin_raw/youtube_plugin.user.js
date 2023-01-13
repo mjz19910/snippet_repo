@@ -290,7 +290,7 @@ async function async_plugin_init(event) {
 					if(e.id==="watch7-content"&&e.classList.value==="watch-main-col") return false;
 					if(e_tn=="svg") return false;
 					let fut_data=[e.tagName,e.id,e.classList.value];
-					event.detail.handle_types.save_string("body_element",fut_data);
+					event.detail.handle_types.save_string("[body_element]",fut_data);
 					return true;
 				});
 				if(ytd_app&&interesting_body_elements.includes(ytd_app)&&interesting_body_elements.length===1) break x;
@@ -2185,10 +2185,10 @@ class KnownDataSaver extends ApiBase {
 			};
 			this.save_key_objs[ki]?.set(x);
 		}
-		if(typeof x!=="object") return this.save_string(`${ki}.type`,typeof x);
-		if(x instanceof Array) return this.save_string(`${ki}.type`,"array");
+		if(typeof x!=="object") return this.save_string(`[${ki}.type]`,typeof x);
+		if(x instanceof Array) return this.save_string(`[${ki}.type]`,"array");
 		let keys=this.get_keys_of(x);
-		let ret=this.save_string(ki,keys.join());
+		let ret=this.save_string(k,keys.join());
 		if(ret&&"actions" in x) debugger;
 		return ret;
 	}
@@ -2297,9 +2297,10 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @type {[string,string|string[]][]} */
 	#new_strings=[];
-	/** @arg {string} k @arg {string|string[]} x */
-	save_string(k,x) {
+	/** @arg {`[${string}]`} k_arg @arg {string|string[]} x */
+	save_string(k_arg,x) {
 		if(x===void 0) {debugger; return;}
+		let k=split_string_once(split_string_once(k_arg,"[")[1],"]")[0];
 		let was_known=true;
 		/** @private @type {["one", string[]]|["many",string[][]]} */
 		let cur;
@@ -2489,7 +2490,7 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value;
 	}
-	/** @arg {string} k @arg {string|string[]} x */
+	/** @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string(k,x) {
 		this.ds.save_string(k,x);
 	}
@@ -2538,7 +2539,7 @@ class BaseService extends BaseServicePrivate {
 		if(!nn[1]) throw new Error();
 		/** @private @type {SplitOnce<NonNullable<SplitOnce<U,T>[1]>,"">[1]} */
 		let no_ns_part=nn[1];
-		this.save_string(`${ns_name}::${ns}`,no_ns_part);
+		this.save_string(`[${ns_name}::${ns}]`,no_ns_part);
 	}
 	/** @public @template {string} T @template {string} Sep @template {`${T[0]}-${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
 	save_enum_with_sep(enum_base,enum_str,sep) {
@@ -2548,7 +2549,7 @@ class BaseService extends BaseServicePrivate {
 		if(!n1[1]) throw new Error();
 		let n2=this.drop_separator(n1[1],sep);
 		if(!n2) throw new Error();
-		this.save_string(`${ns_name}::${enum_base}`,n2[0]);
+		this.save_string(`[${ns_name}::${enum_base}]`,n2[0]);
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
@@ -3212,14 +3213,14 @@ class CsiService extends BaseService {
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_param_key(x) {
 		this.decode_rid_section(x);
-		this.save_string("rid_key",x.key);
+		this.save_string("[rid_key]",x.key);
 	}
 	/** @arg {{key:RidFormat<string>;value:`0x${string}`}} x */
 	decode_rid_section(x) {
 		let section=/[A-Z][a-z]+/.exec(x.key);
 		if(section) {
 			let section_id=section[0].toLowerCase();
-			this.save_string("section_id",section_id);
+			this.save_string("[section_id]",section_id);
 		} else {
 			debugger;
 		}
@@ -3265,7 +3266,7 @@ class CsiService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "c": {
-					this.save_string(`CsiService.${param.key}`,param.value);
+					this.save_string(`[CsiService.${param.key}]`,param.value);
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": this.data[param.key]=param.value; continue;
@@ -4076,7 +4077,7 @@ class ParserService extends BaseService {
 	parse_mime_type(x) {
 		let vv=split_string(x,";");
 		let vns=split_string(vv[1]," ")[1];
-		this.save_string("mime-type",vv[0]);
+		this.save_string("[mime-type]",vv[0]);
 		let v1=split_string(vns,"=")[1];
 		let codec_type_raw=this.extract_inner(v1,"\"");
 		if(this.str_has_sep(codec_type_raw,".")) {
@@ -4917,11 +4918,50 @@ class HandleTypes extends ServiceData {
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
-		const {metadata,microformat,maxAgeStoreSeconds,background,...y2}=y1; this.g(y2);
+		const {metadata,microformat,maxAgeStoreSeconds,background,...y2}=y1;
 		if(metadata) this.ChannelMetadataRenderer(metadata);
 		if(microformat) this.MicroformatDataRenderer(microformat);
 		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
 		if(background) this.MusicThumbnailRenderer(background);
+		const {continuationContents,...y3}=y2; this.g(y3);
+		if(continuationContents) {
+			if("sectionListContinuation" in continuationContents) {
+				this.SectionListContinuation(continuationContents);
+			} else {
+				debugger;
+			}
+			continuationContents.sectionListContinuation;
+		}
+	}
+	/** @arg {SectionListContinuation} x */
+	SectionListContinuation(x) {
+		this.save_keys("[SectionListContinuation]",x);
+		x.sectionListContinuation;
+	}
+	/** @arg {SectionListData} x */
+	SectionListData(x) {
+		this.z(x.contents,a=>this.SectionListItem(a));
+		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {SectionListItem} x */
+	SectionListItem(x) {
+		this.save_keys("[SectionListItem]",x);
+		if("itemSectionRenderer" in x) {
+			this.ItemSectionRenderer(x);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {ItemSectionRenderer} x */
+	ItemSectionRenderer(x) {
+		this.save_keys("[ItemSectionRenderer]",x);
+		this.ItemSectionData(x.itemSectionRenderer);
+	}
+	/** @arg {ItemSectionData} x */
+	ItemSectionData(x) {
+		this.save_keys("[ItemSectionData]",x);
+		this.save_string("[ItemSectionData.sectionIdentifier]",x.sectionIdentifier);
+		this.save_string("[ItemSectionData.targetId]",x.targetId);
 	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
@@ -5093,7 +5133,7 @@ class HandleTypes extends ServiceData {
 	ResponseTypes(x) {
 		/** @private @arg {{type:string}} x */
 		let g=x => {
-			return this.save_string("need_api_type",x.type);
+			return this.save_string("[need_api_type]",x.type);
 		};
 		switch(x.type) {
 			case "_Generic": return g(x);
