@@ -28,4 +28,12 @@ type _ResponseTypes=
 	|share_get_share_panel_t
 	|subscription_subscribe_t
 	|subscription_unsubscribe_t
+	|{
+		type: "music.get_search_suggestions";
+		data: GetSearchSuggestions;
+	}
 	;
+type GetSearchSuggestions={
+	responseContext: ResponseContext;
+	trackingParams: string;
+};

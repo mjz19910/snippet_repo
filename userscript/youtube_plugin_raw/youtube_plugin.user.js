@@ -2829,6 +2829,7 @@ class YtHandlers extends BaseService {
 			case "browse": res=this.convert_browse(target,x); break;
 			case "like": res=this.convert_like(target,x); break;
 			case "live_chat": res=this.convert_live_chat(target,x); break;
+			case "music": res=this.convert_music(target,x); break;
 			case "notification": res=this.convert_notification(target,x); break;
 			case "reel": res=this.convert_reel(target,x); break;
 			case "subscription": res=this.convert_subscription(target,x); break;
@@ -2845,6 +2846,17 @@ class YtHandlers extends BaseService {
 			type: "_Generic",
 			data: x,
 		};
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_music(t,x) {
+		switch(t[1]) {
+			case "get_search_suggestions": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {GetSearchSuggestions} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_share(t,x) {
@@ -4549,11 +4561,23 @@ class ParserService extends BaseService {
 			case "subscription": return this.get_subscription_type(x);
 			case "playlist": return this.get_playlist_type(x);
 			case "share": return this.get_share_type(x);
+			case "music": return this.get_music_type(x);
 		}
 		switch(x.length) {
 			case 3: return this.get_yt_url_type_3(x);
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
+	}
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","music",...string[]]>} x */
+	get_music_type(x) {
+		switch(x[3]) {
+			case "get_search_suggestions": break;
+			default: return this.api_no_handler(x,x[3]);
+		}
+		return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`,
+		}.x;
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","share",...string[]]>} x */
 	get_share_type(x) {
