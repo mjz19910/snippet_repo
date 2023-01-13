@@ -4939,9 +4939,19 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
-		const {contents,trackingParams,...y}=x; this.g(y);
+		const {contents,continuations,trackingParams,...y}=x; this.g(y);
 		this.z(contents,a=>this.SectionListItem(a));
+		if(continuations) this.z(continuations,a=>this.NextContinuationData(a));
 		this.trackingParams(trackingParams);
+	}
+	/** @arg {NextContinuationData} x */
+	NextContinuationData(x) {
+		x.nextContinuationData;
+	}
+	/** @arg {NextContinuation} x */
+	NextContinuation(x) {
+		this.clickTrackingParams(x.clickTrackingParams);
+		this.primitive_of(x.continuation,"string");
 	}
 	/** @arg {SectionListItem} x */
 	SectionListItem(x) {
