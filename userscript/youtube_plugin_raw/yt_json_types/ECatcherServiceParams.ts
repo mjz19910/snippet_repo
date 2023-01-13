@@ -1,4 +1,4 @@
 type ECatcherServiceParams={
 	service: "ECATCHER";
-	params: ToServiceParams<ECatcherServiceType>|ECatcherClientVersion[];
+	params: ToServiceParams<ECatcherServiceType>|ECatcherClientName[]|ECatcherClientVersion[];
 };

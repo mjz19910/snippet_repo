@@ -274,6 +274,7 @@ async function async_plugin_init(event) {
 					if(e_tn=="TITLE") return false;
 					if(e_tn=="SCRIPT") return false;
 					if(e_tn=="IFRAME") return false;
+					if(e_tn=="NOSCRIPT") return false;
 					if(e_tn==="LINK"&&e instanceof HTMLLinkElement) {
 						if(e.rel==="stylesheet") return false;
 					}
@@ -3316,7 +3317,7 @@ class ECatcherService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "client.version": new_client.version=param.value; break;
-				case "client.name": if(param.value!=="WEB") debugger; new_client.name=param.value; break;
+				case "client.name": new_client.name=param.value; break;
 				case "client.fexp": new_client.fexp=param.value.split(",").map(e => parseInt(e,10)); break;
 				default: console.log("[new_param_part]",param); debugger;
 			}
