@@ -3253,15 +3253,12 @@ class CsiService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "c": {
-					if(param.value!=="WEB") debugger;
+					this.save_string(`CsiService.${param.key}`,param.value);
 					this.data[param.key]=param.value;
 				} continue;
 				case "cver": this.data[param.key]=param.value; continue;
-				case "yt_li": {
-					if(param.value!=="1") debugger;
-					this.data[param.key]=param.value;
-				} continue;
-				case "yt_ad": if(param.value!=="1") debugger; this.data[param.key]=param.value; continue;
+				case "yt_li": this.data[param.key]=param.value; continue;
+				case "yt_ad": this.data[param.key]=param.value; continue;
 				case "yt_fn": if(!this.verify_param_yt_fn(param.value)) debugger; this.data[param.key]=param.value; continue;
 			}
 			this.parse_rid_param(param);
@@ -5061,12 +5058,12 @@ class HandleTypes extends ServiceData {
 		let v=x;
 		this.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
-			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="notification.get_notification_menu") break x;
+			if(x.type==="notification.get_unseen_count") break x;
+			if(x.type==="notification.modify_channel_preference") break x;
+			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
-			if(x.type==="notification.modify_channel_preference") break x;
-			if(x.type==="notification.get_unseen_count") break x;
 			debugger;
 		}
 		switch(x.type) {
