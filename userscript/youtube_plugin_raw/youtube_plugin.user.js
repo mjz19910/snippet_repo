@@ -2586,6 +2586,7 @@ class BaseService extends BaseServicePrivate {
 		let keys=this.get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s]",keys.join());
+		debugger;
 	}
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
@@ -4891,12 +4892,13 @@ class HandleTypes extends ServiceData {
 		this.trackingParams(trackingParams);
 		if(onResponseReceivedActions) this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
 		if(contents) this.BrowseContents(contents);
-		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y; this.g(y1);
+		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y;
 		if(topbar) this.DesktopTopbarRenderer(topbar);
 		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
+		const {...y2}=y1; this.g(y2);
 	}
 	/** @arg {BrowseHeader} x */
 	BrowseHeader(x) {
