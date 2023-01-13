@@ -4717,6 +4717,21 @@ class ParserService extends BaseService {
 		}
 		return x[0];
 	}
+	/** @arg {BrowseEndpointPages} x */
+	parse_known_page(x) {
+		switch(x) {
+			default: debugger; return false;
+			case "history": return true;
+			case "library": return true;
+			case "music_explore": return true;
+			case "music_home": return true;
+			case "music_library_landing": return true;
+			case "storefront": return true;
+			case "subscriptions": return true;
+			case "trending": return true;
+			case "what_to_watch": return true;
+		}
+	}
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
 		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
@@ -4727,17 +4742,8 @@ class ParserService extends BaseService {
 			case "FE": {
 				/** @private @type {BrowseEndpointPages} */
 				let page=as(x.slice(2));
-				switch(page) {
-					default: debugger; break;
-					case "history": break x;
-					case "library": break x;
-					case "music_explore": break x;
-					case "music_home": break x;
-					case "storefront": break x;
-					case "subscriptions": break x;
-					case "trending": break x;
-					case "what_to_watch": break x;
-				}
+				let known_page=this.parse_known_page(page);
+				if(known_page) break;
 				if(seen_map.has(page)) break;
 				seen_map.add(page);
 				console.log("[param_value_with_section] [%s] -> [%s]",page_section,page);

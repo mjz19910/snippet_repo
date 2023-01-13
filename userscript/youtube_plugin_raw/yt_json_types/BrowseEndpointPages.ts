@@ -3,6 +3,7 @@ type BrowseEndpointPages=
 	|"library"
 	|"music_explore"
 	|"music_home"
+	|"music_library_landing"
 	|"storefront"
 	|"subscriptions"
 	|"trending"
