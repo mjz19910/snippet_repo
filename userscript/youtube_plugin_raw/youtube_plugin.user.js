@@ -2172,8 +2172,9 @@ class KnownDataSaver extends ApiBase {
 	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
 	do_save_keys_obj=false;
-	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
+	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
 	save_keys(k,x) {
+		if(!x) {debugger; return;}
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
 		if(this.do_save_keys_obj) {
 			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
@@ -4941,7 +4942,7 @@ class HandleTypes extends ServiceData {
 	BrowseCommandMetadata(x) {
 		this.save_keys("[BrowseCommandMetadata]",x);
 		this.BrowseWebCommandMetadata(x.webCommandMetadata);
-		this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
+		if(x.resolveUrlCommandMetadata) this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
