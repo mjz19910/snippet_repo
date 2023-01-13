@@ -1,5 +1,5 @@
 type TabbedSearchResults={
-	tabs: {};
+	tabs: {}[];
 };
 
 type TabbedSearchResultsRenderer={
