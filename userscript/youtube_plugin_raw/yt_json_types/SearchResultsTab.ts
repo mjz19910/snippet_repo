@@ -1,7 +1,7 @@
 type SearchResultsTab={
-	endpoint: {};
+	endpoint?: {};
 	title: {};
-	selected: boolean;
+	selected?: boolean;
 	content: {};
 	tabIdentifier: {};
 	trackingParams: string;
