@@ -2968,7 +2968,7 @@ class YtHandlers extends BaseService {
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
 	}
-	known_page_types=split_string("settings,watch,browse,shorts,channel,playlist",",");
+	known_page_types=split_string("settings,watch,browse,shorts,search,channel,playlist",",");
 	do_initial_data_trace=false;
 	/** @public @arg {[()=>YTNavigateFinishDetail["response"], object, []]} apply_args */
 	on_initial_data(apply_args) {
@@ -4959,6 +4959,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
+		this.save_keys("[SectionListData]",x);
 		const {contents,continuations,trackingParams,...y}=x; this.g(y);
 		this.z(contents,a => this.SectionListItem(a));
 		if(continuations) this.z(continuations,a => this.NextContinuationData(a));
@@ -4966,7 +4967,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {NextContinuationData} x */
 	NextContinuationData(x) {
-		x.nextContinuationData;
+		this.NextContinuation(x.nextContinuationData);
 	}
 	/** @arg {NextContinuation} x */
 	NextContinuation(x) {
