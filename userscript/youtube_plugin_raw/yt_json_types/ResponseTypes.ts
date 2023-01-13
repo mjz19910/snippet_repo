@@ -17,6 +17,7 @@ type _ResponseTypes=
 	|like_like_t
 	|like_removelike_t
 	|live_chat_get_live_chat_replay_t
+	|music_get_search_suggestions_t
 	|next_t
 	|notification_get_unseen_count_t
 	|notification_modify_channel_preference_t
@@ -25,9 +26,9 @@ type _ResponseTypes=
 	|playlist_get_add_to_playlist_t
 	|reel_reel_item_watch_t
 	|reel_reel_watch_sequence_t
+	|search_t
 	|share_get_share_panel_t
 	|subscription_subscribe_t
 	|subscription_unsubscribe_t
-	|music_get_search_suggestions_t|search_t
 	;
 ;
