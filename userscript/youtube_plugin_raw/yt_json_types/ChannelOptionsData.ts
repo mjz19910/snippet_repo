@@ -1,5 +1,5 @@
 type ChannelOptionsData={
-	avatar: Thumbnail<{}>;
+	avatar: Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: TextT[];

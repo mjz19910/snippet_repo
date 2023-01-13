@@ -1,6 +1,6 @@
 type CommentData={
 	authorText: TextT;
-	authorThumbnail: Thumbnail<{}>;
+	authorThumbnail: Thumbnail;
 	authorEndpoint: {};
 	contentText: TextT;
 	publishedTimeText: TextT;
@@ -9,7 +9,7 @@ type CommentData={
 	commentId: string;
 	actionButtons: CommentActionButtonsRenderer;
 	authorIsChannelOwner: boolean;
-	currentUserReplyThumbnail: Thumbnail<{}>;
+	currentUserReplyThumbnail: Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
 	voteCount: TextT;

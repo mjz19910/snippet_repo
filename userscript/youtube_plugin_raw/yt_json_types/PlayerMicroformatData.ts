@@ -1,5 +1,5 @@
 type PlayerMicroformatData={
-	thumbnail: Thumbnail<{}>;
+	thumbnail: Thumbnail;
 	embed: MicroformatEmbed;
 	title: TextT;
 	description?: TextT;

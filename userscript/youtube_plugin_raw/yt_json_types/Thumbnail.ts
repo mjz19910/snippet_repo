@@ -1,1 +1,1 @@
-type Thumbnail<T>=T&{thumbnails: ThumbnailItem[];};
+type Thumbnail={thumbnails: ThumbnailItem[];};

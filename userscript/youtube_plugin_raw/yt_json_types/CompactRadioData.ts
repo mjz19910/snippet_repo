@@ -1,6 +1,6 @@
 type CompactRadioData={
 	playlistId: `RD${"GM"}${string}`;
-	thumbnail: Thumbnail<SampledThumbnailColor>;
+	thumbnail: Thumbnail&SampledThumbnailColor;
 	title: SimpleText;
 	navigationEndpoint: WatchEndpoint;
 	videoCountText: TextT;

@@ -1,13 +1,13 @@
 type CompactPlaylistData={
 	playlistId: string;
-	thumbnail: Thumbnail<{}>;
+	thumbnail: Thumbnail;
 	title: SimpleText;
 	shortBylineText: TextT;
 	videoCountText: TextT;
 	navigationEndpoint: WatchEndpoint;
 	videoCountShortText: SimpleText;
 	trackingParams: string;
-	sidebarThumbnails: Thumbnail<{}>[];
+	sidebarThumbnails: Thumbnail[];
 	thumbnailText: TextT;
 	menu: MenuRenderer;
 	shareUrl: string;

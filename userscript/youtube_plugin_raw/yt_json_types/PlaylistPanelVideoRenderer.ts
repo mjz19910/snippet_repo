@@ -2,7 +2,7 @@ type PlaylistPanelVideoRenderer={
 	playlistPanelVideoRenderer: {
 		title: SimpleText;
 		longBylineText: TextT;
-		thumbnail: Thumbnail<{}>;
+		thumbnail: Thumbnail;
 		lengthText: SimpleText;
 		selected: false;
 		navigationEndpoint: {};

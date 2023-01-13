@@ -5,4 +5,5 @@ type BrowseEndpointPages=
 	|"subscriptions"
 	|"trending"
 	|"what_to_watch"
+	|"music_home"
 	;

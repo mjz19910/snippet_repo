@@ -8,9 +8,11 @@ type BrowseResponse={
 	microformat?: MicroformatDataRenderer;
 	frameworkUpdates?: EntityBatchUpdate;
 	// ?
+	maxAgeStoreSeconds?: number;
+	background?: MusicThumbnailRenderer;
+	// ?2
 	onResponseReceivedActions?: ResponseReceivedAction[];
 	sidebar?: SettingsSidebarRenderer;
 	observedStateTags?: StateTag[];
 	cacheMetadata?: CacheMetadata;
 };
-type BrowseHeader=FeedTabbedHeaderRenderer|C4TabbedHeaderRenderer;

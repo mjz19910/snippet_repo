@@ -4733,6 +4733,7 @@ class ParserService extends BaseService {
 					case "subscriptions": break x;
 					case "trending": break x;
 					case "what_to_watch": break x;
+					case "music_home": break x;
 					default: debugger; break;
 				}
 				if(seen_map.has(v_ac)) break;
@@ -4916,9 +4917,16 @@ class HandleTypes extends ServiceData {
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
-		const {metadata,microformat,...y2}=y1; this.g(y2);
+		const {metadata,microformat,maxAgeStoreSeconds,background,...y2}=y1; this.g(y2);
 		if(metadata) this.ChannelMetadataRenderer(metadata);
 		if(microformat) this.MicroformatDataRenderer(microformat);
+		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
+		if(background) this.MusicThumbnailRenderer(background);
+	}
+	/** @arg {MusicThumbnailRenderer} x */
+	MusicThumbnailRenderer(x) {
+		if(!x.musicThumbnailRenderer) debugger;
+		x.musicThumbnailRenderer
 	}
 	/** @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {

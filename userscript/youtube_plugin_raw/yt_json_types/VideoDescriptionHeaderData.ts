@@ -6,5 +6,5 @@ type VideoDescriptionHeaderData={
 	factoid: FactoidRenderer[];
 	// ChannelNavigationEndpointWebCommandMetadata
 	channelNavigationEndpoint: BrowseEndpoint;
-	channelThumbnail: Thumbnail<{}>;
+	channelThumbnail: Thumbnail;
 };
