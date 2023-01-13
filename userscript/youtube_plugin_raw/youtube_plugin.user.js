@@ -5243,8 +5243,10 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SearchApiResponse} x */
 	SearchApiResponse(x) {
+		const cf="SearchApiResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,trackingParams}=x;
-		this.z(contents,a=>this.save_keys("[SearchApiResponse.contents[]]",a));
+		this.z(contents,a=>this.save_keys(`[${cf}.contents[]]`,a));
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
