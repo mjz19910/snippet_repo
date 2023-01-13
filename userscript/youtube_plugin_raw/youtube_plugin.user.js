@@ -5160,7 +5160,7 @@ class HandleTypes extends ServiceData {
 		console.log("pt",x);
 		debugger;
 	}
-	/** @type {<T extends string,U extends T>(k:string[] extends T?never:T[],r:U[])=>Exclude<T,U>[]} */
+	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
 		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
@@ -5274,6 +5274,10 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
+		this.w(x,this.AdsControlFlowOpportunityReceivedCommandData,split_string("clickTrackingParams"));
+	}
+	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
+	AdsControlFlowOpportunityReceivedCommandData(x) {
 		x;
 	}
 	/** @arg {TwoColumnSearchResultsRenderer} x */
@@ -5355,10 +5359,11 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[PlayerResponse]",x);
 		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
 	}
-	/** @public @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
-	w(x,y) {
+	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[Exclude<GetMaybeKeys<T>, SI>],k: Exclude<GetMaybeKeys<T>, SI>)=>void} y @arg {SI[]} excl */
+	w(x,y,excl=[]) {
 		if(x===void 0) return;
-		let keys=this.get_keys_of(x);
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
 		if(keys.length===0) {
 			debugger;
 			return;
