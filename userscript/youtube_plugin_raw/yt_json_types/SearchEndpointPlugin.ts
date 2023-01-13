@@ -1,3 +1,1 @@
-type SearchEndpointPlugin={
-	searchEndpoint: SearchEndpointData;
-};
+type SearchEndpointPlugin={searchEndpoint: SearchEndpointData;};

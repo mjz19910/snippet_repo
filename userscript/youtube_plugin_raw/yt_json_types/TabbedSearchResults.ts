@@ -1,3 +1,3 @@
 type TabbedSearchResults={
-	tabs: SearchResultsTab[];
+	tabs: SearchResultsTabRenderer[];
 };

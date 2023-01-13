@@ -1,0 +1,1 @@
+type SearchResultsTabRenderer={tabRenderer: SearchResultsTab;};

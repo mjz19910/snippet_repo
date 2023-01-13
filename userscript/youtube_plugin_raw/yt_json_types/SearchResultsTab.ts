@@ -1,8 +1,8 @@
 type SearchResultsTab={
-	endpoint?: {};
-	title: {};
+	endpoint?: SearchResultsSearchEndpoint;
+	title: string;
 	selected?: boolean;
-	content: {};
-	tabIdentifier: {};
+	content: SectionListRenderer;
+	tabIdentifier: string;
 	trackingParams: string;
 };

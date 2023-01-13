@@ -1,0 +1,1 @@
+type SearchEndpointData_1={};
