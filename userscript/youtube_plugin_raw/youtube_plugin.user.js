@@ -4967,10 +4967,12 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {NextContinuationData} x */
 	NextContinuationData(x) {
+		this.save_keys("[NextContinuationData]",x);
 		this.NextContinuation(x.nextContinuationData);
 	}
 	/** @arg {NextContinuation} x */
 	NextContinuation(x) {
+		this.save_keys("[NextContinuation]",x);
 		this.clickTrackingParams(x.clickTrackingParams);
 		this.primitive_of(x.continuation,"string");
 	}
