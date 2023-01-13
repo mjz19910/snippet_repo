@@ -4935,21 +4935,33 @@ class HandleTypes extends ServiceData {
 	/** @arg {SectionListContinuation} x */
 	SectionListContinuation(x) {
 		this.save_keys("[SectionListContinuation]",x);
-		x.sectionListContinuation;
+		this.SectionListData(x.sectionListContinuation);
 	}
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
-		this.z(x.contents,a=>this.SectionListItem(a));
-		this.trackingParams(x.trackingParams);
+		const {contents,trackingParams,...y}=x; this.g(y);
+		this.z(contents,a=>this.SectionListItem(a));
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {SectionListItem} x */
 	SectionListItem(x) {
 		this.save_keys("[SectionListItem]",x);
 		if("itemSectionRenderer" in x) {
-			this.ItemSectionRenderer(x);
+			return this.ItemSectionRenderer(x);
+		} if("continuationItemRenderer" in x) {
+			this.ContinuationItemRenderer(x);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {ContinuationItemRenderer} x */
+	ContinuationItemRenderer(x) {
+		this.save_keys("[ContinuationItemRenderer]",x);
+		this.ContinuationItemData(x.continuationItemRenderer);
+	}
+	/** @arg {ContinuationItemData} x */
+	ContinuationItemData(x) {
+		this.save_keys("[ContinuationItemData]",x);
 	}
 	/** @arg {ItemSectionRenderer} x */
 	ItemSectionRenderer(x) {
