@@ -2963,7 +2963,7 @@ class YtHandlers extends BaseService {
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		this.x.get("handle_types").ptc.DataResponsePageType(ret);
+		this.x.get("handle_types").DataResponsePageType(ret);
 		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
@@ -2984,7 +2984,7 @@ class YtHandlers extends BaseService {
 	on_page_type_changed(detail) {
 		try {
 			if(this.do_initial_data_trace) console.log('ptc detail',detail);
-			this.x.get("handle_types").ptc.YTNavigateFinishDetail(detail);
+			this.x.get("handle_types").YTNavigateFinishDetail(detail);
 		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
@@ -4810,10 +4810,89 @@ class C1 extends BaseService {
 	constructor(x) {
 		super(x);
 	}
+}
+class C2 extends BaseService {
+	/** @public @arg {WatchPageResponse} x */
+	WatchPageResponse(x) {
+		this.save_keys("[WatchPageResponse]",x);
+	}
+}
+class C3 extends BaseService {
+	/** @public @arg {ChannelPageResponse} x */
+	ChannelPageResponse(x) {
+		this.save_keys("[ChannelPageResponse]",x);
+	}
+}
+class C4 extends BaseService {
+	/** @public @arg {PlaylistPageResponse} x */
+	PlaylistPageResponse(x) {
+		this.save_keys("[PlaylistPageResponse]",x);
+	}
+}
+class C5 extends BaseService {
+	/** @public @arg {SettingsPageResponse} x */
+	SettingsPageResponse(x) {
+		this.save_keys("[SettingsPageResponse]",x);
+	}
+}
+class C6 extends BaseService {
+	/** @public @arg {ShortsPageResponse} x */
+	ShortsPageResponse(x) {
+		this.save_keys("[ShortsResponse]",x);
+	}
+}
+class C7 extends BaseService {
+	/** @public @arg {SearchPageResponse} x */
+	SearchPageResponse(x) {
+		this.save_keys("[GetNotificationMenuJson]",x);
+	}
+}
+//#region HandleTypes
+class ServiceData extends BaseService {
+	/** @protected @type {FormatItagArr} */
+	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
+	/** @protected @type {QualArr} */
+	format_quality_label_arr=[
+		"2160p50","1440p50","1080p50","720p50",
+		"2160p60","1440p60","1080p60","720p60",
+		"1080p","720p","480p","360p","240p","144p"
+	];
+	valid_fps_arr=[13,25,30,50,60];
+	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
+	/** @public @arg {keyof VEMap} x */
+	on_root_visual_element(x) {
+		this.ds.save_root_visual_element(x);
+		/** @private @type {`${typeof x}`} */
+		let ss=`${x}`;
+		switch(ss) {
+			case "3611": break;
+			case "3832": break;
+			case "3854": break;
+			case "6827": break;
+			case "11487": break;
+			case "23462": break;
+			case "83769": break;
+			case "96368": break;
+			default: debugger;
+		}
+	}
+}
+class HandleTypes extends ServiceData {
+	/** @arg {ResolverT<Services, ServiceOptions>} x */
+	constructor(x) {
+		super(x);
+		this.c1=new C1(x);
+		this.c2=new C2(x);
+		this.c3=new C3(x);
+		this.c4=new C4(x);
+		this.c5=new C5(x);
+		this.c6=new C6(x);
+		this.c7=new C7(x);
+	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const name="BrowseEditPlaylistResponse";
-		this.z(x.actions,a => this.x.get("handle_types").default.Action(a));
+		this.z(x.actions,a => this.x.get("handle_types").Action(a));
 		this.save_keys(`[${name}]`,x);
 	}
 	log_url=false;
@@ -4890,74 +4969,30 @@ class C1 extends BaseService {
 	parse_browse_id(x) {
 		this.x.get("parser_service").parse_browse_id(x);
 	}
-}
-class C2 extends BaseService {
-	/** @public @arg {WatchPageResponse} x */
-	WatchPageResponse(x) {
-		this.save_keys("[WatchPageResponse]",x);
-	}
-}
-class C3 extends BaseService {
-	/** @public @arg {ChannelPageResponse} x */
-	ChannelPageResponse(x) {
-		this.save_keys("[ChannelPageResponse]",x);
-	}
-}
-class C4 extends BaseService {
-	/** @public @arg {PlaylistPageResponse} x */
-	PlaylistPageResponse(x) {
-		this.save_keys("[PlaylistPageResponse]",x);
-	}
-}
-class C5 extends BaseService {
-	/** @public @arg {SettingsPageResponse} x */
-	SettingsPageResponse(x) {
-		this.save_keys("[SettingsPageResponse]",x);
-	}
-}
-class C6 extends BaseService {
-	/** @public @arg {ShortsPageResponse} x */
-	ShortsPageResponse(x) {
-		this.save_keys("[ShortsResponse]",x);
-	}
-}
-class C7 extends BaseService {
-	/** @public @arg {SearchPageResponse} x */
-	SearchPageResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-}
-//#region HandleTypes
-class ServiceData extends BaseService {
-	/** @protected @type {FormatItagArr} */
-	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
-	/** @protected @type {QualArr} */
-	format_quality_label_arr=[
-		"2160p50","1440p50","1080p50","720p50",
-		"2160p60","1440p60","1080p60","720p60",
-		"1080p","720p","480p","360p","240p","144p"
-	];
-	valid_fps_arr=[13,25,30,50,60];
-	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
-	/** @public @arg {keyof VEMap} x */
-	on_root_visual_element(x) {
-		this.ds.save_root_visual_element(x);
-		/** @private @type {`${typeof x}`} */
-		let ss=`${x}`;
-		switch(ss) {
-			case "3611": break;
-			case "3832": break;
-			case "3854": break;
-			case "6827": break;
-			case "11487": break;
-			case "23462": break;
-			case "83769": break;
-			case "96368": break;
-			default: debugger;
+	/** @arg {YTNavigateFinishDetail} x */
+	YTNavigateFinishDetail(x) {
+		const {response,endpoint,...y}=x;
+		this.DataResponsePageType(response);
+		if(!this.eq_keys(this.get_keys_of(y),["pageType","fromHistory","navigationDoneMs"])) {
+			console.log(y);
 		}
 	}
-}
-class DefaultHandlers extends ApiBase {
+	/** @arg {YTNavigateFinishDetail["response"]} x */
+	DataResponsePageType(x) {
+		this.ResponseContext(x.response.responseContext);
+		switch(x.page) {
+			case "browse": return this.BrowsePageResponse(x);
+			case "watch": return this.c2.WatchPageResponse(x);
+			case "channel": return this.c3.ChannelPageResponse(x);
+			case "playlist": return this.c4.PlaylistPageResponse(x);
+			case "settings": return this.c5.SettingsPageResponse(x);
+			case "shorts": return this.c6.ShortsPageResponse(x);
+			case "search": return this.c7.SearchPageResponse(x);
+			default: break;
+		}
+		console.log("pt",x);
+		debugger;
+	}
 	/** @type {<T extends string,U extends T>(k:string[] extends T?never:T[],r:U[])=>Exclude<T,U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
@@ -4976,54 +5011,9 @@ class DefaultHandlers extends ApiBase {
 	/** @arg {AllActions} x */
 	Action(x) {
 		let name_from_keys=this.get_name_from_keys(x);
-		if(!name_from_keys) {debugger;return;}
+		if(!name_from_keys) {debugger; return;}
 		data_saver.save_keys(`[Action.${name_from_keys}]`,x);
 	}
-}
-class PTC extends BaseService {
-	/** @arg {ResolverT<Services, ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		this.c1=new C1(x);
-		this.c2=new C2(x);
-		this.c3=new C3(x);
-		this.c4=new C4(x);
-		this.c5=new C5(x);
-		this.c6=new C6(x);
-		this.c7=new C7(x);
-	}
-	/** @arg {YTNavigateFinishDetail} x */
-	YTNavigateFinishDetail(x) {
-		const {response,endpoint,...y}=x;
-		this.DataResponsePageType(response);
-		if(!this.eq_keys(this.get_keys_of(y),["pageType","fromHistory","navigationDoneMs"])) {
-			console.log(y);
-		}
-	}
-	/** @arg {YTNavigateFinishDetail["response"]} x */
-	DataResponsePageType(x) {
-		this.ResponseContext(x.response.responseContext);
-		switch(x.page) {
-			case "browse": return this.c1.BrowsePageResponse(x);
-			case "watch": return this.c2.WatchPageResponse(x);
-			case "channel": return this.c3.ChannelPageResponse(x);
-			case "playlist": return this.c4.PlaylistPageResponse(x);
-			case "settings": return this.c5.SettingsPageResponse(x);
-			case "shorts": return this.c6.ShortsPageResponse(x);
-			case "search": return this.c7.SearchPageResponse(x);
-			default: break;
-		}
-		console.log("pt",x);
-		debugger;
-	}
-}
-class HandleTypes extends ServiceData {
-	/** @arg {ResolverT<Services, ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		this.ptc=new PTC(x);
-	}
-	default=new DefaultHandlers;
 	/** @arg {_ResponseTypes} x */
 	ResponseTypes(x) {
 		/** @private @arg {{type:string}} x */
@@ -5052,8 +5042,8 @@ class HandleTypes extends ServiceData {
 			case "account.set_setting": return this.SetSettingResponse(x.data);
 			case "att.get": return this.AttGetResponse(x.data);
 			case "att.log": return this.AttLogResponse(x.data);
-			case "browse.edit_playlist": return this.ptc.c1.BrowseEditPlaylistResponse(x.data);
-			case "browse": return this.ptc.c1.BrowseResponse(x.data);
+			case "browse.edit_playlist": return this.BrowseEditPlaylistResponse(x.data);
+			case "browse": return this.BrowseResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
 			case "get_transcript": return this.GetTranscriptResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);
@@ -5080,7 +5070,7 @@ class HandleTypes extends ServiceData {
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
 		const cf="GetSharePanel";
-		if(x.actions) this.z(x.actions,a => this.default.Action(a));
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
@@ -5093,17 +5083,17 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.default.Action(a));
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[SubscribeResponse]",x);
 	}
 	/** @arg {UnsubscribeResponse} x */
 	UnsubscribeResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.default.Action(a));
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[UnsubscribeResponse]",x);
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.default.Action(a));
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[ModifyChannelPreferenceResponse]",x);
 	}
 	/** @private @arg {PlayerResponse} x */
@@ -5134,7 +5124,7 @@ class HandleTypes extends ServiceData {
 		const {actions,...y}=x;
 		this.save_keys(`[${name}]`,x);
 		if(actions) {
-			this.z(actions,a => this.default.Action(a));
+			this.z(actions,a => this.Action(a));
 		}
 		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
 	}
@@ -5142,7 +5132,7 @@ class HandleTypes extends ServiceData {
 	LikeRemoveLikeResponse(x) {
 		const cf="LikeRemoveLikeResponse";
 		const {responseContext,actions,...y}=x; this.g(y);
-		if(actions) this.z(actions,a => this.default.Action(a));
+		if(actions) this.z(actions,a => this.Action(a));
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ReelWatchSequenceResponse} x */
@@ -5157,9 +5147,7 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
 		const cf="GetNotificationMenuResponse";
-		this.z(x.actions,a => {
-			this.default.Action(a);
-		});
+		this.z(x.actions,a => this.Action(a));
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {NextResponse} x */
@@ -5170,7 +5158,7 @@ class HandleTypes extends ServiceData {
 	NotificationGetUnseenCountResponse(x) {
 		if(x.actions) {
 			if(x.actions.length!==1) debugger;
-			this.z(x.actions,a=>this.default.Action(a));
+			this.z(x.actions,a => this.Action(a));
 		}
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 	}
