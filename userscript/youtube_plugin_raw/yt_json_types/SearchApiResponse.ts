@@ -4,4 +4,4 @@ type SearchApiResponse={
 	continuationContents?: {};
 	trackingParams: string;
 	header?: {};
-};
+}|SearchResponse;

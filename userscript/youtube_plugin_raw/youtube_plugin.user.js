@@ -5246,11 +5246,45 @@ class HandleTypes extends ServiceData {
 	SearchApiResponse(x) {
 		const cf="SearchApiResponse";
 		this.save_keys(`[${cf}]`,x);
+		if("targetId" in x) {
+			return this.SearchResponse(x);
+		}
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y);
 		if(contents) this.TabbedSearchResultsRenderer(contents);
 		if(continuationContents) this.save_keys(`[${cf}.continuationContents]`,continuationContents);
 		this.trackingParams(trackingParams);
 		if(header) this.save_keys(`[${cf}.header]`,header);
+	}
+	/** @arg {SearchResponse} x */
+	SearchResponse(x) {
+		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y);
+		this.primitive_of(estimatedResults,"string");
+		this.TwoColumnSearchResultsRenderer(contents);
+		this.trackingParams(trackingParams);
+		this.DesktopTopbarRenderer(topbar);
+		this.z(refinements,a=>this.primitive_of(a,"string"));
+		this.z(onResponseReceivedCommands,a=>{
+			if("adsControlFlowOpportunityReceivedCommand" in a){
+				return this.AdsControlFlowOpportunityReceivedCommand(a);
+			};
+			debugger;
+		})
+	}
+	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
+	AdsControlFlowOpportunityReceivedCommand(x) {
+		x;
+	}
+	/** @arg {TwoColumnSearchResultsRenderer} x */
+	TwoColumnSearchResultsRenderer(x) {
+		this.TwoColumnSearchResults(x.twoColumnSearchResultsRenderer);
+	}
+	/** @arg {TwoColumnSearchResults} x */
+	TwoColumnSearchResults(x) {
+		this.SectionListRenderer(x.primaryContents);
+	}
+	/** @arg {SectionListRenderer} x */
+	SectionListRenderer(x) {
+		this.SectionListData(x.sectionListRenderer);
 	}
 	/** @arg {TabbedSearchResultsRenderer} x */
 	TabbedSearchResultsRenderer(x) {
