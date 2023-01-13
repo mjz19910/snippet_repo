@@ -4698,13 +4698,12 @@ class ParserService extends BaseService {
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
 		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
-		/** @typedef {ExtractAfterStr<typeof x,"FE">} KnownParts */
 		/** @typedef {ExtractAfterStr<typeof x,"VL"|"UC">} KnownParts_VL */
 		/** @private @type {StartPart} */
 		let v_2c=as(x.slice(0,2));
 		x: switch(v_2c) {
 			case "FE": {
-				/** @private @type {KnownParts} */
+				/** @private @type {BrowseEndpointPages} */
 				let v_ac=as(x.slice(2));
 				switch(v_ac) {
 					case "history": break x;
