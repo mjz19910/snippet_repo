@@ -2702,7 +2702,7 @@ class YtHandlers extends BaseService {
 			};
 			case "search": return {
 				type: target[0],
-				/** @type {BrowseResponse} */
+				/** @type {SearchApiResponse} */
 				data: as(x),
 			};
 		}
