@@ -4711,7 +4711,7 @@ class ParserService extends BaseService {
 					case "subscriptions": break x;
 					case "what_to_watch": break x;
 					case "trending": break x;
-					default: break;
+					default: debugger; break;
 				}
 				if(seen_map.has(v_ac)) break;
 				seen_map.add(v_ac);
