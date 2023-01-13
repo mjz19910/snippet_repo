@@ -1,6 +1,6 @@
-type ItemSectionData<T=never,U=never>={
+type ItemSectionData={
 	contents: ItemSectionItem[];
 	trackingParams: string;
-	sectionIdentifier: T;
-	targetId: U;
+	sectionIdentifier: string;
+	targetId: string;
 };

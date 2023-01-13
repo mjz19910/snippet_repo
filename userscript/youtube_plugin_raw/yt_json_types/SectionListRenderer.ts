@@ -1,3 +1,3 @@
-type SectionListRenderer<T,U>={
-	sectionListRenderer: SectionListData<T,U>;
+type SectionListRenderer={
+	sectionListRenderer: SectionListData;
 };

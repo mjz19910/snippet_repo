@@ -1,4 +1,4 @@
-type SectionListData<T,U>={
-	contents: SectionListItem<T,U>[];
+type SectionListData={
+	contents: SectionListItem[];
 	trackingParams: string;
 };

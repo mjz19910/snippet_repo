@@ -1,6 +1,11 @@
+type SectionListContinuation={
+	sectionListContinuation: SectionListData;
+};
+
 type BrowseResponse={
 	responseContext: ResponseContext;
 	contents?: BrowseContents;
+	continuationContents?: SectionListContinuation;
 	header?: BrowseHeader;
 	metadata?: ChannelMetadataRenderer;
 	trackingParams: string;
@@ -10,7 +15,7 @@ type BrowseResponse={
 	// ?
 	maxAgeStoreSeconds?: number;
 	background?: MusicThumbnailRenderer;
-	// ?2
+	// ?
 	onResponseReceivedActions?: ResponseReceivedAction[];
 	sidebar?: SettingsSidebarRenderer;
 	observedStateTags?: StateTag[];

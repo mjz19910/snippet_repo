@@ -1,1 +1,1 @@
-type SectionListItem<T,U>=ItemSectionRenderer<T,U>|ContinuationItemRenderer;
+type SectionListItem=ItemSectionRenderer|ContinuationItemRenderer;
