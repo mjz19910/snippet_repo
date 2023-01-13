@@ -2601,7 +2601,6 @@ class BaseService extends BaseServicePrivate {
 	ResponseContext(x) {
 		let tracking_handler=this.x.get("service_tracking");
 		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
-		tracking_handler.on_complete_set_service_params();
 		this.save_keys("[ResponseContext]",x);
 	}
 }
@@ -3479,9 +3478,6 @@ class TrackingServices extends BaseService {
 			case "GOOGLE_HELP": this.on_google_help_service(service_arg); break;
 			default: debugger;
 		}
-	}
-	on_complete_set_service_params() {
-		seen_map.clear();
 	}
 }
 class Services {
@@ -4715,6 +4711,7 @@ class ParserService extends BaseService {
 					case "library": break x;
 					case "subscriptions": break x;
 					case "what_to_watch": break x;
+					case "trending": break x;
 					default: break;
 				}
 				if(seen_map.has(v_ac)) break;
@@ -4946,18 +4943,24 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
+		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
 		switch(x.rootVe) {
-			case 3854: this.VE3854_WebCommandMetadata(x); break;
 			default: debugger; break;
+			case 3854: this.VE3854_WebCommandMetadata(x); break;
+			case 6827: this.VE6827_WebCommandMetadata(x); break;
 		}
 	}
 	/** @arg {VE3854_WebCommandMetadata} x */
 	VE3854_WebCommandMetadata(x) {
 		if(x.url!=="/") debugger;
-		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(x.rootVe!==3854) debugger;
-		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
 		this.save_keys("[VE3854_WebCommandMetadata]",x);
+	}
+	/** @arg {VE6827_WebCommandMetadata} x */
+	VE6827_WebCommandMetadata(x) {
+		if(!this.str_starts_with(x.url,"/feed/trending?")) debugger;
+		if(x.rootVe!==6827) debugger;
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {

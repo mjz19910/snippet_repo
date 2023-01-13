@@ -1,1 +1,7 @@
-type BrowseEndpointPages="subscriptions"|"what_to_watch"|"library"|"history";
+type BrowseEndpointPages=
+	|"history"
+	|"library"
+	|"subscriptions"
+	|"trending"
+	|"what_to_watch"
+	;
