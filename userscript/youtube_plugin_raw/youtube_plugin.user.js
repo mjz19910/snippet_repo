@@ -4722,24 +4722,25 @@ class ParserService extends BaseService {
 		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
 		/** @typedef {ExtractAfterStr<typeof x,"VL"|"UC">} KnownParts_VL */
 		/** @private @type {StartPart} */
-		let v_2c=as(x.slice(0,2));
-		x: switch(v_2c) {
+		let page_section=as(x.slice(0,2));
+		x: switch(page_section) {
 			case "FE": {
 				/** @private @type {BrowseEndpointPages} */
-				let v_ac=as(x.slice(2));
-				switch(v_ac) {
+				let page=as(x.slice(2));
+				switch(page) {
 					case "history": break x;
 					case "library": break x;
+					case "music_explore": break x;
+					case "music_home": break x;
 					case "storefront": break x;
 					case "subscriptions": break x;
 					case "trending": break x;
 					case "what_to_watch": break x;
-					case "music_home": break x;
 					default: debugger; break;
 				}
-				if(seen_map.has(v_ac)) break;
-				seen_map.add(v_ac);
-				console.log("[param_value_with_section] [%s] -> [%s]",v_2c,v_ac);
+				if(seen_map.has(page)) break;
+				seen_map.add(page);
+				console.log("[param_value_with_section] [%s] -> [%s]",page_section,page);
 			} break;
 			case "VL": let v_4c=x.slice(2,4); switch(v_4c) {
 				case "LL": break;
@@ -4755,7 +4756,7 @@ class ParserService extends BaseService {
 				console.log("new with param [param_2c_UC]",x,x.slice(2));
 			} break;
 			case "SP": break;
-			default: console.log("[param_value_needed]",v_2c,x); break;
+			default: console.log("[param_value_needed]",page_section,x); break;
 		}
 	}
 }
