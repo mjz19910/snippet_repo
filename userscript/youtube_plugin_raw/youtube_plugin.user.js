@@ -5260,12 +5260,17 @@ class HandleTypes extends ServiceData {
 	TabbedSearchResults(x) {
 		const cf="TabbedSearchResults";
 		this.save_keys(`[${cf}]`,x);
-		this.z(x.tabs,x => {
-			let ka=this.get_keys_of(x);
-			for(let k of ka) {
-				this.save_keys(`[${cf}.tabs[].${k}]`,x[k]);
-			}
-		});
+		const {tabs: a,...y}=x; this.g(y);
+		this.z(a,a=>this.SearchResultsTab(a));
+	}
+	/** @arg {SearchResultsTab} x */
+	SearchResultsTab(x) {
+		const cf="SearchResultsTab";
+		this.save_keys(`[${cf}]`,x);
+		let ka=this.get_keys_of(x);
+		for(let k of ka) {
+			this.save_keys(`[${cf}.${k}]`,x[k]);
+		}
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {

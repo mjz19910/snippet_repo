@@ -1,7 +1,1 @@
-type TabbedSearchResults={
-	tabs: {}[];
-};
-
-type TabbedSearchResultsRenderer={
-	tabbedSearchResultsRenderer: TabbedSearchResults;
-};
+type TabbedSearchResultsRenderer={tabbedSearchResultsRenderer: TabbedSearchResults;};
