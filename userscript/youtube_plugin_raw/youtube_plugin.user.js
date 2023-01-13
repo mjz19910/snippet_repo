@@ -4935,6 +4935,7 @@ class HandleTypes extends ServiceData {
 		this.Thumbnail(x.thumbnail);
 		this.save_enum("MUSIC_THUMBNAIL_CROP",x.thumbnailCrop);
 		this.save_enum("MUSIC_THUMBNAIL_SCALE",x.thumbnailScale);
+		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
