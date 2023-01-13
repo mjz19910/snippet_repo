@@ -4963,13 +4963,16 @@ class HandleTypes extends ServiceData {
 			default: debugger; break;
 			case 3854: this.VE3854_WebCommandMetadata(x); break;
 			case 6827: this.VE6827_WebCommandMetadata(x); break;
-			case 11487: break;
+			case 11487: this.VE11487_WebCommandMetadata(x); break;
 		}
+	}
+	/** @arg {VE11487_WebCommandMetadata} x */
+	VE11487_WebCommandMetadata(x) {
+		if(x.url!=="/premium") debugger;
 	}
 	/** @arg {VE3854_WebCommandMetadata} x */
 	VE3854_WebCommandMetadata(x) {
 		if(x.url!=="/") debugger;
-		if(x.rootVe!==3854) debugger;
 		this.save_keys("[VE3854_WebCommandMetadata]",x);
 	}
 	/** @arg {VE6827_WebCommandMetadata} x */
@@ -4983,7 +4986,6 @@ class HandleTypes extends ServiceData {
 			case "storefront": break;
 			default: debugger; break;
 		}
-		if(x.rootVe!==6827) debugger;
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
