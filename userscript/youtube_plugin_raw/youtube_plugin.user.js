@@ -4898,7 +4898,22 @@ class HandleTypes extends ServiceData {
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
-		const {...y2}=y1; this.g(y2);
+		const {metadata,microformat,...y2}=y1; this.g(y2);
+		if(metadata) this.ChannelMetadataRenderer(metadata);
+		if(microformat) this.MicroformatDataRenderer(microformat);
+	}
+	/** @arg {MicroformatDataRenderer} x */
+	MicroformatDataRenderer(x) {
+		if(x.microformatDataRenderer) this.MicroformatData(x.microformatDataRenderer);
+		this.save_keys("[MicroformatDataRenderer]",x);
+	}
+	/** @arg {MicroformatData} x */
+	MicroformatData(x) {
+		x;
+	}
+	/** @arg {ChannelMetadataRenderer} x */
+	ChannelMetadataRenderer(x) {
+		this.save_keys("[ChannelMetadataRenderer]",x);
 	}
 	/** @arg {BrowseHeader} x */
 	BrowseHeader(x) {
