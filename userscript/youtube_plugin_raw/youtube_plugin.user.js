@@ -3180,7 +3180,7 @@ class CsiService extends BaseService {
 	data={
 		/** @private @type {BrowseEndpointPages|null} */
 		yt_fn: null,
-		/** @private @type {"WEB"|null} */
+		/** @private @type {CsiServiceC["value"]|null} */
 		c: null,
 		/** @private @type {CsiVarTypes["cver"]|null} */
 		cver: null,
@@ -3285,6 +3285,7 @@ class ECatcherService extends BaseService {
 			fexp: fexp_static.concat([
 				[24407190,24424806,24426636,24434209,24440903,24448074,24448246,24450571,39321826],
 				[24124511,24128088],
+				[24200839,24432597],
 			].flat())
 		},
 	};
