@@ -1,4 +1,4 @@
 type ECatcherClientName={
 	key: "client.name";
-	value: "WEB";
+	value: "WEB"|"WEB_REMIX";
 };

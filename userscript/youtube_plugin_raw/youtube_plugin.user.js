@@ -3278,7 +3278,7 @@ const fexp_static=[
 ];
 class ECatcherService extends BaseService {
 	data={
-		/** @private @type {{name: "WEB";fexp:number[];version: SomeVer<CsiVarTypes["cver"]>}|null} */
+		/** @private @type {{name:ECatcherClientName['value'];fexp:number[];version:SomeVer<CsiVarTypes["cver"]>}|null} */
 		client: null,
 		expected_client_values: {
 			/** @private @type {number[]} */
