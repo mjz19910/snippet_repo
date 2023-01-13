@@ -1,1 +1,1 @@
-type TabDataContent=SectionListRenderer<never,never>|RichGridRenderer;
+type TabDataContent=SectionListRenderer|RichGridRenderer;

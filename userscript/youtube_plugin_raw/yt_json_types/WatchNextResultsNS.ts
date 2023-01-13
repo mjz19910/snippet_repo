@@ -1,14 +1,14 @@
 namespace WatchNextResultsNS {
 	type SR_CTI=[
 		RelatedChipCloudRenderer,
-		ItemSectionRenderer<"sid-wn-chips","watch-next-feed">
+		ItemSectionRendererTemplate<"sid-wn-chips","watch-next-feed">
 	][number];
 
 	type SR_CT=ContentsTemplate<SR_CTI>;
 
 	type SR_RAI=[
 		RelatedChipCloudRenderer,
-		ItemSectionRenderer<never,never>
+		ItemSectionRenderer
 	][number];
 
 	type SR_RA=ResultsArrTemplate<SR_RAI>;
@@ -16,8 +16,8 @@ namespace WatchNextResultsNS {
 	type RT_CTI=[
 		VideoPrimaryInfoRenderer,
 		VideoSecondaryInfoRenderer,
-		ItemSectionRenderer<"comments-entry-point",never>,
-		ItemSectionRenderer<"comment-item-section","comments-section">
+		ItemSectionRendererTemplate<"comments-entry-point",never>,
+		ItemSectionRendererTemplate<"comment-item-section","comments-section">
 	][number];
 
 	type RT_CT=ContentsTemplate<RT_CTI>;
