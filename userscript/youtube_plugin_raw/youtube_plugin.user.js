@@ -2596,7 +2596,7 @@ class BaseService extends BaseServicePrivate {
 		if(!keys.length) return true;
 		return false;
 	}
-	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T} x */
+	/** @public @type {this['ds']['save_keys']} @arg {`[${string}]`} k @arg {{}|undefined} x */
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
 	}
