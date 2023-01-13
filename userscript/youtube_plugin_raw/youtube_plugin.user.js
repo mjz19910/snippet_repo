@@ -2504,6 +2504,10 @@ class BaseService extends BaseServicePrivate {
 	trackingParams(x) {
 		this.primitive_of(x,"string");
 	}
+	/** @public @arg {string} x */
+	clickTrackingParams(x) {
+		this.primitive_of(x,"string");
+	}
 	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
 	str_ends_with(x,v) {
 		return x.endsWith(v);
@@ -4928,8 +4932,20 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
+		this.clickTrackingParams(x.clickTrackingParams);
+		this.BrowseCommandMetadata(x.commandMetadata);
 		this.BrowseEndpointData(x.browseEndpoint);
 		this.save_keys("[BrowseEndpoint]",x);
+	}
+	/** @arg {BrowseCommandMetadata} x */
+	BrowseCommandMetadata(x) {
+		this.save_keys("[BrowseCommandMetadata]",x);
+		this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
+		this.save_keys("[BrowseCommandMetadata.webCommandMetadata]",x.webCommandMetadata);
+	}
+	/** @arg {ResolveUrlCommandMetadata} x */
+	ResolveUrlCommandMetadata(x) {
+		this.save_keys("[ResolveUrlCommandMetadata]",x);
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
