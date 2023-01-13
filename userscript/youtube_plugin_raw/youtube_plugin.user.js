@@ -5058,6 +5058,7 @@ class HandleTypes extends ServiceData {
 		let v=x;
 		this.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
+			if(x.type==="account.account_menu") break x;
 			if(x.type==="notification.get_notification_menu") break x;
 			if(x.type==="notification.get_unseen_count") break x;
 			if(x.type==="notification.modify_channel_preference") break x;
@@ -5222,6 +5223,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
+		if(x.actions) this.z(x.actions,a=>this.Action(a));
 		this.save_keys("[AccountMenuResponse]",x);
 	}
 	/** @private @arg {SuccessResponse} x */

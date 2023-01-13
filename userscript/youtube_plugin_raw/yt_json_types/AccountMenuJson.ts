@@ -1,5 +1,5 @@
 type AccountMenuResponse={
        responseContext: ResponseContext;
-       actions: OpenPopupActionData[];
+       actions: OpenPopupAction[];
        trackingParams: string;
 };
