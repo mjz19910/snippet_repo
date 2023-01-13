@@ -4963,6 +4963,7 @@ class HandleTypes extends ServiceData {
 			default: debugger; break;
 			case 3854: this.VE3854_WebCommandMetadata(x); break;
 			case 6827: this.VE6827_WebCommandMetadata(x); break;
+			case 11487: break;
 		}
 	}
 	/** @arg {VE3854_WebCommandMetadata} x */
