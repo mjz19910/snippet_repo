@@ -4930,7 +4930,6 @@ class HandleTypes extends ServiceData {
 			} else {
 				debugger;
 			}
-			continuationContents.sectionListContinuation;
 		}
 	}
 	/** @arg {SectionListContinuation} x */
