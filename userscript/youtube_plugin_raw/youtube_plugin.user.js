@@ -5169,6 +5169,11 @@ class HandleTypes extends ServiceData {
 		if(!name_from_keys) {debugger; return;}
 		data_saver.save_keys(`[Action.${name_from_keys}]`,x);
 	}
+	/** @private @arg {AccountMenuResponse} x */
+	AccountMenuResponse(x) {
+		if(x.actions) this.z(x.actions,a=>this.Action(a));
+		this.save_keys("[AccountMenuResponse]",x);
+	}
 	/** @arg {_ResponseTypes} x */
 	ResponseTypes(x) {
 		/** @private @arg {{type:string}} x */
@@ -5351,11 +5356,6 @@ class HandleTypes extends ServiceData {
 	/** @private @arg {GetTranscriptResponse} x */
 	GetTranscriptResponse(x) {
 		this.save_keys("[GetTranscriptResponse]",x);
-	}
-	/** @private @arg {AccountMenuResponse} x */
-	AccountMenuResponse(x) {
-		if(x.actions) this.z(x.actions,a=>this.Action(a));
-		this.save_keys("[AccountMenuResponse]",x);
 	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
