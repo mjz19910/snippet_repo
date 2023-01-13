@@ -5107,6 +5107,7 @@ class HandleTypes extends ServiceData {
 			case "like.like": return this.LikeLikeResponse(x.data);
 			case "like.removelike": return this.LikeRemoveLikeResponse(x.data);
 			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplayResponse(x.data);
+			case "music.get_search_suggestions": return this.GetSearchSuggestions(x.data);
 			case "next": return this.NextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuResponse(x.data);
 			case "notification.get_unseen_count": return this.NotificationGetUnseenCountResponse(x.data);
@@ -5121,6 +5122,11 @@ class HandleTypes extends ServiceData {
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {GetSearchSuggestions} x */
+	GetSearchSuggestions(x) {
+		this.save_keys("[GetSearchSuggestions]",x);
+		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
