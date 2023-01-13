@@ -4708,9 +4708,10 @@ class ParserService extends BaseService {
 				switch(v_ac) {
 					case "history": break x;
 					case "library": break x;
+					case "storefront": break x;
 					case "subscriptions": break x;
-					case "what_to_watch": break x;
 					case "trending": break x;
+					case "what_to_watch": break x;
 					default: debugger; break;
 				}
 				if(seen_map.has(v_ac)) break;
