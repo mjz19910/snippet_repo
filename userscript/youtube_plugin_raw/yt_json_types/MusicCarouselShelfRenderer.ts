@@ -1,0 +1,3 @@
+type MusicCarouselShelfRenderer={
+	musicCarouselShelfRenderer: MusicCarouselShelf;
+};

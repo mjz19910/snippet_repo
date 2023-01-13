@@ -4958,11 +4958,22 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[SectionListItem]",x);
 		if("itemSectionRenderer" in x) {
 			return this.ItemSectionRenderer(x);
-		} if("continuationItemRenderer" in x) {
+		} else if("continuationItemRenderer" in x) {
 			this.ContinuationItemRenderer(x);
+		} else if("musicCarouselShelfRenderer" in x) {
+			this.MusicCarouselShelfRenderer(x);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {MusicCarouselShelfRenderer} x */
+	MusicCarouselShelfRenderer(x) {
+		this.save_keys("[MusicCarouselShelfRenderer]",x);
+		this.MusicCarouselShelf(x.musicCarouselShelfRenderer);
+	}
+	/** @arg {MusicCarouselShelf} x */
+	MusicCarouselShelf(x) {
+		this.save_keys("[MusicCarouselShelf]",x);
 	}
 	/** @arg {ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {

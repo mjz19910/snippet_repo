@@ -1,1 +1,5 @@
-type SectionListItem=ItemSectionRenderer|ContinuationItemRenderer;
+type SectionListItem=
+	|ContinuationItemRenderer
+	|ItemSectionRenderer
+	|MusicCarouselShelfRenderer
+	;
