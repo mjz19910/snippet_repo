@@ -4909,7 +4909,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {MicroformatData} x */
 	MicroformatData(x) {
-		x;
+		this.save_keys("[MicroformatData]",x);
 	}
 	/** @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
