@@ -4961,9 +4961,9 @@ class HandleTypes extends ServiceData {
 		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
 		switch(x.rootVe) {
 			default: debugger; break;
+			case 11487: this.VE11487_WebCommandMetadata(x); break;
 			case 3854: this.VE3854_WebCommandMetadata(x); break;
 			case 6827: this.VE6827_WebCommandMetadata(x); break;
-			case 11487: this.VE11487_WebCommandMetadata(x); break;
 		}
 	}
 	/** @arg {VE11487_WebCommandMetadata} x */
