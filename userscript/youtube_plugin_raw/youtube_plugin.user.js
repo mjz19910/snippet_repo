@@ -5237,8 +5237,15 @@ class HandleTypes extends ServiceData {
 			case "share.get_share_panel": return this.GetSharePanel(x.data);
 			case "subscription.subscribe": return this.SubscribeResponse(x.data);
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
+			case "search": return this.SearchApiResponse(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {SearchApiResponse} x */
+	SearchApiResponse(x) {
+		const {responseContext: {},contents,trackingParams}=x;
+		this.z(contents,a=>this.save_keys("[SearchApiResponse.contents[]]",a));
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
