@@ -1,7 +1,7 @@
 type BrowseResponse={
 	responseContext: ResponseContext;
 	trackingParams: string;
-	onResponseReceivedActions: ResponseReceivedAction[];
+	onResponseReceivedActions?: ResponseReceivedAction[];
 	contents?: BrowseContents;
 	header?: BrowseHeader;
 	topbar?: DesktopTopbarRenderer;

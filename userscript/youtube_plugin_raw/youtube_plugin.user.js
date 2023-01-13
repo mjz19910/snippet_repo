@@ -4890,7 +4890,7 @@ class HandleTypes extends ServiceData {
 		this.ResponseContext(responseContext);
 		if(header) this.BrowseHeader(header);
 		this.trackingParams(trackingParams);
-		this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
+		if(onResponseReceivedActions) this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
 		if(contents) this.BrowseContents(contents);
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y; this.g(y1);
 		if(topbar) this.DesktopTopbarRenderer(topbar);
@@ -4946,11 +4946,18 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
+		switch(x.rootVe) {
+			case 3854: this.VE3854_WebCommandMetadata(x); break;
+			default: debugger; break;
+		}
+	}
+	/** @arg {VE3854_WebCommandMetadata} x */
+	VE3854_WebCommandMetadata(x) {
 		if(x.url!=="/") debugger;
 		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(x.rootVe!==3854) debugger;
 		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
-		this.save_keys("[BrowseWebCommandMetadata]",x);
+		this.save_keys("[VE3854_WebCommandMetadata]",x);
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
