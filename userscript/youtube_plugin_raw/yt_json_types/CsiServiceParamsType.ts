@@ -1,1 +1,1 @@
-type CsiServiceParamsType=ToServiceParamsList<CsiVarMap>|CsiServiceC[]|CsiServiceCVer[];
+type CsiServiceParamsType=ToServiceParamsList<CsiVarMap>|(CsiServiceC|CsiServiceCVer)[];
