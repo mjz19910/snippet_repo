@@ -4728,6 +4728,7 @@ class ParserService extends BaseService {
 				/** @private @type {BrowseEndpointPages} */
 				let page=as(x.slice(2));
 				switch(page) {
+					default: debugger; break;
 					case "history": break x;
 					case "library": break x;
 					case "music_explore": break x;
@@ -4736,7 +4737,6 @@ class ParserService extends BaseService {
 					case "subscriptions": break x;
 					case "trending": break x;
 					case "what_to_watch": break x;
-					default: debugger; break;
 				}
 				if(seen_map.has(page)) break;
 				seen_map.add(page);
