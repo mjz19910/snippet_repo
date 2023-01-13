@@ -3362,6 +3362,7 @@ class GFeedbackService extends BaseService {
 		data_target.context=x;
 		switch(x) {
 			case "yt_web_search": return;
+			case "yt_web_unlimited": return;
 			case "yt_web_unknown_form_factor_kevlar_w2w": return;
 			default:
 		}
