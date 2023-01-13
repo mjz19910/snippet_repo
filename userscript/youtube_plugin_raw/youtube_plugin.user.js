@@ -4968,7 +4968,6 @@ class HandleTypes extends ServiceData {
 			case "storefront": break;
 			default: debugger; break;
 		}
-		if(!this.str_starts_with(x.url,"/feed/trending?")) debugger;
 		if(x.rootVe!==6827) debugger;
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
