@@ -4805,48 +4805,6 @@ class Generate {
 		this.out_arr.push(gd);
 	}
 }
-class C1 extends BaseService {
-	/** @arg {ResolverT<Services,ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-	}
-}
-class C2 extends BaseService {
-	/** @public @arg {WatchPageResponse} x */
-	WatchPageResponse(x) {
-		this.save_keys("[WatchPageResponse]",x);
-	}
-}
-class C3 extends BaseService {
-	/** @public @arg {ChannelPageResponse} x */
-	ChannelPageResponse(x) {
-		this.save_keys("[ChannelPageResponse]",x);
-	}
-}
-class C4 extends BaseService {
-	/** @public @arg {PlaylistPageResponse} x */
-	PlaylistPageResponse(x) {
-		this.save_keys("[PlaylistPageResponse]",x);
-	}
-}
-class C5 extends BaseService {
-	/** @public @arg {SettingsPageResponse} x */
-	SettingsPageResponse(x) {
-		this.save_keys("[SettingsPageResponse]",x);
-	}
-}
-class C6 extends BaseService {
-	/** @public @arg {ShortsPageResponse} x */
-	ShortsPageResponse(x) {
-		this.save_keys("[ShortsResponse]",x);
-	}
-}
-class C7 extends BaseService {
-	/** @public @arg {SearchPageResponse} x */
-	SearchPageResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
-	}
-}
 //#region HandleTypes
 class ServiceData extends BaseService {
 	/** @protected @type {FormatItagArr} */
@@ -4878,16 +4836,29 @@ class ServiceData extends BaseService {
 	}
 }
 class HandleTypes extends ServiceData {
-	/** @arg {ResolverT<Services, ServiceOptions>} x */
-	constructor(x) {
-		super(x);
-		this.c1=new C1(x);
-		this.c2=new C2(x);
-		this.c3=new C3(x);
-		this.c4=new C4(x);
-		this.c5=new C5(x);
-		this.c6=new C6(x);
-		this.c7=new C7(x);
+	/** @public @arg {WatchPageResponse} x */
+	WatchPageResponse(x) {
+		this.save_keys("[WatchPageResponse]",x);
+	}
+	/** @public @arg {ChannelPageResponse} x */
+	ChannelPageResponse(x) {
+		this.save_keys("[ChannelPageResponse]",x);
+	}
+	/** @public @arg {PlaylistPageResponse} x */
+	PlaylistPageResponse(x) {
+		this.save_keys("[PlaylistPageResponse]",x);
+	}
+	/** @public @arg {SettingsPageResponse} x */
+	SettingsPageResponse(x) {
+		this.save_keys("[SettingsPageResponse]",x);
+	}
+	/** @public @arg {ShortsPageResponse} x */
+	ShortsPageResponse(x) {
+		this.save_keys("[ShortsResponse]",x);
+	}
+	/** @public @arg {SearchPageResponse} x */
+	SearchPageResponse(x) {
+		this.save_keys("[GetNotificationMenuJson]",x);
 	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
@@ -4982,12 +4953,12 @@ class HandleTypes extends ServiceData {
 		this.ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.BrowsePageResponse(x);
-			case "watch": return this.c2.WatchPageResponse(x);
-			case "channel": return this.c3.ChannelPageResponse(x);
-			case "playlist": return this.c4.PlaylistPageResponse(x);
-			case "settings": return this.c5.SettingsPageResponse(x);
-			case "shorts": return this.c6.ShortsPageResponse(x);
-			case "search": return this.c7.SearchPageResponse(x);
+			case "watch": return this.WatchPageResponse(x);
+			case "channel": return this.ChannelPageResponse(x);
+			case "playlist": return this.PlaylistPageResponse(x);
+			case "settings": return this.SettingsPageResponse(x);
+			case "shorts": return this.ShortsPageResponse(x);
+			case "search": return this.SearchPageResponse(x);
 			default: break;
 		}
 		console.log("pt",x);
