@@ -4925,8 +4925,20 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
+		this.save_keys("[MusicThumbnailRenderer]",x);
 		if(!x.musicThumbnailRenderer) debugger;
-		x.musicThumbnailRenderer
+		this.MusicThumbnailData(x.musicThumbnailRenderer);
+	}
+	/** @arg {MusicThumbnailData} x */
+	MusicThumbnailData(x) {
+		this.save_keys("[MusicThumbnailData]",x);
+		this.Thumbnail(x.thumbnail);
+		this.save_enum("MUSIC_THUMBNAIL_CROP",x.thumbnailCrop);
+		this.save_enum("MUSIC_THUMBNAIL_SCALE",x.thumbnailScale);
+	}
+	/** @arg {Thumbnail} x */
+	Thumbnail(x) {
+		this.save_keys("[Thumbnail]",x);
 	}
 	/** @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {
