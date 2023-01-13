@@ -5257,18 +5257,20 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {SearchResponse} x */
 	SearchResponse(x) {
+		const cf="SearchResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y);
 		this.primitive_of(estimatedResults,"string");
 		this.TwoColumnSearchResultsRenderer(contents);
 		this.trackingParams(trackingParams);
 		this.DesktopTopbarRenderer(topbar);
-		this.z(refinements,a=>this.primitive_of(a,"string"));
-		this.z(onResponseReceivedCommands,a=>{
-			if("adsControlFlowOpportunityReceivedCommand" in a){
+		this.z(refinements,a => this.primitive_of(a,"string"));
+		this.z(onResponseReceivedCommands,a => {
+			if("adsControlFlowOpportunityReceivedCommand" in a) {
 				return this.AdsControlFlowOpportunityReceivedCommand(a);
 			};
 			debugger;
-		})
+		});
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
