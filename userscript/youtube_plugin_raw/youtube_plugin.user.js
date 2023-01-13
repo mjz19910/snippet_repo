@@ -5246,8 +5246,15 @@ class HandleTypes extends ServiceData {
 		const cf="SearchApiResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,trackingParams}=x;
-		this.z(contents,a=>this.save_keys(`[${cf}.contents[]]`,a));
+		console.log(contents);
+		this.save_keys(`[${cf}.contents]`,contents);
 		this.trackingParams(trackingParams);
+	}
+	/** @arg {TabbedSearchResultsRenderer} x */
+	TabbedSearchResultsRenderer(x) {
+		const cf="TabbedSearchResultsRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.save_keys(`[${cf}..]`,x.tabbedSearchResultsRenderer);
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
