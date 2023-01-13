@@ -4959,8 +4959,8 @@ class HandleTypes extends ServiceData {
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
 		const {contents,continuations,trackingParams,...y}=x; this.g(y);
-		this.z(contents,a=>this.SectionListItem(a));
-		if(continuations) this.z(continuations,a=>this.NextContinuationData(a));
+		this.z(contents,a => this.SectionListItem(a));
+		if(continuations) this.z(continuations,a => this.NextContinuationData(a));
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {NextContinuationData} x */
@@ -5182,7 +5182,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
-		if(x.actions) this.z(x.actions,a=>this.Action(a));
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[AccountMenuResponse]",x);
 	}
 	/** @arg {_ResponseTypes} x */
@@ -5246,7 +5246,7 @@ class HandleTypes extends ServiceData {
 		const cf="SearchApiResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,trackingParams}=x;
-		console.log(contents);
+		this.TabbedSearchResultsRenderer(contents);
 		this.save_keys(`[${cf}.contents]`,contents);
 		this.trackingParams(trackingParams);
 	}
@@ -5254,7 +5254,10 @@ class HandleTypes extends ServiceData {
 	TabbedSearchResultsRenderer(x) {
 		const cf="TabbedSearchResultsRenderer";
 		this.save_keys(`[${cf}]`,x);
-		this.save_keys(`[${cf}..]`,x.tabbedSearchResultsRenderer);
+		let ka=this.get_keys_of(x);
+		for(let k of ka) {
+			this.save_keys(`[${cf}.${k}]`,x[k]);
+		}
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
