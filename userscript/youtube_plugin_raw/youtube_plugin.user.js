@@ -4940,8 +4940,8 @@ class HandleTypes extends ServiceData {
 	/** @arg {BrowseCommandMetadata} x */
 	BrowseCommandMetadata(x) {
 		this.save_keys("[BrowseCommandMetadata]",x);
-		this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
 		this.BrowseWebCommandMetadata(x.webCommandMetadata);
+		this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
