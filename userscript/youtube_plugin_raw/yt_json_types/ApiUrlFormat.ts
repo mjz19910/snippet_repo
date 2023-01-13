@@ -14,6 +14,7 @@ type ApiUrlFormat=[
 	`youtubei/v1/notification/${ApiNotificationLast}`,
 	`youtubei/v1/playlist/${"get_add_to_playlist"|"create"}`,
 	`youtubei/v1/reel/${"reel_item_watch"|"reel_watch_sequence"}`,
+	`youtubei/v1/search`,
 	`youtubei/v1/share/get_share_panel`,
 	`youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`,
 ][number];

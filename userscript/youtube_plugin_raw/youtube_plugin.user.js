@@ -2700,6 +2700,11 @@ class YtHandlers extends BaseService {
 				/** @type {PlayerResponse} */
 				data: as(x),
 			};
+			case "search": return {
+				type: target[0],
+				/** @type {BrowseResponse} */
+				data: as(x),
+			};
 		}
 		return null;
 	}
@@ -2853,7 +2858,7 @@ class YtHandlers extends BaseService {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetSearchSuggestions} */
+				/** @private @type {GetSearchSuggestionsResponse} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -4564,11 +4569,17 @@ class ParserService extends BaseService {
 			case "playlist": return this.get_playlist_type(x);
 			case "share": return this.get_share_type(x);
 			case "music": return this.get_music_type(x);
+			case "search": return this.get_search_type(x);
 		}
 		switch(x.length) {
 			case 3: return this.get_yt_url_type_3(x);
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
+	}
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","search",...string[]]>} x */
+	get_search_type(x) {
+		if(x.length!==3) debugger;
+		return x[2];
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","music",...string[]]>} x */
 	get_music_type(x) {
@@ -5229,7 +5240,7 @@ class HandleTypes extends ServiceData {
 			default: debugger; return g(x);
 		}
 	}
-	/** @arg {GetSearchSuggestions} x */
+	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
 		this.save_keys("[GetSearchSuggestions]",x);
 		this.trackingParams(x.trackingParams);
