@@ -5764,15 +5764,30 @@ class HandleTypes extends ServiceData {
 	/** @arg {NavigationEndpointData} x */
 	NavigationEndpointData(x) {
 		this.save_keys("[NavigationEndpointData]",x);
+		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.NavigationEndpointCommandMetadata(commandMetadata);
+		this.NavigationEndpointBrowseEndpoint(browseEndpoint);
+	}
+	/** @arg {NavigationEndpointBrowseEndpoint} x */
+	NavigationEndpointBrowseEndpoint(x) {
+		this.save_keys("[NavigationEndpointBrowseEndpoint]",x);
+		this.g(x);
+	}
+	/** @arg {NavigationEndpointCommandMetadata} x */
+	NavigationEndpointCommandMetadata(x) {
+		this.save_keys("[NavigationEndpointCommandMetadata]",x);
+		this.g(x);
 	}
 	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextT(x,f_run) {
 		this.save_keys("[TextT]",x);
 		if("simpleText" in x) {
-			this.SimpleText(x);
-		} else {
-			this.TextWithRuns(x,f_run);
+			return this.SimpleText(x);
+		} else if("runs" in x) {
+			return this.TextWithRuns(x,f_run);
 		}
+		debugger;
 	}
 	/** @arg {SimpleText} x */
 	SimpleText(x) {
