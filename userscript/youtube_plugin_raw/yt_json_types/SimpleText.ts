@@ -1,1 +1,4 @@
-type SimpleText={simpleText: string;};
+type SimpleText={
+	accessibility?: Accessibility;
+	simpleText: string;
+};

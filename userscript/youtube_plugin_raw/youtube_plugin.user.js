@@ -5634,8 +5634,12 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[WatchNextEndScreen]",x);
 		const {results,title,trackingParams,...y}=x; this.g(y);
 		this.z(results,this.WatchNextEndScreenItem);
-		this.SimpleText(title);
+		this.SimpleText(title,this.handle_accessibility);
 		this.trackingParams(trackingParams);
+	}
+	/** @arg {{accessibility?:Accessibility}} x */
+	handle_accessibility(x) {
+		if(x.accessibility) this.Accessibility(x.accessibility);
 	}
 	/** @arg {WatchNextEndScreenItem} x */
 	WatchNextEndScreenItem(x) {
@@ -5680,10 +5684,10 @@ class HandleTypes extends ServiceData {
 		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,...y1}=x;
 		this.videoId(videoId);
 		this.Thumbnail(thumbnail);
-		this.SimpleText(title);
+		this.SimpleText(title,this.handle_accessibility);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.TextWithRuns(shortBylineText,this.NavigationEndpoint);
-		this.SimpleText(lengthText);
+		this.SimpleText(lengthText,this.handle_accessibility);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
 		this.WatchEndpoint(navigationEndpoint);
@@ -5731,7 +5735,7 @@ class HandleTypes extends ServiceData {
 	ThumbnailOverlayTimeStatus(x) {
 		this.save_keys("[ThumbnailOverlayTimeStatus]",x);
 		const {text,style,...y}=x; this.g(y);
-		this.SimpleText(text);
+		this.SimpleText(text,this.handle_accessibility);
 		if(style!=="DEFAULT") debugger;
 	}
 	/** @arg {EndScreenPlaylistRenderer} x */
@@ -5745,9 +5749,9 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[EndScreenPlaylist]",x);
 		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y);
 		this.x.get("parser_service").parse_playlist_id(playlistId);
-		this.SimpleText(title);
+		this.SimpleText(title,this.handle_accessibility);
 		this.Thumbnail(thumbnail);
-		this.TextT(longBylineText,this.NavigationEndpoint);
+		this.TextT(longBylineText,this.NavigationEndpoint,this.handle_accessibility);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
 		this.TextWithRuns(videoCountText,this.NavigationEndpoint);
 		this.WatchEndpoint(navigationEndpoint);
@@ -5802,21 +5806,21 @@ class HandleTypes extends ServiceData {
 		this.rootVe(rootVe);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run */
-	TextT(x,f_run) {
+	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run @arg {(this:this,x:{accessibility?:Accessibility})=>void} f_acc */
+	TextT(x,f_run,f_acc) {
 		this.save_keys("[TextT]",x);
 		if("simpleText" in x) {
-			return this.SimpleText(x);
+			return this.SimpleText(x,f_acc);
 		} else if("runs" in x) {
 			return this.TextWithRuns(x,f_run);
 		}
 		debugger;
 	}
-	/** @arg {SimpleText} x */
-	SimpleText(x) {
+	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
+	SimpleText(x,f) {
 		if(!("simpleText" in x)) {debugger; return;}
 		this.save_keys("[SimpleText]",x);
-		const {simpleText,...y}=x; this.g(y);
+		const {simpleText,...y}=x; f.call(this,y);
 		this.primitive_of(simpleText,"string");
 	}
 	/** @arg {CurrentVideoEndpoint} x */
