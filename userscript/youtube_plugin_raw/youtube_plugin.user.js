@@ -2589,6 +2589,7 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
+		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
 		if(!keys.length) return;
 		console.log("[empty_object] [%s]",keys.join());
@@ -5671,7 +5672,7 @@ class HandleTypes extends ServiceData {
 	ThumbnailOverlayNowPlayingData(x) {
 		this.save_keys("[ThumbnailOverlayNowPlayingData]",x);
 		const {text,...y}=x; this.g(y);
-		this.TextWithRuns(text);
+		this.TextWithRuns(text,this.NavigationEndpoint);
 	}
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
@@ -5681,7 +5682,7 @@ class HandleTypes extends ServiceData {
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
-		this.TextWithRuns(shortBylineText);
+		this.TextWithRuns(shortBylineText,this.NavigationEndpoint);
 		this.SimpleText(lengthText);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
@@ -5698,11 +5699,11 @@ class HandleTypes extends ServiceData {
 	WatchEndpointData(x) {
 		this.save_keys("[WatchEndpointData]",x);
 	}
-	/** @arg {TextWithRuns} x */
-	TextWithRuns(x) {
+	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
+	TextWithRuns(x,f_run) {
 		const {runs,...y}=x; this.g(y);
-		this.z(runs,a=>{
-			const {text,...b}=a; this.g(b);
+		this.z(runs,a => {
+			const {text,...b}=a; f_run.call(this,b);
 			this.primitive_of(text,"string");
 		});
 	}
@@ -5732,18 +5733,22 @@ class HandleTypes extends ServiceData {
 		this.x.get("parser_service").parse_playlist_id(playlistId);
 		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
-		this.TextT(longBylineText);
+		this.TextT(longBylineText,this.NavigationEndpoint);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
-		this.TextWithRuns(videoCountText);
+		this.TextWithRuns(videoCountText,this.NavigationEndpoint);
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {TextT} x */
-	TextT(x) {
+	/** @arg {NavigationEndpoint} x */
+	NavigationEndpoint(x) {
+		x;
+	}
+	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run */
+	TextT(x,f_run) {
 		if("simpleText" in x) {
 			this.SimpleText(x);
 		} else {
-			this.TextWithRuns(x);
+			this.TextWithRuns(x,f_run);
 		}
 	}
 	/** @arg {SimpleText} x */

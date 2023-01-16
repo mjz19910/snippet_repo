@@ -15,7 +15,7 @@ type TextRun={
 	text: string;
 };
 type TextRunTODO={
-	navigationEndpoint?: NavigationEndpoint<BrowseEndpoint_BId_CBUrl|UrlEndpointRedirect,never>;
+	navigationEndpoint?: NavigationEndpoint;
 	bold?: boolean;
 }
 type UrlRedirect={

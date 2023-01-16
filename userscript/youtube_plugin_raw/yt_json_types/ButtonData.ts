@@ -10,7 +10,7 @@ type ButtonData={
 	>;
 	isDisabled?: boolean;
 	serviceEndpoint?: ServiceEndpointTemplate<{}>;
-	navigationEndpoint?: NavigationEndpoint<{},never>;
+	navigationEndpoint?: NavigationEndpoint;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
 	text?: TextWithRuns;
