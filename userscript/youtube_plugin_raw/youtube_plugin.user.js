@@ -5615,7 +5615,7 @@ class HandleTypes extends ServiceData {
 		this.MenuRenderer(addToMenu);
 		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
 		this.AutoplaySwitchButtonRenderer(autonavToggle);
-		this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
+		if(decoratedPlayerBarRenderer) this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {

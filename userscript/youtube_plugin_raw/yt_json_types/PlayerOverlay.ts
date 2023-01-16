@@ -5,5 +5,5 @@ type PlayerOverlay={
 	addToMenu: MenuRenderer;
 	videoDetails: PlayerOverlayVideoDetailsRenderer;
 	autonavToggle: AutoplaySwitchButtonRenderer;
-	decoratedPlayerBarRenderer: DecoratedPlayerBarRenderer;
+	decoratedPlayerBarRenderer?: DecoratedPlayerBarRenderer;
 };
