@@ -5741,7 +5741,10 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
-		x;
+		if("navigationEndpoint" in x) {
+			return;
+		}
+		debugger;
 	}
 	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextT(x,f_run) {
