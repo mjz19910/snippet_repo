@@ -5478,7 +5478,7 @@ class HandleTypes extends ServiceData {
 	LoadMarkersCommandData(x) {
 		this.save_keys("[LoadMarkersCommandData]",x);
 		const {entityKeys,...y}=x; this.g(y);
-		this.z(entityKeys,a=>this.primitive_of(a,"string"));
+		this.z(entityKeys,a => this.primitive_of(a,"string"));
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommandData} x */
 	ChangeKeyedMarkersVisibilityCommandData(x) {
@@ -5547,7 +5547,7 @@ class HandleTypes extends ServiceData {
 		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
 		this.Accessibility(accessibility);
-		this.z(items,a=>this.MenuServiceItemRenderer(a));
+		this.z(items,a => this.MenuServiceItemRenderer(a));
 		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
 	}
 	/** @arg {MenuServiceItemRenderer} x */
@@ -5562,7 +5562,7 @@ class HandleTypes extends ServiceData {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.g(text);
 		this.Icon(icon);
-		this.ServiceEndpointTemplate(serviceEndpoint,a=>this.FeedbackEndpointPlugin(a));
+		this.ServiceEndpointTemplate(serviceEndpoint,a => this.FeedbackEndpointPlugin(a));
 	}
 	/** @arg {FeedbackEndpointPlugin} x */
 	FeedbackEndpointPlugin(x) {
@@ -5624,6 +5624,45 @@ class HandleTypes extends ServiceData {
 	/** @arg {WatchNextEndScreen} x */
 	WatchNextEndScreen(x) {
 		this.save_keys("[WatchNextEndScreen]",x);
+		const {results,title,trackingParams,...y}=x; this.g(y);
+		this.z(results,this.WatchNextEndScreenItem);
+		this.SimpleText(title);
+		this.trackingParams(trackingParams);
+	}
+	/** @arg {WatchNextEndScreenItem} x */
+	WatchNextEndScreenItem(x) {
+		this.save_keys("[WatchNextEndScreenItem]",x);
+		if("endScreenVideoRenderer" in x) {
+			return this.EndScreenVideoRenderer(x);
+		} else if("endScreenPlaylistRenderer" in x) {
+			return this.EndScreenPlaylistRenderer(x);
+		}
+		debugger;
+	}
+	/** @arg {EndScreenVideoRenderer} x */
+	EndScreenVideoRenderer(x) {
+		this.save_keys("[EndScreenPlaylistRenderer]",x);
+		const {endScreenVideoRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {EndScreenVideo} x */
+	EndScreenVideo(x) {
+		this.save_keys("[EndScreenVideo]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {EndScreenPlaylistRenderer} x */
+	EndScreenPlaylistRenderer(x) {
+		this.save_keys("[EndScreenPlaylistRenderer]",x);
+		const {endScreenPlaylistRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {EndScreenPlaylist} x */
+	EndScreenPlaylist(x) {
+		this.save_keys("[EndScreenPlaylist]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {SimpleText} x */
+	SimpleText(x) {
+		if(!("simpleText" in x)) {debugger; return;}
+		this.save_keys("[SimpleText]",x);
 	}
 	/** @arg {CurrentVideoEndpoint} x */
 	CurrentVideoEndpoint(x) {
