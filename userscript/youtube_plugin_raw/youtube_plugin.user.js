@@ -5604,12 +5604,22 @@ class HandleTypes extends ServiceData {
 	/** @arg {PlayerOverlay} x */
 	PlayerOverlay(x) {
 		this.save_keys("[PlayerOverlay]",x);
-		const {endScreen,shareButton,addToMenu,videoDetails,decoratedPlayerBarRenderer,...y}=x; this.g(y);
+		const {endScreen,autoplay,shareButton,addToMenu,videoDetails,autonavToggle,decoratedPlayerBarRenderer,...y}=x; this.g(y);
 		this.WatchNextEndScreenRenderer(endScreen);
+		this.PlayerOverlayAutoplayRenderer(autoplay);
 		this.ButtonRenderer(shareButton);
 		this.MenuRenderer(addToMenu);
 		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
+		this.AutoplaySwitchButtonRenderer(autonavToggle);
 		this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
+	}
+	/** @arg {PlayerOverlayAutoplayRenderer} x */
+	PlayerOverlayAutoplayRenderer(x) {
+		x;
+	}
+	/** @arg {AutoplaySwitchButtonRenderer} x */
+	AutoplaySwitchButtonRenderer(x) {
+		x;
 	}
 	/** @arg {DecoratedPlayerBarRenderer} x */
 	DecoratedPlayerBarRenderer(x) {

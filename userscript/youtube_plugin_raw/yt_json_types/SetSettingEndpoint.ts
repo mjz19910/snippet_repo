@@ -1,0 +1,1 @@
+type SetSettingEndpoint=SetSettingEndpointAutonavForDesktop<boolean>;

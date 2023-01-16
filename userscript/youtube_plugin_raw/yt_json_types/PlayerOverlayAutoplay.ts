@@ -1,0 +1,20 @@
+type PlayerOverlayAutoplay={
+	title: SimpleText;
+	videoTitle: SimpleText;
+	byline: TextWithRuns;
+	pauseText: SimpleText;
+	background: Thumbnail;
+	countDownSecs: 8;
+	cancelButton: ButtonRenderer;
+	nextButton: ButtonRenderer;
+	trackingParams: string;
+	closeButton: ButtonRenderer;
+	thumbnailOverlays: {}[];
+	preferImmediateRedirect: false;
+	videoId: string;
+	publishedTimeText: SimpleText;
+	webShowNewAutonavCountdown: true;
+	webShowBigThumbnailEndscreen: false;
+	shortViewCountText: SimpleText;
+	countDownSecsForFullscreen: 3;
+};
