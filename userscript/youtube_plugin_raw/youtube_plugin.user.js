@@ -5793,6 +5793,8 @@ class HandleTypes extends ServiceData {
 	SimpleText(x) {
 		if(!("simpleText" in x)) {debugger; return;}
 		this.save_keys("[SimpleText]",x);
+		const {simpleText,...y}=x; this.g(y);
+		this.primitive_of(simpleText,"string");
 	}
 	/** @arg {CurrentVideoEndpoint} x */
 	CurrentVideoEndpoint(x) {
