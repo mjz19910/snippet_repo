@@ -13,7 +13,7 @@ type ButtonData={
 	navigationEndpoint?: NavigationEndpoint<{},never>;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
-	text?: TextT;
+	text?: TextWithRuns;
 	trackingParams?: string;
 	targetId?: YtTargetIdType;
 };

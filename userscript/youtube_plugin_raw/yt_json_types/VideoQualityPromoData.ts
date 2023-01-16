@@ -1,6 +1,6 @@
 type VideoQualityPromoData={
 	triggerCriteria: TriggerCriteria;
-	text: TextT;
+	text: TextWithRuns;
 	endpoint: EndpointTemplate<UrlEndpointPlugin>;
 	trackingParams: string;
 	snackbar: NotificationActionRenderer;

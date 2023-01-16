@@ -1,9 +1,9 @@
 type CommentData={
-	authorText: TextT;
+	authorText: TextWithRuns;
 	authorThumbnail: Thumbnail;
 	authorEndpoint: {};
-	contentText: TextT;
-	publishedTimeText: TextT;
+	contentText: TextWithRuns;
+	publishedTimeText: TextWithRuns;
 	isLiked: boolean;
 	actionMenu: MenuRenderer;
 	commentId: string;
@@ -12,7 +12,7 @@ type CommentData={
 	currentUserReplyThumbnail: Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
-	voteCount: TextT;
+	voteCount: TextWithRuns;
 	expandButton: ButtonRenderer;
 	collapseButton: ButtonRenderer;
 	loggingDirectives: LoggingDirectives;

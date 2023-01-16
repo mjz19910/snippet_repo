@@ -1,10 +1,10 @@
 type CommentsHeaderData={
-	countText: TextT;
+	countText: TextWithRuns;
 	createRenderer: CommentSimpleboxRenderer;
 	sortMenu: SortFilterSubMenuRenderer;
 	trackingParams: string;
-	titleText: TextT;
-	commentsCount: TextT;
+	titleText: TextWithRuns;
+	commentsCount: TextWithRuns;
 	showSeparator: true;
 	customEmojis: CustomEmoji[];
 	unicodeEmojisUrl: YtUrlFormat;

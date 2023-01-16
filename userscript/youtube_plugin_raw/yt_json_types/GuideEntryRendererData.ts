@@ -2,7 +2,7 @@ type GuideEntryRendererData={
 	navigationEndpoint?: {};
 	icon: Icon<"MIX">;
 	trackingParams: string;
-	formattedTitle: TextT;
+	formattedTitle: TextWithRuns;
 	accessibility: Accessibility;
 	serviceEndpoint?: ServiceEndpointTemplate<GuideEntryServicePlugins>;
 	entryData?: GuideEntryData;

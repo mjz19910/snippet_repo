@@ -5671,7 +5671,7 @@ class HandleTypes extends ServiceData {
 	ThumbnailOverlayNowPlayingData(x) {
 		this.save_keys("[ThumbnailOverlayNowPlayingData]",x);
 		const {text,...y}=x; this.g(y);
-		this.TextT(text);
+		this.TextWithRuns(text);
 	}
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
@@ -5681,7 +5681,7 @@ class HandleTypes extends ServiceData {
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
-		this.TextT(shortBylineText);
+		this.TextWithRuns(shortBylineText);
 		this.SimpleText(lengthText);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
@@ -5698,8 +5698,8 @@ class HandleTypes extends ServiceData {
 	WatchEndpointData(x) {
 		this.save_keys("[WatchEndpointData]",x);
 	}
-	/** @arg {TextT} x */
-	TextT(x) {
+	/** @arg {TextWithRuns} x */
+	TextWithRuns(x) {
 		const {runs,...y}=x; this.g(y);
 		this.z(runs,a=>{
 			const {text,...b}=a; this.g(b);
@@ -5732,9 +5732,13 @@ class HandleTypes extends ServiceData {
 		this.x.get("parser_service").parse_playlist_id(playlistId);
 		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
-		this.SimpleText(longBylineText);
+		if("simpleText" in longBylineText) {
+			this.SimpleText(longBylineText);
+		} else {
+			this.TextWithRuns(longBylineText);
+		}
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
-		this.TextT(videoCountText);
+		this.TextWithRuns(videoCountText);
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}

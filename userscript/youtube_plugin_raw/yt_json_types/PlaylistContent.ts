@@ -6,8 +6,8 @@ type PlaylistContent={
 	ownerName: SimpleText;
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
-	shortBylineText: TextT;
-	longBylineText: TextT;
+	shortBylineText: TextWithRuns;
+	longBylineText: TextWithRuns;
 	trackingParams: string;
 	titleText: SimpleText;
 	isEditable: true;

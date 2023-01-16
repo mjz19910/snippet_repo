@@ -1,6 +1,6 @@
 type LiveChatTextMessageData={
-	message: TextT;
-	authorName: TextT;
+	message: TextWithRuns;
+	authorName: TextWithRuns;
 	authorPhoto: Thumbnail;
 	contextMenuEndpoint: {};
 	id: string;
@@ -8,5 +8,5 @@ type LiveChatTextMessageData={
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
 	contextMenuAccessibility: Accessibility;
-	timestampText: TextT;
+	timestampText: TextWithRuns;
 };

@@ -3,8 +3,8 @@ type EndScreenPlaylist={
 	title: SimpleText;
 	thumbnail: Thumbnail;
 	videoCount?: `${number}`;
-	longBylineText: SimpleText;
-	videoCountText: TextT;
+	longBylineText: TextT;
+	videoCountText: TextWithRuns;
 	navigationEndpoint: WatchEndpoint;
 	trackingParams: string;
 };

@@ -1,4 +1,4 @@
 type ChannelSwitcherHeader={
-	title: TextT;
+	title: TextWithRuns;
 	button: ButtonRenderer;
 };

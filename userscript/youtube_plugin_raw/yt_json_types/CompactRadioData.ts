@@ -3,12 +3,12 @@ type CompactRadioData={
 	thumbnail: Thumbnail&SampledThumbnailColor;
 	title: SimpleText;
 	navigationEndpoint: WatchEndpoint;
-	videoCountText: TextT;
+	videoCountText: TextWithRuns;
 	secondaryNavigationEndpoint: WatchEndpoint;
 	longBylineText: SimpleText;
 	trackingParams: string;
-	thumbnailText: TextT;
-	videoCountShortText: TextT;
+	thumbnailText: TextWithRuns;
+	videoCountShortText: TextWithRuns;
 	shareUrl: string;
 	menu: MenuRenderer;
 	thumbnailOverlays: ThumbnailOverlayItem[];

@@ -1,1 +1,1 @@
-type TextT={runs: TextRun[];};
+type TextT=SimpleText|TextWithRuns;

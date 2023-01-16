@@ -1,6 +1,6 @@
 type SettingsCheckboxData={
-	title: TextT;
-	helpText?: TextT;
+	title: TextWithRuns;
+	helpText?: TextWithRuns;
 	enabled: boolean;
 	enableServiceEndpoint: {};
 	disableServiceEndpoint: {};

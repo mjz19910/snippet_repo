@@ -1,6 +1,6 @@
 type VideoOwnerData={
 	thumbnail: Thumbnail;
-	title: TextT;
+	title: TextWithRuns;
 	subscriptionButton: SubscriptionButton;
 	// ChannelNavigationEndpointWebCommandMetadata
 	navigationEndpoint: BrowseEndpoint;

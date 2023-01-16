@@ -1,1 +1,1 @@
-type ThumbnailOverlayNowPlayingData={text: TextT;};
+type ThumbnailOverlayNowPlayingData={text: TextWithRuns;};

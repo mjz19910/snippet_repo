@@ -1,10 +1,10 @@
 type AccountItemData={
-	accountName: TextT;
+	accountName: TextWithRuns;
 	accountPhoto: Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;
 	serviceEndpoint: {};
-	accountByline: TextT;
-	channelHandle: TextT;
+	accountByline: TextWithRuns;
+	channelHandle: TextWithRuns;
 };

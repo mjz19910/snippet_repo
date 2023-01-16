@@ -1,6 +1,6 @@
 type VideoSecondaryInfoData={
 	owner: VideoOwnerRenderer;
-	description?: TextT;
+	description?: TextWithRuns;
 	subscribeButton: SubscribeButtonRenderer;
 	metadataRowContainer: MetadataRowContainerRenderer;
 	showMoreText: SimpleText;

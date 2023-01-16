@@ -1,5 +1,5 @@
 type NotificationActionData={
-	responseText: TextT;
+	responseText: TextWithRuns;
 	actionButton?: ButtonRenderer;
 	trackingParams: string;
 };

@@ -1,4 +1,4 @@
 type ThumbnailOverlayHoverTextData={
-	text: TextT;
+	text: TextWithRuns;
 	icon: Icon<"PLAY_ALL">;
 };

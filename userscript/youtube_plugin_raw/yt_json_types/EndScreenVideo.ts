@@ -2,7 +2,7 @@ type EndScreenVideo={
 	videoId: string;
 	thumbnail: Thumbnail;
 	title: SimpleText;
-	shortBylineText: TextT;
+	shortBylineText: TextWithRuns;
 	lengthText: SimpleText;
 	lengthInSeconds: number;
 	navigationEndpoint: WatchEndpoint;

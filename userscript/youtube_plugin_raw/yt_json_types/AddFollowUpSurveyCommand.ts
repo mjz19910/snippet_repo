@@ -1,4 +1,4 @@
 type AddFollowUpSurveyCommand={
 	followUpOptions: FollowUpOption[];
-	followUpText: TextT;
+	followUpText: TextWithRuns;
 };

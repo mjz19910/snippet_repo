@@ -2,6 +2,6 @@ type ChannelOptionsData={
 	avatar: Thumbnail;
 	avatarEndpoint: {};
 	name: string;
-	links: TextT[];
+	links: TextWithRuns[];
 	avatarAccessibility: Accessibility;
 };

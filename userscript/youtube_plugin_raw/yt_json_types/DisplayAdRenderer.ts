@@ -1,9 +1,9 @@
 type DisplayAdRenderer={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
-	titleText: TextT;
+	titleText: TextWithRuns;
 	image: ThumbnailsList;
-	bodyText: TextT;
-	secondaryText: TextT;
+	bodyText: TextWithRuns;
+	secondaryText: TextWithRuns;
 	badge: MetadataBadgeData;
 	menu: MenuRenderer;
 	ctaButton: ButtonRenderer;

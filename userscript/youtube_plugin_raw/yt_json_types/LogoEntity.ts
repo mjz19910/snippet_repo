@@ -1,6 +1,6 @@
 type LogoEntity={
 	iconImage: Icon<"YOUTUBE_LOGO">;
-	tooltipText: TextT;
+	tooltipText: TextWithRuns;
 	endpoint: {};
 	trackingParams: string;
 	overrideEntityKey: string;

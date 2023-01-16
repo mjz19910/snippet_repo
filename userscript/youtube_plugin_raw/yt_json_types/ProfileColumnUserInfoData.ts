@@ -1,4 +1,4 @@
 type ProfileColumnUserInfoData={
-	title: TextT;
+	title: TextWithRuns;
 	thumbnail: Thumbnail;
 };

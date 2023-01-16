@@ -2,6 +2,6 @@ type SearchBox={
 	endpoint: {};
 	searchButton: ButtonRenderer;
 	clearButton: ButtonRenderer;
-	placeholderText: TextT;
+	placeholderText: TextWithRuns;
 	trackingParams: string;
 };

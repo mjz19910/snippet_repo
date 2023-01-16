@@ -1,5 +1,5 @@
 type VideoDescriptionHeaderData={
-	title: TextT;
+	title: TextWithRuns;
 	channel: SimpleText;
 	views: SimpleText;
 	publishDate: SimpleText;

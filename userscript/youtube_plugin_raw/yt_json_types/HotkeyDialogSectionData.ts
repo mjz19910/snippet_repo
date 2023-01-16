@@ -1,4 +1,4 @@
 type HotkeyDialogSectionData={
-	title: TextT;
+	title: TextWithRuns;
 	options: HotkeyDialogSectionOptionRenderer[];
 };

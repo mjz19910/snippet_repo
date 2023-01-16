@@ -1,6 +1,6 @@
 type CompactLinkData={
 	icon: Icon<"PERSON_ADD">;
-	title: TextT;
+	title: TextWithRuns;
 	navigationEndpoint: {};
 	trackingParams: string;
 	style: CompactLinkStyle;

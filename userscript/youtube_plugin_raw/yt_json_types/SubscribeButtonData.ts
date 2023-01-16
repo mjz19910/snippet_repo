@@ -1,14 +1,14 @@
 type SubscribeButtonData={
-	buttonText: TextT;
+	buttonText: TextWithRuns;
 	subscribed: false;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
-	subscribedButtonText: TextT;
-	unsubscribedButtonText: TextT;
+	subscribedButtonText: TextWithRuns;
+	unsubscribedButtonText: TextWithRuns;
 	trackingParams: string;
-	unsubscribeButtonText: TextT;
+	unsubscribeButtonText: TextWithRuns;
 	subscribeAccessibility: Accessibility;
 	unsubscribeAccessibility: Accessibility;
 	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;

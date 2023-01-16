@@ -1,6 +1,6 @@
 type ExpandableVideoDescriptionBodyData={
 }|{
-	descriptionBodyText: TextT;
+	descriptionBodyText: TextWithRuns;
 	showMoreText: SimpleText;
 	showLessText: SimpleText;
 };

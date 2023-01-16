@@ -1,5 +1,5 @@
 type CommentsEntryPointHeaderData={
-	headerText: TextT;
+	headerText: TextWithRuns;
 	onTap: CommandExecutorCommand;
 	trackingParams: string;
 	commentCount: SimpleText;

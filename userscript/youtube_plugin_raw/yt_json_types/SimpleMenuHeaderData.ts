@@ -1,4 +1,4 @@
 type SimpleMenuHeaderData={
-	title: TextT;
+	title: TextWithRuns;
 	buttons: ButtonRenderer[];
 };

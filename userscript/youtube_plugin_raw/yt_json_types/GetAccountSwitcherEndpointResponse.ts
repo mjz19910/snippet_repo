@@ -1,5 +1,5 @@
 type GetAccountSwitcherEndpointResponse={
 	responseContext: ResponseContext;
-	selectText: TextT;
+	selectText: TextWithRuns;
 	actions: GetMultiPageMenuAction[];
 };

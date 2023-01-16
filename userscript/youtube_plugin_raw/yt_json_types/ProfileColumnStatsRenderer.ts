@@ -1,6 +1,6 @@
 type ProfileColumnStatsEntryData={
-	label: TextT;
-	value: TextT;
+	label: TextWithRuns;
+	value: TextWithRuns;
 };
 
 type ProfileColumnStatsEntryRenderer={

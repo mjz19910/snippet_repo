@@ -1,8 +1,8 @@
 type ReelItemData={
 	videoId: YtVideoId;
-	headline: TextT;
+	headline: TextWithRuns;
 	thumbnail: Thumbnail;
-	viewCountText: TextT;
+	viewCountText: TextWithRuns;
 	// ReelWatchEndpointPlugin
 	navigationEndpoint: {};
 	menu: MenuRenderer;

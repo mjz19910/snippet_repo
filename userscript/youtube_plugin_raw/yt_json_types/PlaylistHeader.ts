@@ -1,10 +1,10 @@
 type PlaylistHeader={
 	playlistId: string;
-	title: TextT;
-	numVideosText: TextT;
+	title: TextWithRuns;
+	numVideosText: TextWithRuns;
 	descriptionText: {};
-	ownerText: TextT;
-	viewCountText: TextT;
+	ownerText: TextWithRuns;
+	viewCountText: TextWithRuns;
 	shareData: {};
 	isEditable: boolean;
 	privacy: string;
@@ -12,8 +12,8 @@ type PlaylistHeader={
 	editableDetails: {};
 	trackingParams: string;
 	serviceEndpoints: {}[];
-	stats: TextT[];
-	briefStats: TextT[];
+	stats: TextWithRuns[];
+	briefStats: TextWithRuns[];
 	editorEndpoint: {};
 	playlistHeaderBanner: {};
 	moreActionsMenu: MenuRenderer;
@@ -23,8 +23,8 @@ type PlaylistHeader={
 	cinematicContainer: CinematicContainerRenderer;
 	byline: {
 		playlistBylineRenderer: {
-			text: TextT;
+			text: TextWithRuns;
 		};
 	}[];
-	descriptionTapText: TextT;
+	descriptionTapText: TextWithRuns;
 };

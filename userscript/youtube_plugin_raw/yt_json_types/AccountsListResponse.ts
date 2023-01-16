@@ -1,5 +1,5 @@
 type AccountsListResponse={
 	responseContext: ResponseContext;
-	selectText: TextT;
+	selectText: TextWithRuns;
 	actions: UpdateChannelSwitcherPageAction[];
 };
