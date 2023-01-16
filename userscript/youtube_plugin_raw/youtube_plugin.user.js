@@ -5519,6 +5519,17 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[CommentsHeaderData]",x);
 		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=x; this.g(y);
 		this.TextWithRuns(countText);
+		this.CommentSimpleboxRenderer(createRenderer);
+	}
+	/** @arg {CommentSimpleboxRenderer} x */
+	CommentSimpleboxRenderer(x) {
+		this.save_keys("[CommentSimpleboxRenderer]",x);
+		const {commentSimpleboxRenderer,...y}=x; this.g(y);
+		this.CommentSimpleboxData(commentSimpleboxRenderer);
+	}
+	/** @arg {CommentSimpleboxData} x */
+	CommentSimpleboxData(x) {
+		this.save_keys("[CommentSimpleboxData]",x);
 	}
 	/** @arg {LoadMarkersCommandData} x */
 	LoadMarkersCommandData(x) {
