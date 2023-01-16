@@ -5491,9 +5491,16 @@ class HandleTypes extends ServiceData {
 			debugger;
 		}
 	}
+	/** @private @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
+	starts_with_targetId(x,w) {
+		return this.str_starts_with(x.targetId,w);
+	}
 	/** @arg {AppendContinuationItemsActionData} x */
 	AppendContinuationItemsActionData(x) {
 		this.save_keys("[AppendContinuationItemsActionData]",x);
+		if(this.starts_with_targetId(x,"comment-replies-item-")) {
+			return this.CommentRepliesItem(x);
+		}
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
 			case "browse-feedFEwhat_to_watch": this.BrowseFeedAction(x); break;
@@ -5501,6 +5508,10 @@ class HandleTypes extends ServiceData {
 			case "watch-next-feed": this.WatchNextContinuationAction(x); break;
 			default: debugger;
 		}
+	}
+	/** @arg {CommentRepliesItem} x */
+	CommentRepliesItem(x) {
+		this.save_keys("[CommentRepliesItem]",x);
 	}
 	/** @arg {WatchNextContinuationAction} x */
 	WatchNextContinuationAction(x) {

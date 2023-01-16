@@ -1,4 +1,4 @@
 type CommentRepliesItem={
 	targetId: `comment-replies-item-${string}`;
-	continuationItems: {}[];
+	continuationItems: CommentRenderer[];
 };
