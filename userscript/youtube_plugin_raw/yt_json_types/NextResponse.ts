@@ -4,7 +4,7 @@ interface NextResponse {
 	currentVideoEndpoint?: CurrentVideoEndpoint;
 	trackingParams: string;
 	playerOverlays?: PlayerOverlayRenderer;
-	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];
+	onResponseReceivedEndpoints?: ResponseReceivedEndpointItem[];
 	engagementPanels?: EngagementPanel[];
 	topbar?: DesktopTopbarRenderer;
 	pageVisualEffects?: CinematicContainerRenderer[];

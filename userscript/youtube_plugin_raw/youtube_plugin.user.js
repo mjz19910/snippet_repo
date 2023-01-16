@@ -5422,7 +5422,45 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
+		const {responseContext:{},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
+		if(contents) this.TwoColumnWatchNextResults(contents);
+		if(currentVideoEndpoint) this.CurrentVideoEndpoint(currentVideoEndpoint);
+		this.trackingParams(trackingParams);
+		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
+		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a=>this.ResponseReceivedEndpointItem(a));
 		this.save_keys("[NextResponse]",x);
+	}
+	/** @arg {ResponseReceivedEndpointItem} x */
+	ResponseReceivedEndpointItem(x) {
+		this.save_keys("[ResponseReceivedEndpointItem]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {PlayerOverlayRenderer} x */
+	PlayerOverlayRenderer(x) {
+		this.save_keys("[PlayerOverlayRenderer]",x);
+		const {playerOverlayRenderer,...y}=x; this.g(y);
+		this.PlayerOverlay(playerOverlayRenderer);
+	}
+	/** @arg {{}} x */
+	PlayerOverlay(x) {
+		this.save_keys("[PlayerOverlay]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {CurrentVideoEndpoint} x */
+	CurrentVideoEndpoint(x) {
+		this.save_keys("[CurrentVideoEndpoint]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {TwoColumnWatchNextResults} x */
+	TwoColumnWatchNextResults(x) {
+		this.save_keys("[TwoColumnWatchNextResults]",x);
+		const {twoColumnWatchNextResults,...y}=x; this.g(y);
+		this.TwoColumnWatchNextResultsData(twoColumnWatchNextResults);
+	}
+	/** @arg {TwoColumnWatchNextResultsData} x */
+	TwoColumnWatchNextResultsData(x) {
+		this.save_keys("[TwoColumnWatchNextResultsData]",x);
+		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=x; this.g(y);
 	}
 	/** @private @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
