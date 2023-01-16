@@ -5002,11 +5002,23 @@ class HandleTypes extends ServiceMethods {
 		const cf="WebResponseContextExtensionData";
 		this.save_keys(`[${cf}]`,x);
 		const {hasDecorated,ytConfigData,webPrefetchData,...y}=x; this.g(y);
+		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
+		if(ytConfigData) this.YtConfigData(ytConfigData);
+		if(webPrefetchData) this.WebPrefetchData(webPrefetchData);
+	}
+	/** @arg {YtConfigData} x */
+	YtConfigData(x) {
+		this.save_keys("[YtConfigData]",x);
+		debugger;
+	}
+	/** @arg {WebPrefetchData} x */
+	WebPrefetchData(x) {
+		this.save_keys("[WebPrefetchData]",x);
+		debugger;
 	}
 	/** @arg {MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {
-		const cf="MainAppWebResponseContext";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys("[MainAppWebResponseContext]",x);
 		const {datasyncId,loggedOut,...y}=x; this.g(y);
 		this.primitive_of(datasyncId,"string");
 		this.primitive_of(loggedOut,"boolean");
@@ -5015,24 +5027,24 @@ class HandleTypes extends ServiceMethods {
 	BrowseResponse(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
-		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y}=x;
+		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y1}=x;
 		this.ResponseContext(responseContext);
 		if(header) this.BrowseHeader(header);
 		this.trackingParams(trackingParams);
 		if(onResponseReceivedActions) this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
 		if(contents) this.BrowseContents(contents);
-		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y1}=y;
+		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
 		if(topbar) this.DesktopTopbarRenderer(topbar);
 		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
 		if(sidebar) this.SettingsSidebarRenderer(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
-		const {metadata,microformat,maxAgeStoreSeconds,background,...y2}=y1;
+		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
 		if(metadata) this.ChannelMetadataRenderer(metadata);
 		if(microformat) this.MicroformatDataRenderer(microformat);
 		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
 		if(background) this.MusicThumbnailRenderer(background);
-		const {continuationContents,...y3}=y2; this.g(y3);
+		const {continuationContents,...y}=y3; this.g(y);
 		if(continuationContents) {
 			if("sectionListContinuation" in continuationContents) {
 				this.SectionListContinuation(continuationContents);
