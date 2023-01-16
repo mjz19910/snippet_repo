@@ -5028,6 +5028,7 @@ class HandleTypes extends ServiceMethods {
 		/** @type {`${rootVisualElementType}`} */
 		let s=`${rootVisualElementType}`;
 		switch(s) {
+			case "3832": break;
 			case "5754": break;
 			case "6827": break;
 			case "23462": break;
