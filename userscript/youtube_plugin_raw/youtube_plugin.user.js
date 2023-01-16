@@ -5753,6 +5753,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
+		if(!("runs" in x)) {debugger; return;}
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,...y}=x; this.g(y);
 		this.z(runs,a => {
