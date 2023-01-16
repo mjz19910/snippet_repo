@@ -3907,7 +3907,6 @@ class CodegenService extends BaseService {
 		const max_str_len=40;
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
-			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(typeof o==="string") {
 				if(o.length>max_str_len) {
 					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
@@ -3935,21 +3934,17 @@ class CodegenService extends BaseService {
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
-			if(o.runs&&o.runs instanceof Array) {
-				return "TYPE::TextWithRuns";
-			}
-			if(o.simpleText&&typeof o.simpleText==="string") {
-				return "TYPE::SimpleText";
-			}
-			if(o.thumbnails&&o.thumbnails instanceof Array) {
-				return "TYPE::Thumbnail";
-			}
-			if(o.iconType&&typeof o.iconType==="string") {
-				return `TYPE::Icon<"${o.iconType}">`;
-			}
-			if(o.browseEndpoint) {
-				return `TYPE::BrowseEndpoint`;
-			}
+			if(o.runs&&o.runs instanceof Array) return "TYPE::TextWithRuns";
+			if(o.simpleText&&typeof o.simpleText==="string") return "TYPE::SimpleText";
+			if(o.thumbnails&&o.thumbnails instanceof Array) return "TYPE::Thumbnail";
+			if(o.iconType&&typeof o.iconType==="string") return `TYPE::Icon<"${o.iconType}">`;
+			if(o.twoColumnWatchNextResults) return `TYPE::TwoColumnWatchNextResults`;
+			if(o.browseEndpoint) return `TYPE::BrowseEndpoint`;
+			if(o.watchEndpoint) return `TYPE::WatchEndpoint`;
+			if(o.playerOverlayRenderer) return `TYPE::PlayerOverlayRenderer`;
+			if(o.desktopTopbarRenderer) return `TYPE::DesktopTopbarRenderer`;
+			if(k1==="responseContext") return "TYPE::ResponseContext";
+			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
