@@ -4939,7 +4939,11 @@ class HandleTypes extends ServiceMethods {
 		let u2=split_string_once(u1,"?")[1];
 		let u3=parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
-		if(!this.eq_keys(u4,["v","list","start_radio"])) debugger;
+		x: {
+			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
+			if(this.eq_keys(u4,["v","list","index"])) break x;
+			debugger;
+		}
 		this.save_keys(`[${cf}.url.params]`,u3);
 		this.x.get("parser_service").parse_url(url);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
