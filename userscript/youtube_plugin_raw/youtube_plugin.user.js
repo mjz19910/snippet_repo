@@ -5615,11 +5615,19 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {
-		x;
+		this.save_keys("[PlayerOverlayAutoplayRenderer]",x);
+		const {playerOverlayAutoplayRenderer,...y}=x; this.g(y);
+		this.PlayerOverlayAutoplay(playerOverlayAutoplayRenderer);
+	}
+	/** @arg {PlayerOverlayAutoplay} x */
+	PlayerOverlayAutoplay(x) {
+		this.save_keys("[PlayerOverlayAutoplay]",x);
+		const {title,videoTitle,byline,pauseText,background,countDownSecs,cancelButton,nextButton,trackingParams,closeButton,thumbnailOverlays,preferImmediateRedirect,videoId,publishedTimeText,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,shortViewCountText,countDownSecsForFullscreen,...y}=x; this.g(y);
+		this.SimpleText(title);
 	}
 	/** @arg {AutoplaySwitchButtonRenderer} x */
 	AutoplaySwitchButtonRenderer(x) {
-		x;
+		this.save_keys("[AutoplaySwitchButtonRenderer]",x);
 	}
 	/** @arg {DecoratedPlayerBarRenderer} x */
 	DecoratedPlayerBarRenderer(x) {
@@ -5919,7 +5927,7 @@ class HandleTypes extends ServiceData {
 		debugger;
 	}
 	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
-	SimpleText(x,f) {
+	SimpleText(x,f=this.handle_accessibility) {
 		if(!("simpleText" in x)) {debugger; return;}
 		this.save_keys("[SimpleText]",x);
 		const {simpleText,...y}=x; f.call(this,y);
