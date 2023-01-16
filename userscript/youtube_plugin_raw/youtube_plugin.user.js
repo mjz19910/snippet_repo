@@ -5493,6 +5493,7 @@ class HandleTypes extends ServiceData {
 	/** @arg {AppendContinuationItemsActionData} x */
 	AppendContinuationItemsActionData(x) {
 		this.save_keys("[AppendContinuationItemsActionData]",x);
+		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
 			case "browse-feedFEwhat_to_watch": this.BrowseFeedAction(x); break;
 			case "comments-section": this.CommentsSectionContinuationAction(x); break;
@@ -5519,7 +5520,7 @@ class HandleTypes extends ServiceData {
 		switch(x.slot) {
 			case "RELOAD_CONTINUATION_SLOT_BODY": {
 				const {targetId,continuationItems,slot: {},...y}=x; this.g(y);
-				this.save_string("[Header.targetId]",targetId);
+				this.save_string("[Body.targetId]",targetId);
 				this.z(continuationItems,a => {
 					this.save_keys("[continuationItem]",a);
 				});
