@@ -5466,9 +5466,19 @@ class HandleTypes extends ServiceData {
 			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=x; this.g(y);
 			this.clickTrackingParams(clickTrackingParams);
 			this.ChangeKeyedMarkersVisibilityCommandData(changeKeyedMarkersVisibilityCommand);
+		} else if("loadMarkersCommand" in x) {
+			const {clickTrackingParams,loadMarkersCommand,...y}=x; this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			this.LoadMarkersCommandData(loadMarkersCommand);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {LoadMarkersCommandData} x */
+	LoadMarkersCommandData(x) {
+		this.save_keys("[LoadMarkersCommandData]",x);
+		const {entityKeys,...y}=x; this.g(y);
+		this.z(entityKeys,a=>this.primitive_of(a,"string"));
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommandData} x */
 	ChangeKeyedMarkersVisibilityCommandData(x) {
