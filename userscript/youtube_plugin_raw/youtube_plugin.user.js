@@ -667,7 +667,7 @@ class HandleRichGridRenderer {
 	}
 }
 /** @private @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
-function make_search_params(t) {
+function parse_url_search_params(t) {
 	let sp=new URLSearchParams(t);
 	/** @private @type {any} */
 	let as_any=Object.fromEntries(sp.entries());
@@ -4147,7 +4147,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
-		let sp=make_search_params(x);
+		let sp=parse_url_search_params(x);
 		if(!this.eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
@@ -4191,7 +4191,7 @@ class ParserService extends BaseService {
 			case "ads": {
 				/** @type {ApiStatsAdsArgs} */
 				let sp=as(a[1]);
-				let v=make_search_params(sp);
+				let v=parse_url_search_params(sp);
 				// spell:disable-next
 				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}=v; this.g(y);
 			} break;
@@ -4929,13 +4929,19 @@ class ServiceMethods extends ServiceData {
 class HandleTypes extends ServiceMethods {
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
-		this.save_keys("[WatchPageResponse]",x);
+		const cf="WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {page:{},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
 		this.WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
-		debugger;
-		this.x.get("parser_service").parse_url(as(url));
+		let u1=split_string_once(url,"/")[1];
+		let u2=split_string_once(u1,"?")[1];
+		let u3=parse_url_search_params(u2);
+		let u4=this.get_keys_of(u3);
+		console.log("url_keys",u4.join());
+		this.save_keys("[WatchPage.url.params]",u3);
+		this.x.get("parser_service").parse_url(url);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @arg {WatchResponse} x */
