@@ -1,5 +1,3 @@
-// type ThumbnailOverlayItem=ThumbnailOverlayTimeStatusRenderer;
-
 type EndScreenVideo={
 	videoId: string;
 	thumbnail: Thumbnail;
