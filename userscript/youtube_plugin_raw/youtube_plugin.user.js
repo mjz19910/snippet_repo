@@ -702,7 +702,7 @@ class Base64Binary {
 		let prev_len=input.length;
 		let new_input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
 		if(prev_len!==new_input.length) {
-			console.log("removed %o non base64 chars",prev_len-input.length);
+			console.log("removed %o non base64 chars",prev_len-new_input.length);
 			debugger;
 			throw new Error("Bad");
 		}
