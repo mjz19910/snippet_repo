@@ -3081,6 +3081,7 @@ class HandleRendererContentItemArray extends BaseService {
 			if("feedFilterChipBarRenderer" in content_item) return true;
 			if("commentRenderer" in content_item) return true;
 			if("itemSectionRenderer" in content_item) return true;
+			if("compactRadioRenderer" in content_item) return true;
 			if(!("richSectionRenderer" in content_item)) {
 				console.log("extra content_item keys "+"["+keys.join("][")+"]",content_item);
 				return true;
