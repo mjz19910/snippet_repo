@@ -5760,7 +5760,7 @@ class HandleTypes extends ServiceData {
 			this.NavigationEndpointData(x.navigationEndpoint);
 			return;
 		}
-		debugger;
+		this.g(x);
 	}
 	/** @arg {NavigationEndpointData} x */
 	NavigationEndpointData(x) {
