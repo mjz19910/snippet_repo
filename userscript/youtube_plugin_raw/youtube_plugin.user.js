@@ -4955,15 +4955,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
-		const name="BrowseEditPlaylistResponse";
-		this.save_keys(`[${name}]`,x);
+		const cf="BrowseEditPlaylistResponse";
+		this.save_keys(`[${cf}]`,x);
 		this.z(x.actions,a => this.x.get("handle_types").Action(a));
 	}
 	log_url=false;
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
-		const name="BrowsePageResponse";
-		this.save_keys(`[${name}]`,x);
+		const cf="BrowsePageResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(rootVe) this.save_number("[BrowsePageResponse.rootVe]",rootVe);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
@@ -4977,7 +4977,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
-		this.save_keys("[BrowseResponse]",x);
+		const cf="BrowseResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y}=x;
 		this.ResponseContext(responseContext);
 		if(header) this.BrowseHeader(header);
@@ -5006,7 +5007,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SectionListContinuation} x */
 	SectionListContinuation(x) {
-		this.save_keys("[SectionListContinuation]",x);
+		const cf="SectionListContinuation";
+		this.save_keys(`[${cf}]`,x);
 		this.SectionListData(x.sectionListContinuation);
 	}
 	/** @arg {SectionListData} x */
@@ -5443,9 +5445,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
-		const name="LikeLikeResponse";
+		const cf="LikeLikeResponse";
 		const {actions,...y}=x;
-		this.save_keys(`[${name}]`,x);
+		this.save_keys(`[${cf}]`,x);
 		if(actions) {
 			this.z(actions,a => this.Action(a));
 		}
