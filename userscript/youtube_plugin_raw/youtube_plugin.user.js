@@ -4896,6 +4896,8 @@ class ServiceData extends BaseService {
 	];
 	valid_fps_arr=[13,25,30,50,60];
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
+}
+class ServiceMethods extends ServiceData {
 	/** @public @arg {keyof VEMap} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
@@ -4913,8 +4915,20 @@ class ServiceData extends BaseService {
 			default: debugger;
 		}
 	}
+	/** @arg {BrowseIdType} x */
+	parse_browse_id(x) {
+		this.x.get("parser_service").parse_browse_id(x);
+	}
+	/** @arg {BrowseIdType} x */
+	browseId(x) {
+		this.parse_browse_id(x);
+	}
+	/** @arg {`/@${string}`} x */
+	canonicalBaseUrl(x) {
+		if(!this.str_starts_with(x,"/@")) debugger;
+	}
 }
-class HandleTypes extends ServiceData {
+class HandleTypes extends ServiceMethods {
 	/** @public @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
@@ -5144,19 +5158,27 @@ class HandleTypes extends ServiceData {
 			case 11487: this.VE11487_WebCommandMetadata(x); break;
 			case 3854: this.VE3854_WebCommandMetadata(x); break;
 			case 6827: this.VE6827_WebCommandMetadata(x); break;
+			case 96368: this.VE96368_WebCommandMetadata(x); break;
 		}
+	}
+	/** @arg {VE96368_WebCommandMetadata} x */
+	VE96368_WebCommandMetadata(x) {
+		this.save_keys("[VE96368_WebCommandMetadata]",x);
+		if(x.url!=="/feed/subscriptions") debugger;
 	}
 	/** @arg {VE11487_WebCommandMetadata} x */
 	VE11487_WebCommandMetadata(x) {
+		this.save_keys("[VE11487_WebCommandMetadata]",x);
 		if(x.url!=="/premium") debugger;
 	}
 	/** @arg {VE3854_WebCommandMetadata} x */
 	VE3854_WebCommandMetadata(x) {
-		if(x.url!=="/") debugger;
 		this.save_keys("[VE3854_WebCommandMetadata]",x);
+		if(x.url!=="/") debugger;
 	}
 	/** @arg {VE6827_WebCommandMetadata} x */
 	VE6827_WebCommandMetadata(x) {
+		this.save_keys("[VE6827_WebCommandMetadata]",x);
 		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x.url,"/")[1];
 		let su1=split_string(su,"/");
@@ -5173,12 +5195,8 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
-		if(x.browseId) this.parse_browse_id(x.browseId);
 		this.save_keys("[BrowseEndpointData]",x);
-	}
-	/** @arg {BrowseIdType} x */
-	parse_browse_id(x) {
-		this.x.get("parser_service").parse_browse_id(x);
+		if(x.browseId) this.browseId(x.browseId);
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -5892,14 +5910,6 @@ class HandleTypes extends ServiceData {
 		const {browseId,canonicalBaseUrl,...y}=x; this.g(y);
 		this.browseId(browseId);
 		this.canonicalBaseUrl(canonicalBaseUrl);
-	}
-	/** @arg {BrowseIdType} x */
-	browseId(x) {
-		this.parse_browse_id(x);
-	}
-	/** @arg {`/@${string}`} x */
-	canonicalBaseUrl(x) {
-		if(!this.str_starts_with(x,"/@")) debugger;
 	}
 	/** @arg {NavigationEndpointCommandMetadata} x */
 	NavigationEndpointCommandMetadata(x) {
