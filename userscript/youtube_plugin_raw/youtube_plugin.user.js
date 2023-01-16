@@ -4953,13 +4953,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
 		this.save_keys("[WatchResponse]",x);
-		const {responseContext,...y}=x; y;// this.g(y);
 		this.x.get("yt_plugin").add_function({
 			name: "data",
 			data: {
 				WatchResponse: x,
 			},
 		});
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
 		this.ResponseContext(responseContext);
 	}
 	/** @arg {ChannelPageResponse} x */
