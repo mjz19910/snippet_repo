@@ -3983,11 +3983,10 @@ class CodegenService extends BaseService {
 			return `{${vi}}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(/\[\s+([^\[\]]*)\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e=>e).join("\n");
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e => e).join("\n");
 			console.log("rep",JSON.stringify(v),"=>",JSON.stringify(vi));
 			return `${vi}:ARRAY_TAG`;
 		});
-		debugger;
 		tc=tc.replaceAll(":ARRAY_TAG","[]");
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
@@ -4957,9 +4956,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[WatchResponse]",x);
 		const {responseContext,...y}=x; y;// this.g(y);
 		this.x.get("yt_plugin").add_function({
-			name:"data",
-			data:{
-				WatchResponse:x,
+			name: "data",
+			data: {
+				WatchResponse: x,
 			},
 		});
 		this.ResponseContext(responseContext);
