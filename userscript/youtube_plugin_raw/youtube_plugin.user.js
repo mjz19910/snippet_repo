@@ -1833,6 +1833,11 @@ class ServiceResolver {
 		if(!this.services) throw new Error("No services");
 		return this.services[key];
 	}
+	/** @public @template {keyof T} V @arg {V} key @arg {Extract<T,{}>[V]} value */
+	set(key,value) {
+		if(!this.services) throw new Error("No services");
+		this.services[key]=value;
+	}
 }
 //#region
 /** @private @arg {(x:typeof exports)=>void} fn */
@@ -3550,7 +3555,7 @@ class YtPlugin extends BaseService {
 		inject_api.modules??=new Map;
 		inject_api.modules.set("yt",this);
 	}
-	/** @public @arg {{name:string}} function_obj */
+	/** @public @template {{name:string}} T @arg {T} function_obj */
 	add_function(function_obj) {
 		if(!this.saved_function_objects) return;
 		this.saved_function_objects.push([function_obj.name,function_obj]);
@@ -3754,7 +3759,7 @@ class CodegenService extends BaseService {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
 	/** @arg {{}} x */
-	#is_ResponseContext(x) {
+	is_ResponseContext(x) {
 		x;
 	}
 	/** @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
@@ -3941,8 +3946,10 @@ class CodegenService extends BaseService {
 			if(o.twoColumnWatchNextResults) return `TYPE::TwoColumnWatchNextResults`;
 			if(o.browseEndpoint) return `TYPE::BrowseEndpoint`;
 			if(o.watchEndpoint) return `TYPE::WatchEndpoint`;
+			if(o.signalServiceEndpoint) return `TYPE::SignalServiceEndpoint`;
 			if(o.playerOverlayRenderer) return `TYPE::PlayerOverlayRenderer`;
-			if(o.desktopTopbarRenderer) return `TYPE::DesktopTopbarRenderer`;
+			if(o.desktopTopbarRenderer) return "TYPE::DesktopTopbarRenderer";
+			if(o.engagementPanelSectionListRenderer) return "TYPE::EngagementPanelSectionListRenderer";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) {
@@ -3974,6 +3981,12 @@ class CodegenService extends BaseService {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
+		tc=tc.replaceAll(/\[\s+([^\[\]]*)\s+\]/g,(_a,/**@type {string} */v) => {
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e=>e).join("\n");
+			console.log("rep",JSON.stringify(v),"=>",JSON.stringify(vi));
+			return `${vi}:ARRAY_TAG`;
+		});
+		debugger;
 		tc=tc.replaceAll(":ARRAY_TAG","[]");
 		tc=tc.replaceAll(/"TYPE::(.+)"/gm,(_a,x) => {
 			return x.replaceAll("\\\"","\"");
@@ -4941,7 +4954,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
 		this.save_keys("[WatchResponse]",x);
-		const {responseContext,...y}=x; this.g(y);
+		const {responseContext,...y}=x; y;// this.g(y);
+		this.x.get("yt_plugin").add_function({
+			name:"data",
+			data:{
+				WatchResponse:x,
+			},
+		});
 		this.ResponseContext(responseContext);
 	}
 	/** @arg {ChannelPageResponse} x */

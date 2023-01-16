@@ -1,12 +1,12 @@
 type WatchResponse={
 	responseContext: ResponseContext;
-	contents;
-	currentVideoEndpoint;
-	trackingParams;
-	playerOverlays;
-	onResponseReceivedEndpoints;
-	engagementPanels;
-	topbar;
-	pageVisualEffects;
+	contents: TwoColumnWatchNextResults;
+	currentVideoEndpoint: WatchEndpoint;
+	trackingParams: string;
+	playerOverlays: PlayerOverlayRenderer;
+	onResponseReceivedEndpoints: SignalServiceEndpoint[];
+	engagementPanels: EngagementPanelSectionListRenderer[];
+	topbar: DesktopTopbarRenderer;
+	pageVisualEffects: CinematicContainerRenderer[];
 	frameworkUpdates: FrameworkUpdates;
 };
