@@ -5458,6 +5458,10 @@ class HandleTypes extends ServiceData {
 			const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y);
 			this.clickTrackingParams(clickTrackingParams);
 			this.SignalServiceEndpointCommandMetadata(commandMetadata);
+		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
+			const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=x; this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
 		} else {
 			debugger;
 		}
