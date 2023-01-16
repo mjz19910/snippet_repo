@@ -5704,8 +5704,8 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[WatchEndpointData]",x);
 		const {videoId,playlistId,index,params,...y1}=x;
 		this.videoId(videoId);
-		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y2}=y1; 
-		const {watchEndpointSupportedPrefetchConfig,playerParams,...y}=y2 ;this.g(y);
+		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y2}=y1;
+		const {watchEndpointSupportedPrefetchConfig,playerParams,...y}=y2; this.g(y);
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextWithRuns(x,f_run) {
@@ -5777,7 +5777,20 @@ class HandleTypes extends ServiceData {
 	/** @arg {NavigationEndpointCommandMetadata} x */
 	NavigationEndpointCommandMetadata(x) {
 		this.save_keys("[NavigationEndpointCommandMetadata]",x);
-		this.g(x);
+		const {webCommandMetadata,...y}=x; this.g(y);
+		this.VE3611_WebCommandMetadata(webCommandMetadata);
+	}
+	/** @arg {VE3611_WebCommandMetadata} x */
+	VE3611_WebCommandMetadata(x) {
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		if(this.str_starts_with(url,"/@")) {
+		} else if(this.str_starts_with(url,"/channel/UC")) {
+		} else {
+			debugger;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		this.rootVe(rootVe);
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextT(x,f_run) {
