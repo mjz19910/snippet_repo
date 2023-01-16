@@ -5527,7 +5527,41 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
+		this.save_keys("[MenuServiceItemRenderer]",x);
+		const {menuServiceItemRenderer,...y}=x; this.g(y);
+		this.MenuServiceItemData(menuServiceItemRenderer);
+	}
+	/** @arg {MenuServiceItemData} x */
+	MenuServiceItemData(x) {
+		this.save_keys("[MenuServiceItemData]",x);
+		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
+		this.g(text);
+		this.Icon(icon);
+		this.ServiceEndpointTemplate(serviceEndpoint,a=>this.FeedbackEndpointPlugin(a));
+	}
+	/** @arg {FeedbackEndpointPlugin} x */
+	FeedbackEndpointPlugin(x) {
+		if("feedbackEndpoint" in x) {
+			x.feedbackEndpoint;
+			return;
+		}
+		debugger;
+	}
+	FeedbackEndpointData(x) {
 		x;
+	}
+	/** @template {string} T @arg {Icon<T>} x */
+	Icon(x) {
+		this.save_keys("[Icon]",x);
+		const {iconType,...y}=x; this.g(y);
+		this.save_string("[IconType]",x.iconType);
+	}
+	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(x:T)=>void} f */
+	ServiceEndpointTemplate(x,f) {
+		const {clickTrackingParams,commandMetadata,...y}=x;
+		/** @type {{}} */
+		let t=as(y);
+		f(as(t));
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
