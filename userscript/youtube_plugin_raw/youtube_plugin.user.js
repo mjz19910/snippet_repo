@@ -5443,13 +5443,13 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
+		this.save_keys("[NextResponse]",x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
 		if(contents) this.TwoColumnWatchNextResults(contents);
 		if(currentVideoEndpoint) this.CurrentVideoEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
-		this.save_keys("[NextResponse]",x);
 	}
 	/** @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {
