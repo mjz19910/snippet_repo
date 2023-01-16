@@ -5247,6 +5247,7 @@ class HandleTypes extends ServiceMethods {
 		let [pt]=split_string_once(su1[1],"?");
 		switch(pt) {
 			case "trending": break;
+			case "library": break;
 			case "storefront": break;
 			default: debugger; break;
 		}

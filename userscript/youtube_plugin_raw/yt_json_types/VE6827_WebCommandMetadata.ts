@@ -1,7 +1,8 @@
 type VE6827_PageUrl=
-|`/feed/trending?${string}`
-|`/feed/storefront?${string}`
-;
+	|`/feed/trending?${string}`
+	|`/feed/library`
+	|`/feed/storefront?${string}`
+	;
 type VE6827_WebCommandMetadata={
 	url: VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
