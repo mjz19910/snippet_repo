@@ -1,5 +1,5 @@
 type ResponseMaxAge={
-	mainAppWebResponseContext: MainAppWebResponseContextData;
+	mainAppWebResponseContext: MainAppWebResponseContext;
 	serviceTrackingParams: AllServiceTrackingParams[];
 	webResponseContextExtensionData: WebResponseContextExtensionData;
 	maxAgeSeconds: number;

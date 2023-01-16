@@ -1,6 +1,4 @@
 type ConsistencyTokenJar={
-	mainAppWebResponseContext: MainAppWebResponseContextData;
-	serviceTrackingParams: AllServiceTrackingParams[];
-	webResponseContextExtensionData: WebResponseContextExtensionData;
-	consistencyTokenJar: ConsistencyTokenJarData;
+	encryptedTokenJarContents: string;
+	expirationSeconds: `${TokenJarDefaultExpirationSeconds}`;
 };

@@ -2610,12 +2610,6 @@ class BaseService extends BaseServicePrivate {
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
 	}
-	/** @public @arg {ResponseContext} x */
-	ResponseContext(x) {
-		let tracking_handler=this.x.get("service_tracking");
-		this.z(x.serviceTrackingParams,a => tracking_handler.set_service_params(a));
-		this.save_keys("[ResponseContext]",x);
-	}
 }
 
 class YtHandlers extends BaseService {
@@ -4978,6 +4972,35 @@ class HandleTypes extends ServiceMethods {
 		if(previousCsn!==void 0) {
 			console.log(base64_dec.decode_str(previousCsn));
 		}
+	}
+	/** @arg {ResponseContext} x */
+	ResponseContext(x) {
+		this.save_keys("[ResponseContext]",x);
+		const service_tracking=this.x.get("service_tracking");
+		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=x; this.g(y);
+		this.MainAppWebResponseContext(mainAppWebResponseContext);
+		this.z(serviceTrackingParams,a => service_tracking.set_service_params(a));
+		this.WebResponseContextExtensionData(webResponseContextExtensionData);
+		if(consistencyTokenJar) this.ConsistencyTokenJar(consistencyTokenJar);
+		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
+		if(stateTags) this.RelevantStateTags(stateTags);
+	}
+	/** @arg {RelevantStateTags} x */
+	RelevantStateTags(x) {
+		x;
+	}
+	/** @arg {ConsistencyTokenJar} x */
+	ConsistencyTokenJar(x) {
+		x;
+	}
+	/** @arg {WebResponseContextExtensionData} x */
+	WebResponseContextExtensionData(x) {
+		x;
+	}
+	/** @arg {MainAppWebResponseContext} x */
+	MainAppWebResponseContext(x) {
+		const cf="MainAppWebResponseContext";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {

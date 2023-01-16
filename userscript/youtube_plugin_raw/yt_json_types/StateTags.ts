@@ -1,5 +1,5 @@
 type StateTags={
-	mainAppWebResponseContext: MainAppWebResponseContextData;
+	mainAppWebResponseContext: MainAppWebResponseContext;
 	serviceTrackingParams: AllServiceTrackingParams[];
 	webResponseContextExtensionData: WebResponseContextExtensionData;
 	stateTags: RelevantStateTags;
