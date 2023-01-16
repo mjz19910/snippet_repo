@@ -4927,27 +4927,34 @@ class ServiceMethods extends ServiceData {
 	}
 }
 class HandleTypes extends ServiceMethods {
-	/** @public @arg {WatchPageResponse} x */
+	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
+		const {page:{},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
+		this.WatchEndpoint(endpoint);
+		this.WatchResponse
 	}
-	/** @public @arg {ChannelPageResponse} x */
+	/** @arg {WatchResponse} x */
+	WatchResponse(x) {
+		this.save_keys("[WatchResponse]",x);
+	}
+	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
 		this.save_keys("[ChannelPageResponse]",x);
 	}
-	/** @public @arg {PlaylistPageResponse} x */
+	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
 		this.save_keys("[PlaylistPageResponse]",x);
 	}
-	/** @public @arg {SettingsPageResponse} x */
+	/** @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
 	}
-	/** @public @arg {ShortsPageResponse} x */
+	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
 	}
-	/** @public @arg {SearchPageResponse} x */
+	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
 	}
