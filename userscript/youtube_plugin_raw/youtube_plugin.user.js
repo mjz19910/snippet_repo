@@ -3283,22 +3283,18 @@ class CsiService extends BaseService {
 		}
 	}
 }
-const fexp_static=[
-	23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056,24002022,24002025,24004644,24007246,24034168,24036947,
-	24059444,24059508,24077241,24080738,24108447,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24181174,24187043,24187377,24197450,
-	24211178,24217535,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,
-	24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645,
-	45686551
-];
 class ECatcherService extends BaseService {
 	data={
 		/** @private @type {{name:ECatcherClientName['value'];fexp:number[];version:SomeVer<CsiVarTypes["cver"]>}|null} */
 		client: null,
 		expected_client_values: {
 			/** @private @type {number[]} */
-			fexp: fexp_static.concat([
+			fexp: [
 				[1714247],
 				[9405964],
+				[23804281,23882502,23918597,23934970,23946420,23966208,23983296,23986033,23998056],
+				[24108447],
+				[24135310,24140247,24161116,24162919,24164186,24166867,24169501,24181174,24187043,24187377,24197450],
 				[24120820,24124511,24128088],
 				[24401504,24402891,24404640,24406313,24406621,24407190,24408888],
 				[24414718,24415864,24415866,24416290],
@@ -3309,8 +3305,18 @@ class ECatcherService extends BaseService {
 				[24590921,24591046],
 				[24612269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 				[24200839],
+				[24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738],
+				[24211178,24217535,24219381,24219713],
+				[24241378,24248091],
+				[24250324,24255163,24255543,24255545],
+				[24260378,24262346,24263796,24267564,24268142],
+				[24279196],
+				[24281896,24283015,24283093,24287604,24288442,24288663],
+				[24290971,24291857,24292955],
+				[24390675,24396645],
+				[45686551],
 				[39321826,39321827,39322504,39322574,39322870,39322873,39322980,39322983,39323013,39323016,39323020,39323023,39323117,39323120]
-			].flat())
+			].flat()
 		},
 	};
 	/** @private @type {number[]} */
@@ -5426,12 +5432,12 @@ class HandleTypes extends ServiceData {
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
-		const {responseContext:{},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
+		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
 		if(contents) this.TwoColumnWatchNextResults(contents);
 		if(currentVideoEndpoint) this.CurrentVideoEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
-		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a=>this.ResponseReceivedEndpointItem(a));
+		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
 		this.save_keys("[NextResponse]",x);
 	}
 	/** @arg {ResponseReceivedEndpointItem} x */
