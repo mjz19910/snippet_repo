@@ -5478,9 +5478,47 @@ class HandleTypes extends ServiceData {
 			const {clickTrackingParams,loadMarkersCommand,...y}=x; this.g(y);
 			this.clickTrackingParams(clickTrackingParams);
 			this.LoadMarkersCommandData(loadMarkersCommand);
+		} else if("reloadContinuationItemsCommand" in x) {
+			const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {ReloadContinuationItemsCommandData} x */
+	ReloadContinuationItemsCommandData(x) {
+		this.save_keys("[ReloadContinuationItemsCommandData]",x);
+		this.save_enum("RELOAD_CONTINUATION_SLOT",x.slot);
+		switch(x.slot) {
+			case "RELOAD_CONTINUATION_SLOT_BODY": {
+				const {targetId,continuationItems,slot: {},...y}=x; this.g(y);
+				this.save_string("[Header.targetId]",targetId);
+				this.z(continuationItems,a => {
+					this.save_keys("[continuationItem]",a);
+				});
+			} break;
+			case "RELOAD_CONTINUATION_SLOT_HEADER": {
+				const {targetId,continuationItems,slot: {},...y}=x; this.g(y);
+				this.save_string("[Header.targetId]",targetId);
+				if(targetId!=="comments-section") debugger;
+				if(continuationItems.length!==1) debugger;
+				const [item]=continuationItems;
+				this.CommentsHeaderRenderer(item);
+			} break;
+			default: debugger; break;
+		};
+	}
+	/** @arg {CommentsHeaderRenderer} x */
+	CommentsHeaderRenderer(x) {
+		this.save_keys("[CommentsHeaderRenderer]",x);
+		this.CommentsHeaderData(x.commentsHeaderRenderer);
+	}
+	/** @arg {CommentsHeaderData} x */
+	CommentsHeaderData(x) {
+		this.save_keys("[CommentsHeaderData]",x);
+		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=x; this.g(y);
+		this.TextWithRuns(countText);
 	}
 	/** @arg {LoadMarkersCommandData} x */
 	LoadMarkersCommandData(x) {
@@ -5714,7 +5752,7 @@ class HandleTypes extends ServiceData {
 		const {watchEndpointSupportedPrefetchConfig,playerParams,...y}=y2; this.g(y);
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
-	TextWithRuns(x,f_run) {
+	TextWithRuns(x,f_run=this.NavigationEndpoint) {
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,...y}=x; this.g(y);
 		this.z(runs,a => {
@@ -5723,7 +5761,7 @@ class HandleTypes extends ServiceData {
 		});
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
-	TextRun(x,f_run) {
+	TextRun(x,f_run=this.NavigationEndpoint) {
 		const {text,...y}=x; f_run.call(this,y);
 		this.primitive_of(text,"string");
 	}

@@ -1,1 +1,7 @@
-type ResponseReceivedEndpointItem=SignalServiceEndpoint|AdsControlFlowOpportunityReceivedCommand|ChangeKeyedMarkersVisibilityCommand|LoadMarkersCommand;
+type ResponseReceivedEndpointItem=
+	|AdsControlFlowOpportunityReceivedCommand
+	|ChangeKeyedMarkersVisibilityCommand
+	|LoadMarkersCommand
+	|ReloadContinuationItemsCommand
+	|SignalServiceEndpoint
+	;
