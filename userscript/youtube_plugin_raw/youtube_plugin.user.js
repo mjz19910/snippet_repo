@@ -4940,7 +4940,7 @@ class HandleTypes extends ServiceMethods {
 		let u3=parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
 		console.log("url_keys",u4.join());
-		this.save_keys("[WatchPage.url.params]",u3);
+		this.save_keys(`[${cf}.url.params]`,u3);
 		this.x.get("parser_service").parse_url(url);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
