@@ -4956,12 +4956,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const name="BrowseEditPlaylistResponse";
-		this.z(x.actions,a => this.x.get("handle_types").Action(a));
 		this.save_keys(`[${name}]`,x);
+		this.z(x.actions,a => this.x.get("handle_types").Action(a));
 	}
 	log_url=false;
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
+		const name="BrowsePageResponse";
+		this.save_keys(`[${name}]`,x);
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(rootVe) this.save_number("[BrowsePageResponse.rootVe]",rootVe);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
@@ -4972,7 +4974,6 @@ class HandleTypes extends ServiceMethods {
 		if(previousCsn!==void 0) {
 			console.log(base64_dec.decode_str(previousCsn));
 		}
-		this.save_keys("[BrowsePageResponse]",x);
 	}
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
