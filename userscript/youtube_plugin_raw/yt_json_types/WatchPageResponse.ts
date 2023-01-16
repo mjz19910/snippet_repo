@@ -8,6 +8,3 @@ type WatchPageResponse={
 	|`/watch?v=${string}&list=RD${string}&index=${number}`;
 	previousCsn?: string;
 };
-type WatchResponse={
-	responseContext: ResponseContext;
-};

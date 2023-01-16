@@ -3753,6 +3753,10 @@ class CodegenService extends BaseService {
 	#is_TextT(x2) {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
+	/** @arg {{}} x */
+	#is_ResponseContext(x) {
+		x;
+	}
 	/** @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
@@ -3788,14 +3792,7 @@ class CodegenService extends BaseService {
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
-			if("browseEndpoint" in x2) {
-				ret_arr.push(`
-				this.BrowseEndpoint(x.${k},a=>{
-					d3!a; debugger;
-				d2!});
-				`);
-				continue;
-			}
+			if("browseEndpoint" in x2) {ret_arr.push(`this.BrowseEndpoint(x.${k});`); continue;}
 			/** @private @type {{}} */
 			let o3=x2;
 			let c=this.get_name_from_keys(o3);
@@ -3930,6 +3927,7 @@ class CodegenService extends BaseService {
 					debugger;
 					return "TYPE::string";
 				}
+				if(k1==="responseContext") return "TYPE::ResponseContext";
 				if(k1=="videoId") {
 					console.log("[video_id_json]",o);
 					return "TYPE::string";
@@ -4931,7 +4929,7 @@ class HandleTypes extends ServiceMethods {
 	WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
-		const {page:{},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
+		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
 		this.WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
@@ -4951,6 +4949,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
 		this.save_keys("[WatchResponse]",x);
+		const {responseContext,...y}=x; this.g(y);
+		this.ResponseContext(responseContext);
 	}
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
@@ -5050,7 +5050,7 @@ class HandleTypes extends ServiceMethods {
 	WebPrefetchData(x) {
 		this.save_keys("[WebPrefetchData]",x);
 		const {navigationEndpoints,...y}=x; this.g(y);
-		this.z(navigationEndpoints,a=>{
+		this.z(navigationEndpoints,a => {
 			if("watchEndpoint" in a) {
 				return this.WatchEndpoint(a);
 			}
