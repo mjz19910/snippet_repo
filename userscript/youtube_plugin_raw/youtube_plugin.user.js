@@ -5541,6 +5541,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {FeedbackEndpointPlugin} x */
 	FeedbackEndpointPlugin(x) {
+		this.save_keys("[FeedbackEndpointPlugin]",x);
 		if("feedbackEndpoint" in x) {
 			x.feedbackEndpoint;
 			return;
@@ -5559,7 +5560,10 @@ class HandleTypes extends ServiceData {
 	}
 	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(x:T)=>void} f */
 	ServiceEndpointTemplate(x,f) {
+		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
+		this.clickTrackingParams(clickTrackingParams);
+		this.g(commandMetadata);
 		/** @type {{}} */
 		let t=as(y);
 		f(as(t));

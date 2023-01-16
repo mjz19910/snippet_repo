@@ -1,7 +1,5 @@
 type FeedbackEndpointData={
 	feedbackToken: string;
-	uiActions: {
-		hideEnclosingContainer: true;
-	};
+	uiActions: UiActions;
 	actions: ReplaceEnclosingAction[];
 };

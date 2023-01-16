@@ -1,0 +1,3 @@
+type UiActions={
+	hideEnclosingContainer: true;
+};
