@@ -5772,7 +5772,17 @@ class HandleTypes extends ServiceData {
 	/** @arg {NavigationEndpointBrowseEndpoint} x */
 	NavigationEndpointBrowseEndpoint(x) {
 		this.save_keys("[NavigationEndpointBrowseEndpoint]",x);
-		this.g(x);
+		const {browseId,canonicalBaseUrl,...y}=x; this.g(y);
+		this.browseId(browseId);
+		this.canonicalBaseUrl(canonicalBaseUrl);
+	}
+	/** @arg {BrowseIdType} x */
+	browseId(x) {
+		this.parse_browse_id(x);
+	}
+	/** @arg {`/@${string}`} x */
+	canonicalBaseUrl(x) {
+		if(!this.str_starts_with(x,"/@")) debugger;
 	}
 	/** @arg {NavigationEndpointCommandMetadata} x */
 	NavigationEndpointCommandMetadata(x) {
