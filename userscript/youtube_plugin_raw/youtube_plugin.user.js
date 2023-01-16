@@ -4932,7 +4932,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[WatchPageResponse]",x);
 		const {page:{},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
 		this.WatchEndpoint(endpoint);
-		this.WatchResponse
+		this.WatchResponse(response);
+		this.PlayerResponse(playerResponse);
+		debugger;
+		this.x.get("parser_service").parse_url(url);
+		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
@@ -4976,9 +4980,11 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
 		if(expirationTime) this.primitive_of(expirationTime,"number");
-		if(previousCsn!==void 0) {
-			console.log(base64_dec.decode_str(previousCsn));
-		}
+		if(previousCsn!==void 0) this.previousCsn(previousCsn);
+	}
+	/** @arg {string} x */
+	previousCsn(x) {
+		console.log(base64_dec.decode_str(x));
 	}
 	/** @arg {ResponseContext} x */
 	ResponseContext(x) {
@@ -5033,7 +5039,12 @@ class HandleTypes extends ServiceMethods {
 	WebPrefetchData(x) {
 		this.save_keys("[WebPrefetchData]",x);
 		const {navigationEndpoints,...y}=x; this.g(y);
-		this.z(navigationEndpoints,this.g);
+		this.z(navigationEndpoints,a=>{
+			if("watchEndpoint" in a) {
+				return this.WatchEndpoint(a);
+			}
+			debugger;
+		});
 	}
 	/** @arg {MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {

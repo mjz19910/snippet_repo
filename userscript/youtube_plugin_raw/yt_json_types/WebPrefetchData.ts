@@ -1,3 +1,3 @@
 type WebPrefetchData={
-	navigationEndpoints: {}[];
+	navigationEndpoints: WatchEndpoint[];
 };
