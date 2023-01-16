@@ -3,7 +3,7 @@ type WatchPageResponse={
 	endpoint: WatchEndpoint;
 	response: WatchResponse;
 	playerResponse: PlayerResponse;
-	url: string;
+	url: `/watch?v=${string}&list=RD${string}&start_radio=1`;
 	previousCsn?: string;
 };
 type WatchResponse={
