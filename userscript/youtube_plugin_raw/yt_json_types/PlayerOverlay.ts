@@ -1,9 +1,9 @@
 type PlayerOverlay={
 	endScreen: WatchNextEndScreenRenderer;
-	autoplay: PlayerOverlayAutoplayRenderer;
+	autoplay?: PlayerOverlayAutoplayRenderer;
 	shareButton: ButtonRenderer;
 	addToMenu: MenuRenderer;
 	videoDetails: PlayerOverlayVideoDetailsRenderer;
-	autonavToggle: AutoplaySwitchButtonRenderer;
+	autonavToggle?: AutoplaySwitchButtonRenderer;
 	decoratedPlayerBarRenderer?: DecoratedPlayerBarRenderer;
 };

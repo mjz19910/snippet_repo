@@ -4939,7 +4939,7 @@ class HandleTypes extends ServiceMethods {
 		let u2=split_string_once(u1,"?")[1];
 		let u3=parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
-		console.log("url_keys",u4.join());
+		if(!this.eq_keys(u4,["v","list","start_radio"])) debugger;
 		this.save_keys(`[${cf}.url.params]`,u3);
 		this.x.get("parser_service").parse_url(url);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
@@ -5737,11 +5737,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlayerOverlay]",x);
 		const {endScreen,autoplay,shareButton,addToMenu,videoDetails,autonavToggle,decoratedPlayerBarRenderer,...y}=x; this.g(y);
 		this.WatchNextEndScreenRenderer(endScreen);
-		this.PlayerOverlayAutoplayRenderer(autoplay);
+		if(autoplay) this.PlayerOverlayAutoplayRenderer(autoplay);
 		this.ButtonRenderer(shareButton);
 		this.MenuRenderer(addToMenu);
 		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
-		this.AutoplaySwitchButtonRenderer(autonavToggle);
+		if(autonavToggle) this.AutoplaySwitchButtonRenderer(autonavToggle);
 		if(decoratedPlayerBarRenderer) this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
