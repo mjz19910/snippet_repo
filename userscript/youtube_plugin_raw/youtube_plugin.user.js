@@ -3091,7 +3091,7 @@ class HandleRendererContentItemArray extends BaseService {
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor {
-	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsAction} action */
+	/** @arg {ApiIterateState} state @arg {AppendContinuationItemsActionData} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
@@ -5482,9 +5482,35 @@ class HandleTypes extends ServiceData {
 			const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y);
 			this.clickTrackingParams(clickTrackingParams);
 			this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
+		} else if("appendContinuationItemsAction" in x) {
+			const {clickTrackingParams,appendContinuationItemsAction,...y}=x; this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			this.AppendContinuationItemsActionData(appendContinuationItemsAction);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {AppendContinuationItemsActionData} x */
+	AppendContinuationItemsActionData(x) {
+		this.save_keys("[AppendContinuationItemsActionData]",x);
+		switch(x.targetId) {
+			case "browse-feedFEwhat_to_watch": this.BrowseFeedAction(x); break;
+			case "comments-section": this.CommentsSectionContinuationAction(x); break;
+			case "watch-next-feed": this.WatchNextContinuationAction(x); break;
+			default: debugger;
+		}
+	}
+	/** @arg {WatchNextContinuationAction} x */
+	WatchNextContinuationAction(x) {
+		this.save_keys("[WatchNextContinuationAction]",x);
+	}
+	/** @arg {CommentsSectionContinuationAction} x */
+	CommentsSectionContinuationAction(x) {
+		this.save_keys("[CommentsSectionContinuationAction]",x);
+	}
+	/** @arg {BrowseFeedAction} x */
+	BrowseFeedAction(x) {
+		this.save_keys("[BrowseFeedAction]",x);
 	}
 	/** @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
