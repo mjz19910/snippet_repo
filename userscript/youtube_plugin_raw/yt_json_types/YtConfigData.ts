@@ -1,5 +1,5 @@
 type YtConfigData={
 	visitorData: string;
-	sessionIndex: number;
-	rootVisualElementType: 23462;
+	sessionIndex: 0;
+	rootVisualElementType: 23462|96368;
 };

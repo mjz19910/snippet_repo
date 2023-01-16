@@ -207,9 +207,9 @@ function on_ytd_app(element) {
 	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
 	if(document.visibilityState==="visible") {
 		ytd_app.app_is_visible=true;
-		if(vis_imm) {
+		if(do_restart_video_playback) {
 			fire_on_visibility_change_restart_video_playback();
-			vis_imm=false;
+			do_restart_video_playback=false;
 		}
 	} else {
 		ytd_app.app_is_visible=false;
@@ -217,7 +217,7 @@ function on_ytd_app(element) {
 	ytd_app.ytp_click_cint=setInterval(() => {
 		if(!is_watch_page_active()||!ytd_app) return;
 		if(!ytd_app.app_is_visible) {
-			vis_imm=true;
+			do_restart_video_playback=true;
 			return;
 		}
 	},15*60*1000);
@@ -226,9 +226,9 @@ function on_ytd_app(element) {
 		if(!is_watch_page_active()) return;
 		if(document.visibilityState==="visible") {
 			ytd_app.app_is_visible=true;
-			if(vis_imm) {
+			if(do_restart_video_playback) {
 				fire_on_visibility_change_restart_video_playback();
-				vis_imm=false;
+				do_restart_video_playback=false;
 			}
 		} else {
 			ytd_app.app_is_visible=false;
@@ -1413,7 +1413,7 @@ class YTNavigateFinishEvent {
 }
 /** @private @type {((event:YTNavigateFinishEvent)=>void)[]} */
 let on_yt_navigate_finish=[];
-let vis_imm=false;
+let do_restart_video_playback=false;
 let css_str=`
 	ytd-watch-next-secondary-results-renderer {
 		overflow-x:scroll;
@@ -5009,12 +5009,22 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {YtConfigData} x */
 	YtConfigData(x) {
 		this.save_keys("[YtConfigData]",x);
-		debugger;
+		const {visitorData,sessionIndex,rootVisualElementType,...y}=x; this.g(y);
+		this.primitive_of(visitorData,"string");
+		if(sessionIndex!==0) debugger;
+		/** @type {`${rootVisualElementType}`} */
+		let s=`${rootVisualElementType}`;
+		switch(s) {
+			case "23462": break;
+			case "96368": break;
+			default: debugger; break;
+		}
 	}
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
 		this.save_keys("[WebPrefetchData]",x);
-		debugger;
+		const {navigationEndpoints,...y}=x; this.g(y);
+		this.z(navigationEndpoints,this.g);
 	}
 	/** @arg {MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {
