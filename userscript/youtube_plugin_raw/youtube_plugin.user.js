@@ -2488,7 +2488,11 @@ class BaseServicePrivate extends ApiBase {
 	save_string(k,x) {
 		this.ds.save_string(k,x);
 	}
-	/** @arg {string} k @arg {number|number[]} x */
+	/** @arg {`[${string}]`} k @arg {boolean} x */
+	save_boolean(k,x) {
+		this.ds.save_boolean(k,x);
+	}
+	/** @arg {`[${string}]`} k @arg {number|number[]} x */
 	save_number(k,x) {
 		this.ds.save_number(k,x);
 	}
@@ -4935,7 +4939,7 @@ class HandleTypes extends ServiceData {
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
 		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
-		if(rootVe) this.save_number("BrowsePageResponse.rootVe",rootVe);
+		if(rootVe) this.save_number("[BrowsePageResponse.rootVe]",rootVe);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.BrowseEndpoint(x.endpoint);
 		if(page!=="browse") debugger;
@@ -4986,8 +4990,8 @@ class HandleTypes extends ServiceData {
 		if(continuations) this.z(continuations,a => this.NextContinuationData(a));
 		this.trackingParams(trackingParams);
 		if(subMenu) this.save_keys(`[${cf}.subMenu]`,subMenu);
-		if(hideBottomSeparator!==void 0) this.save_keys(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
-		if(targetId) this.save_keys(`[${cf}.targetId]`,targetId);
+		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
 	}
 	/** @arg {NextContinuationData} x */
 	NextContinuationData(x) {
@@ -5298,6 +5302,7 @@ class HandleTypes extends ServiceData {
 			};
 			debugger;
 		});
+		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
@@ -5512,17 +5517,27 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {MenuData} x */
 	MenuData(x) {
-		this.save_keys("[MenuData]",x);
+		const cf="MenuData";
+		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
 		this.Accessibility(accessibility);
+		this.z(items,a=>this.MenuServiceItemRenderer(a));
+		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
+	}
+	/** @arg {MenuServiceItemRenderer} x */
+	MenuServiceItemRenderer(x) {
+		x;
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
-		x.accessibilityData;
+		this.save_keys("[Accessibility]",x);
+		const {accessibilityData,...y}=x; this.g(y);
+		this.AccessibilityData(accessibilityData);
 	}
 	/** @arg {AccessibilityData} x */
 	AccessibilityData(x) {
+		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
 	}
