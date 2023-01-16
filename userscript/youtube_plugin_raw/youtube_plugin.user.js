@@ -4935,7 +4935,7 @@ class HandleTypes extends ServiceMethods {
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
 		debugger;
-		this.x.get("parser_service").parse_url(url);
+		this.x.get("parser_service").parse_url(as(url));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @arg {WatchResponse} x */
