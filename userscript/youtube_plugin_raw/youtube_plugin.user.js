@@ -4987,20 +4987,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
-		x;
+		const cf="RelevantStateTags";
+		this.save_keys(`[${cf}]`,x);
+		const {relevantStateTags,...y}=x; this.g(y);
 	}
 	/** @arg {ConsistencyTokenJar} x */
 	ConsistencyTokenJar(x) {
-		x;
+		const cf="ConsistencyTokenJar";
+		this.save_keys(`[${cf}]`,x);
+		const {encryptedTokenJarContents,expirationSeconds,...y}=x; this.g(y);
 	}
 	/** @arg {WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {
-		x;
+		const cf="WebResponseContextExtensionData";
+		this.save_keys(`[${cf}]`,x);
+		const {hasDecorated,ytConfigData,webPrefetchData,...y}=x; this.g(y);
 	}
 	/** @arg {MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {
 		const cf="MainAppWebResponseContext";
 		this.save_keys(`[${cf}]`,x);
+		const {datasyncId,loggedOut,...y}=x; this.g(y);
+		this.primitive_of(datasyncId,"string");
+		this.primitive_of(loggedOut,"boolean");
 	}
 	/** @arg {BrowseResponse} x */
 	BrowseResponse(x) {
