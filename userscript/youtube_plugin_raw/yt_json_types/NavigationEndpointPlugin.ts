@@ -1,0 +1,1 @@
+type NavigationEndpointPlugin={navigationEndpoint: NavigationEndpointData;};

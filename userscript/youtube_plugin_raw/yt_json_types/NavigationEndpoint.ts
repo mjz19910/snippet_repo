@@ -1,3 +1,1 @@
-type NavigationEndpoint={
-	navigationEndpoint: {};
-}|{};
+type NavigationEndpoint=NavigationEndpointPlugin|{};

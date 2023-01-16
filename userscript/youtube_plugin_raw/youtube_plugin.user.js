@@ -3941,7 +3941,7 @@ class CodegenService extends BaseService {
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
 			if(o.runs&&o.runs instanceof Array) {
-				return "TYPE::TextT";
+				return "TYPE::TextWithRuns";
 			}
 			if(o.simpleText&&typeof o.simpleText==="string") {
 				return "TYPE::SimpleText";
@@ -5678,7 +5678,7 @@ class HandleTypes extends ServiceData {
 	EndScreenVideo(x) {
 		this.save_keys("[EndScreenVideo]",x);
 		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,...y1}=x;
-		this.x.get("parser_service").parse_video_id(videoId);
+		this.videoId(videoId);
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
@@ -5689,6 +5689,10 @@ class HandleTypes extends ServiceData {
 		this.WatchEndpoint(navigationEndpoint);
 		this.g(y);
 	}
+	/** @arg {string} x */
+	videoId(x) {
+		this.x.get("parser_service").parse_video_id(x);
+	}
 	/** @arg {WatchEndpoint} x */
 	WatchEndpoint(x) {
 		this.save_keys("[WatchEndpoint]",x);
@@ -5698,14 +5702,24 @@ class HandleTypes extends ServiceData {
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
 		this.save_keys("[WatchEndpointData]",x);
+		const {videoId,playlistId,index,params,...y1}=x;
+		this.videoId(videoId);
+		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y2}=y1; 
+		const {watchEndpointSupportedPrefetchConfig,playerParams,...y}=y2 ;this.g(y);
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextWithRuns(x,f_run) {
+		this.save_keys("[TextWithRuns]",x);
 		const {runs,...y}=x; this.g(y);
 		this.z(runs,a => {
 			const {text,...b}=a; f_run.call(this,b);
 			this.primitive_of(text,"string");
 		});
+	}
+	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
+	TextRun(x,f_run) {
+		const {text,...y}=x; f_run.call(this,y);
+		this.primitive_of(text,"string");
 	}
 	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
 	ThumbnailOverlayTimeStatusRenderer(x) {
@@ -5741,13 +5755,20 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
+		this.save_keys("[NavigationEndpoint]",x);
 		if("navigationEndpoint" in x) {
+			this.NavigationEndpointData(x.navigationEndpoint);
 			return;
 		}
 		debugger;
 	}
+	/** @arg {NavigationEndpointData} x */
+	NavigationEndpointData(x) {
+		this.save_keys("[NavigationEndpointData]",x);
+	}
 	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextT(x,f_run) {
+		this.save_keys("[TextT]",x);
 		if("simpleText" in x) {
 			this.SimpleText(x);
 		} else {
