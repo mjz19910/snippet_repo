@@ -1,12 +1,12 @@
 interface NextResponse {
 	responseContext: ResponseContext;
 	contents?: TwoColumnWatchNextResults;
-	currentVideoEndpoint: CurrentVideoEndpoint;
+	currentVideoEndpoint?: CurrentVideoEndpoint;
 	trackingParams: string;
-	playerOverlays: PlayerOverlayRenderer;
+	playerOverlays?: PlayerOverlayRenderer;
 	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];
-	engagementPanels: EngagementPanel[];
-	topbar: DesktopTopbarRenderer;
-	pageVisualEffects: CinematicContainerRenderer[];
+	engagementPanels?: EngagementPanel[];
+	topbar?: DesktopTopbarRenderer;
+	pageVisualEffects?: CinematicContainerRenderer[];
 	frameworkUpdates?: FrameworkUpdates;
 };
