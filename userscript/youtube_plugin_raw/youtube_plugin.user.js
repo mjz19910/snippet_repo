@@ -5249,6 +5249,7 @@ class HandleTypes extends ServiceMethods {
 		switch(pt) {
 			case "trending": break;
 			case "library": break;
+			case "history": break;
 			case "storefront": break;
 			default: debugger; break;
 		}
