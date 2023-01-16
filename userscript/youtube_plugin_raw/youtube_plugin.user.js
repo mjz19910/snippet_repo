@@ -5655,12 +5655,27 @@ class HandleTypes extends ServiceData {
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
 		this.save_keys("[EndScreenVideo]",x);
-		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=x; this.g(y);
+		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,...y1}=x;
 		this.x.get("parser_service").parse_video_id(videoId);
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,a=>this.ThumbnailOverlayTimeStatusRenderer(a));
 		this.TextT(shortBylineText);
+		this.SimpleText(lengthText);
+		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
+		this.primitive_of(lengthInSeconds,"number");
+		this.WatchEndpoint(navigationEndpoint);
+		this.g(y);
+	}
+	/** @arg {WatchEndpoint} x */
+	WatchEndpoint(x) {
+		this.save_keys("[WatchEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
+		this.WatchEndpointData(watchEndpoint);
+	}
+	/** @arg {WatchEndpointData} x */
+	WatchEndpointData(x) {
+		this.save_keys("[WatchEndpointData]",x);
 	}
 	/** @arg {TextT} x */
 	TextT(x) {
@@ -5678,7 +5693,8 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {ThumbnailOverlayTimeStatus} x */
 	ThumbnailOverlayTimeStatus(x) {
-		x;
+		this.save_keys("[ThumbnailOverlayTimeStatus]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
