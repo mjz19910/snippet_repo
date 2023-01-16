@@ -5547,6 +5547,7 @@ class HandleTypes extends ServiceData {
 		}
 		debugger;
 	}
+	/** @arg {FeedbackEndpointData} x */
 	FeedbackEndpointData(x) {
 		x;
 	}
