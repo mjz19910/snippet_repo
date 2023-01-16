@@ -4420,25 +4420,32 @@ class ParserService extends BaseService {
 	log_playlist_index=false;
 	/** @private @arg {YtUrlInfoPlaylist} x */
 	log_playlist_id(x,critical=false) {
-		if(this.cache_playlist_id.includes(x.id)) return;
-		this.cache_playlist_id.push(x.id);
-		if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
+		if(!this.cache_playlist_id.includes(x.id)) {
+			this.cache_playlist_id.push(x.id);
+			if(this.log_enabled_playlist_id||critical) console.log("[playlist]",x.type,x.id);
+		}
+	}
+	/** @arg {YtUrlInfoPlaylist} x */
+	get_playlist_url_info_critical(x) {
+		switch(x.id.length) {
+			case 11: return false;
+			case 24: return false;
+			case 32: return false;
+			default: debugger; return true;
+		}
+	}
+	/** @arg {YtUrlInfoPlaylist} x */
+	parse_playlist_url_info(x) {
+		let is_critical=this.get_playlist_url_info_critical(x);
+		this.log_playlist_id(x,is_critical);
 	}
 	/** @private @arg {YtUrlInfoItem[]} x */
 	log_url_info_arr(x) {
 		for(let url_info of x) {
 			switch(url_info._tag) {
-				case "playlist": x: {
-					switch(url_info.id.length) {
-						case 11: break;
-						case 24: break;
-						case 32: break;
-						default: debugger; break x;
-					}
-					this.log_playlist_id(url_info);
-				} this.log_playlist_id(url_info,true); break;
-				case "video": this.x.get("indexed_db").put({v: url_info.id}); break;
-				case "video-referral": this.x.get("indexed_db").put({v: url_info.id}); break;
+				case "playlist": this.parse_playlist_url_info(url_info); break;
+				case "video": this.parse_video_id(url_info.id); break;
+				case "video-referral": this.parse_video_id(url_info.id); break;
 			}
 		}
 	}
@@ -5648,7 +5655,8 @@ class HandleTypes extends ServiceData {
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
 		this.save_keys("[EndScreenVideo]",x);
-		const {...y}=x; this.g(y);
+		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=x; this.g(y);
+		this.x.get("parser_service").parse_video_id(videoId);
 	}
 	/** @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
