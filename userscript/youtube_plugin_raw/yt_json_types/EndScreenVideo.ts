@@ -1,3 +1,5 @@
+// type ThumbnailOverlayItem=ThumbnailOverlayTimeStatusRenderer;
+
 type EndScreenVideo={
 	videoId: string;
 	thumbnail: Thumbnail;
@@ -9,5 +11,5 @@ type EndScreenVideo={
 	trackingParams: string;
 	shortViewCountText: SimpleText;
 	publishedTimeText: SimpleText;
-	thumbnailOverlays: ThumbnailOverlayTimeStatusRenderer[];
+	thumbnailOverlays: ThumbnailOverlayItem[];
 };

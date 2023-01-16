@@ -5659,7 +5659,12 @@ class HandleTypes extends ServiceData {
 		this.x.get("parser_service").parse_video_id(videoId);
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
-		this.z(thumbnailOverlays,a=>this.ThumbnailOverlayTimeStatusRenderer(a));
+		this.z(thumbnailOverlays,a=>{
+			if("thumbnailOverlayTimeStatusRenderer" in a) {
+				return this.ThumbnailOverlayTimeStatusRenderer(a);
+			}
+			debugger;
+		});
 		this.TextT(shortBylineText);
 		this.SimpleText(lengthText);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
@@ -5694,7 +5699,9 @@ class HandleTypes extends ServiceData {
 	/** @arg {ThumbnailOverlayTimeStatus} x */
 	ThumbnailOverlayTimeStatus(x) {
 		this.save_keys("[ThumbnailOverlayTimeStatus]",x);
-		const {...y}=x; this.g(y);
+		const {text,style,...y}=x; this.g(y);
+		this.SimpleText(text);
+		if(style!=="DEFAULT") debugger;
 	}
 	/** @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {

@@ -2,4 +2,5 @@ type ThumbnailOverlayItem=
 	|ThumbnailOverlayBottomPanelRenderer
 	|ThumbnailOverlayHoverTextRenderer
 	|ThumbnailOverlayNowPlayingRenderer
+	|ThumbnailOverlayTimeStatusRenderer
 	;
