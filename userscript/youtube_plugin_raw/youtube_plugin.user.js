@@ -5433,7 +5433,25 @@ class HandleTypes extends ServiceData {
 	/** @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {
 		this.save_keys("[ResponseReceivedEndpointItem]",x);
-		const {...y}=x; this.g(y);
+		if("signalServiceEndpoint" in x) {
+			const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y);
+			this.clickTrackingParams(clickTrackingParams);
+			this.SignalServiceEndpointCommandMetadata(commandMetadata);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {SignalServiceEndpointCommandMetadata} x */
+	SignalServiceEndpointCommandMetadata(x) {
+		this.save_keys("[SignalServiceEndpointCommandMetadata]",x);
+		const {webCommandMetadata,...y}=x; this.g(y);
+		this.SignalServiceEndpointWebCommandMetadata(webCommandMetadata);
+	}
+	/** @arg {SignalServiceEndpointWebCommandMetadata} x */
+	SignalServiceEndpointWebCommandMetadata(x) {
+		this.save_keys("[SignalServiceEndpointWebCommandMetadata]",x);
+		const {sendPost,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
 	}
 	/** @arg {PlayerOverlayRenderer} x */
 	PlayerOverlayRenderer(x) {
