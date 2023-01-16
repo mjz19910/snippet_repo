@@ -683,12 +683,14 @@ class Base64Binary {
 		var byte_len=((real_len+1)/4)*3|0;
 		var ab=new ArrayBuffer(byte_len);
 		let byte_arr=new Uint8Array(ab);
-		this.decode(input,byte_arr);
+		let decoded=this.decode(input,byte_arr);
+		if(!decoded) return null;
 		return byte_arr;
 	}
 	/** @public @arg {string} input */
 	decode_str(input) {
 		let y=this.decodeByteArray(input);
+		if(!y) return null;
 		return decoder.decode(y);
 	}
 	/** @private @arg {string} input @arg {Uint8Array} binary_arr */
@@ -705,7 +707,7 @@ class Base64Binary {
 			console.log("removed %o non base64 chars",prev_len-new_input.length);
 			console.log("base64_str: \"%s\"",input);
 			debugger;
-			throw new Error("Bad");
+			return false;
 		}
 		input=new_input;
 
@@ -725,7 +727,7 @@ class Base64Binary {
 			if(enc4!=64) binary_arr[i+2]=chr3;
 		}
 
-		return binary_arr;
+		return true;
 	}
 }
 let bigint_val_32=new Uint32Array(2);
@@ -2506,6 +2508,7 @@ class BaseService extends BaseServicePrivate {
 	/** @public @arg {string} str */
 	decode_b64_proto_obj(str) {
 		let buffer=base64_dec.decodeByteArray(str);
+		if(!buffer) return null;
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
 	}
