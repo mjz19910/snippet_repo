@@ -1033,12 +1033,6 @@ class MyReader {
 	}
 }
 const base64_dec=new Base64Binary();
-/** @private @arg {string} str */
-function decode_b64_proto_obj(str) {
-	let buffer=base64_dec.decodeByteArray(str);
-	let reader=new MyReader(buffer);
-	return reader.try_read_any();
-}
 /** @private @template {string} T @arg {T} str @returns {UrlParse<T>} */
 function create_from_parse(str) {
 	let s=new URL(str);
@@ -2503,6 +2497,12 @@ class BaseServicePrivate extends ApiBase {
 	#x;
 }
 class BaseService extends BaseServicePrivate {
+	/** @public @arg {string} str */
+	decode_b64_proto_obj(str) {
+		let buffer=base64_dec.decodeByteArray(str);
+		let reader=new MyReader(buffer);
+		return reader.try_read_any();
+	}
 	/** @public @arg {string} x */
 	trackingParams(x) {
 		this.primitive_of(x,"string");
@@ -4311,7 +4311,7 @@ class ParserService extends BaseService {
 		let pp_dec=decodeURIComponent(pp_value);
 		if(this.cache_player_params.includes(pp_value)) return;
 		this.cache_player_params.push(pp_value);
-		let res_e=decode_b64_proto_obj(pp_dec);
+		let res_e=this.decode_b64_proto_obj(pp_dec);
 		if(!res_e) {
 			debugger;
 			return;
@@ -5475,10 +5475,76 @@ class HandleTypes extends ServiceData {
 		const {playerOverlayRenderer,...y}=x; this.g(y);
 		this.PlayerOverlay(playerOverlayRenderer);
 	}
-	/** @arg {{}} x */
+	/** @arg {PlayerOverlay} x */
 	PlayerOverlay(x) {
 		this.save_keys("[PlayerOverlay]",x);
-		const {...y}=x; this.g(y);
+		const {endScreen,shareButton,addToMenu,videoDetails,decoratedPlayerBarRenderer,...y}=x; this.g(y);
+		this.WatchNextEndScreenRenderer(endScreen);
+		this.ButtonRenderer(shareButton);
+		this.MenuRenderer(addToMenu);
+		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
+		this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
+	}
+	/** @arg {DecoratedPlayerBarRenderer} x */
+	DecoratedPlayerBarRenderer(x) {
+		this.save_keys("[DecoratedPlayerBarRenderer]",x);
+		const {decoratedPlayerBarRenderer,...y}=x; this.g(y);
+		this.DecoratedPlayerBar(decoratedPlayerBarRenderer);
+	}
+	/** @arg {DecoratedPlayerBar} x */
+	DecoratedPlayerBar(x) {
+		this.save_keys("[DecoratedPlayerBar]",x);
+	}
+	/** @arg {PlayerOverlayVideoDetailsRenderer} x */
+	PlayerOverlayVideoDetailsRenderer(x) {
+		this.save_keys("[PlayerOverlayVideoDetailsRenderer]",x);
+		const {playerOverlayVideoDetailsRenderer,...y}=x; this.g(y);
+		this.PlayerOverlayVideoDetails(playerOverlayVideoDetailsRenderer);
+	}
+	/** @arg {PlayerOverlayVideoDetails} x */
+	PlayerOverlayVideoDetails(x) {
+		this.save_keys("[PlayerOverlayVideoDetails]",x);
+	}
+	/** @arg {MenuRenderer} x */
+	MenuRenderer(x) {
+		this.save_keys("[MenuRenderer]",x);
+		const {menuRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {MenuData} x */
+	MenuData(x) {
+		this.save_keys("[MenuData]",x);
+		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
+		this.trackingParams(trackingParams);
+		this.Accessibility(accessibility);
+	}
+	/** @arg {Accessibility} x */
+	Accessibility(x) {
+		x.accessibilityData;
+	}
+	/** @arg {AccessibilityData} x */
+	AccessibilityData(x) {
+		const {label,...y}=x; this.g(y);
+		if(label) this.primitive_of(label,"string");
+	}
+	/** @arg {ButtonRenderer} x */
+	ButtonRenderer(x) {
+		this.save_keys("[ButtonRenderer]",x);
+		const {buttonRenderer,...y}=x; this.g(y);
+		this.ButtonData(buttonRenderer);
+	}
+	/** @arg {ButtonData} x */
+	ButtonData(x) {
+		this.save_keys("[ButtonData]",x);
+	}
+	/** @arg {WatchNextEndScreenRenderer} x */
+	WatchNextEndScreenRenderer(x) {
+		this.save_keys("[WatchNextEndScreenRenderer]",x);
+		const {watchNextEndScreenRenderer,...y}=x; this.g(y);
+		this.WatchNextEndScreen(watchNextEndScreenRenderer);
+	}
+	/** @arg {WatchNextEndScreen} x */
+	WatchNextEndScreen(x) {
+		this.save_keys("[WatchNextEndScreen]",x);
 	}
 	/** @arg {CurrentVideoEndpoint} x */
 	CurrentVideoEndpoint(x) {

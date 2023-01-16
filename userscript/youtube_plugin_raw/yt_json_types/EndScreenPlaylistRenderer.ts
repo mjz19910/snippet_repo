@@ -1,0 +1,3 @@
+type EndScreenPlaylistRenderer={
+	endScreenPlaylistRenderer: EndScreenPlaylist;
+};

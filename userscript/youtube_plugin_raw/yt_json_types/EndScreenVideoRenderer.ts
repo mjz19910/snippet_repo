@@ -1,0 +1,3 @@
+type EndScreenVideoRenderer={
+	endScreenVideoRenderer: EndScreenVideo;
+};

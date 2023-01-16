@@ -1,0 +1,3 @@
+type PlayerOverlayVideoDetailsRenderer={
+	playerOverlayVideoDetailsRenderer: PlayerOverlayVideoDetails;
+};

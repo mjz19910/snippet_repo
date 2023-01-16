@@ -1,3 +1,1 @@
-type PlayerOverlayRenderer={
-	playerOverlayRenderer: {};
-};
+type PlayerOverlayRenderer={playerOverlayRenderer: PlayerOverlay;};

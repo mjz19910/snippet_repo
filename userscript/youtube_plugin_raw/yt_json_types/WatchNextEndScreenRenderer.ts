@@ -1,0 +1,3 @@
+type WatchNextEndScreenRenderer={
+	watchNextEndScreenRenderer: WatchNextEndScreen;
+};
