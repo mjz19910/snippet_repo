@@ -1,1 +1,1 @@
-type CurrentVideoEndpoint={};
+type CurrentVideoEndpoint=WatchEndpoint;

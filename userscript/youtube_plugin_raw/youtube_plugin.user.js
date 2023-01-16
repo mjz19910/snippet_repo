@@ -5467,6 +5467,13 @@ class HandleTypes extends ServiceData {
 	/** @arg {CurrentVideoEndpoint} x */
 	CurrentVideoEndpoint(x) {
 		this.save_keys("[CurrentVideoEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.WatchEndpointCommandMetadata(commandMetadata);
+	}
+	/** @arg {WatchEndpointCommandMetadata} x */
+	WatchEndpointCommandMetadata(x) {
+		this.save_keys("[WatchEndpointCommandMetadata]",x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
