@@ -5490,7 +5490,7 @@ class HandleTypes extends ServiceData {
 	/** @arg {WatchEndpointCommandMetadata} x */
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
-		const {...y}=x; this.g(y);
+		const {webCommandMetadata,...y}=x; this.g(y);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
