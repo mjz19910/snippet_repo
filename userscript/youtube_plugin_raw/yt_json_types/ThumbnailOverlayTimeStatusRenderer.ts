@@ -1,3 +1,5 @@
+type ThumbnailOverlayTimeStatus={};
+
 type ThumbnailOverlayTimeStatusRenderer={
-	thumbnailOverlayTimeStatusRenderer: {};
+	thumbnailOverlayTimeStatusRenderer: ThumbnailOverlayTimeStatus;
 };

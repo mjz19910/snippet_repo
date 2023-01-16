@@ -5657,6 +5657,28 @@ class HandleTypes extends ServiceData {
 		this.save_keys("[EndScreenVideo]",x);
 		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=x; this.g(y);
 		this.x.get("parser_service").parse_video_id(videoId);
+		this.Thumbnail(thumbnail);
+		this.SimpleText(title);
+		this.z(thumbnailOverlays,a=>this.ThumbnailOverlayTimeStatusRenderer(a));
+		this.TextT(shortBylineText);
+	}
+	/** @arg {TextT} x */
+	TextT(x) {
+		const {runs,...y}=x; this.g(y);
+		this.z(runs,a=>{
+			const {text,...b}=a; this.g(b);
+			this.primitive_of(text,"string");
+		});
+	}
+	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
+	ThumbnailOverlayTimeStatusRenderer(x) {
+		this.save_keys("[ThumbnailOverlayTimeStatusRenderer]",x);
+		const {thumbnailOverlayTimeStatusRenderer,...y}=x; this.g(y);
+		this.ThumbnailOverlayTimeStatus(thumbnailOverlayTimeStatusRenderer);
+	}
+	/** @arg {ThumbnailOverlayTimeStatus} x */
+	ThumbnailOverlayTimeStatus(x) {
+		x;
 	}
 	/** @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
