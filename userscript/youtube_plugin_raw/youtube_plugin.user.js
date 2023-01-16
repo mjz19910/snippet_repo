@@ -700,12 +700,13 @@ class Base64Binary {
 		var j=0;
 
 		let prev_len=input.length;
-		input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
-		if(prev_len!==input.length) {
+		let new_input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
+		if(prev_len!==new_input.length) {
 			console.log("removed %o non base64 chars",prev_len-input.length);
 			debugger;
 			throw new Error("Bad");
 		}
+		input=new_input;
 
 		for(i=0;i<byte_len;i+=3) {
 			//get the 3 octets in 4 ascii chars
@@ -4947,13 +4948,16 @@ class HandleTypes extends ServiceData {
 	log_url=false;
 	/** @arg {BrowsePageResponse} x */
 	BrowsePageResponse(x) {
-		const {rootVe,url,endpoint,page,response,expirationTime,...y}=x; this.g(y);
+		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(rootVe) this.save_number("[BrowsePageResponse.rootVe]",rootVe);
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.BrowseEndpoint(x.endpoint);
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
 		if(expirationTime) this.primitive_of(expirationTime,"number");
+		if(previousCsn!==void 0) {
+			console.log(base64_dec.decode_str(previousCsn));
+		}
 		this.save_keys("[BrowsePageResponse]",x);
 	}
 	/** @arg {BrowseResponse} x */

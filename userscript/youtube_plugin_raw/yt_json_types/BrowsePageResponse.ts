@@ -5,4 +5,5 @@ type BrowsePageResponse={
 	page: "browse";
 	response: BrowseResponse;
 	expirationTime?: number;
+	previousCsn?: string;
 };
