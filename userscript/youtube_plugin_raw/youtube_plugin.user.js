@@ -3907,6 +3907,7 @@ class CodegenService extends BaseService {
 		const max_str_len=40;
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
+			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(typeof o==="string") {
 				if(o.length>max_str_len) {
 					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
@@ -3927,7 +3928,6 @@ class CodegenService extends BaseService {
 					debugger;
 					return "TYPE::string";
 				}
-				if(k1==="responseContext") return "TYPE::ResponseContext";
 				if(k1=="videoId") {console.log("[video_id_json]",o); return "TYPE::string";}
 				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 				return o;
