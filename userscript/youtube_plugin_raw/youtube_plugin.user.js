@@ -2997,7 +2997,7 @@ class YtHandlers extends BaseService {
 		}
 		if(is_yt_debug_enabled) console.log("[initial_data]",ret);
 		this.handle_any_data(`page_type_${ret.page}`,as(ret));
-		this.x.get("handle_types").DataResponsePageType(ret);
+		// this.x.get("handle_types").DataResponsePageType(ret);
 		this.iteration.default_iter({t: this,path: ret.page},ret);
 		let page_type=window.ytPageType;
 		if(!page_type) {
@@ -3959,7 +3959,7 @@ class CodegenService extends BaseService {
 				return `TYPE::Icon<"${o.iconType}">`;
 			}
 			if(o.browseEndpoint) {
-				return `TYPE::BrowseEndpoint<never>`;
+				return `TYPE::BrowseEndpoint`;
 			}
 			if(keys.includes(k1)) {
 				if(o instanceof Array) return [o[0]];
