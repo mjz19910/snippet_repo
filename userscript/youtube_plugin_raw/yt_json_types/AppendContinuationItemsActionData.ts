@@ -1,1 +1,6 @@
-type AppendContinuationItemsActionData=WatchNextContinuationAction|CommentsSectionContinuationAction|BrowseFeedAction;
+type AppendContinuationItemsActionData=
+	|WatchNextContinuationAction
+	|CommentsSectionContinuationAction
+	|CommentRepliesItem
+	|BrowseFeedAction
+	;
