@@ -5491,6 +5491,17 @@ class HandleTypes extends ServiceData {
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
+		this.VE3832_WebCommandMetadata(webCommandMetadata);
+	}
+	/** @arg {VE3832_WebCommandMetadata} x */
+	VE3832_WebCommandMetadata(x) {
+		this.save_keys("[VE3832_WebCommandMetadata]",x);
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		this.rootVe(rootVe);
+	}
+	/** @arg {keyof VEMap} x */
+	rootVe(x) {
+		this.on_root_visual_element(x);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
