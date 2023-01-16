@@ -5732,15 +5732,19 @@ class HandleTypes extends ServiceData {
 		this.x.get("parser_service").parse_playlist_id(playlistId);
 		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
-		if("simpleText" in longBylineText) {
-			this.SimpleText(longBylineText);
-		} else {
-			this.TextWithRuns(longBylineText);
-		}
+		this.TextT(longBylineText);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
 		this.TextWithRuns(videoCountText);
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
+	}
+	/** @arg {TextT} x */
+	TextT(x) {
+		if("simpleText" in x) {
+			this.SimpleText(x);
+		} else {
+			this.TextWithRuns(x);
+		}
 	}
 	/** @arg {SimpleText} x */
 	SimpleText(x) {
