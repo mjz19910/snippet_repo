@@ -5550,7 +5550,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {FeedbackEndpointData} x */
 	FeedbackEndpointData(x) {
-		x;
+		this.save_keys("[FeedbackEndpointData]",x);
 	}
 	/** @template {string} T @arg {Icon<T>} x */
 	Icon(x) {
