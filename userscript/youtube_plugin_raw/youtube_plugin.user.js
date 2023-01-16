@@ -5643,6 +5643,7 @@ class HandleTypes extends ServiceData {
 	EndScreenVideoRenderer(x) {
 		this.save_keys("[EndScreenPlaylistRenderer]",x);
 		const {endScreenVideoRenderer,...y}=x; this.g(y);
+		this.EndScreenVideo(endScreenVideoRenderer);
 	}
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
@@ -5653,6 +5654,7 @@ class HandleTypes extends ServiceData {
 	EndScreenPlaylistRenderer(x) {
 		this.save_keys("[EndScreenPlaylistRenderer]",x);
 		const {endScreenPlaylistRenderer,...y}=x; this.g(y);
+		this.EndScreenPlaylist(endScreenPlaylistRenderer);
 	}
 	/** @arg {EndScreenPlaylist} x */
 	EndScreenPlaylist(x) {
