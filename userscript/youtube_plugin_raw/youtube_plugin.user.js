@@ -5705,11 +5705,12 @@ class HandleTypes extends ServiceData {
 	/** @arg {EndScreenPlaylist} x */
 	EndScreenPlaylist(x) {
 		this.save_keys("[EndScreenPlaylist]",x);
-		const {playlistId,title,thumbnail,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y);
+		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y);
 		this.x.get("parser_service").parse_playlist_id(playlistId);
 		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
 		this.SimpleText(longBylineText);
+		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
 		this.TextT(videoCountText);
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
