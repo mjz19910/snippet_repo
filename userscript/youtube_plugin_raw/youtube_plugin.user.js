@@ -5352,6 +5352,7 @@ class HandleTypes extends ServiceMethods {
 			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
+			if(x.type==="browse.edit_playlist") break x;
 			debugger;
 		}
 		switch(x.type) {
