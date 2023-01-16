@@ -5701,6 +5701,8 @@ class HandleTypes extends ServiceData {
 	WatchEndpoint(x) {
 		this.save_keys("[WatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.WatchEndpointCommandMetadata(commandMetadata);
 		this.WatchEndpointData(watchEndpoint);
 	}
 	/** @arg {WatchEndpointData} x */
@@ -5840,6 +5842,8 @@ class HandleTypes extends ServiceData {
 	VE3832_WebCommandMetadata(x) {
 		this.save_keys("[VE3832_WebCommandMetadata]",x);
 		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		if(!this.str_starts_with(url,"/watch?")) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		this.rootVe(rootVe);
 	}
 	/** @arg {keyof VEMap} x */
