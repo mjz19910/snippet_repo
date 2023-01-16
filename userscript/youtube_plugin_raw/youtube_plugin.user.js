@@ -5798,6 +5798,7 @@ class HandleTypes extends ServiceData {
 	}
 	/** @arg {VE3611_WebCommandMetadata} x */
 	VE3611_WebCommandMetadata(x) {
+		this.save_keys("[VE3611_WebCommandMetadata]",x);
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		if(this.str_starts_with(url,"/@")) {
 		} else if(this.str_starts_with(url,"/channel/UC")) {
