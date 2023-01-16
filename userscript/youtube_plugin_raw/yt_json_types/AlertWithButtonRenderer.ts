@@ -1,0 +1,3 @@
+type AlertWithButtonRenderer={
+	alertWithButtonRenderer: AlertWithButton;
+};

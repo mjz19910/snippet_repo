@@ -5055,14 +5055,31 @@ class HandleTypes extends ServiceMethods {
 		if(microformat) this.MicroformatDataRenderer(microformat);
 		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
 		if(background) this.MusicThumbnailRenderer(background);
-		const {continuationContents,...y}=y3; this.g(y);
-		if(continuationContents) {
-			if("sectionListContinuation" in continuationContents) {
-				this.SectionListContinuation(continuationContents);
-			} else {
-				debugger;
-			}
+		const {continuationContents,alerts,...y}=y3; this.g(y);
+		if(continuationContents) this.ContinuationContents(continuationContents);
+		if(alerts) this.z(alerts,this.AlertWithButtonRenderer);
+	}
+	/** @arg {AlertWithButtonRenderer} x */
+	AlertWithButtonRenderer(x) {
+		const {alertWithButtonRenderer,...y}=x; this.g(y);
+		this.AlertWithButton(alertWithButtonRenderer);
+	}
+	/** @arg {AlertWithButton} x */
+	AlertWithButton(x) {
+		const {type,text,dismissButton,...y}=x; this.g(y);
+		switch(type) {
+			case "INFO": break;
+			default: debugger;
 		}
+		this.SimpleText(text);
+		this.ButtonRenderer(dismissButton);
+	}
+	/** @arg {SectionListContinuation} x */
+	ContinuationContents(x) {
+		if("sectionListContinuation" in x) {
+			return this.SectionListContinuation(x);
+		}
+		debugger;
 	}
 	/** @arg {SectionListContinuation} x */
 	SectionListContinuation(x) {

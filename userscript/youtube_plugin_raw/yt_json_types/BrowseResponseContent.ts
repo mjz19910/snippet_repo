@@ -1,12 +1,9 @@
-type SectionListContinuation={
-	sectionListContinuation: SectionListData;
-};
-
 type BrowseResponse={
 	responseContext: ResponseContext;
 	contents?: BrowseContents;
 	continuationContents?: SectionListContinuation;
 	header?: BrowseHeader;
+	alerts?: AlertWithButtonRenderer[];
 	metadata?: ChannelMetadataRenderer;
 	trackingParams: string;
 	topbar?: DesktopTopbarRenderer;
