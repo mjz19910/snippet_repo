@@ -5757,8 +5757,7 @@ class HandleTypes extends ServiceData {
 	NavigationEndpoint(x) {
 		this.save_keys("[NavigationEndpoint]",x);
 		if("navigationEndpoint" in x) {
-			this.NavigationEndpointData(x.navigationEndpoint);
-			return;
+			return this.NavigationEndpointData(x.navigationEndpoint);
 		}
 		this.g(x);
 	}
