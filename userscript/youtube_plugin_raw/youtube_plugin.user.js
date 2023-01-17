@@ -5725,6 +5725,7 @@ class HandleTypes extends ServiceMethods {
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
 			if(x.type==="browse.edit_playlist") break x;
+			if(x.type==="updated_metadata") break x;
 			debugger;
 		}
 		switch(x.type) {
@@ -5764,7 +5765,24 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdatedMetadata} x */
 	UpdatedMetadata(x) {
-		x;
+		this.save_keys(`[UpdatedMetadata]`,x);
+		const {responseContext: {},continuation,actions,...y}=x; this.g(y);
+		this.TimedContinuationData(continuation);
+		this.z(actions,a => {
+			console.log(a);
+		});
+	}
+	/** @arg {TimedContinuationData} x */
+	TimedContinuationData(x) {
+		this.save_keys(`[TimedContinuationData]`,x);
+		this.TimedContinuationDataInner(x.timedContinuationData);
+	}
+	/** @arg {TimedContinuationDataInner} x */
+	TimedContinuationDataInner(x) {
+		this.save_keys(`[TimedContinuationDataInner]`,x);
+		const {timeoutMs,continuation,...y}=x; this.g(y);
+		this.primitive_of(timeoutMs,"number");
+		this.primitive_of(continuation,"string");
 	}
 	/** @arg {SearchApiResponse} x */
 	SearchApiResponse(x) {
