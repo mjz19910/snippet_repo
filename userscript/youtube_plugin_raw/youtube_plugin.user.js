@@ -5121,11 +5121,12 @@ class HandleTypes extends ServiceMethods {
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=x; this.g(y);
 		this.primitive_of(visitorData,"string");
 		if(sessionIndex!==0) debugger;
-		/** @type {`${rootVisualElementType}`} */
+		/** @type {`${typeof rootVisualElementType}`} */
 		let s=`${rootVisualElementType}`;
 		switch(s) {
 			case "3832": break;
 			case "3854": break;
+			case "4724": break;
 			case "5754": break;
 			case "6827": break;
 			case "23462": break;

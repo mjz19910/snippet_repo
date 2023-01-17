@@ -7,6 +7,7 @@ type VEMap={
 		CommandMetadata: VE3611_CommandMetadata;
 	};
 	3854: never;
+	4724: never;
 	5754: never;
 	6827: never;
 	11487: never;
