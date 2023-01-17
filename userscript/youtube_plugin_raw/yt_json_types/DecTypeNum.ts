@@ -4,7 +4,7 @@ type DecTypeNum=
 	["data64",number,bigint]|
 	["data_fixed64",number,bigint]|
 	["info",number,number]|
-	["child",number,Uint8Array]|
+	["child",number,Uint8Array,DecTypeNum[]|null]|
 	["struct",number,DecTypeNum[]]|
 	["group",number,DecTypeNum[]]|
 	["error",number];

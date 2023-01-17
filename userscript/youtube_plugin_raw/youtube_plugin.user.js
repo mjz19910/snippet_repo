@@ -775,18 +775,41 @@ class MyReader {
 	}
 	/** @arg {number} [size] */
 	reset_and_read_any(size) {
+		let prev_pos=this.pos;
+		let prev_len=this.cur_len;
 		this.pos=0;
-		return this.read_any(size);
-	}
-	cur_len=0;
-	/** @private @arg {number} [size] */
-	read_any(size) {
-		this.failed=false;
 		if(!size) {
 			this.cur_len=this.len;
 		} else {
 			this.cur_len=this.pos+size;
 		}
+		try {
+			return this.read_any_impl();
+		} finally {
+			this.pos=prev_pos;
+			this.cur_len=prev_len;
+		}
+	}
+	/** @arg {number} [size] */
+	read_any(size) {
+		let prev_pos=this.pos;
+		let prev_len=this.cur_len;
+		if(!size) {
+			this.cur_len=this.len;
+		} else {
+			this.cur_len=this.pos+size;
+		}
+		try {
+			return this.read_any_impl();
+		} finally {
+			this.pos=prev_pos;
+			this.cur_len=prev_len;
+		}
+	}
+	cur_len=0;
+	/** @private */
+	read_any_impl() {
+		this.failed=false;
 		/** @private @type {DataArrType} */
 		let data=[];
 		let loop_count=0;
@@ -1025,7 +1048,9 @@ class MyReader {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 				}
-				first_num.push(["child",fieldId,sub_buffer]);
+				let res=this.try_read_any(size);
+				/** @type {DecTypeNum} */
+				first_num.push(["child",fieldId,sub_buffer,res]);
 			} break;
 			case 3: {
 				let res;
