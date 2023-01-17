@@ -4983,8 +4983,11 @@ class HandleTypes extends ServiceMethods {
 			const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y);
 			if(rootVe!==3832) debugger;
 			let wp_params=this.parse_watch_page_url(url);
-			this.save_keys(`[${cf}.wp_params]`,wp_params);
+			this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
 			this.WatchEndpoint(endpoint);
+			if(preconnect.length!==1) debugger;
+			this.PlayerResponse(playerResponse);
+			this.WatchResponse(response);
 			return;
 		}
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
