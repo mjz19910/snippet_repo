@@ -1,6 +1,7 @@
 type PlaylistPanel={
 	title: "YouTube Mix";
 	contents: PlaylistPanelVideoRenderer[];
+	currentIndex: number;
 	playlistId: `RD${string}`;
 	isInfinite: true;
 	continuations: NextRadioContinuationData[];
