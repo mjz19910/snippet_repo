@@ -5716,13 +5716,38 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
 		this.save_keys("[NextResponse]",x);
-		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
-		if(contents) this.TwoColumnWatchNextResults(contents);
+		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
+		if(contents) this.NextResponseContents(contents);
 		if(currentVideoEndpoint) this.CurrentVideoEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
 		if(engagementPanels) this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
+		const {videoReporting,queueContextParams,...y1}=y; this.g(y1);
+		if(videoReporting) this.ReportFormModalRenderer(videoReporting);
+	}
+	/** @arg {ReportFormModalRenderer} x */
+	ReportFormModalRenderer(x) {
+		x;
+	}
+	/** @arg {NextResponseContents} x */
+	NextResponseContents(x) {
+		if("twoColumnWatchNextResults" in x) {
+			return this.TwoColumnWatchNextResults(x);
+		} else if("singleColumnMusicWatchNextResultsRenderer" in x) {
+			return this.SingleColumnMusicWatchNextResultsRenderer(x);
+		}
+		debugger;
+	}
+	/** @arg {SingleColumnMusicWatchNextResultsRenderer} x */
+	SingleColumnMusicWatchNextResultsRenderer(x) {
+		this.save_keys("[SingleColumnMusicWatchNextResultsRenderer]",x);
+		this.TabbedRenderer(x.singleColumnMusicWatchNextResultsRenderer);
+	}
+	/** @arg {TabbedRenderer} x */
+	TabbedRenderer(x) {
+		this.save_keys("[TabbedRenderer]",x);
+		debugger;
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanelSectionListRenderer(x) {

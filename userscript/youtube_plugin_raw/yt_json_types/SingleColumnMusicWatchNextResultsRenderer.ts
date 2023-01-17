@@ -1,0 +1,3 @@
+type SingleColumnMusicWatchNextResultsRenderer={
+	singleColumnMusicWatchNextResultsRenderer: TabbedRenderer;
+};

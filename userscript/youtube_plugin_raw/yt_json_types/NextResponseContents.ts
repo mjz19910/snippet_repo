@@ -1,0 +1,1 @@
+type NextResponseContents=TwoColumnWatchNextResults|SingleColumnMusicWatchNextResultsRenderer;
