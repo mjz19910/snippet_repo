@@ -681,13 +681,6 @@ class HandleRichGridRenderer {
 		}
 	}
 }
-/** @private @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
-function parse_url_search_params(t) {
-	let sp=new URLSearchParams(t);
-	/** @private @type {any} */
-	let as_any=Object.fromEntries(sp.entries());
-	return as_any;
-}
 class Base64Binary {
 	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	/* will return a  Uint8Array type */
@@ -1052,15 +1045,6 @@ class MyReader {
 	}
 }
 const base64_dec=new Base64Binary();
-/** @private @template {string} T @arg {T} str @returns {UrlParse<T>} */
-function create_from_parse(str) {
-	let s=new URL(str);
-	/** @private @type {any} */
-	let a=s;
-	/** @private @type {UrlParse<T>} */
-	let ret=a;
-	return ret;
-}
 /** @private @type {any[]} */
 let blob_create_args_arr=[];
 let leftover_args=[];
@@ -2170,6 +2154,13 @@ class ApiBase {
 		}
 		return true;
 	}
+	/** @template {string} T @arg {T} t @returns {ParseUrlSearchParams<T>} */
+	parse_url_search_params(t) {
+		let sp=new URLSearchParams(t);
+		/** @private @type {any} */
+		let as_any=Object.fromEntries(sp.entries());
+		return as_any;
+	}
 	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
 	get_keys_of(obj) {
 		if(!obj) {
@@ -2525,6 +2516,15 @@ class BaseServicePrivate extends ApiBase {
 	#x;
 }
 class BaseService extends BaseServicePrivate {
+	/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
+	parse_with_url_parse(str) {
+		let s=new URL(str);
+		/** @private @type {any} */
+		let a=s;
+		/** @private @type {UrlParse<T>} */
+		let ret=a;
+		return ret;
+	}
 	/** @public @arg {string} str */
 	decode_b64_proto_obj(str) {
 		let buffer=base64_dec.decodeByteArray(str);
@@ -2672,7 +2672,7 @@ class YtHandlers extends BaseService {
 	}
 	/** @private @arg {ApiUrlFormatFull} x */
 	use_template_url(x) {
-		const res_parse=create_from_parse(x);
+		const res_parse=this.parse_with_url_parse(x);
 		if("_tag" in res_parse) {
 			console.log("parse failed (should never happen)",x,res_parse);
 			throw new Error("unreachable");
@@ -2962,7 +2962,7 @@ class YtHandlers extends BaseService {
 		/** @private @type {ApiUrlFormatFull} */
 		let api_url=as(parsed_url.href);
 		let url_type=this.use_template_url(api_url);
-		const res_parse=create_from_parse(api_url);
+		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
 			if(this.str_starts_with(ss1,"youtubei/v1/")) {
@@ -4177,7 +4177,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {`query=${string}`} x */
 	parse_channel_search_url(x) {
-		let sp=parse_url_search_params(x);
+		let sp=this.parse_url_search_params(x);
 		if(!this.eq_keys(this.get_keys_of(sp),["query"])) debugger;
 		console.log("[found_search_query]",sp.query);
 	}
@@ -4221,7 +4221,7 @@ class ParserService extends BaseService {
 			case "ads": {
 				/** @type {ApiStatsAdsArgs} */
 				let sp=as(a[1]);
-				let v=parse_url_search_params(sp);
+				let v=this.parse_url_search_params(sp);
 				// spell:disable-next
 				const {ver,ns,event,device,content_v,el,ei,devicever,bti,break_type,conn,cpn,lact,m_pos,mt,p_h,p_w,rwt,sdkv,slot_pos,vis,vol,wt,sli,slfs,loginael,...y}=v; this.g(y);
 			} break;
@@ -4379,7 +4379,7 @@ class ParserService extends BaseService {
 	cache_player_params=[];
 	/** @private @arg {Extract<YtUrlFormat,`https://${string}`>} x */
 	parse_full_url(x) {
-		let r=create_from_parse(x);
+		let r=this.parse_with_url_parse(x);
 		switch(r.host) {
 			case "ad.doubleclick.net": return;
 			case "www.googleadservices.com": return;
@@ -4986,6 +4986,8 @@ class HandleTypes extends ServiceMethods {
 			this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
 			this.WatchEndpoint(endpoint);
 			if(preconnect.length!==1) debugger;
+			let pc_url=preconnect[0];
+			pc_url;
 			this.PlayerResponse(playerResponse);
 			this.WatchResponse(response);
 			return;
@@ -5002,7 +5004,7 @@ class HandleTypes extends ServiceMethods {
 	parse_watch_page_url(x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
-		let u3=parse_url_search_params(u2);
+		let u3=this.parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
 		x: {
 			if(this.eq_keys(u4,["v"])) break x;
