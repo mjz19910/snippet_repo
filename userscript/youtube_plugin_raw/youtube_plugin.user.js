@@ -775,36 +775,28 @@ class MyReader {
 	}
 	/** @arg {number} [size] */
 	reset_and_read_any(size) {
-		let prev_pos=this.pos;
-		let prev_len=this.cur_len;
-		this.pos=0;
-		if(!size) {
-			this.cur_len=this.len;
-		} else {
-			this.cur_len=this.pos+size;
-		}
-		try {
-			return this.read_any_impl();
-		} finally {
-			this.pos=prev_pos;
-			this.cur_len=prev_len;
-			this.failed=false;
-		}
+		return this.read_any(size,0);
 	}
-	/** @arg {number} [size] */
-	read_any(size) {
+	/** @type {boolean} */
+	failed=false;
+	/** @arg {number} [size] @arg {number} [pos] */
+	read_any(size,pos) {
+		let was_failed=this.failed;
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
+		if(pos!==void 0) this.pos=pos;
 		if(!size) {
 			this.cur_len=this.len;
 		} else {
 			this.cur_len=this.pos+size;
 		}
+		this.failed=false;
 		try {
 			return this.read_any_impl();
 		} finally {
 			this.pos=prev_pos;
 			this.cur_len=prev_len;
+			this.failed=was_failed;
 		}
 	}
 	cur_len=0;
