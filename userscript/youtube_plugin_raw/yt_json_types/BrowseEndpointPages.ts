@@ -6,6 +6,7 @@ type BrowseEndpointPages=
 	|"music_home"
 	|"music_library_landing"
 	|"music_moods_and_genres"
+	|"music_moods_and_genres_category"
 	|"music_new_releases"
 	|"storefront"
 	|"subscriptions"
