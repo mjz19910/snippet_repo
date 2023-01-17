@@ -6482,7 +6482,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
 		this.save_keys("[NavigationEndpoint]",x);
-		return this.NavigationEndpointData(x.navigationEndpoint);
+		const {navigationEndpoint,...y}=x; this.g(y);
+		return this.NavigationEndpointData(navigationEndpoint);
 	}
 	/** @arg {NavigationEndpointData} x */
 	NavigationEndpointData(x) {
