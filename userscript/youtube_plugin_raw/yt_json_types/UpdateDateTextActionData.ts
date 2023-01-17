@@ -1,0 +1,3 @@
+type UpdateDateTextActionData={
+	dateText: SimpleText;
+};

@@ -1,0 +1,3 @@
+type UpdateDescriptionActionData={
+	description: TextWithRuns;
+};

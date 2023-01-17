@@ -1,0 +1,3 @@
+type UpdateViewershipActionData={
+	viewCount: VideoViewCountRenderer;
+};

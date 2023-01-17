@@ -1,3 +1,1 @@
-type UpdateToggleButtonTextAction={
-	updateToggleButtonTextAction: {};
-};
+type UpdateToggleButtonTextAction={updateToggleButtonTextAction: UpdateToggleButtonTextActionData;};

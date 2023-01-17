@@ -5769,8 +5769,33 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y);
 		this.TimedContinuationData(continuation);
 		this.z(actions,a => {
+			if("updateViewershipAction" in a) {
+				return this.UpdateViewershipAction(a);
+			} else if("updateToggleButtonTextAction" in a) {
+				return this.UpdateToggleButtonTextAction(a);
+			} else if("updateDateTextAction" in a) {
+				return this.UpdateDateTextAction(a);
+			} else if("updateTitleAction" in a) {
+				return this.UpdateTitleAction(a);
+			} else if("updateDescriptionAction" in a) {
+				return this.UpdateDescriptionAction(a);
+			}
 			console.log(a);
 		});
+	}
+	UpdateToggleButtonTextAction(x) {
+		x;
+	}
+	/** @arg {UpdateViewershipAction} x */
+	UpdateViewershipAction(x) {
+		let x1=x.updateViewershipAction;
+		this.VideoViewCountRenderer(x1.viewCount);
+	}
+	/** @arg {VideoViewCountRenderer} x */
+	VideoViewCountRenderer(x) {
+		let x1=x.videoViewCountRenderer;
+		this.SimpleText(x1.shortViewCount);
+		this.SimpleText(x1.viewCount);
 	}
 	/** @arg {TimedContinuationData} x */
 	TimedContinuationData(x) {

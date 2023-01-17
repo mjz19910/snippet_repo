@@ -1,3 +1,1 @@
-type UpdateDateTextAction={
-	updateDateTextAction: {};
-};
+type UpdateDateTextAction={updateDateTextAction: UpdateDateTextActionData;};

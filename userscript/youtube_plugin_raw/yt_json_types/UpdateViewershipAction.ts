@@ -1,3 +1,1 @@
-type UpdateViewershipAction={
-	updateViewershipAction: {};
-};
+type UpdateViewershipAction={updateViewershipAction: UpdateViewershipActionData;};

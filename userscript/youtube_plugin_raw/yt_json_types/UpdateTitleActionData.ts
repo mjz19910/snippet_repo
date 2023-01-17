@@ -1,0 +1,3 @@
+type UpdateTitleActionData={
+	title: TextWithRuns;
+};
