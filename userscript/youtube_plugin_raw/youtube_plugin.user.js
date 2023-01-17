@@ -5880,6 +5880,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(playlistSetVideoId,"string");
 		const {thumbnailOverlays,canReorder,...y7}=y6;
 		if(thumbnailOverlays) this.z(thumbnailOverlays,this.ThumbnailOverlayResumePlaybackRenderer);
+		if(canReorder!==void 0&&!canReorder) debugger; 
 		this.g(y7);
 	}
 	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
