@@ -6113,7 +6113,6 @@ class HandleTypes extends ServiceMethods {
 	LikeApiData(x) {
 		this.save_keys("[LikeApiData]",x);
 		this.videoId(x.videoId);
-		this.browseId
 	}
 	/** @arg {string} x */
 	videoId(x) {
