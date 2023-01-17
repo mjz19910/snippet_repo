@@ -3372,7 +3372,7 @@ class ECatcherService extends BaseService {
 				[24590921,24591046,24591048],
 				[24612269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 				[39321826,39321827],
-				[39322504,39322574,39322870,39322873,39322980,39322983],
+				[39322504,39322574,39322870,39322873,39322953,39322980,39322983],
 				[39323013,39323016,39323020,39323023,39323117,39323120],
 				[45686551],
 				[],
@@ -5758,8 +5758,13 @@ class HandleTypes extends ServiceMethods {
 			case "subscription.subscribe": return this.SubscribeResponse(x.data);
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
 			case "search": return this.SearchApiResponse(x.data);
+			case "updated_metadata": return this.UpdatedMetadata(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {UpdatedMetadata} x */
+	UpdatedMetadata(x) {
+		x;
 	}
 	/** @arg {SearchApiResponse} x */
 	SearchApiResponse(x) {
