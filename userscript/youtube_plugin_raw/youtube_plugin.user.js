@@ -3681,6 +3681,7 @@ class IndexedDbAccessor extends BaseService {
 			console.log("[new_data_after_tx_complete]",this.arr);
 		} else {
 			this.committed_data.length=0;
+			this.index.clear();
 		}
 		this.database_open=false;
 		db.close();
