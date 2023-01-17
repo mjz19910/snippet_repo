@@ -4931,6 +4931,10 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @arg {PlaylistId} x */
+	playlistId(x) {
+		this.x.get("parser_service").parse_playlist_id(x);
+	}
 	/** @public @arg {keyof VEMap} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
@@ -5858,10 +5862,6 @@ class HandleTypes extends ServiceMethods {
 	PlaylistPanelVideo(x) {
 		this.save_keys("[PlaylistPanelVideo]",x);
 		debugger;
-	}
-	/** @arg {PlaylistId} x */
-	playlistId(x) {
-		this.x.get("parser_service").parse_playlist_id(x);
 	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {
