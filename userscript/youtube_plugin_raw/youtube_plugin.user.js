@@ -3600,11 +3600,11 @@ class IndexedDbAccessor extends BaseService {
 	put(obj) {
 		if(!obj) {debugger; return;}
 		if(!this.database_open) this.requestOpen();
-		if(this.arr.length!==this.arr.reduce((r)=>r+1,0)) {
+		if(this.arr.length!==this.arr.reduce((r) => r+1,0)) {
 			debugger;
 		}
 		this.push_waiting_obj(obj);
-		if(this.arr.length!==this.arr.reduce((r)=>r+1,0)) {
+		if(this.arr.length!==this.arr.reduce((r) => r+1,0)) {
 			debugger;
 		}
 	}
@@ -5859,7 +5859,7 @@ class HandleTypes extends ServiceMethods {
 		const {isEditable,previewDescription,numItemsToShow,...y5}=y4; this.g(y5);
 		if(isEditable!==true) debugger;
 		if(previewDescription) this.g(previewDescription);
-		if(numItemsToShow!==25) debugger;
+		if(numItemsToShow!==void 0&&numItemsToShow!==25) debugger;
 	}
 	/** @arg {PlaylistPanelItem} x */
 	PlaylistPanelItem(x) {

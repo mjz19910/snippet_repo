@@ -12,5 +12,5 @@ type PlaylistPanel={
 	titleText: TextWithRuns;
 	isEditable: true;
 	previewDescription?: {};
-	numItemsToShow: 25;
+	numItemsToShow?: 25;
 };
