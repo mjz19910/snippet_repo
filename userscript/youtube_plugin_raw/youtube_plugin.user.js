@@ -5813,7 +5813,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VideoViewCountRenderer} x */
 	VideoViewCountRenderer(x) {
 		let x1=x.videoViewCountRenderer;
-		this.SimpleText(x1.shortViewCount);
+		const {shortViewCount,viewCount,...y}=x1; this.g(y);
+		if(shortViewCount) this.SimpleText(shortViewCount);
 		this.SimpleText(x1.viewCount);
 	}
 	/** @arg {TimedContinuationData} x */
@@ -7020,6 +7021,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
 	SimpleText(x,f=this.handle_accessibility) {
+		if(!x) {debugger; return;}
 		if(!("simpleText" in x)) {debugger; return;}
 		this.save_keys("[SimpleText]",x);
 		const {simpleText,...y}=x; f.call(this,y);
