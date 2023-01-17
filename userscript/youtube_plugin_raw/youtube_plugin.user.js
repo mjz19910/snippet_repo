@@ -2803,7 +2803,7 @@ class YtHandlers extends BaseService {
 			default: debugger; break;
 			case "get_live_chat_replay": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChatReplayResponse} */
+				/** @private @type {GetLiveChat} */
 				data: as(x),
 			};
 			case "get_live_chat": return {
@@ -4389,7 +4389,7 @@ class ParserService extends BaseService {
 		}
 		return param_map;
 	}
-	/** @private @arg {string} x */
+	/** @public @arg {string} x */
 	on_player_params(x) {
 		let pp_value=x;
 		let pp_dec=decodeURIComponent(pp_value);
@@ -5730,7 +5730,8 @@ class HandleTypes extends ServiceMethods {
 			case "guide": return this.GuideResponse(x.data);
 			case "like.like": return this.LikeLikeResponse(x.data);
 			case "like.removelike": return this.LikeRemoveLikeResponse(x.data);
-			case "live_chat.get_live_chat_replay": return this.GetLiveChatReplayResponse(x.data);
+			case "live_chat.get_live_chat_replay": return this.GetLiveChat(x.data);
+			case "live_chat.get_live_chat": return this.GetLiveChat(x.data);
 			case "music.get_search_suggestions": return this.GetSearchSuggestions(x.data);
 			case "next": return this.NextResponse(x.data);
 			case "notification.get_notification_menu": return this.GetNotificationMenuResponse(x.data);
@@ -5907,14 +5908,103 @@ class HandleTypes extends ServiceMethods {
 		if(actions) this.z(actions,a => this.Action(a));
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {ReelWatchSequenceResponse} x */
+	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
 		const cf="ReelWatchSequenceResponse";
 		this.save_keys(`[${cf}]`,x);
+		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y);
+		this.z(entries,a => this.CommandTemplate(a,this.ReelWatchEndpoint));
+		this.trackingParams(trackingParams);
+		if(continuationEndpoint) this.ContinuationCommand(continuationEndpoint);
 	}
-	/** @private @arg {GetLiveChatReplayResponse} x */
-	GetLiveChatReplayResponse(x) {
-		this.save_keys("[GetLiveChatReplay]",x);
+	/** @template T @arg {CommandTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	CommandTemplate(x,f) {
+		const cf="CommandTemplate";
+		this.save_keys(`[${cf}]`,x);
+		f.call(this,x.command);
+		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {ReelWatchEndpoint} x */
+	ReelWatchEndpoint(x) {
+		this.save_keys("[ReelWatchEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.g(commandMetadata);
+	}
+	/** @arg {ReelWatchEndpointData} x */
+	ReelWatchEndpointData(x) {
+		this.save_keys("[ReelWatchEndpointData]",x);
+		const {videoId,playerParams,overlay,params,sequenceProvider,inputType,...y}=x; this.g(y);
+		if(videoId) this.videoId(videoId);
+		this.playerParams(playerParams);
+		this.ReelPlayerOverlayRenderer(overlay);
+	}
+	/** @arg {ReelPlayerOverlayRenderer} x */
+	ReelPlayerOverlayRenderer(x) {
+		this.save_keys("[ReelPlayerOverlayRenderer]",x);
+		this.ReelPlayerOverlayData(x.reelPlayerOverlayRenderer);
+	}
+	/** @arg {ReelPlayerOverlayData} x */
+	ReelPlayerOverlayData(x) {
+		this.save_keys("[ReelPlayerOverlayData]",x);
+	}
+	/** @arg {GetLiveChat} x */
+	GetLiveChat(x) {
+		this.save_keys("[GetLiveChat]",x);
+		const {responseContext: {},continuationContents,...y}=x; this.g(y);
+		this.LiveChatContinuation(continuationContents);
+	}
+	/** @arg {LiveChatContinuation} x */
+	LiveChatContinuation(x) {
+		const {liveChatContinuation,...y}=x; this.g(y);
+		this.LiveChatContinuationData(liveChatContinuation);
+	}
+	/** @arg {LiveChatContinuationData} x */
+	LiveChatContinuationData(x) {
+		const {continuations,actions,...y}=x; this.g(y);
+		this.z(continuations,a => {
+			this.LiveChatContinuationItem(a);
+		});
+		this.z(actions,a => {
+			if("replayChatItemAction" in a) {
+				return this.ReplayChatItemAction(a);
+			}
+			debugger;
+		});
+	}
+	/** @arg {ReplayChatItemAction} x */
+	ReplayChatItemAction(x) {
+		const {replayChatItemAction,...y}=x; this.g(y);
+		this.ReplayChatItemActionData(replayChatItemAction);
+	}
+	/** @arg {ReplayChatItemActionData} x */
+	ReplayChatItemActionData(x) {
+		const {actions,videoOffsetTimeMsec,...y}=x; this.g(y);
+		this.z(actions,a => {
+			if("addChatItemAction" in a) {
+				return this.AddChatItemAction(a);
+			}
+			debugger;
+		});
+		this.primitive_of(videoOffsetTimeMsec,"string");
+	}
+	/** @arg {AddChatItemAction} x */
+	AddChatItemAction(x) {
+		const {clickTrackingParams,addChatItemAction,...y}=x; this.g(y);
+		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
+		this.AddChatItemActionData(addChatItemAction);
+	}
+	/** @arg {AddChatItemActionData} x */
+	AddChatItemActionData(x) {
+		let k=this.get_keys_of(x);
+		console.log("[%s]",k[0]);
+		debugger;
+	}
+	/** @arg {LiveChatContinuationItem} x */
+	LiveChatContinuationItem(x) {
+		let k=this.get_keys_of(x);
+		console.log("[%s]",k[0]);
+		debugger;
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
@@ -6629,10 +6719,15 @@ class HandleTypes extends ServiceMethods {
 		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		if(a1) this.PrefetchHintConfig(a1);
+		if(playerParams) this.playerParams(playerParams);
 		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
 		const {nofollow,...y_end}=y5;
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
 		this.g(y_end);
+	}
+	/** @arg {string} x */
+	playerParams(x) {
+		this.x.get("parser_service").on_player_params(x);
 	}
 	/** @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {

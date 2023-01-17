@@ -1,1 +1,6 @@
-type LiveChatContinuationItem=LiveChatReplayContinuationDataRoot|PlayerSeekContinuationDataRoot;
+type LiveChatContinuationItem=
+	|LiveChatReplayContinuationDataRoot
+	|InvalidationContinuationData
+	|PlayerSeekContinuationDataRoot
+	;
+;

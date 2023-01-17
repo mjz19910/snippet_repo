@@ -1,0 +1,3 @@
+type InvalidationContinuationData={
+	invalidationContinuationData: InvalidationContinuationDataInner;
+};
