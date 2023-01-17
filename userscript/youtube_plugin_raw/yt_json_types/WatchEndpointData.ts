@@ -2,6 +2,7 @@ type WatchEndpointData={
 	videoId: string;
 	playlistId?: `PL${string}`|`RD${string}`;
 	index?: number;
+	playlistSetVideoId?: string;
 	params?: string;
 	continuePlayback?: true;
 	loggingContext?: VssLoggingContext;

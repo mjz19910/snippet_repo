@@ -5317,15 +5317,26 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
 		this.save_keys("[Thumbnail]",x);
+		const {thumbnails,...y}=x; this.g(y);
 	}
 	/** @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {
-		if(x.microformatDataRenderer) this.MicroformatData(x.microformatDataRenderer);
 		this.save_keys("[MicroformatDataRenderer]",x);
+		const {microformatDataRenderer,...y}=x; this.g(y);
+		if(microformatDataRenderer) this.MicroformatData(microformatDataRenderer);
 	}
 	/** @arg {MicroformatData} x */
 	MicroformatData(x) {
 		this.save_keys("[MicroformatData]",x);
+		let {urlCanonical,title,...y1}=x;
+		let {description,thumbnail,...y2}=y1;
+		const {siteName,appName,androidPackage,iosAppStoreId,...y3}=y2;
+		const {iosAppArguments,...y4}=y3;
+		const {ogType,...y}=y4;
+		const {urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,...y5}=y;
+		const {twitterCardType,twitterSiteHandle,...y6}=y5;
+		const {schemaDotOrgType,noindex,unlisted,familySafe,availableCountries,linkAlternates,...y7}=y6;
+		this.g(y7);
 	}
 	/** @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
@@ -6321,10 +6332,40 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
 		this.save_keys("[WatchEndpointData]",x);
-		const {videoId,playlistId,index,params,...y1}=x;
+		const {videoId,playlistId,index,playlistSetVideoId,params,...y1}=x;
 		this.videoId(videoId);
+		if(playlistId) this.playlistId(playlistId);
+		if(index!==void 0) this.primitive_of(index,"number");
+		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
+		if(params!==void 0) this.primitive_of(params,"string");
 		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y2}=y1;
+		if(continuePlayback!==void 0&&!continuePlayback) debugger;
+		if(loggingContext) this.VssLoggingContext(loggingContext);
+		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 		const {watchEndpointSupportedPrefetchConfig,playerParams,...y}=y2; this.g(y);
+	}
+	/** @arg {Html5PlaybackOnesieConfig} x */
+	Html5PlaybackOnesieConfig(x) {
+		this.CommonConfig(x.html5PlaybackOnesieConfig);
+	}
+	/** @arg {CommonConfig} x */
+	CommonConfig(x) {
+		this.CommonConfigData(x.commonConfig);
+	}
+	/** @arg {CommonConfigData} x */
+	CommonConfigData(x) {
+		const {url,...y}=x; this.g(y);
+		this.x.get("parser_service").parse_url(url);
+	}
+	/** @arg {VssLoggingContext} x */
+	VssLoggingContext(x) {
+		this.save_keys("[VssLoggingContext]",x);
+		this.VssLoggingContextData(x.vssLoggingContext);
+	}
+	/** @arg {VssLoggingContextData} x */
+	VssLoggingContextData(x) {
+		this.save_keys("[VssLoggingContextData]",x);
+		this.primitive_of(x.serializedContextData,"string");
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
