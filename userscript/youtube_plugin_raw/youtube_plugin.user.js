@@ -6007,7 +6007,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(continuations,a => {
 			this.LiveChatContinuationItem(a);
 		});
-		this.z(actions,a => {
+		if(actions) this.z(actions,a => {
 			if("replayChatItemAction" in a) {
 				return this.ReplayChatItemAction(a);
 			}
