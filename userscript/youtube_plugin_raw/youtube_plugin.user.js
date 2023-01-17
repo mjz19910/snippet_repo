@@ -6346,11 +6346,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
-		this.CommonConfig(x.html5PlaybackOnesieConfig);
+		const {html5PlaybackOnesieConfig,...y}=x; this.g(y);
+		this.CommonConfig(html5PlaybackOnesieConfig);
 	}
 	/** @arg {CommonConfig} x */
 	CommonConfig(x) {
-		this.CommonConfigData(x.commonConfig);
+		const {commonConfig,...y}=x; this.g(y);
+		this.CommonConfigData(commonConfig);
 	}
 	/** @arg {CommonConfigData} x */
 	CommonConfigData(x) {
