@@ -3597,11 +3597,13 @@ class IndexedDbAccessor extends BaseService {
 	committed_data=[];
 	/** @public @template {{v: string}} T @arg {T} obj */
 	put(obj) {
+		if(!obj) {debugger;return;}
 		if(!this.database_open) this.requestOpen();
 		this.push_waiting_obj(obj);
 	}
 	/** @public @template {{v: string}} T @arg {T} obj */
 	push_waiting_obj(obj) {
+		if(!obj) {debugger;return;}
 		let idx=this.index.get(obj.v);
 		if(idx!=null) {
 			this.arr[idx]=obj;
@@ -3699,6 +3701,7 @@ class IndexedDbAccessor extends BaseService {
 				let new_data_map=new Map;
 				database_data.forEach(e => database_map.set(e.v,e));
 				for(let data of this.arr) {
+					if(!data) {debugger;continue;}
 					if(database_map.has(data.v)) {
 						this.committed_data.push(data);
 						let ok=this.get_keys_of(data);
