@@ -6181,7 +6181,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "LIKE": {
 				const {status: {},actions,likeParams,...a}=y; this.g(a);
-				this.z(actions,this.MusicLibraryStatusUpdateCommand);
+				if(actions) this.z(actions,this.MusicLibraryStatusUpdateCommand);
 				this.primitive_of(likeParams,"string");
 			} break;
 		}

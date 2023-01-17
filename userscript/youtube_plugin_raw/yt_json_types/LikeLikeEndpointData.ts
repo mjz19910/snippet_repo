@@ -1,6 +1,6 @@
 type LikeLikeEndpointData={
 	status: "LIKE";
 	target: LikeApiData;
-	actions: MusicLibraryStatusUpdateCommand[];
+	actions?: MusicLibraryStatusUpdateCommand[];
 	likeParams: string;
 };
