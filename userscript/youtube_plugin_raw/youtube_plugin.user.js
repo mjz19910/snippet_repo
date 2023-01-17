@@ -3978,6 +3978,7 @@ class CodegenService extends BaseService {
 			if(o.desktopTopbarRenderer) return "TYPE::DesktopTopbarRenderer";
 			if(o.engagementPanelSectionListRenderer) return "TYPE::EngagementPanelSectionListRenderer";
 			if(o.cinematicContainerRenderer) return "TYPE::CinematicContainerRenderer";
+			if(o.playlistPanelVideoRenderer) return "TYPE::PlaylistPanelVideoRenderer";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) {
