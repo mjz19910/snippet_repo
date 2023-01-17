@@ -1,5 +1,1 @@
-type MusicQueueRenderer={
-	musicQueueRenderer: ContentTemplate<PlaylistPanelRenderer>&{
-		hack: true;
-	};
-};
+type MusicQueueRenderer={musicQueueRenderer: MusicQueue;};

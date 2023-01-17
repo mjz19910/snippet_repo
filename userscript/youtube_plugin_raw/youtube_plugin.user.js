@@ -5778,6 +5778,51 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @arg {MusicQueueRenderer} x */
+	MusicQueueRenderer(x) {
+		this.save_keys("[MusicQueueRenderer]",x);
+		x.musicQueueRenderer;
+	}
+	/** @arg {MusicQueue} x */
+	MusicQueue(x) {
+		this.save_keys("[MusicQueue]",x);
+		const {content,hack,...y}=x; this.g(y);
+		this.PlaylistPanelRenderer(content);
+		this.primitive_of(hack,"boolean");
+	}
+	/** @arg {PlaylistPanelRenderer} x */
+	PlaylistPanelRenderer(x) {
+		this.save_keys("[PlaylistPanelRenderer]",x);
+		this.PlaylistPanel(x.playlistPanelRenderer);
+	}
+	/** @arg {PlaylistPanel} x */
+	PlaylistPanel(x) {
+		this.save_keys("[PlaylistPanel]",x);
+		const {title,contents,...y1}=x;
+		this.primitive_of(title,"string");
+		this.z(contents,this.PlaylistPanelVideoRenderer)
+		const {playlistId,isInfinite,...y2}=y1;
+		this.playlistId(playlistId);
+		this.primitive_of(isInfinite,"boolean");
+		const {continuations,shortBylineText,...y3}=y2;
+		const {trackingParams,titleText,...y4}=y3;
+		const {isEditable,previewDescription,numItemsToShow,...y5}=y4; this.g(y5);
+		this.g(previewDescription);
+	}
+	/** @arg {PlaylistPanelVideoRenderer} x */
+	PlaylistPanelVideoRenderer(x) {
+		this.save_keys("[PlaylistPanelVideoRenderer]",x);
+		this.PlaylistPanelVideo(x.playlistPanelVideoRenderer);
+	}
+	/** @arg {PlaylistPanelVideo} x */
+	PlaylistPanelVideo(x) {
+		this.save_keys("[PlaylistPanelVideo]",x);
+		debugger;
+	}
+	/** @arg {PlaylistId} x */
+	playlistId(x) {
+		this.x.get("parser_service").parse_playlist_id(x);
+	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {
 		this.save_keys("[RichGridRenderer]",x);
@@ -6255,7 +6300,7 @@ class HandleTypes extends ServiceMethods {
 	EndScreenPlaylist(x) {
 		this.save_keys("[EndScreenPlaylist]",x);
 		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y);
-		this.x.get("parser_service").parse_playlist_id(playlistId);
+		this.playlistId(playlistId);
 		this.SimpleText(title,this.handle_accessibility);
 		this.Thumbnail(thumbnail);
 		this.TextT(longBylineText);
