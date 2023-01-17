@@ -6522,13 +6522,15 @@ class HandleTypes extends ServiceMethods {
 		if(index!==void 0) this.primitive_of(index,"number");
 		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
 		if(params!==void 0) this.primitive_of(params,"string");
-		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y2}=y1;
+		const {startTimeSeconds,...y2}=y1;
+		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
+		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y3}=y2;
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
 		if(loggingContext) this.VssLoggingContext(loggingContext);
 		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y3}=y2;
+		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		if(a1) this.PrefetchHintConfig(a1);
-		const {watchEndpointMusicSupportedConfigs: a2,...y4}=y3; this.g(y4);
+		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4; this.g(y5);
 	}
 	/** @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {

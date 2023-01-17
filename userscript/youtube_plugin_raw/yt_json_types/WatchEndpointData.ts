@@ -4,6 +4,7 @@ type WatchEndpointData={
 	index?: number;
 	playlistSetVideoId?: string;
 	params?: string;
+	startTimeSeconds?: number;
 	continuePlayback?: true;
 	loggingContext?: VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
