@@ -3341,12 +3341,13 @@ class ECatcherService extends BaseService {
 				[24432597,24433679,24434209,24436009,24437575,24438162,24438848,24439361,24439483],
 				[24440901,24440903,24441244,24442137,24443373,24447336,24448074,24448246],
 				[24450571,24453129,24453874],
-				[24590921,24591046],
+				[24590921,24591046,24591048],
 				[24612269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 				[45686551],
 				[39321826,39321827],
 				[39322504,39322574,39322870,39322873,39322980,39322983],
 				[39323013,39323016,39323020,39323023,39323117,39323120],
+				[],
 			].flat()
 		},
 	};
@@ -5219,7 +5220,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.TextWithRuns(x.title);
 		this.trackingParams(x.trackingParams);
-		this.z(x.continuations,a=>this.ReloadContinuationData(a));
+		this.z(x.continuations,a => this.ReloadContinuationData(a));
 	}
 	/** @arg {ReloadContinuationData} x */
 	ReloadContinuationData(x) {
@@ -5272,15 +5273,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ContinuationCommandData} x */
 	ContinuationCommandData(x) {
-		x;
+		this.save_keys("[ContinuationCommandData]",x);
+		this.primitive_of(x.token,"string");
+		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
 	}
 	/** @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
-		x;
+		this.save_keys("[GhostGridRenderer]",x);
+		this.GhostGrid(x.ghostGridRenderer);
 	}
 	/** @arg {GhostGrid} x */
 	GhostGrid(x) {
-		x;
+		this.save_keys("[GhostGrid]",x);
+		const {rows,...y}=x; this.g(y);
+		this.primitive_of(rows,"number");
 	}
 	/** @arg {ItemSectionRenderer} x */
 	ItemSectionRenderer(x) {
@@ -5290,8 +5296,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
 		this.save_keys("[ItemSectionData]",x);
-		this.save_string("[ItemSectionData.sectionIdentifier]",x.sectionIdentifier);
-		this.save_string("[ItemSectionData.targetId]",x.targetId);
+		const {contents,trackingParams,sectionIdentifier,targetId,...y}=x; this.g(y);
+		this.z(contents,a=>this.ItemSectionItem(a));
+		this.save_string("[ItemSectionData.hash]",`section-${x.sectionIdentifier}-id-${x.targetId}`);
+	}
+	/** @arg {ItemSectionItem} x */
+	ItemSectionItem(x) {
+		this.save_keys("[ItemSectionItem]",x);
 	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
