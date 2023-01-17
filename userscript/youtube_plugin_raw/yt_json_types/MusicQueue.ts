@@ -1,3 +1,3 @@
-type MusicQueue=ContentTemplate<PlaylistPanelRenderer>&{
+type MusicQueue=Partial<ContentTemplate<PlaylistPanelRenderer>>&{
 	hack: true;
 };

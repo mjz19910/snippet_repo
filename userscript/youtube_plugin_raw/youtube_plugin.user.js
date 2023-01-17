@@ -5821,7 +5821,7 @@ class HandleTypes extends ServiceMethods {
 	MusicQueue(x) {
 		this.save_keys("[MusicQueue]",x);
 		const {content,hack,...y}=x; this.g(y);
-		this.PlaylistPanelRenderer(content);
+		if(content) this.PlaylistPanelRenderer(content);
 		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {PlaylistPanelRenderer} x */
