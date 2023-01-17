@@ -3599,7 +3599,13 @@ class IndexedDbAccessor extends BaseService {
 	put(obj) {
 		if(!obj) {debugger; return;}
 		if(!this.database_open) this.requestOpen();
+		if(this.arr.length!==this.arr.reduce((r)=>r+1,0)) {
+			debugger;
+		}
 		this.push_waiting_obj(obj);
+		if(this.arr.length!==this.arr.reduce((r)=>r+1,0)) {
+			debugger;
+		}
 	}
 	/** @public @template {{v: string}} T @arg {T} obj */
 	push_waiting_obj(obj) {
