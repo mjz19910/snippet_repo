@@ -4979,6 +4979,14 @@ class HandleTypes extends ServiceMethods {
 	WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
+		if("rootVe" in x) {
+			const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y);
+			if(rootVe!==3832) debugger;
+			let wp_params=this.parse_watch_page_url(url);
+			this.save_keys(`[${cf}.wp_params]`,wp_params);
+			this.WatchEndpoint(endpoint);
+			return;
+		}
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
 		this.WatchEndpoint(endpoint);
 		this.WatchResponse(response);
