@@ -6050,12 +6050,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {
+		this.save_keys("[LiveChatContinuation]",x);
 		const {liveChatContinuation,...y}=x; this.g(y);
 		this.LiveChatContinuationData(liveChatContinuation);
 	}
 	/** @arg {LiveChatContinuationData} x */
 	LiveChatContinuationData(x) {
-		const {continuations,actions,...y}=x; this.g(y);
+		this.save_keys("[LiveChatContinuationData]",x);
+		const {continuations,actions,actionPanel,itemList,header,ticker,trackingParams,participantsList,popoutMessage,emojis,clientMessages,viewerName,...y}=x; this.g(y);
 		this.z(continuations,a => {
 			this.LiveChatContinuationItem(a);
 		});
@@ -6068,11 +6070,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
+		this.save_keys("[ReplayChatItemAction]",x);
 		const {replayChatItemAction,...y}=x; this.g(y);
 		this.ReplayChatItemActionData(replayChatItemAction);
 	}
 	/** @arg {ReplayChatItemActionData} x */
 	ReplayChatItemActionData(x) {
+		this.save_keys("[ReplayChatItemActionData]",x);
 		const {actions,videoOffsetTimeMsec,...y}=x; this.g(y);
 		this.z(actions,a => {
 			if("addChatItemAction" in a) {
@@ -6084,18 +6088,21 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddChatItemAction} x */
 	AddChatItemAction(x) {
+		this.save_keys("[AddChatItemAction]",x);
 		const {clickTrackingParams,addChatItemAction,...y}=x; this.g(y);
 		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		this.AddChatItemActionData(addChatItemAction);
 	}
 	/** @arg {AddChatItemActionData} x */
 	AddChatItemActionData(x) {
+		this.save_keys("[AddChatItemActionData]",x);
 		let k=this.get_keys_of(x);
 		console.log("[%s]",k[0]);
 		debugger;
 	}
 	/** @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {
+		this.save_keys("[LiveChatContinuationItem]",x);
 		if("invalidationContinuationData" in x) {
 			return this.InvalidationContinuationData(x);
 		}
@@ -6105,6 +6112,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {InvalidationContinuationData} x */
 	InvalidationContinuationData(x) {
+		this.save_keys("[InvalidationContinuationData]",x);
 		this.InvalidationContinuationDataInner(x.invalidationContinuationData);
 	}
 	/** @arg {InvalidationContinuationDataInner} x */
