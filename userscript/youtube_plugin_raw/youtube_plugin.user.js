@@ -5842,7 +5842,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlaylistPanel]",x);
 		const {title,contents,currentIndex,...y1}=x;
 		this.primitive_of(title,"string");
-		this.z(contents,this.PlaylistPanelVideoRenderer);
+		this.z(contents,this.PlaylistPanelItem);
 		if(currentIndex) this.primitive_of(currentIndex,"number");
 		const {playlistId,isInfinite,...y2}=y1;
 		this.playlistId(playlistId);
@@ -5857,6 +5857,14 @@ class HandleTypes extends ServiceMethods {
 		if(isEditable!==true) debugger;
 		this.g(previewDescription);
 		if(numItemsToShow!==25) debugger;
+	}
+	/** @arg {PlaylistPanelVideoRenderer} x */
+	PlaylistPanelItem(x) {
+		if("playlistPanelVideoRenderer" in x) {
+			this.PlaylistPanelVideoRenderer(x);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {NextRadioContinuationData} x */
 	NextRadioContinuationData(x) {
