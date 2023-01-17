@@ -6131,7 +6131,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {LiveChatViewerEngagementMessage} x */
 	LiveChatViewerEngagementMessage(x) {
 		this.save_keys("[LiveChatViewerEngagementMessage]",x);
-		x;
+		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=x; this.g(y);
+		this.primitive_of(id,"string");
+		this.primitive_of(timestampUsec,"string");
+		this.Icon(icon);
+		this.TextWithRuns(message);
+		this.ButtonRenderer(actionButton);
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {

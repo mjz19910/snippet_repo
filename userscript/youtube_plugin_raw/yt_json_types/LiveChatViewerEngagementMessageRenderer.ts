@@ -1,0 +1,3 @@
+type LiveChatViewerEngagementMessageRenderer={
+	liveChatViewerEngagementMessageRenderer: LiveChatViewerEngagementMessage;
+};

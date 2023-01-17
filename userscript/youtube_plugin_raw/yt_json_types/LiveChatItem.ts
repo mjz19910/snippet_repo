@@ -1,0 +1,3 @@
+type LiveChatItem=LiveChatTextMessageRenderer|
+	LiveChatPlaceholderItemRenderer|
+	LiveChatViewerEngagementMessageRenderer;
