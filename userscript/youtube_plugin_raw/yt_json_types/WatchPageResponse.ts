@@ -3,7 +3,7 @@ type VE3832_WatchPageResponse={
 	url: VE3832_WatchPageUrl;
 	endpoint: WatchEndpoint;
 	page: "watch";
-	preconnect: [`https://rr${number}---sn-nx${number}${string}${number}${string}${number}${string}.googlevideo.com/generate_204`];
+	preconnect: [`https://rr${number}---sn-nx${`${"57"}${"yn"}${"ss"}`}.googlevideo.com/generate_204`];
 	playerResponse: PlayerResponse;
 	response: WatchResponse;
 };
