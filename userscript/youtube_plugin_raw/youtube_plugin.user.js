@@ -1041,6 +1041,8 @@ class MyReader {
 					break;
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
+				let res=this.try_read_any(size);
+				/** @type {DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
@@ -1048,8 +1050,6 @@ class MyReader {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 				}
-				let res=this.try_read_any(size);
-				/** @type {DecTypeNum} */
 				first_num.push(["child",fieldId,sub_buffer,res]);
 			} break;
 			case 3: {
