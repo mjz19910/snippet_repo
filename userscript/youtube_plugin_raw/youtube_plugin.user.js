@@ -5050,6 +5050,7 @@ class HandleTypes extends ServiceMethods {
 		let u3=this.parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
 		x: {
+			if(this.eq_keys(u4,["v","t"])) break x;
 			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
 			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
