@@ -4417,7 +4417,9 @@ class ParserService extends BaseService {
 			let x1=x.get(1);
 			if(!x1) {debugger; break x;}
 			if(!(x1 instanceof Map)) {debugger; break x;}
-			console.log("[new_player_params_f_40_f_1]",Object.fromEntries(x1.entries()));
+			let map_keys_1=[...x1.keys()];
+			console.log("[new_player_params_f_40_f_1]",map_keys_1,Object.fromEntries(x1.entries()));
+			debugger;
 		}
 		console.log("[player_params_f_40]",x,map_keys);
 		console.log("[new_player_params_f_40]",Object.fromEntries(x.entries()));
