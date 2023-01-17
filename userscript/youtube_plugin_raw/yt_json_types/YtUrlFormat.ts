@@ -17,7 +17,6 @@ type YtUrlFormat=[
 	`/watch?${YtWatchVideoUrlFormat}`,
 	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
-	GenericWatchPageUrl,
-	VE3832_WatchPageUrl,
+	WatchPageUrl,
 	YtExternalUrlFormat,
 ][number];

@@ -2,7 +2,7 @@ type VE3832_PreconnectUrl=`https://rr${number}---sn-nx${`${"57"}${"yn"}${"ss"}`}
 
 type VE3832_WatchPageResponse={
 	rootVe: 3832;
-	url: VE3832_WatchPageUrl;
+	url: WatchPageUrl;
 	endpoint: WatchEndpoint;
 	page: "watch";
 	preconnect: [VE3832_PreconnectUrl];
@@ -15,7 +15,7 @@ type Generic_WatchPageResponse={
 	endpoint: WatchEndpoint;
 	response: WatchResponse;
 	playerResponse: PlayerResponse;
-	url: GenericWatchPageUrl;
+	url: WatchPageUrl;
 	previousCsn?: string;
 };
 

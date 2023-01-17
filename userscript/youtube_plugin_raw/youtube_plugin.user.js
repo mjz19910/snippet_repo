@@ -4994,7 +4994,7 @@ class HandleTypes extends ServiceMethods {
 		this.WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
-		let wp_params=this.parse_watch_page_url_generic(url);
+		let wp_params=this.parse_watch_page_url(url);
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
@@ -5003,7 +5003,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchPageResponse";
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y);
 		if(rootVe!==3832) debugger;
-		let wp_params=this.parse_watch_page_url_3832(url);
+		let wp_params=this.parse_watch_page_url(url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
 		this.WatchEndpoint(endpoint);
 		if(preconnect.length!==1) debugger;
@@ -5029,27 +5029,14 @@ class HandleTypes extends ServiceMethods {
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
 		if(ss5!=="57") debugger;
 	}
-	/** @arg {VE3832_WatchPageUrl} x */
-	parse_watch_page_url_3832(x) {
+	/** @arg {WatchPageUrl} x */
+	parse_watch_page_url(x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=this.parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
 		x: {
 			if(this.eq_keys(u4,["v"])) break x;
-			if(this.eq_keys(u4,["v","t"])) break x;
-			debugger;
-		}
-		this.x.get("parser_service").parse_url(x);
-		return u3;
-	}
-	/** @arg {GenericWatchPageUrl} x */
-	parse_watch_page_url_generic(x) {
-		let u1=split_string_once(x,"/")[1];
-		let u2=split_string_once(u1,"?")[1];
-		let u3=this.parse_url_search_params(u2);
-		let u4=this.get_keys_of(u3);
-		x: {
 			if(this.eq_keys(u4,["v","t"])) break x;
 			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
 			if(this.eq_keys(u4,["v","list","index"])) break x;
