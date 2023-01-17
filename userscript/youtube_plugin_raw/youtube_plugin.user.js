@@ -4983,6 +4983,13 @@ class HandleTypes extends ServiceMethods {
 		this.WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
+		let wp_params=this.parse_watch_page_url(url);
+		this.save_keys(`[${cf}.wp_params]`,wp_params);
+		if(previousCsn!==void 0) this.previousCsn(previousCsn);
+	}
+	/** @arg {WatchPageResponse['url']} x */
+	parse_watch_page_url(x) {
+		let url=x;
 		let u1=split_string_once(url,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=parse_url_search_params(u2);
@@ -4992,9 +4999,8 @@ class HandleTypes extends ServiceMethods {
 			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
 		}
-		this.save_keys(`[${cf}.url.params]`,u3);
 		this.x.get("parser_service").parse_url(url);
-		if(previousCsn!==void 0) this.previousCsn(previousCsn);
+		return u3;
 	}
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
