@@ -5789,10 +5789,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TabData} x */
 	TabData(x) {
 		this.save_keys("[TabData]",x);
-		const {content,title,trackingParams,...y}=x; this.g(y);
-		this.TabDataContent(content);
+		const {endpoint,content,title,trackingParams,unselectable,...y}=x; this.g(y);
+		if(endpoint) this.BrowseEndpoint(endpoint);
+		if(content) this.TabDataContent(content);
 		if(title) this.primitive_of(title,"string");
 		this.trackingParams(trackingParams);
+		if(unselectable!==void 0) this.primitive_of(unselectable,"boolean");
 	}
 	/** @arg {TabDataContent} x */
 	TabDataContent(x) {
