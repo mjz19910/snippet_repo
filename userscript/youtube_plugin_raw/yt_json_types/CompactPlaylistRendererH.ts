@@ -1,3 +1,0 @@
-type CompactPlaylistRendererH={
-	compactPlaylistRenderer: CompactPlaylistRenderer;
-};

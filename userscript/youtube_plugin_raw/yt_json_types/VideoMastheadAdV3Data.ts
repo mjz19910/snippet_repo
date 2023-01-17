@@ -1,1 +1,1 @@
-type VideoMastheadAdV3Data={};
+type VideoMastheadAdV3={};

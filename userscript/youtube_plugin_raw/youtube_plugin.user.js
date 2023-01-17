@@ -660,7 +660,7 @@ class HandleRichGridRenderer {
 	constructor(x) {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
-	/** @arg {string} path @arg {RichGridData} renderer */
+	/** @arg {string} path @arg {RichGrid} renderer */
 	richGridRenderer(path,renderer) {
 		if(this.debug) console.log("run handler richGridRenderer");
 		if(renderer.masthead) {
@@ -3146,7 +3146,7 @@ class YtObjectVisitor {
 			return true;
 		});
 	}
-	/** @arg {ApiIterateState} state @arg {RichGridData} renderer */
+	/** @arg {ApiIterateState} state @arg {RichGrid} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
 		state.path="richGridRenderer";
@@ -5747,6 +5747,62 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TabbedRenderer} x */
 	TabbedRenderer(x) {
 		this.save_keys("[TabbedRenderer]",x);
+		this.WatchNextTabbedResultsRenderer(x.tabbedRenderer);
+	}
+	/** @arg {WatchNextTabbedResultsRenderer} x */
+	WatchNextTabbedResultsRenderer(x) {
+		x.watchNextTabbedResultsRenderer;
+	}
+	/** @arg {WatchNextTabbedResults} x */
+	WatchNextTabbedResults(x) {
+		this.z(x.tabs,this.TabRenderer);
+	}
+	/** @arg {TabRenderer} x */
+	TabRenderer(x) {
+		x.tabRenderer;
+	}
+	/** @arg {TabData} x */
+	TabData(x) {
+		const {content,title,trackingParams,...y}=x; this.g(y);
+		this.TabDataContent(content);
+		if(title) this.primitive_of(title,"string");
+	}
+	/** @arg {TabDataContent} x */
+	TabDataContent(x) {
+		if("sectionListRenderer" in x) {
+			return this.SectionListRenderer(x);
+		} else if("richGridRenderer" in x) {
+			return this.RichGridRenderer(x);
+		} else if("musicQueueRenderer" in x) {
+			return this.MusicQueueRenderer(x);
+		}
+		debugger;
+	}
+	/** @arg {RichGridRenderer} x */
+	RichGridRenderer(x) {
+		this.save_keys("[RichGridRenderer]",x);
+		this.RichGrid(x.richGridRenderer);
+	}
+	/** @arg {RichGrid} x */
+	RichGrid(x) {
+		this.save_keys("[RichGrid]",x);
+		const {contents,masthead,...y}=x; this.g(y);
+		this.z(contents,this.RendererContentItem);
+		this.VideoMastheadAdV3Renderer(masthead);
+	}
+	/** @arg {VideoMastheadAdV3Renderer} x */
+	VideoMastheadAdV3Renderer(x) {
+		this.save_keys("[VideoMastheadAdV3Renderer]",x);
+		this.VideoMastheadAdV3(x.videoMastheadAdV3Renderer);
+	}
+	/** @arg {VideoMastheadAdV3} x */
+	VideoMastheadAdV3(x) {
+		this.save_keys("[VideoMastheadAdV3]",x);
+		debugger;
+	}
+	/** @arg {RendererContentItem} x */
+	RendererContentItem(x) {
+		this.save_keys("[RendererContentItem]",x);
 		debugger;
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
@@ -6202,7 +6258,7 @@ class HandleTypes extends ServiceMethods {
 		this.x.get("parser_service").parse_playlist_id(playlistId);
 		this.SimpleText(title,this.handle_accessibility);
 		this.Thumbnail(thumbnail);
-		this.TextT(longBylineText,this.NavigationEndpoint,this.handle_accessibility);
+		this.TextT(longBylineText);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
 		this.TextWithRuns(videoCountText,this.NavigationEndpoint);
 		this.WatchEndpoint(navigationEndpoint);
@@ -6250,13 +6306,13 @@ class HandleTypes extends ServiceMethods {
 		this.rootVe(rootVe);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {TextT} x @arg {(x:NavigationEndpoint)=>void} f_run @arg {(this:this,x:{accessibility?:Accessibility})=>void} f_acc */
-	TextT(x,f_run,f_acc) {
+	/** @arg {TextT} x */
+	TextT(x) {
 		this.save_keys("[TextT]",x);
 		if("simpleText" in x) {
-			return this.SimpleText(x,f_acc);
+			return this.SimpleText(x);
 		} else if("runs" in x) {
-			return this.TextWithRuns(x,f_run);
+			return this.TextWithRuns(x);
 		}
 		debugger;
 	}

@@ -1,3 +1,3 @@
 type VideoMastheadAdV3Renderer={
-	videoMastheadAdV3Renderer: VideoMastheadAdV3Data;
+	videoMastheadAdV3Renderer: VideoMastheadAdV3;
 };

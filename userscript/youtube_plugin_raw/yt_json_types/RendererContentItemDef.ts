@@ -1,5 +1,5 @@
 type RendererContentItemDef=
-	RichItemRendererH|
+	RichItemRenderer|
 	RichSectionRenderer|
 	CommentsHeaderRendererH|
 	CommentThreadRenderer|

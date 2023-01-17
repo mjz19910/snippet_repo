@@ -1,9 +1,9 @@
 type RendererContentItem=
-	RichItemRendererH|
-	RichSectionRenderer|
-	CommentsHeaderRendererH|
-	CommentThreadRenderer|
-	ContinuationItemRenderer|
-	CompactVideoRenderer|
-	CompactPlaylistRendererH|
-	never;
+	|RichItemRenderer
+	|RichSectionRenderer
+	|CommentsHeaderRenderer
+	|CommentThreadRenderer
+	|ContinuationItemRenderer
+	|CompactVideoRenderer
+	|CompactPlaylistRenderer
+	;
