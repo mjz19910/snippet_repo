@@ -5077,7 +5077,7 @@ class HandleTypes extends ServiceMethods {
 	Generic_WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
-		this.WatchEndpoint(endpoint);
+		this._WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
 		let wp_params=this.parse_watch_page_url(url);
@@ -5091,7 +5091,7 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
-		this.WatchEndpoint(endpoint);
+		this._WatchEndpoint(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.PlayerResponse(playerResponse);
 		this.WatchResponse(response);
@@ -5279,7 +5279,7 @@ class HandleTypes extends ServiceMethods {
 		const {navigationEndpoints,...y}=x; this.g(y);
 		this.z(navigationEndpoints,a => {
 			if("watchEndpoint" in a) {
-				return this.WatchEndpoint(a);
+				return this._WatchEndpoint(a);
 			}
 			debugger;
 		});
@@ -5999,7 +5999,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ReelWatchSequenceResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y);
-		this.z(entries,a => this.CommandTemplate(a,this.ReelWatchEndpoint));
+		this.z(entries,a => this.CommandTemplate(a,this._ReelWatchEndpoint));
 		this.trackingParams(trackingParams);
 		if(continuationEndpoint) this.ContinuationCommand(continuationEndpoint);
 	}
@@ -6011,7 +6011,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {ReelWatchEndpoint} x */
-	ReelWatchEndpoint(x) {
+	_ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
 		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
@@ -6138,7 +6138,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NextResponse]",x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
 		if(contents) this.NextResponseContents(contents);
-		if(currentVideoEndpoint) this.WatchEndpoint(currentVideoEndpoint);
+		if(currentVideoEndpoint) this._WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
@@ -6300,7 +6300,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(lengthText);
 		const {selected,navigationEndpoint,...y3}=y2;
 		this.primitive_of(selected,"boolean");
-		this.WatchEndpoint(navigationEndpoint);
+		this._WatchEndpoint(navigationEndpoint);
 		const {videoId,shortBylineText,...y4}=y3;
 		this.videoId(videoId);
 		this.TextWithRuns(shortBylineText);
@@ -6812,14 +6812,14 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(lengthText,this.handle_accessibility);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
-		this.WatchEndpoint(navigationEndpoint);
+		this._WatchEndpoint(navigationEndpoint);
 		this.g(y);
 	}
 	/** @arg {WatchEndpoint} x */
-	WatchEndpoint(x) {
+	_WatchEndpoint(x) {
 		this.save_keys("[WatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
-		this.clickTrackingParams(clickTrackingParams);
+		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		if(commandMetadata) this.WatchEndpointCommandMetadata(commandMetadata);
 		this.WatchEndpointData(watchEndpoint);
 	}
@@ -6945,7 +6945,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(longBylineText);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
 		this.TextWithRuns(videoCountText);
-		this.WatchEndpoint(navigationEndpoint);
+		this._WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {NavigationEndpointRoot} x */
@@ -6955,7 +6955,7 @@ class HandleTypes extends ServiceMethods {
 		if("urlEndpoint" in a1) {
 			return this.UrlEndpoint(a1);
 		} else if("watchEndpoint" in a1) {
-			return this.WatchEndpoint(a1);
+			return this._WatchEndpoint(a1);
 		}
 		debugger;
 		// return this.NavigationEndpointData(navigationEndpoint);
