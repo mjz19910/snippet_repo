@@ -6953,10 +6953,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NavigationEndpointRoot]",x);
 		const {navigationEndpoint: a1,...y}=x; this.g(y);
 		if("urlEndpoint" in a1) {
-			this.UrlEndpoint(a1);
-		} else {
-			debugger;
+			return this.UrlEndpoint(a1);
+		} else if("watchEndpoint" in a1) {
+			return this.WatchEndpoint(a1);
 		}
+		debugger;
 		// return this.NavigationEndpointData(navigationEndpoint);
 	}
 	/** @arg {UrlEndpoint} x */
