@@ -4393,6 +4393,10 @@ class ParserService extends BaseService {
 				if(p8===1&&p9===1) return;
 			}
 		}
+		if(this.eq_keys(map_keys,[40])) {
+			console.log("[player_params_f_40]",param_map.get(40));
+			return;
+		}
 		console.log("[new_player_params]",Object.fromEntries(param_map.entries()));
 		debugger;
 	}
