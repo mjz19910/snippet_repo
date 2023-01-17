@@ -4413,8 +4413,15 @@ class ParserService extends BaseService {
 	/** @arg {ParamMapType} x */
 	parse_player_param_f_40(x) {
 		let map_keys=[...x.keys()];
+		x: if(this.eq_keys(map_keys,[1])) {
+			let x1=x.get(1);
+			if(!x1) {debugger; break x;}
+			if(!(x1 instanceof Map)) {debugger; break x;}
+			console.log("[new_player_params_f_40_f_1]",Object.fromEntries(x1.entries()));
+		}
 		console.log("[player_params_f_40]",x,map_keys);
 		console.log("[new_player_params_f_40]",Object.fromEntries(x.entries()));
+		debugger;
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
