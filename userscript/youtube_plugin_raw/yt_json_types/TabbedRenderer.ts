@@ -1,3 +1,1 @@
-type TabbedRenderer={
-	tabbedRenderer: {};
-};
+type TabbedRenderer={tabbedRenderer: WatchNextTabbedResultsRenderer;};

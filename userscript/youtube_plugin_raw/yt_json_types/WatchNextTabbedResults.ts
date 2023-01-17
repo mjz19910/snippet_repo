@@ -1,0 +1,3 @@
+type WatchNextTabbedResults={
+	tabs: TabRenderer[];
+};

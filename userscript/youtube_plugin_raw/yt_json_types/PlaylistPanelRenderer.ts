@@ -1,0 +1,3 @@
+type PlaylistPanelRenderer={
+	playlistPanelRenderer: PlaylistPanel;
+};
