@@ -5718,7 +5718,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NextResponse]",x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
 		if(contents) this.NextResponseContents(contents);
-		if(currentVideoEndpoint) this.CurrentVideoEndpoint(currentVideoEndpoint);
+		if(currentVideoEndpoint) this.WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
@@ -6367,13 +6367,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SimpleText]",x);
 		const {simpleText,...y}=x; f.call(this,y);
 		this.primitive_of(simpleText,"string");
-	}
-	/** @arg {CurrentVideoEndpoint} x */
-	CurrentVideoEndpoint(x) {
-		this.save_keys("[CurrentVideoEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
-		this.clickTrackingParams(clickTrackingParams);
-		this.WatchEndpointCommandMetadata(commandMetadata);
 	}
 	/** @arg {WatchEndpointCommandMetadata} x */
 	WatchEndpointCommandMetadata(x) {

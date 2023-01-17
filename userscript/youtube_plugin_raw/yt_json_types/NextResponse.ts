@@ -1,7 +1,7 @@
 interface NextResponse {
 	responseContext: ResponseContext;
 	contents?: NextResponseContents;
-	currentVideoEndpoint?: CurrentVideoEndpoint;
+	currentVideoEndpoint?: WatchEndpoint;
 	trackingParams: string;
 	playerOverlays?: PlayerOverlayRenderer;
 	videoReporting?: ReportFormModalRenderer;
