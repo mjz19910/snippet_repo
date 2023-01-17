@@ -5851,7 +5851,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NextRadioContinuationDataInner} x */
 	NextRadioContinuationDataInner(x) {
 		this.save_keys("[NextRadioContinuationDataInner]",x);
-		debugger;
+		const {continuation,clickTrackingParams,...y}=x; this.g(y);
+		this.primitive_of(continuation,"string");
+		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @arg {PlaylistPanelVideoRenderer} x */
 	PlaylistPanelVideoRenderer(x) {
