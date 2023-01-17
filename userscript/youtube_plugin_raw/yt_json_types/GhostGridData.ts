@@ -1,3 +1,0 @@
-type GhostGridData={
-	rows: number;
-};

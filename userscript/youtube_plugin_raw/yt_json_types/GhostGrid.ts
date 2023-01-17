@@ -1,0 +1,3 @@
+type GhostGrid={
+	rows: number;
+};

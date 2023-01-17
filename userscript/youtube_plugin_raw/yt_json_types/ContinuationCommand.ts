@@ -1,4 +1,5 @@
 type ContinuationCommand={
-	token: EncodedURIComponent;
-	request: "CONTINUATION_REQUEST_TYPE_REEL_WATCH_SEQUENCE";
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadataTemplate<3832>;
+	continuationCommand: ContinuationCommandData;
 };

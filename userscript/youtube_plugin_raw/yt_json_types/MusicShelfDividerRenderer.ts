@@ -1,0 +1,3 @@
+type MusicShelfDividerRenderer={
+	musicShelfDividerRenderer: {};
+};

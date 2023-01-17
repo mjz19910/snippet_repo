@@ -5194,6 +5194,8 @@ class HandleTypes extends ServiceMethods {
 			this.ContinuationItemRenderer(x);
 		} else if("musicCarouselShelfRenderer" in x) {
 			this.MusicCarouselShelfRenderer(x);
+		} else if("musicShelfRenderer" in x) {
+			this.MusicShelfRenderer(x);
 		} else {
 			debugger;
 		}
@@ -5202,6 +5204,45 @@ class HandleTypes extends ServiceMethods {
 	MusicCarouselShelfRenderer(x) {
 		this.save_keys("[MusicCarouselShelfRenderer]",x);
 		this.MusicCarouselShelf(x.musicCarouselShelfRenderer);
+	}
+	/** @arg {MusicShelfRenderer} x */
+	MusicShelfRenderer(x) {
+		this.MusicShelf(x.musicShelfRenderer);
+	}
+	/** @arg {MusicShelf} x */
+	MusicShelf(x) {
+		this.save_keys("[MusicShelf]",x);
+		this.ContentsArrayTemplate(x,a => {
+			if("musicResponsiveListItemRenderer" in a) {
+				this.MusicResponsiveListItemRenderer(a);
+			} else debugger;
+		});
+		this.TextWithRuns(x.title);
+		this.trackingParams(x.trackingParams);
+		this.z(x.continuations,a=>this.ReloadContinuationData(a));
+	}
+	/** @arg {ReloadContinuationData} x */
+	ReloadContinuationData(x) {
+		this.ReloadContinuationDataInner(x.reloadContinuationData);
+	}
+	/** @arg {ReloadContinuationDataInner} x */
+	ReloadContinuationDataInner(x) {
+		const {continuation,clickTrackingParams}=x;
+		this.primitive_of(continuation,"string");
+		this.clickTrackingParams(clickTrackingParams);
+	}
+	/** @arg {MusicResponsiveListItemRenderer} x */
+	MusicResponsiveListItemRenderer(x) {
+		this.save_keys("[MusicResponsiveListItemRenderer]",x);
+		this.MusicResponsiveListItem(x.musicResponsiveListItemRenderer);
+	}
+	/** @arg {MusicResponsiveListItem} x */
+	MusicResponsiveListItem(x) {
+		this.save_keys("[MusicResponsiveListItem]",x);
+	}
+	/** @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	ContentsArrayTemplate(x,f) {
+		this.z(x.contents,f);
 	}
 	/** @arg {MusicCarouselShelf} x */
 	MusicCarouselShelf(x) {
@@ -5215,6 +5256,31 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ContinuationItemData} x */
 	ContinuationItemData(x) {
 		this.save_keys("[ContinuationItemData]",x);
+		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y);
+		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
+		// this.save_enum("CONTINUATION_TRIGGER",trigger);
+		this.ContinuationCommand(continuationEndpoint);
+		if(button) this.ButtonRenderer(button);
+		if(ghostCards) this.GhostGridRenderer(ghostCards);
+	}
+	/** @arg {ContinuationCommand} x */
+	ContinuationCommand(x) {
+		const {clickTrackingParams,commandMetadata,continuationCommand}=x;
+		this.clickTrackingParams(clickTrackingParams);
+		this.VE3832_CommandMetadata(commandMetadata);
+		this.ContinuationCommandData(continuationCommand);
+	}
+	/** @arg {ContinuationCommandData} x */
+	ContinuationCommandData(x) {
+		x;
+	}
+	/** @arg {GhostGridRenderer} x */
+	GhostGridRenderer(x) {
+		x;
+	}
+	/** @arg {GhostGrid} x */
+	GhostGrid(x) {
+		x;
 	}
 	/** @arg {ItemSectionRenderer} x */
 	ItemSectionRenderer(x) {
@@ -6175,6 +6241,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {WatchEndpointCommandMetadata} x */
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
+		const {webCommandMetadata,...y}=x; this.g(y);
+		this.VE3832_WebCommandMetadata(webCommandMetadata);
+	}
+	/** @arg {VE3832_CommandMetadata} x */
+	VE3832_CommandMetadata(x) {
+		this.save_keys("[VE3832_CommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
 		this.VE3832_WebCommandMetadata(webCommandMetadata);
 	}

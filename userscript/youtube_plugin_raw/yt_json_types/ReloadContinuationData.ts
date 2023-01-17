@@ -1,0 +1,3 @@
+type ReloadContinuationData={
+	reloadContinuationData: ReloadContinuationDataInner;
+};

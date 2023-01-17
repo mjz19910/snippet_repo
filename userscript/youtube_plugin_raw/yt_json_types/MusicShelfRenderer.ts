@@ -1,3 +1,1 @@
-type MusicShelfRenderer={
-	musicShelfRenderer: {};
-};
+type MusicShelfRenderer={musicShelfRenderer: MusicShelf;};
