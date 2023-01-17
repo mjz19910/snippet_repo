@@ -4839,7 +4839,12 @@ class ParserService extends BaseService {
 		} else if(this.str_starts_with(x,"MP")) {
 			let x1=split_string_once(x,"MP")[1];
 			let x2=split_string_once(x1,"_");
-			console.log("new with param [param_2c_MP]",x,x1,x2);
+			switch(x2[0]) {
+				case "TRt": break;
+				case "REb": break;
+				case "LYt": break;
+				default: console.log("new with param [param_2c_MP]",x,x1,x2); debugger;
+			}
 		} else {
 			debugger;
 		}
@@ -5740,7 +5745,7 @@ class HandleTypes extends ServiceMethods {
 		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
 		if(videoReporting) this.ReportFormModalRenderer(videoReporting);
 		if(queueContextParams) this.primitive_of(queueContextParams,"string");
-		this.PlaylistPanelContinuation(continuationContents);
+		if(continuationContents) this.PlaylistPanelContinuation(continuationContents);
 	}
 	/** @arg {PlaylistPanelContinuation} x */
 	PlaylistPanelContinuation(x) {

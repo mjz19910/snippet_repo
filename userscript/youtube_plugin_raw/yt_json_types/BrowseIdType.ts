@@ -3,4 +3,4 @@ type BrowseIdType=
 	|`VL${`${"LL"|"WL"|"PL"}${string}`}`
 	|`UC${string}`
 	|`SP${`account${""|`_${AccountPageSettingsSections}`}`}`
-	|`MPTRt_${string}`;
+	|`MP${"TRt"|"REb"|"LYt"}_${string}`;
