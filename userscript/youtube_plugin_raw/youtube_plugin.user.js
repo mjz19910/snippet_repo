@@ -181,7 +181,8 @@ function on_ytcp_app(element) {
 }
 /** @arg {HTMLElement} element */
 function on_ytmusic_app(element) {
-
+	ytmusic_app=element;
+	window.ytmusic_app=element;
 }
 function iterate_ytd_app() {
 	if(ytd_app) return false;
@@ -323,6 +324,14 @@ async function async_plugin_init(event) {
 				on_ytcp_app(target_element);
 			}
 			if(ytcp_app) break;
+			x: {
+				if(ytmusic_app) break x;
+				const target_element=get_html_elements(document,"ytmusic-app")[0];
+				if(!target_element) break x;
+				found_element_count++;
+				on_ytmusic_app(target_element);
+			}
+			if(ytmusic_app) break;
 			if(main_page_app&&!ytd_app) {
 				console.log("[found.main_page_app]",main_page_app);
 				break;
@@ -4782,6 +4791,7 @@ class ParserService extends BaseService {
 			default:
 		}
 		switch(x) {
+			case "music_charts": return true;
 			case "music_explore": return true;
 			case "music_home": return true;
 			case "music_library_landing": return true;

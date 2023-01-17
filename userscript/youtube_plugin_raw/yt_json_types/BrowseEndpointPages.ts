@@ -1,6 +1,7 @@
 type BrowseEndpointPages=
 	|"history"
 	|"library"
+	|"music_charts"
 	|"music_explore"
 	|"music_home"
 	|"music_library_landing"
