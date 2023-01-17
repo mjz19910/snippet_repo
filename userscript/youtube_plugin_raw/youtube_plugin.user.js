@@ -6362,12 +6362,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
 		this.save_keys("[VssLoggingContext]",x);
-		this.VssLoggingContextData(x.vssLoggingContext);
+		const {vssLoggingContext,...y}=x; this.g(y);
+		this.VssLoggingContextData(vssLoggingContext);
 	}
 	/** @arg {VssLoggingContextData} x */
 	VssLoggingContextData(x) {
 		this.save_keys("[VssLoggingContextData]",x);
-		this.primitive_of(x.serializedContextData,"string");
+		const {serializedContextData,...y}=x; this.g(y);
+		this.primitive_of(serializedContextData,"string");
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
