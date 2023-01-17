@@ -5311,7 +5311,7 @@ class HandleTypes extends ServiceMethods {
 	ContinuationCommand(x) {
 		const {clickTrackingParams,commandMetadata,continuationCommand}=x;
 		this.clickTrackingParams(clickTrackingParams);
-		this.VE3832_CommandMetadata(commandMetadata);
+		this.ContinuationCommandMetadata(commandMetadata);
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {ContinuationCommandData} x */
@@ -5319,6 +5319,29 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ContinuationCommandData]",x);
 		this.primitive_of(x.token,"string");
 		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
+	}
+	/** @arg {ContinuationCommandMetadata} x */
+	ContinuationCommandMetadata(x) {
+		this.save_keys("[ContinuationCommandMetadata]",x);
+		const {webCommandMetadata,...y}=x; this.g(y);
+		if("rootVe" in webCommandMetadata) {
+			switch(webCommandMetadata.rootVe) {
+				case 3832: return this.VE3832_WebCommandMetadata(webCommandMetadata);
+				default: debugger; break;
+			}
+			return;
+		}
+		this.ContinuationWebCommandMetadata(webCommandMetadata);
+	}
+	/** @arg {ContinuationWebCommandMetadata} x */
+	ContinuationWebCommandMetadata(x) {
+		switch(x.apiUrl) {
+			case "/youtubei/v1/search": {
+				const {sendPost,apiUrl: {},...y}=x; this.g(y);
+				this.primitive_of(sendPost,"boolean");
+			} break;
+			default: debugger; break;
+		}
 	}
 	/** @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
