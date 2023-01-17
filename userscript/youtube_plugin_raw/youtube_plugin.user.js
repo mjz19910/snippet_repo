@@ -4814,35 +4814,34 @@ class ParserService extends BaseService {
 	}
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
-		/** @typedef {SplitIntoGroups<typeof x,`${string}`>[0]} StartPart */
-		/** @typedef {ExtractAfterStr<typeof x,"VL"|"UC">} KnownParts_VL */
-		/** @private @type {StartPart} */
-		let page_section=as(x.slice(0,2));
-		x: switch(page_section) {
-			case "FE": {
-				/** @private @type {BrowseEndpointPages} */
-				let page=as(x.slice(2));
-				let known_page=this.parse_known_page(page);
-				if(known_page) break;
-				if(seen_map.has(page)) break;
-				seen_map.add(page);
-				console.log("[param_value_with_section] [%s] -> [%s]",page_section,page);
-			} break;
-			case "VL": let v_4c=x.slice(2,4); switch(v_4c) {
+		if(this.str_starts_with(x,"FE")) {
+			let page=split_string_once(x,"FE")[1];
+			let known_page=this.parse_known_page(page);
+			if(known_page) return;
+			if(seen_map.has(page)) return;
+			seen_map.add(page);
+			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
+		} else if(this.str_starts_with(x,"VL")) {
+			let v_4c=split_string_once(x,"VL")[1];
+			switch(v_4c) {
 				case "LL": break;
 				case "WL": break;
 				case "PL": break;
 				default:
-					/** @private @type {KnownParts_VL} */
-					let ve_ac=x.slice(2);
-					console.log("new with param [param_2c_VL]",x,ve_ac);
-			} break;
-			case "UC": {
-				if(x.slice(2).length===22) return;
-				console.log("new with param [param_2c_UC]",x,x.slice(2));
-			} break;
-			case "SP": break;
-			default: console.log("[param_value_needed]",page_section,x); break;
+					console.log("new with param [param_2c_VL]",x,v_4c);
+			}
+		} else if(this.str_starts_with(x,"UC")) {
+			if(x.slice(2).length===22) return;
+			console.log("new with param [param_2c_UC]",x);
+		} else if(this.str_starts_with(x,"SP")) {
+			let x1=split_string_once(x,"SP")[1];
+			console.log("new with param [param_2c_SP]",x,x1);
+		} else if(this.str_starts_with(x,"MP")) {
+			let x1=split_string_once(x,"MP")[1];
+			let x2=split_string_once(x1,"_");
+			console.log("new with param [param_2c_MP]",x,x1,x2);
+		} else {
+			debugger;
 		}
 	}
 }
