@@ -1034,7 +1034,6 @@ class MyReader {
 					break;
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
-				debugger;
 				let res=this.try_read_any(size);
 				/** @type {DecTypeNum} */
 				try {
