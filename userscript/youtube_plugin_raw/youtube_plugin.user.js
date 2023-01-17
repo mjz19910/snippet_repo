@@ -788,6 +788,7 @@ class MyReader {
 		} finally {
 			this.pos=prev_pos;
 			this.cur_len=prev_len;
+			this.failed=false;
 		}
 	}
 	/** @arg {number} [size] */
@@ -1041,6 +1042,7 @@ class MyReader {
 					break;
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
+				debugger;
 				let res=this.try_read_any(size);
 				/** @type {DecTypeNum} */
 				try {
