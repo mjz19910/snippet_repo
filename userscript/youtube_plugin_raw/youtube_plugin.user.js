@@ -5826,9 +5826,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPanel} x */
 	PlaylistPanel(x) {
 		this.save_keys("[PlaylistPanel]",x);
-		const {title,contents,...y1}=x;
+		const {title,contents,currentIndex,...y1}=x;
 		this.primitive_of(title,"string");
 		this.z(contents,this.PlaylistPanelVideoRenderer);
+		if(currentIndex) this.primitive_of(currentIndex,"number");
 		const {playlistId,isInfinite,...y2}=y1;
 		this.playlistId(playlistId);
 		this.primitive_of(isInfinite,"boolean");
