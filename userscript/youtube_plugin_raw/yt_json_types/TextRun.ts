@@ -1,1 +1,1 @@
-type TextRun={text: string;navigationEndpoint?: NavigationEndpointData;};
+type TextRun={text: string;navigationEndpoint?: UrlEndpoint;};

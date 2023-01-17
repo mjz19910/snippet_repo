@@ -1,5 +1,5 @@
 type UrlEndpointData={
-	url: YtUrlFormat;
+	url: string;
 	target?: "TARGET_NEW_WINDOW";
-	nofollow?: boolean;
+	nofollow?: true;
 };

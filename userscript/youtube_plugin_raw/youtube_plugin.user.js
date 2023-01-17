@@ -6798,7 +6798,7 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailOverlayNowPlayingData(x) {
 		this.save_keys("[ThumbnailOverlayNowPlayingData]",x);
 		const {text,...y}=x; this.g(y);
-		this.TextWithRuns(text,this.NavigationEndpoint);
+		this.TextWithRuns(text);
 	}
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
@@ -6808,7 +6808,7 @@ class HandleTypes extends ServiceMethods {
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title,this.handle_accessibility);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
-		this.TextWithRuns(shortBylineText,this.NavigationEndpoint);
+		this.TextWithRuns(shortBylineText);
 		this.SimpleText(lengthText,this.handle_accessibility);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
@@ -6902,16 +6902,16 @@ class HandleTypes extends ServiceMethods {
 		const {serializedContextData,...y}=x; this.g(y);
 		this.primitive_of(serializedContextData,"string");
 	}
-	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpoint)=>void} f_run */
-	TextWithRuns(x,f_run=this.NavigationEndpoint) {
+	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot)=>void} f_run */
+	TextWithRuns(x,f_run=this.NavigationEndpointRoot) {
 		if(!("runs" in x)) {debugger; return;}
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
 		if(accessibility) this.Accessibility(accessibility);
 	}
-	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
-	TextRun(x,f_run=this.NavigationEndpoint) {
+	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot)=>void} f_run */
+	TextRun(x,f_run) {
 		const {text,...y}=x;
 		if(y.navigationEndpoint) f_run.call(this,{navigationEndpoint: y.navigationEndpoint});
 		this.primitive_of(text,"string");
@@ -6944,15 +6944,33 @@ class HandleTypes extends ServiceMethods {
 		this.Thumbnail(thumbnail);
 		this.TextT(longBylineText);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
-		this.TextWithRuns(videoCountText,this.NavigationEndpoint);
+		this.TextWithRuns(videoCountText);
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {NavigationEndpoint} x */
-	NavigationEndpoint(x) {
-		this.save_keys("[NavigationEndpoint]",x);
+	/** @arg {NavigationEndpointRoot} x */
+	NavigationEndpointRoot(x) {
+		this.save_keys("[NavigationEndpointRoot]",x);
 		const {navigationEndpoint,...y}=x; this.g(y);
-		return this.NavigationEndpointData(navigationEndpoint);
+		this.UrlEndpoint(navigationEndpoint);
+		// return this.NavigationEndpointData(navigationEndpoint);
+	}
+	/** @arg {UrlEndpoint} x */
+	UrlEndpoint(x) {
+		const {clickTrackingParams,commandMetadata:{webCommandMetadata,...y2},urlEndpoint,...y1}=x; this.g(y2); this.g(y1);
+		this.clickTrackingParams(clickTrackingParams);
+		this.UrlEndpointData(urlEndpoint);
+		const {url,webPageType,rootVe}=webCommandMetadata;
+		this.primitive_of(url,"string");
+		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
+		if(rootVe!==83769) debugger;
+	}
+	/** @arg {UrlEndpointData} x */
+	UrlEndpointData(x) {
+		const {url,target,nofollow,...y}=x; this.g(y);
+		this.primitive_of(url,"string");
+		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
+		if(nofollow&&!nofollow) debugger;
 	}
 	/** @arg {NavigationEndpointData} x */
 	NavigationEndpointData(x) {

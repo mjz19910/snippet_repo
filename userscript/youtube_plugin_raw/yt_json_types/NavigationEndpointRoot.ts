@@ -1,0 +1,3 @@
+type NavigationEndpointRoot={
+	navigationEndpoint: UrlEndpoint;
+};

@@ -1,6 +1,11 @@
-type UrlEndpoint<L_urls extends BaseUrl<any>[],C_meta_1 extends WebCommandMetadataTemplateType,Ep extends {url: string;}>={
+type UrlEndpoint={
 	clickTrackingParams: string;
-	loggingUrls: L_urls;
-	commandMetadata: C_meta_1;
-	urlEndpoint: Ep;
+	commandMetadata: {
+		webCommandMetadata: {
+			url: string;
+			webPageType: "WEB_PAGE_TYPE_UNKNOWN";
+			rootVe: 83769;
+		};
+	};
+	urlEndpoint: UrlEndpointData;
 };
