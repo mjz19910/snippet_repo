@@ -4839,6 +4839,7 @@ class ParserService extends BaseService {
 	get_live_chat_type(x) {
 		switch(x[3]) {
 			case "get_live_chat_replay": break;
+			case "get_live_chat": break;
 			default: return this.api_no_handler(x,x[3]);
 		};
 		return {

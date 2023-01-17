@@ -9,7 +9,7 @@ type ApiUrlFormat=[
 	`youtubei/v1/feedback`,
 	`youtubei/v1/get_transcript`,
 	`youtubei/v1/like/${"like"|"dislike"|"removelike"}`,
-	`youtubei/v1/live_chat/get_live_chat_replay`,
+	`youtubei/v1/live_chat/${"get_live_chat_replay"|"get_live_chat"}`,
 	`youtubei/v1/music/get_search_suggestions`,
 	`youtubei/v1/notification/${ApiNotificationLast}`,
 	`youtubei/v1/playlist/${"get_add_to_playlist"|"create"}`,
