@@ -6098,9 +6098,35 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {AddChatItemActionData} x */
 	AddChatItemActionData(x) {
 		this.save_keys("[AddChatItemActionData]",x);
-		let k=this.get_keys_of(x);
-		console.log("[%s]",k[0]);
+		const {item,clientId,...y}=x; this.g(y);
+		this.LiveChatItem(item);
+		if(clientId) this.primitive_of(clientId,"string");
+	}
+	/** @arg {LiveChatItem} x */
+	LiveChatItem(x) {
+		if("liveChatViewerEngagementMessageRenderer" in x) {
+			return this.LiveChatViewerEngagementMessageRenderer(x);
+		} else if("liveChatTextMessageRenderer" in x) {
+			return this.LiveChatTextMessageRenderer(x);
+		} else if("liveChatPlaceholderItemRenderer" in x) {
+			return this.LiveChatPlaceholderItemRenderer(x);
+		}
 		debugger;
+	}
+	/** @arg {LiveChatPlaceholderItemRenderer} x */
+	LiveChatPlaceholderItemRenderer(x) {
+		this.save_keys("[LiveChatPlaceholderItemRenderer]",x);
+		x;
+	}
+	/** @arg {LiveChatTextMessageRenderer} x */
+	LiveChatTextMessageRenderer(x) {
+		this.save_keys("[LiveChatTextMessageRenderer]",x);
+		x;
+	}
+	/** @arg {LiveChatViewerEngagementMessageRenderer} x */
+	LiveChatViewerEngagementMessageRenderer(x) {
+		this.save_keys("[LiveChatViewerEngagementMessageRenderer]",x);
+		x;
 	}
 	/** @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {
