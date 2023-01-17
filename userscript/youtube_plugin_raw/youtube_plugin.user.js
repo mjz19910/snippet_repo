@@ -6044,8 +6044,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetLiveChat} x */
 	GetLiveChat(x) {
 		this.save_keys("[GetLiveChat]",x);
-		const {responseContext: {},continuationContents,...y}=x; this.g(y);
-		this.LiveChatContinuation(continuationContents);
+		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=x; this.g(y);
+		this.LiveChatContinuation(a1);
+		if(a2) this.trackingParams(a2);
 	}
 	/** @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {
