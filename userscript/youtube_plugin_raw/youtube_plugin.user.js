@@ -6405,20 +6405,39 @@ class HandleTypes extends ServiceMethods {
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
 		if(loggingContext) this.VssLoggingContext(loggingContext);
 		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
-		const {watchEndpointSupportedPrefetchConfig,playerParams,...y}=y2; this.g(y);
+		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y3}=y2;
+		if(a1) this.PrefetchHintConfig(a1);
+		const {watchEndpointMusicSupportedConfigs: a2,...y4}=y3; this.g(y4);
+	}
+	/** @arg {PrefetchHintConfig} x */
+	PrefetchHintConfig(x) {
+		this.save_keys("[Html5PlaybackOnesieConfig]",x);
+		this.PrefetchHintConfigData(x.prefetchHintConfig);
+	}
+	/** @arg {PrefetchHintConfigData} x */
+	PrefetchHintConfigData(x) {
+		this.save_keys("[Html5PlaybackOnesieConfig]",x);
+		const {prefetchPriority,playbackRelativeSecondsPrefetchCondition,...y}=x; this.g(y);
+		this.primitive_of(prefetchPriority,"number");
+		console.log("prePri",prefetchPriority);
+		this.primitive_of(playbackRelativeSecondsPrefetchCondition,"number");
+		console.log("playRelSecPC",playbackRelativeSecondsPrefetchCondition);
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
+		this.save_keys("[Html5PlaybackOnesieConfig]",x);
 		const {html5PlaybackOnesieConfig,...y}=x; this.g(y);
 		this.CommonConfig(html5PlaybackOnesieConfig);
 	}
 	/** @arg {CommonConfig} x */
 	CommonConfig(x) {
+		this.save_keys("[CommonConfig]",x);
 		const {commonConfig,...y}=x; this.g(y);
 		this.CommonConfigData(commonConfig);
 	}
 	/** @arg {CommonConfigData} x */
 	CommonConfigData(x) {
+		this.save_keys("[CommonConfigData]",x);
 		const {url,...y}=x; this.g(y);
 		this.x.get("parser_service").parse_url(url);
 	}
