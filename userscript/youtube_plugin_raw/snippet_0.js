@@ -159,7 +159,7 @@ export class Snippet_0_tmp {
 			y.call(this,x[k],k);
 		}
 	}
-	/** @protected @template {{}} T @arg {ContentsArrTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	w1(x,f) {
 		const {contents: a,...y}=x; this.g(y);
 		this.z(a,f);

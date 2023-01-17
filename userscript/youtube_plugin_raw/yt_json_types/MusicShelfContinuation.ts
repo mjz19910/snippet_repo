@@ -1,0 +1,3 @@
+type MusicShelfContinuation={
+	musicShelfContinuation: {};
+};

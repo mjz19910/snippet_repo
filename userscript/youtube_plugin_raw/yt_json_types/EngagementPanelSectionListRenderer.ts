@@ -1,3 +1,3 @@
 type EngagementPanelSectionListRenderer={
-	engagementPanelSectionListRenderer: EngagementPanelSectionListData;
+	engagementPanelSectionListRenderer: EngagementPanelSectionList;
 };

@@ -1,7 +1,7 @@
 type SearchApiResponse={
 	responseContext: ResponseContext;
 	contents?: TabbedSearchResultsRenderer;
-	continuationContents?: {};
+	continuationContents?: MusicShelfContinuation;
 	trackingParams: string;
-	header?: {};
+	header?: MusicHeaderRenderer;
 }|SearchResponse;

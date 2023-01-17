@@ -1,6 +1,5 @@
-type PlaylistContent={
+type PlaylistContent=ContentsArrayTemplate<PlaylistPanelVideoRenderer>&{
 	title: string;
-	contents: PlaylistPanelVideoRenderer[];
 	currentIndex: number;
 	playlistId: PlaylistId;
 	ownerName: SimpleText;

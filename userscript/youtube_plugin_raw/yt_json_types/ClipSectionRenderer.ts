@@ -1,6 +1,1 @@
-type ContentsArrTemplate<T>={
-	contents: T[];
-}
-type ClipSectionRenderer={
-	clipSectionRenderer: ContentsArrTemplate<ClipCreationRenderer>;
-};
+type ClipSectionRenderer={clipSectionRenderer: ContentsArrayTemplate<ClipCreationRenderer>;};

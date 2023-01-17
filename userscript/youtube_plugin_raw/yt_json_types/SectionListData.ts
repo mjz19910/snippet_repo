@@ -1,14 +1,4 @@
-type NextContinuation={
-	continuation: string;
-	clickTrackingParams: string;
-};
-
-type NextContinuationData={
-	nextContinuationData: NextContinuation;
-};
-
-type SectionListData={
-	contents: SectionListItem[];
+type SectionListData=ContentsArrayTemplate<SectionListItem>&{
 	continuations?: NextContinuationData[];
 	trackingParams: string;
 	subMenu?: {};

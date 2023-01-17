@@ -1,4 +1,1 @@
-type RichGridData={
-	masthead: VideoMastheadAdV3Renderer;
-	contents: RendererContentItem[];
-}
+type RichGridData=ContentsArrayTemplate<RendererContentItem>&{masthead: VideoMastheadAdV3Renderer;};

@@ -1,0 +1,3 @@
+type NextContinuationData={
+	nextContinuationData: NextContinuation;
+};

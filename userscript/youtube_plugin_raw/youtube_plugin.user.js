@@ -4961,6 +4961,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y);
 		this.ResponseContext(responseContext);
+		this.TwoColumnWatchNextResults(contents);
 	}
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
@@ -5114,10 +5115,12 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(text);
 		this.ButtonRenderer(dismissButton);
 	}
-	/** @arg {SectionListContinuation} x */
+	/** @arg {SectionListContinuation|MusicShelfContinuation} x */
 	ContinuationContents(x) {
 		if("sectionListContinuation" in x) {
 			return this.SectionListContinuation(x);
+		} else  if("musicShelfContinuation" in x) {
+			return this.MusicShelfContinuation(x);
 		}
 		debugger;
 	}
@@ -5431,14 +5434,20 @@ class HandleTypes extends ServiceMethods {
 	SearchApiResponse(x) {
 		const cf="SearchApiResponse";
 		this.save_keys(`[${cf}]`,x);
-		if("targetId" in x) {
-			return this.SearchResponse(x);
-		}
+		if("targetId" in x) return this.SearchResponse(x);
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y);
 		if(contents) this.TabbedSearchResultsRenderer(contents);
-		if(continuationContents) this.save_keys(`[${cf}.continuationContents]`,continuationContents);
+		if(continuationContents) this.ContinuationContents(continuationContents);
 		this.trackingParams(trackingParams);
-		if(header) this.save_keys(`[${cf}.header]`,header);
+		if(header) this.MusicHeaderRenderer(header);
+	}
+	/** @arg {MusicShelfContinuation} x */
+	MusicShelfContinuation(x) {
+		x;
+	}
+	/** @arg {MusicHeaderRenderer} x */
+	MusicHeaderRenderer(x) {
+		x;
 	}
 	/** @arg {SearchResponse} x */
 	SearchResponse(x) {
@@ -5604,6 +5613,60 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
+		if(engagementPanels) this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
+	}
+	/** @arg {EngagementPanelSectionListRenderer} x */
+	EngagementPanelSectionListRenderer(x) {
+		this.save_keys("[EngagementPanelSectionListRenderer]",x);
+		this.EngagementPanelSectionList(x.engagementPanelSectionListRenderer);
+	}
+	/** @arg {EngagementPanelSectionList} x */
+	EngagementPanelSectionList(x) {
+		this.save_keys("[EngagementPanelSectionList]",x);
+		const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
+	}
+	/** @arg {AdsEngagementPanelContentRenderer} x */
+	AdsEngagementPanelContentRenderer(x) {
+		x;
+	}
+	/** @arg {EngagementPanelSectionListContent} x */
+	EngagementPanelSectionListContent(x) {
+		if("adsEngagementPanelContentRenderer" in x) {
+			return this.AdsEngagementPanelContentRenderer(x);
+		} else if("clipSectionRenderer" in x) {
+			return this.ClipSectionRenderer(x);
+		} else if("continuationItemRenderer" in x) {
+			return this.ContinuationItemRenderer(x);
+		} else if("sectionListRenderer" in x) {
+			return this.SectionListRendererTemplate(x);
+		} else if("structuredDescriptionContentRenderer" in x) {
+			return this.StructuredDescriptionContentRenderer(x);
+		}
+		debugger;
+	}
+	/**
+	 * @param {ClipSectionRenderer} x
+	 */
+	ClipSectionRenderer(x) {
+		x;
+	}
+	/**
+	 * @param {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x
+	 */
+	SectionListRendererTemplate(x) {
+		this.SectionListDataTemplate(x.sectionListRenderer);
+	}
+	/**
+	 * @param {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x
+	 */
+	SectionListDataTemplate(x) {
+		x.contents;
+	}
+	/**
+	 * @param {StructuredDescriptionContentRenderer} x
+	 */
+	StructuredDescriptionContentRenderer(x) {
+		x;
 	}
 	/** @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {

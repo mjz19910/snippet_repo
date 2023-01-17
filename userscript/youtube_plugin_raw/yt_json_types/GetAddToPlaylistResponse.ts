@@ -1,5 +1,4 @@
-type GetAddToPlaylistResponse={
+type GetAddToPlaylistResponse=ContentsArrayTemplate<{}>&{
 	responseContext: ResponseContext;
-	contents: {}[];
 	trackingParams: string;
 };

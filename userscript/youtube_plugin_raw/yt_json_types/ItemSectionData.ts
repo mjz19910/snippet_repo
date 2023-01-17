@@ -1,5 +1,4 @@
-type ItemSectionData={
-	contents: ItemSectionItem[];
+type ItemSectionData=ContentsArrayTemplate<ItemSectionItem>&{
 	trackingParams: string;
 	sectionIdentifier: string;
 	targetId: string;
