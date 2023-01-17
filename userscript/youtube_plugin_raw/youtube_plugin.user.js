@@ -4989,8 +4989,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchPageResponse['url']} x */
 	parse_watch_page_url(x) {
-		let url=x;
-		let u1=split_string_once(url,"/")[1];
+		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=parse_url_search_params(u2);
 		let u4=this.get_keys_of(u3);
@@ -5000,7 +4999,7 @@ class HandleTypes extends ServiceMethods {
 			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
 		}
-		this.x.get("parser_service").parse_url(url);
+		this.x.get("parser_service").parse_url(x);
 		return u3;
 	}
 	/** @arg {WatchResponse} x */
