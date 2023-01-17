@@ -5880,7 +5880,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(playlistSetVideoId,"string");
 		const {thumbnailOverlays,canReorder,...y7}=y6;
 		if(thumbnailOverlays) this.z(thumbnailOverlays,this.ThumbnailOverlayResumePlaybackRenderer);
-		if(canReorder!==void 0&&!canReorder) debugger; 
+		if(canReorder!==void 0&&!canReorder) debugger;
 		this.g(y7);
 	}
 	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
@@ -6439,12 +6439,12 @@ class HandleTypes extends ServiceMethods {
 		if(!("runs" in x)) {debugger; return;}
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,...y}=x; this.g(y);
-		this.z(runs,a=>this.TextRun(a,f_run));
+		this.z(runs,a => this.TextRun(a,f_run));
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextRun(x,f_run=this.NavigationEndpoint) {
 		const {text,...y}=x;
-		if(y.navigationEndpoint) f_run.call(this,{navigationEndpoint:y.navigationEndpoint});
+		if(y.navigationEndpoint) f_run.call(this,{navigationEndpoint: y.navigationEndpoint});
 		this.primitive_of(text,"string");
 	}
 	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
@@ -6495,9 +6495,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NavigationEndpointBrowseEndpoint} x */
 	NavigationEndpointBrowseEndpoint(x) {
 		this.save_keys("[NavigationEndpointBrowseEndpoint]",x);
-		const {browseId,canonicalBaseUrl,...y}=x; this.g(y);
+		const {browseId,canonicalBaseUrl,browseEndpointContextSupportedConfigs: a3,...y}=x; this.g(y);
 		this.browseId(browseId);
-		this.canonicalBaseUrl(canonicalBaseUrl);
+		if(canonicalBaseUrl) this.canonicalBaseUrl(canonicalBaseUrl);
+		if(a3) this.BrowseEndpointContextSupportedConfigs(a3);
+	}
+	/** @arg {BrowseEndpointContextSupportedConfigs} x */
+	BrowseEndpointContextSupportedConfigs(x) {
+		if("browseEndpointContextMusicConfig" in x) {}
 	}
 	/** @arg {NavigationEndpointCommandMetadata} x */
 	NavigationEndpointCommandMetadata(x) {
