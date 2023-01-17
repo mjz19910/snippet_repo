@@ -6549,9 +6549,12 @@ class HandleTypes extends ServiceMethods {
 	BrowseEndpointContextMusicConfigData(x) {
 		this.save_keys("[BrowseEndpointContextMusicConfigData]",x);
 		const {pageType,...y}=x; this.g(y);
+		this.save_enum("MUSIC_PAGE_TYPE",pageType);
 		switch(pageType) {
+			case "MUSIC_PAGE_TYPE_ALBUM": break;
 			case "MUSIC_PAGE_TYPE_ARTIST": break;
-			default: console.log("mpt",pageType); this.save_enum("MUSIC_PAGE_TYPE",pageType); break;
+			case "MUSIC_PAGE_TYPE_USER_CHANNEL": break;
+			default: debugger; break;
 		}
 	}
 	/** @arg {NavigationEndpointCommandMetadata} x */

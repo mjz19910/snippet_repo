@@ -1,0 +1,3 @@
+type BrowseEndpointContextMusicConfig={
+	browseEndpointContextMusicConfig: BrowseEndpointContextMusicConfigData;
+};
