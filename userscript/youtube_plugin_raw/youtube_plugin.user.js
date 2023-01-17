@@ -4673,6 +4673,7 @@ class ParserService extends BaseService {
 			case "guide": break;
 			case "next": break;
 			case "player": break;
+			case "updated_metadata": break;
 			default: this.api_no_handler(x,x[2]);
 		}
 		return x[2];
