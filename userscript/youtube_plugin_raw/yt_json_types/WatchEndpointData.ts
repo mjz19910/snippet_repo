@@ -1,5 +1,6 @@
 type WatchEndpointData={
 	videoId: string;
+	nofollow?: boolean;
 	playlistId?: `PL${string}`|`RD${string}`;
 	index?: number;
 	playlistSetVideoId?: string;
