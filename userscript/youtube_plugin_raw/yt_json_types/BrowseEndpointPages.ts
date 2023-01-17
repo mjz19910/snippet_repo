@@ -4,6 +4,7 @@ type BrowseEndpointPages=
 	|"music_charts"
 	|"music_explore"
 	|"music_home"
+	|"music_library_corpus_track_artists"
 	|"music_library_landing"
 	|"music_liked_albums"
 	|"music_liked_videos"
