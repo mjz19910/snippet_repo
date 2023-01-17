@@ -6118,10 +6118,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {InvalidationContinuationDataInner} x */
 	InvalidationContinuationDataInner(x) {
 		this.save_keys("[InvalidationContinuationDataInner]",x);
-		const {invalidationId,timeoutMs,continuation,...y}=x; this.g(y);
+		const {invalidationId,timeoutMs,continuation,clickTrackingParams: a1,...y}=x; this.g(y);
 		this.InvalidationIdData(invalidationId);
 		if(timeoutMs!==10000) debugger;
 		this.primitive_of(continuation,"string");
+		if(a1) this.clickTrackingParams(a1);
 	}
 	/** @arg {InvalidationIdData} x */
 	InvalidationIdData(x) {
