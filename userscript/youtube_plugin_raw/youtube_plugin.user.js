@@ -5035,10 +5035,14 @@ class HandleTypes extends ServiceMethods {
 		let wp_params=this.parse_watch_page_url(url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
 		this.WatchEndpoint(endpoint);
-		if(preconnect.length!==1) debugger;
-		this.parse_preconnect_url(preconnect[0]);
+		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.PlayerResponse(playerResponse);
 		this.WatchResponse(response);
+	}
+	/** @arg {[VE3832_PreconnectUrl]} x */
+	parse_preconnect_arr(x) {
+		if(x.length!==1) debugger;
+		this.parse_preconnect_url(x[0]);
 	}
 	/** @arg {VE3832_PreconnectUrl} x */
 	parse_preconnect_url(x) {

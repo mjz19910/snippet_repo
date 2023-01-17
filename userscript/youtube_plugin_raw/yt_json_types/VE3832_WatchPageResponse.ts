@@ -3,7 +3,7 @@ type VE3832_WatchPageResponse={
 	url: WatchPageUrl;
 	endpoint: WatchEndpoint;
 	page: "watch";
-	preconnect: [VE3832_PreconnectUrl];
+	preconnect?: [VE3832_PreconnectUrl];
 	playerResponse: PlayerResponse;
 	response: WatchResponse;
 };
