@@ -5783,9 +5783,27 @@ class HandleTypes extends ServiceMethods {
 			console.log(a);
 		});
 	}
+	/** @arg {UpdateDescriptionAction} x */
+	UpdateDescriptionAction(x) {
+		let x1=x.updateDescriptionAction;
+		this.TextWithRuns(x1.description);
+	}
+	/** @arg {UpdateTitleAction} x */
+	UpdateTitleAction(x) {
+		let x1=x.updateTitleAction;
+		this.TextWithRuns(x1.title);
+	}
+	/** @arg {UpdateDateTextAction} x */
+	UpdateDateTextAction(x) {
+		let x1=x.updateDateTextAction;
+		this.SimpleText(x1.dateText);
+	}
 	/** @arg {UpdateToggleButtonTextAction} x */
 	UpdateToggleButtonTextAction(x) {
-		x;
+		let x1=x.updateToggleButtonTextAction; x1;
+		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
+		this.SimpleText(x1.defaultText);
+		this.SimpleText(x1.toggledText);
 	}
 	/** @arg {UpdateViewershipAction} x */
 	UpdateViewershipAction(x) {
