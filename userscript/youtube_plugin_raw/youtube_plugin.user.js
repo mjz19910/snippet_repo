@@ -2808,7 +2808,7 @@ class YtHandlers extends BaseService {
 			};
 			case "get_live_chat": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChatReplayResponse} */
+				/** @private @type {GetLiveChat} */
 				data: as(x),
 			};
 		}
