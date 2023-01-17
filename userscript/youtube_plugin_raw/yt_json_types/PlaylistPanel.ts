@@ -4,7 +4,7 @@ type PlaylistPanel={
 	currentIndex?: number;
 	playlistId: `RD${string}`;
 	isInfinite: true;
-	continuations: NextRadioContinuationData[];
+	continuations?: NextRadioContinuationData[];
 	shortBylineText: TextWithRuns;
 	trackingParams: string;
 	titleText: TextWithRuns;

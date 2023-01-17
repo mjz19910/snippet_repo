@@ -5848,7 +5848,7 @@ class HandleTypes extends ServiceMethods {
 		this.playlistId(playlistId);
 		this.primitive_of(isInfinite,"boolean");
 		const {continuations,shortBylineText,...y3}=y2;
-		this.z(continuations,this.NextRadioContinuationData);
+		if(continuations) this.z(continuations,this.NextRadioContinuationData);
 		this.TextWithRuns(shortBylineText);
 		const {trackingParams,titleText,...y4}=y3;
 		this.trackingParams(trackingParams);
