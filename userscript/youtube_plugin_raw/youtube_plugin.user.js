@@ -6026,9 +6026,35 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {
+		if("invalidationContinuationData" in x) {
+			return this.InvalidationContinuationData(x);
+		}
 		let k=this.get_keys_of(x);
 		console.log("[%s]",k[0]);
 		debugger;
+	}
+	/** @arg {InvalidationContinuationData} x */
+	InvalidationContinuationData(x) {
+		this.InvalidationContinuationDataInner(x.invalidationContinuationData);
+	}
+	/** @arg {InvalidationContinuationDataInner} x */
+	InvalidationContinuationDataInner(x) {
+		this.save_keys("[InvalidationContinuationDataInner]",x);
+		const {invalidationId,timeoutMs,continuation,...y}=x; this.g(y);
+		this.InvalidationIdData(invalidationId);
+		if(timeoutMs!==10000) debugger;
+		this.primitive_of(continuation,"string");
+	}
+	/** @arg {InvalidationIdData} x */
+	InvalidationIdData(x) {
+		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=x; this.g(y);
+		this.primitive_of(objectSource,"number");
+		this.primitive_of(objectId,"string");
+		this.primitive_of(topic,"string");
+		let topic_dec=split_string(topic,"~");
+		console.log(topic_dec);
+		this.primitive_of(subscribeToGcmTopics,"boolean");
+		this.primitive_of(protoCreationTimestampMs,"string");
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
