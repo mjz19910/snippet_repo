@@ -5,6 +5,7 @@ type BrowseEndpointPages=
 	|"music_explore"
 	|"music_home"
 	|"music_library_landing"
+	|"music_liked_albums"
 	|"music_liked_videos"
 	|"music_moods_and_genres_category"
 	|"music_moods_and_genres"
