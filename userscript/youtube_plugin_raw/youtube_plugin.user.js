@@ -6440,7 +6440,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
-		this.Accessibility(accessibility);
+		if(accessibility) this.Accessibility(accessibility);
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextRun(x,f_run=this.NavigationEndpoint) {
