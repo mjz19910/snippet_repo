@@ -5813,9 +5813,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VideoViewCountRenderer} x */
 	VideoViewCountRenderer(x) {
 		let x1=x.videoViewCountRenderer;
-		const {shortViewCount,viewCount,...y}=x1; this.g(y);
+		this.VideoViewCountData(x1);
+	}
+	/** @arg {VideoViewCountData} x1 */
+	VideoViewCountData(x1) {
+		const {viewCount,shortViewCount,isLive,extraShortViewCount,...y}=x1; this.g(y);
+		this.SimpleText(viewCount);
 		if(shortViewCount) this.SimpleText(shortViewCount);
-		this.SimpleText(x1.viewCount);
+		if(isLive!==void 0) this.primitive_of(isLive,"boolean");
+		if(extraShortViewCount) this.SimpleText(extraShortViewCount);
 	}
 	/** @arg {TimedContinuationData} x */
 	TimedContinuationData(x) {
