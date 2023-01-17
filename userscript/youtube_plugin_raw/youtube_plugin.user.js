@@ -4798,6 +4798,7 @@ class ParserService extends BaseService {
 			case "music_library_corpus_track_artists": return true;
 			case "music_library_landing": return true;
 			case "music_liked_albums": return true;
+			case "music_liked_playlists": return true;
 			case "music_liked_videos": return true;
 			case "music_moods_and_genres_category": return true;
 			case "music_moods_and_genres": return true;

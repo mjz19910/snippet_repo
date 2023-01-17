@@ -8,6 +8,7 @@ type BrowseEndpointPages=
 	|"music_library_corpus_track_artists"
 	|"music_library_landing"
 	|"music_liked_albums"
+	|"music_liked_playlists"
 	|"music_liked_videos"
 	|"music_moods_and_genres_category"
 	|"music_moods_and_genres"
