@@ -4767,17 +4767,26 @@ class ParserService extends BaseService {
 	/** @arg {BrowseEndpointPages} x */
 	parse_known_page(x) {
 		switch(x) {
-			default: debugger; return false;
 			case "history": return true;
 			case "library": return true;
-			case "music_explore": return true;
-			case "music_home": return true;
-			case "music_library_landing": return true;
 			case "storefront": return true;
 			case "subscriptions": return true;
 			case "trending": return true;
 			case "what_to_watch": return true;
+			default:
 		}
+		switch(x) {
+			case "music_explore": return true;
+			case "music_home": return true;
+			case "music_library_landing": return true;
+			case "music_new_releases": return true;
+			default:
+		}
+		switch(x) {
+			case "": return true;
+			default:
+		}
+		switch(x) {default: debugger; return false;}
 	}
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
@@ -5119,7 +5128,7 @@ class HandleTypes extends ServiceMethods {
 	ContinuationContents(x) {
 		if("sectionListContinuation" in x) {
 			return this.SectionListContinuation(x);
-		} else  if("musicShelfContinuation" in x) {
+		} else if("musicShelfContinuation" in x) {
 			return this.MusicShelfContinuation(x);
 		}
 		debugger;
