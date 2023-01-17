@@ -17,12 +17,14 @@
 function as(e,x=e) {
 	return x;
 }
-/** @private @type {YtdAppElement} */
+/** @type {YtdAppElement} */
 const YtdAppElement=as({});
-/** @private @type {InstanceType<typeof YtdAppElement>|null} */
+/** @type {InstanceType<typeof YtdAppElement>|null} */
 let ytd_app=null;
-/** @private @type {Element|null} */
+/** @type {HTMLElement|null} */
 let ytcp_app=null;
+/** @type {HTMLElement|null} */
+let ytmusic_app=null;
 {
 	/** @private @type {Exclude<typeof window[InjectApiStr],undefined>} */
 	let inject_api=window.inject_api??as({});
@@ -176,6 +178,10 @@ function do_find_video() {
 function on_ytcp_app(element) {
 	ytcp_app=element;
 	window.ytcp_app=element;
+}
+/** @arg {HTMLElement} element */
+function on_ytmusic_app(element) {
+
 }
 function iterate_ytd_app() {
 	if(ytd_app) return false;
