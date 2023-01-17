@@ -5383,7 +5383,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.BrowseCommandMetadata(commandMetadata);
+		if(commandMetadata) this.BrowseCommandMetadata(commandMetadata);
 		this.BrowseEndpointData(browseEndpoint);
 	}
 	/** @arg {BrowseCommandMetadata} x */
