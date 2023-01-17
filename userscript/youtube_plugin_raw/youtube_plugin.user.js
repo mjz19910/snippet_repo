@@ -6052,7 +6052,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(objectId,"string");
 		this.primitive_of(topic,"string");
 		let topic_dec=split_string(topic,"~");
-		console.log(topic_dec);
+		console.log("[InvalidationIdData.topic]",topic_dec);
 		this.primitive_of(subscribeToGcmTopics,"boolean");
 		this.primitive_of(protoCreationTimestampMs,"string");
 	}
