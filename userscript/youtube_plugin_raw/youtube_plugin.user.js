@@ -4389,6 +4389,18 @@ class ParserService extends BaseService {
 		}
 		return param_map;
 	}
+	/** @arg {string} x */
+	on_endpoint_params(x) {
+		let pp_value=x;
+		let pp_dec=decodeURIComponent(pp_value);
+		if(this.cache_player_params.includes(pp_value)) return;
+		this.cache_player_params.push(pp_value);
+		let res_e=this.decode_b64_proto_obj(pp_dec);
+		if(!res_e) {debugger; return;}
+		/** @type {ParamMapType} */
+		let param_map=this.make_param_map(res_e);
+		console.log("[new_endpoint_params]",Object.fromEntries(param_map.entries()));
+	}
 	/** @public @arg {string} x */
 	on_player_params(x) {
 		let pp_value=x;
@@ -5938,6 +5950,9 @@ class HandleTypes extends ServiceMethods {
 		if(videoId) this.videoId(videoId);
 		this.playerParams(playerParams);
 		this.ReelPlayerOverlayRenderer(overlay);
+		this.x.get("parser_service").on_endpoint_params(params);
+		this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",sequenceProvider);
+		this.save_enum("REEL_WATCH_INPUT_TYPE",inputType);
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
