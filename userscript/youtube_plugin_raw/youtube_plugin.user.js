@@ -5734,15 +5734,22 @@ class HandleTypes extends ServiceMethods {
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
 		if(engagementPanels) this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
-		const {videoReporting,queueContextParams,...y1}=y; this.g(y1);
+		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
 		if(videoReporting) this.ReportFormModalRenderer(videoReporting);
+		if(queueContextParams) this.primitive_of(queueContextParams,"string");
+		this.PlaylistPanelContinuation(continuationContents);
+	}
+	/** @arg {PlaylistPanelContinuation} x */
+	PlaylistPanelContinuation(x) {
+		this.save_keys("[PlaylistPanelContinuation]",x);
 	}
 	/** @arg {ReportFormModalRenderer} x */
 	ReportFormModalRenderer(x) {
-		x;
+		this.save_keys("[ReportFormModalRenderer]",x);
 	}
 	/** @arg {NextResponseContents} x */
 	NextResponseContents(x) {
+		this.save_keys("[NextResponseContents]",x);
 		if("twoColumnWatchNextResults" in x) {
 			return this.TwoColumnWatchNextResults(x);
 		} else if("singleColumnMusicWatchNextResultsRenderer" in x) {
@@ -5762,24 +5769,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchNextTabbedResultsRenderer} x */
 	WatchNextTabbedResultsRenderer(x) {
-		x.watchNextTabbedResultsRenderer;
+		this.save_keys("[WatchNextTabbedResultsRenderer]",x);
+		this.WatchNextTabbedResults(x.watchNextTabbedResultsRenderer);
 	}
 	/** @arg {WatchNextTabbedResults} x */
 	WatchNextTabbedResults(x) {
+		this.save_keys("[WatchNextTabbedResults]",x);
 		this.z(x.tabs,this.TabRenderer);
 	}
 	/** @arg {TabRenderer} x */
 	TabRenderer(x) {
-		x.tabRenderer;
+		this.save_keys("[TabRenderer]",x);
+		this.TabData(x.tabRenderer);
 	}
 	/** @arg {TabData} x */
 	TabData(x) {
+		this.save_keys("[TabData]",x);
 		const {content,title,trackingParams,...y}=x; this.g(y);
 		this.TabDataContent(content);
 		if(title) this.primitive_of(title,"string");
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {TabDataContent} x */
 	TabDataContent(x) {
+		this.save_keys("[TabDataContent]",x);
 		if("sectionListRenderer" in x) {
 			return this.SectionListRenderer(x);
 		} else if("richGridRenderer" in x) {
@@ -5792,7 +5805,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MusicQueueRenderer} x */
 	MusicQueueRenderer(x) {
 		this.save_keys("[MusicQueueRenderer]",x);
-		x.musicQueueRenderer;
+		this.MusicQueue(x.musicQueueRenderer);
 	}
 	/** @arg {MusicQueue} x */
 	MusicQueue(x) {
@@ -5816,9 +5829,25 @@ class HandleTypes extends ServiceMethods {
 		this.playlistId(playlistId);
 		this.primitive_of(isInfinite,"boolean");
 		const {continuations,shortBylineText,...y3}=y2;
+		this.z(continuations,this.NextRadioContinuationData);
+		this.TextWithRuns(shortBylineText);
 		const {trackingParams,titleText,...y4}=y3;
+		this.trackingParams(trackingParams);
+		this.TextWithRuns(titleText);
 		const {isEditable,previewDescription,numItemsToShow,...y5}=y4; this.g(y5);
+		if(isEditable!==true) debugger;
 		this.g(previewDescription);
+		if(numItemsToShow!==25) debugger;
+	}
+	/** @arg {NextRadioContinuationData} x */
+	NextRadioContinuationData(x) {
+		this.save_keys("[NextRadioContinuationData]",x);
+		this.NextRadioContinuationDataInner(x.nextRadioContinuationData);
+	}
+	/** @arg {NextRadioContinuationDataInner} x */
+	NextRadioContinuationDataInner(x) {
+		this.save_keys("[NextRadioContinuationDataInner]",x);
+		debugger;
 	}
 	/** @arg {PlaylistPanelVideoRenderer} x */
 	PlaylistPanelVideoRenderer(x) {
