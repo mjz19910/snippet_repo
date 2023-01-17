@@ -4248,7 +4248,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["shorts",any]>} x */
 	parse_shorts_url(x) {
-		this.parse_video_id(x[1]);
+		this.x.get("indexed_db").put({v: x[1]});
 	}
 	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["feed",any]>} x */
 	parse_feed_url(x) {
@@ -4949,12 +4949,8 @@ class ServiceMethods extends ServiceData {
 		}
 	}
 	/** @arg {BrowseIdType} x */
-	parse_browse_id(x) {
-		this.x.get("parser_service").parse_browse_id(x);
-	}
-	/** @arg {BrowseIdType} x */
 	browseId(x) {
-		this.parse_browse_id(x);
+		this.x.get("parser_service").parse_browse_id(x);
 	}
 	/** @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {
@@ -6083,10 +6079,45 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {LikeEndpoint} x */
 	LikeEndpoint(x) {
 		this.save_keys("[LikeEndpoint]",x);
+		this.LikeEndpointData(x.likeEndpoint);
+	}
+	/** @arg {LikeEndpointData} x */
+	LikeEndpointData(x) {
+		this.save_keys("[LikeEndpointData]",x);
+		const {target,...y}=x;
+		this.LikeApiData(x.target);
+		switch(y.status) {
+			case "DISLIKE": {
+				const {status: {},dislikeParams,...a}=y; this.g(a);
+				this.primitive_of(dislikeParams,"string");
+			} break;
+			case "INDIFFERENT": {
+				const {status: {},removeLikeParams,...a}=y; this.g(a);
+				this.primitive_of(removeLikeParams,"string");
+			} break;
+			case "LIKE": {
+				const {status: {},actions,likeParams,...a}=y; this.g(a);
+				this.z(actions,this.MusicLibraryStatusUpdateCommand);
+				this.primitive_of(likeParams,"string");
+			} break;
+		}
+	}
+	/** @arg {MusicLibraryStatusUpdateCommand} x */
+	MusicLibraryStatusUpdateCommand(x) {
+		x;
+	}
+	MusicLibraryStatusUpdate(x) {
+		x;
 	}
 	/** @arg {LikeApiData} x */
 	LikeApiData(x) {
 		this.save_keys("[LikeApiData]",x);
+		this.videoId(x.videoId);
+		this.browseId
+	}
+	/** @arg {string} x */
+	videoId(x) {
+		this.x.get("indexed_db").put({v: x});
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {
@@ -6273,10 +6304,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(lengthInSeconds,"number");
 		this.WatchEndpoint(navigationEndpoint);
 		this.g(y);
-	}
-	/** @arg {string} x */
-	videoId(x) {
-		this.x.get("parser_service").parse_video_id(x);
 	}
 	/** @arg {WatchEndpoint} x */
 	WatchEndpoint(x) {
