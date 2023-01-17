@@ -5886,6 +5886,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
 	ThumbnailOverlayResumePlaybackRenderer(x) {
 		this.save_keys("[ThumbnailOverlayResumePlaybackRenderer]",x);
+		this.ThumbnailOverlayResumePlayback(x.thumbnailOverlayResumePlaybackRenderer);
+	}
+	/** @arg {ThumbnailOverlayResumePlayback} x */
+	ThumbnailOverlayResumePlayback(x) {
+		x;
+		debugger;
 	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {
