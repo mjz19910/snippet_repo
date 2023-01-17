@@ -5858,7 +5858,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPanelVideoRenderer} x */
 	PlaylistPanelVideoRenderer(x) {
 		this.save_keys("[PlaylistPanelVideoRenderer]",x);
-		this.PlaylistPanelVideo(x.playlistPanelVideoRenderer);
+		const {playlistPanelVideoRenderer,...y}=x; this.g(y);
+		this.PlaylistPanelVideo(playlistPanelVideoRenderer);
 	}
 	/** @arg {PlaylistPanelVideo} x */
 	PlaylistPanelVideo(x) {
