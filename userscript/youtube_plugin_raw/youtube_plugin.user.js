@@ -5858,13 +5858,23 @@ class HandleTypes extends ServiceMethods {
 		this.g(previewDescription);
 		if(numItemsToShow!==25) debugger;
 	}
-	/** @arg {PlaylistPanelVideoRenderer} x */
+	/** @arg {PlaylistPanelItem} x */
 	PlaylistPanelItem(x) {
 		if("playlistPanelVideoRenderer" in x) {
 			this.PlaylistPanelVideoRenderer(x);
+		} else if("automixPreviewVideoRenderer") {
+			this.AutomixPreviewVideoRenderer(x);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {AutomixPreviewVideoRenderer} x */
+	AutomixPreviewVideoRenderer(x) {
+		this.save_keys("[AutomixPreviewVideoRenderer]",x);
+	}
+	/** @arg {AutomixPreviewVideo} x */
+	AutomixPreviewVideo(x) {
+		this.save_keys("[AutomixPreviewVideo]",x);
 	}
 	/** @arg {NextRadioContinuationData} x */
 	NextRadioContinuationData(x) {

@@ -1,0 +1,3 @@
+type AutomixPreviewVideoRenderer={
+	automixPreviewVideoRenderer: AutomixPreviewVideo;
+};

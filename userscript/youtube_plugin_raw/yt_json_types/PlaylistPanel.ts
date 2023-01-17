@@ -1,6 +1,6 @@
 type PlaylistPanel={
 	title: "YouTube Mix";
-	contents: PlaylistPanelVideoRenderer[];
+	contents: PlaylistPanelItem[];
 	currentIndex?: number;
 	playlistId: `RD${string}`;
 	isInfinite: true;
