@@ -5858,7 +5858,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(titleText);
 		const {isEditable,previewDescription,numItemsToShow,...y5}=y4; this.g(y5);
 		if(isEditable!==true) debugger;
-		this.g(previewDescription);
+		if(previewDescription) this.g(previewDescription);
 		if(numItemsToShow!==25) debugger;
 	}
 	/** @arg {PlaylistPanelItem} x */

@@ -11,6 +11,6 @@ type PlaylistPanel={
 	trackingParams: string;
 	titleText: TextWithRuns;
 	isEditable: true;
-	previewDescription: {};
+	previewDescription?: {};
 	numItemsToShow: 25;
 };
