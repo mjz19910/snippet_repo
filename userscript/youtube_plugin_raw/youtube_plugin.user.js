@@ -5012,9 +5012,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ResponseContext]",x);
 		const service_tracking=this.x.get("service_tracking");
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=x; this.g(y);
-		this.MainAppWebResponseContext(mainAppWebResponseContext);
+		if(mainAppWebResponseContext) this.MainAppWebResponseContext(mainAppWebResponseContext);
 		this.z(serviceTrackingParams,a => service_tracking.set_service_params(a));
-		this.WebResponseContextExtensionData(webResponseContextExtensionData);
+		if(webResponseContextExtensionData) this.WebResponseContextExtensionData(webResponseContextExtensionData);
 		if(consistencyTokenJar) this.ConsistencyTokenJar(consistencyTokenJar);
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
 		if(stateTags) this.RelevantStateTags(stateTags);

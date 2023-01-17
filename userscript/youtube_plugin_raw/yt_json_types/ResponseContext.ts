@@ -1,7 +1,7 @@
 type ResponseContext={
-	mainAppWebResponseContext: MainAppWebResponseContext;
+	mainAppWebResponseContext?: MainAppWebResponseContext;
 	serviceTrackingParams: AllServiceTrackingParams[];
-	webResponseContextExtensionData: WebResponseContextExtensionData;
+	webResponseContextExtensionData?: WebResponseContextExtensionData;
 	consistencyTokenJar?: ConsistencyTokenJar;
 	maxAgeSeconds?: number;
 	stateTags?: RelevantStateTags;
