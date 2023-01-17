@@ -6,4 +6,4 @@ type PlayerOverlay={
 	videoDetails: PlayerOverlayVideoDetailsRenderer;
 	autonavToggle?: AutoplaySwitchButtonRenderer;
 	decoratedPlayerBarRenderer?: DecoratedPlayerBarRenderer;
-};
+}|BrowserMediaSessionRoot;

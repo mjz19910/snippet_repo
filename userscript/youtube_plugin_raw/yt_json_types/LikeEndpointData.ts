@@ -1,0 +1,1 @@
+type LikeEndpointData=LikeIndifferentEndpointData|LikeLikeEndpointData|LikeDislikeEndpointData;

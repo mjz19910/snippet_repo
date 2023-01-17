@@ -1,0 +1,1 @@
+type LikeEndpoint={likeEndpoint: LikeEndpointData;};

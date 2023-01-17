@@ -1,0 +1,3 @@
+type BrowserMediaSessionRenderer={
+	browserMediaSessionRenderer: BrowserMediaSession;
+};

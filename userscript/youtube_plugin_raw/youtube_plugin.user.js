@@ -6047,6 +6047,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlayerOverlay} x */
 	PlayerOverlay(x) {
 		this.save_keys("[PlayerOverlay]",x);
+		if("browserMediaSession" in x) {
+			return this.BrowserMediaSessionRoot(x);
+		}
 		const {endScreen,autoplay,shareButton,addToMenu,videoDetails,autonavToggle,decoratedPlayerBarRenderer,...y}=x; this.g(y);
 		this.WatchNextEndScreenRenderer(endScreen);
 		if(autoplay) this.PlayerOverlayAutoplayRenderer(autoplay);
@@ -6055,6 +6058,35 @@ class HandleTypes extends ServiceMethods {
 		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
 		if(autonavToggle) this.AutoplaySwitchButtonRenderer(autonavToggle);
 		if(decoratedPlayerBarRenderer) this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
+	}
+	/** @arg {BrowserMediaSessionRoot} x */
+	BrowserMediaSessionRoot(x) {
+		this.save_keys("[BrowserMediaSessionRoot]",x);
+		const {actions,browserMediaSession,...y}=x; this.g(y);
+		this.z(actions,this.LikeButtonRenderer);
+	}
+	/** @arg {LikeButtonRenderer} x */
+	LikeButtonRenderer(x) {
+		this.save_keys("[LikeButtonRenderer]",x);
+		this.LikeButton(x.likeButtonRenderer);
+	}
+	/** @arg {LikeButton} x */
+	LikeButton(x) {
+		this.save_keys("[LikeButton]",x);
+		const {target,likeStatus,trackingParams,likesAllowed,serviceEndpoints,...y}=x; this.g(y);
+		this.LikeApiData(target);
+		if(likeStatus!=="INDIFFERENT") debugger;
+		this.trackingParams(trackingParams);
+		this.primitive_of(likesAllowed,"boolean");
+		this.z(serviceEndpoints,this.LikeEndpoint);
+	}
+	/** @arg {LikeEndpoint} x */
+	LikeEndpoint(x) {
+		this.save_keys("[LikeEndpoint]",x);
+	}
+	/** @arg {LikeApiData} x */
+	LikeApiData(x) {
+		this.save_keys("[LikeApiData]",x);
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {

@@ -1,0 +1,3 @@
+type LikeButtonRenderer={
+	likeButtonRenderer: LikeButton;
+};
