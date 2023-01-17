@@ -1,1 +1,4 @@
-type NextRadioContinuationDataInner={};
+type NextRadioContinuationDataInner={
+	continuation: string;
+	clickTrackingParams: string;
+};
