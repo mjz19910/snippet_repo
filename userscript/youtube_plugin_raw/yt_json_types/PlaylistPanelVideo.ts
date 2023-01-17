@@ -9,7 +9,7 @@ type PlaylistPanelVideo={
 	shortBylineText: TextWithRuns;
 	trackingParams: string;
 	menu: MenuRenderer;
-	thumbnailOverlays: ThumbnailOverlayResumePlaybackRenderer[];
+	thumbnailOverlays?: ThumbnailOverlayResumePlaybackRenderer[];
 	playlistSetVideoId: string;
 	canReorder?: true;
 };

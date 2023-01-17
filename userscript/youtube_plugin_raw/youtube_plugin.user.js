@@ -5861,7 +5861,30 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPanelVideo} x */
 	PlaylistPanelVideo(x) {
 		this.save_keys("[PlaylistPanelVideo]",x);
-		debugger;
+		const {title,longBylineText,...y1}=x;
+		this.TextT(title);
+		this.TextWithRuns(longBylineText);
+		const {thumbnail,lengthText,...y2}=y1;
+		this.Thumbnail(thumbnail);
+		this.TextT(lengthText);
+		const {selected,navigationEndpoint,...y3}=y2;
+		this.primitive_of(selected,"boolean");
+		this.WatchEndpoint(navigationEndpoint);
+		const {videoId,shortBylineText,...y4}=y3;
+		this.videoId(videoId);
+		this.TextWithRuns(shortBylineText);
+		const {trackingParams,menu,...y5}=y4;
+		this.trackingParams(trackingParams);
+		this.MenuRenderer(menu);
+		const {playlistSetVideoId,...y6}=y5;
+		this.primitive_of(playlistSetVideoId,"string");
+		const {thumbnailOverlays,canReorder,...y7}=y6;
+		if(thumbnailOverlays) this.z(thumbnailOverlays,this.ThumbnailOverlayResumePlaybackRenderer);
+		this.g(y7);
+	}
+	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
+	ThumbnailOverlayResumePlaybackRenderer(x) {
+		this.save_keys("[ThumbnailOverlayResumePlaybackRenderer]",x);
 	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {

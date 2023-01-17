@@ -1,3 +1,1 @@
-type DesktopTopbarRenderer={
-	desktopTopbarRenderer: DesktopTopbarData;
-};
+type DesktopTopbarRenderer={desktopTopbarRenderer: DesktopTopbarData;};

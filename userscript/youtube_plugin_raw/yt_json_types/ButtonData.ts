@@ -17,4 +17,3 @@ type ButtonData={
 	trackingParams?: string;
 	targetId?: YtTargetIdType;
 };
-type CommandEndpoint={};

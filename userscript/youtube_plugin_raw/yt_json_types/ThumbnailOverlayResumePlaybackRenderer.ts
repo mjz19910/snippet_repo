@@ -1,3 +1,1 @@
-type ThumbnailOverlayResumePlaybackRenderer={
-	thumbnailOverlayResumePlaybackRenderer: {};
-};
+type ThumbnailOverlayResumePlaybackRenderer={thumbnailOverlayResumePlaybackRenderer: ThumbnailOverlayResumePlayback;};

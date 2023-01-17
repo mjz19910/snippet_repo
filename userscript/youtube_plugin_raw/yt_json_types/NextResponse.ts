@@ -13,6 +13,3 @@ interface NextResponse {
 	pageVisualEffects?: CinematicContainerRenderer[];
 	frameworkUpdates?: FrameworkUpdates;
 };
-type PlaylistPanelContinuation={
-	playlistPanelContinuation: {};
-}

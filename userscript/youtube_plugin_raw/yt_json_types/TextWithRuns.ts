@@ -1,3 +1,1 @@
-type TextWithRuns={
-	runs: TextRun[];
-};
+type TextWithRuns={runs: TextRun[];};
