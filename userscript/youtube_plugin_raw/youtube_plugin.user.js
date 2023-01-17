@@ -4987,7 +4987,17 @@ class HandleTypes extends ServiceMethods {
 			this.WatchEndpoint(endpoint);
 			if(preconnect.length!==1) debugger;
 			let pc_url=preconnect[0];
-			pc_url;
+			let up=this.parse_with_url_parse(pc_url);
+			if(up.pathname!=="/generate_204") debugger;
+			let ss1=split_string(up.host,".");
+			if(ss1.length!==3) debugger;
+			let ss2=split_string(ss1[0],"---");
+			if(!this.str_starts_with(ss2[0],"rr")) {
+				debugger;
+			}
+			let ss3=split_string_once(ss2[0],"rr")[1];
+			let ss4=split_string_once(ss2[1],"sn-nx")[1];
+			console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
 			this.PlayerResponse(playerResponse);
 			this.WatchResponse(response);
 			return;
