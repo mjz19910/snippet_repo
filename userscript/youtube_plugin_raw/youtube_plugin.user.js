@@ -6251,7 +6251,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[WatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.WatchEndpointCommandMetadata(commandMetadata);
+		if(commandMetadata) this.WatchEndpointCommandMetadata(commandMetadata);
 		this.WatchEndpointData(watchEndpoint);
 	}
 	/** @arg {WatchEndpointData} x */
