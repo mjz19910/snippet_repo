@@ -6530,7 +6530,7 @@ class HandleTypes extends ServiceMethods {
 		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		if(a1) this.PrefetchHintConfig(a1);
-		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4; this.g(y5);
+		const {watchEndpointMusicSupportedConfigs: a2,...y_end}=y4; this.g(y_end);
 	}
 	/** @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
