@@ -4371,11 +4371,18 @@ class ParserService extends BaseService {
 			debugger;
 			return;
 		}
-		/** @private @type {Map<number,number>} */
+		/** @private @type {Map<number,number|string|DecTypeNum[]>} */
 		let param_map=new Map();
 		for(let param of res_e) {
 			switch(param[0]) {
 				case "data32": param_map.set(param[1],param[2]); break;
+				case "child": {
+					if(param[3]) {
+						param_map.set(param[1],param[3]);
+					} else {
+						param_map.set(param[1],decoder.decode(param[2]));
+					}
+				} break;
 				default: debugger; break;
 			}
 		}
