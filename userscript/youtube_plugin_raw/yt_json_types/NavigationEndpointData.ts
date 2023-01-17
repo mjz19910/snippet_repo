@@ -1,5 +1,5 @@
 type NavigationEndpointData={
 	clickTrackingParams: string;
-	commandMetadata: NavigationEndpointCommandMetadata;
+	commandMetadata?: NavigationEndpointCommandMetadata;
 	browseEndpoint: NavigationEndpointBrowseEndpoint;
 };
