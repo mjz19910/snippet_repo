@@ -1,4 +1,5 @@
 type PrefetchHintConfigData={
-	prefetchPriority: number;
-	playbackRelativeSecondsPrefetchCondition: number;
+	prefetchPriority: 0;
+	countdownUiRelativeSecondsPrefetchCondition: -3;
+	playbackRelativeSecondsPrefetchCondition?: number;
 };

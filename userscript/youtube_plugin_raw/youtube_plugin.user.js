@@ -6457,11 +6457,17 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PrefetchHintConfigData} x */
 	PrefetchHintConfigData(x) {
 		this.save_keys("[Html5PlaybackOnesieConfig]",x);
-		const {prefetchPriority,playbackRelativeSecondsPrefetchCondition,...y}=x; this.g(y);
-		this.primitive_of(prefetchPriority,"number");
-		console.log("prePri",prefetchPriority);
-		this.primitive_of(playbackRelativeSecondsPrefetchCondition,"number");
-		console.log("playRelSecPC",playbackRelativeSecondsPrefetchCondition);
+		const {prefetchPriority: a1,playbackRelativeSecondsPrefetchCondition: b1,countdownUiRelativeSecondsPrefetchCondition: b2,...y}=x; this.g(y);
+		this.primitive_of(a1,"number");
+		console.log("prePri",a1);
+		if(b1!==void 0) {
+			this.primitive_of(b1,"number");
+			console.log("playRelSecPC",b1);
+		}
+		if(b2!==void 0) {
+			this.primitive_of(b2,"number");
+			console.log("CdUiRelSecPC",b2);
+		}
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
