@@ -4359,16 +4359,17 @@ class ParserService extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
+	/** @typedef {Map<number,number|string|ParamMapType>} ParamMapType */
 	/** @arg {DecTypeNum[]} res_e */
 	make_param_map(res_e) {
-		/** @private @type {Map<number,number|string|DecTypeNum[]>} */
+		/** @private @type {ParamMapType} */
 		let param_map=new Map();
 		for(let param of res_e) {
 			switch(param[0]) {
 				case "data32": param_map.set(param[1],param[2]); break;
 				case "child": {
 					if(param[3]) {
-						param_map.set(param[1],param[3]);
+						param_map.set(param[1],this.make_param_map(param[3]));
 					} else {
 						param_map.set(param[1],decoder.decode(param[2]));
 					}
@@ -4385,23 +4386,35 @@ class ParserService extends BaseService {
 		if(this.cache_player_params.includes(pp_value)) return;
 		this.cache_player_params.push(pp_value);
 		let res_e=this.decode_b64_proto_obj(pp_dec);
-		if(!res_e) {debugger;return;}
-		/** @private @type {Map<number,number|string|DecTypeNum[]>} */
+		if(!res_e) {debugger; return;}
+		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
-		let map_keys=[...param_map.keys()];
+		this.parse_player_params_with_map(param_map);
+	}
+	/** @arg {ParamMapType} x */
+	parse_player_params_with_map(x) {
+		let map_keys=[...x.keys()];
 		if(this.eq_keys(map_keys,[8,9])) {
-			let p8=param_map.get(8);
-			let p9=param_map.get(9);
+			let p8=x.get(8);
+			let p9=x.get(9);
 			if(p8!==void 0&&p9!==void 0) {
 				if(p8===1&&p9===1) return;
 			}
 		}
-		if(this.eq_keys(map_keys,[40])) {
-			console.log("[player_params_f_40]",param_map.get(40));
-			return;
+		x: if(this.eq_keys(map_keys,[40])) {
+			let x1=x.get(40);
+			if(!x1) {debugger; break x;}
+			if(!(x1 instanceof Map)) {debugger; break x;}
+			return this.parse_player_param_f_40(x1);
 		}
-		console.log("[new_player_params]",Object.fromEntries(param_map.entries()));
+		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
+	}
+	/** @arg {ParamMapType} x */
+	parse_player_param_f_40(x) {
+		let map_keys=[...x.keys()];
+		console.log("[player_params_f_40]",x,map_keys);
+		console.log("[new_player_params_f_40]",Object.fromEntries(x.entries()));
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
