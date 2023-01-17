@@ -3419,6 +3419,7 @@ class GFeedbackService extends BaseService {
 	on_context_param(data_target,x) {
 		data_target.context=x;
 		switch(x) {
+			case "channel_creator": return;
 			case "yt_web_remix_unlimited": return;
 			case "yt_web_search": return;
 			case "yt_web_unknown_form_factor_kevlar_w2w": return;
