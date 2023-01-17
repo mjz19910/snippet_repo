@@ -6104,15 +6104,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicLibraryStatusUpdateCommand} x */
 	MusicLibraryStatusUpdateCommand(x) {
-		x;
+		this.MusicLibraryStatusUpdate(x.musicLibraryStatusUpdateCommand);
 	}
+	/** @arg {MusicLibraryStatusUpdate} x */
 	MusicLibraryStatusUpdate(x) {
-		x;
+		this.save_keys("[MusicLibraryStatusUpdate]",x);
+		this.g(x);
 	}
 	/** @arg {LikeApiData} x */
 	LikeApiData(x) {
 		this.save_keys("[LikeApiData]",x);
-		this.videoId(x.videoId);
+		const {videoId,...y}=x; this.g(y);
+		this.videoId(videoId);
 	}
 	/** @arg {string} x */
 	videoId(x) {
