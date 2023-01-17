@@ -6441,14 +6441,14 @@ class HandleTypes extends ServiceMethods {
 		const {runs,...y}=x; this.g(y);
 		this.z(runs,a => {
 			const {text,...b}=a;
-			if(b.navigationEndpoint) f_run.call(this,{...b.navigationEndpoint});
+			if(b.navigationEndpoint) f_run.call(this,{navigationEndpoint:b.navigationEndpoint});
 			this.primitive_of(text,"string");
 		});
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextRun(x,f_run=this.NavigationEndpoint) {
 		const {text,...y}=x;
-		if(y.navigationEndpoint) f_run.call(this,{...y.navigationEndpoint});
+		if(y.navigationEndpoint) f_run.call(this,{navigationEndpoint:y.navigationEndpoint});
 		this.primitive_of(text,"string");
 	}
 	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
