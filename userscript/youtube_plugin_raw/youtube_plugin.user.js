@@ -4979,9 +4979,16 @@ class HandleTypes extends ServiceMethods {
 	WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
-		if("rootVe" in x) {
-			return;
+		if("rootVe" in x) switch(x.rootVe) {
+			case 3832: this.VE3832_WatchPageResponse(x); break;
+			default: debugger; break;
+		} else {
+			this.Generic_WatchPageResponse(x);
 		}
+	}
+	/** @arg {Generic_WatchPageResponse} x */
+	Generic_WatchPageResponse(x) {
+		const cf="WatchPageResponse";
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
 		this.WatchEndpoint(endpoint);
 		this.WatchResponse(response);
