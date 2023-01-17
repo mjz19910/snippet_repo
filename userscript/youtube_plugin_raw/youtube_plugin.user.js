@@ -6014,7 +6014,7 @@ class HandleTypes extends ServiceMethods {
 	ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
-		this.clickTrackingParams(clickTrackingParams);
+		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		this.g(commandMetadata);
 	}
 	/** @arg {ReelWatchEndpointData} x */
