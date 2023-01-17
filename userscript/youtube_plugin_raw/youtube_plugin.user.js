@@ -5783,6 +5783,7 @@ class HandleTypes extends ServiceMethods {
 			console.log(a);
 		});
 	}
+	/** @arg {UpdateToggleButtonTextAction} x */
 	UpdateToggleButtonTextAction(x) {
 		x;
 	}
