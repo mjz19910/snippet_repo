@@ -6109,7 +6109,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MusicLibraryStatusUpdate} x */
 	MusicLibraryStatusUpdate(x) {
 		this.save_keys("[MusicLibraryStatusUpdate]",x);
-		this.g(x);
+		const {libraryStatus,addToLibraryFeedbackToken,...y}=x; this.g(y);
+		if(libraryStatus!=="MUSIC_LIBRARY_STATUS_IN_LIBRARY") debugger;
+		this.primitive_of(addToLibraryFeedbackToken,"string");
 	}
 	/** @arg {LikeApiData} x */
 	LikeApiData(x) {
@@ -6119,6 +6121,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {string} x */
 	videoId(x) {
+		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
