@@ -17,9 +17,13 @@ type TextRun={
 };
 type TextRunTODO={
 	bold?: boolean;
-}
+};
 type UrlRedirect={
-  url: `https://www.youtube.com/redirect?${string}`,
-  target: "TARGET_NEW_WINDOW",
-  nofollow: true
+	url: `https://www.youtube.com/redirect?${string}`,
+	target: "TARGET_NEW_WINDOW",
+	nofollow: true;
+};
+type FetchInjectInputArgs={
+	request: string|URL|Request;
+	options: {}|undefined;
 };

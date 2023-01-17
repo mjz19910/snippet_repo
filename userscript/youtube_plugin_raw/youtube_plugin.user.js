@@ -1899,17 +1899,17 @@ function main() {
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types);
-	/** @private @arg {string|URL|Request} request @arg {JsonDataResponseType} response_obj */
-	function fetch_filter_text_then_data_url(request,response_obj) {
+	/** @private @arg {string|URL|Request} request @arg {Response} response @arg {JsonDataResponseType} response_obj */
+	function fetch_filter_text_then_data_url(request,response,response_obj) {
 		try {
-			yt_handlers.on_handle_api(request,response_obj);
+			yt_handlers.on_handle_api(request,response,response_obj);
 		} catch(e) {
 			console.log("plugin error");
 			console.log(e);
 		}
 	}
-	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
-	function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
+	/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+	function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
 		let original_json_parse=JSON.parse;
 		if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
@@ -1926,7 +1926,7 @@ function main() {
 					JSON.parse=original_json_parse;
 				}
 				if(is_yt_debug_enabled) console.log("request.url");
-				fetch_filter_text_then_data_url(request,obj);
+				fetch_filter_text_then_data_url(request,state.response,obj);
 				return obj;
 			}
 		});
@@ -1944,25 +1944,25 @@ function main() {
 		}
 		return ret;
 	}
-	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
-	function bind_promise_handler(request,options,onfulfilled,onrejected) {
+	/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+	function bind_promise_handler(input,state,onfulfilled,onrejected) {
 		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
-		let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
+		let ret=handle_json_parse.bind(null,input,state,onfulfilled,onrejected);
 		return ret;
 	}
-	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Promise<any>} ov @return {Promise<any>} */
-	function handle_fetch_response_2(request,options,ov) {
+	/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{response: Response}} state @arg {{result:Promise<any>}} result @return {Promise<any>} */
+	function handle_fetch_response_2({input},state,result) {
 		return {
 			/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
 			then(onfulfilled,onrejected) {
-				return ov.then(bind_promise_handler(request,options,onfulfilled,onrejected));
+				return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));
 			},
 			/** @private @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
 			catch(onrejected) {
-				return ov.catch(onrejected);
+				return result.result.catch(onrejected);
 			},
 			finally(onfinally) {
-				return ov.finally(onfinally);
+				return result.result.finally(onfinally);
 			},
 			[Symbol.toStringTag]: "Promise",
 		};
@@ -1972,7 +1972,7 @@ function main() {
 		class FakeResponse {
 			text() {
 				if(is_yt_debug_enabled) console.log("response.text()");
-				return handle_fetch_response_2(request,options,response.text());
+				return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
 			}
 			get redirected() {
 				return response.redirected;
@@ -2946,8 +2946,8 @@ class YtHandlers extends BaseService {
 			};
 		}
 	}
-	/** @public @arg {string|URL|Request} request @arg {{}} data */
-	on_handle_api(request,data) {
+	/** @public @arg {string|URL|Request} request @arg {Response} response @arg {{}} data */
+	on_handle_api(request,response,data) {
 		/** @private @arg {string|URL|Request} req */
 		function convert_to_url(req) {
 			if(typeof req=="string") {
@@ -2981,7 +2981,7 @@ class YtHandlers extends BaseService {
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
 		let res=this.get_res_data(url_type,data);
-		this.x.get("handle_types").ResponseTypes(res);
+		this.x.get("handle_types").ResponseTypes(response,res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {SavedDataItem} data */
@@ -5293,7 +5293,7 @@ class HandleTypes extends ServiceMethods {
 	ItemSectionData(x) {
 		this.save_keys("[ItemSectionData]",x);
 		const {contents,trackingParams,sectionIdentifier,targetId,...y}=x; this.g(y);
-		this.z(contents,a=>this.ItemSectionItem(a));
+		this.z(contents,a => this.ItemSectionItem(a));
 		this.save_string("[ItemSectionData.hash]",`section-${x.sectionIdentifier}-id-${x.targetId}`);
 	}
 	/** @arg {ItemSectionItem} x */
@@ -5489,8 +5489,12 @@ class HandleTypes extends ServiceMethods {
 		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[AccountMenuResponse]",x);
 	}
-	/** @arg {_ResponseTypes} x */
-	ResponseTypes(x) {
+	/** @arg {Response} response @arg {_ResponseTypes} x */
+	ResponseTypes(response,x) {
+		if(!response.ok) {
+			console.log("not ok",x);
+			return;
+		}
 		/** @private @arg {{type:string}} x */
 		let g=x => {
 			return this.save_string("[need_api_type]",x.type);
@@ -5807,7 +5811,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlaylistPanel]",x);
 		const {title,contents,...y1}=x;
 		this.primitive_of(title,"string");
-		this.z(contents,this.PlaylistPanelVideoRenderer)
+		this.z(contents,this.PlaylistPanelVideoRenderer);
 		const {playlistId,isInfinite,...y2}=y1;
 		this.playlistId(playlistId);
 		this.primitive_of(isInfinite,"boolean");
