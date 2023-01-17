@@ -6439,11 +6439,7 @@ class HandleTypes extends ServiceMethods {
 		if(!("runs" in x)) {debugger; return;}
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,...y}=x; this.g(y);
-		this.z(runs,a => {
-			const {text,...b}=a;
-			if(b.navigationEndpoint) f_run.call(this,{navigationEndpoint:b.navigationEndpoint});
-			this.primitive_of(text,"string");
-		});
+		this.z(runs,a=>this.TextRun(a,f_run));
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextRun(x,f_run=this.NavigationEndpoint) {
