@@ -5023,13 +5023,17 @@ class HandleTypes extends ServiceMethods {
 		if(!this.str_starts_with(ss2[0],"rr")) debugger;
 		let ss3=split_string_once(ss2[0],"rr")[1];
 		let ss4=split_string_once(ss2[1],"sn-nx")[1];
-		/** @typedef {SplitIntoGroups<typeof ss4,`${string}`>[0]} StartPart */
+		/** @typedef {SplitIntoGroups<typeof ss4,`${string}`>} PartGroups */
+		/** @typedef {Extract<PartGroups,["57",...any]>} PartGroups_1 */
+		/** @typedef {Extract<PartGroups,["5s",...any]>} PartGroups_2 */
+		/** @template {[any,any,...any]} T @typedef {Join<[T[0],T[1]],"">} MergeGroup */
+		/** @typedef {MergeGroup<PartGroups_1>|MergeGroup<PartGroups_2>} StartPart */
 		/** @type {StartPart} */
-		let ss5=as(ss4.slice(0,2));
+		let ss5=as(ss4.slice(0,4));
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
 		switch(ss5) {
-			case "57": break;
-			case "5s": break;
+			case "57yn": break;
+			case "5s7n": break;
 			default: debugger;
 		}
 	}
