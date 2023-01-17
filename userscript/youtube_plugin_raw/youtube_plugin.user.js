@@ -6502,7 +6502,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseEndpointContextSupportedConfigs} x */
 	BrowseEndpointContextSupportedConfigs(x) {
-		if("browseEndpointContextMusicConfig" in x) {}
+		this.save_keys("[BrowseEndpointContextSupportedConfigs]",x);
+		if("browseEndpointContextMusicConfig" in x) {
+			return this.BrowseEndpointContextMusicConfig(x);
+		}
+		debugger;
+	}
+	/** @arg {BrowseEndpointContextMusicConfig} x */
+	BrowseEndpointContextMusicConfig(x) {
+		this.save_keys("[BrowseEndpointContextMusicConfig]",x);
+		const {browseEndpointContextMusicConfig,...y}=x; this.g(y);
+		this.BrowseEndpointContextMusicConfigData(browseEndpointContextMusicConfig);
+	}
+	/** @arg {BrowseEndpointContextMusicConfigData} x */
+	BrowseEndpointContextMusicConfigData(x) {
+		this.save_keys("[BrowseEndpointContextMusicConfigData]",x);
+		const {pageType,...y}=x; this.g(y);
+		if(pageType!=="MUSIC_PAGE_TYPE_ARTIST") debugger;
 	}
 	/** @arg {NavigationEndpointCommandMetadata} x */
 	NavigationEndpointCommandMetadata(x) {
