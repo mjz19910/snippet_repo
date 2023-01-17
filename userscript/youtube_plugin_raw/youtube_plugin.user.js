@@ -5011,7 +5011,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlayerResponse(playerResponse);
 		this.WatchResponse(response);
 	}
-	/** @arg {VE3832_WatchPageResponse['preconnect'][0]} x */
+	/** @arg {VE3832_PreconnectUrl} x */
 	parse_preconnect_url(x) {
 		let up=this.parse_with_url_parse(x);
 		if(up.pathname!=="/generate_204") debugger;
