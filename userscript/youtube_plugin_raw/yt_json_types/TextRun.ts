@@ -13,9 +13,9 @@ type UrlEndpointRedirect={
 
 type TextRun={
 	text: string;
+	navigationEndpoint?: NavigationEndpoint;
 };
 type TextRunTODO={
-	navigationEndpoint?: NavigationEndpoint;
 	bold?: boolean;
 }
 type UrlRedirect={

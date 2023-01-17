@@ -6377,13 +6377,15 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,...y}=x; this.g(y);
 		this.z(runs,a => {
-			const {text,...b}=a; f_run.call(this,b);
+			const {text,...b}=a;
+			if(b.navigationEndpoint) f_run.call(this,{...b.navigationEndpoint});
 			this.primitive_of(text,"string");
 		});
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpoint)=>void} f_run */
 	TextRun(x,f_run=this.NavigationEndpoint) {
-		const {text,...y}=x; f_run.call(this,y);
+		const {text,...y}=x;
+		if(y.navigationEndpoint) f_run.call(this,{...y.navigationEndpoint});
 		this.primitive_of(text,"string");
 	}
 	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
@@ -6421,10 +6423,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
 		this.save_keys("[NavigationEndpoint]",x);
-		if("navigationEndpoint" in x) {
-			return this.NavigationEndpointData(x.navigationEndpoint);
-		}
-		this.g(x);
+		return this.NavigationEndpointData(x.navigationEndpoint);
 	}
 	/** @arg {NavigationEndpointData} x */
 	NavigationEndpointData(x) {
