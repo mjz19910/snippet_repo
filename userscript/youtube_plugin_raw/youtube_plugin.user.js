@@ -4359,17 +4359,8 @@ class ParserService extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
-	/** @private @arg {string} x */
-	on_player_params(x) {
-		let pp_value=x;
-		let pp_dec=decodeURIComponent(pp_value);
-		if(this.cache_player_params.includes(pp_value)) return;
-		this.cache_player_params.push(pp_value);
-		let res_e=this.decode_b64_proto_obj(pp_dec);
-		if(!res_e) {
-			debugger;
-			return;
-		}
+	/** @arg {DecTypeNum[]} res_e */
+	make_param_map(res_e) {
 		/** @private @type {Map<number,number|string|DecTypeNum[]>} */
 		let param_map=new Map();
 		for(let param of res_e) {
@@ -4385,6 +4376,18 @@ class ParserService extends BaseService {
 				default: debugger; break;
 			}
 		}
+		return param_map;
+	}
+	/** @private @arg {string} x */
+	on_player_params(x) {
+		let pp_value=x;
+		let pp_dec=decodeURIComponent(pp_value);
+		if(this.cache_player_params.includes(pp_value)) return;
+		this.cache_player_params.push(pp_value);
+		let res_e=this.decode_b64_proto_obj(pp_dec);
+		if(!res_e) {debugger;return;}
+		/** @private @type {Map<number,number|string|DecTypeNum[]>} */
+		let param_map=this.make_param_map(res_e);
 		let map_keys=[...param_map.keys()];
 		if(this.eq_keys(map_keys,[8,9])) {
 			let p8=param_map.get(8);
