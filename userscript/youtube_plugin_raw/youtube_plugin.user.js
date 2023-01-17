@@ -3597,13 +3597,13 @@ class IndexedDbAccessor extends BaseService {
 	committed_data=[];
 	/** @public @template {{v: string}} T @arg {T} obj */
 	put(obj) {
-		if(!obj) {debugger;return;}
+		if(!obj) {debugger; return;}
 		if(!this.database_open) this.requestOpen();
 		this.push_waiting_obj(obj);
 	}
 	/** @public @template {{v: string}} T @arg {T} obj */
 	push_waiting_obj(obj) {
-		if(!obj) {debugger;return;}
+		if(!obj) {debugger; return;}
 		let idx=this.index.get(obj.v);
 		if(idx!=null) {
 			this.arr[idx]=obj;
@@ -3701,7 +3701,7 @@ class IndexedDbAccessor extends BaseService {
 				let new_data_map=new Map;
 				database_data.forEach(e => database_map.set(e.v,e));
 				for(let data of this.arr) {
-					if(!data) {debugger;continue;}
+					if(!data) {debugger; continue;}
 					if(database_map.has(data.v)) {
 						this.committed_data.push(data);
 						let ok=this.get_keys_of(data);
@@ -4825,14 +4825,11 @@ class ParserService extends BaseService {
 			seen_map.add(page);
 			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
 		} else if(this.str_starts_with(x,"VL")) {
-			let v_4c=split_string_once(x,"VL")[1];
-			switch(v_4c) {
-				case "LL": break;
-				case "WL": break;
-				case "PL": break;
-				default:
-					console.log("new with param [param_2c_VL]",x,v_4c);
-			}
+			let x1=split_string_once(x,"VL")[1];
+			if(this.str_starts_with(x1,"LL")) return;
+			if(this.str_starts_with(x1,"WL")) return;
+			if(this.str_starts_with(x1,"PL")) return;
+			console.log("new with param [param_2c_VL]",x,x1);
 		} else if(this.str_starts_with(x,"UC")) {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
