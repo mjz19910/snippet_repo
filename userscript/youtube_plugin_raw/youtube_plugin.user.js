@@ -4795,6 +4795,7 @@ class ParserService extends BaseService {
 			case "music_explore": return true;
 			case "music_home": return true;
 			case "music_library_landing": return true;
+			case "music_moods_and_genres": return true;
 			case "music_new_releases": return true;
 			default:
 		}
