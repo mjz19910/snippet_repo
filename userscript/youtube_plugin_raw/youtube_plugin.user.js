@@ -6962,7 +6962,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {UrlEndpoint} x */
 	UrlEndpoint(x) {
 		const {clickTrackingParams,commandMetadata:{webCommandMetadata,...y2},urlEndpoint,...y1}=x; this.g(y2); this.g(y1);
-		this.clickTrackingParams(clickTrackingParams);
+		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		this.UrlEndpointData(urlEndpoint);
 		const {url,webPageType,rootVe}=webCommandMetadata;
 		this.primitive_of(url,"string");

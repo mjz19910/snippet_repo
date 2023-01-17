@@ -1,5 +1,5 @@
 type UrlEndpoint={
-	clickTrackingParams: string;
+	clickTrackingParams?: string;
 	commandMetadata: {
 		webCommandMetadata: {
 			url: string;
