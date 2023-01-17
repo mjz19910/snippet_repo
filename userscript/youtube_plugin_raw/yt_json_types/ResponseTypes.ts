@@ -17,6 +17,7 @@ type _ResponseTypes=
 	|like_like_t
 	|like_removelike_t
 	|live_chat_get_live_chat_replay_t
+	|live_chat_get_live_chat_t
 	|music_get_search_suggestions_t
 	|next_t
 	|notification_get_unseen_count_t
@@ -30,5 +31,6 @@ type _ResponseTypes=
 	|share_get_share_panel_t
 	|subscription_subscribe_t
 	|subscription_unsubscribe_t
+	|update_metadata_t
 	;
 ;

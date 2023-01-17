@@ -1,0 +1,3 @@
+type UpdateDateTextAction={
+	updateDateTextAction: {};
+};

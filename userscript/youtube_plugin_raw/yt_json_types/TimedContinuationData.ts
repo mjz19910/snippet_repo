@@ -1,0 +1,3 @@
+type TimedContinuationData={
+	timedContinuationData: TimedContinuationDataInner;
+};

@@ -2747,6 +2747,11 @@ class YtHandlers extends BaseService {
 				/** @type {SearchApiResponse} */
 				data: as(x),
 			};
+			case "updated_metadata": return {
+				type: target[0],
+				/** @type {UpdatedMetadata} */
+				data: as(x),
+			};
 		}
 		return null;
 	}
@@ -2797,6 +2802,11 @@ class YtHandlers extends BaseService {
 		switch(target[1]) {
 			default: debugger; break;
 			case "get_live_chat_replay": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {GetLiveChatReplayResponse} */
+				data: as(x),
+			};
+			case "get_live_chat": return {
 				type: `${target[0]}.${target[1]}`,
 				/** @private @type {GetLiveChatReplayResponse} */
 				data: as(x),
