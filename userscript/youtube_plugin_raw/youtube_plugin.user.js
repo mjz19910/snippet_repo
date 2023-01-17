@@ -6064,6 +6064,8 @@ class HandleTypes extends ServiceMethods {
 		if(actions) this.z(actions,a => {
 			if("replayChatItemAction" in a) {
 				return this.ReplayChatItemAction(a);
+			} else if("addChatItemAction" in a) {
+				return this.AddChatItemAction(a);
 			}
 			debugger;
 		});
