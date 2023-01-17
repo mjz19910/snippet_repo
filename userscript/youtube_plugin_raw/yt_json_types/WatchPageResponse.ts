@@ -1,4 +1,4 @@
-type VE3832_PreconnectUrl=`https://rr${number}---sn-nx${`${"57"}${"yn"}${"ss"}`}.googlevideo.com/generate_204`;
+type VE3832_PreconnectUrl=`https://rr${number}---sn-nx${`${"57"}${"yn"}${"ss"}`|"5s7n7s"}.googlevideo.com/generate_204`;
 
 type VE3832_WatchPageResponse={
 	rootVe: 3832;

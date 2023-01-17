@@ -5027,7 +5027,11 @@ class HandleTypes extends ServiceMethods {
 		/** @type {StartPart} */
 		let ss5=as(ss4.slice(0,2));
 		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
-		if(ss5!=="57") debugger;
+		switch(ss5) {
+			case "57": break;
+			case "5s": break;
+			default: debugger;
+		}
 	}
 	/** @arg {WatchPageUrl} x */
 	parse_watch_page_url(x) {
