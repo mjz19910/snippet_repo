@@ -1,7 +1,9 @@
-type EngagementSectionPanelId=MakeTargetId<"engagement-panel",[
-	"clip-create",
-	"structured-description",
-][number]>;
+type EngagementSectionPanelId=
+	|MakeTargetId<"engagement-panel",[
+		"clip-create",
+		"structured-description",
+	][number]>
+	|"comment-item-section";
 
 type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListContent>&{
 	panelIdentifier?: EngagementSectionPanelId;

@@ -6565,6 +6565,7 @@ class HandleTypes extends ServiceMethods {
 	EngagementSectionPanelId(x) {
 		switch(x) {
 			default: debugger; break;
+			case "comment-item-section": break;
 			case "engagement-panel-clip-create": break;
 			case "engagement-panel-structured-description": break;
 		}
