@@ -4085,7 +4085,7 @@ class CodegenService extends BaseService {
 				if(keys.includes(k1)) return [o[0]];
 				return [o[0]];
 			}
-			let res_type=this.get_json_replacer_type(o);
+			let res_type=this.get_json_replacer_type(r,o);
 			if(res_type!==null) return res_type;
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
@@ -4119,8 +4119,8 @@ class CodegenService extends BaseService {
 		}
 		return ret;
 	}
-	/** @param {{[U in string]:unknown}} x */
-	get_json_replacer_type(x) {
+	/** @arg {string|null} r @param {{[U in string]:unknown}} x */
+	get_json_replacer_type(r,x) {
 		let g=() => {
 			let o_keys=this.filter_keys(this.get_keys_of(x));
 			if(o_keys.length===1) {
@@ -4159,7 +4159,7 @@ class CodegenService extends BaseService {
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
 		if(x.accessibilityData) return "TYPE::Accessibility";
 		let o_keys=this.filter_keys(this.get_keys_of(x));
-		console.log("[no_json_replace_type] %o [%s] [%s]",x,o_keys.join(","),g());
+		console.log("[no_json_replace_type] %o [%s] [%s]",x,o_keys.join(","),g(),"\n",r);
 		return null;
 	}
 	/** @public @arg {string} x1 */
@@ -8186,7 +8186,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
 		if(accessibility) console.log("[button.accessibility]");
-		if(accessibilityData) console.log("[button.accessibilityData]");
+		if(accessibilityData) this.Accessibility(accessibilityData);
 		x: if(command) {
 			if("signalServiceEndpoint" in command) {
 				this.SignalServiceEndpoint(command);
