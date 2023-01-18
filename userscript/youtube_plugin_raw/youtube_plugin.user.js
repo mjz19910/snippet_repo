@@ -5484,7 +5484,11 @@ class HandleTypes extends ServiceMethods {
 		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y);
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
-		this.ContinuationCommand(continuationEndpoint);
+		if("continuationCommand" in continuationEndpoint) {
+			this.ContinuationCommand(continuationEndpoint);
+		} else {
+			debugger;
+		}
 		if(button) this.ButtonRenderer(button);
 		if(ghostCards) this.GhostGridRenderer(ghostCards);
 	}
