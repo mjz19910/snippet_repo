@@ -4100,11 +4100,11 @@ class CodegenService extends BaseService {
 		});
 		debugger;
 		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1).trim()}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(/\[\s+([^\[\]]*)\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e => e).join("\n");
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1).trim()}`).filter(e => e).join("\n");
 			return `${vi}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(":ARRAY_TAG","[]");
