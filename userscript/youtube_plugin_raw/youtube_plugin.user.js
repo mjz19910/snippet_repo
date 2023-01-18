@@ -5340,14 +5340,20 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		switch(x) {
 			default: debugger; break;
-			case "browse-feedFEwhat_to_watch": break;
-			case "comments-section": break;
-			case "engagement-panel-ads": break;
-			case "engagement-panel-clip-create": break;
-			case "engagement-panel-comments-section": break;
-			case "engagement-panel-searchable-transcript": break;
-			case "engagement-panel-structured-description": break;
-			case "watch-next-feed": break;
+			case "browse-feedFEwhat_to_watch": return;
+			case "comments-section": return;
+			case "engagement-panel-ads": return;
+			case "engagement-panel-clip-create": return;
+			case "engagement-panel-comments-section": return;
+			case "engagement-panel-searchable-transcript": return;
+			case "engagement-panel-structured-description": return;
+			case "engagement-panel-macro-markers-description-chapters": return;
+			case "watch-next-feed": return;
+			case "engagement-panel-searchable-transcript-search-panel": return;
+			case "search-feed": return;
+			case "search-page": return;
+		}
+		switch(x) {
 		}
 	}
 	/** @arg {[VE3832_PreconnectUrl]} x */
