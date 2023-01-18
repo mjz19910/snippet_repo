@@ -7296,12 +7296,12 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		debugger;
-		const {content,header,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
+		const {content,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
 		this.EngagementPanelSectionListContent(content);
-		this.EngagementPanelTitleHeaderRenderer(header);
 		this.EngagementPanelSectionTargetId(targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		this.LoggingDirectives(loggingDirectives);
+		// this.EngagementPanelTitleHeaderRenderer(header);
 		// if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
 		// if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 	}
