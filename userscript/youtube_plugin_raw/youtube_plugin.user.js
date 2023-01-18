@@ -4837,13 +4837,18 @@ class ParserService extends BaseService {
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
 	get_yt_url_type_3(x) {
 		switch(x[2]) {
-			case "browse": break;
-			case "feedback": break;
-			case "get_transcript": break;
-			case "guide": break;
-			case "next": break;
-			case "player": break;
-			case "updated_metadata": break;
+			case "browse": return x[2];
+			case "feedback": return x[2];
+			case "get_survey": return x[2];
+			case "get_transcript": return x[2];
+			case "guide": return x[2];
+			case "next": return x[2];
+			case "player": return x[2];
+			case "search": return x[2];
+			case "updated_metadata": return x[2];
+			default:
+		}
+		switch(x[2]) {
 			default: this.api_no_handler(x,x[2]);
 		}
 		return x[2];
@@ -4866,17 +4871,23 @@ class ParserService extends BaseService {
 			case "playlist": return this.get_playlist_type(x);
 			case "share": return this.get_share_type(x);
 			case "music": return this.get_music_type(x);
-			case "search": return this.get_search_type(x);
+			case "pdg": return this.get_pdg_type(x);
 		}
 		switch(x.length) {
 			case 3: return this.get_yt_url_type_3(x);
 			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","search",...string[]]>} x */
-	get_search_type(x) {
-		if(x.length!==3) debugger;
-		return x[2];
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",...string[]]>} x */
+	get_pdg_type(x) {
+		switch(x[3]) {
+			case "get_pdg_buy_flow": break;
+			default: return this.api_no_handler(x,x[3]);
+		}
+		return {
+			/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+			x: `${x[2]}.${x[3]}`,
+		}.x;
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","music",...string[]]>} x */
 	get_music_type(x) {
