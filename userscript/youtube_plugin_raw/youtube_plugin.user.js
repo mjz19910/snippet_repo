@@ -4420,10 +4420,7 @@ class ParserService extends BaseService {
 	}
 	/** @arg {string} x */
 	create_param_map(x) {
-		let pp_dec=decodeURIComponent(x);
-		if(this.cache_player_params.includes(x)) return null;
-		this.cache_player_params.push(x);
-		let res_e=this.decode_b64_url_proto_obj(pp_dec);
+		let res_e=this.decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
 		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
@@ -4431,6 +4428,9 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} for_ @arg {string} x */
 	on_endpoint_params(for_,x) {
+		x=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return;
+		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
 		switch(for_) {
@@ -4481,7 +4481,8 @@ class ParserService extends BaseService {
 				}
 				x: if(transcript_args_dec) {
 					console.log("[get_transcript_args]",transcript_args_dec);
-					let param_map_1=this.create_param_map(transcript_args_dec.params);
+					let param_1=decodeURIComponent(transcript_args_dec.params);
+					let param_map_1=this.create_param_map(param_1);
 					if(!param_map_1) {debugger; break x;}
 					let param_obj_1=Object.fromEntries(param_map_1.entries());
 					console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
@@ -4494,6 +4495,9 @@ class ParserService extends BaseService {
 	}
 	/** @public @arg {string} x */
 	on_player_params(x) {
+		x=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return;
+		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(!param_map) {debugger; return;}
 		this.parse_player_params_with_map(param_map);
