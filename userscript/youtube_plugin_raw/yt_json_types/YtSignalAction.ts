@@ -1,1 +1,0 @@
-type YtSignalAction=HistoryBackSignal|HistoryForwardSignal;

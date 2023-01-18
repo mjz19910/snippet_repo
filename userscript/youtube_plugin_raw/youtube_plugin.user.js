@@ -8594,6 +8594,21 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ServiceEndpointAction} x */
 	ServiceEndpointAction(x) {
 		this.save_keys("[ServiceEndpointAction]",x);
+		if("addToPlaylistCommand" in x) {
+			return this.AddToPlaylistCommand(x);
+		}
+		debugger;
+	}
+	/** @arg {AddToPlaylistCommand} x */
+	AddToPlaylistCommand(x) {
+		this.save_keys("[AddToPlaylistCommand]",x);
+		const {clickTrackingParams,addToPlaylistCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.AddToPlaylistCommandData(addToPlaylistCommand);
+	}
+	/** @arg {AddToPlaylistCommandData} x */
+	AddToPlaylistCommandData(x) {
+		x;
 	}
 }
 //#endregion

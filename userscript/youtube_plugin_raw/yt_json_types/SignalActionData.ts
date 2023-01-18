@@ -1,0 +1,1 @@
+type SignalActionData=HistoryBackSignal|HistoryForwardSignal;
