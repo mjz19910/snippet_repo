@@ -6121,6 +6121,7 @@ class HandleTypes extends ServiceMethods {
 			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
 			case "guide": return this.GuideResponse(x.data);
 			case "like.like": return this.LikeLikeResponse(x.data);
+			case "like.dislike": return this.DislikeResponse(x.data);
 			case "like.removelike": return this.LikeRemoveLikeResponse(x.data);
 			case "live_chat.get_live_chat_replay": return this.GetLiveChat(x.data);
 			case "live_chat.get_live_chat": return this.GetLiveChat(x.data);
@@ -6139,6 +6140,10 @@ class HandleTypes extends ServiceMethods {
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
 			case "search": return this.SearchApiResponse(x.data);
 			case "updated_metadata": return this.UpdatedMetadata(x.data);
+			default:
+		}
+		switch(x.type) {
+			case "pdg.get_pdg_buy_flow": break;
 			default: debugger; return g(x);
 		}
 	}
@@ -6353,6 +6358,13 @@ class HandleTypes extends ServiceMethods {
 	LikeLikeResponse(x) {
 		this.save_keys(`[LikeLikeResponse]`,x);
 		const {responseContext,actions,...y}=x; this.g(y);
+		if(actions) this.z(actions,a => this.Action(a));
+	}
+	/** @arg {DislikeResponse} x */
+	DislikeResponse(x) {
+		this.save_keys(`[DislikeResponse]`,x);
+		debugger;
+		const {responseContext: {},actions,...y}=x; this.g(y);
 		if(actions) this.z(actions,a => this.Action(a));
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
