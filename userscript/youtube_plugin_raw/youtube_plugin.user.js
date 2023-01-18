@@ -4090,6 +4090,12 @@ class CodegenService extends BaseService {
 			if(o.signalServiceEndpoint) return g();
 			if(o.twoColumnWatchNextResults) return g();
 			if(o.watchEndpoint) return g();
+			if(o.getSurveyCommand) return g();
+			if(o.buttonRenderer) return g();
+			if(o.superVodBuyFlowContentRenderer) return g();
+			if(o.pdgCommentPreviewRenderer) return g();
+			if(o.pdgColorSliderRenderer) return g();
+			if(o.pdgCommentOptionRenderer) return g();
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
