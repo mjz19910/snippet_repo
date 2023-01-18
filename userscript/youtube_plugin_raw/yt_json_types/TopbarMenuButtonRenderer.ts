@@ -1,5 +1,1 @@
-type TopbarMenuButtonRenderer={
-	topbarMenuButtonRenderer: {
-		icon: Icon<"VIDEO_CALL">;
-	};
-};
+type TopbarMenuButtonRenderer={topbarMenuButtonRenderer: TopbarMenuButton;};

@@ -8891,8 +8891,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NotificationTopbarButtonRenderer} x */
 	NotificationTopbarButtonRenderer(x) {
 		this.save_keys("[NotificationTopbarButtonRenderer]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {notificationTopbarButtonRenderer,...y}=x; this.g(y);
+		this.NotificationTopbarButtonData(notificationTopbarButtonRenderer);
+	}
+	/** @arg {NotificationTopbarButtonData} x */
+	NotificationTopbarButtonData(x) {
+		this.save_keys("[NotificationTopbarButtonData]",x);
+		const {icon,menuRequest,style,tooltip,accessibility,trackingParams,updateUnseenCountEndpoint,handlerDatas,notificationCount,...y}=x; this.g(y);
 	}
 	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
@@ -8919,8 +8924,21 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TopbarMenuButtonRenderer} x */
 	TopbarMenuButtonRenderer(x) {
 		this.save_keys("[TopbarMenuButtonRenderer]",x);
-		const {topbarMenuButtonRenderer: {icon,...y2},...y}=x; this.g(y); this.g(y2);
+		const {topbarMenuButtonRenderer,...y}=x; this.g(y);
+		this.TopbarMenuButton(topbarMenuButtonRenderer);
+	}
+	/** @arg {TopbarMenuButton} x */
+	TopbarMenuButton(x) {
+		const {icon,menuRenderer,trackingParams,accessibility,tooltip,style,...y}=x; this.g(y);
 		this.Icon(icon);
+		this.MultiPageMenuRenderer(menuRenderer);
+		this.trackingParams(trackingParams);
+		this.AccessibilityData(accessibility);
+		this.primitive_of(tooltip,"string");
+		switch(style) {
+			default: debugger; break;
+			case "STYLE_DEFAULT": break;
+		}
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
 	TwoColumnBrowseResultsData(x) {

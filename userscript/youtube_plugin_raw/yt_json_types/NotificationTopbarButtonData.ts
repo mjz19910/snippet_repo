@@ -1,11 +1,11 @@
 type NotificationTopbarButtonData={
 	icon: Icon<"NOTIFICATIONS">;
+	menuRequest: SignalServiceEndpoint;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
-	menuRequest: {};
 	trackingParams: string;
 	accessibility: AccessibilityData;
 	tooltip: string;
-	updateUnseenCountEndpoint: {};
+	updateUnseenCountEndpoint: SignalServiceEndpoint;
 	notificationCount: number;
 	handlerDatas: ["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"];
 };
