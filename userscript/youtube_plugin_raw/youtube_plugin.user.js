@@ -4138,6 +4138,7 @@ class CodegenService extends BaseService {
 		};
 		if(x.runs&&x.runs instanceof Array) return "TYPE::TextWithRuns";
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
+		if(x.simpleText) return "TYPE::SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
 		if(x.browseEndpoint) return g();
 		if(x.cinematicContainerRenderer) return g();
@@ -4157,6 +4158,7 @@ class CodegenService extends BaseService {
 		if(x.pdgColorSliderRenderer) return g();
 		if(x.pdgCommentOptionRenderer) return g();
 		if(x.richItemRenderer) return g();
+		if(x.menuRenderer) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
 		if(x.accessibilityData) return "TYPE::Accessibility";
 		let o_keys=this.filter_keys(this.get_keys_of(x));
