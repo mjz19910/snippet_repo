@@ -1,1 +1,1 @@
-type ServiceEndpointAction=AddToPlaylistCommand|OpenPopupAction|SignalAction;
+type ServiceEndpointAction=AddToPlaylistCommand|OpenPopupAction|SignalAction|OpenPopupAction;

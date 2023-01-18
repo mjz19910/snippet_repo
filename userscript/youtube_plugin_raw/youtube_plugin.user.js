@@ -8761,8 +8761,14 @@ class HandleTypes extends ServiceMethods {
 			return this.AddToPlaylistCommand(x);
 		} else if("signalAction" in x) {
 			return this.SignalAction(x);
+		} else if("openPopupAction" in x) {
+			return this.OpenPopupAction(x);
 		}
-		debugger;
+		let cg=this.x.get("codegen");
+		let rk=this.filter_keys(this.get_keys_of(x));
+		let kk=rk[0];
+		let u_name=this.uppercase_first(kk);
+		cg.codegen_new_typedef(x,`ServiceEndpointAction_${u_name}`);
 	}
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {
