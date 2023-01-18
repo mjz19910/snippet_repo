@@ -6049,12 +6049,12 @@ class HandleTypes extends ServiceMethods {
 			/** @type {GenericWebCommandMetadata} */
 			switch(x.apiUrl) {
 				default: debugger; break;
-				case "/youtubei/v1/account/account_menu": this.AccountMenuWebCommandMetadata(x); break;
-				case "/youtubei/v1/get_transcript": this.GetTranscriptWebCommandMetadata(x); break;
-				case "/youtubei/v1/playlist/get_add_to_playlist": this.GetAddToPlaylistWebCommandMetadata(x); break;
-				case "/youtubei/v1/browse/edit_playlist": this.EditPlaylistWebCommandMetadata(x); break;
-				case "/youtubei/v1/search": this.SearchApiWebCommandMetadata(x); break;
-				case "/youtubei/v1/next": this.NextWebCommandMetadata(x); break;
+				case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+				case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+				case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+				case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+				case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
 			}
 			return;
 		}
@@ -9364,6 +9364,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
+		x;
+	}
+	/** @arg {NextWebCommandMetadata} x */
+	NextWebCommandMetadata(x) {
 		x;
 	}
 	//#endregion
