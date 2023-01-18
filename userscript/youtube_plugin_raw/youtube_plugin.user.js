@@ -4479,7 +4479,14 @@ class ParserService extends BaseService {
 						unk8: p7
 					};
 				}
-				console.log("[get_transcript_args]",transcript_args_dec);
+				x: if(transcript_args_dec) {
+					console.log("[get_transcript_args]",transcript_args_dec);
+					let param_map_1=this.create_param_map(transcript_args_dec.params);
+					if(!param_map_1) {debugger; break x;}
+					let param_obj_1=Object.fromEntries(param_map_1.entries());
+					console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
+					return;
+				}
 				let param_obj=Object.fromEntries(param_map.entries());
 				console.log("[new_get_transcript_endpoint_params]",param_obj);
 			} break;
