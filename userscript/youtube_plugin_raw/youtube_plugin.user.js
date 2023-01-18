@@ -7155,18 +7155,18 @@ class HandleTypes extends ServiceMethods {
 		const {serializedContextData,...y}=x; this.g(y);
 		this.primitive_of(serializedContextData,"string");
 	}
-	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot)=>void} f_run */
-	TextWithRuns(x,f_run=this.NavigationEndpointRoot) {
+	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	TextWithRuns(x,f_run=this.NavigationEndpoint) {
 		if(!("runs" in x)) {debugger; return;}
 		this.save_keys("[TextWithRuns]",x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
 		if(accessibility) this.Accessibility(accessibility);
 	}
-	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot)=>void} f_run */
+	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
-		const {text,...y}=x;
-		if(y.navigationEndpoint) f_run.call(this,{navigationEndpoint: y.navigationEndpoint});
+		const {text,navigationEndpoint,...y}=x; this.g(y);
+		if(navigationEndpoint) f_run.call(this,navigationEndpoint);
 		this.primitive_of(text,"string");
 	}
 	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
@@ -7201,10 +7201,10 @@ class HandleTypes extends ServiceMethods {
 		this._WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {NavigationEndpointRoot} x */
-	NavigationEndpointRoot(x) {
+	/** @arg {NavigationEndpoint} x */
+	NavigationEndpoint(x) {
 		this.save_keys("[NavigationEndpointRoot]",x);
-		const {navigationEndpoint: a1,...y}=x; this.g(y);
+		let a1=x;
 		if("urlEndpoint" in a1) {
 			this.UrlEndpoint(a1);
 		} else if("watchEndpoint" in a1) {
@@ -7214,7 +7214,6 @@ class HandleTypes extends ServiceMethods {
 		} else {
 			debugger;
 		}
-		// return this.NavigationEndpointData(navigationEndpoint);
 	}
 	/** @arg {UrlEndpoint} x */
 	UrlEndpoint(x) {
