@@ -7999,23 +7999,23 @@ class HandleTypes extends ServiceMethods {
 		const {autoplay,...y}=x; this.g(y);
 		f(autoplay);
 	}
-	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template T @arg {PlaylistTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	PlaylistTemplate(x,f) {
 		this.save_keys("[PlaylistTemplate]",x);
 		const {playlist,...y}=x; this.g(y);
-		f(playlist);
+		f.call(this,playlist);
 	}
-	/** @template T @arg {ResultsTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template T @arg {ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ResultsTemplate(x,f) {
 		this.save_keys("[ResultsTemplate]",x);
 		const {results,...y}=x; this.g(y);
-		f(results);
+		f.call(this,results);
 	}
-	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	SecondaryResultsTemplate(x,f) {
 		this.save_keys("[SecondaryResultsTemplate]",x);
 		const {secondaryResults,...y}=x; this.g(y);
-		f(secondaryResults);
+		f.call(this,secondaryResults);
 	}
 	/** @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
