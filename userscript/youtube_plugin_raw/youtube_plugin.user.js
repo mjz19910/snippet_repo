@@ -7255,17 +7255,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("veType" in x) {
 			switch(x.veType) {
-				case 76278: case 99999: case 126250: {
-					const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
-					debugger;
-					this.EngagementPanelSectionListContent(content);
-					/** @type {EngagementSectionPanelId} */
-					if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
-					if(header) this.EngagementPanelTitleHeaderRenderer(header);
-					if(targetId) this.EngagementPanelSectionTargetId(targetId);
-					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
-					this.LoggingDirectives(loggingDirectives);
+				case 76278: {
+
+				} break;
+				case 99999: {
+					
+				} break;
+				case 126250: {
+					
 				} break;
 				case 124975: {
 					const {content,header,veType,targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
@@ -7297,16 +7294,14 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
-		const {content,panelIdentifier,header,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
-		debugger;
+		const {content,header,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
 		this.EngagementPanelSectionListContent(content);
-		/** @type {EngagementSectionPanelId} */
-		if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
-		if(header) this.EngagementPanelTitleHeaderRenderer(header);
-		if(targetId) this.EngagementPanelSectionTargetId(targetId);
+		this.EngagementPanelTitleHeaderRenderer(header);
+		this.EngagementPanelSectionTargetId(targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 		this.LoggingDirectives(loggingDirectives);
+		// if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
+		// if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 	}
 	/** @arg {EngagementPanelSectionShowCommands} x */
 	EngagementPanelSectionShowCommands(x) {
