@@ -682,6 +682,10 @@ class HandleRichGridRenderer {
 	}
 }
 class Base64Binary {
+	/** @arg {string} key_str */
+	constructor(key_str) {
+		this._keyStr=key_str;
+	}
 	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	/* will return a  Uint8Array type */
 	/** @arg {string} input */
@@ -1062,7 +1066,8 @@ class MyReader {
 		return first_num;
 	}
 }
-const base64_dec=new Base64Binary();
+const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=");
+const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=");
 /** @private @type {any[]} */
 let blob_create_args_arr=[];
 let plr_raw_replace_debug=true;
@@ -2381,6 +2386,13 @@ class BaseService extends BaseServicePrivate {
 	/** @public @arg {string} str */
 	decode_b64_proto_obj(str) {
 		let buffer=base64_dec.decodeByteArray(str);
+		if(!buffer) return null;
+		let reader=new MyReader(buffer);
+		return reader.try_read_any();
+	}
+	/** @public @arg {string} str */
+	decode_b64_url_proto_obj(str) {
+		let buffer=base64_url_dec.decodeByteArray(str);
 		if(!buffer) return null;
 		let reader=new MyReader(buffer);
 		return reader.try_read_any();
@@ -4412,7 +4424,7 @@ class ParserService extends BaseService {
 		let pp_dec=decodeURIComponent(pp_value);
 		if(this.cache_player_params.includes(pp_value)) return;
 		this.cache_player_params.push(pp_value);
-		let res_e=this.decode_b64_proto_obj(pp_dec);
+		let res_e=this.decode_b64_url_proto_obj(pp_dec);
 		if(!res_e) {debugger; return;}
 		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
