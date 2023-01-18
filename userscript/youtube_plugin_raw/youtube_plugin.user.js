@@ -8517,14 +8517,27 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideSubscriptionsSectionData} x */
 	GuideSubscriptionsSectionData(x) {
 		this.save_keys("[GuideSubscriptionsSectionData]",x);
+		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=x; this.g(y);
+		if(sort!=="CHANNEL_ACTIVITY") debugger;
 	}
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
 		this.save_keys("[ElementUpdate]",x);
+		const {updates,...y}=x; this.g(y);
+		this.z(updates,a=>a);
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		this.save_keys("[EntityBatchUpdateData]",x);
+		const {mutations,timestamp,...y}=x; this.g(y);
+		this.z(mutations,a=>a);
+		this.timestamp(timestamp);
+	}
+	/** @arg {TimestampWithNanos} x */
+	timestamp(x) {
+		const {seconds,nanos,...y}=x; this.g(y);
+		this.primitive_of(seconds,"string");
+		this.primitive_of(nanos,"number");
 	}
 }
 //#endregion
