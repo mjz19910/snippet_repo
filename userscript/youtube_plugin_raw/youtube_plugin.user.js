@@ -3975,6 +3975,18 @@ class CodegenService extends BaseService {
 		let tmp3=this.#generate_padding(tmp2);
 		return `\n${tmp3}`;
 	}
+	/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
+	replace_until_same(s,rx,fn) {
+		let i=0;
+		let ps=s;
+		do {
+			let p=s;
+			s=s.replaceAll(rx,fn);
+			ps=p;
+			if(i>12) break;
+		} while(ps!==s);
+		return s;
+	}
 	/** @arg {string} x */
 	#uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
@@ -4068,20 +4080,7 @@ class CodegenService extends BaseService {
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
-		/** @private @arg {string} s @arg {RegExp} rx @arg {(s:string,v:string)=>string} fn */
-		function replace_until_same(s,rx,fn) {
-			let i=0;
-			let ps=s;
-			do {
-				let p=s;
-				s=s.replaceAll(rx,fn);
-				ps=p;
-				if(i>12) break;
-			} while(ps!==s);
-			return s;
-		}
-		debugger;
-		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
+		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
 		});
