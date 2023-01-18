@@ -7752,11 +7752,14 @@ class HandleTypes extends ServiceMethods {
 	DatasyncIdsResponse(x) {
 		this.save_keys("[DatasyncIdsResponse]",x);
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y);
+		this.z(datasyncIds,a=>this.primitive_of(a,"string"));
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
 		this.save_keys("[GetAccountSwitcherEndpointResponse]",x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y);
+		this.TextWithRuns(selectText);
+		this.z(actions,a => this.Action(a));
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
