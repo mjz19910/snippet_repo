@@ -9325,14 +9325,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
 		this.save_keys("[SecondaryContents]",x);
-		if("profileColumnRenderer" in x) return this.ProfileColumnRenderer(x);
+		// if("profileColumnRenderer" in x) return this.ProfileColumnRenderer(x);
 		if("browseFeedActionsRenderer" in x) return this.BrowseFeedActionsRenderer(x);
-		debugger;
-	}
-	/** @arg {ProfileColumnItem} x */
-	ProfileColumnItem(x) {
-		if("profileColumnUserInfoRenderer" in x) return this.ProfileColumnUserInfoRenderer(x);
-		if("profileColumnStatsRenderer" in x) return this.ProfileColumnStatsRenderer(x);
 		debugger;
 	}
 	/** @arg {WatchNextItem} x */
@@ -9365,6 +9359,12 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,this.ChipCloudChipRenderer);
 		this.trackingParams(trackingParams);
 		if(styleType!=="FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID") debugger;
+	}
+	/** @arg {ChipCloudChipRenderer} x */
+	ChipCloudChipRenderer(x) {
+		this.save_keys("[ChipCloudChipRenderer]",x);
+		const {chipCloudChipRenderer,...y}=x; this.g(y);
+		this.ChipCloudChipData(chipCloudChipRenderer);
 	}
 	//#endregion
 	//#region destructure
@@ -9463,22 +9463,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseFeedActionsRenderer]",x);
 		const {browseFeedActionsRenderer,...y}=x; this.g(y);
 	}
-	/** @arg {ProfileColumnStatsRenderer} x */
-	ProfileColumnStatsRenderer(x) {
-		this.save_keys("[ProfileColumnStatsRenderer]",x);
-		const {profileColumnStatsRenderer,...y}=x; this.g(y);
-	}
-	/** @arg {ProfileColumnUserInfoRenderer} x */
-	ProfileColumnUserInfoRenderer(x) {
-		this.save_keys("[ProfileColumnUserInfoRenderer]",x);
-		const {profileColumnUserInfoRenderer,...y}=x; this.g(y);
-	}
-	/** @arg {ChipCloudChipRenderer} x */
-	ChipCloudChipRenderer(x) {
-		const {chipCloudChipRenderer,...y}=x; this.g(y);
-	}
 	/** @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
+		this.save_keys("[ChipCloudChipData]",x);
 		const {style,text,navigationEndpoint,trackingParams,isSelected,...y}=x; this.g(y);
 	}
 	/** @arg {FeedFilterChipBarData} x */

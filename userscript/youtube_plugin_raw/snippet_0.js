@@ -650,4 +650,20 @@ export class Snippet_0_tmp {
 		const {items,...y}=x; this.g(y);
 		this.z(items,this.ProfileColumnItem);
 	}
+	/** @arg {ProfileColumnItem} x */
+	ProfileColumnItem(x) {
+		if("profileColumnUserInfoRenderer" in x) return this.ProfileColumnUserInfoRenderer(x);
+		if("profileColumnStatsRenderer" in x) return this.ProfileColumnStatsRenderer(x);
+		debugger;
+	}
+	/** @arg {ProfileColumnUserInfoRenderer} x */
+	ProfileColumnUserInfoRenderer(x) {
+		this.save_keys("[ProfileColumnUserInfoRenderer]",x);
+		const {profileColumnUserInfoRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {ProfileColumnStatsRenderer} x */
+	ProfileColumnStatsRenderer(x) {
+		this.save_keys("[ProfileColumnStatsRenderer]",x);
+		const {profileColumnStatsRenderer,...y}=x; this.g(y);
+	}
 }
