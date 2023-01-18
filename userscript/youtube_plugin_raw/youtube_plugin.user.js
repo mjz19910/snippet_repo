@@ -8933,7 +8933,7 @@ class HandleTypes extends ServiceMethods {
 			default: console.log("[new.server.setting_item_id]",settingItemId); break;
 			case "407": break;
 		}
-		console.log("[client.setting_item_id]",settingItemIdForClient);
+		if(settingItemIdForClient!=="AUTONAV_FOR_DESKTOP") console.log("[client.setting_item_id]",settingItemIdForClient);
 	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
