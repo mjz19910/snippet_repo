@@ -4397,6 +4397,7 @@ class ParserService extends BaseService {
 						let err=param[3].find(e => e[0]==="error");
 						if(err) break x;
 						param_map.set(param[1],this.make_param_map(param[3]));
+						break;
 					}
 					param_map.set(param[1],decoder.decode(param[2]));
 				} break;
