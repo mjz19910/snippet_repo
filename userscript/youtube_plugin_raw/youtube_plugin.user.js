@@ -2032,6 +2032,17 @@ class ApiBase {
 			if(k==="commandMetadata") continue;
 			ret.push(k);
 		}
+		if(!ret.length) {
+			for(let k of x) {
+				if(k==="clickTrackingParams") continue;
+				ret.push(k);
+			}
+		}
+		if(!ret.length) {
+			for(let k of x) {
+				ret.push(k);
+			}
+		}
 		return ret;
 	}
 	/** @public @arg {unknown} x */
