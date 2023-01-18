@@ -4101,6 +4101,7 @@ class CodegenService extends BaseService {
 			if(typeof o==="string") {
 				if(k1==="apiUrl") return o;
 				if(k1==="targetId") return o;
+				if(k1==="panelIdentifier") return o;
 				if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
 					return o;
 				}
@@ -7254,6 +7255,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("veType" in x) {
 			switch(x.veType) {
+				default: debugger; break;
 				case 76278: {
 					debugger;
 				} break;
@@ -7264,11 +7266,11 @@ class HandleTypes extends ServiceMethods {
 					debugger;
 				} break;
 				case 124975: {
-					const {content,header,veType,targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
-					debugger;
-					this.EngagementPanelSectionListContent(content);
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
+					if(panelIdentifier!=="engagement-panel-structured-description") debugger;
 					this.EngagementPanelTitleHeaderRenderer(header);
-					this.EngagementPanelSectionTargetId(targetId);
+					this.EngagementPanelSectionListContent(content);
+					if(targetId!=="engagement-panel-structured-description") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
 					if(identifier) {
@@ -7291,18 +7293,26 @@ class HandleTypes extends ServiceMethods {
 					let a1=this.ShortsSurfaceIdentifier(identifier);
 					if(a1!=="shorts-comments-panel") debugger;
 				} break;
-				default: debugger; break;
 			}
 			return;
 		}
-		debugger;
-		const {content,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
-		this.EngagementPanelSectionListContent(content);
-		this.EngagementPanelSectionTargetId(targetId);
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.LoggingDirectives(loggingDirectives);
-		// this.EngagementPanelTitleHeaderRenderer(header);
-		// if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
+		switch(x.targetId) {
+			default: debugger; break;
+			case "engagement-panel-ads": {
+				const {content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y);
+				this.AdsEngagementPanelContentRenderer(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-macro-markers-description-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y);
+				if(panelIdentifier!=="engagement-panel-macro-markers-description-chapters") debugger;
+				this.EngagementPanelTitleHeaderRenderer(header);
+				this.MacroMarkersListRenderer(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.LoggingDirectives(loggingDirectives);
+			} break;
+		}
 		// if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 	}
 	/** @arg {EngagementPanelSectionShowCommands} x */

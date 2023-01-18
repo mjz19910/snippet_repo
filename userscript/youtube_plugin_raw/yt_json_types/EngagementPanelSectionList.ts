@@ -1,9 +1,9 @@
 type EngagementPanelSectionList=
 	|GenericEngagementPanelSectionItem
-	|VE_t2_EngagementPanelSectionItem
-	|VE_t1_EngagementPanelSectionItem
+	|VE76278_EngagementPanelSectionItem
+	|VE99999_EngagementPanelSectionItem
 	|VE124975_EngagementPanelSectionItem
-	|VE_t3_EngagementPanelSectionItem
+	|VE126250_EngagementPanelSectionItem
 	|VE139722_EngagementPanelSectionItem
 	;
 ;
