@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
-// #region basic
+//#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {
 	return x;
@@ -78,7 +78,7 @@ function make_iterator(x) {
 	return new Iterator(x);
 }
 //#endregion
-// #region ui_plugin & on_${element}
+//#region ui_plugin & on_${element}
 class CustomEventTarget {
 	/** @private @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 	_events={};
@@ -504,8 +504,8 @@ async function async_plugin_init(event) {
 		console.log("had error in async init",e);
 	}
 }
-// #endregion
-// #region dom_observer & yt_plugin_event
+//#endregion
+//#region dom_observer & yt_plugin_event
 let found_element_count=0;
 let expected_element_count=6;
 async_plugin_init.__debug=false;
@@ -1898,8 +1898,8 @@ class ServiceResolver {
 		this.services[key]=value;
 	}
 }
-// #endregion
-// #region main
+//#endregion
+//#region main
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==="object") {
@@ -1969,7 +1969,7 @@ function main() {
 	}
 }
 //#endregion
-// #region string manipulation
+//#region string manipulation
 /** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 function split_string(x,s=as(",")) {
 	if(!x) {debugger;}
@@ -2007,8 +2007,8 @@ function split_string_once(s,d=as(",")) {
 	let q=r;
 	return as(q);
 }
-// #endregion
-// #region ApiBase
+//#endregion
+//#region ApiBase
 const seen_map=new Set;
 const general_service_state={
 	logged_in: false,
@@ -2096,8 +2096,8 @@ class ApiBase {
 		return ra;
 	}
 }
-// #endregion
-// #region Service
+//#endregion
+//#region Service
 class KnownDataSaver extends ApiBase {
 	constructor() {
 		super();
@@ -2410,7 +2410,7 @@ class KnownDataSaver extends ApiBase {
 const data_saver=new KnownDataSaver;
 /** @template T,U */
 class BaseServicePrivate extends ApiBase {
-	// #region Public
+	//#region Public
 	/** @arg {ResolverT<T,U>} x */
 	constructor(x) {
 		super();
@@ -2433,7 +2433,7 @@ class BaseServicePrivate extends ApiBase {
 	save_number(k,x) {
 		this.ds.save_number(k,x);
 	}
-	// #endregion
+	//#endregion
 	log_skipped_strings=false;
 	#x;
 }
@@ -3669,7 +3669,7 @@ class ModifyEnv extends BaseService {
 	}
 }
 //#endregion Service
-// #region YtPlugin
+//#region YtPlugin
 const decoder=new TextDecoder();
 /** @extends {BaseService<Services,ServiceOptions>} */
 class YtPlugin extends BaseService {
@@ -3687,8 +3687,8 @@ class YtPlugin extends BaseService {
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
 }
-// #endregion
-// #region HelperServices
+//#endregion
+//#region HelperServices
 /** @extends {BaseService<Services,ServiceOptions>} */
 class IndexedDbAccessor extends BaseService {
 	/** @public @arg {ResolverT<Services, ServiceOptions>} x @arg {string} db_name */
@@ -5219,8 +5219,8 @@ class ParserService extends BaseService {
 		}
 	}
 }
-// #endregion
-// #region sizeof_js & Generate
+//#endregion
+//#region sizeof_js & Generate
 let text_encoder=new TextEncoder;
 /** @private @type {Map<unknown,number>} */
 let sizeof_cache=new Map;
@@ -5292,8 +5292,8 @@ class Generate {
 		this.out_arr.push(gd);
 	}
 }
-// #endregion
-// #region HandleTypes
+//#endregion
+//#region HandleTypes
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ServiceData extends BaseService {
 	/** @protected @type {FormatItagArr} */
@@ -5485,7 +5485,7 @@ class ServiceMethods extends ServiceData {
 	}
 }
 /** @extends {BaseService<{parent:HandleTypes},{}>} */
-class SignalTypes  extends BaseService {
+class SignalTypes extends BaseService {
 	/** @arg {Signal_ClientSignal} x */
 	ClientSignal(x) {
 		const {signal,actions,...y}=x; this.g(y);
@@ -8624,6 +8624,7 @@ class HandleTypes extends ServiceMethods {
 	UploadEndpointData(x) {
 		x;
 	}
+	//#region type_error
 	/** @arg {WatchNextContinuationAction} x */
 	WatchNextContinuationAction(x) {
 		this.save_keys("[WatchNextContinuationAction]",x);
@@ -9007,18 +9008,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
 		this.save_keys("[HotkeyDialogRenderer]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {hotkeyDialogRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {TopbarLogoRenderer} x */
 	TopbarLogoRenderer(x) {
 		this.save_keys("[TopbarLogoRenderer]",x);
 		const {topbarLogoRenderer,...y}=x; this.g(y);
 		this.TopbarLogo(topbarLogoRenderer);
-	}
-	/** @arg {TopbarLogo} x */
-	TopbarLogo(x) {
-		x;
 	}
 	/** @arg {FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
@@ -9175,6 +9171,8 @@ class HandleTypes extends ServiceMethods {
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
+	//#endregion
+	//#region destructure
 	/** @arg {FusionSearchboxData} x */
 	FusionSearchboxData(x) {
 		this.save_keys("[FusionSearchboxData]",x);
@@ -9185,6 +9183,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NotificationTopbarButtonData]",x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
 	}
+	//#endregion
+	//#region has_save_keys
 	/** @arg {SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
 		this.save_keys("[SignalNavigationEndpoint]",x);
@@ -9201,9 +9201,20 @@ class HandleTypes extends ServiceMethods {
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
 	}
+	//#endregion
+	//#region
+	/** @arg {HotkeyDialog} x */
+	HotkeyDialog(x) {
+		x;
+	}
+	/** @arg {TopbarLogo} x */
+	TopbarLogo(x) {
+		x;
+	}
+	//#endregion
 }
 //#endregion
-// #region Start main
+//#region Start main
 console=typeof window==="undefined"? console:(() => window.console)();
 main();
-// #endregion
+//#endregion
