@@ -8535,7 +8535,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=x; this.g(y);
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
-		if(adSlotAndLayoutMetadata) this.z(adSlotAndLayoutMetadata,a => this.AdSlotAndLayoutMetadataItem(a));
+		if(adSlotAndLayoutMetadata) this.z(adSlotAndLayoutMetadata,this.AdSlotAndLayoutMetadataItem);
 		this.primitive_of(isInitialLoad,"boolean");
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
