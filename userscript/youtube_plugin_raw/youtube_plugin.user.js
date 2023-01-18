@@ -8127,28 +8127,28 @@ class HandleTypes extends ServiceMethods {
 	EmojiImage(x) {
 		this.save_keys("[EmojiImage]",x);
 		const {accessibility,thumbnails,...y}=x; this.g(y);
-		accessibility;
-		thumbnails;
+		this.AccessibilityData(accessibility);
+		this.z(thumbnails,this.ThumbnailItem);
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
 		this.save_keys("[SortFilterSubMenuRenderer]",x);
 		const {sortFilterSubMenuRenderer,...y}=x; this.g(y);
-		sortFilterSubMenuRenderer;
+		this.SortFilterSubMenuData(sortFilterSubMenuRenderer);
 	}
 	/** @arg {CommentSimpleboxData} x */
 	CommentSimpleboxData(x) {
 		this.save_keys("[CommentSimpleboxData]",x);
 		const {submitButton,cancelButton,authorThumbnail,placeholderText,trackingParams,avatarSize,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=x; this.g(y);
-		submitButton;
-		cancelButton;
-		authorThumbnail;
-		placeholderText;
+		this.ButtonRenderer(submitButton);
+		this.ButtonRenderer(cancelButton);
+		this.Thumbnail(authorThumbnail);
+		this.TextWithRuns(placeholderText);
 		this.trackingParams(trackingParams);
-		avatarSize;
-		emojiButton;
-		emojiPicker;
-		aadcGuidelinesStateEntityKey;
+		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
+		this.ButtonRenderer(emojiButton);
+		this.EmojiPickerRenderer(emojiPicker);
+		this.primitive_of(aadcGuidelinesStateEntityKey,"string");
 	}
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
@@ -8162,38 +8162,39 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChannelPageResponse]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="channel") debugger;
-		endpoint;
-		response;
-		url;
+		this.g(endpoint);
+		this.ChannelResponse(response);
+		this.primitive_of(url,"string");
 	}
 	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
 		this.save_keys("[PlaylistPageResponse]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="playlist") debugger;
-		endpoint;
-		response;
-		url;
+		this.g(endpoint);
+		this.PlaylistResponse(response);
+		this.primitive_of(url,"string");
 	}
 	/** @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="settings") debugger;
-		endpoint;
-		response;
-		url;
+		this.g(endpoint);
+		this.SettingsResponse(response);
+		this.primitive_of(url,"string");
 	}
 	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,...y}=x; this.g(y);
 		if(page!=="shorts") debugger;
-		playerResponse;
-		endpoint;
-		response;
-		reelWatchSequenceResponse;
-		url;
+		this.PlayerResponse(playerResponse);
+		this.ReelWatchEndpoint(endpoint);
+		this.ReelResponse(response);
+		this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
+		if(!this.str_starts_with("/shorts/",url)) debugger;
+		if(url.includes("&")) debugger;
 	}
 	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
@@ -8201,8 +8202,9 @@ class HandleTypes extends ServiceMethods {
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="search") debugger;
 		this.SearchEndpoint(endpoint);
-		response;
-		url;
+		this.SearchResponse(response);
+		if(!this.str_starts_with("/results?search_query=",url)) debugger;
+		if(url.includes("&")) debugger;
 	}
 	/** @arg {SearchEndpoint} x */
 	SearchEndpoint(x) {
@@ -8227,16 +8229,16 @@ class HandleTypes extends ServiceMethods {
 	MusicCarouselShelf(x) {
 		this.save_keys("[MusicCarouselShelf]",x);
 		const {contents,header,trackingParams,itemSize,...y}=x; this.g(y);
-		contents;
-		header;
+		this.z(contents,this.g);
+		this.g(header);
 		this.trackingParams(trackingParams);
-		itemSize;
+		if(itemSize!=="COLLECTION_STYLE_ITEM_SIZE_MEDIUM") debugger;
 	}
 	/** @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
 		this.save_keys("[ChannelMetadataRenderer]",x);
 		const {channelMetadataRenderer,...y}=x; this.g(y);
-		channelMetadataRenderer;
+		this.g(channelMetadataRenderer);
 	}
 	/** @arg {BrowseHeader} x */
 	BrowseHeader(x) {
@@ -8546,7 +8548,7 @@ class HandleTypes extends ServiceMethods {
 	GetMultiPageMenuAction(x) {
 		this.save_keys("[GetMultiPageMenuAction]",x);
 		const {getMultiPageMenuAction,...y}=x; this.g(y);
-		getMultiPageMenuAction;
+		this.GetMultiPageMenuActionData(getMultiPageMenuAction);
 	}
 	/** @arg {FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
@@ -8746,6 +8748,10 @@ class HandleTypes extends ServiceMethods {
 	GuideEntryData(x) {
 		this.save_keys("[GuideEntryData]",x);
 	}
+	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
+	SetSettingEndpointAutonavForDesktop(x) {
+		x;
+	}
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
 		x;
@@ -8758,8 +8764,40 @@ class HandleTypes extends ServiceMethods {
 	UiActions(x) {
 		x;
 	}
-	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
-	SetSettingEndpointAutonavForDesktop(x) {
+	/** @arg {SortFilterSubMenuData} x */
+	SortFilterSubMenuData(x) {
+		x;
+	}
+	/** @arg {GetMultiPageMenuActionData} x */
+	GetMultiPageMenuActionData(x) {
+		x;
+	}
+	/** @arg {ReelWatchEndpoint} x */
+	ReelWatchEndpoint(x) {
+		x;
+	}
+	/** @arg {EmojiPickerRenderer} x */
+	EmojiPickerRenderer(x) {
+		x;
+	}
+	/** @arg {ReelResponse} x */
+	ReelResponse(x) {
+		x;
+	}
+	/** @arg {ChannelResponse} x */
+	ChannelResponse(x) {
+		x;
+	}
+	/** @arg {PlaylistResponse} x */
+	PlaylistResponse(x) {
+		x;
+	}
+	/** @arg {SettingsResponse} x */
+	SettingsResponse(x) {
+		x;
+	}
+	/** @arg {C4TabbedHeaderData} x */
+	C4TabbedHeaderData(x) {
 		x;
 	}
 }

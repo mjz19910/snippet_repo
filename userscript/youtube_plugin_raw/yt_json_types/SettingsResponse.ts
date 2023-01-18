@@ -1,6 +1,6 @@
 type SettingsPageResponse={
 	page: "settings";
 	endpoint: {};
-	response: SettingsResponseContent;
+	response: SettingsResponse;
 	url: string;
 };

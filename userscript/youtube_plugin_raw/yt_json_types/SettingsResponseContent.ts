@@ -1,4 +1,4 @@
-type SettingsResponseContent={
+type SettingsResponse={
 	responseContext: ResponseContext;
 	contents: TwoColumnBrowseResultsRenderer;
 	trackingParams: string;
