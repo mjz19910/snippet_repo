@@ -1,1 +1,4 @@
-type PlayerOverlayVideoDetails={};
+type PlayerOverlayVideoDetails={
+	title: SimpleText;
+	subtitle: TextWithRuns;
+};
