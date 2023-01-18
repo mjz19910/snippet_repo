@@ -4066,12 +4066,20 @@ class CodegenService extends BaseService {
 			if(o.runs&&o.runs instanceof Array) return "TYPE::TextWithRuns";
 			if(o.thumbnails&&o.thumbnails instanceof Array) return "TYPE::Thumbnail";
 			if(o.iconType&&typeof o.iconType==="string") return `TYPE::Icon<"${o.iconType}">`;
-			let o_keys=this.filter_keys(this.get_keys_of(o));
-			if(o_keys.length===1) {
-				let kk=this.get_name_from_keys(o);
-				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
-			}
-			console.log("[type_gen.o_keys]",o_keys);
+			let g=() => {
+				let o_keys=this.filter_keys(this.get_keys_of(o));
+				console.log("[type_gen.o_keys]",o_keys);
+				if(o_keys.length===1) {
+					let kk=this.get_name_from_keys(o);
+					if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
+				} else {
+					let kk=o_keys[0];
+					if(typeof kk!=="string") throw new Error();
+					if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
+				}
+				throw new Error();
+			};
+			g();
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
@@ -6321,6 +6329,10 @@ class HandleTypes extends ServiceMethods {
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": break;
 			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 		}
+	}
+	/** @arg {CompactLinkData['navigationEndpoint']} x */
+	CompactLinkData_NavEndpoint(x) {
+		x;
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
