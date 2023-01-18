@@ -9060,8 +9060,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		this.save_keys("[EntityMutationItem]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {entityKey,type,options,payload,...y}=x; this.g(y);
+		if(payload) {
+			if("subscriptionStateEntity" in payload) 1; else {
+				debugger;
+			}
+		}
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
