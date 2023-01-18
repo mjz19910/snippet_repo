@@ -6004,8 +6004,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SearchApiResponse} x */
 	SearchApiResponse(x) {
-		const cf="SearchApiResponse";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys(`[SearchApiResponse]`,x);
 		if("targetId" in x) return this.SearchResponse(x);
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y);
 		if(contents) this.TabbedSearchResultsRenderer(contents);
