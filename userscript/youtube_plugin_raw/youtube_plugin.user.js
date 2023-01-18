@@ -9310,13 +9310,6 @@ class HandleTypes extends ServiceMethods {
 		const {items,...y}=x; this.g(y);
 		this.z(items,this.StructuredDescriptionContentItem);
 	}
-	/** @arg {StructuredDescriptionContentItem} x */
-	StructuredDescriptionContentItem(x) {
-		if("videoDescriptionHeaderRenderer" in x) {
-			return this.VideoDescriptionHeaderRenderer(x);
-		}
-		debugger;
-	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.save_keys("[CommentRenderer]",x);
@@ -9475,6 +9468,26 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		x;
+	}
+	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
+	ExpandableVideoDescriptionBodyRenderer(x) {
+		x;
+	}
+	/** @arg {VideoDescriptionMusicSectionRenderer} x */
+	VideoDescriptionMusicSectionRenderer(x) {
+		x;
+	}
+	/** @arg {StructuredDescriptionContentItem} x */
+	StructuredDescriptionContentItem(x) {
+		if("videoDescriptionHeaderRenderer" in x) {
+			return this.VideoDescriptionHeaderRenderer(x);
+		} else if("expandableVideoDescriptionBodyRenderer" in x) {
+			return this.ExpandableVideoDescriptionBodyRenderer(x);
+		} else if("videoDescriptionMusicSectionRenderer" in x) {
+			return this.VideoDescriptionMusicSectionRenderer(x);
+		}
+		if("horizontalCardListRenderer" in x) return;
+		debugger;
 	}
 	//#endregion
 }
