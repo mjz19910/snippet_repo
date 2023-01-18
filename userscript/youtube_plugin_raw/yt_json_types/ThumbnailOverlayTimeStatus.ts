@@ -1,6 +1,8 @@
 type ThumbnailOverlayTimeStatus={
-	text: SimpleText&{
-		accessibility: Accessibility;
-	};
+	text: SimpleText;
 	style: "DEFAULT";
+}|{
+	text: TextWithRuns;
+	style: "LIVE";
+	icon: Icon<"LIVE">;
 };

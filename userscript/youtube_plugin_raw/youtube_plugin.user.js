@@ -7557,7 +7557,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[WatchNextEndScreen]",x);
 		const {results,title,trackingParams,...y}=x; this.g(y);
 		this.z(results,this.WatchNextEndScreenItem);
-		this.SimpleText(title,this.handle_accessibility);
+		this.SimpleText(title);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {{accessibility?:Accessibility}} x */
@@ -7622,10 +7622,10 @@ class HandleTypes extends ServiceMethods {
 		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,...y1}=x;
 		this.videoId(videoId);
 		this.Thumbnail(thumbnail);
-		this.SimpleText(title,this.handle_accessibility);
+		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.TextWithRuns(shortBylineText);
-		this.SimpleText(lengthText,this.handle_accessibility);
+		this.SimpleText(lengthText);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
 		this._WatchEndpoint(navigationEndpoint);
@@ -7755,9 +7755,17 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ThumbnailOverlayTimeStatus} x */
 	ThumbnailOverlayTimeStatus(x) {
 		this.save_keys("[ThumbnailOverlayTimeStatus]",x);
-		const {text,style,...y}=x; this.g(y);
-		this.SimpleText(text,this.handle_accessibility);
-		if(style!=="DEFAULT") debugger;
+		const {text,style,...y}=x;
+		this.TextT(text);
+		switch(style) {
+			default: debugger; break;
+			case "DEFAULT": break;
+			case "LIVE": break;
+		}
+		if("icon" in y) {
+			const {icon,...y1}=y; this.g(y1);
+			this.Icon(icon);
+		} else this.g(y);
 	}
 	/** @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
@@ -7770,7 +7778,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[EndScreenPlaylist]",x);
 		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y);
 		this.playlistId(playlistId);
-		this.SimpleText(title,this.handle_accessibility);
+		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
 		this.TextT(longBylineText);
 		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
