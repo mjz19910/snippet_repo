@@ -1,0 +1,1 @@
+type SecondaryResultsItem=ResultsArrTemplate<SecondaryResultsItemInner>;

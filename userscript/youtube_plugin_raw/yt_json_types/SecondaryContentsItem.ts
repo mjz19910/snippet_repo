@@ -1,0 +1,1 @@
+type SecondaryContentsItem=ContentsArrayTemplate<SecondaryContentsItemInner>;
