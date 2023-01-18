@@ -2514,7 +2514,7 @@ class BaseService extends BaseServicePrivate {
 		if(v[0]) return v[0];
 		let q=v[1];
 		if(q) return q;
-		return null;
+		return x;
 	}
 	/** @public @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
 	get_keys_of_ex(obj) {
