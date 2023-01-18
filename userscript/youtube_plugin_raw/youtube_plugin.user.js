@@ -812,6 +812,10 @@ class MyReader {
 		let log_slow=true;
 		for(;this.pos<this.cur_len;loop_count++) {
 			let cur_byte=this.uint32();
+			if(!cur_byte) {
+				this.failed=true;
+				break;
+			}
 			let wireType=cur_byte&7;
 			let fieldId=cur_byte>>>3;
 			let first_num=this.skipTypeEx(fieldId,wireType);
@@ -838,13 +842,15 @@ class MyReader {
 		}
 		return res_arr;
 	}
-	/** @private @template T @arg {number} pos @arg {()=>T} x */
-	revert_to(pos,x) {
+	/** @private @template T @arg {number} pos @arg {()=>T} f */
+	revert_to(pos,f) {
 		let prev_pos=this.pos;
 		this.pos=pos;
-		let ret=x();
-		this.pos=prev_pos;
-		return ret;
+		try {
+			return f();
+		} finally {
+			this.pos=prev_pos;
+		}
 	}
 	/** @private @arg {number} [length] */
 	skip(length) {
@@ -878,22 +884,21 @@ class MyReader {
 		return ret;
 	};
 	do_uint32_read() {
-		let value=0;
-		value=(this.buf[this.pos]&127)>>>0;
-		if(this.buf[this.pos++]<128) return value;
-		value=(value|(this.buf[this.pos]&127)<<7)>>>0;
-		if(this.buf[this.pos++]<128) return value;
-		value=(value|(this.buf[this.pos]&127)<<14)>>>0;
-		if(this.buf[this.pos++]<128) return value;
-		value=(value|(this.buf[this.pos]&127)<<21)>>>0;
-		if(this.buf[this.pos++]<128) return value;
-		value=(value|(this.buf[this.pos]&15)<<28)>>>0;
-		if(this.buf[this.pos++]<128) return value;
-		if((this.pos+=5)>this.len) {
-			this.pos=this.len;
-			throw RangeError("index out of range: "+this.pos+" + "+(10||1)+" > "+this.len);
+		let sa = [this.buf[this.pos] & 127];
+		while (true) {
+			if(this.pos>this.len) return null;
+			if (this.buf[this.pos++] < 128) break;
+			sa.push(this.buf[this.pos] & 127);
 		}
-		return value;
+		let ret=sa.map((e, n) => [e, n]).reduce((r, v) => {
+			let v0 = v[0];
+			let v1 = v[1];
+			let mul_pos = 2 ** (7 * v1);
+			let mul_res = v0 * mul_pos;
+			let num_ret = r + mul_res;
+			return num_ret;
+		}, 0);
+		return ret;
 	}
 	uint64() {
 		this.last_pos=this.pos;
@@ -979,9 +984,13 @@ class MyReader {
 
 		return this.readFixed32_end(this.buf,this.pos+=4);
 	}
-	/** @returns {[number,number]} */
+	/** @returns {[number,number]|null} */
 	read_field_description() {
 		let cur_byte=this.uint32();
+		if(!cur_byte) {
+			this.failed=true;
+			return null;
+		}
 		return [cur_byte&7,cur_byte>>>3];
 	}
 	log_range_error=false;
@@ -1001,6 +1010,10 @@ class MyReader {
 					} catch {}
 					return [false,0n,this.pos];
 				});
+				console.log("su32",this.cur_len,this.pos);
+				if(this.cur_len===37&&this.pos===27) {
+					debugger;
+				}
 				let num32=null;
 				x: try {
 					num32=this.uint32();
@@ -1018,7 +1031,7 @@ class MyReader {
 					this.failed=true;
 					first_num.push(["error",fieldId]);
 				} else if(success_64&&num64!==BigInt(num32)) {
-					console.log("bigint",num32,num64);
+					console.log("bigint",this.cur_len,this.pos,num32,num64);
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
 				} else {
@@ -1037,6 +1050,11 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
+				if(!size) {
+					first_num.push(["error",fieldId]);
+					this.failed=true;
+					break;
+				}
 				if(this.pos+size>this.cur_len) {
 					if(this.log_range_error) console.log("range error at",this.pos,fieldId,"size is too big",size);
 					first_num.push(["error",fieldId]);
@@ -1064,10 +1082,23 @@ class MyReader {
 				}
 			} break;
 			case 3: {
-				let res;
-				while((wireType=(res=this.uint32())&7)!==4) {
+				let res=this.uint32();
+				if(!res) {
+					first_num.push(["error",fieldId]);
+					this.failed=true;
+					break;
+				}
+				wireType=res&7;
+				while(wireType!==4) {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
 					first_num.push(["group",fieldId,skip_res]);
+					res=this.uint32();
+					if(!res) {
+						first_num.push(["error",fieldId]);
+						this.failed=true;
+						break;
+					}
+					wireType=res&7;
 				}
 			} break;
 			case 4: {
