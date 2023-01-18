@@ -9472,7 +9472,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeader(x) {
 		this.save_keys("[EngagementPanelTitleHeader]",x);
-		const {title,visibilityButton,trackingParams,...y}=x; this.g(y);
+		const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
