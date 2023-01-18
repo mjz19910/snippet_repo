@@ -2763,7 +2763,7 @@ class YtHandlers extends BaseService {
 		switch(t[1]) {
 			case "get_pdg_buy_flow": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {pdg_get_pdg_buy_flow_t['data']} */
+				/** @private @type {GetPdgBuyFlow} */
 				data: as(x),
 			};
 			default: debugger; return null;
