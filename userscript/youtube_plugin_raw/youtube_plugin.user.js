@@ -5348,6 +5348,7 @@ class ServiceMethods extends ServiceData {
 			switch(x) {
 				case "shopping_panel_for_entry_point_22": return;
 				case "shopping_panel_for_entry_point_5": return;
+				default:
 			}
 			if(!this.known_target_id.includes(x)) {
 				this.known_target_id.push(x);
