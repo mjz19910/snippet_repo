@@ -742,7 +742,7 @@ class HandleRichGridRenderer {
 	/** @arg {string} path @arg {RichGrid} renderer */
 	richGridRenderer(path,renderer) {
 		if(this.debug) console.log("run handler richGridRenderer");
-		if(renderer.masthead) {
+		if("masthead" in renderer) {
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				/** @private @type {{masthead?: {}}&Omit<typeof renderer,"masthead">} */
@@ -4158,7 +4158,8 @@ class CodegenService extends BaseService {
 		if(x.richItemRenderer) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
 		if(x.accessibilityData) return "TYPE::Accessibility";
-		console.log("[no_json_replace_type] %o [%s] [%s]",x,this.get_keys_of(x).join(","),g());
+		let o_keys=this.filter_keys(this.get_keys_of(x));
+		console.log("[no_json_replace_type] %o [%s] [%s]",x,o_keys.join(","),g());
 		return null;
 	}
 	/** @public @arg {string} x1 */
@@ -7046,7 +7047,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {RichGrid} x */
 	RichGrid(x) {
 		this.save_keys("[RichGrid]",x);
-		const {contents,masthead,trackingParams,...y}=x; this.g(y);
+		if("targetId" in x) {
+			return;
+		}
+		const {contents,masthead,...y}=x; this.g(y);
 		this.z(contents,this.RendererContentItem);
 		if(masthead) this.VideoMastheadAdV3Renderer(masthead);
 	}
