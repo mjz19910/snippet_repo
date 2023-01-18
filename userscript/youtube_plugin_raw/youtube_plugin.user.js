@@ -7915,7 +7915,7 @@ class HandleTypes extends ServiceMethods {
 		const {twoColumnWatchNextResults,...y}=x; this.g(y);
 		this.TwoColumnWatchNextResultsData(twoColumnWatchNextResults);
 	}
-	/** @arg {ItemSectionRendererTemplate_Section<any>|ItemSectionRendererTemplate<any,any>} x @returns {x is ItemSectionRendererTemplate<any,any>} */
+	/** @arg {ItemSectionRendererTemplate_Section<any>} x @returns {x is ItemSectionRendererTemplate<any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
