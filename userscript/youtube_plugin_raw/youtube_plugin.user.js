@@ -2579,6 +2579,11 @@ class YtHandlers extends BaseService {
 				/** @type {GetTranscriptResponse} */
 				data: as(x),
 			};
+			case "get_survey": return {
+				type: target[0],
+				/** @type {GetSurveyResponse} */
+				data: as(x),
+			};
 			case "guide": return {
 				type: target[0],
 				/** @type {GuideResponse} */
@@ -6118,6 +6123,7 @@ class HandleTypes extends ServiceMethods {
 			case "browse": return this.BrowseResponse(x.data);
 			case "feedback": return this.FeedbackResponse(x.data);
 			case "get_transcript": return this.GetTranscriptResponse(x.data);
+			case "get_survey": return this.GetSurveyResponse(x.data);
 			case "getAccountSwitcherEndpoint": return this.GetAccountSwitcherEndpointResponse(x.data);
 			case "getDatasyncIdsEndpoint": return this.DatasyncIdsResponse(x.data);
 			case "guide": return this.GuideResponse(x.data);
@@ -6145,6 +6151,12 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; return g(x);
 		}
 	}
+	/** @arg {GetSurveyResponse} x */
+	GetSurveyResponse(x) {
+		this.save_keys(`[GetSurveyResponse]`,x);
+		const {responseContext: {},trackingParams,...y}=x; this.g(y);
+		this.trackingParams(trackingParams);
+	}
 	/** @arg {GetPdgBuyFlow} x */
 	GetPdgBuyFlow(x) {
 		this.save_keys(`[UpdatedMetadata]`,x);
@@ -6157,6 +6169,8 @@ class HandleTypes extends ServiceMethods {
 	OpenPopupAction(x) {
 		this.save_keys(`[OpenPopupAction]`,x);
 		const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.OpenPopupActionData(openPopupAction);
 	}
 	/** @arg {OpenPopupActionData} x */
 	OpenPopupActionData(x) {

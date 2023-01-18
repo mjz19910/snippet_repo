@@ -10,6 +10,7 @@ type _ResponseTypes=
 	|feedback_t
 	|get_notification_menu_t
 	|get_transcript_t
+	|get_survey_t
 	|GetAccountSwitcherEndpoint_t
 	|getDatasyncIdsEndpoint_t
 	|guide_t
@@ -23,6 +24,7 @@ type _ResponseTypes=
 	|notification_get_unseen_count_t
 	|notification_modify_channel_preference_t
 	|notification_record_interactions
+	|pdg_get_pdg_buy_flow_t
 	|player_t
 	|playlist_get_add_to_playlist_t
 	|reel_reel_item_watch_t
@@ -32,6 +34,5 @@ type _ResponseTypes=
 	|subscription_subscribe_t
 	|subscription_unsubscribe_t
 	|update_metadata_t
-	|pdg_get_pdg_buy_flow_t
 	;
 ;
