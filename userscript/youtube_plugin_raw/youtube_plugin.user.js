@@ -4175,9 +4175,11 @@ class CodegenService extends BaseService {
 			||x.urlEndpoint
 			;
 		if(hg) return g();
-		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
-		if(x.accessibilityData) return "TYPE::Accessibility";
 		let o_keys=this.filter_keys(this.get_keys_of(x));
+		if(o_keys.length===1) {
+			if(x.webCommandMetadata) return "TYPE::CommandMetadata";
+			if(x.accessibilityData) return "TYPE::Accessibility";
+		}
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,o_keys.join(","),g(),"\n",r);
 		return null;
 	}
@@ -9293,8 +9295,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Visibility} x */
 	Visibility(x) {
 		this.save_keys("[Visibility]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {types,...y}=x; this.g(y);
+		this.primitive_of(types,"string");
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
