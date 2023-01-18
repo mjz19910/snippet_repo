@@ -9591,7 +9591,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[EngagementPanelTitleHeader]",x);
 		if("informationButton" in x) {
 			const {title,visibilityButton,trackingParams,...y}=x;
+			this.TextWithRuns(title);
+			this.ButtonRenderer(visibilityButton);
+			this.trackingParams(trackingParams);
 			const {informationButton,...a}=y; this.g(a);
+			this.ButtonRenderer(informationButton);
 			return;
 		}
 		const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
