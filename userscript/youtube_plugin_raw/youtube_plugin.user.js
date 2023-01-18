@@ -6342,7 +6342,10 @@ class HandleTypes extends ServiceMethods {
 		if(currentVideoEndpoint) this._WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
-		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem(a));
+		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => {
+			this.save_keys("[NextResponse.response_endpoint]",a);
+			this.ResponseReceivedEndpointItem(a);
+		});
 		if(engagementPanels) this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
 		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
 		if(videoReporting) this.ReportFormModalRenderer(videoReporting);
