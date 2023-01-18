@@ -886,9 +886,9 @@ class MyReader {
 	do_uint32_read() {
 		let sa = [this.buf[this.pos] & 127];
 		while (true) {
-			if(this.pos>this.len) return null;
 			if (this.buf[this.pos++] < 128) break;
 			sa.push(this.buf[this.pos] & 127);
+			if(this.pos>this.len) return null;
 		}
 		let ret=sa.map((e, n) => [e, n]).reduce((r, v) => {
 			let v0 = v[0];
@@ -4474,6 +4474,9 @@ class ParserService extends BaseService {
 	create_param_map(x) {
 		let res_e=this.decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
+		if(res_e.find(e=>e[0]==="error")) {
+			return null;
+		}
 		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
 		return param_map;
