@@ -8777,8 +8777,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
 		this.save_keys("[GuideEntryData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {guideEntryData,...y}=x; this.g(y);
+		this.GuideEntryDataContent(guideEntryData);
 	}
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
@@ -8879,33 +8879,42 @@ class HandleTypes extends ServiceMethods {
 		this.ButtonRenderer(a11ySkipNavigationButton);
 		this.ButtonRenderer(voiceSearchButton);
 	}
-	// @ts-ignore
+	/** @arg {TopbarButtonItem} x */
 	TopbarButtonItem(x) {
 		this.save_keys("[TopbarButtonItem]",x);
+		if("topbarMenuButtonRenderer" in x) {
+			return this.TopbarMenuButtonRenderer(x);
+		} else if("notificationTopbarButtonRenderer" in x) {
+			return this.NotificationTopbarButtonRenderer(x);
+		}
+	}
+	/** @arg {NotificationTopbarButtonRenderer} x */
+	NotificationTopbarButtonRenderer(x) {
+		this.save_keys("[NotificationTopbarButtonRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
-	// @ts-ignore
+	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
-		this.save_keys("[TopbarLogoRenderer]",x);
+		this.save_keys("[HotkeyDialogRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
-	// @ts-ignore
+	/** @arg {TopbarLogoRenderer} x */
 	TopbarLogoRenderer(x) {
 		this.save_keys("[TopbarLogoRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
-	// @ts-ignore
+	/** @arg {FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
-		this.save_keys("[TopbarLogoRenderer]",x);
+		this.save_keys("[FusionSearchboxRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
-	// @ts-ignore
+	/** @arg {TopbarMenuButtonRenderer} x */
 	TopbarMenuButtonRenderer(x) {
-		this.save_keys("[TopbarLogoRenderer]",x);
+		this.save_keys("[TopbarMenuButtonRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
@@ -8919,6 +8928,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
 		this.save_keys("[ResultRenderer]",x);
+		if("tabRenderer" in x) return this.TabRenderer(x);
+		if("expandableTabRenderer" in x) return this.ExpandableTabRenderer(x);
+		debugger;
+	}
+	/** @arg {ExpandableTabRenderer} x */
+	ExpandableTabRenderer(x) {
+		this.save_keys("[ExpandableTabRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
