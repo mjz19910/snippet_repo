@@ -4099,6 +4099,7 @@ class CodegenService extends BaseService {
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
 			if(typeof o==="string") {
+				if(k1==="apiUrl") return o; 
 				if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
 					return o;
 				}
@@ -9463,7 +9464,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
-		const {apiUrl,...y}=x; this.g(y);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
 	AccountMenuWebCommandMetadata(x) {
