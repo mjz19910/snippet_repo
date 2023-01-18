@@ -6914,7 +6914,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
-		this.Accessibility(accessibility);
+		if(accessibility) this.Accessibility(accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
 		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
 	}
