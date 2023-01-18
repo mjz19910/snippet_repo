@@ -1,0 +1,3 @@
+type GetTranscriptData={
+	params: string;
+};

@@ -1,0 +1,1 @@
+type ContinuationWebCommandMetadata=SearchApiWebCommandMetadata|VE3832_WebCommandMetadata;
