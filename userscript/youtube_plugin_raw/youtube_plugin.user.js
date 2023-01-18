@@ -8874,8 +8874,14 @@ class HandleTypes extends ServiceMethods {
 	TwoColumnBrowseResultsData(x) {
 		this.save_keys("[TwoColumnBrowseResultsData]",x);
 		const {tabs,secondaryContents,...y}=x; this.g(y);
-		this.z(tabs,this.g);
+		this.z(tabs,this.ResultRenderer);
 		if(secondaryContents) this.SecondaryContents(secondaryContents);
+	}
+	/** @arg {ResultRenderer} x */
+	ResultRenderer(x) {
+		this.save_keys("[ResultRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
