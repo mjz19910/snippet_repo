@@ -8245,13 +8245,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 		if(accessibilityData) this.Accessibility(accessibilityData);
-		x: if(command) {
-			if("signalServiceEndpoint" in command) {
-				this.SignalServiceEndpoint(command);
-				break x;
-			}
-			debugger;
-		}
+		if(command) this.ButtonCommand(command);
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		x: if(serviceEndpoint) {
@@ -8274,11 +8268,24 @@ class HandleTypes extends ServiceMethods {
 			switch(style) {
 				default: debugger; break;
 				case "STYLE_DEFAULT": break;
+				case "STYLE_PRIMARY": break;
+				case "STYLE_SUGGESTIVE": break;
+				case "STYLE_TEXT": break;
+				case "STYLE_UNKNOWN": break;
 			}
 		}
 		if(text) this.TextWithRuns(text);
 		if(trackingParams) this.trackingParams(trackingParams);
 		if(targetId) this.targetId(targetId);
+	}
+	/** @arg {ButtonCommand} x */
+	ButtonCommand(x) {
+		if("signalServiceEndpoint" in x) {
+			return this.SignalServiceEndpoint(x);
+		} else if("continuationCommand" in x) {
+			return this.ContinuationCommand(x);
+		}
+		debugger;
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
