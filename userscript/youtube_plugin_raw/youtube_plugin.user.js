@@ -6031,6 +6031,8 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
+		let k=this.get_keys_of(x);
+		if(this.eq_keys(k,["sendPost"])) return;
 		debugger;
 	}
 	/** @arg {WatchPageWebCommandMetadata} x */
