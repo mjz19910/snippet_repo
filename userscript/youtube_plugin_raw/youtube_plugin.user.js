@@ -5541,15 +5541,23 @@ class HandleTypes extends ServiceMethods {
 		if("continuationCommand" in x) {
 			this.ContinuationCommand(x);
 		} else if("getTranscriptEndpoint" in x) {
+			this.GetTranscriptEndpoint(x);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {GetTranscriptEndpoint} x */
+	GetTranscriptEndpoint(x) {
+		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.ContinuationCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {ContinuationCommandData} x */
