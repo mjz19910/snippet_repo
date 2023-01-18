@@ -7626,7 +7626,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.TextWithRuns(shortBylineText);
-		this.SimpleText(lengthText);
+		if(lengthText) this.SimpleText(lengthText);
 		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.primitive_of(lengthInSeconds,"number");
 		this._WatchEndpoint(navigationEndpoint);
