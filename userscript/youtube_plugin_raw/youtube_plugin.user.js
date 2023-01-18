@@ -8401,13 +8401,13 @@ class HandleTypes extends ServiceMethods {
 	LiveChatTickerRenderer(x) {
 		this.save_keys("[LiveChatTickerRenderer]",x);
 		const {liveChatTickerRenderer,...y}=x; this.g(y);
-		this.g; liveChatTickerRenderer;
+		this.g(liveChatTickerRenderer);
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
 		this.save_keys("[LiveChatHeaderRenderer]",x);
 		const {liveChatHeaderRenderer,...y}=x; this.g(y);
-		this.g; liveChatHeaderRenderer;
+		this.g(liveChatHeaderRenderer);
 	}
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
@@ -8431,7 +8431,7 @@ class HandleTypes extends ServiceMethods {
 	ReportFormModalRenderer(x) {
 		this.save_keys("[ReportFormModalRenderer]",x);
 		const {reportFormModalRenderer,...y}=x; this.g(y);
-		this.g; reportFormModalRenderer;
+		this.g(reportFormModalRenderer);
 	}
 	/** @arg {AutomixPreviewVideoRenderer} x */
 	AutomixPreviewVideoRenderer(x) {
