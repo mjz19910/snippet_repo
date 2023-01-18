@@ -8495,7 +8495,7 @@ class HandleTypes extends ServiceMethods {
 	EngagementPanelTitleHeaderRenderer(x) {
 		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
 		const {engagementPanelTitleHeaderRenderer,...y}=x; this.g(y);
-		this.g; engagementPanelTitleHeaderRenderer;
+		this.g(engagementPanelTitleHeaderRenderer);
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
@@ -8727,6 +8727,11 @@ class HandleTypes extends ServiceMethods {
 		if(!this.eq_keys(k,["liveBroadcasting"])) debugger;
 		const {liveBroadcasting,...y}=x; this.g(y);
 	}
+	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
+	SetSettingEndpointAutonavForDesktop(x) {
+		this.save_keys("[SetSettingEndpointAutonavForDesktop]",x);
+		const {...y}=x; this.g(y);
+	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
 		this.save_keys("[GuideCollapsibleEntryRenderer]",x);
@@ -8746,10 +8751,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
 		this.save_keys("[GuideEntryData]",x);
-	}
-	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
-	SetSettingEndpointAutonavForDesktop(x) {
-		this.save_keys("[SetSettingEndpointAutonavForDesktop]",x);
 	}
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
