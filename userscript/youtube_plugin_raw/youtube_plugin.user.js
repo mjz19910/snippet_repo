@@ -4418,16 +4418,21 @@ class ParserService extends BaseService {
 		}
 		return param_map;
 	}
-	/** @arg {ParamsSection} for_ @arg {string} x */
-	on_endpoint_params(for_,x) {
-		let pp_value=x;
-		let pp_dec=decodeURIComponent(pp_value);
-		if(this.cache_player_params.includes(pp_value)) return;
-		this.cache_player_params.push(pp_value);
+	/** @arg {string} x */
+	create_param_map(x) {
+		let pp_dec=decodeURIComponent(x);
+		if(this.cache_player_params.includes(x)) return null;
+		this.cache_player_params.push(x);
 		let res_e=this.decode_b64_url_proto_obj(pp_dec);
-		if(!res_e) {debugger; return;}
+		if(!res_e) return null;
 		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
+		return param_map;
+	}
+	/** @arg {ParamsSection} for_ @arg {string} x */
+	on_endpoint_params(for_,x) {
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
 		switch(for_) {
 			default: {
 				let param_obj=Object.fromEntries(param_map.entries());
@@ -4437,10 +4442,11 @@ class ParserService extends BaseService {
 			case "GetTranscript": {
 				/** @type {(string|number|ParamMapType)[]} */
 				let transcript_args=[];
+				let pMap=param_map;
 				/** @arg {number} x */
 				function convert_param(x) {
 					if(x<=0) {debugger; return;}
-					let pf=param_map.get(x);
+					let pf=pMap.get(x);
 					if(pf) transcript_args[x-1]=pf;
 				}
 				this.z([1,2,3,5,6,7,8],a => convert_param(a));
@@ -4481,14 +4487,8 @@ class ParserService extends BaseService {
 	}
 	/** @public @arg {string} x */
 	on_player_params(x) {
-		let pp_value=x;
-		let pp_dec=decodeURIComponent(pp_value);
-		if(this.cache_player_params.includes(pp_value)) return;
-		this.cache_player_params.push(pp_value);
-		let res_e=this.decode_b64_proto_obj(pp_dec);
-		if(!res_e) {debugger; return;}
-		/** @type {ParamMapType} */
-		let param_map=this.make_param_map(res_e);
+		let param_map=this.create_param_map(x);
+		if(!param_map) {debugger; return;}
 		this.parse_player_params_with_map(param_map);
 	}
 	/** @arg {ParamMapType} x */
