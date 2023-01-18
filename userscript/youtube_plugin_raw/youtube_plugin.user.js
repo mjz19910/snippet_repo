@@ -4017,13 +4017,13 @@ class CodegenService extends BaseService {
 		return x[0].toUpperCase()+x.slice(1);
 	}
 	/** @public @arg {unknown} x @arg {string|null} r @arg {boolean} [ret_val] @returns {string|null|void} */
-	generate_typedef(x,r,ret_val) {
-		let cg=this.#generate_typedef(x,r);
+	codegen_new_typedef(x,r,ret_val) {
+		let cg=this.#_codegen_new_typedef(x,r);
 		if(ret_val) return cg;
 		console.log(cg);
 	}
 	/** @arg {unknown} x @arg {string|null} r */
-	#generate_typedef(x,r=null) {
+	#_codegen_new_typedef(x,r=null) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
 		let tn=k;
@@ -5229,7 +5229,7 @@ class Generate {
 	}
 	/** @public @arg {unknown} x @arg {string|null} r */
 	generate_typedef_and_depth(x,r) {
-		let gen=this.x.generate_typedef(x,r,true);
+		let gen=this.x.codegen_new_typedef(x,r,true);
 		if(!gen) return;
 		this.str_arr.push(gen);
 		let gd=this.x.generate_depth(gen);
@@ -8717,6 +8717,13 @@ class HandleTypes extends ServiceMethods {
 		console.log("[presentationStyle]",presentationStyle);
 		this.primitive_of(presentationStyle,"string");
 	}
+	/** @arg {GuideEntryBadges} x */
+	GuideEntryBadges(x) {
+		this.save_keys("[GuideEntryBadges]",x);
+		let k=this.get_keys_of(x);
+		if(!this.eq_keys(k,["liveBroadcasting"])) debugger;
+		const {liveBroadcasting,...y}=x; this.g(y);
+	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
 		this.save_keys("[GuideCollapsibleEntryRenderer]",x);
@@ -8731,14 +8738,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
-		x;
+		this.save_keys("[UpdateEngagementPanelData]",x);
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
-		x;
+		this.save_keys("[GuideEntryData]",x);
 	}
-	/** @arg {GuideEntryBadges} x */
-	GuideEntryBadges(x) {
+	/** @arg {GuideEntryDataContent} x */
+	GuideEntryDataContent(x) {
 		x;
 	}
 }
