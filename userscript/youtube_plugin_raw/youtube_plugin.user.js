@@ -6952,6 +6952,7 @@ class HandleTypes extends ServiceMethods {
 		this.playlistId(x.playlistId);
 		if(x.actions.length!==1) debugger;
 		this.PlaylistAction(x.actions[0]);
+		if(x.params) this.params(x.params);
 	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
