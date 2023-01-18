@@ -1,4 +1,4 @@
 type BrowseCommandMetadata={
-	webCommandMetadata: BrowseWebCommandMetadata;
+	webCommandMetadata: BrowsePageWebCommandMetadata;
 	resolveUrlCommandMetadata?: ResolveUrlCommandMetadata;
 };

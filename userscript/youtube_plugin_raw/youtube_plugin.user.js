@@ -5795,7 +5795,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GetTranscriptEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.WebCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.GetTranscriptData(getTranscriptEndpoint);
 	}
 	/** @arg {GetTranscriptData} x */
@@ -5809,7 +5809,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ContinuationCommand]",x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.WebCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {ContinuationCommandData} x */
@@ -5822,7 +5822,7 @@ class HandleTypes extends ServiceMethods {
 	ContinuationCommandMetadata(x) {
 		this.save_keys("[ContinuationCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		this.WebCommandMetadataContent(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {SearchApiWebCommandMetadata} x */
 	SearchApiWebCommandMetadata(x) {
@@ -5925,17 +5925,17 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		if(commandMetadata) this.BrowseCommandMetadata(commandMetadata);
+		if(commandMetadata) this.CommandMetadata(commandMetadata);
 		this.BrowseEndpointData(browseEndpoint);
 	}
 	/** @arg {BrowseCommandMetadata} x */
 	BrowseCommandMetadata(x) {
 		this.save_keys("[BrowseCommandMetadata]",x);
-		this.WebCommandMetadataContent(x.webCommandMetadata);
+		this.WebCommandMetadata(x.webCommandMetadata);
 		if(x.resolveUrlCommandMetadata) this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
 	}
-	/** @arg {WebCommandMetadataContent} x */
-	WebCommandMetadataContent(x) {
+	/** @arg {WebCommandMetadata} x */
+	WebCommandMetadata(x) {
 		this.save_keys("[WebCommandMetadataContent]",x);
 		if("rootVe" in x) {
 			this.rootVe(x.rootVe);
@@ -5944,6 +5944,7 @@ class HandleTypes extends ServiceMethods {
 				case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
 				case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
 				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
+				case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
 			}
 		}
 		if("apiUrl" in x) {
@@ -5958,7 +5959,11 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {WatchWebCommandMetadata} x */
+	/** @arg {UnknownWebCommandMetadata} x */
+	UnknownWebCommandMetadata(x) {
+		x;
+	}
+	/** @arg {WatchPageWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
 		this.save_keys("[WatchWebCommandMetadata]",x);
 		if(x.webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
@@ -5967,7 +5972,7 @@ class HandleTypes extends ServiceMethods {
 			case 3832: this.VE3832_WebCommandMetadata(x); break;
 		}
 	}
-	/** @arg {ChannelWebCommandMetadata} x */
+	/** @arg {ChannelPageWebCommandMetadata} x */
 	ChannelWebCommandMetadata(x) {
 		this.save_keys("[ChannelWebCommandMetadata]",x);
 		if(x.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
@@ -5977,7 +5982,7 @@ class HandleTypes extends ServiceMethods {
 			case 3611: this.VE3611_WebCommandMetadata(x); break;
 		}
 	}
-	/** @arg {BrowseWebCommandMetadata} x */
+	/** @arg {BrowsePageWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
 		this.save_keys("[BrowseWebCommandMetadata]",x);
 		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -7383,16 +7388,16 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(clickTrackingParams);
-		this.WebCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		/** @type {{}} */
 		let t=as(y);
 		f.call(this,as(t));
 	}
-	/** @arg {WebCommandMetadata} x */
-	WebCommandMetadata(x) {
-		this.save_keys("[WebCommandMetadata]",x);
+	/** @arg {CommandMetadata} x */
+	CommandMetadata(x) {
+		this.save_keys("[CommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		this.WebCommandMetadataContent(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {EditPlaylistWebCommandMetadata} x */
 	EditPlaylistWebCommandMetadata(x) {
@@ -7730,7 +7735,7 @@ class HandleTypes extends ServiceMethods {
 	NavigationEndpointCommandMetadata(x) {
 		this.save_keys("[NavigationEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		this.WebCommandMetadataContent(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3611_WebCommandMetadata} x */
 	VE3611_WebCommandMetadata(x) {
@@ -7767,13 +7772,13 @@ class HandleTypes extends ServiceMethods {
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		this.WebCommandMetadataContent(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3832_CommandMetadata} x */
 	VE3832_CommandMetadata(x) {
 		this.save_keys("[VE3832_CommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		this.WebCommandMetadataContent(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3832_WebCommandMetadata} x */
 	VE3832_WebCommandMetadata(x) {
@@ -8219,7 +8224,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SearchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.WebCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 	}
 	/** @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
@@ -8535,7 +8540,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[UploadEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,uploadEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.WebCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.UploadEndpointData(uploadEndpoint);
 	}
 	/** @arg {UploadEndpointData} x */
@@ -8755,7 +8760,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SetSettingEndpointAutonavForDesktop]",x);
 		const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.WebCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.SettingItemAutonavForDesktop(setSettingEndpoint);
 	}
 	/** @arg {SettingItemAutonavForDesktop<boolean>} x */

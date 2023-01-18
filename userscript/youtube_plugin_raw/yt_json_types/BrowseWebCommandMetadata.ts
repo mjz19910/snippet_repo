@@ -1,6 +1,1 @@
-type BrowseWebCommandMetadata=
-	|VE11487_WebCommandMetadata
-	|VE3854_WebCommandMetadata
-	|VE6827_WebCommandMetadata
-	|VE96368_WebCommandMetadata
-	;
+type BrowsePageWebCommandMetadata=BrowsePageWebCommandMetadataStore[keyof BrowsePageWebCommandMetadataStore];

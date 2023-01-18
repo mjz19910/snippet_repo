@@ -11,6 +11,6 @@ type UploadEndpointData={
 
 type UploadEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: WebCommandMetadata;
+	commandMetadata: CommandMetadata;
 	uploadEndpoint: UploadEndpointData;
 };

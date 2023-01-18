@@ -1,5 +1,5 @@
 type GetTranscriptEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: WebCommandMetadata;
+	commandMetadata: CommandMetadata;
 	getTranscriptEndpoint: GetTranscriptData;
 };

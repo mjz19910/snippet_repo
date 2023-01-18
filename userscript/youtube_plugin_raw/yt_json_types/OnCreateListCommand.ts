@@ -1,4 +1,4 @@
 type CreatePlaylistServiceEndpoint={
-	commandMetadata: WebCommandMetadata;
+	commandMetadata: CommandMetadata;
 	createPlaylistServiceEndpoint: CreatePlaylistServiceArgs;
 };
