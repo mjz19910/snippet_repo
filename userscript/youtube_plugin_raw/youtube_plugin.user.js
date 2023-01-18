@@ -7959,18 +7959,6 @@ class HandleTypes extends ServiceMethods {
 		});
 		if(conversationBar) this.LiveChatRenderer(conversationBar);
 	}
-	/** @arg {LiveChatRenderer} x */
-	LiveChatRenderer(x) {
-		this.save_keys("[LiveChatRenderer]",x);
-	}
-	/** @arg {AutoplayContent} x */
-	AutoplayContent(x) {
-		this.save_keys("[AutoplayContent]",x);
-	}
-	/** @arg {PlaylistContent} x */
-	PlaylistContent(x) {
-		this.save_keys("[PlaylistContent]",x);
-	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
 	AutoplayTemplate(x,f) {
 		this.save_keys("[AutoplayTemplate]",x);
@@ -8053,6 +8041,18 @@ class HandleTypes extends ServiceMethods {
 	GuideResponse(x) {
 		this.save_keys("[GuideResponse]",x);
 		const {responseContext: {},items,trackingParams,...y}=x; this.g(y);
+	}
+	/** @arg {LiveChatRenderer} x */
+	LiveChatRenderer(x) {
+		this.save_keys("[LiveChatRenderer]",x);
+	}
+	/** @arg {AutoplayContent} x */
+	AutoplayContent(x) {
+		this.save_keys("[AutoplayContent]",x);
+	}
+	/** @arg {PlaylistContent} x */
+	PlaylistContent(x) {
+		this.save_keys("[PlaylistContent]",x);
 	}
 }
 //#endregion
