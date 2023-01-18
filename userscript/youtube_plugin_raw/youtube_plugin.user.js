@@ -6331,10 +6331,7 @@ class HandleTypes extends ServiceMethods {
 	LikeLikeResponse(x) {
 		this.save_keys(`[LikeLikeResponse]`,x);
 		const {responseContext,actions,...y}=x; this.g(y);
-		if(actions) {
-			this.z(actions,a => this.Action(a));
-		}
-		if(!this.eq_keys(this.get_keys_of(y),["responseContext"])) debugger;
+		if(actions) this.z(actions,a => this.Action(a));
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
