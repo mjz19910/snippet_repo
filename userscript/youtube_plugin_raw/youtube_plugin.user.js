@@ -5936,8 +5936,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
 		this.save_keys("[Thumbnail]",x);
-		const {thumbnails,...y}=x; this.g(y);
+		const {thumbnails,accessibility,...y}=x; this.g(y);
 		this.z(thumbnails,this.ThumbnailItem);
+		if(accessibility) this.Accessibility(accessibility);
 	}
 	/** @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
@@ -7361,7 +7362,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
-		if(accessibility) this.AccessibilityData(accessibility);
+		if(accessibility) this.Accessibility(accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
 		if(targetId) {
 			this.targetId(as(targetId));
@@ -7460,13 +7461,13 @@ class HandleTypes extends ServiceMethods {
 		if(sendPost!==true) debugger;
 	}
 	/** @arg {Accessibility} x */
-	AccessibilityData(x) {
+	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
 		const {accessibilityData,...y}=x; this.g(y);
-		this.AccessibilityDataContent(accessibilityData);
+		this.AccessibilityData(accessibilityData);
 	}
 	/** @arg {AccessibilityData} x */
-	AccessibilityDataContent(x) {
+	AccessibilityData(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
@@ -7494,7 +7495,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {{accessibility?:Accessibility}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
-		if(x.accessibility) this.AccessibilityData(x.accessibility);
+		if(x.accessibility) this.Accessibility(x.accessibility);
 	}
 	/** @arg {WatchNextEndScreenItem} x */
 	WatchNextEndScreenItem(x) {
@@ -7668,7 +7669,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
-		if(accessibility) this.AccessibilityData(accessibility);
+		if(accessibility) this.Accessibility(accessibility);
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
@@ -8112,8 +8113,8 @@ class HandleTypes extends ServiceMethods {
 		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=x; this.g(y);
 		this.SetSettingEndpointAutonavForDesktop(onEnabledCommand);
 		this.SetSettingEndpointAutonavForDesktop(onDisabledCommand);
-		this.AccessibilityData(enabledAccessibilityData);
-		this.AccessibilityData(disabledAccessibilityData);
+		this.Accessibility(enabledAccessibilityData);
+		this.Accessibility(disabledAccessibilityData);
 		this.trackingParams(trackingParams);
 		this.primitive_of(enabled,"boolean");
 	}
@@ -8193,7 +8194,7 @@ class HandleTypes extends ServiceMethods {
 	EmojiImage(x) {
 		this.save_keys("[EmojiImage]",x);
 		const {accessibility,thumbnails,...y}=x; this.g(y);
-		this.AccessibilityData(accessibility);
+		this.Accessibility(accessibility);
 		this.z(thumbnails,this.ThumbnailItem);
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
@@ -8796,7 +8797,7 @@ class HandleTypes extends ServiceMethods {
 		this.GuideEntryBadges(badges);
 		this.trackingParams(trackingParams);
 		this.SimpleText(formattedTitle);
-		this.AccessibilityData(accessibility);
+		this.Accessibility(accessibility);
 		this.GuideEntryData(entryData);
 		console.log("[presentationStyle]",presentationStyle);
 		this.primitive_of(presentationStyle,"string");
@@ -9014,7 +9015,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,tooltip,...y0}=x;
 		this.trackingParams(trackingParams);
-		this.AccessibilityData(accessibility);
+		this.Accessibility(accessibility);
 		this.primitive_of(tooltip,"string");
 		if("menuRequest" in y0) {
 			const {avatar,menuRequest,...y}=y0; this.g(y);

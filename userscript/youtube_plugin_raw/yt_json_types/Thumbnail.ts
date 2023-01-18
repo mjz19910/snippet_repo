@@ -1,1 +1,4 @@
-type Thumbnail={thumbnails: ThumbnailItem[];};
+type Thumbnail={
+	thumbnails: ThumbnailItem[];
+	accessibility?: Accessibility;
+};
