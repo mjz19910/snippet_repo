@@ -8242,6 +8242,11 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @arg {NonNullable<ButtonData['navigationEndpoint']>} x */
+	Button_navigationEndpoint(x) {
+		let u_name=this.get_codegen_name(x);
+		this.codegen_new_typedef(x,`_Button_navigationEndpoint_${u_name}`);
+	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		const cf="ButtonData";
@@ -8253,7 +8258,7 @@ class HandleTypes extends ServiceMethods {
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
-		if(navigationEndpoint) this.g(navigationEndpoint);
+		if(navigationEndpoint) this.Button_navigationEndpoint(navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
