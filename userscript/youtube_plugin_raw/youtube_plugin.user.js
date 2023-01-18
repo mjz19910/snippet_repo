@@ -4098,6 +4098,7 @@ class CodegenService extends BaseService {
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
+		debugger;
 		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
@@ -8258,7 +8259,10 @@ class HandleTypes extends ServiceMethods {
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
-		if(navigationEndpoint) this.Button_navigationEndpoint(navigationEndpoint);
+		if(navigationEndpoint) {
+			this.x.get("codegen").codegen_new_typedef(x,typeof cf!=="undefined"?cf:null);
+			this.Button_navigationEndpoint(navigationEndpoint);
+		}
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
