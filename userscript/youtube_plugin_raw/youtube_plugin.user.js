@@ -5189,6 +5189,14 @@ class ServiceMethods extends ServiceData {
 	previousCsn(x) {
 		console.log(base64_dec.decode_str(x));
 	}
+	/** @private @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
+	starts_with_targetId(x,w) {
+		return this.str_starts_with(x.targetId,w);
+	}
+	/** @arg {string} x */
+	playerParams(x) {
+		this.x.get("parser_service").on_player_params(x);
+	}
 }
 class HandleTypes extends ServiceMethods {
 	/** @arg {WatchPageResponse} x */
@@ -5530,6 +5538,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ContentsArrayTemplate(x,f) {
+		this.save_keys("[ContentsArrayTemplate]",x);
 		this.z(x.contents,f);
 	}
 	/** @arg {MusicCarouselShelf} x */
@@ -6738,10 +6747,6 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @private @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
-	starts_with_targetId(x,w) {
-		return this.str_starts_with(x.targetId,w);
-	}
 	/** @arg {AppendContinuationItemsActionData} x */
 	AppendContinuationItemsActionData(x) {
 		this.save_keys("[AppendContinuationItemsActionData]",x);
@@ -7262,20 +7267,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfig(x) {
+		this.save_keys("[WatchEndpointMusicConfig]",x);
 		this.WatchEndpointMusicConfigData(x.watchEndpointMusicConfig);
 	}
 	/** @arg {WatchEndpointMusicConfigData} x */
 	WatchEndpointMusicConfigData(x) {
+		this.save_keys("[WatchEndpointMusicConfigData]",x);
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y);
 		this.primitive_of(hasPersistentPlaylistPanel,"boolean");
 		switch(musicVideoType) {
 			default: debugger; break;
 			case "MUSIC_VIDEO_TYPE_ATV": break;
 		};
-	}
-	/** @arg {string} x */
-	playerParams(x) {
-		this.x.get("parser_service").on_player_params(x);
 	}
 	/** @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
@@ -7331,14 +7334,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
+		const cf="TextWithRuns";
 		if(!("runs" in x)) {debugger; return;}
-		this.save_keys("[TextWithRuns]",x);
+		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
 		if(accessibility) this.Accessibility(accessibility);
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
+		this.save_keys("[TextRun]",x);
 		const {text,navigationEndpoint,...y}=x; this.g(y);
 		if(navigationEndpoint) f_run.call(this,navigationEndpoint);
 		this.primitive_of(text,"string");
@@ -7391,6 +7396,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UrlEndpoint} x */
 	UrlEndpoint(x) {
+		this.save_keys("[UrlEndpoint]",x);
 		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y2},urlEndpoint,...y1}=x; this.g(y2); this.g(y1);
 		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		this.UrlEndpointData(urlEndpoint);
@@ -7401,6 +7407,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UrlEndpointData} x */
 	UrlEndpointData(x) {
+		this.save_keys("[UrlEndpointData]",x);
 		const {url,target,nofollow,...y}=x; this.g(y);
 		this.primitive_of(url,"string");
 		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
@@ -7478,9 +7485,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
 	SimpleText(x,f=this.handle_accessibility) {
+		const cf="SimpleText";
 		if(!x) {debugger; return;}
 		if(!("simpleText" in x)) {debugger; return;}
-		this.save_keys("[SimpleText]",x);
+		this.save_keys(`[${cf}]`,x);
 		const {simpleText,...y}=x; f.call(this,y);
 		this.primitive_of(simpleText,"string");
 	}
