@@ -4444,7 +4444,7 @@ class ParserService extends BaseService {
 					if(pf) transcript_args[x-1]=pf;
 				}
 				this.z([1,2,3,5,6,7,8],a => convert_param(a));
-				/** @type {[string,string,1,"engagement-panel-searchable-transcript-search-panel",1,1,1]|null} */
+				/** @type {{videoId:string,params:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
 				let transcript_args_dec=null;
 				let p0=transcript_args[0];
 				let p1=transcript_args[1];
@@ -4453,12 +4453,24 @@ class ParserService extends BaseService {
 				let p5=transcript_args[5];
 				let p6=transcript_args[6];
 				let p7=transcript_args[7];
-				if(
+				x: if(
 					typeof p0=='string'&&typeof p1=='string'
 					&&p2===1
-					&&p4==="engagement-panel-searchable-transcript-search-panel"
+					&&typeof p4=='string'
 					&&p5===1&&p6===1&&p7===1) {
-					transcript_args_dec=[p0,p1,p2,p4,p5,p6,p7];
+						switch(p4) {
+							case "engagement-panel-searchable-transcript-search-panel": break;
+							default: debugger; break x;
+						}
+					transcript_args_dec={
+						videoId:p0,
+						params:p1,
+						unk3:p2,
+						targetId:p4,
+						unk6:p5,
+						unk7:p6,
+						unk8:p7
+					};
 				}
 				console.log("[get_transcript_args]",transcript_args_dec);
 				let param_obj=Object.fromEntries(param_map.entries());
