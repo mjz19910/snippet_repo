@@ -8519,12 +8519,34 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideSubscriptionsSectionData]",x);
 		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=x; this.g(y);
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
+		this.z(items,this.g);
+		this.trackingParams(trackingParams);
+		this.g(formattedTitle);
+		this.z(handlerDatas,this.g);
 	}
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
 		this.save_keys("[ElementUpdate]",x);
 		const {updates,...y}=x; this.g(y);
-		this.z(updates,a=>a);
+		this.z(updates,this.ElementUpdateItem);
+	}
+	/** @arg {ElementUpdateItem} x */
+	ElementUpdateItem(x) {
+		this.save_keys("[ElementUpdateItem]",x);
+		if("templateUpdate" in x) {
+			this.TemplateUpdate(x);
+		}
+	}
+	/** @arg {TemplateUpdate} x */
+	TemplateUpdate(x) {
+		this.save_keys("[TemplateUpdate]",x);
+		const {templateUpdate,...y}=x; this.g(y);
+		this.TemplateUpdateData(templateUpdate);
+	}
+	/** @arg {TemplateUpdateData} x */
+	TemplateUpdateData(x) {
+		this.save_keys("[TemplateUpdateData]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
