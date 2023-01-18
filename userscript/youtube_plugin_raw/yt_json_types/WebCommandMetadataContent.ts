@@ -1,4 +1,4 @@
-type WebCommandMetadata=
+type WebCommandMetadataContent=
 	|BrowseWebCommandMetadata
 	|ChannelWebCommandMetadata
 	|EditPlaylistWebCommandMetadata
