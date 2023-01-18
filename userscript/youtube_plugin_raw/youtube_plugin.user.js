@@ -8997,11 +8997,6 @@ class HandleTypes extends ServiceMethods {
 		const {notificationTopbarButtonRenderer,...y}=x; this.g(y);
 		this.NotificationTopbarButtonData(notificationTopbarButtonRenderer);
 	}
-	/** @arg {HotkeyDialogRenderer} x */
-	HotkeyDialogRenderer(x) {
-		this.save_keys("[HotkeyDialogRenderer]",x);
-		const {hotkeyDialogRenderer,...y}=x; this.g(y);
-	}
 	/** @arg {TopbarLogoRenderer} x */
 	TopbarLogoRenderer(x) {
 		this.save_keys("[TopbarLogoRenderer]",x);
@@ -9174,6 +9169,11 @@ class HandleTypes extends ServiceMethods {
 	NotificationTopbarButtonData(x) {
 		this.save_keys("[NotificationTopbarButtonData]",x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
+	}
+	/** @arg {HotkeyDialogRenderer} x */
+	HotkeyDialogRenderer(x) {
+		this.save_keys("[HotkeyDialogRenderer]",x);
+		const {hotkeyDialogRenderer,...y}=x; this.g(y);
 	}
 	//#endregion
 	//#region has_save_keys
