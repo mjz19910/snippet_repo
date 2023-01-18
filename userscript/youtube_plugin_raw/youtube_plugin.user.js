@@ -7951,7 +7951,7 @@ class HandleTypes extends ServiceMethods {
 		const {items,trackingParams,formattedTitle}=x; //,...y}=x; this.g(y);
 		this.z(items,a => a);
 		this.trackingParams(trackingParams);
-		if(formattedTitle) this.TextWithRuns(formattedTitle);
+		if(formattedTitle) this.TextT(formattedTitle);
 	}
 	/** @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
