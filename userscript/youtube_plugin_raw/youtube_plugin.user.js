@@ -7190,8 +7190,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelSectionList} x */
 	EngagementPanelSectionList(x) {
-		this.save_keys("[EngagementPanelSectionList]",x);
-		this.codegen.codegen_new_typedef(x,"EngagementPanelSectionList");
+		const cf="EngagementPanelSectionList";
+		this.save_keys(`[${cf}]`,x);
+		this.codegen.codegen_new_typedef(x,cf);
 		if("veType" in x) {
 			switch(x.veType) {
 				case 76278:case 99999:case 124975:case 126250: {
@@ -7205,6 +7206,18 @@ class HandleTypes extends ServiceMethods {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 					this.LoggingDirectives(loggingDirectives);
+				} break;
+				case 139722: {
+					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier: a1,...y}=x; this.g(y);
+					this.SectionListRenderer(content);
+					if(header) this.EngagementPanelTitleHeaderRenderer(header);
+					if(targetId) this.EngagementPanelSectionTargetId(targetId);
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.LoggingDirectives(loggingDirectives);
+					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
+					if(!this.eq_keys(this.get_keys_of(a1),["surface","tag"])) debugger;
+					if(a1.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+					if(a1.tag!=="shorts-comments-panel") debugger;
 				} break;
 				default: debugger; break;
 			}
