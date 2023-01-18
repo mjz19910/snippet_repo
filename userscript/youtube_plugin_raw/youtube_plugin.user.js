@@ -4456,7 +4456,7 @@ class ParserService extends BaseService {
 					if(pf) transcript_args[x-1]=pf;
 				}
 				this.z([1,2,3,5,6,7,8],a => convert_param(a));
-				/** @type {{videoId:string,params:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
+				/** @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
 				let transcript_args_dec=null;
 				let p0=transcript_args[0];
 				let p1=transcript_args[1];
@@ -4477,7 +4477,7 @@ class ParserService extends BaseService {
 					}
 					transcript_args_dec={
 						videoId: p0,
-						params: p1,
+						langParams: p1,
 						unk3: p2,
 						targetId: p4,
 						unk6: p5,
@@ -4486,16 +4486,30 @@ class ParserService extends BaseService {
 					};
 				}
 				x: if(transcript_args_dec) {
-					console.log("[get_transcript_args]",transcript_args_dec);
-					let param_1=decodeURIComponent(transcript_args_dec.params);
+					let param_1=decodeURIComponent(transcript_args_dec.langParams);
 					let param_map_1=this.create_param_map(param_1);
 					if(!param_map_1) {debugger; break x;}
+					let lp_p1=param_map_1.get(1);
+					let lp_p2=param_map_1.get(2);
+					let lp_p3=param_map_1.get(3);
+					y: if(lp_p1&&lp_p2&&typeof lp_p1==='string'&&typeof lp_p2==='string'&&lp_p3 instanceof Map) {
+						if(lp_p1!=="asr") break y;
+						if(lp_p2!=="en") break y;
+						if(lp_p3.size!==0) break y;
+						return;
+					}
+					console.log("[get_transcript_args]",transcript_args_dec);
 					let param_obj_1=Object.fromEntries(param_map_1.entries());
 					console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
+					debugger;
 					return;
+				}
+				if(transcript_args_dec) {
+					console.log("[get_transcript_args]",transcript_args_dec);
 				}
 				let param_obj=Object.fromEntries(param_map.entries());
 				console.log("[new_get_transcript_endpoint_params]",param_obj);
+				debugger;
 			} break;
 		}
 	}
