@@ -7390,7 +7390,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
-		this.save_keys("[CommandMetadata]",x);
+		this.save_keys("[WebCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadataContent(webCommandMetadata);
 	}
