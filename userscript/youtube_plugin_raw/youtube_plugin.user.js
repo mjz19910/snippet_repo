@@ -8270,17 +8270,7 @@ class HandleTypes extends ServiceMethods {
 				case "SIZE_SMALL": break;
 			}
 		}
-		if(style) {
-			switch(style) {
-				default: debugger; break;
-				case "STYLE_DEFAULT": break;
-				case "STYLE_PRIMARY": break;
-				case "STYLE_SUGGESTIVE": break;
-				case "STYLE_TEXT": break;
-				case "STYLE_OPACITY": break;
-				case "STYLE_UNKNOWN": break;
-			}
-		}
+		if(style) this.save_string("[Button.style]",style);
 		if(text) this.TextWithRuns(text);
 		if(trackingParams) this.trackingParams(trackingParams);
 		if(targetId) this.targetId(targetId);
