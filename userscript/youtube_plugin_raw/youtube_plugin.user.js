@@ -6657,6 +6657,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelSectionShowCommands} x */
 	EngagementPanelSectionShowCommands(x) {
+		this.save_keys("[EngagementPanelSectionShowCommands]",x);
 		if("changeEngagementPanelVisibilityAction" in x) {
 			return this.ChangeEngagementPanelVisibilityAction(x);
 		} else if("showEngagementPanelScrimAction" in x) {
