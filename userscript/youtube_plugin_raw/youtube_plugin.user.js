@@ -6539,8 +6539,10 @@ class HandleTypes extends ServiceMethods {
 			case "engagement-panel-structured-description": break;
 		}
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		this.ChangeEngagementPanelVisibilityAction(onShowCommands[0]);
-		this.ShowEngagementPanelScrimAction(onShowCommands[1]);
+		if(onShowCommands) {
+			this.ChangeEngagementPanelVisibilityAction(onShowCommands[0]);
+			this.ShowEngagementPanelScrimAction(onShowCommands[1]);
+		}
 		this.LoggingDirectives(loggingDirectives);
 	}
 	/** @arg {LoggingDirectives} x */

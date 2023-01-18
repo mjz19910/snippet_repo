@@ -4,7 +4,7 @@ type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListConten
 	veType?: 76278;
 	targetId: EngagementPanelSectionTargetIds;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: [
+	onShowCommands?: [
 		ChangeEngagementPanelVisibilityAction,
 		ShowEngagementPanelScrimAction
 	];
