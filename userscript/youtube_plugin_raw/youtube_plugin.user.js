@@ -7980,11 +7980,7 @@ class HandleTypes extends ServiceMethods {
 	LiveChatRenderer(x) {
 		this.save_keys("[LiveChatRenderer]",x);
 		const {liveChatRenderer,...y}=x; this.g(y);
-		this.LiveChatData(liveChatRenderer);
-	}
-	/** @arg {LiveChatData} x */
-	LiveChatData(x) {
-		this.save_keys("[LiveChatData]",x);
+		this.g(liveChatRenderer);
 	}
 	/** @arg {AutoplayContent} x */
 	AutoplayContent(x) {

@@ -1,1 +1,1 @@
-type LiveChatRenderer={liveChatRenderer: LiveChatData;};
+type LiveChatRenderer={liveChatRenderer: {};};
