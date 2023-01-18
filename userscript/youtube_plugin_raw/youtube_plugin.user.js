@@ -5489,6 +5489,7 @@ class SignalTypes  extends BaseService {
 	/** @arg {Signal_ClientSignal} x */
 	ClientSignal(x) {
 		const {signal,actions,...y}=x; this.g(y);
+		if(signal!=="CLIENT_SIGNAL") debugger;
 		this.z(actions,this.x.get("parent").ServiceEndpointAction);
 	}
 }
