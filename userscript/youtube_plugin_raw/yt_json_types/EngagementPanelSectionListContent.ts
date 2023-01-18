@@ -14,7 +14,7 @@ type ProductListItem={
 	price: `CA$${string}`;
 	onClickCommand: UrlEndpoint;
 	trackingParams: string;
-	loggingDirectives: {};
+	loggingDirectives: LoggingDirectives;
 };
 
 type ProductList={

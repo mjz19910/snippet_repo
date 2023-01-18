@@ -1,3 +1,1 @@
-type Visibility={
-	types: `${number}`;
-};
+type Visibility=TypesTemplate<15>;

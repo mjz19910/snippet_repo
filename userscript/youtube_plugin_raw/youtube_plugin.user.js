@@ -8692,7 +8692,7 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,visibility,enableDisplayloggerExperiment,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
 		this.Visibility(visibility);
-		this.primitive_of(enableDisplayloggerExperiment,"boolean");
+		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
 	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
@@ -9305,7 +9305,10 @@ class HandleTypes extends ServiceMethods {
 	Visibility(x) {
 		this.save_keys("[Visibility]",x);
 		const {types,...y}=x; this.g(y);
-		this.primitive_of(types,"string");
+		switch(types) {
+			default: console.log("[Visibility.types]",types); break;
+			case "15": break;
+		}
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
