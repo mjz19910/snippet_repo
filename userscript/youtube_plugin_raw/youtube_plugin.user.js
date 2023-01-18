@@ -7022,7 +7022,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
-		x;
+		const {webCommandMetadata,...y}=x; this.g(y);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {EditPlaylistCommandMetadata} x */
 	EditPlaylistCommandMetadata(x) {

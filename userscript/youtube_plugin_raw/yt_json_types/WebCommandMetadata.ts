@@ -1,7 +1,8 @@
 type WebCommandMetadata=
 	|BrowseWebCommandMetadata
 	|ChannelWebCommandMetadata
-	|WatchWebCommandMetadata
+	|EditPlaylistWebCommandMetadata
 	|SearchApiWebCommandMetadata
+	|WatchWebCommandMetadata
 	;
 ;
