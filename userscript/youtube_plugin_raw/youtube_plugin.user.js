@@ -5779,6 +5779,8 @@ class HandleTypes extends ServiceMethods {
 	PageEndpoint(x) {
 		if("browseEndpoint" in x) {
 			return this.BrowseEndpoint(x);
+		} else if("watchEndpoint" in x) {
+			return this._WatchEndpoint(x);
 		}
 		debugger;
 	}
