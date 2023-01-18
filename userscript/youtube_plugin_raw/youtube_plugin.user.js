@@ -7256,16 +7256,17 @@ class HandleTypes extends ServiceMethods {
 		if("veType" in x) {
 			switch(x.veType) {
 				case 76278: {
-
+					debugger;
 				} break;
 				case 99999: {
-					
+					debugger;
 				} break;
 				case 126250: {
-					
+					debugger;
 				} break;
 				case 124975: {
 					const {content,header,veType,targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
+					debugger;
 					this.EngagementPanelSectionListContent(content);
 					this.EngagementPanelTitleHeaderRenderer(header);
 					this.EngagementPanelSectionTargetId(targetId);
@@ -7280,6 +7281,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case 139722: {
 					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y);
+					debugger;
 					this.SectionListRenderer(content);
 					if(header) this.EngagementPanelTitleHeaderRenderer(header);
 					if(targetId) this.EngagementPanelSectionTargetId(targetId);
@@ -7294,6 +7296,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			return;
 		}
+		debugger;
 		const {content,header,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
 		this.EngagementPanelSectionListContent(content);
 		this.EngagementPanelTitleHeaderRenderer(header);
@@ -8468,9 +8471,10 @@ class HandleTypes extends ServiceMethods {
 			return this.SignalServiceEndpoint(x);
 		} else if("continuationCommand" in x) {
 			return this.ContinuationCommand(x);
+		} else if("changeEngagementPanelVisibilityAction" in x) {
+			return;
 		}
-		let u_name=this.get_codegen_name(x);
-		this.codegen_new_typedef(x,`_ButtonCommand_${u_name}`);
+		debugger;
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
@@ -9026,8 +9030,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("openPopupAction" in x) {
 			return this.OpenPopupAction(x);
 		}
-		let u_name=this.get_codegen_name(x);
-		this.codegen_new_typedef(x,`_gen_ServiceEndpointAction_${u_name}`);
+		debugger;
 	}
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {

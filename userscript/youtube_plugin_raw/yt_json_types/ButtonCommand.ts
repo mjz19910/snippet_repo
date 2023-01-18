@@ -1,5 +1,6 @@
 type ButtonCommand=
-	|SignalServiceEndpoint
+	|ChangeEngagementPanelVisibilityAction
 	|ContinuationCommand
+	|SignalServiceEndpoint
 	;
 ;
