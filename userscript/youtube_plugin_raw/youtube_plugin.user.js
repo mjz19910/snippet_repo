@@ -6318,6 +6318,7 @@ class HandleTypes extends ServiceMethods {
 		switch(style) {
 			default: debugger; break;
 			case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
+			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": break;
 			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 		}
 	}
