@@ -1,3 +1,3 @@
 type SignalNavigationEndpointPlugin={
-	signalNavigationEndpoint: SignalNavigationEndpointData;
+	signalNavigationEndpoint: Signal_ChannelSwitcher;
 };

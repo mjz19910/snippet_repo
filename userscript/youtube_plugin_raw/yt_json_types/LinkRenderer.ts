@@ -16,6 +16,6 @@ type UploadEndpoint={
 };
 type SignalNavigationEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: WebCommandMetadata;
-	signalNavigationEndpoint: SignalNavigationEndpointData;
+	commandMetadata: CommandMetadata;
+	signalNavigationEndpoint: Signal_ChannelSwitcher;
 };

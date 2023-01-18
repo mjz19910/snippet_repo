@@ -7,8 +7,6 @@ type GenericWebCommandMetadata=
 	|AccountMenuWebCommandMetadata
 	|NextWebCommandMetadata
 	|BrowseApiWebCommandMetadata
+	|GetSharePanelWebCommandMetadata
 	;
-;type BrowseApiWebCommandMetadata={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/browse";
-}
+;

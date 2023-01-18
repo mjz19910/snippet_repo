@@ -6168,21 +6168,7 @@ class HandleTypes extends ServiceMethods {
 				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
 			}
 		}
-		if("apiUrl" in x) {
-			/** @type {GenericWebCommandMetadata} */
-			switch(x.apiUrl) {
-				default: debugger; break;
-				case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
-				case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
-				case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
-				case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
-				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
-				case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
-				case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
-				case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
-			}
-			return;
-		}
+		if("apiUrl" in x) return this.GenericWebCommandMetadata(x);
 		let k=this.get_keys_of(x);
 		if(this.eq_keys(k,["sendPost"])) return;
 		debugger;
@@ -6400,6 +6386,19 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {OpenPopupActionData} x */
 	OpenPopupActionData(x) {
 		this.save_keys(`[OpenPopupActionData]`,x);
+		if("beReused" in x) {
+			const {popup,popupType,beReused,...y}=x; this.g(y);
+			if("unifiedSharePanelRenderer" in popup) {
+				this.UnifiedSharePanelRenderer(popup);
+			} else {
+				debugger;
+			}
+			switch(popupType) {
+				default: debugger; break;
+				case "DIALOG": break;
+			}
+			return;
+		}
 		const {popup,popupType,...y}=x; this.g(y);
 		this.AllPopups(popup);
 		switch(popupType) {
@@ -7986,13 +7985,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {UrlEndpoint} x */
 	UrlEndpoint(x) {
 		this.save_keys("[UrlEndpoint]",x);
-		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y2},urlEndpoint,...y1}=x; this.g(y2); this.g(y1);
+		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
 		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		this.UrlEndpointData(urlEndpoint);
+		this.CommandMetadata(commandMetadata);
+		/*
 		const {url,webPageType,rootVe}=webCommandMetadata;
 		this.primitive_of(url,"string");
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		if(rootVe!==83769) debugger;
+		if(rootVe!==83769) debugger;*/
 	}
 	/** @arg {UrlEndpointData} x */
 	UrlEndpointData(x) {
@@ -9039,6 +9040,7 @@ class HandleTypes extends ServiceMethods {
 	CreatePlaylistServiceEndpoint(x) {
 		this.save_keys("[CreatePlaylistServiceEndpoint]",x);
 		const {commandMetadata,createPlaylistServiceEndpoint,...y}=x; this.g(y);
+		this.CommandMetadata(commandMetadata);
 	}
 	/** @arg {CreatePlaylistServiceArgs} x */
 	CreatePlaylistServiceArgs(x) {
@@ -9432,13 +9434,6 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 		this.primitive_of(sendPost,"boolean");
 	}
-	//#endregion
-	//#region destructure_endpoint
-	/** @arg {SignalNavigationEndpoint} x */
-	SignalNavigationEndpoint(x) {
-		this.save_keys("[SignalNavigationEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y);
-	}
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
 		this.save_keys("[UploadEndpointData]",x);
@@ -9460,6 +9455,7 @@ class HandleTypes extends ServiceMethods {
 	ShareEntityServiceEndpoint(x) {
 		this.save_keys("[ShareEntityServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=x; this.g(y);
+		this.CommandMetadata(commandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
 	/** @arg {ShareEntityServiceArgs} x */
@@ -9468,6 +9464,21 @@ class HandleTypes extends ServiceMethods {
 		const {serializedShareEntity,commands,...y}=x; this.g(y);
 		this.primitive_of(serializedShareEntity,"string");
 		this.z(commands,this.OpenPopupAction);
+	}
+	//#endregion
+	//#region destructure_endpoint
+	/** @arg {SignalNavigationEndpoint} x */
+	SignalNavigationEndpoint(x) {
+		this.save_keys("[SignalNavigationEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		debugger;
+		this.CommandMetadata(commandMetadata);
+		this.Signal_ChannelSwitcher(signalNavigationEndpoint);
+	}
+	/** @arg {Signal_ChannelSwitcher} x */
+	Signal_ChannelSwitcher(x) {
+		x;
 	}
 	//#endregion
 	//#region destructure
@@ -9734,6 +9745,21 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @arg {GenericWebCommandMetadata} x */
+	GenericWebCommandMetadata(x) {
+		switch(x.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
+			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return;
+		}
+	}
 	//#endregion
 	//#region type_errors
 	//#endregion
@@ -9742,6 +9768,8 @@ class HandleTypes extends ServiceMethods {
 	//#region TODO_minimal_member_fns
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member(x) {x;}
+	/** @arg {UnifiedSharePanelRenderer} x */
+	UnifiedSharePanelRenderer(x) {x;}
 	//#endregion
 }
 //#endregion

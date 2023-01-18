@@ -3,6 +3,7 @@ type AllPopups=
 	|MultiPageMenuRenderer
 	|NotificationActionRenderer
 	|PdgBuyFlowRenderer
+	|UnifiedSharePanelRenderer
 	|VoiceSearchDialogRenderer
 	;
 ;
