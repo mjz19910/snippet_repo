@@ -8768,7 +8768,7 @@ class HandleTypes extends ServiceMethods {
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
 		let u_name=this.uppercase_first(kk);
-		cg.codegen_new_typedef(x,`ServiceEndpointAction_${u_name}`);
+		cg.codegen_new_typedef(x,`_gen_ServiceEndpointAction_${u_name}`);
 	}
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {
