@@ -1,8 +1,9 @@
 type WatchResultItem=[
+	ItemSectionRendererTemplate<"comment-item-section","comments-section">,
+	ItemSectionRendererTemplate<"comments-entry-point",never>,
+	MerchandiseShelfRenderer,
 	VideoPrimaryInfoRenderer,
 	VideoSecondaryInfoRenderer,
-	ItemSectionRendererTemplate<"comments-entry-point",never>,
-	ItemSectionRendererTemplate<"comment-item-section","comments-section">,
 ][number];
 type MerchandiseShelfRenderer={
 	merchandiseShelfRenderer: {
