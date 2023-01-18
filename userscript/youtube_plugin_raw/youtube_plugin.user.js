@@ -6587,7 +6587,15 @@ class HandleTypes extends ServiceMethods {
 		/** @type {EngagementSectionPanelId} */
 		if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
 		if(header) this.EngagementPanelTitleHeaderRenderer(header);
-		if(veType&&veType!==76278) debugger;
+		if(veType) {
+			/** @type {`${NonNullable<typeof veType>}`} */
+			let ss=`${veType}`;
+			switch(ss) {
+				default: debugger; break;
+				case "76278": break;
+				case "124975": break;
+			}
+		};
 		if(targetId) this.EngagementPanelSectionTargetId(targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		if(onShowCommands) {
