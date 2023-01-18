@@ -1010,10 +1010,6 @@ class MyReader {
 					} catch {}
 					return [false,0n,this.pos];
 				});
-				console.log("su32",this.cur_len,this.pos);
-				if(this.cur_len===37&&this.pos===27) {
-					debugger;
-				}
 				let num32=null;
 				x: try {
 					num32=this.uint32();
@@ -4447,6 +4443,7 @@ class ParserService extends BaseService {
 		this.log_url_info_arr(url_info_arr);
 	}
 	/** @typedef {Map<number,number|string|ParamMapType>} ParamMapType */
+	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @arg {DecTypeNum[]} res_e */
 	make_param_map(res_e) {
 		/** @private @type {ParamMapType} */
@@ -4636,8 +4633,18 @@ class ParserService extends BaseService {
 				return this.parse_video_id(p56);
 			}
 		}
-		let param_obj=Object.fromEntries(x.entries());
+		let param_obj=this.to_param_obj(x);
 		console.log("[new_watch_endpoint_params]",param_obj);
+	}
+	/** @arg {ParamMapType} x @returns {ParamObjType} */
+	to_param_obj(x) {
+		return Object.fromEntries([...x.entries()].map(e=>{
+			let ei=e[1];
+			if(ei instanceof Map) {
+				return [e[0],this.to_param_obj(ei)];
+			}
+			return [e[0],ei];
+		}));
 	}
 	/** @arg {ParamMapType} x */
 	parse_player_param_f_40(x) {
