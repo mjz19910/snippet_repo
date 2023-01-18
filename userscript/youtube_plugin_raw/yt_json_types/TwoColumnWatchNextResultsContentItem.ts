@@ -1,6 +1,6 @@
 type WatchResultItem=[
 	ItemSectionRendererTemplate<"comment-item-section","comments-section">,
-	ItemSectionRendererTemplate<"comments-entry-point",never>,
+	ItemSectionRendererTemplate_Section<"comments-entry-point">,
 	MerchandiseShelfRenderer,
 	VideoPrimaryInfoRenderer,
 	VideoSecondaryInfoRenderer,

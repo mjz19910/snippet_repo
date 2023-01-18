@@ -7925,6 +7925,7 @@ class HandleTypes extends ServiceMethods {
 				switch(k[0]) {
 					default: debugger; break;
 					case "itemSectionRenderer": break;
+					case "merchandiseShelfRenderer": break;
 					case "videoPrimaryInfoRenderer": break;
 					case "videoSecondaryInfoRenderer": break;
 				}
