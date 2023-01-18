@@ -4191,7 +4191,8 @@ class CodegenService extends BaseService {
 	/** @arg {string|null} r @param {{[U in string]:unknown}} x @arg {string[]} keys */
 	get_json_replace_type_len_1(r,x,keys) {
 		let g=() => this.json_auto_replace(x);
-		let hg=x.subscribeButtonRenderer
+		let hg=false
+			||x.subscribeButtonRenderer
 			||x.pivotButtonRenderer
 			;
 		if(hg) return g();
@@ -6193,6 +6194,10 @@ class HandleTypes extends ServiceMethods {
 			return this.BrowseEndpoint(x);
 		} else if("watchEndpoint" in x) {
 			return this._WatchEndpoint(x);
+		} else if("reelWatchEndpoint" in x) {
+			return this.ReelWatchEndpoint(x);
+		} else if("searchEndpoint" in x) {
+			return this.SearchEndpoint(x);
 		}
 		debugger;
 	}
