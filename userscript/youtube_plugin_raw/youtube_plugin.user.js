@@ -8916,12 +8916,6 @@ class HandleTypes extends ServiceMethods {
 		const {fusionSearchboxRenderer,...y}=x; this.g(y);
 		this.FusionSearchboxData(fusionSearchboxRenderer);
 	}
-	/** @arg {FusionSearchboxData} x */
-	FusionSearchboxData(x) {
-		this.save_keys("[FusionSearchboxData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
-	}
 	/** @arg {TopbarMenuButtonRenderer} x */
 	TopbarMenuButtonRenderer(x) {
 		this.save_keys("[TopbarMenuButtonRenderer]",x);
@@ -9041,6 +9035,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseFeedItem]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
+	}
+	/** @arg {FusionSearchboxData} x */
+	FusionSearchboxData(x) {
+		this.save_keys("[FusionSearchboxData]",x);
+		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y);
 	}
 }
 //#endregion
