@@ -4096,6 +4096,7 @@ class CodegenService extends BaseService {
 			if(o.pdgCommentPreviewRenderer) return g();
 			if(o.pdgColorSliderRenderer) return g();
 			if(o.pdgCommentOptionRenderer) return g();
+			if(o.webCommandMetadata) return "TYPE::CommandMetadata";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
