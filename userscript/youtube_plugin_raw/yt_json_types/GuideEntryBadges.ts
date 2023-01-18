@@ -1,0 +1,3 @@
+type GuideEntryBadges={
+	liveBroadcasting: true;
+};

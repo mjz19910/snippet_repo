@@ -1,12 +1,10 @@
-type GuideEntryRendererData={
-	navigationEndpoint?: {};
-	icon: Icon<"MIX">;
+type GuideEntry={
+	navigationEndpoint: BrowseEndpoint;
+	thumbnail: Thumbnail;
+	badges: GuideEntryBadges;
 	trackingParams: string;
-	formattedTitle: TextWithRuns;
-	accessibility: Accessibility;
-	serviceEndpoint?: ServiceEndpointTemplate<GuideEntryServicePlugins>;
-	entryData?: GuideEntryData;
-	isPrimary?: boolean;
-	targetId?: "library-guide-item";
+	formattedTitle: SimpleText;
+	accessibility: AccessibilityData;
+	entryData: GuideEntryData;
+	presentationStyle: string;
 };
-type ServiceEndpoint_Omit<T extends {}>=Omit<ServiceEndpointTemplate<T>,"clickTrackingParams"|"commandMetadata">;

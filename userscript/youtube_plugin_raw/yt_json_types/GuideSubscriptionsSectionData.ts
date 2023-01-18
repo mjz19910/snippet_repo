@@ -1,7 +1,7 @@
 type GuideSubscriptionsSectionData={
 	sort: "CHANNEL_ACTIVITY";
-	items: {}[];
+	items: GuideEntryRenderer[];
 	trackingParams: string;
-	formattedTitle: {};
-	handlerDatas: {}[];
+	formattedTitle: SimpleText;
+	handlerDatas: "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS"[];
 };

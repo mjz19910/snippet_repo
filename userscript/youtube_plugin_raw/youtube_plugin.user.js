@@ -4078,7 +4078,7 @@ class CodegenService extends BaseService {
 			let o_keys=this.filter_keys(this.get_keys_of(o));
 			if(o_keys.length===1) {
 				let kk=this.get_name_from_keys(o);
-				if(kk) return `TYPE::${kk}`;
+				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
 			}
 			console.log("[type_gen.o_keys]",o_keys);
 			if(k1==="responseContext") return "TYPE::ResponseContext";
@@ -8540,10 +8540,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideSubscriptionsSectionData]",x);
 		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=x; this.g(y);
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
-		this.z(items,this.g);
+		this.z(items,this.GuideEntryRenderer);
 		this.trackingParams(trackingParams);
-		this.g(formattedTitle);
-		this.z(handlerDatas,this.g);
+		this.SimpleText(formattedTitle);
+		this.z(handlerDatas,a=>{
+			if(a!=="GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS") debugger;
+		});
 	}
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
@@ -8640,6 +8642,10 @@ class HandleTypes extends ServiceMethods {
 			case "HISTORY_FORWARD": break;
 			case "ENABLE_CHROME_NOTIFICATIONS": break;
 		}
+	}
+	/** @arg {GuideEntryRenderer} x */
+	GuideEntryRenderer(x) {
+		this.save_keys("[GuideEntryRenderer]",x);
 	}
 }
 //#endregion
