@@ -1,5 +1,7 @@
+type AllPopups=MultiPageMenuRenderer|ConfirmDialogRenderer|NotificationActionRenderer;
+
 type OpenPopupActionData={
-	popup: MultiPageMenuRenderer|ConfirmDialogRenderer|NotificationActionRenderer;
+	popup: AllPopups;
 	popupType: PopupTypeList;
 };
 type PopupTypeList=[

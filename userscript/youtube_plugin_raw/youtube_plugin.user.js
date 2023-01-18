@@ -6155,7 +6155,123 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
-		x;
+		this.save_keys(`[OpenPopupAction]`,x);
+		const {clickTrackingParams,openPopupAction,...y}=x; this.g(y);
+	}
+	/** @arg {OpenPopupActionData} x */
+	OpenPopupActionData(x) {
+		this.save_keys(`[OpenPopupActionData]`,x);
+		const {popup,popupType,...y}=x; this.g(y);
+		this.AllPopups(popup);
+		switch(popupType) {
+			default: debugger; break;
+			case "DIALOG": break;
+			case "DROPDOWN": break;
+			case "TOAST": break;
+			case "TOP_ALIGNED_DIALOG": break;
+		}
+	}
+	/** @arg {AllPopups} x */
+	AllPopups(x) {
+		this.save_keys(`[AllPopups]`,x);
+		if("multiPageMenuRenderer" in x) {
+			return this.MultiPageMenuRenderer(x);
+		} else if("confirmDialogRenderer" in x) {
+			return this.ConfirmDialogRenderer(x);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {ConfirmDialogRenderer} x */
+	ConfirmDialogRenderer(x) {
+		this.save_keys(`[MultiPageMenuRenderer]`,x);
+		const {confirmDialogRenderer,...y}=x; this.g(y);
+		this.ConfirmDialogData(confirmDialogRenderer);
+	}
+	/** @arg {ConfirmDialogData} x */
+	ConfirmDialogData(x) {
+		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y);
+		this.TextWithRuns(title);
+		this.trackingParams(trackingParams);
+		this.z(dialogMessages,a=>this.TextWithRuns(a));
+		this.ButtonRenderer(confirmButton);
+		this.ButtonRenderer(cancelButton);
+		this.primitive_of(primaryIsCancel,"boolean");
+	}
+	/** @arg {MultiPageMenuRenderer} x */
+	MultiPageMenuRenderer(x) {
+		this.save_keys(`[MultiPageMenuRenderer]`,x);
+		const {multiPageMenuRenderer,...y}=x; this.g(y);
+		this.MultiPageMenu(multiPageMenuRenderer);
+	}
+	/** @arg {MultiPageMenu} x */
+	MultiPageMenu(x) {
+		this.save_keys(`[MultiPageMenu]`,x);
+		const {header,sections,footer,style,...y}=x; this.g(y);
+		this.SimpleMenuHeaderRenderer(header);
+		this.z(sections,a => {
+			if("accountSectionListRenderer" in a) {
+				return this.AccountSectionListRenderer(a);
+			}
+			debugger;
+		});
+		this.MultiPageMenuSectionRenderer(footer);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
+	}
+	/** @arg {MultiPageMenuSectionRenderer} x */
+	MultiPageMenuSectionRenderer(x) {
+		this.save_keys(`[MultiPageMenuSectionRenderer]`,x);
+		const {multiPageMenuSectionRenderer,...y}=x; this.g(y);
+		this.MultiPageMenuSection(multiPageMenuSectionRenderer);
+	}
+	/** @arg {MultiPageMenuSection} x */
+	MultiPageMenuSection(x) {
+		this.save_keys(`[MultiPageMenuSection]`,x);
+		const {items,...y}=x; this.g(y);
+		this.z(items,a => {
+			if("compactLinkRenderer" in a) return this.CompactLinkRenderer(a);
+			debugger;
+		});
+	}
+	/** @arg {CompactLinkRenderer} x */
+	CompactLinkRenderer(x) {
+		this.save_keys(`[CompactLinkRenderer]`,x);
+		const {compactLinkRenderer,...y}=x; this.g(y);
+		this.CompactLinkData(compactLinkRenderer);
+	}
+	/** @arg {CompactLinkData} x */
+	CompactLinkData(x) {
+		this.save_keys(`[CompactLinkData]`,x);
+		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y);
+		this.Icon(icon);
+		this.TextWithRuns(title);
+		this.g(navigationEndpoint);
+		this.trackingParams(trackingParams);
+		switch(style) {
+			default: debugger; break;
+			case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
+			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
+		}
+	}
+	/** @arg {AccountSectionListRenderer} x */
+	AccountSectionListRenderer(x) {
+		const {accountSectionListRenderer,...y}=x; this.g(y);
+		this.AccountSectionListData(accountSectionListRenderer);
+	}
+	/** @arg {AccountSectionListData} x */
+	AccountSectionListData(x) {
+		this.save_keys(`[SimpleMenuHeaderData]`,x);
+		const {contents,...y}=x; this.g(y);
+	}
+	/** @arg {SimpleMenuHeaderRenderer} x */
+	SimpleMenuHeaderRenderer(x) {
+		const {simpleMenuHeaderRenderer,...y}=x; this.g(y);
+		this.SimpleMenuHeaderData(simpleMenuHeaderRenderer);
+	}
+	/** @arg {SimpleMenuHeaderData} x */
+	SimpleMenuHeaderData(x) {
+		this.save_keys(`[SimpleMenuHeaderData]`,x);
+		const {title,buttons,...y}=x; this.g(y);
 	}
 	/** @arg {UpdatedMetadata} x */
 	UpdatedMetadata(x) {

@@ -1,4 +1,4 @@
-type MultiPageMenuData={
+type MultiPageMenu={
 	header: SimpleMenuHeaderRenderer;
 	sections: AccountSectionListRenderer[];
 	footer: MultiPageMenuSectionRenderer;
