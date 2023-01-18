@@ -4692,12 +4692,18 @@ class ParserService extends BaseService {
 			if(!(x1 instanceof Map)) {debugger; break x;}
 			return this.parse_player_param_f_40(x1);
 		}
-		if(this.eq_keys(map_keys,[30,71])) {
-			let p30=x.get(30);
+		let p30=x.get(30);
+		let i30=map_keys.indexOf(30);
+		if(i30>-1) map_keys.splice(i30,1);
+		if(this.eq_keys(map_keys,[71])) {
 			let p71=x.get(71);
 			if(p30!==void 0&&p71!==void 0) {
 				if(p30===1&&p71===12) return;
 			}
+		}
+		x: if(p30!==void 0) {
+			if(p30!==1) break x;
+			x.delete(30);
 		}
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
