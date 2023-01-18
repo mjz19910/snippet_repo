@@ -4132,8 +4132,8 @@ class CodegenService extends BaseService {
 		if(x.pdgColorSliderRenderer) return g();
 		if(x.pdgCommentOptionRenderer) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
-		if(x.accessibilityData) return "TYPE::CommandMetadata";
-		console.log("[no_json_replace_type]",x,g(x));
+		if(x.accessibilityData) return "TYPE::Accessibility";
+		console.log("[no_json_replace_type]",x,g());
 		return null;
 	}
 	/** @public @arg {string} x1 */
