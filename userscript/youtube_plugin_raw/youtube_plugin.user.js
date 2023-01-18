@@ -5047,6 +5047,11 @@ class ServiceData extends BaseService {
 }
 class ServiceMethods extends ServiceData {
 	/** @arg {string} x */
+	videoId(x) {
+		this.primitive_of(x,"string");
+		this.x.get("indexed_db").put({v: x});
+	}
+	/** @arg {string} x */
 	params(x) {
 		this.x.get("parser_service").on_endpoint_params(x);
 	}
@@ -5116,8 +5121,7 @@ class ServiceMethods extends ServiceData {
 class HandleTypes extends ServiceMethods {
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
-		const cf="WatchPageResponse";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys("[WatchPageResponse]",x);
 		if("rootVe" in x) switch(x.rootVe) {
 			case 3832: this.VE3832_WatchPageResponse(x); break;
 			default: debugger; break;
@@ -5127,7 +5131,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Generic_WatchPageResponse} x */
 	Generic_WatchPageResponse(x) {
-		const cf="WatchPageResponse";
+		const cf="Generic_WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y);
 		this._WatchEndpoint(endpoint);
 		this.WatchResponse(response);
@@ -6680,19 +6685,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ClipSectionRenderer} x */
 	ClipSectionRenderer(x) {
-		x;
+		this.save_keys("[ClipSectionRenderer]",x);
 	}
 	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
+		this.save_keys(`[SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
 		this.SectionListDataTemplate(x.sectionListRenderer);
 	}
 	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
-		x.contents;
+		this.save_keys(`[SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
-		x;
+		this.save_keys("[StructuredDescriptionContentRenderer]",x);
 	}
 	/** @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {
@@ -6803,11 +6809,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CustomEmoji} x */
 	CustomEmoji(x) {
-		x;
+		this.save_keys("[CustomEmoji]",x);
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
-		x;
+		this.save_keys("[SortFilterSubMenuRenderer]",x);
 	}
 	/** @arg {CommentSimpleboxRenderer} x */
 	CommentSimpleboxRenderer(x) {
@@ -6874,7 +6880,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowserMediaSessionRenderer} x */
 	BrowserMediaSessionRenderer(x) {
-		x;
+		this.save_keys("[BrowserMediaSessionRenderer]",x);
 	}
 	/** @arg {LikeButtonRenderer} x */
 	LikeButtonRenderer(x) {
@@ -6919,6 +6925,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicLibraryStatusUpdateCommand} x */
 	MusicLibraryStatusUpdateCommand(x) {
+		this.save_keys("[MusicLibraryStatusUpdateCommand]",x);
 		this.MusicLibraryStatusUpdate(x.musicLibraryStatusUpdateCommand);
 	}
 	/** @arg {MusicLibraryStatusUpdate} x */
@@ -6933,11 +6940,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[LikeApiData]",x);
 		const {videoId,...y}=x; this.g(y);
 		this.videoId(videoId);
-	}
-	/** @arg {string} x */
-	videoId(x) {
-		this.primitive_of(x,"string");
-		this.x.get("indexed_db").put({v: x});
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {
