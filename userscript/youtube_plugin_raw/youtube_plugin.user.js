@@ -6050,6 +6050,7 @@ class HandleTypes extends ServiceMethods {
 			switch(x.apiUrl) {
 				default: debugger; break;
 				case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+				case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
 				case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
 				case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
 				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
@@ -9383,6 +9384,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NextWebCommandMetadata} x */
 	NextWebCommandMetadata(x) {
+		x;
+	}
+	/** @arg {SetSettingWebCommandMetadata} x */
+	SetSettingWebCommandMetadata(x) {
 		x;
 	}
 	//#endregion
