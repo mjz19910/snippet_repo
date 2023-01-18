@@ -6097,15 +6097,15 @@ class HandleTypes extends ServiceMethods {
 		this.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
 			if(x.type==="account.account_menu") break x;
+			if(x.type==="browse.edit_playlist") break x;
+			if(x.type==="like.dislike") break x;
 			if(x.type==="notification.get_notification_menu") break x;
 			if(x.type==="notification.get_unseen_count") break x;
 			if(x.type==="notification.modify_channel_preference") break x;
 			if(x.type==="share.get_share_panel") break x;
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
-			if(x.type==="browse.edit_playlist") break x;
 			if(x.type==="updated_metadata") break x;
-			if(x.type==="like.dislike") break x;
 			debugger;
 		}
 		switch(x.type) {
