@@ -6141,12 +6141,21 @@ class HandleTypes extends ServiceMethods {
 			case "subscription.unsubscribe": return this.UnsubscribeResponse(x.data);
 			case "search": return this.SearchApiResponse(x.data);
 			case "updated_metadata": return this.UpdatedMetadata(x.data);
-			default:
-		}
-		switch(x.type) {
-			case "pdg.get_pdg_buy_flow": break;
+			case "pdg.get_pdg_buy_flow": return this.GetPdgBuyFlow(x.data);
 			default: debugger; return g(x);
 		}
+	}
+	/** @arg {GetPdgBuyFlow} x */
+	GetPdgBuyFlow(x) {
+		this.save_keys(`[UpdatedMetadata]`,x);
+		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y);
+		this.OpenPopupAction(command);
+		this.trackingParams(trackingParams);
+		this.FrameworkUpdates(frameworkUpdates);
+	}
+	/** @arg {OpenPopupAction} x */
+	OpenPopupAction(x) {
+		x;
 	}
 	/** @arg {UpdatedMetadata} x */
 	UpdatedMetadata(x) {
