@@ -1,3 +1,3 @@
 type GuideEntryDataContent={
-	guideEntryId: YtMixPlaylistFormat;
+	guideEntryId: `RD${string}`;
 };

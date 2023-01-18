@@ -1,1 +1,1 @@
-type GuideEntryRenderer={guideEntryRenderer: GuideEntry;};
+type GuideEntryRenderer={guideEntryRenderer: GuideEntryRoot;};

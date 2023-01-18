@@ -1,4 +1,4 @@
-type GuideEntry={
+type GuideEntryRoot={
 	navigationEndpoint: BrowseEndpoint;
 	thumbnail: Thumbnail;
 	badges: GuideEntryBadges;
