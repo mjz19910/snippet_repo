@@ -8228,7 +8228,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {DecoratedPlayerBar} x */
 	DecoratedPlayerBar(x) {
 		this.save_keys("[DecoratedPlayerBar]",x);
-		const {...y}=x; this.g(y);
+		const {playerBar,playerBarActionButton,...y}=x; this.g(y);
+		this.MultiMarkersPlayerBarRenderer(playerBar);
+		this.ButtonRenderer(playerBarActionButton);
 	}
 	/** @arg {PlayerOverlayVideoDetails} x */
 	PlayerOverlayVideoDetails(x) {
@@ -9393,6 +9395,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
+	/** @arg {MultiMarkersPlayerBarRenderer} x */
+	MultiMarkersPlayerBarRenderer(x) {
+		x;
+	}
 	//#endregion
 }
 //#endregion
