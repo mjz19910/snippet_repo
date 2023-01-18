@@ -6338,7 +6338,7 @@ class HandleTypes extends ServiceMethods {
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y);
 		this.Icon(icon);
 		this.TextWithRuns(title);
-		this.UploadEndpoint(navigationEndpoint);
+		this.CompactLinkData_NavEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 		switch(style) {
 			default: debugger; break;
@@ -6349,7 +6349,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CompactLinkData['navigationEndpoint']} x */
 	CompactLinkData_NavEndpoint(x) {
-		x;
+		if("uploadEndpoint" in x) return this.UploadEndpoint(x);
+		if("signalNavigationEndpoint" in x) return this.SignalNavigationEndpoint(x);
+		debugger;
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
@@ -9121,6 +9123,10 @@ class HandleTypes extends ServiceMethods {
 	NotificationTopbarButtonData(x) {
 		this.save_keys("[NotificationTopbarButtonData]",x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
+	}
+	/** @arg {SignalNavigationEndpoint} x */
+	SignalNavigationEndpoint(x) {
+		this.save_keys("[SignalNavigationEndpoint]",x);
 	}
 }
 //#endregion
