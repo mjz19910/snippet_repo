@@ -638,9 +638,16 @@ export class Snippet_0_tmp {
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
 	}
-	/** @arg {LiveChatTextMessageData} x */
-	LiveChatTextMessageData(x) {
-		this.save_keys("[LiveChatTextMessageData]",x);
-		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x; this.g(y);
+	/** @arg {ProfileColumnRenderer} x */
+	ProfileColumnRenderer(x) {
+		this.save_keys("[ProfileColumnRenderer]",x);
+		const {profileColumnRenderer,...y}=x; this.g(y);
+		this.ProfileColumnData(profileColumnRenderer);
+	}
+	/** @arg {ProfileColumnData} x */
+	ProfileColumnData(x) {
+		this.save_keys("[ProfileColumnData]",x);
+		const {items,...y}=x; this.g(y);
+		this.z(items,this.ProfileColumnItem);
 	}
 }

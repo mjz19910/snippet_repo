@@ -9463,18 +9463,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseFeedActionsRenderer]",x);
 		const {browseFeedActionsRenderer,...y}=x; this.g(y);
 	}
-	/** @arg {ProfileColumnRenderer} x */
-	ProfileColumnRenderer(x) {
-		this.save_keys("[ProfileColumnRenderer]",x);
-		const {profileColumnRenderer,...y}=x; this.g(y);
-		this.ProfileColumnData(profileColumnRenderer);
-	}
-	/** @arg {ProfileColumnData} x */
-	ProfileColumnData(x) {
-		this.save_keys("[ProfileColumnData]",x);
-		const {items,...y}=x; this.g(y);
-		this.z(items,this.ProfileColumnItem);
-	}
 	/** @arg {ProfileColumnStatsRenderer} x */
 	ProfileColumnStatsRenderer(x) {
 		this.save_keys("[ProfileColumnStatsRenderer]",x);
