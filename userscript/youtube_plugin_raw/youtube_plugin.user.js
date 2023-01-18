@@ -4849,14 +4849,17 @@ class ParserService extends BaseService {
 			default:
 		}
 		switch(x[2]) {
-			default: this.api_no_handler(x,x[2]);
+			default: console.log("[new_get_yt_url_type_3] [%o] [%s]",x,x[2]); debugger;
 		}
 		return x[2];
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...any]>} x */
 	get_yt_url_type(x) {
 		if(x[1]!=="v1") {
 			return this.api_no_handler(x,x[1]);
+		}
+		if(x.length===3) {
+			return this.get_yt_url_type_3(x);
 		}
 		switch(x[2]) {
 			case "account": return this.get_account_type(x);
@@ -4872,10 +4875,6 @@ class ParserService extends BaseService {
 			case "share": return this.get_share_type(x);
 			case "music": return this.get_music_type(x);
 			case "pdg": return this.get_pdg_type(x);
-		}
-		switch(x.length) {
-			case 3: return this.get_yt_url_type_3(x);
-			default: console.log("[get_yt_url.url_type_new_length]",x); debugger; return null;
 		}
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",...string[]]>} x */
