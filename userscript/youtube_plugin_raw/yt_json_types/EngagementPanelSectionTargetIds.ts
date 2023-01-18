@@ -1,4 +1,4 @@
-type EngagementPanelSectionTargetIds=MakeTargetId<
+type EngagementPanelSectionTargetId=MakeTargetId<
 	"engagement-panel",[
 		"ads",
 		"clip-create",

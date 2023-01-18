@@ -1,8 +1,13 @@
+type EngagementSectionPanelId=MakeTargetId<"engagement-panel",[
+	"clip-create",
+	"structured-description",
+][number]>;
+
 type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListContent>&{
-	panelIdentifier?: "engagement-panel-clip-create";
+	panelIdentifier?: EngagementSectionPanelId;
 	header?: EngagementPanelTitleHeaderRenderer;
 	veType?: 76278;
-	targetId: EngagementPanelSectionTargetIds;
+	targetId: EngagementPanelSectionTargetId;
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	onShowCommands?: [
 		ChangeEngagementPanelVisibilityAction,

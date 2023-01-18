@@ -6560,21 +6560,34 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[EngagementPanelSectionListRenderer]",x);
 		this.EngagementPanelSectionList(x.engagementPanelSectionListRenderer);
 	}
-	/** @arg {EngagementPanelSectionList} x */
-	EngagementPanelSectionList(x) {
-		this.save_keys("[EngagementPanelSectionList]",x);
-		const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
-		this.EngagementPanelSectionListContent(content);
-		if(panelIdentifier&&panelIdentifier!=="engagement-panel-clip-create") debugger;
-		if(header) this.EngagementPanelTitleHeaderRenderer(header);
-		if(veType&&veType!==76278) debugger;
-		switch(targetId) {
+	/** @arg {EngagementSectionPanelId} x */
+	EngagementSectionPanelId(x) {
+		switch(x) {
+			default: debugger; break;
+			case "engagement-panel-clip-create": break;
+			case "engagement-panel-structured-description": break;
+		}
+	}
+	/** @arg {EngagementPanelSectionTargetId} x */
+	EngagementPanelSectionTargetId(x) {
+		switch(x) {
 			default: debugger; break;
 			case "engagement-panel-ads": break;
 			case "engagement-panel-clip-create": break;
 			case "engagement-panel-comments-section": break;
 			case "engagement-panel-structured-description": break;
 		}
+	}
+	/** @arg {EngagementPanelSectionList} x */
+	EngagementPanelSectionList(x) {
+		this.save_keys("[EngagementPanelSectionList]",x);
+		const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
+		this.EngagementPanelSectionListContent(content);
+		/** @type {EngagementSectionPanelId} */
+		if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
+		if(header) this.EngagementPanelTitleHeaderRenderer(header);
+		if(veType&&veType!==76278) debugger;
+		if(targetId) this.EngagementPanelSectionTargetId(targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		if(onShowCommands) {
 			this.ChangeEngagementPanelVisibilityAction(onShowCommands[0]);
