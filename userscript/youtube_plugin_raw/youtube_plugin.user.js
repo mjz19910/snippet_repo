@@ -4032,15 +4032,22 @@ class CodegenService extends BaseService {
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
 			if(o.runs&&o.runs instanceof Array) return "TYPE::TextWithRuns";
+			if(o.simpleText&&typeof o.simpleText==="string") return "TYPE::SimpleText";
 			if(o.thumbnails&&o.thumbnails instanceof Array) return "TYPE::Thumbnail";
 			if(o.iconType&&typeof o.iconType==="string") return `TYPE::Icon<"${o.iconType}">`;
+			if(o.twoColumnWatchNextResults) return `TYPE::TwoColumnWatchNextResults`;
+			if(o.browseEndpoint) return `TYPE::BrowseEndpoint`;
+			if(o.watchEndpoint) return `TYPE::WatchEndpoint`;
+			if(o.signalServiceEndpoint) return `TYPE::SignalServiceEndpoint`;
+			if(o.playerOverlayRenderer) return `TYPE::PlayerOverlayRenderer`;
+			if(o.desktopTopbarRenderer) return "TYPE::DesktopTopbarRenderer";
+			if(o.engagementPanelSectionListRenderer) return "TYPE::EngagementPanelSectionListRenderer";
+			if(o.cinematicContainerRenderer) return "TYPE::CinematicContainerRenderer";
+			if(o.playlistPanelVideoRenderer) return "TYPE::PlaylistPanelVideoRenderer";
+			if(o.openPopupAction) return "TYPE::OpenPopupAction";
+			if(o.openPopupAction) return "TYPE::OpenPopupAction";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
-			let c=this.get_name_from_keys(o);
-			if(c) {
-				let ic=this.#uppercase_first(c);
-				return `TYPE::${ic}`;
-			}
 			if(keys.includes(k1)) {
 				if(o instanceof Array) return [o[0]];
 				return o;
