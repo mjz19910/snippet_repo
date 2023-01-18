@@ -2506,13 +2506,15 @@ class BaseService extends BaseServicePrivate {
 		if(!n1[1]) throw new Error();
 		let n2=this.drop_separator(n1[1],sep);
 		if(!n2) throw new Error();
-		this.save_string(`[${ns_name}::${enum_base}]`,n2[0]);
+		this.save_string(`[${ns_name}::${enum_base}]`,n2);
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
 		let v=split_string_once(x,sep);
 		if(v[0]) return v[0];
-		return v[1]??null;
+		let q=v[1];
+		if(q) return q;
+		return null;
 	}
 	/** @public @template {{}} T @arg {T} obj @returns {(keyof T)[]} */
 	get_keys_of_ex(obj) {
