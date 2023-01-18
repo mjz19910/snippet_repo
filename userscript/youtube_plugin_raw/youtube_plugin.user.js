@@ -8068,8 +8068,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[CustomEmoji]",x);
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji}=x; //,...y}=x; this.g(y);
 		this.primitive_of(emojiId,"string");
-		this.z(shortcuts,a=>this.primitive_of(a,"string"));
-		this.z(searchTerms,a=>this.primitive_of(a,"string"));
+		this.z(shortcuts,a => this.primitive_of(a,"string"));
+		this.z(searchTerms,a => this.primitive_of(a,"string"));
 		this.EmojiImage(image);
 		if(isCustomEmoji) {
 			debugger;
@@ -8540,15 +8540,18 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideSubscriptionsSectionData]",x);
 		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=x; this.g(y);
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
-		this.z(items,a=>{
-			if("guideEntryRenderer" in a) return this.GuideEntryRenderer(a);
-			debugger;
-		});
+		this.z(items,this.GuideSubscriptionsSectionItem);
 		this.trackingParams(trackingParams);
 		this.SimpleText(formattedTitle);
-		this.z(handlerDatas,a=>{
+		this.z(handlerDatas,a => {
 			if(a!=="GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS") debugger;
 		});
+	}
+	/** @arg {GuideSubscriptionsSectionItem} x */
+	GuideSubscriptionsSectionItem(x) {
+		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
+		if("guideCollapsibleEntryRenderer" in x) this.GuideCollapsibleEntryRenderer(x);
+		debugger;
 	}
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
@@ -8575,13 +8578,13 @@ class HandleTypes extends ServiceMethods {
 		const {identifier,serializedTemplateConfig,dependencies,...y}=x; this.g(y);
 		this.primitive_of(identifier,"string");
 		this.primitive_of(serializedTemplateConfig,"string");
-		if(dependencies) this.z(dependencies,a=>this.primitive_of(a,"string"));
+		if(dependencies) this.z(dependencies,a => this.primitive_of(a,"string"));
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		this.save_keys("[EntityBatchUpdateData]",x);
 		const {mutations,timestamp,...y}=x; this.g(y);
-		this.z(mutations,a=>a);
+		this.z(mutations,a => a);
 		this.TimestampWithNanos(timestamp);
 	}
 	/** @arg {TimestampWithNanos} x */
@@ -8655,6 +8658,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
+	}
+	/** @arg {GuideCollapsibleEntryRenderer} x */
+	GuideCollapsibleEntryRenderer(x) {
+		x;
 	}
 }
 //#endregion
