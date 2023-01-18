@@ -1893,135 +1893,10 @@ function main() {
 	// modify global section
 	window.yt_plugin=services.yt_plugin;
 	override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
-	/** @private @type {typeof fetch|null} */
-	let original_fetch=null;
-	fetch_inject.__proxy_target__=window.fetch;
 	services.modify_env.modify_global_env();
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types);
-	/** @private @arg {string|URL|Request} request @arg {Response} response @arg {JsonDataResponseType} response_obj */
-	function fetch_filter_text_then_data_url(request,response,response_obj) {
-		try {
-			yt_handlers.on_handle_api(request,response,response_obj);
-		} catch(e) {
-			console.log("plugin error");
-			console.log(e);
-		}
-	}
-	/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
-	function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text) {
-		if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
-		let original_json_parse=JSON.parse;
-		if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
-		JSON.parse=new Proxy(original_json_parse,{
-			apply: function(...proxy_args) {
-				if(is_yt_debug_enabled) console.log("JSON.parse()");
-				let obj;
-				try {
-					obj=Reflect.apply(...proxy_args);
-				} catch(e) {
-					console.log("target error",e);
-					throw e;
-				} finally {
-					JSON.parse=original_json_parse;
-				}
-				if(is_yt_debug_enabled) console.log("request.url");
-				fetch_filter_text_then_data_url(request,state.response,obj);
-				return obj;
-			}
-		});
-		let ret;
-		try {
-			if(onfulfilled) {
-				ret=onfulfilled(response_text);
-			} else {
-				ret=response_text;
-			}
-		} catch(err) {
-			if(on_rejected) return on_rejected(err);
-			throw err;
-		} finally {
-		}
-		return ret;
-	}
-	/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
-	function bind_promise_handler(input,state,onfulfilled,onrejected) {
-		if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
-		let ret=handle_json_parse.bind(null,input,state,onfulfilled,onrejected);
-		return ret;
-	}
-	/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{response: Response}} state @arg {{result:Promise<any>}} result @return {Promise<any>} */
-	function handle_fetch_response_2({input},state,result) {
-		return {
-			/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
-			then(onfulfilled,onrejected) {
-				return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));
-			},
-			/** @private @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
-			catch(onrejected) {
-				return result.result.catch(onrejected);
-			},
-			finally(onfinally) {
-				return result.result.finally(onfinally);
-			},
-			[Symbol.toStringTag]: "Promise",
-		};
-	}
-	/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
-	function fetch_promise_handler(request,options,response) {
-		class FakeResponse {
-			text() {
-				if(is_yt_debug_enabled) console.log("response.text()");
-				return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
-			}
-			get redirected() {
-				return response.redirected;
-			}
-			get ok() {
-				return response.ok;
-			}
-			get status() {
-				return response.status;
-			}
-		}
-		let fake_res=new FakeResponse;
-		/** @private @type {any} */
-		let any_x=fake_res;
-		/** @private @type {Response} */
-		let fake_res_t=any_x;
-		return new Proxy(fake_res_t,{
-			/** @private @arg {keyof Response} key */
-			get(_obj,key,_proxy) {
-				/** @private @type {string} */
-				let ks=as(key);
-				if(ks==="then") {
-					return void 0;
-				}
-				switch(key) {
-					case "text": case "redirected": case "ok": case "status": return fake_res[key];
-					case "body": return response.body;
-					case "headers": return response.headers;
-					default: console.log("[new_response_key] [%s]",key); debugger;
-				}
-				return Reflect.get(response,key);
-			}
-		});
-	}
-	/** @private @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>} */
-	function fetch_inject(user_request,request_init) {
-		if(!original_fetch) throw new Error("No original fetch");
-		x: if(request_init) {
-			if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
-			console.log("[fetch_request_init_data]",user_request,request_init);
-		}
-		if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
-			return original_fetch(user_request,request_init);
-		}
-		let ret=original_fetch(user_request,request_init);
-		let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
-		return ret_1;
-	}
 	/** @private @arg {[()=>BrowsePageResponse, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
@@ -3559,6 +3434,131 @@ class ModifyEnv extends BaseService {
 	/** @type {[(obj: Blob | MediaSource) => string,typeof URL,Blob|MediaSource][]} */
 	leftover_args=[];
 	modify_global_env() {
+		let yt_handlers=this.x.get("yt_handlers");
+		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {JsonDataResponseType} response_obj */
+		function fetch_filter_text_then_data_url(request,response,response_obj) {
+			try {
+				yt_handlers.on_handle_api(request,response,response_obj);
+			} catch(e) {
+				console.log("plugin error");
+				console.log(e);
+			}
+		}
+		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((arg0: any) => any)|undefined|null} onfulfilled @arg {((arg0: any) => void)|undefined|null} on_rejected @arg {string} response_text */
+		function handle_json_parse({request,options},state,onfulfilled,on_rejected,response_text) {
+			if(is_yt_debug_enabled) console.log("handle_json_parse",request,options);
+			let original_json_parse=JSON.parse;
+			if(is_yt_debug_enabled) console.log("JSON.parse = new Proxy()");
+			JSON.parse=new Proxy(original_json_parse,{
+				apply: function(...proxy_args) {
+					if(is_yt_debug_enabled) console.log("JSON.parse()");
+					let obj;
+					try {
+						obj=Reflect.apply(...proxy_args);
+					} catch(e) {
+						console.log("target error",e);
+						throw e;
+					} finally {
+						JSON.parse=original_json_parse;
+					}
+					if(is_yt_debug_enabled) console.log("request.url");
+					fetch_filter_text_then_data_url(request,state.response,obj);
+					return obj;
+				}
+			});
+			let ret;
+			try {
+				if(onfulfilled) {
+					ret=onfulfilled(response_text);
+				} else {
+					ret=response_text;
+				}
+			} catch(err) {
+				if(on_rejected) return on_rejected(err);
+				throw err;
+			} finally {
+			}
+			return ret;
+		}
+		/** @private @arg {FetchInjectInputArgs} input @arg {{response: Response}} state @arg {((value: any) => any|PromiseLike<any>)|undefined|null} onfulfilled @arg {((reason: any) => any|PromiseLike<any>)|undefined|null} onrejected */
+		function bind_promise_handler(input,state,onfulfilled,onrejected) {
+			if(is_yt_debug_enabled) console.log("handle_json_parse.bind()");
+			let ret=handle_json_parse.bind(null,input,state,onfulfilled,onrejected);
+			return ret;
+		}
+		/** @private @arg {{input: FetchInjectInputArgs}} input_args @arg {{response: Response}} state @arg {{result:Promise<any>}} result @return {Promise<any>} */
+		function handle_fetch_response_2({input},state,result) {
+			return {
+				/** @private @type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T|PromiseLike<T>)|undefined|null, onrejected?: ((reason: any) => TResult2|PromiseLike<TResult2>)|undefined|null)=>Promise<T|TResult2>} */
+				then(onfulfilled,onrejected) {
+					return result.result.then(bind_promise_handler(input,state,onfulfilled,onrejected));
+				},
+				/** @private @type {<TResult = never>(onrejected?: ((reason: any) => TResult|PromiseLike<TResult>)|null|undefined) => Promise<any>} */
+				catch(onrejected) {
+					return result.result.catch(onrejected);
+				},
+				finally(onfinally) {
+					return result.result.finally(onfinally);
+				},
+				[Symbol.toStringTag]: "Promise",
+			};
+		}
+		/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
+		function fetch_promise_handler(request,options,response) {
+			class FakeResponse {
+				text() {
+					if(is_yt_debug_enabled) console.log("response.text()");
+					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
+				}
+				get redirected() {
+					return response.redirected;
+				}
+				get ok() {
+					return response.ok;
+				}
+				get status() {
+					return response.status;
+				}
+			}
+			let fake_res=new FakeResponse;
+			/** @private @type {any} */
+			let any_x=fake_res;
+			/** @private @type {Response} */
+			let fake_res_t=any_x;
+			return new Proxy(fake_res_t,{
+				/** @private @arg {keyof Response} key */
+				get(_obj,key,_proxy) {
+					/** @private @type {string} */
+					let ks=as(key);
+					if(ks==="then") {
+						return void 0;
+					}
+					switch(key) {
+						case "text": case "redirected": case "ok": case "status": return fake_res[key];
+						case "body": return response.body;
+						case "headers": return response.headers;
+						default: console.log("[new_response_key] [%s]",key); debugger;
+					}
+					return Reflect.get(response,key);
+				}
+			});
+		}
+		/** @private @type {typeof fetch|null} */
+		let original_fetch=null;
+		/** @private @arg {string|URL|Request} user_request @arg {RequestInit} [request_init] @returns {Promise<Response>} */
+		function fetch_inject(user_request,request_init) {
+			if(!original_fetch) throw new Error("No original fetch");
+			x: if(request_init) {
+				if(request_init.method==="HEAD"&&request_init.signal instanceof AbortSignal) break x;
+				console.log("[fetch_request_init_data]",user_request,request_init);
+			}
+			if(typeof user_request==="string"&&user_request.startsWith("https://www.gstatic.com")) {
+				return original_fetch(user_request,request_init);
+			}
+			let ret=original_fetch(user_request,request_init);
+			let ret_1=ret.then(fetch_promise_handler.bind(null,user_request,request_init),fetch_rejection_handler);
+			return ret_1;
+		}
 		let t=this;
 		URL.createObjectURL=new Proxy(URL.createObjectURL,{
 			/** @private @arg {typeof URL["createObjectURL"]} target @arg {typeof URL} thisArg @arg {[Blob|MediaSource]} args */
@@ -3582,7 +3582,7 @@ class ModifyEnv extends BaseService {
 				return Reflect.apply(target,thisArg,args);
 			}
 		});
-		original_fetch=fetch;
+		original_fetch=window.fetch;
 		window.fetch=fetch_inject;
 		fetch_inject.__proxy_target__=original_fetch;
 		let navigator_sendBeacon=navigator.sendBeacon;
