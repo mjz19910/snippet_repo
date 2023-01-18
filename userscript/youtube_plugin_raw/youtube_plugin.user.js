@@ -5185,6 +5185,10 @@ class ServiceMethods extends ServiceData {
 	canonicalBaseUrl(x) {
 		if(!this.str_starts_with(x,"/@")) debugger;
 	}
+	/** @arg {string} x */
+	previousCsn(x) {
+		console.log(base64_dec.decode_str(x));
+	}
 }
 class HandleTypes extends ServiceMethods {
 	/** @arg {WatchPageResponse} x */
@@ -5310,10 +5314,6 @@ class HandleTypes extends ServiceMethods {
 		if(expirationTime) this.primitive_of(expirationTime,"number");
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
-	/** @arg {string} x */
-	previousCsn(x) {
-		console.log(base64_dec.decode_str(x));
-	}
 	/** @arg {ResponseContext} x */
 	ResponseContext(x) {
 		this.save_keys("[ResponseContext]",x);
@@ -5416,11 +5416,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AlertWithButtonRenderer} x */
 	AlertWithButtonRenderer(x) {
+		this.save_keys("[AlertWithButtonRenderer]",x);
 		const {alertWithButtonRenderer,...y}=x; this.g(y);
 		this.AlertWithButton(alertWithButtonRenderer);
 	}
 	/** @arg {AlertWithButton} x */
 	AlertWithButton(x) {
+		this.save_keys("[AlertWithButton]",x);
 		const {type,text,dismissButton,...y}=x; this.g(y);
 		switch(type) {
 			case "INFO": break;
@@ -5431,6 +5433,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SectionListContinuation|MusicShelfContinuation} x */
 	ContinuationContents(x) {
+		this.save_keys("[ContinuationContents]",x);
 		if("sectionListContinuation" in x) {
 			return this.SectionListContinuation(x);
 		} else if("musicShelfContinuation" in x) {
@@ -5489,6 +5492,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicShelfRenderer} x */
 	MusicShelfRenderer(x) {
+		this.save_keys("[MusicShelfRenderer]",x);
 		this.MusicShelf(x.musicShelfRenderer);
 	}
 	/** @arg {MusicShelf} x */
@@ -5505,10 +5509,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReloadContinuationData} x */
 	ReloadContinuationData(x) {
+		this.save_keys("[ReloadContinuationData]",x);
 		this.ReloadContinuationDataInner(x.reloadContinuationData);
 	}
 	/** @arg {ReloadContinuationDataInner} x */
 	ReloadContinuationDataInner(x) {
+		this.save_keys("[ReloadContinuationDataInner]",x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y);
 		this.primitive_of(continuation,"string");
 		this.clickTrackingParams(clickTrackingParams);
@@ -5855,17 +5861,19 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AllActions} x */
 	Action(x) {
+		const cf="Action";
 		let name_from_keys=this.get_name_from_keys(x);
 		if(!name_from_keys) {debugger; return;}
-		this.save_keys(`[Action.${name_from_keys}]`,x);
+		this.save_keys(`[${cf}.${name_from_keys}]`,x);
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[AccountMenuResponse]",x);
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 	}
 	/** @arg {Response} response @arg {_ResponseTypes} x */
 	ResponseTypes(response,x) {
+		this.save_keys("[ResponseTypes]",x);
 		if(!response.ok) {
 			console.log("not ok",x);
 			return;
@@ -7028,6 +7036,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MenuServiceEndpoints} x */
 	MenuServiceEndpoints(x) {
+		this.save_keys("[MenuServiceEndpoints]",x);
 		if("feedbackEndpoint" in x) {
 			return this.FeedbackEndpointPlugin(x);
 		} else if("playlistEditEndpoint" in x) {
@@ -7050,6 +7059,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
+		this.save_keys("[PlaylistAction]",x);
 		switch(x.action) {
 			default: debugger; break;
 			case "ACTION_ADD_VIDEO": {
@@ -7092,11 +7102,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
+		this.save_keys("[CommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {EditPlaylistWebCommandMetadata} x */
 	EditPlaylistWebCommandMetadata(x) {
+		this.save_keys("[EditPlaylistWebCommandMetadata]",x);
 		const {apiUrl,sendPost,...y}=x; this.g(y);
 		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
 		if(sendPost!==true) debugger;
@@ -7139,6 +7151,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {{accessibility?:Accessibility}} x */
 	handle_accessibility(x) {
+		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.Accessibility(x.accessibility);
 	}
 	/** @arg {WatchNextEndScreenItem} x */
