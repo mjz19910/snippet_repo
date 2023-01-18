@@ -4116,11 +4116,14 @@ class CodegenService extends BaseService {
 			if(o_keys.length===1) {
 				let kk=this.get_name_from_keys(x);
 				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
-			} else {
+				kk=o_keys[0];
+				return `TYPE::${this.#uppercase_first(kk)}`;
+			} else if(o_keys.length>0) {
 				let kk=o_keys[0];
 				return `TYPE::${this.#uppercase_first(kk)}`;
+			} else {
+				return "TYPE::{}";
 			}
-			throw new Error();
 		};
 		if(x.runs&&x.runs instanceof Array) return "TYPE::TextWithRuns";
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
