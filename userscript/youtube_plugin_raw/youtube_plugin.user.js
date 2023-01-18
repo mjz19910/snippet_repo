@@ -988,7 +988,16 @@ class MyReader {
 	}
 	uint64() {
 		this.last_pos=this.pos;
-		return this.readLongVarint().toBigInt();
+		let u64_varint=this.read_varint();
+		if(!u64_varint) return null;
+		let ret=u64_varint.map((e,n) => [n,e]).reduce((acc,[k,e]) => {
+			let k_=BigInt(k);
+			let e_=BigInt(e);
+			let mul_pos=2n**(7n*k_);
+			let mul_res=e_*mul_pos;
+			return acc+mul_res;
+		},0n);
+		return ret;
 	}
 	readLongVarint() {
 		// tends to deopt with local vars for octet etc.
@@ -1088,13 +1097,14 @@ class MyReader {
 		let first_num=[];
 		switch(wireType) {
 			case 0:
-				/** @private @type {[boolean,bigint,number]} */
+				/** @private @type {[true,bigint,number]|[false,null,number]} */
 				let revert_res=this.revert_to(pos_start,() => {
 					try {
 						let u64=this.uint64();
+						if(u64===null) return [false,u64,this.pos];
 						return [true,u64,this.pos];
 					} catch {}
-					return [false,0n,this.pos];
+					return [false,null,this.pos];
 				});
 				let num32=null;
 				x: try {
@@ -1105,17 +1115,22 @@ class MyReader {
 					first_num.push(["error",fieldId]);
 					break;
 				}
-				let [success_64,num64,new_pos]=revert_res;
-				if(success_64&&num32===null) {
+				if(revert_res[0]&&num32===null) {
+					let [,num64,new_pos]=revert_res;
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
 				} else if(num32===null) {
 					this.failed=true;
 					first_num.push(["error",fieldId]);
-				} else if(success_64&&num64!==BigInt(num32)) {
-					console.log("bigint",this.cur_len,this.pos,num32,num64);
-					first_num.push(["data64",fieldId,num64]);
-					this.pos=new_pos;
+				} else if(revert_res[0]) {
+					let [,num64,new_pos]=revert_res;
+					if(num64!==BigInt(num32)) {
+						console.log("bigint",this.cur_len,this.pos,num32,num64);
+						first_num.push(["data64",fieldId,num64]);
+						this.pos=new_pos;
+					} else {
+						first_num.push(["data32",fieldId,num32]);
+					}
 				} else {
 					first_num.push(["data32",fieldId,num32]);
 				}
