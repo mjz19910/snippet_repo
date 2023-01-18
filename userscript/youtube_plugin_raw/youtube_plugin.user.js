@@ -9480,14 +9480,20 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {StructuredDescriptionContentItem} x */
 	StructuredDescriptionContentItem(x) {
 		if("videoDescriptionHeaderRenderer" in x) {
-			return this.VideoDescriptionHeaderRenderer(x);
+			this.VideoDescriptionHeaderRenderer(x);
 		} else if("expandableVideoDescriptionBodyRenderer" in x) {
-			return this.ExpandableVideoDescriptionBodyRenderer(x);
+			this.ExpandableVideoDescriptionBodyRenderer(x);
 		} else if("videoDescriptionMusicSectionRenderer" in x) {
-			return this.VideoDescriptionMusicSectionRenderer(x);
+			this.VideoDescriptionMusicSectionRenderer(x);
+		} else if("horizontalCardListRenderer" in x) {
+			this.HorizontalCardListRenderer(x);
+		} else {
+			debugger;
 		}
-		if("horizontalCardListRenderer" in x) return;
-		debugger;
+	}
+	/** @arg {HorizontalCardListRenderer} x */
+	HorizontalCardListRenderer(x) {
+		x;
 	}
 	//#endregion
 }
