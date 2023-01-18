@@ -6105,6 +6105,7 @@ class HandleTypes extends ServiceMethods {
 			if(x.type==="subscription.unsubscribe") break x;
 			if(x.type==="browse.edit_playlist") break x;
 			if(x.type==="updated_metadata") break x;
+			if(x.type==="like.dislike") break x;
 			debugger;
 		}
 		switch(x.type) {
