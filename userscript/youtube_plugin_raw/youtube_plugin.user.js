@@ -4435,6 +4435,15 @@ class ParserService extends BaseService {
 			} break;
 			case "WatchEndpoint": this.parse_player_param_f40_f1(param_map); break;
 			case "GetTranscript": {
+				/** @type {(string|number|ParamMapType)[]} */
+				let transcript_args=[];
+				/** @arg {number} x */
+				function convert_param(x) {
+					let pf=param_map.get(x);
+					if(pf) transcript_args[x]=pf;
+				}
+				this.z([1,2,3,5,6,7,8],a=>convert_param(a));
+				console.log("[get_transcript_args]",transcript_args);
 				let param_obj=Object.fromEntries(param_map.entries());
 				console.log("[new_get_transcript_endpoint_params]",param_obj);
 			} break;
