@@ -6656,14 +6656,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelTitleHeaderRenderer} x */
 	EngagementPanelTitleHeaderRenderer(x) {
-		x;
+		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
-		x;
+		this.save_keys("[AdsEngagementPanelContentRenderer]",x);
 	}
 	/** @arg {EngagementPanelSectionListContent} x */
 	EngagementPanelSectionListContent(x) {
+		this.save_keys("[EngagementPanelSectionListContent]",x);
 		if("adsEngagementPanelContentRenderer" in x) {
 			return this.AdsEngagementPanelContentRenderer(x);
 		} else if("clipSectionRenderer" in x) {
@@ -6677,27 +6678,19 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/**
-	 * @param {ClipSectionRenderer} x
-	 */
+	/** @arg {ClipSectionRenderer} x */
 	ClipSectionRenderer(x) {
 		x;
 	}
-	/**
-	 * @param {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x
-	 */
+	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
 		this.SectionListDataTemplate(x.sectionListRenderer);
 	}
-	/**
-	 * @param {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x
-	 */
+	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
 		x.contents;
 	}
-	/**
-	 * @param {StructuredDescriptionContentRenderer} x
-	 */
+	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
 		x;
 	}
