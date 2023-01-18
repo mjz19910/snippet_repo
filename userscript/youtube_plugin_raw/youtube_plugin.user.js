@@ -7282,12 +7282,32 @@ class HandleTypes extends ServiceMethods {
 						this.g(a);
 						return;
 					}
+					this.g(y);
 				} break;
 				case 99999: {
 					debugger;
 				} break;
 				case 126250: {
-					debugger;
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
+					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
+					this.EngagementPanelTitleHeaderRenderer(header);
+					this.ContinuationItemRenderer(content);
+					if(targetId!=="engagement-panel-searchable-transcript") debugger;
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.LoggingDirectives(loggingDirectives);
+					if("identifier" in y) {
+						const {identifier,...a}=y;
+						x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
+							if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
+							let yk=this.get_keys_of(identifier);
+							if(!this.eq_keys(yk,["surface","tag"])) debugger;
+							let a1=this.ShortsSurfaceIdentifier({tag:identifier.tag,surface:identifier.surface});
+							if(a1!=="engagement-panel-structured-description") debugger;
+						}
+						this.g(a);
+						return;
+					}
+					this.g(y);
 				} break;
 				case 124975: {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
