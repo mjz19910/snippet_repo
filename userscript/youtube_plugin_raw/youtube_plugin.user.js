@@ -4444,7 +4444,23 @@ class ParserService extends BaseService {
 					if(pf) transcript_args[x-1]=pf;
 				}
 				this.z([1,2,3,5,6,7,8],a => convert_param(a));
-				console.log("[get_transcript_args]",transcript_args);
+				/** @type {[string,string,1,"engagement-panel-searchable-transcript-search-panel",1,1,1]|null} */
+				let transcript_args_dec=null;
+				let p0=transcript_args[0];
+				let p1=transcript_args[1];
+				let p2=transcript_args[2];
+				let p4=transcript_args[4];
+				let p5=transcript_args[5];
+				let p6=transcript_args[6];
+				let p7=transcript_args[7];
+				if(
+					typeof p0=='string'&&typeof p1=='string'
+					&&p2===1
+					&&p4==="engagement-panel-searchable-transcript-search-panel"
+					&&p5===1&&p6===1&&p7===1) {
+					transcript_args_dec=[p0,p1,p2,p4,p5,p6,p7];
+				}
+				console.log("[get_transcript_args]",transcript_args_dec);
 				let param_obj=Object.fromEntries(param_map.entries());
 				console.log("[new_get_transcript_endpoint_params]",param_obj);
 			} break;
