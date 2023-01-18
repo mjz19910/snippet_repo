@@ -6256,7 +6256,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AllPopups} x */
 	AllPopups(x) {
-		this.save_keys(`[AllPopups]`,x);
+		const cf="AllPopups";
+		this.save_keys(`[${cf}]`,x);
 		if("multiPageMenuRenderer" in x) {
 			return this.MultiPageMenuRenderer(x);
 		} else if("confirmDialogRenderer" in x) {
@@ -6265,9 +6266,15 @@ class HandleTypes extends ServiceMethods {
 			return this.NotificationActionRenderer(x);
 		} else if("pdgBuyFlowRenderer" in x) {
 			return this.PdgBuyFlowRenderer(x);
-		} else {
-			debugger;
 		}
+		let u_name=this.get_codegen_name(x);
+		this.codegen_new_typedef(x,`_gen_${cf}_${u_name}`);
+	}
+	/** @arg {{[U in string]: unknown}} x */
+	get_codegen_name(x) {
+		let rk=this.filter_keys(this.get_keys_of(x));
+		let kk=rk[0];
+		return this.uppercase_first(kk);
 	}
 	/** @arg {PdgBuyFlowRenderer} x */
 	PdgBuyFlowRenderer(x) {
@@ -8764,11 +8771,8 @@ class HandleTypes extends ServiceMethods {
 		} else if("openPopupAction" in x) {
 			return this.OpenPopupAction(x);
 		}
-		let cg=this.x.get("codegen");
-		let rk=this.filter_keys(this.get_keys_of(x));
-		let kk=rk[0];
-		let u_name=this.uppercase_first(kk);
-		cg.codegen_new_typedef(x,`_gen_ServiceEndpointAction_${u_name}`);
+		let u_name=this.get_codegen_name(x);
+		this.codegen_new_typedef(x,`_gen_ServiceEndpointAction_${u_name}`);
 	}
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {
@@ -9233,11 +9237,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {string} name @arg {ButtonCommand} x */
 	ButtonCommand(name,x) {
-		let cg=this.x.get("codegen");
-		let rk=this.filter_keys(this.get_keys_of(x));
-		let kk=rk[0];
-		let u_name=this.uppercase_first(kk);
-		cg.codegen_new_typedef(x,`_button_${name}_${u_name}`);
+		let u_name=this.get_codegen_name(x);
+		this.codegen_new_typedef(x,`_button_${name}_${u_name}`);
+	}
+	/** @arg {unknown} x @arg {string} n @arg {boolean} [ret_val] */
+	codegen_new_typedef(x,n,ret_val) {
+		return this.x.get("codegen").codegen_new_typedef(x,n,ret_val);
 	}
 	//#endregion
 }
