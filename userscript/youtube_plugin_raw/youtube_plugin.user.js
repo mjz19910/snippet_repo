@@ -4055,14 +4055,13 @@ class CodegenService extends BaseService {
 			if(o.pdgCommentOptionRenderer) return "TYPE::PdgCommentOptionRenderer";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
-			if(keys.includes(k1)) return o;
-			obj_count++;
-			let c=this.get_name_from_keys(o);
-			if(c) {
-				c=this.#uppercase_first(c);
-				return `TYPE::${c}`;
+			if(keys.includes(k1)) {
+				if(o instanceof Array) return [o[0]];
+				return o;
 			}
-			if(obj_count<4) return o;
+			if(o instanceof Array) return [o[0]];
+			obj_count++;
+			if(obj_count<3) return o;
 			if(o instanceof Array) return [{}];
 			return {};
 		},"\t");
