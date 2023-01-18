@@ -8672,6 +8672,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
+		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y);
+		this.BrowseEndpoint(navigationEndpoint);
+		thumbnail;
+		badges;
+		trackingParams;
+		formattedTitle;
+		accessibility;
+		entryData;
+		presentationStyle;
 	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
