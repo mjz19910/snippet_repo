@@ -4393,11 +4393,12 @@ class ParserService extends BaseService {
 			switch(param[0]) {
 				case "data32": param_map.set(param[1],param[2]); break;
 				case "child": {
-					if(param[3]) {
+					x: if(param[3]) {
+						let err=param[3].find(e=>e[0]==="error");
+						if(err) break x;
 						param_map.set(param[1],this.make_param_map(param[3]));
-					} else {
-						param_map.set(param[1],decoder.decode(param[2]));
 					}
+					param_map.set(param[1],decoder.decode(param[2]));
 				} break;
 				default: debugger; break;
 			}
@@ -5756,6 +5757,7 @@ class HandleTypes extends ServiceMethods {
 		if("apiUrl" in x) {
 			switch(x.apiUrl) {
 				default: debugger; break;
+				case "/youtubei/v1/get_transcript": break;
 				case "/youtubei/v1/playlist/get_add_to_playlist": break;
 				case "/youtubei/v1/browse/edit_playlist": this.EditPlaylistWebCommandMetadata(x); break;
 				case "/youtubei/v1/search": this.SearchApiWebCommandMetadata(x); break;
