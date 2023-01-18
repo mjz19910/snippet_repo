@@ -8255,7 +8255,7 @@ class HandleTypes extends ServiceMethods {
 		if(command) this.ButtonCommand(command);
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		x: if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
+		if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
 		if(navigationEndpoint) this.g(navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
