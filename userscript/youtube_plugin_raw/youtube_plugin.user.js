@@ -8235,6 +8235,13 @@ class HandleTypes extends ServiceMethods {
 			console.log("[action]",this.get_keys_of(a));
 		});
 	}
+	/** @arg {NonNullable<ButtonData['serviceEndpoint']>} x */
+	Button_serviceEndpoint(x) {
+		if("signalServiceEndpoint" in x) {
+			return this.SignalServiceEndpoint(x);
+		}
+		debugger;
+	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		const cf="ButtonData";
@@ -8248,13 +8255,7 @@ class HandleTypes extends ServiceMethods {
 		if(command) this.ButtonCommand(command);
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		x: if(serviceEndpoint) {
-			if("signalServiceEndpoint" in serviceEndpoint) {
-				this.SignalServiceEndpoint(serviceEndpoint);
-				break x;
-			}
-			debugger;
-		}
+		x: if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
 		if(navigationEndpoint) this.g(navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
