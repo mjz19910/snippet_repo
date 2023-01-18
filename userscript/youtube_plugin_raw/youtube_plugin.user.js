@@ -9062,7 +9062,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[EntityMutationItem]",x);
 		const {entityKey,type,options,payload,...y}=x; this.g(y);
 		if(payload) {
-			if("subscriptionStateEntity" in payload) 1; else {
+			let h="subscriptionStateEntity" in payload;
+			h||="transcriptTrackSelectionEntity" in payload;
+			h||="transcriptSearchBoxStateEntity" in payload;
+			if(!h) {
 				debugger;
 			}
 		}
