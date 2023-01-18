@@ -8867,6 +8867,45 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {DesktopTopbarData} x */
 	DesktopTopbarData(x) {
 		this.save_keys("[DesktopTopbarData]",x);
+		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=x; this.g(y);
+		this.TopbarLogoRenderer(logo);
+		this.FusionSearchboxRenderer(searchbox);
+		this.trackingParams(x.trackingParams);
+		if(x.countryCode!=="CA") debugger;
+		this.z(x.topbarButtons,this.TopbarButtonItem);
+		this.HotkeyDialogRenderer(hotkeyDialog);
+		this.ButtonRenderer(backButton);
+		this.ButtonRenderer(forwardButton);
+		this.ButtonRenderer(a11ySkipNavigationButton);
+		this.ButtonRenderer(voiceSearchButton);
+	}
+	// @ts-ignore
+	TopbarButtonItem(x) {
+		this.save_keys("[TopbarButtonItem]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
+	}
+	// @ts-ignore
+	HotkeyDialogRenderer(x) {
+		this.save_keys("[TopbarLogoRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
+	}
+	// @ts-ignore
+	TopbarLogoRenderer(x) {
+		this.save_keys("[TopbarLogoRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
+	}
+	// @ts-ignore
+	FusionSearchboxRenderer(x) {
+		this.save_keys("[TopbarLogoRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
+	}
+	// @ts-ignore
+	TopbarMenuButtonRenderer(x) {
+		this.save_keys("[TopbarLogoRenderer]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
