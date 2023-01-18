@@ -4137,37 +4137,6 @@ class CodegenService extends BaseService {
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
 		if(x.simpleText) return "TYPE::SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
-		let hg=false
-			||x.browseEndpoint
-			||x.buttonRenderer
-			||x.cinematicContainerRenderer
-			||x.desktopTopbarRenderer
-			||x.engagementPanelSectionListRenderer
-			||x.getSurveyCommand
-			||x.menuRenderer
-			||x.openPopupAction
-			||x.pdgBuyFlowHeaderRenderer
-			||x.pdgColorSliderRenderer
-			||x.pdgCommentOptionRenderer
-			||x.pdgCommentPreviewRenderer
-			||x.playerOverlayRenderer
-			||x.playlistPanelVideoRenderer
-			||x.richItemRenderer
-			||x.signalServiceEndpoint
-			||x.superVodBuyFlowContentRenderer
-			||x.twoColumnWatchNextResults
-			||x.videoViewCountRenderer
-			||x.watchEndpoint
-			||x.videoOwnerRenderer
-			||x.metadataRowContainerRenderer
-			||x.commandExecutorCommand
-			||x.changeEngagementPanelVisibilityAction
-			||x.merchandiseItemRenderer
-			||x.commentsEntryPointHeaderRenderer
-			||x.continuationItemRenderer
-			||x.urlEndpoint
-			;
-		if(hg) return g();
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
@@ -4192,8 +4161,36 @@ class CodegenService extends BaseService {
 	get_json_replace_type_len_1(r,x,keys) {
 		let g=() => this.json_auto_replace(x);
 		let hg=false
-			||x.subscribeButtonRenderer
+			||x.browseEndpoint
+			||x.buttonRenderer
+			||x.changeEngagementPanelVisibilityAction
+			||x.cinematicContainerRenderer
+			||x.commandExecutorCommand
+			||x.commentsEntryPointHeaderRenderer
+			||x.continuationItemRenderer
+			||x.desktopTopbarRenderer
+			||x.engagementPanelSectionListRenderer
+			||x.getSurveyCommand
+			||x.menuRenderer
+			||x.merchandiseItemRenderer
+			||x.metadataRowContainerRenderer
+			||x.openPopupAction
+			||x.pdgBuyFlowHeaderRenderer
+			||x.pdgColorSliderRenderer
+			||x.pdgCommentOptionRenderer
+			||x.pdgCommentPreviewRenderer
 			||x.pivotButtonRenderer
+			||x.playerOverlayRenderer
+			||x.playlistPanelVideoRenderer
+			||x.richItemRenderer
+			||x.signalServiceEndpoint
+			||x.subscribeButtonRenderer
+			||x.superVodBuyFlowContentRenderer
+			||x.twoColumnWatchNextResults
+			||x.urlEndpoint
+			||x.videoOwnerRenderer
+			||x.videoViewCountRenderer
+			||x.watchEndpoint
 			;
 		if(hg) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
@@ -9537,10 +9534,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ReelPlayerOverlayData} x */
 	ReelPlayerOverlayData(x) {
 		this.save_keys("[ReelPlayerOverlayData]",x);
-		const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y);
+		if("reelPlayerNavigationModel" in x) {
+			const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y);
+			if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+			this.trackingParams(trackingParams);
+			if(reelPlayerNavigationModel!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
+			return;
+		}
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.trackingParams(trackingParams);
-		if(reelPlayerNavigationModel!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
 	}
 	/** @arg {SearchPageWebCommandMetadata} x */
 	SearchPageWebCommandMetadata(x) {
