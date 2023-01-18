@@ -4107,7 +4107,7 @@ class CodegenService extends BaseService {
 				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
 			} else {
 				let kk=o_keys[0];
-				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
+				return `TYPE::${this.#uppercase_first(kk)}`;
 			}
 			throw new Error();
 		};
