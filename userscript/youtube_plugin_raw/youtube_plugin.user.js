@@ -5595,8 +5595,25 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {BrowseCommandMetadata} x */
 	BrowseCommandMetadata(x) {
 		this.save_keys("[BrowseCommandMetadata]",x);
-		this.BrowseWebCommandMetadata(x.webCommandMetadata);
+		this.WebCommandMetadata(x.webCommandMetadata);
 		if(x.resolveUrlCommandMetadata) this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
+	}
+	/** @arg {WebCommandMetadata} x */
+	WebCommandMetadata(x) {
+		switch(x.webPageType) {
+			default: debugger; break;
+			case "WEB_PAGE_TYPE_BROWSE": this.BrowseWebCommandMetadata(x); break;
+			case "WEB_PAGE_TYPE_CHANNEL": this.ChannelWebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {ChannelWebCommandMetadata} x */
+	ChannelWebCommandMetadata(x) {
+		if(x.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
+		switch(x.rootVe) {
+			default: debugger; break;
+			case 3611: this.VE3611_WebCommandMetadata(x); break;
+		}
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {

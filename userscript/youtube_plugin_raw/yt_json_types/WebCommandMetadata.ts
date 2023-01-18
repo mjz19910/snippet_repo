@@ -1,3 +1,1 @@
-type WebCommandMetadata={
-	rootVe: 3854;
-};
+type WebCommandMetadata=BrowseWebCommandMetadata|ChannelWebCommandMetadata;
