@@ -5343,7 +5343,6 @@ class ServiceMethods extends ServiceData {
 		this.x.get("parser_service").parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		switch(x) {
-			default: debugger; break;
 			case "browse-feedFEwhat_to_watch": return;
 			case "comments-section": return;
 			case "engagement-panel-ads": return;
@@ -5358,6 +5357,8 @@ class ServiceMethods extends ServiceData {
 			case "search-page": return;
 		}
 		switch(x) {
+			case "shopping_panel_for_entry_point_5": return;
+			default: debugger; break;
 		}
 	}
 	/** @arg {[VE3832_PreconnectUrl]} x */
