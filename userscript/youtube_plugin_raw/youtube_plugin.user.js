@@ -8804,9 +8804,10 @@ class HandleTypes extends ServiceMethods {
 		/** @type {SignalEnum} */
 		switch(signal) {
 			default: debugger; break;
+			case "ENABLE_CHROME_NOTIFICATIONS": break;
 			case "HISTORY_BACK": break;
 			case "HISTORY_FORWARD": break;
-			case "ENABLE_CHROME_NOTIFICATIONS": break;
+			case "SKIP_NAVIGATION": break;
 		}
 	}
 	/** @arg {GuideEntryRenderer} x */
