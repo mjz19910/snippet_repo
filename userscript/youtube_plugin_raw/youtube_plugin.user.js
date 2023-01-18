@@ -7048,6 +7048,12 @@ class HandleTypes extends ServiceMethods {
 	RichGrid(x) {
 		this.save_keys("[RichGrid]",x);
 		if("targetId" in x) {
+			switch(x.targetId) {
+				case "browse-feedFEwhat_to_watch": {
+					const {contents,trackingParams,header,targetId: {},reflowOptions,...y}=x; this.g(y);
+				} break;
+				default: this.codegen_new_typedef(x,"RichGrid");
+			}
 			return;
 		}
 		const {contents,masthead,...y}=x; this.g(y);
