@@ -2453,7 +2453,7 @@ class BaseService extends BaseServicePrivate {
 		this.primitive_of(x,"string");
 	}
 	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
-	str_ends_with(x,v) {
+	_2_str_ends_with(x,v) {
 		return x.endsWith(v);
 	}
 	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${U}${string}`>} */
@@ -3203,7 +3203,7 @@ class CsiService extends BaseService {
 			this.rid[rid_key]=param.value;
 			return;
 		}
-		if(!this.str_ends_with(param.key,"_rid")) {
+		if(!this._2_str_ends_with(param.key,"_rid")) {
 			console.log("new csi param",param);
 			debugger;
 			return;
@@ -6259,7 +6259,7 @@ class HandleTypes extends ServiceMethods {
 	MultiPageMenu(x) {
 		this.save_keys(`[MultiPageMenu]`,x);
 		switch(x.style) {
-			 case "MULTI_PAGE_MENU_STYLE_TYPE_CREATION": {
+			case "MULTI_PAGE_MENU_STYLE_TYPE_CREATION": {
 				const {sections,style,trackingParams,...y}=x; this.g(y);
 				this.z(sections,a => {
 					if("multiPageMenuSectionRenderer" in a) {
@@ -6267,7 +6267,7 @@ class HandleTypes extends ServiceMethods {
 					}
 					debugger;
 				});
-			 } return;
+			} return;
 		}
 		const {header,sections,footer,style,...y}=x; this.g(y);
 		this.SimpleMenuHeaderRenderer(header);
@@ -8794,8 +8794,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
 		this.save_keys("[GuideEntryDataContent]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {guideEntryId,...y}=x; this.g(y);
+		if(this.str_starts_with("RD",guideEntryId)) {
+			console.log("[guideEntryId.length]",guideEntryId.length,guideEntryId);
+		} else {
+			debugger;
+		}
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {

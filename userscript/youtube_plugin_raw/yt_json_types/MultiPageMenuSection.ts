@@ -1,1 +1,4 @@
-type MultiPageMenuSection={items: CompactLinkRenderer[];};
+type MultiPageMenuSection={
+	items: CompactLinkRenderer[];
+	trackingParams: string;
+};
