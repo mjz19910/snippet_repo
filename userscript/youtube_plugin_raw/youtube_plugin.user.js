@@ -4922,9 +4922,8 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","browse",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","browse",string]>} x */
 	get_browse_type(x) {
-		if(x.length===3) return "browse";
 		switch(x[3]) {
 			case "edit_playlist": break;
 			default: return this.api_no_handler(x,x[3]);
@@ -4934,7 +4933,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string]>} x */
 	get_subscription_type(x) {
 		switch(x[3]) {
 			case "subscribe": break;
@@ -4945,7 +4944,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string]>} x */
 	get_reel_type(x) {
 		switch(x[3]) {
 			case "reel_item_watch": break;
@@ -4956,7 +4955,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string]>} x */
 	get_notification_type(x) {
 		switch(x[3]) {
 			case "get_unseen_count": break;
@@ -4969,7 +4968,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string]>} x */
 	get_comment_type(x) {
 		switch(x[3]) {
 			case "create_comment": break;
@@ -4979,7 +4978,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string]>} x */
 	get_att_type(x) {
 		switch(x[3]) {
 			case "get": break;
@@ -4990,7 +4989,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string]>} x */
 	get_like_type(x) {
 		switch(x[3]) {
 			case "like": break;
@@ -5002,7 +5001,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string,...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string]>} x */
 	get_account_type(x) {
 		switch(x[3]) {
 			case "account_menu": break;
@@ -5015,7 +5014,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",string]>} x */
 	get_live_chat_type(x) {
 		switch(x[3]) {
 			case "get_live_chat_replay": break;
