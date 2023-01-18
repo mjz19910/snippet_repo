@@ -9017,6 +9017,13 @@ class HandleTypes extends ServiceMethods {
 		this.AccessibilityData(accessibility);
 		this.primitive_of(tooltip,"string");
 		if("menuRequest" in y0) {
+			const {avatar,menuRequest,...y}=y0; this.g(y);
+			this.Thumbnail(avatar);
+			if("signalServiceEndpoint" in menuRequest) {
+				this.SignalServiceEndpoint(menuRequest);
+			} else {
+				debugger;
+			}
 			return;
 		} else if("menuRenderer" in y0) {
 			const {icon,menuRenderer,style,...y}=y0; this.g(y);
