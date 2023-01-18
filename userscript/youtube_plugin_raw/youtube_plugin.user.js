@@ -4457,19 +4457,20 @@ class ParserService extends BaseService {
 					typeof p0=='string'&&typeof p1=='string'
 					&&p2===1
 					&&typeof p4=='string'
-					&&p5===1&&p6===1&&p7===1) {
-						switch(p4) {
-							case "engagement-panel-searchable-transcript-search-panel": break;
-							default: debugger; break x;
-						}
+					&&p5===1&&p6===1&&p7===1
+				) {
+					switch(p4) {
+						case "engagement-panel-searchable-transcript-search-panel": break;
+						default: debugger; break x;
+					}
 					transcript_args_dec={
-						videoId:p0,
-						params:p1,
-						unk3:p2,
-						targetId:p4,
-						unk6:p5,
-						unk7:p6,
-						unk8:p7
+						videoId: p0,
+						params: p1,
+						unk3: p2,
+						targetId: p4,
+						unk6: p5,
+						unk7: p6,
+						unk8: p7
 					};
 				}
 				console.log("[get_transcript_args]",transcript_args_dec);
