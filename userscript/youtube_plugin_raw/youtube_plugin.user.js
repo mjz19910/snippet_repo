@@ -3875,10 +3875,6 @@ class CodegenService extends BaseService {
 	#is_TextT(x2) {
 		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
 	}
-	/** @arg {{}} x */
-	is_ResponseContext(x) {
-		x;
-	}
 	/** @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
@@ -5553,9 +5549,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RelevantStateTags";
 		this.save_keys(`[${cf}]`,x);
 		const {relevantStateTags,...y}=x; this.g(y);
-		this.z(relevantStateTags,a => {
-			a;
-		});
+		this.z(relevantStateTags,this.StateTag);
 	}
 	/** @arg {ConsistencyTokenJar} x */
 	ConsistencyTokenJar(x) {
