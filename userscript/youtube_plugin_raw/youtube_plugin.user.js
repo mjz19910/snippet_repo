@@ -5741,10 +5741,15 @@ class HandleTypes extends ServiceMethods {
 		this.PageEndpoint(endpoint);
 		this.DataResponsePageType(response);
 		this.x.get("parser_service").parse_page_type(pageType);
+		this.primitive_of(fromHistory,"boolean");
+		this.primitive_of(navigationDoneMs,"number");
 	}
 	/** @arg {YTNavigateFinishDetail['endpoint']} x */
 	PageEndpoint(x) {
-		x;
+		if("browseEndpoint" in x) {
+			return this.BrowseEndpoint(x);
+		}
+		debugger;
 	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
