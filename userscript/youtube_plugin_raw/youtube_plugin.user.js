@@ -7771,7 +7771,22 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
 		this.save_keys("[ReelItemWatchResponse]",x);
-		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x; this.g(y);
+		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels}=x;
+		this.ReelPlayerOverlayRenderer(overlay);
+		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
+		this.trackingParams(trackingParams);
+		this.g(replacementEndpoint);
+		if(sequenceContinuation) this.primitive_of(sequenceContinuation,"string");
+		this.DesktopTopbarRenderer(desktopTopbar);
+		this.z(engagementPanels,this.EngagementPanelItem);
+	}
+	/** @arg {EngagementPanelItem} x */
+	EngagementPanelItem(x) {
+		if("engagementPanelSectionListRenderer" in x) {
+			return this.EngagementPanelSectionListRenderer(x);
+		} else {
+			debugger;
+		}
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {

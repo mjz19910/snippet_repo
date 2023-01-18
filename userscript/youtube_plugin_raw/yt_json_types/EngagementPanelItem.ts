@@ -1,3 +1,1 @@
-type EngagementPanelItem={
-	engagementPanelSectionListRenderer: EngagementPanelSectionListRendererOpt;
-};
+type EngagementPanelItem=EngagementPanelSectionListRenderer;
