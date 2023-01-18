@@ -7872,7 +7872,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		this.save_keys("[AutoplayContent]",x);
-		const {sets,modifiedSets,trackingParams,...y}=x; this.g(y);
+		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistContent} x */
 	PlaylistContent(x) {
@@ -7912,7 +7912,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("[ButtonData]",x);
-		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
+		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {

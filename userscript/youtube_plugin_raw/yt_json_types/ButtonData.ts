@@ -11,6 +11,7 @@ type ButtonData={
 	isDisabled?: boolean;
 	serviceEndpoint?: ServiceEndpointTemplate<{}>;
 	navigationEndpoint?: NavigationEndpointRoot;
+	tooltip?: string;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
 	text?: TextWithRuns;

@@ -1,5 +1,6 @@
 type AutoplayContent={
 	sets: AutoplaySetItem[];
-	modifiedSets: ModifiedSetItem[];
+	countDownSecs?: 5;
+	modifiedSets?: ModifiedSetItem[];
 	trackingParams: string;
 };
