@@ -4167,6 +4167,7 @@ class CodegenService extends BaseService {
 			||x.commandExecutorCommand
 			||x.changeEngagementPanelVisibilityAction
 			||x.merchandiseItemRenderer
+			||x.commentsEntryPointHeaderRenderer
 			;
 		if(hg) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
