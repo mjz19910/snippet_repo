@@ -8631,10 +8631,18 @@ class HandleTypes extends ServiceMethods {
 	SignalAction(x) {
 		this.save_keys("[SignalAction]",x);
 		const {clickTrackingParams,signalAction,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.SignalActionData(signalAction);
 	}
 	/** @arg {SignalActionData} x */
 	SignalActionData(x) {
-		x;
+		this.save_keys("[SignalActionData]",x);
+		const {signal,...y}=x; this.g(y);
+		switch(signal) {
+			default: debugger; break;
+			case "HISTORY_BACK": break;
+			case "HISTORY_FORWARD": break;
+		}
 	}
 }
 //#endregion
