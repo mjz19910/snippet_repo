@@ -6423,6 +6423,10 @@ class HandleTypes extends ServiceMethods {
 		} else if("voiceSearchDialogRenderer" in x) {
 			return this.VoiceSearchDialogRenderer(x);
 		}
+		debugger;
+	}
+	/** @arg {string} cf @arg {{}} x */
+	do_codegen(cf,x) {
 		let u_name=this.get_codegen_name(x);
 		this.codegen_new_typedef(x,`_gen_${cf}_${u_name}`);
 	}
