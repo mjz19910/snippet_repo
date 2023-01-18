@@ -5855,20 +5855,21 @@ class HandleTypes extends ServiceMethods {
 		const {itemSectionRenderer,...y}=x; this.g(y);
 		this.ItemSectionData(itemSectionRenderer);
 	}
-	/** @template {[any,any]} T @arg {ItemSectionRendererTemplate<T[0],T[1]>} x */
-	ItemSectionRendererTemplate(x) {
+	/** @template T,U @arg {ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
+	ItemSectionRendererTemplate(x,f) {
 		this.save_keys("[ItemSectionRendererTemplate]",x);
 		const {itemSectionRenderer,...y}=x; this.g(y);
-		this.ItemSectionDataTemplate(itemSectionRenderer);
+		this.ItemSectionDataTemplate(itemSectionRenderer,f);
 	}
-	/**  @template {[any,any]} T @arg {ItemSectionDataTemplate<T[0],T[1]>} x */
-	ItemSectionDataTemplate(x) {
-		this.ContentsArrayTemplate(x,a => {
-			let k=this.get_keys_of(a);
-			switch(k[0]) {
-				default: debugger; break;
-			}
-		});
+	/** @template T,U @arg {ItemSectionDataTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
+	ItemSectionDataTemplate(x,f) {
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y);
+		f.call(this,[sectionIdentifier,targetId]);
+		this.trackingParams(x.trackingParams);
+		let k=this.get_keys_of(contents);
+		switch(k[0]) {
+			default: debugger; break;
+		}
 	}
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
@@ -7806,7 +7807,10 @@ class HandleTypes extends ServiceMethods {
 			if("contents" in a) {
 				this.z(a.contents,a => {
 					if("itemSectionRenderer" in a) {
-						this.ItemSectionRendererTemplate(a);
+						this.ItemSectionRendererTemplate(a,a=>{
+							if(a[0]==="sid-wn-chips"&&a[1]==="watch-next-feed") return;
+							debugger;
+						});
 					}
 					let k=this.get_keys_of(a);
 					switch(k[0]) {
