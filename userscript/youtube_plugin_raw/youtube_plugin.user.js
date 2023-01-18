@@ -4049,6 +4049,7 @@ class CodegenService extends BaseService {
 			if(o.pdgBuyFlowHeaderRenderer) return "TYPE::PdgBuyFlowHeaderRenderer";
 			if(o.getSurveyCommand) return "TYPE::GetSurveyCommand";
 			if(o.buttonRenderer) return "TYPE::ButtonRenderer";
+			if(o.superVodBuyFlowContentRenderer) return "TYPE::SuperVodBuyFlowContentRenderer";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
