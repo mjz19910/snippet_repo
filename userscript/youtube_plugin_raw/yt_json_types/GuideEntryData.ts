@@ -1,3 +1,1 @@
-type GuideEntryData={
-	guideEntryData: GuideEntryDataContent;
-};
+type GuideEntryData={guideEntryData: GuideEntryDataContent;};
