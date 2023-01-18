@@ -1,3 +1,3 @@
 type CacheMetadata={
-	isCacheHit: boolean;
+	isCacheHit: true;
 };

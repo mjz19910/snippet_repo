@@ -1,0 +1,1 @@
+type AccountItemSection=ContentsArrayTemplate<AccountItemSectionContent>;

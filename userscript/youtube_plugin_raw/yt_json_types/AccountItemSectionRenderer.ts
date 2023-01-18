@@ -1,1 +1,1 @@
-type AccountItemSectionRenderer={accountItemSectionRenderer: ContentsArrayTemplate<AccountItemSectionContent>;};
+type AccountItemSectionRenderer={accountItemSectionRenderer: AccountItemSection;};

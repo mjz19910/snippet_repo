@@ -19,4 +19,5 @@ type YtUrlFormat=[
 	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
 	WatchPageUrl,
 	YtExternalUrlFormat,
+	`http://www.youtube.com/watch?v=${string}&list=${string}`,
 ][number];
