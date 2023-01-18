@@ -5186,10 +5186,10 @@ class HandleTypes extends ServiceMethods {
 		this._WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		this.PlayerOverlayRenderer(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a=>this.SignalServiceEndpoint(a));
+		this.z(onResponseReceivedEndpoints,a => this.SignalServiceEndpoint(a));
 		this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
 		this.DesktopTopbarRenderer(topbar);
-		this.z(pageVisualEffects,a=>this.CinematicContainerRenderer(a));
+		this.z(pageVisualEffects,a => this.CinematicContainerRenderer(a));
 		this.FrameworkUpdates(frameworkUpdates);
 	}
 	/** @arg {FrameworkUpdates} x */
@@ -5278,7 +5278,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RelevantStateTags";
 		this.save_keys(`[${cf}]`,x);
 		const {relevantStateTags}=x;
-		this.z(relevantStateTags,a=>{
+		this.z(relevantStateTags,a => {
 			a;
 		});
 	}
@@ -6145,6 +6145,40 @@ class HandleTypes extends ServiceMethods {
 		});
 		if(actionPanel) this.LiveChatMessageInputRenderer(actionPanel);
 		if(itemList) this.LiveChatItemListRenderer(itemList);
+		if(header) this.LiveChatHeaderRenderer(header);
+		if(ticker) this.LiveChatTickerRenderer(ticker);
+		if(trackingParams) this.trackingParams(trackingParams);
+		if(participantsList) this.LiveChatParticipantsListRenderer(participantsList);
+		if(popoutMessage) this.MessageRenderer(popoutMessage);
+		if(emojis) this.z(emojis,a => {
+			this.LiveChatEmoji(a);
+		});
+		if(clientMessages) this.ClientMessages(clientMessages);
+		if(viewerName) this.primitive_of(viewerName,"string");
+	}
+	/** @arg {ClientMessages} x */
+	ClientMessages(x) {
+		x;
+	}
+	/** @arg {LiveChatEmoji} x */
+	LiveChatEmoji(x) {
+		x;
+	}
+	/** @arg {MessageRenderer} x */
+	MessageRenderer(x) {
+		x;
+	}
+	/** @arg {LiveChatParticipantsListRenderer} x */
+	LiveChatParticipantsListRenderer(x) {
+		x;
+	}
+	/** @arg {LiveChatTickerRenderer} x */
+	LiveChatTickerRenderer(x) {
+		x;
+	}
+	/** @arg {LiveChatHeaderRenderer} x */
+	LiveChatHeaderRenderer(x) {
+		x;
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
@@ -6579,6 +6613,7 @@ class HandleTypes extends ServiceMethods {
 			const {clickTrackingParams,commandMetadata,signalServiceEndpoint}=x;
 			this.clickTrackingParams(clickTrackingParams);
 			this.SignalServiceEndpointCommandMetadata(commandMetadata);
+			this.SignalServiceEndpointData(signalServiceEndpoint);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand}=x;
 			this.clickTrackingParams(clickTrackingParams);
@@ -6671,6 +6706,22 @@ class HandleTypes extends ServiceMethods {
 		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives}=x;
 		this.TextWithRuns(countText);
 		this.CommentSimpleboxRenderer(createRenderer);
+		this.SortFilterSubMenuRenderer(sortMenu);
+		this.trackingParams(trackingParams);
+		this.TextWithRuns(titleText);
+		this.TextWithRuns(commentsCount);
+		if(showSeparator!==true) debugger;
+		this.z(customEmojis,a => this.CustomEmoji(a));
+		this.primitive_of(unicodeEmojisUrl,"string");
+		this.LoggingDirectives(loggingDirectives);
+	}
+	/** @arg {CustomEmoji} x */
+	CustomEmoji(x) {
+		x;
+	}
+	/** @arg {SortFilterSubMenuRenderer} x */
+	SortFilterSubMenuRenderer(x) {
+		x;
 	}
 	/** @arg {CommentSimpleboxRenderer} x */
 	CommentSimpleboxRenderer(x) {
@@ -6733,6 +6784,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowserMediaSessionRoot]",x);
 		const {actions,browserMediaSession}=x;
 		this.z(actions,this.LikeButtonRenderer);
+		this.BrowserMediaSessionRenderer(browserMediaSession);
+	}
+	/** @arg {BrowserMediaSessionRenderer} x */
+	BrowserMediaSessionRenderer(x) {
+		x;
 	}
 	/** @arg {LikeButtonRenderer} x */
 	LikeButtonRenderer(x) {
@@ -6808,6 +6864,23 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlayerOverlayAutoplay]",x);
 		const {title,videoTitle,byline,pauseText,background,countDownSecs,cancelButton,nextButton,trackingParams,closeButton,thumbnailOverlays,preferImmediateRedirect,videoId,publishedTimeText,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,shortViewCountText,countDownSecsForFullscreen}=x;
 		this.SimpleText(title);
+		this.SimpleText(videoTitle);
+		this.TextWithRuns(byline);
+		this.SimpleText(pauseText);
+		this.Thumbnail(background);
+		if(countDownSecs!==8) debugger;
+		this.ButtonRenderer(cancelButton);
+		this.ButtonRenderer(nextButton);
+		this.trackingParams(trackingParams);
+		this.ButtonRenderer(closeButton);
+		this.z(thumbnailOverlays,this.g);
+		if(preferImmediateRedirect!==false) debugger;
+		this.videoId(videoId);
+		this.SimpleText(publishedTimeText);
+		if(webShowBigThumbnailEndscreen!==false) debugger;
+		if(webShowNewAutonavCountdown!==true) debugger;
+		this.SimpleText(shortViewCountText);
+		if(countDownSecsForFullscreen!==3) debugger;
 	}
 	/** @arg {AutoplaySwitchButtonRenderer} x */
 	AutoplaySwitchButtonRenderer(x) {
@@ -6837,6 +6910,7 @@ class HandleTypes extends ServiceMethods {
 	MenuRenderer(x) {
 		this.save_keys("[MenuRenderer]",x);
 		const {menuRenderer}=x;
+		this.MenuData(menuRenderer);
 	}
 	/** @arg {MenuData} x */
 	MenuData(x) {
@@ -6861,6 +6935,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(text);
 		this.Icon(icon);
 		this.ServiceEndpointTemplate(serviceEndpoint,a => this.FeedbackEndpointPlugin(a));
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {FeedbackEndpointPlugin} x */
 	FeedbackEndpointPlugin(x) {
@@ -6879,7 +6954,7 @@ class HandleTypes extends ServiceMethods {
 	Icon(x) {
 		this.save_keys("[Icon]",x);
 		const {iconType}=x;
-		this.save_string("[IconType]",x.iconType);
+		this.save_string("[IconType]",iconType);
 	}
 	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(x:T)=>void} f */
 	ServiceEndpointTemplate(x,f) {
@@ -7213,7 +7288,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VE3611_WebCommandMetadata} x */
 	VE3611_WebCommandMetadata(x) {
 		this.save_keys("[VE3611_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe,apiUrl}=x;
+		const {url,webPageType,rootVe: {},apiUrl}=x;
 		if(this.str_starts_with(url,"/@")) {
 		} else if(this.str_starts_with(url,"/channel/UC")) {
 		} else {
@@ -7274,22 +7349,22 @@ class HandleTypes extends ServiceMethods {
 	TwoColumnWatchNextResultsData(x) {
 		this.save_keys("[TwoColumnWatchNextResultsData]",x);
 		const {results,secondaryResults,playlist,autoplay,conversationBar}=x;
-		this.ResultsTemplate(results,a=>a);
-		this.SecondaryResultsTemplate(secondaryResults,a=>{
+		this.ResultsTemplate(results,a => a);
+		this.SecondaryResultsTemplate(secondaryResults,a => {
 			if("contents" in a) {
-				this.z(a.contents,a=>{
+				this.z(a.contents,a => {
 					a;
 				});
 			} else if("results" in a) {
-				this.z(a.results,a=>{
+				this.z(a.results,a => {
 					a;
 				});
 			}
 		});
-		if(playlist) this.PlaylistTemplate(playlist,a=>{
+		if(playlist) this.PlaylistTemplate(playlist,a => {
 			this.PlaylistContent(a);
 		});
-		if(autoplay) this.AutoplayTemplate(autoplay,a=>{
+		if(autoplay) this.AutoplayTemplate(autoplay,a => {
 			this.AutoplayContent(a);
 		});
 		if(conversationBar) this.LiveChatRenderer(conversationBar);
