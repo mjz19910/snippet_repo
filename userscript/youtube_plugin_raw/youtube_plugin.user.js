@@ -9194,7 +9194,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
 	}
 	//#endregion
-	//#region
+	//#region TODO_minimal_member_fns
 	/** @arg {HotkeyDialog} x */
 	HotkeyDialog(x) {
 		x;
