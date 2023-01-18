@@ -3,5 +3,6 @@ type AllPopups=
 	|MultiPageMenuRenderer
 	|NotificationActionRenderer
 	|PdgBuyFlowRenderer
+	|VoiceSearchDialogRenderer
 	;
 ;

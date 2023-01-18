@@ -1,5 +1,4 @@
 type VoiceSearchDialogData={
-	trackingParams: string;
 	placeholderHeader: TextWithRuns;
 	promptHeader: TextWithRuns;
 	exampleQuery1: TextWithRuns;
@@ -14,5 +13,6 @@ type VoiceSearchDialogData={
 	disabledSubtext: TextWithRuns;
 	microphoneButtonAriaLabel: TextWithRuns;
 	exitButton: ButtonRenderer;
+	trackingParams: string;
 	microphoneOffPromptHeader: TextWithRuns;
 };

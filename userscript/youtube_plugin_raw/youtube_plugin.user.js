@@ -6267,6 +6267,8 @@ class HandleTypes extends ServiceMethods {
 			return this.NotificationActionRenderer(x);
 		} else if("pdgBuyFlowRenderer" in x) {
 			return this.PdgBuyFlowRenderer(x);
+		} else if("voiceSearchDialogRenderer" in x) {
+			return this.VoiceSearchDialogRenderer(x);
 		}
 		let u_name=this.get_codegen_name(x);
 		this.codegen_new_typedef(x,`_gen_${cf}_${u_name}`);
@@ -9269,6 +9271,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {unknown} x @arg {string} n @arg {boolean} [ret_val] */
 	codegen_new_typedef(x,n,ret_val) {
 		return this.x.get("codegen").codegen_new_typedef(x,n,ret_val);
+	}
+	/** @arg {VoiceSearchDialogRenderer} x */
+	VoiceSearchDialogRenderer(x) {
+		x;
 	}
 	//#endregion
 }
