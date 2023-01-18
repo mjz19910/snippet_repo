@@ -2509,7 +2509,6 @@ class BaseService extends BaseServicePrivate {
 			let sd=this.drop_separator(n1[1],sep);
 			if(sd) n2=sd;
 		}
-		if(!n2) throw new Error();
 		this.save_string(`[${ns_name}::${enum_base}]`,n2);
 	}
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
