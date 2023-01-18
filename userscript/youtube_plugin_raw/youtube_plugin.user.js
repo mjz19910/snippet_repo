@@ -8689,10 +8689,25 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
 		this.save_keys("[LoggingDirectives]",x);
-		const {trackingParams,visibility,enableDisplayloggerExperiment,...y}=x; this.g(y);
+		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
 		this.Visibility(visibility);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
+		this.TypesTemplate(gestures,a=>{
+			switch(a) {
+				default: debugger; break;
+				case 4: break;
+			}
+		});
+	}
+	/** @template {number} T @arg {TypesTemplate<T>} x @arg {(x:T)=>void} f @arg {T|null} _x */
+	TypesTemplate(x,f,_x=null) {
+		/** @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		function parse_number(x,_v) {
+			return as(Number.parseInt(x,10));
+		}
+		let r=parse_number(x.types,_x);
+		f(r);
 	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
