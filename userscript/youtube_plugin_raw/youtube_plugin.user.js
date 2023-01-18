@@ -2452,10 +2452,6 @@ class BaseService extends BaseServicePrivate {
 	trackingParams(x) {
 		this.primitive_of(x,"string");
 	}
-	/** @public @arg {string} x */
-	clickTrackingParams(x) {
-		this.primitive_of(x,"string");
-	}
 	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${string}${U}`>} */
 	str_ends_with(x,v) {
 		return x.endsWith(v);
@@ -5246,6 +5242,10 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @public @arg {string} x */
+	clickTrackingParams(x) {
+		this.primitive_of(x,"string");
+	}
 	/** @arg {YtTargetIdType} x */
 	targetId(x) {
 		this.x.get("parser_service").parse_target_id(x);
