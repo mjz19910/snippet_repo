@@ -8596,6 +8596,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ServiceEndpointAction]",x);
 		if("addToPlaylistCommand" in x) {
 			return this.AddToPlaylistCommand(x);
+		} else if("signalAction" in x) {
+			return this.SignalAction(x);
 		}
 		debugger;
 	}
@@ -8616,12 +8618,23 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CreatePlaylistServiceEndpoint} x */
 	CreatePlaylistServiceEndpoint(x) {
 		this.save_keys("[CreatePlaylistServiceEndpoint]",x);
-		const {...y}=x; this.g(y);
+		const {commandMetadata,createPlaylistServiceEndpoint,...y}=x; this.g(y);
 	}
 	/** @arg {CreatePlaylistServiceArgs} x */
 	CreatePlaylistServiceArgs(x) {
 		this.save_keys("[CreatePlaylistServiceArgs]",x);
-		const {...y}=x; this.g(y);
+		const {params,videoIds,...y}=x; this.g(y);
+		this.params("CreatePlaylist",params);
+		this.z(videoIds,this.videoId);
+	}
+	/** @arg {SignalAction} x */
+	SignalAction(x) {
+		this.save_keys("[SignalAction]",x);
+		const {clickTrackingParams,signalAction,...y}=x; this.g(y);
+	}
+	/** @arg {SignalActionData} x */
+	SignalActionData(x) {
+		x;
 	}
 }
 //#endregion

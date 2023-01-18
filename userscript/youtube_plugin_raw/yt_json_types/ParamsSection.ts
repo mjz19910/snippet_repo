@@ -1,1 +1,8 @@
-type ParamsSection="GetTranscript"|"ReelWatch"|"PlaylistEdit"|"WatchEndpoint";
+type ParamsSection=
+	|"CreatePlaylist"
+	|"GetTranscript"
+	|"PlaylistEdit"
+	|"ReelWatch"
+	|"WatchEndpoint"
+	;
+;
