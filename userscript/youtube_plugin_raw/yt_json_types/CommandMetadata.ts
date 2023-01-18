@@ -1,0 +1,1 @@
+type CommandMetadata={webCommandMetadata: WebCommandMetadata;};
