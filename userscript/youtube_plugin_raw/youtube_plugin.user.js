@@ -7927,12 +7927,11 @@ class HandleTypes extends ServiceMethods {
 	GuideItemType(x) {
 		this.save_keys("[GuideItemType]",x);
 		if("guideSectionRenderer" in x) {
-			this.GuideSectionRenderer(x);
-		} if("guideSubscriptionsSectionRenderer" in x) {
-			this.GuideSubscriptionsSectionRenderer(x);
-		} else {
-			debugger;
+			return this.GuideSectionRenderer(x);
+		} else if("guideSubscriptionsSectionRenderer" in x) {
+			return this.GuideSubscriptionsSectionRenderer(x);
 		}
+		debugger;
 	}
 	/** @arg {GuideSectionRenderer} x */
 	GuideSectionRenderer(x) {
