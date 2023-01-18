@@ -7015,10 +7015,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(clickTrackingParams);
-		this.EditPlaylistCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		/** @type {{}} */
 		let t=as(y);
 		f.call(this,as(t));
+	}
+	/** @arg {CommandMetadata} x */
+	CommandMetadata(x) {
+		x;
 	}
 	/** @arg {EditPlaylistCommandMetadata} x */
 	EditPlaylistCommandMetadata(x) {
