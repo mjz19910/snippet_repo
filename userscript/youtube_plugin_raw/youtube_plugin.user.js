@@ -4569,6 +4569,13 @@ class ParserService extends BaseService {
 				debugger;
 			}
 		}
+		if(this.eq_keys(map_keys,[24,56])) {
+			let p24=x.get(24);
+			let p56=x.get(56);
+			if(p24!==void 0&&p56!==void 0&&p24===1&&typeof p56==="string") {
+				return this.parse_video_id(p56);
+			}
+		}
 		let param_obj=Object.fromEntries(x.entries());
 		console.log("[new_watch_endpoint_params]",param_obj);
 	}
