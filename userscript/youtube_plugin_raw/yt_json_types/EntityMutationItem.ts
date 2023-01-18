@@ -4,7 +4,7 @@ type EntityMutationItem={
 	options?: {
 		persistenceOption: "ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST";
 	};
-	payload?: SubscriptionStateEntity;
+	payload?: SubscriptionStateEntity|TranscriptTrackSelectionEntity;
 };
 
 type EntityMutationItemDescEnum=EntityMutationReplace|EntityMutationDelete
