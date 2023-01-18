@@ -4191,6 +4191,11 @@ class CodegenService extends BaseService {
 			||x.videoOwnerRenderer
 			||x.videoViewCountRenderer
 			||x.watchEndpoint
+			||x.metadataBadgeRenderer
+			||x.likeButtonRenderer
+			||x.reelPlayerHeaderRenderer
+			||x.metadataBadgeRenderer
+			||x.likeEndpoint
 			;
 		if(hg) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
