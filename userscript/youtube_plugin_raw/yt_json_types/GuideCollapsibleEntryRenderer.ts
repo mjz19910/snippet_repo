@@ -1,7 +1,9 @@
+type GuideCollapsibleEntry={
+	expanderItem: GuideEntryRenderer;
+	expandableItems: GuideEntryRenderer[];
+	collapserItem: GuideEntryRenderer;
+};
+
 type GuideCollapsibleEntryRenderer={
-	guideCollapsibleEntryRenderer: {
-		expanderItem: GuideEntryRenderer;
-		expandableItems: GuideEntryRenderer[];
-		collapserItem: GuideEntryRenderer;
-	};
+	guideCollapsibleEntryRenderer: GuideCollapsibleEntry;
 };

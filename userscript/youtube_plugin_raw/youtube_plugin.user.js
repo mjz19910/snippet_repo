@@ -8527,6 +8527,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[WatchNextContinuationAction]",x);
 		const {targetId,continuationItems,...y}=x; this.g(y);
 		this.targetId(targetId);
+		// @ts-ignore
 		this.z(continuationItems,this.WatchNextItem);
 	}
 	/** @arg {CommentsSectionContinuationAction} x */
@@ -8534,6 +8535,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[CommentsSectionContinuationAction]",x);
 		const {targetId,continuationItems,...y}=x; this.g(y);
 		this.targetId(targetId);
+		// @ts-ignore
 		this.z(continuationItems,this.CommentsSectionItem);
 	}
 	/** @arg {BrowseFeedAction} x */
@@ -8541,6 +8543,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseFeedAction]",x);
 		const {targetId,continuationItems,...y}=x; this.g(y);
 		this.targetId(targetId);
+		// @ts-ignore
 		this.z(continuationItems,this.BrowseFeedItem);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
@@ -8754,146 +8757,216 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
 		this.save_keys("[GuideCollapsibleEntryRenderer]",x);
+		const {guideCollapsibleEntryRenderer,...y}=x; this.g(y);
+		guideCollapsibleEntryRenderer;
 	}
 	/** @arg {PlayerAnnotationsExpandedRenderer} x */
 	PlayerAnnotationsExpandedRenderer(x) {
 		this.save_keys("[PlayerAnnotationsExpandedRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		this.save_keys("[EntityMutationItem]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
 		this.save_keys("[UpdateEngagementPanelData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
 		this.save_keys("[GuideEntryData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
 		this.save_keys("[GuideEntryDataContent]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
 		this.save_keys("[AccountItem]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {UiActions} x */
 	UiActions(x) {
 		this.save_keys("[UiActions]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuData(x) {
 		this.save_keys("[SortFilterSubMenuData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
 		this.save_keys("[GetMultiPageMenuActionData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {ReelWatchEndpoint} x */
 	ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		this.save_keys("[EmojiPickerRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
 		this.save_keys("[ReelResponse]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
 		this.save_keys("[ChannelResponse]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistResponse} x */
 	PlaylistResponse(x) {
 		this.save_keys("[PlaylistResponse]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {SettingsResponse} x */
 	SettingsResponse(x) {
 		this.save_keys("[SettingsResponse]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
 		this.save_keys("[C4TabbedHeaderData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {
 		this.save_keys("[FeedTabbedHeaderData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
 		this.save_keys("[SettingsSidebarData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {DesktopTopbarData} x */
 	DesktopTopbarData(x) {
 		this.save_keys("[DesktopTopbarData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
 	TwoColumnBrowseResultsData(x) {
 		this.save_keys("[TwoColumnBrowseResultsData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
 		this.save_keys("[FeedFilterChipBarData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {SearchResultsSearchEndpoint} x */
 	SearchResultsSearchEndpoint(x) {
 		this.save_keys("[SearchResultsSearchEndpoint]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */
 	LiveChatPlaceholderItemData(x) {
 		this.save_keys("[LiveChatPlaceholderItemData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
 		this.save_keys("[LiveChatTextMessageData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistPanelContinuationData} x */
 	PlaylistPanelContinuationData(x) {
 		this.save_keys("[PlaylistPanelContinuationData]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {ShowEngagementPanelScrimActionData} x */
 	ShowEngagementPanelScrimActionData(x) {
 		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {AdsEngagementPanelContentData} x */
 	AdsEngagementPanelContentData(x) {
 		this.save_keys("[AdsEngagementPanelContentData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
 		this.save_keys("[StructuredDescriptionContentData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.save_keys("[CommentRenderer]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
-		x;
+		this.save_keys("[RichItemData]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {Visibility} x */
 	Visibility(x) {
-		x;
+		this.save_keys("[Visibility]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
-		x;
+		this.save_keys("[WatchNextItem]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {CommentsSectionItem} x */
 	CommentsSectionItem(x) {
-		x;
+		this.save_keys("[CommentsSectionItem]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {BrowseFeedItem} x */
 	BrowseFeedItem(x) {
-		x;
+		this.save_keys("[BrowseFeedItem]",x);
+		// @ts-ignore
+		const {...y}=x; this.g(y);
 	}
 }
 //#endregion
