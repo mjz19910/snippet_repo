@@ -4123,7 +4123,6 @@ class CodegenService extends BaseService {
 	get_json_replacer_type(x) {
 		let g=() => {
 			let o_keys=this.filter_keys(this.get_keys_of(x));
-			console.log("[type_gen.o_keys]",o_keys);
 			if(o_keys.length===1) {
 				let kk=this.get_name_from_keys(x);
 				if(kk) return `TYPE::${this.uppercase_first(kk)}`;
@@ -4156,9 +4155,10 @@ class CodegenService extends BaseService {
 		if(x.pdgCommentPreviewRenderer) return g();
 		if(x.pdgColorSliderRenderer) return g();
 		if(x.pdgCommentOptionRenderer) return g();
+		if(x.richItemRenderer) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
 		if(x.accessibilityData) return "TYPE::Accessibility";
-		console.log("[no_json_replace_type]",x,g());
+		console.log("[no_json_replace_type] %o [%s] [%s]",x,this.get_keys_of(x).join(","),g());
 		return null;
 	}
 	/** @public @arg {string} x1 */
