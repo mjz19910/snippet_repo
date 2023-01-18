@@ -9308,10 +9308,9 @@ class HandleTypes extends ServiceMethods {
 	StructuredDescriptionContentData(x) {
 		this.save_keys("[StructuredDescriptionContentData]",x);
 		const {items,...y}=x; this.g(y);
-		this.z(items,a => {
-			this.StructuredDescriptionContentItem(a);
-		});
+		this.z(items,this.StructuredDescriptionContentItem);
 	}
+	/** @arg {StructuredDescriptionContentItem} x */
 	StructuredDescriptionContentItem(x) {
 		if("videoDescriptionHeaderRenderer" in x) {
 			return this.VideoDescriptionHeaderRenderer(x);
