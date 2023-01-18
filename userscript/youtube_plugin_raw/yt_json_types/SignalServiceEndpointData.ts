@@ -1,4 +1,1 @@
-type SignalServiceEndpointData={
-	signal: "CLIENT_SIGNAL";
-	actions: ServiceEndpointAction[];
-};
+type SignalServiceEndpointData=Signal_ClientSignal|Signal_GetAccountMenu;

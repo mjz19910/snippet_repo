@@ -8207,8 +8207,19 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
+		switch(x.signal) {
+			case "CLIENT_SIGNAL": return this.ClientSignal(x);
+			case "GET_ACCOUNT_MENU": break;
+		}
+	}
+	/** @arg {Signal_ClientSignal} x */
+	ClientSignal(x) {
 		const {signal,actions,...y}=x; this.g(y);
-		if(signal!=="CLIENT_SIGNAL") debugger;
+		this.z(actions,this.ServiceEndpointAction);
+	}
+	/** @arg {Signal_GetAccountMenu} x */
+	GetAccountMenu(x) {
+		const {signal,actions,...y}=x; this.g(y);
 		this.z(actions,this.ServiceEndpointAction);
 	}
 	/** @arg {ChannelPageResponse} x */

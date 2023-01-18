@@ -1,1 +1,0 @@
-type GuideEntryServicePlugins=ReelWatchEndpointPlugin|SignalServiceEndpointPlugin;
