@@ -5606,7 +5606,15 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 			case "WEB_PAGE_TYPE_BROWSE": this.BrowseWebCommandMetadata(x); break;
 			case "WEB_PAGE_TYPE_CHANNEL": this.ChannelWebCommandMetadata(x); break;
-			case "WEB_PAGE_TYPE_WATCH": this.VE3832_WebCommandMetadata(x); break;
+			case "WEB_PAGE_TYPE_WATCH": this.WatchWebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {WatchWebCommandMetadata} x */
+	WatchWebCommandMetadata(x) {
+		if(x.webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+		switch(x.rootVe) {
+			default: debugger; break;
+			case 3832: this.VE3832_WebCommandMetadata(x); break;
 		}
 	}
 	/** @arg {ChannelWebCommandMetadata} x */
