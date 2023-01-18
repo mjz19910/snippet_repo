@@ -5550,7 +5550,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.SignalServiceEndpointCommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.SignalServiceEndpointData(signalServiceEndpoint);
 	}
 	/** @arg {BrowseEditPlaylistResponse} x */
@@ -7100,10 +7100,7 @@ class HandleTypes extends ServiceMethods {
 	ResponseReceivedEndpointItem(x) {
 		this.save_keys("[ResponseReceivedEndpointItem]",x);
 		if("signalServiceEndpoint" in x) {
-			const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y);
-			this.clickTrackingParams(clickTrackingParams);
-			this.SignalServiceEndpointCommandMetadata(commandMetadata);
-			this.SignalServiceEndpointData(signalServiceEndpoint);
+			this.SignalServiceEndpoint(x);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.AdsControlFlowOpportunityReceivedCommand(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {

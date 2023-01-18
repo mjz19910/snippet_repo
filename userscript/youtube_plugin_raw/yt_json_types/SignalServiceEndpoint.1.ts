@@ -1,5 +1,5 @@
 type SignalServiceEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: SignalServiceEndpointCommandMetadata;
+	commandMetadata: CommandMetadata;
 	signalServiceEndpoint: SignalServiceEndpointData;
 };
