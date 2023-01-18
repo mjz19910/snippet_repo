@@ -1,7 +1,8 @@
 type TabData={
-	endpoint?: BrowseEndpoint;
-	title?: string;
-	content?: TabDataContent;
 	trackingParams: string;
-	unselectable?: boolean;
+}|{
+	selected: true;
+	content: RichGridRenderer;
+	tabIdentifier: "FEwhat_to_watch";
+	trackingParams: string;
 };
