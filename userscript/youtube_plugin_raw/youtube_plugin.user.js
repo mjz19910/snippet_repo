@@ -5936,7 +5936,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WebCommandMetadataContent} x */
 	WebCommandMetadataContent(x) {
-		this.save_keys("[WebCommandMetadata]",x);
+		this.save_keys("[WebCommandMetadataContent]",x);
 		if("rootVe" in x) {
 			this.rootVe(x.rootVe);
 			switch(x.webPageType) {
