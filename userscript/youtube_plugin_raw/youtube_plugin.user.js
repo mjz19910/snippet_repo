@@ -1018,6 +1018,7 @@ class MyReader {
 					this.failed=true;
 					first_num.push(["error",fieldId]);
 				} else if(success_64&&num64!==BigInt(num32)) {
+					console.log("bigint",num32,num64);
 					first_num.push(["data64",fieldId,num64]);
 					this.pos=new_pos;
 				} else {
