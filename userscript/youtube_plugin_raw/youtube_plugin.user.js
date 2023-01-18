@@ -6497,6 +6497,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistPanelItem} x */
 	PlaylistPanelItem(x) {
+		this.save_keys("[PlaylistPanelItem]",x);
 		if("playlistPanelVideoRenderer" in x) {
 			this.PlaylistPanelVideoRenderer(x);
 		} else if("automixPreviewVideoRenderer") {
@@ -6563,8 +6564,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ThumbnailOverlayResumePlayback} x */
 	ThumbnailOverlayResumePlayback(x) {
-		x;
-		debugger;
+		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
 	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {
@@ -6586,12 +6586,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VideoMastheadAdV3} x */
 	VideoMastheadAdV3(x) {
 		this.save_keys("[VideoMastheadAdV3]",x);
-		debugger;
 	}
 	/** @arg {RendererContentItem} x */
 	RendererContentItem(x) {
 		this.save_keys("[RendererContentItem]",x);
-		debugger;
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanelSectionListRenderer(x) {
@@ -6600,6 +6598,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementSectionPanelId} x */
 	EngagementSectionPanelId(x) {
+		this.save_string("[EngagementSectionPanelId]",x);
 		switch(x) {
 			default: debugger; break;
 			case "comment-item-section": break;
@@ -6609,6 +6608,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelSectionTargetId} x */
 	EngagementPanelSectionTargetId(x) {
+		this.save_string("[EngagementPanelSectionTargetId]",x);
 		switch(x) {
 			default: debugger; break;
 			case "engagement-panel-ads": break;
