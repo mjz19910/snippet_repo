@@ -9213,7 +9213,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ButtonCommand} x */
 	ButtonCommand(x) {
-		x;
+		this.x.get("codegen").codegen_new_typedef(x,null);
 	}
 	//#endregion
 }
