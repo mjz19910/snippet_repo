@@ -5189,13 +5189,17 @@ class ServiceMethods extends ServiceData {
 	previousCsn(x) {
 		console.log(base64_dec.decode_str(x));
 	}
-	/** @private @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
+	/** @template {{targetId:string}} T @template {string} U @arg {U} w @arg {T} x @returns {x is {targetId:`${U}${string}`}} */
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
 	/** @arg {string} x */
 	playerParams(x) {
 		this.x.get("parser_service").on_player_params(x);
+	}
+	/** @arg {keyof VEMap} x */
+	rootVe(x) {
+		this.on_root_visual_element(x);
 	}
 }
 class HandleTypes extends ServiceMethods {
@@ -7512,10 +7516,6 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		this.rootVe(rootVe);
 	}
-	/** @arg {keyof VEMap} x */
-	rootVe(x) {
-		this.on_root_visual_element(x);
-	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
 		this.save_keys("[TwoColumnWatchNextResults]",x);
@@ -7548,7 +7548,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
-		x;
+		this.save_keys("[LiveChatRenderer]",x);
 	}
 	/** @arg {AutoplayContent} x */
 	AutoplayContent(x) {
@@ -7560,26 +7560,31 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
 	AutoplayTemplate(x,f) {
+		this.save_keys("[AutoplayTemplate]",x);
 		const {autoplay,...y}=x; this.g(y);
 		f(autoplay);
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(x:T)=>void} f */
 	PlaylistTemplate(x,f) {
+		this.save_keys("[PlaylistTemplate]",x);
 		const {playlist,...y}=x; this.g(y);
 		f(playlist);
 	}
 	/** @template T @arg {ResultsTemplate<T>} x @arg {(x:T)=>void} f */
 	ResultsTemplate(x,f) {
+		this.save_keys("[ResultsTemplate]",x);
 		const {results,...y}=x; this.g(y);
 		f(results);
 	}
 	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(x:T)=>void} f */
 	SecondaryResultsTemplate(x,f) {
+		this.save_keys("[SecondaryResultsTemplate]",x);
 		const {secondaryResults,...y}=x; this.g(y);
 		f(secondaryResults);
 	}
 	/** @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
+		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 		if(x.actions) {
 			if(x.actions.length!==1) debugger;
 			this.z(x.actions,a => this.Action(a));
