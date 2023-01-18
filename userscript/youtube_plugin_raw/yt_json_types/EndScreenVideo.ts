@@ -4,7 +4,7 @@ type EndScreenVideo={
 	title: SimpleText;
 	shortBylineText: TextWithRuns;
 	lengthText?: SimpleText;
-	lengthInSeconds: number;
+	lengthInSeconds?: number;
 	navigationEndpoint: WatchEndpoint;
 	trackingParams: string;
 	shortViewCountText: SimpleText;

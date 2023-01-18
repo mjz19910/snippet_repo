@@ -7620,15 +7620,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
 		this.save_keys("[EndScreenVideo]",x);
-		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,...y1}=x;
+		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,...y1}=x;
 		this.videoId(videoId);
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.TextWithRuns(shortBylineText);
+		const {lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		if(lengthText) this.SimpleText(lengthText);
-		const {lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
-		this.primitive_of(lengthInSeconds,"number");
+		if(lengthInSeconds) this.primitive_of(lengthInSeconds,"number");
 		this._WatchEndpoint(navigationEndpoint);
 		this.g(y);
 	}
