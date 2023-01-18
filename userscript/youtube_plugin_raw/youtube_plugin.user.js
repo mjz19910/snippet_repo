@@ -964,13 +964,18 @@ class MyReader {
 		}
 		return ret;
 	};
-	do_uint32_read() {
+	read_varint() {
 		let sa=[this.buf[this.pos]&127];
 		while(true) {
 			if(this.buf[this.pos++]<128) break;
 			sa.push(this.buf[this.pos]&127);
 			if(this.pos>this.len) return null;
 		}
+		return sa;
+	}
+	do_uint32_read() {
+		let sa=this.read_varint();
+		if(sa===null) return null;
 		let ret=sa.map((e,n) => [e,n]).reduce((r,v) => {
 			let v0=v[0];
 			let v1=v[1];
@@ -4704,6 +4709,14 @@ class ParserService extends BaseService {
 		x: if(p30!==void 0) {
 			if(p30!==1) break x;
 			x.delete(30);
+		}
+		if(this.eq_keys(map_keys,[57,72])) {
+			let p57=x.get(57);
+			let p72=x.get(72);
+			if(p57!==void 0&&p72!==void 0) {
+				if(p57===1&&typeof p72==="bigint") return;
+			}
+			return;
 		}
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
