@@ -9269,8 +9269,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {AdsEngagementPanelContentData} x */
 	AdsEngagementPanelContentData(x) {
 		this.save_keys("[AdsEngagementPanelContentData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {hack,...y}=x; this.g(y);
+		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
