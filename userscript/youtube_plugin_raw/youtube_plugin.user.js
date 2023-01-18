@@ -5054,7 +5054,11 @@ class ServiceMethods extends ServiceData {
 			default: debugger; break;
 			case "browse-feedFEwhat_to_watch": break;
 			case "comments-section": break;
+			case "engagement-panel-ads": break;
+			case "engagement-panel-clip-create": break;
 			case "engagement-panel-comments-section": break;
+			case "engagement-panel-searchable-transcript": break;
+			case "engagement-panel-structured-description": break;
 			case "watch-next-feed": break;
 		}
 	}
