@@ -5852,7 +5852,23 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ItemSectionRenderer} x */
 	ItemSectionRenderer(x) {
 		this.save_keys("[ItemSectionRenderer]",x);
-		this.ItemSectionData(x.itemSectionRenderer);
+		const {itemSectionRenderer,...y}=x; this.g(y);
+		this.ItemSectionData(itemSectionRenderer);
+	}
+	/** @template {[any,any]} T @arg {ItemSectionRendererTemplate<T[0],T[1]>} x */
+	ItemSectionRendererTemplate(x) {
+		this.save_keys("[ItemSectionRendererTemplate]",x);
+		const {itemSectionRenderer,...y}=x; this.g(y);
+		this.ItemSectionDataTemplate(itemSectionRenderer);
+	}
+	/**  @template {[any,any]} T @arg {ItemSectionDataTemplate<T[0],T[1]>} x */
+	ItemSectionDataTemplate(x) {
+		this.ContentsArrayTemplate(x,a => {
+			let k=this.get_keys_of(a);
+			switch(k[0]) {
+				default: debugger; break;
+			}
+		});
 	}
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
@@ -7789,11 +7805,25 @@ class HandleTypes extends ServiceMethods {
 		this.SecondaryResultsTemplate(secondaryResults,a => {
 			if("contents" in a) {
 				this.z(a.contents,a => {
-					a;
+					if("itemSectionRenderer" in a) {
+						this.ItemSectionRendererTemplate(a);
+					}
+					let k=this.get_keys_of(a);
+					switch(k[0]) {
+						case "itemSectionRenderer": break;
+						case "relatedChipCloudRenderer": break;
+					}
 				});
 			} else if("results" in a) {
 				this.z(a.results,a => {
-					a;
+					if("itemSectionRenderer" in a) {
+						this.ItemSectionRenderer(a);
+					}
+					let k=this.get_keys_of(a);
+					switch(k[0]) {
+						case "itemSectionRenderer": break;
+						case "relatedChipCloudRenderer": break;
+					}
 				});
 			}
 		});
@@ -8522,7 +8552,7 @@ class HandleTypes extends ServiceMethods {
 	UpdateEngagementPanelAction(x) {
 		this.save_keys("[UpdateEngagementPanelAction]",x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=x; this.g(y);
-		updateEngagementPanelAction;
+		this.UpdateEngagementPanelData(updateEngagementPanelAction);
 		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @arg {AttBgChallenge} x */
@@ -8674,13 +8704,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideEntryRoot]",x);
 		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y);
 		this.BrowseEndpoint(navigationEndpoint);
-		thumbnail;
-		badges;
-		trackingParams;
-		formattedTitle;
-		accessibility;
-		entryData;
-		presentationStyle;
+		this.Thumbnail(thumbnail);
+		this.GuideEntryBadges(badges);
+		this.trackingParams(trackingParams);
+		this.SimpleText(formattedTitle);
+		this.AccessibilityData(accessibility);
+		this.GuideEntryData(entryData);
+		console.log("[presentationStyle]",presentationStyle);
+		this.primitive_of(presentationStyle,"string");
 	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
@@ -8693,6 +8724,18 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
 		this.save_keys("[EntityMutationItem]",x);
+	}
+	/** @arg {UpdateEngagementPanelData} x */
+	UpdateEngagementPanelData(x) {
+		x;
+	}
+	/** @arg {GuideEntryData} x */
+	GuideEntryData(x) {
+		x;
+	}
+	/** @arg {GuideEntryBadges} x */
+	GuideEntryBadges(x) {
+		x;
 	}
 }
 //#endregion
