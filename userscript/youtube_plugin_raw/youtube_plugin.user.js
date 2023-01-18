@@ -7348,8 +7348,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MusicLibraryStatusUpdateCommand]",x);
 		this.MusicLibraryStatusUpdate(x.musicLibraryStatusUpdateCommand);
 	}
-	//#endregion
-	//#region
 	/** @arg {MusicLibraryStatusUpdate} x */
 	MusicLibraryStatusUpdate(x) {
 		this.save_keys("[MusicLibraryStatusUpdate]",x);
@@ -8363,7 +8361,6 @@ class HandleTypes extends ServiceMethods {
 			this.ContinuationItemRenderer(x);
 		}
 	}
-	//#endregion
 	/** @arg {MusicResponsiveListItem} x */
 	MusicResponsiveListItem(x) {
 		this.save_keys("[MusicResponsiveListItem]",x);
@@ -8891,6 +8888,32 @@ class HandleTypes extends ServiceMethods {
 		const {guideCollapsibleEntryRenderer,...y}=x; this.g(y);
 		this.GuideCollapsibleEntry(guideCollapsibleEntryRenderer);
 	}
+	/** @arg {PlayerAnnotationsExpandedRenderer} x */
+	PlayerAnnotationsExpandedRenderer(x) {
+		this.save_keys("[PlayerAnnotationsExpandedRenderer]",x);
+		const {playerAnnotationsExpandedRenderer,...y}=x; this.g(y);
+		this.PlayerAnnotationsExpandedData(playerAnnotationsExpandedRenderer);
+	}
+	/** @arg {VoiceSearchDialogData} x */
+	VoiceSearchDialog(x) {
+		const {placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,trackingParams,microphoneOffPromptHeader,...y}=x; this.g(y);
+		this.TextWithRuns(placeholderHeader);
+		this.TextWithRuns(promptHeader);
+		this.TextWithRuns(exampleQuery1);
+		this.TextWithRuns(exampleQuery2);
+		this.TextWithRuns(promptMicrophoneLabel);
+		this.TextWithRuns(loadingHeader);
+		this.TextWithRuns(connectionErrorHeader);
+		this.TextWithRuns(connectionErrorMicrophoneLabel);
+		this.TextWithRuns(permissionsHeader);
+		this.TextWithRuns(permissionsSubtext);
+		this.TextWithRuns(disabledHeader);
+		this.TextWithRuns(disabledSubtext);
+		this.TextWithRuns(microphoneButtonAriaLabel);
+		this.ButtonRenderer(exitButton);
+		this.trackingParams(trackingParams);
+		this.TextWithRuns(microphoneOffPromptHeader);
+	}
 	//#endregion
 	//#region type_errors
 	/** @arg {CommentsSectionContinuationAction} x */
@@ -8916,12 +8939,6 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(targetId);
 		// @ts-ignore
 		this.z(continuationItems,this.WatchNextItem);
-	}
-	/** @arg {PlayerAnnotationsExpandedRenderer} x */
-	PlayerAnnotationsExpandedRenderer(x) {
-		this.save_keys("[PlayerAnnotationsExpandedRenderer]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
@@ -9242,6 +9259,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region has_save_keys
+	/** @arg {PlayerAnnotationsExpandedData} x */
+	PlayerAnnotationsExpandedData(x) {
+		this.save_keys("[PlayerAnnotationsExpandedData]",x);
+	}
 	/** @arg {SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
 		this.save_keys("[SignalNavigationEndpoint]",x);
