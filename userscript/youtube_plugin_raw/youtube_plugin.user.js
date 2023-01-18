@@ -5515,11 +5515,11 @@ class ServiceMethods extends ServiceData {
 			case "3611": return;
 			case "3832": return;
 			case "3854": return;
-			case "4724": break;
+			case "4724": return;
 			case "6827": return;
 			case "11487": return;
 			case "23462": return;
-			case "37414": break;
+			case "37414": return;
 			case "83769": return;
 			case "96368": return;
 			default:
