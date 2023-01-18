@@ -6258,6 +6258,17 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MultiPageMenu} x */
 	MultiPageMenu(x) {
 		this.save_keys(`[MultiPageMenu]`,x);
+		switch(x.style) {
+			 case "MULTI_PAGE_MENU_STYLE_TYPE_CREATION": {
+				const {sections,style,trackingParams,...y}=x; this.g(y);
+				this.z(sections,a => {
+					if("multiPageMenuSectionRenderer" in a) {
+						return this.MultiPageMenuSectionRenderer(a);
+					}
+					debugger;
+				});
+			 } return;
+		}
 		const {header,sections,footer,style,...y}=x; this.g(y);
 		this.SimpleMenuHeaderRenderer(header);
 		this.z(sections,a => {
@@ -8894,11 +8905,6 @@ class HandleTypes extends ServiceMethods {
 		const {notificationTopbarButtonRenderer,...y}=x; this.g(y);
 		this.NotificationTopbarButtonData(notificationTopbarButtonRenderer);
 	}
-	/** @arg {NotificationTopbarButtonData} x */
-	NotificationTopbarButtonData(x) {
-		this.save_keys("[NotificationTopbarButtonData]",x);
-		const {icon,menuRequest,style,tooltip,accessibility,trackingParams,updateUnseenCountEndpoint,handlerDatas,notificationCount,...y}=x; this.g(y);
-	}
 	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
 		this.save_keys("[HotkeyDialogRenderer]",x);
@@ -9058,6 +9064,11 @@ class HandleTypes extends ServiceMethods {
 	FusionSearchboxData(x) {
 		this.save_keys("[FusionSearchboxData]",x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y);
+	}
+	/** @arg {NotificationTopbarButtonData} x */
+	NotificationTopbarButtonData(x) {
+		this.save_keys("[NotificationTopbarButtonData]",x);
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
 	}
 }
 //#endregion
