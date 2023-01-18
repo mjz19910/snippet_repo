@@ -5470,13 +5470,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SearchApiWebCommandMetadata} x */
 	SearchApiWebCommandMetadata(x) {
-		switch(x.apiUrl) {
-			case "/youtubei/v1/search": {
-				const {sendPost,apiUrl: {},...y}=x; this.g(y);
-				this.primitive_of(sendPost,"boolean");
-			} break;
-			default: debugger; break;
-		}
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/search") debugger;
 	}
 	/** @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
