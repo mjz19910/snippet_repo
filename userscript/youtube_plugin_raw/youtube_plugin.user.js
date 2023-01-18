@@ -8855,8 +8855,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {
 		this.save_keys("[FeedTabbedHeaderData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {title,...y}=x; this.g(y);
+		this.TextWithRuns(title);
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
