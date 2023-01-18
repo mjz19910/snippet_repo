@@ -1052,7 +1052,15 @@ class MyReader {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 				}
-				first_num.push(["child",fieldId,sub_buffer,res]);
+				x: if(res) {
+					if(res.findIndex(e => e[0]==="error")>-1) {
+						first_num.push(["child",fieldId,sub_buffer,null]);
+						break x;
+					}
+					first_num.push(["child",fieldId,sub_buffer,res]);
+				} else {
+					first_num.push(["child",fieldId,sub_buffer,null]);
+				}
 			} break;
 			case 3: {
 				let res;
