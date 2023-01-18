@@ -5046,6 +5046,74 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @arg {[VE3832_PreconnectUrl]} x */
+	parse_preconnect_arr(x) {
+		if(x.length!==1) debugger;
+		this.parse_preconnect_url(x[0]);
+	}
+	/** @arg {VE3832_PreconnectUrl} x */
+	parse_preconnect_url(x) {
+		let up=this.parse_with_url_parse(x);
+		if(up.pathname!=="/generate_204") debugger;
+		let ss1=split_string(up.host,".");
+		if(ss1.length!==3) debugger;
+		if(ss1[1]!=="googlevideo") debugger;
+		if(ss1[2]!=="com") debugger;
+		let ss2=split_string(ss1[0],"---");
+		if(!this.str_starts_with(ss2[0],"rr")) debugger;
+		let ss3=split_string_once(ss2[0],"rr")[1];
+		let ss4=split_string_once(ss2[1],"sn-nx")[1];
+		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
+		/** @typedef {SplitIntoGroups<typeof ss4,`${string}`>} PartGroups */
+		/** @typedef {Extract<PartGroups,["57",...any]>} PartGroups_1 */
+		/** @typedef {Extract<PartGroups,["5s",...any]>} PartGroups_2 */
+		if(this.str_starts_with(ss4,"57yn")) {
+			/** @type {PartGroups_1[2]} */
+			let ss5=as(ss4.slice(4));
+			switch(ss5) {
+				case "lk": break;
+				case "sd": break;
+				case "se": break;
+				case "sk": break;
+				case "sl": break;
+				case "ss": break;
+				case "sz": break;
+				default: debugger;
+			}
+		} else if(this.str_starts_with(ss4,"5s7n")) {
+			/** @type {PartGroups_2[2]} */
+			let ss5=as(ss4.slice(4));
+			switch(ss5) {
+				case "76": break;
+				case "7d": break;
+				case "7s": break;
+				case "7y": break;
+				case "7z": break;
+				case "ee": break;
+				case "el": break;
+				default: debugger;
+			}
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {WatchPageUrl} x */
+	parse_watch_page_url(x) {
+		let u1=split_string_once(x,"/")[1];
+		let u2=split_string_once(u1,"?")[1];
+		let u3=this.parse_url_search_params(u2);
+		let u4=this.get_keys_of(u3);
+		x: {
+			if(this.eq_keys(u4,["v"])) break x;
+			if(this.eq_keys(u4,["v","pp"])) break x;
+			if(this.eq_keys(u4,["v","t"])) break x;
+			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
+			if(this.eq_keys(u4,["v","list","index"])) break x;
+			debugger;
+		}
+		this.x.get("parser_service").parse_url(x);
+		return u3;
+	}
 	/** @arg {string} x */
 	videoId(x) {
 		this.primitive_of(x,"string");
@@ -5152,74 +5220,6 @@ class HandleTypes extends ServiceMethods {
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.PlayerResponse(playerResponse);
 		this.WatchResponse(response);
-	}
-	/** @arg {[VE3832_PreconnectUrl]} x */
-	parse_preconnect_arr(x) {
-		if(x.length!==1) debugger;
-		this.parse_preconnect_url(x[0]);
-	}
-	/** @arg {VE3832_PreconnectUrl} x */
-	parse_preconnect_url(x) {
-		let up=this.parse_with_url_parse(x);
-		if(up.pathname!=="/generate_204") debugger;
-		let ss1=split_string(up.host,".");
-		if(ss1.length!==3) debugger;
-		if(ss1[1]!=="googlevideo") debugger;
-		if(ss1[2]!=="com") debugger;
-		let ss2=split_string(ss1[0],"---");
-		if(!this.str_starts_with(ss2[0],"rr")) debugger;
-		let ss3=split_string_once(ss2[0],"rr")[1];
-		let ss4=split_string_once(ss2[1],"sn-nx")[1];
-		console.log("google video rr [%s] sn-nx [%s]",ss3,ss4);
-		/** @typedef {SplitIntoGroups<typeof ss4,`${string}`>} PartGroups */
-		/** @typedef {Extract<PartGroups,["57",...any]>} PartGroups_1 */
-		/** @typedef {Extract<PartGroups,["5s",...any]>} PartGroups_2 */
-		if(this.str_starts_with(ss4,"57yn")) {
-			/** @type {PartGroups_1[2]} */
-			let ss5=as(ss4.slice(4));
-			switch(ss5) {
-				case "lk": break;
-				case "sd": break;
-				case "se": break;
-				case "sk": break;
-				case "sl": break;
-				case "ss": break;
-				case "sz": break;
-				default: debugger;
-			}
-		} else if(this.str_starts_with(ss4,"5s7n")) {
-			/** @type {PartGroups_2[2]} */
-			let ss5=as(ss4.slice(4));
-			switch(ss5) {
-				case "76": break;
-				case "7d": break;
-				case "7s": break;
-				case "7y": break;
-				case "7z": break;
-				case "ee": break;
-				case "el": break;
-				default: debugger;
-			}
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {WatchPageUrl} x */
-	parse_watch_page_url(x) {
-		let u1=split_string_once(x,"/")[1];
-		let u2=split_string_once(u1,"?")[1];
-		let u3=this.parse_url_search_params(u2);
-		let u4=this.get_keys_of(u3);
-		x: {
-			if(this.eq_keys(u4,["v"])) break x;
-			if(this.eq_keys(u4,["v","pp"])) break x;
-			if(this.eq_keys(u4,["v","t"])) break x;
-			if(this.eq_keys(u4,["v","list","start_radio"])) break x;
-			if(this.eq_keys(u4,["v","list","index"])) break x;
-			debugger;
-		}
-		this.x.get("parser_service").parse_url(x);
-		return u3;
 	}
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
