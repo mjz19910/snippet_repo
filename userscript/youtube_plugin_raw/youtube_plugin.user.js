@@ -6919,6 +6919,7 @@ class HandleTypes extends ServiceMethods {
 					}
 					this.trackingParams(trackingParams);
 				} return;
+				default:
 			}
 			console.log("[tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
 			return;
