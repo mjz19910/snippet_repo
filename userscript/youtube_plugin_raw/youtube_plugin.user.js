@@ -2498,20 +2498,20 @@ class BaseService extends BaseServicePrivate {
 		let no_ns_part=nn[1];
 		this.save_string(`[${ns_name}::${ns}]`,no_ns_part);
 	}
-	/** @public @template {string} T @template {string} Sep @template {`${T[0]}-${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
+	/** @public @template {string} T @template {string} Sep @template {`${T}${Sep}${string}`} U @arg {T} enum_base @arg {U} enum_str @arg {Sep} sep */
 	save_enum_with_sep(enum_base,enum_str,sep) {
 		const ns_name="ELEMENT";
-		debugger;
 		let n1=split_string_once(enum_str,enum_base);
 		if(!n1[1]) throw new Error();
 		let n2=n1[1];
 		if(sep!=="") {
 			let sd=this.drop_separator(n1[1],sep);
-			if(sd) n2=sd;
+			this.save_string(`[${ns_name}::${enum_base}]`,sd);
+		} else {
+			this.save_string(`[${ns_name}::${enum_base}]`,n2);
 		}
-		this.save_string(`[${ns_name}::${enum_base}]`,n2);
 	}
-	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
+	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]} */
 	drop_separator(x,sep) {
 		let v=split_string_once(x,sep);
 		if(v[0]) return v[0];
