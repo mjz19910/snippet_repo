@@ -3,7 +3,7 @@ type ShortsPageResponse={
 	endpoint: ReelWatchEndpoint;
 	response: ReelResponse;
 	playerResponse: PlayerResponse;
-	reelWatchSequenceResponse: ReelWatchSequenceResponse;
+	reelWatchSequenceResponse?: ReelWatchSequenceResponse;
 	url: `/shorts/${string}`;
 	cachedReelWatchSequenceResponse?: ReelWatchSequenceResponse;
 };

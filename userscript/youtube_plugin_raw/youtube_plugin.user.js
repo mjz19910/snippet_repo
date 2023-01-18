@@ -4134,6 +4134,7 @@ class CodegenService extends BaseService {
 			}
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
+			if(typeof o==="undefined") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
 			if(o instanceof Array) {
 				if(keys.includes(k1)) return [o[0]];
@@ -8638,7 +8639,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlayerResponse(playerResponse);
 		this._ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
-		this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
+		if(reelWatchSequenceResponse) this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(cachedReelWatchSequenceResponse) this.ReelWatchSequenceResponse(cachedReelWatchSequenceResponse);
