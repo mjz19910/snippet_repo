@@ -8324,11 +8324,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
 		this.save_keys("[ReelItemWatchResponse]",x);
-		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels}=x;
+		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x; this.g(y);
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
-		this.g(replacementEndpoint);
+		if(replacementEndpoint) this.g(replacementEndpoint);
 		if(sequenceContinuation) this.primitive_of(sequenceContinuation,"string");
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
@@ -9322,25 +9322,27 @@ class HandleTypes extends ServiceMethods {
 		const {topbarMenuButtonRenderer,...y}=x; this.g(y);
 		this.TopbarMenuButton(topbarMenuButtonRenderer);
 	}
+	/** @arg {Extract<TopbarMenuButton,{menuRequest:any}>['menuRequest']} x */
+	TopbarMenu_menuRequest(x) {
+		if("signalServiceEndpoint" in x) {
+			this.SignalServiceEndpoint(x);
+		} else {
+			debugger;
+		}
+	}
 	/** @arg {TopbarMenuButton} x */
 	TopbarMenuButton(x) {
 		const cf="TopbarMenuButton";
 		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,accessibility,tooltip,...y0}=x;
-		this.trackingParams(trackingParams);
-		this.Accessibility(accessibility);
-		this.primitive_of(tooltip,"string");
-		if("menuRequest" in y0) {
-			const {avatar,menuRequest,...y}=y0; this.g(y);
+		if("menuRequest" in x) {
+			const {trackingParams,accessibility,tooltip,avatar,menuRequest,...y}=x; this.g(y);
 			this.Thumbnail(avatar);
-			if("signalServiceEndpoint" in menuRequest) {
-				this.SignalServiceEndpoint(menuRequest);
-			} else {
-				debugger;
-			}
-			return;
-		} else if("menuRenderer" in y0) {
-			const {icon,menuRenderer,style,...y}=y0; this.g(y);
+			this.TopbarMenu_menuRequest(menuRequest);
+		} else if("menuRenderer" in x) {
+			const {trackingParams,accessibility,tooltip,icon,menuRenderer,style,...y}=x; this.g(y);
+			this.trackingParams(trackingParams);
+			this.Accessibility(accessibility);
+			this.primitive_of(tooltip,"string");
 			this.Icon(icon);
 			this.MultiPageMenuRenderer(menuRenderer);
 			switch(style) {
