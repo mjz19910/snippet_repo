@@ -4406,8 +4406,8 @@ class ParserService extends BaseService {
 		}
 		return param_map;
 	}
-	/** @arg {string} x */
-	on_endpoint_params(x) {
+	/** @arg {ParamsSection} for_ @arg {string} x */
+	on_endpoint_params(for_,x) {
 		let pp_value=x;
 		let pp_dec=decodeURIComponent(pp_value);
 		if(this.cache_player_params.includes(pp_value)) return;
@@ -4416,7 +4416,12 @@ class ParserService extends BaseService {
 		if(!res_e) {debugger; return;}
 		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
-		console.log("[new_endpoint_params]",Object.fromEntries(param_map.entries()));
+		let param_obj=Object.fromEntries(param_map.entries());
+		switch(for_) {
+			default: console.log("[new_endpoint_params] [%s]",for_,param_obj); break;
+			case "WatchEndpoint": console.log("[new_watch_endpoint_params]",param_obj); break;
+			case "GetTranscript": console.log("[new_get_transcript_endpoint_params]",param_obj); break;
+		}
 	}
 	/** @public @arg {string} x */
 	on_player_params(x) {
@@ -4450,12 +4455,35 @@ class ParserService extends BaseService {
 		debugger;
 	}
 	/** @arg {ParamMapType} x */
+	parse_player_param_f40_f1(x) {
+		let map_keys_1=[...x.keys()];
+		if(this.eq_keys(map_keys_1,[2,3])) {
+			let p2=x.get(2);
+			let p3=x.get(3);
+			if(p2!==void 0&&p3!==void 0) {
+				if(p2===2&&p3===1) return;
+			}
+		}
+		let p2=x.get(2);
+		let p3=x.get(3);
+		x: if(p2!==void 0&&p3!==void 0) {
+			if(p2===1&&p3===1) {
+				let p27=x.get(27);
+				if(!p27) {debugger; break x;}
+				if(!(p27 instanceof Map)) {debugger; break x;}
+				debugger;
+			}
+		}
+		x;
+	}
+	/** @arg {ParamMapType} x */
 	parse_player_param_f_40(x) {
 		let map_keys=[...x.keys()];
 		x: if(this.eq_keys(map_keys,[1])) {
 			let x1=x.get(1);
 			if(!x1) {debugger; break x;}
 			if(!(x1 instanceof Map)) {debugger; break x;}
+			this.parse_player_param_f40_f1(x1);
 			let map_keys_1=[...x1.keys()];
 			y: {
 				if(!this.eq_keys(map_keys_1,[2,3])) break y;
@@ -5136,9 +5164,9 @@ class ServiceMethods extends ServiceData {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @arg {string} x */
-	params(x) {
-		this.x.get("parser_service").on_endpoint_params(x);
+	/** @arg {ParamsSection} for_ @arg {string} x */
+	params(for_,x) {
+		this.x.get("parser_service").on_endpoint_params(for_,x);
 	}
 	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
@@ -5607,7 +5635,7 @@ class HandleTypes extends ServiceMethods {
 	GetTranscriptData(x) {
 		this.save_keys("[GetTranscriptData]",x);
 		const {params,...y}=x; this.g(y);
-		this.params(params);
+		this.params("GetTranscript",params);
 	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
@@ -6222,7 +6250,7 @@ class HandleTypes extends ServiceMethods {
 		if(videoId) this.videoId(videoId);
 		this.playerParams(playerParams);
 		this.ReelPlayerOverlayRenderer(overlay);
-		this.params(params);
+		this.params("ReelWatch",params);
 		this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",sequenceProvider);
 		this.save_enum("REEL_WATCH_INPUT_TYPE",inputType);
 	}
@@ -7105,7 +7133,7 @@ class HandleTypes extends ServiceMethods {
 		this.playlistId(playlistId);
 		if(actions.length!==1) debugger;
 		this.PlaylistAction(actions[0]);
-		if(params) this.params(params);
+		if(params) this.params("PlaylistEdit",params);
 	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
@@ -7294,7 +7322,7 @@ class HandleTypes extends ServiceMethods {
 		if(playlistId) this.playlistId(playlistId);
 		if(index!==void 0) this.primitive_of(index,"number");
 		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
-		if(params!==void 0) this.params(params);
+		if(params!==void 0) this.params("WatchEndpoint",params);
 		const {startTimeSeconds,...y2}=y1;
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
 		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y3}=y2;
