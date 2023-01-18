@@ -8113,14 +8113,14 @@ class HandleTypes extends ServiceMethods {
 	SignalServiceEndpointData(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		const {signal,actions}=x; //,...y}=x; this.g(y);
-		signal;
-		actions;
+		if(signal!=="CLIENT_SIGNAL") debugger;
+		this.z(actions,this.ServiceEndpointAction);
 	}
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
 		this.save_keys("[ChannelPageResponse]",x);
 		const {page,endpoint,response,url}=x; //,...y}=x; this.g(y);
-		page;
+		if(page!=="channel") debugger;
 		endpoint;
 		response;
 		url;
@@ -8129,7 +8129,7 @@ class HandleTypes extends ServiceMethods {
 	PlaylistPageResponse(x) {
 		this.save_keys("[PlaylistPageResponse]",x);
 		const {page,endpoint,response,url}=x; //,...y}=x; this.g(y);
-		page;
+		if(page!=="playlist") debugger;
 		endpoint;
 		response;
 		url;
@@ -8138,7 +8138,7 @@ class HandleTypes extends ServiceMethods {
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
 		const {page,endpoint,response,url}=x; //,...y}=x; this.g(y);
-		page;
+		if(page!=="settings") debugger;
 		endpoint;
 		response;
 		url;
@@ -8147,7 +8147,7 @@ class HandleTypes extends ServiceMethods {
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url}=x; //,...y}=x; this.g(y);
-		page;
+		if(page!=="shorts") debugger;
 		playerResponse;
 		endpoint;
 		response;
@@ -8158,10 +8158,17 @@ class HandleTypes extends ServiceMethods {
 	SearchPageResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
 		const {page,endpoint,response,url}=x; //,...y}=x; this.g(y);
-		page;
-		endpoint;
+		if(page!=="search") debugger;
+		this.SearchEndpoint(endpoint);
 		response;
 		url;
+	}
+	/** @arg {SearchEndpoint} x */
+	SearchEndpoint(x) {
+		this.save_keys("[SearchEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
 	}
 	/** @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
@@ -8575,13 +8582,18 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[EntityBatchUpdateData]",x);
 		const {mutations,timestamp,...y}=x; this.g(y);
 		this.z(mutations,a=>a);
-		this.timestamp(timestamp);
+		this.TimestampWithNanos(timestamp);
 	}
 	/** @arg {TimestampWithNanos} x */
-	timestamp(x) {
+	TimestampWithNanos(x) {
+		this.save_keys("[TimestampWithNanos]",x);
 		const {seconds,nanos,...y}=x; this.g(y);
 		this.primitive_of(seconds,"string");
 		this.primitive_of(nanos,"number");
+	}
+	/** @arg {ServiceEndpointAction} x */
+	ServiceEndpointAction(x) {
+		this.save_keys("[ServiceEndpointAction]",x);
 	}
 }
 //#endregion

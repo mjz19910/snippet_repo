@@ -2,12 +2,9 @@ type WebCommandMetadata=
 	|BrowseWebCommandMetadata
 	|ChannelWebCommandMetadata
 	|EditPlaylistWebCommandMetadata
-	|SearchApiWebCommandMetadata
-	|WatchWebCommandMetadata
 	|GenericWebCommandMetadata
+	|SearchApiWebCommandMetadata
+	|SearchWebCommandMetadata
+	|WatchWebCommandMetadata
 	;
 ;
-type GenericWebCommandMetadata={
-	sendPost: boolean;
-	apiUrl: Exclude<`/${ApiUrlFormat}`,SearchApiWebCommandMetadata['apiUrl']|EditPlaylistWebCommandMetadata['apiUrl']>;
-};
