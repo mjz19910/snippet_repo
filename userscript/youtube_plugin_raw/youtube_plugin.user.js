@@ -12,7 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
-// #region
+// #region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {
 	return x;
@@ -78,6 +78,86 @@ function make_iterator(x) {
 	return new Iterator(x);
 }
 //#endregion
+// #region ui_plugin & on_${element}
+class CustomEventTarget {
+	/** @private @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
+	_events={};
+	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
+	addEventListener(type,handler) {
+		(this._events[type]??=[]).push(handler);
+	}
+	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
+	removeEventListener(type,handler) {
+		let event_arr=this._events[type];
+		if(!event_arr) return;
+		if(event_arr.length) return;
+		for(let i=event_arr.length-1;i>=0;i--) {
+			let cur=event_arr[i];
+			if(cur!==handler) continue;
+			event_arr.splice(i,1);
+		}
+	}
+	/** @arg {CustomEventType} event */
+	dispatchEvent(event) {
+		let msg_arr=this._events[event.type];
+		if(!msg_arr) return;
+		for(let i=0;i<msg_arr.length;i++) {
+			let cur=msg_arr[i];
+			cur.call(this,event);
+		}
+	}
+}
+class DomObserver extends CustomEventTarget {
+	/** @arg {null} _v */
+	notify_fn(_v) {};
+	/** @private @type {Set<MessagePort>} */
+	wait_ports=new Set;
+	/** @private @type {Map<MessagePort,ResState[]>} */
+	port_to_resolvers_map=new Map;
+	/** @arg {MessagePort} port */
+	notify_with_port(port) {
+		if(this.wait_ports.has(port)) {
+			let list=this.port_to_resolvers_map.get(port);
+			if(!list) return;
+			if(list.every(e => !e.active)) {
+				this.port_to_resolvers_map.set(port,[]);
+			}
+			for(let x of list) {
+				if(x.active) x.resolver();
+			}
+			if(list[0].active===false) {
+				list.shift();
+			}
+		};
+	}
+	/** @arg {MessagePort} port @arg {number} cur_count */
+	wait_for_port(port,cur_count) {
+		this.next_tick_action(port,cur_count);
+		this.wait_ports.add(port);
+		return new Promise((accept) => {
+			let resolver=() => {
+				state.active=false;
+				accept(null);
+			};
+			let state={
+				active: true,
+				resolver,
+			};
+			if(this.port_to_resolvers_map.has(port)) {
+				if(this.port_to_resolvers_map.has(port)) this.port_to_resolvers_map.get(port)?.push(state);
+			} else {
+				this.port_to_resolvers_map.set(port,[state]);
+			}
+		});
+	}
+	trace=false;
+	/** @private @arg {MessagePort} port @arg {number} count */
+	next_tick_action(port,count) {
+		if(this.trace) console.log("tick_trace",count);
+		port.postMessage(count);
+	}
+}
+let dom_observer=new DomObserver;
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
 		return;
@@ -92,6 +172,7 @@ function yt_watch_page_loaded_handler() {
 	ytd_player.active_nav=false;
 	ytd_player.init_nav=true;
 }
+dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
 let waiting_for_ytd_player=false;
 /** @private @type {number|null} */
 let current_timeout=null;
@@ -423,6 +504,8 @@ async function async_plugin_init(event) {
 		console.log("had error in async init",e);
 	}
 }
+// #endregion
+// #region dom_observer & yt_plugin_event
 let found_element_count=0;
 let expected_element_count=6;
 async_plugin_init.__debug=false;
@@ -454,10 +537,6 @@ border: 0px solid black;
 user-select: none;
 width: 10px;
 `;
-function with_ytd_scope() {
-	dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
-	dom_observer.addEventListener("async-plugin-init",plugin_init);
-}
 const is_ytd_app_debug_enabled=false;
 class VolumeRange {
 	static enabled=true;
@@ -1301,86 +1380,6 @@ let yta_str="yt.player.Application";
 mk_tree_arr.push(yta_str+".create",yta_str+".createAlternate");
 new MKState({},window,"yt","yt",true).run();
 win_watch.addEventListener("new_window_object",act_found_create_yt_player);
-
-class CustomEventTarget {
-	/** @private @type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
-	_events={};
-	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
-	addEventListener(type,handler) {
-		(this._events[type]??=[]).push(handler);
-	}
-	/** @arg {string} type @arg {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler */
-	removeEventListener(type,handler) {
-		let event_arr=this._events[type];
-		if(!event_arr) return;
-		if(event_arr.length) return;
-		for(let i=event_arr.length-1;i>=0;i--) {
-			let cur=event_arr[i];
-			if(cur!==handler) continue;
-			event_arr.splice(i,1);
-		}
-	}
-	/** @arg {CustomEventType} event */
-	dispatchEvent(event) {
-		let msg_arr=this._events[event.type];
-		if(!msg_arr) return;
-		for(let i=0;i<msg_arr.length;i++) {
-			let cur=msg_arr[i];
-			cur.call(this,event);
-		}
-	}
-}
-class DomObserver extends CustomEventTarget {
-	/** @arg {null} _v */
-	notify_fn(_v) {};
-	/** @private @type {Set<MessagePort>} */
-	wait_ports=new Set;
-	/** @private @type {Map<MessagePort,ResState[]>} */
-	port_to_resolvers_map=new Map;
-	/** @arg {MessagePort} port */
-	notify_with_port(port) {
-		if(this.wait_ports.has(port)) {
-			let list=this.port_to_resolvers_map.get(port);
-			if(!list) return;
-			if(list.every(e => !e.active)) {
-				this.port_to_resolvers_map.set(port,[]);
-			}
-			for(let x of list) {
-				if(x.active) x.resolver();
-			}
-			if(list[0].active===false) {
-				list.shift();
-			}
-		};
-	}
-	/** @arg {MessagePort} port @arg {number} cur_count */
-	wait_for_port(port,cur_count) {
-		this.next_tick_action(port,cur_count);
-		this.wait_ports.add(port);
-		return new Promise((accept) => {
-			let resolver=() => {
-				state.active=false;
-				accept(null);
-			};
-			let state={
-				active: true,
-				resolver,
-			};
-			if(this.port_to_resolvers_map.has(port)) {
-				if(this.port_to_resolvers_map.has(port)) this.port_to_resolvers_map.get(port)?.push(state);
-			} else {
-				this.port_to_resolvers_map.set(port,[state]);
-			}
-		});
-	}
-	trace=false;
-	/** @private @arg {MessagePort} port @arg {number} count */
-	next_tick_action(port,count) {
-		if(this.trace) console.log("tick_trace",count);
-		port.postMessage(count);
-	}
-}
-let dom_observer=new DomObserver;
 class YtdPageManagerElement extends HTMLElement {
 	/** @returns {YtCurrentPage|undefined} */
 	getCurrentPage() {throw new Error();}
@@ -1501,9 +1500,7 @@ function ui_css_toggle_click_handler() {
 		ui_plugin_css_enabled=true;
 	}
 }
-
-with_ytd_scope();
-
+dom_observer.addEventListener("async-plugin-init",plugin_init);
 /** @private @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 function get_new_video_element_list(element_list,list_box) {
 	let new_video_elements=[];
@@ -1901,7 +1898,8 @@ class ServiceResolver {
 		this.services[key]=value;
 	}
 }
-//#region
+// #endregion
+// #region main
 /** @private @arg {(x:typeof exports)=>void} fn */
 function export_(fn) {
 	if(typeof exports==="object") {
@@ -1969,9 +1967,9 @@ function main() {
 		page_type_changes.push(nav_load_str);
 		if(log_enabled_page_type_change) console.log(nav_load_str);
 	}
-	// #endregion
 }
 //#endregion
+// #region string manipulation
 /** @private @template {string} X @arg {X} x @template {string} S @arg {S} s @returns {Split<X,string extends S?",":S>} */
 function split_string(x,s=as(",")) {
 	if(!x) {debugger;}
@@ -2009,6 +2007,8 @@ function split_string_once(s,d=as(",")) {
 	let q=r;
 	return as(q);
 }
+// #endregion
+// #region ApiBase
 const seen_map=new Set;
 const general_service_state={
 	logged_in: false,
@@ -2096,6 +2096,7 @@ class ApiBase {
 		return ra;
 	}
 }
+// #endregion
 // #region Service
 class KnownDataSaver extends ApiBase {
 	constructor() {
@@ -2407,9 +2408,10 @@ class KnownDataSaver extends ApiBase {
 	}
 }
 const data_saver=new KnownDataSaver;
+/** @template T,U */
 class BaseServicePrivate extends ApiBase {
 	// #region Public
-	/** @arg {ResolverT<Services,ServiceOptions>} x */
+	/** @arg {ResolverT<T,U>} x */
 	constructor(x) {
 		super();
 		this.#x=x;
@@ -2435,6 +2437,7 @@ class BaseServicePrivate extends ApiBase {
 	log_skipped_strings=false;
 	#x;
 }
+/** @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
 class BaseService extends BaseServicePrivate {
 	/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 	parse_with_url_parse(str) {
@@ -2554,7 +2557,7 @@ class BaseService extends BaseServicePrivate {
 		this.ds.save_keys(k,x);
 	}
 }
-
+/** @extends {BaseService<Services,ServiceOptions>} */
 class YtHandlers extends BaseService {
 	/** @public @arg {ResolverT<Services,ServiceOptions>} res */
 	constructor(res) {
@@ -2989,6 +2992,7 @@ class YtHandlers extends BaseService {
 		}
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class HandleRendererContentItemArray extends BaseService {
 	debug=false;
 	/** @private @arg {RichItemRenderer} content_item */
@@ -3118,6 +3122,7 @@ class YtObjectVisitor {
 		state.t.iteration.default_iter(state,renderer);
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class IterateApiResultBase extends BaseService {
 	obj_visitor;
 	/** @private @type {Map<string,keyof YtObjectVisitor>} */
@@ -3169,6 +3174,7 @@ class IterateApiResultBase extends BaseService {
 		}
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class CsiService extends BaseService {
 	data={
 		/** @private @type {BrowseEndpointPages|null} */
@@ -3258,6 +3264,7 @@ class CsiService extends BaseService {
 		}
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	data={
 		/** @private @type {{name:ECatcherClientName['value'];fexp:number[];version:SomeVer<CsiVarTypes["cver"]>}|null} */
@@ -3330,6 +3337,7 @@ class ECatcherService extends BaseService {
 		this.data.client=client;
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class GFeedbackService extends BaseService {
 	data={
 		/** @private @type {number[]|null} */
@@ -3413,6 +3421,7 @@ class GFeedbackService extends BaseService {
 		this.x.get("e_catcher_service").iterate_fexp(this.data.e);
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class GuidedHelpService extends BaseService {
 	data={
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
@@ -3433,6 +3442,7 @@ class GuidedHelpService extends BaseService {
 		}
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class TrackingServices extends BaseService {
 	/** @private @arg {CsiServiceParams} service */
 	on_csi_service(service) {
@@ -3492,6 +3502,7 @@ class Services {
 		this.modify_env=new ModifyEnv(x);
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class ModifyEnv extends BaseService {
 	/** @type {[(obj: Blob | MediaSource) => string,typeof URL,Blob|MediaSource][]} */
 	leftover_args=[];
@@ -3658,8 +3669,9 @@ class ModifyEnv extends BaseService {
 	}
 }
 //#endregion Service
-//#region decode_entity_key
+// #region YtPlugin
 const decoder=new TextDecoder();
+/** @extends {BaseService<Services,ServiceOptions>} */
 class YtPlugin extends BaseService {
 	/** @private @type {[string,{name: string;}][]} */
 	saved_function_objects=[];
@@ -3675,7 +3687,9 @@ class YtPlugin extends BaseService {
 		this.saved_function_objects.push([function_obj.name,function_obj]);
 	}
 }
-//#endregion
+// #endregion
+// #region HelperServices
+/** @extends {BaseService<Services,ServiceOptions>} */
 class IndexedDbAccessor extends BaseService {
 	/** @public @arg {ResolverT<Services, ServiceOptions>} x @arg {string} db_name */
 	constructor(x,db_name,version=1) {
@@ -3873,6 +3887,7 @@ class IndexedDbAccessor extends BaseService {
 		console.log("idb error",event);
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @arg {{}} x2 */
 	#is_Thumbnail(x2) {
@@ -4213,6 +4228,7 @@ class CodegenService extends BaseService {
 		return null;
 	}
 }
+/** @extends {BaseService<Services,ServiceOptions>} */
 class ParserService extends BaseService {
 	log_playlist_parse=false;
 	/** @public @arg {YTNavigateFinishDetail['pageType']} x */
@@ -5203,6 +5219,8 @@ class ParserService extends BaseService {
 		}
 	}
 }
+// #endregion
+// #region sizeof_js & Generate
 let text_encoder=new TextEncoder;
 /** @private @type {Map<unknown,number>} */
 let sizeof_cache=new Map;
@@ -5274,7 +5292,9 @@ class Generate {
 		this.out_arr.push(gd);
 	}
 }
-//#region HandleTypes
+// #endregion
+// #region HandleTypes
+/** @extends {BaseService<Services,ServiceOptions>} */
 class ServiceData extends BaseService {
 	/** @protected @type {FormatItagArr} */
 	format_itag_arr=[18,133,134,135,136,137,140,160,242,243,244,247,248,249,250,251,278,298,299,302,303,308,315,394,395,396,397,398,399,400,401];
@@ -8208,15 +8228,11 @@ class HandleTypes extends ServiceMethods {
 	SignalServiceEndpointData(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
-			case "CLIENT_SIGNAL": return this.ClientSignal(x);
+			case "CLIENT_SIGNAL": return this.signal.ClientSignal(x);
 			case "GET_ACCOUNT_MENU": break;
 		}
 	}
-	/** @arg {Signal_ClientSignal} x */
-	ClientSignal(x) {
-		const {signal,actions,...y}=x; this.g(y);
-		this.z(actions,this.ServiceEndpointAction);
-	}
+	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
 	/** @arg {Signal_GetAccountMenu} x */
 	GetAccountMenu(x) {
 		const {signal,actions,...y}=x; this.g(y);
@@ -9178,5 +9194,7 @@ class HandleTypes extends ServiceMethods {
 	}
 }
 //#endregion
+// #region Start main
 console=typeof window==="undefined"? console:(() => window.console)();
 main();
+// #endregion
