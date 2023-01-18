@@ -8554,13 +8554,17 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.SimpleText(formattedTitle);
 		this.z(handlerDatas,a => {
-			if(a!=="GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS") debugger;
+			switch(a) {
+				default: debugger; break;
+				case "GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS": break;
+				case "GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS": break;
+			}
 		});
 	}
 	/** @arg {GuideSubscriptionsSectionItem} x */
 	GuideSubscriptionsSectionItem(x) {
 		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
-		if("guideCollapsibleEntryRenderer" in x) this.GuideCollapsibleEntryRenderer(x);
+		if("guideCollapsibleEntryRenderer" in x) return this.GuideCollapsibleEntryRenderer(x);
 		debugger;
 	}
 	/** @arg {ElementUpdate} x */
