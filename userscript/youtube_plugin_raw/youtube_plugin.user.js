@@ -4097,6 +4097,7 @@ class CodegenService extends BaseService {
 		}
 		return ret;
 	}
+	/** @param {{[x:string]:unknown}} x */
 	get_json_replacer_type(x) {
 		let g=() => {
 			let o_keys=this.filter_keys(this.get_keys_of(x));
