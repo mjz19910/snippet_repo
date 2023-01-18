@@ -5503,17 +5503,28 @@ class HandleTypes extends ServiceMethods {
 	CinematicContainer(x) {
 		this.save_keys("[CinematicContainerData]",x);
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config}=x; //,...y}=x; this.g(y);
+		if(backgroundImageConfig) 1;
+		if(gradientColorConfig) 1;
+		if(presentationStyle) 1;
+		if(config) 1;
 	}
 	/** @arg {SignalServiceEndpoint} x */
 	SignalServiceEndpoint(x) {
 		this.save_keys("[SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint}=x; //,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.SignalServiceEndpointCommandMetadata(commandMetadata);
+		this.SignalServiceEndpointData(signalServiceEndpoint);
 	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const cf="BrowseEditPlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
-		this.z(x.actions,a => this.x.get("handle_types").Action(a));
+		const {responseContext: {},status,actions,playlistEditResults,trackingParams}=x; //,...y}=x; this.g(y);
+		if(status!=="STATUS_SUCCEEDED") debugger;
+		this.z(actions,a => this.x.get("handle_types").Action(a));
+		this.z(playlistEditResults,this.g);
+		this.trackingParams(trackingParams);
 	}
 	log_url=false;
 	/** @arg {BrowsePageResponse} x */
