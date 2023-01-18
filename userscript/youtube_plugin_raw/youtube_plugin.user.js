@@ -2745,6 +2745,7 @@ class YtHandlers extends BaseService {
 			case "subscription": res=this.convert_subscription(target,x); break;
 			case "playlist": res=this.convert_playlist(target,x); break;
 			case "share": res=this.convert_share(target,x); break;
+			case "pdg": res=this.convert_pdg(target,x); break;
 		}
 		switch(target.length) {
 			case 1: res=this.convert_length_1(target,x); break;
@@ -2756,6 +2757,17 @@ class YtHandlers extends BaseService {
 			type: "_Generic",
 			data: x,
 		};
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_pdg(t,x) {
+		switch(t[1]) {
+			case "get_pdg_buy_flow": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {pdg_get_pdg_buy_flow_t['data']} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_music(t,x) {
@@ -4027,6 +4039,7 @@ class CodegenService extends BaseService {
 			if(o.engagementPanelSectionListRenderer) return "TYPE::EngagementPanelSectionListRenderer";
 			if(o.cinematicContainerRenderer) return "TYPE::CinematicContainerRenderer";
 			if(o.playlistPanelVideoRenderer) return "TYPE::PlaylistPanelVideoRenderer";
+			if(o.openPopupAction) return "TYPE::OpenPopupAction";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) {

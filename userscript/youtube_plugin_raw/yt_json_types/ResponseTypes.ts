@@ -32,5 +32,21 @@ type _ResponseTypes=
 	|subscription_subscribe_t
 	|subscription_unsubscribe_t
 	|update_metadata_t
+	|pdg_get_pdg_buy_flow_t
 	;
 ;
+type pdg_get_pdg_buy_flow_t={
+	type: "pdg.get_pdg_buy_flow";
+	data: {
+		responseContext: ResponseContext;
+		command: {
+			clickTrackingParams: string;
+			openPopupAction: {
+				popup: {};
+				popupType: "DIALOG";
+			};
+		};
+		trackingParams: string;
+		frameworkUpdates: FrameworkUpdates;
+	};
+}
