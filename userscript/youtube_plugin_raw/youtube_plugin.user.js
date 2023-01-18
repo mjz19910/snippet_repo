@@ -7915,22 +7915,46 @@ class HandleTypes extends ServiceMethods {
 		const {twoColumnWatchNextResults,...y}=x; this.g(y);
 		this.TwoColumnWatchNextResultsData(twoColumnWatchNextResults);
 	}
+	/** @arg {ItemSectionRendererTemplate_Section<any>|ItemSectionRendererTemplate<any,any>} x @returns {x is ItemSectionRendererTemplate<any,any>} */
+	is_ItemSectionRendererTemplate(x) {
+		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
+	}
+	/** @arg {TwoColumnWatchNextResultsData['results']['results']} x */
+	handle_results_2(x) {
+		this.ContentsArrayTemplate(x,a => {
+			if("itemSectionRenderer" in a) {
+				if(this.is_ItemSectionRendererTemplate(a)) {
+					switch(a.itemSectionRenderer.sectionIdentifier) {
+						case "comment-item-section": return this.ItemSectionRenderer(a);
+					}
+				}
+				switch(a.itemSectionRenderer.sectionIdentifier) {
+					case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(a);
+				}
+			}
+			if("merchandiseShelfRenderer" in a) return;
+			if("videoPrimaryInfoRenderer" in a) return;
+			if("videoSecondaryInfoRenderer" in a) return;
+			let k=this.get_keys_of(a);
+			switch(k.at(0)) {
+				default: {
+					console.log("[new.WatchResultItem]",a,k.join());
+					debugger;
+				} break;
+			}
+		});
+	}
+	/** @arg {TwoColumnWatchNextResultsData['results']} x */
+	handle_results_1(x) {
+		this.ResultsTemplate(x,a => {
+			this.handle_results_2(a);
+		});
+	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
 		this.save_keys("[TwoColumnWatchNextResultsData]",x);
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=x; this.g(y);
-		this.ResultsTemplate(results,a => {
-			this.ContentsArrayTemplate(a,a => {
-				if("itemSectionRenderer" in a) return;
-				if("merchandiseShelfRenderer" in a) return;
-				if("videoPrimaryInfoRenderer" in a) return;
-				if("videoSecondaryInfoRenderer" in a) return;
-				let k=this.get_keys_of(a);
-				switch(k.at(0)) {
-					default: debugger; break;
-				}
-			});
-		});
+		this.handle_results_1(results);
 		this.SecondaryResultsTemplate(secondaryResults,a => {
 			if("contents" in a) {
 				this.z(a.contents,a => {
@@ -9321,6 +9345,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
+		x;
+	}
+	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
+	ItemSectionRendererTemplate_Section(x) {
 		x;
 	}
 	//#endregion
