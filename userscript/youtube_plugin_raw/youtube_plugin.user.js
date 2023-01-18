@@ -5466,17 +5466,10 @@ class HandleTypes extends ServiceMethods {
 	ContinuationCommandMetadata(x) {
 		this.save_keys("[ContinuationCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		if("rootVe" in webCommandMetadata) {
-			switch(webCommandMetadata.rootVe) {
-				case 3832: return this.VE3832_WebCommandMetadata(webCommandMetadata);
-				default: debugger; break;
-			}
-			return;
-		}
-		this.ContinuationWebCommandMetadata(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {ContinuationWebCommandMetadata} x */
-	ContinuationWebCommandMetadata(x) {
+	/** @arg {SearchApiWebCommandMetadata} x */
+	SearchApiWebCommandMetadata(x) {
 		switch(x.apiUrl) {
 			case "/youtubei/v1/search": {
 				const {sendPost,apiUrl: {},...y}=x; this.g(y);
@@ -5602,12 +5595,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
-		switch(x.webPageType) {
-			default: debugger; break;
-			case "WEB_PAGE_TYPE_BROWSE": this.BrowseWebCommandMetadata(x); break;
-			case "WEB_PAGE_TYPE_CHANNEL": this.ChannelWebCommandMetadata(x); break;
-			case "WEB_PAGE_TYPE_WATCH": this.WatchWebCommandMetadata(x); break;
+		if("rootVe" in x) {
+			this.rootVe(x.rootVe);
+			switch(x.webPageType) {
+				default: debugger; break;
+				case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
+				case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
+				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
+			}
 		}
+		this.SearchApiWebCommandMetadata(x);
 	}
 	/** @arg {WatchWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
@@ -7115,7 +7112,6 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		this.rootVe(rootVe);
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {TextT} x */

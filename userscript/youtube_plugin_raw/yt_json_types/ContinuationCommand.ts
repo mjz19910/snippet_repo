@@ -1,9 +1,11 @@
-type ContinuationWebCommandMetadata={
+type SearchApiWebCommandMetadata={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/search";
 };
 
-type ContinuationCommandMetadata=CommandMetadataTemplate<3832>|{
+type ContinuationWebCommandMetadata=SearchApiWebCommandMetadata|VE3832_WebCommandMetadata;
+
+type ContinuationCommandMetadata={
 	webCommandMetadata: ContinuationWebCommandMetadata;
 };
 
