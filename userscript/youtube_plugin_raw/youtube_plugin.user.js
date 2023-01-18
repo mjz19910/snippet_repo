@@ -3365,7 +3365,9 @@ class ECatcherService extends BaseService {
 				[24390675,24396645],
 				[24401504,24402891,24404640,24406313,24406621,24407190,24408888],
 				[24414718,24415864,24415866,24416290],
-				[24422508,24424806,24426636,24429095],
+				[24422508],
+				[24424806,24424807],
+				[24426636,24429095],
 				[24432597,24433679,24434209,24436009,24437575,24438162,24438848,24439361,24439483],
 				[24440901,24440903,24441244,24442137,24443373,24447336,24448074,24448246],
 				[24450571,24451033,24453129,24453874],
@@ -3375,6 +3377,7 @@ class ECatcherService extends BaseService {
 				[39322504,39322574,39322870,39322873,39322953,39322980,39322983],
 				[39323013,39323016,39323020,39323023,39323117,39323120],
 				[45686551],
+				[24452012],
 				[],
 			].flat()
 		},
@@ -7031,7 +7034,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UrlEndpoint} x */
 	UrlEndpoint(x) {
-		const {clickTrackingParams,commandMetadata:{webCommandMetadata,...y2},urlEndpoint,...y1}=x; this.g(y2); this.g(y1);
+		const {clickTrackingParams,commandMetadata: {webCommandMetadata,...y2},urlEndpoint,...y1}=x; this.g(y2); this.g(y1);
 		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
 		this.UrlEndpointData(urlEndpoint);
 		const {url,webPageType,rootVe}=webCommandMetadata;
