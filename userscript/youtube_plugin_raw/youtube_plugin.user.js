@@ -7189,6 +7189,12 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(x);
 		this.save_string("[EngagementPanelSectionTargetId]",x);
 	}
+	/** @template T @arg {ShortsSurfaceIdentifier<T>} x */
+	ShortsSurfaceIdentifier(x) {
+		const {surface,tag,...y}=x; this.g(y);
+		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
+		return tag;
+	}
 	/** @arg {EngagementPanelSectionList} x */
 	EngagementPanelSectionList(x) {
 		const cf="EngagementPanelSectionList";
@@ -7196,7 +7202,7 @@ class HandleTypes extends ServiceMethods {
 		this.codegen.codegen_new_typedef(x,cf);
 		if("veType" in x) {
 			switch(x.veType) {
-				case 76278:case 99999:case 126250: {
+				case 76278: case 99999: case 126250: {
 					const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
 					debugger;
 					this.EngagementPanelSectionListContent(content);
@@ -7209,25 +7215,25 @@ class HandleTypes extends ServiceMethods {
 					this.LoggingDirectives(loggingDirectives);
 				} break;
 				case 124975: {
-					const {content,header,veType,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
-					debugger;
+					const {content,header,veType,targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
 					this.EngagementPanelSectionListContent(content);
 					this.EngagementPanelTitleHeaderRenderer(header);
 					this.EngagementPanelSectionTargetId(targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
+					let a1=this.ShortsSurfaceIdentifier(identifier);
+					if(a1!=="engagement-panel-structured-description") debugger;
 				} break;
 				case 139722: {
-					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier: a1,...y}=x; this.g(y);
+					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y);
 					this.SectionListRenderer(content);
 					if(header) this.EngagementPanelTitleHeaderRenderer(header);
 					if(targetId) this.EngagementPanelSectionTargetId(targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
 					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
-					if(!this.eq_keys(this.get_keys_of(a1),["surface","tag"])) debugger;
-					if(a1.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
-					if(a1.tag!=="shorts-comments-panel") debugger;
+					let a1=this.ShortsSurfaceIdentifier(identifier);
+					if(a1!=="shorts-comments-panel") debugger;
 				} break;
 				default: debugger; break;
 			}
