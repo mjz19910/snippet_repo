@@ -5690,13 +5690,20 @@ class HandleTypes extends ServiceMethods {
 		if("rootVe" in x) {
 			this.rootVe(x.rootVe);
 			switch(x.webPageType) {
-				default: debugger; break;
+				default: debugger; return;
 				case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
 				case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
 				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
 			}
 		}
-		this.SearchApiWebCommandMetadata(x);
+		if("apiUrl" in x) {
+			switch(x.apiUrl) {
+				default: debugger; return;
+				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistCommandMetadata({webCommandMetadata: x});
+				case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			}
+		}
+		debugger;
 	}
 	/** @arg {WatchWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
