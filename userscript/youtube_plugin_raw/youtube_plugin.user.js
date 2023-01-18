@@ -4046,15 +4046,13 @@ class CodegenService extends BaseService {
 			if(o.playlistPanelVideoRenderer) return "TYPE::PlaylistPanelVideoRenderer";
 			if(o.openPopupAction) return "TYPE::OpenPopupAction";
 			if(o.openPopupAction) return "TYPE::OpenPopupAction";
+			if(o.pdgBuyFlowHeaderRenderer) return "TYPE::PdgBuyFlowHeaderRenderer";
+			if(o.getSurveyCommand) return "TYPE::GetSurveyCommand";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
-			if(keys.includes(k1)) {
-				if(o instanceof Array) return [o[0]];
-				return o;
-			}
-			if(o instanceof Array) return [o[0]];
+			if(keys.includes(k1)) return o;
 			obj_count++;
-			if(obj_count<2) return o;
+			if(obj_count<4) return o;
 			if(o instanceof Array) return [{}];
 			return {};
 		},"\t");
