@@ -8642,6 +8642,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 			case "HISTORY_BACK": break;
 			case "HISTORY_FORWARD": break;
+			case "ENABLE_CHROME_NOTIFICATIONS": break;
 		}
 	}
 }

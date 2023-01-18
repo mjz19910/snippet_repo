@@ -1,1 +1,3 @@
-type SignalActionData=HistoryBackSignal|HistoryForwardSignal;
+type SignalActionData={
+	signal: SignalEnum;
+}|HistoryBackSignal|HistoryForwardSignal;
