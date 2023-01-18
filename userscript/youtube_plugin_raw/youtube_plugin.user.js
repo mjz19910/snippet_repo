@@ -4159,8 +4159,8 @@ class CodegenService extends BaseService {
 			||x.signalServiceEndpoint
 			||x.superVodBuyFlowContentRenderer
 			||x.twoColumnWatchNextResults
-			||x.watchEndpoint
 			||x.videoViewCountRenderer
+			||x.watchEndpoint
 			;
 		if(hg) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
