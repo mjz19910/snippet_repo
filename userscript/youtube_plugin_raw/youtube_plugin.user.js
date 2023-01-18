@@ -7272,8 +7272,12 @@ class HandleTypes extends ServiceMethods {
 					this.EngagementPanelSectionTargetId(targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
-					let a1=this.ShortsSurfaceIdentifier(identifier);
-					if(a1!=="engagement-panel-structured-description") debugger;
+					if(identifier) {
+						let a1=this.ShortsSurfaceIdentifier(identifier);
+						if(a1!=="engagement-panel-structured-description") debugger;
+					} else {
+						debugger;
+					}
 				} break;
 				case 139722: {
 					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y);
@@ -7283,6 +7287,7 @@ class HandleTypes extends ServiceMethods {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
 					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
+					if(!identifier) debugger;
 					let a1=this.ShortsSurfaceIdentifier(identifier);
 					if(a1!=="shorts-comments-panel") debugger;
 				} break;
