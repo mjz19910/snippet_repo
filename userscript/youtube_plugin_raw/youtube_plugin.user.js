@@ -762,9 +762,10 @@ class HandleRichGridRenderer {
 	}
 }
 class Base64Binary {
-	/** @arg {string} key_str */
-	constructor(key_str) {
+	/** @arg {string} key_str @arg {RegExp} key_regexp */
+	constructor(key_str,key_regexp) {
 		this._keyStr=key_str;
+		this.regexp=key_regexp;
 	}
 	/* will return a  Uint8Array type */
 	/** @arg {string} input */
@@ -1187,8 +1188,8 @@ class MyReader {
 		return first_num;
 	}
 }
-const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=");
-const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=");
+const base64_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",/[^A-Za-z0-9\+\/\=]/g);
+const base64_url_dec=new Base64Binary("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=",/[^A-Za-z0-9\-\_\=]/g);
 /** @private @type {any[]} */
 let blob_create_args_arr=[];
 let plr_raw_replace_debug=true;
