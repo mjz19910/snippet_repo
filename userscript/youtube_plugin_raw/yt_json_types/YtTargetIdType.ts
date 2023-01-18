@@ -1,9 +1,12 @@
 type YtTargetIdType=[
-	WatchNextContinuationAction['targetId'],
-	CommentsSectionContinuationAction['targetId'],
+	AppendContinuationItemsActionData['targetId'],
 	BrowseFeedAction['targetId'],
-	UpdateEngagementPanelData['targetId'],
+	CommentsSectionContinuationAction['targetId'],
+	EngagementPanelSectionTargetId,
+	SearchFeedSectionListData['targetId'],
+	ScrollToEngagementPanelData['targetId'],
+	SearchResponse['targetId'],
 	TranscriptSearchPanelData['targetId'],
-	"library-guide-item",
-	"engagement-panel-comments-section",
+	UpdateEngagementPanelData['targetId'],
+	WatchNextContinuationAction['targetId'],
 ][number];

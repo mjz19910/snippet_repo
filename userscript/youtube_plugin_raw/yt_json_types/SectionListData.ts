@@ -3,5 +3,11 @@ type SectionListData=ContentsArrayTemplate<SectionListItem>&{
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;
-	targetId?: "search-feed";
+}|SearchFeedSectionListData;
+type SearchFeedSectionListData=ContentsArrayTemplate<SectionListItem>&{
+	continuations?: NextContinuationData[];
+	trackingParams: string;
+	subMenu?: {};
+	hideBottomSeparator?: boolean;
+	targetId: "search-feed";
 };

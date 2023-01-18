@@ -5101,8 +5101,9 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @arg {EngagementPanelSectionTargetId|ScrollToEngagementPanelData['targetId']|AppendContinuationItemsActionData['targetId']|"search-feed"|"search-page"} x */
+	/** @arg {YtTargetIdType} x */
 	targetId(x) {
+		this.x.get("parser_service").parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		switch(x) {
 			default: debugger; break;
@@ -5532,6 +5533,23 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SectionListData} x */
 	SectionListData(x) {
 		const cf="SectionListData";
+		this.save_keys(`[${cf}]`,x);
+		if("targetId" in x) {
+			switch(x.targetId) {
+				default: debugger; return;
+				case "search-feed": return this.SearchFeedSectionListData(x);
+			}
+		}
+		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,...y}=x; this.g(y);
+		this.z(contents,a => this.SectionListItem(a));
+		if(continuations) this.z(continuations,a => this.NextContinuationData(a));
+		this.trackingParams(trackingParams);
+		if(subMenu) this.save_keys(`[${cf}.subMenu]`,subMenu);
+		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+	}
+	/** @arg {SearchFeedSectionListData} x */
+	SearchFeedSectionListData(x) {
+		const cf="SearchFeedSectionListData";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=x; this.g(y);
 		this.z(contents,a => this.SectionListItem(a));
