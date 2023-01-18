@@ -6014,11 +6014,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicShelfContinuation} x */
 	MusicShelfContinuation(x) {
-		x;
+		this.save_keys(`[MusicShelfContinuation]`,x);
 	}
 	/** @arg {MusicHeaderRenderer} x */
 	MusicHeaderRenderer(x) {
-		x;
+		this.save_keys(`[MusicHeaderRenderer]`,x);
 	}
 	/** @arg {SearchResponse} x */
 	SearchResponse(x) {
@@ -6087,7 +6087,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
 		this.save_keys("[GetSearchSuggestions]",x);
-		this.trackingParams(x.trackingParams);
+		const {responseContext: {},trackingParams,...y}=x; this.g(y);
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
