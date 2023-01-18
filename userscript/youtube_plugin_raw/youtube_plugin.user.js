@@ -6178,9 +6178,25 @@ class HandleTypes extends ServiceMethods {
 			return this.MultiPageMenuRenderer(x);
 		} else if("confirmDialogRenderer" in x) {
 			return this.ConfirmDialogRenderer(x);
+		} else if("notificationActionRenderer" in x) {
+			return this.NotificationActionRenderer(x);
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {NotificationActionRenderer} x */
+	NotificationActionRenderer(x) {
+		this.save_keys(`[NotificationActionRenderer]`,x);
+		const {notificationActionRenderer,...y}=x; this.g(y);
+		this.NotificationActionData(notificationActionRenderer);
+	}
+	/** @arg {NotificationActionData} x */
+	NotificationActionData(x) {
+		this.save_keys(`[NotificationActionData]`,x);
+		const {responseText,actionButton,trackingParams,...y}=x; this.g(y);
+		this.TextWithRuns(responseText);
+		if(actionButton) this.ButtonRenderer(actionButton);
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {ConfirmDialogRenderer} x */
 	ConfirmDialogRenderer(x) {
