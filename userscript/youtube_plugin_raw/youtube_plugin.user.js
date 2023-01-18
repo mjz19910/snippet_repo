@@ -4473,8 +4473,8 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamMapType} x */
 	parse_player_param_f40_f1(x) {
-		let map_keys_1=[...x.keys()];
-		if(this.eq_keys(map_keys_1,[2,3])) {
+		let map_keys=[...x.keys()];
+		if(this.eq_keys(map_keys,[2,3])) {
 			let p2=x.get(2);
 			let p3=x.get(3);
 			if(p2!==void 0&&p3!==void 0) {
@@ -4488,6 +4488,13 @@ class ParserService extends BaseService {
 				let p27=x.get(27);
 				if(!p27) {debugger; break x;}
 				if(!(p27 instanceof Map)) {debugger; break x;}
+				let map_keys_1=[...p27.keys()];
+				if(this.eq_keys(map_keys_1,[1])) {
+					let p27_p1=p27.get(1);
+					if(p27_p1===1) return;
+				}
+				let param_obj_p27=Object.fromEntries(p27.entries());
+				console.log("[new_watch_endpoint_param_p27]",param_obj_p27);
 				debugger;
 			}
 		}
