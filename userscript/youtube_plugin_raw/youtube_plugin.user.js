@@ -2504,7 +2504,11 @@ class BaseService extends BaseServicePrivate {
 		debugger;
 		let n1=split_string_once(enum_str,enum_base);
 		if(!n1[1]) throw new Error();
-		let n2=this.drop_separator(n1[1],sep);
+		let n2=n1[1];
+		if(sep!=="") {
+			let sd=this.drop_separator(n1[1],sep);
+			if(sd) n2=sd;
+		}
 		if(!n2) throw new Error();
 		this.save_string(`[${ns_name}::${enum_base}]`,n2);
 	}
