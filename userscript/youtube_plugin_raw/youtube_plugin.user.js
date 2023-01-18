@@ -8914,6 +8914,12 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.TextWithRuns(microphoneOffPromptHeader);
 	}
+	/** @arg {VoiceSearchDialogRenderer} x */
+	VoiceSearchDialogRenderer(x) {
+		this.save_keys("[VoiceSearchDialogRenderer]",x);
+		const {voiceSearchDialogRenderer,...y}=x; this.g(y);
+		this.VoiceSearchDialog(voiceSearchDialogRenderer);
+	}
 	//#endregion
 	//#region type_errors
 	/** @arg {CommentsSectionContinuationAction} x */
@@ -9296,15 +9302,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
 		x;
-	}
-	/** @arg {string} name @arg {ButtonCommand} x */
-	ButtonCommand(name,x) {
-		let u_name=this.get_codegen_name(x);
-		this.codegen_new_typedef(x,`_button_${name}_${u_name}`);
-	}
-	/** @arg {VoiceSearchDialogRenderer} x */
-	VoiceSearchDialogRenderer(x) {
-		this.VoiceSearchDialog(x.voiceSearchDialogRenderer);
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
