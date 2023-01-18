@@ -5032,6 +5032,9 @@ class ParserService extends BaseService {
 		if(this.str_starts_with(x,"shopping_panel")) {
 			return this.save_enum("shopping_panel",x);
 		}
+		if(this.str_starts_with(x,"clip")) {
+			return this.save_enum("clip",x);
+		}
 		console.log("[new_parse_target_id]",x);
 		debugger;
 	}
@@ -9768,9 +9771,9 @@ class HandleTypes extends ServiceMethods {
 			return this.SignalServiceEndpoint(x);
 		} else if("continuationCommand" in x) {
 			return this.ContinuationCommand(x);
-		} else if("changeEngagementPanelVisibilityAction" in x) {
-			return;
 		}
+		if("changeEngagementPanelVisibilityAction" in x) return;
+		if("openPopupAction" in x) return;
 		debugger;
 	}
 	/** @arg {GenericWebCommandMetadata} x */
