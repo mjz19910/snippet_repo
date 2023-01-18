@@ -4142,7 +4142,6 @@ class CodegenService extends BaseService {
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
 		if(x.simpleText) return "TYPE::SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
-		if(x.engagementPanelTitleHeaderRenderer) debugger;
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
@@ -4163,52 +4162,52 @@ class CodegenService extends BaseService {
 			return "TYPE::{}";
 		}
 	}
-	/** @arg {string|null} r @param {{[U in string]:unknown}} x @arg {string[]} keys */
-	get_json_replace_type_len_1(r,x,keys) {
-		let g=() => this.json_auto_replace(x);
+	/** @arg {string|null} r @param {{[U in string]:unknown}} o @arg {string[]} keys */
+	get_json_replace_type_len_1(r,o,keys) {
+		let g=() => this.json_auto_replace(o);
 		let hg=false
-			||x.browseEndpoint
-			||x.buttonRenderer
-			||x.changeEngagementPanelVisibilityAction
-			||x.cinematicContainerRenderer
-			||x.commandExecutorCommand
-			||x.commentsEntryPointHeaderRenderer
-			||x.continuationItemRenderer
-			||x.desktopTopbarRenderer
-			||x.engagementPanelSectionListRenderer
-			||x.getSurveyCommand
-			||x.menuRenderer
-			||x.merchandiseItemRenderer
-			||x.metadataRowContainerRenderer
-			||x.openPopupAction
-			||x.pdgBuyFlowHeaderRenderer
-			||x.pdgColorSliderRenderer
-			||x.pdgCommentOptionRenderer
-			||x.pdgCommentPreviewRenderer
-			||x.pivotButtonRenderer
-			||x.playerOverlayRenderer
-			||x.playlistPanelVideoRenderer
-			||x.richItemRenderer
-			||x.signalServiceEndpoint
-			||x.subscribeButtonRenderer
-			||x.superVodBuyFlowContentRenderer
-			||x.twoColumnWatchNextResults
-			||x.urlEndpoint
-			||x.videoOwnerRenderer
-			||x.videoViewCountRenderer
-			||x.watchEndpoint
-			||x.metadataBadgeRenderer
-			||x.likeButtonRenderer
-			||x.reelPlayerHeaderRenderer
-			||x.metadataBadgeRenderer
-			||x.likeEndpoint
-			||x.engagementPanelTitleHeaderRenderer
-			||x.sectionListRenderer
+			||o.browseEndpoint
+			||o.buttonRenderer
+			||o.changeEngagementPanelVisibilityAction
+			||o.cinematicContainerRenderer
+			||o.commandExecutorCommand
+			||o.commentsEntryPointHeaderRenderer
+			||o.continuationItemRenderer
+			||o.desktopTopbarRenderer
+			||o.engagementPanelSectionListRenderer
+			||o.getSurveyCommand
+			||o.menuRenderer
+			||o.merchandiseItemRenderer
+			||o.metadataRowContainerRenderer
+			||o.openPopupAction
+			||o.pdgBuyFlowHeaderRenderer
+			||o.pdgColorSliderRenderer
+			||o.pdgCommentOptionRenderer
+			||o.pdgCommentPreviewRenderer
+			||o.pivotButtonRenderer
+			||o.playerOverlayRenderer
+			||o.playlistPanelVideoRenderer
+			||o.richItemRenderer
+			||o.signalServiceEndpoint
+			||o.subscribeButtonRenderer
+			||o.superVodBuyFlowContentRenderer
+			||o.twoColumnWatchNextResults
+			||o.urlEndpoint
+			||o.videoOwnerRenderer
+			||o.videoViewCountRenderer
+			||o.watchEndpoint
+			||o.metadataBadgeRenderer
+			||o.likeButtonRenderer
+			||o.reelPlayerHeaderRenderer
+			||o.metadataBadgeRenderer
+			||o.likeEndpoint
+			||o.engagementPanelTitleHeaderRenderer
+			||o.sectionListRenderer
 			;
 		if(hg) return g();
-		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
-		if(x.accessibilityData) return "TYPE::Accessibility";
-		console.log("[no_json_replace_type_1] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
+		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
+		if(o.accessibilityData) return "TYPE::Accessibility";
+		console.log("[no_json_replace_type_1] %o [%s] [%s]",o,keys.join(","),g(),"\n",r);
 		return null;
 	}
 	/** @public @arg {string} x1 */
