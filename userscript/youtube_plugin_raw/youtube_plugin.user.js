@@ -5047,7 +5047,7 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @arg {ScrollToEngagementPanelData['targetId']|AppendContinuationItemsActionData['targetId']} x */
+	/** @arg {EngagementPanelSectionTargetId|ScrollToEngagementPanelData['targetId']|AppendContinuationItemsActionData['targetId']|"search-feed"|"search-page"} x */
 	targetId(x) {
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		switch(x) {
@@ -5481,7 +5481,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		if(subMenu) this.save_keys(`[${cf}.subMenu]`,subMenu);
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
-		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
+		if(targetId) {
+			this.targetId(targetId);
+			this.save_string(`[${cf}.targetId]`,targetId);
+		}
 	}
 	/** @arg {NextContinuationData} x */
 	NextContinuationData(x) {
@@ -5650,6 +5653,7 @@ class HandleTypes extends ServiceMethods {
 		const {contents,trackingParams,sectionIdentifier,targetId,...y}=x; this.g(y);
 		this.z(contents,a => this.ItemSectionItem(a));
 		this.trackingParams(trackingParams);
+		this.targetId(as(targetId));
 		this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}-id-${targetId}`);
 	}
 	/** @arg {ItemSectionItem} x */
@@ -6079,7 +6083,10 @@ class HandleTypes extends ServiceMethods {
 			};
 			debugger;
 		});
-		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
+		if(targetId) {
+			this.targetId(targetId);
+			this.save_string(`[${cf}.targetId]`,targetId);
+		}
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
@@ -6641,6 +6648,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelSectionTargetId} x */
 	EngagementPanelSectionTargetId(x) {
+		this.targetId(x);
 		this.save_string("[EngagementPanelSectionTargetId]",x);
 	}
 	/** @arg {EngagementPanelSectionList} x */
@@ -6811,6 +6819,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.slot) {
 			case "RELOAD_CONTINUATION_SLOT_BODY": {
 				const {targetId,continuationItems,slot: {},...y}=x; this.g(y);
+				this.targetId(targetId);
 				this.save_string("[Body.targetId]",targetId);
 				this.z(continuationItems,a => {
 					this.save_keys("[continuationItem]",a);
@@ -6818,6 +6827,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "RELOAD_CONTINUATION_SLOT_HEADER": {
 				const {targetId,continuationItems,slot: {},...y}=x; this.g(y);
+				this.targetId(targetId);
 				this.save_string("[Header.targetId]",targetId);
 				if(targetId!=="comments-section") debugger;
 				if(continuationItems.length!==1) debugger;
@@ -7048,7 +7058,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		if(accessibility) this.Accessibility(accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
-		if(targetId) this.save_string(`[${cf}.targetId]`,targetId);
+		if(targetId) {
+			this.targetId(as(targetId));
+			this.save_string(`[${cf}.targetId]`,targetId);
+		}
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
