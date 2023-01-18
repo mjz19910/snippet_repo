@@ -8894,9 +8894,9 @@ class HandleTypes extends ServiceMethods {
 	GuideEntryDataContent(x) {
 		this.save_keys("[GuideEntryDataContent]",x);
 		const {guideEntryId,...y}=x; this.g(y);
-		if(this.str_starts_with("RD",guideEntryId)) {
+		if(this.str_starts_with(guideEntryId,"RD")) {
 			console.log("[guideEntryId.RD.length]",guideEntryId.length,guideEntryId);
-		} else if(this.str_starts_with("UC",guideEntryId)) {
+		} else if(this.str_starts_with(guideEntryId,"UC")) {
 			console.log("[guideEntryId.UC.length]",guideEntryId.length,guideEntryId);
 		} else {
 			debugger;
