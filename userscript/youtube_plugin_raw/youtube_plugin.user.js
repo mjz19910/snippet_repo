@@ -6901,7 +6901,7 @@ class HandleTypes extends ServiceMethods {
 		if(playlistId) this.playlistId(playlistId);
 		if(index!==void 0) this.primitive_of(index,"number");
 		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
-		if(params!==void 0) this.primitive_of(params,"string");
+		if(params!==void 0) this.params(params);
 		const {startTimeSeconds,...y2}=y1;
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
 		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y3}=y2;
