@@ -5,8 +5,6 @@ type GenericWebCommandMetadata=
 	|GetTranscriptWebCommandMetadata
 	|GetAddToPlaylistWebCommandMetadata
 	|AccountMenuWebCommandMetadata
+	|NextWebCommandMetadata
 	;
-;type AccountMenuWebCommandMetadata={
-	sendPost: true;
-	apiUrl: "/youtubei/v1/account/account_menu";
-};
+;

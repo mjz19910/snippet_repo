@@ -6054,6 +6054,7 @@ class HandleTypes extends ServiceMethods {
 				case "/youtubei/v1/playlist/get_add_to_playlist": this.GetAddToPlaylistWebCommandMetadata(x); break;
 				case "/youtubei/v1/browse/edit_playlist": this.EditPlaylistWebCommandMetadata(x); break;
 				case "/youtubei/v1/search": this.SearchApiWebCommandMetadata(x); break;
+				case "/youtubei/v1/next": this.NextWebCommandMetadata(x); break;
 			}
 			return;
 		}
