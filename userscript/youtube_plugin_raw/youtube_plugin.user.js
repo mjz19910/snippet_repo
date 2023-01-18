@@ -5338,6 +5338,7 @@ class ServiceMethods extends ServiceData {
 	clickTrackingParams(x) {
 		this.primitive_of(x,"string");
 	}
+	/** @type {string[]} */
 	known_target_id=[];
 	/** @arg {YtTargetIdType} x */
 	targetId(x) {
@@ -5363,9 +5364,9 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "search-feed": return;
 			case "search-page": return;
+			default:
 		}
 		switch(x) {
-			case "shopping_panel_for_entry_point_5": return;
 			default: debugger; break;
 		}
 	}
