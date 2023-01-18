@@ -7214,7 +7214,7 @@ class HandleTypes extends ServiceMethods {
 				case "browse-feedFEwhat_to_watch": {
 					const {contents,trackingParams,header,targetId: {},reflowOptions,...y}=x; this.g(y);
 				} break;
-				default: this.codegen_new_typedef(x,"RichGrid");
+				default: debugger;
 			}
 			return;
 		}
@@ -7251,7 +7251,6 @@ class HandleTypes extends ServiceMethods {
 	EngagementPanelSectionList(x) {
 		const cf="EngagementPanelSectionList";
 		this.save_keys(`[${cf}]`,x);
-		this.codegen.codegen_new_typedef(x,cf);
 		if("veType" in x) {
 			switch(x.veType) {
 				case 76278: case 99999: case 126250: {
@@ -8433,8 +8432,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NonNullable<ButtonData['navigationEndpoint']>} x */
 	Button_navigationEndpoint(x) {
-		let u_name=this.get_codegen_name(x);
-		this.codegen_new_typedef(x,`_Button_navigationEndpoint_${u_name}`);
+		if("shareEntityServiceEndpoint" in x) return this.ShareEntityServiceEndpoint(x);
+		debugger;
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
@@ -9712,6 +9711,10 @@ class HandleTypes extends ServiceMethods {
 	//#region has_save_keys
 	//#endregion
 	//#region TODO_minimal_member_fns
+	/** @arg {minimal_handler_member} x */
+	minimal_handler_member(x) {x;}
+	/** @arg {ShareEntityServiceEndpoint} x */
+	ShareEntityServiceEndpoint(x) {x;}
 	//#endregion
 }
 //#endregion
