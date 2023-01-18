@@ -6963,9 +6963,7 @@ class HandleTypes extends ServiceMethods {
 			this.clickTrackingParams(clickTrackingParams);
 			this.LoadMarkersCommandData(loadMarkersCommand);
 		} else if("reloadContinuationItemsCommand" in x) {
-			const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y);
-			this.clickTrackingParams(clickTrackingParams);
-			this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
+			this.ReloadContinuationItemsCommand(x);
 		} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=x; this.g(y);
 			this.clickTrackingParams(clickTrackingParams);
@@ -6988,6 +6986,13 @@ class HandleTypes extends ServiceMethods {
 			case "watch-next-feed": this.WatchNextContinuationAction(x); break;
 			default: debugger;
 		}
+	}
+	/** @arg {ReloadContinuationItemsCommand} x */
+	ReloadContinuationItemsCommand(x) {
+		this.save_keys("[ReloadContinuationItemsCommand]",x);
+		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
 	}
 	/** @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
@@ -7852,282 +7857,394 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideSectionRenderer} x */
 	GuideSectionRenderer(x) {
 		this.save_keys("[GuideSectionRenderer]",x);
+		const {guideSectionRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {GuideSectionData} x */
+	GuideSectionData(x) {
+		this.save_keys("[GuideSectionData]",x);
+		const {items,trackingParams,formattedTitle,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
 		this.save_keys("[LiveChatRenderer]",x);
+		const {liveChatRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		this.save_keys("[AutoplayContent]",x);
+		const {sets,modifiedSets,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistContent} x */
 	PlaylistContent(x) {
 		this.save_keys("[PlaylistContent]",x);
+		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y);
 	}
 	/** @arg {ThumbnailOverlayBottomPanelData} x */
 	ThumbnailOverlayBottomPanelData(x) {
 		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
+		const {icon,...y}=x; this.g(y);
 	}
 	/** @arg {BrowserMediaSessionRenderer} x */
 	BrowserMediaSessionRenderer(x) {
 		this.save_keys("[BrowserMediaSessionRenderer]",x);
+		const {browserMediaSessionRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AutoplaySwitchButtonRenderer} x */
 	AutoplaySwitchButtonRenderer(x) {
 		this.save_keys("[AutoplaySwitchButtonRenderer]",x);
+		const {autoplaySwitchButtonRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {DecoratedPlayerBar} x */
 	DecoratedPlayerBar(x) {
 		this.save_keys("[DecoratedPlayerBar]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {PlayerOverlayVideoDetails} x */
 	PlayerOverlayVideoDetails(x) {
 		this.save_keys("[PlayerOverlayVideoDetails]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {FeedbackEndpointData} x */
 	FeedbackEndpointData(x) {
 		this.save_keys("[FeedbackEndpointData]",x);
+		const {feedbackToken,uiActions,actions,...y}=x; this.g(y);
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("[ButtonData]",x);
+		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
 		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
+		const {text,icon,...y}=x; this.g(y);
 	}
 	/** @arg {CustomEmoji} x */
 	CustomEmoji(x) {
 		this.save_keys("[CustomEmoji]",x);
+		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=x; this.g(y);
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
 		this.save_keys("[SortFilterSubMenuRenderer]",x);
+		const {sortFilterSubMenuRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {CommentSimpleboxData} x */
 	CommentSimpleboxData(x) {
 		this.save_keys("[CommentSimpleboxData]",x);
+		const {submitButton,cancelButton,authorThumbnail,placeholderText,trackingParams,avatarSize,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=x; this.g(y);
 	}
 	/** @arg {SignalServiceEndpointData} x */
 	SignalServiceEndpointData(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
+		const {signal,actions,...y}=x; this.g(y);
 	}
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
 		this.save_keys("[ChannelPageResponse]",x);
+		const {page,endpoint,response,url,...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
 		this.save_keys("[PlaylistPageResponse]",x);
+		const {page,endpoint,response,url,...y}=x; this.g(y);
 	}
 	/** @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
+		const {page,endpoint,response,url,...y}=x; this.g(y);
 	}
 	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
+		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,...y}=x; this.g(y);
 	}
 	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
 		this.save_keys("[GetNotificationMenuJson]",x);
+		const {page,endpoint,response,url,...y}=x; this.g(y);
 	}
 	/** @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
 		this.save_keys("[ItemSectionItem]",x);
+		if("continuationItemRenderer" in x) {
+			this.ContinuationItemRenderer(x);
+		}
 	}
 	/** @arg {MusicResponsiveListItem} x */
 	MusicResponsiveListItem(x) {
 		this.save_keys("[MusicResponsiveListItem]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {MusicCarouselShelf} x */
 	MusicCarouselShelf(x) {
 		this.save_keys("[MusicCarouselShelf]",x);
+		const {contents,header,trackingParams,itemSize,...y}=x; this.g(y);
 	}
 	/** @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
 		this.save_keys("[ChannelMetadataRenderer]",x);
+		const {channelMetadataRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {BrowseHeader} x */
 	BrowseHeader(x) {
 		this.save_keys("[BrowseHeader]",x);
+		if("feedTabbedHeaderRenderer" in x) {
+			return this.FeedTabbedHeaderRenderer(x);
+		} else if("c4TabbedHeaderRenderer" in x) {
+			return this.C4TabbedHeaderRenderer(x);
+		}
+		debugger;
+	}
+	/** @arg {C4TabbedHeaderRenderer} x */
+	C4TabbedHeaderRenderer(x) {
+		this.save_keys("[C4TabbedHeaderRenderer]",x);
+		const {c4TabbedHeaderRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {FeedTabbedHeaderRenderer} x */
+	FeedTabbedHeaderRenderer(x) {
+		this.save_keys("[FeedTabbedHeaderRenderer]",x);
+		const {feedTabbedHeaderRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {CacheMetadata} x */
 	CacheMetadata(x) {
 		this.save_keys("[CacheMetadata]",x);
+		const {isCacheHit,...y}=x; this.g(y);
 	}
 	/** @arg {StateTag} x */
 	StateTag(x) {
 		this.save_keys("[StateTag]",x);
+		if("instruction" in x) {
+			const {stateTag,instruction,...y}=x; this.g(y);
+			return;
+		}
+		const {stateTag,onStateTagModified,...y}=x; this.g(y);
 	}
 	/** @arg {SettingsSidebarRenderer} x */
 	SettingsSidebarRenderer(x) {
 		this.save_keys("[SettingsSidebarRenderer]",x);
+		const {settingsSidebarRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {EntityBatchUpdate} x */
 	EntityBatchUpdate(x) {
 		this.save_keys("[EntityBatchUpdate]",x);
+		const {entityBatchUpdate,...y}=x; this.g(y);
 	}
 	/** @arg {DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {
 		this.save_keys("[DesktopTopbarRenderer]",x);
+		const {desktopTopbarRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
 		this.save_keys("[BrowseContents]",x);
+		if("twoColumnBrowseResultsRenderer" in x) {
+			const {twoColumnBrowseResultsRenderer,...y}=x; this.g(y);
+			return;
+		}
+		const {feedFilterChipBarRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
 		this.save_keys("[ResponseReceivedAction]",x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) {
+			return this.AdsControlFlowOpportunityReceivedCommand(x);
+		}
+		this.ReloadContinuationItemsCommand(x);
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
 		this.save_keys("[ResolveUrlCommandMetadata]",x);
+		const {isVanityUrl,parentTrackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
 		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
+		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=x; this.g(y);
 	}
 	/** @arg {SearchResultsTab} x */
 	SearchResultsTab(x) {
 		this.save_keys("[SearchResultsTab]",x);
+		const {endpoint,title,selected,content,tabIdentifier,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
 	GetAddToPlaylistResponse(x) {
 		this.save_keys("[GetAddToPlaylistResponse]",x);
+		const {contents,responseContext,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {AttLogResponse} x */
 	AttLogResponse(x) {
 		this.save_keys("[AttLogResponse]",x);
+		const {responseContext,...y}=x; this.g(y);
 	}
 	/** @arg {ReelPlayerOverlayData} x */
 	ReelPlayerOverlayData(x) {
 		this.save_keys("[ReelPlayerOverlayData]",x);
+		const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y);
 	}
 	/** @arg {ClientMessages} x */
 	ClientMessages(x) {
 		this.save_keys("[ClientMessages]",x);
+		const {reconnectMessage,unableToReconnectMessage,fatalError,reconnectedMessage,genericError,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatEmoji} x */
 	LiveChatEmoji(x) {
 		this.save_keys("[LiveChatEmoji]",x);
+		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,isLocked,...y}=x; this.g(y);
 	}
 	/** @arg {MessageRenderer} x */
 	MessageRenderer(x) {
 		this.save_keys("[MessageRenderer]",x);
+		const {messageRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatParticipantsListRenderer} x */
 	LiveChatParticipantsListRenderer(x) {
 		this.save_keys("[LiveChatParticipantsListRenderer]",x);
+		const {liveChatParticipantsListRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatTickerRenderer} x */
 	LiveChatTickerRenderer(x) {
 		this.save_keys("[LiveChatTickerRenderer]",x);
+		const {liveChatTickerRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
 		this.save_keys("[LiveChatHeaderRenderer]",x);
+		const {liveChatHeaderRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
 		this.save_keys("[LiveChatPlaceholderItemRenderer]",x);
+		const {liveChatPlaceholderItemRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatTextMessageRenderer} x */
 	LiveChatTextMessageRenderer(x) {
 		this.save_keys("[LiveChatTextMessageRenderer]",x);
+		const {liveChatTextMessageRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistPanelContinuation} x */
 	PlaylistPanelContinuation(x) {
 		this.save_keys("[PlaylistPanelContinuation]",x);
+		const {playlistPanelContinuation,...y}=x; this.g(y);
 	}
 	/** @arg {ReportFormModalRenderer} x */
 	ReportFormModalRenderer(x) {
 		this.save_keys("[ReportFormModalRenderer]",x);
+		const {reportFormModalRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AutomixPreviewVideoRenderer} x */
 	AutomixPreviewVideoRenderer(x) {
 		this.save_keys("[AutomixPreviewVideoRenderer]",x);
+		const {automixPreviewVideoRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AutomixPreviewVideo} x */
 	AutomixPreviewVideo(x) {
 		this.save_keys("[AutomixPreviewVideo]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {ThumbnailOverlayResumePlayback} x */
 	ThumbnailOverlayResumePlayback(x) {
 		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {VideoMastheadAdV3} x */
 	VideoMastheadAdV3(x) {
 		this.save_keys("[VideoMastheadAdV3]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {RendererContentItem} x */
 	RendererContentItem(x) {
 		this.save_keys("[RendererContentItem]",x);
+		if("richItemRenderer" in x) {
+			this.RichItemRenderer(x);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {RichItemRenderer} x */
+	RichItemRenderer(x) {
+		this.save_keys("[RichItemRenderer]",x);
+		const {richItemRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
 		this.save_keys("[LoggingDirectives]",x);
+		const {trackingParams,visibility,enableDisplayloggerExperiment,...y}=x; this.g(y);
 	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
 		this.save_keys("[ShowEngagementPanelScrimAction]",x);
+		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=x; this.g(y);
 	}
 	/** @arg {ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
 		this.save_keys("[ChangeEngagementPanelVisibilityAction]",x);
+		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y);
 	}
 	/** @arg {EngagementPanelTitleHeaderRenderer} x */
 	EngagementPanelTitleHeaderRenderer(x) {
 		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
+		const {engagementPanelTitleHeaderRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
 		this.save_keys("[AdsEngagementPanelContentRenderer]",x);
+		const {adsEngagementPanelContentRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {ClipSectionRenderer} x */
 	ClipSectionRenderer(x) {
 		this.save_keys("[ClipSectionRenderer]",x);
+		const {clipSectionRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
 		this.save_keys("[StructuredDescriptionContentRenderer]",x);
+		const {structuredDescriptionContentRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {CommentRepliesItem} x */
 	CommentRepliesItem(x) {
 		this.save_keys("[CommentRepliesItem]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
 	}
 	/** @arg {WatchNextContinuationAction} x */
 	WatchNextContinuationAction(x) {
 		this.save_keys("[WatchNextContinuationAction]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
 	}
 	/** @arg {CommentsSectionContinuationAction} x */
 	CommentsSectionContinuationAction(x) {
 		this.save_keys("[CommentsSectionContinuationAction]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
 	}
 	/** @arg {BrowseFeedAction} x */
 	BrowseFeedAction(x) {
 		this.save_keys("[BrowseFeedAction]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
 	}
 	/** @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
 		this.save_keys("[GetMultiPageMenuAction]",x);
+		const {getMultiPageMenuAction,...y}=x; this.g(y);
 	}
 	/** @arg {FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
 		this.save_keys("[FeedbackResponseProcessedStatus]",x);
+		const {isProcessed,...y}=x; this.g(y);
 	}
 	/** @arg {UpdateEngagementPanelAction} x */
 	UpdateEngagementPanelAction(x) {
 		this.save_keys("[UpdateEngagementPanelAction]",x);
+		const {updateEngagementPanelAction,clickTrackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
 		this.save_keys("[AttBgChallenge]",x);
+		const {interpreterUrl,interpreterHash,program,globalName,...y}=x; this.g(y);
 	}
 	/** @arg {GuideSubscriptionsSectionRenderer} x */
 	GuideSubscriptionsSectionRenderer(x) {
 		this.save_keys("[GuideSubscriptionsSectionRenderer]",x);
+		const {guideSubscriptionsSectionRenderer,...y}=x; this.g(y);
 	}
 }
 //#endregion
