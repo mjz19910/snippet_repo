@@ -6792,9 +6792,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
-		this.x.get("codegen").codegen_new_typedef(x,null);
 		this.save_keys("[ReelPlayerOverlayRenderer]",x);
-		this.ReelPlayerOverlayData(x.reelPlayerOverlayRenderer);
+		const {reelPlayerOverlayRenderer,...y}=x; this.g(y);
+		this.ReelPlayerOverlayData(reelPlayerOverlayRenderer);
 	}
 	/** @arg {GetLiveChat} x */
 	GetLiveChat(x) {
