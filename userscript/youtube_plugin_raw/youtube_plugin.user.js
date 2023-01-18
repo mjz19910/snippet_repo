@@ -1027,7 +1027,13 @@ class MyReader {
 				if(this.noisy_log_level) console.log("\"field %o: VarInt\": %o",fieldId,first_num[0][1]);
 				break;
 			case 1:
-				first_num.push(["data_fixed64",fieldId,this.fixed64()]);
+				let last_pos=this.pos;
+				let f64=this.fixed64();
+				if(this.pos>this.cur_len) {
+					first_num.push(['error',last_pos]);
+					break;
+				}
+				first_num.push(["data_fixed64",fieldId,f64]);
 				break;
 			case 2: {
 				let size=this.uint32();
