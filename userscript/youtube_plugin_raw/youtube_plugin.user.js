@@ -5290,7 +5290,7 @@ class Generate {
 	}
 }
 //#endregion
-//#region HandleTypes
+//#region HandleTypesSupport
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ServiceData extends BaseService {
 	/** @protected @type {FormatItagArr} */
@@ -5490,7 +5490,11 @@ class SignalTypes extends BaseService {
 		this.z(actions,a => this.x.get("parent").ServiceEndpointAction(a));
 	}
 }
+//#endregion
+//#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
+	//#region
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
@@ -7338,6 +7342,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MusicLibraryStatusUpdateCommand]",x);
 		this.MusicLibraryStatusUpdate(x.musicLibraryStatusUpdateCommand);
 	}
+	//#endregion
+	//#region
 	/** @arg {MusicLibraryStatusUpdate} x */
 	MusicLibraryStatusUpdate(x) {
 		this.save_keys("[MusicLibraryStatusUpdate]",x);
@@ -8283,7 +8289,8 @@ class HandleTypes extends ServiceMethods {
 			case "GET_ACCOUNT_MENU": break;
 		}
 	}
-	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
+	//#endregion
+	//#region
 	/** @arg {Signal_GetAccountMenu} x */
 	GetAccountMenu(x) {
 		const {signal,actions,...y}=x; this.g(y);
@@ -8352,6 +8359,8 @@ class HandleTypes extends ServiceMethods {
 			this.ContinuationItemRenderer(x);
 		}
 	}
+	//#endregion
+	//#region
 	/** @arg {MusicResponsiveListItem} x */
 	MusicResponsiveListItem(x) {
 		this.save_keys("[MusicResponsiveListItem]",x);
@@ -8662,31 +8671,6 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.UploadEndpointData(uploadEndpoint);
 	}
-	//#region type_error
-	/** @arg {WatchNextContinuationAction} x */
-	WatchNextContinuationAction(x) {
-		this.save_keys("[WatchNextContinuationAction]",x);
-		const {targetId,continuationItems,...y}=x; this.g(y);
-		this.targetId(targetId);
-		// @ts-ignore
-		this.z(continuationItems,this.WatchNextItem);
-	}
-	/** @arg {CommentsSectionContinuationAction} x */
-	CommentsSectionContinuationAction(x) {
-		this.save_keys("[CommentsSectionContinuationAction]",x);
-		const {targetId,continuationItems,...y}=x; this.g(y);
-		this.targetId(targetId);
-		// @ts-ignore
-		this.z(continuationItems,this.CommentsSectionItem);
-	}
-	/** @arg {BrowseFeedAction} x */
-	BrowseFeedAction(x) {
-		this.save_keys("[BrowseFeedAction]",x);
-		const {targetId,continuationItems,...y}=x; this.g(y);
-		this.targetId(targetId);
-		// @ts-ignore
-		this.z(continuationItems,this.BrowseFeedItem);
-	}
 	/** @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
 		this.save_keys("[GetMultiPageMenuAction]",x);
@@ -8902,7 +8886,32 @@ class HandleTypes extends ServiceMethods {
 	GuideCollapsibleEntryRenderer(x) {
 		this.save_keys("[GuideCollapsibleEntryRenderer]",x);
 		const {guideCollapsibleEntryRenderer,...y}=x; this.g(y);
-		guideCollapsibleEntryRenderer;
+		this.GuideCollapsibleEntry(guideCollapsibleEntryRenderer);
+	}
+	//#region type_errors
+	/** @arg {CommentsSectionContinuationAction} x */
+	CommentsSectionContinuationAction(x) {
+		this.save_keys("[CommentsSectionContinuationAction]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
+		this.targetId(targetId);
+		// @ts-ignore
+		this.z(continuationItems,this.CommentsSectionItem);
+	}
+	/** @arg {BrowseFeedAction} x */
+	BrowseFeedAction(x) {
+		this.save_keys("[BrowseFeedAction]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
+		this.targetId(targetId);
+		// @ts-ignore
+		this.z(continuationItems,this.BrowseFeedItem);
+	}
+	/** @arg {WatchNextContinuationAction} x */
+	WatchNextContinuationAction(x) {
+		this.save_keys("[WatchNextContinuationAction]",x);
+		const {targetId,continuationItems,...y}=x; this.g(y);
+		this.targetId(targetId);
+		// @ts-ignore
+		this.z(continuationItems,this.WatchNextItem);
 	}
 	/** @arg {PlayerAnnotationsExpandedRenderer} x */
 	PlayerAnnotationsExpandedRenderer(x) {
@@ -9275,22 +9284,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VoiceSearchDialogRenderer} x */
 	VoiceSearchDialogRenderer(x) {
 		this.VoiceSearchDialog(x.voiceSearchDialogRenderer);
-		/*placeholderHeader,
-promptHeader,
-exampleQuery1,
-exampleQuery2,
-promptMicrophoneLabel,
-loadingHeader,
-connectionErrorHeader,
-connectionErrorMicrophoneLabel,
-permissionsHeader,
-permissionsSubtext,
-disabledHeader,
-disabledSubtext,
-microphoneButtonAriaLabel,
-exitButton,
-trackingParams,
-microphoneOffPromptHeader,*/
+	}
+	/** @arg {GuideCollapsibleEntry} x */
+	GuideCollapsibleEntry(x) {
+		x;
 	}
 	/** @arg {VoiceSearchDialogData} x */
 	VoiceSearchDialog(x) {
