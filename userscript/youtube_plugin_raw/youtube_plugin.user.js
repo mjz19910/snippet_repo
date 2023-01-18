@@ -765,7 +765,7 @@ class Base64Binary {
 	/** @arg {string} key_str @arg {RegExp} key_regexp */
 	constructor(key_str,key_regexp) {
 		this._keyStr=key_str;
-		this.regexp=key_regexp;
+		this.key_regexp=key_regexp;
 	}
 	/* will return a  Uint8Array type */
 	/** @arg {string} input */
@@ -794,7 +794,7 @@ class Base64Binary {
 		var j=0;
 
 		let prev_len=input.length;
-		let new_input=input.replace(new RegExp("[^"+this._keyStr+"]","g"),"");
+		let new_input=input.replace(this.key_regexp,"");
 		if(prev_len!==new_input.length) {
 			console.log("removed %o non base64 chars",prev_len-new_input.length);
 			console.log("base64_str: \"%s\"",input);
@@ -4537,7 +4537,7 @@ class ParserService extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
-	/** @typedef {Map<number,number|string|ParamMapType>} ParamMapType */
+	/** @typedef {Map<number,number|string|bigint|ParamMapType>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @arg {DecTypeNum[]} res_e */
 	make_param_map(res_e) {
@@ -4557,6 +4557,7 @@ class ParserService extends BaseService {
 					}
 					param_map.set(param[1],decoder.decode(param[2]));
 				} break;
+				case "data64": param_map.set(param[1],param[2]); break;
 				default: debugger; break;
 			}
 		}
@@ -4599,7 +4600,7 @@ class ParserService extends BaseService {
 			} break;
 			case "WatchEndpoint": this.parse_player_param_f40_f1(param_map); break;
 			case "GetTranscript": {
-				/** @type {(string|number|ParamMapType)[]} */
+				/** @type {(string|number|bigint|ParamMapType)[]} */
 				let transcript_args=[];
 				let pMap=param_map;
 				/** @arg {number} x */
