@@ -5538,6 +5538,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ContinuationEndpointRoot} x */
 	ContinuationEndpointRoot(x) {
+		this.save_keys("[ContinuationEndpointRoot]",x);
 		if("continuationCommand" in x) {
 			this.ContinuationCommand(x);
 		} else if("getTranscriptEndpoint" in x) {
@@ -5548,13 +5549,21 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetTranscriptEndpoint} x */
 	GetTranscriptEndpoint(x) {
-		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
+		this.save_keys("[GetTranscriptEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.ContinuationCommandData(continuationCommand);
+		this.GetTranscriptData(getTranscriptEndpoint);
+	}
+	/** @arg {GetTranscriptData} x */
+	GetTranscriptData(x) {
+		this.save_keys("[GetTranscriptData]",x);
+		const {params,...y}=x; this.g(y);
+		this.params(params);
 	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
+		this.save_keys("[ContinuationCommand]",x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
@@ -5574,6 +5583,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SearchApiWebCommandMetadata} x */
 	SearchApiWebCommandMetadata(x) {
+		this.save_keys("[SearchApiWebCommandMetadata]",x);
 		const {sendPost,apiUrl,...y}=x; this.g(y);
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/search") debugger;
@@ -5628,6 +5638,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
+		this.save_keys("[ThumbnailItem]",x);
 		const {url,width,height,...y}=x; this.g(y);
 		this.primitive_of(url,"string");
 		if(width) this.primitive_of(width,"number");
@@ -5704,6 +5715,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
+		this.save_keys("[WebCommandMetadata]",x);
 		if("rootVe" in x) {
 			this.rootVe(x.rootVe);
 			switch(x.webPageType) {
@@ -5726,6 +5738,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
+		this.save_keys("[WatchWebCommandMetadata]",x);
 		if(x.webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		switch(x.rootVe) {
 			default: debugger; break;
@@ -5734,6 +5747,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChannelWebCommandMetadata} x */
 	ChannelWebCommandMetadata(x) {
+		this.save_keys("[ChannelWebCommandMetadata]",x);
 		if(x.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
 		switch(x.rootVe) {
@@ -5743,6 +5757,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseWebCommandMetadata} x */
 	BrowseWebCommandMetadata(x) {
+		this.save_keys("[BrowseWebCommandMetadata]",x);
 		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
 		switch(x.rootVe) {
@@ -5794,6 +5809,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
+		this.save_keys("[YTNavigateFinishDetail]",x);
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=x; this.g(y);
 		this.PageEndpoint(endpoint);
 		this.DataResponsePageType(response);
@@ -5803,6 +5819,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {YTNavigateFinishDetail['endpoint']} x */
 	PageEndpoint(x) {
+		this.save_keys("[PageEndpoint]",x);
 		if("browseEndpoint" in x) {
 			return this.BrowseEndpoint(x);
 		} else if("watchEndpoint" in x) {
@@ -5812,6 +5829,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
+		this.save_keys("[DataResponsePageType]",x);
 		this.ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.BrowsePageResponse(x);
@@ -5830,7 +5848,7 @@ class HandleTypes extends ServiceMethods {
 	Action(x) {
 		let name_from_keys=this.get_name_from_keys(x);
 		if(!name_from_keys) {debugger; return;}
-		data_saver.save_keys(`[Action.${name_from_keys}]`,x);
+		this.save_keys(`[Action.${name_from_keys}]`,x);
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
