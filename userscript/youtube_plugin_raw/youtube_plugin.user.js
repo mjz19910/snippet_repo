@@ -7765,6 +7765,8 @@ class HandleTypes extends ServiceMethods {
 	AccountsListResponse(x) {
 		this.save_keys("[AccountsListResponse]",x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y);
+		this.TextWithRuns(selectText);
+		this.z(actions,a => this.Action(a));
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {

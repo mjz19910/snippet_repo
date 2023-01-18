@@ -5,6 +5,8 @@ type AllActions=
 	|RefreshPlaylistCommand
 	|RemoveFromGuideSectionAction
 	|RunAttestationCommand
+	|UpdateChannelSwitcherPageAction
 	|UpdateNotificationsUnseenCountAction
 	|UpdateSubscribeButtonAction
 	;
+;
