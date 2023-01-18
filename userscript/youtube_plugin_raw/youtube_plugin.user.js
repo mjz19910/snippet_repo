@@ -812,7 +812,7 @@ class MyReader {
 		let log_slow=true;
 		for(;this.pos<this.cur_len;loop_count++) {
 			let cur_byte=this.uint32();
-			if(!cur_byte) {
+			if(cur_byte===null) {
 				this.failed=true;
 				break;
 			}
@@ -1050,7 +1050,7 @@ class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
-				if(!size) {
+				if(size===null) {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 					break;
@@ -1083,7 +1083,7 @@ class MyReader {
 			} break;
 			case 3: {
 				let res=this.uint32();
-				if(!res) {
+				if(res===null) {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 					break;
@@ -1093,7 +1093,7 @@ class MyReader {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
 					first_num.push(["group",fieldId,skip_res]);
 					res=this.uint32();
-					if(!res) {
+					if(res===null) {
 						first_num.push(["error",fieldId]);
 						this.failed=true;
 						break;
@@ -4472,6 +4472,18 @@ class ParserService extends BaseService {
 	}
 	/** @arg {string} x */
 	create_param_map(x) {
+		let res_e=this.decode_b64_url_proto_obj(x);
+		if(!res_e) return null;
+		if(res_e.find(e=>e[0]==="error")) {
+			return null;
+		}
+		/** @type {ParamMapType} */
+		let param_map=this.make_param_map(res_e);
+		return param_map;
+	}
+	/** @arg {string} x */
+	create_param_map_dbg(x) {
+		debugger;
 		let res_e=this.decode_b64_url_proto_obj(x);
 		if(!res_e) return null;
 		if(res_e.find(e=>e[0]==="error")) {
