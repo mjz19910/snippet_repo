@@ -5226,7 +5226,7 @@ class HandleTypes extends ServiceMethods {
 		this._WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams(trackingParams);
 		this.PlayerOverlayRenderer(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a => this.SignalServiceEndpoint(a));
+		this.z(onResponseReceivedEndpoints,this.ResponseReceivedEndpointItem);
 		this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
 		this.DesktopTopbarRenderer(topbar);
 		this.z(pageVisualEffects,a => this.CinematicContainerRenderer(a));
@@ -5698,10 +5698,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("apiUrl" in x) {
 			switch(x.apiUrl) {
-				default: debugger; return;
-				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
-				case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+				default: debugger; break;
+				case "/youtubei/v1/playlist/get_add_to_playlist": break;
+				case "/youtubei/v1/browse/edit_playlist": this.EditPlaylistWebCommandMetadata(x); break;
+				case "/youtubei/v1/search": this.SearchApiWebCommandMetadata(x); break;
 			}
+			return;
 		}
 		debugger;
 	}

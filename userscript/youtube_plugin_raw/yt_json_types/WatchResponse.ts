@@ -4,7 +4,7 @@ type WatchResponse={
 	currentVideoEndpoint: WatchEndpoint;
 	trackingParams: string;
 	playerOverlays: PlayerOverlayRenderer;
-	onResponseReceivedEndpoints: SignalServiceEndpoint[];
+	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];
 	engagementPanels: EngagementPanelSectionListRenderer[];
 	topbar: DesktopTopbarRenderer;
 	pageVisualEffects: CinematicContainerRenderer[];
