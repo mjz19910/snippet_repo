@@ -4172,7 +4172,6 @@ class CodegenService extends BaseService {
 			||x.videoViewCountRenderer
 			||x.watchEndpoint
 			||x.videoOwnerRenderer
-			||x.subscribeButtonRenderer
 			||x.metadataRowContainerRenderer
 			||x.commandExecutorCommand
 			||x.changeEngagementPanelVisibilityAction
@@ -4184,6 +4183,8 @@ class CodegenService extends BaseService {
 		if(hg) return g();
 		let o_keys=this.filter_keys(this.get_keys_of(x));
 		if(o_keys.length===1) {
+			hg=x.subscribeButtonRenderer;
+			if(hg) return g();
 			if(x.webCommandMetadata) return "TYPE::CommandMetadata";
 			if(x.accessibilityData) return "TYPE::Accessibility";
 		}
@@ -6758,6 +6759,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
+		this.x.get("codegen").codegen_new_typedef(x,null);
 		this.save_keys("[ReelPlayerOverlayRenderer]",x);
 		this.ReelPlayerOverlayData(x.reelPlayerOverlayRenderer);
 	}
@@ -8597,14 +8599,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AttLogResponse]",x);
 		const {responseContext: {},...y}=x; this.g(y);
 	}
-	/** @arg {ReelPlayerOverlayData} x */
-	ReelPlayerOverlayData(x) {
-		this.save_keys("[ReelPlayerOverlayData]",x);
-		const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y);
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.trackingParams(trackingParams);
-		if(reelPlayerNavigationModel!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
-	}
 	/** @arg {ClientMessages} x */
 	ClientMessages(x) {
 		this.save_keys("[ClientMessages]",x);
@@ -9505,6 +9499,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
+	/** @arg {ReelPlayerOverlayData} x */
+	ReelPlayerOverlayData(x) {
+		this.save_keys("[ReelPlayerOverlayData]",x);
+		const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y);
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
+		this.trackingParams(trackingParams);
+		if(reelPlayerNavigationModel!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
+	}
 	//#endregion
 }
 //#endregion
