@@ -1,3 +1,17 @@
+type ShortsSurfaceIdentifier<T>={
+	surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
+	tag:T;
+}
+interface VE124975_EngagementPanelSectionItem {
+	header: EngagementPanelTitleHeaderRenderer;
+	content: StructuredDescriptionContentRenderer;
+	veType: 124975;
+	targetId: "engagement-panel-structured-description";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+	identifier: ShortsSurfaceIdentifier<this['targetId']>;
+	loggingDirectives: LoggingDirectives;
+};
+
 type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListContent>&{
 	panelIdentifier: EngagementSectionPanelId;
 	header: EngagementPanelTitleHeaderRenderer;
@@ -21,15 +35,7 @@ type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListConten
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	onShowCommands?: EngagementPanelSectionShowCommands[];
 	loggingDirectives: LoggingDirectives;
-}|ContentTemplate<EngagementPanelSectionListContent>&{
-	panelIdentifier?: EngagementSectionPanelId;
-	header?: EngagementPanelTitleHeaderRenderer;
-	veType: 124975;
-	targetId: EngagementPanelSectionTargetId;
-	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands?: EngagementPanelSectionShowCommands[];
-	loggingDirectives: LoggingDirectives;
-}|ContentTemplate<EngagementPanelSectionListContent>&{
+}|VE124975_EngagementPanelSectionItem|ContentTemplate<EngagementPanelSectionListContent>&{
 	panelIdentifier?: EngagementSectionPanelId;
 	header?: EngagementPanelTitleHeaderRenderer;
 	veType: 126250;
@@ -44,10 +50,7 @@ type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListConten
 	targetId: "engagement-panel-comments-section";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
-	identifier: {
-		surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";
-		tag: "shorts-comments-panel";
-	};
+	identifier: ShortsSurfaceIdentifier<"shorts-comments-panel">;
 	loggingDirectives: LoggingDirectives;
 };
 type EngagementPanelSectionListC=ContentTemplate<EngagementPanelSectionListContent>&{

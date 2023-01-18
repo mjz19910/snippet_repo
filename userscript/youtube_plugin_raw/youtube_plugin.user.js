@@ -7196,7 +7196,7 @@ class HandleTypes extends ServiceMethods {
 		this.codegen.codegen_new_typedef(x,cf);
 		if("veType" in x) {
 			switch(x.veType) {
-				case 76278:case 99999:case 124975:case 126250: {
+				case 76278:case 99999:case 126250: {
 					const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
 					debugger;
 					this.EngagementPanelSectionListContent(content);
@@ -7206,6 +7206,15 @@ class HandleTypes extends ServiceMethods {
 					if(targetId) this.EngagementPanelSectionTargetId(targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
+					this.LoggingDirectives(loggingDirectives);
+				} break;
+				case 124975: {
+					const {content,header,veType,targetId,visibility,loggingDirectives,...y}=x; this.g(y);
+					debugger;
+					this.EngagementPanelSectionListContent(content);
+					this.EngagementPanelTitleHeaderRenderer(header);
+					this.EngagementPanelSectionTargetId(targetId);
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
 				} break;
 				case 139722: {
