@@ -4181,14 +4181,34 @@ class CodegenService extends BaseService {
 			||x.urlEndpoint
 			;
 		if(hg) return g();
-		let o_keys=this.filter_keys(this.get_keys_of(x));
-		if(o_keys.length===1) {
-			hg=x.subscribeButtonRenderer;
-			if(hg) return g();
-			if(x.webCommandMetadata) return "TYPE::CommandMetadata";
-			if(x.accessibilityData) return "TYPE::Accessibility";
-		}
-		console.log("[no_json_replace_type] %o [%s] [%s]",x,o_keys.join(","),g(),"\n",r);
+		let keys=this.filter_keys(this.get_keys_of(x));
+		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
+		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
+		return null;
+	}
+	/** @arg {string|null} r @param {{[U in string]:unknown}} x @arg {string[]} keys */
+	get_json_replace_type_len_1(r,x,keys) {
+		let g=() => {
+			let o_keys=this.filter_keys(this.get_keys_of(x));
+			if(o_keys.length===1) {
+				let kk=this.get_name_from_keys(x);
+				if(kk) return `TYPE::${this.uppercase_first(kk)}`;
+				kk=o_keys[0];
+				return `TYPE::${this.uppercase_first(kk)}`;
+			} else if(o_keys.length>0) {
+				let kk=o_keys[0];
+				return `TYPE::${this.uppercase_first(kk)}`;
+			} else {
+				return "TYPE::{}";
+			}
+		};
+		let hg=x.subscribeButtonRenderer
+			||x.pivotButtonRenderer
+			;
+		if(hg) return g();
+		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
+		if(x.accessibilityData) return "TYPE::Accessibility";
+		console.log("[no_json_replace_type_1] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		return null;
 	}
 	/** @public @arg {string} x1 */
