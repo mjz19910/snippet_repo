@@ -5941,21 +5941,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateDescriptionAction} x */
 	UpdateDescriptionAction(x) {
+		this.save_keys(`[UpdateDescriptionAction]`,x);
 		let x1=x.updateDescriptionAction;
+		this.save_keys(`[UpdateDescriptionActionData]`,x1);
 		this.TextWithRuns(x1.description);
 	}
 	/** @arg {UpdateTitleAction} x */
 	UpdateTitleAction(x) {
+		this.save_keys(`[UpdateTitleAction]`,x);
 		let x1=x.updateTitleAction;
+		this.save_keys(`[UpdateTitleActionData]`,x1);
 		this.TextWithRuns(x1.title);
 	}
 	/** @arg {UpdateDateTextAction} x */
 	UpdateDateTextAction(x) {
+		this.save_keys(`[UpdateDateTextAction]`,x);
 		let x1=x.updateDateTextAction;
 		this.SimpleText(x1.dateText);
 	}
 	/** @arg {UpdateToggleButtonTextAction} x */
 	UpdateToggleButtonTextAction(x) {
+		this.save_keys(`[UpdateToggleButtonTextAction]`,x);
 		let x1=x.updateToggleButtonTextAction; x1;
 		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
 		this.SimpleText(x1.defaultText);
@@ -5963,17 +5969,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateViewershipAction} x */
 	UpdateViewershipAction(x) {
+		this.save_keys(`[UpdateViewershipAction]`,x);
 		let x1=x.updateViewershipAction;
 		this.VideoViewCountRenderer(x1.viewCount);
 	}
 	/** @arg {VideoViewCountRenderer} x */
 	VideoViewCountRenderer(x) {
+		this.save_keys(`[VideoViewCountRenderer]`,x);
 		let x1=x.videoViewCountRenderer;
 		this.VideoViewCountData(x1);
 	}
-	/** @arg {VideoViewCountData} x1 */
-	VideoViewCountData(x1) {
-		const {viewCount,shortViewCount,isLive,extraShortViewCount,...y}=x1; this.g(y);
+	/** @arg {VideoViewCountData} x */
+	VideoViewCountData(x) {
+		this.save_keys(`[VideoViewCountData]`,x);
+		const {viewCount,shortViewCount,isLive,extraShortViewCount,...y}=x; this.g(y);
 		this.SimpleText(viewCount);
 		if(shortViewCount) this.SimpleText(shortViewCount);
 		if(isLive!==void 0) this.primitive_of(isLive,"boolean");
