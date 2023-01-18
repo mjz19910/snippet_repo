@@ -5305,6 +5305,10 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @arg {unknown} x @arg {string} n @arg {boolean} [ret_val] */
+	codegen_new_typedef(x,n,ret_val) {
+		return this.x.get("codegen").codegen_new_typedef(x,n,ret_val);
+	}
 	/** @public @arg {string} x */
 	clickTrackingParams(x) {
 		this.primitive_of(x,"string");
@@ -9276,10 +9280,6 @@ class HandleTypes extends ServiceMethods {
 	ButtonCommand(name,x) {
 		let u_name=this.get_codegen_name(x);
 		this.codegen_new_typedef(x,`_button_${name}_${u_name}`);
-	}
-	/** @arg {unknown} x @arg {string} n @arg {boolean} [ret_val] */
-	codegen_new_typedef(x,n,ret_val) {
-		return this.x.get("codegen").codegen_new_typedef(x,n,ret_val);
 	}
 	/** @arg {VoiceSearchDialogRenderer} x */
 	VoiceSearchDialogRenderer(x) {
