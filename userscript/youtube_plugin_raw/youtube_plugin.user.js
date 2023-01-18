@@ -9010,6 +9010,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TopbarMenuButton} x */
 	TopbarMenuButton(x) {
+		const cf="TopbarMenuButton";
+		this.save_keys(`[${cf}]`,x);
 		const {icon,menuRenderer,trackingParams,accessibility,tooltip,style,...y}=x; this.g(y);
 		this.Icon(icon);
 		this.MultiPageMenuRenderer(menuRenderer);
