@@ -12,6 +12,7 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/youtube_plugin_raw/youtube_plugin.user.js
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
+//#region done
 //#region basic
 /** @private @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 function as(e,x=e) {
@@ -5495,6 +5496,7 @@ class SignalTypes extends BaseService {
 	}
 }
 //#endregion
+//#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
 	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
@@ -8293,8 +8295,6 @@ class HandleTypes extends ServiceMethods {
 			case "GET_ACCOUNT_MENU": break;
 		}
 	}
-	//#endregion
-	//#region
 	/** @arg {Signal_GetAccountMenu} x */
 	GetAccountMenu(x) {
 		const {signal,actions,...y}=x; this.g(y);
@@ -8364,7 +8364,6 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	//#endregion
-	//#region
 	/** @arg {MusicResponsiveListItem} x */
 	MusicResponsiveListItem(x) {
 		this.save_keys("[MusicResponsiveListItem]",x);
@@ -8892,6 +8891,7 @@ class HandleTypes extends ServiceMethods {
 		const {guideCollapsibleEntryRenderer,...y}=x; this.g(y);
 		this.GuideCollapsibleEntry(guideCollapsibleEntryRenderer);
 	}
+	//#endregion
 	//#region type_errors
 	/** @arg {CommentsSectionContinuationAction} x */
 	CommentsSectionContinuationAction(x) {
@@ -9288,26 +9288,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
 		x;
-	}
-	/** @arg {VoiceSearchDialogData} x */
-	VoiceSearchDialog(x) {
-		const {placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,trackingParams,microphoneOffPromptHeader,...y}=x; this.g(y);
-		this.TextWithRuns(placeholderHeader);
-		this.TextWithRuns(promptHeader);
-		this.TextWithRuns(exampleQuery1);
-		this.TextWithRuns(exampleQuery2);
-		this.TextWithRuns(promptMicrophoneLabel);
-		this.TextWithRuns(loadingHeader);
-		this.TextWithRuns(connectionErrorHeader);
-		this.TextWithRuns(connectionErrorMicrophoneLabel);
-		this.TextWithRuns(permissionsHeader);
-		this.TextWithRuns(permissionsSubtext);
-		this.TextWithRuns(disabledHeader);
-		this.TextWithRuns(disabledSubtext);
-		this.TextWithRuns(microphoneButtonAriaLabel);
-		this.ButtonRenderer(exitButton);
-		this.trackingParams(trackingParams);
-		this.TextWithRuns(microphoneOffPromptHeader);
 	}
 	//#endregion
 }
