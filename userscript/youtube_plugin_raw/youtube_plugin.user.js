@@ -5344,8 +5344,11 @@ class ServiceMethods extends ServiceData {
 	targetId(x) {
 		this.x.get("parser_service").parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
-		switch(x) {case "shopping_panel_for_entry_point_5": return;}
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
+			switch(x) {
+				case "shopping_panel_for_entry_point_22": return;
+				case "shopping_panel_for_entry_point_5": return;
+			}
 			if(!this.known_target_id.includes(x)) {
 				this.known_target_id.push(x);
 				console.log("[target_id.shopping_panel_for_entry_point] [%s]",x);
