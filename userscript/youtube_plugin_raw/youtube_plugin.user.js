@@ -6202,10 +6202,38 @@ class HandleTypes extends ServiceMethods {
 			return this.ConfirmDialogRenderer(x);
 		} else if("notificationActionRenderer" in x) {
 			return this.NotificationActionRenderer(x);
+		} else if("pdgBuyFlowRenderer" in x) {
+			return this.PdgBuyFlowRenderer(x);
 		} else {
-			this.x.get("codegen").generate_typedef(x.pdgBuyFlowRenderer.content[0].superVodBuyFlowContentRenderer.commentPreview,null);
 			debugger;
 		}
+	}
+	/** @arg {PdgBuyFlowRenderer} x */
+	PdgBuyFlowRenderer(x) {
+		this.save_keys(`[PdgBuyFlowRenderer]`,x);
+		const {pdgBuyFlowRenderer,...y}=x; this.g(y);
+		this.PdgBuyFlow(pdgBuyFlowRenderer);
+	}
+	/** @arg {PdgBuyFlow} x */
+	PdgBuyFlow(x) {
+		this.save_keys(`[PdgBuyFlow]`,x);
+		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y);
+		this.PdgBuyFlowHeaderRenderer(header);
+		this.z(content,a=>this.SuperVodBuyFlowContentRenderer(a));
+		this.trackingParams(trackingParams);
+		this.GetSurveyCommand(onCloseCommand);
+	}
+	/** @arg {GetSurveyCommand} x */
+	GetSurveyCommand(x) {
+		this.save_keys(`[GetSurveyCommand]`,x);
+	}
+	/** @arg {SuperVodBuyFlowContentRenderer} x */
+	SuperVodBuyFlowContentRenderer(x) {
+		this.save_keys(`[SuperVodBuyFlowContentRenderer]`,x);
+	}
+	/** @arg {PdgBuyFlowHeaderRenderer} x */
+	PdgBuyFlowHeaderRenderer(x) {
+		this.save_keys(`[PdgBuyFlowHeaderRenderer]`,x);
 	}
 	/** @arg {NotificationActionRenderer} x */
 	NotificationActionRenderer(x) {
@@ -7970,51 +7998,61 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
+		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y);
 		if(x.actions) {
 			if(x.actions.length!==1) debugger;
 			this.z(x.actions,a => this.Action(a));
 		}
-		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
 		this.save_keys("[DatasyncIdsResponse]",x);
+		const {responseContext: {},datasyncIds,...y}=x; this.g(y);
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
 		this.save_keys("[GetAccountSwitcherEndpointResponse]",x);
+		const {responseContext: {},selectText,actions,...y}=x; this.g(y);
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
 		this.save_keys("[AccountsListResponse]",x);
+		const {responseContext: {},selectText,actions,...y}=x; this.g(y);
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
 		this.save_keys("[ReelItemWatchResponse]",x);
+		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x; this.g(y);
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {
 		this.save_keys("[AccountSetSetting]",x);
+		const {responseContext: {},settingItemId,...y}=x; this.g(y);
 	}
 	/** @private @arg {FeedbackResponse} x */
 	FeedbackResponse(x) {
 		this.save_keys("[FeedbackResponse]",x);
+		const {responseContext: {},feedbackResponses,...y}=x; this.g(y);
 	}
 	/** @private @arg {GetTranscriptResponse} x */
 	GetTranscriptResponse(x) {
 		this.save_keys("[GetTranscriptResponse]",x);
+		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
 		this.save_keys("[SuccessResponse]",x);
+		const {responseContext: {},success,...y}=x; this.g(y);
 	}
 	/** @private @arg {AttGetResponse} x */
 	AttGetResponse(x) {
 		this.save_keys("[AttGetResponse]",x);
+		const {responseContext: {},challenge,bgChallenge,...y}=x; this.g(y);
 	}
 	/** @private @arg {GuideResponse} x */
 	GuideResponse(x) {
 		this.save_keys("[GuideResponse]",x);
+		const {responseContext: {},items,trackingParams,...y}=x; this.g(y);
 	}
 }
 //#endregion
