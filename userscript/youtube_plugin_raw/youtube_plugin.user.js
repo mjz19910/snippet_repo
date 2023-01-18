@@ -7919,36 +7919,36 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
+	/** @arg {TwoColumnWatchNextResultsData['results']['results']['contents'][number]} x */
+	handle_results_3(x) {
+		if("itemSectionRenderer" in x) {
+			if(this.is_ItemSectionRendererTemplate(x)) {
+				switch(x.itemSectionRenderer.sectionIdentifier) {
+					case "comment-item-section": return this.ItemSectionRenderer(x);
+				}
+			}
+			switch(x.itemSectionRenderer.sectionIdentifier) {
+				case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(x);
+			}
+		}
+		if("merchandiseShelfRenderer" in x) return;
+		if("videoPrimaryInfoRenderer" in x) return;
+		if("videoSecondaryInfoRenderer" in x) return;
+		let k=this.get_keys_of(x);
+		switch(k.at(0)) {
+			default: {
+				console.log("[new.WatchResultItem]",x,k.join());
+				debugger;
+			} break;
+		}
+	}
 	/** @arg {TwoColumnWatchNextResultsData['results']['results']} x */
 	handle_results_2(x) {
-		this.ContentsArrayTemplate(x,a => {
-			if("itemSectionRenderer" in a) {
-				if(this.is_ItemSectionRendererTemplate(a)) {
-					switch(a.itemSectionRenderer.sectionIdentifier) {
-						case "comment-item-section": return this.ItemSectionRenderer(a);
-					}
-				}
-				switch(a.itemSectionRenderer.sectionIdentifier) {
-					case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(a);
-				}
-			}
-			if("merchandiseShelfRenderer" in a) return;
-			if("videoPrimaryInfoRenderer" in a) return;
-			if("videoSecondaryInfoRenderer" in a) return;
-			let k=this.get_keys_of(a);
-			switch(k.at(0)) {
-				default: {
-					console.log("[new.WatchResultItem]",a,k.join());
-					debugger;
-				} break;
-			}
-		});
+		this.ContentsArrayTemplate(x,this.handle_results_3);
 	}
 	/** @arg {TwoColumnWatchNextResultsData['results']} x */
 	handle_results_1(x) {
-		this.ResultsTemplate(x,a => {
-			this.handle_results_2(a);
-		});
+		this.ResultsTemplate(x,this.handle_results_2);
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
