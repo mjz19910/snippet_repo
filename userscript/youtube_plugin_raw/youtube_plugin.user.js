@@ -6528,7 +6528,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
-		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
+		this.t(x.annotations,a => this.z(a,this.PlayerAnnotationsExpandedRenderer));
 	}
 	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
@@ -8584,7 +8584,7 @@ class HandleTypes extends ServiceMethods {
 	EntityBatchUpdateData(x) {
 		this.save_keys("[EntityBatchUpdateData]",x);
 		const {mutations,timestamp,...y}=x; this.g(y);
-		this.z(mutations,a => a);
+		this.z(mutations,this.EntityMutationItem);
 		this.TimestampWithNanos(timestamp);
 	}
 	/** @arg {TimestampWithNanos} x */
@@ -8661,7 +8661,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
-		x;
+		this.save_keys("[GuideCollapsibleEntryRenderer]",x);
+	}
+	/** @arg {PlayerAnnotationsExpandedRenderer} x */
+	PlayerAnnotationsExpandedRenderer(x) {
+		this.save_keys("[PlayerAnnotationsExpandedRenderer]",x);
+	}
+	/** @arg {EntityMutationItem} x */
+	EntityMutationItem(x) {
+		this.save_keys("[EntityMutationItem]",x);
 	}
 }
 //#endregion
