@@ -4124,6 +4124,19 @@ class CodegenService extends BaseService {
 }
 class ParserService extends BaseService {
 	log_playlist_parse=false;
+	/** @public @arg {YTNavigateFinishDetail['pageType']} x */
+	parse_page_type(x) {
+		switch(x) {
+			default: debugger; break;
+			case "browse": break;
+			case "channel": break;
+			case "playlist": break;
+			case "search": break;
+			case "settings": break;
+			case "shorts": break;
+			case "watch": break;
+		}
+	}
 	/** @public @arg {PlaylistId} x */
 	parse_playlist_id(x) {
 		if(x===void 0) {debugger; return;}
@@ -5725,10 +5738,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=x; this.g(y);
+		this.PageEndpoint(endpoint);
 		this.DataResponsePageType(response);
-		if(!this.eq_keys(this.get_keys_of(y),["pageType","fromHistory","navigationDoneMs"])) {
-			console.log(y);
-		}
+		this.x.get("parser_service").parse_page_type(pageType);
+	}
+	/** @arg {YTNavigateFinishDetail['endpoint']} x */
+	PageEndpoint(x) {
+		x;
 	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
