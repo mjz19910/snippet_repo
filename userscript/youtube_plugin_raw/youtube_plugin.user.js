@@ -3941,7 +3941,7 @@ class CodegenService extends BaseService {
 				continue;
 			}
 			if(c.endsWith("Renderer")) {
-				let ic=this.#uppercase_first(c);
+				let ic=this.uppercase_first(c);
 				ret_arr.push(`this.${ic}(x.${k});`);
 				continue;
 			}
@@ -3972,7 +3972,7 @@ class CodegenService extends BaseService {
 		let io=as(x[0]);
 		let c=this.get_name_from_keys(io);
 		if(c) {
-			let ic=this.#uppercase_first(c);
+			let ic=this.uppercase_first(c);
 			console.log("array key",c);
 			ret_arr.push(`this.z(x.${k},this.${ic});`);
 		}
@@ -3993,7 +3993,7 @@ class CodegenService extends BaseService {
 		let k=this.get_name_from_keys(x);
 		if(r_name) k=r_name;
 		if(k===null) return null;
-		let t_name=this.#uppercase_first(k);
+		let t_name=this.uppercase_first(k);
 		let keys=Object.keys(x);
 		let body=this.#generate_renderer_body(req_names,x,keys,t_name);
 		let tmp_1=`
@@ -4029,10 +4029,6 @@ class CodegenService extends BaseService {
 		} while(ps!==s);
 		return s;
 	}
-	/** @arg {string} x */
-	#uppercase_first(x) {
-		return x[0].toUpperCase()+x.slice(1);
-	}
 	/** @public @arg {unknown} x @arg {string|null} r @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_new_typedef(x,r,ret_val) {
 		let cg=this.#_codegen_new_typedef(x,r);
@@ -4049,7 +4045,7 @@ class CodegenService extends BaseService {
 		}
 		if(x===null) return;
 		if(x===void 0) return;
-		tn=this.#uppercase_first(tn);
+		tn=this.uppercase_first(tn);
 		let obj_count=0;
 		/** @private @type {{[x: number|string]:{}}} */
 		let xa=as(x);
@@ -4130,12 +4126,12 @@ class CodegenService extends BaseService {
 			console.log("[type_gen.o_keys]",o_keys);
 			if(o_keys.length===1) {
 				let kk=this.get_name_from_keys(x);
-				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
+				if(kk) return `TYPE::${this.uppercase_first(kk)}`;
 				kk=o_keys[0];
-				return `TYPE::${this.#uppercase_first(kk)}`;
+				return `TYPE::${this.uppercase_first(kk)}`;
 			} else if(o_keys.length>0) {
 				let kk=o_keys[0];
-				return `TYPE::${this.#uppercase_first(kk)}`;
+				return `TYPE::${this.uppercase_first(kk)}`;
 			} else {
 				return "TYPE::{}";
 			}
@@ -8159,10 +8155,10 @@ class HandleTypes extends ServiceMethods {
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
 		if(accessibility) console.log("[button.accessibility]");
 		if(accessibilityData) console.log("[button.accessibilityData]");
-		if(command) this.ButtonCommand(command);
+		if(command) this.ButtonCommand("command",command);
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		if(serviceEndpoint) this.g(serviceEndpoint);
+		if(serviceEndpoint) this.ButtonCommand("serviceEndpoint",serviceEndpoint);
 		if(navigationEndpoint) this.g(navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
@@ -9212,9 +9208,13 @@ class HandleTypes extends ServiceMethods {
 	UploadEndpointData(x) {
 		x;
 	}
-	/** @arg {ButtonCommand} x */
-	ButtonCommand(x) {
-		this.x.get("codegen").codegen_new_typedef(x,null);
+	/** @arg {string} name @arg {ButtonCommand} x */
+	ButtonCommand(name,x) {
+		let cg=this.x.get("codegen");
+		let rk=this.filter_keys(this.get_keys_of(x));
+		let kk=rk[0];
+		let u_name=this.uppercase_first(kk);
+		cg.codegen_new_typedef(x,`${name}_${u_name}`);
 	}
 	//#endregion
 }

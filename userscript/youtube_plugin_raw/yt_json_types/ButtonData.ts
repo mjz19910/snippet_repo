@@ -9,7 +9,7 @@ type ButtonData={
 	command?: ButtonCommand;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: {};
+	serviceEndpoint?: SignalServiceEndpoint;
 	navigationEndpoint?: {};
 	tooltip?: string;
 	size?: ButtonSizeType;
