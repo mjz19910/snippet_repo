@@ -5995,10 +5995,12 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		if("apiUrl" in x) {
+			/** @type {GenericWebCommandMetadata} */
 			switch(x.apiUrl) {
 				default: debugger; break;
-				case "/youtubei/v1/get_transcript": break;
-				case "/youtubei/v1/playlist/get_add_to_playlist": break;
+				case "/youtubei/v1/account/account_menu": this.AccountMenuWebCommandMetadata(x); break;
+				case "/youtubei/v1/get_transcript": this.GetTranscriptWebCommandMetadata(x); break;
+				case "/youtubei/v1/playlist/get_add_to_playlist": this.GetAddToPlaylistWebCommandMetadata(x); break;
 				case "/youtubei/v1/browse/edit_playlist": this.EditPlaylistWebCommandMetadata(x); break;
 				case "/youtubei/v1/search": this.SearchApiWebCommandMetadata(x); break;
 			}
@@ -9150,6 +9152,18 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
 		this.save_keys("[SignalNavigationEndpoint]",x);
+	}
+	/** @arg {GetTranscriptWebCommandMetadata} x */
+	GetTranscriptWebCommandMetadata(x) {
+		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
+	}
+	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
+	GetAddToPlaylistWebCommandMetadata(x) {
+		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
+	}
+	/** @arg {AccountMenuWebCommandMetadata} x */
+	AccountMenuWebCommandMetadata(x) {
+		this.save_keys("[AccountMenuWebCommandMetadata]",x);
 	}
 }
 //#endregion
