@@ -4056,6 +4056,9 @@ class CodegenService extends BaseService {
 		let tc=JSON.stringify(x,(k1,o) => {
 			if(k1==="") return o;
 			if(typeof o==="string") {
+				if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
+					return o;
+				}
 				if(o.length>max_str_len) {
 					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
 					return "TYPE::string";
