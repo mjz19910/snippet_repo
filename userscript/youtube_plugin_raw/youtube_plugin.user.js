@@ -4132,20 +4132,7 @@ class CodegenService extends BaseService {
 	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} x */
 	get_json_replacer_type(r,x) {
-		let g=() => {
-			let o_keys=this.filter_keys(this.get_keys_of(x));
-			if(o_keys.length===1) {
-				let kk=this.get_name_from_keys(x);
-				if(kk) return `TYPE::${this.uppercase_first(kk)}`;
-				kk=o_keys[0];
-				return `TYPE::${this.uppercase_first(kk)}`;
-			} else if(o_keys.length>0) {
-				let kk=o_keys[0];
-				return `TYPE::${this.uppercase_first(kk)}`;
-			} else {
-				return "TYPE::{}";
-			}
-		};
+		let g=() => this.json_auto_replace(x);
 		if(x.runs&&x.runs instanceof Array) return "TYPE::TextWithRuns";
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
 		if(x.simpleText) return "TYPE::SimpleText";
@@ -4186,22 +4173,24 @@ class CodegenService extends BaseService {
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		return null;
 	}
+	/** @param {{[U in string]:unknown}} x */
+	json_auto_replace(x) {
+		let o_keys=this.filter_keys(this.get_keys_of(x));
+		if(o_keys.length===1) {
+			let kk=this.get_name_from_keys(x);
+			if(kk) return `TYPE::${this.uppercase_first(kk)}`;
+			kk=o_keys[0];
+			return `TYPE::${this.uppercase_first(kk)}`;
+		} else if(o_keys.length>0) {
+			let kk=o_keys[0];
+			return `TYPE::${this.uppercase_first(kk)}`;
+		} else {
+			return "TYPE::{}";
+		}
+	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} x @arg {string[]} keys */
 	get_json_replace_type_len_1(r,x,keys) {
-		let g=() => {
-			let o_keys=this.filter_keys(this.get_keys_of(x));
-			if(o_keys.length===1) {
-				let kk=this.get_name_from_keys(x);
-				if(kk) return `TYPE::${this.uppercase_first(kk)}`;
-				kk=o_keys[0];
-				return `TYPE::${this.uppercase_first(kk)}`;
-			} else if(o_keys.length>0) {
-				let kk=o_keys[0];
-				return `TYPE::${this.uppercase_first(kk)}`;
-			} else {
-				return "TYPE::{}";
-			}
-		};
+		let g=() => this.json_auto_replace(x);
 		let hg=x.subscribeButtonRenderer
 			||x.pivotButtonRenderer
 			;
