@@ -9292,8 +9292,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
 		this.save_keys("[ReelResponse]",x);
-		// @ts-expect-error
-		const {...y}=x; this.g(y);
+		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=x; this.g(y);
+		this.ReelPlayerOverlayRenderer(overlay);
+		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
+		this.trackingParams(trackingParams);
+		this.DesktopTopbarRenderer(desktopTopbar);
+		if(!engagementPanels) debugger;
+		else {
+			this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
+		}
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
