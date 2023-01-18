@@ -8638,6 +8638,7 @@ class HandleTypes extends ServiceMethods {
 	SignalActionData(x) {
 		this.save_keys("[SignalActionData]",x);
 		const {signal,...y}=x; this.g(y);
+		/** @type {SignalEnum} */
 		switch(signal) {
 			default: debugger; break;
 			case "HISTORY_BACK": break;
