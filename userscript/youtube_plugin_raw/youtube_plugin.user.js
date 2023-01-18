@@ -8693,7 +8693,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.Visibility(visibility);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
-		this.TypesTemplate(gestures,a=>{
+		if(gestures) this.TypesTemplate(gestures,a=>{
 			switch(a) {
 				default: debugger; break;
 				case 4: break;
