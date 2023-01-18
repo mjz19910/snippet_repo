@@ -8730,7 +8730,26 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
 	SetSettingEndpointAutonavForDesktop(x) {
 		this.save_keys("[SetSettingEndpointAutonavForDesktop]",x);
-		const {...y}=x; this.g(y);
+		const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.SettingItemAutonavForDesktop(setSettingEndpoint);
+	}
+	/** @arg {SettingItemAutonavForDesktop<boolean>} x */
+	SettingItemAutonavForDesktop(x) {
+		this.save_keys("[SettingItemAutonavForDesktop]",x);
+		const {settingItemId,settingItemIdForClient,...y}=x;
+		if("boolValue" in y) {
+			const {boolValue,...a}=y; this.g(a);
+			this.primitive_of(boolValue,"boolean");
+		} else {
+			debugger;
+		}
+		switch(settingItemId) {
+			default: console.log("[new.server.setting_item_id]",settingItemId); break;
+			case "407": break;
+		}
+		console.log("[client.setting_item_id]",settingItemIdForClient);
 	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
@@ -8855,6 +8874,26 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.save_keys("[CommentRenderer]",x);
+	}
+	/** @arg {RichItemData} x */
+	RichItemData(x) {
+		x;
+	}
+	/** @arg {Visibility} x */
+	Visibility(x) {
+		x;
+	}
+	/** @arg {WatchNextItem} x */
+	WatchNextItem(x) {
+		x;
+	}
+	/** @arg {CommentsSectionItem} x */
+	CommentsSectionItem(x) {
+		x;
+	}
+	/** @arg {BrowseFeedItem} x */
+	BrowseFeedItem(x) {
+		x;
 	}
 }
 //#endregion
