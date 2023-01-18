@@ -4394,7 +4394,7 @@ class ParserService extends BaseService {
 				case "data32": param_map.set(param[1],param[2]); break;
 				case "child": {
 					x: if(param[3]) {
-						let err=param[3].find(e=>e[0]==="error");
+						let err=param[3].find(e => e[0]==="error");
 						if(err) break x;
 						param_map.set(param[1],this.make_param_map(param[3]));
 					}
@@ -6647,15 +6647,22 @@ class HandleTypes extends ServiceMethods {
 				default: debugger; break;
 				case "76278": break;
 				case "124975": break;
+				case "126250": break;
 			}
 		};
 		if(targetId) this.EngagementPanelSectionTargetId(targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-		if(onShowCommands) {
-			this.ChangeEngagementPanelVisibilityAction(onShowCommands[0]);
-			this.ShowEngagementPanelScrimAction(onShowCommands[1]);
-		}
+		if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 		this.LoggingDirectives(loggingDirectives);
+	}
+	/** @arg {EngagementPanelSectionShowCommands} x */
+	EngagementPanelSectionShowCommands(x) {
+		if("changeEngagementPanelVisibilityAction" in x) {
+			return this.ChangeEngagementPanelVisibilityAction(x);
+		} else if("showEngagementPanelScrimAction" in x) {
+			return this.ShowEngagementPanelScrimAction(x);
+		}
+		debugger;
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {

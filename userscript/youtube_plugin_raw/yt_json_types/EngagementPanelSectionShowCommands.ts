@@ -1,0 +1,2 @@
+type EngagementPanelSectionShowCommands=ChangeEngagementPanelVisibilityAction|
+	ShowEngagementPanelScrimAction;
