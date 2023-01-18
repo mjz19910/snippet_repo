@@ -731,7 +731,7 @@ class ObjectInfo {
 }
 ObjectInfo.instance=new ObjectInfo;
 class HandleRichGridRenderer {
-	debug=false;
+	enable_logging=false;
 	/** @readonly */
 	class_name="HandleRichGridRenderer";
 	/** @readonly */
@@ -742,7 +742,8 @@ class HandleRichGridRenderer {
 	}
 	/** @arg {string} path @arg {RichGrid} renderer */
 	richGridRenderer(path,renderer) {
-		if(this.debug) console.log("run handler richGridRenderer");
+		debugger;
+		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
@@ -753,7 +754,7 @@ class HandleRichGridRenderer {
 			}
 		}
 		if(renderer.contents) {
-			if(this.debug) console.log("on_contents",path);
+			if(this.enable_logging) console.log("on_contents",path);
 			let filtered=this.rendererContentItemArray.replace_array(renderer.contents);
 			if(filtered.length>0) {
 				renderer.contents=filtered;
@@ -4573,31 +4574,41 @@ class ParserService extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
-	/** @typedef {Map<number,number|string|bigint|ParamMapType>} ParamMapType */
+	/** @typedef {Map<number,number|string|bigint|["failed",DecTypeNum[]|null]|ParamMapType>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @arg {DecTypeNum[]} res_e */
 	make_param_map(res_e) {
 		/** @private @type {ParamMapType} */
-		let param_map=new Map();
+		let ret_map=new Map();
 		for(let param of res_e) {
 			switch(param[0]) {
-				case "data32": param_map.set(param[1],param[2]); break;
+				case "data_fixed32": case "data_fixed64":
+				case "data32": ret_map.set(param[1],param[2]); break;
 				case "child": {
 					x: if(param[3]) {
 						let err=param[3].find(e => e[0]==="error");
 						if(err) break x;
 						let u8_arr=param[2];
 						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/\w{4}/)) break x;
-						param_map.set(param[1],this.make_param_map(param[3]));
+						let p_map=this.make_param_map(param[3]);
+						if(!p_map) {
+							ret_map.set(param[1],["failed",param[3]]);
+							break;
+						}
+						ret_map.set(param[1],p_map);
 						break;
 					}
-					param_map.set(param[1],decoder.decode(param[2]));
+					ret_map.set(param[1],decoder.decode(param[2]));
 				} break;
-				case "data64": param_map.set(param[1],param[2]); break;
+				case "data64": ret_map.set(param[1],param[2]); break;
+				case "group": debugger; break;
+				case "info": debugger; break;
+				case "struct": debugger; break;
+				case "error": return null;
 				default: debugger; break;
 			}
 		}
-		return param_map;
+		return ret_map;
 	}
 	/** @arg {string} x */
 	create_param_map(x) {
@@ -4606,9 +4617,7 @@ class ParserService extends BaseService {
 		if(res_e.find(e => e[0]==="error")) {
 			return null;
 		}
-		/** @type {ParamMapType} */
-		let param_map=this.make_param_map(res_e);
-		return param_map;
+		return this.make_param_map(res_e);
 	}
 	/** @arg {string} x */
 	create_param_map_dbg(x) {
@@ -4618,9 +4627,7 @@ class ParserService extends BaseService {
 		if(res_e.find(e => e[0]==="error")) {
 			return null;
 		}
-		/** @type {ParamMapType} */
-		let param_map=this.make_param_map(res_e);
-		return param_map;
+		return this.make_param_map(res_e);
 	}
 	/** @arg {ParamsSection} for_ @arg {string} x */
 	on_endpoint_params(for_,x) {
@@ -4709,7 +4716,7 @@ class ParserService extends BaseService {
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
-		if(!param_map) {debugger; return;}
+		if(param_map===null) {debugger; return;}
 		this.parse_player_params_with_map(param_map);
 	}
 	/** @arg {ParamMapType} x */
@@ -6034,7 +6041,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ContinuationCommand]",x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		if(commandMetadata) this.CommandMetadata(commandMetadata);
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {ContinuationCommandData} x */
@@ -6115,8 +6122,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
 		this.save_keys("[Thumbnail]",x);
-		const {thumbnails,accessibility,...y}=x; this.g(y);
+		const {thumbnails,accessibility,isOriginalAspectRatio,...y}=x; this.g(y);
 		this.z(thumbnails,this.ThumbnailItem);
+		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		if(accessibility) this.Accessibility(accessibility);
 	}
 	/** @arg {ThumbnailItem} x */
@@ -7262,7 +7270,7 @@ class HandleTypes extends ServiceMethods {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
 			let yk=this.get_keys_of(identifier);
 			if(!this.eq_keys(yk,["surface","tag"])) debugger;
-			let a1=this.ShortsSurfaceIdentifier({tag:identifier.tag,surface:identifier.surface});
+			let a1=this.ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
 			if(a1!=="engagement-panel-structured-description") debugger;
 			this.g(a);
 			return;
@@ -7310,7 +7318,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case 124975: {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y);
-					if(panelIdentifier!=="engagement-panel-structured-description") debugger;
+					if(panelIdentifier&&panelIdentifier!=="engagement-panel-structured-description") debugger;
 					this.EngagementPanelTitleHeaderRenderer(header);
 					this.EngagementPanelSectionListContent(content);
 					if(targetId!=="engagement-panel-structured-description") debugger;
@@ -7323,7 +7331,6 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case 139722: {
 					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y);
-					debugger;
 					this.SectionListRenderer(content);
 					if(header) this.EngagementPanelTitleHeaderRenderer(header);
 					if(targetId) this.EngagementPanelSectionTargetId(targetId);
@@ -8003,6 +8010,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 			case "DEFAULT": break;
 			case "LIVE": break;
+			case "SHORTS": break;
 		}
 		if("icon" in y) {
 			const {icon,...y1}=y; this.g(y1);
@@ -9532,7 +9540,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SignalNavigationEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		debugger;
+		if(commandMetadata.webCommandMetadata.rootVe!==83769) debugger;
 		this.CommandMetadata(commandMetadata);
 		this.Signal_ChannelSwitcher(signalNavigationEndpoint);
 	}
