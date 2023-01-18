@@ -5484,6 +5484,14 @@ class ServiceMethods extends ServiceData {
 		this.on_root_visual_element(x);
 	}
 }
+/** @extends {BaseService<{parent:HandleTypes},{}>} */
+class SignalTypes  extends BaseService {
+	/** @arg {Signal_ClientSignal} x */
+	ClientSignal(x) {
+		const {signal,actions,...y}=x; this.g(y);
+		this.z(actions,this.x.get("parent").ServiceEndpointAction);
+	}
+}
 class HandleTypes extends ServiceMethods {
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
