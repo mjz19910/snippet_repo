@@ -6949,10 +6949,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistEditEndpointData} x */
 	PlaylistEditEndpointData(x) {
 		this.save_keys("[PlaylistEditEndpointData]",x);
-		this.playlistId(x.playlistId);
-		if(x.actions.length!==1) debugger;
-		this.PlaylistAction(x.actions[0]);
-		if(x.params) this.params(x.params);
+		const {playlistId,actions,params,...y}=x; this.g(y);
+		this.playlistId(playlistId);
+		if(actions.length!==1) debugger;
+		this.PlaylistAction(actions[0]);
+		if(params) this.params(params);
 	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
