@@ -4428,11 +4428,16 @@ class ParserService extends BaseService {
 		if(!res_e) {debugger; return;}
 		/** @type {ParamMapType} */
 		let param_map=this.make_param_map(res_e);
-		let param_obj=Object.fromEntries(param_map.entries());
 		switch(for_) {
-			default: console.log("[new_endpoint_params] [%s]",for_,param_obj); break;
-			case "WatchEndpoint": console.log("[new_watch_endpoint_params]",param_obj); break;
-			case "GetTranscript": console.log("[new_get_transcript_endpoint_params]",param_obj); break;
+			default: {
+				let param_obj=Object.fromEntries(param_map.entries());
+				console.log("[new_endpoint_params] [%s]",for_,param_obj);
+			} break;
+			case "WatchEndpoint": this.parse_player_param_f40_f1(param_map); break;
+			case "GetTranscript": {
+				let param_obj=Object.fromEntries(param_map.entries());
+				console.log("[new_get_transcript_endpoint_params]",param_obj);
+			} break;
 		}
 	}
 	/** @public @arg {string} x */
@@ -4486,7 +4491,8 @@ class ParserService extends BaseService {
 				debugger;
 			}
 		}
-		x;
+		let param_obj=Object.fromEntries(x.entries());
+		console.log("[new_watch_endpoint_params]",param_obj);
 	}
 	/** @arg {ParamMapType} x */
 	parse_player_param_f_40(x) {
