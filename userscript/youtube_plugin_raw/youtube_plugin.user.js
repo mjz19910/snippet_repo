@@ -8277,6 +8277,7 @@ class HandleTypes extends ServiceMethods {
 				case "STYLE_PRIMARY": break;
 				case "STYLE_SUGGESTIVE": break;
 				case "STYLE_TEXT": break;
+				case "STYLE_OPACITY": break;
 				case "STYLE_UNKNOWN": break;
 			}
 		}

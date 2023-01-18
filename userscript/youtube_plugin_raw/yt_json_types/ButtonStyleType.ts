@@ -1,5 +1,6 @@
 type ButtonStyleType=[
 	"STYLE_DEFAULT",
+	"STYLE_OPACITY",
 	"STYLE_PRIMARY",
 	"STYLE_SUGGESTIVE",
 	"STYLE_TEXT",
