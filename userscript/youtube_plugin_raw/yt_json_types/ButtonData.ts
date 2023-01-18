@@ -4,8 +4,8 @@ type ButtonIcon=Icon<[
 ][number]>;
 
 type ButtonData={
-	accessibility?: AccessibilityDataContent;
-	accessibilityData?: AccessibilityData;
+	accessibility?: AccessibilityData;
+	accessibilityData?: Accessibility;
 	command?: {};
 	icon?: ButtonIcon;
 	isDisabled?: boolean;

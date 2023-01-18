@@ -4,7 +4,7 @@ type GuideEntryRoot={
 	badges: GuideEntryBadges;
 	trackingParams: string;
 	formattedTitle: SimpleText;
-	accessibility: AccessibilityData;
+	accessibility: Accessibility;
 	entryData: GuideEntryData;
 	presentationStyle: string;
 };

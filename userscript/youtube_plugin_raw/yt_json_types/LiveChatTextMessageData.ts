@@ -7,6 +7,6 @@ type LiveChatTextMessageData={
 	authorBadges?: LiveChatAuthorBadgeRenderer[];
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
-	contextMenuAccessibility: AccessibilityData;
+	contextMenuAccessibility: Accessibility;
 	timestampText: TextWithRuns;
 };

@@ -2,7 +2,7 @@ type TopbarMenuButton={
 	icon: Icon<"VIDEO_CALL">;
 	menuRenderer: MultiPageMenuRenderer;
 	trackingParams: string;
-	accessibility: AccessibilityData;
+	accessibility: Accessibility;
 	tooltip: string;
 	style: "STYLE_DEFAULT";
 };

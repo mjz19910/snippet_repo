@@ -1,4 +1,4 @@
 type SimpleText={
-	accessibility?: AccessibilityData;
+	accessibility?: Accessibility;
 	simpleText: string;
 };

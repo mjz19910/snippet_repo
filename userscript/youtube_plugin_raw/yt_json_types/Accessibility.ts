@@ -1,0 +1,1 @@
+type Accessibility={accessibilityData: AccessibilityData;};

@@ -4063,40 +4063,8 @@ class CodegenService extends BaseService {
 				if(keys.includes(k1)) return [o[0]];
 				return [o[0]];
 			}
-			if(o.runs&&o.runs instanceof Array) return "TYPE::TextWithRuns";
-			if(o.thumbnails&&o.thumbnails instanceof Array) return "TYPE::Thumbnail";
-			if(o.iconType&&typeof o.iconType==="string") return `TYPE::Icon<"${o.iconType}">`;
-			let g=() => {
-				let o_keys=this.filter_keys(this.get_keys_of(o));
-				console.log("[type_gen.o_keys]",o_keys);
-				if(o_keys.length===1) {
-					let kk=this.get_name_from_keys(o);
-					if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
-				} else {
-					let kk=o_keys[0];
-					if(typeof kk!=="string") throw new Error();
-					if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
-				}
-				throw new Error();
-			};
-			if(o.browseEndpoint) return g();
-			if(o.cinematicContainerRenderer) return g();
-			if(o.desktopTopbarRenderer) return g();
-			if(o.engagementPanelSectionListRenderer) return g();
-			if(o.openPopupAction) return g();
-			if(o.pdgBuyFlowHeaderRenderer) return g();
-			if(o.playerOverlayRenderer) return g();
-			if(o.playlistPanelVideoRenderer) return g();
-			if(o.signalServiceEndpoint) return g();
-			if(o.twoColumnWatchNextResults) return g();
-			if(o.watchEndpoint) return g();
-			if(o.getSurveyCommand) return g();
-			if(o.buttonRenderer) return g();
-			if(o.superVodBuyFlowContentRenderer) return g();
-			if(o.pdgCommentPreviewRenderer) return g();
-			if(o.pdgColorSliderRenderer) return g();
-			if(o.pdgCommentOptionRenderer) return g();
-			if(o.webCommandMetadata) return "TYPE::CommandMetadata";
+			let res_type=this.get_json_replacer_type(o);
+			if(res_type!==null) return res_type;
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
@@ -4128,6 +4096,45 @@ class CodegenService extends BaseService {
 			ret=`\ntype ${tn}=${tc}\n`;
 		}
 		return ret;
+	}
+	get_json_replacer_type(x) {
+		let g=() => {
+			let o_keys=this.filter_keys(this.get_keys_of(x));
+			console.log("[type_gen.o_keys]",o_keys);
+			if(o_keys.length===1) {
+				let kk=this.get_name_from_keys(x);
+				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
+			} else {
+				let kk=o_keys[0];
+				if(typeof kk!=="string") throw new Error();
+				if(kk) return `TYPE::${this.#uppercase_first(kk)}`;
+			}
+			throw new Error();
+		};
+		if(x.runs&&x.runs instanceof Array) return "TYPE::TextWithRuns";
+		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
+		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
+		if(x.browseEndpoint) return g();
+		if(x.cinematicContainerRenderer) return g();
+		if(x.desktopTopbarRenderer) return g();
+		if(x.engagementPanelSectionListRenderer) return g();
+		if(x.openPopupAction) return g();
+		if(x.pdgBuyFlowHeaderRenderer) return g();
+		if(x.playerOverlayRenderer) return g();
+		if(x.playlistPanelVideoRenderer) return g();
+		if(x.signalServiceEndpoint) return g();
+		if(x.twoColumnWatchNextResults) return g();
+		if(x.watchEndpoint) return g();
+		if(x.getSurveyCommand) return g();
+		if(x.buttonRenderer) return g();
+		if(x.superVodBuyFlowContentRenderer) return g();
+		if(x.pdgCommentPreviewRenderer) return g();
+		if(x.pdgColorSliderRenderer) return g();
+		if(x.pdgCommentOptionRenderer) return g();
+		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
+		if(x.accessibilityData) return "TYPE::CommandMetadata";
+		console.log("[no_json_replace_type]",x,g(x));
+		return null;
 	}
 	/** @public @arg {string} x1 */
 	generate_depth(x1) {
@@ -7438,13 +7445,13 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
 		if(sendPost!==true) debugger;
 	}
-	/** @arg {AccessibilityData} x */
+	/** @arg {Accessibility} x */
 	AccessibilityData(x) {
 		this.save_keys("[Accessibility]",x);
 		const {accessibilityData,...y}=x; this.g(y);
 		this.AccessibilityDataContent(accessibilityData);
 	}
-	/** @arg {AccessibilityDataContent} x */
+	/** @arg {AccessibilityData} x */
 	AccessibilityDataContent(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
@@ -7470,7 +7477,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title,this.handle_accessibility);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {{accessibility?:AccessibilityData}} x */
+	/** @arg {{accessibility?:Accessibility}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.AccessibilityData(x.accessibility);
@@ -7791,7 +7798,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:AccessibilityData})=>void} f */
+	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
 	SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
 		if(!x) {debugger; return;}

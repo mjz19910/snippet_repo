@@ -7,7 +7,7 @@ type ReelItemData={
 	navigationEndpoint: {};
 	menu: MenuRenderer;
 	trackingParams: string;
-	accessibility:AccessibilityData;
+	accessibility:Accessibility;
 	style: "REEL_ITEM_STYLE_AVATAR_CIRCLE";
 	videoType: "REEL_VIDEO_TYPE_VIDEO";
 	loggingDirectives: LoggingDirectives;

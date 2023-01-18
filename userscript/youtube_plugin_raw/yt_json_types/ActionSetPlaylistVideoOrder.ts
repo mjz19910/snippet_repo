@@ -2,6 +2,6 @@ type ActionSetPlaylistVideoOrder={
 	title: string;
 	selected: false;
 	serviceEndpoint: {};
-	accessibility: AccessibilityData;
+	accessibility: Accessibility;
 	trackingParams: string;
 };

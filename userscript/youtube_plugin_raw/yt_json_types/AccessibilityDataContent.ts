@@ -1,1 +1,0 @@
-type AccessibilityDataContent={label?: string;};

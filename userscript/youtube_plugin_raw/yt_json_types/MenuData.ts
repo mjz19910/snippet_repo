@@ -1,6 +1,6 @@
 type MenuData={
 	trackingParams: string;
-	accessibility?: AccessibilityData;
+	accessibility?: Accessibility;
 	items: MenuServiceItemRenderer[];
 	targetId?: string;
 };

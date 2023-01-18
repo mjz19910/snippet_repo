@@ -1,4 +1,4 @@
 type TextRunsAndAccessibility={
 	runs: TextRun[];
-	accessibility: AccessibilityData;
+	accessibility: Accessibility;
 };

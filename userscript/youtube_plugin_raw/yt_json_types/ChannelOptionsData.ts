@@ -3,5 +3,5 @@ type ChannelOptionsData={
 	avatarEndpoint: {};
 	name: string;
 	links: TextWithRuns[];
-	avatarAccessibility: AccessibilityData;
+	avatarAccessibility: Accessibility;
 };
