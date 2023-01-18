@@ -1,9 +1,12 @@
 type EngagementPanelTitleHeader={
 	title: TextWithRuns;
 	contextualInfo: TextWithRuns;
-	menu: {
-		sortFilterSubMenuRenderer: {};
-	};
+	menu: SortFilterSubMenuRenderer;
+	visibilityButton: ButtonRenderer;
+	trackingParams: string;
+}|{
+	title: TextWithRuns;
+	informationButton: ButtonRenderer;
 	visibilityButton: ButtonRenderer;
 	trackingParams: string;
 };
