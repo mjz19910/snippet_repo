@@ -7919,17 +7919,21 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
+	/** @arg {Extract<TwoColumnWatchNextResultsData['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
+	handle_results_4(x) {
+		if(this.is_ItemSectionRendererTemplate(x)) {
+			switch(x.itemSectionRenderer.sectionIdentifier) {
+				case "comment-item-section": return this.ItemSectionRenderer(x);
+			}
+		}
+		switch(x.itemSectionRenderer.sectionIdentifier) {
+			case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(x);
+		}
+	}
 	/** @arg {TwoColumnWatchNextResultsData['results']['results']['contents'][number]} x */
 	handle_results_3(x) {
 		if("itemSectionRenderer" in x) {
-			if(this.is_ItemSectionRendererTemplate(x)) {
-				switch(x.itemSectionRenderer.sectionIdentifier) {
-					case "comment-item-section": return this.ItemSectionRenderer(x);
-				}
-			}
-			switch(x.itemSectionRenderer.sectionIdentifier) {
-				case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(x);
-			}
+			x;
 		}
 		if("merchandiseShelfRenderer" in x) return;
 		if("videoPrimaryInfoRenderer" in x) return;

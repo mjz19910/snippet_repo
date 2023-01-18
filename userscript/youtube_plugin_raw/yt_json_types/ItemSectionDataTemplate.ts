@@ -6,4 +6,4 @@ type ItemSectionDataTemplate<T_sectionIdentifier,T_targetId>=ContentsArrayTempla
 type ItemSectionDataTemplate_Section<T_sectionIdentifier>=ContentsArrayTemplate<ItemSectionItem>&{
 	trackingParams: string;
 	sectionIdentifier: T_sectionIdentifier;
-}
+};
