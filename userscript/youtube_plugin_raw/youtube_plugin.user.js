@@ -7775,7 +7775,17 @@ class HandleTypes extends ServiceMethods {
 	TwoColumnWatchNextResultsData(x) {
 		this.save_keys("[TwoColumnWatchNextResultsData]",x);
 		const {results,secondaryResults,playlist,autoplay,conversationBar}=x; //,...y}=x; this.g(y);
-		this.ResultsTemplate(results,a => a);
+		this.ResultsTemplate(results,a => {
+			this.ContentsArrayTemplate(a,a => {
+				let k=this.get_keys_of(a);
+				switch(k[0]) {
+					default: debugger; break;
+					case "itemSectionRenderer": break;
+					case "videoPrimaryInfoRenderer": break;
+					case "videoSecondaryInfoRenderer": break;
+				}
+			});
+		});
 		this.SecondaryResultsTemplate(secondaryResults,a => {
 			if("contents" in a) {
 				this.z(a.contents,a => {
