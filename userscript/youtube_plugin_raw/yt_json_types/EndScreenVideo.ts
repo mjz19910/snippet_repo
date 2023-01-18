@@ -7,7 +7,7 @@ type EndScreenVideo={
 	lengthInSeconds?: number;
 	navigationEndpoint: WatchEndpoint;
 	trackingParams: string;
-	shortViewCountText: SimpleText;
+	shortViewCountText: TextT;
 	publishedTimeText: SimpleText;
 	thumbnailOverlays: ThumbnailOverlayItem[];
 };
