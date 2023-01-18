@@ -1,5 +1,5 @@
 type MenuServiceItemData={
-	text: {};
+	text: TextWithRuns;
 	icon: Icon<"NOT_INTERESTED">;
 	serviceEndpoint: ServiceEndpointTemplate<FeedbackEndpointPlugin>;
 	trackingParams: string;

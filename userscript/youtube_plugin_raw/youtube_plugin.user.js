@@ -6928,7 +6928,7 @@ class HandleTypes extends ServiceMethods {
 	MenuServiceItemData(x) {
 		this.save_keys("[MenuServiceItemData]",x);
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
-		this.g(text);
+		this.TextWithRuns(text);
 		this.Icon(icon);
 		this.ServiceEndpointTemplate(serviceEndpoint,a => this.FeedbackEndpointPlugin(a));
 		this.trackingParams(trackingParams);
