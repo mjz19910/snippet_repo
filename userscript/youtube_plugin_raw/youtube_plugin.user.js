@@ -686,7 +686,6 @@ class Base64Binary {
 	constructor(key_str) {
 		this._keyStr=key_str;
 	}
-	_keyStr="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 	/* will return a  Uint8Array type */
 	/** @arg {string} input */
 	decodeByteArray(input) {
@@ -714,7 +713,7 @@ class Base64Binary {
 		var j=0;
 
 		let prev_len=input.length;
-		let new_input=input.replace(/[^A-Za-z0-9\+\/\=]/g,"");
+		let new_input=input.replace(new RegExp("["+this._keyStr+"]","g"),"");
 		if(prev_len!==new_input.length) {
 			console.log("removed %o non base64 chars",prev_len-new_input.length);
 			console.log("base64_str: \"%s\"",input);
