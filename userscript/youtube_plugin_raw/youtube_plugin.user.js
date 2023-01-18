@@ -6227,27 +6227,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ClientMessages} x */
 	ClientMessages(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		this.save_keys("[ClientMessages]",x);
 	}
 	/** @arg {LiveChatEmoji} x */
 	LiveChatEmoji(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		this.save_keys("[LiveChatEmoji]",x);
 	}
 	/** @arg {MessageRenderer} x */
 	MessageRenderer(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		this.save_keys("[MessageRenderer]",x);
 	}
 	/** @arg {LiveChatParticipantsListRenderer} x */
 	LiveChatParticipantsListRenderer(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		this.save_keys("[LiveChatParticipantsListRenderer]",x);
 	}
 	/** @arg {LiveChatTickerRenderer} x */
 	LiveChatTickerRenderer(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		this.save_keys("[LiveChatTickerRenderer]",x);
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		this.save_keys("[LiveChatHeaderRenderer]",x);
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
@@ -6644,15 +6644,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
-		x;
+		this.save_keys("[LoggingDirectives]",x);
 	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
-		x;
+		this.save_keys("[ShowEngagementPanelScrimAction]",x);
 	}
 	/** @arg {ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
-		x;
+		this.save_keys("[ChangeEngagementPanelVisibilityAction]",x);
 	}
 	/** @arg {EngagementPanelTitleHeaderRenderer} x */
 	EngagementPanelTitleHeaderRenderer(x) {
