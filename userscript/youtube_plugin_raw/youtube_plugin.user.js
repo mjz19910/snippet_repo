@@ -7303,15 +7303,7 @@ class HandleTypes extends ServiceMethods {
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
-						const {identifier,...a}=y;
-						x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
-							if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
-							let yk=this.get_keys_of(identifier);
-							if(!this.eq_keys(yk,["surface","tag"])) debugger;
-							let a1=this.ShortsSurfaceIdentifier({tag:identifier.tag,surface:identifier.surface});
-							if(a1!=="engagement-panel-structured-description") debugger;
-						}
-						this.g(a);
+						this.force_parse_identifier(y);
 						return;
 					}
 					this.g(y);
@@ -9558,7 +9550,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
 		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
-		const {apiUrl,...y}=x; this.g(y);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
