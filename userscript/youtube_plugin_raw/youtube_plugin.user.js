@@ -4099,11 +4099,11 @@ class CodegenService extends BaseService {
 			return g+":";
 		});
 		tc=this.replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n").trim();
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n").trimEnd();
 			return `{${vi}}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(/\[\s+([^\[\]]*)\s+\]/g,(_a,/**@type {string} */v) => {
-			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e => e).join("\n").trim();
+			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).filter(e => e).join("\n").trimEnd();
 			return `${vi}:ARRAY_TAG`;
 		});
 		tc=tc.replaceAll(":ARRAY_TAG","[]");
