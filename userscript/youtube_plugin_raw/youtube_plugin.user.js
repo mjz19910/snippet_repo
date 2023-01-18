@@ -5486,7 +5486,7 @@ class SignalTypes extends BaseService {
 	ClientSignal(x) {
 		const {signal,actions,...y}=x; this.g(y);
 		if(signal!=="CLIENT_SIGNAL") debugger;
-		this.z(actions,this.x.get("parent").ServiceEndpointAction);
+		this.z(actions,a => this.x.get("parent").ServiceEndpointAction(a));
 	}
 }
 class HandleTypes extends ServiceMethods {
@@ -8168,7 +8168,7 @@ class HandleTypes extends ServiceMethods {
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		x: if(serviceEndpoint) {
 			if("signalServiceEndpoint" in serviceEndpoint) {
-				this.SignalServiceEndpoint(serviceEndpoint); 
+				this.SignalServiceEndpoint(serviceEndpoint);
 				break x;
 			}
 			debugger;
