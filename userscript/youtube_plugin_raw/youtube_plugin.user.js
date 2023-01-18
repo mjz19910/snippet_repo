@@ -6908,6 +6908,18 @@ class HandleTypes extends ServiceMethods {
 	TabData(x) {
 		this.save_keys("[TabData]",x);
 		if("tabIdentifier" in x) {
+			switch(x.tabIdentifier) {
+				case "FEwhat_to_watch": {
+					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y);
+					if(selected!==true) debugger;
+					if("richGridRenderer" in content) {
+						this.RichGridRenderer(content);
+					} else {
+						debugger;
+					}
+					this.trackingParams(trackingParams);
+				} return;
+			}
 			console.log("[tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
 			return;
 		}
