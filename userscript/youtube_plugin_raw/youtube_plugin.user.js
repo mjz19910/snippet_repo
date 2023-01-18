@@ -6037,10 +6037,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {UnknownWebCommandMetadata} x */
-	UnknownWebCommandMetadata(x) {
-		x;
-	}
 	/** @arg {WatchPageWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
 		this.save_keys("[WatchWebCommandMetadata]",x);
@@ -8620,10 +8616,6 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.UploadEndpointData(uploadEndpoint);
 	}
-	/** @arg {UploadEndpointData} x */
-	UploadEndpointData(x) {
-		x;
-	}
 	//#region type_error
 	/** @arg {WatchNextContinuationAction} x */
 	WatchNextContinuationAction(x) {
@@ -9209,6 +9201,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
+		x;
+	}
+	/** @arg {UnknownWebCommandMetadata} x */
+	UnknownWebCommandMetadata(x) {
+		x;
+	}
+	/** @arg {UploadEndpointData} x */
+	UploadEndpointData(x) {
 		x;
 	}
 	//#endregion
