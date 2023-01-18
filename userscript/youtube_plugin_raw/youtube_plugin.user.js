@@ -4877,7 +4877,7 @@ class ParserService extends BaseService {
 			case "pdg": return this.get_pdg_type(x);
 		}
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",string]>} x */
 	get_pdg_type(x) {
 		switch(x[3]) {
 			case "get_pdg_buy_flow": break;
@@ -4888,7 +4888,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","music",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","music",string]>} x */
 	get_music_type(x) {
 		switch(x[3]) {
 			case "get_search_suggestions": break;
@@ -4899,7 +4899,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","share",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","share",string]>} x */
 	get_share_type(x) {
 		switch(x[3]) {
 			case "get_share_panel": break;
@@ -4910,7 +4910,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",...string[]]>} x */
+	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",string]>} x */
 	get_playlist_type(x) {
 		switch(x[3]) {
 			case "get_add_to_playlist": break;
