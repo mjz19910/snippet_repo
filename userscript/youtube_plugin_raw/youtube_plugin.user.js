@@ -5047,6 +5047,39 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	filter_out_keys(keys,to_remove) {
+		to_remove=to_remove.slice();
+		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		let ok_e=[];
+		for(let i=0;i<keys.length;i++) {
+			let rm_idx=to_remove.findIndex(e => e===keys[i]);
+			if(rm_idx>=0) {
+				to_remove.splice(rm_idx,1);
+				continue;
+			}
+			ok_e.push(as(keys[i]));
+		}
+		return ok_e;
+	}
+	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[Exclude<GetMaybeKeys<T>, SI>],k: Exclude<GetMaybeKeys<T>, SI>)=>void} y @arg {SI[]} excl */
+	w(x,y,excl=[]) {
+		if(x===void 0) return;
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		if(keys.length===0) {
+			debugger;
+			return;
+		}
+		for(let k of keys) {
+			y.call(this,x[k],k);
+		}
+	}
+	/** @template {{}} T @arg {T|undefined} x @arg {(x:T)=>void} f */
+	t(x,f) {
+		if(!x) return;
+		f(x);
+	}
 	/** @arg {PlaylistId} x */
 	playlistId(x) {
 		this.x.get("parser_service").parse_playlist_id(x);
@@ -5767,21 +5800,6 @@ class HandleTypes extends ServiceMethods {
 		console.log("pt",x);
 		debugger;
 	}
-	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
-	filter_out_keys(keys,to_remove) {
-		to_remove=to_remove.slice();
-		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-		let ok_e=[];
-		for(let i=0;i<keys.length;i++) {
-			let rm_idx=to_remove.findIndex(e => e===keys[i]);
-			if(rm_idx>=0) {
-				to_remove.splice(rm_idx,1);
-				continue;
-			}
-			ok_e.push(as(keys[i]));
-		}
-		return ok_e;
-	}
 	/** @arg {AllActions} x */
 	Action(x) {
 		let name_from_keys=this.get_name_from_keys(x);
@@ -5968,51 +5986,49 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
-		this.w(x,this.AdsControlFlowOpportunityReceivedCommandData,split_string("clickTrackingParams"));
+		this.save_keys("[AdsControlFlowOpportunityReceivedCommand]",x);
+		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
-		x;
+		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
 	}
 	/** @arg {TwoColumnSearchResultsRenderer} x */
 	TwoColumnSearchResultsRenderer(x) {
+		this.save_keys("[TwoColumnSearchResultsRenderer]",x);
 		this.TwoColumnSearchResults(x.twoColumnSearchResultsRenderer);
 	}
 	/** @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
+		this.save_keys("[TwoColumnSearchResults]",x);
 		this.SectionListRenderer(x.primaryContents);
 	}
 	/** @arg {SectionListRenderer} x */
 	SectionListRenderer(x) {
+		this.save_keys("[SectionListRenderer]",x);
 		this.SectionListData(x.sectionListRenderer);
 	}
 	/** @arg {TabbedSearchResultsRenderer} x */
 	TabbedSearchResultsRenderer(x) {
-		const cf="TabbedSearchResultsRenderer";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys("[TabbedSearchResultsRenderer]",x);
 		this.TabbedSearchResults(x.tabbedSearchResultsRenderer);
 	}
 	/** @arg {TabbedSearchResults} x */
 	TabbedSearchResults(x) {
-		const cf="TabbedSearchResults";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys("[TabbedSearchResults]",x);
 		const {tabs: a,...y}=x; this.g(y);
 		this.z(a,a => this.SearchResultsTabRenderer(a));
 	}
 	/** @arg {SearchResultsTabRenderer} x */
 	SearchResultsTabRenderer(x) {
-		const cf="SearchResultsTabRenderer";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys("[SearchResultsTabRenderer]",x);
 		this.SearchResultsTab(x.tabRenderer);
 	}
 	/** @arg {SearchResultsTab} x */
 	SearchResultsTab(x) {
-		const cf="SearchResultsTab";
-		this.save_keys(`[${cf}]`,x);
-		let ka=this.get_keys_of(x);
-		for(let k of ka) {
-			this.save_keys(`[${cf}.${k}]`,x[k]);
-		}
+		this.save_keys("[SearchResultsTab]",x);
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
@@ -6021,9 +6037,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
-		const cf="GetSharePanel";
+		this.save_keys("[GetSharePanel]",x);
 		if(x.actions) this.z(x.actions,a => this.Action(a));
-		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
 	GetAddToPlaylistResponse(x) {
@@ -6035,41 +6050,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[SubscribeResponse]",x);
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 	}
 	/** @arg {UnsubscribeResponse} x */
 	UnsubscribeResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[UnsubscribeResponse]",x);
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
-		if(x.actions) this.z(x.actions,a => this.Action(a));
 		this.save_keys("[ModifyChannelPreferenceResponse]",x);
+		if(x.actions) this.z(x.actions,a => this.Action(a));
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
 		this.save_keys("[PlayerResponse]",x);
 		this.t(x.annotations,a => this.z(a,a => this.w(a,a => a)));
-	}
-	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[Exclude<GetMaybeKeys<T>, SI>],k: Exclude<GetMaybeKeys<T>, SI>)=>void} y @arg {SI[]} excl */
-	w(x,y,excl=[]) {
-		if(x===void 0) return;
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		if(keys.length===0) {
-			debugger;
-			return;
-		}
-		for(let k of keys) {
-			y.call(this,x[k],k);
-		}
-	}
-	/** @template {{}} T @arg {T|undefined} x @arg {(x:T)=>void} f */
-	t(x,f) {
-		if(!x) return;
-		f(x);
 	}
 	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
@@ -6638,9 +6635,7 @@ class HandleTypes extends ServiceMethods {
 			this.SignalServiceEndpointCommandMetadata(commandMetadata);
 			this.SignalServiceEndpointData(signalServiceEndpoint);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
-			const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=x; this.g(y);
-			this.clickTrackingParams(clickTrackingParams);
-			this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
+			this.AdsControlFlowOpportunityReceivedCommand(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
 			const {clickTrackingParams,changeKeyedMarkersVisibilityCommand,...y}=x; this.g(y);
 			this.clickTrackingParams(clickTrackingParams);
