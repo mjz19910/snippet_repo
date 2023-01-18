@@ -5348,7 +5348,7 @@ class ServiceMethods extends ServiceData {
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			if(!this.known_target_id.includes(x)) {
 				this.known_target_id.push(x);
-				console.log("target_id.shopping_panel_for_entry_point",x);
+				console.log("[target_id.shopping_panel_for_entry_point] [%s]",x);
 			}
 			return;
 		}

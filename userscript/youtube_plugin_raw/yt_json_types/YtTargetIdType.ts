@@ -9,5 +9,5 @@ type YtTargetIdType=[
 	TranscriptSearchPanelData['targetId'],
 	UpdateEngagementPanelData['targetId'],
 	WatchNextContinuationAction['targetId'],
-	"shopping_panel_for_entry_point_5",
+	`shopping_panel_for_entry_point_${"5"|"22"}`,
 ][number];
