@@ -7103,7 +7103,7 @@ class HandleTypes extends ServiceMethods {
 	NavigationEndpointCommandMetadata(x) {
 		this.save_keys("[NavigationEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y);
-		this.VE3611_WebCommandMetadata(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3611_WebCommandMetadata} x */
 	VE3611_WebCommandMetadata(x) {
