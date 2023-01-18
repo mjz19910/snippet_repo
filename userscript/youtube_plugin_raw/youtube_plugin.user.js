@@ -7631,7 +7631,7 @@ class HandleTypes extends ServiceMethods {
 		if(lengthInSeconds) this.primitive_of(lengthInSeconds,"number");
 		this._WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
-		this.SimpleText(shortViewCountText);
+		this.TextT(shortViewCountText);
 		this.SimpleText(publishedTimeText);
 		this.g(y);
 	}
