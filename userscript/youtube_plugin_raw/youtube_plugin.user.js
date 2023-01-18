@@ -8158,7 +8158,7 @@ class HandleTypes extends ServiceMethods {
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
 		if(accessibility) console.log("[button.accessibility]");
 		if(accessibilityData) console.log("[button.accessibilityData]");
-		if(command) this.g(command);
+		if(command) this.ButtonCommand(command);
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		if(serviceEndpoint) this.g(serviceEndpoint);
@@ -9209,6 +9209,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
+		x;
+	}
+	/** @arg {ButtonCommand} x */
+	ButtonCommand(x) {
 		x;
 	}
 	//#endregion
