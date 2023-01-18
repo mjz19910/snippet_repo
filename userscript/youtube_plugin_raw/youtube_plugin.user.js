@@ -8501,7 +8501,7 @@ class HandleTypes extends ServiceMethods {
 		this._ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
 		this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
-		if(!this.str_starts_with("/shorts/",url)) debugger;
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(cachedReelWatchSequenceResponse) this.ReelWatchSequenceResponse(cachedReelWatchSequenceResponse);
 	}
@@ -8512,7 +8512,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="search") debugger;
 		this.SearchEndpoint(endpoint);
 		this.SearchResponse(response);
-		if(!this.str_starts_with("/results?search_query=",url)) debugger;
+		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
 	/** @arg {SearchEndpoint} x */
@@ -9300,7 +9300,7 @@ class HandleTypes extends ServiceMethods {
 	ShortsPageWebCommandMetadata(x) {
 		this.save_keys("[ShortsPageWebCommandMetadata]",x);
 		const {url,webPageType,rootVe: {},...y}=x; this.g(y);
-		if(!this.str_starts_with("/shorts/",url)) debugger;
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
 	}
