@@ -1,4 +1,8 @@
-type PageWebCommandMetadata=BrowsePageWebCommandMetadata|
-	ChannelPageWebCommandMetadata|
-	SearchPageWebCommandMetadata|
-	WatchPageWebCommandMetadata;
+type PageWebCommandMetadata=
+	|BrowsePageWebCommandMetadata
+	|ChannelPageWebCommandMetadata
+	|SearchPageWebCommandMetadata
+	|WatchPageWebCommandMetadata
+	|ShortsPageWebCommandMetadata;
+	;
+;

@@ -5506,20 +5506,25 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {
 		this.x.get("parser_service").parse_playlist_id(x);
 	}
-	/** @public @arg {keyof VEMap} x */
+	/** @public @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
 		let ss=`${x}`;
 		switch(ss) {
-			case "3611": break;
-			case "3832": break;
-			case "3854": break;
-			case "6827": break;
-			case "11487": break;
-			case "23462": break;
-			case "83769": break;
-			case "96368": break;
+			case "3611": return;
+			case "3832": return;
+			case "3854": return;
+			case "4724": break;
+			case "6827": return;
+			case "11487": return;
+			case "23462": return;
+			case "37414": break;
+			case "83769": return;
+			case "96368": return;
+			default:
+		}
+		switch(ss) {
 			default: debugger;
 		}
 	}
@@ -5543,7 +5548,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(x) {
 		this.x.get("parser_service").on_player_params(x);
 	}
-	/** @arg {keyof VEMap} x */
+	/** @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -6088,8 +6093,10 @@ class HandleTypes extends ServiceMethods {
 				default: debugger; return;
 				case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
 				case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
-				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
+				case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
+				case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
 				case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
+				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
 			}
 		}
 		if("apiUrl" in x) {
@@ -9514,6 +9521,14 @@ class HandleTypes extends ServiceMethods {
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.trackingParams(trackingParams);
 		if(reelPlayerNavigationModel!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
+	}
+	/** @arg {SearchPageWebCommandMetadata} x */
+	SearchPageWebCommandMetadata(x) {
+		x;
+	}
+	/** @arg {ShortsPageWebCommandMetadata} x */
+	ShortsPageWebCommandMetadata(x) {
+		x;
 	}
 	//#endregion
 }
