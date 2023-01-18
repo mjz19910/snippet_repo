@@ -7999,9 +7999,9 @@ class HandleTypes extends ServiceMethods {
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y);
-		if(x.actions) {
-			if(x.actions.length!==1) debugger;
-			this.z(x.actions,a => this.Action(a));
+		if(actions) {
+			if(actions.length!==1) debugger;
+			this.z(actions,a => this.Action(a));
 		}
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
