@@ -5699,7 +5699,7 @@ class HandleTypes extends ServiceMethods {
 		if("apiUrl" in x) {
 			switch(x.apiUrl) {
 				default: debugger; return;
-				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistCommandMetadata({webCommandMetadata: x});
+				case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
 				case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
 			}
 		}
@@ -7032,9 +7032,9 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {EditPlaylistCommandMetadata} x */
-	EditPlaylistCommandMetadata(x) {
-		const {webCommandMetadata: {apiUrl,sendPost,...y1},...y}=x; this.g(y1); this.g(y);
+	/** @arg {EditPlaylistWebCommandMetadata} x */
+	EditPlaylistWebCommandMetadata(x) {
+		const {apiUrl,sendPost,...y}=x; this.g(y);
 		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
 		if(sendPost!==true) debugger;
 	}
