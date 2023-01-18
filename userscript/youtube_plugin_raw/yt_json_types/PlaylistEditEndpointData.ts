@@ -1,5 +1,5 @@
 type PlaylistEditEndpointData={
 	playlistId: "WL";
-	actions: ENUM_ACTIONS[];
+	actions: [PlaylistAction];
 	params?: string; 
 };

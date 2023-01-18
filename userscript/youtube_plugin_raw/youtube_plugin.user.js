@@ -6930,17 +6930,50 @@ class HandleTypes extends ServiceMethods {
 		const {text,icon,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.TextWithRuns(text);
 		this.Icon(icon);
-		this.ServiceEndpointTemplate(serviceEndpoint,a => this.FeedbackEndpointPlugin(a));
+		this.ServiceEndpointTemplate(serviceEndpoint,this.MenuServiceEndpoints);
 		this.trackingParams(trackingParams);
+	}
+	/** @arg {MenuServiceEndpoints} x */
+	MenuServiceEndpoints(x) {
+		if("feedbackEndpoint" in x) {
+			return this.FeedbackEndpointPlugin(x);
+		} else if("playlistEditEndpoint" in x) {
+			return this.PlaylistEditEndpoint(x);
+		}
+	}
+	/** @arg {PlaylistEditEndpoint} x */
+	PlaylistEditEndpoint(x) {
+		this.save_keys("[PlaylistEditEndpoint]",x);
+		this.PlaylistEditEndpointData(x.playlistEditEndpoint);
+	}
+	/** @arg {PlaylistEditEndpointData} x */
+	PlaylistEditEndpointData(x) {
+		this.save_keys("[PlaylistEditEndpointData]",x);
+		this.playlistId(x.playlistId);
+		if(x.actions.length!==1) debugger;
+		this.PlaylistAction(x.actions[0]);
+	}
+	/** @arg {PlaylistAction} x */
+	PlaylistAction(x) {
+		switch(x.action) {
+			default: debugger; break;
+			case "ACTION_ADD_VIDEO": {
+				const {action,addedVideoId,...y}=x; this.g(y);
+				this.videoId(addedVideoId);
+			} break;
+			case "ACTION_REMOVE_VIDEO_BY_VIDEO_ID": {
+				const {action,removedVideoId,...y}=x; this.g(y);
+				this.videoId(removedVideoId);
+			} break;
+			case "ACTION_SET_PLAYLIST_VIDEO_ORDER": {
+				const {action,...y}=x; this.g(y);
+			} break;
+		}
 	}
 	/** @arg {FeedbackEndpointPlugin} x */
 	FeedbackEndpointPlugin(x) {
 		this.save_keys("[FeedbackEndpointPlugin]",x);
-		if("feedbackEndpoint" in x) {
-			x.feedbackEndpoint;
-			return;
-		}
-		debugger;
+		this.FeedbackEndpointData(x.feedbackEndpoint);
 	}
 	/** @arg {FeedbackEndpointData} x */
 	FeedbackEndpointData(x) {
