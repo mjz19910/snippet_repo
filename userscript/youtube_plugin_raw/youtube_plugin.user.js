@@ -8881,7 +8881,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideEntryDataContent]",x);
 		const {guideEntryId,...y}=x; this.g(y);
 		if(this.str_starts_with("RD",guideEntryId)) {
-			console.log("[guideEntryId.length]",guideEntryId.length,guideEntryId);
+			console.log("[guideEntryId.RD.length]",guideEntryId.length,guideEntryId);
+		} else if(this.str_starts_with("UC",guideEntryId)) {
+			console.log("[guideEntryId.UC.length]",guideEntryId.length,guideEntryId);
 		} else {
 			debugger;
 		}
@@ -9214,7 +9216,7 @@ class HandleTypes extends ServiceMethods {
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
 		let u_name=this.uppercase_first(kk);
-		cg.codegen_new_typedef(x,`${name}_${u_name}`);
+		cg.codegen_new_typedef(x,`_button_${name}_${u_name}`);
 	}
 	//#endregion
 }

@@ -1,3 +1,3 @@
 type GuideEntryDataContent={
-	guideEntryId: `RD${string}`;
+	guideEntryId: `RD${string}`|`UC${string}`;
 };
