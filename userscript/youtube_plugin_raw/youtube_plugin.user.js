@@ -713,7 +713,7 @@ class Base64Binary {
 		var j=0;
 
 		let prev_len=input.length;
-		let new_input=input.replace(new RegExp("["+this._keyStr+"]","g"),"");
+		let new_input=input.replace(new RegExp("[^"+this._keyStr+"]","g"),"");
 		if(prev_len!==new_input.length) {
 			console.log("removed %o non base64 chars",prev_len-new_input.length);
 			console.log("base64_str: \"%s\"",input);
@@ -4413,6 +4413,8 @@ class ParserService extends BaseService {
 					x: if(param[3]) {
 						let err=param[3].find(e => e[0]==="error");
 						if(err) break x;
+						let u8_arr=param[2];
+						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/\w{4}/)) break x;
 						param_map.set(param[1],this.make_param_map(param[3]));
 						break;
 					}
