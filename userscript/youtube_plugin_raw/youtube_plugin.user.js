@@ -9344,52 +9344,52 @@ class HandleTypes extends ServiceMethods {
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
 	}
-	//#endregion
-	//#region TODO_minimal_member_fns
 	/** @arg {HotkeyDialog} x */
 	HotkeyDialog(x) {
-		x;
+		this.save_keys("[HotkeyDialog]",x);
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
-		x;
+		this.save_keys("[TopbarLogo]",x);
 	}
 	/** @arg {UnknownWebCommandMetadata} x */
 	UnknownWebCommandMetadata(x) {
-		x;
+		this.save_keys("[UnknownWebCommandMetadata]",x);
 	}
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
-		x;
+		this.save_keys("[UploadEndpointData]",x);
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
-		x;
+		this.save_keys("[GuideCollapsibleEntry]",x);
 	}
 	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
 	ItemSectionRendererTemplate_Section(x) {
-		x;
+		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {
-		x;
+		this.save_keys("[MerchandiseShelfRenderer]",x);
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
-		x;
+		this.save_keys("[VideoPrimaryInfoRenderer]",x);
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
-		x;
+		this.save_keys("[VideoSecondaryInfoRenderer]",x);
 	}
 	/** @arg {NextWebCommandMetadata} x */
 	NextWebCommandMetadata(x) {
-		x;
+		this.save_keys("[NextWebCommandMetadata]",x);
 	}
 	/** @arg {SetSettingWebCommandMetadata} x */
 	SetSettingWebCommandMetadata(x) {
-		x;
+		this.save_keys("[SetSettingWebCommandMetadata]",x);
 	}
+	//#endregion
+	//#region TODO_minimal_member_fns
 	//#endregion
 }
 //#endregion
