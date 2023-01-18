@@ -5732,13 +5732,17 @@ class HandleTypes extends ServiceMethods {
 		/** @type {`${typeof rootVisualElementType}`} */
 		let s=`${rootVisualElementType}`;
 		switch(s) {
-			case "3832": break;
-			case "3854": break;
-			case "4724": break;
-			case "5754": break;
-			case "6827": break;
-			case "23462": break;
-			case "96368": break;
+			case "3611": return;
+			case "3832": return;
+			case "3854": return;
+			case "4724": return;
+			case "5754": return;
+			case "6827": return;
+			case "11487": return;
+			case "23462": return;
+			case "37414": return;
+			case "83769": return;
+			case "96368": return;
 			default: debugger; break;
 		}
 	}
