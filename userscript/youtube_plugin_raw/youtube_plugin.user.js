@@ -6227,27 +6227,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ClientMessages} x */
 	ClientMessages(x) {
-		x;
+		this.save_keys("[LiveChatContinuationData]",x);
 	}
 	/** @arg {LiveChatEmoji} x */
 	LiveChatEmoji(x) {
-		x;
+		this.save_keys("[LiveChatContinuationData]",x);
 	}
 	/** @arg {MessageRenderer} x */
 	MessageRenderer(x) {
-		x;
+		this.save_keys("[LiveChatContinuationData]",x);
 	}
 	/** @arg {LiveChatParticipantsListRenderer} x */
 	LiveChatParticipantsListRenderer(x) {
-		x;
+		this.save_keys("[LiveChatContinuationData]",x);
 	}
 	/** @arg {LiveChatTickerRenderer} x */
 	LiveChatTickerRenderer(x) {
-		x;
+		this.save_keys("[LiveChatContinuationData]",x);
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
-		x;
+		this.save_keys("[LiveChatContinuationData]",x);
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
@@ -6295,6 +6295,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatItem} x */
 	LiveChatItem(x) {
+		this.save_keys("[LiveChatItem]",x);
 		if("liveChatViewerEngagementMessageRenderer" in x) {
 			return this.LiveChatViewerEngagementMessageRenderer(x);
 		} else if("liveChatTextMessageRenderer" in x) {
@@ -6307,12 +6308,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
 		this.save_keys("[LiveChatPlaceholderItemRenderer]",x);
-		x;
 	}
 	/** @arg {LiveChatTextMessageRenderer} x */
 	LiveChatTextMessageRenderer(x) {
 		this.save_keys("[LiveChatTextMessageRenderer]",x);
-		x;
 	}
 	/** @arg {LiveChatViewerEngagementMessageRenderer} x */
 	LiveChatViewerEngagementMessageRenderer(x) {
@@ -6356,6 +6355,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {InvalidationIdData} x */
 	InvalidationIdData(x) {
+		this.save_keys("[InvalidationIdData]",x);
 		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=x; this.g(y);
 		this.primitive_of(objectSource,"number");
 		this.primitive_of(objectId,"string");
@@ -6369,9 +6369,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
-		const cf="GetNotificationMenuResponse";
+		this.save_keys("[GetNotificationMenuResponse]",x);
 		this.z(x.actions,a => this.Action(a));
-		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
