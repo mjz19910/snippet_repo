@@ -1896,7 +1896,7 @@ function main() {
 	/** @private @type {typeof fetch|null} */
 	let original_fetch=null;
 	fetch_inject.__proxy_target__=window.fetch;
-	modify_global_env();
+	services.modify_env.modify_global_env();
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types);
