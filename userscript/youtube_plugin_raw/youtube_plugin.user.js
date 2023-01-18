@@ -6957,10 +6957,16 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(clickTrackingParams);
-		this.g(commandMetadata);
+		this.EditPlaylistCommandMetadata(commandMetadata);
 		/** @type {{}} */
 		let t=as(y);
 		f(as(t));
+	}
+	/** @arg {EditPlaylistCommandMetadata} x */
+	EditPlaylistCommandMetadata(x) {
+		const {webCommandMetadata: {apiUrl,sendPost,...y1},...y}=x; this.g(y1); this.g(y);
+		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		if(sendPost!==true) debugger;
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
