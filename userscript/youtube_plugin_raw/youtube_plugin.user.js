@@ -2324,16 +2324,17 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @type {[string,number|number[]][]} */
 	#new_numbers=[];
-	/** @public @arg {string} key @arg {number|number[]} x */
+	/** @public @arg {`[${string}]`} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(x===void 0) {debugger; return;}
+		let k=split_string_once(split_string_once(key,"[")[1],"]")[0];
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
-		let p=this.#seen_numbers.find(e => e[0]===key);
+		let p=this.#seen_numbers.find(e => e[0]===k);
 		if(!p) {
 			cur=["one",[]];
-			p=[key,cur];
+			p=[k,cur];
 			this.#seen_numbers.push(p);
 		} else {
 			cur=p[1];
@@ -2365,9 +2366,9 @@ class KnownDataSaver extends ApiBase {
 			}
 		}
 		if(was_known) return;
-		this.#new_numbers.push([key,x]);
+		this.#new_numbers.push([k,x]);
 		this.#onDataChange();
-		console.log("store_num [%s]",key,x);
+		console.log("store_num [%s]",k,x);
 	}
 	/** @type {[string,{t:boolean;f:boolean}][]} */
 	#new_booleans=[];
