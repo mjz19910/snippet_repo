@@ -4093,6 +4093,7 @@ class CodegenService extends BaseService {
 			if(res_type!==null) return res_type;
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
+			if(k1==="loggingDirectives") return "TYPE::LoggingDirectives";
 			if(keys.includes(k1)) return o;
 			obj_count++;
 			if(obj_count<3) return o;
