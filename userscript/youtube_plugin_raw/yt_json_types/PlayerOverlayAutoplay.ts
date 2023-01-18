@@ -9,7 +9,7 @@ type PlayerOverlayAutoplay={
 	nextButton: ButtonRenderer;
 	trackingParams: string;
 	closeButton: ButtonRenderer;
-	thumbnailOverlays: {}[];
+	thumbnailOverlays: ThumbnailOverlayTimeStatusRenderer[];
 	preferImmediateRedirect: false;
 	videoId: string;
 	publishedTimeText: SimpleText;

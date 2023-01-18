@@ -6869,7 +6869,7 @@ class HandleTypes extends ServiceMethods {
 		this.ButtonRenderer(nextButton);
 		this.trackingParams(trackingParams);
 		this.ButtonRenderer(closeButton);
-		this.z(thumbnailOverlays,this.g);
+		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		if(preferImmediateRedirect!==false) debugger;
 		this.videoId(videoId);
 		this.SimpleText(publishedTimeText);
@@ -7025,8 +7025,30 @@ class HandleTypes extends ServiceMethods {
 			return this.ThumbnailOverlayTimeStatusRenderer(x);
 		} else if("thumbnailOverlayNowPlayingRenderer" in x) {
 			return this.ThumbnailOverlayNowPlayingRenderer(x);
+		} else if("thumbnailOverlayBottomPanelRenderer" in x) {
+			return this.ThumbnailOverlayBottomPanelRenderer(x);
+		} else if("thumbnailOverlayHoverTextRenderer" in x) {
+			return this.ThumbnailOverlayHoverTextRenderer(x);
 		}
 		debugger;
+	}
+	/** @arg {ThumbnailOverlayHoverTextRenderer} x */
+	ThumbnailOverlayHoverTextRenderer(x) {
+		this.save_keys("[ThumbnailOverlayHoverTextRenderer]",x);
+		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
+	}
+	/** @arg {ThumbnailOverlayHoverTextData} x */
+	ThumbnailOverlayHoverTextData(x) {
+		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
+	}
+	/** @arg {ThumbnailOverlayBottomPanelRenderer} x */
+	ThumbnailOverlayBottomPanelRenderer(x) {
+		this.save_keys("[ThumbnailOverlayBottomPanelRenderer]",x);
+		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
+	}
+	/** @arg {ThumbnailOverlayBottomPanelData} x */
+	ThumbnailOverlayBottomPanelData(x) {
+		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
 	}
 	/** @arg {ThumbnailOverlayNowPlayingRenderer} x */
 	ThumbnailOverlayNowPlayingRenderer(x) {
