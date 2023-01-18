@@ -5338,10 +5338,18 @@ class ServiceMethods extends ServiceData {
 	clickTrackingParams(x) {
 		this.primitive_of(x,"string");
 	}
+	known_target_id=[];
 	/** @arg {YtTargetIdType} x */
 	targetId(x) {
 		this.x.get("parser_service").parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
+		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
+			if(!this.known_target_id.includes(x)) {
+				this.known_target_id.push(x);
+				console.log("target_id.shopping_panel_for_entry_point",x);
+			}
+			return;
+		}
 		switch(x) {
 			case "browse-feedFEwhat_to_watch": return;
 			case "comments-section": return;
@@ -8700,7 +8708,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.Visibility(visibility);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
-		if(gestures) this.TypesTemplate(gestures,a=>{
+		if(gestures) this.TypesTemplate(gestures,a => {
 			switch(a) {
 				default: debugger; break;
 				case 4: break;
@@ -9322,7 +9330,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[Visibility]",x);
 		const {types,...y}=x; this.g(y);
 		switch(types) {
-			default: console.log("[Visibility.types]",types); break;
+			default: console.log("[Visibility.types]",types); debugger; break;
+			case "12": break;
 			case "15": break;
 		}
 	}

@@ -1,1 +1,1 @@
-type Visibility=TypesTemplate<15>;
+type Visibility=TypesTemplate<12|15>;
