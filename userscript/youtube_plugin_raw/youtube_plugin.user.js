@@ -976,15 +976,27 @@ class MyReader {
 	do_uint32_read() {
 		let varint_arr=this.read_varint();
 		if(varint_arr===null) return null;
-		let ret=varint_arr.map((e,n) => [e,n]).reduce((r,v) => {
-			let v0=v[0];
-			let v1=v[1];
-			let mul_pos=2**(7*v1);
-			let mul_res=v0*mul_pos;
+		/** @arg {number} r @arg {[index:number,num:number]} v */
+		function do_reduce_varint(r,[k,e]) {
+			let mul_pos=2**(7*k);
+			let mul_res=e*mul_pos;
 			let num_ret=r+mul_res;
+			if(num_ret>Number.MAX_SAFE_INTEGER) return null;
 			return num_ret;
-		},0);
-		return ret;
+		}
+		/** @arg {number} e @arg {number} n @returns {[index:number,num:number]} */
+		function into_entries(e,n) {
+			return [n,e];
+		}
+		let varint_entries=varint_arr.map(into_entries);
+		/** @type {number|null} */
+		let res=0;
+		for(let i=0;i<varint_entries.length;i++) {
+			let cur_res=do_reduce_varint(res,varint_entries[i]);
+			if(cur_res===null) return null;
+			res=cur_res;
+		}
+		return res;
 	}
 	uint64() {
 		this.last_pos=this.pos;
