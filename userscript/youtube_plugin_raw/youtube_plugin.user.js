@@ -4529,8 +4529,8 @@ class ParserService extends BaseService {
 		this.log_url_info_arr(arr);
 	}
 	log_start_radio=false;
-	/** @private @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
-	parse_watch_page_url(x) {
+	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	parse_watch_page_url(for_,x) {
 		let vv=split_string(x,"&");
 		/** @private @type {YtUrlInfoItem[]} */
 		let url_info_arr=[];
@@ -4561,7 +4561,7 @@ class ParserService extends BaseService {
 				} break;
 				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
 				case "pp": {
-					this.on_player_params(res[1]);
+					this.on_player_params(for_,res[1]);
 				} break;
 				case "start_radio": {
 					if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);
@@ -4645,7 +4645,9 @@ class ParserService extends BaseService {
 				let param_obj=Object.fromEntries(param_map.entries());
 				console.log("[new_endpoint_params] [%s]",for_,param_obj);
 			} break;
-			case "WatchEndpoint": this.parse_player_param_f40_f1(param_map); break;
+			case "ReelWatch": this.parse_player_param_f40_f1(for_,param_map); break;
+			case "ReelWatch.sequence": this.parse_player_param_f40_f1(for_,param_map); break;
+			case "WatchEndpoint": this.parse_player_param_f40_f1(for_,param_map); break;
 			case "GetTranscript": {
 				/** @type {ParamMapValue[]} */
 				let transcript_args=[];
@@ -4714,17 +4716,17 @@ class ParserService extends BaseService {
 			} break;
 		}
 	}
-	/** @public @arg {string} x */
-	on_player_params(x) {
+	/** @public @arg {ParamsSection} for_ @arg {string} x */
+	on_player_params(for_,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_params_with_map(param_map);
+		this.parse_player_params_with_map(for_,param_map);
 	}
-	/** @arg {ParamMapType} x */
-	parse_player_params_with_map(x) {
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
+	parse_player_params_with_map(for_,x) {
 		let map_keys=[...x.keys()];
 		if(this.eq_keys(map_keys,[8,9])) {
 			let p8=x.get(8);
@@ -4737,7 +4739,7 @@ class ParserService extends BaseService {
 			let x1=x.get(40);
 			if(!x1) {debugger; break x;}
 			if(!(x1 instanceof Map)) {debugger; break x;}
-			return this.parse_player_param_f_40(x1);
+			return this.parse_player_param_f_40(for_,x1);
 		}
 		let p30=x.get(30);
 		let i30=map_keys.indexOf(30);
@@ -4763,8 +4765,8 @@ class ParserService extends BaseService {
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
 	}
-	/** @arg {ParamMapType} x */
-	parse_player_param_f40_f1(x) {
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
+	parse_player_param_f40_f1(for_,x) {
 		let map_keys=[...x.keys()];
 		if(this.eq_keys(map_keys,[2,3])) {
 			let p2=x.get(2);
@@ -4786,7 +4788,7 @@ class ParserService extends BaseService {
 					if(p27_p1===1) return;
 				}
 				let param_obj_p27=Object.fromEntries(p27.entries());
-				console.log("[new_watch_endpoint_param_p27]",param_obj_p27);
+				console.log("[new_watch_endpoint_param_p27]",for_,param_obj_p27);
 				debugger;
 			}
 		}
@@ -4798,7 +4800,7 @@ class ParserService extends BaseService {
 			}
 		}
 		let param_obj=this.to_param_obj(x);
-		console.log("[new_watch_endpoint_params]",param_obj);
+		console.log("[new_watch_endpoint_params]",for_,param_obj);
 	}
 	/** @arg {ParamMapType} x @returns {ParamObjType} */
 	to_param_obj(x) {
@@ -4810,14 +4812,14 @@ class ParserService extends BaseService {
 			return [e[0],ei];
 		}));
 	}
-	/** @arg {ParamMapType} x */
-	parse_player_param_f_40(x) {
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
+	parse_player_param_f_40(for_,x) {
 		let map_keys=[...x.keys()];
 		x: if(this.eq_keys(map_keys,[1])) {
 			let x1=x.get(1);
 			if(!x1) {debugger; break x;}
 			if(!(x1 instanceof Map)) {debugger; break x;}
-			this.parse_player_param_f40_f1(x1);
+			this.parse_player_param_f40_f1(for_,x1);
 			let map_keys_1=[...x1.keys()];
 			y: {
 				if(!this.eq_keys(map_keys_1,[2,3])) break y;
@@ -4841,14 +4843,14 @@ class ParserService extends BaseService {
 	cache_playlist_id=[];
 	/** @private @type {string[]} */
 	cache_player_params=[];
-	/** @private @arg {Extract<YtUrlFormat,`https://${string}`>} x */
-	parse_full_url(x) {
+	/** @private @arg {ParamsSection} for_ @arg {Extract<YtUrlFormat,`https://${string}`>} x */
+	parse_full_url(for_,x) {
 		let r=this.parse_with_url_parse(x);
 		switch(r.host) {
 			case "ad.doubleclick.net": return;
 			case "www.googleadservices.com": return;
 			case "www.youtube.com": {
-				this.parse_url(`${r.pathname}${r.search}`);
+				this.parse_url(for_,`${r.pathname}${r.search}`);
 				return;
 			}
 			default:
@@ -4891,10 +4893,10 @@ class ParserService extends BaseService {
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @public @arg {YtUrlFormat} x */
-	parse_url(x) {
+	/** @public @arg {ParamsSection} for_ @arg {YtUrlFormat} x */
+	parse_url(for_,x) {
 		if(this.str_starts_with(x,"https://")) {
-			return this.parse_full_url(x);
+			return this.parse_full_url(for_,x);
 		}
 		if(x==="/") return;
 		let up=split_string_once(x,"/");
@@ -4902,13 +4904,13 @@ class ParserService extends BaseService {
 			debugger;
 			return;
 		}
-		this.parse_url_1(up[1]);
+		this.parse_url_1(for_,up[1]);
 	}
-	/** @private @arg {ParseUrlStr_1} x */
-	parse_url_1(x) {
+	/** @private @arg {ParamsSection} for_ @arg {ParseUrlStr_1} x */
+	parse_url_1(for_,x) {
 		let v=split_string_once(x,"/");
 		switch(v.length) {
-			case 1: this.parse_url_2(v[0]); break;
+			case 1: this.parse_url_2(for_,v[0]); break;
 			case 2: this.parse_url_3(v); break;
 		}
 	}
@@ -4944,19 +4946,19 @@ class ParserService extends BaseService {
 			}
 		}
 	}
-	/** @private @arg {ParseUrlWithSearchIn} x */
-	parse_url_with_search(x) {
+	/** @private @arg {ParamsSection} for_ @arg {ParseUrlWithSearchIn} x */
+	parse_url_with_search(for_,x) {
 		let a=split_string(x,"?");
 		switch(a[0]) {
 			case "playlist": this.parse_playlist_page_url(a[1]); break;
-			case "watch": this.parse_watch_page_url(a[1]); break;
+			case "watch": this.parse_watch_page_url(for_,a[1]); break;
 		}
 	}
 	log_channel_handles=false;
 	/** @private @type {YtUrlFormat} */
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
-	parse_url_2(x) {
-		if(this.str_is_search(x)) return this.parse_url_with_search(x);
+	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
+	parse_url_2(for_,x) {
+		if(this.str_is_search(x)) return this.parse_url_with_search(for_,x);
 		if(this.str_starts_with(x,"@")) {
 			if(this.log_channel_handles) console.log("[channel_handle]",x);
 			return;
@@ -5526,8 +5528,8 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		}
 	}
-	/** @arg {WatchPageUrl} x */
-	parse_watch_page_url(x) {
+	/** @arg {ParamsSection} for_ @arg {WatchPageUrl} x */
+	parse_watch_page_url(for_,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=this.parse_url_search_params(u2);
@@ -5540,7 +5542,7 @@ class ServiceMethods extends ServiceData {
 			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
 		}
-		this.x.get("parser_service").parse_url(x);
+		this.x.get("parser_service").parse_url(for_,x);
 		return u3;
 	}
 	/** @arg {string} x */
@@ -5627,9 +5629,9 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @arg {string} x */
-	playerParams(x) {
-		this.x.get("parser_service").on_player_params(x);
+	/** @arg {ParamsSection} for_ @arg {string} x */
+	playerParams(for_,x) {
+		this.x.get("parser_service").on_player_params(for_,x);
 	}
 	/** @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
@@ -5669,7 +5671,7 @@ class HandleTypes extends ServiceMethods {
 		this._WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
-		let wp_params=this.parse_watch_page_url(url);
+		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
@@ -5678,7 +5680,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchPageResponse";
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y);
 		if(rootVe!==3832) debugger;
-		let wp_params=this.parse_watch_page_url(url);
+		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
 		this._WatchEndpoint(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
@@ -6861,10 +6863,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
-		this.save_keys("[ReelWatchEndpointData]",x);
+		const cf="ReelWatchEndpointData";
+		this.save_keys(`[${cf}]`,x);
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y);
 		if(videoId) this.videoId(videoId);
-		this.playerParams(playerParams);
+		this.playerParams("ReelWatch.player",playerParams);
 		if(thumbnail) this.Thumbnail(thumbnail);
 		this.ReelPlayerOverlayRenderer(overlay);
 		this.params("ReelWatch",params);
@@ -7894,7 +7897,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchEndpointData} x */
 	WatchEndpointData(x) {
-		this.save_keys("[WatchEndpointData]",x);
+		const cf="WatchEndpointData";
+		this.save_keys(`[${cf}]`,x);
 		const {videoId,playlistId,index,playlistSetVideoId,params,...y1}=x;
 		this.videoId(videoId);
 		if(playlistId) this.playlistId(playlistId);
@@ -7909,7 +7913,7 @@ class HandleTypes extends ServiceMethods {
 		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		if(a1) this.PrefetchHintConfig(a1);
-		if(playerParams) this.playerParams(playerParams);
+		if(playerParams) this.playerParams("WatchEndpoint",playerParams);
 		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
 		if(a2) this.WatchEndpointMusicConfig(a2);
 		const {nofollow,...y_end}=y5;
@@ -7969,7 +7973,7 @@ class HandleTypes extends ServiceMethods {
 	CommonConfigData(x) {
 		this.save_keys("[CommonConfigData]",x);
 		const {url,...y}=x; this.g(y);
-		this.x.get("parser_service").parse_url(url);
+		this.x.get("parser_service").parse_url("CommonConfigData",url);
 	}
 	/** @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
@@ -8416,22 +8420,22 @@ class HandleTypes extends ServiceMethods {
 	AutoplayContent(x) {
 		this.save_keys("[AutoplayContent]",x);
 		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=x; this.g(y);
-		this.z(sets,a => a);
+		this.z(sets,this.AutoplaySetItem);
 		if(countDownSecs&&countDownSecs!==5) debugger;
-		if(modifiedSets!==void 0) this.z(modifiedSets,a => a);
+		if(modifiedSets!==void 0) this.z(modifiedSets,this.ModifiedSetItem);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {PlaylistContent} x */
 	PlaylistContent(x) {
 		this.save_keys("[PlaylistContent]",x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y);
-		this.z(contents,a => a);
+		this.z(contents,this.PlaylistPanelVideoRenderer);
 		this.primitive_of(title,"string");
 		this.primitive_of(currentIndex,"number");
 		this.primitive_of(playlistId,"string");
 		this.SimpleText(ownerName);
 		this.primitive_of(isInfinite,"boolean");
-		this.x.get("parser_service").parse_url(playlistShareUrl);
+		this.x.get("parser_service").parse_url("PlaylistContent",playlistShareUrl);
 		this.TextWithRuns(shortBylineText);
 		this.TextWithRuns(longBylineText);
 		this.trackingParams(trackingParams);
@@ -8957,7 +8961,7 @@ class HandleTypes extends ServiceMethods {
 	ClipSectionRenderer(x) {
 		this.save_keys("[ClipSectionRenderer]",x);
 		const {clipSectionRenderer,...y}=x; this.g(y);
-		this.ContentsArrayTemplate(clipSectionRenderer,a => a);
+		this.ContentsArrayTemplate(clipSectionRenderer,this.ClipCreationRenderer);
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
@@ -9851,6 +9855,12 @@ class HandleTypes extends ServiceMethods {
 	minimal_handler_member(x) {x;}
 	/** @arg {UnifiedSharePanelRenderer} x */
 	UnifiedSharePanelRenderer(x) {x;}
+	/** @arg {AutoplaySetItem} x */
+	AutoplaySetItem(x) {x;}
+	/** @arg {ModifiedSetItem} x */
+	ModifiedSetItem(x) {x;}
+	/** @arg {ClipCreationRenderer} x */
+	ClipCreationRenderer(x) {x;}
 	//#endregion
 }
 //#endregion

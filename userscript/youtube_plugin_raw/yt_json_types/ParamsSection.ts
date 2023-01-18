@@ -1,9 +1,14 @@
 type ParamsSection=
 	|"CreatePlaylist"
+	|"Generic_WatchPageResponse"
 	|"GetTranscript"
 	|"PlaylistEdit"
-	|"ReelWatch"
+	|"ReelWatch.player"
 	|"ReelWatch.sequence"
+	|"ReelWatch"
 	|"WatchEndpoint"
+	|"WatchPageResponse"
+	|"CommonConfigData"
+	|"PlaylistContent"
 	;
 ;
