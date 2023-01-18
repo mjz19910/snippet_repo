@@ -1,0 +1,3 @@
+type EditPlaylistCommandMetadata={
+	webCommandMetadata: EditPlaylistWebCommandMetadata;
+};
