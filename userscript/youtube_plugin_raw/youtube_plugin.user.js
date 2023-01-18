@@ -9396,6 +9396,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
 		const {targetId,visibility,...y}=x; this.g(y);
 	}
+	/** @arg {ShowEngagementPanelScrimActionData} x */
+	ShowEngagementPanelScrimActionData(x) {
+		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
+		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y);
+	}
 	//#endregion
 	//#region has_save_keys
 	/** @arg {PlayerAnnotationsExpandedData} x */
@@ -9462,49 +9467,44 @@ class HandleTypes extends ServiceMethods {
 	SetSettingWebCommandMetadata(x) {
 		this.save_keys("[SetSettingWebCommandMetadata]",x);
 	}
-	/** @arg {ShowEngagementPanelScrimActionData} x */
-	ShowEngagementPanelScrimActionData(x) {
-		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
-		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y);
-	}
-	//#endregion
-	//#region TODO_minimal_member_fns
 	/** @arg {MultiMarkersPlayerBarRenderer} x */
 	MultiMarkersPlayerBarRenderer(x) {
-		x;
+		this.save_keys("[MultiMarkersPlayerBarRenderer]",x);
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
-		x;
+		this.save_keys("[AdSlotAndLayoutMetadataItem]",x);
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
-		x;
+		this.save_keys("[MacroMarkersListRenderer]",x);
 	}
 	/** @arg {EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeader(x) {
-		x;
+		this.save_keys("[EngagementPanelTitleHeader]",x);
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
-		x;
+		this.save_keys("[ProductListRenderer]",x);
 	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
-		x;
+		this.save_keys("[VideoDescriptionHeaderRenderer]",x);
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
-		x;
+		this.save_keys("[ExpandableVideoDescriptionBodyRenderer]",x);
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
-		x;
+		this.save_keys("[VideoDescriptionMusicSectionRenderer]",x);
 	}
 	/** @arg {HorizontalCardListRenderer} x */
 	HorizontalCardListRenderer(x) {
-		x;
+		this.save_keys("[HorizontalCardListRenderer]",x);
 	}
+	//#endregion
+	//#region TODO_minimal_member_fns
 	//#endregion
 }
 //#endregion
