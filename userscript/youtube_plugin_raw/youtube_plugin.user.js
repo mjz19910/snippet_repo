@@ -4238,6 +4238,8 @@ class CodegenService extends BaseService {
 			||o.likeEndpoint
 			||o.engagementPanelTitleHeaderRenderer
 			||o.sectionListRenderer
+			||o.clipSectionRenderer
+			||o.clipCreationRenderer
 			;
 		if(hg) return g();
 		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
