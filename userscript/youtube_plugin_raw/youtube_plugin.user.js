@@ -5466,30 +5466,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y);
 	}
-	/** @arg {SignalServiceEndpointData} x */
-	SignalServiceEndpointData(x) {
-		this.save_keys("[SignalServiceEndpointData]",x);
-	}
-	/** @arg {ChannelPageResponse} x */
-	ChannelPageResponse(x) {
-		this.save_keys("[ChannelPageResponse]",x);
-	}
-	/** @arg {PlaylistPageResponse} x */
-	PlaylistPageResponse(x) {
-		this.save_keys("[PlaylistPageResponse]",x);
-	}
-	/** @arg {SettingsPageResponse} x */
-	SettingsPageResponse(x) {
-		this.save_keys("[SettingsPageResponse]",x);
-	}
-	/** @arg {ShortsPageResponse} x */
-	ShortsPageResponse(x) {
-		this.save_keys("[ShortsResponse]",x);
-	}
-	/** @arg {SearchPageResponse} x */
-	SearchPageResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
-	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const cf="BrowseEditPlaylistResponse";
@@ -5740,18 +5716,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MusicResponsiveListItemRenderer]",x);
 		this.MusicResponsiveListItem(x.musicResponsiveListItemRenderer);
 	}
-	/** @arg {MusicResponsiveListItem} x */
-	MusicResponsiveListItem(x) {
-		this.save_keys("[MusicResponsiveListItem]",x);
-	}
 	/** @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ContentsArrayTemplate(x,f) {
 		this.save_keys("[ContentsArrayTemplate]",x);
 		this.z(x.contents,f);
-	}
-	/** @arg {MusicCarouselShelf} x */
-	MusicCarouselShelf(x) {
-		this.save_keys("[MusicCarouselShelf]",x);
 	}
 	/** @arg {ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {
@@ -5845,10 +5813,6 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(as(targetId));
 		this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}-id-${targetId}`);
 	}
-	/** @arg {ItemSectionItem} x */
-	ItemSectionItem(x) {
-		this.save_keys("[ItemSectionItem]",x);
-	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
 		this.save_keys("[MusicThumbnailRenderer]",x);
@@ -5895,42 +5859,6 @@ class HandleTypes extends ServiceMethods {
 		const {twitterCardType,twitterSiteHandle,...y6}=y5;
 		const {schemaDotOrgType,noindex,unlisted,familySafe,availableCountries,linkAlternates,...y7}=y6;
 		this.g(y7);
-	}
-	/** @arg {ChannelMetadataRenderer} x */
-	ChannelMetadataRenderer(x) {
-		this.save_keys("[ChannelMetadataRenderer]",x);
-	}
-	/** @arg {BrowseHeader} x */
-	BrowseHeader(x) {
-		this.save_keys("[BrowseHeader]",x);
-	}
-	/** @arg {CacheMetadata} x */
-	CacheMetadata(x) {
-		this.save_keys("[CacheMetadata]",x);
-	}
-	/** @arg {StateTag} x */
-	StateTag(x) {
-		this.save_keys("[StateTag]",x);
-	}
-	/** @arg {SettingsSidebarRenderer} x */
-	SettingsSidebarRenderer(x) {
-		this.save_keys("[SettingsSidebarRenderer]",x);
-	}
-	/** @arg {EntityBatchUpdate} x */
-	EntityBatchUpdate(x) {
-		this.save_keys("[EntityBatchUpdate]",x);
-	}
-	/** @arg {DesktopTopbarRenderer} x */
-	DesktopTopbarRenderer(x) {
-		this.save_keys("[DesktopTopbarRenderer]",x);
-	}
-	/** @arg {BrowseContents} x */
-	BrowseContents(x) {
-		this.save_keys("[BrowseContents]",x);
-	}
-	/** @arg {ResponseReceivedAction} x */
-	ResponseReceivedAction(x) {
-		this.save_keys("[ResponseReceivedAction]",x);
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
@@ -6031,10 +5959,6 @@ class HandleTypes extends ServiceMethods {
 			case "storefront": break;
 			default: debugger; break;
 		}
-	}
-	/** @arg {ResolveUrlCommandMetadata} x */
-	ResolveUrlCommandMetadata(x) {
-		this.save_keys("[ResolveUrlCommandMetadata]",x);
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
@@ -6469,10 +6393,6 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(clickTrackingParams);
 		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
 	}
-	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
-	AdsControlFlowOpportunityReceivedCommandData(x) {
-		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
-	}
 	/** @arg {TwoColumnSearchResultsRenderer} x */
 	TwoColumnSearchResultsRenderer(x) {
 		this.save_keys("[TwoColumnSearchResultsRenderer]",x);
@@ -6504,10 +6424,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SearchResultsTabRenderer]",x);
 		this.SearchResultsTab(x.tabRenderer);
 	}
-	/** @arg {SearchResultsTab} x */
-	SearchResultsTab(x) {
-		this.save_keys("[SearchResultsTab]",x);
-	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
 		this.save_keys("[GetSearchSuggestions]",x);
@@ -6518,14 +6434,6 @@ class HandleTypes extends ServiceMethods {
 	GetSharePanel(x) {
 		this.save_keys("[GetSharePanel]",x);
 		if(x.actions) this.z(x.actions,a => this.Action(a));
-	}
-	/** @arg {GetAddToPlaylistResponse} x */
-	GetAddToPlaylistResponse(x) {
-		this.save_keys("[GetAddToPlaylistResponse]",x);
-	}
-	/** @arg {AttLogResponse} x */
-	AttLogResponse(x) {
-		this.save_keys("[AttLogResponse]",x);
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
@@ -6603,10 +6511,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ReelPlayerOverlayRenderer]",x);
 		this.ReelPlayerOverlayData(x.reelPlayerOverlayRenderer);
 	}
-	/** @arg {ReelPlayerOverlayData} x */
-	ReelPlayerOverlayData(x) {
-		this.save_keys("[ReelPlayerOverlayData]",x);
-	}
 	/** @arg {GetLiveChat} x */
 	GetLiveChat(x) {
 		this.save_keys("[GetLiveChat]",x);
@@ -6647,30 +6551,6 @@ class HandleTypes extends ServiceMethods {
 		});
 		if(clientMessages) this.ClientMessages(clientMessages);
 		if(viewerName) this.primitive_of(viewerName,"string");
-	}
-	/** @arg {ClientMessages} x */
-	ClientMessages(x) {
-		this.save_keys("[ClientMessages]",x);
-	}
-	/** @arg {LiveChatEmoji} x */
-	LiveChatEmoji(x) {
-		this.save_keys("[LiveChatEmoji]",x);
-	}
-	/** @arg {MessageRenderer} x */
-	MessageRenderer(x) {
-		this.save_keys("[MessageRenderer]",x);
-	}
-	/** @arg {LiveChatParticipantsListRenderer} x */
-	LiveChatParticipantsListRenderer(x) {
-		this.save_keys("[LiveChatParticipantsListRenderer]",x);
-	}
-	/** @arg {LiveChatTickerRenderer} x */
-	LiveChatTickerRenderer(x) {
-		this.save_keys("[LiveChatTickerRenderer]",x);
-	}
-	/** @arg {LiveChatHeaderRenderer} x */
-	LiveChatHeaderRenderer(x) {
-		this.save_keys("[LiveChatHeaderRenderer]",x);
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
@@ -6727,14 +6607,6 @@ class HandleTypes extends ServiceMethods {
 			return this.LiveChatPlaceholderItemRenderer(x);
 		}
 		debugger;
-	}
-	/** @arg {LiveChatPlaceholderItemRenderer} x */
-	LiveChatPlaceholderItemRenderer(x) {
-		this.save_keys("[LiveChatPlaceholderItemRenderer]",x);
-	}
-	/** @arg {LiveChatTextMessageRenderer} x */
-	LiveChatTextMessageRenderer(x) {
-		this.save_keys("[LiveChatTextMessageRenderer]",x);
 	}
 	/** @arg {LiveChatViewerEngagementMessageRenderer} x */
 	LiveChatViewerEngagementMessageRenderer(x) {
@@ -6812,14 +6684,6 @@ class HandleTypes extends ServiceMethods {
 		if(videoReporting) this.ReportFormModalRenderer(videoReporting);
 		if(queueContextParams) this.primitive_of(queueContextParams,"string");
 		if(continuationContents) this.PlaylistPanelContinuation(continuationContents);
-	}
-	/** @arg {PlaylistPanelContinuation} x */
-	PlaylistPanelContinuation(x) {
-		this.save_keys("[PlaylistPanelContinuation]",x);
-	}
-	/** @arg {ReportFormModalRenderer} x */
-	ReportFormModalRenderer(x) {
-		this.save_keys("[ReportFormModalRenderer]",x);
 	}
 	/** @arg {NextResponseContents} x */
 	NextResponseContents(x) {
@@ -6929,14 +6793,6 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {AutomixPreviewVideoRenderer} x */
-	AutomixPreviewVideoRenderer(x) {
-		this.save_keys("[AutomixPreviewVideoRenderer]",x);
-	}
-	/** @arg {AutomixPreviewVideo} x */
-	AutomixPreviewVideo(x) {
-		this.save_keys("[AutomixPreviewVideo]",x);
-	}
 	/** @arg {NextRadioContinuationData} x */
 	NextRadioContinuationData(x) {
 		this.save_keys("[NextRadioContinuationData]",x);
@@ -6985,10 +6841,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ThumbnailOverlayResumePlaybackRenderer]",x);
 		this.ThumbnailOverlayResumePlayback(x.thumbnailOverlayResumePlaybackRenderer);
 	}
-	/** @arg {ThumbnailOverlayResumePlayback} x */
-	ThumbnailOverlayResumePlayback(x) {
-		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
-	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {
 		this.save_keys("[RichGridRenderer]",x);
@@ -7005,14 +6857,6 @@ class HandleTypes extends ServiceMethods {
 	VideoMastheadAdV3Renderer(x) {
 		this.save_keys("[VideoMastheadAdV3Renderer]",x);
 		this.VideoMastheadAdV3(x.videoMastheadAdV3Renderer);
-	}
-	/** @arg {VideoMastheadAdV3} x */
-	VideoMastheadAdV3(x) {
-		this.save_keys("[VideoMastheadAdV3]",x);
-	}
-	/** @arg {RendererContentItem} x */
-	RendererContentItem(x) {
-		this.save_keys("[RendererContentItem]",x);
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanelSectionListRenderer(x) {
@@ -7075,26 +6919,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ScrollToEngagementPanelData]",x);
 		this.targetId(x.targetId);
 	}
-	/** @arg {LoggingDirectives} x */
-	LoggingDirectives(x) {
-		this.save_keys("[LoggingDirectives]",x);
-	}
-	/** @arg {ShowEngagementPanelScrimAction} x */
-	ShowEngagementPanelScrimAction(x) {
-		this.save_keys("[ShowEngagementPanelScrimAction]",x);
-	}
-	/** @arg {ChangeEngagementPanelVisibilityAction} x */
-	ChangeEngagementPanelVisibilityAction(x) {
-		this.save_keys("[ChangeEngagementPanelVisibilityAction]",x);
-	}
-	/** @arg {EngagementPanelTitleHeaderRenderer} x */
-	EngagementPanelTitleHeaderRenderer(x) {
-		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
-	}
-	/** @arg {AdsEngagementPanelContentRenderer} x */
-	AdsEngagementPanelContentRenderer(x) {
-		this.save_keys("[AdsEngagementPanelContentRenderer]",x);
-	}
 	/** @arg {EngagementPanelSectionListContent} x */
 	EngagementPanelSectionListContent(x) {
 		this.save_keys("[EngagementPanelSectionListContent]",x);
@@ -7111,10 +6935,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {ClipSectionRenderer} x */
-	ClipSectionRenderer(x) {
-		this.save_keys("[ClipSectionRenderer]",x);
-	}
 	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
 		this.save_keys(`[SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
@@ -7123,10 +6943,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
-	}
-	/** @arg {StructuredDescriptionContentRenderer} x */
-	StructuredDescriptionContentRenderer(x) {
-		this.save_keys("[StructuredDescriptionContentRenderer]",x);
 	}
 	/** @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {
@@ -7173,22 +6989,6 @@ class HandleTypes extends ServiceMethods {
 			default: debugger;
 		}
 	}
-	/** @arg {CommentRepliesItem} x */
-	CommentRepliesItem(x) {
-		this.save_keys("[CommentRepliesItem]",x);
-	}
-	/** @arg {WatchNextContinuationAction} x */
-	WatchNextContinuationAction(x) {
-		this.save_keys("[WatchNextContinuationAction]",x);
-	}
-	/** @arg {CommentsSectionContinuationAction} x */
-	CommentsSectionContinuationAction(x) {
-		this.save_keys("[CommentsSectionContinuationAction]",x);
-	}
-	/** @arg {BrowseFeedAction} x */
-	BrowseFeedAction(x) {
-		this.save_keys("[BrowseFeedAction]",x);
-	}
 	/** @arg {ReloadContinuationItemsCommandData} x */
 	ReloadContinuationItemsCommandData(x) {
 		this.save_keys("[ReloadContinuationItemsCommandData]",x);
@@ -7234,23 +7034,11 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(unicodeEmojisUrl,"string");
 		this.LoggingDirectives(loggingDirectives);
 	}
-	/** @arg {CustomEmoji} x */
-	CustomEmoji(x) {
-		this.save_keys("[CustomEmoji]",x);
-	}
-	/** @arg {SortFilterSubMenuRenderer} x */
-	SortFilterSubMenuRenderer(x) {
-		this.save_keys("[SortFilterSubMenuRenderer]",x);
-	}
 	/** @arg {CommentSimpleboxRenderer} x */
 	CommentSimpleboxRenderer(x) {
 		this.save_keys("[CommentSimpleboxRenderer]",x);
 		const {commentSimpleboxRenderer,...y}=x; this.g(y);
 		this.CommentSimpleboxData(commentSimpleboxRenderer);
-	}
-	/** @arg {CommentSimpleboxData} x */
-	CommentSimpleboxData(x) {
-		this.save_keys("[CommentSimpleboxData]",x);
 	}
 	/** @arg {LoadMarkersCommandData} x */
 	LoadMarkersCommandData(x) {
@@ -7304,10 +7092,6 @@ class HandleTypes extends ServiceMethods {
 		const {actions,browserMediaSession,...y}=x; this.g(y);
 		this.z(actions,this.LikeButtonRenderer);
 		this.BrowserMediaSessionRenderer(browserMediaSession);
-	}
-	/** @arg {BrowserMediaSessionRenderer} x */
-	BrowserMediaSessionRenderer(x) {
-		this.save_keys("[BrowserMediaSessionRenderer]",x);
 	}
 	/** @arg {LikeButtonRenderer} x */
 	LikeButtonRenderer(x) {
@@ -7397,29 +7181,17 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(shortViewCountText);
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @arg {AutoplaySwitchButtonRenderer} x */
-	AutoplaySwitchButtonRenderer(x) {
-		this.save_keys("[AutoplaySwitchButtonRenderer]",x);
-	}
 	/** @arg {DecoratedPlayerBarRenderer} x */
 	DecoratedPlayerBarRenderer(x) {
 		this.save_keys("[DecoratedPlayerBarRenderer]",x);
 		const {decoratedPlayerBarRenderer,...y}=x; this.g(y);
 		this.DecoratedPlayerBar(decoratedPlayerBarRenderer);
 	}
-	/** @arg {DecoratedPlayerBar} x */
-	DecoratedPlayerBar(x) {
-		this.save_keys("[DecoratedPlayerBar]",x);
-	}
 	/** @arg {PlayerOverlayVideoDetailsRenderer} x */
 	PlayerOverlayVideoDetailsRenderer(x) {
 		this.save_keys("[PlayerOverlayVideoDetailsRenderer]",x);
 		const {playerOverlayVideoDetailsRenderer,...y}=x; this.g(y);
 		this.PlayerOverlayVideoDetails(playerOverlayVideoDetailsRenderer);
-	}
-	/** @arg {PlayerOverlayVideoDetails} x */
-	PlayerOverlayVideoDetails(x) {
-		this.save_keys("[PlayerOverlayVideoDetails]",x);
 	}
 	/** @arg {MenuRenderer} x */
 	MenuRenderer(x) {
@@ -7502,10 +7274,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[FeedbackEndpointPlugin]",x);
 		this.FeedbackEndpointData(x.feedbackEndpoint);
 	}
-	/** @arg {FeedbackEndpointData} x */
-	FeedbackEndpointData(x) {
-		this.save_keys("[FeedbackEndpointData]",x);
-	}
 	/** @template {string} T @arg {Icon<T>} x */
 	Icon(x) {
 		this.save_keys("[Icon]",x);
@@ -7552,10 +7320,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ButtonRenderer]",x);
 		const {buttonRenderer,...y}=x; this.g(y);
 		this.ButtonData(buttonRenderer);
-	}
-	/** @arg {ButtonData} x */
-	ButtonData(x) {
-		this.save_keys("[ButtonData]",x);
 	}
 	/** @arg {WatchNextEndScreenRenderer} x */
 	WatchNextEndScreenRenderer(x) {
@@ -7611,18 +7375,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ThumbnailOverlayHoverTextRenderer]",x);
 		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
 	}
-	/** @arg {ThumbnailOverlayHoverTextData} x */
-	ThumbnailOverlayHoverTextData(x) {
-		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
-	}
 	/** @arg {ThumbnailOverlayBottomPanelRenderer} x */
 	ThumbnailOverlayBottomPanelRenderer(x) {
 		this.save_keys("[ThumbnailOverlayBottomPanelRenderer]",x);
 		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
-	}
-	/** @arg {ThumbnailOverlayBottomPanelData} x */
-	ThumbnailOverlayBottomPanelData(x) {
-		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
 	}
 	/** @arg {ThumbnailOverlayNowPlayingRenderer} x */
 	ThumbnailOverlayNowPlayingRenderer(x) {
@@ -8053,6 +7809,250 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistContent} x */
 	PlaylistContent(x) {
 		this.save_keys("[PlaylistContent]",x);
+	}
+	/** @arg {ThumbnailOverlayBottomPanelData} x */
+	ThumbnailOverlayBottomPanelData(x) {
+		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
+	}
+	/** @arg {BrowserMediaSessionRenderer} x */
+	BrowserMediaSessionRenderer(x) {
+		this.save_keys("[BrowserMediaSessionRenderer]",x);
+	}
+	/** @arg {AutoplaySwitchButtonRenderer} x */
+	AutoplaySwitchButtonRenderer(x) {
+		this.save_keys("[AutoplaySwitchButtonRenderer]",x);
+	}
+	/** @arg {DecoratedPlayerBar} x */
+	DecoratedPlayerBar(x) {
+		this.save_keys("[DecoratedPlayerBar]",x);
+	}
+	/** @arg {PlayerOverlayVideoDetails} x */
+	PlayerOverlayVideoDetails(x) {
+		this.save_keys("[PlayerOverlayVideoDetails]",x);
+	}
+	/** @arg {FeedbackEndpointData} x */
+	FeedbackEndpointData(x) {
+		this.save_keys("[FeedbackEndpointData]",x);
+	}
+	/** @arg {ButtonData} x */
+	ButtonData(x) {
+		this.save_keys("[ButtonData]",x);
+	}
+	/** @arg {ThumbnailOverlayHoverTextData} x */
+	ThumbnailOverlayHoverTextData(x) {
+		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
+	}
+	/** @arg {CustomEmoji} x */
+	CustomEmoji(x) {
+		this.save_keys("[CustomEmoji]",x);
+	}
+	/** @arg {SortFilterSubMenuRenderer} x */
+	SortFilterSubMenuRenderer(x) {
+		this.save_keys("[SortFilterSubMenuRenderer]",x);
+	}
+	/** @arg {CommentSimpleboxData} x */
+	CommentSimpleboxData(x) {
+		this.save_keys("[CommentSimpleboxData]",x);
+	}
+	/** @arg {SignalServiceEndpointData} x */
+	SignalServiceEndpointData(x) {
+		this.save_keys("[SignalServiceEndpointData]",x);
+	}
+	/** @arg {ChannelPageResponse} x */
+	ChannelPageResponse(x) {
+		this.save_keys("[ChannelPageResponse]",x);
+	}
+	/** @arg {PlaylistPageResponse} x */
+	PlaylistPageResponse(x) {
+		this.save_keys("[PlaylistPageResponse]",x);
+	}
+	/** @arg {SettingsPageResponse} x */
+	SettingsPageResponse(x) {
+		this.save_keys("[SettingsPageResponse]",x);
+	}
+	/** @arg {ShortsPageResponse} x */
+	ShortsPageResponse(x) {
+		this.save_keys("[ShortsResponse]",x);
+	}
+	/** @arg {SearchPageResponse} x */
+	SearchPageResponse(x) {
+		this.save_keys("[GetNotificationMenuJson]",x);
+	}
+	/** @arg {ItemSectionItem} x */
+	ItemSectionItem(x) {
+		this.save_keys("[ItemSectionItem]",x);
+	}
+	/** @arg {MusicResponsiveListItem} x */
+	MusicResponsiveListItem(x) {
+		this.save_keys("[MusicResponsiveListItem]",x);
+	}
+	/** @arg {MusicCarouselShelf} x */
+	MusicCarouselShelf(x) {
+		this.save_keys("[MusicCarouselShelf]",x);
+	}
+	/** @arg {ChannelMetadataRenderer} x */
+	ChannelMetadataRenderer(x) {
+		this.save_keys("[ChannelMetadataRenderer]",x);
+	}
+	/** @arg {BrowseHeader} x */
+	BrowseHeader(x) {
+		this.save_keys("[BrowseHeader]",x);
+	}
+	/** @arg {CacheMetadata} x */
+	CacheMetadata(x) {
+		this.save_keys("[CacheMetadata]",x);
+	}
+	/** @arg {StateTag} x */
+	StateTag(x) {
+		this.save_keys("[StateTag]",x);
+	}
+	/** @arg {SettingsSidebarRenderer} x */
+	SettingsSidebarRenderer(x) {
+		this.save_keys("[SettingsSidebarRenderer]",x);
+	}
+	/** @arg {EntityBatchUpdate} x */
+	EntityBatchUpdate(x) {
+		this.save_keys("[EntityBatchUpdate]",x);
+	}
+	/** @arg {DesktopTopbarRenderer} x */
+	DesktopTopbarRenderer(x) {
+		this.save_keys("[DesktopTopbarRenderer]",x);
+	}
+	/** @arg {BrowseContents} x */
+	BrowseContents(x) {
+		this.save_keys("[BrowseContents]",x);
+	}
+	/** @arg {ResponseReceivedAction} x */
+	ResponseReceivedAction(x) {
+		this.save_keys("[ResponseReceivedAction]",x);
+	}
+	/** @arg {ResolveUrlCommandMetadata} x */
+	ResolveUrlCommandMetadata(x) {
+		this.save_keys("[ResolveUrlCommandMetadata]",x);
+	}
+	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
+	AdsControlFlowOpportunityReceivedCommandData(x) {
+		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
+	}
+	/** @arg {SearchResultsTab} x */
+	SearchResultsTab(x) {
+		this.save_keys("[SearchResultsTab]",x);
+	}
+	/** @arg {GetAddToPlaylistResponse} x */
+	GetAddToPlaylistResponse(x) {
+		this.save_keys("[GetAddToPlaylistResponse]",x);
+	}
+	/** @arg {AttLogResponse} x */
+	AttLogResponse(x) {
+		this.save_keys("[AttLogResponse]",x);
+	}
+	/** @arg {ReelPlayerOverlayData} x */
+	ReelPlayerOverlayData(x) {
+		this.save_keys("[ReelPlayerOverlayData]",x);
+	}
+	/** @arg {ClientMessages} x */
+	ClientMessages(x) {
+		this.save_keys("[ClientMessages]",x);
+	}
+	/** @arg {LiveChatEmoji} x */
+	LiveChatEmoji(x) {
+		this.save_keys("[LiveChatEmoji]",x);
+	}
+	/** @arg {MessageRenderer} x */
+	MessageRenderer(x) {
+		this.save_keys("[MessageRenderer]",x);
+	}
+	/** @arg {LiveChatParticipantsListRenderer} x */
+	LiveChatParticipantsListRenderer(x) {
+		this.save_keys("[LiveChatParticipantsListRenderer]",x);
+	}
+	/** @arg {LiveChatTickerRenderer} x */
+	LiveChatTickerRenderer(x) {
+		this.save_keys("[LiveChatTickerRenderer]",x);
+	}
+	/** @arg {LiveChatHeaderRenderer} x */
+	LiveChatHeaderRenderer(x) {
+		this.save_keys("[LiveChatHeaderRenderer]",x);
+	}
+	/** @arg {LiveChatPlaceholderItemRenderer} x */
+	LiveChatPlaceholderItemRenderer(x) {
+		this.save_keys("[LiveChatPlaceholderItemRenderer]",x);
+	}
+	/** @arg {LiveChatTextMessageRenderer} x */
+	LiveChatTextMessageRenderer(x) {
+		this.save_keys("[LiveChatTextMessageRenderer]",x);
+	}
+	/** @arg {PlaylistPanelContinuation} x */
+	PlaylistPanelContinuation(x) {
+		this.save_keys("[PlaylistPanelContinuation]",x);
+	}
+	/** @arg {ReportFormModalRenderer} x */
+	ReportFormModalRenderer(x) {
+		this.save_keys("[ReportFormModalRenderer]",x);
+	}
+	/** @arg {AutomixPreviewVideoRenderer} x */
+	AutomixPreviewVideoRenderer(x) {
+		this.save_keys("[AutomixPreviewVideoRenderer]",x);
+	}
+	/** @arg {AutomixPreviewVideo} x */
+	AutomixPreviewVideo(x) {
+		this.save_keys("[AutomixPreviewVideo]",x);
+	}
+	/** @arg {ThumbnailOverlayResumePlayback} x */
+	ThumbnailOverlayResumePlayback(x) {
+		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
+	}
+	/** @arg {VideoMastheadAdV3} x */
+	VideoMastheadAdV3(x) {
+		this.save_keys("[VideoMastheadAdV3]",x);
+	}
+	/** @arg {RendererContentItem} x */
+	RendererContentItem(x) {
+		this.save_keys("[RendererContentItem]",x);
+	}
+	/** @arg {LoggingDirectives} x */
+	LoggingDirectives(x) {
+		this.save_keys("[LoggingDirectives]",x);
+	}
+	/** @arg {ShowEngagementPanelScrimAction} x */
+	ShowEngagementPanelScrimAction(x) {
+		this.save_keys("[ShowEngagementPanelScrimAction]",x);
+	}
+	/** @arg {ChangeEngagementPanelVisibilityAction} x */
+	ChangeEngagementPanelVisibilityAction(x) {
+		this.save_keys("[ChangeEngagementPanelVisibilityAction]",x);
+	}
+	/** @arg {EngagementPanelTitleHeaderRenderer} x */
+	EngagementPanelTitleHeaderRenderer(x) {
+		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
+	}
+	/** @arg {AdsEngagementPanelContentRenderer} x */
+	AdsEngagementPanelContentRenderer(x) {
+		this.save_keys("[AdsEngagementPanelContentRenderer]",x);
+	}
+	/** @arg {ClipSectionRenderer} x */
+	ClipSectionRenderer(x) {
+		this.save_keys("[ClipSectionRenderer]",x);
+	}
+	/** @arg {StructuredDescriptionContentRenderer} x */
+	StructuredDescriptionContentRenderer(x) {
+		this.save_keys("[StructuredDescriptionContentRenderer]",x);
+	}
+	/** @arg {CommentRepliesItem} x */
+	CommentRepliesItem(x) {
+		this.save_keys("[CommentRepliesItem]",x);
+	}
+	/** @arg {WatchNextContinuationAction} x */
+	WatchNextContinuationAction(x) {
+		this.save_keys("[WatchNextContinuationAction]",x);
+	}
+	/** @arg {CommentsSectionContinuationAction} x */
+	CommentsSectionContinuationAction(x) {
+		this.save_keys("[CommentsSectionContinuationAction]",x);
+	}
+	/** @arg {BrowseFeedAction} x */
+	BrowseFeedAction(x) {
+		this.save_keys("[BrowseFeedAction]",x);
 	}
 }
 //#endregion
