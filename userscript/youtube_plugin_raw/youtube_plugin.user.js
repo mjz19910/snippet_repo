@@ -5957,12 +5957,14 @@ class HandleTypes extends ServiceMethods {
 	UpdateDateTextAction(x) {
 		this.save_keys(`[UpdateDateTextAction]`,x);
 		let x1=x.updateDateTextAction;
+		this.save_keys(`[UpdateDateTextActionData]`,x1);
 		this.SimpleText(x1.dateText);
 	}
 	/** @arg {UpdateToggleButtonTextAction} x */
 	UpdateToggleButtonTextAction(x) {
 		this.save_keys(`[UpdateToggleButtonTextAction]`,x);
 		let x1=x.updateToggleButtonTextAction; x1;
+		this.save_keys(`[UpdateToggleButtonTextActionData]`,x1);
 		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
 		this.SimpleText(x1.defaultText);
 		this.SimpleText(x1.toggledText);
@@ -5971,13 +5973,13 @@ class HandleTypes extends ServiceMethods {
 	UpdateViewershipAction(x) {
 		this.save_keys(`[UpdateViewershipAction]`,x);
 		let x1=x.updateViewershipAction;
+		this.save_keys(`[UpdateViewershipActionData]`,x1);
 		this.VideoViewCountRenderer(x1.viewCount);
 	}
 	/** @arg {VideoViewCountRenderer} x */
 	VideoViewCountRenderer(x) {
 		this.save_keys(`[VideoViewCountRenderer]`,x);
-		let x1=x.videoViewCountRenderer;
-		this.VideoViewCountData(x1);
+		this.VideoViewCountData(x.videoViewCountRenderer);
 	}
 	/** @arg {VideoViewCountData} x */
 	VideoViewCountData(x) {
