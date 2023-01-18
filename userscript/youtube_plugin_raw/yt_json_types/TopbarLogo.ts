@@ -1,4 +1,4 @@
-type LogoEntity={
+type TopbarLogo={
 	iconImage: Icon<"YOUTUBE_LOGO">;
 	tooltipText: TextWithRuns;
 	endpoint: {};

@@ -8903,20 +8903,30 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TopbarLogoRenderer} x */
 	TopbarLogoRenderer(x) {
 		this.save_keys("[TopbarLogoRenderer]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {topbarLogoRenderer,...y}=x; this.g(y);
+		this.TopbarLogo(topbarLogoRenderer);
+	}
+	/** @arg {TopbarLogo} x */
+	TopbarLogo(x) {
+		x;
 	}
 	/** @arg {FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
 		this.save_keys("[FusionSearchboxRenderer]",x);
+		const {fusionSearchboxRenderer,...y}=x; this.g(y);
+		this.FusionSearchboxData(fusionSearchboxRenderer);
+	}
+	/** @arg {FusionSearchboxData} x */
+	FusionSearchboxData(x) {
+		this.save_keys("[FusionSearchboxData]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {TopbarMenuButtonRenderer} x */
 	TopbarMenuButtonRenderer(x) {
 		this.save_keys("[TopbarMenuButtonRenderer]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {topbarMenuButtonRenderer: {icon,...y2},...y}=x; this.g(y); this.g(y2);
+		this.Icon(icon);
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
 	TwoColumnBrowseResultsData(x) {

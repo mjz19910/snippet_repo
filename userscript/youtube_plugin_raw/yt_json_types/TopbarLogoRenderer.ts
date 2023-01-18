@@ -1,3 +1,1 @@
-type TopbarLogoRenderer={
-	topbarLogoRenderer: LogoEntity;
-};
+type TopbarLogoRenderer={topbarLogoRenderer: TopbarLogo;};
