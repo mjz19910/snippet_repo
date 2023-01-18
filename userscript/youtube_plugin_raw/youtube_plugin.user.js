@@ -4142,10 +4142,8 @@ class ParserService extends BaseService {
 		if(x===void 0) {debugger; return;}
 		x: {
 			switch(x) {
-				case "WL": {
-					console.log("[parse_playlist_static]",x);
-				} break;
-				default: break x;
+				case "WL": break;
+				default: console.log("[parse_playlist_static]",x); break x;
 			}
 			return;
 		}
