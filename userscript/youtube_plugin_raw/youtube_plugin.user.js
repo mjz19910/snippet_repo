@@ -8837,8 +8837,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(formattedTitle);
 		this.Accessibility(accessibility);
 		this.GuideEntryData(entryData);
-		console.log("[presentationStyle]",presentationStyle);
-		this.primitive_of(presentationStyle,"string");
+		if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
 	}
 	/** @arg {GuideEntryBadges} x */
 	GuideEntryBadges(x) {
@@ -8908,6 +8907,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.str_starts_with(guideEntryId,"RD")) {
 			console.log("[guideEntryId.RD.length]",guideEntryId.length,guideEntryId);
 		} else if(this.str_starts_with(guideEntryId,"UC")) {
+			if(guideEntryId.length===24) return;
 			console.log("[guideEntryId.UC.length]",guideEntryId.length,guideEntryId);
 		} else {
 			debugger;

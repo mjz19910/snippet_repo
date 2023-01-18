@@ -6,5 +6,5 @@ type GuideEntryRoot={
 	formattedTitle: SimpleText;
 	accessibility: Accessibility;
 	entryData: GuideEntryData;
-	presentationStyle: string;
+	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT";
 };
