@@ -8247,10 +8247,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
-		if(accessibility) {
-			console.log("[button.accessibility]",accessibility);
-			debugger;
-		}
+		if(accessibility) return this.AccessibilityData(accessibility);
 		if(accessibilityData) this.Accessibility(accessibilityData);
 		if(command) this.ButtonCommand(command);
 		if(icon) this.Icon(icon);
