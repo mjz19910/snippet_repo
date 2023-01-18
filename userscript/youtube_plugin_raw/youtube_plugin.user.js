@@ -5457,6 +5457,7 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "search-feed": return;
 			case "search-page": return;
+			case 'clip-info-button': return;
 			default:
 		}
 		switch(x) {

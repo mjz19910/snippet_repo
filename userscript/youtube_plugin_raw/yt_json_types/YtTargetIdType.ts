@@ -10,4 +10,5 @@ type YtTargetIdType=[
 	UpdateEngagementPanelData['targetId'],
 	WatchNextContinuationAction['targetId'],
 	`shopping_panel_for_entry_point_${"5"|"22"}`,
+	"clip-info-button",
 ][number];
