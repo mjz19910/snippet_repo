@@ -4143,7 +4143,7 @@ class ParserService extends BaseService {
 		x: {
 			switch(x) {
 				case "WL": break;
-				default: console.log("[parse_playlist_static]",x); break x;
+				default: break x;
 			}
 			return;
 		}
@@ -4165,6 +4165,7 @@ class ParserService extends BaseService {
 			if(this.log_playlist_parse) console.log("[parse_playlist_radio]",pl.length,pl);
 			return;
 		}
+		console.log("[new_parse_playlist_id]",x);
 		debugger;
 	}
 	/** @private @template {`${U}${string}${U}`} I @template {string} U @arg {I} x @arg {U} _w @returns {I extends `${U}${infer V}${U}`?V:never} */
