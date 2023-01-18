@@ -8608,7 +8608,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddToPlaylistCommandData} x */
 	AddToPlaylistCommandData(x) {
-		x;
+		this.save_keys("[AddToPlaylistCommandData]",x);
+		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y);
+		this.primitive_of(listType,"string");
+		this.CreatePlaylistServiceEndpoint(onCreateListCommand);
+	}
+	/** @arg {CreatePlaylistServiceEndpoint} x */
+	CreatePlaylistServiceEndpoint(x) {
+		this.save_keys("[CreatePlaylistServiceEndpoint]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {CreatePlaylistServiceArgs} x */
+	CreatePlaylistServiceArgs(x) {
+		this.save_keys("[CreatePlaylistServiceArgs]",x);
+		const {...y}=x; this.g(y);
 	}
 }
 //#endregion

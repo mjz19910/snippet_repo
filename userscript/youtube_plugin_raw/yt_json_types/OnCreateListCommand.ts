@@ -1,4 +1,4 @@
-type OnCreateListCommand={
-	commandMetadata: {};
-	createPlaylistServiceEndpoint: CreatePlaylistServiceEndpoint;
+type CreatePlaylistServiceEndpoint={
+	commandMetadata: CommandMetadata;
+	createPlaylistServiceEndpoint: CreatePlaylistServiceArgs;
 };

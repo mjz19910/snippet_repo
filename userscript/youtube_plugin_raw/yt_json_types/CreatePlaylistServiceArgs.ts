@@ -1,4 +1,4 @@
-type CreatePlaylistServiceEndpoint={
+type CreatePlaylistServiceArgs={
 	params: string;
 	videoIds: string[];
 };

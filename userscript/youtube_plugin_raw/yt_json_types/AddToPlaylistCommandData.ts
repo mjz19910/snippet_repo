@@ -1,6 +1,6 @@
 type AddToPlaylistCommandData={
 	listType: string;
-	onCreateListCommand: OnCreateListCommand;
+	onCreateListCommand: CreatePlaylistServiceEndpoint;
 	openListPanel: boolean;
 	openMiniplayer: boolean;
 	videoId: string;
