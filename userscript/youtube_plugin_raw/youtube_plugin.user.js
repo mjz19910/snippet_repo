@@ -8540,7 +8540,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideSubscriptionsSectionData]",x);
 		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=x; this.g(y);
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
-		this.z(items,this.GuideEntryRenderer);
+		this.z(items,a=>{
+			if("guideEntryRenderer" in a) return this.GuideEntryRenderer(a);
+			debugger;
+		});
 		this.trackingParams(trackingParams);
 		this.SimpleText(formattedTitle);
 		this.z(handlerDatas,a=>{
