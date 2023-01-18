@@ -9505,118 +9505,146 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
 		this.save_keys("[PlayerAnnotationsExpandedData]",x);
+		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y);
 	}
 	/** @arg {SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
 		this.save_keys("[SignalNavigationEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y);
 	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
 		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
+		const {apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
+		const {apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {HotkeyDialog} x */
 	HotkeyDialog(x) {
 		this.save_keys("[HotkeyDialog]",x);
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
 		this.save_keys("[TopbarLogo]",x);
+		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y);
 	}
 	/** @arg {UnknownWebCommandMetadata} x */
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
 	}
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
 		this.save_keys("[UploadEndpointData]",x);
+		const {hack,...y}=x; this.g(y);
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
 		this.save_keys("[GuideCollapsibleEntry]",x);
+		const {expanderItem,expandableItems,collapserItem,...y}=x; this.g(y);
 	}
 	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
 	ItemSectionRendererTemplate_Section(x) {
 		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
+		const {itemSectionRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {
 		this.save_keys("[MerchandiseShelfRenderer]",x);
+		const {merchandiseShelfRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
 		this.save_keys("[VideoPrimaryInfoRenderer]",x);
+		const {videoPrimaryInfoRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
 		this.save_keys("[VideoSecondaryInfoRenderer]",x);
+		const {videoSecondaryInfoRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {NextWebCommandMetadata} x */
 	NextWebCommandMetadata(x) {
 		this.save_keys("[NextWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {SetSettingWebCommandMetadata} x */
 	SetSettingWebCommandMetadata(x) {
 		this.save_keys("[SetSettingWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 	}
 	/** @arg {MultiMarkersPlayerBarRenderer} x */
 	MultiMarkersPlayerBarRenderer(x) {
 		this.save_keys("[MultiMarkersPlayerBarRenderer]",x);
+		const {multiMarkersPlayerBarRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		this.save_keys("[AdSlotAndLayoutMetadataItem]",x);
+		const {adLayoutMetadata,adSlotMetadata,...y}=x; this.g(y);
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
 		this.save_keys("[MacroMarkersListRenderer]",x);
+		const {macroMarkersListRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeader(x) {
 		this.save_keys("[EngagementPanelTitleHeader]",x);
+		const {title,visibilityButton,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
 		this.save_keys("[ProductListRenderer]",x);
+		const {productListRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.save_keys("[VideoDescriptionHeaderRenderer]",x);
+		const {videoDescriptionHeaderRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
 		this.save_keys("[ExpandableVideoDescriptionBodyRenderer]",x);
+		const {expandableVideoDescriptionBodyRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
 		this.save_keys("[VideoDescriptionMusicSectionRenderer]",x);
+		const {videoDescriptionMusicSectionRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {HorizontalCardListRenderer} x */
 	HorizontalCardListRenderer(x) {
 		this.save_keys("[HorizontalCardListRenderer]",x);
+		const {horizontalCardListRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {SearchPageWebCommandMetadata} x */
 	SearchPageWebCommandMetadata(x) {
 		this.save_keys("[SearchPageWebCommandMetadata]",x);
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
 	}
 	/** @arg {BrowseApiWebCommandMetadata} x */
 	BrowseApiWebCommandMetadata(x) {
-		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
-		this.primitive_of(x.sendPost,"boolean");
+		const {apiUrl,sendPost,...y}=x; this.g(y);
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		this.primitive_of(sendPost,"boolean");
+	}
+	/** @arg {CompactVideoRenderer} x */
+	CompactVideoRenderer(x) {
+		this.save_keys("[CompactVideoRenderer]",x);
+		const {compactVideoRenderer,...y}=x; this.g(y);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
-	/** @arg {CompactVideoRenderer} x */
-	CompactVideoRenderer(x) {
-		x;
-	}
 	//#endregion
 }
 //#endregion
