@@ -9274,7 +9274,43 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VoiceSearchDialogRenderer} x */
 	VoiceSearchDialogRenderer(x) {
-		x;
+		this.VoiceSearchDialog(x.voiceSearchDialogRenderer);
+		/*placeholderHeader,
+promptHeader,
+exampleQuery1,
+exampleQuery2,
+promptMicrophoneLabel,
+loadingHeader,
+connectionErrorHeader,
+connectionErrorMicrophoneLabel,
+permissionsHeader,
+permissionsSubtext,
+disabledHeader,
+disabledSubtext,
+microphoneButtonAriaLabel,
+exitButton,
+trackingParams,
+microphoneOffPromptHeader,*/
+	}
+	/** @arg {VoiceSearchDialogData} x */
+	VoiceSearchDialog(x) {
+		const {placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,trackingParams,microphoneOffPromptHeader,...y}=x; this.g(y);
+		this.TextWithRuns(placeholderHeader);
+		this.TextWithRuns(promptHeader);
+		this.TextWithRuns(exampleQuery1);
+		this.TextWithRuns(exampleQuery2);
+		this.TextWithRuns(promptMicrophoneLabel);
+		this.TextWithRuns(loadingHeader);
+		this.TextWithRuns(connectionErrorHeader);
+		this.TextWithRuns(connectionErrorMicrophoneLabel);
+		this.TextWithRuns(permissionsHeader);
+		this.TextWithRuns(permissionsSubtext);
+		this.TextWithRuns(disabledHeader);
+		this.TextWithRuns(disabledSubtext);
+		this.TextWithRuns(microphoneButtonAriaLabel);
+		this.ButtonRenderer(exitButton);
+		this.trackingParams(trackingParams);
+		this.TextWithRuns(microphoneOffPromptHeader);
 	}
 	//#endregion
 }
