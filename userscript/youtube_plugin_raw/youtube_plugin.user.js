@@ -5344,7 +5344,7 @@ class ServiceMethods extends ServiceData {
 	targetId(x) {
 		this.x.get("parser_service").parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
-		switch(x){case "shopping_panel_for_entry_point_5": return;}
+		switch(x) {case "shopping_panel_for_entry_point_5": return;}
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			if(!this.known_target_id.includes(x)) {
 				this.known_target_id.push(x);
@@ -9307,8 +9307,16 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
 		this.save_keys("[StructuredDescriptionContentData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {items,...y}=x; this.g(y);
+		this.z(items,a => {
+			this.StructuredDescriptionContentItem(a);
+		});
+	}
+	StructuredDescriptionContentItem(x) {
+		if("videoDescriptionHeaderRenderer" in x) {
+			return this.VideoDescriptionHeaderRenderer(x);
+		}
+		debugger;
 	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
@@ -9464,6 +9472,10 @@ class HandleTypes extends ServiceMethods {
 	ShowEngagementPanelScrimActionData(x) {
 		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
 		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y);
+	}
+	/** @arg {VideoDescriptionHeaderRenderer} x */
+	VideoDescriptionHeaderRenderer(x) {
+		x;
 	}
 	//#endregion
 }
