@@ -7921,13 +7921,13 @@ class HandleTypes extends ServiceMethods {
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=x; this.g(y);
 		this.ResultsTemplate(results,a => {
 			this.ContentsArrayTemplate(a,a => {
+				if("itemSectionRenderer" in a) return;
+				if("merchandiseShelfRenderer" in a) return;
+				if("videoPrimaryInfoRenderer" in a) return;
+				if("videoSecondaryInfoRenderer" in a) return;
 				let k=this.get_keys_of(a);
-				switch(k[0]) {
+				switch(k.at(0)) {
 					default: debugger; break;
-					case "itemSectionRenderer": break;
-					case "merchandiseShelfRenderer": break;
-					case "videoPrimaryInfoRenderer": break;
-					case "videoSecondaryInfoRenderer": break;
 				}
 			});
 		});
