@@ -5,4 +5,10 @@ type TopbarMenuButton={
 	accessibility: Accessibility;
 	tooltip: string;
 	style: "STYLE_DEFAULT";
+}|{
+	avatar: Thumbnail;
+	menuRequest: SignalServiceEndpoint;
+	trackingParams: string;
+	accessibility: Accessibility;
+	tooltip: string;
 };

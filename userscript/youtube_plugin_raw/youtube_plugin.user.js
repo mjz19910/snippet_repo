@@ -9012,15 +9012,22 @@ class HandleTypes extends ServiceMethods {
 	TopbarMenuButton(x) {
 		const cf="TopbarMenuButton";
 		this.save_keys(`[${cf}]`,x);
-		const {icon,menuRenderer,trackingParams,accessibility,tooltip,style,...y}=x; this.g(y);
-		this.Icon(icon);
-		this.MultiPageMenuRenderer(menuRenderer);
+		const {trackingParams,accessibility,tooltip,...y0}=x;
 		this.trackingParams(trackingParams);
 		this.AccessibilityData(accessibility);
 		this.primitive_of(tooltip,"string");
-		switch(style) {
-			default: debugger; break;
-			case "STYLE_DEFAULT": break;
+		if("menuRequest" in y0) {
+			return;
+		} else if("menuRenderer" in y0) {
+			const {icon,menuRenderer,style,...y}=y0; this.g(y);
+			this.Icon(icon);
+			this.MultiPageMenuRenderer(menuRenderer);
+			switch(style) {
+				default: debugger; break;
+				case "STYLE_DEFAULT": break;
+			}
+		} else {
+			debugger;
 		}
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
