@@ -4944,6 +4944,9 @@ class ParserService extends BaseService {
 		if(this.str_starts_with(x,"watch")) {
 			return this.save_enum("watch",x);
 		}
+		if(this.str_starts_with(x,"shopping_panel")) {
+			return this.save_enum("shopping_panel",x);
+		}
 		console.log("[new_parse_target_id]",x);
 		debugger;
 	}
@@ -7134,6 +7137,7 @@ class HandleTypes extends ServiceMethods {
 			switch(ss) {
 				default: debugger; break;
 				case "76278": break;
+				case "99999": break;
 				case "124975": break;
 				case "126250": break;
 			}
@@ -7182,6 +7186,8 @@ class HandleTypes extends ServiceMethods {
 			return this.StructuredDescriptionContentRenderer(x);
 		} else if("macroMarkersListRenderer" in x) {
 			return this.MacroMarkersListRenderer(x);
+		} else if("productListRenderer" in x) {
+			return this.ProductListRenderer(x);
 		}
 		debugger;
 	}
@@ -9442,6 +9448,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeader(x) {
+		x;
+	}
+	/** @arg {ProductListRenderer} x */
+	ProductListRenderer(x) {
 		x;
 	}
 	//#endregion

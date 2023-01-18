@@ -3,6 +3,7 @@ type EngagementPanelSectionTargetId=MakeTargetId<
 		"ads",
 		"clip-create",
 		"structured-description",
-		"comments-section"
+		"comments-section",
+		"macro-markers-description-chapters",
 	][number]
->|string&{_tag:"string"};
+>;
