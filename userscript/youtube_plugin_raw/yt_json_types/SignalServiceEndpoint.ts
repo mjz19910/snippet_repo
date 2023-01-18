@@ -1,4 +1,5 @@
-type SignalServiceEndpointData={
-	signal: "CLIENT_SIGNAL";
-	actions: ServiceEndpointAction[];
+type SignalServiceEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
+	signalServiceEndpoint: SignalServiceEndpointData;
 };

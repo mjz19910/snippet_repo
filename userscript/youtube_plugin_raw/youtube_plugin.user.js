@@ -7207,18 +7207,6 @@ class HandleTypes extends ServiceMethods {
 		if(isVisible!==true) debugger;
 		if(key!=="HEATSEEKER") debugger;
 	}
-	/** @arg {SignalServiceEndpointCommandMetadata} x */
-	SignalServiceEndpointCommandMetadata(x) {
-		this.save_keys("[SignalServiceEndpointCommandMetadata]",x);
-		const {webCommandMetadata,...y}=x; this.g(y);
-		this.SignalServiceEndpointWebCommandMetadata(webCommandMetadata);
-	}
-	/** @arg {SignalServiceEndpointWebCommandMetadata} x */
-	SignalServiceEndpointWebCommandMetadata(x) {
-		this.save_keys("[SignalServiceEndpointWebCommandMetadata]",x);
-		const {sendPost,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-	}
 	/** @arg {PlayerOverlayRenderer} x */
 	PlayerOverlayRenderer(x) {
 		this.save_keys("[PlayerOverlayRenderer]",x);
