@@ -7,4 +7,5 @@ type MenuServiceItemData={
 	icon: Icon<"NOT_INTERESTED">;
 	serviceEndpoint: MenuServiceEndpointItems;
 	trackingParams: string;
+	hasSeparator?: true;
 };
