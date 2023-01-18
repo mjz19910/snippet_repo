@@ -4051,10 +4051,17 @@ class CodegenService extends BaseService {
 			if(o.buttonRenderer) return "TYPE::ButtonRenderer";
 			if(o.superVodBuyFlowContentRenderer) return "TYPE::SuperVodBuyFlowContentRenderer";
 			if(o.pdgCommentPreviewRenderer) return "TYPE::PdgCommentPreviewRenderer";
+			if(o.pdgColorSliderRenderer) return "TYPE::PdgColorSliderRenderer";
+			if(o.pdgCommentOptionRenderer) return "TYPE::PdgCommentOptionRenderer";
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
 			obj_count++;
+			let c=this.get_name_from_keys(o);
+			if(c) {
+				c=this.#uppercase_first(c);
+				return `TYPE::${c}`;
+			}
 			if(obj_count<4) return o;
 			if(o instanceof Array) return [{}];
 			return {};
@@ -4074,6 +4081,7 @@ class CodegenService extends BaseService {
 			} while(ps!==s);
 			return s;
 		}
+		debugger;
 		tc=replace_until_same(tc,/\[\s+{([^\[\]]*)}\s+\]/g,(_a,/**@type {string} */v) => {
 			let vi=v.split("\n").map(e => `${e.slice(0,1).trim()}${e.slice(1)}`).join("\n");
 			return `{${vi}}:ARRAY_TAG`;
@@ -6197,6 +6205,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("notificationActionRenderer" in x) {
 			return this.NotificationActionRenderer(x);
 		} else {
+			this.x.get("codegen").generate_typedef(x.pdgBuyFlowRenderer.content[0].superVodBuyFlowContentRenderer.commentPreview,null);
 			debugger;
 		}
 	}

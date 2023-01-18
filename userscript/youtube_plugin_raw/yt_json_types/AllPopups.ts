@@ -7,8 +7,22 @@ type PdgBuyFlowHeader={
 type PdgBuyFlowHeaderRenderer={
 	pdgBuyFlowHeaderRenderer: PdgBuyFlowHeader;
 };
+type PdgCommentPreviewRenderer={};
+type PdgColorSliderRenderer={};
+type SuperVodBuyFlowContent={
+	description: TextWithRuns;
+	buyButton: ButtonRenderer;
+	trackingParams: string;
+	commentPreview: PdgCommentPreviewRenderer;
+	disclaimerText: TextWithRuns;
+	colorSlider: PdgColorSliderRenderer;
+	defaultPriceTier: 0;
+	superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
+};
 
-type SuperVodBuyFlowContentRenderer={};
+type SuperVodBuyFlowContentRenderer={
+	superVodBuyFlowContentRenderer: SuperVodBuyFlowContent;
+};
 
 type GetSurveyCommand={
 	clickTrackingParams: string;
