@@ -7278,8 +7278,6 @@ class HandleTypes extends ServiceMethods {
 					if(identifier) {
 						let a1=this.ShortsSurfaceIdentifier(identifier);
 						if(a1!=="engagement-panel-structured-description") debugger;
-					} else {
-						debugger;
 					}
 				} break;
 				case 139722: {
@@ -7304,6 +7302,15 @@ class HandleTypes extends ServiceMethods {
 				const {content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y);
 				this.AdsEngagementPanelContentRenderer(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.LoggingDirectives(loggingDirectives);
+			} break;
+			case "engagement-panel-clip-create": {
+				const {panelIdentifier,header,content,targetId: {},visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
+				if(panelIdentifier!=="engagement-panel-clip-create") debugger;
+				this.EngagementPanelTitleHeaderRenderer(header);
+				this.ClipSectionRenderer(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
 				this.LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-macro-markers-description-chapters": {
