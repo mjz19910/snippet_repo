@@ -4079,7 +4079,17 @@ class CodegenService extends BaseService {
 				}
 				throw new Error();
 			};
-			g();
+			if(o.browseEndpoint) return g();
+			if(o.cinematicContainerRenderer) return g();
+			if(o.desktopTopbarRenderer) return g();
+			if(o.engagementPanelSectionListRenderer) return g();
+			if(o.openPopupAction) return g();
+			if(o.pdgBuyFlowHeaderRenderer) return g();
+			if(o.playerOverlayRenderer) return g();
+			if(o.playlistPanelVideoRenderer) return g();
+			if(o.signalServiceEndpoint) return g();
+			if(o.twoColumnWatchNextResults) return g();
+			if(o.watchEndpoint) return g();
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 			if(keys.includes(k1)) return o;
