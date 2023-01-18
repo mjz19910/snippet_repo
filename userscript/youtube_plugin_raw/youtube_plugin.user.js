@@ -2024,7 +2024,7 @@ class ApiBase {
 	uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
 	}
-	/** @arg {(string|number|symbol)[]} x */
+	/** @template T @arg {T[]} x */
 	filter_keys(x) {
 		let ret=[];
 		for(let k of x) {
@@ -4097,7 +4097,7 @@ class CodegenService extends BaseService {
 		}
 		return ret;
 	}
-	/** @param {{[x:string]:unknown}} x */
+	/** @param {{[U in string]:unknown}} x */
 	get_json_replacer_type(x) {
 		let g=() => {
 			let o_keys=this.filter_keys(this.get_keys_of(x));
