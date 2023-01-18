@@ -7796,7 +7796,7 @@ class HandleTypes extends ServiceMethods {
 			if("contents" in a) {
 				this.z(a.contents,a => {
 					if("itemSectionRenderer" in a) {
-						this.ItemSectionRendererTemplate(a,a=>{
+						this.ItemSectionRendererTemplate(a,a => {
 							if(a[0]==="sid-wn-chips"&&a[1]==="watch-next-feed") return;
 							debugger;
 						});
@@ -8069,7 +8069,7 @@ class HandleTypes extends ServiceMethods {
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y);
 		this.primitive_of(feedbackToken,"string");
 		this.UiActions(uiActions);
-		this.z(actions,a=>{
+		this.z(actions,a => {
 			console.log("[action]",this.get_keys_of(a));
 		});
 	}
@@ -8254,13 +8254,13 @@ class HandleTypes extends ServiceMethods {
 	C4TabbedHeaderRenderer(x) {
 		this.save_keys("[C4TabbedHeaderRenderer]",x);
 		const {c4TabbedHeaderRenderer,...y}=x; this.g(y);
-		c4TabbedHeaderRenderer;
+		this.C4TabbedHeaderData(c4TabbedHeaderRenderer);
 	}
 	/** @arg {FeedTabbedHeaderRenderer} x */
 	FeedTabbedHeaderRenderer(x) {
 		this.save_keys("[FeedTabbedHeaderRenderer]",x);
 		const {feedTabbedHeaderRenderer,...y}=x; this.g(y);
-		feedTabbedHeaderRenderer;
+		this.FeedTabbedHeaderData(feedTabbedHeaderRenderer);
 	}
 	/** @arg {CacheMetadata} x */
 	CacheMetadata(x) {
@@ -8271,44 +8271,43 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {StateTag} x */
 	StateTag(x) {
 		this.save_keys("[StateTag]",x);
+		if(x.stateTag!==3) debugger;
 		if("instruction" in x) {
-			const {stateTag,instruction,...y}=x; this.g(y);
-			stateTag;
-			instruction;
+			const {stateTag: {},instruction,...y}=x; this.g(y);
+			if(instruction!=="STATE_TAG_BROWSE_INSTRUCTION_MARK_AS_DIRTY") debugger;
 			return;
 		}
-		const {stateTag,onStateTagModified,...y}=x; this.g(y);
-		stateTag;
-		onStateTagModified;
+		const {stateTag: {},onStateTagModified,...y}=x; this.g(y);
+		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
 	}
 	/** @arg {SettingsSidebarRenderer} x */
 	SettingsSidebarRenderer(x) {
 		this.save_keys("[SettingsSidebarRenderer]",x);
 		const {settingsSidebarRenderer,...y}=x; this.g(y);
-		settingsSidebarRenderer;
+		this.SettingsSidebarData(settingsSidebarRenderer);
 	}
 	/** @arg {EntityBatchUpdate} x */
 	EntityBatchUpdate(x) {
 		this.save_keys("[EntityBatchUpdate]",x);
 		const {entityBatchUpdate,...y}=x; this.g(y);
-		entityBatchUpdate;
+		this.EntityBatchUpdateData(entityBatchUpdate);
 	}
 	/** @arg {DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {
 		this.save_keys("[DesktopTopbarRenderer]",x);
 		const {desktopTopbarRenderer,...y}=x; this.g(y);
-		desktopTopbarRenderer;
+		this.DesktopTopbarData(desktopTopbarRenderer);
 	}
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
 		this.save_keys("[BrowseContents]",x);
 		if("twoColumnBrowseResultsRenderer" in x) {
 			const {twoColumnBrowseResultsRenderer,...y}=x; this.g(y);
-			twoColumnBrowseResultsRenderer;
+			this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
 			return;
 		}
 		const {feedFilterChipBarRenderer,...y}=x; this.g(y);
-		feedFilterChipBarRenderer;
+		this.FeedFilterChipBarData(feedFilterChipBarRenderer);
 	}
 	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
@@ -8322,34 +8321,34 @@ class HandleTypes extends ServiceMethods {
 	ResolveUrlCommandMetadata(x) {
 		this.save_keys("[ResolveUrlCommandMetadata]",x);
 		const {isVanityUrl,parentTrackingParams,...y}=x; this.g(y);
-		isVanityUrl;
-		parentTrackingParams;
+		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
+		if(parentTrackingParams) this.trackingParams(parentTrackingParams);
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
 		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=x; this.g(y);
-		opportunityType;
-		adSlotAndLayoutMetadata;
-		isInitialLoad;
-		enablePacfLoggingWeb;
+		if(opportunityType!=="OPPORTUNITY_TYPE_ORGANIC_BROWSE_RESPONSE_RECEIVED") debugger;
+		this.z(adSlotAndLayoutMetadata,a => a);
+		this.primitive_of(isInitialLoad,"boolean");
+		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
 	/** @arg {SearchResultsTab} x */
 	SearchResultsTab(x) {
 		this.save_keys("[SearchResultsTab]",x);
 		const {endpoint,title,selected,content,tabIdentifier,trackingParams,...y}=x; this.g(y);
-		endpoint;
-		title;
-		selected;
-		content;
-		tabIdentifier;
+		if(endpoint) this.SearchResultsSearchEndpoint(endpoint);
+		this.primitive_of(title,"string");
+		if(selected!==void 0) this.primitive_of(selected,"boolean");
+		this.SectionListRenderer(content);
+		console.log("[tabIdentifier]",tabIdentifier);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
 	GetAddToPlaylistResponse(x) {
 		this.save_keys("[GetAddToPlaylistResponse]",x);
 		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y);
-		contents;
+		this.z(contents,this.g);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {AttLogResponse} x */
@@ -8361,54 +8360,54 @@ class HandleTypes extends ServiceMethods {
 	ReelPlayerOverlayData(x) {
 		this.save_keys("[ReelPlayerOverlayData]",x);
 		const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y);
-		style;
+		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.trackingParams(trackingParams);
-		reelPlayerNavigationModel;
+		if(reelPlayerNavigationModel!=="REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED") debugger;
 	}
 	/** @arg {ClientMessages} x */
 	ClientMessages(x) {
 		this.save_keys("[ClientMessages]",x);
 		const {reconnectMessage,unableToReconnectMessage,fatalError,reconnectedMessage,genericError,...y}=x; this.g(y);
-		reconnectMessage;
-		unableToReconnectMessage;
-		fatalError;
-		reconnectedMessage;
-		genericError;
+		this.TextWithRuns(reconnectMessage);
+		this.TextWithRuns(unableToReconnectMessage);
+		this.TextWithRuns(fatalError);
+		this.TextWithRuns(reconnectedMessage);
+		this.TextWithRuns(genericError);
 	}
 	/** @arg {LiveChatEmoji} x */
 	LiveChatEmoji(x) {
 		this.save_keys("[LiveChatEmoji]",x);
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,isLocked,...y}=x; this.g(y);
-		emojiId;
-		shortcuts;
-		searchTerms;
-		image;
-		isCustomEmoji;
-		isLocked;
+		this.primitive_of(emojiId,"string");
+		this.z(shortcuts,a => this.primitive_of(a,"string"));
+		this.z(searchTerms,a => this.primitive_of(a,"string"));
+		this.Thumbnail(image);
+		this.primitive_of(isCustomEmoji,"boolean");
+		this.primitive_of(isLocked,"boolean");
 	}
 	/** @arg {MessageRenderer} x */
 	MessageRenderer(x) {
 		this.save_keys("[MessageRenderer]",x);
 		const {messageRenderer,...y}=x; this.g(y);
-		messageRenderer;
+		this.g(messageRenderer);
 	}
 	/** @arg {LiveChatParticipantsListRenderer} x */
 	LiveChatParticipantsListRenderer(x) {
 		this.save_keys("[LiveChatParticipantsListRenderer]",x);
 		const {liveChatParticipantsListRenderer,...y}=x; this.g(y);
-		liveChatParticipantsListRenderer;
+		this.g(liveChatParticipantsListRenderer);
 	}
 	/** @arg {LiveChatTickerRenderer} x */
 	LiveChatTickerRenderer(x) {
 		this.save_keys("[LiveChatTickerRenderer]",x);
 		const {liveChatTickerRenderer,...y}=x; this.g(y);
-		liveChatTickerRenderer;
+		this.g; liveChatTickerRenderer;
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
 		this.save_keys("[LiveChatHeaderRenderer]",x);
 		const {liveChatHeaderRenderer,...y}=x; this.g(y);
-		liveChatHeaderRenderer;
+		this.g; liveChatHeaderRenderer;
 	}
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
@@ -8432,7 +8431,7 @@ class HandleTypes extends ServiceMethods {
 	ReportFormModalRenderer(x) {
 		this.save_keys("[ReportFormModalRenderer]",x);
 		const {reportFormModalRenderer,...y}=x; this.g(y);
-		reportFormModalRenderer;
+		this.g; reportFormModalRenderer;
 	}
 	/** @arg {AutomixPreviewVideoRenderer} x */
 	AutomixPreviewVideoRenderer(x) {
@@ -8798,6 +8797,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
+		x;
+	}
+	/** @arg {FeedTabbedHeaderData} x */
+	FeedTabbedHeaderData(x) {
+		x;
+	}
+	/** @arg {SettingsSidebarData} x */
+	SettingsSidebarData(x) {
+		x;
+	}
+	/** @arg {DesktopTopbarData} x */
+	DesktopTopbarData(x) {
+		x;
+	}
+	/** @arg {TwoColumnBrowseResultsData} x */
+	TwoColumnBrowseResultsData(x) {
+		x;
+	}
+	/** @arg {FeedFilterChipBarData} x */
+	FeedFilterChipBarData(x) {
+		x;
+	}
+	/** @arg {SearchResultsSearchEndpoint} x */
+	SearchResultsSearchEndpoint(x) {
 		x;
 	}
 }
