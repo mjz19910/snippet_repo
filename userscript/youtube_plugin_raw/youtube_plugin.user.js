@@ -7818,10 +7818,6 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {UpdateEngagementPanelAction} x */
-	UpdateEngagementPanelAction(x) {
-		this.save_keys("[UpdateEngagementPanelAction]",x);
-	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
 		this.save_keys("[SuccessResponse]",x);
@@ -7834,10 +7830,6 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},challenge,bgChallenge,...y}=x; this.g(y);
 		this.primitive_of(challenge,"string");
 		this.AttBgChallenge(bgChallenge);
-	}
-	/** @private @arg {AttBgChallenge} x */
-	AttBgChallenge(x) {
-		this.save_keys("[AttBgChallenge]",x);
 	}
 	/** @private @arg {GuideResponse} x */
 	GuideResponse(x) {
@@ -7857,13 +7849,9 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {GuideSubscriptionsSectionRenderer} x */
-	GuideSubscriptionsSectionRenderer(x) {
-		x;
-	}
 	/** @arg {GuideSectionRenderer} x */
 	GuideSectionRenderer(x) {
-		x;
+		this.save_keys("[GuideSectionRenderer]",x);
 	}
 	/** @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
@@ -8125,9 +8113,21 @@ class HandleTypes extends ServiceMethods {
 	GetMultiPageMenuAction(x) {
 		this.save_keys("[GetMultiPageMenuAction]",x);
 	}
-	/** @private @arg {FeedbackResponseProcessedStatus} x */
+	/** @arg {FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
 		this.save_keys("[FeedbackResponseProcessedStatus]",x);
+	}
+	/** @arg {UpdateEngagementPanelAction} x */
+	UpdateEngagementPanelAction(x) {
+		this.save_keys("[UpdateEngagementPanelAction]",x);
+	}
+	/** @arg {AttBgChallenge} x */
+	AttBgChallenge(x) {
+		this.save_keys("[AttBgChallenge]",x);
+	}
+	/** @arg {GuideSubscriptionsSectionRenderer} x */
+	GuideSubscriptionsSectionRenderer(x) {
+		this.save_keys("[GuideSubscriptionsSectionRenderer]",x);
 	}
 }
 //#endregion
