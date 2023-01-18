@@ -745,7 +745,7 @@ class HandleRichGridRenderer {
 		if(renderer.masthead) {
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
-				/** @private @type {{masthead: {}}&Omit<typeof renderer,"masthead">} */
+				/** @private @type {{masthead?: {}}&Omit<typeof renderer,"masthead">} */
 				let no_ad_renderer=renderer;
 				console.log("masthead",masthead);
 				no_ad_renderer.masthead=masthead;
@@ -6921,7 +6921,7 @@ class HandleTypes extends ServiceMethods {
 				} return;
 				default:
 			}
-			console.log("[tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
+			console.log("[new.tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
 			return;
 		}
 		const {trackingParams,...y}=x; this.g(y);
@@ -7046,9 +7046,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {RichGrid} x */
 	RichGrid(x) {
 		this.save_keys("[RichGrid]",x);
-		const {contents,masthead,...y}=x; this.g(y);
+		const {contents,masthead,trackingParams,...y}=x; this.g(y);
 		this.z(contents,this.RendererContentItem);
-		this.VideoMastheadAdV3Renderer(masthead);
+		if(masthead) this.VideoMastheadAdV3Renderer(masthead);
 	}
 	/** @arg {VideoMastheadAdV3Renderer} x */
 	VideoMastheadAdV3Renderer(x) {
