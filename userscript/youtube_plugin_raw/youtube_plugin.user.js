@@ -8463,7 +8463,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
-		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,...y}=x; this.g(y);
+		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y);
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
 		this._ReelWatchEndpoint(endpoint);
@@ -8471,6 +8471,7 @@ class HandleTypes extends ServiceMethods {
 		this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
 		if(!this.str_starts_with("/shorts/",url)) debugger;
 		if(url.includes("&")) debugger;
+		if(cachedReelWatchSequenceResponse) this.ReelWatchSequenceResponse(cachedReelWatchSequenceResponse);
 	}
 	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
