@@ -9332,7 +9332,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ProfileColumnItem} x */
 	ProfileColumnItem(x) {
 		if("profileColumnUserInfoRenderer" in x) return this.ProfileColumnUserInfoRenderer(x);
-		if("profileColumnStatsRenderer" in x) return this.profileColumnStatsRenderer(x);
+		if("profileColumnStatsRenderer" in x) return this.ProfileColumnStatsRenderer(x);
 		debugger;
 	}
 	/** @arg {WatchNextItem} x */
@@ -9341,6 +9341,30 @@ class HandleTypes extends ServiceMethods {
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
 		if("compactVideoRenderer" in x) return this.CompactVideoRenderer(x);
 		debugger;
+	}
+	/** @arg {PlaylistPanelContinuationData} x */
+	PlaylistPanelContinuationData(x) {
+		this.save_keys("[PlaylistPanelContinuationData]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {AdsEngagementPanelContentData} x */
+	AdsEngagementPanelContentData(x) {
+		this.save_keys("[AdsEngagementPanelContentData]",x);
+		const {hack,...y}=x; this.g(y);
+		this.primitive_of(hack,"boolean");
+	}
+	/** @arg {StructuredDescriptionContentData} x */
+	StructuredDescriptionContentData(x) {
+		this.save_keys("[StructuredDescriptionContentData]",x);
+		const {items,...y}=x; this.g(y);
+		this.z(items,this.StructuredDescriptionContentItem);
+	}
+	/** @arg {FeedFilterChipBarData} x */
+	ProfileColumnUserInfoData(x) {
+		const {contents,trackingParams,styleType,...y}=x; this.g(y);
+		this.z(contents,this.ChipCloudChipRenderer);
+		this.trackingParams(trackingParams);
+		if(styleType!=="FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID") debugger;
 	}
 	//#endregion
 	//#region destructure
@@ -9431,40 +9455,38 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerHeaderSupportedRenderers:any}>} x */
 	PlayerOverlayWithSupportedRenderers(x) {
+		this.save_keys("[PlayerOverlayWithSupportedRenderers]",x);
 		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y);
-		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 	}
 	/** @arg {BrowseFeedActionsRenderer} x */
 	BrowseFeedActionsRenderer(x) {
+		this.save_keys("[BrowseFeedActionsRenderer]",x);
 		const {browseFeedActionsRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {ProfileColumnRenderer} x */
 	ProfileColumnRenderer(x) {
-		this.ProfileColumnData(x.profileColumnRenderer);
+		this.save_keys("[ProfileColumnRenderer]",x);
 		const {profileColumnRenderer,...y}=x; this.g(y);
+		this.ProfileColumnData(profileColumnRenderer);
 	}
 	/** @arg {ProfileColumnData} x */
 	ProfileColumnData(x) {
-		this.z(x.items,this.ProfileColumnItem);
+		this.save_keys("[ProfileColumnData]",x);
 		const {items,...y}=x; this.g(y);
+		this.z(items,this.ProfileColumnItem);
 	}
 	/** @arg {ProfileColumnStatsRenderer} x */
-	profileColumnStatsRenderer(x) {
+	ProfileColumnStatsRenderer(x) {
+		this.save_keys("[ProfileColumnStatsRenderer]",x);
 		const {profileColumnStatsRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {ProfileColumnUserInfoRenderer} x */
 	ProfileColumnUserInfoRenderer(x) {
-		x.profileColumnUserInfoRenderer;
+		this.save_keys("[ProfileColumnUserInfoRenderer]",x);
 		const {profileColumnUserInfoRenderer,...y}=x; this.g(y);
-	}
-	/** @arg {FeedFilterChipBarData} x */
-	ProfileColumnUserInfoData(x) {
-		this.z(x.contents,this.ChipCloudChipRenderer);
-		const {contents,trackingParams,styleType,...y}=x; this.g(y);
 	}
 	/** @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
-		x.chipCloudChipRenderer;
 		const {chipCloudChipRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {ChipCloudChipData} x */
@@ -9486,23 +9508,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[LiveChatPlaceholderItemData]",x);
 		const {id,timestampUsec,...y}=x; this.g(y);
 	}
-	/** @arg {PlaylistPanelContinuationData} x */
-	PlaylistPanelContinuationData(x) {
-		this.save_keys("[PlaylistPanelContinuationData]",x);
-		const {...y}=x; this.g(y);
-	}
-	/** @arg {AdsEngagementPanelContentData} x */
-	AdsEngagementPanelContentData(x) {
-		this.save_keys("[AdsEngagementPanelContentData]",x);
-		const {hack,...y}=x; this.g(y);
-		this.primitive_of(hack,"boolean");
-	}
-	/** @arg {StructuredDescriptionContentData} x */
-	StructuredDescriptionContentData(x) {
-		this.save_keys("[StructuredDescriptionContentData]",x);
-		const {items,...y}=x; this.g(y);
-		this.z(items,this.StructuredDescriptionContentItem);
-	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.save_keys("[CommentRenderer]",x);
@@ -9513,13 +9518,13 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[RichItemData]",x);
 		const {content,rowIndex,colIndex,...y}=x; this.g(y);
 	}
-	//#endregion
-	//#region type_errors
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
 		this.save_keys("[LiveChatTextMessageData]",x);
-		const {message,...y}=x; this.g(y);
+		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x; this.g(y);
 	}
+	//#endregion
+	//#region type_errors
 	//#endregion
 	//#region has_save_keys
 	/** @arg {PlayerAnnotationsExpandedData} x */
