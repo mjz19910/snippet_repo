@@ -4,5 +4,5 @@ type MetadataBadgeData={
 	label: "Unlisted";
 	tooltip?: string;
 	trackingParams: string;
-	accessibilityData?: AccessibilityData;
+	accessibilityData?: AccessibilityDataContent;
 };

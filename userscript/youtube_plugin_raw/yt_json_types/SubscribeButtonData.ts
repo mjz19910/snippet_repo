@@ -9,8 +9,8 @@ type SubscribeButtonData={
 	unsubscribedButtonText: TextWithRuns;
 	trackingParams: string;
 	unsubscribeButtonText: TextWithRuns;
-	subscribeAccessibility: Accessibility;
-	unsubscribeAccessibility: Accessibility;
+	subscribeAccessibility: AccessibilityData;
+	unsubscribeAccessibility: AccessibilityData;
 	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;

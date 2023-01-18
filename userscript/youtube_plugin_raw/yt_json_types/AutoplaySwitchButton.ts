@@ -1,8 +1,8 @@
 type AutoplaySwitchButton={
 	onEnabledCommand: SetSettingEndpointAutonavForDesktop<true>;
 	onDisabledCommand: SetSettingEndpointAutonavForDesktop<false>;
-	enabledAccessibilityData: Accessibility;
-	disabledAccessibilityData: Accessibility;
+	enabledAccessibilityData: AccessibilityData;
+	disabledAccessibilityData: AccessibilityData;
 	trackingParams: string;
 	enabled: boolean;
 };

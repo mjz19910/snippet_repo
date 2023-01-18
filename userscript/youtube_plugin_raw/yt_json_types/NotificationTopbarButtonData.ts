@@ -3,7 +3,7 @@ type NotificationTopbarButtonData={
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	menuRequest: {};
 	trackingParams: string;
-	accessibility: Accessibility;
+	accessibility: AccessibilityData;
 	tooltip: string;
 	updateUnseenCountEndpoint: {};
 	notificationCount: number;

@@ -1,6 +1,6 @@
 type CommentsEntryPointTeaserData={
 	teaserAvatar: Thumbnail&{
-		accessibility: Accessibility;
+		accessibility: AccessibilityData;
 	};
 	teaserContent: SimpleText;
 	trackingParams: string;

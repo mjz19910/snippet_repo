@@ -4,5 +4,5 @@ type TranscriptSegmentData={
 	snippet: TextWithRuns;
 	startTimeText: TextWithRuns;
 	trackingParams: string;
-	accessibility: Accessibility;
+	accessibility: AccessibilityData;
 };

@@ -7302,7 +7302,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
-		if(accessibility) this.Accessibility(accessibility);
+		if(accessibility) this.AccessibilityData(accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
 		if(targetId) {
 			this.targetId(as(targetId));
@@ -7400,14 +7400,14 @@ class HandleTypes extends ServiceMethods {
 		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
 		if(sendPost!==true) debugger;
 	}
-	/** @arg {Accessibility} x */
-	Accessibility(x) {
-		this.save_keys("[Accessibility]",x);
-		const {accessibilityData,...y}=x; this.g(y);
-		this.AccessibilityData(accessibilityData);
-	}
 	/** @arg {AccessibilityData} x */
 	AccessibilityData(x) {
+		this.save_keys("[Accessibility]",x);
+		const {accessibilityData,...y}=x; this.g(y);
+		this.AccessibilityDataContent(accessibilityData);
+	}
+	/** @arg {AccessibilityDataContent} x */
+	AccessibilityDataContent(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
@@ -7432,10 +7432,10 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title,this.handle_accessibility);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {{accessibility?:Accessibility}} x */
+	/** @arg {{accessibility?:AccessibilityData}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
-		if(x.accessibility) this.Accessibility(x.accessibility);
+		if(x.accessibility) this.AccessibilityData(x.accessibility);
 	}
 	/** @arg {WatchNextEndScreenItem} x */
 	WatchNextEndScreenItem(x) {
@@ -7609,7 +7609,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
-		if(accessibility) this.Accessibility(accessibility);
+		if(accessibility) this.AccessibilityData(accessibility);
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
@@ -7753,7 +7753,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
+	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:AccessibilityData})=>void} f */
 	SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
 		if(!x) {debugger; return;}

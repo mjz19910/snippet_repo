@@ -2,7 +2,7 @@ type SortFilterSubMenuData={
 	subMenuItems: ActionSetPlaylistVideoOrder[];
 	title: string;
 	icon?: Icon<"SORT">;
-	accessibility?: Accessibility;
+	accessibility?: AccessibilityData;
 	tooltip?: string;
 	trackingParams: string;
 };

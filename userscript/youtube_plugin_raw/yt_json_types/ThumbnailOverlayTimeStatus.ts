@@ -1,6 +1,6 @@
 type ThumbnailOverlayTimeStatus={
 	text: SimpleText&{
-		accessibility: Accessibility;
+		accessibility: AccessibilityData;
 	};
 	style: "DEFAULT";
 };

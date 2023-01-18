@@ -14,7 +14,7 @@ type CompactVideoData={
 	shortViewCountText: TextWithRuns;
 	menu: {};
 	thumbnailOverlays: {};
-	accessibility: Accessibility;
+	accessibility: AccessibilityData;
 	richThumbnail: {};
 	badges?: MetadataBadgeRenderer[];
 };
