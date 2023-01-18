@@ -1,1 +1,0 @@
-type SearchEndpointData_1={};

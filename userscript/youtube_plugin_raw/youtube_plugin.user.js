@@ -8465,17 +8465,6 @@ class HandleTypes extends ServiceMethods {
 		if(trackingParams) this.trackingParams(trackingParams);
 		if(targetId) this.targetId(targetId);
 	}
-	/** @arg {ButtonCommand} x */
-	ButtonCommand(x) {
-		if("signalServiceEndpoint" in x) {
-			return this.SignalServiceEndpoint(x);
-		} else if("continuationCommand" in x) {
-			return this.ContinuationCommand(x);
-		} else if("changeEngagementPanelVisibilityAction" in x) {
-			return;
-		}
-		debugger;
-	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
 		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
@@ -9444,16 +9433,48 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(sendPost,"boolean");
 	}
 	//#endregion
+	//#region destructure_endpoint
+	/** @arg {SignalNavigationEndpoint} x */
+	SignalNavigationEndpoint(x) {
+		this.save_keys("[SignalNavigationEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y);
+	}
+	/** @arg {UploadEndpointData} x */
+	UploadEndpointData(x) {
+		this.save_keys("[UploadEndpointData]",x);
+		const {hack,...y}=x; this.g(y);
+	}
+	/** @arg {SearchResultsSearchEndpoint} x */
+	SearchResultsSearchEndpoint(x) {
+		this.save_keys("[SearchResultsSearchEndpoint]",x);
+		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y);
+		this.SearchEndpointData(searchEndpoint);
+	}
+	/** @arg {SearchEndpointData} x */
+	SearchEndpointData(x) {
+		this.save_keys("[SearchEndpointData]",x);
+		const {query,...y}=x; this.g(y);
+		this.primitive_of(query,"string");
+	}
+	/** @arg {ShareEntityServiceEndpoint} x */
+	ShareEntityServiceEndpoint(x) {
+		this.save_keys("[ShareEntityServiceEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=x; this.g(y);
+		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
+	}
+	/** @arg {ShareEntityServiceArgs} x */
+	ShareEntityServiceArgs(x) {
+		this.save_keys("[ShareEntityServiceArgs]",x);
+		const {serializedShareEntity,commands,...y}=x; this.g(y);
+		this.primitive_of(serializedShareEntity,"string");
+		this.z(commands,this.OpenPopupAction);
+	}
+	//#endregion
 	//#region destructure
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
 		this.save_keys("[PlayerAnnotationsExpandedData]",x);
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y);
-	}
-	/** @arg {SignalNavigationEndpoint} x */
-	SignalNavigationEndpoint(x) {
-		this.save_keys("[SignalNavigationEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y);
 	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
@@ -9484,11 +9505,6 @@ class HandleTypes extends ServiceMethods {
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
 		const {url,webPageType,rootVe,...y}=x; this.g(y);
-	}
-	/** @arg {UploadEndpointData} x */
-	UploadEndpointData(x) {
-		this.save_keys("[UploadEndpointData]",x);
-		const {hack,...y}=x; this.g(y);
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
@@ -9685,11 +9701,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[FeedFilterChipBarData]",x);
 		const {contents,trackingParams,styleType,...y}=x; this.g(y);
 	}
-	/** @arg {SearchResultsSearchEndpoint} x */
-	SearchResultsSearchEndpoint(x) {
-		this.save_keys("[SearchResultsSearchEndpoint]",x);
-		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y);
-	}
 	/** @arg {LiveChatPlaceholderItemData} x */
 	LiveChatPlaceholderItemData(x) {
 		this.save_keys("[LiveChatPlaceholderItemData]",x);
@@ -9711,6 +9722,19 @@ class HandleTypes extends ServiceMethods {
 		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x; this.g(y);
 	}
 	//#endregion
+	//#region dispatch_in_progress
+	/** @arg {ButtonCommand} x */
+	ButtonCommand(x) {
+		if("signalServiceEndpoint" in x) {
+			return this.SignalServiceEndpoint(x);
+		} else if("continuationCommand" in x) {
+			return this.ContinuationCommand(x);
+		} else if("changeEngagementPanelVisibilityAction" in x) {
+			return;
+		}
+		debugger;
+	}
+	//#endregion
 	//#region type_errors
 	//#endregion
 	//#region has_save_keys
@@ -9718,8 +9742,6 @@ class HandleTypes extends ServiceMethods {
 	//#region TODO_minimal_member_fns
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member(x) {x;}
-	/** @arg {ShareEntityServiceEndpoint} x */
-	ShareEntityServiceEndpoint(x) {x;}
 	//#endregion
 }
 //#endregion

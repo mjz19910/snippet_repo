@@ -13,11 +13,13 @@ type ButtonData={
 	trackingParams?: string;
 	targetId?: YtTargetIdType;
 };
+type ShareEntityServiceArgs={
+	serializedShareEntity: string;
+	commands: OpenPopupAction[];
+};
+
 type ShareEntityServiceEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
-	shareEntityServiceEndpoint: {
-		serializedShareEntity: string;
-		commands: OpenPopupAction[];
-	};
+	shareEntityServiceEndpoint: ShareEntityServiceArgs;
 };
