@@ -4,12 +4,7 @@ type ActionCompanionAdData={
 	actionButton: ButtonRenderer;
 	iconImage: ThumbnailsList;
 	bannerImage: ThumbnailsList;
-	navigationEndpoint: UrlEndpoint<[
-		// spell:disable-next
-		BaseUrl<`${"https"}://www.googleadservices.com/pagead/aclk?${string}`>,
-		// spell:disable-next
-		BaseUrl<`${"https"}://ad.doubleclick.net/ddm/trackclk/${string}`>,
-	],WebCommandMetadataTemplateType,ExternalUrlEndpointData>;
+	navigationEndpoint: {};
 	trackingParams: string;
 	adInfoRenderer: ActionCompanionAdInfoRenderers;
 	adVideoId: string;
