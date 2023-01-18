@@ -5,4 +5,9 @@ type MetadataBadgeData={
 	tooltip?: string;
 	trackingParams: string;
 	accessibilityData?: AccessibilityData;
+}|{
+	style: "BADGE_STYLE_TYPE_SHORTS_PLAYER";
+	label: "Includes paid promotion";
+	trackingParams: string;
+	accessibilityData: AccessibilityData
 };
