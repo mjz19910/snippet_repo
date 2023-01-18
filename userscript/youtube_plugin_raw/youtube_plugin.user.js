@@ -6912,9 +6912,23 @@ class HandleTypes extends ServiceMethods {
 		if(a1) this.PrefetchHintConfig(a1);
 		if(playerParams) this.playerParams(playerParams);
 		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
+		if(a2) this.WatchEndpointMusicConfig(a2);
 		const {nofollow,...y_end}=y5;
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
 		this.g(y_end);
+	}
+	/** @arg {WatchEndpointMusicConfig} x */
+	WatchEndpointMusicConfig(x) {
+		this.WatchEndpointMusicConfigData(x.watchEndpointMusicConfig);
+	}
+	/** @arg {WatchEndpointMusicConfigData} x */
+	WatchEndpointMusicConfigData(x) {
+		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y);
+		this.primitive_of(hasPersistentPlaylistPanel,"boolean");
+		switch(musicVideoType) {
+			default: debugger; break;
+			case "MUSIC_VIDEO_TYPE_ATV": break;
+		};
 	}
 	/** @arg {string} x */
 	playerParams(x) {
