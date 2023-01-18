@@ -974,9 +974,9 @@ class MyReader {
 		return sa;
 	}
 	do_uint32_read() {
-		let sa=this.read_varint();
-		if(sa===null) return null;
-		let ret=sa.map((e,n) => [e,n]).reduce((r,v) => {
+		let varint_arr=this.read_varint();
+		if(varint_arr===null) return null;
+		let ret=varint_arr.map((e,n) => [e,n]).reduce((r,v) => {
 			let v0=v[0];
 			let v1=v[1];
 			let mul_pos=2**(7*v1);
