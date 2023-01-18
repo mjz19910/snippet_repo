@@ -2423,6 +2423,11 @@ class BaseServicePrivate extends ApiBase {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value;
 	}
+	/** @this {BaseServicePrivate<Services,{}>} */
+	get codegen() {
+		if(!this.#x.value) throw new Error();
+		return this.#x.value.get("codegen");
+	}
 	/** @arg {`[${string}]`} k @arg {string|string[]} x */
 	save_string(k,x) {
 		this.ds.save_string(k,x);
@@ -4137,6 +4142,7 @@ class CodegenService extends BaseService {
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
 		if(x.simpleText) return "TYPE::SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
+		if(x.engagementPanelTitleHeaderRenderer) debugger;
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
@@ -4196,6 +4202,8 @@ class CodegenService extends BaseService {
 			||x.reelPlayerHeaderRenderer
 			||x.metadataBadgeRenderer
 			||x.likeEndpoint
+			||x.engagementPanelTitleHeaderRenderer
+			||x.sectionListRenderer
 			;
 		if(hg) return g();
 		if(x.webCommandMetadata) return "TYPE::CommandMetadata";
@@ -7184,22 +7192,31 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EngagementPanelSectionList} x */
 	EngagementPanelSectionList(x) {
 		this.save_keys("[EngagementPanelSectionList]",x);
-		const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
+		this.codegen.codegen_new_typedef(x,"EngagementPanelSectionList");
+		if("veType" in x) {
+			switch(x.veType) {
+				case 76278:case 99999:case 124975:case 126250: {
+					const {content,panelIdentifier,header,veType,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
+					debugger;
+					this.EngagementPanelSectionListContent(content);
+					/** @type {EngagementSectionPanelId} */
+					if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
+					if(header) this.EngagementPanelTitleHeaderRenderer(header);
+					if(targetId) this.EngagementPanelSectionTargetId(targetId);
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
+					this.LoggingDirectives(loggingDirectives);
+				} break;
+				default: debugger; break;
+			}
+			return;
+		}
+		const {content,panelIdentifier,header,targetId,visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y);
+		debugger;
 		this.EngagementPanelSectionListContent(content);
 		/** @type {EngagementSectionPanelId} */
 		if(panelIdentifier) this.EngagementSectionPanelId(panelIdentifier);
 		if(header) this.EngagementPanelTitleHeaderRenderer(header);
-		if(veType) {
-			/** @type {`${NonNullable<typeof veType>}`} */
-			let ss=`${veType}`;
-			switch(ss) {
-				default: debugger; break;
-				case "76278": break;
-				case "99999": break;
-				case "124975": break;
-				case "126250": break;
-			}
-		};
 		if(targetId) this.EngagementPanelSectionTargetId(targetId);
 		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 		if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
