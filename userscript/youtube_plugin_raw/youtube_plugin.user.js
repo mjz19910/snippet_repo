@@ -8276,7 +8276,7 @@ class HandleTypes extends ServiceMethods {
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
 		if(navigationEndpoint) {
-			this.x.get("codegen").codegen_new_typedef(x,typeof cf!=="undefined"?cf:null);
+			this.x.get("codegen").codegen_new_typedef(x,typeof cf!=="undefined"? cf:null);
 			this.Button_navigationEndpoint(navigationEndpoint);
 		}
 		if(tooltip&&typeof tooltip!=="string") debugger;
@@ -8535,7 +8535,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=x; this.g(y);
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
-		this.z(adSlotAndLayoutMetadata,a => a);
+		if(adSlotAndLayoutMetadata) this.z(adSlotAndLayoutMetadata,a => this.AdSlotAndLayoutMetadataItem(a));
 		this.primitive_of(isInitialLoad,"boolean");
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
@@ -9401,6 +9401,10 @@ class HandleTypes extends ServiceMethods {
 	//#region TODO_minimal_member_fns
 	/** @arg {MultiMarkersPlayerBarRenderer} x */
 	MultiMarkersPlayerBarRenderer(x) {
+		x;
+	}
+	/** @arg {AdSlotAndLayoutMetadataItem} x */
+	AdSlotAndLayoutMetadataItem(x) {
 		x;
 	}
 	//#endregion

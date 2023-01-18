@@ -1,6 +1,6 @@
 type AdsControlFlowOpportunityReceivedCommandData={
 	opportunityType: OpportunityTypeOrganicEnum;
-	adSlotAndLayoutMetadata: AdSlotAndLayoutMetadataItem[];
+	adSlotAndLayoutMetadata?: AdSlotAndLayoutMetadataItem[];
 	isInitialLoad: boolean;
 	enablePacfLoggingWeb: boolean;
 };
