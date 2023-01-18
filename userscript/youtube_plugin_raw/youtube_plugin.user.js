@@ -1125,7 +1125,6 @@ class MyReader {
 				} else if(revert_res[0]) {
 					let [,num64,new_pos]=revert_res;
 					if(num64!==BigInt(num32)) {
-						console.log("bigint",this.cur_len,this.pos,num32,num64);
 						first_num.push(["data64",fieldId,num64]);
 						this.pos=new_pos;
 					} else {
