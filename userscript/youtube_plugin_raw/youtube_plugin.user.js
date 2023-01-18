@@ -6770,13 +6770,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
 		this.save_keys("[ReelWatchEndpointData]",x);
-		const {videoId,playerParams,overlay,params,sequenceProvider,inputType,...y}=x; this.g(y);
+		const {videoId,playerParams,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y);
 		if(videoId) this.videoId(videoId);
 		this.playerParams(playerParams);
 		this.ReelPlayerOverlayRenderer(overlay);
 		this.params("ReelWatch",params);
 		this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",sequenceProvider);
-		this.save_enum("REEL_WATCH_INPUT_TYPE",inputType);
+		if(sequenceParams) this.params("ReelWatch.sequence",sequenceParams);
+		if(inputType) this.save_enum("REEL_WATCH_INPUT_TYPE",inputType);
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {

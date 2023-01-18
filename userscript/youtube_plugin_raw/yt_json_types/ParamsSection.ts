@@ -3,6 +3,7 @@ type ParamsSection=
 	|"GetTranscript"
 	|"PlaylistEdit"
 	|"ReelWatch"
+	|"ReelWatch.sequence"
 	|"WatchEndpoint"
 	;
 ;
