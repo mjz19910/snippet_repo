@@ -9293,12 +9293,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
 		const {...y}=x; this.g(y);
 	}
-	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
-	ChangeEngagementPanelVisibilityActionData(x) {
-		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
-	}
 	/** @arg {AdsEngagementPanelContentData} x */
 	AdsEngagementPanelContentData(x) {
 		this.save_keys("[AdsEngagementPanelContentData]",x);
@@ -9366,6 +9360,11 @@ class HandleTypes extends ServiceMethods {
 	HotkeyDialogRenderer(x) {
 		this.save_keys("[HotkeyDialogRenderer]",x);
 		const {hotkeyDialogRenderer,...y}=x; this.g(y);
+	}
+	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
+	ChangeEngagementPanelVisibilityActionData(x) {
+		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
+		const {targetId,visibility,...y}=x; this.g(y);
 	}
 	//#endregion
 	//#region has_save_keys
