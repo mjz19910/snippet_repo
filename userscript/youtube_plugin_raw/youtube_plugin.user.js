@@ -5046,6 +5046,10 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @arg {string} x */
+	params(x) {
+		this.x.get("parser_service").on_endpoint_params(x);
+	}
 	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
@@ -6125,9 +6129,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
-		const cf="LikeLikeResponse";
+		this.save_keys(`[LikeLikeResponse]`,x);
 		const {responseContext,actions,...y}=x; this.g(y);
-		this.save_keys(`[${cf}]`,x);
 		if(actions) {
 			this.z(actions,a => this.Action(a));
 		}
@@ -6135,15 +6138,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
-		const cf="LikeRemoveLikeResponse";
+		this.save_keys(`[LikeRemoveLikeResponse]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y);
 		if(actions) this.z(actions,a => this.Action(a));
-		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		const cf="ReelWatchSequenceResponse";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys(`[ReelWatchSequenceResponse]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y);
 		this.z(entries,a => this.CommandTemplate(a,this._ReelWatchEndpoint));
 		this.trackingParams(trackingParams);
@@ -6151,8 +6152,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template T @arg {CommandTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	CommandTemplate(x,f) {
-		const cf="CommandTemplate";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys(`[CommandTemplate]`,x);
 		f.call(this,x.command);
 		this.trackingParams(x.trackingParams);
 	}
@@ -6174,10 +6174,6 @@ class HandleTypes extends ServiceMethods {
 		this.params(params);
 		this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",sequenceProvider);
 		this.save_enum("REEL_WATCH_INPUT_TYPE",inputType);
-	}
-	/** @arg {string} x */
-	params(x) {
-		this.x.get("parser_service").on_endpoint_params(x);
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
