@@ -274,14 +274,20 @@ export class MyReader {
 				break;
 			case 2: {
 				let size=this.uint32();
+				if(size===null) {
+					first_num.push(["error",fieldId]);
+					this.failed=true;
+					break;
+				}
 				if(this.pos+size>this.cur_len) {
-					if(this.log_range_error)
-						console.log("range error at",this.pos,fieldId,"size is too big",size);
+					if(this.log_range_error) console.log("range error at",this.pos,fieldId,"size is too big",size);
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 					break;
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
+				let res=this.try_read_any(size);
+				/** @type {DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
@@ -289,7 +295,15 @@ export class MyReader {
 					first_num.push(["error",fieldId]);
 					this.failed=true;
 				}
-				first_num.push(["child",fieldId,sub_buffer]);
+				x: if(res) {
+					if(res.findIndex(e => e[0]==="error")>-1) {
+						first_num.push(["child",fieldId,sub_buffer,null]);
+						break x;
+					}
+					first_num.push(["child",fieldId,sub_buffer,res]);
+				} else {
+					first_num.push(["child",fieldId,sub_buffer,null]);
+				}
 			} break;
 			case 3: {
 				let res;
