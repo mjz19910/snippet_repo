@@ -1,0 +1,3 @@
+type PaidDigitalGoods={
+	paidDigitalGoods: PaidDigitalGoodsInner;
+};

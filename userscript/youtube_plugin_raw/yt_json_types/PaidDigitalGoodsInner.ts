@@ -1,0 +1,3 @@
+type PaidDigitalGoodsInner={
+	hack: true;
+};

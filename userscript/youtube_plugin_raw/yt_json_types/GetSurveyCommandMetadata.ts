@@ -1,0 +1,3 @@
+type GetSurveyCommandMetadata={
+	webCommandMetadata: GetSurveyWebCommandMetadata;
+};

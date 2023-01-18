@@ -1,0 +1,3 @@
+type SuperVodBuyFlowContentRenderer={
+	superVodBuyFlowContentRenderer: SuperVodBuyFlowContent;
+};

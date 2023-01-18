@@ -1,0 +1,3 @@
+type PdgBuyFlowHeaderRenderer={
+	pdgBuyFlowHeaderRenderer: PdgBuyFlowHeader;
+};
