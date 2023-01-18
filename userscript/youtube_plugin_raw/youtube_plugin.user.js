@@ -8546,7 +8546,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TemplateUpdateData} x */
 	TemplateUpdateData(x) {
 		this.save_keys("[TemplateUpdateData]",x);
-		const {...y}=x; this.g(y);
+		const {identifier,serializedTemplateConfig,dependencies,...y}=x; this.g(y);
+		this.primitive_of(identifier,"string");
+		this.primitive_of(serializedTemplateConfig,"string");
+		if(dependencies) this.z(dependencies,a=>this.primitive_of(a,"string"));
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
