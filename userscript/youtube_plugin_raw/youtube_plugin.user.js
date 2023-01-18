@@ -6987,7 +6987,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=x; this.g(y);
 		this.save_string("[IconType]",iconType);
 	}
-	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ServiceEndpointTemplate(x,f) {
 		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
@@ -6995,7 +6995,7 @@ class HandleTypes extends ServiceMethods {
 		this.EditPlaylistCommandMetadata(commandMetadata);
 		/** @type {{}} */
 		let t=as(y);
-		f(as(t));
+		f.call(this,as(t));
 	}
 	/** @arg {EditPlaylistCommandMetadata} x */
 	EditPlaylistCommandMetadata(x) {
