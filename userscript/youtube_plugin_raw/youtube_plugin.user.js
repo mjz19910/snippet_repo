@@ -7932,12 +7932,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TwoColumnWatchNextResultsData['results']['results']['contents'][number]} x */
 	handle_results_3(x) {
-		if("itemSectionRenderer" in x) {
-			x;
-		}
-		if("merchandiseShelfRenderer" in x) return;
-		if("videoPrimaryInfoRenderer" in x) return;
-		if("videoSecondaryInfoRenderer" in x) return;
+		if("itemSectionRenderer" in x) return this.handle_results_4(x);
+		if("merchandiseShelfRenderer" in x) return this.MerchandiseShelfRenderer(x);
+		if("videoPrimaryInfoRenderer" in x) return this.VideoPrimaryInfoRenderer(x);
+		if("videoSecondaryInfoRenderer" in x) return this.VideoSecondaryInfoRenderer(x);
 		let k=this.get_keys_of(x);
 		switch(k.at(0)) {
 			default: {
@@ -9353,6 +9351,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
 	ItemSectionRendererTemplate_Section(x) {
+		x;
+	}
+	/** @arg {MerchandiseShelfRenderer} x */
+	MerchandiseShelfRenderer(x) {
+		x;
+	}
+	/** @arg {VideoPrimaryInfoRenderer} x */
+	VideoPrimaryInfoRenderer(x) {
+		x;
+	}
+	/** @arg {VideoSecondaryInfoRenderer} x */
+	VideoSecondaryInfoRenderer(x) {
 		x;
 	}
 	//#endregion
