@@ -1,0 +1,3 @@
+type ToggleButtonRenderer={
+	toggleButtonRenderer: ToggleButton;
+};

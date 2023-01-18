@@ -1,0 +1,3 @@
+type MacroMarkersListItemRenderer={
+	macroMarkersListItemRenderer: MacroMarkersListItem;
+};

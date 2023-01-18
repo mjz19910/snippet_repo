@@ -7173,6 +7173,8 @@ class HandleTypes extends ServiceMethods {
 			return this.SectionListRendererTemplate(x);
 		} else if("structuredDescriptionContentRenderer" in x) {
 			return this.StructuredDescriptionContentRenderer(x);
+		} else if("macroMarkersListRenderer" in x) {
+			return this.MacroMarkersListRenderer(x);
 		}
 		debugger;
 	}
@@ -9407,6 +9409,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
+		x;
+	}
+	/** @arg {MacroMarkersListRenderer} x */
+	MacroMarkersListRenderer(x) {
 		x;
 	}
 	//#endregion
