@@ -6195,7 +6195,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("watchEndpoint" in x) {
 			return this._WatchEndpoint(x);
 		} else if("reelWatchEndpoint" in x) {
-			return this.ReelWatchEndpoint(x);
+			return this._ReelWatchEndpoint(x);
 		} else if("searchEndpoint" in x) {
 			return this.SearchEndpoint(x);
 		}
@@ -6757,7 +6757,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ReelWatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
 		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
-		this.g(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		this.ReelWatchEndpointData(reelWatchEndpoint);
 	}
 	/** @arg {ReelWatchEndpointData} x */
@@ -8447,7 +8447,7 @@ class HandleTypes extends ServiceMethods {
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,...y}=x; this.g(y);
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
-		this.ReelWatchEndpoint(endpoint);
+		this._ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
 		this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
 		if(!this.str_starts_with("/shorts/",url)) debugger;
@@ -9260,12 +9260,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
 		this.save_keys("[GetMultiPageMenuActionData]",x);
-		// @ts-expect-error
-		const {...y}=x; this.g(y);
-	}
-	/** @arg {ReelWatchEndpoint} x */
-	ReelWatchEndpoint(x) {
-		this.save_keys("[ReelWatchEndpoint]",x);
 		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
