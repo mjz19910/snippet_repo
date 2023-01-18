@@ -8296,7 +8296,8 @@ class HandleTypes extends ServiceMethods {
 		} else if("continuationCommand" in x) {
 			return this.ContinuationCommand(x);
 		}
-		debugger;
+		let u_name=this.get_codegen_name(x);
+		this.codegen_new_typedef(x,`_ButtonCommand_${u_name}`);
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
