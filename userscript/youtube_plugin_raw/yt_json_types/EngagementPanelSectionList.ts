@@ -3,7 +3,8 @@ type EngagementSectionPanelId=
 		"clip-create",
 		"structured-description",
 	][number]>
-	|"comment-item-section";
+	|"comment-item-section"
+	|string&{_tag:"string"};
 
 type EngagementPanelSectionList=ContentTemplate<EngagementPanelSectionListContent>&{
 	panelIdentifier?: EngagementSectionPanelId;

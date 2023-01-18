@@ -6627,23 +6627,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EngagementSectionPanelId} x */
 	EngagementSectionPanelId(x) {
 		this.save_string("[EngagementSectionPanelId]",x);
-		switch(x) {
-			default: debugger; break;
-			case "comment-item-section": break;
-			case "engagement-panel-clip-create": break;
-			case "engagement-panel-structured-description": break;
-		}
 	}
 	/** @arg {EngagementPanelSectionTargetId} x */
 	EngagementPanelSectionTargetId(x) {
 		this.save_string("[EngagementPanelSectionTargetId]",x);
-		switch(x) {
-			default: debugger; break;
-			case "engagement-panel-ads": break;
-			case "engagement-panel-clip-create": break;
-			case "engagement-panel-comments-section": break;
-			case "engagement-panel-structured-description": break;
-		}
 	}
 	/** @arg {EngagementPanelSectionList} x */
 	EngagementPanelSectionList(x) {

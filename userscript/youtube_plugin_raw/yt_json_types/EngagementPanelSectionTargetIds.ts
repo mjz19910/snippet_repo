@@ -5,4 +5,4 @@ type EngagementPanelSectionTargetId=MakeTargetId<
 		"structured-description",
 		"comments-section"
 	][number]
->;
+>|string&{_tag:"string"};
