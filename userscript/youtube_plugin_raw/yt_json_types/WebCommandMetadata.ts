@@ -1,1 +1,6 @@
-type WebCommandMetadata=BrowseWebCommandMetadata|ChannelWebCommandMetadata;
+type WebCommandMetadata=
+	|BrowseWebCommandMetadata
+	|ChannelWebCommandMetadata
+	|WatchWebCommandMetadata
+	;
+;

@@ -1,0 +1,1 @@
+type WatchWebCommandMetadata=VE3832_WebCommandMetadata;
