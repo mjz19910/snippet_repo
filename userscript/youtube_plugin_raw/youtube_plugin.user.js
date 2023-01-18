@@ -8705,7 +8705,7 @@ class HandleTypes extends ServiceMethods {
 	EngagementPanelTitleHeaderRenderer(x) {
 		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
 		const {engagementPanelTitleHeaderRenderer,...y}=x; this.g(y);
-		this.g(engagementPanelTitleHeaderRenderer);
+		this.EngagementPanelTitleHeader(engagementPanelTitleHeaderRenderer);
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
@@ -9413,6 +9413,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
+		x;
+	}
+	/** @arg {EngagementPanelTitleHeader} x */
+	EngagementPanelTitleHeader(x) {
 		x;
 	}
 	//#endregion
