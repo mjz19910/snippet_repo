@@ -9177,14 +9177,21 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	//#endregion
-	//#region type_errors
+	/** @arg {Visibility} x */
+	Visibility(x) {
+		this.save_keys("[Visibility]",x);
+		const {types,...y}=x; this.g(y);
+		switch(types) {
+			default: console.log("[Visibility.types]",types); debugger; break;
+			case "12": break;
+			case "15": break;
+		}
+	}
 	/** @arg {CommentsSectionContinuationAction} x */
 	CommentsSectionContinuationAction(x) {
 		this.save_keys("[CommentsSectionContinuationAction]",x);
 		const {targetId,continuationItems,...y}=x; this.g(y);
 		this.targetId(targetId);
-		// @ts-ignore
 		this.z(continuationItems,this.CommentsSectionItem);
 	}
 	/** @arg {BrowseFeedAction} x */
@@ -9192,7 +9199,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseFeedAction]",x);
 		const {targetId,continuationItems,...y}=x; this.g(y);
 		this.targetId(targetId);
-		// @ts-ignore
 		this.z(continuationItems,this.BrowseFeedItem);
 	}
 	/** @arg {WatchNextContinuationAction} x */
@@ -9200,121 +9206,132 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[WatchNextContinuationAction]",x);
 		const {targetId,continuationItems,...y}=x; this.g(y);
 		this.targetId(targetId);
-		// @ts-ignore
 		this.z(continuationItems,this.WatchNextItem);
 	}
+	/** @arg {CommentsSectionItem} x */
+	CommentsSectionItem(x) {
+		this.save_keys("[CommentsSectionItem]",x);
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {BrowseFeedItem} x */
+	BrowseFeedItem(x) {
+		this.save_keys("[BrowseFeedItem]",x);
+		const {...y}=x; this.g(y);
+	}
+	//#endregion
+	//#region type_errors
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
 		this.save_keys("[UpdateEngagementPanelData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
 		this.save_keys("[AccountItem]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {UiActions} x */
 	UiActions(x) {
 		this.save_keys("[UiActions]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuData(x) {
 		this.save_keys("[SortFilterSubMenuData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
 		this.save_keys("[GetMultiPageMenuActionData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {ReelWatchEndpoint} x */
 	ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		this.save_keys("[EmojiPickerRenderer]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
 		this.save_keys("[ReelResponse]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
 		this.save_keys("[ChannelResponse]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistResponse} x */
 	PlaylistResponse(x) {
 		this.save_keys("[PlaylistResponse]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {SettingsResponse} x */
 	SettingsResponse(x) {
 		this.save_keys("[SettingsResponse]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
 		this.save_keys("[C4TabbedHeaderData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
 		this.save_keys("[SettingsSidebarData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {ExpandableTabRenderer} x */
 	ExpandableTabRenderer(x) {
 		this.save_keys("[ExpandableTabRenderer]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
 		this.save_keys("[SecondaryContents]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
 		this.save_keys("[FeedFilterChipBarData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {SearchResultsSearchEndpoint} x */
 	SearchResultsSearchEndpoint(x) {
 		this.save_keys("[SearchResultsSearchEndpoint]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */
 	LiveChatPlaceholderItemData(x) {
 		this.save_keys("[LiveChatPlaceholderItemData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
 		this.save_keys("[LiveChatTextMessageData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {PlaylistPanelContinuationData} x */
@@ -9337,41 +9354,19 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.save_keys("[CommentRenderer]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
 		this.save_keys("[RichItemData]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
-	}
-	/** @arg {Visibility} x */
-	Visibility(x) {
-		this.save_keys("[Visibility]",x);
-		const {types,...y}=x; this.g(y);
-		switch(types) {
-			default: console.log("[Visibility.types]",types); debugger; break;
-			case "12": break;
-			case "15": break;
-		}
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
 		this.save_keys("[WatchNextItem]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
-	}
-	/** @arg {CommentsSectionItem} x */
-	CommentsSectionItem(x) {
-		this.save_keys("[CommentsSectionItem]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
-	}
-	/** @arg {BrowseFeedItem} x */
-	BrowseFeedItem(x) {
-		this.save_keys("[BrowseFeedItem]",x);
-		// @ts-ignore
+		// @ts-expect-error
 		const {...y}=x; this.g(y);
 	}
 	//#endregion
