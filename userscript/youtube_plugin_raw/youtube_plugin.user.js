@@ -8303,10 +8303,7 @@ class HandleTypes extends ServiceMethods {
 		if(icon) this.Icon(icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
-		if(navigationEndpoint) {
-			this.x.get("codegen").codegen_new_typedef(x,typeof cf!=="undefined"? cf:null);
-			this.Button_navigationEndpoint(navigationEndpoint);
-		}
+		if(navigationEndpoint) this.Button_navigationEndpoint(navigationEndpoint);
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
