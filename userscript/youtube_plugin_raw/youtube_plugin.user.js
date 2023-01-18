@@ -5047,6 +5047,17 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @arg {ScrollToEngagementPanelData['targetId']|AppendContinuationItemsActionData['targetId']} x */
+	targetId(x) {
+		if(this.str_starts_with(x,"comment-replies-item-")) return;
+		switch(x) {
+			default: debugger; break;
+			case "browse-feedFEwhat_to_watch": break;
+			case "comments-section": break;
+			case "engagement-panel-comments-section": break;
+			case "watch-next-feed": break;
+		}
+	}
 	/** @arg {[VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
@@ -6662,8 +6673,22 @@ class HandleTypes extends ServiceMethods {
 			return this.ChangeEngagementPanelVisibilityAction(x);
 		} else if("showEngagementPanelScrimAction" in x) {
 			return this.ShowEngagementPanelScrimAction(x);
+		} else if("scrollToEngagementPanelCommand" in x) {
+			return this.ScrollToEngagementPanelCommand(x);
 		}
 		debugger;
+	}
+	/** @arg {ScrollToEngagementPanelCommand} x */
+	ScrollToEngagementPanelCommand(x) {
+		this.save_keys("[ScrollToEngagementPanelCommand]",x);
+		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.ScrollToEngagementPanelData(scrollToEngagementPanelCommand);
+	}
+	/** @arg {ScrollToEngagementPanelData} x */
+	ScrollToEngagementPanelData(x) {
+		this.save_keys("[ScrollToEngagementPanelData]",x);
+		this.targetId(x.targetId);
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
@@ -6751,6 +6776,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {AppendContinuationItemsActionData} x */
 	AppendContinuationItemsActionData(x) {
 		this.save_keys("[AppendContinuationItemsActionData]",x);
+		this.targetId(x.targetId);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) {
 			return this.CommentRepliesItem(x);
 		}

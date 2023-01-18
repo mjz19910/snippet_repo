@@ -1,2 +1,6 @@
-type EngagementPanelSectionShowCommands=ChangeEngagementPanelVisibilityAction|
-	ShowEngagementPanelScrimAction;
+type EngagementPanelSectionShowCommands=
+	|ChangeEngagementPanelVisibilityAction
+	|ShowEngagementPanelScrimAction
+	|ScrollToEngagementPanelCommand
+	;
+;

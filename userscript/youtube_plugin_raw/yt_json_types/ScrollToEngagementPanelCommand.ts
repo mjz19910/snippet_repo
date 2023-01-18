@@ -1,4 +1,1 @@
-type ScrollToEngagementPanelCommand={
-	clickTrackingParams: string;
-	scrollToEngagementPanelCommand: ScrollToEngagementPanelData;
-};
+type ScrollToEngagementPanelCommand={clickTrackingParams: string; scrollToEngagementPanelCommand: ScrollToEngagementPanelData;};
