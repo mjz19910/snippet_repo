@@ -2024,6 +2024,16 @@ class ApiBase {
 	uppercase_first(x) {
 		return x[0].toUpperCase()+x.slice(1);
 	}
+	/** @arg {(string|number|symbol)[]} x */
+	filter_keys(x) {
+		let ret=[];
+		for(let k of x) {
+			if(k==="clickTrackingParams") continue;
+			if(k==="commandMetadata") continue;
+			ret.push(k);
+		}
+		return ret;
+	}
 	/** @public @arg {unknown} x */
 	get_name_from_keys(x) {
 		if(typeof x!=='object') return null;
@@ -4058,38 +4068,24 @@ class CodegenService extends BaseService {
 			if(typeof o==="number") return o;
 			if(typeof o==="boolean") return o;
 			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
+			if(o instanceof Array) {
+				if(keys.includes(k1)) return [o[0]];
+				return [o[0]];
+			}
 			if(o.runs&&o.runs instanceof Array) return "TYPE::TextWithRuns";
-			if(o.simpleText&&typeof o.simpleText==="string") return "TYPE::SimpleText";
 			if(o.thumbnails&&o.thumbnails instanceof Array) return "TYPE::Thumbnail";
 			if(o.iconType&&typeof o.iconType==="string") return `TYPE::Icon<"${o.iconType}">`;
-			if(o.twoColumnWatchNextResults) return `TYPE::TwoColumnWatchNextResults`;
-			if(o.browseEndpoint) return `TYPE::BrowseEndpoint`;
-			if(o.watchEndpoint) return `TYPE::WatchEndpoint`;
-			if(o.signalServiceEndpoint) return `TYPE::SignalServiceEndpoint`;
-			if(o.playerOverlayRenderer) return `TYPE::PlayerOverlayRenderer`;
-			if(o.desktopTopbarRenderer) return "TYPE::DesktopTopbarRenderer";
-			if(o.engagementPanelSectionListRenderer) return "TYPE::EngagementPanelSectionListRenderer";
-			if(o.cinematicContainerRenderer) return "TYPE::CinematicContainerRenderer";
-			if(o.playlistPanelVideoRenderer) return "TYPE::PlaylistPanelVideoRenderer";
-			if(o.openPopupAction) return "TYPE::OpenPopupAction";
-			if(o.openPopupAction) return "TYPE::OpenPopupAction";
-			if(o.pdgBuyFlowHeaderRenderer) return "TYPE::PdgBuyFlowHeaderRenderer";
-			if(o.getSurveyCommand) return "TYPE::GetSurveyCommand";
-			if(o.buttonRenderer) return "TYPE::ButtonRenderer";
-			if(o.superVodBuyFlowContentRenderer) return "TYPE::SuperVodBuyFlowContentRenderer";
-			if(o.pdgCommentPreviewRenderer) return "TYPE::PdgCommentPreviewRenderer";
-			if(o.pdgColorSliderRenderer) return "TYPE::PdgColorSliderRenderer";
-			if(o.pdgCommentOptionRenderer) return "TYPE::PdgCommentOptionRenderer";
+			let o_keys=this.filter_keys(this.get_keys_of(o));
+			if(o_keys.length===1) {
+				let kk=this.get_name_from_keys(o);
+				if(kk) return `TYPE::${kk}`;
+			}
+			console.log("[type_gen.o_keys]",o_keys);
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
-			if(keys.includes(k1)) {
-				if(o instanceof Array) return [o[0]];
-				return o;
-			}
-			if(o instanceof Array) return [o[0]];
+			if(keys.includes(k1)) return o;
 			obj_count++;
 			if(obj_count<3) return o;
-			if(o instanceof Array) return [{}];
 			return {};
 		},"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
