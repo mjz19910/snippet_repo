@@ -6,11 +6,11 @@ type ButtonIcon=Icon<[
 type ButtonData={
 	accessibility?: AccessibilityDataContent;
 	accessibilityData?: AccessibilityData;
-	command?: CommandEndpoint;
+	command?: {};
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: ServiceEndpointTemplate<{}>;
-	navigationEndpoint?: NavigationEndpointRoot;
+	serviceEndpoint?: {};
+	navigationEndpoint?: {};
 	tooltip?: string;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;

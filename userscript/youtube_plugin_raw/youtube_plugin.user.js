@@ -3954,7 +3954,6 @@ class CodegenService extends BaseService {
 			console.log("array key",c);
 			ret_arr.push(`this.z(x.${k},this.${ic});`);
 		}
-		x;
 	}
 	/** @arg {string} x */
 	#generate_padding(x) {
@@ -6334,10 +6333,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {AccountItem} x */
-	AccountItem(x) {
-		x;
-	}
 	/** @arg {SimpleMenuHeaderRenderer} x */
 	SimpleMenuHeaderRenderer(x) {
 		const {simpleMenuHeaderRenderer,...y}=x; this.g(y);
@@ -8049,12 +8044,12 @@ class HandleTypes extends ServiceMethods {
 	AutoplaySwitchButton(x) {
 		this.save_keys("[AutoplaySwitchButton]",x);
 		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=x; this.g(y);
-		onEnabledCommand;
-		onDisabledCommand;
-		enabledAccessibilityData;
-		disabledAccessibilityData;
+		this.SetSettingEndpointAutonavForDesktop(onEnabledCommand);
+		this.SetSettingEndpointAutonavForDesktop(onDisabledCommand);
+		this.AccessibilityData(enabledAccessibilityData);
+		this.AccessibilityData(disabledAccessibilityData);
 		this.trackingParams(trackingParams);
-		enabled;
+		this.primitive_of(enabled,"boolean");
 	}
 	/** @arg {DecoratedPlayerBar} x */
 	DecoratedPlayerBar(x) {
@@ -8065,32 +8060,45 @@ class HandleTypes extends ServiceMethods {
 	PlayerOverlayVideoDetails(x) {
 		this.save_keys("[PlayerOverlayVideoDetails]",x);
 		const {title,subtitle,...y}=x; this.g(y);
-		title;
-		subtitle;
+		this.SimpleText(title);
+		this.TextWithRuns(subtitle);
 	}
 	/** @arg {FeedbackEndpointData} x */
 	FeedbackEndpointData(x) {
 		this.save_keys("[FeedbackEndpointData]",x);
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y);
-		feedbackToken;
-		uiActions;
-		actions;
+		this.primitive_of(feedbackToken,"string");
+		this.UiActions(uiActions);
+		this.z(actions,a=>{
+			console.log("[action]",this.get_keys_of(a));
+		});
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
 		this.save_keys("[ButtonData]",x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
-		accessibility;
-		accessibilityData;
-		command;
+		if(accessibility) console.log("[button.accessibility]");
+		if(accessibilityData) console.log("[button.accessibilityData]");
+		if(command) this.g(command);
 		if(icon) this.Icon(icon);
-		isDisabled;
-		serviceEndpoint;
-		navigationEndpoint;
-		tooltip;
-		size;
-		style;
-		text;
+		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
+		if(serviceEndpoint) this.g(serviceEndpoint);
+		if(navigationEndpoint) this.g(navigationEndpoint);
+		if(tooltip&&typeof tooltip!=="string") debugger;
+		if(size) {
+			switch(size) {
+				default: debugger; break;
+				case "SIZE_DEFAULT": break;
+				case "SIZE_SMALL": break;
+			}
+		}
+		if(style) {
+			switch(style) {
+				default: debugger; break;
+				case "STYLE_DEFAULT": break;
+			}
+		}
+		if(text) this.TextWithRuns(text);
 		if(trackingParams) this.trackingParams(trackingParams);
 		if(targetId) this.targetId(targetId);
 	}
@@ -8740,6 +8748,18 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
+		x;
+	}
+	/** @arg {AccountItem} x */
+	AccountItem(x) {
+		x;
+	}
+	/** @arg {UiActions} x */
+	UiActions(x) {
+		x;
+	}
+	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
+	SetSettingEndpointAutonavForDesktop(x) {
 		x;
 	}
 }
