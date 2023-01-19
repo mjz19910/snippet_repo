@@ -9696,7 +9696,16 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GenericWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
 		switch(x.apiUrl) {
-			default: this.codegen_new_typedef(x,`_gen_${x.apiUrl}`); break;
+			default: {
+				let path_parts=split_string(split_string_once(x.apiUrl,"/")[1],"/");
+				let url_type=this.x.get("parser_service").get_url_type(path_parts);
+				if(!url_type) {
+					debugger;
+					return;
+				}
+				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
+				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
+			} break;
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
 			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
 			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
