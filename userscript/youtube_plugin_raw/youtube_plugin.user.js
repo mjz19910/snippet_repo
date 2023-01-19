@@ -5689,7 +5689,106 @@ class SignalTypes extends BaseService {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	//#region
 	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
+	//#endregion
+	//#region templates
+	/** @template {{}} T @arg {{items: T[]}} x @arg {(x:T)=>void} f */
+	ItemsTemplate(x,f) {
+		const {items,...y}=x; this.g(y);
+		this.z(items,f);
+	}
+	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListRendererTemplate(x) {
+		this.save_keys(`[SectionListRendererTemplate]`,x);
+		const {sectionListRenderer,...y}=x; this.g(y);
+		this.SectionListDataTemplate(sectionListRenderer);
+	}
+	/** @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	ContentsArrayTemplate(x,f) {
+		this.save_keys("[ContentsArrayTemplate]",x);
+		this.z(x.contents,f);
+	}
+	/** @template T,U @arg {ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
+	ItemSectionRendererTemplate(x,f) {
+		this.save_keys("[ItemSectionRendererTemplate]",x);
+		const {itemSectionRenderer,...y}=x; this.g(y);
+		this.ItemSectionDataTemplate(itemSectionRenderer,f);
+	}
+	/** @template T,U @arg {ItemSectionDataTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
+	ItemSectionDataTemplate(x,f) {
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y);
+		f.call(this,[sectionIdentifier,targetId]);
+		this.trackingParams(x.trackingParams);
+		let k=this.get_keys_of(contents);
+		switch(k[0]) {
+			default: debugger; break;
+		}
+	}
+	/** @template T @arg {CommandTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	CommandTemplate(x,f) {
+		this.save_keys(`[CommandTemplate]`,x);
+		f.call(this,x.command);
+		this.trackingParams(x.trackingParams);
+	}
+	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	CommandsTemplate(x,f) {
+		this.save_keys(`[CommandsTemplate]`,x);
+		this.z(x.commands,f);
+	}
+	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	ServiceEndpointTemplate(x,f) {
+		this.save_keys("[ServiceEndpointTemplate]",x);
+		const {clickTrackingParams,commandMetadata,...y}=x;
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		/** @type {{}} */
+		let t=as(y);
+		f.call(this,as(t));
+	}
+	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
+	AutoplayTemplate(x,f) {
+		this.save_keys("[AutoplayTemplate]",x);
+		const {autoplay,...y}=x; this.g(y);
+		f(autoplay);
+	}
+	/** @template T @arg {PlaylistTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	PlaylistTemplate(x,f) {
+		this.save_keys("[PlaylistTemplate]",x);
+		const {playlist,...y}=x; this.g(y);
+		f.call(this,playlist);
+	}
+	/** @template T @arg {ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	ResultsTemplate(x,f) {
+		this.save_keys("[ResultsTemplate]",x);
+		const {results,...y}=x; this.g(y);
+		f.call(this,results);
+	}
+	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	SecondaryResultsTemplate(x,f) {
+		this.save_keys("[SecondaryResultsTemplate]",x);
+		const {secondaryResults,...y}=x; this.g(y);
+		f.call(this,secondaryResults);
+	}
+	/** @template {number} T @arg {TypesTemplate<T>} x @arg {(x:T)=>void} f @arg {T|null} _x */
+	TypesTemplate(x,f,_x=null) {
+		/** @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
+		function parse_number(x,_v) {
+			return as(Number.parseInt(x,10));
+		}
+		let r=parse_number(x.types,_x);
+		f(r);
+	}
+	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
+	SimpleText(x,f=this.handle_accessibility) {
+		const cf="SimpleText";
+		if(!x) {debugger; return;}
+		if(!("simpleText" in x)) {debugger; return;}
+		this.save_keys(`[${cf}]`,x);
+		const {simpleText,...y}=x; f.call(this,y);
+		this.primitive_of(simpleText,"string");
+	}
+	//#endregion
 	//#region
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
@@ -6035,11 +6134,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MusicResponsiveListItemRenderer]",x);
 		this.MusicResponsiveListItem(x.musicResponsiveListItemRenderer);
 	}
-	/** @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	ContentsArrayTemplate(x,f) {
-		this.save_keys("[ContentsArrayTemplate]",x);
-		this.z(x.contents,f);
-	}
 	/** @arg {ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {
 		this.save_keys("[ContinuationItemRenderer]",x);
@@ -6123,22 +6217,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ItemSectionRenderer]",x);
 		const {itemSectionRenderer,...y}=x; this.g(y);
 		this.ItemSectionData(itemSectionRenderer);
-	}
-	/** @template T,U @arg {ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
-	ItemSectionRendererTemplate(x,f) {
-		this.save_keys("[ItemSectionRendererTemplate]",x);
-		const {itemSectionRenderer,...y}=x; this.g(y);
-		this.ItemSectionDataTemplate(itemSectionRenderer,f);
-	}
-	/** @template T,U @arg {ItemSectionDataTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
-	ItemSectionDataTemplate(x,f) {
-		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y);
-		f.call(this,[sectionIdentifier,targetId]);
-		this.trackingParams(x.trackingParams);
-		let k=this.get_keys_of(contents);
-		switch(k[0]) {
-			default: debugger; break;
-		}
 	}
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
@@ -6884,17 +6962,6 @@ class HandleTypes extends ServiceMethods {
 		this.z(entries,a => this.CommandTemplate(a,this._ReelWatchEndpoint));
 		this.trackingParams(trackingParams);
 		if(continuationEndpoint) this.ContinuationCommand(continuationEndpoint);
-	}
-	/** @template T @arg {CommandTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	CommandTemplate(x,f) {
-		this.save_keys(`[CommandTemplate]`,x);
-		f.call(this,x.command);
-		this.trackingParams(x.trackingParams);
-	}
-	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	CommandsTemplate(x,f) {
-		this.save_keys(`[CommandsTemplate]`,x);
-		this.z(x.commands,f);
 	}
 	/** @arg {ReelWatchEndpoint} x */
 	_ReelWatchEndpoint(x) {
@@ -7801,16 +7868,6 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=x; this.g(y);
 		this.save_string("[IconType]",iconType);
 	}
-	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	ServiceEndpointTemplate(x,f) {
-		this.save_keys("[ServiceEndpointTemplate]",x);
-		const {clickTrackingParams,commandMetadata,...y}=x;
-		this.clickTrackingParams(clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		/** @type {{}} */
-		let t=as(y);
-		f.call(this,as(t));
-	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
 		this.save_keys("[CommandMetadata]",x);
@@ -8192,15 +8249,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
-	SimpleText(x,f=this.handle_accessibility) {
-		const cf="SimpleText";
-		if(!x) {debugger; return;}
-		if(!("simpleText" in x)) {debugger; return;}
-		this.save_keys(`[${cf}]`,x);
-		const {simpleText,...y}=x; f.call(this,y);
-		this.primitive_of(simpleText,"string");
-	}
 	/** @arg {WatchEndpointCommandMetadata} x */
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
@@ -8304,30 +8352,6 @@ class HandleTypes extends ServiceMethods {
 			this.AutoplayContent(a);
 		});
 		if(conversationBar) this.LiveChatRenderer(conversationBar);
-	}
-	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
-	AutoplayTemplate(x,f) {
-		this.save_keys("[AutoplayTemplate]",x);
-		const {autoplay,...y}=x; this.g(y);
-		f(autoplay);
-	}
-	/** @template T @arg {PlaylistTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	PlaylistTemplate(x,f) {
-		this.save_keys("[PlaylistTemplate]",x);
-		const {playlist,...y}=x; this.g(y);
-		f.call(this,playlist);
-	}
-	/** @template T @arg {ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	ResultsTemplate(x,f) {
-		this.save_keys("[ResultsTemplate]",x);
-		const {results,...y}=x; this.g(y);
-		f.call(this,results);
-	}
-	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	SecondaryResultsTemplate(x,f) {
-		this.save_keys("[SecondaryResultsTemplate]",x);
-		const {secondaryResults,...y}=x; this.g(y);
-		f.call(this,secondaryResults);
 	}
 	/** @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
@@ -8985,15 +9009,6 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 	}
-	/** @template {number} T @arg {TypesTemplate<T>} x @arg {(x:T)=>void} f @arg {T|null} _x */
-	TypesTemplate(x,f,_x=null) {
-		/** @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
-		function parse_number(x,_v) {
-			return as(Number.parseInt(x,10));
-		}
-		let r=parse_number(x.types,_x);
-		f(r);
-	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
 		this.save_keys("[ShowEngagementPanelScrimAction]",x);
@@ -9567,18 +9582,16 @@ class HandleTypes extends ServiceMethods {
 	ProfileColumnStatsData(x) {
 		this.ItemsTemplate(x,this.ProfileColumnStatsEntryRenderer);
 	}
-	/** @template {{}} T @arg {{items: T[]}} x @arg {(x:T)=>void} f */
-	ItemsTemplate(x,f) {
-		const {items,...y}=x; this.g(y);
-		this.z(items,f);
-	}
 	/** @arg {ProfileColumnStatsEntryRenderer} x */
 	ProfileColumnStatsEntryRenderer(x) {
-		this.ProfileColumnStatsEntryData(x.profileColumnStatsEntryRenderer);
+		const {profileColumnStatsEntryRenderer,...y}=x; this.g(y);
+		this.ProfileColumnStatsEntryData(profileColumnStatsEntryRenderer);
 	}
 	/** @arg {ProfileColumnStatsEntryData} x */
 	ProfileColumnStatsEntryData(x) {
-		x;
+		const {label,value,...y}=x; this.g(y);
+		this.TextWithRuns(label);
+		this.TextWithRuns(value);
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
@@ -9765,12 +9778,6 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
 			case "/youtubei/v1/notification/get_notification_menu": break;
 		}
-	}
-	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListRendererTemplate(x) {
-		this.save_keys(`[SectionListRendererTemplate]`,x);
-		const {sectionListRenderer,...y}=x; this.g(y);
-		this.SectionListDataTemplate(sectionListRenderer);
 	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {

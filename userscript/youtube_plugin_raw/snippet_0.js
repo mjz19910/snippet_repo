@@ -330,10 +330,6 @@ export class Snippet_0_tmp {
 		this.save_keys("[HotkeyDialog]",x);
 		const {...y}=x; this.g(y);
 	}
-	/** @arg {ProfileColumnStatsEntryData} x */
-	ProfileColumnStatsEntryData(x) {
-		this.TextWithRuns(x.label);
-	}
 	//#region dispatch_in_progress
 	//#endregion
 }
