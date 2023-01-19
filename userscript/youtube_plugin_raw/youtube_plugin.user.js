@@ -10263,13 +10263,22 @@ class HandleTypes extends ServiceMethods {
 		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
 		this.AddToPlaylist(addToPlaylistRenderer);
 	}
-	//#endregion
-	//#region type_errors
 	/** @arg {AddToPlaylist} x */
 	AddToPlaylist(x) {
 		this.save_keys("[AddToPlaylist]",x);
-		//@ts-expect-error(2345)
-		const {...y}=x; this.g(y);
+		const {playlists,actions,...y}=x; this.g(y);
+		this.z(playlists,this.PlaylistAddToOptionRenderer);
+		this.z(actions,this.AddToPlaylistCreateRenderer);
+	}
+	//#endregion
+	//#region type_errors
+	/** @arg {PlaylistAddToOptionRenderer} x */
+	PlaylistAddToOptionRenderer(x) {
+		x;
+	}
+	/** @arg {AddToPlaylistCreateRenderer} x */
+	AddToPlaylistCreateRenderer(x) {
+		x;
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {

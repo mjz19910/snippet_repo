@@ -1,29 +1,20 @@
+type PlaylistAddToOption={
+	playlistId: string;
+	title: SimpleText;
+	privacy: "PRIVATE";
+	containsSelectedVideos: "NONE";
+	privacyIcon: Icon<"PRIVACY_PRIVATE">;
+	addToPlaylistServiceEndpoint: PlaylistEditEndpoint;
+	removeFromPlaylistServiceEndpoint: {
+		clickTrackingParams: string;
+		commandMetadata: CommandMetadata;
+		playlistEditEndpoint: {};
+	};
+	trackingParams: string;
+};
 
 type PlaylistAddToOptionRenderer={
-	playlistAddToOptionRenderer: {
-		playlistId: string;
-		title: SimpleText;
-		privacy: "PRIVATE";
-		containsSelectedVideos: "NONE";
-		privacyIcon: Icon<"PRIVACY_PRIVATE">;
-		addToPlaylistServiceEndpoint: {
-			clickTrackingParams: string;
-			commandMetadata: CommandMetadata;
-			playlistEditEndpoint: {
-				playlistId: string;
-				actions: {
-					addedVideoId: "pwmIQzLuYl0";
-					action: "ACTION_ADD_VIDEO";
-				}[];
-			};
-		};
-		removeFromPlaylistServiceEndpoint: {
-			clickTrackingParams: string;
-			commandMetadata: CommandMetadata;
-			playlistEditEndpoint: {};
-		};
-		trackingParams: string;
-	};
+	playlistAddToOptionRenderer: PlaylistAddToOption;
 };
 type AddToPlaylistCreate={
 	openCreateLink: CompactLinkRenderer;
