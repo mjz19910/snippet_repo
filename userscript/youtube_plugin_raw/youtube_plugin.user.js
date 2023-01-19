@@ -6132,12 +6132,16 @@ class HandleTypes extends ServiceMethods {
 				let ss=split_string(x.targetId,"browse-feed");
 				if(ss.length!==2) {debugger; return;}
 				let sa=ss[1];
+				let ll=sa.slice(24);
+				console.log("target_id.ll",ll);
 				if(this.str_starts_with(sa,"UC")) {
 					let floc=sa.indexOf("featured");
 					let s1=sa.slice(0,floc);
 					let s2=sa.slice(floc);
+					if(ll!==s2) debugger;
 					console.log("[RichGrid.targetId]",x.targetId);
 					console.log("[target_id_parse]",s1,s2);
+					debugger;
 				}
 				return;
 			}
@@ -10321,7 +10325,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(placeholderText);
 		this.SearchboxConfig(config);
 		this.trackingParams(trackingParams);
-		this.g(searchEndpoint);
+		this.SearchEndpoint(searchEndpoint);
 		this.ButtonRenderer(clearButton);
 	}
 	/** @arg {NotificationTopbarButtonData} x */
