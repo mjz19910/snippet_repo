@@ -4758,19 +4758,18 @@ class ParserService extends BaseService {
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
-				this.default_parse_param_callback(for_,path,tv,ta);
+				this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
 				return;
 			}
 			cb(tv,ta);
 		}
 	}
-	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapValue} tv @arg {number} ta */
-	default_parse_param_callback(for_,path,tv,ta) {
+	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapValue} tv */
+	default_parse_param_callback(for_,path,tv) {
 		if(tv instanceof Map&&tv.size<=0) return;
-		let res_path=`${path}.f${ta}`;
-		switch(res_path) {
+		switch(path) {
 			case "get_transcript.params.f1": return;
-			default: console.log(`[${path}.f${ta}] [idx=${this.parse_key_index}]`,for_,tv); debugger;
+			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv); debugger;
 		}
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
