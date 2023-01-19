@@ -4710,10 +4710,9 @@ class ParserService extends BaseService {
 	default_parse_param_callback(for_,path,tv) {
 		if(tv instanceof Map) {
 			if(tv.size<=0) return;
-
-		}
-		switch(path) {
-			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv);
+			this.parse_any_param(for_,path,tv);
+		} else {
+			console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv);
 		}
 	}
 	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
@@ -4722,8 +4721,9 @@ class ParserService extends BaseService {
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
 		parse_key(1);
+		parse_key(2);
 		if(this.eq_keys(mk,[])) return;
-		console.log("[new_param_data]",root,path,this.to_param_obj(x));
+		console.log(`[new.${path}]`,path,this.to_param_obj(x));
 		debugger;
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
