@@ -1,6 +1,6 @@
 type SortFilterSubMenuData={
 	subMenuItems: ActionSetPlaylistVideoOrder[];
-	title: string;
+	title?: string;
 	icon?: Icon<"SORT">;
 	accessibility?: Accessibility;
 	tooltip?: string;

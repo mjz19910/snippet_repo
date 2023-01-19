@@ -9892,8 +9892,16 @@ class HandleTypes extends ServiceMethods {
 	ChangeEngagementPanelVisibilityActionData(x) {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
 		const {targetId,visibility}=x; //...y}=x; this.g(y); //#destructure
-		if(targetId!=="engagement-panel-comments-section") debugger;
-		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED") debugger;
+		switch(targetId) {
+			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData"); break;
+			case "engagement-panel-clip-view": break;
+			case "engagement-panel-comments-section": break;
+		}
+		switch(visibility) {
+			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData"); break;
+			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED": break;
+			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
+		}
 	}
 	/** @arg {ShowEngagementPanelScrimActionData} x */
 	ShowEngagementPanelScrimActionData(x) {
@@ -9926,10 +9934,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SortFilterSubMenuData]",x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams}=x; //...y}=x; this.g(y); //#destructure
 		this.z(subMenuItems,a=>this.ActionSetPlaylistVideoOrder(a));
-		this.primitive_of(title,"string");
+		if(title) this.primitive_of(title,"string");
 		if(icon) this.Icon(icon);
 		if(accessibility) this.Accessibility(accessibility);
-		tooltip;
+		if(tooltip) this.primitive_of(tooltip,"string");
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {ActionSetPlaylistVideoOrder} x */
