@@ -9726,28 +9726,28 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
 		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/get_transcript") debugger;
 	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y);
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
 	}
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
 		this.save_keys("[PlayerAnnotationsExpandedData]",x);
-		const {featuredChannel,allowSwipeDismiss,annotationId}=x; //...y}=x; this.g(y); //#destructure
+		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y);
 		this.FeaturedChannel(featuredChannel);
 		this.primitive_of(allowSwipeDismiss,"boolean");
 		this.primitive_of(annotationId,"string");
@@ -9755,7 +9755,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {FeaturedChannel} x */
 	FeaturedChannel(x) {
 		this.save_keys("[TopbarLogo]",x);
-		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton}=x; //...y}=x; this.g(y); //#destructure
+		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=x; this.g(y);
 		this.primitive_of(startTimeMs,"string");
 		this.primitive_of(endTimeMs,"string");
 		this.Thumbnail(watermark);
@@ -9764,18 +9764,18 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(channelName,"string");
 		this.SubscribeButtonRenderer(subscribeButton);
 	}
-	//#endregion
-	//#region destructure
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
 		this.save_keys("[TopbarLogo]",x);
-		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey}=x; //...y}=x; this.g(y); //#destructure
+		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y);
 		this.Icon(iconImage);
-		tooltipText;
+		this.TextWithRuns(tooltipText);
 		this.BrowseEndpoint(endpoint);
 		this.trackingParams(trackingParams);
-		overrideEntityKey;
+		this.primitive_of(overrideEntityKey,"string");
 	}
+	//#endregion
+	//#region destructure
 	/** @arg {UnknownWebCommandMetadata} x */
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
