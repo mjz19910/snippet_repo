@@ -7,4 +7,10 @@ type TabData={
 	selected: true;
 	content: SectionListRenderer;
 	trackingParams: string;
+}|{
+	endpoint: BrowseEndpoint;
+	title: string;
+	selected: true;
+	content: SectionListRenderer;
+	trackingParams: string;
 };

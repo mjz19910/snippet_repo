@@ -7373,6 +7373,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TabData} x */
 	TabData(x) {
 		this.save_keys("[TabData]",x);
+		if("endpoint" in x) {
+			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y);
+			this.BrowseEndpoint(endpoint);
+			this.primitive_of(title,"string");
+			if(selected!==true) debugger;
+			return;
+		}
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				case "FEwhat_to_watch": {
