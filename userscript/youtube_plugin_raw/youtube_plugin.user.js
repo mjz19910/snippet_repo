@@ -4104,12 +4104,9 @@ class CodegenService extends BaseService {
 			let fl=code_result.slice(1).split("\n")[0];
 			let fl_trim=fl.trim();
 			let trim_len=fl.length-fl_trim.length;
-			console.log("trim len",trim_len);
 			code_result=code_result.split("\n").map((e,dx,l) => {
-				console.log(e,dx,l.length);
 				if(dx>2&&dx<(l.length-1)) return e;
 				if(!e) return e;
-				console.log("trim",e.slice(trim_len),dx,l.length);
 				return e.slice(trim_len);
 			}).join("\n");
 			if(!this.codegen_cache.includes(code_result)) {
