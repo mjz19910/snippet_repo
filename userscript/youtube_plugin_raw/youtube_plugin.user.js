@@ -4090,7 +4090,18 @@ class CodegenService extends BaseService {
 	codegen_new_typedef(x,gen_name,ret_val) {
 		let cg=this.#_codegen_new_typedef(x,gen_name);
 		if(ret_val) return cg;
-		console.log(cg);
+		if(cg) {
+			let code_result=`namespace ${gen_name} {
+			${cg.split("\n").map(e=>{
+				if(e.startsWith("type")) return `\texport ${e}`;
+				return `\t${e}`;
+			}).join("\n")}
+		}`;
+			if(!this.codegen_cache.includes(code_result)) {
+				this.codegen_cache.push(code_result);
+				console.log(code_result);
+			}
+		}
 	}
 	/** @arg {{}} x @arg {string} gen_name */
 	#_codegen_new_typedef(x,gen_name) {
