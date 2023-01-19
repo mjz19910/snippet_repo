@@ -1,5 +1,5 @@
 type PlaylistAddToOption={
-	playlistId: string;
+	playlistId: PlaylistId;
 	title: SimpleText;
 	privacy: "PRIVATE";
 	containsSelectedVideos: "NONE";
