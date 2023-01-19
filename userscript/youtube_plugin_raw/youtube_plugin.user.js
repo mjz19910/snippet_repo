@@ -4817,6 +4817,7 @@ class ParserService extends BaseService {
 		}
 		parse_key(1);
 		parse_key(5,r=>{
+			if(r.size<=0) return;
 			console.log("obj5",r);
 		});
 		parse_key(6);
