@@ -1,3 +1,7 @@
-type VE6827_PageUrl=`/feed/trending?${string}`|
-	`/feed/${VE6827_PageLocation}`|
-	`/feed/storefront?${string}`;
+type VE6827_PageUrl=
+	|`/feed/trending?${string}`
+	|`/feed/history`
+	|`/feed/library`
+	|`/feed/storefront?${string}`
+	|"/feed/guide_builder"
+	;

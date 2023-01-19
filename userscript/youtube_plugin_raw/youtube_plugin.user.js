@@ -6500,6 +6500,7 @@ class HandleTypes extends ServiceMethods {
 			case "library": break;
 			case "history": break;
 			case "storefront": break;
+			case "guide_builder": break;
 			default: debugger; break;
 		}
 	}
