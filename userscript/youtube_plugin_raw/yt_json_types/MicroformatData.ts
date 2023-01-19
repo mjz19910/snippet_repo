@@ -19,6 +19,7 @@ type MicroformatData={
 	schemaDotOrgType: string;
 	noindex: false;
 	unlisted: false;
+	tags?: string[];
 	familySafe: true;
 	availableCountries: string[];
 	linkAlternates: HrefUrl[];

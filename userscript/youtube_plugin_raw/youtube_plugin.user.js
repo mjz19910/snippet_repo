@@ -6342,15 +6342,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MicroformatData} x */
 	MicroformatData(x) {
 		this.save_keys("[MicroformatData]",x);
-		let {urlCanonical,title,...y1}=x;
-		let {description,thumbnail,...y2}=y1;
-		const {siteName,appName,androidPackage,iosAppStoreId,...y3}=y2;
-		const {iosAppArguments,...y4}=y3;
-		const {ogType,...y}=y4;
-		const {urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,...y5}=y;
-		const {twitterCardType,twitterSiteHandle,...y6}=y5;
-		const {schemaDotOrgType,noindex,unlisted,familySafe,availableCountries,linkAlternates,...y7}=y6;
-		this.g(y7);
+		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=x;
+		if(tags) this.z(tags,a => this.primitive_of(a,"string"));
+		this.g(y);
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
