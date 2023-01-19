@@ -9998,6 +9998,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ButtonCommand} x */
 	ButtonCommand(x) {
+		this.save_keys("[ButtonCommand]",x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
@@ -10008,6 +10009,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelMenu} x */
 	EngagementPanelMenu(x) {
+		this.save_keys("[EngagementPanelMenu]",x);
 		if("menuRenderer" in x) return this.MenuRenderer(x);
 		if("sortFilterSubMenuRenderer" in x) return this.SortFilterSubMenuRenderer(x);
 		debugger;
