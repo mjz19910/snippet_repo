@@ -9529,9 +9529,52 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
 		this.save_keys("[SecondaryContents]",x);
-		// if("profileColumnRenderer" in x) return this.ProfileColumnRenderer(x);
+		if("profileColumnRenderer" in x) return this.ProfileColumnRenderer(x);
 		if("browseFeedActionsRenderer" in x) return this.BrowseFeedActionsRenderer(x);
 		debugger;
+	}
+	/** @arg {ProfileColumnRenderer} x */
+	ProfileColumnRenderer(x) {
+		this.save_keys("[ProfileColumnRenderer]",x);
+		const {profileColumnRenderer,...y}=x; this.g(y);
+		this.ProfileColumnData(profileColumnRenderer);
+	}
+	/** @arg {ProfileColumnData} x */
+	ProfileColumnData(x) {
+		this.save_keys("[ProfileColumnData]",x);
+		const {items,...y}=x; this.g(y);
+		this.z(items,this.ProfileColumnItem);
+	}
+	/** @arg {ProfileColumnItem} x */
+	ProfileColumnItem(x) {
+		if("profileColumnUserInfoRenderer" in x) return this.ProfileColumnUserInfoRenderer(x);
+		if("profileColumnStatsRenderer" in x) return this.ProfileColumnStatsRenderer(x);
+		debugger;
+	}
+	/** @arg {ProfileColumnUserInfoRenderer} x */
+	ProfileColumnUserInfoRenderer(x) {
+		this.save_keys("[ProfileColumnUserInfoRenderer]",x);
+		const {profileColumnUserInfoRenderer,...y}=x; this.g(y);
+		this.ProfileColumnUserInfoData(profileColumnUserInfoRenderer);
+	}
+	/** @arg {ProfileColumnStatsRenderer} x */
+	ProfileColumnStatsRenderer(x) {
+		this.save_keys("[ProfileColumnStatsRenderer]",x);
+		const {profileColumnStatsRenderer,...y}=x; this.g(y);
+		this.ProfileColumnStatsData(profileColumnStatsRenderer);
+	}
+	/** @arg {ProfileColumnStatsData} x */
+	ProfileColumnStatsData(x) {
+		this.ItemsTemplate(x,this.ProfileColumnStatsEntryRenderer);
+	}
+	/** @template {{}} T @arg {{items: T[]}} x @arg {(x:T)=>void} f */
+	ItemsTemplate(x,f) {
+		const {items,...y}=x; this.g(y);
+		this.z(items,f);
+	}
+	/** @arg {ProfileColumnStatsEntryRenderer} x */
+	ProfileColumnStatsEntryRenderer(x) {
+		x;
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
@@ -9557,12 +9600,12 @@ class HandleTypes extends ServiceMethods {
 		const {items,...y}=x; this.g(y);
 		this.z(items,this.StructuredDescriptionContentItem);
 	}
-	/** @arg {FeedFilterChipBarData} x */
+	/** @arg {ProfileColumnUserInfoData} x */
 	ProfileColumnUserInfoData(x) {
-		const {contents,trackingParams,styleType,...y}=x; this.g(y);
-		this.z(contents,this.ChipCloudChipRenderer);
-		this.trackingParams(trackingParams);
-		if(styleType!=="FEED_FILTER_CHIP_BAR_STYLE_TYPE_CHANNEL_PAGE_GRID") debugger;
+		this.save_keys("[ProfileColumnUserInfoData]",x);
+		const {title,thumbnail,...y}=x; this.g(y);
+		this.TextWithRuns(title);
+		this.Thumbnail(thumbnail);
 	}
 	/** @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
