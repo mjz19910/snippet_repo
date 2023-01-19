@@ -4669,7 +4669,7 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_param_f40_f1(for_,path,param_map);
+		this.parse_player_param_data_2(for_,path,param_map);
 	}
 	/** @public @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
 	on_player_params(for_,path,x) {
@@ -4678,7 +4678,7 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_params_with_map(for_,path,param_map);
+		this.parse_player_param_data_1(for_,path,param_map);
 	}
 	parse_key_index=1;
 	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
@@ -4708,26 +4708,32 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapValue} tv */
 	default_parse_param_callback(for_,path,tv) {
+		let key_index=this.parse_key_index;
 		if(tv instanceof Map) {
 			if(tv.size<=0) return;
 			this.parse_any_param(for_,path,tv);
 		} else {
-			console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv);
+			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
 		}
 	}
 	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
 		let mk=[...x.keys()];
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
 		parse_key(1);
 		parse_key(2);
+		parse_key(5);
 		if(this.eq_keys(mk,[])) return;
-		console.log(`[new.${path}]`,path,this.to_param_obj(x));
+		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
 		debugger;
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
-	parse_player_params_with_map(for_,path,x) {
+	parse_player_param_data_1(for_,path,x) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
 		let mk=[...x.keys()];
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(for_,path,x,mk,ta,null);
@@ -4739,15 +4745,16 @@ class ParserService extends BaseService {
 		parse_key(71);
 		parse_key(72);
 		if(this.eq_keys(mk,[])) return;
-		console.log("[new_player_params]",this.to_param_obj(x));
+		console.log(`[data_1.${path}] [idx=${key_index}]`,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
-	parse_player_param_f40_f1(for_,path,x) {
+	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
+	parse_player_param_data_2(root,path,x) {
 		this.parse_key_index++;
+		let key_index=this.parse_key_index;
 		let map_keys=[...x.keys()];
 		/** @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-		let parse_key=(ta,cb=null) => this.parse_key(for_,path,x,map_keys,ta,cb);
+		let parse_key=(ta,cb=null) => this.parse_key(root,path,x,map_keys,ta,cb);
 		parse_key(1);
 		parse_key(3);
 		parse_key(5);
@@ -4757,7 +4764,7 @@ class ParserService extends BaseService {
 		parse_key(33);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
-		console.log("[new_watch_endpoint_params]",for_,param_obj);
+		console.log(`[data_2.${path}] [idx=${key_index}]`,param_obj);
 		debugger;
 	}
 	/** @arg {ParamMapType} x @returns {ParamObjType} */
