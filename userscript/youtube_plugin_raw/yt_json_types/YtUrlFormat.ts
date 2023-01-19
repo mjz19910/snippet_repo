@@ -22,7 +22,12 @@ type YtUrlFormat=[
 	`/watch?${string}`,
 	`http://www.youtube.com/watch?${string}`,
 	`https://support.google.com/youtube/answer/${number}`,
+	YTExternalUrl,
 ][number];
+type YTExternalEncUrl=[
+	`[parse_url_external_1] https://m.youtube.com/premium`,
+][number];
+type YTExternalUrl=SplitOnce<SplitOnce<YTExternalEncUrl,"]">[1]," ">[1];
 type WatchUrlFormat=[
 	WatchPageUrl,
 	`/watch?${YtWatchVideoUrlFormat}`,
