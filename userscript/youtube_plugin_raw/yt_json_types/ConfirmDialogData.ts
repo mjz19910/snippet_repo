@@ -1,5 +1,5 @@
 type ConfirmDialogData={
-	title: TextWithRuns;
+	title: TextT;
 	trackingParams: string;
 	dialogMessages: TextWithRuns[];
 	confirmButton: ButtonRenderer;

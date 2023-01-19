@@ -6537,7 +6537,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ConfirmDialogData} x */
 	ConfirmDialogData(x) {
 		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y);
-		this.TextWithRuns(title);
+		this.TextT(title);
 		this.trackingParams(trackingParams);
 		this.z(dialogMessages,a => this.TextWithRuns(a));
 		this.ButtonRenderer(confirmButton);
