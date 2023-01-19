@@ -10406,7 +10406,6 @@ class HandleTypes extends ServiceMethods {
 	C4TabbedHeaderData(x) {
 		this.save_keys("[C4TabbedHeaderData]",x);
 		const {channelId,title,subscribeButton,trackingParams}=x; //...y}=x; this.g(y); //#destructure
-		debugger;
 		this.x.get("parser_service").parse_channel_id(channelId);
 		this.primitive_of(title,"string");
 		this.SubscribeButtonRenderer(subscribeButton);
