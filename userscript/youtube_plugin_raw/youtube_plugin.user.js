@@ -8780,7 +8780,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SettingsPageResponse]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="settings") debugger;
-		this.g(endpoint);
+		this.BrowseEndpoint(endpoint);
 		this.SettingsResponse(response);
 		this.primitive_of(url,"string");
 	}
