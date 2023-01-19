@@ -2009,12 +2009,6 @@ function split_string(x,s=as(",")) {
 	let r=x.split(s);
 	return as(r);
 }
-/** @private @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
-function join_string(x,s) {
-	if(!x) {debugger;}
-	let r=x.join(s);
-	return as(r);
-}
 /** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
 function split_string_once(s,d=as(",")) {
 	if(s==="") {
@@ -2478,6 +2472,12 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
 class BaseService extends BaseServicePrivate {
+	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
+	join_string(x,s) {
+		if(!x) {debugger;}
+		let r=x.join(s);
+		return as(r);
+	}
 	/** @template {string} T @arg {T} str @returns {UrlParse<T>} */
 	parse_with_url_parse(str) {
 		let s=new URL(str);
@@ -2972,7 +2972,7 @@ class YtHandlers extends BaseService {
 		if(!url_type) {
 			debugger;
 			/** @private @type {UrlTypes} */
-			let url_h=as(join_string(split_string(ss2,"/"),"."));
+			let url_h=as(this.join_string(split_string(ss2,"/"),"."));
 			url_type=url_h;
 		}
 		if(!url_type) throw new Error("Unreachable");
@@ -9614,6 +9614,26 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.Signal_ChannelSwitcher(signalNavigationEndpoint);
 	}
+	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListDataTemplate(x) {
+		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
+		const {contents,...y}=x; this.g(y);
+		this.SectionListItemTemplate(contents);
+	}
+	/** @arg {SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
+	SectionListItemTemplate(x) {
+		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+		this.ItemSectionDataTemplate(x.itemSectionRenderer,a=>{
+			let v=this.join_string(a,"-");
+			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
+		});
+	}
+	/** @arg {Signal_ChannelSwitcher} x */
+	Signal_ChannelSwitcher(x) {
+		this.save_keys(`[Signal_ChannelSwitcher]`,x);
+		const {signal,...y}=x; this.g(y);
+		if(signal!=="CHANNEL_SWITCHER") debugger;
+	}
 	/** @arg {GetSharePanelWebCommandMetadata} x */
 	get_share_panel_WebCommandMetadata(x) {
 		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
@@ -10159,18 +10179,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AddToPlaylistRenderer]",x);
 		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
 		addToPlaylistRenderer;
-	}
-	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListDataTemplate(x) {
-		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
-		const {contents}=x; //...y}=x; this.g(y); //#destructure
-		contents;
-	}
-	/** @arg {Signal_ChannelSwitcher} x */
-	Signal_ChannelSwitcher(x) {
-		this.save_keys(`[Signal_ChannelSwitcher]`,x);
-		const {signal}=x; //...y}=x; this.g(y); //#destructure
-		signal;
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
