@@ -4564,7 +4564,7 @@ class ParserService extends BaseService {
 				} break;
 				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
 				case "pp": {
-					this.on_player_params(for_,res[1]);
+					this.on_player_params(for_,"watch_page_url.pp",res[1]);
 				} break;
 				case "start_radio": {
 					if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);
@@ -4648,9 +4648,9 @@ class ParserService extends BaseService {
 				let param_obj=Object.fromEntries(param_map.entries());
 				console.log("[new_endpoint_params] [%s]",for_,param_obj);
 			} break;
-			case "ReelWatch": this.parse_player_param_f40_f1(for_,param_map); break;
-			case "ReelWatch.sequence": this.parse_player_param_f40_f1(for_,param_map); break;
-			case "WatchEndpoint": this.parse_player_param_f40_f1(for_,param_map); break;
+			case "ReelWatch": this.parse_player_param_f40_f1(for_,"endpoint_params",param_map); break;
+			case "ReelWatch.sequence": this.parse_player_param_f40_f1(for_,"endpoint_params",param_map); break;
+			case "WatchEndpoint": this.parse_player_param_f40_f1(for_,"endpoint_params",param_map); break;
 			case "GetTranscript": {
 				/** @type {ParamMapValue[]} */
 				let transcript_args=[];
@@ -4719,14 +4719,14 @@ class ParserService extends BaseService {
 			} break;
 		}
 	}
-	/** @public @arg {ParamsSection} for_ @arg {string} x */
-	on_player_params(for_,x) {
+	/** @public @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
+	on_player_params(for_,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_params_with_map(for_,param_map);
+		this.parse_player_params_with_map(for_,path,param_map);
 	}
 	parse_key_index=1;
 	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
@@ -4750,47 +4750,38 @@ class ParserService extends BaseService {
 			cb(tv,ta);
 		}
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
-	parse_player_params_with_map(for_,x) {
+	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
+	parse_player_params_with_map(for_,path,x) {
 		let mk=[...x.keys()];
 		/** @type {ParseCallbackFunction} */
 		let default_callback=(tv,ta) => {
 			if(tv instanceof Map&&tv.size<=0) return;
-			console.log(`[watch_endpoint_params.value.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
+			console.log(`[${path}.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
 		};
 		/** @arg {number} ta */
 		let parse_key=(ta,cb=default_callback) => this.parse_key(x,mk,ta,cb);
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
-		parse_key(40,(tv) => {
-			if(tv instanceof Map) return this.parse_player_param_f40(for_,tv);
+		parse_key(40,(tv,ta) => {
+			if(tv instanceof Map) return this.parse_player_param_f40(for_,`${path}.f${ta}`,tv);
 			debugger;
 		});
 		parse_key(57);
 		parse_key(71);
 		parse_key(72);
-		let p40=x.get(40);
-		if(p40!==void 0) {
-			this.remove_key(x,mk,40);
-			let idx=mk.indexOf(40);
-			if(idx>-1) mk.splice(idx,1);
-			x.delete(40);
-		}
-		if(p40&&p40 instanceof Map) {
-		}
 		if(this.eq_keys(mk,[])) return;
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
-	parse_player_param_f40_f1(for_,x) {
+	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
+	parse_player_param_f40_f1(for_,path,x) {
 		this.parse_key_index++;
 		let map_keys=[...x.keys()];
 		/** @type {ParseCallbackFunction} */
 		let default_callback=(tv,ta) => {
 			if(tv instanceof Map&&tv.size<=0) return;
-			console.log(`[watch_endpoint_params.value.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
+			console.log(`[${path}.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
 		};
 		/** @arg {number} ta @arg {ParseCallbackFunction} cb */
 		let parse_key=(ta,cb=default_callback) => this.parse_key(x,map_keys,ta,cb);
@@ -4846,27 +4837,27 @@ class ParserService extends BaseService {
 			return [e[0],ei];
 		}));
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
-	parse_player_param_f40(for_,x) {
+	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
+	parse_player_param_f40(for_,path,x) {
 		let map_keys=[...x.keys()];
 		/** @type {ParseCallbackFunction} */
 		let default_callback=(tv,ta) => {
 			if(tv instanceof Map&&tv.size<=0) return;
-			console.log(`[parse_player_param_f40.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
+			console.log(`[player_param.${path}.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
 		};
 		/** @arg {number} ta @arg {ParseCallbackFunction} cb */
 		let parse_key=(ta,cb=default_callback) => this.parse_key(x,map_keys,ta,cb);
 		parse_key(1,(x1,ta) => {
 			if(!(x1 instanceof Map)) {
-				console.log("[player_params_f40.f%s] [idx=%s]",ta+"",this.parse_key_index.toString(),x1);
+				console.log(`[player_params.${path}.f%s] [idx=%s]`,ta+"",this.parse_key_index.toString(),x1);
 				debugger;
 				return;
 			}
-			return this.parse_player_param_f40_f1(for_,x1);
+			return this.parse_player_param_f40_f1(for_,`player_params.${path}.f${ta}`,x1);
 		});
 		if(this.eq_keys(map_keys,[])) return;
-		console.log("[player_params_f_40]",x,map_keys);
-		console.log("[new_player_params_f_40]",Object.fromEntries(x.entries()));
+		console.log(`[player_params.${path}]`,x,map_keys);
+		console.log(`[new.player_params.${path}]`,Object.fromEntries(x.entries()));
 		debugger;
 	}
 	log_enabled_playlist_id=false;
@@ -5662,9 +5653,9 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @arg {ParamsSection} for_ @arg {string} x */
-	playerParams(for_,x) {
-		this.x.get("parser_service").on_player_params(for_,x);
+	/** @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
+	playerParams(for_,path,x) {
+		this.x.get("parser_service").on_player_params(for_,path,x);
 	}
 	/** @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
@@ -6900,7 +6891,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y);
 		if(videoId) this.videoId(videoId);
-		this.playerParams("ReelWatch.player",playerParams);
+		this.playerParams("ReelWatch.player","reel.player_params",playerParams);
 		if(thumbnail) this.Thumbnail(thumbnail);
 		this.ReelPlayerOverlayRenderer(overlay);
 		this.params("ReelWatch",params);
@@ -7946,7 +7937,7 @@ class HandleTypes extends ServiceMethods {
 		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
 		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		if(a1) this.PrefetchHintConfig(a1);
-		if(playerParams) this.playerParams("WatchEndpoint",playerParams);
+		if(playerParams) this.playerParams("WatchEndpoint","watch.player_params",playerParams);
 		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
 		if(a2) this.WatchEndpointMusicConfig(a2);
 		const {nofollow,...y_end}=y5;
