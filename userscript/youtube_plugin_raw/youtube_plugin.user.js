@@ -4710,18 +4710,7 @@ class ParserService extends BaseService {
 	default_parse_param_callback(for_,path,tv) {
 		if(tv instanceof Map&&tv.size<=0) return;
 		switch(path) {
-			case "reel.player_params.f30": return;
-			case "reel.player_params.f71": return;
-			case "get_transcript.params.f6": return;
-			case "get_transcript.params.f1": return;
-			case "reel.sequence_params.f1": return;
-			case "reel.sequence_params.f5": return;
-			case "reel.player_params.f57": return;
-			case "reel.player_params.f72": return;
-			case "get_transcript.params.f3": return;
-			case "watch.player_params.f8": return;
-			case "watch.player_params.f9": return;
-			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv); debugger;
+			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv);
 		}
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
