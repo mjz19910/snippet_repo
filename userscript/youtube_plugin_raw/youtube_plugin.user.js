@@ -4096,15 +4096,22 @@ class CodegenService extends BaseService {
 		if(cg) {
 			let code_result=`
 			namespace ${gen_name} {
-				${cg.split("\n").map(e => {
+			${cg.split("\n").filter(e => e).map(e => {
 				if(e.startsWith("type")) return `\texport ${e}`;
 				return `\t${e}`;
 			}).join("\n")}
 			}`;
-			let fl=code_result.split("\n")[0];
+			let fl=code_result.slice(1).split("\n")[0];
 			let fl_trim=fl.trim();
-			let trim_len=fl_trim.length-fl.length;
+			let trim_len=fl.length-fl_trim.length;
 			console.log("trim len",trim_len);
+			code_result=code_result.split("\n").map((e,dx,l) => {
+				console.log(e,dx,l.length);
+				if(dx>2&&dx<(l.length-1)) return e;
+				if(!e) return e;
+				console.log("trim",e.slice(trim_len),dx,l.length);
+				return e.slice(trim_len);
+			}).join("\n");
 			if(!this.codegen_cache.includes(code_result)) {
 				this.codegen_cache.push(code_result);
 				console.log(code_result);
