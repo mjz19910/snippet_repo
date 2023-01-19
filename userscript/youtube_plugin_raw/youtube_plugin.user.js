@@ -8631,9 +8631,30 @@ class HandleTypes extends ServiceMethods {
 		this.SettingsResponse(response);
 		this.primitive_of(url,"string");
 	}
+	/** @arg {Extract<ShortsPageResponse,{rootVe:37414}>} x */
+	S_37414(x) {
+		const {rootVe,page,playerResponse,endpoint,response,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y);
+		if(page!=="shorts") debugger;
+		this.PlayerResponse(playerResponse);
+		this._ReelWatchEndpoint(endpoint);
+		this.ReelResponse(response);
+		if("reelWatchSequenceResponse" in x) debugger;
+		// if(reelWatchSequenceResponse) this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
+		if(!this.str_starts_with(url,"/shorts/")) debugger;
+		if(url.includes("&")) debugger;
+		if(!cachedReelWatchSequenceResponse) debugger;
+		this.ReelWatchSequenceResponse(cachedReelWatchSequenceResponse);
+	}
 	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
+		if("rootVe" in x) {
+			switch(x.rootVe) {
+				case 37414: this.S_37414(x); break;
+				default: debugger; break;
+			}
+			return;
+		}
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y);
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
