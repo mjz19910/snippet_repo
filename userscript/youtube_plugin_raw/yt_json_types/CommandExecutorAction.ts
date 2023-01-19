@@ -1,5 +1,6 @@
 type CommandExecutorAction=[
 	ChangeEngagementPanelVisibilityAction,
-	ScrollToEngagementPanelCommand,
+	HideEngagementPanelScrimAction,
 	OpenPopupAction,
+	ScrollToEngagementPanelCommand,
 ][number];

@@ -4980,7 +4980,7 @@ class ParserService extends BaseService {
 			}
 		}
 	}
-	/** @private @arg {ParamsSection} for_ @arg {ParseUrlWithSearchIn} x */
+	/** @private @arg {ParamsSection} for_ @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
 	parse_url_with_search(for_,x) {
 		let a=split_string(x,"?");
 		switch(a[0]) {
@@ -4992,7 +4992,9 @@ class ParserService extends BaseService {
 	/** @private @type {YtUrlFormat} */
 	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
 	parse_url_2(for_,x) {
-		if(this.str_is_search(x)) return this.parse_url_with_search(for_,x);
+		if(this.str_is_search(x)) {
+			return this.parse_url_with_search(for_,x);
+		}
 		if(this.str_starts_with(x,"@")) {
 			if(this.log_channel_handles) console.log("[channel_handle]",x);
 			return;
@@ -5005,6 +5007,7 @@ class ParserService extends BaseService {
 			case "gaming": return;
 			case "premium": return;
 			case "reporthistory": return;
+			case "upload": return;
 			default:
 		}
 		switch(x) {
@@ -9623,7 +9626,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
-		this.ItemSectionDataTemplate(x.itemSectionRenderer,a=>{
+		this.ItemSectionDataTemplate(x.itemSectionRenderer,a => {
 			let v=this.join_string(a,"-");
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
@@ -9722,11 +9725,17 @@ class HandleTypes extends ServiceMethods {
 		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
 		if("hideEngagementPanelScrimAction" in x) return this.HideEngagementPanelScrimAction(x);
+		if("loopCommand" in x) return;
+		if("updateToggleButtonStateCommand" in x) return;
 		debugger;
 	}
 	/** @arg {HideEngagementPanelScrimAction} x */
 	HideEngagementPanelScrimAction(x) {
-		x;
+		const {clickTrackingParams,hideEngagementPanelScrimAction: {engagementPanelTargetId,...y1},...y}=x; this.g(y); this.g(y1);
+		switch(engagementPanelTargetId) {
+			default: debugger; break;
+			case "engagement-panel-clip-create": break;
+		}
 	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
@@ -9785,7 +9794,7 @@ class HandleTypes extends ServiceMethods {
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
 		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
-		this.x.get("parser_service").parse_url("UnknownWebCommandMetadata",as(url));
+		this.x.get("parser_service").parse_url("UnknownWebCommandMetadata",url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
@@ -9982,7 +9991,7 @@ class HandleTypes extends ServiceMethods {
 	SortFilterSubMenuData(x) {
 		this.save_keys("[SortFilterSubMenuData]",x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams}=x; //...y}=x; this.g(y); //#destructure
-		this.z(subMenuItems,a=>this.ActionSetPlaylistVideoOrder(a));
+		this.z(subMenuItems,a => this.ActionSetPlaylistVideoOrder(a));
 		if(title) this.primitive_of(title,"string");
 		if(icon) this.Icon(icon);
 		if(accessibility) this.Accessibility(accessibility);

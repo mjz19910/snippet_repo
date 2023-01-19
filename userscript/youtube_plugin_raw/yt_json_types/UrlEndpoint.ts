@@ -1,5 +1,5 @@
 type VE83769_WebCommandMetadata={
-	url: string;
+	url: "/upload";
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };

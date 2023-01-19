@@ -14,11 +14,19 @@ type YtUrlFormat=[
 	`/reporthistory`,
 	`/results?search_query=${string}`,
 	`/shorts/${string}`,
-	`/watch?${YtWatchVideoUrlFormat}`,
-	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
-	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
-	WatchPageUrl,
 	YtExternalUrlFormat,
+	VE6827_PageUrl,
+	`/@${string}`,
+	"/upload",
+	`/channel/UC${string}`,
+	`/watch?${string}`,
 	`http://www.youtube.com/watch?v=${string}&list=${string}`,
 	`https://support.google.com/youtube/answer/${number}`,
 ][number];
+type WatchUrlFormat=[
+	WatchPageUrl,
+	`/watch?${YtWatchVideoUrlFormat}`,
+	`/watch?v=${string}&list=RD${string}&start_radio=1&rv=${string}`,
+	`/watch?v=${string}&list=RDGM${string}&start_radio=1&rv=${string}`,
+][number];
+type UU=Exclude<Extract<WebCommandMetadata,{url:any}>,{url:YtUrlFormat}>['url'];
