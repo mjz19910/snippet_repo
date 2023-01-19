@@ -1,0 +1,2 @@
+type AccountWCM=AccountMenuWebCommandMetadata|
+	SetSettingWebCommandMetadata;

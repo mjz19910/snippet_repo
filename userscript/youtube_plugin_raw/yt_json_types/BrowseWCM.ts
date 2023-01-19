@@ -1,0 +1,2 @@
+type BrowseWCM=EditPlaylistWebCommandMetadata|
+	BrowseApiWebCommandMetadata;
