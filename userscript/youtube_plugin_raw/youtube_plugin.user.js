@@ -9093,7 +9093,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {string} T @arg {UrlWrappedValueT<T>} x */
 	UrlWrappedValueT(x) {
-		return x.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue;
+		const {privateDoNotAccessOrElseTrustedResourceUrlWrappedValue: a,...y}=x; this.g(y);
+		return a;
 	}
 	/** @arg {GuideSubscriptionsSectionRenderer} x */
 	GuideSubscriptionsSectionRenderer(x) {
