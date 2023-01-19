@@ -4257,6 +4257,7 @@ class CodegenService extends BaseService {
 			||o.textInputFormFieldRenderer
 			||o.dropdownRenderer
 			||o.createPlaylistServiceEndpoint
+			||o.sortFilterSubMenuRenderer
 			;
 		if(hg) return g();
 		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
@@ -4774,6 +4775,9 @@ class ParserService extends BaseService {
 			case "get_transcript.params.f1": return;
 			case "reel.sequence_params.f1": return;
 			case "reel.sequence_params.f5": return;
+			case "reel.player_params.f57": return;
+			case "reel.player_params.f72": return;
+			case "get_transcript.params.f3": return;
 			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv); debugger;
 		}
 	}
@@ -9750,36 +9754,20 @@ class HandleTypes extends ServiceMethods {
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		debugger;
 	}
+	/** @arg {EngagementPanelMenu} x */
+	EngagementPanelMenu(x) {
+		if("menuRenderer" in x) return this.MenuRenderer(x);
+		if("sortFilterSubMenuRenderer" in x) this.SortFilterSubMenuRenderer(x);
+		debugger;
+	}
 	/** @arg {EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeader(x) {
 		this.save_keys("[EngagementPanelTitleHeader]",x);
-		if("informationButton" in x) {
-			const {title,informationButton,visibilityButton,trackingParams,...y}=x; this.g(y);
-			this.TextWithRuns(title);
-			this.ButtonRenderer(informationButton);
-			this.ButtonRenderer(visibilityButton);
-			this.trackingParams(trackingParams);
-			return;
-		}
-		if("contextualInfo" in x) {
-			const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
-			this.TextWithRuns(title);
-			if(contextualInfo) this.TextWithRuns(contextualInfo);
-			if(menu) this.SortFilterSubMenuRenderer(menu);
-			this.ButtonRenderer(visibilityButton);
-			this.trackingParams(trackingParams);
-			return;
-		}
-		if("menu" in x) {
-			const {title,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
-			this.TextWithRuns(title);
-			this.MenuRenderer(menu);
-			this.ButtonRenderer(visibilityButton);
-			this.trackingParams(trackingParams);
-			return;
-		}
-		const {title,visibilityButton,trackingParams,...y}=x; this.g(y);
-		this.SimpleText(title);
+		const {title,menu,contextualInfo,informationButton,visibilityButton,trackingParams,...y}=x; this.g(y);
+		if(title) this.TextWithRuns(title);
+		if(menu) this.EngagementPanelMenu(menu);
+		if(contextualInfo) this.TextWithRuns(contextualInfo);
+		if(informationButton) this.ButtonRenderer(informationButton);
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
 	}
