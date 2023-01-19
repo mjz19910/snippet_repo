@@ -9434,7 +9434,8 @@ class HandleTypes extends ServiceMethods {
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
 		if("icon" in x) {
-			const {icon,trackingParams,formattedTitle,accessibility,...y}=x; this.g(y);
+			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x; this.g(y);
+			if(navigationEndpoint) this.BrowseEndpoint(navigationEndpoint);
 			this.Icon(icon);
 			this.trackingParams(trackingParams);
 			this.SimpleText(formattedTitle);
