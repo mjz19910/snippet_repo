@@ -1,10 +1,12 @@
+type BrowseMetadata=ChannelMetadataRenderer|PlaylistMetadataRenderer;
+
 type BrowseResponse={
 	responseContext: ResponseContext;
 	contents?: BrowseContents;
 	continuationContents?: SectionListContinuation;
 	header?: BrowseHeader;
 	alerts?: AlertWithButtonRenderer[];
-	metadata?: ChannelMetadataRenderer;
+	metadata?: BrowseMetadata;
 	trackingParams: string;
 	topbar?: DesktopTopbarRenderer;
 	microformat?: MicroformatDataRenderer;

@@ -6067,13 +6067,19 @@ class HandleTypes extends ServiceMethods {
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
-		if(metadata) this.ChannelMetadataRenderer(metadata);
+		if(metadata) this.BrowseMetadata(metadata);
 		if(microformat) this.MicroformatDataRenderer(microformat);
 		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
 		if(background) this.MusicThumbnailRenderer(background);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
 		if(continuationContents) this.ContinuationContents(continuationContents);
 		if(alerts) this.z(alerts,this.AlertWithButtonRenderer);
+	}
+	/** @arg {NonNullable<BrowseResponse['metadata']>} x */
+	BrowseMetadata(x) {
+		if("channelMetadataRenderer" in x) return this.ChannelMetadataRenderer(x);
+		if("playlistMetadataRenderer" in x) return this.PlaylistMetadataRenderer(x);
+		debugger;
 	}
 	/** @arg {BrowseSidebar} x */
 	BrowseSidebar(x) {
@@ -10581,7 +10587,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(title);
 		if(subscriptionButton) this.SubscriptionButton(subscriptionButton);
 		this.BrowseEndpoint(navigationEndpoint);
-		this.SimpleText(subscriberCountText);
+		if(subscriberCountText) this.SimpleText(subscriberCountText);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {SubscriptionButton} x */
@@ -10591,6 +10597,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
 	PlaylistSidebarPrimaryInfoRenderer(x) {
+		x;
+	}
+	/** @arg {PlaylistMetadataRenderer} x */
+	PlaylistMetadataRenderer(x) {
 		x;
 	}
 	/** @arg {minimal_handler_member} x */
