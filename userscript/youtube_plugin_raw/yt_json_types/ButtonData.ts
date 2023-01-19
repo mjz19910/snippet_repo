@@ -9,7 +9,7 @@ type ButtonData={
 	tooltip?: string;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
-	text?: TextWithRuns;
+	text?: TextT;
 	trackingParams?: string;
 	targetId?: YtTargetIdType;
 };

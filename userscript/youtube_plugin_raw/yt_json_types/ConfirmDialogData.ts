@@ -1,7 +1,7 @@
 type ConfirmDialogData={
-	title: TextT;
+	title: SimpleText;
 	trackingParams: string;
-	dialogMessages: TextWithRuns[];
+	dialogMessages: SimpleText[];
 	confirmButton: ButtonRenderer;
 	cancelButton: ButtonRenderer;
 	primaryIsCancel: boolean;

@@ -6537,9 +6537,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ConfirmDialogData} x */
 	ConfirmDialogData(x) {
 		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y);
-		this.TextT(title);
+		this.SimpleText(title);
 		this.trackingParams(trackingParams);
-		this.z(dialogMessages,a => this.TextWithRuns(a));
+		this.z(dialogMessages,a => this.SimpleText(a));
 		this.ButtonRenderer(confirmButton);
 		this.ButtonRenderer(cancelButton);
 		this.primitive_of(primaryIsCancel,"boolean");
@@ -8560,7 +8560,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		if(style) this.save_string("[Button.style]",style);
-		if(text) this.TextWithRuns(text);
+		if(text) this.TextT(text);
 		if(trackingParams) this.trackingParams(trackingParams);
 		if(targetId) this.targetId(targetId);
 	}
@@ -9609,6 +9609,8 @@ class HandleTypes extends ServiceMethods {
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
 		if("signalServiceEndpoint" in x) return this.SignalServiceEndpoint(x);
+		if("urlEndpoint" in x) return this.UrlEndpoint(x);
+		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		debugger;
 	}
 	/** @arg {EngagementPanelTitleHeader} x */
@@ -10082,6 +10084,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region has_save_keys
+	/** @arg {minimal_handler_member} x */
+	minimal_handler_member_1(x) {
+		this.save_keys("[minimal_handler_member]",x);
+	}
 	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
@@ -10090,9 +10096,9 @@ class HandleTypes extends ServiceMethods {
 	Signal_ChannelSwitcher(x) {
 		this.save_keys(`[Signal_ChannelSwitcher]`,x);
 	}
-	/** @arg {minimal_handler_member} x */
-	minimal_handler_member_1(x) {
-		this.save_keys("[minimal_handler_member]",x);
+	/** @arg {CommandExecutorCommand} x */
+	CommandExecutorCommand(x) {
+		this.save_keys("[CommandExecutorCommand]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
