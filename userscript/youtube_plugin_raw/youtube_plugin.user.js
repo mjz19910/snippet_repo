@@ -9673,6 +9673,12 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
 		}
 	}
+	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListRendererTemplate(x) {
+		this.save_keys(`[SectionListRendererTemplate]`,x);
+		const {sectionListRenderer,...y}=x; this.g(y);
+		this.SectionListDataTemplate(sectionListRenderer);
+	}
 	//#endregion
 	//#region destructure
 	/** @arg {GetTranscriptWebCommandMetadata} x */
@@ -9700,9 +9706,21 @@ class HandleTypes extends ServiceMethods {
 	PlayerAnnotationsExpandedData(x) {
 		this.save_keys("[PlayerAnnotationsExpandedData]",x);
 		const {featuredChannel,allowSwipeDismiss,annotationId}=x; //...y}=x; this.g(y); //#destructure
-		featuredChannel;
-		allowSwipeDismiss;
-		annotationId;
+		this.FeaturedChannel(featuredChannel);
+		this.primitive_of(allowSwipeDismiss,"boolean");
+		this.primitive_of(annotationId,"string");
+	}
+	/** @arg {FeaturedChannel} x */
+	FeaturedChannel(x) {
+		this.save_keys("[TopbarLogo]",x);
+		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton}=x; //...y}=x; this.g(y); //#destructure
+		startTimeMs;
+		endTimeMs;
+		watermark;
+		trackingParams;
+		navigationEndpoint;
+		channelName;
+		subscribeButton;
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
@@ -10076,12 +10094,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region dispatch_in_progress
-	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListRendererTemplate(x) {
-		this.save_keys(`[SectionListRendererTemplate]`,x);
-		const {sectionListRenderer}=x; //...y}=x; this.g(y); //#destructure
-		this.SectionListDataTemplate(sectionListRenderer);
-	}
 	//#endregion
 	//#region type_errors
 	/** @arg {UnifiedSharePanelRenderer} x */
