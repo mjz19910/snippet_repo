@@ -4747,7 +4747,7 @@ class ParserService extends BaseService {
 		parse_key(71);
 		parse_key(72);
 		if(this.eq_keys(mk,[])) return;
-		console.log(`[data_1.${path}] [idx=${key_index}]`,this.to_param_obj(x));
+		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(x));
 		debugger;
 	}
 	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
