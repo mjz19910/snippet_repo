@@ -9761,7 +9761,7 @@ class HandleTypes extends ServiceMethods {
 		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
 		this.x.get("parser_service").parse_url("UnknownWebCommandMetadata",as(url));
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		rootVe;
+		if(rootVe!==83769) debugger;
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
