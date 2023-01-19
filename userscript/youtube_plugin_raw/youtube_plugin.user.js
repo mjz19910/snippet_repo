@@ -6390,7 +6390,7 @@ class HandleTypes extends ServiceMethods {
 		if(url!=="/account") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 		if(rootVe!==23462) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {WatchPageWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
