@@ -10025,6 +10025,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GenericWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
+		this.save_keys("[GenericWebCommandMetadata]",x);
 		let cx=x.apiUrl;
 		switch(x.apiUrl) {
 			default: {
@@ -10053,12 +10054,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetUnseenCountWebCommandMetadata} x */
 	GetUnseenCountWebCommandMetadata(x) {
+		this.save_keys("[GetUnseenCountWebCommandMetadata]",x);
 		const {sendPost,apiUrl,...y}=x; this.g(y);
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
 	}
 	/** @arg {GetNotificationMenuWebCommandMetadata} x */
 	GetNotificationMenuWebCommandMetadata(x) {
+		this.save_keys("[GetNotificationMenuWebCommandMetadata]",x);
 		const {sendPost,apiUrl,...y}=x; this.g(y);
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
