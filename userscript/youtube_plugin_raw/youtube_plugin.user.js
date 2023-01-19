@@ -6432,7 +6432,11 @@ class HandleTypes extends ServiceMethods {
 				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
 				if(apiUrl!=="/youtubei/v1/browse") debugger;
 				x:{
-					if(url==="/playlist?list=WL") break x;
+					let us=split_string_once(split_string_once(url,"/")[1],"?");
+					if(us[0]!=="playlist") break x;
+					let up=us[1];
+					let pp=split_string_once(up,"=");
+					this.x.get("parser_service").parse_playlist_id(pp[1]);
 					console.log("[playlist.url] [%s]",url);
 					debugger;
 				}

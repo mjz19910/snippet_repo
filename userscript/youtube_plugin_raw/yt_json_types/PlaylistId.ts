@@ -3,4 +3,5 @@ type PlaylistId=[
 	`RDMM${string}`,
 	`PL${string}`,
 	"WL",
+	"LL",
 ][number];
