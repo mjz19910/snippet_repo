@@ -9574,6 +9574,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ProfileColumnStatsEntryRenderer} x */
 	ProfileColumnStatsEntryRenderer(x) {
+		this.ProfileColumnStatsEntryData(x.profileColumnStatsEntryRenderer);
+	}
+	/** @arg {ProfileColumnStatsEntryData} x */
+	ProfileColumnStatsEntryData(x) {
 		x;
 	}
 	/** @arg {WatchNextItem} x */
