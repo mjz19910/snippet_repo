@@ -9645,38 +9645,53 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	//#endregion
-	//#region destructure_endpoint
-	//#endregion
 	//#region destructure
-	/** @arg {PlayerAnnotationsExpandedData} x */
-	PlayerAnnotationsExpandedData(x) {
-		this.save_keys("[PlayerAnnotationsExpandedData]",x);
-		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y); //#destructure
-	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
 		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/get_transcript") debugger;
 	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
+	}
+	/** @arg {PlayerAnnotationsExpandedData} x */
+	PlayerAnnotationsExpandedData(x) {
+		this.save_keys("[PlayerAnnotationsExpandedData]",x);
+		const {featuredChannel,allowSwipeDismiss,annotationId}=x; //...y}=x; this.g(y); //#destructure
+		featuredChannel;
+		allowSwipeDismiss;
+		annotationId;
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
 		this.save_keys("[TopbarLogo]",x);
-		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y); //#destructure
+		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey}=x; //...y}=x; this.g(y); //#destructure
+		iconImage;
+		tooltipText;
+		endpoint;
+		trackingParams;
+		overrideEntityKey;
 	}
 	/** @arg {UnknownWebCommandMetadata} x */
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y); //#destructure
+		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
+		url;
+		webPageType;
+		rootVe;
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
