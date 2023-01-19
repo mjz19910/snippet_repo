@@ -4774,7 +4774,7 @@ class ParserService extends BaseService {
 			x.delete(40);
 		}
 		if(p40&&p40 instanceof Map) {
-			return this.parse_player_param_f_40(for_,p40);
+			return this.parse_player_param_f40(for_,p40);
 		}
 		if(this.eq_keys(mk,[])) return;
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
@@ -4844,7 +4844,7 @@ class ParserService extends BaseService {
 		}));
 	}
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
-	parse_player_param_f_40(for_,x) {
+	parse_player_param_f40(for_,x) {
 		let map_keys=[...x.keys()];
 		/** @type {ParseCallbackFunction} */
 		let default_callback=(tv,ta) => {
