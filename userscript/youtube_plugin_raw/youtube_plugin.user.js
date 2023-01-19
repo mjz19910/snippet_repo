@@ -869,7 +869,7 @@ class MyReader {
 		let prev_pos=this.pos;
 		let prev_len=this.cur_len;
 		if(pos!==void 0) this.pos=pos;
-		if(!size) {
+		if(size===void 0) {
 			this.cur_len=this.len;
 		} else {
 			this.cur_len=this.pos+size;
@@ -1184,6 +1184,7 @@ class MyReader {
 						first_num.push(["child",fieldId,sub_buffer,null]);
 						break x;
 					}
+					if(sub_buffer.length===0&&res.length!==0) debugger;
 					first_num.push(["child",fieldId,sub_buffer,res]);
 				} else {
 					first_num.push(["child",fieldId,sub_buffer,null]);
@@ -4704,7 +4705,9 @@ class ParserService extends BaseService {
 				}
 				x: if(transcript_args_dec) {
 					let param_1=decodeURIComponent(transcript_args_dec.langParams);
-					let param_map_1=this.create_param_map(param_1);
+					let param_buf_1=this.decode_b64_url_proto_obj(param_1);
+					if(param_buf_1===null) {debugger; break x;}
+					let param_map_1=this.make_param_map(param_buf_1);
 					if(!param_map_1) {debugger; break x;}
 					let lp_p1=param_map_1.get(1);
 					let lp_p2=param_map_1.get(2);
@@ -4714,6 +4717,9 @@ class ParserService extends BaseService {
 						if(lp_p2!=="en") break y;
 						if(lp_p3.size!==0) break y;
 						return;
+					}
+					if(lp_p1!==void 0&&lp_p2!==void 0&&lp_p3!==void 0) {
+
 					}
 					console.log("[get_transcript_args]",transcript_args_dec);
 					let param_obj_1=this.to_param_obj(param_map_1);
