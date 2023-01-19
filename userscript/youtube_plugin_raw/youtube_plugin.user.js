@@ -8847,7 +8847,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlaylistPageResponse]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="playlist") debugger;
-		this.g(endpoint);
+		this.BrowseEndpoint(endpoint);
 		this.PlaylistResponse(response);
 		this.primitive_of(url,"string");
 	}
@@ -10543,11 +10543,6 @@ class HandleTypes extends ServiceMethods {
 		const {dropdownRenderer,...y}=x; this.g(y);
 		this.g(dropdownRenderer);
 	}
-	/** @arg {PlaylistSidebarItem} x */
-	PlaylistSidebarItem(x) {
-		x;
-		debugger;
-	}
 	/** @arg {PlaylistSidebarRenderer} x */
 	PlaylistSidebarRenderer(x) {
 		this.PlaylistSidebar(x.playlistSidebarRenderer);
@@ -10556,6 +10551,15 @@ class HandleTypes extends ServiceMethods {
 	PlaylistSidebar(x) {
 		this.z(x.items,this.PlaylistSidebarItem);
 		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {PlaylistSidebarItem} x */
+	PlaylistSidebarItem(x) {
+		if("playlistSidebarPrimaryInfoRenderer" in x) this.PlaylistSidebarPrimaryInfoRenderer(x);
+		debugger;
+	}
+	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
+	PlaylistSidebarPrimaryInfoRenderer(x) {
+		x;
 	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}

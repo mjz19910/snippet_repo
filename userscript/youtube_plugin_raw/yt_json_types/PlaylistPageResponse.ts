@@ -1,6 +1,6 @@
 type PlaylistPageResponse={
 	page: "playlist";
-	endpoint: PlaylistEndpoint;
+	endpoint: BrowseEndpoint;
 	response: PlaylistResponse;
 	url: string;
 };
