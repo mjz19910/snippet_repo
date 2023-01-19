@@ -4251,6 +4251,10 @@ class CodegenService extends BaseService {
 			||o.clipCreationRenderer
 			||o.reelWatchEndpoint
 			||o.reelPlayerOverlayRenderer
+			||o.compactLinkRenderer
+			||o.textInputFormFieldRenderer
+			||o.dropdownRenderer
+			||o.createPlaylistServiceEndpoint
 			;
 		if(hg) return g();
 		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
@@ -8844,7 +8848,7 @@ class HandleTypes extends ServiceMethods {
 	GetAddToPlaylistResponse(x) {
 		this.save_keys("[GetAddToPlaylistResponse]",x);
 		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y);
-		this.z(contents,this.g);
+		this.z(contents,this.AddToPlaylistRenderer);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {AttLogResponse} x */
@@ -10074,30 +10078,64 @@ class HandleTypes extends ServiceMethods {
 	//#region dispatch_in_progress
 	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
-		this.save_keys(`[SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
-		this.SectionListDataTemplate(x.sectionListRenderer);
+		this.save_keys(`[SectionListRendererTemplate]`,x);
+		const {sectionListRenderer}=x; //...y}=x; this.g(y); //#destructure
+		this.SectionListDataTemplate(sectionListRenderer);
 	}
 	//#endregion
 	//#region type_errors
 	/** @arg {UnifiedSharePanelRenderer} x */
 	UnifiedSharePanelRenderer(x) {
 		this.save_keys("[UnifiedSharePanelRenderer]",x);
-		const {unifiedSharePanelRenderer,...y}=x; this.g(y);
+		const {unifiedSharePanelRenderer}=x; //...y}=x; this.g(y); //#destructure
+		unifiedSharePanelRenderer;
 	}
 	/** @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
 		this.save_keys("[AutoplaySetItem]",x);
-		const {mode,autoplayVideo,nextButtonVideo,...y}=x; this.g(y);
+		const {mode,autoplayVideo,nextButtonVideo}=x; //...y}=x; this.g(y); //#destructure
+		mode;
+		autoplayVideo;
+		nextButtonVideo;
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
 		this.save_keys("[ModifiedSetItem]",x);
-		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=x; this.g(y);
+		const {autoplayVideo,nextButtonVideo,previousButtonVideo}=x; //...y}=x; this.g(y); //#destructure
+		autoplayVideo;
+		nextButtonVideo;
+		previousButtonVideo;
 	}
 	/** @arg {ClipCreationRenderer} x */
 	ClipCreationRenderer(x) {
 		this.save_keys("[ClipCreationRenderer]",x);
-		const {clipCreationRenderer,...y}=x; this.g(y);
+		const {clipCreationRenderer}=x; //...y}=x; this.g(y); //#destructure
+		clipCreationRenderer;
+	}
+	/** @arg {AddToPlaylistRenderer} x */
+	AddToPlaylistRenderer(x) {
+		this.save_keys("[AddToPlaylistRenderer]",x);
+		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
+		addToPlaylistRenderer;
+	}
+	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListDataTemplate(x) {
+		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
+		const {contents}=x; //...y}=x; this.g(y); //#destructure
+		contents;
+	}
+	/** @arg {Signal_ChannelSwitcher} x */
+	Signal_ChannelSwitcher(x) {
+		this.save_keys(`[Signal_ChannelSwitcher]`,x);
+		const {signal}=x; //...y}=x; this.g(y); //#destructure
+		signal;
+	}
+	/** @arg {CommandExecutorCommand} x */
+	CommandExecutorCommand(x) {
+		this.save_keys("[CommandExecutorCommand]",x);
+		const {clickTrackingParams,commandExecutorCommand}=x; //...y}=x; this.g(y); //#destructure
+		clickTrackingParams;
+		commandExecutorCommand;
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
@@ -10110,18 +10148,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
-	}
-	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListDataTemplate(x) {
-		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
-	}
-	/** @arg {Signal_ChannelSwitcher} x */
-	Signal_ChannelSwitcher(x) {
-		this.save_keys(`[Signal_ChannelSwitcher]`,x);
-	}
-	/** @arg {CommandExecutorCommand} x */
-	CommandExecutorCommand(x) {
-		this.save_keys("[CommandExecutorCommand]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
