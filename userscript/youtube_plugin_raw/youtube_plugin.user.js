@@ -6387,7 +6387,14 @@ class HandleTypes extends ServiceMethods {
 	VE23462_WebCommandMetadata(x) {
 		this.save_keys("[VE23462_WebCommandMetadata]",x);
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		if(url!=="/account") debugger;
+		switch(url) {
+			default: debugger; return;
+			case "/account": break;
+			case "/account_advanced": break;
+			case "/account_billing": break;
+			case "/account_notifications": break;
+			case "/account_playback": break;
+		}
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 		if(rootVe!==23462) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
@@ -8778,6 +8785,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
+		if("rootVe" in x) {
+			const {page,endpoint,response,url,rootVe,...y}=x; this.g(y);
+			if(page!=="settings") debugger;
+			this.BrowseEndpoint(endpoint);
+			this.SettingsResponse(response);
+			this.primitive_of(url,"string");
+			if(rootVe!==23462) debugger;
+			return;
+		}
 		const {page,endpoint,response,url,...y}=x; this.g(y);
 		if(page!=="settings") debugger;
 		this.BrowseEndpoint(endpoint);

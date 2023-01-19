@@ -1,5 +1,5 @@
 type VE23462_WebCommandMetadata={
-	url: "/account";
+	url: "/account"|`/account_${AccountPageSettingsSections}`;
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
 	rootVe: 23462;
 	apiUrl: "/youtubei/v1/browse";
