@@ -5806,18 +5806,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
 	ItemSectionRendererTemplate_Section(x) {
 		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
-		const {itemSectionRenderer}=x; //...y}=x; this.g(y); //#destructure
+		const {itemSectionRenderer,...y}=x; this.g(y);
 		this.ItemSectionDataTemplate_Section(itemSectionRenderer);
 	}
 	/** @arg {ItemSectionDataTemplate_Section<"comments-entry-point">} x */
 	ItemSectionDataTemplate_Section(x) {
 		this.save_keys("[ItemSectionDataTemplate_Section]",x);
-		const {contents,trackingParams,sectionIdentifier}=x; //...y}=x; this.g(y); //#destructure
-		let v=contents;
-		let r=this.get_keys_of(v[0]);
-		switch(r[0]) {
-			default: debugger; break;
-		}
+		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y);
+		this.z(contents,this.ItemSectionItem);
 		this.trackingParams(trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
