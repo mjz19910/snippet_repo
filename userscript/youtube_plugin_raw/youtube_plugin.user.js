@@ -4943,6 +4943,7 @@ class ParserService extends BaseService {
 			case "tv.youtube.com": return;
 			case "www.gstatic.com": return;
 			case "support.google.com": return;
+			case "m.youtube.com": return;
 			default:
 		}
 		let s_host=split_string_once(r.host,".");
@@ -4964,6 +4965,12 @@ class ParserService extends BaseService {
 	parse_url(for_,x) {
 		if(this.str_starts_with(x,"https://")) {
 			return this.parse_full_url(for_,x);
+		}
+		if(this.str_starts_with(x,"android-app://")) {
+			return;
+		}
+		if(this.str_starts_with(x,"ios-app://")) {
+			return;
 		}
 		if(x==="/") return;
 		let up=split_string_once(x,"/");
