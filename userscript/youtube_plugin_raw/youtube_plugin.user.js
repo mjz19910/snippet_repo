@@ -10549,6 +10549,11 @@ class HandleTypes extends ServiceMethods {
 	//#region destructure
 	//#endregion
 	//#region type_errors
+	/** @arg {WatchPlaylistEndpoint} x */
+	WatchPlaylistEndpoint(x) {
+		this.save_keys("[WatchPlaylistEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=x; this.g(y);
+	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
 		this.save_keys("[minimal_handler_member]",x);
@@ -10617,8 +10622,6 @@ class HandleTypes extends ServiceMethods {
 	RelatedChipCommand(x) {x;}
 	/** @arg {CommentData} x */
 	CommentData(x) {x;}
-	/** @arg {WatchPlaylistEndpoint} x */
-	WatchPlaylistEndpoint(x) {x;}
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {x;}
 	/** @arg {LiveChatAuthorBadgeRenderer} x */

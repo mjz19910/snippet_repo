@@ -12,6 +12,6 @@ type WatchPlaylistEndpointData={
 
 type WatchPlaylistEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadataTemplate<3832>;
+	commandMetadata: CommandMetadata;
 	watchPlaylistEndpoint: WatchPlaylistEndpointData;
 };
