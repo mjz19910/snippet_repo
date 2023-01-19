@@ -11,15 +11,6 @@ type ButtonData={
 	style?: ButtonStyleType;
 	text?: TextT;
 	trackingParams?: string;
+	hint?: HintRenderer;
 	targetId?: YtTargetIdType;
-};
-type ShareEntityServiceArgs={
-	serializedShareEntity: string;
-	commands: OpenPopupAction[];
-};
-
-type ShareEntityServiceEndpoint={
-	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
-	shareEntityServiceEndpoint: ShareEntityServiceArgs;
 };

@@ -1,0 +1,3 @@
+type HintRenderer={
+	hintRenderer: HintRendererData;
+};
