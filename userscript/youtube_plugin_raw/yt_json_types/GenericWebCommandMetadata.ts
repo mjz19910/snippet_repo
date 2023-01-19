@@ -1,3 +1,6 @@
+namespace GenericWebCommandMetadataNS {
+	export type WCM="WebCommandMetadata";
+}
 type GenericWebCommandMetadata=
 	|EditPlaylistWebCommandMetadata
 	|SearchApiWebCommandMetadata
@@ -8,9 +11,6 @@ type GenericWebCommandMetadata=
 	|NextWebCommandMetadata
 	|BrowseApiWebCommandMetadata
 	|GetSharePanelWebCommandMetadata
-	|{
-		sendPost: true;
-		apiUrl: "/youtubei/v1/notification/get_notification_menu"
-	}
+	|GetNotificationMenuWebCommandMetadata
 	;
 ;
