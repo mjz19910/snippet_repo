@@ -7281,7 +7281,12 @@ class HandleTypes extends ServiceMethods {
 			console.log("[new.tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
 			return;
 		}
-		const {trackingParams,...y}=x; this.g(y);
+		const {selected,content,trackingParams,...y}=x; this.g(y);
+		if("sectionListRenderer" in content) {
+			this.SectionListRenderer(content);
+		} else {
+			debugger;
+		}
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {TabDataContent} x */
