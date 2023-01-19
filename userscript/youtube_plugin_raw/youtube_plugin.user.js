@@ -6346,7 +6346,7 @@ class HandleTypes extends ServiceMethods {
 			urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,
 			urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,
 			schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates
-		}=x;// ,...y}=x; this.g(y);
+			,...y}=x; this.g(y);
 		this.primitive_of(urlCanonical,"string");
 		this.primitive_of(title,"string");
 		this.primitive_of(description,"string");
@@ -6369,7 +6369,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(unlisted,"boolean");
 		if(tags) this.z(tags,a => this.primitive_of(a,"string"));
 		if(familySafe) this.primitive_of(familySafe,"boolean");
-		if(availableCountries) this.z(availableCountries,a=>this.primitive_of(a,"string"));
+		if(availableCountries) this.z(availableCountries,a => this.primitive_of(a,"string"));
 		this.z(linkAlternates,this.HrefUrl);
 	}
 	/** @arg {HrefUrl} x */
