@@ -6360,12 +6360,6 @@ class HandleTypes extends ServiceMethods {
 		if(commandMetadata) this.CommandMetadata(commandMetadata);
 		this.BrowseEndpointData(browseEndpoint);
 	}
-	/** @arg {BrowseCommandMetadata} x */
-	BrowseCommandMetadata(x) {
-		this.save_keys("[BrowseCommandMetadata]",x);
-		this.WebCommandMetadata(x.webCommandMetadata);
-		if(x.resolveUrlCommandMetadata) this.ResolveUrlCommandMetadata(x.resolveUrlCommandMetadata);
-	}
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		this.save_keys("[WebCommandMetadataContent]",x);
@@ -7982,8 +7976,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
 		this.save_keys("[CommandMetadata]",x);
-		const {webCommandMetadata,...y}=x; this.g(y);
+		const {webCommandMetadata,resolveUrlCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadata(webCommandMetadata);
+		if(resolveUrlCommandMetadata) this.ResolveUrlCommandMetadata(resolveUrlCommandMetadata);
 	}
 	/** @arg {EditPlaylistWebCommandMetadata} x */
 	EditPlaylistWebCommandMetadata(x) {
