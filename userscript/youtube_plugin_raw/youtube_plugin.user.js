@@ -9968,12 +9968,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
 		const {targetId,visibility}=x; //...y}=x; this.g(y); //#destructure
 		switch(targetId) {
-			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData"); break;
+			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_id"); break;
+			case "engagement-panel-clip-create": break;
 			case "engagement-panel-clip-view": break;
 			case "engagement-panel-comments-section": break;
+			case "engagement-panel-structured-description": break;
 		}
 		switch(visibility) {
-			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData"); break;
+			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_vis"); break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED": break;
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
@@ -10173,10 +10175,6 @@ class HandleTypes extends ServiceMethods {
 		contextMenuAccessibility;
 		timestampText;
 	}
-	//#endregion
-	//#region dispatch_in_progress
-	//#endregion
-	//#region type_errors
 	/** @arg {UnifiedSharePanelRenderer} x */
 	UnifiedSharePanelRenderer(x) {
 		this.save_keys("[UnifiedSharePanelRenderer]",x);
@@ -10209,7 +10207,15 @@ class HandleTypes extends ServiceMethods {
 	AddToPlaylistRenderer(x) {
 		this.save_keys("[AddToPlaylistRenderer]",x);
 		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
-		addToPlaylistRenderer;
+		this.AddToPlaylist(addToPlaylistRenderer);
+	}
+	//#endregion
+	//#region type_errors
+	/** @arg {AddToPlaylist} x */
+	AddToPlaylist(x) {
+		this.save_keys("[AddToPlaylist]",x);
+		//@ts-expect-error(2345)
+		const {...y}=x; this.g(y);
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {

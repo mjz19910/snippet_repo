@@ -672,3 +672,6 @@ export class Snippet_0_tmp {
 		const {...y}=x; this.g(y);
 	}
 }
+
+//#region dispatch_in_progress
+//#endregion
