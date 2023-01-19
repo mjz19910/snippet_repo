@@ -5789,7 +5789,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(simpleText,"string");
 	}
 	//#endregion
-	//#region
+	//#region general done
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
 		this.save_keys("[WatchPageResponse]",x);
