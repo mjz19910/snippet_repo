@@ -5537,6 +5537,7 @@ class ServiceMethods extends ServiceData {
 	known_target_id=[];
 	/** @arg {YtTargetIdType} x */
 	targetId(x) {
+		const cf="targetId";
 		this.x.get("parser_service").parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
@@ -5564,11 +5565,8 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "search-feed": return;
 			case "search-page": return;
-			case 'clip-info-button': return;
-			default:
-		}
-		switch(x) {
-			default: debugger; break;
+			case "clip-info-button": return;
+			default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
 	/** @arg {[VE3832_PreconnectUrl]} x */
