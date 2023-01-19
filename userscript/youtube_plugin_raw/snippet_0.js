@@ -671,7 +671,6 @@ export class Snippet_0_tmp {
 		this.save_keys("[HotkeyDialog]",x);
 		const {...y}=x; this.g(y);
 	}
+	//#region dispatch_in_progress
+	//#endregion
 }
-
-//#region dispatch_in_progress
-//#endregion
