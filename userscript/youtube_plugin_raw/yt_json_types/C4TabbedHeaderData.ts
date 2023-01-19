@@ -25,6 +25,7 @@ type C4TabbedHeaderData={
 	tvBanner: Thumbnail;
 	mobileBanner: Thumbnail;
 	trackingParams: string;
+	sponsorButton?: ButtonRenderer;
 	channelHandleText: TextWithRuns;
 	videosCountText: TextWithRuns;
 };
