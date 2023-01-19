@@ -4779,9 +4779,27 @@ class ParserService extends BaseService {
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
 	}
+	parse_key_index=1;
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
+	parse_key(for_,x,mk,ta) {
+		let tv=x.get(ta);
+		this.parse_value(for_,x,mk,ta,tv);
+	}
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue | undefined} tv */
+	parse_value(for_,x,mk,ta,tv) {
+		if(tv!==void 0) {
+			let cx=mk.indexOf(ta);
+			if(cx>-1) mk.splice(cx,1);
+			console.log("[watch_endpoint_params.value] [idx=%s]",this.parse_key_index.toString(),for_,`p${ta}`,tv);
+			x.delete(ta);
+		}
+	}
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
 	parse_player_param_f40_f1(for_,x) {
+		this.parse_key_index++;
 		let map_keys=[...x.keys()];
+		/** @arg {number} ta */
+		let parse_key=(ta)=>this.parse_key(for_,x,map_keys,ta);
 		if(this.eq_keys(map_keys,[2,3])) {
 			let p2=x.get(2);
 			let p3=x.get(3);
@@ -4813,15 +4831,8 @@ class ParserService extends BaseService {
 				return this.parse_video_id(p56);
 			}
 		}
-		let ta;
-		ta=1;
-		let p1=x.get(ta);
-		if(p1!==void 0) {
-			let cx=map_keys.indexOf(ta);
-			if(cx>-1) map_keys.splice(cx,1);
-			console.log("[watch_endpoint_params]",for_,"p1",p1);
-			x.delete(ta);
-		}
+		parse_key(1);
+		parse_key(6);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log("[new_watch_endpoint_params]",for_,param_obj);
