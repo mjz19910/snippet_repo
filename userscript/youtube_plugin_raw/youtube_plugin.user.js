@@ -3331,16 +3331,18 @@ class ECatcherService extends BaseService {
 				[23918597,23934970,23946420,23966208,23983296,23986033,23998056],
 				[24002022,24002025,24004644,24007246,24034168,24036947,24059444,24059508,24077241,24080738],
 				[24108447,24120820,24124511,24128088,24135310,24140247,24161116,24162919,24164186,24166867,24169501,24181174,24187043,24187377,24197450],
+				//#region @242_
 				[24200839,24211178,24217535,24219381,24219713,24241378,24248091,24250324,24255163,24255543,24255545,24260378,24262346,24263796,24267564,24268142,24279196,24281896,24283015,24283093,24287604,24288442,24288663,24290971,24291857,24292955,24390675,24396645],
+				[24288664],
+				//#endregion
 				//#region @244_
 				[24401504,24402891,24404640,24406313,24406621,24407190,24408888,24414718,24415864,24415866,24416290,24419549,24422508,24424806,24424807,24426636,24429095,24432597,24433679,24434209,24436009,24437575,24438162,24438848,24439361,24439483,24440901,24440903,24441244,24442137,24443373,24447336,24448074,24448246],
-				[24450571,24451033,24452012,24453129,24453874,24453942],
-				//#endregion 
+				[24450199,24450571,24451033,24452012,24453129,24453874,24453942,24454357],
+				//#endregion
 				[24590921,24591046,24591048],
 				[24612269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 				[39321826,39321827,39322504,39322574,39322870,39322873,39322953,39322980,39322983,39323013,39323016,39323020,39323023,39323117,39323120],
 				[45686551],
-				[],
 			].flat(),
 		},
 	};
@@ -4093,10 +4095,10 @@ class CodegenService extends BaseService {
 		if(cg) {
 			let code_result=`
 			namespace ${gen_name} {
-				${cg.split("\n").map(e=>{
-					if(e.startsWith("type")) return `\texport ${e}`;
-					return `\t${e}`;
-				}).join("\n")}
+				${cg.split("\n").map(e => {
+				if(e.startsWith("type")) return `\texport ${e}`;
+				return `\t${e}`;
+			}).join("\n")}
 			}`;
 			let fl=code_result.split("\n")[0];
 			let fl_trim=fl.trim();
@@ -4668,13 +4670,6 @@ class ParserService extends BaseService {
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
 		switch(for_) {
-			default: {
-				let param_obj=this.to_param_obj(param_map);
-				console.log("[new_endpoint_params] [%s]",for_,param_obj);
-			} break;
-			case "ReelWatch": this.parse_player_param_f40_f1(for_,path,param_map); break;
-			case "ReelWatch.sequence": this.parse_player_param_f40_f1(for_,path,param_map); break;
-			case "WatchEndpoint": this.parse_player_param_f40_f1(for_,path,param_map); break;
 			case "GetTranscript": {
 				/** @type {ParamMapValue[]} */
 				let transcript_args=[];
@@ -4762,8 +4757,10 @@ class ParserService extends BaseService {
 				let param_obj=this.to_param_obj(param_map);
 				console.log("[new_get_transcript_endpoint_params]",param_obj);
 				debugger;
-			} break;
+				return;
+			}
 		}
+		this.parse_player_param_f40_f1(for_,path,param_map);
 	}
 	/** @public @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
 	on_player_params(for_,path,x) {
