@@ -10036,6 +10036,7 @@ class HandleTypes extends ServiceMethods {
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
+				debugger;
 			} break;
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
 			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
