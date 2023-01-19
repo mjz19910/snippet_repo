@@ -9,6 +9,6 @@ type RichGrid=ContentsArrayTemplate<RendererContentItem>&{
 	contents: BrowseFeedContentItem[];
 	trackingParams: string;
 	header: FeedFilterChipBarRenderer;
-	targetId: "browse-feedFEwhat_to_watch";
+	targetId: "browse-feedFEwhat_to_watch"
 	reflowOptions: ReflowOptions;
 };

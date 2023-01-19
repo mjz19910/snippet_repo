@@ -1,13 +1,24 @@
-type SectionListData=ContentsArrayTemplate<SectionListItem>&{
+type BrowseFeedSectionListData={
 	continuations?: NextContinuationData[];
+	contents: SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;
-}|SearchFeedSectionListData;
-type SearchFeedSectionListData=ContentsArrayTemplate<SectionListItem>&{
+	targetId: `browse-feedUC${string}featured`;
+};
+
+type SectionListData={
 	continuations?: NextContinuationData[];
+	contents: SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;
-	targetId: "search-feed";
+}|SearchFeedSectionListData|BrowseFeedSectionListData;
+type SearchFeedSectionListData={
+	continuations?: NextContinuationData[];
+	contents: SectionListItem[];
+	trackingParams: string;
+	subMenu?: {};
+	hideBottomSeparator?: boolean;
+	targetId: "search-feed"|`browse-feedUC${string}featured`;
 };
