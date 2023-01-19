@@ -6438,8 +6438,6 @@ class HandleTypes extends ServiceMethods {
 					let up=us[1];
 					let pp=split_string_once(up,"=");
 					this.x.get("parser_service").parse_playlist_id(pp[1]);
-					console.log("[playlist.url] [%s]",url);
-					debugger;
 				}
 			} break;
 		}
