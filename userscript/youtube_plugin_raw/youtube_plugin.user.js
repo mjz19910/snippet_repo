@@ -9884,6 +9884,67 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.primitive_of(overrideEntityKey,"string");
 	}
+	/** @arg {AddToPlaylistRenderer} x */
+	AddToPlaylistRenderer(x) {
+		this.save_keys("[AddToPlaylistRenderer]",x);
+		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
+		this.AddToPlaylist(addToPlaylistRenderer);
+	}
+	/** @arg {AddToPlaylist} x */
+	AddToPlaylist(x) {
+		this.save_keys("[AddToPlaylist]",x);
+		const {playlists,actions,...y}=x; this.g(y);
+		this.z(playlists,this.PlaylistAddToOptionRenderer);
+		this.z(actions,this.AddToPlaylistCreateRenderer);
+	}
+	/** @arg {PlaylistAddToOptionRenderer} x */
+	PlaylistAddToOptionRenderer(x) {
+		this.save_keys("[PlaylistAddToOptionRenderer]",x);
+		const {playlistAddToOptionRenderer,...y}=x; this.g(y);
+		this.PlaylistAddToOption(playlistAddToOptionRenderer);
+	}
+	/** @arg {AddToPlaylistCreateRenderer} x */
+	AddToPlaylistCreateRenderer(x) {
+		this.save_keys("[AddToPlaylistCreateRenderer]",x);
+		const {addToPlaylistCreateRenderer,...y}=x; this.g(y);
+		this.AddToPlaylistCreate(addToPlaylistCreateRenderer);
+	}
+	/** @arg {PlaylistAddToOption} x */
+	PlaylistAddToOption(x) {
+		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams}=x; //,...y}=x; this.g(y);
+		this.playlistId(playlistId);
+		this.SimpleText(title);
+		if(privacy!=="PRIVATE") debugger;
+		if(containsSelectedVideos!=="NONE") debugger;
+		this.Icon(privacyIcon);
+		this.PlaylistEditEndpoint(addToPlaylistServiceEndpoint);
+		this.PlaylistEditEndpoint(removeFromPlaylistServiceEndpoint);
+		this.trackingParams(trackingParams);
+	}
+	/** @arg {AddToPlaylistCreate} x */
+	AddToPlaylistCreate(x) {
+		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=x; this.g(y);
+		this.CompactLinkRenderer(openCreateLink);
+		this.TextInputFormFieldRenderer(nameInput);
+		this.DropdownRenderer(privacyInput);
+		this.ButtonRenderer(createAction);
+		this.CreatePlaylistServiceEndpoint(serviceEndpoint);
+	}
+	/** @arg {TextInputFormFieldRenderer} x */
+	TextInputFormFieldRenderer(x) {
+		const {textInputFormFieldRenderer,...y}=x; this.g(y);
+		this.TextInputFormField(textInputFormFieldRenderer);
+	}
+	/** @arg {TextInputFormField} x */
+	TextInputFormField(x) {
+		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=x; this.g(y);
+		this.TextWithRuns(label);
+		if(maxCharacterLimit!==150) debugger;
+		this.primitive_of(placeholderText,"string");
+		if(validValueRegexp!=="[^<>]*") debugger;
+		this.TextWithRuns(invalidValueErrorMessage);
+		if(required!==true) debugger;
+	}
 	//#endregion
 	//#region destructure
 	/** @arg {UnknownWebCommandMetadata} x */
@@ -10268,72 +10329,6 @@ class HandleTypes extends ServiceMethods {
 		const {clipCreationRenderer}=x; //...y}=x; this.g(y); //#destructure
 		clipCreationRenderer;
 	}
-	/** @arg {AddToPlaylistRenderer} x */
-	AddToPlaylistRenderer(x) {
-		this.save_keys("[AddToPlaylistRenderer]",x);
-		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
-		this.AddToPlaylist(addToPlaylistRenderer);
-	}
-	/** @arg {AddToPlaylist} x */
-	AddToPlaylist(x) {
-		this.save_keys("[AddToPlaylist]",x);
-		const {playlists,actions,...y}=x; this.g(y);
-		this.z(playlists,this.PlaylistAddToOptionRenderer);
-		this.z(actions,this.AddToPlaylistCreateRenderer);
-	}
-	/** @arg {PlaylistAddToOptionRenderer} x */
-	PlaylistAddToOptionRenderer(x) {
-		this.save_keys("[PlaylistAddToOptionRenderer]",x);
-		const {playlistAddToOptionRenderer,...y}=x; this.g(y);
-		this.PlaylistAddToOption(playlistAddToOptionRenderer);
-	}
-	/** @arg {AddToPlaylistCreateRenderer} x */
-	AddToPlaylistCreateRenderer(x) {
-		this.save_keys("[AddToPlaylistCreateRenderer]",x);
-		const {addToPlaylistCreateRenderer,...y}=x; this.g(y);
-		this.AddToPlaylistCreate(addToPlaylistCreateRenderer);
-	}
-	/** @arg {PlaylistAddToOption} x */
-	PlaylistAddToOption(x) {
-		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams}=x; //,...y}=x; this.g(y);
-		this.playlistId(playlistId);
-		this.SimpleText(title);
-		if(privacy!=="PRIVATE") debugger;
-		if(containsSelectedVideos!=="NONE") debugger;
-		this.Icon(privacyIcon);
-		this.PlaylistEditEndpoint(addToPlaylistServiceEndpoint);
-		this.PlaylistEditEndpoint(removeFromPlaylistServiceEndpoint);
-		this.trackingParams(trackingParams);
-	}
-	/** @arg {AddToPlaylistCreate} x */
-	AddToPlaylistCreate(x) {
-		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=x; this.g(y);
-		this.CompactLinkRenderer(openCreateLink);
-		this.TextInputFormFieldRenderer(nameInput);
-		this.DropdownRenderer(privacyInput);
-		this.ButtonRenderer(createAction);
-		this.CreatePlaylistServiceEndpoint(serviceEndpoint);
-	}
-	/** @arg {DropdownRenderer} x */
-	DropdownRenderer(x) {
-		const {dropdownRenderer,...y}=x; this.g(y);
-		this.g(dropdownRenderer);
-	}
-	/** @arg {TextInputFormFieldRenderer} x */
-	TextInputFormFieldRenderer(x) {
-		const {textInputFormFieldRenderer,...y}=x; this.g(y);
-		this.TextInputFormField(textInputFormFieldRenderer);
-	}
-	/** @arg {TextInputFormField} x */
-	TextInputFormField(x) {
-		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=x; this.g(y);
-		this.TextWithRuns(label);
-		if(maxCharacterLimit!==150) debugger;
-		this.primitive_of(placeholderText,"string");
-		if(validValueRegexp!=="[^<>]*") debugger;
-		this.TextWithRuns(invalidValueErrorMessage);
-		if(required!==true) debugger;
-	}
 	//#endregion
 	//#region type_errors
 	/** @arg {{v:minimal_handler_member}} x */
@@ -10350,6 +10345,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
+	/** @arg {DropdownRenderer} x */
+	DropdownRenderer(x) {
+		const {dropdownRenderer,...y}=x; this.g(y);
+		this.g(dropdownRenderer);
+	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
