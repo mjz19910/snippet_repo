@@ -6376,6 +6376,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SettingsWebCommandMetadata} x */
 	SettingsWebCommandMetadata(x) {
+		if(x.webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		switch(x.rootVe) {
+			default: debugger; return;
+			case 23462: this.VE23462_WebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {VE23462_WebCommandMetadata} x */
+	VE23462_WebCommandMetadata(x) {
 		x;
 	}
 	/** @arg {WatchPageWebCommandMetadata} x */
