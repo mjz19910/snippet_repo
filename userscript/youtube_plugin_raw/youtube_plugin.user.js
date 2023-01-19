@@ -7452,15 +7452,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListRendererTemplate(x) {
-		this.save_keys(`[SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
-		this.SectionListDataTemplate(x.sectionListRenderer);
-	}
-	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListDataTemplate(x) {
-		this.save_keys(`[SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
-	}
+	//#region pause
+	//#endregion
 	/** @arg {ResponseReceivedEndpointItem} x */
 	ResponseReceivedEndpointItem(x) {
 		this.save_keys("[ResponseReceivedEndpointItem]",x);
@@ -9570,6 +9563,7 @@ class HandleTypes extends ServiceMethods {
 	SearchResultsSearchEndpoint(x) {
 		this.save_keys("[SearchResultsSearchEndpoint]",x);
 		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
 		this.SearchEndpointData(searchEndpoint);
 	}
 	/** @arg {SearchEndpointData} x */
@@ -9582,6 +9576,7 @@ class HandleTypes extends ServiceMethods {
 	ShareEntityServiceEndpoint(x) {
 		this.save_keys("[ShareEntityServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
@@ -9633,6 +9628,21 @@ class HandleTypes extends ServiceMethods {
 		this.SortFilterSubMenuRenderer(menu);
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
+	}
+	/** @arg {GenericWebCommandMetadata} x */
+	GenericWebCommandMetadata(x) {
+		switch(x.apiUrl) {
+			default: debugger; break;
+			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
+			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
+		}
 	}
 	//#endregion
 	//#region destructure_endpoint
@@ -9881,20 +9891,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region dispatch_in_progress
-	/** @arg {GenericWebCommandMetadata} x */
-	GenericWebCommandMetadata(x) {
-		switch(x.apiUrl) {
-			default: debugger; break;
-			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
-			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
-			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
-			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
-			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
-			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
-			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
-		}
+	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListRendererTemplate(x) {
+		this.save_keys(`[SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
+		this.SectionListDataTemplate(x.sectionListRenderer);
 	}
 	//#endregion
 	//#region type_errors
@@ -9930,6 +9930,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region has_save_keys
+	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListDataTemplate(x) {
+		this.save_keys(`[SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
+	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
