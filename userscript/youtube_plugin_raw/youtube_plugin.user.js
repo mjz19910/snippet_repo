@@ -8835,7 +8835,7 @@ class HandleTypes extends ServiceMethods {
 	ButtonData(x) {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
-		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,targetId,...y}=x; this.g(y);
+		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y);
 		if(accessibility) return this.AccessibilityData(accessibility);
 		if(accessibilityData) this.Accessibility(accessibilityData);
 		if(command) this.ButtonCommand(command);
@@ -8854,6 +8854,7 @@ class HandleTypes extends ServiceMethods {
 		if(style) this.save_string("[Button.style]",style);
 		if(text) this.TextT(text);
 		if(trackingParams) this.trackingParams(trackingParams);
+		if(hint) this.HintRenderer(hint);
 		if(targetId) this.targetId(targetId);
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
@@ -10745,6 +10746,8 @@ class HandleTypes extends ServiceMethods {
 	ResetChannelUnreadCountCommand(x) {x;}
 	/** @arg {ReelPlayerHeaderRenderer} x */
 	ReelPlayerHeaderRenderer(x) {x;}
+	/** @arg {HintRenderer} x */
+	HintRenderer(x) {x;}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
