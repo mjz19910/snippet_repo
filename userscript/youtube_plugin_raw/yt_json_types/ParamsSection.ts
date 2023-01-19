@@ -12,5 +12,6 @@ type ParamsSection=
 	|"UnknownWebCommandMetadata"
 	|"WatchEndpoint"
 	|"WatchPageResponse"
+	|"YpcGetOffers"
 	;
 ;

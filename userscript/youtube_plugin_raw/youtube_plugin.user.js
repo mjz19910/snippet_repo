@@ -8833,16 +8833,27 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Button_serviceEndpoint} x */
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
-		if("signalServiceEndpoint" in x) {
-			return this.SignalServiceEndpoint(x);
-		}
+		this.save_keys(`[${cf}]`,x);
+		if("signalServiceEndpoint" in x) return this.SignalServiceEndpoint(x);
+		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
 	/** @arg {Button_navigationEndpoint} x */
 	Button_navigationEndpoint(x) {
 		const cf="Button_navigationEndpoint";
+		this.save_keys(`[${cf}]`,x);
 		if("shareEntityServiceEndpoint" in x) return this.ShareEntityServiceEndpoint(x);
 		this.do_codegen(cf,x);
+	}
+	/** @arg {YpcGetOffersEndpoint} x */
+	YpcGetOffersEndpoint(x) {
+		const cf="YpcGetOffersEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,ypcGetOffersEndpoint: x1,...y}=x; this.g(y);
+		const cf1="YpcGetOffers";
+		this.save_keys(`[${cf1}]`,x1);
+		const {params,...y1}=x1; this.g(y1);
+		this.params(cf1,"ypc_get_offers",params);
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
