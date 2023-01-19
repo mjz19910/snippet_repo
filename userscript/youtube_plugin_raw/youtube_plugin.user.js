@@ -4756,8 +4756,8 @@ class ParserService extends BaseService {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let map_keys=[...x.keys()];
-		/** @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-		let parse_key=(ta,cb=null) => this.parse_key(root,path,x,map_keys,ta,cb);
+		/** @arg {number} ta */
+		let parse_key=(ta) => this.parse_key(root,path,x,map_keys,ta,null);
 		parse_key(1);
 		parse_key(3);
 		parse_key(5);
