@@ -1,7 +1,7 @@
 type ActionSetPlaylistVideoOrder={
 	title: string;
-	selected: false;
-	serviceEndpoint: {};
+	selected: boolean;
+	serviceEndpoint: ContinuationCommand;
 	accessibility: Accessibility;
 	trackingParams: string;
 };

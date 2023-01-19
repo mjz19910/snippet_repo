@@ -4277,6 +4277,8 @@ class CodegenService extends BaseService {
 			||o.dropdownRenderer
 			||o.createPlaylistServiceEndpoint
 			||o.sortFilterSubMenuRenderer
+			||o.continuationCommand
+			||o.showReloadUiCommand
 			;
 		if(hg) return g();
 		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
@@ -10356,8 +10358,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ActionSetPlaylistVideoOrder]",x);
 		const {title,selected,serviceEndpoint,accessibility,trackingParams,...y}=x; this.g(y);
 		this.primitive_of(title,"string");
-		if(selected!==false) debugger;
-		this.g(serviceEndpoint);
+		this.primitive_of(selected,"boolean");
+		this.ContinuationCommand(serviceEndpoint);
 		this.Accessibility(accessibility);
 		this.trackingParams(trackingParams);
 	}
