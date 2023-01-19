@@ -20,7 +20,7 @@ type MicroformatData={
 	noindex: false;
 	unlisted: false;
 	tags?: string[];
-	familySafe: true;
+	familySafe?: true;
 	availableCountries: string[];
 	linkAlternates: HrefUrl[];
 };

@@ -6364,7 +6364,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(noindex,"boolean");
 		this.primitive_of(unlisted,"boolean");
 		if(tags) this.z(tags,a => this.primitive_of(a,"string"));
-		this.primitive_of(familySafe,"boolean");
+		if(familySafe) this.primitive_of(familySafe,"boolean");
 		this.z(availableCountries,a=>this.primitive_of(a,"string"));
 		this.z(linkAlternates,this.HrefUrl);
 	}
