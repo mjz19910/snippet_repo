@@ -9603,10 +9603,6 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.Signal_ChannelSwitcher(signalNavigationEndpoint);
 	}
-	/** @arg {Signal_ChannelSwitcher} x */
-	Signal_ChannelSwitcher(x) {
-		x;
-	}
 	/** @arg {GetSharePanelWebCommandMetadata} x */
 	get_share_panel_WebCommandMetadata(x) {
 		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
@@ -9622,42 +9618,55 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.SignalServiceEndpoint(x);
 		debugger;
 	}
+	/** @arg {EngagementPanelTitleHeader} x */
+	EngagementPanelTitleHeader(x) {
+		this.save_keys("[EngagementPanelTitleHeader]",x);
+		if("informationButton" in x) {
+			const {title,informationButton,visibilityButton,trackingParams,...y}=x; this.g(y);
+			this.TextWithRuns(title);
+			this.ButtonRenderer(informationButton);
+			this.ButtonRenderer(visibilityButton);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
+		this.TextWithRuns(title);
+		this.TextWithRuns(contextualInfo);
+		this.SortFilterSubMenuRenderer(menu);
+		this.ButtonRenderer(visibilityButton);
+		this.trackingParams(trackingParams);
+	}
 	//#endregion
 	//#region destructure
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
 		this.save_keys("[PlayerAnnotationsExpandedData]",x);
-		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y);
+		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y); //#destructure
 	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
 		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-	}
-	/** @arg {HotkeyDialog} x */
-	HotkeyDialog(x) {
-		this.save_keys("[HotkeyDialog]",x);
-		const {...y}=x; this.g(y);
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
 		this.save_keys("[TopbarLogo]",x);
-		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y);
+		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y); //#destructure
 	}
 	/** @arg {UnknownWebCommandMetadata} x */
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		const {url,webPageType,rootVe,...y}=x; this.g(y); //#destructure
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
@@ -9708,20 +9717,6 @@ class HandleTypes extends ServiceMethods {
 	MacroMarkersListRenderer(x) {
 		this.save_keys("[MacroMarkersListRenderer]",x);
 		const {macroMarkersListRenderer,...y}=x; this.g(y);
-	}
-	/** @arg {EngagementPanelTitleHeader} x */
-	EngagementPanelTitleHeader(x) {
-		this.save_keys("[EngagementPanelTitleHeader]",x);
-		if("informationButton" in x) {
-			const {title,visibilityButton,trackingParams,...y}=x;
-			this.TextWithRuns(title);
-			this.ButtonRenderer(visibilityButton);
-			this.trackingParams(trackingParams);
-			const {informationButton,...a}=y; this.g(a);
-			this.ButtonRenderer(informationButton);
-			return;
-		}
-		const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
@@ -9943,6 +9938,8 @@ class HandleTypes extends ServiceMethods {
 	//#region TODO_minimal_member_fns
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}
+	/** @arg {Signal_ChannelSwitcher} x */
+	Signal_ChannelSwitcher(x) {x;}
 	//#endregion
 }
 //#endregion

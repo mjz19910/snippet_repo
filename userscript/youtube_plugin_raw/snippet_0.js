@@ -666,4 +666,9 @@ export class Snippet_0_tmp {
 		this.save_keys("[ProfileColumnStatsRenderer]",x);
 		const {profileColumnStatsRenderer,...y}=x; this.g(y);
 	}
+	/** @arg {HotkeyDialog} x */
+	HotkeyDialog(x) {
+		this.save_keys("[HotkeyDialog]",x);
+		const {...y}=x; this.g(y);
+	}
 }
