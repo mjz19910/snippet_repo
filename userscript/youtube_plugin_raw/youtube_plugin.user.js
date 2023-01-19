@@ -7406,7 +7406,7 @@ class HandleTypes extends ServiceMethods {
 			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y);
 			this.BrowseEndpoint(endpoint);
 			this.primitive_of(title,"string");
-			if(selected!==true) debugger;
+			if(selected!==void 0&&selected!==true) debugger;
 			this.TabData_section(content);
 			return;
 		}

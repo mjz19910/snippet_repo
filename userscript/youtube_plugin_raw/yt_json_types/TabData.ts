@@ -10,7 +10,7 @@ type TabData={
 }|{
 	endpoint: BrowseEndpoint;
 	title: string;
-	selected: true;
-	content: SectionListRenderer;
+	selected?: true;
+	content?: SectionListRenderer;
 	trackingParams: string;
 };
