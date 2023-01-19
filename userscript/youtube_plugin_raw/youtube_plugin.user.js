@@ -9684,26 +9684,42 @@ class HandleTypes extends ServiceMethods {
 		const {sectionListRenderer,...y}=x; this.g(y);
 		this.SectionListDataTemplate(sectionListRenderer);
 	}
-	//#endregion
-	//#region destructure
+	/** @arg {CommandExecutorCommand} x */
+	CommandExecutorCommand(x) {
+		this.save_keys("[CommandExecutorCommand]",x);
+		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandExecutorData(commandExecutorCommand);
+	}
+	/** @arg {CommandExecutorData} x */
+	CommandExecutorData(x) {
+		this.CommandsTemplate(x,this.CommandExecutorAction);
+	}
+	/** @arg {CommandExecutorAction} x */
+	CommandExecutorAction(x) {
+		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
+		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
+		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		debugger;
+	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
 		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
-		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/get_transcript") debugger;
 	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
-		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
 	AccountMenuWebCommandMetadata(x) {
 		this.save_keys("[AccountMenuWebCommandMetadata]",x);
-		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
 	}
@@ -9727,6 +9743,8 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(channelName,"string");
 		this.SubscribeButtonRenderer(subscribeButton);
 	}
+	//#endregion
+	//#region destructure
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
 		this.save_keys("[TopbarLogo]",x);
@@ -9741,8 +9759,8 @@ class HandleTypes extends ServiceMethods {
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
 		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
-		url;
-		webPageType;
+		this.x.get("parser_service").parse_url("UnknownWebCommandMetadata",as(url));
+		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		rootVe;
 	}
 	/** @arg {GuideCollapsibleEntry} x */
@@ -9788,14 +9806,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NextWebCommandMetadata} x */
 	NextWebCommandMetadata(x) {
 		this.save_keys("[NextWebCommandMetadata]",x);
-		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/next") debugger;
 	}
 	/** @arg {SetSettingWebCommandMetadata} x */
 	SetSettingWebCommandMetadata(x) {
 		this.save_keys("[SetSettingWebCommandMetadata]",x);
-		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		const {sendPost,apiUrl,...y}=x; this.g(y); //#destructure
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/account/set_setting") debugger;
 	}
@@ -10152,24 +10170,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[Signal_ChannelSwitcher]`,x);
 		const {signal}=x; //...y}=x; this.g(y); //#destructure
 		signal;
-	}
-	/** @arg {CommandExecutorCommand} x */
-	CommandExecutorCommand(x) {
-		this.save_keys("[CommandExecutorCommand]",x);
-		const {clickTrackingParams,commandExecutorCommand}=x; //...y}=x; this.g(y); //#destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.CommandExecutorData(commandExecutorCommand);
-	}
-	/** @arg {CommandExecutorData} x */
-	CommandExecutorData(x) {
-		this.CommandsTemplate(x,this.CommandExecutorAction);
-	}
-	/** @arg {CommandExecutorAction} x */
-	CommandExecutorAction(x) {
-		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
-		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
-		if("openPopupAction" in x) return this.OpenPopupAction(x);
-		debugger;
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {

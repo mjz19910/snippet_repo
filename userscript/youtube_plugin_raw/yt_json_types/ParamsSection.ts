@@ -10,5 +10,6 @@ type ParamsSection=
 	|"WatchPageResponse"
 	|"CommonConfigData"
 	|"PlaylistContent"
+	|"UnknownWebCommandMetadata"
 	;
 ;
