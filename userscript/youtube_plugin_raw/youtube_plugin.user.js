@@ -9449,7 +9449,16 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(formattedTitle);
 		this.Accessibility(accessibility);
 		this.GuideEntryData(entryData);
-		if(presentationStyle!=="GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT") debugger;
+		this.GuideEntryPresentationStyle(presentationStyle);
+	}
+	/** @arg {Extract<GuideEntryRoot,{presentationStyle:any}>['presentationStyle']} x */
+	GuideEntryPresentationStyle(x) {
+		switch(x) {
+			case "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT": return;
+			case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE": return;
+			default:
+		}
+		switch(x) {default: debugger; return;}
 	}
 	/** @arg {GuideEntryBadges} x */
 	GuideEntryBadges(x) {
