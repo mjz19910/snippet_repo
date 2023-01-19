@@ -325,10 +325,9 @@ export class Snippet_0_tmp {
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
 	}
-	/** @arg {HotkeyDialog} x */
-	HotkeyDialog(x) {
-		this.save_keys("[HotkeyDialog]",x);
-		const {...y}=x; this.g(y);
+	/** @arg {PlaylistHeader} x */
+	PlaylistHeader(x) {
+		x;
 	}
 	//#region dispatch_in_progress
 	//#endregion

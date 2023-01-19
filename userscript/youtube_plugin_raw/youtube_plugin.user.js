@@ -8822,7 +8822,16 @@ class HandleTypes extends ServiceMethods {
 		} else if("c4TabbedHeaderRenderer" in x) {
 			return this.C4TabbedHeaderRenderer(x);
 		}
+		if("playlistHeaderRenderer" in x) return this.PlaylistHeaderRenderer(x);
 		debugger;
+	}
+	/** @arg {PlaylistHeaderRenderer} x */
+	PlaylistHeaderRenderer(x) {
+		this.PlaylistHeader(x.playlistHeaderRenderer);
+	}
+	/** @arg {PlaylistHeader} x */
+	PlaylistHeader(x) {
+		x;
 	}
 	/** @arg {C4TabbedHeaderRenderer} x */
 	C4TabbedHeaderRenderer(x) {
@@ -9639,7 +9648,7 @@ class HandleTypes extends ServiceMethods {
 	ProfileColumnStatsEntryData(x) {
 		const {label,value,...y}=x; this.g(y);
 		this.TextWithRuns(label);
-		this.TextWithRuns(value);
+		this.SimpleText(value);
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
@@ -9669,7 +9678,7 @@ class HandleTypes extends ServiceMethods {
 	ProfileColumnUserInfoData(x) {
 		this.save_keys("[ProfileColumnUserInfoData]",x);
 		const {title,thumbnail,...y}=x; this.g(y);
-		this.TextWithRuns(title);
+		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
 	}
 	/** @arg {ChipCloudChipRenderer} x */
