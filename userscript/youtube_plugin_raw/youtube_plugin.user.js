@@ -4718,8 +4718,25 @@ class ParserService extends BaseService {
 						if(lp_p3.size!==0) break y;
 						return;
 					}
-					if(lp_p1!==void 0&&lp_p2!==void 0&&lp_p3!==void 0) {
-
+					y: if(lp_p1!==void 0&&lp_p2!==void 0&&lp_p3!==void 0) {
+						c: if(lp_p1 instanceof Map) {
+							if(lp_p1.size===0) break c;
+							let lp_p1_=this.to_param_obj(lp_p1);
+							console.log("[lp_p1_]",lp_p1_);
+							break y;
+						}
+						c: if(typeof lp_p2==='string') {
+							if(lp_p2==="en") break c;
+							console.log("[lp_p2]",lp_p2);
+							break y;
+						}
+						c: if(lp_p3 instanceof Map) {
+							if(lp_p3.size===0) break c;
+							let lp_p3_=this.to_param_obj(lp_p3);
+							console.log("[lp_p3_]",lp_p3_);
+							break y;
+						}
+						return;
 					}
 					console.log("[get_transcript_args]",transcript_args_dec);
 					let param_obj_1=this.to_param_obj(param_map_1);
@@ -9194,7 +9211,33 @@ class HandleTypes extends ServiceMethods {
 	ElementUpdateItem(x) {
 		this.save_keys("[ElementUpdateItem]",x);
 		if("templateUpdate" in x) return this.TemplateUpdate(x);
+		if("resourceStatusInResponseCheck" in x) this.ResourceStatusInResponseCheck(x);
 		debugger;
+	}
+	/** @arg {ResourceStatusInResponseCheck} x */
+	ResourceStatusInResponseCheck(x) {
+		this.ResourceStatusInResponseCheckData(x.resourceStatusInResponseCheck);
+	}
+	/** @arg {ResourceStatusInResponseCheckData} x */
+	ResourceStatusInResponseCheckData(x) {
+		const {resourceStatuses,serverBuildLabel,...y}=x; this.g(y);
+		this.z(resourceStatuses,this.ElementResourceStatus);
+		let ysl=split_string(serverBuildLabel,"_");
+		if(ysl[0]!=="boq") debugger;
+		ysl[1]!=="youtube-watch-ui";
+		let vs=split_string_once(ysl[2],".");
+		console.log(vs);
+		switch(ysl[3]) {
+			case "p0": break;
+			case "p1": break;
+			default: debugger; break;
+		}
+	}
+	/** @arg {ElementResourceStatus} x */
+	ElementResourceStatus(x) {
+		const {identifier,status,...y}=x; this.g(y);
+		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
+		console.log(identifier);
 	}
 	/** @arg {TemplateUpdate} x */
 	TemplateUpdate(x) {
@@ -9248,7 +9291,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(openListPanel,"boolean");
 		this.primitive_of(openMiniplayer,"boolean");
 		this.videoId(videoId);
-		this.z(videoIds,a=>this.videoId(a));
+		this.z(videoIds,a => this.videoId(a));
 	}
 	/** @arg {CreatePlaylistServiceEndpoint} x */
 	CreatePlaylistServiceEndpoint(x) {
