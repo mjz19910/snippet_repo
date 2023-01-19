@@ -9695,9 +9695,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GenericWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
+		let cx=x.apiUrl;
 		switch(x.apiUrl) {
 			default: {
-				let path_parts=split_string(split_string_once(x.apiUrl,"/")[1],"/");
+				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
 				let url_type=this.x.get("parser_service").get_url_type(path_parts);
 				if(!url_type) {
 					debugger;
@@ -9715,6 +9716,7 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
 			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
 			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_notification_menu": break;
 		}
 	}
 	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
