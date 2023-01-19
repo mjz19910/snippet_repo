@@ -6436,6 +6436,7 @@ class HandleTypes extends ServiceMethods {
 					let us=split_string_once(split_string_once(url,"/")[1],"?");
 					if(us[0]!=="playlist") break x;
 					let up=us[1];
+					if(up.includes("&")) debugger;
 					let pp=split_string_once(up,"=");
 					this.x.get("parser_service").parse_playlist_id(pp[1]);
 				}
@@ -10557,7 +10558,35 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistSidebarItem} x */
 	PlaylistSidebarItem(x) {
-		if("playlistSidebarPrimaryInfoRenderer" in x) this.PlaylistSidebarPrimaryInfoRenderer(x);
+		if("playlistSidebarPrimaryInfoRenderer" in x) return this.PlaylistSidebarPrimaryInfoRenderer(x);
+		if("playlistSidebarSecondaryInfoRenderer" in x) return this.PlaylistSidebarSecondaryInfoRenderer(x);
+		debugger;
+	}
+	/** @arg {PlaylistSidebarSecondaryInfoRenderer} x */
+	PlaylistSidebarSecondaryInfoRenderer(x) {
+		this.PlaylistSidebarSecondaryInfo(x.playlistSidebarSecondaryInfoRenderer);
+	}
+	/** @arg {PlaylistSidebarSecondaryInfo} x */
+	PlaylistSidebarSecondaryInfo(x) {
+		this.VideoOwnerRenderer(x.videoOwner);
+	}
+	/** @arg {VideoOwnerRenderer} x */
+	VideoOwnerRenderer(x) {
+		this.VideoOwnerData(x.videoOwnerRenderer);
+	}
+	/** @arg {VideoOwnerData} x */
+	VideoOwnerData(x) {
+		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x; this.g(y);
+		this.Thumbnail(thumbnail);
+		this.TextWithRuns(title);
+		this.SubscriptionButton(subscriptionButton);
+		this.BrowseEndpoint(navigationEndpoint);
+		this.SimpleText(subscriberCountText);
+		this.trackingParams(trackingParams);
+	}
+	/** @arg {SubscriptionButton} x */
+	SubscriptionButton(x) {
+		x;
 		debugger;
 	}
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
