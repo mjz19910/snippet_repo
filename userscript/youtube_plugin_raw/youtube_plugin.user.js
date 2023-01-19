@@ -10040,16 +10040,15 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
 			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
-			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
-			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
-			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
 			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
-			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
 			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
-			/** @type {GenericWebCommandMetadata} */
 			case "/youtubei/v1/notification/get_unseen_count": break;
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
 		}
 	}
 	/** @arg {GetNotificationMenuWebCommandMetadata} x */
