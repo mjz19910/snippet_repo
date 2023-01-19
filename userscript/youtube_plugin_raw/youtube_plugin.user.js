@@ -6133,6 +6133,7 @@ class HandleTypes extends ServiceMethods {
 				if(ss.length!==2) {debugger; return;}
 				let sa=ss[1];
 				let ll=sa.slice(24);
+				if(this.str_starts_with(sa,"UC")&&ll==="featured") return;
 				console.log("target_id.ll",ll);
 				if(this.str_starts_with(sa,"UC")) {
 					let floc=sa.indexOf("featured");
