@@ -1,0 +1,5 @@
+type BrowseSidebar=
+	|SettingsSidebarRenderer
+	|PlaylistSidebarRenderer
+	;
+;

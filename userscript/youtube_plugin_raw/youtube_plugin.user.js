@@ -6061,7 +6061,7 @@ class HandleTypes extends ServiceMethods {
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
 		if(topbar) this.DesktopTopbarRenderer(topbar);
 		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
-		if(sidebar) this.SettingsSidebarRenderer(sidebar);
+		if(sidebar) this.BrowseSidebar(sidebar);
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
 		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
@@ -6072,6 +6072,12 @@ class HandleTypes extends ServiceMethods {
 		const {continuationContents,alerts,...y}=y3; this.g(y);
 		if(continuationContents) this.ContinuationContents(continuationContents);
 		if(alerts) this.z(alerts,this.AlertWithButtonRenderer);
+	}
+	/** @arg {BrowseSidebar} x */
+	BrowseSidebar(x) {
+		if("settingsSidebarRenderer" in x) return this.SettingsSidebarRenderer(x);
+		if("playlistSidebarRenderer" in x) return this.PlaylistSidebarRenderer(x);
+		debugger;
 	}
 	/** @arg {AlertWithButtonRenderer} x */
 	AlertWithButtonRenderer(x) {

@@ -14,7 +14,7 @@ type BrowseResponse={
 	background?: MusicThumbnailRenderer;
 	// ?
 	onResponseReceivedActions?: ResponseReceivedAction[];
-	sidebar?: SettingsSidebarRenderer;
+	sidebar?: BrowseSidebar;
 	observedStateTags?: StateTag[];
 	cacheMetadata?: CacheMetadata;
 };
