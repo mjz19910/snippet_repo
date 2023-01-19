@@ -9433,6 +9433,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
+		if("icon" in x) {
+			const {icon,trackingParams,formattedTitle,accessibility,...y}=x; this.g(y);
+			this.Icon(icon);
+			this.trackingParams(trackingParams);
+			this.SimpleText(formattedTitle);
+			this.Accessibility(accessibility);
+			return;
+		}
 		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y);
 		this.BrowseEndpoint(navigationEndpoint);
 		this.Thumbnail(thumbnail);
