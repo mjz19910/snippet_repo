@@ -4708,10 +4708,16 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapValue} tv */
 	default_parse_param_callback(for_,path,tv) {
-		if(tv instanceof Map&&tv.size<=0) return;
+		if(tv instanceof Map) {
+			if(tv.size<=0) return;
+
+		}
 		switch(path) {
 			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv);
 		}
+	}
+	parse_any_param(for_,path,tv) {
+
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
 	parse_player_params_with_map(for_,path,x) {
@@ -4721,10 +4727,7 @@ class ParserService extends BaseService {
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
-		parse_key(40,(tv,ta) => {
-			if(tv instanceof Map) return this.parse_player_param_f40(for_,`${path}.f${ta}`,tv);
-			debugger;
-		});
+		parse_key(40);
 		parse_key(57);
 		parse_key(71);
 		parse_key(72);
