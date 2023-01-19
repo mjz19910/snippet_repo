@@ -10528,7 +10528,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(subscriberCountText);
 		this.TextWithRuns(channelHandleText);
 		this.TextWithRuns(videosCountText);
-		this.z(badges,this.MetadataBadgeRenderer);
+		if(badges) this.z(badges,this.MetadataBadgeRenderer);
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {

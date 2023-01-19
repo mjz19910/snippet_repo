@@ -18,7 +18,7 @@ type C4TabbedHeaderData={
 	navigationEndpoint: BrowseEndpoint;
 	avatar: Thumbnail;
 	banner: Thumbnail;
-	badges: MetadataBadgeRenderer[];
+	badges?: MetadataBadgeRenderer[];
 	headerLinks: ChannelHeaderLinksRenderer;
 	subscribeButton: SubscribeButtonRenderer;
 	subscriberCountText: SimpleText;
