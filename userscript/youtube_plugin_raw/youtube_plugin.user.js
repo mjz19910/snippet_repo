@@ -6426,6 +6426,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistWebCommandMetadata} x */
 	PlaylistWebCommandMetadata(x) {
 		switch(x.rootVe) {
+			default: debugger; break;
 			case 5754: {
 				const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y);
 				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
