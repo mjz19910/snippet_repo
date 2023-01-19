@@ -12,6 +12,7 @@ type ShortsPageResponse={
 	endpoint: ReelWatchEndpoint;
 	page: "shorts";
 	playerResponse: PlayerResponse;
+	reelWatchSequenceResponse: ReelWatchSequenceResponse|undefined;
 	response: ReelResponse;
 	cachedReelWatchSequenceResponse: ReelWatchSequenceResponse;
 };
