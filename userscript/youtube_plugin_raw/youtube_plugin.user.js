@@ -4084,23 +4084,18 @@ class CodegenService extends BaseService {
 		} while(ps!==s);
 		return s;
 	}
-	/** @public @arg {unknown} x @arg {string|null} r @arg {boolean} [ret_val] @returns {string|null|void} */
-	codegen_new_typedef(x,r,ret_val) {
-		let cg=this.#_codegen_new_typedef(x,r);
+	/** @type {string[]} */
+	codegen_cache=[];
+	/** @public @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
+	codegen_new_typedef(x,gen_name,ret_val) {
+		let cg=this.#_codegen_new_typedef(x,gen_name);
 		if(ret_val) return cg;
 		console.log(cg);
 	}
-	/** @arg {unknown} x @arg {string|null} r */
-	#_codegen_new_typedef(x,r=null) {
+	/** @arg {{}} x @arg {string} gen_name */
+	#_codegen_new_typedef(x,gen_name) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
-		let tn=k;
-		if(r) {
-			tn=r;
-		}
-		if(x===null) return;
-		if(x===void 0) return;
-		tn=this.uppercase_first(tn);
 		let obj_count=0;
 		/** @private @type {{[x: number|string]:{}}} */
 		let xa=as(x);
@@ -4147,7 +4142,7 @@ class CodegenService extends BaseService {
 				if(keys.includes(k1)) return [o[0]];
 				return [o[0]];
 			}
-			let res_type=this.get_json_replacer_type(r,o);
+			let res_type=this.get_json_replacer_type(gen_name,o);
 			if(res_type!==null) return res_type;
 			if(k1==="responseContext") return "TYPE::ResponseContext";
 			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
@@ -4175,10 +4170,10 @@ class CodegenService extends BaseService {
 		tc=tc.replaceAll(",",";");
 		tc=tc.replaceAll(/[^[{;]$/gm,a => `${a};`);
 		let ret;
-		if(typeof tn==="number") {
-			ret=`\ntype ArrayType_${tn}=${tc}\n`;
+		if(typeof gen_name==="number") {
+			ret=`\ntype ArrayType_${gen_name}=${tc}\n`;
 		} else {
-			ret=`\ntype ${tn}=${tc}\n`;
+			ret=`\ntype ${gen_name}=${tc}\n`;
 		}
 		return ret;
 	}
@@ -4315,8 +4310,8 @@ class CodegenService extends BaseService {
 		});
 		return new Map(typedef_members);
 	}
-	/** @public @arg {{}} x @arg {string|null} r */
-	use_generated_members(x,r=null) {
+	/** @public @arg {{}} x @arg {string} r */
+	use_generated_members(x,r) {
 		let td=new Generate(this);
 		td.generate_typedef_and_depth(x,r);
 		return td;
@@ -5488,7 +5483,7 @@ class Generate {
 	get x() {
 		return this.parent;
 	}
-	/** @public @arg {unknown} x @arg {string|null} r */
+	/** @public @arg {{}} x @arg {string} r */
 	generate_typedef_and_depth(x,r) {
 		let gen=this.x.codegen_new_typedef(x,r,true);
 		if(!gen) return;
@@ -5514,9 +5509,9 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @arg {unknown} x @arg {string} n @arg {boolean} [ret_val] */
-	codegen_new_typedef(x,n,ret_val) {
-		return this.x.get("codegen").codegen_new_typedef(x,n,ret_val);
+	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
+	codegen_new_typedef(x,gen_name,ret_val) {
+		return this.x.get("codegen").codegen_new_typedef(x,gen_name,ret_val);
 	}
 	/** @public @arg {string} x */
 	clickTrackingParams(x) {
@@ -6787,7 +6782,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
 		let u_name=this.get_codegen_name(x);
-		this.codegen_new_typedef(x,`_gen_${cf}_${u_name}`);
+		let gen_name=`${cf}$${u_name}`;
+		this.codegen_new_typedef(x,gen_name);
 	}
 	/** @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
@@ -8819,17 +8815,18 @@ class HandleTypes extends ServiceMethods {
 			console.log("[action]",this.get_keys_of(a));
 		});
 	}
-	/** @arg {NonNullable<ButtonData['serviceEndpoint']>} x */
+	/** @arg {Button_serviceEndpoint} x */
 	Button_serviceEndpoint(x) {
 		if("signalServiceEndpoint" in x) {
 			return this.SignalServiceEndpoint(x);
 		}
 		debugger;
 	}
-	/** @arg {NonNullable<ButtonData['navigationEndpoint']>} x */
+	/** @arg {Button_navigationEndpoint} x */
 	Button_navigationEndpoint(x) {
+		const cf="Button_navigationEndpoint";
 		if("shareEntityServiceEndpoint" in x) return this.ShareEntityServiceEndpoint(x);
-		debugger;
+		this.do_codegen(cf,x);
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
