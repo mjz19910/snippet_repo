@@ -4910,7 +4910,7 @@ class ParserService extends BaseService {
 	cache_playlist_id=[];
 	/** @private @type {string[]} */
 	cache_player_params=[];
-	/** @private @arg {ParamsSection} for_ @arg {Extract<YtUrlFormat,`https://${string}`>} x */
+	/** @private @arg {ParamsSection} for_ @arg {Extract<YtUrlFormat,`https://${string}`|`http://${string}`>} x */
 	parse_full_url(for_,x) {
 		let r=this.parse_with_url_parse(x);
 		switch(r.host) {
@@ -4965,6 +4965,9 @@ class ParserService extends BaseService {
 	/** @public @arg {ParamsSection} for_ @arg {YtUrlFormat} x */
 	parse_url(for_,x) {
 		if(this.str_starts_with(x,"https://")) {
+			return this.parse_full_url(for_,x);
+		}
+		if(this.str_starts_with(x,"http://")) {
 			return this.parse_full_url(for_,x);
 		}
 		if(this.str_starts_with(x,"android-app://")) {
