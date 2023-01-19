@@ -9607,6 +9607,21 @@ class HandleTypes extends ServiceMethods {
 	Signal_ChannelSwitcher(x) {
 		x;
 	}
+	/** @arg {GetSharePanelWebCommandMetadata} x */
+	get_share_panel_WebCommandMetadata(x) {
+		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		this.primitive_of(apiUrl,"string");
+	}
+	/** @arg {ButtonCommand} x */
+	ButtonCommand(x) {
+		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
+		if("continuationCommand" in x) return this.ContinuationCommand(x);
+		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		if("signalServiceEndpoint" in x) return this.SignalServiceEndpoint(x);
+		debugger;
+	}
 	//#endregion
 	//#region destructure
 	/** @arg {PlayerAnnotationsExpandedData} x */
@@ -9871,17 +9886,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region dispatch_in_progress
-	/** @arg {ButtonCommand} x */
-	ButtonCommand(x) {
-		if("signalServiceEndpoint" in x) {
-			return this.SignalServiceEndpoint(x);
-		} else if("continuationCommand" in x) {
-			return this.ContinuationCommand(x);
-		}
-		if("changeEngagementPanelVisibilityAction" in x) return;
-		if("openPopupAction" in x) return;
-		debugger;
-	}
 	/** @arg {GenericWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
 		switch(x.apiUrl) {
@@ -9897,29 +9901,48 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
 		}
 	}
-	/** @arg {GetSharePanelWebCommandMetadata} x */
-	get_share_panel_WebCommandMetadata(x) {
-		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		this.primitive_of(apiUrl,"string");
-	}
 	//#endregion
 	//#region type_errors
+	/** @arg {UnifiedSharePanelRenderer} x */
+	UnifiedSharePanelRenderer(x) {
+		this.save_keys("[UnifiedSharePanelRenderer]",x);
+		//@ts-expect-error(2345)
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {AutoplaySetItem} x */
+	AutoplaySetItem(x) {
+		this.save_keys("[AutoplaySetItem]",x);
+		//@ts-expect-error(2345)
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {ModifiedSetItem} x */
+	ModifiedSetItem(x) {
+		this.save_keys("[ModifiedSetItem]",x);
+		//@ts-expect-error(2345)
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {ClipCreationRenderer} x */
+	ClipCreationRenderer(x) {
+		this.save_keys("[ClipCreationRenderer]",x);
+		//@ts-expect-error(2345)
+		const {...y}=x; this.g(y);
+	}
+	/** @arg {{v:minimal_handler_member}} x */
+	minimal_handler_member_4(x) {
+		this.save_keys("[minimal_handler_member]",x);
+		//@ts-expect-error(2345)
+		const {...y}=x; this.g(y);
+	}
 	//#endregion
 	//#region has_save_keys
+	/** @arg {minimal_handler_member} x */
+	minimal_handler_member_1(x) {
+		this.save_keys("[minimal_handler_member]",x);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @arg {minimal_handler_member} x */
-	minimal_handler_member(x) {x;}
-	/** @arg {UnifiedSharePanelRenderer} x */
-	UnifiedSharePanelRenderer(x) {x;}
-	/** @arg {AutoplaySetItem} x */
-	AutoplaySetItem(x) {x;}
-	/** @arg {ModifiedSetItem} x */
-	ModifiedSetItem(x) {x;}
-	/** @arg {ClipCreationRenderer} x */
-	ClipCreationRenderer(x) {x;}
+	minimal_handler_member_2(x) {x;}
 	//#endregion
 }
 //#endregion
