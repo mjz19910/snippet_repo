@@ -5680,6 +5680,7 @@ class ServiceMethods extends ServiceData {
 			case "3832": return;
 			case "3854": return;
 			case "4724": return;
+			case "5754": return;
 			case "6827": return;
 			case "11487": return;
 			case "23462": return;
@@ -6414,11 +6415,27 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; return;
 			case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_PLAYLIST": return this.PlaylistWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
+		}
+	}
+	/** @arg {PlaylistWebCommandMetadata} x */
+	PlaylistWebCommandMetadata(x) {
+		switch(x.rootVe) {
+			case 5754: {
+				const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y);
+				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
+				if(apiUrl!=="/youtubei/v1/browse") debugger;
+				x:{
+					if(url==="/playlist?list=WL") break x;
+					console.log("[playlist.url] [%s]",url);
+					debugger;
+				}
+			} break;
 		}
 	}
 	/** @arg {SettingsWebCommandMetadata} x */
