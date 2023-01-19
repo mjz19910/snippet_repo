@@ -21,6 +21,6 @@ type MicroformatData={
 	unlisted: false;
 	tags?: string[];
 	familySafe?: true;
-	availableCountries: string[];
+	availableCountries?: string[];
 	linkAlternates: HrefUrl[];
 };
