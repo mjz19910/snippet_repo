@@ -1,0 +1,1 @@
+type PlaylistSidebarItem=PlaylistSidebarPrimaryInfoRenderer|PlaylistSidebarSecondaryInfoRenderer;

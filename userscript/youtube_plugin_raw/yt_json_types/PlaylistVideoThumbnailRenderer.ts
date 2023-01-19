@@ -1,3 +1,6 @@
 type PlaylistVideoThumbnailRenderer={
-	playlistVideoThumbnailRenderer: {};
+	playlistVideoThumbnailRenderer: {
+		thumbnail: Thumbnail;
+		trackingParams: string;
+	};
 };

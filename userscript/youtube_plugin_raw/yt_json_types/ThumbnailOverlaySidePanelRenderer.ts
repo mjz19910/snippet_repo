@@ -1,0 +1,3 @@
+type ThumbnailOverlaySidePanelRenderer={
+	thumbnailOverlaySidePanelRenderer: ThumbnailOverlaySidePanel;
+};

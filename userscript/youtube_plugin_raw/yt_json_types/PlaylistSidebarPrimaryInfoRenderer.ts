@@ -1,0 +1,3 @@
+type PlaylistSidebarPrimaryInfoRenderer={
+	playlistSidebarPrimaryInfoRenderer: PlaylistSidebarPrimaryInfo;
+};

@@ -9309,10 +9309,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ResourceStatusInResponseCheck} x */
 	ResourceStatusInResponseCheck(x) {
+		this.save_keys("[ResourceStatusInResponseCheck]",x);
 		this.ResourceStatusInResponseCheckData(x.resourceStatusInResponseCheck);
 	}
 	/** @arg {ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
+		this.save_keys("[ResourceStatusInResponseCheckData]",x);
 		const {resourceStatuses,serverBuildLabel,...y}=x; this.g(y);
 		this.z(resourceStatuses,this.ElementResourceStatus);
 		let ysl=split_string(serverBuildLabel,"_");
@@ -9328,6 +9330,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ElementResourceStatus} x */
 	ElementResourceStatus(x) {
+		this.save_keys("[ElementResourceStatus]",x);
 		const {identifier,status,...y}=x; this.g(y);
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		let vv=split_string_once(identifier,"|");
@@ -9462,6 +9465,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Extract<GuideEntryRoot,{presentationStyle:any}>['presentationStyle']} x */
 	GuideEntryPresentationStyle(x) {
+		this.save_string("[GuideEntryPresentationStyle]",x);
 		switch(x) {
 			case "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT": return;
 			case "GUIDE_ENTRY_PRESENTATION_STYLE_NONE": return;
@@ -9585,9 +9589,9 @@ class HandleTypes extends ServiceMethods {
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=x; this.g(y);
 		this.TopbarLogoRenderer(logo);
 		this.FusionSearchboxRenderer(searchbox);
-		this.trackingParams(x.trackingParams);
-		if(x.countryCode!=="CA") debugger;
-		this.z(x.topbarButtons,this.TopbarButtonItem);
+		this.trackingParams(trackingParams);
+		if(countryCode!=="CA") debugger;
+		this.z(topbarButtons,this.TopbarButtonItem);
 		this.HotkeyDialogRenderer(hotkeyDialog);
 		this.ButtonRenderer(backButton);
 		this.ButtonRenderer(forwardButton);
@@ -10520,6 +10524,20 @@ class HandleTypes extends ServiceMethods {
 	DropdownRenderer(x) {
 		const {dropdownRenderer,...y}=x; this.g(y);
 		this.g(dropdownRenderer);
+	}
+	/** @arg {PlaylistSidebarItem} x */
+	PlaylistSidebarItem(x) {
+		x;
+		debugger;
+	}
+	/** @arg {PlaylistSidebarRenderer} x */
+	PlaylistSidebarRenderer(x) {
+		this.PlaylistSidebar(x.playlistSidebarRenderer);
+	}
+	/** @arg {PlaylistSidebar} x */
+	PlaylistSidebar(x) {
+		this.z(x.items,this.PlaylistSidebarItem);
+		this.trackingParams(x.trackingParams);
 	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}

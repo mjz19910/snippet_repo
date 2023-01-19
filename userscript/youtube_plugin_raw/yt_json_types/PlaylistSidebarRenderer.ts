@@ -1,3 +1,1 @@
-type PlaylistSidebarRenderer={
-	playlistSidebarRenderer: {};
-};
+type PlaylistSidebarRenderer={playlistSidebarRenderer: PlaylistSidebar;};
