@@ -4245,6 +4245,8 @@ class CodegenService extends BaseService {
 			||o.sectionListRenderer
 			||o.clipSectionRenderer
 			||o.clipCreationRenderer
+			||o.reelWatchEndpoint
+			||o.reelPlayerOverlayRenderer
 			;
 		if(hg) return g();
 		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
