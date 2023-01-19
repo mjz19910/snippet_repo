@@ -10553,6 +10553,20 @@ class HandleTypes extends ServiceMethods {
 	WatchPlaylistEndpoint(x) {
 		this.save_keys("[WatchPlaylistEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.WatchPlaylistEndpointData(watchPlaylistEndpoint);
+	}
+	/** @arg {WatchPlaylistEndpointData} x */
+	WatchPlaylistEndpointData(x) {
+		this.save_keys("[WatchPlaylistEndpointData]",x);
+		const {playlistId,index,params,...y}=x; this.g(y);
+		this.parser.parse_playlist_id(playlistId);
+		this.primitive_of(index,"number");
+		this.params("Any","watch_playlist",params);
+	}
+	get parser() {
+		return this.x.get("parser_service");
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {

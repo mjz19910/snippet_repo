@@ -1,4 +1,5 @@
 type ParamsSection=
+	|"Any"
 	|"CommonConfigData"
 	|"CreatePlaylist"
 	|"Generic_WatchPageResponse"
