@@ -4735,29 +4735,34 @@ class ParserService extends BaseService {
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
-	parse_key(for_,x,mk,ta) {
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {(x:ParamMapType)=>void} cb */
+	parse_key(for_,x,mk,ta,cb) {
 		let tv=x.get(ta);
-		this.parse_value(for_,x,mk,ta,tv);
+		this.parse_value(for_,x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue | undefined} tv */
-	parse_value(for_,x,mk,ta,tv) {
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue | undefined} tv @arg {(x:ParamMapType)=>void} cb */
+	parse_value(for_,x,mk,ta,tv,cb) {
 		if(tv!==void 0) {
+			x.delete(ta);
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
+			if(tv instanceof Map) {
+				cb(tv);
+				return;
+			}
 			console.log("[watch_endpoint_params.value] [idx=%s]",this.parse_key_index.toString(),for_,`p${ta}`,tv);
-			x.delete(ta);
 		}
 	}
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
 	parse_player_params_with_map(for_,x) {
 		let mk=[...x.keys()];
 		/** @arg {number} ta */
-		let parse_key=(ta)=>this.parse_key(for_,x,mk,ta);
+		let parse_key=(ta)=>this.parse_key(for_,x,mk,ta,()=>{});
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
 		parse_key(57);
+		parse_key(71);
 		parse_key(72);
 		let p40=x.get(40);
 		if(p40!==void 0) {
@@ -4777,8 +4782,8 @@ class ParserService extends BaseService {
 	parse_player_param_f40_f1(for_,x) {
 		this.parse_key_index++;
 		let map_keys=[...x.keys()];
-		/** @arg {number} ta */
-		let parse_key=(ta)=>this.parse_key(for_,x,map_keys,ta);
+		/** @arg {number} ta @arg {(x:ParamMapType)=>void} cb */
+		let parse_key=(ta,cb=()=>{})=>this.parse_key(for_,x,map_keys,ta,cb);
 		if(this.eq_keys(map_keys,[2,3])) {
 			let p2=x.get(2);
 			let p3=x.get(3);
@@ -4811,6 +4816,9 @@ class ParserService extends BaseService {
 			}
 		}
 		parse_key(1);
+		parse_key(5,r=>{
+			console.log("obj5",r);
+		});
 		parse_key(6);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
