@@ -6285,8 +6285,13 @@ class HandleTypes extends ServiceMethods {
 		const {contents,trackingParams,sectionIdentifier,targetId,...y}=x; this.g(y);
 		this.z(contents,a => this.ItemSectionItem(a));
 		this.trackingParams(trackingParams);
-		this.targetId(as(targetId));
-		this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}-id-${targetId}`);
+		if(targetId) {
+			this.primitive_of(targetId,"string");
+			this.targetId(as(targetId));
+			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}-id-${targetId}`);
+		} else {
+			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}`);
+		}
 	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
@@ -6394,6 +6399,8 @@ class HandleTypes extends ServiceMethods {
 			case "/account_billing": break;
 			case "/account_notifications": break;
 			case "/account_playback": break;
+			case "/account_privacy": break;
+			case "/account_sharing": break;
 		}
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 		if(rootVe!==23462) debugger;
