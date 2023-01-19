@@ -5554,18 +5554,19 @@ class ServiceMethods extends ServiceData {
 		}
 		switch(x) {
 			case "browse-feedFEwhat_to_watch": return;
+			case "clip-info-button": return;
 			case "comments-section": return;
 			case "engagement-panel-ads": return;
 			case "engagement-panel-clip-create": return;
 			case "engagement-panel-comments-section": return;
+			case "engagement-panel-macro-markers-description-chapters": return;
+			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "engagement-panel-searchable-transcript": return;
 			case "engagement-panel-structured-description": return;
-			case "engagement-panel-macro-markers-description-chapters": return;
-			case "watch-next-feed": return;
-			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "search-feed": return;
 			case "search-page": return;
-			case "clip-info-button": return;
+			case "sponsorships-button": return;
+			case "watch-next-feed": return;
 			default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
