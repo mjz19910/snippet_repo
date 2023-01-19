@@ -9757,7 +9757,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EngagementPanelMenu} x */
 	EngagementPanelMenu(x) {
 		if("menuRenderer" in x) return this.MenuRenderer(x);
-		if("sortFilterSubMenuRenderer" in x) this.SortFilterSubMenuRenderer(x);
+		if("sortFilterSubMenuRenderer" in x) return this.SortFilterSubMenuRenderer(x);
 		debugger;
 	}
 	/** @arg {EngagementPanelTitleHeader} x */

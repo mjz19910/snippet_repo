@@ -8,6 +8,13 @@ type EngagementPanelTitleHeader={
 	visibilityButton: ButtonRenderer;
 	trackingParams: string;
 };
+type EngagementPanelMenuAll={
+	title: TextWithRuns;
+	contextualInfo: TextWithRuns;
+	menu: SortFilterSubMenuRenderer;
+	visibilityButton: ButtonRenderer;
+	trackingParams: string;
+}
 
 type EngagementPanelTitleHeaderRenderer={
 	engagementPanelTitleHeaderRenderer: EngagementPanelTitleHeader;
