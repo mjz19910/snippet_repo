@@ -1,0 +1,3 @@
+type PivotButtonRenderer={
+	pivotButtonRenderer: PivotButton;
+};

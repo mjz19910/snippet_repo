@@ -3,30 +3,7 @@ type ReelPlayerOverlayData={
 	trackingParams: string;
 	reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
 }|{
-	likeButton: {
-		likeButtonRenderer: {
-			target: {
-				videoId: string;
-			};
-			likeStatus: "INDIFFERENT";
-			likeCount: 44008;
-			likeCountText: SimpleText;
-			likeCountWithLikeText: SimpleText;
-			likeCountWithUnlikeText: SimpleText;
-			dislikeCountText: SimpleText;
-			dislikeCountWithDislikeText: SimpleText;
-			dislikeCountWithUndislikeText: SimpleText;
-			trackingParams: string;
-			likesAllowed: true;
-			serviceEndpoints: {
-				clickTrackingParams: string;
-				commandMetadata: CommandMetadata;
-				likeEndpoint: {};
-			}[];
-			likeCountTooltipText: TextWithRuns;
-			dislikeCountTooltipText: TextWithRuns;
-		};
-	};
+	likeButton: LikeButtonRenderer;
 	reelPlayerHeaderSupportedRenderers: {
 		reelPlayerHeaderRenderer: {};
 	};
@@ -42,14 +19,4 @@ type ReelPlayerOverlayData={
 	pivotButton: PivotButtonRenderer;
 	badge: MetadataBadgeRenderer;
 };
-type PivotButton={
-	thumbnail: Thumbnail;
-	onClickCommand: BrowseEndpoint;
-	trackingParams: string;
-	contentDescription: SimpleText;
-	soundAttributionTitle: TextWithRuns;
-};
 
-type PivotButtonRenderer={
-	pivotButtonRenderer: PivotButton;
-};
