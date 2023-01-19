@@ -4656,7 +4656,7 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		switch(for_) {
 			default: {
-				let param_obj=Object.fromEntries(param_map.entries());
+				let param_obj=this.to_param_obj(param_map);
 				console.log("[new_endpoint_params] [%s]",for_,param_obj);
 			} break;
 			case "ReelWatch": this.parse_player_param_f40_f1(for_,path,param_map); break;
@@ -4716,7 +4716,7 @@ class ParserService extends BaseService {
 						return;
 					}
 					console.log("[get_transcript_args]",transcript_args_dec);
-					let param_obj_1=Object.fromEntries(param_map_1.entries());
+					let param_obj_1=this.to_param_obj(param_map_1);
 					console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
 					debugger;
 					return;
@@ -4724,7 +4724,7 @@ class ParserService extends BaseService {
 				if(transcript_args_dec) {
 					console.log("[get_transcript_args]",transcript_args_dec);
 				}
-				let param_obj=Object.fromEntries(param_map.entries());
+				let param_obj=this.to_param_obj(param_map);
 				console.log("[new_get_transcript_endpoint_params]",param_obj);
 				debugger;
 			} break;
@@ -4799,7 +4799,7 @@ class ParserService extends BaseService {
 		parse_key(71);
 		parse_key(72);
 		if(this.eq_keys(mk,[])) return;
-		console.log("[new_player_params]",Object.fromEntries(x.entries()));
+		console.log("[new_player_params]",this.to_param_obj(x));
 		debugger;
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
@@ -4827,7 +4827,7 @@ class ParserService extends BaseService {
 					let p27_p1=p27.get(1);
 					if(p27_p1===1) return;
 				}
-				let param_obj_p27=Object.fromEntries(p27.entries());
+				let param_obj_p27=this.to_param_obj(p27);
 				console.log("[new_watch_endpoint_param_p27]",for_,param_obj_p27);
 				debugger;
 			}
@@ -4876,7 +4876,7 @@ class ParserService extends BaseService {
 		});
 		if(this.eq_keys(map_keys,[])) return;
 		console.log(`[player_params.${path}]`,x,map_keys);
-		console.log(`[new.player_params.${path}]`,Object.fromEntries(x.entries()));
+		console.log(`[new.player_params.${path}]`,this.to_param_obj(x));
 		debugger;
 	}
 	log_enabled_playlist_id=false;
