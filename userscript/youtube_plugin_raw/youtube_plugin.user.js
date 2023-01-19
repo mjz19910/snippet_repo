@@ -9192,6 +9192,7 @@ class HandleTypes extends ServiceMethods {
 			case "HISTORY_BACK": break;
 			case "HISTORY_FORWARD": break;
 			case "SKIP_NAVIGATION": break;
+			case "TOGGLE_TRANSCRIPT_TIMESTAMPS": break;
 		}
 	}
 	/** @arg {GuideEntryRenderer} x */
