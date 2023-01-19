@@ -4735,29 +4735,31 @@ class ParserService extends BaseService {
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {(x:ParamMapType)=>void} cb */
-	parse_key(for_,x,mk,ta,cb) {
+	/** @typedef {(x:ParamMapValue,idx:number)=>void} ParseCallbackFunction */
+	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction} cb */
+	parse_key(x,mk,ta,cb) {
 		let tv=x.get(ta);
-		this.parse_value(for_,x,mk,ta,tv,cb);
+		this.parse_value(x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue | undefined} tv @arg {(x:ParamMapType)=>void} cb */
-	parse_value(for_,x,mk,ta,tv,cb) {
+	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction} cb */
+	parse_value(x,mk,ta,tv,cb) {
 		if(tv!==void 0) {
 			x.delete(ta);
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
-			if(tv instanceof Map) {
-				cb(tv);
-				return;
-			}
-			console.log("[watch_endpoint_params.value] [idx=%s]",this.parse_key_index.toString(),for_,`p${ta}`,tv);
+			cb(tv,ta);
 		}
 	}
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
 	parse_player_params_with_map(for_,x) {
 		let mk=[...x.keys()];
+		/** @type {ParseCallbackFunction} */
+		let default_callback=(tv,ta) => {
+			if(tv instanceof Map&&tv.size<=0) return;
+			console.log(`[watch_endpoint_params.value.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
+		};
 		/** @arg {number} ta */
-		let parse_key=(ta)=>this.parse_key(for_,x,mk,ta,()=>{});
+		let parse_key=(ta) => this.parse_key(x,mk,ta,default_callback);
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
@@ -4766,7 +4768,7 @@ class ParserService extends BaseService {
 		parse_key(72);
 		let p40=x.get(40);
 		if(p40!==void 0) {
-			this.remove_key(x,mk,40)
+			this.remove_key(x,mk,40);
 			let idx=mk.indexOf(40);
 			if(idx>-1) mk.splice(idx,1);
 			x.delete(40);
@@ -4782,8 +4784,13 @@ class ParserService extends BaseService {
 	parse_player_param_f40_f1(for_,x) {
 		this.parse_key_index++;
 		let map_keys=[...x.keys()];
-		/** @arg {number} ta @arg {(x:ParamMapType)=>void} cb */
-		let parse_key=(ta,cb=()=>{})=>this.parse_key(for_,x,map_keys,ta,cb);
+		/** @type {ParseCallbackFunction} */
+		let default_callback=(tv,ta) => {
+			if(tv instanceof Map&&tv.size<=0) return;
+			console.log(`[watch_endpoint_params.value.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
+		};
+		/** @arg {number} ta @arg {ParseCallbackFunction} cb */
+		let parse_key=(ta,cb=default_callback) => this.parse_key(x,map_keys,ta,cb);
 		if(this.eq_keys(map_keys,[2,3])) {
 			let p2=x.get(2);
 			let p3=x.get(3);
@@ -4816,15 +4823,11 @@ class ParserService extends BaseService {
 			}
 		}
 		parse_key(1);
-		parse_key(3,tv=>{
-			if(tv.size<=0) return;
-			console.log("[watch_endpoint_params.value.f3] [idx=%s]",this.parse_key_index.toString(),for_,tv);
-		});
-		parse_key(5,tv=>{
-			if(tv.size<=0) return;
-			console.log("[watch_endpoint_params.value.f5] [idx=%s]",this.parse_key_index.toString(),for_,tv);
-		});
+		parse_key(3);
+		parse_key(5);
 		parse_key(6);
+		parse_key(8);
+		parse_key(12);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log("[new_watch_endpoint_params]",for_,param_obj);
@@ -4843,23 +4846,22 @@ class ParserService extends BaseService {
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
 	parse_player_param_f_40(for_,x) {
 		let map_keys=[...x.keys()];
-		x: if(this.eq_keys(map_keys,[1])) {
-			let x1=x.get(1);
-			if(!x1) {debugger; break x;}
-			if(!(x1 instanceof Map)) {debugger; break x;}
-			this.parse_player_param_f40_f1(for_,x1);
-			let map_keys_1=[...x1.keys()];
-			y: {
-				if(!this.eq_keys(map_keys_1,[2,3])) break y;
-				let p2=x1.get(2);
-				let p3=x1.get(3);
-				if(p2!==void 0&&p3!==void 0) {
-					if(p2===2&&p3===1) return;
-				}
+		/** @type {ParseCallbackFunction} */
+		let default_callback=(tv,ta) => {
+			if(tv instanceof Map&&tv.size<=0) return;
+			console.log(`[parse_player_param_f40.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
+		};
+		/** @arg {number} ta @arg {ParseCallbackFunction} cb */
+		let parse_key=(ta,cb=default_callback) => this.parse_key(x,map_keys,ta,cb);
+		parse_key(1,(x1,ta) => {
+			if(!(x1 instanceof Map)) {
+				console.log("[player_params_f40.f%s] [idx=%s]",ta+"",this.parse_key_index.toString(),x1);
+				debugger;
+				return;
 			}
-			console.log("[new_player_params_f_40_f_1]",Object.fromEntries(x1.entries()));
-			debugger;
-		}
+			return this.parse_player_param_f40_f1(for_,x1);
+		});
+		if(this.eq_keys(map_keys,[])) return;
 		console.log("[player_params_f_40]",x,map_keys);
 		console.log("[new_player_params_f_40]",Object.fromEntries(x.entries()));
 		debugger;
