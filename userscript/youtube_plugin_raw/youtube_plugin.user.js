@@ -9211,7 +9211,7 @@ class HandleTypes extends ServiceMethods {
 	ElementUpdateItem(x) {
 		this.save_keys("[ElementUpdateItem]",x);
 		if("templateUpdate" in x) return this.TemplateUpdate(x);
-		if("resourceStatusInResponseCheck" in x) this.ResourceStatusInResponseCheck(x);
+		if("resourceStatusInResponseCheck" in x) return this.ResourceStatusInResponseCheck(x);
 		debugger;
 	}
 	/** @arg {ResourceStatusInResponseCheck} x */
@@ -9226,7 +9226,7 @@ class HandleTypes extends ServiceMethods {
 		if(ysl[0]!=="boq") debugger;
 		ysl[1]!=="youtube-watch-ui";
 		let vs=split_string_once(ysl[2],".");
-		console.log(vs);
+		if(!this.str_starts_with(vs[0],"202301")) debugger;
 		switch(ysl[3]) {
 			case "p0": break;
 			case "p1": break;
@@ -9237,7 +9237,17 @@ class HandleTypes extends ServiceMethods {
 	ElementResourceStatus(x) {
 		const {identifier,status,...y}=x; this.g(y);
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
-		console.log(identifier);
+		let vv=split_string_once(identifier,"|");
+		switch(vv[0]) {
+			default: console.log(vv); debugger; break;
+			case "bottom_sheet_list_option.eml": break;
+			case "track_selection_sheet_option.eml": break;
+		}
+		switch(vv[1]) {
+			default: console.log(vv); debugger; break;
+			case "cd39732d53f1132c": break;
+			case "f3619d8bb085c9a9": break;
+		}
 	}
 	/** @arg {TemplateUpdate} x */
 	TemplateUpdate(x) {
