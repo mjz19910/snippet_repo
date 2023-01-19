@@ -3343,8 +3343,8 @@ class ECatcherService extends BaseService {
 				[24612269,24613467,24613789,24614043,24615363,24615479,24615664,24615733],
 				[39321826,39321827,39322504,39322574,39322870,39322873,39322953,39322980,39322983,39323013,39323016,39323020,39323023,39323117,39323120],
 				[45686551],
-				[24454363],
 				[24453162,24453860],
+				[24454363],
 			].flat(),
 		},
 	};
@@ -4677,6 +4677,97 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
+		switch(for_) {
+			case "GetTranscript": {
+				/** @type {ParamMapValue[]} */
+				let transcript_args=[];
+				let pMap=param_map;
+				/** @arg {number} x */
+				function convert_param(x) {
+					if(x<=0) {debugger; return;}
+					let pf=pMap.get(x);
+					if(pf) transcript_args[x-1]=pf;
+				}
+				this.z([1,2,3,5,6,7,8],a => convert_param(a));
+				/** @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
+				let transcript_args_dec=null;
+				let p0=transcript_args[0];
+				let p1=transcript_args[1];
+				let p2=transcript_args[2];
+				let p4=transcript_args[4];
+				let p5=transcript_args[5];
+				let p6=transcript_args[6];
+				let p7=transcript_args[7];
+				x: if(
+					typeof p0=='string'&&typeof p1=='string'
+					&&p2===1
+					&&typeof p4=='string'
+					&&p5===1&&p6===1&&p7===1
+				) {
+					switch(p4) {
+						case "engagement-panel-searchable-transcript-search-panel": break;
+						default: debugger; break x;
+					}
+					transcript_args_dec={
+						videoId: p0,
+						langParams: p1,
+						unk3: p2,
+						targetId: p4,
+						unk6: p5,
+						unk7: p6,
+						unk8: p7
+					};
+				}
+				x: if(transcript_args_dec) {
+					let param_1=decodeURIComponent(transcript_args_dec.langParams);
+					let param_buf_1=this.decode_b64_url_proto_obj(param_1);
+					if(param_buf_1===null) {debugger; break x;}
+					let param_map_1=this.make_param_map(param_buf_1);
+					if(!param_map_1) {debugger; break x;}
+					let lp_p1=param_map_1.get(1);
+					let lp_p2=param_map_1.get(2);
+					let lp_p3=param_map_1.get(3);
+					y: if(lp_p1&&lp_p2&&typeof lp_p1==='string'&&typeof lp_p2==='string'&&lp_p3 instanceof Map) {
+						if(lp_p1!=="asr") break y;
+						if(lp_p2!=="en") break y;
+						if(lp_p3.size!==0) break y;
+						return;
+					}
+					y: if(lp_p1!==void 0&&lp_p2!==void 0&&lp_p3!==void 0) {
+						c: if(lp_p1 instanceof Map) {
+							if(lp_p1.size===0) break c;
+							let lp_p1_=this.to_param_obj(lp_p1);
+							console.log("[lp_p1_]",lp_p1_);
+							break y;
+						}
+						c: if(typeof lp_p2==='string') {
+							if(lp_p2==="en") break c;
+							console.log("[lp_p2]",lp_p2);
+							break y;
+						}
+						c: if(lp_p3 instanceof Map) {
+							if(lp_p3.size===0) break c;
+							let lp_p3_=this.to_param_obj(lp_p3);
+							console.log("[lp_p3_]",lp_p3_);
+							break y;
+						}
+						return;
+					}
+					console.log("[get_transcript_args]",transcript_args_dec);
+					let param_obj_1=this.to_param_obj(param_map_1);
+					console.log("[new_get_transcript_endpoint_param_inner]",param_obj_1);
+					debugger;
+					return;
+				}
+				if(transcript_args_dec) {
+					console.log("[get_transcript_args]",transcript_args_dec);
+				}
+				let param_obj=this.to_param_obj(param_map);
+				console.log("[new_get_transcript_endpoint_params]",param_obj);
+				debugger;
+				return;
+			}
+		}
 		this.parse_endpoint_param(for_,path,param_map);
 	}
 	/** @public @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
