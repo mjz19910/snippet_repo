@@ -7407,7 +7407,7 @@ class HandleTypes extends ServiceMethods {
 			this.BrowseEndpoint(endpoint);
 			this.primitive_of(title,"string");
 			if(selected!==void 0&&selected!==true) debugger;
-			this.TabData_section(content);
+			if(content) this.TabData_section(content);
 			return;
 		}
 		if("tabIdentifier" in x) {
@@ -8990,7 +8990,7 @@ class HandleTypes extends ServiceMethods {
 	ChannelMetadataRenderer(x) {
 		this.save_keys("[ChannelMetadataRenderer]",x);
 		const {channelMetadataRenderer,...y}=x; this.g(y);
-		this.g(channelMetadataRenderer);
+		this.ChannelMetadata(channelMetadataRenderer);
 	}
 	/** @arg {BrowseHeader} x */
 	BrowseHeader(x) {
@@ -10640,66 +10640,68 @@ class HandleTypes extends ServiceMethods {
 	PlaylistMetadataRenderer(x) {
 		x;
 	}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {MultiMarkersPlayerBar} x */
 	MultiMarkersPlayerBar(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {AdLayoutMetadataItem} x */
 	AdLayoutMetadataItem(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {AdSlotMetadata} x */
 	AdSlotMetadata(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {MacroMarkersList} x */
 	MacroMarkersList(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {ProductList} x */
 	ProductList(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {VideoDescriptionHeaderData} x */
 	VideoDescriptionHeaderData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {ExpandableVideoDescriptionBodyData} x */
 	ExpandableVideoDescriptionBodyData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {HorizontalCardList} x */
 	HorizontalCardList(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {SearchboxConfig} x */
 	SearchboxConfig(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {HotkeyDialog} x */
 	HotkeyDialog(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {TranscriptRenderer} x */
 	TranscriptRenderer(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {AccountItemData} x */
 	AccountItemData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {ExpandableTabData} x */
 	ExpandableTabData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {PivotButtonRenderer} x */
 	PivotButtonRenderer(x) {x;}
 	/** @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {SubscribeButtonData} x */
 	SubscribeButtonData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {ChipCloudStyle} x */
 	ChipCloudStyle(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {RelatedChipCommand} x */
 	RelatedChipCommand(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {CommentData} x */
 	CommentData(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {WatchPlaylistEndpoint} x */
 	WatchPlaylistEndpoint(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {RichItemContent} x */
 	RichItemContent(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {LiveChatAuthorBadgeRenderer} x */
 	LiveChatAuthorBadgeRenderer(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {UnifiedSharePanel} x */
 	UnifiedSharePanel(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	/** @arg {ClipCreationData} x */
 	ClipCreationData(x) {x;}
+	/** @arg {ChannelMetadata} x */
+	ChannelMetadata(x) {x;}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
