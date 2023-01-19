@@ -4722,8 +4722,8 @@ class ParserService extends BaseService {
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
 	parse_player_params_with_map(for_,path,x) {
 		let mk=[...x.keys()];
-		/** @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-		let parse_key=(ta,cb=null) => this.parse_key(for_,path,x,mk,ta,cb);
+		/** @arg {number} ta */
+		let parse_key=(ta) => this.parse_key(for_,path,x,mk,ta,null);
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
