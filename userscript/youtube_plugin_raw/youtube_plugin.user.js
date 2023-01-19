@@ -10090,10 +10090,26 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.primitive_of(overrideEntityKey,"string");
 	}
+	/** @arg {VideoOwnerData} x */
+	VideoOwnerData(x) {
+		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x; this.g(y);
+		this.Thumbnail(thumbnail);
+		this.TextWithRuns(title);
+		if(subscriptionButton) this.SubscriptionButton(subscriptionButton);
+		this.BrowseEndpoint(navigationEndpoint);
+		if(subscriberCountText) this.SimpleText(subscriberCountText);
+		this.trackingParams(trackingParams);
+	}
+	/** @arg {SubscriptionButton} x */
+	SubscriptionButton(x) {
+		const {type,subscribed,...y}=x; this.g(y);
+		if(type!=="FREE") debugger;
+		this.primitive_of(subscribed,"boolean");
+	}
 	/** @arg {AddToPlaylistRenderer} x */
 	AddToPlaylistRenderer(x) {
 		this.save_keys("[AddToPlaylistRenderer]",x);
-		const {addToPlaylistRenderer}=x; //...y}=x; this.g(y); //#destructure
+		const {addToPlaylistRenderer,...y}=x; this.g(y);
 		this.AddToPlaylist(addToPlaylistRenderer);
 	}
 	/** @arg {AddToPlaylist} x */
@@ -10581,21 +10597,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VideoOwnerRenderer} x */
 	VideoOwnerRenderer(x) {
 		this.VideoOwnerData(x.videoOwnerRenderer);
-	}
-	/** @arg {VideoOwnerData} x */
-	VideoOwnerData(x) {
-		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x; this.g(y);
-		this.Thumbnail(thumbnail);
-		this.TextWithRuns(title);
-		if(subscriptionButton) this.SubscriptionButton(subscriptionButton);
-		this.BrowseEndpoint(navigationEndpoint);
-		if(subscriberCountText) this.SimpleText(subscriberCountText);
-		this.trackingParams(trackingParams);
-	}
-	/** @arg {SubscriptionButton} x */
-	SubscriptionButton(x) {
-		x;
-		debugger;
 	}
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
 	PlaylistSidebarPrimaryInfoRenderer(x) {
