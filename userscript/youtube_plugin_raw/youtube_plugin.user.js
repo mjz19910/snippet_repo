@@ -4757,11 +4757,20 @@ class ParserService extends BaseService {
 			if(p30!==1) break x;
 			x.delete(30);
 		}
-		if(this.eq_keys(map_keys,[57,72])) {
-			let p57=x.get(57);
+		let p57=x.get(57);
+		let i57=map_keys.indexOf(57);
+		if(i57>-1) map_keys.splice(i57,1);
+		x: if(p57!==void 0) {
+			switch(p57) {
+				case 1: break;
+				default: break x;
+			}
+			x.delete(57);
+		}
+		if(this.eq_keys(map_keys,[72])) {
 			let p72=x.get(72);
-			if(p57!==void 0&&p72!==void 0) {
-				if(p57===1&&typeof p72==="bigint") return;
+			if(p72!==void 0) {
+				if(typeof p72==="bigint") return;
 			}
 			return;
 		}
@@ -9805,7 +9814,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerHeaderSupportedRenderers:any}>} x */
 	PlayerOverlayWithSupportedRenderers(x) {
 		this.save_keys("[PlayerOverlayWithSupportedRenderers]",x);
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y);
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y);
+		if(videoInteractions) this.g(videoInteractions);
 	}
 	/** @arg {BrowseFeedActionsRenderer} x */
 	BrowseFeedActionsRenderer(x) {

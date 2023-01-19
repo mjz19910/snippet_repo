@@ -36,6 +36,7 @@ type ReelPlayerOverlayData={
 	subscribeButtonRenderer: SubscribeButtonRenderer;
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
 	viewCommentsButton: ButtonRenderer;
+	videoInteractions?: {};
 	trackingParams: string;
 	shareButton: ButtonRenderer;
 	pivotButton: PivotButtonRenderer;
