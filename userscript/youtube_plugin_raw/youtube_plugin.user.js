@@ -10047,8 +10047,14 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
 			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
 			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
-			case "/youtubei/v1/notification/get_notification_menu": break;
+			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
 		}
+	}
+	/** @arg {GetNotificationMenuWebCommandMetadata} x */
+	GetNotificationMenuWebCommandMetadata(x) {
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
 	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
