@@ -1,0 +1,3 @@
+type TextInputFormFieldRenderer={
+	textInputFormFieldRenderer: TextInputFormField;
+};

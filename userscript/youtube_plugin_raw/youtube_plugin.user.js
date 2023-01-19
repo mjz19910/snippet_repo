@@ -8935,6 +8935,7 @@ class HandleTypes extends ServiceMethods {
 	GetAddToPlaylistResponse(x) {
 		this.save_keys("[GetAddToPlaylistResponse]",x);
 		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y);
+		debugger;
 		this.z(contents,this.AddToPlaylistRenderer);
 		this.trackingParams(trackingParams);
 	}

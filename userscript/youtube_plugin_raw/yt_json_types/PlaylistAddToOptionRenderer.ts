@@ -1,0 +1,3 @@
+type PlaylistAddToOptionRenderer={
+	playlistAddToOptionRenderer: PlaylistAddToOption;
+};
