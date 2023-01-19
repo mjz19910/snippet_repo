@@ -9696,213 +9696,354 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
 		this.save_keys("[GuideCollapsibleEntry]",x);
-		const {expanderItem,expandableItems,collapserItem,...y}=x; this.g(y);
+		const {expanderItem,expandableItems,collapserItem}=x; //...y}=x; this.g(y); //#destructure
+		expanderItem;
+		expandableItems;
+		collapserItem;
 	}
 	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
 	ItemSectionRendererTemplate_Section(x) {
 		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
-		const {itemSectionRenderer,...y}=x; this.g(y);
+		const {itemSectionRenderer}=x; //...y}=x; this.g(y); //#destructure
+		this.ItemSectionDataTemplate_Section(itemSectionRenderer);
+	}
+	/** @arg {ItemSectionDataTemplate_Section<"comments-entry-point">} x */
+	ItemSectionDataTemplate_Section(x) {
+		this.save_keys("[ItemSectionDataTemplate_Section]",x);
+		const {contents,trackingParams,sectionIdentifier}=x; //...y}=x; this.g(y); //#destructure
+		contents;
+		trackingParams;
+		sectionIdentifier;
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {
 		this.save_keys("[MerchandiseShelfRenderer]",x);
-		const {merchandiseShelfRenderer,...y}=x; this.g(y);
+		const {merchandiseShelfRenderer}=x; //...y}=x; this.g(y); //#destructure
+		merchandiseShelfRenderer;
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
 		this.save_keys("[VideoPrimaryInfoRenderer]",x);
-		const {videoPrimaryInfoRenderer,...y}=x; this.g(y);
+		const {videoPrimaryInfoRenderer}=x; //...y}=x; this.g(y); //#destructure
+		videoPrimaryInfoRenderer;
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
 		this.save_keys("[VideoSecondaryInfoRenderer]",x);
-		const {videoSecondaryInfoRenderer,...y}=x; this.g(y);
+		const {videoSecondaryInfoRenderer}=x; //...y}=x; this.g(y); //#destructure
+		videoSecondaryInfoRenderer;
 	}
 	/** @arg {NextWebCommandMetadata} x */
 	NextWebCommandMetadata(x) {
 		this.save_keys("[NextWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
+		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/next") debugger;
 	}
 	/** @arg {SetSettingWebCommandMetadata} x */
 	SetSettingWebCommandMetadata(x) {
 		this.save_keys("[SetSettingWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
+		const {sendPost,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/account/set_setting") debugger;
 	}
 	/** @arg {MultiMarkersPlayerBarRenderer} x */
 	MultiMarkersPlayerBarRenderer(x) {
 		this.save_keys("[MultiMarkersPlayerBarRenderer]",x);
-		const {multiMarkersPlayerBarRenderer,...y}=x; this.g(y);
+		const {multiMarkersPlayerBarRenderer}=x; //...y}=x; this.g(y); //#destructure
+		multiMarkersPlayerBarRenderer;
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		this.save_keys("[AdSlotAndLayoutMetadataItem]",x);
-		const {adLayoutMetadata,adSlotMetadata,...y}=x; this.g(y);
+		const {adLayoutMetadata,adSlotMetadata}=x; //...y}=x; this.g(y); //#destructure
+		adLayoutMetadata;
+		adSlotMetadata;
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
 		this.save_keys("[MacroMarkersListRenderer]",x);
-		const {macroMarkersListRenderer,...y}=x; this.g(y);
+		const {macroMarkersListRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9766,9:*/macroMarkersListRenderer
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
 		this.save_keys("[ProductListRenderer]",x);
-		const {productListRenderer,...y}=x; this.g(y);
+		const {productListRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9771,9:*/productListRenderer
 	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.save_keys("[VideoDescriptionHeaderRenderer]",x);
-		const {videoDescriptionHeaderRenderer,...y}=x; this.g(y);
+		const {videoDescriptionHeaderRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9776,9:*/videoDescriptionHeaderRenderer
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
 		this.save_keys("[ExpandableVideoDescriptionBodyRenderer]",x);
-		const {expandableVideoDescriptionBodyRenderer,...y}=x; this.g(y);
+		const {expandableVideoDescriptionBodyRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9781,9:*/expandableVideoDescriptionBodyRenderer
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
 		this.save_keys("[VideoDescriptionMusicSectionRenderer]",x);
-		const {videoDescriptionMusicSectionRenderer,...y}=x; this.g(y);
+		const {videoDescriptionMusicSectionRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9786,9:*/videoDescriptionMusicSectionRenderer
 	}
 	/** @arg {HorizontalCardListRenderer} x */
 	HorizontalCardListRenderer(x) {
 		this.save_keys("[HorizontalCardListRenderer]",x);
-		const {horizontalCardListRenderer,...y}=x; this.g(y);
+		const {horizontalCardListRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9791,9:*/horizontalCardListRenderer
 	}
 	/** @arg {SearchPageWebCommandMetadata} x */
 	SearchPageWebCommandMetadata(x) {
 		this.save_keys("[SearchPageWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
+		url;
+		/*9802,14:*/webPageType
+		/*9802,26:*/rootVe
 	}
 	/** @arg {CompactVideoRenderer} x */
 	CompactVideoRenderer(x) {
 		this.save_keys("[CompactVideoRenderer]",x);
-		const {compactVideoRenderer,...y}=x; this.g(y);
+		const {compactVideoRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9808,9:*/compactVideoRenderer
 	}
 	/** @arg {FusionSearchboxData} x */
 	FusionSearchboxData(x) {
 		this.save_keys("[FusionSearchboxData]",x);
-		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y);
+		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton}=x; //...y}=x; this.g(y); //#destructure
+		icon;
+		/*9813,15:*/placeholderText
+		/*9813,31:*/config
+		/*9813,38:*/trackingParams
+		/*9813,53:*/searchEndpoint
+		/*9813,68:*/clearButton
 	}
 	/** @arg {NotificationTopbarButtonData} x */
 	NotificationTopbarButtonData(x) {
 		this.save_keys("[NotificationTopbarButtonData]",x);
-		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y);
+		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas}=x; //...y}=x; this.g(y); //#destructure
+		icon;
+		menuRequest;
+		/*9819,27:*/style
+		/*9819,33:*/trackingParams
+		/*9819,48:*/accessibility
+		/*9819,62:*/tooltip
+		/*9819,70:*/updateUnseenCountEndpoint
+		/*9819,96:*/notificationCount
+		/*9819,114:*/handlerDatas
 	}
 	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
 		this.save_keys("[HotkeyDialogRenderer]",x);
-		const {hotkeyDialogRenderer,...y}=x; this.g(y);
+		const {hotkeyDialogRenderer}=x; //...y}=x; this.g(y); //#destructure
+		/*9826,9:*/hotkeyDialogRenderer
 	}
 	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
-		const {targetId,visibility,...y}=x; this.g(y);
+		const {targetId,visibility}=x; //...y}=x; this.g(y); //#destructure
+		targetId;
+		/*9831,19:*/visibility
 	}
 	/** @arg {ShowEngagementPanelScrimActionData} x */
 	ShowEngagementPanelScrimActionData(x) {
 		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
-		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y);
+		const {engagementPanelTargetId,onClickCommands}=x; //...y}=x; this.g(y); //#destructure
+		engagementPanelTargetId;
+		/*9837,34:*/onClickCommands
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
 		this.save_keys("[UpdateEngagementPanelData]",x);
-		const {content,targetId,...y}=x; this.g(y);
+		const {content,targetId}=x; //...y}=x; this.g(y); //#destructure
+		content;
+		/*9843,18:*/targetId
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
 		this.save_keys("[AccountItem]",x);
-		const {accountItem,...y}=x; this.g(y);
+		const {accountItem}=x; //...y}=x; this.g(y); //#destructure
+		accountItem;
 	}
 	/** @arg {UiActions} x */
 	UiActions(x) {
 		this.save_keys("[UiActions]",x);
-		const {hideEnclosingContainer,...y}=x; this.g(y);
+		const {hideEnclosingContainer}=x; //...y}=x; this.g(y); //#destructure
+		hideEnclosingContainer;
 	}
 	/** @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuData(x) {
 		this.save_keys("[SortFilterSubMenuData]",x);
-		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y);
+		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams}=x; //...y}=x; this.g(y); //#destructure
+		subMenuItems;
+		/*9861,23:*/title
+		/*9861,29:*/icon
+		/*9861,34:*/accessibility
+		/*9861,48:*/tooltip
+		/*9861,56:*/trackingParams
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
 		this.save_keys("[GetMultiPageMenuActionData]",x);
-		const {menu,...y}=x; this.g(y);
+		const {menu}=x; //...y}=x; this.g(y); //#destructure
+		menu;
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		this.save_keys("[EmojiPickerRenderer]",x);
-		const {emojiPickerRenderer,...y}=x; this.g(y);
+		const {emojiPickerRenderer}=x; //...y}=x; this.g(y); //#destructure
+		emojiPickerRenderer;
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
 		this.save_keys("[ChannelResponse]",x);
-		const {responseContext,contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=x; this.g(y);
+		const {responseContext,contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions}=x; //...y}=x; this.g(y); //#destructure
+		responseContext;
+		/*9873,26:*/contents
+		/*9873,35:*/header
+		/*9873,42:*/metadata
+		/*9873,51:*/topbar
+		/*9873,58:*/trackingParams
+		/*9873,73:*/microformat
+		/*9873,85:*/onResponseReceivedActions
 	}
 	/** @arg {PlaylistResponse} x */
 	PlaylistResponse(x) {
 		this.save_keys("[PlaylistResponse]",x);
-		const {contents,responseContext,header,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y);
+		const {responseContext,contents,header,metadata,topbar,trackingParams,microformat,sidebar}=x; //...y}=x; this.g(y); //#destructure
+		responseContext;
+		/*9879,26:*/contents
+		/*9879,35:*/header
+		/*9879,42:*/metadata
+		/*9879,51:*/topbar
+		/*9879,58:*/trackingParams
+		/*9879,73:*/microformat
+		/*9879,85:*/sidebar
 	}
 	/** @arg {SettingsResponse} x */
 	SettingsResponse(x) {
 		this.save_keys("[SettingsResponse]",x);
-		const {responseContext,contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=x; this.g(y);
+		const {responseContext,contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar}=x; //...y}=x; this.g(y); //#destructure
+		responseContext;
+		/*9885,26:*/contents
+		/*9885,35:*/topbar
+		/*9885,42:*/trackingParams
+		/*9885,57:*/onResponseReceivedEndpoints
+		/*9885,85:*/sidebar
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
 		this.save_keys("[C4TabbedHeaderData]",x);
-		const {channelHandleText,channelId,videosCountText,subscriberCountText,title,navigationEndpoint,avatar,banner,headerLinks,sponsorButton,subscribeButton,visitTracking,trackingParams,tvBanner,mobileBanner,...y}=x; this.g(y);
+		const {channelHandleText,channelId,videosCountText,subscriberCountText,title,navigationEndpoint,avatar,banner,headerLinks,sponsorButton,subscribeButton,visitTracking,trackingParams,tvBanner,mobileBanner}=x; //...y}=x; this.g(y); //#destructure
+		channelHandleText;
+		channelId;
+		/*9891,38:*/videosCountText
+		/*9891,54:*/subscriberCountText
+		/*9891,74:*/title
+		/*9891,80:*/navigationEndpoint
+		/*9891,99:*/avatar
+		/*9891,106:*/banner
+		/*9891,113:*/headerLinks
+		/*9891,125:*/sponsorButton
+		/*9891,139:*/subscribeButton
+		/*9891,155:*/visitTracking
+		/*9891,169:*/trackingParams
+		/*9891,184:*/tvBanner
+		/*9891,193:*/mobileBanner
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
 		this.save_keys("[SettingsSidebarData]",x);
-		const {title,items,...y}=x; this.g(y);
+		const {title,items}=x; //...y}=x; this.g(y); //#destructure
+		title;
+		items;
 	}
 	/** @arg {ExpandableTabRenderer} x */
 	ExpandableTabRenderer(x) {
 		this.save_keys("[ExpandableTabRenderer]",x);
-		const {expandableTabRenderer,...y}=x; this.g(y);
+		const {expandableTabRenderer}=x; //...y}=x; this.g(y); //#destructure
+		expandableTabRenderer;
 	}
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerHeaderSupportedRenderers:any}>} x */
 	PlayerOverlayWithSupportedRenderers(x) {
 		this.save_keys("[PlayerOverlayWithSupportedRenderers]",x);
-		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y);
+		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge}=x; //...y}=x; this.g(y); //#destructure
+		likeButton;
+		reelPlayerHeaderSupportedRenderers;
+		menu;
+		/*9911,61:*/nextItemButton;
+		/*9911,76:*/prevItemButton;
+		/*9911,91:*/subscribeButtonRenderer;
+		/*9911,115:*/style;
+		/*9911,121:*/viewCommentsButton;
 		if(videoInteractions) this.g(videoInteractions);
+		/*9911,158:*/trackingParams;
+		/*9911,173:*/shareButton;
+		/*9911,185:*/pivotButton;
+		/*9911,197:*/badge;
 	}
 	/** @arg {BrowseFeedActionsRenderer} x */
 	BrowseFeedActionsRenderer(x) {
 		this.save_keys("[BrowseFeedActionsRenderer]",x);
-		const {browseFeedActionsRenderer,...y}=x; this.g(y);
+		const {browseFeedActionsRenderer}=x; //...y}=x; this.g(y); //#destructure
+		browseFeedActionsRenderer;
 	}
 	/** @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
 		this.save_keys("[ChipCloudChipData]",x);
-		const {style,text,navigationEndpoint,trackingParams,isSelected,...y}=x; this.g(y);
+		const {style,text,navigationEndpoint,trackingParams,isSelected}=x; //...y}=x; this.g(y); //#destructure
+		style;
+		/*9926,16:*/text;
+		/*9926,21:*/navigationEndpoint;
+		/*9926,40:*/trackingParams;
+		/*9926,55:*/isSelected;
 	}
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
 		this.save_keys("[FeedFilterChipBarData]",x);
-		const {contents,trackingParams,styleType,...y}=x; this.g(y);
+		const {contents,trackingParams,styleType}=x; //...y}=x; this.g(y); //#destructure
+		contents;
+		/*9932,19:*/trackingParams;
+		/*9932,34:*/styleType;
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */
 	LiveChatPlaceholderItemData(x) {
 		this.save_keys("[LiveChatPlaceholderItemData]",x);
-		const {id,timestampUsec,...y}=x; this.g(y);
+		const {id,timestampUsec}=x; //...y}=x; this.g(y); //#destructure
+		id;
+		/*9938,13:*/timestampUsec;
 	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
 		this.save_keys("[CommentRenderer]",x);
-		const {commentRenderer,...y}=x; this.g(y);
+		const {commentRenderer}=x; //...y}=x; this.g(y); //#destructure
+		commentRenderer;
 	}
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
 		this.save_keys("[RichItemData]",x);
-		const {content,rowIndex,colIndex,...y}=x; this.g(y);
+		const {content,rowIndex,colIndex}=x; //...y}=x; this.g(y); //#destructure
+		content;
+		rowIndex;
+		colIndex;
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
 		this.save_keys("[LiveChatTextMessageData]",x);
-		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x; this.g(y);
+		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText}=x; //...y}=x; this.g(y); //#destructure
+		message;
+		authorName;
+		authorPhoto;
+		contextMenuEndpoint;
+		id;
+		authorBadges;
+		timestampUsec;
+		authorExternalChannelId;
+		contextMenuAccessibility;
+		timestampText;
 	}
 	//#endregion
 	//#region dispatch_in_progress
@@ -9916,31 +10057,27 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {UnifiedSharePanelRenderer} x */
 	UnifiedSharePanelRenderer(x) {
 		this.save_keys("[UnifiedSharePanelRenderer]",x);
-		//@ts-expect-error(2345)
-		const {...y}=x; this.g(y);
+		const {unifiedSharePanelRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
 		this.save_keys("[AutoplaySetItem]",x);
-		//@ts-expect-error(2345)
-		const {...y}=x; this.g(y);
+		const {mode,autoplayVideo,nextButtonVideo,...y}=x; this.g(y);
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
 		this.save_keys("[ModifiedSetItem]",x);
-		//@ts-expect-error(2345)
-		const {...y}=x; this.g(y);
+		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=x; this.g(y);
 	}
 	/** @arg {ClipCreationRenderer} x */
 	ClipCreationRenderer(x) {
 		this.save_keys("[ClipCreationRenderer]",x);
-		//@ts-expect-error(2345)
-		const {...y}=x; this.g(y);
+		const {clipCreationRenderer,...y}=x; this.g(y);
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
 		this.save_keys("[minimal_handler_member]",x);
-		//@ts-expect-error(2345)
+		//@ts-expect-error(2345) !
 		const {...y}=x; this.g(y);
 	}
 	//#endregion
