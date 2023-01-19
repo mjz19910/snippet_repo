@@ -4725,7 +4725,9 @@ class ParserService extends BaseService {
 		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
 		parse_key(1);
 		parse_key(2);
+		parse_key(3);
 		parse_key(5);
+		parse_key(9);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
 		debugger;
