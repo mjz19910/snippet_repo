@@ -1,7 +1,7 @@
 type EngagementPanelMenu=MenuRenderer|SortFilterSubMenuRenderer;
 
 type EngagementPanelTitleHeader={
-	title: TextWithRuns;
+	title: TextT;
 	contextualInfo?: TextWithRuns;
 	informationButton?: ButtonRenderer;
 	menu?: EngagementPanelMenu;
