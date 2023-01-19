@@ -4748,37 +4748,6 @@ class ParserService extends BaseService {
 		let map_keys=[...x.keys()];
 		/** @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 		let parse_key=(ta,cb=null) => this.parse_key(for_,path,x,map_keys,ta,cb);
-		if(this.eq_keys(map_keys,[2,3])) {
-			let p2=x.get(2);
-			let p3=x.get(3);
-			if(p2!==void 0&&p3!==void 0) {
-				if(p2===2&&p3===1) return;
-			}
-		}
-		let p2=x.get(2);
-		let p3=x.get(3);
-		x: if(p2!==void 0&&p3!==void 0) {
-			if(p2===1&&p3===1) {
-				let p27=x.get(27);
-				if(!p27) {debugger; break x;}
-				if(!(p27 instanceof Map)) {debugger; break x;}
-				let map_keys_1=[...p27.keys()];
-				if(this.eq_keys(map_keys_1,[1])) {
-					let p27_p1=p27.get(1);
-					if(p27_p1===1) return;
-				}
-				let param_obj_p27=this.to_param_obj(p27);
-				console.log("[new_watch_endpoint_param_p27]",for_,param_obj_p27);
-				debugger;
-			}
-		}
-		if(this.eq_keys(map_keys,[24,56])) {
-			let p24=x.get(24);
-			let p56=x.get(56);
-			if(p24!==void 0&&p56!==void 0&&p24===1&&typeof p56==="string") {
-				return this.parse_video_id(p56);
-			}
-		}
 		parse_key(1);
 		parse_key(3);
 		parse_key(5);
@@ -4804,16 +4773,9 @@ class ParserService extends BaseService {
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
 	parse_player_param_f40(for_,path,x) {
 		let map_keys=[...x.keys()];
-		/** @arg {number} ta @arg {ParseCallbackFunction} cb */
-		let parse_key=(ta,cb) => this.parse_key(for_,path,x,map_keys,ta,cb);
-		parse_key(1,(x1,ta) => {
-			if(!(x1 instanceof Map)) {
-				console.log(`[player_params.${path}.f%s] [idx=%s]`,ta+"",this.parse_key_index.toString(),x1);
-				debugger;
-				return;
-			}
-			return this.parse_player_param_f40_f1(for_,`player_params.${path}.f${ta}`,x1);
-		});
+		/** @arg {number} ta */
+		let parse_key=(ta) => this.parse_key(for_,path,x,map_keys,ta,null);
+		parse_key(1);
 		if(this.eq_keys(map_keys,[])) return;
 		console.log(`[player_params.${path}]`,x,map_keys);
 		console.log(`[new.player_params.${path}]`,this.to_param_obj(x));
