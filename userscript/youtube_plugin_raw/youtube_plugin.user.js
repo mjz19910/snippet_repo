@@ -4816,9 +4816,13 @@ class ParserService extends BaseService {
 			}
 		}
 		parse_key(1);
-		parse_key(5,r=>{
-			if(r.size<=0) return;
-			console.log("obj5",r);
+		parse_key(3,tv=>{
+			if(tv.size<=0) return;
+			console.log("[watch_endpoint_params.value.f3] [idx=%s]",this.parse_key_index.toString(),for_,tv);
+		});
+		parse_key(5,tv=>{
+			if(tv.size<=0) return;
+			console.log("[watch_endpoint_params.value.f5] [idx=%s]",this.parse_key_index.toString(),for_,tv);
 		});
 		parse_key(6);
 		if(this.eq_keys(map_keys,[])) return;
