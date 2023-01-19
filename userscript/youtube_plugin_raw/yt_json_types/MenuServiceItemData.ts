@@ -8,4 +8,8 @@ type MenuServiceItemData={
 	serviceEndpoint: MenuServiceEndpointItems;
 	trackingParams: string;
 	hasSeparator?: true;
+}|{
+	text: TextWithRuns;
+	serviceEndpoint: SignalServiceEndpoint;
+	trackingParams: string;
 };

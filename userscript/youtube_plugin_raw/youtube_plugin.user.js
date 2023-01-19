@@ -7721,12 +7721,19 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
 		this.save_keys("[MenuServiceItemData]",x);
-		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y);
+		if("icon" in x) {
+			const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y);
+			this.TextWithRuns(text);
+			this.Icon(icon);
+			this.ServiceEndpointTemplate(serviceEndpoint,this.MenuServiceEndpoints);
+			this.trackingParams(trackingParams);
+			if(hasSeparator!==void 0&&hasSeparator!==true) debugger;
+			return;
+		}
+		const {text,serviceEndpoint,trackingParams,...y}=x; this.g(y);
 		this.TextWithRuns(text);
-		this.Icon(icon);
-		this.ServiceEndpointTemplate(serviceEndpoint,this.MenuServiceEndpoints);
+		this.SignalServiceEndpoint(serviceEndpoint);
 		this.trackingParams(trackingParams);
-		if(hasSeparator!==void 0&&hasSeparator!==true) debugger;
 	}
 	/** @arg {MenuServiceEndpoints} x */
 	MenuServiceEndpoints(x) {
