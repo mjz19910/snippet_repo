@@ -20,4 +20,5 @@ type YtUrlFormat=[
 	WatchPageUrl,
 	YtExternalUrlFormat,
 	`http://www.youtube.com/watch?v=${string}&list=${string}`,
+	`https://support.google.com/youtube/answer/${number}`,
 ][number];

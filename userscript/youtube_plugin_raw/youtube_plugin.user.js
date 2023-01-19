@@ -4909,6 +4909,7 @@ class ParserService extends BaseService {
 			case "www.youtubekids.com": return;
 			case "tv.youtube.com": return;
 			case "www.gstatic.com": return;
+			case "support.google.com": return;
 			default:
 		}
 		let s_host=split_string_once(r.host,".");
