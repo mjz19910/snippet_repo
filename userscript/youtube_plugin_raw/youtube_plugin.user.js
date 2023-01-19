@@ -9714,13 +9714,13 @@ class HandleTypes extends ServiceMethods {
 	FeaturedChannel(x) {
 		this.save_keys("[TopbarLogo]",x);
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton}=x; //...y}=x; this.g(y); //#destructure
-		startTimeMs;
-		endTimeMs;
-		watermark;
+		this.primitive_of(startTimeMs,"string");
+		this.primitive_of(endTimeMs,"string");
+		this.Thumbnail(watermark);
 		this.trackingParams(trackingParams);
-		navigationEndpoint;
-		channelName;
-		subscribeButton;
+		this.BrowseEndpoint(navigationEndpoint);
+		this.primitive_of(channelName,"string");
+		this.SubscribeButtonRenderer(subscribeButton);
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
@@ -9861,10 +9861,10 @@ class HandleTypes extends ServiceMethods {
 	FusionSearchboxData(x) {
 		this.save_keys("[FusionSearchboxData]",x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton}=x; //...y}=x; this.g(y); //#destructure
-		icon;
+		this.Icon(icon);
 		placeholderText;
 		config;
-		trackingParams;
+		this.trackingParams(trackingParams);
 		searchEndpoint;
 		clearButton;
 	}
@@ -9872,11 +9872,11 @@ class HandleTypes extends ServiceMethods {
 	NotificationTopbarButtonData(x) {
 		this.save_keys("[NotificationTopbarButtonData]",x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas}=x; //...y}=x; this.g(y); //#destructure
-		icon;
-		menuRequest;
+		this.Icon(icon);
+		this.SignalServiceEndpoint(menuRequest);
 		style;
-		trackingParams;
-		accessibility;
+		this.trackingParams(trackingParams);
+		this.Accessibility(accessibility);
 		tooltip;
 		updateUnseenCountEndpoint;
 		notificationCount;
@@ -9892,14 +9892,14 @@ class HandleTypes extends ServiceMethods {
 	ChangeEngagementPanelVisibilityActionData(x) {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
 		const {targetId,visibility}=x; //...y}=x; this.g(y); //#destructure
-		targetId;
-		visibility;
+		if(targetId!=="engagement-panel-comments-section") debugger;
+		if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED") debugger;
 	}
 	/** @arg {ShowEngagementPanelScrimActionData} x */
 	ShowEngagementPanelScrimActionData(x) {
 		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
 		const {engagementPanelTargetId,onClickCommands}=x; //...y}=x; this.g(y); //#destructure
-		engagementPanelTargetId;
+		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
 		onClickCommands;
 	}
 	/** @arg {UpdateEngagementPanelData} x */
@@ -9925,12 +9925,16 @@ class HandleTypes extends ServiceMethods {
 	SortFilterSubMenuData(x) {
 		this.save_keys("[SortFilterSubMenuData]",x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams}=x; //...y}=x; this.g(y); //#destructure
-		subMenuItems;
-		title;
-		icon;
-		accessibility;
+		this.z(subMenuItems,a=>this.ActionSetPlaylistVideoOrder(a));
+		this.primitive_of(title,"string");
+		if(icon) this.Icon(icon);
+		if(accessibility) this.Accessibility(accessibility);
 		tooltip;
-		trackingParams;
+		this.trackingParams(trackingParams);
+	}
+	/** @arg {ActionSetPlaylistVideoOrder} x */
+	ActionSetPlaylistVideoOrder(x) {
+		x;
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
@@ -9953,7 +9957,7 @@ class HandleTypes extends ServiceMethods {
 		header;
 		metadata;
 		topbar;
-		trackingParams;
+		this.trackingParams(trackingParams);
 		microformat;
 		onResponseReceivedActions;
 	}
@@ -9966,7 +9970,7 @@ class HandleTypes extends ServiceMethods {
 		header;
 		metadata;
 		topbar;
-		trackingParams;
+		this.trackingParams(trackingParams);
 		microformat;
 		sidebar;
 	}
@@ -9977,35 +9981,25 @@ class HandleTypes extends ServiceMethods {
 		responseContext;
 		contents;
 		topbar;
-		trackingParams;
+		this.trackingParams(trackingParams);
 		onResponseReceivedEndpoints;
 		sidebar;
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
 		this.save_keys("[C4TabbedHeaderData]",x);
-		const {channelHandleText,channelId,videosCountText,subscriberCountText,title,navigationEndpoint,avatar,banner,headerLinks,sponsorButton,subscribeButton,visitTracking,trackingParams,tvBanner,mobileBanner}=x; //...y}=x; this.g(y); //#destructure
-		channelHandleText;
-		channelId;
-		videosCountText;
-		subscriberCountText;
-		title;
-		navigationEndpoint;
-		avatar;
-		banner;
-		headerLinks;
-		sponsorButton;
-		subscribeButton;
-		visitTracking;
-		trackingParams;
-		tvBanner;
-		mobileBanner;
+		const {channelId,title,subscribeButton,trackingParams}=x; //...y}=x; this.g(y); //#destructure
+		debugger;
+		this.x.get("parser_service").parse_channel_id(channelId);
+		this.primitive_of(title,"string");
+		this.SubscribeButtonRenderer(subscribeButton);
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
 		this.save_keys("[SettingsSidebarData]",x);
 		const {title,items}=x; //...y}=x; this.g(y); //#destructure
-		title;
+		this.TextWithRuns(title);
 		items;
 	}
 	/** @arg {ExpandableTabRenderer} x */
@@ -10023,14 +10017,18 @@ class HandleTypes extends ServiceMethods {
 		menu;
 		nextItemButton;
 		prevItemButton;
-		subscribeButtonRenderer;
+		this.SubscribeButtonRenderer(subscribeButtonRenderer);
 		style;
 		viewCommentsButton;
 		if(videoInteractions) this.g(videoInteractions);
-		trackingParams;
+		this.trackingParams(trackingParams);
 		shareButton;
 		pivotButton;
 		badge;
+	}
+	/** @arg {SubscribeButtonRenderer} x */
+	SubscribeButtonRenderer(x) {
+		x;
 	}
 	/** @arg {BrowseFeedActionsRenderer} x */
 	BrowseFeedActionsRenderer(x) {
@@ -10045,7 +10043,7 @@ class HandleTypes extends ServiceMethods {
 		style;
 		text;
 		navigationEndpoint;
-		trackingParams;
+		this.trackingParams(trackingParams);
 		isSelected;
 	}
 	/** @arg {FeedFilterChipBarData} x */
@@ -10053,7 +10051,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[FeedFilterChipBarData]",x);
 		const {contents,trackingParams,styleType}=x; //...y}=x; this.g(y); //#destructure
 		contents;
-		trackingParams;
+		this.trackingParams(trackingParams);
 		styleType;
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */

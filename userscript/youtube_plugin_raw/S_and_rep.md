@@ -21,3 +21,9 @@ $1(x) {
 		this.save_keys\("\[\w+\]",x\);
 	\}
 ```
+
+# find words followed by ;
+## query 1
+```regexp
+		(\w+);
+```
