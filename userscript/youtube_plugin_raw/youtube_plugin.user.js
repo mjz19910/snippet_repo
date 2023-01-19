@@ -4759,11 +4759,13 @@ class ParserService extends BaseService {
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,map_keys,ta,null);
 		parse_key(1);
+		parse_key(2);
 		parse_key(3);
 		parse_key(5);
 		parse_key(6);
 		parse_key(8);
 		parse_key(12);
+		parse_key(27);
 		parse_key(33);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
