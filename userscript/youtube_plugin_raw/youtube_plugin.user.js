@@ -4350,6 +4350,7 @@ class ParserService extends BaseService {
 		if(x===void 0) {debugger; return;}
 		x: {
 			switch(x) {
+				case "LL": break;
 				case "WL": break;
 				default: break x;
 			}
