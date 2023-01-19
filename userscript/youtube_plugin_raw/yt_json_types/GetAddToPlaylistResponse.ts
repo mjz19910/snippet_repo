@@ -5,38 +5,36 @@ type PlaylistAddToOption={
 	containsSelectedVideos: "NONE";
 	privacyIcon: Icon<"PRIVACY_PRIVATE">;
 	addToPlaylistServiceEndpoint: PlaylistEditEndpoint;
-	removeFromPlaylistServiceEndpoint: {
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		playlistEditEndpoint: {};
-	};
+	removeFromPlaylistServiceEndpoint: PlaylistEditEndpoint;
 	trackingParams: string;
 };
 
 type PlaylistAddToOptionRenderer={
 	playlistAddToOptionRenderer: PlaylistAddToOption;
 };
+type TextInputFormField={
+	label: TextWithRuns;
+	maxCharacterLimit: 150;
+	placeholderText: string;
+	validValueRegexp: "[^<>]*";
+	invalidValueErrorMessage: TextWithRuns;
+	required: true;
+};
+
+type TextInputFormFieldRenderer={
+	textInputFormFieldRenderer: TextInputFormField;
+};
+
+type DropdownRenderer={
+	dropdownRenderer: {};
+};
+
 type AddToPlaylistCreate={
 	openCreateLink: CompactLinkRenderer;
-	nameInput: {
-		textInputFormFieldRenderer: {
-			label: TextWithRuns;
-			maxCharacterLimit: 150;
-			placeholderText: "Enter playlist name...";
-			validValueRegexp: "[^<>]*";
-			invalidValueErrorMessage: TextWithRuns;
-			required: true;
-		};
-	};
-	privacyInput: {
-		dropdownRenderer: {};
-	};
+	nameInput: TextInputFormFieldRenderer;
+	privacyInput: DropdownRenderer;
 	createAction: ButtonRenderer;
-	serviceEndpoint: {
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		createPlaylistServiceEndpoint: {};
-	};
+	serviceEndpoint: CreatePlaylistServiceEndpoint;
 };
 
 type AddToPlaylistCreateRenderer={
