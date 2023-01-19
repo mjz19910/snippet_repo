@@ -8835,13 +8835,19 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
 		this.save_keys("[BrowseContents]",x);
-		if("twoColumnBrowseResultsRenderer" in x) {
-			const {twoColumnBrowseResultsRenderer,...y}=x; this.g(y);
-			this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
-			return;
-		}
+		if("twoColumnBrowseResultsRenderer" in x) return this.TwoColumnBrowseResultsRenderer(x);
+		if("feedFilterChipBarRenderer" in x) return this.FeedFilterChipBarRenderer(x);
+		debugger;
+	}
+	/** @arg {FeedFilterChipBarRenderer} x */
+	FeedFilterChipBarRenderer(x) {
 		const {feedFilterChipBarRenderer,...y}=x; this.g(y);
 		this.FeedFilterChipBarData(feedFilterChipBarRenderer);
+	}
+	/** @arg {TwoColumnBrowseResultsRenderer} x */
+	TwoColumnBrowseResultsRenderer(x) {
+		const {twoColumnBrowseResultsRenderer,...y}=x; this.g(y);
+		this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
 	}
 	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
