@@ -1,11 +1,24 @@
+type SettingsWebCommandMetadata={
+	url: "/account";
+	webPageType: "WEB_PAGE_TYPE_SETTINGS";
+	rootVe: 23462;
+	apiUrl: "/youtubei/v1/browse";
+};
+
 type WebCommandMetadata=
-	|PageWebCommandMetadata
 	|GenericWebCommandMetadata
-	|UnknownWebCommandMetadata
 	|PostWebCommandMetadata
-	|{
-		rootVe: 23462;
-		webPageType: null;
-	}
+	|WebCommandMetadataRVE
+	;
+;
+
+type WebCommandMetadataRVE=
+	|SettingsWebCommandMetadata
+	|UnknownWebCommandMetadata
+	|BrowsePageWebCommandMetadata
+	|ChannelPageWebCommandMetadata
+	|SearchPageWebCommandMetadata
+	|WatchPageWebCommandMetadata
+	|ShortsPageWebCommandMetadata
 	;
 ;

@@ -6354,22 +6354,28 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		this.save_keys("[WebCommandMetadataContent]",x);
-		if("rootVe" in x) {
-			this.rootVe(x.rootVe);
-			switch(x.webPageType) {
-				default: debugger; return;
-				case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
-				case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
-				case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
-				case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
-				case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
-				case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
-			}
-		}
+		if("rootVe" in x) return this.WebCommandMetadataRVE(x);
 		if("apiUrl" in x) return this.GenericWebCommandMetadata(x);
 		let k=this.get_keys_of(x);
 		if(this.eq_keys(k,["sendPost"])) return;
 		debugger;
+	}
+	/** @arg {WebCommandMetadataRVE} x */
+	WebCommandMetadataRVE(x) {
+		this.rootVe(x.rootVe);
+		switch(x.webPageType) {
+			default: debugger; return;
+			case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
+		}
+	}
+	SettingsWebCommandMetadata(x) {
+		x;
 	}
 	/** @arg {WatchPageWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
