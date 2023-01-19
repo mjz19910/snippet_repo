@@ -742,7 +742,6 @@ class HandleRichGridRenderer {
 	}
 	/** @arg {string} path @arg {RichGrid} renderer */
 	richGridRenderer(path,renderer) {
-		debugger;
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
@@ -3049,9 +3048,10 @@ class HandleRendererContentItemArray extends BaseService {
 			if(noisy_logging) console.log("adSlotRenderer=",renderer.content.adSlotRenderer);
 			return false;
 		}
-		if("" in renderer.content) return true;
+		if("videoRenderer" in renderer.content) return true;
+		if("radioRenderer" in renderer.content) return true;
 		let rk=this.get_keys_of(renderer.content);
-		console.log(rk);
+		console.log("[rich_item_renderer.content] [%s]",...rk);
 		debugger;
 		return true;
 	}
