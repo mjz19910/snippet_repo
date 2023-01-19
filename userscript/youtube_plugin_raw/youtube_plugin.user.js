@@ -6432,7 +6432,7 @@ class HandleTypes extends ServiceMethods {
 				const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y);
 				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
 				if(apiUrl!=="/youtubei/v1/browse") debugger;
-				x:{
+				x: {
 					let us=split_string_once(split_string_once(url,"/")[1],"?");
 					if(us[0]!=="playlist") break x;
 					let up=us[1];
@@ -10579,7 +10579,7 @@ class HandleTypes extends ServiceMethods {
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x; this.g(y);
 		this.Thumbnail(thumbnail);
 		this.TextWithRuns(title);
-		this.SubscriptionButton(subscriptionButton);
+		if(subscriptionButton) this.SubscriptionButton(subscriptionButton);
 		this.BrowseEndpoint(navigationEndpoint);
 		this.SimpleText(subscriberCountText);
 		this.trackingParams(trackingParams);
