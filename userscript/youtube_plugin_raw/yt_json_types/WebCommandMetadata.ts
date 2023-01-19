@@ -13,12 +13,12 @@ type WebCommandMetadata=
 ;
 
 type WebCommandMetadataRVE=
-	|SettingsWebCommandMetadata
-	|UnknownWebCommandMetadata
 	|BrowsePageWebCommandMetadata
 	|ChannelPageWebCommandMetadata
 	|SearchPageWebCommandMetadata
-	|WatchPageWebCommandMetadata
+	|SettingsWebCommandMetadata
 	|ShortsPageWebCommandMetadata
+	|UnknownWebCommandMetadata
+	|WatchPageWebCommandMetadata
 	;
 ;

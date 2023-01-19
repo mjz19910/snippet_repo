@@ -6374,6 +6374,7 @@ class HandleTypes extends ServiceMethods {
 			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
 		}
 	}
+	/** @arg {SettingsWebCommandMetadata} x */
 	SettingsWebCommandMetadata(x) {
 		x;
 	}
