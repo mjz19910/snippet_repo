@@ -4091,12 +4091,17 @@ class CodegenService extends BaseService {
 		let cg=this.#_codegen_new_typedef(x,gen_name);
 		if(ret_val) return cg;
 		if(cg) {
-			let code_result=`namespace ${gen_name} {
-			${cg.split("\n").map(e=>{
-				if(e.startsWith("type")) return `\texport ${e}`;
-				return `\t${e}`;
-			}).join("\n")}
-		}`;
+			let code_result=`
+			namespace ${gen_name} {
+				${cg.split("\n").map(e=>{
+					if(e.startsWith("type")) return `\texport ${e}`;
+					return `\t${e}`;
+				}).join("\n")}
+			}`;
+			let fl=code_result.split("\n")[0];
+			let fl_trim=fl.trim();
+			let trim_len=fl_trim.length-fl.length;
+			console.log("trim len",trim_len);
 			if(!this.codegen_cache.includes(code_result)) {
 				this.codegen_cache.push(code_result);
 				console.log(code_result);
@@ -5116,6 +5121,7 @@ class ParserService extends BaseService {
 	/** @public @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		if(this.str_starts_with(x,"browse-feed")) {
+			console.log("[target_id.browse_feed","browse-feed",split_string_once("browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
 		if(this.str_starts_with(x,"engagement-panel")) {
@@ -5136,8 +5142,7 @@ class ParserService extends BaseService {
 		if(this.str_starts_with(x,"clip")) {
 			return this.save_enum("clip",x);
 		}
-		console.log("[new_parse_target_id]",x);
-		debugger;
+		this.save_string("[target_id]",x);
 	}
 	/** @public @arg {SplitOnce<ChanLoc,".">} x */
 	parse_channel_section(x) {
@@ -8828,10 +8833,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Button_serviceEndpoint} x */
 	Button_serviceEndpoint(x) {
+		const cf="Button_serviceEndpoint";
 		if("signalServiceEndpoint" in x) {
 			return this.SignalServiceEndpoint(x);
 		}
-		debugger;
+		this.do_codegen(cf,x);
 	}
 	/** @arg {Button_navigationEndpoint} x */
 	Button_navigationEndpoint(x) {
