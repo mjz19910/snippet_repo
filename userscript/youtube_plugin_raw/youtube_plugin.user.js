@@ -9117,10 +9117,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
 		this.save_keys("[ResponseReceivedAction]",x);
-		if("adsControlFlowOpportunityReceivedCommand" in x) {
-			return this.AdsControlFlowOpportunityReceivedCommand(x);
-		}
-		this.ReloadContinuationItemsCommand(x);
+		if("adsControlFlowOpportunityReceivedCommand" in x) return this.AdsControlFlowOpportunityReceivedCommand(x);
+		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
+		debugger;
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
