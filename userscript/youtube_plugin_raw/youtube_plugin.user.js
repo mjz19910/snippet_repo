@@ -4716,8 +4716,14 @@ class ParserService extends BaseService {
 			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv);
 		}
 	}
-	parse_any_param(for_,path,tv) {
-
+	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
+	parse_any_param(root,path,x) {
+		let mk=[...x.keys()];
+		/** @arg {number} ta */
+		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
+		if(this.eq_keys(mk,[])) return;
+		console.log("[new_param_data]",root,path,this.to_param_obj(x));
+		debugger;
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
 	parse_player_params_with_map(for_,path,x) {
