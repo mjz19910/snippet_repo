@@ -4763,6 +4763,7 @@ class ParserService extends BaseService {
 		x: if(p57!==void 0) {
 			switch(p57) {
 				case 1: break;
+				case 19: break;
 				default: break x;
 			}
 			x.delete(57);
@@ -4774,6 +4775,7 @@ class ParserService extends BaseService {
 			}
 			return;
 		}
+		if(this.eq_keys(map_keys,[])) return;
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
 		debugger;
 	}
@@ -4811,8 +4813,19 @@ class ParserService extends BaseService {
 				return this.parse_video_id(p56);
 			}
 		}
+		let ta;
+		ta=1;
+		let p1=x.get(ta);
+		if(p1!==void 0) {
+			let cx=map_keys.indexOf(ta);
+			if(cx>-1) map_keys.splice(cx,1);
+			debugger;
+			x.delete(ta);
+		}
+		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log("[new_watch_endpoint_params]",for_,param_obj);
+		debugger;
 	}
 	/** @arg {ParamMapType} x @returns {ParamObjType} */
 	to_param_obj(x) {
