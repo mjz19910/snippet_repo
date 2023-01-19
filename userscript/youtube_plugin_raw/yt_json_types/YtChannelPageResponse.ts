@@ -1,6 +1,6 @@
 type ChannelPageResponse={
 	page: "channel";
-	endpoint: {};
+	endpoint: BrowseEndpoint;
 	response: ChannelResponse;
 	url: string;
 	expirationTime?: number;

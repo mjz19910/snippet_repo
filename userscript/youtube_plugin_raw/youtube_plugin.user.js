@@ -8851,7 +8851,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChannelPageResponse]",x);
 		const {page,endpoint,response,url,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(page!=="channel") debugger;
-		this.g(endpoint);
+		this.BrowseEndpoint(endpoint);
 		this.ChannelResponse(response);
 		this.primitive_of(url,"string");
 	}
