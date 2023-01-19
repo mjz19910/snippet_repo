@@ -8331,7 +8331,7 @@ class HandleTypes extends ServiceMethods {
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
-		if(replacementEndpoint) this.g(replacementEndpoint);
+		if(replacementEndpoint) this._ReelWatchEndpoint(replacementEndpoint);
 		if(sequenceContinuation) this.primitive_of(sequenceContinuation,"string");
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
