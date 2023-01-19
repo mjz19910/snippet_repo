@@ -4990,10 +4990,11 @@ class ParserService extends BaseService {
 	}
 	log_channel_handles=false;
 	/** @private @type {YtUrlFormat} */
-	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,[any]>[0]} x */
+	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
 	parse_url_2(for_,x) {
 		if(this.str_is_search(x)) {
-			return this.parse_url_with_search(for_,x);
+			x;
+			return this.parse_url_with_search(for_,as(x));
 		}
 		if(this.str_starts_with(x,"@")) {
 			if(this.log_channel_handles) console.log("[channel_handle]",x);
@@ -9615,7 +9616,18 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(clickTrackingParams);
 		if(commandMetadata.webCommandMetadata.rootVe!==83769) debugger;
 		this.CommandMetadata(commandMetadata);
-		this.Signal_ChannelSwitcher(signalNavigationEndpoint);
+		this.SignalNavigationArgs(signalNavigationEndpoint);
+	}
+	/** @arg {SignalNavigationArgs} x */
+	SignalNavigationArgs(x) {
+		this.save_keys(`[SignalNavigationArgs]`,x);
+		const {signal,...y}=x; this.g(y);
+		this.save_string(`[Signal.signal]`,signal);
+		switch(signal) {
+			default: console.log("[new.Signal.signal]",signal); break;
+			case "CHANNEL_SWITCHER": break;
+			case "LIVE_CONTROL_ROOM": break;
+		}
 	}
 	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
@@ -9630,12 +9642,6 @@ class HandleTypes extends ServiceMethods {
 			let v=this.join_string(a,"-");
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
-	}
-	/** @arg {Signal_ChannelSwitcher} x */
-	Signal_ChannelSwitcher(x) {
-		this.save_keys(`[Signal_ChannelSwitcher]`,x);
-		const {signal,...y}=x; this.g(y);
-		if(signal!=="CHANNEL_SWITCHER") debugger;
 	}
 	/** @arg {GetSharePanelWebCommandMetadata} x */
 	get_share_panel_WebCommandMetadata(x) {
@@ -9690,7 +9696,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GenericWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
 		switch(x.apiUrl) {
-			default: debugger; break;
+			default: this.codegen_new_typedef(x,`_gen_${x.apiUrl}`); break;
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
 			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
 			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);

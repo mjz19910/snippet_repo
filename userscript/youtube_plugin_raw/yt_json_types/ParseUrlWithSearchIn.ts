@@ -1,2 +1,9 @@
-type ParseUrlWithSearchIn=Extract<SplitOnce<SplitOnce<Exclude<WatchUrlFormat,"/">,"/">[1],"/">,[`${string}?${string}`]>[0];
-type ParseUrlWithSearchIn_2=Exclude<Extract<SplitOnce<SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[`${string}?${string}`]>[0],`watch?${string}`>;
+type DoSearchExtract<T extends `/${string}`>=
+	T extends infer C extends `/${string}`?
+	SplitOnce<Exclude<C,"/">,"/">[1] extends infer C1 extends string?
+	Extract<SplitOnce<C1,"/">,[`${string}?${string}`]>[0]
+	:never
+	:never;
+type UU=DoSearchExtract<WatchUrlFormat>;
+type ParseUrlWithSearchIn=DoSearchExtract<WatchUrlFormat>;
+type ParseUrlWithSearchIn_2=DoSearchExtract<PlaylistUrlFormat>;
