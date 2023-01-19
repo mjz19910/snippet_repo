@@ -6886,6 +6886,11 @@ class HandleTypes extends ServiceMethods {
 		f.call(this,x.command);
 		this.trackingParams(x.trackingParams);
 	}
+	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	CommandsTemplate(x,f) {
+		this.save_keys(`[CommandsTemplate]`,x);
+		this.z(x.commands,f);
+	}
 	/** @arg {ReelWatchEndpoint} x */
 	_ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
@@ -9728,7 +9733,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey}=x; //...y}=x; this.g(y); //#destructure
 		this.Icon(iconImage);
 		tooltipText;
-		this.g(endpoint);
+		this.BrowseEndpoint(endpoint);
 		this.trackingParams(trackingParams);
 		overrideEntityKey;
 	}
@@ -10152,8 +10157,19 @@ class HandleTypes extends ServiceMethods {
 	CommandExecutorCommand(x) {
 		this.save_keys("[CommandExecutorCommand]",x);
 		const {clickTrackingParams,commandExecutorCommand}=x; //...y}=x; this.g(y); //#destructure
-		clickTrackingParams;
-		commandExecutorCommand;
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandExecutorData(commandExecutorCommand);
+	}
+	/** @arg {CommandExecutorData} x */
+	CommandExecutorData(x) {
+		this.CommandsTemplate(x,this.CommandExecutorAction);
+	}
+	/** @arg {CommandExecutorAction} x */
+	CommandExecutorAction(x) {
+		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
+		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
+		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		debugger;
 	}
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
