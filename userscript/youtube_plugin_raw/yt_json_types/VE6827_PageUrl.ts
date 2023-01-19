@@ -5,3 +5,4 @@ type VE6827_PageUrl=
 	|`/feed/storefront?${string}`
 	|"/feed/guide_builder"
 	;
+;

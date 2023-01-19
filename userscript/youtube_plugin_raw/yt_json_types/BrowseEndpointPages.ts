@@ -1,6 +1,5 @@
 type BrowseEndpointPages=
-	|"history"
-	|"library"
+	|SplitOnce<Split<VE6827_PageUrl,"/">[2],"?">[0]
 	|"music_charts"
 	|"music_explore"
 	|"music_home"
@@ -13,8 +12,7 @@ type BrowseEndpointPages=
 	|"music_moods_and_genres_category"
 	|"music_moods_and_genres"
 	|"music_new_releases"
-	|"storefront"
 	|"subscriptions"
-	|"trending"
 	|"what_to_watch"
 	;
+type uu=SplitOnce<Split<VE6827_PageUrl,"/">[2],"?">[0];
