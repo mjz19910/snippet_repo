@@ -4669,7 +4669,7 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_param_data_2(for_,path,param_map);
+		this.parse_endpoint_param(for_,path,param_map);
 	}
 	/** @public @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
 	on_player_params(for_,path,x) {
@@ -4678,7 +4678,7 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_param_data_1(for_,path,param_map);
+		this.parse_player_param(for_,path,param_map);
 	}
 	parse_key_index=1;
 	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
@@ -4733,7 +4733,7 @@ class ParserService extends BaseService {
 		debugger;
 	}
 	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
-	parse_player_param_data_1(for_,path,x) {
+	parse_player_param(for_,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...x.keys()];
@@ -4751,7 +4751,7 @@ class ParserService extends BaseService {
 		debugger;
 	}
 	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
-	parse_player_param_data_2(root,path,x) {
+	parse_endpoint_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let map_keys=[...x.keys()];
@@ -4766,7 +4766,7 @@ class ParserService extends BaseService {
 		parse_key(33);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
-		console.log(`[data_2.${path}] [idx=${key_index}]`,param_obj);
+		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
 		debugger;
 	}
 	/** @arg {ParamMapType} x @returns {ParamObjType} */
@@ -4778,17 +4778,6 @@ class ParserService extends BaseService {
 			}
 			return [e[0],ei];
 		}));
-	}
-	/** @arg {ParamsSection} for_ @arg {string} path @arg {ParamMapType} x */
-	parse_player_param_f40(for_,path,x) {
-		let map_keys=[...x.keys()];
-		/** @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(for_,path,x,map_keys,ta,null);
-		parse_key(1);
-		if(this.eq_keys(map_keys,[])) return;
-		console.log(`[player_params.${path}]`,x,map_keys);
-		console.log(`[new.player_params.${path}]`,this.to_param_obj(x));
-		debugger;
 	}
 	log_enabled_playlist_id=false;
 	/** @private @type {string[]} */
