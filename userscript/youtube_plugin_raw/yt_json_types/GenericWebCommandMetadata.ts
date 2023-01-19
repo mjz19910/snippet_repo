@@ -2,15 +2,27 @@ namespace GenericWebCommandMetadataNS {
 	export type WCM="WebCommandMetadata";
 }
 type GenericWebCommandMetadata=
-	|EditPlaylistWebCommandMetadata
-	|SearchApiWebCommandMetadata
-	|SetSettingWebCommandMetadata
+	|SearchWebCommandMetadata
 	|GetTranscriptWebCommandMetadata
-	|GetAddToPlaylistWebCommandMetadata
-	|AccountMenuWebCommandMetadata
+	|PlaylistWCM
+	|AccountWCM
 	|NextWebCommandMetadata
-	|BrowseApiWebCommandMetadata
-	|GetSharePanelWebCommandMetadata
-	|GetNotificationMenuWebCommandMetadata
+	|BrowseWCM
+	|ShareWCM
+	|NotificationWCM
 	;
+;type NotificationWCM=
+|GetUnseenCountWebCommandMetadata
+|GetNotificationMenuWebCommandMetadata
+type ShareWCM=
+|GetSharePanelWebCommandMetadata;
+type AccountWCM=
+|AccountMenuWebCommandMetadata
+|SetSettingWebCommandMetadata
+;
+type PlaylistWCM=
+|GetAddToPlaylistWebCommandMetadata;
+type BrowseWCM=
+|EditPlaylistWebCommandMetadata
+|BrowseApiWebCommandMetadata
 ;

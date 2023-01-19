@@ -6299,7 +6299,7 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {SearchApiWebCommandMetadata} x */
+	/** @arg {SearchWebCommandMetadata} x */
 	SearchApiWebCommandMetadata(x) {
 		this.save_keys("[SearchApiWebCommandMetadata]",x);
 		const {sendPost,apiUrl,...y}=x; this.g(y);
@@ -10048,6 +10048,8 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
 			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
 			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
+			/** @type {GenericWebCommandMetadata} */
+			case "/youtubei/v1/notification/get_unseen_count": break;
 		}
 	}
 	/** @arg {GetNotificationMenuWebCommandMetadata} x */
