@@ -10477,8 +10477,6 @@ class HandleTypes extends ServiceMethods {
 		const {emojiPickerRenderer,...y}=x; this.g(y);
 		this.g(emojiPickerRenderer);
 	}
-	//#endregion
-	//#region destructure
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
 		this.save_keys("[ChannelResponse]",x);
@@ -10657,6 +10655,8 @@ class HandleTypes extends ServiceMethods {
 		const {clipCreationRenderer,...y}=x; this.g(y);
 		this.ClipCreationData(clipCreationRenderer);
 	}
+	//#endregion
+	//#region destructure
 	//#endregion
 	//#region type_errors
 	/** @arg {{v:minimal_handler_member}} x */
