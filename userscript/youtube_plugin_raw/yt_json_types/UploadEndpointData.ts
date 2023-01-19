@@ -1,0 +1,3 @@
+type UploadEndpointData={
+	hack: true;
+};

@@ -6602,7 +6602,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[CompactLinkData]`,x);
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y);
 		this.Icon(icon);
-		this.TextWithRuns(title);
+		this.TextT(title);
 		this.CompactLinkData_NavEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 		switch(style) {
@@ -9624,10 +9624,17 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams(trackingParams);
 			return;
 		}
-		const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
-		this.TextWithRuns(title);
-		this.TextWithRuns(contextualInfo);
-		this.SortFilterSubMenuRenderer(menu);
+		if("contextualInfo" in x) {
+			const {title,contextualInfo,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
+			this.TextWithRuns(title);
+			if(contextualInfo) this.TextWithRuns(contextualInfo);
+			if(menu) this.SortFilterSubMenuRenderer(menu);
+			this.ButtonRenderer(visibilityButton);
+			this.trackingParams(trackingParams);
+			return;
+		}
+		const {title,visibilityButton,trackingParams,...y}=x; this.g(y);
+		this.SimpleText(title);
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
 	}
@@ -9766,62 +9773,62 @@ class HandleTypes extends ServiceMethods {
 	MacroMarkersListRenderer(x) {
 		this.save_keys("[MacroMarkersListRenderer]",x);
 		const {macroMarkersListRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9766,9:*/macroMarkersListRenderer
+		/*9766,9:*/macroMarkersListRenderer;
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
 		this.save_keys("[ProductListRenderer]",x);
 		const {productListRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9771,9:*/productListRenderer
+		/*9771,9:*/productListRenderer;
 	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.save_keys("[VideoDescriptionHeaderRenderer]",x);
 		const {videoDescriptionHeaderRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9776,9:*/videoDescriptionHeaderRenderer
+		/*9776,9:*/videoDescriptionHeaderRenderer;
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
 		this.save_keys("[ExpandableVideoDescriptionBodyRenderer]",x);
 		const {expandableVideoDescriptionBodyRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9781,9:*/expandableVideoDescriptionBodyRenderer
+		/*9781,9:*/expandableVideoDescriptionBodyRenderer;
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
 		this.save_keys("[VideoDescriptionMusicSectionRenderer]",x);
 		const {videoDescriptionMusicSectionRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9786,9:*/videoDescriptionMusicSectionRenderer
+		/*9786,9:*/videoDescriptionMusicSectionRenderer;
 	}
 	/** @arg {HorizontalCardListRenderer} x */
 	HorizontalCardListRenderer(x) {
 		this.save_keys("[HorizontalCardListRenderer]",x);
 		const {horizontalCardListRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9791,9:*/horizontalCardListRenderer
+		/*9791,9:*/horizontalCardListRenderer;
 	}
 	/** @arg {SearchPageWebCommandMetadata} x */
 	SearchPageWebCommandMetadata(x) {
 		this.save_keys("[SearchPageWebCommandMetadata]",x);
 		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
 		url;
-		/*9802,14:*/webPageType
-		/*9802,26:*/rootVe
+		/*9802,14:*/webPageType;
+		/*9802,26:*/rootVe;
 	}
 	/** @arg {CompactVideoRenderer} x */
 	CompactVideoRenderer(x) {
 		this.save_keys("[CompactVideoRenderer]",x);
 		const {compactVideoRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9808,9:*/compactVideoRenderer
+		/*9808,9:*/compactVideoRenderer;
 	}
 	/** @arg {FusionSearchboxData} x */
 	FusionSearchboxData(x) {
 		this.save_keys("[FusionSearchboxData]",x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton}=x; //...y}=x; this.g(y); //#destructure
 		icon;
-		/*9813,15:*/placeholderText
-		/*9813,31:*/config
-		/*9813,38:*/trackingParams
-		/*9813,53:*/searchEndpoint
-		/*9813,68:*/clearButton
+		/*9813,15:*/placeholderText;
+		/*9813,31:*/config;
+		/*9813,38:*/trackingParams;
+		/*9813,53:*/searchEndpoint;
+		/*9813,68:*/clearButton;
 	}
 	/** @arg {NotificationTopbarButtonData} x */
 	NotificationTopbarButtonData(x) {
@@ -9829,40 +9836,40 @@ class HandleTypes extends ServiceMethods {
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas}=x; //...y}=x; this.g(y); //#destructure
 		icon;
 		menuRequest;
-		/*9819,27:*/style
-		/*9819,33:*/trackingParams
-		/*9819,48:*/accessibility
-		/*9819,62:*/tooltip
-		/*9819,70:*/updateUnseenCountEndpoint
-		/*9819,96:*/notificationCount
-		/*9819,114:*/handlerDatas
+		/*9819,27:*/style;
+		/*9819,33:*/trackingParams;
+		/*9819,48:*/accessibility;
+		/*9819,62:*/tooltip;
+		/*9819,70:*/updateUnseenCountEndpoint;
+		/*9819,96:*/notificationCount;
+		/*9819,114:*/handlerDatas;
 	}
 	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
 		this.save_keys("[HotkeyDialogRenderer]",x);
 		const {hotkeyDialogRenderer}=x; //...y}=x; this.g(y); //#destructure
-		/*9826,9:*/hotkeyDialogRenderer
+		/*9826,9:*/hotkeyDialogRenderer;
 	}
 	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
 		const {targetId,visibility}=x; //...y}=x; this.g(y); //#destructure
 		targetId;
-		/*9831,19:*/visibility
+		/*9831,19:*/visibility;
 	}
 	/** @arg {ShowEngagementPanelScrimActionData} x */
 	ShowEngagementPanelScrimActionData(x) {
 		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
 		const {engagementPanelTargetId,onClickCommands}=x; //...y}=x; this.g(y); //#destructure
 		engagementPanelTargetId;
-		/*9837,34:*/onClickCommands
+		/*9837,34:*/onClickCommands;
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
 		this.save_keys("[UpdateEngagementPanelData]",x);
 		const {content,targetId}=x; //...y}=x; this.g(y); //#destructure
 		content;
-		/*9843,18:*/targetId
+		/*9843,18:*/targetId;
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
@@ -9881,11 +9888,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SortFilterSubMenuData]",x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams}=x; //...y}=x; this.g(y); //#destructure
 		subMenuItems;
-		/*9861,23:*/title
-		/*9861,29:*/icon
-		/*9861,34:*/accessibility
-		/*9861,48:*/tooltip
-		/*9861,56:*/trackingParams
+		/*9861,23:*/title;
+		/*9861,29:*/icon;
+		/*9861,34:*/accessibility;
+		/*9861,48:*/tooltip;
+		/*9861,56:*/trackingParams;
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
@@ -9904,37 +9911,37 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChannelResponse]",x);
 		const {responseContext,contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions}=x; //...y}=x; this.g(y); //#destructure
 		responseContext;
-		/*9873,26:*/contents
-		/*9873,35:*/header
-		/*9873,42:*/metadata
-		/*9873,51:*/topbar
-		/*9873,58:*/trackingParams
-		/*9873,73:*/microformat
-		/*9873,85:*/onResponseReceivedActions
+		/*9873,26:*/contents;
+		/*9873,35:*/header;
+		/*9873,42:*/metadata;
+		/*9873,51:*/topbar;
+		/*9873,58:*/trackingParams;
+		/*9873,73:*/microformat;
+		/*9873,85:*/onResponseReceivedActions;
 	}
 	/** @arg {PlaylistResponse} x */
 	PlaylistResponse(x) {
 		this.save_keys("[PlaylistResponse]",x);
 		const {responseContext,contents,header,metadata,topbar,trackingParams,microformat,sidebar}=x; //...y}=x; this.g(y); //#destructure
 		responseContext;
-		/*9879,26:*/contents
-		/*9879,35:*/header
-		/*9879,42:*/metadata
-		/*9879,51:*/topbar
-		/*9879,58:*/trackingParams
-		/*9879,73:*/microformat
-		/*9879,85:*/sidebar
+		/*9879,26:*/contents;
+		/*9879,35:*/header;
+		/*9879,42:*/metadata;
+		/*9879,51:*/topbar;
+		/*9879,58:*/trackingParams;
+		/*9879,73:*/microformat;
+		/*9879,85:*/sidebar;
 	}
 	/** @arg {SettingsResponse} x */
 	SettingsResponse(x) {
 		this.save_keys("[SettingsResponse]",x);
 		const {responseContext,contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar}=x; //...y}=x; this.g(y); //#destructure
 		responseContext;
-		/*9885,26:*/contents
-		/*9885,35:*/topbar
-		/*9885,42:*/trackingParams
-		/*9885,57:*/onResponseReceivedEndpoints
-		/*9885,85:*/sidebar
+		/*9885,26:*/contents;
+		/*9885,35:*/topbar;
+		/*9885,42:*/trackingParams;
+		/*9885,57:*/onResponseReceivedEndpoints;
+		/*9885,85:*/sidebar;
 	}
 	/** @arg {C4TabbedHeaderData} x */
 	C4TabbedHeaderData(x) {
@@ -9942,19 +9949,19 @@ class HandleTypes extends ServiceMethods {
 		const {channelHandleText,channelId,videosCountText,subscriberCountText,title,navigationEndpoint,avatar,banner,headerLinks,sponsorButton,subscribeButton,visitTracking,trackingParams,tvBanner,mobileBanner}=x; //...y}=x; this.g(y); //#destructure
 		channelHandleText;
 		channelId;
-		/*9891,38:*/videosCountText
-		/*9891,54:*/subscriberCountText
-		/*9891,74:*/title
-		/*9891,80:*/navigationEndpoint
-		/*9891,99:*/avatar
-		/*9891,106:*/banner
-		/*9891,113:*/headerLinks
-		/*9891,125:*/sponsorButton
-		/*9891,139:*/subscribeButton
-		/*9891,155:*/visitTracking
-		/*9891,169:*/trackingParams
-		/*9891,184:*/tvBanner
-		/*9891,193:*/mobileBanner
+		/*9891,38:*/videosCountText;
+		/*9891,54:*/subscriberCountText;
+		/*9891,74:*/title;
+		/*9891,80:*/navigationEndpoint;
+		/*9891,99:*/avatar;
+		/*9891,106:*/banner;
+		/*9891,113:*/headerLinks;
+		/*9891,125:*/sponsorButton;
+		/*9891,139:*/subscribeButton;
+		/*9891,155:*/visitTracking;
+		/*9891,169:*/trackingParams;
+		/*9891,184:*/tvBanner;
+		/*9891,193:*/mobileBanner;
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {

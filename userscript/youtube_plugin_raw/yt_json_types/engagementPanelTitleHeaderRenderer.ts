@@ -9,6 +9,10 @@ type EngagementPanelTitleHeader={
 	informationButton: ButtonRenderer;
 	visibilityButton: ButtonRenderer;
 	trackingParams: string;
+}|{
+	title: SimpleText;
+	visibilityButton: ButtonRenderer;
+	trackingParams: string;
 };
 
 type EngagementPanelTitleHeaderRenderer={
