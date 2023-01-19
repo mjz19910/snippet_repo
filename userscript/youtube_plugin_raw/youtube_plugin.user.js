@@ -4778,6 +4778,8 @@ class ParserService extends BaseService {
 			case "reel.player_params.f57": return;
 			case "reel.player_params.f72": return;
 			case "get_transcript.params.f3": return;
+			case "watch.player_params.f8": return;
+			case "watch.player_params.f9": return;
 			default: console.log(`[${path}] [idx=${this.parse_key_index}]`,for_,tv); debugger;
 		}
 	}
