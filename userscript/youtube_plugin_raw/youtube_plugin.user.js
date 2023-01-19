@@ -9633,6 +9633,14 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams(trackingParams);
 			return;
 		}
+		if("menu" in x) {
+			const {title,menu,visibilityButton,trackingParams,...y}=x; this.g(y);
+			this.TextWithRuns(title);
+			this.MenuRenderer(menu);
+			this.ButtonRenderer(visibilityButton);
+			this.trackingParams(trackingParams);
+			return;
+		}
 		const {title,visibilityButton,trackingParams,...y}=x; this.g(y);
 		this.SimpleText(title);
 		this.ButtonRenderer(visibilityButton);

@@ -13,6 +13,11 @@ type EngagementPanelTitleHeader={
 	title: SimpleText;
 	visibilityButton: ButtonRenderer;
 	trackingParams: string;
+}|{
+	title: TextWithRuns;
+	menu: MenuRenderer;
+	visibilityButton: ButtonRenderer;
+	trackingParams: string;
 };
 
 type EngagementPanelTitleHeaderRenderer={
