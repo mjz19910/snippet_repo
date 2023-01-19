@@ -10086,6 +10086,10 @@ class HandleTypes extends ServiceMethods {
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">]`,x);
 	}
+	/** @arg {Signal_ChannelSwitcher} x */
+	Signal_ChannelSwitcher(x) {
+		this.save_keys(`[Signal_ChannelSwitcher]`,x);
+	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
@@ -10094,8 +10098,6 @@ class HandleTypes extends ServiceMethods {
 	//#region TODO_minimal_member_fns
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}
-	/** @arg {Signal_ChannelSwitcher} x */
-	Signal_ChannelSwitcher(x) {x;}
 	//#endregion
 }
 //#endregion
