@@ -6128,6 +6128,19 @@ class HandleTypes extends ServiceMethods {
 		const cf="SectionListData";
 		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) {
+			if(this.str_starts_with(x.targetId,"browse-feed")) {
+				let ss=split_string(x.targetId,"browse-feed");
+				if(ss.length!==2) {debugger; return;}
+				let sa=ss[1];
+				if(this.str_starts_with(sa,"UC")) {
+					let floc=sa.indexOf("featured");
+					let s1=sa.slice(0,floc);
+					let s2=sa.slice(floc);
+					console.log("[RichGrid.targetId]",x.targetId);
+					console.log("[target_id_parse]",s1,s2);
+				}
+				return;
+			}
 			switch(x.targetId) {
 				default: debugger; return;
 				case "search-feed": return this.SearchFeedSectionListData(x);
@@ -7534,17 +7547,6 @@ class HandleTypes extends ServiceMethods {
 	RichGrid(x) {
 		this.save_keys("[RichGrid]",x);
 		if("targetId" in x) {
-			let ss=split_string(x.targetId,"browse-feed");
-			if(ss.length!==2) {debugger; return;}
-			let sa=ss[1];
-			if(this.str_starts_with(sa,"UC")) {
-				let floc=sa.indexOf("featured");
-				let s1=sa.slice(0,floc);
-				let s2=sa.slice(floc);
-				console.log("[RichGrid.targetId]",x.targetId);
-				console.log("[target_id_parse]",s1,s2);
-				return;
-			}
 			switch(x.targetId) {
 				case "browse-feedFEwhat_to_watch": {
 					const {contents,trackingParams,header,targetId: {},reflowOptions,...y}=x; this.g(y);
