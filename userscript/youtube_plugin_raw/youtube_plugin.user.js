@@ -6282,7 +6282,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ItemSectionData} x */
 	ItemSectionData(x) {
 		this.save_keys("[ItemSectionData]",x);
-		const {contents,trackingParams,sectionIdentifier,targetId,...y}=x; this.g(y);
+		const {contents,trackingParams,sectionIdentifier,targetId,header,...y}=x; this.g(y);
 		this.z(contents,a => this.ItemSectionItem(a));
 		this.trackingParams(trackingParams);
 		if(targetId) {
@@ -6292,6 +6292,16 @@ class HandleTypes extends ServiceMethods {
 		} else {
 			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}`);
 		}
+		if(header) this.ItemSectionHeaderRenderer(header);
+	}
+	/** @arg {ItemSectionHeaderRenderer} x */
+	ItemSectionHeaderRenderer(x) {
+		this.ItemSectionHeader(x.itemSectionHeaderRenderer);
+	}
+	/** @arg {ItemSectionHeader} x */
+	ItemSectionHeader(x) {
+		this.TextWithRuns(x.title);
+		this.TextWithRuns(x.subtitle);
 	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
