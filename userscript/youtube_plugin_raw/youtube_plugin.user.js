@@ -8849,7 +8849,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
 		this.save_keys("[ChannelPageResponse]",x);
-		const {page,endpoint,response,url,...y}=x; this.g(y);
+		const {page,endpoint,response,url,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(page!=="channel") debugger;
 		this.g(endpoint);
 		this.ChannelResponse(response);
@@ -8858,7 +8858,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
 		this.save_keys("[PlaylistPageResponse]",x);
-		const {page,endpoint,response,url,...y}=x; this.g(y);
+		const {page,endpoint,response,url,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(page!=="playlist") debugger;
 		this.BrowseEndpoint(endpoint);
 		this.PlaylistResponse(response);
@@ -8868,7 +8868,7 @@ class HandleTypes extends ServiceMethods {
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
 		if("rootVe" in x) {
-			const {page,endpoint,response,url,rootVe,...y}=x; this.g(y);
+			const {page,endpoint,response,url,rootVe,expirationTime,previousCsn,...y}=x; this.g(y);
 			if(page!=="settings") debugger;
 			this.BrowseEndpoint(endpoint);
 			this.SettingsResponse(response);
@@ -8876,7 +8876,7 @@ class HandleTypes extends ServiceMethods {
 			if(rootVe!==23462) debugger;
 			return;
 		}
-		const {page,endpoint,response,url,...y}=x; this.g(y);
+		const {page,endpoint,response,url,expirationTime,previousCsn,...y}=x; this.g(y);
 		if(page!=="settings") debugger;
 		this.BrowseEndpoint(endpoint);
 		this.SettingsResponse(response);

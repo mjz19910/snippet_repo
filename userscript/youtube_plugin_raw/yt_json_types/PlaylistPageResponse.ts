@@ -3,4 +3,6 @@ type PlaylistPageResponse={
 	endpoint: BrowseEndpoint;
 	response: PlaylistResponse;
 	url: string;
+	expirationTime?: number;
+	previousCsn?: string;
 };
