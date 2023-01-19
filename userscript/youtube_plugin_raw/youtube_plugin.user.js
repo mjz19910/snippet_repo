@@ -6342,9 +6342,35 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MicroformatData} x */
 	MicroformatData(x) {
 		this.save_keys("[MicroformatData]",x);
-		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=x;
+		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates}=x;// ,...y}=x; this.g(y);
+		this.primitive_of(urlCanonical,"string");
+		this.primitive_of(title,"string");
+		this.primitive_of(description,"string");
+		this.Thumbnail(thumbnail);
+		this.primitive_of(siteName,"string");
+		this.primitive_of(appName,"string");
+		this.primitive_of(androidPackage,"string");
+		this.primitive_of(iosAppStoreId,"string");
+		this.primitive_of(iosAppArguments,"string");
+		this.primitive_of(ogType,"string");
+		this.primitive_of(urlApplinksWeb,"string");
+		this.primitive_of(urlApplinksIos,"string");
+		this.primitive_of(urlApplinksAndroid,"string");
+		this.primitive_of(urlTwitterIos,"string");
+		this.primitive_of(urlTwitterAndroid,"string");
+		this.primitive_of(twitterCardType,"string");
+		this.primitive_of(twitterSiteHandle,"string");
+		this.primitive_of(schemaDotOrgType,"string");
+		this.primitive_of(noindex,"boolean");
+		this.primitive_of(unlisted,"boolean");
 		if(tags) this.z(tags,a => this.primitive_of(a,"string"));
-		this.g(y);
+		this.primitive_of(familySafe,"boolean");
+		this.z(availableCountries,a=>this.primitive_of(a,"string"));
+		this.z(linkAlternates,this.HrefUrl);
+	}
+	/** @arg {HrefUrl} x */
+	HrefUrl(x) {
+		this.x.get("parser_service").parse_url("HrefUrl",as(x.hrefUrl));
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
