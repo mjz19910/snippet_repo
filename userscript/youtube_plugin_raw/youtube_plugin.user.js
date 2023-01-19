@@ -4728,58 +4728,13 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		this.parse_player_params_with_map(for_,param_map);
 	}
-	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
-	parse_player_params_with_map(for_,x) {
-		let map_keys=[...x.keys()];
-		if(this.eq_keys(map_keys,[8,9])) {
-			let p8=x.get(8);
-			let p9=x.get(9);
-			if(p8!==void 0&&p9!==void 0) {
-				if(p8===1&&p9===1) return;
-			}
-		}
-		x: if(this.eq_keys(map_keys,[40])) {
-			let x1=x.get(40);
-			if(!x1) {debugger; break x;}
-			if(!(x1 instanceof Map)) {debugger; break x;}
-			return this.parse_player_param_f_40(for_,x1);
-		}
-		let p30=x.get(30);
-		let i30=map_keys.indexOf(30);
-		if(i30>-1) map_keys.splice(i30,1);
-		if(this.eq_keys(map_keys,[71])) {
-			let p71=x.get(71);
-			if(p30!==void 0&&p71!==void 0) {
-				if(p30===1&&p71===12) return;
-			}
-		}
-		x: if(p30!==void 0) {
-			if(p30!==1) break x;
-			x.delete(30);
-		}
-		let p57=x.get(57);
-		let i57=map_keys.indexOf(57);
-		if(i57>-1) map_keys.splice(i57,1);
-		x: if(p57!==void 0) {
-			switch(p57) {
-				case 1: break;
-				case 19: break;
-				default: break x;
-			}
-			x.delete(57);
-		}
-		if(this.eq_keys(map_keys,[72])) {
-			let p72=x.get(72);
-			if(p72!==void 0) {
-				if(typeof p72==="bigint") return;
-			}
-			return;
-		}
-		if(this.eq_keys(map_keys,[])) return;
-		console.log("[new_player_params]",Object.fromEntries(x.entries()));
-		debugger;
-	}
 	parse_key_index=1;
+	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
+	remove_key(x,mk,ta) {
+		x.delete(ta);
+		let idx=mk.indexOf(ta);
+		if(idx>-1) mk.splice(idx,1);
+	}
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
 	parse_key(for_,x,mk,ta) {
 		let tv=x.get(ta);
@@ -4793,6 +4748,30 @@ class ParserService extends BaseService {
 			console.log("[watch_endpoint_params.value] [idx=%s]",this.parse_key_index.toString(),for_,`p${ta}`,tv);
 			x.delete(ta);
 		}
+	}
+	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
+	parse_player_params_with_map(for_,x) {
+		let mk=[...x.keys()];
+		/** @arg {number} ta */
+		let parse_key=(ta)=>this.parse_key(for_,x,mk,ta);
+		parse_key(8);
+		parse_key(9);
+		parse_key(30);
+		parse_key(57);
+		parse_key(72);
+		let p40=x.get(40);
+		if(p40!==void 0) {
+			this.remove_key(x,mk,40)
+			let idx=mk.indexOf(40);
+			if(idx>-1) mk.splice(idx,1);
+			x.delete(40);
+		}
+		if(p40&&p40 instanceof Map) {
+			return this.parse_player_param_f_40(for_,p40);
+		}
+		if(this.eq_keys(mk,[])) return;
+		console.log("[new_player_params]",Object.fromEntries(x.entries()));
+		debugger;
 	}
 	/** @arg {ParamsSection} for_ @arg {ParamMapType} x */
 	parse_player_param_f40_f1(for_,x) {
