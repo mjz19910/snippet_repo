@@ -5362,6 +5362,7 @@ class ParserService extends BaseService {
 			case "subscriptions": return true;
 			case "trending": return true;
 			case "what_to_watch": return true;
+			case "guide_builder": return true;
 			default:
 		}
 		switch(x) {
