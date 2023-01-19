@@ -9721,7 +9721,12 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		if("hideEngagementPanelScrimAction" in x) return this.HideEngagementPanelScrimAction(x);
 		debugger;
+	}
+	/** @arg {HideEngagementPanelScrimAction} x */
+	HideEngagementPanelScrimAction(x) {
+		x;
 	}
 	/** @arg {GetTranscriptWebCommandMetadata} x */
 	GetTranscriptWebCommandMetadata(x) {
