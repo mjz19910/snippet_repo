@@ -9945,23 +9945,23 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(invalidValueErrorMessage);
 		if(required!==true) debugger;
 	}
-	//#endregion
-	//#region destructure
 	/** @arg {UnknownWebCommandMetadata} x */
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
-		const {url,webPageType,rootVe}=x; //...y}=x; this.g(y); //#destructure
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
 		this.x.get("parser_service").parse_url("UnknownWebCommandMetadata",url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
+	//#endregion
+	//#region destructure
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
 		this.save_keys("[GuideCollapsibleEntry]",x);
 		const {expanderItem,expandableItems,collapserItem}=x; //...y}=x; this.g(y); //#destructure
-		expanderItem;
-		expandableItems;
-		collapserItem;
+		this.GuideEntryRenderer(expanderItem);
+		this.z(expandableItems,this.GuideEntryRenderer);
+		this.GuideEntryRenderer(collapserItem);
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {

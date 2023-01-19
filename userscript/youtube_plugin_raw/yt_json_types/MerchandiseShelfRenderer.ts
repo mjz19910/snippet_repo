@@ -1,0 +1,3 @@
+type MerchandiseShelfRenderer={
+	merchandiseShelfRenderer: MerchandiseShelf;
+};
