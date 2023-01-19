@@ -7,13 +7,15 @@ type BrowseFeedSectionListData={
 	targetId: `browse-feedUC${string}featured`;
 };
 
-type SectionListData={
+type GenericSectionListData={
 	continuations?: NextContinuationData[];
 	contents: SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;
-}|SearchFeedSectionListData|BrowseFeedSectionListData;
+};
+
+type SectionListData=GenericSectionListData|SearchFeedSectionListData|BrowseFeedSectionListData;
 type SearchFeedSectionListData={
 	continuations?: NextContinuationData[];
 	contents: SectionListItem[];
