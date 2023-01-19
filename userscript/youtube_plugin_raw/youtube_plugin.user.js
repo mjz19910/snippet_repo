@@ -4759,10 +4759,14 @@ class ParserService extends BaseService {
 			console.log(`[watch_endpoint_params.value.f${ta}] [idx=%s]`,this.parse_key_index.toString(),for_,tv);
 		};
 		/** @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(x,mk,ta,default_callback);
+		let parse_key=(ta,cb=default_callback) => this.parse_key(x,mk,ta,cb);
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
+		parse_key(40,(tv) => {
+			if(tv instanceof Map) return this.parse_player_param_f40(for_,tv);
+			debugger;
+		});
 		parse_key(57);
 		parse_key(71);
 		parse_key(72);
@@ -4774,7 +4778,6 @@ class ParserService extends BaseService {
 			x.delete(40);
 		}
 		if(p40&&p40 instanceof Map) {
-			return this.parse_player_param_f40(for_,p40);
 		}
 		if(this.eq_keys(mk,[])) return;
 		console.log("[new_player_params]",Object.fromEntries(x.entries()));
