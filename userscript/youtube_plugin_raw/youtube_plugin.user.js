@@ -9132,9 +9132,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ElementUpdateItem} x */
 	ElementUpdateItem(x) {
 		this.save_keys("[ElementUpdateItem]",x);
-		if("templateUpdate" in x) {
-			this.TemplateUpdate(x);
-		}
+		if("templateUpdate" in x) return this.TemplateUpdate(x);
+		debugger;
 	}
 	/** @arg {TemplateUpdate} x */
 	TemplateUpdate(x) {
