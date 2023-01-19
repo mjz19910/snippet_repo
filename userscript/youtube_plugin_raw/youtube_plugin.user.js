@@ -6090,6 +6090,38 @@ class HandleTypes extends ServiceMethods {
 		if("playlistSidebarRenderer" in x) return this.PlaylistSidebarRenderer(x);
 		debugger;
 	}
+	/** @arg {DropdownRenderer} x */
+	DropdownRenderer(x) {
+		const {dropdownRenderer,...y}=x; this.g(y);
+		this.g(dropdownRenderer);
+	}
+	/** @arg {PlaylistSidebarRenderer} x */
+	PlaylistSidebarRenderer(x) {
+		this.PlaylistSidebar(x.playlistSidebarRenderer);
+	}
+	/** @arg {PlaylistSidebar} x */
+	PlaylistSidebar(x) {
+		this.z(x.items,this.PlaylistSidebarItem);
+		this.trackingParams(x.trackingParams);
+	}
+	/** @arg {PlaylistSidebarItem} x */
+	PlaylistSidebarItem(x) {
+		if("playlistSidebarPrimaryInfoRenderer" in x) return this.PlaylistSidebarPrimaryInfoRenderer(x);
+		if("playlistSidebarSecondaryInfoRenderer" in x) return this.PlaylistSidebarSecondaryInfoRenderer(x);
+		debugger;
+	}
+	/** @arg {PlaylistSidebarSecondaryInfoRenderer} x */
+	PlaylistSidebarSecondaryInfoRenderer(x) {
+		this.PlaylistSidebarSecondaryInfo(x.playlistSidebarSecondaryInfoRenderer);
+	}
+	/** @arg {PlaylistSidebarSecondaryInfo} x */
+	PlaylistSidebarSecondaryInfo(x) {
+		this.VideoOwnerRenderer(x.videoOwner);
+	}
+	/** @arg {VideoOwnerRenderer} x */
+	VideoOwnerRenderer(x) {
+		this.VideoOwnerData(x.videoOwnerRenderer);
+	}
 	/** @arg {AlertWithButtonRenderer} x */
 	AlertWithButtonRenderer(x) {
 		this.save_keys("[AlertWithButtonRenderer]",x);
@@ -10641,46 +10673,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
-	/** @arg {DropdownRenderer} x */
-	DropdownRenderer(x) {
-		const {dropdownRenderer,...y}=x; this.g(y);
-		this.g(dropdownRenderer);
-	}
-	/** @arg {PlaylistSidebarRenderer} x */
-	PlaylistSidebarRenderer(x) {
-		this.PlaylistSidebar(x.playlistSidebarRenderer);
-	}
-	/** @arg {PlaylistSidebar} x */
-	PlaylistSidebar(x) {
-		this.z(x.items,this.PlaylistSidebarItem);
-		this.trackingParams(x.trackingParams);
-	}
-	/** @arg {PlaylistSidebarItem} x */
-	PlaylistSidebarItem(x) {
-		if("playlistSidebarPrimaryInfoRenderer" in x) return this.PlaylistSidebarPrimaryInfoRenderer(x);
-		if("playlistSidebarSecondaryInfoRenderer" in x) return this.PlaylistSidebarSecondaryInfoRenderer(x);
-		debugger;
-	}
-	/** @arg {PlaylistSidebarSecondaryInfoRenderer} x */
-	PlaylistSidebarSecondaryInfoRenderer(x) {
-		this.PlaylistSidebarSecondaryInfo(x.playlistSidebarSecondaryInfoRenderer);
-	}
-	/** @arg {PlaylistSidebarSecondaryInfo} x */
-	PlaylistSidebarSecondaryInfo(x) {
-		this.VideoOwnerRenderer(x.videoOwner);
-	}
-	/** @arg {VideoOwnerRenderer} x */
-	VideoOwnerRenderer(x) {
-		this.VideoOwnerData(x.videoOwnerRenderer);
-	}
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
-	PlaylistSidebarPrimaryInfoRenderer(x) {
-		x;
-	}
+	PlaylistSidebarPrimaryInfoRenderer(x) {x;}
 	/** @arg {PlaylistMetadataRenderer} x */
-	PlaylistMetadataRenderer(x) {
-		x;
-	}
+	PlaylistMetadataRenderer(x) {x;}
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {x;}
 	/** @arg {VideoPrimaryInfoData} x */
