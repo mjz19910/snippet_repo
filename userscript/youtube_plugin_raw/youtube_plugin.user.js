@@ -5779,6 +5779,38 @@ class HandleTypes extends ServiceMethods {
 		let r=parse_number(x.types,_x);
 		f(r);
 	}
+	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListDataTemplate(x) {
+		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
+		const {contents,...y}=x; this.g(y);
+		this.SectionListItemTemplate(contents);
+	}
+	/** @arg {SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
+	SectionListItemTemplate(x) {
+		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+		this.ItemSectionDataTemplate(x.itemSectionRenderer,a => {
+			let v=this.join_string(a,"-");
+			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
+		});
+	}
+	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
+	ItemSectionRendererTemplate_Section(x) {
+		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
+		const {itemSectionRenderer}=x; //...y}=x; this.g(y); //#destructure
+		this.ItemSectionDataTemplate_Section(itemSectionRenderer);
+	}
+	/** @arg {ItemSectionDataTemplate_Section<"comments-entry-point">} x */
+	ItemSectionDataTemplate_Section(x) {
+		this.save_keys("[ItemSectionDataTemplate_Section]",x);
+		const {contents,trackingParams,sectionIdentifier}=x; //...y}=x; this.g(y); //#destructure
+		let v=contents;
+		let r=this.get_keys_of(v[0]);
+		switch(r[0]) {
+			default: debugger; break;
+		}
+		this.trackingParams(trackingParams);
+		if(sectionIdentifier!=="comments-entry-point") debugger;
+	}
 	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
 	SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
@@ -9697,20 +9729,6 @@ class HandleTypes extends ServiceMethods {
 			case "LIVE_CONTROL_ROOM": break;
 		}
 	}
-	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
-	SectionListDataTemplate(x) {
-		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
-		const {contents,...y}=x; this.g(y);
-		this.SectionListItemTemplate(contents);
-	}
-	/** @arg {SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
-	SectionListItemTemplate(x) {
-		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
-		this.ItemSectionDataTemplate(x.itemSectionRenderer,a => {
-			let v=this.join_string(a,"-");
-			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
-		});
-	}
 	/** @arg {GetSharePanelWebCommandMetadata} x */
 	get_share_panel_WebCommandMetadata(x) {
 		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
@@ -9884,20 +9902,6 @@ class HandleTypes extends ServiceMethods {
 		expanderItem;
 		expandableItems;
 		collapserItem;
-	}
-	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
-	ItemSectionRendererTemplate_Section(x) {
-		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
-		const {itemSectionRenderer}=x; //...y}=x; this.g(y); //#destructure
-		this.ItemSectionDataTemplate_Section(itemSectionRenderer);
-	}
-	/** @arg {ItemSectionDataTemplate_Section<"comments-entry-point">} x */
-	ItemSectionDataTemplate_Section(x) {
-		this.save_keys("[ItemSectionDataTemplate_Section]",x);
-		const {contents,trackingParams,sectionIdentifier}=x; //...y}=x; this.g(y); //#destructure
-		contents;
-		this.trackingParams(trackingParams);
-		sectionIdentifier;
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {
