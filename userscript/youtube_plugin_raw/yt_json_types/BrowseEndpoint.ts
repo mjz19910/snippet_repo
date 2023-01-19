@@ -1,5 +1,5 @@
 type BrowseEndpoint={
 	clickTrackingParams: string;
-	commandMetadata?: BrowseCommandMetadata;
+	commandMetadata?: CommandMetadata;
 	browseEndpoint: BrowseEndpointData;
 };
