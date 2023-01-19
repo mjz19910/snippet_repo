@@ -4764,15 +4764,10 @@ class ParserService extends BaseService {
 		let map_keys=[...x.keys()];
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,map_keys,ta,null);
-		parse_key(1);
-		parse_key(2);
-		parse_key(3);
-		parse_key(5);
-		parse_key(6);
-		parse_key(8);
-		parse_key(12);
-		parse_key(27);
-		parse_key(33);
+		for(let i=1;i<40;i++) {
+			if(!map_keys.includes(i)) continue;
+			parse_key(i);
+		}
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
@@ -10360,7 +10355,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(title,"string");
 		this.primitive_of(selected,"boolean");
 		this.ContinuationCommand(serviceEndpoint);
-		this.Accessibility(accessibility);
+		if(accessibility) this.Accessibility(accessibility);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
