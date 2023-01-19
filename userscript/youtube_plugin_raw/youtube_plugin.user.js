@@ -7370,6 +7370,22 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[TabRenderer]",x);
 		this.TabData(x.tabRenderer);
 	}
+	/** @arg {SectionListRenderer} x */
+	TabData_section(x) {
+		if("sectionListRenderer" in x) {
+			this.SectionListRenderer(x);
+		} else {
+			debugger;
+		}
+	}
+	/** @arg {RichGridRenderer} x */
+	Tab_grid(x) {
+		if("richGridRenderer" in x) {
+			this.RichGridRenderer(x);
+		} else {
+			debugger;
+		}
+	}
 	/** @arg {TabData} x */
 	TabData(x) {
 		this.save_keys("[TabData]",x);
@@ -7378,6 +7394,7 @@ class HandleTypes extends ServiceMethods {
 			this.BrowseEndpoint(endpoint);
 			this.primitive_of(title,"string");
 			if(selected!==true) debugger;
+			this.TabData_section(content);
 			return;
 		}
 		if("tabIdentifier" in x) {
@@ -7385,11 +7402,7 @@ class HandleTypes extends ServiceMethods {
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y);
 					if(selected!==true) debugger;
-					if("richGridRenderer" in content) {
-						this.RichGridRenderer(content);
-					} else {
-						debugger;
-					}
+					this.Tab_grid(content);
 					this.trackingParams(trackingParams);
 				} return;
 				default:
@@ -7398,11 +7411,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		const {selected,content,trackingParams,...y}=x; this.g(y);
-		if("sectionListRenderer" in content) {
-			this.SectionListRenderer(content);
-		} else {
-			debugger;
-		}
+		this.TabData_section(content);
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {TabDataContent} x */
