@@ -9592,8 +9592,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(serializedShareEntity,"string");
 		this.z(commands,this.OpenPopupAction);
 	}
-	//#endregion
-	//#region destructure_endpoint
 	/** @arg {SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
 		this.save_keys("[SignalNavigationEndpoint]",x);
@@ -9636,6 +9634,8 @@ class HandleTypes extends ServiceMethods {
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
 	}
+	//#endregion
+	//#region destructure_endpoint
 	//#endregion
 	//#region destructure
 	/** @arg {PlayerAnnotationsExpandedData} x */
