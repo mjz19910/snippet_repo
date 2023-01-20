@@ -5049,6 +5049,7 @@ case "${path_parts[idx-1]}": {
 		let gen_return_part=(idx) => {
 			let case_part="";
 			if(path_parts.length===idx) {
+				if(tv instanceof Map) case_part=`${"\n\t\t"}if(tv instanceof Map) return;`;
 				switch(typeof tv) {
 					case "number": case_part=`
 ${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`
@@ -5087,6 +5088,7 @@ case "${path_parts[idx-1]}": {
 				case "params": {
 					const idx=3;
 					if(path_parts.length===idx) {
+						if(tv instanceof Map) return;
 						switch(tv) {default: debugger; break;}
 						return;
 					}
