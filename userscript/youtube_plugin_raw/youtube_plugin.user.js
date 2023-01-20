@@ -9025,18 +9025,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Record<"identifier",unknown>} x */
 	force_parse_identifier(x) {
-		const {identifier,...a}=x;
+		const {identifier,...a}=x; this.g(a);
 		x: if(identifier&&typeof identifier==="object"&&"tag" in identifier&&"surface" in identifier) {
 			if(identifier.surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") break x;
 			let yk=this.get_keys_of(identifier);
 			if(!this.eq_keys(yk,["surface","tag"])) debugger;
 			let a1=this.ShortsSurfaceIdentifier({tag: identifier.tag,surface: identifier.surface});
 			if(a1!=="engagement-panel-structured-description") debugger;
-			this.primitive_of(a,"string");
 			return;
 		}
 		debugger;
-		this.primitive_of(a,"string");
 	}
 	/** @arg {EngagementPanelSectionList} x */
 	EngagementPanelSectionList(x) {
