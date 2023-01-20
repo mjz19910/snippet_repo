@@ -4648,8 +4648,8 @@ class ParserService extends BaseService {
 		this.log_url_info_arr(arr);
 	}
 	log_start_radio=false;
-	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
-	parse_watch_page_url(for_,x) {
+	/** @private @arg {ParamsSection} root @arg {Extract<SplitOnce<ParseUrlWithSearchIn,"?">,["watch",...any]>[1]} x */
+	parse_watch_page_url(root,x) {
 		let vv=split_string(x,"&");
 		/** @private @type {YtUrlInfoItem[]} */
 		let url_info_arr=[];
@@ -4680,7 +4680,7 @@ class ParserService extends BaseService {
 				} break;
 				case "rv": url_info_arr.push({_tag: "video-referral",id: res[1]}); break;
 				case "pp": {
-					this.on_player_params(for_,"watch_page_url.pp",res[1]);
+					this.on_player_params(root,"watch_page_url.pp",res[1]);
 				} break;
 				case "start_radio": {
 					if(this.log_start_radio) console.log("[playlist_start_radio]",res[1]);
@@ -4706,15 +4706,15 @@ class ParserService extends BaseService {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
-	on_endpoint_params(for_,path,x) {
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		switch(for_) {
+		switch(root) {
 			case "GetTranscript": {
 				/** @type {ParamMapValue[]} */
 				let transcript_args=[];
@@ -4804,16 +4804,36 @@ class ParserService extends BaseService {
 				debugger;
 			} return;
 		}
-		this.parse_endpoint_param(for_,path,param_map);
+		this.parse_endpoint_param(root,path,param_map);
 	}
-	/** @public @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
-	on_player_params(for_,path,x) {
+	/** @public @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	on_player_params(root,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
-		this.parse_player_param(for_,path,param_map);
+		this.parse_player_param(root,path,param_map);
+	}
+	/** @private @type {string[]} */
+	cache_interaction_requests=[];
+	/** @public @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	on_serialized_interactions_request_params(root,path,x) {
+		if(this.cache_interaction_requests.includes(x)) return;
+		this.cache_interaction_requests.push(x);
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
+		this.parse_serialized_interactions_request(root,path,param_map);
+	}
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} map */
+	parse_serialized_interactions_request(root,path,map) {
+		this.parse_key_index++;
+		let key_index=this.parse_key_index;
+		let mk=[...map.keys()];
+		/** @arg {number} ta */
+		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,null);
+		parse_key(1);
+		key_index;
 	}
 	parse_key_index=1;
 	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
@@ -4823,13 +4843,13 @@ class ParserService extends BaseService {
 		if(idx>-1) mk.splice(idx,1);
 	}
 	/** @typedef {(x:ParamMapValue,idx:number)=>void} ParseCallbackFunction */
-	/** @arg {ParamsSection} for_ @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
-	parse_key(for_,path,x,mk,ta,cb) {
+	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	parse_key(root,path,x,mk,ta,cb) {
 		let tv=x.get(ta);
-		this.parse_value(for_,path,x,mk,ta,tv,cb);
+		this.parse_value(root,path,x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} for_ @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
-	parse_value(for_,path,x,mk,ta,tv,cb) {
+	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
+	parse_value(root,path,x,mk,ta,tv,cb) {
 		if(tv!==void 0) {
 			x.delete(ta);
 			let cx=mk.indexOf(ta);
@@ -4852,7 +4872,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.parse_param_next(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(root,`${path}.f${ta}`,tv);
 						} break;
 						case "watch.player_params": {
 							switch(ta) {
@@ -4865,7 +4885,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.parse_param_next(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(root,`${path}.f${ta}`,tv);
 						} break;
 						case "watch.params.f27": {
 							switch(ta) {
@@ -4876,7 +4896,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.parse_param_next(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(root,`${path}.f${ta}`,tv);
 						} break;
 						case "watch.params.f33": {
 							switch(ta) {
@@ -4890,7 +4910,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.parse_param_next(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(root,`${path}.f${ta}`,tv);
 						} break;
 						case "watch.player_params.f40": {
 							switch(ta) {
@@ -4933,12 +4953,12 @@ case "${path}": {
 			cb(tv,ta);
 		}
 	}
-	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {ParamMapValue} tv */
-	parse_param_next(for_,path,tv) {
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue} tv */
+	parse_param_next(root,path,tv) {
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) {
 			if(tv.size<=0) return;
-			this.parse_any_param(for_,path,tv);
+			this.parse_any_param(root,path,tv);
 		} else {
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
@@ -4983,7 +5003,7 @@ case "${path_parts[2]}": return;`);
 				} break;
 			}
 			console.log(path_parts);
-			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
+			console.log(`[${path}] [idx=${key_index}]`,root,tv);
 			debugger;
 		}
 	}
@@ -5002,13 +5022,13 @@ case "${path_parts[2]}": return;`);
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {ParamMapType} x */
-	parse_player_param(for_,path,x) {
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
+	parse_player_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
 		let mk=[...x.keys()];
 		/** @arg {number} ta */
-		let parse_key=(ta) => this.parse_key(for_,path,x,mk,ta,null);
+		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
 		parse_key(8);
 		parse_key(9);
 		parse_key(30);
@@ -5055,14 +5075,14 @@ case "${path_parts[2]}": return;`);
 	cache_playlist_id=[];
 	/** @private @type {string[]} */
 	cache_player_params=[];
-	/** @private @arg {ParamsSection} for_ @arg {Extract<YtUrlFormat,`https://${string}`|`http://${string}`>} x */
-	parse_full_url(for_,x) {
+	/** @private @arg {ParamsSection} root @arg {Extract<YtUrlFormat,`https://${string}`|`http://${string}`>} x */
+	parse_full_url(root,x) {
 		let r=this.parse_with_url_parse(x);
 		switch(r.host) {
 			case "ad.doubleclick.net": return;
 			case "www.googleadservices.com": return;
 			case "www.youtube.com": {
-				this.parse_url(for_,`${r.pathname}${r.search}`);
+				this.parse_url(root,`${r.pathname}${r.search}`);
 				return;
 			}
 			default:
@@ -5107,13 +5127,13 @@ case "${path_parts[2]}": return;`);
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @public @arg {ParamsSection} for_ @arg {YtUrlFormat} x */
-	parse_url(for_,x) {
+	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
+	parse_url(root,x) {
 		if(this.str_starts_with(x,"https://")) {
-			return this.parse_full_url(for_,x);
+			return this.parse_full_url(root,x);
 		}
 		if(this.str_starts_with(x,"http://")) {
-			return this.parse_full_url(for_,x);
+			return this.parse_full_url(root,x);
 		}
 		if(this.str_starts_with(x,"android-app://")) {
 			return;
@@ -5127,13 +5147,13 @@ case "${path_parts[2]}": return;`);
 			debugger;
 			return;
 		}
-		this.parse_url_1(for_,up[1]);
+		this.parse_url_1(root,up[1]);
 	}
-	/** @private @arg {ParamsSection} for_ @arg {ParseUrlStr_1} x */
-	parse_url_1(for_,x) {
+	/** @private @arg {ParamsSection} root @arg {ParseUrlStr_1} x */
+	parse_url_1(root,x) {
 		let v=split_string_once(x,"/");
 		switch(v.length) {
-			case 1: this.parse_url_2(for_,v[0]); break;
+			case 1: this.parse_url_2(root,v[0]); break;
 			case 2: this.parse_url_3(v); break;
 		}
 	}
@@ -5169,21 +5189,21 @@ case "${path_parts[2]}": return;`);
 			}
 		}
 	}
-	/** @private @arg {ParamsSection} for_ @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
-	parse_url_with_search(for_,x) {
+	/** @private @arg {ParamsSection} root @arg {ParseUrlWithSearchIn|ParseUrlWithSearchIn_2} x */
+	parse_url_with_search(root,x) {
 		let a=split_string(x,"?");
 		switch(a[0]) {
 			case "playlist": this.parse_playlist_page_url(a[1]); break;
-			case "watch": this.parse_watch_page_url(for_,a[1]); break;
+			case "watch": this.parse_watch_page_url(root,a[1]); break;
 		}
 	}
 	log_channel_handles=false;
 	/** @private @type {YtUrlFormat} */
-	/** @private @arg {ParamsSection} for_ @arg {Extract<SplitOnce<SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
-	parse_url_2(for_,x) {
+	/** @private @arg {ParamsSection} root @arg {Extract<SplitOnce<SplitOnce<Exclude<YtUrlFormat,"/">,"/">[1],"/">,[any]>[0]} x */
+	parse_url_2(root,x) {
 		if(this.str_is_search(x)) {
 			x;
-			return this.parse_url_with_search(for_,as(x));
+			return this.parse_url_with_search(root,as(x));
 		}
 		if(this.str_starts_with(x,"@")) {
 			if(this.log_channel_handles) console.log("[channel_handle]",x);
@@ -5740,8 +5760,8 @@ class ServiceMethods extends ServiceData {
 			debugger;
 		}
 	}
-	/** @arg {ParamsSection} for_ @arg {WatchPageUrl} x */
-	parse_watch_page_url(for_,x) {
+	/** @arg {ParamsSection} root @arg {WatchPageUrl} x */
+	parse_watch_page_url(root,x) {
 		let u1=split_string_once(x,"/")[1];
 		let u2=split_string_once(u1,"?")[1];
 		let u3=this.parse_url_search_params(u2);
@@ -5754,7 +5774,7 @@ class ServiceMethods extends ServiceData {
 			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
 		}
-		this.parser.parse_url(for_,x);
+		this.parser.parse_url(root,x);
 		return u3;
 	}
 	/** @arg {string} x */
@@ -5762,9 +5782,9 @@ class ServiceMethods extends ServiceData {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
-	params(for_,path,x) {
-		this.parser.on_endpoint_params(for_,path,x);
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	params(root,path,x) {
+		this.parser.on_endpoint_params(root,path,x);
 	}
 	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
@@ -5842,9 +5862,9 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
-	playerParams(for_,path,x) {
-		this.parser.on_player_params(for_,path,x);
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	playerParams(root,path,x) {
+		this.parser.on_player_params(root,path,x);
 	}
 	/** @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
@@ -7203,16 +7223,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {RecordNotificationInteractions} x */
 	RecordNotificationInteractions(x) {
-		this.save_keys(`[RecordNotificationInteractions]`,x);
+		const cf="RecordNotificationInteractions";
+		this.save_keys(`[${cf}]`,x);
 		const {serializedInteractionsRequest,...y}=x; this.g(y);
-		this.serializedInteractionsRequest(serializedInteractionsRequest);
+		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
 	}
-	/** @arg {string} x */
-	serializedInteractionsRequest(x) {
-		let param_map=this.create_param_map(x);
-		if(param_map===null) {debugger; return;}
-		console.log(param_map);
-		debugger;
+	/** @arg {"RecordNotificationInteractions"} root @arg {string} x */
+	serializedInteractionsRequest(root,x) {
+		/** @type {ParamsSection} */
+		this.parser.on_serialized_interactions_request_params(root,"record_notification_interactions",x);
 	}
 	/** @arg {MultiPageMenuSectionRenderer<CompactLinkRenderer>} x */
 	MultiPageMenuSectionRenderer(x) {

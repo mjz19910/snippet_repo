@@ -7,6 +7,7 @@ type ParamsSection=
 	|"HrefUrl"
 	|"PlaylistContent"
 	|"PlaylistEdit"
+	|"RecordNotificationInteractions"
 	|"ReelWatch.player"
 	|"ReelWatch.sequence"
 	|"ReelWatch"
