@@ -4935,6 +4935,8 @@ class ParserService extends BaseService {
 					case ${ta}: break;`);
 							} return;
 						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "create_playlist.params": {
 						switch(ta) {
@@ -4945,6 +4947,8 @@ class ParserService extends BaseService {
 					case ${ta}: break;`);
 							} return;
 						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "record_notification_interactions": {
 						switch(ta) {
