@@ -4890,13 +4890,13 @@ class ParserService extends BaseService {
 							this.parse_param_next(for_,`${path}.f${ta}`,tv);
 						} break;
 						default: {
-							console.log("[parse_value.new_ns]");
+							console.log("[parse_value.new_ns]",path);
 							console.log(`
 case "${path}": {
 	switch(ta) {
 		case ${ta}: break;
 		default: {
-			console.log("generate_ns",path);
+			console.log("[parse_value.new_ns]",path);
 			console.log(\`\ncase \${ta}: break;\`);
 		} return;
 	}
