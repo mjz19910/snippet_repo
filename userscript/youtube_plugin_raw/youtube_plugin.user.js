@@ -6292,23 +6292,39 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VE96368_WebCommandMetadata} x */
 	VE96368_WebCommandMetadata(x) {
 		this.save_keys("[VE96368_WebCommandMetadata]",x);
-		if(x.url!=="/feed/subscriptions") debugger;
+		const {url,webPageType,rootVe: {},apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		if(url!=="/feed/subscriptions") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VE11487_WebCommandMetadata} x */
 	VE11487_WebCommandMetadata(x) {
 		this.save_keys("[VE11487_WebCommandMetadata]",x);
-		if(x.url!=="/premium") debugger;
+		const {url,webPageType,rootVe: {},apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		if(url!=="/premium") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VE3854_WebCommandMetadata} x */
 	VE3854_WebCommandMetadata(x) {
 		this.save_keys("[VE3854_WebCommandMetadata]",x);
-		if(x.url!=="/") debugger;
+		const {url,webPageType,rootVe: {},apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		if(url!=="/") debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VE6827_WebCommandMetadata} x */
 	VE6827_WebCommandMetadata(x) {
 		this.save_keys("[VE6827_WebCommandMetadata]",x);
+		const {url,webPageType,rootVe: {},apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.t(url,this.VE6827_PageUrl);
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @arg {VE6827_PageUrl} x */
+	VE6827_PageUrl(x) {
 		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
-		let su=split_string_once(x.url,"/")[1];
+		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		let [pt]=split_string_once(su1[1],"?");
 		switch(pt) {
