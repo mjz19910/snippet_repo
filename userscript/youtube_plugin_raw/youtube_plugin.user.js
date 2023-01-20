@@ -5804,8 +5804,8 @@ case "${path_parts[idx-1]}": {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(typeof tv==="number") {
-												if(((tv/1000/25628)%2)<0.1) {
-													let ntv=(tv/1000/25628)|0;
+												if(((tv/1000/100)%2)<0.1) {
+													let ntv=(tv/1000/100)|0;
 													return this.save_number(`[${path}]`,ntv);
 												} return;
 											}
