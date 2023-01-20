@@ -1,10 +1,7 @@
+type RefForEntityMutItem=DiscriminatedEnums.EntityMutationItem;
 type EntityMutationItem={
 	entityKey: string;
-	type: "ENTITY_MUTATION_TYPE_DELETE";
-	options?: {
-		persistenceOption: "ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST";
-	};
-	payload?: SubscriptionStateEntity|TranscriptTrackSelectionEntity;
+	type: "ENTITY_MUTATION_TYPE_DELETE"|"ENTITY_MUTATION_TYPE_REPLACE";
+	options?: EntityMutationOptions;
+	payload?: SubscriptionStateEntity|TranscriptTrackSelectionEntity|TranscriptSearchBoxStateEntity;
 };
-
-type EntityMutationItemDescEnum=EntityMutationReplace|EntityMutationDelete

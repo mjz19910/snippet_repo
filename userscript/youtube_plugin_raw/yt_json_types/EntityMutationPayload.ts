@@ -16,11 +16,4 @@ type EntityMutationPayload=
 |TranscriptTrackSelectionEntity
 ;
 
-type TranscriptSearchBoxStateEntityData={
-	key: string;
-	isHidden: false;
-};
-
-type TranscriptSearchBoxStateEntity={
-	transcriptSearchBoxStateEntity: TranscriptSearchBoxStateEntityData;
-};
+type TranscriptSearchBoxStateEntity={transcriptSearchBoxStateEntity: TranscriptSearchBoxState;};

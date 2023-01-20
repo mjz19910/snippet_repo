@@ -4844,7 +4844,9 @@ class ParserService extends BaseService {
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,null);
 		parse_key(1);
-		key_index;
+		if(this.eq_keys(mk,[])) return;
+		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
+		debugger;
 	}
 	parse_key_index=1;
 	/** @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
@@ -5895,6 +5897,11 @@ class SignalTypes extends BaseService {
 //#endregion
 //#region HandleTypes
 class HandleTypes extends ServiceMethods {
+	/** @private */
+	//@ts-expect-error(6133)
+	minimal_handler_member_use() {
+		this.minimal_handler_member_2({});
+	}
 	//#region
 	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
 	//#endregion
@@ -7042,7 +7049,6 @@ class HandleTypes extends ServiceMethods {
 			case "TOAST": break;
 			case "TOP_ALIGNED_DIALOG": break;
 		}
-		x;
 	}
 	/** @arg {OpenPopupActionData} x */
 	OpenPopupActionData(x) {
@@ -7195,8 +7201,8 @@ class HandleTypes extends ServiceMethods {
 			}
 			debugger;
 		});
-		trackingParams;
-		style;
+		this.primitive_of(trackingParams,"string");
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 	}
 	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
 	MultiPageMenuNotificationSectionRenderer(x) {
@@ -7529,22 +7535,28 @@ class HandleTypes extends ServiceMethods {
 	LikeLikeResponse(x) {
 		this.save_keys(`[LikeLikeResponse]`,x);
 		const {responseContext: {},actions}=x; //...y}=x; this.g(y); //#destructure
-		actions;
-		debugger;
+		this.z(actions,x => {
+			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			debugger;
+		});
 	}
 	/** @arg {DislikeResponse} x */
 	DislikeResponse(x) {
 		this.save_keys(`[DislikeResponse]`,x);
 		const {responseContext: {},actions}=x; //...y}=x; this.g(y); //#destructure
-		actions;
-		debugger;
+		this.z(actions,x => {
+			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			debugger;
+		});
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
 		this.save_keys(`[LikeRemoveLikeResponse]`,x);
 		const {responseContext: {},actions}=x; //...y}=x; this.g(y); //#destructure
-		actions;
-		debugger;
+		this.t(actions,a => this.z(a,x => {
+			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			debugger;
+		}));
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
@@ -8434,7 +8446,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(accessibility,this.Accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
 		debugger;
-		targetId;// this.t(targetId,a => this.targetId(cf,a));
+		/**/targetId;// this.t(targetId,a => this.targetId(cf,a));
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
@@ -9037,8 +9049,25 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AccountsListResponse]",x);
 		const {responseContext: {},selectText,actions}=x; //...y}=x; this.g(y); //#destructure
 		this.TextWithRuns(selectText);
-		actions;
-		debugger;
+		this.z(actions,this.UpdateChannelSwitcherPageAction);
+	}
+	/** @private @arg {UpdateChannelSwitcherPageAction} x */
+	UpdateChannelSwitcherPageAction(x) {
+		this.save_keys("[UpdateChannelSwitcherPageAction]",x);
+		const {updateChannelSwitcherPageAction}=x; //...y}=x; this.g(y); //#destructure
+		this.PageAction(updateChannelSwitcherPageAction);
+	}
+	/** @private @arg {PageAction<ChannelSwitcherPageRenderer>} x */
+	PageAction(x) {
+		this.save_keys("[PageAction]",x);
+		const {page}=x; //...y}=x; this.g(y); //#destructure
+		this.ChannelSwitcherPageRenderer(page);
+	}
+	/** @private @arg {ChannelSwitcherPageRenderer} x */
+	ChannelSwitcherPageRenderer(x) {
+		this.save_keys("[UpdateChannelSwitcherPageAction]",x);
+		const {channelSwitcherPageRenderer}=x; //...y}=x; this.g(y); //#destructure
+		this.ChannelSwitcherPage(channelSwitcherPageRenderer);
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
@@ -9336,7 +9365,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Signal_GetAccountMenu} x */
 	GetAccountMenu(x) {
 		const {signal,actions}=x; //...y}=x; this.g(y); //#destructure
-		signal;
+		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		this.z(actions,this.ServiceEndpointAction);
 	}
 	/** @arg {ChannelPageResponse} x */
@@ -9473,10 +9502,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistHeaderRenderer} x */
 	PlaylistHeaderRenderer(x) {
 		this.PlaylistHeader(x.playlistHeaderRenderer);
-	}
-	/** @arg {PlaylistHeader} x */
-	PlaylistHeader(x) {
-		x;
 	}
 	/** @arg {C4TabbedHeaderRenderer} x */
 	C4TabbedHeaderRenderer(x) {
@@ -10081,8 +10106,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[EntityMutationItem]",x);
 		const {entityKey,type,options,payload}=x; //...y}=x; this.g(y); //#destructure
 		entityKey;
-		type;
-		options;
+		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
+		if(options) this.EntityMutationOptions(options);
 		if(payload) {
 			let h="subscriptionStateEntity" in payload;
 			h||="transcriptTrackSelectionEntity" in payload;
@@ -10091,6 +10116,12 @@ class HandleTypes extends ServiceMethods {
 				debugger;
 			}
 		}
+	}
+	/** @arg {EntityMutationOptions} x */
+	EntityMutationOptions(x) {
+		this.save_keys("[EntityMutationOptions]",x);
+		const {persistenceOption}=x; //...y}=x; this.g(y); //#destructure
+		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
@@ -11403,7 +11434,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
-	/** @arg {minimal_handler_member} x ! */
+	/** @private @arg {ChannelSwitcherPage} x */
+	ChannelSwitcherPage(x) {x;}
+	/** @arg {PlaylistHeader} x */
+	PlaylistHeader(x) {x;}
+	/** @private @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
 }
