@@ -14,6 +14,7 @@ type PathRoot=[
 	`watch.params.f27`,
 	`watch.params.f27.f1`,
 	"watch.params.f33",
+	"watch.player_params.f8",
 	`watch.player_params.f40`,
 	"watch.player_params.f40.f1",
 ][number];
