@@ -7708,8 +7708,13 @@ class HandleTypes extends ServiceMethods {
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
+			let [pt0]=su1;
 			this.save_string(`[${cf}]`,`${su1[0]}`);
-			if(su1[0]==="reporthistory") return;
+			if(pt0==="reporthistory") return;
+			switch(pt0) {
+				case "reporthistory": return;
+				default: debugger; return;
+			}
 		}
 		let [pt]=split_string_once(su1[1],"?");
 		this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
