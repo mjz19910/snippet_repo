@@ -5006,9 +5006,18 @@ case "${path}": {
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
 				default: {
+					let idx=1;
 					console.log("root_next_case");
 					console.log(`
-case "${path_parts[0]}":`);
+case "${path_parts[0]}": switch(path_parts[${idx}]) {
+	default: {
+		let idx=${idx+1};
+		console.log("in",path_parts[${idx-1}]);
+		console.log(\`
+case "\${path_parts[${idx}]}":\`);
+		debugger;
+	} path_parts[${idx}]===""; break;
+}`);
 					debugger;
 				} break;
 				case "watch": switch(path_parts[1]) {
