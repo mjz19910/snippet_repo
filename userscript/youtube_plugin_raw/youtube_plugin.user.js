@@ -5481,7 +5481,6 @@ case "${path_parts[idx-1]}": {
 		let gd=(idx) => {
 			console.log("[param_next.new_ns]",path_parts.join("."));
 			gen_next_part(idx);
-			debugger;
 		};
 		/** @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
