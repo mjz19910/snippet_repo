@@ -8543,7 +8543,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MultiPageMenu} x */
 	MultiPageMenu(x) {
-		this.save_keys(`[MultiPageMenu]`,x);
+		const cf="MultiPageMenu";
+		this.save_keys(`[${cf}]`,x);
 		switch(x.style) {
 			case "MULTI_PAGE_MENU_STYLE_TYPE_CREATION": {
 				const {sections,style,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -8570,16 +8571,26 @@ class HandleTypes extends ServiceMethods {
 			if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 			return;
 		}
-		const {header,sections,trackingParams,style,...y}=x; this.g(y); // ! #destructure
-		this.SimpleMenuHeaderRenderer(header);
-		this.z(sections,a => {
-			if(a.multiPageMenuNotificationSectionRenderer) {
-				return this.MultiPageMenuNotificationSectionRenderer(a);
-			}
-			debugger;
-		});
-		this.primitive_of_string(trackingParams);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+		switch(x.style) {
+			case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": {
+				const {trackingParams,style,showLoadingSpinner,...y}=x; this.g(y); // ! #destructure
+				this.trackingParams(cf,trackingParams);
+			} break;
+			case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": {
+				const {header,sections,trackingParams,style,...y}=x; this.g(y); // ! #destructure
+				this.SimpleMenuHeaderRenderer(header);
+				this.z(sections,a => {
+					if(a.multiPageMenuNotificationSectionRenderer) {
+						return this.MultiPageMenuNotificationSectionRenderer(a);
+					}
+					debugger;
+				});
+				this.trackingParams(cf,trackingParams);
+			} break;
+		}
+		if("showLoadingSpinner" in x) {
+			return;
+		}
 	}
 	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
 	MultiPageMenuNotificationSectionRenderer(x) {
@@ -8589,10 +8600,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ItemsTemplate<NotificationRenderer>} x */
 	MultiPageMenuNotificationSection(x) {
-		this.save_keys(`[MultiPageMenuNotificationSection]`,x);
+		const cf="MultiPageMenuNotificationSection";
+		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(items,this.NotificationRenderer);
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
 	}
 	/** @arg {NotificationRenderer} x */
 	NotificationRenderer(x) {

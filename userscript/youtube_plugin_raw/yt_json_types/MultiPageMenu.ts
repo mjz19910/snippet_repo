@@ -12,6 +12,10 @@ type MultiPageMenu={
 	sections: MultiPageMenuNotificationSectionRenderer[];
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS";
+}|{
+	trackingParams: string;
+	style: "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT";
+	showLoadingSpinner: true;
 };
 type ItemsTemplate<T>={
 	items: T[];
