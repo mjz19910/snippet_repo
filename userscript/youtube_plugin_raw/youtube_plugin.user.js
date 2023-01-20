@@ -4946,6 +4946,18 @@ class ParserService extends BaseService {
 							} return;
 						}
 					} return;
+					case "record_notification_interactions": {
+						switch(ta) {
+							case 2: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`
+					case ${ta}: break;`);
+							} return;
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					default: {
 						console.log("[parse_value.new_ns]",path);
 						console.log(`

@@ -24,6 +24,7 @@ type PathRoot=
 	|"watch.player_params"
 	|"ypc_get_offers.params"
 	|`record_notification_interactions`
+	|"record_notification_interactions.f2"
 	|`watch.player_params.f40`
 	;
 ;
