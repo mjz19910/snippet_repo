@@ -5030,10 +5030,11 @@ case "${path}": {
 			/** @arg {number} idx */
 			let gen_next_part=(idx)=>{
 				console.log(`
-case "${path_parts[0]}": switch(path_parts[${idx}]) {
+case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
+		let idx=${idx+1};
 		console.log("in",path_parts[${idx-1}]);
-		gen_next_part(${idx+1});
+		gen_next_part(idx);
 		debugger;
 	} path_parts[${idx}]===""; break;
 } break;`);
@@ -5041,12 +5042,12 @@ case "${path_parts[0]}": switch(path_parts[${idx}]) {
 			/** @arg {number} idx */
 			let gen_final_part=(idx)=>{
 				console.log(`
-case "${path_parts[0]}": switch(path_parts[${idx}]) {
+case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
 		let idx=${idx+1};
 		console.log("in",path_parts[${idx-1}]);
 		console.log(\`
-case "\${path_parts[${idx}]}": return;\`);
+case "\${path_parts[\${idx}]}": return;\`);
 		debugger;
 	} path_parts[${idx}]===""; break;
 } break;`);
@@ -5057,6 +5058,20 @@ case "\${path_parts[${idx}]}": return;\`);
 					console.log("root_next_case");
 					gen_next_part(1);
 					debugger;
+				} break;
+				case "record_notification_interactions": switch(path_parts[1]) {
+					default: {
+						console.log("in",path_parts[0]);
+						gen_next_part(2);
+						debugger;
+					} path_parts[1]===""; break;
+					case "f2": switch(path_parts[2]) {
+						default: {
+							console.log("in",path_parts[1]);
+							gen_next_part(3);
+							debugger;
+						} path_parts[2]===""; break;
+					} break;
 				} break;
 				case "create_playlist": switch(path_parts[1]) {
 					default: {
