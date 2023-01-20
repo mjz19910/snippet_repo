@@ -5188,6 +5188,14 @@ case "${path}": {
 				/** @type {LogItems} */
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "entity_key": {
+						switch(ta) {
+							case 2: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "tracking.trackingParams.f4": {
 						switch(ta) {
 							case 1: break;

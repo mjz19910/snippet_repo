@@ -10,6 +10,7 @@ type LogItems=[
 	"[parse_value.gen_ns] [tracking.trackingParams.f4.f2]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f4.f3]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f6]",
+	"[parse_value.gen_ns] [entity_key.f2]",
 ][number];
 type PathRoot=[
 	"createBackstagePost.param",
