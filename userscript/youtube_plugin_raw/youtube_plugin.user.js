@@ -8916,15 +8916,19 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata}=x; //...y}=x; this.g(y); //#destructure
 		this.WebCommandMetadata(webCommandMetadata);
 	}
+	/** @arg {VE3611_WebCommandMetadata['url']} x */
+	VE3611_parse_url(x) {
+			if(x==="/gaming") return;
+			if(this.str_starts_with(x,"/@")) return;
+			if(this.str_starts_with(x,"/channel/UC")) return;
+			debugger;
+	}
 	/** @arg {VE3611_WebCommandMetadata} x */
 	VE3611_WebCommandMetadata(x) {
 		this.save_keys("[VE3611_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe: {},apiUrl}=x; //...y}=x; this.g(y); //#destructure
-		if(this.str_starts_with(url,"/@")) {
-		} else if(this.str_starts_with(url,"/channel/UC")) {
-		} else {
-			debugger;
-		}
+		const {url,webPageType,rootVe,apiUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.VE3611_parse_url(url);
+		if(rootVe!==3611) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
