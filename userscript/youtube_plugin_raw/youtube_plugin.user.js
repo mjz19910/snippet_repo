@@ -9181,7 +9181,7 @@ class HandleTypes extends ServiceMethods {
 		const {serializedContextData,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(serializedContextData,"string");
 	}
-	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @private @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
 		if(!("runs" in x)) {debugger; return;}
 		const cf="TextWithRuns";
@@ -9190,20 +9190,20 @@ class HandleTypes extends ServiceMethods {
 		this.z(runs,a => this.TextRun(a,f_run));
 		this.t(accessibility,this.Accessibility);
 	}
-	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @private @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
 		this.save_keys("[TextRun]",x);
 		const {text,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of(text,"string");
 	}
-	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
+	/** @private @arg {ThumbnailOverlayTimeStatusRenderer} x */
 	ThumbnailOverlayTimeStatusRenderer(x) {
 		this.save_keys("[ThumbnailOverlayTimeStatusRenderer]",x);
 		const {thumbnailOverlayTimeStatusRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ThumbnailOverlayTimeStatus(thumbnailOverlayTimeStatusRenderer);
 	}
-	/** @arg {ThumbnailOverlayTimeStatus} x */
+	/** @private @arg {ThumbnailOverlayTimeStatus} x */
 	ThumbnailOverlayTimeStatus(x) {
 		this.save_keys("[ThumbnailOverlayTimeStatus]",x);
 		const {text,style,...y}=x;
@@ -9219,13 +9219,13 @@ class HandleTypes extends ServiceMethods {
 			this.Icon(icon);
 		} else this.g(y);
 	}
-	/** @arg {EndScreenPlaylistRenderer} x */
+	/** @private @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
 		this.save_keys("[EndScreenPlaylistRenderer]",x);
 		const {endScreenPlaylistRenderer,...y}=x; this.g(y); // ! #destructure
 		this.EndScreenPlaylist(endScreenPlaylistRenderer);
 	}
-	/** @arg {EndScreenPlaylist} x */
+	/** @private @arg {EndScreenPlaylist} x */
 	EndScreenPlaylist(x) {
 		this.save_keys("[EndScreenPlaylist]",x);
 		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -9238,7 +9238,7 @@ class HandleTypes extends ServiceMethods {
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {NavigationEndpoint} x */
+	/** @private @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
 		this.save_keys("[NavigationEndpointRoot]",x);
 		let a1=x;
@@ -9252,7 +9252,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {E_UrlEndpoint} x */
+	/** @private @arg {E_UrlEndpoint} x */
 	UrlEndpoint(x) {
 		this.save_keys("[UrlEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
@@ -9265,29 +9265,13 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;*/
 	}
-	/** @arg {AE_UrlEndpoint} x */
+	/** @private @arg {AE_UrlEndpoint} x */
 	UrlEndpointData(x) {
 		this.save_keys("[UrlEndpointData]",x);
 		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(url,"string");
 		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
 		if(nofollow&&!nofollow) debugger;
-	}
-	/** @arg {NavigationEndpointData} x */
-	NavigationEndpointData(x) {
-		this.save_keys("[NavigationEndpointData]",x);
-		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.t(commandMetadata,this.NavigationEndpointCommandMetadata);
-		this.NavigationEndpointBrowseEndpoint(browseEndpoint);
-	}
-	/** @arg {NavigationEndpointBrowseEndpoint} x */
-	NavigationEndpointBrowseEndpoint(x) {
-		this.save_keys("[NavigationEndpointBrowseEndpoint]",x);
-		const {browseId,canonicalBaseUrl,browseEndpointContextSupportedConfigs: a3,...y}=x; this.g(y); // ! #destructure
-		this.browseId(browseId);
-		this.t(canonicalBaseUrl,this.canonicalBaseUrl);
-		this.t(a3,this.BrowseEndpointContextSupportedConfigs);
 	}
 	/** @arg {BrowseEndpointContextSupportedConfigs} x */
 	BrowseEndpointContextSupportedConfigs(x) {
