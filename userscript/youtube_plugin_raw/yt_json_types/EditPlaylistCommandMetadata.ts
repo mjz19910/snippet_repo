@@ -1,3 +1,0 @@
-type EditPlaylistCommandMetadata={
-	webCommandMetadata: EditPlaylistWebCommandMetadata;
-};

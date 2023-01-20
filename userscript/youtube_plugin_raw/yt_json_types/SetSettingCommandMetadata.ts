@@ -1,3 +1,0 @@
-type SetSettingCommandMetadata={
-	webCommandMetadata: SetSettingWebCommandMetadata;
-};

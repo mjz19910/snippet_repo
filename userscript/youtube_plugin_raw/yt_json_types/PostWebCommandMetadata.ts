@@ -1,3 +1,0 @@
-type PostWebCommandMetadata={
-	sendPost: true;
-};

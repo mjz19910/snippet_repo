@@ -1,2 +1,0 @@
-type NotificationWCM=GetUnseenCountWebCommandMetadata|
-	GetNotificationMenuWebCommandMetadata;

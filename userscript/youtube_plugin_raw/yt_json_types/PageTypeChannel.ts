@@ -1,6 +1,6 @@
 type PageTypeChannel={
 	pageType: "channel";
-	endpoint: ChannelEndpoint;
+	endpoint: {};
 	response: ChannelPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

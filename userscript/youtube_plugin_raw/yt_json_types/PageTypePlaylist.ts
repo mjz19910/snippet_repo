@@ -1,6 +1,6 @@
 type PageTypePlaylist={
 	pageType: "playlist";
-	endpoint: PlaylistEndpoint;
+	endpoint: {};
 	response: PlaylistPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

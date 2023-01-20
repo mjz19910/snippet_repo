@@ -8,8 +8,8 @@ type VE23462_WebCommandMetadata={
 type SettingsWebCommandMetadata=VE23462_WebCommandMetadata;
 
 type WebCommandMetadata=
-	|GenericWebCommandMetadata
-	|PostWebCommandMetadata
+	|GeneratedWebCommandMetadata
+	|M$SendPost
 	|WebCommandMetadataRVE
 	;
 ;
@@ -22,7 +22,6 @@ type PlaylistWebCommandMetadata={
 };
 
 type WebCommandMetadataRVE=
-	|BrowsePageWebCommandMetadata
 	|ChannelPageWebCommandMetadata
 	|PlaylistWebCommandMetadata
 	|SearchPageWebCommandMetadata

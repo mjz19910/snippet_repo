@@ -4388,10 +4388,10 @@ class CodegenService extends BaseService {
 	decode_PopupTypeMap(x) {
 		switch(x.popupType) {
 			default: debugger; break;
-			case "DIALOG": 
-			let jy=Object.keys(x).filter(e=>e!=="popupType").join(":any;");
-			console.log("jy",jy);
-			return `TYPE::Extract<PopupTypeMap["${x.popupType}"][number],{${jy}}>`;
+			case "DIALOG":
+				let jy=Object.keys(x).filter(e => e!=="popupType").join(":any;");
+				console.log("jy",jy);
+				return `TYPE::Extract<PopupTypeMap["${x.popupType}"][number],{${jy}}>`;
 		}
 		return `TYPE::PopupTypeMap["${x.popupType}"]`;
 	}
@@ -7330,7 +7330,10 @@ class ServiceMethods extends ServiceData {
 			case "37414": return;
 			case "83769": return;
 			case "96368": return;
-			default:
+			default: {
+				/** @type {GeneratedWebCommandMetadata[]} */
+				let x=[];
+			}
 		}
 		switch(ss) {
 			default: debugger;
@@ -7511,7 +7514,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.eq_keys(k,["sendPost"])) return;
 		debugger;
 	}
-	/** @arg {GenericWebCommandMetadata} x */
+	/** @arg {GeneratedWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
 		this.save_keys("[GenericWebCommandMetadata]",x);
 		let cx=x.apiUrl;
@@ -7630,12 +7633,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GeneratedWebCommandMetadata} x */
 	GeneratedWebCommandMetadata(x) {
-		const {sendPost,apiUrl}=x;
-		this.primitive_of(sendPost,"boolean");
-		this.parser.parse_url("GeneratedWCM",apiUrl);
+		if("apiUrl" in x) {
+			const {sendPost,apiUrl}=x;
+			this.primitive_of(sendPost,"boolean");
+			this.parser.parse_url("GeneratedWCM",apiUrl);
+		}
 	}
-	/** @arg {WebCommandMetadataRVE} x */
+	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadataRVE(x) {
+		if(!("rootVe" in x)) return;
 		this.rootVe(x.rootVe);
 		switch(x.webPageType) {
 			default: debugger; return;
@@ -12422,7 +12428,7 @@ class HandleTypes extends ServiceMethods {
 		let n=(Number.parseInt(sid[0],10));
 		n/=1000;
 		this.save_number("[AdSlot.slotId[0]]",n|0);
-		this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e=>Number.parseInt(e,10)));
+		this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if(slotPhysicalPosition!==1) debugger;
 	}
