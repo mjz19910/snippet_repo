@@ -9182,10 +9182,10 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.AE_ReelWatch(reelWatchEndpoint);
+		this.E$ReelWatch(reelWatchEndpoint);
 	}
 	/** @arg {E$ReelWatch} x */
-	AE_ReelWatch(x) {
+	E$ReelWatch(x) {
 		const cf="ReelWatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y); // ! #destructure
@@ -9440,10 +9440,12 @@ class HandleTypes extends ServiceMethods {
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				case "FEsubscriptions":{
-					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y); // ! #destructure
+					const {selected,content,tabIdentifier: {},endpoint,accessibility,trackingParams,...y}=x; this.g(y); // ! #destructure
 					if(selected!==true) debugger;
 					this.SectionListRenderer(content);
 					this.trackingParams(cf,trackingParams);
+					this.E$BrowseEndpoint(endpoint);
+					this.Accessibility(accessibility);
 				} return;
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -11097,7 +11099,7 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.AE_Search(searchEndpoint);
+		this.E$Search(searchEndpoint);
 	}
 	/** @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
@@ -11432,7 +11434,13 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,uploadEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.AE_Upload(uploadEndpoint);
+		this.E$Upload(uploadEndpoint);
+	}
+	/** @arg {E$Upload} x */
+	E$Upload(x) {
+		this.save_keys("[E$Upload]",x);
+		const {hack,...y}=x; this.g(y); // ! #destructure
+		if(hack!==true) debugger;
 	}
 	/** @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
@@ -12110,23 +12118,17 @@ class HandleTypes extends ServiceMethods {
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip(chipCloudChipRenderer);
 	}
-	/** @arg {E$Upload} x */
-	AE_Upload(x) {
-		this.save_keys("[UploadEndpointData]",x);
-		const {hack,...y}=x; this.g(y); // ! #destructure
-		if(hack!==true) debugger;
-	}
 	/** @arg {E$SearchResultsSearchEndpoint} x */
 	SearchResultsSearchEndpoint(x) {
 		const cf="SearchResultsSearchEndpoint";
 		this.save_keys("[SearchResultsSearchEndpoint]",x);
 		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.AE_Search(searchEndpoint);
+		this.E$Search(searchEndpoint);
 	}
 	/** @arg {E$Search} x */
-	AE_Search(x) {
-		this.save_keys("[SearchEndpointData]",x);
+	E$Search(x) {
+		this.save_keys("[Search]",x);
 		const {query,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(query);
 	}
@@ -12829,9 +12831,9 @@ class HandleTypes extends ServiceMethods {
 	ModifiedSetItem(x) {
 		this.save_keys("[ModifiedSetItem]",x);
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=x; this.g(y); // ! #destructure
-		this.WatchPlaylistEndpoint(autoplayVideo);
-		this.WatchPlaylistEndpoint(nextButtonVideo);
-		this.t(previousButtonVideo,this.WatchPlaylistEndpoint);
+		this.E$WatchPlaylistEndpoint(autoplayVideo);
+		this.E$WatchPlaylistEndpoint(nextButtonVideo);
+		this.t(previousButtonVideo,this.E$WatchPlaylistEndpoint);
 	}
 	/** @arg {ClipCreationRenderer} x */
 	ClipCreationRenderer(x) {
@@ -12840,17 +12842,17 @@ class HandleTypes extends ServiceMethods {
 		this.ClipCreationData(clipCreationRenderer);
 	}
 	/** @arg {WatchPlaylistEndpoint} x */
-	WatchPlaylistEndpoint(x) {
+	E$WatchPlaylistEndpoint(x) {
 		const cf="WatchPlaylistEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("WatchPlaylistEndpoint",clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.WatchPlaylistEndpointData(watchPlaylistEndpoint);
+		this.E$WatchPlaylist(watchPlaylistEndpoint);
 	}
-	/** @arg {WatchPlaylistEndpointData} x */
-	WatchPlaylistEndpointData(x) {
-		this.save_keys("[WatchPlaylistEndpointData]",x);
+	/** @arg {E$WatchPlaylist} x */
+	E$WatchPlaylist(x) {
+		this.save_keys("[WatchPlaylist]",x);
 		const {playlistId,index,params,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_playlist_id(playlistId);
 		this.primitive_of(index,"number");
