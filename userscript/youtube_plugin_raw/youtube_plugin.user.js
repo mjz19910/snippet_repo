@@ -11945,14 +11945,6 @@ class HandleTypes extends ServiceMethods {
 			this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
 		}
 	}
-	/** @arg {ShortsPageWebCommandMetadata} x */
-	ShortsPageWebCommandMetadata(x) {
-		this.save_keys("[ShortsPageWebCommandMetadata]",x);
-		const {url,webPageType,rootVe: {},...y}=x; this.g(y); // ! #destructure
-		if(!this.str_starts_with(url,"/shorts/")) debugger;
-		if(url.includes("&")) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SHORTS") debugger;
-	}
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerNavigationModel:any}>} x */
 	PlayerOverlayWithNavigationModel(x) {
 		const {style,trackingParams,reelPlayerNavigationModel,...y}=x; this.g(y); // ! #destructure
