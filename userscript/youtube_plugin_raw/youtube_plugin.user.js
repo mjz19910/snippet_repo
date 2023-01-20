@@ -5032,7 +5032,7 @@ case "${path}": {
 			}
 			console.log(`
 case "${path_parts[idx-1]}": {
-	let idx=${idx+1};
+	const idx=${idx+1};
 	if(path_parts.length===idx) {
 		switch(tv) {default: debugger; return;}
 	}
@@ -5049,12 +5049,17 @@ case "${path_parts[idx-1]}": {
 		let gen_return_part=(idx) => {
 			console.log(`
 case "${path_parts[idx-1]}": {
-	let idx=${idx};
-	if(path_parts.length===${idx+1}) {
+	const idx=${idx};
+	if(path_parts.length===idx) {
 		switch(tv) {default: debugger; return;}
 	}
-	gen_next_part(idx);
-	debugger;
+	switch(path_parts[${idx}]) {
+		default: {
+			console.log("in",path_parts[${idx-1}]);
+			gen_next_part(idx);
+			debugger;
+		} path_parts[${idx}]===""; break;
+	}
 } break;`);
 		};
 		let path_parts=split_string(path,".");
@@ -5096,6 +5101,14 @@ case "${path_parts[idx-1]}": {
 									gen_next_part(idx);
 									debugger;
 								} path_parts[3]===""; break;
+								case "f3": {
+									let idx=4;
+									if(path_parts.length===5) {
+										switch(tv) {default: debugger; return;}
+									}
+									gen_next_part(idx);
+									debugger;
+								} break;
 								case "f2": {
 									const idx=4;
 									if(path_parts.length===idx) {
