@@ -7581,7 +7581,7 @@ class HandleTypes extends ServiceMethods {
 			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
 		}
 	}
-	/** @arg {SearchPageWebCommandMetadata} x */
+	/** @arg {VE4724_WebCommandMetadata} x */
 	SearchPageWebCommandMetadata(x) {
 		this.save_keys("[SearchPageWebCommandMetadata]",x);
 		const {url,webPageType,rootVe,...y}=x; this.g(y); // ! #destructure
@@ -10108,10 +10108,15 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
 		this.save_keys("[CommandMetadata]",x);
-		const {webCommandMetadata,resolveUrlCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		debugger;
-		// this.WebCommandMetadata(webCommandMetadata);
-		this.t(resolveUrlCommandMetadata,this.ResolveUrlCommandMetadata);
+		if("resolveUrlCommandMetadata" in x) {
+			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=x; this.g(y); // ! #destructure
+			debugger;
+			// this.WebCommandMetadata(webCommandMetadata);
+			this.t(resolveUrlCommandMetadata,this.ResolveUrlCommandMetadata);
+			return;
+		}
+		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
@@ -10822,8 +10827,13 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E$UndoFeedbackEndpoint} x */
 	E$UndoFeedbackEndpoint(x) {
 		const cf="UndoFeedbackEndpoint";
-		this.EndpointTemplate(cf,x,x => {
-			const {undoFeedbackEndpoint: {actions,undoToken,...y}}=x; this.g(y);
+		const {clickTrackingParams,commandMetadata,undoFeedbackEndpoint}=x;
+		this.clickTrackingParams(cf,clickTrackingParams);
+		commandMetadata;
+		debugger;
+		// this.CommandMetadata(commandMetadata);
+		{
+			const {actions,undoToken,...y}=undoFeedbackEndpoint; this.g(y);
 			let act=this.z(actions,a => {
 				const {clickTrackingParams,...y}=a;
 				this.clickTrackingParams("E$UndoFeedback",clickTrackingParams);
@@ -10831,7 +10841,7 @@ class HandleTypes extends ServiceMethods {
 			});
 			this.z(act,this.g);
 			this.primitive_of_string(undoToken);
-		});
+		};
 	}
 	/** @arg {E$Button_serviceEndpoint} x */
 	Button_serviceEndpoint(x) {

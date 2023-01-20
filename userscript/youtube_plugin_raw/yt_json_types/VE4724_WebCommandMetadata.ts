@@ -3,5 +3,3 @@ type VE4724_WebCommandMetadata={
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
-
-type SearchPageWebCommandMetadata=VE4724_WebCommandMetadata;

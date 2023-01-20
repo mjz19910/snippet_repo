@@ -1,6 +1,8 @@
 type GeneratedWebCommandMetadata=[
 	VE3832_WebCommandMetadata,
 	VE3611_WebCommandMetadata,
+	VE83769_WebCommandMetadata,
+	VE4724_WebCommandMetadata,
 	M$SendPost,
 	{rootVe: 3854; webPageType: "WEB_PAGE_TYPE_BROWSE";},
 	{rootVe: 6827; webPageType: "WEB_PAGE_TYPE_BROWSE";},

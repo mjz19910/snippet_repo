@@ -24,7 +24,7 @@ type PlaylistWebCommandMetadata={
 type WebCommandMetadataRVE=
 	|ChannelPageWebCommandMetadata
 	|PlaylistWebCommandMetadata
-	|SearchPageWebCommandMetadata
+	|VE4724_WebCommandMetadata
 	|SettingsWebCommandMetadata
 	|ShortsPageWebCommandMetadata
 	|UnknownWebCommandMetadata

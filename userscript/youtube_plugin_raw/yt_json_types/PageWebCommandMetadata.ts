@@ -1,6 +1,6 @@
 type PageWebCommandMetadata=
 	|ChannelPageWebCommandMetadata
-	|SearchPageWebCommandMetadata
+	|VE4724_WebCommandMetadata
 	|WatchPageWebCommandMetadata
 	|ShortsPageWebCommandMetadata;
 	;
