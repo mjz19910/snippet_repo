@@ -4312,6 +4312,95 @@ class CodegenService extends BaseService {
 	get_json_replace_type_len_1(r,b,keys) {
 		let g=() => this.json_auto_replace(b);
 		let hg=false
+			||b.twoColumnWatchNextResults
+			//#region action
+			||b.changeEngagementPanelVisibilityAction
+			||b.openPopupAction
+			||b.addChatItemAction
+			||b.appendContinuationItemsAction
+			||b.changeEngagementPanelVisibilityAction
+			||b.createAction
+			||b.getMultiPageMenuAction
+			||b.hideEngagementPanelScrimAction
+			||b.openPopupAction
+			||b.replayChatItemAction
+			||b.sendFeedbackAction
+			||b.showEngagementPanelScrimAction
+			||b.signalAction
+			||b.updateChannelSwitcherPageAction
+			||b.updateDateTextAction
+			||b.updateDescriptionAction
+			||b.updateEngagementPanelAction
+			||b.updateNotificationsUnseenCountAction
+			||b.updateTitleAction
+			||b.updateToggleButtonTextAction
+			||b.updateViewershipAction
+			//#endregion
+			//#region command
+			||b.commandExecutorCommand
+			||b.showReloadUiCommand
+			||b.addToPlaylistCommand
+			||b.adsControlFlowOpportunityReceivedCommand
+			||b.changeKeyedMarkersVisibilityCommand
+			||b.commandExecutorCommand
+			||b.continuationCommand
+			||b.getInitialCommand
+			||b.getSurveyCommand
+			||b.loadMarkersCommand
+			||b.loopCommand
+			||b.musicLibraryStatusUpdateCommand
+			||b.onCloseCommand
+			||b.onCreateListCommand
+			||b.onDisabledCommand
+			||b.onEnabledCommand
+			||b.relatedChipCommand
+			||b.reloadContinuationItemsCommand
+			||b.resetChannelUnreadCountCommand
+			||b.scrollToEngagementPanelCommand
+			||b.showLessCommand
+			||b.showMoreCommand
+			||b.showReloadUiCommand
+			||b.updateToggleButtonStateCommand
+			//#endregion
+			//#region endpoint
+			||b.addToPlaylistServiceEndpoint
+			||b.authorEndpoint
+			||b.browseEndpoint
+			||b.channelNavigationEndpoint
+			||b.contextMenuEndpoint
+			||b.continuationEndpoint
+			||b.createPlaylistServiceEndpoint
+			||b.currentVideoEndpoint
+			||b.getAccountSwitcherEndpoint
+			||b.getDatasyncIdsEndpoint
+			||b.getTranscriptEndpoint
+			||b.likeEndpoint
+			||b.navigationEndpoint
+			||b.notificationOptOutEndpoint
+			||b.onResponseReceivedEndpoint
+			||b.onSubscribeEndpoint
+			||b.onUnsubscribeEndpoint
+			||b.playlistEditEndpoint
+			||b.recordClickEndpoint
+			||b.recordNotificationInteractionsEndpoint
+			||b.reelWatchEndpoint
+			||b.removeFromPlaylistServiceEndpoint
+			||b.replacementEndpoint
+			||b.searchEndpoint
+			||b.serviceEndpoint
+			||b.setSettingEndpoint
+			||b.shareEntityServiceEndpoint
+			||b.signalNavigationEndpoint
+			||b.signalServiceEndpoint
+			||b.updateUnseenCountEndpoint
+			||b.uploadEndpoint
+			||b.urlEndpoint
+			||b.watchEndpoint
+			||b.watchPlaylistEndpoint
+			||b.ypcGetOffersEndpoint
+			//#endregion
+			//#region renderer
+			||b.accountItemSectionRenderer
 			||b.accountSectionListRenderer
 			||b.addToPlaylistCreateRenderer
 			||b.addToPlaylistRenderer
@@ -4321,12 +4410,10 @@ class CodegenService extends BaseService {
 			||b.automixPreviewVideoRenderer
 			||b.autoplaySwitchButtonRenderer
 			||b.backstagePostThreadRenderer
-			||b.browseEndpoint
 			||b.browseFeedActionsRenderer
 			||b.browserMediaSessionRenderer
 			||b.buttonRenderer
 			||b.c4TabbedHeaderRenderer
-			||b.changeEngagementPanelVisibilityAction
 			||b.channelAboutFullMetadataRenderer
 			||b.channelFeaturedContentRenderer
 			||b.channelHeaderLinksRenderer
@@ -4337,7 +4424,6 @@ class CodegenService extends BaseService {
 			||b.cinematicContainerRenderer
 			||b.clipCreationRenderer
 			||b.clipSectionRenderer
-			||b.commandExecutorCommand
 			||b.commentRenderer
 			||b.commentsEntryPointHeaderRenderer
 			||b.commentsHeaderRenderer
@@ -4352,7 +4438,6 @@ class CodegenService extends BaseService {
 			||b.connectedAppRenderer
 			||b.continuationCommand
 			||b.continuationItemRenderer
-			||b.createPlaylistServiceEndpoint
 			||b.createRenderer
 			||b.decoratedPlayerBarRenderer
 			||b.desktopTopbarRenderer
@@ -4385,7 +4470,6 @@ class CodegenService extends BaseService {
 			||b.itemSectionHeaderRenderer
 			||b.itemSectionRenderer
 			||b.likeButtonRenderer
-			||b.likeEndpoint
 			||b.liveChatAuthorBadgeRenderer
 			||b.liveChatHeaderRenderer
 			||b.liveChatItemListRenderer
@@ -4417,7 +4501,6 @@ class CodegenService extends BaseService {
 			||b.notificationActionRenderer
 			||b.notificationRenderer
 			||b.notificationTopbarButtonRenderer
-			||b.openPopupAction
 			||b.pageIntroductionRenderer
 			||b.pdgBuyFlowHeaderRenderer
 			||b.pdgBuyFlowRenderer
@@ -4463,7 +4546,6 @@ class CodegenService extends BaseService {
 			||b.settingsOptionsRenderer
 			||b.settingsSidebarRenderer
 			||b.shelfRenderer
-			||b.showReloadUiCommand||b.accountItemSectionRenderer
 			||b.signalServiceEndpoint
 			||b.simpleMenuHeaderRenderer
 			||b.singleColumnMusicWatchNextResultsRenderer
@@ -4487,9 +4569,7 @@ class CodegenService extends BaseService {
 			||b.transcriptRenderer
 			||b.twoColumnBrowseResultsRenderer
 			||b.twoColumnSearchResultsRenderer
-			||b.twoColumnWatchNextResults
 			||b.unifiedSharePanelRenderer
-			||b.urlEndpoint
 			||b.videoDescriptionHeaderRenderer
 			||b.videoDescriptionMusicSectionRenderer
 			||b.videoMastheadAdV3Renderer
@@ -4499,9 +4579,9 @@ class CodegenService extends BaseService {
 			||b.videoSecondaryInfoRenderer
 			||b.videoViewCountRenderer
 			||b.voiceSearchDialogRenderer
-			||b.watchEndpoint
 			||b.watchNextEndScreenRenderer
 			||b.watchNextTabbedResultsRenderer
+			//#endregion
 			;
 		if(hg) return g();
 		if(b.webCommandMetadata) return "TYPE::CommandMetadata";
