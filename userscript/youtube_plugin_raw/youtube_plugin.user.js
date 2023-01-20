@@ -5125,6 +5125,8 @@ case "${path}": {
 					case "subscribe.params": {
 						switch(ta) {
 							case 2: break;
+							case 3: break;
+							case 4: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
