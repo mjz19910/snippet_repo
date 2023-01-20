@@ -6318,8 +6318,8 @@ case "${path_parts[idx-1]}": {
 		parse_key(56);
 		// endpoint.create_playlist.params
 		this.parse_key(root,path,x,map_keys,77,tv => {
-			if(typeof tv==="string") {
-				let bt=this.decode_browse_id(tv);
+			if(tv.length===1&&typeof tv[0]==="string") {
+				let bt=this.decode_browse_id(tv[0]);
 				if(!bt) {debugger; return;}
 				return this.parse_browse_id(bt);
 			}
