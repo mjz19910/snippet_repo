@@ -1,1 +1,9 @@
-type MenuServiceEndpoints=E_PlaylistEditEndpoint|E$GetReportFormEndpoint;
+type MenuServiceEndpoints=
+	|E_PlaylistEditEndpoint
+	|E$GetReportFormEndpoint
+	|{
+		addToPlaylistServiceEndpoint: {
+			videoId: string;
+		};
+	}
+	;

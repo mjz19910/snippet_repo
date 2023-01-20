@@ -9466,8 +9466,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MenuServiceEndpoints]",x);
 		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
 		debugger;
 	}
+	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
+	AddToPlaylistServiceEndpoint(x) {x;}
 	/** @arg {E$GetReportFormEndpoint} x */
 	GetReportFormEndpoint(x) {
 		let [{params}]=this.w(x);
