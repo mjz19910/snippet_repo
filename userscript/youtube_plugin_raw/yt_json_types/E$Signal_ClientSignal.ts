@@ -1,4 +1,4 @@
 type E$Signal_ClientSignal={
 	signal: "CLIENT_SIGNAL";
-	actions: (SignalAction|OpenPopupAction)[];
+	actions: (A$SendFeedbackAction|SignalAction|OpenPopupAction)[];
 };

@@ -7728,8 +7728,18 @@ class HandleTypes extends ServiceMethods {
 		this.z(actions,x => {
 			if("signalAction" in x) return this.SignalAction(x);
 			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			if("sendFeedbackAction" in x) return this.SendFeedbackAction(x);
 			debugger;
 		});
+	}
+	/** @arg {A$SendFeedbackAction} x */
+	SendFeedbackAction(x) {
+		const {clickTrackingParams,...z}=x;
+		let a=this.w(z);
+		const {bucket,...y}=a; this.g(y);
+		if(bucket!=="Kevlar") debugger;
+		if(this.eq_keys(this.get_keys_of(a),["bucket"])) return;
+		debugger;
 	}
 	/** @arg {E$Signal$GetAccountMenu} x */
 	E$Signal$GetAccountMenu(x) {
