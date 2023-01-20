@@ -8861,22 +8861,20 @@ class HandleTypes extends ServiceMethods {
 		const {menuServiceItemRenderer}=x; //...y}=x; this.g(y); //#destructure
 		this.MenuServiceItemData(menuServiceItemRenderer);
 	}
+	/** @arg {MenuServiceEndpointItems} x */
+	MenuServiceEndpointItems(x) {
+		if("notificationOptOutEndpoint" in x) return;
+		this.ServiceEndpointTemplate(x,this.MenuServiceEndpoints);
+	}
 	/** @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
 		this.save_keys("[MenuServiceItemData]",x);
-		if("icon" in x) {
-			const {text,icon,serviceEndpoint,trackingParams,hasSeparator}=x; //...y}=x; this.g(y); //#destructure
-			this.TextWithRuns(text);
-			this.Icon(icon);
-			this.ServiceEndpointTemplate(serviceEndpoint,this.MenuServiceEndpoints);
-			this.trackingParams(trackingParams);
-			if(hasSeparator!==void 0&&hasSeparator!==true) debugger;
-			return;
-		}
-		const {text,serviceEndpoint,trackingParams}=x; //...y}=x; this.g(y); //#destructure
+		const {text,icon,serviceEndpoint,trackingParams,hasSeparator}=x; //...y}=x; this.g(y); //#destructure
 		this.TextWithRuns(text);
-		this.SignalServiceEndpoint(serviceEndpoint);
+		this.t(icon,this.Icon);
+		this.ServiceEndpointTemplate(serviceEndpoint,this.MenuServiceEndpointItems);
 		this.trackingParams(trackingParams);
+		this.t(hasSeparator,a => {if(a!==true) debugger;});
 	}
 	/** @arg {MenuServiceEndpoints} x */
 	MenuServiceEndpoints(x) {

@@ -1,15 +1,7 @@
-type MenuServiceEndpoints=FeedbackEndpointPlugin|PlaylistEditEndpoint;
-
-type MenuServiceEndpointItems=ServiceEndpointTemplate<MenuServiceEndpoints>;
-
 type MenuServiceItemData={
 	text: TextWithRuns;
-	icon: Icon<"NOT_INTERESTED">;
+	icon?: Icon<"NOT_INTERESTED">;
 	serviceEndpoint: MenuServiceEndpointItems;
 	trackingParams: string;
 	hasSeparator?: true;
-}|{
-	text: TextWithRuns;
-	serviceEndpoint: SignalServiceEndpoint;
-	trackingParams: string;
 };
