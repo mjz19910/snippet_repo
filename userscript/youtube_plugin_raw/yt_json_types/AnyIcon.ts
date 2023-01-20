@@ -14,4 +14,5 @@ type MenuServiceIconTypeStr=[
 	"PLAYLIST_ADD",
 	"VISIBILITY_OFF",
 	"SHARE",
+	"ALIGN_LEFT",
 ][number]|"WATCH_LATER"|"NOT_INTERESTED"|"LIBRARY_ADD"|"LIBRARY_REMOVE"|(MenuServiceIcon['icon']['iconType']);

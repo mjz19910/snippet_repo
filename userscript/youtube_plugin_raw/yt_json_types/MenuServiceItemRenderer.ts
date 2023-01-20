@@ -1,1 +1,1 @@
-type MenuServiceItemRenderer={menuServiceItemRenderer: MenuServiceItemData<"NOT_INTERESTED">;};
+type MenuServiceItemRenderer={menuServiceItemRenderer: MenuServiceItem<"NOT_INTERESTED">;};

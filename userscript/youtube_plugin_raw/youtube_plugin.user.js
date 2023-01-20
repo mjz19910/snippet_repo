@@ -10061,13 +10061,13 @@ class HandleTypes extends ServiceMethods {
 		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
 		{const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled,...y}=x1; this.g(y);}
 		this.primitive_of(isToggled,"boolean");
-		this.MenuServiceItemData({
+		this.MenuServiceItem({
 			icon: defaultIcon,
 			text: defaultText,
 			serviceEndpoint: defaultServiceEndpoint,
 			trackingParams,
 		});
-		this.MenuServiceItemData({
+		this.MenuServiceItem({
 			icon: toggledIcon,
 			text: toggledText,
 			serviceEndpoint: toggledServiceEndpoint,
@@ -10078,11 +10078,11 @@ class HandleTypes extends ServiceMethods {
 	MenuServiceItemRenderer(x) {
 		this.save_keys("[MenuServiceItemRenderer]",x);
 		const {menuServiceItemRenderer,...y}=x; this.g(y); // ! #destructure
-		this.MenuServiceItemData(menuServiceItemRenderer);
+		this.MenuServiceItem(menuServiceItemRenderer);
 	}
-	/** @arg {MenuServiceItemData<MenuServiceIconTypeStr>} x */
-	MenuServiceItemData(x) {
-		this.save_keys("[MenuServiceItemData]",x);
+	/** @arg {MenuServiceItem<MenuServiceIconTypeStr>} x */
+	MenuServiceItem(x) {
+		this.save_keys("[MenuServiceItem]",x);
 		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(text);
 		if(icon) {
@@ -10095,8 +10095,11 @@ class HandleTypes extends ServiceMethods {
 				case "PLAYLIST_ADD": break;
 				case "VISIBILITY_OFF": break;
 				case "SHARE": break;
-				/** @type {MenuServiceIcon} */
-				default: console.log(`case "${icon.iconType}": break;`); icon.iconType===""; debugger; break;
+				case "ALIGN_LEFT": break;
+				default: {
+					/** @type {MenuServiceIcon} */
+					console.log(`-- [MenuServiceItem] --\n\n\ncase "${icon.iconType}": break;`); icon.iconType==="";
+				} break;
 			}
 		}
 		this.t(icon,this.Icon);

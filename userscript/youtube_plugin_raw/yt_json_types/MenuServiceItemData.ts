@@ -1,4 +1,4 @@
-type MenuServiceItemData<T extends string>={
+type MenuServiceItem<T extends string>={
 	text: TextWithRuns;
 	icon?: Icon<T>;
 	serviceEndpoint: MenuServiceEndpointItems;
