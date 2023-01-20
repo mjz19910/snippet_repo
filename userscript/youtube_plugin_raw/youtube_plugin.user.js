@@ -2630,15 +2630,19 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn.call(this,e[0],e[1]));
 	}
-	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} f  */
+	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f  */
 	z(x,f) {
-		if(x===void 0) {debugger; return;}
-		if(!x.entries) debugger;
+		if(x===void 0) {debugger; return [];}
+		if(!x.entries) {debugger; return [];}
+		/** @type {U[]} */
+		let c=[];
 		for(let it of x.entries()) {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
-			f.call(this,a,i);
+			let u=f.call(this,a,i);
+			c.push(u);
 		}
+		return c;
 	}
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
@@ -10276,6 +10280,13 @@ class HandleTypes extends ServiceMethods {
 	E_UndoFeedbackEndpoint(x) {
 		this.EndpointTemplate(x,x => {
 			const {undoFeedbackEndpoint: {actions,undoToken,...y}}=x; this.g(y);
+			let act=this.z(actions,a=>{
+				const {clickTrackingParams,...y}=a;
+				this.clickTrackingParams(clickTrackingParams);
+				return this.w(y);
+			});
+			this.z(act,this.g);
+			this.primitive_of(undoToken,"string");
 		});
 	}
 	/** @arg {Button_serviceEndpoint} x */
