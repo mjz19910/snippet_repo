@@ -7508,13 +7508,23 @@ class HandleTypes extends ServiceMethods {
 	E$ShareEntityServiceEndpoint(x) {
 		const cf="ShareEntityServiceEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint: v,...y}=x; this.g(y); // ! #destructure
+		let q=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(x)),this.OpenPopupAction);
+		let {serializedShareEntity,...y}=q; this.g(y);
+		this.primitive_of_string(serializedShareEntity);
+	}
+	/** @template {{}} T @template {CommandsTemplate<T>} C @arg {C} x @arg {(this:this,x:T)=>void} f */
+	CommandsTemplate$Omit(x,f) {
+		this.save_keys(`[CommandsTemplate]`,x);
+		const {commands,...y}=x; // ! #destructure
+		this.z(commands,f);
+		return y;
+	}
+	/** @template {EB$Endpoint} T @arg {T} x */
+	EB$Endpoint(x) {
+		const {clickTrackingParams,commandMetadata,...y}=x; // ! #destructure
 		this.t(clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata); {
-			const {serializedShareEntity,commands,...y}=v; this.g(y);
-			this.primitive_of_string(serializedShareEntity);
-			this.z(commands,this.OpenPopupAction);
-		}
+		this.CommandMetadata(commandMetadata);
+		return y;
 	}
 	/** @arg {EG$MenuServiceEndpoints} x */
 	EG$MenuServiceEndpoints(x) {
