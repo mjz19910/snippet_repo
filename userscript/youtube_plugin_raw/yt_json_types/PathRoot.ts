@@ -29,4 +29,4 @@ type only_param$extract=Extract<category$param,`${string}.params.${string}`>;
 type wp_param_ex=Extract<only_param$extract,`watch.params.${string}`>;
 type report$param=Extract<only_param$extract,`report.params.${string}`>;
 type get_transcript$param=Extract<only_param$extract,`get_transcript.params.${string}`>;
-type $U=Split<Exclude<category$param,wp_param_ex|report$param|get_transcript$param>,".">[0];
+type $U=Split<Exclude<category$param,wp_param_ex|report$param|get_transcript$param|reel$player_param>,".">[0];
