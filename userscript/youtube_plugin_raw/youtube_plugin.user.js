@@ -6036,7 +6036,10 @@ case "${path_parts[idx-1]}": {
 					case "f6": {
 						const idx=4;
 						if(path_parts.length===3) {
-							switch(tv) {default: debugger; return;}
+							switch(tv) {
+								case 2: return;
+								default: debugger; return;
+							}
 						}
 						switch(path_parts[3]) {
 							default: u(idx); path_parts[3]===""; break;
