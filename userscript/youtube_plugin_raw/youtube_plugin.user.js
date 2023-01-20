@@ -5031,6 +5031,7 @@ case "${path}": {
 			let gen_next_part=(idx) => {
 				if(path_parts.length===idx) {
 					gen_final_part(idx);
+					gen_return_part(idx);
 					return;
 				}
 				console.log(`
@@ -5070,98 +5071,6 @@ debugger;
 					console.log("root_next_case");
 					gen_next_part(1);
 					debugger;
-				} break;
-				case "watch": switch(path_parts[1]) {
-					default: {
-						console.log("in",path_parts[0]);
-						console.log(`
-case "${path_parts[1]}":`);
-						debugger;
-					} path_parts[1]===""; break;
-					case "player_params": switch(path_parts[2]) {
-						default: {
-							console.log("in",path_parts[1]);
-							console.log(`
-case "${path_parts[2]}": return;`);
-							debugger;
-						} break;
-						case "f8": {
-							if(path_parts.length===3) return;
-							debugger;
-						} break;
-						case "f9": {
-							if(path_parts.length===3) return;
-							debugger;
-						} break;
-						case "f40": {
-							if(path_parts.length===3) return;
-							switch(path_parts[3]) {
-								default: {
-									console.log("in",path_parts[1]);
-									gen_return_part(2);
-									path_parts==="";
-									debugger;
-								} break;
-								case "f1": return;
-							}
-						} break;
-					} path_parts[2]===""; break;
-					case "params": switch(path_parts[2]) {
-						default: {
-							console.log("in",path_parts[1]);
-							gen_return_part(1);
-							path_parts==="";
-							debugger;
-						} break;
-						case "f2": {
-							if(path_parts.length===3) return;
-							debugger;
-						} break;
-						case "f3": {
-							if(path_parts.length===3) return;
-							debugger;
-						} break;
-						case "f24": {
-							if(path_parts.length===3) return;
-							debugger;
-						} break;
-						case "f27": {
-							if(path_parts.length===3) return;
-							switch(path_parts[3]) {
-								default: {
-									console.log("in",path_parts[1]);
-									console.log(`
-		case "${path_parts[2]}": return;`);
-									debugger;
-								} break;
-								case "f1": return;
-							}
-							path_parts[3]==="";
-							debugger;
-						} break;
-						case "f33": {
-							if(path_parts.length===3) return;
-							switch(path_parts[3]) {
-								default: {
-									console.log("in",path_parts[1]);
-									console.log(`
-		case "${path_parts[2]}": return;`);
-									debugger;
-								} break;
-								case "f2": return;
-								case "f3": return;
-								case "f4": return;
-								case "f5": return;
-							}
-							path_parts[3]==="";
-							debugger;
-						} break;
-						case "f56": {
-							if(path_parts.length===3) return;
-							path_parts[3]==="";
-							debugger;
-						} break;
-					} path_parts[2]===""; break;
 				} break;
 			}
 			console.log(path_parts);
