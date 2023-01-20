@@ -5068,6 +5068,14 @@ case "${path_parts[2]}": return;`);
 		}
 		// endpoint.watch.params
 		parse_key(56);
+		this.parse_key(root,path,x,map_keys,77,tv => {
+			if(typeof tv==="string") {
+				let bt=this.decode_browse_id(tv);
+				if(!bt) {debugger; return;}
+				return this.parse_browse_id(bt);
+			}
+			debugger;
+		});
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
@@ -5553,6 +5561,13 @@ case "${path_parts[2]}": return;`);
 			default:
 		}
 		switch(x) {default: debugger; return false;}
+	}
+	/** @public @arg {string} x @returns {BrowseIdType|null} */
+	decode_browse_id(x) {
+		if(this.str_starts_with(x,"FE")) {
+			return x;
+		}
+		return null;
 	}
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
