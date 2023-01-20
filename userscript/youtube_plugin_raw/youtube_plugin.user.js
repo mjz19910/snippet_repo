@@ -4460,7 +4460,7 @@ class ParserService extends BaseService {
 			case "feed": return this.parse_feed_url(x);
 			case "shorts": return this.parse_shorts_url(x);
 			case "channel": return this.parse_channel_url(x);
-			case "youtubei": return this.parse_youtubei_api_url(x);
+			case "youtubei": return this.parse_youtube_url_2(x);
 			case "api": return this.parse_api_url(x);
 			default: debugger; return;
 		}
@@ -4500,17 +4500,25 @@ class ParserService extends BaseService {
 		}
 		debugger;
 	}
-	/** @private @arg {Extract<SplitOnce<ParseUrlStr_1,"/">,["youtubei",...any]>} x */
-	parse_youtubei_api_url(x) {
+	/** @private @arg {ParseUrlStr_2} x */
+	parse_youtube_url_2(x) {
 		let [,a]=x;
-		let b=split_string_once(a,"/");
-		if(b[0]!=="v1") debugger;
-		let [,c]=b;
-		switch(c) {
-			case "browse": break;
-			case "next": break;
-			default: console.log(a); debugger;
+		this.parse_youtube_url_4(a);
+	}
+	/** @arg {ParseUrlStr_4} x */
+	parse_youtube_url_4(x) {
+		let a=split_string_once(x,"/");
+		if(a[0]!=="v1") debugger;
+		let [,b]=a;
+		if(this.str_has_sep(b,"/")) {
+			return this.parse_youtube_api_url_5(b);
 		}
+		this.get_yt_url_type(["youtubei","v1",b]);
+	}
+	/** @arg {ParseUrlStr_5} x */
+	parse_youtube_api_url_5(x) {
+		let a=split_string_once(x,"/");
+		this.get_yt_url_type(["youtubei","v1",...a]);
 	}
 	/** @public @arg {string} x */
 	parse_video_id(x) {
