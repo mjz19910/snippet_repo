@@ -3,7 +3,7 @@ type ReelItemData={
 	headline: TextWithRuns;
 	thumbnail: Thumbnail;
 	viewCountText: TextWithRuns;
-	navigationEndpoint: E_ReelWatchEndpoint;
+	navigationEndpoint: E$ReelWatchEndpoint;
 	menu: MenuRenderer;
 	trackingParams: string;
 	accessibility:Accessibility;

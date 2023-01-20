@@ -1,3 +1,3 @@
 type WebPrefetchData={
-	navigationEndpoints: WatchEndpoint[];
+	navigationEndpoints: E$WatchEndpoint[];
 };

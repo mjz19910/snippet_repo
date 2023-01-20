@@ -3,7 +3,7 @@ type ProductListItem={
 	accessibilityTitle: string;
 	thumbnail: Thumbnail;
 	price: `CA$${string}`;
-	onClickCommand: E_UrlEndpoint;
+	onClickCommand: E$UrlEndpoint;
 	trackingParams: string;
 	loggingDirectives: LoggingDirectives;
 };

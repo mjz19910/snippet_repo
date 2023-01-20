@@ -1,3 +1,3 @@
-type AE_SignOut={
+type E$SignOut={
 	hack: true;
 };

@@ -25,7 +25,7 @@ type HeroPlaylistThumbnail={
 	thumbnail: Thumbnail;
 	maxRatio: 0.5625;
 	trackingParams: string;
-	onTap: WatchEndpoint;
+	onTap: E$WatchEndpoint;
 	thumbnailOverlays: ThumbnailOverlayHoverTextRenderer;
 };
 
@@ -46,7 +46,7 @@ type PlaylistHeader={
 	ownerEndpoint: E_BrowseEndpoint;
 	editableDetails: EditableDetails;
 	trackingParams: string;
-	serviceEndpoints: EndpointTemplate<E_PlaylistEditEndpoint>[];
+	serviceEndpoints: EndpointTemplate<E$PlaylistEditEndpoint>[];
 	stats: TextWithRuns[];
 	briefStats: TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;

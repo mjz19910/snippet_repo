@@ -1,4 +1,4 @@
-type AE_Watch={
+type E$Watch={
 	videoId: string;
 	nofollow?: boolean;
 	playlistId?: `PL${string}`|`RD${string}`;

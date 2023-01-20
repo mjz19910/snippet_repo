@@ -5,7 +5,7 @@ type EndScreenVideo={
 	shortBylineText: TextWithRuns;
 	lengthText?: SimpleText;
 	lengthInSeconds?: number;
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	trackingParams: string;
 	shortViewCountText: TextT;
 	publishedTimeText: SimpleText;

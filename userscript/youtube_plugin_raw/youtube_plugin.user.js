@@ -7047,7 +7047,7 @@ class ServiceMethods extends ServiceData {
 }
 /** @extends {BaseService<{parent:HandleTypes},{}>} */
 class SignalTypes extends BaseService {
-	/** @arg {Signal_ClientSignal} x */
+	/** @arg {E$Signal_ClientSignal} x */
 	ClientSignal(x) {
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="CLIENT_SIGNAL") debugger;
@@ -7475,7 +7475,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region endpoint
-	/** @arg {E_SubscribeEndpoint} x */
+	/** @arg {E$SubscribeEndpoint} x */
 	E_SubscribeEndpoint(x) {
 		const cf="SubscribeEndpoint";
 		this.save_keys(`[E_${cf}]`,x);
@@ -7484,7 +7484,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.params(cf,"subscribe.params",subscribeEndpoint.params);
 	}
-	/** @arg {E_SignalServiceEndpoint} x */
+	/** @arg {E$SignalServiceEndpoint} x */
 	E_SignalServiceEndpoint(x) {
 		this.save_keys("[E_SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7492,7 +7492,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.AE_SignalService(signalServiceEndpoint);
 	}
-	/** @arg {E_SignalService} x */
+	/** @arg {E$SignalService} x */
 	AE_SignalService(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
@@ -7500,7 +7500,7 @@ class HandleTypes extends ServiceMethods {
 			case "GET_ACCOUNT_MENU": break;
 		}
 	}
-	/** @arg {E_PlaylistEditEndpoint} x */
+	/** @arg {E$PlaylistEditEndpoint} x */
 	PlaylistEditEndpoint(x) {
 		this.save_keys("[PlaylistEditEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7508,7 +7508,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.AE_PlaylistEdit(playlistEditEndpoint);
 	}
-	/** @arg {AE_PlaylistEdit} x */
+	/** @arg {E$PlaylistEdit} x */
 	AE_PlaylistEdit(x) {
 		this.save_keys("[PlaylistEditEndpointData]",x);
 		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
@@ -7517,7 +7517,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlaylistAction(actions[0]);
 		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
 	}
-	/** @private @arg {E_UrlEndpoint} x */
+	/** @private @arg {E$UrlEndpoint} x */
 	UrlEndpoint(x) {
 		this.save_keys("[UrlEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
@@ -7525,7 +7525,7 @@ class HandleTypes extends ServiceMethods {
 		this.AE_Url(urlEndpoint);
 		this.CommandMetadata(commandMetadata);
 	}
-	/** @private @arg {AE_Url} x */
+	/** @private @arg {E$Url} x */
 	AE_Url(x) {
 		this.save_keys("[UrlEndpointData]",x);
 		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
@@ -7533,7 +7533,7 @@ class HandleTypes extends ServiceMethods {
 		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
 		if(nofollow&&!nofollow) debugger;
 	}
-	/** @arg {E_GetTranscriptEndpoint} x */
+	/** @arg {E$GetTranscriptEndpoint} x */
 	GetTranscriptEndpoint(x) {
 		this.save_keys("[GetTranscriptEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7541,7 +7541,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.AE_GetTranscript(getTranscriptEndpoint);
 	}
-	/** @arg {AE_GetTranscript} x */
+	/** @arg {E$GetTranscript} x */
 	AE_GetTranscript(x) {
 		this.save_keys("[GetTranscriptData]",x);
 		const {params,...y}=x; this.g(y); // ! #destructure
@@ -7564,7 +7564,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(params,a => this.params(cf,"browse.params",a));
 		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
 	}
-	/** @arg {E_RecordNotificationInteractionsEndpoint} x */
+	/** @arg {E$RecordNotificationInteractionsEndpoint} x */
 	RecordNotificationInteractionsEndpoint(x) {
 		this.save_keys(`[RecordNotificationInteractionsEndpoint]`,x);
 		const {clickTrackingParams,commandMetadata,recordNotificationInteractionsEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7572,7 +7572,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
 	}
-	/** @arg {EA_RecordNotificationInteractions} x */
+	/** @arg {E$RecordNotificationInteractions} x */
 	RecordNotificationInteractions(x) {
 		const cf="RecordNotificationInteractions";
 		this.save_keys(`[${cf}]`,x);
@@ -8807,7 +8807,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ReelWatchSequenceResponse",trackingParams);
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
-	/** @arg {E_ReelWatchEndpoint} x */
+	/** @arg {E$ReelWatchEndpoint} x */
 	E_ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -8815,7 +8815,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.AE_ReelWatch(reelWatchEndpoint);
 	}
-	/** @arg {AE_ReelWatch} x */
+	/** @arg {E$ReelWatch} x */
 	AE_ReelWatch(x) {
 		const cf="ReelWatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -9581,13 +9581,13 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(likesAllowed,"boolean");
 		this.z(serviceEndpoints,this.LikeEndpoint);
 	}
-	/** @arg {E_LikeEndpoint} x */
+	/** @arg {E$LikeEndpoint} x */
 	LikeEndpoint(x) {
 		this.save_keys("[LikeEndpoint]",x);
 		if(this.get_keys_of(x).length!==1) debugger;
 		this.AE_Like(x.likeEndpoint);
 	}
-	/** @arg {AE_Like} x */
+	/** @arg {E$Like} x */
 	AE_Like(x) {
 		this.save_keys("[LikeEndpointData]",x);
 		let ua=this.LikeApiData.bind(this);
@@ -9940,7 +9940,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(shortViewCountText);
 		this.SimpleText(publishedTimeText);
 	}
-	/** @arg {WatchEndpoint} x */
+	/** @arg {E$WatchEndpoint} x */
 	WatchEndpoint(x) {
 		this.save_keys("[WatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -9948,7 +9948,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(commandMetadata,this.WatchEndpointCommandMetadata);
 		this.AE_Watch(watchEndpoint);
 	}
-	/** @arg {AE_Watch} x */
+	/** @arg {E$Watch} x */
 	AE_Watch(x) {
 		const cf="WatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -10515,7 +10515,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title);
 		this.TextWithRuns(subtitle);
 	}
-	/** @arg {AE_Feedback} x */
+	/** @arg {E$Feedback} x */
 	AE_Feedback(x) {
 		this.save_keys("[FeedbackEndpointData]",x);
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
@@ -10548,7 +10548,7 @@ class HandleTypes extends ServiceMethods {
 		this.E_UndoFeedbackEndpoint(undoEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
-	/** @arg {EndpointTemplate<Omit<E_UndoFeedbackEndpoint,"clickTrackingParams"|"commandMetadata">>} x */
+	/** @arg {EndpointTemplate<Omit<E$UndoFeedbackEndpoint,"clickTrackingParams"|"commandMetadata">>} x */
 	E_UndoFeedbackEndpoint(x) {
 		this.EndpointTemplate(x,x => {
 			const {undoFeedbackEndpoint: {actions,undoToken,...y}}=x; this.g(y);
@@ -10662,7 +10662,7 @@ class HandleTypes extends ServiceMethods {
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of_string(aadcGuidelinesStateEntityKey);
 	}
-	/** @arg {Signal_GetAccountMenu} x */
+	/** @arg {E$Signal_GetAccountMenu} x */
 	GetAccountMenu(x) {
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
@@ -10753,7 +10753,7 @@ class HandleTypes extends ServiceMethods {
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @arg {E_SearchEndpoint} x */
+	/** @arg {E$SearchEndpoint} x */
 	SearchEndpoint(x) {
 		this.save_keys("[SearchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -11085,7 +11085,7 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.CommentRenderer);
 	}
-	/** @arg {UploadEndpoint} x */
+	/** @arg {E$UploadEndpoint} x */
 	UploadEndpoint(x) {
 		this.save_keys("[UploadEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,uploadEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -11382,7 +11382,7 @@ class HandleTypes extends ServiceMethods {
 		const {liveBroadcasting,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(liveBroadcasting,"boolean");
 	}
-	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
+	/** @arg {E$SetSettingEndpointAutonavForDesktop<boolean>} x */
 	SetSettingEndpointAutonavForDesktop(x) {
 		this.save_keys("[SetSettingEndpointAutonavForDesktop]",x);
 		const {clickTrackingParams,commandMetadata,setSettingEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -11779,26 +11779,26 @@ class HandleTypes extends ServiceMethods {
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip(chipCloudChipRenderer);
 	}
-	/** @arg {AE_Upload} x */
+	/** @arg {E$Upload} x */
 	AE_Upload(x) {
 		this.save_keys("[UploadEndpointData]",x);
 		const {hack,...y}=x; this.g(y); // ! #destructure
 		if(hack!==true) debugger;
 	}
-	/** @arg {E_SearchResultsSearchEndpoint} x */
+	/** @arg {E$SearchResultsSearchEndpoint} x */
 	SearchResultsSearchEndpoint(x) {
 		this.save_keys("[SearchResultsSearchEndpoint]",x);
 		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.AE_Search(searchEndpoint);
 	}
-	/** @arg {AE_Search} x */
+	/** @arg {E$Search} x */
 	AE_Search(x) {
 		this.save_keys("[SearchEndpointData]",x);
 		const {query,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(query);
 	}
-	/** @arg {E_ShareEntityServiceEndpoint} x */
+	/** @arg {E$ShareEntityServiceEndpoint} x */
 	ShareEntityServiceEndpoint(x) {
 		this.save_keys("[ShareEntityServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,shareEntityServiceEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -11806,14 +11806,14 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
-	/** @arg {ShareEntityServiceArgs} x */
+	/** @arg {E$ShareEntityService} x */
 	ShareEntityServiceArgs(x) {
 		this.save_keys("[ShareEntityServiceArgs]",x);
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.OpenPopupAction);
 	}
-	/** @arg {E_SignalNavigationEndpoint} x */
+	/** @arg {E$SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
 		this.save_keys("[SignalNavigationEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -11822,7 +11822,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.SignalNavigationArgs(signalNavigationEndpoint);
 	}
-	/** @arg {SignalNavigation} x */
+	/** @arg {E$SignalNavigation} x */
 	SignalNavigationArgs(x) {
 		this.save_keys(`[SignalNavigationArgs]`,x);
 		const {signal,...y}=x; this.g(y); // ! #destructure

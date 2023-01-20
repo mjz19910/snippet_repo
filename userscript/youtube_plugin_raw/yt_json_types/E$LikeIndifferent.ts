@@ -1,4 +1,4 @@
-type AE_LikeIndifferent={
+type E$LikeIndifferent={
 	status: "INDIFFERENT";
 	target: LikeApiData;
 	removeLikeParams?: string;

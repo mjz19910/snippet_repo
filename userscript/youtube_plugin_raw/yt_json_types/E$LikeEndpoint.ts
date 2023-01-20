@@ -1,6 +1,1 @@
-type E_Endpoint={
-	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
-};
-
-type E_LikeEndpoint={likeEndpoint: AE_Like;}&E_Endpoint;
+type E$LikeEndpoint={likeEndpoint: E$Like;}&EB$Endpoint;

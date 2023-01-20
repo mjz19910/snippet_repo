@@ -1,4 +1,4 @@
-type E_SearchResultsSearchEndpoint={
+type E$SearchResultsSearchEndpoint={
 	clickTrackingParams: string;
-	searchEndpoint: AE_Search;
+	searchEndpoint: E$Search;
 };

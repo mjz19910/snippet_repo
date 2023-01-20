@@ -1,4 +1,4 @@
-type AE_UndoFeedback={
+type E$UndoFeedback={
 	undoToken: string;
 	actions: UndoFeedbackAction[];
 };

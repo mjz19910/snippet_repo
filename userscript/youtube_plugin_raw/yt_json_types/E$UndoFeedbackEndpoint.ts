@@ -1,5 +1,5 @@
-type E_UndoFeedbackEndpoint={
+type E$UndoFeedbackEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: FeedbackCommandMetadata;
-	undoFeedbackEndpoint: AE_UndoFeedback;
+	undoFeedbackEndpoint: E$UndoFeedback;
 };

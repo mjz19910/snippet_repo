@@ -2,9 +2,9 @@ type CompactRadioData={
 	playlistId: `RD${"GM"}${string}`;
 	thumbnail: Thumbnail&SampledThumbnailColor;
 	title: SimpleText;
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	videoCountText: TextWithRuns;
-	secondaryNavigationEndpoint: WatchEndpoint;
+	secondaryNavigationEndpoint: E$WatchEndpoint;
 	longBylineText: SimpleText;
 	trackingParams: string;
 	thumbnailText: TextWithRuns;

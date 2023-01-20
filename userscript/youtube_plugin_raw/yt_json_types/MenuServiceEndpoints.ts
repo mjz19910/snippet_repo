@@ -1,16 +1,13 @@
+type E$FeedbackEndpoint=EB$Endpoint&{
+	feedbackEndpoint: E$Feedback;
+};
+
 type MenuServiceEndpoints=
-	|E_LikeEndpoint
-	|E_NotificationOptOutEndpoint
-	|E_PlaylistEditEndpoint
+	|E$LikeEndpoint
+	|E$NotificationOptOutEndpoint
+	|E$PlaylistEditEndpoint
 	|E$GetReportFormEndpoint
 	|E$ShareEntityServiceEndpoint
-	|E_Endpoint&{addToPlaylistServiceEndpoint: {videoId: string;};}
-	|E_Endpoint&{feedbackEndpoint: AE_Feedback;}
+	|EB$Endpoint&{addToPlaylistServiceEndpoint: {videoId: string;};}
+	|EB$Endpoint&E$FeedbackEndpoint
 	;
-
-type E$ShareEntityServiceEndpoint=E_Endpoint&{
-	shareEntityServiceEndpoint: {
-		serializedShareEntity: string;
-		commands: OpenPopupAction[];
-	};
-};

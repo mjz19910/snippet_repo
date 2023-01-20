@@ -1,6 +1,6 @@
 type Generic_WatchPageResponse={
 	page: "watch";
-	endpoint: WatchEndpoint;
+	endpoint: E$WatchEndpoint;
 	response: WatchResponse;
 	playerResponse: PlayerResponse;
 	url: WatchPageUrl;

@@ -4,7 +4,7 @@ type CompactPlaylistData={
 	title: SimpleText;
 	shortBylineText: TextWithRuns;
 	videoCountText: TextWithRuns;
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	videoCountShortText: SimpleText;
 	trackingParams: string;
 	sidebarThumbnails: Thumbnail[];

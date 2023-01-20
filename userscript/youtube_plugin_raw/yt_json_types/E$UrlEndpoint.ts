@@ -1,5 +1,5 @@
-type E_UrlEndpoint={
+type E$UrlEndpoint={
 	clickTrackingParams?: string;
 	commandMetadata: VE83769_CommandMetadata;
-	urlEndpoint: AE_Url;
+	urlEndpoint: E$Url;
 };

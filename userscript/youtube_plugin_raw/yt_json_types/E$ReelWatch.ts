@@ -1,4 +1,4 @@
-type AE_ReelWatch={
+type E$ReelWatch={
 	videoId?: string;
 	playerParams: string;
 	thumbnail?: Thumbnail;

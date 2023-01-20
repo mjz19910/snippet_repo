@@ -1,5 +1,5 @@
-type E_RecordNotificationInteractionsEndpoint={
+type E$RecordNotificationInteractionsEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
-	recordNotificationInteractionsEndpoint: EA_RecordNotificationInteractions;
+	recordNotificationInteractionsEndpoint: E$RecordNotificationInteractions;
 };

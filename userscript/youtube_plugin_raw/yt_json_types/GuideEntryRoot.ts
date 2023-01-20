@@ -8,7 +8,7 @@ type GuideEntryRoot={
 	entryData: GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
-	navigationEndpoint?: E_UrlEndpoint|E_BrowseEndpoint;
+	navigationEndpoint?: E$UrlEndpoint|E_BrowseEndpoint;
 	icon: Icon<"EXPAND"|"ADD_CIRCLE">;
 	trackingParams: string;
 	formattedTitle: SimpleText;
@@ -25,12 +25,12 @@ type GuideEntryRoot={
 	trackingParams: string;
 	formattedTitle: SimpleText;
 	accessibility: Accessibility;
-	serviceEndpoint: E_SignalServiceEndpoint|E_ReelWatchEndpoint;
+	serviceEndpoint: E$SignalServiceEndpoint|E$ReelWatchEndpoint;
 	isPrimary: true;
 }|{
 	icon: Icon<"HELP">;
 	trackingParams: string;
 	formattedTitle: SimpleText;
 	accessibility: Accessibility;
-	serviceEndpoint: E_SignalServiceEndpoint;
+	serviceEndpoint: E$SignalServiceEndpoint;
 };

@@ -1,3 +1,3 @@
-type AE_Search={
+type E$Search={
 	query: string;
 };

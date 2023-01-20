@@ -3,9 +3,9 @@ type YtNotification={
 	videoThumbnail: Thumbnail;
 	shortMessage: SimpleText;
 	sentTimeText: SimpleText;
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	read: boolean;
-	recordClickEndpoint: E_RecordNotificationInteractionsEndpoint;
+	recordClickEndpoint: E$RecordNotificationInteractionsEndpoint;
 	contextualMenu: MenuRenderer;
 	trackingParams: string;
 	notificationId: `${number}`;

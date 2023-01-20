@@ -1,5 +1,5 @@
-type E_SearchEndpoint={
+type E$SearchEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: SearchCommandMetadata;
-	searchEndpoint: AE_Search;
+	searchEndpoint: E$Search;
 };

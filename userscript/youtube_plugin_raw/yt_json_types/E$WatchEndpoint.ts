@@ -1,5 +1,5 @@
-type WatchEndpoint={
+type E$WatchEndpoint={
 	clickTrackingParams?: string;
 	commandMetadata?: WatchEndpointCommandMetadata;
-	watchEndpoint: AE_Watch;
+	watchEndpoint: E$Watch;
 };

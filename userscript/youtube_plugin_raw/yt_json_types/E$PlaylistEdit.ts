@@ -1,4 +1,4 @@
-type AE_PlaylistEdit={
+type E$PlaylistEdit={
 	playlistId: "WL";
 	actions: [PlaylistAction];
 	params?: string; 

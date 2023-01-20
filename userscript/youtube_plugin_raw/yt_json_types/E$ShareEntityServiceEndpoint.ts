@@ -1,5 +1,3 @@
-type E_ShareEntityServiceEndpoint={
-	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
-	shareEntityServiceEndpoint: ShareEntityServiceArgs;
+type E$ShareEntityServiceEndpoint=EB$Endpoint&{
+	shareEntityServiceEndpoint: E$ShareEntityService;
 };

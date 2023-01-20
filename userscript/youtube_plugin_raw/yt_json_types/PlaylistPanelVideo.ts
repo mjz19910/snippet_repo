@@ -11,7 +11,7 @@ type PlaylistPanelVideo={
 	lengthText: SimpleText;
 	indexText: SimpleText;
 	selected: true;
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	videoId: string;
 	shortBylineText: TextWithRuns;
 	trackingParams: string;

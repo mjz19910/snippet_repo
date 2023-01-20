@@ -6,7 +6,7 @@ type MerchandiseItem={
 	vendorName: string;
 	trackingParams: string;
 	buttonText: string;
-	buttonCommand: E_UrlEndpoint;
+	buttonCommand: E$UrlEndpoint;
 	accessibilityTitle: string;
 	buttonAccessibilityText: string;
 	fromVendorText: string;

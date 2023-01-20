@@ -4,7 +4,7 @@ type PlaylistSidebarPrimaryInfo={
 	stats: TextWithRuns[];
 	menu: MenuRenderer;
 	thumbnailOverlays: ThumbnailOverlaySidePanelRenderer[];
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	badges: MetadataBadgeRenderer[];
 	description: {};
 	showMoreText: TextWithRuns;

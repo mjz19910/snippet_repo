@@ -1,5 +1,5 @@
 type PrimaryLinkItem={
-	navigationEndpoint: E_UrlEndpoint;
+	navigationEndpoint: E$UrlEndpoint;
 	icon: Thumbnail;
 	title: SimpleText;
 };

@@ -1,4 +1,4 @@
-type Button_serviceEndpoint=E_SignalServiceEndpoint|YpcGetOffersEndpoint;
+type Button_serviceEndpoint=E$SignalServiceEndpoint|YpcGetOffersEndpoint;
 type YpcGetOffers={
 	params: string;
 };
@@ -8,7 +8,7 @@ type YpcGetOffersEndpoint={
 	commandMetadata: CommandMetadata;
 	ypcGetOffersEndpoint: YpcGetOffers;
 }
-type Button_navigationEndpoint=E_ShareEntityServiceEndpoint;
+type Button_navigationEndpoint=E$ShareEntityServiceEndpoint;
 
 type ButtonData={
 	accessibility?: LabelData;

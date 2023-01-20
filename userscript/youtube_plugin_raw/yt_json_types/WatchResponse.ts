@@ -1,7 +1,7 @@
 type WatchResponse={
 	responseContext: ResponseContext;
 	contents: TwoColumnWatchNextResults;
-	currentVideoEndpoint: WatchEndpoint;
+	currentVideoEndpoint: E$WatchEndpoint;
 	trackingParams: string;
 	playerOverlays: PlayerOverlayRenderer;
 	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];

@@ -1,3 +1,3 @@
-type E_NotificationOptOutEndpoint=E_Endpoint&{
+type E$NotificationOptOutEndpoint=EB$Endpoint&{
 	notificationOptOutEndpoint: AE_NotificationOptOut;
 };

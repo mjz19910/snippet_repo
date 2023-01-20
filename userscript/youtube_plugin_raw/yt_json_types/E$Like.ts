@@ -1,1 +1,1 @@
-type AE_Like=AE_LikeIndifferent|AE_LikeLike|AE_LikeDislike;
+type E$Like=E$LikeIndifferent|E$LikeLike|E$LikeDislike;

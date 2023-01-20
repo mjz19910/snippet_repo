@@ -5,6 +5,6 @@ type EndScreenPlaylist={
 	videoCount?: `${number}`;
 	longBylineText: TextT;
 	videoCountText: TextWithRuns;
-	navigationEndpoint: WatchEndpoint;
+	navigationEndpoint: E$WatchEndpoint;
 	trackingParams: string;
 };

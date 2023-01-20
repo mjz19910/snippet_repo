@@ -2,9 +2,9 @@ type ButtonCommand=
 	|ChangeEngagementPanelVisibilityAction
 	|ContinuationCommand
 	|OpenPopupAction
-	|E_SignalServiceEndpoint
+	|E$SignalServiceEndpoint
 	|$CreateBackstagePostEndpoint
-	|E_UrlEndpoint
+	|E$UrlEndpoint
 	|CommandExecutorCommand
 	;
 ;

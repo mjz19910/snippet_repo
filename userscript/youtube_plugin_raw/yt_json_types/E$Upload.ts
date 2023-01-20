@@ -1,3 +1,3 @@
-type AE_Upload={
+type E$Upload={
 	hack: true;
 };

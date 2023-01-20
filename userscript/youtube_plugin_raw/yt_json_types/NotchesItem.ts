@@ -1,6 +1,6 @@
 type NotchesItem={
 	linearGradientCssStyle?: string;
 	knobColorArgb: 4280191205;
-	purchaseCommand: YpcGetCartEndpoint;
+	purchaseCommand: E$YpcGetCartEndpoint;
 	tierValue: SimpleText;
 };

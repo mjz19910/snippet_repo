@@ -1,4 +1,4 @@
-type CompactLink_Endpoint=UploadEndpoint|E_SignalNavigationEndpoint;
+type CompactLink_Endpoint=E$UploadEndpoint|E$SignalNavigationEndpoint;
 
 type CompactLinkData={
 	icon: Icon<"PERSON_ADD"|"CREATION_UPLOAD">;
