@@ -4190,7 +4190,7 @@ class CodegenService extends BaseService {
 			gen_name,
 			keys,
 		};
-		let tc=JSON.stringify(x,this.json_replacer.bind(null,state),"\t");
+		let tc=JSON.stringify(x,this.json_replacer.bind(this,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
@@ -9153,7 +9153,7 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,url,endpoint,page,response,...y}=x; this.g(y);
 		if(page!=="playlist") debugger;
 		this.BrowseEndpoint(endpoint);
-		this.PlaylistResponse(response);
+		this.Api_PlaylistResponse(response);
 		this.primitive_of(url,"string");
 	}
 	/** @arg {SettingsPageResponse} x */
@@ -10654,16 +10654,27 @@ class HandleTypes extends ServiceMethods {
 		this.z(onResponseReceivedActions,this.ResetChannelUnreadCountCommand);
 	}
 	/** @arg {PlaylistResponse} x */
-	PlaylistResponse(x) {
-		this.save_keys("[PlaylistResponse]",x);
-		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y);
+	Api_PlaylistResponse(x) {
+		const cf="PlaylistResponse";
+		this.save_keys(`[${cf}]`,x);
+		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y);
 		this.TwoColumnBrowseResultsRenderer(contents);
 		this.PlaylistHeaderRenderer(header);
+		this.t(alerts,a=>this.Response_alerts(cf,a));
 		this.PlaylistMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(trackingParams);
 		this.MicroformatDataRenderer(microformat);
 		this.PlaylistSidebarRenderer(sidebar);
+	}
+	/** @arg {string} cf @arg {NonNullable<PlaylistResponse['alerts']>} x */
+	Response_alerts(cf,x) {
+		this.z(x,x=>{
+			if("alertWithButtonRenderer" in x) {
+				return this.AlertWithButtonRenderer(x);
+			}
+			this.do_codegen(`${cf}$alerts$iterate`,x);
+		});
 	}
 	/** @arg {SettingsResponse} x */
 	SettingsResponse(x) {
