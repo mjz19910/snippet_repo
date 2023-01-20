@@ -7591,8 +7591,8 @@ class HandleTypes extends ServiceMethods {
 	GetNotificationMenuResponse(x) {
 		this.save_keys("[GetNotificationMenuResponse]",x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
-		this.z(actions,a => {
-			a;
+		this.z(actions,x => {
+			if(x.openPopupAction) return this.OpenPopupAction(x);
 			debugger;
 		});
 		this.trackingParams(trackingParams);
