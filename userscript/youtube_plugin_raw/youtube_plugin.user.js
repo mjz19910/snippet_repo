@@ -11553,15 +11553,21 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ClipAdStateRenderer]",x);
 	}
 	/** @private @arg {AdSlotRenderer} x */
-	AdSlotRenderer(x) {x;}
+	AdSlotRenderer(x) {
+		this.save_keys("[AdSlotRenderer]",x);
+	}
 	/** @private @arg {VideoRenderer} x */
 	VideoRenderer(x) {
 		this.save_keys("[VideoRenderer]",x);
 	}
 	/** @private @arg {RadioRenderer} x */
-	RadioRenderer(x) {x;}
+	RadioRenderer(x) {
+		this.save_keys("[RadioRenderer]",x);
+	}
 	/** @private @arg {FeedNudgeRenderer} x */
-	FeedNudgeRenderer(x) {x;}
+	FeedNudgeRenderer(x) {
+		this.save_keys("[FeedNudgeRenderer]",x);
+	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
