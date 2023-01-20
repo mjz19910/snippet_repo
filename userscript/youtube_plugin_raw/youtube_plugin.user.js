@@ -6213,6 +6213,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VE3832_WatchPageResponse} x */
 	VE3832_WatchPageResponse(x) {
 		const cf="WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y);
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
@@ -6282,7 +6283,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},status,actions,playlistEditResults,trackingParams,...y}=x; this.g(y);
 		if(status!=="STATUS_SUCCEEDED") debugger;
-		this.z(actions,a => this.x.get("handle_types").Action(a));
+		this.z(actions,a => {
+			a;
+			debugger;
+		});
 		this.z(playlistEditResults,this.g);
 		this.trackingParams(trackingParams);
 	}
@@ -6833,17 +6837,10 @@ class HandleTypes extends ServiceMethods {
 		console.log("pt",x);
 		debugger;
 	}
-	/** @arg {AllActions} x */
-	Action(x) {
-		const cf="Action";
-		let name_from_keys=this.get_name_from_keys(x);
-		if(!name_from_keys) {debugger; return;}
-		this.save_keys(`[${cf}.${name_from_keys}]`,x);
-	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
 		this.save_keys("[AccountMenuResponse]",x);
-		if(x.actions) this.z(x.actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {Response} response @arg {_ResponseTypes} x */
 	ResponseTypes(response,x) {
@@ -7329,22 +7326,22 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
 		this.save_keys("[GetSharePanel]",x);
-		if(x.actions) this.z(x.actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
 		this.save_keys("[SubscribeResponse]",x);
-		if(x.actions) this.z(x.actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {UnsubscribeResponse} x */
 	UnsubscribeResponse(x) {
 		this.save_keys("[UnsubscribeResponse]",x);
-		if(x.actions) this.z(x.actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
 		this.save_keys("[ModifyChannelPreferenceResponse]",x);
-		if(x.actions) this.z(x.actions,a => this.Action(a));
+		debugger;
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
@@ -7355,19 +7352,19 @@ class HandleTypes extends ServiceMethods {
 	LikeLikeResponse(x) {
 		this.save_keys(`[LikeLikeResponse]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y);
-		if(actions) this.z(actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {DislikeResponse} x */
 	DislikeResponse(x) {
 		this.save_keys(`[DislikeResponse]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y);
-		if(actions) this.z(actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
 		this.save_keys(`[LikeRemoveLikeResponse]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y);
-		if(actions) this.z(actions,a => this.Action(a));
+		debugger;
 	}
 	/** @arg {ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
@@ -7559,7 +7556,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
 		this.save_keys("[GetNotificationMenuResponse]",x);
-		this.z(x.actions,a => this.Action(a));
+		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
@@ -8791,7 +8788,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y);
 		if(actions) {
 			if(actions.length!==1) debugger;
-			this.z(actions,a => this.Action(a));
+			debugger;
 		}
 		if(unseenCount!==void 0) this.primitive_of(unseenCount,"number");
 	}
@@ -8818,7 +8815,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AccountsListResponse]",x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y);
 		this.TextWithRuns(selectText);
-		this.z(actions,a => this.Action(a));
+		debugger;
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {

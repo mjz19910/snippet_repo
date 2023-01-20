@@ -1,6 +1,12 @@
 import {KnownDataSaver} from "./yt_json_types/KnownDataSaver";
 import {Base64Binary} from "./yt_json_types/Base64Binary";
 import {MyReader} from "./yt_json_types/MyReader";
+`
+this.z(actions,a => {
+	a;
+	debugger;
+});
+`
 const decoder=new TextDecoder();
 const base64_dec=new Base64Binary();
 export let no_storage_access=false;
