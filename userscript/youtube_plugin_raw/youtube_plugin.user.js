@@ -5718,10 +5718,10 @@ class ServiceMethods extends ServiceData {
 			y.call(this,x[k],k);
 		}
 	}
-	/** @template {{}} T @arg {T|undefined} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>void} f */
 	t(x,f) {
 		if(!x) return;
-		f(x);
+		f.call(this,x);
 	}
 	/** @arg {PlaylistId} x */
 	playlistId(x) {
@@ -8128,7 +8128,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistEditEndpoint} x */
 	PlaylistEditEndpoint(x) {
 		this.save_keys("[PlaylistEditEndpoint]",x);
-		this.PlaylistEditEndpointData(x.playlistEditEndpoint);
+		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y);
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.t(commandMetadata,this.CommandMetadata);
+		this.PlaylistEditEndpointData(playlistEditEndpoint);
 	}
 	/** @arg {PlaylistEditEndpointData} x */
 	PlaylistEditEndpointData(x) {
