@@ -9468,6 +9468,7 @@ class HandleTypes extends ServiceMethods {
 		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
+		if("feedbackEndpoint" in x) return this.AE_Feedback(x.feedbackEndpoint);
 		debugger;
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
