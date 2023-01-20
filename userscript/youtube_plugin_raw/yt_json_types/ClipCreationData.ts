@@ -5,8 +5,9 @@ type ClipCreationData={
 	scrubber: {};
 	saveButton: {};
 	displayName: {};
-	publicityLabel: "Public";
+	publicityLabel: Capitalize<Lowercase<PlaylistAddToOption['privacy']>>;
 	cancelButton: {};
 	adStateOverlay: {};
 	externalVideoId: string;
+	publicityLabelIcon: `PRIVACY_${PlaylistAddToOption['privacy']}`;
 };

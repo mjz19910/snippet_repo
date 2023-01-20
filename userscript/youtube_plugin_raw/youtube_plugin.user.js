@@ -10849,8 +10849,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
 		this.save_keys("[VideoSecondaryInfoData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=x; this.g(y);
 	}
 	/** @arg {MultiMarkersPlayerBar} x */
 	MultiMarkersPlayerBar(x) {
@@ -10975,14 +10974,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {UnifiedSharePanel} x */
 	UnifiedSharePanel(x) {
 		this.save_keys("[UnifiedSharePanel]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {trackingParams,showLoadingSpinner,...y}=x; this.g(y);
 	}
 	/** @arg {ClipCreationData} x */
 	ClipCreationData(x) {
 		this.save_keys("[ClipCreationData]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
+		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=x; this.g(y);
 	}
 	/** @arg {ChannelMetadata} x */
 	ChannelMetadata(x) {
