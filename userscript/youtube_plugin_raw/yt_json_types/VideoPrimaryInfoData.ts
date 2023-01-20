@@ -4,6 +4,6 @@ type VideoPrimaryInfoData={
 	videoActions: MenuRenderer;
 	trackingParams: string;
 	badges?: MetadataBadgeRenderer[];
-	dateText: TextWithRuns;
-	relativeDateText: TextWithRuns;
+	dateText: SimpleText;
+	relativeDateText: SimpleText;
 };

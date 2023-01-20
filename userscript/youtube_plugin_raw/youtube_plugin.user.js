@@ -5033,7 +5033,7 @@ class ParserService extends BaseService {
 				debugger;
 			} return;
 		}
-		this.parse_endpoint_param(root,path,param_map);
+		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
 	/** @public @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
 	on_player_params(root,path,x) {
@@ -5111,6 +5111,22 @@ case "${path}": {
 			if(cb===null) {
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "report.params.f18.f1": {
+						switch(ta) {
+							case 2: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
+					case "report.params.f18": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params": {
 						switch(ta) {
 							case 2: break;
@@ -5325,6 +5341,61 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
+							case "f18": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(tv instanceof Map) return;
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+											// url
+											case "f2": {
+												const idx=6;
+												if(path_parts.length===5) {
+													if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+													switch(tv) {default: debugger; return;}
+												}
+												switch(path_parts[5]) {
+													default: gd(idx); path_parts[5]===""; break;
+												}
+											} break;
+										}
+									} break;
+								}
+							} break;
+							case "f15": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 5: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f11": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 0: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f8": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -12088,8 +12159,8 @@ class HandleTypes extends ServiceMethods {
 		this.VideoViewCountRenderer(viewCount);
 		this.MenuRenderer(videoActions);
 		this.trackingParams(trackingParams);
-		this.TextWithRuns(dateText);
-		this.TextWithRuns(relativeDateText);
+		this.SimpleText(dateText);
+		this.SimpleText(relativeDateText);
 		this.t(badges,a => this.z(a,this.MetadataBadgeRenderer));
 	}
 	/** @arg {MerchandiseShelf} x */
