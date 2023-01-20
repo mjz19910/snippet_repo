@@ -7474,6 +7474,66 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	//#endregion
+	//#region endpoint
+	/** @arg {E_SubscribeEndpoint} x */
+	E_SubscribeEndpoint(x) {
+		const cf="SubscribeEndpoint";
+		this.save_keys(`[E_${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,subscribeEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.params(cf,"subscribe.params",subscribeEndpoint.params);
+	}
+	/** @arg {E_SignalServiceEndpoint} x */
+	E_SignalServiceEndpoint(x) {
+		this.save_keys("[E_SignalServiceEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.AE_SignalService(signalServiceEndpoint);
+	}
+	/** @arg {AE_SignalService} x */
+	AE_SignalService(x) {
+		this.save_keys("[SignalServiceEndpointData]",x);
+		switch(x.signal) {
+			case "CLIENT_SIGNAL": return this.signal.ClientSignal(x);
+			case "GET_ACCOUNT_MENU": break;
+		}
+	}
+	/** @arg {E_PlaylistEditEndpoint} x */
+	PlaylistEditEndpoint(x) {
+		this.save_keys("[PlaylistEditEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.AE_PlaylistEdit(playlistEditEndpoint);
+	}
+	/** @arg {AE_PlaylistEdit} x */
+	AE_PlaylistEdit(x) {
+		this.save_keys("[PlaylistEditEndpointData]",x);
+		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
+		this.playlistId(playlistId);
+		if(actions.length!==1) debugger;
+		this.PlaylistAction(actions[0]);
+		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
+	}
+	/** @private @arg {E_UrlEndpoint} x */
+	UrlEndpoint(x) {
+		this.save_keys("[UrlEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.AE_Url(urlEndpoint);
+		this.CommandMetadata(commandMetadata);
+	}
+	/** @private @arg {AE_Url} x */
+	AE_Url(x) {
+		this.save_keys("[UrlEndpointData]",x);
+		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
+		this.primitive_of_string(url);
+		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
+		if(nofollow&&!nofollow) debugger;
+	}
+	//#endregion
 	//#region general done
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
@@ -7552,14 +7612,6 @@ class HandleTypes extends ServiceMethods {
 		if(gradientColorConfig) 1;
 		if(presentationStyle) 1;
 		if(config) 1;
-	}
-	/** @arg {E_SignalServiceEndpoint} x */
-	E_SignalServiceEndpoint(x) {
-		this.save_keys("[E_SignalServiceEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.AE_SignalService(signalServiceEndpoint);
 	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
@@ -9752,23 +9804,6 @@ class HandleTypes extends ServiceMethods {
 		let {params}=this.w({x:x.getReportFormEndpoint});
 		this.t(params,a => this.params("GetReportForm","report.params",a));
 	}
-	/** @arg {E_PlaylistEditEndpoint} x */
-	PlaylistEditEndpoint(x) {
-		this.save_keys("[PlaylistEditEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.AE_PlaylistEdit(playlistEditEndpoint);
-	}
-	/** @arg {AE_PlaylistEdit} x */
-	AE_PlaylistEdit(x) {
-		this.save_keys("[PlaylistEditEndpointData]",x);
-		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
-		this.playlistId(playlistId);
-		if(actions.length!==1) debugger;
-		this.PlaylistAction(actions[0]);
-		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
-	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
 		this.save_keys("[PlaylistAction]",x);
@@ -10069,22 +10104,6 @@ class HandleTypes extends ServiceMethods {
 		} else {
 			debugger;
 		}
-	}
-	/** @private @arg {E_UrlEndpoint} x */
-	UrlEndpoint(x) {
-		this.save_keys("[UrlEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
-		this.t(clickTrackingParams,this.clickTrackingParams);
-		this.AE_Url(urlEndpoint);
-		this.CommandMetadata(commandMetadata);
-	}
-	/** @private @arg {AE_Url} x */
-	AE_Url(x) {
-		this.save_keys("[UrlEndpointData]",x);
-		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(url);
-		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
-		if(nofollow&&!nofollow) debugger;
 	}
 	/** @arg {BrowseEndpointContextSupportedConfigs} x */
 	BrowseEndpointContextSupportedConfigs(x) {
@@ -10642,14 +10661,6 @@ class HandleTypes extends ServiceMethods {
 		this.ButtonRenderer(emojiButton);
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of_string(aadcGuidelinesStateEntityKey);
-	}
-	/** @arg {AE_SignalService} x */
-	AE_SignalService(x) {
-		this.save_keys("[SignalServiceEndpointData]",x);
-		switch(x.signal) {
-			case "CLIENT_SIGNAL": return this.signal.ClientSignal(x);
-			case "GET_ACCOUNT_MENU": break;
-		}
 	}
 	/** @arg {Signal_GetAccountMenu} x */
 	GetAccountMenu(x) {
@@ -12717,15 +12728,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(subscribedEntityKey);
 		this.z(onSubscribeEndpoints,this.E_SubscribeEndpoint);
 		this.z(onUnsubscribeEndpoints,this.E_SignalServiceEndpoint);
-	}
-	/** @arg {E_SubscribeEndpoint} x */
-	E_SubscribeEndpoint(x) {
-		const cf="SubscribeEndpoint";
-		this.save_keys(`[E_${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,subscribeEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t(clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.params(cf,"subscribe.params",subscribeEndpoint.params);
 	}
 	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {
