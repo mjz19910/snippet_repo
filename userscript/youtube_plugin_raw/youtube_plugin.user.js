@@ -6822,6 +6822,8 @@ class HandleTypes extends ServiceMethods {
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
 				/** @arg {GeneratedWebCommandMetadata} x */
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
+				console.log(`\n\t_gen_${url_type_ex},`);
+				console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
 				debugger;
 			} break;
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
@@ -6838,6 +6840,7 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
 			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
 			case "/youtubei/v1/share/get_share_panel": return this.GetSharePanelWebCommandMetadata(x);
+			case "/youtubei/v1/flag/get_form": return this.GeneratedWebCommandMetadata(x);
 		}
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
