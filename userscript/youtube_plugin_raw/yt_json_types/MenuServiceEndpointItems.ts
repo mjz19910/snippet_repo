@@ -1,1 +1,1 @@
-type MenuServiceEndpointItems=MenuServiceEndpoints;
+type MenuServiceEndpointItems=EG$MenuServiceEndpoints;

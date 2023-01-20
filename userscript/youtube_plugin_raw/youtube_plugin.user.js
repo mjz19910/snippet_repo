@@ -9729,11 +9729,6 @@ class HandleTypes extends ServiceMethods {
 		const {menuServiceItemRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MenuServiceItemData(menuServiceItemRenderer);
 	}
-	/** @arg {MenuServiceEndpointItems} x */
-	MenuServiceEndpointItems(x) {
-		if("notificationOptOutEndpoint" in x) return;
-		this.MenuServiceEndpoints(x);
-	}
 	/** @arg {MenuServiceItemData<MenuServiceIconTypeStr>} x */
 	MenuServiceItemData(x) {
 		this.save_keys("[MenuServiceItemData]",x);
@@ -9754,12 +9749,12 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		this.t(icon,this.Icon);
-		this.MenuServiceEndpointItems(serviceEndpoint);
+		this.EG$MenuServiceEndpoints(serviceEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
 	}
-	/** @arg {MenuServiceEndpoints} x */
-	MenuServiceEndpoints(x) {
+	/** @arg {EG$MenuServiceEndpoints} x */
+	EG$MenuServiceEndpoints(x) {
 		this.save_keys("[MenuServiceEndpoints]",x);
 		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
