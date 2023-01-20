@@ -9845,11 +9845,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(clickTrackingParams,this.clickTrackingParams);
 		this.AE_Url(urlEndpoint);
 		this.CommandMetadata(commandMetadata);
-		/*
-		const {url,webPageType,rootVe}=webCommandMetadata;
-		this.primitive_of(url,"string");
-		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		if(rootVe!==83769) debugger;*/
 	}
 	/** @private @arg {AE_Url} x */
 	AE_Url(x) {
