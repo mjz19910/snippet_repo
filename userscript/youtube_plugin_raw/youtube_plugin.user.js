@@ -5468,6 +5468,25 @@ case "${path_parts[idx-1]}": {
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
 			default: gd(1); break;
+			case "entity_key": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(tv) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "f2": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+						}
+					} break;
+				}
+			} break;
 			case "createBackstagePost": {
 				const idx=2;
 				switch(path_parts[1]) {
