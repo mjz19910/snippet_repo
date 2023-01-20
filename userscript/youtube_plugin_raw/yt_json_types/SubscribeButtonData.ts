@@ -16,5 +16,5 @@ type SubscribeButtonData={
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
 	onSubscribeEndpoints: {}[];
-	onUnsubscribeEndpoints: {}[];
+	onUnsubscribeEndpoints: E_SignalServiceEndpoint[];
 };

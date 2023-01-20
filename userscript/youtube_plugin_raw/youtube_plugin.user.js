@@ -4312,6 +4312,8 @@ class CodegenService extends BaseService {
 	get_json_replace_type_len_1(r,b,keys) {
 		let g=() => this.json_auto_replace(b);
 		let hg=false
+			||false
+			||b.subscriptionNotificationToggleButtonRenderer
 			||b.twoColumnWatchNextResults
 			//#region action
 			||b.changeEngagementPanelVisibilityAction
