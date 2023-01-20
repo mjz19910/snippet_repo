@@ -10409,7 +10409,7 @@ class HandleTypes extends ServiceMethods {
 		const {signal,...y}=x; this.g(y); // ! #destructure
 		/** @type {SignalEnum} */
 		switch(signal) {
-			default: debugger; break;
+			default: console.log(`\ncase "${signal}": break;`); debugger; break;
 			case "ENABLE_CHROME_NOTIFICATIONS": break;
 			case "HISTORY_BACK": break;
 			case "HISTORY_FORWARD": break;
