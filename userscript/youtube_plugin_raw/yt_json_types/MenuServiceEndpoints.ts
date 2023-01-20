@@ -1,1 +1,1 @@
-type MenuServiceEndpoints=E_PlaylistEditEndpoint;
+type MenuServiceEndpoints=E_PlaylistEditEndpoint|E$GetReportFormEndpoint;
