@@ -5162,6 +5162,12 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue[]|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
+		/** @arg {string} ns @arg {()=>void} f */
+		let grouped=(ns,f) => {
+			console.group(ns);
+			f();
+			console.groupEnd();
+		};
 		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
 			/** @type {LogItems} */
@@ -5194,7 +5200,7 @@ case "${path}": {
 			if(cb===null) {
 				/** @type {LogItems} */
 				switch(path) {
-					default: new_path(); debugger; break;
+					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
 					case "browse$param.f84": {
 						switch(ta) {
 							case 5: break;
@@ -7834,7 +7840,8 @@ class HandleTypes extends ServiceMethods {
 		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
 		if("shareEntityServiceEndpoint" in x) return this.E$ShareEntityServiceEndpoint(x);
 		if("likeEndpoint" in x) return this.E$Like(x.likeEndpoint);
-		debugger;
+		console.log("");
+		this.do_codegen("EG$MenuService",x);
 	}
 	/** @arg {E$SubscribeEndpoint} x */
 	E$SubscribeEndpoint(x) {
