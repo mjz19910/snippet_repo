@@ -5023,18 +5023,14 @@ case "${path}": {
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue} tv */
 	parse_param_next(root,path,tv) {
 		let key_index=this.parse_key_index;
-		if(tv instanceof Map) {
-			if(tv.size<=0) return;
-			this.parse_any_param(root,path,tv);
-		} else {
-			/** @arg {number} idx */
-			let gen_next_part=(idx) => {
-				if(path_parts.length===idx) {
-					gen_final_part(idx);
-					gen_return_part(idx);
-					return;
-				}
-				console.log(`
+		/** @arg {number} idx */
+		let gen_next_part=(idx) => {
+			if(path_parts.length===idx) {
+				gen_final_part(idx);
+				gen_return_part(idx);
+				return;
+			}
+			console.log(`
 case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
 		let idx=${idx+1};
@@ -5043,40 +5039,86 @@ case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 		debugger;
 	} path_parts[${idx}]===""; break;
 } break;`);
-			};
-			/** @arg {number} idx */
-			let gen_final_part=(idx) => {
-				console.log(`
+		};
+		/** @arg {number} idx */
+		let gen_final_part=(idx) => {
+			console.log(`
 case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
 		let idx=${idx+1};
 		console.log("in",path_parts[${idx-1}]);
-		console.log(\`
-case "\${path_parts[${idx}]}": return;\`);
+		gen_return_part(idx);
 		debugger;
 	} path_parts[${idx}]===""; break;
 } break;`);
-			};
-			/** @arg {number} idx */
-			let gen_return_part=(idx)=>{
-				console.log(`
-case "${path_parts[idx-1]}": {
-if(path_parts.length===${idx}) return;
-debugger;
-} break;`);
-			}
-			let path_parts=split_string(path,".");
-			switch(path_parts[0]) {
-				default: {
-					console.log("root_next_case");
-					gen_next_part(1);
-					debugger;
-				} break;
-			}
-			console.log(path_parts);
-			console.log(`[${path}] [idx=${key_index}]`,root,tv);
-			debugger;
+		};
+		/** @arg {number} idx */
+		let gen_return_part=(idx) => {
+			console.log(`
+case "${path_parts[idx]}": {
+	if(path_parts.length===${idx+1}) {
+		if(tv instanceof Map) {
+			this.parse_any_param(root,path,tv);
 		}
+	}
+	debugger;
+} break;`);
+		};
+		let path_parts=split_string(path,".");
+		switch(path_parts[0]) {
+			default: {
+				let idx=1;
+				console.log("[param_next.new_ns]",path_parts[0]);
+				gen_next_part(idx);
+				debugger;
+			} break;
+			case "create_playlist": switch(path_parts[1]) {
+				default: {
+					let idx=2;
+					console.log("in",path_parts[0]);
+					gen_next_part(idx);
+					debugger;
+				} path_parts[1]===""; break;
+				case "params": switch(path_parts[2]) {
+					default: {
+						let idx=3;
+						console.log("in",path_parts[1]);
+						gen_next_part(idx);
+						debugger;
+					} path_parts[2]===""; break;
+					case "f84": {
+						if(path_parts.length===3) {
+							if(tv instanceof Map) {
+								this.parse_any_param(root,path,tv);
+							}
+							switch(tv) {
+								default: debugger; break;
+							}
+							return;
+						}
+						switch(path_parts[3]) {
+							default: {
+								let idx=4;
+								console.log("in",path_parts[2]);
+								gen_return_part(idx-1);
+								debugger;
+							} path_parts[3]===""; break;
+							case "f5": {
+								if(path_parts.length===4) {
+									if(tv instanceof Map) {
+										this.parse_any_param(root,path,tv);
+									}
+								}
+								debugger;
+							} break;
+						} break;
+					}
+				} break;
+			} break;
+		}
+		console.log(path_parts);
+		console.log(`[${path}] [idx=${key_index}]`,root,tv);
+		debugger;
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
