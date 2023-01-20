@@ -5530,6 +5530,12 @@ case "${path_parts[idx-1]}": {
 								const idx=4;
 								if(path_parts.length===3) {
 									switch(tv) {
+										case 4167: return;
+										case 4168: return;
+										case 6075: return;
+										case 7238: return;
+										case 9723: return;
+										case 153108: return;
 										default: console.log("trackingParams.f2"); console.log(`\ncase ${JSON.stringify(tv)}: return;`); return;
 									}
 								}
