@@ -5103,6 +5103,7 @@ case "${path_parts[idx-1]}": {
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===idx) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
