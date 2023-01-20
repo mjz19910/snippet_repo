@@ -1,3 +1,3 @@
 type FeedbackEndpointPlugin={
-	feedbackEndpoint: FeedbackEndpointData;
+	feedbackEndpoint: AE_Feedback;
 };

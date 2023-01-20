@@ -9679,7 +9679,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title);
 		this.TextWithRuns(subtitle);
 	}
-	/** @arg {FeedbackEndpointData} x */
+	/** @arg {AE_Feedback} x */
 	FeedbackEndpointData(x) {
 		this.save_keys("[FeedbackEndpointData]",x);
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
