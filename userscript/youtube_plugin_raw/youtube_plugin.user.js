@@ -4873,15 +4873,11 @@ class ParserService extends BaseService {
 			console.log(`\ncase ${ta}: break;`);
 			debugger;
 		};
-		if(tv!==void 0) {
-			x.delete(ta);
-			let cx=mk.indexOf(ta);
-			if(cx>-1) mk.splice(cx,1);
-			if(cb===null) {
-				switch(path) {
-					default: {
-						console.log("[parse_value.new_ns]",path);
-						console.log(`
+		let new_path=() => {
+			console.log("[parse_value.new_ns]",path);
+			/** @type {LogItems} */
+			console.log("\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
+			console.log(`
 case "${path}": {
 	switch(ta) {
 		case ${ta}: break;
@@ -4889,9 +4885,16 @@ case "${path}": {
 	}
 	/** @type {PathRoot} */
 	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
-} return;`);
-						debugger;
-					} break;
+} return;
+`);
+		};
+		if(tv!==void 0) {
+			x.delete(ta);
+			let cx=mk.indexOf(ta);
+			if(cx>-1) mk.splice(cx,1);
+			if(cb===null) {
+				switch(path) {
+					default: new_path(); debugger; break;
 					case "reel.player_params": {
 						switch(ta) {
 							case 30: break;
