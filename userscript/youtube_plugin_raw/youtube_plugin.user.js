@@ -5349,6 +5349,42 @@ case "${path_parts[idx-1]}": {
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
 			default: gd(1); break;
+			case "subscribe": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f2": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											switch(tv) {
+												case 3: return;
+												default: debugger; return;
+											}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+								}
+							} break;
+						}
+					} break;
+				}
+			} break;
 			case "report": {
 				const idx=2;
 				switch(path_parts[1]) {
