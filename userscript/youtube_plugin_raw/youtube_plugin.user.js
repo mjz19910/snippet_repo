@@ -5483,58 +5483,103 @@ case "${path_parts[idx-1]}": {
 			gen_next_part(idx);
 			debugger;
 		};
+		/** @arg {string} ns @arg {()=>void} f */
+		let grouped=(ns,f) => {
+			console.group(ns);
+			f();
+			console.groupEnd();
+		};
 		let path_parts=split_string(path,".");
+		const idx=1;
 		switch(path_parts[0]) {
-			default: gd(1); {
-				switch(path_parts[0]) { 
-					case "playlist_edit": break;
-					case "watch_page_url": break;
-					case "watch_playlist": break;
-					case "ypc_get_offers": break;
-				}
+			default: {
+				grouped("gen.new_ns."+path_parts,() => gd(idx));
+				switch(path_parts[0]) {}
 			} break;
 			case "ypc_get_offers": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]==="params"; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.ypc_get_offers",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "watch_playlist": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]==="params"; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.watch_playlist",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "watch_page_url": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]==="pp"; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "pp": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.watch_page_url",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "playlist_edit": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]==="params"; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.playlist_edit",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "next": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]==="queue_context_params"; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]==="queue_context_params"; break;
+					case "queue_context_params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.next",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "browse": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]==="params"; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.browse",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "like": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
-					case "likeParams": break;
-					case "remove_like_params": break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "likeParams": gd(idx); break;
+					case "remove_like_params": gd(idx); break;
 				}
 			} break;
 			case "browse$param": {
@@ -6113,242 +6158,244 @@ case "${path_parts[idx-1]}": {
 					} break;
 				}
 			} break;
-			case "watch": const idx=2; switch(path_parts[1]) {
-				default: gd(idx); path_parts[1]===""; break;
-				case "player_params": {
-					const idx=3;
-					if(path_parts.length===2) {
-						if(tv instanceof Map) {
-							let mk=[...tv.keys()];
-							console.log(path_parts,mk);
-							return;
-						}
-						switch(tv) {default: debugger; return;}
-					}
-					switch(path_parts[2]) {
-						default: gd(idx); path_parts[2]===""; break;
-						case "f9": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 1: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						case "f8": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 1: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						case "f40": {
-							const idx=4;
-							if(path_parts.length===idx) {
-								if(tv instanceof Map) {
-									let mk=[...tv.keys()];
-									console.log(path_parts,mk);
-									return;
-								}
-								switch(tv) {default: debugger; return;}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-								case "f1": {
-									const idx=5;
-									if(path_parts.length===5) {
-										switch(tv) {
-											case 1: return;
-											case 2: return;
-											case 3: return;
-											default: debugger; return;
-										}
-									}
-									switch(path_parts[4]) {
-										default: {
-											console.log("in",path_parts[3]);
-											gen_next_part(idx);
-											debugger;
-										} path_parts[4]===""; break;
-									}
-								} break;
-							}
-						} break;
-					}
-				} break;
-				case "params": {
-					const idx=3;
-					if(path_parts.length===2) {
-						if(tv instanceof Map) return;
-						switch(tv) {default: debugger; break;}
-						return;
-					}
-					switch(path_parts[2]) {
-						default: gd(idx); path_parts[2]===""; break;
-						case "f27": {
-							const idx=4;
-							if(path_parts.length===3) {
-								if(tv instanceof Map) return;
-								switch(tv) {default: debugger; return;}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-								case "f1": {
-									const idx=5;
-									if(path_parts.length===4) {
-										switch(tv) {
-											case 1: return;
-											default: debugger; return;
-										}
-									}
-									switch(path_parts[4]) {
-										default: gd(idx); path_parts[4]===""; break;
-									}
-								} break;
-							}
-						} break;
-						case "f13": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 0: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						case "f12": {
-							const idx=4;
-							if(path_parts.length===3) {
-								if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
-								switch(tv) {default: debugger; return;}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						case "f7": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 1: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						// "watch.params.f3"
-						case "f3": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 1: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						// ["watch", "params", "f2"]
-						case "f2": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 1: return;
-									case 2: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						case "f24": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {
-									case 1: return;
-									default: debugger; return;
-								}
-							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-							}
-						} break;
-						case "f33": {
-							const idx=4;
-							if(path_parts.length===3) {
-								switch(tv) {default: debugger; break;}
+			case "watch": {
+				const idx=2; switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "player_params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(tv instanceof Map) {
+								let mk=[...tv.keys()];
+								console.log(path_parts,mk);
 								return;
 							}
-							switch(path_parts[3]) {
-								default: gd(idx); path_parts[3]===""; break;
-								case "f5": {
-									const idx=4;
-									if(path_parts.length===idx) {
-										if(typeof tv==="number") return console.log("[param_parse]",path,tv);
-										switch(tv) {default: debugger; return;}
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f9": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
 									}
-									switch(path_parts[4]) {
-										default: {
-											console.log("in",path_parts[3]);
-											gen_next_part(idx);
-											debugger;
-										} path_parts[4]===""; break;
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f8": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
 									}
-								} break;
-								case "f4": {
-									const idx=4;
-									if(path_parts.length===idx) {
-										if(typeof tv==="number") return console.log("[param_parse]",path,tv);
-										switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f40": {
+								const idx=4;
+								if(path_parts.length===idx) {
+									if(tv instanceof Map) {
+										let mk=[...tv.keys()];
+										console.log(path_parts,mk);
+										return;
 									}
-									switch(path_parts[4]) {
-										default: {
-											console.log("in",path_parts[3]);
-											gen_next_part(idx);
-											debugger;
-										} path_parts[4]===""; break;
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===5) {
+											switch(tv) {
+												case 1: return;
+												case 2: return;
+												case 3: return;
+												default: debugger; return;
+											}
+										}
+										switch(path_parts[4]) {
+											default: {
+												console.log("in",path_parts[3]);
+												gen_next_part(idx);
+												debugger;
+											} path_parts[4]===""; break;
+										}
+									} break;
+								}
+							} break;
+						}
+					} break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
+							switch(tv) {default: debugger; break;}
+							return;
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f27": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											switch(tv) {
+												case 1: return;
+												default: debugger; return;
+											}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+								}
+							} break;
+							case "f13": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 0: return;
+										default: debugger; return;
 									}
-								} break;
-								// ["watch", "params", "f33", "f3"]
-								case "f3": {
-									let idx=4;
-									if(path_parts.length===4) {
-										if(typeof tv==="number") return console.log("[param_parse]",path,tv);
-										switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f12": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f7": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
 									}
-									gen_next_part(idx);
-									debugger;
-								} break;
-								case "f2": {
-									const idx=4;
-									if(path_parts.length===idx) {
-										if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
-										switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							// "watch.params.f3"
+							case "f3": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
 									}
-									gen_next_part(idx);
-									debugger;
-								} break;
-							}
-						} break;
-					}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							// ["watch", "params", "f2"]
+							case "f2": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										case 2: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f24": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f33": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {default: debugger; break;}
+									return;
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f5": {
+										const idx=4;
+										if(path_parts.length===idx) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: {
+												console.log("in",path_parts[3]);
+												gen_next_part(idx);
+												debugger;
+											} path_parts[4]===""; break;
+										}
+									} break;
+									case "f4": {
+										const idx=4;
+										if(path_parts.length===idx) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: {
+												console.log("in",path_parts[3]);
+												gen_next_part(idx);
+												debugger;
+											} path_parts[4]===""; break;
+										}
+									} break;
+									// ["watch", "params", "f33", "f3"]
+									case "f3": {
+										let idx=4;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										gen_next_part(idx);
+										debugger;
+									} break;
+									case "f2": {
+										const idx=4;
+										if(path_parts.length===idx) {
+											if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										gen_next_part(idx);
+										debugger;
+									} break;
+								}
+							} break;
+						}
+					} break;
 				} break;
-			} break;
+			}
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
 	}
