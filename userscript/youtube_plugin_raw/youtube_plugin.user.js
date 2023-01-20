@@ -5114,6 +5114,14 @@ case "${path}": {
 				/** @type {LogItems} */
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "subscribe.params.f2": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "subscribe.params": {
 						switch(ta) {
 							case 2: break;
