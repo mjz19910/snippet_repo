@@ -5532,9 +5532,9 @@ case "${path_parts[2]}": return;`);
 	/** @arg {BrowseEndpointPages} x */
 	parse_known_page(x) {
 		switch(x) {
+			case "explore": return true;
 			case "guide_builder": return true;
 			case "history": return true;
-			case "explore": return true;
 			case "library": return true;
 			case "storefront": return true;
 			case "subscriptions": return true;
