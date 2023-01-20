@@ -5116,6 +5116,23 @@ case "${path_parts[idx]}": {
 							gen_next_part(idx);
 							debugger;
 						} path_parts[2]===""; break;
+						case "f33": {
+							let idx=4;
+							if(path_parts.length===idx) {
+								if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+								switch(tv) {
+									default: debugger; break;
+								}
+								return;
+							}
+							switch(path_parts[3]) {
+								default: {
+									console.log("in",path_parts[2]);
+									gen_next_part(idx);
+									debugger;
+								} path_parts[3]===""; break;
+							}
+						} break;
 					}
 				} break;
 			} break;
