@@ -363,6 +363,7 @@ export class Snippet_0_tmp {
 	/** @arg {GeneratedWebCommandMetadata} x */
 	GenericWebCommandMetadata(x) {
 		this.save_keys("[GenericWebCommandMetadata]",x);
+		if(!("apiUrl" in x)) return;
 		let cx=x.apiUrl;
 		switch(x.apiUrl) {
 			default: {
