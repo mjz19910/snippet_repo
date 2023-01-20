@@ -7016,7 +7016,7 @@ class HandleTypes extends ServiceMethods {
 		if(!("simpleText" in x)) {debugger; return;}
 		this.save_keys(`[${cf}]`,x);
 		const {simpleText,...y}=x; f.call(this,y);
-		this.primitive_of(simpleText,"string");
+		this.primitive_of_string(simpleText);
 	}
 	//#endregion
 	//#region web_command_metadata
@@ -7142,7 +7142,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
 		const {sendPost,apiUrl,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(sendPost,"boolean");
-		this.primitive_of(apiUrl,"string");
+		this.primitive_of_string(apiUrl);
 	}
 	/** @arg {GeneratedWebCommandMetadata} x */
 	GeneratedWebCommandMetadata(x) {
@@ -7440,7 +7440,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ConsistencyTokenJar";
 		this.save_keys(`[${cf}]`,x);
 		const {encryptedTokenJarContents,expirationSeconds,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(encryptedTokenJarContents,"string");
+		this.primitive_of_string(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
 	/** @arg {WebResponseContextExtensionData} x */
@@ -7456,7 +7456,7 @@ class HandleTypes extends ServiceMethods {
 	YtConfigData(x) {
 		this.save_keys("[YtConfigData]",x);
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(visitorData,"string");
+		this.primitive_of_string(visitorData);
 		if(sessionIndex!==0) debugger;
 		/** @type {`${typeof rootVisualElementType}`} */
 		let s=`${rootVisualElementType}`;
@@ -7490,7 +7490,7 @@ class HandleTypes extends ServiceMethods {
 	MainAppWebResponseContext(x) {
 		this.save_keys("[MainAppWebResponseContext]",x);
 		const {datasyncId,loggedOut,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(datasyncId,"string");
+		this.primitive_of_string(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
 	}
 	/** @arg {BrowseResponse} x */
@@ -7538,7 +7538,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {DropdownData} x */
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(label,"string");
+		this.primitive_of_string(label);
 		this.z(entries,x => {
 			if("privacyDropdownItemRenderer" in x) {
 				return;
@@ -7711,7 +7711,7 @@ class HandleTypes extends ServiceMethods {
 	ReloadContinuationDataInner(x) {
 		this.save_keys("[ReloadContinuationDataInner]",x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(continuation,"string");
+		this.primitive_of_string(continuation);
 		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @arg {MusicResponsiveListItemRenderer} x */
@@ -7804,7 +7804,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,this.ItemSectionItem);
 		this.trackingParams(trackingParams);
 		if(targetId) {
-			this.primitive_of(targetId,"string");
+			this.primitive_of_string(targetId);
 			this.targetId(cf,as(targetId));
 			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}-id-${targetId}`);
 		} else {
@@ -7847,7 +7847,7 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailItem(x) {
 		this.save_keys("[ThumbnailItem]",x);
 		const {url,width,height,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(url,"string");
+		this.primitive_of_string(url);
 		this.t(width,a => this.primitive_of(a,"number"));
 		this.t(height,a => this.primitive_of(a,"number"));
 	}
@@ -7861,29 +7861,29 @@ class HandleTypes extends ServiceMethods {
 	MicroformatData(x) {
 		this.save_keys("[MicroformatData]",x);
 		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(urlCanonical,"string");
-		this.primitive_of(title,"string");
-		this.primitive_of(description,"string");
+		this.primitive_of_string(urlCanonical);
+		this.primitive_of_string(title);
+		this.primitive_of_string(description);
 		this.Thumbnail(thumbnail);
-		this.primitive_of(siteName,"string");
-		this.primitive_of(appName,"string");
-		this.primitive_of(androidPackage,"string");
-		this.primitive_of(iosAppStoreId,"string");
-		this.primitive_of(iosAppArguments,"string");
-		this.primitive_of(ogType,"string");
-		this.primitive_of(urlApplinksWeb,"string");
-		this.primitive_of(urlApplinksIos,"string");
-		this.primitive_of(urlApplinksAndroid,"string");
-		this.primitive_of(urlTwitterIos,"string");
-		this.primitive_of(urlTwitterAndroid,"string");
-		this.primitive_of(twitterCardType,"string");
-		this.primitive_of(twitterSiteHandle,"string");
-		this.primitive_of(schemaDotOrgType,"string");
+		this.primitive_of_string(siteName);
+		this.primitive_of_string(appName);
+		this.primitive_of_string(androidPackage);
+		this.primitive_of_string(iosAppStoreId);
+		this.primitive_of_string(iosAppArguments);
+		this.primitive_of_string(ogType);
+		this.primitive_of_string(urlApplinksWeb);
+		this.primitive_of_string(urlApplinksIos);
+		this.primitive_of_string(urlApplinksAndroid);
+		this.primitive_of_string(urlTwitterIos);
+		this.primitive_of_string(urlTwitterAndroid);
+		this.primitive_of_string(twitterCardType);
+		this.primitive_of_string(twitterSiteHandle);
+		this.primitive_of_string(schemaDotOrgType);
 		this.primitive_of(noindex,"boolean");
 		this.primitive_of(unlisted,"boolean");
-		this.t(tags,tags => this.z(tags,a => this.primitive_of(a,"string")));
+		this.t(tags,tags => this.z(tags,a => this.primitive_of_string(a)));
 		this.t(familySafe,a => this.primitive_of(a,"boolean"));
-		this.tz(availableCountries,(a => this.primitive_of(a,"string")));
+		this.tz(availableCountries,(a => this.primitive_of_string(a)));
 		this.z(linkAlternates,this.HrefUrl);
 	}
 	/** @arg {HrefUrl} x */
@@ -8217,7 +8217,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			debugger;
 		});
-		this.primitive_of(trackingParams,"string");
+		this.primitive_of_string(trackingParams);
 		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 	}
 	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
@@ -8252,7 +8252,7 @@ class HandleTypes extends ServiceMethods {
 		this.RecordNotificationInteractionsEndpoint(recordClickEndpoint);
 		this.MenuRenderer(contextualMenu);
 		this.trackingParams(trackingParams);
-		this.primitive_of(notificationId,"string");
+		this.primitive_of_string(notificationId);
 	}
 	/** @arg {E_RecordNotificationInteractionsEndpoint} x */
 	RecordNotificationInteractionsEndpoint(x) {
@@ -8440,7 +8440,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[TimedContinuationDataInner]`,x);
 		const {timeoutMs,continuation,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(timeoutMs,"number");
-		this.primitive_of(continuation,"string");
+		this.primitive_of_string(continuation);
 	}
 	/** @arg {SearchApiResponse} x */
 	SearchApiResponse(x) {
@@ -8465,11 +8465,11 @@ class HandleTypes extends ServiceMethods {
 		const cf="SearchResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(estimatedResults,"string");
+		this.primitive_of_string(estimatedResults);
 		this.TwoColumnSearchResultsRenderer(contents);
 		this.trackingParams(trackingParams);
 		this.DesktopTopbarRenderer(topbar);
-		this.z(refinements,a => this.primitive_of(a,"string"));
+		this.z(refinements,a => this.primitive_of_string(a));
 		this.z(onResponseReceivedCommands,a => {
 			if("adsControlFlowOpportunityReceivedCommand" in a) {
 				return this.AdsControlFlowOpportunityReceivedCommand(a);
@@ -8649,19 +8649,19 @@ class HandleTypes extends ServiceMethods {
 			this.LiveChatEmoji(a);
 		}));
 		this.t(clientMessages,this.ClientMessages);
-		this.t(viewerName,a => this.primitive_of(a,"string"));
+		this.t(viewerName,a => this.primitive_of_string(a));
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
 		this.save_keys("[LiveChatItemListRenderer]",x);
 		const {liveChatItemListRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(liveChatItemListRenderer,"string");
+		this.g(liveChatItemListRenderer);
 	}
 	/** @arg {LiveChatMessageInputRenderer} x */
 	LiveChatMessageInputRenderer(x) {
 		this.save_keys("[LiveChatMessageInputRenderer]",x);
 		const {liveChatMessageInputRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(liveChatMessageInputRenderer,"string");
+		this.g(liveChatMessageInputRenderer);
 	}
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
@@ -8679,7 +8679,7 @@ class HandleTypes extends ServiceMethods {
 			}
 			debugger;
 		});
-		this.primitive_of(videoOffsetTimeMsec,"string");
+		this.primitive_of_string(videoOffsetTimeMsec);
 	}
 	/** @arg {AddChatItemAction} x */
 	AddChatItemAction(x) {
@@ -8693,7 +8693,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AddChatItemActionData]",x);
 		const {item,clientId,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatItem(item);
-		this.t(clientId,a => this.primitive_of(a,"string"));
+		this.t(clientId,a => this.primitive_of_string(a));
 	}
 	/** @arg {LiveChatItem} x */
 	LiveChatItem(x) {
@@ -8716,8 +8716,8 @@ class HandleTypes extends ServiceMethods {
 	LiveChatViewerEngagementMessage(x) {
 		this.save_keys("[LiveChatViewerEngagementMessage]",x);
 		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(id,"string");
-		this.primitive_of(timestampUsec,"string");
+		this.primitive_of_string(id);
+		this.primitive_of_string(timestampUsec);
 		this.Icon(icon);
 		this.TextWithRuns(message);
 		this.ButtonRenderer(actionButton);
@@ -8744,7 +8744,7 @@ class HandleTypes extends ServiceMethods {
 		const {invalidationId,timeoutMs,continuation,clickTrackingParams: a1,...y}=x; this.g(y); // ! #destructure
 		this.InvalidationIdData(invalidationId);
 		if(timeoutMs!==10000) debugger;
-		this.primitive_of(continuation,"string");
+		this.primitive_of_string(continuation);
 		this.t(a1,this.clickTrackingParams);
 	}
 	/** @arg {InvalidationIdData} x */
@@ -8752,14 +8752,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[InvalidationIdData]",x);
 		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(objectSource,"number");
-		this.primitive_of(objectId,"string");
-		this.primitive_of(topic,"string");
+		this.primitive_of_string(objectId);
+		this.primitive_of_string(topic);
 		let topic_dec=split_string(topic,"~");
 		if(topic_dec.length!==3) debugger;
 		if(topic_dec[0]!=="chat") debugger;
 		this.videoId(topic_dec[1]);
 		this.primitive_of(subscribeToGcmTopics,"boolean");
-		this.primitive_of(protoCreationTimestampMs,"string");
+		this.primitive_of_string(protoCreationTimestampMs);
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
@@ -8783,7 +8783,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(engagementPanels,(this.EngagementPanelSectionListRenderer));
 		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
 		this.t(videoReporting,this.ReportFormModalRenderer);
-		this.t(queueContextParams,a => this.primitive_of(a,"string"));
+		this.t(queueContextParams,a => this.primitive_of_string(a));
 		this.t(continuationContents,this.PlaylistPanelContinuation);
 	}
 	/** @arg {NextResponseContents} x */
@@ -8856,7 +8856,7 @@ class HandleTypes extends ServiceMethods {
 		if("endpoint" in x) {
 			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y); // ! #destructure
 			this.BrowseEndpoint(endpoint);
-			this.primitive_of(title,"string");
+			this.primitive_of_string(title);
 			if(selected!==void 0&&selected!==true) debugger;
 			this.t(content,this.TabData_section);
 			this.trackingParams(trackingParams);
@@ -8900,7 +8900,7 @@ class HandleTypes extends ServiceMethods {
 	PlaylistPanel(x) {
 		this.save_keys("[PlaylistPanel]",x);
 		const {title,contents,currentIndex,...y1}=x;
-		this.primitive_of(title,"string");
+		this.primitive_of_string(title);
 		this.z(contents,this.PlaylistPanelItem);
 		this.t(currentIndex,a => this.primitive_of(a,"number"));
 		const {playlistId,ownerName,isInfinite,...y2}=y1;
@@ -8939,7 +8939,7 @@ class HandleTypes extends ServiceMethods {
 	NextRadioContinuationDataInner(x) {
 		this.save_keys("[NextRadioContinuationDataInner]",x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(continuation,"string");
+		this.primitive_of_string(continuation);
 		this.clickTrackingParams(clickTrackingParams);
 	}
 	/** @arg {PlaylistPanelVideoRenderer} x */
@@ -8962,7 +8962,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(shortBylineText);
 		this.trackingParams(trackingParams);
 		this.MenuRenderer(menu);
-		this.primitive_of(playlistSetVideoId,"string");
+		this.primitive_of_string(playlistSetVideoId);
 		this.tz(thumbnailOverlays,this.PlaylistPanel_thumbnailOverlay);
 	}
 	/** @arg {tz<PlaylistPanelVideo['thumbnailOverlays']>} x */
@@ -9273,7 +9273,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(commentsCount);
 		if(showSeparator!==true) debugger;
 		this.z(customEmojis,this.CustomEmoji);
-		this.primitive_of(unicodeEmojisUrl,"string");
+		this.primitive_of_string(unicodeEmojisUrl);
 		this.LoggingDirectives(loggingDirectives);
 	}
 	/** @arg {CommentSimpleboxRenderer} x */
@@ -9286,7 +9286,7 @@ class HandleTypes extends ServiceMethods {
 	LoadMarkersCommandData(x) {
 		this.save_keys("[LoadMarkersCommandData]",x);
 		const {entityKeys,...y}=x; this.g(y); // ! #destructure
-		this.z(entityKeys,a => this.primitive_of(a,"string"));
+		this.z(entityKeys,a => this.primitive_of_string(a));
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommandData} x */
 	ChangeKeyedMarkersVisibilityCommandData(x) {
@@ -9359,28 +9359,35 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E_LikeEndpoint} x */
 	LikeEndpoint(x) {
 		this.save_keys("[LikeEndpoint]",x);
+		if(this.get_keys_of(x).length!==1) debugger;
 		this.AE_Like(x.likeEndpoint);
 	}
 	/** @arg {AE_Like} x */
 	AE_Like(x) {
 		this.save_keys("[LikeEndpointData]",x);
-		const {target,...y}=x;
-		this.LikeApiData(x.target);
-		switch(y.status) {
+		let ua=this.LikeApiData.bind(this);
+		switch(x.status) {
 			case "DISLIKE": {
-				const {status: {},dislikeParams,...a}=y; this.g(a);
-				this.primitive_of(dislikeParams,"string");
+				const {target: b,status: {},dislikeParams,...a}=x; this.g(a); ua(b);
+				this.primitive_of_string(dislikeParams);
 			} break;
 			case "INDIFFERENT": {
-				const {status: {},removeLikeParams,...a}=y; this.g(a);
-				this.primitive_of(removeLikeParams,"string");
+				const {target: b,status: {},removeLikeParams,...a}=x; this.g(a); ua(b);
+				this.primitive_of_string(removeLikeParams);
 			} break;
 			case "LIKE": {
-				const {status: {},actions,likeParams,...a}=y; this.g(a);
-				this.tz(actions,(this.MusicLibraryStatusUpdateCommand));
-				this.primitive_of(likeParams,"string");
+				const {target: b,status: {},actions,likeParams,...a}=x; this.g(a); ua(b);
+				this.tz(actions,a => {
+					if("musicLibraryStatusUpdateCommand" in a) return this.MusicLibraryStatusUpdateCommand(a);
+					debugger;
+				});
+				this.t(likeParams,this.primitive_of_string);
 			} break;
 		}
+	}
+	/** @arg {string} x */
+	primitive_of_string(x) {
+		this.primitive_of(x,"string");
 	}
 	/** @arg {MusicLibraryStatusUpdateCommand} x */
 	MusicLibraryStatusUpdateCommand(x) {
@@ -9392,13 +9399,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MusicLibraryStatusUpdate]",x);
 		const {libraryStatus,addToLibraryFeedbackToken,...y}=x; this.g(y); // ! #destructure
 		if(libraryStatus!=="MUSIC_LIBRARY_STATUS_IN_LIBRARY") debugger;
-		this.primitive_of(addToLibraryFeedbackToken,"string");
+		this.primitive_of_string(addToLibraryFeedbackToken);
 	}
 	/** @arg {LikeApiData} x */
 	LikeApiData(x) {
 		this.save_keys("[LikeApiData]",x);
-		const {videoId,...y}=x; this.g(y); // ! #destructure
-		this.videoId(videoId);
+		if("videoId" in x) return this.videoId(this.w(x));
+		if("playlistId" in x) return this.playlistId(this.w(x));
+		debugger;
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {
@@ -9535,14 +9543,14 @@ class HandleTypes extends ServiceMethods {
 			let v=this.w(x);
 			const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
 			this.TextWithRuns(optOutText);
-			this.primitive_of(serializedOptOut,"string");
-			this.primitive_of(serializedRecordInteractionsRequest,"string");
+			this.primitive_of_string(serializedOptOut);
+			this.primitive_of_string(serializedRecordInteractionsRequest);
 			return;
 		}
 		if("shareEntityServiceEndpoint" in x) {
 			let v=this.w(x);
 			const {serializedShareEntity,commands,...y}=v; this.g(y);
-			this.primitive_of(serializedShareEntity,"string");
+			this.primitive_of_string(serializedShareEntity);
 			this.z(commands,a => {
 				const {clickTrackingParams,...b}=a;
 				if(!b.openPopupAction) debugger;
@@ -9557,28 +9565,7 @@ class HandleTypes extends ServiceMethods {
 			});
 			return;
 		}
-		if("likeEndpoint" in x) {
-			let a=this.w(x);
-			switch(a.status) {
-				case "DISLIKE": {
-					const {dislikeParams,status: {},target,...y}=a; this.g(y);
-					this.primitive_of(dislikeParams,"string");
-					this.LikeApiData(target);
-				} return;
-				case "INDIFFERENT": {
-					const {removeLikeParams,status: {},target,...y}=a; this.g(y);
-					this.primitive_of(removeLikeParams,"string");
-					this.LikeApiData(target);
-				} return;
-				case "LIKE": {
-					const {likeParams,status: {},target,actions,...y}=a; this.g(y);
-					this.primitive_of(likeParams,"string");
-					this.LikeApiData(target);
-				} return;
-				default: debugger; break;
-			}
-		}
-		x;
+		if("likeEndpoint" in x) return this.AE_Like(x.likeEndpoint);
 		debugger;
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
@@ -9647,7 +9634,7 @@ class HandleTypes extends ServiceMethods {
 	LabelData(x) {
 		this.save_keys("[LabelData]",x);
 		const {label,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(label,"string");
+		this.primitive_of_string(label);
 	}
 	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
@@ -9757,7 +9744,7 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(videoId);
 		this.t(playlistId,this.playlistId);
 		if(index!==void 0) this.primitive_of(index,"number");
-		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
+		if(playlistSetVideoId!==void 0) this.primitive_of_string(playlistSetVideoId);
 		if(params!==void 0) this.params("WatchEndpoint","watch.params",params);
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
@@ -9833,7 +9820,7 @@ class HandleTypes extends ServiceMethods {
 	VssLoggingContextData(x) {
 		this.save_keys("[VssLoggingContextData]",x);
 		const {serializedContextData,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(serializedContextData,"string");
+		this.primitive_of_string(serializedContextData);
 	}
 	/** @private @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
@@ -9849,7 +9836,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[TextRun]",x);
 		const {text,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t(navigationEndpoint,f_run);
-		this.primitive_of(text,"string");
+		this.primitive_of_string(text);
 	}
 	/** @private @arg {ThumbnailOverlayTimeStatusRenderer} x */
 	ThumbnailOverlayTimeStatusRenderer(x) {
@@ -9887,7 +9874,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
 		this.TextT(longBylineText);
-		if(videoCount!==void 0) this.primitive_of(videoCount,"string");
+		if(videoCount!==void 0) this.primitive_of_string(videoCount);
 		this.TextWithRuns(videoCountText);
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
@@ -9918,7 +9905,7 @@ class HandleTypes extends ServiceMethods {
 	AE_Url(x) {
 		this.save_keys("[UrlEndpointData]",x);
 		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(url,"string");
+		this.primitive_of_string(url);
 		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
 		if(nofollow&&!nofollow) debugger;
 	}
@@ -10101,7 +10088,7 @@ class HandleTypes extends ServiceMethods {
 	UpdateNotificationsUnseenCount(x) {
 		this.save_keys("[UpdateNotificationsUnseenCount]",x);
 		const {handlerData,unseenCount,timeoutMs,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(handlerData,"string");
+		this.primitive_of_string(handlerData);
 		this.primitive_of(unseenCount,"number");
 		this.primitive_of(timeoutMs,"number");
 	}
@@ -10109,7 +10096,7 @@ class HandleTypes extends ServiceMethods {
 	DatasyncIdsResponse(x) {
 		this.save_keys("[DatasyncIdsResponse]",x);
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y); // ! #destructure
-		this.z(datasyncIds,a => this.primitive_of(a,"string"));
+		this.z(datasyncIds,a => this.primitive_of_string(a));
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
@@ -10156,7 +10143,7 @@ class HandleTypes extends ServiceMethods {
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
 		this.t(replacementEndpoint,this.E_ReelWatchEndpoint);
-		this.t(sequenceContinuation,a => this.primitive_of(a,"string"));
+		this.t(sequenceContinuation,a => this.primitive_of_string(a));
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
 	}
@@ -10203,7 +10190,7 @@ class HandleTypes extends ServiceMethods {
 	AttGetResponse(x) {
 		this.save_keys("[AttGetResponse]",x);
 		const {responseContext: {},challenge,bgChallenge,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(challenge,"string");
+		this.primitive_of_string(challenge);
 		this.AttBgChallenge(bgChallenge);
 	}
 	/** @private @arg {GuideResponse} x */
@@ -10247,7 +10234,7 @@ class HandleTypes extends ServiceMethods {
 	LiveChatRenderer(x) {
 		this.save_keys("[LiveChatRenderer]",x);
 		const {liveChatRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(liveChatRenderer,"string");
+		this.g(liveChatRenderer);
 	}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
@@ -10263,9 +10250,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlaylistContent]",x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.PlaylistPanelVideoRenderer);
-		this.primitive_of(title,"string");
+		this.primitive_of_string(title);
 		this.primitive_of(currentIndex,"number");
-		this.primitive_of(playlistId,"string");
+		this.primitive_of_string(playlistId);
 		this.SimpleText(ownerName);
 		this.primitive_of(isInfinite,"boolean");
 		this.parser.parse_url("PlaylistContent",playlistShareUrl);
@@ -10332,7 +10319,7 @@ class HandleTypes extends ServiceMethods {
 	AE_Feedback(x) {
 		this.save_keys("[FeedbackEndpointData]",x);
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(feedbackToken,"string");
+		this.primitive_of_string(feedbackToken);
 		this.UiActions(uiActions);
 		this.tz(actions,this.ReplaceEnclosingAction);
 	}
@@ -10371,7 +10358,7 @@ class HandleTypes extends ServiceMethods {
 				return this.w(y);
 			});
 			this.z(act,this.g);
-			this.primitive_of(undoToken,"string");
+			this.primitive_of_string(undoToken);
 		});
 	}
 	/** @arg {Button_serviceEndpoint} x */
@@ -10438,9 +10425,9 @@ class HandleTypes extends ServiceMethods {
 	CustomEmoji(x) {
 		this.save_keys("[CustomEmoji]",x);
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(emojiId,"string");
-		this.z(shortcuts,a => this.primitive_of(a,"string"));
-		this.z(searchTerms,a => this.primitive_of(a,"string"));
+		this.primitive_of_string(emojiId);
+		this.z(shortcuts,a => this.primitive_of_string(a));
+		this.z(searchTerms,a => this.primitive_of_string(a));
 		this.EmojiImage(image);
 		if(isCustomEmoji) {
 			debugger;
@@ -10473,7 +10460,7 @@ class HandleTypes extends ServiceMethods {
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
 		this.ButtonRenderer(emojiButton);
 		this.EmojiPickerRenderer(emojiPicker);
-		this.primitive_of(aadcGuidelinesStateEntityKey,"string");
+		this.primitive_of_string(aadcGuidelinesStateEntityKey);
 	}
 	/** @arg {AE_SignalService} x */
 	AE_SignalService(x) {
@@ -10496,7 +10483,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="channel") debugger;
 		this.BrowseEndpoint(endpoint);
 		this.ChannelResponse(response);
-		this.primitive_of(url,"string");
+		this.primitive_of_string(url);
 	}
 	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
@@ -10505,7 +10492,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="playlist") debugger;
 		this.BrowseEndpoint(endpoint);
 		this.Api_PlaylistResponse(response);
-		this.primitive_of(url,"string");
+		this.primitive_of_string(url);
 		switch(rootVe) {
 			default: debugger; break;
 			case void 0: break;
@@ -10520,7 +10507,7 @@ class HandleTypes extends ServiceMethods {
 			if(page!=="settings") debugger;
 			this.BrowseEndpoint(endpoint);
 			this.SettingsResponse(response);
-			this.primitive_of(url,"string");
+			this.primitive_of_string(url);
 			if(rootVe!==23462) debugger;
 			return;
 		}
@@ -10528,7 +10515,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="settings") debugger;
 		this.BrowseEndpoint(endpoint);
 		this.SettingsResponse(response);
-		this.primitive_of(url,"string");
+		this.primitive_of_string(url);
 	}
 	/** @arg {Extract<ShortsPageResponse,{rootVe:37414}>} x */
 	S_37414(x) {
@@ -10599,7 +10586,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MusicCarouselShelf]",x);
 		const {contents,header,trackingParams,itemSize,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.g);
-		this.primitive_of(header,"string");
+		this.g(header);
 		this.trackingParams(trackingParams);
 		if(itemSize!=="COLLECTION_STYLE_ITEM_SIZE_MEDIUM") debugger;
 	}
@@ -10717,7 +10704,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SearchResultsTab]",x);
 		const {endpoint,title,selected,content,tabIdentifier,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.t(endpoint,this.SearchResultsSearchEndpoint);
-		this.primitive_of(title,"string");
+		this.primitive_of_string(title);
 		if(selected!==void 0) this.primitive_of(selected,"boolean");
 		this.SectionListRenderer(content);
 		console.log("[tabIdentifier]",tabIdentifier);
@@ -10749,9 +10736,9 @@ class HandleTypes extends ServiceMethods {
 	LiveChatEmoji(x) {
 		this.save_keys("[LiveChatEmoji]",x);
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,isLocked,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(emojiId,"string");
-		this.z(shortcuts,a => this.primitive_of(a,"string"));
-		this.z(searchTerms,a => this.primitive_of(a,"string"));
+		this.primitive_of_string(emojiId);
+		this.z(shortcuts,a => this.primitive_of_string(a));
+		this.z(searchTerms,a => this.primitive_of_string(a));
 		this.Thumbnail(image);
 		this.primitive_of(isCustomEmoji,"boolean");
 		this.primitive_of(isLocked,"boolean");
@@ -10760,25 +10747,25 @@ class HandleTypes extends ServiceMethods {
 	MessageRenderer(x) {
 		this.save_keys("[MessageRenderer]",x);
 		const {messageRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(messageRenderer,"string");
+		this.g(messageRenderer);
 	}
 	/** @arg {LiveChatParticipantsListRenderer} x */
 	LiveChatParticipantsListRenderer(x) {
 		this.save_keys("[LiveChatParticipantsListRenderer]",x);
 		const {liveChatParticipantsListRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(liveChatParticipantsListRenderer,"string");
+		this.g(liveChatParticipantsListRenderer);
 	}
 	/** @arg {LiveChatTickerRenderer} x */
 	LiveChatTickerRenderer(x) {
 		this.save_keys("[LiveChatTickerRenderer]",x);
 		const {liveChatTickerRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(liveChatTickerRenderer,"string");
+		this.g(liveChatTickerRenderer);
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
 		this.save_keys("[LiveChatHeaderRenderer]",x);
 		const {liveChatHeaderRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(liveChatHeaderRenderer,"string");
+		this.g(liveChatHeaderRenderer);
 	}
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
@@ -10802,7 +10789,7 @@ class HandleTypes extends ServiceMethods {
 	ReportFormModalRenderer(x) {
 		this.save_keys("[ReportFormModalRenderer]",x);
 		const {reportFormModalRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(reportFormModalRenderer,"string");
+		this.g(reportFormModalRenderer);
 	}
 	/** @arg {AutomixPreviewVideoRenderer} x */
 	AutomixPreviewVideoRenderer(x) {
@@ -10938,9 +10925,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AttBgChallenge]",x);
 		const {interpreterUrl,interpreterHash,program,globalName,...y}=x; this.g(y); // ! #destructure
 		let uw=this.UrlWrappedValueT(interpreterUrl);
-		this.primitive_of(uw,"string");
-		this.primitive_of(interpreterHash,"string");
-		this.primitive_of(program,"string");
+		this.primitive_of_string(uw);
+		this.primitive_of_string(interpreterHash);
+		this.primitive_of_string(program);
 		if(globalName!=="trayride") debugger;
 	}
 	/** @template {string} T @arg {UrlWrappedValueT<T>} x */
@@ -11037,9 +11024,9 @@ class HandleTypes extends ServiceMethods {
 	TemplateUpdateData(x) {
 		this.save_keys("[TemplateUpdateData]",x);
 		const {identifier,serializedTemplateConfig,dependencies,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(identifier,"string");
-		this.primitive_of(serializedTemplateConfig,"string");
-		this.tz(dependencies,a => this.primitive_of(a,"string"));
+		this.primitive_of_string(identifier);
+		this.primitive_of_string(serializedTemplateConfig);
+		this.tz(dependencies,a => this.primitive_of_string(a));
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
@@ -11052,7 +11039,7 @@ class HandleTypes extends ServiceMethods {
 	TimestampWithNanos(x) {
 		this.save_keys("[TimestampWithNanos]",x);
 		const {seconds,nanos,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(seconds,"string");
+		this.primitive_of_string(seconds);
 		this.primitive_of(nanos,"number");
 	}
 	/** @arg {ServiceEndpointAction} x */
@@ -11081,7 +11068,7 @@ class HandleTypes extends ServiceMethods {
 	AddToPlaylistCommandData(x) {
 		this.save_keys("[AddToPlaylistCommandData]",x);
 		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(listType,"string");
+		this.primitive_of_string(listType);
 		this.CreatePlaylistServiceEndpoint(onCreateListCommand);
 		this.primitive_of(openListPanel,"boolean");
 		this.primitive_of(openMiniplayer,"boolean");
@@ -11381,14 +11368,14 @@ class HandleTypes extends ServiceMethods {
 			const {trackingParams,accessibility,tooltip,avatar,menuRequest,...y}=x; this.g(y); // ! #destructure
 			this.trackingParams(trackingParams);
 			this.Accessibility(accessibility);
-			this.primitive_of(tooltip,"string");
+			this.primitive_of_string(tooltip);
 			this.Thumbnail(avatar);
 			this.TopbarMenu_menuRequest(menuRequest);
 		} else if("menuRenderer" in x) {
 			const {trackingParams,accessibility,tooltip,icon,menuRenderer,style,...y}=x; this.g(y); // ! #destructure
 			this.trackingParams(trackingParams);
 			this.Accessibility(accessibility);
-			this.primitive_of(tooltip,"string");
+			this.primitive_of_string(tooltip);
 			this.Icon(icon);
 			this.MultiPageMenuRenderer(menuRenderer);
 			switch(style) {
@@ -11617,7 +11604,7 @@ class HandleTypes extends ServiceMethods {
 	AE_Search(x) {
 		this.save_keys("[SearchEndpointData]",x);
 		const {query,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(query,"string");
+		this.primitive_of_string(query);
 	}
 	/** @arg {E_ShareEntityServiceEndpoint} x */
 	ShareEntityServiceEndpoint(x) {
@@ -11631,7 +11618,7 @@ class HandleTypes extends ServiceMethods {
 	ShareEntityServiceArgs(x) {
 		this.save_keys("[ShareEntityServiceArgs]",x);
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(serializedShareEntity,"string");
+		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.OpenPopupAction);
 	}
 	/** @arg {E_SignalNavigationEndpoint} x */
@@ -11724,18 +11711,18 @@ class HandleTypes extends ServiceMethods {
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y); // ! #destructure
 		this.FeaturedChannel(featuredChannel);
 		this.primitive_of(allowSwipeDismiss,"boolean");
-		this.primitive_of(annotationId,"string");
+		this.primitive_of_string(annotationId);
 	}
 	/** @arg {FeaturedChannel} x */
 	FeaturedChannel(x) {
 		this.save_keys("[TopbarLogo]",x);
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(startTimeMs,"string");
-		this.primitive_of(endTimeMs,"string");
+		this.primitive_of_string(startTimeMs);
+		this.primitive_of_string(endTimeMs);
 		this.Thumbnail(watermark);
 		this.trackingParams(trackingParams);
 		this.BrowseEndpoint(navigationEndpoint);
-		this.primitive_of(channelName,"string");
+		this.primitive_of_string(channelName);
 		this.SubscribeButtonRenderer(subscribeButton);
 	}
 	/** @arg {TopbarLogo} x */
@@ -11746,7 +11733,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(tooltipText);
 		this.BrowseEndpoint(endpoint);
 		this.trackingParams(trackingParams);
-		this.primitive_of(overrideEntityKey,"string");
+		this.primitive_of_string(overrideEntityKey);
 	}
 	/** @arg {VideoOwnerData} x */
 	VideoOwnerData(x) {
@@ -11825,7 +11812,7 @@ class HandleTypes extends ServiceMethods {
 		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(label);
 		if(maxCharacterLimit!==150) debugger;
-		this.primitive_of(placeholderText,"string");
+		this.primitive_of_string(placeholderText);
 		if(validValueRegexp!=="[^<>]*") debugger;
 		this.TextWithRuns(invalidValueErrorMessage);
 		if(required!==true) debugger;
@@ -12002,7 +11989,7 @@ class HandleTypes extends ServiceMethods {
 		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams(trackingParams);
 		this.Accessibility(accessibility);
-		this.primitive_of(tooltip,"string");
+		this.primitive_of_string(tooltip);
 		this.E_SignalServiceEndpoint(updateUnseenCountEndpoint);
 		this.primitive_of(notificationCount,"number");
 		if(!this.eq_keys(handlerDatas,["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"])) {
@@ -12063,17 +12050,17 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SortFilterSubMenuData]",x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(subMenuItems,this.ActionSetPlaylistVideoOrder);
-		this.t(title,a => this.primitive_of(a,"string"));
+		this.t(title,a => this.primitive_of_string(a));
 		this.t(icon,this.Icon);
 		this.t(accessibility,this.Accessibility);
-		this.t(tooltip,a => this.primitive_of(a,"string"));
+		this.t(tooltip,a => this.primitive_of_string(a));
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
 		this.save_keys("[ActionSetPlaylistVideoOrder]",x);
 		const {title,selected,serviceEndpoint,accessibility,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(title,"string");
+		this.primitive_of_string(title);
 		this.primitive_of(selected,"boolean");
 		this.ContinuationCommand(serviceEndpoint);
 		this.t(accessibility,this.Accessibility);
@@ -12089,7 +12076,7 @@ class HandleTypes extends ServiceMethods {
 	EmojiPickerRenderer(x) {
 		this.save_keys("[EmojiPickerRenderer]",x);
 		const {emojiPickerRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(emojiPickerRenderer,"string");
+		this.g(emojiPickerRenderer);
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
@@ -12139,7 +12126,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[C4TabbedHeaderData]",x);
 		const {channelId,title,subscribeButton,trackingParams,sponsorButton,navigationEndpoint,avatar,badges,banner,headerLinks,subscriberCountText,tvBanner,mobileBanner,channelHandleText,videosCountText,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_channel_id(channelId);
-		this.primitive_of(title,"string");
+		this.primitive_of_string(title);
 		this.SubscribeButtonRenderer(subscribeButton);
 		this.trackingParams(trackingParams);
 		this.t(sponsorButton,this.ButtonRenderer);
@@ -12252,8 +12239,8 @@ class HandleTypes extends ServiceMethods {
 	LiveChatPlaceholderItemData(x) {
 		this.save_keys("[LiveChatPlaceholderItemData]",x);
 		const {id,timestampUsec,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(id,"string");
-		this.primitive_of(timestampUsec,"string");
+		this.primitive_of_string(id);
+		this.primitive_of_string(timestampUsec);
 	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
@@ -12277,10 +12264,10 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(message);
 		this.TextWithRuns(authorName);
 		this.Thumbnail(authorPhoto);
-		this.primitive_of(contextMenuEndpoint,"string");
-		this.primitive_of(id,"string");
+		this.g(contextMenuEndpoint);
+		this.primitive_of_string(id);
 		this.tz(authorBadges,(this.LiveChatAuthorBadgeRenderer));
-		this.primitive_of(timestampUsec,"string");
+		this.primitive_of_string(timestampUsec);
 		this.parser.parse_channel_id(authorExternalChannelId);
 		this.Accessibility(contextMenuAccessibility);
 		this.TextWithRuns(timestampText);
@@ -12377,7 +12364,7 @@ class HandleTypes extends ServiceMethods {
 	ReelPlayerHeaderRenderer(x) {
 		this.save_keys("[ReelPlayerHeaderRenderer]",x);
 		const {reelPlayerHeaderRenderer,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(reelPlayerHeaderRenderer,"string");
+		this.g(reelPlayerHeaderRenderer);
 	}
 	/** @arg {HintRenderer} x */
 	HintRenderer(x) {
@@ -12401,11 +12388,11 @@ class HandleTypes extends ServiceMethods {
 	MerchandiseShelf(x) {
 		this.save_keys("[MerchandiseShelf]",x);
 		const {title,items,trackingParams,showText,hideText,actionButton,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(title,"string");
+		this.primitive_of_string(title);
 		this.z(items,this.MerchandiseItemRenderer);
 		this.trackingParams(trackingParams);
-		this.primitive_of(showText,"string");
-		this.primitive_of(hideText,"string");
+		this.primitive_of_string(showText);
+		this.primitive_of_string(hideText);
 		this.MenuRenderer(actionButton);
 	}
 	/** @arg {VideoSecondaryInfoData} x */
@@ -12454,31 +12441,31 @@ class HandleTypes extends ServiceMethods {
 	AdLayoutMetadataItem(x) {
 		this.save_keys("[AdLayoutMetadataItem]",x);
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(layoutType,"string");
-		this.primitive_of(layoutId,"string");
+		this.primitive_of_string(layoutType);
+		this.primitive_of_string(layoutId);
 		this.AdLayoutLoggingData(adLayoutLoggingData);
 	}
 	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {
 		this.save_keys("[CompactVideoData]",x);
 		const {videoId,thumbnail,title,thumbnailOverlays,lengthText,longBylineText,publishedTimeText,trackingParams,viewCountText,navigationEndpoint,shortBylineText,shortViewCountText,channelThumbnail,ownerBadges,accessibility,menu,richThumbnail,badges,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(videoId,"string");
+		this.primitive_of_string(videoId);
 		this.Thumbnail(thumbnail);
-		this.primitive_of(title,"string");
-		this.primitive_of(thumbnailOverlays,"string");
+		this.g(title);
+		this.g(thumbnailOverlays);
 		this.TextWithRuns(lengthText);
 		this.TextWithRuns(longBylineText);
 		this.TextWithRuns(publishedTimeText);
 		this.trackingParams(trackingParams);
 		this.TextWithRuns(viewCountText);
-		this.primitive_of(navigationEndpoint,"string");
+		this.g(navigationEndpoint);
 		this.TextWithRuns(shortBylineText);
 		this.TextWithRuns(shortViewCountText);
-		this.primitive_of(channelThumbnail,"string");
+		this.g(channelThumbnail);
 		this.t(ownerBadges,this.g);
 		this.Accessibility(accessibility);
-		this.primitive_of(menu,"string");
-		this.primitive_of(richThumbnail,"string");
+		this.g(menu);
+		this.g(richThumbnail);
 		this.tz(badges,(this.MetadataBadgeRenderer));
 	}
 	/** @arg {SearchboxConfig} x */
@@ -12506,16 +12493,16 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isDisabled,"boolean");
 		this.primitive_of(isSelected,"boolean");
 		this.primitive_of(hasChannel,"boolean");
-		this.primitive_of(serviceEndpoint,"string");
+		this.g(serviceEndpoint);
 		this.TextWithRuns(channelHandle);
 	}
 	/** @arg {ExpandableTabData} x */
 	ExpandableTabData(x) {
 		this.save_keys("[ExpandableTabData]",x);
 		const {endpoint,expandedText,title,selected,content,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(endpoint,"string");
-		this.t(expandedText,a => this.primitive_of(a,"string"));
-		this.primitive_of(title,"string");
+		this.g(endpoint);
+		this.t(expandedText,a => this.primitive_of_string(a));
+		this.primitive_of_string(title);
 		this.primitive_of(selected,"boolean");
 		this.t(content,this.SectionListRenderer);
 	}
@@ -12526,8 +12513,8 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(buttonText);
 		this.primitive_of(subscribed,"boolean");
 		this.primitive_of(enabled,"boolean");
-		this.primitive_of(type,"string");
-		this.primitive_of(channelId,"string");
+		this.primitive_of_string(type);
+		this.primitive_of_string(channelId);
 		this.primitive_of(showPreferences,"boolean");
 		this.TextWithRuns(subscribedButtonText);
 		this.TextWithRuns(unsubscribedButtonText);
@@ -12537,8 +12524,8 @@ class HandleTypes extends ServiceMethods {
 		this.Accessibility(subscribeAccessibility);
 		this.Accessibility(unsubscribeAccessibility);
 		this.SubscriptionNotificationToggleButtonRenderer(notificationPreferenceButton);
-		this.primitive_of(targetId,"string");
-		this.primitive_of(subscribedEntityKey,"string");
+		this.primitive_of_string(targetId);
+		this.primitive_of_string(subscribedEntityKey);
 		this.z(onSubscribeEndpoints,this.E_SubscribeEndpoint);
 		this.z(onUnsubscribeEndpoints,this.E_SignalServiceEndpoint);
 	}
@@ -12567,7 +12554,7 @@ class HandleTypes extends ServiceMethods {
 	RelatedChipCommand(x) {
 		this.save_keys("[RelatedChipCommand]",x);
 		const {clickTrackingParams,relatedChipCommand,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(clickTrackingParams,"string");
+		this.primitive_of_string(clickTrackingParams);
 		this.RelatedChipCommandData(relatedChipCommand);
 	}
 	/** @arg {CommentData} x */
@@ -12576,18 +12563,18 @@ class HandleTypes extends ServiceMethods {
 		const {actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,authorText,authorThumbnail,collapseButton,commentId,contentText,currentUserReplyThumbnail,publishedTimeText,isLiked,voteCount,voteStatus,trackingParams,expandButton,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 		this.CommentActionButtonsRenderer(actionButtons);
 		this.MenuRenderer(actionMenu);
-		this.primitive_of(authorEndpoint,"string");
+		this.g(authorEndpoint);
 		this.primitive_of(authorIsChannelOwner,"boolean");
 		this.TextWithRuns(authorText);
 		this.Thumbnail(authorThumbnail);
 		this.ButtonRenderer(collapseButton);
-		this.primitive_of(commentId,"string");
+		this.primitive_of_string(commentId);
 		this.TextWithRuns(contentText);
 		this.Thumbnail(currentUserReplyThumbnail);
 		this.TextWithRuns(publishedTimeText);
 		this.primitive_of(isLiked,"boolean");
 		this.TextWithRuns(voteCount);
-		this.primitive_of(voteStatus,"string");
+		this.primitive_of_string(voteStatus);
 		this.trackingParams(trackingParams);
 		this.ButtonRenderer(expandButton);
 		this.LoggingDirectives(loggingDirectives);
@@ -12618,38 +12605,38 @@ class HandleTypes extends ServiceMethods {
 		this.ClipCreationScrubberRenderer(scrubber);
 		this.ButtonRenderer(saveButton);
 		this.SimpleText(displayName);
-		this.primitive_of(publicityLabel,"string");
+		this.primitive_of_string(publicityLabel);
 		this.ButtonRenderer(cancelButton);
 		this.ClipAdStateRenderer(adStateOverlay);
-		this.primitive_of(externalVideoId,"string");
-		this.primitive_of(publicityLabelIcon,"string");
+		this.primitive_of_string(externalVideoId);
+		this.primitive_of_string(publicityLabelIcon);
 	}
 	/** @arg {ChannelMetadata} x */
 	ChannelMetadata(x) {
 		this.save_keys("[ChannelMetadata]",x);
 		const {title,description,rssUrl,externalId,keywords,ownerUrls,androidAppindexingLink,androidDeepLink,availableCountryCodes,avatar,channelUrl,vanityChannelUrl,iosAppindexingLink,isFamilySafe,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(title,"string");
-		this.primitive_of(description,"string");
-		this.primitive_of(rssUrl,"string");
-		this.primitive_of(externalId,"string");
-		this.primitive_of(keywords,"string");
+		this.primitive_of_string(title);
+		this.primitive_of_string(description);
+		this.primitive_of_string(rssUrl);
+		this.primitive_of_string(externalId);
+		this.primitive_of_string(keywords);
 		let ou=ownerUrls[0];
 		if(!this.str_starts_with(ou,"http://www.youtube.com/@")) debugger;
-		this.primitive_of(androidAppindexingLink,"string");
-		this.primitive_of(androidDeepLink,"string");
-		this.z(availableCountryCodes,a => this.primitive_of(a,"string"));
+		this.primitive_of_string(androidAppindexingLink);
+		this.primitive_of_string(androidDeepLink);
+		this.z(availableCountryCodes,a => this.primitive_of_string(a));
 		this.Thumbnail(avatar);
-		this.primitive_of(channelUrl,"string");
-		this.primitive_of(vanityChannelUrl,"string");
-		this.primitive_of(iosAppindexingLink,"string");
+		this.primitive_of_string(channelUrl);
+		this.primitive_of_string(vanityChannelUrl);
+		this.primitive_of_string(iosAppindexingLink);
 		if(isFamilySafe!==true) debugger;
 	}
 	/** @arg {ResetChannelUnreadCountCommand} x */
 	ResetChannelUnreadCountCommand(x) {
 		this.save_keys("[ResetChannelUnreadCountCommand]",x);
 		const {clickTrackingParams,resetChannelUnreadCountCommand,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(clickTrackingParams,"string");
-		this.primitive_of(resetChannelUnreadCountCommand,"string");
+		this.primitive_of_string(clickTrackingParams);
+		this.g(resetChannelUnreadCountCommand);
 	}
 	//#endregion
 	//#region has_save_keys
