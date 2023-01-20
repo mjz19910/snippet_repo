@@ -11448,64 +11448,116 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region has_save_keys
+	/** @private @arg {ChannelSwitcherPage} x */
+	ChannelSwitcherPage(x) {
+		this.save_keys("[ChannelSwitcherPage]",x);
+	}
+	/** @arg {PlaylistHeader} x */
+	PlaylistHeader(x) {
+		this.save_keys("[PlaylistHeader]",x);
+	}
+	/** @arg {MacroMarkersListItemRenderer} x */
+	MacroMarkersListItemRenderer(x) {
+		this.save_keys("[MacroMarkersListItemRenderer]",x);
+	}
+	/** @arg {ProductListItemRenderer} x */
+	ProductListItemRenderer(x) {
+		this.save_keys("[ProductListItemRenderer]",x);
+	}
+	/** @arg {MetadataRowContainerRenderer} x */
+	MetadataRowContainerRenderer(x) {
+		this.save_keys("[MetadataRowContainerRenderer]",x);
+	}
+	/** @arg {TopicLinkRenderer} x */
+	TopicLinkRenderer(x) {
+		this.save_keys("[TopicLinkRenderer]",x);
+	}
+	/** @arg {DescriptionChapters} x */
+	DescriptionChapters(x) {
+		this.save_keys("[DescriptionChapters]",x);
+	}
+	/** @arg {HeatSeekerItemData} x */
+	HeatSeekerItemData(x) {
+		this.save_keys("[HeatSeekerItemData]",x);
+	}
+	/** @arg {PlaylistSidebarPrimaryInfo} x */
+	PlaylistSidebarPrimaryInfo(x) {
+		this.save_keys("[PlaylistSidebarPrimaryInfo]",x);
+	}
+	/** @arg {PlaylistMetadata} x */
+	PlaylistMetadata(x) {
+		this.save_keys("[PlaylistMetadata]",x);
+	}
+	/** @private @arg {AdLayoutLoggingData} x */
+	AdLayoutLoggingData(x) {
+		this.save_keys("[AdLayoutLoggingData]",x);
+	}
+	/** @private @arg {TranscriptData} x */
+	TranscriptData(x) {
+		this.save_keys("[TranscriptData]",x);
+	}
+	/** @private @arg {PivotButton} x */
+	PivotButton(x) {
+		this.save_keys("[PivotButton]",x);
+	}
+	/** @private @arg {MetadataBadgeData} x */
+	MetadataBadgeData(x) {
+		this.save_keys("[MetadataBadgeData]",x);
+	}
+	/** @private @arg {LiveChatAuthorBadgeData} x */
+	LiveChatAuthorBadgeData(x) {
+		this.save_keys("[LiveChatAuthorBadgeData]",x);
+	}
+	/** @private @arg {ChannelHeaderLinks} x */
+	ChannelHeaderLinks(x) {
+		this.save_keys("[ChannelHeaderLinks]",x);
+	}
+	/** @private @arg {HintRendererData} x */
+	HintRendererData(x) {
+		this.save_keys("[HintRendererData]",x);
+	}
+	/** @private @arg {HotkeyDialogSectionRenderer} x */
+	HotkeyDialogSectionRenderer(x) {
+		this.save_keys("[HotkeyDialogSectionRenderer]",x);
+	}
+	/** @private @arg {WebSearchboxConfig} x */
+	WebSearchboxConfig(x) {
+		this.save_keys("[WebSearchboxConfig]",x);
+	}
+	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
+	SubscriptionNotificationToggleButtonRenderer(x) {
+		this.save_keys("[SubscriptionNotificationToggleButtonRenderer]",x);
+	}
+	/** @private @arg {BrowseFeedContent} x */
+	BrowseFeedContent(x) {
+		this.save_keys("[BrowseFeedContent]",x);
+	}
+	/** @private @arg {RelatedChipCommandData} x */
+	RelatedChipCommandData(x) {
+		this.save_keys("[RelatedChipCommandData]",x);
+	}
+	/** @private @arg {CommentActionButtonsRenderer} x */
+	CommentActionButtonsRenderer(x) {
+		this.save_keys("[CommentActionButtonsRenderer]",x);
+	}
+	/** @private @arg {ClipCreationTextInputRenderer} x */
+	ClipCreationTextInputRenderer(x) {
+		this.save_keys("[ClipCreationTextInputRenderer]",x);
+	}
+	/** @private @arg {ClipCreationScrubberRenderer} x */
+	ClipCreationScrubberRenderer(x) {
+		this.save_keys("[ClipCreationScrubberRenderer]",x);
+	}
+	/** @private @arg {ClipAdStateRenderer} x */
+	ClipAdStateRenderer(x) {
+		this.save_keys("[ClipAdStateRenderer]",x);
+	}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
-	/** @private @arg {ChannelSwitcherPage} x */
-	ChannelSwitcherPage(x) {x;}
-	/** @arg {PlaylistHeader} x */
-	PlaylistHeader(x) {x;}
-	/** @arg {MacroMarkersListItemRenderer} x */
-	MacroMarkersListItemRenderer(x) {x;}
-	/** @arg {ProductListItemRenderer} x */
-	ProductListItemRenderer(x) {x;}
-	/** @arg {MetadataRowContainerRenderer} x */
-	MetadataRowContainerRenderer(x) {x;}
-	/** @arg {TopicLinkRenderer} x */
-	TopicLinkRenderer(x) {x;}
-	/** @arg {DescriptionChapters} x */
-	DescriptionChapters(x) {x;}
-	/** @arg {HeatSeekerItemData} x */
-	HeatSeekerItemData(x) {x;}
-	/** @arg {PlaylistSidebarPrimaryInfo} x */
-	PlaylistSidebarPrimaryInfo(x) {x;}
-	/** @arg {PlaylistMetadata} x */
-	PlaylistMetadata(x) {x;}
-	/** @private @arg {AdLayoutLoggingData} x */
-	AdLayoutLoggingData(x) {x;}
-	/** @private @arg {TranscriptData} x */
-	TranscriptData(x) {x;}
-	/** @private @arg {PivotButton} x */
-	PivotButton(x) {x;}
-	/** @private @arg {MetadataBadgeData} x */
-	MetadataBadgeData(x) {x;}
-	/** @private @arg {LiveChatAuthorBadgeData} x */
-	LiveChatAuthorBadgeData(x) {x;}
-	/** @private @arg {ChannelHeaderLinks} x */
-	ChannelHeaderLinks(x) {x;}
-	/** @private @arg {HintRendererData} x */
-	HintRendererData(x) {x;}
-	/** @private @arg {HotkeyDialogSectionRenderer} x */
-	HotkeyDialogSectionRenderer(x) {x;}
-	/** @private @arg {WebSearchboxConfig} x */
-	WebSearchboxConfig(x) {x;}
-	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
-	SubscriptionNotificationToggleButtonRenderer(x) {x;}
-	/** @private @arg {BrowseFeedContent} x */
-	BrowseFeedContent(x) {x;}
-	/** @private @arg {RelatedChipCommandData} x */
-	RelatedChipCommandData(x) {x;}
-	/** @private @arg {CommentActionButtonsRenderer} x */
-	CommentActionButtonsRenderer(x) {x;}
-	/** @private @arg {ClipCreationTextInputRenderer} x */
-	ClipCreationTextInputRenderer(x) {x;}
-	/** @private @arg {ClipCreationScrubberRenderer} x */
-	ClipCreationScrubberRenderer(x) {x;}
-	/** @private @arg {ClipAdStateRenderer} x */
-	ClipAdStateRenderer(x) {x;}
 	/** @private @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
