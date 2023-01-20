@@ -5186,23 +5186,7 @@ case "${path_parts[2]}": return;`);
 		if(x.includes("&")) debugger;
 		let y=split_string(x,"=");
 		switch(y[0]) {
-			case "list": {
-				if(y[1]==="WL") return;
-				if(this.str_starts_with_at_1(y,"RD")) {
-					if(this.str_starts_with_at_1(y,`RD${"MM"}`)) {
-						return;
-					}
-					console.log(y);
-					debugger;
-					return;
-				};
-				if(this.str_starts_with_at_1(y,"PL")) {
-					let [,v]=y; v;
-					return;
-				};
-				console.log(y);
-				debugger;
-			} break;
+			case "list": return this.parse_playlist_id(y[1]);
 			default: debugger;
 		}
 	}
