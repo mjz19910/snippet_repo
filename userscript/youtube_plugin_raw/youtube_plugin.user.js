@@ -5056,11 +5056,15 @@ case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 		let gen_return_part=(idx) => {
 			console.log(`
 case "${path_parts[idx]}": {
+	let idx=${idx};
 	if(path_parts.length===${idx+1}) {
-		if(tv instanceof Map) {
-			this.parse_any_param(root,path,tv);
+		if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+		switch(tv) {
+			default: debugger; break;
 		}
+		return;
 	}
+	gen_next_part(idx);
 	debugger;
 } break;`);
 		};
@@ -5088,9 +5092,7 @@ case "${path_parts[idx]}": {
 					} path_parts[2]===""; break;
 					case "f84": {
 						if(path_parts.length===3) {
-							if(tv instanceof Map) {
-								this.parse_any_param(root,path,tv);
-							}
+							if(tv instanceof Map) return this.parse_any_param(root,path,tv);
 							switch(tv) {
 								default: debugger; break;
 							}
