@@ -6033,6 +6033,15 @@ case "${path_parts[idx-1]}": {
 				}
 				switch(path_parts[2]) {
 					default: u(idx); path_parts[2]===""; break;
+					case "f6": {
+						const idx=4;
+						if(path_parts.length===3) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[3]) {
+							default: u(idx); path_parts[3]===""; break;
+						}
+					} break;
 					case "f1": {
 						const idx=4;
 						if(path_parts.length===3) {
