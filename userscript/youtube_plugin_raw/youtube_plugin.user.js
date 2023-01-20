@@ -2659,7 +2659,7 @@ class BaseService extends BaseServicePrivate {
 		let jk=keys.join();
 		if(this.logged_keys.includes(jk)) return;
 		this.logged_keys.push(jk);
-		console.log("[empty_object] [%s]",keys.join());
+		console.log("[empty_object] [%s]",jk);
 		debugger;
 	}
 	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
