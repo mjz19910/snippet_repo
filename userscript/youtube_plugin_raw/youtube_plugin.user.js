@@ -7112,15 +7112,13 @@ class HandleTypes extends ServiceMethods {
 		const {commands,...y}=x; this.g(y); // ! #destructure
 		this.z(commands,f);
 	}
-	/** @template {{}} T @arg {EndpointTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template {{}} U @template {EndpointTemplate<U>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	EndpointTemplate(x,f) {
 		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		/** @type {{}} */
-		let t=as(y);
-		f.call(this,as(t));
+		f.call(this,y);
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	AutoplayTemplate(x,f) {
@@ -9682,7 +9680,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MenuServiceEndpointItems} x */
 	MenuServiceEndpointItems(x) {
 		if("notificationOptOutEndpoint" in x) return;
-		this.EndpointTemplate(x,this.MenuServiceEndpoints);
+		this.MenuServiceEndpoints(x);
 	}
 	/** @arg {MenuServiceItemData<MenuServiceIconTypeStr>} x */
 	MenuServiceItemData(x) {
@@ -9716,7 +9714,7 @@ class HandleTypes extends ServiceMethods {
 		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
 		if("feedbackEndpoint" in x) return this.AE_Feedback(x.feedbackEndpoint);
 		if("notificationOptOutEndpoint" in x) {
-			let v=this.w(x);
+			let v=this.w({x:x.notificationOptOutEndpoint});
 			const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
 			this.TextWithRuns(optOutText);
 			this.primitive_of_string(serializedOptOut);
@@ -9724,7 +9722,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		if("shareEntityServiceEndpoint" in x) {
-			let v=this.w(x);
+			let v=this.w({x:x.shareEntityServiceEndpoint});
 			const {serializedShareEntity,commands,...y}=v; this.g(y);
 			this.primitive_of_string(serializedShareEntity);
 			this.z(commands,a => {
@@ -9751,13 +9749,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$GetReportFormEndpoint} x */
 	GetReportFormEndpoint(x) {
-		let {params}=this.w(x);
+		let {params}=this.w({x:x.getReportFormEndpoint});
 		this.t(params,a => this.params("GetReportForm","report.params",a));
 	}
 	/** @arg {E_PlaylistEditEndpoint} x */
 	PlaylistEditEndpoint(x) {
 		this.save_keys("[PlaylistEditEndpoint]",x);
-		const {playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
+		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
 		this.AE_PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @arg {AE_PlaylistEdit} x */
@@ -11832,7 +11832,7 @@ class HandleTypes extends ServiceMethods {
 		if("urlEndpoint" in x) return this.UrlEndpoint(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) {
-			this.CommandTemplate(x,a => {
+			this.EndpointTemplate(x,a => {
 				this.params("","createBackstagePost.param",this.w(a).createBackstagePostParams);
 			});
 			return;

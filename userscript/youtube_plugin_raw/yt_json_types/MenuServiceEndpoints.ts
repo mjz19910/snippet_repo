@@ -4,11 +4,11 @@ type MenuServiceEndpoints=
 	|E_PlaylistEditEndpoint
 	|E$GetReportFormEndpoint
 	|E$ShareEntityServiceEndpoint
-	|{addToPlaylistServiceEndpoint: {videoId: string;};}
-	|{feedbackEndpoint: AE_Feedback;}
+	|E_Endpoint&{addToPlaylistServiceEndpoint: {videoId: string;};}
+	|E_Endpoint&{feedbackEndpoint: AE_Feedback;}
 	;
 
-type E$ShareEntityServiceEndpoint={
+type E$ShareEntityServiceEndpoint=E_Endpoint&{
 	shareEntityServiceEndpoint: {
 		serializedShareEntity: string;
 		commands: OpenPopupAction[];

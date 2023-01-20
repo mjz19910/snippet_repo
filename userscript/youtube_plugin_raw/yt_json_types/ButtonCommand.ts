@@ -8,8 +8,10 @@ type ButtonCommand=
 	|CommandExecutorCommand
 	;
 ;
-type $CreateBackstagePostEndpoint=CommandTemplate<{
+type $CreateBackstagePostEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: CommandMetadata;
 	createBackstagePostEndpoint: {
 		createBackstagePostParams: string;
 	};
-}>;
+};

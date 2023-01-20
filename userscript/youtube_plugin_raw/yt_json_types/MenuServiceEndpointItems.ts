@@ -1,1 +1,1 @@
-type MenuServiceEndpointItems=EndpointTemplate<MenuServiceEndpoints>;
+type MenuServiceEndpointItems=MenuServiceEndpoints;

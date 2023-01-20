@@ -3,10 +3,10 @@ type MenuData={
 		toggleMenuServiceItemRenderer: {
 			defaultText: TextWithRuns;
 			defaultIcon: Icon<"LIBRARY_ADD">;
-			defaultServiceEndpoint: EndpointTemplate<E_LikeEndpoint>;
+			defaultServiceEndpoint: E_LikeEndpoint;
 			toggledText: TextWithRuns;
 			toggledIcon: Icon<"LIBRARY_REMOVE">;
-			toggledServiceEndpoint: EndpointTemplate<E_LikeEndpoint>;
+			toggledServiceEndpoint: E_LikeEndpoint;
 			trackingParams: string;
 			isToggled: boolean;
 		};
