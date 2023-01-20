@@ -11,6 +11,43 @@ try {
 } catch {
 	no_storage_access=true;
 }
+/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
+function split_string_once(s,d=as(",")) {
+	if(s==="") {
+		/** @type {[]} */
+		let r=[];
+		/** @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.indexOf(d);
+	if(i===-1) {
+		/** @type {[S]} */
+		let r=[s];
+		/** @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @type {[string,string]} */
+	let r=[a,b];
+	/** @type {any} */
+	let q=r;
+	return as(q);
+}
+class ParserService {
+	/** @arg {Split<ApiUrlFormat,"/">} x @returns {Join<Split<ApiUrlFormat,"/">,".">} */
+	get_url_type(x) {x;throw 1;}
+}
+class CodegenService {
+	/**
+	 * @param {{}} x
+	 * @param {string} y
+	 * @param {boolean | undefined} z
+	 */
+	codegen_new_typedef(x,y,z) {x;y;z;}
+}
 export class Snippet_0_tmp {
 	/** @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
@@ -97,31 +134,7 @@ export class Snippet_0_tmp {
 			);
 		}
 	}
-	/** @private @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {SplitOnce<S,D>} */
-	split_string_once(s,d=this.as(",")) {
-		if(s==="") {
-			/** @type {[]} */
-			let r=[];
-			/** @type {any} */
-			let q=r;
-			return this.as(q);
-		}
-		let i=s.indexOf(d);
-		if(i===-1) {
-			/** @type {[S]} */
-			let r=[s];
-			/** @type {any} */
-			let q=r;
-			return this.as(q);
-		}
-		let a=s.slice(0,i);
-		let b=s.slice(i+d.length);
-		/** @type {[string,string]} */
-		let r=[a,b];
-		/** @type {any} */
-		let q=r;
-		return this.as(q);
-	}
+	split_string_once=split_string_once;
 	/** @private @template {string} T @template {string} U @arg {T} x @arg {U} sep @returns {SplitOnce<T,U>[number]|null} */
 	drop_separator(x,sep) {
 		let v=this.split_string_once(x,sep);
@@ -325,9 +338,103 @@ export class Snippet_0_tmp {
 	save_keys(k,x) {
 		this.ds.save_keys(k,x);
 	}
-	/** @arg {PlaylistHeader} x */
-	PlaylistHeader(x) {
-		x;
+	parser=new ParserService;
+	codegen=new CodegenService;
+	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
+	codegen_new_typedef(x,gen_name,ret_val) {
+		return this.codegen.codegen_new_typedef(x,gen_name,ret_val);
+	}
+	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
+	join_string(x,s) {
+		if(!x) {debugger;}
+		let r=x.join(s);
+		return as(r);
+	}
+	/** @arg {GenericWebCommandMetadata} x */
+	GenericWebCommandMetadata(x) {
+		this.save_keys("[GenericWebCommandMetadata]",x);
+		let cx=x.apiUrl;
+		switch(x.apiUrl) {
+			default: {
+				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
+				let url_type=this.parser.get_url_type(path_parts);
+				if(!url_type) {
+					debugger;
+					return;
+				}
+				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
+				/** @arg {GeneratedWebCommandMetadata} x */
+				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
+				debugger;
+			} break;
+			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
+			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_unseen_count": this.GetUnseenCountWebCommandMetadata(x); break;
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
+			case "/youtubei/v1/playlist/create": return this.GeneratedWCM(x);
+		}
+	}
+	/** @arg {AccountMenuWebCommandMetadata} x */
+	AccountMenuWebCommandMetadata(x) {
+		this.save_keys("[AccountMenuWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
+	}
+	/** @arg {SetSettingWebCommandMetadata} x */
+	SetSettingWebCommandMetadata(x) {
+		this.save_keys("[SetSettingWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/account/set_setting") debugger;
+	}
+	/** @arg {BrowseApiWebCommandMetadata} x */
+	BrowseApiWebCommandMetadata(x) {
+		const {apiUrl,sendPost,...y}=x; this.g(y);
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		this.primitive_of(sendPost,"boolean");
+	}
+	/** @arg {EditPlaylistWebCommandMetadata} x */
+	EditPlaylistWebCommandMetadata(x) {
+		this.save_keys("[EditPlaylistWebCommandMetadata]",x);
+		const {apiUrl,sendPost,...y}=x; this.g(y);
+		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @arg {GetTranscriptWebCommandMetadata} x */
+	GetTranscriptWebCommandMetadata(x) {
+		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/get_transcript") debugger;
+	}
+	/** @arg {NextWebCommandMetadata} x */
+	NextWebCommandMetadata(x) {
+		this.save_keys("[NextWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/next") debugger;
+	}
+	/** @arg {GetNotificationMenuWebCommandMetadata} x */
+	GetNotificationMenuWebCommandMetadata(x) {
+		this.save_keys("[GetNotificationMenuWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
+	}
+	/** @arg {GetUnseenCountWebCommandMetadata} x */
+	GetUnseenCountWebCommandMetadata(x) {
+		this.save_keys("[GetUnseenCountWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
 	}
 	//#region dispatch_in_progress
 	//#endregion

@@ -5957,18 +5957,6 @@ class HandleTypes extends ServiceMethods {
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
 				debugger;
 			} break;
-			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
-			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
-			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
-			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
-			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
-			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
-			case "/youtubei/v1/notification/get_unseen_count": this.GetUnseenCountWebCommandMetadata(x); break;
-			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
-			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
-			case "/youtubei/v1/playlist/create": return this.GeneratedWCM(x);
 		}
 	}
 	/** @arg {SearchWebCommandMetadata} x */
@@ -8246,13 +8234,6 @@ class HandleTypes extends ServiceMethods {
 		this.WebCommandMetadata(webCommandMetadata);
 		this.t(resolveUrlCommandMetadata,this.ResolveUrlCommandMetadata)
 	}
-	/** @arg {EditPlaylistWebCommandMetadata} x */
-	EditPlaylistWebCommandMetadata(x) {
-		this.save_keys("[EditPlaylistWebCommandMetadata]",x);
-		const {apiUrl,sendPost,...y}=x; this.g(y);
-		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		if(sendPost!==true) debugger;
-	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
@@ -10099,12 +10080,6 @@ class HandleTypes extends ServiceMethods {
 		const {chipCloudChipRenderer,...y}=x; this.g(y);
 		this.ChipCloudChipData(chipCloudChipRenderer);
 	}
-	/** @arg {BrowseApiWebCommandMetadata} x */
-	BrowseApiWebCommandMetadata(x) {
-		const {apiUrl,sendPost,...y}=x; this.g(y);
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-		this.primitive_of(sendPost,"boolean");
-	}
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
 		this.save_keys("[UploadEndpointData]",x);
@@ -10200,20 +10175,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(sendPost,"boolean");
 		this.parser.parse_url("GeneratedWCM",apiUrl);
 	}
-	/** @arg {GetUnseenCountWebCommandMetadata} x */
-	GetUnseenCountWebCommandMetadata(x) {
-		this.save_keys("[GetUnseenCountWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
-	}
-	/** @arg {GetNotificationMenuWebCommandMetadata} x */
-	GetNotificationMenuWebCommandMetadata(x) {
-		this.save_keys("[GetNotificationMenuWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		if(sendPost!==true) debugger;
-		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
-	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
 		this.save_keys("[CommandExecutorCommand]",x);
@@ -10243,26 +10204,12 @@ class HandleTypes extends ServiceMethods {
 			case "engagement-panel-clip-create": break;
 		}
 	}
-	/** @arg {GetTranscriptWebCommandMetadata} x */
-	GetTranscriptWebCommandMetadata(x) {
-		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/get_transcript") debugger;
-	}
 	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
 	GetAddToPlaylistWebCommandMetadata(x) {
 		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
 		const {sendPost,apiUrl,...y}=x; this.g(y);
 		this.primitive_of(sendPost,"boolean");
 		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
-	}
-	/** @arg {AccountMenuWebCommandMetadata} x */
-	AccountMenuWebCommandMetadata(x) {
-		this.save_keys("[AccountMenuWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
 	}
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
@@ -10391,20 +10338,6 @@ class HandleTypes extends ServiceMethods {
 		this.GuideEntryRenderer(expanderItem);
 		this.z(expandableItems,this.GuideEntryRenderer);
 		this.GuideEntryRenderer(collapserItem);
-	}
-	/** @arg {NextWebCommandMetadata} x */
-	NextWebCommandMetadata(x) {
-		this.save_keys("[NextWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/next") debugger;
-	}
-	/** @arg {SetSettingWebCommandMetadata} x */
-	SetSettingWebCommandMetadata(x) {
-		this.save_keys("[SetSettingWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/account/set_setting") debugger;
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {

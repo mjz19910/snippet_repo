@@ -3,6 +3,6 @@ type AnyIcon=NonNullable<[
 	ButtonData['icon'],
 	InfoRowData['expandIcon'],
 	TopicLinkData['callToActionIcon'],
-	MenuServiceItemData['icon'],
+	Extract<MenuServiceItemData,{icon:any}>['icon'],
 	ThumbnailOverlayHoverTextData['icon'],
 ][number]>;
