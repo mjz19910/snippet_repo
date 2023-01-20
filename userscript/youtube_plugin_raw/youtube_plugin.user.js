@@ -4868,6 +4868,7 @@ class ParserService extends BaseService {
 	parse_value(root,path,x,mk,ta,tv,cb) {
 		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
+			console.log("[parse_value.gen_ns] [%s]",`${path}.f${ta}`);
 			console.log(`\ncase ${ta}: break;`);
 			debugger;
 		};
@@ -4893,6 +4894,7 @@ case "${path}": {
 					case "record_notification_interactions.f2.f14.f1": {
 						switch(ta) {
 							case 1: break;
+							case 2: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
