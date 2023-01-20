@@ -378,14 +378,22 @@ export class Snippet_0_tmp {
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
 				debugger;
 			} break;
-			case "/youtubei/v1/playlist/create": return this.GeneratedWCM(x);
+			case "/youtubei/v1/playlist/create": return this.GeneratedWebCommandMetadata(x);
 		}
 	}
 	/** @arg {GeneratedWebCommandMetadata} x */
-	GeneratedWCM(x) {
-		const {sendPost,apiUrl}=x;
-		this.primitive_of(sendPost,"boolean");
-		this.parser.parse_url("GeneratedWCM",apiUrl);
+	GeneratedWebCommandMetadata(x) {
+		if("apiUrl" in x) {
+			const {sendPost,apiUrl}=x;
+			this.primitive_of(sendPost,"boolean");
+			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
+		} else {
+			switch(x.rootVe) {
+				case 3854:
+				case 6827:
+				case 11487: break;
+			}
+		}
 	}
 	//#region dispatch_in_progress
 	//#endregion
