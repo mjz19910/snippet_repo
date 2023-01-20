@@ -383,7 +383,7 @@ export class Snippet_0_tmp {
 	}
 	/** @arg {GeneratedWebCommandMetadata} x */
 	GeneratedWebCommandMetadata(x) {
-		if("apiUrl" in x) {
+		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;
 			this.primitive_of(sendPost,"boolean");
 			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
