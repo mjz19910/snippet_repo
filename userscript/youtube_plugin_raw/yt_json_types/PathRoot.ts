@@ -1,5 +1,6 @@
 type LogItems=[
 	"[parse_value.gen_ns] [reel.player_params.f71]",
+	"[parse_value.gen_ns] [get_transcript.params.f1]",
 ][number];
 type PathRoot=
 	|SplitOnce<SplitOnce<Split<LogItems," ">[1],"[">[1],"]">[0]

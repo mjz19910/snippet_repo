@@ -4895,6 +4895,14 @@ case "${path}": {
 			if(cb===null) {
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "get_transcript.params": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "reel.player_params": {
 						switch(ta) {
 							case 30: break;
