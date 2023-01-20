@@ -13,4 +13,11 @@ type TabData={
 	selected?: true;
 	content?: SectionListRenderer;
 	trackingParams: string;
+}|{
+	endpoint: E$BrowseEndpoint;
+	selected: true;
+	content: SectionListRenderer;
+	tabIdentifier: "FEsubscriptions";
+	accessibility: Accessibility;
+	trackingParams: string;
 };

@@ -4379,7 +4379,7 @@ class CodegenService extends BaseService {
 	json_auto_replace(x) {
 		let type_val=this.json_auto_replace_1(x);
 		if(type_val.endsWith("Endpoint")) {
-			type_val=`E_${type_val}`;
+			type_val=`E$${type_val}`;
 		}
 		return `TYPE::${type_val}`;
 	}
@@ -9435,18 +9435,25 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TabData} x */
 	TabData(x) {
+		const cf="TabData";
 		this.save_keys("[TabData]",x);
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
+				case "FEsubscriptions":{
+					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y); // ! #destructure
+					if(selected!==true) debugger;
+					this.SectionListRenderer(content);
+					this.trackingParams(cf,trackingParams);
+				} return;
 				case "FEwhat_to_watch": {
 					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 					if(selected!==true) debugger;
 					this.Tab_grid(content);
-					this.trackingParams("CF_FIX",trackingParams);
+					this.trackingParams(cf,trackingParams);
 				} return;
 				default:
 			}
-			console.log("[new.tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
+			console.log("[new.tab.tab_id]",(/**@arg {{tabIdentifier:string}} e*/e=>e)(x).tabIdentifier,this.get_keys_of(x));
 			return;
 		}
 		if("endpoint" in x) {
