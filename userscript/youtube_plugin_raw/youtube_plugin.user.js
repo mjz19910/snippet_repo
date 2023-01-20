@@ -4866,6 +4866,11 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
+		let new_ns=()=>{
+			console.log("[parse_value.new_ns]",path);
+			console.log(`\ncase ${ta}: break;`);
+			debugger;
+		}
 		if(tv!==void 0) {
 			x.delete(ta);
 			let cx=mk.indexOf(ta);
@@ -4881,9 +4886,6 @@ class ParserService extends BaseService {
 							case 33: break;
 							case 56: break;
 							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`\ncase ${ta}: break;`);
-								debugger;
 							} return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -4893,22 +4895,14 @@ class ParserService extends BaseService {
 							case 8: break;
 							case 9: break;
 							case 40: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`\ncase ${ta}: break;`);
-								debugger;
-							} return;
+							default: return new_ns();
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
 					case "watch.params.f27": {
 						switch(ta) {
 							case 1: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`\ncase ${ta}: break;`);
-								debugger;
-							} return;
+							default: return new_ns();
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
@@ -4918,22 +4912,14 @@ class ParserService extends BaseService {
 							case 3: break;
 							case 4: break;
 							case 5: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`\ncase ${ta}: break;`);
-								debugger;
-							} return;
+							default: return new_ns();
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
 					case "watch.player_params.f40": {
 						switch(ta) {
 							case 1: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -4941,11 +4927,7 @@ class ParserService extends BaseService {
 					case "create_playlist.params": {
 						switch(ta) {
 							case 84: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -4953,11 +4935,7 @@ class ParserService extends BaseService {
 					case "record_notification_interactions": {
 						switch(ta) {
 							case 2: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -4965,11 +4943,7 @@ class ParserService extends BaseService {
 					case "create_playlist.params.f84": {
 						switch(ta) {
 							case 5: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -4977,11 +4951,8 @@ class ParserService extends BaseService {
 					case "watch.player_params.f40.f1": {
 						switch(ta) {
 							case 2: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							case 3: break;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -4989,11 +4960,7 @@ class ParserService extends BaseService {
 					case "record_notification_interactions.f2": {
 						switch(ta) {
 							case 1: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5085,6 +5052,49 @@ case "${path_parts[idx-1]}": {
 					gen_next_part(idx);
 					debugger;
 				} path_parts[1]===""; break;
+				case "player_params": {
+					const idx=3;
+					if(path_parts.length===idx) {
+						switch(tv) {default: debugger; return;}
+					}
+					switch(path_parts[2]) {
+						default: {
+							console.log("in",path_parts[1]);
+							gen_next_part(idx);
+							debugger;
+						} path_parts[2]===""; break;
+						case "f40": {
+							const idx=4;
+							if(path_parts.length===idx) {
+								switch(tv) {default: debugger; return;}
+							}
+							switch(path_parts[3]) {
+								default: {
+									console.log("in",path_parts[2]);
+									gen_next_part(idx);
+									debugger;
+								} path_parts[3]===""; break;
+								case "f1": {
+									const idx=5;
+									if(path_parts.length===idx) {
+										switch(tv) {
+											case 2: return;
+											case 3: return;
+											default: debugger; return;
+										}
+									}
+									switch(path_parts[4]) {
+										default: {
+											console.log("in",path_parts[3]);
+											gen_next_part(idx);
+											debugger;
+										} path_parts[4]===""; break;
+									}
+								} break;
+							}
+						} break;
+					}
+				} break;
 				case "params": {
 					const idx=3;
 					if(path_parts.length===idx) {
