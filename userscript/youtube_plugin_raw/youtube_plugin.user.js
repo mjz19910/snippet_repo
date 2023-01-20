@@ -5578,8 +5578,20 @@ case "${path_parts[idx-1]}": {
 				const idx=2;
 				switch(path_parts[1]) {
 					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
-					case "likeParams": gd(idx); break;
-					case "remove_like_params": gd(idx); break;
+					case "likeParams": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.like.likeParams",() => gd(idx));
+					} break;
+					case "remove_like_params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						grouped("gen.like.remove_like_params",() => gd(idx));
+					} break;
 				}
 			} break;
 			case "browse$param": {
@@ -5588,8 +5600,8 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
-					case "f84": gd(idx); break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "f84": grouped(path_parts+"",() => gd(idx)); break;
 				}
 			} break;
 			case "entity_key": {
@@ -5598,7 +5610,7 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5636,7 +5648,7 @@ case "${path_parts[idx-1]}": {
 			case "createBackstagePost": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "param": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5679,14 +5691,14 @@ case "${path_parts[idx-1]}": {
 			case "tracking": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
-					case "parentTrackingParams": gd(idx); break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					case "parentTrackingParams": grouped(path_parts+"",() => gd(idx)); break;
 					case "trackingParams": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
-						// case "f": gd(idx); break;
+						// case "f": grouped(path_parts+"",() => gd(idx)); break;
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
 							case "f6": {
@@ -5798,7 +5810,7 @@ case "${path_parts[idx-1]}": {
 			case "subscribe": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5859,7 +5871,7 @@ case "${path_parts[idx-1]}": {
 			case "report": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6010,7 +6022,7 @@ case "${path_parts[idx-1]}": {
 					debugger;
 				}
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "player_params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6053,7 +6065,7 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6160,7 +6172,7 @@ case "${path_parts[idx-1]}": {
 			} break;
 			case "watch": {
 				const idx=2; switch(path_parts[1]) {
-					default: gd(idx); path_parts[1]===""; break;
+					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
 					case "player_params": {
 						const idx=3;
 						if(path_parts.length===2) {
