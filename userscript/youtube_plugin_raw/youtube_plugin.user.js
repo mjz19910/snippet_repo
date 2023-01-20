@@ -6404,13 +6404,13 @@ class HandleTypes extends ServiceMethods {
 		this.ResponseContext(responseContext);
 		this.t(header,this.BrowseHeader);
 		this.trackingParams(trackingParams);
-		if(onResponseReceivedActions) this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
+		this.t(onResponseReceivedActions,a => this.z(a,a => this.ResponseReceivedAction(a)));
 		this.t(contents,this.BrowseContents);
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
 		this.t(topbar,this.DesktopTopbarRenderer);
 		this.t(frameworkUpdates,this.EntityBatchUpdate);
 		this.t(sidebar,this.BrowseSidebar);
-		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
+		this.t(observedStateTags,a => this.z(a,a => this.StateTag(a)));
 		this.t(cacheMetadata,this.CacheMetadata);
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
 		this.t(metadata,this.BrowseMetadata);
@@ -6419,7 +6419,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(background,this.MusicThumbnailRenderer);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
 		this.t(continuationContents,this.ContinuationContents);
-		if(alerts) this.z(alerts,this.AlertWithButtonRenderer);
+		this.t(alerts,a => this.Response_alerts(cf,a));
 	}
 	/** @arg {NonNullable<BrowseResponse['metadata']>} x */
 	BrowseMetadata(x) {
@@ -6551,7 +6551,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=x; this.g(y);
 		this.z(contents,a => this.SectionListItem(a));
-		if(continuations) this.z(continuations,a => this.NextContinuationData(a));
+		this.t(continuations,a => this.z(a,a => this.NextContinuationData(a)));
 		this.trackingParams(trackingParams);
 		if(subMenu) this.save_keys(`[${cf}.subMenu]`,subMenu);
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
@@ -6788,9 +6788,9 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(schemaDotOrgType,"string");
 		this.primitive_of(noindex,"boolean");
 		this.primitive_of(unlisted,"boolean");
-		if(tags) this.z(tags,a => this.primitive_of(a,"string"));
+		this.t(tags,tags => this.z(tags,a => this.primitive_of(a,"string")));
 		if(familySafe) this.primitive_of(familySafe,"boolean");
-		if(availableCountries) this.z(availableCountries,a => this.primitive_of(a,"string"));
+		this.t(availableCountries,a => this.z(a,a => this.primitive_of(a,"string")));
 		this.z(linkAlternates,this.HrefUrl);
 	}
 	/** @arg {HrefUrl} x */
@@ -7442,14 +7442,14 @@ class HandleTypes extends ServiceMethods {
 		this.z(continuations,a => {
 			this.LiveChatContinuationItem(a);
 		});
-		if(actions) this.z(actions,a => {
+		this.t(actions,a => this.z(a,a => {
 			if("replayChatItemAction" in a) {
 				return this.ReplayChatItemAction(a);
 			} else if("addChatItemAction" in a) {
 				return this.AddChatItemAction(a);
 			}
 			debugger;
-		});
+		}));
 		this.t(actionPanel,this.LiveChatMessageInputRenderer);
 		this.t(itemList,this.LiveChatItemListRenderer);
 		this.t(header,this.LiveChatHeaderRenderer);
@@ -7457,9 +7457,9 @@ class HandleTypes extends ServiceMethods {
 		this.t(trackingParams,this.trackingParams);
 		this.t(participantsList,this.LiveChatParticipantsListRenderer);
 		this.t(popoutMessage,this.MessageRenderer);
-		if(emojis) this.z(emojis,a => {
+		this.t(emojis,a => this.z(a,a => {
 			this.LiveChatEmoji(a);
-		});
+		}));
 		this.t(clientMessages,this.ClientMessages);
 		if(viewerName) this.primitive_of(viewerName,"string");
 	}
@@ -7591,11 +7591,11 @@ class HandleTypes extends ServiceMethods {
 		this.t(currentVideoEndpoint,this.WatchEndpoint);
 		this.trackingParams(trackingParams);
 		this.t(playerOverlays,this.PlayerOverlayRenderer);
-		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => {
+		this.t(onResponseReceivedEndpoints,a => this.z(a,a => {
 			this.save_keys("[NextResponse.response_endpoint]",a);
 			this.ResponseReceivedEndpointItem(a);
-		});
-		if(engagementPanels) this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
+		}));
+		this.t(engagementPanels,a => this.z(a,this.EngagementPanelSectionListRenderer));
 		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
 		this.t(videoReporting,this.ReportFormModalRenderer);
 		if(queueContextParams) this.primitive_of(queueContextParams,"string");
@@ -7721,7 +7721,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ownerName,this.TextWithRuns);
 		this.primitive_of(isInfinite,"boolean");
 		const {continuations,shortBylineText,longBylineText,...y3}=y2;
-		if(continuations) this.z(continuations,this.NextRadioContinuationData);
+		this.t(continuations,a => this.z(a,this.NextRadioContinuationData));
 		this.TextWithRuns(shortBylineText);
 		this.t(longBylineText,this.TextWithRuns);
 		const {trackingParams,titleText,...y4}=y3;
@@ -7782,7 +7782,7 @@ class HandleTypes extends ServiceMethods {
 		const {playlistSetVideoId,...y6}=y5;
 		this.primitive_of(playlistSetVideoId,"string");
 		const {thumbnailOverlays,canReorder,...y7}=y6;
-		if(thumbnailOverlays) this.z(thumbnailOverlays,this.ThumbnailOverlayResumePlaybackRenderer);
+		this.t(thumbnailOverlays,a => this.z(a,this.ThumbnailOverlayResumePlaybackRenderer));
 		if(canReorder!==void 0&&!canReorder) debugger;
 		this.g(y7);
 	}
@@ -7939,7 +7939,7 @@ class HandleTypes extends ServiceMethods {
 				this.LoggingDirectives(loggingDirectives);
 			} break;
 		}
-		// if(onShowCommands) this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
+		// this.t(onShowCommands,a=>this.z(a,this.EngagementPanelSectionShowCommands));
 	}
 	/** @arg {EngagementPanelSectionShowCommands} x */
 	EngagementPanelSectionShowCommands(x) {
@@ -8169,7 +8169,7 @@ class HandleTypes extends ServiceMethods {
 			} break;
 			case "LIKE": {
 				const {status: {},actions,likeParams,...a}=y; this.g(a);
-				if(actions) this.z(actions,this.MusicLibraryStatusUpdateCommand);
+				this.t(actions,a => this.z(a,this.MusicLibraryStatusUpdateCommand));
 				this.primitive_of(likeParams,"string");
 			} break;
 		}
@@ -9354,7 +9354,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=x; this.g(y);
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
-		if(adSlotAndLayoutMetadata) this.z(adSlotAndLayoutMetadata,this.AdSlotAndLayoutMetadataItem);
+		this.t(adSlotAndLayoutMetadata,a => this.z(a,this.AdSlotAndLayoutMetadataItem));
 		this.primitive_of(isInitialLoad,"boolean");
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
@@ -9679,7 +9679,7 @@ class HandleTypes extends ServiceMethods {
 		const {identifier,serializedTemplateConfig,dependencies,...y}=x; this.g(y);
 		this.primitive_of(identifier,"string");
 		this.primitive_of(serializedTemplateConfig,"string");
-		if(dependencies) this.z(dependencies,a => this.primitive_of(a,"string"));
+		this.t(dependencies,a => this.z(a,a => this.primitive_of(a,"string")));
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
@@ -10660,7 +10660,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y);
 		this.TwoColumnBrowseResultsRenderer(contents);
 		this.PlaylistHeaderRenderer(header);
-		this.t(alerts,a=>this.Response_alerts(cf,a));
+		this.t(alerts,a => this.Response_alerts(cf,a));
 		this.PlaylistMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(trackingParams);
@@ -10669,7 +10669,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {string} cf @arg {NonNullable<PlaylistResponse['alerts']>} x */
 	Response_alerts(cf,x) {
-		this.z(x,x=>{
+		this.z(x,x => {
 			if("alertWithButtonRenderer" in x) return this.AlertWithButtonRenderer(x);
 			this.do_codegen(`${cf}$alerts$iterate`,x);
 		});
@@ -10681,7 +10681,7 @@ class HandleTypes extends ServiceMethods {
 		this.TwoColumnBrowseResultsRenderer(contents);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(trackingParams);
-		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,this.g);
+		this.t(onResponseReceivedEndpoints,a => this.z(a,this.g));
 		this.SettingsSidebarRenderer(sidebar);
 	}
 	/** @arg {C4TabbedHeaderData} x */
@@ -10702,7 +10702,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(subscriberCountText);
 		this.TextWithRuns(channelHandleText);
 		this.TextWithRuns(videosCountText);
-		if(badges) this.z(badges,this.MetadataBadgeRenderer);
+		this.t(badges,a => this.z(a,this.MetadataBadgeRenderer));
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
@@ -10795,7 +10795,7 @@ class HandleTypes extends ServiceMethods {
 		this.Thumbnail(authorPhoto);
 		this.g(contextMenuEndpoint);
 		this.primitive_of(id,"string");
-		if(authorBadges) this.z(authorBadges,this.LiveChatAuthorBadgeRenderer);
+		this.t(authorBadges,a => this.z(a,this.LiveChatAuthorBadgeRenderer));
 		this.primitive_of(timestampUsec,"string");
 		this.parser.parse_channel_id(authorExternalChannelId);
 		this.Accessibility(contextMenuAccessibility);
