@@ -5044,7 +5044,7 @@ ${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`;
 			console.log(`
 case "${path_parts[idx-1]}": {
 	const idx=${idx+1};
-	if(path_parts.length===idx) {${case_part}${value_part}
+	if(path_parts.length===${idx}) {${case_part}${value_part}
 	}
 	switch(path_parts[${idx}]) {
 		default: {
@@ -5090,7 +5090,8 @@ case "${path_parts[idx-1]}": {
 							} path_parts[2]===""; break;
 							case "f14": {
 								const idx=4;
-								if(path_parts.length===idx) {
+								let idx_2=idx-1;
+								if(path_parts.length===idx_2) {
 									if(tv instanceof Map) return;
 									switch(tv) {default: debugger; return;}
 								}
@@ -5102,7 +5103,7 @@ case "${path_parts[idx-1]}": {
 									} path_parts[3]===""; break;
 									case "f1": {
 										const idx=5;
-										if(path_parts.length===idx) {
+										if(path_parts.length===4) {
 											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
 											switch(tv) {default: debugger; return;}
 										}
