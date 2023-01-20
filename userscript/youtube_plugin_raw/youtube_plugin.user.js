@@ -5103,8 +5103,10 @@ case "${path_parts[idx-1]}": {
 								} path_parts[3]===""; break;
 								case "f3": {
 									let idx=4;
-									if(path_parts.length===5) {
-										switch(tv) {default: debugger; return;}
+									if(path_parts.length===4) {
+										switch(tv) {
+											default: console.log("[param_parse]",path,tv); return;
+										}
 									}
 									gen_next_part(idx);
 									debugger;
