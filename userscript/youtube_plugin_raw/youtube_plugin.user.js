@@ -8958,7 +8958,6 @@ class HandleTypes extends ServiceMethods {
 		this.MenuRenderer(menu);
 		this.primitive_of(playlistSetVideoId,"string");
 		this.tz(thumbnailOverlays,this.PlaylistPanel_thumbnailOverlay);
-		/*!*/this.g(y);
 	}
 	/** @arg {tz<PlaylistPanelVideo['thumbnailOverlays']>} x */
 	PlaylistPanel_thumbnailOverlay(x) {
@@ -10752,7 +10751,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
 		const {percentDurationWatched,...y}=x; this.g(y);
 		if(!percentDurationWatched) {debugger; return;}
-		if(percentDurationWatched!==10) debugger;
+		/** @type {Percent} */
+		switch(percentDurationWatched) {
+			case 10: return;
+			case 100: return;
+			default: debugger; return;
+		}
 	}
 	/** @arg {VideoMastheadAdV3} x */
 	VideoMastheadAdV3(x) {
