@@ -7475,8 +7475,30 @@ class HandleTypes extends ServiceMethods {
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		this.z(actions,this.OpenPopupAction);
 	}
-	FeedbackEndpoint(x) {
-		x;
+	/** @arg {E$FeedbackEndpoint} x */
+	E$FeedbackEndpoint(x) {
+		const cf="SubscribeEndpoint";
+		this.save_keys(`[E_${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.E$Feedback(feedbackEndpoint);
+	}
+	/** @arg {E$Feedback} x */
+	E$Feedback(x) {
+		this.save_keys("[FeedbackEndpointData]",x);
+		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
+		this.primitive_of_string(feedbackToken);
+		this.UiActions(uiActions);
+		this.tz(actions,this.ReplaceEnclosingAction);
+	}
+	/** @arg {E$NotificationOptOutEndpoint} x */
+	E$NotificationOptOutEndpoint(x) {
+		let v=this.w({x:x.notificationOptOutEndpoint});
+		const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
+		this.TextWithRuns(optOutText);
+		this.primitive_of_string(serializedOptOut);
+		this.primitive_of_string(serializedRecordInteractionsRequest);
 	}
 	/** @arg {EG$MenuServiceEndpoints} x */
 	EG$MenuServiceEndpoints(x) {
@@ -7484,15 +7506,8 @@ class HandleTypes extends ServiceMethods {
 		if("playlistEditEndpoint" in x) return this.E$PlaylistEditEndpoint(x);
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
-		if("feedbackEndpoint" in x) return this.AE_Feedback(x.feedbackEndpoint);
-		if("notificationOptOutEndpoint" in x) {
-			let v=this.w({x:x.notificationOptOutEndpoint});
-			const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
-			this.TextWithRuns(optOutText);
-			this.primitive_of_string(serializedOptOut);
-			this.primitive_of_string(serializedRecordInteractionsRequest);
-			return;
-		}
+		if("feedbackEndpoint" in x) return this.E$FeedbackEndpoint(x);
+		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
 		if("shareEntityServiceEndpoint" in x) {
 			let v=this.w({x:x.shareEntityServiceEndpoint});
 			const {serializedShareEntity,commands,...y}=v; this.g(y);
@@ -10512,14 +10527,6 @@ class HandleTypes extends ServiceMethods {
 		const {title,subtitle,...y}=x; this.g(y); // ! #destructure
 		this.SimpleText(title);
 		this.TextWithRuns(subtitle);
-	}
-	/** @arg {E$Feedback} x */
-	AE_Feedback(x) {
-		this.save_keys("[FeedbackEndpointData]",x);
-		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(feedbackToken);
-		this.UiActions(uiActions);
-		this.tz(actions,this.ReplaceEnclosingAction);
 	}
 	/** @template T @arg {ItemTemplate<T>} x */
 	ItemTemplate(x) {
