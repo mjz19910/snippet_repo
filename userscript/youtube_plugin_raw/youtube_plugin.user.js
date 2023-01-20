@@ -2648,6 +2648,43 @@ class BaseService extends BaseServicePrivate {
 		console.log("[empty_object] [%s]",keys.join());
 		debugger;
 	}
+	/** @public @template U @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {(this:this,v:T[SI],k: Exclude<GetMaybeKeys<T>, SI>)=>U} y @arg {SI[]} excl @returns {[U]} */
+	w(x,y=a => a,excl=[]) {
+		let ka=this.get_keys_of(x);
+		let keys=this.filter_out_keys(ka,excl);
+		let k=keys[0];
+		let r=y.call(this,x[k],k);
+		return [r];
+	}
+	/** @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>void} f */
+	t(x,f) {
+		if(!x) return;
+		f.call(this,x);
+	}
+	/** @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
+	tz(x,f) {
+		if(!x) return;
+		this.z(x,f);
+	}
+	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T|undefined)=>void} */
+	tf(f) {
+		return x => this.t(x,f);
+	}
+	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
+	filter_out_keys(keys,to_remove) {
+		to_remove=to_remove.slice();
+		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
+		let ok_e=[];
+		for(let i=0;i<keys.length;i++) {
+			let rm_idx=to_remove.findIndex(e => e===keys[i]);
+			if(rm_idx>=0) {
+				to_remove.splice(rm_idx,1);
+				continue;
+			}
+			ok_e.push(as(keys[i]));
+		}
+		return ok_e;
+	}
 	/** @protected @template {{}} T @arg {T} x */
 	is_empty_object(x) {
 		let keys=this.get_keys_of(x);
@@ -6761,38 +6798,6 @@ class ServiceMethods extends ServiceData {
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
-	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
-	filter_out_keys(keys,to_remove) {
-		to_remove=to_remove.slice();
-		/** @type {Exclude<typeof keys[number],typeof to_remove[number]>[]} */
-		let ok_e=[];
-		for(let i=0;i<keys.length;i++) {
-			let rm_idx=to_remove.findIndex(e => e===keys[i]);
-			if(rm_idx>=0) {
-				to_remove.splice(rm_idx,1);
-				continue;
-			}
-			ok_e.push(as(keys[i]));
-		}
-		return ok_e;
-	}
-	/** @public @template U @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {(this:this,v:T[SI],k: Exclude<GetMaybeKeys<T>, SI>)=>U} y @arg {SI[]} excl @returns {[U]} */
-	w(x,y=a => a,excl=[]) {
-		let ka=this.get_keys_of(x);
-		let keys=this.filter_out_keys(ka,excl);
-		let k=keys[0];
-		let r=y.call(this,x[k],k);
-		return [r];
-	}
-	/** @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>void} f */
-	t(x,f) {
-		if(!x) return;
-		f.call(this,x);
-	}
-	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T|undefined)=>void} */
-	tf(f) {
-		return x => this.t(x,f);
-	}
 	/** @arg {PlaylistId} x */
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
@@ -9473,7 +9478,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
 	AddToPlaylistServiceEndpoint(x) {
-		let [{videoId}]=this.w(x,a=>a);
+		let [{videoId}]=this.w(x,a => a);
 		this.videoId(videoId);
 	}
 	/** @arg {E$GetReportFormEndpoint} x */
@@ -10231,9 +10236,10 @@ class HandleTypes extends ServiceMethods {
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(feedbackToken,"string");
 		this.UiActions(uiActions);
-		this.z(actions,a => {
+		this.t(actions,a => this.z(a,a => {
 			console.log("[action]",this.get_keys_of(a));
-		});
+		}));
+		this.tz(actions,a => {});
 	}
 	/** @arg {Button_serviceEndpoint} x */
 	Button_serviceEndpoint(x) {
