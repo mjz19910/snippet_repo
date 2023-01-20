@@ -6316,7 +6316,7 @@ class HandleTypes extends ServiceMethods {
 		this.BrowseEndpoint(endpoint);
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
-		if(expirationTime) this.primitive_of(expirationTime,"number");
+		this.t(expirationTime,a => this.primitive_of(a,"number"));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @arg {ResponseContext} x */
@@ -6415,7 +6415,7 @@ class HandleTypes extends ServiceMethods {
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
 		this.t(metadata,this.BrowseMetadata);
 		this.t(microformat,this.MicroformatDataRenderer);
-		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
+		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
 		this.t(background,this.MusicThumbnailRenderer);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
 		this.t(continuationContents,this.ContinuationContents);
@@ -6751,8 +6751,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ThumbnailItem]",x);
 		const {url,width,height,...y}=x; this.g(y);
 		this.primitive_of(url,"string");
-		if(width) this.primitive_of(width,"number");
-		if(height) this.primitive_of(height,"number");
+		this.t(width,a => this.primitive_of(a,"number"));
+		this.t(height,a => this.primitive_of(a,"number"));
 	}
 	/** @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {
@@ -6789,7 +6789,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(noindex,"boolean");
 		this.primitive_of(unlisted,"boolean");
 		this.t(tags,tags => this.z(tags,a => this.primitive_of(a,"string")));
-		if(familySafe) this.primitive_of(familySafe,"boolean");
+		this.t(familySafe,a => this.primitive_of(a,"boolean"));
 		this.t(availableCountries,a => this.z(a,a => this.primitive_of(a,"string")));
 		this.z(linkAlternates,this.HrefUrl);
 	}
@@ -7461,7 +7461,7 @@ class HandleTypes extends ServiceMethods {
 			this.LiveChatEmoji(a);
 		}));
 		this.t(clientMessages,this.ClientMessages);
-		if(viewerName) this.primitive_of(viewerName,"string");
+		this.t(viewerName,a => this.primitive_of(a,"string"));
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
@@ -7505,7 +7505,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AddChatItemActionData]",x);
 		const {item,clientId,...y}=x; this.g(y);
 		this.LiveChatItem(item);
-		if(clientId) this.primitive_of(clientId,"string");
+		this.t(clientId,a => this.primitive_of(a,"string"));
 	}
 	/** @arg {LiveChatItem} x */
 	LiveChatItem(x) {
@@ -7598,7 +7598,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(engagementPanels,a => this.z(a,this.EngagementPanelSectionListRenderer));
 		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
 		this.t(videoReporting,this.ReportFormModalRenderer);
-		if(queueContextParams) this.primitive_of(queueContextParams,"string");
+		this.t(queueContextParams,a => this.primitive_of(a,"string"));
 		this.t(continuationContents,this.PlaylistPanelContinuation);
 	}
 	/** @arg {NextResponseContents} x */
@@ -7715,7 +7715,7 @@ class HandleTypes extends ServiceMethods {
 		const {title,contents,currentIndex,...y1}=x;
 		this.primitive_of(title,"string");
 		this.z(contents,this.PlaylistPanelItem);
-		if(currentIndex) this.primitive_of(currentIndex,"number");
+		this.t(currentIndex,a => this.primitive_of(a,"number"));
 		const {playlistId,ownerName,isInfinite,...y2}=y1;
 		this.playlistId(playlistId);
 		this.t(ownerName,this.TextWithRuns);
@@ -8434,7 +8434,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(shortBylineText);
 		const {lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.t(lengthText,this.SimpleText);
-		if(lengthInSeconds) this.primitive_of(lengthInSeconds,"number");
+		this.t(lengthInSeconds,a => this.primitive_of(a,"number"));
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 		this.TextT(shortViewCountText);
@@ -8467,7 +8467,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(watchEndpointSupportedOnesieConfig,this.Html5PlaybackOnesieConfig);
 		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		this.t(a1,this.PrefetchHintConfig);
-		if(playerParams) this.playerParams("WatchEndpoint","watch.player_params",playerParams);
+		this.t(playerParams,a => this.playerParams("WatchEndpoint","watch.player_params",a));
 		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
 		this.t(a2,this.WatchEndpointMusicConfig);
 		const {nofollow,...y_end}=y5;
@@ -8554,7 +8554,7 @@ class HandleTypes extends ServiceMethods {
 	TextRun(x,f_run) {
 		this.save_keys("[TextRun]",x);
 		const {text,navigationEndpoint,...y}=x; this.g(y);
-		if(navigationEndpoint) f_run.call(this,navigationEndpoint);
+		this.t(navigationEndpoint,f_run);
 		this.primitive_of(text,"string");
 	}
 	/** @arg {ThumbnailOverlayTimeStatusRenderer} x */
@@ -8850,7 +8850,7 @@ class HandleTypes extends ServiceMethods {
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
 		this.t(replacementEndpoint,this._ReelWatchEndpoint);
-		if(sequenceContinuation) this.primitive_of(sequenceContinuation,"string");
+		this.t(sequenceContinuation,a => this.primitive_of(a,"string"));
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
 	}
@@ -9071,7 +9071,7 @@ class HandleTypes extends ServiceMethods {
 				case "SIZE_SMALL": break;
 			}
 		}
-		if(style) this.save_string("[Button.style]",style);
+		this.t(style,a => this.save_string("[Button.style]",a));
 		this.t(text,this.TextT);
 		this.t(trackingParams,this.trackingParams);
 		this.t(hint,this.HintRenderer);
@@ -10613,10 +10613,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SortFilterSubMenuData]",x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y);
 		this.z(subMenuItems,a => this.ActionSetPlaylistVideoOrder(a));
-		if(title) this.primitive_of(title,"string");
+		this.t(title,a => this.primitive_of(a,"string"));
 		this.t(icon,this.Icon);
 		this.t(accessibility,this.Accessibility);
-		if(tooltip) this.primitive_of(tooltip,"string");
+		this.t(tooltip,a => this.primitive_of(a,"string"));
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {ActionSetPlaylistVideoOrder} x */
@@ -10783,8 +10783,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[RichItemData]",x);
 		const {content,rowIndex,colIndex,...y}=x; this.g(y);
 		this.RichItemContent(content);
-		if(rowIndex) this.primitive_of(rowIndex,"number");
-		if(colIndex) this.primitive_of(colIndex,"number");
+		this.t(rowIndex,a => this.primitive_of(a,"number"));
+		this.t(colIndex,a => this.primitive_of(a,"number"));
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
