@@ -5,7 +5,12 @@ type GeneratedWebCommandMetadata=[
 	_gen_flag$get_form,
 	_gen_subscription$subscribe,
 	_gen_feedback,
+	_gen_like$like,
 ][number];
+type _gen_like$like={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/like/like";
+};
 type _gen_feedback={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/feedback";

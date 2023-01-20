@@ -6,4 +6,12 @@ type AnyIcon=NonNullable<[
 	Icon<"LIBRARY_REMOVE">,
 	ThumbnailOverlayHoverTextData['icon'],
 ][number]>;
-type MenuServiceIconTypeStr="NOT_INTERESTED"|"LIBRARY_ADD"|"LIBRARY_REMOVE";
+type MenuServiceIcon=Extract<[
+	{icon: Icon<"FLAG">;},
+	{}
+][number],{icon:any}>;
+type MenuServiceIconTypeStr=[
+	"PLAYLIST_ADD",
+	"VISIBILITY_OFF",
+	"SHARE",
+][number]|"WATCH_LATER"|"NOT_INTERESTED"|"LIBRARY_ADD"|"LIBRARY_REMOVE"|(MenuServiceIcon['icon']['iconType']);

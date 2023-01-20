@@ -7048,6 +7048,7 @@ class HandleTypes extends ServiceMethods {
 				console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
 				debugger;
 			} break;
+			case "/youtubei/v1/like/like": return this.GeneratedWebCommandMetadata(x);
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
 			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
 			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
@@ -9509,7 +9510,13 @@ class HandleTypes extends ServiceMethods {
 				case "LIBRARY_ADD": break;
 				case "LIBRARY_REMOVE": break;
 				case "NOT_INTERESTED": break;
-				default: icon.iconType===""; debugger; break;
+				case "FLAG": break;
+				case "WATCH_LATER": break;
+				case "PLAYLIST_ADD": break;
+				case "VISIBILITY_OFF": break;
+				case "SHARE": break;
+				/** @type {MenuServiceIcon} */
+				default: console.log(`case "${icon.iconType}": break;`); icon.iconType===""; debugger; break;
 			}
 		}
 		this.t(icon,this.Icon);
