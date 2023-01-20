@@ -7009,6 +7009,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {{[U in string]: unknown}} x */
 	get_codegen_name(x) {
+		if(typeof x.type==='string') {
+			return x.type.split(".").map(e => {
+				if(e.includes("_")) {
+					return e.split("_").map(e => this.uppercase_first(e)).join("");
+				}
+				return this.uppercase_first(e);
+			}).join("$");
+		}
 		let rk=this.filter_keys(this.get_keys_of(x));
 		let kk=rk[0];
 		return this.uppercase_first(kk);
