@@ -6840,7 +6840,12 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
 		this.save_keys("[AccountMenuResponse]",x);
-		debugger;
+		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
+		this.z(actions,a => {
+			a;
+			debugger;
+		});
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {Response} response @arg {_ResponseTypes} x */
 	ResponseTypes(response,x) {
@@ -7635,14 +7640,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TabData} x */
 	TabData(x) {
 		this.save_keys("[TabData]",x);
-		if("endpoint" in x) {
-			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y);
-			this.BrowseEndpoint(endpoint);
-			this.primitive_of(title,"string");
-			if(selected!==void 0&&selected!==true) debugger;
-			this.t(content,this.TabData_section);
-			return;
-		}
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
 				case "FEwhat_to_watch": {
@@ -7654,6 +7651,14 @@ class HandleTypes extends ServiceMethods {
 				default:
 			}
 			console.log("[new.tab.tab_id]",x.tabIdentifier,this.get_keys_of(x));
+			return;
+		}
+		if("endpoint" in x) {
+			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y);
+			this.BrowseEndpoint(endpoint);
+			this.primitive_of(title,"string");
+			if(selected!==void 0&&selected!==true) debugger;
+			this.t(content,this.TabData_section);
 			return;
 		}
 		const {selected,content,trackingParams,...y}=x; this.g(y);

@@ -2,6 +2,7 @@ import {KnownDataSaver} from "./yt_json_types/KnownDataSaver";
 import {Base64Binary} from "./yt_json_types/Base64Binary";
 import {MyReader} from "./yt_json_types/MyReader";
 `
+const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 this.z(actions,a => {
 	a;
 	debugger;
