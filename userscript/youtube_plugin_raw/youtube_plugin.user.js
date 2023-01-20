@@ -4845,7 +4845,8 @@ class ParserService extends BaseService {
 		let mk=[...map.keys()];
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,map,mk,ta,null);
-		parse_key(1);
+		parse_key(2);
+		parse_key(5);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(map));
 		debugger;
