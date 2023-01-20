@@ -5027,7 +5027,6 @@ case "${path}": {
 		/** @arg {number} idx */
 		let gen_next_part=(idx) => {
 			if(path_parts.length===idx) {
-				gen_final_part(idx);
 				gen_return_part(idx);
 				return;
 			}
@@ -5035,10 +5034,7 @@ case "${path}": {
 case "${path_parts[idx-1]}": {
 	let idx=${idx+1};
 	if(path_parts.length===idx) {
-		switch(tv) {
-			default: debugger; break;
-		}
-		return;
+		switch(tv) {default: debugger; return;}
 	}
 	switch(path_parts[${idx}]) {
 		default: {
@@ -5050,34 +5046,12 @@ case "${path_parts[idx-1]}": {
 } break;`);
 		};
 		/** @arg {number} idx */
-		let gen_final_part=(idx) => {
-			console.log(`
-case "${path_parts[idx-1]}": {
-	let idx=${idx+1};
-	if(path_parts.length===idx) {
-		switch(tv) {default: debugger; break;}
-		return;
-	}
-	switch(path_parts[${idx}]) {
-		default: {
-			console.log("in",path_parts[${idx-1}]);
-			gen_return_part(idx);
-			debugger;
-		} path_parts[${idx}]===""; break;
-	} break;
-}`);
-		};
-		/** @arg {number} idx */
 		let gen_return_part=(idx) => {
 			console.log(`
 case "${path_parts[idx-1]}": {
 	let idx=${idx};
 	if(path_parts.length===${idx+1}) {
-		if(tv instanceof Map) return;
-		switch(tv) {
-			default: debugger; break;
-		}
-		return;
+		switch(tv) {default: debugger; return;}
 	}
 	gen_next_part(idx);
 	debugger;
@@ -5111,7 +5085,7 @@ case "${path_parts[idx-1]}": {
 							debugger;
 						} path_parts[2]===""; break;
 						case "f33": {
-							let idx=4;
+							const idx=4;
 							if(path_parts.length===idx-1) {
 								switch(tv) {default: debugger; break;}
 								return;
@@ -5122,6 +5096,14 @@ case "${path_parts[idx-1]}": {
 									gen_next_part(idx);
 									debugger;
 								} path_parts[3]===""; break;
+								case "f2": {
+									const idx=4;
+									if(path_parts.length===idx) {
+										switch(tv) {default: debugger; return;}
+									}
+									gen_next_part(idx);
+									debugger;
+								} break;
 							}
 						} break;
 					}
