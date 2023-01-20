@@ -5028,7 +5028,7 @@ case "${path}": {
 			this.parse_any_param(root,path,tv);
 		} else {
 			/** @arg {number} idx */
-			let gen_next_part=(idx)=>{
+			let gen_next_part=(idx) => {
 				console.log(`
 case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
@@ -5038,20 +5038,20 @@ case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 		debugger;
 	} path_parts[${idx}]===""; break;
 } break;`);
-			}
+			};
 			/** @arg {number} idx */
-			let gen_final_part=(idx)=>{
+			let gen_final_part=(idx) => {
 				console.log(`
 case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
 		let idx=${idx+1};
 		console.log("in",path_parts[${idx-1}]);
 		console.log(\`
-case "\${path_parts[\${idx}]}": return;\`);
+case "\${path_parts[${idx}]}": return;\`);
 		debugger;
 	} path_parts[${idx}]===""; break;
 } break;`);
-			}
+			};
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
 				default: {
@@ -5061,16 +5061,21 @@ case "\${path_parts[\${idx}]}": return;\`);
 				} break;
 				case "record_notification_interactions": switch(path_parts[1]) {
 					default: {
+						let idx=2;
 						console.log("in",path_parts[0]);
-						gen_next_part(2);
+						gen_next_part(idx);
 						debugger;
 					} path_parts[1]===""; break;
 					case "f2": switch(path_parts[2]) {
 						default: {
+							let idx=3;
 							console.log("in",path_parts[1]);
-							gen_next_part(3);
+							gen_next_part(idx);
 							debugger;
 						} path_parts[2]===""; break;
+						case "f1": {
+							if(path_parts.length===3) return;
+						} break;
 					} break;
 				} break;
 				case "create_playlist": switch(path_parts[1]) {
@@ -5118,9 +5123,18 @@ case "${path_parts[1]}":`);
 case "${path_parts[2]}": return;`);
 							debugger;
 						} break;
-						case "f8": return;
-						case "f9": return;
-						case "f40": return;
+						case "f8": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f9": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f40": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
 					} path_parts[2]===""; break;
 					case "params": switch(path_parts[2]) {
 						default: {
@@ -5129,12 +5143,30 @@ case "${path_parts[2]}": return;`);
 case "${path_parts[2]}": return;`);
 							debugger;
 						} break;
-						case "f2": return;
-						case "f3": return;
-						case "f24": return;
-						case "f27": return;
-						case "f33": return;
-						case "f56": return;
+						case "f2": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f3": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f24": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f27": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f33": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
+						case "f56": {
+							if(path_parts.length===3) return;
+							debugger;
+						} break;
 					} path_parts[2]===""; break;
 				} break;
 			}
