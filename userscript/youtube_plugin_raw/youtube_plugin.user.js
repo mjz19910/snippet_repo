@@ -6473,12 +6473,15 @@ case "${path_parts[idx-1]}": {
 	}
 	/** @arg {number} key_index @arg {P$PathRoot} p @arg {ParamMapValue} x */
 	player_f71(key_index,p,x) {
-		console.log(`[${p}] [idx=${key_index}]`,x);
 		switch(x) {
 			case 12: return;
 			case 15: return;
-			default: console.log(`-- [player_f71] --\n\n\ncase ${x}: return;`); return;
+			default: {
+				console.log(`[${p}] [idx=${key_index}]`,x);
+				console.log(`-- [player_f71] --\n\n\ncase ${x}: return;`);
+			} return;
 		}
+
 	}
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
