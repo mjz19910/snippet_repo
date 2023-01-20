@@ -4089,30 +4089,15 @@ class CodegenService extends BaseService {
 		return s;
 	}
 	/** @type {string[]} */
-	codegen_cache=[];
+	typedef_cache=[];
 	/** @public @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] @returns {string|null|void} */
 	codegen_new_typedef(x,gen_name,ret_val) {
-		let cg=this.#_codegen_new_typedef(x,gen_name);
-		if(ret_val) return cg;
-		if(cg) {
-			let code_result=`
-			namespace ${gen_name} {
-			${cg.split("\n").filter(e => e).map(e => {
-				if(e.startsWith("type")) return `\texport ${e}`;
-				return `\t${e}`;
-			}).join("\n")}
-			}`;
-			let fl=code_result.slice(1).split("\n")[0];
-			let fl_trim=fl.trim();
-			let trim_len=fl.length-fl_trim.length;
-			code_result=code_result.split("\n").map((e,dx,l) => {
-				if(dx>2&&dx<(l.length-1)) return e;
-				if(!e) return e;
-				return e.slice(trim_len);
-			}).join("\n");
-			if(!this.codegen_cache.includes(code_result)) {
-				this.codegen_cache.push(code_result);
-				console.log(code_result);
+		let new_typedef=this.#_codegen_new_typedef(x,gen_name);
+		if(ret_val) return new_typedef;
+		if(new_typedef) {
+			if(!this.typedef_cache.includes(new_typedef)) {
+				this.typedef_cache.push(new_typedef);
+				console.log(new_typedef);
 			}
 		}
 	}
@@ -4807,6 +4792,7 @@ class ParserService extends BaseService {
 								case 3: break;
 								case 24: break;
 								case 27: break;
+								case 33: break;
 								case 56: break;
 								default: {
 									console.log("generate_ns",path);
@@ -4820,6 +4806,7 @@ class ParserService extends BaseService {
 							switch(ta) {
 								case 8: break;
 								case 9: break;
+								case 40: break;
 								default: {
 									console.log("generate_ns",path);
 									console.log(`\ncase ${ta}: break;`);
@@ -4867,25 +4854,40 @@ class ParserService extends BaseService {
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
 				default: {
+					console.log("root_next_case");
 					console.log(`
 case "${path_parts[0]}":`);
 					debugger;
 				} break;
 				case "watch": switch(path_parts[1]) {
 					default: {
+						console.log("in", path_parts[0]);
 						console.log(`
 case "${path_parts[1]}":`);
 						debugger;
 					} break;
+					case "player_params": switch(path_parts[2]) {
+						default: {
+							console.log("in", path_parts[1]);
+							console.log(`
+case "${path_parts[2]}": return;`);
+							debugger;
+						} break;
+						case "f8": return;
+						case "f9": return;
+					} break;
 					case "params": switch(path_parts[2]) {
 						default: {
+							console.log("in", path_parts[1]);
 							console.log(`
 case "${path_parts[2]}": return;`);
 							debugger;
 						} break;
 						case "f2": return;
 						case "f3": return;
+						case "f24": return;
 						case "f27": return;
+						case "f56": return;
 					} break;
 				} break;
 			}
@@ -9218,7 +9220,6 @@ class HandleTypes extends ServiceMethods {
 	GetAddToPlaylistResponse(x) {
 		this.save_keys("[GetAddToPlaylistResponse]",x);
 		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y);
-		debugger;
 		this.z(contents,this.AddToPlaylistRenderer);
 		this.trackingParams(trackingParams);
 	}
