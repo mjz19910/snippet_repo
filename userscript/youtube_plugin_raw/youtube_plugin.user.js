@@ -11003,15 +11003,6 @@ class HandleTypes extends ServiceMethods {
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of_string(aadcGuidelinesStateEntityKey);
 	}
-	/** @arg {E$Signal$GetAccountMenu} x */
-	GetAccountMenu(x) {
-		const {signal,actions,...y}=x; this.g(y); // ! #destructure
-		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		this.z(actions,x => {
-			if("openPopupAction" in x) return this.OpenPopupAction(x);
-			debugger;
-		});
-	}
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
 		this.save_keys("[ChannelPageResponse]",x);
