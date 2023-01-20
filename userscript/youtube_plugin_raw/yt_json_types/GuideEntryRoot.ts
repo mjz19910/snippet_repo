@@ -13,4 +13,11 @@ type GuideEntryRoot={
 	trackingParams: string;
 	formattedTitle: SimpleText;
 	accessibility: Accessibility;
+}|{
+	navigationEndpoint: BrowseEndpoint;
+	icon: Icon<"WHAT_TO_WATCH">;
+	trackingParams: string;
+	formattedTitle: SimpleText;
+	accessibility: Accessibility;
+	isPrimary: true;
 };

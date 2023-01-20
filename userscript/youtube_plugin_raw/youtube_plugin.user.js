@@ -10413,7 +10413,7 @@ class HandleTypes extends ServiceMethods {
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
 		if("icon" in x) {
-			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x; this.g(y); // ! #destructure
+			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x;
 			this.t(navigationEndpoint,x => {
 				if("browseEndpoint" in x) return this.BrowseEndpoint(x);
 				if("urlEndpoint" in x) return this.UrlEndpoint(x);
@@ -10423,6 +10423,13 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams(trackingParams);
 			this.SimpleText(formattedTitle);
 			this.Accessibility(accessibility);
+			if("isPrimary" in y) {
+				const {isPrimary,...y1}=y;
+				if(isPrimary!==true) debugger;
+				this.g(y1);
+				return;
+			}
+			this.g(y);
 			return;
 		}
 		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y); // ! #destructure
@@ -11461,7 +11468,8 @@ class HandleTypes extends ServiceMethods {
 			switch(a) {
 				case "STYLE_DEFAULT": return;
 				case "STYLE_HOME_FILTER": return;
-				default: debugger;
+				case "STYLE_REFRESH_TO_NOVEL_CHIP": return;
+				default: a===""; debugger;
 			}
 		});
 	}
