@@ -7494,11 +7494,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$NotificationOptOutEndpoint} x */
 	E$NotificationOptOutEndpoint(x) {
-		let v=this.w({x:x.notificationOptOutEndpoint});
-		const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
+		const cf="SubscribeEndpoint";
+		this.save_keys(`[E$${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,notificationOptOutEndpoint: v,...y}=x; this.g(y); // ! #destructure
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y1}=v; this.g(y1);
 		this.TextWithRuns(optOutText);
 		this.primitive_of_string(serializedOptOut);
 		this.primitive_of_string(serializedRecordInteractionsRequest);
+	}
+	/** @arg {E$ShareEntityServiceEndpoint} x */
+	E$ShareEntityServiceEndpoint(x) {
+		const cf="ShareEntityServiceEndpoint";
+		this.save_keys(`[E$${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,notificationOptOutEndpoint: v,...y}=x; this.g(y); // ! #destructure
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		let v=this.w({x: x.shareEntityServiceEndpoint});
+		const {serializedShareEntity,commands,...y}=v; this.g(y);
+		this.primitive_of_string(serializedShareEntity);
+		this.z(commands,this.OpenPopupAction);
 	}
 	/** @arg {EG$MenuServiceEndpoints} x */
 	EG$MenuServiceEndpoints(x) {
@@ -7508,13 +7524,7 @@ class HandleTypes extends ServiceMethods {
 		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
 		if("feedbackEndpoint" in x) return this.E$FeedbackEndpoint(x);
 		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
-		if("shareEntityServiceEndpoint" in x) {
-			let v=this.w({x:x.shareEntityServiceEndpoint});
-			const {serializedShareEntity,commands,...y}=v; this.g(y);
-			this.primitive_of_string(serializedShareEntity);
-			this.z(commands,this.OpenPopupAction);
-			return;
-		}
+		if("shareEntityServiceEndpoint" in x) return this.E$ShareEntityServiceEndpoint(x);
 		if("likeEndpoint" in x) return this.E$Like(x.likeEndpoint);
 		debugger;
 	}
@@ -9803,7 +9813,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$GetReportFormEndpoint} x */
 	GetReportFormEndpoint(x) {
-		let {params}=this.w({x:x.getReportFormEndpoint});
+		let {params}=this.w({x: x.getReportFormEndpoint});
 		this.t(params,a => this.params("GetReportForm","report.params",a));
 	}
 	/** @arg {PlaylistAction} x */
