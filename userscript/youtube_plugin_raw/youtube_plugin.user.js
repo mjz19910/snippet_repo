@@ -6097,7 +6097,13 @@ case "${path_parts[idx-1]}": {
 			case "share": return this.get_share_type(x);
 			case "music": return this.get_music_type(x);
 			case "pdg": return this.get_pdg_type(x);
-			default: debugger; return null;
+			case "flag":
+				if(x[3]!=="get_form") debugger;
+				return {
+					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+					x: `${x[2]}.${x[3]}`,
+				}.x;
+			default: return this.api_no_handler(x,x[2]);
 		}
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",string]>} x */

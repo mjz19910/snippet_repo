@@ -21,4 +21,5 @@ type ApiUrlFormat=[
 	`youtubei/v1/share/get_share_panel`,
 	`youtubei/v1/subscription/${"subscribe"|"unsubscribe"}`,
 	`youtubei/v1/updated_metadata`,
+	"youtubei/v1/flag/get_form",
 ][number];
