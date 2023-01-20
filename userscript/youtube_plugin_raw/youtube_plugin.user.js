@@ -4990,7 +4990,7 @@ case "${path}": {
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue} tv */
 	parse_param_next(root,path,tv) {
 		let key_index=this.parse_key_index;
-		if(tv instanceof Map) this.parse_any_param(root,path,tv);
+		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		/** @arg {number} idx */
 		let gen_next_part=(idx) => {
 			if(path_parts.length===idx) {
