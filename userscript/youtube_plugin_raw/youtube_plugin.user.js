@@ -7552,9 +7552,12 @@ class HandleTypes extends ServiceMethods {
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 				} break;
 				case 3854: return this.GeneratedWebCommandMetadata(x);
+				case 4724: return this.GeneratedWebCommandMetadata(x);
 				case 6827: return this.GeneratedWebCommandMetadata(x);
 				case 11487: return this.GeneratedWebCommandMetadata(x);
 				case 96368: return this.GeneratedWebCommandMetadata(x);
+				case 83769: return this.GeneratedWebCommandMetadata(x);
+				case 37414: return this.GeneratedWebCommandMetadata(x);
 			}
 			return;
 		}
