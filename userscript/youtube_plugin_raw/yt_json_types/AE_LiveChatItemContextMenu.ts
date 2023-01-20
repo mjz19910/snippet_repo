@@ -1,1 +1,0 @@
-type LiveChatItemContextMenuEndpointData={params: string;};

@@ -1,3 +1,3 @@
 type SetSettingEndpointPlugin={
-	setSettingEndpoint: SetSettingEndpointData;
+	setSettingEndpoint: AE_SetSetting;
 };

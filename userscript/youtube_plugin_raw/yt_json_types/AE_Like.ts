@@ -1,1 +1,1 @@
-type AE_Like=LikeIndifferentEndpointData|LikeLikeEndpointData|LikeDislikeEndpointData;
+type AE_Like=AE_LikeIndifferent|AE_LikeLike|AE_LikeDislike;

@@ -1,4 +1,4 @@
-type WatchEndpointData={
+type AE_Watch={
 	videoId: string;
 	nofollow?: boolean;
 	playlistId?: `PL${string}`|`RD${string}`;
@@ -10,15 +10,6 @@ type WatchEndpointData={
 	loggingContext?: VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
-	watchEndpointMusicSupportedConfigs?: WatchEndpointMusicSupportedConfigs;
+	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
 	playerParams?: string;
-};
-type WatchEndpointMusicSupportedConfigs=WatchEndpointMusicConfig;
-type WatchEndpointMusicConfigData={
-	hasPersistentPlaylistPanel: boolean;
-	musicVideoType: "MUSIC_VIDEO_TYPE_ATV";
-};
-
-type WatchEndpointMusicConfig={
-	watchEndpointMusicConfig: WatchEndpointMusicConfigData;
 };

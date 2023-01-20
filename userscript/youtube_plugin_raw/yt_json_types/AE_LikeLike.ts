@@ -1,4 +1,4 @@
-type LikeLikeEndpointData={
+type AE_LikeLike={
 	status: "LIKE";
 	target: LikeApiData;
 	actions?: MusicLibraryStatusUpdateCommand[];

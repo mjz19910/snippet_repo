@@ -1,0 +1,1 @@
+type ParamsTemplate={params: string;};

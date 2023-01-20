@@ -1,1 +1,1 @@
-type SearchEndpointPlugin={searchEndpoint: SearchEndpointData;};
+type SearchEndpointPlugin={searchEndpoint: AE_Search;};

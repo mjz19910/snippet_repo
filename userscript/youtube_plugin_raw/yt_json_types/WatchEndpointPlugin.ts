@@ -1,3 +1,3 @@
 type WatchEndpointPlugin={
-	watchEndpoint: WatchEndpointData;
+	watchEndpoint: AE_Watch;
 };

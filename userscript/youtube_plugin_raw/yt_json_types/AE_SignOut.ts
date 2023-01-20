@@ -1,3 +1,3 @@
-type SignOutEndpointData={
+type AE_SignOut={
 	hack: true;
 };

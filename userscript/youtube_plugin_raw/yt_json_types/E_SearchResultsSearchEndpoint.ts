@@ -1,4 +1,4 @@
 type E_SearchResultsSearchEndpoint={
 	clickTrackingParams: string;
-	searchEndpoint: SearchEndpointData;
+	searchEndpoint: AE_Search;
 };

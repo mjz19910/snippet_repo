@@ -1,3 +1,3 @@
 type SignOutEndpointPlugin={
-	signOutEndpoint: SignOutEndpointData;
+	signOutEndpoint: AE_SignOut;
 };

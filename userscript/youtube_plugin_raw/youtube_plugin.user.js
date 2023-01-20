@@ -8936,7 +8936,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(commandMetadata,this.CommandMetadata);
 		this.PlaylistEditEndpointData(playlistEditEndpoint);
 	}
-	/** @arg {PlaylistEditEndpointData} x */
+	/** @arg {AE_PlaylistEdit} x */
 	PlaylistEditEndpointData(x) {
 		this.save_keys("[PlaylistEditEndpointData]",x);
 		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
@@ -9095,7 +9095,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(commandMetadata,this.WatchEndpointCommandMetadata);
 		this.WatchEndpointData(watchEndpoint);
 	}
-	/** @arg {WatchEndpointData} x */
+	/** @arg {AE_Watch} x */
 	WatchEndpointData(x) {
 		const cf="WatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -9114,12 +9114,12 @@ class HandleTypes extends ServiceMethods {
 		this.t(a2,this.WatchEndpointMusicConfig);
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
 	}
-	/** @arg {WatchEndpointMusicConfig} x */
+	/** @arg {R_WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfig(x) {
 		this.save_keys("[WatchEndpointMusicConfig]",x);
 		this.WatchEndpointMusicConfigData(x.watchEndpointMusicConfig);
 	}
-	/** @arg {WatchEndpointMusicConfigData} x */
+	/** @arg {D_WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfigData(x) {
 		this.save_keys("[WatchEndpointMusicConfigData]",x);
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y); // ! #destructure
@@ -9790,7 +9790,7 @@ class HandleTypes extends ServiceMethods {
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of(aadcGuidelinesStateEntityKey,"string");
 	}
-	/** @arg {AE_SignalServiceEndpoint} x */
+	/** @arg {AE_SignalService} x */
 	SignalServiceEndpointData(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
@@ -10892,7 +10892,7 @@ class HandleTypes extends ServiceMethods {
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip(chipCloudChipRenderer);
 	}
-	/** @arg {UploadEndpointData} x */
+	/** @arg {AE_Upload} x */
 	UploadEndpointData(x) {
 		this.save_keys("[UploadEndpointData]",x);
 		const {hack,...y}=x; this.g(y); // ! #destructure
@@ -10905,7 +10905,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(clickTrackingParams);
 		this.SearchEndpointData(searchEndpoint);
 	}
-	/** @arg {SearchEndpointData} x */
+	/** @arg {AE_Search} x */
 	SearchEndpointData(x) {
 		this.save_keys("[SearchEndpointData]",x);
 		const {query,...y}=x; this.g(y); // ! #destructure

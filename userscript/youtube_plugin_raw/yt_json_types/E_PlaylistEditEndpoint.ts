@@ -1,5 +1,5 @@
 type E_PlaylistEditEndpoint={
 	clickTrackingParams?: string;
 	commandMetadata?: CommandMetadata;
-	playlistEditEndpoint: PlaylistEditEndpointData;
+	playlistEditEndpoint: AE_PlaylistEdit;
 };

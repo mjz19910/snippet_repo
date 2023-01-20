@@ -1,1 +1,1 @@
-type AE_SignalServiceEndpoint=Signal_ClientSignal|Signal_GetAccountMenu;
+type AE_SignalService=Signal_ClientSignal|Signal_GetAccountMenu;
