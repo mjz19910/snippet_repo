@@ -4670,7 +4670,7 @@ class ParserService extends BaseService {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
+	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	on_endpoint_params(for_,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -4769,7 +4769,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_endpoint_param(for_,path,param_map);
 	}
-	/** @public @arg {ParamsSection} for_ @arg {`watch.params.f${string}`} path @arg {string} x */
+	/** @public @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	on_player_params(for_,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -4786,25 +4786,32 @@ class ParserService extends BaseService {
 		if(idx>-1) mk.splice(idx,1);
 	}
 	/** @typedef {(x:ParamMapValue,idx:number)=>void} ParseCallbackFunction */
-	/** @arg {ParamsSection} for_ @arg {`watch.params.f${string}`} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} for_ @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 	parse_key(for_,path,x,mk,ta,cb) {
 		let tv=x.get(ta);
 		this.parse_value(for_,path,x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} for_ @arg {`watch.params.f${string}`} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} for_ @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(for_,path,x,mk,ta,tv,cb) {
 		if(tv!==void 0) {
 			x.delete(ta);
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
-				this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+				/** @arg {PathRoot} path */
+				let d=(path)=>{
+					this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+				}
+				switch(path) {
+					case "watch_page_url.pp": d(path);
+					default: debugger; break;
+				}
 				return;
 			}
 			cb(tv,ta);
 		}
 	}
-	/** @arg {ParamsSection} for_ @arg {`watch.params.f${string}`} path @arg {ParamMapValue} tv */
+	/** @arg {ParamsSection} for_ @arg {PathFromRoot} path @arg {ParamMapValue} tv */
 	default_parse_param_callback(for_,path,tv) {
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) {
@@ -4816,7 +4823,7 @@ class ParserService extends BaseService {
 			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
 		}
 	}
-	/** @arg {ParamsSection} root @arg {`watch.params.f${string}`} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -4832,7 +4839,7 @@ class ParserService extends BaseService {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} for_ @arg {`watch.params.f${string}`} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {ParamMapType} x */
 	parse_player_param(for_,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -4850,7 +4857,7 @@ class ParserService extends BaseService {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} root @arg {string} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x */
 	parse_endpoint_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5605,7 +5612,7 @@ class ServiceMethods extends ServiceData {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
+	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	params(for_,path,x) {
 		this.x.get("parser_service").on_endpoint_params(for_,path,x);
 	}
@@ -5685,7 +5692,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @arg {ParamsSection} for_ @arg {string} path @arg {string} x */
+	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	playerParams(for_,path,x) {
 		this.x.get("parser_service").on_player_params(for_,path,x);
 	}
@@ -8815,7 +8822,7 @@ class HandleTypes extends ServiceMethods {
 		const cf1="YpcGetOffers";
 		this.save_keys(`[${cf1}]`,x1);
 		const {params,...y1}=x1; this.g(y1);
-		this.params(cf1,"ypc_get_offers",params);
+		this.params(cf1,"ypc_get_offers.params",params);
 	}
 	/** @arg {ButtonData} x */
 	ButtonData(x) {
@@ -10660,7 +10667,7 @@ class HandleTypes extends ServiceMethods {
 		const {playlistId,index,params,...y}=x; this.g(y);
 		this.parser.parse_playlist_id(playlistId);
 		this.primitive_of(index,"number");
-		this.params("Any","watch_playlist",params);
+		this.params("WatchPlaylist","watch_playlist.params",params);
 	}
 	get parser() {
 		return this.x.get("parser_service");
