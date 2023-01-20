@@ -5111,6 +5111,14 @@ case "${path}": {
 			if(cb===null) {
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "watch.params.f27": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "get_transcript.params": {
 						switch(ta) {
 							case 1: break;
@@ -5504,7 +5512,7 @@ case "${path_parts[idx-1]}": {
 				default: gd(idx); path_parts[1]===""; break;
 				case "player_params": {
 					const idx=3;
-					if(path_parts.length===idx) {
+					if(path_parts.length===2) {
 						if(tv instanceof Map) {
 							let mk=[...tv.keys()];
 							console.log(path_parts,mk);
@@ -5514,6 +5522,18 @@ case "${path_parts[idx-1]}": {
 					}
 					switch(path_parts[2]) {
 						default: gd(idx); path_parts[2]===""; break;
+						case "f8": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 1: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
 						case "f40": {
 							const idx=4;
 							if(path_parts.length===idx) {
@@ -5557,9 +5577,32 @@ case "${path_parts[idx-1]}": {
 					}
 					switch(path_parts[2]) {
 						default: gd(idx); path_parts[2]===""; break;
+						case "f27": {
+							const idx=4;
+							if(path_parts.length===3) {
+								if(tv instanceof Map) return;
+								switch(tv) {default: debugger; return;}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
+						case "f13": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 0: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
 						case "f12": {
 							const idx=4;
 							if(path_parts.length===3) {
+								if(typeof tv==="string") return console.log("[param_parse]",path,tv);
 								switch(tv) {default: debugger; return;}
 							}
 							switch(path_parts[3]) {
