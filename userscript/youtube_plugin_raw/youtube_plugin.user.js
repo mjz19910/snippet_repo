@@ -7723,7 +7723,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$FeedbackEndpoint} x */
 	E$FeedbackEndpoint(x) {
-		const cf="SubscribeEndpoint";
+		const cf="FeedbackEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
@@ -7740,7 +7740,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$NotificationOptOutEndpoint} x */
 	E$NotificationOptOutEndpoint(x) {
-		const cf="SubscribeEndpoint";
+		const cf="NotificationOptOutEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,notificationOptOutEndpoint: v,...y}=x; this.g(y); // ! #destructure
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
@@ -7876,8 +7876,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$Browse} x */
 	E$Browse(x) {
-		const cf="AE_Browse";
-		this.save_keys("[AE_Browse]",x);
+		const cf="Browse";
+		this.save_keys(`[${cf}]`,x);
 		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y); // ! #destructure
 		this.t(browseId,this.browseId);
 		this.t(params,a => this.params(cf,"browse.params",a));
@@ -9493,7 +9493,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NextRadioContinuationDataInner} x */
 	NextRadioContinuationDataInner(x) {
-		const cf="FE_CF";
+		const cf="NextRadioContinuationDataInner";
 		this.save_keys("[NextRadioContinuationDataInner]",x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(continuation);
@@ -9706,7 +9706,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ScrollToEngagementPanelCommand} x */
 	ScrollToEngagementPanelCommand(x) {
-		const cf="FE_CF";
+		const cf="ScrollToEngagementPanelCommand";
 		this.save_keys("[ScrollToEngagementPanelCommand]",x);
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -9783,7 +9783,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReloadContinuationItemsCommand} x */
 	ReloadContinuationItemsCommand(x) {
-		const cf="FE_CF";
+		const cf="ReloadContinuationItemsCommand";
 		this.save_keys("[ReloadContinuationItemsCommand]",x);
 		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -11337,7 +11337,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
-		const cf="FE_CF";
+		const cf="ShowEngagementPanelScrimAction";
 		this.save_keys("[ShowEngagementPanelScrimAction]",x);
 		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -11345,7 +11345,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
-		const cf="FE_CF";
+		const cf="ChangeEngagementPanelVisibilityAction";
 		this.save_keys("[ChangeEngagementPanelVisibilityAction]",x);
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -11406,7 +11406,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateEngagementPanelAction} x */
 	UpdateEngagementPanelAction(x) {
-		const cf="FE_CF";
+		const cf="UpdateEngagementPanelAction";
 		this.save_keys("[UpdateEngagementPanelAction]",x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
 		this.UpdateEngagementPanelData(updateEngagementPanelAction);
@@ -11536,7 +11536,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {
-		const cf="FE_CF";
+		const cf="AddToPlaylistCommand";
 		this.save_keys("[AddToPlaylistCommand]",x);
 		const {clickTrackingParams,addToPlaylistCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -11571,8 +11571,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SignalAction} x */
 	SignalAction(x) {
-		const cf="FE_CF";
-		this.save_keys("[SignalAction]",x);
+		const cf="SignalAction";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,signalAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.SignalActionData(signalAction);
@@ -12076,7 +12076,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$SearchResultsSearchEndpoint} x */
 	SearchResultsSearchEndpoint(x) {
-		const cf="FE_CF";
+		const cf="SearchResultsSearchEndpoint";
 		this.save_keys("[SearchResultsSearchEndpoint]",x);
 		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -12106,7 +12106,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$SignalNavigationEndpoint} x */
 	SignalNavigationEndpoint(x) {
-		const cf="FE_CF";
+		const cf="SignalNavigationEndpoint";
 		this.save_keys("[SignalNavigationEndpoint]",x);
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -12128,7 +12128,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ButtonCommand} x */
 	ButtonCommand(x) {
-		const cf="FE_CF";
+		const cf="ButtonCommand";
 		this.save_keys("[ButtonCommand]",x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
@@ -12164,7 +12164,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
-		const cf="FE_CF";
+		const cf="CommandExecutorCommand";
 		this.save_keys("[CommandExecutorCommand]",x);
 		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -12186,7 +12186,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {HideEngagementPanelScrimAction} x */
 	HideEngagementPanelScrimAction(x) {
-		const cf="FE_CF";
+		const cf="HideEngagementPanelScrimAction";
 		const {clickTrackingParams,hideEngagementPanelScrimAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.HideEngagementPanelScrimAction_1(hideEngagementPanelScrimAction);
@@ -12799,7 +12799,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchPlaylistEndpoint} x */
 	WatchPlaylistEndpoint(x) {
-		const cf="FE_CF";
+		const cf="WatchPlaylistEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("WatchPlaylistEndpoint",clickTrackingParams);
