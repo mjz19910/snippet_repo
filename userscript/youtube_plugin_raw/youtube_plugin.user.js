@@ -4871,86 +4871,84 @@ class ParserService extends BaseService {
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
-				/** @arg {PathRoot} path */
-				let d=(path) => {
-					switch(path) {
-						case "watch.params": {
-							switch(ta) {
-								case 2: break;
-								case 3: break;
-								case 24: break;
-								case 27: break;
-								case 33: break;
-								case 56: break;
-								default: {
-									console.log("[parse_value.new_ns]",path);
-									console.log(`\ncase ${ta}: break;`);
-									debugger;
-								} return;
-							}
-							this.parse_param_next(root,`${path}.f${ta}`,tv);
-						} break;
-						case "watch.player_params": {
-							switch(ta) {
-								case 8: break;
-								case 9: break;
-								case 40: break;
-								default: {
-									console.log("[parse_value.new_ns]",path);
-									console.log(`\ncase ${ta}: break;`);
-									debugger;
-								} return;
-							}
-							this.parse_param_next(root,`${path}.f${ta}`,tv);
-						} break;
-						case "watch.params.f27": {
-							switch(ta) {
-								case 1: break;
-								default: {
-									console.log("[parse_value.new_ns]",path);
-									console.log(`\ncase ${ta}: break;`);
-									debugger;
-								} return;
-							}
-							this.parse_param_next(root,`${path}.f${ta}`,tv);
-						} break;
-						case "watch.params.f33": {
-							switch(ta) {
-								case 2: break;
-								case 3: break;
-								case 4: break;
-								case 5: break;
-								default: {
-									console.log("[parse_value.new_ns]",path);
-									console.log(`\ncase ${ta}: break;`);
-									debugger;
-								} return;
-							}
-							this.parse_param_next(root,`${path}.f${ta}`,tv);
-						} break;
-						case "watch.player_params.f40": {
-							switch(ta) {
-								case 1: break;
-								default: {
-									console.log("[parse_value.new_ns]",path);
-									console.log(`
-						case ${ta}: break;`);
-								} return;
-							}
-						} return;
-						case "create_playlist.params": {
-							switch(ta) {
-								case 84: break;
-								default: {
-									console.log("[parse_value.new_ns]",path);
-									console.log(`
-						case ${ta}: break;`);
-								} return;
-							}
-						} return;
-						default: {
-							console.log("[parse_value.new_ns]",path);
-							console.log(`
+				switch(path) {
+					case "watch.params": {
+						switch(ta) {
+							case 2: break;
+							case 3: break;
+							case 24: break;
+							case 27: break;
+							case 33: break;
+							case 56: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`\ncase ${ta}: break;`);
+								debugger;
+							} return;
+						}
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} break;
+					case "watch.player_params": {
+						switch(ta) {
+							case 8: break;
+							case 9: break;
+							case 40: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`\ncase ${ta}: break;`);
+								debugger;
+							} return;
+						}
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} break;
+					case "watch.params.f27": {
+						switch(ta) {
+							case 1: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`\ncase ${ta}: break;`);
+								debugger;
+							} return;
+						}
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} break;
+					case "watch.params.f33": {
+						switch(ta) {
+							case 2: break;
+							case 3: break;
+							case 4: break;
+							case 5: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`\ncase ${ta}: break;`);
+								debugger;
+							} return;
+						}
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} break;
+					case "watch.player_params.f40": {
+						switch(ta) {
+							case 1: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`
+					case ${ta}: break;`);
+							} return;
+						}
+					} return;
+					case "create_playlist.params": {
+						switch(ta) {
+							case 84: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`
+					case ${ta}: break;`);
+							} return;
+						}
+					} return;
+					default: {
+						console.log("[parse_value.new_ns]",path);
+						console.log(`
 case "${path}": {
 	switch(ta) {
 		case ${ta}: break;
@@ -4959,21 +4957,10 @@ case "${path}": {
 			console.log(\`\ncase \${ta}: break;\`);
 		} return;
 	}
+	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 } return;`);
-							debugger;
-						} break;
-					}
-				};
-				switch(path) {
-					case "create_playlist.params":
-					case "watch_page_url.pp":
-					case "watch.params.f27":
-					case "watch.params.f33":
-					case "watch.params":
-					case "watch.player_params.f40.f1":
-					case "watch.player_params.f40":
-					case "watch.player_params": d(path); break;
-					default: debugger; break;
+						debugger;
+					} break;
 				}
 				return;
 			}
