@@ -5811,6 +5811,7 @@ case "${path_parts[idx-1]}": {
 			case "get_notification_menu": break;
 			case "record_interactions": break;
 			case "modify_channel_preference": break;
+			case "opt_out": break;
 			default: return this.api_no_handler(x,x[3]);
 		} return {
 			/** @private @type {`${typeof x[2]}.${typeof x[3]}`} */
