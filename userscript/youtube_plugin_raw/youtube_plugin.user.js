@@ -4659,6 +4659,7 @@ class CodegenService extends BaseService {
 			||b.watchNextEndScreenRenderer
 			||b.watchNextTabbedResultsRenderer
 			//#endregion
+			||b.engagementPanelPopupPresentationConfig
 			;
 		if(hg) return g();
 		if(b.webCommandMetadata) return "TYPE::CommandMetadata";
