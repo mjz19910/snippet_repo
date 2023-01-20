@@ -10827,6 +10827,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[HintRenderer]",x);
 		const {hintRenderer,...y}=x; this.g(y);
 	}
+	/** @arg {VideoPrimaryInfoData} x */
+	VideoPrimaryInfoData(x) {
+		this.save_keys("[VideoPrimaryInfoData]",x);
+		const {title,viewCount,videoActions,trackingParams,dateText,relativeDateText,badges,...y}=x; this.g(y);
+	}
 	//#endregion
 	//#region type_errors
 	/** @arg {{v:minimal_handler_member}} x */
@@ -10846,12 +10851,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {
 		this.save_keys("[MerchandiseShelf]",x);
-		// @ts-ignore
-		const {...y}=x; this.g(y);
-	}
-	/** @arg {VideoPrimaryInfoData} x */
-	VideoPrimaryInfoData(x) {
-		this.save_keys("[VideoPrimaryInfoData]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
 	}
