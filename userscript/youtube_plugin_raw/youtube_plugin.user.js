@@ -5076,18 +5076,28 @@ case "${path_parts[idx-1]}": {
 					} path_parts[1]===""; break;
 					case "f2": {
 						const idx=3;
-						if(path_parts.length===idx) {
-							switch(tv) {
-								case 2: return;
-								default: debugger; return;
-							}
-						}
 						switch(path_parts[2]) {
 							default: {
 								console.log("in",path_parts[1]);
 								gen_next_part(idx);
 								debugger;
 							} path_parts[2]===""; break;
+							case "f1": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 2: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: {
+										console.log("in",path_parts[2]);
+										gen_next_part(idx);
+										debugger;
+									} path_parts[3]===""; break;
+								}
+							} break;
 							case "f14": {
 								const idx=4;
 								let idx_2=idx-1;
@@ -5107,13 +5117,9 @@ case "${path_parts[idx-1]}": {
 											if(typeof tv==="string") return console.log("[param_parse]",path,tv);
 											switch(tv) {default: debugger; return;}
 										}
-										switch(path_parts[4]) {
-											default: {
-												console.log("in",path_parts[3]);
-												gen_next_part(idx);
-												debugger;
-											} path_parts[4]===""; break;
-										}
+										console.log("in",path_parts[2]);
+										gen_next_part(idx);
+										debugger;
 									} break;
 									case "f1": {
 										const idx=5;
