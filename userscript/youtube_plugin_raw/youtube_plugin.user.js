@@ -10789,11 +10789,7 @@ class HandleTypes extends ServiceMethods {
 		const {...y}=x; this.g(y);
 	}
 	//#endregion
-	//#region has_save_keys
-	/** @arg {minimal_handler_member} x */
-	minimal_handler_member_1(x) {
-		this.save_keys("[minimal_handler_member]",x);
-	}
+	//#region has_save_keys renderer
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
 	PlaylistSidebarPrimaryInfoRenderer(x) {
 		this.save_keys("[PlaylistSidebarPrimaryInfoRenderer]",x);
@@ -10829,6 +10825,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {HintRenderer} x */
 	HintRenderer(x) {
 		this.save_keys("[HintRenderer]",x);
+	}
+	//#endregion
+	//#region has_save_keys
+	/** @arg {minimal_handler_member} x */
+	minimal_handler_member_1(x) {
+		this.save_keys("[minimal_handler_member]",x);
 	}
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {
