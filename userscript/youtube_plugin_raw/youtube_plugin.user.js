@@ -8918,10 +8918,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VE3611_WebCommandMetadata['url']} x */
 	VE3611_parse_url(x) {
-			if(x==="/gaming") return;
-			if(this.str_starts_with(x,"/@")) return;
-			if(this.str_starts_with(x,"/channel/UC")) return;
-			debugger;
+		if(x==="/gaming") return;
+		if(this.str_starts_with(x,"/@")) return;
+		if(this.str_starts_with(x,"/channel/UC")) return;
+		debugger;
 	}
 	/** @arg {VE3611_WebCommandMetadata} x */
 	VE3611_WebCommandMetadata(x) {
@@ -10047,7 +10047,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideEntryRoot]",x);
 		if("icon" in x) {
 			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility}=x; //...y}=x; this.g(y); //#destructure
-			this.t(navigationEndpoint,this.BrowseEndpoint);
+			this.t(navigationEndpoint,x => {
+				if("browseEndpoint" in x) return this.BrowseEndpoint(x);
+				debugger;
+			});
 			this.Icon(icon);
 			this.trackingParams(trackingParams);
 			this.SimpleText(formattedTitle);
