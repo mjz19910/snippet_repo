@@ -7529,10 +7529,11 @@ class HandleTypes extends ServiceMethods {
 					}
 					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
 					/** @arg {GeneratedWebCommandMetadata} x */
-					this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
-					console.log(`\n\t_gen_${url_type_ex},`);
-					console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
-					debugger;
+					let typedef_str=this.codegen_new_typedef(x,`_gen_${url_type_ex}`,true);
+					console.log(`
+					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
+					---\n\n\t_gen_${url_type_ex},
+					---\n\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
 				} break;
 				case "/youtubei/v1/backstage/create_post": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/like/removelike": return this.GeneratedWebCommandMetadata(x);
@@ -7544,21 +7545,24 @@ class HandleTypes extends ServiceMethods {
 				case "/youtubei/v1/subscription/subscribe": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/feedback": return this.GeneratedWebCommandMetadata(x);
 			}
+			return;
 		}
-		let cx=x.rootVe;
-		switch(x.rootVe) {
-			default: {
-				/** @arg {GeneratedWebCommandMetadata} x */
-				this.codegen_new_typedef(x,`_gen_VE${cx}`);
-				console.log(`\n\t_gen_VE${cx},`);
-				console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
-				debugger;
-			} break;
-			case 3854:return this.GeneratedWebCommandMetadata(x);
-			case 6827:return this.GeneratedWebCommandMetadata(x);
-			case 11487:return this.GeneratedWebCommandMetadata(x);
-			case 96368:return this.GeneratedWebCommandMetadata(x);
-		};
+		if("rootVe" in x) {
+			let cx=x.rootVe;
+			switch(x.rootVe) {
+				default: {
+					/** @arg {GeneratedWebCommandMetadata} x */
+					this.codegen_new_typedef(x,`_gen_VE${cx}`);
+					console.log(`\n\t_gen_VE${cx},`);
+					console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
+				} break;
+				case 3854: return this.GeneratedWebCommandMetadata(x);
+				case 6827: return this.GeneratedWebCommandMetadata(x);
+				case 11487: return this.GeneratedWebCommandMetadata(x);
+				case 96368: return this.GeneratedWebCommandMetadata(x);
+			};
+		}
+		debugger;
 	}
 	/** @arg {GeneratedWebCommandMetadata} x */
 	GeneratedWebCommandMetadata(x) {
