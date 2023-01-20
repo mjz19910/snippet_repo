@@ -10670,9 +10670,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {string} cf @arg {NonNullable<PlaylistResponse['alerts']>} x */
 	Response_alerts(cf,x) {
 		this.z(x,x=>{
-			if("alertWithButtonRenderer" in x) {
-				return this.AlertWithButtonRenderer(x);
-			}
+			if("alertWithButtonRenderer" in x) return this.AlertWithButtonRenderer(x);
 			this.do_codegen(`${cf}$alerts$iterate`,x);
 		});
 	}
