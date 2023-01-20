@@ -5409,7 +5409,10 @@ case "${path}": {
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue[]} tv */
 	parse_param_next(root,path,[tv,...tr]) {
-		if(tr.length>0) debugger;
+		if(tr.length>0) {
+			console.log("param_next.list",root,path,tr[0]);
+			this.parse_param_next(root,path,tr);
+		}
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		/** @arg {number} idx */
