@@ -7506,17 +7506,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
-	/** @arg {WebCommandMetadata} x */
-	WebCommandMetadata(x) {
-		this.save_keys("[WebCommandMetadataContent]",x);
-		if("rootVe" in x) return this.WebCommandMetadataRVE(x);
-		if("apiUrl" in x) return this.GenericWebCommandMetadata(x);
-		let k=this.get_keys_of(x);
-		if(this.eq_keys(k,["sendPost"])) return;
-		debugger;
-	}
 	/** @arg {GeneratedWebCommandMetadata} x */
-	GenericWebCommandMetadata(x) {
+	WebCommandMetadata(x) {
 		this.save_keys("[GenericWebCommandMetadata]",x);
 		if("apiUrl" in x) {
 			let cx=x.apiUrl;
@@ -7545,6 +7536,7 @@ class HandleTypes extends ServiceMethods {
 				case "/youtubei/v1/flag/get_form": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/subscription/subscribe": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/feedback": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/browse": return this.GeneratedWebCommandMetadata(x);
 			}
 			return;
 		}
@@ -7579,7 +7571,7 @@ class HandleTypes extends ServiceMethods {
 		this.rootVe(x.rootVe);
 		switch(x.webPageType) {
 			default: debugger; return;
-			case "WEB_PAGE_TYPE_BROWSE": return this.GenericWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_BROWSE": return this.WebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_PLAYLIST": return this.PlaylistWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
@@ -10117,7 +10109,8 @@ class HandleTypes extends ServiceMethods {
 	CommandMetadata(x) {
 		this.save_keys("[CommandMetadata]",x);
 		const {webCommandMetadata,resolveUrlCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		this.WebCommandMetadata(webCommandMetadata);
+		debugger;
+		// this.WebCommandMetadata(webCommandMetadata);
 		this.t(resolveUrlCommandMetadata,this.ResolveUrlCommandMetadata);
 	}
 	/** @arg {Accessibility} x */

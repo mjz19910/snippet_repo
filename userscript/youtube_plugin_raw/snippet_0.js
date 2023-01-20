@@ -387,11 +387,19 @@ export class Snippet_0_tmp {
 			const {sendPost,apiUrl}=x;
 			this.primitive_of(sendPost,"boolean");
 			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
-		} else {
+		} else if("rootVe" in x) {
 			switch(x.rootVe) {
+				case 3832:
 				case 3854:
 				case 6827:
 				case 11487: break;
+				case 96368: break;
+				default: let rve=((/**@template {number} T @arg {{rootVe:T}} v @return {{rootVe:T}}*/(v)=>{
+					/** @type {{rootVe:T}} */
+					let c=as(v);
+					return c;
+				}))(x).rootVe;
+				rve;
 			}
 		}
 	}
