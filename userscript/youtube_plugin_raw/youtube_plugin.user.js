@@ -8872,7 +8872,7 @@ class HandleTypes extends ServiceMethods {
 		const {text,icon,serviceEndpoint,trackingParams,hasSeparator}=x; //...y}=x; this.g(y); //#destructure
 		this.TextWithRuns(text);
 		this.t(icon,this.Icon);
-		this.ServiceEndpointTemplate(serviceEndpoint,this.MenuServiceEndpointItems);
+		this.MenuServiceEndpointItems(serviceEndpoint);
 		this.trackingParams(trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
 	}
