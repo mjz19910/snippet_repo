@@ -1,9 +1,1 @@
-type ReplaceEnclosingAction={
-	clickTrackingParams: string;
-	replaceEnclosingAction: ItemTemplate<NotificationTextRenderer|{
-		reelDismissalActionRenderer: {
-			onDismissalCompletionRenderer: NotificationActionRenderer;
-			trackingParams: string;
-		};
-	}>;
-};
+type ReplaceEnclosingAction=C$Tracking&{replaceEnclosingAction: ItemTemplate<NotificationTextRenderer|ReelDismissalActionRenderer>;};
