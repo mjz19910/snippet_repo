@@ -2087,7 +2087,7 @@ class ApiBase {
 	}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
-		if(typeof x!==y) debugger;
+		if(typeof x!==y) console.log(new Error());
 	}
 	/** @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
@@ -5905,6 +5905,7 @@ case "${path_parts[idx-1]}": {
 										if(path_parts.length===4) {
 											switch(tv) {
 												case 3: return;
+												case 12: return;
 												default: debugger; return;
 											}
 										}
