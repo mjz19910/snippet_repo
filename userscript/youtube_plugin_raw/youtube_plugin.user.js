@@ -7469,6 +7469,12 @@ class HandleTypes extends ServiceMethods {
 		if(signal!=="CLIENT_SIGNAL") debugger;
 		this.z(actions,this.ServiceEndpointAction);
 	}
+	/** @arg {E$Signal$GetAccountMenu} x */
+	E$Signal$GetAccountMenu(x) {
+		const {signal,actions,...y}=x; this.g(y); // ! #destructure
+		if(signal!=="GET_ACCOUNT_MENU") debugger;
+		this.z(actions,this.OpenPopupAction);
+	}
 	FeedbackEndpoint(x) {
 		x;
 	}
@@ -7530,7 +7536,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
 			case "CLIENT_SIGNAL": return this.E$Signal_ClientSignal(x);
-			case "GET_ACCOUNT_MENU": break;
+			case "GET_ACCOUNT_MENU": return this.E$Signal$GetAccountMenu(x);
 		}
 	}
 	/** @arg {E$PlaylistEditEndpoint} x */
@@ -10654,7 +10660,7 @@ class HandleTypes extends ServiceMethods {
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of_string(aadcGuidelinesStateEntityKey);
 	}
-	/** @arg {E$Signal_GetAccountMenu} x */
+	/** @arg {E$Signal$GetAccountMenu} x */
 	GetAccountMenu(x) {
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
