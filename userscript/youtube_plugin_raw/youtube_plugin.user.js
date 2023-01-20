@@ -6097,6 +6097,7 @@ case "${path_parts[idx-1]}": {
 			case "share": return this.get_share_type(x);
 			case "music": return this.get_music_type(x);
 			case "pdg": return this.get_pdg_type(x);
+			default: debugger; return null;
 		}
 	}
 	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",string]>} x */
@@ -9473,7 +9474,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(b1!==void 0) {
 			this.primitive_of(b1,"number");
-			console.log("playRelSecPC",b1);
+			if(b1!==-3) {console.log("playRelSecPC",b1); debugger;}
 		}
 		if(b2!==void 0) {
 			this.primitive_of(b2,"number");
