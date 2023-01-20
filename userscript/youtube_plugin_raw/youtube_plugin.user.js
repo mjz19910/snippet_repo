@@ -4665,6 +4665,7 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	on_endpoint_params(for_,path,x) {
+		if(x===void 0){debugger; return;}
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
