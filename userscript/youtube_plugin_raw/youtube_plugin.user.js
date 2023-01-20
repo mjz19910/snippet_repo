@@ -10109,7 +10109,7 @@ class HandleTypes extends ServiceMethods {
 	EntityMutationItem(x) {
 		this.save_keys("[EntityMutationItem]",x);
 		const {entityKey,type,options,payload}=x; //...y}=x; this.g(y); //#destructure
-		entityKey;
+		console.log(entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		this.tf(this.EntityMutationOptions)(options);
 		this.tf(this.EntityMutationPayload)(payload);
@@ -10733,9 +10733,9 @@ class HandleTypes extends ServiceMethods {
 	MacroMarkersList(x) {
 		this.save_keys("[MacroMarkersList]",x);
 		const {contents,syncButtonLabel,trackingParams}=x; //...y}=x; this.g(y); //#destructure
-		contents;
-		syncButtonLabel;
-		trackingParams;
+		this.z(contents,this.MacroMarkersListItemRenderer);
+		this.TextWithRuns(syncButtonLabel);
+		this.trackingParams(trackingParams);
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
@@ -11445,6 +11445,8 @@ class HandleTypes extends ServiceMethods {
 	ChannelSwitcherPage(x) {x;}
 	/** @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {x;}
+	/** @arg {MacroMarkersListItemRenderer} x */
+	MacroMarkersListItemRenderer(x) {x;}
 	/** @private @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
