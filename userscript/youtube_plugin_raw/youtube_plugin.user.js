@@ -3970,7 +3970,7 @@ class CodegenService extends BaseService {
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
-			if(k=="responseContext") {console.log("responseContext",x); continue;}
+			if(k=="responseContext") {debugger; continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
@@ -4106,66 +4106,90 @@ class CodegenService extends BaseService {
 			}
 		}
 	}
+	/** @arg {string} o @arg {string} k1 */
+	json_filter_string(o,k1) {
+		const max_str_len=40;
+		if(k1==="apiUrl") return o;
+		if(k1==="targetId") return o;
+		if(k1==="panelIdentifier") return o;
+		if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
+			return o;
+		}
+		if(o.length>max_str_len) {
+			console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
+			return "TYPE::string";
+		}
+		let u_ty_count=[...new Set(o.split("").sort())].join("").length;
+		if(o.includes("%")) {
+			if(u_ty_count>13) {
+				return "TYPE::string";
+			}
+		}
+		if(k1=="trackingParams") return "TYPE::string";
+		if(k1=="clickTrackingParams") return "TYPE::string";
+		if(k1=="playlistId") {
+			if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
+			if(o.startsWith("RD")) return `TYPE::\`RD$\{string}\``;
+			if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
+			debugger;
+			return "TYPE::string";
+		}
+		if(k1=="videoId") {console.log("[video_id_json]",o); return "TYPE::string";}
+		console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
+		return o;
+	}
+	/** @typedef {{object_count:number;gen_name:string;keys:string[]}} JsonReplacerState */
+	/** @arg {JsonReplacerState} state @arg {{}|null} x @arg {string} k1 */
+	json_filter_object(state,x,k1) {
+		const {gen_name,keys}=state;
+		if(x===null) return x;
+		if(k1==="responseContext") return "TYPE::ResponseContext";
+		if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
+		if(k1==="loggingDirectives") return "TYPE::LoggingDirectives";
+		if(x instanceof Array) {
+			if(keys.includes(k1)) return [x[0]];
+			return [x[0]];
+		}
+		let res_type=this.get_json_replacer_type(gen_name,x);
+		if(res_type!==null) return res_type;
+		if(keys.includes(k1)) return x;
+		state.object_count++;
+		if(state.object_count<3) return x;
+		return {};
+	}
+	/** @arg {JsonReplacerState} state @arg {string} k1 @arg {unknown} rep */
+	json_replacer(state,k1,rep) {
+		/** @type {unknown} */
+		let o=rep;
+		if(k1==="") return o;
+		if(typeof o==="bigint") return o;
+		else if(typeof o==="boolean") return o;
+		else if(typeof o==="function") return o;
+		else if(typeof o==="number") return o;
+		else if(typeof o==="symbol") return o;
+		else if(typeof o==="undefined") return o;
+		else if(typeof o==="string") return this.json_filter_string(o,k1);
+		else if(typeof o==="object") return this.json_filter_object(state,o,k1);
+		throw new Error();
+	}
 	/** @arg {{}} x @arg {string} gen_name */
 	#_codegen_new_typedef(x,gen_name) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
-		let obj_count=0;
+		/** @type {JsonReplacerState} */
+		let state={
+			object_count: 0,
+			gen_name,
+			keys: [],
+		};
 		/** @private @type {{[x: number|string]:{}}} */
 		let xa=as(x);
 		let o2=xa[k];
-		let keys=Object.keys(x).concat(Object.keys(o2));
-		const max_str_len=40;
-		let tc=JSON.stringify(x,(k1,o) => {
-			if(k1==="") return o;
-			if(typeof o==="string") {
-				if(k1==="apiUrl") return o;
-				if(k1==="targetId") return o;
-				if(k1==="panelIdentifier") return o;
-				if(o.match(/^[A-Z][A-Z_]+[A-Z]$/)) {
-					return o;
-				}
-				if(o.length>max_str_len) {
-					console.log("[json_str_too_long]",o.length,o.slice(0,max_str_len+6));
-					return "TYPE::string";
-				}
-				let u_ty_count=[...new Set(o.split("").sort())].join("").length;
-				if(o.includes("%")) {
-					if(u_ty_count>13) {
-						return "TYPE::string";
-					}
-				}
-				if(k1=="trackingParams") return "TYPE::string";
-				if(k1=="clickTrackingParams") return "TYPE::string";
-				if(k1=="playlistId") {
-					if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
-					if(o.startsWith("RD")) return `TYPE::\`RD$\{string}\``;
-					if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
-					debugger;
-					return "TYPE::string";
-				}
-				if(k1=="videoId") {console.log("[video_id_json]",o); return "TYPE::string";}
-				console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
-				return o;
-			}
-			if(typeof o==="number") return o;
-			if(typeof o==="boolean") return o;
-			if(typeof o==="undefined") return o;
-			if(typeof o!=="object") throw new Error("handle typeof "+typeof o);
-			if(o instanceof Array) {
-				if(keys.includes(k1)) return [o[0]];
-				return [o[0]];
-			}
-			let res_type=this.get_json_replacer_type(gen_name,o);
-			if(res_type!==null) return res_type;
-			if(k1==="responseContext") return "TYPE::ResponseContext";
-			if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
-			if(k1==="loggingDirectives") return "TYPE::LoggingDirectives";
-			if(keys.includes(k1)) return o;
-			obj_count++;
-			if(obj_count<3) return o;
-			return {};
-		},"\t");
+		state.keys=Object.keys(x).concat(Object.keys(o2));
+		if("response" in x&&typeof x.response==='object'&&x.response!==null) {
+			state.keys=state.keys.concat(Object.keys(x.response));
+		}
+		let tc=JSON.stringify(x,this.json_replacer.bind(null,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
 		});
@@ -4218,63 +4242,69 @@ class CodegenService extends BaseService {
 			return "TYPE::{}";
 		}
 	}
-	/** @arg {string|null} r @param {{[U in string]:unknown}} o @arg {string[]} keys */
-	get_json_replace_type_len_1(r,o,keys) {
-		let g=() => this.json_auto_replace(o);
+	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
+	get_json_replace_type_len_1(r,b,keys) {
+		let g=() => this.json_auto_replace(b);
 		let hg=false
-			||o.browseEndpoint
-			||o.buttonRenderer
-			||o.changeEngagementPanelVisibilityAction
-			||o.cinematicContainerRenderer
-			||o.commandExecutorCommand
-			||o.commentsEntryPointHeaderRenderer
-			||o.continuationItemRenderer
-			||o.desktopTopbarRenderer
-			||o.engagementPanelSectionListRenderer
-			||o.getSurveyCommand
-			||o.menuRenderer
-			||o.merchandiseItemRenderer
-			||o.metadataRowContainerRenderer
-			||o.openPopupAction
-			||o.pdgBuyFlowHeaderRenderer
-			||o.pdgColorSliderRenderer
-			||o.pdgCommentOptionRenderer
-			||o.pdgCommentPreviewRenderer
-			||o.pivotButtonRenderer
-			||o.playerOverlayRenderer
-			||o.playlistPanelVideoRenderer
-			||o.richItemRenderer
-			||o.signalServiceEndpoint
-			||o.subscribeButtonRenderer
-			||o.superVodBuyFlowContentRenderer
-			||o.twoColumnWatchNextResults
-			||o.urlEndpoint
-			||o.videoOwnerRenderer
-			||o.videoViewCountRenderer
-			||o.watchEndpoint
-			||o.metadataBadgeRenderer
-			||o.likeButtonRenderer
-			||o.reelPlayerHeaderRenderer
-			||o.metadataBadgeRenderer
-			||o.likeEndpoint
-			||o.engagementPanelTitleHeaderRenderer
-			||o.sectionListRenderer
-			||o.clipSectionRenderer
-			||o.clipCreationRenderer
-			||o.reelWatchEndpoint
-			||o.reelPlayerOverlayRenderer
-			||o.compactLinkRenderer
-			||o.textInputFormFieldRenderer
-			||o.dropdownRenderer
-			||o.createPlaylistServiceEndpoint
-			||o.sortFilterSubMenuRenderer
-			||o.continuationCommand
-			||o.showReloadUiCommand
+			||b.browseEndpoint
+			||b.buttonRenderer
+			||b.changeEngagementPanelVisibilityAction
+			||b.cinematicContainerRenderer
+			||b.commandExecutorCommand
+			||b.commentsEntryPointHeaderRenderer
+			||b.continuationItemRenderer
+			||b.desktopTopbarRenderer
+			||b.engagementPanelSectionListRenderer
+			||b.getSurveyCommand
+			||b.menuRenderer
+			||b.merchandiseItemRenderer
+			||b.metadataRowContainerRenderer
+			||b.openPopupAction
+			||b.pdgBuyFlowHeaderRenderer
+			||b.pdgColorSliderRenderer
+			||b.pdgCommentOptionRenderer
+			||b.pdgCommentPreviewRenderer
+			||b.pivotButtonRenderer
+			||b.playerOverlayRenderer
+			||b.playlistPanelVideoRenderer
+			||b.richItemRenderer
+			||b.signalServiceEndpoint
+			||b.subscribeButtonRenderer
+			||b.superVodBuyFlowContentRenderer
+			||b.twoColumnWatchNextResults
+			||b.urlEndpoint
+			||b.videoOwnerRenderer
+			||b.videoViewCountRenderer
+			||b.watchEndpoint
+			||b.metadataBadgeRenderer
+			||b.likeButtonRenderer
+			||b.reelPlayerHeaderRenderer
+			||b.metadataBadgeRenderer
+			||b.likeEndpoint
+			||b.engagementPanelTitleHeaderRenderer
+			||b.sectionListRenderer
+			||b.clipSectionRenderer
+			||b.clipCreationRenderer
+			||b.reelWatchEndpoint
+			||b.reelPlayerOverlayRenderer
+			||b.compactLinkRenderer
+			||b.textInputFormFieldRenderer
+			||b.dropdownRenderer
+			||b.createPlaylistServiceEndpoint
+			||b.sortFilterSubMenuRenderer
+			||b.continuationCommand
+			||b.showReloadUiCommand
+			||b.playlistHeaderRenderer
+			||b.playlistMetadataRenderer
+			||b.microformatDataRenderer
+			||b.playlistSidebarRenderer
+			||b.tabRenderer
+			||b.twoColumnBrowseResultsRenderer
 			;
 		if(hg) return g();
-		if(o.webCommandMetadata) return "TYPE::CommandMetadata";
-		if(o.accessibilityData) return "TYPE::Accessibility";
-		console.log("[no_json_replace_type_1] %o [%s] [%s]",o,keys.join(","),g(),"\n",r);
+		if(b.webCommandMetadata) return "TYPE::CommandMetadata";
+		if(b.accessibilityData) return "TYPE::Accessibility";
+		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
 	}
 	/** @public @arg {string} x1 */
