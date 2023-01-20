@@ -10722,7 +10722,7 @@ class HandleTypes extends ServiceMethods {
 		let sid=split_string(slotId,":");
 		console.log(sid);
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
-		if(slotPhysicalPosition!==0) debugger;
+		if(slotPhysicalPosition!==1) debugger;
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
@@ -11390,10 +11390,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {
 		this.save_keys("[RichItemContent]",x);
-		if("adSlotRenderer" in x) {debugger; return;};
-		if("videoRenderer" in x) {debugger; return;};
-		if("radioRenderer" in x) {debugger; return;};
-		if("feedNudgeRenderer" in x) {debugger; return;};
+		if("adSlotRenderer" in x) return this.AdSlotRenderer(x);
+		if("videoRenderer" in x) return this.VideoRenderer(x);
+		if("radioRenderer" in x) return this.RadioRenderer(x);
+		if("feedNudgeRenderer" in x) return this.FeedNudgeRenderer(x);
 		debugger;
 	}
 	/** @arg {UnifiedSharePanel} x */
@@ -11552,6 +11552,16 @@ class HandleTypes extends ServiceMethods {
 	ClipAdStateRenderer(x) {
 		this.save_keys("[ClipAdStateRenderer]",x);
 	}
+	/** @private @arg {AdSlotRenderer} x */
+	AdSlotRenderer(x) {x;}
+	/** @private @arg {VideoRenderer} x */
+	VideoRenderer(x) {
+		this.save_keys("[VideoRenderer]",x);
+	}
+	/** @private @arg {RadioRenderer} x */
+	RadioRenderer(x) {x;}
+	/** @private @arg {FeedNudgeRenderer} x */
+	FeedNudgeRenderer(x) {x;}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
