@@ -10049,6 +10049,7 @@ class HandleTypes extends ServiceMethods {
 			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility}=x; //...y}=x; this.g(y); //#destructure
 			this.t(navigationEndpoint,x => {
 				if("browseEndpoint" in x) return this.BrowseEndpoint(x);
+				if("urlEndpoint" in x) return this.UrlEndpoint(x);
 				debugger;
 			});
 			this.Icon(icon);
