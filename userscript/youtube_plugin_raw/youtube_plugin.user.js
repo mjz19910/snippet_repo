@@ -5605,7 +5605,10 @@ case "${path_parts[idx-1]}": {
 									case "f3": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+											if(typeof tv==="number") {
+												if(tv<8192) return this.save_number(`[${path}]`,tv);
+												return;
+											}
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
@@ -5616,7 +5619,10 @@ case "${path_parts[idx-1]}": {
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+											if(typeof tv==="number") {
+												if(tv<8192) return this.save_number(`[${path}]`,tv);
+												return;
+											}
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
