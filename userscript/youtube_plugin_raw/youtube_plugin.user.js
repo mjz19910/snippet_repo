@@ -9161,9 +9161,15 @@ class HandleTypes extends ServiceMethods {
 	GuideSectionData(x) {
 		this.save_keys("[GuideSectionData]",x);
 		const {items,trackingParams,formattedTitle}=x; //...y}=x; this.g(y); //#destructure
-		this.z(items,a => a);
+		this.z(items,this.GuideSectionItemType);
 		this.trackingParams(trackingParams);
 		this.t(formattedTitle,this.TextT);
+	}
+	/** @private @arg {GuideSectionItemType} x */
+	GuideSectionItemType(x) {
+		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
+		if("guideCollapsibleSectionEntryRenderer" in x) this.GuideCollapsibleSectionEntryRenderer(x);
+		debugger;
 	}
 	/** @private @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
@@ -11205,7 +11211,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MerchandiseShelf]",x);
 		const {title,items,trackingParams,showText,hideText,actionButton}=x; //...y}=x; this.g(y); //#destructure
 		this.primitive_of(title,"string");
-		this.z(items,a => a);
+		this.z(items,this.MerchandiseItemRenderer);
 		this.trackingParams(trackingParams);
 		this.primitive_of(showText,"string");
 		this.primitive_of(hideText,"string");
@@ -11224,8 +11230,8 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.primitive_of(defaultExpanded,"boolean");
 		this.primitive_of(descriptionCollapsedLines,"number");
-		this.t(showMoreCommand,a => a);
-		this.t(showLessCommand,a => a);
+		this.t(showMoreCommand,this.CommandExecutorCommand);
+		this.t(showLessCommand,this.ChangeEngagementPanelVisibilityAction);
 	}
 	//#endregion
 	//#region type_errors
@@ -11336,7 +11342,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(unsubscribedButtonText);
 		this.trackingParams(trackingParams);
 		this.TextWithRuns(unsubscribeButtonText);
-		this.t(serviceEndpoints,a => a);
+		this.t(serviceEndpoints,a => this.z(a,this.g));
 		this.Accessibility(subscribeAccessibility);
 		this.Accessibility(unsubscribeAccessibility);
 		this.SubscriptionNotificationToggleButtonRenderer(notificationPreferenceButton);
@@ -11574,6 +11580,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {RichSectionRenderer} x */
 	RichSectionRenderer(x) {
 		this.save_keys("[RichSectionRenderer]",x);
+	}
+	/** @private @arg {GuideCollapsibleSectionEntryRenderer} x */
+	GuideCollapsibleSectionEntryRenderer(x) {
+		this.save_keys("[GuideCollapsibleSectionEntryRenderer]",x);
+	}
+	/** @private @arg {MerchandiseItemRenderer} x */
+	MerchandiseItemRenderer(x) {
+		this.save_keys("[MerchandiseItemRenderer]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
