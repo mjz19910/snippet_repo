@@ -5493,6 +5493,7 @@ case "${path_parts[idx-1]}": {
 											default: gd(idx); path_parts[4]===""; break;
 										}
 									} break;
+									// ["tracking", "trackingParams", "f4", "f2"]
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5528,6 +5529,7 @@ case "${path_parts[idx-1]}": {
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// ["tracking", "trackingParams", "f2"]
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5598,6 +5600,7 @@ case "${path_parts[idx-1]}": {
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// ["subscribe", "params", "f2"]
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5651,7 +5654,7 @@ case "${path_parts[idx-1]}": {
 										}
 										switch(path_parts[4]) {
 											default: gd(idx); path_parts[4]===""; break;
-											// url
+											// ["report", "params", "f18", "f1", "f2"] = url
 											case "f2": {
 												const idx=6;
 												if(path_parts.length===5) {
@@ -5702,6 +5705,7 @@ case "${path_parts[idx-1]}": {
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// ["report", "params", "f2"]
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5831,6 +5835,7 @@ case "${path_parts[idx-1]}": {
 							default: gd(idx); path_parts[2]===""; break;
 						}
 					} break;
+					// ["record_notification_interactions", "f2"]
 					case "f2": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5860,6 +5865,7 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									// ["record_notification_interactions", "f2", "f14", "f2"]
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5883,6 +5889,7 @@ case "${path_parts[idx-1]}": {
 												gen_next_part(idx);
 												debugger;
 											} path_parts[4]===""; break;
+											// ["record_notification_interactions", "f2", "f14", "f1", "f2"]
 											case "f2": {
 												const idx=6;
 												if(path_parts.length===5) {
@@ -6072,11 +6079,13 @@ case "${path_parts[idx-1]}": {
 								default: gd(idx); path_parts[3]===""; break;
 							}
 						} break;
+						// ["watch", "params", "f2"]
 						case "f2": {
 							const idx=4;
 							if(path_parts.length===3) {
 								switch(tv) {
 									case 1: return;
+									case 2: return;
 									default: debugger; return;
 								}
 							}
@@ -7055,7 +7064,7 @@ class HandleTypes extends ServiceMethods {
 	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
 	//#endregion
 	//#region templates
-	/** @template {{}} T @arg {{items: T[]}} x @arg {(x:T)=>void} f */
+	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
 		const {items,...y}=x; this.g(y); // ! #destructure
 		this.z(items,f);
@@ -7110,11 +7119,11 @@ class HandleTypes extends ServiceMethods {
 		let t=as(y);
 		f.call(this,as(t));
 	}
-	/** @template T @arg {AutoplayTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @template T @arg {AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	AutoplayTemplate(x,f) {
 		this.save_keys("[AutoplayTemplate]",x);
 		const {autoplay,...y}=x; this.g(y); // ! #destructure
-		f(autoplay);
+		f.call(this,autoplay);
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	PlaylistTemplate(x,f) {
@@ -10147,7 +10156,11 @@ class HandleTypes extends ServiceMethods {
 	VE3832_WebCommandMetadata(x) {
 		this.save_keys("[VE3832_WebCommandMetadata]",x);
 		const {url,webPageType,rootVe,...y}=x; this.g(y); // ! #destructure
-		if(!this.str_starts_with(url,"/watch?")) debugger;
+		x: {
+			if(this.str_starts_with(url,"/watch?")) break x;
+			if(this.str_starts_with(url,"/playlist?")) break x;
+			console.log("[VE3832.url]",url);
+		}
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		this.rootVe(rootVe);
 	}
@@ -12708,7 +12721,7 @@ class HandleTypes extends ServiceMethods {
 		const {contents,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.BrowseFeedContent);
 	}
-	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(x:T)=>void} f */
+	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
 		this.save_keys("[ChipCloudStyle]",x);
 		const {styleType,...y}=x; this.g(y); // ! #destructure
