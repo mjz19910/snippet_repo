@@ -38,9 +38,9 @@ function split_string_once(s,d=as(",")) {
 }
 class ParserService {
 	/** @arg {Split<ApiUrlFormat,"/">} x @returns {Join<Split<ApiUrlFormat,"/">,".">} */
-	get_url_type(x) {x;throw 1;}
+	get_url_type(x) {x; throw 1;}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
-	parse_url(root,x) {root;x;}
+	parse_url(root,x) {root; x;}
 }
 class CodegenService {
 	/**
@@ -48,7 +48,7 @@ class CodegenService {
 	 * @param {string} y
 	 * @param {boolean | undefined} z
 	 */
-	codegen_new_typedef(x,y,z) {x;y;z;}
+	codegen_new_typedef(x,y,z) {x; y; z;}
 }
 export class Snippet_0_tmp {
 	/** @arg {NavigationEndpoint} x */
