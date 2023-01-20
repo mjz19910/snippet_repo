@@ -5023,6 +5023,7 @@ case "${path}": {
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue} tv */
 	parse_param_next(root,path,tv) {
 		let key_index=this.parse_key_index;
+		if(tv instanceof Map) this.parse_any_param(root,path,tv);
 		/** @arg {number} idx */
 		let gen_next_part=(idx) => {
 			if(path_parts.length===idx) {
@@ -5119,7 +5120,10 @@ case "${path_parts[idx]}": {
 						case "f33": {
 							let idx=4;
 							if(path_parts.length===idx) {
-								if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+								if(typeof tv==="string") {
+									console.log(path,tv);
+									return;
+								}
 								switch(tv) {
 									default: debugger; break;
 								}
