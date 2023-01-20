@@ -6896,8 +6896,10 @@ class HandleTypes extends ServiceMethods {
 		const {browseId,params,canonicalBaseUrl}=x; //...y}=x; this.g(y); //#destructure
 		this.t(browseId,this.browseId);
 		this.t(params,a => this.params("CommonConfigData","create_playlist.params",a));
-		this.t(canonicalBaseUrl,() => console.log(canonicalBaseUrl));
-		debugger;
+		this.t(canonicalBaseUrl,() => {
+			console.log(canonicalBaseUrl);
+			debugger;
+		});
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
