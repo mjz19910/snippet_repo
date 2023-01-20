@@ -5213,6 +5213,19 @@ case "${path}": {
 				/** @type {LogItems} */
 				switch(path) {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
+					case "click.trackingParams":
+					case "tracking.trackingParams": {
+						switch(ta) {
+							case 1: break;
+							case 2: break;
+							case 3: break;
+							case 4: break;
+							case 6: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "browse$param.f84": {
 						switch(ta) {
 							case 5: break;
@@ -5253,18 +5266,6 @@ case "${path}": {
 							case 1: break;
 							case 2: break;
 							case 3: break;
-							default: return new_ns();
-						}
-						/** @type {PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "tracking.trackingParams": {
-						switch(ta) {
-							case 1: break;
-							case 2: break;
-							case 3: break;
-							case 4: break;
-							case 6: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */

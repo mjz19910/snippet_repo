@@ -1,6 +1,5 @@
 type unknown$param=[
 	"browse.params",
-	"click.trackingParams",
 	"createBackstagePost.param",
 	"entity_key",
 	"get_transcript.params",
@@ -12,9 +11,18 @@ type unknown$param=[
 	"report.params",
 	"subscribe.params",
 	"tracking.parentTrackingParams",
-	"tracking.trackingParams.f1",
-	"tracking.trackingParams",
 	"watch_page_url.pp",
 	"watch_playlist.params",
 	"ypc_get_offers.params",
+][number];
+type tracking$param<T extends string>=[
+	`${T}.trackingParams.f1`,
+	`${T}.trackingParams.f2`,
+	`${T}.trackingParams.f3`,
+	`${T}.trackingParams.f4.f1`,
+	`${T}.trackingParams.f4.f2`,
+	`${T}.trackingParams.f4.f3`,
+	`${T}.trackingParams.f4`,
+	`${T}.trackingParams.f6`,
+	`${T}.trackingParams`,
 ][number];

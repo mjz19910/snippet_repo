@@ -1,4 +1,5 @@
 type $known$param=[
+	tracking$param<"click"|"tracking">,
 	browse$param,
 	create_playlist$param,
 	get_transcript$param,
