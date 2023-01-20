@@ -4973,6 +4973,7 @@ case "${path}": {
 			console.log(\`\ncase \${ta}: break;\`);
 		} return;
 	}
+	/** @type {PathRoot} */
 	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 } return;`);
 						debugger;
