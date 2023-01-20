@@ -5176,11 +5176,22 @@ case "${path}": {
 				/** @type {LogItems} */
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "tracking.trackingParams.f4": {
+						switch(ta) {
+							case 1: break;
+							case 2: break;
+							case 3: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "tracking.trackingParams": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
 							case 3: break;
+							case 4: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
@@ -5435,7 +5446,45 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
-							// case "f3": gd(idx); break;
+							case "f4": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f3": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+									case "f2": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+								}
+							} break;
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {

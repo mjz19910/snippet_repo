@@ -5,6 +5,10 @@ type LogItems=[
 	"[parse_value.gen_ns] [subscribe.params.f4]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f2]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f3]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f4]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f4.f1]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f4.f2]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f4.f3]",
 ][number];
 type PathRoot=[
 	"like.remove_like_params",
