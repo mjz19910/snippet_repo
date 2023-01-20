@@ -5482,6 +5482,7 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									// ["tracking", "trackingParams", "f4", "f3"]
 									case "f3": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5514,6 +5515,7 @@ case "${path_parts[idx-1]}": {
 									} break;
 								}
 							} break;
+							// ["tracking", "trackingParams", "f3"]
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5583,6 +5585,7 @@ case "${path_parts[idx-1]}": {
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// "subscribe.params.f3"
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6056,6 +6059,7 @@ case "${path_parts[idx-1]}": {
 								default: gd(idx); path_parts[3]===""; break;
 							}
 						} break;
+						// "watch.params.f3"
 						case "f3": {
 							const idx=4;
 							if(path_parts.length===3) {
@@ -6128,6 +6132,7 @@ case "${path_parts[idx-1]}": {
 										} path_parts[4]===""; break;
 									}
 								} break;
+								// ["watch", "params", "f33", "f3"]
 								case "f3": {
 									let idx=4;
 									if(path_parts.length===4) {
