@@ -7923,6 +7923,20 @@ class HandleTypes extends ServiceMethods {
 		this.t(params,a => this.params(cf,"browse.params",a));
 		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
 	}
+	/** @arg {YTNavigateFinishDetail['endpoint']} x */
+	E$PageEndpoint(x) {
+		this.save_keys("[PageEndpoint]",x);
+		if("browseEndpoint" in x) {
+			return this.E$BrowseEndpoint(x);
+		} else if("watchEndpoint" in x) {
+			return this.E$WatchEndpoint(x);
+		} else if("reelWatchEndpoint" in x) {
+			return this.E$ReelWatchEndpoint(x);
+		} else if("searchEndpoint" in x) {
+			return this.E$SearchEndpoint(x);
+		}
+		debugger;
+	}
 	/** @arg {E$RecordNotificationInteractionsEndpoint} x */
 	E$RecordNotificationInteractionsEndpoint(x) {
 		const cf="RecordNotificationInteractionsEndpoint";
@@ -7956,7 +7970,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="Generic_WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y); // ! #destructure
-		this.WatchEndpoint(endpoint);
+		this.E$WatchEndpoint(endpoint);
 		this.WatchResponse(response);
 		this.PlayerResponse(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
@@ -7971,7 +7985,7 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==3832) debugger;
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
-		this.WatchEndpoint(endpoint);
+		this.E$WatchEndpoint(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.PlayerResponse(playerResponse);
 		this.WatchResponse(response);
@@ -7988,7 +8002,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
 		this.ResponseContext(responseContext);
 		this.TwoColumnWatchNextResults(contents);
-		this.WatchEndpoint(currentVideoEndpoint);
+		this.E$WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams("WatchResponse",trackingParams);
 		this.PlayerOverlayRenderer(playerOverlays);
 		this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("WatchResponse",a));
@@ -8111,7 +8125,7 @@ class HandleTypes extends ServiceMethods {
 		const {navigationEndpoints,...y}=x; this.g(y); // ! #destructure
 		this.z(navigationEndpoints,a => {
 			if("watchEndpoint" in a) {
-				return this.WatchEndpoint(a);
+				return this.E$WatchEndpoint(a);
 			}
 			debugger;
 		});
@@ -8515,25 +8529,11 @@ class HandleTypes extends ServiceMethods {
 	YTNavigateFinishDetail(x) {
 		this.save_keys("[YTNavigateFinishDetail]",x);
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=x; this.g(y); // ! #destructure
-		this.PageEndpoint(endpoint);
+		this.E$PageEndpoint(endpoint);
 		this.DataResponsePageType(response);
 		this.parser.parse_page_type(pageType);
 		this.primitive_of(fromHistory,"boolean");
 		this.primitive_of(navigationDoneMs,"number");
-	}
-	/** @arg {YTNavigateFinishDetail['endpoint']} x */
-	PageEndpoint(x) {
-		this.save_keys("[PageEndpoint]",x);
-		if("browseEndpoint" in x) {
-			return this.E$BrowseEndpoint(x);
-		} else if("watchEndpoint" in x) {
-			return this.WatchEndpoint(x);
-		} else if("reelWatchEndpoint" in x) {
-			return this.E_ReelWatchEndpoint(x);
-		} else if("searchEndpoint" in x) {
-			return this.SearchEndpoint(x);
-		}
-		debugger;
 	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
@@ -9171,12 +9171,12 @@ class HandleTypes extends ServiceMethods {
 	ReelWatchSequenceResponse(x) {
 		this.save_keys(`[ReelWatchSequenceResponse]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.z(entries,a => this.CommandTemplate(a,this.E_ReelWatchEndpoint));
+		this.z(entries,a => this.CommandTemplate(a,this.E$ReelWatchEndpoint));
 		this.trackingParams("ReelWatchSequenceResponse",trackingParams);
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
 	/** @arg {E$ReelWatchEndpoint} x */
-	E_ReelWatchEndpoint(x) {
+	E$ReelWatchEndpoint(x) {
 		const cf="ReelWatchEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -9372,7 +9372,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NextResponse]",x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=x;
 		this.t(contents,this.NextResponseContents);
-		this.t(currentVideoEndpoint,this.WatchEndpoint);
+		this.t(currentVideoEndpoint,this.E$WatchEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.t(playerOverlays,this.PlayerOverlayRenderer);
 		this.tz(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("NextResponse",a));
@@ -9563,7 +9563,7 @@ class HandleTypes extends ServiceMethods {
 		this.Thumbnail(thumbnail);
 		this.TextT(lengthText);
 		this.primitive_of(selected,"boolean");
-		this.WatchEndpoint(navigationEndpoint);
+		this.E$WatchEndpoint(navigationEndpoint);
 		this.videoId(videoId);
 		this.TextWithRuns(shortBylineText);
 		this.trackingParams("CF_FIX",trackingParams);
@@ -10276,13 +10276,13 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(shortBylineText);
 		this.t(lengthText,this.SimpleText);
 		this.t(lengthInSeconds,a => this.primitive_of(a,"number"));
-		this.WatchEndpoint(navigationEndpoint);
+		this.E$WatchEndpoint(navigationEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.TextT(shortViewCountText);
 		this.SimpleText(publishedTimeText);
 	}
 	/** @arg {E$WatchEndpoint} x */
-	WatchEndpoint(x) {
+	E$WatchEndpoint(x) {
 		const cf="WatchEndpoint";
 		this.save_keys("[WatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -10430,7 +10430,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(longBylineText);
 		this.t(videoCount,this.primitive_of_string);
 		this.TextWithRuns(videoCountText);
-		this.WatchEndpoint(navigationEndpoint);
+		this.E$WatchEndpoint(navigationEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @private @arg {NavigationEndpoint} x */
@@ -10440,7 +10440,7 @@ class HandleTypes extends ServiceMethods {
 		if("urlEndpoint" in a1) {
 			this.E$UrlEndpoint(a1);
 		} else if("watchEndpoint" in a1) {
-			this.WatchEndpoint(a1);
+			this.E$WatchEndpoint(a1);
 		} else if("browseEndpoint" in a1) {
 			this.E$BrowseEndpoint(a1);
 		} else {
@@ -10687,7 +10687,7 @@ class HandleTypes extends ServiceMethods {
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams("CF_FIX",trackingParams);
-		this.t(replacementEndpoint,this.E_ReelWatchEndpoint);
+		this.t(replacementEndpoint,this.E$ReelWatchEndpoint);
 		this.t(sequenceContinuation,this.primitive_of_string);
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
@@ -11060,7 +11060,7 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
-		this.E_ReelWatchEndpoint(endpoint);
+		this.E$ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
 		this.t(reelWatchSequenceResponse,this.ReelWatchSequenceResponse);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
@@ -11075,7 +11075,7 @@ class HandleTypes extends ServiceMethods {
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
-		this.E_ReelWatchEndpoint(endpoint);
+		this.E$ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
 		this.t(reelWatchSequenceResponse,this.ReelWatchSequenceResponse);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
@@ -11087,19 +11087,25 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GetNotificationMenuJson]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="search") debugger;
-		this.SearchEndpoint(endpoint);
+		this.E$SearchEndpoint(endpoint);
 		this.SearchResponse(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
 	/** @arg {E$SearchEndpoint} x */
-	SearchEndpoint(x) {
+	E$SearchEndpoint(x) {
 		const cf="SearchEndpoint";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys("[SearchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
 		this.E$Search(searchEndpoint);
+	}
+	/** @arg {E$Search} x */
+	E$Search(x) {
+		this.save_keys("[Search]",x);
+		const {query,...y}=x; this.g(y); // ! #destructure
+		this.primitive_of_string(query);
 	}
 	/** @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
@@ -11650,7 +11656,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NonNullable<Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']>} x */
 	GuideEntryRoot_ser(x) {
-		if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
+		if("reelWatchEndpoint" in x) return this.E$ReelWatchEndpoint(x);
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		debugger;
 	}
@@ -12118,21 +12124,6 @@ class HandleTypes extends ServiceMethods {
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip(chipCloudChipRenderer);
 	}
-	/** @arg {E$SearchEndpoint} x */
-	E$SearchEndpoint(x) {
-		const cf="SearchEndpoint";
-		this.save_keys("[SearchEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$Search(searchEndpoint);
-	}
-	/** @arg {E$Search} x */
-	E$Search(x) {
-		this.save_keys("[Search]",x);
-		const {query,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(query);
-	}
 	/** @arg {E$ShareEntityServiceEndpoint} x */
 	ShareEntityServiceEndpoint(x) {
 		const cf="ShareEntityServiceEndpoint";
@@ -12519,7 +12510,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(placeholderText);
 		this.SearchboxConfig(config);
 		this.trackingParams("CF_FIX",trackingParams);
-		this.SearchEndpoint(searchEndpoint);
+		this.E$SearchEndpoint(searchEndpoint);
 		this.R$Button(clearButton);
 	}
 	/** @arg {NotificationTopbarButtonData} x */
@@ -12825,8 +12816,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[AutoplaySetItem]",x);
 		const {mode,autoplayVideo,nextButtonVideo,...y}=x; this.g(y); // ! #destructure
 		if(mode!=="NORMAL") debugger;
-		this.WatchEndpoint(autoplayVideo);
-		this.t(nextButtonVideo,this.WatchEndpoint);
+		this.E$WatchEndpoint(autoplayVideo);
+		this.t(nextButtonVideo,this.E$WatchEndpoint);
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
