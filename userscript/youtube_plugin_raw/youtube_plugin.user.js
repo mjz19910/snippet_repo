@@ -10986,18 +10986,19 @@ class HandleTypes extends ServiceMethods {
 			case 5754: break;
 		}
 	}
+	/** @arg {Extract<SettingsPageResponse,{rootVe:23462}>} x */
+	Settings_VE23462(x) {
+		const {page,endpoint,response,url,rootVe,...y}=x; this.g(y); // ! #destructure
+		if(page!=="settings") debugger;
+		this.E$BrowseEndpoint(endpoint);
+		this.SettingsResponse(response);
+		this.primitive_of_string(url);
+		if(rootVe!==23462) debugger;
+	}
 	/** @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
 		this.save_keys("[SettingsPageResponse]",x);
-		if("rootVe" in x) {
-			const {page,endpoint,response,url,rootVe,...y}=x; this.g(y); // ! #destructure
-			if(page!=="settings") debugger;
-			this.E$BrowseEndpoint(endpoint);
-			this.SettingsResponse(response);
-			this.primitive_of_string(url);
-			if(rootVe!==23462) debugger;
-			return;
-		}
+		if("rootVe" in x) return this.Settings_VE23462(x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="settings") debugger;
 		this.E$BrowseEndpoint(endpoint);
@@ -11005,7 +11006,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(url);
 	}
 	/** @arg {Extract<ShortsPageResponse,{rootVe:37414}>} x */
-	S_37414(x) {
+	Shorts_VE37414(x) {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
@@ -11021,13 +11022,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
 		this.save_keys("[ShortsResponse]",x);
-		if("rootVe" in x) {
-			switch(x.rootVe) {
-				case 37414: this.S_37414(x); break;
-				default: debugger; break;
-			}
-			return;
-		}
+		if("rootVe" in x) return this.Shorts_VE37414(x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
