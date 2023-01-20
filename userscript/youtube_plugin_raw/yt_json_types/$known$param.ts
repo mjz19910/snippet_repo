@@ -1,4 +1,7 @@
 type $known$param=[
+	"createBackstagePost.param.f2"|"createBackstagePost.param.f1",
+	"entity_key.f4"|"entity_key.f5"|"entity_key.f2",
+	"subscribe.params.f2.f1"|"subscribe.params.f2"|"subscribe.params.f3"|"subscribe.params.f4",
 	tracking$param<"click"|"tracking">,
 	browse$param,
 	create_playlist$param,

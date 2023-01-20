@@ -1,5 +1,4 @@
 type $log$param=[
-	"[parse_value.gen_ns] [entity_key.f2]",
 	"[parse_value.gen_ns] [get_transcript.params.f1]",
 	"[parse_value.gen_ns] [reel.player_params.f71]",
 	"[parse_value.gen_ns] [report.params.f11]",
