@@ -5930,6 +5930,187 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(simpleText,"string");
 	}
 	//#endregion
+	//#region web_command_metadata
+	/** @arg {WebCommandMetadata} x */
+	WebCommandMetadata(x) {
+		this.save_keys("[WebCommandMetadataContent]",x);
+		if("rootVe" in x) return this.WebCommandMetadataRVE(x);
+		if("apiUrl" in x) return this.GenericWebCommandMetadata(x);
+		let k=this.get_keys_of(x);
+		if(this.eq_keys(k,["sendPost"])) return;
+		debugger;
+	}
+	/** @arg {GenericWebCommandMetadata} x */
+	GenericWebCommandMetadata(x) {
+		this.save_keys("[GenericWebCommandMetadata]",x);
+		let cx=x.apiUrl;
+		switch(x.apiUrl) {
+			default: {
+				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
+				let url_type=this.parser.get_url_type(path_parts);
+				if(!url_type) {
+					debugger;
+					return;
+				}
+				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
+				/** @arg {GeneratedWebCommandMetadata} x */
+				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
+				debugger;
+			} break;
+			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
+			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_unseen_count": this.GetUnseenCountWebCommandMetadata(x); break;
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
+			case "/youtubei/v1/playlist/create": return this.GeneratedWCM(x);
+		}
+	}
+	/** @arg {SearchWebCommandMetadata} x */
+	SearchApiWebCommandMetadata(x) {
+		this.save_keys("[SearchApiWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/search") debugger;
+	}
+	/** @arg {WebCommandMetadataRVE} x */
+	WebCommandMetadataRVE(x) {
+		this.rootVe(x.rootVe);
+		switch(x.webPageType) {
+			default: debugger; return;
+			case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_PLAYLIST": return this.PlaylistWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
+		}
+	}
+	/** @arg {SearchPageWebCommandMetadata} x */
+	SearchPageWebCommandMetadata(x) {
+		this.save_keys("[SearchPageWebCommandMetadata]",x);
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		if(!this.str_starts_with("/results?search_query=",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		if(rootVe!==4724) debugger;
+	}
+	/** @arg {PlaylistWebCommandMetadata} x */
+	PlaylistWebCommandMetadata(x) {
+		switch(x.rootVe) {
+			default: debugger; break;
+			case 5754: {
+				const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y);
+				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
+				if(apiUrl!=="/youtubei/v1/browse") debugger;
+				x: {
+					let us=split_string_once(split_string_once(url,"/")[1],"?");
+					if(us[0]!=="playlist") break x;
+					let up=us[1];
+					if(up.includes("&")) debugger;
+					let pp=split_string_once(up,"=");
+					this.parser.parse_playlist_id(pp[1]);
+				}
+			} break;
+		}
+	}
+	/** @arg {SettingsWebCommandMetadata} x */
+	SettingsWebCommandMetadata(x) {
+		this.save_keys("[SettingsWebCommandMetadata]",x);
+		if(x.webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		switch(x.rootVe) {
+			default: debugger; return;
+			case 23462: this.VE23462_WebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {WatchPageWebCommandMetadata} x */
+	WatchWebCommandMetadata(x) {
+		this.save_keys("[WatchWebCommandMetadata]",x);
+		if(x.webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+		switch(x.rootVe) {
+			default: debugger; break;
+			case 3832: this.VE3832_WebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {ChannelPageWebCommandMetadata} x */
+	ChannelWebCommandMetadata(x) {
+		this.save_keys("[ChannelWebCommandMetadata]",x);
+		if(x.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
+		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
+		switch(x.rootVe) {
+			default: debugger; break;
+			case 3611: this.VE3611_WebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {BrowsePageWebCommandMetadata} x */
+	BrowseWebCommandMetadata(x) {
+		this.save_keys("[BrowseWebCommandMetadata]",x);
+		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
+		switch(x.rootVe) {
+			default: debugger; break;
+			case 11487: this.VE11487_WebCommandMetadata(x); break;
+			case 3854: this.VE3854_WebCommandMetadata(x); break;
+			case 6827: this.VE6827_WebCommandMetadata(x); break;
+			case 96368: this.VE96368_WebCommandMetadata(x); break;
+		}
+	}
+	/** @arg {VE23462_WebCommandMetadata} x */
+	VE23462_WebCommandMetadata(x) {
+		this.save_keys("[VE23462_WebCommandMetadata]",x);
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		switch(url) {
+			default: debugger; return;
+			case "/account": break;
+			case "/account_advanced": break;
+			case "/account_billing": break;
+			case "/account_notifications": break;
+			case "/account_playback": break;
+			case "/account_privacy": break;
+			case "/account_sharing": break;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		if(rootVe!==23462) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+	}
+	/** @arg {VE96368_WebCommandMetadata} x */
+	VE96368_WebCommandMetadata(x) {
+		this.save_keys("[VE96368_WebCommandMetadata]",x);
+		if(x.url!=="/feed/subscriptions") debugger;
+	}
+	/** @arg {VE11487_WebCommandMetadata} x */
+	VE11487_WebCommandMetadata(x) {
+		this.save_keys("[VE11487_WebCommandMetadata]",x);
+		if(x.url!=="/premium") debugger;
+	}
+	/** @arg {VE3854_WebCommandMetadata} x */
+	VE3854_WebCommandMetadata(x) {
+		this.save_keys("[VE3854_WebCommandMetadata]",x);
+		if(x.url!=="/") debugger;
+	}
+	/** @arg {VE6827_WebCommandMetadata} x */
+	VE6827_WebCommandMetadata(x) {
+		this.save_keys("[VE6827_WebCommandMetadata]",x);
+		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
+		let su=split_string_once(x.url,"/")[1];
+		let su1=split_string(su,"/");
+		let [pt]=split_string_once(su1[1],"?");
+		switch(pt) {
+			case "trending": break;
+			case "library": break;
+			case "history": break;
+			case "storefront": break;
+			case "guide_builder": break;
+			default: debugger; break;
+		}
+	}
+	//#endregion
 	//#region general done
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
@@ -6409,13 +6590,6 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {SearchWebCommandMetadata} x */
-	SearchApiWebCommandMetadata(x) {
-		this.save_keys("[SearchApiWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/search") debugger;
-	}
 	/** @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
 		this.save_keys("[GhostGridRenderer]",x);
@@ -6543,148 +6717,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseEndpointData]",x);
 		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y);
 		this.t(browseId,this.browseId);
-	}
-	//#region web_command_metadata
-	/** @arg {WebCommandMetadata} x */
-	WebCommandMetadata(x) {
-		this.save_keys("[WebCommandMetadataContent]",x);
-		if("rootVe" in x) return this.WebCommandMetadataRVE(x);
-		if("apiUrl" in x) return this.GenericWebCommandMetadata(x);
-		let k=this.get_keys_of(x);
-		if(this.eq_keys(k,["sendPost"])) return;
-		debugger;
-	}
-	/** @arg {WebCommandMetadataRVE} x */
-	WebCommandMetadataRVE(x) {
-		this.rootVe(x.rootVe);
-		switch(x.webPageType) {
-			default: debugger; return;
-			case "WEB_PAGE_TYPE_BROWSE": return this.BrowseWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_PLAYLIST": return this.PlaylistWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
-		}
-	}
-	/** @arg {SearchPageWebCommandMetadata} x */
-	SearchPageWebCommandMetadata(x) {
-		this.save_keys("[SearchPageWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y);
-		if(!this.str_starts_with("/results?search_query=",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
-	}
-	/** @arg {PlaylistWebCommandMetadata} x */
-	PlaylistWebCommandMetadata(x) {
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 5754: {
-				const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y);
-				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
-				if(apiUrl!=="/youtubei/v1/browse") debugger;
-				x: {
-					let us=split_string_once(split_string_once(url,"/")[1],"?");
-					if(us[0]!=="playlist") break x;
-					let up=us[1];
-					if(up.includes("&")) debugger;
-					let pp=split_string_once(up,"=");
-					this.parser.parse_playlist_id(pp[1]);
-				}
-			} break;
-		}
-	}
-	/** @arg {SettingsWebCommandMetadata} x */
-	SettingsWebCommandMetadata(x) {
-		this.save_keys("[SettingsWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		switch(x.rootVe) {
-			default: debugger; return;
-			case 23462: this.VE23462_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {WatchPageWebCommandMetadata} x */
-	WatchWebCommandMetadata(x) {
-		this.save_keys("[WatchWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 3832: this.VE3832_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {ChannelPageWebCommandMetadata} x */
-	ChannelWebCommandMetadata(x) {
-		this.save_keys("[ChannelWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 3611: this.VE3611_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {BrowsePageWebCommandMetadata} x */
-	BrowseWebCommandMetadata(x) {
-		this.save_keys("[BrowseWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 11487: this.VE11487_WebCommandMetadata(x); break;
-			case 3854: this.VE3854_WebCommandMetadata(x); break;
-			case 6827: this.VE6827_WebCommandMetadata(x); break;
-			case 96368: this.VE96368_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {VE23462_WebCommandMetadata} x */
-	VE23462_WebCommandMetadata(x) {
-		this.save_keys("[VE23462_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		switch(url) {
-			default: debugger; return;
-			case "/account": break;
-			case "/account_advanced": break;
-			case "/account_billing": break;
-			case "/account_notifications": break;
-			case "/account_playback": break;
-			case "/account_privacy": break;
-			case "/account_sharing": break;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(rootVe!==23462) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @arg {VE96368_WebCommandMetadata} x */
-	VE96368_WebCommandMetadata(x) {
-		this.save_keys("[VE96368_WebCommandMetadata]",x);
-		if(x.url!=="/feed/subscriptions") debugger;
-	}
-	/** @arg {VE11487_WebCommandMetadata} x */
-	VE11487_WebCommandMetadata(x) {
-		this.save_keys("[VE11487_WebCommandMetadata]",x);
-		if(x.url!=="/premium") debugger;
-	}
-	/** @arg {VE3854_WebCommandMetadata} x */
-	VE3854_WebCommandMetadata(x) {
-		this.save_keys("[VE3854_WebCommandMetadata]",x);
-		if(x.url!=="/") debugger;
-	}
-	/** @arg {VE6827_WebCommandMetadata} x */
-	VE6827_WebCommandMetadata(x) {
-		this.save_keys("[VE6827_WebCommandMetadata]",x);
-		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
-		let su=split_string_once(x.url,"/")[1];
-		let su1=split_string(su,"/");
-		let [pt]=split_string_once(su1[1],"?");
-		switch(pt) {
-			case "trending": break;
-			case "library": break;
-			case "history": break;
-			case "storefront": break;
-			case "guide_builder": break;
-			default: debugger; break;
-		}
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -10126,13 +10158,6 @@ class HandleTypes extends ServiceMethods {
 			case "LIVE_CONTROL_ROOM": break;
 		}
 	}
-	/** @arg {GetSharePanelWebCommandMetadata} x */
-	get_share_panel_WebCommandMetadata(x) {
-		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		this.primitive_of(apiUrl,"string");
-	}
 	/** @arg {ButtonCommand} x */
 	ButtonCommand(x) {
 		this.save_keys("[ButtonCommand]",x);
@@ -10162,36 +10187,12 @@ class HandleTypes extends ServiceMethods {
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {GenericWebCommandMetadata} x */
-	GenericWebCommandMetadata(x) {
-		this.save_keys("[GenericWebCommandMetadata]",x);
-		let cx=x.apiUrl;
-		switch(x.apiUrl) {
-			default: {
-				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
-				let url_type=this.parser.get_url_type(path_parts);
-				if(!url_type) {
-					debugger;
-					return;
-				}
-				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-				/** @arg {GeneratedWebCommandMetadata} x */
-				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
-				debugger;
-			} break;
-			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
-			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
-			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
-			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
-			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
-			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
-			case "/youtubei/v1/notification/get_unseen_count": this.GetUnseenCountWebCommandMetadata(x); break;
-			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
-			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
-			case "/youtubei/v1/share/get_share_panel": return this.get_share_panel_WebCommandMetadata(x);
-			case "/youtubei/v1/playlist/create": return this.GeneratedWCM(x);
-		}
+	/** @arg {GetSharePanelWebCommandMetadata} x */
+	get_share_panel_WebCommandMetadata(x) {
+		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		this.primitive_of(apiUrl,"string");
 	}
 	/** @arg {GeneratedWebCommandMetadata} x */
 	GeneratedWCM(x) {
