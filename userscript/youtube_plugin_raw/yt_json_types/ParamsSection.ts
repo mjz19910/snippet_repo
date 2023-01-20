@@ -4,6 +4,7 @@ type ParamsSection=
 	|"CreatePlaylist"
 	|"GeneratedWCM"
 	|"Generic_WatchPageResponse"
+	|"GetReportForm"
 	|"GetTranscript"
 	|"HrefUrl"
 	|"PlaylistContent"

@@ -9271,7 +9271,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E$GetReportFormEndpoint} x */
 	GetReportFormEndpoint(x) {
 		let [{params}]=this.w(x);
-		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
+		this.t(params,a => this.params("GetReportForm","report.params",a));
 	}
 	/** @arg {E_PlaylistEditEndpoint} x */
 	PlaylistEditEndpoint(x) {
