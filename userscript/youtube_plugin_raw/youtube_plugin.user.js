@@ -5111,8 +5111,17 @@ case "${path}": {
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
+				/** @type {LogItems} */
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "subscribe.params": {
+						switch(ta) {
+							case 2: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params.f18.f1": {
 						switch(ta) {
 							case 2: break;
