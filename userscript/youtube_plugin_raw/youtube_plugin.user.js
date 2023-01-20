@@ -5047,10 +5047,17 @@ case "${path_parts[idx-1]}": {
 		};
 		/** @arg {number} idx */
 		let gen_return_part=(idx) => {
+			let case_part="";
+			if(path_parts.length===idx) {
+				switch(typeof tv) {
+					case "number": case_part=`
+${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`
+				}
+			}
 			console.log(`
 case "${path_parts[idx-1]}": {
 	const idx=${idx};
-	if(path_parts.length===idx) {
+	if(path_parts.length===idx) {${case_part}
 		switch(tv) {default: debugger; return;}
 	}
 	switch(path_parts[${idx}]) {
@@ -5101,6 +5108,19 @@ case "${path_parts[idx-1]}": {
 									gen_next_part(idx);
 									debugger;
 								} path_parts[3]===""; break;
+								case "f5": {
+									const idx=4;
+									if(path_parts.length===idx) {
+										switch(tv) {default: debugger; return;}
+									}
+									switch(path_parts[4]) {
+										default: {
+											console.log("in",path_parts[3]);
+											gen_next_part(idx);
+											debugger;
+										} path_parts[4]===""; break;
+									}
+								} break;
 								case "f4": {
 									const idx=4;
 									if(path_parts.length===idx) {
