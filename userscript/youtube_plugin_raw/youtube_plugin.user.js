@@ -4876,7 +4876,7 @@ class ParserService extends BaseService {
 		let new_path=() => {
 			console.log("[parse_value.new_ns]",path);
 			/** @type {LogItems} */
-			console.log("\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
+			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
 case "${path}": {
 	switch(ta) {
