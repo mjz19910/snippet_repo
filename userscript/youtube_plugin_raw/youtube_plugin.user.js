@@ -5232,8 +5232,9 @@ case "${path_parts[idx-1]}": {
 								} path_parts[3]===""; break;
 								case "f1": {
 									const idx=5;
-									if(path_parts.length===idx) {
+									if(path_parts.length===5) {
 										switch(tv) {
+											case 1: return;
 											case 2: return;
 											case 3: return;
 											default: debugger; return;
@@ -8842,18 +8843,21 @@ class HandleTypes extends ServiceMethods {
 	MenuRenderer(x) {
 		this.save_keys("[MenuRenderer]",x);
 		const {menuRenderer}=x; //...y}=x; this.g(y); //#destructure
-		this.MenuData(menuRenderer);
+		this.R_MenuData(menuRenderer);
 	}
 	/** @arg {MenuData} x */
-	MenuData(x) {
+	R_MenuData(x) {
 		const cf="MenuData";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId}=x; //...y}=x; this.g(y); //#destructure
 		this.trackingParams(trackingParams);
 		this.t(accessibility,this.Accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
-		debugger;
-		/**/targetId;// this.t(targetId,a => this.targetId(cf,a));
+		this.t(targetId,a => {
+			a;
+			debugger;
+			// this.targetId(cf,a);
+		});
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
