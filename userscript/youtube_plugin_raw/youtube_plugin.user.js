@@ -4799,11 +4799,14 @@ class ParserService extends BaseService {
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
 				/** @arg {PathRoot} path */
-				let d=(path)=>{
+				let d=(path) => {
 					this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
-				}
+				};
 				switch(path) {
-					case "watch_page_url.pp": d(path); break;
+					case "watch.params.f27":
+					case "watch.player_params":
+					case "watch_page_url.pp":
+					case "watch.params": d(path); break;
 					default: debugger; break;
 				}
 				return;
@@ -4819,6 +4822,9 @@ class ParserService extends BaseService {
 			this.parse_any_param(for_,path,tv);
 		} else {
 			let path_parts=split_string(path,".");
+			switch(path_parts[0]) {
+				case "watch": if(path_parts[1]==="params"||path_parts[1]==="player_params") return;
+			}
 			console.log(path_parts);
 			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
 		}
@@ -4868,6 +4874,8 @@ class ParserService extends BaseService {
 			if(!map_keys.includes(i)) continue;
 			parse_key(i);
 		}
+		// endpoint.watch.params
+		parse_key(56);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
