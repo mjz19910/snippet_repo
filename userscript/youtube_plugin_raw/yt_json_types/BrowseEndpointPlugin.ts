@@ -1,3 +1,0 @@
-type BrowseEndpointPlugin={
-	browseEndpoint: BrowseEndpointData;
-};

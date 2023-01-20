@@ -2,6 +2,6 @@ type ButtonCommand=
 	|ChangeEngagementPanelVisibilityAction
 	|ContinuationCommand
 	|OpenPopupAction
-	|SignalServiceEndpoint
+	|E_SignalServiceEndpoint
 	;
 ;

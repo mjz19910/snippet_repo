@@ -1,15 +1,5 @@
-type VE83769_WebCommandMetadata={
-	url: "/upload";
-	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
-	rootVe: 83769;
-};
-
-type UrlEndpointCommandMetadata={
-	webCommandMetadata: VE83769_WebCommandMetadata;
-};
-
-type UrlEndpoint={
+type E_UrlEndpoint={
 	clickTrackingParams?: string;
-	commandMetadata: UrlEndpointCommandMetadata;
-	urlEndpoint: UrlEndpointData;
+	commandMetadata: VE83769_CommandMetadata;
+	urlEndpoint: AE_UrlEndpoint;
 };

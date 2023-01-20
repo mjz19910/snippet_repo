@@ -6813,7 +6813,7 @@ class HandleTypes extends ServiceMethods {
 		if(presentationStyle) 1;
 		if(config) 1;
 	}
-	/** @arg {SignalServiceEndpoint} x */
+	/** @arg {E_SignalServiceEndpoint} x */
 	SignalServiceEndpoint(x) {
 		this.save_keys("[SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7324,7 +7324,7 @@ class HandleTypes extends ServiceMethods {
 		const {hrefUrl,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_url("HrefUrl",as(hrefUrl));
 	}
-	/** @arg {BrowseEndpoint} x */
+	/** @arg {E_BrowseEndpoint} x */
 	BrowseEndpoint(x) {
 		this.save_keys("[BrowseEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7332,7 +7332,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(commandMetadata,this.CommandMetadata);
 		this.BrowseEndpointData(browseEndpoint);
 	}
-	/** @arg {BrowseEndpointData} x */
+	/** @arg {AE_BrowseEndpoint} x */
 	BrowseEndpointData(x) {
 		const cf="BrowseEndpointData";
 		this.save_keys("[BrowseEndpointData]",x);
@@ -8021,7 +8021,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.ReelWatchEndpointData(reelWatchEndpoint);
 	}
-	/** @arg {Args_E_ReelWatchEndpointData} x */
+	/** @arg {AE_ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
 		const cf="ReelWatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -9252,7 +9252,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {UrlEndpoint} x */
+	/** @arg {E_UrlEndpoint} x */
 	UrlEndpoint(x) {
 		this.save_keys("[UrlEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
@@ -9265,7 +9265,7 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;*/
 	}
-	/** @arg {UrlEndpointData} x */
+	/** @arg {AE_UrlEndpoint} x */
 	UrlEndpointData(x) {
 		this.save_keys("[UrlEndpointData]",x);
 		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
@@ -9806,7 +9806,7 @@ class HandleTypes extends ServiceMethods {
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of(aadcGuidelinesStateEntityKey,"string");
 	}
-	/** @arg {SignalServiceEndpointData} x */
+	/** @arg {AE_SignalServiceEndpoint} x */
 	SignalServiceEndpointData(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
@@ -10951,7 +10951,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.SignalNavigationArgs(signalNavigationEndpoint);
 	}
-	/** @arg {SignalNavigationArgs} x */
+	/** @arg {SignalNavigation} x */
 	SignalNavigationArgs(x) {
 		this.save_keys(`[SignalNavigationArgs]`,x);
 		const {signal,...y}=x; this.g(y); // ! #destructure

@@ -43,7 +43,7 @@ type PlaylistHeader={
 	shareData: YtShareData;
 	isEditable: boolean;
 	privacy: string;
-	ownerEndpoint: BrowseEndpoint;
+	ownerEndpoint: E_BrowseEndpoint;
 	editableDetails: EditableDetails;
 	trackingParams: string;
 	serviceEndpoints: PlaylistEditEndpoint[];

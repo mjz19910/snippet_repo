@@ -1,7 +1,7 @@
 type TopbarLogo={
 	iconImage: Icon<"YOUTUBE_LOGO">;
 	tooltipText: TextWithRuns;
-	endpoint: BrowseEndpoint;
+	endpoint: E_BrowseEndpoint;
 	trackingParams: string;
 	overrideEntityKey: string;
 };

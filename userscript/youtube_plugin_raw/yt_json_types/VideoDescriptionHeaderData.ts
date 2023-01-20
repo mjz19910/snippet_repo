@@ -5,6 +5,6 @@ type VideoDescriptionHeaderData={
 	publishDate: SimpleText;
 	factoid: FactoidRenderer[];
 	// ChannelNavigationEndpointWebCommandMetadata
-	channelNavigationEndpoint: BrowseEndpoint;
+	channelNavigationEndpoint: E_BrowseEndpoint;
 	channelThumbnail: Thumbnail;
 };

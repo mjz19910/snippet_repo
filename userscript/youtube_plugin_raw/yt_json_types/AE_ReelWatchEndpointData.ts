@@ -1,4 +1,4 @@
-type Args_E_ReelWatchEndpointData={
+type AE_ReelWatchEndpointData={
 	videoId?: string;
 	playerParams: string;
 	thumbnail?: Thumbnail;

@@ -1,7 +1,7 @@
 type PlaylistPageResponse={
 	rootVe?: 5754;
 	page: "playlist";
-	endpoint: BrowseEndpoint;
+	endpoint: E_BrowseEndpoint;
 	response: PlaylistResponse;
 	url: string;
 };

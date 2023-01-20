@@ -1,6 +1,6 @@
 type PageTypeBrowse={
 	pageType: "browse";
-	endpoint: BrowseEndpoint;
+	endpoint: E_BrowseEndpoint;
 	response: BrowsePageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

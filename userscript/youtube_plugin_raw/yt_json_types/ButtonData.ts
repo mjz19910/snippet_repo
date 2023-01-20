@@ -1,4 +1,4 @@
-type Button_serviceEndpoint=SignalServiceEndpoint|YpcGetOffersEndpoint;
+type Button_serviceEndpoint=E_SignalServiceEndpoint|YpcGetOffersEndpoint;
 type YpcGetOffers={
 	params: string;
 };

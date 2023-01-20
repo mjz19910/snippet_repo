@@ -1,1 +1,1 @@
-type E_ReelWatchEndpointPlugin={reelWatchEndpoint: Args_E_ReelWatchEndpointData;};
+type E_ReelWatchEndpointPlugin={reelWatchEndpoint: AE_ReelWatchEndpointData;};

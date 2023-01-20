@@ -1,6 +1,6 @@
 type PageTypeShorts={
 	pageType: "shorts";
-	endpoint: ShortsEndpoint;
+	endpoint: E_ReelWatchEndpoint;
 	response: ShortsPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

@@ -1,5 +1,5 @@
 type PrimaryLinkItem={
-	navigationEndpoint: UrlEndpoint;
+	navigationEndpoint: E_UrlEndpoint;
 	icon: Thumbnail;
 	title: SimpleText;
 };
@@ -15,7 +15,7 @@ type ChannelHeaderLinksRenderer={
 type C4TabbedHeaderData={
 	channelId: `UC${string}`;
 	title: string;
-	navigationEndpoint: BrowseEndpoint;
+	navigationEndpoint: E_BrowseEndpoint;
 	avatar: Thumbnail;
 	banner: Thumbnail;
 	badges?: MetadataBadgeRenderer[];
