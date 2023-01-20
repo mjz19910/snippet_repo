@@ -5007,28 +5007,18 @@ case "${path}": {
 			let gen_next_part=(idx)=>{
 				console.log(`
 case "${path_parts[0]}": switch(path_parts[${idx}]) {
-default: {
-	let idx=${idx+1};
-	console.log("in",path_parts[${idx-1}]);
-	console.log(\`
+	default: {
+		let idx=${idx+1};
+		console.log("in",path_parts[${idx-1}]);
+		console.log(\`
 case "\${path_parts[${idx}]}":\`);
-	debugger;
-} path_parts[${idx}]===""; break;
+		debugger;
+	} path_parts[${idx}]===""; break;
 }`);
 			}
-			let path_parts=split_string(path,".");
-			switch(path_parts[0]) {
-				default: {
-					let idx=1;
-					console.log("root_next_case");
-					gen_next_part(idx);
-					debugger;
-				} break;
-				case "create_playlist": switch(path_parts[1]) {
-					default: {
-						let idx=2;
-						console.log("in",path_parts[0]);
-						console.log(`
+			/** @arg {number} idx */
+			let gen_final_part=(idx)=>{
+				console.log(`
 case "${path_parts[0]}": switch(path_parts[${idx}]) {
 	default: {
 		let idx=${idx+1};
@@ -5038,6 +5028,18 @@ case "\${path_parts[${idx}]}": return;\`);
 		debugger;
 	} path_parts[${idx}]===""; break;
 }`);
+			}
+			let path_parts=split_string(path,".");
+			switch(path_parts[0]) {
+				default: {
+					console.log("root_next_case");
+					gen_next_part(1);
+					debugger;
+				} break;
+				case "create_playlist": switch(path_parts[1]) {
+					default: {
+						console.log("in",path_parts[0]);
+						gen_final_part(2);
 						debugger;
 					} path_parts[1]===""; break;
 					case "params": switch(path_parts[2]) {
