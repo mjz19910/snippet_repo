@@ -4974,6 +4974,18 @@ class ParserService extends BaseService {
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
+					case "watch.player_params.f40.f1": {
+						switch(ta) {
+							case 2: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`
+					case ${ta}: break;`);
+							} return;
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					default: {
 						console.log("[parse_value.new_ns]",path);
 						console.log(`
@@ -5047,8 +5059,23 @@ case "\${path_parts[${idx}]}": return;\`);
 case "${path_parts[2]}": return;`);
 							debugger;
 						} path_parts[1]===""; break;
-						case "f84": path_parts[3]===""; return;
-					} break;
+						case "f84": {
+							if(path_parts[3]===void 0) return;
+							switch(path_parts[3]) {
+								default: {
+									console.log("in",path_parts[1]);
+									console.log(`
+		case "${path_parts[2]}": return;`);
+									debugger;
+								} path_parts[1]===""; break;
+								case "f5": {
+									if(path_parts.length===4) return;
+									gen_next_part(4);
+									debugger;
+								}
+							}
+						}
+					} path_parts[3]===""; break;
 				} break;
 				case "watch": switch(path_parts[1]) {
 					default: {
