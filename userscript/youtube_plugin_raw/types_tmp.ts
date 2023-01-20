@@ -9,7 +9,11 @@ type PathRoot=[
 	"ypc_get_offers.params",
 	"create_playlist.params",
 	"watch_playlist.params",
-	`watch.params.f${number}`,
+	`watch.params.f2`,
+	`watch.params.f3`,
+	`watch.params.f27`,
+	`watch.params.f27.f1`,
+	"watch.params.f33",
 	`watch.player_params.f40`,
 	"watch.player_params.f40.f1",
 ][number];
