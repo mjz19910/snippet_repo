@@ -4358,6 +4358,7 @@ class CodegenService extends BaseService {
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
 		if(x.simpleText) return "TYPE::SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
+		if(x.popupType) return this.decode_PopupTypeMap(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
@@ -4396,9 +4397,6 @@ class CodegenService extends BaseService {
 	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(r,b,keys) {
-		if(b.popupType) {
-			return this.decode_PopupTypeMap(b);
-		}
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
