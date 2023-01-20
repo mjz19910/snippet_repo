@@ -5188,6 +5188,14 @@ case "${path}": {
 				/** @type {LogItems} */
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "browse$param.f84": {
+						switch(ta) {
+							case 5: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "browse.params": {
 						switch(ta) {
 							case 84: break;
