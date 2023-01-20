@@ -1,1 +1,1 @@
-type Accessibility={accessibilityData: AccessibilityData;};
+type Accessibility={accessibilityData: LabelData;};

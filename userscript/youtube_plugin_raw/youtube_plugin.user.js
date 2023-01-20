@@ -6146,7 +6146,18 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {DropdownRenderer} x */
 	DropdownRenderer(x) {
 		const {dropdownRenderer,...y}=x; this.g(y);
-		this.g(dropdownRenderer);
+		this.DropdownData(dropdownRenderer);
+	}
+	/** @arg {DropdownData} x */
+	DropdownData(x) {
+		const {entries,label,...y}=x; this.g(y);
+		this.primitive_of(label,"string");
+		this.z(entries,x=>{
+			if("privacyDropdownItemRenderer" in x) {
+				return;
+			}
+			this.do_codegen("Dropdown",x);
+		});
 	}
 	/** @arg {PlaylistSidebarRenderer} x */
 	PlaylistSidebarRenderer(x) {
@@ -8190,13 +8201,13 @@ class HandleTypes extends ServiceMethods {
 	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
 		const {accessibilityData,...y}=x; this.g(y);
-		this.AccessibilityData(accessibilityData);
+		this.LabelData(accessibilityData);
 	}
-	/** @arg {AccessibilityData} x */
-	AccessibilityData(x) {
-		this.save_keys("[AccessibilityData]",x);
+	/** @arg {LabelData} x */
+	LabelData(x) {
+		this.save_keys("[LabelData]",x);
 		const {label,...y}=x; this.g(y);
-		if(label) this.primitive_of(label,"string");
+		this.primitive_of(label,"string");
 	}
 	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
@@ -8907,7 +8918,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y);
-		if(accessibility) return this.AccessibilityData(accessibility);
+		if(accessibility) return this.LabelData(accessibility);
 		if(accessibilityData) this.Accessibility(accessibilityData);
 		if(command) this.ButtonCommand(command);
 		if(icon) this.Icon(icon);

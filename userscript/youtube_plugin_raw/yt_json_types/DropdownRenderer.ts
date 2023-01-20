@@ -1,3 +1,1 @@
-type DropdownRenderer={
-	dropdownRenderer: {};
-};
+type DropdownRenderer={dropdownRenderer: DropdownData;};

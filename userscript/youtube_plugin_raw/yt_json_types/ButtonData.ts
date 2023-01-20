@@ -11,7 +11,7 @@ type YpcGetOffersEndpoint={
 type Button_navigationEndpoint=ShareEntityServiceEndpoint;
 
 type ButtonData={
-	accessibility?: AccessibilityData;
+	accessibility?: LabelData;
 	accessibilityData?: Accessibility;
 	command?: ButtonCommand;
 	icon?: ButtonIcon;
