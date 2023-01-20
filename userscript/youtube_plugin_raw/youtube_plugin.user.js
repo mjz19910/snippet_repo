@@ -4383,8 +4383,22 @@ class CodegenService extends BaseService {
 		}
 		return `TYPE::${type_val}`;
 	}
+	/** @param {{[U in string]:unknown}} x */
+	decode_PopupTypeMap(x) {
+		switch(x.popupType) {
+			default: debugger; break;
+			case "DIALOG": 
+			let jy=Object.keys(x).filter(e=>e!=="popupType").join(":any;");
+			console.log("jy",jy);
+			return `TYPE::Extract<PopupTypeMap["${x.popupType}"][number],{${jy}}>`;
+		}
+		return `TYPE::PopupTypeMap["${x.popupType}"]`;
+	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(r,b,keys) {
+		if(b.popupType) {
+			return this.decode_PopupTypeMap(b);
+		}
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false

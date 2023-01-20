@@ -7,6 +7,14 @@ type UnifiedSharePanelRenderer={
 	unifiedSharePanelRenderer: UnifiedSharePanel;
 };
 
+type PopupTypeMap={
+	DIALOG: [{
+		popup: UnifiedSharePanelRenderer;
+		popupType: "DIALOG";
+		beReused: true;
+	}];
+}
+
 type OpenPopupActionData={
 	popup: AllPopups;
 	popupType: PopupTypeList;
