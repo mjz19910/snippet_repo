@@ -10038,10 +10038,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryBadges} x */
 	GuideEntryBadges(x) {
 		this.save_keys("[GuideEntryBadges]",x);
-		let k=this.get_keys_of(x);
-		if(!this.eq_keys(k,["liveBroadcasting"])) debugger;
 		const {liveBroadcasting}=x; //...y}=x; this.g(y); //#destructure
-		if(liveBroadcasting!==true) debugger;
+		this.primitive_of(liveBroadcasting,"boolean");
 	}
 	/** @arg {SetSettingEndpointAutonavForDesktop<boolean>} x */
 	SetSettingEndpointAutonavForDesktop(x) {

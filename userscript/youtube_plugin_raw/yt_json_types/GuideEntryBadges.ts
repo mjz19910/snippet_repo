@@ -1,3 +1,3 @@
 type GuideEntryBadges={
-	liveBroadcasting: true;
+	liveBroadcasting: boolean;
 };
