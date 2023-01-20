@@ -7035,6 +7035,7 @@ class HandleTypes extends ServiceMethods {
 			case "/youtubei/v1/share/get_share_panel": return this.GetSharePanelWebCommandMetadata(x);
 			case "/youtubei/v1/flag/get_form": return this.GeneratedWebCommandMetadata(x);
 			case "/youtubei/v1/subscription/subscribe": return this.GeneratedWebCommandMetadata(x);
+			case "/youtubei/v1/feedback": return this.GeneratedWebCommandMetadata(x);
 		}
 	}
 	/** @arg {AccountMenuWebCommandMetadata} x */
