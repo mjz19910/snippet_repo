@@ -10409,15 +10409,22 @@ class HandleTypes extends ServiceMethods {
 		const {guideEntryRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideEntryRoot(guideEntryRenderer);
 	}
+	/** @arg {Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']} x */
+	GuideEntryRoot_ser(x) {
+		if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
+		debugger;
+	}
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
 		if("serviceEndpoint" in x) {
-			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,isPrimary,...y}=x;
-			this.t(serviceEndpoint,x => {
-				if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
-				debugger;
-			});
+			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,isPrimary,...y}=x; this.g(y);
+			this.Icon(icon);
+			this.trackingParams(trackingParams);
+			this.SimpleText(formattedTitle);
+			this.Accessibility(accessibility);
+			this.GuideEntryRoot_ser(serviceEndpoint);
+			if(isPrimary!==true) debugger;
 			return;
 		}
 		if("icon" in x) {
@@ -11468,7 +11475,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(text);
 		this.ChipCloudChip_nav(navigationEndpoint);
 		this.trackingParams(trackingParams);
-		this.t(targetId,a=>this.targetId(cf,a));
+		this.t(targetId,a => this.targetId(cf,a));
 	}
 	/** @arg {ChipCloudChip['style']} x */
 	ChipCloudChip_style(x) {
