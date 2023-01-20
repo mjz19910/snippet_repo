@@ -5105,8 +5105,10 @@ case "${path_parts[idx]}": {
 							} path_parts[3]===""; break;
 							case "f5": {
 								if(path_parts.length===4) {
-									if(tv instanceof Map) {
-										this.parse_any_param(root,path,tv);
+									if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+									switch(tv) {
+										case 2: return;
+										default: debugger; break;
 									}
 								}
 								debugger;
