@@ -5064,6 +5064,12 @@ case "${path_parts[idx-1]}": {
 	}
 } break;`);
 		};
+		/** @arg {number} idx */
+		let gd=(idx) => {
+			console.log("in",path_parts[0]);
+			gen_next_part(idx);
+			debugger;
+		};
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
 			default: {
@@ -5072,17 +5078,34 @@ case "${path_parts[idx-1]}": {
 				gen_next_part(idx);
 				debugger;
 			} break;
+			case "reel": {
+				const idx=2;
+				if(path_parts.length!==2&&path_parts.length!==3) {
+					gen_next_part(idx);
+					debugger;
+				}
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "player_params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f30": return gd(idx);
+						}
+					} break;
+					case "sequence_params": return gd(idx);
+				}
+			} break;
 			case "record_notification_interactions": {
 				const idx=2;
 				if(path_parts.length===1) {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: {
-						console.log("in",path_parts[0]);
-						gen_next_part(idx);
-						debugger;
-					} path_parts[1]===""; break;
+					default: gd(idx); path_parts[1]===""; break;
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5090,11 +5113,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: {
-								console.log("in",path_parts[1]);
-								gen_next_part(idx);
-								debugger;
-							} path_parts[2]===""; break;
+							default: gd(idx); path_parts[2]===""; break;
 						}
 					} break;
 					case "f2": {
@@ -5104,11 +5123,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: {
-								console.log("in",path_parts[1]);
-								gen_next_part(idx);
-								debugger;
-							} path_parts[2]===""; break;
+							default: gd(idx); path_parts[2]===""; break;
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5200,13 +5215,8 @@ case "${path_parts[idx-1]}": {
 					} break;
 				}
 			} break;
-			case "watch": switch(path_parts[1]) {
-				default: {
-					const idx=2;
-					console.log("in",path_parts[0]);
-					gen_next_part(idx);
-					debugger;
-				} path_parts[1]===""; break;
+			case "watch": const idx=2; switch(path_parts[1]) {
+				default: gd(idx); path_parts[1]===""; break;
 				case "player_params": {
 					const idx=3;
 					if(path_parts.length===idx) {
@@ -5218,11 +5228,7 @@ case "${path_parts[idx-1]}": {
 						switch(tv) {default: debugger; return;}
 					}
 					switch(path_parts[2]) {
-						default: {
-							console.log("in",path_parts[1]);
-							gen_next_part(idx);
-							debugger;
-						} path_parts[2]===""; break;
+						default: gd(idx); path_parts[2]===""; break;
 						case "f40": {
 							const idx=4;
 							if(path_parts.length===idx) {
@@ -5269,11 +5275,7 @@ case "${path_parts[idx-1]}": {
 						return;
 					}
 					switch(path_parts[2]) {
-						default: {
-							console.log("in",path_parts[1]);
-							gen_next_part(idx);
-							debugger;
-						} path_parts[2]===""; break;
+						default: gd(idx); path_parts[2]===""; break;
 						case "f33": {
 							const idx=4;
 							if(path_parts.length===idx-1) {
@@ -5336,46 +5338,6 @@ case "${path_parts[idx-1]}": {
 									debugger;
 								} break;
 							}
-						} break;
-					}
-				} break;
-			} break;
-			case "create_playlist": switch(path_parts[1]) {
-				default: {
-					let idx=2;
-					console.log("in",path_parts[0]);
-					gen_next_part(idx);
-					debugger;
-				} path_parts[1]===""; break;
-				case "params": switch(path_parts[2]) {
-					default: {
-						let idx=3;
-						console.log("in",path_parts[1]);
-						gen_next_part(idx);
-						debugger;
-					} path_parts[2]===""; break;
-					case "f84": {
-						if(path_parts.length===3) {
-							if(tv instanceof Map) return;
-							switch(tv) {default: debugger; break;}
-							return;
-						}
-						switch(path_parts[3]) {
-							default: {
-								let idx=4;
-								console.log("in",path_parts[2]);
-								gen_next_part(idx);
-								debugger;
-							} path_parts[3]===""; break;
-							case "f5": {
-								if(path_parts.length===4) {
-									switch(tv) {
-										case 2: return;
-										default: debugger; break;
-									}
-								}
-								debugger;
-							} break;
 						} break;
 					}
 				} break;
