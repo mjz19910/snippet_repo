@@ -4941,7 +4941,7 @@ case "${path_parts[0]}":`);
 						console.log(`
 case "${path_parts[1]}":`);
 						debugger;
-					} break;
+					} path_parts[1]===""; break;
 					case "player_params": switch(path_parts[2]) {
 						default: {
 							console.log("in",path_parts[1]);
@@ -4951,7 +4951,8 @@ case "${path_parts[2]}": return;`);
 						} break;
 						case "f8": return;
 						case "f9": return;
-					} break;
+						case "f40": return;
+					} path_parts[2]===""; break;
 					case "params": switch(path_parts[2]) {
 						default: {
 							console.log("in",path_parts[1]);
@@ -4963,8 +4964,9 @@ case "${path_parts[2]}": return;`);
 						case "f3": return;
 						case "f24": return;
 						case "f27": return;
+						case "f33": return;
 						case "f56": return;
-					} break;
+					} path_parts[2]===""; break;
 				} break;
 			}
 			console.log(path_parts);
