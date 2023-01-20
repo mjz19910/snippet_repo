@@ -1,3 +1,3 @@
-type ContinuationCommandMetadata={
+type C$Continuation$CommandMetadata={
 	webCommandMetadata: ContinuationWebCommandMetadata;
 };

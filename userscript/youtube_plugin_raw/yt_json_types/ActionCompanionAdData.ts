@@ -1,7 +1,7 @@
 type ActionCompanionAdData={
 	headline: TemplatedText;
 	description: TemplatedText;
-	actionButton: ButtonRenderer;
+	actionButton: R$Button;
 	iconImage: ThumbnailsList;
 	bannerImage: ThumbnailsList;
 	navigationEndpoint: {};

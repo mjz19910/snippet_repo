@@ -1,18 +1,4 @@
-type PrimaryLinkItem={
-	navigationEndpoint: E$UrlEndpoint;
-	icon: Thumbnail;
-	title: SimpleText;
-};
-
-type ChannelHeaderLinks={
-	primaryLinks: PrimaryLinkItem[];
-};
-
-type ChannelHeaderLinksRenderer={
-	channelHeaderLinksRenderer: ChannelHeaderLinks;
-};
-
-type C4TabbedHeaderData={
+type D$C4TabbedHeader={
 	channelId: `UC${string}`;
 	title: string;
 	navigationEndpoint: E$BrowseEndpoint;
@@ -25,7 +11,7 @@ type C4TabbedHeaderData={
 	tvBanner: Thumbnail;
 	mobileBanner: Thumbnail;
 	trackingParams: string;
-	sponsorButton?: ButtonRenderer;
+	sponsorButton?: R$Button;
 	channelHandleText: TextWithRuns;
 	videosCountText: TextWithRuns;
 };

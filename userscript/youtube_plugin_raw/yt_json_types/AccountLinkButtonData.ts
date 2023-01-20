@@ -1,4 +1,4 @@
 type AccountLinkButtonData={
 	providerKey: AccountLinkProviderKey;
-	unlinkedButton: ButtonRenderer;
+	unlinkedButton: R$Button;
 };

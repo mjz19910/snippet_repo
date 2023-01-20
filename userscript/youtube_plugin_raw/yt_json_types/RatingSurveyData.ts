@@ -1,7 +1,7 @@
 type RatingSurveyData={
 	ratings: RatingSurveyOptionRenderer[];
 	trackingParams: string;
-	notSureButton: ButtonRenderer;
-	undoButton: ButtonRenderer;
+	notSureButton: R$Button;
+	undoButton: R$Button;
 	notSureEndpoint: {};
 };

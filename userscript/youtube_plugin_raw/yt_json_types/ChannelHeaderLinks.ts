@@ -1,0 +1,3 @@
+type ChannelHeaderLinks={
+	primaryLinks: PrimaryLinkItem[];
+};

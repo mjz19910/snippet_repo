@@ -5,10 +5,10 @@ type PlayerOverlayAutoplay={
 	pauseText: SimpleText;
 	background: Thumbnail;
 	countDownSecs: 8;
-	cancelButton: ButtonRenderer;
-	nextButton: ButtonRenderer;
+	cancelButton: R$Button;
+	nextButton: R$Button;
 	trackingParams: string;
-	closeButton: ButtonRenderer;
+	closeButton: R$Button;
 	thumbnailOverlays: ThumbnailOverlayTimeStatusRenderer[];
 	preferImmediateRedirect: false;
 	videoId: string;

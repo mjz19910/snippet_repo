@@ -1,1 +1,1 @@
-type ConnectButton=ButtonRenderer;
+type ConnectButton=R$Button;

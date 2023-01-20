@@ -3,10 +3,10 @@ type ClipCreationData={
 	userAvatar: Thumbnail;
 	titleInput: ClipCreationTextInputRenderer;
 	scrubber: ClipCreationScrubberRenderer;
-	saveButton: ButtonRenderer;
+	saveButton: R$Button;
 	displayName: SimpleText;
 	publicityLabel: Capitalize<Lowercase<PlaylistAddToOption['privacy']>>;
-	cancelButton: ButtonRenderer;
+	cancelButton: R$Button;
 	adStateOverlay: ClipAdStateRenderer;
 	externalVideoId: string;
 	publicityLabelIcon: `PRIVACY_${PlaylistAddToOption['privacy']}`;

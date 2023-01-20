@@ -1,7 +1,7 @@
 type PlayerOverlay={
 	endScreen: WatchNextEndScreenRenderer;
 	autoplay?: PlayerOverlayAutoplayRenderer;
-	shareButton: ButtonRenderer;
+	shareButton: R$Button;
 	addToMenu: MenuRenderer;
 	videoDetails: PlayerOverlayVideoDetailsRenderer;
 	autonavToggle?: AutoplaySwitchButtonRenderer;

@@ -1,0 +1,1 @@
+type E$Button_navigationEndpoint=E$ShareEntityServiceEndpoint;

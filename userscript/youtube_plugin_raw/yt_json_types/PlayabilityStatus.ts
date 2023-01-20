@@ -1,7 +1,7 @@
 type PlayabilityStatus={
 	status: "OK";
 	playableInEmbed: boolean;
-	offlineability: ButtonRenderer;
+	offlineability: R$Button;
 	miniplayer: MiniplayerRenderer;
 	contextParams: string;
 };

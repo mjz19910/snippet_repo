@@ -1,7 +1,7 @@
 type ActionSetPlaylistVideoOrder={
 	title: string;
 	selected: boolean;
-	serviceEndpoint: ContinuationCommand;
+	serviceEndpoint: C$Continuation;
 	accessibility?: Accessibility;
 	trackingParams: string;
 };

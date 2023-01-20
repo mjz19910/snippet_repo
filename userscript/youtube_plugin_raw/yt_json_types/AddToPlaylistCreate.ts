@@ -2,6 +2,6 @@ type AddToPlaylistCreate={
 	openCreateLink: CompactLinkRenderer;
 	nameInput: TextInputFormFieldRenderer;
 	privacyInput: DropdownRenderer;
-	createAction: ButtonRenderer;
+	createAction: R$Button;
 	serviceEndpoint: CreatePlaylistServiceEndpoint;
 };

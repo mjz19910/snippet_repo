@@ -1,6 +1,6 @@
 type AnyIcon=NonNullable<[
 	Icon<AnyIconStr>,
-	ButtonData['icon'],
+	D$Button['icon'],
 	InfoRowData['expandIcon'],
 	TopicLinkData['callToActionIcon'],
 	Icon<"LIBRARY_REMOVE">,

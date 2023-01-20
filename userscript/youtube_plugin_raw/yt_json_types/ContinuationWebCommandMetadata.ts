@@ -1,1 +1,0 @@
-type ContinuationWebCommandMetadata=SearchWebCommandMetadata|VE3832_WebCommandMetadata;

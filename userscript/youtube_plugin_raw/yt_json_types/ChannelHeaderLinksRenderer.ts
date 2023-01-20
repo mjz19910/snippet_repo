@@ -1,0 +1,3 @@
+type ChannelHeaderLinksRenderer={
+	channelHeaderLinksRenderer: ChannelHeaderLinks;
+};

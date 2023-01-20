@@ -13,7 +13,7 @@ type CommentData={
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
 	voteCount: TextWithRuns;
-	expandButton: ButtonRenderer;
-	collapseButton: ButtonRenderer;
+	expandButton: R$Button;
+	collapseButton: R$Button;
 	loggingDirectives: LoggingDirectives;
 };

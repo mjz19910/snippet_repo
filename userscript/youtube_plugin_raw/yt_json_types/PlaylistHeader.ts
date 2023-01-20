@@ -52,8 +52,8 @@ type PlaylistHeader={
 	editorEndpoint: PlaylistEditorEndpoint;
 	playlistHeaderBanner: HeroPlaylistThumbnailRenderer;
 	moreActionsMenu: MenuRenderer;
-	playButton: ButtonRenderer;
-	shufflePlayButton: ButtonRenderer;
+	playButton: R$Button;
+	shufflePlayButton: R$Button;
 	onDescriptionTap: OpenPopupAction;
 	cinematicContainer: CinematicContainerRenderer;
 	byline: PlaylistBylineRenderer[];

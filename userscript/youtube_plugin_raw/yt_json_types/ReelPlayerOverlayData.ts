@@ -10,14 +10,14 @@ type ReelPlayerOverlayData={
 	likeButton: LikeButtonRenderer;
 	reelPlayerHeaderSupportedRenderers: ReelPlayerHeaderRenderer;
 	menu: MenuRenderer;
-	nextItemButton: ButtonRenderer;
-	prevItemButton: ButtonRenderer;
+	nextItemButton: R$Button;
+	prevItemButton: R$Button;
 	subscribeButtonRenderer: SubscribeButtonRenderer;
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
-	viewCommentsButton: ButtonRenderer;
+	viewCommentsButton: R$Button;
 	videoInteractions?: {};
 	trackingParams: string;
-	shareButton: ButtonRenderer;
+	shareButton: R$Button;
 	pivotButton: PivotButtonRenderer;
 	badge: MetadataBadgeRenderer;
 };

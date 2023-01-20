@@ -1,3 +1,3 @@
-type R_WatchEndpointMusicConfig={
-	watchEndpointMusicConfig: D_WatchEndpointMusicConfig;
+type R$WatchEndpointMusicConfig={
+	watchEndpointMusicConfig: D$WatchEndpointMusicConfig;
 };

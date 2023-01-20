@@ -1,5 +1,5 @@
 type PdgBuyFlowHeader={
 	text: TextWithRuns;
-	helpButton: ButtonRenderer;
-	dismissButton: ButtonRenderer;
+	helpButton: R$Button;
+	dismissButton: R$Button;
 };

@@ -1,6 +1,6 @@
 type ButtonCommand=
 	|ChangeEngagementPanelVisibilityAction
-	|ContinuationCommand
+	|C$Continuation
 	|OpenPopupAction
 	|E$SignalServiceEndpoint
 	|$CreateBackstagePostEndpoint

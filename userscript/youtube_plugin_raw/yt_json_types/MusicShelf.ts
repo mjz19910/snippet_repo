@@ -4,5 +4,5 @@ type MusicShelf=ContentsArrayTemplate<MusicResponsiveListItemRenderer>&{
 	continuations: ReloadContinuationData[];
 	shelfDivider: MusicShelfDividerRenderer;
 	autoReloadWhenEmpty: true;
-	bottomButton: ButtonRenderer;
+	bottomButton: R$Button;
 };

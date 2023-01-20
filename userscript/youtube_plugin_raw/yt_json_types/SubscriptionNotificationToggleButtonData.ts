@@ -3,17 +3,17 @@ type SubscriptionNotificationToggleButtonData={
 		{
 			stateId: 2;
 			nextStateId: 2;
-			state: ButtonRenderer;
+			state: R$Button;
 		},
 		{
 			stateId: 3;
 			nextStateId: 3;
-			state: ButtonRenderer;
+			state: R$Button;
 		},
 		{
 			stateId: 0;
 			nextStateId: 0;
-			state: ButtonRenderer;
+			state: R$Button;
 		}
 	];
 	currentStateId: 2;

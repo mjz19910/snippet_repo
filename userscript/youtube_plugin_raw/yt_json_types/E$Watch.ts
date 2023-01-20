@@ -10,6 +10,6 @@ type E$Watch={
 	loggingContext?: VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
-	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
+	watchEndpointMusicSupportedConfigs?: R$WatchEndpointMusicConfig;
 	playerParams?: string;
 };

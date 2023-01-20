@@ -1,6 +1,6 @@
 type SuperVodBuyFlowContent={
 	description: TextWithRuns;
-	buyButton: ButtonRenderer;
+	buyButton: R$Button;
 	trackingParams: string;
 	commentPreview: PdgCommentPreviewRenderer;
 	disclaimerText: TextWithRuns;

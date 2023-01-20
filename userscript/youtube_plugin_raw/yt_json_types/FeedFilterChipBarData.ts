@@ -1,6 +1,6 @@
 type FeedFilterChipBarData=ContentsArrayTemplate<ChipCloudChipRenderer>&{
 	trackingParams: string;
-	nextButton: ButtonRenderer;
-	previousButton: ButtonRenderer;
+	nextButton: R$Button;
+	previousButton: R$Button;
 	styleType: ChannelPageGrid;
 };
