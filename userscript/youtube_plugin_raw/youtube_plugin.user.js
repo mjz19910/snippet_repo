@@ -5066,18 +5066,13 @@ case "${path_parts[idx-1]}": {
 		};
 		/** @arg {number} idx */
 		let gd=(idx) => {
-			console.log("in",path_parts[0]);
+			console.log("[param_next.new_ns]",path_parts.join("."));
 			gen_next_part(idx);
 			debugger;
 		};
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
-			default: {
-				let idx=1;
-				console.log("[param_next.new_ns]",path_parts[0]);
-				gen_next_part(idx);
-				debugger;
-			} break;
+			default: gd(1); break;
 			case "reel": {
 				const idx=2;
 				if(path_parts.length!==2&&path_parts.length!==3) {
@@ -5093,7 +5088,22 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
-							case "f30": return gd(idx);
+							case "f30": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: {
+										console.log("in",path_parts[2]);
+										gen_next_part(idx);
+										debugger;
+									} path_parts[3]===""; break;
+								}
+							} break;
 						}
 					} break;
 					case "sequence_params": return gd(idx);
