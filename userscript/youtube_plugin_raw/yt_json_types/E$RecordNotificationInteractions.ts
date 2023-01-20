@@ -1,3 +1,3 @@
-type RecordNotificationInteractions={
+type EA_RecordNotificationInteractions={
 	serializedInteractionsRequest: string;
 };

@@ -7492,7 +7492,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.AE_SignalService(signalServiceEndpoint);
 	}
-	/** @arg {AE_SignalService} x */
+	/** @arg {E_SignalService} x */
 	AE_SignalService(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
@@ -7533,7 +7533,53 @@ class HandleTypes extends ServiceMethods {
 		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
 		if(nofollow&&!nofollow) debugger;
 	}
-	//#endregion
+	/** @arg {E_GetTranscriptEndpoint} x */
+	GetTranscriptEndpoint(x) {
+		this.save_keys("[GetTranscriptEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.AE_GetTranscript(getTranscriptEndpoint);
+	}
+	/** @arg {AE_GetTranscript} x */
+	AE_GetTranscript(x) {
+		this.save_keys("[GetTranscriptData]",x);
+		const {params,...y}=x; this.g(y); // ! #destructure
+		this.params("GetTranscript","get_transcript.params",params);
+	}
+	/** @arg {E_BrowseEndpoint} x */
+	BrowseEndpoint(x) {
+		this.save_keys("[BrowseEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.t(commandMetadata,this.CommandMetadata);
+		this.AE_Browse(browseEndpoint);
+	}
+	/** @arg {AE_Browse} x */
+	AE_Browse(x) {
+		const cf="AE_Browse";
+		this.save_keys("[AE_Browse]",x);
+		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y); // ! #destructure
+		this.t(browseId,this.browseId);
+		this.t(params,a => this.params(cf,"browse.params",a));
+		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
+	}
+	/** @arg {E_RecordNotificationInteractionsEndpoint} x */
+	RecordNotificationInteractionsEndpoint(x) {
+		this.save_keys(`[RecordNotificationInteractionsEndpoint]`,x);
+		const {clickTrackingParams,commandMetadata,recordNotificationInteractionsEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
+	}
+	/** @arg {EA_RecordNotificationInteractions} x */
+	RecordNotificationInteractions(x) {
+		const cf="RecordNotificationInteractions";
+		this.save_keys(`[${cf}]`,x);
+		const {serializedInteractionsRequest,...y}=x; this.g(y); // ! #destructure
+		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
+	}
+	//#endregion {E_}
 	//#region general done
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
@@ -7970,20 +8016,6 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {E_GetTranscriptEndpoint} x */
-	GetTranscriptEndpoint(x) {
-		this.save_keys("[GetTranscriptEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.AE_GetTranscript(getTranscriptEndpoint);
-	}
-	/** @arg {AE_GetTranscript} x */
-	AE_GetTranscript(x) {
-		this.save_keys("[GetTranscriptData]",x);
-		const {params,...y}=x; this.g(y); // ! #destructure
-		this.params("GetTranscript","get_transcript.params",params);
-	}
 	/** @arg {ContinuationCommand} x */
 	ContinuationCommand(x) {
 		this.save_keys("[ContinuationCommand]",x);
@@ -8116,23 +8148,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[HrefUrl]",x);
 		const {hrefUrl,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_url("HrefUrl",as(hrefUrl));
-	}
-	/** @arg {E_BrowseEndpoint} x */
-	BrowseEndpoint(x) {
-		this.save_keys("[BrowseEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.t(commandMetadata,this.CommandMetadata);
-		this.AE_Browse(browseEndpoint);
-	}
-	/** @arg {AE_Browse} x */
-	AE_Browse(x) {
-		const cf="AE_Browse";
-		this.save_keys("[AE_Browse]",x);
-		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y); // ! #destructure
-		this.t(browseId,this.browseId);
-		this.t(params,a => this.params(cf,"browse.params",a));
-		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -8478,21 +8493,6 @@ class HandleTypes extends ServiceMethods {
 		this.MenuRenderer(contextualMenu);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.primitive_of_string(notificationId);
-	}
-	/** @arg {E_RecordNotificationInteractionsEndpoint} x */
-	RecordNotificationInteractionsEndpoint(x) {
-		this.save_keys(`[RecordNotificationInteractionsEndpoint]`,x);
-		const {clickTrackingParams,commandMetadata,recordNotificationInteractionsEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
-	}
-	/** @arg {RecordNotificationInteractions} x */
-	RecordNotificationInteractions(x) {
-		const cf="RecordNotificationInteractions";
-		this.save_keys(`[${cf}]`,x);
-		const {serializedInteractionsRequest,...y}=x; this.g(y); // ! #destructure
-		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
 	}
 	/** @arg {"RecordNotificationInteractions"} root @arg {string} x */
 	serializedInteractionsRequest(root,x) {

@@ -1,1 +1,0 @@
-type AE_SignalService=Signal_ClientSignal|Signal_GetAccountMenu;
