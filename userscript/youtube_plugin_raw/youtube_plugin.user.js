@@ -12124,6 +12124,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[SearchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
 		this.E$Search(searchEndpoint);
 	}
 	/** @arg {E$Search} x */
