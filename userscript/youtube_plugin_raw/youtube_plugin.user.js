@@ -5035,7 +5035,6 @@ case "${path}": {
 case "${path_parts[idx-1]}": {
 	let idx=${idx+1};
 	if(path_parts.length===idx) {
-		if(tv instanceof Map) return this.parse_any_param(root,path,tv);
 		switch(tv) {
 			default: debugger; break;
 		}
@@ -5056,10 +5055,7 @@ case "${path_parts[idx-1]}": {
 case "${path_parts[idx-1]}": {
 	let idx=${idx+1};
 	if(path_parts.length===idx) {
-		if(tv instanceof Map) return this.parse_any_param(root,path,tv);
-		switch(tv) {
-			default: debugger; break;
-		}
+		switch(tv) {default: debugger; break;}
 		return;
 	}
 	switch(path_parts[${idx}]) {
@@ -5074,10 +5070,10 @@ case "${path_parts[idx-1]}": {
 		/** @arg {number} idx */
 		let gen_return_part=(idx) => {
 			console.log(`
-case "${path_parts[idx]}": {
+case "${path_parts[idx-1]}": {
 	let idx=${idx};
 	if(path_parts.length===${idx+1}) {
-		if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+		if(tv instanceof Map) return;
 		switch(tv) {
 			default: debugger; break;
 		}
@@ -5105,10 +5101,7 @@ case "${path_parts[idx]}": {
 				case "params": {
 					let idx=3;
 					if(path_parts.length===idx) {
-						if(tv instanceof Map) return this.parse_any_param(root,path,tv);
-						switch(tv) {
-							default: debugger; break;
-						}
+						switch(tv) {default: debugger; break;}
 						return;
 					}
 					switch(path_parts[2]) {
@@ -5119,14 +5112,8 @@ case "${path_parts[idx]}": {
 						} path_parts[2]===""; break;
 						case "f33": {
 							let idx=4;
-							if(path_parts.length===idx) {
-								if(typeof tv==="string") {
-									console.log(path,tv);
-									return;
-								}
-								switch(tv) {
-									default: debugger; break;
-								}
+							if(path_parts.length===idx-1) {
+								switch(tv) {default: debugger; break;}
 								return;
 							}
 							switch(path_parts[3]) {
@@ -5156,10 +5143,7 @@ case "${path_parts[idx]}": {
 					} path_parts[2]===""; break;
 					case "f84": {
 						if(path_parts.length===3) {
-							if(tv instanceof Map) return this.parse_any_param(root,path,tv);
-							switch(tv) {
-								default: debugger; break;
-							}
+							switch(tv) {default: debugger; break;}
 							return;
 						}
 						switch(path_parts[3]) {
@@ -5171,7 +5155,6 @@ case "${path_parts[idx]}": {
 							} path_parts[3]===""; break;
 							case "f5": {
 								if(path_parts.length===4) {
-									if(tv instanceof Map) return this.parse_any_param(root,path,tv);
 									switch(tv) {
 										case 2: return;
 										default: debugger; break;
