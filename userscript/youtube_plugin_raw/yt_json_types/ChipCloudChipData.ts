@@ -1,8 +1,16 @@
-type ChipCloudChipData={
-	style: ChipCloudStyle<"STYLE_DEFAULT"|"STYLE_HOME_FILTER">;
+type ChipCloudChip_tid={
+	style: ChipCloudStyle<"STYLE_DEFAULT"|"STYLE_HOME_FILTER"|"STYLE_REFRESH_TO_NOVEL_CHIP">;
+	text: TextT;
+	navigationEndpoint?: ContinuationCommand|RelatedChipCommand;
+	trackingParams: string;
+	targetId: "feed_filter_chip_bar_second_chip";
+};
+
+type ChipCloudChip={
+	style: ChipCloudStyle<"STYLE_DEFAULT"|"STYLE_HOME_FILTER"|"STYLE_REFRESH_TO_NOVEL_CHIP">;
 	text: TextT;
 	navigationEndpoint?: ContinuationCommand|RelatedChipCommand;
 	trackingParams: string;
 	isSelected?: true;
-	targetId?: "feed_filter_chip_bar_second_chip";
-};
+	uniqueId?: "ATTRIBUTE_FILTER_TYPE_EXPLORE";
+}|ChipCloudChip_tid;

@@ -10846,7 +10846,7 @@ class HandleTypes extends ServiceMethods {
 	ChipCloudChipRenderer(x) {
 		this.save_keys("[ChipCloudChipRenderer]",x);
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
-		this.ChipCloudChipData(chipCloudChipRenderer);
+		this.ChipCloudChip(chipCloudChipRenderer);
 	}
 	/** @arg {UploadEndpointData} x */
 	UploadEndpointData(x) {
@@ -11445,23 +11445,43 @@ class HandleTypes extends ServiceMethods {
 		const {browseFeedActionsRenderer,...y}=x; this.g(y); // ! #destructure
 		this.BrowseFeedActions(browseFeedActionsRenderer);
 	}
-	/** @arg {ChipCloudChipData} x */
-	ChipCloudChipData(x) {
-		this.save_keys("[ChipCloudChipData]",x);
-		const {style,text,navigationEndpoint,trackingParams,isSelected,targetId,...y}=x; this.g(y); // ! #destructure
-		this.ChipCloudStyle(style,a => {
+	/** @arg {Extract<ChipCloudChip,{targetId:any}>} x */
+	ChipCloudChip_tid(x) {
+		const cf="ChipCloudChip";
+		const {style,text,navigationEndpoint,trackingParams,targetId,...y}=x; this.g(y); // ! #destructure
+		this.ChipCloudChip_style(style);
+		this.TextT(text);
+		this.ChipCloudChip_nav(navigationEndpoint);
+		this.trackingParams(trackingParams);
+		this.t(targetId,a=>this.targetId(cf,a));
+	}
+	/** @arg {ChipCloudChip['style']} x */
+	ChipCloudChip_style(x) {
+		this.ChipCloudStyle(x,a => {
 			switch(a) {
 				case "STYLE_DEFAULT": return;
 				case "STYLE_HOME_FILTER": return;
 				default: debugger;
 			}
 		});
-		this.TextT(text);
-		this.t(navigationEndpoint,x => {
+	}
+	/** @arg {ChipCloudChip['navigationEndpoint']} x */
+	ChipCloudChip_nav(x) {
+		this.t(x,x => {
 			if("relatedChipCommand" in x) return this.RelatedChipCommand(x);
 			if("continuationCommand" in x) return this.ContinuationCommand(x);
 			debugger;
 		});
+	}
+	/** @arg {ChipCloudChip} x */
+	ChipCloudChip(x) {
+		const cf="ChipCloudChip";
+		this.save_keys(`[${cf}]`,x);
+		if("targetId" in x) return this.ChipCloudChip_tid(x);
+		const {style,text,navigationEndpoint,trackingParams,isSelected,uniqueId,...y}=x; this.g(y); // ! #destructure
+		this.ChipCloudChip_style(style);
+		this.TextT(text);
+		this.ChipCloudChip_nav(navigationEndpoint);
 		this.trackingParams(trackingParams);
 		this.t(isSelected,a => this.primitive_of(a,"boolean"));
 	}
