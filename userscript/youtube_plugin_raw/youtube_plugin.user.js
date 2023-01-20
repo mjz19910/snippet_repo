@@ -8945,27 +8945,27 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPanelVideo} x */
 	PlaylistPanelVideo(x) {
 		this.save_keys("[PlaylistPanelVideo]",x);
-		const {title,longBylineText,...y1}=x;
+		const {title,longBylineText,thumbnail,lengthText,selected,navigationEndpoint,videoId,shortBylineText,trackingParams,menu,playlistSetVideoId,thumbnailOverlays,canReorder,...y}=x; this.g(y);
 		this.TextT(title);
 		this.TextWithRuns(longBylineText);
-		const {thumbnail,lengthText,...y2}=y1;
 		this.Thumbnail(thumbnail);
 		this.TextT(lengthText);
-		const {selected,navigationEndpoint,...y3}=y2;
 		this.primitive_of(selected,"boolean");
 		this.WatchEndpoint(navigationEndpoint);
-		const {videoId,shortBylineText,...y4}=y3;
 		this.videoId(videoId);
 		this.TextWithRuns(shortBylineText);
-		const {trackingParams,menu,...y5}=y4;
 		this.trackingParams(trackingParams);
 		this.MenuRenderer(menu);
-		const {playlistSetVideoId,...y6}=y5;
 		this.primitive_of(playlistSetVideoId,"string");
-		const {thumbnailOverlays,canReorder,...y7}=y6;
-		this.tz(thumbnailOverlays,(this.ThumbnailOverlayResumePlaybackRenderer));
+		this.tz(thumbnailOverlays,this.PlaylistPanel_thumbnailOverlay);
 		if(canReorder!==void 0&&!canReorder) debugger;
-		this.primitive_of(y7,"string");
+	}
+	/** @arg {tz<PlaylistPanelVideo['thumbnailOverlays']>} x */
+	PlaylistPanel_thumbnailOverlay(x) {
+		if("thumbnailOverlayTimeStatusRenderer" in x) return;
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.ThumbnailOverlayResumePlaybackRenderer(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return;
+		debugger;
 	}
 	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
 	ThumbnailOverlayResumePlaybackRenderer(x) {
@@ -9499,7 +9499,7 @@ class HandleTypes extends ServiceMethods {
 			let v=this.w(x);
 			const {serializedShareEntity,commands,...y}=v; this.g(y);
 			this.primitive_of(serializedShareEntity,"string");
-			this.z(commands,a=>{
+			this.z(commands,a => {
 				const {clickTrackingParams,...b}=a;
 				if(!b.openPopupAction) debugger;
 				let {popup,popupType,...y}=this.w(b);
@@ -9510,7 +9510,7 @@ class HandleTypes extends ServiceMethods {
 				this.AllPopups(popup);
 				this.parse_popup_type(popupType);
 				this.g(y);
-			})
+			});
 			return;
 		}
 		debugger;
@@ -10306,7 +10306,7 @@ class HandleTypes extends ServiceMethods {
 	E_UndoFeedbackEndpoint(x) {
 		this.EndpointTemplate(x,x => {
 			const {undoFeedbackEndpoint: {actions,undoToken,...y}}=x; this.g(y);
-			let act=this.z(actions,a=>{
+			let act=this.z(actions,a => {
 				const {clickTrackingParams,...y}=a;
 				this.clickTrackingParams(clickTrackingParams);
 				return this.w(y);
@@ -10760,7 +10760,7 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailOverlayResumePlayback(x) {
 		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
 		const {percentDurationWatched,...y}=x; this.g(y);
-		if(!percentDurationWatched) {debugger;return;}
+		if(!percentDurationWatched) {debugger; return;}
 		if(percentDurationWatched!==10) debugger;
 	}
 	/** @arg {VideoMastheadAdV3} x */

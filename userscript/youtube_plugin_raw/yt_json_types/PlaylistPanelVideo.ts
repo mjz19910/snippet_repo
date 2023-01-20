@@ -1,3 +1,9 @@
+type PP_Overlays=
+|ThumbnailOverlayResumePlaybackRenderer
+|ThumbnailOverlayTimeStatusRenderer
+|ThumbnailOverlayNowPlayingRenderer
+;
+
 type PlaylistPanelVideo={
 	title: TextT;
 	longBylineText: TextWithRuns;
@@ -9,7 +15,7 @@ type PlaylistPanelVideo={
 	shortBylineText: TextWithRuns;
 	trackingParams: string;
 	menu: MenuRenderer;
-	thumbnailOverlays?: ThumbnailOverlayResumePlaybackRenderer[];
+	thumbnailOverlays?: PP_Overlays[];
 	playlistSetVideoId: string;
 	canReorder?: true;
 };
