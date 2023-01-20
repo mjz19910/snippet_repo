@@ -5143,6 +5143,7 @@ case "${path_parts[idx-1]}": {
 					} path_parts[2]===""; break;
 					case "f84": {
 						if(path_parts.length===3) {
+							if(tv instanceof Map) return;
 							switch(tv) {default: debugger; break;}
 							return;
 						}
