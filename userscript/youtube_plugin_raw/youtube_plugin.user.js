@@ -9716,6 +9716,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[RendererContentItem]",x);
 		if("richItemRenderer" in x) {
 			this.RichItemRenderer(x);
+		} else if("continuationItemRenderer" in x) {
+			this.ContinuationItemRenderer(x);
 		} else {
 			debugger;
 		}
@@ -11040,7 +11042,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChipCloudChipData]",x);
 		const {style,text,navigationEndpoint,trackingParams,isSelected}=x; //...y}=x; this.g(y); //#destructure
 		this.ChipCloudStyle(style);
-		this.SimpleText(text);
+		this.TextT(text);
 		this.RelatedChipCommand(navigationEndpoint);
 		this.trackingParams(trackingParams);
 		this.primitive_of(isSelected,"boolean");
