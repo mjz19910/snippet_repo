@@ -9464,7 +9464,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MenuData['items']} x */
 	R_MenuItems(x) {
-		this.z(x,a=>{
+		this.z(x,a => {
 			if("toggleMenuServiceItemRenderer" in a) return this.toggleMenuServiceItemRenderer(a);
 			if("menuServiceItemRenderer" in a) return this.MenuServiceItemRenderer(a);
 			debugger;
@@ -9474,18 +9474,18 @@ class HandleTypes extends ServiceMethods {
 	toggleMenuServiceItemRenderer(x) {
 		let x1=this.w(x);
 		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
-		{const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled,...y}=x1;this.g(y)}
+		{const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled,...y}=x1; this.g(y);}
 		this.primitive_of(isToggled,"boolean");
 		this.MenuServiceItemData({
-			icon:defaultIcon,
-			text:defaultText,
-			serviceEndpoint:defaultServiceEndpoint,
+			icon: defaultIcon,
+			text: defaultText,
+			serviceEndpoint: defaultServiceEndpoint,
 			trackingParams,
 		});
 		this.MenuServiceItemData({
-			icon:toggledIcon,
-			text:toggledText,
-			serviceEndpoint:toggledServiceEndpoint,
+			icon: toggledIcon,
+			text: toggledText,
+			serviceEndpoint: toggledServiceEndpoint,
 			trackingParams,
 		});
 	}
@@ -9557,6 +9557,28 @@ class HandleTypes extends ServiceMethods {
 			});
 			return;
 		}
+		if("likeEndpoint" in x) {
+			let a=this.w(x);
+			switch(a.status) {
+				case "DISLIKE": {
+					const {dislikeParams,status: {},target,...y}=a; this.g(y);
+					this.primitive_of(dislikeParams,"string");
+					this.LikeApiData(target);
+				} return;
+				case "INDIFFERENT": {
+					const {removeLikeParams,status: {},target,...y}=a; this.g(y);
+					this.primitive_of(removeLikeParams,"string");
+					this.LikeApiData(target);
+				} return;
+				case "LIKE": {
+					const {likeParams,status: {},target,actions,...y}=a; this.g(y);
+					this.primitive_of(likeParams,"string");
+					this.LikeApiData(target);
+				} return;
+				default: debugger; break;
+			}
+		}
+		x;
 		debugger;
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
