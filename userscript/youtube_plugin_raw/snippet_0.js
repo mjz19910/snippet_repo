@@ -6,6 +6,7 @@ this.z(actions,a => {
 	a;
 	debugger;
 });
+this.trackingParams(trackingParams);
 `
 const decoder=new TextDecoder();
 const base64_dec=new Base64Binary();
