@@ -7729,6 +7729,38 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region endpoint
+	/** @arg {E$CompactLink$navigationEndpoint} x */
+	E$CompactLink$navigationEndpoint(x) {
+		if("uploadEndpoint" in x) return this.E$UploadEndpoint(x);
+		if("signalNavigationEndpoint" in x) return this.E$SignalNavigationEndpoint(x);
+		debugger;
+	}
+	/** @arg {E$SignalNavigationEndpoint} x */
+	E$SignalNavigationEndpoint(x) {
+		const cf="SignalNavigationEndpoint";
+		this.save_keys("[SignalNavigationEndpoint]",x);
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams("SignalNavigationEndpoint",clickTrackingParams);
+		if(commandMetadata.webCommandMetadata.rootVe!==83769) debugger;
+		this.CommandMetadata(commandMetadata);
+		this.SignalNavigationArgs(signalNavigationEndpoint);
+	}
+	/** @arg {E$UploadEndpoint} x */
+	E$UploadEndpoint(x) {
+		const cf="UploadEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,uploadEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.E$Upload(uploadEndpoint);
+	}
+	/** @arg {E$Upload} x */
+	E$Upload(x) {
+		this.save_keys("[E$Upload]",x);
+		const {hack,...y}=x; this.g(y); // ! #destructure
+		if(hack!==true) debugger;
+	}
 	/** @arg {E$Signal_ClientSignal} x */
 	E$Signal_ClientSignal(x) {
 		const cf="SendFeedbackAction";
@@ -8894,7 +8926,7 @@ class HandleTypes extends ServiceMethods {
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
 		this.TextT(title);
-		this.t(navigationEndpoint,this.CompactLink_Endpoint);
+		this.t(navigationEndpoint,this.E$CompactLink$navigationEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 		switch(style) {
 			default: debugger; break;
@@ -8903,12 +8935,6 @@ class HandleTypes extends ServiceMethods {
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": break;
 			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 		}
-	}
-	/** @arg {CompactLink_Endpoint} x */
-	CompactLink_Endpoint(x) {
-		if("uploadEndpoint" in x) return this.UploadEndpoint(x);
-		if("signalNavigationEndpoint" in x) return this.SignalNavigationEndpoint(x);
-		debugger;
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
@@ -11424,21 +11450,6 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.CommentRenderer);
 	}
-	/** @arg {E$UploadEndpoint} x */
-	UploadEndpoint(x) {
-		const cf="UploadEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,uploadEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$Upload(uploadEndpoint);
-	}
-	/** @arg {E$Upload} x */
-	E$Upload(x) {
-		this.save_keys("[E$Upload]",x);
-		const {hack,...y}=x; this.g(y); // ! #destructure
-		if(hack!==true) debugger;
-	}
 	/** @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
 		this.save_keys("[GetMultiPageMenuAction]",x);
@@ -12130,17 +12141,6 @@ class HandleTypes extends ServiceMethods {
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.OpenPopupAction);
-	}
-	/** @arg {E$SignalNavigationEndpoint} x */
-	SignalNavigationEndpoint(x) {
-		const cf="SignalNavigationEndpoint";
-		this.save_keys("[SignalNavigationEndpoint]",x);
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams("SignalNavigationEndpoint",clickTrackingParams);
-		if(commandMetadata.webCommandMetadata.rootVe!==83769) debugger;
-		this.CommandMetadata(commandMetadata);
-		this.SignalNavigationArgs(signalNavigationEndpoint);
 	}
 	/** @arg {E$SignalNavigation} x */
 	SignalNavigationArgs(x) {
