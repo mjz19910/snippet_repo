@@ -5957,7 +5957,101 @@ class HandleTypes extends ServiceMethods {
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
 				debugger;
 			} break;
+			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
+			case "/youtubei/v1/account/set_setting": return this.SetSettingWebCommandMetadata(x);
+			case "/youtubei/v1/browse": return this.BrowseApiWebCommandMetadata(x);
+			case "/youtubei/v1/browse/edit_playlist": return this.EditPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/get_transcript": return this.GetTranscriptWebCommandMetadata(x);
+			case "/youtubei/v1/next": return this.NextWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_notification_menu": return this.GetNotificationMenuWebCommandMetadata(x);
+			case "/youtubei/v1/notification/get_unseen_count": this.GetUnseenCountWebCommandMetadata(x); break;
+			case "/youtubei/v1/playlist/get_add_to_playlist": return this.GetAddToPlaylistWebCommandMetadata(x);
+			case "/youtubei/v1/search": return this.SearchApiWebCommandMetadata(x);
+			case "/youtubei/v1/share/get_share_panel": return this.GetSharePanelWebCommandMetadata(x);
+			case "/youtubei/v1/playlist/create": return this.GeneratedWebCommandMetadata(x);
 		}
+	}
+	/** @arg {AccountMenuWebCommandMetadata} x */
+	AccountMenuWebCommandMetadata(x) {
+		this.save_keys("[AccountMenuWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/account/account_menu") debugger;
+	}
+	/** @arg {SetSettingWebCommandMetadata} x */
+	SetSettingWebCommandMetadata(x) {
+		this.save_keys("[SetSettingWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/account/set_setting") debugger;
+	}
+	/** @arg {BrowseApiWebCommandMetadata} x */
+	BrowseApiWebCommandMetadata(x) {
+		const {apiUrl,sendPost,...y}=x; this.g(y);
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
+		this.primitive_of(sendPost,"boolean");
+	}
+	/** @arg {EditPlaylistWebCommandMetadata} x */
+	EditPlaylistWebCommandMetadata(x) {
+		this.save_keys("[EditPlaylistWebCommandMetadata]",x);
+		const {apiUrl,sendPost,...y}=x; this.g(y);
+		if(apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		if(sendPost!==true) debugger;
+	}
+	/** @arg {GetTranscriptWebCommandMetadata} x */
+	GetTranscriptWebCommandMetadata(x) {
+		this.save_keys("[GetTranscriptWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/get_transcript") debugger;
+	}
+	/** @arg {NextWebCommandMetadata} x */
+	NextWebCommandMetadata(x) {
+		this.save_keys("[NextWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/next") debugger;
+	}
+	/** @arg {GetNotificationMenuWebCommandMetadata} x */
+	GetNotificationMenuWebCommandMetadata(x) {
+		this.save_keys("[GetNotificationMenuWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_notification_menu") debugger;
+	}
+	/** @arg {GetUnseenCountWebCommandMetadata} x */
+	GetUnseenCountWebCommandMetadata(x) {
+		this.save_keys("[GetUnseenCountWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		if(sendPost!==true) debugger;
+		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
+	}
+	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
+	GetAddToPlaylistWebCommandMetadata(x) {
+		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
+	}
+	/** @arg {SearchWebCommandMetadata} x */
+	SearchApiWebCommandMetadata(x) {
+		this.save_keys("[SearchApiWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/search") debugger;
+	}
+	/** @arg {GetSharePanelWebCommandMetadata} x */
+	GetSharePanelWebCommandMetadata(x) {
+		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		this.primitive_of(apiUrl,"string");
+	}
+	/** @arg {GeneratedWebCommandMetadata} x */
+	GeneratedWebCommandMetadata(x) {
+		const {sendPost,apiUrl}=x;
+		this.primitive_of(sendPost,"boolean");
+		this.parser.parse_url("GeneratedWCM",apiUrl);
 	}
 	/** @arg {WebCommandMetadataRVE} x */
 	WebCommandMetadataRVE(x) {
