@@ -6910,8 +6910,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[CommandsTemplate]`,x);
 		this.z(x.commands,f);
 	}
-	/** @template {{}} T @arg {ServiceEndpointTemplate<T>} x @arg {(this:this,x:T)=>void} f */
-	ServiceEndpointTemplate(x,f) {
+	/** @template {{}} T @arg {EndpointTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	EndpointTemplate(x,f) {
 		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(clickTrackingParams);
@@ -9449,7 +9449,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MenuServiceEndpointItems} x */
 	MenuServiceEndpointItems(x) {
 		if("notificationOptOutEndpoint" in x) return;
-		this.ServiceEndpointTemplate(x,this.MenuServiceEndpoints);
+		this.EndpointTemplate(x,this.MenuServiceEndpoints);
 	}
 	/** @arg {MenuServiceItemData} x */
 	MenuServiceItemData(x) {
@@ -9470,7 +9470,10 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
-	AddToPlaylistServiceEndpoint(x) {x;}
+	AddToPlaylistServiceEndpoint(x) {
+		let [{videoId}]=this.w(x,a=>a);
+		this.videoId(videoId);
+	}
 	/** @arg {E$GetReportFormEndpoint} x */
 	GetReportFormEndpoint(x) {
 		let [{params}]=this.w(x);
@@ -9479,9 +9482,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E_PlaylistEditEndpoint} x */
 	PlaylistEditEndpoint(x) {
 		this.save_keys("[PlaylistEditEndpoint]",x);
-		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t(clickTrackingParams,this.clickTrackingParams);
-		this.t(commandMetadata,this.CommandMetadata);
+		const {playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.AE_PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @arg {AE_PlaylistEdit} x */
