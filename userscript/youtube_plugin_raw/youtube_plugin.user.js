@@ -10200,7 +10200,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(ownerName);
 		this.primitive_of(isInfinite,"boolean");
 		this.parser.parse_url("PlaylistContent",playlistShareUrl);
-		this.TextWithRuns(shortBylineText);
+		this.SimpleText(shortBylineText);
 		this.TextWithRuns(longBylineText);
 		this.trackingParams(trackingParams);
 		this.SimpleText(titleText);
