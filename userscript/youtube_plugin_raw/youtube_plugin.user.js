@@ -5899,14 +5899,13 @@ class HandleTypes extends ServiceMethods {
 		const {secondaryResults,...y}=x; this.g(y);
 		f.call(this,secondaryResults);
 	}
-	/** @template {number} T @arg {TypesTemplate<T>} x @arg {(x:T)=>void} f @arg {T|null} _x */
-	TypesTemplate(x,f,_x=null) {
+	/** @template {number} T @arg {TypesTemplate<T>} x @arg {T|null} _x @returns {T} */
+	TypesTemplate(x,_x=null) {
 		/** @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
 			return as(Number.parseInt(x,10));
 		}
-		let r=parse_number(x.types,_x);
-		f(r);
+		return parse_number(x.types,_x);
 	}
 	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
@@ -6311,7 +6310,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowsePageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=x; this.g(y);
-		if(rootVe) this.save_number("[BrowsePageResponse.rootVe]",rootVe);
+		this.t(rootVe,a => this.save_number("[BrowsePageResponse.rootVe]",a));
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.BrowseEndpoint(endpoint);
 		if(page!=="browse") debugger;
@@ -6553,7 +6552,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(contents,a => this.SectionListItem(a));
 		this.t(continuations,a => this.z(a,a => this.NextContinuationData(a)));
 		this.trackingParams(trackingParams);
-		if(subMenu) this.save_keys(`[${cf}.subMenu]`,subMenu);
+		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
@@ -7412,9 +7411,9 @@ class HandleTypes extends ServiceMethods {
 		this.t(thumbnail,this.Thumbnail);
 		this.ReelPlayerOverlayRenderer(overlay);
 		this.params("ReelWatch","get_transcript.params",params);
-		if(sequenceProvider) this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",sequenceProvider);
-		if(sequenceParams) this.params("ReelWatch.sequence","reel.sequence_params",sequenceParams);
-		if(inputType) this.save_enum("REEL_WATCH_INPUT_TYPE",inputType);
+		this.t(sequenceProvider,a => this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",a));
+		this.t(sequenceParams,a => this.params("ReelWatch.sequence","reel.sequence_params",a));
+		this.t(inputType,a => this.save_enum("REEL_WATCH_INPUT_TYPE",a));
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
@@ -8297,7 +8296,7 @@ class HandleTypes extends ServiceMethods {
 		this.playlistId(playlistId);
 		if(actions.length!==1) debugger;
 		this.PlaylistAction(actions[0]);
-		if(params) this.params("PlaylistEdit","playlist_edit.params",params);
+		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
 	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
@@ -8799,12 +8798,8 @@ class HandleTypes extends ServiceMethods {
 				});
 			}
 		});
-		if(playlist) this.PlaylistTemplate(playlist,a => {
-			this.PlaylistContent(a);
-		});
-		if(autoplay) this.AutoplayTemplate(autoplay,a => {
-			this.AutoplayContent(a);
-		});
+		this.t(playlist,a => this.PlaylistTemplate(a,a => this.PlaylistContent(a)));
+		this.t(autoplay,a => this.AutoplayTemplate(a,a => this.AutoplayContent(a)));
 		this.t(conversationBar,this.LiveChatRenderer);
 	}
 	/** @arg {NotificationGetUnseenCountResponse} x */
@@ -9492,13 +9487,13 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
 		this.Visibility(visibility);
-		if(gestures) this.TypesTemplate(gestures,a => {
-			switch(a) {
-				default: debugger; break;
-				case 4: break;
-			}
-		});
+		this.t(gestures,this.LoggingDirectives_gestures);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
+	}
+	/** @arg {NonNullable<LoggingDirectives['gestures']>} x */
+	LoggingDirectives_gestures(x) {
+		let inner=this.TypesTemplate(x);
+		if(inner!==4) debugger;
 	}
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
