@@ -2649,11 +2649,16 @@ class BaseService extends BaseServicePrivate {
 		}
 		return c;
 	}
+	/** @type {string[]} */
+	logged_keys=[];
 	/** @protected @template {{}} T @arg {{} extends T?MaybeKeysArray<T> extends []?T:never:never} x */
 	g(x) {
 		if(!x) {debugger; return;}
 		let keys=this.get_keys_of(x);
 		if(!keys.length) return;
+		let jk=keys.join();
+		if(this.logged_keys.includes(jk)) return;
+		this.logged_keys.push(jk);
 		console.log("[empty_object] [%s]",keys.join());
 		debugger;
 	}
