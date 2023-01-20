@@ -5101,6 +5101,20 @@ case "${path_parts[idx-1]}": {
 										gen_next_part(idx);
 										debugger;
 									} path_parts[3]===""; break;
+									case "f2": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: {
+												console.log("in",path_parts[3]);
+												gen_next_part(idx);
+												debugger;
+											} path_parts[4]===""; break;
+										}
+									} break;
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
