@@ -5191,6 +5191,7 @@ case "${path}": {
 					case "createBackstagePost.param": {
 						switch(ta) {
 							case 1: break;
+							case 2: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
@@ -5478,6 +5479,18 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
+							case "f2": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -8407,8 +8420,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {OpenPopupActionData['popup']} x */
 	popup_generic(x) {
-		if("unifiedSharePanelRenderer" in x) return this.UnifiedSharePanelRenderer(x);
-		debugger;
+		this.AllPopups(x);
 	}
 	/** @arg {OpenPopupActionData['popupType']} x */
 	parse_popup_type(x) {
@@ -8438,18 +8450,12 @@ class HandleTypes extends ServiceMethods {
 	AllPopups(x) {
 		const cf="AllPopups";
 		this.save_keys(`[${cf}]`,x);
-		if("multiPageMenuRenderer" in x) {
-			return this.MultiPageMenuRenderer(x);
-		} else if("confirmDialogRenderer" in x) {
-			return this.ConfirmDialogRenderer(x);
-		} else if("notificationActionRenderer" in x) {
-			return this.NotificationActionRenderer(x);
-		} else if("pdgBuyFlowRenderer" in x) {
-			return this.PdgBuyFlowRenderer(x);
-		} else if("voiceSearchDialogRenderer" in x) {
-			return this.VoiceSearchDialogRenderer(x);
-		}
-		debugger;
+		if("confirmDialogRenderer" in x) return this.ConfirmDialogRenderer(x);
+		if("multiPageMenuRenderer" in x) return this.MultiPageMenuRenderer(x);
+		if("notificationActionRenderer" in x) return this.NotificationActionRenderer(x);
+		if("pdgBuyFlowRenderer" in x) return this.PdgBuyFlowRenderer(x);
+		if("unifiedSharePanelRenderer" in x) return this.UnifiedSharePanelRenderer(x);
+		if("voiceSearchDialogRenderer" in x) return this.VoiceSearchDialogRenderer(x);
 	}
 	/** @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
