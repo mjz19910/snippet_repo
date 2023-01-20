@@ -4471,6 +4471,7 @@ class CodegenService extends BaseService {
 			||b.watchEndpoint
 			||b.watchPlaylistEndpoint
 			||b.ypcGetOffersEndpoint
+			||b.signalServiceEndpoint
 			//#endregion
 			//#region renderer
 			||b.accountItemSectionRenderer
@@ -4619,7 +4620,6 @@ class CodegenService extends BaseService {
 			||b.settingsOptionsRenderer
 			||b.settingsSidebarRenderer
 			||b.shelfRenderer
-			||b.signalServiceEndpoint
 			||b.simpleMenuHeaderRenderer
 			||b.singleColumnMusicWatchNextResultsRenderer
 			||b.sortFilterSubMenuRenderer
@@ -7475,8 +7475,47 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region endpoint
+	FeedbackEndpoint(x) {
+		x;
+	}
+	/** @arg {EG$MenuServiceEndpoints} x */
+	EG$MenuServiceEndpoints(x) {
+		this.save_keys("[MenuServiceEndpoints]",x);
+		if("playlistEditEndpoint" in x) return this.E$PlaylistEditEndpoint(x);
+		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
+		if("feedbackEndpoint" in x) return this.AE_Feedback(x.feedbackEndpoint);
+		if("notificationOptOutEndpoint" in x) {
+			let v=this.w({x:x.notificationOptOutEndpoint});
+			const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
+			this.TextWithRuns(optOutText);
+			this.primitive_of_string(serializedOptOut);
+			this.primitive_of_string(serializedRecordInteractionsRequest);
+			return;
+		}
+		if("shareEntityServiceEndpoint" in x) {
+			let v=this.w({x:x.shareEntityServiceEndpoint});
+			const {serializedShareEntity,commands,...y}=v; this.g(y);
+			this.primitive_of_string(serializedShareEntity);
+			this.z(commands,a => {
+				const {clickTrackingParams,...b}=a;
+				if(!b.openPopupAction) debugger;
+				let {popup,popupType,...y}=this.w(b);
+				if("beReused" in y) {
+					if(y.beReused!==true) debugger;
+					return;
+				}
+				this.AllPopups(popup);
+				this.parse_popup_type(popupType);
+				this.g(y);
+			});
+			return;
+		}
+		if("likeEndpoint" in x) return this.E$Like(x.likeEndpoint);
+		debugger;
+	}
 	/** @arg {E$SubscribeEndpoint} x */
-	E_SubscribeEndpoint(x) {
+	E$SubscribeEndpoint(x) {
 		const cf="SubscribeEndpoint";
 		this.save_keys(`[E_${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,subscribeEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -7485,15 +7524,15 @@ class HandleTypes extends ServiceMethods {
 		this.params(cf,"subscribe.params",subscribeEndpoint.params);
 	}
 	/** @arg {E$SignalServiceEndpoint} x */
-	E_SignalServiceEndpoint(x) {
+	E$SignalServiceEndpoint(x) {
 		this.save_keys("[E_SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.AE_SignalService(signalServiceEndpoint);
+		this.E$SignalService(signalServiceEndpoint);
 	}
 	/** @arg {E$SignalService} x */
-	AE_SignalService(x) {
+	E$SignalService(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
 			case "CLIENT_SIGNAL": return this.signal.ClientSignal(x);
@@ -7501,15 +7540,15 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {E$PlaylistEditEndpoint} x */
-	PlaylistEditEndpoint(x) {
+	E$PlaylistEditEndpoint(x) {
 		this.save_keys("[PlaylistEditEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.AE_PlaylistEdit(playlistEditEndpoint);
+		this.E$PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @arg {E$PlaylistEdit} x */
-	AE_PlaylistEdit(x) {
+	E$PlaylistEdit(x) {
 		this.save_keys("[PlaylistEditEndpointData]",x);
 		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
 		this.playlistId(playlistId);
@@ -7518,15 +7557,15 @@ class HandleTypes extends ServiceMethods {
 		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
 	}
 	/** @private @arg {E$UrlEndpoint} x */
-	UrlEndpoint(x) {
+	E$UrlEndpoint(x) {
 		this.save_keys("[UrlEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
 		this.t(clickTrackingParams,this.clickTrackingParams);
-		this.AE_Url(urlEndpoint);
 		this.CommandMetadata(commandMetadata);
+		this.E$Url(urlEndpoint);
 	}
 	/** @private @arg {E$Url} x */
-	AE_Url(x) {
+	E$Url(x) {
 		this.save_keys("[UrlEndpointData]",x);
 		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(url);
@@ -9411,7 +9450,7 @@ class HandleTypes extends ServiceMethods {
 	ResponseReceivedEndpointItem(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
-			this.E_SignalServiceEndpoint(x);
+			this.E$SignalServiceEndpoint(x);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.AdsControlFlowOpportunityReceivedCommand(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
@@ -9585,10 +9624,10 @@ class HandleTypes extends ServiceMethods {
 	LikeEndpoint(x) {
 		this.save_keys("[LikeEndpoint]",x);
 		if(this.get_keys_of(x).length!==1) debugger;
-		this.AE_Like(x.likeEndpoint);
+		this.E$Like(x.likeEndpoint);
 	}
 	/** @arg {E$Like} x */
-	AE_Like(x) {
+	E$Like(x) {
 		this.save_keys("[LikeEndpointData]",x);
 		let ua=this.LikeApiData.bind(this);
 		switch(x.status) {
@@ -9752,42 +9791,6 @@ class HandleTypes extends ServiceMethods {
 		this.EG$MenuServiceEndpoints(serviceEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
-	}
-	/** @arg {EG$MenuServiceEndpoints} x */
-	EG$MenuServiceEndpoints(x) {
-		this.save_keys("[MenuServiceEndpoints]",x);
-		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
-		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
-		if("feedbackEndpoint" in x) return this.AE_Feedback(x.feedbackEndpoint);
-		if("notificationOptOutEndpoint" in x) {
-			let v=this.w({x:x.notificationOptOutEndpoint});
-			const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
-			this.TextWithRuns(optOutText);
-			this.primitive_of_string(serializedOptOut);
-			this.primitive_of_string(serializedRecordInteractionsRequest);
-			return;
-		}
-		if("shareEntityServiceEndpoint" in x) {
-			let v=this.w({x:x.shareEntityServiceEndpoint});
-			const {serializedShareEntity,commands,...y}=v; this.g(y);
-			this.primitive_of_string(serializedShareEntity);
-			this.z(commands,a => {
-				const {clickTrackingParams,...b}=a;
-				if(!b.openPopupAction) debugger;
-				let {popup,popupType,...y}=this.w(b);
-				if("beReused" in y) {
-					if(y.beReused!==true) debugger;
-					return;
-				}
-				this.AllPopups(popup);
-				this.parse_popup_type(popupType);
-				this.g(y);
-			});
-			return;
-		}
-		if("likeEndpoint" in x) return this.AE_Like(x.likeEndpoint);
-		debugger;
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
 	AddToPlaylistServiceEndpoint(x) {
@@ -10091,7 +10094,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NavigationEndpointRoot]",x);
 		let a1=x;
 		if("urlEndpoint" in a1) {
-			this.UrlEndpoint(a1);
+			this.E$UrlEndpoint(a1);
 		} else if("watchEndpoint" in a1) {
 			this.WatchEndpoint(a1);
 		} else if("browseEndpoint" in a1) {
@@ -10560,7 +10563,7 @@ class HandleTypes extends ServiceMethods {
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
@@ -11308,7 +11311,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {NonNullable<Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']>} x */
 	GuideEntryRoot_ser(x) {
 		if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		debugger;
 	}
 	/** @arg {GuideEntryRoot} x */
@@ -11335,7 +11338,7 @@ class HandleTypes extends ServiceMethods {
 			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x;
 			this.t(navigationEndpoint,x => {
 				if("browseEndpoint" in x) return this.BrowseEndpoint(x);
-				if("urlEndpoint" in x) return this.UrlEndpoint(x);
+				if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
 				debugger;
 			});
 			this.Icon(icon);
@@ -11542,7 +11545,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<TopbarMenuButton,{menuRequest:any}>['menuRequest']} x */
 	TopbarMenu_menuRequest(x) {
 		if("signalServiceEndpoint" in x) {
-			this.E_SignalServiceEndpoint(x);
+			this.E$SignalServiceEndpoint(x);
 		} else {
 			debugger;
 		}
@@ -11834,8 +11837,8 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
-		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
-		if("urlEndpoint" in x) return this.UrlEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
+		if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) {
 			this.EndpointTemplate(x,a => {
@@ -11982,8 +11985,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		if(containsSelectedVideos!=="NONE") debugger;
 		this.Icon(privacyIcon);
-		this.PlaylistEditEndpoint(addToPlaylistServiceEndpoint);
-		this.PlaylistEditEndpoint(removeFromPlaylistServiceEndpoint);
+		this.E$PlaylistEditEndpoint(addToPlaylistServiceEndpoint);
+		this.E$PlaylistEditEndpoint(removeFromPlaylistServiceEndpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {AddToPlaylistCreate} x */
@@ -12178,12 +12181,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NotificationTopbarButtonData]",x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
-		this.E_SignalServiceEndpoint(menuRequest);
+		this.E$SignalServiceEndpoint(menuRequest);
 		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams("CF_FIX",trackingParams);
 		this.Accessibility(accessibility);
 		this.primitive_of_string(tooltip);
-		this.E_SignalServiceEndpoint(updateUnseenCountEndpoint);
+		this.E$SignalServiceEndpoint(updateUnseenCountEndpoint);
 		this.primitive_of(notificationCount,"number");
 		if(!this.eq_keys(handlerDatas,["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"])) {
 			debugger;
@@ -12721,8 +12724,8 @@ class HandleTypes extends ServiceMethods {
 		this.SubscriptionNotificationToggleButtonRenderer(notificationPreferenceButton);
 		this.primitive_of_string(targetId);
 		this.primitive_of_string(subscribedEntityKey);
-		this.z(onSubscribeEndpoints,this.E_SubscribeEndpoint);
-		this.z(onUnsubscribeEndpoints,this.E_SignalServiceEndpoint);
+		this.z(onSubscribeEndpoints,this.E$SubscribeEndpoint);
+		this.z(onUnsubscribeEndpoints,this.E$SignalServiceEndpoint);
 	}
 	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {
