@@ -9473,6 +9473,7 @@ class HandleTypes extends ServiceMethods {
 	toggleMenuServiceItemRenderer(x) {
 		let x1=this.w(x);
 		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
+		{const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled,...y}=x1;this.g(y)}
 		this.primitive_of(isToggled,"boolean");
 		this.MenuServiceItemData({
 			icon:defaultIcon,
