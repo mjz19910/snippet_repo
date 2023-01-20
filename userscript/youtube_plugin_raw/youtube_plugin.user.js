@@ -6529,6 +6529,12 @@ case "${path_parts[idx-1]}": {
 					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
 					x: `${x[2]}.${x[3]}`,
 				}.x;
+			case "backstage":
+				if(x[3]!=="create_post") debugger;
+				return {
+					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+					x: `${x[2]}.${x[3]}`,
+				}.x;
 			default: return this.api_no_handler(x,x[2]);
 		}
 	}
@@ -7207,6 +7213,7 @@ class HandleTypes extends ServiceMethods {
 				console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
 				debugger;
 			} break;
+			case "/youtubei/v1/backstage/create_post": return this.GeneratedWebCommandMetadata(x);
 			case "/youtubei/v1/like/removelike": return this.GeneratedWebCommandMetadata(x);
 			case "/youtubei/v1/like/like": return this.GeneratedWebCommandMetadata(x);
 			case "/youtubei/v1/account/account_menu": return this.AccountMenuWebCommandMetadata(x);
@@ -7531,7 +7538,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[MenuServiceEndpoints]",x);
 		if("playlistEditEndpoint" in x) return this.E$PlaylistEditEndpoint(x);
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
+		if("addToPlaylistServiceEndpoint" in x) return this.E$AddToPlaylistServiceEndpoint(x);
 		if("feedbackEndpoint" in x) return this.E$FeedbackEndpoint(x);
 		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
 		if("shareEntityServiceEndpoint" in x) return this.E$ShareEntityServiceEndpoint(x);
@@ -9816,9 +9823,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("CF_FIX",trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
 	}
-	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
-	AddToPlaylistServiceEndpoint(x) {
-		let {videoId}=this.w(x);
+	/** @arg {E$AddToPlaylistServiceEndpoint} x */
+	E$AddToPlaylistServiceEndpoint(x) {
+		let q=this.w(this.EB$Endpoint(x));
+		let {videoId}=q;
 		this.videoId(videoId);
 	}
 	/** @arg {E$GetReportFormEndpoint} x */
