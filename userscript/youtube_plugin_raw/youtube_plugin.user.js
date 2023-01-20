@@ -10479,7 +10479,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[DecoratedPlayerBar]",x);
 		const {playerBar,playerBarActionButton,...y}=x; this.g(y); // ! #destructure
 		this.MultiMarkersPlayerBarRenderer(playerBar);
-		this.ButtonRenderer(playerBarActionButton);
+		this.t(playerBarActionButton,this.ButtonRenderer);
 	}
 	/** @arg {PlayerOverlayVideoDetails} x */
 	PlayerOverlayVideoDetails(x) {

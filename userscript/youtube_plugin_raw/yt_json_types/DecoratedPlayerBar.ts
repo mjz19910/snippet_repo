@@ -53,5 +53,5 @@ type MultiMarkersPlayerBarRenderer={
 
 type DecoratedPlayerBar={
 	playerBar: MultiMarkersPlayerBarRenderer;
-	playerBarActionButton: ButtonRenderer;
+	playerBarActionButton?: ButtonRenderer;
 };
