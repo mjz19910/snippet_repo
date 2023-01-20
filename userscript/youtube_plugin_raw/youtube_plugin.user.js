@@ -2478,6 +2478,52 @@ class BaseServicePrivate extends ApiBase {
 }
 /** @template C_T,C_U @extends {BaseServicePrivate<C_T,C_U>} */
 class BaseService extends BaseServicePrivate {
+	/** @arg {string} x */
+	create_param_map(x) {
+		let res_e=this.decode_b64_url_proto_obj(x);
+		if(!res_e) return null;
+		if(res_e.find(e => e[0]==="error")) {
+			return null;
+		}
+		return this.make_param_map(res_e);
+	}
+	/** @typedef {number|string|bigint|["failed",DecTypeNum[]|null]|ParamMapType} ParamMapValue */
+	/** @typedef {Map<number,ParamMapValue>} ParamMapType */
+	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
+	/** @arg {DecTypeNum[]} res_e */
+	make_param_map(res_e) {
+		/** @private @type {ParamMapType} */
+		let ret_map=new Map();
+		for(let param of res_e) {
+			switch(param[0]) {
+				case "data_fixed32": case "data_fixed64":
+				case "data32": ret_map.set(param[1],param[2]); break;
+				case "child": {
+					x: if(param[3]) {
+						let err=param[3].find(e => e[0]==="error");
+						if(err) break x;
+						let u8_arr=param[2];
+						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/\w{4}/)) break x;
+						let p_map=this.make_param_map(param[3]);
+						if(!p_map) {
+							ret_map.set(param[1],["failed",param[3]]);
+							break;
+						}
+						ret_map.set(param[1],p_map);
+						break;
+					}
+					ret_map.set(param[1],decoder.decode(param[2]));
+				} break;
+				case "data64": ret_map.set(param[1],param[2]); break;
+				case "group": debugger; break;
+				case "info": debugger; break;
+				case "struct": debugger; break;
+				case "error": return null;
+				default: debugger; break;
+			}
+		}
+		return ret_map;
+	}
 	/** @template {string[]} X @arg {X} x @template {string} S @arg {S} s @returns {Join<X,S>} */
 	join_string(x,s) {
 		if(!x) {debugger;}
@@ -4650,52 +4696,6 @@ class ParserService extends BaseService {
 		}
 		this.log_url_info_arr(url_info_arr);
 	}
-	/** @typedef {number|string|bigint|["failed",DecTypeNum[]|null]|ParamMapType} ParamMapValue */
-	/** @typedef {Map<number,ParamMapValue>} ParamMapType */
-	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
-	/** @arg {DecTypeNum[]} res_e */
-	make_param_map(res_e) {
-		/** @private @type {ParamMapType} */
-		let ret_map=new Map();
-		for(let param of res_e) {
-			switch(param[0]) {
-				case "data_fixed32": case "data_fixed64":
-				case "data32": ret_map.set(param[1],param[2]); break;
-				case "child": {
-					x: if(param[3]) {
-						let err=param[3].find(e => e[0]==="error");
-						if(err) break x;
-						let u8_arr=param[2];
-						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/\w{4}/)) break x;
-						let p_map=this.make_param_map(param[3]);
-						if(!p_map) {
-							ret_map.set(param[1],["failed",param[3]]);
-							break;
-						}
-						ret_map.set(param[1],p_map);
-						break;
-					}
-					ret_map.set(param[1],decoder.decode(param[2]));
-				} break;
-				case "data64": ret_map.set(param[1],param[2]); break;
-				case "group": debugger; break;
-				case "info": debugger; break;
-				case "struct": debugger; break;
-				case "error": return null;
-				default: debugger; break;
-			}
-		}
-		return ret_map;
-	}
-	/** @arg {string} x */
-	create_param_map(x) {
-		let res_e=this.decode_b64_url_proto_obj(x);
-		if(!res_e) return null;
-		if(res_e.find(e => e[0]==="error")) {
-			return null;
-		}
-		return this.make_param_map(res_e);
-	}
 	/** @arg {string} x */
 	create_param_map_dbg(x) {
 		debugger;
@@ -4881,6 +4881,9 @@ class ParserService extends BaseService {
 						case "watch.params.f33": {
 							switch(ta) {
 								case 2: break;
+								case 3: break;
+								case 4: break;
+								case 5: break;
 								default: {
 									console.log("[parse_value.new_ns]",path);
 									console.log(`\ncase ${ta}: break;`);
@@ -4889,6 +4892,16 @@ class ParserService extends BaseService {
 							}
 							this.parse_param_next(for_,`${path}.f${ta}`,tv);
 						} break;
+						case "watch.player_params.f40": {
+							switch(ta) {
+								case 1: break;
+								default: {
+									console.log("[parse_value.new_ns]",path);
+									console.log(`
+						case ${ta}: break;`);
+								} return;
+							}
+						} return;
 						default: {
 							console.log("[parse_value.new_ns]",path);
 							console.log(`
@@ -7192,8 +7205,13 @@ class HandleTypes extends ServiceMethods {
 	RecordNotificationInteractions(x) {
 		this.save_keys(`[RecordNotificationInteractions]`,x);
 		const {serializedInteractionsRequest,...y}=x; this.g(y);
-		let dec=this.decode_b64_url_proto_obj(serializedInteractionsRequest);
-		console.log(dec);
+		this.serializedInteractionsRequest(serializedInteractionsRequest);
+	}
+	/** @arg {string} x */
+	serializedInteractionsRequest(x) {
+		let param_map=this.create_param_map(x);
+		if(param_map===null) {debugger; return;}
+		console.log(param_map);
 		debugger;
 	}
 	/** @arg {MultiPageMenuSectionRenderer<CompactLinkRenderer>} x */
