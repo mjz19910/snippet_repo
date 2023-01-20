@@ -1,5 +1,5 @@
 type MenuData={
-	items: (MenuServiceItemRenderer|{
+	items?: (MenuServiceItemRenderer|{
 		toggleMenuServiceItemRenderer: {
 			defaultText: TextWithRuns;
 			defaultIcon: Icon<"LIBRARY_ADD">;

@@ -11,7 +11,7 @@ type PlaylistContent=ContentsArrayTemplate<PlaylistPanelVideoRenderer>&{
 	titleText: SimpleText;
 	isEditable: true;
 	menu: MenuRenderer;
-	localCurrentIndex: 25;
+	localCurrentIndex: 0|25;
 	playlistButtons: MenuRenderer;
 	isCourse: false;
 	nextVideoLabel: SimpleText;

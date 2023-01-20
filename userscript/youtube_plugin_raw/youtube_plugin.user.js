@@ -9636,13 +9636,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MenuData['items']} x */
 	R_MenuItems(x) {
-		this.z(x,a => {
+		this.tz(x,a => {
 			if("toggleMenuServiceItemRenderer" in a) return this.toggleMenuServiceItemRenderer(a);
 			if("menuServiceItemRenderer" in a) return this.MenuServiceItemRenderer(a);
 			debugger;
 		});
 	}
-	/** @arg {Extract<MenuData['items'][number],{toggleMenuServiceItemRenderer:any}>} x */
+	/** @arg {Extract<tz<MenuData['items']>,{toggleMenuServiceItemRenderer:any}>} x */
 	toggleMenuServiceItemRenderer(x) {
 		let x1=this.w(x);
 		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
@@ -10426,7 +10426,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(titleText);
 		this.primitive_of(isEditable,"boolean");
 		this.MenuRenderer(menu);
-		if(localCurrentIndex!==25) debugger;
+		if(localCurrentIndex!==25&&localCurrentIndex!==0) debugger;
 		this.MenuRenderer(playlistButtons);
 		this.primitive_of(isCourse,"boolean");
 		this.SimpleText(nextVideoLabel);
