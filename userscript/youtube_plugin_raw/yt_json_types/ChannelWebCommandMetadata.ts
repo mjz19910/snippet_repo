@@ -1,1 +1,0 @@
-type ChannelPageWebCommandMetadata=VE3611_WebCommandMetadata;

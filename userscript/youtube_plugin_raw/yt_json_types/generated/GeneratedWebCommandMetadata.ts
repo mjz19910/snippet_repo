@@ -3,9 +3,18 @@ type GeneratedWebCommandMetadata=[
 	M$GeneratedWebCommandMetadata,
 	_gen_VE37414,
 	_gen_VE4724,
+	{rootVe: -1; webPageType: "WEB_PAGE_TYPE_CHANNEL"|"WEB_PAGE_TYPE_PLAYLIST"|"WEB_PAGE_TYPE_SETTINGS"|"WEB_PAGE_TYPE_WATCH";},
+	{rootVe: 3611; webPageType: "";},
+	{rootVe: 3832; webPageType: "";},
+	{rootVe: 5754; webPageType: "";},
+	{rootVe: 23462; webPageType: "";},
 	_gen_notification$get_notification_menu,
 	_gen_notification$get_unseen_count,
 	_gen_account$account_menu,
+	{
+		sendPost: true;
+		apiUrl: "/youtubei/v1/browse";
+	}
 ][number];
 type _gen_account$account_menu={
 	sendPost: true;

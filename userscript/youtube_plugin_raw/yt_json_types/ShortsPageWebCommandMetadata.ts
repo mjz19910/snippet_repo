@@ -1,1 +1,0 @@
-type ShortsPageWebCommandMetadata=VE37414_WebCommandMetadata;

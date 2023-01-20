@@ -7318,7 +7318,7 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}
-	/** @public @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
@@ -7364,7 +7364,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
+	/** @arg {Extract<GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -7581,94 +7581,22 @@ class HandleTypes extends ServiceMethods {
 			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
 		}
 	}
-	/** @arg {WebCommandMetadata} x */
+	/** @arg {GeneratedWebCommandMetadata} x */
 	WebCommandMetadataRVE(x) {
 		if(!("rootVe" in x)) return;
 		this.rootVe(x.rootVe);
+		debugger;
 		switch(x.webPageType) {
 			default: debugger; return;
 			case "WEB_PAGE_TYPE_BROWSE": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_CHANNEL": return this.ChannelWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_PLAYLIST": return this.PlaylistWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SEARCH": return this.SearchPageWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SETTINGS": return this.SettingsWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SHORTS": return this.ShortsPageWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_CHANNEL": return this.WebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_PLAYLIST": return this.WebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SEARCH": return this.WebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SETTINGS": return this.WebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_SHORTS": return this.WebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_UNKNOWN": return this.WebCommandMetadata(x);
+			case "WEB_PAGE_TYPE_WATCH": return this.WebCommandMetadata(x);
 		}
-	}
-	/** @arg {VE4724_WebCommandMetadata} x */
-	SearchPageWebCommandMetadata(x) {
-		this.save_keys("[SearchPageWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y); // ! #destructure
-		if(!this.str_starts_with("/results?search_query=",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
-	}
-	/** @arg {PlaylistWebCommandMetadata} x */
-	PlaylistWebCommandMetadata(x) {
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 5754: {
-				const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-				if(webPageType!=="WEB_PAGE_TYPE_PLAYLIST") debugger;
-				if(apiUrl!=="/youtubei/v1/browse") debugger;
-				x: {
-					let us=split_string_once(split_string_once(url,"/")[1],"?");
-					if(us[0]!=="playlist") break x;
-					let up=us[1];
-					if(up.includes("&")) debugger;
-					let pp=split_string_once(up,"=");
-					this.parser.parse_playlist_id(pp[1]);
-				}
-			} break;
-		}
-	}
-	/** @arg {SettingsWebCommandMetadata} x */
-	SettingsWebCommandMetadata(x) {
-		this.save_keys("[SettingsWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		switch(x.rootVe) {
-			default: debugger; return;
-			case 23462: this.VE23462_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {WatchPageWebCommandMetadata} x */
-	WatchWebCommandMetadata(x) {
-		this.save_keys("[WatchWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 3832: this.VE3832_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {ChannelPageWebCommandMetadata} x */
-	ChannelWebCommandMetadata(x) {
-		this.save_keys("[ChannelWebCommandMetadata]",x);
-		if(x.webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(x.apiUrl!=="/youtubei/v1/browse") debugger;
-		switch(x.rootVe) {
-			default: debugger; break;
-			case 3611: this.VE3611_WebCommandMetadata(x); break;
-		}
-	}
-	/** @arg {VE23462_WebCommandMetadata} x */
-	VE23462_WebCommandMetadata(x) {
-		this.save_keys("[VE23462_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y); // ! #destructure
-		switch(url) {
-			default: debugger; return;
-			case "/account": break;
-			case "/account_advanced": break;
-			case "/account_billing": break;
-			case "/account_notifications": break;
-			case "/account_playback": break;
-			case "/account_privacy": break;
-			case "/account_sharing": break;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(rootVe!==23462) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VE96368_WebCommandMetadata} x */
 	VE96368_WebCommandMetadata(x) {
@@ -8497,8 +8425,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ContinuationCommand]",x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("ContinuationCommand",clickTrackingParams);
-		debugger;
-		// this.t(commandMetadata,this.CommandMetadata);
+		if(commandMetadata) {
+			if("apiUrl" in commandMetadata.webCommandMetadata) {
+				return this.WebCommandMetadata(commandMetadata.webCommandMetadata);
+			}
+			debugger;
+		}
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {CD$Continuation} x */
@@ -8564,11 +8496,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicThumbnailData} x */
 	MusicThumbnailData(x) {
-		this.save_keys("[MusicThumbnailData]",x);
+		const cf="MusicThumbnailData";
+		this.save_keys("[]",x);
 		this.Thumbnail(x.thumbnail);
 		this.save_enum("MUSIC_THUMBNAIL_CROP",x.thumbnailCrop);
 		this.save_enum("MUSIC_THUMBNAIL_SCALE",x.thumbnailScale);
-		this.trackingParams("CF_FIX",x.trackingParams);
+		this.trackingParams(cf,x.trackingParams);
 	}
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
@@ -8735,23 +8668,26 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetSurveyResponse} x */
 	GetSurveyResponse(x) {
-		this.save_keys(`[GetSurveyResponse]`,x);
+		const cf="GetSurveyResponse";
+		this.save_keys(`[]`,x);
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {GetPdgBuyFlow} x */
 	GetPdgBuyFlow(x) {
-		this.save_keys(`[UpdatedMetadata]`,x);
+		const cf="GetPdgBuyFlow";
+		this.save_keys(`[]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
 		this.OpenPopupAction(command);
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
 	/** @arg {OpenPopupAction} x */
 	OpenPopupAction(x) {
-		this.save_keys(`[OpenPopupAction]`,x);
+		const cf="OpenPopupAction";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,openPopupAction,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams("OpenPopupAction",clickTrackingParams);
+		this.clickTrackingParams(cf,clickTrackingParams);
 		this.OpenPopupActionData(openPopupAction);
 	}
 	/** @arg {OpenPopupActionData['popup']} x */
@@ -8788,7 +8724,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("confirmDialogRenderer" in x) return this.ConfirmDialogRenderer(x);
 		if("multiPageMenuRenderer" in x) return this.MultiPageMenuRenderer(x);
-		if("notificationActionRenderer" in x) return this.NotificationActionRenderer(x);
+		if("notificationActionRenderer" in x) return this.R$NotificationAction(x);
 		if("pdgBuyFlowRenderer" in x) return this.PdgBuyFlowRenderer(x);
 		if("unifiedSharePanelRenderer" in x) return this.UnifiedSharePanelRenderer(x);
 		if("voiceSearchDialogRenderer" in x) return this.VoiceSearchDialogRenderer(x);
@@ -8821,11 +8757,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PdgBuyFlow} x */
 	PdgBuyFlow(x) {
-		this.save_keys(`[PdgBuyFlow]`,x);
+		const cf="PdgBuyFlow";
+		this.save_keys(`[${cf}]`,x);
 		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y); // ! #destructure
 		this.PdgBuyFlowHeaderRenderer(header);
 		this.z(content,this.SuperVodBuyFlowContentRenderer);
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		this.GetSurveyCommand(onCloseCommand);
 	}
 	/** @arg {GetSurveyCommand} x */
@@ -8840,19 +8777,20 @@ class HandleTypes extends ServiceMethods {
 	PdgBuyFlowHeaderRenderer(x) {
 		this.save_keys(`[PdgBuyFlowHeaderRenderer]`,x);
 	}
-	/** @arg {NotificationActionRenderer} x */
-	NotificationActionRenderer(x) {
+	/** @arg {R$NotificationAction} x */
+	R$NotificationAction(x) {
 		this.save_keys(`[NotificationActionRenderer]`,x);
 		const {notificationActionRenderer,...y}=x; this.g(y); // ! #destructure
-		this.NotificationActionData(notificationActionRenderer);
+		this.A$NotificationAction(notificationActionRenderer);
 	}
-	/** @arg {NotificationActionData} x */
-	NotificationActionData(x) {
-		this.save_keys(`[NotificationActionData]`,x);
+	/** @arg {A$NotificationAction} x */
+	A$NotificationAction(x) {
+		const cf="NotificationActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {responseText,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(responseText);
 		this.t(actionButton,this.R$Button);
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {ConfirmDialogRenderer} x */
 	ConfirmDialogRenderer(x) {
@@ -8976,13 +8914,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MultiPageMenuSection<CompactLinkRenderer>} x */
 	MultiPageMenuSection(x) {
-		this.save_keys(`[MultiPageMenuSection]`,x);
+		const cf="MultiPageMenuSection";
+		this.save_keys(`[]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(items,a => {
 			if("compactLinkRenderer" in a) return this.CompactLinkRenderer(a);
 			debugger;
 		});
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
@@ -8992,12 +8931,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CompactLinkData} x */
 	CompactLinkData(x) {
-		this.save_keys(`[CompactLinkData]`,x);
+		const cf="CompactLinkData";
+		this.save_keys(`[]`,x);
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
 		this.TextT(title);
 		this.t(navigationEndpoint,this.E$CompactLink$navigationEndpoint);
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		switch(style) {
 			default: debugger; break;
 			case undefined: break;
@@ -10523,21 +10463,12 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		// this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {VE3611_WebCommandMetadata['url']} x */
+	/** @arg {"/gaming"|"/@"|"/channel/UC"} x */
 	VE3611_parse_url(x) {
 		if(x==="/gaming") return;
 		if(this.str_starts_with(x,"/@")) return;
 		if(this.str_starts_with(x,"/channel/UC")) return;
 		debugger;
-	}
-	/** @arg {VE3611_WebCommandMetadata} x */
-	VE3611_WebCommandMetadata(x) {
-		this.save_keys("[VE3611_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y); // ! #destructure
-		this.VE3611_parse_url(url);
-		if(rootVe!==3611) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {TextT} x */
 	TextT(x) {
@@ -10553,27 +10484,13 @@ class HandleTypes extends ServiceMethods {
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		debugger;
-		// this.WebCommandMetadata(webCommandMetadata);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3832_CommandMetadata} x */
 	VE3832_CommandMetadata(x) {
 		this.save_keys("[VE3832_CommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		debugger;
-		// this.WebCommandMetadata(webCommandMetadata);
-	}
-	/** @arg {VE3832_WebCommandMetadata} x */
-	VE3832_WebCommandMetadata(x) {
-		this.save_keys("[VE3832_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y); // ! #destructure
-		x: {
-			if(this.str_starts_with(url,"/watch?")) break x;
-			if(this.str_starts_with(url,"/playlist?")) break x;
-			console.log("[VE3832.url]",url);
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
-		this.rootVe(rootVe);
+		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
@@ -12355,14 +12272,6 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(invalidValueErrorMessage);
 		if(required!==true) debugger;
 	}
-	/** @arg {UnknownWebCommandMetadata} x */
-	UnknownWebCommandMetadata(x) {
-		this.save_keys("[UnknownWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y); // ! #destructure
-		this.parser.parse_url("UnknownWebCommandMetadata",url);
-		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
-		if(rootVe!==83769) debugger;
-	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
 		this.save_keys("[GuideCollapsibleEntry]",x);
@@ -13178,7 +13087,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ReelDismissalActionRenderer]",x);
 		const {reelDismissalActionRenderer: {onDismissalCompletionRenderer,trackingParams,...z},...y}=x; this.g(y); this.g(z); // #destructure
 		this.trackingParams("ReelDismissalAction",trackingParams);
-		this.NotificationActionRenderer(onDismissalCompletionRenderer);
+		this.R$NotificationAction(onDismissalCompletionRenderer);
 	}
 	/** @private @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
