@@ -5832,6 +5832,10 @@ class ServiceMethods extends ServiceData {
 		if(!x) return;
 		f.call(this,x);
 	}
+	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T|undefined)=>void} */
+	tf(f) {
+		return x => this.t(x,f);
+	}
 	/** @arg {PlaylistId} x */
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
@@ -10107,15 +10111,17 @@ class HandleTypes extends ServiceMethods {
 		const {entityKey,type,options,payload}=x; //...y}=x; this.g(y); //#destructure
 		entityKey;
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
-		if(options) this.EntityMutationOptions(options);
-		if(payload) {
-			let h="subscriptionStateEntity" in payload;
-			h||="transcriptTrackSelectionEntity" in payload;
-			h||="transcriptSearchBoxStateEntity" in payload;
-			if(!h) {
-				debugger;
-			}
-		}
+		this.tf(this.EntityMutationOptions)(options);
+		this.tf(this.EntityMutationPayload)(payload);
+	}
+	/** @arg {EntityMutationPayload} x */
+	EntityMutationPayload(x) {
+		if("subscriptionStateEntity" in x) return;
+		if("transcriptTrackSelectionEntity" in x) return;
+		if("transcriptSearchBoxStateEntity" in x) return;
+		if("offlineabilityEntity" in x) return;
+		if("playlistLoopStateEntity" in x) return;
+		debugger;
 	}
 	/** @arg {EntityMutationOptions} x */
 	EntityMutationOptions(x) {
@@ -10712,9 +10718,10 @@ class HandleTypes extends ServiceMethods {
 	AdSlotMetadata(x) {
 		this.save_keys("[AdSlotMetadata]",x);
 		const {slotId,slotType,slotPhysicalPosition}=x; //...y}=x; this.g(y); //#destructure
-		slotId;
-		slotType;
-		slotPhysicalPosition;
+		let sid=split_string(slotId,":");
+		console.log(sid);
+		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
+		if(slotPhysicalPosition!==0) debugger;
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
