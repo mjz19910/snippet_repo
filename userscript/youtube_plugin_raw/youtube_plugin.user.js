@@ -7054,9 +7054,6 @@ class HandleTypes extends ServiceMethods {
 	minimal_handler_member_use() {
 		this.minimal_handler_member_2({});
 	}
-	//#region
-	signal=new SignalTypes({value: new ServiceResolver({parent: this},{})});
-	//#endregion
 	//#region templates
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
@@ -7532,7 +7529,7 @@ class HandleTypes extends ServiceMethods {
 	E$SignalService(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
-			case "CLIENT_SIGNAL": return this.signal.E$Signal_ClientSignal(x);
+			case "CLIENT_SIGNAL": return this.E$Signal_ClientSignal(x);
 			case "GET_ACCOUNT_MENU": break;
 		}
 	}
