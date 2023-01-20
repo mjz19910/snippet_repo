@@ -5529,8 +5529,9 @@ case "${path_parts[idx-1]}": {
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(typeof tv==="number") return console.log("[param_parse]",path,tv);
-									switch(tv) {default: debugger; return;}
+									switch(tv) {
+										default: console.log("trackingParams.f2"); console.log(`\ncase ${JSON.stringify(tv)}: return;`); return;
+									}
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
