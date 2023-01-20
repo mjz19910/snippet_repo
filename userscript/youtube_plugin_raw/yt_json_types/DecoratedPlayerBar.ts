@@ -43,7 +43,7 @@ type HeatSeekerItemData={
 type HeatSeekerItem=MapTemplate<"HEATSEEKER",HeatSeekerItemData>;
 
 type MultiMarkersPlayerBar={
-	visibleOnLoad: KeyTemplate<"DESCRIPTION_CHAPTERS">;
+	visibleOnLoad: KeyTemplate<"DESCRIPTION_CHAPTERS"|"">;
 	markersMap: [DescriptionChaptersItem,HeatSeekerItem];
 };
 

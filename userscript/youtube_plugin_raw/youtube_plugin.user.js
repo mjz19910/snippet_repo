@@ -5507,7 +5507,12 @@ case "${path_parts[idx-1]}": {
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="number") {
+												if((tv/1000)>(1674236436126.906+(25628*8))) {
+													let ntv=tv/1000/25628;
+													return console.log("[param_parse]",path,ntv,ntv-(1674236436126.906/25628));
+												} return;
+											}
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
@@ -12600,7 +12605,9 @@ class HandleTypes extends ServiceMethods {
 	MultiMarkersPlayerBar(x) {
 		this.save_keys("[MultiMarkersPlayerBar]",x);
 		const {visibleOnLoad,markersMap,...y}=x; this.g(y); // ! #destructure
-		if(visibleOnLoad.key!=="DESCRIPTION_CHAPTERS") debugger;
+		if(visibleOnLoad.key!=="") {
+			if(visibleOnLoad.key!=="DESCRIPTION_CHAPTERS") debugger;
+		}
 		this.z(markersMap,this.MarkerItem);
 	}
 	/** @arg {MultiMarkersPlayerBar['markersMap'][number]} x */
@@ -12610,9 +12617,9 @@ class HandleTypes extends ServiceMethods {
 			case "HEATSEEKER": this.MapTemplate(x,this.HeatSeekerItemData); break;
 		}
 	}
-	/** @template K,V @arg {MapTemplate<K,V>} x @arg {(x:V,k:K)=>void} f */
+	/** @template K,V @arg {MapTemplate<K,V>} x @arg {(this:this,x:V,k:K)=>void} f */
 	MapTemplate(x,f) {
-		f(x.value,x.key);
+		f.call(this,x.value,x.key);
 	}
 	/** @arg {AdLayoutMetadataItem} x */
 	AdLayoutMetadataItem(x) {
