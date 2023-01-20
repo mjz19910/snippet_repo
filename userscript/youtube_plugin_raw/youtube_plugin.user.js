@@ -4874,17 +4874,18 @@ case "${path_parts[0]}":`);
 				case "watch": switch(path_parts[1]) {
 					default: {
 						console.log(`
-	case "${path_parts[1]}":`);
+case "${path_parts[1]}":`);
 						debugger;
 					} break;
 					case "params": switch(path_parts[2]) {
 						default: {
 							console.log(`
-		case "${path_parts[2]}": return;`);
+case "${path_parts[2]}": return;`);
 							debugger;
 						} break;
-						case "f3": return;
 						case "f2": return;
+						case "f3": return;
+						case "f27": return;
 					} break;
 				} break;
 			}
