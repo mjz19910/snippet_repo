@@ -8180,7 +8180,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger;
 		}
 		this.SimpleText(text);
-		this.ButtonRenderer(dismissButton);
+		this.R$Button(dismissButton);
 	}
 	/** @arg {SectionListContinuation|MusicShelfContinuation} x */
 	ContinuationContents(x) {
@@ -8323,7 +8323,7 @@ class HandleTypes extends ServiceMethods {
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.ContinuationEndpointRoot(continuationEndpoint);
-		this.t(button,this.ButtonRenderer);
+		this.t(button,this.R$Button);
 		this.t(ghostCards,this.GhostGridRenderer);
 	}
 	/** @arg {ContinuationEndpointRoot} x */
@@ -8710,7 +8710,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[NotificationActionData]`,x);
 		const {responseText,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(responseText);
-		this.t(actionButton,this.ButtonRenderer);
+		this.t(actionButton,this.R$Button);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {ConfirmDialogRenderer} x */
@@ -8726,8 +8726,8 @@ class HandleTypes extends ServiceMethods {
 		this.t(title,this.SimpleText);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.z(dialogMessages,this.TextT);
-		this.ButtonRenderer(confirmButton);
-		this.ButtonRenderer(cancelButton);
+		this.R$Button(confirmButton);
+		this.R$Button(cancelButton);
 		this.primitive_of(primaryIsCancel,"boolean");
 	}
 	/** @arg {MultiPageMenuRenderer} x */
@@ -8910,7 +8910,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[SimpleMenuHeaderData]`,x);
 		const {title,buttons,...y}=x; this.g(y); // ! #destructure
 		this.TextT(title);
-		this.z(buttons,this.ButtonRenderer);
+		this.z(buttons,this.R$Button);
 	}
 	/** @arg {UpdatedMetadata} x */
 	UpdatedMetadata(x) {
@@ -9276,7 +9276,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(timestampUsec);
 		this.Icon(icon);
 		this.TextWithRuns(message);
-		this.ButtonRenderer(actionButton);
+		this.R$Button(actionButton);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {LiveChatContinuationItem} x */
@@ -9870,7 +9870,7 @@ class HandleTypes extends ServiceMethods {
 		const {endScreen,autoplay,shareButton,addToMenu,videoDetails,autonavToggle,decoratedPlayerBarRenderer,...y}=x; this.g(y); // ! #destructure
 		this.WatchNextEndScreenRenderer(endScreen);
 		this.t(autoplay,this.PlayerOverlayAutoplayRenderer);
-		this.ButtonRenderer(shareButton);
+		this.R$Button(shareButton);
 		this.MenuRenderer(addToMenu);
 		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
 		this.t(autonavToggle,this.AutoplaySwitchButtonRenderer);
@@ -9985,10 +9985,10 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(pauseText);
 		this.Thumbnail(background);
 		if(countDownSecs!==8) debugger;
-		this.ButtonRenderer(cancelButton);
-		this.ButtonRenderer(nextButton);
+		this.R$Button(cancelButton);
+		this.R$Button(nextButton);
 		this.trackingParams("PlayerOverlayAutoplay",trackingParams);
-		this.ButtonRenderer(closeButton);
+		this.R$Button(closeButton);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		if(preferImmediateRedirect!==false) debugger;
 		this.videoId(videoId);
@@ -10141,7 +10141,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(label);
 	}
 	/** @arg {R$Button} x */
-	ButtonRenderer(x) {
+	R$Button(x) {
 		if(!x) {debugger; return;}
 		this.save_keys("[ButtonRenderer]",x);
 		const {buttonRenderer,...y}=x; this.g(y); // ! #destructure
@@ -10803,7 +10803,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[DecoratedPlayerBar]",x);
 		const {playerBar,playerBarActionButton,...y}=x; this.g(y); // ! #destructure
 		this.MultiMarkersPlayerBarRenderer(playerBar);
-		this.t(playerBarActionButton,this.ButtonRenderer);
+		this.t(playerBarActionButton,this.R$Button);
 	}
 	/** @arg {PlayerOverlayVideoDetails} x */
 	PlayerOverlayVideoDetails(x) {
@@ -10945,13 +10945,13 @@ class HandleTypes extends ServiceMethods {
 	CommentSimpleboxData(x) {
 		this.save_keys("[CommentSimpleboxData]",x);
 		const {submitButton,cancelButton,authorThumbnail,placeholderText,trackingParams,avatarSize,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=x; this.g(y); // ! #destructure
-		this.ButtonRenderer(submitButton);
-		this.ButtonRenderer(cancelButton);
+		this.R$Button(submitButton);
+		this.R$Button(cancelButton);
 		this.Thumbnail(authorThumbnail);
 		this.TextWithRuns(placeholderText);
 		this.trackingParams("CF_FIX",trackingParams);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
-		this.ButtonRenderer(emojiButton);
+		this.R$Button(emojiButton);
 		this.EmojiPickerRenderer(emojiPicker);
 		this.primitive_of_string(aadcGuidelinesStateEntityKey);
 	}
@@ -11722,7 +11722,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(disabledHeader);
 		this.TextWithRuns(disabledSubtext);
 		this.TextWithRuns(microphoneButtonAriaLabel);
-		this.ButtonRenderer(exitButton);
+		this.R$Button(exitButton);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.TextWithRuns(microphoneOffPromptHeader);
 	}
@@ -11791,10 +11791,10 @@ class HandleTypes extends ServiceMethods {
 		if(countryCode!=="CA") debugger;
 		this.z(topbarButtons,this.TopbarButtonItem);
 		this.HotkeyDialogRenderer(hotkeyDialog);
-		this.ButtonRenderer(backButton);
-		this.ButtonRenderer(forwardButton);
-		this.ButtonRenderer(a11ySkipNavigationButton);
-		this.ButtonRenderer(voiceSearchButton);
+		this.R$Button(backButton);
+		this.R$Button(forwardButton);
+		this.R$Button(a11ySkipNavigationButton);
+		this.R$Button(voiceSearchButton);
 	}
 	/** @arg {TopbarButtonItem} x */
 	TopbarButtonItem(x) {
@@ -12154,8 +12154,8 @@ class HandleTypes extends ServiceMethods {
 		this.t(title,this.TextT);
 		this.t(menu,this.EngagementPanelMenu);
 		this.t(contextualInfo,this.TextWithRuns);
-		this.t(informationButton,this.ButtonRenderer);
-		this.ButtonRenderer(visibilityButton);
+		this.t(informationButton,this.R$Button);
+		this.R$Button(visibilityButton);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {CommandExecutorCommand} x */
@@ -12289,7 +12289,7 @@ class HandleTypes extends ServiceMethods {
 		this.CompactLinkRenderer(openCreateLink);
 		this.TextInputFormFieldRenderer(nameInput);
 		this.DropdownRenderer(privacyInput);
-		this.ButtonRenderer(createAction);
+		this.R$Button(createAction);
 		this.CreatePlaylistServiceEndpoint(serviceEndpoint);
 	}
 	/** @arg {TextInputFormFieldRenderer} x */
@@ -12471,7 +12471,7 @@ class HandleTypes extends ServiceMethods {
 		this.SearchboxConfig(config);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.SearchEndpoint(searchEndpoint);
-		this.ButtonRenderer(clearButton);
+		this.R$Button(clearButton);
 	}
 	/** @arg {NotificationTopbarButtonData} x */
 	NotificationTopbarButtonData(x) {
@@ -12622,7 +12622,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(title);
 		this.SubscribeButtonRenderer(subscribeButton);
 		this.trackingParams("CF_FIX",trackingParams);
-		this.t(sponsorButton,this.ButtonRenderer);
+		this.t(sponsorButton,this.R$Button);
 		this.E$BrowseEndpoint(navigationEndpoint);
 		this.Thumbnail(avatar);
 		this.Thumbnail(banner);
@@ -12654,14 +12654,14 @@ class HandleTypes extends ServiceMethods {
 		this.LikeButtonRenderer(likeButton);
 		this.ReelPlayerHeaderRenderer(reelPlayerHeaderSupportedRenderers);
 		this.MenuRenderer(menu);
-		this.ButtonRenderer(nextItemButton);
-		this.ButtonRenderer(prevItemButton);
+		this.R$Button(nextItemButton);
+		this.R$Button(prevItemButton);
 		this.SubscribeButtonRenderer(subscribeButtonRenderer);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
-		this.ButtonRenderer(viewCommentsButton);
+		this.R$Button(viewCommentsButton);
 		this.t(videoInteractions,this.g);
 		this.trackingParams("CF_FIX",trackingParams);
-		this.ButtonRenderer(shareButton);
+		this.R$Button(shareButton);
 		this.PivotButtonRenderer(pivotButton);
 		this.MetadataBadgeRenderer(badge);
 	}
@@ -12724,8 +12724,8 @@ class HandleTypes extends ServiceMethods {
 		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.ChipCloudChipRenderer);
 		this.trackingParams("CF_FIX",trackingParams);
-		this.ButtonRenderer(nextButton);
-		this.ButtonRenderer(previousButton);
+		this.R$Button(nextButton);
+		this.R$Button(previousButton);
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */
@@ -12976,7 +12976,7 @@ class HandleTypes extends ServiceMethods {
 		const {title,sections,dismissButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(title);
 		this.z(sections,this.HotkeyDialogSectionRenderer);
-		this.ButtonRenderer(dismissButton);
+		this.R$Button(dismissButton);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {AccountItemData} x */
@@ -13054,7 +13054,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(authorIsChannelOwner,"boolean");
 		this.TextWithRuns(authorText);
 		this.Thumbnail(authorThumbnail);
-		this.ButtonRenderer(collapseButton);
+		this.R$Button(collapseButton);
 		this.primitive_of_string(commentId);
 		this.TextWithRuns(contentText);
 		this.Thumbnail(currentUserReplyThumbnail);
@@ -13063,7 +13063,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(voteCount);
 		this.primitive_of_string(voteStatus);
 		this.trackingParams("CF_FIX",trackingParams);
-		this.ButtonRenderer(expandButton);
+		this.R$Button(expandButton);
 		this.LoggingDirectives(loggingDirectives);
 	}
 	/** @arg {RichItemContent} x */
@@ -13090,10 +13090,10 @@ class HandleTypes extends ServiceMethods {
 		this.Thumbnail(userAvatar);
 		this.ClipCreationTextInputRenderer(titleInput);
 		this.ClipCreationScrubberRenderer(scrubber);
-		this.ButtonRenderer(saveButton);
+		this.R$Button(saveButton);
 		this.SimpleText(displayName);
 		this.primitive_of_string(publicityLabel);
-		this.ButtonRenderer(cancelButton);
+		this.R$Button(cancelButton);
 		this.ClipAdStateRenderer(adStateOverlay);
 		this.primitive_of_string(externalVideoId);
 		this.primitive_of_string(publicityLabelIcon);
@@ -13125,15 +13125,29 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(clickTrackingParams);
 		this.g(resetChannelUnreadCountCommand);
 	}
+	/** @private @arg {ReelDismissalActionRenderer} x */
+	ReelDismissalActionRenderer(x) {
+		this.save_keys("[ReelDismissalActionRenderer]",x);
+		const {reelDismissalActionRenderer: {onDismissalCompletionRenderer,trackingParams,...z},...y}=x; this.g(y); this.g(z); // #destructure
+		this.trackingParams("ReelDismissalAction",trackingParams);
+		this.NotificationActionRenderer(onDismissalCompletionRenderer);
+	}
+	/** @private @arg {ChannelSwitcherPage} x */
+	ChannelSwitcherPage(x) {
+		this.save_keys("[ChannelSwitcherPage]",x);
+		this.save_keys("[ReelDismissalActionRenderer]",x);
+		const {contents: [z],header,targetId,...y}=x; this.g(y); // #destructure
+		if("buttonRenderer" in z) return this.R$Button(z);
+		this.ChannelSwitcherHeaderRenderer(header);
+		switch(targetId) {
+			default: debugger; break;
+		}
+	}
 	//#endregion
 	//#region has_save_keys
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
-	}
-	/** @private @arg {ChannelSwitcherPage} x */
-	ChannelSwitcherPage(x) {
-		this.save_keys("[ChannelSwitcherPage]",x);
 	}
 	/** @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {
@@ -13271,9 +13285,9 @@ class HandleTypes extends ServiceMethods {
 	FactoidRenderer(x) {
 		this.save_keys("[FactoidRenderer]",x);
 	}
-	/** @private @arg {ReelDismissalActionRenderer} x */
-	ReelDismissalActionRenderer(x) {
-		x;
+	/** @private @arg {ChannelSwitcherHeaderRenderer} x */
+	ChannelSwitcherHeaderRenderer(x) {
+		this.save_keys("[ChannelSwitcherHeaderRenderer]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
