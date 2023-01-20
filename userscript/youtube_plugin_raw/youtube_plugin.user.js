@@ -2660,7 +2660,6 @@ class BaseService extends BaseServicePrivate {
 		if(this.logged_keys.includes(jk)) return;
 		this.logged_keys.push(jk);
 		console.log("[empty_object] [%s]",jk);
-		debugger;
 	}
 	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(x,excl=[]) {
@@ -5496,6 +5495,10 @@ case "${path_parts[idx-1]}": {
 			f();
 			console.groupEnd();
 		};
+		/** @arg {number} idx */
+		let u=idx=>{
+			grouped(path_parts.join("$"),() => gd(idx));
+		};
 		let path_parts=split_string(path,".");
 		const idx=1;
 		switch(path_parts[0]) {
@@ -5506,7 +5509,7 @@ case "${path_parts[idx-1]}": {
 			case "ypc_get_offers": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5519,7 +5522,7 @@ case "${path_parts[idx-1]}": {
 			case "watch_playlist": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5532,7 +5535,7 @@ case "${path_parts[idx-1]}": {
 			case "watch_page_url": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "pp": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5545,7 +5548,7 @@ case "${path_parts[idx-1]}": {
 			case "playlist_edit": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5558,7 +5561,7 @@ case "${path_parts[idx-1]}": {
 			case "next": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]==="queue_context_params"; break;
+					default: u(idx); path_parts[1]==="queue_context_params"; break;
 					case "queue_context_params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5571,7 +5574,7 @@ case "${path_parts[idx-1]}": {
 			case "browse": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5584,7 +5587,7 @@ case "${path_parts[idx-1]}": {
 			case "like": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "likeParams": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5607,8 +5610,18 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
-					case "f84": grouped(path_parts+"",() => gd(idx)); break;
+					default: u(idx); path_parts[1]===""; break;
+					case "f84": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f5": u(idx); break;
+						}
+					} break;
 				}
 			} break;
 			case "entity_key": {
@@ -5617,7 +5630,7 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -5627,7 +5640,7 @@ case "${path_parts[idx-1]}": {
 							}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 						}
 					} break;
 					case "f4": {
@@ -5637,7 +5650,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 						}
 					} break;
 					case "f2": {
@@ -5647,7 +5660,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 						}
 					} break;
 				}
@@ -5655,14 +5668,14 @@ case "${path_parts[idx-1]}": {
 			case "createBackstagePost": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "param": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5672,7 +5685,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f1": {
@@ -5688,7 +5701,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 						}
@@ -5698,16 +5711,16 @@ case "${path_parts[idx-1]}": {
 			case "tracking": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
-					case "parentTrackingParams": grouped(path_parts+"",() => gd(idx)); break;
+					default: u(idx); path_parts[1]===""; break;
+					case "parentTrackingParams": u(idx); break;
 					case "trackingParams": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
-						// case "f": grouped(path_parts+"",() => gd(idx)); break;
+						// case "f": u(idx); break;
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f6": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5715,7 +5728,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f4": {
@@ -5725,7 +5738,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									// ["tracking", "trackingParams", "f4", "f3"]
 									case "f3": {
 										const idx=5;
@@ -5737,7 +5750,7 @@ case "${path_parts[idx-1]}": {
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
-											default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
 									// ["tracking", "trackingParams", "f4", "f2"]
@@ -5751,7 +5764,7 @@ case "${path_parts[idx-1]}": {
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
-											default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
 									case "f1": {
@@ -5766,7 +5779,7 @@ case "${path_parts[idx-1]}": {
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
-											default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
 								}
@@ -5781,7 +5794,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							// ["tracking", "trackingParams", "f2"]
@@ -5794,7 +5807,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f1": {
@@ -5807,7 +5820,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 						}
@@ -5817,14 +5830,14 @@ case "${path_parts[idx-1]}": {
 			case "subscribe": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f4": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5832,7 +5845,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							// "subscribe.params.f3"
@@ -5845,7 +5858,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							// ["subscribe", "params", "f2"]
@@ -5856,7 +5869,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5866,7 +5879,7 @@ case "${path_parts[idx-1]}": {
 											}
 										}
 										switch(path_parts[4]) {
-											default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
 								}
@@ -5878,14 +5891,14 @@ case "${path_parts[idx-1]}": {
 			case "report": {
 				const idx=2;
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f18": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5893,7 +5906,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5901,7 +5914,7 @@ case "${path_parts[idx-1]}": {
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
-											default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+											default: u(idx); path_parts[4]===""; break;
 											// ["report", "params", "f18", "f1", "f2"] = url
 											case "f2": {
 												const idx=6;
@@ -5910,7 +5923,7 @@ case "${path_parts[idx-1]}": {
 													switch(tv) {default: debugger; return;}
 												}
 												switch(path_parts[5]) {
-													default: grouped(path_parts+"",() => gd(idx)); path_parts[5]===""; break;
+													default: u(idx); path_parts[5]===""; break;
 												}
 											} break;
 										}
@@ -5926,7 +5939,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f11": {
@@ -5938,7 +5951,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f8": {
@@ -5950,7 +5963,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							// ["report", "params", "f2"]
@@ -5961,7 +5974,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 						}
@@ -5974,7 +5987,7 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[2]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+					default: u(idx); path_parts[2]===""; break;
 					case "f84": {
 						const idx=4;
 						if(path_parts.length===3) {
@@ -5982,7 +5995,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[3]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+							default: u(idx); path_parts[3]===""; break;
 							case "f5": {
 								const idx=5;
 								if(path_parts.length===4) {
@@ -5992,7 +6005,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[4]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+									default: u(idx); path_parts[4]===""; break;
 								}
 							} break;
 						}
@@ -6007,7 +6020,7 @@ case "${path_parts[idx-1]}": {
 					debugger;
 				}
 				switch(path_parts[2]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+					default: u(idx); path_parts[2]===""; break;
 					case "f1": {
 						const idx=4;
 						if(path_parts.length===3) {
@@ -6017,7 +6030,7 @@ case "${path_parts[idx-1]}": {
 							}
 						}
 						switch(path_parts[3]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+							default: u(idx); path_parts[3]===""; break;
 						}
 					} break;
 				}
@@ -6029,14 +6042,14 @@ case "${path_parts[idx-1]}": {
 					debugger;
 				}
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "player_params": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f71": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6046,7 +6059,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f30": {
@@ -6058,7 +6071,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 						}
@@ -6072,7 +6085,7 @@ case "${path_parts[idx-1]}": {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6080,7 +6093,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 						}
 					} break;
 					// ["record_notification_interactions", "f2"]
@@ -6091,7 +6104,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6101,7 +6114,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f14": {
@@ -6112,7 +6125,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									// ["record_notification_interactions", "f2", "f14", "f2"]
 									case "f2": {
 										const idx=5;
@@ -6179,7 +6192,7 @@ case "${path_parts[idx-1]}": {
 			} break;
 			case "watch": {
 				const idx=2; switch(path_parts[1]) {
-					default: grouped(path_parts+"",() => gd(idx)); path_parts[1]===""; break;
+					default: u(idx); path_parts[1]===""; break;
 					case "player_params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6191,7 +6204,7 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f9": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6201,7 +6214,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f8": {
@@ -6213,7 +6226,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f40": {
@@ -6227,7 +6240,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===5) {
@@ -6258,7 +6271,7 @@ case "${path_parts[idx-1]}": {
 							return;
 						}
 						switch(path_parts[2]) {
-							default: grouped(path_parts+"",() => gd(idx)); path_parts[2]===""; break;
+							default: u(idx); path_parts[2]===""; break;
 							case "f27": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6266,7 +6279,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -6276,7 +6289,7 @@ case "${path_parts[idx-1]}": {
 											}
 										}
 										switch(path_parts[4]) {
-											default: grouped(path_parts+"",() => gd(idx)); path_parts[4]===""; break;
+											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
 								}
@@ -6290,7 +6303,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f12": {
@@ -6300,7 +6313,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f7": {
@@ -6312,7 +6325,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							// "watch.params.f3"
@@ -6325,7 +6338,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							// ["watch", "params", "f2"]
@@ -6339,7 +6352,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f24": {
@@ -6351,7 +6364,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f33": {
@@ -6361,7 +6374,7 @@ case "${path_parts[idx-1]}": {
 									return;
 								}
 								switch(path_parts[3]) {
-									default: grouped(path_parts+"",() => gd(idx)); path_parts[3]===""; break;
+									default: u(idx); path_parts[3]===""; break;
 									case "f5": {
 										const idx=4;
 										if(path_parts.length===idx) {
