@@ -5200,7 +5200,7 @@ case "${path}": {
 		case ${ta}: break;
 		default: return new_ns();
 	}
-	/** @type {PathRoot} */
+	/** @type {P$PathRoot} */
 	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 } return;
 `);
@@ -5221,6 +5221,24 @@ case "${path}": {
 							case 3: break;
 							case 4: break;
 							case 6: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
+					case "click.trackingParams.f4": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
+					case "tracking.trackingParams.f4": {
+						switch(ta) {
+							case 1: break;
+							case 2: break;
+							case 3: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5256,16 +5274,6 @@ case "${path}": {
 							case 2: break;
 							case 4: break;
 							case 5: break;
-							default: return new_ns();
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "tracking.trackingParams.f4": {
-						switch(ta) {
-							case 1: break;
-							case 2: break;
-							case 3: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -7555,6 +7563,11 @@ class HandleTypes extends ServiceMethods {
 				case 11487: return this.GeneratedWebCommandMetadata(x);
 				case 96368: return this.GeneratedWebCommandMetadata(x);
 			}
+			return;
+		}
+		if("sendPost" in x) {
+			const {sendPost,...y}=x; this.g(y);
+			if(sendPost!==true) debugger;
 			return;
 		}
 		debugger;
