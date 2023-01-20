@@ -4954,13 +4954,14 @@ case "${path}": {
 					}
 				};
 				switch(path) {
+					case "create_playlist.params":
+					case "watch_page_url.pp":
+					case "watch.params.f27":
+					case "watch.params.f33":
+					case "watch.params":
 					case "watch.player_params.f40.f1":
 					case "watch.player_params.f40":
-					case "watch.params.f33":
-					case "watch.params.f27":
-					case "watch.player_params":
-					case "watch_page_url.pp":
-					case "watch.params": d(path); break;
+					case "watch.player_params": d(path); break;
 					default: debugger; break;
 				}
 				return;
