@@ -4,7 +4,6 @@ type $known$param=[
 	record_notification_interactions$param,
 	reel$player_param,
 	report$param,
-	unknown$param,
 	watch$param,
-	watch$player_param
+	watch$player_param,
 ][number];
