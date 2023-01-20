@@ -5485,7 +5485,68 @@ case "${path_parts[idx-1]}": {
 		};
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
-			default: gd(1); break;
+			default: gd(1); {
+				switch(path_parts[0]) { 
+					case "playlist_edit": break;
+					case "watch_page_url": break;
+					case "watch_playlist": break;
+					case "ypc_get_offers": break;
+				}
+			} break;
+			case "ypc_get_offers": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]==="params"; break;
+				}
+			} break;
+			case "watch_playlist": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]==="params"; break;
+				}
+			} break;
+			case "watch_page_url": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]==="pp"; break;
+				}
+			} break;
+			case "playlist_edit": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]==="params"; break;
+				}
+			} break;
+			case "next": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]==="queue_context_params"; break;
+				}
+			} break;
+			case "browse": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]==="params"; break;
+				}
+			} break;
+			case "like": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "likeParams": break;
+					case "remove_like_params": break;
+				}
+			} break;
+			case "browse$param": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(tv) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "f84": gd(idx); break;
+				}
+			} break;
 			case "entity_key": {
 				const idx=2;
 				if(path_parts.length===1) {
