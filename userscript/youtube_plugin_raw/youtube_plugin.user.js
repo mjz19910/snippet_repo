@@ -5031,26 +5031,44 @@ case "${path}": {
 				return;
 			}
 			console.log(`
-case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
-	default: {
-		let idx=${idx+1};
-		console.log("in",path_parts[${idx-1}]);
-		gen_next_part(idx);
-		debugger;
-	} path_parts[${idx}]===""; break;
+case "${path_parts[idx-1]}": {
+	let idx=${idx+1};
+	if(path_parts.length===idx) {
+		if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+		switch(tv) {
+			default: debugger; break;
+		}
+		return;
+	}
+	switch(path_parts[${idx}]) {
+		default: {
+			console.log("in",path_parts[${idx-1}]);
+			gen_next_part(idx);
+			debugger;
+		} path_parts[${idx}]===""; break;
+	}
 } break;`);
 		};
 		/** @arg {number} idx */
 		let gen_final_part=(idx) => {
 			console.log(`
-case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
-	default: {
-		let idx=${idx+1};
-		console.log("in",path_parts[${idx-1}]);
-		gen_return_part(idx);
-		debugger;
-	} path_parts[${idx}]===""; break;
-} break;`);
+case "${path_parts[idx-1]}": {
+	let idx=${idx+1};
+	if(path_parts.length===idx) {
+		if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+		switch(tv) {
+			default: debugger; break;
+		}
+		return;
+	}
+	switch(path_parts[${idx}]) {
+		default: {
+			console.log("in",path_parts[${idx-1}]);
+			gen_return_part(idx);
+			debugger;
+		} path_parts[${idx}]===""; break;
+	} break;
+}`);
 		};
 		/** @arg {number} idx */
 		let gen_return_part=(idx) => {
@@ -5075,6 +5093,31 @@ case "${path_parts[idx]}": {
 				console.log("[param_next.new_ns]",path_parts[0]);
 				gen_next_part(idx);
 				debugger;
+			} break;
+			case "watch": switch(path_parts[1]) {
+				default: {
+					let idx=2;
+					console.log("in",path_parts[0]);
+					gen_next_part(idx);
+					debugger;
+				} path_parts[1]===""; break;
+				case "params": {
+					let idx=3;
+					if(path_parts.length===idx) {
+						if(tv instanceof Map) return this.parse_any_param(root,path,tv);
+						switch(tv) {
+							default: debugger; break;
+						}
+						return;
+					}
+					switch(path_parts[2]) {
+						default: {
+							console.log("in",path_parts[1]);
+							gen_next_part(idx);
+							debugger;
+						} path_parts[2]===""; break;
+					}
+				} break;
 			} break;
 			case "create_playlist": switch(path_parts[1]) {
 				default: {
