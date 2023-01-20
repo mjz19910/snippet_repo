@@ -8945,7 +8945,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPanelVideo} x */
 	PlaylistPanelVideo(x) {
 		this.save_keys("[PlaylistPanelVideo]",x);
-		const {title,longBylineText,thumbnail,lengthText,selected,navigationEndpoint,videoId,shortBylineText,trackingParams,menu,playlistSetVideoId,thumbnailOverlays,canReorder,...y}=x; this.g(y);
+		const {title,longBylineText,thumbnail,lengthText,indexText,selected,navigationEndpoint,videoId,shortBylineText,trackingParams,menu,playlistSetVideoId,thumbnailOverlays,lightColorPalette,darkColorPalette,...y}=x; this.g(y);
 		this.TextT(title);
 		this.TextWithRuns(longBylineText);
 		this.Thumbnail(thumbnail);
@@ -8958,7 +8958,7 @@ class HandleTypes extends ServiceMethods {
 		this.MenuRenderer(menu);
 		this.primitive_of(playlistSetVideoId,"string");
 		this.tz(thumbnailOverlays,this.PlaylistPanel_thumbnailOverlay);
-		if(canReorder!==void 0&&!canReorder) debugger;
+		/*!*/this.g(y);
 	}
 	/** @arg {tz<PlaylistPanelVideo['thumbnailOverlays']>} x */
 	PlaylistPanel_thumbnailOverlay(x) {
