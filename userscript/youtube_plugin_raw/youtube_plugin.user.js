@@ -7969,6 +7969,70 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
+	/** @arg {E$ReelWatchEndpoint} x */
+	E$ReelWatchEndpoint(x) {
+		const cf="ReelWatchEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.E$ReelWatch(reelWatchEndpoint);
+	}
+	/** @arg {E$ReelWatch} x */
+	E$ReelWatch(x) {
+		const cf="ReelWatchEndpointData";
+		this.save_keys(`[${cf}]`,x);
+		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y); // ! #destructure
+		this.t(videoId,this.videoId);
+		this.playerParams("ReelWatch","reel.player_params",playerParams);
+		this.t(thumbnail,this.Thumbnail);
+		this.ReelPlayerOverlayRenderer(overlay);
+		this.params("ReelWatch","get_transcript.params",params);
+		this.t(sequenceProvider,a => this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",a));
+		this.t(sequenceParams,a => this.params("ReelWatch","reel.sequence_params",a));
+		this.t(inputType,a => this.save_enum("REEL_WATCH_INPUT_TYPE",a));
+	}
+	/** @arg {E$LikeEndpoint} x */
+	E$LikeEndpoint(x) {
+		const cf="LikeEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,likeEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.E$Like(likeEndpoint);
+	}
+	/** @arg {E$LikeDislike} x */
+	E$LikeDislike(x) {
+		const {target: b,status: {},dislikeParams,...a}=x; this.g(a);
+		this.LikeApiData(b);
+		this.params("Next","next.queue_context_params",dislikeParams);
+		this.primitive_of_string(dislikeParams);
+	}
+	/** @arg {E$LikeIndifferent} x */
+	E$LikeIndifferent(x) {
+		const {target: b,status: {},removeLikeParams,...a}=x; this.g(a);
+		this.LikeApiData(b);
+		this.t(removeLikeParams,a => this.params("LikeEndpoint","like.remove_like_params",a));
+	}
+	/** @arg {E$LikeLike} x */
+	E$LikeLike(x) {
+		const {target: b,status: {},actions,likeParams,...a}=x; this.g(a);
+		this.LikeApiData(b);
+		this.tz(actions,a => {
+			if("musicLibraryStatusUpdateCommand" in a) return this.MusicLibraryStatusUpdateCommand(a);
+			debugger;
+		});
+		this.t(likeParams,a => this.params("LikeEndpoint","like.likeParams",a));
+	}
+	/** @arg {E$Like} x */
+	E$Like(x) {
+		this.save_keys("[E$Like]",x);
+		switch(x.status) {
+			case "DISLIKE": return this.E$LikeDislike(x);
+			case "INDIFFERENT": return this.E$LikeIndifferent(x);
+			case "LIKE": return this.E$LikeLike(x);
+		}
+	}
 	/** @arg {E$RecordNotificationInteractionsEndpoint} x */
 	E$RecordNotificationInteractionsEndpoint(x) {
 		const cf="RecordNotificationInteractionsEndpoint";
@@ -9201,29 +9265,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ReelWatchSequenceResponse",trackingParams);
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
-	/** @arg {E$ReelWatchEndpoint} x */
-	E$ReelWatchEndpoint(x) {
-		const cf="ReelWatchEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$ReelWatch(reelWatchEndpoint);
-	}
-	/** @arg {E$ReelWatch} x */
-	E$ReelWatch(x) {
-		const cf="ReelWatchEndpointData";
-		this.save_keys(`[${cf}]`,x);
-		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y); // ! #destructure
-		this.t(videoId,this.videoId);
-		this.playerParams("ReelWatch","reel.player_params",playerParams);
-		this.t(thumbnail,this.Thumbnail);
-		this.ReelPlayerOverlayRenderer(overlay);
-		this.params("ReelWatch","get_transcript.params",params);
-		this.t(sequenceProvider,a => this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",a));
-		this.t(sequenceParams,a => this.params("ReelWatch","reel.sequence_params",a));
-		this.t(inputType,a => this.save_enum("REEL_WATCH_INPUT_TYPE",a));
-	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
 		this.save_keys("[ReelPlayerOverlayRenderer]",x);
@@ -9988,37 +10029,7 @@ class HandleTypes extends ServiceMethods {
 		if(likeStatus!=="INDIFFERENT") debugger;
 		this.trackingParams("CF_FIX",trackingParams);
 		this.primitive_of(likesAllowed,"boolean");
-		this.z(serviceEndpoints,this.LikeEndpoint);
-	}
-	/** @arg {E$LikeEndpoint} x */
-	LikeEndpoint(x) {
-		this.save_keys("[LikeEndpoint]",x);
-		if(this.get_keys_of(x).length!==1) debugger;
-		this.E$Like(x.likeEndpoint);
-	}
-	/** @arg {E$Like} x */
-	E$Like(x) {
-		this.save_keys("[LikeEndpointData]",x);
-		let ua=this.LikeApiData.bind(this);
-		switch(x.status) {
-			case "DISLIKE": {
-				const {target: b,status: {},dislikeParams,...a}=x; this.g(a); ua(b);
-				this.params("Next","next.queue_context_params",dislikeParams);
-				this.primitive_of_string(dislikeParams);
-			} break;
-			case "INDIFFERENT": {
-				const {target: b,status: {},removeLikeParams,...a}=x; this.g(a); ua(b);
-				this.t(removeLikeParams,a => this.params("LikeEndpoint","like.remove_like_params",a));
-			} break;
-			case "LIKE": {
-				const {target: b,status: {},actions,likeParams,...a}=x; this.g(a); ua(b);
-				this.tz(actions,a => {
-					if("musicLibraryStatusUpdateCommand" in a) return this.MusicLibraryStatusUpdateCommand(a);
-					debugger;
-				});
-				this.t(likeParams,a => this.params("LikeEndpoint","like.likeParams",a));
-			} break;
-		}
+		this.z(serviceEndpoints,this.E$LikeEndpoint);
 	}
 	/** @arg {string} x */
 	primitive_of_string(x) {
