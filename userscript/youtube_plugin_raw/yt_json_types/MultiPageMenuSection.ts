@@ -1,4 +1,1 @@
-type MultiPageMenuSection={
-	items: CompactLinkRenderer[];
-	trackingParams: string;
-};
+type MultiPageMenuSection<T>=ItemsTemplate<T>;

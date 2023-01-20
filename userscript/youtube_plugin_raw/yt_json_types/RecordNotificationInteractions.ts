@@ -1,0 +1,3 @@
+type RecordNotificationInteractions={
+	serializedInteractionsRequest: string;
+};

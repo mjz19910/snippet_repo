@@ -1,3 +1,1 @@
-type NotificationRenderer={
-	notificationRenderer: {};
-};
+type NotificationRenderer={notificationRenderer: YtNotification;};

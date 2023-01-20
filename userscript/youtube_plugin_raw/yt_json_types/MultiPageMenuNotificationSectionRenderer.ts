@@ -1,3 +1,1 @@
-type MultiPageMenuNotificationSectionRenderer={
-	multiPageMenuNotificationSectionRenderer: MultiPageMenuNotificationSectionData;
-};
+type MultiPageMenuNotificationSectionRenderer={multiPageMenuNotificationSectionRenderer: ItemsTemplate<NotificationRenderer>;};

@@ -1,1 +1,1 @@
-type MultiPageMenuSectionRenderer={multiPageMenuSectionRenderer: MultiPageMenuSection;};
+type MultiPageMenuSectionRenderer<T>={multiPageMenuSectionRenderer: MultiPageMenuSection<T>;};

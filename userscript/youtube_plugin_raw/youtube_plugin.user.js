@@ -4000,7 +4000,7 @@ class CodegenService extends BaseService {
 			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
 			if(x2===null) {ret_arr.push(`if(x.${k}!==null) debugger;`); continue;}
-			if(this.#is_TextT(x2)) {ret_arr.push(`this.text_t(x.${k});`); continue;};
+			if(this.#is_TextT(x2)) {ret_arr.push(`this.TextT(x.${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
@@ -7098,24 +7098,85 @@ class HandleTypes extends ServiceMethods {
 				});
 			} return;
 		}
-		const {header,sections,footer,style,...y}=x; this.g(y);
+		if("footer" in x) {
+			const {header,sections,footer,style,...y}=x; this.g(y);
+			this.SimpleMenuHeaderRenderer(header);
+			this.z(sections,a => {
+				if("accountSectionListRenderer" in a) {
+					return this.AccountSectionListRenderer(a);
+				}
+				debugger;
+			});
+			this.MultiPageMenuSectionRenderer(footer);
+			if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
+			return;
+		}
+		const {header,sections,trackingParams,style,...y}=x; this.g(y);
 		this.SimpleMenuHeaderRenderer(header);
 		this.z(sections,a => {
-			if("accountSectionListRenderer" in a) {
-				return this.AccountSectionListRenderer(a);
+			if(a.multiPageMenuNotificationSectionRenderer) {
+				return this.MultiPageMenuNotificationSectionRenderer(a);
 			}
 			debugger;
 		});
-		this.MultiPageMenuSectionRenderer(footer);
-		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
 	}
-	/** @arg {MultiPageMenuSectionRenderer} x */
+	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
+	MultiPageMenuNotificationSectionRenderer(x) {
+		this.save_keys(`[MultiPageMenuNotificationSectionRenderer]`,x);
+		const {multiPageMenuNotificationSectionRenderer,...y}=x; this.g(y);
+		this.MultiPageMenuNotificationSection(multiPageMenuNotificationSectionRenderer);
+	}
+	/** @arg {ItemsTemplate<NotificationRenderer>} x */
+	MultiPageMenuNotificationSection(x) {
+		this.save_keys(`[MultiPageMenuNotificationSection]`,x);
+		const {items,trackingParams,...y}=x; this.g(y);
+		this.z(items,this.NotificationRenderer);
+		this.trackingParams(trackingParams);
+	}
+	/** @arg {NotificationRenderer} x */
+	NotificationRenderer(x) {
+		this.save_keys(`[NotificationRenderer]`,x);
+		const {notificationRenderer,...y}=x; this.g(y);
+		this.Notification(notificationRenderer);
+	}
+	/** @arg {YtNotification} x */
+	Notification(x) {
+		this.save_keys(`[Notification]`,x);
+		const {thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,trackingParams,notificationId,...y}=x; this.g(y);
+		this.Thumbnail(thumbnail);
+		this.Thumbnail(videoThumbnail);
+		this.TextT(shortMessage);
+		this.TextT(sentTimeText);
+		this.NavigationEndpoint(navigationEndpoint);
+		this.primitive_of(read,"boolean");
+		this.RecordNotificationInteractionsEndpoint(recordClickEndpoint);
+		this.MenuRenderer(contextualMenu);
+		this.trackingParams(trackingParams);
+		this.primitive_of(notificationId,"string");
+	}
+	/** @arg {RecordNotificationInteractionsEndpoint} x */
+	RecordNotificationInteractionsEndpoint(x) {
+		this.save_keys(`[RecordNotificationInteractionsEndpoint]`,x);
+		const {clickTrackingParams,commandMetadata,recordNotificationInteractionsEndpoint,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
+	}
+	/** @arg {RecordNotificationInteractions} x */
+	RecordNotificationInteractions(x) {
+		this.save_keys(`[RecordNotificationInteractions]`,x);
+		const {serializedInteractionsRequest,...y}=x; this.g(y);
+		let dec=this.decode_b64_url_proto_obj(serializedInteractionsRequest);
+		console.log(dec);
+		debugger;
+	}
+	/** @arg {MultiPageMenuSectionRenderer<CompactLinkRenderer>} x */
 	MultiPageMenuSectionRenderer(x) {
 		this.save_keys(`[MultiPageMenuSectionRenderer]`,x);
 		const {multiPageMenuSectionRenderer,...y}=x; this.g(y);
 		this.MultiPageMenuSection(multiPageMenuSectionRenderer);
 	}
-	/** @arg {MultiPageMenuSection} x */
+	/** @arg {MultiPageMenuSection<CompactLinkRenderer>} x */
 	MultiPageMenuSection(x) {
 		this.save_keys(`[MultiPageMenuSection]`,x);
 		const {items,trackingParams,...y}=x; this.g(y);
@@ -7187,11 +7248,11 @@ class HandleTypes extends ServiceMethods {
 		const {simpleMenuHeaderRenderer,...y}=x; this.g(y);
 		this.SimpleMenuHeaderData(simpleMenuHeaderRenderer);
 	}
-	/** @arg {SimpleMenuHeaderData} x */
+	/** @arg {SimpleMenuHeader} x */
 	SimpleMenuHeaderData(x) {
 		this.save_keys(`[SimpleMenuHeaderData]`,x);
 		const {title,buttons,...y}=x; this.g(y);
-		this.TextWithRuns(title);
+		this.TextT(title);
 		this.z(buttons,this.ButtonRenderer);
 	}
 	/** @arg {UpdatedMetadata} x */
