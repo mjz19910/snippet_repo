@@ -11432,7 +11432,7 @@ class HandleTypes extends ServiceMethods {
 	EntityMutationItem(x) {
 		this.save_keys("[EntityMutationItem]",x);
 		const {entityKey,type,options,payload,...y}=x; this.g(y); // ! #destructure
-		console.log(entityKey);
+		this.params("EntityMutationItem","entity_key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		this.tf(this.EntityMutationOptions)(options);
 		this.tf(this.EntityMutationPayload)(payload);
