@@ -6326,6 +6326,9 @@ class HandleTypes extends ServiceMethods {
 		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
+		if(su1.length===1) {
+			if(su1[0]==="reporthistory") return;
+		}
 		let [pt]=split_string_once(su1[1],"?");
 		switch(pt) {
 			case "trending": break;

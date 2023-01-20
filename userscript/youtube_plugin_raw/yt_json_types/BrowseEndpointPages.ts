@@ -1,5 +1,5 @@
 type BrowseEndpointPages=
-	|SplitOnce<Split<VE6827_PageUrl,"/">[2],"?">[0]
+	|SplitOnce<NonNullable<Split<VE6827_PageUrl,"/">[2]>,"?">[0]
 	|"explore"
 	|"music_charts"
 	|"music_explore"
@@ -16,4 +16,3 @@ type BrowseEndpointPages=
 	|"subscriptions"
 	|"what_to_watch"
 	;
-type uu=SplitOnce<Split<VE6827_PageUrl,"/">[2],"?">[0];
