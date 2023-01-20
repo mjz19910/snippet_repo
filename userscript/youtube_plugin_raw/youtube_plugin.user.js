@@ -11483,8 +11483,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
 		this.save_keys("[RichItemData]",x);
-		const {content,rowIndex,colIndex,...y}=x; this.g(y); // ! #destructure
+		const {content,trackingParams,rowIndex,colIndex,...y}=x; this.g(y); // ! #destructure
 		this.RichItemContent(content);
+		this.trackingParams(trackingParams);
 		this.t(rowIndex,a => this.primitive_of(a,"number"));
 		this.t(colIndex,a => this.primitive_of(a,"number"));
 	}
