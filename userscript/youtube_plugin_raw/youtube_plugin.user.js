@@ -11040,7 +11040,7 @@ class HandleTypes extends ServiceMethods {
 		const {style,text,navigationEndpoint,trackingParams,isSelected}=x; //...y}=x; this.g(y); //#destructure
 		this.ChipCloudStyle(style);
 		this.TextT(text);
-		this.RelatedChipCommand(navigationEndpoint);
+		this.t(navigationEndpoint,a => this.RelatedChipCommand(a));
 		this.trackingParams(trackingParams);
 		this.primitive_of(isSelected,"boolean");
 	}
