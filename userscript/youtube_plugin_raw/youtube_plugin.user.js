@@ -10361,6 +10361,13 @@ class HandleTypes extends ServiceMethods {
 		if("addToPlaylistCommand" in x) return this.AddToPlaylistCommand(x);
 		if("signalAction" in x) return this.SignalAction(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		if("sendFeedbackAction" in x) {
+			this.save_keys("[A$SendFeedbackAction]",x);
+			this.save_keys("[A$D$SendFeedbackAction]",x.sendFeedbackAction);
+			const {clickTrackingParams,sendFeedbackAction: {bucket,...y1},...y}=x; this.g(y); this.g(y1);
+			this.clickTrackingParams(clickTrackingParams);
+			return;
+		}
 		debugger;
 	}
 	/** @arg {AddToPlaylistCommand} x */
