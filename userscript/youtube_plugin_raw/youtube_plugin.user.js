@@ -5738,6 +5738,7 @@ case "${path_parts[idx-1]}": {
 					} break;
 				}
 			} break;
+			case "click":
 			case "tracking": {
 				const idx=2;
 				switch(path_parts[1]) {
