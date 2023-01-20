@@ -5314,6 +5314,43 @@ case "${path_parts[idx-1]}": {
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
 			default: gd(1); break;
+			case "report": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f8": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f2": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+						}
+					} break;
+				}
+			} break;
 			case "create_playlist": {
 				const idx=3;
 				if(path_parts.length===2) {
@@ -5756,9 +5793,7 @@ case "${path_parts[idx-1]}": {
 				} break;
 			} break;
 		}
-		console.log(path_parts);
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
-		debugger;
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
