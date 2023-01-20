@@ -10823,66 +10823,124 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChannelHeaderLinksRenderer]",x);
 	}
 	/** @arg {ReelPlayerHeaderRenderer} x */
-	ReelPlayerHeaderRenderer(x) {x;}
+	ReelPlayerHeaderRenderer(x) {
+		this.save_keys("[ReelPlayerHeaderRenderer]",x);
+	}
 	/** @arg {HintRenderer} x */
-	HintRenderer(x) {x;}
+	HintRenderer(x) {
+		this.save_keys("[HintRenderer]",x);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @arg {MerchandiseShelf} x */
-	MerchandiseShelf(x) {x;}
+	MerchandiseShelf(x) {
+		this.save_keys("[MerchandiseShelf]",x);
+	}
 	/** @arg {VideoPrimaryInfoData} x */
-	VideoPrimaryInfoData(x) {x;}
+	VideoPrimaryInfoData(x) {
+		this.save_keys("[VideoPrimaryInfoData]",x);
+	}
 	/** @arg {VideoSecondaryInfoData} x */
-	VideoSecondaryInfoData(x) {x;}
+	VideoSecondaryInfoData(x) {
+		this.save_keys("[VideoSecondaryInfoData]",x);
+	}
 	/** @arg {MultiMarkersPlayerBar} x */
-	MultiMarkersPlayerBar(x) {x;}
+	MultiMarkersPlayerBar(x) {
+		this.save_keys("[MultiMarkersPlayerBar]",x);
+	}
 	/** @arg {AdLayoutMetadataItem} x */
-	AdLayoutMetadataItem(x) {x;}
+	AdLayoutMetadataItem(x) {
+		this.save_keys("[AdLayoutMetadataItem]",x);
+	}
 	/** @arg {AdSlotMetadata} x */
-	AdSlotMetadata(x) {x;}
+	AdSlotMetadata(x) {
+		this.save_keys("[AdSlotMetadata]",x);
+	}
 	/** @arg {MacroMarkersList} x */
-	MacroMarkersList(x) {x;}
+	MacroMarkersList(x) {
+		this.save_keys("[MacroMarkersList]",x);
+	}
 	/** @arg {ProductList} x */
-	ProductList(x) {x;}
+	ProductList(x) {
+		this.save_keys("[ProductList]",x);
+	}
 	/** @arg {VideoDescriptionHeaderData} x */
-	VideoDescriptionHeaderData(x) {x;}
+	VideoDescriptionHeaderData(x) {
+		this.save_keys("[VideoDescriptionHeaderData]",x);
+	}
 	/** @arg {ExpandableVideoDescriptionBodyData} x */
-	ExpandableVideoDescriptionBodyData(x) {x;}
+	ExpandableVideoDescriptionBodyData(x) {
+		this.save_keys("[ExpandableVideoDescriptionBodyData]",x);
+	}
 	/** @arg {VideoDescriptionMusicSectionData} x */
-	VideoDescriptionMusicSectionData(x) {x;}
+	VideoDescriptionMusicSectionData(x) {
+		this.save_keys("[VideoDescriptionMusicSectionData]",x);
+	}
 	/** @arg {HorizontalCardList} x */
-	HorizontalCardList(x) {x;}
+	HorizontalCardList(x) {
+		this.save_keys("[HorizontalCardList]",x);
+	}
 	/** @arg {CompactVideoData} x */
-	CompactVideoData(x) {x;}
+	CompactVideoData(x) {
+		this.save_keys("[CompactVideoData]",x);
+	}
 	/** @arg {SearchboxConfig} x */
-	SearchboxConfig(x) {x;}
+	SearchboxConfig(x) {
+		this.save_keys("[SearchboxConfig]",x);
+	}
 	/** @arg {HotkeyDialog} x */
-	HotkeyDialog(x) {x;}
+	HotkeyDialog(x) {
+		this.save_keys("[HotkeyDialog]",x);
+	}
 	/** @arg {AccountItemData} x */
-	AccountItemData(x) {x;}
+	AccountItemData(x) {
+		this.save_keys("[AccountItemData]",x);
+	}
 	/** @arg {ExpandableTabData} x */
-	ExpandableTabData(x) {x;}
+	ExpandableTabData(x) {
+		this.save_keys("[ExpandableTabData]",x);
+	}
 	/** @arg {SubscribeButtonData} x */
-	SubscribeButtonData(x) {x;}
+	SubscribeButtonData(x) {
+		this.save_keys("[SubscribeButtonData]",x);
+	}
 	/** @arg {BrowseFeedActions} x */
-	BrowseFeedActions(x) {x;}
+	BrowseFeedActions(x) {
+		this.save_keys("[BrowseFeedActions]",x);
+	}
 	/** @arg {ChipCloudStyle} x */
-	ChipCloudStyle(x) {x;}
+	ChipCloudStyle(x) {
+		this.save_keys("[ChipCloudStyle]",x);
+	}
 	/** @arg {RelatedChipCommand} x */
-	RelatedChipCommand(x) {x;}
+	RelatedChipCommand(x) {
+		this.save_keys("[RelatedChipCommand]",x);
+	}
 	/** @arg {CommentData} x */
-	CommentData(x) {x;}
+	CommentData(x) {
+		this.save_keys("[CommentData]",x);
+	}
 	/** @arg {RichItemContent} x */
-	RichItemContent(x) {x;}
+	RichItemContent(x) {
+		this.save_keys("[RichItemContent]",x);
+	}
 	/** @arg {UnifiedSharePanel} x */
-	UnifiedSharePanel(x) {x;}
+	UnifiedSharePanel(x) {
+		this.save_keys("[UnifiedSharePanel]",x);
+	}
 	/** @arg {ClipCreationData} x */
-	ClipCreationData(x) {x;}
+	ClipCreationData(x) {
+		this.save_keys("[ClipCreationData]",x);
+	}
 	/** @arg {ChannelMetadata} x */
-	ChannelMetadata(x) {x;}
+	ChannelMetadata(x) {
+		this.save_keys("[ChannelMetadata]",x);
+	}
 	/** @arg {ResetChannelUnreadCountCommand} x */
-	ResetChannelUnreadCountCommand(x) {x;}
-	/** @arg {minimal_handler_member} x */
+	ResetChannelUnreadCountCommand(x) {
+		this.save_keys("[ResetChannelUnreadCountCommand]",x);
+	}
+	/** @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
 }
