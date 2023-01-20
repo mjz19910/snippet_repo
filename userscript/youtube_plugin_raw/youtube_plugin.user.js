@@ -5065,7 +5065,7 @@ case "${path_parts[idx-1]}": {
 			} break;
 			case "record_notification_interactions": {
 				const idx=2;
-				if(path_parts.length===idx) {
+				if(path_parts.length===1) {
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {
@@ -5076,6 +5076,10 @@ case "${path_parts[idx-1]}": {
 					} path_parts[1]===""; break;
 					case "f2": {
 						const idx=3;
+						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
+							switch(tv) {default: debugger; return;}
+						}
 						switch(path_parts[2]) {
 							default: {
 								console.log("in",path_parts[1]);
