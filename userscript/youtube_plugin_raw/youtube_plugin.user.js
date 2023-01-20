@@ -10028,7 +10028,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(x,a => {
 			if("toggleMenuServiceItemRenderer" in a) return this.toggleMenuServiceItemRenderer(a);
 			if("menuServiceItemRenderer" in a) return this.MenuServiceItemRenderer(a);
-			debugger;
+			this.do_codegen("MenuItems",a);
 		});
 	}
 	/** @arg {Extract<tz<MenuData['items']>,{toggleMenuServiceItemRenderer:any}>} x */
