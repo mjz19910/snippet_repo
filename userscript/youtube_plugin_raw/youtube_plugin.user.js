@@ -4949,6 +4949,7 @@ case "${path}": {
 					case "record_notification_interactions": {
 						switch(ta) {
 							case 2: break;
+							case 5: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
