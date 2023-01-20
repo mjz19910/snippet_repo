@@ -6579,7 +6579,7 @@ class ServiceMethods extends ServiceData {
 		return ok_e;
 	}
 	/** @public @template U @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {(this:this,v:T[SI],k: Exclude<GetMaybeKeys<T>, SI>)=>U} y @arg {SI[]} excl @returns {[U]} */
-	w(x,y,excl=[]) {
+	w(x,y=a => a,excl=[]) {
 		let ka=this.get_keys_of(x);
 		let keys=this.filter_out_keys(ka,excl);
 		let k=keys[0];
@@ -9270,7 +9270,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$GetReportFormEndpoint} x */
 	GetReportFormEndpoint(x) {
-		let [{params}]=this.w(x,a => a);
+		let [{params}]=this.w(x);
 		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
 	}
 	/** @arg {E_PlaylistEditEndpoint} x */
