@@ -5179,6 +5179,7 @@ case "${path}": {
 					case "tracking.trackingParams": {
 						switch(ta) {
 							case 1: break;
+							case 2: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
