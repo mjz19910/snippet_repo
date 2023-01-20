@@ -4814,7 +4814,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(for_,`${path}.f${ta}`,tv);
 						} break;
 						case "watch.player_params": {
 							switch(ta) {
@@ -4826,7 +4826,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(for_,`${path}.f${ta}`,tv);
 						} break;
 						case "watch.params.f27": {
 							switch(ta) {
@@ -4837,7 +4837,7 @@ class ParserService extends BaseService {
 									debugger;
 								} return;
 							}
-							this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+							this.parse_param_next(for_,`${path}.f${ta}`,tv);
 						} break;
 						default: debugger; return;
 					}
@@ -4858,7 +4858,7 @@ class ParserService extends BaseService {
 		}
 	}
 	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {ParamMapValue} tv */
-	default_parse_param_callback(for_,path,tv) {
+	parse_param_next(for_,path,tv) {
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) {
 			if(tv.size<=0) return;
@@ -4866,7 +4866,16 @@ class ParserService extends BaseService {
 		} else {
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
-				case "watch": if(path_parts.length==2&&path_parts[1]==="params"||path_parts[1]==="player_params") return;
+				default: {
+					console.log(`
+case "${path_parts[0]}":`);
+					debugger;
+				} break;
+				case "watch": switch(path_parts[1]) {
+					case "params": switch(path_parts[2]) {
+						case "f2": return;
+					} break;
+				} break;
 			}
 			console.log(path_parts);
 			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
