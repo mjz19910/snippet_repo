@@ -3627,7 +3627,7 @@ class Services {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ModifyEnv extends BaseService {
-	/** @type {[(obj: Blob | MediaSource) => string,typeof URL,Blob|MediaSource][]} */
+	/** @type {[(obj: Blob|MediaSource) => string,typeof URL,Blob|MediaSource][]} */
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
@@ -5603,6 +5603,12 @@ case "${path_parts[2]}": return;`);
 			console.log("new with param [param_2c_UC]",x);
 		} else if(this.str_starts_with(x,"SP")) {
 			let x1=split_string_once(x,"SP")[1];
+			switch(x1) {
+				case "account": case "account_advanced": case "account_billing": case "account_notifications": case "account_privacy":
+				case "account_sharing": case "account_playback": case "account_overview": case "report_history": return;
+				case "unlimited": return;
+				default: debugger;
+			}
 			console.log("new with param [param_2c_SP]",x,x1);
 		} else if(this.str_starts_with(x,"MP")) {
 			let x1=split_string_once(x,"MP")[1];
