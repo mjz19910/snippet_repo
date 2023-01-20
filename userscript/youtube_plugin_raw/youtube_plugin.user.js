@@ -11571,7 +11571,10 @@ class HandleTypes extends ServiceMethods {
 	FeedNudgeRenderer(x) {
 		this.save_keys("[FeedNudgeRenderer]",x);
 	}
-	RichSectionRenderer(x) {x;}
+	/** @private @arg {RichSectionRenderer} x */
+	RichSectionRenderer(x) {
+		this.save_keys("[RichSectionRenderer]",x);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
