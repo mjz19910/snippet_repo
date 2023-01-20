@@ -5029,6 +5029,10 @@ case "${path}": {
 		} else {
 			/** @arg {number} idx */
 			let gen_next_part=(idx) => {
+				if(path_parts.length===idx) {
+					gen_final_part(idx);
+					return;
+				}
 				console.log(`
 case "${path_parts[idx-1]}": switch(path_parts[${idx}]) {
 	default: {
@@ -5052,62 +5056,20 @@ case "\${path_parts[${idx}]}": return;\`);
 	} path_parts[${idx}]===""; break;
 } break;`);
 			};
+			/** @arg {number} idx */
+			let gen_return_part=(idx)=>{
+				console.log(`
+case "${path_parts[idx-1]}": {
+if(path_parts.length===${idx}) return;
+debugger;
+} break;`);
+			}
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
 				default: {
 					console.log("root_next_case");
 					gen_next_part(1);
 					debugger;
-				} break;
-				case "record_notification_interactions": switch(path_parts[1]) {
-					default: {
-						let idx=2;
-						console.log("in",path_parts[0]);
-						gen_next_part(idx);
-						debugger;
-					} path_parts[1]===""; break;
-					case "f2": switch(path_parts[2]) {
-						default: {
-							let idx=3;
-							console.log("in",path_parts[1]);
-							gen_next_part(idx);
-							debugger;
-						} path_parts[2]===""; break;
-						case "f1": {
-							if(path_parts.length===3) return;
-						} break;
-					} break;
-				} break;
-				case "create_playlist": switch(path_parts[1]) {
-					default: {
-						console.log("in",path_parts[0]);
-						gen_final_part(2);
-						debugger;
-					} path_parts[1]===""; break;
-					case "params": switch(path_parts[2]) {
-						default: {
-							console.log("in",path_parts[1]);
-							console.log(`
-case "${path_parts[2]}": return;`);
-							debugger;
-						} path_parts[1]===""; break;
-						case "f84": {
-							if(path_parts[3]===void 0) return;
-							switch(path_parts[3]) {
-								default: {
-									console.log("in",path_parts[1]);
-									console.log(`
-		case "${path_parts[2]}": return;`);
-									debugger;
-								} path_parts[1]===""; break;
-								case "f5": {
-									if(path_parts.length===4) return;
-									gen_next_part(4);
-									debugger;
-								}
-							}
-						}
-					} path_parts[3]===""; break;
 				} break;
 				case "watch": switch(path_parts[1]) {
 					default: {
@@ -5133,14 +5095,22 @@ case "${path_parts[2]}": return;`);
 						} break;
 						case "f40": {
 							if(path_parts.length===3) return;
-							debugger;
+							switch(path_parts[3]) {
+								default: {
+									console.log("in",path_parts[1]);
+									gen_return_part(2);
+									path_parts==="";
+									debugger;
+								} break;
+								case "f1": return;
+							}
 						} break;
 					} path_parts[2]===""; break;
 					case "params": switch(path_parts[2]) {
 						default: {
 							console.log("in",path_parts[1]);
-							console.log(`
-case "${path_parts[2]}": return;`);
+							gen_return_part(1);
+							path_parts==="";
 							debugger;
 						} break;
 						case "f2": {
@@ -5157,14 +5127,38 @@ case "${path_parts[2]}": return;`);
 						} break;
 						case "f27": {
 							if(path_parts.length===3) return;
+							switch(path_parts[3]) {
+								default: {
+									console.log("in",path_parts[1]);
+									console.log(`
+		case "${path_parts[2]}": return;`);
+									debugger;
+								} break;
+								case "f1": return;
+							}
+							path_parts[3]==="";
 							debugger;
 						} break;
 						case "f33": {
 							if(path_parts.length===3) return;
+							switch(path_parts[3]) {
+								default: {
+									console.log("in",path_parts[1]);
+									console.log(`
+		case "${path_parts[2]}": return;`);
+									debugger;
+								} break;
+								case "f2": return;
+								case "f3": return;
+								case "f4": return;
+								case "f5": return;
+							}
+							path_parts[3]==="";
 							debugger;
 						} break;
 						case "f56": {
 							if(path_parts.length===3) return;
+							path_parts[3]==="";
 							debugger;
 						} break;
 					} path_parts[2]===""; break;
