@@ -4983,11 +4983,8 @@ case "${path}": {
 					case "record_notification_interactions.f2.f14": {
 						switch(ta) {
 							case 1: break;
-							default: {
-								console.log("[parse_value.new_ns]",path);
-								console.log(`
-					case ${ta}: break;`);
-							} return;
+							case 2: break;
+							default: return new_ns();
 						}
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
