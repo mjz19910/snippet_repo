@@ -5015,18 +5015,25 @@ case "${path_parts[idx-1]}": {
 		/** @arg {number} idx */
 		let gen_return_part=(idx) => {
 			let case_part="";
+			let value_part="\n\t\tswitch(tv) {default: debugger; return;}";
 			if(path_parts.length===idx) {
 				if(tv instanceof Map) case_part=`${"\n\t\t"}if(tv instanceof Map) return;`;
 				switch(typeof tv) {
-					case "number": case_part=`
+					case "number": {
+						if(tv > 128) {
+							case_part=`
 ${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`
+						} else {
+							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;
+\t\t\tdefault: debugger; return;\n\t\t}`;
+						}
+					}
 				}
 			}
 			console.log(`
 case "${path_parts[idx-1]}": {
 	const idx=${idx};
-	if(path_parts.length===idx) {${case_part}
-		switch(tv) {default: debugger; return;}
+	if(path_parts.length===idx) {${case_part}${value_part}
 	}
 	switch(path_parts[${idx}]) {
 		default: {
@@ -5044,6 +5051,35 @@ case "${path_parts[idx-1]}": {
 				console.log("[param_next.new_ns]",path_parts[0]);
 				gen_next_part(idx);
 				debugger;
+			} break;
+			case "record_notification_interactions": {
+				const idx=2;
+				if(path_parts.length===idx) {
+					switch(tv) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: {
+						console.log("in",path_parts[0]);
+						gen_next_part(idx);
+						debugger;
+					} path_parts[1]===""; break;
+					case "f2": {
+						const idx=3;
+						if(path_parts.length===idx) {
+							switch(tv) {
+								case 2: return;
+								default: debugger; return;
+							}
+						}
+						switch(path_parts[2]) {
+							default: {
+								console.log("in",path_parts[1]);
+								gen_next_part(idx);
+								debugger;
+							} path_parts[2]===""; break;
+						}
+					} break;
+				}
 			} break;
 			case "watch": switch(path_parts[1]) {
 				default: {
