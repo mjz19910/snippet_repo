@@ -6066,8 +6066,9 @@ case "${path_parts[idx-1]}": {
 								const idx=4;
 								if(path_parts.length===3) {
 									switch(tv) {
+										case 12: return;
 										case 15: return;
-										default: debugger; return;
+										default: console.log(`-- [player_f71] --\n\n\ncase ${tv}: return;`); return;
 									}
 								}
 								switch(path_parts[3]) {
