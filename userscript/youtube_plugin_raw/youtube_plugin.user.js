@@ -5099,6 +5099,10 @@ case "${path_parts[idx-1]}": {
 								case "f2": {
 									const idx=4;
 									if(path_parts.length===idx) {
+										if(typeof tv==="string") {
+											console.log(path,tv);
+											return;
+										}
 										switch(tv) {default: debugger; return;}
 									}
 									gen_next_part(idx);
