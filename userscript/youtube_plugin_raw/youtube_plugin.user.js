@@ -5496,7 +5496,7 @@ case "${path_parts[idx-1]}": {
 			console.groupEnd();
 		};
 		/** @arg {number} idx */
-		let u=idx=>{
+		let u=idx => {
 			grouped(path_parts.join("$"),() => gd(idx));
 		};
 		let path_parts=split_string(path,".");
@@ -5619,7 +5619,19 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
-							case "f5": u(idx); break;
+							// browse$param$f84$f5
+							case "f5": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 2: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 						}
 					} break;
 				}
