@@ -11462,9 +11462,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
 		this.save_keys("[FeedFilterChipBarData]",x);
-		const {contents,trackingParams,styleType,...y}=x; this.g(y); // ! #destructure
+		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.ChipCloudChipRenderer);
 		this.trackingParams(trackingParams);
+		this.ButtonRenderer(nextButton);
+		this.ButtonRenderer(previousButton);
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */
