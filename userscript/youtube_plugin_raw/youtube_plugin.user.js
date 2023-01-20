@@ -4803,6 +4803,7 @@ class ParserService extends BaseService {
 					this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
 				};
 				switch(path) {
+					case "watch.player_params.f40.f1":
 					case "watch.player_params.f40":
 					case "watch.params.f33":
 					case "watch.params.f27":

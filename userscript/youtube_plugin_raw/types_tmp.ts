@@ -10,6 +10,7 @@ type PathRoot=[
 	"create_playlist.params",
 	"watch_playlist.params",
 	`watch.params.f${number}`,
-	`watch.player_params.f${number}`,
+	`watch.player_params.f40`,
+	"watch.player_params.f40.f1",
 ][number];
 type PathFromRoot=PathRoot|`${PathRoot}.f${number}`;
