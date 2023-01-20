@@ -5226,14 +5226,7 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "click.trackingParams.f4": {
-						switch(ta) {
-							case 1: break;
-							default: return new_ns();
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
+					case "click.trackingParams.f4":
 					case "tracking.trackingParams.f4": {
 						switch(ta) {
 							case 1: break;
