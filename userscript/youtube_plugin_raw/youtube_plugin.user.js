@@ -7512,18 +7512,7 @@ class HandleTypes extends ServiceMethods {
 			let v=this.w({x:x.shareEntityServiceEndpoint});
 			const {serializedShareEntity,commands,...y}=v; this.g(y);
 			this.primitive_of_string(serializedShareEntity);
-			this.z(commands,a => {
-				const {clickTrackingParams,...b}=a;
-				if(!b.openPopupAction) debugger;
-				let {popup,popupType,...y}=this.w(b);
-				if("beReused" in y) {
-					if(y.beReused!==true) debugger;
-					return;
-				}
-				this.AllPopups(popup);
-				this.parse_popup_type(popupType);
-				this.g(y);
-			});
+			this.z(commands,this.OpenPopupAction);
 			return;
 		}
 		if("likeEndpoint" in x) return this.E$Like(x.likeEndpoint);
