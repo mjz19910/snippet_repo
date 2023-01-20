@@ -6880,7 +6880,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {HrefUrl} x */
 	HrefUrl(x) {
-		this.parser.parse_url("HrefUrl",as(x.hrefUrl));
+		this.save_keys("[HrefUrl]",x);
+		const {hrefUrl}=x; //...y}=x; this.g(y); //#destructure
+		this.parser.parse_url("HrefUrl",as(hrefUrl));
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
@@ -6892,14 +6894,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseEndpointData} x */
 	BrowseEndpointData(x) {
+		const cf="BrowseEndpointData";
 		this.save_keys("[BrowseEndpointData]",x);
 		const {browseId,params,canonicalBaseUrl}=x; //...y}=x; this.g(y); //#destructure
 		this.t(browseId,this.browseId);
 		this.t(params,a => this.params("CommonConfigData","create_playlist.params",a));
-		this.t(canonicalBaseUrl,() => {
-			console.log(canonicalBaseUrl);
-			debugger;
-		});
+		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
