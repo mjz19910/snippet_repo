@@ -7703,13 +7703,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VE6827_PageUrl} x */
 	VE6827_PageUrl(x) {
+		const cf="VE6827_PageUrl";
 		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
+			this.save_string(`[${cf}]`,`${su1[0]}`);
 			if(su1[0]==="reporthistory") return;
 		}
 		let [pt]=split_string_once(su1[1],"?");
+		this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
 		switch(pt) {
 			case "trending": break;
 			case "library": break;
@@ -7723,6 +7726,8 @@ class HandleTypes extends ServiceMethods {
 	//#region endpoint
 	/** @arg {E$Signal_ClientSignal} x */
 	E$Signal_ClientSignal(x) {
+		const cf="SendFeedbackAction";
+		this.save_keys(`[E$${cf}]`,x);
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="CLIENT_SIGNAL") debugger;
 		this.z(actions,x => {
@@ -7734,6 +7739,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {A$SendFeedbackAction} x */
 	SendFeedbackAction(x) {
+		const cf="SendFeedbackAction";
+		this.save_keys(`[A$${cf}]`,x);
 		const {clickTrackingParams,...z}=x;
 		let a=this.w(z);
 		const {bucket,...y}=a; this.g(y);
@@ -7743,6 +7750,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$Signal$GetAccountMenu} x */
 	E$Signal$GetAccountMenu(x) {
+		const cf="Signal$GetAccountMenu";
+		this.save_keys(`[E$${cf}]`,x);
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
 		this.z(actions,this.OpenPopupAction);
