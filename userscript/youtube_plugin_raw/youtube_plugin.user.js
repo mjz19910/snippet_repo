@@ -2492,16 +2492,25 @@ class BaseService extends BaseServicePrivate {
 		return this.make_param_map(res_e);
 	}
 	/** @typedef {number|string|bigint|["failed",DecTypeNum[]|null]|ParamMapType} ParamMapValue */
-	/** @typedef {Map<number,ParamMapValue>} ParamMapType */
+	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @arg {DecTypeNum[]} res_e */
 	make_param_map(res_e) {
-		/** @private @type {ParamMapType} */
+		/** @type {ParamMapType} */
 		let ret_map=new Map();
+		/** @arg {number} key @arg {ParamMapValue} value */
+		let do_set=(key,value) => {
+			if(ret_map.has(key)) {
+				let v=ret_map.get(key);
+				v?.push(value);
+			} else {
+				ret_map.set(key,[value]);
+			}
+		};
 		for(let param of res_e) {
 			switch(param[0]) {
 				case "data_fixed32": case "data_fixed64":
-				case "data32": ret_map.set(param[1],param[2]); break;
+				case "data32": do_set(param[1],param[2]); break;
 				case "child": {
 					x: if(param[3]) {
 						let err=param[3].find(e => e[0]==="error");
@@ -2510,16 +2519,16 @@ class BaseService extends BaseServicePrivate {
 						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/\w{4}/)) break x;
 						let p_map=this.make_param_map(param[3]);
 						if(!p_map) {
-							ret_map.set(param[1],["failed",param[3]]);
+							do_set(param[1],["failed",param[3]]);
 							break;
 						}
-						ret_map.set(param[1],p_map);
+						do_set(param[1],p_map);
 						break;
 					}
 					let decoder=new TextDecoder();
-					ret_map.set(param[1],decoder.decode(param[2]));
+					do_set(param[1],decoder.decode(param[2]));
 				} break;
-				case "data64": ret_map.set(param[1],param[2]); break;
+				case "data64": do_set(param[1],param[2]); break;
 				case "group": debugger; break;
 				case "info": debugger; break;
 				case "struct": debugger; break;
@@ -5009,14 +5018,17 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		switch(root) {
 			case "GetTranscript": {
-				/** @type {ParamMapValue[]} */
+				/** @type {(ParamMapValue|["seq",ParamMapValue[]])[]} */
 				let transcript_args=[];
 				let pMap=param_map;
 				/** @arg {number} x */
 				function convert_param(x) {
 					if(x<=0) {debugger; return;}
 					let pf=pMap.get(x);
-					if(pf) transcript_args[x-1]=pf;
+					if(pf) {
+						if(pf.length!==1) debugger;
+						transcript_args[x-1]=['seq',pf];
+					}
 				}
 				this.z([1,2,3,5,6,7,8],a => convert_param(a));
 				/** @type {{videoId:string,langParams:string,unk3:1,targetId:"engagement-panel-searchable-transcript-search-panel",unk6:1,unk7:1,unk8:1}|null} */
@@ -5138,13 +5150,13 @@ class ParserService extends BaseService {
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
-	/** @typedef {(x:ParamMapValue,idx:number)=>void} ParseCallbackFunction */
+	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 	parse_key(root,path,x,mk,ta,cb) {
 		let tv=x.get(ta);
 		this.parse_value(root,path,x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue[]|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
 		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
@@ -5395,8 +5407,9 @@ case "${path}": {
 			return xx;
 		}
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue} tv */
-	parse_param_next(root,path,tv) {
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue[]} tv */
+	parse_param_next(root,path,[tv,...tr]) {
+		if(tr.length>0) debugger;
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		/** @arg {number} idx */
@@ -5501,9 +5514,9 @@ case "${path_parts[idx-1]}": {
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(typeof tv==="number") return console.log("[param_parse]",path,tv);
 									switch(tv) {
-										case 0: return;
-										default: debugger; return;
+										default: "trackingParams.f3"; console.log(`\ncase ${JSON.stringify(tv)}: return;`); return;
 									}
 								}
 								switch(path_parts[3]) {
