@@ -1,3 +1,3 @@
 type GetAccountsListInnertubeEndpointPlugin={
-	getAccountsListInnertubeEndpoint: GetAccountsListInnertubeEndpointData;
+	getAccountsListInnertubeEndpoint: AE_GetAccountsListInnertube;
 };

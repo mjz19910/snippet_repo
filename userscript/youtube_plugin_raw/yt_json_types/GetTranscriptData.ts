@@ -1,3 +1,3 @@
-type GetTranscriptData={
+type AE_GetTranscript={
 	params: string;
 };

@@ -1,5 +1,5 @@
 type E_ReelWatchEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: CommandMetadata;
-	reelWatchEndpoint: AE_ReelWatchEndpointData;
+	reelWatchEndpoint: AE_ReelWatch;
 };

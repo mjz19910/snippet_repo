@@ -1,6 +1,6 @@
 type SearchPageResponse={
 	page: "search";
-	endpoint: SearchEndpoint;
+	endpoint: E_SearchEndpoint;
 	response: SearchResponse;
 	url: `/results?search_query=${string}`;
 };

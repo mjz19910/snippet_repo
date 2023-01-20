@@ -3,6 +3,6 @@ type FusionSearchboxData={
 	placeholderText: TextWithRuns;
 	config: SearchboxConfig;
 	trackingParams: string;
-	searchEndpoint: SearchEndpoint;
+	searchEndpoint: E_SearchEndpoint;
 	clearButton: ButtonRenderer;
 };

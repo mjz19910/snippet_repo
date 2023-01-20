@@ -1,0 +1,1 @@
+type E_SetSettingEndpoint=SetSettingEndpointAutonavForDesktop<boolean>;

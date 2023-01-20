@@ -3,5 +3,5 @@ type LikeButton={
 	likeStatus: "INDIFFERENT";
 	trackingParams: string;
 	likesAllowed: boolean;
-	serviceEndpoints: LikeEndpoint[];
+	serviceEndpoints: E_LikeEndpoint[];
 }|LikeButton_2;

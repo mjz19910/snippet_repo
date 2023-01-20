@@ -8,7 +8,7 @@ type YpcGetOffersEndpoint={
 	commandMetadata: CommandMetadata;
 	ypcGetOffersEndpoint: YpcGetOffers;
 }
-type Button_navigationEndpoint=ShareEntityServiceEndpoint;
+type Button_navigationEndpoint=E_ShareEntityServiceEndpoint;
 
 type ButtonData={
 	accessibility?: LabelData;

@@ -1,1 +1,1 @@
-type MenuServiceEndpointItems=ServiceEndpointTemplate<MenuServiceEndpoints>|NotificationOptOutEndpoint;
+type MenuServiceEndpointItems=ServiceEndpointTemplate<MenuServiceEndpoints>|E_NotificationOptOutEndpoint;

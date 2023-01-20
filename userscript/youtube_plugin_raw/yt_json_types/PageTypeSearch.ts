@@ -1,6 +1,6 @@
 type PageTypeSearch={
 	pageType: "search";
-	endpoint: SearchEndpoint;
+	endpoint: E_SearchEndpoint;
 	response: SearchPageResponse;
 	fromHistory: boolean;
 	navigationDoneMs: number;

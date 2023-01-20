@@ -1,1 +1,0 @@
-type CurrentVideoEndpoint=WatchEndpoint;

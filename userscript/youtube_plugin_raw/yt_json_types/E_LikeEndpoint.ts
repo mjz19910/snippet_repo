@@ -1,0 +1,1 @@
+type E_LikeEndpoint={likeEndpoint: AE_Like;};

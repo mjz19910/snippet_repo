@@ -1,3 +1,0 @@
-type PingingEndpoint={
-	hack: true;
-};

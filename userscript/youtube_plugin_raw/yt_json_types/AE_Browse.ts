@@ -1,4 +1,4 @@
-type AE_BrowseEndpoint={
+type AE_Browse={
 	browseId?: BrowseIdType;
 	params?: string;
 	canonicalBaseUrl?: `/@${string}`;

@@ -1,0 +1,1 @@
+type AE_ConfirmDialog=ContentTemplate<ConfirmDialogRenderer>;

@@ -5,7 +5,7 @@ type YtNotification={
 	sentTimeText: SimpleText;
 	navigationEndpoint: WatchEndpoint;
 	read: boolean;
-	recordClickEndpoint: RecordNotificationInteractionsEndpoint;
+	recordClickEndpoint: E_RecordNotificationInteractionsEndpoint;
 	contextualMenu: MenuRenderer;
 	trackingParams: string;
 	notificationId: `${number}`;

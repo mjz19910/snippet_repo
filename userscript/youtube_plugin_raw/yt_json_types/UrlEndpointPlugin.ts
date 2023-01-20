@@ -1,3 +1,3 @@
 type UrlEndpointPlugin={
-	urlEndpoint: AE_UrlEndpoint;
+	urlEndpoint: AE_Url;
 };
