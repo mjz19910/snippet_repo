@@ -1,3 +1,3 @@
-type ChipCloudStyle={
-	styleType: "STYLE_DEFAULT";
+type ChipCloudStyle<T>={
+	styleType: T;
 };

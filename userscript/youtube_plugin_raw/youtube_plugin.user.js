@@ -5159,7 +5159,7 @@ case "${path_parts[idx-1]}": {
 													switch(tv) {
 														case 6: return;
 														case 8: return;
-														default: console.log(`\ncase ${tv}: return;`);debugger; return;
+														default: console.log(`\ncase ${tv}: return;`); debugger; return;
 													}
 												}
 												switch(path_parts[5]) {
@@ -11448,8 +11448,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ChipCloudChipData} x */
 	ChipCloudChipData(x) {
 		this.save_keys("[ChipCloudChipData]",x);
-		const {style,text,navigationEndpoint,trackingParams,isSelected,...y}=x; this.g(y); // ! #destructure
-		this.ChipCloudStyle(style);
+		const {style,text,navigationEndpoint,trackingParams,isSelected,targetId,...y}=x; this.g(y); // ! #destructure
+		this.ChipCloudStyle(style,a => {
+			switch(a) {
+				case "STYLE_DEFAULT": return;
+				case "STYLE_HOME_FILTER": return;
+				default: debugger;
+			}
+		});
 		this.TextT(text);
 		this.t(navigationEndpoint,x => {
 			if("relatedChipCommand" in x) return this.RelatedChipCommand(x);
@@ -11769,11 +11775,11 @@ class HandleTypes extends ServiceMethods {
 		const {contents,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.BrowseFeedContent);
 	}
-	/** @arg {ChipCloudStyle} x */
-	ChipCloudStyle(x) {
+	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(x:T)=>void} f */
+	ChipCloudStyle(x,f) {
 		this.save_keys("[ChipCloudStyle]",x);
 		const {styleType,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(styleType,"string");
+		f.call(this,styleType);
 	}
 	/** @arg {RelatedChipCommand} x */
 	RelatedChipCommand(x) {
