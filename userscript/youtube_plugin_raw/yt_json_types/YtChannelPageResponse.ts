@@ -3,6 +3,4 @@ type ChannelPageResponse={
 	endpoint: BrowseEndpoint;
 	response: ChannelResponse;
 	url: string;
-	expirationTime?: number;
-	previousCsn?: string;
 };
