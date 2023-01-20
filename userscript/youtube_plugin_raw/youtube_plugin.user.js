@@ -5486,7 +5486,7 @@ case "${path_parts[idx-1]}": {
 									case "f3": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
@@ -5497,7 +5497,7 @@ case "${path_parts[idx-1]}": {
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
@@ -5508,9 +5508,9 @@ case "${path_parts[idx-1]}": {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(typeof tv==="number") {
-												if((tv/1000)>(1674236436126.906+(25628*8))) {
-													let ntv=tv/1000/25628;
-													return console.log("[param_parse]",path,ntv,ntv-(1674236436126.906/25628));
+												if(((tv/1000/25628)%2) < 0.1) {
+													let ntv=(tv/1000/25628)|0;
+													return this.save_number(`[${path}]`,ntv);
 												} return;
 											}
 											switch(tv) {default: debugger; return;}
@@ -5525,7 +5525,7 @@ case "${path_parts[idx-1]}": {
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 									switch(tv) {
 										default: "trackingParams.f3"; console.log(`\ncase ${JSON.stringify(tv)}: return;`); return;
 									}
@@ -5550,6 +5550,12 @@ case "${path_parts[idx-1]}": {
 										case 21964: return;
 										case 21965: return;
 										case 153108: return;
+										case 7377: return;
+										case 13187: return;
+										case 10045: return;
+										case 11898: return;
+										case 12558: return;
+										case 19301: return;
 										default: console.log("trackingParams.f2"); console.log(`\ncase ${JSON.stringify(tv)}: return;`); return;
 									}
 								}
@@ -5560,7 +5566,10 @@ case "${path_parts[idx-1]}": {
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+									if(typeof tv==="number") {
+										this.save_number(`[${path}]`,tv);
+										return;
+									}
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
