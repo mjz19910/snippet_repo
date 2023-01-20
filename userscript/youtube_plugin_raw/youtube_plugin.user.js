@@ -5111,6 +5111,18 @@ case "${path}": {
 			if(cb===null) {
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "report.params": {
+						switch(ta) {
+							case 2: break;
+							case 8: break;
+							case 11: break;
+							case 15: break;
+							case 18: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "watch.params.f27": {
 						switch(ta) {
 							case 1: break;
