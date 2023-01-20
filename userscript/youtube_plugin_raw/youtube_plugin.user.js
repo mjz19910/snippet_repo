@@ -6538,6 +6538,7 @@ class HandleTypes extends ServiceMethods {
 		if(commandMetadata) this.CommandMetadata(commandMetadata);
 		this.BrowseEndpointData(browseEndpoint);
 	}
+	//#region web_command_metadata
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		this.save_keys("[WebCommandMetadataContent]",x);
@@ -6561,6 +6562,14 @@ class HandleTypes extends ServiceMethods {
 			case "WEB_PAGE_TYPE_UNKNOWN": return this.UnknownWebCommandMetadata(x);
 			case "WEB_PAGE_TYPE_WATCH": return this.WatchWebCommandMetadata(x);
 		}
+	}
+	/** @arg {SearchPageWebCommandMetadata} x */
+	SearchPageWebCommandMetadata(x) {
+		this.save_keys("[SearchPageWebCommandMetadata]",x);
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		if(!this.str_starts_with("/results?search_query=",url)) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
+		if(rootVe!==4724) debugger;
 	}
 	/** @arg {PlaylistWebCommandMetadata} x */
 	PlaylistWebCommandMetadata(x) {
@@ -6589,24 +6598,6 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; return;
 			case 23462: this.VE23462_WebCommandMetadata(x); break;
 		}
-	}
-	/** @arg {VE23462_WebCommandMetadata} x */
-	VE23462_WebCommandMetadata(x) {
-		this.save_keys("[VE23462_WebCommandMetadata]",x);
-		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		switch(url) {
-			default: debugger; return;
-			case "/account": break;
-			case "/account_advanced": break;
-			case "/account_billing": break;
-			case "/account_notifications": break;
-			case "/account_playback": break;
-			case "/account_privacy": break;
-			case "/account_sharing": break;
-		}
-		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
-		if(rootVe!==23462) debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {WatchPageWebCommandMetadata} x */
 	WatchWebCommandMetadata(x) {
@@ -6639,6 +6630,24 @@ class HandleTypes extends ServiceMethods {
 			case 6827: this.VE6827_WebCommandMetadata(x); break;
 			case 96368: this.VE96368_WebCommandMetadata(x); break;
 		}
+	}
+	/** @arg {VE23462_WebCommandMetadata} x */
+	VE23462_WebCommandMetadata(x) {
+		this.save_keys("[VE23462_WebCommandMetadata]",x);
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		switch(url) {
+			default: debugger; return;
+			case "/account": break;
+			case "/account_advanced": break;
+			case "/account_billing": break;
+			case "/account_notifications": break;
+			case "/account_playback": break;
+			case "/account_privacy": break;
+			case "/account_sharing": break;
+		}
+		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
+		if(rootVe!==23462) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @arg {VE96368_WebCommandMetadata} x */
 	VE96368_WebCommandMetadata(x) {
@@ -10426,11 +10435,21 @@ class HandleTypes extends ServiceMethods {
 		this.z(adLayoutMetadata,this.AdLayoutMetadataItem);
 		this.AdSlotMetadata(adSlotMetadata);
 	}
+	/** @arg {AdSlotMetadata} x */
+	AdSlotMetadata(x) {
+		this.save_keys("[AdSlotMetadata]",x);
+		const {slotId,slotType,slotPhysicalPosition,...y}=x; this.g(y);
+	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
 		this.save_keys("[MacroMarkersListRenderer]",x);
 		const {macroMarkersListRenderer,...y}=x; this.g(y);
 		this.MacroMarkersList(macroMarkersListRenderer);
+	}
+	/** @arg {MacroMarkersList} x */
+	MacroMarkersList(x) {
+		this.save_keys("[MacroMarkersList]",x);
+		const {contents,syncButtonLabel,trackingParams,...y}=x; this.g(y);
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
@@ -10438,11 +10457,21 @@ class HandleTypes extends ServiceMethods {
 		const {productListRenderer,...y}=x; this.g(y);
 		this.ProductList(productListRenderer);
 	}
+	/** @arg {ProductList} x */
+	ProductList(x) {
+		this.save_keys("[ProductList]",x);
+		const {contents,trackingParams,...y}=x; this.g(y);
+	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
 		this.save_keys("[VideoDescriptionHeaderRenderer]",x);
 		const {videoDescriptionHeaderRenderer,...y}=x; this.g(y);
 		this.VideoDescriptionHeaderData(videoDescriptionHeaderRenderer);
+	}
+	/** @arg {VideoDescriptionHeaderData} x */
+	VideoDescriptionHeaderData(x) {
+		this.save_keys("[VideoDescriptionHeaderData]",x);
+		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=x; this.g(y);
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
@@ -10450,11 +10479,21 @@ class HandleTypes extends ServiceMethods {
 		const {expandableVideoDescriptionBodyRenderer,...y}=x; this.g(y);
 		this.ExpandableVideoDescriptionBodyData(expandableVideoDescriptionBodyRenderer);
 	}
+	/** @arg {ExpandableVideoDescriptionBodyData} x */
+	ExpandableVideoDescriptionBodyData(x) {
+		this.save_keys("[ExpandableVideoDescriptionBodyData]",x);
+		const {descriptionBodyText,showMoreText,showLessText,...y}=x; this.g(y);
+	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
 		this.save_keys("[VideoDescriptionMusicSectionRenderer]",x);
 		const {videoDescriptionMusicSectionRenderer,...y}=x; this.g(y);
 		this.VideoDescriptionMusicSectionData(videoDescriptionMusicSectionRenderer);
+	}
+	/** @arg {VideoDescriptionMusicSectionData} x */
+	VideoDescriptionMusicSectionData(x) {
+		this.save_keys("[VideoDescriptionMusicSectionData]",x);
+		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=x; this.g(y);
 	}
 	/** @arg {HorizontalCardListRenderer} x */
 	HorizontalCardListRenderer(x) {
@@ -10462,13 +10501,10 @@ class HandleTypes extends ServiceMethods {
 		const {horizontalCardListRenderer,...y}=x; this.g(y);
 		this.HorizontalCardList(horizontalCardListRenderer);
 	}
-	/** @arg {SearchPageWebCommandMetadata} x */
-	SearchPageWebCommandMetadata(x) {
-		this.save_keys("[SearchPageWebCommandMetadata]",x);
-		const {url,webPageType,rootVe,...y}=x; this.g(y);
-		if(!this.str_starts_with("/results?search_query=",url)) debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_SEARCH") debugger;
-		if(rootVe!==4724) debugger;
+	/** @arg {HorizontalCardList} x */
+	HorizontalCardList(x) {
+		this.save_keys("[HorizontalCardList]",x);
+		const {cards,trackingParams,header,style,centerItems,...y}=x; this.g(y);
 	}
 	/** @arg {CompactVideoRenderer} x */
 	CompactVideoRenderer(x) {
@@ -10859,41 +10895,6 @@ class HandleTypes extends ServiceMethods {
 	AdLayoutMetadataItem(x) {
 		this.save_keys("[AdLayoutMetadataItem]",x);
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=x; this.g(y);
-	}
-	/** @arg {AdSlotMetadata} x */
-	AdSlotMetadata(x) {
-		this.save_keys("[AdSlotMetadata]",x);
-		const {slotId,slotType,slotPhysicalPosition,...y}=x; this.g(y);
-	}
-	/** @arg {MacroMarkersList} x */
-	MacroMarkersList(x) {
-		this.save_keys("[MacroMarkersList]",x);
-		const {contents,syncButtonLabel,trackingParams,...y}=x; this.g(y);
-	}
-	/** @arg {ProductList} x */
-	ProductList(x) {
-		this.save_keys("[ProductList]",x);
-		const {contents,trackingParams,...y}=x; this.g(y);
-	}
-	/** @arg {VideoDescriptionHeaderData} x */
-	VideoDescriptionHeaderData(x) {
-		this.save_keys("[VideoDescriptionHeaderData]",x);
-		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=x; this.g(y);
-	}
-	/** @arg {ExpandableVideoDescriptionBodyData} x */
-	ExpandableVideoDescriptionBodyData(x) {
-		this.save_keys("[ExpandableVideoDescriptionBodyData]",x);
-		const {descriptionBodyText,showMoreText,showLessText,...y}=x; this.g(y);
-	}
-	/** @arg {VideoDescriptionMusicSectionData} x */
-	VideoDescriptionMusicSectionData(x) {
-		this.save_keys("[VideoDescriptionMusicSectionData]",x);
-		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=x; this.g(y);
-	}
-	/** @arg {HorizontalCardList} x */
-	HorizontalCardList(x) {
-		this.save_keys("[HorizontalCardList]",x);
-		const {cards,trackingParams,header,style,centerItems,...y}=x; this.g(y);
 	}
 	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {
