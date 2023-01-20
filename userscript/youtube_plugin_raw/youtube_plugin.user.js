@@ -5068,6 +5068,7 @@ case "${path_parts[2]}": return;`);
 		}
 		// endpoint.watch.params
 		parse_key(56);
+		// endpoint.create_playlist.params
 		this.parse_key(root,path,x,map_keys,77,tv => {
 			if(typeof tv==="string") {
 				let bt=this.decode_browse_id(tv);
@@ -5076,6 +5077,7 @@ case "${path_parts[2]}": return;`);
 			}
 			debugger;
 		});
+		parse_key(84);
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
