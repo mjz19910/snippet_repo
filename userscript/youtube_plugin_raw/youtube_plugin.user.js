@@ -6814,8 +6814,8 @@ class HandleTypes extends ServiceMethods {
 		if(config) 1;
 	}
 	/** @arg {E_SignalServiceEndpoint} x */
-	SignalServiceEndpoint(x) {
-		this.save_keys("[SignalServiceEndpoint]",x);
+	E_SignalServiceEndpoint(x) {
+		this.save_keys("[E_SignalServiceEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
@@ -8623,7 +8623,7 @@ class HandleTypes extends ServiceMethods {
 	ResponseReceivedEndpointItem(x) {
 		this.save_keys("[ResponseReceivedEndpointItem]",x);
 		if("signalServiceEndpoint" in x) {
-			this.SignalServiceEndpoint(x);
+			this.E_SignalServiceEndpoint(x);
 		} else if("adsControlFlowOpportunityReceivedCommand" in x) {
 			this.AdsControlFlowOpportunityReceivedCommand(x);
 		} else if("changeKeyedMarkersVisibilityCommand" in x) {
@@ -9685,7 +9685,7 @@ class HandleTypes extends ServiceMethods {
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
-		if("signalServiceEndpoint" in x) return this.SignalServiceEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
 		if("ypcGetOffersEndpoint" in x) return this.YpcGetOffersEndpoint(x);
 		this.do_codegen(cf,x);
 	}
@@ -10426,6 +10426,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']} x */
 	GuideEntryRoot_ser(x) {
 		if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
 		debugger;
 	}
 	/** @arg {GuideEntryRoot} x */
@@ -10652,7 +10653,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<TopbarMenuButton,{menuRequest:any}>['menuRequest']} x */
 	TopbarMenu_menuRequest(x) {
 		if("signalServiceEndpoint" in x) {
-			this.SignalServiceEndpoint(x);
+			this.E_SignalServiceEndpoint(x);
 		} else {
 			debugger;
 		}
@@ -10944,7 +10945,7 @@ class HandleTypes extends ServiceMethods {
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
-		if("signalServiceEndpoint" in x) return this.SignalServiceEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
 		if("urlEndpoint" in x) return this.UrlEndpoint(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		debugger;
@@ -11282,12 +11283,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NotificationTopbarButtonData]",x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
-		this.SignalServiceEndpoint(menuRequest);
+		this.E_SignalServiceEndpoint(menuRequest);
 		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams(trackingParams);
 		this.Accessibility(accessibility);
 		this.primitive_of(tooltip,"string");
-		this.SignalServiceEndpoint(updateUnseenCountEndpoint);
+		this.E_SignalServiceEndpoint(updateUnseenCountEndpoint);
 		this.primitive_of(notificationCount,"number");
 		if(!this.eq_keys(handlerDatas,["NOTIFICATION_ACTION_UPDATE_UNSEEN_COUNT"])) {
 			debugger;
