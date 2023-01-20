@@ -3415,9 +3415,16 @@ class GFeedbackService extends BaseService {
 	get handle_types() {
 		return this.x.get("handle_types");
 	}
+	/** @type {string[]} */
+	seen_e_param=[];
+	has_new_e_param=false;
 	/** @private @arg {Extract<ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
 	parse_e_param(param) {
-		return param.value.split(",").map(e => parseInt(e,10));
+		if(this.seen_e_param.includes(param.value)) return;
+		this.seen_e_param.push(param.value);
+		let inner=param.value.split(",").map(e => parseInt(e,10));
+		this.data.e=inner;
+		this.has_new_e_param=true;
 	}
 	/** @public @arg {ServiceContextStore} data_target @arg {NonNullable<ServiceContextStore["context"]>} x */
 	on_context_param(data_target,x) {
@@ -3437,13 +3444,12 @@ class GFeedbackService extends BaseService {
 	}
 	/** @public @arg {GFeedbackServiceParamsType} params */
 	on_params(params) {
-		let parsed_e=null;
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
 				case "browse_id": this.parser.parse_browse_id(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
-				case "e": parsed_e=this.data.e=this.parse_e_param(param); break;
+				case "e": this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
 				case "has_unlimited_entitlement": break;
 				case "ipcc": break;
@@ -3465,7 +3471,7 @@ class GFeedbackService extends BaseService {
 				} break;
 				default: console.log("[param_key]",param); debugger;
 			}
-			if(parsed_e) this.maybe_new_e();
+			this.maybe_new_e();
 		}
 	}
 	/** @private @arg {GFeedbackServiceRouteParam} x */
@@ -3483,6 +3489,7 @@ class GFeedbackService extends BaseService {
 	}
 	maybe_new_e() {
 		if(!this.data.e) return;
+		if(!this.has_new_e_param) return;
 		this.x.get("e_catcher_service").iterate_fexp(this.data.e);
 	}
 }
