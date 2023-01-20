@@ -2571,7 +2571,7 @@ class BaseService extends BaseServicePrivate {
 	_2_str_ends_with(x,v) {
 		return x.endsWith(v);
 	}
-	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is Extract<T,`${U}${string}`>} */
+	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
 	str_starts_with(x,v) {
 		return x.startsWith(v);
 	}
@@ -5467,6 +5467,37 @@ case "${path_parts[idx-1]}": {
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
 			default: gd(1); break;
+			case "createBackstagePost": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "param": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f1": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") {
+										if(this.str_starts_with(tv,"UC")) {
+											return this.parse_channel_id(tv);
+										}
+										debugger;
+										return;
+									}
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+						}
+					} break;
+				}
+			} break;
 			case "tracking": {
 				const idx=2;
 				switch(path_parts[1]) {
@@ -6448,6 +6479,9 @@ case "${path_parts[idx-1]}": {
 			console.log("[target_id.browse_feed","browse-feed",split_string_once("browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
+		if(this.str_starts_with(x,"comment-replies-item")) {
+			return this.save_enum("comment-replies-item",x);
+		}
 		if(this.str_starts_with(x,"engagement-panel")) {
 			return this.save_enum("engagement-panel",x);
 		}
@@ -6743,7 +6777,10 @@ case "${path_parts[idx-1]}": {
 	/** @public @arg {string} x @returns {BrowseIdType|null} */
 	decode_browse_id(x) {
 		if(this.str_starts_with(x,"FE")) {
-			return x;
+			switch(x) {
+				case "FEwhat_to_watch": return x;
+				default: debugger; return null;
+			}
 		}
 		return null;
 	}
@@ -7116,10 +7153,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {{}} U @template {EndpointTemplate<U>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	EndpointTemplate(x,f) {
-		this.save_keys("[ServiceEndpointTemplate]",x);
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
+		this.save_keys("[ServiceEndpointTemplate]",y);
 		f.call(this,y);
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
