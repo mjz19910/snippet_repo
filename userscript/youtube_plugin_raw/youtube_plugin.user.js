@@ -4676,7 +4676,6 @@ class CodegenService extends BaseService {
 		if(hg) return g();
 		if(b.webCommandMetadata) return "TYPE::CommandMetadata";
 		if(b.accessibilityData) return "TYPE::Accessibility";
-		debugger;
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
 	}
