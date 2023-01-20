@@ -6835,7 +6835,8 @@ case "${path_parts[idx-1]}": {
 		if(this.str_starts_with(x,"FE")) {
 			switch(x) {
 				case "FEwhat_to_watch": return x;
-				default: debugger; return null;
+				case "FEexplore": return x;
+				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}: return x;`);debugger; return null;
 			}
 		}
 		return null;
