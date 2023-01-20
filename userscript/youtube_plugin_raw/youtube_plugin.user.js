@@ -5008,10 +5008,8 @@ case "${path}": {
 				console.log(`
 case "${path_parts[0]}": switch(path_parts[${idx}]) {
 	default: {
-		let idx=${idx+1};
 		console.log("in",path_parts[${idx-1}]);
-		console.log(\`
-case "\${path_parts[${idx}]}":\`);
+		gen_next_part(${idx+1});
 		debugger;
 	} path_parts[${idx}]===""; break;
 }`);
@@ -5048,7 +5046,8 @@ case "\${path_parts[${idx}]}": return;\`);
 							console.log(`
 case "${path_parts[2]}": return;`);
 							debugger;
-						} break;
+						} path_parts[1]===""; break;
+						case "f84": path_parts[3]===""; return;
 					} break;
 				} break;
 				case "watch": switch(path_parts[1]) {
