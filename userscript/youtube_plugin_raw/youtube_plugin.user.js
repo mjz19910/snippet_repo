@@ -5477,7 +5477,18 @@ case "${path_parts[idx-1]}": {
 				}
 				switch(path_parts[1]) {
 					default: gd(idx); path_parts[1]===""; break;
-					case "f5": gd(idx); break;
+					case "f5": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {
+								case 1: return;
+								default: debugger; return;
+							}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+						}
+					} break;
 					case "f4": {
 						const idx=3;
 						if(path_parts.length===2) {
