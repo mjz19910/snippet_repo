@@ -4,6 +4,7 @@ type PathRoot=
 	|"create_playlist.params"
 	|"get_transcript.params"
 	|"playlist_edit.params"
+	|"record_notification_interactions.f2.f14.f1.f1"
 	|"record_notification_interactions.f2.f14.f1"
 	|"record_notification_interactions.f2.f14"
 	|"record_notification_interactions.f2.f1"
