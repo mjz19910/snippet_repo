@@ -4843,12 +4843,12 @@ class ParserService extends BaseService {
 		if(idx>-1) mk.splice(idx,1);
 	}
 	/** @typedef {(x:ParamMapValue,idx:number)=>void} ParseCallbackFunction */
-	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 	parse_key(root,path,x,mk,ta,cb) {
 		let tv=x.get(ta);
 		this.parse_value(root,path,x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
 		if(tv!==void 0) {
 			x.delete(ta);
@@ -5007,7 +5007,7 @@ case "${path_parts[2]}": return;`);
 			debugger;
 		}
 	}
-	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5040,7 +5040,7 @@ case "${path_parts[2]}": return;`);
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
 	parse_endpoint_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
