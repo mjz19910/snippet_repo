@@ -10415,6 +10415,7 @@ class HandleTypes extends ServiceMethods {
 			case "HISTORY_FORWARD": break;
 			case "SKIP_NAVIGATION": break;
 			case "TOGGLE_TRANSCRIPT_TIMESTAMPS": break;
+			case "HELP": break;
 		}
 	}
 	/** @arg {GuideEntryRenderer} x */
@@ -10423,7 +10424,7 @@ class HandleTypes extends ServiceMethods {
 		const {guideEntryRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideEntryRoot(guideEntryRenderer);
 	}
-	/** @arg {Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']} x */
+	/** @arg {NonNullable<Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']>} x */
 	GuideEntryRoot_ser(x) {
 		if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
@@ -10433,13 +10434,20 @@ class HandleTypes extends ServiceMethods {
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
 		if("serviceEndpoint" in x) {
-			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,isPrimary,...y}=x; this.g(y);
+			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,...y}=x;
 			this.Icon(icon);
 			this.trackingParams(trackingParams);
 			this.SimpleText(formattedTitle);
 			this.Accessibility(accessibility);
 			this.GuideEntryRoot_ser(serviceEndpoint);
-			if(isPrimary!==true) debugger;
+			if("isPrimary" in y) {
+				const {isPrimary,...y1}=y;
+				if(isPrimary!==true) debugger;
+				this.g(y1);
+				return;
+			}
+			this.g(y);
+			return;
 			return;
 		}
 		if("icon" in x) {

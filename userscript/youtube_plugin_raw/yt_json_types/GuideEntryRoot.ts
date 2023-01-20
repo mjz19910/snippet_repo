@@ -27,4 +27,10 @@ type GuideEntryRoot={
 	accessibility: Accessibility;
 	serviceEndpoint: E_SignalServiceEndpoint|E_ReelWatchEndpoint;
 	isPrimary: true;
+}|{
+	icon: Icon<"HELP">;
+	trackingParams: string;
+	formattedTitle: SimpleText;
+	accessibility: Accessibility;
+	serviceEndpoint: E_SignalServiceEndpoint;
 };
