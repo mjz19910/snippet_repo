@@ -5534,6 +5534,7 @@ case "${path_parts[2]}": return;`);
 		switch(x) {
 			case "guide_builder": return true;
 			case "history": return true;
+			case "explore": return true;
 			case "library": return true;
 			case "storefront": return true;
 			case "subscriptions": return true;

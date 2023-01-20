@@ -1,5 +1,6 @@
 type BrowseEndpointPages=
 	|SplitOnce<Split<VE6827_PageUrl,"/">[2],"?">[0]
+	|"explore"
 	|"music_charts"
 	|"music_explore"
 	|"music_home"
