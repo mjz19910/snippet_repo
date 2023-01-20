@@ -1,19 +1,20 @@
 type unknown$param=[
-	"browse.params"|
-	"get_transcript.params"|
-	"playlist_edit.params"|
-	"reel.sequence_params"|
-	"report.params"|
-	"watch_page_url.pp"|
-	"watch_playlist.params"|
-	"ypc_get_offers.params",
+	"browse.params",
+	"click.trackingParams",
 	"createBackstagePost.param",
 	"entity_key",
-	"like.remove_like_params",
-	"tracking.trackingParams.f1",
+	"get_transcript.params",
 	"like.likeParams",
-	"tracking.parentTrackingParams",
-	"tracking.trackingParams",
+	"like.remove_like_params",
 	"next.queue_context_params",
+	"playlist_edit.params",
+	"reel.sequence_params",
+	"report.params",
 	"subscribe.params",
+	"tracking.parentTrackingParams",
+	"tracking.trackingParams.f1",
+	"tracking.trackingParams",
+	"watch_page_url.pp",
+	"watch_playlist.params",
+	"ypc_get_offers.params",
 ][number];

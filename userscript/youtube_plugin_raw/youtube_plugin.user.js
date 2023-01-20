@@ -7187,9 +7187,9 @@ class ServiceMethods extends ServiceData {
 	codegen_new_typedef(x,gen_name,ret_val) {
 		return this.codegen.codegen_new_typedef(x,gen_name,ret_val);
 	}
-	/** @public @arg {string} x */
-	clickTrackingParams(x) {
-		this.primitive_of(x,"string");
+	/** @public @arg {string} cf @arg {string} x */
+	clickTrackingParams(cf,x) {
+		this.params(cf,"click.trackingParams",x);
 	}
 	/** @type {string[]} */
 	known_target_id=[];
