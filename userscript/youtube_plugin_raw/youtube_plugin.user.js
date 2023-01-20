@@ -7795,11 +7795,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AE_Browse} x */
 	AE_Browse(x) {
-		const cf="BrowseEndpointData";
-		this.save_keys("[BrowseEndpointData]",x);
+		const cf="AE_Browse";
+		this.save_keys("[AE_Browse]",x);
 		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y); // ! #destructure
 		this.t(browseId,this.browseId);
-		this.t(params,a => this.params("CommonConfigData","create_playlist.params",a));
+		this.t(params,a => this.params(cf,"browse.params",a));
 		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
 	}
 	/** @arg {YTNavigateFinishDetail} x */
@@ -12307,8 +12307,17 @@ class HandleTypes extends ServiceMethods {
 		this.SubscriptionNotificationToggleButtonRenderer(notificationPreferenceButton);
 		this.primitive_of(targetId,"string");
 		this.primitive_of(subscribedEntityKey,"string");
-		this.z(onSubscribeEndpoints,this.g);
-		this.z(onUnsubscribeEndpoints,this.g);
+		this.z(onSubscribeEndpoints,this.E_SubscribeEndpoint);
+		this.z(onUnsubscribeEndpoints,this.E_SignalServiceEndpoint);
+	}
+	/** @arg {E_SubscribeEndpoint} x */
+	E_SubscribeEndpoint(x) {
+		const cf="SubscribeEndpoint";
+		this.save_keys(`[E_${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,subscribeEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.t(clickTrackingParams,this.clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.params(cf,"subscribe.params",subscribeEndpoint.params);
 	}
 	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {

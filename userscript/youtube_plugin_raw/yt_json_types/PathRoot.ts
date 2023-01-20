@@ -13,46 +13,20 @@ type LogItems=[
 	"[parse_value.gen_ns] [watch.params.f13]",
 	"[parse_value.gen_ns] [watch.params.f27]",
 ][number];
-type PathRoot=
-	|"create_playlist.params.f84.f5"
-	|"create_playlist.params.f84"
-	|"create_playlist.params"
-	|"get_transcript.params"
-	|"playlist_edit.params"
-	|"record_notification_interactions.f2.f1"
-	|"record_notification_interactions.f2.f14.f1.f1"
-	|"record_notification_interactions.f2.f14.f1.f2"
-	|"record_notification_interactions.f2.f14.f1"
-	|"record_notification_interactions.f2.f14.f2"
-	|"record_notification_interactions.f2.f14"
-	|"record_notification_interactions.f2"
-	|"record_notification_interactions.f5"
-	|"record_notification_interactions"
-	|"reel.player_params.f30"
-	|"reel.player_params"
-	|"reel.sequence_params"
-	|"report.params"
-	|"watch_page_url.pp"
-	|"watch_playlist.params"
-	|"watch.params.f2"
-	|"watch.params.f24"
-	|"watch.params.f27.f1"
-	|"watch.params.f3"
-	|"watch.params.f33.f2"
-	|"watch.params.f33.f3"
-	|"watch.params.f33.f4"
-	|"watch.params.f33.f5"
-	|"watch.params.f33"
-	|"watch.params"
-	|"watch.player_params.f40.f1.f2"
-	|"watch.player_params.f40.f1.f3"
-	|"watch.player_params.f40.f1"
-	|"watch.player_params.f40"
-	|"watch.player_params.f8"
-	|"watch.player_params.f9"
-	|"watch.player_params"
-	|"ypc_get_offers.params"
-	|SplitOnce<SplitOnce<Split<LogItems," ">[1],"[">[1],"]">[0]
-	;
-;
-
+type PathRoot=[
+	"subscribe.params",
+	unknown$param,
+	create_playlist$param,
+	reel$player_param,
+	record_notification_interactions$param,
+	watch$param,
+	watch$player_param,
+	report$param,
+	get_transcript$param,
+][number];
+type category$param=SplitOnce<SplitOnce<Split<LogItems," ">[1],"[">[1],"]">[0];
+type only_param$extract=Extract<category$param,`${string}.params.${string}`>;
+type wp_param_ex=Extract<only_param$extract,`watch.params.${string}`>;
+type report$param=Extract<only_param$extract,`report.params.${string}`>;
+type get_transcript$param=Extract<only_param$extract,`get_transcript.params.${string}`>;
+type $U=Split<Exclude<category$param,wp_param_ex|report$param|get_transcript$param>,".">[0];

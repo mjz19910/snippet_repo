@@ -1,5 +1,6 @@
 type ParamsSection=
-	|"BrowseEndpointData"
+	|"SubscribeEndpoint"
+	|"AE_Browse"
 	|"CommonConfigData"
 	|"CreatePlaylist"
 	|"GeneratedWCM"

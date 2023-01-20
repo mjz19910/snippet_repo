@@ -15,6 +15,6 @@ type SubscribeButtonData={
 	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
-	onSubscribeEndpoints: {}[];
+	onSubscribeEndpoints: E_SubscribeEndpoint[];
 	onUnsubscribeEndpoints: E_SignalServiceEndpoint[];
 };
