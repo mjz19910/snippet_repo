@@ -5200,6 +5200,8 @@ case "${path}": {
 					case "entity_key": {
 						switch(ta) {
 							case 2: break;
+							case 4: break;
+							case 5: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
@@ -5475,6 +5477,8 @@ case "${path_parts[idx-1]}": {
 				}
 				switch(path_parts[1]) {
 					default: gd(idx); path_parts[1]===""; break;
+					case "f5": gd(idx); break;
+					case "f4": gd(idx); break;
 					case "f2": {
 						const idx=3;
 						if(path_parts.length===2) {
