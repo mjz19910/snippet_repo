@@ -1,11 +1,6 @@
 type HotkeyDialog={
 	title: TextWithRuns;
-	sections: {
-		hotkeyDialogSectionRenderer: {
-			title: TextWithRuns;
-			options: {}[];
-		};
-	}[];
+	sections: HotkeyDialogSectionRenderer[];
 	dismissButton: ButtonRenderer;
 	trackingParams: string;
 };

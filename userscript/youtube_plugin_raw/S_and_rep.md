@@ -42,3 +42,6 @@ this.t($1,this.$2)
 ```regexp
 		(\w+);
 ```
+```regexp
+^\s\s((?!return|debugger|break)\w+);
+```

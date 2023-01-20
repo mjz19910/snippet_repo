@@ -27,16 +27,20 @@ type HeatmapRenderer={
 	};
 };
 
-type DescriptionChaptersItem=MapTemplate<"DESCRIPTION_CHAPTERS",{
+type DescriptionChapters={
 	chapters: ChapterRenderer[];
 	trackingParams: string;
 	onChapterRepeat: OpenPopupAction;
-}>;
+};
 
-type HeatSeekerItem=MapTemplate<"HEATSEEKER",{
+type DescriptionChaptersItem=MapTemplate<"DESCRIPTION_CHAPTERS",DescriptionChapters>;
+
+type HeatSeekerItemData={
 	trackingParams: string;
 	heatmap: HeatmapRenderer;
-}>;
+};
+
+type HeatSeekerItem=MapTemplate<"HEATSEEKER",HeatSeekerItemData>;
 
 type MultiMarkersPlayerBar={
 	visibleOnLoad: KeyTemplate<"DESCRIPTION_CHAPTERS">;

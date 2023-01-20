@@ -1,0 +1,3 @@
+type ProductListItemRenderer={
+	productListItemRenderer: ProductListItem;
+};

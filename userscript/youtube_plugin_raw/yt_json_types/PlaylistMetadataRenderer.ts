@@ -1,7 +1,9 @@
+type PlaylistMetadata={
+	title: string;
+	androidAppindexingLink: string;
+	iosAppindexingLink: string;
+};
+
 type PlaylistMetadataRenderer={
-	playlistMetadataRenderer: {
-		title: string;
-		androidAppindexingLink: string;
-		iosAppindexingLink: string;
-	};
+	playlistMetadataRenderer: PlaylistMetadata;
 };
