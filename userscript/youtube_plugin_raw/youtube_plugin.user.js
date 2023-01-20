@@ -10151,6 +10151,7 @@ class HandleTypes extends ServiceMethods {
 					return;
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
+				/** @arg {GeneratedWebCommandMetadata} x */
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
 				debugger;
 			} break;
