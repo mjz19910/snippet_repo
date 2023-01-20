@@ -1,1 +1,0 @@
-type SearchEndpointPlugin={searchEndpoint: AE_Search;};

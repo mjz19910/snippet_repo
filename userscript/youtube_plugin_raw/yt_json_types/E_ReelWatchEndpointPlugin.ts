@@ -1,1 +1,0 @@
-type E_ReelWatchEndpointPlugin={reelWatchEndpoint: AE_ReelWatch;};
