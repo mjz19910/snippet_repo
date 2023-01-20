@@ -5157,6 +5157,7 @@ case "${path_parts[idx-1]}": {
 												const idx=6;
 												if(path_parts.length===5) {
 													switch(tv) {
+														case 6: return;
 														case 8: return;
 														default: debugger; return;
 													}
