@@ -776,11 +776,12 @@ class Base64Binary {
 		if(!decoded) return null;
 		return byte_arr;
 	}
+	decoder=new TextDecoder();
 	/** @public @arg {string} input */
 	decode_str(input) {
 		let y=this.decodeByteArray(input);
 		if(!y) return null;
-		return decoder.decode(y);
+		return this.decoder.decode(y);
 	}
 	/** @private @arg {string} input @arg {Uint8Array} binary_arr */
 	decode(input,binary_arr) {
@@ -2515,6 +2516,7 @@ class BaseService extends BaseServicePrivate {
 						ret_map.set(param[1],p_map);
 						break;
 					}
+					let decoder=new TextDecoder();
 					ret_map.set(param[1],decoder.decode(param[2]));
 				} break;
 				case "data64": ret_map.set(param[1],param[2]); break;
@@ -3791,7 +3793,6 @@ class ModifyEnv extends BaseService {
 }
 //#endregion Service
 //#region YtPlugin
-const decoder=new TextDecoder();
 /** @extends {BaseService<Services,ServiceOptions>} */
 class YtPlugin extends BaseService {
 	/** @private @type {[string,{name: string;}][]} */
@@ -11046,9 +11047,13 @@ class HandleTypes extends ServiceMethods {
 		const {style,text,navigationEndpoint,trackingParams,isSelected}=x; //...y}=x; this.g(y); //#destructure
 		this.ChipCloudStyle(style);
 		this.TextT(text);
-		this.t(navigationEndpoint,this.RelatedChipCommand);
+		this.t(navigationEndpoint,x => {
+			if("relatedChipCommand" in x) return this.RelatedChipCommand(x);
+			if("continuationCommand" in x) return this.ContinuationCommand(x);
+			debugger;
+		});
 		this.trackingParams(trackingParams);
-		this.primitive_of(isSelected,"boolean");
+		this.t(isSelected,a => this.primitive_of(a,"boolean"));
 	}
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {

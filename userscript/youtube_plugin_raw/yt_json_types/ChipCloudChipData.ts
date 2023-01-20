@@ -1,7 +1,7 @@
 type ChipCloudChipData={
 	style: ChipCloudStyle;
 	text: TextT;
-	navigationEndpoint?: RelatedChipCommand;
+	navigationEndpoint?: ContinuationCommand|RelatedChipCommand;
 	trackingParams: string;
-	isSelected: true;
+	isSelected?: true;
 };
