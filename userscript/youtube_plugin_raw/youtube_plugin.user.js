@@ -10330,7 +10330,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
 		if(!("runs" in x)) {debugger; return;}
-		const cf="TextWithRuns";
+		const cf/*!*/="TextWithRuns";
 		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y); // ! #destructure
 		this.z(runs,a => this.TextRun(a,f_run));
