@@ -5429,7 +5429,7 @@ case "${path}": {
 							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;\n\t\t\tdefault: debugger; return;\n\t\t}`;
 						}
 					} break;
-					case "string": case_part=`\n\t\tif(typeof tv==="string") return console.log("[param_parse]",path,tv);`; break;
+					case "string": case_part=`\n\t\tif(typeof tv==="string") return this.save_string(\`[\${path}]\`,tv);`; break;
 				}
 			}
 			console.log(`
@@ -5467,7 +5467,7 @@ case "${path_parts[idx-1]}": {
 							case "f6": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
@@ -5538,24 +5538,8 @@ case "${path_parts[idx-1]}": {
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 									switch(tv) {
-										case 4167: return;
-										case 4168: return;
-										case 5531: return;
-										case 6075: return;
-										case 7238: return;
-										case 7393: return;
-										case 9723: return;
-										case 11760: return;
-										case 21964: return;
-										case 21965: return;
-										case 153108: return;
-										case 7377: return;
-										case 13187: return;
-										case 10045: return;
-										case 11898: return;
-										case 12558: return;
-										case 19301: return;
 										default: console.log("trackingParams.f2"); console.log(`\ncase ${JSON.stringify(tv)}: return;`); return;
 									}
 								}
@@ -5594,7 +5578,7 @@ case "${path_parts[idx-1]}": {
 							case "f4": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
@@ -5672,7 +5656,7 @@ case "${path_parts[idx-1]}": {
 											case "f2": {
 												const idx=6;
 												if(path_parts.length===5) {
-													if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+													if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 													switch(tv) {default: debugger; return;}
 												}
 												switch(path_parts[5]) {
@@ -5723,7 +5707,7 @@ case "${path_parts[idx-1]}": {
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
-									if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
@@ -5883,7 +5867,7 @@ case "${path_parts[idx-1]}": {
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										console.log("in",path_parts[2]);
@@ -6061,7 +6045,7 @@ case "${path_parts[idx-1]}": {
 						case "f12": {
 							const idx=4;
 							if(path_parts.length===3) {
-								if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+								if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 								switch(tv) {default: debugger; return;}
 							}
 							switch(path_parts[3]) {
@@ -6168,10 +6152,7 @@ case "${path_parts[idx-1]}": {
 								case "f2": {
 									const idx=4;
 									if(path_parts.length===idx) {
-										if(typeof tv==="string") {
-											console.log(path,tv);
-											return;
-										}
+										if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 										switch(tv) {default: debugger; return;}
 									}
 									gen_next_part(idx);
@@ -9825,6 +9806,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ButtonRenderer} x */
 	ButtonRenderer(x) {
+		if(!x) {debugger; return;}
 		this.save_keys("[ButtonRenderer]",x);
 		const {buttonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ButtonData(buttonRenderer);
