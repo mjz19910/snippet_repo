@@ -7725,8 +7725,9 @@ class HandleTypes extends ServiceMethods {
 	E$Signal_ClientSignal(x) {
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="CLIENT_SIGNAL") debugger;
-		this.z(actions,a => {
-			a;
+		this.z(actions,x => {
+			if("signalAction" in x) return this.SignalAction(x);
+			if("openPopupAction" in x) return this.OpenPopupAction(x);
 			debugger;
 		});
 	}
