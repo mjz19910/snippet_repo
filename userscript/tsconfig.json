@@ -32,7 +32,7 @@
 		"esm": true,
 	},
 	"include": [
-		"**/*", "youtube_plugin_raw/.ts",
+		"**/*",
 	],
 	"exclude": [
 		"node_modules",
