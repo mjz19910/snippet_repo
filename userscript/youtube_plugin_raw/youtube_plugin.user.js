@@ -6036,10 +6036,7 @@ case "${path_parts[idx-1]}": {
 					case "f1": {
 						const idx=4;
 						if(path_parts.length===3) {
-							switch(tv) {
-								case 15: return;
-								default: debugger; return;
-							}
+							return this.player_f71(key_index,this.join_string(path_parts,"."),tv);
 						}
 						switch(path_parts[3]) {
 							default: u(idx); path_parts[3]===""; break;
@@ -6065,11 +6062,7 @@ case "${path_parts[idx-1]}": {
 							case "f71": {
 								const idx=4;
 								if(path_parts.length===3) {
-									switch(tv) {
-										case 12: return;
-										case 15: return;
-										default: console.log(`-- [player_f71] --\n\n\ncase ${tv}: return;`); return;
-									}
+									return this.player_f71(key_index,this.join_string(path_parts,"."),tv);
 								}
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
@@ -6443,6 +6436,15 @@ case "${path_parts[idx-1]}": {
 			}
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
+	}
+	/** @arg {number} key_index @arg {PathRoot} p @arg {ParamMapValue} x */
+	player_f71(key_index,p,x) {
+		console.log(`[${p}] [idx=${key_index}]`,x);
+		switch(x) {
+			case 12: return;
+			case 15: return;
+			default: console.log(`-- [player_f71] --\n\n\ncase ${x}: return;`); return;
+		}
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
