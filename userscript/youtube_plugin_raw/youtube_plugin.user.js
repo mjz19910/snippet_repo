@@ -5079,13 +5079,13 @@ case "${path_parts[idx-1]}": {
 			} break;
 			case "watch": switch(path_parts[1]) {
 				default: {
-					let idx=2;
+					const idx=2;
 					console.log("in",path_parts[0]);
 					gen_next_part(idx);
 					debugger;
 				} path_parts[1]===""; break;
 				case "params": {
-					let idx=3;
+					const idx=3;
 					if(path_parts.length===idx) {
 						switch(tv) {default: debugger; break;}
 						return;
