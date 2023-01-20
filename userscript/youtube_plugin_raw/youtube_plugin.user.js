@@ -2151,7 +2151,6 @@ class KnownDataSaver extends ApiBase {
 		if(x instanceof Array) return this.save_string(`[${ki}.type]`,"array");
 		let keys=this.get_keys_of(x);
 		let ret=this.save_string(k,keys.join());
-		if(ret&&"actions" in x) debugger;
 		return ret;
 	}
 	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
