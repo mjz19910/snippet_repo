@@ -4665,7 +4665,7 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	on_endpoint_params(for_,path,x) {
-		if(x===void 0){debugger; return;}
+		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
@@ -4870,14 +4870,14 @@ case "${path_parts[0]}":`);
 				} break;
 				case "watch": switch(path_parts[1]) {
 					default: {
-						console.log("in", path_parts[0]);
+						console.log("in",path_parts[0]);
 						console.log(`
 case "${path_parts[1]}":`);
 						debugger;
 					} break;
 					case "player_params": switch(path_parts[2]) {
 						default: {
-							console.log("in", path_parts[1]);
+							console.log("in",path_parts[1]);
 							console.log(`
 case "${path_parts[2]}": return;`);
 							debugger;
@@ -4887,7 +4887,7 @@ case "${path_parts[2]}": return;`);
 					} break;
 					case "params": switch(path_parts[2]) {
 						default: {
-							console.log("in", path_parts[1]);
+							console.log("in",path_parts[1]);
 							console.log(`
 case "${path_parts[2]}": return;`);
 							debugger;
@@ -6161,7 +6161,7 @@ class HandleTypes extends ServiceMethods {
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y);
 		this.primitive_of(label,"string");
-		this.z(entries,x=>{
+		this.z(entries,x => {
 			if("privacyDropdownItemRenderer" in x) {
 				return;
 			}
@@ -9597,13 +9597,13 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,createPlaylistServiceEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.CreatePlaylistServiceArgs(createPlaylistServiceEndpoint);
+		this.CreatePlaylistService(createPlaylistServiceEndpoint);
 	}
-	/** @arg {CreatePlaylistServiceArgs} x */
-	CreatePlaylistServiceArgs(x) {
+	/** @arg {CreatePlaylistService} x */
+	CreatePlaylistService(x) {
 		this.save_keys("[CreatePlaylistServiceArgs]",x);
 		const {params,videoIds,...y}=x; this.g(y);
-		this.params("CreatePlaylist","create_playlist.params",params);
+		this.t(params,a => this.params("CreatePlaylist","create_playlist.params",a));
 		this.z(videoIds,this.videoId);
 	}
 	/** @arg {SignalAction} x */
@@ -10794,12 +10794,26 @@ class HandleTypes extends ServiceMethods {
 	minimal_handler_member_1(x) {
 		this.save_keys("[minimal_handler_member]",x);
 	}
-	//#endregion
-	//#region TODO_minimal_member_fns
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
 	PlaylistSidebarPrimaryInfoRenderer(x) {x;}
 	/** @arg {PlaylistMetadataRenderer} x */
 	PlaylistMetadataRenderer(x) {x;}
+	/** @arg {TranscriptRenderer} x */
+	TranscriptRenderer(x) {x;}
+	/** @arg {PivotButtonRenderer} x */
+	PivotButtonRenderer(x) {x;}
+	/** @arg {MetadataBadgeRenderer} x */
+	MetadataBadgeRenderer(x) {x;}
+	/** @arg {LiveChatAuthorBadgeRenderer} x */
+	LiveChatAuthorBadgeRenderer(x) {x;}
+	/** @arg {ChannelHeaderLinksRenderer} x */
+	ChannelHeaderLinksRenderer(x) {x;}
+	/** @arg {ReelPlayerHeaderRenderer} x */
+	ReelPlayerHeaderRenderer(x) {x;}
+	/** @arg {HintRenderer} x */
+	HintRenderer(x) {x;}
+	//#endregion
+	//#region TODO_minimal_member_fns
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {x;}
 	/** @arg {VideoPrimaryInfoData} x */
@@ -10830,16 +10844,10 @@ class HandleTypes extends ServiceMethods {
 	SearchboxConfig(x) {x;}
 	/** @arg {HotkeyDialog} x */
 	HotkeyDialog(x) {x;}
-	/** @arg {TranscriptRenderer} x */
-	TranscriptRenderer(x) {x;}
 	/** @arg {AccountItemData} x */
 	AccountItemData(x) {x;}
 	/** @arg {ExpandableTabData} x */
 	ExpandableTabData(x) {x;}
-	/** @arg {PivotButtonRenderer} x */
-	PivotButtonRenderer(x) {x;}
-	/** @arg {MetadataBadgeRenderer} x */
-	MetadataBadgeRenderer(x) {x;}
 	/** @arg {SubscribeButtonData} x */
 	SubscribeButtonData(x) {x;}
 	/** @arg {BrowseFeedActions} x */
@@ -10852,22 +10860,14 @@ class HandleTypes extends ServiceMethods {
 	CommentData(x) {x;}
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {x;}
-	/** @arg {LiveChatAuthorBadgeRenderer} x */
-	LiveChatAuthorBadgeRenderer(x) {x;}
 	/** @arg {UnifiedSharePanel} x */
 	UnifiedSharePanel(x) {x;}
 	/** @arg {ClipCreationData} x */
 	ClipCreationData(x) {x;}
 	/** @arg {ChannelMetadata} x */
 	ChannelMetadata(x) {x;}
-	/** @arg {ChannelHeaderLinksRenderer} x */
-	ChannelHeaderLinksRenderer(x) {x;}
 	/** @arg {ResetChannelUnreadCountCommand} x */
 	ResetChannelUnreadCountCommand(x) {x;}
-	/** @arg {ReelPlayerHeaderRenderer} x */
-	ReelPlayerHeaderRenderer(x) {x;}
-	/** @arg {HintRenderer} x */
-	HintRenderer(x) {x;}
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
