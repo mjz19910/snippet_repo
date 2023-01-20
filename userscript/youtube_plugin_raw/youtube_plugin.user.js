@@ -4803,6 +4803,7 @@ class ParserService extends BaseService {
 					this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
 				};
 				switch(path) {
+					case "watch.player_params.f40":
 					case "watch.params.f33":
 					case "watch.params.f27":
 					case "watch.player_params":
@@ -4837,11 +4838,10 @@ class ParserService extends BaseService {
 		let mk=[...x.keys()];
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
-		parse_key(1);
-		parse_key(2);
-		parse_key(3);
-		parse_key(5);
-		parse_key(9);
+		for(let i=1;i<12;i++) {
+			if(!mk.includes(i)) continue;
+			parse_key(i);
+		}
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
 		debugger;
