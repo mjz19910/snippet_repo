@@ -5024,7 +5024,7 @@ class ParserService extends BaseService {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	on_endpoint_params(root,path,x) {
 		if(x===void 0) {debugger; return;}
 		x=decodeURIComponent(x);
@@ -5127,7 +5127,7 @@ class ParserService extends BaseService {
 		}
 		this.parse_endpoint_param(root,path,new Map(param_map));
 	}
-	/** @public @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	/** @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	on_player_params(root,path,x) {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
@@ -5138,7 +5138,7 @@ class ParserService extends BaseService {
 	}
 	/** @private @type {string[]} */
 	cache_interaction_requests=[];
-	/** @public @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	/** @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	on_serialized_interactions_request_params(root,path,x) {
 		if(this.cache_interaction_requests.includes(x)) return;
 		this.cache_interaction_requests.push(x);
@@ -5146,7 +5146,7 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		this.parse_serialized_interactions_request(root,path,param_map);
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} map */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} map */
 	parse_serialized_interactions_request(root,path,map) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -5167,12 +5167,12 @@ class ParserService extends BaseService {
 		if(idx>-1) mk.splice(idx,1);
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 	parse_key(root,path,x,mk,ta,cb) {
 		let tv=x.get(ta);
 		this.parse_value(root,path,x,mk,ta,tv,cb);
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue[]|undefined} tv @arg {ParseCallbackFunction|null} cb */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue[]|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
 		/** @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
@@ -5182,17 +5182,17 @@ class ParserService extends BaseService {
 		};
 		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
-			/** @type {LogItems} */
+			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`\ncase ${ta}: break;`);
 			if(tv!==void 0) {
-				/** @type {PathRoot} */
+				/** @type {P$PathRoot} */
 				this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 			}
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_ns]",path);
-			/** @type {LogItems} */
+			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
 case "${path}": {
@@ -5210,7 +5210,7 @@ case "${path}": {
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
-				/** @type {LogItems} */
+				/** @type {P$LogItems} */
 				switch(path) {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
 					case "click.trackingParams":
@@ -5223,7 +5223,7 @@ case "${path}": {
 							case 6: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "browse$param.f84": {
@@ -5231,7 +5231,7 @@ case "${path}": {
 							case 5: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "browse.params": {
@@ -5239,7 +5239,7 @@ case "${path}": {
 							case 84: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`browse$param.f${ta}`,tv);
 					} return;
 					case "createBackstagePost.param": {
@@ -5248,7 +5248,7 @@ case "${path}": {
 							case 2: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "entity_key": {
@@ -5258,7 +5258,7 @@ case "${path}": {
 							case 5: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "tracking.trackingParams.f4": {
@@ -5268,7 +5268,7 @@ case "${path}": {
 							case 3: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "subscribe.params.f2": {
@@ -5276,7 +5276,7 @@ case "${path}": {
 							case 1: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "subscribe.params": {
@@ -5286,7 +5286,7 @@ case "${path}": {
 							case 4: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "report.params.f18.f1": {
@@ -5294,7 +5294,7 @@ case "${path}": {
 							case 2: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "report.params.f18": {
@@ -5302,7 +5302,7 @@ case "${path}": {
 							case 1: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "report.params": {
@@ -5314,7 +5314,7 @@ case "${path}": {
 							case 18: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "watch.params.f27": {
@@ -5322,7 +5322,7 @@ case "${path}": {
 							case 1: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "get_transcript.params": {
@@ -5330,7 +5330,7 @@ case "${path}": {
 							case 1: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "reel.player_params": {
@@ -5339,7 +5339,7 @@ case "${path}": {
 							case 71: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "record_notification_interactions.f2.f14.f1": {
@@ -5348,7 +5348,7 @@ case "${path}": {
 							case 2: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "watch.params": {
@@ -5383,7 +5383,7 @@ case "${path}": {
 							case 1: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "create_playlist.params": {
@@ -5391,7 +5391,7 @@ case "${path}": {
 							case 84: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "record_notification_interactions": {
@@ -5400,7 +5400,7 @@ case "${path}": {
 							case 5: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "create_playlist.params.f84": {
@@ -5408,7 +5408,7 @@ case "${path}": {
 							case 5: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "watch.player_params.f40.f1": {
@@ -5417,7 +5417,7 @@ case "${path}": {
 							case 3: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "record_notification_interactions.f2": {
@@ -5426,7 +5426,7 @@ case "${path}": {
 							case 14: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 					case "record_notification_interactions.f2.f14": {
@@ -5435,7 +5435,7 @@ case "${path}": {
 							case 2: break;
 							default: return new_ns();
 						}
-						/** @type {PathRoot} */
+						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
 				}
@@ -5468,7 +5468,7 @@ case "${path}": {
 			return xx;
 		}
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue[]} tv */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv */
 	parse_param_next(root,path,[tv,...tr]) {
 		if(tr.length>0) {
 			console.log("param_next.list",root,path,tr[0]);
@@ -6470,7 +6470,7 @@ case "${path_parts[idx-1]}": {
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
 	}
-	/** @arg {number} key_index @arg {PathRoot} p @arg {ParamMapValue} x */
+	/** @arg {number} key_index @arg {P$PathRoot} p @arg {ParamMapValue} x */
 	player_f71(key_index,p,x) {
 		console.log(`[${p}] [idx=${key_index}]`,x);
 		switch(x) {
@@ -6479,7 +6479,7 @@ case "${path_parts[idx-1]}": {
 			default: console.log(`-- [player_f71] --\n\n\ncase ${x}: return;`); return;
 		}
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -6495,7 +6495,7 @@ case "${path_parts[idx-1]}": {
 		console.log(`[new.${path}] [idx=${key_index}]`,path,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
 	parse_player_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -6513,7 +6513,7 @@ case "${path_parts[idx-1]}": {
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(x));
 		debugger;
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
 	parse_endpoint_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
@@ -7307,7 +7307,7 @@ class ServiceMethods extends ServiceData {
 		this.primitive_of(x,"string");
 		this.x.get("indexed_db").put({v: x});
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	params(root,path,x) {
 		this.parser.on_endpoint_params(root,path,x);
 	}
@@ -7357,7 +7357,7 @@ class ServiceMethods extends ServiceData {
 	starts_with_targetId(x,w) {
 		return this.str_starts_with(x.targetId,w);
 	}
-	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {string} x */
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}

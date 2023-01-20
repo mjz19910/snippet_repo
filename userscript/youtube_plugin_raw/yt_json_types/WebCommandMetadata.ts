@@ -9,7 +9,7 @@ type SettingsWebCommandMetadata=VE23462_WebCommandMetadata;
 
 type WebCommandMetadata=
 	|GeneratedWebCommandMetadata
-	|M$SendPost
+	|M_$SendPost
 	|WebCommandMetadataRVE
 	;
 ;

@@ -1,4 +1,4 @@
-type unknown$param=[
+type P$unknown$param=[
 	"browse.params",
 	"createBackstagePost.param",
 	"entity_key",
@@ -14,4 +14,5 @@ type unknown$param=[
 	"watch_page_url.pp",
 	"watch_playlist.params",
 	"ypc_get_offers.params",
+	Extract<P$category$param,`reel.${string}`>,
 ][number];

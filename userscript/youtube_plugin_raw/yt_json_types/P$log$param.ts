@@ -1,4 +1,4 @@
-type $log$param=[
+type P$log$param=[
 	"[parse_value.gen_ns] [get_transcript.params.f1]",
 	"[parse_value.gen_ns] [reel.player_params.f71]",
 	"[parse_value.gen_ns] [report.params.f11]",
@@ -8,12 +8,4 @@ type $log$param=[
 	"[parse_value.gen_ns] [report.params.f18]",
 	"[parse_value.gen_ns] [report.params.f2]",
 	"[parse_value.gen_ns] [report.params.f8]",
-	"[parse_value.gen_ns] [subscribe.params.f2.f1]",
-	"[parse_value.gen_ns] [subscribe.params.f2]",
-	"[parse_value.gen_ns] [subscribe.params.f3]",
-	"[parse_value.gen_ns] [subscribe.params.f4]",
-	"[parse_value.gen_ns] [watch.params.f12]",
-	"[parse_value.gen_ns] [watch.params.f13]",
-	"[parse_value.gen_ns] [watch.params.f27]",
-	"[parse_value.gen_ns] [watch.params.f7]",
 ];

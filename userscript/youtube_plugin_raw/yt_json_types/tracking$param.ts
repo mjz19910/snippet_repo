@@ -1,4 +1,4 @@
-type tracking$param<T extends string>=[
+type P$tracking$param<T extends string>=[
 	`${T}.trackingParams.f1`,
 	`${T}.trackingParams.f2`,
 	`${T}.trackingParams.f3`,
