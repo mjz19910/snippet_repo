@@ -5994,7 +5994,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[FrameworkUpdates]",x);
 		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y);
 		this.EntityBatchUpdateData(entityBatchUpdate);
-		if(elementUpdate) this.ElementUpdate(elementUpdate);
+		this.t(elementUpdate,this.ElementUpdate)
 	}
 	/** @arg {CinematicContainerRenderer} x */
 	CinematicContainerRenderer(x) {
@@ -6048,12 +6048,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ResponseContext]",x);
 		const service_tracking=this.x.get("service_tracking");
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=x; this.g(y);
-		if(mainAppWebResponseContext) this.MainAppWebResponseContext(mainAppWebResponseContext);
+		this.t(mainAppWebResponseContext,this.MainAppWebResponseContext)
 		this.z(serviceTrackingParams,a => service_tracking.set_service_params(a));
-		if(webResponseContextExtensionData) this.WebResponseContextExtensionData(webResponseContextExtensionData);
-		if(consistencyTokenJar) this.ConsistencyTokenJar(consistencyTokenJar);
+		this.t(webResponseContextExtensionData,this.WebResponseContextExtensionData)
+		this.t(consistencyTokenJar,this.ConsistencyTokenJar)
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
-		if(stateTags) this.RelevantStateTags(stateTags);
+		this.t(stateTags,this.RelevantStateTags)
 	}
 	/** @arg {RelevantStateTags} x */
 	RelevantStateTags(x) {
@@ -6076,8 +6076,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {hasDecorated,ytConfigData,webPrefetchData,...y}=x; this.g(y);
 		if(hasDecorated!==void 0) this.primitive_of(hasDecorated,"boolean");
-		if(ytConfigData) this.YtConfigData(ytConfigData);
-		if(webPrefetchData) this.WebPrefetchData(webPrefetchData);
+		this.t(ytConfigData,this.YtConfigData)
+		this.t(webPrefetchData,this.WebPrefetchData)
 	}
 	/** @arg {YtConfigData} x */
 	YtConfigData(x) {
@@ -6126,23 +6126,23 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext,header,trackingParams,onResponseReceivedActions,contents,...y1}=x;
 		this.ResponseContext(responseContext);
-		if(header) this.BrowseHeader(header);
+		this.t(header,this.BrowseHeader)
 		this.trackingParams(trackingParams);
 		if(onResponseReceivedActions) this.z(onResponseReceivedActions,a => this.ResponseReceivedAction(a));
-		if(contents) this.BrowseContents(contents);
+		this.t(contents,this.BrowseContents)
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
-		if(topbar) this.DesktopTopbarRenderer(topbar);
-		if(frameworkUpdates) this.EntityBatchUpdate(frameworkUpdates);
-		if(sidebar) this.BrowseSidebar(sidebar);
+		this.t(topbar,this.DesktopTopbarRenderer)
+		this.t(frameworkUpdates,this.EntityBatchUpdate)
+		this.t(sidebar,this.BrowseSidebar)
 		if(observedStateTags) this.z(observedStateTags,a => this.StateTag(a));
-		if(cacheMetadata) this.CacheMetadata(cacheMetadata);
+		this.t(cacheMetadata,this.CacheMetadata)
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
-		if(metadata) this.BrowseMetadata(metadata);
-		if(microformat) this.MicroformatDataRenderer(microformat);
+		this.t(metadata,this.BrowseMetadata)
+		this.t(microformat,this.MicroformatDataRenderer)
 		if(maxAgeStoreSeconds) this.primitive_of(maxAgeStoreSeconds,"number");
-		if(background) this.MusicThumbnailRenderer(background);
+		this.t(background,this.MusicThumbnailRenderer)
 		const {continuationContents,alerts,...y}=y3; this.g(y);
-		if(continuationContents) this.ContinuationContents(continuationContents);
+		this.t(continuationContents,this.ContinuationContents)
 		if(alerts) this.z(alerts,this.AlertWithButtonRenderer);
 	}
 	/** @arg {NonNullable<BrowseResponse['metadata']>} x */
@@ -6361,8 +6361,8 @@ class HandleTypes extends ServiceMethods {
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.ContinuationEndpointRoot(continuationEndpoint);
-		if(button) this.ButtonRenderer(button);
-		if(ghostCards) this.GhostGridRenderer(ghostCards);
+		this.t(button,this.ButtonRenderer)
+		this.t(ghostCards,this.GhostGridRenderer)
 	}
 	/** @arg {ContinuationEndpointRoot} x */
 	ContinuationEndpointRoot(x) {
@@ -6394,7 +6394,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ContinuationCommand]",x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		if(commandMetadata) this.CommandMetadata(commandMetadata);
+		this.t(commandMetadata,this.CommandMetadata)
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {ContinuationCommandData} x */
@@ -6446,7 +6446,7 @@ class HandleTypes extends ServiceMethods {
 		} else {
 			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}`);
 		}
-		if(header) this.ItemSectionHeaderRenderer(header);
+		this.t(header,this.ItemSectionHeaderRenderer)
 	}
 	/** @arg {ItemSectionHeaderRenderer} x */
 	ItemSectionHeaderRenderer(x) {
@@ -6477,7 +6477,7 @@ class HandleTypes extends ServiceMethods {
 		const {thumbnails,accessibility,isOriginalAspectRatio,...y}=x; this.g(y);
 		this.z(thumbnails,this.ThumbnailItem);
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
-		if(accessibility) this.Accessibility(accessibility);
+		this.t(accessibility,this.Accessibility)
 	}
 	/** @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
@@ -6491,7 +6491,7 @@ class HandleTypes extends ServiceMethods {
 	MicroformatDataRenderer(x) {
 		this.save_keys("[MicroformatDataRenderer]",x);
 		const {microformatDataRenderer,...y}=x; this.g(y);
-		if(microformatDataRenderer) this.MicroformatData(microformatDataRenderer);
+		this.t(microformatDataRenderer,this.MicroformatData)
 	}
 	/** @arg {MicroformatData} x */
 	MicroformatData(x) {
@@ -6535,7 +6535,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[BrowseEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		if(commandMetadata) this.CommandMetadata(commandMetadata);
+		this.t(commandMetadata,this.CommandMetadata)
 		this.BrowseEndpointData(browseEndpoint);
 	}
 	/** @arg {BrowseEndpointData} x */
@@ -6922,7 +6922,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[NotificationActionData]`,x);
 		const {responseText,actionButton,trackingParams,...y}=x; this.g(y);
 		this.TextWithRuns(responseText);
-		if(actionButton) this.ButtonRenderer(actionButton);
+		this.t(actionButton,this.ButtonRenderer)
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {ConfirmDialogRenderer} x */
@@ -7124,9 +7124,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[VideoViewCountData]`,x);
 		const {viewCount,shortViewCount,isLive,extraShortViewCount,...y}=x; this.g(y);
 		this.SimpleText(viewCount);
-		if(shortViewCount) this.SimpleText(shortViewCount);
+		this.t(shortViewCount,this.SimpleText)
 		if(isLive!==void 0) this.primitive_of(isLive,"boolean");
-		if(extraShortViewCount) this.SimpleText(extraShortViewCount);
+		this.t(extraShortViewCount,this.SimpleText)
 	}
 	/** @arg {TimedContinuationData} x */
 	TimedContinuationData(x) {
@@ -7145,10 +7145,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[SearchApiResponse]`,x);
 		if("targetId" in x) return this.SearchResponse(x);
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y);
-		if(contents) this.TabbedSearchResultsRenderer(contents);
-		if(continuationContents) this.ContinuationContents(continuationContents);
+		this.t(contents,this.TabbedSearchResultsRenderer)
+		this.t(continuationContents,this.ContinuationContents)
 		this.trackingParams(trackingParams);
-		if(header) this.MusicHeaderRenderer(header);
+		this.t(header,this.MusicHeaderRenderer)
 	}
 	/** @arg {MusicShelfContinuation} x */
 	MusicShelfContinuation(x) {
@@ -7272,13 +7272,13 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y);
 		this.z(entries,a => this.CommandTemplate(a,this._ReelWatchEndpoint));
 		this.trackingParams(trackingParams);
-		if(continuationEndpoint) this.ContinuationCommand(continuationEndpoint);
+		this.t(continuationEndpoint,this.ContinuationCommand)
 	}
 	/** @arg {ReelWatchEndpoint} x */
 	_ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y);
-		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
+		this.t(clickTrackingParams,this.clickTrackingParams)
 		this.CommandMetadata(commandMetadata);
 		this.ReelWatchEndpointData(reelWatchEndpoint);
 	}
@@ -7287,9 +7287,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="ReelWatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y);
-		if(videoId) this.videoId(videoId);
+		this.t(videoId,this.videoId)
 		this.playerParams("ReelWatch.player","reel.player_params",playerParams);
-		if(thumbnail) this.Thumbnail(thumbnail);
+		this.t(thumbnail,this.Thumbnail)
 		this.ReelPlayerOverlayRenderer(overlay);
 		this.params("ReelWatch","get_transcript.params",params);
 		if(sequenceProvider) this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",sequenceProvider);
@@ -7307,7 +7307,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GetLiveChat]",x);
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=x; this.g(y);
 		this.LiveChatContinuation(a1);
-		if(a2) this.trackingParams(a2);
+		this.t(a2,this.trackingParams)
 	}
 	/** @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {
@@ -7330,17 +7330,17 @@ class HandleTypes extends ServiceMethods {
 			}
 			debugger;
 		});
-		if(actionPanel) this.LiveChatMessageInputRenderer(actionPanel);
-		if(itemList) this.LiveChatItemListRenderer(itemList);
-		if(header) this.LiveChatHeaderRenderer(header);
-		if(ticker) this.LiveChatTickerRenderer(ticker);
-		if(trackingParams) this.trackingParams(trackingParams);
-		if(participantsList) this.LiveChatParticipantsListRenderer(participantsList);
-		if(popoutMessage) this.MessageRenderer(popoutMessage);
+		this.t(actionPanel,this.LiveChatMessageInputRenderer)
+		this.t(itemList,this.LiveChatItemListRenderer)
+		this.t(header,this.LiveChatHeaderRenderer)
+		this.t(ticker,this.LiveChatTickerRenderer)
+		this.t(trackingParams,this.trackingParams)
+		this.t(participantsList,this.LiveChatParticipantsListRenderer)
+		this.t(popoutMessage,this.MessageRenderer)
 		if(emojis) this.z(emojis,a => {
 			this.LiveChatEmoji(a);
 		});
-		if(clientMessages) this.ClientMessages(clientMessages);
+		this.t(clientMessages,this.ClientMessages)
 		if(viewerName) this.primitive_of(viewerName,"string");
 	}
 	/** @arg {LiveChatItemListRenderer} x */
@@ -7377,7 +7377,7 @@ class HandleTypes extends ServiceMethods {
 	AddChatItemAction(x) {
 		this.save_keys("[AddChatItemAction]",x);
 		const {clickTrackingParams,addChatItemAction,...y}=x; this.g(y);
-		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
+		this.t(clickTrackingParams,this.clickTrackingParams)
 		this.AddChatItemActionData(addChatItemAction);
 	}
 	/** @arg {AddChatItemActionData} x */
@@ -7437,7 +7437,7 @@ class HandleTypes extends ServiceMethods {
 		this.InvalidationIdData(invalidationId);
 		if(timeoutMs!==10000) debugger;
 		this.primitive_of(continuation,"string");
-		if(a1) this.clickTrackingParams(a1);
+		this.t(a1,this.clickTrackingParams)
 	}
 	/** @arg {InvalidationIdData} x */
 	InvalidationIdData(x) {
@@ -7462,19 +7462,19 @@ class HandleTypes extends ServiceMethods {
 	NextResponse(x) {
 		this.save_keys("[NextResponse]",x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x;
-		if(contents) this.NextResponseContents(contents);
-		if(currentVideoEndpoint) this.WatchEndpoint(currentVideoEndpoint);
+		this.t(contents,this.NextResponseContents)
+		this.t(currentVideoEndpoint,this.WatchEndpoint)
 		this.trackingParams(trackingParams);
-		if(playerOverlays) this.PlayerOverlayRenderer(playerOverlays);
+		this.t(playerOverlays,this.PlayerOverlayRenderer)
 		if(onResponseReceivedEndpoints) this.z(onResponseReceivedEndpoints,a => {
 			this.save_keys("[NextResponse.response_endpoint]",a);
 			this.ResponseReceivedEndpointItem(a);
 		});
 		if(engagementPanels) this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
 		const {videoReporting,queueContextParams,continuationContents,...y1}=y; this.g(y1);
-		if(videoReporting) this.ReportFormModalRenderer(videoReporting);
+		this.t(videoReporting,this.ReportFormModalRenderer)
 		if(queueContextParams) this.primitive_of(queueContextParams,"string");
-		if(continuationContents) this.PlaylistPanelContinuation(continuationContents);
+		this.t(continuationContents,this.PlaylistPanelContinuation)
 	}
 	/** @arg {NextResponseContents} x */
 	NextResponseContents(x) {
@@ -7535,7 +7535,7 @@ class HandleTypes extends ServiceMethods {
 			this.BrowseEndpoint(endpoint);
 			this.primitive_of(title,"string");
 			if(selected!==void 0&&selected!==true) debugger;
-			if(content) this.TabData_section(content);
+			this.t(content,this.TabData_section)
 			return;
 		}
 		if("tabIdentifier" in x) {
@@ -7576,7 +7576,7 @@ class HandleTypes extends ServiceMethods {
 	MusicQueue(x) {
 		this.save_keys("[MusicQueue]",x);
 		const {content,hack,...y}=x; this.g(y);
-		if(content) this.PlaylistPanelRenderer(content);
+		this.t(content,this.PlaylistPanelRenderer)
 		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {PlaylistPanelRenderer} x */
@@ -7593,18 +7593,18 @@ class HandleTypes extends ServiceMethods {
 		if(currentIndex) this.primitive_of(currentIndex,"number");
 		const {playlistId,ownerName,isInfinite,...y2}=y1;
 		this.playlistId(playlistId);
-		if(ownerName) this.TextWithRuns(ownerName);
+		this.t(ownerName,this.TextWithRuns)
 		this.primitive_of(isInfinite,"boolean");
 		const {continuations,shortBylineText,longBylineText,...y3}=y2;
 		if(continuations) this.z(continuations,this.NextRadioContinuationData);
 		this.TextWithRuns(shortBylineText);
-		if(longBylineText) this.TextWithRuns(longBylineText);
+		this.t(longBylineText,this.TextWithRuns)
 		const {trackingParams,titleText,...y4}=y3;
 		this.trackingParams(trackingParams);
 		this.TextWithRuns(titleText);
 		const {isEditable,previewDescription,numItemsToShow,...y5}=y4; this.g(y5);
 		if(isEditable!==true) debugger;
-		if(previewDescription) this.g(previewDescription);
+		this.t(previewDescription,this.g)
 		if(numItemsToShow!==void 0&&numItemsToShow!==25) debugger;
 	}
 	/** @arg {PlaylistPanelItem} x */
@@ -7685,7 +7685,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {contents,masthead,...y}=x; this.g(y);
 		this.z(contents,this.RendererContentItem);
-		if(masthead) this.VideoMastheadAdV3Renderer(masthead);
+		this.t(masthead,this.VideoMastheadAdV3Renderer)
 	}
 	/** @arg {VideoMastheadAdV3Renderer} x */
 	VideoMastheadAdV3Renderer(x) {
@@ -7781,8 +7781,8 @@ class HandleTypes extends ServiceMethods {
 				case 139722: {
 					const {content,header,veType,targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y);
 					this.SectionListRenderer(content);
-					if(header) this.EngagementPanelTitleHeaderRenderer(header);
-					if(targetId) this.EngagementPanelSectionTargetId(targetId);
+					this.t(header,this.EngagementPanelTitleHeaderRenderer)
+					this.t(targetId,this.EngagementPanelSectionTargetId)
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.LoggingDirectives(loggingDirectives);
 					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
@@ -7992,12 +7992,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {endScreen,autoplay,shareButton,addToMenu,videoDetails,autonavToggle,decoratedPlayerBarRenderer,...y}=x; this.g(y);
 		this.WatchNextEndScreenRenderer(endScreen);
-		if(autoplay) this.PlayerOverlayAutoplayRenderer(autoplay);
+		this.t(autoplay,this.PlayerOverlayAutoplayRenderer)
 		this.ButtonRenderer(shareButton);
 		this.MenuRenderer(addToMenu);
 		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
-		if(autonavToggle) this.AutoplaySwitchButtonRenderer(autonavToggle);
-		if(decoratedPlayerBarRenderer) this.DecoratedPlayerBarRenderer(decoratedPlayerBarRenderer);
+		this.t(autonavToggle,this.AutoplaySwitchButtonRenderer)
+		this.t(decoratedPlayerBarRenderer,this.DecoratedPlayerBarRenderer)
 	}
 	/** @arg {BrowserMediaSessionRoot} x */
 	BrowserMediaSessionRoot(x) {
@@ -8122,7 +8122,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y);
 		this.trackingParams(trackingParams);
-		if(accessibility) this.Accessibility(accessibility);
+		this.t(accessibility,this.Accessibility)
 		this.z(items,a => this.MenuServiceItemRenderer(a));
 		if(targetId) {
 			this.targetId(as(targetId));
@@ -8212,7 +8212,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[CommandMetadata]",x);
 		const {webCommandMetadata,resolveUrlCommandMetadata,...y}=x; this.g(y);
 		this.WebCommandMetadata(webCommandMetadata);
-		if(resolveUrlCommandMetadata) this.ResolveUrlCommandMetadata(resolveUrlCommandMetadata);
+		this.t(resolveUrlCommandMetadata,this.ResolveUrlCommandMetadata)
 	}
 	/** @arg {EditPlaylistWebCommandMetadata} x */
 	EditPlaylistWebCommandMetadata(x) {
@@ -8319,7 +8319,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.TextWithRuns(shortBylineText);
 		const {lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
-		if(lengthText) this.SimpleText(lengthText);
+		this.t(lengthText,this.SimpleText)
 		if(lengthInSeconds) this.primitive_of(lengthInSeconds,"number");
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
@@ -8331,8 +8331,8 @@ class HandleTypes extends ServiceMethods {
 	WatchEndpoint(x) {
 		this.save_keys("[WatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y);
-		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
-		if(commandMetadata) this.WatchEndpointCommandMetadata(commandMetadata);
+		this.t(clickTrackingParams,this.clickTrackingParams)
+		this.t(commandMetadata,this.WatchEndpointCommandMetadata)
 		this.WatchEndpointData(watchEndpoint);
 	}
 	/** @arg {WatchEndpointData} x */
@@ -8341,7 +8341,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,playlistId,index,playlistSetVideoId,params,...y1}=x;
 		this.videoId(videoId);
-		if(playlistId) this.playlistId(playlistId);
+		this.t(playlistId,this.playlistId)
 		if(index!==void 0) this.primitive_of(index,"number");
 		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
 		if(params!==void 0) this.params("WatchEndpoint","watch.params",params);
@@ -8349,13 +8349,13 @@ class HandleTypes extends ServiceMethods {
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
 		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y3}=y2;
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
-		if(loggingContext) this.VssLoggingContext(loggingContext);
-		if(watchEndpointSupportedOnesieConfig) this.Html5PlaybackOnesieConfig(watchEndpointSupportedOnesieConfig);
+		this.t(loggingContext,this.VssLoggingContext)
+		this.t(watchEndpointSupportedOnesieConfig,this.Html5PlaybackOnesieConfig)
 		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
-		if(a1) this.PrefetchHintConfig(a1);
+		this.t(a1,this.PrefetchHintConfig)
 		if(playerParams) this.playerParams("WatchEndpoint","watch.player_params",playerParams);
 		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
-		if(a2) this.WatchEndpointMusicConfig(a2);
+		this.t(a2,this.WatchEndpointMusicConfig)
 		const {nofollow,...y_end}=y5;
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
 		this.g(y_end);
@@ -8434,7 +8434,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y);
 		this.z(runs,a => this.TextRun(a,f_run));
-		if(accessibility) this.Accessibility(accessibility);
+		this.t(accessibility,this.Accessibility)
 	}
 	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
@@ -8502,7 +8502,7 @@ class HandleTypes extends ServiceMethods {
 	UrlEndpoint(x) {
 		this.save_keys("[UrlEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
-		if(clickTrackingParams) this.clickTrackingParams(clickTrackingParams);
+		this.t(clickTrackingParams,this.clickTrackingParams)
 		this.UrlEndpointData(urlEndpoint);
 		this.CommandMetadata(commandMetadata);
 		/*
@@ -8524,7 +8524,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NavigationEndpointData]",x);
 		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y);
 		this.clickTrackingParams(clickTrackingParams);
-		if(commandMetadata) this.NavigationEndpointCommandMetadata(commandMetadata);
+		this.t(commandMetadata,this.NavigationEndpointCommandMetadata)
 		this.NavigationEndpointBrowseEndpoint(browseEndpoint);
 	}
 	/** @arg {NavigationEndpointBrowseEndpoint} x */
@@ -8532,8 +8532,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[NavigationEndpointBrowseEndpoint]",x);
 		const {browseId,canonicalBaseUrl,browseEndpointContextSupportedConfigs: a3,...y}=x; this.g(y);
 		this.browseId(browseId);
-		if(canonicalBaseUrl) this.canonicalBaseUrl(canonicalBaseUrl);
-		if(a3) this.BrowseEndpointContextSupportedConfigs(a3);
+		this.t(canonicalBaseUrl,this.canonicalBaseUrl)
+		this.t(a3,this.BrowseEndpointContextSupportedConfigs)
 	}
 	/** @arg {BrowseEndpointContextSupportedConfigs} x */
 	BrowseEndpointContextSupportedConfigs(x) {
@@ -8691,7 +8691,7 @@ class HandleTypes extends ServiceMethods {
 		if(autoplay) this.AutoplayTemplate(autoplay,a => {
 			this.AutoplayContent(a);
 		});
-		if(conversationBar) this.LiveChatRenderer(conversationBar);
+		this.t(conversationBar,this.LiveChatRenderer)
 	}
 	/** @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
@@ -8735,7 +8735,7 @@ class HandleTypes extends ServiceMethods {
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
-		if(replacementEndpoint) this._ReelWatchEndpoint(replacementEndpoint);
+		this.t(replacementEndpoint,this._ReelWatchEndpoint)
 		if(sequenceContinuation) this.primitive_of(sequenceContinuation,"string");
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
@@ -8815,7 +8815,7 @@ class HandleTypes extends ServiceMethods {
 		const {items,trackingParams,formattedTitle,...y}=x; this.g(y);
 		this.z(items,a => a);
 		this.trackingParams(trackingParams);
-		if(formattedTitle) this.TextT(formattedTitle);
+		this.t(formattedTitle,this.TextT)
 	}
 	/** @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
@@ -8943,12 +8943,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y);
 		if(accessibility) return this.LabelData(accessibility);
-		if(accessibilityData) this.Accessibility(accessibilityData);
-		if(command) this.ButtonCommand(command);
-		if(icon) this.Icon(icon);
+		this.t(accessibilityData,this.Accessibility)
+		this.t(command,this.ButtonCommand)
+		this.t(icon,this.Icon)
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		if(serviceEndpoint) this.Button_serviceEndpoint(serviceEndpoint);
-		if(navigationEndpoint) this.Button_navigationEndpoint(navigationEndpoint);
+		this.t(serviceEndpoint,this.Button_serviceEndpoint)
+		this.t(navigationEndpoint,this.Button_navigationEndpoint)
 		if(tooltip&&typeof tooltip!=="string") debugger;
 		if(size) {
 			switch(size) {
@@ -8958,10 +8958,10 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		if(style) this.save_string("[Button.style]",style);
-		if(text) this.TextT(text);
-		if(trackingParams) this.trackingParams(trackingParams);
-		if(hint) this.HintRenderer(hint);
-		if(targetId) this.targetId(targetId);
+		this.t(text,this.TextT)
+		this.t(trackingParams,this.trackingParams)
+		this.t(hint,this.HintRenderer)
+		this.t(targetId,this.targetId)
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
@@ -9067,7 +9067,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlayerResponse(playerResponse);
 		this._ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
-		if(reelWatchSequenceResponse) this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
+		this.t(reelWatchSequenceResponse,this.ReelWatchSequenceResponse)
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		if(!cachedReelWatchSequenceResponse) debugger;
@@ -9088,10 +9088,10 @@ class HandleTypes extends ServiceMethods {
 		this.PlayerResponse(playerResponse);
 		this._ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
-		if(reelWatchSequenceResponse) this.ReelWatchSequenceResponse(reelWatchSequenceResponse);
+		this.t(reelWatchSequenceResponse,this.ReelWatchSequenceResponse)
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
-		if(cachedReelWatchSequenceResponse) this.ReelWatchSequenceResponse(cachedReelWatchSequenceResponse);
+		this.t(cachedReelWatchSequenceResponse,this.ReelWatchSequenceResponse)
 	}
 	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
@@ -9233,7 +9233,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ResolveUrlCommandMetadata]",x);
 		const {isVanityUrl,parentTrackingParams,...y}=x; this.g(y);
 		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
-		if(parentTrackingParams) this.trackingParams(parentTrackingParams);
+		this.t(parentTrackingParams,this.trackingParams)
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
@@ -9248,7 +9248,7 @@ class HandleTypes extends ServiceMethods {
 	SearchResultsTab(x) {
 		this.save_keys("[SearchResultsTab]",x);
 		const {endpoint,title,selected,content,tabIdentifier,trackingParams,...y}=x; this.g(y);
-		if(endpoint) this.SearchResultsSearchEndpoint(endpoint);
+		this.t(endpoint,this.SearchResultsSearchEndpoint)
 		this.primitive_of(title,"string");
 		if(selected!==void 0) this.primitive_of(selected,"boolean");
 		this.SectionListRenderer(content);
@@ -9653,7 +9653,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[GuideEntryRoot]",x);
 		if("icon" in x) {
 			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x; this.g(y);
-			if(navigationEndpoint) this.BrowseEndpoint(navigationEndpoint);
+			this.t(navigationEndpoint,this.BrowseEndpoint)
 			this.Icon(icon);
 			this.trackingParams(trackingParams);
 			this.SimpleText(formattedTitle);
@@ -9874,7 +9874,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[TwoColumnBrowseResultsData]",x);
 		const {tabs,secondaryContents,...y}=x; this.g(y);
 		this.z(tabs,this.ResultRenderer);
-		if(secondaryContents) this.SecondaryContents(secondaryContents);
+		this.t(secondaryContents,this.SecondaryContents)
 	}
 	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
@@ -10155,10 +10155,10 @@ class HandleTypes extends ServiceMethods {
 	EngagementPanelTitleHeader(x) {
 		this.save_keys("[EngagementPanelTitleHeader]",x);
 		const {title,menu,contextualInfo,informationButton,visibilityButton,trackingParams,...y}=x; this.g(y);
-		if(title) this.TextT(title);
-		if(menu) this.EngagementPanelMenu(menu);
-		if(contextualInfo) this.TextWithRuns(contextualInfo);
-		if(informationButton) this.ButtonRenderer(informationButton);
+		this.t(title,this.TextT)
+		this.t(menu,this.EngagementPanelMenu)
+		this.t(contextualInfo,this.TextWithRuns)
+		this.t(informationButton,this.ButtonRenderer)
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
 	}
@@ -10298,9 +10298,9 @@ class HandleTypes extends ServiceMethods {
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x; this.g(y);
 		this.Thumbnail(thumbnail);
 		this.TextWithRuns(title);
-		if(subscriptionButton) this.SubscriptionButton(subscriptionButton);
+		this.t(subscriptionButton,this.SubscriptionButton)
 		this.BrowseEndpoint(navigationEndpoint);
-		if(subscriberCountText) this.SimpleText(subscriberCountText);
+		this.t(subscriberCountText,this.SimpleText)
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {SubscriptionButton} x */
@@ -10595,8 +10595,8 @@ class HandleTypes extends ServiceMethods {
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y);
 		this.z(subMenuItems,a => this.ActionSetPlaylistVideoOrder(a));
 		if(title) this.primitive_of(title,"string");
-		if(icon) this.Icon(icon);
-		if(accessibility) this.Accessibility(accessibility);
+		this.t(icon,this.Icon)
+		this.t(accessibility,this.Accessibility)
 		if(tooltip) this.primitive_of(tooltip,"string");
 		this.trackingParams(trackingParams);
 	}
@@ -10607,7 +10607,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(title,"string");
 		this.primitive_of(selected,"boolean");
 		this.ContinuationCommand(serviceEndpoint);
-		if(accessibility) this.Accessibility(accessibility);
+		this.t(accessibility,this.Accessibility)
 		this.trackingParams(trackingParams);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
@@ -10664,7 +10664,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(title,"string");
 		this.SubscribeButtonRenderer(subscribeButton);
 		this.trackingParams(trackingParams);
-		if(sponsorButton) this.ButtonRenderer(sponsorButton);
+		this.t(sponsorButton,this.ButtonRenderer)
 		this.BrowseEndpoint(navigationEndpoint);
 		this.Thumbnail(avatar);
 		this.Thumbnail(banner);
@@ -10701,7 +10701,7 @@ class HandleTypes extends ServiceMethods {
 		this.SubscribeButtonRenderer(subscribeButtonRenderer);
 		if(style!=="REEL_PLAYER_OVERLAY_STYLE_SHORTS") debugger;
 		this.ButtonRenderer(viewCommentsButton);
-		if(videoInteractions) this.g(videoInteractions);
+		this.t(videoInteractions,this.g)
 		this.trackingParams(trackingParams);
 		this.ButtonRenderer(shareButton);
 		this.PivotButtonRenderer(pivotButton);
@@ -10785,7 +10785,7 @@ class HandleTypes extends ServiceMethods {
 		const {mode,autoplayVideo,nextButtonVideo,...y}=x; this.g(y);
 		if(mode!=="NORMAL") debugger;
 		this.WatchEndpoint(autoplayVideo);
-		if(nextButtonVideo) this.WatchEndpoint(nextButtonVideo);
+		this.t(nextButtonVideo,this.WatchEndpoint)
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
@@ -10793,7 +10793,7 @@ class HandleTypes extends ServiceMethods {
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=x; this.g(y);
 		this.WatchPlaylistEndpoint(autoplayVideo);
 		this.WatchPlaylistEndpoint(nextButtonVideo);
-		if(previousButtonVideo) this.WatchPlaylistEndpoint(previousButtonVideo);
+		this.t(previousButtonVideo,this.WatchPlaylistEndpoint)
 	}
 	/** @arg {ClipCreationRenderer} x */
 	ClipCreationRenderer(x) {

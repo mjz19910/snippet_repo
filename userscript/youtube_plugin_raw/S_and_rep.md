@@ -1,11 +1,9 @@
 # find member to add save_keys to the body
 
-## query 1
+## search_and_replace
 ```regexp
 (\w+)\(x\) \{x;\}
 ```
-
-## replace 1
 ```js
 $1(x) {
 		this.save_keys("[$1]",x);
@@ -14,19 +12,25 @@ $1(x) {
 
 # find members to replace with save_keys body
 
-## query 1
+## search_and_replace
 ```regexp
 /\*\* @arg \{\w+\} x \*/
 \s(\w+)\(x\) \{x;\}
 ```
-## replace 1
 ```js
 /** @arg {$1} x */
 	$1(x) {
 		this.save_keys("[$1]",x);
 	}
 ```
-
+# find nullable if case
+## search_and_replace
+```regexp
+if\((\w+)\) this\.(\w+)\(\w+\);
+```
+```js
+this.t($1,this.$2)
+```
 # find save_keys members
 ## query 1
 ```regexp
