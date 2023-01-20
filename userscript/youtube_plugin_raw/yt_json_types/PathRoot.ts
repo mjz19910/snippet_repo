@@ -1,4 +1,8 @@
+type LogItems=[
+	"[parse_value.gen_ns] [reel.player_params.f71]",
+][number];
 type PathRoot=
+	|SplitOnce<SplitOnce<Split<LogItems," ">[1],"[">[1],"]">[0]
 	|"create_playlist.params.f84.f5"
 	|"create_playlist.params.f84"
 	|"create_playlist.params"

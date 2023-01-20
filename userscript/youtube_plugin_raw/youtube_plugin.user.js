@@ -4868,7 +4868,8 @@ class ParserService extends BaseService {
 	parse_value(root,path,x,mk,ta,tv,cb) {
 		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
-			console.log("[parse_value.gen_ns] [%s]",`${path}.f${ta}`);
+			/** @type {LogItems} */
+			console.log("\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`\ncase ${ta}: break;`);
 			debugger;
 		};
@@ -4894,6 +4895,7 @@ case "${path}": {
 					case "reel.player_params": {
 						switch(ta) {
 							case 30: break;
+							case 71: break;
 							default: return new_ns();
 						}
 						/** @type {PathRoot} */
@@ -5084,6 +5086,18 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
+							case "f71": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 15: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f30": {
 								const idx=4;
 								if(path_parts.length===3) {
