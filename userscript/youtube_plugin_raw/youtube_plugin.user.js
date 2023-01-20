@@ -5082,6 +5082,60 @@ case "${path_parts[idx-1]}": {
 		let path_parts=split_string(path,".");
 		switch(path_parts[0]) {
 			default: gd(1); break;
+			case "create_playlist": {
+				const idx=3;
+				if(path_parts.length===2) {
+					switch(tv) {default: debugger; return;}
+				}
+				switch(path_parts[2]) {
+					default: gd(idx); path_parts[2]===""; break;
+					case "f84": {
+						const idx=4;
+						if(path_parts.length===3) {
+							if(tv instanceof Map) return;
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[3]) {
+							default: gd(idx); path_parts[3]===""; break;
+							case "f5": {
+								const idx=5;
+								if(path_parts.length===4) {
+									switch(tv) {
+										case 2: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[4]) {
+									default: gd(idx); path_parts[4]===""; break;
+								}
+							} break;
+						}
+					} break;
+				}
+			} break;
+			case "get_transcript": {
+				if(path_parts[1]!=="params") debugger;
+				const idx=3;
+				if(path_parts.length===2) {
+					gen_next_part(idx);
+					debugger;
+				}
+				switch(path_parts[2]) {
+					default: gd(idx); path_parts[2]===""; break;
+					case "f1": {
+						const idx=4;
+						if(path_parts.length===3) {
+							switch(tv) {
+								case 15: return;
+								default: debugger; return;
+							}
+						}
+						switch(path_parts[3]) {
+							default: gd(idx); path_parts[3]===""; break;
+						}
+					} break;
+				}
+			} break;
 			case "reel": {
 				const idx=2;
 				if(path_parts.length!==2&&path_parts.length!==3) {
@@ -6068,8 +6122,10 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
+		if(this.str_starts_with(x,"browse-feed")) {
+			return this.parser.parse_target_id(x);
+		};
 		switch(x) {
-			case "browse-feedFEwhat_to_watch": return;
 			case "clip-info-button": return;
 			case "comments-section": return;
 			case "engagement-panel-ads": return;
@@ -6079,11 +6135,12 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "engagement-panel-searchable-transcript": return;
 			case "engagement-panel-structured-description": return;
+			case "feed_filter_chip_bar_second_chip": return;
 			case "search-feed": return;
 			case "search-page": return;
 			case "sponsorships-button": return;
 			case "watch-next-feed": return;
-			default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
+			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
 	/** @arg {[VE3832_PreconnectUrl]} x */
