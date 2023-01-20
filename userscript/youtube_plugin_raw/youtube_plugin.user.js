@@ -10795,19 +10795,33 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[minimal_handler_member]",x);
 	}
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
-	PlaylistSidebarPrimaryInfoRenderer(x) {x;}
+	PlaylistSidebarPrimaryInfoRenderer(x) {
+		this.save_keys("[PlaylistSidebarPrimaryInfoRenderer]",x);
+	}
 	/** @arg {PlaylistMetadataRenderer} x */
-	PlaylistMetadataRenderer(x) {x;}
+	PlaylistMetadataRenderer(x) {
+		this.save_keys("[PlaylistMetadataRenderer]",x);
+	}
 	/** @arg {TranscriptRenderer} x */
-	TranscriptRenderer(x) {x;}
+	TranscriptRenderer(x) {
+		this.save_keys("[TranscriptRenderer]",x);
+	}
 	/** @arg {PivotButtonRenderer} x */
-	PivotButtonRenderer(x) {x;}
+	PivotButtonRenderer(x) {
+		this.save_keys("[PivotButtonRenderer]",x);
+	}
 	/** @arg {MetadataBadgeRenderer} x */
-	MetadataBadgeRenderer(x) {x;}
+	MetadataBadgeRenderer(x) {
+		this.save_keys("[MetadataBadgeRenderer]",x);
+	}
 	/** @arg {LiveChatAuthorBadgeRenderer} x */
-	LiveChatAuthorBadgeRenderer(x) {x;}
+	LiveChatAuthorBadgeRenderer(x) {
+		this.save_keys("[LiveChatAuthorBadgeRenderer]",x);
+	}
 	/** @arg {ChannelHeaderLinksRenderer} x */
-	ChannelHeaderLinksRenderer(x) {x;}
+	ChannelHeaderLinksRenderer(x) {
+		this.save_keys("[ChannelHeaderLinksRenderer]",x);
+	}
 	/** @arg {ReelPlayerHeaderRenderer} x */
 	ReelPlayerHeaderRenderer(x) {x;}
 	/** @arg {HintRenderer} x */
