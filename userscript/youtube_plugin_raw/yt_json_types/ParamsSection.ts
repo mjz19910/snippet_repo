@@ -1,4 +1,5 @@
 type ParamsSection=
+	|"BrowseEndpointData"
 	|"CommonConfigData"
 	|"CreatePlaylist"
 	|"GeneratedWCM"
