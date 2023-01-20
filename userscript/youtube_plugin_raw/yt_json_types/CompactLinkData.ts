@@ -1,7 +1,9 @@
+type CompactLink_Endpoint=UploadEndpoint|SignalNavigationEndpoint;
+
 type CompactLinkData={
 	icon: Icon<"PERSON_ADD"|"CREATION_UPLOAD">;
 	title: TextT;
-	navigationEndpoint: UploadEndpoint|SignalNavigationEndpoint;
+	navigationEndpoint?: CompactLink_Endpoint;
 	trackingParams: string;
-	style: CompactLinkStyle|"COMPACT_LINK_STYLE_TYPE_CREATION_MENU";
+	style?: CompactLinkStyle;
 };
