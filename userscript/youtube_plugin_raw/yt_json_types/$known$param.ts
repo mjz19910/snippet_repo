@@ -1,4 +1,5 @@
 type $known$param=[
+	browse$param,
 	create_playlist$param,
 	get_transcript$param,
 	record_notification_interactions$param,

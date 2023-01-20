@@ -5188,6 +5188,14 @@ case "${path}": {
 				/** @type {LogItems} */
 				switch(path) {
 					default: new_path(); debugger; break;
+					case "browse.params": {
+						switch(ta) {
+							case 84: break;
+							default: return new_ns();
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`browse$param.f${ta}`,tv);
+					} return;
 					case "createBackstagePost.param": {
 						switch(ta) {
 							case 1: break;
@@ -6836,7 +6844,7 @@ case "${path_parts[idx-1]}": {
 			switch(x) {
 				case "FEwhat_to_watch": return x;
 				case "FEexplore": return x;
-				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}: return x;`);debugger; return null;
+				default: console.log(`--- [decode_browse_id] ---\n\n\ncase "${x}: return x;`); return null;
 			}
 		}
 		return null;
