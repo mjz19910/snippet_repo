@@ -4800,7 +4800,20 @@ class ParserService extends BaseService {
 			if(cb===null) {
 				/** @arg {PathRoot} path */
 				let d=(path) => {
-					this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+					switch(path) {
+						case "watch.params": {
+							switch(ta) {
+								case 2: break;
+								default: {
+									console.log("generate_ns",path);
+									console.log(`\ncase ${ta}: break;`);
+									debugger;
+								} return;
+							}
+							this.default_parse_param_callback(for_,`${path}.f${ta}`,tv);
+						} break;
+						default: debugger; return;
+					}
 				};
 				switch(path) {
 					case "watch.player_params.f40.f1":
@@ -4817,7 +4830,7 @@ class ParserService extends BaseService {
 			cb(tv,ta);
 		}
 	}
-	/** @arg {ParamsSection} for_ @arg {PathFromRoot} path @arg {ParamMapValue} tv */
+	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {ParamMapValue} tv */
 	default_parse_param_callback(for_,path,tv) {
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) {
@@ -4826,7 +4839,7 @@ class ParserService extends BaseService {
 		} else {
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
-				case "watch": if(path_parts[1]==="params"||path_parts[1]==="player_params") return;
+				case "watch": if(path_parts.length==2&&path_parts[1]==="params"||path_parts[1]==="player_params") return;
 			}
 			console.log(path_parts);
 			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
