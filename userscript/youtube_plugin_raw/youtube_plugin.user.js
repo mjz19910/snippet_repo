@@ -5026,27 +5026,6 @@ case "${path}": {
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		/** @arg {number} idx */
 		let gen_next_part=(idx) => {
-			if(path_parts.length===idx) {
-				gen_return_part(idx);
-				return;
-			}
-			console.log(`
-case "${path_parts[idx-1]}": {
-	const idx=${idx+1};
-	if(path_parts.length===idx) {
-		switch(tv) {default: debugger; return;}
-	}
-	switch(path_parts[${idx}]) {
-		default: {
-			console.log("in",path_parts[${idx-1}]);
-			gen_next_part(idx);
-			debugger;
-		} path_parts[${idx}]===""; break;
-	}
-} break;`);
-		};
-		/** @arg {number} idx */
-		let gen_return_part=(idx) => {
 			let case_part="";
 			let value_part="\n\t\tswitch(tv) {default: debugger; return;}";
 			if(path_parts.length===idx) {
@@ -5065,7 +5044,7 @@ ${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`;
 			}
 			console.log(`
 case "${path_parts[idx-1]}": {
-	const idx=${idx};
+	const idx=${idx+1};
 	if(path_parts.length===idx) {${case_part}${value_part}
 	}
 	switch(path_parts[${idx}]) {
@@ -5121,6 +5100,19 @@ case "${path_parts[idx-1]}": {
 										gen_next_part(idx);
 										debugger;
 									} path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===idx) {
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: {
+												console.log("in",path_parts[3]);
+												gen_next_part(idx);
+												debugger;
+											} path_parts[4]===""; break;
+										}
+									} break;
 								}
 							} break;
 						}
@@ -5290,7 +5282,7 @@ case "${path_parts[idx-1]}": {
 							default: {
 								let idx=4;
 								console.log("in",path_parts[2]);
-								gen_return_part(idx-1);
+								gen_next_part(idx);
 								debugger;
 							} path_parts[3]===""; break;
 							case "f5": {
