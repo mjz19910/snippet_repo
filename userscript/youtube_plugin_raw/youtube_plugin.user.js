@@ -5148,7 +5148,7 @@ case "${path}": {
 					case "watch.params": {
 						switch(ta) {
 							case 2: case 3: break; case 7: case 12: case 13: break;
-							case 24: case 27: case 33: case 56: break;
+							case 24: case 27: case 33: break;
 							default: return new_ns();
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5522,6 +5522,18 @@ case "${path_parts[idx-1]}": {
 					}
 					switch(path_parts[2]) {
 						default: gd(idx); path_parts[2]===""; break;
+						case "f9": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 1: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
 						case "f8": {
 							const idx=4;
 							if(path_parts.length===3) {
@@ -5585,6 +5597,18 @@ case "${path_parts[idx-1]}": {
 							}
 							switch(path_parts[3]) {
 								default: gd(idx); path_parts[3]===""; break;
+								case "f1": {
+									const idx=5;
+									if(path_parts.length===4) {
+										switch(tv) {
+											case 1: return;
+											default: debugger; return;
+										}
+									}
+									switch(path_parts[4]) {
+										default: gd(idx); path_parts[4]===""; break;
+									}
+								} break;
 							}
 						} break;
 						case "f13": {
@@ -9200,7 +9224,7 @@ class HandleTypes extends ServiceMethods {
 	R_MenuData(x) {
 		const cf="MenuData";
 		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,accessibility,items,targetId,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(trackingParams);
 		this.t(accessibility,this.Accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));

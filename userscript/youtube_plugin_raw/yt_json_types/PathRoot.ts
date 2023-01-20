@@ -8,6 +8,7 @@ type LogItems=[
 ][number];
 type PathRoot=
 	|SplitOnce<SplitOnce<Split<LogItems," ">[1],"[">[1],"]">[0]
+	|"watch.params.f27.f1"
 	|"create_playlist.params.f84.f5"
 	|"create_playlist.params.f84"
 	|"create_playlist.params"
@@ -35,7 +36,6 @@ type PathRoot=
 	|"watch.params.f33.f4"
 	|"watch.params.f33.f5"
 	|"watch.params.f33"
-	|"watch.params.f56"
 	|"watch.params"
 	|"watch.player_params.f40.f1.f2"
 	|"watch.player_params.f40.f1.f3"
