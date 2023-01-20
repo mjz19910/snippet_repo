@@ -9487,6 +9487,31 @@ class HandleTypes extends ServiceMethods {
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.AddToPlaylistServiceEndpoint(x);
 		if("feedbackEndpoint" in x) return this.AE_Feedback(x.feedbackEndpoint);
+		if("notificationOptOutEndpoint" in x) {
+			let v=this.w(x);
+			const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y}=v; this.g(y);
+			this.TextWithRuns(optOutText);
+			this.primitive_of(serializedOptOut,"string");
+			this.primitive_of(serializedRecordInteractionsRequest,"string");
+			return;
+		}
+		if("shareEntityServiceEndpoint" in x) {
+			let v=this.w(x);
+			const {serializedShareEntity,commands,...y}=v; this.g(y);
+			this.primitive_of(serializedShareEntity,"string");
+			this.z(commands,a=>{
+				const {clickTrackingParams,...b}=a;
+				let {popup,popupType,...y}=this.w(b);
+				if("beReused" in y) {
+					if(y.beReused!==true) debugger;
+					return;
+				}
+				this.AllPopups(popup);
+				this.parse_popup_type(popupType);
+				this.g(y);
+			})
+			return;
+		}
 		debugger;
 	}
 	/** @arg {{addToPlaylistServiceEndpoint:{videoId:string}}} x */
