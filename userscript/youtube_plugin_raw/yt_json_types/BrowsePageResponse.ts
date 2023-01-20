@@ -1,7 +1,7 @@
 type BrowsePageResponse={
 	rootVe?: number;
 	url: string;
-	endpoint: E_BrowseEndpoint;
+	endpoint: E$BrowseEndpoint;
 	page: "browse";
 	response: BrowseResponse;
 	expirationTime?: number;

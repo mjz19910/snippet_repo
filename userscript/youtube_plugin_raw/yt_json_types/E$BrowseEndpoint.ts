@@ -1,5 +1,5 @@
-type E_BrowseEndpoint={
+type E$BrowseEndpoint={
 	clickTrackingParams: string;
 	commandMetadata?: CommandMetadata;
-	browseEndpoint: AE_Browse;
+	browseEndpoint: E$Browse;
 };

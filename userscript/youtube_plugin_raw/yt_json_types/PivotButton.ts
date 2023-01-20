@@ -1,6 +1,6 @@
 type PivotButton={
 	thumbnail: Thumbnail;
-	onClickCommand: E_BrowseEndpoint;
+	onClickCommand: E$BrowseEndpoint;
 	trackingParams: string;
 	contentDescription: SimpleText;
 	soundAttributionTitle: TextWithRuns;

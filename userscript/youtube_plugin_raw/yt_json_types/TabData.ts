@@ -8,7 +8,7 @@ type TabData={
 	content: SectionListRenderer;
 	trackingParams: string;
 }|{
-	endpoint: E_BrowseEndpoint;
+	endpoint: E$BrowseEndpoint;
 	title: string;
 	selected?: true;
 	content?: SectionListRenderer;

@@ -2,7 +2,7 @@ type VideoOwnerData={
 	thumbnail: Thumbnail;
 	title: TextWithRuns;
 	subscriptionButton?: SubscriptionButton;
-	navigationEndpoint: E_BrowseEndpoint;
+	navigationEndpoint: E$BrowseEndpoint;
 	subscriberCountText?: SimpleText;
 	trackingParams: string;
 };

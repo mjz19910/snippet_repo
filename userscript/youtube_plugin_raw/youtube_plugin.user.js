@@ -7045,15 +7045,6 @@ class ServiceMethods extends ServiceData {
 		this.on_root_visual_element(x);
 	}
 }
-/** @extends {BaseService<{parent:HandleTypes},{}>} */
-class SignalTypes extends BaseService {
-	/** @arg {E$Signal_ClientSignal} x */
-	ClientSignal(x) {
-		const {signal,actions,...y}=x; this.g(y); // ! #destructure
-		if(signal!=="CLIENT_SIGNAL") debugger;
-		this.z(actions,a => this.x.get("parent").ServiceEndpointAction(a));
-	}
-}
 //#endregion
 //#endregion
 //#region HandleTypes
@@ -7475,6 +7466,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region endpoint
+	/** @arg {E$Signal_ClientSignal} x */
+	E$Signal_ClientSignal(x) {
+		const {signal,actions,...y}=x; this.g(y); // ! #destructure
+		if(signal!=="CLIENT_SIGNAL") debugger;
+		this.z(actions,this.ServiceEndpointAction);
+	}
 	FeedbackEndpoint(x) {
 		x;
 	}
@@ -7535,7 +7532,7 @@ class HandleTypes extends ServiceMethods {
 	E$SignalService(x) {
 		this.save_keys("[SignalServiceEndpointData]",x);
 		switch(x.signal) {
-			case "CLIENT_SIGNAL": return this.signal.ClientSignal(x);
+			case "CLIENT_SIGNAL": return this.signal.E$Signal_ClientSignal(x);
 			case "GET_ACCOUNT_MENU": break;
 		}
 	}
@@ -7573,29 +7570,29 @@ class HandleTypes extends ServiceMethods {
 		if(nofollow&&!nofollow) debugger;
 	}
 	/** @arg {E$GetTranscriptEndpoint} x */
-	GetTranscriptEndpoint(x) {
+	E$GetTranscriptEndpoint(x) {
 		this.save_keys("[GetTranscriptEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.AE_GetTranscript(getTranscriptEndpoint);
+		this.E$GetTranscript(getTranscriptEndpoint);
 	}
 	/** @arg {E$GetTranscript} x */
-	AE_GetTranscript(x) {
+	E$GetTranscript(x) {
 		this.save_keys("[GetTranscriptData]",x);
 		const {params,...y}=x; this.g(y); // ! #destructure
 		this.params("GetTranscript","get_transcript.params",params);
 	}
-	/** @arg {E_BrowseEndpoint} x */
-	BrowseEndpoint(x) {
+	/** @arg {E$BrowseEndpoint} x */
+	E$BrowseEndpoint(x) {
 		this.save_keys("[BrowseEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.t(commandMetadata,this.CommandMetadata);
-		this.AE_Browse(browseEndpoint);
+		this.E$Browse(browseEndpoint);
 	}
-	/** @arg {AE_Browse} x */
-	AE_Browse(x) {
+	/** @arg {E$Browse} x */
+	E$Browse(x) {
 		const cf="AE_Browse";
 		this.save_keys("[AE_Browse]",x);
 		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y); // ! #destructure
@@ -7604,21 +7601,21 @@ class HandleTypes extends ServiceMethods {
 		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
 	}
 	/** @arg {E$RecordNotificationInteractionsEndpoint} x */
-	RecordNotificationInteractionsEndpoint(x) {
+	E$RecordNotificationInteractionsEndpoint(x) {
 		this.save_keys(`[RecordNotificationInteractionsEndpoint]`,x);
 		const {clickTrackingParams,commandMetadata,recordNotificationInteractionsEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
+		this.E$RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
 	}
 	/** @arg {E$RecordNotificationInteractions} x */
-	RecordNotificationInteractions(x) {
+	E$RecordNotificationInteractions(x) {
 		const cf="RecordNotificationInteractions";
 		this.save_keys(`[${cf}]`,x);
 		const {serializedInteractionsRequest,...y}=x; this.g(y); // ! #destructure
 		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
 	}
-	//#endregion {E_}
+	//#endregion {E$}
 	//#region general done
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
@@ -7719,7 +7716,7 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=x; this.g(y); // ! #destructure
 		this.t(rootVe,a => this.save_number("[BrowsePageResponse.rootVe]",a));
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
-		this.BrowseEndpoint(endpoint);
+		this.E$BrowseEndpoint(endpoint);
 		if(page!=="browse") debugger;
 		this.BrowseResponse(response);
 		this.t(expirationTime,a => this.primitive_of(a,"number"));
@@ -8050,7 +8047,7 @@ class HandleTypes extends ServiceMethods {
 		if("continuationCommand" in x) {
 			this.ContinuationCommand(x);
 		} else if("getTranscriptEndpoint" in x) {
-			this.GetTranscriptEndpoint(x);
+			this.E$GetTranscriptEndpoint(x);
 		} else {
 			debugger;
 		}
@@ -8202,7 +8199,7 @@ class HandleTypes extends ServiceMethods {
 	PageEndpoint(x) {
 		this.save_keys("[PageEndpoint]",x);
 		if("browseEndpoint" in x) {
-			return this.BrowseEndpoint(x);
+			return this.E$BrowseEndpoint(x);
 		} else if("watchEndpoint" in x) {
 			return this.WatchEndpoint(x);
 		} else if("reelWatchEndpoint" in x) {
@@ -8528,7 +8525,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(sentTimeText);
 		this.NavigationEndpoint(navigationEndpoint);
 		this.primitive_of(read,"boolean");
-		this.RecordNotificationInteractionsEndpoint(recordClickEndpoint);
+		this.E$RecordNotificationInteractionsEndpoint(recordClickEndpoint);
 		this.MenuRenderer(contextualMenu);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.primitive_of_string(notificationId);
@@ -9119,7 +9116,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("endpoint" in x) {
 			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y); // ! #destructure
-			this.BrowseEndpoint(endpoint);
+			this.E$BrowseEndpoint(endpoint);
 			this.primitive_of_string(title);
 			if(selected!==void 0&&selected!==true) debugger;
 			this.t(content,this.TabData_section);
@@ -10098,7 +10095,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("watchEndpoint" in a1) {
 			this.WatchEndpoint(a1);
 		} else if("browseEndpoint" in a1) {
-			this.BrowseEndpoint(a1);
+			this.E$BrowseEndpoint(a1);
 		} else {
 			debugger;
 		}
@@ -10671,7 +10668,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ChannelPageResponse]",x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="channel") debugger;
-		this.BrowseEndpoint(endpoint);
+		this.E$BrowseEndpoint(endpoint);
 		this.ChannelResponse(response);
 		this.primitive_of_string(url);
 	}
@@ -10680,7 +10677,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[PlaylistPageResponse]",x);
 		const {rootVe,url,endpoint,page,response,...y}=x; this.g(y); // ! #destructure
 		if(page!=="playlist") debugger;
-		this.BrowseEndpoint(endpoint);
+		this.E$BrowseEndpoint(endpoint);
 		this.Api_PlaylistResponse(response);
 		this.primitive_of_string(url);
 		switch(rootVe) {
@@ -10695,7 +10692,7 @@ class HandleTypes extends ServiceMethods {
 		if("rootVe" in x) {
 			const {page,endpoint,response,url,rootVe,...y}=x; this.g(y); // ! #destructure
 			if(page!=="settings") debugger;
-			this.BrowseEndpoint(endpoint);
+			this.E$BrowseEndpoint(endpoint);
 			this.SettingsResponse(response);
 			this.primitive_of_string(url);
 			if(rootVe!==23462) debugger;
@@ -10703,7 +10700,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="settings") debugger;
-		this.BrowseEndpoint(endpoint);
+		this.E$BrowseEndpoint(endpoint);
 		this.SettingsResponse(response);
 		this.primitive_of_string(url);
 	}
@@ -11337,7 +11334,7 @@ class HandleTypes extends ServiceMethods {
 		if("icon" in x) {
 			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x;
 			this.t(navigationEndpoint,x => {
-				if("browseEndpoint" in x) return this.BrowseEndpoint(x);
+				if("browseEndpoint" in x) return this.E$BrowseEndpoint(x);
 				if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
 				debugger;
 			});
@@ -11355,7 +11352,7 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y); // ! #destructure
-		this.BrowseEndpoint(navigationEndpoint);
+		this.E$BrowseEndpoint(navigationEndpoint);
 		this.Thumbnail(thumbnail);
 		this.GuideEntryBadges(badges);
 		this.trackingParams("GuideEntryRoot",trackingParams);
@@ -11917,7 +11914,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(endTimeMs);
 		this.Thumbnail(watermark);
 		this.trackingParams("CF_FIX",trackingParams);
-		this.BrowseEndpoint(navigationEndpoint);
+		this.E$BrowseEndpoint(navigationEndpoint);
 		this.primitive_of_string(channelName);
 		this.SubscribeButtonRenderer(subscribeButton);
 	}
@@ -11927,7 +11924,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y); // ! #destructure
 		this.Icon(iconImage);
 		this.TextWithRuns(tooltipText);
-		this.BrowseEndpoint(endpoint);
+		this.E$BrowseEndpoint(endpoint);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.primitive_of_string(overrideEntityKey);
 	}
@@ -11937,7 +11934,7 @@ class HandleTypes extends ServiceMethods {
 		this.Thumbnail(thumbnail);
 		this.TextWithRuns(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
-		this.BrowseEndpoint(navigationEndpoint);
+		this.E$BrowseEndpoint(navigationEndpoint);
 		this.t(subscriberCountText,this.SimpleText);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
@@ -12111,7 +12108,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(views);
 		this.SimpleText(publishDate);
 		this.z(factoid,this.FactoidRenderer);
-		this.BrowseEndpoint(channelNavigationEndpoint);
+		this.E$BrowseEndpoint(channelNavigationEndpoint);
 		this.Thumbnail(channelThumbnail);
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
@@ -12326,7 +12323,7 @@ class HandleTypes extends ServiceMethods {
 		this.SubscribeButtonRenderer(subscribeButton);
 		this.trackingParams("CF_FIX",trackingParams);
 		this.t(sponsorButton,this.ButtonRenderer);
-		this.BrowseEndpoint(navigationEndpoint);
+		this.E$BrowseEndpoint(navigationEndpoint);
 		this.Thumbnail(avatar);
 		this.Thumbnail(banner);
 		this.Thumbnail(tvBanner);

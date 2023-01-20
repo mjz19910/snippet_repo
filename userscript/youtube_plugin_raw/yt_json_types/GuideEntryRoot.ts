@@ -1,5 +1,5 @@
 type GuideEntryRoot={
-	navigationEndpoint: E_BrowseEndpoint;
+	navigationEndpoint: E$BrowseEndpoint;
 	thumbnail: Thumbnail;
 	badges: GuideEntryBadges;
 	trackingParams: string;
@@ -8,13 +8,13 @@ type GuideEntryRoot={
 	entryData: GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
-	navigationEndpoint?: E$UrlEndpoint|E_BrowseEndpoint;
+	navigationEndpoint?: E$UrlEndpoint|E$BrowseEndpoint;
 	icon: Icon<"EXPAND"|"ADD_CIRCLE">;
 	trackingParams: string;
 	formattedTitle: SimpleText;
 	accessibility: Accessibility;
 }|{
-	navigationEndpoint: E_BrowseEndpoint;
+	navigationEndpoint: E$BrowseEndpoint;
 	icon: Icon<"WHAT_TO_WATCH">;
 	trackingParams: string;
 	formattedTitle: SimpleText;

@@ -15,7 +15,7 @@ type ChannelHeaderLinksRenderer={
 type C4TabbedHeaderData={
 	channelId: `UC${string}`;
 	title: string;
-	navigationEndpoint: E_BrowseEndpoint;
+	navigationEndpoint: E$BrowseEndpoint;
 	avatar: Thumbnail;
 	banner: Thumbnail;
 	badges?: MetadataBadgeRenderer[];

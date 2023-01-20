@@ -1,6 +1,6 @@
 type ChannelPageResponse={
 	page: "channel";
-	endpoint: E_BrowseEndpoint;
+	endpoint: E$BrowseEndpoint;
 	response: ChannelResponse;
 	url: string;
 };
