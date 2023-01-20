@@ -10840,14 +10840,6 @@ class HandleTypes extends ServiceMethods {
 		//@ts-expect-error(2345) !
 		const {...y}=x; this.g(y);
 	}
-	//#endregion
-	//#region has_save_keys renderer
-	//#endregion
-	//#region has_save_keys
-	/** @arg {minimal_handler_member} x */
-	minimal_handler_member_1(x) {
-		this.save_keys("[minimal_handler_member]",x);
-	}
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {
 		this.save_keys("[MerchandiseShelf]",x);
@@ -11003,6 +10995,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ResetChannelUnreadCountCommand]",x);
 		// @ts-ignore
 		const {...y}=x; this.g(y);
+	}
+	//#endregion
+	//#region has_save_keys
+	/** @arg {minimal_handler_member} x */
+	minimal_handler_member_1(x) {
+		this.save_keys("[minimal_handler_member]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
