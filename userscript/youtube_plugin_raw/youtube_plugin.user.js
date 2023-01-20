@@ -2781,7 +2781,7 @@ class YtHandlers extends BaseService {
 			};
 			case "reel_watch_sequence": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ReelWatchSequenceResponse} */
+				/** @private @type {R_ReelWatchSequenceResponse} */
 				data: as(x),
 			};
 		}
@@ -7321,7 +7321,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("watchEndpoint" in x) {
 			return this.WatchEndpoint(x);
 		} else if("reelWatchEndpoint" in x) {
-			return this._ReelWatchEndpoint(x);
+			return this.E_ReelWatchEndpoint(x);
 		} else if("searchEndpoint" in x) {
 			return this.SearchEndpoint(x);
 		}
@@ -7967,23 +7967,23 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}));
 	}
-	/** @arg {ReelWatchSequenceResponse} x */
+	/** @arg {R_ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
 		this.save_keys(`[ReelWatchSequenceResponse]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.z(entries,a => this.CommandTemplate(a,this._ReelWatchEndpoint));
+		this.z(entries,a => this.CommandTemplate(a,this.E_ReelWatchEndpoint));
 		this.trackingParams(trackingParams);
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
-	/** @arg {ReelWatchEndpoint} x */
-	_ReelWatchEndpoint(x) {
+	/** @arg {E_ReelWatchEndpoint} x */
+	E_ReelWatchEndpoint(x) {
 		this.save_keys("[ReelWatchEndpoint]",x);
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t(clickTrackingParams,this.clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
 		this.ReelWatchEndpointData(reelWatchEndpoint);
 	}
-	/** @arg {ReelWatchEndpointData} x */
+	/** @arg {Args_E_ReelWatchEndpointData} x */
 	ReelWatchEndpointData(x) {
 		const cf="ReelWatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -9484,7 +9484,7 @@ class HandleTypes extends ServiceMethods {
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
 		this.trackingParams(trackingParams);
-		this.t(replacementEndpoint,this._ReelWatchEndpoint);
+		this.t(replacementEndpoint,this.E_ReelWatchEndpoint);
 		this.t(sequenceContinuation,a => this.primitive_of(a,"string"));
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
@@ -9829,7 +9829,7 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==37414) debugger;
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
-		this._ReelWatchEndpoint(endpoint);
+		this.E_ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
 		this.t(reelWatchSequenceResponse,this.ReelWatchSequenceResponse);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
@@ -9850,7 +9850,7 @@ class HandleTypes extends ServiceMethods {
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(page!=="shorts") debugger;
 		this.PlayerResponse(playerResponse);
-		this._ReelWatchEndpoint(endpoint);
+		this.E_ReelWatchEndpoint(endpoint);
 		this.ReelResponse(response);
 		this.t(reelWatchSequenceResponse,this.ReelWatchSequenceResponse);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
@@ -10412,6 +10412,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
 		this.save_keys("[GuideEntryRoot]",x);
+		if("serviceEndpoint" in x) {
+			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,isPrimary,...y}=x;
+			this.t(serviceEndpoint,x => {
+				if("reelWatchEndpoint" in x) return this.E_ReelWatchEndpoint(x);
+				debugger;
+			});
+			return;
+		}
 		if("icon" in x) {
 			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,...y}=x;
 			this.t(navigationEndpoint,x => {

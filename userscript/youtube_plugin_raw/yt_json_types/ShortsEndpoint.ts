@@ -1,1 +1,1 @@
-type ShortsEndpoint=ReelWatchEndpoint;
+type ShortsEndpoint=E_ReelWatchEndpoint;

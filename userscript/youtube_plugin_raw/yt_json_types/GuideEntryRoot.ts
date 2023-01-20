@@ -20,4 +20,11 @@ type GuideEntryRoot={
 	formattedTitle: SimpleText;
 	accessibility: Accessibility;
 	isPrimary: true;
+}|{
+	icon: Icon<"TAB_SHORTS">;
+	trackingParams: string;
+	formattedTitle: SimpleText;
+	accessibility: Accessibility;
+	serviceEndpoint: E_ReelWatchEndpoint;
+	isPrimary: true;
 };

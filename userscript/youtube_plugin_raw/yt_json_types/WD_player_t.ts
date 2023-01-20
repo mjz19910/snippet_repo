@@ -1,0 +1,1 @@
+type WD_player_t={type: "player";data: PlayerResponse;};

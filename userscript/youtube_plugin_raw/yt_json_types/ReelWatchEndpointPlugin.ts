@@ -1,1 +1,0 @@
-type ReelWatchEndpointPlugin={reelWatchEndpoint: ReelWatchEndpointData;};

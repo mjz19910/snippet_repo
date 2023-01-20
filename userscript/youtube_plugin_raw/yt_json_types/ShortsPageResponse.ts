@@ -1,18 +1,18 @@
 type ShortsPageResponse={
 	page: "shorts";
-	endpoint: ReelWatchEndpoint;
+	endpoint: E_ReelWatchEndpoint;
 	response: ReelResponse;
 	playerResponse: PlayerResponse;
-	reelWatchSequenceResponse?: ReelWatchSequenceResponse;
+	reelWatchSequenceResponse?: R_ReelWatchSequenceResponse;
 	url: `/shorts/${string}`;
-	cachedReelWatchSequenceResponse?: ReelWatchSequenceResponse;
+	cachedReelWatchSequenceResponse?: R_ReelWatchSequenceResponse;
 }|{
 	rootVe: 37414;
 	url: `/shorts/${string}`;
-	endpoint: ReelWatchEndpoint;
+	endpoint: E_ReelWatchEndpoint;
 	page: "shorts";
 	playerResponse: PlayerResponse;
-	reelWatchSequenceResponse: ReelWatchSequenceResponse|undefined;
+	reelWatchSequenceResponse: R_ReelWatchSequenceResponse|undefined;
 	response: ReelResponse;
-	cachedReelWatchSequenceResponse: ReelWatchSequenceResponse;
+	cachedReelWatchSequenceResponse: R_ReelWatchSequenceResponse;
 };

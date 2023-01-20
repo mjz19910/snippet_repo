@@ -1,4 +1,4 @@
-type notification_record_interactions={
+type WD_notification_record_interactions={
 	type: "notification.record_interactions";
 	data: SuccessResponse;
 };

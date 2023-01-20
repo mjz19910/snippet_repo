@@ -3,7 +3,7 @@ type ReelItemWatchResponse={
 	overlay: ReelPlayerOverlayRenderer;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
 	trackingParams: string;
-	replacementEndpoint?: ReelWatchEndpoint;
+	replacementEndpoint?: E_ReelWatchEndpoint;
 	sequenceContinuation?: string;
 	desktopTopbar: DesktopTopbarRenderer;
 	engagementPanels: EngagementPanelItem[];
