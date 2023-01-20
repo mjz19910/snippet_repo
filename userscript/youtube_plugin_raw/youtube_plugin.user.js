@@ -7547,7 +7547,7 @@ class HandleTypes extends ServiceMethods {
 					/** @arg {GeneratedWebCommandMetadata} x */
 					this.codegen_new_typedef(x,`_gen_VE${cx}`);
 					console.log(`\n\t_gen_VE${cx},`);
-					console.log(`\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
+					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 				} break;
 				case 3854: return this.GeneratedWebCommandMetadata(x);
 				case 6827: return this.GeneratedWebCommandMetadata(x);
@@ -8338,7 +8338,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ContinuationCommand]",x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("ContinuationCommand",clickTrackingParams);
-		this.t(commandMetadata,this.CommandMetadata);
+		debugger;
+		// this.t(commandMetadata,this.CommandMetadata);
 		this.ContinuationCommandData(continuationCommand);
 	}
 	/** @arg {CD$Continuation} x */
@@ -8351,7 +8352,8 @@ class HandleTypes extends ServiceMethods {
 	ContinuationCommandMetadata(x) {
 		this.save_keys("[ContinuationCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		this.WebCommandMetadata(webCommandMetadata);
+		debugger;
+		// this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
@@ -10419,7 +10421,8 @@ class HandleTypes extends ServiceMethods {
 	NavigationEndpointCommandMetadata(x) {
 		this.save_keys("[NavigationEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		this.WebCommandMetadata(webCommandMetadata);
+		debugger;
+		// this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3611_WebCommandMetadata['url']} x */
 	VE3611_parse_url(x) {
@@ -10451,13 +10454,15 @@ class HandleTypes extends ServiceMethods {
 	WatchEndpointCommandMetadata(x) {
 		this.save_keys("[WatchEndpointCommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		this.WebCommandMetadata(webCommandMetadata);
+		debugger;
+		// this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3832_CommandMetadata} x */
 	VE3832_CommandMetadata(x) {
 		this.save_keys("[VE3832_CommandMetadata]",x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		this.WebCommandMetadata(webCommandMetadata);
+		debugger;
+		// this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3832_WebCommandMetadata} x */
 	VE3832_WebCommandMetadata(x) {
@@ -10829,9 +10834,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="UndoFeedbackEndpoint";
 		const {clickTrackingParams,commandMetadata,undoFeedbackEndpoint}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
-		commandMetadata;
-		debugger;
-		// this.CommandMetadata(commandMetadata);
+		this.CommandMetadata(commandMetadata);
 		{
 			const {actions,undoToken,...y}=undoFeedbackEndpoint; this.g(y);
 			let act=this.z(actions,a => {
