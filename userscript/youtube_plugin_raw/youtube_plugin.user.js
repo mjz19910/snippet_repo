@@ -5003,22 +5003,51 @@ case "${path}": {
 			if(tv.size<=0) return;
 			this.parse_any_param(root,path,tv);
 		} else {
+			/** @arg {number} idx */
+			let gen_next_part=(idx)=>{
+				console.log(`
+case "${path_parts[0]}": switch(path_parts[${idx}]) {
+default: {
+	let idx=${idx+1};
+	console.log("in",path_parts[${idx-1}]);
+	console.log(\`
+case "\${path_parts[${idx}]}":\`);
+	debugger;
+} path_parts[${idx}]===""; break;
+}`);
+			}
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
 				default: {
 					let idx=1;
 					console.log("root_next_case");
-					console.log(`
+					gen_next_part(idx);
+					debugger;
+				} break;
+				case "create_playlist": switch(path_parts[1]) {
+					default: {
+						let idx=2;
+						console.log("in",path_parts[0]);
+						console.log(`
 case "${path_parts[0]}": switch(path_parts[${idx}]) {
 	default: {
 		let idx=${idx+1};
 		console.log("in",path_parts[${idx-1}]);
 		console.log(\`
-case "\${path_parts[${idx}]}":\`);
+case "\${path_parts[${idx}]}": return;\`);
 		debugger;
 	} path_parts[${idx}]===""; break;
 }`);
-					debugger;
+						debugger;
+					} path_parts[1]===""; break;
+					case "params": switch(path_parts[2]) {
+						default: {
+							console.log("in",path_parts[1]);
+							console.log(`
+case "${path_parts[2]}": return;`);
+							debugger;
+						} break;
+					} break;
 				} break;
 				case "watch": switch(path_parts[1]) {
 					default: {
