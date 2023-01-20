@@ -6965,17 +6965,18 @@ class HandleTypes extends ServiceMethods {
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y);
 		this.Icon(icon);
 		this.TextT(title);
-		this.CompactLinkData_NavEndpoint(navigationEndpoint);
+		this.t(navigationEndpoint,this.CompactLink_Endpoint);
 		this.trackingParams(trackingParams);
 		switch(style) {
 			default: debugger; break;
+			case undefined: break;
 			case "COMPACT_LINK_STYLE_TYPE_ACCOUNT_SWITCHER_FOOTER": break;
 			case "COMPACT_LINK_STYLE_TYPE_CREATION_MENU": break;
 			case "COMPACT_LINK_STYLE_TYPE_SETTINGS_SIDEBAR": break;
 		}
 	}
-	/** @arg {CompactLinkData['navigationEndpoint']} x */
-	CompactLinkData_NavEndpoint(x) {
+	/** @arg {CompactLink_Endpoint} x */
+	CompactLink_Endpoint(x) {
 		if("uploadEndpoint" in x) return this.UploadEndpoint(x);
 		if("signalNavigationEndpoint" in x) return this.SignalNavigationEndpoint(x);
 		debugger;
@@ -10298,9 +10299,9 @@ class HandleTypes extends ServiceMethods {
 		switch(privacy) {
 			default: debugger; break;
 			case "PRIVATE": break;
+			case "PUBLIC": break;
 			case "UNLISTED": break;
 		}
-		if(privacy!=="PRIVATE") debugger;
 		if(containsSelectedVideos!=="NONE") debugger;
 		this.Icon(privacyIcon);
 		this.PlaylistEditEndpoint(addToPlaylistServiceEndpoint);

@@ -5,6 +5,7 @@ namespace CompactLinkStyleNS {
 		"ACCOUNT_SWITCHER_FOOTER"
 	][number];
 	export type Enum=[
-		`${EnumS}_${EnumVal}`
+		`${EnumS}_${EnumVal}`,
+		"COMPACT_LINK_STYLE_TYPE_CREATION_MENU",
 	][number];
 }
