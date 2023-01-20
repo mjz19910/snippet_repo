@@ -4805,7 +4805,9 @@ class ParserService extends BaseService {
 							switch(ta) {
 								case 2: break;
 								case 3: break;
+								case 24: break;
 								case 27: break;
+								case 56: break;
 								default: {
 									console.log("generate_ns",path);
 									console.log(`\ncase ${ta}: break;`);
@@ -4817,6 +4819,7 @@ class ParserService extends BaseService {
 						case "watch.player_params": {
 							switch(ta) {
 								case 8: break;
+								case 9: break;
 								default: {
 									console.log("generate_ns",path);
 									console.log(`\ncase ${ta}: break;`);
@@ -4867,6 +4870,7 @@ class ParserService extends BaseService {
 			}
 			console.log(path_parts);
 			console.log(`[${path}] [idx=${key_index}]`,for_,tv);
+			debugger;
 		}
 	}
 	/** @arg {ParamsSection} root @arg {PathFromRoot} path @arg {ParamMapType} x */
