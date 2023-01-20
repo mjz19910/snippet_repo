@@ -6,7 +6,12 @@ type GeneratedWebCommandMetadata=[
 	_gen_subscription$subscribe,
 	_gen_feedback,
 	_gen_like$like,
+	_gen_like$removelike,
 ][number];
+type _gen_like$removelike={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/like/removelike";
+};
 type _gen_like$like={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/like";

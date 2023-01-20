@@ -1,4 +1,6 @@
 type ParamsSection=
+	string
+	|"Next"
 	|"SubscribeEndpoint"
 	|"AE_Browse"
 	|"CommonConfigData"
@@ -11,8 +13,6 @@ type ParamsSection=
 	|"PlaylistContent"
 	|"PlaylistEdit"
 	|"RecordNotificationInteractions"
-	|"ReelWatch.player"
-	|"ReelWatch.sequence"
 	|"ReelWatch"
 	|"UnknownWebCommandMetadata"
 	|"WatchEndpoint"

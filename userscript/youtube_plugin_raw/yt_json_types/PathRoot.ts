@@ -5,6 +5,12 @@ type LogItems=[
 	"[parse_value.gen_ns] [subscribe.params.f4]",
 ][number];
 type PathRoot=[
+	"like.remove_like_params",
+	"tracking.trackingParams.f1",
+	"like.likeParams",
+	"tracking.parentTrackingParams",
+	"tracking.trackingParams",
+	"next.queue_context_params",
 	"subscribe.params",
 	$missing$param,
 	$known$param,
