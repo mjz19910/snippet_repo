@@ -5055,6 +5055,11 @@ case "${path_parts[idx-1]}": {
 				case "player_params": {
 					const idx=3;
 					if(path_parts.length===idx) {
+						if(tv instanceof Map) {
+							let mk=[...tv.keys()];
+							console.log(path_parts,mk);
+							return;
+						}
 						switch(tv) {default: debugger; return;}
 					}
 					switch(path_parts[2]) {
@@ -5066,6 +5071,11 @@ case "${path_parts[idx-1]}": {
 						case "f40": {
 							const idx=4;
 							if(path_parts.length===idx) {
+								if(tv instanceof Map) {
+									let mk=[...tv.keys()];
+									console.log(path_parts,mk);
+									return;
+								}
 								switch(tv) {default: debugger; return;}
 							}
 							switch(path_parts[3]) {
