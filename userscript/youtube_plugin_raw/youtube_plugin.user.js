@@ -4312,65 +4312,201 @@ class CodegenService extends BaseService {
 	get_json_replace_type_len_1(r,b,keys) {
 		let g=() => this.json_auto_replace(b);
 		let hg=false
+			||b.accountSectionListRenderer
+			||b.addToPlaylistCreateRenderer
+			||b.addToPlaylistRenderer
+			||b.adsEngagementPanelContentRenderer
+			||b.adSlotRenderer
+			||b.alertWithButtonRenderer
+			||b.automixPreviewVideoRenderer
+			||b.autoplaySwitchButtonRenderer
+			||b.backstagePostThreadRenderer
 			||b.browseEndpoint
+			||b.browseFeedActionsRenderer
+			||b.browserMediaSessionRenderer
 			||b.buttonRenderer
+			||b.c4TabbedHeaderRenderer
 			||b.changeEngagementPanelVisibilityAction
+			||b.channelAboutFullMetadataRenderer
+			||b.channelFeaturedContentRenderer
+			||b.channelHeaderLinksRenderer
+			||b.channelMetadataRenderer
+			||b.channelRenderer
+			||b.channelSwitcherPageRenderer
+			||b.chipCloudChipRenderer
 			||b.cinematicContainerRenderer
+			||b.clipCreationRenderer
+			||b.clipSectionRenderer
 			||b.commandExecutorCommand
+			||b.commentRenderer
 			||b.commentsEntryPointHeaderRenderer
+			||b.commentsHeaderRenderer
+			||b.commentSimpleboxRenderer
+			||b.commentThreadRenderer
+			||b.compactLinkRenderer
+			||b.compactPlaylistRenderer
+			||b.compactPromotedVideoRenderer
+			||b.compactRadioRenderer
+			||b.compactVideoRenderer
+			||b.confirmDialogRenderer
+			||b.connectedAppRenderer
+			||b.continuationCommand
 			||b.continuationItemRenderer
+			||b.createPlaylistServiceEndpoint
+			||b.createRenderer
+			||b.decoratedPlayerBarRenderer
 			||b.desktopTopbarRenderer
+			||b.dropdownRenderer
+			||b.emojiPickerRenderer
+			||b.endScreenPlaylistRenderer
+			||b.endScreenVideoRenderer
 			||b.engagementPanelSectionListRenderer
+			||b.engagementPanelTitleHeaderRenderer
+			||b.expandableTabRenderer
+			||b.expandableVideoDescriptionBodyRenderer
+			||b.feedFilterChipBarRenderer
+			||b.feedNudgeRenderer
+			||b.feedTabbedHeaderRenderer
+			||b.fusionSearchboxRenderer
 			||b.getSurveyCommand
+			||b.ghostGridRenderer
+			||b.gridRenderer
+			||b.guideCollapsibleEntryRenderer
+			||b.guideCollapsibleSectionEntryRenderer
+			||b.guideEntryRenderer
+			||b.guideSectionRenderer
+			||b.guideSubscriptionsSectionRenderer
+			||b.hintRenderer
+			||b.horizontalCardListRenderer
+			||b.hotkeyDialogRenderer
+			||b.hotkeyDialogSectionRenderer
+			||b.inlineSurveyRenderer
+			||b.is_ItemSectionRenderer
+			||b.itemSectionHeaderRenderer
+			||b.itemSectionRenderer
+			||b.likeButtonRenderer
+			||b.likeEndpoint
+			||b.liveChatAuthorBadgeRenderer
+			||b.liveChatHeaderRenderer
+			||b.liveChatItemListRenderer
+			||b.liveChatMessageInputRenderer
+			||b.liveChatParticipantsListRenderer
+			||b.liveChatPlaceholderItemRenderer
+			||b.liveChatRenderer
+			||b.liveChatTextMessageRenderer
+			||b.liveChatTickerRenderer
+			||b.liveChatViewerEngagementMessageRenderer
+			||b.macroMarkersListRenderer
 			||b.menuRenderer
+			||b.menuServiceItemRenderer
 			||b.merchandiseItemRenderer
+			||b.merchandiseShelfRenderer
+			||b.messageRenderer
+			||b.metadataBadgeRenderer
 			||b.metadataRowContainerRenderer
+			||b.microformatDataRenderer
+			||b.multiMarkersPlayerBarRenderer
+			||b.multiPageMenuNotificationSectionRenderer
+			||b.multiPageMenuRenderer
+			||b.multiPageMenuSectionRenderer
+			||b.musicCarouselShelfRenderer
+			||b.musicQueueRenderer
+			||b.musicResponsiveListItemRenderer
+			||b.musicShelfRenderer
+			||b.musicThumbnailRenderer
+			||b.notificationActionRenderer
+			||b.notificationRenderer
+			||b.notificationTopbarButtonRenderer
 			||b.openPopupAction
+			||b.pageIntroductionRenderer
 			||b.pdgBuyFlowHeaderRenderer
+			||b.pdgBuyFlowRenderer
 			||b.pdgColorSliderRenderer
 			||b.pdgCommentOptionRenderer
 			||b.pdgCommentPreviewRenderer
 			||b.pivotButtonRenderer
+			||b.playerAnnotationsExpandedRenderer
+			||b.playerOverlayAutoplayRenderer
 			||b.playerOverlayRenderer
-			||b.playlistPanelVideoRenderer
-			||b.richItemRenderer
-			||b.signalServiceEndpoint
-			||b.subscribeButtonRenderer
-			||b.superVodBuyFlowContentRenderer
-			||b.twoColumnWatchNextResults
-			||b.urlEndpoint
-			||b.videoOwnerRenderer
-			||b.videoViewCountRenderer
-			||b.watchEndpoint
-			||b.metadataBadgeRenderer
-			||b.likeButtonRenderer
-			||b.reelPlayerHeaderRenderer
-			||b.metadataBadgeRenderer
-			||b.likeEndpoint
-			||b.engagementPanelTitleHeaderRenderer
-			||b.sectionListRenderer
-			||b.clipSectionRenderer
-			||b.clipCreationRenderer
-			||b.reelWatchEndpoint
-			||b.reelPlayerOverlayRenderer
-			||b.compactLinkRenderer
-			||b.textInputFormFieldRenderer
-			||b.dropdownRenderer
-			||b.createPlaylistServiceEndpoint
-			||b.sortFilterSubMenuRenderer
-			||b.continuationCommand
-			||b.showReloadUiCommand
+			||b.playerOverlayVideoDetailsRenderer
+			||b.playlistAddToOptionRenderer
 			||b.playlistHeaderRenderer
 			||b.playlistMetadataRenderer
-			||b.microformatDataRenderer
+			||b.playlistPanelRenderer
+			||b.playlistPanelVideoRenderer
+			||b.playlistRenderer
+			||b.playlistSidebarPrimaryInfoRenderer
 			||b.playlistSidebarRenderer
+			||b.playlistSidebarSecondaryInfoRenderer
+			||b.playlistVideoListRenderer
+			||b.privacyDropdownItemRenderer
+			||b.productListRenderer
+			||b.profileColumnRenderer
+			||b.profileColumnStatsEntryRenderer
+			||b.profileColumnStatsRenderer
+			||b.profileColumnUserInfoRenderer
+			||b.promotedSparklesWebRenderer
+			||b.radioRenderer
+			||b.recognitionShelfRenderer
+			||b.reelPlayerHeaderRenderer
+			||b.reelPlayerHeaderSupportedRenderer
+			||b.reelPlayerOverlayRenderer
+			||b.reelShelfRenderer
+			||b.relatedChipCloudRenderer
+			||b.reportFormModalRenderer
+			||b.richGridRenderer
+			||b.richItemRenderer
+			||b.richSectionRenderer
+			||b.richShelfRenderer
+			||b.searchPyvRenderer
+			||b.sectionListRenderer
+			||b.settingsOptionsRenderer
+			||b.settingsSidebarRenderer
+			||b.shelfRenderer
+			||b.showReloadUiCommand||b.accountItemSectionRenderer
+			||b.signalServiceEndpoint
+			||b.simpleMenuHeaderRenderer
+			||b.singleColumnMusicWatchNextResultsRenderer
+			||b.sortFilterSubMenuRenderer
+			||b.sourcePivotHeaderRenderer
+			||b.structuredDescriptionContentRenderer
+			||b.subscribeButtonRenderer
+			||b.superVodBuyFlowContentRenderer
+			||b.tabbedRenderer
+			||b.tabbedSearchResultsRenderer
 			||b.tabRenderer
+			||b.textInputFormFieldRenderer
+			||b.thumbnailOverlayBottomPanelRenderer
+			||b.thumbnailOverlayHoverTextRenderer
+			||b.thumbnailOverlayNowPlayingRenderer
+			||b.thumbnailOverlayResumePlaybackRenderer
+			||b.thumbnailOverlayTimeStatusRenderer
+			||b.thumbnailOverlayToggleButtonRenderer
+			||b.topbarLogoRenderer
+			||b.topbarMenuButtonRenderer
+			||b.transcriptRenderer
 			||b.twoColumnBrowseResultsRenderer
-			||b.hotkeyDialogSectionRenderer
+			||b.twoColumnSearchResultsRenderer
+			||b.twoColumnWatchNextResults
+			||b.unifiedSharePanelRenderer
+			||b.urlEndpoint
+			||b.videoDescriptionHeaderRenderer
+			||b.videoDescriptionMusicSectionRenderer
+			||b.videoMastheadAdV3Renderer
+			||b.videoOwnerRenderer
+			||b.videoPrimaryInfoRenderer
+			||b.videoRenderer
+			||b.videoSecondaryInfoRenderer
+			||b.videoViewCountRenderer
+			||b.voiceSearchDialogRenderer
+			||b.watchEndpoint
+			||b.watchNextEndScreenRenderer
+			||b.watchNextTabbedResultsRenderer
 			;
 		if(hg) return g();
 		if(b.webCommandMetadata) return "TYPE::CommandMetadata";
 		if(b.accessibilityData) return "TYPE::Accessibility";
+		debugger;
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
 	}

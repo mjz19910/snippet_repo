@@ -3,4 +3,5 @@ type MenuData={
 	accessibility?: Accessibility;
 	items: MenuServiceItemRenderer[];
 	targetId?: string;
+	loggingDirectives?: LoggingDirectives;
 };
