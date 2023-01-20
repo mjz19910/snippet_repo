@@ -10268,7 +10268,7 @@ class HandleTypes extends ServiceMethods {
 		let n=this.w(x);
 		const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=n; this.g(y);
 		this.TextWithRuns(successResponseText);
-		this.TextWithRuns(undoEndpoint);
+		this.TextWithRuns(undoText);
 		this.E_UndoFeedbackEndpoint(undoEndpoint);
 		this.trackingParams(trackingParams);
 	}
