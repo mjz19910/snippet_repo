@@ -8713,26 +8713,20 @@ class HandleTypes extends ServiceMethods {
 	WatchEndpointData(x) {
 		const cf="WatchEndpointData";
 		this.save_keys(`[${cf}]`,x);
-		const {videoId,playlistId,index,playlistSetVideoId,params,...y1}=x;
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,...y}=x; this.g(y);
 		this.videoId(videoId);
 		this.t(playlistId,this.playlistId);
 		if(index!==void 0) this.primitive_of(index,"number");
 		if(playlistSetVideoId!==void 0) this.primitive_of(playlistSetVideoId,"string");
 		if(params!==void 0) this.params("WatchEndpoint","watch.params",params);
-		const {startTimeSeconds,...y2}=y1;
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
-		const {continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,...y3}=y2;
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
 		this.t(loggingContext,this.VssLoggingContext);
 		this.t(watchEndpointSupportedOnesieConfig,this.Html5PlaybackOnesieConfig);
-		const {watchEndpointSupportedPrefetchConfig: a1,playerParams,...y4}=y3;
 		this.t(a1,this.PrefetchHintConfig);
 		this.t(playerParams,a => this.playerParams("WatchEndpoint","watch.player_params",a));
-		const {watchEndpointMusicSupportedConfigs: a2,...y5}=y4;
 		this.t(a2,this.WatchEndpointMusicConfig);
-		const {nofollow,...y_end}=y5;
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
-		this.primitive_of(y_end,"string");
 	}
 	/** @arg {WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfig(x) {
