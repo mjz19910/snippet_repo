@@ -5056,11 +5056,7 @@ case "${path_parts[idx-1]}": {
 	if(path_parts.length===${idx}) {${case_part}${value_part}
 	}
 	switch(path_parts[${idx}]) {
-		default: {
-			console.log("in",path_parts[${idx-1}]);
-			gen_next_part(idx);
-			debugger;
-		} path_parts[${idx}]===""; break;
+		default: gd(idx); path_parts[${idx}]===""; break;
 	}
 } break;`);
 		};
@@ -5097,11 +5093,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: {
-										console.log("in",path_parts[2]);
-										gen_next_part(idx);
-										debugger;
-									} path_parts[3]===""; break;
+									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
 						}
@@ -5143,11 +5135,7 @@ case "${path_parts[idx-1]}": {
 									}
 								}
 								switch(path_parts[3]) {
-									default: {
-										console.log("in",path_parts[2]);
-										gen_next_part(idx);
-										debugger;
-									} path_parts[3]===""; break;
+									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
 							case "f14": {
@@ -5158,11 +5146,7 @@ case "${path_parts[idx-1]}": {
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
-									default: {
-										console.log("in",path_parts[2]);
-										gen_next_part(idx);
-										debugger;
-									} path_parts[3]===""; break;
+									default: gd(idx); path_parts[3]===""; break;
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5250,11 +5234,7 @@ case "${path_parts[idx-1]}": {
 								switch(tv) {default: debugger; return;}
 							}
 							switch(path_parts[3]) {
-								default: {
-									console.log("in",path_parts[2]);
-									gen_next_part(idx);
-									debugger;
-								} path_parts[3]===""; break;
+								default: gd(idx); path_parts[3]===""; break;
 								case "f1": {
 									const idx=5;
 									if(path_parts.length===5) {
@@ -5293,11 +5273,7 @@ case "${path_parts[idx-1]}": {
 								return;
 							}
 							switch(path_parts[3]) {
-								default: {
-									console.log("in",path_parts[2]);
-									gen_next_part(idx);
-									debugger;
-								} path_parts[3]===""; break;
+								default: gd(idx); path_parts[3]===""; break;
 								case "f5": {
 									const idx=4;
 									if(path_parts.length===idx) {
