@@ -9,6 +9,6 @@ type PathRoot=[
 	"ypc_get_offers.params",
 	"create_playlist.params",
 	"watch_playlist.params",
-	"watch.params.f27",
+	`watch.params.f${number}`,
 ][number];
 type PathFromRoot=PathRoot|`${PathRoot}.f${number}`;
