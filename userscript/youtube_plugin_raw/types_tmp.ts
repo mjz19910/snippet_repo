@@ -15,6 +15,7 @@ type PathRoot=[
 	"watch.params.f27",
 	"watch.params.f27.f1",
 	"watch.params.f33",
+	"watch.params.f33.f2",
 	"watch.params.f56",
 	"watch.player_params.f8",
 	"watch.player_params.f9",
