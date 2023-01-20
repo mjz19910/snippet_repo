@@ -8821,11 +8821,26 @@ class HandleTypes extends ServiceMethods {
 	NotificationGetUnseenCountResponse(x) {
 		this.save_keys("[NotificationGetUnseenCountResponse]",x);
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y);
-		if(actions) {
-			if(actions.length!==1) debugger;
+		this.t(actions,a=>this.z(a,x=>{
+			if("updateNotificationsUnseenCountAction" in x) return this.UpdateNotificationsUnseenCountAction(x);
 			debugger;
-		}
+		}));
 		if(unseenCount!==void 0) this.primitive_of(unseenCount,"number");
+	}
+	/** @private @arg {UpdateNotificationsUnseenCountAction} x */
+	UpdateNotificationsUnseenCountAction(x) {
+		this.save_keys("[UpdateNotificationsUnseenCountAction]",x);
+		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=x; this.g(y);
+		this.clickTrackingParams(clickTrackingParams);
+		this.UpdateNotificationsUnseenCount(updateNotificationsUnseenCountAction);
+	}
+	/** @private @arg {UpdateNotificationsUnseenCount} x */
+	UpdateNotificationsUnseenCount(x) {
+		this.save_keys("[UpdateNotificationsUnseenCount]",x);
+		const {handlerData,unseenCount,timeoutMs,...y}=x; this.g(y);
+		this.primitive_of(handlerData,"string");
+		this.primitive_of(unseenCount,"number");
+		this.primitive_of(timeoutMs,"number");
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
@@ -8864,7 +8879,7 @@ class HandleTypes extends ServiceMethods {
 		this.DesktopTopbarRenderer(desktopTopbar);
 		this.z(engagementPanels,this.EngagementPanelItem);
 	}
-	/** @arg {EngagementPanelItem} x */
+	/** @private @arg {EngagementPanelItem} x */
 	EngagementPanelItem(x) {
 		this.save_keys("[EngagementPanelItem]",x);
 		if("engagementPanelSectionListRenderer" in x) {
@@ -8927,13 +8942,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {GuideSectionRenderer} x */
+	/** @private @arg {GuideSectionRenderer} x */
 	GuideSectionRenderer(x) {
 		this.save_keys("[GuideSectionRenderer]",x);
 		const {guideSectionRenderer,...y}=x; this.g(y);
 		this.GuideSectionData(guideSectionRenderer);
 	}
-	/** @arg {GuideSectionData} x */
+	/** @private @arg {GuideSectionData} x */
 	GuideSectionData(x) {
 		this.save_keys("[GuideSectionData]",x);
 		const {items,trackingParams,formattedTitle,...y}=x; this.g(y);
@@ -8941,13 +8956,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(trackingParams);
 		this.t(formattedTitle,this.TextT);
 	}
-	/** @arg {LiveChatRenderer} x */
+	/** @private @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
 		this.save_keys("[LiveChatRenderer]",x);
 		const {liveChatRenderer,...y}=x; this.g(y);
 		this.g(liveChatRenderer);
 	}
-	/** @arg {AutoplayContent} x */
+	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		this.save_keys("[AutoplayContent]",x);
 		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=x; this.g(y);
@@ -8956,7 +8971,7 @@ class HandleTypes extends ServiceMethods {
 		if(modifiedSets!==void 0) this.z(modifiedSets,this.ModifiedSetItem);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {PlaylistContent} x */
+	/** @private @arg {PlaylistContent} x */
 	PlaylistContent(x) {
 		this.save_keys("[PlaylistContent]",x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y);
@@ -8978,30 +8993,30 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isCourse,"boolean");
 		this.SimpleText(nextVideoLabel);
 	}
-	/** @arg {ThumbnailOverlayBottomPanelData} x */
+	/** @private @arg {ThumbnailOverlayBottomPanelData} x */
 	ThumbnailOverlayBottomPanelData(x) {
 		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
 		const {icon,...y}=x; this.g(y);
 		this.Icon(icon);
 	}
-	/** @arg {BrowserMediaSessionRenderer} x */
+	/** @private @arg {BrowserMediaSessionRenderer} x */
 	BrowserMediaSessionRenderer(x) {
 		this.save_keys("[BrowserMediaSessionRenderer]",x);
 		const {browserMediaSessionRenderer,...y}=x; this.g(y);
 		this.BrowserMediaSession(browserMediaSessionRenderer);
 	}
-	/** @arg {BrowserMediaSession} x */
+	/** @private @arg {BrowserMediaSession} x */
 	BrowserMediaSession(x) {
 		this.save_keys("[BrowserMediaSession]",x);
 		const {...y}=x; this.g(y);
 	}
-	/** @arg {AutoplaySwitchButtonRenderer} x */
+	/** @private @arg {AutoplaySwitchButtonRenderer} x */
 	AutoplaySwitchButtonRenderer(x) {
 		this.save_keys("[AutoplaySwitchButtonRenderer]",x);
 		const {autoplaySwitchButtonRenderer,...y}=x; this.g(y);
 		this.AutoplaySwitchButton(autoplaySwitchButtonRenderer);
 	}
-	/** @arg {AutoplaySwitchButton} x */
+	/** @private @arg {AutoplaySwitchButton} x */
 	AutoplaySwitchButton(x) {
 		this.save_keys("[AutoplaySwitchButton]",x);
 		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=x; this.g(y);
