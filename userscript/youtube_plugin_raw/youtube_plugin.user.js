@@ -6538,6 +6538,12 @@ class HandleTypes extends ServiceMethods {
 		if(commandMetadata) this.CommandMetadata(commandMetadata);
 		this.BrowseEndpointData(browseEndpoint);
 	}
+	/** @arg {BrowseEndpointData} x */
+	BrowseEndpointData(x) {
+		this.save_keys("[BrowseEndpointData]",x);
+		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y);
+		this.t(browseId,this.browseId);
+	}
 	//#region web_command_metadata
 	/** @arg {WebCommandMetadata} x */
 	WebCommandMetadata(x) {
@@ -6679,11 +6685,6 @@ class HandleTypes extends ServiceMethods {
 			case "guide_builder": break;
 			default: debugger; break;
 		}
-	}
-	/** @arg {BrowseEndpointData} x */
-	BrowseEndpointData(x) {
-		this.save_keys("[BrowseEndpointData]",x);
-		if(x.browseId) this.browseId(x.browseId);
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
