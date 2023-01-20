@@ -4937,6 +4937,16 @@ class ParserService extends BaseService {
 								} return;
 							}
 						} return;
+						case "create_playlist.params": {
+							switch(ta) {
+								case 84: break;
+								default: {
+									console.log("[parse_value.new_ns]",path);
+									console.log(`
+						case ${ta}: break;`);
+								} return;
+							}
+						} return;
 						default: {
 							console.log("[parse_value.new_ns]",path);
 							console.log(`
