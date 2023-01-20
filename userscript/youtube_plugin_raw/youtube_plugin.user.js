@@ -9501,6 +9501,7 @@ class HandleTypes extends ServiceMethods {
 			this.primitive_of(serializedShareEntity,"string");
 			this.z(commands,a=>{
 				const {clickTrackingParams,...b}=a;
+				if(!b.openPopupAction) debugger;
 				let {popup,popupType,...y}=this.w(b);
 				if("beReused" in y) {
 					if(y.beReused!==true) debugger;
@@ -10758,7 +10759,9 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ThumbnailOverlayResumePlayback} x */
 	ThumbnailOverlayResumePlayback(x) {
 		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
-		const {...y}=x; this.g(y);
+		const {percentDurationWatched,...y}=x; this.g(y);
+		if(!percentDurationWatched) {debugger;return;}
+		if(percentDurationWatched!==10) debugger;
 	}
 	/** @arg {VideoMastheadAdV3} x */
 	VideoMastheadAdV3(x) {

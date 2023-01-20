@@ -1,1 +1,3 @@
-type ThumbnailOverlayResumePlayback={};
+type ThumbnailOverlayResumePlayback={
+	percentDurationWatched: 10;
+};
