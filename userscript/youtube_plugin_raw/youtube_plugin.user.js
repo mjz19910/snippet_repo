@@ -9169,7 +9169,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {GuideSectionItemType} x */
 	GuideSectionItemType(x) {
 		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) this.GuideCollapsibleSectionEntryRenderer(x);
+		if("guideCollapsibleSectionEntryRenderer" in x) return this.GuideCollapsibleSectionEntryRenderer(x);
 		debugger;
 	}
 	/** @private @arg {LiveChatRenderer} x */
