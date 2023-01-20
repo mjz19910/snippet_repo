@@ -4866,11 +4866,11 @@ class ParserService extends BaseService {
 	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
-		let new_ns=()=>{
+		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
 			console.log(`\ncase ${ta}: break;`);
 			debugger;
-		}
+		};
 		if(tv!==void 0) {
 			x.delete(ta);
 			let cx=mk.indexOf(ta);
@@ -4996,6 +4996,30 @@ case "${path}": {
 			cb(tv,ta);
 		}
 	}
+	/** @arg {ParamMapValue} tv */
+	mapper_use(tv) {
+		/** @arg {ParamMapValue} e */
+		let mapper=e => {
+			if(e instanceof Map) {
+				let min_=Math.min(...e.keys());
+				let len=Math.max(...e.keys());
+				let x2=this.to_param_obj(e);
+				let c3={
+					...x2,
+					length: len+1,
+				};
+				return Array(min_).concat(Array.from(c3).map((_u,j) => e.get(j)).slice(min_));
+			}
+			return e;
+		};
+		let xx=mapper(tv);
+		// Array.from(xx).slice(1).map(mapper)[0];
+		if(xx instanceof Array) {
+			return xx.map(mapper);
+		} else {
+			return xx;
+		}
+	}
 	/** @arg {ParamsSection} root @arg {PathRoot} path @arg {ParamMapValue} tv */
 	parse_param_next(root,path,tv) {
 		let key_index=this.parse_key_index;
@@ -5029,9 +5053,9 @@ case "${path_parts[idx-1]}": {
 				if(tv instanceof Map) case_part=`${"\n\t\t"}if(tv instanceof Map) return;`;
 				switch(typeof tv) {
 					case "number": {
-						if(tv > 128) {
+						if(tv>128) {
 							case_part=`
-${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`
+${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`;
 						} else {
 							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;
 \t\t\tdefault: debugger; return;\n\t\t}`;
@@ -5086,6 +5110,19 @@ case "${path_parts[idx-1]}": {
 								gen_next_part(idx);
 								debugger;
 							} path_parts[2]===""; break;
+							case "f14": {
+								const idx=4;
+								if(path_parts.length===idx) {
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: {
+										console.log("in",path_parts[2]);
+										gen_next_part(idx);
+										debugger;
+									} path_parts[3]===""; break;
+								}
+							} break;
 						}
 					} break;
 				}
