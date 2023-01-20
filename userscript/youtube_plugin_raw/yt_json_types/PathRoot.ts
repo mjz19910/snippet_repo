@@ -1,16 +1,5 @@
 type LogItems=[
-	"[parse_value.gen_ns] [subscribe.params.f2]",
-	"[parse_value.gen_ns] [subscribe.params.f2.f1]",
-	"[parse_value.gen_ns] [subscribe.params.f3]",
-	"[parse_value.gen_ns] [subscribe.params.f4]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f2]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f3]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f4]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f4.f1]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f4.f2]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f4.f3]",
-	"[parse_value.gen_ns] [tracking.trackingParams.f6]",
-	"[parse_value.gen_ns] [entity_key.f2]",
+	"[parse_value.gen_ns] [createBackstagePost.param.f1]",
 ][number];
 type PathRoot=[
 	"createBackstagePost.param",
