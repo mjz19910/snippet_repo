@@ -5085,7 +5085,7 @@ class ParserService extends BaseService {
 		let new_ns=() => {
 			console.log("[parse_value.new_ns]",path);
 			/** @type {LogItems} */
-			console.log("\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
+			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`\ncase ${ta}: break;`);
 			debugger;
 		};
@@ -5139,11 +5139,8 @@ case "${path}": {
 					} return;
 					case "watch.params": {
 						switch(ta) {
-							case 2: break;
-							case 3: break;
-							case 24: break;
-							case 33: break;
-							case 56: break;
+							case 2: case 3: break; case 7: case 12: case 13: break;
+							case 24: case 27: case 33: case 56: break;
 							default: return new_ns();
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5270,13 +5267,12 @@ case "${path}": {
 				switch(typeof tv) {
 					case "number": {
 						if(tv>128) {
-							case_part=`
-${"\t\t"}if(typeof tv==="number") return console.log("[param_parse]",path,tv);`;
+							case_part=`\n\t\tif(typeof tv==="number") return console.log("[param_parse]",path,tv);`;
 						} else {
-							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;
-\t\t\tdefault: debugger; return;\n\t\t}`;
+							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;\n\t\t\tdefault: debugger; return;\n\t\t}`;
 						}
-					}
+					} break;
+					case "string": case_part=`\n\t\tif(typeof tv==="string") return console.log("[param_parse]",path,tv);`; break;
 				}
 			}
 			console.log(`
@@ -5554,16 +5550,73 @@ case "${path_parts[idx-1]}": {
 				} break;
 				case "params": {
 					const idx=3;
-					if(path_parts.length===idx) {
+					if(path_parts.length===2) {
 						if(tv instanceof Map) return;
 						switch(tv) {default: debugger; break;}
 						return;
 					}
 					switch(path_parts[2]) {
 						default: gd(idx); path_parts[2]===""; break;
+						case "f12": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {default: debugger; return;}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
+						case "f7": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 1: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
+						case "f3": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 1: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
+						case "f2": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 1: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
+						case "f24": {
+							const idx=4;
+							if(path_parts.length===3) {
+								switch(tv) {
+									case 1: return;
+									default: debugger; return;
+								}
+							}
+							switch(path_parts[3]) {
+								default: gd(idx); path_parts[3]===""; break;
+							}
+						} break;
 						case "f33": {
 							const idx=4;
-							if(path_parts.length===idx-1) {
+							if(path_parts.length===3) {
 								switch(tv) {default: debugger; break;}
 								return;
 							}
