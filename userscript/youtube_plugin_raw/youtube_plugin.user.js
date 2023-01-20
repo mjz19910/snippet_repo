@@ -11235,7 +11235,7 @@ class HandleTypes extends ServiceMethods {
 	SearchResultsTab(x) {
 		this.save_keys("[SearchResultsTab]",x);
 		const {endpoint,title,selected,content,tabIdentifier,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.t(endpoint,this.SearchResultsSearchEndpoint);
+		this.t(endpoint,this.E$SearchEndpoint);
 		this.primitive_of_string(title);
 		if(selected!==void 0) this.primitive_of(selected,"boolean");
 		this.SectionListRenderer(content);
@@ -12118,11 +12118,11 @@ class HandleTypes extends ServiceMethods {
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip(chipCloudChipRenderer);
 	}
-	/** @arg {E$SearchResultsSearchEndpoint} x */
-	SearchResultsSearchEndpoint(x) {
-		const cf="SearchResultsSearchEndpoint";
-		this.save_keys("[SearchResultsSearchEndpoint]",x);
-		const {clickTrackingParams,searchEndpoint,...y}=x; this.g(y); // ! #destructure
+	/** @arg {E$SearchEndpoint} x */
+	E$SearchEndpoint(x) {
+		const cf="SearchEndpoint";
+		this.save_keys("[SearchEndpoint]",x);
+		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.E$Search(searchEndpoint);
 	}

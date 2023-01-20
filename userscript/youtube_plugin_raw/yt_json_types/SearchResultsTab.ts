@@ -1,5 +1,5 @@
 type SearchResultsTab={
-	endpoint?: E$SearchResultsSearchEndpoint;
+	endpoint?: E$SearchEndpoint;
 	title: string;
 	selected?: boolean;
 	content: SectionListRenderer;
