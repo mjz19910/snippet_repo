@@ -1,7 +1,7 @@
 type ParamsSection=
-	|"WatchPlaylist"
 	|"CommonConfigData"
 	|"CreatePlaylist"
+	|"GeneratedWCM"
 	|"Generic_WatchPageResponse"
 	|"GetTranscript"
 	|"HrefUrl"
@@ -13,6 +13,7 @@ type ParamsSection=
 	|"UnknownWebCommandMetadata"
 	|"WatchEndpoint"
 	|"WatchPageResponse"
+	|"WatchPlaylist"
 	|"YpcGetOffers"
 	;
 ;
