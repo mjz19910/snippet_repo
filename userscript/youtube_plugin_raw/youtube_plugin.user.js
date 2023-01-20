@@ -10295,6 +10295,11 @@ class HandleTypes extends ServiceMethods {
 		const {playlistId,title,privacy,containsSelectedVideos,privacyIcon,addToPlaylistServiceEndpoint,removeFromPlaylistServiceEndpoint,trackingParams}=x; //,...y}=x; this.g(y);
 		this.playlistId(playlistId);
 		this.SimpleText(title);
+		switch(privacy) {
+			default: debugger; break;
+			case "PRIVATE": break;
+			case "UNLISTED": break;
+		}
 		if(privacy!=="PRIVATE") debugger;
 		if(containsSelectedVideos!=="NONE") debugger;
 		this.Icon(privacyIcon);
