@@ -2582,6 +2582,7 @@ class BaseService extends BaseServicePrivate {
 	/** @public @template {{}} U @arg {U[]} x @arg {(this:this,x:U,i:number)=>void} f  */
 	z(x,f) {
 		if(x===void 0) {debugger; return;}
+		if(!x.entries) debugger;
 		for(let it of x.entries()) {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
@@ -10672,7 +10673,7 @@ class HandleTypes extends ServiceMethods {
 	PlaylistResponse(x) {
 		this.save_keys("[PlaylistResponse]",x);
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y);
-		this.z(contents,this.TwoColumnBrowseResultsRenderer);
+		this.TwoColumnBrowseResultsRenderer(contents);
 		this.PlaylistHeaderRenderer(header);
 		this.PlaylistMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);

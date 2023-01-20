@@ -1,4 +1,4 @@
-type PlaylistResponse=ContentsArrayTemplate<TwoColumnBrowseResultsRenderer>&{
+type PlaylistResponse=ContentsTemplate<TwoColumnBrowseResultsRenderer>&{
 	responseContext: ResponseContext;
 	header: PlaylistHeaderRenderer;
 	metadata: PlaylistMetadataRenderer;
