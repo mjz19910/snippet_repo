@@ -4350,19 +4350,24 @@ class CodegenService extends BaseService {
 		return null;
 	}
 	/** @param {{[U in string]:unknown}} x */
-	json_auto_replace(x) {
+	json_auto_replace_1(x) {
 		let o_keys=this.filter_keys(this.get_keys_of(x));
 		if(o_keys.length===1) {
 			let kk=this.get_name_from_keys(x);
-			if(kk) return `TYPE::${this.uppercase_first(kk)}`;
-			kk=o_keys[0];
-			return `TYPE::${this.uppercase_first(kk)}`;
-		} else if(o_keys.length>0) {
-			let kk=o_keys[0];
-			return `TYPE::${this.uppercase_first(kk)}`;
-		} else {
-			return "TYPE::{}";
+			if(kk) return this.uppercase_first(kk);
 		}
+		if(o_keys.length>0) {
+			return this.uppercase_first(o_keys[0]);
+		}
+		return "{}";
+	}
+	/** @param {{[U in string]:unknown}} x */
+	json_auto_replace(x) {
+		let type_val=this.json_auto_replace_1(x);
+		if(type_val.endsWith("Endpoint")) {
+			type_val=`E_${type_val}`;
+		}
+		return `TYPE::${type_val}`;
 	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(r,b,keys) {
@@ -9448,13 +9453,39 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(trackingParams);
 		this.t(accessibility,this.Accessibility);
-		this.z(items,this.MenuServiceItemRenderer);
+		this.R_MenuItems(items);
 		this.t(targetId,a => {
 			a;
 			debugger;
 			// this.targetId(cf,a);
 		});
 		this.t(loggingDirectives,this.LoggingDirectives);
+	}
+	/** @arg {MenuData['items']} x */
+	R_MenuItems(x) {
+		this.z(x,a=>{
+			if("toggleMenuServiceItemRenderer" in a) return this.toggleMenuServiceItemRenderer(a);
+			if("menuServiceItemRenderer" in a) return this.MenuServiceItemRenderer(a);
+			debugger;
+		});
+	}
+	/** @arg {Extract<MenuData['items'][number],{toggleMenuServiceItemRenderer:any}>} x */
+	toggleMenuServiceItemRenderer(x) {
+		let x1=this.w(x);
+		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
+		this.primitive_of(isToggled,"boolean");
+		this.MenuServiceItemData({
+			icon:defaultIcon,
+			text:defaultText,
+			serviceEndpoint:defaultServiceEndpoint,
+			trackingParams,
+		});
+		this.MenuServiceItemData({
+			icon:toggledIcon,
+			text:toggledText,
+			serviceEndpoint:toggledServiceEndpoint,
+			trackingParams,
+		});
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
@@ -9467,11 +9498,19 @@ class HandleTypes extends ServiceMethods {
 		if("notificationOptOutEndpoint" in x) return;
 		this.EndpointTemplate(x,this.MenuServiceEndpoints);
 	}
-	/** @arg {MenuServiceItemData} x */
+	/** @arg {MenuServiceItemData<MenuServiceIconTypeStr>} x */
 	MenuServiceItemData(x) {
 		this.save_keys("[MenuServiceItemData]",x);
 		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(text);
+		if(icon) {
+			switch(icon.iconType) {
+				case "LIBRARY_ADD": break;
+				case "LIBRARY_REMOVE": break;
+				case "NOT_INTERESTED": break;
+				default: icon.iconType===""; debugger; break;
+			}
+		}
 		this.t(icon,this.Icon);
 		this.MenuServiceEndpointItems(serviceEndpoint);
 		this.trackingParams(trackingParams);
@@ -10201,7 +10240,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isInfinite,"boolean");
 		this.parser.parse_url("PlaylistContent",playlistShareUrl);
 		this.SimpleText(shortBylineText);
-		this.TextWithRuns(longBylineText);
+		this.SimpleText(longBylineText);
 		this.trackingParams(trackingParams);
 		this.SimpleText(titleText);
 		this.primitive_of(isEditable,"boolean");

@@ -1,4 +1,5 @@
 type MenuServiceEndpoints=
+	|E_LikeEndpoint
 	|E_NotificationOptOutEndpoint
 	|E_PlaylistEditEndpoint
 	|E$GetReportFormEndpoint
@@ -7,9 +8,9 @@ type MenuServiceEndpoints=
 	|{feedbackEndpoint: AE_Feedback;}
 	;
 
-	type E$ShareEntityServiceEndpoint={
-		shareEntityServiceEndpoint: {
-			serializedShareEntity: string;
-			commands: OpenPopupAction[];
-		};
+type E$ShareEntityServiceEndpoint={
+	shareEntityServiceEndpoint: {
+		serializedShareEntity: string;
+		commands: OpenPopupAction[];
 	};
+};

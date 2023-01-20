@@ -1,6 +1,6 @@
-type MenuServiceItemData={
+type MenuServiceItemData<T extends string>={
 	text: TextWithRuns;
-	icon?: Icon<"NOT_INTERESTED">;
+	icon?: Icon<T>;
 	serviceEndpoint: MenuServiceEndpointItems;
 	trackingParams: string;
 	hasSeparator?: true;

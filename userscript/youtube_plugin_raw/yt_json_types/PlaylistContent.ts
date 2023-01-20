@@ -6,7 +6,7 @@ type PlaylistContent=ContentsArrayTemplate<PlaylistPanelVideoRenderer>&{
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
 	shortBylineText: SimpleText;
-	longBylineText: TextWithRuns;
+	longBylineText: SimpleText;
 	trackingParams: string;
 	titleText: SimpleText;
 	isEditable: true;
