@@ -4962,6 +4962,18 @@ class ParserService extends BaseService {
 						/** @type {PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
+					case "create_playlist.params.f84": {
+						switch(ta) {
+							case 5: break;
+							default: {
+								console.log("[parse_value.new_ns]",path);
+								console.log(`
+					case ${ta}: break;`);
+							} return;
+						}
+						/** @type {PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					default: {
 						console.log("[parse_value.new_ns]",path);
 						console.log(`

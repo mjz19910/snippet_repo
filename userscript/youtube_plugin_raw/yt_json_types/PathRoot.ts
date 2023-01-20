@@ -1,5 +1,6 @@
 type PathRoot=
 	|"create_playlist.params.f84"
+	|"create_playlist.params.f84.f5"
 	|"create_playlist.params"
 	|"get_transcript.params"
 	|"playlist_edit.params"
