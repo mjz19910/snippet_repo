@@ -9104,7 +9104,7 @@ class HandleTypes extends ServiceMethods {
 	R_MenuData(x) {
 		const cf="MenuData";
 		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,accessibility,items,targetId,...y}=x; this.g(y); // ! #destructure
+		const {trackingParams,accessibility,items,targetId,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(trackingParams);
 		this.t(accessibility,this.Accessibility);
 		this.z(items,a => this.MenuServiceItemRenderer(a));
@@ -9113,6 +9113,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			// this.targetId(cf,a);
 		});
+		this.t(loggingDirectives,this.LoggingDirectives);
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
