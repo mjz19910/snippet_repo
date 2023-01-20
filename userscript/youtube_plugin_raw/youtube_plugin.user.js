@@ -5508,7 +5508,7 @@ case "${path_parts[idx-1]}": {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(typeof tv==="number") {
-												if(((tv/1000/25628)%2) < 0.1) {
+												if(((tv/1000/25628)%2)<0.1) {
 													let ntv=(tv/1000/25628)|0;
 													return this.save_number(`[${path}]`,ntv);
 												} return;
@@ -11823,6 +11823,12 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
 		if("urlEndpoint" in x) return this.UrlEndpoint(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
+		if("createBackstagePostEndpoint" in x) {
+			this.CommandTemplate(x,a => {
+				this.params("","createBackstagePost.param",this.w(a).createBackstagePostParams);
+			});
+			return;
+		}
 		debugger;
 	}
 	/** @arg {EngagementPanelMenu} x */
