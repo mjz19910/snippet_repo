@@ -4176,19 +4176,19 @@ class CodegenService extends BaseService {
 	#_codegen_new_typedef(x,gen_name) {
 		let k=this.get_name_from_keys(x);
 		if(k===null) return null;
+		/** @private @type {{[x: number|string]:{}}} */
+		let xa=as(x);
+		let o2=xa[k];
+		let keys=Object.keys(x).concat(Object.keys(o2));
+		if("response" in x&&typeof x.response==='object'&&x.response!==null) {
+			keys=keys.concat(Object.keys(x.response));
+		}
 		/** @type {JsonReplacerState} */
 		let state={
 			object_count: 0,
 			gen_name,
-			keys: [],
+			keys,
 		};
-		/** @private @type {{[x: number|string]:{}}} */
-		let xa=as(x);
-		let o2=xa[k];
-		state.keys=Object.keys(x).concat(Object.keys(o2));
-		if("response" in x&&typeof x.response==='object'&&x.response!==null) {
-			state.keys=state.keys.concat(Object.keys(x.response));
-		}
 		let tc=JSON.stringify(x,this.json_replacer.bind(null,state),"\t");
 		tc=tc.replaceAll(/\"(\w+)\":/g,(_a,g) => {
 			return g+":";
