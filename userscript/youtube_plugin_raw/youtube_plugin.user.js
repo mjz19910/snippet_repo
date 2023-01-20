@@ -10830,8 +10830,6 @@ class HandleTypes extends ServiceMethods {
 	HintRenderer(x) {
 		this.save_keys("[HintRenderer]",x);
 	}
-	//#endregion
-	//#region TODO_minimal_member_fns
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {
 		this.save_keys("[MerchandiseShelf]",x);
@@ -10940,6 +10938,8 @@ class HandleTypes extends ServiceMethods {
 	ResetChannelUnreadCountCommand(x) {
 		this.save_keys("[ResetChannelUnreadCountCommand]",x);
 	}
+	//#endregion
+	//#region TODO_minimal_member_fns
 	/** @arg {minimal_handler_member} x ! */
 	minimal_handler_member_2(x) {x;}
 	//#endregion
