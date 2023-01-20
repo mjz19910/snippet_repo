@@ -5362,6 +5362,28 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
+							case "f4": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return console.log("[param_parse]",path,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f3": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 0: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -8115,10 +8137,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ConfirmDialogData} x */
 	ConfirmDialogData(x) {
+		this.save_keys(`[ConfirmDialogData]`,x);
 		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y); // ! #destructure
-		this.SimpleText(title);
+		this.t(title,this.SimpleText);
 		this.trackingParams(trackingParams);
-		this.z(dialogMessages,a => this.SimpleText(a));
+		this.z(dialogMessages,a => this.TextT(a));
 		this.ButtonRenderer(confirmButton);
 		this.ButtonRenderer(cancelButton);
 		this.primitive_of(primaryIsCancel,"boolean");
