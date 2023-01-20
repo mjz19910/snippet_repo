@@ -10864,20 +10864,20 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title);
 		this.TextWithRuns(subtitle);
 	}
-	/** @template T @arg {ItemTemplate<T>} x */
-	ItemTemplate(x) {
-		return x.item;
+	/** @template T @arg {ItemTemplate<T>} x @arg {(x:T)=>void} f */
+	ItemTemplate(x,f) {
+		return f.call(this,x.item);
 	}
 	/** @arg {ReplaceEnclosingAction} x */
 	ReplaceEnclosingAction(x) {
-		if("replaceEnclosingAction" in x) {
-			const {clickTrackingParams,replaceEnclosingAction,...y}=x; this.g(y);
-			let i=this.ItemTemplate(replaceEnclosingAction);
-			if("notificationTextRenderer" in i) return this.NotificationTextRenderer(i);
-			debugger;
-			return;
-		}
-		console.log("[action]",this.get_keys_of(x));
+		const {clickTrackingParams,replaceEnclosingAction,...y}=x; this.g(y);
+		this.ItemTemplate(replaceEnclosingAction,this.ReplaceEnclosingAction_item);
+	}
+	/** @arg {ReplaceEnclosingAction['replaceEnclosingAction']['item']} x */
+	ReplaceEnclosingAction_item(x) {
+		if("notificationTextRenderer" in x) return this.NotificationTextRenderer(x);
+		if("reelDismissalActionRenderer" in x) return this.ReelDismissalActionRenderer(x);
+		this.do_codegen("ReplaceEnclosingAction_item",x);
 	}
 	/** @arg {NotificationTextRenderer} x */
 	NotificationTextRenderer(x) {
@@ -13318,6 +13318,10 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {FactoidRenderer} x */
 	FactoidRenderer(x) {
 		this.save_keys("[FactoidRenderer]",x);
+	}
+	/** @private @arg {ReelDismissalActionRenderer} x */
+	ReelDismissalActionRenderer(x) {
+		x;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
