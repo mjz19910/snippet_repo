@@ -9714,13 +9714,10 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {RendererContentItem} x */
 	RendererContentItem(x) {
 		this.save_keys("[RendererContentItem]",x);
-		if("richItemRenderer" in x) {
-			this.RichItemRenderer(x);
-		} else if("continuationItemRenderer" in x) {
-			this.ContinuationItemRenderer(x);
-		} else {
-			debugger;
-		}
+		if("richItemRenderer" in x) return this.RichItemRenderer(x);
+		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+		if("richSectionRenderer" in x) return this.RichSectionRenderer(x);
+		debugger;
 	}
 	/** @arg {RichItemRenderer} x */
 	RichItemRenderer(x) {
@@ -11450,6 +11447,10 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region has_save_keys
+	/** @arg {minimal_handler_member} x */
+	minimal_handler_member_1(x) {
+		this.save_keys("[minimal_handler_member]",x);
+	}
 	/** @private @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
 		this.save_keys("[ChannelSwitcherPage]",x);
@@ -11570,10 +11571,7 @@ class HandleTypes extends ServiceMethods {
 	FeedNudgeRenderer(x) {
 		this.save_keys("[FeedNudgeRenderer]",x);
 	}
-	/** @arg {minimal_handler_member} x */
-	minimal_handler_member_1(x) {
-		this.save_keys("[minimal_handler_member]",x);
-	}
+	RichSectionRenderer(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
