@@ -9055,7 +9055,7 @@ class HandleTypes extends ServiceMethods {
 						this.force_parse_identifier(y);
 						return;
 					}
-					this.primitive_of(y,"string");
+					this.g(y);
 				} break;
 				case 99999: {
 					debugger;
@@ -9072,7 +9072,7 @@ class HandleTypes extends ServiceMethods {
 						this.force_parse_identifier(y);
 						return;
 					}
-					this.primitive_of(y,"string");
+					this.g(y);
 				} break;
 				case 124975: {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,identifier,...y}=x; this.g(y); // ! #destructure
@@ -9660,20 +9660,18 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
 		this.save_keys("[EndScreenVideo]",x);
-		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,...y1}=x;
+		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=x; this.g(y);
 		this.videoId(videoId);
 		this.Thumbnail(thumbnail);
 		this.SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.TextWithRuns(shortBylineText);
-		const {lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=y1;
 		this.t(lengthText,this.SimpleText);
 		this.t(lengthInSeconds,a => this.primitive_of(a,"number"));
 		this.WatchEndpoint(navigationEndpoint);
 		this.trackingParams(trackingParams);
 		this.TextT(shortViewCountText);
 		this.SimpleText(publishedTimeText);
-		this.primitive_of(y,"string");
 	}
 	/** @arg {WatchEndpoint} x */
 	WatchEndpoint(x) {
