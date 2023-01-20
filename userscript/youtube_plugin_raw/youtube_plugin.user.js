@@ -2451,6 +2451,11 @@ class BaseServicePrivate extends ApiBase {
 		return this.#x.value;
 	}
 	/** @this {BaseServicePrivate<Services,{}>} */
+	get parser() {
+		if(!this.#x.value) throw new Error();
+		return this.#x.value.get("parser_service");
+	}
+	/** @this {BaseServicePrivate<Services,{}>} */
 	get codegen() {
 		if(!this.#x.value) throw new Error();
 		return this.#x.value.get("codegen");
@@ -2649,7 +2654,7 @@ class YtHandlers extends BaseService {
 			throw new Error("unreachable");
 		}
 		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
-		return this.x.get("parser_service").get_url_type(path_parts);
+		return this.parser.get_url_type(path_parts);
 	}
 	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_length_1(target,x) {
@@ -3435,7 +3440,7 @@ class GFeedbackService extends BaseService {
 		for(let param of params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("parser_service").parse_browse_id(param.value); break;
+				case "browse_id": this.parser.parse_browse_id(param.value); break;
 				case "context": this.on_context_param(this.data,param.value); break;
 				case "e": parsed_e=this.data.e=this.parse_e_param(param); break;
 				case "has_alc_entitlement": break;
@@ -3464,7 +3469,7 @@ class GFeedbackService extends BaseService {
 	}
 	/** @private @arg {GFeedbackServiceRouteParam} x */
 	parse_route_param(x) {
-		let h=this.x.get("parser_service");
+		let h=this.parser;
 		this.data.route=x.value;
 		let route_parts=split_string_once(x.value,".");
 		switch(route_parts[0]) {
@@ -3527,7 +3532,7 @@ class TrackingServices extends BaseService {
 		for(let param of service.params) {
 			switch(param.key) {
 				case "browse_id_prefix": if(param.value!=="") debugger; break;
-				case "browse_id": this.x.get("parser_service").parse_browse_id(param.value); break;
+				case "browse_id": this.parser.parse_browse_id(param.value); break;
 				default: console.log("[new_param_key]",param); debugger;
 			}
 		}
@@ -5579,7 +5584,7 @@ class ServiceData extends BaseService {
 class ServiceMethods extends ServiceData {
 	/** @arg {{}} x @arg {string} gen_name @arg {boolean} [ret_val] */
 	codegen_new_typedef(x,gen_name,ret_val) {
-		return this.x.get("codegen").codegen_new_typedef(x,gen_name,ret_val);
+		return this.codegen.codegen_new_typedef(x,gen_name,ret_val);
 	}
 	/** @public @arg {string} x */
 	clickTrackingParams(x) {
@@ -5590,7 +5595,7 @@ class ServiceMethods extends ServiceData {
 	/** @arg {YtTargetIdType} x */
 	targetId(x) {
 		const cf="targetId";
-		this.x.get("parser_service").parse_target_id(x);
+		this.parser.parse_target_id(x);
 		if(this.str_starts_with(x,"comment-replies-item-")) return;
 		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
 			switch(x) {
@@ -5687,7 +5692,7 @@ class ServiceMethods extends ServiceData {
 			if(this.eq_keys(u4,["v","list","index"])) break x;
 			debugger;
 		}
-		this.x.get("parser_service").parse_url(for_,x);
+		this.parser.parse_url(for_,x);
 		return u3;
 	}
 	/** @arg {string} x */
@@ -5697,7 +5702,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	params(for_,path,x) {
-		this.x.get("parser_service").on_endpoint_params(for_,path,x);
+		this.parser.on_endpoint_params(for_,path,x);
 	}
 	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
@@ -5734,7 +5739,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {PlaylistId} x */
 	playlistId(x) {
-		this.x.get("parser_service").parse_playlist_id(x);
+		this.parser.parse_playlist_id(x);
 	}
 	/** @public @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
@@ -5761,7 +5766,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {BrowseIdType} x */
 	browseId(x) {
-		this.x.get("parser_service").parse_browse_id(x);
+		this.parser.parse_browse_id(x);
 	}
 	/** @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {
@@ -5777,7 +5782,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {ParamsSection} for_ @arg {PathRoot} path @arg {string} x */
 	playerParams(for_,path,x) {
-		this.x.get("parser_service").on_player_params(for_,path,x);
+		this.parser.on_player_params(for_,path,x);
 	}
 	/** @arg {Extract<WebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
@@ -6523,7 +6528,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {HrefUrl} x */
 	HrefUrl(x) {
-		this.x.get("parser_service").parse_url("HrefUrl",as(x.hrefUrl));
+		this.parser.parse_url("HrefUrl",as(x.hrefUrl));
 	}
 	/** @arg {BrowseEndpoint} x */
 	BrowseEndpoint(x) {
@@ -6571,7 +6576,7 @@ class HandleTypes extends ServiceMethods {
 					let up=us[1];
 					if(up.includes("&")) debugger;
 					let pp=split_string_once(up,"=");
-					this.x.get("parser_service").parse_playlist_id(pp[1]);
+					this.parser.parse_playlist_id(pp[1]);
 				}
 			} break;
 		}
@@ -6677,7 +6682,7 @@ class HandleTypes extends ServiceMethods {
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=x; this.g(y);
 		this.PageEndpoint(endpoint);
 		this.DataResponsePageType(response);
-		this.x.get("parser_service").parse_page_type(pageType);
+		this.parser.parse_page_type(pageType);
 		this.primitive_of(fromHistory,"boolean");
 		this.primitive_of(navigationDoneMs,"number");
 	}
@@ -8398,7 +8403,7 @@ class HandleTypes extends ServiceMethods {
 	CommonConfigData(x) {
 		this.save_keys("[CommonConfigData]",x);
 		const {url,...y}=x; this.g(y);
-		this.x.get("parser_service").parse_url("CommonConfigData",url);
+		this.parser.parse_url("CommonConfigData",url);
 	}
 	/** @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
@@ -8827,7 +8832,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(playlistId,"string");
 		this.SimpleText(ownerName);
 		this.primitive_of(isInfinite,"boolean");
-		this.x.get("parser_service").parse_url("PlaylistContent",playlistShareUrl);
+		this.parser.parse_url("PlaylistContent",playlistShareUrl);
 		this.TextWithRuns(shortBylineText);
 		this.TextWithRuns(longBylineText);
 		this.trackingParams(trackingParams);
@@ -10154,7 +10159,7 @@ class HandleTypes extends ServiceMethods {
 		switch(x.apiUrl) {
 			default: {
 				let path_parts=split_string(split_string_once(cx,"/")[1],"/");
-				let url_type=this.x.get("parser_service").get_url_type(path_parts);
+				let url_type=this.parser.get_url_type(path_parts);
 				if(!url_type) {
 					debugger;
 					return;
@@ -10364,7 +10369,7 @@ class HandleTypes extends ServiceMethods {
 	UnknownWebCommandMetadata(x) {
 		this.save_keys("[UnknownWebCommandMetadata]",x);
 		const {url,webPageType,rootVe,...y}=x; this.g(y);
-		this.x.get("parser_service").parse_url("UnknownWebCommandMetadata",url);
+		this.parser.parse_url("UnknownWebCommandMetadata",url);
 		if(webPageType!=="WEB_PAGE_TYPE_UNKNOWN") debugger;
 		if(rootVe!==83769) debugger;
 	}
@@ -10618,7 +10623,7 @@ class HandleTypes extends ServiceMethods {
 	C4TabbedHeaderData(x) {
 		this.save_keys("[C4TabbedHeaderData]",x);
 		const {channelId,title,subscribeButton,trackingParams,sponsorButton,navigationEndpoint,avatar,badges,banner,headerLinks,subscriberCountText,tvBanner,mobileBanner,channelHandleText,videosCountText,...y}=x; this.g(y);
-		this.x.get("parser_service").parse_channel_id(channelId);
+		this.parser.parse_channel_id(channelId);
 		this.primitive_of(title,"string");
 		this.SubscribeButtonRenderer(subscribeButton);
 		this.trackingParams(trackingParams);
@@ -10727,7 +10732,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(id,"string");
 		if(authorBadges) this.z(authorBadges,this.LiveChatAuthorBadgeRenderer);
 		this.primitive_of(timestampUsec,"string");
-		this.x.get("parser_service").parse_channel_id(authorExternalChannelId);
+		this.parser.parse_channel_id(authorExternalChannelId);
 		this.Accessibility(contextMenuAccessibility);
 		this.TextWithRuns(timestampText);
 	}
@@ -10759,10 +10764,6 @@ class HandleTypes extends ServiceMethods {
 		const {clipCreationRenderer,...y}=x; this.g(y);
 		this.ClipCreationData(clipCreationRenderer);
 	}
-	//#endregion
-	//#region destructure
-	//#endregion
-	//#region type_errors
 	/** @arg {WatchPlaylistEndpoint} x */
 	WatchPlaylistEndpoint(x) {
 		this.save_keys("[WatchPlaylistEndpoint]",x);
@@ -10779,9 +10780,10 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(index,"number");
 		this.params("WatchPlaylist","watch_playlist.params",params);
 	}
-	get parser() {
-		return this.x.get("parser_service");
-	}
+	//#endregion
+	//#region destructure
+	//#endregion
+	//#region type_errors
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
 		this.save_keys("[minimal_handler_member]",x);
