@@ -5959,13 +5959,6 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @arg {SearchWebCommandMetadata} x */
-	SearchApiWebCommandMetadata(x) {
-		this.save_keys("[SearchApiWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/search") debugger;
-	}
 	/** @arg {WebCommandMetadataRVE} x */
 	WebCommandMetadataRVE(x) {
 		this.rootVe(x.rootVe);
@@ -10162,19 +10155,6 @@ class HandleTypes extends ServiceMethods {
 		this.ButtonRenderer(visibilityButton);
 		this.trackingParams(trackingParams);
 	}
-	/** @arg {GetSharePanelWebCommandMetadata} x */
-	get_share_panel_WebCommandMetadata(x) {
-		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		this.primitive_of(apiUrl,"string");
-	}
-	/** @arg {GeneratedWebCommandMetadata} x */
-	GeneratedWCM(x) {
-		const {sendPost,apiUrl}=x;
-		this.primitive_of(sendPost,"boolean");
-		this.parser.parse_url("GeneratedWCM",apiUrl);
-	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
 		this.save_keys("[CommandExecutorCommand]",x);
@@ -10203,13 +10183,6 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 			case "engagement-panel-clip-create": break;
 		}
-	}
-	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
-	GetAddToPlaylistWebCommandMetadata(x) {
-		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
-		const {sendPost,apiUrl,...y}=x; this.g(y);
-		this.primitive_of(sendPost,"boolean");
-		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
 	}
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {

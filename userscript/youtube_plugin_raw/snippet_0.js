@@ -39,6 +39,8 @@ function split_string_once(s,d=as(",")) {
 class ParserService {
 	/** @arg {Split<ApiUrlFormat,"/">} x @returns {Join<Split<ApiUrlFormat,"/">,".">} */
 	get_url_type(x) {x;throw 1;}
+	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
+	parse_url(root,x) {root;x;}
 }
 class CodegenService {
 	/**
@@ -435,6 +437,33 @@ export class Snippet_0_tmp {
 		const {sendPost,apiUrl,...y}=x; this.g(y);
 		if(sendPost!==true) debugger;
 		if(apiUrl!=="/youtubei/v1/notification/get_unseen_count") debugger;
+	}
+	/** @arg {GetAddToPlaylistWebCommandMetadata} x */
+	GetAddToPlaylistWebCommandMetadata(x) {
+		this.save_keys("[GetAddToPlaylistWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/playlist/get_add_to_playlist") debugger;
+	}
+	/** @arg {SearchWebCommandMetadata} x */
+	SearchApiWebCommandMetadata(x) {
+		this.save_keys("[SearchApiWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		if(apiUrl!=="/youtubei/v1/search") debugger;
+	}
+	/** @arg {GetSharePanelWebCommandMetadata} x */
+	get_share_panel_WebCommandMetadata(x) {
+		this.save_keys("[GetSharePanelWebCommandMetadata]",x);
+		const {sendPost,apiUrl,...y}=x; this.g(y);
+		this.primitive_of(sendPost,"boolean");
+		this.primitive_of(apiUrl,"string");
+	}
+	/** @arg {GeneratedWebCommandMetadata} x */
+	GeneratedWCM(x) {
+		const {sendPost,apiUrl}=x;
+		this.primitive_of(sendPost,"boolean");
+		this.parser.parse_url("GeneratedWCM",apiUrl);
 	}
 	//#region dispatch_in_progress
 	//#endregion
