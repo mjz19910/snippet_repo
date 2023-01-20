@@ -9135,7 +9135,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
 		this.save_keys("[PlaylistPageResponse]",x);
-		const {page,endpoint,response,url,expirationTime,previousCsn,...y}=x; this.g(y);
+		const {rootVe,url,endpoint,page,response,...y}=x; this.g(y);
 		if(page!=="playlist") debugger;
 		this.BrowseEndpoint(endpoint);
 		this.PlaylistResponse(response);
