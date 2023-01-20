@@ -5104,6 +5104,7 @@ case "${path_parts[idx-1]}": {
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
+											if(tv instanceof Map) return;
 											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
 											switch(tv) {default: debugger; return;}
 										}
@@ -5113,6 +5114,36 @@ case "${path_parts[idx-1]}": {
 												gen_next_part(idx);
 												debugger;
 											} path_parts[4]===""; break;
+											case "f2": {
+												const idx=6;
+												if(path_parts.length===5) {
+													switch(tv) {
+														case 8: return;
+														default: debugger; return;
+													}
+												}
+												switch(path_parts[5]) {
+													default: {
+														console.log("in",path_parts[4]);
+														gen_next_part(idx);
+														debugger;
+													} path_parts[5]===""; break;
+												}
+											} break;
+											case "f1": {
+												const idx=6;
+												if(path_parts.length===5) {
+													if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+													switch(tv) {default: debugger; return;}
+												}
+												switch(path_parts[5]) {
+													default: {
+														console.log("in",path_parts[4]);
+														gen_next_part(idx);
+														debugger;
+													} path_parts[5]===""; break;
+												}
+											} break;
 										}
 									} break;
 								}
