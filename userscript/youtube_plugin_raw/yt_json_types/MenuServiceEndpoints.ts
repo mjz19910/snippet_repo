@@ -1,1 +1,1 @@
-type MenuServiceEndpoints=FeedbackEndpointPlugin|E_PlaylistEditEndpoint;
+type MenuServiceEndpoints=E_PlaylistEditEndpoint;
