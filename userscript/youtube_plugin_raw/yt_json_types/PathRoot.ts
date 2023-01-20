@@ -3,6 +3,7 @@ type LogItems=[
 	"[parse_value.gen_ns] [subscribe.params.f2.f1]",
 	"[parse_value.gen_ns] [subscribe.params.f3]",
 	"[parse_value.gen_ns] [subscribe.params.f4]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f2]",
 ][number];
 type PathRoot=[
 	"like.remove_like_params",

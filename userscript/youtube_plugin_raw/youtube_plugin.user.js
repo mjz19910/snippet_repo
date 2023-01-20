@@ -5432,6 +5432,8 @@ case "${path_parts[idx-1]}": {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f2": gd(idx); break;
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5442,7 +5444,6 @@ case "${path_parts[idx-1]}": {
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
-							default: gd(idx); path_parts[2]===""; break;
 						}
 					} break;
 				}
