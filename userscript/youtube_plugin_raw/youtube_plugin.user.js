@@ -5449,6 +5449,7 @@ case "${path_parts[idx-1]}": {
 							case "f4": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
