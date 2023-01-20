@@ -8014,14 +8014,16 @@ class HandleTypes extends ServiceMethods {
 		this.LikeApiData(b);
 		this.t(removeLikeParams,a => this.params("LikeEndpoint","like.remove_like_params",a));
 	}
+	/** @arg {MusicLibraryStatusUpdateCommand} x */
+	LikeAction(x) {
+		if("musicLibraryStatusUpdateCommand" in x) return this.MusicLibraryStatusUpdateCommand(x);
+		debugger;
+	}
 	/** @arg {E$LikeLike} x */
 	E$LikeLike(x) {
 		const {target: b,status: {},actions,likeParams,...a}=x; this.g(a);
 		this.LikeApiData(b);
-		this.tz(actions,a => {
-			if("musicLibraryStatusUpdateCommand" in a) return this.MusicLibraryStatusUpdateCommand(a);
-			debugger;
-		});
+		this.tz(actions,this.LikeAction);
 		this.t(likeParams,a => this.params("LikeEndpoint","like.likeParams",a));
 	}
 	/** @arg {E$Like} x */
