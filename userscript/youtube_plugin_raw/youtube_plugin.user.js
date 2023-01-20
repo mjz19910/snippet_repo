@@ -8003,6 +8003,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$LikeDislike} x */
 	E$LikeDislike(x) {
+		this.save_keys("[E$LikeDislike]",x);
 		const {target: b,status: {},dislikeParams,...a}=x; this.g(a);
 		this.LikeApiData(b);
 		this.params("Next","next.queue_context_params",dislikeParams);
@@ -8010,17 +8011,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$LikeIndifferent} x */
 	E$LikeIndifferent(x) {
+		this.save_keys("[E$LikeIndifferent]",x);
 		const {target: b,status: {},removeLikeParams,...a}=x; this.g(a);
 		this.LikeApiData(b);
 		this.t(removeLikeParams,a => this.params("LikeEndpoint","like.remove_like_params",a));
 	}
 	/** @arg {MusicLibraryStatusUpdateCommand} x */
 	LikeAction(x) {
+		this.save_keys("[A$LikeAction]",x);
 		if("musicLibraryStatusUpdateCommand" in x) return this.MusicLibraryStatusUpdateCommand(x);
 		debugger;
 	}
 	/** @arg {E$LikeLike} x */
 	E$LikeLike(x) {
+		this.save_keys("[E$LikeLike]",x);
 		const {target: b,status: {},actions,likeParams,...a}=x; this.g(a);
 		this.LikeApiData(b);
 		this.tz(actions,this.LikeAction);
