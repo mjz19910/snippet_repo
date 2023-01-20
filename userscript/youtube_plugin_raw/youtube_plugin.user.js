@@ -10770,7 +10770,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(channel);
 		this.SimpleText(views);
 		this.SimpleText(publishDate);
-		this.z(factoid,a => a);
+		this.z(factoid,this.FactoidRenderer);
 		this.BrowseEndpoint(channelNavigationEndpoint);
 		this.Thumbnail(channelThumbnail);
 	}
@@ -10799,7 +10799,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[VideoDescriptionMusicSectionData]",x);
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink}=x; //...y}=x; this.g(y); //#destructure
 		this.SimpleText(sectionTitle);
-		this.z(carouselLockups,a => a);
+		this.z(carouselLockups,this.CarouselLockupRenderer);
 		this.TopicLinkRenderer(topicLink);
 		this.TextWithRuns(premiumUpsellLink);
 	}
@@ -11588,6 +11588,14 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {MerchandiseItemRenderer} x */
 	MerchandiseItemRenderer(x) {
 		this.save_keys("[MerchandiseItemRenderer]",x);
+	}
+	/** @private @arg {CarouselLockupRenderer} x */
+	CarouselLockupRenderer(x) {
+		this.save_keys("[CarouselLockupRenderer]",x);
+	}
+	/** @private @arg {FactoidRenderer} x */
+	FactoidRenderer(x) {
+		this.save_keys("[FactoidRenderer]",x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
