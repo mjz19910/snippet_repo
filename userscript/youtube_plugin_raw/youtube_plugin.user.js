@@ -5036,7 +5036,7 @@ case "${path_parts[0]}": switch(path_parts[${idx}]) {
 		gen_next_part(${idx+1});
 		debugger;
 	} path_parts[${idx}]===""; break;
-}`);
+} break;`);
 			}
 			/** @arg {number} idx */
 			let gen_final_part=(idx)=>{
@@ -5049,7 +5049,7 @@ case "${path_parts[0]}": switch(path_parts[${idx}]) {
 case "\${path_parts[${idx}]}": return;\`);
 		debugger;
 	} path_parts[${idx}]===""; break;
-}`);
+} break;`);
 			}
 			let path_parts=split_string(path,".");
 			switch(path_parts[0]) {
