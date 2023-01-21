@@ -4407,7 +4407,7 @@ class CodegenService extends BaseService {
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
-		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
+		if(keys.length===1) return this.get_json_replace_type_len_1(state,r,x,keys);
 		if(state.key_keep_arr.includes(state.k1)) return x;
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		debugger;
@@ -4454,8 +4454,8 @@ class CodegenService extends BaseService {
 		debugger;
 		return x;
 	}
-	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
-	get_json_replace_type_len_1(r,b,keys) {
+	/** @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
+	get_json_replace_type_len_1(state,r,b,keys) {
 		let g=() => this.json_auto_replace(b);
 		let hg=false
 			||false
@@ -4734,7 +4734,10 @@ class CodegenService extends BaseService {
 			||b.userFeedbackEndpoint
 			;
 		if(hg) return g();
-		if(b.webCommandMetadata) return "TYPE::CommandMetadata";
+		if(b.webCommandMetadata) {
+			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
+			return b;
+		}
 		if(b.accessibilityData) return "TYPE::Accessibility";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;

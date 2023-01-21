@@ -9,7 +9,7 @@ type SubscribeButtonData={
 	unsubscribedButtonText: D$TextWithRuns;
 	trackingParams: string;
 	unsubscribeButtonText: D$TextWithRuns;
-	serviceEndpoints?: E$SubscribeEndpoint[];
+	serviceEndpoints?: (E$SubscribeEndpoint|SubscribeButtonData$SignalServiceEndpoint)[];
 	subscribeAccessibility: A$Accessibility;
 	unsubscribeAccessibility: A$Accessibility;
 	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;
@@ -17,4 +17,13 @@ type SubscribeButtonData={
 	subscribedEntityKey: string;
 	onSubscribeEndpoints: E$SubscribeEndpoint[];
 	onUnsubscribeEndpoints: E$SignalServiceEndpoint[];
+};
+type SubscribeButtonData$SignalServiceEndpoint={
+	clickTrackingParams: string;
+	commandMetadata: {
+		webCommandMetadata: {
+			sendPost: true;
+		}
+	};
+	signalServiceEndpoint: E$Signal_ClientSignal;
 };
