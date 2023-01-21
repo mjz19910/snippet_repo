@@ -1939,6 +1939,9 @@ function export_(fn) {
 	}
 }
 function main() {
+	setTimeout(() => {
+		window.yt_plugin?.ds.num_bitmap_console();
+	},4000);
 	const log_enabled_page_type_change=false;
 	/** @private @type {ResolverT<Services,ServiceOptions>} */
 	const resolver_value={value: null};
