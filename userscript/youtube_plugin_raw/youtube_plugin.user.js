@@ -2121,6 +2121,13 @@ class ApiBase {
 }
 //#endregion
 //#region Service
+class BitmapResult {
+	/** @arg {number[]} map_arr @arg {string} bitmap */
+	constructor(map_arr,bitmap) {
+		this.map_arr=map_arr;
+		this.bitmap=bitmap;
+	}
+}
 class KnownDataSaver extends ApiBase {
 	constructor() {
 		super();
@@ -2370,24 +2377,22 @@ class KnownDataSaver extends ApiBase {
 		}
 		return new BitmapResult(map_arr,bitmap);
 	}
-	/** @arg {number[]} bitmap_src */
-	generate_bitmap_num(bitmap_src) {
-		let map_arr=[...new Set([...bitmap_src])].sort((a,b) => a-b);
+	/** @arg {number[]} src */
+	generate_bitmap_num_raw(src) {
+		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
 		let zz=map_arr.at(-1)??0;
 		let ta=new Array(zz+1).fill(0);
-		bitmap_src.forEach(e => {
+		src.forEach(e => {
 			ta[e]=1;
 		});
 		let bs=ta.join("");
-		let rle=this.rle_enc(bs);
-		class BitmapResult {
-			/** @arg {number[]} map_arr @arg {string} bitmap */
-			constructor(map_arr,bitmap) {
-				this.map_arr=map_arr;
-				this.bitmap=bitmap;
-			}
-		}
-		return new BitmapResult(map_arr,rle);
+		return new BitmapResult(map_arr,bs);
+	}
+	/** @arg {number[]} bitmap_src */
+	generate_bitmap_num(bitmap_src) {
+		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
+		let bitmap_rle=this.rle_enc(bitmap);
+		return new BitmapResult(map_arr,bitmap_rle);
 	}
 	/** @type {[string,number|number[]][]} */
 	#new_numbers=[];
