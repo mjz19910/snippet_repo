@@ -5362,37 +5362,22 @@ case "${path}": {
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
+				if(this.str_starts_with(path,"report.params.f28.f1[")) {
+					let [,c1]=split_string_once(path,".");
+					let [,c2]=split_string_once(c1,".");
+					let [c,c3]=split_string_once(c2,".");
+					let [d,c4]=split_string_once(c3,"[");
+					let c5=split_string_once(c4,"]");
+					if(c5[1]==="") return;
+					console.log('off',c,d,c5[0]);
+					return;
+				}
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
-					case "report.params.f28.f1[1].f1.f1[1]": {
-						switch(ta) {
-							case 1: break;
-							default: return new_ns();
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1[1].f1": {
-						switch(ta) {
-							case 1: break;
-							default: return new_ns();
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1[1]": {
-						switch(ta) {
-							case 1: break;
-							case 3: break;
-							default: return new_ns();
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
 					case "ypc_get_offers.params.f5.f5": {
 						switch(ta) {
 							case 1: break;
@@ -5840,29 +5825,16 @@ case "${path}": {
 		if(tva.length>1) {
 			let off=1;
 			for(let val of tva) {
-				let g1=()=>{
-					console.log(`\ncase ${JSON.stringify(path)}: /*tva*/{};`);
-					console.log(`\n\n\t"[parse_value.gen_ns] [${path}[${off}]]",`);
-				}
-				let g2=()=>{
-					console.log(`\ncase ${JSON.stringify(off)}: break;`);
+				let g1=() => {
+					console.log(`
+case ${JSON.stringify(path)}: /*tva*/{
+	this.parse_param_next(root,\`\${path}[\${off}]\`,[val]);
+}; return;`);
 					console.log(`\n\n\t"[parse_value.gen_ns] [${path}[${off}]]",`);
 				};
 				switch(path) {
 					default: g1(); debugger; return;
-					case "report.params.f28.f1[1].f1.f1": /*tva*/{
-						switch(off) {
-							default: g2(); debugger; return;
-							case 1: break;
-						}
-						this.parse_param_next(root,`${path}[${off}]`,[val]);
-					}; return;
 					case "report.params.f28.f1": /*tva*/{
-						switch(off) {
-							default: g2(); debugger; return;
-							case 1: break;
-							case 2: break;
-						}
 						this.parse_param_next(root,`${path}[${off}]`,[val]);
 					} break;
 				}
