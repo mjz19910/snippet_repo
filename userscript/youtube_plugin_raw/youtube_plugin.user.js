@@ -2366,9 +2366,9 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
-		let map_arr=[...new Set([...bitmap_src])];
-		let ta=new Array(map_arr.length).fill(0);
-		bitmap_src.map(e => map_arr.indexOf(e)).forEach(e => {
+		let map_arr=[...new Set([...bitmap_src])].sort((a,b)=>a-b);
+		let ta=new Array(map_arr.at(-1)).fill(0);
+		bitmap_src.forEach(e => {
 			ta[e]=1;
 		});
 		let bs=ta.join("");
