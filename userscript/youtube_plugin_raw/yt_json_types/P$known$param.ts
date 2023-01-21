@@ -1,4 +1,27 @@
 type P$known$param=[
+	"report.params.f28.f1.f1.f1[2].f1",
+	"report.params.f28.f1.f1.f1[2]",
+	"report.params.f28.f1.f1.f1[3]",
+	"report.params.f28.f1.f1.f1[3].f1.f4",
+	"report.params.f28.f1.f1.f1[4]",
+	"report.params.f28.f1.f1.f1[4].f1",
+	"report.params.f28.f1.f1.f1[5]",
+	"report.params.f28.f1.f1.f1[6]",
+	"report.params.f28.f1.f1.f1[7],",
+	"report.params.f28.f1[1].f1",
+	"ypc_get_offers.params.f1",
+	"ypc_get_offers.params.f1.f1",
+	"ypc_get_offers.params.f1.f2",
+	"ypc_get_offers.params.f3",
+	"ypc_get_offers.params.f5",
+	"ypc_get_offers.params.f5.f1",
+	"ypc_get_offers.params.f5.f3",
+	"ypc_get_offers.params.f5.f5",
+	"ypc_get_offers.params.f5.f5.f1",
+	"ypc_get_offers.params.f5.f9",
+	"click.trackingParams.f6.f12",
+	"click.trackingParams.f6.f13",
+	"report.params.f28.f1.f1.f1[2].f1",
 	"click.trackingParams.f19.f2"|"report.params.f25"|"report.params.f26"|"report.params.f28"|
 	"report.params.f28.f1"|"watch.params.f56"|"report.params.f28.f1.f1"|"report.params.f28.f1.f1.f1"|
 	"report.params.f28.f1.f1.f1.f1"|"report.params.f28.f1.f1.f1.f1.f4"|
