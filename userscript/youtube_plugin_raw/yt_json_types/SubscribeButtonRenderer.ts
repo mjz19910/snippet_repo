@@ -1,1 +1,1 @@
-type SubscribeButtonRenderer={subscribeButtonRenderer: SubscribeButtonData;};
+type SubscribeButtonRenderer={subscribeButtonRenderer: SubscribeButton;};

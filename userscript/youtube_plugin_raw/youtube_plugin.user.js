@@ -6141,6 +6141,7 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
+									case "f13": u(idx); break;
 									// [click.trackingParams.f6.f12]
 									case "f12": {
 										const idx=5;
@@ -13554,7 +13555,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="SubscribeButtonRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {subscribeButtonRenderer,...y}=x; this.g(y); // ! #destructure
-		this.SubscribeButtonData(subscribeButtonRenderer);
+		this.SubscribeButton(subscribeButtonRenderer);
 	}
 	/** @arg {R$BrowseFeedActions} x */
 	BrowseFeedActionsRenderer(x) {
@@ -13916,9 +13917,9 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(selected,"boolean");
 		this.t(content,this.SectionListRenderer);
 	}
-	/** @template {SubscribeButtonData} T @arg {T} x */
+	/** @template {SubscribeButton} T @arg {T} x */
 	SubscribeButton$Omit(x) {
-		const cf="SubscribeButton$Omit";
+		const cf="SubscribeButton";
 		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
 		this.primitive_of(subscribed,"boolean");
 		this.primitive_of(enabled,"boolean");
@@ -13941,9 +13942,9 @@ class HandleTypes extends ServiceMethods {
 		this.A$Accessibility(unsubscribeAccessibility);
 		return y;
 	}
-	/** @arg {SubscribeButtonData} x */
-	SubscribeButtonData(x) {
-		const cf="SubscribeButtonData";
+	/** @arg {SubscribeButton} x */
+	SubscribeButton(x) {
+		const cf="SubscribeButton";
 		this.save_keys(`[${cf}]`,x);
 		if(!("targetId" in x)) {
 			let u=this.SubscribeButton$Omit(x);
