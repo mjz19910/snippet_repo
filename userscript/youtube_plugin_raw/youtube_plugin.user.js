@@ -5245,7 +5245,7 @@ class ParserService extends BaseService {
 			console.log("[parse_value.new_ns]",path);
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
-			console.log(`\ncase ${ta}: break;`);
+			console.log(`-- [parse_value.gen_ns] --\n\n\tcase ${ta}: break;\n`);
 			debugger;
 			if(tv!==void 0) {
 				/** @type {P$PathRoot} */
@@ -5306,6 +5306,7 @@ case "${path}": {
 					case "report.params.f28.f1": {
 						switch(ta) {
 							case 1: break;
+							case 3: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5628,7 +5629,7 @@ case "${path}": {
 					case "string": case_part=`\n\t\tif(typeof tv==="string") return this.save_string(\`[\${path}]\`,tv);`; break;
 				}
 			}
-			console.log(`
+			console.log(`-- [${path_parts.join(".")},${idx}] --\n
 case "${path_parts[idx-1]}": {
 	const idx=${idx+1};
 	if(path_parts.length===${idx}) {${case_part}${value_part}
@@ -6537,7 +6538,16 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
-							case "f56": u(idx); break;
+							case "f56": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f27": {
 								const idx=4;
 								if(path_parts.length===3) {
