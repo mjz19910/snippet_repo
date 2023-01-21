@@ -5344,15 +5344,14 @@ class ParserService extends BaseService {
 			console.groupEnd();
 		};
 		let new_ns=() => {
-			console.log("[parse_value.new_ns]",path);
-			/** @type {P$LogItems} */
-			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
-			console.log(`-- [parse_value.gen_ns] --\n\n\tcase ${ta}: break;\n`);
-			debugger;
 			if(tv!==void 0) {
 				/** @type {P$PathRoot} */
 				this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 			}
+			console.log("[parse_value.new_ns]",path);
+			/** @type {P$LogItems} */
+			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
+			console.log(`-- [parse_value.gen_ns] --\n\n\tcase ${ta}: break;\n`);
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_ns]",path);
@@ -5362,7 +5361,7 @@ class ParserService extends BaseService {
 case "${path}": {
 	switch(ta) {
 		case ${ta}: break;
-		default: return new_ns();
+		default: new_ns(); debugger; return;
 	}
 	/** @type {P$PathRoot} */
 	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
@@ -5384,7 +5383,9 @@ case "${path}": {
 					case "transcript_target_id.param": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							case 2: break;
+							case 3: break;
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5392,7 +5393,7 @@ case "${path}": {
 					case "ypc_get_offers.params.f5.f5": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5403,7 +5404,7 @@ case "${path}": {
 							case 3: break;
 							case 5: break;
 							case 9: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5412,7 +5413,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5422,7 +5423,7 @@ case "${path}": {
 							case 1: break;
 							case 3: break;
 							case 5: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5431,7 +5432,7 @@ case "${path}": {
 						switch(ta) {
 							case 12: break;
 							case 13: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5439,7 +5440,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[7]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5447,7 +5448,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[6].f1": {
 						switch(ta) {
 							case 4: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5455,7 +5456,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[6]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5463,7 +5464,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[5]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5471,7 +5472,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[4]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5479,7 +5480,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[3].f1": {
 						switch(ta) {
 							case 4: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5487,7 +5488,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[3]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5495,7 +5496,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[2]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5503,7 +5504,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1[1]": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5511,7 +5512,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1.f1": {
 						switch(ta) {
 							case 4: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5519,7 +5520,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1.f1": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5527,7 +5528,7 @@ case "${path}": {
 					case "report.params.f28.f1.f1": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5536,7 +5537,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 3: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5544,7 +5545,7 @@ case "${path}": {
 					case "report.params.f28": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5552,7 +5553,7 @@ case "${path}": {
 					case "browse$param.f93": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5561,7 +5562,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5575,7 +5576,7 @@ case "${path}": {
 							case 6: break;
 							case 9: break;
 							case 19: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5585,7 +5586,7 @@ case "${path}": {
 							case 1: break;
 							case 2: break;
 							case 3: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5593,7 +5594,7 @@ case "${path}": {
 					case "browse$param.f84": {
 						switch(ta) {
 							case 5: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5602,7 +5603,7 @@ case "${path}": {
 						switch(ta) {
 							case 84: break;
 							case 93: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`browse$param.f${ta}`,tv);
@@ -5611,7 +5612,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5621,7 +5622,7 @@ case "${path}": {
 							case 2: break;
 							case 4: break;
 							case 5: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5629,7 +5630,7 @@ case "${path}": {
 					case "subscribe.params.f2": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5639,7 +5640,7 @@ case "${path}": {
 							case 2: break;
 							case 3: break;
 							case 4: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5647,7 +5648,7 @@ case "${path}": {
 					case "report.params.f18.f1": {
 						switch(ta) {
 							case 2: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5655,7 +5656,7 @@ case "${path}": {
 					case "report.params.f18": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5670,7 +5671,7 @@ case "${path}": {
 							case 25: break;
 							case 26: break;
 							case 28: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5678,7 +5679,7 @@ case "${path}": {
 					case "watch.params.f27": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5686,7 +5687,7 @@ case "${path}": {
 					case "get_transcript.params": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5695,7 +5696,7 @@ case "${path}": {
 						switch(ta) {
 							case 30: break;
 							case 71: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5704,7 +5705,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5714,7 +5715,7 @@ case "${path}": {
 							case 2: case 3: break; case 7: case 12: case 13: break;
 							case 24: case 27: case 33: break;
 							case 56: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
@@ -5723,7 +5724,7 @@ case "${path}": {
 							case 8: break;
 							case 9: break;
 							case 40: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
@@ -5733,14 +5734,14 @@ case "${path}": {
 							case 3: break;
 							case 4: break;
 							case 5: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
 					case "watch.player_params.f40": {
 						switch(ta) {
 							case 1: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5748,7 +5749,7 @@ case "${path}": {
 					case "create_playlist.params": {
 						switch(ta) {
 							case 84: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5757,7 +5758,7 @@ case "${path}": {
 						switch(ta) {
 							case 2: break;
 							case 5: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5765,7 +5766,7 @@ case "${path}": {
 					case "create_playlist.params.f84": {
 						switch(ta) {
 							case 5: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5774,7 +5775,7 @@ case "${path}": {
 						switch(ta) {
 							case 2: break;
 							case 3: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5783,7 +5784,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 14: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5792,7 +5793,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
-							default: return new_ns();
+							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5919,6 +5920,26 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
+							case "f3": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f2": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -13682,11 +13703,12 @@ class HandleTypes extends ServiceMethods {
 	ActionSetPlaylistVideoOrder(x) {
 		const cf="ActionSetPlaylistVideoOrder";
 		this.save_keys(`[${cf}]`,x);
-		const {title,selected,serviceEndpoint,accessibility,trackingParams,...y}=x; this.g(y); // ! #destructure
+		const {title,selected,serviceEndpoint,accessibility,trackingParams,continuation,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(title);
 		this.primitive_of(selected,"boolean");
-		this.ContinuationCommand(serviceEndpoint);
+		this.t(serviceEndpoint,this.ContinuationCommand);
 		this.t(accessibility,this.A$Accessibility);
+		this.t(continuation,this.ReloadContinuationData)
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
