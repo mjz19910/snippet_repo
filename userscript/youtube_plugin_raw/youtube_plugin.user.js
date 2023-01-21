@@ -14372,6 +14372,7 @@ class HandleTypes extends ServiceMethods {
 		const {transcriptSegmentListRenderer: {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y},...z}=x; this.g(y); this.g(z);
 		this.z(initialSegments,this.TranscriptSegmentRenderer);
 		this.z([noResultLabel,retryLabel],a => this.D$TextWithRuns(a));
+		this.primitive_of(touchCaptionsEnabled,"boolean");
 	}
 	/** @private @arg {TranscriptSegmentRenderer} x */
 	TranscriptSegmentRenderer(x) {
