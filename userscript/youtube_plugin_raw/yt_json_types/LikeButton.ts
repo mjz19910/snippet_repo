@@ -5,9 +5,7 @@ type LikeButton={
 	likesAllowed: boolean;
 	serviceEndpoints: E$LikeEndpoint[];
 }|{
-	target: {
-		videoId: string;
-	};
+	target: LikeApiData;
 	likeStatus: "INDIFFERENT";
 	likeCount: 44008;
 	likeCountText: D$SimpleText;
@@ -18,11 +16,7 @@ type LikeButton={
 	dislikeCountWithUndislikeText: D$SimpleText;
 	trackingParams: string;
 	likesAllowed: true;
-	serviceEndpoints: {
-		clickTrackingParams: string;
-		commandMetadata: CommandMetadata;
-		likeEndpoint: {};
-	}[];
+	serviceEndpoints: E$LikeEndpoint[];
 	likeCountTooltipText: D$TextWithRuns;
 	dislikeCountTooltipText: D$TextWithRuns;
 };
