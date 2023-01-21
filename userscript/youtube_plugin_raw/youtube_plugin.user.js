@@ -4209,7 +4209,7 @@ class JsonReplacerState {
 		this.k1="";
 		/** @type {{}[]} */
 		this.object_store=[];
-		/** @type {Map<{},number>} */
+		/** @type {Map<{},[number,string]>} */
 		this.parent_map=new Map;
 	}
 }
@@ -4411,14 +4411,15 @@ class CodegenService extends BaseService {
 		}
 		if(!state.object_store.includes(x)) {
 			state.object_store.push(x);
-			state.parent_map.set(x,state.object_store.indexOf(x));
+			let mi=state.object_store.indexOf(x);
+			state.parent_map.set(x,[mi,k1]);
 		}
 		let mi=state.object_store.indexOf(x);
 		let xi=Object.entries(x);
 		for(let [k_in,val] of xi) {
-			if(state.object_store.includes(k_in)) continue;
-			state.object_store.push(k_in);
-			state.parent_map.set(val,mi);
+			if(state.object_store.includes(val)) continue;
+			state.object_store.push(val);
+			state.parent_map.set(val,[mi,k_in]);
 		}
 		state.k1=k1;
 		if(k1==="") return x;
@@ -4492,6 +4493,7 @@ class CodegenService extends BaseService {
 	/** @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} x */
 	get_json_replacer_type(state,r,x) {
 		let g=() => this.json_auto_replace(x);
+		if(state.k1==="webCommandMetadata") return o;
 		/** @type {D$TextWithRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::D$TextWithRuns";
 		/** @type {D$Thumbnail} */
@@ -4499,7 +4501,6 @@ class CodegenService extends BaseService {
 		/** @type {D$SimpleText} */
 		if(x.simpleText) return "TYPE::D$SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
-		if(x.thumbnails) return `TYPE::D$${g()}`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
