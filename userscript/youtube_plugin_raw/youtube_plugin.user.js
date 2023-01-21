@@ -9998,7 +9998,7 @@ class HandleTypes extends ServiceMethods {
 					this.SectionListRenderer(content);
 					if(targetId!=="engagement-panel-comments-section") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.LoggingDirectives(loggingDirectives);
+					this.A$LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
 						this.force_parse_identifier(y);
 						return;
@@ -10012,7 +10012,7 @@ class HandleTypes extends ServiceMethods {
 					this.ProductListRenderer(content);
 					if(targetId!=="shopping_panel_for_entry_point_5") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.LoggingDirectives(loggingDirectives);
+					this.A$LoggingDirectives(loggingDirectives);
 				} break;
 				case 126250: {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
@@ -10021,7 +10021,7 @@ class HandleTypes extends ServiceMethods {
 					this.ContinuationItemRenderer(content);
 					if(targetId!=="engagement-panel-searchable-transcript") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.LoggingDirectives(loggingDirectives);
+					this.A$LoggingDirectives(loggingDirectives);
 					if("identifier" in y) {
 						this.force_parse_identifier(y);
 						return;
@@ -10035,7 +10035,7 @@ class HandleTypes extends ServiceMethods {
 					this.EngagementPanelSectionListContent(content);
 					if(targetId!=="engagement-panel-structured-description") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.LoggingDirectives(loggingDirectives);
+					this.A$LoggingDirectives(loggingDirectives);
 					if(identifier) {
 						let a1=this.ShortsSurfaceIdentifier(identifier);
 						if(a1!=="engagement-panel-structured-description") debugger;
@@ -10047,7 +10047,7 @@ class HandleTypes extends ServiceMethods {
 					this.t(header,this.EngagementPanelTitleHeaderRenderer);
 					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-					this.LoggingDirectives(loggingDirectives);
+					this.A$LoggingDirectives(loggingDirectives);
 					if(continuationService!=="ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE") debugger;
 					if(!identifier) debugger;
 					let a1=this.ShortsSurfaceIdentifier(identifier);
@@ -10062,7 +10062,7 @@ class HandleTypes extends ServiceMethods {
 				const {content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 				this.AdsEngagementPanelContentRenderer(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.LoggingDirectives(loggingDirectives);
+				this.A$LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-clip-create": {
 				const {panelIdentifier,header,content,targetId: {},visibility,onShowCommands,loggingDirectives,...y}=x; this.g(y); // ! #destructure
@@ -10071,7 +10071,7 @@ class HandleTypes extends ServiceMethods {
 				this.ClipSectionRenderer(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 				this.z(onShowCommands,this.EngagementPanelSectionShowCommands);
-				this.LoggingDirectives(loggingDirectives);
+				this.A$LoggingDirectives(loggingDirectives);
 			} break;
 			case "engagement-panel-macro-markers-description-chapters": {
 				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
@@ -10079,7 +10079,7 @@ class HandleTypes extends ServiceMethods {
 				this.EngagementPanelTitleHeaderRenderer(header);
 				this.MacroMarkersListRenderer(content);
 				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
-				this.LoggingDirectives(loggingDirectives);
+				this.A$LoggingDirectives(loggingDirectives);
 			} break;
 		}
 		// this.t(onShowCommands,a=>this.z(a,this.EngagementPanelSectionShowCommands));
@@ -10229,7 +10229,7 @@ class HandleTypes extends ServiceMethods {
 		if(showSeparator!==true) debugger;
 		this.z(customEmojis,this.CustomEmoji);
 		this.primitive_of_string(unicodeEmojisUrl);
-		this.LoggingDirectives(loggingDirectives);
+		this.A$LoggingDirectives(loggingDirectives);
 	}
 	/** @arg {CommentSimpleboxRenderer} x */
 	CommentSimpleboxRenderer(x) {
@@ -10410,7 +10410,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			// this.targetId(cf,a);
 		});
-		this.t(loggingDirectives,this.LoggingDirectives);
+		this.t(loggingDirectives,this.A$LoggingDirectives);
 	}
 	/** @arg {D$Menu['items']} x */
 	R_MenuItems(x) {
@@ -10467,7 +10467,8 @@ class HandleTypes extends ServiceMethods {
 	MenuServiceItem(x) {
 		const cf="MenuServiceItem";
 		this.save_keys(`[${cf}]`,x);
-		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y); // ! #destructure
+		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+		this.t(loggingDirectives,this.A$LoggingDirectives);
 		this.TextT(text);
 		if(icon) {
 			switch(icon.iconType) {
@@ -11821,7 +11822,7 @@ class HandleTypes extends ServiceMethods {
 		this.RichItemData(richItemRenderer);
 	}
 	/** @arg {A$LoggingDirectives} x */
-	LoggingDirectives(x) {
+	A$LoggingDirectives(x) {
 		const cf="LoggingDirectives";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=x; this.g(y); // ! #destructure
@@ -13681,7 +13682,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(voteStatus);
 		this.trackingParams(cf,trackingParams);
 		this.R$Button(expandButton);
-		this.LoggingDirectives(loggingDirectives);
+		this.A$LoggingDirectives(loggingDirectives);
 	}
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {
