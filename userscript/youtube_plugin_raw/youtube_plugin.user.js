@@ -14357,12 +14357,31 @@ class HandleTypes extends ServiceMethods {
 		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
 		this.TranscriptSegmentListRenderer(body);
 		this.TranscriptFooterRenderer(footer);
-		x;
 	}
 	/** @private @arg {TranscriptFooterRenderer} x */
-	TranscriptFooterRenderer(x) {x;}
+	TranscriptFooterRenderer(x) {
+		const cf="TranscriptFooterRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptFooterRenderer: {languageMenu,...y},...z}=x; this.g(y); this.g(z);
+		this.SortFilterSubMenuRenderer(languageMenu);
+	}
 	/** @private @arg {TranscriptSegmentListRenderer} x */
-	TranscriptSegmentListRenderer(x) {x;}
+	TranscriptSegmentListRenderer(x) {
+		const cf="TranscriptSegmentListRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptSegmentListRenderer: {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y},...z}=x; this.g(y); this.g(z);
+		this.z(initialSegments,this.TranscriptSegmentRenderer);
+	}
+	/** @private @arg {TranscriptSegmentRenderer} x */
+	TranscriptSegmentRenderer(x) {
+		const cf="TranscriptSegmentRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptSegmentRenderer: {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,...y},...z}=x; this.g(y); this.g(z);
+		this.z([startMs,endMs],a=>this.primitive_of(a,"string"));
+		this.z([snippet,startTimeText],a=>this.D$TextWithRuns(a));
+		this.trackingParams(cf,trackingParams);
+		this.A$Accessibility(accessibility);
+	}
 	/** @private @arg {PivotButton} x */
 	PivotButton(x) {
 		const cf="PivotButton";
