@@ -2347,13 +2347,13 @@ class KnownDataSaver extends ApiBase {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.ds.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=this.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]==="many") return;
-		let bm=this.ds.generate_bitmap_num(g1[1]).bitmap;
-		this.ds.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.ds.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
+		let bm=this.generate_bitmap_num(g1[1]).bitmap;
+		this.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
 	}
 	/** @arg {string[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
