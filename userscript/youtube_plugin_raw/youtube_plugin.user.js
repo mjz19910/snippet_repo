@@ -6930,7 +6930,7 @@ case "${path_parts[idx-1]}": {
 							} break;
 							case "f40": {
 								const idx=4;
-								if(path_parts.length===idx) {
+								if(path_parts.length===3) {
 									if(tv instanceof Map) {
 										let mk=[...tv.keys()];
 										console.log(path_parts,mk);
@@ -6950,13 +6950,7 @@ case "${path_parts[idx-1]}": {
 												default: debugger; return;
 											}
 										}
-										switch(path_parts[4]) {
-											default: {
-												console.log("in",path_parts[3]);
-												gen_next_part(idx);
-												debugger;
-											} path_parts[4]===""; break;
-										}
+										gen_next_part(idx);
 									} break;
 								}
 							} break;
@@ -7087,7 +7081,7 @@ case "${path_parts[idx-1]}": {
 									default: u(idx); path_parts[3]===""; break;
 									case "f5": {
 										const idx=4;
-										if(path_parts.length===idx) {
+										if(path_parts.length===4) {
 											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
 											switch(tv) {default: debugger; return;}
 										}
