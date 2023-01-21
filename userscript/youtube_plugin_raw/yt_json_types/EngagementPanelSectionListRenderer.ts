@@ -1,3 +1,3 @@
-type EngagementPanelSectionListRenderer={
+type R$EngagementPanelSectionList={
 	engagementPanelSectionListRenderer: EngagementPanelSectionList;
 };

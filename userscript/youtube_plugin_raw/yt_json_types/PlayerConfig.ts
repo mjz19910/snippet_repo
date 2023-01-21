@@ -1,8 +1,6 @@
-type PlayerConfig={
-	audioConfig: AudioConfig;
-	streamSelectionConfig: {
-		maxBitrate: `${number};`
-	};
+type D$PlayerConfig={
+	audioConfig: D$AudioConfig;
+	streamSelectionConfig: D$StreamSelectionConfig;
 	mediaCommonConfig: {};
 	webPlayerConfig: {};
 };

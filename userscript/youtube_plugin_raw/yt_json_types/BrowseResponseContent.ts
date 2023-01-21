@@ -8,7 +8,7 @@ type BrowseResponse={
 	alerts?: AlertWithButtonRenderer[];
 	metadata?: BrowseMetadata;
 	trackingParams: string;
-	topbar?: DesktopTopbarRenderer;
+	topbar?: R$DesktopTopbar;
 	microformat?: MicroformatDataRenderer;
 	frameworkUpdates?: EntityBatchUpdate;
 	// ?

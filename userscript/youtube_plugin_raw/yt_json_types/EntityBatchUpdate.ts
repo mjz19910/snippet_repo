@@ -1,3 +1,3 @@
 type EntityBatchUpdate={
-	entityBatchUpdate: EntityBatchUpdateData;
+	entityBatchUpdate: D$EntityBatchUpdateData;
 };

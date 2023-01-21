@@ -8,5 +8,5 @@ type CommentsHeaderData={
 	showSeparator: true;
 	customEmojis: CustomEmoji[];
 	unicodeEmojisUrl: string;
-	loggingDirectives: LoggingDirectives;
+	loggingDirectives: A$LoggingDirectives;
 };

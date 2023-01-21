@@ -1,4 +1,4 @@
-type StreamingData={
+type D$StreamingData={
 	expiresInSeconds: `${number}`;
 	adaptiveFormats: AdaptiveFormatItem[];
 	formats: FormatItem[];

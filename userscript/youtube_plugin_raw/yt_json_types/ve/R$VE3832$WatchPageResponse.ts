@@ -4,6 +4,6 @@ type R$VE3832$WatchPageResponse={
 	endpoint: E$WatchEndpoint;
 	page: "watch";
 	preconnect?: [D$VE3832$PreconnectUrl];
-	playerResponse: PlayerResponse;
+	playerResponse: R$Player;
 	response: R$Watch;
 };

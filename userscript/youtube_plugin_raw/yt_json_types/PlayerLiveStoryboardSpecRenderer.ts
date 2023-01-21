@@ -1,1 +1,0 @@
-type PlayerLiveStoryboardSpecRenderer={playerLiveStoryboardSpecRenderer: PlayerLiveStoryboardSpecData;};

@@ -5,5 +5,5 @@ type ProductListItem={
 	price: `CA$${string}`;
 	onClickCommand: E$UrlEndpoint;
 	trackingParams: string;
-	loggingDirectives: LoggingDirectives;
+	loggingDirectives: A$LoggingDirectives;
 };

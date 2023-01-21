@@ -4,7 +4,7 @@ type PlaylistResponse=ContentsTemplate<R$TwoColumnBrowseResults>&{
 	alerts?: AlertWithButtonRenderer[];
 	metadata: PlaylistMetadataRenderer;
 	trackingParams: string;
-	topbar: DesktopTopbarRenderer;
+	topbar: R$DesktopTopbar;
 	microformat: MicroformatDataRenderer;
 	sidebar: PlaylistSidebarRenderer;
 };

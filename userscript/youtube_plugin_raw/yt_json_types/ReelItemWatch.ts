@@ -5,6 +5,6 @@ type ReelItemWatchResponse={
 	trackingParams: string;
 	replacementEndpoint?: E$ReelWatchEndpoint;
 	sequenceContinuation?: string;
-	desktopTopbar: DesktopTopbarRenderer;
+	desktopTopbar: R$DesktopTopbar;
 	engagementPanels: EngagementPanelItem[];
 };

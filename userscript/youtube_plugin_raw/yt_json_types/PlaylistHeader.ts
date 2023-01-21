@@ -55,7 +55,7 @@ type PlaylistHeader={
 	playButton: R$Button;
 	shufflePlayButton: R$Button;
 	onDescriptionTap: OpenPopupAction;
-	cinematicContainer: CinematicContainerRenderer;
+	cinematicContainer: R$CinematicContainer;
 	byline: PlaylistBylineRenderer[];
 	descriptionTapText: D$TextWithRuns;
 };

@@ -2,8 +2,8 @@ type ActionCompanionAdData={
 	headline: TemplatedText;
 	description: TemplatedText;
 	actionButton: R$Button;
-	iconImage: ThumbnailsList;
-	bannerImage: ThumbnailsList;
+	iconImage: R$ThumbnailsList;
+	bannerImage: R$ThumbnailsList;
 	navigationEndpoint: {};
 	trackingParams: string;
 	adInfoRenderer: ActionCompanionAdInfoRenderers;

@@ -1,4 +1,4 @@
-type ResponseReceivedEndpointItem=
+type EI$ResponseReceived=
 	|AdsControlFlowOpportunityReceivedCommand
 	|AppendContinuationItemsAction
 	|ChangeKeyedMarkersVisibilityCommand

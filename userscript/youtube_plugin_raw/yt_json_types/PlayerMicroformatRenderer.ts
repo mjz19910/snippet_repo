@@ -1,1 +1,0 @@
-type PlayerMicroformatRenderer={playerMicroformatRenderer: PlayerMicroformatData;};

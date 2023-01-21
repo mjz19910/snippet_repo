@@ -3,5 +3,5 @@ type CommentThreadData={
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";
 	isModeratedElqComment: boolean;
-	loggingDirectives: LoggingDirectives;
+	loggingDirectives: A$LoggingDirectives;
 };

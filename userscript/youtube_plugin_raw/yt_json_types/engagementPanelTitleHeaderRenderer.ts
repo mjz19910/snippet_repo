@@ -16,6 +16,6 @@ type EngagementPanelMenuAll={
 	trackingParams: string;
 }
 
-type EngagementPanelTitleHeaderRenderer={
+type R$EngagementPanelTitleHeader={
 	engagementPanelTitleHeaderRenderer: EngagementPanelTitleHeader;
 };

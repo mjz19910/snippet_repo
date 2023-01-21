@@ -1,16 +1,16 @@
 type ShortsResponsePlayer={
 	responseContext: {};
 	playabilityStatus: {};
-	streamingData: StreamingData;
-	playbackTracking: PlaybackTracking;
-	captions: PlayerCaptionsTracklistRenderer;
-	videoDetails: VideoDetails;
+	streamingData: D$StreamingData;
+	playbackTracking: D$PlaybackTracking;
+	captions: R$PlayerCaptionsTracklist;
+	videoDetails: D$VideoDetails;
 	playerConfig: {};
-	storyboards: PlayerStoryboardSpecRenderer;
-	microformat: PlayerMicroformatRenderer;
+	storyboards: R$PlayerStoryboardSpec;
+	microformat: R$PlayerMicroformat;
 	trackingParams: string;
-	attestation: PlayerAttestationRenderer;
-	videoQualityPromoSupportedRenderers: VideoQualityPromoRenderer;
-	frameworkUpdates: FrameworkUpdates;
+	attestation: R$PlayerAttestation;
+	videoQualityPromoSupportedRenderers: R$VideoQualityPromo;
+	frameworkUpdates: A$FrameworkUpdates;
 	cacheMetadata?: CacheMetadata;
 };

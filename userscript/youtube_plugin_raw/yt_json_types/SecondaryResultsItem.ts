@@ -1,1 +1,1 @@
-type SecondaryResultsItem=ResultsArrTemplate<SecondaryResultsItemInner>;
+type SecondaryResultsItem=T$ResultsArrTemplate<SecondaryResultsItemInner>;

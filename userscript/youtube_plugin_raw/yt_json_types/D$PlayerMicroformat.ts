@@ -1,0 +1,19 @@
+type D$PlayerMicroformat={
+	thumbnail: D$Thumbnail;
+	embed: D$MicroformatEmbed;
+	title: D$TextWithRuns;
+	description?: D$TextWithRuns;
+	lengthSeconds: `${number}`;
+	ownerProfileUrl: `http://www.youtube.com/channel/UC${string}`;
+	externalChannelId: ChannelId;
+	isFamilySafe: boolean;
+	availableCountries: string[];
+	isUnlisted: boolean;
+	hasYpcMetadata: boolean;
+	viewCount: `${number}`;
+	category: YtCategoryStr;
+	publishDate: string;
+	ownerChannelName: string;
+	liveBroadcastDetails?: D$LiveBroadcastDetails;
+	uploadDate: string;
+};

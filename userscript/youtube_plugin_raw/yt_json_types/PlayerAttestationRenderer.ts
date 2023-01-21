@@ -1,1 +1,0 @@
-type PlayerAttestationRenderer={playerAttestationRenderer: PlayerAttestation;};

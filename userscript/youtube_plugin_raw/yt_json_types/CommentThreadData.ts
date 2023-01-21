@@ -15,5 +15,5 @@ type CommentData={
 	voteCount: D$TextWithRuns;
 	expandButton: R$Button;
 	collapseButton: R$Button;
-	loggingDirectives: LoggingDirectives;
+	loggingDirectives: A$LoggingDirectives;
 };

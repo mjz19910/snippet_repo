@@ -1,1 +1,1 @@
-type AdPlacementRenderer={adPlacementRenderer: AdPlacementData;};
+type R$AdPlacement={adPlacementRenderer: AdPlacementData;};

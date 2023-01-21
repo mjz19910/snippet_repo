@@ -1,0 +1,1 @@
+type R$TemplateUpdate={templateUpdate: D$TemplateUpdate;};

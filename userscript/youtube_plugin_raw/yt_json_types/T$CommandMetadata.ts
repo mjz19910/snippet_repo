@@ -1,0 +1,1 @@
+type T$CommandMetadata<T extends keyof VEMap>=VEMap[T]['CommandMetadata'];

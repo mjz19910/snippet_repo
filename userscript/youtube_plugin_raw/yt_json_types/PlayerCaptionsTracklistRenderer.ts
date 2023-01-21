@@ -1,1 +1,0 @@
-type PlayerCaptionsTracklistRenderer={playerCaptionsTracklistRenderer: PlayerCaptionsTracklistData;};

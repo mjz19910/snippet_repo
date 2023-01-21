@@ -1,3 +1,0 @@
-type TemplateUpdate={
-	templateUpdate: TemplateUpdateData;
-};

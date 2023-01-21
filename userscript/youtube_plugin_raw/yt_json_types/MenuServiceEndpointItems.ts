@@ -1,1 +1,0 @@
-type MenuServiceEndpointItems=EG$MenuServiceEndpoints;

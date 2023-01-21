@@ -1,3 +1,3 @@
-type ProductListRenderer={
+type R$ProductList={
 	productListRenderer: ProductList;
 };

@@ -1,1 +1,1 @@
-type EngagementPanel=EngagementPanelSectionListRenderer;
+type EngagementPanel=R$EngagementPanelSectionList;

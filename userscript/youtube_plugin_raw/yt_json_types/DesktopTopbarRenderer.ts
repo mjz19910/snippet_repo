@@ -1,1 +1,1 @@
-type DesktopTopbarRenderer={desktopTopbarRenderer: DesktopTopbarData;};
+type R$DesktopTopbar={desktopTopbarRenderer: DesktopTopbarData;};

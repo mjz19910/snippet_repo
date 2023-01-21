@@ -3,7 +3,7 @@ type EngagementPanelSectionListContent=[
 	ClipSectionRenderer,
 	R$ContinuationItemRenderer,
 	MacroMarkersListRenderer,
-	ProductListRenderer,
+	R$ProductList,
 	SectionListRendererTemplate<"comment-item-section","engagement-panel-comments-section">,
 	StructuredDescriptionContentRenderer,
 ][number];

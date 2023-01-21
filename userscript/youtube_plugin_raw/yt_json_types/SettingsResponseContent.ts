@@ -2,7 +2,7 @@ type SettingsResponse={
 	responseContext: RC$ResponseContext;
 	contents: R$TwoColumnBrowseResults;
 	trackingParams: string;
-	topbar: DesktopTopbarRenderer;
+	topbar: R$DesktopTopbar;
 	onResponseReceivedEndpoints?: {}[];
 	sidebar: SettingsSidebarRenderer;
 };

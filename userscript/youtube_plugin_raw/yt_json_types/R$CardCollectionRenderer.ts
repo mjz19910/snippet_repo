@@ -1,1 +1,1 @@
-type CardCollectionRenderer={cardCollectionRenderer: CardCollectionData;};
+type R$CardCollection={cardCollectionRenderer: CardCollectionData;};

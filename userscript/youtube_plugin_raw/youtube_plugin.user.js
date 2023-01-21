@@ -2871,7 +2871,7 @@ class YtHandlers extends BaseService {
 			};
 			case "player": return {
 				type: target[0],
-				/** @type {PlayerResponse} */
+				/** @type {R$Player} */
 				data: as(x),
 			};
 			case "search": return {
@@ -7554,35 +7554,35 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ServiceEndpointTemplate]",y);
 		f.call(this,y);
 	}
-	/** @template T @arg {T$AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @arg {T$Autoplay<T>} x @arg {(this:this,x:T)=>void} f */
 	AutoplayTemplate(x,f) {
 		const cf="AutoplayTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {autoplay,...y}=x; this.g(y); // ! #destructure
 		f.call(this,autoplay);
 	}
-	/** @template T @arg {PlaylistTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @arg {T$Playlist<T>} x @arg {(this:this,x:T)=>void} f */
 	PlaylistTemplate(x,f) {
 		const cf="PlaylistTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {playlist,...y}=x; this.g(y); // ! #destructure
 		f.call(this,playlist);
 	}
-	/** @template T @arg {ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @arg {T$ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ResultsTemplate(x,f) {
 		const cf="ResultsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {results,...y}=x; this.g(y); // ! #destructure
 		f.call(this,results);
 	}
-	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @arg {T$SecondaryResults<T>} x @arg {(this:this,x:T)=>void} f */
 	SecondaryResultsTemplate(x,f) {
 		const cf="SecondaryResultsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {secondaryResults,...y}=x; this.g(y); // ! #destructure
 		f.call(this,secondaryResults);
 	}
-	/** @template {number} T @arg {TypesTemplate<T>} x @arg {T|null} _x @returns {T} */
+	/** @template {number} T @arg {T$TypesTemplate<T>} x @arg {T|null} _x @returns {T} */
 	TypesTemplate(x,_x=null) {
 		/** @template {number} T @template {`${T}`} U @arg {U} x @arg {T|null} _v @returns {T} */
 		function parse_number(x,_v) {
@@ -8182,7 +8182,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(pageVisualEffects,this.CinematicContainerRenderer);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @arg {FrameworkUpdates} x */
+	/** @arg {A$FrameworkUpdates} x */
 	FrameworkUpdates(x) {
 		const cf="FrameworkUpdates";
 		this.save_keys(`[${cf}]`,x);
@@ -8190,14 +8190,14 @@ class HandleTypes extends ServiceMethods {
 		this.EntityBatchUpdateData(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
-	/** @arg {CinematicContainerRenderer} x */
+	/** @arg {R$CinematicContainer} x */
 	CinematicContainerRenderer(x) {
 		const cf="CinematicContainerRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {cinematicContainerRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CinematicContainer(cinematicContainerRenderer);
 	}
-	/** @arg {CinematicContainerData} x */
+	/** @arg {D$CinematicContainer} x */
 	CinematicContainer(x) {
 		const cf="CinematicContainerData";
 		this.save_keys(`[${cf}]`,x);
@@ -9390,7 +9390,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {PlayerResponse} x */
+	/** @private @arg {R$Player} x */
 	PlayerResponse(x) {
 		const cf="PlayerResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9892,7 +9892,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.VideoMastheadAdV3(x.videoMastheadAdV3Renderer);
 	}
-	/** @arg {EngagementPanelSectionListRenderer} x */
+	/** @arg {R$EngagementPanelSectionList} x */
 	EngagementPanelSectionListRenderer(x) {
 		const cf="EngagementPanelSectionListRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -10071,7 +10071,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region pause
 	//#endregion
-	/** @arg {string} cf @arg {ResponseReceivedEndpointItem} x */
+	/** @arg {string} cf @arg {EI$ResponseReceived} x */
 	ResponseReceivedEndpointItem(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
@@ -10334,7 +10334,7 @@ class HandleTypes extends ServiceMethods {
 		const {menuRenderer,...y}=x; this.g(y); // ! #destructure
 		this.R_MenuData(menuRenderer);
 	}
-	/** @arg {MenuData} x */
+	/** @arg {D$Menu} x */
 	R_MenuData(x) {
 		const cf="MenuData";
 		this.save_keys(`[${cf}]`,x);
@@ -10349,7 +10349,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.t(loggingDirectives,this.LoggingDirectives);
 	}
-	/** @arg {MenuData['items']} x */
+	/** @arg {D$Menu['items']} x */
 	R_MenuItems(x) {
 		this.tz(x,a => {
 			if("toggleMenuServiceItemRenderer" in a) return this.toggleMenuServiceItemRenderer(a);
@@ -10357,7 +10357,7 @@ class HandleTypes extends ServiceMethods {
 			this.do_codegen("MenuItems",a);
 		});
 	}
-	/** @arg {Extract<tz<MenuData['items']>,{toggleMenuServiceItemRenderer:any}>} x */
+	/** @arg {Extract<tz<D$Menu['items']>,{toggleMenuServiceItemRenderer:any}>} x */
 	toggleMenuServiceItemRenderer(x) {
 		let x1=this.w(x);
 		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
@@ -10376,14 +10376,14 @@ class HandleTypes extends ServiceMethods {
 			trackingParams,
 		});
 	}
-	/** @arg {MenuServiceItemRenderer} x */
+	/** @arg {R$MenuServiceItem} x */
 	MenuServiceItemRenderer(x) {
 		const cf="MenuServiceItemRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {menuServiceItemRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MenuServiceItem(menuServiceItemRenderer);
 	}
-	/** @arg {MenuServiceItem<MenuServiceIconTypeStr>} x */
+	/** @arg {D$MenuServiceItem<MenuServiceIconTypeStr>} x */
 	MenuServiceItem(x) {
 		const cf="MenuServiceItem";
 		this.save_keys(`[${cf}]`,x);
@@ -11523,7 +11523,7 @@ class HandleTypes extends ServiceMethods {
 		const {entityBatchUpdate,...y}=x; this.g(y); // ! #destructure
 		this.EntityBatchUpdateData(entityBatchUpdate);
 	}
-	/** @arg {DesktopTopbarRenderer} x */
+	/** @arg {R$DesktopTopbar} x */
 	DesktopTopbarRenderer(x) {
 		const cf="DesktopTopbarRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -11727,7 +11727,7 @@ class HandleTypes extends ServiceMethods {
 		const {richItemRenderer,...y}=x; this.g(y); // ! #destructure
 		this.RichItemData(richItemRenderer);
 	}
-	/** @arg {LoggingDirectives} x */
+	/** @arg {A$LoggingDirectives} x */
 	LoggingDirectives(x) {
 		const cf="LoggingDirectives";
 		this.save_keys(`[${cf}]`,x);
@@ -11737,7 +11737,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(gestures,this.LoggingDirectives_gestures);
 		if(enableDisplayloggerExperiment!==void 0) this.primitive_of(enableDisplayloggerExperiment,"boolean");
 	}
-	/** @arg {NonNullable<LoggingDirectives['gestures']>} x */
+	/** @arg {NonNullable<A$LoggingDirectives['gestures']>} x */
 	LoggingDirectives_gestures(x) {
 		let inner=this.TypesTemplate(x);
 		if(inner!==4) debugger;
@@ -11758,7 +11758,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
 	}
-	/** @arg {EngagementPanelTitleHeaderRenderer} x */
+	/** @arg {R$EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeaderRenderer(x) {
 		const cf="EngagementPanelTitleHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -11862,14 +11862,14 @@ class HandleTypes extends ServiceMethods {
 		if("guideCollapsibleEntryRenderer" in x) return this.GuideCollapsibleEntryRenderer(x);
 		debugger;
 	}
-	/** @arg {ElementUpdate} x */
+	/** @arg {R$ElementUpdate} x */
 	ElementUpdate(x) {
 		const cf="ElementUpdate";
 		this.save_keys(`[${cf}]`,x);
 		const {updates,...y}=x; this.g(y); // ! #destructure
 		this.z(updates,this.ElementUpdateItem);
 	}
-	/** @arg {ElementUpdateItem} x */
+	/** @arg {D$ElementUpdate} x */
 	ElementUpdateItem(x) {
 		const cf="ElementUpdateItem";
 		this.save_keys(`[${cf}]`,x);
@@ -11877,13 +11877,13 @@ class HandleTypes extends ServiceMethods {
 		if("resourceStatusInResponseCheck" in x) return this.ResourceStatusInResponseCheck(x);
 		debugger;
 	}
-	/** @arg {ResourceStatusInResponseCheck} x */
+	/** @arg {R$ResourceStatusInResponseCheck} x */
 	ResourceStatusInResponseCheck(x) {
 		const cf="ResourceStatusInResponseCheck";
 		this.save_keys(`[${cf}]`,x);
 		this.ResourceStatusInResponseCheckData(x.resourceStatusInResponseCheck);
 	}
-	/** @arg {ResourceStatusInResponseCheckData} x */
+	/** @arg {D$ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
 		const cf="ResourceStatusInResponseCheckData";
 		this.save_keys(`[${cf}]`,x);
@@ -11900,7 +11900,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @arg {ElementResourceStatus} x */
+	/** @arg {D$ElementResourceStatus} x */
 	ElementResourceStatus(x) {
 		const cf="ElementResourceStatus";
 		this.save_keys(`[${cf}]`,x);
@@ -11918,14 +11918,14 @@ class HandleTypes extends ServiceMethods {
 			case "f3619d8bb085c9a9": break;
 		}
 	}
-	/** @arg {TemplateUpdate} x */
+	/** @arg {R$TemplateUpdate} x */
 	TemplateUpdate(x) {
 		const cf="TemplateUpdate";
 		this.save_keys(`[${cf}]`,x);
 		const {templateUpdate,...y}=x; this.g(y); // ! #destructure
 		this.TemplateUpdateData(templateUpdate);
 	}
-	/** @arg {TemplateUpdateData} x */
+	/** @arg {D$TemplateUpdate} x */
 	TemplateUpdateData(x) {
 		const cf="TemplateUpdateData";
 		this.save_keys(`[${cf}]`,x);
@@ -11934,7 +11934,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(serializedTemplateConfig);
 		this.tz(dependencies,this.primitive_of_string);
 	}
-	/** @arg {EntityBatchUpdateData} x */
+	/** @arg {D$EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
 		const cf="EntityBatchUpdateData";
 		this.save_keys(`[${cf}]`,x);
@@ -12128,7 +12128,7 @@ class HandleTypes extends ServiceMethods {
 		const {guideCollapsibleEntryRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideCollapsibleEntry(guideCollapsibleEntryRenderer);
 	}
-	/** @arg {PlayerAnnotationsExpandedRenderer} x */
+	/** @arg {R$PlayerAnnotationsExpanded} x */
 	PlayerAnnotationsExpandedRenderer(x) {
 		const cf="PlayerAnnotationsExpandedRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -12336,7 +12336,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {Visibility} x */
+	/** @arg {TM$Visibility} x */
 	Visibility(x) {
 		const cf="Visibility";
 		this.save_keys(`[${cf}]`,x);
@@ -12816,7 +12816,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(syncButtonLabel);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
-	/** @arg {ProductListRenderer} x */
+	/** @arg {R$ProductList} x */
 	ProductListRenderer(x) {
 		const cf="ProductListRenderer";
 		this.save_keys(`[${cf}]`,x);

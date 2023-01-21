@@ -1,1 +1,1 @@
-type R$MenuRenderer={menuRenderer: MenuData;};
+type R$MenuRenderer={menuRenderer: D$Menu;};

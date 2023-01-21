@@ -7,9 +7,9 @@ interface NextResponse {
 	playerOverlays?: R$PlayerOverlay;
 	videoReporting?: RT$ReportFormModal;
 	queueContextParams?: string;
-	onResponseReceivedEndpoints?: ResponseReceivedEndpointItem[];
+	onResponseReceivedEndpoints?: EI$ResponseReceived[];
 	engagementPanels?: EngagementPanel[];
-	topbar?: DesktopTopbarRenderer;
-	pageVisualEffects?: CinematicContainerRenderer[];
-	frameworkUpdates?: FrameworkUpdates;
+	topbar?: R$DesktopTopbar;
+	pageVisualEffects?: R$CinematicContainer[];
+	frameworkUpdates?: A$FrameworkUpdates;
 };

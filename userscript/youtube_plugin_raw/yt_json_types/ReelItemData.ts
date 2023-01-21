@@ -9,5 +9,5 @@ type ReelItemData={
 	accessibility:A$Accessibility;
 	style: "REEL_ITEM_STYLE_AVATAR_CIRCLE";
 	videoType: "REEL_VIDEO_TYPE_VIDEO";
-	loggingDirectives: LoggingDirectives;
+	loggingDirectives: A$LoggingDirectives;
 };

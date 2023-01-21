@@ -1,0 +1,1 @@
+type R$PlayerCaptionsTracklist={playerCaptionsTracklistRenderer: PlayerCaptionsTracklistData;};

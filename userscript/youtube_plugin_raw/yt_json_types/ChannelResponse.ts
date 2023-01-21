@@ -4,7 +4,7 @@ type ChannelResponse={
 	header: C4TabbedHeaderRenderer;
 	metadata: ChannelMetadataRenderer;
 	trackingParams: string;
-	topbar: DesktopTopbarRenderer;
+	topbar: R$DesktopTopbar;
 	microformat: MicroformatDataRenderer;
 	onResponseReceivedActions: ResetChannelUnreadCountCommand[];
 };

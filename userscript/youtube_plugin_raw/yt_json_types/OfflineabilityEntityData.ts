@@ -4,5 +4,5 @@ type OfflineabilityEntityData={
 	addToOfflineButtonState: AddToOfflineButtonStateEnum;
 	contentCheckOk?: false;
 	racyCheckOk?: false;
-	loggingDirectives?: LoggingDirectives;
+	loggingDirectives?: A$LoggingDirectives;
 };

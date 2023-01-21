@@ -3,5 +3,5 @@ type SubscribeResponse={
 	actions: (AddToGuideSectionAction|OpenPopupAction|C$RunAttestation|UpdateSubscribeButtonAction)[];
 	newNotificationButton: {};
 	trackingParams: string;
-	frameworkUpdates: FrameworkUpdates;
+	frameworkUpdates: A$FrameworkUpdates;
 };

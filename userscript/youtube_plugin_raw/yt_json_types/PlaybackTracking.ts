@@ -1,4 +1,4 @@
-type PlaybackTracking={
+type D$PlaybackTracking={
 	atrUrl: UrlAndElapsedMediaTime;
 	ptrackingUrl: BaseUrl<never>;
 	qoeUrl: BaseUrl<never>;
