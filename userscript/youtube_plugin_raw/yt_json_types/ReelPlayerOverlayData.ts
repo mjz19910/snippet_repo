@@ -19,6 +19,6 @@ type ReelPlayerOverlayData={
 	trackingParams: string;
 	shareButton: R$ButtonRenderer;
 	pivotButton: PivotButtonRenderer;
-	badge: MetadataBadgeRenderer;
+	badge: R$MetadataBadgeRenderer;
 };
 

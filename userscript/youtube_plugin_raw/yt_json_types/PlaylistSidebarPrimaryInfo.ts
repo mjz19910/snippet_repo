@@ -5,7 +5,7 @@ type PlaylistSidebarPrimaryInfo={
 	menu: R$MenuRenderer;
 	thumbnailOverlays: ThumbnailOverlaySidePanelRenderer[];
 	navigationEndpoint: E$WatchEndpoint;
-	badges: MetadataBadgeRenderer[];
+	badges: R$MetadataBadgeRenderer[];
 	description: {};
 	showMoreText: D$TextWithRuns;
 };

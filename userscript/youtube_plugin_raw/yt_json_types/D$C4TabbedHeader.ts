@@ -4,7 +4,7 @@ type D$C4TabbedHeader={
 	navigationEndpoint: E$BrowseEndpoint;
 	avatar: D$Thumbnail;
 	banner: D$Thumbnail;
-	badges?: MetadataBadgeRenderer[];
+	badges?: R$MetadataBadgeRenderer[];
 	headerLinks: ChannelHeaderLinksRenderer;
 	subscribeButton: SubscribeButtonRenderer;
 	subscriberCountText: D$SimpleText;

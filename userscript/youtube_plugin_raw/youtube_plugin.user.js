@@ -13936,7 +13936,7 @@ class HandleTypes extends ServiceMethods {
 		const {pivotButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PivotButton(pivotButtonRenderer);
 	}
-	/** @arg {MetadataBadgeRenderer} x */
+	/** @arg {R$MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {
 		const cf="MetadataBadgeRenderer";
 		this.save_keys(`[${cf}]`,x);

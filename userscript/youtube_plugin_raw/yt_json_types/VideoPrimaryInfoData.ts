@@ -4,7 +4,7 @@ type VideoPrimaryInfoData={
 	videoActions: R$MenuRenderer;
 	trackingParams: string;
 	superTitleLink?: D$TextWithRuns;
-	badges?: MetadataBadgeRenderer[];
+	badges?: R$MetadataBadgeRenderer[];
 	dateText: D$SimpleText;
 	relativeDateText: D$SimpleText;
 };
