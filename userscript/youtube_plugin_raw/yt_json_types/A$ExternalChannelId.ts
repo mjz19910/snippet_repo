@@ -1,3 +1,3 @@
-type ExternalChannelId={
+type A$ExternalChannelId={
 	externalChannelId: `UC${string}`;
 };

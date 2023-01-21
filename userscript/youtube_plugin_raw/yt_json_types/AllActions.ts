@@ -4,7 +4,7 @@ type AllActions=
 	|OpenPopupAction
 	|RefreshPlaylistCommand
 	|RemoveFromGuideSectionAction
-	|RunAttestationCommand
+	|C$RunAttestation
 	|UpdateChannelSwitcherPageAction
 	|UpdateNotificationsUnseenCountAction
 	|UpdateSubscribeButtonAction

@@ -3,7 +3,7 @@ type VideoDescriptionHeaderData={
 	channel: D$SimpleText;
 	views: D$SimpleText;
 	publishDate: D$SimpleText;
-	factoid: FactoidRenderer[];
+	factoid: R$Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
 	channelNavigationEndpoint: E$BrowseEndpoint;
 	channelThumbnail: Thumbnail;

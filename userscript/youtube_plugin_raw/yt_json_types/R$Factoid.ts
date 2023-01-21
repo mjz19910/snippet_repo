@@ -1,0 +1,1 @@
+type R$Factoid={factoidRenderer: D$Factoid;};

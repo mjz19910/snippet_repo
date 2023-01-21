@@ -7489,7 +7489,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {T$SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
-		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,a => {
 			let v=this.join_string(a,"-");
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
@@ -8732,14 +8731,14 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {GetSurveyResponse} x */
 	GetSurveyResponse(x) {
 		const cf="GetSurveyResponse";
-		this.save_keys(`[]`,x);
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {GetPdgBuyFlow} x */
 	GetPdgBuyFlow(x) {
 		const cf="GetPdgBuyFlow";
-		this.save_keys(`[]`,x);
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
 		this.OpenPopupAction(command);
 		this.trackingParams(cf,trackingParams);
@@ -8991,7 +8990,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MultiPageMenuSection<R$CompactLinkRenderer>} x */
 	MultiPageMenuSection(x) {
 		const cf="MultiPageMenuSection";
-		this.save_keys(`[]`,x);
+		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(items,a => {
 			if("compactLinkRenderer" in a) return this.CompactLinkRenderer(a);
@@ -9009,7 +9008,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D$CompactLink} x */
 	CompactLinkData(x) {
 		const cf="CompactLinkData";
-		this.save_keys(`[]`,x);
+		this.save_keys(`[${cf}]`,x);
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
 		this.TextT(title);
@@ -11550,7 +11549,7 @@ class HandleTypes extends ServiceMethods {
 		const {playlistPanelContinuation,...y}=x; this.g(y); // ! #destructure
 		this.PlaylistPanelContinuationData(playlistPanelContinuation);
 	}
-	/** @arg {ReportFormModalRenderer} x */
+	/** @arg {RT$ReportFormModal} x */
 	ReportFormModalRenderer(x) {
 		const cf="ReportFormModalRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -13698,7 +13697,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="CarouselLockupRenderer";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {FactoidRenderer} x */
+	/** @private @arg {R$Factoid} x */
 	FactoidRenderer(x) {
 		const cf="FactoidRenderer";
 		this.save_keys(`[${cf}]`,x);

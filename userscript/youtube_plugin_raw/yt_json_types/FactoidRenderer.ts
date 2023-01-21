@@ -1,1 +1,0 @@
-type FactoidRenderer={factoidRenderer: FactoidData;};

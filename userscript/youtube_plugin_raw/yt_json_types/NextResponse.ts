@@ -5,7 +5,7 @@ interface NextResponse {
 	currentVideoEndpoint?: E$WatchEndpoint;
 	trackingParams: string;
 	playerOverlays?: PlayerOverlayRenderer;
-	videoReporting?: ReportFormModalRenderer;
+	videoReporting?: RT$ReportFormModal;
 	queueContextParams?: string;
 	onResponseReceivedEndpoints?: ResponseReceivedEndpointItem[];
 	engagementPanels?: EngagementPanel[];

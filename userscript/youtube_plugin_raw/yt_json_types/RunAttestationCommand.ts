@@ -1,1 +1,0 @@
-type RunAttestationCommand={runAttestationCommand: RunAttestationCommandData;};

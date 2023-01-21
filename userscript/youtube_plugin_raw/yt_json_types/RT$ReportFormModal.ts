@@ -1,0 +1,3 @@
+type RT$ReportFormModal={
+	reportFormModalRenderer: {};
+};

@@ -1,3 +1,0 @@
-type ReportFormModalRenderer={
-	reportFormModalRenderer: {};
-};
