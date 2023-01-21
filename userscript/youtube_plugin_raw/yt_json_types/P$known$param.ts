@@ -51,15 +51,20 @@ type $sub=[
 	"subscribe.params.f4"
 ][number];
 
-type P$known$param=[
-	"click.trackingParams.f19.f2",
-	"click.trackingParams.f6.f12",
-	"click.trackingParams.f6.f13",
-	"createBackstagePost.param.f1",
-	"createBackstagePost.param.f2",
+type $entity_key=[
 	"entity_key.f2",
 	"entity_key.f4",
 	"entity_key.f5",
+][number];
+
+type $createBackstagePost=[
+	"createBackstagePost.param.f1",
+	"createBackstagePost.param.f2"
+][number];
+
+type P$known$param=[
+	$createBackstagePost,
+	$entity_key,
 	$report[number],
 	$sub,
 	$ypc_get_offers[number],
