@@ -5279,6 +5279,14 @@ case "${path}": {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "report.params.f28.f1.f1.f1.f1": {
+						switch(ta) {
+							case 4: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params.f28.f1.f1.f1": {
 						switch(ta) {
 							case 1: break;
@@ -6529,6 +6537,7 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							case "f56": u(idx); break;
 							case "f27": {
 								const idx=4;
 								if(path_parts.length===3) {
