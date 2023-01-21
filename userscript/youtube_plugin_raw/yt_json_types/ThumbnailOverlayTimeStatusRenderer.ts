@@ -1,1 +1,0 @@
-type ThumbnailOverlayTimeStatusRenderer={thumbnailOverlayTimeStatusRenderer: ThumbnailOverlayTimeStatus;};

@@ -1,3 +1,3 @@
-type RadioButtonSurveyOptionRenderer={
+type R$RadioButtonSurveyOptionRenderer={
 	radioButtonSurveyOptionRenderer: RadioButtonSurveyOptionData;
 };

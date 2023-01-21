@@ -1,6 +1,6 @@
 type CompactVideoData={
 	videoId: string;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	title: {};
 	longBylineText: D$TextWithRuns;
 	publishedTimeText: D$TextWithRuns;

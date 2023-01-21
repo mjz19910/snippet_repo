@@ -2,7 +2,7 @@ type MicroformatData={
 	urlCanonical: string;
 	title: string;
 	description: string;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	siteName: string;
 	appName: string;
 	androidPackage: string;

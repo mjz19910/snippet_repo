@@ -1,6 +1,6 @@
 type GuideEntryRoot={
 	navigationEndpoint: E$BrowseEndpoint;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	badges: GuideEntryBadges;
 	trackingParams: string;
 	formattedTitle: D$SimpleText;

@@ -22,11 +22,11 @@ type PlaylistEditorEndpoint={
 	playlistEditorEndpoint: PlaylistEditorArgs;
 };
 type HeroPlaylistThumbnail={
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	maxRatio: 0.5625;
 	trackingParams: string;
 	onTap: E$WatchEndpoint;
-	thumbnailOverlays: ThumbnailOverlayHoverTextRenderer;
+	thumbnailOverlays: R$ThumbnailOverlayHoverText;
 };
 
 type HeroPlaylistThumbnailRenderer={
@@ -51,7 +51,7 @@ type PlaylistHeader={
 	briefStats: D$TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;
 	playlistHeaderBanner: HeroPlaylistThumbnailRenderer;
-	moreActionsMenu: MenuRenderer;
+	moreActionsMenu: R$MenuRenderer;
 	playButton: R$Button;
 	shufflePlayButton: R$Button;
 	onDescriptionTap: OpenPopupAction;

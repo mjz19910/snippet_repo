@@ -1,10 +1,4 @@
-type LikeButton={
-	target: LikeApiData;
-	likeStatus: "INDIFFERENT";
-	trackingParams: string;
-	likesAllowed: boolean;
-	serviceEndpoints: E$LikeEndpoint[];
-}|{
+type D$LikeButton$2={
 	target: LikeApiData;
 	likeStatus: "INDIFFERENT";
 	likeCount: 44008;

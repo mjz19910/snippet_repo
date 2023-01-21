@@ -1,0 +1,1 @@
+type D$LikeButton=D$LikeButton$1|D$LikeButton$2;

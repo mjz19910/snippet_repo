@@ -1,6 +1,6 @@
 type A$D$AccountItem={
 	accountName: D$TextWithRuns;
-	accountPhoto: Thumbnail;
+	accountPhoto: D$Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;

@@ -1,7 +1,7 @@
 type MerchandiseItem={
 	title: string;
 	description: string;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	price: `CA$${string}`;
 	vendorName: string;
 	trackingParams: string;

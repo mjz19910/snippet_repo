@@ -1,5 +1,5 @@
 type ExpandableSurveyResponseData={
-	options: RatingSurveyRenderer;
+	options: R$RatingSurvey;
 	submitButton: R$Button;
 	trackingParams: string;
 };

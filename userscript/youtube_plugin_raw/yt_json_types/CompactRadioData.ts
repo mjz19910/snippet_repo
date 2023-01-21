@@ -1,6 +1,6 @@
 type CompactRadioData={
 	playlistId: `RD${"GM"}${string}`;
-	thumbnail: Thumbnail&SampledThumbnailColor;
+	thumbnail: D$Thumbnail&SampledThumbnailColor;
 	title: D$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
 	videoCountText: D$TextWithRuns;
@@ -10,6 +10,6 @@ type CompactRadioData={
 	thumbnailText: D$TextWithRuns;
 	videoCountShortText: D$TextWithRuns;
 	shareUrl: string;
-	menu: MenuRenderer;
+	menu: R$MenuRenderer;
 	thumbnailOverlays: ThumbnailOverlayItem[];
 };

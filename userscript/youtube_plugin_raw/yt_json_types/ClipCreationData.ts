@@ -1,6 +1,6 @@
 type ClipCreationData={
 	trackingParams: string;
-	userAvatar: Thumbnail;
+	userAvatar: D$Thumbnail;
 	titleInput: ClipCreationTextInputRenderer;
 	scrubber: ClipCreationScrubberRenderer;
 	saveButton: R$Button;

@@ -9,7 +9,7 @@ type ChapterRenderer={
 			clickTrackingParams: string;
 			setActivePanelItemAction: {};
 		};
-		thumbnail: Thumbnail;
+		thumbnail: D$Thumbnail;
 	};
 };
 

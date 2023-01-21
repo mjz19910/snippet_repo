@@ -1,7 +1,7 @@
 type PdgCommentPreviewRenderer={
 	pdgCommentPreviewRenderer: {
 		title: D$TextWithRuns;
-		authorThumbnail: Thumbnail;
+		authorThumbnail: D$Thumbnail;
 		authorText: D$SimpleText;
 		commentOptionRenderers: PdgCommentOptionRenderer[];
 		defaultCommentText: D$TextWithRuns;

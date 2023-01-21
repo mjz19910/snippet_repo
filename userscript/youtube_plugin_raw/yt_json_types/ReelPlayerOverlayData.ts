@@ -7,9 +7,9 @@ type ReelPlayerOverlayData={
 	trackingParams: string;
 	reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
 }|{
-	likeButton: LikeButtonRenderer;
+	likeButton: R$LikeButton;
 	reelPlayerHeaderSupportedRenderers: ReelPlayerHeaderRenderer;
-	menu: MenuRenderer;
+	menu: R$MenuRenderer;
 	nextItemButton: R$Button;
 	prevItemButton: R$Button;
 	subscribeButtonRenderer: SubscribeButtonRenderer;

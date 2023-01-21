@@ -1,5 +1,5 @@
 type PlayerMicroformatData={
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	embed: MicroformatEmbed;
 	title: D$TextWithRuns;
 	description?: D$TextWithRuns;

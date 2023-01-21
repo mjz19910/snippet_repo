@@ -1,10 +1,10 @@
 type ReelItemData={
 	videoId: YtVideoId;
 	headline: D$TextWithRuns;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	viewCountText: D$TextWithRuns;
 	navigationEndpoint: E$ReelWatchEndpoint;
-	menu: MenuRenderer;
+	menu: R$MenuRenderer;
 	trackingParams: string;
 	accessibility:A$Accessibility;
 	style: "REEL_ITEM_STYLE_AVATAR_CIRCLE";

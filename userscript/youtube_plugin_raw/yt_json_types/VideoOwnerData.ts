@@ -1,5 +1,5 @@
 type VideoOwnerData={
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	title: D$TextWithRuns;
 	subscriptionButton?: SubscriptionButton;
 	navigationEndpoint: E$BrowseEndpoint;

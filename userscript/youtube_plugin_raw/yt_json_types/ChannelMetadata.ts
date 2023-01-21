@@ -5,7 +5,7 @@ type ChannelMetadata={
 	externalId: "UCMlGfpWw-RUdWX_JbLCukXg";
 	keywords: string;
 	ownerUrls: [`http://www.youtube.com/@${string}`];
-	avatar: Thumbnail;
+	avatar: D$Thumbnail;
 	channelUrl: string;
 	isFamilySafe: true;
 	availableCountryCodes: string[];

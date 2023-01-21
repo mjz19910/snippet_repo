@@ -1,15 +1,15 @@
 type CommentData={
 	authorText: D$TextWithRuns;
-	authorThumbnail: Thumbnail;
+	authorThumbnail: D$Thumbnail;
 	authorEndpoint: {};
 	contentText: D$TextWithRuns;
 	publishedTimeText: D$TextWithRuns;
 	isLiked: boolean;
-	actionMenu: MenuRenderer;
+	actionMenu: R$MenuRenderer;
 	commentId: string;
 	actionButtons: CommentActionButtonsRenderer;
 	authorIsChannelOwner: boolean;
-	currentUserReplyThumbnail: Thumbnail;
+	currentUserReplyThumbnail: D$Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
 	voteCount: D$TextWithRuns;

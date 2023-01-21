@@ -1,1 +1,1 @@
-type RadioData={};
+type D$Radio={};

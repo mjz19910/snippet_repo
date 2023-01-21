@@ -1,15 +1,15 @@
-type PlayerOverlayAutoplay={
+type D$PlayerOverlayAutoplay={
 	title: D$SimpleText;
 	videoTitle: D$SimpleText;
 	byline: D$TextWithRuns;
 	pauseText: D$SimpleText;
-	background: Thumbnail;
+	background: D$Thumbnail;
 	countDownSecs: 8;
 	cancelButton: R$Button;
 	nextButton: R$Button;
 	trackingParams: string;
 	closeButton: R$Button;
-	thumbnailOverlays: ThumbnailOverlayTimeStatusRenderer[];
+	thumbnailOverlays: R$ThumbnailOverlayTimeStatus[];
 	preferImmediateRedirect: false;
 	videoId: string;
 	publishedTimeText: D$SimpleText;

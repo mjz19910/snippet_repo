@@ -1,5 +1,5 @@
 type ChannelOptionsData={
-	avatar: Thumbnail;
+	avatar: D$Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: D$TextWithRuns[];

@@ -1,7 +1,7 @@
 type VideoPrimaryInfoData={
 	title: D$TextWithRuns;
 	viewCount: VideoViewCountRenderer;
-	videoActions: MenuRenderer;
+	videoActions: R$MenuRenderer;
 	trackingParams: string;
 	superTitleLink?: D$TextWithRuns;
 	badges?: MetadataBadgeRenderer[];

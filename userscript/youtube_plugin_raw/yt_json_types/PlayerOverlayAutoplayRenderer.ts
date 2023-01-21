@@ -1,3 +1,0 @@
-type PlayerOverlayAutoplayRenderer={
-	playerOverlayAutoplayRenderer: PlayerOverlayAutoplay;
-};

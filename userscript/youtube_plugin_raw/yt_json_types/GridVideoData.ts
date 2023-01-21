@@ -1,11 +1,11 @@
 type GridVideoData={
 	badges: {}[];
-	channelThumbnail: Thumbnail;
-	menu: MenuRenderer;
+	channelThumbnail: D$Thumbnail;
+	menu: R$MenuRenderer;
 	navigationEndpoint: {};
 	shortBylineText: D$TextWithRuns;
 	shortViewCountText: D$TextWithRuns;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	thumbnailOverlay: ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;

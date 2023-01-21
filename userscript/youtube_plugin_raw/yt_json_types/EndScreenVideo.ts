@@ -1,6 +1,6 @@
 type EndScreenVideo={
 	videoId: string;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	title: D$SimpleText;
 	shortBylineText: D$TextWithRuns;
 	lengthText?: D$SimpleText;

@@ -1,0 +1,1 @@
+type R$LikeButton={likeButtonRenderer: D$LikeButton;};

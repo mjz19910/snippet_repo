@@ -1,5 +1,5 @@
 type CommentsEntryPointTeaserData={
-	teaserAvatar: Thumbnail&{
+	teaserAvatar: D$Thumbnail&{
 		accessibility: A$Accessibility;
 	};
 	teaserContent: D$SimpleText;

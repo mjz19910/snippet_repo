@@ -1,6 +1,6 @@
 type ThumbnailOverlayItem=
-	|ThumbnailOverlayBottomPanelRenderer
-	|ThumbnailOverlayHoverTextRenderer
-	|ThumbnailOverlayNowPlayingRenderer
-	|ThumbnailOverlayTimeStatusRenderer
+	|R$ThumbnailOverlayBottomPanel
+	|R$ThumbnailOverlayHoverText
+	|R$ThumbnailOverlayNowPlaying
+	|R$ThumbnailOverlayTimeStatus
 	;

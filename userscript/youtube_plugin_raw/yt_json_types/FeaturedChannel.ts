@@ -1,7 +1,7 @@
 type FeaturedChannel={
 	startTimeMs: `${number}`;
 	endTimeMs: `${number}`;
-	watermark: Thumbnail;
+	watermark: D$Thumbnail;
 	trackingParams: string;
 	navigationEndpoint: E$BrowseEndpoint;
 	channelName: string;

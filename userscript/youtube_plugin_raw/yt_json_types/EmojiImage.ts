@@ -1,4 +1,4 @@
 type EmojiImage={
 	accessibility: A$Accessibility;
-	thumbnails: ThumbnailItem[];
+	thumbnails: D$ThumbnailItem[];
 };

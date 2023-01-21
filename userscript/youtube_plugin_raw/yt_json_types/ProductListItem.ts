@@ -1,7 +1,7 @@
 type ProductListItem={
 	title: D$SimpleText;
 	accessibilityTitle: string;
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	price: `CA$${string}`;
 	onClickCommand: E$UrlEndpoint;
 	trackingParams: string;

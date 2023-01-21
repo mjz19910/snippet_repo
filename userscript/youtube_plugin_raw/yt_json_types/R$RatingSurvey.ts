@@ -1,3 +1,3 @@
-type RatingSurveyRenderer={
+type R$RatingSurvey={
 	ratingSurveyRenderer: RatingSurveyData;
 };

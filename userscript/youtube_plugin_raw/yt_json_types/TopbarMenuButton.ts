@@ -6,7 +6,7 @@ type TopbarMenuButton={
 	tooltip: string;
 	style: "STYLE_DEFAULT";
 }|{
-	avatar: Thumbnail;
+	avatar: D$Thumbnail;
 	menuRequest: E$SignalServiceEndpoint;
 	trackingParams: string;
 	accessibility: A$Accessibility;

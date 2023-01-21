@@ -5,7 +5,7 @@ type DisplayAdRenderer={
 	bodyText: D$TextWithRuns;
 	secondaryText: D$TextWithRuns;
 	badge: MetadataBadgeData;
-	menu: MenuRenderer;
+	menu: R$MenuRenderer;
 	ctaButton: R$Button;
 	impressionEndpoints: {}[];
 	clickCommand: {};

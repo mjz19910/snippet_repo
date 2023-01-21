@@ -1,4 +1,4 @@
-type EngagementPanelMenu=MenuRenderer|SortFilterSubMenuRenderer;
+type EngagementPanelMenu=R$MenuRenderer|SortFilterSubMenuRenderer;
 
 type EngagementPanelTitleHeader={
 	title: D$TextT;

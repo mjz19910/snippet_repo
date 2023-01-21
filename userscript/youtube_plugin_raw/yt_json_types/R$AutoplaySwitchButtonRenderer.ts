@@ -1,3 +1,3 @@
-type AutoplaySwitchButtonRenderer={
+type R$AutoplaySwitchButtonRenderer={
 	autoplaySwitchButtonRenderer: AutoplaySwitchButton;
 };

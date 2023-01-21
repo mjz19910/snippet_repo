@@ -1,6 +1,6 @@
 type TopicLinkData={
 	title: D$SimpleText;
-	thumbnailDetails: Thumbnail;
+	thumbnailDetails: D$Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata
 	endpoint: E$BrowseEndpoint;
 	callToActionIcon: Icon<"CHEVRON_RIGHT">;

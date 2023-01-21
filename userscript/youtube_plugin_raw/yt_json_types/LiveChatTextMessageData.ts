@@ -1,7 +1,7 @@
 type LiveChatTextMessageData={
 	message: D$TextWithRuns;
 	authorName: D$TextWithRuns;
-	authorPhoto: Thumbnail;
+	authorPhoto: D$Thumbnail;
 	contextMenuEndpoint: {};
 	id: string;
 	authorBadges?: LiveChatAuthorBadgeRenderer[];

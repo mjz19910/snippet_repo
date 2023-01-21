@@ -1,5 +1,5 @@
 type PivotButton={
-	thumbnail: Thumbnail;
+	thumbnail: D$Thumbnail;
 	onClickCommand: E$BrowseEndpoint;
 	trackingParams: string;
 	contentDescription: D$SimpleText;
