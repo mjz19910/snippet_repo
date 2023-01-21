@@ -4365,7 +4365,6 @@ class CodegenService extends BaseService {
 			if(!this.typedef_cache.includes(new_typedef)) {
 				this.typedef_cache.push(new_typedef);
 				console.log(new_typedef);
-				debugger;
 			}
 		}
 	}
@@ -8490,10 +8489,12 @@ class HandleTypes extends ServiceMethods {
 		if("feedbackEndpoint" in x) return this.E$FeedbackEndpoint(x);
 		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
 		if("shareEntityServiceEndpoint" in x) return this.E$ShareEntityServiceEndpoint(x);
-		if("likeEndpoint" in x) return this.E$Like(x.likeEndpoint);
+		if("likeEndpoint" in x) return this.E$LikeEndpoint(x);
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
+		if("recordNotificationInteractionsEndpoint" in x) return this.E$RecordNotificationInteractionsEndpoint(x);
 		console.log("");
 		this.do_codegen("EG$MenuService",x);
+		debugger;
 	}
 	/** @arg {E$AddToPlaylistServiceEndpoint} x */
 	E$AddToPlaylistServiceEndpoint(x) {
@@ -8702,8 +8703,16 @@ class HandleTypes extends ServiceMethods {
 	E$RecordNotificationInteractions(x) {
 		const cf="RecordNotificationInteractions";
 		this.save_keys(`[${cf}]`,x);
-		const {serializedInteractionsRequest,...y}=x; this.g(y); // ! #destructure
+		const {serializedInteractionsRequest,actions,...y}=x; this.g(y); // ! #destructure
 		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
+		this.z(actions,this.HideEnclosingAction);
+	}
+	/** @arg {A$HideEnclosingAction} x */
+	HideEnclosingAction(x) {
+		const cf="HideEnclosingAction";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,hideEnclosingAction: {notificationId,...z},...y}=x; this.g(y); this.g(z);// ! #destructure
+		this.primitive_of(notificationId,"string");
 	}
 	//#endregion {E$}
 	//#region general done
@@ -13721,7 +13730,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(selected,"boolean");
 		this.t(serviceEndpoint,this.ContinuationCommand);
 		this.t(accessibility,this.A$Accessibility);
-		this.t(continuation,this.ReloadContinuationData)
+		this.t(continuation,this.ReloadContinuationData);
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {GetMultiPageMenuActionData} x */

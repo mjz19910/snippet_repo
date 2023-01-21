@@ -6,4 +6,6 @@ type EG$MenuServiceEndpoints=
 	|E$ShareEntityServiceEndpoint
 	|E$AddToPlaylistServiceEndpoint
 	|E$FeedbackEndpoint
+	|E$SignalServiceEndpoint
+	|E$RecordNotificationInteractionsEndpoint
 	;
