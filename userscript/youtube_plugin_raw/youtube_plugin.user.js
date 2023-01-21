@@ -2357,7 +2357,9 @@ class KnownDataSaver extends ApiBase {
 	/** @public @arg {`[${string}]`} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(x===void 0) {debugger; return;}
-		let k=split_string_once(split_string_once(key,"[")[1],"]")[0];
+		let [,u1]=split_string_once(key,"[");
+		let [k,...u2]=split_string(u1,"]");
+		k=k+u2.join("]");
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
