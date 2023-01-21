@@ -5371,6 +5371,7 @@ case "${path}": {
 					if(c5[1]==="") {
 						switch(ta) {
 							case 1: break;
+							case 3: break;
 							default: return new_ns();
 						}
 						this.parse_param_next(root,`${a}.${b}.${c}.${d}[${c5[0]}].f${ta}`,tv);
