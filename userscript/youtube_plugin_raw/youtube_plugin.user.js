@@ -5368,6 +5368,14 @@ case "${path}": {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "report.params.f28.f1[1].f1": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params.f28.f1[1]": {
 						switch(ta) {
 							case 1: break;
@@ -5825,7 +5833,16 @@ case "${path}": {
 		if(tva.length>1) {
 			let off=1;
 			for(let val of tva) {
-				this.parse_param_next(root,as(`${path}[${off}]`),[val]);
+				switch(path) {
+					default: console.log(`\ncase ${JSON.stringify(path)}: {};`); debugger; return;
+					case "report.params.f28.f1": {
+						switch(off) {
+							case 1: break;
+							default: console.log(`\ncase ${JSON.stringify(off)}: break;`); debugger; return;
+						}
+						this.parse_param_next(root,`${path}[${off}]`,[val]);
+					} break;
+				}
 				off++;
 			}
 			return;
