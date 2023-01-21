@@ -2388,6 +2388,24 @@ class KnownDataSaver extends ApiBase {
 		let bs=ta.join("");
 		return new BitmapResult(map_arr,bs);
 	}
+	/** @arg {number[]} src */
+	generate_bitmap_num_raw_fill(src,fill_value=0) {
+		let map_arr=[...new Set([...src])].sort((a,b) => a-b);
+		let zz=map_arr.at(-1)??0;
+		let ta=new Array(zz+1).fill(fill_value);
+		/** @type {0|1} */
+		let replace_value;
+		if(fill_value===0) {
+			replace_value=1;
+		} else {
+			replace_value=0;
+		}
+		src.forEach(e => {
+			ta[e]=replace_value;
+		});
+		let bs=ta.join("");
+		return new BitmapResult(map_arr,bs);
+	}
 	/** @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
 		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
