@@ -5608,11 +5608,12 @@ case "${path}": {
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
-	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv */
-	parse_param_next(root,path,[tv,...tr]) {
+	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv @arg {string|null} no_off_path */
+	parse_param_next(root,path,[tv,...tr],off=0,no_off_path=null) {
+		if(!no_off_path) no_off_path=path;
 		if(tr.length>0) {
 			console.log("param_next.list",root,path,[tv,...tr]);
-			this.parse_param_next(root,path,tr);
+			this.parse_param_next(root,as(`${no_off_path}.[${off}]`),tr,off+1,path);
 		}
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
