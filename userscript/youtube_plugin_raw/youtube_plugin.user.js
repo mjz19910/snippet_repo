@@ -2304,7 +2304,6 @@ class KnownDataSaver extends ApiBase {
 		let idx=this.#seen_strings.indexOf(p);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(idx);
-		debugger;
 		return true;
 	}
 	/** @arg {number} idx */
