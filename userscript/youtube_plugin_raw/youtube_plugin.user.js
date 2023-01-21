@@ -5374,9 +5374,9 @@ case "${path}": {
 							case 3: break;
 							default: return new_ns();
 						}
-						this.parse_param_next(root,`${a}.${b}.${c}.${d}[${c5[0]}].f${ta}`,tv);
+						this.parse_param_next(root,`${a}.${b}.${c}.${d}[].f${ta}`,tv);
 					}
-					console.log('off',c,d,c5[0]);
+					console.log('off',c,d,`[${c5[0]}]`,ta,tv);
 					return;
 				}
 				/** @type {P$LogItems} */
