@@ -13358,7 +13358,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {title,viewCount,videoActions,trackingParams,superTitleLink,dateText,relativeDateText,badges,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(title);
-		this.D$TextWithRuns(superTitleLink);
+		this.t(superTitleLink,this.D$TextWithRuns);
 		this.VideoViewCountRenderer(viewCount);
 		this.MenuRenderer(videoActions);
 		this.trackingParams("CF_FIX",trackingParams);
