@@ -2337,7 +2337,7 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {string} x */
 	rle_enc(x) {
-		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2)=>{
+		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2) => {
 			let rle=c1?.length??c2?.length;
 			if(rle<4) return "!"+v[0]+":"+v.length;
 			if(c1?.length!==void 0) return "!"+c1[0]+":"+c1.length;
@@ -2346,6 +2346,17 @@ class KnownDataSaver extends ApiBase {
 		}).split("!").slice(1);
 		return rle.join("!");
 	}
+	num_bitmap_console() {
+		let yt_plugin=window.yt_plugin;
+		if(!yt_plugin) return;
+		let gg=yt_plugin.ds.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
+		if(!gg) return;
+		let g1=gg[1];
+		if(g1[0]==="many") return;
+		let bm=yt_plugin.ds.generate_bitmap_num(g1[1]).bitmap;
+		yt_plugin.ds.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		yt_plugin.ds.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
+	}
 	/** @arg {string[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
 		let map_arr=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
@@ -2353,7 +2364,7 @@ class KnownDataSaver extends ApiBase {
 			let ta=new Array(map_arr.length).fill(0);
 			for(let x of e) ta[x]=1;
 			let bs=ta.join("");
-			return this.rle_enc(bs);
+			return bs;
 		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
 		class BitmapResult {
 			/** @arg {string[]} map_arr @arg {string} bitmap */
@@ -2366,8 +2377,9 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
-		let map_arr=[...new Set([...bitmap_src])].sort((a,b)=>a-b);
-		let ta=new Array(map_arr.at(-1)).fill(0);
+		let map_arr=[...new Set([...bitmap_src])].sort((a,b) => a-b);
+		let zz=map_arr.at(-1)??0;
+		let ta=new Array(zz+1).fill(0);
 		bitmap_src.forEach(e => {
 			ta[e]=1;
 		});
