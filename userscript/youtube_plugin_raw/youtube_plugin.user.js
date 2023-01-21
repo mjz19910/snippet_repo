@@ -4493,7 +4493,7 @@ class CodegenService extends BaseService {
 	/** @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} x */
 	get_json_replacer_type(state,r,x) {
 		let g=() => this.json_auto_replace(x);
-		if(state.k1==="webCommandMetadata") return o;
+		if(state.k1==="webCommandMetadata") return x;
 		/** @type {D$TextWithRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::D$TextWithRuns";
 		/** @type {D$Thumbnail} */
