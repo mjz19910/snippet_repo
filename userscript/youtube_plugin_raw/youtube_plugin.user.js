@@ -13249,8 +13249,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("badges" in x) {
 			let u=this.VideoOwner$Omit(x);
-			const {badges,...y}=u; this.g(y); // ! #destructure
+			const {badges,membershipButton,...y}=u; this.g(y); // ! #destructure
 			this.z(badges,this.MetadataBadgeRenderer);
+			this.R$ButtonRenderer(membershipButton);
 			return;
 		}
 		let u=this.VideoOwner$Omit(x);
