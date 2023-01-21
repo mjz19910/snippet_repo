@@ -4207,6 +4207,10 @@ class JsonReplacerState {
 		this.gen_name=gen_name;
 		this.key_keep_arr=keys;
 		this.k1="";
+		/** @type {{}[]} */
+		this.object_store=[];
+		/** @type {Map<{},number>} */
+		this.parent_map=new Map;
 	}
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
@@ -4411,6 +4415,17 @@ class CodegenService extends BaseService {
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
+		}
+		if(!state.object_store.includes(x)) {
+			state.object_store.push(x);
+			state.parent_map.set(x,state.object_store.indexOf(x));
+		}
+		let mi=state.object_store.indexOf(x);
+		let xi=Object.entries(x);
+		for(let [k_in,val] of xi) {
+			if(state.object_store.includes(k_in)) continue;
+			state.object_store.push(k_in);
+			state.parent_map.set(val,mi);
 		}
 		state.k1=k1;
 		let res_type=this.get_json_replacer_type(state,gen_name,x);
