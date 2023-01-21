@@ -1,4 +1,10 @@
 type P$known$param=[
+	"click.trackingParams.f19.f2"|"report.params.f25"|"report.params.f26"|"report.params.f28"|
+	"report.params.f28.f1"|"watch.params.f56"|"report.params.f28.f1.f1"|"report.params.f28.f1.f1.f1"|
+	"report.params.f28.f1.f1.f1.f1"|"report.params.f28.f1.f1.f1.f1.f4"|
+	"report.params.f28.f1.f3",
+	GEN$PathRoot.CX2<GEN$PathRoot.X$CU>,
+	GEN$PathRoot.CX2<GEN$PathRoot.X$CU2>,
 	"createBackstagePost.param.f2"|"createBackstagePost.param.f1",
 	"entity_key.f4"|"entity_key.f5"|"entity_key.f2",
 	"subscribe.params.f2.f1"|"subscribe.params.f2"|"subscribe.params.f3"|"subscribe.params.f4",
