@@ -1,4 +1,4 @@
 type NotificationGetUnseenCountDirect={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	unseenCount: number;
 };

@@ -5,5 +5,5 @@ type R$VE3832$WatchPageResponse={
 	page: "watch";
 	preconnect?: [D$VE3832$PreconnectUrl];
 	playerResponse: PlayerResponse;
-	response: WatchResponse;
+	response: R$Watch;
 };

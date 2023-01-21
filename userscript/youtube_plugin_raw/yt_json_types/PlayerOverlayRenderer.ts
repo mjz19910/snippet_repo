@@ -1,1 +1,0 @@
-type PlayerOverlayRenderer={playerOverlayRenderer: D$PlayerOverlay;};

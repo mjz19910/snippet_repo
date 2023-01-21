@@ -1,1 +1,1 @@
-type GFeedbackServiceParamsType=GFeedbackServiceParamList|ToServiceParams<GFeedbackVarMap>;
+type GFeedbackServiceParamsType=GFeedbackServiceParamList|RC$ToServiceParams<GFeedbackVarMap>;

@@ -1,5 +1,5 @@
 type SearchResponse=ContentsTemplate<TwoColumnSearchResultsRenderer>&{
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	estimatedResults: `${number}`;
 	trackingParams: string;
 	topbar: DesktopTopbarRenderer;

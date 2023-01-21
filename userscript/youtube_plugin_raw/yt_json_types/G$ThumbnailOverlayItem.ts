@@ -1,4 +1,4 @@
-type ThumbnailOverlayItem=
+type G$ThumbnailOverlayItem=
 	|R$ThumbnailOverlayBottomPanel
 	|R$ThumbnailOverlayHoverText
 	|R$ThumbnailOverlayNowPlaying

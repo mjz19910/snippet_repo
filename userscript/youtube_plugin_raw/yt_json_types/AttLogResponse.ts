@@ -1,3 +1,3 @@
 type AttLogResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 };

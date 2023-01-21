@@ -1,4 +1,4 @@
 type SuccessResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	success: boolean;
 };

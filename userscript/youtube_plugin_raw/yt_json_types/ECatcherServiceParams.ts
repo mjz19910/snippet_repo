@@ -1,4 +1,4 @@
-type ECatcherServiceParams={
+type RC$ECatcherServiceParams={
 	service: "ECATCHER";
-	params: ToServiceParams<ECatcherServiceType>|ECatcherClientName[]|ECatcherClientVersion[];
+	params: RC$ToServiceParams<ECatcherServiceType>|RC$ECatcherClientName[]|ECatcherClientVersion[];
 };

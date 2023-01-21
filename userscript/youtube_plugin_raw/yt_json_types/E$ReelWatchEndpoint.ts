@@ -1,5 +1,5 @@
 type E$ReelWatchEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: M$CommandMetadata;
 	reelWatchEndpoint: E$ReelWatch;
 };

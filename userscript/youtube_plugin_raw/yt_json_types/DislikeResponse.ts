@@ -1,4 +1,4 @@
 type DislikeResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	actions: OpenPopupAction[];
 };

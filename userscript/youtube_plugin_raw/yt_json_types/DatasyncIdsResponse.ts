@@ -1,4 +1,4 @@
 type DatasyncIdsResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	datasyncIds: (`${number}||${number}`|`${number}||`)[];
 };

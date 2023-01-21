@@ -1,4 +1,4 @@
 type AccountSetSetting={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	settingItemId: `${AccountSettingIdList[number]}`;
 };

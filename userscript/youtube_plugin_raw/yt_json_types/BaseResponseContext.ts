@@ -1,5 +1,5 @@
 type BaseResponseContext={
-	mainAppWebResponseContext: MainAppWebResponseContext;
-	serviceTrackingParams: AllServiceTrackingParams[];
-	webResponseContextExtensionData: WebResponseContextExtensionData;
+	mainAppWebResponseContext: RC$MainAppWebResponseContext;
+	serviceTrackingParams: RC$AllServiceTrackingParams[];
+	webResponseContextExtensionData: RC$WebResponseContextExtensionData;
 };

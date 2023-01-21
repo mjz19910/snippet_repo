@@ -1,7 +1,7 @@
 type E$UndoFeedbackEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: {
-		webCommandMetadata: GeneratedWebCommandMetadata;
+		webCommandMetadata: M$GeneratedWebCommandMetadata;
 	};
 	undoFeedbackEndpoint: E$UndoFeedback;
 };

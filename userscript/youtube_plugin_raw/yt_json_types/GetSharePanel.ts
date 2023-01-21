@@ -1,5 +1,5 @@
 type GetSharePanel={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	trackingParams: string;
 	actions: OpenPopupAction[];
 };

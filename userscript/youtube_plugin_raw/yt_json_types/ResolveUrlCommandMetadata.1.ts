@@ -1,4 +1,4 @@
-type ResolveUrlCommandMetadata={
+type M$ResolveUrlCommandMetadata={
 	isVanityUrl?: boolean;
 	parentTrackingParams?: string; 
 };

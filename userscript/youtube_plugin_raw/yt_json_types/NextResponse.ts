@@ -1,10 +1,10 @@
 interface NextResponse {
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	contents?: NextResponseContents;
 	continuationContents?: PlaylistPanelContinuation;
 	currentVideoEndpoint?: E$WatchEndpoint;
 	trackingParams: string;
-	playerOverlays?: PlayerOverlayRenderer;
+	playerOverlays?: R$PlayerOverlay;
 	videoReporting?: RT$ReportFormModal;
 	queueContextParams?: string;
 	onResponseReceivedEndpoints?: ResponseReceivedEndpointItem[];

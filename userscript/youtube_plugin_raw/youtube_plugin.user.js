@@ -3405,9 +3405,9 @@ class CsiService extends BaseService {
 	data={
 		/** @private @type {BrowseEndpointPages|null} */
 		yt_fn: null,
-		/** @private @type {CsiServiceC["value"]|null} */
+		/** @private @type {RC$CsiServiceC["value"]|null} */
 		c: null,
-		/** @private @type {CsiVarTypes["cver"]|null} */
+		/** @private @type {RC$CsiVarTypes["cver"]|null} */
 		cver: null,
 		/** @private @type {"1"|null} */
 		yt_li: null,
@@ -3473,7 +3473,7 @@ class CsiService extends BaseService {
 			default: console.log("[verify_param_bad]",value); debugger; return false;
 		};
 	}
-	/** @arg {CsiServiceParamsType} params */
+	/** @arg {RC$CsiServiceParamsType} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3493,7 +3493,7 @@ class CsiService extends BaseService {
 /** @extends {BaseService<Services,ServiceOptions>} */
 class ECatcherService extends BaseService {
 	data={
-		/** @private @type {{name:ECatcherClientName['value'];fexp:number[];version:SomeVer<CsiVarTypes["cver"]>}|null} */
+		/** @private @type {{name:RC$ECatcherClientName['value'];fexp:number[];version:RC$SomeVer<RC$CsiVarTypes["cver"]>}|null} */
 		client: null,
 		expected_client_values: {
 			/** @private @type {number[]} */
@@ -3544,7 +3544,7 @@ class ECatcherService extends BaseService {
 		}
 		this.data.expected_client_values.fexp;
 	}
-	/** @public @arg {ECatcherServiceParams["params"]} params */
+	/** @public @arg {RC$ECatcherServiceParams["params"]} params */
 	on_params(params) {
 		/** @private @type {NonNullable<this["data"]["client"]>} */
 		let new_client={};
@@ -3586,7 +3586,7 @@ class GFeedbackService extends BaseService {
 	/** @type {string[]} */
 	seen_e_param=[];
 	has_new_e_param=false;
-	/** @private @arg {Extract<ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
+	/** @private @arg {Extract<RC$ToServiceParams<GFeedbackVarMap>[number],{key:"e"}>} param */
 	parse_e_param(param) {
 		if(this.seen_e_param.includes(param.value)) return;
 		this.seen_e_param.push(param.value);
@@ -3667,7 +3667,7 @@ class GuidedHelpService extends BaseService {
 		/** @private @type {"yt_web_unknown_form_factor_kevlar_w2w"|null} */
 		context: null,
 	};
-	/** @public @arg {GuidedHelpServiceParams["params"]} params */
+	/** @public @arg {RC$GuidedHelpServiceParams["params"]} params */
 	on_params(params) {
 		for(let param of params) {
 			switch(param.key) {
@@ -3684,26 +3684,26 @@ class GuidedHelpService extends BaseService {
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
 class TrackingServices extends BaseService {
-	/** @private @arg {CsiServiceParams} service */
+	/** @private @arg {RC$CsiServiceParams} service */
 	on_csi_service(service) {
 		this.x.get("csi_service").on_params(service.params);
 	}
-	/** @private @arg {ECatcherServiceParams} service */
+	/** @private @arg {RC$ECatcherServiceParams} service */
 	on_e_catcher_service(service) {
 		this.x.get("e_catcher_service").on_params(service.params);
 	}
-	/** @private @arg {GFeedbackServiceParams} service */
+	/** @private @arg {RC$GFeedbackServiceParams} service */
 	on_g_feedback_service(service) {
 		this.x.get("g_feedback_service").on_params(service.params);
 	}
-	/** @private @arg {GuidedHelpServiceParams} service */
+	/** @private @arg {RC$GuidedHelpServiceParams} service */
 	on_guided_help_service(service) {
 		this.x.get("guided_help_service").on_params(service.params);
 	}
 	get handle_types() {
 		return this.x.get("handle_types");
 	}
-	/** @private @arg {GoogleHelpServiceParams} service */
+	/** @private @arg {RC$GoogleHelpServiceParams} service */
 	on_google_help_service(service) {
 		for(let param of service.params) {
 			switch(param.key) {
@@ -3713,7 +3713,7 @@ class TrackingServices extends BaseService {
 			}
 		}
 	}
-	/** @public @arg {AllServiceTrackingParams} service_arg */
+	/** @public @arg {RC$AllServiceTrackingParams} service_arg */
 	set_service_params(service_arg) {
 		switch(service_arg.service) {
 			case "CSI": this.on_csi_service(service_arg); break;
@@ -7427,7 +7427,7 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}
-	/** @public @arg {Extract<GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<M$GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
@@ -7445,7 +7445,7 @@ class ServiceMethods extends ServiceData {
 			case "83769": return;
 			case "96368": return;
 			default: {
-				/** @type {GeneratedWebCommandMetadata[]} */
+				/** @type {M$GeneratedWebCommandMetadata[]} */
 				let x=[]; x;
 			}
 		}
@@ -7473,7 +7473,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @arg {Extract<GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
+	/** @arg {Extract<M$GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -7630,7 +7630,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
-	/** @arg {GeneratedWebCommandMetadata} x */
+	/** @arg {M$GeneratedWebCommandMetadata} x */
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -7645,7 +7645,7 @@ class HandleTypes extends ServiceMethods {
 						return;
 					}
 					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-					/** @arg {GeneratedWebCommandMetadata} x */
+					/** @arg {M$GeneratedWebCommandMetadata} x */
 					let typedef_str=this.codegen_new_typedef(x,`G$${url_type_ex}`,true);
 					console.log(`
 					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
@@ -7679,7 +7679,7 @@ class HandleTypes extends ServiceMethods {
 			let cx=x.rootVe;
 			switch(x.rootVe) {
 				default: {
-					/** @arg {GeneratedWebCommandMetadata} x */
+					/** @arg {M$GeneratedWebCommandMetadata} x */
 					this.codegen_new_typedef(x,`G$VE${cx}`);
 					console.log(`\n\tG$VE${cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
@@ -7702,7 +7702,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {GeneratedWebCommandMetadata} x */
+	/** @arg {M$GeneratedWebCommandMetadata} x */
 	GeneratedWebCommandMetadata(x) {
 		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;
@@ -7710,7 +7710,7 @@ class HandleTypes extends ServiceMethods {
 			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
 		}
 	}
-	/** @arg {GeneratedWebCommandMetadata} x */
+	/** @arg {M$GeneratedWebCommandMetadata} x */
 	WebCommandMetadataRVE(x) {
 		if(!("rootVe" in x)) return;
 		this.rootVe(x.rootVe);
@@ -8160,7 +8160,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlayerResponse(playerResponse);
 		this.WatchResponse(response);
 	}
-	/** @arg {WatchResponse} x */
+	/** @arg {R$Watch} x */
 	WatchResponse(x) {
 		const cf="WatchResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8234,7 +8234,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(expirationTime,a => this.primitive_of(a,"number"));
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
-	/** @arg {ResponseContext} x */
+	/** @arg {RC$ResponseContext} x */
 	ResponseContext(x) {
 		const cf="ResponseContext";
 		this.save_keys(`[${cf}]`,x);
@@ -8247,14 +8247,14 @@ class HandleTypes extends ServiceMethods {
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
 		this.t(stateTags,this.RelevantStateTags);
 	}
-	/** @arg {A$RelevantStateTags} x */
+	/** @arg {RC$A$RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const cf="RelevantStateTags";
 		this.save_keys(`[${cf}]`,x);
 		const {relevantStateTags,...y}=x; this.g(y); // ! #destructure
 		this.z(relevantStateTags,this.StateTag);
 	}
-	/** @arg {ConsistencyTokenJar} x */
+	/** @arg {RC$ConsistencyTokenJar} x */
 	ConsistencyTokenJar(x) {
 		const cf="ConsistencyTokenJar";
 		this.save_keys(`[${cf}]`,x);
@@ -8262,7 +8262,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
-	/** @arg {WebResponseContextExtensionData} x */
+	/** @arg {RC$WebResponseContextExtensionData} x */
 	WebResponseContextExtensionData(x) {
 		const cf="WebResponseContextExtensionData";
 		this.save_keys(`[${cf}]`,x);
@@ -8307,7 +8307,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @arg {MainAppWebResponseContext} x */
+	/** @arg {RC$MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {
 		const cf="MainAppWebResponseContext";
 		this.save_keys(`[${cf}]`,x);
@@ -8791,7 +8791,7 @@ class HandleTypes extends ServiceMethods {
 			case "_Generic": return g(x);
 		}
 		this._current_response_type=x.type;
-		/** @type {{data:{responseContext:ResponseContext;}}} */
+		/** @type {{data:{responseContext:RC$ResponseContext;}}} */
 		let v=x;
 		this.ResponseContext(v.data.responseContext);
 		x: if("actions" in x.data) {
@@ -10190,7 +10190,7 @@ class HandleTypes extends ServiceMethods {
 		if(isVisible!==true) debugger;
 		if(key!=="HEATSEEKER") debugger;
 	}
-	/** @arg {PlayerOverlayRenderer} x */
+	/** @arg {R$PlayerOverlay} x */
 	PlayerOverlayRenderer(x) {
 		const cf="PlayerOverlayRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -10437,7 +10437,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=x; this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
-	/** @arg {CommandMetadata} x */
+	/** @arg {M$CommandMetadata} x */
 	CommandMetadata(x) {
 		const cf="CommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -10512,7 +10512,7 @@ class HandleTypes extends ServiceMethods {
 		const {endScreenVideoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.EndScreenVideo(endScreenVideoRenderer);
 	}
-	/** @arg {ThumbnailOverlayItem} x */
+	/** @arg {G$ThumbnailOverlayItem} x */
 	ThumbnailOverlayItem(x) {
 		const cf="ThumbnailOverlayItem";
 		this.save_keys(`[${cf}]`,x);
@@ -11556,7 +11556,7 @@ class HandleTypes extends ServiceMethods {
 		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
 		debugger;
 	}
-	/** @arg {ResolveUrlCommandMetadata} x */
+	/** @arg {M$ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
 		const cf="ResolveUrlCommandMetadata";
 		this.save_keys(`[${cf}]`,x);

@@ -1,7 +1,7 @@
 type BrowseMetadata=ChannelMetadataRenderer|PlaylistMetadataRenderer;
 
 type BrowseResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	contents?: BrowseContents;
 	continuationContents?: C$SectionList;
 	header?: BrowseHeader;

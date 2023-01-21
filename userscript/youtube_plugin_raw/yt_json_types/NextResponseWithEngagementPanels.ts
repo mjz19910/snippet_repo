@@ -1,6 +1,6 @@
 type NextResponseWithEngagementPanels={
 	onResponseReceivedEndpoints: {}[];
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	trackingParams: string;
 	engagementPanels: EngagementPanel[];
 };

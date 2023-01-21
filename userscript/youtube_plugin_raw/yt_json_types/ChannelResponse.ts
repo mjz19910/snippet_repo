@@ -1,5 +1,5 @@
 type ChannelResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	contents: R$TwoColumnBrowseResults;
 	header: C4TabbedHeaderRenderer;
 	metadata: ChannelMetadataRenderer;

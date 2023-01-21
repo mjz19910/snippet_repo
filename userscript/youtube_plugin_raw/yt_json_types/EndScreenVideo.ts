@@ -9,5 +9,5 @@ type EndScreenVideo={
 	trackingParams: string;
 	shortViewCountText: D$TextT;
 	publishedTimeText: D$SimpleText;
-	thumbnailOverlays: ThumbnailOverlayItem[];
+	thumbnailOverlays: G$ThumbnailOverlayItem[];
 };

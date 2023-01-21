@@ -1,5 +1,5 @@
 type E$SetSettingEndpointAutonavForDesktop<T extends boolean>={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: M$CommandMetadata;
 	setSettingEndpoint: SettingItemAutonavForDesktop<T>;
 };

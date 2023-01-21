@@ -1,5 +1,5 @@
 type NotificationGetUnseenCountResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	actions?: [UpdateNotificationsUnseenCountAction];
 	unseenCount?: number;
 };

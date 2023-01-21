@@ -1,5 +1,5 @@
 type GetTranscriptResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	actions: UpdateEngagementPanelAction[];
 	trackingParams: string;
 };

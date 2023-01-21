@@ -1,4 +1,4 @@
 type GetSurveyResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	trackingParams: string;
 };

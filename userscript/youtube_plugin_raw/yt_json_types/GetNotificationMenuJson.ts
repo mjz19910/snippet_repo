@@ -1,5 +1,5 @@
 type GetNotificationMenuResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	actions: OpenPopupAction[];
 	trackingParams: string;
 };

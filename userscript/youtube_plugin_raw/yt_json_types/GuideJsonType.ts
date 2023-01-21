@@ -1,5 +1,5 @@
 type GuideResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	items: GuideItemType[];
 	trackingParams: string;
 };

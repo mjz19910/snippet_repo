@@ -1,4 +1,4 @@
-type CsiVarMap={
+type RC$CsiVarMap={
 	yt_li: "1";
 	yt_ad: "1";
 	yt_fn: BrowseEndpointPages;

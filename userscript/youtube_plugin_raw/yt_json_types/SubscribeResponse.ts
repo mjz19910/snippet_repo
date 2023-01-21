@@ -1,5 +1,5 @@
 type SubscribeResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	actions: (AddToGuideSectionAction|OpenPopupAction|C$RunAttestation|UpdateSubscribeButtonAction)[];
 	newNotificationButton: {};
 	trackingParams: string;

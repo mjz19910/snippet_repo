@@ -1,5 +1,5 @@
 type E$UploadEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: M$CommandMetadata;
 	uploadEndpoint: E$Upload;
 };

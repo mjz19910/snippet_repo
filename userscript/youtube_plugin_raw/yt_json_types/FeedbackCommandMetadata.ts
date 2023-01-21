@@ -1,3 +1,3 @@
 type FeedbackCommandMetadata={
-	webCommandMetadata: GeneratedWebCommandMetadata;
+	webCommandMetadata: M$GeneratedWebCommandMetadata;
 };

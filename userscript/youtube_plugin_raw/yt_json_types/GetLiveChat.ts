@@ -1,5 +1,5 @@
 type GetLiveChat={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	continuationContents: LiveChatContinuation;
 	trackingParams?: string;
 };

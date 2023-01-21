@@ -11,5 +11,5 @@ type CompactRadioData={
 	videoCountShortText: D$TextWithRuns;
 	shareUrl: string;
 	menu: R$MenuRenderer;
-	thumbnailOverlays: ThumbnailOverlayItem[];
+	thumbnailOverlays: G$ThumbnailOverlayItem[];
 };

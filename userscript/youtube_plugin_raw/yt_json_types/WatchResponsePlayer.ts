@@ -1,5 +1,5 @@
 interface PlayerResponse {
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	playabilityStatus: PlayabilityStatus;
 	streamingData?: StreamingData;
 	heartbeatParams?: HeartbeatParams;

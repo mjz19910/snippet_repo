@@ -1,9 +1,9 @@
-type WatchResponse={
-	responseContext: ResponseContext;
+type R$Watch={
+	responseContext: RC$ResponseContext;
 	contents: A$TwoColumnWatchNextResults;
 	currentVideoEndpoint: E$WatchEndpoint;
 	trackingParams: string;
-	playerOverlays: PlayerOverlayRenderer;
+	playerOverlays: R$PlayerOverlay;
 	onResponseReceivedEndpoints: ResponseReceivedEndpointItem[];
 	engagementPanels: EngagementPanelSectionListRenderer[];
 	topbar: DesktopTopbarRenderer;

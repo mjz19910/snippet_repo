@@ -6,7 +6,7 @@ type GridVideoData={
 	shortBylineText: D$TextWithRuns;
 	shortViewCountText: D$TextWithRuns;
 	thumbnail: D$Thumbnail;
-	thumbnailOverlay: ThumbnailOverlayItem[];
+	thumbnailOverlay: G$ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;
 	videoId: string;

@@ -1,6 +1,6 @@
 type E$SubscribeEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: CommandMetadata;
+	commandMetadata: M$CommandMetadata;
 	subscribeEndpoint: {
 		channelIds: string[];
 		params: string;

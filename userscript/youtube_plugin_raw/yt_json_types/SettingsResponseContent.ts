@@ -1,5 +1,5 @@
 type SettingsResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	contents: R$TwoColumnBrowseResults;
 	trackingParams: string;
 	topbar: DesktopTopbarRenderer;

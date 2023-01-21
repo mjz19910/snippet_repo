@@ -1,5 +1,5 @@
 type PlaylistResponse=ContentsTemplate<R$TwoColumnBrowseResults>&{
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	header: PlaylistHeaderRenderer;
 	alerts?: AlertWithButtonRenderer[];
 	metadata: PlaylistMetadataRenderer;

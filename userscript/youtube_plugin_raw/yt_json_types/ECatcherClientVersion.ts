@@ -1,4 +1,4 @@
 type ECatcherClientVersion={
 	key: "client.version";
-	value: SomeVer<CsiVarTypes['cver']>;
+	value: RC$SomeVer<RC$CsiVarTypes['cver']>;
 };

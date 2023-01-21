@@ -1,5 +1,5 @@
 type UpdatedMetadata={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	continuation: TimedContinuationData;
 	actions: UpdatedMetadataActions;
 };

@@ -1,5 +1,5 @@
 type AttGetResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	challenge: string;
 	bgChallenge: AttBgChallenge;
 };

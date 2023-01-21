@@ -1,4 +1,4 @@
 type GetSearchSuggestionsResponse={
-	responseContext: ResponseContext;
+	responseContext: RC$ResponseContext;
 	trackingParams: string;
 };

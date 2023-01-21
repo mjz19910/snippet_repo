@@ -62,7 +62,7 @@ async function use_page_type_watch_detail() {
 	function use_gfeedback() {
 		const watch_j_response=json.response.response;
 		let service_param_1=watch_j_response.responseContext.serviceTrackingParams[1];
-		const service_param_1_t: GFeedbackServiceParams=service_param_1;
+		const service_param_1_t: RC$GFeedbackServiceParams=service_param_1;
 		return service_param_1_t;
 	}
 	const gfeedback=use_gfeedback();
