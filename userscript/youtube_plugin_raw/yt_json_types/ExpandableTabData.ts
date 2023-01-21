@@ -3,5 +3,5 @@ type D$ExpandableTab={
 	title: string;
 	selected: boolean;
 	expandedText?: string;
-	content?: R$SectionListRenderer;
+	content?: R$SectionList;
 };

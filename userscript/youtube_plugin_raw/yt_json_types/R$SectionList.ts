@@ -1,3 +1,3 @@
-type R$SectionListRenderer={
+type R$SectionList={
 	sectionListRenderer: G$SectionList;
 };

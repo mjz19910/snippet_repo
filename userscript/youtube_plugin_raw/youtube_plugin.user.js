@@ -7397,7 +7397,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.z(x.contents,f);
 	}
-	/** @template T,U @arg {ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
+	/** @template T,U @arg {T$ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
 	ItemSectionRendererTemplate(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -7481,13 +7481,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		return parse_number(x.types,_x);
 	}
-	/** @arg {SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
+	/** @arg {T$SectionListDataTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
 		const {contents,...y}=x; this.g(y); // ! #destructure
 		this.SectionListItemTemplate(contents);
 	}
-	/** @arg {SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
+	/** @arg {T$SectionListItemTemplate<"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,a => {
@@ -8299,7 +8299,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(text);
 		this.R$Button(dismissButton);
 	}
-	/** @arg {SectionListContinuation|MusicShelfContinuation} x */
+	/** @arg {C$SectionList|MusicShelfContinuation} x */
 	ContinuationContents(x) {
 		const cf="ContinuationContents";
 		this.save_keys(`[${cf}]`,x);
@@ -8310,7 +8310,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {SectionListContinuation} x */
+	/** @arg {C$SectionList} x */
 	SectionListContinuation(x) {
 		const cf="SectionListContinuation";
 		this.save_keys(`[${cf}]`,x);
@@ -9218,7 +9218,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.SectionListRenderer(x.primaryContents);
 	}
-	/** @arg {R$SectionListRenderer} x */
+	/** @arg {R$SectionList} x */
 	SectionListRenderer(x) {
 		const cf="SectionListRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -9561,7 +9561,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.TabData(x.tabRenderer);
 	}
-	/** @arg {R$SectionListRenderer} x */
+	/** @arg {R$SectionList} x */
 	TabData_section(x) {
 		if("sectionListRenderer" in x) {
 			this.SectionListRenderer(x);
@@ -10704,7 +10704,7 @@ class HandleTypes extends ServiceMethods {
 		const {twoColumnWatchNextResults,...y}=x; this.g(y); // ! #destructure
 		this.TwoColumnWatchNextResultsData(twoColumnWatchNextResults);
 	}
-	/** @arg {ItemSectionRendererTemplate_Section<any>} x @returns {x is ItemSectionRendererTemplate<any,any>} */
+	/** @arg {ItemSectionRendererTemplate_Section<any>} x @returns {x is T$ItemSectionRendererTemplate<any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}

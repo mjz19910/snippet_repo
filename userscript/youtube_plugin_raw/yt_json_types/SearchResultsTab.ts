@@ -2,7 +2,7 @@ type SearchResultsTab={
 	endpoint?: E$SearchEndpoint;
 	title: string;
 	selected?: boolean;
-	content: R$SectionListRenderer;
+	content: R$SectionList;
 	tabIdentifier: string;
 	trackingParams: string;
 };

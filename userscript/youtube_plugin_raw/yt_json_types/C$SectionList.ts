@@ -1,0 +1,1 @@
+type C$SectionList={sectionListContinuation: G$SectionList;};

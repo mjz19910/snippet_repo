@@ -1,4 +1,4 @@
-type ItemSectionRendererTemplate<T,U>={
+type T$ItemSectionRendererTemplate<T,U>={
 	itemSectionRenderer: ItemSectionDataTemplate<T,U>;
 };
 type ItemSectionRendererTemplate_Section<T>={

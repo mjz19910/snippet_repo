@@ -3,7 +3,7 @@ type BrowseMetadata=ChannelMetadataRenderer|PlaylistMetadataRenderer;
 type BrowseResponse={
 	responseContext: ResponseContext;
 	contents?: BrowseContents;
-	continuationContents?: SectionListContinuation;
+	continuationContents?: C$SectionList;
 	header?: BrowseHeader;
 	alerts?: AlertWithButtonRenderer[];
 	metadata?: BrowseMetadata;

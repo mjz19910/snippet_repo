@@ -1,4 +1,4 @@
-type EngagementPanelSectionShortsComments=ContentTemplate<R$SectionListRenderer>&{
+type EngagementPanelSectionShortsComments=ContentTemplate<R$SectionList>&{
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
 	identifier: {

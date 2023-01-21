@@ -1,4 +1,4 @@
 type SecondaryContentsItemInner=[
 	RelatedChipCloudRenderer,
-	ItemSectionRendererTemplate<"sid-wn-chips","watch-next-feed">
+	T$ItemSectionRendererTemplate<"sid-wn-chips","watch-next-feed">
 ][number];
