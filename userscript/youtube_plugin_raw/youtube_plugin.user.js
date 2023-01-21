@@ -9638,7 +9638,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="LikeLikeResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
-		this.z(actions,x => {
+		this.tz(actions,x => {
 			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
 		});
