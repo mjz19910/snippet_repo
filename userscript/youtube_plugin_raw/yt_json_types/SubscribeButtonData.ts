@@ -12,7 +12,7 @@ type SubscribeButtonData={
 	serviceEndpoints?: (E$SubscribeEndpoint|SubscribeButtonData$SignalServiceEndpoint)[];
 	subscribeAccessibility: A$Accessibility;
 	unsubscribeAccessibility: A$Accessibility;
-	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;
+	notificationPreferenceButton?: SubscriptionNotificationToggleButtonRenderer;
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
 	onSubscribeEndpoints: E$SubscribeEndpoint[];

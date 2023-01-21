@@ -5606,7 +5606,7 @@ case "${path}": {
 	}
 	/** @arg {string[]} x */
 	report$params(x) {
-		this.save_string("[report.params.path]",x);
+		this.save_string("[report.params.path]",x.join("$"));
 	}
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv */
 	parse_param_next(root,path,[tv,...tr]) {
@@ -13736,7 +13736,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.A$Accessibility(subscribeAccessibility);
 		this.A$Accessibility(unsubscribeAccessibility);
-		this.SubscriptionNotificationToggleButtonRenderer(notificationPreferenceButton);
+		this.t(notificationPreferenceButton,this.SubscriptionNotificationToggleButtonRenderer);
 		this.primitive_of_string(targetId);
 		this.primitive_of_string(subscribedEntityKey);
 		this.z(onSubscribeEndpoints,this.E$SubscribeEndpoint);
