@@ -6613,8 +6613,6 @@ case "${path_parts[idx-1]}": {
 			if(!map_keys.includes(i)) continue;
 			parse_key(i);
 		}
-		// endpoint.watch.params
-		parse_key(56);
 		// endpoint.create_playlist.params
 		this.parse_key(root,path,x,map_keys,77,tv => {
 			if(tv.length===1&&typeof tv[0]==="string") {
@@ -6624,7 +6622,10 @@ case "${path_parts[idx-1]}": {
 			}
 			debugger;
 		});
-		parse_key(84);
+		for(let i=1;i<300;i++) {
+			if(!map_keys.includes(i)) continue;
+			parse_key(i);
+		}
 		if(this.eq_keys(map_keys,[])) return;
 		let param_obj=this.to_param_obj(x);
 		console.log(`[endpoint.${path}] [idx=${key_index}]`,param_obj);
@@ -7125,6 +7126,7 @@ case "${path_parts[idx-1]}": {
 		}
 		switch(x) {
 			case "hashtag": return true;
+			default:
 		}
 		switch(x) {
 			case "": return true;
