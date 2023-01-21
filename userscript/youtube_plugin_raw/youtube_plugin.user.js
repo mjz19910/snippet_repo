@@ -9580,7 +9580,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TabData} x */
 	TabData(x) {
 		const cf="TabData";
-		const cf="TabData";
 		this.save_keys(`[${cf}]`,x);
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
@@ -9694,7 +9693,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NextRadioContinuationDataInner} x */
 	NextRadioContinuationDataInner(x) {
-		const cf="NextRadioContinuationDataInner";
 		const cf="NextRadioContinuationDataInner";
 		this.save_keys(`[${cf}]`,x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
@@ -9917,7 +9915,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ScrollToEngagementPanelCommand} x */
 	ScrollToEngagementPanelCommand(x) {
 		const cf="ScrollToEngagementPanelCommand";
-		const cf="ScrollToEngagementPanelCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -9995,7 +9992,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReloadContinuationItemsCommand} x */
 	ReloadContinuationItemsCommand(x) {
-		const cf="ReloadContinuationItemsCommand";
 		const cf="ReloadContinuationItemsCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y); // ! #destructure
@@ -11297,7 +11293,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E$SearchEndpoint} x */
 	E$SearchEndpoint(x) {
 		const cf="SearchEndpoint";
-		const cf="SearchEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -11628,7 +11623,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
 		const cf="ShowEngagementPanelScrimAction";
-		const cf="ShowEngagementPanelScrimAction";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -11636,7 +11630,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
-		const cf="ChangeEngagementPanelVisibilityAction";
 		const cf="ChangeEngagementPanelVisibilityAction";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y); // ! #destructure
@@ -11695,7 +11688,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateEngagementPanelAction} x */
 	UpdateEngagementPanelAction(x) {
-		const cf="UpdateEngagementPanelAction";
 		const cf="UpdateEngagementPanelAction";
 		this.save_keys(`[${cf}]`,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
@@ -11838,7 +11830,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {
-		const cf="AddToPlaylistCommand";
 		const cf="AddToPlaylistCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,addToPlaylistCommand,...y}=x; this.g(y); // ! #destructure
@@ -12435,7 +12426,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ButtonCommand} x */
 	ButtonCommand(x) {
 		const cf="ButtonCommand";
-		const cf="ButtonCommand";
 		this.save_keys(`[${cf}]`,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
@@ -12473,7 +12463,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
-		const cf="CommandExecutorCommand";
 		const cf="CommandExecutorCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y); // ! #destructure
@@ -13529,8 +13518,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
 		const cf="ChannelSwitcherPage";
-		this.save_keys(`[${cf}]`,x);
-		const cf="ReelDismissalActionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {contents: [z],header,targetId,...y}=x; this.g(y); // #destructure
 		if("buttonRenderer" in z) return this.R$Button(z);

@@ -1,1 +1,1 @@
-type VE83769_CommandMetadata={webCommandMetadata: _gen_VE83769;};
+type VE83769_CommandMetadata={webCommandMetadata: G$VE83769;};
