@@ -2140,7 +2140,7 @@ class KnownDataSaver extends ApiBase {
 	do_save_keys_obj=false;
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
 	save_keys(k,x) {
-		if(!x) {console.log(new Error()); return;}
+		if(!x) {debugger; return;}
 		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
 		if(this.do_save_keys_obj) {
 			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
@@ -7122,6 +7122,9 @@ case "${path_parts[idx-1]}": {
 			case "music_moods_and_genres": return true;
 			case "music_new_releases": return true;
 			default:
+		}
+		switch(x) {
+			case "hashtag": return true;
 		}
 		switch(x) {
 			case "": return true;
@@ -12634,7 +12637,7 @@ class HandleTypes extends ServiceMethods {
 	SubscriptionButton(x) {
 		const {type,subscribed,...y}=x; this.g(y); // ! #destructure
 		if(type!=="FREE") debugger;
-		this.primitive_of(subscribed,"boolean");
+		this.t(subscribed,a => this.primitive_of(a,"boolean"));
 	}
 	/** @arg {AddToPlaylistRenderer} x */
 	AddToPlaylistRenderer(x) {
