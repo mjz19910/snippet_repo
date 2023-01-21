@@ -12305,7 +12305,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
 	}
-	/** @arg {R$EngagementPanelTitleHeader} x */
+	/** @arg {R$EngagementPanelTitleHeaderRenderer} x */
 	EngagementPanelTitleHeaderRenderer(x) {
 		const cf="EngagementPanelTitleHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -13377,7 +13377,7 @@ class HandleTypes extends ServiceMethods {
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if(slotPhysicalPosition!==1) debugger;
 	}
-	/** @arg {MacroMarkersListRenderer} x */
+	/** @arg {R$MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
 		const cf="MacroMarkersListRenderer";
 		this.save_keys(`[${cf}]`,x);

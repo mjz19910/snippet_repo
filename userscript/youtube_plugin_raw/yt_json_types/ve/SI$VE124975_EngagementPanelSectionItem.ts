@@ -1,6 +1,6 @@
 interface VE124975_EngagementPanelSectionItem {
 	panelIdentifier?: "engagement-panel-structured-description";
-	header: R$EngagementPanelTitleHeader;
+	header: R$EngagementPanelTitleHeaderRenderer;
 	content: StructuredDescriptionContentRenderer;
 	veType: 124975;
 	targetId: "engagement-panel-structured-description";
