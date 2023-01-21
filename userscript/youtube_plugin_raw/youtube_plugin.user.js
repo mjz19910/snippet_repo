@@ -9148,6 +9148,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {C$Continuation} x */
 	ContinuationCommand(x) {
+		if(!x) {debugger; return;}
 		const cf="ContinuationCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y); // ! #destructure
@@ -14384,9 +14385,9 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.A$Accessibility(accessibility);
 		let cc=this.t(targetId,a => this.targetId_arr(split_string_once(a,".")));
-		this.t(cc,a=>{
+		this.t(cc,a => {
 			console.log("targetId",a);
-		})
+		});
 	}
 	/** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
 	targetId_arr([f,a]) {
