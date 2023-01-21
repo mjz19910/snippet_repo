@@ -5088,11 +5088,12 @@ class ParserService extends BaseService {
 	parse_get_transcript(x) {
 		/** @type {ParamMapValue[]} */
 		let transcript_args=[];
+		let pMap=x;
 		debugger;
 		/** @arg {number} x */
 		function convert_param(x) {
 			if(x<=0) {debugger; return;}
-			let pf=x.get(x);
+			let pf=pMap.get(x);
 			if(pf) {
 				if(pf.length!==1) debugger;
 				transcript_args[x-1]=pf[0];
