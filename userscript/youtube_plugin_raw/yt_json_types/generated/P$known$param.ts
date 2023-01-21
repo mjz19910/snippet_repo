@@ -10,7 +10,6 @@ type P$known$param=[
 	P$get_transcript$param,
 	P$record_notification_interactions$param,
 	P$reel$player_param,
-	P$report$param,
 	P$watch$param,
 	P$watch$player_param,
 ][number];
@@ -57,21 +56,29 @@ type $subscribe=[
 	"subscribe.params.f2.f1",
 	"subscribe.params.f2",
 	"subscribe.params.f3",
-	"subscribe.params.f4"
+	"subscribe.params.f4",
+	"subscribe.params",
 ][number];
 type $entity_key=[
 	"entity_key.f2",
 	"entity_key.f4",
 	"entity_key.f5",
+	"entity_key",
 ][number];
 type $createBackstagePost=[
 	"createBackstagePost.param.f1",
-	"createBackstagePost.param.f2"
+	"createBackstagePost.param.f2",
+	"createBackstagePost.param",
 ][number];
 type P$tracking$param=PE$tracking$param<[
 	"click",
-	"tracking"
-][number]>; type P$get_transcript$param="get_transcript.params.f6"|"get_transcript.params.f1";
+	"tracking",
+][number]>;
+type P$get_transcript$param=[
+	"get_transcript.params",
+	"get_transcript.params.f6",
+	"get_transcript.params.f1",
+][number];
 type P$category$param=P$LogItems[number] extends `[${string}] [${infer U}]`?U:never;
 type P$browse$param=[
 	"browse$param.f84.f5",
@@ -79,6 +86,7 @@ type P$browse$param=[
 	"browse$param.f93",
 	"browse$param.f93.f1",
 	"browse$param",
+	"browse.params",
 ][number];
 type $missing$param=Exclude<P$category$param,P$known$param>;
 type only_param$extract=Extract<P$category$param,`${string}.params.${string}`>;
@@ -98,32 +106,16 @@ type P$reel$player_param=[
 	"reel.player_params.f71",
 	"reel.player_params",
 	"reel.sequence_params.f1",
-][number];
-type P$report$param=[
-][number];
-type P$unknown$param=[
-	"browse.params",
-	"createBackstagePost.param",
-	"entity_key",
-	"get_transcript.params",
-	"like.likeParams",
-	"like.remove_like_params",
-	"next.queue_context_params",
-	"playlist_edit.params",
 	"reel.sequence_params",
-	"subscribe.params",
-	"tracking.parentTrackingParams",
-	"watch_page_url.pp",
-	"watch_playlist.params",
-	Extract<P$category$param,`reel.${string}`>,
-][number]; type P$watch$player_param=[
-	"watch.player_params.f40.f1.f2"|
-	"watch.player_params.f40.f1.f3"|
-	"watch.player_params.f40.f1"|
-	"watch.player_params.f40"|
-	"watch.player_params.f8"|
-	"watch.player_params.f9"|
-	"watch.player_params"
+][number];
+type P$watch$player_param=[
+	"watch.player_params.f40.f1.f2",
+	"watch.player_params.f40.f1.f3",
+	"watch.player_params.f40.f1",
+	"watch.player_params.f40",
+	"watch.player_params.f8",
+	"watch.player_params.f9",
+	"watch.player_params",
 ][number];
 type PE$tracking$param<T extends string>=[
 	`${T}.trackingParams.f1`,
@@ -140,7 +132,7 @@ type PE$tracking$param<T extends string>=[
 	`${T}.trackingParams.f6.f13`,
 	`${T}.trackingParams.f6`,
 	`${T}.trackingParams.f9`,
-	`${T}.trackingParams`
+	`${T}.trackingParams`,
 ][number];
 type P$watch$param=[
 	"watch.params.f12",
@@ -159,5 +151,12 @@ type P$watch$param=[
 	"watch.params.f7",
 	"watch.params",
 ][number];
-
-
+type P$unknown$param=[
+	"like.likeParams",
+	"like.remove_like_params",
+	"next.queue_context_params",
+	"playlist_edit.params",
+	"tracking.parentTrackingParams",
+	"watch_page_url.pp",
+	"watch_playlist.params",
+][number]; 
