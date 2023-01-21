@@ -13718,7 +13718,9 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.D$TextWithRuns(unsubscribeButtonText);
 		this.tz(serviceEndpoints,x => {
-			if("subscribeEndpoint" in x) return;
+			if("subscribeEndpoint" in x) return this.E$SubscribeEndpoint(x);
+			if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
+			x;
 			this.do_codegen(cf,x);
 			debugger;
 		});
@@ -13729,6 +13731,10 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(subscribedEntityKey);
 		this.z(onSubscribeEndpoints,this.E$SubscribeEndpoint);
 		this.z(onUnsubscribeEndpoints,this.E$SignalServiceEndpoint);
+	}
+	/** @arg {E$SignalServiceEndpoint} x */
+	signalServiceEndpoint(x) {
+		this.E$SignalServiceEndpoint(x);
 	}
 	/** @arg {D$BrowseFeedActions} x */
 	BrowseFeedActions(x) {
