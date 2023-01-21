@@ -2335,13 +2335,25 @@ class KnownDataSaver extends ApiBase {
 			console.log(bitmap);
 		}
 	}
+	/** @arg {string} x */
+	rle_enc(x) {
+		let rle=x.replaceAll(/(1+)|(0+)/g,(v,c1,c2)=>{
+			let rle=c1?.length??c2?.length;
+			if(rle<4) return "!"+v[0]+":"+v.length;
+			if(c1?.length!==void 0) return "!"+c1[0]+":"+c1.length;
+			if(c2?.length!==void 0) return "!"+c2[0]+":"+c2.length;
+			return ["!",c1?.length,"$",c2?.length,":"]+"";
+		}).split("!").slice(1);
+		return rle.join("!");
+	}
 	/** @arg {string[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
 		let map_arr=[...new Set([...bitmap_src.map(e => e.split(",")).flat()])];
 		let bitmap="\n"+bitmap_src.map(e => e.split(",").map(e => map_arr.indexOf(e))).map(e => {
 			let ta=new Array(map_arr.length).fill(0);
 			for(let x of e) ta[x]=1;
-			return ta.join("");
+			let bs=ta.join("");
+			return this.rle_enc(bs);
 		}).sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
 		class BitmapResult {
 			/** @arg {string[]} map_arr @arg {string} bitmap */
