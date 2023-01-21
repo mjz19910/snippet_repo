@@ -5362,55 +5362,6 @@ case "${path}": {
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
-				if(this.str_starts_with(path,"report.params.f28.f1[")) {
-					let [a,c1]=split_string_once(path,".");
-					let [b,c2]=split_string_once(c1,".");
-					let [c,c3]=split_string_once(c2,".");
-					let [d,c4]=split_string_once(c3,"[");
-					let c5=split_string_once(c4,"]");
-					/** @type {`${a}.${b}.${c}.${d}`} */
-					let sp=`${a}.${b}.${c}.${d}`;
-					if(c5[1]==="") {
-						switch(ta) {
-							case 1: break;
-							case 3: break;
-							default: return new_ns();
-						}
-						this.parse_param_next(root,`${sp}[].f${ta}`,tv);
-						return;
-					}
-					let c6=split_string_once(c5[1],".")[1];
-					switch(c6) {
-						case "f1": {
-							switch(ta) {
-								case 1: break;
-								default: return new_ns();
-							}
-							this.parse_param_next(root,`${sp}[].${c6}.f${ta}`,tv);
-							return;
-						}
-						case "f1.f1": return new_ns();
-						case "f3": return new_ns();
-					}
-					let c7=split_string_once(c6,".");
-					if(c7[0]!=="f1") debugger;
-					let c8=split_string_once(c7[1],"[");
-					if(c8[0]!=="f1") debugger;
-					let c9=split_string_once(c8[1],"]"); c9;
-					if(c9[1]==="") {
-						switch(ta) {
-							case 1: break;
-							default: return new_ns();
-						}
-						/** @type {`${sp}[].${c7[0]}.${c8[0]}[]`} */
-						const s2=`${sp}[].${c7[0]}.${c8[0]}[]`;
-						this.parse_param_next(root,`${s2}.f${ta}`,tv);
-						return;
-					}
-					console.log('off',c,d,`[${c5[0]}]`,ta,tv);
-					debugger;
-					return;
-				}
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: {
