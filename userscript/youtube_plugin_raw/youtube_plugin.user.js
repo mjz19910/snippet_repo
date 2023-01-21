@@ -5606,7 +5606,7 @@ case "${path}": {
 	}
 	/** @arg {string[]} x */
 	report$params(x) {
-		console.log(x);
+		this.save_string("[report.params.path]",x);
 	}
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv */
 	parse_param_next(root,path,[tv,...tr]) {
