@@ -1,7 +1,7 @@
-type ExpandableTabData={
+type D$ExpandableTab={
 	endpoint: {};
 	title: string;
 	selected: boolean;
 	expandedText?: string;
-	content?: SectionListRenderer;
+	content?: R$SectionListRenderer;
 };

@@ -1,24 +1,24 @@
-type BrowseFeedSectionListData={
-	continuations?: NextContinuationData[];
-	contents: SectionListItem[];
+type D$BrowseFeedSectionList={
+	continuations?: A$NextContinuationData[];
+	contents: $SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;
 	targetId: `browse-feedUC${string}featured`;
 };
 
-type GenericSectionListData={
-	continuations?: NextContinuationData[];
-	contents: SectionListItem[];
+type D$GenericSectionList={
+	continuations?: A$NextContinuationData[];
+	contents: $SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;
 };
 
-type SectionListData=GenericSectionListData|SearchFeedSectionListData|BrowseFeedSectionListData;
-type SearchFeedSectionListData={
-	continuations?: NextContinuationData[];
-	contents: SectionListItem[];
+type G$SectionList=D$GenericSectionList|D$SearchFeedSectionList|D$BrowseFeedSectionList;
+type D$SearchFeedSectionList={
+	continuations?: A$NextContinuationData[];
+	contents: $SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;

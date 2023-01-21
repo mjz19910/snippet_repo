@@ -1,3 +1,3 @@
 type SectionListContinuation={
-	sectionListContinuation: SectionListData;
+	sectionListContinuation: G$SectionList;
 };

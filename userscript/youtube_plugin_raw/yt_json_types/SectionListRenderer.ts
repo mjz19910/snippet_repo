@@ -1,3 +1,3 @@
-type SectionListRenderer={
-	sectionListRenderer: SectionListData;
+type R$SectionListRenderer={
+	sectionListRenderer: G$SectionList;
 };

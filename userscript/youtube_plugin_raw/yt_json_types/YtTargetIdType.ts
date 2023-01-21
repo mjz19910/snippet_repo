@@ -3,7 +3,7 @@ type YtTargetIdType=[
 	BrowseFeedAction['targetId'],
 	CommentsSectionContinuationAction['targetId'],
 	EngagementPanelSectionTargetId,
-	SearchFeedSectionListData['targetId'],
+	D$SearchFeedSectionList['targetId'],
 	ScrollToEngagementPanelData['targetId'],
 	SearchResponse['targetId'],
 	TranscriptSearchPanelData['targetId'],

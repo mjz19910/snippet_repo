@@ -5,18 +5,18 @@ type TabData={
 	trackingParams: string;
 }|{
 	selected: true;
-	content: SectionListRenderer;
+	content: R$SectionListRenderer;
 	trackingParams: string;
 }|{
 	endpoint: E$BrowseEndpoint;
 	title: string;
 	selected?: true;
-	content?: SectionListRenderer;
+	content?: R$SectionListRenderer;
 	trackingParams: string;
 }|{
 	endpoint: E$BrowseEndpoint;
 	selected: true;
-	content: SectionListRenderer;
+	content: R$SectionListRenderer;
 	tabIdentifier: "FEsubscriptions";
 	accessibility: A$Accessibility;
 	trackingParams: string;

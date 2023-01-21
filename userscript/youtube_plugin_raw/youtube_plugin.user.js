@@ -8316,7 +8316,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.SectionListData(x.sectionListContinuation);
 	}
-	/** @arg {SectionListData} x */
+	/** @arg {G$SectionList} x */
 	SectionListData(x) {
 		const cf="SectionListData";
 		this.save_keys(`[${cf}]`,x);
@@ -8352,7 +8352,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 	}
-	/** @arg {SearchFeedSectionListData} x */
+	/** @arg {D$SearchFeedSectionList} x */
 	SearchFeedSectionListData(x) {
 		const cf="SearchFeedSectionListData";
 		this.save_keys(`[${cf}]`,x);
@@ -8364,20 +8364,20 @@ class HandleTypes extends ServiceMethods {
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
-	/** @arg {NextContinuationData} x */
+	/** @arg {A$NextContinuationData} x */
 	NextContinuationData(x) {
 		const cf="NextContinuationData";
 		this.save_keys(`[${cf}]`,x);
 		this.NextContinuation(x.nextContinuationData);
 	}
-	/** @arg {NextContinuation} x */
+	/** @arg {D$NextContinuation} x */
 	NextContinuation(x) {
 		const cf="NextContinuation";
 		this.save_keys(`[${cf}]`,x);
 		this.clickTrackingParams("NextContinuation",x.clickTrackingParams);
 		this.primitive_of(x.continuation,"string");
 	}
-	/** @arg {SectionListItem} x */
+	/** @arg {$SectionListItem} x */
 	SectionListItem(x) {
 		const cf="SectionListItem";
 		this.save_keys(`[${cf}]`,x);
@@ -9218,7 +9218,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.SectionListRenderer(x.primaryContents);
 	}
-	/** @arg {SectionListRenderer} x */
+	/** @arg {R$SectionListRenderer} x */
 	SectionListRenderer(x) {
 		const cf="SectionListRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -9555,13 +9555,13 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.z(x.tabs,this.TabRenderer);
 	}
-	/** @arg {TabRenderer} x */
+	/** @arg {R$Tab} x */
 	TabRenderer(x) {
 		const cf="TabRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.TabData(x.tabRenderer);
 	}
-	/** @arg {SectionListRenderer} x */
+	/** @arg {R$SectionListRenderer} x */
 	TabData_section(x) {
 		if("sectionListRenderer" in x) {
 			this.SectionListRenderer(x);
@@ -12190,7 +12190,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(tabs,this.ResultRenderer);
 		this.t(secondaryContents,this.SecondaryContents);
 	}
-	/** @arg {ResultRenderer} x */
+	/** @arg {G$ResultRenderer} x */
 	ResultRenderer(x) {
 		const cf="ResultRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -12294,7 +12294,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {SecondaryContents} x */
+	/** @arg {G$SecondaryContents} x */
 	SecondaryContents(x) {
 		const cf="SecondaryContents";
 		this.save_keys(`[${cf}]`,x);
@@ -12979,7 +12979,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextWithRuns(title);
 		this.z(items,this.CompactLinkRenderer);
 	}
-	/** @arg {ExpandableTabRenderer} x */
+	/** @arg {R$ExpandableTab} x */
 	ExpandableTabRenderer(x) {
 		const cf="ExpandableTabRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -13363,7 +13363,7 @@ class HandleTypes extends ServiceMethods {
 		this.g(serviceEndpoint);
 		this.TextWithRuns(channelHandle);
 	}
-	/** @arg {ExpandableTabData} x */
+	/** @arg {D$ExpandableTab} x */
 	ExpandableTabData(x) {
 		const cf="ExpandableTabData";
 		this.save_keys(`[${cf}]`,x);

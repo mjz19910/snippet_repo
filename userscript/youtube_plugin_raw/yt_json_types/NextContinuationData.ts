@@ -1,3 +1,3 @@
-type NextContinuationData={
-	nextContinuationData: NextContinuation;
+type A$NextContinuationData={
+	nextContinuationData: D$NextContinuation;
 };

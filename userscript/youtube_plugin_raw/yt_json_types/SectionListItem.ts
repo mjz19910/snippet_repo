@@ -1,4 +1,4 @@
-type SectionListItem=
+type $SectionListItem=
 	|R$ContinuationItemRenderer
 	|ItemSectionRenderer
 	|MusicCarouselShelfRenderer

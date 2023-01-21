@@ -1,3 +1,3 @@
 type WatchNextTabbedResults={
-	tabs: TabRenderer[];
+	tabs: R$Tab[];
 };

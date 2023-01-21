@@ -1,1 +1,1 @@
-type ResultRenderer=TabRenderer|ExpandableTabRenderer;
+type G$ResultRenderer=R$Tab|R$ExpandableTab;

@@ -1,6 +1,6 @@
 type VE139722_EngagementPanelSectionItem={
 	header: EngagementPanelTitleHeaderRenderer;
-	content: SectionListRenderer;
+	content: R$SectionListRenderer;
 	veType: 139722;
 	targetId: "engagement-panel-comments-section";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";

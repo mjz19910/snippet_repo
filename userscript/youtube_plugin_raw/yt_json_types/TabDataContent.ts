@@ -1,5 +1,5 @@
 type TabDataContent=
-	|SectionListRenderer
+	|R$SectionListRenderer
 	|RichGridRenderer
 	|MusicQueueRenderer
 	;
