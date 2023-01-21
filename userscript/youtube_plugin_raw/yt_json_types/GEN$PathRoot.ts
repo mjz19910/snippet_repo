@@ -1,4 +1,4 @@
-namespace GEN$PathRoot {
+namespace PathRoot_Gen {
 	export type X$CU="[parse_value.gen_ns] [report.params.f28.f1.f1.f1[1].f1]";
 	export type X$CU2="[parse_value.gen_ns] [report.params.f28.f1.f1.f1[1]]";
 	type CX<T extends string>=SplitOnce<Extract<Split<T," ">,[any,any]>[1],"[">;
