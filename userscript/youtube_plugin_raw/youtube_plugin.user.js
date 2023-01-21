@@ -1191,7 +1191,6 @@ class MyReader {
 			} break;
 			case 3: {
 				let res;
-				debugger;
 				while((wireType=(res=this.uint32())&7)!==4) {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
 					if(this.failed) {
@@ -5276,7 +5275,18 @@ case "${path}": {
 			if(cb===null) {
 				/** @type {P$LogItems} */
 				switch(path) {
-					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
+					default: {
+						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
+						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
+					} break;
+					case "report.params.f28.f1.f1.f1": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params.f28.f1.f1": {
 						switch(ta) {
 							case 1: break;
@@ -5581,6 +5591,10 @@ case "${path}": {
 			return xx;
 		}
 	}
+	/** @arg {string[]} x */
+	report$params(x) {
+		console.log(x);
+	}
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv */
 	parse_param_next(root,path,[tv,...tr]) {
 		if(tr.length>0) {
@@ -5620,6 +5634,7 @@ case "${path_parts[idx-1]}": {
 		let gd=(idx) => {
 			console.log("[param_next.new_ns]",path_parts.join("."));
 			gen_next_part(idx);
+			debugger;
 		};
 		/** @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
@@ -6100,6 +6115,7 @@ case "${path_parts[idx-1]}": {
 				const idx=2;
 				switch(path_parts[1]) {
 					default: u(idx); path_parts[1]===""; break;
+					// report$params
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6107,6 +6123,33 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							case "f28": {
+								let [,,...sp]=path_parts;
+								return this.report$params(sp);
+							}
+							case "f26": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 14: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f25": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							// report$params$f18
 							case "f18": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -7913,7 +7956,7 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,...z}=x;
 		let panel_id=this.w(this.w(z));
 		switch(panel_id) {
-			default: console.log(`-- [ShowEngagementPanelEndpoint] --\n\n\ncase "${panel_id}": break;`);debugger; break;
+			default: console.log(`-- [ShowEngagementPanelEndpoint] --\n\n\ncase "${panel_id}": break;`); debugger; break;
 			case "engagement-panel-searchable-transcript": break;
 		};
 	}
@@ -10439,7 +10482,7 @@ class HandleTypes extends ServiceMethods {
 			/** @type {G$Menu$items$iterate} */
 			if("toggleMenuServiceItemRenderer" in x) return this.toggleMenuServiceItemRenderer(x);
 			if("menuServiceItemRenderer" in x) return this.MenuServiceItemRenderer(x);
-			if("menuNavigationItemRenderer"in x) return this.menuNavigationItemRenderer(x);
+			if("menuNavigationItemRenderer" in x) return this.menuNavigationItemRenderer(x);
 			this.do_codegen("MenuItems",x);
 		});
 	}
