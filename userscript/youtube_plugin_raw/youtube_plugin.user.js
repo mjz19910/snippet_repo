@@ -4405,9 +4405,13 @@ class CodegenService extends BaseService {
 		if(x.simpleText) return "TYPE::SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
+		if(x.signal) {
+			return this.decode_Signal(x);
+		}
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
+		debugger;
 		return null;
 	}
 	/** @param {{[U in string]:unknown}} x */
@@ -4440,6 +4444,15 @@ class CodegenService extends BaseService {
 				return `TYPE::Extract<PopupTypeMap["${x.popupType}"][number],{${jy}}>`;
 		}
 		return `TYPE::PopupTypeMap["${x.popupType}"]`;
+	}
+	/** @param {{[U in string]:unknown}} x */
+	decode_Signal(x) {
+		/** @type {E$Signal_ClientSignal} */
+		let u=as(x);
+		switch(u.signal) {
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E$Signal_ClientSignal"; break;
+		}
+		return x;
 	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
 	get_json_replace_type_len_1(r,b,keys) {
@@ -7650,6 +7663,10 @@ class HandleTypes extends ServiceMethods {
 				case "/youtubei/v1/notification/get_notification_menu": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/get_transcript": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/next": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/share/get_share_panel": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/browse/edit_playlist": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/playlist/get_add_to_playlist": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/account/set_setting": return this.GeneratedWebCommandMetadata(x);
 			}
 			return;
 		}
@@ -9921,7 +9938,13 @@ class HandleTypes extends ServiceMethods {
 					this.g(y);
 				} break;
 				case 99999: {
-					debugger;
+					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x; this.g(y);
+					if(panelIdentifier!=="shopping_panel_for_entry_point_5") debugger;
+					this.EngagementPanelTitleHeaderRenderer(header);
+					this.ProductListRenderer(content);
+					if(targetId!=="shopping_panel_for_entry_point_5") debugger;
+					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+					this.LoggingDirectives(loggingDirectives);
 				} break;
 				case 126250: {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
