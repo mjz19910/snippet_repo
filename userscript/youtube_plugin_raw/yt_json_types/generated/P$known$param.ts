@@ -70,10 +70,6 @@ type $createBackstagePost=[
 	"createBackstagePost.param.f2",
 	"createBackstagePost.param",
 ][number];
-type P$tracking$param=PE$tracking$param<[
-	"click",
-	"tracking",
-][number]>;
 type P$get_transcript$param=[
 	"get_transcript.params",
 	"get_transcript.params.f6",
@@ -117,7 +113,10 @@ type P$watch$player_param=[
 	"watch.player_params.f9",
 	"watch.player_params",
 ][number];
-type PE$tracking$param<T extends string>=[
+type P$tracking$param<T extends string=[
+	"click",
+	"tracking",
+][number]>=[
 	`${T}.trackingParams.f1`,
 	`${T}.trackingParams.f19.f1`,
 	`${T}.trackingParams.f19.f2`,
