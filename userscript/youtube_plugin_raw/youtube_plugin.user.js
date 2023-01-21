@@ -1194,8 +1194,10 @@ class MyReader {
 				debugger;
 				while((wireType=(res=this.uint32())&7)!==4) {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
-					first_num.push(["error",res>>>3]);
-					if(this.failed) break;
+					if(this.failed) {
+						first_num.push(["error",res>>>3]);
+						break;
+					}
 					first_num.push(["group",res>>>3,skip_res]);
 				}
 			} break;
