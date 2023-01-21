@@ -13494,7 +13494,7 @@ class HandleTypes extends ServiceMethods {
 		const {richListHeaderRenderer:u,...y}=x; this.g(y); // ! #destructure
 		const {title,trackingParams,navigationButton,...z}=u; this.g(z);
 		this.D$SimpleText(title);
-		this.trackingParams(trackingParams);
+		this.trackingParams(cf,trackingParams);
 		this.R$ButtonRenderer(navigationButton);
 	}
 	/** @arg {R$CompactVideoRenderer} x */
