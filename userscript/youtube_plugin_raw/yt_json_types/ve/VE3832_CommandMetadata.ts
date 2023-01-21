@@ -1,3 +1,3 @@
 type VE3832_CommandMetadata={
-	webCommandMetadata: VE3832_WebCommandMetadata;
+	webCommandMetadata: _gen_VE3832;
 };

@@ -7386,18 +7386,21 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
-		this.save_keys(`[SectionListRendererTemplate]`,x);
+		const cf="SectionListRendererTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {sectionListRenderer,...y}=x; this.g(y); // ! #destructure
 		this.SectionListDataTemplate(sectionListRenderer);
 	}
 	/** @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ContentsArrayTemplate(x,f) {
-		this.save_keys("[ContentsArrayTemplate]",x);
+		const cf="ContentsArrayTemplate";
+		this.save_keys(`[${cf}]`,x);
 		this.z(x.contents,f);
 	}
 	/** @template T,U @arg {ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
 	ItemSectionRendererTemplate(x,f) {
-		this.save_keys("[ItemSectionRendererTemplate]",x);
+		const cf="ItemSectionRendererTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {itemSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ItemSectionDataTemplate(itemSectionRenderer,f);
 	}
@@ -7413,20 +7416,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template T @arg {CommandTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	CommandTemplate(x,f) {
-		this.save_keys(`[CommandTemplate]`,x);
+		const cf="CommandTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,command,...y}=x; this.g(y); // ! #destructure
 		f.call(this,command);
 		this.trackingParams("CommandTemplate",trackingParams);
 	}
 	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate(x,f) {
-		this.save_keys(`[CommandsTemplate]`,x);
+		const cf="CommandsTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {commands,...y}=x; this.g(y); // ! #destructure
 		this.z(commands,f);
 	}
 	/** @template {{}} T @template {CommandsTemplate<T>} C @arg {C} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate$Omit(x,f) {
-		this.save_keys(`[CommandsTemplate]`,x);
+		const cf="CommandsTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {commands,...y}=x; // ! #destructure
 		this.z(commands,f);
 		return y;
@@ -7441,25 +7447,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template T @arg {AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	AutoplayTemplate(x,f) {
-		this.save_keys("[AutoplayTemplate]",x);
+		const cf="AutoplayTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {autoplay,...y}=x; this.g(y); // ! #destructure
 		f.call(this,autoplay);
 	}
 	/** @template T @arg {PlaylistTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	PlaylistTemplate(x,f) {
-		this.save_keys("[PlaylistTemplate]",x);
+		const cf="PlaylistTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {playlist,...y}=x; this.g(y); // ! #destructure
 		f.call(this,playlist);
 	}
 	/** @template T @arg {ResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	ResultsTemplate(x,f) {
-		this.save_keys("[ResultsTemplate]",x);
+		const cf="ResultsTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {results,...y}=x; this.g(y); // ! #destructure
 		f.call(this,results);
 	}
 	/** @template T @arg {SecondaryResultsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	SecondaryResultsTemplate(x,f) {
-		this.save_keys("[SecondaryResultsTemplate]",x);
+		const cf="SecondaryResultsTemplate";
+		this.save_keys(`[${cf}]`,x);
 		const {secondaryResults,...y}=x; this.g(y); // ! #destructure
 		f.call(this,secondaryResults);
 	}
@@ -7487,13 +7497,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ItemSectionRendererTemplate_Section<"comments-entry-point">} x */
 	ItemSectionRendererTemplate_Section(x) {
-		this.save_keys("[ItemSectionRendererTemplate_Section]",x);
+		const cf="ItemSectionRendererTemplate_Section";
+		this.save_keys(`[${cf}]`,x);
 		const {itemSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ItemSectionDataTemplate_Section(itemSectionRenderer);
 	}
 	/** @arg {ItemSectionDataTemplate_Section<"comments-entry-point">} x */
 	ItemSectionDataTemplate_Section(x) {
-		this.save_keys("[ItemSectionDataTemplate_Section]",x);
+		const cf="ItemSectionDataTemplate_Section";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.ItemSectionItem);
 		this.trackingParams("ItemSectionData",trackingParams);
@@ -7512,7 +7524,8 @@ class HandleTypes extends ServiceMethods {
 	//#region web_command_metadata
 	/** @arg {GeneratedWebCommandMetadata} x */
 	WebCommandMetadata(x) {
-		this.save_keys("[GenericWebCommandMetadata]",x);
+		const cf="GenericWebCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		if("apiUrl" in x) {
 			let cx=x.apiUrl;
 			switch(x.apiUrl) {
@@ -7600,7 +7613,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VE96368_WebCommandMetadata} x */
 	VE96368_WebCommandMetadata(x) {
-		this.save_keys("[VE96368_WebCommandMetadata]",x);
+		const cf="VE96368_WebCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
 		if(url!=="/feed/subscriptions") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -7608,7 +7622,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VE11487_WebCommandMetadata} x */
 	VE11487_WebCommandMetadata(x) {
-		this.save_keys("[VE11487_WebCommandMetadata]",x);
+		const cf="VE11487_WebCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
 		if(url!=="/premium") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -7616,7 +7631,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VE3854_WebCommandMetadata} x */
 	VE3854_WebCommandMetadata(x) {
-		this.save_keys("[VE3854_WebCommandMetadata]",x);
+		const cf="VE3854_WebCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
 		if(url!=="/") debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -7624,7 +7640,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VE6827_WebCommandMetadata} x */
 	VE6827_WebCommandMetadata(x) {
-		this.save_keys("[VE6827_WebCommandMetadata]",x);
+		const cf="VE6827_WebCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
 		this.t(url,this.VE6827_PageUrl);
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
@@ -7666,7 +7683,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E$SignalNavigationEndpoint} x */
 	E$SignalNavigationEndpoint(x) {
 		const cf="SignalNavigationEndpoint";
-		this.save_keys("[SignalNavigationEndpoint]",x);
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("SignalNavigationEndpoint",clickTrackingParams);
@@ -7732,7 +7748,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$Feedback} x */
 	E$Feedback(x) {
-		this.save_keys("[FeedbackEndpointData]",x);
+		const cf="FeedbackEndpointData";
+		this.save_keys(`[${cf}]`,x);
 		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(feedbackToken);
 		this.UiActions(uiActions);
@@ -7767,7 +7784,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EG$MenuServiceEndpoints} x */
 	EG$MenuServiceEndpoints(x) {
-		this.save_keys("[MenuServiceEndpoints]",x);
+		const cf="MenuServiceEndpoints";
+		this.save_keys(`[${cf}]`,x);
 		if("playlistEditEndpoint" in x) return this.E$PlaylistEditEndpoint(x);
 		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
 		if("addToPlaylistServiceEndpoint" in x) return this.E$AddToPlaylistServiceEndpoint(x);
@@ -7809,7 +7827,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$SignalService} x */
 	E$SignalService(x) {
-		this.save_keys("[SignalServiceEndpointData]",x);
+		const cf="SignalServiceEndpointData";
+		this.save_keys(`[${cf}]`,x);
 		switch(x.signal) {
 			case "CLIENT_SIGNAL": return this.E$Signal_ClientSignal(x);
 			case "GET_ACCOUNT_MENU": return this.E$Signal$GetAccountMenu(x);
@@ -7826,7 +7845,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$PlaylistEdit} x */
 	E$PlaylistEdit(x) {
-		this.save_keys("[PlaylistEditEndpointData]",x);
+		const cf="PlaylistEditEndpointData";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
 		this.playlistId(playlistId);
 		if(actions.length!==1) debugger;
@@ -7844,7 +7864,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {E$Url} x */
 	E$Url(x) {
-		this.save_keys("[UrlEndpointData]",x);
+		const cf="UrlEndpointData";
+		this.save_keys(`[${cf}]`,x);
 		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(url);
 		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
@@ -7861,7 +7882,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$GetTranscript} x */
 	E$GetTranscript(x) {
-		this.save_keys("[GetTranscriptData]",x);
+		const cf="GetTranscriptData";
+		this.save_keys(`[${cf}]`,x);
 		const {params,...y}=x; this.g(y); // ! #destructure
 		this.params("GetTranscript","get_transcript.params",params);
 	}
@@ -7885,7 +7907,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {YTNavigateFinishDetail['endpoint']} x */
 	E$PageEndpoint(x) {
-		this.save_keys("[PageEndpoint]",x);
+		const cf="PageEndpoint";
+		this.save_keys(`[${cf}]`,x);
 		if("browseEndpoint" in x) {
 			return this.E$BrowseEndpoint(x);
 		} else if("watchEndpoint" in x) {
@@ -7987,7 +8010,8 @@ class HandleTypes extends ServiceMethods {
 	//#region general done
 	/** @arg {WatchPageResponse} x */
 	WatchPageResponse(x) {
-		this.save_keys("[WatchPageResponse]",x);
+		const cf="WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x) switch(x.rootVe) {
 			case 3832: this.VE3832_WatchPageResponse(x); break;
 			default: debugger; break;
@@ -8022,7 +8046,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchResponse} x */
 	WatchResponse(x) {
-		this.save_keys("[WatchResponse]",x);
+		const cf="WatchResponse";
+		this.save_keys(`[${cf}]`,x);
 		this.x.get("yt_plugin").add_function({
 			name: "data",
 			data: {
@@ -8043,20 +8068,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {FrameworkUpdates} x */
 	FrameworkUpdates(x) {
-		this.save_keys("[FrameworkUpdates]",x);
+		const cf="FrameworkUpdates";
+		this.save_keys(`[${cf}]`,x);
 		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y); // ! #destructure
 		this.EntityBatchUpdateData(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
 	/** @arg {CinematicContainerRenderer} x */
 	CinematicContainerRenderer(x) {
-		this.save_keys("[CinematicContainerRenderer]",x);
+		const cf="CinematicContainerRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {cinematicContainerRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CinematicContainer(cinematicContainerRenderer);
 	}
 	/** @arg {CinematicContainerData} x */
 	CinematicContainer(x) {
-		this.save_keys("[CinematicContainerData]",x);
+		const cf="CinematicContainerData";
+		this.save_keys(`[${cf}]`,x);
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=x; this.g(y); // ! #destructure
 		if(backgroundImageConfig) 1;
 		if(gradientColorConfig) 1;
@@ -8092,7 +8120,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ResponseContext} x */
 	ResponseContext(x) {
-		this.save_keys("[ResponseContext]",x);
+		const cf="ResponseContext";
+		this.save_keys(`[${cf}]`,x);
 		const service_tracking=this.x.get("service_tracking");
 		const {mainAppWebResponseContext,serviceTrackingParams,webResponseContextExtensionData,consistencyTokenJar,maxAgeSeconds,stateTags,...y}=x; this.g(y); // ! #destructure
 		this.t(mainAppWebResponseContext,this.MainAppWebResponseContext);
@@ -8128,7 +8157,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {YtConfigData} x */
 	YtConfigData(x) {
-		this.save_keys("[YtConfigData]",x);
+		const cf="YtConfigData";
+		this.save_keys(`[${cf}]`,x);
 		const {visitorData,sessionIndex,rootVisualElementType,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(visitorData);
 		if(sessionIndex!==0) debugger;
@@ -8151,7 +8181,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WebPrefetchData} x */
 	WebPrefetchData(x) {
-		this.save_keys("[WebPrefetchData]",x);
+		const cf="WebPrefetchData";
+		this.save_keys(`[${cf}]`,x);
 		const {navigationEndpoints,...y}=x; this.g(y); // ! #destructure
 		this.z(navigationEndpoints,a => {
 			if("watchEndpoint" in a) {
@@ -8162,7 +8193,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MainAppWebResponseContext} x */
 	MainAppWebResponseContext(x) {
-		this.save_keys("[MainAppWebResponseContext]",x);
+		const cf="MainAppWebResponseContext";
+		this.save_keys(`[${cf}]`,x);
 		const {datasyncId,loggedOut,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
@@ -8250,13 +8282,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AlertWithButtonRenderer} x */
 	AlertWithButtonRenderer(x) {
-		this.save_keys("[AlertWithButtonRenderer]",x);
+		const cf="AlertWithButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {alertWithButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.AlertWithButton(alertWithButtonRenderer);
 	}
 	/** @arg {AlertWithButton} x */
 	AlertWithButton(x) {
-		this.save_keys("[AlertWithButton]",x);
+		const cf="AlertWithButton";
+		this.save_keys(`[${cf}]`,x);
 		const {type,text,dismissButton,...y}=x; this.g(y); // ! #destructure
 		switch(type) {
 			case "INFO": break;
@@ -8267,7 +8301,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SectionListContinuation|MusicShelfContinuation} x */
 	ContinuationContents(x) {
-		this.save_keys("[ContinuationContents]",x);
+		const cf="ContinuationContents";
+		this.save_keys(`[${cf}]`,x);
 		if("sectionListContinuation" in x) {
 			return this.SectionListContinuation(x);
 		} else if("musicShelfContinuation" in x) {
@@ -8331,18 +8366,21 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NextContinuationData} x */
 	NextContinuationData(x) {
-		this.save_keys("[NextContinuationData]",x);
+		const cf="NextContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		this.NextContinuation(x.nextContinuationData);
 	}
 	/** @arg {NextContinuation} x */
 	NextContinuation(x) {
-		this.save_keys("[NextContinuation]",x);
+		const cf="NextContinuation";
+		this.save_keys(`[${cf}]`,x);
 		this.clickTrackingParams("NextContinuation",x.clickTrackingParams);
 		this.primitive_of(x.continuation,"string");
 	}
 	/** @arg {SectionListItem} x */
 	SectionListItem(x) {
-		this.save_keys("[SectionListItem]",x);
+		const cf="SectionListItem";
+		this.save_keys(`[${cf}]`,x);
 		if("itemSectionRenderer" in x) {
 			return this.ItemSectionRenderer(x);
 		} else if("continuationItemRenderer" in x) {
@@ -8357,17 +8395,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicCarouselShelfRenderer} x */
 	MusicCarouselShelfRenderer(x) {
-		this.save_keys("[MusicCarouselShelfRenderer]",x);
+		const cf="MusicCarouselShelfRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.MusicCarouselShelf(x.musicCarouselShelfRenderer);
 	}
 	/** @arg {MusicShelfRenderer} x */
 	MusicShelfRenderer(x) {
-		this.save_keys("[MusicShelfRenderer]",x);
+		const cf="MusicShelfRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.MusicShelf(x.musicShelfRenderer);
 	}
 	/** @arg {MusicShelf} x */
 	MusicShelf(x) {
-		this.save_keys("[MusicShelf]",x);
+		const cf="MusicShelf";
+		this.save_keys(`[${cf}]`,x);
 		this.ContentsArrayTemplate(x,a => {
 			if("musicResponsiveListItemRenderer" in a) {
 				this.MusicResponsiveListItemRenderer(a);
@@ -8379,29 +8420,34 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReloadContinuationData} x */
 	ReloadContinuationData(x) {
-		this.save_keys("[ReloadContinuationData]",x);
+		const cf="ReloadContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		this.ReloadContinuationDataInner(x.reloadContinuationData);
 	}
 	/** @arg {ReloadContinuationDataInner} x */
 	ReloadContinuationDataInner(x) {
-		this.save_keys("[ReloadContinuationDataInner]",x);
+		const cf="ReloadContinuationDataInner";
+		this.save_keys(`[${cf}]`,x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(continuation);
 		this.clickTrackingParams("ReloadContinuationDataInner",clickTrackingParams);
 	}
 	/** @arg {MusicResponsiveListItemRenderer} x */
 	MusicResponsiveListItemRenderer(x) {
-		this.save_keys("[MusicResponsiveListItemRenderer]",x);
+		const cf="MusicResponsiveListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.MusicResponsiveListItem(x.musicResponsiveListItemRenderer);
 	}
 	/** @arg {ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {
-		this.save_keys("[ContinuationItemRenderer]",x);
+		const cf="ContinuationItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.ContinuationItemData(x.continuationItemRenderer);
 	}
 	/** @arg {ContinuationItemData} x */
 	ContinuationItemData(x) {
-		this.save_keys("[ContinuationItemData]",x);
+		const cf="ContinuationItemData";
+		this.save_keys(`[${cf}]`,x);
 		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y); // ! #destructure
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
@@ -8411,7 +8457,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ContinuationEndpointRoot} x */
 	ContinuationEndpointRoot(x) {
-		this.save_keys("[ContinuationEndpointRoot]",x);
+		const cf="ContinuationEndpointRoot";
+		this.save_keys(`[${cf}]`,x);
 		if("continuationCommand" in x) {
 			this.ContinuationCommand(x);
 		} else if("getTranscriptEndpoint" in x) {
@@ -8422,7 +8469,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {C$Continuation} x */
 	ContinuationCommand(x) {
-		this.save_keys("[ContinuationCommand]",x);
+		const cf="ContinuationCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,continuationCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("ContinuationCommand",clickTrackingParams);
 		if(commandMetadata) {
@@ -8435,31 +8483,36 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CD$Continuation} x */
 	ContinuationCommandData(x) {
-		this.save_keys("[ContinuationCommandData]",x);
+		const cf="ContinuationCommandData";
+		this.save_keys(`[${cf}]`,x);
 		this.primitive_of(x.token,"string");
 		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
 	}
 	/** @arg {C$Continuation$CommandMetadata} x */
 	ContinuationCommandMetadata(x) {
-		this.save_keys("[ContinuationCommandMetadata]",x);
+		const cf="ContinuationCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		debugger;
 		// this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {GhostGridRenderer} x */
 	GhostGridRenderer(x) {
-		this.save_keys("[GhostGridRenderer]",x);
+		const cf="GhostGridRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.GhostGrid(x.ghostGridRenderer);
 	}
 	/** @arg {GhostGrid} x */
 	GhostGrid(x) {
-		this.save_keys("[GhostGrid]",x);
+		const cf="GhostGrid";
+		this.save_keys(`[${cf}]`,x);
 		const {rows,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(rows,"number");
 	}
 	/** @arg {ItemSectionRenderer} x */
 	ItemSectionRenderer(x) {
-		this.save_keys("[ItemSectionRenderer]",x);
+		const cf="ItemSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {itemSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ItemSectionData(itemSectionRenderer);
 	}
@@ -8490,7 +8543,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicThumbnailRenderer} x */
 	MusicThumbnailRenderer(x) {
-		this.save_keys("[MusicThumbnailRenderer]",x);
+		const cf="MusicThumbnailRenderer";
+		this.save_keys(`[${cf}]`,x);
 		if(!x.musicThumbnailRenderer) debugger;
 		this.MusicThumbnailData(x.musicThumbnailRenderer);
 	}
@@ -8505,7 +8559,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Thumbnail} x */
 	Thumbnail(x) {
-		this.save_keys("[Thumbnail]",x);
+		const cf="Thumbnail";
+		this.save_keys(`[${cf}]`,x);
 		const {thumbnails,accessibility,isOriginalAspectRatio,...y}=x; this.g(y); // ! #destructure
 		this.z(thumbnails,this.ThumbnailItem);
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
@@ -8513,7 +8568,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ThumbnailItem} x */
 	ThumbnailItem(x) {
-		this.save_keys("[ThumbnailItem]",x);
+		const cf="ThumbnailItem";
+		this.save_keys(`[${cf}]`,x);
 		const {url,width,height,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(url);
 		this.t(width,a => this.primitive_of(a,"number"));
@@ -8521,13 +8577,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MicroformatDataRenderer} x */
 	MicroformatDataRenderer(x) {
-		this.save_keys("[MicroformatDataRenderer]",x);
+		const cf="MicroformatDataRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {microformatDataRenderer,...y}=x; this.g(y); // ! #destructure
 		this.t(microformatDataRenderer,this.MicroformatData);
 	}
 	/** @arg {MicroformatData} x */
 	MicroformatData(x) {
-		this.save_keys("[MicroformatData]",x);
+		const cf="MicroformatData";
+		this.save_keys(`[${cf}]`,x);
 		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(urlCanonical);
 		this.primitive_of_string(title);
@@ -8556,13 +8614,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {HrefUrl} x */
 	HrefUrl(x) {
-		this.save_keys("[HrefUrl]",x);
+		const cf="HrefUrl";
+		this.save_keys(`[${cf}]`,x);
 		const {hrefUrl,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_url("HrefUrl",as(hrefUrl));
 	}
 	/** @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
-		this.save_keys("[YTNavigateFinishDetail]",x);
+		const cf="YTNavigateFinishDetail";
+		this.save_keys(`[${cf}]`,x);
 		const {response,endpoint,pageType,fromHistory,navigationDoneMs,...y}=x; this.g(y); // ! #destructure
 		this.E$PageEndpoint(endpoint);
 		this.DataResponsePageType(response);
@@ -8572,7 +8632,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
-		this.save_keys("[DataResponsePageType]",x);
+		const cf="DataResponsePageType";
+		this.save_keys(`[${cf}]`,x);
 		this.ResponseContext(x.response.responseContext);
 		switch(x.page) {
 			case "browse": return this.BrowsePageResponse(x);
@@ -8589,7 +8650,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AccountMenuResponse} x */
 	AccountMenuResponse(x) {
-		this.save_keys("[AccountMenuResponse]",x);
+		const cf="AccountMenuResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.OpenPopupAction(x);
@@ -8599,7 +8661,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Response} response @arg {_ResponseTypes} x */
 	ResponseTypes(response,x) {
-		this.save_keys("[ResponseTypes]",x);
+		const cf="ResponseTypes";
+		this.save_keys(`[${cf}]`,x);
 		if(!response.ok) {
 			console.log("not ok",x);
 			return;
@@ -8706,7 +8769,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {OpenPopupActionData} x */
 	OpenPopupActionData(x) {
-		this.save_keys(`[OpenPopupActionData]`,x);
+		const cf="OpenPopupActionData";
+		this.save_keys(`[${cf}]`,x);
 		if("beReused" in x) {
 			const {popup,popupType,beReused,...y}=x; this.g(y); // ! #destructure
 			this.popup_generic(popup);
@@ -8751,7 +8815,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PdgBuyFlowRenderer} x */
 	PdgBuyFlowRenderer(x) {
-		this.save_keys(`[PdgBuyFlowRenderer]`,x);
+		const cf="PdgBuyFlowRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {pdgBuyFlowRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PdgBuyFlow(pdgBuyFlowRenderer);
 	}
@@ -8767,19 +8832,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetSurveyCommand} x */
 	GetSurveyCommand(x) {
-		this.save_keys(`[GetSurveyCommand]`,x);
+		const cf="GetSurveyCommand";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {SuperVodBuyFlowContentRenderer} x */
 	SuperVodBuyFlowContentRenderer(x) {
-		this.save_keys(`[SuperVodBuyFlowContentRenderer]`,x);
+		const cf="SuperVodBuyFlowContentRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {PdgBuyFlowHeaderRenderer} x */
 	PdgBuyFlowHeaderRenderer(x) {
-		this.save_keys(`[PdgBuyFlowHeaderRenderer]`,x);
+		const cf="PdgBuyFlowHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {R$NotificationAction} x */
 	R$NotificationAction(x) {
-		this.save_keys(`[NotificationActionRenderer]`,x);
+		const cf="NotificationActionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {notificationActionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.A$NotificationAction(notificationActionRenderer);
 	}
@@ -8794,13 +8863,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ConfirmDialogRenderer} x */
 	ConfirmDialogRenderer(x) {
-		this.save_keys(`[MultiPageMenuRenderer]`,x);
+		const cf="MultiPageMenuRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {confirmDialogRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ConfirmDialogData(confirmDialogRenderer);
 	}
 	/** @arg {ConfirmDialogData} x */
 	ConfirmDialogData(x) {
-		this.save_keys(`[ConfirmDialogData]`,x);
+		const cf="ConfirmDialogData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y); // ! #destructure
 		this.t(title,this.SimpleText);
 		this.trackingParams("CF_FIX",trackingParams);
@@ -8811,7 +8882,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MultiPageMenuRenderer} x */
 	MultiPageMenuRenderer(x) {
-		this.save_keys(`[MultiPageMenuRenderer]`,x);
+		const cf="MultiPageMenuRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {multiPageMenuRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenu(multiPageMenuRenderer);
 	}
@@ -8868,7 +8940,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
 	MultiPageMenuNotificationSectionRenderer(x) {
-		this.save_keys(`[MultiPageMenuNotificationSectionRenderer]`,x);
+		const cf="MultiPageMenuNotificationSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {multiPageMenuNotificationSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuNotificationSection(multiPageMenuNotificationSectionRenderer);
 	}
@@ -8882,13 +8955,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NotificationRenderer} x */
 	NotificationRenderer(x) {
-		this.save_keys(`[NotificationRenderer]`,x);
+		const cf="NotificationRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {notificationRenderer,...y}=x; this.g(y); // ! #destructure
 		this.Notification(notificationRenderer);
 	}
 	/** @arg {YtNotification} x */
 	Notification(x) {
-		this.save_keys(`[Notification]`,x);
+		const cf="Notification";
+		this.save_keys(`[${cf}]`,x);
 		const {thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,trackingParams,notificationId,...y}=x; this.g(y); // ! #destructure
 		this.Thumbnail(thumbnail);
 		this.Thumbnail(videoThumbnail);
@@ -8908,7 +8983,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MultiPageMenuSectionRenderer<CompactLinkRenderer>} x */
 	MultiPageMenuSectionRenderer(x) {
-		this.save_keys(`[MultiPageMenuSectionRenderer]`,x);
+		const cf="MultiPageMenuSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {multiPageMenuSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuSection(multiPageMenuSectionRenderer);
 	}
@@ -8925,7 +9001,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
-		this.save_keys(`[CompactLinkRenderer]`,x);
+		const cf="CompactLinkRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {compactLinkRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CompactLinkData(compactLinkRenderer);
 	}
@@ -8953,7 +9030,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AccountSectionListData} x */
 	AccountSectionListData(x) {
-		this.save_keys(`[SimpleMenuHeaderData]`,x);
+		const cf="SimpleMenuHeaderData";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.AccountItemSectionRenderer);
 	}
@@ -8982,14 +9060,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SimpleMenuHeader} x */
 	SimpleMenuHeaderData(x) {
-		this.save_keys(`[SimpleMenuHeaderData]`,x);
+		const cf="SimpleMenuHeaderData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,buttons,...y}=x; this.g(y); // ! #destructure
 		this.TextT(title);
 		this.z(buttons,this.R$Button);
 	}
 	/** @arg {UpdatedMetadata} x */
 	UpdatedMetadata(x) {
-		this.save_keys(`[UpdatedMetadata]`,x);
+		const cf="UpdatedMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y); // ! #destructure
 		this.TimedContinuationData(continuation);
 		this.z(actions,a => {
@@ -9009,28 +9089,32 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateDescriptionAction} x */
 	UpdateDescriptionAction(x) {
-		this.save_keys(`[UpdateDescriptionAction]`,x);
+		const cf="UpdateDescriptionAction";
+		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateDescriptionAction;
 		this.save_keys(`[UpdateDescriptionActionData]`,x1);
 		this.TextWithRuns(x1.description);
 	}
 	/** @arg {UpdateTitleAction} x */
 	UpdateTitleAction(x) {
-		this.save_keys(`[UpdateTitleAction]`,x);
+		const cf="UpdateTitleAction";
+		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateTitleAction;
 		this.save_keys(`[UpdateTitleActionData]`,x1);
 		this.TextWithRuns(x1.title);
 	}
 	/** @arg {UpdateDateTextAction} x */
 	UpdateDateTextAction(x) {
-		this.save_keys(`[UpdateDateTextAction]`,x);
+		const cf="UpdateDateTextAction";
+		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateDateTextAction;
 		this.save_keys(`[UpdateDateTextActionData]`,x1);
 		this.SimpleText(x1.dateText);
 	}
 	/** @arg {UpdateToggleButtonTextAction} x */
 	UpdateToggleButtonTextAction(x) {
-		this.save_keys(`[UpdateToggleButtonTextAction]`,x);
+		const cf="UpdateToggleButtonTextAction";
+		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateToggleButtonTextAction; x1;
 		this.save_keys(`[UpdateToggleButtonTextActionData]`,x1);
 		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
@@ -9039,19 +9123,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UpdateViewershipAction} x */
 	UpdateViewershipAction(x) {
-		this.save_keys(`[UpdateViewershipAction]`,x);
+		const cf="UpdateViewershipAction";
+		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateViewershipAction;
 		this.save_keys(`[UpdateViewershipActionData]`,x1);
 		this.VideoViewCountRenderer(x1.viewCount);
 	}
 	/** @arg {VideoViewCountRenderer} x */
 	VideoViewCountRenderer(x) {
-		this.save_keys(`[VideoViewCountRenderer]`,x);
+		const cf="VideoViewCountRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.VideoViewCountData(x.videoViewCountRenderer);
 	}
 	/** @arg {VideoViewCountData} x */
 	VideoViewCountData(x) {
-		this.save_keys(`[VideoViewCountData]`,x);
+		const cf="VideoViewCountData";
+		this.save_keys(`[${cf}]`,x);
 		const {viewCount,shortViewCount,isLive,extraShortViewCount,...y}=x; this.g(y); // ! #destructure
 		this.SimpleText(viewCount);
 		this.t(shortViewCount,this.SimpleText);
@@ -9060,19 +9147,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TimedContinuationData} x */
 	TimedContinuationData(x) {
-		this.save_keys(`[TimedContinuationData]`,x);
+		const cf="TimedContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		this.TimedContinuationDataInner(x.timedContinuationData);
 	}
 	/** @arg {TimedContinuationDataInner} x */
 	TimedContinuationDataInner(x) {
-		this.save_keys(`[TimedContinuationDataInner]`,x);
+		const cf="TimedContinuationDataInner";
+		this.save_keys(`[${cf}]`,x);
 		const {timeoutMs,continuation,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(timeoutMs,"number");
 		this.primitive_of_string(continuation);
 	}
 	/** @arg {SearchApiResponse} x */
 	SearchApiResponse(x) {
-		this.save_keys(`[SearchApiResponse]`,x);
+		const cf="SearchApiResponse";
+		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) return this.SearchResponse(x);
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y); // ! #destructure
 		this.t(contents,this.TabbedSearchResultsRenderer);
@@ -9082,11 +9172,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicShelfContinuation} x */
 	MusicShelfContinuation(x) {
-		this.save_keys(`[MusicShelfContinuation]`,x);
+		const cf="MusicShelfContinuation";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {MusicHeaderRenderer} x */
 	MusicHeaderRenderer(x) {
-		this.save_keys(`[MusicHeaderRenderer]`,x);
+		const cf="MusicHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {SearchResponse} x */
 	SearchResponse(x) {
@@ -9116,69 +9208,82 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TwoColumnSearchResultsRenderer} x */
 	TwoColumnSearchResultsRenderer(x) {
-		this.save_keys("[TwoColumnSearchResultsRenderer]",x);
+		const cf="TwoColumnSearchResultsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.TwoColumnSearchResults(x.twoColumnSearchResultsRenderer);
 	}
 	/** @arg {TwoColumnSearchResults} x */
 	TwoColumnSearchResults(x) {
-		this.save_keys("[TwoColumnSearchResults]",x);
+		const cf="TwoColumnSearchResults";
+		this.save_keys(`[${cf}]`,x);
 		this.SectionListRenderer(x.primaryContents);
 	}
 	/** @arg {SectionListRenderer} x */
 	SectionListRenderer(x) {
-		this.save_keys("[SectionListRenderer]",x);
+		const cf="SectionListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.SectionListData(x.sectionListRenderer);
 	}
 	/** @arg {TabbedSearchResultsRenderer} x */
 	TabbedSearchResultsRenderer(x) {
-		this.save_keys("[TabbedSearchResultsRenderer]",x);
+		const cf="TabbedSearchResultsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.TabbedSearchResults(x.tabbedSearchResultsRenderer);
 	}
 	/** @arg {TabbedSearchResults} x */
 	TabbedSearchResults(x) {
-		this.save_keys("[TabbedSearchResults]",x);
+		const cf="TabbedSearchResults";
+		this.save_keys(`[${cf}]`,x);
 		const {tabs: a,...y}=x; this.g(y); // ! #destructure
 		this.z(a,this.SearchResultsTabRenderer);
 	}
 	/** @arg {SearchResultsTabRenderer} x */
 	SearchResultsTabRenderer(x) {
-		this.save_keys("[SearchResultsTabRenderer]",x);
+		const cf="SearchResultsTabRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.SearchResultsTab(x.tabRenderer);
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
-		this.save_keys("[GetSearchSuggestions]",x);
+		const cf="GetSearchSuggestions";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {GetSharePanel} x */
 	GetSharePanel(x) {
-		this.save_keys("[GetSharePanel]",x);
+		const cf="GetSharePanel";
+		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @arg {SubscribeResponse} x */
 	SubscribeResponse(x) {
-		this.save_keys("[SubscribeResponse]",x);
+		const cf="SubscribeResponse";
+		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @arg {UnsubscribeResponse} x */
 	UnsubscribeResponse(x) {
-		this.save_keys("[UnsubscribeResponse]",x);
+		const cf="UnsubscribeResponse";
+		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @arg {ModifyChannelPreferenceResponse} x */
 	ModifyChannelPreferenceResponse(x) {
-		this.save_keys("[ModifyChannelPreferenceResponse]",x);
+		const cf="ModifyChannelPreferenceResponse";
+		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @private @arg {PlayerResponse} x */
 	PlayerResponse(x) {
-		this.save_keys("[PlayerResponse]",x);
+		const cf="PlayerResponse";
+		this.save_keys(`[${cf}]`,x);
 		this.tz(x.annotations,this.PlayerAnnotationsExpandedRenderer);
 	}
 	/** @arg {LikeLikeResponse} x */
 	LikeLikeResponse(x) {
-		this.save_keys(`[LikeLikeResponse]`,x);
+		const cf="LikeLikeResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.OpenPopupAction(x);
@@ -9187,7 +9292,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {DislikeResponse} x */
 	DislikeResponse(x) {
-		this.save_keys(`[DislikeResponse]`,x);
+		const cf="DislikeResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.OpenPopupAction(x);
@@ -9196,7 +9302,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
 	LikeRemoveLikeResponse(x) {
-		this.save_keys(`[LikeRemoveLikeResponse]`,x);
+		const cf="LikeRemoveLikeResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
 			if("openPopupAction" in x) return this.OpenPopupAction(x);
@@ -9205,7 +9312,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R$ReelWatchSequenceResponse} x */
 	ReelWatchSequenceResponse(x) {
-		this.save_keys(`[ReelWatchSequenceResponse]`,x);
+		const cf="ReelWatchSequenceResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},entries,trackingParams,continuationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.z(entries,a => this.CommandTemplate(a,this.E$ReelWatchEndpoint));
 		this.trackingParams("ReelWatchSequenceResponse",trackingParams);
@@ -9213,26 +9321,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReelPlayerOverlayRenderer} x */
 	ReelPlayerOverlayRenderer(x) {
-		this.save_keys("[ReelPlayerOverlayRenderer]",x);
+		const cf="ReelPlayerOverlayRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {reelPlayerOverlayRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ReelPlayerOverlayData(reelPlayerOverlayRenderer);
 	}
 	/** @arg {GetLiveChat} x */
 	GetLiveChat(x) {
-		this.save_keys("[GetLiveChat]",x);
+		const cf="GetLiveChat";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatContinuation(a1);
 		this.t_cf("GetLiveChat",a2,this.trackingParams);
 	}
 	/** @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {
-		this.save_keys("[LiveChatContinuation]",x);
+		const cf="LiveChatContinuation";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatContinuation,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatContinuationData(liveChatContinuation);
 	}
 	/** @arg {LiveChatContinuationData} x */
 	LiveChatContinuationData(x) {
-		this.save_keys("[LiveChatContinuationData]",x);
+		const cf="LiveChatContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		const {continuations,actions,actionPanel,itemList,header,ticker,trackingParams,participantsList,popoutMessage,emojis,clientMessages,viewerName,...y}=x; this.g(y); // ! #destructure
 		this.z(continuations,a => {
 			this.LiveChatContinuationItem(a);
@@ -9260,25 +9372,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatItemListRenderer} x */
 	LiveChatItemListRenderer(x) {
-		this.save_keys("[LiveChatItemListRenderer]",x);
+		const cf="LiveChatItemListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatItemListRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(liveChatItemListRenderer);
 	}
 	/** @arg {LiveChatMessageInputRenderer} x */
 	LiveChatMessageInputRenderer(x) {
-		this.save_keys("[LiveChatMessageInputRenderer]",x);
+		const cf="LiveChatMessageInputRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatMessageInputRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(liveChatMessageInputRenderer);
 	}
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
-		this.save_keys("[ReplayChatItemAction]",x);
+		const cf="ReplayChatItemAction";
+		this.save_keys(`[${cf}]`,x);
 		const {replayChatItemAction,...y}=x; this.g(y); // ! #destructure
 		this.ReplayChatItemActionData(replayChatItemAction);
 	}
 	/** @arg {ReplayChatItemActionData} x */
 	ReplayChatItemActionData(x) {
-		this.save_keys("[ReplayChatItemActionData]",x);
+		const cf="ReplayChatItemActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {actions,videoOffsetTimeMsec,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,a => {
 			if("addChatItemAction" in a) {
@@ -9298,14 +9414,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddChatItemActionData} x */
 	AddChatItemActionData(x) {
-		this.save_keys("[AddChatItemActionData]",x);
+		const cf="AddChatItemActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {item,clientId,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatItem(item);
 		this.t(clientId,this.primitive_of_string);
 	}
 	/** @arg {LiveChatItem} x */
 	LiveChatItem(x) {
-		this.save_keys("[LiveChatItem]",x);
+		const cf="LiveChatItem";
+		this.save_keys(`[${cf}]`,x);
 		if("liveChatViewerEngagementMessageRenderer" in x) {
 			return this.LiveChatViewerEngagementMessageRenderer(x);
 		} else if("liveChatTextMessageRenderer" in x) {
@@ -9317,12 +9435,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatViewerEngagementMessageRenderer} x */
 	LiveChatViewerEngagementMessageRenderer(x) {
-		this.save_keys("[LiveChatViewerEngagementMessageRenderer]",x);
+		const cf="LiveChatViewerEngagementMessageRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.LiveChatViewerEngagementMessage(x.liveChatViewerEngagementMessageRenderer);
 	}
 	/** @arg {LiveChatViewerEngagementMessage} x */
 	LiveChatViewerEngagementMessage(x) {
-		this.save_keys("[LiveChatViewerEngagementMessage]",x);
+		const cf="LiveChatViewerEngagementMessage";
+		this.save_keys(`[${cf}]`,x);
 		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(id);
 		this.primitive_of_string(timestampUsec);
@@ -9333,7 +9453,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatContinuationItem} x */
 	LiveChatContinuationItem(x) {
-		this.save_keys("[LiveChatContinuationItem]",x);
+		const cf="LiveChatContinuationItem";
+		this.save_keys(`[${cf}]`,x);
 		if("invalidationContinuationData" in x) {
 			return this.InvalidationContinuationData(x);
 		}
@@ -9343,13 +9464,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {InvalidationContinuationData} x */
 	InvalidationContinuationData(x) {
-		this.save_keys("[InvalidationContinuationData]",x);
+		const cf="InvalidationContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		this.InvalidationContinuationDataInner(x.invalidationContinuationData);
 	}
 	/** @arg {InvalidationContinuationDataInner} x */
 	InvalidationContinuationDataInner(x) {
-		const cf="ShareEntityServiceEndpoint";
-		this.save_keys("[InvalidationContinuationDataInner]",x);
+		const cf="InvalidationContinuationDataInner";
+		this.save_keys(`[${cf}]`,x);
 		const {invalidationId,timeoutMs,continuation,clickTrackingParams: a1,...y}=x; this.g(y); // ! #destructure
 		this.InvalidationIdData(invalidationId);
 		if(timeoutMs!==10000) debugger;
@@ -9358,7 +9480,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {InvalidationIdData} x */
 	InvalidationIdData(x) {
-		this.save_keys("[InvalidationIdData]",x);
+		const cf="InvalidationIdData";
+		this.save_keys(`[${cf}]`,x);
 		const {objectSource,objectId,topic,subscribeToGcmTopics,protoCreationTimestampMs,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(objectSource,"number");
 		this.primitive_of_string(objectId);
@@ -9372,7 +9495,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GetNotificationMenuResponse} x */
 	GetNotificationMenuResponse(x) {
-		this.save_keys("[GetNotificationMenuResponse]",x);
+		const cf="GetNotificationMenuResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
 			if(x.openPopupAction) return this.OpenPopupAction(x);
@@ -9382,7 +9506,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {NextResponse} x */
 	NextResponse(x) {
-		this.save_keys("[NextResponse]",x);
+		const cf="NextResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=x;
 		this.t(contents,this.NextResponseContents);
 		this.t(currentVideoEndpoint,this.E$WatchEndpoint);
@@ -9397,7 +9522,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NextResponseContents} x */
 	NextResponseContents(x) {
-		this.save_keys("[NextResponseContents]",x);
+		const cf="NextResponseContents";
+		this.save_keys(`[${cf}]`,x);
 		if("twoColumnWatchNextResults" in x) {
 			return this.TwoColumnWatchNextResults(x);
 		} else if("singleColumnMusicWatchNextResultsRenderer" in x) {
@@ -9407,27 +9533,32 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SingleColumnMusicWatchNextResultsRenderer} x */
 	SingleColumnMusicWatchNextResultsRenderer(x) {
-		this.save_keys("[SingleColumnMusicWatchNextResultsRenderer]",x);
+		const cf="SingleColumnMusicWatchNextResultsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.TabbedRenderer(x.singleColumnMusicWatchNextResultsRenderer);
 	}
 	/** @arg {TabbedRenderer} x */
 	TabbedRenderer(x) {
-		this.save_keys("[TabbedRenderer]",x);
+		const cf="TabbedRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.WatchNextTabbedResultsRenderer(x.tabbedRenderer);
 	}
 	/** @arg {WatchNextTabbedResultsRenderer} x */
 	WatchNextTabbedResultsRenderer(x) {
-		this.save_keys("[WatchNextTabbedResultsRenderer]",x);
+		const cf="WatchNextTabbedResultsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.WatchNextTabbedResults(x.watchNextTabbedResultsRenderer);
 	}
 	/** @arg {WatchNextTabbedResults} x */
 	WatchNextTabbedResults(x) {
-		this.save_keys("[WatchNextTabbedResults]",x);
+		const cf="WatchNextTabbedResults";
+		this.save_keys(`[${cf}]`,x);
 		this.z(x.tabs,this.TabRenderer);
 	}
 	/** @arg {TabRenderer} x */
 	TabRenderer(x) {
-		this.save_keys("[TabRenderer]",x);
+		const cf="TabRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.TabData(x.tabRenderer);
 	}
 	/** @arg {SectionListRenderer} x */
@@ -9449,10 +9580,11 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {TabData} x */
 	TabData(x) {
 		const cf="TabData";
-		this.save_keys("[TabData]",x);
+		const cf="TabData";
+		this.save_keys(`[${cf}]`,x);
 		if("tabIdentifier" in x) {
 			switch(x.tabIdentifier) {
-				case "FEsubscriptions":{
+				case "FEsubscriptions": {
 					const {selected,content,tabIdentifier: {},endpoint,accessibility,trackingParams,...y}=x; this.g(y); // ! #destructure
 					if(selected!==true) debugger;
 					this.SectionListRenderer(content);
@@ -9468,7 +9600,7 @@ class HandleTypes extends ServiceMethods {
 				} return;
 				default:
 			}
-			console.log("[new.tab.tab_id]",(/**@arg {{tabIdentifier:string}} e*/e=>e)(x).tabIdentifier,this.get_keys_of(x));
+			console.log("[new.tab.tab_id]",(/**@arg {{tabIdentifier:string}} e*/e => e)(x).tabIdentifier,this.get_keys_of(x));
 			return;
 		}
 		if("endpoint" in x) {
@@ -9487,7 +9619,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TabDataContent} x */
 	TabDataContent(x) {
-		this.save_keys("[TabDataContent]",x);
+		const cf="TabDataContent";
+		this.save_keys(`[${cf}]`,x);
 		if("sectionListRenderer" in x) {
 			return this.SectionListRenderer(x);
 		} else if("richGridRenderer" in x) {
@@ -9499,24 +9632,28 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicQueueRenderer} x */
 	MusicQueueRenderer(x) {
-		this.save_keys("[MusicQueueRenderer]",x);
+		const cf="MusicQueueRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.MusicQueue(x.musicQueueRenderer);
 	}
 	/** @arg {MusicQueue} x */
 	MusicQueue(x) {
-		this.save_keys("[MusicQueue]",x);
+		const cf="MusicQueue";
+		this.save_keys(`[${cf}]`,x);
 		const {content,hack,...y}=x; this.g(y); // ! #destructure
 		this.t(content,this.PlaylistPanelRenderer);
 		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {PlaylistPanelRenderer} x */
 	PlaylistPanelRenderer(x) {
-		this.save_keys("[PlaylistPanelRenderer]",x);
+		const cf="PlaylistPanelRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.PlaylistPanel(x.playlistPanelRenderer);
 	}
 	/** @arg {PlaylistPanel} x */
 	PlaylistPanel(x) {
-		this.save_keys("[PlaylistPanel]",x);
+		const cf="PlaylistPanel";
+		this.save_keys(`[${cf}]`,x);
 		const {title,contents,currentIndex,...y1}=x;
 		this.primitive_of_string(title);
 		this.z(contents,this.PlaylistPanelItem);
@@ -9539,7 +9676,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistPanelItem} x */
 	PlaylistPanelItem(x) {
-		this.save_keys("[PlaylistPanelItem]",x);
+		const cf="PlaylistPanelItem";
+		this.save_keys(`[${cf}]`,x);
 		if("playlistPanelVideoRenderer" in x) {
 			this.PlaylistPanelVideoRenderer(x);
 		} else if("automixPreviewVideoRenderer") {
@@ -9550,26 +9688,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NextRadioContinuationData} x */
 	NextRadioContinuationData(x) {
-		this.save_keys("[NextRadioContinuationData]",x);
+		const cf="NextRadioContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		this.NextRadioContinuationDataInner(x.nextRadioContinuationData);
 	}
 	/** @arg {NextRadioContinuationDataInner} x */
 	NextRadioContinuationDataInner(x) {
 		const cf="NextRadioContinuationDataInner";
-		this.save_keys("[NextRadioContinuationDataInner]",x);
+		const cf="NextRadioContinuationDataInner";
+		this.save_keys(`[${cf}]`,x);
 		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(continuation);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @arg {PlaylistPanelVideoRenderer} x */
 	PlaylistPanelVideoRenderer(x) {
-		this.save_keys("[PlaylistPanelVideoRenderer]",x);
+		const cf="PlaylistPanelVideoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistPanelVideoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlaylistPanelVideo(playlistPanelVideoRenderer);
 	}
 	/** @arg {PlaylistPanelVideo} x */
 	PlaylistPanelVideo(x) {
-		this.save_keys("[PlaylistPanelVideo]",x);
+		const cf="PlaylistPanelVideo";
+		this.save_keys(`[${cf}]`,x);
 		const {title,longBylineText,thumbnail,lengthText,indexText,selected,navigationEndpoint,videoId,shortBylineText,trackingParams,menu,playlistSetVideoId,thumbnailOverlays,lightColorPalette,darkColorPalette,...y}=x; this.g(y);
 		this.TextT(title);
 		this.TextWithRuns(longBylineText);
@@ -9593,17 +9735,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
 	ThumbnailOverlayResumePlaybackRenderer(x) {
-		this.save_keys("[ThumbnailOverlayResumePlaybackRenderer]",x);
+		const cf="ThumbnailOverlayResumePlaybackRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayResumePlayback(x.thumbnailOverlayResumePlaybackRenderer);
 	}
 	/** @arg {RichGridRenderer} x */
 	RichGridRenderer(x) {
-		this.save_keys("[RichGridRenderer]",x);
+		const cf="RichGridRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.RichGrid(x.richGridRenderer);
 	}
 	/** @arg {RichGrid} x */
 	RichGrid(x) {
-		this.save_keys("[RichGrid]",x);
+		const cf="RichGrid";
+		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) {
 			switch(x.targetId) {
 				case "browse-feedFEwhat_to_watch": {
@@ -9629,12 +9774,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VideoMastheadAdV3Renderer} x */
 	VideoMastheadAdV3Renderer(x) {
-		this.save_keys("[VideoMastheadAdV3Renderer]",x);
+		const cf="VideoMastheadAdV3Renderer";
+		this.save_keys(`[${cf}]`,x);
 		this.VideoMastheadAdV3(x.videoMastheadAdV3Renderer);
 	}
 	/** @arg {EngagementPanelSectionListRenderer} x */
 	EngagementPanelSectionListRenderer(x) {
-		this.save_keys("[EngagementPanelSectionListRenderer]",x);
+		const cf="EngagementPanelSectionListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.EngagementPanelSectionList(x.engagementPanelSectionListRenderer);
 	}
 	/** @arg {EngagementSectionPanelId} x */
@@ -9756,7 +9903,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelSectionShowCommands} x */
 	EngagementPanelSectionShowCommands(x) {
-		this.save_keys("[EngagementPanelSectionShowCommands]",x);
+		const cf="EngagementPanelSectionShowCommands";
+		this.save_keys(`[${cf}]`,x);
 		if("changeEngagementPanelVisibilityAction" in x) {
 			return this.ChangeEngagementPanelVisibilityAction(x);
 		} else if("showEngagementPanelScrimAction" in x) {
@@ -9769,7 +9917,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ScrollToEngagementPanelCommand} x */
 	ScrollToEngagementPanelCommand(x) {
 		const cf="ScrollToEngagementPanelCommand";
-		this.save_keys("[ScrollToEngagementPanelCommand]",x);
+		const cf="ScrollToEngagementPanelCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ScrollToEngagementPanelData(scrollToEngagementPanelCommand);
@@ -9782,7 +9931,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelSectionListContent} x */
 	EngagementPanelSectionListContent(x) {
-		this.save_keys("[EngagementPanelSectionListContent]",x);
+		const cf="EngagementPanelSectionListContent";
+		this.save_keys(`[${cf}]`,x);
 		if("adsEngagementPanelContentRenderer" in x) {
 			return this.AdsEngagementPanelContentRenderer(x);
 		} else if("clipSectionRenderer" in x) {
@@ -9846,7 +9996,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ReloadContinuationItemsCommand} x */
 	ReloadContinuationItemsCommand(x) {
 		const cf="ReloadContinuationItemsCommand";
-		this.save_keys("[ReloadContinuationItemsCommand]",x);
+		const cf="ReloadContinuationItemsCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
@@ -9879,12 +10030,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommentsHeaderRenderer} x */
 	CommentsHeaderRenderer(x) {
-		this.save_keys("[CommentsHeaderRenderer]",x);
+		const cf="CommentsHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.CommentsHeaderData(x.commentsHeaderRenderer);
 	}
 	/** @arg {CommentsHeaderData} x */
 	CommentsHeaderData(x) {
-		this.save_keys("[CommentsHeaderData]",x);
+		const cf="CommentsHeaderData";
+		this.save_keys(`[${cf}]`,x);
 		const {countText,createRenderer,sortMenu,trackingParams,titleText,commentsCount,showSeparator,customEmojis,unicodeEmojisUrl,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(countText);
 		this.CommentSimpleboxRenderer(createRenderer);
@@ -9899,32 +10052,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommentSimpleboxRenderer} x */
 	CommentSimpleboxRenderer(x) {
-		this.save_keys("[CommentSimpleboxRenderer]",x);
+		const cf="CommentSimpleboxRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {commentSimpleboxRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CommentSimpleboxData(commentSimpleboxRenderer);
 	}
 	/** @arg {LoadMarkersCommandData} x */
 	LoadMarkersCommandData(x) {
-		this.save_keys("[LoadMarkersCommandData]",x);
+		const cf="LoadMarkersCommandData";
+		this.save_keys(`[${cf}]`,x);
 		const {entityKeys,...y}=x; this.g(y); // ! #destructure
 		this.z(entityKeys,this.primitive_of_string);
 	}
 	/** @arg {ChangeKeyedMarkersVisibilityCommandData} x */
 	ChangeKeyedMarkersVisibilityCommandData(x) {
-		this.save_keys("[ChangeKeyedMarkersVisibilityCommandData]",x);
+		const cf="ChangeKeyedMarkersVisibilityCommandData";
+		this.save_keys(`[${cf}]`,x);
 		const {isVisible,key,...y}=x; this.g(y); // ! #destructure
 		if(isVisible!==true) debugger;
 		if(key!=="HEATSEEKER") debugger;
 	}
 	/** @arg {PlayerOverlayRenderer} x */
 	PlayerOverlayRenderer(x) {
-		this.save_keys("[PlayerOverlayRenderer]",x);
+		const cf="PlayerOverlayRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playerOverlayRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlayerOverlay(playerOverlayRenderer);
 	}
 	/** @arg {PlayerOverlay} x */
 	PlayerOverlay(x) {
-		this.save_keys("[PlayerOverlay]",x);
+		const cf="PlayerOverlay";
+		this.save_keys(`[${cf}]`,x);
 		if("browserMediaSession" in x) {
 			return this.BrowserMediaSessionRoot(x);
 		}
@@ -9939,19 +10097,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowserMediaSessionRoot} x */
 	BrowserMediaSessionRoot(x) {
-		this.save_keys("[BrowserMediaSessionRoot]",x);
+		const cf="BrowserMediaSessionRoot";
+		this.save_keys(`[${cf}]`,x);
 		const {actions,browserMediaSession,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,this.LikeButtonRenderer);
 		this.BrowserMediaSessionRenderer(browserMediaSession);
 	}
 	/** @arg {LikeButtonRenderer} x */
 	LikeButtonRenderer(x) {
-		this.save_keys("[LikeButtonRenderer]",x);
+		const cf="LikeButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.LikeButton(x.likeButtonRenderer);
 	}
 	/** @arg {LikeButton} x */
 	LikeButton(x) {
-		this.save_keys("[LikeButton]",x);
+		const cf="LikeButton";
+		this.save_keys(`[${cf}]`,x);
 		if("likeCountText" in x) {
 			const {target,likeStatus,trackingParams,likesAllowed,serviceEndpoints,likeCount,likeCountText,likeCountTooltipText,likeCountWithLikeText,likeCountWithUnlikeText,dislikeCountText,dislikeCountTooltipText,dislikeCountWithDislikeText,dislikeCountWithUndislikeText,...y}=x; this.g(y); // ! #destructure
 			target;
@@ -9983,32 +10144,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MusicLibraryStatusUpdateCommand} x */
 	MusicLibraryStatusUpdateCommand(x) {
-		this.save_keys("[MusicLibraryStatusUpdateCommand]",x);
+		const cf="MusicLibraryStatusUpdateCommand";
+		this.save_keys(`[${cf}]`,x);
 		this.MusicLibraryStatusUpdate(x.musicLibraryStatusUpdateCommand);
 	}
 	/** @arg {MusicLibraryStatusUpdate} x */
 	MusicLibraryStatusUpdate(x) {
-		this.save_keys("[MusicLibraryStatusUpdate]",x);
+		const cf="MusicLibraryStatusUpdate";
+		this.save_keys(`[${cf}]`,x);
 		const {libraryStatus,addToLibraryFeedbackToken,...y}=x; this.g(y); // ! #destructure
 		if(libraryStatus!=="MUSIC_LIBRARY_STATUS_IN_LIBRARY") debugger;
 		this.primitive_of_string(addToLibraryFeedbackToken);
 	}
 	/** @arg {LikeApiData} x */
 	LikeApiData(x) {
-		this.save_keys("[LikeApiData]",x);
+		const cf="LikeApiData";
+		this.save_keys(`[${cf}]`,x);
 		if("videoId" in x) return this.videoId(this.w(x));
 		if("playlistId" in x) return this.playlistId(this.w(x));
 		debugger;
 	}
 	/** @arg {PlayerOverlayAutoplayRenderer} x */
 	PlayerOverlayAutoplayRenderer(x) {
-		this.save_keys("[PlayerOverlayAutoplayRenderer]",x);
+		const cf="PlayerOverlayAutoplayRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playerOverlayAutoplayRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlayerOverlayAutoplay(playerOverlayAutoplayRenderer);
 	}
 	/** @arg {PlayerOverlayAutoplay} x */
 	PlayerOverlayAutoplay(x) {
-		this.save_keys("[PlayerOverlayAutoplay]",x);
+		const cf="PlayerOverlayAutoplay";
+		this.save_keys(`[${cf}]`,x);
 		const {title,videoTitle,byline,pauseText,background,countDownSecs,cancelButton,nextButton,trackingParams,closeButton,thumbnailOverlays,preferImmediateRedirect,videoId,publishedTimeText,webShowBigThumbnailEndscreen,webShowNewAutonavCountdown,shortViewCountText,countDownSecsForFullscreen,...y}=x; this.g(y); // ! #destructure
 		this.SimpleText(title);
 		this.SimpleText(videoTitle);
@@ -10031,19 +10197,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {DecoratedPlayerBarRenderer} x */
 	DecoratedPlayerBarRenderer(x) {
-		this.save_keys("[DecoratedPlayerBarRenderer]",x);
+		const cf="DecoratedPlayerBarRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {decoratedPlayerBarRenderer,...y}=x; this.g(y); // ! #destructure
 		this.DecoratedPlayerBar(decoratedPlayerBarRenderer);
 	}
 	/** @arg {PlayerOverlayVideoDetailsRenderer} x */
 	PlayerOverlayVideoDetailsRenderer(x) {
-		this.save_keys("[PlayerOverlayVideoDetailsRenderer]",x);
+		const cf="PlayerOverlayVideoDetailsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playerOverlayVideoDetailsRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlayerOverlayVideoDetails(playerOverlayVideoDetailsRenderer);
 	}
 	/** @arg {MenuRenderer} x */
 	MenuRenderer(x) {
-		this.save_keys("[MenuRenderer]",x);
+		const cf="MenuRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {menuRenderer,...y}=x; this.g(y); // ! #destructure
 		this.R_MenuData(menuRenderer);
 	}
@@ -10091,13 +10260,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MenuServiceItemRenderer} x */
 	MenuServiceItemRenderer(x) {
-		this.save_keys("[MenuServiceItemRenderer]",x);
+		const cf="MenuServiceItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {menuServiceItemRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MenuServiceItem(menuServiceItemRenderer);
 	}
 	/** @arg {MenuServiceItem<MenuServiceIconTypeStr>} x */
 	MenuServiceItem(x) {
-		this.save_keys("[MenuServiceItem]",x);
+		const cf="MenuServiceItem";
+		this.save_keys(`[${cf}]`,x);
 		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(text);
 		if(icon) {
@@ -10124,7 +10295,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistAction} x */
 	PlaylistAction(x) {
-		this.save_keys("[PlaylistAction]",x);
+		const cf="PlaylistAction";
+		this.save_keys(`[${cf}]`,x);
 		switch(x.action) {
 			default: debugger; break;
 			case "ACTION_ADD_VIDEO": {
@@ -10142,13 +10314,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {string} T @arg {Icon<T>} x */
 	Icon(x) {
-		this.save_keys("[Icon]",x);
+		const cf="Icon";
+		this.save_keys(`[${cf}]`,x);
 		const {iconType,...y}=x; this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
 	/** @arg {CommandMetadata} x */
 	CommandMetadata(x) {
-		this.save_keys("[CommandMetadata]",x);
+		const cf="CommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		if("resolveUrlCommandMetadata" in x) {
 			const {webCommandMetadata,resolveUrlCommandMetadata,...y}=x; this.g(y); // ! #destructure
 			debugger;
@@ -10161,32 +10335,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Accessibility} x */
 	Accessibility(x) {
-		this.save_keys("[Accessibility]",x);
+		const cf="Accessibility";
+		this.save_keys(`[${cf}]`,x);
 		const {accessibilityData,...y}=x; this.g(y); // ! #destructure
 		this.LabelData(accessibilityData);
 	}
 	/** @arg {LabelData} x */
 	LabelData(x) {
-		this.save_keys("[LabelData]",x);
+		const cf="LabelData";
+		this.save_keys(`[${cf}]`,x);
 		const {label,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(label);
 	}
 	/** @arg {R$Button} x */
 	R$Button(x) {
 		if(!x) {debugger; return;}
-		this.save_keys("[ButtonRenderer]",x);
+		const cf="ButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {buttonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ButtonData(buttonRenderer);
 	}
 	/** @arg {WatchNextEndScreenRenderer} x */
 	WatchNextEndScreenRenderer(x) {
-		this.save_keys("[WatchNextEndScreenRenderer]",x);
+		const cf="WatchNextEndScreenRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {watchNextEndScreenRenderer,...y}=x; this.g(y); // ! #destructure
 		this.WatchNextEndScreen(watchNextEndScreenRenderer);
 	}
 	/** @arg {WatchNextEndScreen} x */
 	WatchNextEndScreen(x) {
-		this.save_keys("[WatchNextEndScreen]",x);
+		const cf="WatchNextEndScreen";
+		this.save_keys(`[${cf}]`,x);
 		const {results,title,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(results,this.WatchNextEndScreenItem);
 		this.SimpleText(title);
@@ -10199,7 +10378,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchNextEndScreenItem} x */
 	WatchNextEndScreenItem(x) {
-		this.save_keys("[WatchNextEndScreenItem]",x);
+		const cf="WatchNextEndScreenItem";
+		this.save_keys(`[${cf}]`,x);
 		if("endScreenVideoRenderer" in x) {
 			return this.EndScreenVideoRenderer(x);
 		} else if("endScreenPlaylistRenderer" in x) {
@@ -10209,13 +10389,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EndScreenVideoRenderer} x */
 	EndScreenVideoRenderer(x) {
-		this.save_keys("[EndScreenPlaylistRenderer]",x);
+		const cf="EndScreenPlaylistRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {endScreenVideoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.EndScreenVideo(endScreenVideoRenderer);
 	}
 	/** @arg {ThumbnailOverlayItem} x */
 	ThumbnailOverlayItem(x) {
-		this.save_keys("[ThumbnailOverlayItem]",x);
+		const cf="ThumbnailOverlayItem";
+		this.save_keys(`[${cf}]`,x);
 		if("thumbnailOverlayTimeStatusRenderer" in x) {
 			return this.ThumbnailOverlayTimeStatusRenderer(x);
 		} else if("thumbnailOverlayNowPlayingRenderer" in x) {
@@ -10229,28 +10411,33 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ThumbnailOverlayHoverTextRenderer} x */
 	ThumbnailOverlayHoverTextRenderer(x) {
-		this.save_keys("[ThumbnailOverlayHoverTextRenderer]",x);
+		const cf="ThumbnailOverlayHoverTextRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
 	}
 	/** @arg {ThumbnailOverlayBottomPanelRenderer} x */
 	ThumbnailOverlayBottomPanelRenderer(x) {
-		this.save_keys("[ThumbnailOverlayBottomPanelRenderer]",x);
+		const cf="ThumbnailOverlayBottomPanelRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
 	}
 	/** @arg {ThumbnailOverlayNowPlayingRenderer} x */
 	ThumbnailOverlayNowPlayingRenderer(x) {
-		this.save_keys("[ThumbnailOverlayNowPlayingRenderer]",x);
+		const cf="ThumbnailOverlayNowPlayingRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayNowPlayingData(x.thumbnailOverlayNowPlayingRenderer);
 	}
 	/** @arg {ThumbnailOverlayNowPlayingData} x */
 	ThumbnailOverlayNowPlayingData(x) {
-		this.save_keys("[ThumbnailOverlayNowPlayingData]",x);
+		const cf="ThumbnailOverlayNowPlayingData";
+		this.save_keys(`[${cf}]`,x);
 		const {text,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(text);
 	}
 	/** @arg {EndScreenVideo} x */
 	EndScreenVideo(x) {
-		this.save_keys("[EndScreenVideo]",x);
+		const cf="EndScreenVideo";
+		this.save_keys(`[${cf}]`,x);
 		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=x; this.g(y);
 		this.videoId(videoId);
 		this.Thumbnail(thumbnail);
@@ -10267,7 +10454,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E$WatchEndpoint} x */
 	E$WatchEndpoint(x) {
 		const cf="WatchEndpoint";
-		this.save_keys("[WatchEndpoint]",x);
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
 		this.t(commandMetadata,this.WatchEndpointCommandMetadata);
@@ -10294,12 +10481,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {R$WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfig(x) {
-		this.save_keys("[WatchEndpointMusicConfig]",x);
+		const cf="WatchEndpointMusicConfig";
+		this.save_keys(`[${cf}]`,x);
 		this.WatchEndpointMusicConfigData(x.watchEndpointMusicConfig);
 	}
 	/** @arg {D$WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfigData(x) {
-		this.save_keys("[WatchEndpointMusicConfigData]",x);
+		const cf="WatchEndpointMusicConfigData";
+		this.save_keys(`[${cf}]`,x);
 		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(hasPersistentPlaylistPanel,"boolean");
 		switch(musicVideoType) {
@@ -10309,12 +10498,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
-		this.save_keys("[Html5PlaybackOnesieConfig]",x);
+		const cf="Html5PlaybackOnesieConfig";
+		this.save_keys(`[${cf}]`,x);
 		this.PrefetchHintConfigData(x.prefetchHintConfig);
 	}
 	/** @arg {PrefetchHintConfigData} x */
 	PrefetchHintConfigData(x) {
-		this.save_keys("[Html5PlaybackOnesieConfig]",x);
+		const cf="Html5PlaybackOnesieConfig";
+		this.save_keys(`[${cf}]`,x);
 		const {prefetchPriority: a1,playbackRelativeSecondsPrefetchCondition: b1,countdownUiRelativeSecondsPrefetchCondition: b2,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(a1,"number");
 		if(a1!==0) {
@@ -10331,31 +10522,36 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Html5PlaybackOnesieConfig} x */
 	Html5PlaybackOnesieConfig(x) {
-		this.save_keys("[Html5PlaybackOnesieConfig]",x);
+		const cf="Html5PlaybackOnesieConfig";
+		this.save_keys(`[${cf}]`,x);
 		const {html5PlaybackOnesieConfig,...y}=x; this.g(y); // ! #destructure
 		this.CommonConfig(html5PlaybackOnesieConfig);
 	}
 	/** @arg {CommonConfig} x */
 	CommonConfig(x) {
-		this.save_keys("[CommonConfig]",x);
+		const cf="CommonConfig";
+		this.save_keys(`[${cf}]`,x);
 		const {commonConfig,...y}=x; this.g(y); // ! #destructure
 		this.CommonConfigData(commonConfig);
 	}
 	/** @arg {CommonConfigData} x */
 	CommonConfigData(x) {
-		this.save_keys("[CommonConfigData]",x);
+		const cf="CommonConfigData";
+		this.save_keys(`[${cf}]`,x);
 		const {url,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_url("CommonConfigData",url);
 	}
 	/** @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
-		this.save_keys("[VssLoggingContext]",x);
+		const cf="VssLoggingContext";
+		this.save_keys(`[${cf}]`,x);
 		const {vssLoggingContext,...y}=x; this.g(y); // ! #destructure
 		this.VssLoggingContextData(vssLoggingContext);
 	}
 	/** @arg {VssLoggingContextData} x */
 	VssLoggingContextData(x) {
-		this.save_keys("[VssLoggingContextData]",x);
+		const cf="VssLoggingContextData";
+		this.save_keys(`[${cf}]`,x);
 		const {serializedContextData,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedContextData);
 	}
@@ -10370,20 +10566,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
-		this.save_keys("[TextRun]",x);
+		const cf="TextRun";
+		this.save_keys(`[${cf}]`,x);
 		const {text,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of_string(text);
 	}
 	/** @private @arg {ThumbnailOverlayTimeStatusRenderer} x */
 	ThumbnailOverlayTimeStatusRenderer(x) {
-		this.save_keys("[ThumbnailOverlayTimeStatusRenderer]",x);
+		const cf="ThumbnailOverlayTimeStatusRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {thumbnailOverlayTimeStatusRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ThumbnailOverlayTimeStatus(thumbnailOverlayTimeStatusRenderer);
 	}
 	/** @private @arg {ThumbnailOverlayTimeStatus} x */
 	ThumbnailOverlayTimeStatus(x) {
-		this.save_keys("[ThumbnailOverlayTimeStatus]",x);
+		const cf="ThumbnailOverlayTimeStatus";
+		this.save_keys(`[${cf}]`,x);
 		const {text,style,...y}=x;
 		this.TextT(text);
 		switch(style) {
@@ -10399,13 +10598,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
-		this.save_keys("[EndScreenPlaylistRenderer]",x);
+		const cf="EndScreenPlaylistRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {endScreenPlaylistRenderer,...y}=x; this.g(y); // ! #destructure
 		this.EndScreenPlaylist(endScreenPlaylistRenderer);
 	}
 	/** @private @arg {EndScreenPlaylist} x */
 	EndScreenPlaylist(x) {
-		this.save_keys("[EndScreenPlaylist]",x);
+		const cf="EndScreenPlaylist";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.playlistId(playlistId);
 		this.SimpleText(title);
@@ -10418,7 +10619,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
-		this.save_keys("[NavigationEndpointRoot]",x);
+		const cf="NavigationEndpointRoot";
+		this.save_keys(`[${cf}]`,x);
 		let a1=x;
 		if("urlEndpoint" in a1) {
 			this.E$UrlEndpoint(a1);
@@ -10432,7 +10634,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseEndpointContextSupportedConfigs} x */
 	BrowseEndpointContextSupportedConfigs(x) {
-		this.save_keys("[BrowseEndpointContextSupportedConfigs]",x);
+		const cf="BrowseEndpointContextSupportedConfigs";
+		this.save_keys(`[${cf}]`,x);
 		if("browseEndpointContextMusicConfig" in x) {
 			return this.BrowseEndpointContextMusicConfig(x);
 		}
@@ -10440,13 +10643,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseEndpointContextMusicConfig} x */
 	BrowseEndpointContextMusicConfig(x) {
-		this.save_keys("[BrowseEndpointContextMusicConfig]",x);
+		const cf="BrowseEndpointContextMusicConfig";
+		this.save_keys(`[${cf}]`,x);
 		const {browseEndpointContextMusicConfig,...y}=x; this.g(y); // ! #destructure
 		this.BrowseEndpointContextMusicConfigData(browseEndpointContextMusicConfig);
 	}
 	/** @arg {BrowseEndpointContextMusicConfigData} x */
 	BrowseEndpointContextMusicConfigData(x) {
-		this.save_keys("[BrowseEndpointContextMusicConfigData]",x);
+		const cf="BrowseEndpointContextMusicConfigData";
+		this.save_keys(`[${cf}]`,x);
 		const {pageType,...y}=x; this.g(y); // ! #destructure
 		this.save_enum("MUSIC_PAGE_TYPE",pageType);
 		switch(pageType) {
@@ -10458,7 +10663,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NavigationEndpointCommandMetadata} x */
 	NavigationEndpointCommandMetadata(x) {
-		this.save_keys("[NavigationEndpointCommandMetadata]",x);
+		const cf="NavigationEndpointCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		debugger;
 		// this.WebCommandMetadata(webCommandMetadata);
@@ -10472,7 +10678,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TextT} x */
 	TextT(x) {
-		this.save_keys("[TextT]",x);
+		const cf="TextT";
+		this.save_keys(`[${cf}]`,x);
 		if("simpleText" in x) {
 			return this.SimpleText(x);
 		} else if("runs" in x) {
@@ -10482,19 +10689,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchEndpointCommandMetadata} x */
 	WatchEndpointCommandMetadata(x) {
-		this.save_keys("[WatchEndpointCommandMetadata]",x);
+		const cf="WatchEndpointCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {VE3832_CommandMetadata} x */
 	VE3832_CommandMetadata(x) {
-		this.save_keys("[VE3832_CommandMetadata]",x);
+		const cf="VE3832_CommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		this.WebCommandMetadata(webCommandMetadata);
 	}
 	/** @arg {TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
-		this.save_keys("[TwoColumnWatchNextResults]",x);
+		const cf="TwoColumnWatchNextResults";
+		this.save_keys(`[${cf}]`,x);
 		const {twoColumnWatchNextResults,...y}=x; this.g(y); // ! #destructure
 		this.TwoColumnWatchNextResultsData(twoColumnWatchNextResults);
 	}
@@ -10537,7 +10747,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TwoColumnWatchNextResultsData} x */
 	TwoColumnWatchNextResultsData(x) {
-		this.save_keys("[TwoColumnWatchNextResultsData]",x);
+		const cf="TwoColumnWatchNextResultsData";
+		this.save_keys(`[${cf}]`,x);
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=x; this.g(y); // ! #destructure
 		this.handle_results_1(results);
 		this.SecondaryResultsTemplate(secondaryResults,a => {
@@ -10574,7 +10785,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NotificationGetUnseenCountResponse} x */
 	NotificationGetUnseenCountResponse(x) {
-		this.save_keys("[NotificationGetUnseenCountResponse]",x);
+		const cf="NotificationGetUnseenCountResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
 			if("updateNotificationsUnseenCountAction" in x) return this.UpdateNotificationsUnseenCountAction(x);
@@ -10584,14 +10796,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {UpdateNotificationsUnseenCountAction} x */
 	UpdateNotificationsUnseenCountAction(x) {
-		this.save_keys("[UpdateNotificationsUnseenCountAction]",x);
+		const cf="UpdateNotificationsUnseenCountAction";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams("UpdateNotificationsUnseenCountAction",clickTrackingParams);
 		this.UpdateNotificationsUnseenCount(updateNotificationsUnseenCountAction);
 	}
 	/** @private @arg {UpdateNotificationsUnseenCount} x */
 	UpdateNotificationsUnseenCount(x) {
-		this.save_keys("[UpdateNotificationsUnseenCount]",x);
+		const cf="UpdateNotificationsUnseenCount";
+		this.save_keys(`[${cf}]`,x);
 		const {handlerData,unseenCount,timeoutMs,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(handlerData);
 		this.primitive_of(unseenCount,"number");
@@ -10599,13 +10813,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {DatasyncIdsResponse} x */
 	DatasyncIdsResponse(x) {
-		this.save_keys("[DatasyncIdsResponse]",x);
+		const cf="DatasyncIdsResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y); // ! #destructure
 		this.z(datasyncIds,this.primitive_of_string);
 	}
 	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
 	GetAccountSwitcherEndpointResponse(x) {
-		this.save_keys("[GetAccountSwitcherEndpointResponse]",x);
+		const cf="GetAccountSwitcherEndpointResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(selectText);
 		this.z(actions,a => {
@@ -10617,32 +10833,37 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AccountsListResponse} x */
 	AccountsListResponse(x) {
-		this.save_keys("[AccountsListResponse]",x);
+		const cf="AccountsListResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(selectText);
 		this.z(actions,this.UpdateChannelSwitcherPageAction);
 	}
 	/** @private @arg {UpdateChannelSwitcherPageAction} x */
 	UpdateChannelSwitcherPageAction(x) {
-		this.save_keys("[UpdateChannelSwitcherPageAction]",x);
+		const cf="UpdateChannelSwitcherPageAction";
+		this.save_keys(`[${cf}]`,x);
 		const {updateChannelSwitcherPageAction,...y}=x; this.g(y); // ! #destructure
 		this.PageAction(updateChannelSwitcherPageAction);
 	}
 	/** @private @arg {PageAction<ChannelSwitcherPageRenderer>} x */
 	PageAction(x) {
-		this.save_keys("[PageAction]",x);
+		const cf="PageAction";
+		this.save_keys(`[${cf}]`,x);
 		const {page,...y}=x; this.g(y); // ! #destructure
 		this.ChannelSwitcherPageRenderer(page);
 	}
 	/** @private @arg {ChannelSwitcherPageRenderer} x */
 	ChannelSwitcherPageRenderer(x) {
-		this.save_keys("[UpdateChannelSwitcherPageAction]",x);
+		const cf="UpdateChannelSwitcherPageAction";
+		this.save_keys(`[${cf}]`,x);
 		const {channelSwitcherPageRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChannelSwitcherPage(channelSwitcherPageRenderer);
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
-		this.save_keys("[ReelItemWatchResponse]",x);
+		const cf="ReelItemWatchResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x; this.g(y); // ! #destructure
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
@@ -10654,7 +10875,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {EngagementPanelItem} x */
 	EngagementPanelItem(x) {
-		this.save_keys("[EngagementPanelItem]",x);
+		const cf="EngagementPanelItem";
+		this.save_keys(`[${cf}]`,x);
 		if("engagementPanelSectionListRenderer" in x) {
 			return this.EngagementPanelSectionListRenderer(x);
 		} else {
@@ -10663,19 +10885,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {
-		this.save_keys("[AccountSetSetting]",x);
+		const cf="AccountSetSetting";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},settingItemId,...y}=x; this.g(y); // ! #destructure
 		if(settingItemId!=="407") debugger;
 	}
 	/** @private @arg {FeedbackResponse} x */
 	FeedbackResponse(x) {
-		this.save_keys("[FeedbackResponse]",x);
+		const cf="FeedbackResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},feedbackResponses,...y}=x; this.g(y); // ! #destructure
 		this.z(feedbackResponses,this.FeedbackResponseProcessedStatus);
 	}
 	/** @private @arg {GetTranscriptResponse} x */
 	GetTranscriptResponse(x) {
-		this.save_keys("[GetTranscriptResponse]",x);
+		const cf="GetTranscriptResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {
@@ -10687,27 +10912,31 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {SuccessResponse} x */
 	SuccessResponse(x) {
-		this.save_keys("[SuccessResponse]",x);
+		const cf="SuccessResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},success,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(success,"boolean");
 	}
 	/** @private @arg {AttGetResponse} x */
 	AttGetResponse(x) {
-		this.save_keys("[AttGetResponse]",x);
+		const cf="AttGetResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},challenge,bgChallenge,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(challenge);
 		this.AttBgChallenge(bgChallenge);
 	}
 	/** @private @arg {GuideResponse} x */
 	GuideResponse(x) {
-		this.save_keys("[GuideResponse]",x);
+		const cf="GuideResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(items,this.GuideItemType);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {GuideItemType} x */
 	GuideItemType(x) {
-		this.save_keys("[GuideItemType]",x);
+		const cf="GuideItemType";
+		this.save_keys(`[${cf}]`,x);
 		if("guideSectionRenderer" in x) {
 			return this.GuideSectionRenderer(x);
 		} else if("guideSubscriptionsSectionRenderer" in x) {
@@ -10717,13 +10946,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {GuideSectionRenderer} x */
 	GuideSectionRenderer(x) {
-		this.save_keys("[GuideSectionRenderer]",x);
+		const cf="GuideSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {guideSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideSectionData(guideSectionRenderer);
 	}
 	/** @private @arg {GuideSectionData} x */
 	GuideSectionData(x) {
-		this.save_keys("[GuideSectionData]",x);
+		const cf="GuideSectionData";
+		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,formattedTitle,...y}=x; this.g(y); // ! #destructure
 		this.z(items,this.GuideSectionItemType);
 		this.trackingParams("CF_FIX",trackingParams);
@@ -10737,13 +10968,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {LiveChatRenderer} x */
 	LiveChatRenderer(x) {
-		this.save_keys("[LiveChatRenderer]",x);
+		const cf="LiveChatRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(liveChatRenderer);
 	}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
-		this.save_keys("[AutoplayContent]",x);
+		const cf="AutoplayContent";
+		this.save_keys(`[${cf}]`,x);
 		const {sets,countDownSecs,modifiedSets,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(sets,this.AutoplaySetItem);
 		if(countDownSecs&&countDownSecs!==5) debugger;
@@ -10752,7 +10985,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {PlaylistContent} x */
 	PlaylistContent(x) {
-		this.save_keys("[PlaylistContent]",x);
+		const cf="PlaylistContent";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.PlaylistPanelVideoRenderer);
 		this.primitive_of_string(title);
@@ -10774,30 +11008,35 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {ThumbnailOverlayBottomPanelData} x */
 	ThumbnailOverlayBottomPanelData(x) {
-		this.save_keys("[ThumbnailOverlayBottomPanelData]",x);
+		const cf="ThumbnailOverlayBottomPanelData";
+		this.save_keys(`[${cf}]`,x);
 		const {icon,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
 	}
 	/** @private @arg {BrowserMediaSessionRenderer} x */
 	BrowserMediaSessionRenderer(x) {
-		this.save_keys("[BrowserMediaSessionRenderer]",x);
+		const cf="BrowserMediaSessionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {browserMediaSessionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.BrowserMediaSession(browserMediaSessionRenderer);
 	}
 	/** @private @arg {BrowserMediaSession} x */
 	BrowserMediaSession(x) {
-		this.save_keys("[BrowserMediaSession]",x);
+		const cf="BrowserMediaSession";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @private @arg {AutoplaySwitchButtonRenderer} x */
 	AutoplaySwitchButtonRenderer(x) {
-		this.save_keys("[AutoplaySwitchButtonRenderer]",x);
+		const cf="AutoplaySwitchButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {autoplaySwitchButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.AutoplaySwitchButton(autoplaySwitchButtonRenderer);
 	}
 	/** @private @arg {AutoplaySwitchButton} x */
 	AutoplaySwitchButton(x) {
-		this.save_keys("[AutoplaySwitchButton]",x);
+		const cf="AutoplaySwitchButton";
+		this.save_keys(`[${cf}]`,x);
 		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=x; this.g(y); // ! #destructure
 		this.SetSettingEndpointAutonavForDesktop(onEnabledCommand);
 		this.SetSettingEndpointAutonavForDesktop(onDisabledCommand);
@@ -10808,14 +11047,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {DecoratedPlayerBar} x */
 	DecoratedPlayerBar(x) {
-		this.save_keys("[DecoratedPlayerBar]",x);
+		const cf="DecoratedPlayerBar";
+		this.save_keys(`[${cf}]`,x);
 		const {playerBar,playerBarActionButton,...y}=x; this.g(y); // ! #destructure
 		this.MultiMarkersPlayerBarRenderer(playerBar);
 		this.t(playerBarActionButton,this.R$Button);
 	}
 	/** @arg {PlayerOverlayVideoDetails} x */
 	PlayerOverlayVideoDetails(x) {
-		this.save_keys("[PlayerOverlayVideoDetails]",x);
+		const cf="PlayerOverlayVideoDetails";
+		this.save_keys(`[${cf}]`,x);
 		const {title,subtitle,...y}=x; this.g(y); // ! #destructure
 		this.SimpleText(title);
 		this.TextWithRuns(subtitle);
@@ -10917,14 +11158,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
-		this.save_keys("[ThumbnailOverlayHoverTextData]",x);
+		const cf="ThumbnailOverlayHoverTextData";
+		this.save_keys(`[${cf}]`,x);
 		const {text,icon,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(text);
 		this.Icon(icon);
 	}
 	/** @arg {CustomEmoji} x */
 	CustomEmoji(x) {
-		this.save_keys("[CustomEmoji]",x);
+		const cf="CustomEmoji";
+		this.save_keys(`[${cf}]`,x);
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(emojiId);
 		this.z(shortcuts,this.primitive_of_string);
@@ -10938,20 +11181,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EmojiImage} x */
 	EmojiImage(x) {
-		this.save_keys("[EmojiImage]",x);
+		const cf="EmojiImage";
+		this.save_keys(`[${cf}]`,x);
 		const {accessibility,thumbnails,...y}=x; this.g(y); // ! #destructure
 		this.Accessibility(accessibility);
 		this.z(thumbnails,this.ThumbnailItem);
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
-		this.save_keys("[SortFilterSubMenuRenderer]",x);
+		const cf="SortFilterSubMenuRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {sortFilterSubMenuRenderer,...y}=x; this.g(y); // ! #destructure
 		this.SortFilterSubMenuData(sortFilterSubMenuRenderer);
 	}
 	/** @arg {CommentSimpleboxData} x */
 	CommentSimpleboxData(x) {
-		this.save_keys("[CommentSimpleboxData]",x);
+		const cf="CommentSimpleboxData";
+		this.save_keys(`[${cf}]`,x);
 		const {submitButton,cancelButton,authorThumbnail,placeholderText,trackingParams,avatarSize,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=x; this.g(y); // ! #destructure
 		this.R$Button(submitButton);
 		this.R$Button(cancelButton);
@@ -10965,7 +11211,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChannelPageResponse} x */
 	ChannelPageResponse(x) {
-		this.save_keys("[ChannelPageResponse]",x);
+		const cf="ChannelPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="channel") debugger;
 		this.E$BrowseEndpoint(endpoint);
@@ -10974,7 +11221,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlaylistPageResponse} x */
 	PlaylistPageResponse(x) {
-		this.save_keys("[PlaylistPageResponse]",x);
+		const cf="PlaylistPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {rootVe,url,endpoint,page,response,...y}=x; this.g(y); // ! #destructure
 		if(page!=="playlist") debugger;
 		this.E$BrowseEndpoint(endpoint);
@@ -10997,7 +11245,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SettingsPageResponse} x */
 	SettingsPageResponse(x) {
-		this.save_keys("[SettingsPageResponse]",x);
+		const cf="SettingsPageResponse";
+		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x) return this.Settings_VE23462(x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="settings") debugger;
@@ -11021,7 +11270,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ShortsPageResponse} x */
 	ShortsPageResponse(x) {
-		this.save_keys("[ShortsResponse]",x);
+		const cf="ShortsResponse";
+		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x) return this.Shorts_VE37414(x);
 		const {page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(page!=="shorts") debugger;
@@ -11035,7 +11285,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SearchPageResponse} x */
 	SearchPageResponse(x) {
-		this.save_keys("[GetNotificationMenuJson]",x);
+		const cf="GetNotificationMenuJson";
+		this.save_keys(`[${cf}]`,x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="search") debugger;
 		this.E$SearchEndpoint(endpoint);
@@ -11046,7 +11297,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {E$SearchEndpoint} x */
 	E$SearchEndpoint(x) {
 		const cf="SearchEndpoint";
-		this.save_keys("[SearchEndpoint]",x);
+		const cf="SearchEndpoint";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
@@ -11054,25 +11306,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$Search} x */
 	E$Search(x) {
-		this.save_keys("[Search]",x);
+		const cf="Search";
+		this.save_keys(`[${cf}]`,x);
 		const {query,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(query);
 	}
 	/** @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
-		this.save_keys("[ItemSectionItem]",x);
+		const cf="ItemSectionItem";
+		this.save_keys(`[${cf}]`,x);
 		if("continuationItemRenderer" in x) {
 			this.ContinuationItemRenderer(x);
 		}
 	}
 	/** @arg {MusicResponsiveListItem} x */
 	MusicResponsiveListItem(x) {
-		this.save_keys("[MusicResponsiveListItem]",x);
+		const cf="MusicResponsiveListItem";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {MusicCarouselShelf} x */
 	MusicCarouselShelf(x) {
-		this.save_keys("[MusicCarouselShelf]",x);
+		const cf="MusicCarouselShelf";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,header,trackingParams,itemSize,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.g);
 		this.g(header);
@@ -11081,13 +11337,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
-		this.save_keys("[ChannelMetadataRenderer]",x);
+		const cf="ChannelMetadataRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {channelMetadataRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChannelMetadata(channelMetadataRenderer);
 	}
 	/** @arg {BrowseHeader} x */
 	BrowseHeader(x) {
-		this.save_keys("[BrowseHeader]",x);
+		const cf="BrowseHeader";
+		this.save_keys(`[${cf}]`,x);
 		if("feedTabbedHeaderRenderer" in x) {
 			return this.FeedTabbedHeaderRenderer(x);
 		} else if("c4TabbedHeaderRenderer" in x) {
@@ -11102,25 +11360,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {C4TabbedHeaderRenderer} x */
 	C4TabbedHeaderRenderer(x) {
-		this.save_keys("[C4TabbedHeaderRenderer]",x);
+		const cf="C4TabbedHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {c4TabbedHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.C4TabbedHeaderData(c4TabbedHeaderRenderer);
 	}
 	/** @arg {FeedTabbedHeaderRenderer} x */
 	FeedTabbedHeaderRenderer(x) {
-		this.save_keys("[FeedTabbedHeaderRenderer]",x);
+		const cf="FeedTabbedHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {feedTabbedHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.FeedTabbedHeaderData(feedTabbedHeaderRenderer);
 	}
 	/** @arg {CacheMetadata} x */
 	CacheMetadata(x) {
-		this.save_keys("[CacheMetadata]",x);
+		const cf="CacheMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {isCacheHit,...y}=x; this.g(y); // ! #destructure
 		if(!isCacheHit) debugger;
 	}
 	/** @arg {StateTag} x */
 	StateTag(x) {
-		this.save_keys("[StateTag]",x);
+		const cf="StateTag";
+		this.save_keys(`[${cf}]`,x);
 		if(x.stateTag!==3) debugger;
 		if("instruction" in x) {
 			const {stateTag: {},instruction,...y}=x; this.g(y); // ! #destructure
@@ -11132,25 +11394,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SettingsSidebarRenderer} x */
 	SettingsSidebarRenderer(x) {
-		this.save_keys("[SettingsSidebarRenderer]",x);
+		const cf="SettingsSidebarRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {settingsSidebarRenderer,...y}=x; this.g(y); // ! #destructure
 		this.SettingsSidebarData(settingsSidebarRenderer);
 	}
 	/** @arg {EntityBatchUpdate} x */
 	EntityBatchUpdate(x) {
-		this.save_keys("[EntityBatchUpdate]",x);
+		const cf="EntityBatchUpdate";
+		this.save_keys(`[${cf}]`,x);
 		const {entityBatchUpdate,...y}=x; this.g(y); // ! #destructure
 		this.EntityBatchUpdateData(entityBatchUpdate);
 	}
 	/** @arg {DesktopTopbarRenderer} x */
 	DesktopTopbarRenderer(x) {
-		this.save_keys("[DesktopTopbarRenderer]",x);
+		const cf="DesktopTopbarRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {desktopTopbarRenderer,...y}=x; this.g(y); // ! #destructure
 		this.DesktopTopbarData(desktopTopbarRenderer);
 	}
 	/** @arg {BrowseContents} x */
 	BrowseContents(x) {
-		this.save_keys("[BrowseContents]",x);
+		const cf="BrowseContents";
+		this.save_keys(`[${cf}]`,x);
 		if("twoColumnBrowseResultsRenderer" in x) return this.TwoColumnBrowseResultsRenderer(x);
 		if("feedFilterChipBarRenderer" in x) return this.FeedFilterChipBarRenderer(x);
 		debugger;
@@ -11167,21 +11433,24 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ResponseReceivedAction} x */
 	ResponseReceivedAction(x) {
-		this.save_keys("[ResponseReceivedAction]",x);
+		const cf="ResponseReceivedAction";
+		this.save_keys(`[${cf}]`,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.AdsControlFlowOpportunityReceivedCommand(x);
 		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
 		debugger;
 	}
 	/** @arg {ResolveUrlCommandMetadata} x */
 	ResolveUrlCommandMetadata(x) {
-		this.save_keys("[ResolveUrlCommandMetadata]",x);
+		const cf="ResolveUrlCommandMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {isVanityUrl,parentTrackingParams,...y}=x; this.g(y); // ! #destructure
 		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
 		this.t(parentTrackingParams,a => this.params("ResolveUrlCommandMetadata","tracking.parentTrackingParams",a));
 	}
 	/** @arg {AdsControlFlowOpportunityReceivedCommandData} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
-		this.save_keys("[AdsControlFlowOpportunityReceivedCommandData]",x);
+		const cf="AdsControlFlowOpportunityReceivedCommandData";
+		this.save_keys(`[${cf}]`,x);
 		const {opportunityType,adSlotAndLayoutMetadata,isInitialLoad,enablePacfLoggingWeb,...y}=x; this.g(y); // ! #destructure
 		this.save_enum("OPPORTUNITY_TYPE",opportunityType);
 		this.tz(adSlotAndLayoutMetadata,(this.AdSlotAndLayoutMetadataItem));
@@ -11190,7 +11459,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SearchResultsTab} x */
 	SearchResultsTab(x) {
-		this.save_keys("[SearchResultsTab]",x);
+		const cf="SearchResultsTab";
+		this.save_keys(`[${cf}]`,x);
 		const {endpoint,title,selected,content,tabIdentifier,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.t(endpoint,this.E$SearchEndpoint);
 		this.primitive_of_string(title);
@@ -11201,19 +11471,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetAddToPlaylistResponse} x */
 	GetAddToPlaylistResponse(x) {
-		this.save_keys("[GetAddToPlaylistResponse]",x);
+		const cf="GetAddToPlaylistResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.AddToPlaylistRenderer);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {AttLogResponse} x */
 	AttLogResponse(x) {
-		this.save_keys("[AttLogResponse]",x);
+		const cf="AttLogResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},...y}=x; this.g(y); // ! #destructure
 	}
 	/** @arg {ClientMessages} x */
 	ClientMessages(x) {
-		this.save_keys("[ClientMessages]",x);
+		const cf="ClientMessages";
+		this.save_keys(`[${cf}]`,x);
 		const {reconnectMessage,unableToReconnectMessage,fatalError,reconnectedMessage,genericError,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(reconnectMessage);
 		this.TextWithRuns(unableToReconnectMessage);
@@ -11223,7 +11496,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatEmoji} x */
 	LiveChatEmoji(x) {
-		this.save_keys("[LiveChatEmoji]",x);
+		const cf="LiveChatEmoji";
+		this.save_keys(`[${cf}]`,x);
 		const {emojiId,shortcuts,searchTerms,image,isCustomEmoji,isLocked,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(emojiId);
 		this.z(shortcuts,this.primitive_of_string);
@@ -11234,66 +11508,77 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MessageRenderer} x */
 	MessageRenderer(x) {
-		this.save_keys("[MessageRenderer]",x);
+		const cf="MessageRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {messageRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(messageRenderer);
 	}
 	/** @arg {LiveChatParticipantsListRenderer} x */
 	LiveChatParticipantsListRenderer(x) {
-		this.save_keys("[LiveChatParticipantsListRenderer]",x);
+		const cf="LiveChatParticipantsListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatParticipantsListRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(liveChatParticipantsListRenderer);
 	}
 	/** @arg {LiveChatTickerRenderer} x */
 	LiveChatTickerRenderer(x) {
-		this.save_keys("[LiveChatTickerRenderer]",x);
+		const cf="LiveChatTickerRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatTickerRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(liveChatTickerRenderer);
 	}
 	/** @arg {LiveChatHeaderRenderer} x */
 	LiveChatHeaderRenderer(x) {
-		this.save_keys("[LiveChatHeaderRenderer]",x);
+		const cf="LiveChatHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(liveChatHeaderRenderer);
 	}
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
-		this.save_keys("[LiveChatPlaceholderItemRenderer]",x);
+		const cf="LiveChatPlaceholderItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatPlaceholderItemRenderer,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatPlaceholderItemData(liveChatPlaceholderItemRenderer);
 	}
 	/** @arg {LiveChatTextMessageRenderer} x */
 	LiveChatTextMessageRenderer(x) {
-		this.save_keys("[LiveChatTextMessageRenderer]",x);
+		const cf="LiveChatTextMessageRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatTextMessageRenderer,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatTextMessageData(liveChatTextMessageRenderer);
 	}
 	/** @arg {PlaylistPanelContinuation} x */
 	PlaylistPanelContinuation(x) {
-		this.save_keys("[PlaylistPanelContinuation]",x);
+		const cf="PlaylistPanelContinuation";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistPanelContinuation,...y}=x; this.g(y); // ! #destructure
 		this.PlaylistPanelContinuationData(playlistPanelContinuation);
 	}
 	/** @arg {ReportFormModalRenderer} x */
 	ReportFormModalRenderer(x) {
-		this.save_keys("[ReportFormModalRenderer]",x);
+		const cf="ReportFormModalRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {reportFormModalRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(reportFormModalRenderer);
 	}
 	/** @arg {AutomixPreviewVideoRenderer} x */
 	AutomixPreviewVideoRenderer(x) {
-		this.save_keys("[AutomixPreviewVideoRenderer]",x);
+		const cf="AutomixPreviewVideoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {automixPreviewVideoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.AutomixPreviewVideo(automixPreviewVideoRenderer);
 	}
 	/** @arg {AutomixPreviewVideo} x */
 	AutomixPreviewVideo(x) {
-		this.save_keys("[AutomixPreviewVideo]",x);
+		const cf="AutomixPreviewVideo";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {ThumbnailOverlayResumePlayback} x */
 	ThumbnailOverlayResumePlayback(x) {
-		this.save_keys("[ThumbnailOverlayResumePlayback]",x);
+		const cf="ThumbnailOverlayResumePlayback";
+		this.save_keys(`[${cf}]`,x);
 		const {percentDurationWatched,...y}=x; this.g(y);
 		if(!percentDurationWatched) {debugger; return;}
 		/** @type {Percent} */
@@ -11305,12 +11590,14 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VideoMastheadAdV3} x */
 	VideoMastheadAdV3(x) {
-		this.save_keys("[VideoMastheadAdV3]",x);
+		const cf="VideoMastheadAdV3";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {RendererContentItem} x */
 	RendererContentItem(x) {
-		this.save_keys("[RendererContentItem]",x);
+		const cf="RendererContentItem";
+		this.save_keys(`[${cf}]`,x);
 		if("richItemRenderer" in x) return this.RichItemRenderer(x);
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
 		if("richSectionRenderer" in x) return this.RichSectionRenderer(x);
@@ -11318,13 +11605,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {RichItemRenderer} x */
 	RichItemRenderer(x) {
-		this.save_keys("[RichItemRenderer]",x);
+		const cf="RichItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {richItemRenderer,...y}=x; this.g(y); // ! #destructure
 		this.RichItemData(richItemRenderer);
 	}
 	/** @arg {LoggingDirectives} x */
 	LoggingDirectives(x) {
-		this.save_keys("[LoggingDirectives]",x);
+		const cf="LoggingDirectives";
+		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,visibility,gestures,enableDisplayloggerExperiment,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams("CF_FIX",trackingParams);
 		this.Visibility(visibility);
@@ -11339,7 +11628,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ShowEngagementPanelScrimAction} x */
 	ShowEngagementPanelScrimAction(x) {
 		const cf="ShowEngagementPanelScrimAction";
-		this.save_keys("[ShowEngagementPanelScrimAction]",x);
+		const cf="ShowEngagementPanelScrimAction";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,showEngagementPanelScrimAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ShowEngagementPanelScrimActionData(showEngagementPanelScrimAction);
@@ -11347,32 +11637,37 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
 		const cf="ChangeEngagementPanelVisibilityAction";
-		this.save_keys("[ChangeEngagementPanelVisibilityAction]",x);
+		const cf="ChangeEngagementPanelVisibilityAction";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
 	}
 	/** @arg {EngagementPanelTitleHeaderRenderer} x */
 	EngagementPanelTitleHeaderRenderer(x) {
-		this.save_keys("[EngagementPanelTitleHeaderRenderer]",x);
+		const cf="EngagementPanelTitleHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {engagementPanelTitleHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.EngagementPanelTitleHeader(engagementPanelTitleHeaderRenderer);
 	}
 	/** @arg {AdsEngagementPanelContentRenderer} x */
 	AdsEngagementPanelContentRenderer(x) {
-		this.save_keys("[AdsEngagementPanelContentRenderer]",x);
+		const cf="AdsEngagementPanelContentRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {adsEngagementPanelContentRenderer,...y}=x; this.g(y); // ! #destructure
 		this.AdsEngagementPanelContentData(adsEngagementPanelContentRenderer);
 	}
 	/** @arg {ClipSectionRenderer} x */
 	ClipSectionRenderer(x) {
-		this.save_keys("[ClipSectionRenderer]",x);
+		const cf="ClipSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {clipSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ContentsArrayTemplate(clipSectionRenderer,this.ClipCreationRenderer);
 	}
 	/** @arg {StructuredDescriptionContentRenderer} x */
 	StructuredDescriptionContentRenderer(x) {
-		this.save_keys("[StructuredDescriptionContentRenderer]",x);
+		const cf="StructuredDescriptionContentRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {structuredDescriptionContentRenderer,...y}=x; this.g(y); // ! #destructure
 		this.StructuredDescriptionContentData(structuredDescriptionContentRenderer);
 	}
@@ -11386,27 +11681,31 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetMultiPageMenuAction} x */
 	GetMultiPageMenuAction(x) {
-		this.save_keys("[GetMultiPageMenuAction]",x);
+		const cf="GetMultiPageMenuAction";
+		this.save_keys(`[${cf}]`,x);
 		const {getMultiPageMenuAction,...y}=x; this.g(y); // ! #destructure
 		this.GetMultiPageMenuActionData(getMultiPageMenuAction);
 	}
 	/** @arg {FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
-		this.save_keys("[FeedbackResponseProcessedStatus]",x);
+		const cf="FeedbackResponseProcessedStatus";
+		this.save_keys(`[${cf}]`,x);
 		const {isProcessed,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(isProcessed,"boolean");
 	}
 	/** @arg {UpdateEngagementPanelAction} x */
 	UpdateEngagementPanelAction(x) {
 		const cf="UpdateEngagementPanelAction";
-		this.save_keys("[UpdateEngagementPanelAction]",x);
+		const cf="UpdateEngagementPanelAction";
+		this.save_keys(`[${cf}]`,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
 		this.UpdateEngagementPanelData(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @arg {AttBgChallenge} x */
 	AttBgChallenge(x) {
-		this.save_keys("[AttBgChallenge]",x);
+		const cf="AttBgChallenge";
+		this.save_keys(`[${cf}]`,x);
 		const {interpreterUrl,interpreterHash,program,globalName,...y}=x; this.g(y); // ! #destructure
 		let uw=this.UrlWrappedValueT(interpreterUrl);
 		this.primitive_of_string(uw);
@@ -11421,13 +11720,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideSubscriptionsSectionRenderer} x */
 	GuideSubscriptionsSectionRenderer(x) {
-		this.save_keys("[GuideSubscriptionsSectionRenderer]",x);
+		const cf="GuideSubscriptionsSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {guideSubscriptionsSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideSubscriptionsSectionData(guideSubscriptionsSectionRenderer);
 	}
 	/** @arg {GuideSubscriptionsSectionData} x */
 	GuideSubscriptionsSectionData(x) {
-		this.save_keys("[GuideSubscriptionsSectionData]",x);
+		const cf="GuideSubscriptionsSectionData";
+		this.save_keys(`[${cf}]`,x);
 		const {sort,items,trackingParams,formattedTitle,handlerDatas,...y}=x; this.g(y); // ! #destructure
 		if(sort!=="CHANNEL_ACTIVITY") debugger;
 		this.z(items,this.GuideSubscriptionsSectionItem);
@@ -11449,25 +11750,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ElementUpdate} x */
 	ElementUpdate(x) {
-		this.save_keys("[ElementUpdate]",x);
+		const cf="ElementUpdate";
+		this.save_keys(`[${cf}]`,x);
 		const {updates,...y}=x; this.g(y); // ! #destructure
 		this.z(updates,this.ElementUpdateItem);
 	}
 	/** @arg {ElementUpdateItem} x */
 	ElementUpdateItem(x) {
-		this.save_keys("[ElementUpdateItem]",x);
+		const cf="ElementUpdateItem";
+		this.save_keys(`[${cf}]`,x);
 		if("templateUpdate" in x) return this.TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.ResourceStatusInResponseCheck(x);
 		debugger;
 	}
 	/** @arg {ResourceStatusInResponseCheck} x */
 	ResourceStatusInResponseCheck(x) {
-		this.save_keys("[ResourceStatusInResponseCheck]",x);
+		const cf="ResourceStatusInResponseCheck";
+		this.save_keys(`[${cf}]`,x);
 		this.ResourceStatusInResponseCheckData(x.resourceStatusInResponseCheck);
 	}
 	/** @arg {ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
-		this.save_keys("[ResourceStatusInResponseCheckData]",x);
+		const cf="ResourceStatusInResponseCheckData";
+		this.save_keys(`[${cf}]`,x);
 		const {resourceStatuses,serverBuildLabel,...y}=x; this.g(y); // ! #destructure
 		this.z(resourceStatuses,this.ElementResourceStatus);
 		let ysl=split_string(serverBuildLabel,"_");
@@ -11483,7 +11788,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ElementResourceStatus} x */
 	ElementResourceStatus(x) {
-		this.save_keys("[ElementResourceStatus]",x);
+		const cf="ElementResourceStatus";
+		this.save_keys(`[${cf}]`,x);
 		const {identifier,status,...y}=x; this.g(y); // ! #destructure
 		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
 		let vv=split_string_once(identifier,"|");
@@ -11500,13 +11806,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TemplateUpdate} x */
 	TemplateUpdate(x) {
-		this.save_keys("[TemplateUpdate]",x);
+		const cf="TemplateUpdate";
+		this.save_keys(`[${cf}]`,x);
 		const {templateUpdate,...y}=x; this.g(y); // ! #destructure
 		this.TemplateUpdateData(templateUpdate);
 	}
 	/** @arg {TemplateUpdateData} x */
 	TemplateUpdateData(x) {
-		this.save_keys("[TemplateUpdateData]",x);
+		const cf="TemplateUpdateData";
+		this.save_keys(`[${cf}]`,x);
 		const {identifier,serializedTemplateConfig,dependencies,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(identifier);
 		this.primitive_of_string(serializedTemplateConfig);
@@ -11514,14 +11822,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EntityBatchUpdateData} x */
 	EntityBatchUpdateData(x) {
-		this.save_keys("[EntityBatchUpdateData]",x);
+		const cf="EntityBatchUpdateData";
+		this.save_keys(`[${cf}]`,x);
 		const {mutations,timestamp,...y}=x; this.g(y); // ! #destructure
 		this.z(mutations,this.EntityMutationItem);
 		this.TimestampWithNanos(timestamp);
 	}
 	/** @arg {TimestampWithNanos} x */
 	TimestampWithNanos(x) {
-		this.save_keys("[TimestampWithNanos]",x);
+		const cf="TimestampWithNanos";
+		this.save_keys(`[${cf}]`,x);
 		const {seconds,nanos,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(seconds);
 		this.primitive_of(nanos,"number");
@@ -11529,14 +11839,16 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {AddToPlaylistCommand} x */
 	AddToPlaylistCommand(x) {
 		const cf="AddToPlaylistCommand";
-		this.save_keys("[AddToPlaylistCommand]",x);
+		const cf="AddToPlaylistCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,addToPlaylistCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AddToPlaylistCommandData(addToPlaylistCommand);
 	}
 	/** @arg {AddToPlaylistCommandData} x */
 	AddToPlaylistCommandData(x) {
-		this.save_keys("[AddToPlaylistCommandData]",x);
+		const cf="AddToPlaylistCommandData";
+		this.save_keys(`[${cf}]`,x);
 		const {listType,onCreateListCommand,openListPanel,openMiniplayer,videoId,videoIds,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(listType);
 		this.CreatePlaylistServiceEndpoint(onCreateListCommand);
@@ -11556,7 +11868,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CreatePlaylistService} x */
 	CreatePlaylistService(x) {
-		this.save_keys("[CreatePlaylistServiceArgs]",x);
+		const cf="CreatePlaylistServiceArgs";
+		this.save_keys(`[${cf}]`,x);
 		const {params,videoIds,...y}=x; this.g(y); // ! #destructure
 		this.t(params,a => this.params("CreatePlaylist","create_playlist.params",a));
 		this.z(videoIds,this.videoId);
@@ -11571,7 +11884,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SignalActionData} x */
 	SignalActionData(x) {
-		this.save_keys("[SignalActionData]",x);
+		const cf="SignalActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {signal,...y}=x; this.g(y); // ! #destructure
 		/** @type {SignalEnum} */
 		switch(signal) {
@@ -11586,7 +11900,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideEntryRenderer} x */
 	GuideEntryRenderer(x) {
-		this.save_keys("[GuideEntryRenderer]",x);
+		const cf="GuideEntryRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {guideEntryRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideEntryRoot(guideEntryRenderer);
 	}
@@ -11598,7 +11913,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
-		this.save_keys("[GuideEntryRoot]",x);
+		const cf="GuideEntryRoot";
+		this.save_keys(`[${cf}]`,x);
 		if("serviceEndpoint" in x) {
 			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,...y}=x;
 			this.Icon(icon);
@@ -11658,7 +11974,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideEntryBadges} x */
 	GuideEntryBadges(x) {
-		this.save_keys("[GuideEntryBadges]",x);
+		const cf="GuideEntryBadges";
+		this.save_keys(`[${cf}]`,x);
 		const {liveBroadcasting,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(liveBroadcasting,"boolean");
 	}
@@ -11673,7 +11990,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SettingItemAutonavForDesktop<boolean>} x */
 	SettingItemAutonavForDesktop(x) {
-		this.save_keys("[SettingItemAutonavForDesktop]",x);
+		const cf="SettingItemAutonavForDesktop";
+		this.save_keys(`[${cf}]`,x);
 		const {settingItemId,settingItemIdForClient,...y}=x;
 		if("boolValue" in y) {
 			const {boolValue,...a}=y; this.g(a);
@@ -11692,13 +12010,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideCollapsibleEntryRenderer} x */
 	GuideCollapsibleEntryRenderer(x) {
-		this.save_keys("[GuideCollapsibleEntryRenderer]",x);
+		const cf="GuideCollapsibleEntryRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {guideCollapsibleEntryRenderer,...y}=x; this.g(y); // ! #destructure
 		this.GuideCollapsibleEntry(guideCollapsibleEntryRenderer);
 	}
 	/** @arg {PlayerAnnotationsExpandedRenderer} x */
 	PlayerAnnotationsExpandedRenderer(x) {
-		this.save_keys("[PlayerAnnotationsExpandedRenderer]",x);
+		const cf="PlayerAnnotationsExpandedRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playerAnnotationsExpandedRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlayerAnnotationsExpandedData(playerAnnotationsExpandedRenderer);
 	}
@@ -11724,13 +12044,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VoiceSearchDialogRenderer} x */
 	VoiceSearchDialogRenderer(x) {
-		this.save_keys("[VoiceSearchDialogRenderer]",x);
+		const cf="VoiceSearchDialogRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {voiceSearchDialogRenderer,...y}=x; this.g(y); // ! #destructure
 		this.VoiceSearchDialog(voiceSearchDialogRenderer);
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
-		this.save_keys("[EntityMutationItem]",x);
+		const cf="EntityMutationItem";
+		this.save_keys(`[${cf}]`,x);
 		const {entityKey,type,options,payload,...y}=x; this.g(y); // ! #destructure
 		this.params("EntityMutationItem","entity_key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
@@ -11748,19 +12070,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EntityMutationOptions} x */
 	EntityMutationOptions(x) {
-		this.save_keys("[EntityMutationOptions]",x);
+		const cf="EntityMutationOptions";
+		this.save_keys(`[${cf}]`,x);
 		const {persistenceOption,...y}=x; this.g(y); // ! #destructure
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}
 	/** @arg {GuideEntryData} x */
 	GuideEntryData(x) {
-		this.save_keys("[GuideEntryData]",x);
+		const cf="GuideEntryData";
+		this.save_keys(`[${cf}]`,x);
 		const {guideEntryData,...y}=x; this.g(y); // ! #destructure
 		this.GuideEntryDataContent(guideEntryData);
 	}
 	/** @arg {GuideEntryDataContent} x */
 	GuideEntryDataContent(x) {
-		this.save_keys("[GuideEntryDataContent]",x);
+		const cf="GuideEntryDataContent";
+		this.save_keys(`[${cf}]`,x);
 		const {guideEntryId,...y}=x; this.g(y); // ! #destructure
 		if(this.str_starts_with(guideEntryId,"RD")) {
 			console.log("[guideEntryId.RD.length]",guideEntryId.length,guideEntryId);
@@ -11773,13 +12098,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {FeedTabbedHeaderData} x */
 	FeedTabbedHeaderData(x) {
-		this.save_keys("[FeedTabbedHeaderData]",x);
+		const cf="FeedTabbedHeaderData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(title);
 	}
 	/** @arg {DesktopTopbarData} x */
 	DesktopTopbarData(x) {
-		this.save_keys("[DesktopTopbarData]",x);
+		const cf="DesktopTopbarData";
+		this.save_keys(`[${cf}]`,x);
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=x; this.g(y); // ! #destructure
 		this.TopbarLogoRenderer(logo);
 		this.FusionSearchboxRenderer(searchbox);
@@ -11794,7 +12121,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TopbarButtonItem} x */
 	TopbarButtonItem(x) {
-		this.save_keys("[TopbarButtonItem]",x);
+		const cf="TopbarButtonItem";
+		this.save_keys(`[${cf}]`,x);
 		if("topbarMenuButtonRenderer" in x) {
 			return this.TopbarMenuButtonRenderer(x);
 		} else if("notificationTopbarButtonRenderer" in x) {
@@ -11803,25 +12131,29 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {NotificationTopbarButtonRenderer} x */
 	NotificationTopbarButtonRenderer(x) {
-		this.save_keys("[NotificationTopbarButtonRenderer]",x);
+		const cf="NotificationTopbarButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {notificationTopbarButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.NotificationTopbarButtonData(notificationTopbarButtonRenderer);
 	}
 	/** @arg {TopbarLogoRenderer} x */
 	TopbarLogoRenderer(x) {
-		this.save_keys("[TopbarLogoRenderer]",x);
+		const cf="TopbarLogoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {topbarLogoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.TopbarLogo(topbarLogoRenderer);
 	}
 	/** @arg {FusionSearchboxRenderer} x */
 	FusionSearchboxRenderer(x) {
-		this.save_keys("[FusionSearchboxRenderer]",x);
+		const cf="FusionSearchboxRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {fusionSearchboxRenderer,...y}=x; this.g(y); // ! #destructure
 		this.FusionSearchboxData(fusionSearchboxRenderer);
 	}
 	/** @arg {TopbarMenuButtonRenderer} x */
 	TopbarMenuButtonRenderer(x) {
-		this.save_keys("[TopbarMenuButtonRenderer]",x);
+		const cf="TopbarMenuButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {topbarMenuButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.TopbarMenuButton(topbarMenuButtonRenderer);
 	}
@@ -11861,21 +12193,24 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TwoColumnBrowseResultsData} x */
 	TwoColumnBrowseResultsData(x) {
-		this.save_keys("[TwoColumnBrowseResultsData]",x);
+		const cf="TwoColumnBrowseResultsData";
+		this.save_keys(`[${cf}]`,x);
 		const {tabs,secondaryContents,...y}=x; this.g(y); // ! #destructure
 		this.z(tabs,this.ResultRenderer);
 		this.t(secondaryContents,this.SecondaryContents);
 	}
 	/** @arg {ResultRenderer} x */
 	ResultRenderer(x) {
-		this.save_keys("[ResultRenderer]",x);
+		const cf="ResultRenderer";
+		this.save_keys(`[${cf}]`,x);
 		if("tabRenderer" in x) return this.TabRenderer(x);
 		if("expandableTabRenderer" in x) return this.ExpandableTabRenderer(x);
 		debugger;
 	}
 	/** @arg {StructuredDescriptionContentItem} x */
 	StructuredDescriptionContentItem(x) {
-		this.save_keys("[StructuredDescriptionContentItem]",x);
+		const cf="StructuredDescriptionContentItem";
+		this.save_keys(`[${cf}]`,x);
 		if("videoDescriptionHeaderRenderer" in x) {
 			this.VideoDescriptionHeaderRenderer(x);
 		} else if("expandableVideoDescriptionBodyRenderer" in x) {
@@ -11890,7 +12225,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {Visibility} x */
 	Visibility(x) {
-		this.save_keys("[Visibility]",x);
+		const cf="Visibility";
+		this.save_keys(`[${cf}]`,x);
 		const {types,...y}=x; this.g(y); // ! #destructure
 		switch(types) {
 			default: console.log("[Visibility.types]",types); debugger; break;
@@ -11924,17 +12260,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CommentsSectionItem} x */
 	CommentsSectionItem(x) {
-		this.save_keys("[CommentsSectionItem]",x);
+		const cf="CommentsSectionItem";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {BrowseFeedItem} x */
 	BrowseFeedItem(x) {
-		this.save_keys("[BrowseFeedItem]",x);
+		const cf="BrowseFeedItem";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {ReelResponse} x */
 	ReelResponse(x) {
-		this.save_keys("[ReelResponse]",x);
+		const cf="ReelResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=x; this.g(y); // ! #destructure
 		this.ReelPlayerOverlayRenderer(overlay);
 		if(status!=="REEL_ITEM_WATCH_STATUS_SUCCEEDED") debugger;
@@ -11954,7 +12293,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ReelPlayerOverlayData} x */
 	ReelPlayerOverlayData(x) {
-		this.save_keys("[ReelPlayerOverlayData]",x);
+		const cf="ReelPlayerOverlayData";
+		this.save_keys(`[${cf}]`,x);
 		if("reelPlayerNavigationModel" in x) {
 			return this.PlayerOverlayWithNavigationModel(x);
 		} else if("reelPlayerHeaderSupportedRenderers" in x) {
@@ -11965,20 +12305,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SecondaryContents} x */
 	SecondaryContents(x) {
-		this.save_keys("[SecondaryContents]",x);
+		const cf="SecondaryContents";
+		this.save_keys(`[${cf}]`,x);
 		if("profileColumnRenderer" in x) return this.ProfileColumnRenderer(x);
 		if("browseFeedActionsRenderer" in x) return this.BrowseFeedActionsRenderer(x);
 		debugger;
 	}
 	/** @arg {ProfileColumnRenderer} x */
 	ProfileColumnRenderer(x) {
-		this.save_keys("[ProfileColumnRenderer]",x);
+		const cf="ProfileColumnRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {profileColumnRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ProfileColumnData(profileColumnRenderer);
 	}
 	/** @arg {ProfileColumnData} x */
 	ProfileColumnData(x) {
-		this.save_keys("[ProfileColumnData]",x);
+		const cf="ProfileColumnData";
+		this.save_keys(`[${cf}]`,x);
 		const {items,...y}=x; this.g(y); // ! #destructure
 		this.z(items,this.ProfileColumnItem);
 	}
@@ -11990,13 +12333,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ProfileColumnUserInfoRenderer} x */
 	ProfileColumnUserInfoRenderer(x) {
-		this.save_keys("[ProfileColumnUserInfoRenderer]",x);
+		const cf="ProfileColumnUserInfoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {profileColumnUserInfoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ProfileColumnUserInfoData(profileColumnUserInfoRenderer);
 	}
 	/** @arg {ProfileColumnStatsRenderer} x */
 	ProfileColumnStatsRenderer(x) {
-		this.save_keys("[ProfileColumnStatsRenderer]",x);
+		const cf="ProfileColumnStatsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {profileColumnStatsRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ProfileColumnStatsData(profileColumnStatsRenderer);
 	}
@@ -12017,38 +12362,44 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {WatchNextItem} x */
 	WatchNextItem(x) {
-		this.save_keys("[WatchNextItem]",x);
+		const cf="WatchNextItem";
+		this.save_keys(`[${cf}]`,x);
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
 		if("compactVideoRenderer" in x) return this.CompactVideoRenderer(x);
 		debugger;
 	}
 	/** @arg {PlaylistPanelContinuationData} x */
 	PlaylistPanelContinuationData(x) {
-		this.save_keys("[PlaylistPanelContinuationData]",x);
+		const cf="PlaylistPanelContinuationData";
+		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {AdsEngagementPanelContentData} x */
 	AdsEngagementPanelContentData(x) {
-		this.save_keys("[AdsEngagementPanelContentData]",x);
+		const cf="AdsEngagementPanelContentData";
+		this.save_keys(`[${cf}]`,x);
 		const {hack,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {StructuredDescriptionContentData} x */
 	StructuredDescriptionContentData(x) {
-		this.save_keys("[StructuredDescriptionContentData]",x);
+		const cf="StructuredDescriptionContentData";
+		this.save_keys(`[${cf}]`,x);
 		const {items,...y}=x; this.g(y); // ! #destructure
 		this.z(items,this.StructuredDescriptionContentItem);
 	}
 	/** @arg {ProfileColumnUserInfoData} x */
 	ProfileColumnUserInfoData(x) {
-		this.save_keys("[ProfileColumnUserInfoData]",x);
+		const cf="ProfileColumnUserInfoData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,thumbnail,...y}=x; this.g(y); // ! #destructure
 		this.SimpleText(title);
 		this.Thumbnail(thumbnail);
 	}
 	/** @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
-		this.save_keys("[ChipCloudChipRenderer]",x);
+		const cf="ChipCloudChipRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {chipCloudChipRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip(chipCloudChipRenderer);
 	}
@@ -12063,14 +12414,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$ShareEntityService} x */
 	ShareEntityServiceArgs(x) {
-		this.save_keys("[ShareEntityServiceArgs]",x);
+		const cf="ShareEntityServiceArgs";
+		this.save_keys(`[${cf}]`,x);
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.OpenPopupAction);
 	}
 	/** @arg {E$SignalNavigation} x */
 	SignalNavigationArgs(x) {
-		this.save_keys(`[SignalNavigationArgs]`,x);
+		const cf="SignalNavigationArgs";
+		this.save_keys(`[${cf}]`,x);
 		const {signal,...y}=x; this.g(y); // ! #destructure
 		this.save_string(`[Signal.signal]`,signal);
 		switch(signal) {
@@ -12082,7 +12435,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {ButtonCommand} x */
 	ButtonCommand(x) {
 		const cf="ButtonCommand";
-		this.save_keys("[ButtonCommand]",x);
+		const cf="ButtonCommand";
+		this.save_keys(`[${cf}]`,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
 		if("openPopupAction" in x) return this.OpenPopupAction(x);
@@ -12099,14 +12453,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EngagementPanelMenu} x */
 	EngagementPanelMenu(x) {
-		this.save_keys("[EngagementPanelMenu]",x);
+		const cf="EngagementPanelMenu";
+		this.save_keys(`[${cf}]`,x);
 		if("menuRenderer" in x) return this.MenuRenderer(x);
 		if("sortFilterSubMenuRenderer" in x) return this.SortFilterSubMenuRenderer(x);
 		debugger;
 	}
 	/** @arg {EngagementPanelTitleHeader} x */
 	EngagementPanelTitleHeader(x) {
-		this.save_keys("[EngagementPanelTitleHeader]",x);
+		const cf="EngagementPanelTitleHeader";
+		this.save_keys(`[${cf}]`,x);
 		const {title,menu,contextualInfo,informationButton,visibilityButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.t(title,this.TextT);
 		this.t(menu,this.EngagementPanelMenu);
@@ -12118,7 +12474,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
 		const cf="CommandExecutorCommand";
-		this.save_keys("[CommandExecutorCommand]",x);
+		const cf="CommandExecutorCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandExecutorCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandExecutorData(commandExecutorCommand);
@@ -12154,7 +12511,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {PlayerAnnotationsExpandedData} x */
 	PlayerAnnotationsExpandedData(x) {
-		this.save_keys("[PlayerAnnotationsExpandedData]",x);
+		const cf="PlayerAnnotationsExpandedData";
+		this.save_keys(`[${cf}]`,x);
 		const {featuredChannel,allowSwipeDismiss,annotationId,...y}=x; this.g(y); // ! #destructure
 		this.FeaturedChannel(featuredChannel);
 		this.primitive_of(allowSwipeDismiss,"boolean");
@@ -12162,7 +12520,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {FeaturedChannel} x */
 	FeaturedChannel(x) {
-		this.save_keys("[TopbarLogo]",x);
+		const cf="TopbarLogo";
+		this.save_keys(`[${cf}]`,x);
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(startTimeMs);
 		this.primitive_of_string(endTimeMs);
@@ -12174,7 +12533,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TopbarLogo} x */
 	TopbarLogo(x) {
-		this.save_keys("[TopbarLogo]",x);
+		const cf="TopbarLogo";
+		this.save_keys(`[${cf}]`,x);
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y); // ! #destructure
 		this.Icon(iconImage);
 		this.TextWithRuns(tooltipText);
@@ -12200,26 +12560,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddToPlaylistRenderer} x */
 	AddToPlaylistRenderer(x) {
-		this.save_keys("[AddToPlaylistRenderer]",x);
+		const cf="AddToPlaylistRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {addToPlaylistRenderer,...y}=x; this.g(y); // ! #destructure
 		this.AddToPlaylist(addToPlaylistRenderer);
 	}
 	/** @arg {AddToPlaylist} x */
 	AddToPlaylist(x) {
-		this.save_keys("[AddToPlaylist]",x);
+		const cf="AddToPlaylist";
+		this.save_keys(`[${cf}]`,x);
 		const {playlists,actions,...y}=x; this.g(y); // ! #destructure
 		this.z(playlists,this.PlaylistAddToOptionRenderer);
 		this.z(actions,this.AddToPlaylistCreateRenderer);
 	}
 	/** @arg {PlaylistAddToOptionRenderer} x */
 	PlaylistAddToOptionRenderer(x) {
-		this.save_keys("[PlaylistAddToOptionRenderer]",x);
+		const cf="PlaylistAddToOptionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistAddToOptionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlaylistAddToOption(playlistAddToOptionRenderer);
 	}
 	/** @arg {AddToPlaylistCreateRenderer} x */
 	AddToPlaylistCreateRenderer(x) {
-		this.save_keys("[AddToPlaylistCreateRenderer]",x);
+		const cf="AddToPlaylistCreateRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {addToPlaylistCreateRenderer,...y}=x; this.g(y); // ! #destructure
 		this.AddToPlaylistCreate(addToPlaylistCreateRenderer);
 	}
@@ -12266,7 +12630,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
-		this.save_keys("[GuideCollapsibleEntry]",x);
+		const cf="GuideCollapsibleEntry";
+		this.save_keys(`[${cf}]`,x);
 		const {expanderItem,expandableItems,collapserItem,...y}=x; this.g(y); // ! #destructure
 		this.GuideEntryRenderer(expanderItem);
 		this.z(expandableItems,this.GuideEntryRenderer);
@@ -12274,38 +12639,44 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MerchandiseShelfRenderer} x */
 	MerchandiseShelfRenderer(x) {
-		this.save_keys("[MerchandiseShelfRenderer]",x);
+		const cf="MerchandiseShelfRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {merchandiseShelfRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MerchandiseShelf(merchandiseShelfRenderer);
 	}
 	/** @arg {VideoPrimaryInfoRenderer} x */
 	VideoPrimaryInfoRenderer(x) {
-		this.save_keys("[VideoPrimaryInfoRenderer]",x);
+		const cf="VideoPrimaryInfoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {videoPrimaryInfoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.VideoPrimaryInfoData(videoPrimaryInfoRenderer);
 	}
 	/** @arg {VideoSecondaryInfoRenderer} x */
 	VideoSecondaryInfoRenderer(x) {
-		this.save_keys("[VideoSecondaryInfoRenderer]",x);
+		const cf="VideoSecondaryInfoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {videoSecondaryInfoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.VideoSecondaryInfoData(videoSecondaryInfoRenderer);
 	}
 	/** @arg {MultiMarkersPlayerBarRenderer} x */
 	MultiMarkersPlayerBarRenderer(x) {
-		this.save_keys("[MultiMarkersPlayerBarRenderer]",x);
+		const cf="MultiMarkersPlayerBarRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {multiMarkersPlayerBarRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiMarkersPlayerBar(multiMarkersPlayerBarRenderer);
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
-		this.save_keys("[AdSlotAndLayoutMetadataItem]",x);
+		const cf="AdSlotAndLayoutMetadataItem";
+		this.save_keys(`[${cf}]`,x);
 		const {adLayoutMetadata,adSlotMetadata,...y}=x; this.g(y); // ! #destructure
 		this.z(adLayoutMetadata,this.AdLayoutMetadataItem);
 		this.AdSlotMetadata(adSlotMetadata);
 	}
 	/** @arg {AdSlotMetadata} x */
 	AdSlotMetadata(x) {
-		this.save_keys("[AdSlotMetadata]",x);
+		const cf="AdSlotMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {slotId,slotType,slotPhysicalPosition,...y}=x; this.g(y); // ! #destructure
 		let sid=split_string(slotId,":");
 		let n=(Number.parseInt(sid[0],10));
@@ -12317,13 +12688,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MacroMarkersListRenderer} x */
 	MacroMarkersListRenderer(x) {
-		this.save_keys("[MacroMarkersListRenderer]",x);
+		const cf="MacroMarkersListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {macroMarkersListRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MacroMarkersList(macroMarkersListRenderer);
 	}
 	/** @arg {MacroMarkersList} x */
 	MacroMarkersList(x) {
-		this.save_keys("[MacroMarkersList]",x);
+		const cf="MacroMarkersList";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,syncButtonLabel,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.MacroMarkersListItemRenderer);
 		this.TextWithRuns(syncButtonLabel);
@@ -12331,26 +12704,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ProductListRenderer} x */
 	ProductListRenderer(x) {
-		this.save_keys("[ProductListRenderer]",x);
+		const cf="ProductListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {productListRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ProductList(productListRenderer);
 	}
 	/** @arg {ProductList} x */
 	ProductList(x) {
-		this.save_keys("[ProductList]",x);
+		const cf="ProductList";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.ProductListItemRenderer);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
 	/** @arg {VideoDescriptionHeaderRenderer} x */
 	VideoDescriptionHeaderRenderer(x) {
-		this.save_keys("[VideoDescriptionHeaderRenderer]",x);
+		const cf="VideoDescriptionHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {videoDescriptionHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.VideoDescriptionHeaderData(videoDescriptionHeaderRenderer);
 	}
 	/** @arg {VideoDescriptionHeaderData} x */
 	VideoDescriptionHeaderData(x) {
-		this.save_keys("[VideoDescriptionHeaderData]",x);
+		const cf="VideoDescriptionHeaderData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,channel,views,publishDate,factoid,channelNavigationEndpoint,channelThumbnail,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(title);
 		this.SimpleText(channel);
@@ -12362,13 +12739,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
-		this.save_keys("[ExpandableVideoDescriptionBodyRenderer]",x);
+		const cf="ExpandableVideoDescriptionBodyRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {expandableVideoDescriptionBodyRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ExpandableVideoDescriptionBodyData(expandableVideoDescriptionBodyRenderer);
 	}
 	/** @arg {ExpandableVideoDescriptionBodyData} x */
 	ExpandableVideoDescriptionBodyData(x) {
-		this.save_keys("[ExpandableVideoDescriptionBodyData]",x);
+		const cf="ExpandableVideoDescriptionBodyData";
+		this.save_keys(`[${cf}]`,x);
 		const {descriptionBodyText,showMoreText,showLessText,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(descriptionBodyText);
 		this.SimpleText(showMoreText);
@@ -12376,13 +12755,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VideoDescriptionMusicSectionRenderer} x */
 	VideoDescriptionMusicSectionRenderer(x) {
-		this.save_keys("[VideoDescriptionMusicSectionRenderer]",x);
+		const cf="VideoDescriptionMusicSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {videoDescriptionMusicSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.VideoDescriptionMusicSectionData(videoDescriptionMusicSectionRenderer);
 	}
 	/** @arg {VideoDescriptionMusicSectionData} x */
 	VideoDescriptionMusicSectionData(x) {
-		this.save_keys("[VideoDescriptionMusicSectionData]",x);
+		const cf="VideoDescriptionMusicSectionData";
+		this.save_keys(`[${cf}]`,x);
 		const {sectionTitle,carouselLockups,topicLink,premiumUpsellLink,...y}=x; this.g(y); // ! #destructure
 		this.SimpleText(sectionTitle);
 		this.z(carouselLockups,this.CarouselLockupRenderer);
@@ -12391,13 +12772,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {HorizontalCardListRenderer} x */
 	HorizontalCardListRenderer(x) {
-		this.save_keys("[HorizontalCardListRenderer]",x);
+		const cf="HorizontalCardListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {horizontalCardListRenderer,...y}=x; this.g(y); // ! #destructure
 		this.HorizontalCardList(horizontalCardListRenderer);
 	}
 	/** @arg {HorizontalCardList} x */
 	HorizontalCardList(x) {
-		this.save_keys("[HorizontalCardList]",x);
+		const cf="HorizontalCardList";
+		this.save_keys(`[${cf}]`,x);
 		const {cards,trackingParams,header,style,centerItems,...y}=x; this.g(y); // ! #destructure
 		this.z(cards,this.MacroMarkersListItemRenderer);
 		this.trackingParams("CF_FIX",trackingParams);
@@ -12407,24 +12790,27 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CompactVideoRenderer} x */
 	CompactVideoRenderer(x) {
-		this.save_keys("[CompactVideoRenderer]",x);
+		const cf="CompactVideoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {compactVideoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CompactVideoData(compactVideoRenderer);
 	}
 	/** @arg {FusionSearchboxData} x */
 	FusionSearchboxData(x) {
-		this.save_keys("[FusionSearchboxData]",x);
+		const cf="FusionSearchboxData";
+		this.save_keys(`[${cf}]`,x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
 		this.TextWithRuns(placeholderText);
 		this.SearchboxConfig(config);
-		this.trackingParams("CF_FIX",trackingParams);
+		this.trackingParams(cf,trackingParams);
 		this.E$SearchEndpoint(searchEndpoint);
 		this.R$Button(clearButton);
 	}
 	/** @arg {NotificationTopbarButtonData} x */
 	NotificationTopbarButtonData(x) {
-		this.save_keys("[NotificationTopbarButtonData]",x);
+		const cf="NotificationTopbarButtonData";
+		this.save_keys(`[${cf}]`,x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y); // ! #destructure
 		this.Icon(icon);
 		this.E$SignalServiceEndpoint(menuRequest);
@@ -12440,13 +12826,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {HotkeyDialogRenderer} x */
 	HotkeyDialogRenderer(x) {
-		this.save_keys("[HotkeyDialogRenderer]",x);
+		const cf="HotkeyDialogRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {hotkeyDialogRenderer,...y}=x; this.g(y); // ! #destructure
 		this.HotkeyDialog(hotkeyDialogRenderer);
 	}
 	/** @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
-		this.save_keys("[ChangeEngagementPanelVisibilityActionData]",x);
+		const cf="ChangeEngagementPanelVisibilityActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {targetId,visibility,...y}=x; this.g(y); // ! #destructure
 		switch(targetId) {
 			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_id"); break;
@@ -12463,33 +12851,38 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ShowEngagementPanelScrimActionData} x */
 	ShowEngagementPanelScrimActionData(x) {
-		this.save_keys("[ShowEngagementPanelScrimActionData]",x);
+		const cf="ShowEngagementPanelScrimActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y); // ! #destructure
 		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
 		this.z(onClickCommands,this.OpenPopupAction);
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
-		this.save_keys("[UpdateEngagementPanelData]",x);
+		const cf="UpdateEngagementPanelData";
+		this.save_keys(`[${cf}]`,x);
 		const {content,targetId,...y}=x; this.g(y); // ! #destructure
 		this.TranscriptRenderer(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
 	/** @arg {AccountItem} x */
 	AccountItem(x) {
-		this.save_keys("[AccountItem]",x);
+		const cf="AccountItem";
+		this.save_keys(`[${cf}]`,x);
 		const {accountItem,...y}=x; this.g(y); // ! #destructure
 		this.AccountItemData(accountItem);
 	}
 	/** @arg {UiActions} x */
 	UiActions(x) {
-		this.save_keys("[UiActions]",x);
+		const cf="UiActions";
+		this.save_keys(`[${cf}]`,x);
 		const {hideEnclosingContainer,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(hideEnclosingContainer,"boolean");
 	}
 	/** @arg {SortFilterSubMenuData} x */
 	SortFilterSubMenuData(x) {
-		this.save_keys("[SortFilterSubMenuData]",x);
+		const cf="SortFilterSubMenuData";
+		this.save_keys(`[${cf}]`,x);
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(subMenuItems,this.ActionSetPlaylistVideoOrder);
 		this.t(title,this.primitive_of_string);
@@ -12500,7 +12893,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ActionSetPlaylistVideoOrder} x */
 	ActionSetPlaylistVideoOrder(x) {
-		this.save_keys("[ActionSetPlaylistVideoOrder]",x);
+		const cf="ActionSetPlaylistVideoOrder";
+		this.save_keys(`[${cf}]`,x);
 		const {title,selected,serviceEndpoint,accessibility,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(title);
 		this.primitive_of(selected,"boolean");
@@ -12510,19 +12904,22 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {GetMultiPageMenuActionData} x */
 	GetMultiPageMenuActionData(x) {
-		this.save_keys("[GetMultiPageMenuActionData]",x);
+		const cf="GetMultiPageMenuActionData";
+		this.save_keys(`[${cf}]`,x);
 		const {menu,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuRenderer(menu);
 	}
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
-		this.save_keys("[EmojiPickerRenderer]",x);
+		const cf="EmojiPickerRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {emojiPickerRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(emojiPickerRenderer);
 	}
 	/** @arg {ChannelResponse} x */
 	ChannelResponse(x) {
-		this.save_keys("[ChannelResponse]",x);
+		const cf="ChannelResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=x; this.g(y); // ! #destructure
 		this.TwoColumnBrowseResultsRenderer(contents);
 		this.C4TabbedHeaderRenderer(header);
@@ -12555,7 +12952,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SettingsResponse} x */
 	SettingsResponse(x) {
-		this.save_keys("[SettingsResponse]",x);
+		const cf="SettingsResponse";
+		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=x; this.g(y); // ! #destructure
 		this.TwoColumnBrowseResultsRenderer(contents);
 		this.DesktopTopbarRenderer(topbar);
@@ -12565,7 +12963,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {D$C4TabbedHeader} x */
 	C4TabbedHeaderData(x) {
-		this.save_keys("[C4TabbedHeaderData]",x);
+		const cf="C4TabbedHeaderData";
+		this.save_keys(`[${cf}]`,x);
 		const {channelId,title,subscribeButton,trackingParams,sponsorButton,navigationEndpoint,avatar,badges,banner,headerLinks,subscriberCountText,tvBanner,mobileBanner,channelHandleText,videosCountText,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_channel_id(channelId);
 		this.primitive_of_string(title);
@@ -12585,20 +12984,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
-		this.save_keys("[SettingsSidebarData]",x);
+		const cf="SettingsSidebarData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,items,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(title);
 		this.z(items,this.CompactLinkRenderer);
 	}
 	/** @arg {ExpandableTabRenderer} x */
 	ExpandableTabRenderer(x) {
-		this.save_keys("[ExpandableTabRenderer]",x);
+		const cf="ExpandableTabRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {expandableTabRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ExpandableTabData(expandableTabRenderer);
 	}
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerHeaderSupportedRenderers:any}>} x */
 	PlayerOverlayWithSupportedRenderers(x) {
-		this.save_keys("[PlayerOverlayWithSupportedRenderers]",x);
+		const cf="PlayerOverlayWithSupportedRenderers";
+		this.save_keys(`[${cf}]`,x);
 		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y); // ! #destructure
 		this.LikeButtonRenderer(likeButton);
 		this.ReelPlayerHeaderRenderer(reelPlayerHeaderSupportedRenderers);
@@ -12616,13 +13018,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SubscribeButtonRenderer} x */
 	SubscribeButtonRenderer(x) {
-		this.save_keys("[SubscribeButtonRenderer]",x);
+		const cf="SubscribeButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {subscribeButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.SubscribeButtonData(subscribeButtonRenderer);
 	}
 	/** @arg {BrowseFeedActionsRenderer} x */
 	BrowseFeedActionsRenderer(x) {
-		this.save_keys("[BrowseFeedActionsRenderer]",x);
+		const cf="BrowseFeedActionsRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {browseFeedActionsRenderer,...y}=x; this.g(y); // ! #destructure
 		this.BrowseFeedActions(browseFeedActionsRenderer);
 	}
@@ -12669,7 +13073,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
-		this.save_keys("[FeedFilterChipBarData]",x);
+		const cf="FeedFilterChipBarData";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.ChipCloudChipRenderer);
 		this.trackingParams("CF_FIX",trackingParams);
@@ -12679,20 +13084,23 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatPlaceholderItemData} x */
 	LiveChatPlaceholderItemData(x) {
-		this.save_keys("[LiveChatPlaceholderItemData]",x);
+		const cf="LiveChatPlaceholderItemData";
+		this.save_keys(`[${cf}]`,x);
 		const {id,timestampUsec,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(id);
 		this.primitive_of_string(timestampUsec);
 	}
 	/** @arg {CommentRenderer} x */
 	CommentRenderer(x) {
-		this.save_keys("[CommentRenderer]",x);
+		const cf="CommentRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {commentRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CommentData(commentRenderer);
 	}
 	/** @arg {RichItemData} x */
 	RichItemData(x) {
-		this.save_keys("[RichItemData]",x);
+		const cf="RichItemData";
+		this.save_keys(`[${cf}]`,x);
 		const {content,trackingParams,rowIndex,colIndex,...y}=x; this.g(y); // ! #destructure
 		this.RichItemContent(content);
 		this.trackingParams("CF_FIX",trackingParams);
@@ -12701,7 +13109,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {LiveChatTextMessageData} x */
 	LiveChatTextMessageData(x) {
-		this.save_keys("[LiveChatTextMessageData]",x);
+		const cf="LiveChatTextMessageData";
+		this.save_keys(`[${cf}]`,x);
 		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(message);
 		this.TextWithRuns(authorName);
@@ -12716,13 +13125,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UnifiedSharePanelRenderer} x */
 	UnifiedSharePanelRenderer(x) {
-		this.save_keys("[UnifiedSharePanelRenderer]",x);
+		const cf="UnifiedSharePanelRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {unifiedSharePanelRenderer,...y}=x; this.g(y); // ! #destructure
 		this.UnifiedSharePanel(unifiedSharePanelRenderer);
 	}
 	/** @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
-		this.save_keys("[AutoplaySetItem]",x);
+		const cf="AutoplaySetItem";
+		this.save_keys(`[${cf}]`,x);
 		const {mode,autoplayVideo,nextButtonVideo,...y}=x; this.g(y); // ! #destructure
 		if(mode!=="NORMAL") debugger;
 		this.E$WatchEndpoint(autoplayVideo);
@@ -12730,7 +13141,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ModifiedSetItem} x */
 	ModifiedSetItem(x) {
-		this.save_keys("[ModifiedSetItem]",x);
+		const cf="ModifiedSetItem";
+		this.save_keys(`[${cf}]`,x);
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=x; this.g(y); // ! #destructure
 		this.E$WatchPlaylistEndpoint(autoplayVideo);
 		this.E$WatchPlaylistEndpoint(nextButtonVideo);
@@ -12738,7 +13150,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ClipCreationRenderer} x */
 	ClipCreationRenderer(x) {
-		this.save_keys("[ClipCreationRenderer]",x);
+		const cf="ClipCreationRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {clipCreationRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ClipCreationData(clipCreationRenderer);
 	}
@@ -12753,7 +13166,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$WatchPlaylist} x */
 	E$WatchPlaylist(x) {
-		this.save_keys("[WatchPlaylist]",x);
+		const cf="WatchPlaylist";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistId,index,params,...y}=x; this.g(y); // ! #destructure
 		this.parser.parse_playlist_id(playlistId);
 		this.primitive_of(index,"number");
@@ -12763,61 +13177,71 @@ class HandleTypes extends ServiceMethods {
 	//#region destructure
 	/** @arg {PlaylistSidebarPrimaryInfoRenderer} x */
 	PlaylistSidebarPrimaryInfoRenderer(x) {
-		this.save_keys("[PlaylistSidebarPrimaryInfoRenderer]",x);
+		const cf="PlaylistSidebarPrimaryInfoRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistSidebarPrimaryInfoRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlaylistSidebarPrimaryInfo(playlistSidebarPrimaryInfoRenderer);
 	}
 	/** @arg {PlaylistMetadataRenderer} x */
 	PlaylistMetadataRenderer(x) {
-		this.save_keys("[PlaylistMetadataRenderer]",x);
+		const cf="PlaylistMetadataRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {playlistMetadataRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PlaylistMetadata(playlistMetadataRenderer);
 	}
 	/** @arg {TranscriptRenderer} x */
 	TranscriptRenderer(x) {
-		this.save_keys("[TranscriptRenderer]",x);
+		const cf="TranscriptRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {transcriptRenderer,...y}=x; this.g(y); // ! #destructure
 		this.TranscriptData(transcriptRenderer);
 	}
 	/** @arg {PivotButtonRenderer} x */
 	PivotButtonRenderer(x) {
-		this.save_keys("[PivotButtonRenderer]",x);
+		const cf="PivotButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {pivotButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.PivotButton(pivotButtonRenderer);
 	}
 	/** @arg {MetadataBadgeRenderer} x */
 	MetadataBadgeRenderer(x) {
-		this.save_keys("[MetadataBadgeRenderer]",x);
+		const cf="MetadataBadgeRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {metadataBadgeRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MetadataBadgeData(metadataBadgeRenderer);
 	}
 	/** @arg {LiveChatAuthorBadgeRenderer} x */
 	LiveChatAuthorBadgeRenderer(x) {
-		this.save_keys("[LiveChatAuthorBadgeRenderer]",x);
+		const cf="LiveChatAuthorBadgeRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {liveChatAuthorBadgeRenderer,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatAuthorBadgeData(liveChatAuthorBadgeRenderer);
 	}
 	/** @arg {ChannelHeaderLinksRenderer} x */
 	ChannelHeaderLinksRenderer(x) {
-		this.save_keys("[ChannelHeaderLinksRenderer]",x);
+		const cf="ChannelHeaderLinksRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {channelHeaderLinksRenderer,...y}=x; this.g(y); // ! #destructure
 		this.ChannelHeaderLinks(channelHeaderLinksRenderer);
 	}
 	/** @arg {ReelPlayerHeaderRenderer} x */
 	ReelPlayerHeaderRenderer(x) {
-		this.save_keys("[ReelPlayerHeaderRenderer]",x);
+		const cf="ReelPlayerHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {reelPlayerHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(reelPlayerHeaderRenderer);
 	}
 	/** @arg {R$Hint} x */
 	HintRenderer(x) {
-		this.save_keys("[HintRenderer]",x);
+		const cf="HintRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {hintRenderer,...y}=x; this.g(y); // ! #destructure
 		this.HintRendererData(hintRenderer);
 	}
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
-		this.save_keys("[VideoPrimaryInfoData]",x);
+		const cf="VideoPrimaryInfoData";
+		this.save_keys(`[${cf}]`,x);
 		const {title,viewCount,videoActions,trackingParams,dateText,relativeDateText,badges,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(title);
 		this.VideoViewCountRenderer(viewCount);
@@ -12829,7 +13253,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {
-		this.save_keys("[MerchandiseShelf]",x);
+		const cf="MerchandiseShelf";
+		this.save_keys(`[${cf}]`,x);
 		const {title,items,trackingParams,showText,hideText,actionButton,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(title);
 		this.z(items,this.MerchandiseItemRenderer);
@@ -12840,7 +13265,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
-		this.save_keys("[VideoSecondaryInfoData]",x);
+		const cf="VideoSecondaryInfoData";
+		this.save_keys(`[${cf}]`,x);
 		const {owner,description,subscribeButton,metadataRowContainer,showMoreText,showLessText,trackingParams,defaultExpanded,descriptionCollapsedLines,showMoreCommand,showLessCommand,...y}=x; this.g(y); // ! #destructure
 		this.VideoOwnerRenderer(owner);
 		this.t(description,this.TextWithRuns);
@@ -12858,13 +13284,15 @@ class HandleTypes extends ServiceMethods {
 	//#region type_errors
 	/** @arg {{v:minimal_handler_member}} x */
 	minimal_handler_member_4(x) {
-		this.save_keys("[minimal_handler_member]",x);
+		const cf="minimal_handler_member";
+		this.save_keys(`[${cf}]`,x);
 		//@ts-expect-error(2345) !
 		const {...y}=x; this.g(y);
 	}
 	/** @arg {MultiMarkersPlayerBar} x */
 	MultiMarkersPlayerBar(x) {
-		this.save_keys("[MultiMarkersPlayerBar]",x);
+		const cf="MultiMarkersPlayerBar";
+		this.save_keys(`[${cf}]`,x);
 		const {visibleOnLoad,markersMap,...y}=x; this.g(y); // ! #destructure
 		if(visibleOnLoad.key!=="") {
 			if(visibleOnLoad.key!=="DESCRIPTION_CHAPTERS") debugger;
@@ -12884,7 +13312,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AdLayoutMetadataItem} x */
 	AdLayoutMetadataItem(x) {
-		this.save_keys("[AdLayoutMetadataItem]",x);
+		const cf="AdLayoutMetadataItem";
+		this.save_keys(`[${cf}]`,x);
 		const {layoutType,layoutId,adLayoutLoggingData,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(layoutType);
 		this.primitive_of_string(layoutId);
@@ -12892,7 +13321,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {CompactVideoData} x */
 	CompactVideoData(x) {
-		this.save_keys("[CompactVideoData]",x);
+		const cf="CompactVideoData";
+		this.save_keys(`[${cf}]`,x);
 		const {videoId,thumbnail,title,thumbnailOverlays,lengthText,longBylineText,publishedTimeText,trackingParams,viewCountText,navigationEndpoint,shortBylineText,shortViewCountText,channelThumbnail,ownerBadges,accessibility,menu,richThumbnail,badges,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(videoId);
 		this.Thumbnail(thumbnail);
@@ -12915,13 +13345,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SearchboxConfig} x */
 	SearchboxConfig(x) {
-		this.save_keys("[SearchboxConfig]",x);
+		const cf="SearchboxConfig";
+		this.save_keys(`[${cf}]`,x);
 		const {webSearchboxConfig,...y}=x; this.g(y); // ! #destructure
 		this.WebSearchboxConfig(webSearchboxConfig);
 	}
 	/** @arg {HotkeyDialog} x */
 	HotkeyDialog(x) {
-		this.save_keys("[HotkeyDialog]",x);
+		const cf="HotkeyDialog";
+		this.save_keys(`[${cf}]`,x);
 		const {title,sections,dismissButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(title);
 		this.z(sections,this.HotkeyDialogSectionRenderer);
@@ -12930,7 +13362,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AccountItemData} x */
 	AccountItemData(x) {
-		this.save_keys("[AccountItemData]",x);
+		const cf="AccountItemData";
+		this.save_keys(`[${cf}]`,x);
 		const {accountByline,accountName,accountPhoto,isDisabled,isSelected,hasChannel,serviceEndpoint,channelHandle,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(accountByline);
 		this.TextWithRuns(accountName);
@@ -12943,7 +13376,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ExpandableTabData} x */
 	ExpandableTabData(x) {
-		this.save_keys("[ExpandableTabData]",x);
+		const cf="ExpandableTabData";
+		this.save_keys(`[${cf}]`,x);
 		const {endpoint,expandedText,title,selected,content,...y}=x; this.g(y); // ! #destructure
 		this.g(endpoint);
 		this.t(expandedText,this.primitive_of_string);
@@ -12953,7 +13387,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SubscribeButtonData} x */
 	SubscribeButtonData(x) {
-		this.save_keys("[SubscribeButtonData]",x);
+		const cf="SubscribeButtonData";
+		this.save_keys(`[${cf}]`,x);
 		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,notificationPreferenceButton,targetId,subscribedEntityKey,onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=x; this.g(y); // ! #destructure
 		this.TextWithRuns(buttonText);
 		this.primitive_of(subscribed,"boolean");
@@ -12976,26 +13411,30 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {BrowseFeedActions} x */
 	BrowseFeedActions(x) {
-		this.save_keys("[BrowseFeedActions]",x);
+		const cf="BrowseFeedActions";
+		this.save_keys(`[${cf}]`,x);
 		const {contents,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.BrowseFeedContent);
 	}
 	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {
-		this.save_keys("[ChipCloudStyle]",x);
+		const cf="ChipCloudStyle";
+		this.save_keys(`[${cf}]`,x);
 		const {styleType,...y}=x; this.g(y); // ! #destructure
 		f.call(this,styleType);
 	}
 	/** @arg {RelatedChipCommand} x */
 	RelatedChipCommand(x) {
-		this.save_keys("[RelatedChipCommand]",x);
+		const cf="RelatedChipCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,relatedChipCommand,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(clickTrackingParams);
 		this.RelatedChipCommandData(relatedChipCommand);
 	}
 	/** @arg {CommentData} x */
 	CommentData(x) {
-		this.save_keys("[CommentData]",x);
+		const cf="CommentData";
+		this.save_keys(`[${cf}]`,x);
 		const {actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,authorText,authorThumbnail,collapseButton,commentId,contentText,currentUserReplyThumbnail,publishedTimeText,isLiked,voteCount,voteStatus,trackingParams,expandButton,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 		this.CommentActionButtonsRenderer(actionButtons);
 		this.MenuRenderer(actionMenu);
@@ -13017,7 +13456,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {RichItemContent} x */
 	RichItemContent(x) {
-		this.save_keys("[RichItemContent]",x);
+		const cf="RichItemContent";
+		this.save_keys(`[${cf}]`,x);
 		if("adSlotRenderer" in x) return this.AdSlotRenderer(x);
 		if("videoRenderer" in x) return this.VideoRenderer(x);
 		if("radioRenderer" in x) return this.RadioRenderer(x);
@@ -13026,14 +13466,16 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {UnifiedSharePanel} x */
 	UnifiedSharePanel(x) {
-		this.save_keys("[UnifiedSharePanel]",x);
+		const cf="UnifiedSharePanel";
+		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,showLoadingSpinner,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams("CF_FIX",trackingParams);
 		this.primitive_of(showLoadingSpinner,"boolean");
 	}
 	/** @arg {ClipCreationData} x */
 	ClipCreationData(x) {
-		this.save_keys("[ClipCreationData]",x);
+		const cf="ClipCreationData";
+		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams("CF_FIX",trackingParams);
 		this.Thumbnail(userAvatar);
@@ -13049,7 +13491,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChannelMetadata} x */
 	ChannelMetadata(x) {
-		this.save_keys("[ChannelMetadata]",x);
+		const cf="ChannelMetadata";
+		this.save_keys(`[${cf}]`,x);
 		const {title,description,rssUrl,externalId,keywords,ownerUrls,androidAppindexingLink,androidDeepLink,availableCountryCodes,avatar,channelUrl,vanityChannelUrl,iosAppindexingLink,isFamilySafe,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(title);
 		this.primitive_of_string(description);
@@ -13069,22 +13512,26 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ResetChannelUnreadCountCommand} x */
 	ResetChannelUnreadCountCommand(x) {
-		this.save_keys("[ResetChannelUnreadCountCommand]",x);
+		const cf="ResetChannelUnreadCountCommand";
+		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,resetChannelUnreadCountCommand,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(clickTrackingParams);
 		this.g(resetChannelUnreadCountCommand);
 	}
 	/** @private @arg {ReelDismissalActionRenderer} x */
 	ReelDismissalActionRenderer(x) {
-		this.save_keys("[ReelDismissalActionRenderer]",x);
+		const cf="ReelDismissalActionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {reelDismissalActionRenderer: {onDismissalCompletionRenderer,trackingParams,...z},...y}=x; this.g(y); this.g(z); // #destructure
 		this.trackingParams("ReelDismissalAction",trackingParams);
 		this.R$NotificationAction(onDismissalCompletionRenderer);
 	}
 	/** @private @arg {ChannelSwitcherPage} x */
 	ChannelSwitcherPage(x) {
-		this.save_keys("[ChannelSwitcherPage]",x);
-		this.save_keys("[ReelDismissalActionRenderer]",x);
+		const cf="ChannelSwitcherPage";
+		this.save_keys(`[${cf}]`,x);
+		const cf="ReelDismissalActionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {contents: [z],header,targetId,...y}=x; this.g(y); // #destructure
 		if("buttonRenderer" in z) return this.R$Button(z);
 		this.ChannelSwitcherHeaderRenderer(header);
@@ -13096,147 +13543,183 @@ class HandleTypes extends ServiceMethods {
 	//#region has_save_keys
 	/** @arg {minimal_handler_member} x */
 	minimal_handler_member_1(x) {
-		this.save_keys("[minimal_handler_member]",x);
+		const cf="minimal_handler_member";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {
-		this.save_keys("[PlaylistHeader]",x);
+		const cf="PlaylistHeader";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {MacroMarkersListItemRenderer} x */
 	MacroMarkersListItemRenderer(x) {
-		this.save_keys("[MacroMarkersListItemRenderer]",x);
+		const cf="MacroMarkersListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {ProductListItemRenderer} x */
 	ProductListItemRenderer(x) {
-		this.save_keys("[ProductListItemRenderer]",x);
+		const cf="ProductListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {MetadataRowContainerRenderer} x */
 	MetadataRowContainerRenderer(x) {
-		this.save_keys("[MetadataRowContainerRenderer]",x);
+		const cf="MetadataRowContainerRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {TopicLinkRenderer} x */
 	TopicLinkRenderer(x) {
-		this.save_keys("[TopicLinkRenderer]",x);
+		const cf="TopicLinkRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {DescriptionChapters} x */
 	DescriptionChapters(x) {
-		this.save_keys("[DescriptionChapters]",x);
+		const cf="DescriptionChapters";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {HeatSeekerItemData} x */
 	HeatSeekerItemData(x) {
-		this.save_keys("[HeatSeekerItemData]",x);
+		const cf="HeatSeekerItemData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {PlaylistSidebarPrimaryInfo} x */
 	PlaylistSidebarPrimaryInfo(x) {
-		this.save_keys("[PlaylistSidebarPrimaryInfo]",x);
+		const cf="PlaylistSidebarPrimaryInfo";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {PlaylistMetadata} x */
 	PlaylistMetadata(x) {
-		this.save_keys("[PlaylistMetadata]",x);
+		const cf="PlaylistMetadata";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {AdLayoutLoggingData} x */
 	AdLayoutLoggingData(x) {
-		this.save_keys("[AdLayoutLoggingData]",x);
+		const cf="AdLayoutLoggingData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {TranscriptData} x */
 	TranscriptData(x) {
-		this.save_keys("[TranscriptData]",x);
+		const cf="TranscriptData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {PivotButton} x */
 	PivotButton(x) {
-		this.save_keys("[PivotButton]",x);
+		const cf="PivotButton";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {MetadataBadgeData} x */
 	MetadataBadgeData(x) {
-		this.save_keys("[MetadataBadgeData]",x);
+		const cf="MetadataBadgeData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {LiveChatAuthorBadgeData} x */
 	LiveChatAuthorBadgeData(x) {
-		this.save_keys("[LiveChatAuthorBadgeData]",x);
+		const cf="LiveChatAuthorBadgeData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ChannelHeaderLinks} x */
 	ChannelHeaderLinks(x) {
-		this.save_keys("[ChannelHeaderLinks]",x);
+		const cf="ChannelHeaderLinks";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {D$Hint} x */
 	HintRendererData(x) {
-		this.save_keys("[HintRendererData]",x);
+		const cf="HintRendererData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {HotkeyDialogSectionRenderer} x */
 	HotkeyDialogSectionRenderer(x) {
-		this.save_keys("[HotkeyDialogSectionRenderer]",x);
+		const cf="HotkeyDialogSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {WebSearchboxConfig} x */
 	WebSearchboxConfig(x) {
-		this.save_keys("[WebSearchboxConfig]",x);
+		const cf="WebSearchboxConfig";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
 	SubscriptionNotificationToggleButtonRenderer(x) {
-		this.save_keys("[SubscriptionNotificationToggleButtonRenderer]",x);
+		const cf="SubscriptionNotificationToggleButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {BrowseFeedContent} x */
 	BrowseFeedContent(x) {
-		this.save_keys("[BrowseFeedContent]",x);
+		const cf="BrowseFeedContent";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {RelatedChipCommandData} x */
 	RelatedChipCommandData(x) {
-		this.save_keys("[RelatedChipCommandData]",x);
+		const cf="RelatedChipCommandData";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {CommentActionButtonsRenderer} x */
 	CommentActionButtonsRenderer(x) {
-		this.save_keys("[CommentActionButtonsRenderer]",x);
+		const cf="CommentActionButtonsRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ClipCreationTextInputRenderer} x */
 	ClipCreationTextInputRenderer(x) {
-		this.save_keys("[ClipCreationTextInputRenderer]",x);
+		const cf="ClipCreationTextInputRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ClipCreationScrubberRenderer} x */
 	ClipCreationScrubberRenderer(x) {
-		this.save_keys("[ClipCreationScrubberRenderer]",x);
+		const cf="ClipCreationScrubberRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ClipAdStateRenderer} x */
 	ClipAdStateRenderer(x) {
-		this.save_keys("[ClipAdStateRenderer]",x);
+		const cf="ClipAdStateRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {AdSlotRenderer} x */
 	AdSlotRenderer(x) {
-		this.save_keys("[AdSlotRenderer]",x);
+		const cf="AdSlotRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {VideoRenderer} x */
 	VideoRenderer(x) {
-		this.save_keys("[VideoRenderer]",x);
+		const cf="VideoRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {RadioRenderer} x */
 	RadioRenderer(x) {
-		this.save_keys("[RadioRenderer]",x);
+		const cf="RadioRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {FeedNudgeRenderer} x */
 	FeedNudgeRenderer(x) {
-		this.save_keys("[FeedNudgeRenderer]",x);
+		const cf="FeedNudgeRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {RichSectionRenderer} x */
 	RichSectionRenderer(x) {
-		this.save_keys("[RichSectionRenderer]",x);
+		const cf="RichSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {GuideCollapsibleSectionEntryRenderer} x */
 	GuideCollapsibleSectionEntryRenderer(x) {
-		this.save_keys("[GuideCollapsibleSectionEntryRenderer]",x);
+		const cf="GuideCollapsibleSectionEntryRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {MerchandiseItemRenderer} x */
 	MerchandiseItemRenderer(x) {
-		this.save_keys("[MerchandiseItemRenderer]",x);
+		const cf="MerchandiseItemRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {CarouselLockupRenderer} x */
 	CarouselLockupRenderer(x) {
-		this.save_keys("[CarouselLockupRenderer]",x);
+		const cf="CarouselLockupRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {FactoidRenderer} x */
 	FactoidRenderer(x) {
-		this.save_keys("[FactoidRenderer]",x);
+		const cf="FactoidRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {ChannelSwitcherHeaderRenderer} x */
 	ChannelSwitcherHeaderRenderer(x) {
-		this.save_keys("[ChannelSwitcherHeaderRenderer]",x);
+		const cf="ChannelSwitcherHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
