@@ -12733,6 +12733,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AddToPlaylistCreate} x */
 	AddToPlaylistCreate(x) {
+		const cf="AddToPlaylistCreate";
+		this.save_keys(`[${cf}]`,x);
 		const {openCreateLink,nameInput,privacyInput,createAction,serviceEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.CompactLinkRenderer(openCreateLink);
 		this.TextInputFormFieldRenderer(nameInput);
@@ -12742,11 +12744,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {TextInputFormFieldRenderer} x */
 	TextInputFormFieldRenderer(x) {
+		const cf="TextInputFormFieldRenderer";
+		this.save_keys(`[${cf}]`,x);
 		const {textInputFormFieldRenderer,...y}=x; this.g(y); // ! #destructure
 		this.TextInputFormField(textInputFormFieldRenderer);
 	}
 	/** @arg {TextInputFormField} x */
 	TextInputFormField(x) {
+		const cf="TextInputFormField";
+		this.save_keys(`[${cf}]`,x);
 		const {label,maxCharacterLimit,placeholderText,validValueRegexp,invalidValueErrorMessage,required,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(label);
 		if(maxCharacterLimit!==150) debugger;
