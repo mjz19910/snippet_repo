@@ -13048,6 +13048,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @template {VideoOwnerData} T @arg {T} x */
 	VideoOwner$Omit(x) {
+		const cf="VideoOwnerData";
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
 		this.Thumbnail(thumbnail);
 		this.D$TextWithRuns(title);
