@@ -14371,14 +14371,15 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {transcriptSegmentListRenderer: {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y},...z}=x; this.g(y); this.g(z);
 		this.z(initialSegments,this.TranscriptSegmentRenderer);
+		this.z([noResultLabel,retryLabel],a => this.D$TextWithRuns(a));
 	}
 	/** @private @arg {TranscriptSegmentRenderer} x */
 	TranscriptSegmentRenderer(x) {
 		const cf="TranscriptSegmentRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {transcriptSegmentRenderer: {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,...y},...z}=x; this.g(y); this.g(z);
-		this.z([startMs,endMs],a=>this.primitive_of(a,"string"));
-		this.z([snippet,startTimeText],a=>this.D$TextWithRuns(a));
+		this.z([startMs,endMs],a => this.primitive_of(a,"string"));
+		this.z([snippet,startTimeText],a => this.D$TextWithRuns(a));
 		this.trackingParams(cf,trackingParams);
 		this.A$Accessibility(accessibility);
 	}
