@@ -2406,6 +2406,62 @@ class KnownDataSaver extends ApiBase {
 		let bs=ta.join("");
 		return new BitmapResult(map_arr,bs);
 	}
+	bitmap_console_todo_1() {
+		let yt_plugin={
+			ds: this,
+		};
+		let gg=yt_plugin.ds.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
+		if(!gg) return;
+		if(gg[1][0]==="many") return;
+		gg[1][1].sort((a,b) => a-b);
+		let g1=gg[1];
+		/** @arg {string} str */
+		function find_one_set_bit(str) {
+			let rx=/(?<=0)1{1}(?=0)/g;
+			/** @type {[number,string][]} */
+			let r=[];
+			for(;;) {
+				let rr=rx.exec(str);
+				if(rr===null) return r;
+				r.push([rx.lastIndex,rr[0]]);
+			}
+		}
+		let bm=yt_plugin.ds.generate_bitmap_num_raw_fill(g1[1],1).bitmap;
+		let mm=find_one_set_bit(bm);
+		/** @arg {string} bm */
+		function unset_bits(bm) {
+			let mu=bm.split("");
+			for(let u of mm) {
+				let [k,v]=u;
+				let cx=k-1;
+				let off=0;
+				if(v.length===2) off=0;
+				if(v.length===1) off=1;
+				for(let i=cx-1;i<k+v.length-2;i++) {
+					let ui=i+off;
+					let log_clear=false;
+					if(log_clear) console.log("clear",ui,"of",mu[ui]);
+					mu[ui]="0";
+				}
+			}
+			return mu;
+		}
+		/** @arg {string[]} s */
+		function swap_mask(s) {
+			return s.map(e => e==="0"? "1":"0").join("");
+		}
+		let mu=unset_bits(bm);
+		new Map(mm);
+		bm;
+		yt_plugin.ds.rle_enc(mu.join(""));
+		let mc=swap_mask(mu);
+		mm=find_one_set_bit(mc);
+		mu=unset_bits(mc);
+		let mu_=swap_mask(mu);
+		let mx=mu_;
+		let rle_x=yt_plugin.ds.rle_enc(mx);
+		console.log(rle_x.split("!"));
+	}
 	/** @arg {number[]} bitmap_src */
 	generate_bitmap_num(bitmap_src) {
 		let {map_arr,bitmap}=this.generate_bitmap_num_raw(bitmap_src);
@@ -5306,6 +5362,14 @@ case "${path}": {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "click.trackingParams.f6": {
+						switch(ta) {
+							case 12: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params.f28.f1.f1.f1[7]": {
 						switch(ta) {
 							case 1: break;
@@ -6070,6 +6134,8 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
+									// [click.trackingParams.f6.f12]
+									case "f12": u(idx); break;
 								}
 							} break;
 							// [click.trackingParams.f4]
