@@ -6135,7 +6135,15 @@ case "${path_parts[idx-1]}": {
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
 									// [click.trackingParams.f6.f12]
-									case "f12": u(idx); break;
+									case "f12": {
+										const idx=5;
+										if(path_parts.length===4) {
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
 								}
 							} break;
 							// [click.trackingParams.f4]
