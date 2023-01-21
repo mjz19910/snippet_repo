@@ -5280,6 +5280,7 @@ case "${path}": {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
 					case "click.trackingParams.f19": {
 						switch(ta) {
+							case 1: break;
 							case 2: break;
 							default: return new_ns();
 						}
@@ -5837,6 +5838,16 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
