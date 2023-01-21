@@ -10544,6 +10544,14 @@ class HandleTypes extends ServiceMethods {
 		}
 		switch(x.targetId) {
 			default: debugger; break;
+			case "engagement-panel-macro-markers-auto-chapters": {
+				const {panelIdentifier,header,content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
+				if(panelIdentifier!=="engagement-panel-macro-markers-auto-chapters") debugger;
+				this.EngagementPanelTitleHeaderRenderer(header);
+				this.MacroMarkersListRenderer(content);
+				if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
+				this.A$LoggingDirectives(loggingDirectives);
+			} break;
 			case "engagement-panel-ads": {
 				const {content,targetId: {},visibility,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 				this.AdsEngagementPanelContentRenderer(content);
