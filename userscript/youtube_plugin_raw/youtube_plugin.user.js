@@ -2706,6 +2706,7 @@ class BaseService extends BaseServicePrivate {
 		if(this.logged_keys.includes(jk)) return;
 		this.logged_keys.push(jk);
 		console.log("[empty_object] [%s]",jk);
+		debugger;
 	}
 	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @arg {SI[]} excl @returns {T[SI]} */
 	w(x,excl=[]) {
@@ -4129,6 +4130,15 @@ class IndexedDbAccessor extends BaseService {
 		console.log("idb error",event);
 	}
 }
+class JsonReplacerState {
+	/** @arg {string} gen_name @arg {string[]} keys */
+	constructor(gen_name,keys) {
+		this.object_count=0;
+		this.gen_name=gen_name;
+		this.key_keep_arr=keys;
+		this.k1="";
+	}
+}
 /** @extends {BaseService<Services,ServiceOptions>} */
 class CodegenService extends BaseService {
 	/** @arg {{}} x2 */
@@ -4316,21 +4326,21 @@ class CodegenService extends BaseService {
 		console.log("[unique_chars_count]",k1,[...new Set(o.split("").sort())].join("").length);
 		return o;
 	}
-	/** @typedef {{object_count:number;gen_name:string;keys:string[]}} JsonReplacerState */
 	/** @arg {JsonReplacerState} state @arg {{}|null} x @arg {string} k1 */
 	json_filter_object(state,x,k1) {
-		const {gen_name,keys}=state;
+		const {gen_name,key_keep_arr}=state;
 		if(x===null) return x;
 		if(k1==="responseContext") return "TYPE::ResponseContext";
 		if(k1==="frameworkUpdates") return "TYPE::FrameworkUpdates";
 		if(k1==="loggingDirectives") return "TYPE::LoggingDirectives";
 		if(x instanceof Array) {
-			if(keys.includes(k1)) return [x[0]];
+			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
 		}
-		let res_type=this.get_json_replacer_type(gen_name,x);
+		state.k1=k1;
+		let res_type=this.get_json_replacer_type(state,gen_name,x);
 		if(res_type!==null) return res_type;
-		if(keys.includes(k1)) return x;
+		if(key_keep_arr.includes(k1)) return x;
 		state.object_count++;
 		if(state.object_count<3) return x;
 		return {};
@@ -4361,14 +4371,6 @@ class CodegenService extends BaseService {
 		if("response" in x&&typeof x.response==='object'&&x.response!==null) {
 			keys=keys.concat(Object.keys(x.response));
 		}
-		class JsonReplacerState {
-			/** @arg {string} gen_name @arg {string[]} keys */
-			constructor(gen_name,keys) {
-				this.object_count=0;
-				this.gen_name=gen_name;
-				this.keys=keys;
-			}
-		}
 		/** @type {JsonReplacerState} */
 		let state=new JsonReplacerState(gen_name,keys);
 		let tc=JSON.stringify(x,this.json_replacer.bind(this,state),"\t");
@@ -4397,19 +4399,20 @@ class CodegenService extends BaseService {
 		}
 		return ret;
 	}
-	/** @arg {string|null} r @param {{[U in string]:unknown}} x */
-	get_json_replacer_type(r,x) {
+	/** @arg {JsonReplacerState} state @arg {string|null} r @param {{[U in string]:unknown}} x */
+	get_json_replacer_type(state,r,x) {
 		let g=() => this.json_auto_replace(x);
-		if(x.runs&&x.runs instanceof Array) return "TYPE::TextWithRuns";
+		/** @type {D$TextWithRuns} */
+		if(x.runs&&x.runs instanceof Array) return "TYPE::D$TextWithRuns";
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
-		if(x.simpleText) return "TYPE::SimpleText";
+		/** @type {D$SimpleText} */
+		if(x.simpleText) return "TYPE::D$SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
-		if(x.signal) {
-			return this.decode_Signal(x);
-		}
+		if(x.signal) return this.decode_Signal(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
 		if(keys.length===1) return this.get_json_replace_type_len_1(r,x,keys);
+		if(state.key_keep_arr.includes(state.k1)) return x;
 		console.log("[no_json_replace_type] %o [%s] [%s]",x,keys.join(","),g(),"\n",r);
 		debugger;
 		return null;
@@ -5246,6 +5249,7 @@ class ParserService extends BaseService {
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`\ncase ${ta}: break;`);
+			debugger;
 			if(tv!==void 0) {
 				/** @type {P$PathRoot} */
 				this.parse_param_next(root,as(`${path}.f${ta}`),tv);

@@ -3,6 +3,7 @@ type VideoPrimaryInfoData={
 	viewCount: VideoViewCountRenderer;
 	videoActions: MenuRenderer;
 	trackingParams: string;
+	superTitleLink?: D$TextWithRuns;
 	badges?: MetadataBadgeRenderer[];
 	dateText: D$SimpleText;
 	relativeDateText: D$SimpleText;
