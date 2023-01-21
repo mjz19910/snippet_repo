@@ -12669,9 +12669,9 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {slotId,slotType,slotPhysicalPosition,...y}=x; this.g(y); // ! #destructure
 		let sid=split_string(slotId,":");
-		let n=(Number.parseInt(sid[0],10));
-		n/=1000;
-		this.save_number("[AdSlot.slotId[0]]",n|0);
+		let n=(BigInt(sid[0]));
+		n/=1000n;
+		this.save_string("[AdSlot.slotId[0]]",n.toString());
 		this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if(slotPhysicalPosition!==1) debugger;
