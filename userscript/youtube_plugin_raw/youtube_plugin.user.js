@@ -2787,10 +2787,10 @@ class BaseService extends BaseServicePrivate {
 		let r=x[k];
 		return r;
 	}
-	/** @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>void} f */
+	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
 	t(x,f) {
 		if(!x) return;
-		f.call(this,x);
+		return f.call(this,x);
 	}
 	/** @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
@@ -14378,11 +14378,21 @@ class HandleTypes extends ServiceMethods {
 	TranscriptSegmentRenderer(x) {
 		const cf="TranscriptSegmentRenderer";
 		this.save_keys(`[${cf}]`,x);
-		const {transcriptSegmentRenderer: {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,...y},...z}=x; this.g(y); this.g(z);
+		const {transcriptSegmentRenderer: {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y},...z}=x; this.g(y); this.g(z);
 		this.z([startMs,endMs],a => this.primitive_of(a,"string"));
 		this.z([snippet,startTimeText],a => this.D$TextWithRuns(a));
 		this.trackingParams(cf,trackingParams);
 		this.A$Accessibility(accessibility);
+		let cc=this.t(targetId,a => this.targetId_arr(split_string_once(a,".")));
+		this.t(cc,a=>{
+			console.log("targetId",a);
+		})
+	}
+	/** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
+	targetId_arr([f,a]) {
+		let [c,a1]=split_string_once(a,".");
+		let [d,a2]=split_string_once(a1,".");
+		return [f,c,d,a2];
 	}
 	/** @private @arg {PivotButton} x */
 	PivotButton(x) {

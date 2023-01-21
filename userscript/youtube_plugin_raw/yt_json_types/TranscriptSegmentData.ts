@@ -5,4 +5,5 @@ type TranscriptSegmentData={
 	startTimeText: D$TextWithRuns;
 	trackingParams: string;
 	accessibility: A$Accessibility;
+	targetId?: `${string}.${string}.${string}.${string}`;
 };
