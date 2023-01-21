@@ -5864,6 +5864,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		/** @arg {number} idx */
 		let gen_next_part=(idx) => {
+			if(idx>path_parts.length) return;
 			let case_part="";
 			let value_part="\n\t\tswitch(tv) {default: debugger; return;}";
 			if(path_parts.length===idx) {
@@ -5871,7 +5872,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 				switch(typeof tv) {
 					case "number": {
 						if(tv>128) {
-							case_part=`\n\t\tif(typeof tv==="number") return console.log("[param_parse]",path,tv);`;
+							case_part=`\n\t\tif(typeof tv==="number") return this.save_number(\`[\${path}]\`,tv);`;
 						} else {
 							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;\n\t\t\tdefault: debugger; return;\n\t\t}`;
 						}
@@ -6806,10 +6807,8 @@ case "${path_parts[idx-1]}": {
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
-									switch(tv) {
-										case 2: return;
-										default: debugger; return;
-									}
+									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
@@ -6839,7 +6838,7 @@ case "${path_parts[idx-1]}": {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(tv instanceof Map) return;
-											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
@@ -8705,7 +8704,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {serializedInteractionsRequest,actions,...y}=x; this.g(y); // ! #destructure
 		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
-		this.z(actions,this.HideEnclosingAction);
+		this.t(actions,a => this.z(a,this.HideEnclosingAction));
 	}
 	/** @arg {A$HideEnclosingAction} x */
 	HideEnclosingAction(x) {
@@ -11253,7 +11252,17 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
+		debugger;
+		x: if(clickTrackingParams) {
+			let x=clickTrackingParams;
+			let root=cf;
+			const path="tracking.trackingParams";
+			let dx=decodeURIComponent(x);
+			let res_e=this.decode_b64_url_proto_obj(dx);
+			if(!res_e) break x;
+			let param_map=this.make_param_map(res_e);
+			this.parser.parse_endpoint_param(root,path,new Map(param_map));
+		}
 		this.t(commandMetadata,this.WatchEndpointCommandMetadata);
 		this.E$Watch(watchEndpoint);
 	}
@@ -13014,12 +13023,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="Visibility";
 		this.save_keys(`[${cf}]`,x);
 		const {types,...y}=x; this.g(y); // ! #destructure
-		switch(types) {
-			default: console.log("[Visibility.types]",types); debugger; break;
-			case "12": break;
-			case "14": break;
-			case "15": break;
-		}
+		this.save_string("[Visibility.types]",types);
 	}
 	/** @arg {CommentsSectionContinuationAction} x */
 	CommentsSectionContinuationAction(x) {
