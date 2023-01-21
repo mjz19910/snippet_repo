@@ -14413,7 +14413,7 @@ class HandleTypes extends ServiceMethods {
 		this.A$Accessibility(accessibility);
 		let cc=this.t(targetId,a => this.targetId_arr(split_string_once(a,".")));
 		this.t(cc,a => {
-			console.log("targetId",a);
+			this.parser.on_endpoint_params(cf,"transcript_target_id.param",a[1]);
 		});
 	}
 	/** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
