@@ -1,5 +1,6 @@
 type P$LogItems=[
 	"[parse_value.gen_ns] [click.trackingParams.f6.f12]",
+	"[parse_value.gen_ns] [click.trackingParams.f6.f13]",
 ];
 type P$PathRoot=[
 	$missing$param,

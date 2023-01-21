@@ -4,5 +4,5 @@ type FusionSearchboxData={
 	config: SearchboxConfig;
 	trackingParams: string;
 	searchEndpoint: E$SearchEndpoint;
-	clearButton: R$Button;
+	clearButton: R$ButtonRenderer;
 };

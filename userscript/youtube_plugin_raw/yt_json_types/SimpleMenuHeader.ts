@@ -1,4 +1,4 @@
 type SimpleMenuHeader={
 	title: D$TextT;
-	buttons: R$Button[];
+	buttons: R$ButtonRenderer[];
 };

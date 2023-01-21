@@ -2,6 +2,6 @@ type ChipCloudData={
 	chips: ChipCloudChipRenderer;
 	trackingParams: string;
 	horizontalScrollable: false;
-	nextButton: R$Button;
-	previousButton: R$Button;
+	nextButton: R$ButtonRenderer;
+	previousButton: R$ButtonRenderer;
 };

@@ -11,7 +11,7 @@ type D$C4TabbedHeader={
 	tvBanner: D$Thumbnail;
 	mobileBanner: D$Thumbnail;
 	trackingParams: string;
-	sponsorButton?: R$Button;
+	sponsorButton?: R$ButtonRenderer;
 	channelHandleText: D$TextWithRuns;
 	videosCountText: D$TextWithRuns;
 };

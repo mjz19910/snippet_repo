@@ -5,5 +5,6 @@ type VideoOwnerData={
 	navigationEndpoint: E$BrowseEndpoint;
 	subscriberCountText?: D$SimpleText;
 	trackingParams: string;
+	membershipButton?: R$ButtonRenderer;
 	badges: MetadataBadgeRenderer[];
 };

@@ -12,7 +12,7 @@ type VoiceSearchDialogData={
 	disabledHeader: D$TextWithRuns;
 	disabledSubtext: D$TextWithRuns;
 	microphoneButtonAriaLabel: D$TextWithRuns;
-	exitButton: R$Button;
+	exitButton: R$ButtonRenderer;
 	trackingParams: string;
 	microphoneOffPromptHeader: D$TextWithRuns;
 };

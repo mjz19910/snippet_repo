@@ -5365,6 +5365,7 @@ case "${path}": {
 					case "click.trackingParams.f6": {
 						switch(ta) {
 							case 12: break;
+							case 13: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -8747,7 +8748,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(text);
 		this.R$Button(dismissButton);
 	}
-	/** @arg {R$Button} x */
+	/** @arg {R$ButtonRenderer} x */
 	R$Button(x) {
 		if(!x) {debugger; return;}
 		const cf="ButtonRenderer";

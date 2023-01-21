@@ -5,10 +5,10 @@ type D$PlayerOverlayAutoplay={
 	pauseText: D$SimpleText;
 	background: D$Thumbnail;
 	countDownSecs: 8;
-	cancelButton: R$Button;
-	nextButton: R$Button;
+	cancelButton: R$ButtonRenderer;
+	nextButton: R$ButtonRenderer;
 	trackingParams: string;
-	closeButton: R$Button;
+	closeButton: R$ButtonRenderer;
 	thumbnailOverlays: R$ThumbnailOverlayTimeStatus[];
 	preferImmediateRedirect: false;
 	videoId: string;

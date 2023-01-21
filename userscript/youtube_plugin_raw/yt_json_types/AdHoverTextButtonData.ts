@@ -1,5 +1,5 @@
 type AdHoverTextButtonData={
-	button: R$Button;
+	button: R$ButtonRenderer;
 	hoverText: D$TextWithRuns;
 	trackingParams: string;
 };
