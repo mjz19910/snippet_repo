@@ -8539,11 +8539,11 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.E$ReelWatch(reelWatchEndpoint);
+		this.D$ReelWatch(reelWatchEndpoint);
 	}
 	/** @arg {E$ReelWatch} x */
-	E$ReelWatch(x) {
-		const cf="ReelWatchEndpointData";
+	D$ReelWatch(x) {
+		const cf="D$ReelWatch";
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y); // ! #destructure
 		this.t(videoId,this.videoId);
@@ -11132,7 +11132,12 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(shortBylineText);
 		this.t(lengthText,this.D$SimpleText);
 		this.t(lengthInSeconds,a => this.primitive_of(a,"number"));
-		this.E$WatchEndpoint(navigationEndpoint);
+		(x => {
+			if("watchEndpoint" in x) return this.E$WatchEndpoint(x);
+			if("reelWatchEndpoint" in x) return this.E$ReelWatchEndpoint(x);
+			this.do_codegen(cf,x);
+			debugger;
+		})(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.TextT(shortViewCountText);
 		this.D$SimpleText(publishedTimeText);
@@ -13491,7 +13496,7 @@ class HandleTypes extends ServiceMethods {
 	RichListHeaderRenderer(x) {
 		const cf="RichListHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
-		const {richListHeaderRenderer:u,...y}=x; this.g(y); // ! #destructure
+		const {richListHeaderRenderer: u,...y}=x; this.g(y); // ! #destructure
 		const {title,trackingParams,navigationButton,...z}=u; this.g(z);
 		this.D$SimpleText(title);
 		this.trackingParams(cf,trackingParams);
@@ -13546,11 +13551,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,visibility,...y}=x; this.g(y); // ! #destructure
 		switch(targetId) {
-			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_id"); break;
+			default: targetId===""; this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_id"); break;
 			case "engagement-panel-clip-create": break;
 			case "engagement-panel-clip-view": break;
 			case "engagement-panel-comments-section": break;
 			case "engagement-panel-structured-description": break;
+			case "engagement-panel-macro-markers-auto-chapters": break;
 		}
 		switch(visibility) {
 			default: this.codegen_new_typedef(x,"ChangeEngagementPanelVisibilityActionData_vis"); break;

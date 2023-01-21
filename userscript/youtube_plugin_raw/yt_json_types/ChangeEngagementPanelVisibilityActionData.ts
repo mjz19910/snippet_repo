@@ -10,4 +10,7 @@ type ChangeEngagementPanelVisibilityActionData={
 }|{
 	targetId: "engagement-panel-structured-description";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
+}|{
+	targetId: "engagement-panel-macro-markers-auto-chapters";
+	visibility: "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED";
 };
