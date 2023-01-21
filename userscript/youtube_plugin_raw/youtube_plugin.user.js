@@ -11911,6 +11911,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="Button_navigationEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		if("shareEntityServiceEndpoint" in x) return this.ShareEntityServiceEndpoint(x);
+		if("browseEndpoint" in x) return this.E$BrowseEndpoint(x);
 		this.do_codegen(cf,x);
 	}
 	/** @arg {E$YpcGetOffersEndpoint} x */
