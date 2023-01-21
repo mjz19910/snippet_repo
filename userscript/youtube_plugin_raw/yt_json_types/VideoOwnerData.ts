@@ -5,6 +5,15 @@ type VideoOwnerData={
 	navigationEndpoint: E$BrowseEndpoint;
 	subscriberCountText?: D$SimpleText;
 	trackingParams: string;
-	membershipButton?: R$ButtonRenderer;
 	badges: MetadataBadgeRenderer[];
+}|{
+	thumbnail: D$Thumbnail;
+	title: D$TextWithRuns;
+	subscriptionButton: {
+		type: "FREE";
+	};
+	navigationEndpoint: E$BrowseEndpoint;
+	subscriberCountText: D$SimpleText;
+	trackingParams: string;
+	membershipButton: R$ButtonRenderer;
 };

@@ -4510,6 +4510,9 @@ class CodegenService extends BaseService {
 		if(type_val.endsWith("Endpoint")) {
 			type_val=`E$${type_val}`;
 		}
+		if(type_val.endsWith("Renderer")) {
+			type_val=`R$${type_val}`;
+		}
 		return `TYPE::${type_val}`;
 	}
 	/** @param {{[U in string]:unknown}} x */
