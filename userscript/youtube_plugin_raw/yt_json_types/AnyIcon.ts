@@ -11,6 +11,7 @@ type MenuServiceIcon=Extract<[
 	{}
 ][number],{icon:any}>;
 type MenuServiceIconTypeStr=[
+	"SUBTITLES",
 	"PLAYLIST_ADD",
 	"VISIBILITY_OFF",
 	"SHARE",

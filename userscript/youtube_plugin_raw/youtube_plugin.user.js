@@ -4291,6 +4291,7 @@ class CodegenService extends BaseService {
 			if(!this.typedef_cache.includes(new_typedef)) {
 				this.typedef_cache.push(new_typedef);
 				console.log(new_typedef);
+				debugger;
 			}
 		}
 	}
@@ -5101,6 +5102,7 @@ class ParserService extends BaseService {
 				/** @type {(ParamMapValue|["seq",ParamMapValue[]])[]} */
 				let transcript_args=[];
 				let pMap=param_map;
+				debugger;
 				/** @arg {number} x */
 				function convert_param(x) {
 					if(x<=0) {debugger; return;}
@@ -5269,6 +5271,7 @@ case "${path}": {
 	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 } return;
 `);
+			debugger;
 		};
 		if(tv!==void 0) {
 			x.delete(ta);
@@ -5278,6 +5281,14 @@ case "${path}": {
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
+					case "browse$param.f93": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "click.trackingParams.f19": {
 						switch(ta) {
 							case 1: break;
@@ -5716,12 +5727,15 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
-							// browse$param$f84$f5
-							case "f5": {
+							// browse$param$f93$f1
+							case "f1": {
 								const idx=4;
-								gd(idx-1);
-								debugger;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
 								switch(path_parts[3]) {
+									// browse$param$f93$f1$..
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
@@ -7860,14 +7874,26 @@ class HandleTypes extends ServiceMethods {
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="CLIENT_SIGNAL") debugger;
 		this.z(actions,x => {
-			if("signalAction" in x) return this.SignalAction(x);
-			if("openPopupAction" in x) return this.OpenPopupAction(x);
-			if("sendFeedbackAction" in x) return this.SendFeedbackAction(x);
+			if("signalAction" in x) return this.A$SignalAction(x);
+			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
+			if("sendFeedbackAction" in x) return this.A$SendFeedbackAction(x);
+			if("showEngagementPanelEndpoint" in x) return this.E$ShowEngagementPanelEndpoint(x);
 			debugger;
 		});
 	}
+	/** @arg {Extract<E$Signal_ClientSignal['actions'][number],{showEngagementPanelEndpoint:any}>} x */
+	E$ShowEngagementPanelEndpoint(x) {
+		const cf="ShowEngagementPanelEndpoint";
+		this.save_keys(`[E$${cf}]`,x);
+		const {clickTrackingParams,...z}=x;
+		let panel_id=this.w(this.w(z));
+		switch(panel_id) {
+			default: console.log(`-- [ShowEngagementPanelEndpoint] --\n\n\ncase "${panel_id}": break;`);debugger; break;
+			case "engagement-panel-searchable-transcript": break;
+		};
+	}
 	/** @arg {A$SendFeedbackAction} x */
-	SendFeedbackAction(x) {
+	A$SendFeedbackAction(x) {
 		const cf="SendFeedbackAction";
 		this.save_keys(`[A$${cf}]`,x);
 		const {clickTrackingParams,...z}=x;
@@ -7883,7 +7909,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[E$${cf}]`,x);
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
 		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		this.z(actions,this.OpenPopupAction);
+		this.z(actions,this.A$OpenPopupAction);
 	}
 	/** @arg {E$FeedbackEndpoint} x */
 	E$FeedbackEndpoint(x) {
@@ -7919,7 +7945,7 @@ class HandleTypes extends ServiceMethods {
 	E$ShareEntityServiceEndpoint(x) {
 		const cf="E$ShareEntityServiceEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
-		let q=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),this.OpenPopupAction);
+		let q=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),this.A$OpenPopupAction);
 		let {serializedShareEntity,...y}=q; this.g(y);
 		this.primitive_of_string(serializedShareEntity);
 	}
@@ -7941,6 +7967,7 @@ class HandleTypes extends ServiceMethods {
 		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
 		if("shareEntityServiceEndpoint" in x) return this.E$ShareEntityServiceEndpoint(x);
 		if("likeEndpoint" in x) return this.E$Like(x.likeEndpoint);
+		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		console.log("");
 		this.do_codegen("EG$MenuService",x);
 	}
@@ -8802,7 +8829,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
 		});
 		this.trackingParams("AccountMenuResponse",trackingParams);
@@ -8889,12 +8916,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetPdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
-		this.OpenPopupAction(command);
+		this.A$OpenPopupAction(command);
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
 	/** @arg {OpenPopupAction} x */
-	OpenPopupAction(x) {
+	A$OpenPopupAction(x) {
 		const cf="OpenPopupAction";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,openPopupAction,...y}=x; this.g(y); // ! #destructure
@@ -9434,7 +9461,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
 		});
 	}
@@ -9444,7 +9471,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
 		});
 	}
@@ -9454,7 +9481,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
 		}));
 	}
@@ -9647,7 +9674,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if(x.openPopupAction) return this.OpenPopupAction(x);
+			if(x.openPopupAction) return this.A$OpenPopupAction(x);
 			debugger;
 		});
 		this.trackingParams(cf,trackingParams);
@@ -10432,9 +10459,10 @@ class HandleTypes extends ServiceMethods {
 				case "VISIBILITY_OFF": break;
 				case "SHARE": break;
 				case "ALIGN_LEFT": break;
+				case "SUBTITLES": break;
 				default: {
 					/** @type {MenuServiceIcon} */
-					console.log(`-- [MenuServiceItem] --\n\n\ncase "${icon.iconType}": break;`); icon.iconType==="";
+					console.log(`-- [MenuServiceItem] --\n\n\ncase "${icon.iconType}": break;\n--\n\t"${icon.iconType}",\n`); icon.iconType==="";
 				} break;
 			}
 		}
@@ -12032,7 +12060,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(videoIds,this.videoId);
 	}
 	/** @arg {SignalAction} x */
-	SignalAction(x) {
+	A$SignalAction(x) {
 		const cf="SignalAction";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,signalAction,...y}=x; this.g(y); // ! #destructure
@@ -12579,7 +12607,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
-		this.z(commands,this.OpenPopupAction);
+		this.z(commands,this.A$OpenPopupAction);
 	}
 	/** @arg {E$SignalNavigation} x */
 	SignalNavigationArgs(x) {
@@ -12599,7 +12627,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
-		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
@@ -12647,7 +12675,7 @@ class HandleTypes extends ServiceMethods {
 	CommandExecutorAction(x) {
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
 		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
-		if("openPopupAction" in x) return this.OpenPopupAction(x);
+		if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 		if("hideEngagementPanelScrimAction" in x) return this.HideEngagementPanelScrimAction(x);
 		if("loopCommand" in x) return;
 		if("updateToggleButtonStateCommand" in x) return;
@@ -12705,13 +12733,14 @@ class HandleTypes extends ServiceMethods {
 	VideoOwnerData(x) {
 		const cf="VideoOwnerData";
 		this.save_keys(`[${cf}]`,x);
-		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x; this.g(y); // ! #destructure
+		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,badges,...y}=x; this.g(y); // ! #destructure
 		this.Thumbnail(thumbnail);
 		this.D$TextWithRuns(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E$BrowseEndpoint(navigationEndpoint);
 		this.t(subscriberCountText,this.SimpleText);
 		this.trackingParams(cf,trackingParams);
+		this.z(badges,this.MetadataBadgeRenderer);
 	}
 	/** @arg {SubscriptionButton} x */
 	SubscriptionButton(x) {
@@ -13029,7 +13058,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {engagementPanelTargetId,onClickCommands,...y}=x; this.g(y); // ! #destructure
 		if(engagementPanelTargetId!=="engagement-panel-clip-create") debugger;
-		this.z(onClickCommands,this.OpenPopupAction);
+		this.z(onClickCommands,this.A$OpenPopupAction);
 	}
 	/** @arg {UpdateEngagementPanelData} x */
 	UpdateEngagementPanelData(x) {
