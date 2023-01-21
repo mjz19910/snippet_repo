@@ -4405,13 +4405,6 @@ class CodegenService extends BaseService {
 	json_filter_object(state,x,k1) {
 		const {gen_name,key_keep_arr}=state;
 		if(x===null) return x;
-		/** @type {RC$ResponseContext} */
-		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
-		/** @type {A$FrameworkUpdates} */
-		if(k1==="frameworkUpdates") return "TYPE::A$FrameworkUpdates";
-		/** @type {A$LoggingDirectives} */
-		if(k1==="loggingDirectives") return "TYPE::A$LoggingDirectives";
-		if(k1==="subscriptionButton") return "TYPE::D$SubscriptionButton";
 		if(x instanceof Array) {
 			if(key_keep_arr.includes(k1)) return [x[0]];
 			return [x[0]];
@@ -4428,6 +4421,14 @@ class CodegenService extends BaseService {
 			state.parent_map.set(val,mi);
 		}
 		state.k1=k1;
+		if(k1==="") return x;
+		/** @type {RC$ResponseContext} */
+		if(k1==="responseContext") return "TYPE::RC$ResponseContext";
+		/** @type {A$FrameworkUpdates} */
+		if(k1==="frameworkUpdates") return "TYPE::A$FrameworkUpdates";
+		/** @type {A$LoggingDirectives} */
+		if(k1==="loggingDirectives") return "TYPE::A$LoggingDirectives";
+		if(k1==="subscriptionButton") return "TYPE::D$SubscriptionButton";
 		let res_type=this.get_json_replacer_type(state,gen_name,x);
 		if(res_type!==null) return res_type;
 		if(key_keep_arr.includes(k1)) return x;
