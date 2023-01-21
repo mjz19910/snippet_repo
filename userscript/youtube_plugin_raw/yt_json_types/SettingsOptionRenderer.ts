@@ -1,3 +1,3 @@
-type SettingsOptionRenderer={
+type R$SettingsOptionRenderer={
 	settingsOptionsRenderer: SettingsOptionsData;
 };

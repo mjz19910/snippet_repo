@@ -3,6 +3,6 @@ type SectionItem=[
 	RichSectionRenderer,
 	CommentsHeaderRenderer,
 	CommentThreadRenderer,
-	CompactVideoRenderer,
-	ContinuationItemRenderer,
+	R$CompactVideoRenderer,
+	R$ContinuationItemRenderer,
 ][number];

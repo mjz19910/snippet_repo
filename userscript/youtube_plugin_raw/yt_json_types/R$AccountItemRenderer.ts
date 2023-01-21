@@ -1,3 +1,3 @@
-type AccountItemRenderer={
+type A$AccountItemRenderer={
 	accountItemRenderer: AccountItemData;
 };

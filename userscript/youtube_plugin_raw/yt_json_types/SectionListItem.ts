@@ -1,5 +1,5 @@
 type SectionListItem=
-	|ContinuationItemRenderer
+	|R$ContinuationItemRenderer
 	|ItemSectionRenderer
 	|MusicCarouselShelfRenderer
 	|MusicShelfRenderer

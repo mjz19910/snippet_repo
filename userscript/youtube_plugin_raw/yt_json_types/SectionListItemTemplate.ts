@@ -1,1 +1,1 @@
-type SectionListItemTemplate<T,U>=ItemSectionRendererTemplate<T,U>|ContinuationItemRenderer;
+type SectionListItemTemplate<T,U>=ItemSectionRendererTemplate<T,U>|R$ContinuationItemRenderer;

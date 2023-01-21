@@ -1,3 +1,3 @@
-type AccountItem={
+type A$AccountItem={
 	accountItem: AccountItemData;
 };

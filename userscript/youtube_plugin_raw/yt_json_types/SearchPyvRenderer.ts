@@ -1,1 +1,0 @@
-type SearchPyvRenderer={searchPyvRenderer: SearchPyvData;};

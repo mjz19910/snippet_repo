@@ -1,1 +1,1 @@
-type RichItemContent=AdSlotRenderer|VideoRenderer|RadioRenderer|FeedNudgeRenderer;
+type RichItemContent=AdSlotRenderer|R$VideoRenderer|RadioRenderer|FeedNudgeRenderer;

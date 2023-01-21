@@ -3,7 +3,7 @@ type RendererContentItem=
 	|RichSectionRenderer
 	|CommentsHeaderRenderer
 	|CommentThreadRenderer
-	|ContinuationItemRenderer
-	|CompactVideoRenderer
-	|CompactPlaylistRenderer
+	|R$ContinuationItemRenderer
+	|R$CompactVideoRenderer
+	|R$CompactPlaylistRenderer
 	;

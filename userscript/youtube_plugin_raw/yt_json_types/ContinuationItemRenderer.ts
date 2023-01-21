@@ -1,3 +1,3 @@
-type ContinuationItemRenderer={
+type R$ContinuationItemRenderer={
 	continuationItemRenderer: ContinuationItemData;
 };

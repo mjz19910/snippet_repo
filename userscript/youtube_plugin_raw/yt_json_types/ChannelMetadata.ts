@@ -14,7 +14,3 @@ type ChannelMetadata={
 	iosAppindexingLink: string;
 	vanityChannelUrl: `http://www.youtube.com/@${string}`;
 };
-
-type ChannelMetadataRenderer={
-	channelMetadataRenderer: ChannelMetadata;
-};

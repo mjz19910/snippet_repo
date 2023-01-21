@@ -1,3 +1,3 @@
-type PlaylistVideoListRenderer={
+type R$PlaylistVideoListRenderer={
 	playlistVideoListRenderer: PlaylistVideoListData;
 };

@@ -8438,7 +8438,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.MusicResponsiveListItem(x.musicResponsiveListItemRenderer);
 	}
-	/** @arg {ContinuationItemRenderer} x */
+	/** @arg {R$ContinuationItemRenderer} x */
 	ContinuationItemRenderer(x) {
 		const cf="ContinuationItemRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -8981,14 +8981,14 @@ class HandleTypes extends ServiceMethods {
 		/** @type {ParamsSection} */
 		this.parser.on_serialized_interactions_request_params(root,"record_notification_interactions",x);
 	}
-	/** @arg {MultiPageMenuSectionRenderer<CompactLinkRenderer>} x */
+	/** @arg {MultiPageMenuSectionRenderer<A$CompactLinkRenderer>} x */
 	MultiPageMenuSectionRenderer(x) {
 		const cf="MultiPageMenuSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {multiPageMenuSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuSection(multiPageMenuSectionRenderer);
 	}
-	/** @arg {MultiPageMenuSection<CompactLinkRenderer>} x */
+	/** @arg {MultiPageMenuSection<A$CompactLinkRenderer>} x */
 	MultiPageMenuSection(x) {
 		const cf="MultiPageMenuSection";
 		this.save_keys(`[]`,x);
@@ -8999,7 +8999,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {CompactLinkRenderer} x */
+	/** @arg {A$CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
 		const cf="CompactLinkRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -12777,7 +12777,7 @@ class HandleTypes extends ServiceMethods {
 		if(style.type!=="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION") debugger;
 		if(centerItems!==false) debugger;
 	}
-	/** @arg {CompactVideoRenderer} x */
+	/** @arg {R$CompactVideoRenderer} x */
 	CompactVideoRenderer(x) {
 		const cf="CompactVideoRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -12854,7 +12854,7 @@ class HandleTypes extends ServiceMethods {
 		this.TranscriptRenderer(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @arg {AccountItem} x */
+	/** @arg {A$AccountItem} x */
 	AccountItem(x) {
 		const cf="AccountItem";
 		this.save_keys(`[${cf}]`,x);
@@ -13663,7 +13663,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="AdSlotRenderer";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {VideoRenderer} x */
+	/** @private @arg {R$VideoRenderer} x */
 	VideoRenderer(x) {
 		const cf="VideoRenderer";
 		this.save_keys(`[${cf}]`,x);

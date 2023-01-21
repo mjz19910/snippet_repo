@@ -1,2 +1,0 @@
-
-type CompactPlaylistRenderer={compactPlaylistRenderer: CompactPlaylistData;};
