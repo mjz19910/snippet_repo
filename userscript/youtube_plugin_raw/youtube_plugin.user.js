@@ -5363,12 +5363,18 @@ case "${path}": {
 			if(cx>-1) mk.splice(cx,1);
 			if(cb===null) {
 				if(this.str_starts_with(path,"report.params.f28.f1[")) {
-					let [,c1]=split_string_once(path,".");
-					let [,c2]=split_string_once(c1,".");
+					let [a,c1]=split_string_once(path,".");
+					let [b,c2]=split_string_once(c1,".");
 					let [c,c3]=split_string_once(c2,".");
 					let [d,c4]=split_string_once(c3,"[");
 					let c5=split_string_once(c4,"]");
-					if(c5[1]==="") return;
+					if(c5[1]==="") {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						this.parse_param_next(root,`${a}.${b}.${c}.${d}[${c5[0]}].f${ta}`,tv);
+					}
 					console.log('off',c,d,c5[0]);
 					return;
 				}
