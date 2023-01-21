@@ -5381,6 +5381,7 @@ case "${path}": {
 							case 1: break;
 							case 3: break;
 							case 5: break;
+							case 9: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5888,6 +5889,7 @@ case "${path_parts[idx-1]}": {
 							case "f5": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
