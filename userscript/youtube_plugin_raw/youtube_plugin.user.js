@@ -5909,14 +5909,15 @@ case "${path_parts[idx-1]}": {
 				switch(path_parts[1]) {
 					default: u(idx); path_parts[1]===""; break;
 					case "parentTrackingParams": u(idx); break;
+					// [click.trackingParams]
 					case "trackingParams": {
 						const idx=3;
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
-						// case "f": u(idx); break;
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							// [click.trackingParams.f19]
 							case "f19": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5925,20 +5926,22 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									// [click.trackingParams.f19.f1]
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
 											default: gd(idx); path_parts[4]===""; break;
 										}
 									} break;
+									// [click.trackingParams.f19.f2]
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
-											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
@@ -5947,6 +5950,7 @@ case "${path_parts[idx-1]}": {
 									} break;
 								}
 							} break;
+							// [click.trackingParams.f9]
 							case "f9": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5957,6 +5961,7 @@ case "${path_parts[idx-1]}": {
 									default: gd(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// [click.trackingParams.f6]
 							case "f6": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5967,6 +5972,7 @@ case "${path_parts[idx-1]}": {
 									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// [click.trackingParams.f4]
 							case "f4": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -5975,7 +5981,7 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
-									// ["tracking", "trackingParams", "f4", "f3"]
+									// [click.trackingParams.f4.f3]
 									case "f3": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -5989,7 +5995,7 @@ case "${path_parts[idx-1]}": {
 											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
-									// ["tracking", "trackingParams", "f4", "f2"]
+									// [click.trackingParams.f4.f2]
 									case "f2": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -6003,6 +6009,7 @@ case "${path_parts[idx-1]}": {
 											default: u(idx); path_parts[4]===""; break;
 										}
 									} break;
+									// [click.trackingParams.f4.f1]
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -6020,7 +6027,7 @@ case "${path_parts[idx-1]}": {
 									} break;
 								}
 							} break;
-							// ["tracking", "trackingParams", "f3"]
+							// [click.trackingParams.f3]
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6033,7 +6040,7 @@ case "${path_parts[idx-1]}": {
 									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
-							// ["tracking", "trackingParams", "f2"]
+							// [click.trackingParams.f2]
 							case "f2": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6046,6 +6053,7 @@ case "${path_parts[idx-1]}": {
 									default: u(idx); path_parts[3]===""; break;
 								}
 							} break;
+							// [click.trackingParams.f1]
 							case "f1": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6067,6 +6075,7 @@ case "${path_parts[idx-1]}": {
 				const idx=2;
 				switch(path_parts[1]) {
 					default: u(idx); path_parts[1]===""; break;
+					// [subscribe.params]
 					case "params": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6074,6 +6083,7 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							// [subscribe.params.f4]
 							case "f4": {
 								const idx=4;
 								if(path_parts.length===3) {
