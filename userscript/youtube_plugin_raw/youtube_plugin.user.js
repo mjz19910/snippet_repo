@@ -4479,7 +4479,8 @@ class CodegenService extends BaseService {
 		let g=() => this.json_auto_replace(x);
 		/** @type {D$TextWithRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::D$TextWithRuns";
-		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::Thumbnail";
+		/** @type {D$Thumbnail} */
+		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D$Thumbnail";
 		/** @type {D$SimpleText} */
 		if(x.simpleText) return "TYPE::D$SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
