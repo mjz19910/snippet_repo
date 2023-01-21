@@ -2537,7 +2537,7 @@ class BaseService extends BaseServicePrivate {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @typedef {number|string|bigint|["failed",DecTypeNum[]|null]|ParamMapType} ParamMapValue */
+	/** @typedef {number|string|bigint|['group',DecTypeNum[]]|["failed",DecTypeNum[]|null]|ParamMapType} ParamMapValue */
 	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @arg {DecTypeNum[]} res_e */
@@ -2575,7 +2575,7 @@ class BaseService extends BaseServicePrivate {
 					do_set(param[1],decoder.decode(param[2]));
 				} break;
 				case "data64": do_set(param[1],param[2]); break;
-				case "group": debugger; break;
+				case "group": do_set(param[1],['group',param[2]]); break;
 				case "info": debugger; break;
 				case "struct": debugger; break;
 				case "error": return null;
@@ -10360,7 +10360,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="MenuServiceItem";
 		this.save_keys(`[${cf}]`,x);
 		const {text,icon,serviceEndpoint,trackingParams,hasSeparator,...y}=x; this.g(y); // ! #destructure
-		this.TextWithRuns(text);
+		this.TextT(text);
 		if(icon) {
 			switch(icon.iconType) {
 				case "LIBRARY_ADD": break;

@@ -1,5 +1,5 @@
 type MenuServiceItem<T extends string>={
-	text: D$TextWithRuns;
+	text: D$TextT;
 	icon?: Icon<T>;
 	serviceEndpoint: MenuServiceEndpointItems;
 	trackingParams: string;
