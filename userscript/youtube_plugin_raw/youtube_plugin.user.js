@@ -12825,12 +12825,15 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {EntityMutationPayload} x */
 	EntityMutationPayload(x) {
+		const cf="EntityMutationPayload";
+		this.save_keys(`[${cf}]`,x);
 		if("subscriptionStateEntity" in x) return;
 		if("transcriptTrackSelectionEntity" in x) return;
 		if("transcriptSearchBoxStateEntity" in x) return;
 		if("offlineabilityEntity" in x) return;
 		if("playlistLoopStateEntity" in x) return;
 		if("macroMarkersListEntity" in x) return;
+		if("superThanksSelectedTierEntity" in x) return;
 		debugger;
 	}
 	/** @arg {EntityMutationOptions} x */
@@ -13846,7 +13849,7 @@ class HandleTypes extends ServiceMethods {
 		const {style,text,navigationEndpoint,trackingParams,targetId,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip_style(style);
 		this.TextT(text);
-		this.ChipCloudChip_nav(navigationEndpoint);
+		this.t(navigationEndpoint,this.ChipCloudChip_nav);
 		this.trackingParams(cf,trackingParams);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
@@ -13863,9 +13866,9 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 	}
-	/** @arg {ChipCloudChip['navigationEndpoint']} x */
+	/** @arg {NonNullable<ChipCloudChip['navigationEndpoint']>} x */
 	ChipCloudChip_nav(x) {
-		if(!x) {debugger; return;}
+		if(!x) return;
 		const cf="ChipCloudChip_nav";
 		this.save_keys(`[${cf}]`,x);
 		if("relatedChipCommand" in x) return this.RelatedChipCommand(x);
@@ -13880,7 +13883,7 @@ class HandleTypes extends ServiceMethods {
 		const {style,text,navigationEndpoint,trackingParams,isSelected,uniqueId,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip_style(style);
 		this.TextT(text);
-		this.ChipCloudChip_nav(navigationEndpoint);
+		this.t(navigationEndpoint,this.ChipCloudChip_nav);
 		this.trackingParams(cf,trackingParams);
 		this.t(isSelected,a => this.primitive_of(a,"boolean"));
 	}
