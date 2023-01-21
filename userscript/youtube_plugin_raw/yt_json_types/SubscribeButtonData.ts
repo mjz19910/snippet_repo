@@ -9,7 +9,7 @@ type SubscribeButtonData={
 	unsubscribedButtonText: D$TextWithRuns;
 	trackingParams: string;
 	unsubscribeButtonText: D$TextWithRuns;
-	serviceEndpoints?: {}[];
+	serviceEndpoints?: E$SubscribeEndpoint[];
 	subscribeAccessibility: A$Accessibility;
 	unsubscribeAccessibility: A$Accessibility;
 	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;

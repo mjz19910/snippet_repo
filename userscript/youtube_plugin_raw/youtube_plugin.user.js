@@ -5089,7 +5089,6 @@ class ParserService extends BaseService {
 		/** @type {ParamMapValue[]} */
 		let transcript_args=[];
 		let pMap=x;
-		debugger;
 		/** @arg {number} x */
 		function convert_param(x) {
 			if(x<=0) {debugger; return;}
@@ -13715,7 +13714,11 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(unsubscribedButtonText);
 		this.trackingParams(cf,trackingParams);
 		this.D$TextWithRuns(unsubscribeButtonText);
-		this.tz(serviceEndpoints,(this.g));
+		this.tz(serviceEndpoints,x => {
+			if("subscribeEndpoint" in x) return;
+			this.do_codegen(cf,x);
+			debugger;
+		});
 		this.A$Accessibility(subscribeAccessibility);
 		this.A$Accessibility(unsubscribeAccessibility);
 		this.SubscriptionNotificationToggleButtonRenderer(notificationPreferenceButton);
