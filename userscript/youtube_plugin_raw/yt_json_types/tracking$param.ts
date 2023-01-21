@@ -9,5 +9,6 @@ type P$tracking$param<T extends string>=[
 	`${T}.trackingParams.f6`,
 	`${T}.trackingParams.f9`,
 	`${T}.trackingParams.f19`,
+	`${T}.trackingParams.f19.f1`,
 	`${T}.trackingParams`
 ][number];
