@@ -2351,6 +2351,7 @@ class KnownDataSaver extends ApiBase {
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]==="many") return;
+		this.save_number("[arr.tracking.trackingParams.f1]",g1[1]);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
 		this.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
 		this.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
