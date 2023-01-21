@@ -4483,6 +4483,7 @@ class CodegenService extends BaseService {
 		/** @type {D$SimpleText} */
 		if(x.simpleText) return "TYPE::D$SimpleText";
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
+		if(x.thumbnails) return `TYPE::D$${g()}`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
