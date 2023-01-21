@@ -7878,6 +7878,7 @@ class HandleTypes extends ServiceMethods {
 			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			if("sendFeedbackAction" in x) return this.A$SendFeedbackAction(x);
 			if("showEngagementPanelEndpoint" in x) return this.E$ShowEngagementPanelEndpoint(x);
+			this.do_codegen(cf,x);
 			debugger;
 		});
 	}
