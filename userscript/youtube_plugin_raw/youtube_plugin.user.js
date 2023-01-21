@@ -13176,6 +13176,7 @@ class HandleTypes extends ServiceMethods {
 		if("loopCommand" in x) return;
 		if("updateToggleButtonStateCommand" in x) return;
 		if("changeMarkersVisibilityCommand" in x) return;
+		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return;
 		debugger;
 	}
 	/** @arg {HideEngagementPanelScrimAction} x */
