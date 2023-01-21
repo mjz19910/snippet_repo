@@ -13483,9 +13483,19 @@ class HandleTypes extends ServiceMethods {
 		const {cards,trackingParams,header,style,centerItems,...y}=x; this.g(y); // ! #destructure
 		this.z(cards,this.MacroMarkersListItemRenderer);
 		this.trackingParams(cf,trackingParams);
-		this.g(this.w(header));
+		this.RichListHeaderRenderer(header);
 		if(style.type!=="HORIZONTAL_CARD_LIST_STYLE_TYPE_ENGAGEMENT_PANEL_SECTION") debugger;
 		if(centerItems!==false) debugger;
+	}
+	/** @arg {HorizontalCardList['header']} x */
+	RichListHeaderRenderer(x) {
+		const cf="RichListHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {richListHeaderRenderer:u,...y}=x; this.g(y); // ! #destructure
+		const {title,trackingParams,navigationButton,...z}=u; this.g(z);
+		this.D$SimpleText(title);
+		this.trackingParams(trackingParams);
+		this.R$ButtonRenderer(navigationButton);
 	}
 	/** @arg {R$CompactVideoRenderer} x */
 	CompactVideoRenderer(x) {
