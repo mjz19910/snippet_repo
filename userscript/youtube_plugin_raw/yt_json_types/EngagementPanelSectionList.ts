@@ -1,6 +1,6 @@
 type EngagementPanelSectionList=
 	|GenericEngagementPanelSectionItem
-	|VE76278_EngagementPanelSectionItem
+	|SI$VE76278$EngagementPanelSectionItem
 	|VE99999_EngagementPanelSectionItem
 	|VE124975_EngagementPanelSectionItem
 	|VE126250_EngagementPanelSectionItem

@@ -1,1 +1,1 @@
-type WatchPageResponse=Generic_WatchPageResponse|VE3832_WatchPageResponse;
+type WatchPageResponse=Generic_WatchPageResponse|R$VE3832$WatchPageResponse;

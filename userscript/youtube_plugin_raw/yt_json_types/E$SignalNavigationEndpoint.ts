@@ -1,5 +1,5 @@
 type E$SignalNavigationEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: VE83769_CommandMetadata;
+	commandMetadata: M$VE83769$Metadata;
 	signalNavigationEndpoint: E$SignalNavigation;
 };

@@ -1,9 +1,9 @@
-type VE3832_WatchPageResponse={
+type R$VE3832$WatchPageResponse={
 	rootVe: 3832;
 	url: WatchPageUrl;
 	endpoint: E$WatchEndpoint;
 	page: "watch";
-	preconnect?: [VE3832_PreconnectUrl];
+	preconnect?: [D$VE3832$PreconnectUrl];
 	playerResponse: PlayerResponse;
 	response: WatchResponse;
 };

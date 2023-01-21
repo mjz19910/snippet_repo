@@ -15,7 +15,7 @@ type YtUrlFormat=[
 	`/reporthistory`,
 	`/shorts/${string}`,
 	YtExternalUrlFormat,
-	VE6827_PageUrl,
+	D$VE6827$PageUrl,
 	`/@${string}`,
 	"/upload",
 	`/results?${string}`,

@@ -1,1 +1,0 @@
-type VE3832_CommandMetadata={webCommandMetadata: G$VE3832;};

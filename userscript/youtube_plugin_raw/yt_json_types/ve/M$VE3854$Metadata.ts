@@ -1,4 +1,4 @@
-type VE3854_WebCommandMetadata={
+type M$VE3854$Metadata={
 	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 3854;

@@ -7237,12 +7237,12 @@ class ServiceMethods extends ServiceData {
 			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
-	/** @arg {[VE3832_PreconnectUrl]} x */
+	/** @arg {[D$VE3832$PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
 		this.parse_preconnect_url(x[0]);
 	}
-	/** @arg {VE3832_PreconnectUrl} x */
+	/** @arg {D$VE3832$PreconnectUrl} x */
 	parse_preconnect_url(x) {
 		let up=this.parse_with_url_parse(x);
 		if(up.pathname!=="/generate_204") debugger;
@@ -7611,7 +7611,7 @@ class HandleTypes extends ServiceMethods {
 			case "WEB_PAGE_TYPE_WATCH": return this.WebCommandMetadata(x);
 		}
 	}
-	/** @arg {VE96368_WebCommandMetadata} x */
+	/** @arg {M$VE96368$Metadata} x */
 	VE96368_WebCommandMetadata(x) {
 		const cf="VE96368_WebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -7620,7 +7620,7 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {VE11487_WebCommandMetadata} x */
+	/** @arg {M$VE11487$Metadata} x */
 	VE11487_WebCommandMetadata(x) {
 		const cf="VE11487_WebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -7629,7 +7629,7 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {VE3854_WebCommandMetadata} x */
+	/** @arg {M$VE3854$Metadata} x */
 	VE3854_WebCommandMetadata(x) {
 		const cf="VE3854_WebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -7638,7 +7638,7 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {VE6827_WebCommandMetadata} x */
+	/** @arg {M$VE6827$Metadata} x */
 	VE6827_WebCommandMetadata(x) {
 		const cf="VE6827_WebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -7647,10 +7647,10 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @arg {VE6827_PageUrl} x */
+	/** @arg {D$VE6827$PageUrl} x */
 	VE6827_PageUrl(x) {
 		const cf="VE6827_PageUrl";
-		/** @type {SplitOnce<VE6827_PageUrl,"/">[1]} */
+		/** @type {SplitOnce<D$VE6827$PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
@@ -8031,7 +8031,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
-	/** @arg {VE3832_WatchPageResponse} x */
+	/** @arg {R$VE3832$WatchPageResponse} x */
 	VE3832_WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -10657,7 +10657,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @arg {NavigationEndpointCommandMetadata} x */
+	/** @arg {M$VE3611$Metadata} x */
 	NavigationEndpointCommandMetadata(x) {
 		const cf="NavigationEndpointCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -10690,7 +10690,7 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {VE3832_CommandMetadata} x */
+	/** @arg {CM$VE3832$Metadata} x */
 	VE3832_CommandMetadata(x) {
 		const cf="VE3832_CommandMetadata";
 		this.save_keys(`[${cf}]`,x);

@@ -1,4 +1,4 @@
-type VE96368_WebCommandMetadata={
+type M$VE96368$Metadata={
 	url: "/feed/subscriptions";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 96368;
