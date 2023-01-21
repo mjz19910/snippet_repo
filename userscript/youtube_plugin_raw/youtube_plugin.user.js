@@ -5380,6 +5380,7 @@ case "${path}": {
 					case "ypc_get_offers.params": {
 						switch(ta) {
 							case 1: break;
+							case 3: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
