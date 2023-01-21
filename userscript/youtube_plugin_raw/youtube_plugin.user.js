@@ -5368,6 +5368,23 @@ case "${path}": {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "ypc_get_offers.params.f1": {
+						switch(ta) {
+							case 1: break;
+							case 2: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
+					case "ypc_get_offers.params": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "click.trackingParams.f6": {
 						switch(ta) {
 							case 12: break;
@@ -5846,7 +5863,41 @@ case "${path_parts[idx-1]}": {
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
-						grouped("gen.ypc_get_offers",() => gd(idx));
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f1": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f2": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											switch(tv) {
+												case 3: return;
+												default: debugger; return;
+											}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+								}
+							} break;
+						}
 					} break;
 				}
 			} break;
@@ -8005,6 +8056,7 @@ class HandleTypes extends ServiceMethods {
 				case "/youtubei/v1/browse/edit_playlist": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/playlist/get_add_to_playlist": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/account/set_setting": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/ypc/get_offers": return this.GeneratedWebCommandMetadata(x);
 			}
 			return;
 		}

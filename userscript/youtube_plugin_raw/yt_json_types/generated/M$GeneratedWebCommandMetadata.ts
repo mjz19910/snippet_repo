@@ -7,7 +7,12 @@ type M$GeneratedWebCommandMetadata=[
 	G$browse$edit_playlist,
 	G$playlist$get_add_to_playlist,
 	G$account$set_setting,
+	G$ypc$get_offers,
 ][number];
+type G$ypc$get_offers={
+	sendPost: true;
+	apiUrl: "/youtubei/v1/ypc/get_offers";
+};
 type G$account$set_setting={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/set_setting";
