@@ -13,6 +13,9 @@ type P$known$param=[
 	P$watch$param,
 	P$watch$player_param,
 ][number];
+type P$category$param=P$LogItems[number] extends `[${string}] [${infer U}]`?U:never;
+type $missing$param=Exclude<P$category$param,P$known$param>;
+type only_param$extract=Extract<P$category$param,`${string}.params.${string}`>;
 type $ypc_get_offers=[
 	"ypc_get_offers.params.f1.f1",
 	"ypc_get_offers.params.f1.f2",
@@ -75,7 +78,6 @@ type P$get_transcript$param=[
 	"get_transcript.params.f6",
 	"get_transcript.params.f1",
 ][number];
-type P$category$param=P$LogItems[number] extends `[${string}] [${infer U}]`?U:never;
 type P$browse$param=[
 	"browse$param.f84.f5",
 	"browse$param.f84",
@@ -84,8 +86,6 @@ type P$browse$param=[
 	"browse$param",
 	"browse.params",
 ][number];
-type $missing$param=Exclude<P$category$param,P$known$param>;
-type only_param$extract=Extract<P$category$param,`${string}.params.${string}`>;
 type P$record_notification_interactions$param=[
 	"record_notification_interactions.f2.f1",
 	"record_notification_interactions.f2.f14.f1.f1",
