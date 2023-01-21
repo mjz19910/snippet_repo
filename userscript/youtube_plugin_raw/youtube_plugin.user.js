@@ -2090,7 +2090,7 @@ class ApiBase {
 	}
 	/** @protected @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
-		if(typeof x!==y) console.log(new Error());
+		if(typeof x!==y) debugger;
 	}
 	/** @template {{}} B @template {B} U @arg {{}} x @arg {B} _b @returns {Partial<B>} */
 	upgrade_obj(x,_b) {
@@ -5260,6 +5260,14 @@ case "${path}": {
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
+					case "click.trackingParams.f19": {
+						switch(ta) {
+							case 2: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "click.trackingParams":
 					case "tracking.trackingParams": {
 						switch(ta) {
@@ -5268,6 +5276,7 @@ case "${path}": {
 							case 3: break;
 							case 4: break;
 							case 6: break;
+							case 9: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5809,6 +5818,16 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									case "f2": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
 								}
 							} break;
 							case "f9": {
@@ -7609,6 +7628,7 @@ class HandleTypes extends ServiceMethods {
 					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
 					---\n\n\tG$${url_type_ex},
 					---\n\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
+					debugger;
 				} break;
 				case "/youtubei/v1/backstage/create_post": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/like/removelike": return this.GeneratedWebCommandMetadata(x);
@@ -7623,6 +7643,8 @@ class HandleTypes extends ServiceMethods {
 				case "/youtubei/v1/account/account_menu": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/notification/get_unseen_count": return this.GeneratedWebCommandMetadata(x);
 				case "/youtubei/v1/notification/get_notification_menu": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/get_transcript": return this.GeneratedWebCommandMetadata(x);
+				case "/youtubei/v1/next": return this.GeneratedWebCommandMetadata(x);
 			}
 			return;
 		}
@@ -12734,11 +12756,14 @@ class HandleTypes extends ServiceMethods {
 		const cf="AdSlotMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {slotId,slotType,slotPhysicalPosition,...y}=x; this.g(y); // ! #destructure
-		let sid=split_string(slotId,":");
-		let n=(BigInt(sid[0]));
-		n/=1000n;
-		this.save_number("[AdSlot.slotId[0]]",Number(n));
-		this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
+		let do_=false;
+		if(do_) {
+			let sid=split_string(slotId,":");
+			let n=(BigInt(sid[0]));
+			n/=1000n;
+			this.save_number("[AdSlot.slotId[0]]",Number(n));
+			this.save_number("[AdSlot.slotId[1..]]",sid.slice(1).map(e => Number.parseInt(e,10)));
+		}
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if(slotPhysicalPosition!==1) debugger;
 	}
