@@ -5422,7 +5422,7 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "click.trackingParams.f6": {
+					case "tracking.trackingParams.f6": {
 						switch(ta) {
 							case 12: break;
 							case 13: break;
@@ -5552,7 +5552,7 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "click.trackingParams.f19": {
+					case "tracking.trackingParams.f19": {
 						switch(ta) {
 							case 1: break;
 							case 2: break;
@@ -5561,7 +5561,6 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "click.trackingParams":
 					case "tracking.trackingParams": {
 						switch(ta) {
 							case 1: break;
@@ -5576,7 +5575,6 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "click.trackingParams.f4":
 					case "tracking.trackingParams.f4": {
 						switch(ta) {
 							case 1: break;
@@ -6247,7 +6245,6 @@ case "${path_parts[idx-1]}": {
 					} break;
 				}
 			} break;
-			case "click":
 			case "tracking": {
 				const idx=2;
 				switch(path_parts[1]) {
@@ -7809,7 +7806,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @public @arg {string} cf @arg {string} x */
 	clickTrackingParams(cf,x) {
-		this.params(cf,"click.trackingParams",x);
+		this.params(cf,"tracking.trackingParams",x);
 	}
 	/** @type {string[]} */
 	known_target_id=[];

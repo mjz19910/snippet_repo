@@ -113,10 +113,8 @@ type P$watch$player_param=[
 	"watch.player_params.f9",
 	"watch.player_params",
 ][number];
-type P$tracking$param<T extends string=[
-	"click",
-	"tracking",
-][number]>=[
+type P$tracking$param<T extends string="tracking">=[
+	"tracking.parentTrackingParams",
 	`${T}.trackingParams.f1`,
 	`${T}.trackingParams.f19.f1`,
 	`${T}.trackingParams.f19.f2`,
@@ -155,7 +153,6 @@ type P$unknown$param=[
 	"like.remove_like_params",
 	"next.queue_context_params",
 	"playlist_edit.params",
-	"tracking.parentTrackingParams",
 	"watch_page_url.pp",
 	"watch_playlist.params",
 ][number]; 
