@@ -1,4 +1,5 @@
 type P$LogItems=[
+	"[parse_value.gen_ns] [tracking.trackingParams.f7]",
 	`[parse_value.gen_ns] [report.params.f28.f1[].f1.f1[].f1]`,
 	`[parse_value.gen_ns] [report.params.f28.f1[].f1.f1[]]`,
 	"[parse_value.gen_ns] [transcript_target_id.param.f2]",

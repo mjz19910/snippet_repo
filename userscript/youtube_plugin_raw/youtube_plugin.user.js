@@ -5576,6 +5576,7 @@ case "${path}": {
 							case 3: break;
 							case 4: break;
 							case 6: break;
+							case 7: break;
 							case 9: break;
 							case 19: break;
 							default: new_ns(); debugger; return;
@@ -6316,6 +6317,16 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							case "f7": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							// [click.trackingParams.f19]
 							case "f19": {
 								const idx=4;
@@ -7068,6 +7079,7 @@ case "${path_parts[idx-1]}": {
 							case "f33": {
 								const idx=4;
 								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
 									switch(tv) {default: debugger; break;}
 									return;
 								}
