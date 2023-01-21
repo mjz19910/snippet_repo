@@ -2364,6 +2364,25 @@ class KnownDataSaver extends ApiBase {
 		}
 		return new BitmapResult(map_arr,bitmap);
 	}
+	/** @arg {number[]} bitmap_src */
+	generate_bitmap_num(bitmap_src) {
+		let map_arr=[...new Set([...bitmap_src.map(e => e).flat()])];
+		let ta=new Array(map_arr.length).fill(0);
+		let bitmap="\n"+bitmap_src.map(e => map_arr.indexOf(e)).map(e => {
+			ta[e]=1;
+		});
+		let bs=ta.join("");
+		let rle=this.rle_enc(bs);
+		rle.split("!").sort((a,b) => b.split("0").length-a.split("0").length).join("\n")+"\n";
+		class BitmapResult {
+			/** @arg {number[]} map_arr @arg {string} bitmap */
+			constructor(map_arr,bitmap) {
+				this.map_arr=map_arr;
+				this.bitmap=bitmap;
+			}
+		}
+		return new BitmapResult(map_arr,bitmap);
+	}
 	/** @type {[string,number|number[]][]} */
 	#new_numbers=[];
 	/** @public @arg {`[${string}]`} key @arg {number|number[]} x */
