@@ -1,1 +1,0 @@
-type TwoColumnWatchNextResults={twoColumnWatchNextResults: TwoColumnWatchNextResultsData;};

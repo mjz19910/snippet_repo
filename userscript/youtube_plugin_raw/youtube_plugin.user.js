@@ -10697,7 +10697,7 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {TwoColumnWatchNextResults} x */
+	/** @arg {A$TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResults";
 		this.save_keys(`[${cf}]`,x);
@@ -13349,7 +13349,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$Button(dismissButton);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
-	/** @arg {AccountItemData} x */
+	/** @arg {A$D$AccountItem} x */
 	AccountItemData(x) {
 		const cf="AccountItemData";
 		this.save_keys(`[${cf}]`,x);

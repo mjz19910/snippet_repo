@@ -1,0 +1,1 @@
+type A$TwoColumnWatchNextResults={twoColumnWatchNextResults: TwoColumnWatchNextResultsData;};

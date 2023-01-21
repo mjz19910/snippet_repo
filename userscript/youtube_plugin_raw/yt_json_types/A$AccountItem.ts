@@ -1,3 +1,3 @@
 type A$AccountItem={
-	accountItem: AccountItemData;
+	accountItem: A$D$AccountItem;
 };

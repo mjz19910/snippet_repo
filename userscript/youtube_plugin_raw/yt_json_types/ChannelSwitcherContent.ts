@@ -1,1 +1,1 @@
-type ChannelSwitcherContent=R$Button|A$AccountItemRenderer;
+type ChannelSwitcherContent=R$Button|A$AccountItem;

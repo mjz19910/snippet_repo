@@ -1,6 +1,6 @@
 type WatchResponse={
 	responseContext: ResponseContext;
-	contents: TwoColumnWatchNextResults;
+	contents: A$TwoColumnWatchNextResults;
 	currentVideoEndpoint: E$WatchEndpoint;
 	trackingParams: string;
 	playerOverlays: PlayerOverlayRenderer;
