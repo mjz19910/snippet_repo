@@ -1,3 +1,1 @@
-type ClipAdStateRenderer={
-	clipAdStateRenderer: _gen$ClipAdStateRenderer['clipAdStateRenderer'];
-};
+type ClipAdStateRenderer={clipAdStateRenderer: ClipAdState;};
