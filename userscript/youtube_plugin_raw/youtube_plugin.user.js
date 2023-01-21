@@ -5611,7 +5611,7 @@ case "${path}": {
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tv */
 	parse_param_next(root,path,[tv,...tr]) {
 		if(tr.length>0) {
-			console.log("param_next.list",root,path,[new Map(tv),...tr.map(a=>new Map(a))]);
+			console.log("param_next.list",root,path,[tv,...tr]);
 			this.parse_param_next(root,path,tr);
 		}
 		let key_index=this.parse_key_index;
