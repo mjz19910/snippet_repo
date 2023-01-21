@@ -5375,8 +5375,22 @@ case "${path}": {
 							default: return new_ns();
 						}
 						this.parse_param_next(root,`${a}.${b}.${c}.${d}[].f${ta}`,tv);
+						return;
+					}
+					let c6=split_string_once(c5[1],".")[1];
+					switch(c6) {
+						case "f1": {
+							switch(ta) {
+								case 1: break;
+								default: return new_ns();
+							}
+							this.parse_param_next(root,`${a}.${b}.${c}.${d}[].${c6}.f${ta}`,tv);
+						} break;
+						case "f1.f1": new_ns(); break;
+						case "f3": new_ns(); break;
 					}
 					console.log('off',c,d,`[${c5[0]}]`,ta,tv);
+					debugger;
 					return;
 				}
 				/** @type {P$LogItems} */

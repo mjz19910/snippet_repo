@@ -49,6 +49,7 @@ type $report=[
 	"report.params.f28.f1",
 	`report.params.f28.f1[${number}].f1.f1`,
 	`report.params.f28.f1[${number}].f1`,
+	`report.params.f28.f1[].f1.f1`,
 	`report.params.f28.f1[].f1`,
 	`report.params.f28.f1[].f3`,
 	`report.params.f28.f1[${number}].f3`,
