@@ -5855,6 +5855,9 @@ case ${JSON.stringify(path)}: /*tva*/{
 				};
 				switch(path) {
 					default: g1(); debugger; return;
+					case "report.params.f28.f1[].f1.f1": /*tva*/{
+						this.parse_param_next(root,`${path}[${off}]`,[val]);
+					}; return;
 					case "report.params.f28.f1": /*tva*/{
 						this.parse_param_next(root,`${path}[${off}]`,[val]);
 					} break;
