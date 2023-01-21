@@ -8627,7 +8627,7 @@ class HandleTypes extends ServiceMethods {
 		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y); // ! #destructure
 		this.t(videoId,this.videoId);
 		this.playerParams("ReelWatch","reel.player_params",playerParams);
-		this.t(thumbnail,this.Thumbnail);
+		this.t(thumbnail,this.D$Thumbnail);
 		this.ReelPlayerOverlayRenderer(overlay);
 		this.params("ReelWatch","get_transcript.params",params);
 		this.t(sequenceProvider,a => this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",a));
@@ -8908,7 +8908,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(cacheMetadata,this.CacheMetadata);
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
 		this.t(metadata,this.BrowseMetadata);
-		this.t(microformat,this.MicroformatDataRenderer);
+		this.t(microformat,this.R$MicroformatDataRenderer);
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
 		this.t(background,this.MusicThumbnailRenderer);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
@@ -9310,32 +9310,32 @@ class HandleTypes extends ServiceMethods {
 	MusicThumbnailData(x) {
 		const cf="MusicThumbnailData";
 		this.save_keys("[]",x);
-		this.Thumbnail(x.thumbnail);
+		this.D$Thumbnail(x.thumbnail);
 		this.save_enum("MUSIC_THUMBNAIL_CROP",x.thumbnailCrop);
 		this.save_enum("MUSIC_THUMBNAIL_SCALE",x.thumbnailScale);
 		this.trackingParams(cf,x.trackingParams);
 	}
 	/** @arg {D$Thumbnail} x */
-	Thumbnail(x) {
-		const cf="Thumbnail";
+	D$Thumbnail(x) {
+		const cf="D$Thumbnail";
 		this.save_keys(`[${cf}]`,x);
 		const {thumbnails,accessibility,isOriginalAspectRatio,...y}=x; this.g(y); // ! #destructure
-		this.z(thumbnails,this.ThumbnailItem);
+		this.z(thumbnails,this.D$ThumbnailItem);
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.A$Accessibility);
 	}
 	/** @arg {D$ThumbnailItem} x */
-	ThumbnailItem(x) {
-		const cf="ThumbnailItem";
+	D$ThumbnailItem(x) {
+		const cf="D$ThumbnailItem";
 		this.save_keys(`[${cf}]`,x);
 		const {url,width,height,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(url);
 		this.t(width,a => this.primitive_of(a,"number"));
 		this.t(height,a => this.primitive_of(a,"number"));
 	}
-	/** @arg {MicroformatDataRenderer} x */
-	MicroformatDataRenderer(x) {
-		const cf="MicroformatDataRenderer";
+	/** @arg {R$MicroformatDataRenderer} x */
+	R$MicroformatDataRenderer(x) {
+		const cf="R$MicroformatDataRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {microformatDataRenderer,...y}=x; this.g(y); // ! #destructure
 		this.t(microformatDataRenderer,this.MicroformatData);
@@ -9348,7 +9348,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(urlCanonical);
 		this.primitive_of_string(title);
 		this.primitive_of_string(description);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.primitive_of_string(siteName);
 		this.primitive_of_string(appName);
 		this.primitive_of_string(androidPackage);
@@ -9719,8 +9719,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="Notification";
 		this.save_keys(`[${cf}]`,x);
 		const {thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,trackingParams,notificationId,...y}=x; this.g(y); // ! #destructure
-		this.Thumbnail(thumbnail);
-		this.Thumbnail(videoThumbnail);
+		this.D$Thumbnail(thumbnail);
+		this.D$Thumbnail(videoThumbnail);
 		this.TextT(shortMessage);
 		this.TextT(sentTimeText);
 		this.NavigationEndpoint(navigationEndpoint);
@@ -10467,7 +10467,7 @@ class HandleTypes extends ServiceMethods {
 		const {title,longBylineText,thumbnail,lengthText,indexText,selected,navigationEndpoint,videoId,shortBylineText,trackingParams,menu,playlistSetVideoId,thumbnailOverlays,lightColorPalette,darkColorPalette,...y}=x; this.g(y);
 		this.TextT(title);
 		this.D$TextWithRuns(longBylineText);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.TextT(lengthText);
 		this.primitive_of(selected,"boolean");
 		this.E$WatchEndpoint(navigationEndpoint);
@@ -10944,7 +10944,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(videoTitle);
 		this.D$TextWithRuns(byline);
 		this.D$SimpleText(pauseText);
-		this.Thumbnail(background);
+		this.D$Thumbnail(background);
 		if(countDownSecs!==8) debugger;
 		this.R$ButtonRenderer(cancelButton);
 		this.R$ButtonRenderer(nextButton);
@@ -11215,7 +11215,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,thumbnail,title,thumbnailOverlays,shortBylineText,lengthText,lengthInSeconds,navigationEndpoint,trackingParams,shortViewCountText,publishedTimeText,...y}=x; this.g(y);
 		this.videoId(videoId);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.D$SimpleText(title);
 		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.D$TextWithRuns(shortBylineText);
@@ -11397,7 +11397,7 @@ class HandleTypes extends ServiceMethods {
 		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.playlistId(playlistId);
 		this.D$SimpleText(title);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.TextT(longBylineText);
 		this.t(videoCount,this.primitive_of_string);
 		this.D$TextWithRuns(videoCountText);
@@ -11952,7 +11952,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,thumbnails,...y}=x; this.g(y); // ! #destructure
 		this.A$Accessibility(accessibility);
-		this.z(thumbnails,this.ThumbnailItem);
+		this.z(thumbnails,this.D$ThumbnailItem);
 	}
 	/** @arg {SortFilterSubMenuRenderer} x */
 	SortFilterSubMenuRenderer(x) {
@@ -11968,7 +11968,7 @@ class HandleTypes extends ServiceMethods {
 		const {submitButton,cancelButton,authorThumbnail,placeholderText,trackingParams,avatarSize,emojiButton,emojiPicker,aadcGuidelinesStateEntityKey,...y}=x; this.g(y); // ! #destructure
 		this.R$ButtonRenderer(submitButton);
 		this.R$ButtonRenderer(cancelButton);
-		this.Thumbnail(authorThumbnail);
+		this.D$Thumbnail(authorThumbnail);
 		this.D$TextWithRuns(placeholderText);
 		this.trackingParams(cf,trackingParams);
 		if(avatarSize!=="SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT") debugger;
@@ -12268,7 +12268,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(emojiId);
 		this.z(shortcuts,this.primitive_of_string);
 		this.z(searchTerms,this.primitive_of_string);
-		this.Thumbnail(image);
+		this.D$Thumbnail(image);
 		this.primitive_of(isCustomEmoji,"boolean");
 		this.primitive_of(isLocked,"boolean");
 	}
@@ -12716,7 +12716,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y); // ! #destructure
 		this.E$BrowseEndpoint(navigationEndpoint);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.GuideEntryBadges(badges);
 		this.trackingParams("GuideEntryRoot",trackingParams);
 		this.D$SimpleText(formattedTitle);
@@ -12942,7 +12942,7 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams(cf,trackingParams);
 			this.A$Accessibility(accessibility);
 			this.primitive_of_string(tooltip);
-			this.Thumbnail(avatar);
+			this.D$Thumbnail(avatar);
 			this.TopbarMenu_menuRequest(menuRequest);
 		} else if("menuRenderer" in x) {
 			const {trackingParams,accessibility,tooltip,icon,menuRenderer,style,...y}=x; this.g(y); // ! #destructure
@@ -13164,7 +13164,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {title,thumbnail,...y}=x; this.g(y); // ! #destructure
 		this.D$SimpleText(title);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 	}
 	/** @arg {ChipCloudChipRenderer} x */
 	ChipCloudChipRenderer(x) {
@@ -13295,7 +13295,7 @@ class HandleTypes extends ServiceMethods {
 		const {startTimeMs,endTimeMs,watermark,trackingParams,navigationEndpoint,channelName,subscribeButton,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(startTimeMs);
 		this.primitive_of_string(endTimeMs);
-		this.Thumbnail(watermark);
+		this.D$Thumbnail(watermark);
 		this.trackingParams(cf,trackingParams);
 		this.E$BrowseEndpoint(navigationEndpoint);
 		this.primitive_of_string(channelName);
@@ -13316,7 +13316,7 @@ class HandleTypes extends ServiceMethods {
 	VideoOwner$Omit(x) {
 		const cf="VideoOwnerData";
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.D$TextWithRuns(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E$BrowseEndpoint(navigationEndpoint);
@@ -13535,7 +13535,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(publishDate);
 		this.z(factoid,this.FactoidRenderer);
 		this.E$BrowseEndpoint(channelNavigationEndpoint);
-		this.Thumbnail(channelThumbnail);
+		this.D$Thumbnail(channelThumbnail);
 	}
 	/** @arg {ExpandableVideoDescriptionBodyRenderer} x */
 	ExpandableVideoDescriptionBodyRenderer(x) {
@@ -13738,7 +13738,7 @@ class HandleTypes extends ServiceMethods {
 		this.ChannelMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(cf,trackingParams);
-		this.MicroformatDataRenderer(microformat);
+		this.R$MicroformatDataRenderer(microformat);
 		this.z(onResponseReceivedActions,this.ResetChannelUnreadCountCommand);
 	}
 	/** @arg {PlaylistResponse} x */
@@ -13752,7 +13752,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlaylistMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(cf,trackingParams);
-		this.MicroformatDataRenderer(microformat);
+		this.R$MicroformatDataRenderer(microformat);
 		this.PlaylistSidebarRenderer(sidebar);
 	}
 	/** @arg {string} cf @arg {NonNullable<PlaylistResponse['alerts']>} x */
@@ -13784,10 +13784,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.t(sponsorButton,this.R$ButtonRenderer);
 		this.E$BrowseEndpoint(navigationEndpoint);
-		this.Thumbnail(avatar);
-		this.Thumbnail(banner);
-		this.Thumbnail(tvBanner);
-		this.Thumbnail(mobileBanner);
+		this.D$Thumbnail(avatar);
+		this.D$Thumbnail(banner);
+		this.D$Thumbnail(tvBanner);
+		this.D$Thumbnail(mobileBanner);
 		this.ChannelHeaderLinksRenderer(headerLinks);
 		this.D$SimpleText(subscriberCountText);
 		this.D$TextWithRuns(channelHandleText);
@@ -13930,7 +13930,7 @@ class HandleTypes extends ServiceMethods {
 		const {message,authorName,authorPhoto,contextMenuEndpoint,id,authorBadges,timestampUsec,authorExternalChannelId,contextMenuAccessibility,timestampText,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(message);
 		this.D$TextWithRuns(authorName);
-		this.Thumbnail(authorPhoto);
+		this.D$Thumbnail(authorPhoto);
 		this.g(contextMenuEndpoint);
 		this.primitive_of_string(id);
 		this.tz(authorBadges,(this.LiveChatAuthorBadgeRenderer));
@@ -14045,7 +14045,19 @@ class HandleTypes extends ServiceMethods {
 		const cf="ReelPlayerHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {reelPlayerHeaderRenderer,...y}=x; this.g(y); // ! #destructure
-		this.g(reelPlayerHeaderRenderer);
+		this.ReelPlayerHeader(reelPlayerHeaderRenderer);
+	}
+	/** @arg {ReelPlayerHeader} x */
+	ReelPlayerHeader(x) {
+		const cf="ReelPlayerHeader";
+		this.save_keys(`[${cf}]`,x);
+		const {trackingParams,reelTitleText,timestampText,channelNavigationEndpoint,channelTitleText,channelThumbnail,accessibility,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
+		this.D$TextWithRuns(reelTitleText);
+		this.E$BrowseEndpoint(channelNavigationEndpoint);
+		this.D$TextWithRuns(channelTitleText);
+		this.D$Thumbnail(channelThumbnail);
+		this.A$Accessibility(accessibility);
 	}
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
@@ -14135,7 +14147,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,thumbnail,title,thumbnailOverlays,lengthText,longBylineText,publishedTimeText,trackingParams,viewCountText,navigationEndpoint,shortBylineText,shortViewCountText,channelThumbnail,ownerBadges,accessibility,menu,richThumbnail,badges,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(videoId);
-		this.Thumbnail(thumbnail);
+		this.D$Thumbnail(thumbnail);
 		this.g(title);
 		this.g(thumbnailOverlays);
 		this.D$TextWithRuns(lengthText);
@@ -14177,7 +14189,7 @@ class HandleTypes extends ServiceMethods {
 		const {accountByline,accountName,accountPhoto,isDisabled,isSelected,hasChannel,serviceEndpoint,channelHandle,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(accountByline);
 		this.D$TextWithRuns(accountName);
-		this.Thumbnail(accountPhoto);
+		this.D$Thumbnail(accountPhoto);
 		this.primitive_of(isDisabled,"boolean");
 		this.primitive_of(isSelected,"boolean");
 		this.primitive_of(hasChannel,"boolean");
@@ -14271,11 +14283,11 @@ class HandleTypes extends ServiceMethods {
 		this.g(authorEndpoint);
 		this.primitive_of(authorIsChannelOwner,"boolean");
 		this.D$TextWithRuns(authorText);
-		this.Thumbnail(authorThumbnail);
+		this.D$Thumbnail(authorThumbnail);
 		this.R$ButtonRenderer(collapseButton);
 		this.primitive_of_string(commentId);
 		this.D$TextWithRuns(contentText);
-		this.Thumbnail(currentUserReplyThumbnail);
+		this.D$Thumbnail(currentUserReplyThumbnail);
 		this.D$TextWithRuns(publishedTimeText);
 		this.primitive_of(isLiked,"boolean");
 		this.D$TextWithRuns(voteCount);
@@ -14308,7 +14320,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,userAvatar,titleInput,scrubber,saveButton,displayName,publicityLabel,cancelButton,adStateOverlay,externalVideoId,publicityLabelIcon,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.Thumbnail(userAvatar);
+		this.D$Thumbnail(userAvatar);
 		this.ClipCreationTextInputRenderer(titleInput);
 		this.ClipCreationScrubberRenderer(scrubber);
 		this.R$ButtonRenderer(saveButton);
@@ -14334,7 +14346,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(androidAppindexingLink);
 		this.primitive_of_string(androidDeepLink);
 		this.z(availableCountryCodes,this.primitive_of_string);
-		this.Thumbnail(avatar);
+		this.D$Thumbnail(avatar);
 		this.primitive_of_string(channelUrl);
 		this.primitive_of_string(vanityChannelUrl);
 		this.primitive_of_string(iosAppindexingLink);

@@ -5,6 +5,6 @@ type PlaylistResponse=ContentsTemplate<R$TwoColumnBrowseResults>&{
 	metadata: PlaylistMetadataRenderer;
 	trackingParams: string;
 	topbar: R$DesktopTopbar;
-	microformat: MicroformatDataRenderer;
+	microformat: R$MicroformatDataRenderer;
 	sidebar: PlaylistSidebarRenderer;
 };

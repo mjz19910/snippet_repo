@@ -1,0 +1,3 @@
+type ReelPlayerHeaderRenderer={
+	reelPlayerHeaderRenderer: ReelPlayerHeader;
+};

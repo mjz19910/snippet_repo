@@ -1,7 +1,3 @@
-type ReelPlayerHeaderRenderer={
-	reelPlayerHeaderRenderer: {};
-};
-
 type ReelPlayerOverlayData={
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
 	trackingParams: string;
