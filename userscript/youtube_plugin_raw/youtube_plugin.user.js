@@ -4452,6 +4452,7 @@ class CodegenService extends BaseService {
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E$Signal_ClientSignal"; break;
 		}
+		debugger;
 		return x;
 	}
 	/** @arg {string|null} r @param {{[U in string]:unknown}} b @arg {string[]} keys */
