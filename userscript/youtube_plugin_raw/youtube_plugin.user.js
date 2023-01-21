@@ -13169,6 +13169,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<ChipCloudChip,{targetId:any}>} x */
 	ChipCloudChip_tid(x) {
 		const cf="ChipCloudChip";
+		this.save_keys(`[${cf}]`,x);
 		const {style,text,navigationEndpoint,trackingParams,targetId,...y}=x; this.g(y); // ! #destructure
 		this.ChipCloudChip_style(style);
 		this.TextT(text);
@@ -13178,6 +13179,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChipCloudChip['style']} x */
 	ChipCloudChip_style(x) {
+		const cf="ChipCloudChip_style";
+		this.save_keys(`[${cf}]`,x);
 		this.ChipCloudStyle(x,a => {
 			switch(a) {
 				case "STYLE_DEFAULT": return;
@@ -13189,11 +13192,12 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {ChipCloudChip['navigationEndpoint']} x */
 	ChipCloudChip_nav(x) {
-		this.t(x,x => {
-			if("relatedChipCommand" in x) return this.RelatedChipCommand(x);
-			if("continuationCommand" in x) return this.ContinuationCommand(x);
-			debugger;
-		});
+		if(!x) {debugger; return;}
+		const cf="ChipCloudChip_nav";
+		this.save_keys(`[${cf}]`,x);
+		if("relatedChipCommand" in x) return this.RelatedChipCommand(x);
+		if("continuationCommand" in x) return this.ContinuationCommand(x);
+		debugger;
 	}
 	/** @arg {ChipCloudChip} x */
 	ChipCloudChip(x) {
