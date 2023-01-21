@@ -5613,7 +5613,7 @@ case "${path}": {
 		if(!no_off_path) no_off_path=path;
 		if(tr.length>0) {
 			console.log("param_next.list",root,path,[tv,...tr]);
-			this.parse_param_next(root,as(`${no_off_path}.[${off}]`),tr,off+1,path);
+			this.parse_param_next(root,as(`${no_off_path}.[${off}]`),tr,off+1,no_off_path);
 		}
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
