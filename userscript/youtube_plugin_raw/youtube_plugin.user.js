@@ -5295,6 +5295,7 @@ case "${path}": {
 							case 4: break;
 							case 6: break;
 							case 9: break;
+							case 19: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
