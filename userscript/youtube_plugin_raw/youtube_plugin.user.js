@@ -5371,6 +5371,8 @@ case "${path}": {
 					case "ypc_get_offers.params.f5": {
 						switch(ta) {
 							case 1: break;
+							case 3: break;
+							case 5: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5882,6 +5884,40 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									case "f9": {
+										const idx=5;
+										if(path_parts.length===4) {
+											switch(tv) {
+												case 2: return;
+												default: debugger; return;
+											}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+									case "f5": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(tv instanceof Map) return;
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+									case "f3": {
+										const idx=5;
+										if(path_parts.length===4) {
+											switch(tv) {
+												case 1: return;
+												default: debugger; return;
+											}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
@@ -11181,6 +11217,7 @@ class HandleTypes extends ServiceMethods {
 	handle_text_endpoint(x) {
 		if("browseEndpoint" in x) return this.E$BrowseEndpoint(x);
 		if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
+		if("watchEndpoint" in x) return this.E$WatchEndpoint(x);
 		debugger;
 	}
 	/** @private @arg {D$TextWithRuns} x @arg {(x:NonNullable<D$TextRun['navigationEndpoint']>)=>void} f_run */
