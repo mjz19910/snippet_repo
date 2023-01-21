@@ -8652,6 +8652,64 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(text);
 		this.R$Button(dismissButton);
 	}
+	/** @arg {R$Button} x */
+	R$Button(x) {
+		if(!x) {debugger; return;}
+		const cf="ButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {buttonRenderer,...y}=x; this.g(y); // ! #destructure
+		this.D$Button(buttonRenderer);
+	}
+	/** @arg {D$Button} x */
+	D$Button(x) {
+		const cf="ButtonData";
+		this.save_keys(`[${cf}]`,x);
+		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y); // ! #destructure
+		if(accessibility) return this.LabelData(accessibility);
+		this.t(accessibilityData,this.A$Accessibility);
+		this.t(command,this.ButtonCommand);
+		this.t(icon,this.Icon);
+		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
+		this.t(serviceEndpoint,this.Button_serviceEndpoint);
+		this.t(navigationEndpoint,this.Button_navigationEndpoint);
+		if(tooltip&&typeof tooltip!=="string") debugger;
+		if(size) {
+			switch(size) {
+				default: debugger; break;
+				case "SIZE_DEFAULT": break;
+				case "SIZE_SMALL": break;
+			}
+		}
+		this.t(style,a => this.save_string("[Button.style]",a));
+		this.t(text,this.TextT);
+		this.t_cf(cf,trackingParams,this.trackingParams);
+		this.t(hint,this.R$Hint);
+		this.t(targetId,a => this.targetId(cf,a));
+	}
+	/** @arg {R$Hint} x */
+	R$Hint(x) {
+		const cf="HintRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {hintRenderer,...y}=x; this.g(y); // ! #destructure
+		this.D$Hint(hintRenderer);
+	}
+	/** @private @arg {D$Hint} x */
+	D$Hint(x) {
+		const cf="HintRendererData";
+		this.save_keys(`[${cf}]`,x);
+		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=x; this.g(y); // ! #destructure
+		if(hintId!=="sponsor-pre-purchase") debugger;
+		if(dwellTimeMs!=="60000") debugger;
+		this.HintCap(hintCap);
+		this.trackingParams(cf,trackingParams);
+	}
+	/** @private @arg {HintCap} x */
+	HintCap(x) {
+		const cf="HintCap";
+		this.save_keys(`[${cf}]`,x);
+		const {impressionCap,...y}=x; this.g(y);
+		if(impressionCap!=="1") debugger;
+	}
 	/** @arg {C$SectionList|MusicShelfContinuation} x */
 	ContinuationContents(x) {
 		const cf="ContinuationContents";
@@ -10716,14 +10774,6 @@ class HandleTypes extends ServiceMethods {
 		const {label,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(label);
 	}
-	/** @arg {R$Button} x */
-	R$Button(x) {
-		if(!x) {debugger; return;}
-		const cf="ButtonRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {buttonRenderer,...y}=x; this.g(y); // ! #destructure
-		this.ButtonData(buttonRenderer);
-	}
 	/** @arg {R$WatchNextEndScreenRenderer} x */
 	WatchNextEndScreenRenderer(x) {
 		const cf="WatchNextEndScreenRenderer";
@@ -11510,32 +11560,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf1}]`,x1);
 		const {params,...y1}=x1; this.g(y1);
 		this.params(cf1,"ypc_get_offers.params",params);
-	}
-	/** @arg {D$Button} x */
-	ButtonData(x) {
-		const cf="ButtonData";
-		this.save_keys(`[${cf}]`,x);
-		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y); // ! #destructure
-		if(accessibility) return this.LabelData(accessibility);
-		this.t(accessibilityData,this.A$Accessibility);
-		this.t(command,this.ButtonCommand);
-		this.t(icon,this.Icon);
-		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
-		this.t(serviceEndpoint,this.Button_serviceEndpoint);
-		this.t(navigationEndpoint,this.Button_navigationEndpoint);
-		if(tooltip&&typeof tooltip!=="string") debugger;
-		if(size) {
-			switch(size) {
-				default: debugger; break;
-				case "SIZE_DEFAULT": break;
-				case "SIZE_SMALL": break;
-			}
-		}
-		this.t(style,a => this.save_string("[Button.style]",a));
-		this.t(text,this.TextT);
-		this.t_cf(cf,trackingParams,this.trackingParams);
-		this.t(hint,this.HintRenderer);
-		this.t(targetId,a => this.targetId(cf,a));
 	}
 	/** @arg {ThumbnailOverlayHoverTextData} x */
 	ThumbnailOverlayHoverTextData(x) {
@@ -13629,13 +13653,6 @@ class HandleTypes extends ServiceMethods {
 		const {reelPlayerHeaderRenderer,...y}=x; this.g(y); // ! #destructure
 		this.g(reelPlayerHeaderRenderer);
 	}
-	/** @arg {R$Hint} x */
-	HintRenderer(x) {
-		const cf="HintRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {hintRenderer,...y}=x; this.g(y); // ! #destructure
-		this.HintRendererData(hintRenderer);
-	}
 	/** @arg {VideoPrimaryInfoData} x */
 	VideoPrimaryInfoData(x) {
 		const cf="VideoPrimaryInfoData";
@@ -14038,24 +14055,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="ChannelHeaderLinks";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {D$Hint} x */
-	HintRendererData(x) {
-		const cf="HintRendererData";
-		this.save_keys(`[${cf}]`,x);
-	}
-	/** @private @arg {HotkeyDialogSectionRenderer} x */
-	HotkeyDialogSectionRenderer(x) {
-		const cf="HotkeyDialogSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-	}
 	/** @private @arg {WebSearchboxConfig} x */
 	WebSearchboxConfig(x) {
 		const cf="WebSearchboxConfig";
-		this.save_keys(`[${cf}]`,x);
-	}
-	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
-	SubscriptionNotificationToggleButtonRenderer(x) {
-		const cf="SubscriptionNotificationToggleButtonRenderer";
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {RelatedChipCommandData} x */
@@ -14189,6 +14191,16 @@ class HandleTypes extends ServiceMethods {
 	ChannelSwitcherHeader(x) {x;}
 	/** @arg {SuperVodBuyFlowContent} x */
 	SuperVodBuyFlowContent(x) {x;}
+	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
+	SubscriptionNotificationToggleButtonRenderer(x) {
+		const cf="SubscriptionNotificationToggleButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
+	}
+	/** @private @arg {HotkeyDialogSectionRenderer} x */
+	HotkeyDialogSectionRenderer(x) {
+		const cf="HotkeyDialogSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
+	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
