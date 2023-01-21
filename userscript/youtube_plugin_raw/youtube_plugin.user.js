@@ -2305,6 +2305,7 @@ class KnownDataSaver extends ApiBase {
 		let idx=this.#seen_strings.indexOf(p);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(idx);
+		debugger;
 		return true;
 	}
 	/** @arg {number} idx */
@@ -5800,6 +5801,26 @@ case "${path_parts[idx-1]}": {
 						// case "f": u(idx); break;
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							case "f19": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(tv instanceof Map) return;
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+							case "f9": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="bigint") return this.save_string(`[${path_parts[1]}.${path_parts[2]}]`,tv.toString());
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f6": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -7583,10 +7604,10 @@ class HandleTypes extends ServiceMethods {
 					}
 					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
 					/** @arg {GeneratedWebCommandMetadata} x */
-					let typedef_str=this.codegen_new_typedef(x,`_gen_${url_type_ex}`,true);
+					let typedef_str=this.codegen_new_typedef(x,`G$${url_type_ex}`,true);
 					console.log(`
 					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
-					---\n\n\t_gen_${url_type_ex},
+					---\n\n\tG$${url_type_ex},
 					---\n\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
 				} break;
 				case "/youtubei/v1/backstage/create_post": return this.GeneratedWebCommandMetadata(x);
@@ -7610,10 +7631,11 @@ class HandleTypes extends ServiceMethods {
 			switch(x.rootVe) {
 				default: {
 					/** @arg {GeneratedWebCommandMetadata} x */
-					this.codegen_new_typedef(x,`_gen_VE${cx}`);
-					console.log(`\n\t_gen_VE${cx},`);
+					this.codegen_new_typedef(x,`G$VE${cx}`);
+					console.log(`\n\tG$VE${cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 				} break;
+				case 3832: return this.GeneratedWebCommandMetadata(x);
 				case 3854: return this.GeneratedWebCommandMetadata(x);
 				case 4724: return this.GeneratedWebCommandMetadata(x);
 				case 6827: return this.GeneratedWebCommandMetadata(x);
