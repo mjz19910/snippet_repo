@@ -7277,6 +7277,13 @@ case "${path_parts[idx-1]}": {
 					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
 					x: `${x[2]}.${x[3]}`,
 				}.x;
+			case "ypc": {
+				if(x[3]!=="get_offers") debugger;
+				return {
+					/** @type {`${typeof x[2]}.${typeof x[3]}`} */
+					x: `${x[2]}.${x[3]}`,
+				}.x;
+			} break;
 			default: return this.api_no_handler(x,x[2]);
 		}
 	}
