@@ -1,18 +1,9 @@
 type D$Menu={
-	items?: (R$MenuServiceItem|R$ToggleMenuServiceItem)[];
+	items?: G$Menu$items$iterate[];
 	trackingParams: string;
-	topLevelButtons?: {
-		segmentedLikeDislikeButtonRenderer: {
-			likeButton: {
-				toggleButtonRenderer: {};
-			};
-			dislikeButton: {};
-		};
-	}[];
+	topLevelButtons?: R$SegmentedLikeDislikeButton[];
 	accessibility?: A$Accessibility;
 	targetId?: string;
 	loggingDirectives?: A$LoggingDirectives;
-	flexibleItems?: {
-		menuFlexibleItemRenderer: {};
-	}[];
+	flexibleItems?: R$MenuFlexibleItem[];
 };
