@@ -1,4 +1,4 @@
 type SearchPyvData={
-	ads: AdSlotRenderer[];
+	ads: R$AdSlot[];
 	trackingParams: string;
 };

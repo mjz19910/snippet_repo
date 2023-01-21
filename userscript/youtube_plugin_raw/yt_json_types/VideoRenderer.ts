@@ -1,3 +1,3 @@
-type R$VideoRenderer={
+type R$Video={
 	videoRenderer: VideoData;
 };

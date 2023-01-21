@@ -1,1 +1,1 @@
-type ClipAdStateRenderer={clipAdStateRenderer: ClipAdState;};
+type R$ClipAdState={clipAdStateRenderer: ClipAdState;};

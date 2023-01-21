@@ -11,5 +11,5 @@ type ItemSectionItem=[
 	R$SearchPyvRenderer,
 	R$SettingsOptionRenderer,
 	R$ShelfRenderer,
-	R$VideoRenderer,
+	R$Video,
 ][number];

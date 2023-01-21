@@ -9188,11 +9188,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetSurveyCommand";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @arg {SuperVodBuyFlowContentRenderer} x */
-	SuperVodBuyFlowContentRenderer(x) {
-		const cf="SuperVodBuyFlowContentRenderer";
-		this.save_keys(`[${cf}]`,x);
-	}
 	/** @arg {PdgBuyFlowHeaderRenderer} x */
 	PdgBuyFlowHeaderRenderer(x) {
 		const cf="PdgBuyFlowHeaderRenderer";
@@ -14063,86 +14058,137 @@ class HandleTypes extends ServiceMethods {
 		const cf="SubscriptionNotificationToggleButtonRenderer";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {BrowseFeedContent} x */
-	BrowseFeedContent(x) {
-		const cf="BrowseFeedContent";
-		this.save_keys(`[${cf}]`,x);
-	}
 	/** @private @arg {RelatedChipCommandData} x */
 	RelatedChipCommandData(x) {
 		const cf="RelatedChipCommandData";
+		this.save_keys(`[${cf}]`,x);
+	}
+	/** @private @arg {BrowseFeedContent} x */
+	BrowseFeedContent(x) {
+		const cf="BrowseFeedContent";
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @private @arg {CommentActionButtonsRenderer} x */
 	CommentActionButtonsRenderer(x) {
 		const cf="CommentActionButtonsRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.CommentActionButtons(this.w(x));
 	}
+	/** @private @arg {Do$w<CommentActionButtonsRenderer>} x */
+	CommentActionButtons(x) {x;}
 	/** @private @arg {ClipCreationTextInputRenderer} x */
 	ClipCreationTextInputRenderer(x) {
 		const cf="ClipCreationTextInputRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.ClipCreationTextInput(this.w(x));
 	}
-	/** @private @arg {ClipCreationScrubberRenderer} x */
+	/** @private @arg {Do$w<ClipCreationTextInputRenderer>} x */
+	ClipCreationTextInput(x) {x;}
+	/** @private @arg {R$ClipCreationScrubber} x */
 	ClipCreationScrubberRenderer(x) {
 		const cf="ClipCreationScrubberRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.ClipCreationScrubber(this.w(x));
 	}
-	/** @private @arg {ClipAdStateRenderer} x */
+	/** @private @arg {Do$w<R$ClipCreationScrubber>} x */
+	ClipCreationScrubber(x) {x;}
+	/** @private @arg {R$ClipAdState} x */
 	ClipAdStateRenderer(x) {
 		const cf="ClipAdStateRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.ClipAdState(this.w(x));
 	}
-	/** @private @arg {AdSlotRenderer} x */
+	/** @private @arg {Do$w<R$ClipAdState>} x */
+	ClipAdState(x) {x;}
+	/** @private @arg {R$AdSlot} x */
 	AdSlotRenderer(x) {
 		const cf="AdSlotRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.AdSlot(this.w(x));
 	}
-	/** @private @arg {R$VideoRenderer} x */
+	/** @private @arg {Do$w<R$AdSlot>} x */
+	AdSlot(x) {x;}
+	/** @private @arg {R$Video} x */
 	VideoRenderer(x) {
 		const cf="VideoRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.Video(this.w(x));
 	}
+	/** @private @arg {Do$w<R$Video>} x */
+	Video(x) {x;}
 	/** @private @arg {R$Radio} x */
 	RadioRenderer(x) {
 		const cf="RadioRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.Radio(this.w(x));
 	}
+	/** @private @arg {Do$w<R$Radio>} x */
+	Radio(x) {x;}
 	/** @private @arg {FeedNudgeRenderer} x */
 	FeedNudgeRenderer(x) {
 		const cf="FeedNudgeRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.FeedNudge(this.w(x));
 	}
+	/** @private @arg {Do$w<FeedNudgeRenderer>} x */
+	FeedNudge(x) {x;}
 	/** @private @arg {RichSectionRenderer} x */
 	RichSectionRenderer(x) {
 		const cf="RichSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.RichSection(this.w(x));
 	}
+	/** @private @arg {Do$w<RichSectionRenderer>} x */
+	RichSection(x) {x;}
 	/** @private @arg {GuideCollapsibleSectionEntryRenderer} x */
 	GuideCollapsibleSectionEntryRenderer(x) {
 		const cf="GuideCollapsibleSectionEntryRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.GuideCollapsibleSectionEntry(this.w(x));
 	}
+	/** @private @arg {Do$w<GuideCollapsibleSectionEntryRenderer>} x */
+	GuideCollapsibleSectionEntry(x) {x;}
+	/** @template {{}} T @typedef {T[GetMaybeKeys<T>]} Do$w */
 	/** @private @arg {MerchandiseItemRenderer} x */
 	MerchandiseItemRenderer(x) {
 		const cf="MerchandiseItemRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.MerchandiseItem(this.w(x));
 	}
+	/** @private @arg {Do$w<MerchandiseItemRenderer>} x */
+	MerchandiseItem(x) {x;}
 	/** @private @arg {CarouselLockupRenderer} x */
 	CarouselLockupRenderer(x) {
 		const cf="CarouselLockupRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.CarouselLockup(this.w(x));
 	}
+	/** @private @arg {CarouselLockupRenderer[GetMaybeKeys<CarouselLockupRenderer>]} x */
+	CarouselLockup(x) {x;}
 	/** @private @arg {R$Factoid} x */
 	FactoidRenderer(x) {
 		const cf="FactoidRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.Factoid(this.w(x));
 	}
+	/** @private @arg {R$Factoid['factoidRenderer']} x */
+	Factoid(x) {x;}
 	/** @private @arg {ChannelSwitcherHeaderRenderer} x */
 	ChannelSwitcherHeaderRenderer(x) {
 		const cf="ChannelSwitcherHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.ChannelSwitcherHeader(this.w(x));
 	}
+	/** @arg {SuperVodBuyFlowContentRenderer} x */
+	SuperVodBuyFlowContentRenderer(x) {
+		const cf="SuperVodBuyFlowContentRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.SuperVodBuyFlowContent(this.w(x));
+	}
+	/** @arg {ChannelSwitcherHeader} x */
+	ChannelSwitcherHeader(x) {x;}
+	/** @arg {SuperVodBuyFlowContent} x */
+	SuperVodBuyFlowContent(x) {x;}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */

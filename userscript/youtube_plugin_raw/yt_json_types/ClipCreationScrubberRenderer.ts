@@ -1,4 +1,4 @@
-type ClipCreationScrubberRenderer={
+type R$ClipCreationScrubber={
 	clipCreationScrubberRenderer: {
 		lengthTemplate: "$clip_length seconds";
 		maxLengthMs: 60000;
