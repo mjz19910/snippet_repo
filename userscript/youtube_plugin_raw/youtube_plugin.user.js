@@ -6105,14 +6105,13 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); path_parts[3]===""; break;
+									// [subscribe.params.f2.f1]
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
-											switch(tv) {
-												case 3: return;
-												case 12: return;
-												default: debugger; return;
-											}
+											if(typeof tv==="number") return this.save_number("[subscribe.params.f2.f1]",tv);
+											debugger;
+											return;
 										}
 										switch(path_parts[4]) {
 											default: u(idx); path_parts[4]===""; break;
