@@ -5907,7 +5907,31 @@ case "${path_parts[idx-1]}": {
 		switch(path_parts[0]) {
 			default: {
 				grouped("gen.new_ns."+path_parts,() => gd(idx));
-				switch(path_parts[0]) {}
+			} break;
+			case "transcript_target_id": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: gd(idx); path_parts[1]===""; break;
+					case "param": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							case "f1": {
+								const idx=4;
+								if(path_parts.length===3) {
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+						}
+					} break;
+				}
 			} break;
 			case "ypc_get_offers": {
 				const idx=2;
