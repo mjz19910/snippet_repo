@@ -13789,17 +13789,16 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(selected,"boolean");
 		this.t(content,this.SectionListRenderer);
 	}
-	/** @arg {SubscribeButtonData} x */
-	SubscribeButtonData(x) {
-		const cf="SubscribeButtonData";
-		this.save_keys(`[${cf}]`,x);
-		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,notificationPreferenceButton,targetId,subscribedEntityKey,onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=x; this.g(y); // ! #destructure
-		this.D$TextWithRuns(buttonText);
+	/** @template {SubscribeButtonData} T @arg {T} x */
+	SubscribeButton$Omit(x) {
+		const cf="SubscribeButton$Omit";
+		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
 		this.primitive_of(subscribed,"boolean");
 		this.primitive_of(enabled,"boolean");
 		this.primitive_of_string(type);
 		this.primitive_of_string(channelId);
 		this.primitive_of(showPreferences,"boolean");
+		this.D$TextWithRuns(buttonText);
 		this.D$TextWithRuns(subscribedButtonText);
 		this.D$TextWithRuns(unsubscribedButtonText);
 		this.trackingParams(cf,trackingParams);
@@ -13813,6 +13812,19 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.A$Accessibility(subscribeAccessibility);
 		this.A$Accessibility(unsubscribeAccessibility);
+		return y;
+	}
+	/** @arg {SubscribeButtonData} x */
+	SubscribeButtonData(x) {
+		const cf="SubscribeButtonData";
+		this.save_keys(`[${cf}]`,x);
+		if(!("targetId" in x)) {
+			let u=this.SubscribeButton$Omit(x);
+			const {...y}=u; this.g(y); // ! #destructure
+			return;
+		}
+		let u=this.SubscribeButton$Omit(x);
+		const {notificationPreferenceButton,targetId,subscribedEntityKey,onSubscribeEndpoints,onUnsubscribeEndpoints,...y}=u; this.g(y); // ! #destructure
 		this.t(notificationPreferenceButton,this.SubscriptionNotificationToggleButtonRenderer);
 		this.primitive_of_string(targetId);
 		this.primitive_of_string(subscribedEntityKey);
