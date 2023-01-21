@@ -44,6 +44,13 @@ type $report=[
 	"report.params.f28"
 ];
 
+type $sub=[
+	"subscribe.params.f2.f1",
+	"subscribe.params.f2",
+	"subscribe.params.f3",
+	"subscribe.params.f4"
+][number];
+
 type P$known$param=[
 	"click.trackingParams.f19.f2",
 	"click.trackingParams.f6.f12",
@@ -54,11 +61,7 @@ type P$known$param=[
 	"entity_key.f4",
 	"entity_key.f5",
 	$report[number],
-	"subscribe.params.f2.f1",
-	"subscribe.params.f2",
-	"subscribe.params.f3",
-	"subscribe.params.f4",
-	"watch.params.f56",
+	$sub,
 	$ypc_get_offers[number],
 	P$tracking$param,
 	P$browse$param,
