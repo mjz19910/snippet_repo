@@ -12,5 +12,6 @@ type D$Button={
 	text?: D$TextT;
 	trackingParams?: string;
 	hint?: R$Hint;
-	targetId?: YtTargetIdType;
+	targetId?: D$Button$TargetId;
 };
+type D$Button$TargetId="clip-info-button";

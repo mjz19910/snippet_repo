@@ -7819,6 +7819,7 @@ class ServiceMethods extends ServiceData {
 			case "engagement-panel-searchable-transcript-search-panel": return;
 			case "engagement-panel-searchable-transcript": return;
 			case "engagement-panel-structured-description": return;
+			case "engagement-panel-macro-markers-auto-chapters": return;
 			case "feed_filter_chip_bar_second_chip": return;
 			case "search-feed": return;
 			case "search-page": return;
@@ -8943,7 +8944,14 @@ class HandleTypes extends ServiceMethods {
 		this.t(text,this.TextT);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,this.R$Hint);
-		this.t(targetId,a => this.targetId(cf,a));
+		this.t(targetId,a => {
+			switch(a) {
+				case "clip-info-button": break;
+				case "sponsorships-button": return;
+				default: console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`); debugger;
+			}
+			this.targetId(cf,a);
+		});
 	}
 	/** @arg {R$Hint} x */
 	R$Hint(x) {
@@ -13167,6 +13175,7 @@ class HandleTypes extends ServiceMethods {
 		if("hideEngagementPanelScrimAction" in x) return this.HideEngagementPanelScrimAction(x);
 		if("loopCommand" in x) return;
 		if("updateToggleButtonStateCommand" in x) return;
+		if("changeMarkersVisibilityCommand" in x) return;
 		debugger;
 	}
 	/** @arg {HideEngagementPanelScrimAction} x */
