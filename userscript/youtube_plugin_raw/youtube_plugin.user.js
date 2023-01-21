@@ -13733,9 +13733,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(onUnsubscribeEndpoints,this.E$SignalServiceEndpoint);
 	}
 	/** @arg {E$SignalServiceEndpoint} x */
-	signalServiceEndpoint(x) {
-		this.E$SignalServiceEndpoint(x);
-	}
+	signalServiceEndpoint(x) {this.E$SignalServiceEndpoint(x);}
 	/** @arg {D$BrowseFeedActions} x */
 	BrowseFeedActions(x) {
 		const cf="BrowseFeedActions";
