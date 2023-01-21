@@ -11,7 +11,7 @@ type P$watch$param=[
 	"watch.params.f33.f4",
 	"watch.params.f33.f5",
 	"watch.params.f33",
+	"watch.params.f56",
 	"watch.params.f7",
 	"watch.params",
-	"watch.params.f56",
 ][number];
