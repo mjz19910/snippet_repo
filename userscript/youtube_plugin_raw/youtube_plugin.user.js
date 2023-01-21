@@ -5837,10 +5837,11 @@ case "${path_parts[idx-1]}": {
 							default: u(idx); path_parts[2]===""; break;
 						}
 					} break;
+					// [entity_key.f4]
 					case "f4": {
 						const idx=3;
 						if(path_parts.length===2) {
-							if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
@@ -6358,7 +6359,7 @@ case "${path_parts[idx-1]}": {
 					case "f5": {
 						const idx=3;
 						if(path_parts.length===2) {
-							if(typeof tv==="number") return console.log("[param_parse]",path,tv);
+							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
