@@ -1,3 +1,3 @@
-type RelevantStateTags={
-	relevantStateTags: StateTag[];
+type A$RelevantStateTags={
+	relevantStateTags: B$StateTag[];
 };

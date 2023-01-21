@@ -1,3 +1,3 @@
 type UpdateTitleActionData={
-	title: TextWithRuns;
+	title: D$TextWithRuns;
 };

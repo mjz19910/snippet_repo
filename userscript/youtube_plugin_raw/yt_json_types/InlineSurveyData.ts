@@ -1,10 +1,10 @@
 type InlineSurveyData={
 	dismissalEndpoint: {};
-	title: TextWithRuns;
-	subtitle: TextWithRuns;
+	title: D$TextWithRuns;
+	subtitle: D$TextWithRuns;
 	inlineContent: R$CompactVideoRenderer;
 	response: SurveyRendererResponse;
 	trackingParams: string;
-	dismissalText: TextWithRuns;
+	dismissalText: D$TextWithRuns;
 	impressionEndpoints: {}[];
 };

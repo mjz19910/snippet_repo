@@ -1,4 +1,4 @@
-type CommandMetadataTemplate<T extends keyof VEMap>=VEMap[T]['CommandMetadata'];
+type T$CommandMetadataTemplate<T extends keyof VEMap>=VEMap[T]['CommandMetadata'];
 type VEMap={
 	3832: {
 		CommandMetadata: CM$VE3832$Metadata;

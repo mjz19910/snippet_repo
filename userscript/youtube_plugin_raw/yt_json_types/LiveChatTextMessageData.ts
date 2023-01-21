@@ -1,12 +1,12 @@
 type LiveChatTextMessageData={
-	message: TextWithRuns;
-	authorName: TextWithRuns;
+	message: D$TextWithRuns;
+	authorName: D$TextWithRuns;
 	authorPhoto: Thumbnail;
 	contextMenuEndpoint: {};
 	id: string;
 	authorBadges?: LiveChatAuthorBadgeRenderer[];
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
-	contextMenuAccessibility: Accessibility;
-	timestampText: TextWithRuns;
+	contextMenuAccessibility: A$Accessibility;
+	timestampText: D$TextWithRuns;
 };

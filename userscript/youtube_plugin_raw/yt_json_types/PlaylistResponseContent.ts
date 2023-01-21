@@ -1,1 +1,1 @@
-type PlaylistResponseContent=ContentsArrayTemplate<TwoColumnBrowseResultsRenderer>&{trackingParams: string;};
+type PlaylistResponseContent=ContentsArrayTemplate<R$TwoColumnBrowseResults>&{trackingParams: string;};

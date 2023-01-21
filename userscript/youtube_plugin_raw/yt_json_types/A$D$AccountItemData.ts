@@ -1,10 +1,10 @@
 type A$D$AccountItem={
-	accountName: TextWithRuns;
+	accountName: D$TextWithRuns;
 	accountPhoto: Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;
 	serviceEndpoint: {};
-	accountByline: TextWithRuns;
-	channelHandle: TextWithRuns;
+	accountByline: D$TextWithRuns;
+	channelHandle: D$TextWithRuns;
 };

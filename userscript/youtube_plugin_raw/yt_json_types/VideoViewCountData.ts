@@ -1,6 +1,6 @@
 type VideoViewCountData={
-	viewCount: SimpleText;
+	viewCount: D$SimpleText;
 	isLive?: boolean;
-	extraShortViewCount?: SimpleText;
-	shortViewCount?: SimpleText;
+	extraShortViewCount?: D$SimpleText;
+	shortViewCount?: D$SimpleText;
 };

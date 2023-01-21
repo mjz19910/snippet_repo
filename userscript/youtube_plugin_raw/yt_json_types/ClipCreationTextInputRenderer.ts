@@ -1,6 +1,6 @@
 type ClipCreationTextInputRenderer={
 	clipCreationTextInputRenderer: {
-		placeholderText: TextWithRuns;
+		placeholderText: D$TextWithRuns;
 		maxCharacterLimit: 140;
 	};
 };

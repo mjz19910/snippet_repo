@@ -1,6 +1,6 @@
 type SettingsCheckboxData={
-	title: TextWithRuns;
-	helpText?: TextWithRuns;
+	title: D$TextWithRuns;
+	helpText?: D$TextWithRuns;
 	enabled: boolean;
 	enableServiceEndpoint: {};
 	disableServiceEndpoint: {};

@@ -1,1 +1,1 @@
-type BrowseFeedContent=SearchBoxRenderer|SubFeedSelectorRenderer|R$Button|A$CompactLinkRenderer;
+type BrowseFeedContent=R$SearchBoxRenderer|R$SubFeedSelectorRenderer|R$Button|R$CompactLinkRenderer;

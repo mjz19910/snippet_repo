@@ -1,1 +1,1 @@
-type SecondaryContents=ProfileColumnRenderer|BrowseFeedActionsRenderer;
+type SecondaryContents=R$ProfileColumnRenderer|R$BrowseFeedActions;

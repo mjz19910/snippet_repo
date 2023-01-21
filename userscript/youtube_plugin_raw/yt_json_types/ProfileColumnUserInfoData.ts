@@ -1,4 +1,4 @@
 type ProfileColumnUserInfoData={
-	title: SimpleText;
+	title: D$SimpleText;
 	thumbnail: Thumbnail;
 };

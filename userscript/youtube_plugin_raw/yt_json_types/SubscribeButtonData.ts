@@ -1,17 +1,17 @@
 type SubscribeButtonData={
-	buttonText: TextWithRuns;
+	buttonText: D$TextWithRuns;
 	subscribed: false;
 	enabled: true;
 	type: "FREE";
 	channelId: `UC${string}`;
 	showPreferences: false;
-	subscribedButtonText: TextWithRuns;
-	unsubscribedButtonText: TextWithRuns;
+	subscribedButtonText: D$TextWithRuns;
+	unsubscribedButtonText: D$TextWithRuns;
 	trackingParams: string;
-	unsubscribeButtonText: TextWithRuns;
+	unsubscribeButtonText: D$TextWithRuns;
 	serviceEndpoints?: {}[];
-	subscribeAccessibility: Accessibility;
-	unsubscribeAccessibility: Accessibility;
+	subscribeAccessibility: A$Accessibility;
+	unsubscribeAccessibility: A$Accessibility;
 	notificationPreferenceButton: SubscriptionNotificationToggleButtonRenderer;
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;

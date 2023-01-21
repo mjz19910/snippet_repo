@@ -1,5 +1,5 @@
 type ProductListItem={
-	title: SimpleText;
+	title: D$SimpleText;
 	accessibilityTitle: string;
 	thumbnail: Thumbnail;
 	price: `CA$${string}`;

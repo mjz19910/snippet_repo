@@ -7,6 +7,6 @@ type ToggleButton={
 	toggledServiceEndpoint: CommandExecutorCommand;
 	trackingParams: string;
 	toggledStyle: StyleTypeObj;
-	accessibilityData: Accessibility;
-	toggledAccessibilityData: Accessibility;
+	accessibilityData: A$Accessibility;
+	toggledAccessibilityData: A$Accessibility;
 };

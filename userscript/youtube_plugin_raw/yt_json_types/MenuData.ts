@@ -1,10 +1,10 @@
 type MenuData={
 	items?: (MenuServiceItemRenderer|{
 		toggleMenuServiceItemRenderer: {
-			defaultText: TextWithRuns;
+			defaultText: D$TextWithRuns;
 			defaultIcon: Icon<"LIBRARY_ADD">;
 			defaultServiceEndpoint: E$LikeEndpoint;
-			toggledText: TextWithRuns;
+			toggledText: D$TextWithRuns;
 			toggledIcon: Icon<"LIBRARY_REMOVE">;
 			toggledServiceEndpoint: E$LikeEndpoint;
 			trackingParams: string;
@@ -20,7 +20,7 @@ type MenuData={
 			dislikeButton: {};
 		};
 	}[];
-	accessibility?: Accessibility;
+	accessibility?: A$Accessibility;
 	targetId?: string;
 	loggingDirectives?: LoggingDirectives;
 	flexibleItems?: {

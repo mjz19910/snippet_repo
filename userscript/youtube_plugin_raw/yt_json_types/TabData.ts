@@ -18,6 +18,6 @@ type TabData={
 	selected: true;
 	content: SectionListRenderer;
 	tabIdentifier: "FEsubscriptions";
-	accessibility: Accessibility;
+	accessibility: A$Accessibility;
 	trackingParams: string;
 };

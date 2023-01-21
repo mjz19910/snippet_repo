@@ -1,10 +1,10 @@
 type VideoSecondaryInfoData={
 	owner: VideoOwnerRenderer;
-	description?: TextWithRuns;
+	description?: D$TextWithRuns;
 	subscribeButton: SubscribeButtonRenderer;
 	metadataRowContainer: MetadataRowContainerRenderer;
-	showMoreText: SimpleText;
-	showLessText: SimpleText;
+	showMoreText: D$SimpleText;
+	showLessText: D$SimpleText;
 	trackingParams: string;
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;

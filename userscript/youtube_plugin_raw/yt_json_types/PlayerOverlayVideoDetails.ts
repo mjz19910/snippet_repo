@@ -1,4 +1,4 @@
 type PlayerOverlayVideoDetails={
-	title: SimpleText;
-	subtitle: TextWithRuns;
+	title: D$SimpleText;
+	subtitle: D$TextWithRuns;
 };

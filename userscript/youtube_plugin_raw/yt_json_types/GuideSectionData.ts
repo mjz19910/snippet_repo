@@ -1,5 +1,5 @@
 type GuideSectionData={
 	items: GuideSectionItemType[];
 	trackingParams: string;
-	formattedTitle?: TextT;
+	formattedTitle?: D$TextT;
 };

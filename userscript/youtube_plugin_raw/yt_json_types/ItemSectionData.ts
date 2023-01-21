@@ -5,8 +5,8 @@ type ItemSectionData=ContentsArrayTemplate<ItemSectionItem>&{
 	header?: ItemSectionHeaderRenderer;
 };
 type ItemSectionHeader={
-	title: TextWithRuns;
-	subtitle: TextWithRuns;
+	title: D$TextWithRuns;
+	subtitle: D$TextWithRuns;
 };
 
 type ItemSectionHeaderRenderer={

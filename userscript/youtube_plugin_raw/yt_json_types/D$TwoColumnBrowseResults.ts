@@ -1,4 +1,4 @@
-type TwoColumnBrowseResultsData={
+type D$TwoColumnBrowseResults={
 	tabs: ResultRenderer[];
 	secondaryContents?: SecondaryContents;
 };

@@ -1,5 +1,5 @@
 type ExpandableVideoDescriptionBodyData={
-	descriptionBodyText: TextWithRuns;
-	showMoreText: SimpleText;
-	showLessText: SimpleText;
+	descriptionBodyText: D$TextWithRuns;
+	showMoreText: D$SimpleText;
+	showLessText: D$SimpleText;
 };

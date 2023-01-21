@@ -1,1 +1,1 @@
-type AccountItemSectionContent=A$AccountItem|A$CompactLinkRenderer;
+type AccountItemSectionContent=A$AccountItem|R$CompactLinkRenderer;

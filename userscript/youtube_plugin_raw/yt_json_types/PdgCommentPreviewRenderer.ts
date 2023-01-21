@@ -1,10 +1,10 @@
 type PdgCommentPreviewRenderer={
 	pdgCommentPreviewRenderer: {
-		title: TextWithRuns;
+		title: D$TextWithRuns;
 		authorThumbnail: Thumbnail;
-		authorText: SimpleText;
+		authorText: D$SimpleText;
 		commentOptionRenderers: PdgCommentOptionRenderer[];
-		defaultCommentText: TextWithRuns;
+		defaultCommentText: D$TextWithRuns;
 		editButton: R$Button;
 		superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
 	};

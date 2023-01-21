@@ -1,3 +1,0 @@
-type BrowseFeedActionsRenderer={
-	browseFeedActionsRenderer: BrowseFeedActions;
-};

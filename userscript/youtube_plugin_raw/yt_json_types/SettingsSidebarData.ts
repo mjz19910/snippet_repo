@@ -1,4 +1,4 @@
 type SettingsSidebarData={
-	title: TextWithRuns;
-	items: A$CompactLinkRenderer[];
+	title: D$TextWithRuns;
+	items: R$CompactLinkRenderer[];
 };

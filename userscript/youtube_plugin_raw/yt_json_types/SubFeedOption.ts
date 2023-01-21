@@ -1,5 +1,5 @@
 type SubFeedOption={
-	name: TextWithRuns;
+	name: D$TextWithRuns;
 	isSelected: boolean;
 	navigationEndpoint: {};
 	trackingParams: string;

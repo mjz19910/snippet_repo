@@ -1,4 +1,4 @@
-type PlaylistResponse=ContentsTemplate<TwoColumnBrowseResultsRenderer>&{
+type PlaylistResponse=ContentsTemplate<R$TwoColumnBrowseResults>&{
 	responseContext: ResponseContext;
 	header: PlaylistHeaderRenderer;
 	alerts?: AlertWithButtonRenderer[];

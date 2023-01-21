@@ -1,1 +1,1 @@
-type SettingsOptionsData={options: SettingsOptionItem[];title: TextWithRuns;};
+type SettingsOptionsData={options: SettingsOptionItem[];title: D$TextWithRuns;};

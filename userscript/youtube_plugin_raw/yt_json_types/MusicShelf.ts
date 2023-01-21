@@ -1,5 +1,5 @@
 type MusicShelf=ContentsArrayTemplate<MusicResponsiveListItemRenderer>&{
-	title: TextWithRuns;
+	title: D$TextWithRuns;
 	trackingParams: string;
 	continuations: ReloadContinuationData[];
 	shelfDivider: MusicShelfDividerRenderer;

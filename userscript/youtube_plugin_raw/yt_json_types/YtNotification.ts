@@ -1,8 +1,8 @@
 type YtNotification={
 	thumbnail: Thumbnail;
 	videoThumbnail: Thumbnail;
-	shortMessage: SimpleText;
-	sentTimeText: SimpleText;
+	shortMessage: D$SimpleText;
+	sentTimeText: D$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
 	read: boolean;
 	recordClickEndpoint: E$RecordNotificationInteractionsEndpoint;

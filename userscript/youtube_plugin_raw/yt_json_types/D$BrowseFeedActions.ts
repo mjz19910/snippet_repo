@@ -1,3 +1,3 @@
-type BrowseFeedActions={
+type D$BrowseFeedActions={
 	contents: BrowseFeedContent[];
 };

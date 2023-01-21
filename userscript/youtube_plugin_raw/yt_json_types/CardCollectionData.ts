@@ -1,6 +1,6 @@
 type CardCollectionData={
 	cards: CardRenderer[];
-	headerText: TextWithRuns;
+	headerText: D$TextWithRuns;
 	icon: InfoCardIconRenderer;
 	closeButton: InfoCardIconRenderer;
 	trackingParams: string;

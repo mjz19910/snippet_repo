@@ -1,5 +1,5 @@
 type RatingSurveyOptionData={
-	responseText: TextWithRuns;
+	responseText: D$TextWithRuns;
 	defaultStateIcon: Icon<"STAR_BORDER">;
 	onStateIcon: Icon<"STAR">;
 	followUpCommand: FollowUpCommand;

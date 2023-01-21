@@ -4,10 +4,10 @@ type MetadataBadgeData={
 	label: "Unlisted";
 	tooltip?: string;
 	trackingParams: string;
-	accessibilityData?: LabelData;
+	accessibilityData?: A$LabelData;
 }|{
 	style: "BADGE_STYLE_TYPE_SHORTS_PLAYER";
 	label: "Includes paid promotion";
 	trackingParams: string;
-	accessibilityData: LabelData
+	accessibilityData: A$LabelData
 };

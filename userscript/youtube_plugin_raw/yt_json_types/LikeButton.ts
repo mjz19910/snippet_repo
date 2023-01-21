@@ -4,4 +4,25 @@ type LikeButton={
 	trackingParams: string;
 	likesAllowed: boolean;
 	serviceEndpoints: E$LikeEndpoint[];
-}|LikeButton_2;
+}|{
+	target: {
+		videoId: string;
+	};
+	likeStatus: "INDIFFERENT";
+	likeCount: 44008;
+	likeCountText: D$SimpleText;
+	likeCountWithLikeText: D$SimpleText;
+	likeCountWithUnlikeText: D$SimpleText;
+	dislikeCountText: D$SimpleText;
+	dislikeCountWithDislikeText: D$SimpleText;
+	dislikeCountWithUndislikeText: D$SimpleText;
+	trackingParams: string;
+	likesAllowed: true;
+	serviceEndpoints: {
+		clickTrackingParams: string;
+		commandMetadata: CommandMetadata;
+		likeEndpoint: {};
+	}[];
+	likeCountTooltipText: D$TextWithRuns;
+	dislikeCountTooltipText: D$TextWithRuns;
+};

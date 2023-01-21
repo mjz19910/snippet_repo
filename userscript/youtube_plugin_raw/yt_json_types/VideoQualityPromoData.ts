@@ -1,6 +1,6 @@
 type VideoQualityPromoData={
 	triggerCriteria: TriggerCriteria;
-	text: TextWithRuns;
+	text: D$TextWithRuns;
 	endpoint: E$UrlEndpoint;
 	trackingParams: string;
 	snackbar: R$NotificationAction;

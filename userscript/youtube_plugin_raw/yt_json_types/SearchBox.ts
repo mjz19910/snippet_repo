@@ -2,6 +2,6 @@ type SearchBox={
 	endpoint: {};
 	searchButton: R$Button;
 	clearButton: R$Button;
-	placeholderText: TextWithRuns;
+	placeholderText: D$TextWithRuns;
 	trackingParams: string;
 };

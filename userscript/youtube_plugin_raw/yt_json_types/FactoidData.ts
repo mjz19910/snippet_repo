@@ -1,5 +1,5 @@
 type FactoidData={
-	value: SimpleText;
-	label: SimpleText;
+	value: D$SimpleText;
+	label: D$SimpleText;
 	accessibilityText: string;
 };

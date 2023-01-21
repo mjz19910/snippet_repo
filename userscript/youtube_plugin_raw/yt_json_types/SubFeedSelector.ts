@@ -1,5 +1,5 @@
 type SubFeedSelector={
-	title: TextWithRuns;
+	title: D$TextWithRuns;
 	options: SubFeedOptionRenderer[];
 	trackingParams: string;
 };

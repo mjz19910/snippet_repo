@@ -1,4 +1,4 @@
 type TextRunsAndAccessibility={
-	runs: TextRun[];
-	accessibility: Accessibility;
+	runs: D$TextRun[];
+	accessibility: A$Accessibility;
 };

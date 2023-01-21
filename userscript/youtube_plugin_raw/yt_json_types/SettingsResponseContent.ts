@@ -1,6 +1,6 @@
 type SettingsResponse={
 	responseContext: ResponseContext;
-	contents: TwoColumnBrowseResultsRenderer;
+	contents: R$TwoColumnBrowseResults;
 	trackingParams: string;
 	topbar: DesktopTopbarRenderer;
 	onResponseReceivedEndpoints?: {}[];

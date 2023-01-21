@@ -4,5 +4,5 @@ type ResponseContext={
 	webResponseContextExtensionData?: WebResponseContextExtensionData;
 	consistencyTokenJar?: ConsistencyTokenJar;
 	maxAgeSeconds?: number;
-	stateTags?: RelevantStateTags;
+	stateTags?: A$RelevantStateTags;
 };

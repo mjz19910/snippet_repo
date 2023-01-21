@@ -1,3 +1,0 @@
-type TwoColumnBrowseResultsRenderer={
-	twoColumnBrowseResultsRenderer: TwoColumnBrowseResultsData;
-};

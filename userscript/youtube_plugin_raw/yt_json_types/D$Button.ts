@@ -1,6 +1,6 @@
 type D$Button={
-	accessibility?: LabelData;
-	accessibilityData?: Accessibility;
+	accessibility?: A$LabelData;
+	accessibilityData?: A$Accessibility;
 	command?: ButtonCommand;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
@@ -9,7 +9,7 @@ type D$Button={
 	tooltip?: string;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
-	text?: TextT;
+	text?: D$TextT;
 	trackingParams?: string;
 	hint?: R$Hint;
 	targetId?: YtTargetIdType;

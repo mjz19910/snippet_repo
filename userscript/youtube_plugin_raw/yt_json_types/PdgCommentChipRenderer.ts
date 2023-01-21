@@ -1,6 +1,6 @@
 type PdgCommentChipRenderer={
 	pdgCommentChipRenderer: {
-		chipText: SimpleText;
+		chipText: D$SimpleText;
 		chipColorPalette: {
 			backgroundColor: 4280191205;
 			foregroundTitleColor: 4294967295;

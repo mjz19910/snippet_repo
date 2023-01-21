@@ -7445,7 +7445,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[ServiceEndpointTemplate]",y);
 		f.call(this,y);
 	}
-	/** @template T @arg {AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template T @arg {T$AutoplayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	AutoplayTemplate(x,f) {
 		const cf="AutoplayTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -7511,7 +7511,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ItemSectionData",trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @arg {SimpleText} x @arg {(this:this,x:{accessibility?:Accessibility})=>void} f */
+	/** @arg {D$SimpleText} x @arg {(this:this,x:{accessibility?:A$Accessibility})=>void} f */
 	SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
 		if(!x) {debugger; return;}
@@ -8131,7 +8131,7 @@ class HandleTypes extends ServiceMethods {
 		if(maxAgeSeconds!==void 0) this.primitive_of(maxAgeSeconds,"number");
 		this.t(stateTags,this.RelevantStateTags);
 	}
-	/** @arg {RelevantStateTags} x */
+	/** @arg {A$RelevantStateTags} x */
 	RelevantStateTags(x) {
 		const cf="RelevantStateTags";
 		this.save_keys(`[${cf}]`,x);
@@ -8981,14 +8981,14 @@ class HandleTypes extends ServiceMethods {
 		/** @type {ParamsSection} */
 		this.parser.on_serialized_interactions_request_params(root,"record_notification_interactions",x);
 	}
-	/** @arg {MultiPageMenuSectionRenderer<A$CompactLinkRenderer>} x */
+	/** @arg {MultiPageMenuSectionRenderer<R$CompactLinkRenderer>} x */
 	MultiPageMenuSectionRenderer(x) {
 		const cf="MultiPageMenuSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {multiPageMenuSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuSection(multiPageMenuSectionRenderer);
 	}
-	/** @arg {MultiPageMenuSection<A$CompactLinkRenderer>} x */
+	/** @arg {MultiPageMenuSection<R$CompactLinkRenderer>} x */
 	MultiPageMenuSection(x) {
 		const cf="MultiPageMenuSection";
 		this.save_keys(`[]`,x);
@@ -8999,14 +8999,14 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {A$CompactLinkRenderer} x */
+	/** @arg {R$CompactLinkRenderer} x */
 	CompactLinkRenderer(x) {
 		const cf="CompactLinkRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {compactLinkRenderer,...y}=x; this.g(y); // ! #destructure
 		this.CompactLinkData(compactLinkRenderer);
 	}
-	/** @arg {CompactLinkData} x */
+	/** @arg {D$CompactLink} x */
 	CompactLinkData(x) {
 		const cf="CompactLinkData";
 		this.save_keys(`[]`,x);
@@ -10329,14 +10329,14 @@ class HandleTypes extends ServiceMethods {
 		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
 		this.WebCommandMetadata(webCommandMetadata);
 	}
-	/** @arg {Accessibility} x */
+	/** @arg {A$Accessibility} x */
 	Accessibility(x) {
 		const cf="Accessibility";
 		this.save_keys(`[${cf}]`,x);
 		const {accessibilityData,...y}=x; this.g(y); // ! #destructure
 		this.LabelData(accessibilityData);
 	}
-	/** @arg {LabelData} x */
+	/** @arg {A$LabelData} x */
 	LabelData(x) {
 		const cf="LabelData";
 		this.save_keys(`[${cf}]`,x);
@@ -10367,7 +10367,7 @@ class HandleTypes extends ServiceMethods {
 		this.SimpleText(title);
 		this.trackingParams("CF_FIX",trackingParams);
 	}
-	/** @arg {{accessibility?:Accessibility}} x */
+	/** @arg {{accessibility?:A$Accessibility}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.Accessibility(x.accessibility);
@@ -10551,7 +10551,7 @@ class HandleTypes extends ServiceMethods {
 		const {serializedContextData,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedContextData);
 	}
-	/** @private @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @private @arg {D$TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
 		if(!("runs" in x)) {debugger; return;}
 		const cf/*!*/="TextWithRuns";
@@ -10560,7 +10560,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(runs,a => this.TextRun(a,f_run));
 		this.t(accessibility,this.Accessibility);
 	}
-	/** @private @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @private @arg {D$TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
 		const cf="TextRun";
 		this.save_keys(`[${cf}]`,x);
@@ -10672,7 +10672,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.str_starts_with(x,"/channel/UC")) return;
 		debugger;
 	}
-	/** @arg {TextT} x */
+	/** @arg {D$TextT} x */
 	TextT(x) {
 		const cf="TextT";
 		this.save_keys(`[${cf}]`,x);
@@ -10708,7 +10708,7 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @arg {Extract<TwoColumnWatchNextResultsData['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
+	/** @arg {Extract<D$TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	handle_results_4(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
@@ -10719,7 +10719,7 @@ class HandleTypes extends ServiceMethods {
 			case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(x);
 		}
 	}
-	/** @arg {TwoColumnWatchNextResultsData['results']['results']['contents'][number]} x */
+	/** @arg {D$TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
 	handle_results_3(x) {
 		if("itemSectionRenderer" in x) return this.handle_results_4(x);
 		if("merchandiseShelfRenderer" in x) return this.MerchandiseShelfRenderer(x);
@@ -10733,15 +10733,15 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @arg {TwoColumnWatchNextResultsData['results']['results']} x */
+	/** @arg {D$TwoColumnWatchNextResults['results']['results']} x */
 	handle_results_2(x) {
 		this.ContentsArrayTemplate(x,this.handle_results_3);
 	}
-	/** @arg {TwoColumnWatchNextResultsData['results']} x */
+	/** @arg {D$TwoColumnWatchNextResults['results']} x */
 	handle_results_1(x) {
 		this.ResultsTemplate(x,this.handle_results_2);
 	}
-	/** @arg {TwoColumnWatchNextResultsData} x */
+	/** @arg {D$TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResultsData(x) {
 		const cf="TwoColumnWatchNextResultsData";
 		this.save_keys(`[${cf}]`,x);
@@ -11374,7 +11374,7 @@ class HandleTypes extends ServiceMethods {
 		const {isCacheHit,...y}=x; this.g(y); // ! #destructure
 		if(!isCacheHit) debugger;
 	}
-	/** @arg {StateTag} x */
+	/** @arg {B$StateTag} x */
 	StateTag(x) {
 		const cf="StateTag";
 		this.save_keys(`[${cf}]`,x);
@@ -11421,7 +11421,7 @@ class HandleTypes extends ServiceMethods {
 		const {feedFilterChipBarRenderer,...y}=x; this.g(y); // ! #destructure
 		this.FeedFilterChipBarData(feedFilterChipBarRenderer);
 	}
-	/** @arg {TwoColumnBrowseResultsRenderer} x */
+	/** @arg {R$TwoColumnBrowseResults} x */
 	TwoColumnBrowseResultsRenderer(x) {
 		const {twoColumnBrowseResultsRenderer,...y}=x; this.g(y); // ! #destructure
 		this.TwoColumnBrowseResultsData(twoColumnBrowseResultsRenderer);
@@ -12182,7 +12182,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {TwoColumnBrowseResultsData} x */
+	/** @arg {D$TwoColumnBrowseResults} x */
 	TwoColumnBrowseResultsData(x) {
 		const cf="TwoColumnBrowseResultsData";
 		this.save_keys(`[${cf}]`,x);
@@ -12302,7 +12302,7 @@ class HandleTypes extends ServiceMethods {
 		if("browseFeedActionsRenderer" in x) return this.BrowseFeedActionsRenderer(x);
 		debugger;
 	}
-	/** @arg {ProfileColumnRenderer} x */
+	/** @arg {R$ProfileColumnRenderer} x */
 	ProfileColumnRenderer(x) {
 		const cf="ProfileColumnRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -13012,7 +13012,7 @@ class HandleTypes extends ServiceMethods {
 		const {subscribeButtonRenderer,...y}=x; this.g(y); // ! #destructure
 		this.SubscribeButtonData(subscribeButtonRenderer);
 	}
-	/** @arg {BrowseFeedActionsRenderer} x */
+	/** @arg {R$BrowseFeedActions} x */
 	BrowseFeedActionsRenderer(x) {
 		const cf="BrowseFeedActionsRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -13398,7 +13398,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(onSubscribeEndpoints,this.E$SubscribeEndpoint);
 		this.z(onUnsubscribeEndpoints,this.E$SignalServiceEndpoint);
 	}
-	/** @arg {BrowseFeedActions} x */
+	/** @arg {D$BrowseFeedActions} x */
 	BrowseFeedActions(x) {
 		const cf="BrowseFeedActions";
 		this.save_keys(`[${cf}]`,x);

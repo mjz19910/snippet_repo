@@ -1,5 +1,5 @@
 type TopicLinkData={
-	title: SimpleText;
+	title: D$SimpleText;
 	thumbnailDetails: Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata
 	endpoint: E$BrowseEndpoint;

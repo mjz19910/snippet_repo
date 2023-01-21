@@ -1,6 +1,6 @@
 type PageIntroductionData={
-	bodyText: TextWithRuns;
+	bodyText: D$TextWithRuns;
 	headerIcon: Icon<"ACCOUNT_ADVANCED">|Icon<"ACCOUNT_SHARING">;
-	headerText: TextWithRuns;
-	pageTitle: TextWithRuns;
+	headerText: D$TextWithRuns;
+	pageTitle: D$TextWithRuns;
 };

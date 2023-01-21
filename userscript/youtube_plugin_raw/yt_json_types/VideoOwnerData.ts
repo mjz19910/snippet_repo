@@ -1,8 +1,8 @@
 type VideoOwnerData={
 	thumbnail: Thumbnail;
-	title: TextWithRuns;
+	title: D$TextWithRuns;
 	subscriptionButton?: SubscriptionButton;
 	navigationEndpoint: E$BrowseEndpoint;
-	subscriberCountText?: SimpleText;
+	subscriberCountText?: D$SimpleText;
 	trackingParams: string;
 };

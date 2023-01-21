@@ -1,1 +1,0 @@
-type LabelData={label: string;};

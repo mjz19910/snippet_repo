@@ -17,6 +17,6 @@ type BrowseResponse={
 	// ?
 	onResponseReceivedActions?: ResponseReceivedAction[];
 	sidebar?: BrowseSidebar;
-	observedStateTags?: StateTag[];
+	observedStateTags?: B$StateTag[];
 	cacheMetadata?: CacheMetadata;
 };

@@ -1,6 +1,6 @@
 type PlaylistBylineRenderer={
 	playlistBylineRenderer: {
-		text: TextWithRuns;
+		text: D$TextWithRuns;
 	};
 };
 
@@ -35,11 +35,11 @@ type HeroPlaylistThumbnailRenderer={
 
 type PlaylistHeader={
 	playlistId: string;
-	title: TextWithRuns;
-	numVideosText: TextWithRuns;
+	title: D$TextWithRuns;
+	numVideosText: D$TextWithRuns;
 	descriptionText: {};
-	ownerText: TextWithRuns;
-	viewCountText: TextWithRuns;
+	ownerText: D$TextWithRuns;
+	viewCountText: D$TextWithRuns;
 	shareData: YtShareData;
 	isEditable: boolean;
 	privacy: string;
@@ -47,8 +47,8 @@ type PlaylistHeader={
 	editableDetails: EditableDetails;
 	trackingParams: string;
 	serviceEndpoints: EndpointTemplate<E$PlaylistEditEndpoint>[];
-	stats: TextWithRuns[];
-	briefStats: TextWithRuns[];
+	stats: D$TextWithRuns[];
+	briefStats: D$TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;
 	playlistHeaderBanner: HeroPlaylistThumbnailRenderer;
 	moreActionsMenu: MenuRenderer;
@@ -57,5 +57,5 @@ type PlaylistHeader={
 	onDescriptionTap: OpenPopupAction;
 	cinematicContainer: CinematicContainerRenderer;
 	byline: PlaylistBylineRenderer[];
-	descriptionTapText: TextWithRuns;
+	descriptionTapText: D$TextWithRuns;
 };

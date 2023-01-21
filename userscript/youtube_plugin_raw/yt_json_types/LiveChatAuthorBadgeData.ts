@@ -1,5 +1,5 @@
 type LiveChatAuthorBadgeData={
 	icon: Icon<"MODERATOR">;
 	tooltip: string;
-	accessibility: Accessibility;
+	accessibility: A$Accessibility;
 };

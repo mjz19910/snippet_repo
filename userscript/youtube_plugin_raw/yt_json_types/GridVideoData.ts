@@ -3,12 +3,12 @@ type GridVideoData={
 	channelThumbnail: Thumbnail;
 	menu: MenuRenderer;
 	navigationEndpoint: {};
-	shortBylineText: TextWithRuns;
-	shortViewCountText: TextWithRuns;
+	shortBylineText: D$TextWithRuns;
+	shortViewCountText: D$TextWithRuns;
 	thumbnail: Thumbnail;
 	thumbnailOverlay: ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;
 	videoId: string;
-	viewCountText: TextWithRuns;
+	viewCountText: D$TextWithRuns;
 };

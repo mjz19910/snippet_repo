@@ -1,6 +1,6 @@
 type TranscriptSegmentListData={
 	initialSegments: TranscriptSegmentRenderer[];
-	noResultLabel: TextWithRuns;
-	retryLabel: TextWithRuns;
+	noResultLabel: D$TextWithRuns;
+	retryLabel: D$TextWithRuns;
 	touchCaptionsEnabled: boolean;
 };

@@ -1,16 +1,16 @@
 type EngagementPanelMenu=MenuRenderer|SortFilterSubMenuRenderer;
 
 type EngagementPanelTitleHeader={
-	title: TextT;
-	contextualInfo?: TextWithRuns;
+	title: D$TextT;
+	contextualInfo?: D$TextWithRuns;
 	informationButton?: R$Button;
 	menu?: EngagementPanelMenu;
 	visibilityButton: R$Button;
 	trackingParams: string;
 };
 type EngagementPanelMenuAll={
-	title: TextWithRuns;
-	contextualInfo: TextWithRuns;
+	title: D$TextWithRuns;
+	contextualInfo: D$TextWithRuns;
 	menu: SortFilterSubMenuRenderer;
 	visibilityButton: R$Button;
 	trackingParams: string;

@@ -1,5 +1,5 @@
 type A$NotificationAction={
-	responseText: TextWithRuns;
+	responseText: D$TextWithRuns;
 	actionButton?: R$Button;
 	trackingParams: string;
 };

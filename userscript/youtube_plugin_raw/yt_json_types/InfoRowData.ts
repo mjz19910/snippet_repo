@@ -1,7 +1,7 @@
 type InfoRowData={
-	title: SimpleText;
-	defaultMetadata?: SimpleText;
-	expandedMetadata?: SimpleText;
+	title: D$SimpleText;
+	defaultMetadata?: D$SimpleText;
+	expandedMetadata?: D$SimpleText;
 	expandIcon?: Icon<"EXPAND">;
 	trackingParams: string;
 	infoRowExpandStatusKey?: EnumForExpandStatusKey;

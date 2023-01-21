@@ -1,7 +1,7 @@
-type TwoColumnWatchNextResultsData={
+type D$TwoColumnWatchNextResults={
 	results: ResultsTemplate<ContentsArrayTemplate<WatchResultItem>>;
 	secondaryResults: SecondaryResultsTemplate<SecondaryContentsItem|SecondaryResultsItem>;
 	playlist?: PlaylistTemplate<PlaylistContent>;
-	autoplay?: AutoplayTemplate<AutoplayContent>;
+	autoplay?: T$AutoplayTemplate<AutoplayContent>;
 	conversationBar?: ConversationBarTypes;
 };

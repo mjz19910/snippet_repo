@@ -1,3 +1,3 @@
 type FeedTabbedHeaderData={
-	title: TextWithRuns;
+	title: D$TextWithRuns;
 };

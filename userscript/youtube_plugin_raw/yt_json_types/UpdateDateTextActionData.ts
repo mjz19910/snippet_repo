@@ -1,3 +1,3 @@
 type UpdateDateTextActionData={
-	dateText: SimpleText;
+	dateText: D$SimpleText;
 };

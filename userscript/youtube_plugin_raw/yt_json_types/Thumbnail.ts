@@ -1,5 +1,5 @@
 type Thumbnail={
 	thumbnails: ThumbnailItem[];
-	accessibility?: Accessibility;
+	accessibility?: A$Accessibility;
 	isOriginalAspectRatio?: true;
 };

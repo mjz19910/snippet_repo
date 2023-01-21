@@ -70,19 +70,19 @@ export class Snippet_0_tmp {
 			debugger;
 		}
 	}
-	/** @arg {Accessibility} x */
+	/** @arg {A$Accessibility} x */
 	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
 		const {accessibilityData,...y}=x; this.g(y);
 		this.AccessibilityData(accessibilityData);
 	}
-	/** @arg {LabelData} x */
+	/** @arg {A$LabelData} x */
 	AccessibilityData(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
 	}
-	/** @arg {TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @arg {D$TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextWithRuns(x,f_run=this.NavigationEndpoint) {
 		const cf="TextWithRuns";
 		if(!("runs" in x)) {debugger; return;}
@@ -91,7 +91,7 @@ export class Snippet_0_tmp {
 		this.z(runs,a => this.TextRun(a,f_run));
 		if(accessibility) this.Accessibility(accessibility);
 	}
-	/** @arg {TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @arg {D$TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
 	TextRun(x,f_run) {
 		this.save_keys("[TextRun]",x);
 		const {text,navigationEndpoint,...y}=x; this.g(y);

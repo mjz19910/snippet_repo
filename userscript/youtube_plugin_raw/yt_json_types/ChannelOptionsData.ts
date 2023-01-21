@@ -2,6 +2,6 @@ type ChannelOptionsData={
 	avatar: Thumbnail;
 	avatarEndpoint: {};
 	name: string;
-	links: TextWithRuns[];
-	avatarAccessibility: Accessibility;
+	links: D$TextWithRuns[];
+	avatarAccessibility: A$Accessibility;
 };

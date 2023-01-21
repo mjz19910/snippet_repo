@@ -1,4 +1,4 @@
-type TextWithRuns={
-	runs: TextRun[];
-	accessibility?: Accessibility;
+type D$TextWithRuns={
+	runs: D$TextRun[];
+	accessibility?: A$Accessibility;
 };

@@ -5,15 +5,15 @@ type PP_Overlays=
 ;
 
 type PlaylistPanelVideo={
-	title: SimpleText;
-	longBylineText: TextWithRuns;
+	title: D$SimpleText;
+	longBylineText: D$TextWithRuns;
 	thumbnail: Thumbnail;
-	lengthText: SimpleText;
-	indexText: SimpleText;
+	lengthText: D$SimpleText;
+	indexText: D$SimpleText;
 	selected: true;
 	navigationEndpoint: E$WatchEndpoint;
 	videoId: string;
-	shortBylineText: TextWithRuns;
+	shortBylineText: D$TextWithRuns;
 	trackingParams: string;
 	menu: MenuRenderer;
 	thumbnailOverlays: PP_Overlays[];

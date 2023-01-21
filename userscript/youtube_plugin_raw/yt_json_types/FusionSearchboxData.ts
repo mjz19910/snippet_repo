@@ -1,6 +1,6 @@
 type FusionSearchboxData={
 	icon: Icon<"SEARCH">;
-	placeholderText: TextWithRuns;
+	placeholderText: D$TextWithRuns;
 	config: SearchboxConfig;
 	trackingParams: string;
 	searchEndpoint: E$SearchEndpoint;

@@ -1,6 +1,6 @@
 type PdgCommentOptionRenderer={
 	pdgCommentOptionRenderer: {
-		commentText: TextWithRuns;
+		commentText: D$TextWithRuns;
 		chipRenderer: PdgCommentChipRenderer;
 	};
 };

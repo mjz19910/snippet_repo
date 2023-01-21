@@ -1,6 +1,6 @@
 type ChannelResponse={
 	responseContext: ResponseContext;
-	contents: TwoColumnBrowseResultsRenderer;
+	contents: R$TwoColumnBrowseResults;
 	header: C4TabbedHeaderRenderer;
 	metadata: ChannelMetadataRenderer;
 	trackingParams: string;

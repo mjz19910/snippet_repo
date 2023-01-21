@@ -1,6 +1,6 @@
 type PlaylistAddToOption={
 	playlistId: PlaylistId;
-	title: SimpleText;
+	title: D$SimpleText;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";
 	privacyIcon: Icon<"PRIVACY_PRIVATE">;

@@ -3,7 +3,7 @@ type MapTemplate<T,U>={key: T; value: U;};
 
 type ChapterRenderer={
 	chapterRenderer: {
-		title: SimpleText;
+		title: D$SimpleText;
 		timeRangeStartMillis: 0;
 		onActiveCommand: {
 			clickTrackingParams: string;

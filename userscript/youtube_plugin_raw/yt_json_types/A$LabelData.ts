@@ -1,0 +1,1 @@
+type A$LabelData={label: string;};

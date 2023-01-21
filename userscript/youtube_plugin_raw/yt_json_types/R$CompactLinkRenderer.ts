@@ -1,3 +1,3 @@
-type A$CompactLinkRenderer={
-	compactLinkRenderer: CompactLinkData;
+type R$CompactLinkRenderer={
+	compactLinkRenderer: D$CompactLink;
 };

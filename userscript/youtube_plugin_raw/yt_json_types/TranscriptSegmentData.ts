@@ -1,8 +1,8 @@
 type TranscriptSegmentData={
 	startMs: `${number}`;
 	endMs: `${number}`;
-	snippet: TextWithRuns;
-	startTimeText: TextWithRuns;
+	snippet: D$TextWithRuns;
+	startTimeText: D$TextWithRuns;
 	trackingParams: string;
-	accessibility: Accessibility;
+	accessibility: A$Accessibility;
 };
