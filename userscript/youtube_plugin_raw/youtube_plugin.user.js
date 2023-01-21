@@ -5368,6 +5368,14 @@ case "${path}": {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "ypc_get_offers.params.f5": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "ypc_get_offers.params.f1": {
 						switch(ta) {
 							case 1: break;
@@ -5381,6 +5389,7 @@ case "${path}": {
 						switch(ta) {
 							case 1: break;
 							case 3: break;
+							case 5: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5866,6 +5875,25 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: gd(idx); path_parts[2]===""; break;
+							case "f5": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: gd(idx); path_parts[4]===""; break;
+										}
+									} break;
+								}
+							} break;
 							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) {
