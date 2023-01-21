@@ -4424,7 +4424,6 @@ class CodegenService extends BaseService {
 	json_replacer(state,k1,rep) {
 		/** @type {unknown} */
 		let o=rep;
-		if(k1==="") return o;
 		if(typeof o==="bigint") return o;
 		else if(typeof o==="boolean") return o;
 		else if(typeof o==="function") return o;
