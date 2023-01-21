@@ -960,6 +960,7 @@ class MyReader {
 		if(diff!==1) {
 			if(this.noisy_log_level) console.log("at %o uint32 consumed %o bytes",this.last_pos,diff);
 		}
+		if(ret===null) throw new Error("Failed to read uint32");
 		return ret;
 	};
 	read_varint() {
@@ -1189,23 +1190,10 @@ class MyReader {
 				}
 			} break;
 			case 3: {
-				let res=this.uint32();
-				if(res===null) {
-					first_num.push(["error",fieldId]);
-					this.failed=true;
-					break;
-				}
-				wireType=res&7;
-				while(wireType!==4) {
+				let res;
+				while((wireType=(res=this.uint32())&7)!==4) {
 					let skip_res=this.skipTypeEx(res>>>3,wireType);
-					first_num.push(["group",fieldId,skip_res]);
-					res=this.uint32();
-					if(res===null) {
-						first_num.push(["error",fieldId]);
-						this.failed=true;
-						break;
-					}
-					wireType=res&7;
+					first_num.push(["group",res>>>3,skip_res]);
 				}
 			} break;
 			case 4: {
@@ -5284,6 +5272,14 @@ case "${path}": {
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
+					case "report.params.f28.f1.f1": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "report.params.f28.f1": {
 						switch(ta) {
 							case 1: break;
