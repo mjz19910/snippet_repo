@@ -1,7 +1,7 @@
 type VideoOwnerData={
 	thumbnail: D$Thumbnail;
 	title: D$TextWithRuns;
-	subscriptionButton?: SubscriptionButton;
+	subscriptionButton?: D$SubscriptionButton;
 	navigationEndpoint: E$BrowseEndpoint;
 	subscriberCountText?: D$SimpleText;
 	trackingParams: string;
@@ -9,9 +9,7 @@ type VideoOwnerData={
 }|{
 	thumbnail: D$Thumbnail;
 	title: D$TextWithRuns;
-	subscriptionButton: {
-		type: "FREE";
-	};
+	subscriptionButton: D$SubscriptionButton;
 	navigationEndpoint: E$BrowseEndpoint;
 	subscriberCountText: D$SimpleText;
 	trackingParams: string;
