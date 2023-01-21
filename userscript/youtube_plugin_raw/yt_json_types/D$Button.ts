@@ -14,4 +14,3 @@ type D$Button={
 	hint?: R$Hint;
 	targetId?: D$Button$TargetId;
 };
-type D$Button$TargetId="clip-info-button";

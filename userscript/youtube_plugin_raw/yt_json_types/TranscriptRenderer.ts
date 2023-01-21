@@ -1,3 +1,3 @@
 type TranscriptRenderer={
-	transcriptRenderer: TranscriptData;
+	transcriptRenderer: D$Transcript;
 };

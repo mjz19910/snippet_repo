@@ -8945,6 +8945,7 @@ class HandleTypes extends ServiceMethods {
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,this.R$Hint);
 		this.t(targetId,a => {
+			/** @type {D$Button$TargetId} */
 			switch(a) {
 				case "clip-info-button": break;
 				case "sponsorships-button": return;
@@ -9367,6 +9368,7 @@ class HandleTypes extends ServiceMethods {
 			if(x.type==="subscription.subscribe") break x;
 			if(x.type==="subscription.unsubscribe") break x;
 			if(x.type==="updated_metadata") break x;
+			if(x.type==="get_transcript") break x;
 			debugger;
 		}
 		switch(x.type) {
@@ -12749,6 +12751,7 @@ class HandleTypes extends ServiceMethods {
 		if("transcriptSearchBoxStateEntity" in x) return;
 		if("offlineabilityEntity" in x) return;
 		if("playlistLoopStateEntity" in x) return;
+		if("macroMarkersListEntity" in x) return;
 		debugger;
 	}
 	/** @arg {EntityMutationOptions} x */
@@ -13923,7 +13926,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="TranscriptRenderer";
 		this.save_keys(`[${cf}]`,x);
 		const {transcriptRenderer,...y}=x; this.g(y); // ! #destructure
-		this.TranscriptData(transcriptRenderer);
+		this.D$Transcript(transcriptRenderer);
 	}
 	/** @arg {PivotButtonRenderer} x */
 	PivotButtonRenderer(x) {
@@ -14337,11 +14340,29 @@ class HandleTypes extends ServiceMethods {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {TranscriptData} x */
-	TranscriptData(x) {
-		const cf="TranscriptData";
+	/** @private @arg {D$Transcript} x */
+	D$Transcript(x) {
+		const cf="Transcript";
 		this.save_keys(`[${cf}]`,x);
+		const {trackingParams,content,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
+		this.TranscriptSearchPanelRenderer(content);
 	}
+	/** @private @arg {TranscriptSearchPanelRenderer} x */
+	TranscriptSearchPanelRenderer(x) {
+		const cf="TranscriptSearchPanelRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptSearchPanelRenderer: {trackingParams,body,footer,targetId,...y},...z}=x; this.g(y); this.g(z);
+		this.trackingParams(cf,trackingParams);
+		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
+		this.TranscriptSegmentListRenderer(body);
+		this.TranscriptFooterRenderer(footer);
+		x;
+	}
+	/** @private @arg {TranscriptFooterRenderer} x */
+	TranscriptFooterRenderer(x) {x;}
+	/** @private @arg {TranscriptSegmentListRenderer} x */
+	TranscriptSegmentListRenderer(x) {x;}
 	/** @private @arg {PivotButton} x */
 	PivotButton(x) {
 		const cf="PivotButton";
