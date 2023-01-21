@@ -2347,15 +2347,13 @@ class KnownDataSaver extends ApiBase {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let yt_plugin=window.yt_plugin;
-		if(!yt_plugin) return;
-		let gg=yt_plugin.ds.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=this.ds.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]==="many") return;
-		let bm=yt_plugin.ds.generate_bitmap_num(g1[1]).bitmap;
-		yt_plugin.ds.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		yt_plugin.ds.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
+		let bm=this.ds.generate_bitmap_num(g1[1]).bitmap;
+		this.ds.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
+		this.ds.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
 	}
 	/** @arg {string[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
