@@ -5102,7 +5102,7 @@ class ParserService extends BaseService {
 		if(param_map===null) {debugger; return;}
 		switch(root) {
 			case "GetTranscript": {
-				/** @type {(ParamMapValue|["seq",ParamMapValue[]])[]} */
+				/** @type {ParamMapValue[]} */
 				let transcript_args=[];
 				let pMap=param_map;
 				debugger;
@@ -5112,7 +5112,7 @@ class ParserService extends BaseService {
 					let pf=pMap.get(x);
 					if(pf) {
 						if(pf.length!==1) debugger;
-						transcript_args[x-1]=['seq',pf];
+						transcript_args[x-1]=pf[0];
 					}
 				}
 				this.z([1,2,3,5,6,7,8],a => convert_param(a));
@@ -5284,6 +5284,22 @@ case "${path}": {
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); break;
+					case "report.params.f28.f1": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
+					case "report.params.f28": {
+						switch(ta) {
+							case 1: break;
+							default: return new_ns();
+						}
+						/** @type {P$PathRoot} */
+						this.parse_param_next(root,`${path}.f${ta}`,tv);
+					} return;
 					case "browse$param.f93": {
 						switch(ta) {
 							case 1: break;
@@ -5404,6 +5420,9 @@ case "${path}": {
 							case 11: break;
 							case 15: break;
 							case 18: break;
+							case 25: break;
+							case 26: break;
+							case 28: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5447,6 +5466,7 @@ case "${path}": {
 						switch(ta) {
 							case 2: case 3: break; case 7: case 12: case 13: break;
 							case 24: case 27: case 33: break;
+							case 56: break;
 							default: return new_ns();
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
