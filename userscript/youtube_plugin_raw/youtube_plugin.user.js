@@ -5324,6 +5324,7 @@ case "${path}": {
 					case "browse.params": {
 						switch(ta) {
 							case 84: break;
+							case 93: break;
 							default: return new_ns();
 						}
 						/** @type {P$PathRoot} */
@@ -5707,6 +5708,25 @@ case "${path_parts[idx-1]}": {
 				}
 				switch(path_parts[1]) {
 					default: u(idx); path_parts[1]===""; break;
+					case "f93": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: gd(idx); path_parts[2]===""; break;
+							// browse$param$f84$f5
+							case "f5": {
+								const idx=4;
+								gd(idx-1);
+								debugger;
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
+						}
+					} break;
 					case "f84": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -10685,8 +10705,14 @@ class HandleTypes extends ServiceMethods {
 		const {serializedContextData,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedContextData);
 	}
-	/** @private @arg {D$TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
-	D$TextWithRuns(x,f_run=this.NavigationEndpoint) {
+	/** @arg {NonNullable<D$TextRun['navigationEndpoint']>} x */
+	handle_text_endpoint(x) {
+		if("browseEndpoint" in x) return this.E$BrowseEndpoint(x);
+		if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
+		debugger;
+	}
+	/** @private @arg {D$TextWithRuns} x @arg {(x:NonNullable<D$TextRun['navigationEndpoint']>)=>void} f_run */
+	D$TextWithRuns(x,f_run=this.handle_text_endpoint) {
 		if(!("runs" in x)) {debugger; return;}
 		const cf/*!*/="TextWithRuns";
 		this.save_keys(`[${cf}]`,x);
@@ -10694,11 +10720,11 @@ class HandleTypes extends ServiceMethods {
 		this.z(runs,a => this.D$TextRun(a,f_run));
 		this.t(accessibility,this.A$Accessibility);
 	}
-	/** @private @arg {D$TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
+	/** @private @arg {D$TextRun} x @arg {(x:NonNullable<D$TextRun['navigationEndpoint']>)=>void} f_run */
 	D$TextRun(x,f_run) {
 		const cf="TextRun";
 		this.save_keys(`[${cf}]`,x);
-		const {text,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
+		const {text,navigationEndpoint,loggingDirectives,bold,...y}=x; this.g(y); // ! #destructure
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of_string(text);
 	}
