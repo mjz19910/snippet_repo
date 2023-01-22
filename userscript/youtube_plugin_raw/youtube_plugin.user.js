@@ -2030,6 +2030,56 @@ function split_string_once(s,d=as(",")) {
 	let q=r;
 	return as(q);
 }
+/** @arg {WA|null} _wa @template {string} WA @template {string} S @arg {S} s @template {string} D @arg {D} d @returns {S extends `${D}${infer U}`?U extends `${WA}${infer A}`?["",`${WA}${A}`]:never:[S]} */
+function split_string_once_ex(s,d=as(","),_wa) {
+	if(s==="") {
+		/** @private @type {[]} */
+		let r=[];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.indexOf(d);
+	if(i===-1) {
+		/** @private @type {[S]} */
+		let r=[s];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @private @type {[string,string]} */
+	let r=[a,b];
+	/** @private @type {any} */
+	let q=r;
+	return as(q);
+}
+/** @arg {WX|null} _wx @template {string} S @template {string} WX @arg {S} s @template {string} D @arg {D} d @returns {S extends `${infer U}${D}`?U extends WX?[WX,""]:never:S extends `${D}${infer U}`?U extends `${WX}${infer A}`?["",`${WX}${A}`]:never:[S]} */
+function split_string_once_last(s,d,_wx) {
+	if(s==="") {
+		/** @private @type {[]} */
+		let r=[];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let i=s.lastIndexOf(d);
+	if(i===-1) {
+		/** @private @type {[S]} */
+		let r=[s];
+		/** @private @type {any} */
+		let q=r;
+		return as(q);
+	}
+	let a=s.slice(0,i);
+	let b=s.slice(i+d.length);
+	/** @private @type {[string,string]} */
+	let r=[a,b];
+	/** @private @type {any} */
+	let q=r;
+	return as(q);
+}
 //#endregion
 //#region ApiBase
 const seen_map=new Set;
@@ -2137,10 +2187,21 @@ class KnownDataSaver extends ApiBase {
 	/** @type {{[x:string]:{arr:any[],set(o:{}):void}}} */
 	save_key_objs={};
 	do_save_keys_obj=false;
+	/** @template {string} T @arg {`[${T}]`} x @returns {T} */
+	unwrap_brackets(x) {
+		/** @returns {T|null} */
+		function gn() {return null;}
+		let wv=gn();
+		let wa=split_string_once_ex(x,"[",wv);
+		let [_s1,s2]=wa;
+		let ua=split_string_once_last(s2,"]",wv);
+		let [s3,_s4]=ua;
+		return s3;
+	}
 	/** @public @template {{}} T @arg {`[${string}]`} k @arg {T|undefined} x */
 	save_keys(k,x) {
 		if(!x) {debugger; return;}
-		let ki=split_string_once(split_string_once(k,"[")[1],"]")[0];
+		let ki=this.unwrap_brackets(k);
 		if(this.do_save_keys_obj) {
 			if(!(ki in this.save_key_objs)) this.save_key_objs[ki]={
 				arr: [],
@@ -2259,7 +2320,7 @@ class KnownDataSaver extends ApiBase {
 	/** @arg {`[${string}]`} k_arg @arg {string|string[]} x */
 	save_string(k_arg,x) {
 		if(x===void 0) {debugger; return;}
-		let k=split_string_once(split_string_once(k_arg,"[")[1],"]")[0];
+		let k=this.unwrap_brackets(k_arg);
 		let was_known=true;
 		/** @private @type {["one", string[]]|["many",string[][]]} */
 		let cur;
@@ -2472,9 +2533,7 @@ class KnownDataSaver extends ApiBase {
 	/** @public @arg {`[${string}]`} key @arg {number|number[]} x */
 	save_number(key,x) {
 		if(x===void 0) {debugger; return;}
-		let [,u1]=split_string_once(key,"[");
-		let [k,...u2]=split_string(u1,"]");
-		k=k+u2.join("]");
+		let k=this.unwrap_brackets(key);
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
@@ -7418,7 +7477,7 @@ case "${path_parts[idx-1]}": {
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
 			let [pt0]=su1;
-			this.save_string(`[${cf}]`,`${pt0}`);
+			this.save_string(`[ve_6827.part[0]]`,`${pt0}`);
 			switch(pt0) {
 				case "reporthistory": return;
 				default: debugger; return;
