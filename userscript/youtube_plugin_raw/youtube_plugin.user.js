@@ -6095,7 +6095,10 @@ case "${path_parts[idx-1]}": {
 			case "playlist_edit":
 			case "watch_page_url":
 			case "watch_playlist":
-			case "reel": u(idx); debugger; break;
+			case "reel": {
+				u(idx);
+				debugger;
+			} break;
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
 	}
