@@ -5265,7 +5265,7 @@ class ParserService extends BaseService {
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "AdServingDataEntry":
-						switch(ta) {case 4: case 5: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
@@ -5383,7 +5383,14 @@ class ParserService extends BaseService {
 				if(path_parts.length===1) switch(tv) {default: debugger; return;}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					case "f4": {
+					case "f4":
+					case "f5":
+					case "f6":
+					case "f7":
+					case "f9":
+					case "f10":
+					case "f14":
+					case "f13": {
 						const idx=3;
 						if(path_parts.length===2) {
 							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
