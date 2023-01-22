@@ -5182,9 +5182,25 @@ class ParserService extends BaseService {
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
+	/** @private @arg {string} ns @arg {()=>void} f */
+	grouped(ns,f) {
+		console.group(ns);
+		f();
+		console.groupEnd();
+	};
 	/** @private @arg {P$PathRoot} path @arg {ParamMapValue} tv @arg {number|null} ta */
 	get_parse_fns(path,tv,ta=null) {
 		let path_parts=split_string(path,".");
+		/** @private @arg {number} idx */
+		let gd=(idx) => {
+			/** @type {P$LogItems} */
+			console.log("[param_next.next_new_ns]",path_parts.join("."));
+			gen_next_part(idx);
+		};
+		/** @private @arg {number} idx */
+		let u=idx => {
+			this.grouped(path_parts.join("$"),() => gd(idx));
+		};
 		/** @private @arg {number} idx */
 		let gen_next_part=(idx) => {
 			if(idx>path_parts.length) return;
@@ -5217,22 +5233,6 @@ class ParserService extends BaseService {
 				switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
 				/** @type {P$PathRoot} */
 				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`);
-		};
-		/** @private @arg {number} idx */
-		let gd=(idx) => {
-			/** @type {P$LogItems} */
-			console.log("[param_next.next_new_ns]",path_parts.join("."));
-			gen_next_part(idx);
-		};
-		/** @private @arg {string} ns @arg {()=>void} f */
-		let grouped=(ns,f) => {
-			console.group(ns);
-			f();
-			console.groupEnd();
-		};
-		/** @private @arg {number} idx */
-		let u=idx => {
-			grouped(path_parts.join("$"),() => gd(idx));
 		};
 		return {u,gen_next_part,new_path};
 	}
