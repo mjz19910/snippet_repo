@@ -5265,7 +5265,7 @@ class ParserService extends BaseService {
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "AdServingDataEntry.f9":
-						switch(ta) {case 1: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "tracking.trackingParams.f4":
@@ -5395,6 +5395,7 @@ class ParserService extends BaseService {
 					case "f14": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
 							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 							switch(tv) {default: debugger; return;}
 						}
