@@ -5226,7 +5226,7 @@ class ParserService extends BaseService {
 			case "${path}":
 				switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
 				/** @type {P$PathRoot} */
-				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`);
+				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e=>e.slice(1)).join("\n"));
 		};
 		return {u,gen_next_part,new_path};
 	}
