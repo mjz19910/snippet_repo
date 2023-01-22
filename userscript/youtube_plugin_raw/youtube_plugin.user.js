@@ -6079,8 +6079,7 @@ case "${path_parts[idx-1]}": {
 		const idx=1;
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
-			case "entity_key":
-			// [tracking.trackingParams.f4.f1]
+			case "entity_key": u(idx); debugger; break;
 			case "tracking": {
 				const idx=2;
 				if(path_parts.length===1) {
@@ -6088,7 +6087,7 @@ case "${path_parts[idx-1]}": {
 				}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					// [tracking.trackingParams.f4.f1]
+					// [tracking.trackingParams]
 					case "trackingParams": {
 						const idx=3;
 						if(path_parts.length===2) {
@@ -6096,7 +6095,7 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							// [tracking.trackingParams.f4.f1]
+							// [tracking.trackingParams.f4]
 							case "f4": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -6104,7 +6103,17 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
-									case "f1": u(idx); debugger; break;
+									// [tracking.trackingParams.f4.f1]
+									case "f1": {
+										const idx=5;
+										if(path_parts.length===4) {
+											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+											switch(tv) {default: debugger; return;}
+										}
+										switch(path_parts[4]) {
+											default: u(idx); debugger; path_parts[4]===""; break;
+										}
+									} break;
 								}
 							} break;
 						}
