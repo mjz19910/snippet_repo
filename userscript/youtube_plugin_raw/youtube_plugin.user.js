@@ -5400,12 +5400,14 @@ class ParserService extends BaseService {
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
-							case "f1": {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							case "f1":
+							case "f2":
+							case "f3": {
 								const idx=4;
 								if(path_parts.length===3) return;
 								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break;}
 							} break;
-							default: u(idx); debugger; path_parts[2]===""; break;
 						}
 					} break;
 				}
