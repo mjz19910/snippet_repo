@@ -4336,10 +4336,6 @@ class CodegenService extends BaseService {
 	#is_Thumbnail(x2) {
 		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
 	}
-	/** @arg {{}} x2 */
-	#is_TextT(x2) {
-		return typeof x2=="object"&&("simpleText" in x2||("runs" in x2&&x2.runs instanceof Array));
-	}
 	/** @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
@@ -4349,26 +4345,14 @@ class CodegenService extends BaseService {
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
-			if(k=="responseContext") {debugger; continue;}
+			if(k=="responseContext") {ret_arr.push(`this.RC$ResponseContext(${k});`); continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
-				if(x2.startsWith("https:")) {
-					ret_arr.push(`this.primitive_of(${k},"string");`);
-					continue;
-				}
-				let u_count=[...new Set(x2.split("").sort())].join("").length;
-				if(x2.includes("%")) {
-					if(u_count>13) {
-						ret_arr.push(`this.primitive_of(${k},"string");`);
-						continue;
-					}
-				}
-				console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
-				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
+				this.generate_code_for_string(ret_arr,k,x2);
 				continue;
 			}
 			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(${k},"number");`);}
-			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
+			if(typeof x2=="boolean") {ret_arr.push(`if(${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.SimpleText(${k});`); continue;};
@@ -4516,7 +4500,7 @@ class CodegenService extends BaseService {
 		if(k1=="clickTrackingParams") return "TYPE::string";
 		if(k1=="playlistId") {
 			if(o.startsWith("RDMM")) return `TYPE::\`RDMM$\{string}\``;
-			if(o.startsWith("RD")) return `TYPE::\`RD$\{string}\``;
+			if(o.startsWith("RD")) return "TYPE::`RD${string}`";
 			if(o.startsWith("PL")) return `TYPE::\`PL$\{string}\``;
 			debugger;
 			return "TYPE::string";
@@ -5029,6 +5013,27 @@ class CodegenService extends BaseService {
 		if(w) return gen_obj;
 		console.log(gen_obj);
 		return null;
+	}
+	generate_code_for_string(res,k,x) {
+		if(k==="playlistId") {
+			if(x.startsWith("RD")) {
+				res.push(`this.str_starts_with("RD",${k},"string");`);
+			}
+		}
+		if(x2.startsWith("https:")) {
+			ret_arr.push(`this.primitive_of(${k},"string");`);
+			continue;
+		}
+		let u_count=[...new Set(x2.split("").sort())].join("").length;
+		if(x2.includes("%")) {
+			if(u_count>13) {
+				ret_arr.push(`this.primitive_of(${k},"string");`);
+				continue;
+			}
+		}
+		console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
+		ret_arr.push(`if(${k}!=="${x2}") debugger;`);
+		x;
 	}
 }
 /** @extends {BaseService<Services,ServiceOptions>} */
@@ -14763,18 +14768,22 @@ class HandleTypes extends ServiceMethods {
 		const cf="Radio";
 		this.save_keys(`[${cf}]`,x);
 		const {playlistId,title,thumbnail,videoCountText,navigationEndpoint,trackingParams,videos,thumbnailText,longBylineText,menu,thumbnailOverlays,videoCountShortText,...y}=x; this.g(y);
-		if(x.playlistId!=="RDKaaqiCtR3qA") debugger;
+		if(!this.str_starts_with("RD",playlistId)) debugger;
 		this.TextT(title);
 		this.D$Thumbnail(thumbnail);
 		this.TextT(videoCountText);
 		this.NavigationEndpoint(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.z(x.videos,this.ChildVideoRenderer);
+		this.z(x.videos,this.R$ChildVideo);
 		this.TextT(thumbnailText);
 		this.TextT(longBylineText);
-		this.Menu(menu);
+		this.R$Menu(menu);
 		this.z(x.thumbnailOverlays,this.ThumbnailOverlayBottomPanelRenderer);
 		this.TextT(videoCountShortText);
+	}
+	/** @private @arg {R$ChildVideo} x */
+	R$ChildVideo(x) {
+		x;
 	}
 	/** @private @arg {Do$w<FeedNudgeRenderer>} x */
 	FeedNudge(x) {

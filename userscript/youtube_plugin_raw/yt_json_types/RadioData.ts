@@ -1,4 +1,13 @@
 type D$Radio=Radio$PlaylistId;
+type R$ChildVideo={
+	childVideoRenderer: {
+		title: D$SimpleText;
+		navigationEndpoint: E$WatchEndpoint;
+		lengthText: D$SimpleText;
+		videoId: string;
+	};
+};
+
 type Radio$PlaylistId={
 	playlistId: `RD${string}`;
 	title: D$SimpleText;
@@ -6,14 +15,7 @@ type Radio$PlaylistId={
 	videoCountText: D$TextWithRuns;
 	navigationEndpoint: E$WatchEndpoint;
 	trackingParams: string;
-	videos: {
-		childVideoRenderer: {
-			title: D$SimpleText;
-			navigationEndpoint: E$WatchEndpoint;
-			lengthText: D$SimpleText;
-			videoId: string;
-		};
-	}[];
+	videos: R$ChildVideo[];
 	thumbnailText: D$TextWithRuns;
 	longBylineText: D$SimpleText;
 	menu: R$Menu;
