@@ -7126,7 +7126,12 @@ class HandleTypes extends ServiceMethods {
 		x;
 	}
 	/** @private @arg {G$VE23462$WC$Metadata} x */
-	G$VE23462$WC$Metadata(x) {x;}
+	G$VE23462$WC$Metadata(x) {
+		const cf="VE23462.Metadata";
+		this.save_keys(`[${cf}]`,x);
+		const {rootVe,...y}=x; this.g(y);
+		if(x.browseId!=="") debugger;
+	}
 	/** @public @arg {E$D$Browse} x */
 	E$D$Browse(x) {
 		const cf="D$Browse";
