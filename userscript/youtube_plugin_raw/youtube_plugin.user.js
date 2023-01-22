@@ -10443,6 +10443,7 @@ class HandleTypes extends ServiceMethods {
 		{
 			let {accessibility,icon,tooltip,serviceEndpoint,...v1}=c_tog; this.g(v1);
 			this.A$Accessibility(accessibility);
+			this.T$Icon(icon);
 			if(icon.iconType!=="CHECK") debugger;
 			if(tooltip!=="Added") debugger;
 			this.PlaylistEditEndpoint(serviceEndpoint);
@@ -10450,6 +10451,7 @@ class HandleTypes extends ServiceMethods {
 		{
 			let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un; this.g(v2);
 			this.A$Accessibility(accessibility);
+			this.T$Icon(icon);
 			if(icon.iconType!=="WATCH_LATER") debugger;
 			if(tooltip!=="Watch Later") debugger;
 			this.PlaylistEditEndpoint(serviceEndpoint);
