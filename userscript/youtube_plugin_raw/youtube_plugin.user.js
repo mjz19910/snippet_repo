@@ -5191,31 +5191,22 @@ class ParserService extends BaseService {
 			let case_part="";
 			let value_part="switch(tv) {default: debugger; return;}";
 			if(path_parts.length===idx) {
-				if(tv instanceof Map) case_part=`if(tv instanceof Map) return;`;
+				if(tv instanceof Map) case_part="if(tv instanceof Map) return;";
 				switch(typeof tv) {
-					case "number": {
-						if(tv>128) {
-							case_part=`if(typeof tv==="number") return this.save_number(\`[\${path}]\`,tv);`;
-						} else {
-							value_part=`switch(tv) {case ${tv}: return; default: debugger; return;}`;
-						}
-					} break;
+					case "number": case_part='if(typeof tv==="number") return this.save_number(`[${path}]`,tv);'; break;
 					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,tv);'; break;
 				}
 			}
 			let res_case="";
-			if(idx<path_parts.length) {
-				res_case=`case "${path_parts[idx]}": u(idx); debugger; break`;
-			}
+			if(idx<path_parts.length) res_case=`case "${path_parts[idx]}": u(idx); debugger; break;`;
 			console.log(`"[parse_value.L_gen_next_part] [${path}]",`);
 			console.log(`
 			-- [${path_parts.join(".")},${idx}] --\n
-			// [${path_parts.join(".")}]
 			case "${path_parts[idx-1]}": {
 				const idx=${idx+1};
 				if(path_parts.length===${idx}) {${case_part}${value_part}}
 				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}}
-			} break;`.slice(1).split("\n").map(e=>e.slice(3)).join("\n"));
+			} break;`.slice(1).split("\n").map(e => e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_path_gen]",path);
@@ -5225,10 +5216,25 @@ class ParserService extends BaseService {
 			case "${path}":
 				switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
 				/** @type {P$PathRoot} */
-				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
-`);
+				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`);
 		};
-		return {gen_next_part,new_path};
+		/** @private @arg {number} idx */
+		let gd=(idx) => {
+			/** @type {P$LogItems} */
+			console.log("[param_next.next_new_ns]",path_parts.join("."));
+			gen_next_part(idx);
+		};
+		/** @private @arg {string} ns @arg {()=>void} f */
+		let grouped=(ns,f) => {
+			console.group(ns);
+			f();
+			console.groupEnd();
+		};
+		/** @private @arg {number} idx */
+		let u=idx => {
+			grouped(path_parts.join("$"),() => gd(idx));
+		};
+		return {u,gen_next_part,new_path};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
@@ -5370,28 +5376,20 @@ class ParserService extends BaseService {
 		let tv=tva[0];
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
-		/** @private @arg {number} idx */
-		let gd=(idx) => {
-			/** @type {P$LogItems} */
-			console.log("[param_next.next_new_ns]",path_parts.join("."));
-			pp.gen_next_part(idx);
-		};
-		/** @private @arg {string} ns @arg {()=>void} f */
-		let grouped=(ns,f) => {
-			console.group(ns);
-			f();
-			console.groupEnd();
-		};
-		/** @private @arg {number} idx */
-		let u=idx => {
-			grouped(path_parts.join("$"),() => gd(idx));
-		};
 		let path_parts=split_string(path,".");
 		let pp=this.get_parse_fns(path,tv);
+		let u=pp.u;
 		const idx=1;
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
-			case "AdServingDataEntry": u(idx); debugger; break;
+			case "AdServingDataEntry": {
+				const idx=2;
+				if(path_parts.length===1) {switch(tv) {default: debugger; return;}}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f4": u(idx); debugger; break;
+				}
+			} break;
 			// [watch.player_params]
 			case "watch": {
 				const idx=2;
