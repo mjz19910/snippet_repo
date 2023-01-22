@@ -8908,11 +8908,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ConfirmDialogData(this.w(x));
 	}
-	/** @arg {T$R$MultiPageMenu<{}>} x */
+	/** @template T @arg {T$R$MultiPageMenu<T>} x */
 	MultiPageMenuRenderer(x) {
 		const cf="MultiPageMenuRenderer";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		return x.multiPageMenuRenderer;
 	}
 	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
 	MultiPageMenuNotificationSectionRenderer(x) {
@@ -13316,8 +13316,10 @@ class HandleTypes extends ServiceMethods {
 			this.A$Accessibility(accessibility);
 			this.primitive_of_string(tooltip);
 			this.Icon(icon);
-			debugger;
-			this.MultiPageMenuRenderer(menuRenderer);
+			{
+				let x=this.MultiPageMenuRenderer(menuRenderer);
+				this.TopbarMenuButton$MultiPageMenu(x);
+			}
 			switch(style) {
 				default: debugger; break;
 				case "STYLE_DEFAULT": break;
@@ -13325,6 +13327,16 @@ class HandleTypes extends ServiceMethods {
 		} else {
 			debugger;
 		}
+	}
+	/** @arg {Extract<TopbarMenuButton,{menuRenderer:any}>['menuRenderer']['multiPageMenuRenderer']} x */
+	TopbarMenuButton$MultiPageMenu(x) {
+		const cf="TopbarMenuButton$MultiPageMenu";
+		this.save_keys(`[${cf}]`,x);
+		const {sections,trackingParams,style,...y}=x; this.g(y); // ! #destructure
+		this.trackingParams(cf,trackingParams);
+		if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_CREATION") debugger;
+		if(sections.length!==1) debugger;
+		this.MultiPageMenuSectionRenderer(sections[0]);
 	}
 	/** @arg {D$TwoColumnBrowseResults} x */
 	TwoColumnBrowseResultsData(x) {
