@@ -1,5 +1,5 @@
 type EngagementPanelSectionListContent=[
-	AdsEngagementPanelContentRenderer,
+	R$AdsEngagementPanelContent,
 	ClipSectionRenderer,
 	R$ContinuationItemRenderer,
 	R$MacroMarkersListRenderer,

@@ -1,0 +1,1 @@
+type R$AdPlacement={adPlacementRenderer: D$AdPlacement;};

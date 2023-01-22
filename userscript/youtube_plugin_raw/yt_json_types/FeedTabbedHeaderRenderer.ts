@@ -1,3 +1,3 @@
-type FeedTabbedHeaderRenderer={
+type R$FeedTabbedHeader={
 	feedTabbedHeaderRenderer: FeedTabbedHeaderData;
 };

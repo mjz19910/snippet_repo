@@ -1,1 +1,1 @@
-type BrowseHeader=FeedTabbedHeaderRenderer|C4TabbedHeaderRenderer;
+type BrowseHeader=R$FeedTabbedHeader|R$C4TabbedHeader;

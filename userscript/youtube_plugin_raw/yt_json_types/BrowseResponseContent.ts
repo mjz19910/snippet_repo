@@ -5,7 +5,7 @@ type BrowseResponse={
 	contents?: BrowseContents;
 	continuationContents?: C$SectionList;
 	header?: BrowseHeader;
-	alerts?: AlertWithButtonRenderer[];
+	alerts?: R$AlertWithButton[];
 	metadata?: BrowseMetadata;
 	trackingParams: string;
 	topbar?: R$DesktopTopbar;

@@ -1,7 +1,7 @@
 type ChannelResponse={
 	responseContext: RC$ResponseContext;
 	contents: R$TwoColumnBrowseResults;
-	header: C4TabbedHeaderRenderer;
+	header: R$C4TabbedHeader;
 	metadata: ChannelMetadataRenderer;
 	trackingParams: string;
 	topbar: R$DesktopTopbar;

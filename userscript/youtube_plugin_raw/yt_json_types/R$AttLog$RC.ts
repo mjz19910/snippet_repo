@@ -1,0 +1,1 @@
+type R$AttLog$RC={responseContext: RC$ResponseContext;};

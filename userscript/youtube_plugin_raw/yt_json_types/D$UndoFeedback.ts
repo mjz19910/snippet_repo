@@ -1,4 +1,4 @@
-type E$UndoFeedback={
+type D$UndoFeedback={
 	undoToken: string;
 	actions: UndoFeedbackAction[];
 };

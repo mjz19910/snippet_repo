@@ -1,3 +1,5 @@
-type E$SignalNavigation=Signal_ChannelSwitcher|{
-	signal: "LIVE_CONTROL_ROOM";
+type E$SignalNavigation={
+	clickTrackingParams: string;
+	commandMetadata: M$VE83769$Metadata;
+	signalNavigationEndpoint: D$SignalNavigation;
 };

@@ -1,4 +1,4 @@
 type WD_att_log_t={
 	type: "att.log";
-	data: AttLogResponse;
+	data: R$AttLog$RC;
 };

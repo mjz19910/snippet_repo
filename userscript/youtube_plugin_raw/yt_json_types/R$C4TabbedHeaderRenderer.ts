@@ -1,1 +1,0 @@
-type C4TabbedHeaderRenderer={c4TabbedHeaderRenderer: D$C4TabbedHeader;};

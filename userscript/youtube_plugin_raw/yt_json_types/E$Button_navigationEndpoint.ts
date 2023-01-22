@@ -1,4 +1,4 @@
-type E$Button_navigationEndpoint=E$ShareEntityServiceEndpoint|{
+type E$Button_navigationEndpoint=E$ShareEntityService|{
 	clickTrackingParams: string;
 	commandMetadata: {
 		webCommandMetadata: {

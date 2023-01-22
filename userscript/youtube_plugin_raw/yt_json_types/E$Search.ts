@@ -1,3 +1,5 @@
 type E$Search={
-	query: string;
+	clickTrackingParams: string;
+	commandMetadata: VE4724_CommandMetadata;
+	searchEndpoint: D$Search;
 };

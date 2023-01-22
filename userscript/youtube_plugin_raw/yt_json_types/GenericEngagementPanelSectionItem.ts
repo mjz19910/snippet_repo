@@ -1,5 +1,5 @@
 type GenericEngagementPanelSectionItem={
-	content: AdsEngagementPanelContentRenderer;
+	content: R$AdsEngagementPanelContent;
 	targetId: "engagement-panel-ads";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: A$LoggingDirectives;

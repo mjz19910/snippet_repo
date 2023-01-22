@@ -3136,7 +3136,7 @@ class YtHandlers extends BaseService {
 			};
 			case "log": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {AttLogResponse} */
+				/** @type {R$AttLog$RC} */
 				data: as(x),
 			};
 		}
@@ -8096,7 +8096,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region pause
 	//#endregion
-	/** @private @template T @arg {E$SignalServiceEndpoint<T>} x */
+	/** @private @template T @arg {E$T$SignalService<T>} x */
 	E$SignalServiceEndpoint(x) {x;}
 	/** @private @arg {string} cf @arg {EI$ResponseReceived} x */
 	ResponseReceivedEndpointItem(cf,x) {
@@ -8307,7 +8307,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(c);
 	}
-	/** @private @arg {PlaylistEditEndpoint|E$SignalServiceEndpoint<Signal$ClientSignal>} x */
+	/** @private @arg {PlaylistEditEndpoint|E$T$SignalService<Signal$ClientSignal>} x */
 	ThumbnailOverlayToggleButton$serviceEndpoint(x) {
 		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
@@ -8512,7 +8512,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.T$R$ItemSection$1(x,a => {a;});
+			case "comments-entry-point": return this.T$R$ItemSection$1(x,a => {a; debugger;});
 		}
 	}
 	/** @arg {T$R$ItemSection<{},"comment-item-section","comments-section">} x */
@@ -8766,6 +8766,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isEditable,"boolean");
 		this.primitive_of(isCourse,"boolean");
 	}
+	/** @private @arg {D$PlaylistPanelVideo} x */
 	R$PlaylistPanelVideo(x) {x;}
 	/** @private @arg {D$PlayerOverlayVideoDetails} x */
 	D$PlayerOverlayVideoDetails(x) {
@@ -8781,12 +8782,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		return f.call(this,x.item);
 	}
-	/** @private @arg {E$UndoFeedbackEndpoint} x */
+	/** @private @arg {E$UndoFeedback} x */
 	E$UndoFeedbackEndpoint(x) {
 		const cf="UndoFeedbackEndpoint";
 		const {clickTrackingParams,commandMetadata,undoFeedbackEndpoint}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
+		console.log("[undo.feedback.wcm]",commandMetadata.webCommandMetadata);
 		{
 			const {actions,undoToken,...y}=undoFeedbackEndpoint; this.g(y);
 			let act=this.z(actions,a => {
@@ -8911,15 +8912,17 @@ class HandleTypes extends ServiceMethods {
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
-	/** @private @arg {E$SearchEndpoint} x */
+	/** @private @arg {E$Search} x */
 	E$SearchEndpoint(x) {
 		const cf="SearchEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.E$Search(searchEndpoint);
+		this.D$Search(searchEndpoint);
 	}
+	/** @private @arg {D$Search} x */
+	D$Search(x) {x;}
 	/** @private @arg {ItemSectionItem} x */
 	ItemSectionItem(x) {
 		const cf="ItemSectionItem";
@@ -8931,13 +8934,19 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowseHeader";
 		this.save_keys(`[${cf}]`,x);
 		if("feedTabbedHeaderRenderer" in x) {
-			return this.FeedTabbedHeaderRenderer(x);
+			return this.R$FeedTabbedHeader(x);
 		} else if("c4TabbedHeaderRenderer" in x) {
-			return this.C4TabbedHeaderRenderer(x);
+			return this.R$C4TabbedHeader(x);
 		}
 		if("playlistHeaderRenderer" in x) return this.PlaylistHeaderRenderer(x);
 		debugger;
 	}
+	/**
+	 * @param {R$C4TabbedHeader} x
+	 */
+	R$C4TabbedHeader(x) {this.H$Renderer("C4TabbedHeader",x,a => {a; debugger;});}
+	/** @private @arg {R$FeedTabbedHeader} x */
+	R$FeedTabbedHeader(x) {this.H$Renderer("FeedTabbedHeader",x,a => {a; debugger;});}
 	/** @private @arg {PlaylistHeaderRenderer} x */
 	PlaylistHeaderRenderer(x) {
 		this.PlaylistHeader(x.playlistHeaderRenderer);
@@ -9009,10 +9018,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetAddToPlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.AddToPlaylistRenderer);
+		this.z(contents,this.R$AddToPlaylist);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {AttLogResponse} x */
+	/** @private @arg {R$AddToPlaylist} x */
+	R$AddToPlaylist(x) {x;}
+	/** @private @arg {R$AttLog$RC} x */
 	R$AttLog(x) {
 		const cf="AttLogResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9288,7 +9299,7 @@ class HandleTypes extends ServiceMethods {
 		if("compactVideoRenderer" in x) return this.R$CompactVideoRenderer(x);
 		debugger;
 	}
-	/** @private @arg {E$ShareEntityServiceEndpoint} x */
+	/** @private @arg {E$ShareEntityService} x */
 	ShareEntityServiceEndpoint(x) {
 		const cf="ShareEntityServiceEndpoint";
 		this.save_keys(`[${cf}]`,x);
@@ -9297,7 +9308,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
-	/** @private @arg {E$ShareEntityService} x */
+	/** @private @arg {D$ShareEntityService} x */
 	ShareEntityServiceArgs(x) {
 		const cf="ShareEntityServiceArgs";
 		this.save_keys(`[${cf}]`,x);
@@ -9480,7 +9491,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=x; this.g(y); // ! #destructure
 		this.TwoColumnBrowseResultsRenderer(contents);
-		this.C4TabbedHeaderRenderer(header);
+		this.R$C4TabbedHeader(header);
 		this.ChannelMetadataRenderer(metadata);
 		this.R$DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
@@ -9636,7 +9647,7 @@ class HandleTypes extends ServiceMethods {
 		this.A$Accessibility(unsubscribeAccessibility);
 		return y;
 	}
-	/** @template T @arg {E$SignalServiceEndpoint<T>} x */
+	/** @template T @arg {E$T$SignalService<T>} x */
 	signalServiceEndpoint(x) {this.E$SignalServiceEndpoint(x);}
 	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
 	ChipCloudStyle(x,f) {

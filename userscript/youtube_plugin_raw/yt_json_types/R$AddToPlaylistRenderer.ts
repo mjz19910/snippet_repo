@@ -1,3 +1,0 @@
-type AddToPlaylistRenderer={
-	addToPlaylistRenderer: AddToPlaylist;
-};

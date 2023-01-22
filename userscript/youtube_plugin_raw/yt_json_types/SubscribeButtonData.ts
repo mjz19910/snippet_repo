@@ -16,7 +16,7 @@ type SubscribeButton={
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
 	onSubscribeEndpoints: E$SubscribeEndpoint[];
-	onUnsubscribeEndpoints: E$SignalServiceEndpoint[];
+	onUnsubscribeEndpoints: E$T$SignalService[];
 }|{
 	buttonText: D$TextWithRuns;
 	subscribed: false;

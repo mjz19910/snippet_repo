@@ -1,3 +1,3 @@
-type AlertWithButtonRenderer={
+type R$AlertWithButton={
 	alertWithButtonRenderer: AlertWithButton;
 };
