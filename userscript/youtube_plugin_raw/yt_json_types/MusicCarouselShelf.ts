@@ -1,4 +1,4 @@
-type D__MusicCarouselShelf=T$AR$Contents<{}>&{
+type D__MusicCarouselShelf=T$AR_Contents<{}>&{
 	header: {};
 	trackingParams: string;
 	itemSize: "COLLECTION_STYLE_ITEM_SIZE_MEDIUM";

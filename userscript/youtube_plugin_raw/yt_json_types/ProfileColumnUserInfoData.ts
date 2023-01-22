@@ -1,4 +1,4 @@
 type D__ProfileColumnUserInfo={
-	title: R$SimpleText;
+	title: R_SimpleText;
 	thumbnail: D__Thumbnail;
 };

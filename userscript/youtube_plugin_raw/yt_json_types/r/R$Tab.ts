@@ -1,3 +1,3 @@
-type R$Tab={
+type R_Tab={
 	tabRenderer: D__Tab;
 };

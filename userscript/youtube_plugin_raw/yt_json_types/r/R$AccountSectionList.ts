@@ -1,1 +1,1 @@
-type R$AccountSectionList={accountSectionListRenderer: T$Contents<R$AccountItemSection[]>;};
+type R_AccountSectionList={accountSectionListRenderer: T$Contents<R_AccountItemSection[]>;};

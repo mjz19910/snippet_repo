@@ -1,4 +1,4 @@
 type TranslationLanguage={
 	languageCode: string;
-	languageName: R$SimpleText;
+	languageName: R_SimpleText;
 };

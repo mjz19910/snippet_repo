@@ -1,1 +1,1 @@
-type R$HeroPlaylistThumbnail={heroPlaylistThumbnailRenderer: D__HeroPlaylistThumbnail;};
+type R_HeroPlaylistThumbnail={heroPlaylistThumbnailRenderer: D__HeroPlaylistThumbnail;};

@@ -1,7 +1,7 @@
 type PageTypeBrowse={
 	pageType: "browse";
 	endpoint: E$Browse;
-	response: R$BrowsePage;
+	response: R_BrowsePage;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

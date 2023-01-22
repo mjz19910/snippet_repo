@@ -1,1 +1,1 @@
-type R$RatingSurvey={ratingSurveyRenderer: D__RatingSurvey;};
+type R_RatingSurvey={ratingSurveyRenderer: D__RatingSurvey;};

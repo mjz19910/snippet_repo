@@ -1,9 +1,9 @@
 type RendererContentItem=
-	|R$RichItem
-	|R$RichSection
-	|R$CommentsHeader
-	|R$CommentThread
-	|R$ContinuationItem
-	|R$CompactVideo
-	|R$CompactPlaylist
+	|R_RichItem
+	|R_RichSection
+	|R_CommentsHeader
+	|R_CommentThread
+	|R_ContinuationItem
+	|R_CompactVideo
+	|R_CompactPlaylist
 	;

@@ -1,3 +1,3 @@
-type R$SettingsSidebar={
+type R_SettingsSidebar={
 	settingsSidebarRenderer: D__SettingsSidebar;
 };

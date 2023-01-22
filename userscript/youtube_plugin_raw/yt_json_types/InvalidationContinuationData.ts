@@ -1,1 +1,1 @@
-type R$InvalidationContinuation={invalidationContinuationData: InvalidationContinuationDataInner;};
+type R_InvalidationContinuation={invalidationContinuationData: InvalidationContinuationDataInner;};

@@ -1,9 +1,9 @@
 type D__ProfileColumnStatsEntry={
-	label: R$TextWithRuns;
-	value: R$SimpleText;
+	label: R_TextWithRuns;
+	value: R_SimpleText;
 };
-type R$ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D__ProfileColumnStatsEntry;};
+type R_ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D__ProfileColumnStatsEntry;};
 type D__ProfileColumnStats={
-	items: R$ProfileColumnStatsEntry[];
+	items: R_ProfileColumnStatsEntry[];
 };
-type R$ProfileColumnStats={profileColumnStatsRenderer: D__ProfileColumnStats;};
+type R_ProfileColumnStats={profileColumnStatsRenderer: D__ProfileColumnStats;};

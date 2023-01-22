@@ -1,1 +1,1 @@
-type R$CompactVideo={compactVideoRenderer: D__CompactVideo;};
+type R_CompactVideo={compactVideoRenderer: D__CompactVideo;};

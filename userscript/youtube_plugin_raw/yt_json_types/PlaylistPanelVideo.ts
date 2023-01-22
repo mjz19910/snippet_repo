@@ -1,15 +1,15 @@
 type D__PlaylistPanelVideo={
-	title: R$SimpleText;
-	longBylineText: R$TextWithRuns;
+	title: R_SimpleText;
+	longBylineText: R_TextWithRuns;
 	thumbnail: D__Thumbnail;
-	lengthText: R$SimpleText;
-	indexText: R$SimpleText;
+	lengthText: R_SimpleText;
+	indexText: R_SimpleText;
 	selected: true;
 	navigationEndpoint: E$WatchEndpoint;
 	videoId: string;
-	shortBylineText: R$TextWithRuns;
+	shortBylineText: R_TextWithRuns;
 	trackingParams: string;
-	menu: R$Menu;
+	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	playlistSetVideoId: "56B44F6D10557CC6";
 	lightColorPalette: {

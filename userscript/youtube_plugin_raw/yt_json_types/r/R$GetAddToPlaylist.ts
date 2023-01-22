@@ -1,5 +1,5 @@
-type R$GetAddToPlaylist={
+type R_GetAddToPlaylist={
 	responseContext: RC$ResponseContext;
-	contents: R$AddToPlaylist[];
+	contents: R_AddToPlaylist[];
 	trackingParams: string;
 };

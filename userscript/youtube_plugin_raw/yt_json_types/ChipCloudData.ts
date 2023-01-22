@@ -1,7 +1,7 @@
 type D__ChipCloudData={
-	chips: R$ChipCloudChip;
+	chips: R_ChipCloudChip;
 	trackingParams: string;
 	horizontalScrollable: false;
-	nextButton: R$Button;
-	previousButton: R$Button;
+	nextButton: R_Button;
+	previousButton: R_Button;
 };

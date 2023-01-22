@@ -1,1 +1,1 @@
-type PlaylistResponseContent=T$AR$Contents<R$TwoColumnBrowseResults>&{trackingParams: string;};
+type PlaylistResponseContent=T$AR_Contents<R_TwoColumnBrowseResults>&{trackingParams: string;};

@@ -1,7 +1,7 @@
 type D__RatingSurvey={
-	ratings: R$RatingSurveyOption[];
+	ratings: R_RatingSurveyOption[];
 	trackingParams: string;
-	notSureButton: R$Button;
-	undoButton: R$Button;
+	notSureButton: R_Button;
+	undoButton: R_Button;
 	notSureEndpoint: {};
 };

@@ -3,17 +3,17 @@ type D__ReelPlayerOverlay={
 	trackingParams: string;
 	reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
 }|{
-	likeButton: R$LikeButton;
-	reelPlayerHeaderSupportedRenderers: R$ReelPlayerHeader;
-	menu: R$Menu;
-	nextItemButton: R$Button;
-	prevItemButton: R$Button;
-	subscribeButtonRenderer: R$SubscribeButton;
+	likeButton: R_LikeButton;
+	reelPlayerHeaderSupportedRenderers: R_ReelPlayerHeader;
+	menu: R_Menu;
+	nextItemButton: R_Button;
+	prevItemButton: R_Button;
+	subscribeButtonRenderer: R_SubscribeButton;
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
-	viewCommentsButton: R$Button;
+	viewCommentsButton: R_Button;
 	videoInteractions?: {};
 	trackingParams: string;
-	shareButton: R$Button;
-	pivotButton: R$PivotButton;
-	badge: R$MetadataBadge;
+	shareButton: R_Button;
+	pivotButton: R_PivotButton;
+	badge: R_MetadataBadge;
 };

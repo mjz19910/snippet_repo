@@ -1,1 +1,1 @@
-type D__UpdateDescriptionAction={description: R$TextWithRuns;};
+type D__UpdateDescriptionAction={description: R_TextWithRuns;};

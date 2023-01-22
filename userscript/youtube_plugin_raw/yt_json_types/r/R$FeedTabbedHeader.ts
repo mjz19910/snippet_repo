@@ -1,1 +1,1 @@
-type R$FeedTabbedHeader={feedTabbedHeaderRenderer: D__FeedTabbedHeader;};
+type R_FeedTabbedHeader={feedTabbedHeaderRenderer: D__FeedTabbedHeader;};

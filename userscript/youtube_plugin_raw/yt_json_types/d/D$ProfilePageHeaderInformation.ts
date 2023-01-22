@@ -1,7 +1,7 @@
 type D__ProfilePageHeaderInformation={
-	title: R$ProfilePageHeaderTitleViewModel;
-	metadata: R$ProfilePageHeaderMetadataViewModel;
-	thumbnail: R$ProfilePageHeaderThumbnailViewModel;
+	title: R_ProfilePageHeaderTitleViewModel;
+	metadata: R_ProfilePageHeaderMetadataViewModel;
+	thumbnail: R_ProfilePageHeaderThumbnailViewModel;
 	alignment: string;
 	onTap: C$InnertubeCommand;
 };

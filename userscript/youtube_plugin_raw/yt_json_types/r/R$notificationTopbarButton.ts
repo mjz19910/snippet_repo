@@ -1,1 +1,1 @@
-type R$NotificationTopbarButton={notificationTopbarButtonRenderer: D__NotificationTopbarButton;};
+type R_NotificationTopbarButton={notificationTopbarButtonRenderer: D__NotificationTopbarButton;};

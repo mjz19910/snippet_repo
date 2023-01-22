@@ -1,1 +1,1 @@
-type G_Menu$items$iterate=R$MenuServiceItem|R$ToggleMenuServiceItem|R$MenuNavigationItem;
+type G_Menu$items$iterate=R_MenuServiceItem|R_ToggleMenuServiceItem|R_MenuNavigationItem;

@@ -1,4 +1,4 @@
 type D__ReelDismissalAction={
-	onDismissalCompletionRenderer: R$NotificationAction;
+	onDismissalCompletionRenderer: R_NotificationAction;
 	trackingParams: string;
 };

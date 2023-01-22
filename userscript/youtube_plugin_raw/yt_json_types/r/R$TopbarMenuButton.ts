@@ -1,1 +1,1 @@
-type R$TopbarMenuButton={topbarMenuButtonRenderer: D__TopbarMenuButton;};
+type R_TopbarMenuButton={topbarMenuButtonRenderer: D__TopbarMenuButton;};

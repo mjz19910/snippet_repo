@@ -1,18 +1,18 @@
-type PlaylistContent=T$AR$Contents<R$PlaylistPanelVideo>&{
+type PlaylistContent=T$AR_Contents<R_PlaylistPanelVideo>&{
 	title: string;
 	currentIndex: number;
 	playlistId: PlaylistId;
-	ownerName: R$SimpleText;
+	ownerName: R_SimpleText;
 	isInfinite: boolean;
 	playlistShareUrl: `http://www.youtube.com/watch?v=${string}&list=${string}`;
-	shortBylineText: R$SimpleText;
-	longBylineText: R$SimpleText;
+	shortBylineText: R_SimpleText;
+	longBylineText: R_SimpleText;
 	trackingParams: string;
-	titleText: R$SimpleText;
+	titleText: R_SimpleText;
 	isEditable: true;
-	menu: R$Menu;
+	menu: R_Menu;
 	localCurrentIndex: 0|25;
-	playlistButtons: R$Menu;
+	playlistButtons: R_Menu;
 	isCourse: false;
-	nextVideoLabel: R$SimpleText;
+	nextVideoLabel: R_SimpleText;
 };

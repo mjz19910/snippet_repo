@@ -1,15 +1,15 @@
-type R$Next={
+type R_Next={
 	responseContext: RC$ResponseContext;
 	contents?: G_NextContents;
 	continuationContents?: PlaylistPanelContinuation;
 	currentVideoEndpoint?: E$WatchEndpoint;
 	trackingParams: string;
-	playerOverlays?: R$PlayerOverlay;
+	playerOverlays?: R_PlayerOverlay;
 	videoReporting?: RT$ReportFormModal;
 	queueContextParams?: string;
 	onResponseReceivedEndpoints?: EI$ResponseReceived[];
 	engagementPanels?: EngagementPanel[];
-	topbar?: R$DesktopTopbar;
-	pageVisualEffects?: R$CinematicContainer[];
+	topbar?: R_DesktopTopbar;
+	pageVisualEffects?: R_CinematicContainer[];
 	frameworkUpdates?: A_FrameworkUpdates;
 };

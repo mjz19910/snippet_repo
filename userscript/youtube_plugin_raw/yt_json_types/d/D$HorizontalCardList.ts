@@ -1,7 +1,7 @@
 type D__HorizontalCardList={
-	cards: R$MacroMarkersListItem[];
+	cards: R_MacroMarkersListItem[];
 	trackingParams: string;
-	header: R$RichListHeader;
+	header: R_RichListHeader;
 	style: D__HorizontalCardList$StyleType;
 	centerItems: false;
 };

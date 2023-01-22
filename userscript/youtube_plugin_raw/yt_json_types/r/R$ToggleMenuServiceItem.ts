@@ -1,1 +1,1 @@
-type R$ToggleMenuServiceItem={toggleMenuServiceItemRenderer: D__ToggleMenuServiceItem;};
+type R_ToggleMenuServiceItem={toggleMenuServiceItemRenderer: D__ToggleMenuServiceItem;};

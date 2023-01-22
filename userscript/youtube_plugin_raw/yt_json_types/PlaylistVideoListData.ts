@@ -1,6 +1,6 @@
 type D__PlaylistVideoList={
 	playlistId: "WL";
-	sortFilterMenu: R$SortFilterSubMenu;
+	sortFilterMenu: R_SortFilterSubMenu;
 	targetId: "WL";
 	trackingParams: string;
 };

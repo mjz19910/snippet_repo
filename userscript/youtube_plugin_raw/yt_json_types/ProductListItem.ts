@@ -1,5 +1,5 @@
 type D__ProductListItem={
-	title: R$SimpleText;
+	title: R_SimpleText;
 	accessibilityTitle: string;
 	thumbnail: D__Thumbnail;
 	price: `CA_${string}`;

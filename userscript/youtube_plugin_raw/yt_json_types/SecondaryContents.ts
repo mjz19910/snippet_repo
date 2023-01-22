@@ -1,1 +1,1 @@
-type G_SecondaryContents=R$ProfileColumn|R$BrowseFeedActions;
+type G_SecondaryContents=R_ProfileColumn|R_BrowseFeedActions;

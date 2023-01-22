@@ -1,10 +1,10 @@
 type G_ThumbnailOverlayItem=
-	|R$ThumbnailOverlayBottomPanel
-	|R$ThumbnailOverlayHoverText
-	|R$ThumbnailOverlayLoadingPreview
-	|R$ThumbnailOverlayNowPlaying
-	|R$ThumbnailOverlayTimeStatus
-	|R$ThumbnailOverlayToggleButton
-	|R$ThumbnailOverlayResumePlayback
+	|R_ThumbnailOverlayBottomPanel
+	|R_ThumbnailOverlayHoverText
+	|R_ThumbnailOverlayLoadingPreview
+	|R_ThumbnailOverlayNowPlaying
+	|R_ThumbnailOverlayTimeStatus
+	|R_ThumbnailOverlayToggleButton
+	|R_ThumbnailOverlayResumePlayback
 	;
 ;

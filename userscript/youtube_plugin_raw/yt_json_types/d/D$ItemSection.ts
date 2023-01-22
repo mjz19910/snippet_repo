@@ -1,6 +1,6 @@
-type D__ItemSection=T$AR$Contents<ItemSectionItem>&{
+type D__ItemSection=T$AR_Contents<ItemSectionItem>&{
 	trackingParams: string;
 	sectionIdentifier: string;
 	targetId?: string;
-	header?: R$ItemSectionHeader;
+	header?: R_ItemSectionHeader;
 };

@@ -1,1 +1,1 @@
-type R$InlineSurvey={inlineSurveyRenderer: D__InlineSurvey;};
+type R_InlineSurvey={inlineSurveyRenderer: D__InlineSurvey;};

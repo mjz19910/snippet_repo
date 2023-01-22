@@ -1,1 +1,1 @@
-type R$ChannelMetadata={channelMetadataRenderer: D__ChannelMetadata;};
+type R_ChannelMetadata={channelMetadataRenderer: D__ChannelMetadata;};

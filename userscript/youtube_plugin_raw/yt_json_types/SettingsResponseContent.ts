@@ -1,8 +1,8 @@
-type R$Settings={
+type R_Settings={
 	responseContext: RC$ResponseContext;
-	contents: R$TwoColumnBrowseResults;
+	contents: R_TwoColumnBrowseResults;
 	trackingParams: string;
-	topbar: R$DesktopTopbar;
+	topbar: R_DesktopTopbar;
 	onResponseReceivedEndpoints?: {}[];
-	sidebar: R$SettingsSidebar;
+	sidebar: R_SettingsSidebar;
 };

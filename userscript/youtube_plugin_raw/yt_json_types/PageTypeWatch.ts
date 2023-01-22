@@ -1,7 +1,7 @@
 type PageTypeWatch={
 	pageType: "watch";
 	endpoint: E$WatchEndpoint;
-	response: R$WatchPage;
+	response: R_WatchPage;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

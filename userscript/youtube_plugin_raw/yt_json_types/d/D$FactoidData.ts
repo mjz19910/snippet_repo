@@ -1,5 +1,5 @@
 type D__Factoid={
-	value: R$SimpleText;
-	label: R$SimpleText;
+	value: R_SimpleText;
+	label: R_SimpleText;
 	accessibilityText: string;
 };

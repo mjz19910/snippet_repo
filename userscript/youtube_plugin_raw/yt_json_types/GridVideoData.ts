@@ -1,14 +1,14 @@
 type D__GridVideo={
 	badges: {}[];
 	channelThumbnail: D__Thumbnail;
-	menu: R$Menu;
+	menu: R_Menu;
 	navigationEndpoint: {};
-	shortBylineText: R$TextWithRuns;
-	shortViewCountText: R$TextWithRuns;
+	shortBylineText: R_TextWithRuns;
+	shortViewCountText: R_TextWithRuns;
 	thumbnail: D__Thumbnail;
 	thumbnailOverlay: G_ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;
 	videoId: string;
-	viewCountText: R$TextWithRuns;
+	viewCountText: R_TextWithRuns;
 };

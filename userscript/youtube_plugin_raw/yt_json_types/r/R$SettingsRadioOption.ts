@@ -1,1 +1,1 @@
-type R$SettingsRadioOption={settingsRadioOptionRenderer: D__SettingsRadioOption;};
+type R_SettingsRadioOption={settingsRadioOptionRenderer: D__SettingsRadioOption;};

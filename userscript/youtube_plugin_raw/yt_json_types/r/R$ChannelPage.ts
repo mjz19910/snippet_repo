@@ -1,6 +1,6 @@
-type R$ChannelPage={
+type R_ChannelPage={
 	page: "channel";
 	endpoint: E$Browse;
-	response: R$Channel;
+	response: R_Channel;
 	url: string;
 };

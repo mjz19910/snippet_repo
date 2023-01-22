@@ -1,12 +1,12 @@
 type D__DesktopTopbar={
-	logo: R$TopbarLogo;
-	searchbox: R$FusionSearchbox;
+	logo: R_TopbarLogo;
+	searchbox: R_FusionSearchbox;
 	trackingParams: string;
 	countryCode: CountryCode;
 	topbarButtons: TopbarButtonItem[];
-	hotkeyDialog: R$HotkeyDialog;
-	backButton: R$Button;
-	forwardButton: R$Button;
-	a11ySkipNavigationButton: R$Button;
-	voiceSearchButton: R$Button;
+	hotkeyDialog: R_HotkeyDialog;
+	backButton: R_Button;
+	forwardButton: R_Button;
+	a11ySkipNavigationButton: R_Button;
+	voiceSearchButton: R_Button;
 };

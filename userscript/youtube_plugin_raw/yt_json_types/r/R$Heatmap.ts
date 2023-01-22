@@ -1,1 +1,1 @@
-type R$Heatmap={heatmapRenderer: D__Heatmap;};
+type R_Heatmap={heatmapRenderer: D__Heatmap;};

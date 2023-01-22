@@ -1,1 +1,1 @@
-type R$PdgCommentChip={pdgCommentChipRenderer: D__PdgCommentChip;};
+type R_PdgCommentChip={pdgCommentChipRenderer: D__PdgCommentChip;};

@@ -1,3 +1,3 @@
-type R$LiveChatHeader={
+type R_LiveChatHeader={
 	liveChatHeaderRenderer: {};
 };

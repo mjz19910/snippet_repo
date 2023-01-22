@@ -1,4 +1,4 @@
 type WD_like_removelike_t={
 	type: "like.removelike";
-	data: R$LikeRemoveLike;
+	data: R_LikeRemoveLike;
 };

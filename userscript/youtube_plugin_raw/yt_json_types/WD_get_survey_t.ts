@@ -1,4 +1,4 @@
 type WD_get_survey_t={
 	type: "get_survey";
-	data: R$GetSurvey;
+	data: R_GetSurvey;
 };

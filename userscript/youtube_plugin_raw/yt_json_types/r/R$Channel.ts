@@ -1,10 +1,10 @@
-type R$Channel={
+type R_Channel={
 	responseContext: RC$ResponseContext;
-	contents: R$TwoColumnBrowseResults;
-	header: R$C4TabbedHeader;
-	metadata: R$ChannelMetadata;
+	contents: R_TwoColumnBrowseResults;
+	header: R_C4TabbedHeader;
+	metadata: R_ChannelMetadata;
 	trackingParams: string;
-	topbar: R$DesktopTopbar;
-	microformat: R$MicroformatData;
+	topbar: R_DesktopTopbar;
+	microformat: R_MicroformatData;
 	onResponseReceivedActions: C$ResetChannelUnreadCount[];
 };

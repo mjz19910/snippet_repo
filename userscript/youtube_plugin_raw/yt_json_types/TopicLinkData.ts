@@ -1,5 +1,5 @@
 type D__TopicLink={
-	title: R$SimpleText;
+	title: R_SimpleText;
 	thumbnailDetails: D__Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata
 	endpoint: E$Browse;

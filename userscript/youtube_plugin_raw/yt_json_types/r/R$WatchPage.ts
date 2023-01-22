@@ -1,1 +1,1 @@
-type R$WatchPage=R$WatchPage$1|R$VE3832$WatchPage;
+type R_WatchPage=R_WatchPage$1|R_VE3832$WatchPage;

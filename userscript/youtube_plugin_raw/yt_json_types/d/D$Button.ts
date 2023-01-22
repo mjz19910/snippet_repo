@@ -11,6 +11,6 @@ type D__Button={
 	style?: ButtonStyleType;
 	text?: G_Text;
 	trackingParams?: string;
-	hint?: R$Hint;
+	hint?: R_Hint;
 	targetId?: D__Button$TargetId;
 };

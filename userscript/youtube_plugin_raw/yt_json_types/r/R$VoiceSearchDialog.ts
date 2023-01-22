@@ -1,1 +1,1 @@
-type R$VoiceSearchDialog={voiceSearchDialogRenderer: D__VoiceSearchDialog;};
+type R_VoiceSearchDialog={voiceSearchDialogRenderer: D__VoiceSearchDialog;};

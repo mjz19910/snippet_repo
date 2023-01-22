@@ -1,4 +1,4 @@
 type WD_get_transcript_t={
 	type: "get_transcript";
-	data: R$GetTranscript;
+	data: R_GetTranscript;
 };

@@ -1,1 +1,1 @@
-type R$PlayerSeekContinuation={playerSeekContinuationData: D__PlayerSeekContinuation;};
+type R_PlayerSeekContinuation={playerSeekContinuationData: D__PlayerSeekContinuation;};

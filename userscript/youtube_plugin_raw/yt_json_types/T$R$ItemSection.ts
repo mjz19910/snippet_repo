@@ -1,1 +1,1 @@
-type T$R$ItemSection<CT,T,U>={itemSectionRenderer: T$D__ItemSection<CT,T,U>;};
+type T$R_ItemSection<CT,T,U>={itemSectionRenderer: T$D__ItemSection<CT,T,U>;};

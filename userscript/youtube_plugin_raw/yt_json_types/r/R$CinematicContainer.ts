@@ -1,1 +1,1 @@
-type R$CinematicContainer={cinematicContainerRenderer: D__CinematicContainer;};
+type R_CinematicContainer={cinematicContainerRenderer: D__CinematicContainer;};

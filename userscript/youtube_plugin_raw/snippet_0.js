@@ -411,13 +411,13 @@ export class Snippet_0_tmp {
 		return r;
 	}
 	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
-	H$R$(cf,x,f) {
+	H$R_(cf,x,f) {
 		this.save_keys(`[${cf}Renderer]`,x);
 		f.call(this,this.w(x));
 	}
 	/** @arg {D__NotificationAction} x */
 	D__NotificationAction(x) {x;}
-	/** @protected @template {{}} T @arg {T$R$SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	/** @protected @template {{}} T @arg {T$R_SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
 		const cf="SectionListRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -428,7 +428,7 @@ export class Snippet_0_tmp {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
 		this.SectionListItemTemplate(this.w(x));
 	}
-	/** @private @template {{}} T @arg {T$R$ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
+	/** @private @template {{}} T @arg {T$R_ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
 			this.z(b,a=>{a;debugger;});
@@ -448,14 +448,14 @@ export class Snippet_0_tmp {
 	}
 }
 class ND extends Snippet_0_tmp {
-	/** @private @arg {R$NotificationAction} x */
-	R$New(x) {this.H$R$("NotificationAction",x,this.D__NotificationAction);}
+	/** @private @arg {R_NotificationAction} x */
+	R_New(x) {this.H$R_("NotificationAction",x,this.D__NotificationAction);}
 	/** @pub @arg {D__NotificationAction} x */
 	D__NewData(x) {x;}
 	/** @pub @arg {E$T$SignalService<{}>} x */
 	E$NewEndpoint(x) {x;}
 	use() {
-		this.R$New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
+		this.R_New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
 	}
 }
 new ND;

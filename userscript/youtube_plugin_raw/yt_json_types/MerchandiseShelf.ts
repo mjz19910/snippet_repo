@@ -1,8 +1,8 @@
 type D__MerchandiseShelf={
 	title: string;
-	items: R$MerchandiseItem[];
+	items: R_MerchandiseItem[];
 	trackingParams: string;
 	showText: string;
 	hideText: string;
-	actionButton: R$Menu;
+	actionButton: R_Menu;
 };

@@ -1,1 +1,1 @@
-type R$GuideCollapsibleEntry={guideCollapsibleEntryRenderer: D__GuideCollapsibleEntry;};
+type R_GuideCollapsibleEntry={guideCollapsibleEntryRenderer: D__GuideCollapsibleEntry;};

@@ -1,1 +1,1 @@
-type G_LinearAdsItem=R$InstreamVideoAd|R$AdActionInterstitial;
+type G_LinearAdsItem=R_InstreamVideoAd|R_AdActionInterstitial;

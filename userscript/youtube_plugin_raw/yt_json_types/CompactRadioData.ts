@@ -1,15 +1,15 @@
 type D__CompactRadio={
 	playlistId: `RD__{"GM"}${string}`;
 	thumbnail: D__Thumbnail&SampledThumbnailColor;
-	title: R$SimpleText;
+	title: R_SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
-	videoCountText: R$TextWithRuns;
+	videoCountText: R_TextWithRuns;
 	secondaryNavigationEndpoint: E$WatchEndpoint;
-	longBylineText: R$SimpleText;
+	longBylineText: R_SimpleText;
 	trackingParams: string;
-	thumbnailText: R$TextWithRuns;
-	videoCountShortText: R$TextWithRuns;
+	thumbnailText: R_TextWithRuns;
+	videoCountShortText: R_TextWithRuns;
 	shareUrl: string;
-	menu: R$Menu;
+	menu: R_Menu;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };

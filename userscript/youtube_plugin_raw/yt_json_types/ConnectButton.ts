@@ -1,1 +1,1 @@
-type ConnectButton=R$Button;
+type ConnectButton=R_Button;

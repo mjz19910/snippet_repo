@@ -1,1 +1,1 @@
-type R$ElementUpdate={updates: D__ElementUpdate[];};
+type R_ElementUpdate={updates: D__ElementUpdate[];};

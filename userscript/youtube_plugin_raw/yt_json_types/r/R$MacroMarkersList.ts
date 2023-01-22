@@ -1,1 +1,1 @@
-type R$MacroMarkersList={macroMarkersListRenderer: D__MacroMarkersList;};
+type R_MacroMarkersList={macroMarkersListRenderer: D__MacroMarkersList;};

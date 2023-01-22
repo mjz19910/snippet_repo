@@ -1,1 +1,1 @@
-type R$PlayerMicroformat={playerMicroformatRenderer: D__PlayerMicroformat;};
+type R_PlayerMicroformat={playerMicroformatRenderer: D__PlayerMicroformat;};

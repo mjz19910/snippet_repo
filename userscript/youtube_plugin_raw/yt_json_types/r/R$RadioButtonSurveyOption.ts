@@ -1,1 +1,1 @@
-type R$RadioButtonSurveyOption={radioButtonSurveyOptionRenderer: D__RadioButtonSurveyOption;};
+type R_RadioButtonSurveyOption={radioButtonSurveyOptionRenderer: D__RadioButtonSurveyOption;};

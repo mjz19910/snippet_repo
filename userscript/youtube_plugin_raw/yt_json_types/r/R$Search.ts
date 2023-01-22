@@ -1,8 +1,8 @@
-type R$Search=T$Contents<R$TwoColumnSearchResults>&{
+type R_Search=T$Contents<R_TwoColumnSearchResults>&{
 	responseContext: RC$ResponseContext;
 	estimatedResults: `${number}`;
 	trackingParams: string;
-	topbar: R$DesktopTopbar;
+	topbar: R_DesktopTopbar;
 	refinements: string[];
 	onResponseReceivedCommands: SearchResponseReceivedCommandItem[];
 	targetId: "search-page";

@@ -1,1 +1,1 @@
-type D__TranscriptFooter={languageMenu: R$SortFilterSubMenu;};
+type D__TranscriptFooter={languageMenu: R_SortFilterSubMenu;};

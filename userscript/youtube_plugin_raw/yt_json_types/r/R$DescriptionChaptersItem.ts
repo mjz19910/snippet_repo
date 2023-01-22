@@ -1,1 +1,1 @@
-type R$DescriptionChaptersItem=MapTemplate<"DESCRIPTION_CHAPTERS",R$DescriptionChapters>;
+type R_DescriptionChaptersItem=MapTemplate<"DESCRIPTION_CHAPTERS",R_DescriptionChapters>;

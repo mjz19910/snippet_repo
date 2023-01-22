@@ -1,1 +1,1 @@
-type R$ChannelThumbnailWithLink={channelThumbnailWithLinkRenderer: D__ChannelThumbnailWithLink;};
+type R_ChannelThumbnailWithLink={channelThumbnailWithLinkRenderer: D__ChannelThumbnailWithLink;};

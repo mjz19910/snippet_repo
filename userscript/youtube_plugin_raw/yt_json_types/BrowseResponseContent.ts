@@ -1,19 +1,19 @@
-type BrowseMetadata=R$ChannelMetadata|R$PlaylistMetadata;
+type BrowseMetadata=R_ChannelMetadata|R_PlaylistMetadata;
 
-type R$Browse={
+type R_Browse={
 	responseContext: RC$ResponseContext;
 	contents?: BrowseContents;
 	continuationContents?: C$SectionList;
 	header?: BrowseHeader;
-	alerts?: R$AlertWithButton[];
+	alerts?: R_AlertWithButton[];
 	metadata?: BrowseMetadata;
 	trackingParams: string;
-	topbar?: R$DesktopTopbar;
-	microformat?: R$MicroformatData;
-	frameworkUpdates?: R$EntityBatchUpdate;
+	topbar?: R_DesktopTopbar;
+	microformat?: R_MicroformatData;
+	frameworkUpdates?: R_EntityBatchUpdate;
 	// ?
 	maxAgeStoreSeconds?: number;
-	background?: R$MusicThumbnail;
+	background?: R_MusicThumbnail;
 	// ?
 	onResponseReceivedActions?: ResponseReceivedAction[];
 	sidebar?: BrowseSidebar;

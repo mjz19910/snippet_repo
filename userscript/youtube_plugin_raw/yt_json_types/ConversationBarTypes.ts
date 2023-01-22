@@ -1,1 +1,1 @@
-type ConversationBarTypes=R$LiveChat;
+type ConversationBarTypes=R_LiveChat;

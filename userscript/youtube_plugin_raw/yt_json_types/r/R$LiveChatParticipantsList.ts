@@ -1,3 +1,3 @@
-type R$LiveChatParticipantsList={
+type R_LiveChatParticipantsList={
 	liveChatParticipantsListRenderer: {};
 };

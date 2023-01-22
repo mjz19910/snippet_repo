@@ -1,1 +1,1 @@
-type RenderingContent={displayAdRenderer: R$DisplayAd;};
+type RenderingContent={displayAdRenderer: R_DisplayAd;};

@@ -1,7 +1,7 @@
 type D__VideoQualityPromo={
 	triggerCriteria: TriggerCriteria;
-	text: R$TextWithRuns;
+	text: R_TextWithRuns;
 	endpoint: E$UrlEndpoint;
 	trackingParams: string;
-	snackbar: R$NotificationAction;
+	snackbar: R_NotificationAction;
 };

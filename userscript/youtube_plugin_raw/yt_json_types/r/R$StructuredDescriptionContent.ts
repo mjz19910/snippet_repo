@@ -1,1 +1,1 @@
-type R$StructuredDescriptionContent={structuredDescriptionContentRenderer: D__StructuredDescriptionContent;};
+type R_StructuredDescriptionContent={structuredDescriptionContentRenderer: D__StructuredDescriptionContent;};

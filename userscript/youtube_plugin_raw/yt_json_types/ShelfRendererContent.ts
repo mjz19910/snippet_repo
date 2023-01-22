@@ -1,3 +1,3 @@
 type ShelfItem={
-	gridRenderer: R$Grid;
+	gridRenderer: R_Grid;
 };

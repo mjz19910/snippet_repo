@@ -1,9 +1,9 @@
 type $Popups$=
-	|R$ConfirmDialog
-	|T$R$MultiPageMenu<{}>
-	|R$NotificationAction
-	|R$PdgBuyFlow
-	|R$UnifiedSharePanel
-	|R$VoiceSearchDialog
+	|R_ConfirmDialog
+	|T$R_MultiPageMenu<{}>
+	|R_NotificationAction
+	|R_PdgBuyFlow
+	|R_UnifiedSharePanel
+	|R_VoiceSearchDialog
 	;
 ;

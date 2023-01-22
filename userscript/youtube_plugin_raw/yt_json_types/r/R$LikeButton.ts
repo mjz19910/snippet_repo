@@ -1,1 +1,1 @@
-type R$LikeButton={likeButtonRenderer: D__LikeButton;};
+type R_LikeButton={likeButtonRenderer: D__LikeButton;};

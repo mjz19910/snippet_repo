@@ -1,1 +1,1 @@
-type R$PlayerAttestation={playerAttestationRenderer: D__PlayerAttestation;};
+type R_PlayerAttestation={playerAttestationRenderer: D__PlayerAttestation;};

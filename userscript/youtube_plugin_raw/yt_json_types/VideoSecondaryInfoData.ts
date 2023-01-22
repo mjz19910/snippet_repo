@@ -1,10 +1,10 @@
 type D__VideoSecondaryInfo={
-	owner: R$VideoOwner;
-	description?: R$TextWithRuns;
-	subscribeButton: R$SubscribeButton;
-	metadataRowContainer: R$MetadataRowContainer;
-	showMoreText: R$SimpleText;
-	showLessText: R$SimpleText;
+	owner: R_VideoOwner;
+	description?: R_TextWithRuns;
+	subscribeButton: R_SubscribeButton;
+	metadataRowContainer: R_MetadataRowContainer;
+	showMoreText: R_SimpleText;
+	showLessText: R_SimpleText;
 	trackingParams: string;
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;

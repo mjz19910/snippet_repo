@@ -1,1 +1,1 @@
-type R$ConfirmDialog={confirmDialogRenderer: D__ConfirmDialog;};
+type R_ConfirmDialog={confirmDialogRenderer: D__ConfirmDialog;};

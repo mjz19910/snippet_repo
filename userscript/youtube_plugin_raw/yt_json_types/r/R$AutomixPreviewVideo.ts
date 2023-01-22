@@ -1,1 +1,1 @@
-type R$AutomixPreviewVideo={automixPreviewVideoRenderer: D__AutomixPreviewVideo;};
+type R_AutomixPreviewVideo={automixPreviewVideoRenderer: D__AutomixPreviewVideo;};

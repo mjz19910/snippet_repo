@@ -1,4 +1,4 @@
 type D__DecoratedPlayerBar={
-	playerBar: R$MultiMarkersPlayerBar;
-	playerBarActionButton?: R$Button;
+	playerBar: R_MultiMarkersPlayerBar;
+	playerBarActionButton?: R_Button;
 };

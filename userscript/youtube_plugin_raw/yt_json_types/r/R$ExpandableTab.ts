@@ -1,1 +1,1 @@
-type R$ExpandableTab={expandableTabRenderer: D__ExpandableTab;};
+type R_ExpandableTab={expandableTabRenderer: D__ExpandableTab;};

@@ -1,12 +1,12 @@
 type D__Notification={
 	thumbnail: D__Thumbnail;
 	videoThumbnail: D__Thumbnail;
-	shortMessage: R$SimpleText;
-	sentTimeText: R$SimpleText;
+	shortMessage: R_SimpleText;
+	sentTimeText: R_SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
 	read: boolean;
 	recordClickEndpoint: E$RecordNotificationInteractions;
-	contextualMenu: R$Menu;
+	contextualMenu: R_Menu;
 	trackingParams: string;
 	notificationId: `${number}`;
 };

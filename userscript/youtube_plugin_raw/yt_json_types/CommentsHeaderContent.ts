@@ -1,5 +1,5 @@
 type CommentsHeaderContent={
 	continuationItems: [
-		R$CommentsHeader
+		R_CommentsHeader
 	];
 };

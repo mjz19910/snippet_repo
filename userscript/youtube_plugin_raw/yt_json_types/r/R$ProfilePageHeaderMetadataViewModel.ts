@@ -1,1 +1,1 @@
-type R$ProfilePageHeaderMetadataViewModel={profilePageHeaderMetadataViewModel: {};};
+type R_ProfilePageHeaderMetadataViewModel={profilePageHeaderMetadataViewModel: {};};

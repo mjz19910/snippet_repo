@@ -1,1 +1,1 @@
-type PlaylistSidebarItem=R$PlaylistSidebarPrimaryInfo|R$PlaylistSidebarSecondaryInfo;
+type PlaylistSidebarItem=R_PlaylistSidebarPrimaryInfo|R_PlaylistSidebarSecondaryInfo;

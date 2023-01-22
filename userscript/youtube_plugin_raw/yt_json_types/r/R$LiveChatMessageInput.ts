@@ -1,3 +1,3 @@
-type R$LiveChatMessageInput={
+type R_LiveChatMessageInput={
 	liveChatMessageInputRenderer: {};
 };

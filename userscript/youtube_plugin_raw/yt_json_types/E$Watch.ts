@@ -7,10 +7,10 @@ type E$Watch={
 	params?: string;
 	startTimeSeconds?: number;
 	continuePlayback?: true;
-	loggingContext?: R$VssLoggingContext;
+	loggingContext?: R_VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
-	watchEndpointMusicSupportedConfigs?: R$WatchEndpointMusicConfig;
+	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
 	playerParams?: string;
 	playerExtraUrlParams?: [{
 		key: "inline";

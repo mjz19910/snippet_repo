@@ -1,22 +1,22 @@
-type R$Player={
+type R_Player={
 	responseContext: RC$ResponseContext;
 	playabilityStatus: D__PlayabilityStatus;
 	streamingData?: D__StreamingData;
 	heartbeatParams?: D__HeartbeatParams;
-	playerAds?: R$DesktopWatchAds[];
+	playerAds?: R_DesktopWatchAds[];
 	playbackTracking?: D__PlaybackTracking;
-	captions?: R$PlayerCaptionsTracklist;
+	captions?: R_PlayerCaptionsTracklist;
 	videoDetails?: D__VideoDetails;
 	playerConfig?: D__PlayerConfig;
-	storyboards?: R$PlayerStoryboardSpec|R$PlayerLiveStoryboardSpec;
-	microformat?: R$PlayerMicroformat;
-	cards?: R$CardCollection;
+	storyboards?: R_PlayerStoryboardSpec|R_PlayerLiveStoryboardSpec;
+	microformat?: R_PlayerMicroformat;
+	cards?: R_CardCollection;
 	trackingParams: string;
-	attestation?: R$PlayerAttestation;
-	videoQualityPromoSupportedRenderers?: R$VideoQualityPromo;
-	adPlacements?: Maybe<R$AdPlacement>[];
+	attestation?: R_PlayerAttestation;
+	videoQualityPromoSupportedRenderers?: R_VideoQualityPromo;
+	adPlacements?: Maybe<R_AdPlacement>[];
 	frameworkUpdates: A_FrameworkUpdates;
-	endscreen?: R$Endscreen;
+	endscreen?: R_Endscreen;
 	paidContentOverlay?: {};
-	annotations?: R$PlayerAnnotationsExpanded[];
+	annotations?: R_PlayerAnnotationsExpanded[];
 }

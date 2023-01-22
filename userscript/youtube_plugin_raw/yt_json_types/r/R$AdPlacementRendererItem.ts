@@ -1,6 +1,6 @@
 type AdPlacementRendererItem=[
-	R$AdBreakService,
-	R$ClientForecastingAd,
-	R$InstreamVideoAd,
-	R$LinearAdSequence,
+	R_AdBreakService,
+	R_ClientForecastingAd,
+	R_InstreamVideoAd,
+	R_LinearAdSequence,
 ][number];

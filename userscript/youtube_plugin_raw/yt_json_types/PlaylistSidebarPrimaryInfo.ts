@@ -1,11 +1,11 @@
 type D__PlaylistSidebarPrimaryInfo={
-	thumbnailRenderer: R$PlaylistVideoThumbnail;
-	title: R$TextWithRuns;
-	stats: R$TextWithRuns[];
-	menu: R$Menu;
-	thumbnailOverlays: R$ThumbnailOverlaySidePanel[];
+	thumbnailRenderer: R_PlaylistVideoThumbnail;
+	title: R_TextWithRuns;
+	stats: R_TextWithRuns[];
+	menu: R_Menu;
+	thumbnailOverlays: R_ThumbnailOverlaySidePanel[];
 	navigationEndpoint: E$WatchEndpoint;
-	badges: R$MetadataBadge[];
+	badges: R_MetadataBadge[];
 	description: {};
-	showMoreText: R$TextWithRuns;
+	showMoreText: R_TextWithRuns;
 };

@@ -1,1 +1,1 @@
-type G_NextContents=R$TwoColumnWatchNextResults|R$SingleColumnMusicWatchNextResults;
+type G_NextContents=R_TwoColumnWatchNextResults|R_SingleColumnMusicWatchNextResults;

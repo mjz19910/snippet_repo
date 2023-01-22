@@ -1,1 +1,1 @@
-type EngagementPanelItem=R$EngagementPanelSectionList;
+type EngagementPanelItem=R_EngagementPanelSectionList;

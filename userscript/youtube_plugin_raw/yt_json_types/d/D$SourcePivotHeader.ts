@@ -1,5 +1,5 @@
 type D__SourcePivotHeader={
-	headerInformation: R$ProfilePageHeaderInformationViewModel;
-	buttonRow: R$ProfilePageHeaderButtonRowViewModel;
+	headerInformation: R_ProfilePageHeaderInformationViewModel;
+	buttonRow: R_ProfilePageHeaderButtonRowViewModel;
 	trackingParams: string;
 };

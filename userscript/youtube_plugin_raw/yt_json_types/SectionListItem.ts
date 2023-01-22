@@ -1,6 +1,6 @@
 type $SectionListItem=
-	|R$ContinuationItem
-	|R$ItemSection
-	|R$MusicCarouselShelf
-	|R$MusicShelf
+	|R_ContinuationItem
+	|R_ItemSection
+	|R_MusicCarouselShelf
+	|R_MusicShelf
 	;

@@ -1,4 +1,4 @@
 type D__ProductList={
-	contents: R$ProductListItem[];
+	contents: R_ProductListItem[];
 	trackingParams: string;
 };

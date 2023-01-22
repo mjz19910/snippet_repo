@@ -1,1 +1,1 @@
-type R$CompactLink={compactLinkRenderer: D__CompactLink;};
+type R_CompactLink={compactLinkRenderer: D__CompactLink;};

@@ -1,4 +1,4 @@
 type C$AddFollowUpSurvey={
 	followUpOptions: FollowUpOption[];
-	followUpText: R$TextWithRuns;
+	followUpText: R_TextWithRuns;
 };

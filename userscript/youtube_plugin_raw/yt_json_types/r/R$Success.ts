@@ -1,4 +1,4 @@
-type R$Success={
+type R_Success={
 	responseContext: RC$ResponseContext;
 	success: boolean;
 };

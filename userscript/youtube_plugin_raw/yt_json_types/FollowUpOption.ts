@@ -1,1 +1,1 @@
-type FollowUpOption=R$RadioButtonSurveyOption|R$CheckboxSurveyOption;
+type FollowUpOption=R_RadioButtonSurveyOption|R_CheckboxSurveyOption;

@@ -1,2 +1,2 @@
 
-type R$VideoPrimaryInfo={videoPrimaryInfoRenderer: D__VideoPrimaryInfo;};
+type R_VideoPrimaryInfo={videoPrimaryInfoRenderer: D__VideoPrimaryInfo;};

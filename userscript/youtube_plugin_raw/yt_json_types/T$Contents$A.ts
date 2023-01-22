@@ -1,1 +1,1 @@
-type T$AR$Contents<T>={contents: T[];};
+type T$AR_Contents<T>={contents: T[];};

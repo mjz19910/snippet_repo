@@ -1,1 +1,1 @@
-type R$PdgCommentPreview={pdgCommentPreviewRenderer: D__PdgCommentPreview;};
+type R_PdgCommentPreview={pdgCommentPreviewRenderer: D__PdgCommentPreview;};

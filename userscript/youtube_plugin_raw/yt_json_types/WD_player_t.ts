@@ -1,1 +1,1 @@
-type WD_player_t={type: "player";data: R$Player;};
+type WD_player_t={type: "player";data: R_Player;};

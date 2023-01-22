@@ -1,3 +1,3 @@
-type R$LiveChatTicker={
+type R_LiveChatTicker={
 	liveChatTickerRenderer: {};
 };

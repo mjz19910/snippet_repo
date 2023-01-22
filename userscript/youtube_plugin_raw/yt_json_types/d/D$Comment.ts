@@ -1,19 +1,19 @@
 type D__Comment={
-	authorText: R$TextWithRuns;
+	authorText: R_TextWithRuns;
 	authorThumbnail: D__Thumbnail;
 	authorEndpoint: {};
-	contentText: R$TextWithRuns;
-	publishedTimeText: R$TextWithRuns;
+	contentText: R_TextWithRuns;
+	publishedTimeText: R_TextWithRuns;
 	isLiked: boolean;
-	actionMenu: R$Menu;
+	actionMenu: R_Menu;
 	commentId: string;
-	actionButtons: R$CommentActionButtons;
+	actionButtons: R_CommentActionButtons;
 	authorIsChannelOwner: boolean;
 	currentUserReplyThumbnail: D__Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
-	voteCount: R$TextWithRuns;
-	expandButton: R$Button;
-	collapseButton: R$Button;
+	voteCount: R_TextWithRuns;
+	expandButton: R_Button;
+	collapseButton: R_Button;
 	loggingDirectives: A_LoggingDirectives;
 };

@@ -1,1 +1,1 @@
-type R$C4TabbedHeader={c4TabbedHeaderRenderer: D__C4TabbedHeader;};
+type R_C4TabbedHeader={c4TabbedHeaderRenderer: D__C4TabbedHeader;};

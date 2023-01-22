@@ -1,1 +1,1 @@
-type R$TwoColumnSearchResults={twoColumnSearchResultsRenderer: D__TwoColumnSearchResults;};
+type R_TwoColumnSearchResults={twoColumnSearchResultsRenderer: D__TwoColumnSearchResults;};

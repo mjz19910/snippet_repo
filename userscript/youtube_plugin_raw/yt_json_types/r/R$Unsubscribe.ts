@@ -1,4 +1,4 @@
-type R$Unsubscribe={
+type R_Unsubscribe={
 	responseContext: RC$ResponseContext;
 	actions: (A_RemoveFromGuideSection|T$A_OpenPopup<{}>|A_UpdateSubscribeButton)[];
 	trackingParams: string;

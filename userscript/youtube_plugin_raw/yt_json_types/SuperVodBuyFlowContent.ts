@@ -1,10 +1,10 @@
 type D__SuperVodBuyFlowContent={
-	description: R$TextWithRuns;
-	buyButton: R$Button;
+	description: R_TextWithRuns;
+	buyButton: R_Button;
 	trackingParams: string;
-	commentPreview: R$PdgCommentPreview;
-	disclaimerText: R$TextWithRuns;
-	colorSlider: R$PdgColorSlider;
+	commentPreview: R_PdgCommentPreview;
+	disclaimerText: R_TextWithRuns;
+	colorSlider: R_PdgColorSlider;
 	defaultPriceTier: number;
 	superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
 };

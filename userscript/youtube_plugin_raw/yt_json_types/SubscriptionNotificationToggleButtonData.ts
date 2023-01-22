@@ -3,17 +3,17 @@ type D__SubscriptionNotificationToggleButton={
 		{
 			stateId: 2;
 			nextStateId: 2;
-			state: R$Button;
+			state: R_Button;
 		},
 		{
 			stateId: 3;
 			nextStateId: 3;
-			state: R$Button;
+			state: R_Button;
 		},
 		{
 			stateId: 0;
 			nextStateId: 0;
-			state: R$Button;
+			state: R_Button;
 		}
 	];
 	currentStateId: 2;

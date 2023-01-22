@@ -1,4 +1,4 @@
-type R$TextWithRuns={
-	runs: R$TextRun[];
+type R_TextWithRuns={
+	runs: R_TextRun[];
 	accessibility?: D__Accessibility;
 };

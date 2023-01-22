@@ -1,5 +1,5 @@
 type D__CommentThread={
-	comment: R$Comment;
+	comment: R_Comment;
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";
 	isModeratedElqComment: boolean;

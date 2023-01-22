@@ -1,6 +1,6 @@
 type D__SettingsCheckbox={
-	title: R$TextWithRuns;
-	helpText?: R$TextWithRuns;
+	title: R_TextWithRuns;
+	helpText?: R_TextWithRuns;
 	enabled: boolean;
 	enableServiceEndpoint: {};
 	disableServiceEndpoint: {};

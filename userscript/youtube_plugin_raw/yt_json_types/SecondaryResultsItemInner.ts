@@ -1,4 +1,4 @@
 type SecondaryResultsItemInner=[
-	R$RelatedChipCloud,
-	R$ItemSection
+	R_RelatedChipCloud,
+	R_ItemSection
 ][number];

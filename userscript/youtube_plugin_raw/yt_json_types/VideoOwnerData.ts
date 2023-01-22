@@ -1,18 +1,18 @@
 type D__VideoOwner={
 	thumbnail: D__Thumbnail;
-	title: R$TextWithRuns;
+	title: R_TextWithRuns;
 	subscriptionButton: D__SubscriptionButton;
 	navigationEndpoint: E$Browse;
-	subscriberCountText: R$SimpleText;
+	subscriberCountText: R_SimpleText;
 	trackingParams: string;
-	membershipButton: R$Button;
+	membershipButton: R_Button;
 }|{
 	thumbnail: D__Thumbnail;
-	title: R$TextWithRuns;
+	title: R_TextWithRuns;
 	subscriptionButton: D__SubscriptionButton;
 	navigationEndpoint: E$Browse;
-	subscriberCountText: R$SimpleText;
+	subscriberCountText: R_SimpleText;
 	trackingParams: string;
-	badges: R$MetadataBadge[];
-	membershipButton: R$Button;
+	badges: R_MetadataBadge[];
+	membershipButton: R_Button;
 };

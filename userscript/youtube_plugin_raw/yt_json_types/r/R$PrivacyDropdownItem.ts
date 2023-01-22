@@ -1,1 +1,1 @@
-type R$PrivacyDropdownItem={privacyDropdownItemRenderer: D__PrivacyDropdownItem;};
+type R_PrivacyDropdownItem={privacyDropdownItemRenderer: D__PrivacyDropdownItem;};

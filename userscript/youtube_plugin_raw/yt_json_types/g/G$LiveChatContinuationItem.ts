@@ -1,6 +1,6 @@
 type G_LiveChatContinuationItem=
-	|R$LiveChatReplayContinuation
-	|R$InvalidationContinuation
-	|R$PlayerSeekContinuation
+	|R_LiveChatReplayContinuation
+	|R_InvalidationContinuation
+	|R_PlayerSeekContinuation
 	;
 ;

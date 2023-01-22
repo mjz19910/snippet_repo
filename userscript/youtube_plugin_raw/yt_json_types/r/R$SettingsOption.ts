@@ -1,1 +1,1 @@
-type R$SettingsOption={settingsOptionsRenderer: D__SettingsOptions;};
+type R_SettingsOption={settingsOptionsRenderer: D__SettingsOptions;};

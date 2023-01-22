@@ -1,4 +1,4 @@
 type WD_notification_record_interactions={
 	type: "notification.record_interactions";
-	data: R$Success;
+	data: R_Success;
 };

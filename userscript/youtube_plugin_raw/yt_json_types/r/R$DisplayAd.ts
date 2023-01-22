@@ -1,15 +1,15 @@
-type R$DisplayAd={
+type R_DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
-	titleText: R$TextWithRuns;
-	image: R$ThumbnailsList;
-	bodyText: R$TextWithRuns;
-	secondaryText: R$TextWithRuns;
+	titleText: R_TextWithRuns;
+	image: R_ThumbnailsList;
+	bodyText: R_TextWithRuns;
+	secondaryText: R_TextWithRuns;
 	badge: D__MetadataBadge;
-	menu: R$Menu;
-	ctaButton: R$Button;
+	menu: R_Menu;
+	ctaButton: R_Button;
 	impressionEndpoints: {}[];
 	clickCommand: {};
-	mediaHoverOverlay: R$Button;
+	mediaHoverOverlay: R_Button;
 	mediaBadge: D__MetadataBadge;
 	trackingParams: string;
 }

@@ -1,10 +1,10 @@
-type R$Playlist=T$Contents<R$TwoColumnBrowseResults>&{
+type R_Playlist=T$Contents<R_TwoColumnBrowseResults>&{
 	responseContext: RC$ResponseContext;
-	header: R$PlaylistHeader;
-	alerts?: R$AlertWithButton[];
-	metadata: R$PlaylistMetadata;
+	header: R_PlaylistHeader;
+	alerts?: R_AlertWithButton[];
+	metadata: R_PlaylistMetadata;
 	trackingParams: string;
-	topbar: R$DesktopTopbar;
-	microformat: R$MicroformatData;
-	sidebar: R$PlaylistSidebar;
+	topbar: R_DesktopTopbar;
+	microformat: R_MicroformatData;
+	sidebar: R_PlaylistSidebar;
 };

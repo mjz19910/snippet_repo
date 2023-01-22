@@ -1,5 +1,5 @@
 type G_GuideSubscriptionsSectionItem=
-	|R$GuideEntry
-	|R$GuideCollapsibleEntry
+	|R_GuideEntry
+	|R_GuideCollapsibleEntry
 	;
 ;

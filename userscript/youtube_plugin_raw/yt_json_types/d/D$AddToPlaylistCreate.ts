@@ -1,7 +1,7 @@
 type D__AddToPlaylistCreate={
-	openCreateLink: R$CompactLink;
-	nameInput: R$TextInputFormField;
-	privacyInput: R$Dropdown;
-	createAction: R$Button;
+	openCreateLink: R_CompactLink;
+	nameInput: R_TextInputFormField;
+	privacyInput: R_Dropdown;
+	createAction: R_Button;
 	serviceEndpoint: CreatePlaylistServiceEndpoint;
 };

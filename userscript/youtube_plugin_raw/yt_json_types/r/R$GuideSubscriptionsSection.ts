@@ -1,1 +1,1 @@
-type R$GuideSubscriptionsSection={guideSubscriptionsSectionRenderer: D__GuideSubscriptionsSection;};
+type R_GuideSubscriptionsSection={guideSubscriptionsSectionRenderer: D__GuideSubscriptionsSection;};

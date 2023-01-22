@@ -5,5 +5,5 @@ type FeaturedChannel={
 	trackingParams: string;
 	navigationEndpoint: E$Browse;
 	channelName: string;
-	subscribeButton: R$SubscribeButton;
+	subscribeButton: R_SubscribeButton;
 };

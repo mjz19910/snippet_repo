@@ -1,1 +1,1 @@
-type R$SettingsSwitch={settingsSwitchRenderer: D__SettingsSwitch;};
+type R_SettingsSwitch={settingsSwitchRenderer: D__SettingsSwitch;};

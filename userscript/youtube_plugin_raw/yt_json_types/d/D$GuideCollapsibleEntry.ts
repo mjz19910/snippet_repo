@@ -1,5 +1,5 @@
 type D__GuideCollapsibleEntry={
-	expanderItem: R$GuideEntry;
-	expandableItems: R$GuideEntry[];
-	collapserItem: R$GuideEntry;
+	expanderItem: R_GuideEntry;
+	expandableItems: R_GuideEntry[];
+	collapserItem: R_GuideEntry;
 };

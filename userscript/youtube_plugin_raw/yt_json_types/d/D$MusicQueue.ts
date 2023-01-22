@@ -1,1 +1,1 @@
-type D__MusicQueue=Partial<T$Content<R$PlaylistPanel>>&B$Hack;
+type D__MusicQueue=Partial<T$Content<R_PlaylistPanel>>&B$Hack;

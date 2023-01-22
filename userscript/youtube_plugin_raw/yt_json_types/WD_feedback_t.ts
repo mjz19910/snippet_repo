@@ -1,4 +1,4 @@
 type WD_feedback_t={
 	type: "feedback";
-	data: R$Feedback;
+	data: R_Feedback;
 };

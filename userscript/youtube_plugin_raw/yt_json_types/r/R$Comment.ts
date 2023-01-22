@@ -1,1 +1,1 @@
-type R$Comment={commentRenderer: D__Comment;};
+type R_Comment={commentRenderer: D__Comment;};

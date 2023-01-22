@@ -1,1 +1,1 @@
-type R$ClipCreationScrubber={clipCreationScrubberRenderer: D__ClipCreationScrubber;};
+type R_ClipCreationScrubber={clipCreationScrubberRenderer: D__ClipCreationScrubber;};

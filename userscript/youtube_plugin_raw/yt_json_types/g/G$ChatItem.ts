@@ -1,5 +1,5 @@
 type G_ChatItem=[
-	R$LiveChatTextMessage,
-	R$LiveChatPlaceholderItem,
-	R$LiveChatViewerEngagementMessage,
+	R_LiveChatTextMessage,
+	R_LiveChatPlaceholderItem,
+	R_LiveChatViewerEngagementMessage,
 ][number];

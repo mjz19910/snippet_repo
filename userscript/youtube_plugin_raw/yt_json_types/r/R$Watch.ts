@@ -1,12 +1,12 @@
-type R$Watch={
+type R_Watch={
 	responseContext: RC$ResponseContext;
-	contents: R$TwoColumnWatchNextResults;
+	contents: R_TwoColumnWatchNextResults;
 	currentVideoEndpoint: E$WatchEndpoint;
 	trackingParams: string;
-	playerOverlays: R$PlayerOverlay;
+	playerOverlays: R_PlayerOverlay;
 	onResponseReceivedEndpoints: EI$ResponseReceived[];
-	engagementPanels: R$EngagementPanelSectionList[];
-	topbar: R$DesktopTopbar;
-	pageVisualEffects: R$CinematicContainer[];
+	engagementPanels: R_EngagementPanelSectionList[];
+	topbar: R_DesktopTopbar;
+	pageVisualEffects: R_CinematicContainer[];
 	frameworkUpdates: A_FrameworkUpdates;
 };

@@ -1,4 +1,4 @@
 type SecondaryContentsItemInner=[
-	R$RelatedChipCloud,
-	T$R$ItemSection<{},"sid-wn-chips","watch-next-feed">
+	R_RelatedChipCloud,
+	T$R_ItemSection<{},"sid-wn-chips","watch-next-feed">
 ][number];

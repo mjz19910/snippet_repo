@@ -1,5 +1,5 @@
 type D__PdgBuyFlowHeader={
-	text: R$TextWithRuns;
-	helpButton: R$Button;
-	dismissButton: R$Button;
+	text: R_TextWithRuns;
+	helpButton: R_Button;
+	dismissButton: R_Button;
 };

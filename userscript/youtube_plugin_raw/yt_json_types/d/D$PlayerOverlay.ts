@@ -1,6 +1,6 @@
 type D__PlayerOverlay={
-	endScreen: R$WatchNextEndScreen;
-	shareButton: R$Button;
-	addToMenu: R$Menu;
-	videoDetails: R$PlayerOverlayVideoDetails;
+	endScreen: R_WatchNextEndScreen;
+	shareButton: R_Button;
+	addToMenu: R_Menu;
+	videoDetails: R_PlayerOverlayVideoDetails;
 }|A_BrowserMediaSession;

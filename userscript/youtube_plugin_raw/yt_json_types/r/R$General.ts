@@ -1,1 +1,1 @@
-type R$General=R$SettingsSidebar;
+type R_General=R_SettingsSidebar;

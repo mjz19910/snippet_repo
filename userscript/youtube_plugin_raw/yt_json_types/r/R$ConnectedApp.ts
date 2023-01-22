@@ -1,1 +1,1 @@
-type R$ConnectedApp={connectedAppRenderer: D__ConnectedApp;};
+type R_ConnectedApp={connectedAppRenderer: D__ConnectedApp;};

@@ -1,4 +1,4 @@
-type T$R$MultiPageMenu<T>={
+type T$R_MultiPageMenu<T>={
 	multiPageMenuRenderer: T;
 };
-type R$DestroyType$MultiPageMenu=D__MultiPageMenu;
+type R_DestroyType$MultiPageMenu=D__MultiPageMenu;

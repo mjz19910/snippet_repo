@@ -1,1 +1,1 @@
-type D__UpdateDateTextAction={dateText: R$SimpleText;};
+type D__UpdateDateTextAction={dateText: R_SimpleText;};

@@ -1,1 +1,1 @@
-type R$PdgBuyFlowHeader={pdgBuyFlowHeaderRenderer: D__PdgBuyFlowHeader;};
+type R_PdgBuyFlowHeader={pdgBuyFlowHeaderRenderer: D__PdgBuyFlowHeader;};

@@ -1,4 +1,4 @@
 type D__ItemSectionHeader={
-	title: R$TextWithRuns;
-	subtitle: R$TextWithRuns;
+	title: R_TextWithRuns;
+	subtitle: R_TextWithRuns;
 };

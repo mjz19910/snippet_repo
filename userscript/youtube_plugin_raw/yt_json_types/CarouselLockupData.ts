@@ -1,3 +1,3 @@
 type D__CarouselLockup={
-	infoRows: R$InfoRow[];
+	infoRows: R_InfoRow[];
 };

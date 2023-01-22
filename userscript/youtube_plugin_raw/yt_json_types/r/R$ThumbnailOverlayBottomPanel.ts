@@ -1,1 +1,1 @@
-type R$ThumbnailOverlayBottomPanel={thumbnailOverlayBottomPanelRenderer: D__ThumbnailOverlayBottomPanel;};
+type R_ThumbnailOverlayBottomPanel={thumbnailOverlayBottomPanelRenderer: D__ThumbnailOverlayBottomPanel;};

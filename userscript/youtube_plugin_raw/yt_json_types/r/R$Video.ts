@@ -1,1 +1,1 @@
-type R$Video={videoRenderer: D__Video;};
+type R_Video={videoRenderer: D__Video;};

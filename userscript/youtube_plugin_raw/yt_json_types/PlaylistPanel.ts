@@ -3,13 +3,13 @@ type D__PlaylistPanel={
 	contents: G_PlaylistPanel$contents[];
 	currentIndex?: number;
 	playlistId: `RD__{string}`;
-	ownerName?: R$TextWithRuns;
+	ownerName?: R_TextWithRuns;
 	isInfinite: true;
 	continuations?: D__NextRadioContinuation[];
-	shortBylineText: R$TextWithRuns;
-	longBylineText?: R$TextWithRuns;
+	shortBylineText: R_TextWithRuns;
+	longBylineText?: R_TextWithRuns;
 	trackingParams: string;
-	titleText: R$TextWithRuns;
+	titleText: R_TextWithRuns;
 	isEditable: true;
 	previewDescription?: {};
 	numItemsToShow?: 25;

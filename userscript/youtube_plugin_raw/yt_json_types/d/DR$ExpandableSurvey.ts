@@ -1,5 +1,5 @@
-type DR$ExpandableSurvey={
-	options: R$RatingSurvey;
-	submitButton: R$Button;
+type DR_ExpandableSurvey={
+	options: R_RatingSurvey;
+	submitButton: R_Button;
 	trackingParams: string;
 };

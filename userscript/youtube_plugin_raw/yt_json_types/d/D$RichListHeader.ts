@@ -1,5 +1,5 @@
 type D__RichListHeader={
-	title: R$SimpleText;
+	title: R_SimpleText;
 	trackingParams: string;
-	navigationButton: R$Button;
+	navigationButton: R_Button;
 };

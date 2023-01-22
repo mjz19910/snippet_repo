@@ -1,4 +1,4 @@
 type D__Dropdown={
-	entries: R$PrivacyDropdownItem[];
+	entries: R_PrivacyDropdownItem[];
 	label: "Privacy";
 };

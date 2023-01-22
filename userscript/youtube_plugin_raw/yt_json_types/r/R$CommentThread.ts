@@ -1,1 +1,1 @@
-type R$CommentThread={commentThreadRenderer: D__CommentThread;};
+type R_CommentThread={commentThreadRenderer: D__CommentThread;};

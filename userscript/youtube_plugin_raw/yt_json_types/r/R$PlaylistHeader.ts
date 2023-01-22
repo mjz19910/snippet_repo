@@ -1,1 +1,1 @@
-type R$PlaylistHeader={playlistHeaderRenderer: D__PlaylistHeader;};
+type R_PlaylistHeader={playlistHeaderRenderer: D__PlaylistHeader;};

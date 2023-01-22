@@ -1,5 +1,5 @@
 type D__NotificationAction={
-	responseText: R$TextWithRuns;
-	actionButton?: R$Button;
+	responseText: R_TextWithRuns;
+	actionButton?: R_Button;
 	trackingParams: string;
 };

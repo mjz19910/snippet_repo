@@ -1,1 +1,1 @@
-type R$CommentsEntryPointTeaser={commentsEntryPointTeaserRenderer: D__CommentsEntryPointTeaser;};
+type R_CommentsEntryPointTeaser={commentsEntryPointTeaserRenderer: D__CommentsEntryPointTeaser;};

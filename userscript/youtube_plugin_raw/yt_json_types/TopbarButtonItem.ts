@@ -1,1 +1,1 @@
-type TopbarButtonItem=R$TopbarMenuButton|R$NotificationTopbarButton;
+type TopbarButtonItem=R_TopbarMenuButton|R_NotificationTopbarButton;

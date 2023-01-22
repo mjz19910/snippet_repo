@@ -1,1 +1,1 @@
-type R$TopicLink={topicLinkRenderer: D__TopicLink;};
+type R_TopicLink={topicLinkRenderer: D__TopicLink;};

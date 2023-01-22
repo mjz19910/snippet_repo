@@ -1,4 +1,4 @@
 type D__SearchPyv={
-	ads: R$AdSlot[];
+	ads: R_AdSlot[];
 	trackingParams: string;
 };

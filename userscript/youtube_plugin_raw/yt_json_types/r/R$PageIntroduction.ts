@@ -1,1 +1,1 @@
-type R$PageIntroduction={pageIntroductionRenderer: D__PageIntroduction;};
+type R_PageIntroduction={pageIntroductionRenderer: D__PageIntroduction;};

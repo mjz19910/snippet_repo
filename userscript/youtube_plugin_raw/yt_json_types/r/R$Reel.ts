@@ -1,8 +1,8 @@
-type R$Reel={
+type R_Reel={
 	responseContext: RC$ResponseContext;
-	overlay: R$ReelPlayerOverlay;
+	overlay: R_ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
 	trackingParams: string;
-	desktopTopbar: R$DesktopTopbar;
-	engagementPanels: R$EngagementPanelSectionList[];
+	desktopTopbar: R_DesktopTopbar;
+	engagementPanels: R_EngagementPanelSectionList[];
 };

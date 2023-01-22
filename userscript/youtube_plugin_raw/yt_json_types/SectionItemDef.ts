@@ -1,1 +1,1 @@
-type SectionItemDef=R$RichItem|R$RichSection;
+type SectionItemDef=R_RichItem|R_RichSection;

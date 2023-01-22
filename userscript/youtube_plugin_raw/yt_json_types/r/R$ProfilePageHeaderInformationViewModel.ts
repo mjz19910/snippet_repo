@@ -1,1 +1,1 @@
-type R$ProfilePageHeaderInformationViewModel={profilePageHeaderInformationViewModel: D__ProfilePageHeaderInformation;};
+type R_ProfilePageHeaderInformationViewModel={profilePageHeaderInformationViewModel: D__ProfilePageHeaderInformation;};

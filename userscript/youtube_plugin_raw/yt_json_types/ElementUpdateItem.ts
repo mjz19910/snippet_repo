@@ -1,1 +1,1 @@
-type D__ElementUpdate=R$TemplateUpdate|R$ResourceStatusInResponseCheck;
+type D__ElementUpdate=R_TemplateUpdate|R_ResourceStatusInResponseCheck;

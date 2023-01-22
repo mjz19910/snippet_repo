@@ -1,6 +1,6 @@
 type SettingsOptionItem=
-	R$ChannelOptions|
-	R$SettingsSwitch|
-	R$SettingsCheckbox|
-	R$SettingsRadioOption|
-	R$CopyLink;
+	R_ChannelOptions|
+	R_SettingsSwitch|
+	R_SettingsCheckbox|
+	R_SettingsRadioOption|
+	R_CopyLink;

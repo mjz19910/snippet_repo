@@ -1,6 +1,6 @@
 type D__ChildVideo={
-	title: R$SimpleText;
+	title: R_SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
-	lengthText: R$SimpleText;
+	lengthText: R_SimpleText;
 	videoId: string;
 };

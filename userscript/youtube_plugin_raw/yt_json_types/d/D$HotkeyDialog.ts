@@ -1,6 +1,6 @@
 type D__HotkeyDialog={
-	title: R$TextWithRuns;
-	sections: R$HotkeyDialogSection[];
-	dismissButton: R$Button;
+	title: R_TextWithRuns;
+	sections: R_HotkeyDialogSection[];
+	dismissButton: R_Button;
 	trackingParams: string;
 };

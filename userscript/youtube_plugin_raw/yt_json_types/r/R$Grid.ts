@@ -1,3 +1,3 @@
-type R$Grid={
+type R_Grid={
 	items: GridRendererItem[];
 };

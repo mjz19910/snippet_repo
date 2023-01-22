@@ -1,6 +1,6 @@
 type D__PlaylistAddToOption={
 	playlistId: PlaylistId;
-	title: R$SimpleText;
+	title: R_SimpleText;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";
 	containsSelectedVideos: "NONE";
 	privacyIcon: T$Icon<"PRIVACY_PRIVATE">;

@@ -1,1 +1,1 @@
-type R$RichSection={richSectionRenderer: T$Content<G_RichSection>;};
+type R_RichSection={richSectionRenderer: T$Content<G_RichSection>;};

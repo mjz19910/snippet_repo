@@ -1,1 +1,1 @@
-type R$G_Result=R$Tab|R$ExpandableTab;
+type R_G_Result=R_Tab|R_ExpandableTab;

@@ -1,1 +1,1 @@
-type D__AccountItemSection=T$AR$Contents<G_AccountItemSection>;
+type D__AccountItemSection=T$AR_Contents<G_AccountItemSection>;

@@ -1,1 +1,1 @@
-type R$ChildVideo={childVideoRenderer: D__ChildVideo;};
+type R_ChildVideo={childVideoRenderer: D__ChildVideo;};

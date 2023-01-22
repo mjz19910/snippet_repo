@@ -1,11 +1,11 @@
 type D__MacroMarkersListItem={
-	title: R$SimpleText;
-	timeDescription: R$SimpleText;
+	title: R_SimpleText;
+	timeDescription: R_SimpleText;
 	thumbnail: D__Thumbnail;
 	onTap: E$WatchEndpoint;
 	trackingParams: string;
-	shareButton: R$Button;
-	repeatButton: R$ToggleButton;
+	shareButton: R_Button;
+	repeatButton: R_ToggleButton;
 	macroMarkerRepeatStateEntityKey: string;
 	endRepeatCommand: E$CommandExecutorCommand;
 	playerStateEntityKey: string;
@@ -14,8 +14,8 @@ type D__MacroMarkersListItem={
 	darkColorPalette: DarkColorPalette;
 	timeDescriptionA11yLabel: `${number} seconds`;
 }|{
-	title: R$SimpleText;
-	timeDescription: R$SimpleText;
+	title: R_SimpleText;
+	timeDescription: R_SimpleText;
 	thumbnail: D__Thumbnail;
 	onTap: E$WatchEndpoint;
 	trackingParams: string;

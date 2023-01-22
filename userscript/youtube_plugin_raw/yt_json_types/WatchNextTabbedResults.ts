@@ -1,3 +1,3 @@
 type D__WatchNextTabbedResults={
-	tabs: R$Tab[];
+	tabs: R_Tab[];
 };

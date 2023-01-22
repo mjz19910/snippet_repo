@@ -1,1 +1,1 @@
-type SecondaryContentsItem=T$AR$Contents<SecondaryContentsItemInner>;
+type SecondaryContentsItem=T$AR_Contents<SecondaryContentsItemInner>;

@@ -1,9 +1,9 @@
 type D__ActionCompanionAd={
 	headline: TemplatedText;
 	description: TemplatedText;
-	actionButton: R$Button;
-	iconImage: R$ThumbnailsList;
-	bannerImage: R$ThumbnailsList;
+	actionButton: R_Button;
+	iconImage: R_ThumbnailsList;
+	bannerImage: R_ThumbnailsList;
 	navigationEndpoint: {};
 	trackingParams: string;
 	adInfoRenderer: RL$ActionCompanionAdInfo;
