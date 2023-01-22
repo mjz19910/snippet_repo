@@ -8946,6 +8946,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {DropdownRenderer} x */
 	DropdownRenderer(x) {
+		const cf="DropdownRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.DropdownData(this.w(x));
 	}
 	/** @arg {DropdownData} x */
@@ -9814,6 +9816,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AccountSectionListRenderer} x */
 	AccountSectionListRenderer(x) {
+		const cf="AccountSectionListRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.AccountSectionListData(this.w(x));
 	}
 	/** @arg {AccountSectionListData} x */
@@ -9825,14 +9829,20 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {AccountItemSectionRenderer} x */
 	AccountItemSectionRenderer(x) {
+		const cf="AccountItemSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.AccountItemSection(this.w(x));
 	}
 	/** @arg {AccountItemSection} x */
 	AccountItemSection(x) {
+		const cf="AccountItemSection";
+		this.save_keys(`[${cf}]`,x);
 		this.ContentsArrayTemplate(x,this.AccountItemSectionContent);
 	}
 	/** @arg {AccountItemSectionContent} x */
 	AccountItemSectionContent(x) {
+		const cf="AccountItemSectionContent";
+		this.save_keys(`[${cf}]`,x);
 		if("compactLinkRenderer" in x) {
 			return this.CompactLinkRenderer(x);
 		} else if("accountItem" in x) {
@@ -9842,6 +9852,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {SimpleMenuHeaderRenderer} x */
 	SimpleMenuHeaderRenderer(x) {
+		const cf="SimpleMenuHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
 		this.SimpleMenuHeaderData(this.w(x));
 	}
 	/** @arg {SimpleMenuHeader} x */
@@ -11019,17 +11031,17 @@ class HandleTypes extends ServiceMethods {
 	R_MenuItems(x) {
 		this.tz(x,x => {
 			/** @type {G$Menu$items$iterate} */
-			if("toggleMenuServiceItemRenderer" in x) return this.toggleMenuServiceItemRenderer(x);
+			if("toggleMenuServiceItemRenderer" in x) return this.R$ToggleMenuServiceItem(x);
 			if("menuServiceItemRenderer" in x) return this.MenuServiceItemRenderer(x);
-			if("menuNavigationItemRenderer" in x) return this.menuNavigationItemRenderer(x);
+			if("menuNavigationItemRenderer" in x) return this.R$MenuNavigationItem(x);
 			this.do_codegen("MenuItems",x);
 		});
 	}
-	/** @arg {Extract<G$Menu$items$iterate,{menuNavigationItemRenderer:any}>} x */
-	menuNavigationItemRenderer(x) {
+	/** @arg {R$MenuNavigationItem} x */
+	R$MenuNavigationItem(x) {
 		const cf="R$MenuNavigationItem";
 		this.save_keys(`[${cf}]`,x);
-		this.D$MenuNavigationItem(x.menuNavigationItemRenderer);
+		this.D$MenuNavigationItem(this.w(x));
 	}
 	/** @arg {D$MenuNavigationItem} x */
 	D$MenuNavigationItem(x) {
@@ -11040,9 +11052,16 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(text);
 		this.A$OpenPopupAction(navigationEndpoint);
 	}
-	/** @arg {Extract<G$Menu$items$iterate,{toggleMenuServiceItemRenderer:any}>} x */
-	toggleMenuServiceItemRenderer(x) {
-		let x1=this.w(x);
+	/** @arg {R$ToggleMenuServiceItem} x */
+	R$ToggleMenuServiceItem(x) {
+		const cf="ToggleMenuServiceItem";
+		this.save_keys(`[${cf}Renderer]`,x);
+		this.D$ToggleMenuServiceItem(this.w(x));
+	}
+	/** @arg {D$ToggleMenuServiceItem} x1 */
+	D$ToggleMenuServiceItem(x1) {
+		const cf="ToggleMenuServiceItem";
+		this.save_keys(`[${cf}]`,x1);
 		const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled}=x1;
 		{const {defaultIcon,defaultServiceEndpoint,defaultText,toggledIcon,toggledServiceEndpoint,toggledText,trackingParams,isToggled,...y}=x1; this.g(y);}
 		this.primitive_of(isToggled,"boolean");
