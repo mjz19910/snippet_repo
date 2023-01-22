@@ -1,4 +1,4 @@
-type PlaylistContent=ContentsArrayTemplate<PlaylistPanelVideoRenderer>&{
+type PlaylistContent=T$AR$Contents<PlaylistPanelVideoRenderer>&{
 	title: string;
 	currentIndex: number;
 	playlistId: PlaylistId;

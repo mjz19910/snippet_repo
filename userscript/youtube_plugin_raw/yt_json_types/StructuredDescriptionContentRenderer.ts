@@ -1,1 +1,0 @@
-type StructuredDescriptionContentRenderer={structuredDescriptionContentRenderer: StructuredDescriptionContentData;};

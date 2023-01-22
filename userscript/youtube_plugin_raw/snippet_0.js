@@ -234,7 +234,7 @@ export class Snippet_0_tmp {
 			y.call(this,x[k],k);
 		}
 	}
-	/** @protected @template {{}} T @arg {ContentsArrayTemplate<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {{}} T @arg {T$AR$Contents<T>} x @arg {(this:this,x:T)=>void} f */
 	w1(x,f) {
 		const {contents: a,...y}=x; this.g(y);
 		this.z(a,f);
@@ -303,7 +303,7 @@ export class Snippet_0_tmp {
 		let q=this.split_string_once(r[1],"_");
 		return q[1];
 	}
-	/** @public @template {{}} T @arg {CommandsTemplate<T>} x @arg {(x:T)=>void} f */
+	/** @public @template {{}} T @arg {T$Commands<T>} x @arg {(x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		this.z(x.commands,f);
 	}

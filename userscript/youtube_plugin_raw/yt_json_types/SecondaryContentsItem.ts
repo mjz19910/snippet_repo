@@ -1,1 +1,1 @@
-type SecondaryContentsItem=ContentsArrayTemplate<SecondaryContentsItemInner>;
+type SecondaryContentsItem=T$AR$Contents<SecondaryContentsItemInner>;

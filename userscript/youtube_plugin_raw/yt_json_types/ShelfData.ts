@@ -1,4 +1,4 @@
-type ShelfData=ContentTemplate<ShelfItem>&{
+type ShelfData=T$Content<ShelfItem>&{
 	title: {};
 	trackingParams: string;
 	menu?: {};

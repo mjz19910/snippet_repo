@@ -1,1 +1,1 @@
-type VideoDescriptionHeaderRenderer={videoDescriptionHeaderRenderer: VideoDescriptionHeaderData;};
+type R$VideoDescriptionHeaderRenderer={videoDescriptionHeaderRenderer: VideoDescriptionHeaderData;};

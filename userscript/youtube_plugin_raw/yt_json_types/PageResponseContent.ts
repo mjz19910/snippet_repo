@@ -1,1 +1,1 @@
-type PageResponseContent=ContentsArrayTemplate<R$TwoColumnBrowseResults>&{trackingParams: string;};
+type PageResponseContent=T$AR$Contents<R$TwoColumnBrowseResults>&{trackingParams: string;};

@@ -1,0 +1,1 @@
+type T$R$ItemSection$1<T>={itemSectionRenderer: T$D$ItemSection$1<T>;};

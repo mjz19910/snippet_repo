@@ -1,1 +1,1 @@
-type AccountItemSection=ContentsArrayTemplate<AccountItemSectionContent>;
+type AccountItemSection=T$AR$Contents<AccountItemSectionContent>;

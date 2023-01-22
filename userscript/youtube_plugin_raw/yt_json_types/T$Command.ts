@@ -1,4 +1,4 @@
-type CommandTemplate<T>={
+type T$Command<T>={
 	command: T;
 	trackingParams: string;
 };

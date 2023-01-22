@@ -1,1 +1,1 @@
-type ContentTemplate<T>={content: T;};
+type T$Content<T>={content: T;};

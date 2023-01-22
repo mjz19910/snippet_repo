@@ -1,1 +1,0 @@
-type StructuredDescriptionContentData={items: StructuredDescriptionContentItem[];};

@@ -1,1 +1,1 @@
-type T$SectionListItemTemplate<T,U>=T$ItemSectionRendererTemplate<T,U>;
+type T$SectionListItemTemplate<T,U>=T$R$ItemSection$2<T,U>;

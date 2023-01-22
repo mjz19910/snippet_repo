@@ -1,3 +1,3 @@
-type CommandsTemplate<T>={
+type T$Commands<T>={
 	commands: T[];
 };

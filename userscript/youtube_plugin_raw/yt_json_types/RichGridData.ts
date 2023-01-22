@@ -3,7 +3,7 @@ type ReflowOptions={
 	minimumRowsOfVideosBetweenSections: 1;
 };
 type BrowseFeedContentItem=RichItemRenderer;
-type RichGrid=ContentsArrayTemplate<RendererContentItem>&{
+type RichGrid=T$AR$Contents<RendererContentItem>&{
 	masthead: VideoMastheadAdV3Renderer;
 }|{
 	contents: BrowseFeedContentItem[];

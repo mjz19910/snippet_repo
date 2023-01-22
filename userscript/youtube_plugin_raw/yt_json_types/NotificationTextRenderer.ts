@@ -1,3 +1,3 @@
-type NotificationTextRenderer={
+type R$NotificationText={
 	notificationTextRenderer: NotificationTextData;
 };

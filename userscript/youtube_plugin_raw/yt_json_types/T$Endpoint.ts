@@ -1,4 +1,4 @@
-type EndpointTemplate<T extends {}>={
+type T$Endpoint<T extends {},G$M>={
 	clickTrackingParams: string;
-	commandMetadata: G$Metadata;
+	commandMetadata: G$M;
 }&T;

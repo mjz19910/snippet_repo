@@ -1,4 +1,4 @@
-type ItemSectionData=ContentsArrayTemplate<ItemSectionItem>&{
+type ItemSectionData=T$AR$Contents<ItemSectionItem>&{
 	trackingParams: string;
 	sectionIdentifier: string;
 	targetId?: string;

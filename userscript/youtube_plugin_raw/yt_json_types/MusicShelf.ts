@@ -1,4 +1,4 @@
-type MusicShelf=ContentsArrayTemplate<MusicResponsiveListItemRenderer>&{
+type MusicShelf=T$AR$Contents<MusicResponsiveListItemRenderer>&{
 	title: D$TextWithRuns;
 	trackingParams: string;
 	continuations: ReloadContinuationData[];

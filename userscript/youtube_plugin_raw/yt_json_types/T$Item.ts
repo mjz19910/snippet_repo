@@ -1,3 +1,3 @@
-type ItemTemplate<T>={
+type T$Item<T>={
 	item: T;
 };

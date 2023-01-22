@@ -46,7 +46,7 @@ type PlaylistHeader={
 	ownerEndpoint: E$BrowseEndpoint;
 	editableDetails: EditableDetails;
 	trackingParams: string;
-	serviceEndpoints: EndpointTemplate<E$PlaylistEditEndpoint>[];
+	serviceEndpoints: T$Endpoint<E$PlaylistEditEndpoint,{}>[];
 	stats: D$TextWithRuns[];
 	briefStats: D$TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;
