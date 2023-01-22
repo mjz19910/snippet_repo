@@ -1,1 +1,0 @@
-type PrefetchHintConfig={prefetchHintConfig: D__PrefetchHintConfig;};

@@ -9,7 +9,7 @@ type E_Watch={
 	continuePlayback?: true;
 	loggingContext?: R_VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
-	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
+	watchEndpointSupportedPrefetchConfig?: R_PrefetchHintConfig;
 	watchEndpointMusicSupportedConfigs?: R_WatchEndpointMusicConfig;
 	playerParams?: string;
 	playerExtraUrlParams?: [{

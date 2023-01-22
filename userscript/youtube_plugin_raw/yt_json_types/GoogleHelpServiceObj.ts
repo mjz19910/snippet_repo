@@ -1,4 +1,4 @@
 type GoogleHelpServiceObj={
-	browse_id: BrowseIdType;
+	browse_id: D$Browse$Id;
 	browse_id_prefix: "";
 };

@@ -20,5 +20,5 @@ type D__SubscriptionNotificationToggleButton={
 	trackingParams: string;
 	command: E_CommandExecutorCommand;
 	targetId: string;
-	secondaryIcon: T$Icon<"EXPAND_MORE">;
+	secondaryIcon: T_Icon<"EXPAND_MORE">;
 };

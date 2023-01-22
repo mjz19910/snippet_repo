@@ -1,1 +1,1 @@
-type YtFeedSubSections=BrowseEndpointPages;
+type YtFeedSubSections=D$BrowseEndpointPages;

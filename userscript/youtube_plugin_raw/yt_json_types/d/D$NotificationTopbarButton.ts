@@ -1,5 +1,5 @@
 type D__NotificationTopbarButton={
-	icon: T$Icon<"NOTIFICATIONS">;
+	icon: T_Icon<"NOTIFICATIONS">;
 	menuRequest: E_T$SignalService<{}>;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	trackingParams: string;

@@ -1,1 +1,0 @@
-type BrowseEndpointContextSupportedConfigs=R_BrowseEndpointContextMusicConfig;

@@ -1,0 +1,1 @@
+type T$BaseUrl<T extends string>={baseUrl: T;};

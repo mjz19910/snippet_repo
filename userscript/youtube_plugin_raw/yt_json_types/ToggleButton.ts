@@ -2,7 +2,7 @@ type D__ToggleButton={
 	style: StyleTypeObj;
 	isToggled: false;
 	isDisabled: false;
-	defaultIcon: T$Icon<"LOOP">;
+	defaultIcon: T_Icon<"LOOP">;
 	defaultServiceEndpoint: RepeatChapterCommand;
 	toggledServiceEndpoint: E_CommandExecutorCommand;
 	trackingParams: string;

@@ -1,0 +1,1 @@
+type R_PrefetchHintConfig={prefetchHintConfig: D_PrefetchHintConfig;};

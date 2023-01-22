@@ -1,4 +1,4 @@
-type BrowseSidebar=
+type G$BrowseSidebar=
 	|R_SettingsSidebar
 	|R_PlaylistSidebar
 	;

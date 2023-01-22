@@ -1,3 +1,3 @@
 type D__BrowseFeedActions={
-	contents: BrowseFeedContent[];
+	contents: G$BrowseFeedContent[];
 };

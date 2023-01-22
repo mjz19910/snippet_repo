@@ -1,1 +1,1 @@
-type R_AlertWithButton={alertWithButtonRenderer: D__AlertWithButton;};
+type R_AlertWithButton={alertWithButtonRenderer: D_AlertWithButton;};

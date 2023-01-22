@@ -1,4 +1,4 @@
-type SettingsIconTypes=T$Icon<[
+type SettingsIconTypes=T_Icon<[
 	"ACCOUNT_PRIVACY",
 	"ACCOUNT_SHARING",
 	"ACCOUNT_ADVANCED",

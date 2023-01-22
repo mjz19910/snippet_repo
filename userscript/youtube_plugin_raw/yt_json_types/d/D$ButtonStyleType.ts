@@ -1,4 +1,4 @@
-type ButtonStyleType=[
+type D$ButtonStyleType=[
 	"STYLE_ALERT_INFO",
 	"STYLE_BLUE_TEXT_WITH_INVERSE_THEME",
 	"STYLE_BLUE_TEXT",

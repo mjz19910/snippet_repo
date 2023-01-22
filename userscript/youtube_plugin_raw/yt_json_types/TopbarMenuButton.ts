@@ -1,5 +1,5 @@
 type D__TopbarMenuButton={
-	icon: T$Icon<"VIDEO_CALL">;
+	icon: T_Icon<"VIDEO_CALL">;
 	menuRenderer: T$R_MultiPageMenu<{
 		sections: [T$R_MultiPageMenuSection<R_CompactLink>];
 		trackingParams: string;

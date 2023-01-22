@@ -1,1 +1,1 @@
-type D__RichShelf={icon: T$Icon<"YOUTUBE_SHORTS_BRAND_24">;title: R_TextWithRuns;};
+type D__RichShelf={icon: T_Icon<"YOUTUBE_SHORTS_BRAND_24">;title: R_TextWithRuns;};

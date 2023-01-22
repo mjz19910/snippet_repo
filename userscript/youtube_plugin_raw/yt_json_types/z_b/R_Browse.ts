@@ -1,12 +1,10 @@
-type BrowseMetadata=R_ChannelMetadata|R_PlaylistMetadata;
-
 type R_Browse={
 	responseContext: RC$ResponseContext;
-	contents?: BrowseContents;
+	contents?: G$BrowseContents;
 	continuationContents?: C$SectionList;
-	header?: BrowseHeader;
+	header?: G$BrowseHeader;
 	alerts?: R_AlertWithButton[];
-	metadata?: BrowseMetadata;
+	metadata?: G$BrowseMetadata;
 	trackingParams: string;
 	topbar?: R_DesktopTopbar;
 	microformat?: R_MicroformatData;
@@ -16,7 +14,7 @@ type R_Browse={
 	background?: R_MusicThumbnail;
 	// ?
 	onResponseReceivedActions?: ResponseReceivedAction[];
-	sidebar?: BrowseSidebar;
+	sidebar?: G$BrowseSidebar;
 	observedStateTags?: B$StateTag[];
 	cacheMetadata?: CacheMetadata;
 };

@@ -3278,7 +3278,7 @@ class IterateApiResultBase extends BaseService {
 /** @extends {BaseService<Services,ServiceOptions>} */
 class CsiService extends BaseService {
 	data={
-		/** @private @type {BrowseEndpointPages|null} */
+		/** @private @type {D$BrowseEndpointPages|null} */
 		yt_fn: null,
 		/** @private @type {RC$CsiServiceC["value"]|null} */
 		c: null,
@@ -3337,7 +3337,7 @@ class CsiService extends BaseService {
 			this.rid[x]=void 0;
 		}
 	}
-	/** @private @arg {BrowseEndpointPages} value */
+	/** @private @arg {D$BrowseEndpointPages} value */
 	verify_param_yt_fn(value) {
 		switch(value) {
 			case "history":
@@ -4323,7 +4323,7 @@ class CodegenService extends BaseService {
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D__Thumbnail";
 		/** @type {R_SimpleText} */
 		if(x.simpleText) return "TYPE::D__SimpleText";
-		/** @type {T$Icon<"">} */
+		/** @type {T_Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T$Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
@@ -5215,7 +5215,7 @@ class ParserService extends BaseService {
 				const idx=${idx+1};
 				if(path_parts.length===${idx}) {\n${case_part}${value_part}\n}
 				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}}
-			} break;`.slice(1).split("\n").map(e => e.slice(3)).join("\n"));
+			} break;`.slice(1).split("\n").map(e => e.slice(0,3).trim()+e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_path_gen]",path);
@@ -5280,13 +5280,13 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
-						switch(ta) {case 7: case 24: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 7: case 24: break; default:break;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					case "watch.player_params":
-						switch(ta) {case 12: case 25: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 12: case 25: break; default: new_ns(); break;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5448,7 +5448,11 @@ class ParserService extends BaseService {
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
 									case "f5": case "f1": case "f2": case "f4":
-									case "f3": u(idx); debugger; break;
+									case "f3": {
+										const idx=5;
+										if(path_parts.length===4) return;
+										switch(path_parts[4]) {default: u(idx); debugger; path_parts[4]===""; break;}
+									} break;
 								}
 							} break;
 						}
@@ -6091,7 +6095,7 @@ class ParserService extends BaseService {
 		}
 		return x[0];
 	}
-	/** @private @arg {BrowseEndpointPages} x */
+	/** @private @arg {D$BrowseEndpointPages} x */
 	parse_known_page(x) {
 		switch(x) {
 			case "explore": return true;
@@ -6129,7 +6133,7 @@ class ParserService extends BaseService {
 		}
 		switch(x) {default: debugger; return false;}
 	}
-	/** @public @arg {string} x @returns {BrowseIdType|null} */
+	/** @public @arg {string} x @returns {D$Browse$Id|null} */
 	decode_browse_id(x) {
 		if(this.str_starts_with_r(x,"FE")) {
 			switch(x) {
@@ -6140,7 +6144,7 @@ class ParserService extends BaseService {
 		}
 		return null;
 	}
-	/** @public @arg {BrowseIdType} x */
+	/** @public @arg {D$Browse$Id} x */
 	parse_browse_id(x) {
 		if(this.str_starts_with_r(x,"FE")) {
 			let page=split_string_once(x,"FE")[1];
@@ -6738,7 +6742,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger;
 		}
 	}
-	/** @public @arg {BrowseIdType} x */
+	/** @public @arg {D$Browse$Id} x */
 	browseId(x) {
 		this.parser.parse_browse_id(x);
 	}
@@ -7203,7 +7207,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
-	/** @private @arg {RC$WebResponseContextExtension} x */
+	/** @private @arg {RC_WebResponseContextExtension} x */
 	WebResponseContextExtensionData(x) {
 		const cf="WebResponseContextExtensionData";
 		this.save_keys(`[${cf}]`,x);
@@ -7289,7 +7293,7 @@ class HandleTypes extends ServiceMethods {
 	BrowseMetadata(x) {this.emf("BrowseMetadata",x);}
 	/** @private @arg {string} cf @arg {{}} x */
 	emf(cf,x) {this.save_keys(`[${cf}]`,x); debugger;}
-	/** @private @arg {BrowseSidebar} x */
+	/** @private @arg {G$BrowseSidebar} x */
 	BrowseSidebar(x) {
 		if("settingsSidebarRenderer" in x) return this.R_SettingsSidebar(x);
 		if("playlistSidebarRenderer" in x) return this.R_PlaylistSidebar(x);
@@ -7329,7 +7333,7 @@ class HandleTypes extends ServiceMethods {
 	R_PlaylistSidebarSecondaryInfo(x) {
 		x; debugger;
 	}
-	/** @public @arg {D__AlertWithButton} x */
+	/** @public @arg {D_AlertWithButton} x */
 	AlertWithButton(x) {
 		const cf="AlertWithButton";
 		this.save_keys(`[${cf}]`,x);
@@ -7345,7 +7349,7 @@ class HandleTypes extends ServiceMethods {
 	D__Label(x) {this.H_R_("Label",x,this.primitive_of_string);}
 	/** @private @arg {D__Accessibility} x */
 	D__Accessibility(x) {this.H_R_("A_Accessibility",x,this.D__Label);}
-	/** @private @arg {D__Button} x */
+	/** @private @arg {D_Button} x */
 	D__Button(x) {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
@@ -8030,7 +8034,7 @@ class HandleTypes extends ServiceMethods {
 		this.D__SimpleText(text);
 		this.A_OpenPopupAction(navigationEndpoint);
 	}
-	/** @template {string} T @arg {T$Icon<T>} x */
+	/** @template {string} T @arg {T_Icon<T>} x */
 	T$Icon(x) {
 		const cf="Icon";
 		this.save_keys(`[${cf}]`,x);
@@ -8758,7 +8762,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D__Search} x */
 	D__Search(x) {x;}
-	/** @private @arg {BrowseHeader} x */
+	/** @private @arg {G$BrowseHeader} x */
 	BrowseHeader(x) {
 		const cf="BrowseHeader";
 		this.save_keys(`[${cf}]`,x);
@@ -8804,7 +8808,7 @@ class HandleTypes extends ServiceMethods {
 		const {stateTag: {},onStateTagModified,...y}=x; this.g(y); // ! #destructure
 		if(onStateTagModified!=="STATE_TAG_CACHE_INSTRUCTION_EVICT_RESPONSE") debugger;
 	}
-	/** @private @arg {BrowseContents} x */
+	/** @private @arg {G$BrowseContents} x */
 	BrowseContents(x) {
 		const cf="BrowseContents";
 		this.save_keys(`[${cf}]`,x);
@@ -8910,7 +8914,7 @@ class HandleTypes extends ServiceMethods {
 		this.UpdateEngagementPanelData(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
-	/** @private @arg {AttBgChallenge} x */
+	/** @private @arg {D$AttBgChallenge} x */
 	AttBgChallenge(x) {
 		const cf="AttBgChallenge";
 		this.save_keys(`[${cf}]`,x);
@@ -9195,7 +9199,7 @@ class HandleTypes extends ServiceMethods {
 		if(type!=="FREE") debugger;
 		this.t(subscribed,a => this.primitive_of(a,"boolean"));
 	}
-	/** @private @arg {AdSlotAndLayoutMetadataItem} x */
+	/** @private @arg {D$AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
 		const cf="AdSlotAndLayoutMetadataItem";
 		this.save_keys(`[${cf}]`,x);
@@ -9556,7 +9560,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		x; debugger;
 	}
-	/** @private @arg {PrefetchHintConfig} x */
+	/** @private @arg {R_PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
 		const cf="Html5PlaybackOnesieConfig";
 		this.save_keys(`[${cf}]`,x);

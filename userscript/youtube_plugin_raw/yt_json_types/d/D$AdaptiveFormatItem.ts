@@ -18,7 +18,7 @@ type D__AdaptiveFormatItem={
 	highReplication?: true,
 	audioQuality?: "AUDIO_QUALITY_MEDIUM";
 	approxDurationMs: `${number}`;
-	audioSampleRate?: `${AudioSampleRate}`;
+	audioSampleRate?: `${D$AudioSampleRate}`;
 	audioChannels?: 2;
 	loudnessDb?: number;
 	signatureCipher?: `s=${string}&sp=${"sig"}&url=${string}`;

@@ -1,11 +1,11 @@
 type D__PlaybackTracking={
 	atrUrl: UrlAndElapsedMediaTime;
-	ptrackingUrl: BaseUrl<never>;
-	qoeUrl: BaseUrl<never>;
+	ptrackingUrl: T$BaseUrl<never>;
+	qoeUrl: T$BaseUrl<never>;
 	videostatsDefaultFlushIntervalSeconds: 40;
 	videostatsDelayplayUrl: UrlAndElapsedMediaTime;
-	videostatsPlaybackUrl: BaseUrl<never>;
+	videostatsPlaybackUrl: T$BaseUrl<never>;
 	videostatsScheduledFlushWalltimeSeconds: [10,20,30];
-	videostatsWatchtimeUrl: BaseUrl<never>;
-	youtubeRemarketingUrl?: BaseUrl<never>;
+	videostatsWatchtimeUrl: T$BaseUrl<never>;
+	youtubeRemarketingUrl?: T$BaseUrl<never>;
 };

@@ -1,0 +1,1 @@
+type G$BrowseContents=R_TwoColumnBrowseResults|R_FeedFilterChipBar;

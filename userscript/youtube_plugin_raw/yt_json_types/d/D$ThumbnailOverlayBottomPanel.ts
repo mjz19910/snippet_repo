@@ -1,1 +1,1 @@
-type D__ThumbnailOverlayBottomPanel={icon: T$Icon<"MIX">;};
+type D__ThumbnailOverlayBottomPanel={icon: T_Icon<"MIX">;};

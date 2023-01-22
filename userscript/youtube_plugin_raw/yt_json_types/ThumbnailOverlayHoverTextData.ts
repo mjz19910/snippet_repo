@@ -1,4 +1,4 @@
-type D__ThumbnailOverlayHoverText={
+type D_ThumbnailOverlayHoverText={
 	text: R_TextWithRuns;
-	icon: T$Icon<"PLAY_ALL">;
+	icon: T_Icon<"PLAY_ALL">;
 };

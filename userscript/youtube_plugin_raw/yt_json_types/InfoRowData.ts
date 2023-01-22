@@ -1,8 +1,8 @@
-type D__InfoRow={
+type D_InfoRow={
 	title: R_SimpleText;
 	defaultMetadata?: R_SimpleText;
 	expandedMetadata?: R_SimpleText;
-	expandIcon?: T$Icon<"EXPAND">;
+	expandIcon?: T_Icon<"EXPAND">;
 	trackingParams: string;
 	infoRowExpandStatusKey?: EnumForExpandStatusKey;
 };
