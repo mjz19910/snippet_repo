@@ -5286,8 +5286,12 @@ class ParserService extends BaseService {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						debugger;
-						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
+						return;
 					} break;
+					case "serializedTemplateConfig":
+						switch(ta) {case 2: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "AdServingDataEntry.f10":
 						switch(ta) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
