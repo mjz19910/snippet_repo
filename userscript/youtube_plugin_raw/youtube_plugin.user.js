@@ -7792,7 +7792,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetNotificationMenuResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
-		let ar=this.z(actions,x => {
+		let [ar]=this.z(actions,x => {
 			if(x.openPopupAction) return this.A$OpenPopupAction(x);
 			debugger;
 			return null;
@@ -8978,7 +8978,7 @@ class HandleTypes extends ServiceMethods {
 	TopbarButtonItem(x) {
 		const cf="TopbarButtonItem";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		{x;};
 	}
 	/** @private @arg {D$TwoColumnBrowseResults} x */
 	TwoColumnBrowseResultsData(x) {
