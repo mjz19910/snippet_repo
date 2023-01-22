@@ -5535,7 +5535,8 @@ class ParserService extends BaseService {
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
-case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
+case "${path}":
+switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
 /** @type {P$PathRoot} */
 return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 `);
@@ -5576,6 +5577,10 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 						debugger;
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "watch.params":
+						switch(ta) {case 7: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.player_params":
 						switch(ta) {case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
