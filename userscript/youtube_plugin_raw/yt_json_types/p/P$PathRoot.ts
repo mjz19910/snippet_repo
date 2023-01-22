@@ -1,7 +1,5 @@
 type P$LogItems=[
-	"[parse_value.gen_ns] [serializedTemplateConfig.f1.f2]",
-	"[parse_value.gen_ns] [serializedTemplateConfig.f1]",
-	"[parse_value.gen_ns] [serializedTemplateConfig.f2]",
+	"[parse_value.gen_ns_g1] [serializedTemplateConfig[]]",
 	"[parse_value.gen_ns] [watch.player_params.f8]",
 	"[parse_value.gen_ns] [AdServingDataEntry.f5]",
 	"[parse_value.gen_ns] [AdServingDataEntry.f6]",
