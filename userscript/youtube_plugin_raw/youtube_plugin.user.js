@@ -4350,7 +4350,7 @@ class CodegenService extends BaseService {
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
 			if(k=="responseContext") {ret_arr.push(`this.RC$ResponseContext(${k});`); continue;}
 			let x2=x1[k];
-			if(typeof x2==="string") {this.generate_code_for_string(ret_arr,k,x2);continue;}
+			if(typeof x2==="string") {this.generate_code_for_string(ret_arr,k,x2); continue;}
 			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(${k},"number");`);}
 			if(typeof x2=="boolean") {ret_arr.push(`if(${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
@@ -4442,16 +4442,26 @@ class CodegenService extends BaseService {
 		d1!}
 		`;
 		let ex_names=req_names.map(e => {
-			let keys=Object.keys(x);
+			let kk=keys.find(u => this.uppercase_first(u)===e);
+			if(!kk) {debugger; return "";}
+			/** @type {{}} */
+			let ucx=x;
+			/** @private @type {{[x:string]:unknown}} */
+			let x1=ucx;
+			let val_2=x1[kk];
+			if(typeof val_2!=="object") return "";
+			if(val_2===null) return "";
+			let keys_2=Object.keys(val_2);
 			/** @type {string[]} */
 			let next_req=[];
-			let body_2=this.#generate_renderer_body(next_req,x,keys,t_name);
+			let body_2=this.#generate_renderer_body(next_req,x,keys_2,t_name);
 			let tmp0=`
 			d1!/** @private @arg {${e}} x */
 			d1!${e}(x) {
 				${body_2}
 			d1!}
 			`;
+			console.log("more req",next_req);
 			return tmp0;
 		});
 		tmp_1=ex_names.join("")+tmp_1;
@@ -5028,7 +5038,7 @@ class CodegenService extends BaseService {
 				res.push(`this.str_starts_with("RD",${k1},"string");`);
 			}
 		}
-		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`);}
+		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`); return;}
 		let x2=x;
 		let ret_arr=res;
 		if(x2.startsWith("https:")) {
