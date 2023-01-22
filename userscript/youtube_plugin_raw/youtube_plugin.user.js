@@ -4442,7 +4442,7 @@ class CodegenService extends BaseService {
 		let tmp_1=`
 		d1!/** @private @arg {${t_name}} x */
 		d1!${t_name}(x) {
-			const {${keys.join()},...y}=x; this.g(y);
+			d2!const {${keys.join()},...y}=x; this.g(y);
 			d2!${body}
 		d1!}
 		`;
