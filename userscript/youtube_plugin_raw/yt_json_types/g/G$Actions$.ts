@@ -1,6 +1,6 @@
 type G_Actions$=
 	|A_AddToGuideSection
-	|A_GetMultiPageMenu
+	|A_GetMP_Menu
 	|TA_OpenPopup<{}>
 	|C$RefreshPlaylist
 	|A_RemoveFromGuideSection

@@ -1,7 +1,7 @@
 type D_TopbarMenuButton={
 	icon: T_Icon<"VIDEO_CALL">;
-	menuRenderer: TR_MultiPageMenu<{
-		sections: [TR_MultiPageMenuSection<R_CompactLink>];
+	menuRenderer: TR_MP_Menu<{
+		sections: [TR_MP_MenuSection<R_CompactLink>];
 		trackingParams: string;
 		style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 	}>;

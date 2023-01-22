@@ -1,1 +1,1 @@
-type A_GetMultiPageMenu={getMultiPageMenuAction: D_GetMultiPageMenu;};
+type A_GetMP_Menu={getMP_MenuAction: D_GetMP_Menu;};

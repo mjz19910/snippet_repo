@@ -1,4 +1,4 @@
-type D_MultiPageMenu$style={
+type D_MP_Menu$style={
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER";
 }|{
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";

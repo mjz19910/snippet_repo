@@ -1,3 +1,3 @@
-type D_GetMultiPageMenu={
-	menu: TR_MultiPageMenu<{}>;
+type D_GetMP_Menu={
+	menu: TR_MP_Menu<{}>;
 };

@@ -4394,7 +4394,7 @@ class CodegenService extends BaseService {
 			||b.appendContinuationItemsAction
 			||b.changeEngagementPanelVisibilityAction
 			||b.createAction
-			||b.getMultiPageMenuAction
+			||b.getMP_MenuAction
 			||b.hideEngagementPanelScrimAction
 			||b.openPopupAction
 			||b.replayChatItemAction
@@ -8358,16 +8358,16 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
 		this.D_TextWithRuns(selectText);
 		this.z(actions,a => {
-			if("getMultiPageMenuAction" in a) {
-				return this.A_GetMultiPageMenu(a);
+			if("getMP_MenuAction" in a) {
+				return this.A_GetMP_Menu(a);
 			}
 			debugger;
 		});
 	}
-	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu",x,this.D_GetMultiPageMenu);}
-	/** @private @arg {D_GetMultiPageMenu} x */
-	D_GetMultiPageMenu(x) {this.H_("D_GetMultiPageMenu",x,() => 0);}
+	/** @private @arg {A_GetMP_Menu} x */
+	A_GetMP_Menu(x) {this.H_("A_GetMP_Menu",x,this.D_GetMP_Menu);}
+	/** @private @arg {D_GetMP_Menu} x */
+	D_GetMP_Menu(x) {this.H_("D_GetMP_Menu",x,() => 0);}
 	/** @private @arg {R_AccountsList} x */
 	R_AccountsList(x) {
 		const cf="AccountsListResponse";
@@ -8409,9 +8409,9 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},feedbackResponses,...y}=x; this.g(y); // ! #destructure
 		this.z(feedbackResponses,this.FeedbackResponseProcessedStatus);
 	}
-	/** @arg {D_MultiPageMenu} x */
-	D_MultiPageMenu(x) {
-		const cf="D_MultiPageMenu";
+	/** @arg {D_MP_Menu} x */
+	D_MP_Menu(x) {
+		const cf="D_MP_Menu";
 		this.save_keys(`[${cf}]`,x);
 		if(x.sections) {
 			let z=x.sections[0];
@@ -8422,10 +8422,10 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {R_MP_MenuNotificationSection} x */
-	R_MP_MenuNotificationSection(x) {this.H_("R_MP_MenuNotificationSection",x,this.MultiPageMenuNotificationSection);}
+	R_MP_MenuNotificationSection(x) {this.H_("R_MP_MenuNotificationSection",x,this.MP_MenuNotificationSection);}
 	/** @private @arg {{trackingParams:string;}&T_Items<R_Notification|TR_ContinuationItem<E_GetNotificationMenuEndpoint>>} x */
-	MultiPageMenuNotificationSection(x) {
-		const cf="MultiPageMenuNotificationSection";
+	MP_MenuNotificationSection(x) {
+		const cf="MP_MenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let xr=this.z(items,x => {
@@ -8438,7 +8438,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 		debugger;
-		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
+		this.trackingParams("MP_MenuNotificationSection",trackingParams);
 	}
 	/** @private @arg {R_Notification} x */
 	R_Notification(x) {this.H_("R_Notification",x,() => 0);}
