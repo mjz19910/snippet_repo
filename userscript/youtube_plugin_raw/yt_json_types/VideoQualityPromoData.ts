@@ -3,5 +3,5 @@ type VideoQualityPromoData={
 	text: D$TextWithRuns;
 	endpoint: E$UrlEndpoint;
 	trackingParams: string;
-	snackbar: R$NotificationAction;
+	snackbar: A$NotificationAction;
 };

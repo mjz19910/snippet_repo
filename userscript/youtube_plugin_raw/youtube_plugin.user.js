@@ -8161,6 +8161,57 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.D$HotkeyDialog(this.w(x));
 	}
+	/** @arg {R$ThumbnailOverlayResumePlayback} x */
+	R$ThumbnailOverlayResumePlaybackRenderer(x) {
+		const cf="ThumbnailOverlayResumePlaybackRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.ThumbnailOverlayResumePlayback(x.thumbnailOverlayResumePlaybackRenderer);
+	}
+	/** @arg {R$ThumbnailOverlayHoverText} x */
+	R$ThumbnailOverlayHoverTextRenderer(x) {
+		const cf="ThumbnailOverlayHoverTextRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
+	}
+	/** @arg {R$ThumbnailOverlayBottomPanel} x */
+	R$ThumbnailOverlayBottomPanelRenderer(x) {
+		const cf="ThumbnailOverlayBottomPanelRenderer";
+		this.save_keys(`[${cf}]`,x);
+		if(!x.thumbnailOverlayBottomPanelRenderer) debugger;
+		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
+	}
+	/** @arg {R$ThumbnailOverlayNowPlaying} x */
+	R$ThumbnailOverlayNowPlaying(x) {
+		const cf="ThumbnailOverlayNowPlayingRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.ThumbnailOverlayNowPlayingData(x.thumbnailOverlayNowPlayingRenderer);
+	}
+	/** @private @arg {R$ThumbnailOverlayTimeStatus} x */
+	R$ThumbnailOverlayTimeStatus(x) {
+		const cf="R$ThumbnailOverlayTimeStatus";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayTimeStatus(this.w(x));
+	}
+	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
+	R$ThumbnailOverlayLoadingPreview(x) {
+		const cf="R$ThumbnailOverlayLoadingPreview";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayLoadingPreview(this.w(x));
+	}
+	/** @arg {R$ThumbnailOverlayToggleButton} x */
+	R$ThumbnailOverlayToggleButton(x) {
+		const cf="R$ThumbnailOverlayNowPlayingData";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayToggleButton(this.w(x));
+	}
+	/** @arg {R$HotkeyDialogSection} x */
+	R$HotkeyDialogSection(x) {this.H$Renderer("HotkeyDialogSection",x,this.D$HotkeyDialogSection);}
+	/** @arg {R$HotkeyDialogSectionOption} x */
+	R$HotkeyDialogSectionOption(x) {this.H$Renderer("HotkeyDialogSectionOption",x,this.D$HotkeyDialogSectionOption);}
+	/** @arg {R$PlayerOverlayVideoDetails} x */
+	R$PlayerOverlayVideoDetails(x) {this.H$Renderer("PlayerOverlayVideoDetails",x,this.D$PlayerOverlayVideoDetails);}
+	/** @arg {A$NotificationAction} x */
+	A$NotificationAction(x) {this.H$Renderer("NotificationAction",x,this.A$NotificationAction);}
 	/** @arg {E$Search} x */
 	E$Search(x) {
 		const cf="Search";
@@ -8473,49 +8524,6 @@ class HandleTypes extends ServiceMethods {
 			this.targetId(cf,a);
 		});
 	}
-	/** @arg {R$ThumbnailOverlayResumePlayback} x */
-	R$ThumbnailOverlayResumePlaybackRenderer(x) {
-		const cf="ThumbnailOverlayResumePlaybackRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ThumbnailOverlayResumePlayback(x.thumbnailOverlayResumePlaybackRenderer);
-	}
-	/** @arg {R$ThumbnailOverlayHoverText} x */
-	R$ThumbnailOverlayHoverTextRenderer(x) {
-		const cf="ThumbnailOverlayHoverTextRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
-	}
-	/** @arg {R$ThumbnailOverlayBottomPanel} x */
-	R$ThumbnailOverlayBottomPanelRenderer(x) {
-		const cf="ThumbnailOverlayBottomPanelRenderer";
-		this.save_keys(`[${cf}]`,x);
-		if(!x.thumbnailOverlayBottomPanelRenderer) debugger;
-		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
-	}
-	/** @arg {R$ThumbnailOverlayNowPlaying} x */
-	R$ThumbnailOverlayNowPlaying(x) {
-		const cf="ThumbnailOverlayNowPlayingRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ThumbnailOverlayNowPlayingData(x.thumbnailOverlayNowPlayingRenderer);
-	}
-	/** @private @arg {R$ThumbnailOverlayTimeStatus} x */
-	R$ThumbnailOverlayTimeStatus(x) {
-		const cf="R$ThumbnailOverlayTimeStatus";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayTimeStatus(this.w(x));
-	}
-	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
-	R$ThumbnailOverlayLoadingPreview(x) {
-		const cf="R$ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayLoadingPreview(this.w(x));
-	}
-	/** @arg {R$ThumbnailOverlayToggleButton} x */
-	R$ThumbnailOverlayToggleButton(x) {
-		const cf="R$ThumbnailOverlayNowPlayingData";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayToggleButton(this.w(x));
-	}
 	/** @arg {G$ThumbnailOverlayItem} x */
 	G$ThumbnailOverlayItem(x) {
 		const cf="ThumbnailOverlayItem";
@@ -8572,13 +8580,6 @@ class HandleTypes extends ServiceMethods {
 	codegen_renderer(cf,x) {
 		this.codegen.generate_renderer(x,cf);
 	}
-	/** @arg {R$NotificationAction} x */
-	R$NotificationAction(x) {
-		const cf="NotificationActionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {notificationActionRenderer,...y}=x; this.g(y); // ! #destructure
-		this.A$NotificationAction(notificationActionRenderer);
-	}
 	/** @arg {ClipSectionRenderer} x */
 	ClipSectionRenderer(x) {
 		const cf="ClipSectionRenderer";
@@ -8614,18 +8615,6 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(title);
 		this.trackingParams(cf,trackingParams);
 		this.R$Button(navigationButton);
-	}
-	/** @arg {R$HotkeyDialogSection} x */
-	R$HotkeyDialogSection(x) {
-		const cf="R$HotkeyDialogSection";
-		this.save_keys(`[${cf}]`,x);
-		this.D$HotkeyDialogSection(this.w(x));
-	}
-	/** @arg {R$HotkeyDialogSectionOption} x */
-	R$HotkeyDialogSectionOption(x) {
-		const cf="R$HotkeyDialogSectionOption";
-		this.save_keys(`[${cf}]`,x);
-		this.D$HotkeyDialogSectionOption(this.w(x));
 	}
 	/** @arg {MusicShelf} x */
 	MusicShelf(x) {
@@ -8939,7 +8928,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("confirmDialogRenderer" in x) return this.ConfirmDialogRenderer(x);
 		if("multiPageMenuRenderer" in x) return this.MultiPageMenuRenderer(x);
-		if("notificationActionRenderer" in x) return this.R$NotificationAction(x);
+		if("notificationActionRenderer" in x) return this.A$NotificationAction(x);
 		if("pdgBuyFlowRenderer" in x) return this.PdgBuyFlowRenderer(x);
 		if("unifiedSharePanelRenderer" in x) return this.UnifiedSharePanelRenderer(x);
 		if("voiceSearchDialogRenderer" in x) return this.VoiceSearchDialogRenderer(x);
@@ -9953,10 +9942,6 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(shortViewCountText);
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @arg {R$PlayerOverlayVideoDetails} x */
-	R$PlayerOverlayVideoDetails(x) {
-		this.H$Renderer("PlayerOverlayVideoDetails",x,this.PlayerOverlayVideoDetails);
-	}
 	/** @arg {D$Menu} x */
 	D$Menu(x) {
 		const cf="Menu";
@@ -10698,7 +10683,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(playerBarActionButton,this.R$Button);
 	}
 	/** @arg {D$PlayerOverlayVideoDetails} x */
-	PlayerOverlayVideoDetails(x) {
+	D$PlayerOverlayVideoDetails(x) {
 		const cf="PlayerOverlayVideoDetails";
 		this.save_keys(`[${cf}]`,x);
 		const {title,subtitle,...y}=x; this.g(y); // ! #destructure
@@ -12716,7 +12701,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {onDismissalCompletionRenderer,trackingParams,...y}=x; this.g(y); // #destructure
 		this.trackingParams("ReelDismissalAction",trackingParams);
-		this.R$NotificationAction(onDismissalCompletionRenderer);
+		this.A$NotificationAction(onDismissalCompletionRenderer);
 	}
 	/** @private @arg {TranscriptSegmentListRenderer} x */
 	TranscriptSegmentListRenderer(x) {

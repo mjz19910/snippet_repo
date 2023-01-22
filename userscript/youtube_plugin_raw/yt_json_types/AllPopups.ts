@@ -1,7 +1,7 @@
 type AllPopups=
 	|ConfirmDialogRenderer
 	|T$R$MultiPageMenu<{}>
-	|R$NotificationAction
+	|A$NotificationAction
 	|PdgBuyFlowRenderer
 	|UnifiedSharePanelRenderer
 	|VoiceSearchDialogRenderer

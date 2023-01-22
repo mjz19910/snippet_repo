@@ -1,4 +1,4 @@
 type ToastPopupTag={
-	popup: R$NotificationAction;
+	popup: A$NotificationAction;
 	popupType: "TOAST";
 };
