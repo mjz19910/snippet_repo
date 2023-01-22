@@ -1,1 +1,1 @@
-type WatchNextItem=R$CompactVideo|R$ContinuationItem;
+type G$WatchNext=R$CompactVideo|R$ContinuationItem;

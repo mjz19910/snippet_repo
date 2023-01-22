@@ -98,7 +98,7 @@ export class Snippet_0_tmp {
 		const {accessibilityData,...y}=x; this.g(y);
 		this.AccessibilityData(accessibilityData);
 	}
-	/** @arg {A$LabelData} x */
+	/** @arg {A$Label} x */
 	AccessibilityData(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);

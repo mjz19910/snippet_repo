@@ -1,3 +1,1 @@
-type ClipSection={
-	contents: R$ClipCreation[];
-};
+type ClipSection=T$Contents<R$ClipCreation[]>;

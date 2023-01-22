@@ -1,1 +1,1 @@
-type A$Accessibility={accessibilityData: A$LabelData;};
+type A$Accessibility={accessibilityData: A$Label;};

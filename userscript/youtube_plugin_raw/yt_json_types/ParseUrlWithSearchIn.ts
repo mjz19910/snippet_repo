@@ -4,6 +4,8 @@ type DoSearchExtract<T extends `/${string}`>=
 	Extract<SplitOnce<C1,"/">,[`${string}?${string}`]>[0]
 	:never
 	:never;
-type UU=DoSearchExtract<WatchUrlFormat>;
+namespace UU_Old$1 {
+	export type UU=DoSearchExtract<WatchUrlFormat>;
+}
 type ParseUrlWithSearchIn=DoSearchExtract<WatchUrlFormat>;
 type ParseUrlWithSearchIn_2=DoSearchExtract<PlaylistUrlFormat>;

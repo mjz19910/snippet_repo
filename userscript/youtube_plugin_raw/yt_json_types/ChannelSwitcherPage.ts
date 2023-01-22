@@ -1,5 +1,4 @@
-type D$ChannelSwitcherPage={
+type D$ChannelSwitcherPage=T$Contents<ChannelSwitcherContent[]>&{
 	header: R$ChannelSwitcherHeader;
-	contents: ChannelSwitcherContent[];
 	targetId: YtTargetIdType;
 };

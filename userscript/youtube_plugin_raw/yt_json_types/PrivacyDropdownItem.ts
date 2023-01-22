@@ -4,5 +4,5 @@ type D$PrivacyDropdownItem={
 	description: D$TextWithRuns;
 	int32Value: 1;
 	isSelected: false;
-	accessibility: A$LabelData;
+	accessibility: A$Label;
 };
