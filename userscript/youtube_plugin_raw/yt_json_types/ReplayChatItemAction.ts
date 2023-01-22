@@ -1,1 +1,0 @@
-type ReplayChatItemAction={replayChatItemAction: D$ReplayChatItemAction;};

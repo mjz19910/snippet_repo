@@ -1,4 +1,4 @@
 type D$AccountLinkButton={
-	providerKey: AccountLinkProviderKey;
+	providerKey: K$AccountLinkProviderKey;
 	unlinkedButton: R$Button;
 };

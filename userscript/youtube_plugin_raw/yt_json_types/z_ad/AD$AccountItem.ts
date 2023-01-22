@@ -1,4 +1,4 @@
-type A$D$AccountItem={
+type AD$AccountItem={
 	accountName: R$TextWithRuns;
 	accountPhoto: D$Thumbnail;
 	isSelected: boolean;

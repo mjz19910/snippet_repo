@@ -1,7 +1,7 @@
 type D$OfflineabilityEntity={
 	key: string;
 	command: C$InnertubeCommand;
-	addToOfflineButtonState: AddToOfflineButtonStateEnum;
+	addToOfflineButtonState: GE$AddToOfflineButtonState;
 	contentCheckOk: false;
 	racyCheckOk: false;
 	loggingDirectives: A$LoggingDirectives;

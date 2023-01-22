@@ -1,3 +1,1 @@
-type Signal$LiveControlRoom={
-	signal: "LIVE_CONTROL_ROOM";
-};
+type Signal$LiveControlRoom=T$Signal<"LIVE_CONTROL_ROOM">;

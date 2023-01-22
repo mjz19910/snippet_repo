@@ -1,4 +1,4 @@
-type R$ReelItemWatch={
+type D$ReelItemWatch={
 	responseContext: RC$ResponseContext;
 	overlay: R$ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";

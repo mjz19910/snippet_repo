@@ -1,1 +1,1 @@
-type D$AddToGuideSectionAction=T$Items<R$GuideEntry>&{handlerData: AddToGuideSectionHandlerDataEnum;};
+type D$AddToGuideSectionAction=T$Items<R$GuideEntry>&{handlerData: DE$AddToGuideSectionHandler;};

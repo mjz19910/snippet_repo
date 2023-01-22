@@ -1,0 +1,1 @@
+type A$AccountItem={accountItem: AD$AccountItem;};

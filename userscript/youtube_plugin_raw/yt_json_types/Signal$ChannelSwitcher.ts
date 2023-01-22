@@ -1,0 +1,1 @@
+type Signal$ChannelSwitcher=T$Signal<"CHANNEL_SWITCHER">;

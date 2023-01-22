@@ -6353,7 +6353,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$ReelItemWatch} */
+				/** @private @type {D$ReelItemWatch} */
 				data: as(x),
 			};
 			case "reel_watch_sequence": return {
@@ -8280,7 +8280,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {A$UpdateChannelSwitcherPage} x */
 	A$UpdateChannelSwitcherPage(x) {this.H$R$("NotificationAction",x,a => {a; debugger;});}
-	/** @private @arg {R$ReelItemWatch} x */
+	/** @private @arg {D$ReelItemWatch} x */
 	R$ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9242,7 +9242,7 @@ class HandleTypes extends ServiceMethods {
 		const {styleType,...y}=x; this.g(y); // ! #destructure
 		f.call(this,styleType);
 	}
-	/** @private @arg {ResetChannelUnreadCountCommand} x */
+	/** @private @arg {C$ResetChannelUnreadCount} x */
 	ResetChannelUnreadCountCommand(x) {
 		const cf="ResetChannelUnreadCountCommand";
 		this.save_keys(`[${cf}]`,x);

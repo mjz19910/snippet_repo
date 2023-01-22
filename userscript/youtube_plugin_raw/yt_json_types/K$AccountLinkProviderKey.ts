@@ -1,4 +1,4 @@
-type AccountLinkProviderKey={
+type K$AccountLinkProviderKey={
 	id: string;
 	subject: "all";
 }|{

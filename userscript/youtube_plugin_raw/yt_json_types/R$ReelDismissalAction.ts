@@ -1,1 +1,1 @@
-type R$ReelDismissalAction={reelDismissalActionRenderer: D$ReelDismissalAction;};
+type RA$ReelDismissal={reelDismissalActionRenderer: D$ReelDismissalAction;};
