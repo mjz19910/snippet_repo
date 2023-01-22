@@ -8146,7 +8146,11 @@ class HandleTypes extends ServiceMethods {
 		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
 	}
 	/** @private @arg {Html5PlaybackOnesieConfig} x */
-	R_Html5PlaybackOnesieConfig(x) {this.H_R_("Html5PlaybackOnesieConfig",x,a => {a; debugger;});}
+	R_Html5PlaybackOnesieConfig(x) {this.H_R_("R_Html5PlaybackOnesieConfig",x,this.R_CommonConfig);}
+	/** @private @arg {R_CommonConfig} x */
+	R_CommonConfig(x) {this.H_R_("R_CommonConfig",x,this.D_CommonConfig);}
+	/** @private @arg {D_CommonConfig} x */
+	D_CommonConfig(x) {const cf="D_CommonConfig";this.H_R_(cf,x,x=>this.parser.parse_url(cf,x));}
 	/** @private @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {x;}
 	/** @private @arg {NonNullable<R_TextRun['navigationEndpoint']>} x */
