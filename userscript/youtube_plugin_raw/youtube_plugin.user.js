@@ -13205,9 +13205,9 @@ class HandleTypes extends ServiceMethods {
 	VoiceSearchDialog(x) {
 		const cf="VoiceSearchDialog";
 		this.save_keys(`[${cf}]`,x);
-		const {exitButton,trackingParams,...y}=x;
-		this.R$Button(exitButton);
+		const {trackingParams,exitButton,...y}=x;
 		this.trackingParams(cf,trackingParams);
+		this.R$Button(exitButton);
 		this.z(Object.values(y),this.c1(this.D$TextWithRuns));
 	}
 	/** @arg {EntityMutationItem} x */
