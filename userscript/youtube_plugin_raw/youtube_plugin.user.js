@@ -5508,6 +5508,7 @@ class ParserService extends BaseService {
 											if(path_parts[2]==="f4") {
 												if(path_parts[3]=="f1") return true;
 												if(path_parts[3]=="f2") return true;
+												if(path_parts[3]=="f3") return true;
 											}
 											return false;
 										}
