@@ -7843,16 +7843,16 @@ class HandleTypes extends ServiceMethods {
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
 		return tag;
 	}
-	/** @private @arg {ScrollToEngagementPanelCommand} x */
+	/** @private @arg {C$ScrollToEngagementPanel} x */
 	ScrollToEngagementPanelCommand(x) {
 		const cf="ScrollToEngagementPanelCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.ScrollToEngagementPanelData(scrollToEngagementPanelCommand);
+		this.D_ScrollToEngagementPanel(scrollToEngagementPanelCommand);
 	}
-	/** @private @arg {D__ScrollToEngagementPanel} x */
-	ScrollToEngagementPanelData(x) {
+	/** @private @arg {D_ScrollToEngagementPanel} x */
+	D_ScrollToEngagementPanel(x) {
 		const cf="ScrollToEngagementPanelData";
 		this.save_keys(`[${cf}]`,x);
 		this.targetId(cf,x.targetId);

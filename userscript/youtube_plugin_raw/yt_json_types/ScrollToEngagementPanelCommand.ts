@@ -1,1 +1,1 @@
-type ScrollToEngagementPanelCommand={clickTrackingParams: string; scrollToEngagementPanelCommand: D__ScrollToEngagementPanel;};
+type C$ScrollToEngagementPanel={clickTrackingParams: string; scrollToEngagementPanelCommand: D_ScrollToEngagementPanel;};

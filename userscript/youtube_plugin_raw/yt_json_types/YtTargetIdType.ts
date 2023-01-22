@@ -4,7 +4,7 @@ type YtTargetIdType=[
 	"comments-section",
 	EngagementPanelSectionTargetId,
 	D__SearchFeedSectionList['targetId'],
-	D__ScrollToEngagementPanel['targetId'],
+	D_ScrollToEngagementPanel['targetId'],
 	R$Search['targetId'],
 	D__TranscriptSearchPanel['targetId'],
 	D__UpdateEngagementPanel['targetId'],

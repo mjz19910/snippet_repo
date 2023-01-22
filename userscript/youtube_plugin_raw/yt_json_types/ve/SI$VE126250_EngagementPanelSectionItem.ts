@@ -5,6 +5,6 @@ type VE126250_EngagementPanelSectionItem={
 	veType: 126250;
 	targetId: "engagement-panel-searchable-transcript";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: ScrollToEngagementPanelCommand[];
+	onShowCommands: C$ScrollToEngagementPanel[];
 	loggingDirectives: A$LoggingDirectives;
 };

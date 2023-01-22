@@ -1,1 +1,1 @@
-type D__ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
+type D_ScrollToEngagementPanel={targetId: "engagement-panel-comments-section";};
