@@ -1,4 +1,4 @@
-type SI$VE76278$EngagementPanelSectionItem={
+type G$VE76278$EngagementPanel$S$Item={
 	panelIdentifier: "comment-item-section";
 	header: R_EngagementPanelTitleHeader;
 	content: R_SectionList;

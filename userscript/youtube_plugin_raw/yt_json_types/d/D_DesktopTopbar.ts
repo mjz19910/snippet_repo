@@ -1,4 +1,4 @@
-type D__DesktopTopbar={
+type D_DesktopTopbar={
 	logo: R_TopbarLogo;
 	searchbox: R_FusionSearchbox;
 	trackingParams: string;

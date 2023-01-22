@@ -11,7 +11,7 @@ type D__MacroMarkersListItem={
 	playerStateEntityKey: string;
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
 	lightColorPalette: LightColorPalette;
-	darkColorPalette: DarkColorPalette;
+	darkColorPalette: D$DarkColorPalette;
 	timeDescriptionA11yLabel: `${number} seconds`;
 }|{
 	title: R_SimpleText;

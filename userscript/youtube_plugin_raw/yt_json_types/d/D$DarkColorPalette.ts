@@ -1,4 +1,4 @@
-type DarkColorPalette={
+type D$DarkColorPalette={
 	section1Color: 4281871903;
 	section2Color: 4280819991;
 	section3Color: 4279833614;

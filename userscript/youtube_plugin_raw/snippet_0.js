@@ -65,7 +65,7 @@ function split_string_once(s,d=as(",")) {
 	return as(q);
 }
 class ParserService {
-	/** @arg {Split<ApiUrlFormat,"/">} x @returns {Join<Split<ApiUrlFormat,"/">,".">} */
+	/** @arg {Split<D$ApiUrlFormat,"/">} x @returns {Join<Split<D$ApiUrlFormat,"/">,".">} */
 	get_url_type(x) {x; throw 1;}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {root; x;}
@@ -241,9 +241,9 @@ export class Snippet_0_tmp {
 		rn=this.generate_renderer(x,"VideoDescriptionMusicSectionData");
 		console.log(rn);
 	}
-	/** @arg {MyReader} reader @arg {DecTypeNum[]} results */
+	/** @arg {MyReader} reader @arg {D$DecTypeNum[]} results */
 	unpack_children_reader_result(reader,results) {
-		/** @type {DecTypeNum[]} */
+		/** @type {D$DecTypeNum[]} */
 		let out=[];
 		for(let item of results) {
 			switch(item[0]) {

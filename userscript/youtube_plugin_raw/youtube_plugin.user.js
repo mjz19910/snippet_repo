@@ -883,7 +883,7 @@ class MyReader {
 	/** @private */
 	read_any_impl() {
 		this.failed=false;
-		/** @private @type {DataArrType} */
+		/** @private @type {D$DataArrType} */
 		let data=[];
 		let loop_count=0;
 		let log_slow=true;
@@ -908,7 +908,7 @@ class MyReader {
 				console.log("taking a very long time to read protobuf data",loop_count/4096|0);
 			}
 		}
-		/** @private @type {DecTypeNum[]} */
+		/** @private @type {D$DecTypeNum[]} */
 		let res_arr=[];
 		for(let i=0;i<data.length;i++) {
 			let cur=data[i];
@@ -1102,7 +1102,7 @@ class MyReader {
 	skipTypeEx(fieldId,wireType) {
 		if(this.noisy_log_level) console.log("[skip] pos=%o",this.pos);
 		let pos_start=this.pos;
-		/** @private @type {DecTypeNum[]} */
+		/** @private @type {D$DecTypeNum[]} */
 		let first_num=[];
 		switch(wireType) {
 			case 0:
@@ -1168,7 +1168,7 @@ class MyReader {
 				}
 				let sub_buffer=this.buf.subarray(this.pos,this.pos+size);
 				let res=this.try_read_any(size);
-				/** @type {DecTypeNum} */
+				/** @type {D$DecTypeNum} */
 				try {
 					this.skip(size);
 				} catch {
@@ -2685,10 +2685,10 @@ class BaseService extends BaseServicePrivate {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @typedef {number|string|bigint|['group',DecTypeNum[]]|["failed",DecTypeNum[]|null]|ParamMapType} ParamMapValue */
+	/** @typedef {number|string|bigint|['group',D$DecTypeNum[]]|["failed",D$DecTypeNum[]|null]|ParamMapType} ParamMapValue */
 	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
-	/** @public @arg {DecTypeNum[]} res_e */
+	/** @public @arg {D$DecTypeNum[]} res_e */
 	make_param_map(res_e) {
 		/** @type {ParamMapType} */
 		let ret_map=new Map();
@@ -4897,7 +4897,7 @@ class ParserService extends BaseService {
 		let a=split_string_once(x,"?");
 		switch(a[0]) {
 			case "ads": {
-				/** @type {ApiStatsAdsArgs} */
+				/** @type {D$ApiStatsAdsArgs} */
 				let sp=as(a[1]);
 				let v=this.parse_url_search_params(sp);
 				// spell:disable-next
@@ -5872,7 +5872,7 @@ class ParserService extends BaseService {
 		debugger;
 		return null;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1",string]>} x */
 	get_yt_url_type_3(x) {
 		switch(x[2]) {
 			case "browse": return x[2];
@@ -5891,7 +5891,7 @@ class ParserService extends BaseService {
 		}
 		return x[2];
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei",...any]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei",...any]>} x */
 	get_yt_url_type(x) {
 		if(x[1]!=="v1") {
 			return this.api_no_handler(x,x[1]);
@@ -5935,7 +5935,7 @@ class ParserService extends BaseService {
 			default: return this.api_no_handler(x,x[2]);
 		}
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","pdg",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","pdg",string]>} x */
 	get_pdg_type(x) {
 		switch(x[3]) {
 			case "get_pdg_buy_flow": break;
@@ -5946,7 +5946,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","music",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","music",string]>} x */
 	get_music_type(x) {
 		switch(x[3]) {
 			case "get_search_suggestions": break;
@@ -5957,7 +5957,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","share",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","share",string]>} x */
 	get_share_type(x) {
 		switch(x[3]) {
 			case "get_share_panel": break;
@@ -5968,7 +5968,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","playlist",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","playlist",string]>} x */
 	get_playlist_type(x) {
 		switch(x[3]) {
 			case "get_add_to_playlist": break;
@@ -5980,7 +5980,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`,
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","browse",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","browse",string]>} x */
 	get_browse_type(x) {
 		switch(x[3]) {
 			case "edit_playlist": break;
@@ -5991,7 +5991,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","subscription",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","subscription",string]>} x */
 	get_subscription_type(x) {
 		switch(x[3]) {
 			case "subscribe": break;
@@ -6002,7 +6002,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","reel",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","reel",string]>} x */
 	get_reel_type(x) {
 		switch(x[3]) {
 			case "reel_item_watch": break;
@@ -6013,7 +6013,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","notification",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","notification",string]>} x */
 	get_notification_type(x) {
 		switch(x[3]) {
 			case "get_unseen_count": break;
@@ -6027,7 +6027,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","comment",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","comment",string]>} x */
 	get_comment_type(x) {
 		switch(x[3]) {
 			case "create_comment": break;
@@ -6037,7 +6037,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","att",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","att",string]>} x */
 	get_att_type(x) {
 		switch(x[3]) {
 			case "get": break;
@@ -6048,7 +6048,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","like",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","like",string]>} x */
 	get_like_type(x) {
 		switch(x[3]) {
 			case "like": break;
@@ -6060,7 +6060,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","account",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","account",string]>} x */
 	get_account_type(x) {
 		switch(x[3]) {
 			case "account_menu": break;
@@ -6073,7 +6073,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @private @arg {Extract<Split<ApiUrlFormat,"/">,["youtubei","v1","live_chat",string]>} x */
+	/** @private @arg {Extract<Split<D$ApiUrlFormat,"/">,["youtubei","v1","live_chat",string]>} x */
 	get_live_chat_type(x) {
 		switch(x[3]) {
 			case "get_live_chat_replay": break;
@@ -6085,7 +6085,7 @@ class ParserService extends BaseService {
 			x: `${x[2]}.${x[3]}`
 		}.x;
 	}
-	/** @public @arg {Split<ApiUrlFormat,"/">} x */
+	/** @public @arg {Split<D$ApiUrlFormat,"/">} x */
 	get_url_type(x) {
 		switch(x[0]) {
 			case "youtubei": return this.get_yt_url_type(x);
@@ -7089,7 +7089,7 @@ class HandleTypes extends ServiceMethods {
 	R_TopbarLogo(x) {this.H_R_("DesktopTopbar",x,this.TopbarLogo);}
 	/** @private @arg {R_FusionSearchbox} x */
 	R_X_FusionSearchbox(x) {this.H_R_("DesktopTopbar",x,this.FusionSearchboxData);}
-	/** @private @arg {D__DesktopTopbar} x */
+	/** @private @arg {D_DesktopTopbar} x */
 	D__DesktopTopbar(x) {
 		const cf="DesktopTopbar";
 		this.save_keys(`[D__${cf}]`,x);
@@ -7301,7 +7301,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {{}} x */
 	R_SettingsSidebar(x) {this.emf("SettingsSidebarRenderer",x);}
-	/** @public @arg {D__Dropdown} x */
+	/** @public @arg {D_Dropdown_Privacy} x */
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(label);

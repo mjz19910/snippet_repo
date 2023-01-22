@@ -1,1 +1,1 @@
-type R_Dropdown={dropdownRenderer: D__Dropdown;};
+type R_Dropdown={dropdownRenderer: D_Dropdown_Privacy;};
