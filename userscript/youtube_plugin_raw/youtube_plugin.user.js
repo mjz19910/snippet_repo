@@ -7467,8 +7467,19 @@ class HandleTypes extends ServiceMethods {
 	R$Button(x) {
 		const cf="Button";
 		this.save_keys(`[${cf}Renderer]`,x);
-		this.D$Button(this.w(x));
 		this.y(x,this.D$Button);
+	}
+	/** @arg {R$MicroformatData} x */
+	R$MicroformatData(x) {
+		const cf="R$MicroformatDataRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.t(this.w(x),this.D$MicroformatData);
+	}
+	/** @arg {R$PdgBuyFlowHeader} x */
+	R$PdgBuyFlowHeader(x) {
+		const cf="PdgBuyFlowHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.D$PdgBuyFlowHeader(this.w(x));
 	}
 	/** @arg {R$Menu} x */
 	R$Menu(x) {
@@ -8358,7 +8369,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(cacheMetadata,this.CacheMetadata);
 		const {metadata,microformat,maxAgeStoreSeconds,background,...y3}=y2;
 		this.t(metadata,this.BrowseMetadata);
-		this.t(microformat,this.R$MicroformatDataRenderer);
+		this.t(microformat,this.R$MicroformatData);
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
 		this.t(background,this.MusicThumbnailRenderer);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
@@ -8548,18 +8559,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if(!x.musicThumbnailRenderer) debugger;
 		this.MusicThumbnailData(x.musicThumbnailRenderer);
-	}
-	/** @arg {R$MicroformatDataRenderer} x */
-	R$MicroformatDataRenderer(x) {
-		const cf="R$MicroformatDataRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.t(this.w(x),this.MicroformatData);
-	}
-	/** @arg {R$PdgBuyFlowHeader} x */
-	R$PdgBuyFlowHeader(x) {
-		const cf="PdgBuyFlowHeaderRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.D$PdgBuyFlowHeader(this.w(x));
 	}
 	/** @arg {D$PdgBuyFlowHeader} x */
 	D$PdgBuyFlowHeader(x) {
@@ -8762,7 +8761,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(height,a => this.primitive_of(a,"number"));
 	}
 	/** @arg {MicroformatData} x */
-	MicroformatData(x) {
+	D$MicroformatData(x) {
 		const cf="MicroformatData";
 		this.save_keys(`[${cf}]`,x);
 		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=x; this.g(y); // ! #destructure
@@ -12161,7 +12160,7 @@ class HandleTypes extends ServiceMethods {
 		this.ChannelMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(cf,trackingParams);
-		this.R$MicroformatDataRenderer(microformat);
+		this.R$MicroformatData(microformat);
 		this.z(onResponseReceivedActions,this.ResetChannelUnreadCountCommand);
 	}
 	/** @arg {PlaylistResponse} x */
@@ -12175,7 +12174,7 @@ class HandleTypes extends ServiceMethods {
 		this.PlaylistMetadataRenderer(metadata);
 		this.DesktopTopbarRenderer(topbar);
 		this.trackingParams(cf,trackingParams);
-		this.R$MicroformatDataRenderer(microformat);
+		this.R$MicroformatData(microformat);
 		this.PlaylistSidebarRenderer(sidebar);
 	}
 	/** @arg {string} cf @arg {NonNullable<PlaylistResponse['alerts']>} x */

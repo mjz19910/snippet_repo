@@ -9,7 +9,7 @@ type BrowseResponse={
 	metadata?: BrowseMetadata;
 	trackingParams: string;
 	topbar?: R$DesktopTopbar;
-	microformat?: R$MicroformatDataRenderer;
+	microformat?: R$MicroformatData;
 	frameworkUpdates?: EntityBatchUpdate;
 	// ?
 	maxAgeStoreSeconds?: number;

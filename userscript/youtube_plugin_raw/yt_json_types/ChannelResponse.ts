@@ -5,6 +5,6 @@ type ChannelResponse={
 	metadata: ChannelMetadataRenderer;
 	trackingParams: string;
 	topbar: R$DesktopTopbar;
-	microformat: R$MicroformatDataRenderer;
+	microformat: R$MicroformatData;
 	onResponseReceivedActions: ResetChannelUnreadCountCommand[];
 };
