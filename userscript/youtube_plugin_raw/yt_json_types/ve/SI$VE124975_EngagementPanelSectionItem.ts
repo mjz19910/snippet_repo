@@ -5,6 +5,6 @@ interface VE124975_EngagementPanelSectionItem {
 	veType: 124975;
 	targetId: "engagement-panel-structured-description";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	identifier?: ShortsSurfaceIdentifier<this['targetId']>;
+	identifier?: I$ShortsSurfaceIdentifier<this['targetId']>;
 	loggingDirectives: A$LoggingDirectives;
 }

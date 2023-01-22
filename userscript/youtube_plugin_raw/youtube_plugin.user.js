@@ -7837,8 +7837,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {PlaylistPanelContinuation} x */
 	R$PlaylistPanelContinuation(x) {this.H$R$("PlaylistPanelContinuation",x,a => {a; debugger;});}
-	/** @template T @arg {ShortsSurfaceIdentifier<T>} x */
-	ShortsSurfaceIdentifier(x) {
+	/** @template T @arg {I$ShortsSurfaceIdentifier<T>} x */
+	I$ShortsSurfaceIdentifier(x) {
 		const {surface,tag,...y}=x; this.g(y); // ! #destructure
 		if(surface!=="ENGAGEMENT_PANEL_SURFACE_SHORTS") debugger;
 		return tag;

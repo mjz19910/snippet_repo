@@ -5,6 +5,6 @@ type VE139722_EngagementPanelSectionItem={
 	targetId: "engagement-panel-comments-section";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
-	identifier: ShortsSurfaceIdentifier<"shorts-comments-panel">;
+	identifier: I$ShortsSurfaceIdentifier<"shorts-comments-panel">;
 	loggingDirectives: A$LoggingDirectives;
 };
