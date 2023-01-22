@@ -1,1 +1,0 @@
-type SortFilterMenuType=R$SortFilterSubMenu;

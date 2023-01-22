@@ -1,7 +1,7 @@
 type ClientMessages={
-	reconnectMessage: D$TextWithRuns;
-	unableToReconnectMessage: D$TextWithRuns;
-	fatalError: D$TextWithRuns;
-	reconnectedMessage: D$TextWithRuns;
-	genericError: D$TextWithRuns;
+	reconnectMessage: R$TextWithRuns;
+	unableToReconnectMessage: R$TextWithRuns;
+	fatalError: R$TextWithRuns;
+	reconnectedMessage: R$TextWithRuns;
+	genericError: R$TextWithRuns;
 };

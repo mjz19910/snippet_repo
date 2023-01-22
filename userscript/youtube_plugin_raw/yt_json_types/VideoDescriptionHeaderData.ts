@@ -1,8 +1,8 @@
 type D$VideoDescriptionHeader={
-	title: D$TextWithRuns;
-	channel: D$SimpleText;
-	views: D$SimpleText;
-	publishDate: D$SimpleText;
+	title: R$TextWithRuns;
+	channel: R$SimpleText;
+	views: R$SimpleText;
+	publishDate: R$SimpleText;
 	factoid: R$Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
 	channelNavigationEndpoint: E$Browse;

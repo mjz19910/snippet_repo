@@ -1,6 +1,6 @@
 type D$ProfileColumnStatsEntry={
-	label: D$TextWithRuns;
-	value: D$SimpleText;
+	label: R$TextWithRuns;
+	value: R$SimpleText;
 };
 type R$ProfileColumnStatsEntry={profileColumnStatsEntryRenderer: D$ProfileColumnStatsEntry;};
 type D$ProfileColumnStats={

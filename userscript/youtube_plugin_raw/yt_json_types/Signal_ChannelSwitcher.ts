@@ -1,3 +1,1 @@
-type Signal_ChannelSwitcher={
-	signal: "CHANNEL_SWITCHER";
-};
+type Signal$ChannelSwitcher={signal: "CHANNEL_SWITCHER";};

@@ -1,1 +1,0 @@
-type D$SignalAction={signal: SignalEnum;};

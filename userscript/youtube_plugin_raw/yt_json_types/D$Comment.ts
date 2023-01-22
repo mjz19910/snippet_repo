@@ -1,9 +1,9 @@
 type D$Comment={
-	authorText: D$TextWithRuns;
+	authorText: R$TextWithRuns;
 	authorThumbnail: D$Thumbnail;
 	authorEndpoint: {};
-	contentText: D$TextWithRuns;
-	publishedTimeText: D$TextWithRuns;
+	contentText: R$TextWithRuns;
+	publishedTimeText: R$TextWithRuns;
 	isLiked: boolean;
 	actionMenu: R$Menu;
 	commentId: string;
@@ -12,7 +12,7 @@ type D$Comment={
 	currentUserReplyThumbnail: D$Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
-	voteCount: D$TextWithRuns;
+	voteCount: R$TextWithRuns;
 	expandButton: R$Button;
 	collapseButton: R$Button;
 	loggingDirectives: A$LoggingDirectives;

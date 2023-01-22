@@ -1,6 +1,6 @@
 type D$TranscriptSegmentList={
 	initialSegments: R$TranscriptSegment[];
-	noResultLabel: D$TextWithRuns;
-	retryLabel: D$TextWithRuns;
+	noResultLabel: R$TextWithRuns;
+	retryLabel: R$TextWithRuns;
 	touchCaptionsEnabled: boolean;
 };

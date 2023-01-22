@@ -1,1 +1,1 @@
-type D$UpdateTitleAction={title: D$TextWithRuns;};
+type D$UpdateTitleAction={title: R$TextWithRuns;};

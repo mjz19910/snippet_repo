@@ -1,4 +1,4 @@
 type D$HotkeyDialogSection={
-	title: D$TextWithRuns;
+	title: R$TextWithRuns;
 	options: R$HotkeyDialogSectionOption[];
 };

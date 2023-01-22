@@ -1,6 +1,6 @@
 type D$CardCollection={
 	cards: R$Card[];
-	headerText: D$TextWithRuns;
+	headerText: R$TextWithRuns;
 	icon: R$InfoCardIcon;
 	closeButton: R$InfoCardIcon;
 	trackingParams: string;

@@ -4056,7 +4056,7 @@ class CodegenService extends BaseService {
 			if(new_code) {ret_arr.push(new_code); continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.D$SimpleText(${k});`); continue;};
-			/** @type {D$TextWithRuns} */
+			/** @type {R$TextWithRuns} */
 			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D$TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
 			/** @type {D$Thumbnail} */
@@ -4318,11 +4318,11 @@ class CodegenService extends BaseService {
 	get_json_replacer_type(state,r,x) {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
-		/** @type {D$TextWithRuns} */
+		/** @type {R$TextWithRuns} */
 		if(x.runs&&x.runs instanceof Array) return "TYPE::D$TextWithRuns";
 		/** @type {D$Thumbnail} */
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D$Thumbnail";
-		/** @type {D$SimpleText} */
+		/** @type {R$SimpleText} */
 		if(x.simpleText) return "TYPE::D$SimpleText";
 		/** @type {T$Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T$Icon<"${x.iconType}">`;
@@ -6852,7 +6852,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ItemSectionData",trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @private @arg {D$SimpleText} x @arg {(this:this,x:{accessibility?:A$Accessibility})=>void} f */
+	/** @private @arg {R$SimpleText} x @arg {(this:this,x:{accessibility?:A$Accessibility})=>void} f */
 	D$SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
 		this.save_keys(`[${cf}]`,x);
@@ -8091,7 +8091,7 @@ class HandleTypes extends ServiceMethods {
 	R$Html5PlaybackOnesieConfig(x) {this.H$R$("Html5PlaybackOnesieConfig",x,a => {a; debugger;});}
 	/** @private @arg {R$VssLoggingContext} x */
 	R$VssLoggingContext(x) {x;}
-	/** @private @arg {NonNullable<D$TextRun['navigationEndpoint']>} x */
+	/** @private @arg {NonNullable<R$TextRun['navigationEndpoint']>} x */
 	handle_text_endpoint(x) {
 		if("browseEndpoint" in x) return this.E$Browse(x);
 		if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
@@ -8100,7 +8100,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @pub @arg {E$UrlEndpoint} x */
 	E$UrlEndpoint(x) {x;}
-	/** @private @arg {D$TextWithRuns} x @arg {(x:NonNullable<D$TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {R$TextWithRuns} x @arg {(x:NonNullable<R$TextRun['navigationEndpoint']>)=>void} f_run */
 	D$TextWithRuns(x,f_run=this.handle_text_endpoint) {
 		if(!("runs" in x)) {debugger; return;}
 		const cf/*!*/="TextWithRuns";
@@ -8109,7 +8109,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(runs,a => this.D$TextRun(a,f_run));
 		this.t(accessibility,this.A$Accessibility);
 	}
-	/** @private @arg {D$TextRun} x @arg {(x:NonNullable<D$TextRun['navigationEndpoint']>)=>void} f_run */
+	/** @private @arg {R$TextRun} x @arg {(x:NonNullable<R$TextRun['navigationEndpoint']>)=>void} f_run */
 	D$TextRun(x,f_run) {
 		const cf="TextRun";
 		this.save_keys(`[${cf}]`,x);

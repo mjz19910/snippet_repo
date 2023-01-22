@@ -1,9 +1,9 @@
 type R$DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
-	titleText: D$TextWithRuns;
+	titleText: R$TextWithRuns;
 	image: R$ThumbnailsList;
-	bodyText: D$TextWithRuns;
-	secondaryText: D$TextWithRuns;
+	bodyText: R$TextWithRuns;
+	secondaryText: R$TextWithRuns;
 	badge: D$MetadataBadge;
 	menu: R$Menu;
 	ctaButton: R$Button;

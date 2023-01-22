@@ -1,5 +1,5 @@
 type D$UpdateToggleButtonTextAction={
-	defaultText: D$SimpleText;
-	toggledText: D$SimpleText;
+	defaultText: R$SimpleText;
+	toggledText: R$SimpleText;
 	buttonId: "TOGGLE_BUTTON_ID_TYPE_LIKE";
 };

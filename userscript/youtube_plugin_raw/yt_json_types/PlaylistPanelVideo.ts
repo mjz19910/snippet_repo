@@ -1,13 +1,13 @@
 type D$PlaylistPanelVideo={
-	title: D$SimpleText;
-	longBylineText: D$TextWithRuns;
+	title: R$SimpleText;
+	longBylineText: R$TextWithRuns;
 	thumbnail: D$Thumbnail;
-	lengthText: D$SimpleText;
-	indexText: D$SimpleText;
+	lengthText: R$SimpleText;
+	indexText: R$SimpleText;
 	selected: true;
 	navigationEndpoint: E$WatchEndpoint;
 	videoId: string;
-	shortBylineText: D$TextWithRuns;
+	shortBylineText: R$TextWithRuns;
 	trackingParams: string;
 	menu: R$Menu;
 	thumbnailOverlays: G$ThumbnailOverlayItem[];

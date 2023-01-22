@@ -1,5 +1,5 @@
 type D$ProductListItem={
-	title: D$SimpleText;
+	title: R$SimpleText;
 	accessibilityTitle: string;
 	thumbnail: D$Thumbnail;
 	price: `CA$${string}`;

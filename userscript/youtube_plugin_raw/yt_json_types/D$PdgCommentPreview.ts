@@ -1,9 +1,9 @@
 type D$PdgCommentPreview={
-	title: D$TextWithRuns;
+	title: R$TextWithRuns;
 	authorThumbnail: D$Thumbnail;
-	authorText: D$SimpleText;
+	authorText: R$SimpleText;
 	commentOptionRenderers: R$PdgCommentOption[];
-	defaultCommentText: D$TextWithRuns;
+	defaultCommentText: R$TextWithRuns;
 	editButton: R$Button;
 	superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
 };

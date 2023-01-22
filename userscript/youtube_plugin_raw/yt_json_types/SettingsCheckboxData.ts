@@ -1,6 +1,6 @@
 type D$SettingsCheckbox={
-	title: D$TextWithRuns;
-	helpText?: D$TextWithRuns;
+	title: R$TextWithRuns;
+	helpText?: R$TextWithRuns;
 	enabled: boolean;
 	enableServiceEndpoint: {};
 	disableServiceEndpoint: {};

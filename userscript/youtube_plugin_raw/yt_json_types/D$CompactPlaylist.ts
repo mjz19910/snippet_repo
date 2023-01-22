@@ -1,17 +1,17 @@
 type D$CompactPlaylist={
 	playlistId: string;
 	thumbnail: D$Thumbnail;
-	title: D$SimpleText;
-	shortBylineText: D$TextWithRuns;
-	videoCountText: D$TextWithRuns;
+	title: R$SimpleText;
+	shortBylineText: R$TextWithRuns;
+	videoCountText: R$TextWithRuns;
 	navigationEndpoint: E$WatchEndpoint;
-	videoCountShortText: D$SimpleText;
+	videoCountShortText: R$SimpleText;
 	trackingParams: string;
 	sidebarThumbnails: D$Thumbnail[];
-	thumbnailText: D$TextWithRuns;
+	thumbnailText: R$TextWithRuns;
 	menu: R$Menu;
 	shareUrl: string;
 	thumbnailRenderer: R$PlaylistVideoThumbnail;
-	longBylineText: D$TextWithRuns;
+	longBylineText: R$TextWithRuns;
 	thumbnailOverlays: {}[];
 };

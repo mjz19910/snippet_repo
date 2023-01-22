@@ -1,6 +1,6 @@
 type D$NotificationText={
-	successResponseText: D$TextWithRuns;
-	undoText: D$TextWithRuns;
+	successResponseText: R$TextWithRuns;
+	undoText: R$TextWithRuns;
 	undoEndpoint: E$UndoFeedback;
 	trackingParams: string;
 };

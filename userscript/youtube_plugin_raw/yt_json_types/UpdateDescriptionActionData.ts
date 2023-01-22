@@ -1,1 +1,1 @@
-type D$UpdateDescriptionAction={description: D$TextWithRuns;};
+type D$UpdateDescriptionAction={description: R$TextWithRuns;};

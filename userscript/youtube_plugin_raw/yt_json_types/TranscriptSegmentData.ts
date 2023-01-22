@@ -1,7 +1,7 @@
 type D$TranscriptSegment={
 	startMs: `${number}`;
 	endMs: `${number}`;
-	snippet: D$TextWithRuns;
+	snippet: R$TextWithRuns;
 	startTimeText: G$Text;
 	trackingParams: string;
 	accessibility: A$Accessibility;

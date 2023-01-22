@@ -7,11 +7,11 @@ type D$C4TabbedHeader={
 	badges?: R$MetadataBadge[];
 	headerLinks: R$ChannelHeaderLinks;
 	subscribeButton: R$SubscribeButton;
-	subscriberCountText: D$SimpleText;
+	subscriberCountText: R$SimpleText;
 	tvBanner: D$Thumbnail;
 	mobileBanner: D$Thumbnail;
 	trackingParams: string;
 	sponsorButton?: R$Button;
-	channelHandleText: D$TextWithRuns;
-	videosCountText: D$TextWithRuns;
+	channelHandleText: R$TextWithRuns;
+	videosCountText: R$TextWithRuns;
 };

@@ -1,5 +1,5 @@
 type D$ThumbnailOverlayTimeStatus$2={
-	text: D$TextWithRuns;
+	text: R$TextWithRuns;
 	style: "LIVE";
 	icon: T$Icon<"LIVE">;
 };

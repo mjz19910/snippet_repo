@@ -1,7 +1,7 @@
 type D$PrivacyDropdownItem={
-	label: D$SimpleText;
+	label: R$SimpleText;
 	icon: T$Icon<"PRIVACY_PUBLIC">;
-	description: D$TextWithRuns;
+	description: R$TextWithRuns;
 	int32Value: 1;
 	isSelected: false;
 	accessibility: A$Label;

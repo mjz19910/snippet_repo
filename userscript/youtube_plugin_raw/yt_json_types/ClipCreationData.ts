@@ -4,7 +4,7 @@ type D$ClipCreation={
 	titleInput: R$ClipCreationTextInput;
 	scrubber: R$ClipCreationScrubber;
 	saveButton: R$Button;
-	displayName: D$SimpleText;
+	displayName: R$SimpleText;
 	publicityLabel: Capitalize<Lowercase<D$PlaylistAddToOption['privacy']>>;
 	cancelButton: R$Button;
 	adStateOverlay: R$ClipAdState;

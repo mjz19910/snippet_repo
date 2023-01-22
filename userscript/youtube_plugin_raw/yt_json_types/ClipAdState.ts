@@ -1,4 +1,4 @@
 type D$ClipAdState={
-	title: D$TextWithRuns;
-	body: D$TextWithRuns;
+	title: R$TextWithRuns;
+	body: R$TextWithRuns;
 };

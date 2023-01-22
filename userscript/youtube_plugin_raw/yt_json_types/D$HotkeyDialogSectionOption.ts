@@ -1,8 +1,8 @@
 type D$HotkeyDialogSectionOption={
-	label: D$TextWithRuns;
+	label: R$TextWithRuns;
 	hotkey: string;
 }|{
-	label: D$TextWithRuns;
+	label: R$TextWithRuns;
 	hotkey: string;
 	hotkeyAccessibilityLabel: A$Accessibility;
 };

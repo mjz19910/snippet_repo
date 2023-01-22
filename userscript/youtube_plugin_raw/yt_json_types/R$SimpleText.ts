@@ -1,4 +1,4 @@
-type D$SimpleText={
+type R$SimpleText={
 	accessibility?: A$Accessibility;
 	simpleText: string;
 };

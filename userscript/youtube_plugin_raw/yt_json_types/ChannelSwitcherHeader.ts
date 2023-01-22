@@ -1,4 +1,4 @@
 type D$ChannelSwitcherHeader={
-	title: D$TextWithRuns;
+	title: R$TextWithRuns;
 	button: R$Button;
 };

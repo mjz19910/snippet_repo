@@ -1,5 +1,5 @@
 type D$AlertWithButton={
 	type: "INFO";
-	text: D$SimpleText;
+	text: R$SimpleText;
 	dismissButton: R$Button;
 };

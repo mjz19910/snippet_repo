@@ -1,8 +1,8 @@
 type D$TextInputFormField={
-	label: D$TextWithRuns;
+	label: R$TextWithRuns;
 	maxCharacterLimit: 150;
 	placeholderText: string;
 	validValueRegexp: "[^<>]*";
-	invalidValueErrorMessage: D$TextWithRuns;
+	invalidValueErrorMessage: R$TextWithRuns;
 	required: true;
 };

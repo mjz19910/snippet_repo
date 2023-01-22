@@ -1,14 +1,14 @@
 type D$CompactRadio={
 	playlistId: `RD${"GM"}${string}`;
 	thumbnail: D$Thumbnail&SampledThumbnailColor;
-	title: D$SimpleText;
+	title: R$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
-	videoCountText: D$TextWithRuns;
+	videoCountText: R$TextWithRuns;
 	secondaryNavigationEndpoint: E$WatchEndpoint;
-	longBylineText: D$SimpleText;
+	longBylineText: R$SimpleText;
 	trackingParams: string;
-	thumbnailText: D$TextWithRuns;
-	videoCountShortText: D$TextWithRuns;
+	thumbnailText: R$TextWithRuns;
+	videoCountShortText: R$TextWithRuns;
 	shareUrl: string;
 	menu: R$Menu;
 	thumbnailOverlays: G$ThumbnailOverlayItem[];

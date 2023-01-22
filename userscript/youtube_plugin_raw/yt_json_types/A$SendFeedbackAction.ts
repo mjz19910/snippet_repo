@@ -1,4 +1,4 @@
-type A$SendFeedbackAction={
+type A$SendFeedback={
 	clickTrackingParams: string;
 	sendFeedbackAction: A$D$SendFeedbackAction;
 };

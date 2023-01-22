@@ -1,5 +1,5 @@
 type R$GetAccountSwitcherEndpoint={
 	responseContext: RC$ResponseContext;
-	selectText: D$TextWithRuns;
+	selectText: R$TextWithRuns;
 	actions: A$GetMultiPageMenu[];
 };

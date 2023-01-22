@@ -1,10 +1,10 @@
 type D$CommentsHeader={
-	countText: D$TextWithRuns;
+	countText: R$TextWithRuns;
 	createRenderer: R$CommentSimplebox;
 	sortMenu: R$SortFilterSubMenu;
 	trackingParams: string;
-	titleText: D$TextWithRuns;
-	commentsCount: D$TextWithRuns;
+	titleText: R$TextWithRuns;
+	commentsCount: R$TextWithRuns;
 	showSeparator: true;
 	customEmojis: CustomEmoji[];
 	unicodeEmojisUrl: string;

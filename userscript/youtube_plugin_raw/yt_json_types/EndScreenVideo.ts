@@ -1,13 +1,13 @@
 type D$EndScreenVideo={
 	videoId: string;
 	thumbnail: D$Thumbnail;
-	title: D$SimpleText;
-	shortBylineText: D$TextWithRuns;
-	lengthText?: D$SimpleText;
+	title: R$SimpleText;
+	shortBylineText: R$TextWithRuns;
+	lengthText?: R$SimpleText;
 	lengthInSeconds?: number;
 	navigationEndpoint: E$WatchEndpoint|E$ReelWatchEndpoint;
 	trackingParams: string;
 	shortViewCountText: G$Text;
-	publishedTimeText: D$SimpleText;
+	publishedTimeText: R$SimpleText;
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
 };

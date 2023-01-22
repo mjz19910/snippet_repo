@@ -1,6 +1,6 @@
 type D$TopbarLogo={
 	iconImage: T$Icon<"YOUTUBE_LOGO">;
-	tooltipText: D$TextWithRuns;
+	tooltipText: R$TextWithRuns;
 	endpoint: E$Browse;
 	trackingParams: string;
 	overrideEntityKey: string;

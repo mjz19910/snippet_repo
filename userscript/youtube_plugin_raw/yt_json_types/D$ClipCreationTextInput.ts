@@ -1,4 +1,4 @@
 type D$ClipCreationTextInput={
-	placeholderText: D$TextWithRuns;
+	placeholderText: R$TextWithRuns;
 	maxCharacterLimit: 140;
 };

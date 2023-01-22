@@ -1,6 +1,6 @@
 type G$EngagementPanelMenu_={
-	title: D$TextWithRuns;
-	contextualInfo: D$TextWithRuns;
+	title: R$TextWithRuns;
+	contextualInfo: R$TextWithRuns;
 	menu: R$SortFilterSubMenu;
 	visibilityButton: R$Button;
 	trackingParams: string;

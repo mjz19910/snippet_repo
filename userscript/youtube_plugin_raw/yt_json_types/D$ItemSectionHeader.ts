@@ -1,4 +1,4 @@
 type D$ItemSectionHeader={
-	title: D$TextWithRuns;
-	subtitle: D$TextWithRuns;
+	title: R$TextWithRuns;
+	subtitle: R$TextWithRuns;
 };

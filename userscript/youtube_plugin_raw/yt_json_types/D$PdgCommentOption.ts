@@ -1,4 +1,4 @@
 type D$PdgCommentOption={
-	commentText: D$TextWithRuns;
+	commentText: R$TextWithRuns;
 	chipRenderer: R$PdgCommentChip;
 };

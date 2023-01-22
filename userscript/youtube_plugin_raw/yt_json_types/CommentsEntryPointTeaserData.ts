@@ -2,6 +2,6 @@ type D$CommentsEntryPointTeaser={
 	teaserAvatar: D$Thumbnail&{
 		accessibility: A$Accessibility;
 	};
-	teaserContent: D$SimpleText;
+	teaserContent: R$SimpleText;
 	trackingParams: string;
 };

@@ -1,8 +1,8 @@
 type D$ReelItem={
 	videoId: YtVideoId;
-	headline: D$TextWithRuns;
+	headline: R$TextWithRuns;
 	thumbnail: D$Thumbnail;
-	viewCountText: D$TextWithRuns;
+	viewCountText: R$TextWithRuns;
 	navigationEndpoint: E$ReelWatchEndpoint;
 	menu: R$Menu;
 	trackingParams: string;

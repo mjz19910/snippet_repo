@@ -1,6 +1,6 @@
 type D$VideoViewCount={
-	viewCount: D$SimpleText;
+	viewCount: R$SimpleText;
 	isLive?: boolean;
-	extraShortViewCount?: D$SimpleText;
-	shortViewCount?: D$SimpleText;
+	extraShortViewCount?: R$SimpleText;
+	shortViewCount?: R$SimpleText;
 };

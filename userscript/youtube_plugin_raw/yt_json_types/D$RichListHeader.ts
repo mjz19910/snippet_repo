@@ -1,5 +1,5 @@
 type D$RichListHeader={
-	title: D$SimpleText;
+	title: R$SimpleText;
 	trackingParams: string;
 	navigationButton: R$Button;
 };

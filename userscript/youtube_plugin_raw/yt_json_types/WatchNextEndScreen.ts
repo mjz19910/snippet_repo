@@ -1,5 +1,5 @@
 type D$WatchNextEndScreen={
 	results: WatchNextEndScreenItem[];
-	title: D$SimpleText;
+	title: R$SimpleText;
 	trackingParams: string;
 };

@@ -1,5 +1,5 @@
 type D$HotkeyDialog={
-	title: D$TextWithRuns;
+	title: R$TextWithRuns;
 	sections: R$HotkeyDialogSection[];
 	dismissButton: R$Button;
 	trackingParams: string;

@@ -1,6 +1,6 @@
 type D$ChildVideo={
-	title: D$SimpleText;
+	title: R$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
-	lengthText: D$SimpleText;
+	lengthText: R$SimpleText;
 	videoId: string;
 };

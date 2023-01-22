@@ -1,4 +1,4 @@
 type D$SettingsSidebar={
-	title: D$TextWithRuns;
+	title: R$TextWithRuns;
 	items: R$CompactLink[];
 };

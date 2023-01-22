@@ -2,6 +2,6 @@ type D$ChannelOptions={
 	avatar: D$Thumbnail;
 	avatarEndpoint: {};
 	name: string;
-	links: D$TextWithRuns[];
+	links: R$TextWithRuns[];
 	avatarAccessibility: A$Accessibility;
 };

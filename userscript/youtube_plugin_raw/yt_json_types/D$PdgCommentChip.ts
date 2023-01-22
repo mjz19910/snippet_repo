@@ -1,5 +1,5 @@
 type D$PdgCommentChip={
-	chipText: D$SimpleText;
+	chipText: R$SimpleText;
 	chipColorPalette: {
 		backgroundColor: 4280191205;
 		foregroundTitleColor: 4294967295;

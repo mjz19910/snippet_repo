@@ -1,0 +1,1 @@
+type G$Text=R$SimpleText|R$TextWithRuns;

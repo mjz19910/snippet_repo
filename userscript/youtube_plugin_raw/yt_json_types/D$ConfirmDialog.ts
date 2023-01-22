@@ -1,5 +1,5 @@
 type D$ConfirmDialog={
-	title?: D$SimpleText;
+	title?: R$SimpleText;
 	trackingParams: string;
 	dialogMessages: G$Text[];
 	confirmButton: R$Button;

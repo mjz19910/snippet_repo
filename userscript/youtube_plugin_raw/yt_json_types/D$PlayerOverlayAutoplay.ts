@@ -1,8 +1,8 @@
 type D$PlayerOverlayAutoplay={
-	title: D$SimpleText;
-	videoTitle: D$SimpleText;
-	byline: D$TextWithRuns;
-	pauseText: D$SimpleText;
+	title: R$SimpleText;
+	videoTitle: R$SimpleText;
+	byline: R$TextWithRuns;
+	pauseText: R$SimpleText;
 	background: D$Thumbnail;
 	countDownSecs: 8;
 	cancelButton: R$Button;
@@ -12,9 +12,9 @@ type D$PlayerOverlayAutoplay={
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
 	preferImmediateRedirect: false;
 	videoId: string;
-	publishedTimeText: D$SimpleText;
+	publishedTimeText: R$SimpleText;
 	webShowNewAutonavCountdown: true;
 	webShowBigThumbnailEndscreen: false;
-	shortViewCountText: D$SimpleText;
+	shortViewCountText: R$SimpleText;
 	countDownSecsForFullscreen: 3;
 };
