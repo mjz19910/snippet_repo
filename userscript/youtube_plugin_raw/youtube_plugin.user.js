@@ -9748,8 +9748,7 @@ class HandleTypes extends ServiceMethods {
 	/** @template T @arg {T$ContinuationItemRenderer<T>} x */
 	T$ContinuationItemRenderer(x) {
 		const {continuationItemRenderer,...y}=x; this.g(y);
-		let d=this.T$ContinuationItemData(continuationItemRenderer);
-		return d.continuationEndpoint;
+		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
 	/** @template T @arg {T$ContinuationItemData<T>} x */
 	T$ContinuationItemData(x) {
