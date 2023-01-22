@@ -14766,6 +14766,10 @@ class HandleTypes extends ServiceMethods {
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
 		this.GuideEntryRenderer(headerEntry);
 		this.T$Icon(expanderIcon);
+		this.T$Icon(collapserIcon);
+		this.z(sectionItems,this.g);
+		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
+		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
 	}
 	/** @private @arg {Do$w<MerchandiseItemRenderer>} x */
 	MerchandiseItem(x) {
