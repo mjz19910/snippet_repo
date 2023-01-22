@@ -995,6 +995,7 @@ class MyReader {
 		}
 		return res;
 	}
+	/** @returns {[number[],bigint]|null} */
 	uint64() {
 		this.last_pos=this.pos;
 		let u64_varint=this.read_varint();
@@ -1006,7 +1007,7 @@ class MyReader {
 			let mul_res=e_*mul_pos;
 			return acc+mul_res;
 		},0n);
-		return ret;
+		return [u64_varint,ret];
 	}
 	readLongVarint() {
 		// tends to deopt with local vars for octet etc.
@@ -1106,7 +1107,7 @@ class MyReader {
 		let first_num=[];
 		switch(wireType) {
 			case 0:
-				/** @private @type {[true,bigint,number]|[false,null,number]} */
+				/** @private @type {[true,[number[], bigint],number]|[false,null,number]} */
 				let revert_res=this.revert_to(pos_start,() => {
 					try {
 						let u64=this.uint64();
@@ -1126,15 +1127,15 @@ class MyReader {
 				}
 				if(revert_res[0]&&num32===null) {
 					let [,num64,new_pos]=revert_res;
-					first_num.push(["data64",fieldId,num64]);
+					first_num.push(["data64",fieldId,...num64]);
 					this.pos=new_pos;
 				} else if(num32===null) {
 					this.failed=true;
 					first_num.push(["error",fieldId]);
 				} else if(revert_res[0]) {
 					let [,num64,new_pos]=revert_res;
-					if(num64!==BigInt(num32)) {
-						first_num.push(["data64",fieldId,num64]);
+					if(num64[1]!==BigInt(num32)) {
+						first_num.push(["data64",fieldId,...num64]);
 						this.pos=new_pos;
 					} else {
 						first_num.push(["data32",fieldId,num32]);
@@ -2685,7 +2686,7 @@ class BaseService extends BaseServicePrivate {
 		}
 		return this.make_param_map(res_e);
 	}
-	/** @typedef {number|string|bigint|['group',D$DecTypeNum[]]|["failed",D$DecTypeNum[]|null]|ParamMapType} ParamMapValue */
+	/** @typedef {number|string|['bigint',number[], bigint]|['group',D$DecTypeNum[]]|["failed",D$DecTypeNum[]|null]|ParamMapType} ParamMapValue */
 	/** @typedef {Map<number,ParamMapValue[]>} ParamMapType */
 	/** @typedef {{[x:number]:number|string|ParamObjType}} ParamObjType */
 	/** @public @arg {D$DecTypeNum[]} res_e */
@@ -2703,7 +2704,8 @@ class BaseService extends BaseServicePrivate {
 		};
 		for(let param of res_e) {
 			switch(param[0]) {
-				case "data_fixed32": case "data_fixed64":
+				case "data_fixed64":do_set(param[1],["bigint",[],param[2]]); break;
+				case "data_fixed32":
 				case "data32": do_set(param[1],param[2]); break;
 				case "child": {
 					x: if(param[3]) {
@@ -2722,7 +2724,7 @@ class BaseService extends BaseServicePrivate {
 					let decoder=new TextDecoder();
 					do_set(param[1],decoder.decode(param[2]));
 				} break;
-				case "data64": do_set(param[1],param[2]); break;
+				case "data64": do_set(param[1],["bigint",param[2],param[3]]); break;
 				case "group": do_set(param[1],['group',param[2]]); break;
 				case "info": debugger; break;
 				case "struct": debugger; break;
@@ -5139,7 +5141,14 @@ class ParserService extends BaseService {
 		this.cache_player_params.push(x);
 		switch(root) {
 			case "D_TemplateUpdate": {
-				let res_e=this.decode_b64_url_proto_obj(x);
+				let buffer=base64_url_dec.decodeByteArray(x);
+				if(!buffer) return;
+				let reader=new MyReader(buffer);
+				reader.pos+=1;
+				let res_e=reader.try_read_any();
+				if(!res_e) return;
+				let [ru,...ex]=res_e;
+				console.log(ru,ex);
 				debugger;
 			} return;
 		}
@@ -5451,7 +5460,10 @@ class ParserService extends BaseService {
 									if(tv instanceof Map) return;
 									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-									if(typeof tv==="bigint") return this.save_string(`[${path}]`,`${tv}n`);
+									if(tv[0]==="bigint") {
+										this.save_number(`[${path}]`,tv[1]);
+										return this.save_string(`[${path}]`,`${tv[2]}n`);
+									}
 									debugger;
 								}
 								switch(path_parts[3]) {
