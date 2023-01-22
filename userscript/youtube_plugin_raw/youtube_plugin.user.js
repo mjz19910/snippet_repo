@@ -9900,9 +9900,9 @@ class HandleTypes extends ServiceMethods {
 	A$OpenPopupAction(x) {
 		const cf="OpenPopupAction";
 		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,openPopupAction,...y}=x; this.g(y); // ! #destructure
+		const {clickTrackingParams,...y}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.OpenPopupActionData(openPopupAction);
+		this.g(this.w(y));
 	}
 	/** @arg {D$OpenPopupAction['popup']} x */
 	popup_generic(x) {
