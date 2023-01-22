@@ -11,6 +11,9 @@ type P$LogItems=[
 	"[parse_value.gen_ns] [AdServingDataEntry.f9.f1]",
 	"[parse_value.gen_ns] [AdServingDataEntry.f9.f2]",
 	"[parse_value.gen_ns] [AdServingDataEntry.f9.f3]",
+	"[parse_value.gen_ns] [AdServingDataEntry.f10.f1]",
+	"[parse_value.gen_ns] [AdServingDataEntry.f10.f6]",
+	"[parse_value.gen_ns] [AdServingDataEntry.f10.f11]",
 ];
 type P$PathRoot=[
 	P$param$missing$,

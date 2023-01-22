@@ -5264,11 +5264,13 @@ class ParserService extends BaseService {
 						debugger;
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
-					case "AdServingDataEntry.f9":
-						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
+					case "AdServingDataEntry.f10":
+						switch(ta) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "AdServingDataEntry.f9":
 					case "tracking.trackingParams.f4":
+					case "transcript_target_id.param":
 						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5284,7 +5286,6 @@ class ParserService extends BaseService {
 						switch(ta) {case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "transcript_target_id.param": switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5403,7 +5404,9 @@ class ParserService extends BaseService {
 							default: u(idx); debugger; path_parts[2]===""; break;
 							case "f1":
 							case "f2":
-							case "f3": {
+							case "f3":
+							case "f6":
+							case "f11": {
 								const idx=4;
 								if(path_parts.length===3) return;
 								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break;}
@@ -9472,10 +9475,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
 		this.parser.on_endpoint_params(cf,"AdServingDataEntry",a);
-		let dec=this.create_param_map(a);
-		if(!dec) return;
-		console.log(dec);
-		debugger;
 	}
 	/** @private @arg {R$LiveChat} x */
 	R$LiveChat(x) {
