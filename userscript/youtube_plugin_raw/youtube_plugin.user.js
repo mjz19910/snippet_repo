@@ -9194,13 +9194,19 @@ class HandleTypes extends ServiceMethods {
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y); // ! #destructure
 		this.T$Icon(icon);
 		this.D$TextWithRuns(placeholderText);
-		this.R$SearchboxConfig(config);
+		this.R$WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
 		this.E$SearchEndpoint(searchEndpoint);
 		this.R$Button(clearButton);
 	}
-	/** @private @arg {R$SearchboxConfig} x */
-	R$SearchboxConfig(x) {this.H$R$("SearchboxConfig",x,a => {a; debugger;});}
+	/** @private @arg {R$WebSearchboxConfig} x */
+	R$WebSearchboxConfig(x) {this.H$R$("SearchboxConfig",x,this.D$WebSearchboxConfig);}
+	/** @private @arg {D$WebSearchboxConfig} x */
+	D$WebSearchboxConfig(x) {
+		const cf="WebSearchboxConfig";
+		this.save_keys(`[${cf}]`,x);
+		{x;}
+	}
 	/** @private @arg {D$ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		const cf="ChangeEngagementPanelVisibilityActionData";
