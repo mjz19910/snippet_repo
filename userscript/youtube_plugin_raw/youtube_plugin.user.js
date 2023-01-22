@@ -7789,8 +7789,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$GetNotificationMenu} x */
 	R$GetNotificationMenu(x) {
-		const cf="R$GetNotificationMenu";
-		this.save_keys(`[${cf}]`,x);
+		const cf="GetNotificationMenu";
+		this.save_keys(`[R$${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let [ar]=this.z(actions,x => {
 			if(x.openPopupAction) return this.A$OpenPopupAction(x);
@@ -7819,8 +7819,8 @@ class HandleTypes extends ServiceMethods {
 	R$SimpleMenuHeader(x) {x;}
 	/** @private @arg {R$Next} x */
 	R$Next(x) {
-		const cf="NextResponse";
-		this.save_keys(`[${cf}]`,x);
+		const cf="Next";
+		this.save_keys(`[R$${cf}]`,x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=x;
 		this.t(contents,((_x) => {debugger;}));
 		this.t(currentVideoEndpoint,this.E$WatchEndpoint);
