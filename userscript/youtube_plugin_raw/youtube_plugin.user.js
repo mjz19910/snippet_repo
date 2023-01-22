@@ -5493,8 +5493,8 @@ class ParserService extends BaseService {
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
-	/** @arg {P$PathRoot} path @arg {ParamMapValue} tv */
-	get_parse_fns(path,tv) {
+	/** @arg {P$PathRoot} path @arg {ParamMapValue} tv @arg {number|null} ta */
+	get_parse_fns(path,tv,ta=null) {
 		let path_parts=split_string(path,".");
 		/** @arg {number} idx */
 		let gen_next_part=(idx) => {
@@ -5530,7 +5530,17 @@ class ParserService extends BaseService {
 			}
 		} break;`);
 		};
-		return {gen_next_part};
+		let new_path=() => {
+			console.log("[parse_value.new_path_gen]",path);
+			/** @type {P$LogItems} */
+			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
+			console.log(`
+case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
+/** @type {P$PathRoot} */
+return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
+`);
+		};
+		return {gen_next_part,new_path};
 	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
@@ -5553,17 +5563,8 @@ class ParserService extends BaseService {
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`-- [parse_value.gen_ns] --\n\n\tcase ${ta}: \n`);
 		};
-		let new_path=() => {
-			console.log("[parse_value.new_path_gen]",path);
-			/** @type {P$LogItems} */
-			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
-			console.log(`
-case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
-/** @type {P$PathRoot} */
-return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
-`);
-		};
 		if(tv!==void 0) {
+			let new_path=this.get_parse_fns(path,tv[0],ta).new_path;
 			x.delete(ta);
 			let cx=mk.indexOf(ta);
 			if(cx>-1) mk.splice(cx,1);
