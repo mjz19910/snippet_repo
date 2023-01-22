@@ -7114,21 +7114,25 @@ class HandleTypes extends ServiceMethods {
 				case "": break;
 				default: debugger; break;
 			};
-		},cm => {
-			switch(cm.webCommandMetadata.rootVe) {
-				case 3854: this.G$VE3854$WC$Metadata(cm.webCommandMetadata); break;
-				case 23462: break;
+		},x => {
+			let y=this.w(x);
+			switch(y.rootVe) {
+				case 3854: this.G$VE3854$WC$Metadata(y); break;
+				case 23462: this.G$VE23462$WC$Metadata(y); break;
 				default: debugger; break;
 			}
-			this.WebCommandMetadata(this.w(cm));
+			this.WebCommandMetadata(this.w(x));
 		});
 		x;
 	}
+	/** @private @arg {G$VE23462$WC$Metadata} x */
+	G$VE23462$WC$Metadata(x) {x;}
 	/** @public @arg {E$D$Browse} x */
 	E$D$Browse(x) {
 		const cf="D$Browse";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		const {browseId,...y}=x; this.g(y);
+		if(x.browseId!=="") debugger;
 	}
 	/** @private @arg {RC$ResponseContext} x */
 	RC$ResponseContext(x) {
