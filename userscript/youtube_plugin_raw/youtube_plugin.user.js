@@ -7552,10 +7552,10 @@ class HandleTypes extends ServiceMethods {
 	A$Accessibility(x) {
 		const cf="Accessibility";
 		this.save_keys(`[${cf}]`,x);
-		this.LabelData(this.w(x));
+		this.A$LabelData(this.w(x));
 	}
 	/** @arg {A$LabelData} x */
-	LabelData(x) {
+	A$LabelData(x) {
 		const cf="LabelData";
 		this.save_keys(`[${cf}]`,x);
 		this.primitive_of_string(this.w(x));
@@ -8367,7 +8367,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y); // ! #destructure
-		if(accessibility) return this.LabelData(accessibility);
+		if(accessibility) return this.A$LabelData(accessibility);
 		this.t(accessibilityData,this.A$Accessibility);
 		this.t(command,this.ButtonCommand);
 		this.t(icon,this.T$Icon);
@@ -13142,7 +13142,12 @@ class HandleTypes extends ServiceMethods {
 	MetadataBadgeData(x) {
 		const cf="MetadataBadgeData";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=x; this.g(y);
+		this.T$Icon(icon);
+		switch(style) {case "BADGE_STYLE_TYPE_VERIFIED":break;default: debugger;}
+		this.primitive_of(tooltip,"string");
+		this.trackingParams(cf,trackingParams);
+		this.t(accessibilityData,this.A$LabelData);
 	}
 	/** @private @arg {LiveChatAuthorBadgeData} x */
 	LiveChatAuthorBadgeData(x) {
