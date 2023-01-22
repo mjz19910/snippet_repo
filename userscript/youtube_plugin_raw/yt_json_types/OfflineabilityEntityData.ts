@@ -1,4 +1,4 @@
-type D__OfflineabilityEntity={
+type D_OfflineabilityEntity={
 	key: string;
 	command: C$InnertubeCommand;
 	addToOfflineButtonState: GE_AddToOfflineButtonState;

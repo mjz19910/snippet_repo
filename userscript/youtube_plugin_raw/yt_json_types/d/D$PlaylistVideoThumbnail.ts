@@ -1,4 +1,4 @@
-type D__PlaylistVideoThumbnail={
-	thumbnail: D__Thumbnail;
+type D_PlaylistVideoThumbnail={
+	thumbnail: D_Thumbnail;
 	trackingParams: string;
 };

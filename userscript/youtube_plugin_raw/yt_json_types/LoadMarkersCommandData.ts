@@ -1,3 +1,3 @@
-type D__LoadMarkersCommand={
+type D_LoadMarkersCommand={
 	entityKeys: string[];
 };

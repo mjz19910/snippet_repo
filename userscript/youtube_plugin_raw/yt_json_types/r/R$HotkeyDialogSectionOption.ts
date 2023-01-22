@@ -1,1 +1,1 @@
-type R_HotkeyDialogSectionOption={hotkeyDialogSectionOptionRenderer: D__HotkeyDialogSectionOption;};
+type R_HotkeyDialogSectionOption={hotkeyDialogSectionOptionRenderer: D_HotkeyDialogSectionOption;};

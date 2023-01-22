@@ -1,1 +1,1 @@
-type D__LikeButton=D__LikeButton$1|D__LikeButton$2;
+type D_LikeButton=D_LikeButton$1|D_LikeButton$2;

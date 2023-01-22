@@ -1,1 +1,1 @@
-type D__AdActionInterstitial={};
+type D_AdActionInterstitial={};

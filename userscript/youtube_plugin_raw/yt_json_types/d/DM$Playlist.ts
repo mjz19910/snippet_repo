@@ -1,4 +1,4 @@
-type D__PlaylistMetadata={
+type D_PlaylistMetadata={
 	title: string;
 	androidAppindexingLink: string;
 	iosAppindexingLink: string;

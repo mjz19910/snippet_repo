@@ -1,4 +1,4 @@
 type EmojiImage={
-	accessibility: D__Accessibility;
-	thumbnails: D__ThumbnailItem[];
+	accessibility: D_Accessibility;
+	thumbnails: D_ThumbnailItem[];
 };

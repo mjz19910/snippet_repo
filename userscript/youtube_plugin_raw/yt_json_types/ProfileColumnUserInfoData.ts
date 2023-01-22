@@ -1,4 +1,4 @@
-type D__ProfileColumnUserInfo={
+type D_ProfileColumnUserInfo={
 	title: R_SimpleText;
-	thumbnail: D__Thumbnail;
+	thumbnail: D_Thumbnail;
 };

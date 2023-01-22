@@ -1,4 +1,4 @@
-type D__ConfirmDialog={
+type D_ConfirmDialog={
 	title?: R_SimpleText;
 	trackingParams: string;
 	dialogMessages: G_Text[];

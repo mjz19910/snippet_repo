@@ -1,1 +1,1 @@
-type R_Hint={hintRenderer: D__Hint;};
+type R_Hint={hintRenderer: D_Hint;};

@@ -1,1 +1,1 @@
-type R_VideoViewCount={videoViewCountRenderer: D__VideoViewCount;};
+type R_VideoViewCount={videoViewCountRenderer: D_VideoViewCount;};

@@ -1,1 +1,1 @@
-type C$RunAttestation={runAttestationCommand: D__RunAttestation;};
+type C$RunAttestation={runAttestationCommand: D_RunAttestation;};

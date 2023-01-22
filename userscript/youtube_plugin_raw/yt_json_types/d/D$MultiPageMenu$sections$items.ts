@@ -1,1 +1,1 @@
-type D__MultiPageMenu$sections$items=MultiPageMenu$section[keyof MultiPageMenu$section];
+type D_MultiPageMenu$sections$items=MultiPageMenu$section[keyof MultiPageMenu$section];

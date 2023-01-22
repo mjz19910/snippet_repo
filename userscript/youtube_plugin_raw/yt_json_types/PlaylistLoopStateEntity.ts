@@ -1,1 +1,1 @@
-type PlaylistLoopStateEntity={playlistLoopStateEntity: D__PlaylistLoopStateEntity;};
+type PlaylistLoopStateEntity={playlistLoopStateEntity: D_PlaylistLoopStateEntity;};

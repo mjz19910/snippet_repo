@@ -1,1 +1,1 @@
-type R_ProfileColumn={profileColumnRenderer: D__ProfileColumn;};
+type R_ProfileColumn={profileColumnRenderer: D_ProfileColumn;};

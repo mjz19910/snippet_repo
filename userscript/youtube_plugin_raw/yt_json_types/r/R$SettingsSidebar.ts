@@ -1,3 +1,3 @@
 type R_SettingsSidebar={
-	settingsSidebarRenderer: D__SettingsSidebar;
+	settingsSidebarRenderer: D_SettingsSidebar;
 };

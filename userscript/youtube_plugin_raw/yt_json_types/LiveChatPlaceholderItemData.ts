@@ -1,4 +1,4 @@
-type D__LiveChatPlaceholderItem={
+type D_LiveChatPlaceholderItem={
 	id: string;
 	timestampUsec: `${number}`;
 };

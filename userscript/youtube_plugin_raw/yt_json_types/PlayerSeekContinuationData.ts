@@ -1,1 +1,1 @@
-type D__PlayerSeekContinuation=D__GenericContinuation;
+type D_PlayerSeekContinuation=D_GenericContinuation;

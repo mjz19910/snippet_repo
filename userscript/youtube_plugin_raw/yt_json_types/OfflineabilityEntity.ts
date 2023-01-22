@@ -1,1 +1,1 @@
-type OfflineabilityEntity={offlineabilityEntity: D__OfflineabilityEntity;};
+type OfflineabilityEntity={offlineabilityEntity: D_OfflineabilityEntity;};

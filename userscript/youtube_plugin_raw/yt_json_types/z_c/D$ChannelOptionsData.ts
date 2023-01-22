@@ -1,7 +1,7 @@
-type D__ChannelOptions={
-	avatar: D__Thumbnail;
+type D_ChannelOptions={
+	avatar: D_Thumbnail;
 	avatarEndpoint: {};
 	name: string;
 	links: R_TextWithRuns[];
-	avatarAccessibility: D__Accessibility;
+	avatarAccessibility: D_Accessibility;
 };

@@ -1,1 +1,1 @@
-type R_GridVideo={gridVideoRenderer: D__GridVideo;};
+type R_GridVideo={gridVideoRenderer: D_GridVideo;};

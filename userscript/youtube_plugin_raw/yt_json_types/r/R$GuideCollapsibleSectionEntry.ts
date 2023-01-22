@@ -1,1 +1,1 @@
-type R_GuideCollapsibleSectionEntry={guideCollapsibleSectionEntryRenderer: D__GuideCollapsibleSectionEntry;};
+type R_GuideCollapsibleSectionEntry={guideCollapsibleSectionEntryRenderer: D_GuideCollapsibleSectionEntry;};

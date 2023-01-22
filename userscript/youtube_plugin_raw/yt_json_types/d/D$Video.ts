@@ -1,7 +1,7 @@
-type D__Video=Video$VideoId;
+type D_Video=Video$VideoId;
 type Video$VideoId={
 	videoId: string;
-	thumbnail: D__Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: R_TextWithRuns;
 	descriptionSnippet: R_TextWithRuns;
 	longBylineText: R_TextWithRuns;
@@ -20,5 +20,5 @@ type Video$VideoId={
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	richThumbnail: R_MovingThumbnail;
 	inlinePlaybackEndpoint: E_WatchEndpoint;
-	owner: D__Video$Owner;
+	owner: D_Video$Owner;
 };

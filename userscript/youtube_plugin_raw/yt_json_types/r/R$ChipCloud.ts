@@ -1,1 +1,1 @@
-type R_ChipCloud={chipCloudRenderer: D__ChipCloudData;};
+type R_ChipCloud={chipCloudRenderer: D_ChipCloudData;};

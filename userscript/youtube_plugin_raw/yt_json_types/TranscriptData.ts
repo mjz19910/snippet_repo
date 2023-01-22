@@ -1,3 +1,3 @@
-type D__Transcript=T$Content<R_TranscriptSearchPanel>&{
+type D_Transcript=T$Content<R_TranscriptSearchPanel>&{
 	trackingParams: string;
 };

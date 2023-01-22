@@ -1,1 +1,1 @@
-type D__PlaylistSidebarSecondaryInfo={videoOwner: R_VideoOwner;};
+type D_PlaylistSidebarSecondaryInfo={videoOwner: R_VideoOwner;};

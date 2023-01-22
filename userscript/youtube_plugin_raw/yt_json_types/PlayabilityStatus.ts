@@ -1,4 +1,4 @@
-type D__PlayabilityStatus={
+type D_PlayabilityStatus={
 	status: "OK";
 	playableInEmbed: boolean;
 	offlineability: R_Button;

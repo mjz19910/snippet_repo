@@ -1,1 +1,1 @@
-type D__TimedContinuation={timedContinuationData: TimedContinuationDataInner;};
+type D_TimedContinuation={timedContinuationData: TimedContinuationDataInner;};

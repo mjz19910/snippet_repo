@@ -1,4 +1,4 @@
-type D__GuideCollapsibleSectionEntry={
+type D_GuideCollapsibleSectionEntry={
 	headerEntry: R_GuideEntry;
 	expanderIcon: T_Icon<"EXPAND">;
 	collapserIcon: T_Icon<"COLLAPSE">;

@@ -1,4 +1,4 @@
-type D__CommentThread={
+type D_CommentThread={
 	comment: R_Comment;
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";

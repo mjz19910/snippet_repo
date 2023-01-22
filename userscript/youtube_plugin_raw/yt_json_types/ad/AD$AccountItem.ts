@@ -1,6 +1,6 @@
 type AD__AccountItem={
 	accountName: R_TextWithRuns;
-	accountPhoto: D__Thumbnail;
+	accountPhoto: D_Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;

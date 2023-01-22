@@ -1,4 +1,4 @@
-type D__FusionSearchbox={
+type D_FusionSearchbox={
 	icon: T_Icon<"SEARCH">;
 	placeholderText: R_TextWithRuns;
 	config: R_WebSearchboxConfig;

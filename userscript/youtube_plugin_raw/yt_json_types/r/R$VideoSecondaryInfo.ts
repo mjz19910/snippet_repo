@@ -1,1 +1,1 @@
-type R_VideoSecondaryInfo={videoSecondaryInfoRenderer: D__VideoSecondaryInfo;};
+type R_VideoSecondaryInfo={videoSecondaryInfoRenderer: D_VideoSecondaryInfo;};

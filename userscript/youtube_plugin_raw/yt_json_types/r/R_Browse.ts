@@ -13,7 +13,7 @@ type R_Browse={
 	maxAgeStoreSeconds?: number;
 	background?: R_MusicThumbnail;
 	// ?
-	onResponseReceivedActions?: ResponseReceivedAction[];
+	onResponseReceivedActions?: A_ResponseReceived[];
 	sidebar?: G$BrowseSidebar;
 	observedStateTags?: B$StateTag[];
 	cacheMetadata?: CacheMetadata;

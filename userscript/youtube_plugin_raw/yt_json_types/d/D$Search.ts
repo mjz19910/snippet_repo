@@ -1,1 +1,1 @@
-type D__Search={query: string;};
+type D_Search={query: string;};

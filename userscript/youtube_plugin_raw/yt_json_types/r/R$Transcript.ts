@@ -1,1 +1,1 @@
-type R_Transcript={transcriptRenderer: D__Transcript;};
+type R_Transcript={transcriptRenderer: D_Transcript;};

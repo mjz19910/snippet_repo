@@ -1,5 +1,5 @@
 type R_GetTranscript={
 	responseContext: RC$ResponseContext;
-	actions: UpdateEngagementPanelAction[];
+	actions: UA_EngagementPanel[];
 	trackingParams: string;
 };

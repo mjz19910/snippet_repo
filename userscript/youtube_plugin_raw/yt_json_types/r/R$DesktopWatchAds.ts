@@ -1,1 +1,1 @@
-type R_DesktopWatchAds={playerLegacyDesktopWatchAdsRenderer: D__DesktopWatchAds;};
+type R_DesktopWatchAds={playerLegacyDesktopWatchAdsRenderer: D_DesktopWatchAds;};

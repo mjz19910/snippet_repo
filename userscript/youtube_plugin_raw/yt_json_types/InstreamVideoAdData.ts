@@ -1,4 +1,4 @@
-type D__InstreamVideoAd={
+type D_InstreamVideoAd={
 	skipOffsetMilliseconds: number;
 	pings: {};
 	clickthroughEndpoint: {};

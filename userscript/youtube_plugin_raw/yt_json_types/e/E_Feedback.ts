@@ -1,5 +1,5 @@
 type E_Feedback={
 	feedbackToken: string;
-	uiActions: UiActions;
+	uiActions: D$HideEnclosingContainer;
 	actions?: A_ReplaceEnclosing[];
 };

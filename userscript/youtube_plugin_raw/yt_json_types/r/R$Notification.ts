@@ -1,1 +1,1 @@
-type R_Notification={notificationRenderer: D__Notification;};
+type R_Notification={notificationRenderer: D_Notification;};

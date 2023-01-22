@@ -1,4 +1,4 @@
-type D__NextContinuation={
+type D_NextContinuation={
 	continuation: string;
 	clickTrackingParams: string;
 };

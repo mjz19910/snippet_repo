@@ -1,4 +1,4 @@
-type D__SetSetting={
+type D_SetSetting={
 	settingItemId: `${number}`;
 	boolValue?: boolean;
 	settingItemIdForClient: KnownSplit;

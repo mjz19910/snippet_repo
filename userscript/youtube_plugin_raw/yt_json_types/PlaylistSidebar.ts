@@ -1,4 +1,4 @@
-type D__PlaylistSidebar={
+type D_PlaylistSidebar={
 	items: PlaylistSidebarItem[];
 	trackingParams: string;
 };

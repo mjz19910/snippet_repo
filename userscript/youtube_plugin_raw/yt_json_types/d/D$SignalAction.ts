@@ -1,1 +1,1 @@
-type D__SignalAction={signal: E_SignalEnum;};
+type AD_Signal={signal: E_SignalEnum;};

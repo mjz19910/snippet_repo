@@ -1,4 +1,4 @@
-type SetActivePanelItemAction={
+type A_SetActivePanelItem={
 	clickTrackingParams: string;
 	setActivePanelItemAction: {};
 };

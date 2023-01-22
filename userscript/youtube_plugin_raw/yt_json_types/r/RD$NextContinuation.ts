@@ -1,1 +1,1 @@
-type RD__NextContinuation={nextContinuationData: D__NextContinuation;};
+type RD__NextContinuation={nextContinuationData: D_NextContinuation;};

@@ -1,4 +1,4 @@
-type D__SearchResultsTab={
+type D_SearchResultsTab={
 	endpoint?: E_Search;
 	title: string;
 	selected?: boolean;

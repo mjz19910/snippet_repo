@@ -1,4 +1,4 @@
 type WD_update_metadata_t={
 	type: "updated_metadata";
-	data: UpdatedMetadata;
+	data: R_UpdatedMetadata;
 };

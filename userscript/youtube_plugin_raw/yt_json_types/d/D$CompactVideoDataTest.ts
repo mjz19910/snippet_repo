@@ -4,10 +4,10 @@ namespace test {
 	type ED1="trackingParams,shortViewCountText,menu,thumbnailOverlays,accessibility,richThumbnail";
 	type S1=`${SM1},${CT},ownerBadges,${ED1}`;
 	type U1=Split<S1>[number];
-	export type T1=D__CompactVideo[U1];
+	export type T1=D_CompactVideo[U1];
 	type BaseKeysStr=`${SM1},${CT},${ED1}`;
 	type U2=Split<BaseKeysStr>[number];
-	export type T2=D__CompactVideo[U2];
+	export type T2=D_CompactVideo[U2];
 	type S3=`${SM1},badges,${CT},${ED1}`;
-	export type T3=D__CompactVideo[Split<S3>[number]];
+	export type T3=D_CompactVideo[Split<S3>[number]];
 }

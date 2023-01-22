@@ -1,4 +1,4 @@
-type D__PlaylistSidebarPrimaryInfo={
+type D_PlaylistSidebarPrimaryInfo={
 	thumbnailRenderer: R_PlaylistVideoThumbnail;
 	title: R_TextWithRuns;
 	stats: R_TextWithRuns[];

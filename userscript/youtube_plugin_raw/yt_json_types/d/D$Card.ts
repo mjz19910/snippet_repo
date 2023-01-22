@@ -1,1 +1,1 @@
-type D__Card={};
+type D_Card={};

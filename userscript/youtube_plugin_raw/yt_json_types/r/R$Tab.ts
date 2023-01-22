@@ -1,3 +1,3 @@
 type R_Tab={
-	tabRenderer: D__Tab;
+	tabRenderer: D_Tab;
 };

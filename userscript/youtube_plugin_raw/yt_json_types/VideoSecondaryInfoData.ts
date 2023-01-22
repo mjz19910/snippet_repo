@@ -1,4 +1,4 @@
-type D__VideoSecondaryInfo={
+type D_VideoSecondaryInfo={
 	owner: R_VideoOwner;
 	description?: R_TextWithRuns;
 	subscribeButton: R_SubscribeButton;

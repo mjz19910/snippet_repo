@@ -1,4 +1,4 @@
-type D__VoiceSearchDialog={
+type D_VoiceSearchDialog={
 	placeholderHeader: R_TextWithRuns;
 	promptHeader: R_TextWithRuns;
 	exampleQuery1: R_TextWithRuns;

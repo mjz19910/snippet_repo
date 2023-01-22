@@ -1,1 +1,1 @@
-type R_LiveChatViewerEngagementMessage={liveChatViewerEngagementMessageRenderer: D__LiveChatViewerEngagementMessage;};
+type R_LiveChatViewerEngagementMessage={liveChatViewerEngagementMessageRenderer: D_LiveChatViewerEngagementMessage;};

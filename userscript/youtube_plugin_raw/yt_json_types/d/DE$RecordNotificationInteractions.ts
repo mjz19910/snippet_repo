@@ -1,4 +1,4 @@
 type DE_RecordNotificationInteractions={
 	serializedInteractionsRequest: string;
-	actions?: A_HideEnclosingAction[];
+	actions?: A_A_HideEnclosing[];
 };

@@ -1,1 +1,1 @@
-type R_AdPlacement={adPlacementRenderer: D__AdPlacement;};
+type R_AdPlacement={adPlacementRenderer: D_AdPlacement;};

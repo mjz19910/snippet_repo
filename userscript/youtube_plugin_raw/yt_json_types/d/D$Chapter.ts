@@ -1,6 +1,6 @@
-type D__Chapter={
+type D_Chapter={
 	title: R_SimpleText;
 	timeRangeStartMillis: 0;
-	onActiveCommand: SetActivePanelItemAction;
-	thumbnail: D__Thumbnail;
+	onActiveCommand: A_SetActivePanelItem;
+	thumbnail: D_Thumbnail;
 };

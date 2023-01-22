@@ -1,4 +1,4 @@
-type D__AdaptiveFormatItem={
+type D_AdaptiveFormatItem={
 	itag: number;
 	url?: string;
 	mimeType: MimeTypeFormat;

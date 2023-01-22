@@ -1,4 +1,4 @@
-type D__ProfilePageHeaderInformation={
+type D_ProfilePageHeaderInformation={
 	title: R_ProfilePageHeaderTitleViewModel;
 	metadata: R_ProfilePageHeaderMetadataViewModel;
 	thumbnail: R_ProfilePageHeaderThumbnailViewModel;

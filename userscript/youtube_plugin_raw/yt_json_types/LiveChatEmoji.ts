@@ -2,7 +2,7 @@ type LiveChatEmoji={
 	emojiId: string;
 	shortcuts: `:${string}:`[];
 	searchTerms: string[];
-	image: D__Thumbnail;
+	image: D_Thumbnail;
 	isCustomEmoji: boolean;
 	isLocked: boolean;
 };

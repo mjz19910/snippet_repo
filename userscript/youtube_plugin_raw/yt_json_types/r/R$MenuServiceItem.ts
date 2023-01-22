@@ -1,1 +1,1 @@
-type R_MenuServiceItem={menuServiceItemRenderer: D__MenuServiceItem<"NOT_INTERESTED",{}>;};
+type R_MenuServiceItem={menuServiceItemRenderer: D_MenuServiceItem<"NOT_INTERESTED",{}>;};

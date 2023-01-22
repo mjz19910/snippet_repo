@@ -1,1 +1,1 @@
-type R_PlaylistVideoThumbnail={playlistVideoThumbnailRenderer: D__PlaylistVideoThumbnail;};
+type R_PlaylistVideoThumbnail={playlistVideoThumbnailRenderer: D_PlaylistVideoThumbnail;};

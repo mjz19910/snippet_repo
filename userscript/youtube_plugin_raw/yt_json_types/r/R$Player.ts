@@ -1,13 +1,13 @@
 type R_Player={
 	responseContext: RC$ResponseContext;
-	playabilityStatus: D__PlayabilityStatus;
-	streamingData?: D__StreamingData;
-	heartbeatParams?: D__HeartbeatParams;
+	playabilityStatus: D_PlayabilityStatus;
+	streamingData?: D_StreamingData;
+	heartbeatParams?: D_HeartbeatParams;
 	playerAds?: R_DesktopWatchAds[];
-	playbackTracking?: D__PlaybackTracking;
+	playbackTracking?: D_PlaybackTracking;
 	captions?: R_PlayerCaptionsTracklist;
-	videoDetails?: D__VideoDetails;
-	playerConfig?: D__PlayerConfig;
+	videoDetails?: D_VideoDetails;
+	playerConfig?: D_PlayerConfig;
 	storyboards?: R_PlayerStoryboardSpec|R_PlayerLiveStoryboardSpec;
 	microformat?: R_PlayerMicroformat;
 	cards?: R_CardCollection;

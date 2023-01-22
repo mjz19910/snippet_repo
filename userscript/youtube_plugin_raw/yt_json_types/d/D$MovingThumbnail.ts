@@ -1,5 +1,5 @@
-type D__MovingThumbnail={
-	movingThumbnailDetails?: D__Thumbnail;
+type D_MovingThumbnail={
+	movingThumbnailDetails?: D_Thumbnail;
 	enableHoveredLogging: true;
 	enableOverlay: true;
 };

@@ -1,4 +1,4 @@
-type T$OpenPopupAction$Toast<T>={
+type T$A_OpenPopup$Toast<T>={
 	popup: T;
 	popupType: "TOAST";
 };

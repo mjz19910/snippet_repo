@@ -1,4 +1,4 @@
-type D__RatingSurvey={
+type D_RatingSurvey={
 	ratings: R_RatingSurveyOption[];
 	trackingParams: string;
 	notSureButton: R_Button;

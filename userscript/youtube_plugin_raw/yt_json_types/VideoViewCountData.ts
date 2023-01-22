@@ -1,4 +1,4 @@
-type D__VideoViewCount={
+type D_VideoViewCount={
 	viewCount: R_SimpleText;
 	isLive?: boolean;
 	extraShortViewCount?: R_SimpleText;

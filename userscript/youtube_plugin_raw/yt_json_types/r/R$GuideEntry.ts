@@ -1,1 +1,1 @@
-type R_GuideEntry={guideEntryRenderer: D__GuideEntry;};
+type R_GuideEntry={guideEntryRenderer: D_GuideEntry;};

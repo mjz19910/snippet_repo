@@ -1,4 +1,4 @@
-type D__CopyLink={
+type D_CopyLink={
 	copyButton: R_Button;
 	shortUrl: string;
 	trackingParams: string;

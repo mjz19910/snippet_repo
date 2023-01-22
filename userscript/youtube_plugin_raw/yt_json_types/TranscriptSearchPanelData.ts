@@ -1,4 +1,4 @@
-type D__TranscriptSearchPanel={
+type D_TranscriptSearchPanel={
 	body: R_TranscriptSegmentList;
 	footer: R_TranscriptFooter;
 	trackingParams: string;

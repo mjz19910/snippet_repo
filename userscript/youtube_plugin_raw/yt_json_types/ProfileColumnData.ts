@@ -1,5 +1,5 @@
 type ProfileColumnItem=R_ProfileColumnUserInfo|R_ProfileColumnStats;
 
-type D__ProfileColumn={
+type D_ProfileColumn={
 	items: ProfileColumnItem[];
 };

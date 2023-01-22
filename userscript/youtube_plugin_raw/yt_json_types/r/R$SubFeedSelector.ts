@@ -1,1 +1,1 @@
-type R_SubFeedSelector={subFeedSelectorRenderer: D__SubFeedSelector;};
+type R_SubFeedSelector={subFeedSelectorRenderer: D_SubFeedSelector;};

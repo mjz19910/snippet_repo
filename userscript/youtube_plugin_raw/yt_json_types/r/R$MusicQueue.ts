@@ -1,1 +1,1 @@
-type R_MusicQueue={musicQueueRenderer: D__MusicQueue;};
+type R_MusicQueue={musicQueueRenderer: D_MusicQueue;};

@@ -1,4 +1,4 @@
-type D__AddToPlaylistCreate={
+type D_AddToPlaylistCreate={
 	openCreateLink: R_CompactLink;
 	nameInput: R_TextInputFormField;
 	privacyInput: R_Dropdown;

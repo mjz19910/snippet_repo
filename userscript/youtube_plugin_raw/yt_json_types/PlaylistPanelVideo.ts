@@ -1,7 +1,7 @@
-type D__PlaylistPanelVideo={
+type D_PlaylistPanelVideo={
 	title: R_SimpleText;
 	longBylineText: R_TextWithRuns;
-	thumbnail: D__Thumbnail;
+	thumbnail: D_Thumbnail;
 	lengthText: R_SimpleText;
 	indexText: R_SimpleText;
 	selected: true;

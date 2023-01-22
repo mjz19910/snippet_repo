@@ -1,1 +1,1 @@
-type R_ChannelSwitcherHeader={channelSwitcherHeaderRenderer: D__ChannelSwitcherHeader;};
+type R_ChannelSwitcherHeader={channelSwitcherHeaderRenderer: D_ChannelSwitcherHeader;};

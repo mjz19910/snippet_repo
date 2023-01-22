@@ -1,1 +1,1 @@
-type R_MusicResponsiveListItem={musicResponsiveListItemRenderer: D__MusicResponsiveListItem;};
+type R_MusicResponsiveListItem={musicResponsiveListItemRenderer: D_MusicResponsiveListItem;};

@@ -1,4 +1,4 @@
-type D__SettingsCheckbox={
+type D_SettingsCheckbox={
 	title: R_TextWithRuns;
 	helpText?: R_TextWithRuns;
 	enabled: boolean;

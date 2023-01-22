@@ -1,1 +1,1 @@
-type R_ReelShelf={reelShelfRenderer: D__ReelShelf;};
+type R_ReelShelf={reelShelfRenderer: D_ReelShelf;};

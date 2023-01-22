@@ -1,1 +1,1 @@
-type R_RichShelf={richShelfRenderer: D__RichShelf;};
+type R_RichShelf={richShelfRenderer: D_RichShelf;};

@@ -1,4 +1,4 @@
-type D__LiveChatViewerEngagementMessage={
+type D_LiveChatViewerEngagementMessage={
 	id: string;
 	timestampUsec: `${number}`;
 	icon: T_Icon<"YOUTUBE_ROUND">;

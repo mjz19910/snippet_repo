@@ -1,1 +1,0 @@
-type UpdateToggleButtonTextAction={updateToggleButtonTextAction: D__UpdateToggleButtonTextAction;};

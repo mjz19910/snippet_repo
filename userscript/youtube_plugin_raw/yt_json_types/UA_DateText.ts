@@ -1,0 +1,1 @@
+type UA_DateText={updateDateTextAction: DUA_DateText;};

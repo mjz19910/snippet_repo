@@ -1,1 +1,0 @@
-type UpdateViewershipAction={updateViewershipAction: D__UpdateViewershipAction;};

@@ -1,4 +1,4 @@
-type D__VideoPrimaryInfo={
+type D_VideoPrimaryInfo={
 	title: R_TextWithRuns;
 	viewCount: R_VideoViewCount;
 	videoActions: R_Menu;

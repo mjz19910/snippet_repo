@@ -1,1 +1,1 @@
-type R_ThumbnailOverlayLoadingPreview={thumbnailOverlayLoadingPreviewRenderer: D__ThumbnailOverlayLoadingPreview;};
+type R_ThumbnailOverlayLoadingPreview={thumbnailOverlayLoadingPreviewRenderer: D_ThumbnailOverlayLoadingPreview;};

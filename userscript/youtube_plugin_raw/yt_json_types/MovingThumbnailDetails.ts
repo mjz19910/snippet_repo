@@ -1,4 +1,4 @@
 type MovingThumbnailDetails={
-	thumbnails: D__ThumbnailItem[];
+	thumbnails: D_ThumbnailItem[];
 	logAsMovingThumbnail: boolean;
 };

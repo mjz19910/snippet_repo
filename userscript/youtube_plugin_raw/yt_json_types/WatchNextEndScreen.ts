@@ -1,4 +1,4 @@
-type D__WatchNextEndScreen={
+type D_WatchNextEndScreen={
 	results: WatchNextEndScreenItem[];
 	title: R_SimpleText;
 	trackingParams: string;

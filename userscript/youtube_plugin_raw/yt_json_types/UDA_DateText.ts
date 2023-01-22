@@ -1,0 +1,1 @@
+type DUA_DateText={dateText: R_SimpleText;};

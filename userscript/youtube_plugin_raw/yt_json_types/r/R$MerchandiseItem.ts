@@ -1,1 +1,1 @@
-type R_MerchandiseItem={merchandiseItemRenderer: D__MerchandiseItem;};
+type R_MerchandiseItem={merchandiseItemRenderer: D_MerchandiseItem;};

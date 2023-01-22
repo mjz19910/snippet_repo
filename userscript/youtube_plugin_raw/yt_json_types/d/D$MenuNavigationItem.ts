@@ -1,6 +1,6 @@
-type D__MenuNavigationItem={
+type D_MenuNavigationItem={
 	text: R_SimpleText;
 	icon: T_Icon<"INFO">;
-	navigationEndpoint: T$A_OpenPopup<{}>;
+	navigationEndpoint: TA_OpenPopup<{}>;
 	trackingParams: string;
 };

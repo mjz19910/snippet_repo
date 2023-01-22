@@ -1,4 +1,4 @@
-type D__PdgCommentChip={
+type D_PdgCommentChip={
 	chipText: R_SimpleText;
 	chipColorPalette: {
 		backgroundColor: 4280191205;

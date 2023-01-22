@@ -1,4 +1,4 @@
-type D__GradientColorConfig=[
+type D_GradientColorConfig=[
 	{
 		darkThemeColor: Color<0x99000000,"0x99000000">;
 		startLocation: 0;

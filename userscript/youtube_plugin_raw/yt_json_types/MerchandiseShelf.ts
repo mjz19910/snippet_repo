@@ -1,4 +1,4 @@
-type D__MerchandiseShelf={
+type D_MerchandiseShelf={
 	title: string;
 	items: R_MerchandiseItem[];
 	trackingParams: string;

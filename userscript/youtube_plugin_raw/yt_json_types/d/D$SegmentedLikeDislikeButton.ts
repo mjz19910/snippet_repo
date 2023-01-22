@@ -1,4 +1,4 @@
-type D__SegmentedLikeDislikeButton={
+type D_SegmentedLikeDislikeButton={
 	likeButton: R_ToggleButton;
 	dislikeButton: {};
 };

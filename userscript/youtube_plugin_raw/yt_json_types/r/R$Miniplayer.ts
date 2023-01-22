@@ -1,1 +1,1 @@
-type R_Miniplayer={miniplayerRenderer: D__Miniplayer;};
+type R_Miniplayer={miniplayerRenderer: D_Miniplayer;};

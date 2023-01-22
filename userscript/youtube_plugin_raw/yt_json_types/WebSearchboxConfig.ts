@@ -1,4 +1,4 @@
-type D__WebSearchboxConfig={
+type D_WebSearchboxConfig={
 	requestLanguage: "en";
 	requestDomain: "ca";
 	hasOnscreenKeyboard: false;

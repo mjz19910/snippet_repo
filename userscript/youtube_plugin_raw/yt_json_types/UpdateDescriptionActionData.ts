@@ -1,1 +1,0 @@
-type D__UpdateDescriptionAction={description: R_TextWithRuns;};

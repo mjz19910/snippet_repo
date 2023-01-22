@@ -1,4 +1,4 @@
-type D__EntityBatchUpdateData={
+type D_EntityBatchUpdateData={
 	mutations: EntityMutationItem[];
 	timestamp: TimestampWithNanos;
 };

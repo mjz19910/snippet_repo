@@ -1,4 +1,4 @@
 type A_FrameworkUpdates={
-	entityBatchUpdate: D__EntityBatchUpdateData;
+	entityBatchUpdate: D_EntityBatchUpdateData;
 	elementUpdate?: R_ElementUpdate;
 };

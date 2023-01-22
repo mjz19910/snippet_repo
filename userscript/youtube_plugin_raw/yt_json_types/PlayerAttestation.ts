@@ -1,4 +1,4 @@
-type D__PlayerAttestation={
+type D_PlayerAttestation={
 	challenge: string;
 	botguardData: D_Botguard;
 };

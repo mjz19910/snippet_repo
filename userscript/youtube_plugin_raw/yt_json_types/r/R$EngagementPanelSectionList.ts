@@ -1,1 +1,1 @@
-type R_EngagementPanelSectionList={engagementPanelSectionListRenderer: D__EngagementPanelSectionList;};
+type R_EngagementPanelSectionList={engagementPanelSectionListRenderer: D_EngagementPanelSectionList;};

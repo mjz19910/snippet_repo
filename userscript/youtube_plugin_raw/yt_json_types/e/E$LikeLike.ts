@@ -1,6 +1,6 @@
 type E_LikeLike={
 	status: "LIKE";
-	target: D__LikeApi;
+	target: D_LikeApi;
 	actions?: MusicLibraryStatusUpdateCommand[];
 	likeParams?: string;
 };

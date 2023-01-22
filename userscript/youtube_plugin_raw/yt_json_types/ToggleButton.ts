@@ -1,4 +1,4 @@
-type D__ToggleButton={
+type D_ToggleButton={
 	style: StyleTypeObj;
 	isToggled: false;
 	isDisabled: false;
@@ -7,6 +7,6 @@ type D__ToggleButton={
 	toggledServiceEndpoint: E_CommandExecutorCommand;
 	trackingParams: string;
 	toggledStyle: StyleTypeObj;
-	accessibilityData: D__Accessibility;
-	toggledAccessibilityData: D__Accessibility;
+	accessibilityData: D_Accessibility;
+	toggledAccessibilityData: D_Accessibility;
 };

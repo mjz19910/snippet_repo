@@ -1,10 +1,10 @@
-type D__Menu={
+type D_Menu={
 	items?: G_Menu$items$iterate[];
 	trackingParams: string;
 	topLevelButtons?: R_SegmentedLikeDislikeButton[];
-	accessibility?: D__Accessibility;
-	targetId?: D__Menu$targetId;
+	accessibility?: D_Accessibility;
+	targetId?: D_Menu$targetId;
 	loggingDirectives?: A_LoggingDirectives;
 	flexibleItems?: R_MenuFlexibleItem[];
 };
-type D__Menu$targetId="browse-video-menu-button";
+type D_Menu$targetId="browse-video-menu-button";

@@ -1,6 +1,6 @@
 type E_CompactLink$navigationEndpoint=E_UploadEndpoint|E_SignalNavigation;
 
-type D__CompactLink={
+type D_CompactLink={
 	icon: T_Icon<"PERSON_ADD"|"CREATION_UPLOAD">;
 	title: G_Text;
 	navigationEndpoint?: E_CompactLink$navigationEndpoint;

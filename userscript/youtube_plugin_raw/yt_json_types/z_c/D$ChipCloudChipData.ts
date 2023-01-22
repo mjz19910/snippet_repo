@@ -5,7 +5,7 @@ type ChipCloudChip_tid={
 	trackingParams: string;
 	targetId: "feed_filter_chip_bar_second_chip";
 };
-type D__ChipCloudChip={
+type D_ChipCloudChip={
 	style: ChipCloudStyle<"STYLE_DEFAULT"|"STYLE_HOME_FILTER"|"STYLE_REFRESH_TO_NOVEL_CHIP">;
 	text: G_Text;
 	navigationEndpoint?: E_Continuation|RelatedChipCommand;

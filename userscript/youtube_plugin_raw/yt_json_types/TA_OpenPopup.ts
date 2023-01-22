@@ -1,4 +1,4 @@
-type T$A_OpenPopup<T>={
+type TA_OpenPopup<T>={
 	clickTrackingParams: string;
 	openPopupAction: T;
 };

@@ -1,7 +1,7 @@
-type D__ProductListItem={
+type D_ProductListItem={
 	title: R_SimpleText;
 	accessibilityTitle: string;
-	thumbnail: D__Thumbnail;
+	thumbnail: D_Thumbnail;
 	price: `CA_${string}`;
 	onClickCommand: E_UrlEndpoint;
 	trackingParams: string;

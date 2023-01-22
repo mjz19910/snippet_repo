@@ -1,1 +1,1 @@
-type D__RadioPlaylistStr<T extends string>=`RD__{T}`;
+type D_RadioPlaylistStr<T extends string>=`RD__{T}`;

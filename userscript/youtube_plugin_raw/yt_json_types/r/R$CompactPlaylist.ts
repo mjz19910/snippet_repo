@@ -1,2 +1,2 @@
 
-type R_CompactPlaylist={compactPlaylistRenderer: D__CompactPlaylist;};
+type R_CompactPlaylist={compactPlaylistRenderer: D_CompactPlaylist;};

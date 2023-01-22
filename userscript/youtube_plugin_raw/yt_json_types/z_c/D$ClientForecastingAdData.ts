@@ -1,1 +1,1 @@
-type D__ClientForecastingAd={impressionUrls: T$BaseUrl<`https://www.youtube.com/api/stats/ads?${D$ApiStatsAdsArgs}`>[];};
+type D_ClientForecastingAd={impressionUrls: T$BaseUrl<`https://www.youtube.com/api/stats/ads?${D$ApiStatsAdsArgs}`>[];};

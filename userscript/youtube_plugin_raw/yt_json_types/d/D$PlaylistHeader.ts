@@ -1,4 +1,4 @@
-type D__PlaylistHeader={
+type D_PlaylistHeader={
 	playlistId: string;
 	title: R_TextWithRuns;
 	numVideosText: R_TextWithRuns;
@@ -19,7 +19,7 @@ type D__PlaylistHeader={
 	moreActionsMenu: R_Menu;
 	playButton: R_Button;
 	shufflePlayButton: R_Button;
-	onDescriptionTap: T$A_OpenPopup<{}>;
+	onDescriptionTap: TA_OpenPopup<{}>;
 	cinematicContainer: R_CinematicContainer;
 	byline: R_PlaylistByline[];
 	descriptionTapText: R_TextWithRuns;

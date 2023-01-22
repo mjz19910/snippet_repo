@@ -1,1 +1,1 @@
-type R_Chapter={chapterRenderer: D__Chapter;};
+type R_Chapter={chapterRenderer: D_Chapter;};

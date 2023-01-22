@@ -1,1 +1,1 @@
-type R_ResourceStatusInResponseCheck={resourceStatusInResponseCheck: D__ResourceStatusInResponseCheckData;};
+type R_ResourceStatusInResponseCheck={resourceStatusInResponseCheck: D_ResourceStatusInResponseCheckData;};

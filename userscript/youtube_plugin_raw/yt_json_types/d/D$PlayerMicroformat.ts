@@ -1,6 +1,6 @@
-type D__PlayerMicroformat={
-	thumbnail: D__Thumbnail;
-	embed: D__MicroformatEmbed;
+type D_PlayerMicroformat={
+	thumbnail: D_Thumbnail;
+	embed: D_MicroformatEmbed;
 	title: R_TextWithRuns;
 	description?: R_TextWithRuns;
 	lengthSeconds: `${number}`;
@@ -14,6 +14,6 @@ type D__PlayerMicroformat={
 	category: YtCategoryStr;
 	publishDate: string;
 	ownerChannelName: string;
-	liveBroadcastDetails?: D__LiveBroadcastDetails;
+	liveBroadcastDetails?: D_LiveBroadcastDetails;
 	uploadDate: string;
 };

@@ -1,1 +1,1 @@
-type R_AdActionInterstitial={adActionInterstitialRenderer: D__AdActionInterstitial;};
+type R_AdActionInterstitial={adActionInterstitialRenderer: D_AdActionInterstitial;};

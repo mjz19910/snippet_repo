@@ -1,1 +1,1 @@
-type D__Miniplayer={};
+type D_Miniplayer={};

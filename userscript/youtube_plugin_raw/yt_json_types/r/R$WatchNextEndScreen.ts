@@ -1,1 +1,1 @@
-type R_WatchNextEndScreen={watchNextEndScreenRenderer: D__WatchNextEndScreen;};
+type R_WatchNextEndScreen={watchNextEndScreenRenderer: D_WatchNextEndScreen;};

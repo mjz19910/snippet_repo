@@ -1,9 +1,9 @@
-type D__NotificationTopbarButton={
+type D_NotificationTopbarButton={
 	icon: T_Icon<"NOTIFICATIONS">;
 	menuRequest: E_T$SignalService<{}>;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	trackingParams: string;
-	accessibility: D__Accessibility;
+	accessibility: D_Accessibility;
 	tooltip: string;
 	updateUnseenCountEndpoint: E_T$SignalService<{}>;
 	notificationCount: number;

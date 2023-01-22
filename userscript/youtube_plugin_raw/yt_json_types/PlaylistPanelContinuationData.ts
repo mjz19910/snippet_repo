@@ -1,1 +1,1 @@
-type D__PlaylistPanelContinuation={};
+type D_PlaylistPanelContinuation={};

@@ -1,4 +1,4 @@
-type D__VideoDescriptionHeader={
+type D_VideoDescriptionHeader={
 	title: R_TextWithRuns;
 	channel: R_SimpleText;
 	views: R_SimpleText;
@@ -6,5 +6,5 @@ type D__VideoDescriptionHeader={
 	factoid: R_Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
 	channelNavigationEndpoint: E_Browse;
-	channelThumbnail: D__Thumbnail;
+	channelThumbnail: D_Thumbnail;
 };

@@ -1,3 +1,3 @@
-type D__WatchNextTabbedResults={
+type D_WatchNextTabbedResults={
 	tabs: R_Tab[];
 };

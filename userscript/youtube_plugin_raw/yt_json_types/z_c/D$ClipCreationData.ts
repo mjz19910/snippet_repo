@@ -1,13 +1,13 @@
-type D__ClipCreation={
+type D_ClipCreation={
 	trackingParams: string;
-	userAvatar: D__Thumbnail;
+	userAvatar: D_Thumbnail;
 	titleInput: R_ClipCreationTextInput;
 	scrubber: R_ClipCreationScrubber;
 	saveButton: R_Button;
 	displayName: R_SimpleText;
-	publicityLabel: Capitalize<Lowercase<D__PlaylistAddToOption['privacy']>>;
+	publicityLabel: Capitalize<Lowercase<D_PlaylistAddToOption['privacy']>>;
 	cancelButton: R_Button;
 	adStateOverlay: R_ClipAdState;
 	externalVideoId: string;
-	publicityLabelIcon: `PRIVACY_${D__PlaylistAddToOption['privacy']}`;
+	publicityLabelIcon: `PRIVACY_${D_PlaylistAddToOption['privacy']}`;
 };

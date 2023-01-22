@@ -1,6 +1,6 @@
-type D__PlayerConfig={
-	audioConfig: D__AudioConfig;
-	streamSelectionConfig: D__StreamSelectionConfig;
+type D_PlayerConfig={
+	audioConfig: D_AudioConfig;
+	streamSelectionConfig: D_StreamSelectionConfig;
 	mediaCommonConfig: {};
 	webPlayerConfig: {};
 };

@@ -1,1 +1,1 @@
-type R_TemplateUpdate={templateUpdate: D__TemplateUpdate;};
+type R_TemplateUpdate={templateUpdate: D_TemplateUpdate;};

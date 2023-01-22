@@ -1,1 +1,1 @@
-type R_RichListHeader={richListHeaderRenderer: D__RichListHeader;};
+type R_RichListHeader={richListHeaderRenderer: D_RichListHeader;};

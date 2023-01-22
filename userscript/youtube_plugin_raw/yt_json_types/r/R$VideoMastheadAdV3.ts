@@ -1,1 +1,1 @@
-type R_VideoMastheadAdV3={videoMastheadAdV3Renderer: D__VideoMastheadAdV3;};
+type R_VideoMastheadAdV3={videoMastheadAdV3Renderer: D_VideoMastheadAdV3;};

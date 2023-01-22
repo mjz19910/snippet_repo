@@ -1,4 +1,4 @@
-type D__UndoFeedback={
+type D_UndoFeedback={
 	undoToken: string;
-	actions: UndoFeedbackAction[];
+	actions: A_UndoFeedback[];
 };

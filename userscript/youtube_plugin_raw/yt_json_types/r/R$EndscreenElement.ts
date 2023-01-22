@@ -1,1 +1,1 @@
-type R_EndscreenElement={endscreenElementRenderer: D__EndscreenElement;};
+type R_EndscreenElement={endscreenElementRenderer: D_EndscreenElement;};

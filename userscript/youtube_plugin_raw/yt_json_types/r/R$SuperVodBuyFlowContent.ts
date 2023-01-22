@@ -1,1 +1,1 @@
-type R_SuperVodBuyFlowContent={superVodBuyFlowContentRenderer: D__SuperVodBuyFlowContent;};
+type R_SuperVodBuyFlowContent={superVodBuyFlowContentRenderer: D_SuperVodBuyFlowContent;};

@@ -1,1 +1,1 @@
-type D__RefreshPlaylist={};
+type D_RefreshPlaylist={};

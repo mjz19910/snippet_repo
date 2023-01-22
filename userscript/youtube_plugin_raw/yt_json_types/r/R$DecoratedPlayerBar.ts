@@ -1,1 +1,1 @@
-type R_DecoratedPlayerBar={decoratedPlayerBarRenderer: D__DecoratedPlayerBar;};
+type R_DecoratedPlayerBar={decoratedPlayerBarRenderer: D_DecoratedPlayerBar;};

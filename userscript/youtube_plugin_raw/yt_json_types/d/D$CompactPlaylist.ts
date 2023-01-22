@@ -1,13 +1,13 @@
-type D__CompactPlaylist={
+type D_CompactPlaylist={
 	playlistId: string;
-	thumbnail: D__Thumbnail;
+	thumbnail: D_Thumbnail;
 	title: R_SimpleText;
 	shortBylineText: R_TextWithRuns;
 	videoCountText: R_TextWithRuns;
 	navigationEndpoint: E_WatchEndpoint;
 	videoCountShortText: R_SimpleText;
 	trackingParams: string;
-	sidebarThumbnails: D__Thumbnail[];
+	sidebarThumbnails: D_Thumbnail[];
 	thumbnailText: R_TextWithRuns;
 	menu: R_Menu;
 	shareUrl: string;

@@ -1,1 +1,1 @@
-type SubscriptionStateEntity={subscriptionStateEntity: D__SubscriptionState;};
+type SubscriptionStateEntity={subscriptionStateEntity: D_SubscriptionState;};

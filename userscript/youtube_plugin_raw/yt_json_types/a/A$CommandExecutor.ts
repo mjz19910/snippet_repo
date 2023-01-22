@@ -1,6 +1,6 @@
-type CommandExecutorAction=[
+type A_CommandExecutor=[
 	EA_ChangeEngagementPanelVisibility,
-	HideEngagementPanelScrimAction,
-	T$A_OpenPopup<{}>,
+	A_HideEngagementPanelScrim,
+	TA_OpenPopup<{}>,
 	C$ScrollToEngagementPanel,
 ][number];

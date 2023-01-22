@@ -1,4 +1,4 @@
-type D__SuperVodBuyFlowContent={
+type D_SuperVodBuyFlowContent={
 	description: R_TextWithRuns;
 	buyButton: R_Button;
 	trackingParams: string;

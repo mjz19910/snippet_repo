@@ -1,1 +1,1 @@
-type PlaylistPanelContinuation={playlistPanelContinuation: D__PlaylistPanelContinuation;};
+type PlaylistPanelContinuation={playlistPanelContinuation: D_PlaylistPanelContinuation;};

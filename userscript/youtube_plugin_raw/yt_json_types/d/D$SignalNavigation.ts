@@ -1,1 +1,1 @@
-type D__SignalNavigation=Signal$ChannelSwitcher|Signal$LiveControlRoom;
+type D_SignalNavigation=Signal$ChannelSwitcher|Signal$LiveControlRoom;

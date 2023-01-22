@@ -1,1 +1,1 @@
-type D__ResolveUrlCommandMetadata={};
+type D_ResolveUrlCommandMetadata={};

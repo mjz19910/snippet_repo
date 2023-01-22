@@ -1,4 +1,4 @@
-type D__ChangeKeyedMarkersVisibilityCommand={
+type D_ChangeKeyedMarkersVisibilityCommand={
 	isVisible: true;
 	key: "HEATSEEKER";
 };

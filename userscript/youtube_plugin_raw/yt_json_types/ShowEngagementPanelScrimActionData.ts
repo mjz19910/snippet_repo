@@ -1,4 +1,4 @@
-type D__ShowEngagementPanelScrimAction={
+type AD_ShowEngagementPanelScrim={
 	engagementPanelTargetId: "engagement-panel-clip-create";
-	onClickCommands: T$A_OpenPopup<{}>[];
+	onClickCommands: TA_OpenPopup<{}>[];
 };

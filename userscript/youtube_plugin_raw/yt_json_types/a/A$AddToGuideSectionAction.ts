@@ -1,4 +1,4 @@
 type A_AddToGuideSection={
 	clickTrackingParams: string;
-	addToGuideSectionAction: D__AddToGuideSectionAction;
+	addToGuideSectionAction: AD_AddToGuideSection;
 };

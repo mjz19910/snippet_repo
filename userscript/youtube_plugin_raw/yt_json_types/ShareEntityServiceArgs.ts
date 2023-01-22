@@ -1,4 +1,4 @@
-type D__ShareEntityService={
+type D_ShareEntityService={
 	serializedShareEntity: string;
-	commands: T$A_OpenPopup<{}>[];
+	commands: TA_OpenPopup<{}>[];
 };

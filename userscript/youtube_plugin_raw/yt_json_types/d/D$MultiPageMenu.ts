@@ -1,8 +1,8 @@
-type D__MultiPageMenu={
+type D_MultiPageMenu={
 	header: R_SimpleMenuHeader;
-	sections?: D__MultiPageMenu$sections$items[];
+	sections?: D_MultiPageMenu$sections$items[];
 	footer: T$R_MultiPageMenuSection<R_CompactLink>;
-	style: D__MultiPageMenu$style['style'];
+	style: D_MultiPageMenu$style['style'];
 	trackingParams?: string;
 	showLoadingSpinner?: true;
 };

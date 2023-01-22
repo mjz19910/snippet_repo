@@ -1,4 +1,4 @@
-type UndoFeedbackAction={
+type A_UndoFeedback={
 	clickTrackingParams: string;
 	undoFeedbackAction: {};
 };

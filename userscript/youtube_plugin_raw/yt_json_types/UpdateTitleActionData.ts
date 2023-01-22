@@ -1,1 +1,1 @@
-type D__UpdateTitleAction={title: R_TextWithRuns;};
+type D_UA_Title={title: R_TextWithRuns;};

@@ -1,1 +1,1 @@
-type D__UpdateViewershipAction={viewCount: R_VideoViewCount;};
+type D_UA_Viewership={viewCount: R_VideoViewCount;};

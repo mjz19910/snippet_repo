@@ -1,3 +1,3 @@
-type D__TabbedSearchResults={
+type D_TabbedSearchResults={
 	tabs: R_SearchResultsTab[];
 };

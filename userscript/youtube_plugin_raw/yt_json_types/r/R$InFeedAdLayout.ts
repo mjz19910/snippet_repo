@@ -1,1 +1,1 @@
-type R_InFeedAdLayout={inFeedAdLayoutRenderer: D__InFeedAdLayout;};
+type R_InFeedAdLayout={inFeedAdLayoutRenderer: D_InFeedAdLayout;};

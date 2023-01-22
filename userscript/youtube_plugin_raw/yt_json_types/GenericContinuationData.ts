@@ -1,1 +1,1 @@
-type D__GenericContinuation={continuation: string;};
+type D_GenericContinuation={continuation: string;};

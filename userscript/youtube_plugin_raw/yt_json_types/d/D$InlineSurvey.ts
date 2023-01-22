@@ -1,4 +1,4 @@
-type D__InlineSurvey={
+type D_InlineSurvey={
 	dismissalEndpoint: {};
 	title: R_TextWithRuns;
 	subtitle: R_TextWithRuns;

@@ -1,4 +1,4 @@
-type D__AccountLinkButton={
+type D_AccountLinkButton={
 	providerKey: K$AccountLinkProviderKey;
 	unlinkedButton: R_Button;
 };

@@ -1,1 +1,1 @@
-type D__Button$TargetId="sponsorships-button"|"clip-info-button";
+type D_Button$TargetId="sponsorships-button"|"clip-info-button";

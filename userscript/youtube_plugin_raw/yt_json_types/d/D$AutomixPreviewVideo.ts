@@ -1,1 +1,1 @@
-type D__AutomixPreviewVideo={};
+type D_AutomixPreviewVideo={};

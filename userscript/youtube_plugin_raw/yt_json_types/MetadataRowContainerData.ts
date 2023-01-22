@@ -1,4 +1,4 @@
-type D__MetadataRowContainer={
+type D_MetadataRowContainer={
 	rows?: {}[];
 	collapsedItemCount: number;
 	trackingParams: string;

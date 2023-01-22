@@ -1,4 +1,4 @@
-type D__ToggleMenuServiceItem={
+type D_ToggleMenuServiceItem={
 	defaultText: R_TextWithRuns;
 	defaultIcon: T_Icon<"LIBRARY_ADD">;
 	defaultServiceEndpoint: E_LikeEndpoint;

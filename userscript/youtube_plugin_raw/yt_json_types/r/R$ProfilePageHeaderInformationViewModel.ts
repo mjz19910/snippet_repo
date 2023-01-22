@@ -1,1 +1,1 @@
-type R_ProfilePageHeaderInformationViewModel={profilePageHeaderInformationViewModel: D__ProfilePageHeaderInformation;};
+type R_ProfilePageHeaderInformationViewModel={profilePageHeaderInformationViewModel: D_ProfilePageHeaderInformation;};

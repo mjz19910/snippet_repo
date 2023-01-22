@@ -1,1 +1,1 @@
-type R_GuideSection={guideSectionRenderer: D__GuideSection;};
+type R_GuideSection={guideSectionRenderer: D_GuideSection;};

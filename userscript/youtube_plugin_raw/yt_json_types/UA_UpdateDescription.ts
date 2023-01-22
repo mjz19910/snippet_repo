@@ -1,0 +1,1 @@
+type UA_Description={updateDescriptionAction: UDA_Description;};

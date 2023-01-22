@@ -1,1 +1,1 @@
-type R_PlayerOverlayVideoDetails={playerOverlayVideoDetailsRenderer: D__PlayerOverlayVideoDetails;};
+type R_PlayerOverlayVideoDetails={playerOverlayVideoDetailsRenderer: D_PlayerOverlayVideoDetails;};

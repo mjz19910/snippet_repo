@@ -1,1 +1,1 @@
-type R_Menu={menuRenderer: D__Menu;};
+type R_Menu={menuRenderer: D_Menu;};

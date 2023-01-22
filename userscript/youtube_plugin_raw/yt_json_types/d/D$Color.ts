@@ -1,1 +1,1 @@
-type D__Color={red: number; green: number; blue: number;};
+type D_Color={red: number; green: number; blue: number;};

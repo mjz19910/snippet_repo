@@ -1,1 +1,1 @@
-type R_PlaylistByline={playlistBylineRenderer: D__PlaylistByline;};
+type R_PlaylistByline={playlistBylineRenderer: D_PlaylistByline;};

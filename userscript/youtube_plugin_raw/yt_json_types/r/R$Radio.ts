@@ -1,1 +1,1 @@
-type R_Radio={radioRenderer: D__Radio;};
+type R_Radio={radioRenderer: D_Radio;};

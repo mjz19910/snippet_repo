@@ -1,3 +1,3 @@
-type D__ShowEngagementPanel={
+type D_ShowEngagementPanel={
 	panelIdentifier: "engagement-panel-searchable-transcript";
 };

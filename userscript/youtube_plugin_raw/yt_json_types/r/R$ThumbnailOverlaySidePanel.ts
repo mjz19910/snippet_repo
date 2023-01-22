@@ -1,1 +1,1 @@
-type R_ThumbnailOverlaySidePanel={thumbnailOverlaySidePanelRenderer: D__ThumbnailOverlaySidePanel;};
+type R_ThumbnailOverlaySidePanel={thumbnailOverlaySidePanelRenderer: D_ThumbnailOverlaySidePanel;};

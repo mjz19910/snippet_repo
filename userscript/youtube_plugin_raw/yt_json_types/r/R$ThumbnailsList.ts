@@ -1,1 +1,1 @@
-type R_ThumbnailsList={thumbnail: D__Thumbnail;trackingParams?: string;};
+type R_ThumbnailsList={thumbnail: D_Thumbnail;trackingParams?: string;};

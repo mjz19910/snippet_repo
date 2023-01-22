@@ -1,1 +1,1 @@
-type D__CommandExecutor=T$Commands<CommandExecutorAction>;
+type D_CommandExecutor=T$Commands<A_CommandExecutor>;

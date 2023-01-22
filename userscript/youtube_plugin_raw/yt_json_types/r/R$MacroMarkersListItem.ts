@@ -1,1 +1,1 @@
-type R_MacroMarkersListItem={macroMarkersListItemRenderer: D__MacroMarkersListItem;};
+type R_MacroMarkersListItem={macroMarkersListItemRenderer: D_MacroMarkersListItem;};

@@ -735,7 +735,7 @@ class R_HandleRichGrid$ {
 	constructor(x) {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
-	/** @public @arg {string} path @arg {D__RichGrid} renderer */
+	/** @public @arg {string} path @arg {D_RichGrid} renderer */
 	richGridRenderer$(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
@@ -3186,7 +3186,7 @@ class YtObjectVisitor {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @public @arg {ApiIterateState} state @arg {D__ItemSection} renderer */
+	/** @public @arg {ApiIterateState} state @arg {D_ItemSection} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
@@ -3201,7 +3201,7 @@ class YtObjectVisitor {
 			return true;
 		});
 	}
-	/** @public @arg {ApiIterateState} state @arg {D__RichGrid} renderer */
+	/** @public @arg {ApiIterateState} state @arg {D_RichGrid} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer$(state.path,renderer);
 		state.path="richGridRenderer";
@@ -4054,12 +4054,12 @@ class CodegenService extends BaseService {
 			let new_code=this.generate_code_for_entry(x2,k);
 			if(new_code) {ret_arr.push(new_code); continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
-			if("simpleText" in x2) {ret_arr.push(`this.D__SimpleText(${k});`); continue;};
+			if("simpleText" in x2) {ret_arr.push(`this.D_SimpleText(${k});`); continue;};
 			/** @type {R_TextWithRuns} */
-			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D__TextWithRuns(${k});`); continue;};
+			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D_TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			/** @type {D__Thumbnail} */
-			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D__Thumbnail(${k});`); continue;}
+			/** @type {D_Thumbnail} */
+			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D_Thumbnail(${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
 			/** @private @type {{}} */
 			let o3=x2;
@@ -4252,7 +4252,7 @@ class CodegenService extends BaseService {
 		if(k1==="frameworkUpdates") return "TYPE::A_FrameworkUpdates";
 		/** @type {A_LoggingDirectives} */
 		if(k1==="loggingDirectives") return "TYPE::A_LoggingDirectives";
-		if(k1==="subscriptionButton") return "TYPE::D__SubscriptionButton";
+		if(k1==="subscriptionButton") return "TYPE::D_SubscriptionButton";
 		let res_type=this.get_json_replacer_type(state,gen_name,x);
 		if(res_type!==null) return res_type;
 		if(key_keep_arr.includes(k1)) return x;
@@ -4318,11 +4318,11 @@ class CodegenService extends BaseService {
 		let g=() => this.json_auto_replace(x);
 		if(state.k1==="webCommandMetadata") return x;
 		/** @type {R_TextWithRuns} */
-		if(x.runs&&x.runs instanceof Array) return "TYPE::D__TextWithRuns";
-		/** @type {D__Thumbnail} */
-		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D__Thumbnail";
+		if(x.runs&&x.runs instanceof Array) return "TYPE::D_TextWithRuns";
+		/** @type {D_Thumbnail} */
+		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D_Thumbnail";
 		/** @type {R_SimpleText} */
-		if(x.simpleText) return "TYPE::D__SimpleText";
+		if(x.simpleText) return "TYPE::D_SimpleText";
 		/** @type {T_Icon<"">} */
 		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T$Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
@@ -4662,7 +4662,7 @@ class CodegenService extends BaseService {
 			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
 			return b;
 		}
-		/** @type {D__Accessibility} */
+		/** @type {D_Accessibility} */
 		if(b.accessibilityData) return "TYPE::A_Accessibility";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
@@ -6375,7 +6375,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "updated_metadata": return {
 				type: target[0],
-				/** @type {UpdatedMetadata} */
+				/** @type {R_UpdatedMetadata} */
 				data: as(x),
 			};
 		}
@@ -6387,7 +6387,7 @@ class ServiceMethods extends ServiceData {
 			default: debugger; return null;
 			case "reel_item_watch": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {D__ReelItemWatch} */
+				/** @private @type {D_ReelItemWatch} */
 				data: as(x),
 			};
 			case "reel_watch_sequence": return {
@@ -6782,7 +6782,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region templates
 	/** @private @template {{}} T @arg {T$R_ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	T$R_ItemSection$1(x,f) {this.H_R_("T$R_ItemSection$1",x,a => this.T$D__ItemSection$CommentsEntryPoint(a,f));}
+	T$R_ItemSection$1(x,f) {this.H_R_("T$R_ItemSection$1",x,a => this.T$D_ItemSection$CommentsEntryPoint(a,f));}
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
 		const cf/**/="ItemsTemplate";
@@ -6801,7 +6801,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ItemSectionDataTemplate(this.w(x),f);
 	}
-	/** @template CT,T,U @arg {T$D__ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @template CT,T,U @arg {T$D_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
@@ -6877,8 +6877,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		return parse_number(x.types,_x);
 	}
-	/** @private @template {{}} T @arg {T$D__ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	T$D__ItemSection$CommentsEntryPoint(x,f) {
+	/** @private @template {{}} T @arg {T$D_ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	T$D_ItemSection$CommentsEntryPoint(x,f) {
 		const cf="ItemSectionDataTemplate_Section";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
@@ -6886,8 +6886,8 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ItemSectionData",trackingParams);
 		if(sectionIdentifier!=="comments-entry-point") debugger;
 	}
-	/** @private @arg {R_SimpleText} x @arg {(this:this,x:{accessibility?:D__Accessibility})=>void} f */
-	D__SimpleText(x,f=this.handle_accessibility) {
+	/** @private @arg {R_SimpleText} x @arg {(this:this,x:{accessibility?:D_Accessibility})=>void} f */
+	D_SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
 		this.save_keys(`[${cf}]`,x);
 		const {simpleText,...y}=x; f.call(this,y);
@@ -7016,15 +7016,15 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
 	H_R(cf,x) {this.save_keys(`[${cf}]`,x);}
 	/** @private @arg {R_Button} x */
-	R_Button(x) {this.H_R_("Button",x,this.D__Button);}
+	R_Button(x) {this.H_R_("Button",x,this.D_Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
-	R_HotkeyDialogSection(x) {this.H_R_("HotkeyDialogSection",x,this.D__HotkeyDialogSection);}
+	R_HotkeyDialogSection(x) {this.H_R_("HotkeyDialogSection",x,this.D_HotkeyDialogSection);}
 	/** @private @arg {R_HotkeyDialogSectionOption} x */
-	R_HotkeyDialogSectionOption(x) {this.H_R_("HotkeyDialogSectionOption",x,this.D__HotkeyDialogSectionOption);}
+	R_HotkeyDialogSectionOption(x) {this.H_R_("HotkeyDialogSectionOption",x,this.D_HotkeyDialogSectionOption);}
 	/** @private @arg {R_PlayerOverlayVideoDetails} x */
-	R_PlayerOverlayVideoDetails(x) {this.H_R_("PlayerOverlayVideoDetails",x,this.D__PlayerOverlayVideoDetails);}
+	R_PlayerOverlayVideoDetails(x) {this.H_R_("PlayerOverlayVideoDetails",x,this.D_PlayerOverlayVideoDetails);}
 	/** @private @arg {R_CinematicContainer} x */
-	R_CinematicContainer(x) {this.H_R_("CinematicContainer",x,this.D__CinematicContainer);}
+	R_CinematicContainer(x) {this.H_R_("CinematicContainer",x,this.D_CinematicContainer);}
 	/** @private @arg {R_WatchPage} x */
 	R_WatchPage(x) {
 		const cf="WatchPageResponse";
@@ -7084,17 +7084,17 @@ class HandleTypes extends ServiceMethods {
 		this.FrameworkUpdates(frameworkUpdates);
 	}
 	/** @private @arg {R_TwoColumnWatchNextResults} x */
-	A_TwoColumnWatchNextResults(x) {this.H_R_("TwoColumnWatchNextResults",x,this.D__TwoColumnWatchNextResults);}
+	A_TwoColumnWatchNextResults(x) {this.H_R_("TwoColumnWatchNextResults",x,this.D_TwoColumnWatchNextResults);}
 	/** @private @arg {R_PlayerOverlay} x */
-	R_PlayerOverlay(x) {this.H_R_("NotificationAction",x,this.D__PlayerOverlay);}
+	R_PlayerOverlay(x) {this.H_R_("A_Notification",x,this.D_PlayerOverlay);}
 	/** @private @arg {R_DesktopTopbar} x */
-	R_DesktopTopbar(x) {this.H_R_("DesktopTopbar",x,this.D__DesktopTopbar);}
+	R_DesktopTopbar(x) {this.H_R_("DesktopTopbar",x,this.D_DesktopTopbar);}
 	/** @private @arg {R_TopbarLogo} x */
 	R_TopbarLogo(x) {this.H_R_("DesktopTopbar",x,this.TopbarLogo);}
 	/** @private @arg {R_FusionSearchbox} x */
 	R_X_FusionSearchbox(x) {this.H_R_("DesktopTopbar",x,this.FusionSearchboxData);}
 	/** @private @arg {D_DesktopTopbar} x */
-	D__DesktopTopbar(x) {
+	D_DesktopTopbar(x) {
 		const cf="DesktopTopbar";
 		this.save_keys(`[D__${cf}]`,x);
 		const {logo,searchbox,trackingParams,countryCode,topbarButtons,hotkeyDialog,backButton,forwardButton,a11ySkipNavigationButton,voiceSearchButton,...y}=x; this.g(y); // ! #destructure
@@ -7110,13 +7110,13 @@ class HandleTypes extends ServiceMethods {
 		this.R_Button(voiceSearchButton);
 	}
 	/** @private @arg {R_HotkeyDialog} x */
-	R_HotkeyDialog(x) {this.H_R_("HotkeyDialog",x,this.D__HotkeyDialog);}
+	R_HotkeyDialog(x) {this.H_R_("HotkeyDialog",x,this.D_HotkeyDialog);}
 	/** @private @arg {A_FrameworkUpdates} x */
 	FrameworkUpdates(x) {
 		const cf="FrameworkUpdates";
 		this.save_keys(`[${cf}]`,x);
 		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y); // ! #destructure
-		this.D__EntityBatchUpdate(entityBatchUpdate);
+		this.D_EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
 	/** @private @arg {R_BrowseEditPlaylist} x */
@@ -7178,7 +7178,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @public @arg {D_Browse_Id<"">} x */
 	E_D__Browse(x) {
-		const cf="D__Browse";
+		const cf="D_Browse";
 		this.save_keys(`[${cf}]`,x);
 		const {browseId,...y}=x; this.g(y);
 		if(x.browseId!=="") debugger;
@@ -7220,7 +7220,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ytConfigData,this.YtConfigData);
 		this.t(webPrefetchData,this.WebPrefetchData);
 	}
-	/** @private @arg {D__YtConfig} x */
+	/** @private @arg {D_YtConfig} x */
 	YtConfigData(x) {
 		const cf="YtConfigData";
 		this.save_keys(`[${cf}]`,x);
@@ -7272,7 +7272,7 @@ class HandleTypes extends ServiceMethods {
 		this.RC$ResponseContext(responseContext);
 		this.t(header,this.BrowseHeader);
 		this.trackingParams(cf,trackingParams);
-		this.tz(onResponseReceivedActions,this.ResponseReceivedAction);
+		this.tz(onResponseReceivedActions,this.A_ResponseReceived);
 		this.t(contents,this.BrowseContents);
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
 		this.t(topbar,this.R_DesktopTopbar);
@@ -7292,7 +7292,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {{}} x */
 	R_MicroformatData(x) {this.emf("R_MicroformatData",x);}
 	/** @private @arg {R_EntityBatchUpdate} x */
-	R_EntityBatchUpdate(x) {this.H_R_("NotificationAction",x,this.D__EntityBatchUpdate);}
+	R_EntityBatchUpdate(x) {this.H_R_("A_Notification",x,this.D_EntityBatchUpdate);}
 	/** @private @arg {NonNullable<R_Browse['metadata']>} x */
 	BrowseMetadata(x) {this.emf("BrowseMetadata",x);}
 	/** @private @arg {string} cf @arg {{}} x */
@@ -7317,9 +7317,9 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {R_PlaylistSidebar} x */
-	R_PlaylistSidebar(x) {this.H_R_("PlaylistSidebar",x,this.D__PlaylistSidebar);}
-	/** @private @arg {D__PlaylistSidebar} x */
-	D__PlaylistSidebar(x) {
+	R_PlaylistSidebar(x) {this.H_R_("PlaylistSidebar",x,this.D_PlaylistSidebar);}
+	/** @private @arg {D_PlaylistSidebar} x */
+	D_PlaylistSidebar(x) {
 		const cf="PlaylistSidebar";
 		this.save_keys(`[${cf}]`,x);
 		this.z(x.items,this.PlaylistSidebarItem);
@@ -7346,20 +7346,20 @@ class HandleTypes extends ServiceMethods {
 			case "INFO": break;
 			default: debugger;
 		}
-		this.D__SimpleText(text);
+		this.D_SimpleText(text);
 		this.R_Button(dismissButton);
 	}
-	/** @private @arg {D__Label} x */
-	D__Label(x) {this.H_R_("Label",x,this.primitive_of_string);}
-	/** @private @arg {D__Accessibility} x */
-	D__Accessibility(x) {this.H_R_("A_Accessibility",x,this.D__Label);}
+	/** @private @arg {D_Label} x */
+	D_Label(x) {this.H_R_("Label",x,this.primitive_of_string);}
+	/** @private @arg {D_Accessibility} x */
+	D_Accessibility(x) {this.H_R_("A_Accessibility",x,this.D_Label);}
 	/** @private @arg {D_Button} x */
-	D__Button(x) {
+	D_Button(x) {
 		const cf="ButtonData";
 		this.save_keys(`[${cf}]`,x);
 		const {accessibility,accessibilityData,command,icon,isDisabled,serviceEndpoint,navigationEndpoint,tooltip,size,style,text,trackingParams,hint,targetId,...y}=x; this.g(y); // ! #destructure
-		if(accessibility) return this.D__Label(accessibility);
-		this.t(accessibilityData,this.D__Accessibility);
+		if(accessibility) return this.D_Label(accessibility);
+		this.t(accessibilityData,this.D_Accessibility);
 		this.t(command,this.ButtonCommand);
 		this.t(icon,this.T$Icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
@@ -7378,7 +7378,7 @@ class HandleTypes extends ServiceMethods {
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,_x => {debugger;});
 		this.t(targetId,a => {
-			/** @type {D__Button$TargetId} */
+			/** @type {D_Button$TargetId} */
 			switch(a) {
 				case "clip-info-button": break;
 				case "sponsorships-button": return;
@@ -7387,15 +7387,15 @@ class HandleTypes extends ServiceMethods {
 			this.targetId(cf,a);
 		});
 	}
-	/** @public @arg {D__ThumbnailOverlayLoadingPreview} x */
-	D__ThumbnailOverlayLoadingPreview(x) {
-		const cf_="D__ThumbnailOverlayLoadingPreview";
+	/** @public @arg {D_ThumbnailOverlayLoadingPreview} x */
+	D_ThumbnailOverlayLoadingPreview(x) {
+		const cf_="D_ThumbnailOverlayLoadingPreview";
 		this.save_keys(`[${cf_}]`,x);
-		this.D__TextWithRuns(this.w(x));
+		this.D_TextWithRuns(this.w(x));
 	}
-	/** @public @arg {D__PdgBuyFlowHeader} x */
-	D__PdgBuyFlowHeader(x) {
-		const cf="D__PdgBuyFlowHeader";
+	/** @public @arg {D_PdgBuyFlowHeader} x */
+	D_PdgBuyFlowHeader(x) {
+		const cf="D_PdgBuyFlowHeader";
 		this.save_keys(`[${cf}]`,x);
 		const {}=x;
 		this.codegen_renderer(cf,x);
@@ -7414,17 +7414,17 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {R_Tab} x */
-	R_Tab(x) {this.H_R_("Tab",x,this.D__Tab);}
-	/** @private @arg {D__Tab} x */
-	D__Tab(x) {
+	R_Tab(x) {this.H_R_("Tab",x,this.D_Tab);}
+	/** @private @arg {D_Tab} x */
+	D_Tab(x) {
 		const cf="Tab";
 		this.save_keys(`[${cf}]`,x);
 		{x;}
 	}
 	/** @private @arg {R_ExpandableTab} x */
-	R_ExpandableTab(x) {this.H_R_("R_ExpandableTab",x,this.D__ExpandableTab);}
-	/** @private @arg {D__ExpandableTab} x */
-	D__ExpandableTab(x) {
+	R_ExpandableTab(x) {this.H_R_("R_ExpandableTab",x,this.D_ExpandableTab);}
+	/** @private @arg {D_ExpandableTab} x */
+	D_ExpandableTab(x) {
 		const cf="ExpandableTab";
 		this.save_keys(`[${cf}]`,x);
 		{x;}
@@ -7451,18 +7451,18 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(x.token,"string");
 		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
 	}
-	/** @private @arg {D__Thumbnail} x */
-	D__Thumbnail(x) {
-		const cf="D__Thumbnail";
+	/** @private @arg {D_Thumbnail} x */
+	D_Thumbnail(x) {
+		const cf="D_Thumbnail";
 		this.save_keys(`[${cf}]`,x);
 		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,...y}=x;
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
-		this.t(accessibility,this.D__Accessibility);
-		this.z(this.w(y),this.D__ThumbnailItem);
+		this.t(accessibility,this.D_Accessibility);
+		this.z(this.w(y),this.D_ThumbnailItem);
 	}
-	/** @private @arg {D__ThumbnailItem} x */
-	D__ThumbnailItem(x) {
-		const cf="D__ThumbnailItem";
+	/** @private @arg {D_ThumbnailItem} x */
+	D_ThumbnailItem(x) {
+		const cf="D_ThumbnailItem";
 		this.save_keys(`[${cf}]`,x);
 		const {url,width,height,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(url);
@@ -7511,7 +7511,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.A_OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7600,13 +7600,13 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetPdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},command,trackingParams,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
-		this.A_OpenPopupAction(command);
+		this.A_A_OpenPopup(command);
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @template T @arg {T$A_OpenPopup<T>} x */
-	A_OpenPopupAction(x) {
-		const cf="OpenPopupAction";
+	/** @template T @arg {TA_OpenPopup<T>} x */
+	A_A_OpenPopup(x) {
+		const cf="A_OpenPopup";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,...y}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -7637,75 +7637,75 @@ class HandleTypes extends ServiceMethods {
 		const {continuationItemRenderer,...y}=x; this.g(y);
 		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
-	/** @template T @arg {T$D__ContinuationItem<T>} x */
+	/** @template T @arg {T$D_ContinuationItem<T>} x */
 	T$ContinuationItemData(x) {
 		const {trigger,...y}=x;
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
 	/** @private @arg {R_Menu} x */
-	R_Menu(x) {this.H_R_("NotificationAction",x,this.D__Menu);}
-	/** @private @arg {UpdatedMetadata} x */
+	R_Menu(x) {this.H_R_("A_Notification",x,this.D_Menu);}
+	/** @private @arg {R_UpdatedMetadata} x */
 	R_UpdatedMetadata(x) {
-		const cf="UpdatedMetadata";
+		const cf="R_UpdatedMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y); // ! #destructure
 		((_x) => {debugger;})(continuation);
 		this.z(actions,a => {
 			if("updateViewershipAction" in a) {
-				return this.UpdateViewershipAction(a);
+				return this.UA_Viewership(a);
 			} else if("updateToggleButtonTextAction" in a) {
-				return this.UpdateToggleButtonTextAction(a);
+				return this.UA_ToggleButtonText(a);
 			} else if("updateDateTextAction" in a) {
-				return this.UpdateDateTextAction(a);
+				return this.UA_DateText(a);
 			} else if("updateTitleAction" in a) {
-				return this.UpdateTitleAction(a);
+				return this.UA_Title(a);
 			} else if("updateDescriptionAction" in a) {
-				return this.UpdateDescriptionAction(a);
+				return this.UA_Description(a);
 			}
 			console.log(a);
 		});
 	}
-	/** @private @arg {UpdateDescriptionAction} x */
-	UpdateDescriptionAction(x) {
-		const cf="UpdateDescriptionAction";
+	/** @private @arg {UA_Description} x */
+	UA_Description(x) {
+		const cf="UA_Description";
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateDescriptionAction;
-		this.save_keys(`[UpdateDescriptionActionData]`,x1);
-		this.D__TextWithRuns(x1.description);
+		this.save_keys(`[UA_DescriptionData]`,x1);
+		this.D_TextWithRuns(x1.description);
 	}
-	/** @private @arg {UpdateTitleAction} x */
-	UpdateTitleAction(x) {
-		const cf="UpdateTitleAction";
+	/** @private @arg {UA_Title} x */
+	UA_Title(x) {
+		const cf="UA_Title";
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateTitleAction;
-		this.save_keys(`[UpdateTitleActionData]`,x1);
-		this.D__TextWithRuns(x1.title);
+		this.save_keys(`[UA_TitleData]`,x1);
+		this.D_TextWithRuns(x1.title);
 	}
-	/** @private @arg {UpdateDateTextAction} x */
-	UpdateDateTextAction(x) {
-		const cf="UpdateDateTextAction";
+	/** @private @arg {UA_DateText} x */
+	UA_DateText(x) {
+		const cf="UA_DateText";
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateDateTextAction;
-		this.save_keys(`[UpdateDateTextActionData]`,x1);
-		this.D__SimpleText(x1.dateText);
+		this.save_keys(`[UA_DateTextData]`,x1);
+		this.D_SimpleText(x1.dateText);
 	}
-	/** @private @arg {UpdateToggleButtonTextAction} x */
-	UpdateToggleButtonTextAction(x) {
-		const cf="UpdateToggleButtonTextAction";
+	/** @private @arg {UA_ToggleButtonText} x */
+	UA_ToggleButtonText(x) {
+		const cf="UA_ToggleButtonText";
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateToggleButtonTextAction; x1;
-		this.save_keys(`[UpdateToggleButtonTextActionData]`,x1);
+		this.save_keys(`[UA_ToggleButtonTextData]`,x1);
 		if(x1.buttonId!=="TOGGLE_BUTTON_ID_TYPE_LIKE") debugger;
-		this.D__SimpleText(x1.defaultText);
-		this.D__SimpleText(x1.toggledText);
+		this.D_SimpleText(x1.defaultText);
+		this.D_SimpleText(x1.toggledText);
 	}
-	/** @private @arg {UpdateViewershipAction} x */
-	UpdateViewershipAction(x) {
-		const cf="UpdateViewershipAction";
+	/** @private @arg {UA_Viewership} x */
+	UA_Viewership(x) {
+		const cf="UA_Viewership";
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateViewershipAction;
-		this.save_keys(`[UpdateViewershipActionData]`,x1);
+		this.save_keys(`[UA_ViewershipData]`,x1);
 		((_x) => {debugger;})(x1.viewCount);
 	}
 	/** @private @arg {R_Search} x */
@@ -7755,7 +7755,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,x => {
-			if("openPopupAction" in x) return this.A_OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7766,7 +7766,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,x => {
-			if("openPopupAction" in x) return this.A_OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7777,7 +7777,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
-			if("openPopupAction" in x) return this.A_OpenPopupAction(x);
+			if("openPopupAction" in x) return this.A_A_OpenPopup(x);
 			debugger;
 			return null;
 		}));
@@ -7815,7 +7815,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[R_${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let [ar]=this.z(actions,x => {
-			if(x.openPopupAction) return this.A_OpenPopupAction(x);
+			if(x.openPopupAction) return this.A_A_OpenPopup(x);
 			debugger;
 			return null;
 		});
@@ -7958,14 +7958,14 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		};
 	}
-	/** @private @arg {D__LoadMarkersCommand} x */
+	/** @private @arg {D_LoadMarkersCommand} x */
 	LoadMarkersCommandData(x) {
 		const cf="LoadMarkersCommandData";
 		this.save_keys(`[${cf}]`,x);
 		const {entityKeys,...y}=x; this.g(y); // ! #destructure
 		this.z(entityKeys,this.primitive_of_string);
 	}
-	/** @private @arg {D__ChangeKeyedMarkersVisibilityCommand} x */
+	/** @private @arg {D_ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommandData(x) {
 		const cf="ChangeKeyedMarkersVisibilityCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -7973,8 +7973,8 @@ class HandleTypes extends ServiceMethods {
 		if(isVisible!==true) debugger;
 		if(key!=="HEATSEEKER") debugger;
 	}
-	/** @private @arg {D__PlayerOverlay} x */
-	D__PlayerOverlay(x) {
+	/** @private @arg {D_PlayerOverlay} x */
+	D_PlayerOverlay(x) {
 		const cf="PlayerOverlay";
 		this.save_keys(`[${cf}]`,x);
 		if("browserMediaSession" in x) {
@@ -8003,15 +8003,15 @@ class HandleTypes extends ServiceMethods {
 	primitive_of_string(x) {
 		this.primitive_of(x,"string");
 	}
-	/** @private @arg {D__Menu} x */
-	D__Menu(x) {
+	/** @private @arg {D_Menu} x */
+	D_Menu(x) {
 		const cf="Menu";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.t(accessibility,this.D__Accessibility);
+		this.t(accessibility,this.D_Accessibility);
 		this.tz(items,this.G_Menu$items$iterate);
-		/** @type {D__Menu$targetId} */
+		/** @type {D_Menu$targetId} */
 		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.A_LoggingDirectives);
 	}
@@ -8027,16 +8027,16 @@ class HandleTypes extends ServiceMethods {
 	R_MenuNavigationItem(x) {
 		const cf="R_MenuNavigationItem";
 		this.save_keys(`[${cf}]`,x);
-		this.D__MenuNavigationItem(this.w(x));
+		this.D_MenuNavigationItem(this.w(x));
 	}
-	/** @private @arg {D__MenuNavigationItem} x */
-	D__MenuNavigationItem(x) {
-		const cf="D__MenuNavigationItem";
+	/** @private @arg {D_MenuNavigationItem} x */
+	D_MenuNavigationItem(x) {
+		const cf="D_MenuNavigationItem";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,text,icon,navigationEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.D__SimpleText(text);
-		this.A_OpenPopupAction(navigationEndpoint);
+		this.D_SimpleText(text);
+		this.A_A_OpenPopup(navigationEndpoint);
 	}
 	/** @template {string} T @arg {T_Icon<T>} x */
 	T$Icon(x) {
@@ -8058,10 +8058,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.WebCommandMetadata(this.w(x));
 	}
-	/** @private @arg {{accessibility?:D__Accessibility}} x */
+	/** @private @arg {{accessibility?:D_Accessibility}} x */
 	handle_accessibility(x) {
 		this.save_keys("[default.Accessibility]",x);
-		if(x.accessibility) this.D__Accessibility(x.accessibility);
+		if(x.accessibility) this.D_Accessibility(x.accessibility);
 	}
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
@@ -8155,16 +8155,16 @@ class HandleTypes extends ServiceMethods {
 	/** @pub @arg {E_UrlEndpoint} x */
 	E_UrlEndpoint(x) {x;}
 	/** @private @arg {R_TextWithRuns} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
-	D__TextWithRuns(x,f_run=this.handle_text_endpoint) {
+	D_TextWithRuns(x,f_run=this.handle_text_endpoint) {
 		if(!("runs" in x)) {debugger; return;}
 		const cf/*!*/="TextWithRuns";
 		this.save_keys(`[${cf}]`,x);
 		const {runs,accessibility,...y}=x; this.g(y); // ! #destructure
-		this.z(runs,a => this.D__TextRun(a,f_run));
-		this.t(accessibility,this.D__Accessibility);
+		this.z(runs,a => this.D_TextRun(a,f_run));
+		this.t(accessibility,this.D_Accessibility);
 	}
 	/** @private @arg {R_TextRun} x @arg {(x:NonNullable<R_TextRun['navigationEndpoint']>)=>void} f_run */
-	D__TextRun(x,f_run) {
+	D_TextRun(x,f_run) {
 		const cf="TextRun";
 		this.save_keys(`[${cf}]`,x);
 		const {text,navigationEndpoint,loggingDirectives,bold,...y}=x; this.g(y); // ! #destructure
@@ -8176,9 +8176,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="TextT";
 		this.save_keys(`[${cf}]`,x);
 		if("simpleText" in x) {
-			return this.D__SimpleText(x);
+			return this.D_SimpleText(x);
 		} else if("runs" in x) {
-			return this.D__TextWithRuns(x);
+			return this.D_TextWithRuns(x);
 		}
 		debugger;
 	}
@@ -8186,7 +8186,7 @@ class HandleTypes extends ServiceMethods {
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
-	/** @arg {D__TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
+	/** @arg {D_TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
 	handle_results_3(x) {
 		if("itemSectionRenderer" in x) return this.T$R_ItemSection$CommentItemSection(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
@@ -8203,7 +8203,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {{}} x */
 	/** @private @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_R_("VideoSecondaryInfo",x,a => {a; debugger;});}
-	/** @private @arg {Extract<D__TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
+	/** @private @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	T$R_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
@@ -8215,22 +8215,22 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {T$R_ItemSection<{},"comment-item-section","comments-section">} x */
-	T$R_ItemSection$2$CommentItemSection(x) {this.H_R_("NotificationAction",x,a => {a; debugger;});}
-	/** @arg {T$D__ItemSection<{},"comment-item-section","comments-section">} x */
-	T$D__ItemSection$2CommentItemSection(x) {x;}
+	T$R_ItemSection$2$CommentItemSection(x) {this.H_R_("A_Notification",x,a => {a; debugger;});}
+	/** @arg {T$D_ItemSection<{},"comment-item-section","comments-section">} x */
+	T$D_ItemSection$2CommentItemSection(x) {x;}
 	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
-	D__TwoColumnWatchNextResults$results(x) {x;}
+	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @arg {R_ItemSection} x */
 	/** @private @arg {R_ItemSection} x */
-	R_ItemSection(x) {this.H_R_("ItemSection",x,this.D__ItemSection);}
-	/** @private @arg {D__ItemSection} x */
-	D__ItemSection(x) {x; debugger;}
-	/** @private @arg {D__TwoColumnWatchNextResults} x */
-	D__TwoColumnWatchNextResults(x) {
+	R_ItemSection(x) {this.H_R_("ItemSection",x,this.D_ItemSection);}
+	/** @private @arg {D_ItemSection} x */
+	D_ItemSection(x) {x; debugger;}
+	/** @private @arg {D_TwoColumnWatchNextResults} x */
+	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
 		this.save_keys(`[${cf}]`,x);
 		const {results,secondaryResults,playlist,autoplay,conversationBar,...y}=x; this.g(y); // ! #destructure
-		this.D__TwoColumnWatchNextResults$results(results);
+		this.D_TwoColumnWatchNextResults$results(results);
 		this.SecondaryResultsTemplate(secondaryResults,a => {
 			if("contents" in a) {
 				this.z(a.contents,a => {
@@ -8267,33 +8267,33 @@ class HandleTypes extends ServiceMethods {
 		this.t(conversationBar,this.R_LiveChat);
 	}
 	/** @private @arg {R_RelatedChipCloud} x */
-	R_RelatedClipCloud(x) {this.H_R_("NotificationAction",x,a => {this.R_ChipCloud(a.content);});}
+	R_RelatedClipCloud(x) {this.H_R_("A_Notification",x,a => {this.R_ChipCloud(a.content);});}
 	/** @private @arg {R_ChipCloud} x */
-	R_ChipCloud(x) {this.H_R_("NotificationAction",x,this.D__ChipCloud);}
-	/** @private @arg {D__ChipCloudData} x */
-	D__ChipCloud(x) {x;}
+	R_ChipCloud(x) {this.H_R_("A_Notification",x,this.D_ChipCloud);}
+	/** @private @arg {D_ChipCloudData} x */
+	D_ChipCloud(x) {x;}
 	/** @private @arg {R_NotificationGetUnseenCount} x */
 	R_GetUnseenCount(x) {
 		const cf="NotificationGetUnseenCountResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,unseenCount,...y}=x; this.g(y); // ! #destructure
 		this.tz(actions,(x => {
-			if("updateNotificationsUnseenCountAction" in x) return this.UpdateNotificationsUnseenCountAction(x);
+			if("updateNotificationsUnseenCountAction" in x) return this.UA_NotificationsUnseenCount(x);
 			debugger;
 		}));
 		if(unseenCount!==void 0) this.primitive_of(unseenCount,"number");
 	}
 	/** @private @arg {A_UpdateNotificationsUnseenCount} x */
-	UpdateNotificationsUnseenCountAction(x) {
-		const cf="UpdateNotificationsUnseenCountAction";
+	UA_NotificationsUnseenCount(x) {
+		const cf="UA_NotificationsUnseenCount";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,updateNotificationsUnseenCountAction,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams("UpdateNotificationsUnseenCountAction",clickTrackingParams);
-		this.UpdateNotificationsUnseenCount(updateNotificationsUnseenCountAction);
+		this.clickTrackingParams("UA_NotificationsUnseenCount",clickTrackingParams);
+		this.U_NotificationsUnseenCount(updateNotificationsUnseenCountAction);
 	}
-	/** @private @arg {UpdateNotificationsUnseenCount} x */
-	UpdateNotificationsUnseenCount(x) {
-		const cf="UpdateNotificationsUnseenCount";
+	/** @private @arg {U_NotificationsUnseenCount} x */
+	U_NotificationsUnseenCount(x) {
+		const cf="U_NotificationsUnseenCount";
 		this.save_keys(`[${cf}]`,x);
 		const {handlerData,unseenCount,timeoutMs,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(handlerData);
@@ -8312,7 +8312,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetAccountSwitcherEndpointResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
-		this.D__TextWithRuns(selectText);
+		this.D_TextWithRuns(selectText);
 		this.z(actions,a => {
 			if("getMultiPageMenuAction" in a) {
 				return this.A_GetMultiPageMenu(a);
@@ -8321,20 +8321,20 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.H_R_("GetMultiPageMenu",x,this.D__GetMultiPageMenu);}
-	/** @private @arg {D__A_GetMultiPageMenu} x */
-	D__GetMultiPageMenu(x) {x;}
+	A_GetMultiPageMenu(x) {this.H_R_("GetMultiPageMenu",x,this.D_GetMultiPageMenu);}
+	/** @private @arg {D_A_GetMultiPageMenu} x */
+	D_GetMultiPageMenu(x) {x;}
 	/** @private @arg {R_AccountsList} x */
 	R_AccountsList(x) {
 		const cf="AccountsListResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
-		this.D__TextWithRuns(selectText);
+		this.D_TextWithRuns(selectText);
 		this.z(actions,this.A_UpdateChannelSwitcherPage);
 	}
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
-	A_UpdateChannelSwitcherPage(x) {this.H_R_("NotificationAction",x,a => {a; debugger;});}
-	/** @private @arg {D__ReelItemWatch} x */
+	A_UpdateChannelSwitcherPage(x) {this.H_R_("A_Notification",x,a => {a; debugger;});}
+	/** @private @arg {D_ReelItemWatch} x */
 	R_ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8369,9 +8369,9 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},feedbackResponses,...y}=x; this.g(y); // ! #destructure
 		this.z(feedbackResponses,this.FeedbackResponseProcessedStatus);
 	}
-	/** @arg {D__MultiPageMenu} x */
-	D__MultiPageMenu(x) {
-		const cf="D__MultiPageMenu";
+	/** @arg {D_MultiPageMenu} x */
+	D_MultiPageMenu(x) {
+		const cf="D_MultiPageMenu";
 		this.save_keys(`[${cf}]`,x);
 		if(x.sections) {
 			let z=x.sections[0];
@@ -8443,7 +8443,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 	}
-	/** @private @arg {D__SearchFeedSectionList} x */
+	/** @private @arg {D_SearchFeedSectionList} x */
 	SearchFeedSectionListData(x) {
 		const cf="SearchFeedSectionListData";
 		this.save_keys(`[${cf}]`,x);
@@ -8485,7 +8485,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ContinuationItemData(x.continuationItemRenderer);
 	}
-	/** @private @arg {D__ContinuationItem} x */
+	/** @private @arg {D_ContinuationItem} x */
 	ContinuationItemData(x) {
 		const cf="ContinuationItemData";
 		this.save_keys(`[${cf}]`,x);
@@ -8531,7 +8531,7 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,a => {
 			if("updateEngagementPanelAction" in a) {
-				return this.UpdateEngagementPanelAction(a);
+				return this.UA_EngagementPanel(a);
 			}
 			debugger;
 		});
@@ -8573,8 +8573,8 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_GuideSubscriptionsSection} x */
 	R_GuideSubscriptionsSection(x) {x;}
-	/** @private @arg {D__GuideSection} x */
-	D__GuideSection(x) {
+	/** @private @arg {D_GuideSection} x */
+	D_GuideSection(x) {
 		const cf="GuideSectionData";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,formattedTitle,...y}=x; this.g(y); // ! #destructure
@@ -8593,7 +8593,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {{}} x */
 	R_GuideEntry(x) {x;}
 	/** @private @arg {R_GuideSection} x */
-	R_GuideSection(x) {this.H_R_("GuideSection",x,this.D__GuideSection);}
+	R_GuideSection(x) {this.H_R_("GuideSection",x,this.D_GuideSection);}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		const cf="AutoplayContent";
@@ -8610,7 +8610,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
-		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],a => this.D__SimpleText(a));
+		this.z([ownerName,shortBylineText,longBylineText,titleText,nextVideoLabel],a => this.D_SimpleText(a));
 		this.z(contents,this.R_PlaylistPanelVideo);
 		this.primitive_of_string(title);
 		this.primitive_of_string(playlistId);
@@ -8625,13 +8625,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_PlaylistPanelVideo} x */
 	R_PlaylistPanelVideo(x) {x;}
-	/** @private @arg {D__PlayerOverlayVideoDetails} x */
-	D__PlayerOverlayVideoDetails(x) {
+	/** @private @arg {D_PlayerOverlayVideoDetails} x */
+	D_PlayerOverlayVideoDetails(x) {
 		const cf="PlayerOverlayVideoDetails";
 		this.save_keys(`[${cf}]`,x);
 		const {title,subtitle,...y}=x; this.g(y); // ! #destructure
-		this.D__SimpleText(title);
-		this.D__TextWithRuns(subtitle);
+		this.D_SimpleText(title);
+		this.D_TextWithRuns(subtitle);
 	}
 	/** @template T @arg {T$Item<T>} x @arg {(x:T)=>void} f */
 	ItemTemplate(x,f) {
@@ -8762,10 +8762,10 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,searchEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.D__Search(searchEndpoint);
+		this.D_Search(searchEndpoint);
 	}
-	/** @private @arg {D__Search} x */
-	D__Search(x) {x;}
+	/** @private @arg {D_Search} x */
+	D_Search(x) {x;}
 	/** @private @arg {G$BrowseHeader} x */
 	BrowseHeader(x) {
 		const cf="BrowseHeader";
@@ -8783,14 +8783,14 @@ class HandleTypes extends ServiceMethods {
 	 */
 	R_C4TabbedHeader(x) {this.H_R_("C4TabbedHeader",x,a => {a; debugger;});}
 	/** @private @arg {R_FeedTabbedHeader} x */
-	R_FeedTabbedHeader(x) {this.H_R_("FeedTabbedHeader",x,this.D__FeedTabbedHeader);}
+	R_FeedTabbedHeader(x) {this.H_R_("FeedTabbedHeader",x,this.D_FeedTabbedHeader);}
 	/** @private @arg {R_PlaylistHeader} x */
 	R_PlaylistHeader(x) {
 		x; debugger;
 	}
-	/** @private @arg {D__FeedTabbedHeader} x */
-	D__FeedTabbedHeader(x) {
-		this.D__TextWithRuns(this.w(x));
+	/** @private @arg {D_FeedTabbedHeader} x */
+	D_FeedTabbedHeader(x) {
+		this.D_TextWithRuns(this.w(x));
 	}
 	/** @private @arg {CacheMetadata} x */
 	CacheMetadata(x) {
@@ -8828,9 +8828,9 @@ class HandleTypes extends ServiceMethods {
 	R_TwoColumnBrowseResults(x) {
 		this.TwoColumnBrowseResultsData(this.w(x));
 	}
-	/** @private @arg {ResponseReceivedAction} x */
-	ResponseReceivedAction(x) {
-		const cf="ResponseReceivedAction";
+	/** @private @arg {A_ResponseReceived} x */
+	A_ResponseReceived(x) {
+		const cf="A_ResponseReceived";
 		this.save_keys(`[${cf}]`,x);
 		if("adsControlFlowOpportunityReceivedCommand" in x) return this.AdsControlFlowOpportunityReceivedCommand(x);
 		if("reloadContinuationItemsCommand" in x) return this.ReloadContinuationItemsCommand(x);
@@ -8886,8 +8886,8 @@ class HandleTypes extends ServiceMethods {
 		if(inner!==4) debugger;
 	}
 	/** @private @arg {EA_ChangeEngagementPanelVisibility} x */
-	ChangeEngagementPanelVisibilityAction(x) {
-		const cf="ChangeEngagementPanelVisibilityAction";
+	A_ChangeEngagementPanelVisibility(x) {
+		const cf="A_ChangeEngagementPanelVisibility";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,changeEngagementPanelVisibilityAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
@@ -8910,12 +8910,12 @@ class HandleTypes extends ServiceMethods {
 		const {isProcessed,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(isProcessed,"boolean");
 	}
-	/** @private @arg {UpdateEngagementPanelAction} x */
-	UpdateEngagementPanelAction(x) {
-		const cf="UpdateEngagementPanelAction";
+	/** @private @arg {UA_EngagementPanel} x */
+	UA_EngagementPanel(x) {
+		const cf="UA_EngagementPanel";
 		this.save_keys(`[${cf}]`,x);
 		const {updateEngagementPanelAction,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
-		this.UpdateEngagementPanelData(updateEngagementPanelAction);
+		this.U_EngagementPanelData(updateEngagementPanelAction);
 		this.clickTrackingParams(cf,clickTrackingParams);
 	}
 	/** @private @arg {D$AttBgChallenge} x */
@@ -8942,7 +8942,7 @@ class HandleTypes extends ServiceMethods {
 		const {updates,...y}=x; this.g(y); // ! #destructure
 		this.z(updates,this.ElementUpdateItem);
 	}
-	/** @private @arg {D__ElementUpdate} x */
+	/** @private @arg {D_ElementUpdate} x */
 	ElementUpdateItem(x) {
 		const cf="ElementUpdateItem";
 		this.save_keys(`[${cf}]`,x);
@@ -8953,8 +8953,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {R_TemplateUpdate} x */
 	/** @private @arg {R_TemplateUpdate} x */
 	R_TemplateUpdate(x) {this.H_R_("TemplateUpdate",x,a => {a; debugger;});}
-	/** @private @arg {D__EntityBatchUpdateData} x */
-	D__EntityBatchUpdate(x) {
+	/** @private @arg {D_EntityBatchUpdateData} x */
+	D_EntityBatchUpdate(x) {
 		const cf="EntityBatchUpdateData";
 		this.save_keys(`[${cf}]`,x);
 		const {mutations,timestamp,...y}=x; this.g(y); // ! #destructure
@@ -9020,7 +9020,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		{x;};
 	}
-	/** @private @arg {D__TwoColumnBrowseResults} x */
+	/** @private @arg {D_TwoColumnBrowseResults} x */
 	TwoColumnBrowseResultsData(x) {
 		const cf="TwoColumnBrowseResultsData";
 		this.save_keys(`[${cf}]`,x);
@@ -9037,7 +9037,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {T$A_Continuation<"comments-section",G_CommentsSection>} x */
 	A_CommentsSectionContinuation$(x) {
-		const cf="CommentsSectionContinuationAction";
+		const cf="A_CommentsSectionContinuation";
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
@@ -9045,7 +9045,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {T$A_Continuation<"browse-feedFEwhat_to_watch",R_BrowseFeed>} x */
 	A_BrowseFeed$(x) {
-		const cf="BrowseFeedAction";
+		const cf="A_BrowseFeed";
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
@@ -9104,21 +9104,21 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.ShareEntityServiceArgs(shareEntityServiceEndpoint);
 	}
-	/** @private @arg {D__ShareEntityService} x */
+	/** @private @arg {D_ShareEntityService} x */
 	ShareEntityServiceArgs(x) {
 		const cf="ShareEntityServiceArgs";
 		this.save_keys(`[${cf}]`,x);
 		const {serializedShareEntity,commands,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(serializedShareEntity);
-		this.z(commands,this.A_OpenPopupAction);
+		this.z(commands,this.A_A_OpenPopup);
 	}
 	/** @private @arg {G_Button$command} x */
 	ButtonCommand(x) {
 		const cf="ButtonCommand";
 		this.save_keys(`[${cf}]`,x);
-		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("continuationCommand" in x) return this.ContinuationCommand(x);
-		if("openPopupAction" in x) return this.A_OpenPopupAction(x);
+		if("openPopupAction" in x) return this.A_A_OpenPopup(x);
 		if("signalServiceEndpoint" in x) return this.E_SignalServiceEndpoint(x);
 		if("urlEndpoint" in x) return this.E_UrlEndpoint(x);
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
@@ -9141,30 +9141,30 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandExecutorData(commandExecutorCommand);
 	}
-	/** @private @arg {D__CommandExecutor} x */
+	/** @private @arg {D_CommandExecutor} x */
 	CommandExecutorData(x) {
-		this.CommandsTemplate(x,this.CommandExecutorAction);
+		this.CommandsTemplate(x,this.A_CommandExecutor);
 	}
-	/** @private @arg {CommandExecutorAction} x */
-	CommandExecutorAction(x) {
-		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
+	/** @private @arg {A_CommandExecutor} x */
+	A_CommandExecutor(x) {
+		if("changeEngagementPanelVisibilityAction" in x) return this.A_ChangeEngagementPanelVisibility(x);
 		if("scrollToEngagementPanelCommand" in x) return this.C$ScrollToEngagementPanel(x);
-		if("openPopupAction" in x) return this.A_OpenPopupAction(x);
-		if("hideEngagementPanelScrimAction" in x) return this.HideEngagementPanelScrimAction(x);
+		if("openPopupAction" in x) return this.A_A_OpenPopup(x);
+		if("hideEngagementPanelScrimAction" in x) return this.A_HideEngagementPanelScrim(x);
 		if("loopCommand" in x) return;
 		if("updateToggleButtonStateCommand" in x) return;
 		if("changeMarkersVisibilityCommand" in x) return;
 		if("engagementPanelHeaderShowNavigationButtonCommand" in x) return;
 		debugger;
 	}
-	/** @private @arg {HideEngagementPanelScrimAction} x */
-	HideEngagementPanelScrimAction(x) {
-		const cf="HideEngagementPanelScrimAction";
+	/** @private @arg {A_HideEngagementPanelScrim} x */
+	A_HideEngagementPanelScrim(x) {
+		const cf="A_HideEngagementPanelScrim";
 		const {clickTrackingParams,hideEngagementPanelScrimAction,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.HideEngagementPanelScrimAction_1(hideEngagementPanelScrimAction);
 	}
-	/** @private @arg {HideEngagementPanelScrimAction['hideEngagementPanelScrimAction']} x */
+	/** @private @arg {A_HideEngagementPanelScrim['hideEngagementPanelScrimAction']} x */
 	HideEngagementPanelScrimAction_1(x) {
 		const {engagementPanelTargetId,...y}=x; this.g(y); // ! #destructure
 		switch(engagementPanelTargetId) {
@@ -9172,30 +9172,30 @@ class HandleTypes extends ServiceMethods {
 			case "engagement-panel-clip-create": break;
 		}
 	}
-	/** @private @arg {D__TopbarLogo} x */
+	/** @private @arg {D_TopbarLogo} x */
 	TopbarLogo(x) {
 		const cf="TopbarLogo";
 		this.save_keys(`[${cf}]`,x);
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y); // ! #destructure
 		this.T$Icon(iconImage);
-		this.D__TextWithRuns(tooltipText);
+		this.D_TextWithRuns(tooltipText);
 		this.E_Browse(endpoint);
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(overrideEntityKey);
 	}
-	/** @template {D__VideoOwner} T @arg {T} x */
+	/** @template {D_VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
 		const cf="VideoOwnerData";
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
-		this.D__Thumbnail(thumbnail);
-		this.D__TextWithRuns(title);
+		this.D_Thumbnail(thumbnail);
+		this.D_TextWithRuns(title);
 		this.t(subscriptionButton,this.SubscriptionButton);
 		this.E_Browse(navigationEndpoint);
-		this.t(subscriberCountText,this.D__SimpleText);
+		this.t(subscriberCountText,this.D_SimpleText);
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {D__SubscriptionButton} x */
+	/** @private @arg {D_SubscriptionButton} x */
 	SubscriptionButton(x) {
 		const cf="SubscriptionButton";
 		this.save_keys(`[${cf}]`,x);
@@ -9227,27 +9227,27 @@ class HandleTypes extends ServiceMethods {
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if(slotPhysicalPosition!==1) debugger;
 	}
-	/** @private @arg {D__FusionSearchbox} x */
+	/** @private @arg {D_FusionSearchbox} x */
 	FusionSearchboxData(x) {
 		const cf="FusionSearchboxData";
 		this.save_keys(`[${cf}]`,x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y); // ! #destructure
 		this.T$Icon(icon);
-		this.D__TextWithRuns(placeholderText);
+		this.D_TextWithRuns(placeholderText);
 		this.R_WebSearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
 		this.E_SearchEndpoint(searchEndpoint);
 		this.R_Button(clearButton);
 	}
 	/** @private @arg {R_WebSearchboxConfig} x */
-	R_WebSearchboxConfig(x) {this.H_R_("SearchboxConfig",x,this.D__WebSearchboxConfig);}
-	/** @private @arg {D__WebSearchboxConfig} x */
-	D__WebSearchboxConfig(x) {
+	R_WebSearchboxConfig(x) {this.H_R_("SearchboxConfig",x,this.D_WebSearchboxConfig);}
+	/** @private @arg {D_WebSearchboxConfig} x */
+	D_WebSearchboxConfig(x) {
 		const cf="WebSearchboxConfig";
 		this.save_keys(`[${cf}]`,x);
 		{x;}
 	}
-	/** @private @arg {D__ChangeEngagementPanelVisibilityAction} x */
+	/** @private @arg {AD_ChangeEngagementPanelVisibility} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		const cf="ChangeEngagementPanelVisibilityActionData";
 		this.save_keys(`[${cf}]`,x);
@@ -9266,9 +9266,9 @@ class HandleTypes extends ServiceMethods {
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
 	}
-	/** @private @arg {D__UpdateEngagementPanel} x */
-	UpdateEngagementPanelData(x) {
-		const cf="UpdateEngagementPanelData";
+	/** @private @arg {D_UpdateEngagementPanel} x */
+	U_EngagementPanelData(x) {
+		const cf="U_EngagementPanelData";
 		this.save_keys(`[${cf}]`,x);
 		const {content,targetId,...y}=x; this.g(y); // ! #destructure
 		this.R_Transcript(content);
@@ -9327,7 +9327,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.R_SettingsSidebar(sidebar);
 	}
-	/** @private @arg {D__FeedFilterChipBar} x */
+	/** @private @arg {D_FeedFilterChipBar} x */
 	FeedFilterChipBarData(x) {
 		const cf="FeedFilterChipBarData";
 		this.save_keys(`[${cf}]`,x);
@@ -9389,27 +9389,27 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(layoutId);
 		this.AdLayoutLoggingData(adLayoutLoggingData);
 	}
-	/** @private @arg {D__HotkeyDialog} x */
-	D__HotkeyDialog(x) {
-		const cf="D__HotkeyDialog";
+	/** @private @arg {D_HotkeyDialog} x */
+	D_HotkeyDialog(x) {
+		const cf="D_HotkeyDialog";
 		this.save_keys(`[${cf}]`,x);
 		const {title,sections,dismissButton,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.D__TextWithRuns(title);
+		this.D_TextWithRuns(title);
 		this.z(sections,this.R_HotkeyDialogSection);
 		this.R_Button(dismissButton);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {D__HotkeyDialogSection} x */
-	D__HotkeyDialogSection(x) {
-		const cf="D__HotkeyDialogSection";
+	/** @private @arg {D_HotkeyDialogSection} x */
+	D_HotkeyDialogSection(x) {
+		const cf="D_HotkeyDialogSection";
 		this.save_keys(`[${cf}]`,x);
 		const {title,...y}=x;
 		let u=this.w(y);
 		this.z(u,this.R_HotkeyDialogSectionOption);
 	}
-	/** @private @arg {D__HotkeyDialogSectionOption} x */
-	D__HotkeyDialogSectionOption(x) {
-		const cf="D__HotkeyDialogSectionOption";
+	/** @private @arg {D_HotkeyDialogSectionOption} x */
+	D_HotkeyDialogSectionOption(x) {
+		const cf="D_HotkeyDialogSectionOption";
 		this.save_keys(`[${cf}]`,x);
 		const {label,hotkey,...y}=x;
 		this.save_string(`[${cf}.label]`,label.runs[0].text);
@@ -9417,10 +9417,10 @@ class HandleTypes extends ServiceMethods {
 		if("hotkeyAccessibilityLabel" in y) {
 			let ka=this.w(y);
 			this.save_string(`[${cf}.hotkey_label]`,ka.accessibilityData.label);
-			this.D__Accessibility(ka);
+			this.D_Accessibility(ka);
 		}
 	}
-	/** @template {D__SubscribeButton} T @arg {T} x */
+	/** @template {D_SubscribeButton} T @arg {T} x */
 	SubscribeButton$Omit(x) {
 		const cf="SubscribeButton";
 		this.save_keys(`[${cf}]`,x);
@@ -9430,11 +9430,11 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(type);
 		this.primitive_of_string(channelId);
 		this.primitive_of(showPreferences,"boolean");
-		this.D__TextWithRuns(buttonText);
-		this.D__TextWithRuns(subscribedButtonText);
-		this.D__TextWithRuns(unsubscribedButtonText);
+		this.D_TextWithRuns(buttonText);
+		this.D_TextWithRuns(subscribedButtonText);
+		this.D_TextWithRuns(unsubscribedButtonText);
 		this.trackingParams(cf,trackingParams);
-		this.D__TextWithRuns(unsubscribeButtonText);
+		this.D_TextWithRuns(unsubscribeButtonText);
 		this.tz(serviceEndpoints,x => {
 			if("subscribeEndpoint" in x) return this.E_SubscribeEndpoint(x);
 			if("signalServiceEndpoint" in x) return this.signalServiceEndpoint(x);
@@ -9442,8 +9442,8 @@ class HandleTypes extends ServiceMethods {
 			this.do_codegen(cf,x);
 			debugger;
 		});
-		this.D__Accessibility(subscribeAccessibility);
-		this.D__Accessibility(unsubscribeAccessibility);
+		this.D_Accessibility(subscribeAccessibility);
+		this.D_Accessibility(unsubscribeAccessibility);
 		return y;
 	}
 	/** @arg {E_SubscribeEndpoint} x */
@@ -9465,18 +9465,18 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(clickTrackingParams);
 		this.g(resetChannelUnreadCountCommand);
 	}
-	/** @private @arg {D__CinematicContainer} x */
-	D__CinematicContainer(x) {
+	/** @private @arg {D_CinematicContainer} x */
+	D_CinematicContainer(x) {
 		const cf="CinematicContainerData";
 		this.save_keys(`[${cf}]`,x);
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=x; this.g(y); // ! #destructure
 		this.t(backgroundImageConfig,this.R_ThumbnailsList);
-		this.D__GradientColorConfig(gradientColorConfig);
+		this.D_GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
 		this.g(config);
 	}
-	/** @private @arg {D__GradientColorConfig} x */
-	D__GradientColorConfig(x) {
+	/** @private @arg {D_GradientColorConfig} x */
+	D_GradientColorConfig(x) {
 		{
 			let c=x[0];
 			/** @type {`${typeof c['darkThemeColor']}`} */
@@ -9502,9 +9502,9 @@ class HandleTypes extends ServiceMethods {
 	R_ThumbnailsList(x) {
 		const cf="ThumbnailsList";
 		this.save_keys(`[${cf}]`,x);
-		this.D__Thumbnail(x.thumbnail);
+		this.D_Thumbnail(x.thumbnail);
 	}
-	/** @private @arg {D__AdLayoutLogging} x */
+	/** @private @arg {D_AdLayoutLogging} x */
 	AdLayoutLoggingData(x) {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);

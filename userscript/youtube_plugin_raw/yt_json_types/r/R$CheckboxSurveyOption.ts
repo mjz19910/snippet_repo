@@ -1,1 +1,1 @@
-type R_CheckboxSurveyOption={checkboxSurveyOptionRenderer: D__CheckboxSurveyOption;};
+type R_CheckboxSurveyOption={checkboxSurveyOptionRenderer: D_CheckboxSurveyOption;};

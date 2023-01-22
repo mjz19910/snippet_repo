@@ -1,4 +1,4 @@
-type D__SearchFeedSectionList={
+type D_SearchFeedSectionList={
 	continuations?: RD__NextContinuation[];
 	contents: $SectionListItem[];
 	trackingParams: string;

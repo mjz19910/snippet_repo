@@ -1,1 +1,1 @@
-type R_ClipAdState={clipAdStateRenderer: D__ClipAdState;};
+type R_ClipAdState={clipAdStateRenderer: D_ClipAdState;};

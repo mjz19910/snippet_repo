@@ -1,1 +1,1 @@
-type R_TranscriptFooter={transcriptFooterRenderer: D__TranscriptFooter;};
+type R_TranscriptFooter={transcriptFooterRenderer: D_TranscriptFooter;};

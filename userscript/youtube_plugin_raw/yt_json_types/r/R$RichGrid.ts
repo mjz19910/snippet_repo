@@ -1,1 +1,1 @@
-type R_RichGrid={richGridRenderer: D__RichGrid;};
+type R_RichGrid={richGridRenderer: D_RichGrid;};
