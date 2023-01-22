@@ -8,5 +8,5 @@ type R$Watch={
 	engagementPanels: R$EngagementPanelSectionList[];
 	topbar: R$DesktopTopbar;
 	pageVisualEffects: R$CinematicContainer[];
-	frameworkUpdates: A$FrameworkUpdates;
+	frameworkUpdates: A_FrameworkUpdates;
 };

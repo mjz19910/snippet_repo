@@ -19,7 +19,7 @@ type D__PlaylistHeader={
 	moreActionsMenu: R$Menu;
 	playButton: R$Button;
 	shufflePlayButton: R$Button;
-	onDescriptionTap: T$A$OpenPopup<{}>;
+	onDescriptionTap: T$A_OpenPopup<{}>;
 	cinematicContainer: R$CinematicContainer;
 	byline: R$PlaylistByline[];
 	descriptionTapText: R$TextWithRuns;

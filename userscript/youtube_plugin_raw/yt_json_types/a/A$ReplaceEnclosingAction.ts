@@ -1,1 +1,1 @@
-type A$ReplaceEnclosing=C$Tracking&{replaceEnclosingAction: T$Item<R$NotificationText|RA$ReelDismissal>;};
+type A_ReplaceEnclosing=C$Tracking&{replaceEnclosingAction: T$Item<R$NotificationText|RA_ReelDismissal>;};

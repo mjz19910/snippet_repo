@@ -1,3 +1,3 @@
-type D__A$GetMultiPageMenu={
+type D__A_GetMultiPageMenu={
 	menu: T$R$MultiPageMenu<{}>;
 };

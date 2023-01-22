@@ -1,6 +1,6 @@
 type GetPdgBuyFlow={
 	responseContext: RC$ResponseContext;
-	command: T$A$OpenPopup<{}>;
+	command: T$A_OpenPopup<{}>;
 	trackingParams: string;
-	frameworkUpdates: A$FrameworkUpdates;
+	frameworkUpdates: A_FrameworkUpdates;
 };

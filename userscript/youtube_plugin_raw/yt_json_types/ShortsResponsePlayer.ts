@@ -11,6 +11,6 @@ type ShortsResponsePlayer={
 	trackingParams: string;
 	attestation: R$PlayerAttestation;
 	videoQualityPromoSupportedRenderers: R$VideoQualityPromo;
-	frameworkUpdates: A$FrameworkUpdates;
+	frameworkUpdates: A_FrameworkUpdates;
 	cacheMetadata?: CacheMetadata;
 };

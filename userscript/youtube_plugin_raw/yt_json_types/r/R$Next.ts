@@ -11,5 +11,5 @@ type R$Next={
 	engagementPanels?: EngagementPanel[];
 	topbar?: R$DesktopTopbar;
 	pageVisualEffects?: R$CinematicContainer[];
-	frameworkUpdates?: A$FrameworkUpdates;
+	frameworkUpdates?: A_FrameworkUpdates;
 };

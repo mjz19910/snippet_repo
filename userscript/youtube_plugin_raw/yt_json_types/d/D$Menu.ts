@@ -4,7 +4,7 @@ type D__Menu={
 	topLevelButtons?: R$SegmentedLikeDislikeButton[];
 	accessibility?: D__Accessibility;
 	targetId?: D__Menu$targetId;
-	loggingDirectives?: A$LoggingDirectives;
+	loggingDirectives?: A_LoggingDirectives;
 	flexibleItems?: R$MenuFlexibleItem[];
 };
 type D__Menu$targetId="browse-video-menu-button";

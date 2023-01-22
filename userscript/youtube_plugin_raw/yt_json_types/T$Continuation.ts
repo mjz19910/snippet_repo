@@ -1,4 +1,4 @@
-type T$A$Continuation<Tid,Type>={
+type T$A_Continuation<Tid,Type>={
 	targetId: Tid;
 	continuationItems: Type[];
 };

@@ -3,5 +3,5 @@ type D__CommentThread={
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";
 	isModeratedElqComment: boolean;
-	loggingDirectives: A$LoggingDirectives;
+	loggingDirectives: A_LoggingDirectives;
 };

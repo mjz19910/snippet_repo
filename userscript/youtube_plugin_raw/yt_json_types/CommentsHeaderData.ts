@@ -8,5 +8,5 @@ type D__CommentsHeader={
 	showSeparator: true;
 	customEmojis: CustomEmoji[];
 	unicodeEmojisUrl: string;
-	loggingDirectives: A$LoggingDirectives;
+	loggingDirectives: A_LoggingDirectives;
 };

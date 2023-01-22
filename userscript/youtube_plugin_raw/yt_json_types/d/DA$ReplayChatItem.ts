@@ -1,4 +1,4 @@
-type DA$ReplayChatItem={
-	actions: A$AddChatItem[];
+type DA_ReplayChatItem={
+	actions: A_AddChatItem[];
 	videoOffsetTimeMsec: `${number}`;
 };

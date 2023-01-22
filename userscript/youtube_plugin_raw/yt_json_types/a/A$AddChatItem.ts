@@ -1,4 +1,4 @@
-type A$AddChatItem={
+type A_AddChatItem={
 	clickTrackingParams?: string;
-	addChatItemAction: DA$AddChatItem;
+	addChatItemAction: DA_AddChatItem;
 };

@@ -1,6 +1,6 @@
 type R$GetNotificationMenu={
 	responseContext: RC$ResponseContext;
-	actions: T$A$OpenPopup<{
+	actions: T$A_OpenPopup<{
 		popup: T$R$MultiPageMenu<{
 			header: R$SimpleMenuHeader;
 			sections: R$MP$MenuNotificationSection[];

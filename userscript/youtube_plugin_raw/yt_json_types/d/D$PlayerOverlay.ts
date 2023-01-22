@@ -3,4 +3,4 @@ type D__PlayerOverlay={
 	shareButton: R$Button;
 	addToMenu: R$Menu;
 	videoDetails: R$PlayerOverlayVideoDetails;
-}|A$BrowserMediaSession;
+}|A_BrowserMediaSession;

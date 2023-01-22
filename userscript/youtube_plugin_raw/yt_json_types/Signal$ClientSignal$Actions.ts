@@ -1,1 +1,1 @@
-type Signal$ClientSignal$Actions=E$ShowEngagementPanel|A$SendFeedback|A$Signal|T$A$OpenPopup<{}>;
+type Signal$ClientSignal$Actions=E$ShowEngagementPanel|A_SendFeedback|A_Signal|T$A_OpenPopup<{}>;

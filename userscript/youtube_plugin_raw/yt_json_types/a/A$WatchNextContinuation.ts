@@ -1,1 +1,1 @@
-type A$WatchNextContinuation=T$A$Continuation<"watch-next-feed",G_WatchNext>;
+type A_WatchNextContinuation=T$A_Continuation<"watch-next-feed",G_WatchNext>;

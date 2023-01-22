@@ -1,4 +1,4 @@
-type A$UpdateNotificationsUnseenCount={
+type A_UpdateNotificationsUnseenCount={
 	clickTrackingParams: string;
 	updateNotificationsUnseenCountAction: UpdateNotificationsUnseenCount;
 };

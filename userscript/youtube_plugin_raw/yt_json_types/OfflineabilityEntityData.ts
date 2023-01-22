@@ -4,5 +4,5 @@ type D__OfflineabilityEntity={
 	addToOfflineButtonState: GE$AddToOfflineButtonState;
 	contentCheckOk: false;
 	racyCheckOk: false;
-	loggingDirectives: A$LoggingDirectives;
+	loggingDirectives: A_LoggingDirectives;
 };

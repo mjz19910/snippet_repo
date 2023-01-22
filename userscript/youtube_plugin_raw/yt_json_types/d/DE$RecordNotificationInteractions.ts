@@ -1,4 +1,4 @@
 type DE$RecordNotificationInteractions={
 	serializedInteractionsRequest: string;
-	actions?: A$HideEnclosingAction[];
+	actions?: A_HideEnclosingAction[];
 };

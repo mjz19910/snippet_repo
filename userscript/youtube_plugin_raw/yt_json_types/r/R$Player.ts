@@ -15,7 +15,7 @@ type R$Player={
 	attestation?: R$PlayerAttestation;
 	videoQualityPromoSupportedRenderers?: R$VideoQualityPromo;
 	adPlacements?: Maybe<R$AdPlacement>[];
-	frameworkUpdates: A$FrameworkUpdates;
+	frameworkUpdates: A_FrameworkUpdates;
 	endscreen?: R$Endscreen;
 	paidContentOverlay?: {};
 	annotations?: R$PlayerAnnotationsExpanded[];

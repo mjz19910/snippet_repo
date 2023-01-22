@@ -3,4 +3,4 @@ type R$BrowseEditPlaylist={
 	status: "STATUS_SUCCEEDED";
 	playlistEditResults: {}[];
 	trackingParams: string;
-}&T$Actions$<C$RefreshPlaylist|T$A$OpenPopup<{}>>;
+}&T$Actions$<C$RefreshPlaylist|T$A_OpenPopup<{}>>;

@@ -1,6 +1,6 @@
 type R$Unsubscribe={
 	responseContext: RC$ResponseContext;
-	actions: (A$RemoveFromGuideSection|T$A$OpenPopup<{}>|A$UpdateSubscribeButton)[];
+	actions: (A_RemoveFromGuideSection|T$A_OpenPopup<{}>|A_UpdateSubscribeButton)[];
 	trackingParams: string;
-	frameworkUpdates: A$FrameworkUpdates;
+	frameworkUpdates: A_FrameworkUpdates;
 };

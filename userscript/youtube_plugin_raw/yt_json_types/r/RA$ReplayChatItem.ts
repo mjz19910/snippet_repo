@@ -1,1 +1,1 @@
-type RA$ReplayChatItem={replayChatItemAction: DA$ReplayChatItem;};
+type RA_ReplayChatItem={replayChatItemAction: DA_ReplayChatItem;};

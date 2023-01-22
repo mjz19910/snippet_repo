@@ -1,12 +1,12 @@
 type G_Actions$=
-	|A$AddToGuideSection
-	|A$GetMultiPageMenu
-	|T$A$OpenPopup<{}>
+	|A_AddToGuideSection
+	|A_GetMultiPageMenu
+	|T$A_OpenPopup<{}>
 	|C$RefreshPlaylist
-	|A$RemoveFromGuideSection
+	|A_RemoveFromGuideSection
 	|C$RunAttestation
-	|A$UpdateChannelSwitcherPage
-	|A$UpdateNotificationsUnseenCount
-	|A$UpdateSubscribeButton
+	|A_UpdateChannelSwitcherPage
+	|A_UpdateNotificationsUnseenCount
+	|A_UpdateSubscribeButton
 	;
 ;

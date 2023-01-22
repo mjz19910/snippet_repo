@@ -1,1 +1,1 @@
-type A$Params={params: string;};
+type A_Params={params: string;};

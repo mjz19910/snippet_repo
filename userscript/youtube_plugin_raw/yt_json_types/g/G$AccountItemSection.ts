@@ -1,1 +1,1 @@
-type G_AccountItemSection=A$AccountItem|R$CompactLink;
+type G_AccountItemSection=A_AccountItem|R$CompactLink;

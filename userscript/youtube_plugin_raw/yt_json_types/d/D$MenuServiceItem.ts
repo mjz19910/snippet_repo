@@ -4,5 +4,5 @@ type D__MenuServiceItem<T extends string,EndpointItems>={
 	serviceEndpoint: G_MenuServiceEndpointItems<EndpointItems>;
 	trackingParams: string;
 	hasSeparator?: true;
-	loggingDirectives?: A$LoggingDirectives;
+	loggingDirectives?: A_LoggingDirectives;
 };

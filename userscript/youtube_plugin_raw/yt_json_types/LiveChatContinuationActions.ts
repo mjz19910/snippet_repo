@@ -1,1 +1,1 @@
-type LiveChatContinuationActions=RA$ReplayChatItem|A$AddChatItem;
+type LiveChatContinuationActions=RA_ReplayChatItem|A_AddChatItem;

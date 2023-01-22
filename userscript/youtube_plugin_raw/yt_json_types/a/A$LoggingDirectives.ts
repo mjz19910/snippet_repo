@@ -1,4 +1,4 @@
-type A$LoggingDirectives={
+type A_LoggingDirectives={
 	trackingParams: string;
 	visibility: TM$Visibility;
 	enableDisplayloggerExperiment?: boolean;

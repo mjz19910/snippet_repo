@@ -1,1 +1,1 @@
-type Signal$GetAccountMenu=T$Signal<"GET_ACCOUNT_MENU">&T$Actions$<T$A$OpenPopup<Popup$GetAccountMenu>>;
+type Signal$GetAccountMenu=T$Signal<"GET_ACCOUNT_MENU">&T$Actions$<T$A_OpenPopup<Popup$GetAccountMenu>>;
