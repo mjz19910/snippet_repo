@@ -1,1 +1,0 @@
-type AdPlacementConfig={adPlacementConfig: D$AdPlacementConfig;};

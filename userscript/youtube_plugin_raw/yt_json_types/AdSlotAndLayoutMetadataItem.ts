@@ -1,4 +1,4 @@
 type AdSlotAndLayoutMetadataItem={
 	adSlotMetadata: AdSlotMetadata;
-	adLayoutMetadata: AdLayoutMetadataItem[];
+	adLayoutMetadata: M$AdLayoutMetadata$1[];
 };

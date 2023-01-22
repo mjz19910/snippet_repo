@@ -1,0 +1,1 @@
+type R$AdPlacementConfig={adPlacementConfig: D$AdPlacementConfig;};

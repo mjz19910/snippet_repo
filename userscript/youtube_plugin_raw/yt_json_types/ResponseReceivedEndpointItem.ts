@@ -1,5 +1,5 @@
 type EI$ResponseReceived=
-	|AdsControlFlowOpportunityReceivedCommand
+	|C$AdsControlFlowOpportunityReceived
 	|AppendContinuationItemsAction
 	|ChangeKeyedMarkersVisibilityCommand
 	|LoadMarkersCommand

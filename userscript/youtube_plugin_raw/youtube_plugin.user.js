@@ -7696,7 +7696,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.targetId(cf,targetId);
 	}
-	/** @private @arg {AdsControlFlowOpportunityReceivedCommand} x */
+	/** @private @arg {C$AdsControlFlowOpportunityReceived} x */
 	AdsControlFlowOpportunityReceivedCommand(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommand";
 		this.save_keys(`[${cf}]`,x);
@@ -8635,7 +8635,7 @@ class HandleTypes extends ServiceMethods {
 		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
 		this.t(parentTrackingParams,a => this.params("ResolveUrlCommandMetadata","tracking.parentTrackingParams",a));
 	}
-	/** @private @arg {D$AdsControlFlowOpportunityReceivedCommand} x */
+	/** @private @arg {DC$AdsControlFlowOpportunityReceived} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -9165,7 +9165,7 @@ class HandleTypes extends ServiceMethods {
 	MapTemplate(x,f) {
 		f.call(this,x.value,x.key);
 	}
-	/** @private @arg {AdLayoutMetadataItem} x */
+	/** @private @arg {M$AdLayoutMetadata$1} x */
 	AdLayoutMetadataItem(x) {
 		const cf="AdLayoutMetadataItem";
 		this.save_keys(`[${cf}]`,x);

@@ -1,5 +1,5 @@
 type D$AdPlacementConfig={
-	kind: AdPlacementKindEnum;
+	kind: DE$AdPlacementKind;
 	adTimeOffset?: AdTimeOffset;
 	hideCueRangeMarker: true;
 };

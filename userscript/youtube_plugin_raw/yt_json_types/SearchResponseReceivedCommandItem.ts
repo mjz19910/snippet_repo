@@ -1,1 +1,1 @@
-type SearchResponseReceivedCommandItem=AdsControlFlowOpportunityReceivedCommand;
+type SearchResponseReceivedCommandItem=C$AdsControlFlowOpportunityReceived;

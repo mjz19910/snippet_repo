@@ -1,3 +1,3 @@
 type ResponseReceivedAction=
-	|AdsControlFlowOpportunityReceivedCommand
+	|C$AdsControlFlowOpportunityReceived
 	|ReloadContinuationItemsCommand;

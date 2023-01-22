@@ -1,1 +1,0 @@
-type D$AdPlacement={config: AdPlacementConfig;renderer: AdPlacementRendererItem;};
