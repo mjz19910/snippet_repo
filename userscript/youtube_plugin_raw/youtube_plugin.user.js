@@ -11526,7 +11526,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowseEndpointContextMusicConfig";
 		this.save_keys(`[${cf}]`,x);
 		let pageType=this.w(x);
-		let pt2=this.T$Renderer(cf,x);pt2;
+		let pt2=this.T$Renderer(cf,x); pt2;
 		this.save_enum("MUSIC_PAGE_TYPE",pageType);
 		switch(pageType) {
 			case "MUSIC_PAGE_TYPE_ALBUM": break;
@@ -14606,9 +14606,15 @@ class HandleTypes extends ServiceMethods {
 		this.SuperVodBuyFlowContent(this.w(x));
 	}
 	/** @arg {ChannelSwitcherHeader} x */
-	ChannelSwitcherHeader(x) {x;}
+	ChannelSwitcherHeader(x) {
+		const cf="ChannelSwitcherHeader";
+		this.save_keys(`[${cf}]`,x);
+	}
 	/** @arg {SuperVodBuyFlowContent} x */
-	SuperVodBuyFlowContent(x) {x;}
+	SuperVodBuyFlowContent(x) {
+		const cf="SuperVodBuyFlowContent";
+		this.save_keys(`[${cf}]`,x);
+	}
 	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
 	SubscriptionNotificationToggleButtonRenderer(x) {
 		const cf="SubscriptionNotificationToggleButtonRenderer";
