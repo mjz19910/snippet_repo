@@ -2993,309 +2993,6 @@ class YtHandlers extends BaseService {
 			["videoRenderer",false],
 		]);
 	}
-	/** @private @arg {ApiUrlFormatFull} x */
-	use_template_url(x) {
-		const res_parse=this.parse_with_url_parse(x);
-		if("_tag" in res_parse) {
-			console.log("parse failed (should never happen)",x,res_parse);
-			throw new Error("unreachable");
-		}
-		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
-		return this.parser.get_url_type(path_parts);
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_length_1(target,x) {
-		switch(target[0]) {
-			default: debugger; break;
-			case "browse": return {
-				type: target[0],
-				/** @type {R$Browse} */
-				data: as(x),
-			};
-			case "feedback": return {
-				type: target[0],
-				/** @type {R$Feedback} */
-				data: as(x),
-			};
-			case "getDatasyncIdsEndpoint": return {
-				type: target[0],
-				/** @type {R$DatasyncIds} */
-				data: as(x),
-			};
-			case "getAccountSwitcherEndpoint": return {
-				type: target[0],
-				/** @type {R$GetAccountSwitcherEndpoint} */
-				data: as(x),
-			};
-			case "get_transcript": return {
-				type: target[0],
-				/** @type {R$GetTranscript} */
-				data: as(x),
-			};
-			case "get_survey": return {
-				type: target[0],
-				/** @type {R$GetSurvey} */
-				data: as(x),
-			};
-			case "guide": return {
-				type: target[0],
-				/** @type {R$Guide} */
-				data: as(x),
-			};
-			case "next": return {
-				type: target[0],
-				/** @type {R$Next} */
-				data: as(x),
-			};
-			case "player": return {
-				type: target[0],
-				/** @type {R$Player} */
-				data: as(x),
-			};
-			case "search": return {
-				type: target[0],
-				/** @type {R$SearchApi} */
-				data: as(x),
-			};
-			case "updated_metadata": return {
-				type: target[0],
-				/** @type {UpdatedMetadata} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_reel(target,x) {
-		switch(target[1]) {
-			default: debugger; return null;
-			case "reel_item_watch": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$ReelItemWatch} */
-				data: as(x),
-			};
-			case "reel_watch_sequence": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$ReelWatchSequence} */
-				data: as(x),
-			};
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_notification(target,x) {
-		switch(target[1]) {
-			default: debugger; return null;
-			case "get_notification_menu": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$GetNotificationMenu} */
-				data: as(x),
-			};
-			case "get_unseen_count": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$NotificationGetUnseenCount} */
-				data: as(x),
-			};
-			case "modify_channel_preference": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$ModifyChannelPreference} */
-				data: as(x),
-			};
-			case "record_interactions": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$Success} */
-				data: as(x),
-			};
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_live_chat(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "get_live_chat_replay": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChat} */
-				data: as(x),
-			};
-			case "get_live_chat": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetLiveChat} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_res_att(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "get": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @type {R$AttGet} */
-				data: as(x),
-			};
-			case "log": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @type {R$AttLog$RC} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_account(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "account_menu": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$AccountMenu} */
-				data: as(x),
-			};
-			case "accounts_list": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$AccountsList} */
-				data: as(x),
-			};
-			case "set_setting": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountSetSetting} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_like(target,x) {
-		switch(target[1]) {
-			default: debugger; break;
-			case "dislike": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$Dislike} */
-				data: as(x),
-			};
-			case "like": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$LikeLike} */
-				data: as(x),
-			};
-			case "removelike": return {
-				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$LikeRemoveLike} */
-				data: as(x),
-			};
-		}
-		return null;
-	}
-	/** @private @arg {UrlTypes} url_type @arg {{}} x @returns {_ResponseTypes} */
-	get_res_data(url_type,x) {
-		/** @private @type {Split<UrlTypes, ".">} */
-		let target=split_string(url_type,".");
-		/** @private @type {_ResponseTypes|null} */
-		let res=null;
-		switch(target[0]) {
-			case "account": res=this.convert_account(target,x); break;
-			case "att": res=this.convert_res_att(target,x); break;
-			case "browse": res=this.convert_browse(target,x); break;
-			case "like": res=this.convert_like(target,x); break;
-			case "live_chat": res=this.convert_live_chat(target,x); break;
-			case "music": res=this.convert_music(target,x); break;
-			case "notification": res=this.convert_notification(target,x); break;
-			case "reel": res=this.convert_reel(target,x); break;
-			case "subscription": res=this.convert_subscription(target,x); break;
-			case "playlist": res=this.convert_playlist(target,x); break;
-			case "share": res=this.convert_share(target,x); break;
-			case "pdg": res=this.convert_pdg(target,x); break;
-		}
-		switch(target.length) {
-			case 1: res=this.convert_length_1(target,x); break;
-		}
-		if(res) return res;
-		console.log("[log_get_res_data]",target,x);
-		debugger;
-		return {
-			type: "_Generic",
-			data: x,
-		};
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_pdg(t,x) {
-		switch(t[1]) {
-			case "get_pdg_buy_flow": return {
-				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetPdgBuyFlow} */
-				data: as(x),
-			};
-			default: debugger; return null;
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_music(t,x) {
-		switch(t[1]) {
-			case "get_search_suggestions": return {
-				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R$GetSearchSuggestions} */
-				data: as(x),
-			};
-			default: debugger; return null;
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_share(t,x) {
-		switch(t[1]) {
-			case "get_share_panel": return {
-				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetSharePanel} */
-				data: as(x),
-			};
-			default: debugger; return null;
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_playlist(t,x) {
-		switch(t[1]) {
-			case "get_add_to_playlist": return {
-				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R$GetAddToPlaylist} */
-				data: as(x),
-			};
-			default: debugger; return null;
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_subscription(t,x) {
-		switch(t[1]) {
-			case "subscribe": return {
-				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R$Subscribe} */
-				data: as(x),
-			};
-			case "unsubscribe": return {
-				type: `${t[0]}.${t[1]}`,
-				/** @private @type {R$Unsubscribe} */
-				data: as(x),
-			};
-			default: debugger; return null;
-		}
-	}
-	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
-	convert_browse(t,x) {
-		switch(t.length) {
-			case 2: switch(t[1]) {
-				case "edit_playlist": return {
-					type: `${t[0]}.${t[1]}`,
-					/** @private @type {R$BrowseEditPlaylist} */
-					data: as(x),
-				};
-			}
-			case 1: break;
-		}
-		switch(t[0]) {
-			case "browse": return {
-				type: t[0],
-				/** @type {R$Browse} */
-				data: as(x),
-			};
-		}
-	}
 	/** @public @arg {string|URL|Request} request @arg {Response} response @arg {{}} data */
 	on_handle_api(request,response,data) {
 		/** @private @arg {string|URL|Request} req */
@@ -3311,7 +3008,7 @@ class YtHandlers extends BaseService {
 		let parsed_url=convert_to_url(request).url;
 		/** @private @type {ApiUrlFormatFull} */
 		let api_url=as(parsed_url.href);
-		let url_type=this.use_template_url(api_url);
+		let url_type=this.x.get("handle_types").use_template_url(api_url);
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
@@ -3330,8 +3027,9 @@ class YtHandlers extends BaseService {
 		}
 		if(!url_type) throw new Error("Unreachable");
 		this.handle_any_data(url_type,data);
-		let res=this.get_res_data(url_type,data);
-		this.x.get("handle_types").ResponseTypes(response,res);
+		let ht=this.x.get("handle_types");
+		let res=ht.get_res_data(url_type,data);
+		ht.ResponseTypes(response,res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {SavedDataItem} data */
@@ -3996,7 +3694,7 @@ class ModifyEnv extends BaseService {
 		}
 		/** @private @arg {string|URL|Request} request @arg {{}|undefined} options @arg {Response} response @returns {Response} */
 		function fetch_promise_handler(request,options,response) {
-			class FakeResponse {
+			class R$Fake {
 				text() {
 					if(is_yt_debug_enabled) console.log("response.text()");
 					return handle_fetch_response_2({input: {request,options}},{response},{result: response.text()});
@@ -4011,7 +3709,7 @@ class ModifyEnv extends BaseService {
 					return response.status;
 				}
 			}
-			let fake_res=new FakeResponse;
+			let fake_res=new R$Fake;
 			/** @private @type {any} */
 			let any_x=fake_res;
 			/** @private @type {Response} */
@@ -6546,6 +6244,309 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @public @arg {UrlTypes} url_type @arg {{}} x @returns {_ResponseTypes} */
+	get_res_data(url_type,x) {
+		/** @private @type {Split<UrlTypes, ".">} */
+		let target=split_string(url_type,".");
+		/** @private @type {_ResponseTypes|null} */
+		let res=null;
+		switch(target[0]) {
+			case "account": res=this.convert_account(target,x); break;
+			case "att": res=this.convert_res_att(target,x); break;
+			case "browse": res=this.convert_browse(target,x); break;
+			case "like": res=this.x.get("handle_types").convert_like(target,x); break;
+			case "live_chat": res=this.convert_live_chat(target,x); break;
+			case "music": res=this.convert_music(target,x); break;
+			case "notification": res=this.convert_notification(target,x); break;
+			case "reel": res=this.convert_reel(target,x); break;
+			case "subscription": res=this.convert_subscription(target,x); break;
+			case "playlist": res=this.convert_playlist(target,x); break;
+			case "share": res=this.convert_share(target,x); break;
+			case "pdg": res=this.convert_pdg(target,x); break;
+		}
+		switch(target.length) {
+			case 1: res=this.convert_length_1(target,x); break;
+		}
+		if(res) return res;
+		console.log("[log_get_res_data]",target,x);
+		debugger;
+		return {
+			type: "_Generic",
+			data: x,
+		};
+	}
+	/** @public @arg {ApiUrlFormatFull} x */
+	use_template_url(x) {
+		const res_parse=this.parse_with_url_parse(x);
+		if("_tag" in res_parse) {
+			console.log("parse failed (should never happen)",x,res_parse);
+			throw new Error("unreachable");
+		}
+		let path_parts=split_string(split_string_once(res_parse.pathname,"/")[1],"/");
+		return this.parser.get_url_type(path_parts);
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,[any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_length_1(target,x) {
+		switch(target[0]) {
+			default: debugger; break;
+			case "browse": return {
+				type: target[0],
+				/** @type {R$Browse} */
+				data: as(x),
+			};
+			case "feedback": return {
+				type: target[0],
+				/** @type {R$Feedback} */
+				data: as(x),
+			};
+			case "getDatasyncIdsEndpoint": return {
+				type: target[0],
+				/** @type {R$DatasyncIds} */
+				data: as(x),
+			};
+			case "getAccountSwitcherEndpoint": return {
+				type: target[0],
+				/** @type {R$GetAccountSwitcherEndpoint} */
+				data: as(x),
+			};
+			case "get_transcript": return {
+				type: target[0],
+				/** @type {R$GetTranscript} */
+				data: as(x),
+			};
+			case "get_survey": return {
+				type: target[0],
+				/** @type {R$GetSurvey} */
+				data: as(x),
+			};
+			case "guide": return {
+				type: target[0],
+				/** @type {R$Guide} */
+				data: as(x),
+			};
+			case "next": return {
+				type: target[0],
+				/** @type {R$Next} */
+				data: as(x),
+			};
+			case "player": return {
+				type: target[0],
+				/** @type {R$Player} */
+				data: as(x),
+			};
+			case "search": return {
+				type: target[0],
+				/** @type {R$Search} */
+				data: as(x),
+			};
+			case "updated_metadata": return {
+				type: target[0],
+				/** @type {UpdatedMetadata} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["reel",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_reel(target,x) {
+		switch(target[1]) {
+			default: debugger; return null;
+			case "reel_item_watch": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$ReelItemWatch} */
+				data: as(x),
+			};
+			case "reel_watch_sequence": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$ReelWatchSequence} */
+				data: as(x),
+			};
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["notification",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_notification(target,x) {
+		switch(target[1]) {
+			default: debugger; return null;
+			case "get_notification_menu": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$GetNotificationMenu} */
+				data: as(x),
+			};
+			case "get_unseen_count": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$NotificationGetUnseenCount} */
+				data: as(x),
+			};
+			case "modify_channel_preference": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$ModifyChannelPreference} */
+				data: as(x),
+			};
+			case "record_interactions": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$Success} */
+				data: as(x),
+			};
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["live_chat",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_live_chat(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get_live_chat_replay": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {GetLiveChat} */
+				data: as(x),
+			};
+			case "get_live_chat": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {GetLiveChat} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["att",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_res_att(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "get": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {R$AttGet} */
+				data: as(x),
+			};
+			case "log": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @type {R$AttLog$RC} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["account",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_account(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "account_menu": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$AccountMenu} */
+				data: as(x),
+			};
+			case "accounts_list": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$AccountsList} */
+				data: as(x),
+			};
+			case "set_setting": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {AccountSetSetting} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["pdg",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_pdg(t,x) {
+		switch(t[1]) {
+			case "get_pdg_buy_flow": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {GetPdgBuyFlow} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["music",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_music(t,x) {
+		switch(t[1]) {
+			case "get_search_suggestions": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {R$GetSearchSuggestions} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["share",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_share(t,x) {
+		switch(t[1]) {
+			case "get_share_panel": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {GetSharePanel} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["playlist",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_playlist(t,x) {
+		switch(t[1]) {
+			case "get_add_to_playlist": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {R$GetAddToPlaylist} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["subscription",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_subscription(t,x) {
+		switch(t[1]) {
+			case "subscribe": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {R$Subscribe} */
+				data: as(x),
+			};
+			case "unsubscribe": return {
+				type: `${t[0]}.${t[1]}`,
+				/** @private @type {R$Unsubscribe} */
+				data: as(x),
+			};
+			default: debugger; return null;
+		}
+	}
+	/** @private @arg {Extract<Split<UrlTypes, ".">,["browse",...any]>} t @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_browse(t,x) {
+		switch(t.length) {
+			case 2: switch(t[1]) {
+				case "edit_playlist": return {
+					type: `${t[0]}.${t[1]}`,
+					/** @private @type {R$BrowseEditPlaylist} */
+					data: as(x),
+				};
+			}
+			case 1: break;
+		}
+		switch(t[0]) {
+			case "browse": return {
+				type: t[0],
+				/** @type {R$Browse} */
+				data: as(x),
+			};
+		}
+	}
+	/** @public @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
+	convert_like(target,x) {
+		switch(target[1]) {
+			default: debugger; break;
+			case "dislike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$Dislike} */
+				data: as(x),
+			};
+			case "like": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$LikeLike} */
+				data: as(x),
+			};
+			case "removelike": return {
+				type: `${target[0]}.${target[1]}`,
+				/** @private @type {R$LikeRemoveLike} */
+				data: as(x),
+			};
+		}
+		return null;
+	}
 	/** @public @arg {true} x */
 	expect_true(x) {
 		if(x!==true) debugger;
@@ -6966,30 +6967,30 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R$CinematicContainer} x */
 	R$CinematicContainer(x) {this.H$R$("CinematicContainer",x,this.D$CinematicContainer);}
 	/** @private @arg {R$WatchPage} x */
-	WatchPageResponse(x) {
+	R$WatchPage(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: this.VE3832_WatchPageResponse(x); break;
+			case 3832: this.R$VE3832_WatchPage(x); break;
 			default: debugger; break;
 		} else {
-			this.Generic_WatchPageResponse(x);
+			this.R$Generic_WatchPage(x);
 		}
 	}
 	/** @private @arg {R$WatchPage$1} x */
-	Generic_WatchPageResponse(x) {
+	R$Generic_WatchPage(x) {
 		const cf="Generic_WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y); // ! #destructure
 		this.E$WatchEndpoint(endpoint);
-		this.WatchResponse(response);
+		this.R$Watch(response);
 		this.R$Player(playerResponse);
 		let wp_params=this.parse_watch_page_url(cf,url);
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
 	/** @private @arg {R$VE3832$WatchPage} x */
-	VE3832_WatchPageResponse(x) {
+	R$VE3832_WatchPage(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y); // ! #destructure
@@ -6999,16 +7000,16 @@ class HandleTypes extends ServiceMethods {
 		this.E$WatchEndpoint(endpoint);
 		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
 		this.R$Player(playerResponse);
-		this.WatchResponse(response);
+		this.R$Watch(response);
 	}
 	/** @private @arg {R$Watch} x */
-	WatchResponse(x) {
+	R$Watch(x) {
 		const cf="WatchResponse";
 		this.save_keys(`[${cf}]`,x);
 		this.x.get("yt_plugin").add_function({
 			name: "data",
 			data: {
-				WatchResponse: x,
+				R$Watch: x,
 			},
 		});
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
@@ -7074,11 +7075,11 @@ class HandleTypes extends ServiceMethods {
 	}
 	log_url=false;
 	/** @private @arg {R$BrowsePage} x */
-	BrowsePageResponse(x) {
+	R$BrowsePage(x) {
 		const cf="BrowsePageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {rootVe,url,endpoint,page,response,expirationTime,previousCsn,...y}=x; this.g(y); // ! #destructure
-		this.t(rootVe,a => this.save_number("[BrowsePageResponse.rootVe]",a));
+		this.t(rootVe,a => this.save_number("[R$BrowsePage.rootVe]",a));
 		if(this.log_url) console.log("[browse_url] [%s]",JSON.stringify(url));
 		this.E$Browse(endpoint);
 		if(page!=="browse") debugger;
@@ -7439,13 +7440,13 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.RC$ResponseContext(x.response.responseContext);
 		switch(x.page) {
-			case "browse": return this.BrowsePageResponse(x);
-			case "watch": return this.WatchPageResponse(x);
-			case "channel": return this.ChannelPageResponse(x);
-			case "playlist": return this.PlaylistPageResponse(x);
-			case "settings": return this.SettingsPageResponse(x);
-			case "shorts": return this.ShortsPageResponse(x);
-			case "search": return this.SearchPageResponse(x);
+			case "browse": return this.R$BrowsePage(x);
+			case "watch": return this.R$WatchPage(x);
+			case "channel": return this.R$ChannelPage(x);
+			case "playlist": return this.R$PlaylistPage(x);
+			case "settings": return this.R$SettingsPage(x);
+			case "shorts": return this.R$ShortsPage(x);
+			case "search": return this.R$SearchPage(x);
 			default: break;
 		}
 		console.log("pt",x);
@@ -7654,19 +7655,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[UpdateViewershipActionData]`,x1);
 		((_x) => {debugger;})(x1.viewCount);
 	}
-	/** @private @arg {R$SearchApi} x */
-	R$Search(x) {
-		const cf="SearchApiResponse";
-		this.save_keys(`[${cf}]`,x);
-		if("targetId" in x) return this.SearchResponse(x);
-		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y); // ! #destructure
-		this.t(contents,((_x) => {debugger;}));
-		this.t(continuationContents,((_x) => {debugger;}));
-		this.trackingParams(cf,trackingParams);
-		this.t(header,this.R$MusicHeader);
-	}
 	/** @private @arg {R$Search} x */
-	SearchResponse(x) {
+	R$Search(x) {
 		const cf="SearchResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y); // ! #destructure
@@ -8475,23 +8465,23 @@ class HandleTypes extends ServiceMethods {
 		this.params(cf1,"ypc_get_offers.params",params);
 	}
 	/** @private @arg {R$ChannelPage} x */
-	ChannelPageResponse(x) {
+	R$ChannelPage(x) {
 		const cf="ChannelPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="channel") debugger;
 		this.E$Browse(endpoint);
-		this.ChannelResponse(response);
+		this.R$Channel(response);
 		this.primitive_of_string(url);
 	}
 	/** @private @arg {R$PlaylistPage} x */
-	PlaylistPageResponse(x) {
+	R$PlaylistPage(x) {
 		const cf="PlaylistPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {url,endpoint,page,response,...y}=x;
 		if(page!=="playlist") debugger;
 		this.E$Browse(endpoint);
-		this.Api_PlaylistResponse(response);
+		this.R$Api_Playlist(response);
 		this.primitive_of_string(url);
 		if("rootVe" in y) {
 			switch(this.w(y)) {
@@ -8507,19 +8497,19 @@ class HandleTypes extends ServiceMethods {
 		const {page,endpoint,response,url,rootVe,...y}=x; this.g(y); // ! #destructure
 		if(page!=="settings") debugger;
 		this.E$Browse(endpoint);
-		this.SettingsResponse(response);
+		this.R$Settings(response);
 		this.primitive_of_string(url);
 		if(rootVe!==23462) debugger;
 	}
 	/** @private @arg {R$SettingsPage} x */
-	SettingsPageResponse(x) {
+	R$SettingsPage(x) {
 		const cf="SettingsPageResponse";
 		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x) return this.Settings_VE23462(x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="settings") debugger;
 		this.E$Browse(endpoint);
-		this.SettingsResponse(response);
+		this.R$Settings(response);
 		this.primitive_of_string(url);
 	}
 	/** @private @arg {Extract<R$ShortsPage,{rootVe:37414}>} x */
@@ -8529,7 +8519,7 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.R$Player(playerResponse);
 		this.E$ReelWatchEndpoint(endpoint);
-		this.ReelResponse(response);
+		this.R$Reel(response);
 		this.t(reelWatchSequenceResponse,this.R$ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
@@ -8537,7 +8527,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
 	/** @private @arg {R$ShortsPage} x */
-	ShortsPageResponse(x) {
+	R$ShortsPage(x) {
 		const cf="ShortsResponse";
 		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x) return this.Shorts_VE37414(x);
@@ -8545,20 +8535,20 @@ class HandleTypes extends ServiceMethods {
 		if(page!=="shorts") debugger;
 		this.R$Player(playerResponse);
 		this.E$ReelWatchEndpoint(endpoint);
-		this.ReelResponse(response);
+		this.R$Reel(response);
 		this.t(reelWatchSequenceResponse,this.R$ReelWatchSequence);
 		if(!this.str_starts_with(url,"/shorts/")) debugger;
 		if(url.includes("&")) debugger;
 		this.t(cachedReelWatchSequenceResponse,this.R$ReelWatchSequence);
 	}
 	/** @private @arg {R$SearchPage} x */
-	SearchPageResponse(x) {
+	R$SearchPage(x) {
 		const cf="GetNotificationMenuJson";
 		this.save_keys(`[${cf}]`,x);
 		const {page,endpoint,response,url,...y}=x; this.g(y); // ! #destructure
 		if(page!=="search") debugger;
 		this.E$SearchEndpoint(endpoint);
-		this.SearchResponse(response);
+		this.R$Search(response);
 		if(!this.str_starts_with(url,"/results?search_query=")) debugger;
 		if(url.includes("&")) debugger;
 	}
@@ -8910,7 +8900,7 @@ class HandleTypes extends ServiceMethods {
 		const {...y}=x; this.g(y);
 	}
 	/** @private @arg {R$Reel} x */
-	ReelResponse(x) {
+	R$Reel(x) {
 		const cf="ReelResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},overlay,status,trackingParams,desktopTopbar,engagementPanels,...y}=x; this.g(y); // ! #destructure
@@ -9138,7 +9128,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R$Transcript} x */
 	R$Transcript(x) {this.H$R$("Transcript",x,a => {a; debugger;});}
 	/** @private @arg {R$Channel} x */
-	ChannelResponse(x) {
+	R$Channel(x) {
 		const cf="ChannelResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=x; this.g(y); // ! #destructure
@@ -9153,7 +9143,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R$ChannelMetadata} x */
 	R$ChannelMetadata(x) {this.H$R$("ChannelMetadata",x,a => {a; debugger;});}
 	/** @private @arg {R$Playlist} x */
-	Api_PlaylistResponse(x) {
+	R$Api_Playlist(x) {
 		const cf="PlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y); // ! #destructure
@@ -9178,7 +9168,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R$AlertWithButton} x */
 	R$AlertWithButton(x) {this.H$R$("AlertWithButton",x,a => {a; debugger;});}
 	/** @private @arg {R$Settings} x */
-	SettingsResponse(x) {
+	R$Settings(x) {
 		const cf="SettingsResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=x; this.g(y); // ! #destructure
@@ -9331,7 +9321,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="CinematicContainerData";
 		this.save_keys(`[${cf}]`,x);
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=x; this.g(y); // ! #destructure
-		this.t(backgroundImageConfig,this.ThumbnailsList);
+		this.t(backgroundImageConfig,this.R$ThumbnailsList);
 		this.D$GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
 		this.g(config);
@@ -9360,7 +9350,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @private @arg {R$ThumbnailsList} x */
-	ThumbnailsList(x) {
+	R$ThumbnailsList(x) {
 		const cf="ThumbnailsList";
 		this.save_keys(`[${cf}]`,x);
 		this.D$Thumbnail(x.thumbnail);
@@ -9369,15 +9359,11 @@ class HandleTypes extends ServiceMethods {
 	PlaylistHeader(x) {
 		const cf="PlaylistHeader";
 		this.save_keys(`[${cf}]`,x);
+		debugger;
 	}
 	/** @private @arg {D$AdLayoutLogging} x */
 	AdLayoutLoggingData(x) {
 		const cf="AdLayoutLoggingData";
-		this.save_keys(`[${cf}]`,x);
-	}
-	/** @private @arg {R$MusicHeader} x */
-	R$MusicHeader(x) {
-		const cf="MusicHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
