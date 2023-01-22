@@ -1,9 +1,3 @@
-type PP_Overlays=
-|ThumbnailOverlayResumePlaybackRenderer
-|R$ThumbnailOverlayTimeStatus
-|R$ThumbnailOverlayNowPlaying
-;
-
 type PlaylistPanelVideo={
 	title: D$SimpleText;
 	longBylineText: D$TextWithRuns;
@@ -16,7 +10,7 @@ type PlaylistPanelVideo={
 	shortBylineText: D$TextWithRuns;
 	trackingParams: string;
 	menu: R$Menu;
-	thumbnailOverlays: PP_Overlays[];
+	thumbnailOverlays: G$ThumbnailOverlayItem[];
 	playlistSetVideoId: "56B44F6D10557CC6";
 	lightColorPalette: {
 		section2Color: 4076401393;

@@ -5,5 +5,6 @@ type G$ThumbnailOverlayItem=
 	|R$ThumbnailOverlayNowPlaying
 	|R$ThumbnailOverlayTimeStatus
 	|R$ThumbnailOverlayToggleButton
+	|R$ThumbnailOverlayResumePlayback
 	;
 ;

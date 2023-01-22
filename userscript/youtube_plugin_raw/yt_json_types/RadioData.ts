@@ -9,6 +9,6 @@ type D$Radio={
 	thumbnailText: D$TextWithRuns;
 	longBylineText: D$SimpleText;
 	menu: R$Menu;
-	thumbnailOverlays: R$ThumbnailOverlayBottomPanel[];
+	thumbnailOverlays: G$ThumbnailOverlayItem[];
 	videoCountShortText: D$TextWithRuns;
 };

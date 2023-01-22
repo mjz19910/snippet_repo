@@ -7436,7 +7436,7 @@ class HandleTypes extends ServiceMethods {
 		});
 		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
 		this.ResponseContext(responseContext);
-		this.TwoColumnWatchNextResults(contents);
+		this.A$TwoColumnWatchNextResults(contents);
 		this.E$WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams("WatchResponse",trackingParams);
 		this.PlayerOverlayRenderer(playerOverlays);
@@ -7670,44 +7670,44 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(this.w(x));
 	}
 	/** @private @arg {R$ThumbnailOverlayTimeStatus} x */
-	ThumbnailOverlayTimeStatusRenderer(x) {
-		const cf="ThumbnailOverlayTimeStatusRenderer";
+	R$ThumbnailOverlayTimeStatus(x) {
+		const cf="R$ThumbnailOverlayTimeStatus";
 		this.save_keys(`[${cf}]`,x);
-		this.ThumbnailOverlayTimeStatus(this.w(x));
+		this.D$ThumbnailOverlayTimeStatus(this.w(x));
 	}
 	/** @private @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
-		const cf="EndScreenPlaylistRenderer";
+		const cf="R$EndScreenPlaylist";
 		this.save_keys(`[${cf}]`,x);
 		this.EndScreenPlaylist(this.w(x));
 	}
 	/** @arg {A$TwoColumnWatchNextResults} x */
-	TwoColumnWatchNextResults(x) {
-		const cf="TwoColumnWatchNextResults";
+	A$TwoColumnWatchNextResults(x) {
+		const cf="A$TwoColumnWatchNextResults";
 		this.save_keys(`[${cf}]`,x);
 		this.TwoColumnWatchNextResultsData(this.w(x));
 	}
 	/** @private @arg {A$UpdateChannelSwitcherPage} x */
-	UpdateChannelSwitcherPageAction(x) {
-		const cf="UpdateChannelSwitcherPageAction";
+	A$UpdateChannelSwitcherPage(x) {
+		const cf="A$UpdateChannelSwitcherPage";
 		this.save_keys(`[${cf}]`,x);
-		this.PageAction(this.w(x));
+		this.T$PageAction$ChannelSwitcher(this.w(x));
 	}
-	/** @private @arg {PageAction<ChannelSwitcherPageRenderer>} x */
-	PageAction(x) {
-		const cf="PageAction";
+	/** @private @arg {T$PageAction<R$ChannelSwitcherPage>} x */
+	T$PageAction$ChannelSwitcher(x) {
+		const cf="PageAction.ChannelSwitcher";
 		this.save_keys(`[${cf}]`,x);
 		this.ChannelSwitcherPageRenderer(this.w(x));
 	}
-	/** @private @arg {ChannelSwitcherPageRenderer} x */
+	/** @private @arg {R$ChannelSwitcherPage} x */
 	ChannelSwitcherPageRenderer(x) {
 		const cf="UpdateChannelSwitcherPageAction";
 		this.save_keys(`[${cf}]`,x);
 		this.ChannelSwitcherPage(this.w(x));
 	}
 	/** @private @arg {R$GuideSection} x */
-	GuideSectionRenderer(x) {
-		const cf="GuideSectionRenderer";
+	R$GuideSection(x) {
+		const cf="R$GuideSection";
 		this.save_keys(`[${cf}]`,x);
 		this.GuideSectionData(this.w(x));
 	}
@@ -7820,7 +7820,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.G$VE3832$WC$Metadata(this.w(x));
 	}
-	/** @private @arg {ThumbnailOverlayBottomPanelData} x */
+	/** @private @arg {D$ThumbnailOverlayBottomPanel} x */
 	ThumbnailOverlayBottomPanelData(x) {
 		const cf="ThumbnailOverlayBottomPanelData";
 		this.save_keys(`[${cf}]`,x);
@@ -8725,7 +8725,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.NextRadioContinuationDataInner(x.nextRadioContinuationData);
 	}
-	/** @arg {ThumbnailOverlayResumePlaybackRenderer} x */
+	/** @arg {R$ThumbnailOverlayResumePlayback} x */
 	ThumbnailOverlayResumePlaybackRenderer(x) {
 		const cf="ThumbnailOverlayResumePlaybackRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -8777,6 +8777,7 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailOverlayBottomPanelRenderer(x) {
 		const cf="ThumbnailOverlayBottomPanelRenderer";
 		this.save_keys(`[${cf}]`,x);
+		if(!x.thumbnailOverlayBottomPanelRenderer) debugger;
 		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
 	}
 	/** @arg {R$ThumbnailOverlayNowPlaying} x */
@@ -9760,7 +9761,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="NextResponseContents";
 		this.save_keys(`[${cf}]`,x);
 		if("twoColumnWatchNextResults" in x) {
-			return this.TwoColumnWatchNextResults(x);
+			return this.A$TwoColumnWatchNextResults(x);
 		} else if("singleColumnMusicWatchNextResultsRenderer" in x) {
 			return this.SingleColumnMusicWatchNextResultsRenderer(x);
 		}
@@ -9906,7 +9907,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {tz<PlaylistPanelVideo['thumbnailOverlays']>} x */
 	PlaylistPanel_thumbnailOverlay(x) {
-		if("thumbnailOverlayTimeStatusRenderer" in x) return;
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R$ThumbnailOverlayTimeStatus(x);
 		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.ThumbnailOverlayResumePlaybackRenderer(x);
 		if("thumbnailOverlayNowPlayingRenderer" in x) return;
 		debugger;
@@ -10478,7 +10479,7 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailOverlayItem(x) {
 		const cf="ThumbnailOverlayItem";
 		this.save_keys(`[${cf}]`,x);
-		if("thumbnailOverlayTimeStatusRenderer" in x) return this.ThumbnailOverlayTimeStatusRenderer(x);
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R$ThumbnailOverlayTimeStatus(x);
 		if("thumbnailOverlayNowPlayingRenderer" in x) return this.ThumbnailOverlayNowPlayingRenderer(x);
 		if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
 		if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
@@ -10710,7 +10711,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(text);
 	}
 	/** @private @arg {D$ThumbnailOverlayTimeStatus} x */
-	ThumbnailOverlayTimeStatus(x) {
+	D$ThumbnailOverlayTimeStatus(x) {
 		const cf="ThumbnailOverlayTimeStatus";
 		this.save_keys(`[${cf}]`,x);
 		const {text,style,...y}=x;
@@ -10942,7 +10943,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},selectText,actions,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(selectText);
-		this.z(actions,this.UpdateChannelSwitcherPageAction);
+		this.z(actions,this.A$UpdateChannelSwitcherPage);
 	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
@@ -11022,7 +11023,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="GuideItemType";
 		this.save_keys(`[${cf}]`,x);
 		if("guideSectionRenderer" in x) {
-			return this.GuideSectionRenderer(x);
+			return this.R$GuideSection(x);
 		} else if("guideSubscriptionsSectionRenderer" in x) {
 			return this.GuideSubscriptionsSectionRenderer(x);
 		}
@@ -13452,7 +13453,11 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(thumbnailText);
 		this.TextT(longBylineText);
 		this.R$Menu(menu);
-		this.z(thumbnailOverlays,this.ThumbnailOverlayBottomPanelRenderer);
+		this.z(thumbnailOverlays,x=>{
+			if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
+			if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
+			debugger;
+		});
 		this.TextT(videoCountShortText);
 	}
 	/** @private @arg {R$ChildVideo} x */

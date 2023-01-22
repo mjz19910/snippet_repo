@@ -1,3 +1,3 @@
-type PageAction<T>={
+type T$PageAction<T>={
 	page: T;
 };

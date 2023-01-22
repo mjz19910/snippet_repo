@@ -26,7 +26,7 @@ type HeroPlaylistThumbnail={
 	maxRatio: 0.5625;
 	trackingParams: string;
 	onTap: E$WatchEndpoint;
-	thumbnailOverlays: R$ThumbnailOverlayHoverText;
+	thumbnailOverlays: G$ThumbnailOverlayItem;
 };
 
 type HeroPlaylistThumbnailRenderer={

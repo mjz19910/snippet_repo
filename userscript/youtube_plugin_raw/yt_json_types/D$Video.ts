@@ -17,7 +17,7 @@ type Video$VideoId={
 	shortViewCountText: D$SimpleText;
 	menu: R$Menu;
 	channelThumbnailSupportedRenderers: R$ChannelThumbnailWithLink;
-	thumbnailOverlays: R$ThumbnailOverlayTimeStatus[];
+	thumbnailOverlays: G$ThumbnailOverlayItem[];
 	richThumbnail: R$MovingThumbnail;
 	inlinePlaybackEndpoint: E$WatchEndpoint;
 	owner: D$Video$Owner;
