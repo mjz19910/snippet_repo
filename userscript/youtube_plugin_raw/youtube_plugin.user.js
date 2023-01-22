@@ -9663,7 +9663,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.CompactVideoData(this.w(x));
 	}
-	/** @arg {HotkeyDialogRenderer} x */
+	/** @arg {R$HotkeyDialog} x */
 	HotkeyDialogRenderer(x) {
 		const cf="HotkeyDialogRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -10931,15 +10931,11 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.t(header,this.MusicHeaderRenderer);
 	}
-	/** @arg {MusicShelfContinuation} x */
-	MusicShelfContinuation(x) {
-		const cf="MusicShelfContinuation";
+	/** @arg {ClipSectionRenderer} x */
+	ClipSectionRenderer(x) {
+		const cf="ClipSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
-	}
-	/** @arg {MusicHeaderRenderer} x */
-	MusicHeaderRenderer(x) {
-		const cf="MusicHeaderRenderer";
-		this.save_keys(`[${cf}]`,x);
+		this.ContentsArrayTemplate(this.w(x),this.ClipCreationRenderer);
 	}
 	/** @arg {SearchResponse} x */
 	SearchResponse(x) {
@@ -12898,12 +12894,6 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
 	}
-	/** @arg {ClipSectionRenderer} x */
-	ClipSectionRenderer(x) {
-		const cf="ClipSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ContentsArrayTemplate(this.w(x),this.ClipCreationRenderer);
-	}
 	/** @arg {CommentRepliesItem} x */
 	CommentRepliesItem(x) {
 		const cf="CommentRepliesItem";
@@ -14288,13 +14278,13 @@ class HandleTypes extends ServiceMethods {
 		this.g(richThumbnail);
 		this.tz(badges,(this.MetadataBadgeRenderer));
 	}
-	/** @arg {HotkeyDialog} x */
+	/** @arg {D$HotkeyDialog} x */
 	HotkeyDialog(x) {
 		const cf="HotkeyDialog";
 		this.save_keys(`[${cf}]`,x);
 		const {title,sections,dismissButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(title);
-		this.z(sections,this.HotkeyDialogSectionRenderer);
+		this.z(sections,this.R$HotkeyDialogSection);
 		this.R$Button(dismissButton);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -14568,30 +14558,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlaylistHeader";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @arg {MacroMarkersListItemRenderer} x */
-	MacroMarkersListItemRenderer(x) {
-		const cf="MacroMarkersListItemRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MacroMarkersListItem(this.w(x));
-	}
 	/** @arg {MacroMarkersListItem} x */
 	MacroMarkersListItem(x) {
 		const cf="MacroMarkersListItem";
-		this.save_keys(`[${cf}]`,x);
-	}
-	/** @arg {ProductListItemRenderer} x */
-	ProductListItemRenderer(x) {
-		const cf="ProductListItemRenderer";
-		this.save_keys(`[${cf}]`,x);
-	}
-	/** @arg {MetadataRowContainerRenderer} x */
-	MetadataRowContainerRenderer(x) {
-		const cf="MetadataRowContainerRenderer";
-		this.save_keys(`[${cf}]`,x);
-	}
-	/** @arg {TopicLinkRenderer} x */
-	TopicLinkRenderer(x) {
-		const cf="TopicLinkRenderer";
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {DescriptionChapters} x */
@@ -14679,18 +14648,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
-	SubscriptionNotificationToggleButtonRenderer(x) {
-		const cf="SubscriptionNotificationToggleButtonRenderer";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {HotkeyDialogSectionRenderer} x */
-	HotkeyDialogSectionRenderer(x) {
-		const cf="HotkeyDialogSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
 	/** @private @arg {AD$BrowserMediaSession} x */
 	BrowserMediaSession(x) {
 		const cf="BrowserMediaSession";
@@ -14763,12 +14720,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {LiveChatRenderer} x */
-	LiveChatRenderer(x) {
-		const cf="LiveChatRenderer";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
 	/** @arg {VideoMastheadAdV3} x */
 	VideoMastheadAdV3(x) {
 		const cf="VideoMastheadAdV3";
@@ -14778,6 +14729,54 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistPanelContinuationData} x */
 	PlaylistPanelContinuationData(x) {
 		const cf="PlaylistPanelContinuationData";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {MusicShelfContinuation} x */
+	MusicShelfContinuation(x) {
+		const cf="MusicShelfContinuation";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {MacroMarkersListItemRenderer} x */
+	MacroMarkersListItemRenderer(x) {
+		const cf="MacroMarkersListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.MacroMarkersListItem(this.w(x));
+	}
+	/** @arg {ProductListItemRenderer} x */
+	ProductListItemRenderer(x) {
+		const cf="ProductListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {MetadataRowContainerRenderer} x */
+	MetadataRowContainerRenderer(x) {
+		const cf="MetadataRowContainerRenderer";
+		debugger;
+		this.save_keys(`[${cf}]`,x);
+	}
+	/** @arg {TopicLinkRenderer} x */
+	TopicLinkRenderer(x) {
+		const cf="TopicLinkRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {MusicHeaderRenderer} x */
+	MusicHeaderRenderer(x) {
+		const cf="MusicHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @private @arg {LiveChatRenderer} x */
+	LiveChatRenderer(x) {
+		const cf="LiveChatRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
+	SubscriptionNotificationToggleButtonRenderer(x) {
+		const cf="SubscriptionNotificationToggleButtonRenderer";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}

@@ -1,1 +1,0 @@
-type HotkeyDialogRenderer={hotkeyDialogRenderer: HotkeyDialog;};

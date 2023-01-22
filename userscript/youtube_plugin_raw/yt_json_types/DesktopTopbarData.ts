@@ -4,7 +4,7 @@ type DesktopTopbarData={
 	trackingParams: string;
 	countryCode: CountryCode;
 	topbarButtons: TopbarButtonItem[];
-	hotkeyDialog: HotkeyDialogRenderer;
+	hotkeyDialog: R$HotkeyDialog;
 	backButton: R$Button;
 	forwardButton: R$Button;
 	a11ySkipNavigationButton: R$Button;

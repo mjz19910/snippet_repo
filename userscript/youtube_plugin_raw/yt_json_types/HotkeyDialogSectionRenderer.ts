@@ -1,3 +1,0 @@
-type HotkeyDialogSectionRenderer={
-	hotkeyDialogSectionRenderer: HotkeyDialogSectionData;
-};

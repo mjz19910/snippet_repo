@@ -1,0 +1,1 @@
+type R$HotkeyDialogSection={hotkeyDialogSectionRenderer: D$HotkeyDialogSection;};
