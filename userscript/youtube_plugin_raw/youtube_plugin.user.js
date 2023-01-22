@@ -8111,7 +8111,7 @@ class HandleTypes extends ServiceMethods {
 	CommandsTemplate$Omit(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
-		const {commands,...y}=x; // ! #destructure
+		const {commands,...y}=x;
 		this.z(commands,f);
 		return y;
 	}
