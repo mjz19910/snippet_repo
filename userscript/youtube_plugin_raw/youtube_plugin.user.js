@@ -7377,31 +7377,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf_}]`,x);
 		this.D$TextWithRuns(this.w(x));
 	}
-	/** @private @arg {R$WatchEndpointMusicConfig} x */
-	WatchEndpointMusicConfig(x) {
-		const cf="WatchEndpointMusicConfig";
-		this.save_keys(`[${cf}]`,x);
-		x; debugger;
-	}
-	/** @private @arg {PrefetchHintConfig} x */
-	PrefetchHintConfig(x) {
-		const cf="Html5PlaybackOnesieConfig";
-		this.save_keys(`[${cf}]`,x);
-		x; debugger;
-	}
-	/** @private @arg {R$ResourceStatusInResponseCheck} x */
-	ResourceStatusInResponseCheck(x) {
-		const cf="ResourceStatusInResponseCheck";
-		this.save_keys(`[${cf}]`,x);
-		x; debugger;
-	}
-	/** @private @arg {R$MusicThumbnail} x */
-	R$MusicThumbnail(x) {
-		const cf="MusicThumbnailRenderer";
-		this.save_keys(`[${cf}]`,x);
-		if(!x.musicThumbnailRenderer) debugger;
-		x; debugger;
-	}
 	/** @public @arg {D$PdgBuyFlowHeader} x */
 	D$PdgBuyFlowHeader(x) {
 		const cf="D$PdgBuyFlowHeader";
@@ -7418,12 +7393,24 @@ class HandleTypes extends ServiceMethods {
 	R$Result(x) {
 		const cf="ResultRenderer";
 		this.save_keys(`[${cf}]`,x);
-		if("tabRenderer" in x) return ((_x) => {debugger;})(x);
+		if("tabRenderer" in x) return this.R$Tab(x);
 		if("expandableTabRenderer" in x) return this.R$ExpandableTab(x);
 		debugger;
 	}
-	/** @private @arg {{}} x */
-	R$ExpandableTab(x) {this.emf("R$ExpandableTabRenderer",x);}
+	/** @private @arg {R$Tab} x */
+	R$Tab(x) {this.H$R$("Tab",x,this.D$Tab);}
+	/** @private @arg {D$Tab} x */
+	D$Tab(x) {
+		const cf="Tab";
+		this.save_keys(`[${cf}]`,x);
+	}
+	/** @private @arg {R$ExpandableTab} x */
+	R$ExpandableTab(x) {this.H$R$("R$ExpandableTab",x,this.D$ExpandableTab);}
+	/** @private @arg {D$ExpandableTab} x */
+	D$ExpandableTab(x) {
+		const cf="ExpandableTab";
+		this.save_keys(`[${cf}]`,x);
+	}
 	/** @private @arg {E$Continuation} x */
 	ContinuationCommand(x) {
 		if(!x) {debugger; return;}
@@ -9522,6 +9509,31 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowseFeedItem";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
+	}
+	/** @private @arg {R$WatchEndpointMusicConfig} x */
+	WatchEndpointMusicConfig(x) {
+		const cf="WatchEndpointMusicConfig";
+		this.save_keys(`[${cf}]`,x);
+		x; debugger;
+	}
+	/** @private @arg {PrefetchHintConfig} x */
+	PrefetchHintConfig(x) {
+		const cf="Html5PlaybackOnesieConfig";
+		this.save_keys(`[${cf}]`,x);
+		x; debugger;
+	}
+	/** @private @arg {R$ResourceStatusInResponseCheck} x */
+	ResourceStatusInResponseCheck(x) {
+		const cf="ResourceStatusInResponseCheck";
+		this.save_keys(`[${cf}]`,x);
+		x; debugger;
+	}
+	/** @private @arg {R$MusicThumbnail} x */
+	R$MusicThumbnail(x) {
+		const cf="MusicThumbnailRenderer";
+		this.save_keys(`[${cf}]`,x);
+		if(!x.musicThumbnailRenderer) debugger;
+		x; debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
