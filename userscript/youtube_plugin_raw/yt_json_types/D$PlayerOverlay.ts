@@ -1,1 +1,6 @@
-type D$PlayerOverlay=D$PlayerOverlay$1|A$BrowserMediaSession;
+type D$PlayerOverlay={
+	endScreen: R$WatchNextEndScreenRenderer;
+	shareButton: R$Button;
+	addToMenu: R$Menu;
+	videoDetails: R$PlayerOverlayVideoDetails;
+};

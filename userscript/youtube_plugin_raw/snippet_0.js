@@ -414,6 +414,6 @@ export class Snippet_0_tmp {
 }
 class ND extends Snippet_0_tmp {
 	/** @arg {R$NotificationAction} x */
-	$R$New(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
+	R$NewRenderer(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
 }
 new ND;

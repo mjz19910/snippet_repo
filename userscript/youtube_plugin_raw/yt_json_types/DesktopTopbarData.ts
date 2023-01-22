@@ -1,6 +1,6 @@
-type DesktopTopbarData={
-	logo: TopbarLogoRenderer;
-	searchbox: FusionSearchboxRenderer;
+type D$DesktopTopbar={
+	logo: R$TopbarLogo;
+	searchbox: R$FusionSearchbox;
 	trackingParams: string;
 	countryCode: CountryCode;
 	topbarButtons: TopbarButtonItem[];

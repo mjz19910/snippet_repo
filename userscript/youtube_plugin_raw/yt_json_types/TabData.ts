@@ -8,13 +8,13 @@ type TabData={
 	content: R$SectionList;
 	trackingParams: string;
 }|{
-	endpoint: E$BrowseEndpoint;
+	endpoint: E$Browse;
 	title: string;
 	selected?: true;
 	content?: R$SectionList;
 	trackingParams: string;
 }|{
-	endpoint: E$BrowseEndpoint;
+	endpoint: E$Browse;
 	selected: true;
 	content: R$SectionList;
 	tabIdentifier: "FEsubscriptions";

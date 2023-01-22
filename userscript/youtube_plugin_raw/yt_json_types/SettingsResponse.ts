@@ -1,11 +1,11 @@
 type SettingsPageResponse={
 	page: "settings";
-	endpoint: E$BrowseEndpoint;
+	endpoint: E$Browse;
 	response: SettingsResponse;
 	url: string;
 }|{
 	page: "settings";
-	endpoint: E$BrowseEndpoint;
+	endpoint: E$Browse;
 	response: SettingsResponse;
 	url: string;
 	rootVe: 23462;

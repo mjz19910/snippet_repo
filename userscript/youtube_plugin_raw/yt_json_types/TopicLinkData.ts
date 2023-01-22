@@ -2,7 +2,7 @@ type TopicLinkData={
 	title: D$SimpleText;
 	thumbnailDetails: D$Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata
-	endpoint: E$BrowseEndpoint;
+	endpoint: E$Browse;
 	callToActionIcon: T$Icon<"CHEVRON_RIGHT">;
 	trackingParams: string;
 };

@@ -1,5 +1,5 @@
 type E$Browse={
-	browseId?: BrowseIdType;
-	params?: string;
-	canonicalBaseUrl?: `/@${string}`;
+	clickTrackingParams: string;
+	commandMetadata?: G$Metadata;
+	browseEndpoint: D$Browse;
 };
