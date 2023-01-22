@@ -8854,10 +8854,33 @@ class HandleTypes extends ServiceMethods {
 		this.EntityBatchUpdateData(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
-	/** @arg {string} cf @arg {D$BrowseEndpointContextMusicConfig} x */
-	T$Renderer(cf,x) {
+	/** @arg {string} cf @public @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @returns {T[K]} */
+	T$D$Data(cf,x) {
 		this.save_keys(`[${cf}Data]`,x);
 		return this.w(x);
+	}
+	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	H$Renderer(cf,x,f) {
+		this.save_keys(`[${cf}Renderer]`,x);
+		f.call(this,this.w(x));
+	}
+	/** @arg {R$Button} x */
+	R$Button(x) {
+		const cf="Button";
+		this.save_keys(`[${cf}Renderer]`,x);
+		this.D$Button(this.w(x));
+	}
+	/** @arg {R$Menu} x */
+	R$Menu(x) {
+		const cf="Menu";
+		this.save_keys(`[${cf}Renderer]`,x);
+		this.D$Menu(this.w(x));
+	}
+	/** @arg {R$ToggleMenuServiceItem} x */
+	R$ToggleMenuServiceItem(x) {
+		const cf="ToggleMenuServiceItem";
+		this.save_keys(`[${cf}Renderer]`,x);
+		this.D$ToggleMenuServiceItem(this.w(x));
 	}
 	/** @arg {R$CinematicContainer} x */
 	CinematicContainerRenderer(x) {
@@ -9099,12 +9122,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.GuideSectionData(this.w(x));
 	}
-	/** @arg {R$Button} x */
-	R$Button(x) {
-		const cf="Button";
-		this.save_keys(`[${cf}Renderer]`,x);
-		this.D$Button(this.w(x));
-	}
 	/** @private @arg {CommentActionButtonsRenderer} x */
 	CommentActionButtonsRenderer(x) {
 		const cf="CommentActionButtonsRenderer";
@@ -9195,18 +9212,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="SuperVodBuyFlowContentRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.SuperVodBuyFlowContent(this.w(x));
-	}
-	/** @arg {R$Menu} x */
-	R$Menu(x) {
-		const cf="Menu";
-		this.save_keys(`[${cf}Renderer]`,x);
-		this.D$Menu(this.w(x));
-	}
-	/** @arg {R$ToggleMenuServiceItem} x */
-	R$ToggleMenuServiceItem(x) {
-		const cf="ToggleMenuServiceItem";
-		this.save_keys(`[${cf}Renderer]`,x);
-		this.D$ToggleMenuServiceItem(this.w(x));
 	}
 	/** @arg {R$BrowseEndpointContextMusicConfig} x */
 	R$BrowseEndpointContextMusicConfig(x) {
@@ -11771,11 +11776,6 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(shortViewCountText);
 		if(countDownSecsForFullscreen!==3) debugger;
 	}
-	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
-	H$Renderer(cf,x,f) {
-		this.save_keys(`[${cf}Renderer]`,x);
-		f.call(this,this.w(x));
-	}
 	/** @arg {R$PlayerOverlayVideoDetails} x */
 	R$PlayerOverlayVideoDetails(x) {
 		this.H$Renderer("PlayerOverlayVideoDetails",x,this.PlayerOverlayVideoDetails);
@@ -12136,10 +12136,12 @@ class HandleTypes extends ServiceMethods {
 	D$BrowseEndpointContextMusicConfig(x) {
 		const cf="BrowseEndpointContextMusicConfig";
 		this.save_keys(`[${cf}]`,x);
-		let pageType=this.w(x);
-		let pt2=this.T$Renderer(cf,x); pt2;
-		this.save_enum("MUSIC_PAGE_TYPE",pageType);
-		switch(pageType) {
+		this.ContextMusicConfig$pageType(this.T$D$Data(cf,x));
+	}
+	/** @arg {D$BrowseEndpointContextMusicConfig['pageType']} x */
+	ContextMusicConfig$pageType(x) {
+		this.save_enum("MUSIC_PAGE_TYPE",x);
+		switch(x) {
 			case "MUSIC_PAGE_TYPE_ALBUM": break;
 			case "MUSIC_PAGE_TYPE_ARTIST": break;
 			case "MUSIC_PAGE_TYPE_USER_CHANNEL": break;
