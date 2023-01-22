@@ -5879,6 +5879,10 @@ case "${path_parts[idx-1]}": {
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
+	/** @arg {G$VE3832$WC$Metadata['url']} x */
+	parse_url_VE3832(x) {
+		if(!this.str_starts_with("/watch?",x)) debugger;
+	}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {
 		if(this.str_starts_with("https://",x)) {
@@ -10645,7 +10649,8 @@ class HandleTypes extends ServiceMethods {
 	G$VE3832$WC$Metadata(x) {
 		const cf="G$VE3832$WC$Metadata";
 		this.save_keys(`[${cf}]`,x);
-		const {rootVe,webPageType,...y}=x; this.g(y);
+		const {rootVe,webPageType,url,...y}=x; this.g(y);
+		this.parser.parse_url_VE3832(url);
 		if(rootVe!==3832) debugger;
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}

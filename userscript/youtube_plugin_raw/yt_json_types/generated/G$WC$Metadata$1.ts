@@ -39,6 +39,7 @@ type G$VE3611$WC$Metadata={
 type G$VE3832$WC$Metadata={
 	rootVe: 3832;
 	webPageType: "WEB_PAGE_TYPE_WATCH";
+	url: `/watch?${string}`;
 };
 type G$VE5754$WC$Metadata={
 	rootVe: 5754;
