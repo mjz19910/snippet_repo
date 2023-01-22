@@ -10,7 +10,7 @@ type D__PlaylistPanelVideo={
 	shortBylineText: R$TextWithRuns;
 	trackingParams: string;
 	menu: R$Menu;
-	thumbnailOverlays: G$ThumbnailOverlayItem[];
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	playlistSetVideoId: "56B44F6D10557CC6";
 	lightColorPalette: {
 		section2Color: 4076401393;

@@ -1,5 +1,5 @@
 type E$RecordNotificationInteractions={
 	clickTrackingParams: string;
-	commandMetadata: G$Metadata;
+	commandMetadata: G_Metadata;
 	recordNotificationInteractionsEndpoint: DE$RecordNotificationInteractions;
 };

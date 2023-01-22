@@ -1,4 +1,4 @@
-type G$Button$command=
+type G_Button$command=
 	|E$ChangeEngagementPanelVisibilityAction
 	|E$Continuation
 	|T$A$OpenPopup<{}>

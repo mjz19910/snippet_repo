@@ -1,4 +1,4 @@
-type G$StructuredDescriptionContentItem=[
+type G_StructuredDescriptionContentItem=[
 	R$ExpandableVideoDescriptionBody,
 	R$HorizontalCardList,
 	R$VideoDescriptionHeader,

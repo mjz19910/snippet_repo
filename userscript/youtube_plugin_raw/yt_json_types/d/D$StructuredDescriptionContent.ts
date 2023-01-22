@@ -1,1 +1,1 @@
-type D__StructuredDescriptionContent={items: G$StructuredDescriptionContentItem[];};
+type D__StructuredDescriptionContent={items: G_StructuredDescriptionContentItem[];};

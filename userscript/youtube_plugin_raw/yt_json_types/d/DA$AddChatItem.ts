@@ -1,4 +1,4 @@
 type DA$AddChatItem={
-	item: G$ChatItem;
+	item: G_ChatItem;
 	clientId?: string;
 };

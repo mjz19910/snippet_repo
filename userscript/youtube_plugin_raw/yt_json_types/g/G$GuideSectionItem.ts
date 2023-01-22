@@ -1,1 +1,1 @@
-type G$GuideSectionItem=R$GuideEntry|R$GuideCollapsibleSectionEntry;
+type G_GuideSectionItem=R$GuideEntry|R$GuideCollapsibleSectionEntry;

@@ -1,4 +1,4 @@
-type G$EngagementPanelMenu_={
+type G_EngagementPanelMenu_={
 	title: R$TextWithRuns;
 	contextualInfo: R$TextWithRuns;
 	menu: R$SortFilterSubMenu;

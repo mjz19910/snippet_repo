@@ -1,5 +1,5 @@
 type PlaylistEditorEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: G$Metadata;
+	commandMetadata: G_Metadata;
 	playlistEditorEndpoint: PlaylistEditorArgs;
 };

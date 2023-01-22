@@ -1,7 +1,7 @@
 type D__Button={
 	accessibility?: D__Label;
 	accessibilityData?: D__Accessibility;
-	command?: G$Button$command;
+	command?: G_Button$command;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
 	serviceEndpoint?: E$Button_serviceEndpoint<{}>;
@@ -9,7 +9,7 @@ type D__Button={
 	tooltip?: string;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
-	text?: G$Text;
+	text?: G_Text;
 	trackingParams?: string;
 	hint?: R$Hint;
 	targetId?: D__Button$TargetId;

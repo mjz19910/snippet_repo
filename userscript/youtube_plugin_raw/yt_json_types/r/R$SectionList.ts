@@ -1,1 +1,1 @@
-type R$SectionList={sectionListRenderer: G$SectionList;};
+type R$SectionList={sectionListRenderer: G_SectionList;};

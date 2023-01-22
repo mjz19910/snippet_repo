@@ -1,4 +1,4 @@
-type G$Actions$=
+type G_Actions$=
 	|A$AddToGuideSection
 	|A$GetMultiPageMenu
 	|T$A$OpenPopup<{}>

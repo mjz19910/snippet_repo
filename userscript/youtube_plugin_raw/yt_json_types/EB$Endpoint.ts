@@ -1,4 +1,4 @@
 type EB$Endpoint={
 	clickTrackingParams: string;
-	commandMetadata: G$Metadata;
+	commandMetadata: G_Metadata;
 };

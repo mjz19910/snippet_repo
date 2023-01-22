@@ -3,5 +3,5 @@ type D__HeroPlaylistThumbnail={
 	maxRatio: 0.5625;
 	trackingParams: string;
 	onTap: E$WatchEndpoint;
-	thumbnailOverlays: G$ThumbnailOverlayItem;
+	thumbnailOverlays: G_ThumbnailOverlayItem;
 };

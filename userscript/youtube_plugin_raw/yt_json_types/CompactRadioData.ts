@@ -11,5 +11,5 @@ type D__CompactRadio={
 	videoCountShortText: R$TextWithRuns;
 	shareUrl: string;
 	menu: R$Menu;
-	thumbnailOverlays: G$ThumbnailOverlayItem[];
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
 };

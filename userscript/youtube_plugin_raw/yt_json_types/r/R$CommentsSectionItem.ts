@@ -1,1 +1,1 @@
-type G$CommentsSection={};
+type G_CommentsSection={};

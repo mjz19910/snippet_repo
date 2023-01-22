@@ -1,4 +1,4 @@
-type T$Endpoint<T extends {},G$M>={
+type T$Endpoint<T extends {},G_M>={
 	clickTrackingParams: string;
-	commandMetadata?: G$M;
+	commandMetadata?: G_M;
 }&T;

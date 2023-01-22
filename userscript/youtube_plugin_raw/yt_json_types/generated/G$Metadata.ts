@@ -1,6 +1,6 @@
-type G$Metadata={
-	webCommandMetadata: G$WC$Metadata;
+type G_Metadata={
+	webCommandMetadata: G_WC$Metadata;
 	resolveUrlCommandMetadata: M$ResolveUrlCommandMetadata;
 }|{
-	webCommandMetadata: G$WC$Metadata;
+	webCommandMetadata: G_WC$Metadata;
 };

@@ -1,1 +1,1 @@
-type G$RichSection=R$RichShelf|R$InlineSurvey|R$SourcePivotHeader;
+type G_RichSection=R$RichShelf|R$InlineSurvey|R$SourcePivotHeader;

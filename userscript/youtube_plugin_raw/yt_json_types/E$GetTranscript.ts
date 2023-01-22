@@ -1,5 +1,5 @@
 type E$GetTranscript={
 	clickTrackingParams: string;
-	commandMetadata: G$Metadata;
+	commandMetadata: G_Metadata;
 	getTranscriptEndpoint: DE$GetTranscript;
 };

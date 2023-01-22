@@ -1,1 +1,1 @@
-type G$SectionList=D__GenericSectionList|D__SearchFeedSectionList|D__BrowseFeedSectionList;
+type G_SectionList=D__GenericSectionList|D__SearchFeedSectionList|D__BrowseFeedSectionList;

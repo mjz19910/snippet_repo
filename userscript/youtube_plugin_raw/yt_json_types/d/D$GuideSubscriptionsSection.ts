@@ -1,4 +1,4 @@
-type D__GuideSubscriptionsSection=T$Items<G$GuideSubscriptionsSectionItem>&{
+type D__GuideSubscriptionsSection=T$Items<G_GuideSubscriptionsSectionItem>&{
 	sort: "CHANNEL_ACTIVITY";
 	trackingParams: string;
 	formattedTitle: R$SimpleText;

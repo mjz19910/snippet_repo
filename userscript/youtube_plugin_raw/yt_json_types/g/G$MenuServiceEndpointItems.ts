@@ -1,1 +1,1 @@
-type G$MenuServiceEndpointItems<T>=EG$MenuServiceEndpoints<T>;
+type G_MenuServiceEndpointItems<T>=EG_MenuServiceEndpoints<T>;

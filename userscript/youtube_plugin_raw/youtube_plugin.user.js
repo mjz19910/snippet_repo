@@ -3111,7 +3111,7 @@ class HandleRendererContentItemArray extends BaseService {
 	/** @private @arg {R$RichSection} content_item */
 	handle_rich_section_renderer(content_item) {
 		let renderer=content_item.richSectionRenderer;
-		/** @type {G$RichSection} */
+		/** @type {G_RichSection} */
 		let content=renderer.content;
 		if("inlineSurveyRenderer" in content) return true;
 		if("sourcePivotHeaderRenderer" in content) return true;
@@ -3141,7 +3141,7 @@ class HandleRendererContentItemArray extends BaseService {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @public @template {R$BrowseFeed[]|G$WatchNext[]|G$CommentsSection[]|SectionItem[]} T @arg {T} arr @returns {T} */
+	/** @public @template {R$BrowseFeed[]|G_WatchNext[]|G_CommentsSection[]|SectionItem[]} T @arg {T} arr @returns {T} */
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			let keys=this.get_keys_of(content_item);
@@ -3167,7 +3167,7 @@ class HandleRendererContentItemArray extends BaseService {
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor {
-	/** @public @arg {ApiIterateState} state @arg {G$AppendContinuationItems} action */
+	/** @public @arg {ApiIterateState} state @arg {G_AppendContinuationItems} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
@@ -3624,7 +3624,7 @@ class ModifyEnv extends BaseService {
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
-		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G$Response$} response_obj */
+		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G_Response$} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
 			try {
 				yt_handlers.on_handle_api(request,response,response_obj);
@@ -5654,7 +5654,7 @@ class ParserService extends BaseService {
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @public @arg {G$VE3832$Watch$WC$Metadata['url']} x */
+	/** @public @arg {G_VE3832$Watch$WC$Metadata['url']} x */
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
@@ -6711,7 +6711,7 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}
-	/** @public @arg {Extract<G$WC$Metadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<G_WC$Metadata,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
@@ -6729,7 +6729,7 @@ class ServiceMethods extends ServiceData {
 			case "83769": return;
 			case "96368": return;
 			default: {
-				/** @type {G$WC$Metadata[]} */
+				/** @type {G_WC$Metadata[]} */
 				let x=[]; x;
 			}
 		}
@@ -6757,7 +6757,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @public @arg {Extract<G$WC$Metadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<G_WC$Metadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -6886,13 +6886,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
-	/** @private @arg {G$WC$Metadata} x */
+	/** @private @arg {G_WC$Metadata} x */
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x&&"apiUrl" in x) {
 			switch(x.rootVe) {
-				case 3854: return this.G$VE3854$WC$Metadata(x);
+				case 3854: return this.G_VE3854$WC$Metadata(x);
 				default: debugger; break;
 			}
 		}
@@ -6907,11 +6907,11 @@ class HandleTypes extends ServiceMethods {
 						return;
 					}
 					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-					/** @private @arg {G$WC$Metadata} x */
-					let typedef_str=this.codegen_new_typedef(x,`G$${url_type_ex}`,true);
+					/** @private @arg {G_WC$Metadata} x */
+					let typedef_str=this.codegen_new_typedef(x,`G_${url_type_ex}`,true);
 					console.log(`
 					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
-					---\n\n\tG$${url_type_ex},
+					---\n\n\tG_${url_type_ex},
 					---\n\n\tcase "${cx}": return this.GeneratedWebCommandMetadata(x);`);
 					debugger;
 				} break;
@@ -6942,12 +6942,12 @@ class HandleTypes extends ServiceMethods {
 			let cx=x.rootVe;
 			switch(x.rootVe) {
 				default: {
-					/** @private @arg {G$WC$Metadata} x */
-					this.codegen_new_typedef(x,`G$VE${cx}`);
-					console.log(`\n\tG$VE${cx},`);
+					/** @private @arg {G_WC$Metadata} x */
+					this.codegen_new_typedef(x,`G_VE${cx}`);
+					console.log(`\n\tG_VE${cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 				} break;
-				case 3832: return this.G$VE3832$Watch$WC$Metadata(x);
+				case 3832: return this.G_VE3832$Watch$WC$Metadata(x);
 				case 4724: return this.GeneratedWebCommandMetadata(x);
 				case 6827: return this.GeneratedWebCommandMetadata(x);
 				case 11487: return this.GeneratedWebCommandMetadata(x);
@@ -6964,15 +6964,15 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {G$VE3832$Watch$WC$Metadata} x */
-	G$VE3832$Watch$WC$Metadata(x) {
+	/** @private @arg {G_VE3832$Watch$WC$Metadata} x */
+	G_VE3832$Watch$WC$Metadata(x) {
 		const {url,webPageType,rootVe,...y}=x; this.g(y);
 		x: {if(this.str_starts_with("/watch?",url)) break x; debugger;}
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		if(rootVe!==3832) debugger;
 	}
-	/** @private @arg {G$VE3854$WC$Metadata} x */
-	G$VE3854$WC$Metadata(x) {
+	/** @private @arg {G_VE3854$WC$Metadata} x */
+	G_VE3854$WC$Metadata(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		x: {
 			if(url==="/") break x;
@@ -6982,7 +6982,7 @@ class HandleTypes extends ServiceMethods {
 		if(rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
-	/** @private @arg {G$WC$Metadata} x */
+	/** @private @arg {G_WC$Metadata} x */
 	GeneratedWebCommandMetadata(x) {
 		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;
@@ -7145,16 +7145,16 @@ class HandleTypes extends ServiceMethods {
 		},x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
-				case 3854: this.G$VE3854$WC$Metadata(y); break;
-				case 23462: this.G$VE23462$WC$Metadata(y); break;
+				case 3854: this.G_VE3854$WC$Metadata(y); break;
+				case 23462: this.G_VE23462$WC$Metadata(y); break;
 				default: debugger; break;
 			}
 			this.WebCommandMetadata(this.w(x));
 		});
 		x;
 	}
-	/** @private @arg {G$VE23462$WC$Metadata} x */
-	G$VE23462$WC$Metadata(x) {
+	/** @private @arg {G_VE23462$WC$Metadata} x */
+	G_VE23462$WC$Metadata(x) {
 		const cf="VE23462.Metadata";
 		this.save_keys(`[${cf}]`,x);
 		const {rootVe,webPageType,...y}=x; this.g(y);
@@ -7358,7 +7358,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		this.t(style,a => this.save_string("[Button.style]",a));
-		this.t(text,this.G$Text);
+		this.t(text,this.G_Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,_x => {debugger;});
 		this.t(targetId,a => {
@@ -7389,7 +7389,7 @@ class HandleTypes extends ServiceMethods {
 	codegen_renderer(cf,x) {
 		this.codegen.generate_renderer(x,cf);
 	}
-	/** @private @arg {R$G$Result} x */
+	/** @private @arg {R$G_Result} x */
 	R$Result(x) {
 		const cf="ResultRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -7881,14 +7881,14 @@ class HandleTypes extends ServiceMethods {
 		} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=x; this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
-			this.G$AppendContinuationItems(appendContinuationItemsAction);
+			this.G_AppendContinuationItems(appendContinuationItemsAction);
 		} else {
 			debugger;
 		}
 	}
-	/** @private @arg {G$AppendContinuationItems} x */
-	G$AppendContinuationItems(x) {
-		const cf="G$AppendContinuationItems";
+	/** @private @arg {G_AppendContinuationItems} x */
+	G_AppendContinuationItems(x) {
+		const cf="G_AppendContinuationItems";
 		this.save_keys(`[${cf}]`,x);
 		this.targetId(cf,x.targetId);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) {
@@ -7988,13 +7988,13 @@ class HandleTypes extends ServiceMethods {
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.D__Accessibility);
-		this.tz(items,this.G$Menu$items$iterate);
+		this.tz(items,this.G_Menu$items$iterate);
 		/** @type {D__Menu$targetId} */
 		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.A$LoggingDirectives);
 	}
-	/** @private @arg {G$Menu$items$iterate} x */
-	G$Menu$items$iterate(x) {
+	/** @private @arg {G_Menu$items$iterate} x */
+	G_Menu$items$iterate(x) {
 		if("toggleMenuServiceItemRenderer" in x) return ((_x) => {debugger;})(x);
 		if("menuServiceItemRenderer" in x) return ((_x) => {debugger;})(x);
 		if("menuNavigationItemRenderer" in x) return this.R$MenuNavigationItem(x);
@@ -8023,7 +8023,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=x; this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
-	/** @private @arg {G$Metadata} x */
+	/** @private @arg {G_Metadata} x */
 	CommandMetadata(x) {
 		const cf="CommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -8149,8 +8149,8 @@ class HandleTypes extends ServiceMethods {
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of_string(text);
 	}
-	/** @private @arg {G$Text} x */
-	G$Text(x) {
+	/** @private @arg {G_Text} x */
+	G_Text(x) {
 		const cf="TextT";
 		this.save_keys(`[${cf}]`,x);
 		if("simpleText" in x) {
@@ -8385,7 +8385,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		return this.w(this.T$ContinuationItemData(this.w(x)));
 	}
-	/** @arg {G$SectionList} x */
+	/** @arg {G_SectionList} x */
 	SectionListData(x) {
 		const cf="SectionListData";
 		this.save_keys(`[${cf}]`,x);
@@ -8470,12 +8470,12 @@ class HandleTypes extends ServiceMethods {
 		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y); // ! #destructure
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
-		this.G$ContinuationEndpoint(continuationEndpoint);
+		this.G_ContinuationEndpoint(continuationEndpoint);
 		this.t(button,this.R$Button);
 		this.t(ghostCards,((_x) => {debugger;}));
 	}
-	/** @private @arg {G$ContinuationEndpoint} x */
-	G$ContinuationEndpoint(x) {
+	/** @private @arg {G_ContinuationEndpoint} x */
+	G_ContinuationEndpoint(x) {
 		const cf="ContinuationEndpointRoot";
 		this.save_keys(`[${cf}]`,x);
 		if("continuationCommand" in x) {
@@ -8538,7 +8538,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(items,this.GuideItemType);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {G$GuideItem} x */
+	/** @private @arg {G_GuideItem} x */
 	GuideItemType(x) {
 		const cf="GuideItemType";
 		this.save_keys(`[${cf}]`,x);
@@ -8556,12 +8556,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="GuideSectionData";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,formattedTitle,...y}=x; this.g(y); // ! #destructure
-		this.z(items,this.G$GuideSectionItem);
+		this.z(items,this.G_GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
-		this.t(formattedTitle,this.G$Text);
+		this.t(formattedTitle,this.G_Text);
 	}
-	/** @private @arg {G$GuideSectionItem} x */
-	G$GuideSectionItem(x) {
+	/** @private @arg {G_GuideSectionItem} x */
+	G_GuideSectionItem(x) {
 		if("guideEntryRenderer" in x) return this.R$GuideEntry(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.R$GuideCollapsibleSectionEntry(x);
 		debugger;
@@ -9013,13 +9013,13 @@ class HandleTypes extends ServiceMethods {
 		const {types,...y}=x; this.g(y); // ! #destructure
 		this.save_string("[Visibility.types]",types);
 	}
-	/** @private @arg {T$A$Continuation<"comments-section",G$CommentsSection>} x */
+	/** @private @arg {T$A$Continuation<"comments-section",G_CommentsSection>} x */
 	A$CommentsSectionContinuation$(x) {
 		const cf="CommentsSectionContinuationAction";
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.G$CommentsSection);
+		this.z(continuationItems,this.G_CommentsSection);
 	}
 	/** @private @arg {T$A$Continuation<"browse-feedFEwhat_to_watch",R$BrowseFeed>} x */
 	A$BrowseFeed$(x) {
@@ -9029,7 +9029,7 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.R$BrowseFeed);
 	}
-	/** @private @arg {T$A$Continuation<"watch-next-feed",G$WatchNext>} x */
+	/** @private @arg {T$A$Continuation<"watch-next-feed",G_WatchNext>} x */
 	A$WatchNext$(x) {
 		const cf="A$WatchNext$";
 		this.save_keys(`[${cf}]`,x);
@@ -9051,7 +9051,7 @@ class HandleTypes extends ServiceMethods {
 			this.z(engagementPanels,((_x) => {debugger;}));
 		}
 	}
-	/** @private @arg {G$SecondaryContents} x */
+	/** @private @arg {G_SecondaryContents} x */
 	SecondaryContents(x) {
 		const cf="SecondaryContents";
 		this.save_keys(`[${cf}]`,x);
@@ -9063,7 +9063,7 @@ class HandleTypes extends ServiceMethods {
 	R$ProfileColumn(x) {this.H$R$("ProfileColumn",x,a => {a; debugger;});}
 	/** @private @arg {R$BrowseFeedActions} x */
 	R$BrowseFeedActions(x) {this.H$R$("BrowseFeedActions",x,a => {a; debugger;});}
-	/** @private @arg {G$WatchNext} x */
+	/** @private @arg {G_WatchNext} x */
 	WatchNextItem(x) {
 		const cf="WatchNextItem";
 		this.save_keys(`[${cf}]`,x);
@@ -9090,7 +9090,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(serializedShareEntity);
 		this.z(commands,this.A$OpenPopupAction);
 	}
-	/** @private @arg {G$Button$command} x */
+	/** @private @arg {G_Button$command} x */
 	ButtonCommand(x) {
 		const cf="ButtonCommand";
 		this.save_keys(`[${cf}]`,x);
@@ -9524,8 +9524,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {G$CommentsSection} x */
-	G$CommentsSection(x) {
+	/** @private @arg {G_CommentsSection} x */
+	G_CommentsSection(x) {
 		const cf="CommentsSectionItem";
 		this.save_keys(`[${cf}]`,x);
 		debugger;

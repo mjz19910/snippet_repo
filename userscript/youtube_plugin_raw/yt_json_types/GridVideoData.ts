@@ -6,7 +6,7 @@ type D__GridVideo={
 	shortBylineText: R$TextWithRuns;
 	shortViewCountText: R$TextWithRuns;
 	thumbnail: D__Thumbnail;
-	thumbnailOverlay: G$ThumbnailOverlayItem[];
+	thumbnailOverlay: G_ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;
 	videoId: string;

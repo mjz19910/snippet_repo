@@ -1,1 +1,1 @@
-type G$GuideItem=R$GuideSection|R$GuideSubscriptionsSection;
+type G_GuideItem=R$GuideSection|R$GuideSubscriptionsSection;

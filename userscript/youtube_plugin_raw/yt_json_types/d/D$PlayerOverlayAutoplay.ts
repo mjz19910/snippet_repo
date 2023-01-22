@@ -9,7 +9,7 @@ type D__PlayerOverlayAutoplay={
 	nextButton: R$Button;
 	trackingParams: string;
 	closeButton: R$Button;
-	thumbnailOverlays: G$ThumbnailOverlayItem[];
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	preferImmediateRedirect: false;
 	videoId: string;
 	publishedTimeText: R$SimpleText;

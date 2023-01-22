@@ -1,5 +1,5 @@
 type D__Menu={
-	items?: G$Menu$items$iterate[];
+	items?: G_Menu$items$iterate[];
 	trackingParams: string;
 	topLevelButtons?: R$SegmentedLikeDislikeButton[];
 	accessibility?: D__Accessibility;

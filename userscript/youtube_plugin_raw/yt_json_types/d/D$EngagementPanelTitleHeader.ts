@@ -1,8 +1,8 @@
 type D__EngagementPanelTitleHeader={
-	title: G$Text;
+	title: G_Text;
 	contextualInfo?: R$TextWithRuns;
 	informationButton?: R$Button;
-	menu?: G$EngagementPanelMenu;
+	menu?: G_EngagementPanelMenu;
 	visibilityButton: R$Button;
 	trackingParams: string;
 };

@@ -1,4 +1,4 @@
-type G$WC$Metadata=[
-	G$WC$Metadata$SendPost,
-	G$WC$Metadata$1,
+type G_WC$Metadata=[
+	G_WC$Metadata$SendPost,
+	G_WC$Metadata$1,
 ][number];

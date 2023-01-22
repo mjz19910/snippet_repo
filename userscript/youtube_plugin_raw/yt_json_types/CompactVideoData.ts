@@ -13,7 +13,7 @@ type D__CompactVideo={
 	trackingParams: string;
 	shortViewCountText: R$TextWithRuns;
 	menu: {};
-	thumbnailOverlays: G$ThumbnailOverlayItem[];
+	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	accessibility: D__Accessibility;
 	richThumbnail: {};
 	badges?: R$MetadataBadge[];

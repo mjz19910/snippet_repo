@@ -1,6 +1,6 @@
 type R$Next={
 	responseContext: RC$ResponseContext;
-	contents?: G$NextContents;
+	contents?: G_NextContents;
 	continuationContents?: PlaylistPanelContinuation;
 	currentVideoEndpoint?: E$WatchEndpoint;
 	trackingParams: string;

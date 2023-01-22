@@ -1,1 +1,1 @@
-type G$Text=R$SimpleText|R$TextWithRuns;
+type G_Text=R$SimpleText|R$TextWithRuns;

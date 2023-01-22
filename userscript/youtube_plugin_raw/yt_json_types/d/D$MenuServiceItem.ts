@@ -1,7 +1,7 @@
 type D__MenuServiceItem<T extends string,EndpointItems>={
-	text: G$Text;
+	text: G_Text;
 	icon?: T$Icon<T>;
-	serviceEndpoint: G$MenuServiceEndpointItems<EndpointItems>;
+	serviceEndpoint: G_MenuServiceEndpointItems<EndpointItems>;
 	trackingParams: string;
 	hasSeparator?: true;
 	loggingDirectives?: A$LoggingDirectives;

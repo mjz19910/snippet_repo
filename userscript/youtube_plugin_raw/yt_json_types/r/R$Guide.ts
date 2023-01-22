@@ -1,5 +1,5 @@
 type R$Guide={
 	responseContext: RC$ResponseContext;
-	items: G$GuideItem[];
+	items: G_GuideItem[];
 	trackingParams: string;
 };

@@ -1,1 +1,1 @@
-type EG$MenuServiceEndpoints<T={}>=T;
+type EG_MenuServiceEndpoints<T={}>=T;

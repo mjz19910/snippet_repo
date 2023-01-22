@@ -1,5 +1,5 @@
 type D__GuideSection={
-	items: G$GuideSectionItem[];
+	items: G_GuideSectionItem[];
 	trackingParams: string;
-	formattedTitle?: G$Text;
+	formattedTitle?: G_Text;
 };
