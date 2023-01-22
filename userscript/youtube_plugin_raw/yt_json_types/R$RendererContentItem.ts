@@ -1,6 +1,6 @@
 type RendererContentItem=
 	|RichItemRenderer
-	|RichSectionRenderer
+	|R$RichSection
 	|CommentsHeaderRenderer
 	|CommentThreadRenderer
 	|R$ContinuationItemRenderer

@@ -1,3 +1,0 @@
-type InlineSurveyRenderer={
-	inlineSurveyRenderer: InlineSurveyData;
-};

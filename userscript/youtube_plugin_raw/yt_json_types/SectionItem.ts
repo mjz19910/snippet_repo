@@ -1,6 +1,6 @@
 type SectionItem=[
 	RichItemRenderer,
-	RichSectionRenderer,
+	R$RichSection,
 	CommentsHeaderRenderer,
 	CommentThreadRenderer,
 	R$CompactVideoRenderer,

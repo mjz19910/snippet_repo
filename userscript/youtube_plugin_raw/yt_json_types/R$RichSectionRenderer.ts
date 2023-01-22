@@ -1,1 +1,0 @@
-type RichSectionRenderer={richSectionRenderer: RichSectionData;};

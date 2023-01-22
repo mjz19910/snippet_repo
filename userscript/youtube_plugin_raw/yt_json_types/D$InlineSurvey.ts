@@ -1,4 +1,4 @@
-type InlineSurveyData={
+type D$InlineSurvey={
 	dismissalEndpoint: {};
 	title: D$TextWithRuns;
 	subtitle: D$TextWithRuns;
