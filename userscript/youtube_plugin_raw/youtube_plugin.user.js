@@ -5192,11 +5192,7 @@ class ParserService extends BaseService {
 	get_parse_fns(path,tv,ta=null) {
 		let path_parts=split_string(path,".");
 		/** @private @arg {number} idx */
-		let gd=(idx) => {
-			/** @type {P$LogItems} */
-			console.log("[param_next.next_new_ns]",path_parts.join("."));
-			gen_next_part(idx);
-		};
+		let gd=(idx) => {console.log("[param_next.next_new_ns]",path_parts.join(".")); gen_next_part(idx);};
 		/** @private @arg {number} idx */
 		let u=idx => this.grouped(path_parts.join("$"),() => gd(idx));
 		/** @private @arg {number} idx */
@@ -5378,6 +5374,7 @@ class ParserService extends BaseService {
 		let pp=this.get_parse_fns(path,tv);
 		let u=pp.u;
 		const idx=1;
+		/** @type {P$LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
 			case "AdServingDataEntry": {
