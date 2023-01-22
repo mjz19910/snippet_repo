@@ -1,5 +1,5 @@
-type CommentThreadData={
-	comment: CommentRenderer;
+type D$CommentThread={
+	comment: R$Comment;
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";
 	isModeratedElqComment: boolean;

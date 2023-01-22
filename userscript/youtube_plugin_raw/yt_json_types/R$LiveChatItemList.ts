@@ -1,3 +1,3 @@
-type LiveChatItemListRenderer={
+type R$LiveChatItemList={
 	liveChatItemListRenderer: {};
 };

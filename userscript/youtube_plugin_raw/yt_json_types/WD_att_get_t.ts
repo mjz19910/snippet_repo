@@ -1,1 +1,1 @@
-type WD_att_get_t={type: "att.get";data: AttGetResponse;};
+type WD_att_get_t={type: "att.get";data: R$AttGet;};

@@ -5,7 +5,7 @@ type MacroMarkersListItem={
 	onTap: E$WatchEndpoint;
 	trackingParams: string;
 	shareButton: R$Button;
-	repeatButton: ToggleButtonRenderer;
+	repeatButton: R$ToggleButton;
 	macroMarkerRepeatStateEntityKey: string;
 	endRepeatCommand: E$CommandExecutorCommand;
 	playerStateEntityKey: string;

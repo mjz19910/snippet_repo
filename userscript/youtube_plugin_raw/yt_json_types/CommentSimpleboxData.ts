@@ -6,6 +6,6 @@ type CommentSimpleboxData={
 	trackingParams: string;
 	avatarSize: "SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT";
 	emojiButton: R$Button;
-	emojiPicker: EmojiPickerRenderer;
+	emojiPicker: R$EmojiPicker;
 	aadcGuidelinesStateEntityKey: string;
 };

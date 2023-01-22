@@ -1,3 +1,3 @@
 type AccountSectionListData={
-	contents: AccountItemSectionRenderer[];
+	contents: R$AccountItemSection[];
 };

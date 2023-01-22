@@ -1,13 +1,13 @@
 type LiveChatContinuationData={
 	continuations: LiveChatContinuationItem[];
 	actions?: LiveChatContinuationActions[];
-	actionPanel?: LiveChatMessageInputRenderer;
-	itemList?: LiveChatItemListRenderer;
-	header?: LiveChatHeaderRenderer;
-	ticker?: LiveChatTickerRenderer;
+	actionPanel?: R$LiveChatMessageInput;
+	itemList?: R$LiveChatItemList;
+	header?: R$LiveChatHeader;
+	ticker?: R$LiveChatTicker;
 	trackingParams?: string;
-	participantsList?: LiveChatParticipantsListRenderer;
-	popoutMessage?: MessageRenderer;
+	participantsList?: R$LiveChatParticipantsList;
+	popoutMessage?: R$Message;
 	emojis?: LiveChatEmoji[];
 	clientMessages?: ClientMessages;
 	viewerName?: string;

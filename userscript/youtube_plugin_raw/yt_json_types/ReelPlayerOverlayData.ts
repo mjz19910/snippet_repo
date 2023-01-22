@@ -4,17 +4,17 @@ type ReelPlayerOverlayData={
 	reelPlayerNavigationModel: "REEL_PLAYER_NAVIGATION_MODEL_UNSPECIFIED";
 }|{
 	likeButton: R$LikeButton;
-	reelPlayerHeaderSupportedRenderers: ReelPlayerHeaderRenderer;
+	reelPlayerHeaderSupportedRenderers: R$ReelPlayerHeader;
 	menu: R$Menu;
 	nextItemButton: R$Button;
 	prevItemButton: R$Button;
-	subscribeButtonRenderer: SubscribeButtonRenderer;
+	subscribeButtonRenderer: R$SubscribeButton;
 	style: "REEL_PLAYER_OVERLAY_STYLE_SHORTS";
 	viewCommentsButton: R$Button;
 	videoInteractions?: {};
 	trackingParams: string;
 	shareButton: R$Button;
-	pivotButton: PivotButtonRenderer;
-	badge: R$MetadataBadgeRenderer;
+	pivotButton: R$PivotButton;
+	badge: R$MetadataBadge;
 };
 

@@ -1,3 +1,3 @@
-type TranscriptSearchPanelRenderer={
+type R$TranscriptSearchPanel={
 	transcriptSearchPanelRenderer: TranscriptSearchPanelData;
 };

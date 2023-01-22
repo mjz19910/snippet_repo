@@ -1,5 +1,5 @@
 type VE139722_EngagementPanelSectionItem={
-	header: R$EngagementPanelTitleHeaderRenderer;
+	header: R$EngagementPanelTitleHeader;
 	content: R$SectionList;
 	veType: 139722;
 	targetId: "engagement-panel-comments-section";

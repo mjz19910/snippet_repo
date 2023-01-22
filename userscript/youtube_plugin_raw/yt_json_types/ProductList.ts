@@ -1,4 +1,4 @@
 type ProductList={
-	contents: ProductListItemRenderer[];
+	contents: R$ProductListItem[];
 	trackingParams: string;
 };

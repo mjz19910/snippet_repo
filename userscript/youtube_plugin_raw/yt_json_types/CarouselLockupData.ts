@@ -1,3 +1,3 @@
 type CarouselLockupData={
-	infoRows: InfoRowRenderer[];
+	infoRows: R$InfoRow[];
 };

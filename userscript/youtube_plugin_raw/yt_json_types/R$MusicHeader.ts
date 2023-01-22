@@ -1,3 +1,3 @@
-type MusicHeaderRenderer={
+type R$MusicHeader={
 	musicHeaderRenderer: {};
 };

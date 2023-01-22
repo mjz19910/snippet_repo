@@ -1,1 +1,1 @@
-type DropdownRenderer={dropdownRenderer: DropdownData;};
+type R$Dropdown={dropdownRenderer: DropdownData;};

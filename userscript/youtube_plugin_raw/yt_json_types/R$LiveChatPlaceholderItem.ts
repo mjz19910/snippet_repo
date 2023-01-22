@@ -1,1 +1,1 @@
-type LiveChatPlaceholderItemRenderer={liveChatPlaceholderItemRenderer: LiveChatPlaceholderItemData;};
+type R$LiveChatPlaceholderItem={liveChatPlaceholderItemRenderer: LiveChatPlaceholderItemData;};

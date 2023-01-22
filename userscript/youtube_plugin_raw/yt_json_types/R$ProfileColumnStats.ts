@@ -3,14 +3,14 @@ type ProfileColumnStatsEntryData={
 	value: D$SimpleText;
 };
 
-type ProfileColumnStatsEntryRenderer={
+type R$ProfileColumnStatsEntry={
 	profileColumnStatsEntryRenderer: ProfileColumnStatsEntryData;
 };
 
 type ProfileColumnStatsData={
-	items: ProfileColumnStatsEntryRenderer[];
+	items: R$ProfileColumnStatsEntry[];
 };
 
-type ProfileColumnStatsRenderer={
+type R$ProfileColumnStats={
 	profileColumnStatsRenderer: ProfileColumnStatsData;
 };

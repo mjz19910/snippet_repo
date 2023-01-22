@@ -1,1 +1,1 @@
-type BrowseContents=R$TwoColumnBrowseResults|FeedFilterChipBarRenderer;
+type BrowseContents=R$TwoColumnBrowseResults|R$FeedFilterChipBar;

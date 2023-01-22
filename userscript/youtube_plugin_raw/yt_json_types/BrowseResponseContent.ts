@@ -1,6 +1,6 @@
-type BrowseMetadata=ChannelMetadataRenderer|PlaylistMetadataRenderer;
+type BrowseMetadata=R$ChannelMetadata|R$PlaylistMetadata;
 
-type BrowseResponse={
+type R$Browse={
 	responseContext: RC$ResponseContext;
 	contents?: BrowseContents;
 	continuationContents?: C$SectionList;
@@ -13,7 +13,7 @@ type BrowseResponse={
 	frameworkUpdates?: R$EntityBatchUpdate;
 	// ?
 	maxAgeStoreSeconds?: number;
-	background?: MusicThumbnailRenderer;
+	background?: R$MusicThumbnail;
 	// ?
 	onResponseReceivedActions?: ResponseReceivedAction[];
 	sidebar?: BrowseSidebar;

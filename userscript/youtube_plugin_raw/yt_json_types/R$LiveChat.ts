@@ -1,1 +1,1 @@
-type LiveChatRenderer={liveChatRenderer: {};};
+type R$LiveChat={liveChatRenderer: {};};

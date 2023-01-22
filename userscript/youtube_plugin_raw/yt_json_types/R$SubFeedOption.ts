@@ -1,3 +1,3 @@
-type SubFeedOptionRenderer={
+type R$SubFeedOption={
 	subFeedOptionRenderer: SubFeedOption;
 };

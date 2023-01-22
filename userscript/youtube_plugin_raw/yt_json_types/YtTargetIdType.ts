@@ -5,7 +5,7 @@ type YtTargetIdType=[
 	EngagementPanelSectionTargetId,
 	D$SearchFeedSectionList['targetId'],
 	ScrollToEngagementPanelData['targetId'],
-	SearchResponse['targetId'],
+	R$Search['targetId'],
 	TranscriptSearchPanelData['targetId'],
 	UpdateEngagementPanelData['targetId'],
 	WatchNextContinuationAction['targetId'],

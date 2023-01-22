@@ -1,4 +1,4 @@
-type SearchResponse=T$Contents<TwoColumnSearchResultsRenderer>&{
+type R$Search=T$Contents<TwoColumnSearchResultsRenderer>&{
 	responseContext: RC$ResponseContext;
 	estimatedResults: `${number}`;
 	trackingParams: string;

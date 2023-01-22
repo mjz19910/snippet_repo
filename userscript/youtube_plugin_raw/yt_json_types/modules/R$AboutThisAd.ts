@@ -1,1 +1,1 @@
-type AboutThisAdRenderer={url: UrlWrappedValue;};
+type R$AboutThisAd={aboutThisAdRenderer: D$AboutThisAd;};

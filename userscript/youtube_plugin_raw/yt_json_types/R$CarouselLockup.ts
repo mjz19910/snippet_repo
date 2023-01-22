@@ -1,3 +1,3 @@
-type CarouselLockupRenderer={
+type R$CarouselLockup={
 	carouselLockupRenderer: CarouselLockupData;
 };

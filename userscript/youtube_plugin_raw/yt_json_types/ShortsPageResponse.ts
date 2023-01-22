@@ -1,7 +1,7 @@
-type ShortsPageResponse={
+type R$ShortsPage={
 	page: "shorts";
 	endpoint: E$ReelWatchEndpoint;
-	response: ReelResponse;
+	response: R$Reel;
 	playerResponse: R$Player;
 	reelWatchSequenceResponse?: R$ReelWatchSequenceResponse;
 	url: `/shorts/${string}`;
@@ -13,6 +13,6 @@ type ShortsPageResponse={
 	page: "shorts";
 	playerResponse: R$Player;
 	reelWatchSequenceResponse: R$ReelWatchSequenceResponse|undefined;
-	response: ReelResponse;
+	response: R$Reel;
 	cachedReelWatchSequenceResponse: R$ReelWatchSequenceResponse;
 };

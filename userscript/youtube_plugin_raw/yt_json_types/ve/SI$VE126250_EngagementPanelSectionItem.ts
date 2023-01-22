@@ -1,7 +1,7 @@
 type VE126250_EngagementPanelSectionItem={
 	panelIdentifier: "engagement-panel-searchable-transcript";
-	header: R$EngagementPanelTitleHeaderRenderer;
-	content: R$ContinuationItemRenderer;
+	header: R$EngagementPanelTitleHeader;
+	content: R$ContinuationItem;
 	veType: 126250;
 	targetId: "engagement-panel-searchable-transcript";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";

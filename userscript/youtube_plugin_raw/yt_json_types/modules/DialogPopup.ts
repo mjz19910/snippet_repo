@@ -1,4 +1,5 @@
-type DialogPopup={
-	popup: R$ConfirmDialog|AboutThisAdRendererPopup;
+type T$DialogPopup<T=R$ConfirmDialog>={
+	// R$AboutThisAd
+	popup: T;
 	popupType: "DIALOG";
 };

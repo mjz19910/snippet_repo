@@ -1,4 +1,4 @@
 type D$TwoColumnBrowseResults={
-	tabs: G$ResultRenderer[];
+	tabs: R$G$Result[];
 	secondaryContents?: G$SecondaryContents;
 };

@@ -1,0 +1,26 @@
+type D$PlaylistHeader={
+	playlistId: string;
+	title: D$TextWithRuns;
+	numVideosText: D$TextWithRuns;
+	descriptionText: {};
+	ownerText: D$TextWithRuns;
+	viewCountText: D$TextWithRuns;
+	shareData: YtShareData;
+	isEditable: boolean;
+	privacy: string;
+	ownerEndpoint: E$Browse;
+	editableDetails: EditableDetails;
+	trackingParams: string;
+	serviceEndpoints: T$Endpoint<E$PlaylistEdit,{}>[];
+	stats: D$TextWithRuns[];
+	briefStats: D$TextWithRuns[];
+	editorEndpoint: PlaylistEditorEndpoint;
+	playlistHeaderBanner: R$HeroPlaylistThumbnail;
+	moreActionsMenu: R$Menu;
+	playButton: R$Button;
+	shufflePlayButton: R$Button;
+	onDescriptionTap: T$A$OpenPopup<{}>;
+	cinematicContainer: R$CinematicContainer;
+	byline: R$PlaylistByline[];
+	descriptionTapText: D$TextWithRuns;
+};

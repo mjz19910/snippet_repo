@@ -1,1 +1,1 @@
-type PlaylistSidebarItem=PlaylistSidebarPrimaryInfoRenderer|PlaylistSidebarSecondaryInfoRenderer;
+type PlaylistSidebarItem=R$PlaylistSidebarPrimaryInfo|R$PlaylistSidebarSecondaryInfo;

@@ -1,6 +1,6 @@
 type MerchandiseShelf={
 	title: string;
-	items: MerchandiseItemRenderer[];
+	items: R$MerchandiseItem[];
 	trackingParams: string;
 	showText: string;
 	hideText: string;

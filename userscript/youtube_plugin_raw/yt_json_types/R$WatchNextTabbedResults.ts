@@ -1,3 +1,3 @@
-type WatchNextTabbedResultsRenderer={
+type R$WatchNextTabbedResults={
 	watchNextTabbedResultsRenderer: WatchNextTabbedResults;
 };

@@ -1,3 +1,3 @@
-type TranscriptSegmentRenderer={
+type R$TranscriptSegment={
 	transcriptSegmentRenderer: TranscriptSegmentData;
 };

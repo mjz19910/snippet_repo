@@ -4,7 +4,7 @@ type LiveChatTextMessageData={
 	authorPhoto: D$Thumbnail;
 	contextMenuEndpoint: {};
 	id: string;
-	authorBadges?: LiveChatAuthorBadgeRenderer[];
+	authorBadges?: R$LiveChatAuthorBadge[];
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
 	contextMenuAccessibility: A$Accessibility;

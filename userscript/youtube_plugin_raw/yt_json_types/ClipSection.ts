@@ -1,3 +1,3 @@
 type ClipSection={
-	contents: ClipCreationRenderer[];
+	contents: R$ClipCreation[];
 };

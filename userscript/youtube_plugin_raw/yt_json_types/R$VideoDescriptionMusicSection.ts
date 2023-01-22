@@ -1,1 +1,1 @@
-type R$VideoDescriptionMusicSectionRenderer={videoDescriptionMusicSectionRenderer: VideoDescriptionMusicSectionData;};
+type R$VideoDescriptionMusicSection={videoDescriptionMusicSectionRenderer: VideoDescriptionMusicSectionData;};

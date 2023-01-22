@@ -1,7 +1,7 @@
 type CommentsHeaderData={
 	countText: D$TextWithRuns;
-	createRenderer: CommentSimpleboxRenderer;
-	sortMenu: SortFilterSubMenuRenderer;
+	createRenderer: R$CommentSimplebox;
+	sortMenu: R$SortFilterSubMenu;
 	trackingParams: string;
 	titleText: D$TextWithRuns;
 	commentsCount: D$TextWithRuns;

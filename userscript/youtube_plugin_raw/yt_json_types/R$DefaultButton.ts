@@ -1,3 +1,3 @@
-type DefaultButtonRenderer={
+type R$DefaultButton={
 	buttonRenderer: D$Button;
 };

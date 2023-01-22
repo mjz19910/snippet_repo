@@ -1,3 +1,3 @@
-type FeedFilterChipBarRenderer={
+type R$FeedFilterChipBar={
 	feedFilterChipBarRenderer: FeedFilterChipBarData;
 };

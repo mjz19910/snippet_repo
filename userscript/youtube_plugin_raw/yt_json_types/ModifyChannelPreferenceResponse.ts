@@ -1,8 +1,8 @@
-type ModifyChannelPreferenceResponse={
+type R$ModifyChannelPreference={
 	responseContext: RC$ResponseContext;
 	actions: T$A$OpenPopup<{}>[];
 	channelId: `UC${string}`;
-	newNotificationButton: SubscriptionNotificationToggleButtonRenderer;
+	newNotificationButton: R$SubscriptionNotificationToggleButton;
 	trackingParams: string;
 	frameworkUpdates: R$EntityBatchUpdate;
 };

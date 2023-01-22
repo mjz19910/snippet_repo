@@ -11,7 +11,7 @@ type D$CompactPlaylist={
 	thumbnailText: D$TextWithRuns;
 	menu: R$Menu;
 	shareUrl: string;
-	thumbnailRenderer: PlaylistVideoThumbnailRenderer;
+	thumbnailRenderer: R$PlaylistVideoThumbnail;
 	longBylineText: D$TextWithRuns;
 	thumbnailOverlays: {}[];
 };

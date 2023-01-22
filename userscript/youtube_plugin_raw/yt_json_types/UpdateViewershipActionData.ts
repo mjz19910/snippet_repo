@@ -1,3 +1,3 @@
 type UpdateViewershipActionData={
-	viewCount: VideoViewCountRenderer;
+	viewCount: R$VideoViewCount;
 };

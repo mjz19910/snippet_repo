@@ -2,9 +2,9 @@ type SuperVodBuyFlowContent={
 	description: D$TextWithRuns;
 	buyButton: R$Button;
 	trackingParams: string;
-	commentPreview: PdgCommentPreviewRenderer;
+	commentPreview: R$PdgCommentPreview;
 	disclaimerText: D$TextWithRuns;
-	colorSlider: PdgColorSliderRenderer;
+	colorSlider: R$PdgColorSlider;
 	defaultPriceTier: number;
 	superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
 };

@@ -1,3 +1,3 @@
 type RenderingContent={
-	displayAdRenderer: DisplayAdRenderer;
+	displayAdRenderer: R$DisplayAd;
 };

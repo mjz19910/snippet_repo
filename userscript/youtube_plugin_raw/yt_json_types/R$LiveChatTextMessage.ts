@@ -1,3 +1,3 @@
-type LiveChatTextMessageRenderer={
+type R$LiveChatTextMessage={
 	liveChatTextMessageRenderer: LiveChatTextMessageData;
 };

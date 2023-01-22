@@ -1,3 +1,3 @@
-type GridVideoRenderer={
+type R$GridVideo={
 	gridVideoRenderer: GridVideoData;
 };

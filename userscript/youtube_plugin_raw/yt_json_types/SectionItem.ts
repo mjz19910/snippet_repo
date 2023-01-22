@@ -1,8 +1,8 @@
 type SectionItem=[
-	RichItemRenderer,
+	R$RichItem,
 	R$RichSection,
-	CommentsHeaderRenderer,
-	CommentThreadRenderer,
-	R$CompactVideoRenderer,
-	R$ContinuationItemRenderer,
+	R$CommentsHeader,
+	R$CommentThread,
+	R$CompactVideo,
+	R$ContinuationItem,
 ][number];

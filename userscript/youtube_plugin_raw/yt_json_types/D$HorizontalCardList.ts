@@ -1,5 +1,5 @@
 type D$HorizontalCardList={
-	cards: MacroMarkersListItemRenderer[];
+	cards: R$MacroMarkersListItem[];
 	trackingParams: string;
 	header: R$RichListHeader;
 	style: D$HorizontalCardList$StyleType;

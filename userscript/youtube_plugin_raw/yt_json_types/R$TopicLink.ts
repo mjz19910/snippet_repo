@@ -1,3 +1,3 @@
-type TopicLinkRenderer={
+type R$TopicLink={
 	topicLinkRenderer: TopicLinkData;
 };

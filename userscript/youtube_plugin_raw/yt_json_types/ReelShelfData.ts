@@ -1,6 +1,6 @@
 type ReelShelfData={
 	title: D$TextWithRuns;
-	items: ReelItemRenderer[];
+	items: R$ReelItem[];
 	trackingParams: string;
 	icon: T$Icon<"YOUTUBE_SHORTS_BRAND_24">;
 };

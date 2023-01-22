@@ -1,7 +1,7 @@
 type G$StructuredDescriptionContentItem=[
-	R$ExpandableVideoDescriptionBodyRenderer,
+	R$ExpandableVideoDescriptionBody,
 	R$HorizontalCardList,
-	R$VideoDescriptionHeaderRenderer,
-	R$VideoDescriptionMusicSectionRenderer,
+	R$VideoDescriptionHeader,
+	R$VideoDescriptionMusicSection,
 ][number];
 

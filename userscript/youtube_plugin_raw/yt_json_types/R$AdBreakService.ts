@@ -1,3 +1,3 @@
-type AdBreakServiceRenderer={
+type R$AdBreakService={
 	adBreakServiceRenderer: AdBreakServiceData;
 };

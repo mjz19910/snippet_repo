@@ -1,1 +1,1 @@
-type PlaylistSidebarRenderer={playlistSidebarRenderer: PlaylistSidebar;};
+type R$PlaylistSidebar={playlistSidebarRenderer: D$PlaylistSidebar;};

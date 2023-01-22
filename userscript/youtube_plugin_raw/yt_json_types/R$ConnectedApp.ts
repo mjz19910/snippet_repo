@@ -1,3 +1,3 @@
-type R$ConnectedAppRenderer={
+type R$ConnectedApp={
 	connectedAppRenderer: ConnectedAppData;
 };

@@ -1,3 +1,3 @@
-type CommentActionButtonsRenderer={
+type R$CommentActionButtons={
 	commentActionButtonsRenderer: CommentActionButtonsData;
 };

@@ -1,4 +1,4 @@
-type PlaylistPanelVideo={
+type D$PlaylistPanelVideo={
 	title: D$SimpleText;
 	longBylineText: D$TextWithRuns;
 	thumbnail: D$Thumbnail;

@@ -1,3 +1,3 @@
-type CheckboxSurveyOptionRenderer={
+type R$CheckboxSurveyOption={
 	checkboxSurveyOptionRenderer: CheckboxSurveyOptionData;
 };

@@ -4,6 +4,6 @@ type PlaylistMetadata={
 	iosAppindexingLink: string;
 };
 
-type PlaylistMetadataRenderer={
+type R$PlaylistMetadata={
 	playlistMetadataRenderer: PlaylistMetadata;
 };

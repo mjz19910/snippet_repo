@@ -1,0 +1,1 @@
+type D$AboutThisAd={url: UrlWrappedValue;};

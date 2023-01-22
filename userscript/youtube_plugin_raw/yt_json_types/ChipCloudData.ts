@@ -1,5 +1,5 @@
 type D$ChipCloudData={
-	chips: ChipCloudChipRenderer;
+	chips: R$ChipCloudChip;
 	trackingParams: string;
 	horizontalScrollable: false;
 	nextButton: R$Button;

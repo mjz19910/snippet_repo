@@ -1,3 +1,3 @@
-type R$CompactVideoRenderer={
+type R$CompactVideo={
 	compactVideoRenderer: CompactVideoData;
 };

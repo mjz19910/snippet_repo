@@ -16,5 +16,5 @@ type CompactVideoData={
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
 	accessibility: A$Accessibility;
 	richThumbnail: {};
-	badges?: R$MetadataBadgeRenderer[];
+	badges?: R$MetadataBadge[];
 };

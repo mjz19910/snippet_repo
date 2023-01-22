@@ -1,1 +1,1 @@
-type G$ResultRenderer=R$Tab|R$ExpandableTab;
+type R$G$Result=R$Tab|R$ExpandableTab;

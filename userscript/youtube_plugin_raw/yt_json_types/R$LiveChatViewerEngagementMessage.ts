@@ -1,3 +1,3 @@
-type LiveChatViewerEngagementMessageRenderer={
+type R$LiveChatViewerEngagementMessage={
 	liveChatViewerEngagementMessageRenderer: LiveChatViewerEngagementMessage;
 };

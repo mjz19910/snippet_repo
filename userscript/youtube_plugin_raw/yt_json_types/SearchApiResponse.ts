@@ -1,7 +1,7 @@
-type SearchApiResponse={
+type R$SearchApi={
 	responseContext: RC$ResponseContext;
-	contents?: TabbedSearchResultsRenderer;
+	contents?: R$TabbedSearchResults;
 	continuationContents?: MusicShelfContinuation;
 	trackingParams: string;
-	header?: MusicHeaderRenderer;
-}|SearchResponse;
+	header?: R$MusicHeader;
+}|R$Search;

@@ -1,6 +1,6 @@
 type VideoDescriptionMusicSectionData={
 	sectionTitle: D$SimpleText;
-	carouselLockups: CarouselLockupRenderer[];
-	topicLink: TopicLinkRenderer;
+	carouselLockups: R$CarouselLockup[];
+	topicLink: R$TopicLink;
 	premiumUpsellLink: D$TextWithRuns;
 };

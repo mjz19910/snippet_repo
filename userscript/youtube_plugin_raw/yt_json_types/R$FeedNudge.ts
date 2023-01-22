@@ -1,3 +1,3 @@
-type FeedNudgeRenderer={
+type R$FeedNudge={
 	feedNudgeRenderer: {};
 };

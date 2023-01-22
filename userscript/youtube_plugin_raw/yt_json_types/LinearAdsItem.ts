@@ -1,1 +1,1 @@
-type LinearAdsItem=InstreamVideoAdRenderer|AdActionInterstitialRenderer;
+type LinearAdsItem=R$InstreamVideoAd|R$AdActionInterstitial;

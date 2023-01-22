@@ -1,0 +1,1 @@
+type R$Page=T$AR$Contents<R$TwoColumnBrowseResults>&{trackingParams: string;};

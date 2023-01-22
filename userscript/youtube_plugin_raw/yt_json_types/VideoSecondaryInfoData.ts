@@ -1,8 +1,8 @@
 type VideoSecondaryInfoData={
-	owner: VideoOwnerRenderer;
+	owner: R$VideoOwner;
 	description?: D$TextWithRuns;
-	subscribeButton: SubscribeButtonRenderer;
-	metadataRowContainer: MetadataRowContainerRenderer;
+	subscribeButton: R$SubscribeButton;
+	metadataRowContainer: R$MetadataRowContainer;
 	showMoreText: D$SimpleText;
 	showLessText: D$SimpleText;
 	trackingParams: string;

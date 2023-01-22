@@ -9,7 +9,7 @@ type Video$VideoId={
 	lengthText: D$SimpleText;
 	viewCountText: D$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
-	ownerBadges: R$MetadataBadgeRenderer[];
+	ownerBadges: R$MetadataBadge[];
 	ownerText: D$TextWithRuns;
 	shortBylineText: D$TextWithRuns;
 	trackingParams: string;

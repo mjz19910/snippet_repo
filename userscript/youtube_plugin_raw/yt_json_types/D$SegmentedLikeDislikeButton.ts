@@ -1,4 +1,4 @@
 type D$SegmentedLikeDislikeButton={
-	likeButton: ToggleButtonRenderer;
+	likeButton: R$ToggleButton;
 	dislikeButton: {};
 };

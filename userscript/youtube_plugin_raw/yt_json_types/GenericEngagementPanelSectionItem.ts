@@ -5,23 +5,23 @@ type GenericEngagementPanelSectionItem={
 	loggingDirectives: A$LoggingDirectives;
 }|{
 	panelIdentifier: "engagement-panel-macro-markers-description-chapters";
-	header: R$EngagementPanelTitleHeaderRenderer;
-	content: R$MacroMarkersListRenderer;
+	header: R$EngagementPanelTitleHeader;
+	content: R$MacroMarkersList;
 	targetId: "engagement-panel-macro-markers-description-chapters";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: A$LoggingDirectives;
 }|{
 	panelIdentifier: "engagement-panel-clip-create";
-	header: R$EngagementPanelTitleHeaderRenderer;
-	content: ClipSectionRenderer;
+	header: R$EngagementPanelTitleHeader;
+	content: R$ClipSection;
 	targetId: "engagement-panel-clip-create";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	onShowCommands: E$ChangeEngagementPanelVisibilityAction[];
 	loggingDirectives: A$LoggingDirectives;
 }|{
 	panelIdentifier: "engagement-panel-macro-markers-auto-chapters";
-	header: R$EngagementPanelTitleHeaderRenderer;
-	content: R$MacroMarkersListRenderer;
+	header: R$EngagementPanelTitleHeader;
+	content: R$MacroMarkersList;
 	targetId: "engagement-panel-macro-markers-auto-chapters";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
 	loggingDirectives: A$LoggingDirectives;

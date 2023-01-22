@@ -1,1 +1,1 @@
-type TopbarButtonItem=TopbarMenuButtonRenderer|NotificationTopbarButtonRenderer;
+type TopbarButtonItem=R$TopbarMenuButton|R$NotificationTopbarButton;

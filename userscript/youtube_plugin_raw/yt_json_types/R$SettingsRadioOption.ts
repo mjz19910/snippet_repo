@@ -1,3 +1,3 @@
-type SettingsRadioOptionRenderer={
+type R$SettingsRadioOption={
 	settingsRadioOptionRenderer: SettingsRadioOptionData;
 };

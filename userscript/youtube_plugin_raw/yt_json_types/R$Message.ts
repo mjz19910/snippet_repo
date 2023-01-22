@@ -1,3 +1,3 @@
-type MessageRenderer={
+type R$Message={
 	messageRenderer: {};
 };

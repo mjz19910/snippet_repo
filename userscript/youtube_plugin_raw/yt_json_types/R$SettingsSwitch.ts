@@ -1,3 +1,3 @@
-type SettingsSwitchRenderer={
+type R$SettingsSwitch={
 	settingsSwitchRenderer: SettingsSwitchData;
 };

@@ -1,6 +1,6 @@
 type PdgBuyFlow={
 	header: R$PdgBuyFlowHeader;
-	content: SuperVodBuyFlowContentRenderer[];
+	content: R$SuperVodBuyFlowContent[];
 	trackingParams: string;
 	onCloseCommand: GetSurveyCommand;
 };

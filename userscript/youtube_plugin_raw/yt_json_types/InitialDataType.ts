@@ -1,4 +1,4 @@
-type InitialDataType=JsonDataResponseType;
+type InitialDataType=G$Response;
 function check(data: YTNavigateFinishDetail) {
 	const types_assert=data.response;
 	return types_assert;

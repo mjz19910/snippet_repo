@@ -1,1 +1,1 @@
-type SortFilterSubMenuRenderer={sortFilterSubMenuRenderer: SortFilterSubMenuData;};
+type R$SortFilterSubMenu={sortFilterSubMenuRenderer: SortFilterSubMenuData;};

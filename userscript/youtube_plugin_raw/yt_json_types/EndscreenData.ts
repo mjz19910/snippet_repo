@@ -1,4 +1,4 @@
 type EndscreenData={
-	elements: EndscreenElementRenderer[];
+	elements: R$EndscreenElement[];
 	startMs?: number;
 };

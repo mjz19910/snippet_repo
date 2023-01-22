@@ -411,7 +411,7 @@ export class Snippet_0_tmp {
 		return r;
 	}
 	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
-	H$Renderer(cf,x,f) {
+	H$R$(cf,x,f) {
 		this.save_keys(`[${cf}Renderer]`,x);
 		f.call(this,this.w(x));
 	}
@@ -449,13 +449,13 @@ export class Snippet_0_tmp {
 }
 class ND extends Snippet_0_tmp {
 	/** @private @arg {R$NotificationAction} x */
-	R$NewRenderer(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
+	R$New(x) {this.H$R$("NotificationAction",x,this.D$NotificationAction);}
 	/** @pub @arg {D$NotificationAction} x */
 	D$NewData(x) {x;}
 	/** @pub @arg {E$T$SignalService<{}>} x */
 	E$NewEndpoint(x) {x;}
 	use() {
-		this.R$NewRenderer({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
+		this.R$New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
 	}
 }
 new ND;

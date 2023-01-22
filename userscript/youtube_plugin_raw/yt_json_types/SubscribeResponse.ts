@@ -1,4 +1,4 @@
-type SubscribeResponse={
+type R$Subscribe={
 	responseContext: RC$ResponseContext;
 	actions: (A$AddToGuideSection|T$A$OpenPopup<{}>|C$RunAttestation|A$UpdateSubscribeButton)[];
 	newNotificationButton: {};

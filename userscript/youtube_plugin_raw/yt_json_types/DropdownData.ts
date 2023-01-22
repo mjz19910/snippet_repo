@@ -1,4 +1,4 @@
 type DropdownData={
-	entries: PrivacyDropdownItemRenderer[];
+	entries: R$PrivacyDropdownItem[];
 	label: "Privacy";
 };

@@ -1,0 +1,3 @@
+type PlaylistEditorArgs={
+	playlistId: string;
+};

@@ -1,8 +1,8 @@
 type CardCollectionData={
-	cards: CardRenderer[];
+	cards: R$Card[];
 	headerText: D$TextWithRuns;
-	icon: InfoCardIconRenderer;
-	closeButton: InfoCardIconRenderer;
+	icon: R$InfoCardIcon;
+	closeButton: R$InfoCardIcon;
 	trackingParams: string;
 	allowTeaserDismiss: boolean;
 	logIconVisibilityUpdates: boolean;

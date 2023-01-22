@@ -1,3 +1,3 @@
-type ItemSectionRenderer={
-	itemSectionRenderer: ItemSectionData;
+type R$ItemSection={
+	itemSectionRenderer: D$ItemSection;
 };

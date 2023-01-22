@@ -1,3 +1,3 @@
-type MenuNavigationItemRenderer={
+type R$MenuNavigationItem={
 	menuNavigationItemRenderer: MenuNavigationItemData;
 };

@@ -1,3 +1,3 @@
 type TranscriptFooterData={
-	languageMenu: SortFilterSubMenuRenderer;
+	languageMenu: R$SortFilterSubMenu;
 };

@@ -1,1 +1,1 @@
-type ClipSectionRenderer={clipSectionRenderer: T$AR$Contents<ClipCreationRenderer>;};
+type R$ClipSection={clipSectionRenderer: T$AR$Contents<ClipCreationRenderer>;};

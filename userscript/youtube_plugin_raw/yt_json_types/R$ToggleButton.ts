@@ -1,3 +1,3 @@
-type ToggleButtonRenderer={
+type R$ToggleButton={
 	toggleButtonRenderer: ToggleButton;
 };

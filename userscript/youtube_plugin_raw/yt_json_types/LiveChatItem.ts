@@ -1,3 +1,3 @@
-type LiveChatItem=LiveChatTextMessageRenderer|
-	LiveChatPlaceholderItemRenderer|
-	LiveChatViewerEngagementMessageRenderer;
+type LiveChatItem=R$LiveChatTextMessage|
+	R$LiveChatPlaceholderItem|
+	R$LiveChatViewerEngagementMessage;

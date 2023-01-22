@@ -1,4 +1,4 @@
-type CommentData={
+type D$Comment={
 	authorText: D$TextWithRuns;
 	authorThumbnail: D$Thumbnail;
 	authorEndpoint: {};
@@ -7,7 +7,7 @@ type CommentData={
 	isLiked: boolean;
 	actionMenu: R$Menu;
 	commentId: string;
-	actionButtons: CommentActionButtonsRenderer;
+	actionButtons: R$CommentActionButtons;
 	authorIsChannelOwner: boolean;
 	currentUserReplyThumbnail: D$Thumbnail;
 	voteStatus: "INDIFFERENT";

@@ -1,3 +1,3 @@
-type MusicThumbnailRenderer={
+type R$MusicThumbnail={
 	musicThumbnailRenderer: MusicThumbnailData;
 };

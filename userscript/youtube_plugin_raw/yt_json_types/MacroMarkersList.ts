@@ -1,5 +1,5 @@
 type MacroMarkersList={
-	contents: MacroMarkersListItemRenderer[];
+	contents: R$MacroMarkersListItem[];
 	syncButtonLabel: D$TextWithRuns;
 	trackingParams: string;
 };

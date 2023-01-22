@@ -1,1 +1,1 @@
-type ClientForecastingAdRenderer={clientForecastingAdRenderer: ClientForecastingAdData;};
+type R$ClientForecastingAd={clientForecastingAdRenderer: ClientForecastingAdData;};

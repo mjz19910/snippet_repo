@@ -1,4 +1,4 @@
-type PdgColorSliderRenderer={
+type R$PdgColorSlider={
 	pdgColorSliderRenderer: {
 		notches: NotchesItem[];
 		superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;

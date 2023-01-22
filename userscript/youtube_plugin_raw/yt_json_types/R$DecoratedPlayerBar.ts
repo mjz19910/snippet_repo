@@ -1,3 +1,3 @@
-type DecoratedPlayerBarRenderer={
-	decoratedPlayerBarRenderer: DecoratedPlayerBar;
+type R$DecoratedPlayerBar={
+	decoratedPlayerBarRenderer: D$DecoratedPlayerBar;
 };

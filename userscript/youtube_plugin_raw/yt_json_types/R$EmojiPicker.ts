@@ -1,3 +1,3 @@
-type EmojiPickerRenderer={
+type R$EmojiPicker={
 	emojiPickerRenderer: {};
 };

@@ -1,3 +1,3 @@
 type TabbedSearchResults={
-	tabs: SearchResultsTabRenderer[];
+	tabs: R$SearchResultsTab[];
 };

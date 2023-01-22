@@ -1,1 +1,1 @@
-type GeneralRenderer=SettingsSidebarRenderer;
+type R$General=R$SettingsSidebar;

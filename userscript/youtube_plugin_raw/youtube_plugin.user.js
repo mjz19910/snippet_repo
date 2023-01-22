@@ -725,7 +725,7 @@ class ObjectInfo {
 	}
 }
 ObjectInfo.instance=new ObjectInfo;
-class HandleRichGridRenderer {
+class R$HandleRichGrid$ {
 	enable_logging=false;
 	/** @readonly */
 	class_name="HandleRichGridRenderer";
@@ -736,7 +736,7 @@ class HandleRichGridRenderer {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
 	/** @public @arg {string} path @arg {RichGrid} renderer */
-	richGridRenderer(path,renderer) {
+	richGridRenderer$(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
@@ -1968,7 +1968,7 @@ function main() {
 
 	// wait for plugin requirements
 	start_message_channel_loop(services.handle_types);
-	/** @private @arg {[()=>BrowsePageResponse, object, []]} apply_args */
+	/** @private @arg {[()=>R$BrowsePage, object, []]} apply_args */
 	function do_proxy_call_getInitialData(apply_args) {
 		return yt_handlers.on_initial_data(apply_args);
 	}
@@ -2780,7 +2780,7 @@ class BaseService extends BaseServicePrivate {
 		let [d,a2]=split_string_once(a1,".");
 		return [f,c,d,a2];
 	}
-	/** @private @arg {string} cf @arg {`${string}.${string}.${number}.${number}`} x */
+	/** @public @arg {string} cf @arg {`${string}.${string}.${number}.${number}`} x */
 	parse_transcript_target_id(cf,x) {
 		let b=this.parser.targetId_arr(split_string_once(x,"."));
 		this.parser.on_endpoint_params(cf,"transcript_target_id.param",b[1]);
@@ -2962,7 +2962,7 @@ class YtHandlers extends BaseService {
 		super(res);
 		this.filter_handler_debug=false;
 		this.handlers={
-			rich_grid: new HandleRichGridRenderer(res),
+			rich_grid: new R$HandleRichGrid$(res),
 			renderer_content_item_array: new HandleRendererContentItemArray(res),
 		};
 		this.iteration=new IterateApiResultBase(res,new YtObjectVisitor);
@@ -3010,32 +3010,32 @@ class YtHandlers extends BaseService {
 			default: debugger; break;
 			case "browse": return {
 				type: target[0],
-				/** @type {BrowseResponse} */
+				/** @type {R$Browse} */
 				data: as(x),
 			};
 			case "feedback": return {
 				type: target[0],
-				/** @type {FeedbackResponse} */
+				/** @type {R$Feedback} */
 				data: as(x),
 			};
 			case "getDatasyncIdsEndpoint": return {
 				type: target[0],
-				/** @type {DatasyncIdsResponse} */
+				/** @type {R$DatasyncIds} */
 				data: as(x),
 			};
 			case "getAccountSwitcherEndpoint": return {
 				type: target[0],
-				/** @type {GetAccountSwitcherEndpointResponse} */
+				/** @type {R$GetAccountSwitcherEndpoint} */
 				data: as(x),
 			};
 			case "get_transcript": return {
 				type: target[0],
-				/** @type {GetTranscriptResponse} */
+				/** @type {R$GetTranscript} */
 				data: as(x),
 			};
 			case "get_survey": return {
 				type: target[0],
-				/** @type {GetSurveyResponse} */
+				/** @type {R$GetSurvey} */
 				data: as(x),
 			};
 			case "guide": return {
@@ -3045,7 +3045,7 @@ class YtHandlers extends BaseService {
 			};
 			case "next": return {
 				type: target[0],
-				/** @type {NextResponse} */
+				/** @type {R$Next} */
 				data: as(x),
 			};
 			case "player": return {
@@ -3055,7 +3055,7 @@ class YtHandlers extends BaseService {
 			};
 			case "search": return {
 				type: target[0],
-				/** @type {SearchApiResponse} */
+				/** @type {R$SearchApi} */
 				data: as(x),
 			};
 			case "updated_metadata": return {
@@ -3088,22 +3088,22 @@ class YtHandlers extends BaseService {
 			default: debugger; return null;
 			case "get_notification_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {GetNotificationMenuResponse} */
+				/** @private @type {R$GetNotificationMenu} */
 				data: as(x),
 			};
 			case "get_unseen_count": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {NotificationGetUnseenCountResponse} */
+				/** @private @type {R$NotificationGetUnseenCount} */
 				data: as(x),
 			};
 			case "modify_channel_preference": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {ModifyChannelPreferenceResponse} */
+				/** @private @type {R$ModifyChannelPreference} */
 				data: as(x),
 			};
 			case "record_interactions": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {SuccessResponse} */
+				/** @private @type {R$Success} */
 				data: as(x),
 			};
 		}
@@ -3131,7 +3131,7 @@ class YtHandlers extends BaseService {
 			default: debugger; break;
 			case "get": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @type {AttGetResponse} */
+				/** @type {R$AttGet} */
 				data: as(x),
 			};
 			case "log": return {
@@ -3148,12 +3148,12 @@ class YtHandlers extends BaseService {
 			default: debugger; break;
 			case "account_menu": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountMenuResponse} */
+				/** @private @type {R$AccountMenu} */
 				data: as(x),
 			};
 			case "accounts_list": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {AccountsListResponse} */
+				/** @private @type {R$AccountsList} */
 				data: as(x),
 			};
 			case "set_setting": return {
@@ -3175,12 +3175,12 @@ class YtHandlers extends BaseService {
 			};
 			case "like": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {LikeLikeResponse} */
+				/** @private @type {R$LikeLike} */
 				data: as(x),
 			};
 			case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {LikeRemoveLikeResponse} */
+				/** @private @type {R$LikeRemoveLike} */
 				data: as(x),
 			};
 		}
@@ -3233,7 +3233,7 @@ class YtHandlers extends BaseService {
 		switch(t[1]) {
 			case "get_search_suggestions": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetSearchSuggestionsResponse} */
+				/** @private @type {R$GetSearchSuggestions} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -3255,7 +3255,7 @@ class YtHandlers extends BaseService {
 		switch(t[1]) {
 			case "get_add_to_playlist": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {GetAddToPlaylistResponse} */
+				/** @private @type {R$GetAddToPlaylist} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -3266,12 +3266,12 @@ class YtHandlers extends BaseService {
 		switch(t[1]) {
 			case "subscribe": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {SubscribeResponse} */
+				/** @private @type {R$Subscribe} */
 				data: as(x),
 			};
 			case "unsubscribe": return {
 				type: `${t[0]}.${t[1]}`,
-				/** @private @type {UnsubscribeResponse} */
+				/** @private @type {R$Unsubscribe} */
 				data: as(x),
 			};
 			default: debugger; return null;
@@ -3283,7 +3283,7 @@ class YtHandlers extends BaseService {
 			case 2: switch(t[1]) {
 				case "edit_playlist": return {
 					type: `${t[0]}.${t[1]}`,
-					/** @private @type {BrowseEditPlaylistResponse} */
+					/** @private @type {R$BrowseEditPlaylist} */
 					data: as(x),
 				};
 			}
@@ -3292,7 +3292,7 @@ class YtHandlers extends BaseService {
 		switch(t[0]) {
 			case "browse": return {
 				type: t[0],
-				/** @type {BrowseResponse} */
+				/** @type {R$Browse} */
 				data: as(x),
 			};
 		}
@@ -3393,7 +3393,7 @@ class YtHandlers extends BaseService {
 /** @extends {BaseService<Services,ServiceOptions>} */
 class HandleRendererContentItemArray extends BaseService {
 	debug=false;
-	/** @private @arg {RichItemRenderer} content_item */
+	/** @private @arg {R$RichItem} content_item */
 	filter_for_rich_item_renderer(content_item) {
 		let noisy_logging=this.x.get_param("noisy_logging");
 		let renderer=content_item.richItemRenderer;
@@ -3490,7 +3490,7 @@ class YtObjectVisitor {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @public @arg {ApiIterateState} state @arg {ItemSectionData} renderer */
+	/** @public @arg {ApiIterateState} state @arg {D$ItemSection} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
@@ -3507,7 +3507,7 @@ class YtObjectVisitor {
 	}
 	/** @public @arg {ApiIterateState} state @arg {RichGrid} renderer */
 	richGridRenderer(state,renderer) {
-		state.t.handlers.rich_grid.richGridRenderer(state.path,renderer);
+		state.t.handlers.rich_grid.richGridRenderer$(state.path,renderer);
 		state.path="richGridRenderer";
 		state.t.iteration.default_iter(state,renderer);
 	}
@@ -3927,7 +3927,7 @@ class ModifyEnv extends BaseService {
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
-		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {JsonDataResponseType} response_obj */
+		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G$Response} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
 			try {
 				yt_handlers.on_handle_api(request,response,response_obj);
@@ -5479,7 +5479,7 @@ class ParserService extends BaseService {
 		debugger;
 	}
 	parse_key_index=1;
-	/** @private @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
+	/** @public @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta */
 	remove_key(x,mk,ta) {
 		x.delete(ta);
 		let idx=mk.indexOf(ta);
@@ -5615,7 +5615,7 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 			cb(tv,ta);
 		}
 	}
-	/** @private @arg {ParamMapValue} tv */
+	/** @public @arg {ParamMapValue} tv */
 	mapper_use(tv) {
 		/** @private @arg {ParamMapValue} e */
 		let mapper=e => {
@@ -5639,7 +5639,7 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 			return xx;
 		}
 	}
-	/** @private @arg {string[]} x */
+	/** @public @arg {string[]} x */
 	report$params(x) {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
@@ -5802,17 +5802,6 @@ case ${JSON.stringify(path)}: /*tva*/{
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
 	}
-	/** @private @arg {number} key_index @arg {P$PathRoot} p @arg {ParamMapValue} x */
-	player_f71(key_index,p,x) {
-		switch(x) {
-			case 12: return;
-			case 15: return;
-			default: {
-				console.log(`[${p}] [idx=${key_index}]`,x);
-				console.log(`-- [player_f71] --\n\n\ncase ${x}: return;`);
-			} return;
-		}
-	}
 	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x */
 	parse_any_param(root,path,x) {
 		this.parse_key_index++;
@@ -5943,7 +5932,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @private @arg {G$VE3832$WC$Metadata['url']} x */
+	/** @public @arg {G$VE3832$WC$Metadata['url']} x */
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
@@ -6076,7 +6065,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 			default: debugger;
 		}
 	}
-	/** @private @arg {D$VE6827$PageUrl} x */
+	/** @public @arg {D$VE6827$PageUrl} x */
 	parse_ve_6827_url(x) {
 		const cf="VE6827_PageUrl";
 		/** @type {SplitOnce<D$VE6827$PageUrl,"/">[1]} */
@@ -6558,7 +6547,7 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
-	/** @private @arg {true} x */
+	/** @public @arg {true} x */
 	expect_true(x) {
 		if(x!==true) debugger;
 	}
@@ -6764,7 +6753,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#region templates
 	/** @private @template {{}} T @arg {T$R$ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	T$R$ItemSection$1(x,f) {this.H$Renderer("T$R$ItemSection$1",x,a => this.T$D$ItemSection$CommentsEntryPoint(a,f));}
+	T$R$ItemSection$1(x,f) {this.H$R$("T$R$ItemSection$1",x,a => this.T$D$ItemSection$CommentsEntryPoint(a,f));}
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
 		const cf/**/="ItemsTemplate";
@@ -6963,23 +6952,21 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
 	H$Data(cf,x) {this.save_keys(`[D$${cf}]`,x);}
 	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
-	H$Renderer(cf,x,f) {
+	H$R$(cf,x,f) {
 		this.save_keys(`[R$${cf}]`,x);
 		f.call(this,this.w(x));
 	}
 	/** @private @arg {R$Button} x */
-	R$Button(x) {this.H$Renderer("Button",x,this.D$Button);}
-	/** @private @arg {R$NotificationAction} x */
-	R$NotificationAction(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
+	R$Button(x) {this.H$R$("Button",x,this.D$Button);}
 	/** @private @arg {R$HotkeyDialogSection} x */
-	R$HotkeyDialogSection(x) {this.H$Renderer("HotkeyDialogSection",x,this.D$HotkeyDialogSection);}
+	R$HotkeyDialogSection(x) {this.H$R$("HotkeyDialogSection",x,this.D$HotkeyDialogSection);}
 	/** @private @arg {R$HotkeyDialogSectionOption} x */
-	R$HotkeyDialogSectionOption(x) {this.H$Renderer("HotkeyDialogSectionOption",x,this.D$HotkeyDialogSectionOption);}
+	R$HotkeyDialogSectionOption(x) {this.H$R$("HotkeyDialogSectionOption",x,this.D$HotkeyDialogSectionOption);}
 	/** @private @arg {R$PlayerOverlayVideoDetails} x */
-	R$PlayerOverlayVideoDetails(x) {this.H$Renderer("PlayerOverlayVideoDetails",x,this.D$PlayerOverlayVideoDetails);}
+	R$PlayerOverlayVideoDetails(x) {this.H$R$("PlayerOverlayVideoDetails",x,this.D$PlayerOverlayVideoDetails);}
 	/** @private @arg {R$CinematicContainer} x */
-	R$CinematicContainer(x) {this.H$Renderer("CinematicContainer",x,this.D$CinematicContainer);}
-	/** @private @arg {WatchPageResponse} x */
+	R$CinematicContainer(x) {this.H$R$("CinematicContainer",x,this.D$CinematicContainer);}
+	/** @private @arg {R$WatchPage} x */
 	WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -6990,7 +6977,7 @@ class HandleTypes extends ServiceMethods {
 			this.Generic_WatchPageResponse(x);
 		}
 	}
-	/** @private @arg {Generic_WatchPageResponse} x */
+	/** @private @arg {R$Generic_WatchPage} x */
 	Generic_WatchPageResponse(x) {
 		const cf="Generic_WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7037,17 +7024,16 @@ class HandleTypes extends ServiceMethods {
 		this.z(pageVisualEffects,this.R$CinematicContainer);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @private @arg {A$TwoColumnWatchNextResults} x */
-	A$TwoColumnWatchNextResults(x) {this.H$Renderer("TwoColumnWatchNextResults",x,this.D$TwoColumnWatchNextResults);}
+	/** @private @arg {R$TwoColumnWatchNextResults} x */
+	A$TwoColumnWatchNextResults(x) {this.H$R$("TwoColumnWatchNextResults",x,this.D$TwoColumnWatchNextResults);}
 	/** @private @arg {R$PlayerOverlay} x */
-	R$PlayerOverlay(x) {this.H$Renderer("NotificationAction",x,this.D$PlayerOverlay);}
+	R$PlayerOverlay(x) {this.H$R$("NotificationAction",x,this.D$PlayerOverlay);}
 	/** @private @arg {R$DesktopTopbar} x */
-	R$DesktopTopbar(x) {this.H$Renderer("DesktopTopbar",x,this.D$DesktopTopbar);}
+	R$DesktopTopbar(x) {this.H$R$("DesktopTopbar",x,this.D$DesktopTopbar);}
 	/** @private @arg {R$TopbarLogo} x */
-	R$TopbarLogo(x) {this.H$Renderer("DesktopTopbar",x,this.TopbarLogo);}
+	R$TopbarLogo(x) {this.H$R$("DesktopTopbar",x,this.TopbarLogo);}
 	/** @private @arg {R$FusionSearchbox} x */
-	R_X_FusionSearchbox(x) {this.H$Renderer("DesktopTopbar",x,this.FusionSearchboxData);}
-	// FusionSearchboxRenderer(x) {this.H$Renderer("DesktopTopbar",x,this.FusionSearchboxData);}
+	R_X_FusionSearchbox(x) {this.H$R$("DesktopTopbar",x,this.FusionSearchboxData);}
 	/** @private @arg {D$DesktopTopbar} x */
 	D$DesktopTopbar(x) {
 		const cf="DesktopTopbar";
@@ -7065,7 +7051,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$Button(voiceSearchButton);
 	}
 	/** @private @arg {R$HotkeyDialog} x */
-	R$HotkeyDialog(x) {this.H$Renderer("HotkeyDialog",x,this.D$HotkeyDialog);}
+	R$HotkeyDialog(x) {this.H$R$("HotkeyDialog",x,this.D$HotkeyDialog);}
 	/** @private @arg {A$FrameworkUpdates} x */
 	FrameworkUpdates(x) {
 		const cf="FrameworkUpdates";
@@ -7074,7 +7060,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
-	/** @private @arg {BrowseEditPlaylistResponse} x */
+	/** @private @arg {R$BrowseEditPlaylist} x */
 	R$BrowseEditPlaylist(x) {
 		const cf="BrowseEditPlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7088,7 +7074,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	log_url=false;
-	/** @private @arg {BrowsePageResponse} x */
+	/** @private @arg {R$BrowsePage} x */
 	BrowsePageResponse(x) {
 		const cf="BrowsePageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7110,7 +7096,7 @@ class HandleTypes extends ServiceMethods {
 		},this.g);
 		x;
 	}
-	/** @private @arg {E$D$Browse} x */
+	/** @public @arg {E$D$Browse} x */
 	E$D$Browse(x) {
 		const cf="D$Browse";
 		this.save_keys(`[${cf}]`,x);
@@ -7197,7 +7183,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(datasyncId);
 		this.primitive_of(loggedOut,"boolean");
 	}
-	/** @private @arg {BrowseResponse} x */
+	/** @private @arg {R$Browse} x */
 	R$Browse(x) {
 		const cf="BrowseResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7217,7 +7203,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(metadata,this.BrowseMetadata);
 		this.t(microformat,this.R$MicroformatData);
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
-		this.t(background,this.MusicThumbnailRenderer);
+		this.t(background,this.R$MusicThumbnail);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
 		this.t(continuationContents,_x => {debugger;});
 		this.t(alerts,a => this.Response_alerts(cf,a));
@@ -7225,20 +7211,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {{}} x */
 	R$MicroformatData(x) {this.emf("R$MicroformatData",x);}
 	/** @private @arg {R$EntityBatchUpdate} x */
-	R$EntityBatchUpdate(x) {this.H$Renderer("NotificationAction",x,this.D$EntityBatchUpdate);}
-	/** @private @arg {NonNullable<BrowseResponse['metadata']>} x */
+	R$EntityBatchUpdate(x) {this.H$R$("NotificationAction",x,this.D$EntityBatchUpdate);}
+	/** @private @arg {NonNullable<R$Browse['metadata']>} x */
 	BrowseMetadata(x) {this.emf("BrowseMetadata",x);}
 	/** @private @arg {string} cf @arg {{}} x */
 	emf(cf,x) {this.save_keys(`[${cf}]`,x); debugger;}
 	/** @private @arg {BrowseSidebar} x */
 	BrowseSidebar(x) {
-		if("settingsSidebarRenderer" in x) return this.SettingsSidebarRenderer(x);
-		if("playlistSidebarRenderer" in x) return this.PlaylistSidebarRenderer(x);
+		if("settingsSidebarRenderer" in x) return this.R$SettingsSidebar(x);
+		if("playlistSidebarRenderer" in x) return this.R$PlaylistSidebar(x);
 		debugger;
 	}
 	/** @private @arg {{}} x */
-	SettingsSidebarRenderer(x) {this.emf("SettingsSidebarRenderer",x);}
-	/** @private @arg {DropdownData} x */
+	R$SettingsSidebar(x) {this.emf("SettingsSidebarRenderer",x);}
+	/** @public @arg {DropdownData} x */
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(label);
@@ -7249,37 +7235,36 @@ class HandleTypes extends ServiceMethods {
 			this.do_codegen("Dropdown",x);
 		});
 	}
-	/** @private @arg {PlaylistSidebarRenderer} x */
-	PlaylistSidebarRenderer(x) {
-		this.PlaylistSidebar(x.playlistSidebarRenderer);
-	}
-	/** @private @arg {PlaylistSidebar} x */
-	PlaylistSidebar(x) {
+	/** @private @arg {R$PlaylistSidebar} x */
+	R$PlaylistSidebar(x) {this.H$R$("PlaylistSidebar",x,this.D$PlaylistSidebar);}
+	/** @private @arg {D$PlaylistSidebar} x */
+	D$PlaylistSidebar(x) {
 		const cf="PlaylistSidebar";
+		this.save_keys(`[${cf}]`,x);
 		this.z(x.items,this.PlaylistSidebarItem);
 		this.trackingParams(cf,x.trackingParams);
 	}
-	/** @private @arg {{}} x */
-	PlaylistSidebarPrimaryInfoRenderer(x) {this.emf("PlaylistSidebarPrimaryInfoRenderer",x);}
+	/** @private @arg {R$PlaylistSidebarPrimaryInfo} x */
+	R$PlaylistSidebarPrimaryInfo(x) {this.emf("PlaylistSidebarPrimaryInfoRenderer",x);}
 	/** @private @arg {PlaylistSidebarItem} x */
 	PlaylistSidebarItem(x) {
-		if("playlistSidebarPrimaryInfoRenderer" in x) return this.PlaylistSidebarPrimaryInfoRenderer(x);
-		if("playlistSidebarSecondaryInfoRenderer" in x) return this.PlaylistSidebarSecondaryInfoRenderer(x);
+		if("playlistSidebarPrimaryInfoRenderer" in x) return this.R$PlaylistSidebarPrimaryInfo(x);
+		if("playlistSidebarSecondaryInfoRenderer" in x) return this.R$PlaylistSidebarSecondaryInfo(x);
 		debugger;
 	}
-	/** @private @arg {PlaylistSidebarSecondaryInfoRenderer} x */
-	PlaylistSidebarSecondaryInfoRenderer(x) {
+	/** @private @arg {R$PlaylistSidebarSecondaryInfo} x */
+	R$PlaylistSidebarSecondaryInfo(x) {
 		this.PlaylistSidebarSecondaryInfo(x.playlistSidebarSecondaryInfoRenderer);
 	}
 	/** @private @arg {PlaylistSidebarSecondaryInfo} x */
 	PlaylistSidebarSecondaryInfo(x) {
-		this.VideoOwnerRenderer(x.videoOwner);
+		this.R$VideoOwner(x.videoOwner);
 	}
-	/** @private @arg {VideoOwnerRenderer} x */
-	VideoOwnerRenderer(x) {
+	/** @private @arg {R$VideoOwner} x */
+	R$VideoOwner(x) {
 		this.VideoOwnerData(x.videoOwnerRenderer);
 	}
-	/** @private @arg {AlertWithButton} x */
+	/** @public @arg {AlertWithButton} x */
 	AlertWithButton(x) {
 		const cf="AlertWithButton";
 		this.save_keys(`[${cf}]`,x);
@@ -7329,7 +7314,7 @@ class HandleTypes extends ServiceMethods {
 			this.targetId(cf,a);
 		});
 	}
-	/** @private @arg {D$ThumbnailOverlayLoadingPreview} x */
+	/** @public @arg {D$ThumbnailOverlayLoadingPreview} x */
 	D$ThumbnailOverlayLoadingPreview(x) {
 		const cf_="D$ThumbnailOverlayLoadingPreview";
 		this.save_keys(`[${cf_}]`,x);
@@ -7353,14 +7338,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ResourceStatusInResponseCheckData(x.resourceStatusInResponseCheck);
 	}
-	/** @private @arg {MusicThumbnailRenderer} x */
-	MusicThumbnailRenderer(x) {
+	/** @private @arg {R$MusicThumbnail} x */
+	R$MusicThumbnail(x) {
 		const cf="MusicThumbnailRenderer";
 		this.save_keys(`[${cf}]`,x);
 		if(!x.musicThumbnailRenderer) debugger;
 		this.MusicThumbnailData(x.musicThumbnailRenderer);
 	}
-	/** @private @arg {D$PdgBuyFlowHeader} x */
+	/** @public @arg {D$PdgBuyFlowHeader} x */
 	D$PdgBuyFlowHeader(x) {
 		const cf="D$PdgBuyFlowHeader";
 		this.save_keys(`[${cf}]`,x);
@@ -7372,92 +7357,16 @@ class HandleTypes extends ServiceMethods {
 	codegen_renderer(cf,x) {
 		this.codegen.generate_renderer(x,cf);
 	}
-	/** @private @arg {ClipSectionRenderer} x */
-	ClipSectionRenderer(x) {
-		const cf="ClipSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ContentsArrayTemplate(this.w(x),this.ClipCreationRenderer);
-	}
-	/** @private @arg {{}} x */
-	ClipCreationRenderer(x) {this.emf("R$ClipCreationRenderer",x);}
-	/** @private @arg {R$NotificationText} x */
-	NotificationTextRenderer(x) {
-		const cf="NotificationTextRenderer";
-		this.save_keys(`[${cf}]`,x);
-		/** @type {NotificationTextData} */
-		let n=this.w(x);
-		const {successResponseText,undoText,undoEndpoint,trackingParams,...y}=n; this.g(y);
-		this.D$TextWithRuns(successResponseText);
-		this.D$TextWithRuns(undoText);
-		this.E$UndoFeedbackEndpoint(undoEndpoint);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {G$ResultRenderer} x */
-	ResultRenderer(x) {
+	/** @private @arg {R$G$Result} x */
+	R$Result(x) {
 		const cf="ResultRenderer";
 		this.save_keys(`[${cf}]`,x);
 		if("tabRenderer" in x) return ((_x) => {debugger;})(x);
-		if("expandableTabRenderer" in x) return this.ExpandableTabRenderer(x);
+		if("expandableTabRenderer" in x) return this.R$ExpandableTab(x);
 		debugger;
 	}
 	/** @private @arg {{}} x */
-	ExpandableTabRenderer(x) {this.emf("R$ExpandableTabRenderer",x);}
-	/** @private @arg {D$HorizontalCardList['header']} x */
-	RichListHeaderRenderer(x) {
-		const cf="RichListHeaderRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {richListHeaderRenderer: u,...y}=x; this.g(y); // ! #destructure
-		const {title,trackingParams,navigationButton,...z}=u; this.g(z);
-		this.D$SimpleText(title);
-		this.trackingParams(cf,trackingParams);
-		this.R$Button(navigationButton);
-	}
-	/** @private @arg {MusicShelf} x */
-	MusicShelf(x) {
-		const cf="MusicShelf";
-		this.save_keys(`[${cf}]`,x);
-		this.ContentsArrayTemplate(x,a => {
-			if("musicResponsiveListItemRenderer" in a) {
-				((_x) => {debugger;})(a);
-			} else debugger;
-		});
-		this.D$TextWithRuns(x.title);
-		this.trackingParams("MusicShelf",x.trackingParams);
-		this.z(x.continuations,((_x) => {debugger;}));
-	}
-	/** @private @arg {ReloadContinuationDataInner} x */
-	ReloadContinuationDataInner(x) {
-		const cf="ReloadContinuationDataInner";
-		this.save_keys(`[${cf}]`,x);
-		const {continuation,clickTrackingParams,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(continuation);
-		this.clickTrackingParams("ReloadContinuationDataInner",clickTrackingParams);
-	}
-	/** @private @arg {ContinuationItemData} x */
-	ContinuationItemData(x) {
-		const cf="ContinuationItemData";
-		this.save_keys(`[${cf}]`,x);
-		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y); // ! #destructure
-		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
-		// this.save_enum("CONTINUATION_TRIGGER",trigger);
-		this.G$ContinuationEndpoint(continuationEndpoint);
-		this.t(button,this.R$Button);
-		this.t(ghostCards,((_x) => {debugger;}));
-	}
-	/** @private @arg {G$ContinuationEndpoint} x */
-	G$ContinuationEndpoint(x) {
-		const cf="ContinuationEndpointRoot";
-		this.save_keys(`[${cf}]`,x);
-		if("continuationCommand" in x) {
-			this.ContinuationCommand(x);
-		} else if("getTranscriptEndpoint" in x) {
-			this.E$GetTranscriptEndpoint(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @private @arg {{}} x */
-	E$GetTranscriptEndpoint(x) {this.emf("R$GetTranscriptEndpoint",x);}
+	R$ExpandableTab(x) {this.emf("R$ExpandableTabRenderer",x);}
 	/** @private @arg {E$Continuation} x */
 	ContinuationCommand(x) {
 		if(!x) {debugger; return;}
@@ -7479,46 +7388,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.primitive_of(x.token,"string");
 		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
-	}
-	/** @private @arg {C$Continuation$CommandMetadata} x */
-	ContinuationCommandMetadata(x) {
-		const cf="ContinuationCommandMetadata";
-		this.save_keys(`[${cf}]`,x);
-		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		debugger;
-		// this.WebCommandMetadata(webCommandMetadata);
-	}
-	/** @private @arg {GhostGrid} x */
-	GhostGrid(x) {
-		const cf="GhostGrid";
-		this.save_keys(`[${cf}]`,x);
-		const {rows,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(rows,"number");
-	}
-	/** @private @arg {ItemSectionData} x */
-	ItemSectionData(x) {
-		const cf="ItemSectionData";
-		this.save_keys(`[${cf}]`,x);
-		const {contents,trackingParams,sectionIdentifier,targetId,header,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.ItemSectionItem);
-		this.trackingParams(cf,trackingParams);
-		if(targetId) {
-			this.primitive_of_string(targetId);
-			this.targetId(cf,as(targetId));
-			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}-id-${targetId}`);
-		} else {
-			this.save_string("[ItemSectionData.hash]",`section-${sectionIdentifier}`);
-		}
-		this.t(header,this.ItemSectionHeaderRenderer);
-	}
-	/** @private @arg {ItemSectionHeaderRenderer} x */
-	ItemSectionHeaderRenderer(x) {
-		this.ItemSectionHeader(x.itemSectionHeaderRenderer);
-	}
-	/** @private @arg {ItemSectionHeader} x */
-	ItemSectionHeader(x) {
-		this.D$TextWithRuns(x.title);
-		this.D$TextWithRuns(x.subtitle);
 	}
 	/** @private @arg {MusicThumbnailData} x */
 	MusicThumbnailData(x) {
@@ -7546,43 +7415,6 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(url);
 		this.t(width,a => this.primitive_of(a,"number"));
 		this.t(height,a => this.primitive_of(a,"number"));
-	}
-	/** @private @arg {MicroformatData} x */
-	D$MicroformatData(x) {
-		const cf="MicroformatData";
-		this.save_keys(`[${cf}]`,x);
-		let {urlCanonical,title,description,thumbnail,siteName,appName,androidPackage,iosAppStoreId,iosAppArguments,ogType,urlApplinksWeb,urlApplinksIos,urlApplinksAndroid,urlTwitterIos,urlTwitterAndroid,twitterCardType,twitterSiteHandle,schemaDotOrgType,noindex,unlisted,tags,familySafe,availableCountries,linkAlternates,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(urlCanonical);
-		this.primitive_of_string(title);
-		this.primitive_of_string(description);
-		this.D$Thumbnail(thumbnail);
-		this.primitive_of_string(siteName);
-		this.primitive_of_string(appName);
-		this.primitive_of_string(androidPackage);
-		this.primitive_of_string(iosAppStoreId);
-		this.primitive_of_string(iosAppArguments);
-		this.primitive_of_string(ogType);
-		this.primitive_of_string(urlApplinksWeb);
-		this.primitive_of_string(urlApplinksIos);
-		this.primitive_of_string(urlApplinksAndroid);
-		this.primitive_of_string(urlTwitterIos);
-		this.primitive_of_string(urlTwitterAndroid);
-		this.primitive_of_string(twitterCardType);
-		this.primitive_of_string(twitterSiteHandle);
-		this.primitive_of_string(schemaDotOrgType);
-		this.primitive_of(noindex,"boolean");
-		this.primitive_of(unlisted,"boolean");
-		this.tz(tags,this.primitive_of_string);
-		this.t(familySafe,a => this.primitive_of(a,"boolean"));
-		this.tz(availableCountries,this.primitive_of_string);
-		this.z(linkAlternates,this.HrefUrl);
-	}
-	/** @private @arg {HrefUrl} x */
-	HrefUrl(x) {
-		const cf="HrefUrl";
-		this.save_keys(`[${cf}]`,x);
-		const {hrefUrl,...y}=x; this.g(y); // ! #destructure
-		this.parser.parse_url("HrefUrl",as(hrefUrl));
 	}
 	/** @public @arg {YTNavigateFinishDetail} x */
 	YTNavigateFinishDetail(x) {
@@ -7620,7 +7452,7 @@ class HandleTypes extends ServiceMethods {
 		console.log("pt",x);
 		debugger;
 	}
-	/** @private @arg {AccountMenuResponse} x */
+	/** @private @arg {R$AccountMenu} x */
 	R$AccountMenu(x) {
 		const cf="AccountMenuResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7703,7 +7535,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; return g(x);
 		}
 	}
-	/** @private @arg {GetSurveyResponse} x */
+	/** @private @arg {R$GetSurvey} x */
 	R$GetSurvey(x) {
 		const cf="GetSurveyResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7727,27 +7559,6 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return this.w(y);
 	}
-	/** @private @arg {$Popups$} x */
-	AllPopups(x) {
-		const cf="AllPopups";
-		this.save_keys(`[${cf}]`,x);
-		if("confirmDialogRenderer" in x) return this.R$ConfirmDialog(x);
-		if("multiPageMenuRenderer" in x) return this.R$MultiPageMenu(x);
-		if("notificationActionRenderer" in x) return this.R$NotificationAction(x);
-		if("pdgBuyFlowRenderer" in x) return this.R$PdgBuyFlow(x);
-		if("unifiedSharePanelRenderer" in x) return this.R$UnifiedSharePanel(x);
-		if("voiceSearchDialogRenderer" in x) return this.R$VoiceSearchDialog(x);
-	}
-	/** @private @arg {{}} x */
-	R$ConfirmDialog(x) {this.H$Renderer("ConfirmDialog",x,this.D$ConfirmDialog);}
-	/** @private @arg {{}} x */
-	R$MultiPageMenu(x) {this.H$Renderer("MultiPageMenu",x,this.D$MultiPageMenu);}
-	/** @private @arg {{}} x */
-	R$PdgBuyFlow(x) {this.H$Renderer("PdgBuyFlow",x,this.D$PdgBuyFlow);}
-	/** @private @arg {{}} x */
-	R$UnifiedSharePanel(x) {this.H$Renderer("UnifiedSharePanel",x,this.D$UnifiedSharePanel);}
-	/** @private @arg {{}} x */
-	R$VoiceSearchDialog(x) {this.H$Renderer("VoiceSearchDialog",x,this.D$VoiceSearchDialog);}
 	/** @private @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
 		let u_name=this.get_codegen_name(x);
@@ -7768,82 +7579,8 @@ class HandleTypes extends ServiceMethods {
 		let kk=rk[0];
 		return this.uppercase_first(kk);
 	}
-	/** @private @arg {PdgBuyFlow} x */
-	D$PdgBuyFlow(x) {
-		const cf="PdgBuyFlow";
-		this.save_keys(`[${cf}]`,x);
-		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y); // ! #destructure
-		this.R$PdgBuyFlowHeader(header);
-		this.z(content,this.R$SuperVodBuyFlowContent);
-		this.trackingParams(cf,trackingParams);
-		this.GetSurveyCommand(onCloseCommand);
-	}
-	/** @private @arg {{}} x */
-	R$PdgBuyFlowHeader(x) {this.H$Renderer("PdgBuyFlowHeader",x,this.D$VoiceSearchDialog);}
-	/** @private @arg {{}} x */
-	R$SuperVodBuyFlowContent(x) {this.H$Renderer("SuperVodBuyFlowContentRenderer",x,this.D$SuperVodBuyFlowContent);}
-	/** @private @arg {D$NotificationAction} x */
-	D$NotificationAction(x) {
-		const cf="NotificationActionData";
-		this.save_keys(`[${cf}]`,x);
-		const {responseText,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.D$TextWithRuns(responseText);
-		this.t(actionButton,this.R$Button);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {D$ConfirmDialog} x */
-	D$ConfirmDialog(x) {
-		const cf="ConfirmDialogData";
-		this.save_keys(`[${cf}]`,x);
-		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y); // ! #destructure
-		this.t(title,this.D$SimpleText);
-		this.trackingParams(cf,trackingParams);
-		this.z(dialogMessages,this.TextT);
-		this.R$Button(confirmButton);
-		this.R$Button(cancelButton);
-		this.primitive_of(primaryIsCancel,"boolean");
-	}
-	/** @private @arg {D$MultiPageMenu} x */
-	D$MultiPageMenu(x) {
-		const cf="MultiPageMenu";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {R$Notification} x */
-	R$Notification(x) {this.H$Renderer("NotificationRenderer",x,this.D$Notification);}
-	/** @private @arg {D$Notification} x */
-	D$Notification(x) {
-		const cf="Notification";
-		this.save_keys(`[D$${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {ItemsTemplate<R$Notification|T$R$ContinuationItem<E$GetNotificationMenuEndpoint>>} x */
-	MultiPageMenuNotificationSection(x) {
-		const cf="MultiPageMenuNotificationSection";
-		this.save_keys(`[${cf}]`,x);
-		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
-		let xr=this.z(items,x => {
-			if("notificationRenderer" in x) return this.R$Notification(x);
-			if("continuationItemRenderer" in x) return this.T$ContinuationItemRenderer(x);
-			debugger;
-		});
-		this.z(xr[0],x => {
-			this.E$GetNotificationMenuEndpoint(x);
-			x.getNotificationMenuEndpoint;
-		});
-		debugger;
-		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
-	}
-	/** @private @arg {E$GetNotificationMenuEndpoint} x */
-	E$GetNotificationMenuEndpoint(x) {
-		const cf="E$GetNotificationMenuEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,...y}=x;
-		let tok=this.w(this.w(y));
-		this.params(cf,"GetNotificationMenu.ctoken",tok);
-	}
 	/** @template T @arg {T$R$ContinuationItem<T>} x */
-	T$ContinuationItemRenderer(x) {
+	R$T$ContinuationItem(x) {
 		const {continuationItemRenderer,...y}=x; this.g(y);
 		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
@@ -7853,26 +7590,8 @@ class HandleTypes extends ServiceMethods {
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
-	/** @private @arg {D$Notification} x */
-	Notification(x) {
-		const cf="Notification";
-		this.save_keys(`[${cf}]`,x);
-		const {thumbnail,videoThumbnail,shortMessage,sentTimeText,navigationEndpoint,read,recordClickEndpoint,contextualMenu,trackingParams,notificationId,...y}=x; this.g(y); // ! #destructure
-		this.D$Thumbnail(thumbnail);
-		this.D$Thumbnail(videoThumbnail);
-		this.TextT(shortMessage);
-		this.TextT(sentTimeText);
-		this.NavigationEndpoint(navigationEndpoint);
-		this.primitive_of(read,"boolean");
-		this.E$RecordNotificationInteractionsEndpoint(recordClickEndpoint);
-		this.R$Menu(contextualMenu);
-		this.trackingParams(cf,trackingParams);
-		this.primitive_of_string(notificationId);
-	}
 	/** @private @arg {R$Menu} x */
-	R$Menu(x) {this.H$Renderer("NotificationAction",x,this.D$Menu);}
-	/** @private @arg {E$RecordNotificationInteractions} x */
-	E$RecordNotificationInteractionsEndpoint(x) {x;}
+	R$Menu(x) {this.H$R$("NotificationAction",x,this.D$Menu);}
 	/** @private @arg {UpdatedMetadata} x */
 	R$UpdatedMetadata(x) {
 		const cf="UpdatedMetadata";
@@ -7936,7 +7655,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[UpdateViewershipActionData]`,x1);
 		((_x) => {debugger;})(x1.viewCount);
 	}
-	/** @private @arg {SearchApiResponse} x */
+	/** @private @arg {R$SearchApi} x */
 	R$Search(x) {
 		const cf="SearchApiResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7945,9 +7664,9 @@ class HandleTypes extends ServiceMethods {
 		this.t(contents,((_x) => {debugger;}));
 		this.t(continuationContents,((_x) => {debugger;}));
 		this.trackingParams(cf,trackingParams);
-		this.t(header,this.MusicHeaderRenderer);
+		this.t(header,this.R$MusicHeader);
 	}
-	/** @private @arg {SearchResponse} x */
+	/** @private @arg {R$Search} x */
 	SearchResponse(x) {
 		const cf="SearchResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7973,7 +7692,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
 	}
-	/** @private @arg {GetSearchSuggestionsResponse} x */
+	/** @private @arg {R$GetSearchSuggestions} x */
 	R$GetSearchSuggestions(x) {
 		const cf="GetSearchSuggestions";
 		this.save_keys(`[${cf}]`,x);
@@ -7988,7 +7707,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$PlayerAnnotationsExpanded} x */
 	R$PlayerAnnotationsExpanded(x) {x;}
-	/** @private @arg {LikeLikeResponse} x */
+	/** @private @arg {R$LikeLike} x */
 	R$LikeLike(x) {
 		const cf="LikeLikeResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8010,7 +7729,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 	}
-	/** @private @arg {LikeRemoveLikeResponse} x */
+	/** @private @arg {R$LikeRemoveLike} x */
 	R$LikeRemoveLike(x) {
 		const cf="LikeRemoveLikeResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8031,7 +7750,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
 	/** @private @arg {E$ReelWatchEndpoint} x */
-	E$ReelWatchEndpoint(x) {this.H$Renderer("NotificationAction",x,_a => {debugger;});}
+	E$ReelWatchEndpoint(x) {this.H$R$("NotificationAction",x,_a => {debugger;});}
 	/** @private @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {x; debugger;}
 	/** @private @arg {GetLiveChat} x */
@@ -8042,7 +7761,7 @@ class HandleTypes extends ServiceMethods {
 		this.LiveChatContinuation(a1);
 		this.t_cf("GetLiveChat",a2,this.trackingParams);
 	}
-	/** @private @arg {GetNotificationMenuResponse} x */
+	/** @private @arg {R$GetNotificationMenu} x */
 	R$GetNotificationMenu(x) {
 		const cf="GetNotificationMenuResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8056,7 +7775,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {NextResponse} x */
+	/** @private @arg {R$Next} x */
 	R$Next(x) {
 		const cf="NextResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8068,12 +7787,12 @@ class HandleTypes extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("NextResponse",a));
 		this.tz(engagementPanels,((_x) => {debugger;}));
 		const {...y1}=y; this.g(y1);
-		this.t(videoReporting,this.ReportFormModalRenderer);
+		this.t(videoReporting,this.R$ReportFormModal);
 		this.t(queueContextParams,a => this.params("Next","next.queue_context_params",a));
-		this.t(continuationContents,this.PlaylistPanelContinuation);
+		this.t(continuationContents,this.R$PlaylistPanelContinuation);
 	}
 	/** @private @arg {PlaylistPanelContinuation} x */
-	PlaylistPanelContinuation(x) {x;}
+	R$PlaylistPanelContinuation(x) {this.H$R$("PlaylistPanelContinuation",x,a => {a; debugger;});}
 	/** @template T @arg {ShortsSurfaceIdentifier<T>} x */
 	ShortsSurfaceIdentifier(x) {
 		const {surface,tag,...y}=x; this.g(y); // ! #destructure
@@ -8197,12 +7916,12 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {endScreen,shareButton,addToMenu,videoDetails,...y}=x; this.g(y);
 		this.R$WatchNextEndScreen(endScreen);
-		// this.t(autoplay,this.PlayerOverlayAutoplayRenderer);
+		// this.t(autoplay,this.R$PlayerOverlayAutoplay);
 		this.R$Button(shareButton);
 		this.R$Menu(addToMenu);
 		this.R$PlayerOverlayVideoDetails(videoDetails);
-		// this.t(autonavToggle,this.R$AutoplaySwitchButtonRenderer);
-		// this.t(decoratedPlayerBarRenderer,this.DecoratedPlayerBarRenderer);
+		// this.t(autonavToggle,this.R$AutoplaySwitchButton);
+		// this.t(decoratedPlayerBarRenderer,this.R$DecoratedPlayerBar);
 	}
 	/** @private @arg {R$WatchNextEndScreen} x */
 	R$WatchNextEndScreen(x) {x;}
@@ -8278,51 +7997,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys("[default.Accessibility]",x);
 		if(x.accessibility) this.A$Accessibility(x.accessibility);
 	}
-	/** @private @arg {D$ThumbnailOverlayToggleButton} x */
-	D$ThumbnailOverlayToggleButton(x) {
-		const cf="D$ThumbnailOverlayNowPlayingData";
-		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,...y}=x;
-		this.trackingParams(cf,trackingParams);
-		let [c_tog,c_un,c]=this.unwrap_toggled(y); this.g(c);
-		{
-			let {accessibility,icon,tooltip,...v1}=c_tog;
-			this.A$Accessibility(accessibility);
-			this.T$Icon(icon);
-			switch(icon.iconType) {case "CHECK": case "PLAYLIST_ADD_CHECK": break; default: debugger;}
-			if(tooltip!=="Added") debugger;
-			if("serviceEndpoint" in v1) {
-				this.PlaylistEditEndpoint(this.w(v1));
-			} else {
-				this.g(v1);
-			}
-		}
-		{
-			let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un; this.g(v2);
-			this.A$Accessibility(accessibility);
-			this.T$Icon(icon);
-			switch(icon.iconType) {case "ADD_TO_QUEUE_TAIL": case "WATCH_LATER": break; default: debugger;}
-			switch(tooltip) {case "Add to queue": case "Watch Later": break; default: debugger;}
-			this.ThumbnailOverlayToggleButton$serviceEndpoint(serviceEndpoint);
-		}
-		this.g(c);
-	}
-	/** @private @arg {PlaylistEditEndpoint|E$T$SignalService<Signal$ClientSignal>} x */
-	ThumbnailOverlayToggleButton$serviceEndpoint(x) {
-		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
-		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
-		debugger;
-	}
-	/** @private @arg {PlaylistEditEndpoint} x */
-	PlaylistEditEndpoint(x) {
-		const cf="PlaylistEditEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,playlistEditEndpoint}=x;
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
-		((_x) => {debugger;})(playlistEditEndpoint);
-	}
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
 	/** @template {{}} U @arg {U} x @returns {[RemoveToggled<U>,RemoveUnToggled<U>,Omit<U,`toggled${string}`|`untoggled${string}`>]} */
@@ -8394,7 +8068,7 @@ class HandleTypes extends ServiceMethods {
 		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
 		if(continuePlayback!==void 0&&!continuePlayback) debugger;
 		this.t(loggingContext,this.R$VssLoggingContext);
-		this.t(watchEndpointSupportedOnesieConfig,this.Html5PlaybackOnesieConfig);
+		this.t(watchEndpointSupportedOnesieConfig,this.R$Html5PlaybackOnesieConfig);
 		this.t(a1,this.PrefetchHintConfig);
 		this.t(playerParams,a => this.playerParams("WatchEndpoint","watch.player_params",a));
 		this.t(a2,this.WatchEndpointMusicConfig);
@@ -8402,7 +8076,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
 	}
 	/** @private @arg {Html5PlaybackOnesieConfig} x */
-	Html5PlaybackOnesieConfig(x) {x;}
+	R$Html5PlaybackOnesieConfig(x) {this.H$R$("Html5PlaybackOnesieConfig",x,a => {a; debugger;});}
 	/** @private @arg {R$VssLoggingContext} x */
 	R$VssLoggingContext(x) {x;}
 	/** @private @arg {D$WatchEndpointMusicConfig} x */
@@ -8460,21 +8134,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of_string(text);
 	}
-	/** @private @arg {NavigationEndpoint} x */
-	NavigationEndpoint(x) {
-		const cf="NavigationEndpointRoot";
-		this.save_keys(`[${cf}]`,x);
-		let a1=x;
-		if("urlEndpoint" in a1) {
-			this.E$UrlEndpoint(a1);
-		} else if("watchEndpoint" in a1) {
-			this.E$WatchEndpoint(a1);
-		} else if("browseEndpoint" in a1) {
-			this.E$Browse(a1);
-		} else {
-			debugger;
-		}
-	}
 	/** @private @arg {D$TextT} x */
 	TextT(x) {
 		const cf="TextT";
@@ -8493,17 +8152,20 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D$TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
 	handle_results_3(x) {
 		if("itemSectionRenderer" in x) return this.T$R$ItemSection$CommentItemSection(x);
-		if("merchandiseShelfRenderer" in x) return this.MerchandiseShelfRenderer(x);
-		if("videoPrimaryInfoRenderer" in x) return this.VideoPrimaryInfoRenderer(x);
-		if("videoSecondaryInfoRenderer" in x) return this.VideoSecondaryInfoRenderer(x);
+		if("merchandiseShelfRenderer" in x) return this.R$MerchandiseShelf(x);
+		if("videoPrimaryInfoRenderer" in x) return this.R$VideoPrimaryInfo(x);
+		if("videoSecondaryInfoRenderer" in x) return this.R$VideoSecondaryInfo(x);
 		debugger;
 	}
 	/** @arg {{}} x */
-	MerchandiseShelfRenderer(x) {x;}
+	/** @private @arg {R$MerchandiseShelf} x */
+	R$MerchandiseShelf(x) {this.H$R$("MerchandiseShelf",x,a => {a; debugger;});}
 	/** @arg {{}} x */
-	VideoPrimaryInfoRenderer(x) {x;}
+	/** @private @arg {R$VideoPrimaryInfo} x */
+	R$VideoPrimaryInfo(x) {this.H$R$("VideoPrimaryInfo",x,a => {a; debugger;});}
 	/** @arg {{}} x */
-	VideoSecondaryInfoRenderer(x) {x;}
+	/** @private @arg {R$VideoSecondaryInfo} x */
+	R$VideoSecondaryInfo(x) {this.H$R$("VideoSecondaryInfo",x,a => {a; debugger;});}
 	/** @private @arg {Extract<D$TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
 	T$R$ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
@@ -8516,13 +8178,16 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {T$R$ItemSection<{},"comment-item-section","comments-section">} x */
-	T$R$ItemSection$2$CommentItemSection(x) {this.H$Renderer("NotificationAction",x,a => {a; debugger;});}
+	T$R$ItemSection$2$CommentItemSection(x) {this.H$R$("NotificationAction",x,a => {a; debugger;});}
 	/** @arg {T$D$ItemSection<{},"comment-item-section","comments-section">} x */
 	T$D$ItemSection$2CommentItemSection(x) {x;}
 	/** @template T @arg {T$ResultsTemplate<T$AR$Contents<T>>} x */
 	D$TwoColumnWatchNextResults$results(x) {x;}
-	/** @arg {ItemSectionRenderer} x */
-	ItemSectionRenderer(x) {x;}
+	/** @arg {R$ItemSection} x */
+	/** @private @arg {R$ItemSection} x */
+	R$ItemSection(x) {this.H$R$("ItemSection",x,this.D$ItemSection);}
+	/** @private @arg {D$ItemSection} x */
+	D$ItemSection(x) {x; debugger;}
 	/** @private @arg {D$TwoColumnWatchNextResults} x */
 	D$TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
@@ -8554,7 +8219,7 @@ class HandleTypes extends ServiceMethods {
 				});
 			} else if("results" in a) {
 				this.z(a.results,x => {
-					if("itemSectionRenderer" in x) return this.ItemSectionRenderer(x);
+					if("itemSectionRenderer" in x) return this.R$ItemSection(x);
 					if("relatedChipCloudRenderer" in x) return this.R$RelatedClipCloud(x);
 					debugger;
 				});
@@ -8562,15 +8227,15 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.t(playlist,a => this.PlaylistTemplate(a,this.PlaylistContent));
 		this.t(autoplay,a => this.AutoplayTemplate(a,this.AutoplayContent));
-		this.t(conversationBar,this.LiveChatRenderer);
+		this.t(conversationBar,this.R$LiveChat);
 	}
-	/** @private @arg {RelatedChipCloudRenderer} x */
-	R$RelatedClipCloud(x) {this.H$Renderer("NotificationAction",x,a => {this.R$ChipCloud(a.content);});}
+	/** @private @arg {R$RelatedChipCloud} x */
+	R$RelatedClipCloud(x) {this.H$R$("NotificationAction",x,a => {this.R$ChipCloud(a.content);});}
 	/** @private @arg {R$ChipCloud} x */
-	R$ChipCloud(x) {this.H$Renderer("NotificationAction",x,this.D$ChipCloud);}
+	R$ChipCloud(x) {this.H$R$("NotificationAction",x,this.D$ChipCloud);}
 	/** @private @arg {D$ChipCloudData} x */
 	D$ChipCloud(x) {x;}
-	/** @private @arg {NotificationGetUnseenCountResponse} x */
+	/** @private @arg {R$NotificationGetUnseenCount} x */
 	R$GetUnseenCount(x) {
 		const cf="NotificationGetUnseenCountResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8598,14 +8263,14 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(unseenCount,"number");
 		this.primitive_of(timeoutMs,"number");
 	}
-	/** @private @arg {DatasyncIdsResponse} x */
+	/** @private @arg {R$DatasyncIds} x */
 	R$DatasyncIds(x) {
 		const cf="DatasyncIdsResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},datasyncIds,...y}=x; this.g(y); // ! #destructure
 		this.z(datasyncIds,this.primitive_of_string);
 	}
-	/** @private @arg {GetAccountSwitcherEndpointResponse} x */
+	/** @private @arg {R$GetAccountSwitcherEndpoint} x */
 	R$E$GetAccountSwitcher(x) {
 		const cf="GetAccountSwitcherEndpointResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8619,10 +8284,10 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {A$GetMultiPageMenu} x */
-	A$GetMultiPageMenu(x) {this.H$Renderer("GetMultiPageMenu",x,this.D$GetMultiPageMenu);}
+	A$GetMultiPageMenu(x) {this.H$R$("GetMultiPageMenu",x,this.D$GetMultiPageMenu);}
 	/** @private @arg {D$A$GetMultiPageMenu} x */
 	D$GetMultiPageMenu(x) {x;}
-	/** @private @arg {AccountsListResponse} x */
+	/** @private @arg {R$AccountsList} x */
 	R$AccountsList(x) {
 		const cf="AccountsListResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8631,7 +8296,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(actions,this.A$UpdateChannelSwitcherPage);
 	}
 	/** @private @arg {A$UpdateChannelSwitcherPage} x */
-	A$UpdateChannelSwitcherPage(x) {this.H$Renderer("NotificationAction",x,a => {a; debugger;});}
+	A$UpdateChannelSwitcherPage(x) {this.H$R$("NotificationAction",x,a => {a; debugger;});}
 	/** @private @arg {R$ReelItemWatch} x */
 	R$ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
@@ -8660,14 +8325,14 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},settingItemId,...y}=x; this.g(y); // ! #destructure
 		if(settingItemId!=="407") debugger;
 	}
-	/** @private @arg {FeedbackResponse} x */
+	/** @private @arg {R$Feedback} x */
 	R$Feedback(x) {
 		const cf="FeedbackResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},feedbackResponses,...y}=x; this.g(y); // ! #destructure
 		this.z(feedbackResponses,this.FeedbackResponseProcessedStatus);
 	}
-	/** @private @arg {GetTranscriptResponse} x */
+	/** @private @arg {R$GetTranscript} x */
 	R$GetTranscript(x) {
 		const cf="GetTranscriptResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8680,14 +8345,14 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @private @arg {SuccessResponse} x */
+	/** @private @arg {R$Success} x */
 	R$Success(x) {
 		const cf="SuccessResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},success,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of(success,"boolean");
 	}
-	/** @private @arg {AttGetResponse} x */
+	/** @private @arg {R$AttGet} x */
 	R$AttGet(x) {
 		const cf="AttGetResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8736,7 +8401,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {{}} x */
 	R$GuideEntry(x) {x;}
 	/** @private @arg {R$GuideSection} x */
-	R$GuideSection(x) {this.H$Renderer("GuideSection",x,this.D$GuideSection);}
+	R$GuideSection(x) {this.H$R$("GuideSection",x,this.D$GuideSection);}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		const cf="AutoplayContent";
@@ -8766,7 +8431,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isEditable,"boolean");
 		this.primitive_of(isCourse,"boolean");
 	}
-	/** @private @arg {D$PlaylistPanelVideo} x */
+	/** @private @arg {R$PlaylistPanelVideo} x */
 	R$PlaylistPanelVideo(x) {x;}
 	/** @private @arg {D$PlayerOverlayVideoDetails} x */
 	D$PlayerOverlayVideoDetails(x) {
@@ -8782,24 +8447,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		return f.call(this,x.item);
 	}
-	/** @private @arg {E$UndoFeedback} x */
-	E$UndoFeedbackEndpoint(x) {
-		const cf="UndoFeedbackEndpoint";
-		const {clickTrackingParams,commandMetadata,undoFeedbackEndpoint}=x;
-		this.clickTrackingParams(cf,clickTrackingParams);
-		console.log("[undo.feedback.wcm]",commandMetadata.webCommandMetadata);
-		{
-			const {actions,undoToken,...y}=undoFeedbackEndpoint; this.g(y);
-			let act=this.z(actions,a => {
-				const {clickTrackingParams,...y}=a;
-				this.clickTrackingParams("E$UndoFeedback",clickTrackingParams);
-				return this.w(y);
-			});
-			this.z(act[0],this.g);
-			this.primitive_of_string(undoToken);
-		};
-	}
-	/** @private @arg {E$Button_serviceEndpoint} x */
+	/** @private @template T @arg {E$Button_serviceEndpoint<T>} x */
 	Button_serviceEndpoint(x) {
 		const cf="Button_serviceEndpoint";
 		this.save_keys(`[${cf}]`,x);
@@ -8827,7 +8475,7 @@ class HandleTypes extends ServiceMethods {
 		const {params,...y1}=x1; this.g(y1);
 		this.params(cf1,"ypc_get_offers.params",params);
 	}
-	/** @private @arg {ChannelPageResponse} x */
+	/** @private @arg {R$ChannelPage} x */
 	ChannelPageResponse(x) {
 		const cf="ChannelPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8837,7 +8485,7 @@ class HandleTypes extends ServiceMethods {
 		this.ChannelResponse(response);
 		this.primitive_of_string(url);
 	}
-	/** @private @arg {PlaylistPageResponse} x */
+	/** @private @arg {R$PlaylistPage} x */
 	PlaylistPageResponse(x) {
 		const cf="PlaylistPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8852,7 +8500,7 @@ class HandleTypes extends ServiceMethods {
 			case 5754: break;
 		}
 	}
-	/** @private @arg {Extract<SettingsPageResponse,{rootVe:23462}>} x */
+	/** @private @arg {Extract<R$SettingsPage,{rootVe:23462}>} x */
 	Settings_VE23462(x) {
 		const {page,endpoint,response,url,rootVe,...y}=x; this.g(y); // ! #destructure
 		if(page!=="settings") debugger;
@@ -8861,7 +8509,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(url);
 		if(rootVe!==23462) debugger;
 	}
-	/** @private @arg {SettingsPageResponse} x */
+	/** @private @arg {R$SettingsPage} x */
 	SettingsPageResponse(x) {
 		const cf="SettingsPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8872,7 +8520,7 @@ class HandleTypes extends ServiceMethods {
 		this.SettingsResponse(response);
 		this.primitive_of_string(url);
 	}
-	/** @private @arg {Extract<ShortsPageResponse,{rootVe:37414}>} x */
+	/** @private @arg {Extract<R$ShortsPage,{rootVe:37414}>} x */
 	Shorts_VE37414(x) {
 		const {rootVe,page,playerResponse,endpoint,response,reelWatchSequenceResponse,url,cachedReelWatchSequenceResponse,...y}=x; this.g(y); // ! #destructure
 		if(rootVe!==37414) debugger;
@@ -8886,7 +8534,7 @@ class HandleTypes extends ServiceMethods {
 		if(!cachedReelWatchSequenceResponse) debugger;
 		this.R$ReelWatchSequence(cachedReelWatchSequenceResponse);
 	}
-	/** @private @arg {ShortsPageResponse} x */
+	/** @private @arg {R$ShortsPage} x */
 	ShortsPageResponse(x) {
 		const cf="ShortsResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -8901,7 +8549,7 @@ class HandleTypes extends ServiceMethods {
 		if(url.includes("&")) debugger;
 		this.t(cachedReelWatchSequenceResponse,this.R$ReelWatchSequence);
 	}
-	/** @private @arg {SearchPageResponse} x */
+	/** @private @arg {R$SearchPage} x */
 	SearchPageResponse(x) {
 		const cf="GetNotificationMenuJson";
 		this.save_keys(`[${cf}]`,x);
@@ -8923,12 +8571,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D$Search} x */
 	D$Search(x) {x;}
-	/** @private @arg {ItemSectionItem} x */
-	ItemSectionItem(x) {
-		const cf="ItemSectionItem";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
 	/** @private @arg {BrowseHeader} x */
 	BrowseHeader(x) {
 		const cf="BrowseHeader";
@@ -8938,17 +8580,17 @@ class HandleTypes extends ServiceMethods {
 		} else if("c4TabbedHeaderRenderer" in x) {
 			return this.R$C4TabbedHeader(x);
 		}
-		if("playlistHeaderRenderer" in x) return this.PlaylistHeaderRenderer(x);
+		if("playlistHeaderRenderer" in x) return this.R$PlaylistHeader(x);
 		debugger;
 	}
 	/**
 	 * @param {R$C4TabbedHeader} x
 	 */
-	R$C4TabbedHeader(x) {this.H$Renderer("C4TabbedHeader",x,a => {a; debugger;});}
+	R$C4TabbedHeader(x) {this.H$R$("C4TabbedHeader",x,a => {a; debugger;});}
 	/** @private @arg {R$FeedTabbedHeader} x */
-	R$FeedTabbedHeader(x) {this.H$Renderer("FeedTabbedHeader",x,a => {a; debugger;});}
-	/** @private @arg {PlaylistHeaderRenderer} x */
-	PlaylistHeaderRenderer(x) {
+	R$FeedTabbedHeader(x) {this.H$R$("FeedTabbedHeader",x,a => {a; debugger;});}
+	/** @private @arg {R$PlaylistHeader} x */
+	R$PlaylistHeader(x) {
 		this.PlaylistHeader(x.playlistHeaderRenderer);
 	}
 	/** @private @arg {CacheMetadata} x */
@@ -8975,16 +8617,16 @@ class HandleTypes extends ServiceMethods {
 	BrowseContents(x) {
 		const cf="BrowseContents";
 		this.save_keys(`[${cf}]`,x);
-		if("twoColumnBrowseResultsRenderer" in x) return this.TwoColumnBrowseResultsRenderer(x);
-		if("feedFilterChipBarRenderer" in x) return this.FeedFilterChipBarRenderer(x);
+		if("twoColumnBrowseResultsRenderer" in x) return this.R$TwoColumnBrowseResults(x);
+		if("feedFilterChipBarRenderer" in x) return this.R$FeedFilterChipBar(x);
 		debugger;
 	}
-	/** @private @arg {FeedFilterChipBarRenderer} x */
-	FeedFilterChipBarRenderer(x) {
+	/** @private @arg {R$FeedFilterChipBar} x */
+	R$FeedFilterChipBar(x) {
 		this.FeedFilterChipBarData(this.w(x));
 	}
 	/** @private @arg {R$TwoColumnBrowseResults} x */
-	TwoColumnBrowseResultsRenderer(x) {
+	R$TwoColumnBrowseResults(x) {
 		this.TwoColumnBrowseResultsData(this.w(x));
 	}
 	/** @private @arg {ResponseReceivedAction} x */
@@ -9013,7 +8655,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(isInitialLoad,"boolean");
 		this.primitive_of(enablePacfLoggingWeb,"boolean");
 	}
-	/** @private @arg {GetAddToPlaylistResponse} x */
+	/** @private @arg {R$GetAddToPlaylist} x */
 	R$GetAddToPlaylist(x) {
 		const cf="GetAddToPlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9058,8 +8700,10 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.CommentRenderer);
+		this.z(continuationItems,this.R$Comment);
 	}
+	/** @private @arg {R$Comment} x */
+	R$Comment(x) {this.H$R$("Comment",x,a => {a; debugger;});}
 	/** @private @arg {FeedbackResponseProcessedStatus} x */
 	FeedbackResponseProcessedStatus(x) {
 		const cf="FeedbackResponseProcessedStatus";
@@ -9103,10 +8747,13 @@ class HandleTypes extends ServiceMethods {
 	ElementUpdateItem(x) {
 		const cf="ElementUpdateItem";
 		this.save_keys(`[${cf}]`,x);
-		if("templateUpdate" in x) return this.TemplateUpdate(x);
+		if("templateUpdate" in x) return this.R$TemplateUpdate(x);
 		if("resourceStatusInResponseCheck" in x) return this.ResourceStatusInResponseCheck(x);
 		debugger;
 	}
+	/** @arg {R$TemplateUpdate} x */
+	/** @private @arg {R$TemplateUpdate} x */
+	R$TemplateUpdate(x) {this.H$R$("TemplateUpdate",x,a => {a; debugger;});}
 	/** @private @arg {D$ResourceStatusInResponseCheckData} x */
 	ResourceStatusInResponseCheckData(x) {
 		const cf="ResourceStatusInResponseCheckData";
@@ -9157,15 +8804,6 @@ class HandleTypes extends ServiceMethods {
 		const {seconds,nanos,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(seconds);
 		this.primitive_of(nanos,"number");
-	}
-	/** @private @arg {D$VoiceSearchDialog} x */
-	D$VoiceSearchDialog(x) {
-		const cf="VoiceSearchDialog";
-		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,exitButton,...y}=x;
-		this.trackingParams(cf,trackingParams);
-		this.R$Button(exitButton);
-		this.z(Object.values(y),this.c1(this.D$TextWithRuns));
 	}
 	/** @private @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
@@ -9223,7 +8861,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="TwoColumnBrowseResultsData";
 		this.save_keys(`[${cf}]`,x);
 		const {tabs,secondaryContents,...y}=x; this.g(y); // ! #destructure
-		this.z(tabs,this.ResultRenderer);
+		this.z(tabs,this.R$Result);
 		this.t(secondaryContents,this.SecondaryContents);
 	}
 	/** @private @arg {TM$Visibility} x */
@@ -9269,7 +8907,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {...y}=x; this.g(y);
 	}
-	/** @private @arg {ReelResponse} x */
+	/** @private @arg {R$Reel} x */
 	ReelResponse(x) {
 		const cf="ReelResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -9287,18 +8925,24 @@ class HandleTypes extends ServiceMethods {
 	SecondaryContents(x) {
 		const cf="SecondaryContents";
 		this.save_keys(`[${cf}]`,x);
-		if("profileColumnRenderer" in x) return this.ProfileColumnRenderer(x);
-		if("browseFeedActionsRenderer" in x) return this.BrowseFeedActionsRenderer(x);
+		if("profileColumnRenderer" in x) return this.R$ProfileColumn(x);
+		if("browseFeedActionsRenderer" in x) return this.R$BrowseFeedActions(x);
 		debugger;
 	}
+	/** @private @arg {R$ProfileColumn} x */
+	R$ProfileColumn(x) {this.H$R$("ProfileColumn",x,a => {a; debugger;});}
+	/** @private @arg {R$BrowseFeedActions} x */
+	R$BrowseFeedActions(x) {this.H$R$("BrowseFeedActions",x,a => {a; debugger;});}
 	/** @private @arg {WatchNextItem} x */
 	WatchNextItem(x) {
 		const cf="WatchNextItem";
 		this.save_keys(`[${cf}]`,x);
 		if("continuationItemRenderer" in x) return ((_x) => {debugger;})(x);
-		if("compactVideoRenderer" in x) return this.R$CompactVideoRenderer(x);
+		if("compactVideoRenderer" in x) return this.R$CompactVideo(x);
 		debugger;
 	}
+	/** @private @arg {R$CompactVideo} x */
+	R$CompactVideo(x) {x;}
 	/** @private @arg {E$ShareEntityService} x */
 	ShareEntityServiceEndpoint(x) {
 		const cf="ShareEntityServiceEndpoint";
@@ -9414,6 +9058,8 @@ class HandleTypes extends ServiceMethods {
 		const {membershipButton,...y}=u; this.g(y); // ! #destructure
 		this.R$Button(membershipButton);
 	}
+	/** @private @arg {R$MetadataBadge} x */
+	R$MetadataBadge(x) {x;}
 	/** @private @arg {D$SubscriptionButton} x */
 	SubscriptionButton(x) {
 		const cf="SubscriptionButton";
@@ -9453,11 +9099,13 @@ class HandleTypes extends ServiceMethods {
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y); // ! #destructure
 		this.T$Icon(icon);
 		this.D$TextWithRuns(placeholderText);
-		this.SearchboxConfig(config);
+		this.R$SearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
 		this.E$SearchEndpoint(searchEndpoint);
 		this.R$Button(clearButton);
 	}
+	/** @private @arg {R$SearchboxConfig} x */
+	R$SearchboxConfig(x) {this.H$R$("SearchboxConfig",x,a => {a; debugger;});}
 	/** @private @arg {ChangeEngagementPanelVisibilityActionData} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		const cf="ChangeEngagementPanelVisibilityActionData";
@@ -9482,65 +9130,75 @@ class HandleTypes extends ServiceMethods {
 		const cf="UpdateEngagementPanelData";
 		this.save_keys(`[${cf}]`,x);
 		const {content,targetId,...y}=x; this.g(y); // ! #destructure
-		this.TranscriptRenderer(content);
+		this.R$Transcript(content);
 		if(targetId!=="engagement-panel-searchable-transcript") debugger;
 	}
-	/** @private @arg {ChannelResponse} x */
+	/** @private @arg {R$Transcript} x */
+	R$Transcript(x) {this.H$R$("Transcript",x,a => {a; debugger;});}
+	/** @private @arg {R$Channel} x */
 	ChannelResponse(x) {
 		const cf="ChannelResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,header,metadata,topbar,trackingParams,microformat,onResponseReceivedActions,...y}=x; this.g(y); // ! #destructure
-		this.TwoColumnBrowseResultsRenderer(contents);
+		this.R$TwoColumnBrowseResults(contents);
 		this.R$C4TabbedHeader(header);
-		this.ChannelMetadataRenderer(metadata);
+		this.R$ChannelMetadata(metadata);
 		this.R$DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
 		this.R$MicroformatData(microformat);
 		this.z(onResponseReceivedActions,this.ResetChannelUnreadCountCommand);
 	}
-	/** @private @arg {PlaylistResponse} x */
+	/** @private @arg {R$ChannelMetadata} x */
+	R$ChannelMetadata(x) {this.H$R$("ChannelMetadata",x,a => {a; debugger;});}
+	/** @private @arg {R$Playlist} x */
 	Api_PlaylistResponse(x) {
 		const cf="PlaylistResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,header,alerts,metadata,topbar,trackingParams,microformat,sidebar,...y}=x; this.g(y); // ! #destructure
-		this.TwoColumnBrowseResultsRenderer(contents);
-		this.PlaylistHeaderRenderer(header);
+		this.R$TwoColumnBrowseResults(contents);
+		this.R$PlaylistHeader(header);
 		this.t(alerts,a => this.Response_alerts(cf,a));
-		this.PlaylistMetadataRenderer(metadata);
+		this.R$PlaylistMetadata(metadata);
 		this.R$DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
 		this.R$MicroformatData(microformat);
-		this.PlaylistSidebarRenderer(sidebar);
+		this.R$PlaylistSidebar(sidebar);
 	}
-	/** @private @arg {string} cf @arg {NonNullable<PlaylistResponse['alerts']>} x */
+	/** @private @arg {R$PlaylistMetadata} x */
+	R$PlaylistMetadata(x) {this.H$R$("PlaylistMetadata",x,a => {a; debugger;});}
+	/** @private @arg {string} cf @arg {NonNullable<R$Playlist['alerts']>} x */
 	Response_alerts(cf,x) {
 		this.z(x,x => {
-			if("alertWithButtonRenderer" in x) return this.AlertWithButtonRenderer(x);
+			if("alertWithButtonRenderer" in x) return this.R$AlertWithButton(x);
 			this.do_codegen(`${cf}$alerts$iterate`,x);
 		});
 	}
-	/** @private @arg {SettingsResponse} x */
+	/** @private @arg {R$AlertWithButton} x */
+	R$AlertWithButton(x) {this.H$R$("AlertWithButton",x,a => {a; debugger;});}
+	/** @private @arg {R$Settings} x */
 	SettingsResponse(x) {
 		const cf="SettingsResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,topbar,trackingParams,onResponseReceivedEndpoints,sidebar,...y}=x; this.g(y); // ! #destructure
-		this.TwoColumnBrowseResultsRenderer(contents);
+		this.R$TwoColumnBrowseResults(contents);
 		this.R$DesktopTopbar(topbar);
 		this.trackingParams(cf,trackingParams);
 		this.tz(onResponseReceivedEndpoints,(this.g));
-		this.SettingsSidebarRenderer(sidebar);
+		this.R$SettingsSidebar(sidebar);
 	}
 	/** @private @arg {FeedFilterChipBarData} x */
 	FeedFilterChipBarData(x) {
 		const cf="FeedFilterChipBarData";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,nextButton,previousButton,styleType,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.ChipCloudChipRenderer);
+		this.z(contents,this.R$ChipCloudChip);
 		this.trackingParams(cf,trackingParams);
 		this.R$Button(nextButton);
 		this.R$Button(previousButton);
 		this.save_enum("FEED_FILTER_CHIP_BAR_STYLE_TYPE",styleType);
 	}
+	/** @private @arg {R$ChipCloudChip} x */
+	R$ChipCloudChip(x) {this.H$R$("ChipCloudChip",x,a => {a; debugger;});}
 	/** @private @arg {AutoplaySetItem} x */
 	AutoplaySetItem(x) {
 		const cf="AutoplaySetItem";
@@ -9647,6 +9305,8 @@ class HandleTypes extends ServiceMethods {
 		this.A$Accessibility(unsubscribeAccessibility);
 		return y;
 	}
+	/** @arg {E$SubscribeEndpoint} x */
+	E$SubscribeEndpoint(x) {x;}
 	/** @template T @arg {E$T$SignalService<T>} x */
 	signalServiceEndpoint(x) {this.E$SignalServiceEndpoint(x);}
 	/** @template {string} T @arg {ChipCloudStyle<T>} x @arg {(this:this,x:T)=>void} f */
@@ -9655,14 +9315,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {styleType,...y}=x; this.g(y); // ! #destructure
 		f.call(this,styleType);
-	}
-	/** @private @arg {UnifiedSharePanel} x */
-	D$UnifiedSharePanel(x) {
-		const cf="UnifiedSharePanel";
-		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,showLoadingSpinner,...y}=x; this.g(y); // ! #destructure
-		this.trackingParams(cf,trackingParams);
-		this.primitive_of(showLoadingSpinner,"boolean");
 	}
 	/** @private @arg {ResetChannelUnreadCountCommand} x */
 	ResetChannelUnreadCountCommand(x) {
@@ -9711,7 +9363,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.D$Thumbnail(x.thumbnail);
 	}
-	/** @private @arg {PlaylistHeader} x */
+	/** @private @arg {D$PlaylistHeader} x */
 	PlaylistHeader(x) {
 		const cf="PlaylistHeader";
 		this.save_keys(`[${cf}]`,x);
@@ -9721,32 +9373,20 @@ class HandleTypes extends ServiceMethods {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {RelatedChipCommandData} x */
-	RelatedChipCommandData(x) {
-		const cf="RelatedChipCommandData";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {SuperVodBuyFlowContent} x */
-	D$SuperVodBuyFlowContent(x) {
-		const cf="SuperVodBuyFlowContent";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {MusicHeaderRenderer} x */
-	MusicHeaderRenderer(x) {
+	/** @private @arg {R$MusicHeader} x */
+	R$MusicHeader(x) {
 		const cf="MusicHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {LiveChatRenderer} x */
-	LiveChatRenderer(x) {
+	/** @private @arg {R$LiveChat} x */
+	R$LiveChat(x) {
 		const cf="LiveChatRenderer";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @private @arg {RT$ReportFormModal} x */
-	ReportFormModalRenderer(x) {
+	R$ReportFormModal(x) {
 		const cf="ReportFormModalRenderer";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
@@ -9757,34 +9397,28 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {SubscribeResponse} x */
+	/** @private @arg {R$Subscribe} x */
 	R$Subscribe(x) {
 		const cf="SubscribeResponse";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {UnsubscribeResponse} x */
+	/** @private @arg {R$Unsubscribe} x */
 	R$Unsubscribe(x) {
 		const cf="UnsubscribeResponse";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {ModifyChannelPreferenceResponse} x */
+	/** @private @arg {R$ModifyChannelPreference} x */
 	R$ModifyChannelPreference(x) {
-		const cf="ModifyChannelPreferenceResponse";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {GetSurveyCommand} x */
-	GetSurveyCommand(x) {
-		const cf="GetSurveyCommand";
+		const cf="ModifyChannelPreference";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
 	/** @private @arg {minimal_handler_member} x ! */
-	minimal_handler_member_2(x) {x;}
+	minimal_handler_member_2(x) {x;/*!*/}
 	//#endregion
 }
 //#endregion

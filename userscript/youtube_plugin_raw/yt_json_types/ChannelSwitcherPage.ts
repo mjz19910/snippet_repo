@@ -1,5 +1,5 @@
 type ChannelSwitcherPage={
-	header: ChannelSwitcherHeaderRenderer;
+	header: R$ChannelSwitcherHeader;
 	contents: ChannelSwitcherContent[];
 	targetId: YtTargetIdType;
 };

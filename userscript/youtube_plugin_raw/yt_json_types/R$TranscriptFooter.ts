@@ -1,3 +1,3 @@
-type TranscriptFooterRenderer={
+type R$TranscriptFooter={
 	transcriptFooterRenderer: TranscriptFooterData;
 };

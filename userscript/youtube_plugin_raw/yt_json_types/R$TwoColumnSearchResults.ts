@@ -1,3 +1,3 @@
-type TwoColumnSearchResultsRenderer={
+type R$TwoColumnSearchResults={
 	twoColumnSearchResultsRenderer: TwoColumnSearchResults;
 };

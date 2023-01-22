@@ -1,3 +1,3 @@
-type CardRenderer={
+type R$Card={
 	cardRenderer: {};
 };

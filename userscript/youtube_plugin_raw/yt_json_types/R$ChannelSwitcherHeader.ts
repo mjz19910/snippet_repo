@@ -1,3 +1,3 @@
-type ChannelSwitcherHeaderRenderer={
+type R$ChannelSwitcherHeader={
 	channelSwitcherHeaderRenderer: ChannelSwitcherHeader;
 };

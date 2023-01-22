@@ -1,7 +1,7 @@
 type PageTypeSearch={
 	pageType: "search";
 	endpoint: E$Search;
-	response: SearchPageResponse;
+	response: R$SearchPage;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

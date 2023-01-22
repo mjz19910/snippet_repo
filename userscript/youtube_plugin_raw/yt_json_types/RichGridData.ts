@@ -2,13 +2,13 @@ type ReflowOptions={
 	minimumRowsOfVideosAtStart: 2;
 	minimumRowsOfVideosBetweenSections: 1;
 };
-type BrowseFeedContentItem=RichItemRenderer;
+type BrowseFeedContentItem=R$RichItem;
 type RichGrid=T$AR$Contents<RendererContentItem>&{
-	masthead: VideoMastheadAdV3Renderer;
+	masthead: R$VideoMastheadAdV3;
 }|{
 	contents: BrowseFeedContentItem[];
 	trackingParams: string;
-	header: FeedFilterChipBarRenderer;
+	header: R$FeedFilterChipBar;
 	targetId: "browse-feedFEwhat_to_watch"
 	reflowOptions: ReflowOptions;
 };

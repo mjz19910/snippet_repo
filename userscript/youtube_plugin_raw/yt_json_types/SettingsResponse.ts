@@ -1,12 +1,12 @@
-type SettingsPageResponse={
+type R$SettingsPage={
 	page: "settings";
 	endpoint: E$Browse;
-	response: SettingsResponse;
+	response: R$Settings;
 	url: string;
 }|{
 	page: "settings";
 	endpoint: E$Browse;
-	response: SettingsResponse;
+	response: R$Settings;
 	url: string;
 	rootVe: 23462;
 };

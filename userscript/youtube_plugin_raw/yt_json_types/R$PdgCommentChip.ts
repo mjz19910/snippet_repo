@@ -1,4 +1,4 @@
-type PdgCommentChipRenderer={
+type R$PdgCommentChip={
 	pdgCommentChipRenderer: {
 		chipText: D$SimpleText;
 		chipColorPalette: {

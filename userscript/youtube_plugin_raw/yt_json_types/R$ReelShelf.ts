@@ -1,3 +1,3 @@
-type R$ReelShelfRenderer={
+type R$ReelShelf={
 	reelShelfRenderer: ReelShelfData;
 };

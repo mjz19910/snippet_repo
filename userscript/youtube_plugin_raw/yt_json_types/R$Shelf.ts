@@ -1,3 +1,3 @@
-type R$ShelfRenderer={
+type R$Shelf={
 	shelfRenderer: ShelfData;
 };

@@ -1,3 +1,3 @@
-type ThumbnailOverlaySidePanelRenderer={
+type R$ThumbnailOverlaySidePanel={
 	thumbnailOverlaySidePanelRenderer: ThumbnailOverlaySidePanel;
 };

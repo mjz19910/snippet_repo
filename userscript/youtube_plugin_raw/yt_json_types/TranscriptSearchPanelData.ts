@@ -1,6 +1,6 @@
 type TranscriptSearchPanelData={
-	body: TranscriptSegmentListRenderer;
-	footer: TranscriptFooterRenderer;
+	body: R$TranscriptSegmentList;
+	footer: R$TranscriptFooter;
 	trackingParams: string;
 	targetId: "engagement-panel-searchable-transcript-search-panel";
 };

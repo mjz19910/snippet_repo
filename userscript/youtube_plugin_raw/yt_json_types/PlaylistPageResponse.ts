@@ -1,7 +1,7 @@
-type PlaylistPageResponse={
+type R$PlaylistPage={
 	rootVe?: 5754;
 	page: "playlist";
 	endpoint: E$Browse;
-	response: PlaylistResponse;
+	response: R$Playlist;
 	url: string;
 };

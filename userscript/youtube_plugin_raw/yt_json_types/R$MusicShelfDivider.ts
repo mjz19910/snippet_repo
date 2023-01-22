@@ -1,3 +1,3 @@
-type MusicShelfDividerRenderer={
+type R$MusicShelfDivider={
 	musicShelfDividerRenderer: {};
 };

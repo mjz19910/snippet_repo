@@ -1,5 +1,5 @@
 type BrowseSidebar=
-	|SettingsSidebarRenderer
-	|PlaylistSidebarRenderer
+	|R$SettingsSidebar
+	|R$PlaylistSidebar
 	;
 ;

@@ -1,3 +1,3 @@
-type MusicCarouselShelfRenderer={
+type R$MusicCarouselShelf={
 	musicCarouselShelfRenderer: MusicCarouselShelf;
 };

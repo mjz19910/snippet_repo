@@ -1,7 +1,7 @@
 type PageTypeSettings={
 	pageType: "settings";
 	endpoint: SettingsEndpoint;
-	response: SettingsPageResponse;
+	response: R$SettingsPage;
 	fromHistory: boolean;
 	navigationDoneMs: number;
 };

@@ -1,3 +1,3 @@
-type R$CommentsEntryPointHeaderRenderer={
+type R$CommentsEntryPointHeader={
 	commentsEntryPointHeaderRenderer: CommentsEntryPointHeaderData;
 };

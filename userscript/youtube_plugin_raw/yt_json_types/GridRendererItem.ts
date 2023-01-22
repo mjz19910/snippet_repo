@@ -1,1 +1,1 @@
-type GridRendererItem=GridVideoRenderer;
+type GridRendererItem=R$GridVideo;

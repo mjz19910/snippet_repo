@@ -1,3 +1,3 @@
-type A$AccountItemRenderer={
+type R$A$AccountItem={
 	accountItemRenderer: A$D$AccountItem;
 };

@@ -1,6 +1,6 @@
 type TabData={
 	selected: true;
-	content: RichGridRenderer;
+	content: R$RichGrid;
 	tabIdentifier: "FEwhat_to_watch";
 	trackingParams: string;
 }|{

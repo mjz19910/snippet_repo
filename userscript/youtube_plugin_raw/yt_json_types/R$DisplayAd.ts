@@ -1,4 +1,4 @@
-type DisplayAdRenderer={
+type R$DisplayAd={
 	layout: "DISPLAY_AD_LAYOUT_TOP_LANDSCAPE_IMAGE";
 	titleText: D$TextWithRuns;
 	image: R$ThumbnailsList;

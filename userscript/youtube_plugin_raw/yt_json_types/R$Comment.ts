@@ -1,3 +1,1 @@
-type CommentRenderer={
-	commentRenderer: CommentData;
-};
+type R$Comment={commentRenderer: D$Comment;};

@@ -3,6 +3,6 @@ type CommentsEntryPointHeaderData={
 	onTap: E$CommandExecutorCommand;
 	trackingParams: string;
 	commentCount: D$SimpleText;
-	contentRenderer: CommentsEntryPointTeaserRenderer;
+	contentRenderer: R$CommentsEntryPointTeaser;
 	targetId: "comments-entry-point-header-identifier";
 };
