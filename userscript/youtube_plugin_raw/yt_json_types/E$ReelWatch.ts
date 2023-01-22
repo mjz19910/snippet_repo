@@ -2,7 +2,7 @@ type E$ReelWatch={
 	videoId?: string;
 	playerParams: string;
 	thumbnail?: D$Thumbnail;
-	overlay: ReelPlayerOverlayRenderer;
+	overlay: R$ReelPlayerOverlay;
 	params: string;
 	sequenceProvider?: "REEL_WATCH_SEQUENCE_PROVIDER_RPC";
 	sequenceParams?: string;

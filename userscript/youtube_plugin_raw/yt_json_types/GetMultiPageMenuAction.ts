@@ -1,3 +1,3 @@
 type A$GetMultiPageMenu={
-	getMultiPageMenuAction: GetMultiPageMenuActionData;
+	getMultiPageMenuAction: D$A$GetMultiPageMenu;
 };

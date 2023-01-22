@@ -1,6 +1,6 @@
-type ReelItemWatchResponse={
+type R$ReelItemWatch={
 	responseContext: RC$ResponseContext;
-	overlay: ReelPlayerOverlayRenderer;
+	overlay: R$ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
 	trackingParams: string;
 	replacementEndpoint?: E$ReelWatchEndpoint;
