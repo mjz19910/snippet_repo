@@ -8098,8 +8098,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="CommandTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,...y}=x;
+		this.trackingParams(cf,trackingParams);
 		f.call(this,this.w(y));
-		this.trackingParams("CommandTemplate",trackingParams);
 	}
 	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate(x,f) {
