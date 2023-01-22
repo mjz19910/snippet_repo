@@ -8488,16 +8488,19 @@ class HandleTypes extends ServiceMethods {
 	PlaylistPageResponse(x) {
 		const cf="PlaylistPageResponse";
 		this.save_keys(`[${cf}]`,x);
-		const {rootVe,url,endpoint,page,response,...y}=x; this.g(y); // ! #destructure
+		const {url,endpoint,page,response,...y}=x;
 		if(page!=="playlist") debugger;
 		this.E$Browse(endpoint);
 		this.Api_PlaylistResponse(response);
 		this.primitive_of_string(url);
-		switch(rootVe) {
-			default: debugger; break;
-			case void 0: break;
-			case 5754: break;
+		if("rootVe" in y) {
+			switch(this.w(y)) {
+				default: debugger; break;
+				case 5754: break;
+			}
+			return;
 		}
+		this.g(y);
 	}
 	/** @private @arg {Extract<R$SettingsPage,{rootVe:23462}>} x */
 	Settings_VE23462(x) {
