@@ -5267,9 +5267,11 @@ class ParserService extends BaseService {
 						switch(ta) {case 1: case 6: case 11: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "tracking.trackingParams.f6": switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "AdServingDataEntry.f9":
 					case "tracking.trackingParams.f4":
 					case "transcript_target_id.param":
+					case "tracking.trackingParams.f19":
 						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -7003,6 +7005,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		f.call(this,this.w(x));
 	}
+	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
+	H_R(cf,x) {this.save_keys(`[${cf}]`,x);}
 	/** @private @arg {R_Button} x */
 	R_Button(x) {this.H_R_("Button",x,this.D__Button);}
 	/** @private @arg {R_HotkeyDialogSection} x */
@@ -7780,7 +7784,13 @@ class HandleTypes extends ServiceMethods {
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
 	/** @private @arg {E_ReelWatchEndpoint} x */
-	E_ReelWatchEndpoint(x) {this.H_("E_ReelWatchEndpoint",x,_a => {debugger;});}
+	E_ReelWatchEndpoint(x) {
+		const cf="E_ReelWatchEndpoint";
+		this.H_R(cf,x);
+		this.T$Endpoint(cf,x,x => {this.y(x,this.D_ReelWatch);},x => {x; debugger;});
+	}
+	/** @private @arg {D_ReelWatch} x */
+	D_ReelWatch(x) {x;}
 	/** @private @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {x; debugger;}
 	/** @private @arg {GetLiveChat} x */
@@ -7801,21 +7811,21 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			return null;
 		});
-		this.z(ar,a=>{
+		this.z(ar,a => {
 			switch(a.popupType) {
 				default: debugger; break;
 				case "DROPDOWN": {
 					let x=this.w(a.popup);
 					const {header,sections,style,trackingParams,...y}=x; this.g(y);
 					this.R_SimpleMenuHeader(header);
-					this.z(sections,a=>{
+					this.z(sections,a => {
 						a;
-					})
+					});
 					if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
 					this.trackingParams(cf,trackingParams);
 				} break;
 			}
-		})
+		});
 		debugger;
 		this.trackingParams(cf,trackingParams);
 	}
