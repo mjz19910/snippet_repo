@@ -8343,17 +8343,112 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
 	}
-	/** @arg {R$Notification} x */
+	/** @private @arg {R$Notification} x */
 	R$Notification(x) {x;}
-	/** @arg {E$GetNotificationMenuEndpoint} x */
+	/** @private @arg {E$GetNotificationMenuEndpoint} x */
 	E$GetNotificationMenuEndpoint(x) {x;}
-	/** @template T @arg {T$R$ContinuationItem<T>} x */
+	/** @private @template T @arg {T$R$ContinuationItem<T>} x */
 	T$ContinuationItemRenderer(x) {
 		const cf="T$ContinuationItemRenderer";
 		this.save_keys(`[${cf}]`,x);
 		return this.w(this.T$ContinuationItemData(this.w(x)));
 	}
-	/** @arg {E$GetTranscript} x */
+	/** @arg {G$SectionList} x */
+	SectionListData(x) {
+		const cf="SectionListData";
+		this.save_keys(`[${cf}]`,x);
+		if("targetId" in x) {
+			if(this.str_starts_with(x.targetId,"browse-feed")) {
+				let ss=split_string(x.targetId,"browse-feed");
+				if(ss.length!==2) {debugger; return;}
+				let sa=ss[1];
+				let ll=sa.slice(24);
+				if(this.str_starts_with(sa,"UC")&&ll==="featured") return;
+				console.log("target_id.ll",ll);
+				if(this.str_starts_with(sa,"UC")) {
+					let floc=sa.indexOf("featured");
+					if(floc<0) {debugger; return;}
+					let s1=sa.slice(0,floc);
+					let s2=sa.slice(floc);
+					if(ll!==s2) debugger;
+					console.log("[RichGrid.targetId]",x.targetId);
+					console.log("[target_id_parse]",s1,s2);
+					debugger;
+				}
+				return;
+			}
+			switch(x.targetId) {
+				default: debugger; return;
+				case "search-feed": return this.SearchFeedSectionListData(x);
+			}
+		}
+		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,...y}=x; this.g(y); // ! #destructure
+		this.z(contents,this.SectionListItem);
+		this.tz(continuations,this.NextContinuationData);
+		this.trackingParams(cf,trackingParams);
+		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
+		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+	}
+	/** @private @arg {D$SearchFeedSectionList} x */
+	SearchFeedSectionListData(x) {
+		const cf="SearchFeedSectionListData";
+		this.save_keys(`[${cf}]`,x);
+		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=x; this.g(y); // ! #destructure
+		this.z(contents,this.SectionListItem);
+		this.tz(continuations,this.A$NextContinuationData);
+		this.trackingParams(cf,trackingParams);
+		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
+		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
+		this.t(targetId,a => this.targetId(cf,a));
+	}
+	/** @private @arg {A$NextContinuationData} x */
+	A$NextContinuationData(x) {x;}
+	/** @private @arg {$SectionListItem} x */
+	SectionListItem(x) {
+		const cf="SectionListItem";
+		this.save_keys(`[${cf}]`,x);
+		if("itemSectionRenderer" in x) {
+			return this.ItemSectionRenderer(x);
+		} else if("continuationItemRenderer" in x) {
+			this.ContinuationItemRenderer(x);
+		} else if("musicCarouselShelfRenderer" in x) {
+			this.MusicCarouselShelfRenderer(x);
+		} else if("musicShelfRenderer" in x) {
+			this.MusicShelfRenderer(x);
+		} else {
+			debugger;
+		}
+	}
+	/** @private @arg {R$ContinuationItem} x */
+	ContinuationItemRenderer(x) {
+		const cf="ContinuationItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.ContinuationItemData(x.continuationItemRenderer);
+	}
+	/** @private @arg {D$ContinuationItem} x */
+	ContinuationItemData(x) {
+		const cf="ContinuationItemData";
+		this.save_keys(`[${cf}]`,x);
+		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y); // ! #destructure
+		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
+		// this.save_enum("CONTINUATION_TRIGGER",trigger);
+		this.G$ContinuationEndpoint(continuationEndpoint);
+		this.t(button,this.R$Button);
+		this.t(ghostCards,((_x) => {debugger;}));
+	}
+	/** @private @arg {G$ContinuationEndpoint} x */
+	G$ContinuationEndpoint(x) {
+		const cf="ContinuationEndpointRoot";
+		this.save_keys(`[${cf}]`,x);
+		if("continuationCommand" in x) {
+			this.ContinuationCommand(x);
+		} else if("getTranscriptEndpoint" in x) {
+			this.E$GetTranscriptEndpoint(x);
+		} else {
+			debugger;
+		}
+	}
+	/** @private @arg {E$GetTranscript} x */
 	E$GetTranscriptEndpoint(x) {
 		const cf="GetTranscriptEndpoint";
 		this.save_keys(`[${cf}]`,x);
@@ -8362,7 +8457,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.DE$GetTranscript(getTranscriptEndpoint);
 	}
-	/** @arg {DE$GetTranscript} x */
+	/** @private @arg {DE$GetTranscript} x */
 	DE$GetTranscript(x) {
 		const cf="GetTranscriptData";
 		this.save_keys(`[${cf}]`,x);
