@@ -2704,7 +2704,7 @@ class BaseService extends BaseServicePrivate {
 		};
 		for(let param of res_e) {
 			switch(param[0]) {
-				case "data_fixed64":do_set(param[1],["bigint",[],param[2]]); break;
+				case "data_fixed64": do_set(param[1],["bigint",[],param[2]]); break;
 				case "data_fixed32":
 				case "data32": do_set(param[1],param[2]); break;
 				case "child": {
@@ -5286,8 +5286,7 @@ class ParserService extends BaseService {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						debugger;
-						return;
-					} break;
+					} return;
 					case "serializedTemplateConfig":
 						switch(ta) {case 2: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
@@ -5342,11 +5341,6 @@ class ParserService extends BaseService {
 					case "browse$param": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
 					case "entity_key": switch(ta) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 				}
-				if(tv!==void 0) {
-					/** @type {P$PathRoot} */
-					return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
-				}
-				return;
 			}
 			cb(tv,ta);
 		}
