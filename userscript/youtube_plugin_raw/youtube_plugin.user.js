@@ -5203,8 +5203,8 @@ class ParserService extends BaseService {
 			if(path_parts.length===idx) {
 				if(tv instanceof Map) case_part="if(tv instanceof Map) return;";
 				switch(typeof tv) {
-					case "number": case_part='if(typeof tv==="number") return this.save_number(`[${path}]`,tv);'; break;
-					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,tv);'; break;
+					case "number": case_part='if(typeof tv==="number") return this.save_number(`[${path}]`,tv);\n'; break;
+					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,tv);\n'; break;
 				}
 			}
 			let res_case="";
@@ -5214,7 +5214,7 @@ class ParserService extends BaseService {
 			-- [${path_parts.join(".")},${idx}] --\n
 			case "${path_parts[idx-1]}": {
 				const idx=${idx+1};
-				if(path_parts.length===${idx}) {${case_part}${value_part}}
+				if(path_parts.length===${idx}) {\n${case_part}${value_part}\n}
 				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}}
 			} break;`.slice(1).split("\n").map(e => e.slice(3)).join("\n"));
 		};
@@ -5265,7 +5265,7 @@ class ParserService extends BaseService {
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "AdServingDataEntry":
-						switch(ta) {case 4: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 4: case 5: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
@@ -5276,11 +5276,9 @@ class ParserService extends BaseService {
 						switch(ta) {case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "transcript_target_id.param": case "tracking.trackingParams.f19":
-					case "tracking.trackingParams.f4": switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "transcript_target_id.param": switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "tracking.trackingParams.f6": switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "browse$param.f93": case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40":
 					case "ypc_get_offers.params.f5.f5": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5302,7 +5300,7 @@ class ParserService extends BaseService {
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "browse$param.f84": switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "create_playlist.params":
-					case "browse.params": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
+					case "browse$param": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
 					case "entity_key": switch(ta) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 				}
 				if(tv!==void 0) {
@@ -5385,7 +5383,14 @@ class ParserService extends BaseService {
 				if(path_parts.length===1) switch(tv) {default: debugger; return;}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
-					case "f4": u(idx); debugger; break;
+					case "f4": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+					} break;
 				}
 			} break;
 			// [watch.player_params]
@@ -5483,7 +5488,6 @@ class ParserService extends BaseService {
 			case "createBackstagePost":
 			case "subscribe":
 			case "ypc_get_offers":
-			case "browse":
 			case "create_playlist":
 			case "get_transcript":
 			case "like":
