@@ -2312,11 +2312,6 @@ class KnownDataSaver extends ApiBase {
 		const {seen_keys_index: index,seen_keys: data}=this.#data_store;
 		return {index,data,new_data: this.#new_keys};
 	}
-	/** @arg {string} key */
-	#get_seen_string_item(key) {
-		let store=this.#get_string_store();
-		return this.get_seen_string_item_store(key,store);
-	}
 	/** @arg {string} key @arg {StoreDescription<string>} store */
 	get_seen_string_item_store(key,store) {
 		const {index,data}=store;
@@ -2380,14 +2375,15 @@ class KnownDataSaver extends ApiBase {
 		console.log(`store [${ns}] [${k}] %o`,x);
 		let idx=store.data.indexOf(store_item);
 		if(idx<0) {debugger; return;}
-		this.show_strings_bitmap(idx);
+		this.show_strings_bitmap(ns,idx,store);
 		return true;
 	}
 	/** @arg {`[${string}]`} k_arg @arg {string|string[]} x */
 	save_string(k_arg,x) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(k_arg);
-		let store_item=this.#get_seen_string_item(k);
+		let store=this.#get_string_store();
+		let store_item=this.get_seen_string_item_store(k,store);
 		if(!store_item) {
 			store_item=[k,["one",[]]];
 			let nk=this.#data_store.seen_strings.push(store_item)-1;
@@ -2400,12 +2396,12 @@ class KnownDataSaver extends ApiBase {
 		console.log("store_str [%s] %o",k,x);
 		let idx=this.#data_store.seen_strings.indexOf(store_item);
 		if(idx<0) {debugger; return;}
-		this.show_strings_bitmap(idx);
+		this.show_strings_bitmap("save_string",idx,store);
 		return true;
 	}
-	/** @arg {number} idx */
-	show_strings_bitmap(idx) {
-		let p=this.#data_store.seen_strings[idx];
+	/** @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
+	show_strings_bitmap(ns,idx,store) {
+		let p=store.data[idx];
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
@@ -2415,7 +2411,7 @@ class KnownDataSaver extends ApiBase {
 			for(let bitmap_src_idx=0;bitmap_src_idx<max_len;bitmap_src_idx++) {
 				let bitmap_src=src_data.filter(e => bitmap_src_idx<e.length).map(e => e[bitmap_src_idx]);
 				let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
-				console.log(` --------- [store["${k}"][${bitmap_src_idx}]] --------- `);
+				console.log(` --------- [${ns}] [store["${k}"][${bitmap_src_idx}]] --------- `);
 				console.log(index_map.map(e => `"${e}"`).join(","));
 				console.log(bitmap);
 			}
@@ -2424,12 +2420,12 @@ class KnownDataSaver extends ApiBase {
 			let bitmap_src=cur[1];
 			let linear_map=bitmap_src.every(e => !e.includes(","));
 			if(linear_map) {
-				console.log(` --------- [${k}] --------- `);
+				console.log(` --------- [${ns}] [${k}] --------- `);
 				console.log(bitmap_src.join(","));
 				return;
 			}
 			let {bitmap,map_arr: index_map}=this.generate_bitmap(bitmap_src);
-			console.log(` --------- [${k}] --------- `);
+			console.log(` --------- [${ns}] [${k}] --------- `);
 			console.log(index_map.join(","));
 			console.log(bitmap);
 		}
