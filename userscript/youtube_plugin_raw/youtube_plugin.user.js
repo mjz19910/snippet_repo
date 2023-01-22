@@ -2751,19 +2751,27 @@ class BaseService extends BaseServicePrivate {
 		let arr=Object.entries(obj);
 		this.z(arr,e => fn.call(this,e[0],e[1]));
 	}
-	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f  */
+	/** @public @template U @template {{}} T @arg {T[]} x @arg {(this:this,x:T,i:number)=>U} f @returns {[Extract<U,{}>[],Extract<U,void>[]]}  */
 	z(x,f) {
-		if(x===void 0) {debugger; return [];}
-		if(!x.entries) {debugger; return [];}
-		/** @type {U[]} */
+		if(x===void 0) {debugger; return [[],[]];}
+		if(!x.entries) {debugger; return [[],[]];}
+		/** @type {any[]} */
 		let c=[];
+		/** @type {any[]} */
+		let v=[];
 		for(let it of x.entries()) {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
 			let u=f.call(this,a,i);
-			c.push(u);
+			if(u!==void 0) {
+				c.push(u);
+			} else if(u===void 0) {
+				v.push(u);
+			} else {
+				throw new Error();
+			}
 		}
-		return c;
+		return [c,v];
 	}
 	/** @type {string[]} */
 	logged_keys=[];
@@ -6847,7 +6855,7 @@ case "${path_parts[idx-1]}": {
 												gen_next_part(idx);
 												debugger;
 											} path_parts[4]===""; break;
-											// ["record_notification_interactions", "f2", "f14", "f1", "f2"]
+											// [record_notification_interactions.f2.f14.f1.f2]
 											case "f2": {
 												const idx=6;
 												if(path_parts.length===5) {
@@ -9712,15 +9720,25 @@ class HandleTypes extends ServiceMethods {
 		const {multiPageMenuNotificationSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuNotificationSection(multiPageMenuNotificationSectionRenderer);
 	}
-	/** @arg {ItemsTemplate<NotificationRenderer>} x */
+	/** @arg {ItemsTemplate<R$NotificationRenderer|T$ContinuationItemRenderer<{}>>} x */
 	MultiPageMenuNotificationSection(x) {
 		const cf="MultiPageMenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.z(items,this.NotificationRenderer);
+		let xr=this.z(items,x => {
+			if("notificationRenderer" in x) return this.NotificationRenderer(x);
+			if("continuationItemRenderer" in x) return this.T$ContinuationItemRenderer(x);
+			debugger;
+		});
+		let vv=xr[0]; vv;
+		debugger;
 		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
 	}
-	/** @arg {NotificationRenderer} x */
+	/** @template T @arg {T$ContinuationItemRenderer<T>} x */
+	T$ContinuationItemRenderer(x) {
+		return x.continuationItemRenderer.continuationEndpoint;
+	}
+	/** @arg {R$NotificationRenderer} x */
 	NotificationRenderer(x) {
 		const cf="NotificationRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -11919,7 +11937,7 @@ class HandleTypes extends ServiceMethods {
 				this.clickTrackingParams("E$UndoFeedback",clickTrackingParams);
 				return this.w(y);
 			});
-			this.z(act,this.g);
+			this.z(act[0],this.g);
 			this.primitive_of_string(undoToken);
 		};
 	}

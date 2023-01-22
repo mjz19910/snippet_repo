@@ -8,7 +8,27 @@ this.z(actions,a => {
 	debugger;
 });
 this.trackingParams(trackingParams);
-`
+`;
+export function con_snippet_1() {
+	let x={};
+	/** @arg {{}} o */
+	function nx(o) {
+		let u = structuredClone(o);
+		/** @arg {{}} x */
+		function ru(x) {
+			Object.entries(x).forEach(([, v]) => {
+				if (typeof v === "object") {
+					ru(v);
+					Object.setPrototypeOf(v, null);
+				}
+			});
+			return x;
+		}
+		return ru(u);
+	}
+	let u=nx(x);
+	console.log(u);
+}
 const decoder=new TextDecoder();
 const base64_dec=new Base64Binary();
 export let no_storage_access=false;
@@ -81,22 +101,6 @@ export class Snippet_0_tmp {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
-	}
-	/** @arg {D$TextWithRuns} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
-	TextWithRuns(x,f_run=this.NavigationEndpoint) {
-		const cf="TextWithRuns";
-		if(!("runs" in x)) {debugger; return;}
-		this.save_keys(`[${cf}]`,x);
-		const {runs,accessibility,...y}=x; this.g(y);
-		this.z(runs,a => this.TextRun(a,f_run));
-		if(accessibility) this.Accessibility(accessibility);
-	}
-	/** @arg {D$TextRun} x @arg {(x:NavigationEndpointRoot['navigationEndpoint'])=>void} f_run */
-	TextRun(x,f_run) {
-		this.save_keys("[TextRun]",x);
-		const {text,navigationEndpoint,...y}=x; this.g(y);
-		if(navigationEndpoint) f_run.call(this,navigationEndpoint);
-		this.primitive_of(text,"string");
 	}
 	/** @public @arg {string} x */
 	trackingParams(x) {

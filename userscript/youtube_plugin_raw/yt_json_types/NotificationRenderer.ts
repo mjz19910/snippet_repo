@@ -1,1 +1,1 @@
-type NotificationRenderer={notificationRenderer: YtNotification;};
+type R$NotificationRenderer={notificationRenderer: YtNotification;};
