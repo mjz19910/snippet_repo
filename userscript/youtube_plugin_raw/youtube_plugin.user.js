@@ -8074,14 +8074,13 @@ class HandleTypes extends ServiceMethods {
 	ContentsArrayTemplate(x,f) {
 		const cf="ContentsArrayTemplate";
 		this.save_keys(`[${cf}]`,x);
-		this.z(x.contents,f);
+		this.z(this.w(x),f);
 	}
 	/** @template T,U @arg {T$ItemSectionRendererTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
 	ItemSectionRendererTemplate(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
-		const {itemSectionRenderer,...y}=x; this.g(y); // ! #destructure
-		this.ItemSectionDataTemplate(itemSectionRenderer,f);
+		this.ItemSectionDataTemplate(this.w(x),f);
 	}
 	/** @template T,U @arg {ItemSectionDataTemplate<T,U>} x @arg {(this:this,x:[T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
