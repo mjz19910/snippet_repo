@@ -9473,8 +9473,7 @@ class HandleTypes extends ServiceMethods {
 	AdLayoutLoggingData(x) {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);
-		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
-		this.parser.on_endpoint_params(cf,"AdServingDataEntry",a);
+		this.parser.on_endpoint_params(cf,"AdServingDataEntry",this.w(x));
 	}
 	/** @private @arg {R$LiveChat} x */
 	R$LiveChat(x) {
