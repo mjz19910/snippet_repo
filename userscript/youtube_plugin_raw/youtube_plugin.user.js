@@ -5442,6 +5442,7 @@ class ParserService extends BaseService {
 					case "f2": case "f1": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
 							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 							switch(tv) {default: debugger; return;}
 						}
