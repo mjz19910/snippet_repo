@@ -5280,13 +5280,13 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
-						switch(ta) {case 7: case 8: case 24: break; default: break;}
+						switch(ta) {case 7: case 8: case 24: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.player_params":
-						switch(ta) {case 12: case 25: break; default: new_ns(); break;}
+						switch(ta) {case 8: case 9: case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
-						return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
