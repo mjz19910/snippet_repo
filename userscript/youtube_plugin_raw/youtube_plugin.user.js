@@ -5266,6 +5266,10 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 						debugger;
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "AdServingDataEntry":
+					switch(ta) {case 4: break; default: new_ns(); debugger; return;}
+					/** @type {P$PathRoot} */
+					return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
 						switch(ta) {case 7: case 24: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
