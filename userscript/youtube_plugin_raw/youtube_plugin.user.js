@@ -7958,6 +7958,10 @@ class ServiceData extends BaseService {
 	format_quality_arr=["hd2160","hd1440","hd1080","hd720","large","medium","small","tiny"];
 }
 class ServiceMethods extends ServiceData {
+	/** @arg {true} x */
+	expect_true(x) {
+		if(x!==true) debugger;
+	}
 	/** @public @arg {string} cf @arg {string} x */
 	trackingParams(cf,x) {
 		this.params(cf,"tracking.trackingParams",x);
@@ -13101,10 +13105,6 @@ class HandleTypes extends ServiceMethods {
 		if("reelWatchEndpoint" in x) return this.E$ReelWatchEndpoint(x);
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		debugger;
-	}
-	/** @arg {true} x */
-	expect_true(x) {
-		if(x!==true) debugger;
 	}
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
