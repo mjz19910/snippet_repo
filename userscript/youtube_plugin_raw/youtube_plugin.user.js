@@ -9462,8 +9462,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.VoiceSearchDialog(this.w(x));
 	}
-	/** @arg {GuideEntryData} x */
-	GuideEntryData(x) {
+	/** @arg {D$GuideEntry} x */
+	D$GuideEntry(x) {
 		const cf="GuideEntryData";
 		this.save_keys(`[${cf}]`,x);
 		this.GuideEntryDataContent(this.w(x));
@@ -13102,6 +13102,10 @@ class HandleTypes extends ServiceMethods {
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		debugger;
 	}
+	/** @arg {true} x */
+	expect_true(x) {
+		if(x!==true) debugger;
+	}
 	/** @arg {GuideEntryRoot} x */
 	GuideEntryRoot(x) {
 		const cf="GuideEntryRoot";
@@ -13113,14 +13117,8 @@ class HandleTypes extends ServiceMethods {
 			this.D$SimpleText(formattedTitle);
 			this.A$Accessibility(accessibility);
 			this.GuideEntryRoot_ser(serviceEndpoint);
-			if("isPrimary" in y) {
-				const {isPrimary,...y1}=y;
-				if(isPrimary!==true) debugger;
-				this.g(y1);
-				return;
-			}
+			if("isPrimary" in y) return this.expect_true(this.w(y));
 			this.g(y);
-			return;
 			return;
 		}
 		if("icon" in x) {
@@ -13150,7 +13148,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("GuideEntryRoot",trackingParams);
 		this.D$SimpleText(formattedTitle);
 		this.A$Accessibility(accessibility);
-		this.GuideEntryData(entryData);
+		this.D$GuideEntry(entryData);
 		this.GuideEntryPresentationStyle(presentationStyle);
 	}
 	/** @arg {Extract<GuideEntryRoot,{presentationStyle:any}>['presentationStyle']} x */

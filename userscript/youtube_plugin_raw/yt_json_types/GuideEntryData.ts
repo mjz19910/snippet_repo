@@ -1,1 +1,1 @@
-type GuideEntryData={guideEntryData: GuideEntryDataContent;};
+type D$GuideEntry={guideEntryData: GuideEntryDataContent;};
