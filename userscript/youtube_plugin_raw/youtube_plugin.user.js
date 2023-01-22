@@ -13211,7 +13211,7 @@ class HandleTypes extends ServiceMethods {
 		if("commandExecutorCommand" in x) return this.CommandExecutorCommand(x);
 		if("createBackstagePostEndpoint" in x) {
 			this.EndpointTemplate(cf,x,a => {
-				this.params(cf,"createBackstagePost.param",this.w(a).createBackstagePostParams);
+				this.params(cf,"createBackstagePost.param",this.w(this.w(a)));
 			});
 			return;
 		}
