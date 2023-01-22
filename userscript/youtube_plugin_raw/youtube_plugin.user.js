@@ -6992,10 +6992,15 @@ class HandleTypes extends ServiceMethods {
 	//#endregion {E_}
 	//#region general done
 	/** @private @arg {string} cf @public @template {{}} T @arg {T} x */
-	H$Data(cf,x) {this.save_keys(`[D__${cf}]`,x);}
+	H$Data(cf,x) {this.save_keys(`[D_${cf}]`,x);}
 	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
 	H_R_(cf,x,f) {
 		this.save_keys(`[R_${cf}]`,x);
+		f.call(this,this.w(x));
+	}
+	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	H_(cf,x,f) {
+		this.save_keys(`[${cf}]`,x);
 		f.call(this,this.w(x));
 	}
 	/** @private @arg {R_Button} x */
