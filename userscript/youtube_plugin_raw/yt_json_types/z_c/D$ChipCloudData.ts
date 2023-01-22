@@ -1,4 +1,4 @@
-type D_ChipCloudData={
+type D_ChipCloud={
 	chips: R_ChipCloudChip;
 	trackingParams: string;
 	horizontalScrollable: false;
