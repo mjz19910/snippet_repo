@@ -30,7 +30,7 @@ type HeatmapRenderer={
 type DescriptionChapters={
 	chapters: ChapterRenderer[];
 	trackingParams: string;
-	onChapterRepeat: OpenPopupAction;
+	onChapterRepeat: A$OpenPopup;
 };
 
 type DescriptionChaptersItem=MapTemplate<"DESCRIPTION_CHAPTERS",DescriptionChapters>;

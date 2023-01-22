@@ -1,5 +1,5 @@
 type ResponseActions=
-	OpenPopupAction|
+	A$OpenPopup|
 	UpdateNotificationsUnseenCountAction|
 	RemoveFromGuideSectionAction|
 	AddToGuideSectionAction|

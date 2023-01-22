@@ -4,7 +4,7 @@ type ToggleButton={
 	isDisabled: false;
 	defaultIcon: Icon<"LOOP">;
 	defaultServiceEndpoint: RepeatChapterCommand;
-	toggledServiceEndpoint: CommandExecutorCommand;
+	toggledServiceEndpoint: E$CommandExecutorCommand;
 	trackingParams: string;
 	toggledStyle: StyleTypeObj;
 	accessibilityData: A$Accessibility;

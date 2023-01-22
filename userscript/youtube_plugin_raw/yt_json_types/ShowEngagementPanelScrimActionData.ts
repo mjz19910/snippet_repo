@@ -1,4 +1,4 @@
 type ShowEngagementPanelScrimActionData={
 	engagementPanelTargetId: "engagement-panel-clip-create";
-	onClickCommands: OpenPopupAction[];
+	onClickCommands: A$OpenPopup[];
 };

@@ -8,6 +8,6 @@ type VideoSecondaryInfoData={
 	trackingParams: string;
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;
-	showMoreCommand?: CommandExecutorCommand;
-	showLessCommand?: ChangeEngagementPanelVisibilityAction;
+	showMoreCommand?: E$CommandExecutorCommand;
+	showLessCommand?: E$ChangeEngagementPanelVisibilityAction;
 };

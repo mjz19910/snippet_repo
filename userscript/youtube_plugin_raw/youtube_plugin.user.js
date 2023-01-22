@@ -9629,7 +9629,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @arg {C$Continuation} x */
+	/** @arg {E$Continuation} x */
 	ContinuationCommand(x) {
 		if(!x) {debugger; return;}
 		const cf="ContinuationCommand";
@@ -9896,7 +9896,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @arg {OpenPopupAction} x */
+	/** @arg {A$OpenPopup} x */
 	A$OpenPopupAction(x) {
 		const cf="OpenPopupAction";
 		this.save_keys(`[${cf}]`,x);
@@ -9904,11 +9904,11 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.OpenPopupActionData(openPopupAction);
 	}
-	/** @arg {OpenPopupActionData['popup']} x */
+	/** @arg {D$OpenPopupAction['popup']} x */
 	popup_generic(x) {
 		this.AllPopups(x);
 	}
-	/** @arg {OpenPopupActionData['popupType']} x */
+	/** @arg {D$OpenPopupAction['popupType']} x */
 	parse_popup_type(x) {
 		switch(x) {
 			default: debugger; break;
@@ -9918,7 +9918,7 @@ class HandleTypes extends ServiceMethods {
 			case "TOP_ALIGNED_DIALOG": break;
 		}
 	}
-	/** @arg {OpenPopupActionData} x */
+	/** @arg {D$OpenPopupAction} x */
 	OpenPopupActionData(x) {
 		const cf="OpenPopupActionData";
 		this.save_keys(`[${cf}]`,x);
@@ -12426,7 +12426,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ShowEngagementPanelScrimActionData(showEngagementPanelScrimAction);
 	}
-	/** @arg {ChangeEngagementPanelVisibilityAction} x */
+	/** @arg {E$ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityAction(x) {
 		const cf="ChangeEngagementPanelVisibilityAction";
 		this.save_keys(`[${cf}]`,x);
@@ -13199,7 +13199,7 @@ class HandleTypes extends ServiceMethods {
 			case "LIVE_CONTROL_ROOM": break;
 		}
 	}
-	/** @arg {ButtonCommand} x */
+	/** @arg {E$ButtonCommand} x */
 	ButtonCommand(x) {
 		const cf="ButtonCommand";
 		this.save_keys(`[${cf}]`,x);
@@ -13216,6 +13216,10 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		debugger;
+	}
+	/** @arg {E$CreateBackstagePostEndpoint} x */
+	$CreateBackstagePostEndpoint(x) {
+		x;
 	}
 	/** @arg {EngagementPanelMenu} x */
 	EngagementPanelMenu(x) {
@@ -13237,7 +13241,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$ButtonRenderer(visibilityButton);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {CommandExecutorCommand} x */
+	/** @arg {E$CommandExecutorCommand} x */
 	CommandExecutorCommand(x) {
 		const cf="CommandExecutorCommand";
 		this.save_keys(`[${cf}]`,x);

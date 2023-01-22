@@ -1,1 +1,1 @@
-type ContinuationEndpointRoot=C$Continuation|E$GetTranscriptEndpoint;
+type ContinuationEndpointRoot=E$Continuation|E$GetTranscriptEndpoint;

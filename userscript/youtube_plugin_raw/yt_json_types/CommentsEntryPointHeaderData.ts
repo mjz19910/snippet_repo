@@ -1,6 +1,6 @@
 type CommentsEntryPointHeaderData={
 	headerText: D$TextWithRuns;
-	onTap: CommandExecutorCommand;
+	onTap: E$CommandExecutorCommand;
 	trackingParams: string;
 	commentCount: D$SimpleText;
 	contentRenderer: CommentsEntryPointTeaserRenderer;

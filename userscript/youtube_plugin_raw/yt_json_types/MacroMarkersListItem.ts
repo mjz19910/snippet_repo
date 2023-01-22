@@ -7,7 +7,7 @@ type MacroMarkersListItem={
 	shareButton: R$ButtonRenderer;
 	repeatButton: ToggleButtonRenderer;
 	macroMarkerRepeatStateEntityKey: string;
-	endRepeatCommand: CommandExecutorCommand;
+	endRepeatCommand: E$CommandExecutorCommand;
 	playerStateEntityKey: string;
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
 	lightColorPalette: LightColorPalette;

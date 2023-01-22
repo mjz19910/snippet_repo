@@ -1,7 +1,7 @@
 type AllActions=
 	|AddToGuideSectionAction
 	|GetMultiPageMenuAction
-	|OpenPopupAction
+	|A$OpenPopup
 	|RefreshPlaylistCommand
 	|RemoveFromGuideSectionAction
 	|C$RunAttestation

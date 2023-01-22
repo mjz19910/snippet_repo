@@ -18,7 +18,7 @@ type SubscriptionNotificationToggleButtonData={
 	];
 	currentStateId: 2;
 	trackingParams: string;
-	command: CommandExecutorCommand;
+	command: E$CommandExecutorCommand;
 	targetId: string;
 	secondaryIcon: Icon<"EXPAND_MORE">;
 };

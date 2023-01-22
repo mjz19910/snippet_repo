@@ -16,7 +16,7 @@ type GenericEngagementPanelSectionItem={
 	content: ClipSectionRenderer;
 	targetId: "engagement-panel-clip-create";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN";
-	onShowCommands: ChangeEngagementPanelVisibilityAction[];
+	onShowCommands: E$ChangeEngagementPanelVisibilityAction[];
 	loggingDirectives: A$LoggingDirectives;
 }|{
 	panelIdentifier: "engagement-panel-macro-markers-auto-chapters";
