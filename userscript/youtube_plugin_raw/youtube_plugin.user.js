@@ -5548,9 +5548,7 @@ case "${path}": {
 					} break;
 					case "transcript_target_id.param": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
-							case 3: break;
+							case 1: case 2: case 3: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5564,117 +5562,14 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "ypc_get_offers.params.f5": {
-						switch(ta) {
-							case 1: break;
-							case 3: break;
-							case 5: break;
-							case 9: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "ypc_get_offers.params.f1": {
-						switch(ta) {
-							case 1: break;
-							case 2: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
+					case "ypc_get_offers.params.f5": {switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
+					case "ypc_get_offers.params.f1": {switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
 					case "ypc_get_offers.params": {
-						switch(ta) {
-							case 1: break;
-							case 3: break;
-							case 5: break;
-							default: new_ns(); debugger; return;
-						}
+						switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
-					case "tracking.trackingParams.f6": {
-						switch(ta) {
-							case 12: break;
-							case 13: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[7]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[6].f1": {
-						switch(ta) {
-							case 4: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[6]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[5]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[4]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[3].f1": {
-						switch(ta) {
-							case 4: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[3]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[2]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1.f1[1]": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
+					case "tracking.trackingParams.f6": {switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
 					case "report.params.f28.f1.f1.f1.f1": {
 						switch(ta) {
 							case 4: break;
@@ -5683,15 +5578,8 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
+					case "report.params.f28.f1.f1":
 					case "report.params.f28.f1.f1.f1": {
-						switch(ta) {
-							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "report.params.f28.f1.f1": {
 						switch(ta) {
 							case 1: break;
 							default: new_ns(); debugger; return;
@@ -5701,8 +5589,7 @@ case "${path}": {
 					} return;
 					case "report.params.f28.f1": {
 						switch(ta) {
-							case 1: break;
-							case 3: break;
+							case 1: case 3: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5726,8 +5613,7 @@ case "${path}": {
 					} return;
 					case "tracking.trackingParams.f19": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
+							case 1: case 2: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
