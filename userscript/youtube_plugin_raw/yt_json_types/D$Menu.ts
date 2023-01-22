@@ -3,7 +3,8 @@ type D$Menu={
 	trackingParams: string;
 	topLevelButtons?: R$SegmentedLikeDislikeButton[];
 	accessibility?: A$Accessibility;
-	targetId?: string;
+	targetId?: D$Menu$targetId;
 	loggingDirectives?: A$LoggingDirectives;
 	flexibleItems?: R$MenuFlexibleItem[];
 };
+type D$Menu$targetId="browse-video-menu-button";

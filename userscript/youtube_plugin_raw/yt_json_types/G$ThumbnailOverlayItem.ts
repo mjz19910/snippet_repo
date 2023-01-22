@@ -3,4 +3,6 @@ type G$ThumbnailOverlayItem=
 	|R$ThumbnailOverlayHoverText
 	|R$ThumbnailOverlayNowPlaying
 	|R$ThumbnailOverlayTimeStatus
+	|R$ThumbnailOverlayToggleButton
 	;
+;

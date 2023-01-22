@@ -6567,6 +6567,7 @@ class ServiceMethods extends ServiceData {
 			case "search-page": return;
 			case "sponsorships-button": return;
 			case "watch-next-feed": return;
+			case "browse-video-menu-button": return;
 			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
@@ -10275,11 +10276,8 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.A$Accessibility);
 		this.tz(items,this.G$Menu$items$iterate);
-		this.t(targetId,a => {
-			a;
-			debugger;
-			// this.targetId(cf,a);
-		});
+		/** @type {D$Menu$targetId} */
+		this.t(targetId,a => this.targetId(cf,a));
 		this.t(loggingDirectives,this.A$LoggingDirectives);
 	}
 	/** @arg {G$Menu$items$iterate} x */
@@ -10422,15 +10420,10 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailOverlayItem(x) {
 		const cf="ThumbnailOverlayItem";
 		this.save_keys(`[${cf}]`,x);
-		if("thumbnailOverlayTimeStatusRenderer" in x) {
-			return this.ThumbnailOverlayTimeStatusRenderer(x);
-		} else if("thumbnailOverlayNowPlayingRenderer" in x) {
-			return this.ThumbnailOverlayNowPlayingRenderer(x);
-		} else if("thumbnailOverlayBottomPanelRenderer" in x) {
-			return this.ThumbnailOverlayBottomPanelRenderer(x);
-		} else if("thumbnailOverlayHoverTextRenderer" in x) {
-			return this.ThumbnailOverlayHoverTextRenderer(x);
-		}
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.ThumbnailOverlayTimeStatusRenderer(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.ThumbnailOverlayNowPlayingRenderer(x);
+		if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
 		debugger;
 	}
 	/** @arg {ThumbnailOverlayNowPlayingData} x */

@@ -1,4 +1,4 @@
-type ACTION_REMOVE_VIDEO_BY_VIDEO_ID={
+type ActionRemoveVideoByVideoId={
 	action: "ACTION_REMOVE_VIDEO_BY_VIDEO_ID";
 	removedVideoId: string;
 };

@@ -13,5 +13,6 @@ type YtTargetIdType=[
 	`shopping_panel_for_entry_point_${"5"|"22"}`,
 	"clip-info-button",
 	"sponsorships-button",
+	D$Menu$targetId,
 	GenericEngagementPanelSectionItem['targetId'],
 ][number];
