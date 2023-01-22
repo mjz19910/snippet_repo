@@ -7998,7 +7998,7 @@ class ServiceMethods extends ServiceData {
 	playlistId(x) {
 		this.parser.parse_playlist_id(x);
 	}
-	/** @public @arg {Extract<M$GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
+	/** @public @arg {Extract<G$WC$Metadata,{rootVe:any}>['rootVe']} x */
 	on_root_visual_element(x) {
 		this.ds.save_root_visual_element(x);
 		/** @private @type {`${typeof x}`} */
@@ -8016,7 +8016,7 @@ class ServiceMethods extends ServiceData {
 			case "83769": return;
 			case "96368": return;
 			default: {
-				/** @type {M$GeneratedWebCommandMetadata[]} */
+				/** @type {G$WC$Metadata[]} */
 				let x=[]; x;
 			}
 		}
@@ -8044,7 +8044,7 @@ class ServiceMethods extends ServiceData {
 	playerParams(root,path,x) {
 		this.parser.on_player_params(root,path,x);
 	}
-	/** @arg {Extract<M$GeneratedWebCommandMetadata,{rootVe:any}>['rootVe']} x */
+	/** @arg {Extract<G$WC$Metadata,{rootVe:any}>['rootVe']} x */
 	rootVe(x) {
 		this.on_root_visual_element(x);
 	}
@@ -8198,7 +8198,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion
 	//#region web_command_metadata
-	/** @arg {M$GeneratedWebCommandMetadata} x */
+	/** @arg {G$WC$Metadata} x */
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -8213,7 +8213,7 @@ class HandleTypes extends ServiceMethods {
 						return;
 					}
 					let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-					/** @arg {M$GeneratedWebCommandMetadata} x */
+					/** @arg {G$WC$Metadata} x */
 					let typedef_str=this.codegen_new_typedef(x,`G$${url_type_ex}`,true);
 					console.log(`
 					-- [GeneratedWebCommandMetadata] --\n\n${typedef_str}
@@ -8248,7 +8248,7 @@ class HandleTypes extends ServiceMethods {
 			let cx=x.rootVe;
 			switch(x.rootVe) {
 				default: {
-					/** @arg {M$GeneratedWebCommandMetadata} x */
+					/** @arg {G$WC$Metadata} x */
 					this.codegen_new_typedef(x,`G$VE${cx}`);
 					console.log(`\n\tG$VE${cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
@@ -8271,7 +8271,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {M$GeneratedWebCommandMetadata} x */
+	/** @arg {G$WC$Metadata} x */
 	GeneratedWebCommandMetadata(x) {
 		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;
@@ -8279,7 +8279,7 @@ class HandleTypes extends ServiceMethods {
 			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
 		}
 	}
-	/** @arg {M$GeneratedWebCommandMetadata} x */
+	/** @arg {G$WC$Metadata} x */
 	WebCommandMetadataRVE(x) {
 		if(!("rootVe" in x)) return;
 		this.rootVe(x.rootVe);
@@ -11141,7 +11141,7 @@ class HandleTypes extends ServiceMethods {
 		const {iconType,...y}=x; this.g(y); // ! #destructure
 		this.save_string("[IconType]",iconType);
 	}
-	/** @arg {M$CommandMetadata} x */
+	/** @arg {G$Metadata} x */
 	CommandMetadata(x) {
 		const cf="CommandMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -11285,7 +11285,7 @@ class HandleTypes extends ServiceMethods {
 			let param_map=this.make_param_map(res_e);
 			this.parser.parse_endpoint_param(root,path,new Map(param_map));
 		}
-		this.t(commandMetadata,this.WatchEndpointCommandMetadata);
+		this.t(commandMetadata,this.CM$VE3832$Metadata);
 		this.E$Watch(watchEndpoint);
 	}
 	/** @arg {E$Watch} x */
@@ -11500,7 +11500,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.G$VE3611(this.w(x));
 	}
-	/** @arg {G$VE3611} x */
+	/** @arg {G$VE3611$WC$Metadata} x */
 	G$VE3611(x) {
 		const {rootVe,webPageType,...y}=x; this.g(y);
 		if(rootVe!==3611) debugger;
@@ -11524,17 +11524,19 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {WatchEndpointCommandMetadata} x */
-	WatchEndpointCommandMetadata(x) {
-		const cf="WatchEndpointCommandMetadata";
-		this.save_keys(`[${cf}]`,x);
-		this.WebCommandMetadata(this.w(x));
-	}
 	/** @arg {CM$VE3832$Metadata} x */
-	VE3832_CommandMetadata(x) {
+	CM$VE3832$Metadata(x) {
 		const cf="VE3832_CommandMetadata";
 		this.save_keys(`[${cf}]`,x);
-		this.WebCommandMetadata(this.w(x));
+		this.G$VE3832$WC$Metadata(this.w(x));
+	}
+	/** @arg {G$VE3832$WC$Metadata} x */
+	G$VE3832$WC$Metadata(x) {
+		const cf="G$VE3832$WC$Metadata";
+		this.save_keys(`[${cf}]`,x);
+		const {rootVe,webPageType,...y}=x; this.g(y);
+		if(rootVe!==3832) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 	}
 	/** @arg {A$TwoColumnWatchNextResults} x */
 	TwoColumnWatchNextResults(x) {

@@ -1,0 +1,1 @@
+type G$WC$Metadata$SendPost={sendPost: true;};

@@ -1,1 +1,1 @@
-type CM$VE3832$Metadata={webCommandMetadata: G$VE3832;};
+type CM$VE3832$Metadata={webCommandMetadata: G$VE3832$WC$Metadata;};

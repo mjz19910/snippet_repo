@@ -1,5 +1,5 @@
 type E$YpcGetOffersEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: M$CommandMetadata;
+	commandMetadata: G$Metadata;
 	ypcGetOffersEndpoint: E$YpcGetOffers;
 };

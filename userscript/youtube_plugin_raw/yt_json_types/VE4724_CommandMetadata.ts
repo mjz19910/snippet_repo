@@ -1,4 +1,4 @@
 type VE4724_CommandMetadata={
 	// VE4724_WebCommandMetadata
-	webCommandMetadata: M$GeneratedWebCommandMetadata;
+	webCommandMetadata: G$WC$Metadata;
 };

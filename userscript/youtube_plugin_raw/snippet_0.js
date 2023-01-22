@@ -364,7 +364,7 @@ export class Snippet_0_tmp {
 		let r=x.join(s);
 		return as(r);
 	}
-	/** @arg {M$GeneratedWebCommandMetadata} x */
+	/** @arg {G$WC$Metadata} x */
 	GenericWebCommandMetadata(x) {
 		this.save_keys("[GenericWebCommandMetadata]",x);
 		if(!("apiUrl" in x)) return;
@@ -378,14 +378,14 @@ export class Snippet_0_tmp {
 					return;
 				}
 				let url_type_ex=this.join_string(split_string(url_type,"."),"$");
-				/** @arg {M$GeneratedWebCommandMetadata} x */
+				/** @arg {G$WC$Metadata} x */
 				this.codegen_new_typedef(x,`_gen_${url_type_ex}`);
 				debugger;
 			} break;
 			case "/youtubei/v1/playlist/create": return this.GeneratedWebCommandMetadata(x);
 		}
 	}
-	/** @arg {M$GeneratedWebCommandMetadata} x */
+	/** @arg {G$WC$Metadata} x */
 	GeneratedWebCommandMetadata(x) {
 		if("apiUrl" in x&&"sendPost" in x) {
 			const {sendPost,apiUrl}=x;

@@ -1,1 +1,0 @@
-type M_$SendPost={sendPost: true;};

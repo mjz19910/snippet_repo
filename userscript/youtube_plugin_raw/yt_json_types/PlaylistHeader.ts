@@ -18,7 +18,7 @@ type PlaylistEditorArgs={
 
 type PlaylistEditorEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: M$CommandMetadata;
+	commandMetadata: G$Metadata;
 	playlistEditorEndpoint: PlaylistEditorArgs;
 };
 type HeroPlaylistThumbnail={

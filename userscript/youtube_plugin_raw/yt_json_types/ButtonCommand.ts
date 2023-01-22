@@ -10,7 +10,7 @@ type ButtonCommand=
 ;
 type $CreateBackstagePostEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: M$CommandMetadata;
+	commandMetadata: G$Metadata;
 	createBackstagePostEndpoint: {
 		createBackstagePostParams: string;
 	};

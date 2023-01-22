@@ -1,5 +1,5 @@
 type E$SignalServiceEndpoint={
 	clickTrackingParams: string;
-	commandMetadata: M$CommandMetadata;
+	commandMetadata: G$Metadata;
 	signalServiceEndpoint: E$SignalService;
 };
