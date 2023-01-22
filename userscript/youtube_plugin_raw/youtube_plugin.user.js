@@ -7342,7 +7342,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MusicLibraryStatusUpdateCommand} x */
 	LikeAction(x) {
 		this.save_keys("[A$LikeAction]",x);
-		if("musicLibraryStatusUpdateCommand" in x) return this.MusicLibraryStatusUpdateCommand(x);
 		debugger;
 	}
 	/** @arg {E$LikeLike} x */
@@ -7441,7 +7440,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("WatchResponse",trackingParams);
 		this.PlayerOverlayRenderer(playerOverlays);
 		this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("WatchResponse",a));
-		this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
+		this.z(engagementPanels,_x=>{debugger;});
 		this.DesktopTopbarRenderer(topbar);
 		this.z(pageVisualEffects,this.CinematicContainerRenderer);
 		this.FrameworkUpdates(frameworkUpdates);
@@ -7668,12 +7667,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="VssLoggingContextData";
 		this.save_keys(`[${cf}]`,x);
 		this.primitive_of_string(this.w(x));
-	}
-	/** @private @arg {R$ThumbnailOverlayTimeStatus} x */
-	R$ThumbnailOverlayTimeStatus(x) {
-		const cf="R$ThumbnailOverlayTimeStatus";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayTimeStatus(this.w(x));
 	}
 	/** @private @arg {EndScreenPlaylistRenderer} x */
 	EndScreenPlaylistRenderer(x) {
@@ -8369,7 +8362,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
 		this.t(background,this.MusicThumbnailRenderer);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
-		this.t(continuationContents,this.ContinuationContents);
+		this.t(continuationContents,_x=>{debugger;});
 		this.t(alerts,a => this.Response_alerts(cf,a));
 	}
 	/** @arg {NonNullable<BrowseResponse['metadata']>} x */
@@ -8458,7 +8451,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(style,a => this.save_string("[Button.style]",a));
 		this.t(text,this.TextT);
 		this.t_cf(cf,trackingParams,this.trackingParams);
-		this.t(hint,this.R$Hint);
+		this.t(hint,_x=>{debugger;});
 		this.t(targetId,a => {
 			/** @type {D$Button$TargetId} */
 			switch(a) {
@@ -8469,322 +8462,63 @@ class HandleTypes extends ServiceMethods {
 			this.targetId(cf,a);
 		});
 	}
-	/** @arg {R$Hint} x */
-	R$Hint(x) {
-		const cf="HintRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {hintRenderer,...y}=x; this.g(y); // ! #destructure
-		this.D$Hint(hintRenderer);
-	}
-	/** @private @arg {D$Hint} x */
-	D$Hint(x) {
-		const cf="HintRendererData";
-		this.save_keys(`[${cf}]`,x);
-		const {hintId,dwellTimeMs,hintCap,trackingParams,...y}=x; this.g(y); // ! #destructure
-		if(hintId!=="sponsor-pre-purchase") debugger;
-		if(dwellTimeMs!=="60000") debugger;
-		this.HintCap(hintCap);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @private @arg {HintCap} x */
-	HintCap(x) {
-		const cf="HintCap";
-		this.save_keys(`[${cf}]`,x);
-		const {impressionCap,...y}=x; this.g(y);
-		if(impressionCap!=="1") debugger;
-	}
-	/** @arg {C$SectionList|MusicShelfContinuation} x */
-	ContinuationContents(x) {
-		const cf="ContinuationContents";
-		this.save_keys(`[${cf}]`,x);
-		if("sectionListContinuation" in x) {
-			return this.SectionListContinuation(x);
-		} else if("musicShelfContinuation" in x) {
-			return this.MusicShelfContinuation(x);
-		}
-		debugger;
-	}
-	/** @arg {G$SectionList} x */
-	SectionListData(x) {
-		const cf="SectionListData";
-		this.save_keys(`[${cf}]`,x);
-		if("targetId" in x) {
-			if(this.str_starts_with(x.targetId,"browse-feed")) {
-				let ss=split_string(x.targetId,"browse-feed");
-				if(ss.length!==2) {debugger; return;}
-				let sa=ss[1];
-				let ll=sa.slice(24);
-				if(this.str_starts_with(sa,"UC")&&ll==="featured") return;
-				console.log("target_id.ll",ll);
-				if(this.str_starts_with(sa,"UC")) {
-					let floc=sa.indexOf("featured");
-					if(floc<0) {debugger; return;}
-					let s1=sa.slice(0,floc);
-					let s2=sa.slice(floc);
-					if(ll!==s2) debugger;
-					console.log("[RichGrid.targetId]",x.targetId);
-					console.log("[target_id_parse]",s1,s2);
-					debugger;
-				}
-				return;
-			}
-			switch(x.targetId) {
-				default: debugger; return;
-				case "search-feed": return this.SearchFeedSectionListData(x);
-			}
-		}
-		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.NextContinuationData);
-		this.trackingParams(cf,trackingParams);
-		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
-		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
-	}
-	/** @arg {D$SearchFeedSectionList} x */
-	SearchFeedSectionListData(x) {
-		const cf="SearchFeedSectionListData";
-		this.save_keys(`[${cf}]`,x);
-		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.NextContinuationData);
-		this.trackingParams(cf,trackingParams);
-		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
-		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
-		this.t(targetId,a => this.targetId(cf,a));
-	}
-	/** @arg {D$NextContinuation} x */
-	NextContinuation(x) {
-		const cf="NextContinuation";
-		this.save_keys(`[${cf}]`,x);
-		this.clickTrackingParams("NextContinuation",x.clickTrackingParams);
-		this.primitive_of(x.continuation,"string");
-	}
-	/** @arg {$SectionListItem} x */
-	SectionListItem(x) {
-		const cf="SectionListItem";
-		this.save_keys(`[${cf}]`,x);
-		if("itemSectionRenderer" in x) {
-			return this.ItemSectionRenderer(x);
-		} else if("continuationItemRenderer" in x) {
-			this.ContinuationItemRenderer(x);
-		} else if("musicCarouselShelfRenderer" in x) {
-			this.MusicCarouselShelfRenderer(x);
-		} else if("musicShelfRenderer" in x) {
-			this.MusicShelfRenderer(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {C$SectionList} x */
-	SectionListContinuation(x) {
-		const cf="SectionListContinuation";
-		this.save_keys(`[${cf}]`,x);
-		this.SectionListData(x.sectionListContinuation);
-	}
-	/** @arg {A$NextContinuationData} x */
-	NextContinuationData(x) {
-		const cf="NextContinuationData";
-		this.save_keys(`[${cf}]`,x);
-		this.NextContinuation(x.nextContinuationData);
-	}
-	/** @arg {MusicCarouselShelfRenderer} x */
-	MusicCarouselShelfRenderer(x) {
-		const cf="MusicCarouselShelfRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MusicCarouselShelf(x.musicCarouselShelfRenderer);
-	}
-	/** @arg {MusicShelfRenderer} x */
-	MusicShelfRenderer(x) {
-		const cf="MusicShelfRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MusicShelf(x.musicShelfRenderer);
-	}
-	/** @arg {ReloadContinuationData} x */
-	ReloadContinuationData(x) {
-		const cf="ReloadContinuationData";
-		this.save_keys(`[${cf}]`,x);
-		this.ReloadContinuationDataInner(x.reloadContinuationData);
-	}
-	/** @arg {MusicResponsiveListItemRenderer} x */
-	MusicResponsiveListItemRenderer(x) {
-		const cf="MusicResponsiveListItemRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MusicResponsiveListItem(x.musicResponsiveListItemRenderer);
-	}
-	/** @arg {R$ContinuationItemRenderer} x */
-	ContinuationItemRenderer(x) {
-		const cf="ContinuationItemRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ContinuationItemData(x.continuationItemRenderer);
-	}
-	/** @arg {GhostGridRenderer} x */
-	GhostGridRenderer(x) {
-		const cf="GhostGridRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.GhostGrid(x.ghostGridRenderer);
-	}
-	/** @arg {VideoViewCountRenderer} x */
-	VideoViewCountRenderer(x) {
-		const cf="VideoViewCountRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.VideoViewCountData(x.videoViewCountRenderer);
-	}
-	/** @arg {TimedContinuationData} x */
-	TimedContinuationData(x) {
-		const cf="TimedContinuationData";
-		this.save_keys(`[${cf}]`,x);
-		this.TimedContinuationDataInner(x.timedContinuationData);
-	}
-	/** @arg {TwoColumnSearchResultsRenderer} x */
-	TwoColumnSearchResultsRenderer(x) {
-		const cf="TwoColumnSearchResultsRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TwoColumnSearchResults(x.twoColumnSearchResultsRenderer);
-	}
-	/** @arg {TwoColumnSearchResults} x */
-	TwoColumnSearchResults(x) {
-		const cf="TwoColumnSearchResults";
-		this.save_keys(`[${cf}]`,x);
-		this.SectionListRenderer(x.primaryContents);
-	}
-	/** @arg {R$SectionList} x */
-	SectionListRenderer(x) {
-		const cf="SectionListRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.SectionListData(x.sectionListRenderer);
-	}
-	/** @arg {TabbedSearchResultsRenderer} x */
-	TabbedSearchResultsRenderer(x) {
-		const cf="TabbedSearchResultsRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TabbedSearchResults(x.tabbedSearchResultsRenderer);
-	}
-	/** @arg {SearchResultsTabRenderer} x */
-	SearchResultsTabRenderer(x) {
-		const cf="SearchResultsTabRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.SearchResultsTab(x.tabRenderer);
-	}
-	/** @arg {WatchNextTabbedResults} x */
-	WatchNextTabbedResults(x) {
-		const cf="WatchNextTabbedResults";
-		this.save_keys(`[${cf}]`,x);
-		this.z(x.tabs,this.TabRenderer);
-	}
-	/** @arg {LiveChatViewerEngagementMessageRenderer} x */
-	LiveChatViewerEngagementMessageRenderer(x) {
-		const cf="LiveChatViewerEngagementMessageRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.LiveChatViewerEngagementMessage(x.liveChatViewerEngagementMessageRenderer);
-	}
-	/** @arg {InvalidationContinuationData} x */
-	InvalidationContinuationData(x) {
-		const cf="InvalidationContinuationData";
-		this.save_keys(`[${cf}]`,x);
-		this.InvalidationContinuationDataInner(x.invalidationContinuationData);
-	}
-	/** @arg {SingleColumnMusicWatchNextResultsRenderer} x */
-	SingleColumnMusicWatchNextResultsRenderer(x) {
-		const cf="SingleColumnMusicWatchNextResultsRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TabbedRenderer(x.singleColumnMusicWatchNextResultsRenderer);
-	}
-	/** @arg {TabbedRenderer} x */
-	TabbedRenderer(x) {
-		const cf="TabbedRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.WatchNextTabbedResultsRenderer(x.tabbedRenderer);
-	}
-	/** @arg {WatchNextTabbedResultsRenderer} x */
-	WatchNextTabbedResultsRenderer(x) {
-		const cf="WatchNextTabbedResultsRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.WatchNextTabbedResults(x.watchNextTabbedResultsRenderer);
-	}
-	/** @arg {R$Tab} x */
-	TabRenderer(x) {
-		const cf="TabRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TabData(x.tabRenderer);
-	}
-	/** @arg {MusicQueueRenderer} x */
-	MusicQueueRenderer(x) {
-		const cf="MusicQueueRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MusicQueue(x.musicQueueRenderer);
-	}
-	/** @arg {PlaylistPanelRenderer} x */
-	PlaylistPanelRenderer(x) {
-		const cf="PlaylistPanelRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.PlaylistPanel(x.playlistPanelRenderer);
-	}
-	/** @arg {NextRadioContinuationData} x */
-	NextRadioContinuationData(x) {
-		const cf="NextRadioContinuationData";
-		this.save_keys(`[${cf}]`,x);
-		this.NextRadioContinuationDataInner(x.nextRadioContinuationData);
-	}
 	/** @arg {R$ThumbnailOverlayResumePlayback} x */
-	ThumbnailOverlayResumePlaybackRenderer(x) {
+	R$ThumbnailOverlayResumePlaybackRenderer(x) {
 		const cf="ThumbnailOverlayResumePlaybackRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayResumePlayback(x.thumbnailOverlayResumePlaybackRenderer);
 	}
-	/** @arg {RichGridRenderer} x */
-	RichGridRenderer(x) {
-		const cf="RichGridRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.RichGrid(x.richGridRenderer);
-	}
-	/** @arg {VideoMastheadAdV3Renderer} x */
-	VideoMastheadAdV3Renderer(x) {
-		const cf="VideoMastheadAdV3Renderer";
-		this.save_keys(`[${cf}]`,x);
-		this.VideoMastheadAdV3(x.videoMastheadAdV3Renderer);
-	}
-	/** @arg {R$EngagementPanelSectionList} x */
-	EngagementPanelSectionListRenderer(x) {
-		const cf="EngagementPanelSectionListRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.EngagementPanelSectionList(x.engagementPanelSectionListRenderer);
-	}
-	/** @arg {CommentsHeaderRenderer} x */
-	CommentsHeaderRenderer(x) {
-		const cf="CommentsHeaderRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.CommentsHeaderData(x.commentsHeaderRenderer);
-	}
-	/** @arg {R$LikeButton} x */
-	LikeButtonRenderer(x) {
-		const cf="LikeButtonRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.LikeButton(x.likeButtonRenderer);
-	}
-	/** @arg {MusicLibraryStatusUpdateCommand} x */
-	MusicLibraryStatusUpdateCommand(x) {
-		const cf="MusicLibraryStatusUpdateCommand";
-		this.save_keys(`[${cf}]`,x);
-		this.MusicLibraryStatusUpdate(x.musicLibraryStatusUpdateCommand);
-	}
 	/** @arg {R$ThumbnailOverlayHoverText} x */
-	ThumbnailOverlayHoverTextRenderer(x) {
+	R$ThumbnailOverlayHoverTextRenderer(x) {
 		const cf="ThumbnailOverlayHoverTextRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayHoverTextData(x.thumbnailOverlayHoverTextRenderer);
 	}
 	/** @arg {R$ThumbnailOverlayBottomPanel} x */
-	ThumbnailOverlayBottomPanelRenderer(x) {
+	R$ThumbnailOverlayBottomPanelRenderer(x) {
 		const cf="ThumbnailOverlayBottomPanelRenderer";
 		this.save_keys(`[${cf}]`,x);
 		if(!x.thumbnailOverlayBottomPanelRenderer) debugger;
 		this.ThumbnailOverlayBottomPanelData(x.thumbnailOverlayBottomPanelRenderer);
 	}
 	/** @arg {R$ThumbnailOverlayNowPlaying} x */
-	ThumbnailOverlayNowPlayingRenderer(x) {
+	R$ThumbnailOverlayNowPlaying(x) {
 		const cf="ThumbnailOverlayNowPlayingRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.ThumbnailOverlayNowPlayingData(x.thumbnailOverlayNowPlayingRenderer);
+	}
+	/** @private @arg {R$ThumbnailOverlayTimeStatus} x */
+	R$ThumbnailOverlayTimeStatus(x) {
+		const cf="R$ThumbnailOverlayTimeStatus";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayTimeStatus(this.w(x));
+	}
+	/** @arg {G$ThumbnailOverlayItem} x */
+	G$ThumbnailOverlayItem(x) {
+		const cf="ThumbnailOverlayItem";
+		this.save_keys(`[${cf}]`,x);
+		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R$ThumbnailOverlayTimeStatus(x);
+		if("thumbnailOverlayNowPlayingRenderer" in x) return this.R$ThumbnailOverlayNowPlaying(x);
+		if("thumbnailOverlayBottomPanelRenderer" in x) return this.R$ThumbnailOverlayBottomPanelRenderer(x);
+		if("thumbnailOverlayHoverTextRenderer" in x) return this.R$ThumbnailOverlayHoverTextRenderer(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R$ThumbnailOverlayToggleButton(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R$ThumbnailOverlayLoadingPreview(x);
+		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R$ThumbnailOverlayResumePlaybackRenderer(x);
+		debugger;
+	}
+	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
+	R$ThumbnailOverlayLoadingPreview(x) {
+		const cf="R$ThumbnailOverlayLoadingPreview";
+		this.save_keys(`[${cf}]`,x);
+		const cf_="D$ThumbnailOverlayLoadingPreview";
+		this.save_keys(`[${cf_}]`,this.w(x));
+		this.D$TextWithRuns(this.w(this.w(x)));
+	}
+	/** @arg {R$ThumbnailOverlayToggleButton} x */
+	R$ThumbnailOverlayToggleButton(x) {
+		const cf="R$ThumbnailOverlayNowPlayingData";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayToggleButton(this.w(x));
 	}
 	/** @arg {R$WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfig(x) {
@@ -8852,7 +8586,7 @@ class HandleTypes extends ServiceMethods {
 	ResultRenderer(x) {
 		const cf="ResultRenderer";
 		this.save_keys(`[${cf}]`,x);
-		if("tabRenderer" in x) return this.TabRenderer(x);
+		if("tabRenderer" in x) return ((_x)=>{debugger;})(x);
 		if("expandableTabRenderer" in x) return this.ExpandableTabRenderer(x);
 		debugger;
 	}
@@ -8884,12 +8618,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ContentsArrayTemplate(x,a => {
 			if("musicResponsiveListItemRenderer" in a) {
-				this.MusicResponsiveListItemRenderer(a);
+				((_x)=>{debugger;})(a);
 			} else debugger;
 		});
 		this.D$TextWithRuns(x.title);
 		this.trackingParams("MusicShelf",x.trackingParams);
-		this.z(x.continuations,this.ReloadContinuationData);
+		this.z(x.continuations,((_x)=>{debugger;}));
 	}
 	/** @arg {ReloadContinuationDataInner} x */
 	ReloadContinuationDataInner(x) {
@@ -8908,7 +8642,7 @@ class HandleTypes extends ServiceMethods {
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
 		this.ContinuationEndpointRoot(continuationEndpoint);
 		this.t(button,this.R$Button);
-		this.t(ghostCards,this.GhostGridRenderer);
+		this.t(ghostCards,((_x)=>{debugger;}));
 	}
 	/** @arg {ContinuationEndpointRoot} x */
 	ContinuationEndpointRoot(x) {
@@ -9424,7 +9158,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="UpdatedMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y); // ! #destructure
-		this.TimedContinuationData(continuation);
+		((_x)=>{debugger;})(continuation);
 		this.z(actions,a => {
 			if("updateViewershipAction" in a) {
 				return this.UpdateViewershipAction(a);
@@ -9480,7 +9214,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateViewershipAction;
 		this.save_keys(`[UpdateViewershipActionData]`,x1);
-		this.VideoViewCountRenderer(x1.viewCount);
+		((_x)=>{debugger;})(x1.viewCount);
 	}
 	/** @arg {VideoViewCountData} x */
 	VideoViewCountData(x) {
@@ -9506,8 +9240,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) return this.SearchResponse(x);
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y); // ! #destructure
-		this.t(contents,this.TabbedSearchResultsRenderer);
-		this.t(continuationContents,this.ContinuationContents);
+		this.t(contents,((_x)=>{debugger;}));
+		this.t(continuationContents,((_x)=>{debugger;}));
 		this.trackingParams(cf,trackingParams);
 		this.t(header,this.MusicHeaderRenderer);
 	}
@@ -9517,7 +9251,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(estimatedResults);
-		this.TwoColumnSearchResultsRenderer(contents);
+		((_x)=>{debugger;})(contents);
 		this.trackingParams(cf,trackingParams);
 		this.DesktopTopbarRenderer(topbar);
 		this.z(refinements,this.primitive_of_string);
@@ -9536,13 +9270,6 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,adsControlFlowOpportunityReceivedCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.AdsControlFlowOpportunityReceivedCommandData(adsControlFlowOpportunityReceivedCommand);
-	}
-	/** @arg {TabbedSearchResults} x */
-	TabbedSearchResults(x) {
-		const cf="TabbedSearchResults";
-		this.save_keys(`[${cf}]`,x);
-		const {tabs: a,...y}=x; this.g(y); // ! #destructure
-		this.z(a,this.SearchResultsTabRenderer);
 	}
 	/** @arg {GetSearchSuggestionsResponse} x */
 	GetSearchSuggestions(x) {
@@ -9612,9 +9339,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="LiveChatContinuationData";
 		this.save_keys(`[${cf}]`,x);
 		const {continuations,actions,actionPanel,itemList,header,ticker,trackingParams,participantsList,popoutMessage,emojis,clientMessages,viewerName,...y}=x; this.g(y); // ! #destructure
-		this.z(continuations,a => {
-			this.LiveChatContinuationItem(a);
-		});
+		this.z(continuations,((_x)=>{debugger;}));
 		this.tz(actions,(a => {
 			if("replayChatItemAction" in a) {
 				return this.ReplayChatItemAction(a);
@@ -9662,21 +9387,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="AddChatItemActionData";
 		this.save_keys(`[${cf}]`,x);
 		const {item,clientId,...y}=x; this.g(y); // ! #destructure
-		this.LiveChatItem(item);
+		((_x)=>{debugger;})(item);
 		this.t(clientId,this.primitive_of_string);
-	}
-	/** @arg {LiveChatItem} x */
-	LiveChatItem(x) {
-		const cf="LiveChatItem";
-		this.save_keys(`[${cf}]`,x);
-		if("liveChatViewerEngagementMessageRenderer" in x) {
-			return this.LiveChatViewerEngagementMessageRenderer(x);
-		} else if("liveChatTextMessageRenderer" in x) {
-			return this.LiveChatTextMessageRenderer(x);
-		} else if("liveChatPlaceholderItemRenderer" in x) {
-			return this.LiveChatPlaceholderItemRenderer(x);
-		}
-		debugger;
 	}
 	/** @arg {LiveChatViewerEngagementMessage} x */
 	LiveChatViewerEngagementMessage(x) {
@@ -9689,17 +9401,6 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(message);
 		this.R$Button(actionButton);
 		this.trackingParams(cf,trackingParams);
-	}
-	/** @arg {LiveChatContinuationItem} x */
-	LiveChatContinuationItem(x) {
-		const cf="LiveChatContinuationItem";
-		this.save_keys(`[${cf}]`,x);
-		if("invalidationContinuationData" in x) {
-			return this.InvalidationContinuationData(x);
-		}
-		let k=this.get_keys_of(x);
-		console.log("[%s]",k[0]);
-		debugger;
 	}
 	/** @arg {InvalidationContinuationDataInner} x */
 	InvalidationContinuationDataInner(x) {
@@ -9745,102 +9446,23 @@ class HandleTypes extends ServiceMethods {
 		const cf="NextResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=x;
-		this.t(contents,this.NextResponseContents);
+		this.t(contents,((_x)=>{debugger;}));
 		this.t(currentVideoEndpoint,this.E$WatchEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.t(playerOverlays,this.PlayerOverlayRenderer);
 		this.tz(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("NextResponse",a));
-		this.tz(engagementPanels,(this.EngagementPanelSectionListRenderer));
+		this.tz(engagementPanels,((_x)=>{debugger;}));
 		const {...y1}=y; this.g(y1);
 		this.t(videoReporting,this.ReportFormModalRenderer);
 		this.t(queueContextParams,a => this.params("Next","next.queue_context_params",a));
 		this.t(continuationContents,this.PlaylistPanelContinuation);
-	}
-	/** @arg {NextResponseContents} x */
-	NextResponseContents(x) {
-		const cf="NextResponseContents";
-		this.save_keys(`[${cf}]`,x);
-		if("twoColumnWatchNextResults" in x) {
-			return this.A$TwoColumnWatchNextResults(x);
-		} else if("singleColumnMusicWatchNextResultsRenderer" in x) {
-			return this.SingleColumnMusicWatchNextResultsRenderer(x);
-		}
-		debugger;
-	}
-	/** @arg {R$SectionList} x */
-	TabData_section(x) {
-		if("sectionListRenderer" in x) {
-			this.SectionListRenderer(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {RichGridRenderer} x */
-	Tab_grid(x) {
-		if("richGridRenderer" in x) {
-			this.RichGridRenderer(x);
-		} else {
-			debugger;
-		}
-	}
-	/** @arg {TabData} x */
-	TabData(x) {
-		const cf="TabData";
-		this.save_keys(`[${cf}]`,x);
-		if("tabIdentifier" in x) {
-			switch(x.tabIdentifier) {
-				case "FEsubscriptions": {
-					const {selected,content,tabIdentifier: {},endpoint,accessibility,trackingParams,...y}=x; this.g(y); // ! #destructure
-					if(selected!==true) debugger;
-					this.SectionListRenderer(content);
-					this.trackingParams(cf,trackingParams);
-					this.E$BrowseEndpoint(endpoint);
-					this.A$Accessibility(accessibility);
-				} return;
-				case "FEwhat_to_watch": {
-					const {selected,content,tabIdentifier: {},trackingParams,...y}=x; this.g(y); // ! #destructure
-					if(selected!==true) debugger;
-					this.Tab_grid(content);
-					this.trackingParams(cf,trackingParams);
-				} return;
-				default:
-			}
-			console.log("[new.tab.tab_id]",(/**@arg {{tabIdentifier:string}} e*/e => e)(x).tabIdentifier,this.get_keys_of(x));
-			return;
-		}
-		if("endpoint" in x) {
-			const {endpoint,title,selected,content,trackingParams,...y}=x; this.g(y); // ! #destructure
-			this.E$BrowseEndpoint(endpoint);
-			this.primitive_of_string(title);
-			if(selected!==void 0&&selected!==true) debugger;
-			this.t(content,this.TabData_section);
-			this.trackingParams(cf,trackingParams);
-			return;
-		}
-		const {selected,content,trackingParams,...y}=x; this.g(y); // ! #destructure
-		if(selected!==void 0&&selected!==true) debugger;
-		this.TabData_section(content);
-		this.trackingParams(cf,trackingParams);
-	}
-	/** @arg {TabDataContent} x */
-	TabDataContent(x) {
-		const cf="TabDataContent";
-		this.save_keys(`[${cf}]`,x);
-		if("sectionListRenderer" in x) {
-			return this.SectionListRenderer(x);
-		} else if("richGridRenderer" in x) {
-			return this.RichGridRenderer(x);
-		} else if("musicQueueRenderer" in x) {
-			return this.MusicQueueRenderer(x);
-		}
-		debugger;
 	}
 	/** @arg {MusicQueue} x */
 	MusicQueue(x) {
 		const cf="MusicQueue";
 		this.save_keys(`[${cf}]`,x);
 		const {content,hack,...y}=x; this.g(y); // ! #destructure
-		this.t(content,this.PlaylistPanelRenderer);
+		this.t(content,((_x)=>{debugger;}));
 		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {PlaylistPanel} x */
@@ -9856,7 +9478,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ownerName,this.D$TextWithRuns);
 		this.primitive_of(isInfinite,"boolean");
 		const {continuations,shortBylineText,longBylineText,...y3}=y2;
-		this.tz(continuations,(this.NextRadioContinuationData));
+		this.tz(continuations,((_x)=>{debugger;}));
 		this.D$TextWithRuns(shortBylineText);
 		this.t(longBylineText,this.D$TextWithRuns);
 		const {trackingParams,titleText,...y4}=y3;
@@ -9903,14 +9525,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.R$Menu(menu);
 		this.primitive_of_string(playlistSetVideoId);
-		this.tz(thumbnailOverlays,this.PlaylistPanel_thumbnailOverlay);
-	}
-	/** @arg {tz<PlaylistPanelVideo['thumbnailOverlays']>} x */
-	PlaylistPanel_thumbnailOverlay(x) {
-		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R$ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.ThumbnailOverlayResumePlaybackRenderer(x);
-		if("thumbnailOverlayNowPlayingRenderer" in x) return;
-		debugger;
+		this.tz(thumbnailOverlays,this.G$ThumbnailOverlayItem);
 	}
 	/** @arg {RichGrid} x */
 	RichGrid(x) {
@@ -9931,7 +9546,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {contents,masthead,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.RendererContentItem);
-		this.t(masthead,this.VideoMastheadAdV3Renderer);
+		this.t(masthead,((_x)=>{debugger;}));
 	}
 	/** @arg {ReflowOptions} x */
 	ReflowOptions(x) {
@@ -9973,7 +9588,7 @@ class HandleTypes extends ServiceMethods {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x;
 					if(panelIdentifier!=="comment-item-section") debugger;
 					this.EngagementPanelTitleHeaderRenderer(header);
-					this.SectionListRenderer(content);
+					((_x)=>{debugger;})(content);
 					if(targetId!=="engagement-panel-comments-section") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.A$LoggingDirectives(loggingDirectives);
@@ -9996,7 +9611,7 @@ class HandleTypes extends ServiceMethods {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
 					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 					this.EngagementPanelTitleHeaderRenderer(header);
-					this.ContinuationItemRenderer(content);
+					((_x)=>{debugger;})(content);
 					if(targetId!=="engagement-panel-searchable-transcript") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.A$LoggingDirectives(loggingDirectives);
@@ -10021,7 +9636,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case 139722: {
 					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y); // ! #destructure
-					this.SectionListRenderer(content);
+					((_x)=>{debugger;})(content);
 					this.t(header,this.EngagementPanelTitleHeaderRenderer);
 					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -10106,7 +9721,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("clipSectionRenderer" in x) {
 			return this.ClipSectionRenderer(x);
 		} else if("continuationItemRenderer" in x) {
-			return this.ContinuationItemRenderer(x);
+			return ((_x)=>{debugger;})(x);
 		} else if("sectionListRenderer" in x) {
 			return this.SectionListRendererTemplate(x);
 		} else if("structuredDescriptionContentRenderer" in x) {
@@ -10190,7 +9805,7 @@ class HandleTypes extends ServiceMethods {
 				if(targetId!=="comments-section") debugger;
 				if(continuationItems.length!==1) debugger;
 				const [item]=continuationItems;
-				this.CommentsHeaderRenderer(item);
+				((_x)=>{debugger;})(item);
 			} break;
 			default: debugger; break;
 		};
@@ -10247,7 +9862,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowserMediaSessionRoot";
 		this.save_keys(`[${cf}]`,x);
 		const {actions,browserMediaSession,...y}=x; this.g(y); // ! #destructure
-		this.z(actions,this.LikeButtonRenderer);
+		this.z(actions,((_x)=>{debugger;}));
 		this.R$BrowserMediaSession(browserMediaSession);
 	}
 	/** @arg {D$LikeButton} x */
@@ -10314,7 +9929,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$Button(nextButton);
 		this.trackingParams("PlayerOverlayAutoplay",trackingParams);
 		this.R$Button(closeButton);
-		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
+		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
 		if(preferImmediateRedirect!==false) debugger;
 		this.videoId(videoId);
 		this.D$SimpleText(publishedTimeText);
@@ -10475,32 +10090,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @arg {G$ThumbnailOverlayItem} x */
-	ThumbnailOverlayItem(x) {
-		const cf="ThumbnailOverlayItem";
-		this.save_keys(`[${cf}]`,x);
-		if("thumbnailOverlayTimeStatusRenderer" in x) return this.R$ThumbnailOverlayTimeStatus(x);
-		if("thumbnailOverlayNowPlayingRenderer" in x) return this.ThumbnailOverlayNowPlayingRenderer(x);
-		if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
-		if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
-		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R$ThumbnailOverlayToggleButton(x);
-		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R$ThumbnailOverlayLoadingPreview(x);
-		debugger;
-	}
-	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
-	R$ThumbnailOverlayLoadingPreview(x) {
-		const cf="R$ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf}]`,x);
-		const cf_="D$ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf_}]`,this.w(x));
-		this.D$TextWithRuns(this.w(this.w(x)));
-	}
-	/** @arg {R$ThumbnailOverlayToggleButton} x */
-	R$ThumbnailOverlayToggleButton(x) {
-		const cf="R$ThumbnailOverlayNowPlayingData";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayToggleButton(this.w(x));
-	}
 	/** @arg {D$ThumbnailOverlayToggleButton} x */
 	D$ThumbnailOverlayToggleButton(x) {
 		const cf="D$ThumbnailOverlayNowPlayingData";
@@ -10594,7 +10183,7 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(videoId);
 		this.D$Thumbnail(thumbnail);
 		this.D$SimpleText(title);
-		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
+		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
 		this.D$TextWithRuns(shortBylineText);
 		this.t(lengthText,this.D$SimpleText);
 		this.t(lengthInSeconds,a => this.primitive_of(a,"number"));
@@ -10962,11 +10551,7 @@ class HandleTypes extends ServiceMethods {
 	EngagementPanelItem(x) {
 		const cf="EngagementPanelItem";
 		this.save_keys(`[${cf}]`,x);
-		if("engagementPanelSectionListRenderer" in x) {
-			return this.EngagementPanelSectionListRenderer(x);
-		} else {
-			debugger;
-		}
+		debugger;
 	}
 	/** @private @arg {AccountSetSetting} x */
 	SetSettingResponse(x) {
@@ -11313,9 +10898,7 @@ class HandleTypes extends ServiceMethods {
 	ItemSectionItem(x) {
 		const cf="ItemSectionItem";
 		this.save_keys(`[${cf}]`,x);
-		if("continuationItemRenderer" in x) {
-			this.ContinuationItemRenderer(x);
-		}
+		debugger;
 	}
 	/** @arg {MusicResponsiveListItem} x */
 	MusicResponsiveListItem(x) {
@@ -11419,7 +11002,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(endpoint,this.E$SearchEndpoint);
 		this.primitive_of_string(title);
 		if(selected!==void 0) this.primitive_of(selected,"boolean");
-		this.SectionListRenderer(content);
+		((_x)=>{debugger;})(content);
 		console.log("[tabIdentifier]",tabIdentifier);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -11484,7 +11067,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RendererContentItem";
 		this.save_keys(`[${cf}]`,x);
 		if("richItemRenderer" in x) return this.RichItemRenderer(x);
-		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+		if("continuationItemRenderer" in x) return ((_x)=>{debugger;})(x);
 		if("richSectionRenderer" in x) return this.R$RichSection(x);
 		debugger;
 	}
@@ -12045,7 +11628,7 @@ class HandleTypes extends ServiceMethods {
 		this.DesktopTopbarRenderer(desktopTopbar);
 		if(!engagementPanels) debugger;
 		else {
-			this.z(engagementPanels,this.EngagementPanelSectionListRenderer);
+			this.z(engagementPanels,((_x)=>{debugger;}));
 		}
 	}
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerNavigationModel:any}>} x */
@@ -12107,7 +11690,7 @@ class HandleTypes extends ServiceMethods {
 	WatchNextItem(x) {
 		const cf="WatchNextItem";
 		this.save_keys(`[${cf}]`,x);
-		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
+		if("continuationItemRenderer" in x) return ((_x)=>{debugger;})(x);
 		if("compactVideoRenderer" in x) return this.R$CompactVideoRenderer(x);
 		debugger;
 	}
@@ -12549,7 +12132,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(selected,"boolean");
 		this.t(serviceEndpoint,this.ContinuationCommand);
 		this.t(accessibility,this.A$Accessibility);
-		this.t(continuation,this.ReloadContinuationData);
+		this.t(continuation,((_x)=>{debugger;}));
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {ChannelResponse} x */
@@ -12631,7 +12214,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlayerOverlayWithSupportedRenderers";
 		this.save_keys(`[${cf}]`,x);
 		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y); // ! #destructure
-		this.LikeButtonRenderer(likeButton);
+		((_x)=>{debugger;})(likeButton);
 		this.ReelPlayerHeaderRenderer(reelPlayerHeaderSupportedRenderers);
 		this.R$Menu(menu);
 		this.R$Button(nextItemButton);
@@ -12792,7 +12375,7 @@ class HandleTypes extends ServiceMethods {
 		const {title,viewCount,videoActions,trackingParams,superTitleLink,dateText,relativeDateText,badges,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(title);
 		this.t(superTitleLink,this.D$TextWithRuns);
-		this.VideoViewCountRenderer(viewCount);
+		((_x)=>{debugger;})(viewCount);
 		this.R$Menu(videoActions);
 		this.trackingParams(cf,trackingParams);
 		this.D$SimpleText(dateText);
@@ -12875,7 +12458,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(videoId);
 		this.D$Thumbnail(thumbnail);
 		this.g(title);
-		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
+		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
 		this.D$TextWithRuns(lengthText);
 		this.D$TextWithRuns(longBylineText);
 		this.D$TextWithRuns(publishedTimeText);
@@ -12945,11 +12528,17 @@ class HandleTypes extends ServiceMethods {
 		this.t(expandedText,this.primitive_of_string);
 		this.primitive_of_string(title);
 		this.primitive_of(selected,"boolean");
-		this.t(content,this.SectionListRenderer);
+		this.t(content,this.R$SectionList);
+	}
+	/** @arg {R$SectionList} x */
+	R$SectionList(x) {
+		const cf="R$SectionList";
+		this.save_keys(`[${cf}]`,x);
 	}
 	/** @template {SubscribeButton} T @arg {T} x */
 	SubscribeButton$Omit(x) {
 		const cf="SubscribeButton";
+		this.save_keys(`[${cf}]`,x);
 		const {buttonText,subscribed,enabled,type,channelId,showPreferences,subscribedButtonText,unsubscribedButtonText,trackingParams,unsubscribeButtonText,serviceEndpoints,subscribeAccessibility,unsubscribeAccessibility,...y}=x;
 		this.primitive_of(subscribed,"boolean");
 		this.primitive_of(enabled,"boolean");
@@ -13421,7 +13010,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(shortViewCountText);
 		this.R$Menu(menu);
 		this.R$ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
+		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
 		this.R$MovingThumbnail(richThumbnail);
 		this.E$WatchEndpoint(inlinePlaybackEndpoint);
 		this.D$Video$Owner(owner);
@@ -13453,11 +13042,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(thumbnailText);
 		this.TextT(longBylineText);
 		this.R$Menu(menu);
-		this.z(thumbnailOverlays,x=>{
-			if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
-			if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
-			debugger;
-		});
+		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
 		this.TextT(videoCountShortText);
 	}
 	/** @private @arg {R$ChildVideo} x */
