@@ -5382,7 +5382,7 @@ class ParserService extends BaseService {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
 			case "AdServingDataEntry": {
 				const idx=2;
-				if(path_parts.length===1) {switch(tv) {default: debugger; return;}}
+				if(path_parts.length===1) switch(tv) {default: debugger; return;}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
 					case "f4": u(idx); debugger; break;
