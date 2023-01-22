@@ -1,7 +1,7 @@
 type E$ButtonCommand=
 	|E$ChangeEngagementPanelVisibilityAction
 	|E$Continuation
-	|A$OpenPopup
+	|T$OpenPopup<{}>
 	|E$SignalServiceEndpoint
 	|E$CreateBackstagePostEndpoint
 	|E$UrlEndpoint

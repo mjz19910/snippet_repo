@@ -1,1 +1,0 @@
-type A$OpenPopup=T$OpenPopup<{}>;

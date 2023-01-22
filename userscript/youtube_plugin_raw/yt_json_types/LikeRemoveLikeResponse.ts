@@ -1,4 +1,4 @@
 type LikeRemoveLikeResponse={
 	responseContext: RC$ResponseContext;
-	actions?: (A$OpenPopup|RemoveFromGuideSectionAction)[]
+	actions?: (T$OpenPopup<{}>|RemoveFromGuideSectionAction)[]
 };

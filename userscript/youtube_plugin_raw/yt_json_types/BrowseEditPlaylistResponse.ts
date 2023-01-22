@@ -1,7 +1,7 @@
 type BrowseEditPlaylistResponse={
 	responseContext: RC$ResponseContext;
 	status: "STATUS_SUCCEEDED";
-	actions: (RefreshPlaylistCommand|A$OpenPopup)[];
+	actions: (RefreshPlaylistCommand|T$OpenPopup<{}>)[];
 	playlistEditResults: {}[];
 	trackingParams: string;
 };
