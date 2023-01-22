@@ -5198,9 +5198,7 @@ class ParserService extends BaseService {
 			gen_next_part(idx);
 		};
 		/** @private @arg {number} idx */
-		let u=idx => {
-			this.grouped(path_parts.join("$"),() => gd(idx));
-		};
+		let u=idx => this.grouped(path_parts.join("$"),() => gd(idx));
 		/** @private @arg {number} idx */
 		let gen_next_part=(idx) => {
 			if(idx>path_parts.length) return;
