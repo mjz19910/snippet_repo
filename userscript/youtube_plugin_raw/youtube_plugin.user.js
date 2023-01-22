@@ -5681,7 +5681,7 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							case "f16": case "f1": case "f2": case "f3": case "f9": case "f10": case "f11": case "f19": case "f6": case "f7":
+							case "f16": case "f1": case "f2": case "f3": case "f8": case "f9": case "f10": case "f11": case "f19": case "f6": case "f7":
 							// [tracking.trackingParams.f4]
 							case "f4": {
 								const idx=4;
