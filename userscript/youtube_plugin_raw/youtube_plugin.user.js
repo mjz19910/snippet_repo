@@ -8560,6 +8560,7 @@ class HandleTypes extends ServiceMethods {
 	PdgBuyFlowHeaderRenderer(x) {
 		const cf="PdgBuyFlowHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
+		this.PdgBuyFlowHeader(this.w(x));
 	}
 	/** @arg {R$NotificationAction} x */
 	R$NotificationAction(x) {
