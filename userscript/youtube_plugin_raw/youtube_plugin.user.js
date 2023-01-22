@@ -7816,9 +7816,9 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {R$SimpleMenuHeader} x */
-	R$SimpleMenuHeader(x) {this.H$R$("SimpleMenuHeader",x,this.D__SimpleMenuHeader);}
-	/** @private @arg {D__SimpleMenuHeader} x */
-	D__SimpleMenuHeader(x) {x;}
+	R$SimpleMenuHeader(x) {this.H$R$("SimpleMenuHeader",x,this.D_SimpleMenuHeader);}
+	/** @private @arg {D_SimpleMenuHeader} x */
+	D_SimpleMenuHeader(x) {x;}
 	/** @private @arg {R$Next} x */
 	R$Next(x) {
 		const cf="Next";

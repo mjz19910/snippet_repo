@@ -1,1 +1,1 @@
-type R$SimpleMenuHeader={simpleMenuHeaderRenderer: D__SimpleMenuHeader;};
+type R$SimpleMenuHeader={simpleMenuHeaderRenderer: D_SimpleMenuHeader;};
