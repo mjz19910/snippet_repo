@@ -8581,7 +8581,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {D$FeedTabbedHeader} x */
 	D$FeedTabbedHeader(x) {
-		this.D$TextWithRuns(this.w(x))
+		this.D$TextWithRuns(this.w(x));
 	}
 	/** @private @arg {CacheMetadata} x */
 	CacheMetadata(x) {
@@ -9293,6 +9293,11 @@ class HandleTypes extends ServiceMethods {
 	AdLayoutLoggingData(x) {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);
+		const {serializedAdServingDataEntry: a,...y}=x; this.g(y);
+		this.parser.on_endpoint_params(cf,"AdServingDataEntry",a);
+		let dec=this.create_param_map(a);
+		if(!dec) return;
+		console.log(dec);
 		debugger;
 	}
 	/** @private @arg {R$LiveChat} x */

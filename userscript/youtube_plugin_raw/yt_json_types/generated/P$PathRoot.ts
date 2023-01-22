@@ -15,6 +15,7 @@ type P$LogItems=[
 	"[parse_value.gen_ns] [watch.player_params.f12]",
 ];
 type P$PathRoot=[
+	"AdServingDataEntry",
 	"tracking.trackingParams.f16",
 	"tracking.trackingParams.f5",
 	"tracking.trackingParams.f16.f1",
