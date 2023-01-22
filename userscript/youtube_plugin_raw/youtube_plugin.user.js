@@ -10425,17 +10425,26 @@ class HandleTypes extends ServiceMethods {
 		if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
 		if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
 		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R$ThumbnailOverlayToggleButton(x);
+		if("thumbnailOverlayLoadingPreviewRenderer" in x) return this.R$ThumbnailOverlayLoadingPreview(x);
 		debugger;
+	}
+	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
+	R$ThumbnailOverlayLoadingPreview(x) {
+		const cf="R$ThumbnailOverlayLoadingPreview";
+		this.save_keys(`[${cf}]`,x);
+		const cf_="D$ThumbnailOverlayLoadingPreview";
+		this.save_keys(`[${cf_}]`,this.w(x));
+		this.D$TextWithRuns(this.w(this.w(x)));
 	}
 	/** @arg {R$ThumbnailOverlayToggleButton} x */
 	R$ThumbnailOverlayToggleButton(x) {
-		const cf="ThumbnailOverlayNowPlayingData";
+		const cf="R$ThumbnailOverlayNowPlayingData";
 		this.save_keys(`[${cf}]`,x);
 		this.D$ThumbnailOverlayToggleButton(this.w(x));
 	}
 	/** @arg {D$ThumbnailOverlayToggleButton} x */
 	D$ThumbnailOverlayToggleButton(x) {
-		const cf="ThumbnailOverlayNowPlayingData";
+		const cf="D$ThumbnailOverlayNowPlayingData";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,...y}=x;
 		this.trackingParams(cf,trackingParams);
@@ -10465,7 +10474,7 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {PlaylistEditEndpoint|E$SignalServiceEndpoint<Signal$ClientSignal>} x */
 	ThumbnailOverlayToggleButton$serviceEndpoint(x) {
 		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
-		this.E$SignalServiceEndpoint(x);
+		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		debugger;
 	}
 	/** @arg {PlaylistEditEndpoint} x */
