@@ -5189,36 +5189,32 @@ class ParserService extends BaseService {
 		let gen_next_part=(idx) => {
 			if(idx>path_parts.length) return;
 			let case_part="";
-			let value_part="\n\t\tswitch(tv) {default: debugger; return;}";
+			let value_part="switch(tv) {default: debugger; return;}";
 			if(path_parts.length===idx) {
-				if(tv instanceof Map) case_part=`${"\n\t\t"}if(tv instanceof Map) return;`;
+				if(tv instanceof Map) case_part=`if(tv instanceof Map) return;`;
 				switch(typeof tv) {
 					case "number": {
 						if(tv>128) {
-							case_part=`\n\t\tif(typeof tv==="number") return this.save_number(\`[\${path}]\`,tv);`;
+							case_part=`if(typeof tv==="number") return this.save_number(\`[\${path}]\`,tv);`;
 						} else {
-							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;\n\t\t\tdefault: debugger; return;\n\t\t}`;
+							value_part=`switch(tv) {case ${tv}: return; default: debugger; return;}`;
 						}
 					} break;
-					case "string": case_part=`\n\t\tif(typeof tv==="string") return this.save_string(\`[\${path}]\`,tv);`; break;
+					case "string": case_part='if(typeof tv==="string") return this.save_string(`[${path}]`,tv);'; break;
 				}
 			}
 			let res_case="";
 			if(idx<path_parts.length) {
-				res_case=`\n\t\tcase "${path_parts[idx]}": u(idx); debugger; break`;
+				res_case=`case "${path_parts[idx]}": u(idx); debugger; break`;
 			}
-			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
+			console.log(`"[parse_value.L_gen_next_part] [${path}]",`);
 			console.log(`
 			-- [${path_parts.join(".")},${idx}] --\n
 			// [${path_parts.join(".")}]
 			case "${path_parts[idx-1]}": {
 				const idx=${idx+1};
-				if(path_parts.length===${idx}) {
-					${case_part}${value_part}
-				}
-				switch(path_parts[${idx}]) {
-					default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}
-				}
+				if(path_parts.length===${idx}) {${case_part}${value_part}}
+				switch(path_parts[${idx}]) {default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}}
 			} break;`.slice(1).split("\n").map(e=>e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
@@ -5226,10 +5222,10 @@ class ParserService extends BaseService {
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
-case "${path}":
-switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
-/** @type {P$PathRoot} */
-return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
+			case "${path}":
+				switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
+				/** @type {P$PathRoot} */
+				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 `);
 		};
 		return {gen_next_part,new_path};
@@ -5353,9 +5349,9 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 			for(let val of tva) {
 				let g1=() => {
 					console.log(`
-case ${JSON.stringify(path)}: /*tva*/{
-	this.parse_param_next(root,\`\${path}[\${off}]\`,[val]);
-}; return;`);
+					case ${JSON.stringify(path)}: /*tva*/{
+						this.parse_param_next(root,\`\${path}[\${off}]\`,[val]);
+					}; return;`);
 					console.log(`\n\n\t"[parse_value.gen_ns_g1] [${path}[${off}]]",`);
 				};
 				switch(path) {
