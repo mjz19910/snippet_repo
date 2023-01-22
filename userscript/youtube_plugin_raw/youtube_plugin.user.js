@@ -7782,7 +7782,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {GetLiveChat} x */
 	R$GetLiveChat(x) {
 		const cf="GetLiveChat";
-		this.save_keys(`[${cf}]`,x);
+		this.save_keys(`[R$${cf}]`,x);
 		const {responseContext: {},continuationContents: a1,trackingParams: a2,...y}=x; this.g(y); // ! #destructure
 		this.LiveChatContinuation(a1);
 		this.t_cf("GetLiveChat",a2,this.trackingParams);
