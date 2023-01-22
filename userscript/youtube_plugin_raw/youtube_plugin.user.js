@@ -8212,13 +8212,13 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
-	/** @template {{}} T @template {CommandsTemplate<T>} C @arg {C} x @arg {(this:this,x:T)=>void} f */
+	/** @template U @template {{}} T @template {CommandsTemplate<T>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
 	CommandsTemplate$Omit(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		const {commands,...y}=x;
-		this.z(commands,f);
-		return y;
+		let ca=this.z(commands,f);
+		return [y,ca];
 	}
 	/** @arg {string} cf @template {{}} U @template {EndpointTemplate<U>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	EndpointTemplate(cf,x,f) {
@@ -8546,7 +8546,11 @@ class HandleTypes extends ServiceMethods {
 	E$ShareEntityServiceEndpoint(x) {
 		const cf="E$ShareEntityServiceEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
-		let q=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),this.A$OpenPopupAction);
+		let [q,ret_arr]=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),a=>{
+			return a;
+		});
+		console.log(ret_arr);
+		debugger;
 		let {serializedShareEntity,...y}=q; this.g(y);
 		this.primitive_of_string(serializedShareEntity);
 	}
@@ -10460,6 +10464,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
+			return null;
 		});
 		this.trackingParams("AccountMenuResponse",trackingParams);
 	}
@@ -10550,13 +10555,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @arg {A$OpenPopup} x */
+	/** @template T @arg {T$OpenPopup<T>} x */
 	A$OpenPopupAction(x) {
 		const cf="OpenPopupAction";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,...y}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.g(this.w(y));
+		return this.w(y);
 	}
 	/** @arg {D$OpenPopupAction['popup']} x */
 	popup_generic(x) {
@@ -11014,6 +11019,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(actions,x => {
 			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
+			return null;
 		});
 	}
 	/** @arg {DislikeResponse} x */
@@ -11024,6 +11030,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(actions,x => {
 			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
+			return null;
 		});
 	}
 	/** @arg {LikeRemoveLikeResponse} x */
@@ -11034,6 +11041,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(actions,(x => {
 			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 			debugger;
+			return null;
 		}));
 	}
 	/** @arg {R$ReelWatchSequenceResponse} x */
@@ -11177,10 +11185,13 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetNotificationMenuResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.z(actions,x => {
+		let ar=this.z(actions,x => {
 			if(x.openPopupAction) return this.A$OpenPopupAction(x);
 			debugger;
+			return null;
 		});
+		console.log(ar);
+		debugger;
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @private @arg {NextResponse} x */
@@ -13213,9 +13224,9 @@ class HandleTypes extends ServiceMethods {
 			if("state" in x) return;
 			if("serializedParams" in x) return;
 			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=x; this.g(y);
-			this.z([key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives],a=>{
+			this.z([key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives],a => {
 				if(a===void 0) debugger;
-			})
+			});
 		}
 	}
 	/** @private @template V @arg {{[U in `${string}Entity`]:V}} x */
