@@ -9,9 +9,11 @@ type P$LogItems=[
 	"[parse_value.gen_ns] [tracking.trackingParams.f11]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f10]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f19.f3]",
+	"[parse_value.L_gen_next_part] [tracking.trackingParams.f8]",
 ];
 type P$PathRoot=[
 	"tracking.trackingParams.f16",
+	"tracking.trackingParams.f5",
 	"tracking.trackingParams.f16.f1",
 	"transcript_target_id.param",
 	"watch.player_params.f40",

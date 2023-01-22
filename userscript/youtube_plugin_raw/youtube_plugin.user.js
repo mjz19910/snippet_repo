@@ -5546,7 +5546,19 @@ case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; retu
 					case "report.params.f28.f1": switch(ta) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "createBackstagePost.param": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1":
 					case "record_notification_interactions.f2.f14": switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "tracking.trackingParams": switch(ta) {case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 10: case 11: case 19: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "tracking.trackingParams":
+						switch(ta) {
+							case 19: break;
+							default: {
+								if(ta<12) {
+									/** @type {NumRange<1,11>} */
+									let tu=as(ta);
+									ta=tu;
+									return this.parse_param_next(root,`${path}.f${tu}`,tv);
+								}
+							} new_ns(); debugger; return;
+						}
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "browse$param.f84": switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "create_playlist.params":
 					case "browse.params": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
@@ -5595,7 +5607,7 @@ case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; retu
 case ${JSON.stringify(path)}: /*tva*/{
 	this.parse_param_next(root,\`\${path}[\${off}]\`,[val]);
 }; return;`);
-					console.log(`\n\n\t"[parse_value.gen_ns] [${path}[${off}]]",`);
+					console.log(`\n\n\t"[parse_value.gen_ns_g1] [${path}[${off}]]",`);
 				};
 				switch(path) {
 					default: g1(); debugger; return;
@@ -5635,6 +5647,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 			if(idx<path_parts.length) {
 				res_case=`\n\t\tcase "${path_parts[idx]}": u(idx); debugger; break`;
 			}
+			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
 			console.log(`-- [${path_parts.join(".")},${idx}] --\n
 // [${path_parts.join(".")}]
 case "${path_parts[idx-1]}": {
@@ -5681,14 +5694,15 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							case "f16": case "f1": case "f2": case "f3": case "f8": case "f9": case "f10": case "f11": case "f19": case "f6": case "f7":
 							// [tracking.trackingParams.f4]
-							case "f4": {
+							case "f1": case "f2": case "f3": case "f4": case "f5": case "f6": case "f7": case "f8": case "f9":
+							case "f10": case "f11": case "f16": case "f19": {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(tv instanceof Map) return;
 									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+									if(typeof tv==="bigint") return this.save_string(`[${path}]`,`${tv}n`);
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
@@ -10337,7 +10351,6 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		this.t(icon,this.T$Icon);
-		debugger;
 		this.trackingParams(cf,trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
 	}
@@ -13144,7 +13157,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=x; this.g(y);
 		this.T$Icon(icon);
-		switch(style) {case "BADGE_STYLE_TYPE_VERIFIED":break;default: debugger;}
+		switch(style) {case "BADGE_STYLE_TYPE_VERIFIED": break; default: debugger;}
 		this.primitive_of(tooltip,"string");
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibilityData,this.A$LabelData);
