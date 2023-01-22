@@ -2298,12 +2298,8 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {string} key */
 	#get_seen_string_item(key) {
-		let idx=this.#data.strings_key_index_map[key];
-		if(idx) return this.#data.seen_strings[idx];
-		idx=this.#data.seen_strings.findIndex(e => e[0]===key);
-		if(idx<0) return this.add_to_index(key,["one",[]],this.#get_string_store());
-		this.#data.strings_key_index_map[key]=idx;
-		return this.#data.seen_strings[idx];
+		let store=this.#get_string_store();
+		return this.get_seen_string_item_store(key,store);
 	}
 	/** @arg {string} key @arg {StoreDescription<string>} store */
 	get_seen_string_item_store(key,store) {
@@ -2311,9 +2307,7 @@ class KnownDataSaver extends ApiBase {
 		let idx=index[key];
 		if(idx) return data[idx];
 		idx=data.findIndex(e => e[0]===key);
-		if(idx<0) {
-			return this.add_to_index(key,["one",[]],store);
-		}
+		if(idx<0) return this.add_to_index(key,["one",[]],store);
 		index[key]=idx;
 		return data[idx];
 	}
