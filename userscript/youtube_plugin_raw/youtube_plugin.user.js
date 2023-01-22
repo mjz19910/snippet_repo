@@ -5288,6 +5288,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "serializedTemplateConfig.f1":
+						switch(ta) {case 1: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`serializedTemplateConfig.f${ta}`,tv);
 					case "serializedTemplateConfig.f2":
 						switch(ta) {case 1: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
