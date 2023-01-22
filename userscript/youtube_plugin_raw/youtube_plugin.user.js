@@ -3177,7 +3177,7 @@ class YtObjectVisitor {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @public @arg {ApiIterateState} state @arg  {D__ReloadContinuationItemsCommand} command */
+	/** @public @arg {ApiIterateState} state @arg  {DC_ReloadContinuationItems} command */
 	reloadContinuationItemsCommand({t: state},command) {
 		if(!command.continuationItems) {
 			debugger;
@@ -7908,11 +7908,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,reloadContinuationItemsCommand,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
-		this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
+		this.DC_ReloadContinuationItems(reloadContinuationItemsCommand);
 	}
-	/** @private @arg {D__ReloadContinuationItemsCommand} x */
-	ReloadContinuationItemsCommandData(x) {
-		const cf="ReloadContinuationItemsCommandData";
+	/** @private @arg {DC_ReloadContinuationItems} x */
+	DC_ReloadContinuationItems(x) {
+		const cf="DC_ReloadContinuationItems";
 		this.save_keys(`[${cf}]`,x);
 		this.save_enum("RELOAD_CONTINUATION_SLOT",x.slot);
 		switch(x.slot) {

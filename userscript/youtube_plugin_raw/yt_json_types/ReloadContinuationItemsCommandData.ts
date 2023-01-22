@@ -1,4 +1,4 @@
-type D__ReloadContinuationItemsCommand={
+type DC_ReloadContinuationItems={
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
 	targetId: "browse-feedFEwhat_to_watch";
 	continuationItems: SectionItem[];
