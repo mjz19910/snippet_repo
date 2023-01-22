@@ -15,7 +15,7 @@ type PlaylistPanelVideo={
 	videoId: string;
 	shortBylineText: D$TextWithRuns;
 	trackingParams: string;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	thumbnailOverlays: PP_Overlays[];
 	playlistSetVideoId: "56B44F6D10557CC6";
 	lightColorPalette: {

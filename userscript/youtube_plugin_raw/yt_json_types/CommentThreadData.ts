@@ -5,7 +5,7 @@ type CommentData={
 	contentText: D$TextWithRuns;
 	publishedTimeText: D$TextWithRuns;
 	isLiked: boolean;
-	actionMenu: R$MenuRenderer;
+	actionMenu: R$Menu;
 	commentId: string;
 	actionButtons: CommentActionButtonsRenderer;
 	authorIsChannelOwner: boolean;

@@ -10,9 +10,9 @@ type PlaylistContent=ContentsArrayTemplate<PlaylistPanelVideoRenderer>&{
 	trackingParams: string;
 	titleText: D$SimpleText;
 	isEditable: true;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	localCurrentIndex: 0|25;
-	playlistButtons: R$MenuRenderer;
+	playlistButtons: R$Menu;
 	isCourse: false;
 	nextVideoLabel: D$SimpleText;
 };

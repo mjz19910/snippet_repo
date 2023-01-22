@@ -4,5 +4,5 @@ type MerchandiseShelf={
 	trackingParams: string;
 	showText: string;
 	hideText: string;
-	actionButton: R$MenuRenderer;
+	actionButton: R$Menu;
 };

@@ -2,7 +2,7 @@ type PlaylistSidebarPrimaryInfo={
 	thumbnailRenderer: PlaylistVideoThumbnailRenderer;
 	title: D$TextWithRuns;
 	stats: D$TextWithRuns[];
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	thumbnailOverlays: ThumbnailOverlaySidePanelRenderer[];
 	navigationEndpoint: E$WatchEndpoint;
 	badges: R$MetadataBadgeRenderer[];

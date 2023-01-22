@@ -5,7 +5,7 @@ type ReelPlayerOverlayData={
 }|{
 	likeButton: R$LikeButton;
 	reelPlayerHeaderSupportedRenderers: ReelPlayerHeaderRenderer;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	nextItemButton: R$ButtonRenderer;
 	prevItemButton: R$ButtonRenderer;
 	subscribeButtonRenderer: SubscribeButtonRenderer;

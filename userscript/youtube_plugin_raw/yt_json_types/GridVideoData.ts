@@ -1,7 +1,7 @@
 type GridVideoData={
 	badges: {}[];
 	channelThumbnail: D$Thumbnail;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	navigationEndpoint: {};
 	shortBylineText: D$TextWithRuns;
 	shortViewCountText: D$TextWithRuns;

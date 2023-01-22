@@ -10,6 +10,6 @@ type CompactRadioData={
 	thumbnailText: D$TextWithRuns;
 	videoCountShortText: D$TextWithRuns;
 	shareUrl: string;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
 };

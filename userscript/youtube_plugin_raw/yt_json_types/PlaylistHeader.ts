@@ -51,7 +51,7 @@ type PlaylistHeader={
 	briefStats: D$TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;
 	playlistHeaderBanner: HeroPlaylistThumbnailRenderer;
-	moreActionsMenu: R$MenuRenderer;
+	moreActionsMenu: R$Menu;
 	playButton: R$ButtonRenderer;
 	shufflePlayButton: R$ButtonRenderer;
 	onDescriptionTap: OpenPopupAction;

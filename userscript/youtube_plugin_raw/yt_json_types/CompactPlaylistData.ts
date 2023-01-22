@@ -9,7 +9,7 @@ type CompactPlaylistData={
 	trackingParams: string;
 	sidebarThumbnails: D$Thumbnail[];
 	thumbnailText: D$TextWithRuns;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	shareUrl: string;
 	thumbnailRenderer: PlaylistVideoThumbnailRenderer;
 	longBylineText: D$TextWithRuns;

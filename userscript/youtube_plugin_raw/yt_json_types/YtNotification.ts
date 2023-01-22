@@ -6,7 +6,7 @@ type YtNotification={
 	navigationEndpoint: E$WatchEndpoint;
 	read: boolean;
 	recordClickEndpoint: E$RecordNotificationInteractionsEndpoint;
-	contextualMenu: R$MenuRenderer;
+	contextualMenu: R$Menu;
 	trackingParams: string;
 	notificationId: `${number}`;
 };

@@ -9765,7 +9765,7 @@ class HandleTypes extends ServiceMethods {
 		this.NavigationEndpoint(navigationEndpoint);
 		this.primitive_of(read,"boolean");
 		this.E$RecordNotificationInteractionsEndpoint(recordClickEndpoint);
-		this.MenuRenderer(contextualMenu);
+		this.R$Menu(contextualMenu);
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(notificationId);
 	}
@@ -10512,7 +10512,7 @@ class HandleTypes extends ServiceMethods {
 		this.videoId(videoId);
 		this.D$TextWithRuns(shortBylineText);
 		this.trackingParams(cf,trackingParams);
-		this.MenuRenderer(menu);
+		this.R$Menu(menu);
 		this.primitive_of_string(playlistSetVideoId);
 		this.tz(thumbnailOverlays,this.PlaylistPanel_thumbnailOverlay);
 	}
@@ -10890,8 +10890,8 @@ class HandleTypes extends ServiceMethods {
 		this.WatchNextEndScreenRenderer(endScreen);
 		this.t(autoplay,this.PlayerOverlayAutoplayRenderer);
 		this.R$ButtonRenderer(shareButton);
-		this.MenuRenderer(addToMenu);
-		this.PlayerOverlayVideoDetailsRenderer(videoDetails);
+		this.R$Menu(addToMenu);
+		this.R$PlayerOverlayVideoDetails(videoDetails);
 		this.t(autonavToggle,this.AutoplaySwitchButtonRenderer);
 		this.t(decoratedPlayerBarRenderer,this.DecoratedPlayerBarRenderer);
 	}
@@ -11000,26 +11000,29 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.DecoratedPlayerBar(this.w(x));
 	}
-	/** @arg {R$PlayerOverlayVideoDetails} x */
-	PlayerOverlayVideoDetailsRenderer(x) {
-		const cf="PlayerOverlayVideoDetailsRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.PlayerOverlayVideoDetails(this.w(x));
+	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	H$Renderer(cf,x,f) {
+		this.save_keys(`[${cf}Renderer]`,x);
+		f.call(this,this.w(x));
 	}
-	/** @arg {R$MenuRenderer} x */
-	MenuRenderer(x) {
-		const cf="MenuRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.R_MenuData(this.w(x));
+	/** @arg {R$PlayerOverlayVideoDetails} x */
+	R$PlayerOverlayVideoDetails(x) {
+		this.H$Renderer("PlayerOverlayVideoDetails",x,this.PlayerOverlayVideoDetails);
+	}
+	/** @arg {R$Menu} x */
+	R$Menu(x) {
+		const cf="Menu";
+		this.save_keys(`[${cf}Renderer]`,x);
+		this.D$Menu(this.w(x));
 	}
 	/** @arg {D$Menu} x */
-	R_MenuData(x) {
-		const cf="MenuData";
+	D$Menu(x) {
+		const cf="Menu";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,accessibility,items,targetId,loggingDirectives,flexibleItems,topLevelButtons,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 		this.t(accessibility,this.A$Accessibility);
-		this.R_MenuItems(items);
+		this.tz(items,this.G$Menu$items$iterate);
 		this.t(targetId,a => {
 			a;
 			debugger;
@@ -11027,15 +11030,13 @@ class HandleTypes extends ServiceMethods {
 		});
 		this.t(loggingDirectives,this.A$LoggingDirectives);
 	}
-	/** @arg {D$Menu['items']} x */
-	R_MenuItems(x) {
-		this.tz(x,x => {
-			/** @type {G$Menu$items$iterate} */
-			if("toggleMenuServiceItemRenderer" in x) return this.R$ToggleMenuServiceItem(x);
-			if("menuServiceItemRenderer" in x) return this.MenuServiceItemRenderer(x);
-			if("menuNavigationItemRenderer" in x) return this.R$MenuNavigationItem(x);
-			this.do_codegen("MenuItems",x);
-		});
+	/** @arg {G$Menu$items$iterate} x */
+	G$Menu$items$iterate(x) {
+		if("toggleMenuServiceItemRenderer" in x) return this.R$ToggleMenuServiceItem(x);
+		if("menuServiceItemRenderer" in x) return this.MenuServiceItemRenderer(x);
+		if("menuNavigationItemRenderer" in x) return this.R$MenuNavigationItem(x);
+		this.do_codegen("MenuItems",x);
+		x;
 	}
 	/** @arg {R$MenuNavigationItem} x */
 	R$MenuNavigationItem(x) {
@@ -11819,9 +11820,9 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.D$SimpleText(titleText);
 		this.primitive_of(isEditable,"boolean");
-		this.MenuRenderer(menu);
+		this.R$Menu(menu);
 		if(localCurrentIndex!==25&&localCurrentIndex!==0) debugger;
-		this.MenuRenderer(playlistButtons);
+		this.R$Menu(playlistButtons);
 		this.primitive_of(isCourse,"boolean");
 		this.D$SimpleText(nextVideoLabel);
 	}
@@ -13210,7 +13211,7 @@ class HandleTypes extends ServiceMethods {
 	EngagementPanelMenu(x) {
 		const cf="EngagementPanelMenu";
 		this.save_keys(`[${cf}]`,x);
-		if("menuRenderer" in x) return this.MenuRenderer(x);
+		if("menuRenderer" in x) return this.R$Menu(x);
 		if("sortFilterSubMenuRenderer" in x) return this.SortFilterSubMenuRenderer(x);
 		debugger;
 	}
@@ -13782,7 +13783,7 @@ class HandleTypes extends ServiceMethods {
 		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y); // ! #destructure
 		this.LikeButtonRenderer(likeButton);
 		this.ReelPlayerHeaderRenderer(reelPlayerHeaderSupportedRenderers);
-		this.MenuRenderer(menu);
+		this.R$Menu(menu);
 		this.R$ButtonRenderer(nextItemButton);
 		this.R$ButtonRenderer(prevItemButton);
 		this.SubscribeButtonRenderer(subscribeButtonRenderer);
@@ -14021,7 +14022,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(title);
 		this.t(superTitleLink,this.D$TextWithRuns);
 		this.VideoViewCountRenderer(viewCount);
-		this.MenuRenderer(videoActions);
+		this.R$Menu(videoActions);
 		this.trackingParams(cf,trackingParams);
 		this.D$SimpleText(dateText);
 		this.D$SimpleText(relativeDateText);
@@ -14037,7 +14038,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(showText);
 		this.primitive_of_string(hideText);
-		this.MenuRenderer(actionButton);
+		this.R$Menu(actionButton);
 	}
 	/** @arg {VideoSecondaryInfoData} x */
 	VideoSecondaryInfoData(x) {
@@ -14232,7 +14233,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {actionButtons,actionMenu,authorEndpoint,authorIsChannelOwner,authorText,authorThumbnail,collapseButton,commentId,contentText,currentUserReplyThumbnail,publishedTimeText,isLiked,voteCount,voteStatus,trackingParams,expandButton,loggingDirectives,...y}=x; this.g(y); // ! #destructure
 		this.CommentActionButtonsRenderer(actionButtons);
-		this.MenuRenderer(actionMenu);
+		this.R$Menu(actionMenu);
 		this.g(authorEndpoint);
 		this.primitive_of(authorIsChannelOwner,"boolean");
 		this.D$TextWithRuns(authorText);

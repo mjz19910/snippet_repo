@@ -4,7 +4,7 @@ type ReelItemData={
 	thumbnail: D$Thumbnail;
 	viewCountText: D$TextWithRuns;
 	navigationEndpoint: E$ReelWatchEndpoint;
-	menu: R$MenuRenderer;
+	menu: R$Menu;
 	trackingParams: string;
 	accessibility:A$Accessibility;
 	style: "REEL_ITEM_STYLE_AVATAR_CIRCLE";
