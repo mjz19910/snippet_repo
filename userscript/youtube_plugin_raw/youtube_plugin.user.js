@@ -10444,7 +10444,7 @@ class HandleTypes extends ServiceMethods {
 			let {accessibility,icon,tooltip,...v1}=c_tog;
 			this.A$Accessibility(accessibility);
 			this.T$Icon(icon);
-			switch(icon.iconType) {case "CHECK": break; default: debugger;}
+			switch(icon.iconType) {case "CHECK": case "PLAYLIST_ADD_CHECK": break; default: debugger;}
 			if(tooltip!=="Added") debugger;
 			if("serviceEndpoint" in v1) {
 				this.PlaylistEditEndpoint(this.w(v1));
@@ -10456,8 +10456,8 @@ class HandleTypes extends ServiceMethods {
 			let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un; this.g(v2);
 			this.A$Accessibility(accessibility);
 			this.T$Icon(icon);
-			if(icon.iconType!=="WATCH_LATER") debugger;
-			if(tooltip!=="Watch Later") debugger;
+			switch(icon.iconType) {case "ADD_TO_QUEUE_TAIL": case "WATCH_LATER": break; default: debugger;}
+			switch(tooltip) {case "Add to queue": case "Watch Later": break; default: debugger;}
 			this.ThumbnailOverlayToggleButton$serviceEndpoint(serviceEndpoint);
 		}
 		this.g(c);
