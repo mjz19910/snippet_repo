@@ -6444,6 +6444,8 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: gd(idx); path_parts[3]===""; break;
+									case "f1": gd(idx); break;
+									case "f2": gd(idx); break;
 								}
 							} break;
 							case "f7": {
@@ -14577,6 +14579,29 @@ class HandleTypes extends ServiceMethods {
 		this.D$GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
 		this.g(config);
+	}
+	/** @arg {D$GradientColorConfig} x */
+	D$GradientColorConfig(x) {
+		{
+			let c=x[0];
+			/** @type {`${typeof c['darkThemeColor']}`} */
+			let u=`${c.darkThemeColor}`;
+			if(c.startLocation!==0) debugger;
+			if(u!=="2566914048") debugger;
+		}
+		{
+			let c=x[1];
+			/** @type {`${typeof c['darkThemeColor']}`} */
+			let u=`${c.darkThemeColor}`;
+			if(u!=="2130706432") debugger;
+		}
+		{
+			let c=x[2];
+			/** @type {`${typeof c['darkThemeColor']}`} */
+			let u=`${c.darkThemeColor}`;
+			if(c.startLocation!==1) debugger;
+			if(u!=="4278190080") debugger;
+		}
 	}
 	/** @arg {R$ThumbnailsList} x */
 	ThumbnailsList(x) {
