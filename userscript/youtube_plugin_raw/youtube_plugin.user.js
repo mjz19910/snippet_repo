@@ -6082,9 +6082,6 @@ case "${path_parts[idx-1]}": {
 			case "entity_key": u(idx); debugger; break;
 			case "tracking": {
 				const idx=2;
-				if(path_parts.length===1) {
-					switch(tv) {default: debugger; return;}
-				}
 				switch(path_parts[1]) {
 					default: u(idx); debugger; path_parts[1]===""; break;
 					// [tracking.trackingParams]
