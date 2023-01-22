@@ -2632,7 +2632,7 @@ class BaseService extends BaseServicePrivate {
 						let err=param[3].find(e => e[0]==="error");
 						if(err) break x;
 						let u8_arr=param[2];
-						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/\w{4}/)) break x;
+						if(String.fromCharCode(...u8_arr.slice(0,4)).match(/[\w-]{4}/)) break x;
 						let p_map=this.make_param_map(param[3]);
 						if(!p_map) {
 							do_set(param[1],["failed",param[3]]);
@@ -6851,11 +6851,7 @@ case "${path_parts[idx-1]}": {
 											case "f2": {
 												const idx=6;
 												if(path_parts.length===5) {
-													switch(tv) {
-														case 6: return;
-														case 8: return;
-														default: console.log(`\ncase ${tv}: return;`); debugger; return;
-													}
+													if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 												}
 												switch(path_parts[5]) {
 													default: {
@@ -11252,7 +11248,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,watchEndpoint,...y}=x; this.g(y); // ! #destructure
-		debugger;
 		x: if(clickTrackingParams) {
 			let x=clickTrackingParams;
 			let root=cf;
@@ -11260,6 +11255,11 @@ class HandleTypes extends ServiceMethods {
 			let dx=decodeURIComponent(x);
 			let res_e=this.decode_b64_url_proto_obj(dx);
 			if(!res_e) break x;
+			for(let i=0;i<res_e.length;i++) {
+				if(res_e[i][0]==="child") {
+					console.log(res_e[i]);
+				}
+			}
 			let param_map=this.make_param_map(res_e);
 			this.parser.parse_endpoint_param(root,path,new Map(param_map));
 		}
