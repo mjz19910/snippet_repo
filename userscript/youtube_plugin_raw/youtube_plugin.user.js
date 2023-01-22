@@ -5784,12 +5784,10 @@ case "${path_parts[idx-1]}": {
 		let mk=[...x.keys()];
 		/** @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
-		parse_key(8);
-		parse_key(9);
-		parse_key(30);
-		parse_key(40);
-		parse_key(57);
-		parse_key(71);
+		for(let i=1;i<72;i++) {
+			if(!mk.includes(i)) continue;
+			parse_key(i);
+		}
 		parse_key(72);
 		if(this.eq_keys(mk,[])) return;
 		console.log(`[player.${path}] [idx=${key_index}]`,this.to_param_obj(x));
@@ -10574,9 +10572,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @arg {E$Watch} x */
 	E$Watch(x) {
-		const cf="WatchEndpointData";
+		const cf="E$Watch";
 		this.save_keys(`[${cf}]`,x);
-		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,...y}=x; this.g(y);
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,playerExtraUrlParams,...y}=x; this.g(y);
 		this.videoId(videoId);
 		this.t(playlistId,this.playlistId);
 		if(index!==void 0) this.primitive_of(index,"number");
@@ -10590,6 +10588,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(playerParams,a => this.playerParams("WatchEndpoint","watch.player_params",a));
 		this.t(a2,this.WatchEndpointMusicConfig);
 		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
+		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
 	}
 	/** @arg {D$WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfigData(x) {

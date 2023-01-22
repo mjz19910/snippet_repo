@@ -12,4 +12,8 @@ type E$Watch={
 	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
 	watchEndpointMusicSupportedConfigs?: R$WatchEndpointMusicConfig;
 	playerParams?: string;
+	playerExtraUrlParams?: [{
+		key: "inline";
+		value: "1";
+	}];
 };
