@@ -1,3 +1,3 @@
-type BrowseEndpointContextMusicConfig={
-	browseEndpointContextMusicConfig: BrowseEndpointContextMusicConfigData;
+type R$BrowseEndpointContextMusicConfig={
+	browseEndpointContextMusicConfig: D$BrowseEndpointContextMusicConfig;
 };

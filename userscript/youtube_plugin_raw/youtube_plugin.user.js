@@ -11364,8 +11364,7 @@ class HandleTypes extends ServiceMethods {
 	CommonConfigData(x) {
 		const cf="CommonConfigData";
 		this.save_keys(`[${cf}]`,x);
-		const {url,...y}=x; this.g(y); // ! #destructure
-		this.parser.parse_url("CommonConfigData",url);
+		this.parser.parse_url("CommonConfigData",this.w(x));
 	}
 	/** @arg {VssLoggingContext} x */
 	VssLoggingContext(x) {
@@ -11466,21 +11465,27 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowseEndpointContextSupportedConfigs";
 		this.save_keys(`[${cf}]`,x);
 		if("browseEndpointContextMusicConfig" in x) {
-			return this.BrowseEndpointContextMusicConfig(x);
+			return this.R$BrowseEndpointContextMusicConfig(x);
 		}
 		debugger;
 	}
-	/** @arg {BrowseEndpointContextMusicConfig} x */
-	BrowseEndpointContextMusicConfig(x) {
+	/** @arg {R$BrowseEndpointContextMusicConfig} x */
+	R$BrowseEndpointContextMusicConfig(x) {
 		const cf="BrowseEndpointContextMusicConfig";
 		this.save_keys(`[${cf}]`,x);
-		this.BrowseEndpointContextMusicConfigData(this.w(x));
+		this.D$BrowseEndpointContextMusicConfig(this.w(x));
 	}
-	/** @arg {BrowseEndpointContextMusicConfigData} x */
-	BrowseEndpointContextMusicConfigData(x) {
-		const cf="BrowseEndpointContextMusicConfigData";
+	/** @arg {string} cf @arg {D$BrowseEndpointContextMusicConfig} x */
+	T$Renderer(cf,x) {
+		this.save_keys(`[${cf}Data]`,x);
+		return this.w(x);
+	}
+	/** @arg {D$BrowseEndpointContextMusicConfig} x */
+	D$BrowseEndpointContextMusicConfig(x) {
+		const cf="BrowseEndpointContextMusicConfig";
 		this.save_keys(`[${cf}]`,x);
-		const {pageType,...y}=x; this.g(y); // ! #destructure
+		let pageType=this.w(x);
+		let pt2=this.T$Renderer(cf,x);pt2;
 		this.save_enum("MUSIC_PAGE_TYPE",pageType);
 		switch(pageType) {
 			case "MUSIC_PAGE_TYPE_ALBUM": break;
@@ -11493,9 +11498,13 @@ class HandleTypes extends ServiceMethods {
 	NavigationEndpointCommandMetadata(x) {
 		const cf="NavigationEndpointCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
-		const {webCommandMetadata,...y}=x; this.g(y); // ! #destructure
-		debugger;
-		// this.WebCommandMetadata(webCommandMetadata);
+		this.G$VE3611(this.w(x));
+	}
+	/** @arg {G$VE3611} x */
+	G$VE3611(x) {
+		const {rootVe,webPageType,...y}=x; this.g(y);
+		if(rootVe!==3611) debugger;
+		if(webPageType!=="WEB_PAGE_TYPE_CHANNEL") debugger;
 	}
 	/** @arg {"/gaming"|"/@"|"/channel/UC"} x */
 	VE3611_parse_url(x) {

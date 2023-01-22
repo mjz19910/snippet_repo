@@ -1,1 +1,1 @@
-type BrowseEndpointContextSupportedConfigs=BrowseEndpointContextMusicConfig;
+type BrowseEndpointContextSupportedConfigs=R$BrowseEndpointContextMusicConfig;
