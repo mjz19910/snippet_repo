@@ -8061,8 +8061,9 @@ class HandleTypes extends ServiceMethods {
 	//#region templates
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
-		const {items,...y}=x; this.g(y); // ! #destructure
-		this.z(items,f);
+		const cf/**/="ItemsTemplate";
+		this.save_keys(`[${cf}]`,x);
+		this.z(this.w(x),f);
 	}
 	/** @arg {SectionListRendererTemplate<"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
