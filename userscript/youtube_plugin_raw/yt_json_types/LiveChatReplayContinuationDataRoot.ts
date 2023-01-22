@@ -1,1 +1,0 @@
-type LiveChatReplayContinuationDataRoot={liveChatReplayContinuationData: D$LiveChatReplayContinuation;};

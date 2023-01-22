@@ -1,4 +1,4 @@
-type R$ReelWatchSequenceResponse={
+type R$ReelWatchSequence={
 	responseContext: RC$ResponseContext;
 	entries: T$Command<E$ReelWatchEndpoint>[];
 	trackingParams: string;

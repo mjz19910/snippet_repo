@@ -1,4 +1,4 @@
-type R$Generic_WatchPage={
+type R$WatchPage$1={
 	page: "watch";
 	endpoint: E$WatchEndpoint;
 	response: R$Watch;

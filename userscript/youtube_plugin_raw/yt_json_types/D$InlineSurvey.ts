@@ -3,7 +3,7 @@ type D$InlineSurvey={
 	title: D$TextWithRuns;
 	subtitle: D$TextWithRuns;
 	inlineContent: R$CompactVideo;
-	response: R$ExpandableSurveyResponse;
+	response: R$ExpandableSurvey;
 	trackingParams: string;
 	dismissalText: D$TextWithRuns;
 	impressionEndpoints: {}[];

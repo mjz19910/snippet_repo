@@ -1,5 +1,5 @@
 type D$LiveChatContinuation={
-	continuations: LiveChatContinuationItem[];
+	continuations: G$LiveChatContinuationItem[];
 	actions?: LiveChatContinuationActions[];
 	actionPanel?: R$LiveChatMessageInput;
 	itemList?: R$LiveChatItemList;

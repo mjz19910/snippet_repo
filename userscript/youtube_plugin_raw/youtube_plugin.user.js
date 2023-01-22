@@ -3076,7 +3076,7 @@ class YtHandlers extends BaseService {
 			};
 			case "reel_watch_sequence": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$ReelWatchSequenceResponse} */
+				/** @private @type {R$ReelWatchSequence} */
 				data: as(x),
 			};
 		}
@@ -3926,7 +3926,7 @@ class ModifyEnv extends BaseService {
 	leftover_args=[];
 	modify_global_env() {
 		let yt_handlers=this.x.get("yt_handlers");
-		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G$Response} response_obj */
+		/** @private @arg {string|URL|Request} request @arg {Response} response @arg {G$Response$} response_obj */
 		function fetch_filter_text_then_data_url(request,response,response_obj) {
 			try {
 				yt_handlers.on_handle_api(request,response,response_obj);
@@ -6976,7 +6976,7 @@ class HandleTypes extends ServiceMethods {
 			this.Generic_WatchPageResponse(x);
 		}
 	}
-	/** @private @arg {R$Generic_WatchPage} x */
+	/** @private @arg {R$WatchPage$1} x */
 	Generic_WatchPageResponse(x) {
 		const cf="Generic_WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -6988,7 +6988,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}.wp_params]`,wp_params);
 		if(previousCsn!==void 0) this.previousCsn(previousCsn);
 	}
-	/** @private @arg {R$VE3832$WatchPageResponse} x */
+	/** @private @arg {R$VE3832$WatchPage} x */
 	VE3832_WatchPageResponse(x) {
 		const cf="WatchPageResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -7739,7 +7739,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		}));
 	}
-	/** @private @arg {R$ReelWatchSequenceResponse} x */
+	/** @private @arg {R$ReelWatchSequence} x */
 	R$ReelWatchSequence(x) {
 		const cf="ReelWatchSequenceResponse";
 		this.save_keys(`[${cf}]`,x);

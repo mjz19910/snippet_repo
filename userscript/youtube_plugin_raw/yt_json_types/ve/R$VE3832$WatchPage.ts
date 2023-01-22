@@ -1,4 +1,4 @@
-type R$VE3832$WatchPageResponse={
+type R$VE3832$WatchPage={
 	rootVe: 3832;
 	url: WatchPageUrl;
 	endpoint: E$WatchEndpoint;

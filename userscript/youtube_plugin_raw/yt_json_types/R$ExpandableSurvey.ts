@@ -1,0 +1,1 @@
+type R$ExpandableSurvey={expandableSurveyResponseRenderer: DR$ExpandableSurvey;};
