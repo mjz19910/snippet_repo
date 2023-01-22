@@ -6045,6 +6045,10 @@ case ${JSON.stringify(path)}: /*tva*/{
 					case "string": case_part=`\n\t\tif(typeof tv==="string") return this.save_string(\`[\${path}]\`,tv);`; break;
 				}
 			}
+			let res_case="";
+			if(idx<path_parts.length) {
+				res_case=`\n\t\tcase "${path_parts[idx]}": u(idx); debugger; break`;
+			}
 			console.log(`-- [${path_parts.join(".")},${idx}] --\n
 // [${path_parts.join(".")}]
 case "${path_parts[idx-1]}": {
@@ -6052,8 +6056,7 @@ case "${path_parts[idx-1]}": {
 	if(path_parts.length===${idx}) {${case_part}${value_part}
 	}
 	switch(path_parts[${idx}]) {
-		default: u(idx); debugger; path_parts[${idx}]===""; break;
-		case "${path_parts[idx]}": u(idx); debugger; break;
+		default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}
 	}
 } break;`);
 		};
@@ -6077,7 +6080,37 @@ case "${path_parts[idx-1]}": {
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
 			case "entity_key":
-			case "tracking":
+			// [tracking.trackingParams.f4.f1]
+			case "tracking": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(tv) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					// [tracking.trackingParams.f4.f1]
+					case "trackingParams": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							// [tracking.trackingParams.f4.f1]
+							case "f4": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: u(idx); debugger; path_parts[3]===""; break;
+									case "f1": u(idx); debugger; break;
+								}
+							} break;
+						}
+					} break;
+				}
+			} break;
 			case "browse$param":
 			case "record_notification_interactions":
 			case "transcript_target_id":
