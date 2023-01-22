@@ -14315,32 +14315,18 @@ class HandleTypes extends ServiceMethods {
 		let u=this.w(y);
 		this.z(u,this.R$HotkeyDialogSectionOption);
 	}
-	/** @arg {D$HotkeyDialogSectionOption} x @returns {x is Extract<D$HotkeyDialogSectionOption,{hotkey:{tag:""}}>]} */
-	Is$HotkeyType(x) {
-		return x.hotkey===",";
-	}
-	/** @arg {D$HotkeyDialogSectionOption} x @returns {["any",Extract<D$HotkeyDialogSectionOption,{hotkey:{tag:""}}>]|[",",Exclude<D$HotkeyDialogSectionOption,{hotkey:{tag:""}}>]} */
-	Get$HotkeyType(x) {
-		if(this.Is$HotkeyType(x)) return ["any",x];
-		return [",",x];
-	}
 	/** @arg {Exclude<D$HotkeyDialogSectionOption,{hotkey:{tag:""}}>} x */
 	D$HotkeyDialogSectionOption(x) {
 		const cf="D$HotkeyDialogSectionOption";
 		this.save_keys(`[${cf}]`,x);
-		let x2=this.Get$HotkeyType(x);
-		if(x2[0]===",") {
-			const {label,hotkey,...y}=x2[1];
-			this.save_string(`[${cf}.label]`,label.runs[0].text);
-			this.save_string(`[${cf}.hotkey]`,hotkey);
+		const {label,hotkey,...y}=x;
+		this.save_string(`[${cf}.label]`,label.runs[0].text);
+		this.save_string(`[${cf}.hotkey]`,hotkey);
+		if("hotkeyAccessibilityLabel" in y) {
 			let ka=this.w(y);
 			this.save_string(`[${cf}.hotkey_label]`,ka.accessibilityData.label);
 			this.A$Accessibility(ka);
-			return;
 		}
-		const {label,hotkey,...y}=x2[1]; this.g(y);
-		this.save_string(`[${cf}.label]`,label.runs[0].text);
-		this.save_string(`[${cf}.hotkey]`,hotkey);
 	}
 	/** @arg {A$D$AccountItem} x */
 	AccountItemData(x) {
