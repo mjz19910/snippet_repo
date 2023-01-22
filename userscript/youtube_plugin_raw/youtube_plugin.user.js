@@ -5783,10 +5783,7 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
-									case "f5":
-									case "f1":
-									case "f2":
-									case "f4":
+									case "f5": case "f1": case "f2": case "f4":
 									case "f3": u(idx); debugger; break;
 								}
 							} break;
