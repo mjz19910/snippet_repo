@@ -7061,7 +7061,7 @@ class HandleTypes extends ServiceMethods {
 		this.E$WatchEndpoint(currentVideoEndpoint);
 		this.trackingParams("WatchResponse",trackingParams);
 		this.R$PlayerOverlay(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("WatchResponse",a));
+		this.z(onResponseReceivedEndpoints,a => this.EI$ResponseReceived("WatchResponse",a));
 		this.z(engagementPanels,_x => {debugger;});
 		this.R$DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R$CinematicContainer);
@@ -7828,7 +7828,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(currentVideoEndpoint,this.E$WatchEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.t(playerOverlays,this.R$PlayerOverlay);
-		this.tz(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("NextResponse",a));
+		this.tz(onResponseReceivedEndpoints,a => this.EI$ResponseReceived("NextResponse",a));
 		this.tz(engagementPanels,((_x) => {debugger;}));
 		const {...y1}=y; this.g(y1);
 		this.t(videoReporting,this.R$ReportFormModal);
@@ -7844,7 +7844,7 @@ class HandleTypes extends ServiceMethods {
 		return tag;
 	}
 	/** @private @arg {C$ScrollToEngagementPanel} x */
-	ScrollToEngagementPanelCommand(x) {
+	C$ScrollToEngagementPanel(x) {
 		const cf="ScrollToEngagementPanelCommand";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,scrollToEngagementPanelCommand,...y}=x; this.g(y); // ! #destructure
@@ -7862,7 +7862,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @template T @arg {E$T$SignalService<T>} x */
 	E$SignalServiceEndpoint(x) {x;}
 	/** @private @arg {string} cf @arg {EI$ResponseReceived} x */
-	ResponseReceivedEndpointItem(cf,x) {
+	EI$ResponseReceived(cf,x) {
 		this.save_keys(`[${cf}.response_endpoint]`,x);
 		if("signalServiceEndpoint" in x) {
 			this.E$SignalServiceEndpoint(x);
@@ -7881,14 +7881,14 @@ class HandleTypes extends ServiceMethods {
 		} else if("appendContinuationItemsAction" in x) {
 			const {clickTrackingParams,appendContinuationItemsAction,...y}=x; this.g(y); // ! #destructure
 			this.clickTrackingParams(cf,clickTrackingParams);
-			this.AppendContinuationItemsActionData(appendContinuationItemsAction);
+			this.G$AppendContinuationItems(appendContinuationItemsAction);
 		} else {
 			debugger;
 		}
 	}
 	/** @private @arg {G$AppendContinuationItems} x */
-	AppendContinuationItemsActionData(x) {
-		const cf="AppendContinuationItemsActionData";
+	G$AppendContinuationItems(x) {
+		const cf="G$AppendContinuationItems";
 		this.save_keys(`[${cf}]`,x);
 		this.targetId(cf,x.targetId);
 		if(this.starts_with_targetId(x,"comment-replies-item-")) {
@@ -9126,7 +9126,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {CommandExecutorAction} x */
 	CommandExecutorAction(x) {
 		if("changeEngagementPanelVisibilityAction" in x) return this.ChangeEngagementPanelVisibilityAction(x);
-		if("scrollToEngagementPanelCommand" in x) return this.ScrollToEngagementPanelCommand(x);
+		if("scrollToEngagementPanelCommand" in x) return this.C$ScrollToEngagementPanel(x);
 		if("openPopupAction" in x) return this.A$OpenPopupAction(x);
 		if("hideEngagementPanelScrimAction" in x) return this.HideEngagementPanelScrimAction(x);
 		if("loopCommand" in x) return;
