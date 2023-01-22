@@ -5288,6 +5288,10 @@ class ParserService extends BaseService {
 						debugger;
 						return;
 					}
+					case "serializedTemplateConfig[]":
+						switch(ta) {case 1: case 3: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "serializedTemplateConfig":
 						switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
@@ -5431,7 +5435,17 @@ class ParserService extends BaseService {
 					if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 					switch(tv) {default: debugger; return;}
 				}
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f1": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+					} break;
+				}
 			} break;
 			case "serializedTemplateConfig": {
 				const idx=2;
