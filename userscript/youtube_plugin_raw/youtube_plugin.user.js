@@ -5756,6 +5756,44 @@ case "${path_parts[idx-1]}": {
 				u(idx);
 				debugger;
 			} break;
+			// [watch.player_params]
+			case "watch": {
+				const idx=2;
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					// [watch.player_params.f12]
+					case "params":
+					case "player_params": {
+						const idx=3;
+						if(path_parts.length===2) {
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {
+							default: u(idx); debugger; path_parts[2]===""; break;
+							// [watch.player_params.f12]
+							case "f2": case "f3": case "f7": case "f8": case "f9":
+							case "f12": case "f13": case "f24": case "f27":
+							case "f33": case "f40": case "f56": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {
+										case 1: return;
+										default: debugger; return;
+									}
+								}
+								switch(path_parts[3]) {
+									default: u(idx); debugger; path_parts[3]===""; break;
+									case "f5":
+									case "f1":
+									case "f2":
+									case "f4":
+									case "f3": u(idx); debugger; break;
+								}
+							} break;
+						}
+					} break;
+				}
+			} break;
 		}
 		console.log(`[${path}] [idx=${key_index}]`,root,tv);
 	}
