@@ -8343,7 +8343,9 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
 	}
+	/** @arg {R$Notification} x */
 	R$Notification(x) {x;}
+	/** @arg {E$GetNotificationMenuEndpoint} x */
 	E$GetNotificationMenuEndpoint(x) {x;}
 	/** @template T @arg {T$R$ContinuationItem<T>} x */
 	T$ContinuationItemRenderer(x) {
