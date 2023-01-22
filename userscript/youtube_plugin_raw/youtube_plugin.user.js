@@ -6833,7 +6833,7 @@ class HandleTypes extends ServiceMethods {
 	T$Endpoint(cf,x,f,f_v$m) {
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
-		this.t(commandMetadata,a=>f_v$m.call(this,a));
+		this.t(commandMetadata,a => f_v$m.call(this,a));
 		this.save_keys("[ServiceEndpointTemplate]",y);
 		f.call(this,y);
 	}
@@ -7065,7 +7065,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("WatchResponse",trackingParams);
 		this.R$PlayerOverlay(playerOverlays);
 		this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("WatchResponse",a));
-		this.z(engagementPanels,_x=>{debugger;});
+		this.z(engagementPanels,_x => {debugger;});
 		this.R$DesktopTopbar(topbar);
 		this.z(pageVisualEffects,this.R$CinematicContainer);
 		this.FrameworkUpdates(frameworkUpdates);
@@ -7104,7 +7104,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="FrameworkUpdates";
 		this.save_keys(`[${cf}]`,x);
 		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y); // ! #destructure
-		this.EntityBatchUpdateData(entityBatchUpdate);
+		this.D$EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
 	/** @private @arg {WebSearchboxConfig} x */
@@ -7148,14 +7148,16 @@ class HandleTypes extends ServiceMethods {
 	E$Browse(x) {
 		const cf="Browse";
 		this.save_keys(`[E$${cf}]`,x);
-		this.T$Endpoint("E$Browse",x,a=>{
+		this.T$Endpoint("E$Browse",x,a => {
 			this.w(a);
 		},this.g);
 		x;
 	}
-	/** @arg {D$Browse} x */
-	D$Browse(x) {
-
+	/** @arg {E$D$Browse} x */
+	E$D$Browse(x) {
+		const cf="D$Browse";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
 	}
 	/** @arg {RC$ResponseContext} x */
 	ResponseContext(x) {
@@ -7250,7 +7252,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(contents,this.BrowseContents);
 		const {topbar,frameworkUpdates,sidebar,observedStateTags,cacheMetadata,...y2}=y1;
 		this.t(topbar,this.R$DesktopTopbar);
-		this.t(frameworkUpdates,this.EntityBatchUpdate);
+		this.t(frameworkUpdates,this.R$EntityBatchUpdate);
 		this.t(sidebar,this.BrowseSidebar);
 		this.tz(observedStateTags,this.StateTag);
 		this.t(cacheMetadata,this.CacheMetadata);
@@ -7260,21 +7262,25 @@ class HandleTypes extends ServiceMethods {
 		this.t(maxAgeStoreSeconds,a => this.primitive_of(a,"number"));
 		this.t(background,this.MusicThumbnailRenderer);
 		const {continuationContents,alerts,...y}=y3; this.g(y);
-		this.t(continuationContents,_x=>{debugger;});
+		this.t(continuationContents,_x => {debugger;});
 		this.t(alerts,a => this.Response_alerts(cf,a));
 	}
+	/** @arg {{}} x */
+	R$MicroformatData(x) {this.emf("R$MicroformatData",x);}
+	/** @arg {R$EntityBatchUpdate} x */
+	R$EntityBatchUpdate(x) {this.H$Renderer("NotificationAction",x,this.D$EntityBatchUpdate);}
 	/** @arg {NonNullable<BrowseResponse['metadata']>} x */
-	BrowseMetadata(x) {
-		if("channelMetadataRenderer" in x) return this.ChannelMetadataRenderer(x);
-		if("playlistMetadataRenderer" in x) return this.PlaylistMetadataRenderer(x);
-		debugger;
-	}
+	BrowseMetadata(x) {this.emf("BrowseMetadata",x);}
+	/** @arg {string} cf @arg {{}} x */
+	emf(cf,x) {this.save_keys(`[${cf}]`,x); debugger;}
 	/** @arg {BrowseSidebar} x */
 	BrowseSidebar(x) {
 		if("settingsSidebarRenderer" in x) return this.SettingsSidebarRenderer(x);
 		if("playlistSidebarRenderer" in x) return this.PlaylistSidebarRenderer(x);
 		debugger;
 	}
+	/** @arg {{}} x */
+	SettingsSidebarRenderer(x) {this.emf("SettingsSidebarRenderer",x);}
 	/** @arg {DropdownData} x */
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
@@ -7296,6 +7302,8 @@ class HandleTypes extends ServiceMethods {
 		this.z(x.items,this.PlaylistSidebarItem);
 		this.trackingParams(cf,x.trackingParams);
 	}
+	/** @arg {{}} x */
+	PlaylistSidebarPrimaryInfoRenderer(x) {this.emf("PlaylistSidebarPrimaryInfoRenderer",x);}
 	/** @arg {PlaylistSidebarItem} x */
 	PlaylistSidebarItem(x) {
 		if("playlistSidebarPrimaryInfoRenderer" in x) return this.PlaylistSidebarPrimaryInfoRenderer(x);
@@ -7326,6 +7334,10 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(text);
 		this.R$Button(dismissButton);
 	}
+	/** @arg {{}} x */
+	A$LabelData(x) {this.emf("A$LabelData",x);}
+	/** @arg {{}} x */
+	A$Accessibility(x) {this.emf("A$Accessibility",x);}
 	/** @arg {D$Button} x */
 	D$Button(x) {
 		const cf="ButtonData";
@@ -7349,7 +7361,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(style,a => this.save_string("[Button.style]",a));
 		this.t(text,this.TextT);
 		this.t_cf(cf,trackingParams,this.trackingParams);
-		this.t(hint,_x=>{debugger;});
+		this.t(hint,_x => {debugger;});
 		this.t(targetId,a => {
 			/** @type {D$Button$TargetId} */
 			switch(a) {
@@ -7373,6 +7385,16 @@ class HandleTypes extends ServiceMethods {
 		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R$ThumbnailOverlayResumePlaybackRenderer(x);
 		debugger;
 	}
+	/** @arg {{}} x */
+	R$ThumbnailOverlayHoverTextRenderer(x) {this.emf("R$ThumbnailOverlayHoverTextRenderer",x);}
+	/** @arg {{}} x */
+	R$ThumbnailOverlayResumePlaybackRenderer(x) {this.emf("R$ThumbnailOverlayResumePlaybackRenderer",x);}
+	/** @arg {{}} x */
+	R$ThumbnailOverlayBottomPanelRenderer(x) {this.emf("R$ThumbnailOverlayBottomPanelRenderer",x);}
+	/** @arg {{}} x */
+	R$ThumbnailOverlayTimeStatus(x) {this.emf("R$ThumbnailOverlayTimeStatus",x);}
+	/** @arg {{}} x */
+	R$ThumbnailOverlayNowPlaying(x) {this.emf("R$ThumbnailOverlayNowPlaying",x);}
 	/** @arg {D$ThumbnailOverlayLoadingPreview} x */
 	D$ThumbnailOverlayLoadingPreview(x) {
 		const cf_="D$ThumbnailOverlayLoadingPreview";
@@ -7422,6 +7444,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ContentsArrayTemplate(this.w(x),this.ClipCreationRenderer);
 	}
+	/** @arg {{}} x */
+	ClipCreationRenderer(x) {this.emf("R$ClipCreationRenderer",x);}
 	/** @arg {R$NotificationText} x */
 	NotificationTextRenderer(x) {
 		const cf="NotificationTextRenderer";
@@ -7438,10 +7462,12 @@ class HandleTypes extends ServiceMethods {
 	ResultRenderer(x) {
 		const cf="ResultRenderer";
 		this.save_keys(`[${cf}]`,x);
-		if("tabRenderer" in x) return ((_x)=>{debugger;})(x);
+		if("tabRenderer" in x) return ((_x) => {debugger;})(x);
 		if("expandableTabRenderer" in x) return this.ExpandableTabRenderer(x);
 		debugger;
 	}
+	/** @arg {{}} x */
+	ExpandableTabRenderer(x) {this.emf("R$ExpandableTabRenderer",x);}
 	/** @arg {D$HorizontalCardList['header']} x */
 	RichListHeaderRenderer(x) {
 		const cf="RichListHeaderRenderer";
@@ -7458,12 +7484,12 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ContentsArrayTemplate(x,a => {
 			if("musicResponsiveListItemRenderer" in a) {
-				((_x)=>{debugger;})(a);
+				((_x) => {debugger;})(a);
 			} else debugger;
 		});
 		this.D$TextWithRuns(x.title);
 		this.trackingParams("MusicShelf",x.trackingParams);
-		this.z(x.continuations,((_x)=>{debugger;}));
+		this.z(x.continuations,((_x) => {debugger;}));
 	}
 	/** @arg {ReloadContinuationDataInner} x */
 	ReloadContinuationDataInner(x) {
@@ -7480,12 +7506,12 @@ class HandleTypes extends ServiceMethods {
 		const {trigger,continuationEndpoint,button,ghostCards,...y}=x; this.g(y); // ! #destructure
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		// this.save_enum("CONTINUATION_TRIGGER",trigger);
-		this.ContinuationEndpointRoot(continuationEndpoint);
+		this.G$ContinuationEndpoint(continuationEndpoint);
 		this.t(button,this.R$Button);
-		this.t(ghostCards,((_x)=>{debugger;}));
+		this.t(ghostCards,((_x) => {debugger;}));
 	}
-	/** @arg {ContinuationEndpointRoot} x */
-	ContinuationEndpointRoot(x) {
+	/** @arg {G$ContinuationEndpoint} x */
+	G$ContinuationEndpoint(x) {
 		const cf="ContinuationEndpointRoot";
 		this.save_keys(`[${cf}]`,x);
 		if("continuationCommand" in x) {
@@ -7496,6 +7522,8 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
+	/** @arg {{}} x */
+	E$GetTranscriptEndpoint(x) {this.emf("R$GetTranscriptEndpoint",x);}
 	/** @arg {E$Continuation} x */
 	ContinuationCommand(x) {
 		if(!x) {debugger; return;}
@@ -7633,6 +7661,13 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(fromHistory,"boolean");
 		this.primitive_of(navigationDoneMs,"number");
 	}
+	/** @arg {YTNavigateFinishDetail['endpoint']} x */
+	E$PageEndpoint(x) {
+		if(!("clickTrackingParams" in x)) return;
+		if("browseEndpoint" in x) return;
+		if("watchEndpoint" in x) return;
+		debugger;
+	}
 	/** @arg {YTNavigateFinishDetail["response"]} x */
 	DataResponsePageType(x) {
 		const cf="DataResponsePageType";
@@ -7762,13 +7797,23 @@ class HandleTypes extends ServiceMethods {
 	AllPopups(x) {
 		const cf="AllPopups";
 		this.save_keys(`[${cf}]`,x);
-		if("confirmDialogRenderer" in x) return this.ConfirmDialogRenderer(x);
-		if("multiPageMenuRenderer" in x) return this.MultiPageMenuRenderer(x);
+		if("confirmDialogRenderer" in x) return this.R$ConfirmDialog(x);
+		if("multiPageMenuRenderer" in x) return this.R$MultiPageMenu(x);
 		if("notificationActionRenderer" in x) return this.R$NotificationAction(x);
-		if("pdgBuyFlowRenderer" in x) return this.PdgBuyFlowRenderer(x);
-		if("unifiedSharePanelRenderer" in x) return this.UnifiedSharePanelRenderer(x);
-		if("voiceSearchDialogRenderer" in x) return this.VoiceSearchDialogRenderer(x);
+		if("pdgBuyFlowRenderer" in x) return this.R$PdgBuyFlow(x);
+		if("unifiedSharePanelRenderer" in x) return this.R$UnifiedSharePanel(x);
+		if("voiceSearchDialogRenderer" in x) return this.R$VoiceSearchDialog(x);
 	}
+	/** @arg {{}} x */
+	R$ConfirmDialog(x) {this.H$Renderer("ConfirmDialog",x,this.D$ConfirmDialog);}
+	/** @arg {{}} x */
+	R$MultiPageMenu(x) {this.H$Renderer("MultiPageMenu",x,this.D$MultiPageMenu);}
+	/** @arg {{}} x */
+	R$PdgBuyFlow(x) {this.H$Renderer("PdgBuyFlow",x,this.D$PdgBuyFlow);}
+	/** @arg {{}} x */
+	R$UnifiedSharePanel(x) {this.H$Renderer("UnifiedSharePanel",x,this.D$UnifiedSharePanel);}
+	/** @arg {{}} x */
+	R$VoiceSearchDialog(x) {this.H$Renderer("VoiceSearchDialog",x,this.D$VoiceSearchDialog);}
 	/** @arg {string} cf @arg {{}} x */
 	do_codegen(cf,x) {
 		let u_name=this.get_codegen_name(x);
@@ -7790,20 +7835,19 @@ class HandleTypes extends ServiceMethods {
 		return this.uppercase_first(kk);
 	}
 	/** @arg {PdgBuyFlow} x */
-	PdgBuyFlow(x) {
+	D$PdgBuyFlow(x) {
 		const cf="PdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y); // ! #destructure
 		this.R$PdgBuyFlowHeader(header);
-		this.z(content,this.SuperVodBuyFlowContentRenderer);
+		this.z(content,this.R$SuperVodBuyFlowContent);
 		this.trackingParams(cf,trackingParams);
 		this.GetSurveyCommand(onCloseCommand);
 	}
-	/** @arg {GetSurveyCommand} x */
-	GetSurveyCommand(x) {
-		const cf="GetSurveyCommand";
-		this.save_keys(`[${cf}]`,x);
-	}
+	/** @arg {{}} x */
+	R$PdgBuyFlowHeader(x) {this.H$Renderer("PdgBuyFlowHeader",x,this.D$VoiceSearchDialog);}
+	/** @arg {{}} x */
+	R$SuperVodBuyFlowContent(x) {this.H$Renderer("SuperVodBuyFlowContentRenderer",x,this.D$SuperVodBuyFlowContent);}
 	/** @arg {D$NotificationAction} x */
 	D$NotificationAction(x) {
 		const cf="NotificationActionData";
@@ -7814,7 +7858,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {D$ConfirmDialog} x */
-	ConfirmDialogData(x) {
+	D$ConfirmDialog(x) {
 		const cf="ConfirmDialogData";
 		this.save_keys(`[${cf}]`,x);
 		const {title,trackingParams,dialogMessages,confirmButton,cancelButton,primaryIsCancel,...y}=x; this.g(y); // ! #destructure
@@ -7825,64 +7869,27 @@ class HandleTypes extends ServiceMethods {
 		this.R$Button(cancelButton);
 		this.primitive_of(primaryIsCancel,"boolean");
 	}
-	/** @arg {MultiPageMenu} x */
-	MultiPageMenu(x) {
+	/** @arg {D$MultiPageMenu} x */
+	D$MultiPageMenu(x) {
 		const cf="MultiPageMenu";
 		this.save_keys(`[${cf}]`,x);
-		switch(x.style) {
-			case "MULTI_PAGE_MENU_STYLE_TYPE_CREATION": {
-				const {sections,style,trackingParams,...y}=x; this.g(y); // ! #destructure
-				this.z(sections,a => {
-					if("multiPageMenuSectionRenderer" in a) {
-						return this.MultiPageMenuSectionRenderer(a);
-					}
-					style;
-					trackingParams;
-					debugger;
-				});
-			} return;
-		}
-		if("footer" in x) {
-			const {header,sections,footer,style,...y}=x; this.g(y); // ! #destructure
-			this.SimpleMenuHeaderRenderer(header);
-			this.z(sections,a => {
-				if("accountSectionListRenderer" in a) {
-					return this.AccountSectionListRenderer(a);
-				}
-				debugger;
-			});
-			this.MultiPageMenuSectionRenderer(footer);
-			if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER") debugger;
-			return;
-		}
-		switch(x.style) {
-			case "MULTI_PAGE_MENU_STYLE_TYPE_ACCOUNT": {
-				const {trackingParams,style,showLoadingSpinner,...y}=x; this.g(y); // ! #destructure
-				this.trackingParams(cf,trackingParams);
-			} break;
-			case "MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS": {
-				const {header,sections,trackingParams,style,...y}=x; this.g(y); // ! #destructure
-				this.SimpleMenuHeaderRenderer(header);
-				this.z(sections,a => {
-					if(a.multiPageMenuNotificationSectionRenderer) {
-						return this.MultiPageMenuNotificationSectionRenderer(a);
-					}
-					debugger;
-				});
-				this.trackingParams(cf,trackingParams);
-			} break;
-		}
-		if("showLoadingSpinner" in x) {
-			return;
-		}
+		debugger;
 	}
-	/** @arg {ItemsTemplate<R$NotificationRenderer|T$R$ContinuationItem<E$GetNotificationMenuEndpoint>>} x */
+	/** @arg {R$Notification} x */
+	R$Notification(x) {this.H$Renderer("NotificationRenderer",x,this.D$Notification);}
+	/** @arg {D$Notification} x */
+	D$Notification(x) {
+		const cf="Notification";
+		this.save_keys(`[D$${cf}]`,x);
+		debugger;
+	}
+	/** @arg {ItemsTemplate<R$Notification|T$R$ContinuationItem<E$GetNotificationMenuEndpoint>>} x */
 	MultiPageMenuNotificationSection(x) {
 		const cf="MultiPageMenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
 		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let xr=this.z(items,x => {
-			if("notificationRenderer" in x) return this.NotificationRenderer(x);
+			if("notificationRenderer" in x) return this.R$Notification(x);
 			if("continuationItemRenderer" in x) return this.T$ContinuationItemRenderer(x);
 			debugger;
 		});
@@ -7912,7 +7919,7 @@ class HandleTypes extends ServiceMethods {
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
 		return y;
 	}
-	/** @arg {YtNotification} x */
+	/** @arg {D$Notification} x */
 	Notification(x) {
 		const cf="Notification";
 		this.save_keys(`[${cf}]`,x);
@@ -7998,7 +8005,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="UpdatedMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},continuation,actions,...y}=x; this.g(y); // ! #destructure
-		((_x)=>{debugger;})(continuation);
+		((_x) => {debugger;})(continuation);
 		this.z(actions,a => {
 			if("updateViewershipAction" in a) {
 				return this.UpdateViewershipAction(a);
@@ -8054,7 +8061,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		let x1=x.updateViewershipAction;
 		this.save_keys(`[UpdateViewershipActionData]`,x1);
-		((_x)=>{debugger;})(x1.viewCount);
+		((_x) => {debugger;})(x1.viewCount);
 	}
 	/** @arg {VideoViewCountData} x */
 	VideoViewCountData(x) {
@@ -8080,8 +8087,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) return this.SearchResponse(x);
 		const {responseContext: {},contents,continuationContents,trackingParams,header,...y}=x; this.g(y); // ! #destructure
-		this.t(contents,((_x)=>{debugger;}));
-		this.t(continuationContents,((_x)=>{debugger;}));
+		this.t(contents,((_x) => {debugger;}));
+		this.t(continuationContents,((_x) => {debugger;}));
 		this.trackingParams(cf,trackingParams);
 		this.t(header,this.MusicHeaderRenderer);
 	}
@@ -8091,7 +8098,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},estimatedResults,contents,trackingParams,topbar,refinements,onResponseReceivedCommands,targetId,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(estimatedResults);
-		((_x)=>{debugger;})(contents);
+		((_x) => {debugger;})(contents);
 		this.trackingParams(cf,trackingParams);
 		this.R$DesktopTopbar(topbar);
 		this.z(refinements,this.primitive_of_string);
@@ -8179,7 +8186,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="LiveChatContinuationData";
 		this.save_keys(`[${cf}]`,x);
 		const {continuations,actions,actionPanel,itemList,header,ticker,trackingParams,participantsList,popoutMessage,emojis,clientMessages,viewerName,...y}=x; this.g(y); // ! #destructure
-		this.z(continuations,((_x)=>{debugger;}));
+		this.z(continuations,((_x) => {debugger;}));
 		this.tz(actions,(a => {
 			if("replayChatItemAction" in a) {
 				return this.ReplayChatItemAction(a);
@@ -8227,7 +8234,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="AddChatItemActionData";
 		this.save_keys(`[${cf}]`,x);
 		const {item,clientId,...y}=x; this.g(y); // ! #destructure
-		((_x)=>{debugger;})(item);
+		((_x) => {debugger;})(item);
 		this.t(clientId,this.primitive_of_string);
 	}
 	/** @arg {LiveChatViewerEngagementMessage} x */
@@ -8286,12 +8293,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="NextResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,videoReporting,queueContextParams,continuationContents,...y}=x;
-		this.t(contents,((_x)=>{debugger;}));
+		this.t(contents,((_x) => {debugger;}));
 		this.t(currentVideoEndpoint,this.E$WatchEndpoint);
 		this.trackingParams(cf,trackingParams);
 		this.t(playerOverlays,this.PlayerOverlayRenderer);
 		this.tz(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("NextResponse",a));
-		this.tz(engagementPanels,((_x)=>{debugger;}));
+		this.tz(engagementPanels,((_x) => {debugger;}));
 		const {...y1}=y; this.g(y1);
 		this.t(videoReporting,this.ReportFormModalRenderer);
 		this.t(queueContextParams,a => this.params("Next","next.queue_context_params",a));
@@ -8302,7 +8309,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="MusicQueue";
 		this.save_keys(`[${cf}]`,x);
 		const {content,hack,...y}=x; this.g(y); // ! #destructure
-		this.t(content,((_x)=>{debugger;}));
+		this.t(content,((_x) => {debugger;}));
 		this.primitive_of(hack,"boolean");
 	}
 	/** @arg {PlaylistPanel} x */
@@ -8318,7 +8325,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ownerName,this.D$TextWithRuns);
 		this.primitive_of(isInfinite,"boolean");
 		const {continuations,shortBylineText,longBylineText,...y3}=y2;
-		this.tz(continuations,((_x)=>{debugger;}));
+		this.tz(continuations,((_x) => {debugger;}));
 		this.D$TextWithRuns(shortBylineText);
 		this.t(longBylineText,this.D$TextWithRuns);
 		const {trackingParams,titleText,...y4}=y3;
@@ -8386,7 +8393,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {contents,masthead,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.RendererContentItem);
-		this.t(masthead,((_x)=>{debugger;}));
+		this.t(masthead,((_x) => {debugger;}));
 	}
 	/** @arg {ReflowOptions} x */
 	ReflowOptions(x) {
@@ -8428,7 +8435,7 @@ class HandleTypes extends ServiceMethods {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,loggingDirectives,...y}=x;
 					if(panelIdentifier!=="comment-item-section") debugger;
 					this.EngagementPanelTitleHeaderRenderer(header);
-					((_x)=>{debugger;})(content);
+					((_x) => {debugger;})(content);
 					if(targetId!=="engagement-panel-comments-section") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.A$LoggingDirectives(loggingDirectives);
@@ -8451,7 +8458,7 @@ class HandleTypes extends ServiceMethods {
 					const {panelIdentifier,header,content,veType: {},targetId,visibility,onShowCommands,loggingDirectives,...y}=x;
 					if(panelIdentifier!=="engagement-panel-searchable-transcript") debugger;
 					this.EngagementPanelTitleHeaderRenderer(header);
-					((_x)=>{debugger;})(content);
+					((_x) => {debugger;})(content);
 					if(targetId!=="engagement-panel-searchable-transcript") debugger;
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
 					this.A$LoggingDirectives(loggingDirectives);
@@ -8476,7 +8483,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 				case 139722: {
 					const {content,header,veType: {},targetId,visibility,loggingDirectives,continuationService,identifier,...y}=x; this.g(y); // ! #destructure
-					((_x)=>{debugger;})(content);
+					((_x) => {debugger;})(content);
 					this.t(header,this.EngagementPanelTitleHeaderRenderer);
 					this.targetId(cf,targetId);
 					if(visibility!=="ENGAGEMENT_PANEL_VISIBILITY_HIDDEN") debugger;
@@ -8561,7 +8568,7 @@ class HandleTypes extends ServiceMethods {
 		} else if("clipSectionRenderer" in x) {
 			return this.ClipSectionRenderer(x);
 		} else if("continuationItemRenderer" in x) {
-			return ((_x)=>{debugger;})(x);
+			return ((_x) => {debugger;})(x);
 		} else if("sectionListRenderer" in x) {
 			return this.SectionListRendererTemplate(x);
 		} else if("structuredDescriptionContentRenderer" in x) {
@@ -8645,7 +8652,7 @@ class HandleTypes extends ServiceMethods {
 				if(targetId!=="comments-section") debugger;
 				if(continuationItems.length!==1) debugger;
 				const [item]=continuationItems;
-				((_x)=>{debugger;})(item);
+				((_x) => {debugger;})(item);
 			} break;
 			default: debugger; break;
 		};
@@ -8702,7 +8709,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowserMediaSessionRoot";
 		this.save_keys(`[${cf}]`,x);
 		const {actions,browserMediaSession,...y}=x; this.g(y); // ! #destructure
-		this.z(actions,((_x)=>{debugger;}));
+		this.z(actions,((_x) => {debugger;}));
 		this.R$BrowserMediaSession(browserMediaSession);
 	}
 	/** @arg {D$LikeButton} x */
@@ -9838,7 +9845,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(endpoint,this.E$SearchEndpoint);
 		this.primitive_of_string(title);
 		if(selected!==void 0) this.primitive_of(selected,"boolean");
-		((_x)=>{debugger;})(content);
+		((_x) => {debugger;})(content);
 		console.log("[tabIdentifier]",tabIdentifier);
 		this.trackingParams(cf,trackingParams);
 	}
@@ -9903,7 +9910,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="RendererContentItem";
 		this.save_keys(`[${cf}]`,x);
 		if("richItemRenderer" in x) return this.RichItemRenderer(x);
-		if("continuationItemRenderer" in x) return ((_x)=>{debugger;})(x);
+		if("continuationItemRenderer" in x) return ((_x) => {debugger;})(x);
 		if("richSectionRenderer" in x) return this.R$RichSection(x);
 		debugger;
 	}
@@ -10061,7 +10068,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(dependencies,this.primitive_of_string);
 	}
 	/** @arg {D$EntityBatchUpdateData} x */
-	EntityBatchUpdateData(x) {
+	D$EntityBatchUpdate(x) {
 		const cf="EntityBatchUpdateData";
 		this.save_keys(`[${cf}]`,x);
 		const {mutations,timestamp,...y}=x; this.g(y); // ! #destructure
@@ -10238,7 +10245,7 @@ class HandleTypes extends ServiceMethods {
 		}
 	}
 	/** @arg {D$VoiceSearchDialog} x */
-	VoiceSearchDialog(x) {
+	D$VoiceSearchDialog(x) {
 		const cf="VoiceSearchDialog";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,exitButton,...y}=x;
@@ -10345,7 +10352,7 @@ class HandleTypes extends ServiceMethods {
 			this.primitive_of_string(tooltip);
 			this.T$Icon(icon);
 			{
-				let x=this.MultiPageMenuRenderer(menuRenderer);
+				let x=this.R$MultiPageMenu(menuRenderer);
 				this.TopbarMenuButton$MultiPageMenu(x);
 			}
 			switch(style) {
@@ -10444,7 +10451,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$DesktopTopbar(desktopTopbar);
 		if(!engagementPanels) debugger;
 		else {
-			this.z(engagementPanels,((_x)=>{debugger;}));
+			this.z(engagementPanels,((_x) => {debugger;}));
 		}
 	}
 	/** @arg {Extract<ReelPlayerOverlayData,{reelPlayerNavigationModel:any}>} x */
@@ -10506,7 +10513,7 @@ class HandleTypes extends ServiceMethods {
 	WatchNextItem(x) {
 		const cf="WatchNextItem";
 		this.save_keys(`[${cf}]`,x);
-		if("continuationItemRenderer" in x) return ((_x)=>{debugger;})(x);
+		if("continuationItemRenderer" in x) return ((_x) => {debugger;})(x);
 		if("compactVideoRenderer" in x) return this.R$CompactVideoRenderer(x);
 		debugger;
 	}
@@ -10948,7 +10955,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(selected,"boolean");
 		this.t(serviceEndpoint,this.ContinuationCommand);
 		this.t(accessibility,this.A$Accessibility);
-		this.t(continuation,((_x)=>{debugger;}));
+		this.t(continuation,((_x) => {debugger;}));
 		this.trackingParams(cf,trackingParams);
 	}
 	/** @arg {ChannelResponse} x */
@@ -11030,7 +11037,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlayerOverlayWithSupportedRenderers";
 		this.save_keys(`[${cf}]`,x);
 		const {likeButton,reelPlayerHeaderSupportedRenderers,menu,nextItemButton,prevItemButton,subscribeButtonRenderer,style,viewCommentsButton,videoInteractions,trackingParams,shareButton,pivotButton,badge,...y}=x; this.g(y); // ! #destructure
-		((_x)=>{debugger;})(likeButton);
+		((_x) => {debugger;})(likeButton);
 		this.ReelPlayerHeaderRenderer(reelPlayerHeaderSupportedRenderers);
 		this.R$Menu(menu);
 		this.R$Button(nextItemButton);
@@ -11191,7 +11198,7 @@ class HandleTypes extends ServiceMethods {
 		const {title,viewCount,videoActions,trackingParams,superTitleLink,dateText,relativeDateText,badges,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(title);
 		this.t(superTitleLink,this.D$TextWithRuns);
-		((_x)=>{debugger;})(viewCount);
+		((_x) => {debugger;})(viewCount);
 		this.R$Menu(videoActions);
 		this.trackingParams(cf,trackingParams);
 		this.D$SimpleText(dateText);
@@ -11452,7 +11459,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @arg {UnifiedSharePanel} x */
-	UnifiedSharePanel(x) {
+	D$UnifiedSharePanel(x) {
 		const cf="UnifiedSharePanel";
 		this.save_keys(`[${cf}]`,x);
 		const {trackingParams,showLoadingSpinner,...y}=x; this.g(y); // ! #destructure
@@ -11757,7 +11764,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @arg {SuperVodBuyFlowContent} x */
-	SuperVodBuyFlowContent(x) {
+	D$SuperVodBuyFlowContent(x) {
 		const cf="SuperVodBuyFlowContent";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
@@ -12012,6 +12019,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {EmojiPickerRenderer} x */
 	EmojiPickerRenderer(x) {
 		const cf="EmojiPickerRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {GetSurveyCommand} x */
+	GetSurveyCommand(x) {
+		const cf="GetSurveyCommand";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}

@@ -1,4 +1,4 @@
-type YtNotification={
+type D$Notification={
 	thumbnail: D$Thumbnail;
 	videoThumbnail: D$Thumbnail;
 	shortMessage: D$SimpleText;

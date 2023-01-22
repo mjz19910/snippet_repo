@@ -1,3 +1,3 @@
-type EntityBatchUpdate={
+type R$EntityBatchUpdate={
 	entityBatchUpdate: D$EntityBatchUpdateData;
 };

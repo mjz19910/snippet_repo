@@ -10,7 +10,7 @@ type BrowseResponse={
 	trackingParams: string;
 	topbar?: R$DesktopTopbar;
 	microformat?: R$MicroformatData;
-	frameworkUpdates?: EntityBatchUpdate;
+	frameworkUpdates?: R$EntityBatchUpdate;
 	// ?
 	maxAgeStoreSeconds?: number;
 	background?: MusicThumbnailRenderer;

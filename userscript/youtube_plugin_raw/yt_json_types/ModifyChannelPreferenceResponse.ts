@@ -4,5 +4,5 @@ type ModifyChannelPreferenceResponse={
 	channelId: `UC${string}`;
 	newNotificationButton: SubscriptionNotificationToggleButtonRenderer;
 	trackingParams: string;
-	frameworkUpdates: EntityBatchUpdate;
+	frameworkUpdates: R$EntityBatchUpdate;
 };
