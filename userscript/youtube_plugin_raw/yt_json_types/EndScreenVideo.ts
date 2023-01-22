@@ -7,7 +7,7 @@ type D$EndScreenVideo={
 	lengthInSeconds?: number;
 	navigationEndpoint: E$WatchEndpoint|E$ReelWatchEndpoint;
 	trackingParams: string;
-	shortViewCountText: D$TextT;
+	shortViewCountText: G$Text;
 	publishedTimeText: D$SimpleText;
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
 };

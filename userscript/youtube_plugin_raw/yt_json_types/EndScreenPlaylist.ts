@@ -3,7 +3,7 @@ type D$EndScreenPlaylist={
 	title: D$SimpleText;
 	thumbnail: D$Thumbnail;
 	videoCount?: `${number}`;
-	longBylineText: D$TextT;
+	longBylineText: G$Text;
 	videoCountText: D$TextWithRuns;
 	navigationEndpoint: E$WatchEndpoint;
 	trackingParams: string;

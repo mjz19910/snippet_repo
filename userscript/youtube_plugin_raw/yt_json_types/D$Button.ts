@@ -9,7 +9,7 @@ type D$Button={
 	tooltip?: string;
 	size?: ButtonSizeType;
 	style?: ButtonStyleType;
-	text?: D$TextT;
+	text?: G$Text;
 	trackingParams?: string;
 	hint?: R$Hint;
 	targetId?: D$Button$TargetId;

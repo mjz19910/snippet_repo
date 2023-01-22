@@ -7294,15 +7294,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$PlaylistSidebarSecondaryInfo} x */
 	R$PlaylistSidebarSecondaryInfo(x) {
-		this.PlaylistSidebarSecondaryInfo(x.playlistSidebarSecondaryInfoRenderer);
-	}
-	/** @private @arg {D$PlaylistSidebarSecondaryInfo} x */
-	PlaylistSidebarSecondaryInfo(x) {
-		this.R$VideoOwner(x.videoOwner);
-	}
-	/** @private @arg {R$VideoOwner} x */
-	R$VideoOwner(x) {
-		this.VideoOwnerData(x.videoOwnerRenderer);
+		x; debugger;
 	}
 	/** @public @arg {D$AlertWithButton} x */
 	AlertWithButton(x) {
@@ -7341,7 +7333,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		this.t(style,a => this.save_string("[Button.style]",a));
-		this.t(text,this.TextT);
+		this.t(text,this.G$Text);
 		this.t_cf(cf,trackingParams,this.trackingParams);
 		this.t(hint,_x => {debugger;});
 		this.t(targetId,a => {
@@ -7364,26 +7356,26 @@ class HandleTypes extends ServiceMethods {
 	WatchEndpointMusicConfig(x) {
 		const cf="WatchEndpointMusicConfig";
 		this.save_keys(`[${cf}]`,x);
-		this.WatchEndpointMusicConfigData(x.watchEndpointMusicConfig);
+		x; debugger;
 	}
 	/** @private @arg {PrefetchHintConfig} x */
 	PrefetchHintConfig(x) {
 		const cf="Html5PlaybackOnesieConfig";
 		this.save_keys(`[${cf}]`,x);
-		this.PrefetchHintConfigData(x.prefetchHintConfig);
+		x; debugger;
 	}
 	/** @private @arg {R$ResourceStatusInResponseCheck} x */
 	ResourceStatusInResponseCheck(x) {
 		const cf="ResourceStatusInResponseCheck";
 		this.save_keys(`[${cf}]`,x);
-		this.ResourceStatusInResponseCheckData(x.resourceStatusInResponseCheck);
+		x; debugger;
 	}
 	/** @private @arg {R$MusicThumbnail} x */
 	R$MusicThumbnail(x) {
 		const cf="MusicThumbnailRenderer";
 		this.save_keys(`[${cf}]`,x);
 		if(!x.musicThumbnailRenderer) debugger;
-		this.MusicThumbnailData(x.musicThumbnailRenderer);
+		x; debugger;
 	}
 	/** @public @arg {D$PdgBuyFlowHeader} x */
 	D$PdgBuyFlowHeader(x) {
@@ -7428,15 +7420,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.primitive_of(x.token,"string");
 		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
-	}
-	/** @private @arg {D$MusicThumbnail} x */
-	MusicThumbnailData(x) {
-		const cf="MusicThumbnailData";
-		this.save_keys("[]",x);
-		this.D$Thumbnail(x.thumbnail);
-		this.save_enum("MUSIC_THUMBNAIL_CROP",x.thumbnailCrop);
-		this.save_enum("MUSIC_THUMBNAIL_SCALE",x.thumbnailScale);
-		this.trackingParams(cf,x.trackingParams);
 	}
 	/** @private @arg {D$Thumbnail} x */
 	D$Thumbnail(x) {
@@ -8108,35 +8091,6 @@ class HandleTypes extends ServiceMethods {
 	R$Html5PlaybackOnesieConfig(x) {this.H$R$("Html5PlaybackOnesieConfig",x,a => {a; debugger;});}
 	/** @private @arg {R$VssLoggingContext} x */
 	R$VssLoggingContext(x) {x;}
-	/** @private @arg {D$WatchEndpointMusicConfig} x */
-	WatchEndpointMusicConfigData(x) {
-		const cf="WatchEndpointMusicConfigData";
-		this.save_keys(`[${cf}]`,x);
-		const {hasPersistentPlaylistPanel,musicVideoType,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(hasPersistentPlaylistPanel,"boolean");
-		switch(musicVideoType) {
-			default: debugger; break;
-			case "MUSIC_VIDEO_TYPE_ATV": break;
-		};
-	}
-	/** @private @arg {D$PrefetchHintConfig} x */
-	PrefetchHintConfigData(x) {
-		const cf="Html5PlaybackOnesieConfig";
-		this.save_keys(`[${cf}]`,x);
-		const {prefetchPriority: a1,playbackRelativeSecondsPrefetchCondition: b1,countdownUiRelativeSecondsPrefetchCondition: b2,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of(a1,"number");
-		if(a1!==0) {
-			console.log("prePri",a1);
-		}
-		if(b1!==void 0) {
-			this.primitive_of(b1,"number");
-			if(b1!==-3) {console.log("playRelSecPC",b1); debugger;}
-		}
-		if(b2!==void 0) {
-			this.primitive_of(b2,"number");
-			if(b2!==-3) console.log("CdUiRelSecPC",b2);
-		}
-	}
 	/** @private @arg {NonNullable<D$TextRun['navigationEndpoint']>} x */
 	handle_text_endpoint(x) {
 		if("browseEndpoint" in x) return this.E$Browse(x);
@@ -8163,8 +8117,8 @@ class HandleTypes extends ServiceMethods {
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of_string(text);
 	}
-	/** @private @arg {D$TextT} x */
-	TextT(x) {
+	/** @private @arg {G$Text} x */
+	G$Text(x) {
 		const cf="TextT";
 		this.save_keys(`[${cf}]`,x);
 		if("simpleText" in x) {
@@ -8417,7 +8371,7 @@ class HandleTypes extends ServiceMethods {
 		const {items,trackingParams,formattedTitle,...y}=x; this.g(y); // ! #destructure
 		this.z(items,this.G$GuideSectionItem);
 		this.trackingParams(cf,trackingParams);
-		this.t(formattedTitle,this.TextT);
+		this.t(formattedTitle,this.G$Text);
 	}
 	/** @private @arg {G$GuideSectionItem} x */
 	G$GuideSectionItem(x) {
@@ -8620,10 +8574,14 @@ class HandleTypes extends ServiceMethods {
 	 */
 	R$C4TabbedHeader(x) {this.H$R$("C4TabbedHeader",x,a => {a; debugger;});}
 	/** @private @arg {R$FeedTabbedHeader} x */
-	R$FeedTabbedHeader(x) {this.H$R$("FeedTabbedHeader",x,a => {a; debugger;});}
+	R$FeedTabbedHeader(x) {this.H$R$("FeedTabbedHeader",x,this.D$FeedTabbedHeader);}
 	/** @private @arg {R$PlaylistHeader} x */
 	R$PlaylistHeader(x) {
-		this.PlaylistHeader(x.playlistHeaderRenderer);
+		x; debugger;
+	}
+	/** @private @arg {D$FeedTabbedHeader} x */
+	D$FeedTabbedHeader(x) {
+		this.D$TextWithRuns(this.w(x))
 	}
 	/** @private @arg {CacheMetadata} x */
 	CacheMetadata(x) {
@@ -8786,41 +8744,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {R$TemplateUpdate} x */
 	/** @private @arg {R$TemplateUpdate} x */
 	R$TemplateUpdate(x) {this.H$R$("TemplateUpdate",x,a => {a; debugger;});}
-	/** @private @arg {D$ResourceStatusInResponseCheckData} x */
-	ResourceStatusInResponseCheckData(x) {
-		const cf="ResourceStatusInResponseCheckData";
-		this.save_keys(`[${cf}]`,x);
-		const {resourceStatuses,serverBuildLabel,...y}=x; this.g(y); // ! #destructure
-		this.z(resourceStatuses,this.ElementResourceStatus);
-		let ysl=split_string(serverBuildLabel,"_");
-		if(ysl[0]!=="boq") debugger;
-		ysl[1]!=="youtube-watch-ui";
-		let vs=split_string_once(ysl[2],".");
-		if(!this.str_starts_with(vs[0],"202301")) debugger;
-		switch(ysl[3]) {
-			case "p0": break;
-			case "p1": break;
-			default: debugger; break;
-		}
-	}
-	/** @private @arg {D$ElementResourceStatus} x */
-	ElementResourceStatus(x) {
-		const cf="ElementResourceStatus";
-		this.save_keys(`[${cf}]`,x);
-		const {identifier,status,...y}=x; this.g(y); // ! #destructure
-		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
-		let vv=split_string_once(identifier,"|");
-		switch(vv[0]) {
-			default: console.log(vv); debugger; break;
-			case "bottom_sheet_list_option.eml": break;
-			case "track_selection_sheet_option.eml": break;
-		}
-		switch(vv[1]) {
-			default: console.log(vv); debugger; break;
-			case "cd39732d53f1132c": break;
-			case "f3619d8bb085c9a9": break;
-		}
-	}
 	/** @private @arg {D$EntityBatchUpdateData} x */
 	D$EntityBatchUpdate(x) {
 		const cf="EntityBatchUpdateData";
@@ -9063,23 +8986,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {D$VideoOwner} x */
-	VideoOwnerData(x) {
-		const cf="VideoOwnerData";
-		this.save_keys(`[${cf}]`,x);
-		if("badges" in x) {
-			let u=this.VideoOwner$Omit(x);
-			const {badges,membershipButton,...y}=u; this.g(y); // ! #destructure
-			this.z(badges,this.R$MetadataBadge);
-			this.R$Button(membershipButton);
-			return;
-		}
-		let u=this.VideoOwner$Omit(x);
-		const {membershipButton,...y}=u; this.g(y); // ! #destructure
-		this.R$Button(membershipButton);
-	}
-	/** @private @arg {R$MetadataBadge} x */
-	R$MetadataBadge(x) {x;}
 	/** @private @arg {D$SubscriptionButton} x */
 	SubscriptionButton(x) {
 		const cf="SubscriptionButton";
@@ -9382,12 +9288,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="ThumbnailsList";
 		this.save_keys(`[${cf}]`,x);
 		this.D$Thumbnail(x.thumbnail);
-	}
-	/** @private @arg {D$PlaylistHeader} x */
-	PlaylistHeader(x) {
-		const cf="PlaylistHeader";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
 	}
 	/** @private @arg {D$AdLayoutLogging} x */
 	AdLayoutLoggingData(x) {

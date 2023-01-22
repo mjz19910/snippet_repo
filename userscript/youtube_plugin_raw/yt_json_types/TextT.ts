@@ -1,1 +1,1 @@
-type D$TextT=D$SimpleText|D$TextWithRuns;
+type G$Text=D$SimpleText|D$TextWithRuns;

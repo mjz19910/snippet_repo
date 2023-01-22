@@ -1,5 +1,5 @@
 type D$MenuServiceItem<T extends string,EndpointItems>={
-	text: D$TextT;
+	text: G$Text;
 	icon?: T$Icon<T>;
 	serviceEndpoint: G$MenuServiceEndpointItems<EndpointItems>;
 	trackingParams: string;

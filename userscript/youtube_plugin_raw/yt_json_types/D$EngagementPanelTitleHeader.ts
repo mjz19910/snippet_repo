@@ -1,5 +1,5 @@
 type D$EngagementPanelTitleHeader={
-	title: D$TextT;
+	title: G$Text;
 	contextualInfo?: D$TextWithRuns;
 	informationButton?: R$Button;
 	menu?: G$EngagementPanelMenu;
