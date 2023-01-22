@@ -2775,9 +2775,9 @@ class BaseService extends BaseServicePrivate {
 	_2_str_ends_with(x,v) {
 		return x.endsWith(v);
 	}
-	/** @public @template {string} T @template {string} U @arg {T} x @arg {U} v @returns {x is `${U}${string}`} */
-	str_starts_with(x,v) {
-		return x.startsWith(v);
+	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	str_starts_with(needle,str) {
+		return str.startsWith(needle);
 	}
 	get TODO_true() {
 		return true;
@@ -3324,7 +3324,7 @@ class YtHandlers extends BaseService {
 		const res_parse=this.parse_with_url_parse(api_url);
 		let ss1=split_string_once(res_parse.pathname,"/")[1];
 		let get_ss2=() => {
-			if(this.str_starts_with(ss1,"youtubei/v1/")) {
+			if(this.str_starts_with("youtubei/v1/",ss1)) {
 				return split_string_once(ss1,"youtubei/v1/")[1];
 			} else {
 				return ss1;
@@ -5012,28 +5012,29 @@ class CodegenService extends BaseService {
 		console.log(gen_obj);
 		return null;
 	}
-	/** @arg {string[]} res @arg {string} k @arg {string} x */
-	generate_code_for_string(res,k,x) {
-		if(k==="playlistId") {
+	/** @arg {string[]} res @arg {string} k1 @arg {string} x */
+	generate_code_for_string(res,k1,x) {
+		if(k1==="playlistId") {
 			if(x.startsWith("RD")) {
-				res.push(`this.str_starts_with("RD",${k},"string");`);
+				res.push(`this.str_starts_with("RD",${k1},"string");`);
 			}
 		}
+		if(k1=="videoId") {res.push(`this.primitive_of(${k1},"string");`);}
 		let x2=x;
 		let ret_arr=res;
 		if(x2.startsWith("https:")) {
-			ret_arr.push(`this.primitive_of(${k},"string");`);
+			ret_arr.push(`this.primitive_of(${k1},"string");`);
 			return;
 		}
 		let u_count=[...new Set(x2.split("").sort())].join("").length;
 		if(x2.includes("%")) {
 			if(u_count>13) {
-				ret_arr.push(`this.primitive_of(${k},"string");`);
+				ret_arr.push(`this.primitive_of(${k1},"string");`);
 				return;
 			}
 		}
-		console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
-		ret_arr.push(`if(${k}!=="${x2}") debugger;`);
+		console.log("[unique_chars_count]",k1,[...new Set(x2.split("").sort())].join("").length);
+		ret_arr.push(`if(${k1}!=="${x2}") debugger;`);
 		x;
 	}
 }
@@ -5064,7 +5065,7 @@ class ParserService extends BaseService {
 			}
 			return;
 		}
-		if(this.str_starts_with(x,"PL")) {
+		if(this.str_starts_with_r(x,"PL")) {
 			let pl=x.slice(2);
 			switch(pl.length) {
 				case 32: return;
@@ -5072,12 +5073,12 @@ class ParserService extends BaseService {
 			console.log("[parse_playlist]",pl.length,pl);
 			return;
 		}
-		if(this.str_starts_with(x,"RDMM")) {
+		if(this.str_starts_with_r(x,"RDMM")) {
 			let pl=x.slice(4);
 			console.log("[parse_playlist_radio_mm]",pl.length,pl);
 			return;
 		}
-		if(this.str_starts_with(x,"RD")) {
+		if(this.str_starts_with_r(x,"RD")) {
 			let pl=x.slice(2);
 			if(this.log_playlist_parse) console.log("[parse_playlist_radio]",pl.length,pl);
 			return;
@@ -5197,7 +5198,7 @@ class ParserService extends BaseService {
 	}
 	/** @public @arg {`UC${string}`} x */
 	parse_channel_id(x) {
-		if(this.str_starts_with(x,"UC")) {
+		if(this.str_starts_with_r(x,"UC")) {
 			return;
 		}
 		debugger;
@@ -5252,7 +5253,7 @@ class ParserService extends BaseService {
 	parse_guide_entry_id(x) {
 		/** @private @type {YtUrlInfoItem[]} */
 		let arr=[];
-		if(this.str_starts_with(x,"RD")) {
+		if(this.str_starts_with_r(x,"RD")) {
 			arr.push({_tag: "playlist",type: "RD",id: x.slice(2)});
 		} else {
 			console.log(x);
@@ -6420,7 +6421,7 @@ case "${path_parts[idx-1]}": {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(typeof tv==="string") {
-										if(this.str_starts_with(tv,"UC")) {
+										if(this.str_starts_with("UC",tv)) {
 											return this.parse_channel_id(tv);
 										}
 										debugger;
@@ -7418,16 +7419,16 @@ case "${path_parts[idx-1]}": {
 	}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {
-		if(this.str_starts_with(x,"https://")) {
+		if(this.str_starts_with("https://",x)) {
 			return this.parse_full_url(root,x);
 		}
-		if(this.str_starts_with(x,"http://")) {
+		if(this.str_starts_with("http://",x)) {
 			return this.parse_full_url(root,x);
 		}
-		if(this.str_starts_with(x,"android-app://")) {
+		if(this.str_starts_with("android-app://",x)) {
 			return;
 		}
-		if(this.str_starts_with(x,"ios-app://")) {
+		if(this.str_starts_with("ios-app://",x)) {
 			return;
 		}
 		if(x==="/") return;
@@ -7494,11 +7495,11 @@ case "${path_parts[idx-1]}": {
 			x;
 			return this.parse_url_with_search(root,as(x));
 		}
-		if(this.str_starts_with(x,"@")) {
+		if(this.str_starts_with("@",x)) {
 			if(this.log_channel_handles) console.log("[channel_handle]",x);
 			return;
 		}
-		if(this.str_starts_with(x,"account")) {
+		if(this.str_starts_with("account",x)) {
 			return this.parse_account_url(x);
 		}
 		switch(x) {
@@ -7570,31 +7571,35 @@ case "${path_parts[idx-1]}": {
 			default: debugger; break;
 		}
 	}
+	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	str_starts_with_r(str,needle) {
+		return this.str_starts_with(needle,str);
+	}
 	/** @public @arg {YtTargetIdType} x */
 	parse_target_id(x) {
-		if(this.str_starts_with(x,"browse-feed")) {
+		if(this.str_starts_with("browse-feed",x)) {
 			console.log("[target_id.browse_feed","browse-feed",split_string_once("browse-feed")[1]);
 			return this.save_enum_with_sep("browse-feed",x,"");
 		}
-		if(this.str_starts_with(x,"comment-replies-item")) {
+		if(this.str_starts_with("comment-replies-item",x)) {
 			return this.save_enum("comment-replies-item",x);
 		}
-		if(this.str_starts_with(x,"engagement-panel")) {
+		if(this.str_starts_with_r(x,"engagement-panel")) {
 			return this.save_enum("engagement-panel",x);
 		}
-		if(this.str_starts_with(x,"comments")) {
+		if(this.str_starts_with_r(x,"comments")) {
 			return this.save_enum("comments",x);
 		}
-		if(this.str_starts_with(x,"library")) {
+		if(this.str_starts_with_r(x,"library")) {
 			return this.save_enum("library",x);
 		}
-		if(this.str_starts_with(x,"watch")) {
+		if(this.str_starts_with_r(x,"watch")) {
 			return this.save_enum("watch",x);
 		}
-		if(this.str_starts_with(x,"shopping_panel")) {
+		if(this.str_starts_with_r(x,"shopping_panel")) {
 			return this.save_enum("shopping_panel",x);
 		}
-		if(this.str_starts_with(x,"clip")) {
+		if(this.str_starts_with_r(x,"clip")) {
 			return this.save_enum("clip",x);
 		}
 		this.save_string("[target_id]",x);
@@ -7884,7 +7889,7 @@ case "${path_parts[idx-1]}": {
 	}
 	/** @public @arg {string} x @returns {BrowseIdType|null} */
 	decode_browse_id(x) {
-		if(this.str_starts_with(x,"FE")) {
+		if(this.str_starts_with_r(x,"FE")) {
 			switch(x) {
 				case "FEwhat_to_watch": return x;
 				case "FEexplore": return x;
@@ -7895,23 +7900,23 @@ case "${path_parts[idx-1]}": {
 	}
 	/** @public @arg {BrowseIdType} x */
 	parse_browse_id(x) {
-		if(this.str_starts_with(x,"FE")) {
+		if(this.str_starts_with_r(x,"FE")) {
 			let page=split_string_once(x,"FE")[1];
 			let known_page=this.parse_known_page(page);
 			if(known_page) return;
 			if(seen_map.has(page)) return;
 			seen_map.add(page);
 			console.log("[param_value_with_section] [%s] -> [%s]",x.slice(0,2),page);
-		} else if(this.str_starts_with(x,"VL")) {
+		} else if(this.str_starts_with_r(x,"VL")) {
 			let x1=split_string_once(x,"VL")[1];
 			if(this.str_starts_with(x1,"LL")) return;
 			if(this.str_starts_with(x1,"WL")) return;
 			if(this.str_starts_with(x1,"PL")) return;
 			console.log("new with param [param_2c_VL]",x,x1);
-		} else if(this.str_starts_with(x,"UC")) {
+		} else if(this.str_starts_with_r(x,"UC")) {
 			if(x.slice(2).length===22) return;
 			console.log("new with param [param_2c_UC]",x);
-		} else if(this.str_starts_with(x,"SP")) {
+		} else if(this.str_starts_with_r(x,"SP")) {
 			let x1=split_string_once(x,"SP")[1];
 			switch(x1) {
 				case "account": case "account_advanced": case "account_billing": case "account_notifications": case "account_privacy":
@@ -7920,7 +7925,7 @@ case "${path_parts[idx-1]}": {
 				default: debugger;
 			}
 			console.log("new with param [param_2c_SP]",x,x1);
-		} else if(this.str_starts_with(x,"MP")) {
+		} else if(this.str_starts_with_r(x,"MP")) {
 			let x1=split_string_once(x,"MP")[1];
 			let x2=split_string_once(x1,"_");
 			switch(x2[0]) {
@@ -8041,13 +8046,17 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @type {string[]} */
 	known_target_id=[];
+	/** @public @template {string} T_Needle @template {string} T_Str @arg {T_Needle} needle @arg {T_Str} str @returns {str is `${T_Needle}${string}`} */
+	str_starts_with_r(str,needle) {
+		return this.str_starts_with(needle,str);
+	}
 	/** @arg {string} root @arg {YtTargetIdType} x */
 	targetId(root,x) {
 		const cf="targetId";
 		this.save_string(`[${root}.${cf}]`,x);
 		this.parser.parse_target_id(x);
-		if(this.str_starts_with(x,"comment-replies-item-")) return;
-		if(this.str_starts_with(x,"shopping_panel_for_entry_point_")) {
+		if(this.str_starts_with_r(x,"comment-replies-item-")) return;
+		if(this.str_starts_with_r(x,"shopping_panel_for_entry_point_")) {
 			switch(x) {
 				case "shopping_panel_for_entry_point_22": return;
 				case "shopping_panel_for_entry_point_5": return;
@@ -8059,7 +8068,7 @@ class ServiceMethods extends ServiceData {
 			}
 			return;
 		}
-		if(this.str_starts_with(x,"browse-feed")) {
+		if(this.str_starts_with_r(x,"browse-feed")) {
 			return this.parser.parse_target_id(x);
 		};
 		switch(x) {
@@ -8194,7 +8203,7 @@ class ServiceMethods extends ServiceData {
 	}
 	/** @arg {`/@${string}`} x */
 	canonicalBaseUrl(x) {
-		if(!this.str_starts_with(x,"/@")) debugger;
+		if(!this.str_starts_with_r(x,"/@")) debugger;
 	}
 	/** @arg {string} x */
 	previousCsn(x) {
@@ -12155,8 +12164,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {"/gaming"|"/@"|"/channel/UC"} x */
 	VE3611_parse_url(x) {
 		if(x==="/gaming") return;
-		if(this.str_starts_with(x,"/@")) return;
-		if(this.str_starts_with(x,"/channel/UC")) return;
+		if(this.str_starts_with_r(x,"/@")) return;
+		if(this.str_starts_with_r(x,"/channel/UC")) return;
 		debugger;
 	}
 	/** @arg {D$TextT} x */
@@ -14762,7 +14771,7 @@ class HandleTypes extends ServiceMethods {
 	Video(x) {
 		const cf="Video";
 		this.save_keys(`[${cf}]`,x);
-		const {videoId,thumbnail,title,descriptionSnippet,longBylineText,publishedTimeText,lengthText,viewCountText,navigationEndpoint,ownerBadges,ownerText,shortBylineText,trackingParams,showActionMenu,shortViewCountText,menu,channelThumbnailSupportedRenderers,thumbnailOverlays,richThumbnail,inlinePlaybackEndpoint,owner,...y}=x;
+		debugger;
 	}
 	/** @private @arg {D$Radio} x */
 	Radio(x) {
@@ -14775,11 +14784,11 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(videoCountText);
 		this.NavigationEndpoint(navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
-		this.z(x.videos,this.R$ChildVideo);
+		this.z(videos,this.R$ChildVideo);
 		this.TextT(thumbnailText);
 		this.TextT(longBylineText);
 		this.R$Menu(menu);
-		this.z(x.thumbnailOverlays,this.ThumbnailOverlayBottomPanelRenderer);
+		this.z(thumbnailOverlays,this.ThumbnailOverlayBottomPanelRenderer);
 		this.TextT(videoCountShortText);
 	}
 	/** @private @arg {R$ChildVideo} x */
