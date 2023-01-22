@@ -5478,7 +5478,8 @@ class ParserService extends BaseService {
 						const idx=3;
 						if(path_parts.length===2) {
 							if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
-							switch(tv) {default: debugger; return;}
+							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+							switch(tv) {default: u(idx-1); debugger; return;}
 						}
 						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
 					} break;
