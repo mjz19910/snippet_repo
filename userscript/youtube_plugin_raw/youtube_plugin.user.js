@@ -5493,6 +5493,45 @@ class ParserService extends BaseService {
 		let idx=mk.indexOf(ta);
 		if(idx>-1) mk.splice(idx,1);
 	}
+	/** @arg {P$PathRoot} path @arg {ParamMapValue} tv */
+	get_parse_fns(path,tv) {
+		let path_parts=split_string(path,".");
+		/** @arg {number} idx */
+		let gen_next_part=(idx) => {
+			if(idx>path_parts.length) return;
+			let case_part="";
+			let value_part="\n\t\tswitch(tv) {default: debugger; return;}";
+			if(path_parts.length===idx) {
+				if(tv instanceof Map) case_part=`${"\n\t\t"}if(tv instanceof Map) return;`;
+				switch(typeof tv) {
+					case "number": {
+						if(tv>128) {
+							case_part=`\n\t\tif(typeof tv==="number") return this.save_number(\`[\${path}]\`,tv);`;
+						} else {
+							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;\n\t\t\tdefault: debugger; return;\n\t\t}`;
+						}
+					} break;
+					case "string": case_part=`\n\t\tif(typeof tv==="string") return this.save_string(\`[\${path}]\`,tv);`; break;
+				}
+			}
+			let res_case="";
+			if(idx<path_parts.length) {
+				res_case=`\n\t\tcase "${path_parts[idx]}": u(idx); debugger; break`;
+			}
+			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
+			console.log(`-- [${path_parts.join(".")},${idx}] --\n
+		// [${path_parts.join(".")}]
+		case "${path_parts[idx-1]}": {
+			const idx=${idx+1};
+			if(path_parts.length===${idx}) {${case_part}${value_part}
+			}
+			switch(path_parts[${idx}]) {
+				default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}
+			}
+		} break;`);
+		};
+		return {gen_next_part};
+	}
 	/** @typedef {(x:ParamMapValue[],idx:number)=>void} ParseCallbackFunction */
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParseCallbackFunction|null} cb */
 	parse_key(root,path,x,mk,ta,cb) {
@@ -5537,7 +5576,7 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "watch.player_params":
-						switch(ta) {case 25: case 12: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 12: case 25: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "transcript_target_id.param": case "tracking.trackingParams.f19":
@@ -5571,7 +5610,7 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 				}
 				if(tv!==void 0) {
 					/** @type {P$PathRoot} */
-					this.parse_param_next(root,as(`${path}.f${ta}`),tv);
+					return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 				}
 				return;
 			}
@@ -5635,44 +5674,10 @@ case ${JSON.stringify(path)}: /*tva*/{
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
 		/** @arg {number} idx */
-		let gen_next_part=(idx) => {
-			if(idx>path_parts.length) return;
-			let case_part="";
-			let value_part="\n\t\tswitch(tv) {default: debugger; return;}";
-			if(path_parts.length===idx) {
-				if(tv instanceof Map) case_part=`${"\n\t\t"}if(tv instanceof Map) return;`;
-				switch(typeof tv) {
-					case "number": {
-						if(tv>128) {
-							case_part=`\n\t\tif(typeof tv==="number") return this.save_number(\`[\${path}]\`,tv);`;
-						} else {
-							value_part=`\n\t\tswitch(tv) {\n\t\t\tcase ${tv}: return;\n\t\t\tdefault: debugger; return;\n\t\t}`;
-						}
-					} break;
-					case "string": case_part=`\n\t\tif(typeof tv==="string") return this.save_string(\`[\${path}]\`,tv);`; break;
-				}
-			}
-			let res_case="";
-			if(idx<path_parts.length) {
-				res_case=`\n\t\tcase "${path_parts[idx]}": u(idx); debugger; break`;
-			}
-			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
-			console.log(`-- [${path_parts.join(".")},${idx}] --\n
-// [${path_parts.join(".")}]
-case "${path_parts[idx-1]}": {
-	const idx=${idx+1};
-	if(path_parts.length===${idx}) {${case_part}${value_part}
-	}
-	switch(path_parts[${idx}]) {
-		default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}
-	}
-} break;`);
-		};
-		/** @arg {number} idx */
 		let gd=(idx) => {
 			/** @type {P$LogItems} */
 			console.log("[param_next.next_new_ns]",path_parts.join("."));
-			gen_next_part(idx);
+			pp.gen_next_part(idx);
 		};
 		/** @arg {string} ns @arg {()=>void} f */
 		let grouped=(ns,f) => {
@@ -5685,6 +5690,7 @@ case "${path_parts[idx-1]}": {
 			grouped(path_parts.join("$"),() => gd(idx));
 		};
 		let path_parts=split_string(path,".");
+		let pp=this.get_parse_fns(path,tv);
 		const idx=1;
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
