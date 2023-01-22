@@ -8415,11 +8415,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if(x.sections) {
 			let z=x.sections[0];
-			if("multiPageMenuNotificationSectionRenderer" in z) {
-				return this.MultiPageMenuNotificationSection(z.multiPageMenuNotificationSectionRenderer);
-			}
+			if("multiPageMenuNotificationSectionRenderer" in z) return this.R_MP_MenuNotificationSection(z);
+			if("accountSectionListRenderer" in z) return;
+			if("multiPageMenuSectionRenderer" in z) return;
+			debugger;
 		}
 	}
+	/** @private @arg {R_MP_MenuNotificationSection} x */
+	R_MP_MenuNotificationSection(x) {this.H_("R_MP_MenuNotificationSection",x,this.MultiPageMenuNotificationSection);}
 	/** @private @arg {{trackingParams:string;}&T_Items<R_Notification|TR_ContinuationItem<E_GetNotificationMenuEndpoint>>} x */
 	MultiPageMenuNotificationSection(x) {
 		const cf="MultiPageMenuNotificationSection";
