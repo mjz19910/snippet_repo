@@ -8855,7 +8855,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(elementUpdate,this.ElementUpdate);
 	}
 	/** @arg {string} cf @public @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @returns {T[K]} */
-	T$D$Data(cf,x) {
+	H$Data(cf,x) {
 		this.save_keys(`[${cf}Data]`,x);
 		return this.w(x);
 	}
@@ -12136,7 +12136,7 @@ class HandleTypes extends ServiceMethods {
 	D$BrowseEndpointContextMusicConfig(x) {
 		const cf="BrowseEndpointContextMusicConfig";
 		this.save_keys(`[${cf}]`,x);
-		this.ContextMusicConfig$pageType(this.T$D$Data(cf,x));
+		this.ContextMusicConfig$pageType(this.H$Data(cf,x));
 	}
 	/** @arg {D$BrowseEndpointContextMusicConfig['pageType']} x */
 	ContextMusicConfig$pageType(x) {
