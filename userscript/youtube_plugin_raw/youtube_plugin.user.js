@@ -5509,10 +5509,6 @@ class ParserService extends BaseService {
 			console.groupEnd();
 		};
 		let new_ns=() => {
-			if(tv!==void 0) {
-				/** @type {P$PathRoot} */
-				this.parse_param_next(root,as(`${path}.f${ta}`),tv);
-			}
 			console.log("[parse_value.new_ns_gen]",path);
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
@@ -5541,7 +5537,7 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "watch.player_params":
-						switch(ta) {case 12: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 25: case 12: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "transcript_target_id.param": case "tracking.trackingParams.f19":
@@ -5572,6 +5568,10 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 					case "create_playlist.params":
 					case "browse.params": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
 					case "entity_key": switch(ta) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+				}
+				if(tv!==void 0) {
+					/** @type {P$PathRoot} */
+					this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 				}
 				return;
 			}
@@ -5702,9 +5702,11 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
+							/** @type {P$LogItems} */
 							// [watch.player_params.f12]
+							// [watch.player_params.f25]
 							case "f2": case "f3": case "f7": case "f8": case "f9":
-							case "f12": case "f13": case "f24": case "f27":
+							case "f12": case "f13": case "f24": case "f27": case "f25":
 							case "f33": case "f40": case "f56": {
 								const idx=4;
 								if(path_parts.length===3) {
