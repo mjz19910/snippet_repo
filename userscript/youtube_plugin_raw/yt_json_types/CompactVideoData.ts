@@ -13,7 +13,7 @@ type CompactVideoData={
 	trackingParams: string;
 	shortViewCountText: D$TextWithRuns;
 	menu: {};
-	thumbnailOverlays: {};
+	thumbnailOverlays: G$ThumbnailOverlayItem[];
 	accessibility: A$Accessibility;
 	richThumbnail: {};
 	badges?: R$MetadataBadgeRenderer[];

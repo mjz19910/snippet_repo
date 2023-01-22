@@ -20,10 +20,5 @@ type Video$VideoId={
 	thumbnailOverlays: R$ThumbnailOverlayTimeStatus[];
 	richThumbnail: R$MovingThumbnail;
 	inlinePlaybackEndpoint: E$WatchEndpoint;
-	owner: {
-		thumbnail: D$Thumbnail;
-		navigationEndpoint: E$BrowseEndpoint;
-		accessibility: A$Accessibility;
-		title: string;
-	};
+	owner: D$Video$Owner;
 };

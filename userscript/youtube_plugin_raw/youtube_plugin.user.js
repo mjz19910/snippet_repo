@@ -4352,7 +4352,7 @@ class CodegenService extends BaseService {
 		/** @private @type {string[]} */
 		let ret_arr=[];
 		ret_arr.push(`const cf="${t_name}";`);
-		ret_arr.push("this.save_string(`[${cf}]`,x)");
+		ret_arr.push("this.save_keys(`[${cf}]`,x)");
 		ret_arr.push(`const {${keys.join()},...y}=x; this.g(y);`);
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
@@ -5513,16 +5513,17 @@ class ParserService extends BaseService {
 				/** @type {P$PathRoot} */
 				this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 			}
-			console.log("[parse_value.new_ns]",path);
+			console.log("[parse_value.new_ns_gen]",path);
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`-- [parse_value.gen_ns] --\n\n\tcase ${ta}: break;\n`);
 		};
 		let new_path=() => {
-			console.log("[parse_value.new_ns]",path);
+			console.log("[parse_value.new_path_gen]",path);
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
+// []
 case "${path}": {
 	switch(ta) {
 		case ${ta}: break;
@@ -6045,18 +6046,20 @@ case ${JSON.stringify(path)}: /*tva*/{
 				}
 			}
 			console.log(`-- [${path_parts.join(".")},${idx}] --\n
+// [${path_parts.join(".")}]
 case "${path_parts[idx-1]}": {
 	const idx=${idx+1};
 	if(path_parts.length===${idx}) {${case_part}${value_part}
 	}
 	switch(path_parts[${idx}]) {
 		default: u(idx); debugger; path_parts[${idx}]===""; break;
+		case "${path_parts[idx]}": u(idx); debugger; break;
 	}
 } break;`);
 		};
 		/** @arg {number} idx */
 		let gd=(idx) => {
-			console.log("[param_next.new_ns]",path_parts.join("."));
+			console.log("[param_next.next_new_ns]",path_parts.join("."));
 			gen_next_part(idx);
 		};
 		/** @arg {string} ns @arg {()=>void} f */
@@ -9419,7 +9422,7 @@ class HandleTypes extends ServiceMethods {
 		this.PivotButton(this.w(x));
 	}
 	/** @arg {R$MetadataBadgeRenderer} x */
-	MetadataBadgeRenderer(x) {
+	R$MetadataBadge(x) {
 		const cf="MetadataBadgeRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.MetadataBadgeData(this.w(x));
@@ -13700,7 +13703,7 @@ class HandleTypes extends ServiceMethods {
 		if("badges" in x) {
 			let u=this.VideoOwner$Omit(x);
 			const {badges,membershipButton,...y}=u; this.g(y); // ! #destructure
-			this.z(badges,this.MetadataBadgeRenderer);
+			this.z(badges,this.R$MetadataBadge);
 			this.R$Button(membershipButton);
 			return;
 		}
@@ -14018,7 +14021,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(subscriberCountText);
 		this.D$TextWithRuns(channelHandleText);
 		this.D$TextWithRuns(videosCountText);
-		this.tz(badges,(this.MetadataBadgeRenderer));
+		this.tz(badges,(this.R$MetadataBadge));
 	}
 	/** @arg {SettingsSidebarData} x */
 	SettingsSidebarData(x) {
@@ -14045,7 +14048,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.R$Button(shareButton);
 		this.PivotButtonRenderer(pivotButton);
-		this.MetadataBadgeRenderer(badge);
+		this.R$MetadataBadge(badge);
 	}
 	/** @arg {Extract<ChipCloudChip,{targetId:any}>} x */
 	ChipCloudChip_tid(x) {
@@ -14199,7 +14202,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.D$SimpleText(dateText);
 		this.D$SimpleText(relativeDateText);
-		this.tz(badges,(this.MetadataBadgeRenderer));
+		this.tz(badges,(this.R$MetadataBadge));
 	}
 	/** @arg {MerchandiseShelf} x */
 	MerchandiseShelf(x) {
@@ -14277,7 +14280,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(videoId);
 		this.D$Thumbnail(thumbnail);
 		this.g(title);
-		this.g(thumbnailOverlays);
+		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.D$TextWithRuns(lengthText);
 		this.D$TextWithRuns(longBylineText);
 		this.D$TextWithRuns(publishedTimeText);
@@ -14291,7 +14294,7 @@ class HandleTypes extends ServiceMethods {
 		this.A$Accessibility(accessibility);
 		this.g(menu);
 		this.g(richThumbnail);
-		this.tz(badges,(this.MetadataBadgeRenderer));
+		this.tz(badges,(this.R$MetadataBadge));
 	}
 	/** @arg {D$HotkeyDialog} x */
 	D$HotkeyDialog(x) {
@@ -14799,7 +14802,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D$Video} x */
 	Video(x) {
 		const cf="Video";
-		this.save_string(`[${cf}]`,x)
+		this.save_keys(`[${cf}]`,x);
 		const {videoId,thumbnail,title,descriptionSnippet,longBylineText,publishedTimeText,lengthText,viewCountText,navigationEndpoint,ownerBadges,ownerText,shortBylineText,trackingParams,showActionMenu,shortViewCountText,menu,channelThumbnailSupportedRenderers,thumbnailOverlays,richThumbnail,inlinePlaybackEndpoint,owner,...y}=x; this.g(y);
 		this.primitive_of(videoId,"string");
 		this.D$Thumbnail(thumbnail);
@@ -14818,11 +14821,16 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(shortViewCountText);
 		this.R$Menu(menu);
 		this.R$ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		this.z(thumbnailOverlays,this.R$ThumbnailOverlayTimeStatus);
+		this.z(thumbnailOverlays,this.ThumbnailOverlayItem);
 		this.R$MovingThumbnail(richThumbnail);
 		this.E$WatchEndpoint(inlinePlaybackEndpoint);
 		this.D$Video$Owner(owner);
 	}
+	/** @private @arg {R$ChannelThumbnailWithLink} x */
+	R$ChannelThumbnailWithLink(x) {
+		x;
+	}
+	/** @private @arg {R$MovingThumbnail} x */
 	R$MovingThumbnail(x) {
 		x;
 	}
@@ -14850,7 +14858,9 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$ChildVideo} x */
 	R$ChildVideo(x) {
-		x;
+		const cf="ChildVideo";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
 	}
 	/** @private @arg {Do$w<FeedNudgeRenderer>} x */
 	FeedNudge(x) {
