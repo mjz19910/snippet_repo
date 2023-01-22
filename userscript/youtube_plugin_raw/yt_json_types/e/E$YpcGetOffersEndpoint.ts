@@ -1,5 +1,5 @@
-type E_YpcGetOffersEndpoint={
+type E_YpcGetOffers={
 	clickTrackingParams: string;
 	commandMetadata: G_Metadata;
-	ypcGetOffersEndpoint: E_YpcGetOffers;
+	ypcGetOffersEndpoint: D_YpcGetOffers;
 };

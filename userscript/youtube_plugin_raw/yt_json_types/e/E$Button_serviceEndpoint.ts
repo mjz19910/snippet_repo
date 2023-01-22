@@ -1,1 +1,1 @@
-type E_Button_serviceEndpoint<T>=E_T$SignalService<T>|E_YpcGetOffersEndpoint;
+type E_Button_service<T>=E_T$SignalService<T>|E_YpcGetOffers;

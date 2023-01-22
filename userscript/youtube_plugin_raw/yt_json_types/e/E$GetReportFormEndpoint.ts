@@ -1,4 +1,4 @@
-type E_GetReportFormEndpoint=EB$Endpoint&{
+type E_GetReportForm=EB$Endpoint&{
 	getReportFormEndpoint: {
 		params: string;
 	};

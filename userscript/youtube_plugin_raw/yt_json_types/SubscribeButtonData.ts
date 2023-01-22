@@ -9,13 +9,13 @@ type D_SubscribeButton={
 	unsubscribedButtonText: R_TextWithRuns;
 	trackingParams: string;
 	unsubscribeButtonText: R_TextWithRuns;
-	serviceEndpoints?: (E_SubscribeEndpoint|SubscribeButtonData$SignalServiceEndpoint)[];
+	serviceEndpoints?: (E_Subscribe|SubscribeButtonData$SignalServiceEndpoint)[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 	notificationPreferenceButton?: R_SubscriptionNotificationToggleButton;
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
-	onSubscribeEndpoints: E_SubscribeEndpoint[];
+	onSubscribeEndpoints: E_Subscribe[];
 	onUnsubscribeEndpoints: E_T$SignalService<{}>[];
 }|{
 	buttonText: R_TextWithRuns;
@@ -28,7 +28,7 @@ type D_SubscribeButton={
 	unsubscribedButtonText: R_TextWithRuns;
 	trackingParams: string;
 	unsubscribeButtonText: R_TextWithRuns;
-	serviceEndpoints: E_SubscribeEndpoint[];
+	serviceEndpoints: E_Subscribe[];
 	subscribeAccessibility: D_Accessibility;
 	unsubscribeAccessibility: D_Accessibility;
 };

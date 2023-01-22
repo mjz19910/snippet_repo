@@ -2,7 +2,7 @@ type D_MacroMarkersListItem={
 	title: R_SimpleText;
 	timeDescription: R_SimpleText;
 	thumbnail: D_Thumbnail;
-	onTap: E_WatchEndpoint;
+	onTap: E_Watch;
 	trackingParams: string;
 	shareButton: R_Button;
 	repeatButton: R_ToggleButton;
@@ -17,7 +17,7 @@ type D_MacroMarkersListItem={
 	title: R_SimpleText;
 	timeDescription: R_SimpleText;
 	thumbnail: D_Thumbnail;
-	onTap: E_WatchEndpoint;
+	onTap: E_Watch;
 	trackingParams: string;
 	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";

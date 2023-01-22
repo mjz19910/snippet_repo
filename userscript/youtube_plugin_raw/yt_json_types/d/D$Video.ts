@@ -8,7 +8,7 @@ type Video$VideoId={
 	publishedTimeText: R_SimpleText;
 	lengthText: R_SimpleText;
 	viewCountText: R_SimpleText;
-	navigationEndpoint: E_WatchEndpoint;
+	navigationEndpoint: E_Watch;
 	ownerBadges: R_MetadataBadge[];
 	ownerText: R_TextWithRuns;
 	shortBylineText: R_TextWithRuns;
@@ -19,6 +19,6 @@ type Video$VideoId={
 	channelThumbnailSupportedRenderers: R_ChannelThumbnailWithLink;
 	thumbnailOverlays: G_ThumbnailOverlayItem[];
 	richThumbnail: R_MovingThumbnail;
-	inlinePlaybackEndpoint: E_WatchEndpoint;
+	inlinePlaybackEndpoint: E_Watch;
 	owner: D_Video$Owner;
 };

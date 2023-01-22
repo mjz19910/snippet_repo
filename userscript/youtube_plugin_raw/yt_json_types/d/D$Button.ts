@@ -4,8 +4,8 @@ type D_Button={
 	command?: G_Button$command;
 	icon?: D$ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: E_Button_serviceEndpoint<{}>;
-	navigationEndpoint?: E_Button_navigationEndpoint;
+	serviceEndpoint?: E_Button_service<{}>;
+	navigationEndpoint?: E_Button_navigation;
 	tooltip?: string;
 	size?: D$ButtonSizeType;
 	style?: D$ButtonStyleType;

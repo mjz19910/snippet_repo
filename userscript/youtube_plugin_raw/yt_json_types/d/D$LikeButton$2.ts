@@ -10,7 +10,7 @@ type D_LikeButton$2={
 	dislikeCountWithUndislikeText: R_SimpleText;
 	trackingParams: string;
 	likesAllowed: true;
-	serviceEndpoints: E_LikeEndpoint[];
+	serviceEndpoints: E_Like[];
 	likeCountTooltipText: R_TextWithRuns;
 	dislikeCountTooltipText: R_TextWithRuns;
 };

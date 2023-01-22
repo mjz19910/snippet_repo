@@ -3,7 +3,7 @@ type D_ReelItemWatch={
 	overlay: R_ReelPlayerOverlay;
 	status: "REEL_ITEM_WATCH_STATUS_SUCCEEDED";
 	trackingParams: string;
-	replacementEndpoint?: E_ReelWatchEndpoint;
+	replacementEndpoint?: E_ReelWatch;
 	sequenceContinuation?: string;
 	desktopTopbar: R_DesktopTopbar;
 	engagementPanels: G_EngagementPanelItem[];

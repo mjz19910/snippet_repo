@@ -3,7 +3,7 @@ type D_ReelItem={
 	headline: R_TextWithRuns;
 	thumbnail: D_Thumbnail;
 	viewCountText: R_TextWithRuns;
-	navigationEndpoint: E_ReelWatchEndpoint;
+	navigationEndpoint: E_ReelWatch;
 	menu: R_Menu;
 	trackingParams: string;
 	accessibility:D_Accessibility;

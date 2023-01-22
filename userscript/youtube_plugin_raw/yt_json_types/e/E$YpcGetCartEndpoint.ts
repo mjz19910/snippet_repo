@@ -1,4 +1,4 @@
-type E_YpcGetCartEndpoint={
+type E_YpcGetCart={
 	clickTrackingParams: string;
 	commandMetadata: YpcGetCartCommandMetadata;
 	ypcGetCartEndpoint: YpcGetCartArgs;

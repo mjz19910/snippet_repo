@@ -1,4 +1,4 @@
-type E_YpcGetOfflineUpsellEndpoint={
+type E_YpcGetOfflineUpsell={
 	clickTrackingParams: string;
-	ypcGetOfflineUpsellEndpoint: YpcGetOfflineUpsell;
+	ypcGetOfflineUpsellEndpoint: D_YpcGetOfflineUpsell;
 };

@@ -1,3 +1,3 @@
 type D_WebPrefetch={
-	navigationEndpoints: E_WatchEndpoint[];
+	navigationEndpoints: E_Watch[];
 };

@@ -8,7 +8,7 @@ type D_GuideEntry={
 	entryData: R_GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
-	navigationEndpoint?: E_UrlEndpoint|E_Browse;
+	navigationEndpoint?: E_Url|E_Browse;
 	icon: T_Icon<"EXPAND"|"ADD_CIRCLE">;
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
@@ -25,7 +25,7 @@ type D_GuideEntry={
 	trackingParams: string;
 	formattedTitle: R_SimpleText;
 	accessibility: D_Accessibility;
-	serviceEndpoint: E_T$SignalService<{}>|E_ReelWatchEndpoint;
+	serviceEndpoint: E_T$SignalService<{}>|E_ReelWatch;
 	isPrimary: true;
 }|{
 	icon: T_Icon<"HELP">;

@@ -1,5 +1,5 @@
-type E_WatchEndpoint={
+type E_Watch={
 	clickTrackingParams?: string;
 	commandMetadata?: M_VE3832;
-	watchEndpoint: E_Watch;
+	watchEndpoint: {};
 };

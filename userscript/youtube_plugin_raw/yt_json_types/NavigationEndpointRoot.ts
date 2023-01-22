@@ -1,4 +1,4 @@
-type NavigationEndpoint=E_WatchEndpoint|E_UrlEndpoint;
+type NavigationEndpoint=E_Watch|E_Url;
 
 type NavigationEndpointRoot={
 	navigationEndpoint: NavigationEndpoint;

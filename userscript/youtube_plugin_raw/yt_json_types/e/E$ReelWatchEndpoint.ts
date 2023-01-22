@@ -1,4 +1,4 @@
-type E_ReelWatchEndpoint={
+type E_ReelWatch={
 	clickTrackingParams: string;
 	commandMetadata: {};
 	reelWatchEndpoint: D_ReelWatch;

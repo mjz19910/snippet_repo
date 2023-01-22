@@ -4,7 +4,7 @@ type G_Button$command=
 	|TA_OpenPopup<{}>
 	|E_T$SignalService<{}>
 	|E_CreateBackstagePost
-	|E_UrlEndpoint
+	|E_Url
 	|E_CommandExecutorCommand
 	;
 ;

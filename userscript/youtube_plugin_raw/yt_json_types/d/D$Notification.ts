@@ -3,7 +3,7 @@ type D_Notification={
 	videoThumbnail: D_Thumbnail;
 	shortMessage: R_SimpleText;
 	sentTimeText: R_SimpleText;
-	navigationEndpoint: E_WatchEndpoint;
+	navigationEndpoint: E_Watch;
 	read: boolean;
 	recordClickEndpoint: E_RecordNotificationInteractions;
 	contextualMenu: R_Menu;
