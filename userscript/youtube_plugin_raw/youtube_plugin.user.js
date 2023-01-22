@@ -2212,16 +2212,17 @@ class KnownDataSaver extends ApiBase {
 		}
 		if(typeof x!=="object") return this.save_string(`[${ki}.type]`,typeof x);
 		if(x instanceof Array) return this.save_string(`[${ki}.type]`,"array");
+		let store=this.#get_keys_store();
 		let keys=this.get_keys_of(x);
-		let ret=this.save_string(k,keys.join());
+		let ret=this.save_to_store("save_keys",k,keys.join(),store);
 		return ret;
 	}
-	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["pull_data"]>>} */
+	/** @arg {string} str @returns {Partial<ReturnType<KnownDataSaver["get_data_store"]>>} */
 	#parse_data(str) {
 		return JSON.parse(str);
 	}
 	#store_data() {
-		let data=this.pull_data();
+		let data=this.get_data_store();
 		for(let v=0;v<data.seen_numbers.length;v++) {
 			const j=data.seen_numbers[v];
 			const [_n,[_k,c]]=j;
@@ -2244,20 +2245,33 @@ class KnownDataSaver extends ApiBase {
 			this.#loaded_from_storage=true;
 		}
 	}
-	#data=new class StoreData {
+	#data_store=new class StoreData {
 		/** @type {number[]} */
 		seen_root_visual_elements=[];
 		/** @type {{[x:string]:number}} */
 		strings_key_index_map={};
+		/** @type {{[x:string]:number}} */
+		seen_keys_index={};
+		/** @type {[string,["one",string[]]|["many",string[][]]][]} */
+		seen_keys=[];
 		/** @type {[string,["one",string[]]|["many",string[][]]][]} */
 		seen_strings=[];
 		/** @type {[string,["one",number[]]|["many",number[][]]][]} */
 		seen_numbers=[];
 		/** @type {[string,{t:boolean;f:boolean}][]} */
 		seen_booleans=[];
+		/** @arg {Partial<StoreData>} x */
+		update(x) {
+			const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings,seen_keys}=x;
+			if(seen_booleans) this.seen_booleans=seen_booleans;
+			if(seen_numbers) this.seen_numbers=seen_numbers;
+			if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
+			if(seen_strings) this.seen_strings=seen_strings;
+			if(seen_keys) this.seen_keys=seen_keys
+		}
 	};
-	pull_data() {
-		return this.#data;
+	get_data_store() {
+		return this.#data_store;
 	}
 	/** @arg {string} seen_data */
 	#save_local_storage(seen_data) {
@@ -2271,14 +2285,10 @@ class KnownDataSaver extends ApiBase {
 		if(no_storage_access) return this.#seen_data_json_str;
 		return localStorage.getItem("seen_data");
 	}
-	/** @arg {Partial<ReturnType<KnownDataSaver["pull_data"]>>} x */
+	/** @arg {Partial<ReturnType<KnownDataSaver["get_data_store"]>>} x */
 	#push_data_to_parent(x) {
-		let x1=this.pull_data();
-		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings}=x;
-		if(seen_booleans) x1.seen_booleans=seen_booleans;
-		if(seen_numbers) x1.seen_numbers=seen_numbers;
-		if(seen_root_visual_elements) x1.seen_root_visual_elements=seen_root_visual_elements;
-		if(seen_strings) x1.seen_strings=seen_strings;
+		let x1=this.get_data_store();
+		x1.update(x);
 	}
 	/** @type {string|null} */
 	#seen_data_json_str=null;
@@ -2293,8 +2303,14 @@ class KnownDataSaver extends ApiBase {
 		});
 	}
 	#get_string_store() {
-		const {strings_key_index_map: index,seen_strings: data}=this.#data;
+		const {strings_key_index_map: index,seen_strings: data}=this.#data_store;
 		return {index,data,new_data: this.#new_strings};
+	}
+	/** @type {[string,string|string[]][]} */
+	#new_keys=[];
+	#get_keys_store() {
+		const {seen_keys_index: index,seen_keys: data}=this.#data_store;
+		return {index,data,new_data: this.#new_keys};
 	}
 	/** @arg {string} key */
 	#get_seen_string_item(key) {
@@ -2352,14 +2368,19 @@ class KnownDataSaver extends ApiBase {
 		store.index[k]=nk;
 		return p;
 	}
-	/** @arg {`[${string}]`} ka @arg {string|string[]} x @arg {StoreDescription<string>} store */
-	save_to_store(ka,x,store) {
+	/** @arg {string} ns @arg {`[${string}]`} ka @arg {string|string[]} x @arg {StoreDescription<string>} store */
+	save_to_store(ns,ka,x,store) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(ka);
-		let p=this.get_seen_string_item_store(k,store);
-		let store_index=this.save_to_data_item(x,p);
+		let store_item=this.get_seen_string_item_store(k,store);
+		let store_index=this.save_to_data_item(x,store_item);
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
+		this.#onDataChange();
+		console.log(`store [${ns}] [${k}] %o`,x);
+		let idx=store.data.indexOf(store_item);
+		if(idx<0) {debugger; return;}
+		this.show_strings_bitmap(idx);
 		return true;
 	}
 	/** @arg {`[${string}]`} k_arg @arg {string|string[]} x */
@@ -2369,22 +2390,22 @@ class KnownDataSaver extends ApiBase {
 		let store_item=this.#get_seen_string_item(k);
 		if(!store_item) {
 			store_item=[k,["one",[]]];
-			let nk=this.#data.seen_strings.push(store_item)-1;
-			this.#data.strings_key_index_map[k]=nk;
+			let nk=this.#data_store.seen_strings.push(store_item)-1;
+			this.#data_store.strings_key_index_map[k]=nk;
 		}
 		let was_known=this.save_to_data_item(x,store_item);
 		if(was_known<0) return false;
 		this.#new_strings.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
-		let idx=this.#data.seen_strings.indexOf(store_item);
+		let idx=this.#data_store.seen_strings.indexOf(store_item);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(idx);
 		return true;
 	}
 	/** @arg {number} idx */
 	show_strings_bitmap(idx) {
-		let p=this.#data.seen_strings[idx];
+		let p=this.#data_store.seen_strings[idx];
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
@@ -2425,14 +2446,14 @@ class KnownDataSaver extends ApiBase {
 		return rle.join("!");
 	}
 	num_bitmap_console() {
-		let gg=this.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=this.get_data_store().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		let g1=gg[1];
 		if(g1[0]==="many") return;
 		this.save_number("[arr.tracking.trackingParams.f1]",g1[1]);
 		let bm=this.generate_bitmap_num(g1[1]).bitmap;
 		this.save_string("[tp.f1.b_map]",bm.split("!").map((e,u) => [u,e].join("$")).join(","));
-		this.pull_data().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
+		this.get_data_store().seen_strings.find(e => e[0]==="tp.f1.b_map")?.[1]?.[1];
 	}
 	/** @arg {string[]} bitmap_src */
 	generate_bitmap(bitmap_src) {
@@ -2485,7 +2506,7 @@ class KnownDataSaver extends ApiBase {
 		let yt_plugin={
 			ds: this,
 		};
-		let gg=yt_plugin.ds.pull_data().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
+		let gg=yt_plugin.ds.get_data_store().seen_numbers.find(e => e[0]==="tracking.trackingParams.f1");
 		if(!gg) return;
 		if(gg[1][0]==="many") return;
 		gg[1][1].sort((a,b) => a-b);
@@ -2552,11 +2573,11 @@ class KnownDataSaver extends ApiBase {
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
-		let p=this.#data.seen_numbers.find(e => e[0]===k);
+		let p=this.#data_store.seen_numbers.find(e => e[0]===k);
 		if(!p) {
 			cur=["one",[]];
 			p=[k,cur];
-			this.#data.seen_numbers.push(p);
+			this.#data_store.seen_numbers.push(p);
 		} else {
 			cur=p[1];
 		}
@@ -2595,10 +2616,10 @@ class KnownDataSaver extends ApiBase {
 	#new_booleans=[];
 	/** @public @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
-		let krc=this.#data.seen_booleans.find(e => e[0]===key);
+		let krc=this.#data_store.seen_booleans.find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];
-			this.#data.seen_booleans.push(krc);
+			this.#data_store.seen_booleans.push(krc);
 		}
 		let [,kc]=krc;
 		if(bool) {
@@ -2620,9 +2641,9 @@ class KnownDataSaver extends ApiBase {
 	/** @public @arg {number} x */
 	save_root_visual_element(x) {
 		if(x===void 0) {debugger; return;}
-		if(this.#data.seen_root_visual_elements.includes(x)) return;
+		if(this.#data_store.seen_root_visual_elements.includes(x)) return;
 		console.log("store [root_visual_element]",x);
-		this.#data.seen_root_visual_elements.push(x);
+		this.#data_store.seen_root_visual_elements.push(x);
 		this.#new_root_visual_elements.push(x);
 		this.#onDataChange();
 	}
