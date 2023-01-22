@@ -6950,7 +6950,6 @@ class HandleTypes extends ServiceMethods {
 	G$VE3854$WC$Metadata(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		x: {
-			if(this.str_starts_with("/watch?",url)) break x;
 			if(url==="/") break x;
 			debugger;
 		}

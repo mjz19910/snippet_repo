@@ -72,7 +72,7 @@ type G$VE6827$WC$Metadata={
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type G$VE3854$WC$Metadata={
-	url: "/"|`watch?${string}`;
+	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 3854;
 	apiUrl: "/youtubei/v1/browse";
