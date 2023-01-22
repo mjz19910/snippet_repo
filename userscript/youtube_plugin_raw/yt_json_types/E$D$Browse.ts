@@ -1,1 +1,1 @@
-type E$D$Browse={browseId: ``;};
+type D$Browse$Id<T>={browseId: T;};

@@ -7114,7 +7114,7 @@ class HandleTypes extends ServiceMethods {
 			let {browseId,...y}=u; this.g(y);
 			switch(u.browseId) {
 				case "SPaccount_notifications": break;
-				case "": break;
+				case "FEwhat_to_watch": break;
 				default: debugger; break;
 			};
 		},x => {
@@ -7135,7 +7135,7 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,webPageType,...y}=x; this.g(y);
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 	}
-	/** @public @arg {E$D$Browse} x */
+	/** @public @arg {D$Browse$Id} x */
 	E$D$Browse(x) {
 		const cf="D$Browse";
 		this.save_keys(`[${cf}]`,x);
