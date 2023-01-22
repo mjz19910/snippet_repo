@@ -7789,7 +7789,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$GetNotificationMenu} x */
 	R$GetNotificationMenu(x) {
-		const cf="GetNotificationMenuResponse";
+		const cf="R$GetNotificationMenu";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		let [ar]=this.z(actions,x => {
@@ -7797,10 +7797,26 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 			return null;
 		});
-		console.log(ar);
+		this.z(ar,a=>{
+			switch(a.popupType) {
+				default: debugger; break;
+				case "DROPDOWN": {
+					let x=this.w(a.popup);
+					const {header,sections,style,trackingParams,...y}=x; this.g(y);
+					this.R$SimpleMenuHeader(header);
+					this.z(sections,a=>{
+						a;
+					})
+					if(style!=="MULTI_PAGE_MENU_STYLE_TYPE_NOTIFICATIONS") debugger;
+					this.trackingParams(cf,trackingParams);
+				} break;
+			}
+		})
 		debugger;
 		this.trackingParams(cf,trackingParams);
 	}
+	/** @private @arg {R$SimpleMenuHeader} x */
+	R$SimpleMenuHeader(x) {x;}
 	/** @private @arg {R$Next} x */
 	R$Next(x) {
 		const cf="NextResponse";
