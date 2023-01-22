@@ -8553,14 +8553,25 @@ class HandleTypes extends ServiceMethods {
 	R$MicroformatDataRenderer(x) {
 		const cf="R$MicroformatDataRenderer";
 		this.save_keys(`[${cf}]`,x);
-		const {microformatDataRenderer,...y}=x; this.g(y); // ! #destructure
-		this.t(microformatDataRenderer,this.MicroformatData);
+		this.t(this.w(x),this.MicroformatData);
 	}
-	/** @arg {PdgBuyFlowHeaderRenderer} x */
-	PdgBuyFlowHeaderRenderer(x) {
+	/** @arg {R$PdgBuyFlowHeader} x */
+	R$PdgBuyFlowHeader(x) {
 		const cf="PdgBuyFlowHeaderRenderer";
 		this.save_keys(`[${cf}]`,x);
-		this.PdgBuyFlowHeader(this.w(x));
+		this.D$PdgBuyFlowHeader(this.w(x));
+	}
+	/** @arg {D$PdgBuyFlowHeader} x */
+	D$PdgBuyFlowHeader(x) {
+		const cf="D$PdgBuyFlowHeader";
+		this.save_keys(`[${cf}]`,x);
+		const {}=x;
+		this.codegen_renderer(cf,x);
+		debugger;
+	}
+	/** @arg {string} cf @arg {{}} x */
+	codegen_renderer(cf,x) {
+		this.codegen.generate_renderer(x,cf);
 	}
 	/** @arg {R$NotificationAction} x */
 	R$NotificationAction(x) {
@@ -8959,7 +8970,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PdgBuyFlow";
 		this.save_keys(`[${cf}]`,x);
 		const {header,content,trackingParams,onCloseCommand,...y}=x; this.g(y); // ! #destructure
-		this.PdgBuyFlowHeaderRenderer(header);
+		this.R$PdgBuyFlowHeader(header);
 		this.z(content,this.SuperVodBuyFlowContentRenderer);
 		this.trackingParams(cf,trackingParams);
 		this.GetSurveyCommand(onCloseCommand);
