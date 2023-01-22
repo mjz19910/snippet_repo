@@ -6528,21 +6528,16 @@ class ServiceMethods extends ServiceData {
 	/** @public @arg {Extract<Split<UrlTypes, ".">,["like",any]>} target @arg {{}} x @returns {_ResponseTypes|null} */
 	convert_like(target,x) {
 		switch(target[1]) {
-			default: debugger; break;
-			case "dislike": return {
+			default: debugger; break; case "dislike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$Dislike} */
+				/** @type {R$Dislike} */
 				data: as(x),
-			};
-			case "like": return {
+			}; case "like": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$LikeLike} */
-				data: as(x),
-			};
-			case "removelike": return {
+				/** @type {R$LikeLike} */data: as(x),
+			}; case "removelike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {R$LikeRemoveLike} */
-				data: as(x),
+				/** @type {R$LikeRemoveLike} */data: as(x),
 			};
 		}
 		return null;
@@ -8887,18 +8882,6 @@ class HandleTypes extends ServiceMethods {
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.WatchNextItem);
 	}
-	/** @private @arg {CommentsSectionItem} x */
-	CommentsSectionItem(x) {
-		const cf="CommentsSectionItem";
-		this.save_keys(`[${cf}]`,x);
-		const {...y}=x; this.g(y);
-	}
-	/** @private @arg {BrowseFeedItem} x */
-	BrowseFeedItem(x) {
-		const cf="BrowseFeedItem";
-		this.save_keys(`[${cf}]`,x);
-		const {...y}=x; this.g(y);
-	}
 	/** @private @arg {R$Reel} x */
 	R$Reel(x) {
 		const cf="ReelResponse";
@@ -9400,6 +9383,18 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R$ModifyChannelPreference} x */
 	R$ModifyChannelPreference(x) {
 		const cf="ModifyChannelPreference";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @private @arg {CommentsSectionItem} x */
+	CommentsSectionItem(x) {
+		const cf="CommentsSectionItem";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @private @arg {BrowseFeedItem} x */
+	BrowseFeedItem(x) {
+		const cf="BrowseFeedItem";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
