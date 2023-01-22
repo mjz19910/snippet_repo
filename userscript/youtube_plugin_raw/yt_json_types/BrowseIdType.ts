@@ -10,7 +10,7 @@ type BrowseIdType=
 	[
 		"FEhashtag",
 	][number]
-	|`FE_{BrowseEndpointPages}`
+	|`FE${BrowseEndpointPages}`
 	|`VL${`${"LL"|"WL"|"PL"}${string}`}`
 	|`UC${string}`
 	|`SP${SettingsPages}`
