@@ -7387,72 +7387,6 @@ class HandleTypes extends ServiceMethods {
 	}
 	//#endregion {E$}
 	//#region general done
-	/** @arg {WatchPageResponse} x */
-	WatchPageResponse(x) {
-		const cf="WatchPageResponse";
-		this.save_keys(`[${cf}]`,x);
-		if("rootVe" in x) switch(x.rootVe) {
-			case 3832: this.VE3832_WatchPageResponse(x); break;
-			default: debugger; break;
-		} else {
-			this.Generic_WatchPageResponse(x);
-		}
-	}
-	/** @arg {Generic_WatchPageResponse} x */
-	Generic_WatchPageResponse(x) {
-		const cf="Generic_WatchPageResponse";
-		this.save_keys(`[${cf}]`,x);
-		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y); // ! #destructure
-		this.E$WatchEndpoint(endpoint);
-		this.WatchResponse(response);
-		this.PlayerResponse(playerResponse);
-		let wp_params=this.parse_watch_page_url(cf,url);
-		this.save_keys(`[${cf}.wp_params]`,wp_params);
-		if(previousCsn!==void 0) this.previousCsn(previousCsn);
-	}
-	/** @arg {R$VE3832$WatchPageResponse} x */
-	VE3832_WatchPageResponse(x) {
-		const cf="WatchPageResponse";
-		this.save_keys(`[${cf}]`,x);
-		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y); // ! #destructure
-		if(rootVe!==3832) debugger;
-		let wp_params=this.parse_watch_page_url(cf,url);
-		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
-		this.E$WatchEndpoint(endpoint);
-		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
-		this.PlayerResponse(playerResponse);
-		this.WatchResponse(response);
-	}
-	/** @arg {R$Watch} x */
-	WatchResponse(x) {
-		const cf="WatchResponse";
-		this.save_keys(`[${cf}]`,x);
-		this.x.get("yt_plugin").add_function({
-			name: "data",
-			data: {
-				WatchResponse: x,
-			},
-		});
-		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
-		this.ResponseContext(responseContext);
-		this.A$TwoColumnWatchNextResults(contents);
-		this.E$WatchEndpoint(currentVideoEndpoint);
-		this.trackingParams("WatchResponse",trackingParams);
-		this.PlayerOverlayRenderer(playerOverlays);
-		this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("WatchResponse",a));
-		this.z(engagementPanels,_x=>{debugger;});
-		this.DesktopTopbarRenderer(topbar);
-		this.z(pageVisualEffects,this.CinematicContainerRenderer);
-		this.FrameworkUpdates(frameworkUpdates);
-	}
-	/** @arg {A$FrameworkUpdates} x */
-	FrameworkUpdates(x) {
-		const cf="FrameworkUpdates";
-		this.save_keys(`[${cf}]`,x);
-		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y); // ! #destructure
-		this.EntityBatchUpdateData(entityBatchUpdate);
-		this.t(elementUpdate,this.ElementUpdate);
-	}
 	/** @arg {string} cf @public @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @returns {T[K]} */
 	H$Data(cf,x) {
 		this.save_keys(`[${cf}Data]`,x);
@@ -8232,6 +8166,72 @@ class HandleTypes extends ServiceMethods {
 		const cf="Search";
 		this.save_keys(`[${cf}]`,x);
 		this.primitive_of_string(this.w(x));
+	}
+	/** @arg {WatchPageResponse} x */
+	WatchPageResponse(x) {
+		const cf="WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
+		if("rootVe" in x) switch(x.rootVe) {
+			case 3832: this.VE3832_WatchPageResponse(x); break;
+			default: debugger; break;
+		} else {
+			this.Generic_WatchPageResponse(x);
+		}
+	}
+	/** @arg {Generic_WatchPageResponse} x */
+	Generic_WatchPageResponse(x) {
+		const cf="Generic_WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
+		const {page: {},endpoint,response,playerResponse,url,previousCsn,...y}=x; this.g(y); // ! #destructure
+		this.E$WatchEndpoint(endpoint);
+		this.WatchResponse(response);
+		this.PlayerResponse(playerResponse);
+		let wp_params=this.parse_watch_page_url(cf,url);
+		this.save_keys(`[${cf}.wp_params]`,wp_params);
+		if(previousCsn!==void 0) this.previousCsn(previousCsn);
+	}
+	/** @arg {R$VE3832$WatchPageResponse} x */
+	VE3832_WatchPageResponse(x) {
+		const cf="WatchPageResponse";
+		this.save_keys(`[${cf}]`,x);
+		const {rootVe,url,endpoint,page: {},preconnect,playerResponse,response,...y}=x; this.g(y); // ! #destructure
+		if(rootVe!==3832) debugger;
+		let wp_params=this.parse_watch_page_url(cf,url);
+		this.save_keys(`[VE3832.${cf}.wp_params]`,wp_params);
+		this.E$WatchEndpoint(endpoint);
+		if(preconnect!==void 0) this.parse_preconnect_arr(preconnect);
+		this.PlayerResponse(playerResponse);
+		this.WatchResponse(response);
+	}
+	/** @arg {R$Watch} x */
+	WatchResponse(x) {
+		const cf="WatchResponse";
+		this.save_keys(`[${cf}]`,x);
+		this.x.get("yt_plugin").add_function({
+			name: "data",
+			data: {
+				WatchResponse: x,
+			},
+		});
+		const {responseContext,contents,currentVideoEndpoint,trackingParams,playerOverlays,onResponseReceivedEndpoints,engagementPanels,topbar,pageVisualEffects,frameworkUpdates,...y}=x; this.g(y); // ! #destructure
+		this.ResponseContext(responseContext);
+		this.A$TwoColumnWatchNextResults(contents);
+		this.E$WatchEndpoint(currentVideoEndpoint);
+		this.trackingParams("WatchResponse",trackingParams);
+		this.PlayerOverlayRenderer(playerOverlays);
+		this.z(onResponseReceivedEndpoints,a => this.ResponseReceivedEndpointItem("WatchResponse",a));
+		this.z(engagementPanels,_x=>{debugger;});
+		this.DesktopTopbarRenderer(topbar);
+		this.z(pageVisualEffects,this.CinematicContainerRenderer);
+		this.FrameworkUpdates(frameworkUpdates);
+	}
+	/** @arg {A$FrameworkUpdates} x */
+	FrameworkUpdates(x) {
+		const cf="FrameworkUpdates";
+		this.save_keys(`[${cf}]`,x);
+		const {entityBatchUpdate,elementUpdate,...y}=x; this.g(y); // ! #destructure
+		this.EntityBatchUpdateData(entityBatchUpdate);
+		this.t(elementUpdate,this.ElementUpdate);
 	}
 	/** @private @arg {WebSearchboxConfig} x */
 	WebSearchboxConfig(x) {
