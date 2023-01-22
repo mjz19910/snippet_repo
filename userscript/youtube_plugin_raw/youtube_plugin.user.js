@@ -2322,27 +2322,18 @@ class KnownDataSaver extends ApiBase {
 				data_item[1]=target;
 			}
 			let found=target[1].find(e => this.eq_keys(e,x));
-			if(!found) {
-				target[1].push(x);
-				return false;
-			}
+			if(!found) return target[1].push(x);
 		} else {
 			if(target[0]==="one") {
-				if(!target[1].includes(x)) {
-					target[1].push(x);
-					return false;
-				}
+				if(!target[1].includes(x)) return target[1].push(x);
 			} else if(target[0]==="many") {
 				let res=target[1].find(([e,...r]) => !r.length&&e===x);
-				if(!res) {
-					target[1].push([x]);
-					return false;
-				}
+				if(!res) return target[1].push([x]);
 			}
 		}
-		return true;
+		return -1;
 	}
-	/** @arg {`[${string}]`} ka @arg {string|string[]} x @arg {{data:[string, ["one", string[]] | ["many", string[][]]][];index:{[x:string]:number}}} store */
+	/** @arg {`[${string}]`} ka @arg {string|string[]} x @arg {{new_data: [string, string | string[]][];data:[string, ["one", string[]] | ["many", string[][]]][];index:{[x:string]:number}}} store */
 	save_to_store(ka,x,store) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(ka);
@@ -2352,8 +2343,10 @@ class KnownDataSaver extends ApiBase {
 			let nk=store.data.push(p)-1;
 			store.index[k]=nk;
 		}
-		let was_known=this.save_to_data_item(x,p);
-		was_known;
+		let store_index=this.save_to_data_item(x,p);
+		if(store_index<0) return false;
+		store.new_data.push([k,x]);
+		return true;
 	}
 	/** @arg {`[${string}]`} k_arg @arg {string|string[]} x */
 	save_string(k_arg,x) {
@@ -2366,7 +2359,7 @@ class KnownDataSaver extends ApiBase {
 			this.#data.strings_key_index_map[k]=nk;
 		}
 		let was_known=this.save_to_data_item(x,store_item);
-		if(was_known) return false;
+		if(was_known<0) return false;
 		this.#new_strings.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
@@ -2612,7 +2605,7 @@ class KnownDataSaver extends ApiBase {
 	#new_root_visual_elements=[];
 	/** @public @arg {number} x */
 	save_root_visual_element(x) {
-		if(x===void 0) {debugger;return;}
+		if(x===void 0) {debugger; return;}
 		if(this.#data.seen_root_visual_elements.includes(x)) return;
 		console.log("store [root_visual_element]",x);
 		this.#data.seen_root_visual_elements.push(x);
