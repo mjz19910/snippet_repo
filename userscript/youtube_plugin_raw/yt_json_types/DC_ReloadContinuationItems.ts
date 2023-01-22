@@ -1,7 +1,7 @@
 type DC_ReloadContinuationItems={
 	slot: "RELOAD_CONTINUATION_SLOT_BODY";
 	targetId: "browse-feedFEwhat_to_watch";
-	continuationItems: SectionItem[];
+	continuationItems: G$SectionItem[];
 }|{
 	slot: "RELOAD_CONTINUATION_SLOT_HEADER";
 	targetId: "comments-section";

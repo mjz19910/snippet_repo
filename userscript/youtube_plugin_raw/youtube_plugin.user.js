@@ -3141,7 +3141,7 @@ class HandleRendererContentItemArray extends BaseService {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @public @template {R_BrowseFeed[]|G_WatchNext[]|G_CommentsSection[]|SectionItem[]} T @arg {T} arr @returns {T} */
+	/** @public @template {R_BrowseFeed[]|G_WatchNext[]|G_CommentsSection[]|G$SectionItem[]} T @arg {T} arr @returns {T} */
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			let keys=this.get_keys_of(content_item);
