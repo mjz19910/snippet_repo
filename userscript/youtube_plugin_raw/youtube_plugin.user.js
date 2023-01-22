@@ -5735,14 +5735,7 @@ case "${path}": {
 					} return;
 					case "tracking.trackingParams": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
-							case 3: break;
-							case 4: break;
-							case 6: break;
-							case 7: break;
-							case 9: break;
-							case 19: break;
+							case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 19: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5750,9 +5743,7 @@ case "${path}": {
 					} return;
 					case "tracking.trackingParams.f4": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
-							case 3: break;
+							case 1: case 2: case 3: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5768,8 +5759,7 @@ case "${path}": {
 					} return;
 					case "browse.params": {
 						switch(ta) {
-							case 84: break;
-							case 93: break;
+							case 84: case 93: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5777,8 +5767,7 @@ case "${path}": {
 					} return;
 					case "createBackstagePost.param": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
+							case 1: case 2: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5786,9 +5775,7 @@ case "${path}": {
 					} return;
 					case "entity_key": {
 						switch(ta) {
-							case 2: break;
-							case 4: break;
-							case 5: break;
+							case 2: case 4: case 5: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5804,9 +5791,7 @@ case "${path}": {
 					} return;
 					case "subscribe.params": {
 						switch(ta) {
-							case 2: break;
-							case 3: break;
-							case 4: break;
+							case 2: case 3: case 4: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5830,14 +5815,7 @@ case "${path}": {
 					} return;
 					case "report.params": {
 						switch(ta) {
-							case 2: break;
-							case 8: break;
-							case 11: break;
-							case 15: break;
-							case 18: break;
-							case 25: break;
-							case 26: break;
-							case 28: break;
+							case 2: case 8: case 11: case 15: case 18: case 25: case 26: case 28: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5861,8 +5839,7 @@ case "${path}": {
 					} return;
 					case "reel.player_params": {
 						switch(ta) {
-							case 30: break;
-							case 71: break;
+							case 30: case 71: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5870,8 +5847,7 @@ case "${path}": {
 					} return;
 					case "record_notification_interactions.f2.f14.f1": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
+							case 1: case 2: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5879,28 +5855,21 @@ case "${path}": {
 					} return;
 					case "watch.params": {
 						switch(ta) {
-							case 2: case 3: break; case 7: case 12: case 13: break;
-							case 24: case 27: case 33: break;
-							case 56: break;
+							case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 56: break;
 							default: new_ns(); debugger; return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
 					case "watch.player_params": {
 						switch(ta) {
-							case 8: break;
-							case 9: break;
-							case 40: break;
+							case 8: case 9: case 40: break;
 							default: new_ns(); debugger; return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} break;
 					case "watch.params.f33": {
 						switch(ta) {
-							case 2: break;
-							case 3: break;
-							case 4: break;
-							case 5: break;
+							case 2: case 3: case 4: case 5: break;
 							default: new_ns(); debugger; return;
 						}
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
@@ -5923,8 +5892,7 @@ case "${path}": {
 					} return;
 					case "record_notification_interactions": {
 						switch(ta) {
-							case 2: break;
-							case 5: break;
+							case 2: case 5: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5940,8 +5908,7 @@ case "${path}": {
 					} return;
 					case "watch.player_params.f40.f1": {
 						switch(ta) {
-							case 2: break;
-							case 3: break;
+							case 2: case 3: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5949,8 +5916,7 @@ case "${path}": {
 					} return;
 					case "record_notification_interactions.f2": {
 						switch(ta) {
-							case 1: break;
-							case 14: break;
+							case 1: case 14: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
@@ -5958,13 +5924,12 @@ case "${path}": {
 					} return;
 					case "record_notification_interactions.f2.f14": {
 						switch(ta) {
-							case 1: break;
-							case 2: break;
+							case 1: case 2: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
+					}
 				}
 				return;
 			}
@@ -6062,6 +6027,7 @@ case "${path_parts[idx-1]}": {
 		};
 		/** @arg {number} idx */
 		let gd=(idx) => {
+			/** @type {P$LogItems} */
 			console.log("[param_next.next_new_ns]",path_parts.join("."));
 			gen_next_part(idx);
 		};
@@ -6088,6 +6054,7 @@ case "${path_parts[idx-1]}": {
 					// [tracking.trackingParams]
 					case "trackingParams": {
 						const idx=3;
+						/** @type {P$LogItems} */
 						if(path_parts.length===2) {
 							switch(tv) {default: debugger; return;}
 						}
@@ -6098,6 +6065,7 @@ case "${path_parts[idx-1]}": {
 							case "f2":
 							case "f3":
 							case "f9":
+							case "f11":
 							case "f19":
 							case "f6":
 							case "f7":
