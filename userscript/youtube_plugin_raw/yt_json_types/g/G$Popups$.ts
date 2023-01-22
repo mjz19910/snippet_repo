@@ -1,6 +1,6 @@
 type G$Popups$=
 	|R_ConfirmDialog
-	|T$R_MultiPageMenu<{}>
+	|TR_MultiPageMenu<{}>
 	|A_R_Notification
 	|R_PdgBuyFlow
 	|R_UnifiedSharePanel

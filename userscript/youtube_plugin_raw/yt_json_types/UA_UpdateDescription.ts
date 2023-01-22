@@ -1,1 +1,1 @@
-type UA_Description={updateDescriptionAction: UDA_Description;};
+type U_Description={updateDescriptionAction: D_Description;};

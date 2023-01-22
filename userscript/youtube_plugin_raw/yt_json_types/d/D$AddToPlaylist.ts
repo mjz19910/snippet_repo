@@ -1,3 +1,3 @@
 type D_AddToPlaylist={
 	playlists: R_PlaylistAddToOption[];
-}&T$Actions$<R_AddToPlaylistCreate>;
+}&T_Actions<R_AddToPlaylistCreate>;

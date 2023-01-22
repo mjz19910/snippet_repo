@@ -1,0 +1,1 @@
+type D_DateText={dateText: R_SimpleText;};

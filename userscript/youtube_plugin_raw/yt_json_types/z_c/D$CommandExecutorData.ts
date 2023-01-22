@@ -1,1 +1,1 @@
-type D_CommandExecutor=T$Commands<A_CommandExecutor>;
+type D_CommandExecutor=Record<"commands",A_CommandExecutor[]>;

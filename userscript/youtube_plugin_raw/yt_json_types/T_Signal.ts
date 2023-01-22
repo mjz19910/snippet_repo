@@ -1,0 +1,1 @@
+type T_Signal<T>={signal: T;};

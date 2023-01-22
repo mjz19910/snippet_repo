@@ -1,4 +1,4 @@
-type D_RichItem=T$Content<RichItemContent>&{
+type D_RichItem=Record<"content",RichItemContent>&{
 	trackingParams: string;
 	rowIndex?: number;
 	colIndex?: number;

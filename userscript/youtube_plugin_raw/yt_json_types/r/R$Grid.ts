@@ -1,3 +1,1 @@
-type R_Grid={
-	items: GridRendererItem[];
-};
+type R_Grid=T_Items<R_GridVideo>;

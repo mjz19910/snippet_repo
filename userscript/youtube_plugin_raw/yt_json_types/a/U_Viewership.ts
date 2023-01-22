@@ -1,0 +1,1 @@
+type U_Viewership={updateViewershipAction: D_ViewCount;};

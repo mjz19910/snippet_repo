@@ -1,4 +1,4 @@
 type R_AccountMenu={
 	responseContext: RC$ResponseContext;
 	trackingParams: string;
-}&T$Actions$<TA_OpenPopup<{}>>;
+}&T_Actions<TA_OpenPopup<{}>>;

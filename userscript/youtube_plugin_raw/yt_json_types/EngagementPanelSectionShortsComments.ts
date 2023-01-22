@@ -1,4 +1,4 @@
-type EngagementPanelSectionShortsComments=T$Content<R_SectionList>&{
+type EngagementPanelSectionShortsComments=Record<"content",R_SectionList>&{
 	continuationService: "ENGAGEMENT_PANEL_CONTINUATION_SERVICE_BROWSE";
 	header: {};
 	identifier: {

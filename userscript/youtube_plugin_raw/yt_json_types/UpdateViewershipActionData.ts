@@ -1,1 +1,0 @@
-type D_UA_Viewership={viewCount: R_VideoViewCount;};

@@ -1,1 +1,0 @@
-type A_UpdateSubscribeButton={updateSubscribeButtonAction: D_UA_SubscribeButton;};

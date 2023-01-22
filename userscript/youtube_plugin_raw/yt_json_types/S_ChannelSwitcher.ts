@@ -1,0 +1,1 @@
+type S_ChannelSwitcher=T_Signal<"CHANNEL_SWITCHER">;

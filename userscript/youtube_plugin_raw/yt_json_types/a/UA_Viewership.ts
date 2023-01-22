@@ -1,1 +1,0 @@
-type UA_Viewership={updateViewershipAction: D_UA_Viewership;};

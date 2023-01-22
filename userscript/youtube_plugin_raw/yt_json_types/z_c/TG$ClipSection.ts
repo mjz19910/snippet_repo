@@ -1,1 +1,1 @@
-type ClipSection=T$Contents<R_ClipCreation[]>;
+type ClipSection=Record<"contents",R_ClipCreation[]>;

@@ -1,3 +1,3 @@
-type T$R_ContinuationItem<T>={
-	continuationItemRenderer: T$D_ContinuationItem<T>;
+type TR_ContinuationItem<T>={
+	continuationItemRenderer: TD_ContinuationItem<T>;
 };

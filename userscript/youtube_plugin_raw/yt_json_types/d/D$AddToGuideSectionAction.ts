@@ -1,1 +1,1 @@
-type AD_AddToGuideSection=T$Items<R_GuideEntry>&{handlerData: DE_AddToGuideSectionHandler;};
+type AD_AddToGuideSection=T_Items<R_GuideEntry>&{handlerData: DE_AddToGuideSectionHandler;};

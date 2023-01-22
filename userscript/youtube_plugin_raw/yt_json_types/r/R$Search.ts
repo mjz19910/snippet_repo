@@ -1,4 +1,4 @@
-type R_Search=T$Contents<R_TwoColumnSearchResults>&{
+type R_Search=Record<"contents",R_TwoColumnSearchResults>&{
 	responseContext: RC$ResponseContext;
 	estimatedResults: `${number}`;
 	trackingParams: string;

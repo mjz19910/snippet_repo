@@ -1,3 +1,3 @@
-type AD__SendFeedback={
+type AD_SendFeedback={
 	bucket: "Kevlar";
 };

@@ -1,1 +1,0 @@
-type T$Contents<T>={contents: T;};

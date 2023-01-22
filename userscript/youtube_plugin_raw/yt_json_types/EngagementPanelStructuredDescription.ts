@@ -1,4 +1,4 @@
-type EngagementPanelStructuredDescription=T$Content<{}>&{
+type EngagementPanelStructuredDescription=Record<"content",{}>&{
 	header: {};
 	identifier: {
 		surface: "ENGAGEMENT_PANEL_SURFACE_SHORTS";

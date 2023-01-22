@@ -4370,10 +4370,10 @@ class CodegenService extends BaseService {
 	}
 	/** @param {{[U in string]:unknown}} x */
 	decode_Signal(x) {
-		/** @type {Signal$ClientSignal} */
+		/** @type {SG_Client} */
 		let u=as(x);
 		switch(u.signal) {
-			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E_Signal_ClientSignal"; break;
+			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E_S_ClientSignal"; break;
 		}
 		debugger;
 		return x;
@@ -6375,7 +6375,7 @@ class ServiceMethods extends ServiceData {
 			};
 			case "updated_metadata": return {
 				type: target[0],
-				/** @type {R_UpdatedMetadata} */
+				/** @type {U_Metadata} */
 				data: as(x),
 			};
 		}
@@ -6781,27 +6781,27 @@ class HandleTypes extends ServiceMethods {
 		this.minimal_handler_member_2({});
 	}
 	//#region templates
-	/** @private @template {{}} T @arg {T$R_ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	T$R_ItemSection$1(x,f) {this.H_R_("T$R_ItemSection$1",x,a => this.T$D_ItemSection$CommentsEntryPoint(a,f));}
+	/** @private @template {{}} T @arg {TR_ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	TR_ItemSection$1(x,f) {this.H_R_("TR_ItemSection$1",x,a => this.TD_ItemSection$CommentsEntryPoint(a,f));}
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
 		const cf/**/="ItemsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
-	/** @template {{}} T @arg {T$Contents<T[]>} x @arg {(this:this,x:T)=>void} f */
+	/** @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
 	ContentsArrayTemplate(x,f) {
 		const cf="ContentsArrayTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
-	/** @template CT,T,U @arg {T$R_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @template CT,T,U @arg {TR_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionRendererTemplate(x,f) {
 		const cf="ItemSectionRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.ItemSectionDataTemplate(this.w(x),f);
 	}
-	/** @template CT,T,U @arg {T$D_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @template CT,T,U @arg {TD_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
@@ -6819,13 +6819,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		f.call(this,this.w(y));
 	}
-	/** @template {{}} T @arg {T$Commands<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @template {{}} T @arg {{commands: T[];}} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
-	/** @template U @template {{}} T @template {T$Commands<T>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
+	/** @template U @template {{}} T @template {{commands: T[];}} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
 	CommandsTemplate$Omit(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -6877,8 +6877,8 @@ class HandleTypes extends ServiceMethods {
 		}
 		return parse_number(x.types,_x);
 	}
-	/** @private @template {{}} T @arg {T$D_ItemSection$1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
-	T$D_ItemSection$CommentsEntryPoint(x,f) {
+	/** @private @template {{}} T @arg {TD_ItemSection_1<T,"comments-entry-point">} x @arg {(x:T)=>void} f */
+	TD_ItemSection$CommentsEntryPoint(x,f) {
 		const cf="ItemSectionDataTemplate_Section";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
@@ -7632,12 +7632,12 @@ class HandleTypes extends ServiceMethods {
 		let kk=rk[0];
 		return this.uppercase_first(kk);
 	}
-	/** @template T @arg {T$R_ContinuationItem<T>} x */
+	/** @template T @arg {TR_ContinuationItem<T>} x */
 	R_T$ContinuationItem(x) {
 		const {continuationItemRenderer,...y}=x; this.g(y);
 		return this.w(this.T$ContinuationItemData(continuationItemRenderer));
 	}
-	/** @template T @arg {T$D_ContinuationItem<T>} x */
+	/** @template T @arg {TD_ContinuationItem<T>} x */
 	T$ContinuationItemData(x) {
 		const {trigger,...y}=x;
 		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
@@ -7645,7 +7645,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R_Menu} x */
 	R_Menu(x) {this.H_R_("A_Notification",x,this.D_Menu);}
-	/** @private @arg {R_UpdatedMetadata} x */
+	/** @private @arg {U_Metadata} x */
 	R_UpdatedMetadata(x) {
 		const cf="R_UpdatedMetadata";
 		this.save_keys(`[${cf}]`,x);
@@ -7666,7 +7666,7 @@ class HandleTypes extends ServiceMethods {
 			console.log(a);
 		});
 	}
-	/** @private @arg {UA_Description} x */
+	/** @private @arg {U_Description} x */
 	UA_Description(x) {
 		const cf="UA_Description";
 		this.save_keys(`[${cf}]`,x);
@@ -7674,7 +7674,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[UA_DescriptionData]`,x1);
 		this.D_TextWithRuns(x1.description);
 	}
-	/** @private @arg {UA_Title} x */
+	/** @private @arg {U_Title} x */
 	UA_Title(x) {
 		const cf="UA_Title";
 		this.save_keys(`[${cf}]`,x);
@@ -7682,7 +7682,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[UA_TitleData]`,x1);
 		this.D_TextWithRuns(x1.title);
 	}
-	/** @private @arg {UA_DateText} x */
+	/** @private @arg {U_DateText} x */
 	UA_DateText(x) {
 		const cf="UA_DateText";
 		this.save_keys(`[${cf}]`,x);
@@ -7690,7 +7690,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[UA_DateTextData]`,x1);
 		this.D_SimpleText(x1.dateText);
 	}
-	/** @private @arg {UA_ToggleButtonText} x */
+	/** @private @arg {U_ToggleButtonText} x */
 	UA_ToggleButtonText(x) {
 		const cf="UA_ToggleButtonText";
 		this.save_keys(`[${cf}]`,x);
@@ -7700,7 +7700,7 @@ class HandleTypes extends ServiceMethods {
 		this.D_SimpleText(x1.defaultText);
 		this.D_SimpleText(x1.toggledText);
 	}
-	/** @private @arg {UA_Viewership} x */
+	/** @private @arg {U_Viewership} x */
 	UA_Viewership(x) {
 		const cf="UA_Viewership";
 		this.save_keys(`[${cf}]`,x);
@@ -8182,13 +8182,13 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {T$R_ItemSection$1<any,any>} x @returns {x is T$R_ItemSection<any,any,any>} */
+	/** @private @arg {TR_ItemSection$1<any,any>} x @returns {x is TR_ItemSection<any,any,any>} */
 	is_ItemSectionRendererTemplate(x) {
 		return ("sectionIdentifier" in x.itemSectionRenderer)&&("targetId" in x.itemSectionRenderer);
 	}
 	/** @arg {D_TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
 	handle_results_3(x) {
-		if("itemSectionRenderer" in x) return this.T$R_ItemSection$CommentItemSection(x);
+		if("itemSectionRenderer" in x) return this.TR_ItemSection$CommentItemSection(x);
 		if("merchandiseShelfRenderer" in x) return this.R_MerchandiseShelf(x);
 		if("videoPrimaryInfoRenderer" in x) return this.R_VideoPrimaryInfo(x);
 		if("videoSecondaryInfoRenderer" in x) return this.R_VideoSecondaryInfo(x);
@@ -8204,20 +8204,20 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_VideoSecondaryInfo} x */
 	R_VideoSecondaryInfo(x) {this.H_R_("VideoSecondaryInfo",x,a => {a; debugger;});}
 	/** @private @arg {Extract<D_TwoColumnWatchNextResults['results']['results']['contents'][number],{itemSectionRenderer:any}>} x */
-	T$R_ItemSection$CommentItemSection(x) {
+	TR_ItemSection$CommentItemSection(x) {
 		if(this.is_ItemSectionRendererTemplate(x)) {
 			switch(x.itemSectionRenderer.sectionIdentifier) {
-				case "comment-item-section": return this.T$R_ItemSection$2$CommentItemSection(x);
+				case "comment-item-section": return this.TR_ItemSection$2$CommentItemSection(x);
 			}
 		}
 		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.T$R_ItemSection$1(x,a => {a; debugger;});
+			case "comments-entry-point": return this.TR_ItemSection$1(x,a => {a; debugger;});
 		}
 	}
-	/** @arg {T$R_ItemSection<{},"comment-item-section","comments-section">} x */
-	T$R_ItemSection$2$CommentItemSection(x) {this.H_R_("A_Notification",x,a => {a; debugger;});}
-	/** @arg {T$D_ItemSection<{},"comment-item-section","comments-section">} x */
-	T$D_ItemSection$2CommentItemSection(x) {x;}
+	/** @arg {TR_ItemSection<{},"comment-item-section","comments-section">} x */
+	TR_ItemSection$2$CommentItemSection(x) {this.H_R_("A_Notification",x,a => {a; debugger;});}
+	/** @arg {TD_ItemSection<{},"comment-item-section","comments-section">} x */
+	TD_ItemSection$2CommentItemSection(x) {x;}
 	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
 	/** @arg {R_ItemSection} x */
@@ -8380,7 +8380,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 	}
-	/** @private @arg {{trackingParams:string;}&T$Items<R_Notification|T$R_ContinuationItem<E_GetNotificationMenuEndpoint>>} x */
+	/** @private @arg {{trackingParams:string;}&T_Items<R_Notification|TR_ContinuationItem<E_GetNotificationMenuEndpoint>>} x */
 	MultiPageMenuNotificationSection(x) {
 		const cf="MultiPageMenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
@@ -8401,7 +8401,7 @@ class HandleTypes extends ServiceMethods {
 	R_Notification(x) {x;}
 	/** @private @arg {E_GetNotificationMenuEndpoint} x */
 	E_GetNotificationMenuEndpoint(x) {x;}
-	/** @private @template T @arg {T$R_ContinuationItem<T>} x */
+	/** @private @template T @arg {TR_ContinuationItem<T>} x */
 	T$ContinuationItemRenderer(x) {
 		const cf="T$ContinuationItemRenderer";
 		this.save_keys(`[${cf}]`,x);

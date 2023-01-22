@@ -1,0 +1,1 @@
+type T_Items<T>={items: T[];};

@@ -1,0 +1,1 @@
+type A_UpdateSubscribeButton={updateSubscribeButtonAction: D_SubscribeButton;};

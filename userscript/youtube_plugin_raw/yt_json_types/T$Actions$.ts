@@ -1,3 +1,3 @@
-type T$Actions$<T>={
+type T_Actions<T>={
 	actions: T[];
 };

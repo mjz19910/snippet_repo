@@ -1,5 +1,5 @@
-type R_UpdatedMetadata={
+type U_Metadata={
 	responseContext: RC$ResponseContext;
 	continuation: D_TimedContinuation;
-	actions: UA_dMetadatas;
+	actions: U_MetadataAction$items[];
 };

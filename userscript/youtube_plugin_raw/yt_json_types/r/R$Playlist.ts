@@ -1,4 +1,4 @@
-type R_Playlist=T$Contents<R_TwoColumnBrowseResults>&{
+type R_Playlist=Record<"contents",R_TwoColumnBrowseResults>&{
 	responseContext: RC$ResponseContext;
 	header: R_PlaylistHeader;
 	alerts?: R_AlertWithButton[];

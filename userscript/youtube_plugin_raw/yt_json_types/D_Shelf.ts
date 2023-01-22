@@ -1,4 +1,4 @@
-type D_Shelf=T$Content<ShelfItem>&{
+type D_Shelf=Record<"content",G_ShelfItem>&{
 	title: {};
 	trackingParams: string;
 	menu?: {};

@@ -1,0 +1,1 @@
+type S_GetAccountMenu=T_Signal<"GET_ACCOUNT_MENU">&T_Actions<TA_OpenPopup<Popup$GetAccountMenu>>;

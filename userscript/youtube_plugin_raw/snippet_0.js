@@ -1,6 +1,6 @@
 import {KnownDataSaver} from "./yt_json_types/KnownDataSaver";
-import {Base64Binary} from "./yt_json_types/Base64Binary";
 import {MyReader} from "./yt_json_types/MyReader";
+import {Base64Binary} from "./yt_json_types/z_c/Base64Binary";
 `
 const {responseContext: {},actions,trackingParams,...y}=x; this.g(y);
 this.z(actions,a => {
@@ -218,7 +218,7 @@ export class Snippet_0_tmp {
 			y.call(this,a,i);
 		}
 	}
-	/** @protected @template {{}} T @arg {T$Contents<T[]>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {{}} T @arg {Record<"contents",T[]>} x @arg {(this:this,x:T)=>void} f */
 	w1(x,f) {
 		const {contents: a,...y}=x; this.g(y);
 		this.z(a,f);
@@ -417,18 +417,18 @@ export class Snippet_0_tmp {
 	}
 	/** @arg {AD_Notification} x */
 	AD_Notification(x) {x;}
-	/** @protected @template {{}} T @arg {T$R_SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	/** @protected @template {{}} T @arg {TR_SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
 		const cf="SectionListRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.SectionListDataTemplate(this.w(x));
 	}
-	/** @private @template {{}} T @arg {T$D_SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	/** @private @template {{}} T @arg {TR_SectionList<T,"comment-item-section", "engagement-panel-comments-section">['sectionListRenderer']} x */
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
 		this.SectionListItemTemplate(this.w(x));
 	}
-	/** @private @template {{}} T @arg {T$R_ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
+	/** @private @template {{}} T @arg {TR_ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
 	SectionListItemTemplate(x) {
 		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
 			this.z(b,a=>{a;debugger;});
@@ -436,7 +436,7 @@ export class Snippet_0_tmp {
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
 	}
-	/** @template CT,T,U @arg {T$D_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @template CT,T,U @arg {TD_ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
