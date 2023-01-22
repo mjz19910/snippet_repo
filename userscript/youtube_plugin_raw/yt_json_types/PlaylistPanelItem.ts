@@ -1,1 +1,1 @@
-type PlaylistPanelItem=AutomixPreviewVideoRenderer|PlaylistPanelVideoRenderer;
+type PlaylistPanelItem=R$AutomixPreviewVideo|R$PlaylistPanelVideo;

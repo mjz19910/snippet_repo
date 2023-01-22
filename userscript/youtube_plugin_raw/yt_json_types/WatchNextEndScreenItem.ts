@@ -1,2 +1,2 @@
 type WatchNextEndScreenItem=EndScreenPlaylistRenderer|
-	EndScreenVideoRenderer;
+	R$EndScreenVideo;

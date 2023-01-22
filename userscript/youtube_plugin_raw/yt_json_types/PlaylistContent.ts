@@ -1,4 +1,4 @@
-type PlaylistContent=T$AR$Contents<PlaylistPanelVideoRenderer>&{
+type PlaylistContent=T$AR$Contents<R$PlaylistPanelVideo>&{
 	title: string;
 	currentIndex: number;
 	playlistId: PlaylistId;

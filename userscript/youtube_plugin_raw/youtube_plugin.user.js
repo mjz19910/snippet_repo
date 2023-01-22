@@ -2267,7 +2267,7 @@ class KnownDataSaver extends ApiBase {
 			if(seen_numbers) this.seen_numbers=seen_numbers;
 			if(seen_root_visual_elements) this.seen_root_visual_elements=seen_root_visual_elements;
 			if(seen_strings) this.seen_strings=seen_strings;
-			if(seen_keys) this.seen_keys=seen_keys
+			if(seen_keys) this.seen_keys=seen_keys;
 		}
 	};
 	get_data_store() {
@@ -9017,26 +9017,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.LiveChatContinuationData(this.w(x));
 	}
-	/** @arg {LiveChatItemListRenderer} x */
-	LiveChatItemListRenderer(x) {
-		const cf="LiveChatItemListRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
-	/** @arg {LiveChatMessageInputRenderer} x */
-	LiveChatMessageInputRenderer(x) {
-		const cf="LiveChatMessageInputRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
 	/** @arg {ReplayChatItemAction} x */
 	ReplayChatItemAction(x) {
 		const cf="ReplayChatItemAction";
 		this.save_keys(`[${cf}]`,x);
 		this.ReplayChatItemActionData(this.w(x));
 	}
-	/** @arg {PlaylistPanelVideoRenderer} x */
-	PlaylistPanelVideoRenderer(x) {
+	/** @arg {R$PlaylistPanelVideo} x */
+	R$PlaylistPanelVideo(x) {
 		const cf="PlaylistPanelVideoRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.PlaylistPanelVideo(this.w(x));
@@ -9089,8 +9077,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.WatchNextEndScreen(this.w(x));
 	}
-	/** @arg {EndScreenVideoRenderer} x */
-	EndScreenVideoRenderer(x) {
+	/** @arg {R$EndScreenVideo} x */
+	R$EndScreenVideo(x) {
 		const cf="EndScreenPlaylistRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.EndScreenVideo(this.w(x));
@@ -9330,30 +9318,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.DesktopTopbarData(this.w(x));
 	}
-	/** @arg {MessageRenderer} x */
-	MessageRenderer(x) {
-		const cf="MessageRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
-	/** @arg {LiveChatParticipantsListRenderer} x */
-	LiveChatParticipantsListRenderer(x) {
-		const cf="LiveChatParticipantsListRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
-	/** @arg {LiveChatTickerRenderer} x */
-	LiveChatTickerRenderer(x) {
-		const cf="LiveChatTickerRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
-	/** @arg {LiveChatHeaderRenderer} x */
-	LiveChatHeaderRenderer(x) {
-		const cf="LiveChatHeaderRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
 	/** @arg {LiveChatPlaceholderItemRenderer} x */
 	LiveChatPlaceholderItemRenderer(x) {
 		const cf="LiveChatPlaceholderItemRenderer";
@@ -9372,14 +9336,8 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.PlaylistPanelContinuationData(this.w(x));
 	}
-	/** @arg {RT$ReportFormModal} x */
-	ReportFormModalRenderer(x) {
-		const cf="ReportFormModalRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
-	/** @arg {AutomixPreviewVideoRenderer} x */
-	AutomixPreviewVideoRenderer(x) {
+	/** @arg {R$AutomixPreviewVideo} x */
+	R$AutomixPreviewVideo(x) {
 		const cf="AutomixPreviewVideoRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.AutomixPreviewVideo(this.w(x));
@@ -9571,12 +9529,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.MultiPageMenuRenderer(this.w(x));
 	}
-	/** @arg {EmojiPickerRenderer} x */
-	EmojiPickerRenderer(x) {
-		const cf="EmojiPickerRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
-	}
 	/** @arg {R$ExpandableTab} x */
 	ExpandableTabRenderer(x) {
 		const cf="ExpandableTabRenderer";
@@ -9698,13 +9650,13 @@ class HandleTypes extends ServiceMethods {
 		this.HorizontalCardList(this.w(x));
 	}
 	/** @arg {R$CompactVideoRenderer} x */
-	CompactVideoRenderer(x) {
+	R$CompactVideoRenderer(x) {
 		const cf="CompactVideoRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.CompactVideoData(this.w(x));
 	}
 	/** @arg {R$HotkeyDialog} x */
-	HotkeyDialogRenderer(x) {
+	R$HotkeyDialog(x) {
 		const cf="HotkeyDialogRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.D$HotkeyDialog(this.w(x));
@@ -11036,30 +10988,6 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {GetSharePanel} x */
-	GetSharePanel(x) {
-		const cf="GetSharePanel";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @arg {SubscribeResponse} x */
-	SubscribeResponse(x) {
-		const cf="SubscribeResponse";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @arg {UnsubscribeResponse} x */
-	UnsubscribeResponse(x) {
-		const cf="UnsubscribeResponse";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @arg {ModifyChannelPreferenceResponse} x */
-	ModifyChannelPreferenceResponse(x) {
-		const cf="ModifyChannelPreferenceResponse";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
 	/** @private @arg {R$Player} x */
 	PlayerResponse(x) {
 		const cf="PlayerResponse";
@@ -11381,9 +11309,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlaylistPanelItem";
 		this.save_keys(`[${cf}]`,x);
 		if("playlistPanelVideoRenderer" in x) {
-			this.PlaylistPanelVideoRenderer(x);
+			this.R$PlaylistPanelVideo(x);
 		} else if("automixPreviewVideoRenderer") {
-			this.AutomixPreviewVideoRenderer(x);
+			this.R$AutomixPreviewVideo(x);
 		} else {
 			debugger;
 		}
@@ -11982,7 +11910,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchNextEndScreenItem";
 		this.save_keys(`[${cf}]`,x);
 		if("endScreenVideoRenderer" in x) {
-			return this.EndScreenVideoRenderer(x);
+			return this.R$EndScreenVideo(x);
 		} else if("endScreenPlaylistRenderer" in x) {
 			return this.EndScreenPlaylistRenderer(x);
 		}
@@ -12481,7 +12409,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlaylistContent";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,title,currentIndex,playlistId,ownerName,isInfinite,playlistShareUrl,shortBylineText,longBylineText,trackingParams,titleText,isEditable,menu,localCurrentIndex,playlistButtons,isCourse,nextVideoLabel,...y}=x; this.g(y); // ! #destructure
-		this.z(contents,this.PlaylistPanelVideoRenderer);
+		this.z(contents,this.R$PlaylistPanelVideo);
 		this.primitive_of_string(title);
 		this.primitive_of(currentIndex,"number");
 		this.primitive_of_string(playlistId);
@@ -13325,7 +13253,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		if(countryCode!=="CA") debugger;
 		this.z(topbarButtons,this.TopbarButtonItem);
-		this.HotkeyDialogRenderer(hotkeyDialog);
+		this.R$HotkeyDialog(hotkeyDialog);
 		this.R$Button(backButton);
 		this.R$Button(forwardButton);
 		this.R$Button(a11ySkipNavigationButton);
@@ -13530,7 +13458,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="WatchNextItem";
 		this.save_keys(`[${cf}]`,x);
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
-		if("compactVideoRenderer" in x) return this.CompactVideoRenderer(x);
+		if("compactVideoRenderer" in x) return this.R$CompactVideoRenderer(x);
 		debugger;
 	}
 	/** @arg {AdsEngagementPanelContentData} x */
@@ -14622,16 +14550,39 @@ class HandleTypes extends ServiceMethods {
 		this.A$Accessibility(accessibility);
 		this.t(targetId,a => this.parser.parse_transcript_target_id(cf,a));
 	}
+	/** @private @arg {D$GuideCollapsibleSectionEntry} x */
+	GuideCollapsibleSectionEntry(x) {
+		const cf="GuideCollapsibleSectionEntry";
+		this.save_keys(`[${cf}]`,x);
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
+		this.R$GuideEntry(headerEntry);
+		this.T$Icon(expanderIcon);
+		this.T$Icon(collapserIcon);
+		this.z(sectionItems,this.R$GuideEntry);
+		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
+		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
+	}
+	/** @arg {MacroMarkersListItemRenderer} x */
+	MacroMarkersListItemRenderer(x) {
+		const cf="MacroMarkersListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.MacroMarkersListItem(this.w(x));
+	}
 	/** @arg {D$CinematicContainer} x */
 	CinematicContainer(x) {
 		const cf="CinematicContainerData";
 		this.save_keys(`[${cf}]`,x);
 		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=x; this.g(y); // ! #destructure
-		if(backgroundImageConfig) 1;
-		if(gradientColorConfig) 1;
-		if(presentationStyle) 1;
-		if(config) 1;
-		debugger;
+		this.t(backgroundImageConfig,this.ThumbnailsList);
+		this.D$GradientColorConfig(gradientColorConfig);
+		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
+		this.g(config);
+	}
+	/** @arg {R$ThumbnailsList} x */
+	ThumbnailsList(x) {
+		const cf="ThumbnailsList";
+		this.save_keys(`[${cf}]`,x);
+		this.D$Thumbnail(x.thumbnail);
 	}
 	/** @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {
@@ -14746,18 +14697,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {D$GuideCollapsibleSectionEntry} x */
-	GuideCollapsibleSectionEntry(x) {
-		const cf="GuideCollapsibleSectionEntry";
-		this.save_keys(`[${cf}]`,x);
-		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
-		this.R$GuideEntry(headerEntry);
-		this.T$Icon(expanderIcon);
-		this.T$Icon(collapserIcon);
-		this.z(sectionItems,this.R$GuideEntry);
-		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
-		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
-	}
 	/** @private @arg {Do$w<MerchandiseItemRenderer>} x */
 	MerchandiseItem(x) {
 		const cf="MerchandiseItem";
@@ -14824,12 +14763,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @arg {MacroMarkersListItemRenderer} x */
-	MacroMarkersListItemRenderer(x) {
-		const cf="MacroMarkersListItemRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MacroMarkersListItem(this.w(x));
-	}
 	/** @arg {ProductListItemRenderer} x */
 	ProductListItemRenderer(x) {
 		const cf="ProductListItemRenderer";
@@ -14863,6 +14796,78 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {SubscriptionNotificationToggleButtonRenderer} x */
 	SubscriptionNotificationToggleButtonRenderer(x) {
 		const cf="SubscriptionNotificationToggleButtonRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {RT$ReportFormModal} x */
+	ReportFormModalRenderer(x) {
+		const cf="ReportFormModalRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {LiveChatItemListRenderer} x */
+	LiveChatItemListRenderer(x) {
+		const cf="LiveChatItemListRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {LiveChatMessageInputRenderer} x */
+	LiveChatMessageInputRenderer(x) {
+		const cf="LiveChatMessageInputRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {MessageRenderer} x */
+	MessageRenderer(x) {
+		const cf="MessageRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {LiveChatParticipantsListRenderer} x */
+	LiveChatParticipantsListRenderer(x) {
+		const cf="LiveChatParticipantsListRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {LiveChatTickerRenderer} x */
+	LiveChatTickerRenderer(x) {
+		const cf="LiveChatTickerRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {LiveChatHeaderRenderer} x */
+	LiveChatHeaderRenderer(x) {
+		const cf="LiveChatHeaderRenderer";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {GetSharePanel} x */
+	GetSharePanel(x) {
+		const cf="GetSharePanel";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {SubscribeResponse} x */
+	SubscribeResponse(x) {
+		const cf="SubscribeResponse";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {UnsubscribeResponse} x */
+	UnsubscribeResponse(x) {
+		const cf="UnsubscribeResponse";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {ModifyChannelPreferenceResponse} x */
+	ModifyChannelPreferenceResponse(x) {
+		const cf="ModifyChannelPreferenceResponse";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
+	}
+	/** @arg {EmojiPickerRenderer} x */
+	EmojiPickerRenderer(x) {
+		const cf="EmojiPickerRenderer";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
