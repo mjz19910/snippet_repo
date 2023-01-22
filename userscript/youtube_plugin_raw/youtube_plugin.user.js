@@ -5158,6 +5158,7 @@ class ParserService extends BaseService {
 				}
 				let param_map=this.make_param_map(res_e);
 				this.parse_endpoint_param(root,path,new Map(param_map));
+				return;
 			}
 		}
 		let param_map=this.create_param_map(x);
@@ -5293,7 +5294,7 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "serializedTemplateConfig":
-						switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,"serializedTemplateConfig",tv);
 					case "AdServingDataEntry.f10":
@@ -5460,6 +5461,8 @@ class ParserService extends BaseService {
 				if(path_parts.length===1) {
 					if(tv instanceof Map) return;
 					if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+					if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+					if(this.is_bigint(tv)) return this.handle_bigint(path,tv);
 					switch(tv) {default: debugger; return;}
 				}
 				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break;}
