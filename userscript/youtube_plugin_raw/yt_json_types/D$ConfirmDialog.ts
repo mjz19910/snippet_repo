@@ -1,4 +1,4 @@
-type ConfirmDialogData={
+type D$ConfirmDialog={
 	title?: D$SimpleText;
 	trackingParams: string;
 	dialogMessages: D$TextT[];

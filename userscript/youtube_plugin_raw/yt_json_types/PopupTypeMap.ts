@@ -1,6 +1,6 @@
 type PopupTypeMap={
 	DIALOG: [{
-		popup: UnifiedSharePanelRenderer;
+		popup: R$UnifiedSharePanel;
 		popupType: "DIALOG";
 		beReused: true;
 	}];

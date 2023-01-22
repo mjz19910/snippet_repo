@@ -1,6 +1,6 @@
 type ItemSectionItem=[
 	R$CommentsEntryPointHeaderRenderer,
-	R$CompactPlaylistRenderer,
+	R$CompactPlaylist,
 	R$CompactRadioRenderer,
 	R$CompactVideoRenderer,
 	R$ConnectedAppRenderer,

@@ -1,4 +1,4 @@
-type VoiceSearchDialogData={
+type D$VoiceSearchDialog={
 	placeholderHeader: D$TextWithRuns;
 	promptHeader: D$TextWithRuns;
 	exampleQuery1: D$TextWithRuns;

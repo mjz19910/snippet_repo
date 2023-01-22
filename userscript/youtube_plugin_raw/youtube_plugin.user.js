@@ -6771,6 +6771,8 @@ class HandleTypes extends ServiceMethods {
 		this.minimal_handler_member_2({});
 	}
 	//#region templates
+	/** @arg {T$R$ItemSection$1<"comments-entry-point">} x */
+	T$R$ItemSection$1(x) {this.H$Renderer("T$R$ItemSection$1",x,this.T$D$ItemSection$1);}
 	/** @template {{}} T @arg {{items: T[]}} x @arg {(this:this,x:T)=>void} f */
 	ItemsTemplate(x,f) {
 		const cf/**/="ItemsTemplate";
@@ -6883,14 +6885,8 @@ class HandleTypes extends ServiceMethods {
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
 	}
-	/** @arg {T$R$ItemSection$1<"comments-entry-point">} x */
-	ItemSectionRendererTemplate_Section(x) {
-		const cf/**/="ItemSectionRendererTemplate_Section";
-		this.save_keys(`[${cf}]`,x);
-		this.ItemSectionDataTemplate_Section(this.w(x));
-	}
 	/** @arg {T$D$ItemSection$1<"comments-entry-point">} x */
-	ItemSectionDataTemplate_Section(x) {
+	T$D$ItemSection$1(x) {
 		const cf="ItemSectionDataTemplate_Section";
 		this.save_keys(`[${cf}]`,x);
 		const {contents,trackingParams,sectionIdentifier,...y}=x; this.g(y); // ! #destructure
@@ -6988,403 +6984,6 @@ class HandleTypes extends ServiceMethods {
 			this.parser.parse_url("GeneratedWebCommandMetadata",apiUrl);
 		}
 	}
-	/** @arg {G$WC$Metadata} x */
-	WebCommandMetadataRVE(x) {
-		if(!("rootVe" in x)) return;
-		this.rootVe(x.rootVe);
-		debugger;
-		switch(x.webPageType) {
-			default: debugger; return;
-			case "WEB_PAGE_TYPE_BROWSE": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_CHANNEL": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_PLAYLIST": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SEARCH": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SETTINGS": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_SHORTS": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_UNKNOWN": return this.WebCommandMetadata(x);
-			case "WEB_PAGE_TYPE_WATCH": return this.WebCommandMetadata(x);
-		}
-	}
-	/** @arg {M$VE96368$Metadata} x */
-	VE96368_WebCommandMetadata(x) {
-		const cf="VE96368_WebCommandMetadata";
-		this.save_keys(`[${cf}]`,x);
-		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-		if(url!=="/feed/subscriptions") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @arg {M$VE11487$Metadata} x */
-	VE11487_WebCommandMetadata(x) {
-		const cf="VE11487_WebCommandMetadata";
-		this.save_keys(`[${cf}]`,x);
-		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-		if(url!=="/premium") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @arg {M$VE3854$Metadata} x */
-	VE3854_WebCommandMetadata(x) {
-		const cf="VE3854_WebCommandMetadata";
-		this.save_keys(`[${cf}]`,x);
-		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-		if(url!=="/") debugger;
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @arg {M$VE6827$Metadata} x */
-	VE6827_WebCommandMetadata(x) {
-		const cf="VE6827_WebCommandMetadata";
-		this.save_keys(`[${cf}]`,x);
-		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-		this.t(url,x => this.parser.parse_ve_6827_url(x));
-		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
-		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	//#endregion
-	//#region endpoint
-	/** @arg {E$CompactLink$navigationEndpoint} x */
-	E$CompactLink$navigationEndpoint(x) {
-		if("uploadEndpoint" in x) return this.E$UploadEndpoint(x);
-		if("signalNavigationEndpoint" in x) return this.E$SignalNavigationEndpoint(x);
-		debugger;
-	}
-	/** @arg {E$SignalNavigationEndpoint} x */
-	E$SignalNavigationEndpoint(x) {
-		const cf="SignalNavigationEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,signalNavigationEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams("SignalNavigationEndpoint",clickTrackingParams);
-		if(commandMetadata.webCommandMetadata.rootVe!==83769) debugger;
-		this.CommandMetadata(commandMetadata);
-		this.SignalNavigationArgs(signalNavigationEndpoint);
-	}
-	/** @arg {E$UploadEndpoint} x */
-	E$UploadEndpoint(x) {
-		const cf="UploadEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,uploadEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$Upload(uploadEndpoint);
-	}
-	/** @arg {E$Upload} x */
-	E$Upload(x) {
-		this.save_keys("[E$Upload]",x);
-		const {hack,...y}=x; this.g(y); // ! #destructure
-		if(hack!==true) debugger;
-	}
-	/** @arg {Signal$ClientSignal} x */
-	E$Signal_ClientSignal(x) {
-		const cf="SendFeedbackAction";
-		this.save_keys(`[E$${cf}]`,x);
-		const {signal,actions,...y}=x; this.g(y); // ! #destructure
-		if(signal!=="CLIENT_SIGNAL") debugger;
-		this.z(actions,x => {
-			if("signalAction" in x) return this.A$SignalAction(x);
-			if("openPopupAction" in x) return this.A$OpenPopupAction(x);
-			if("sendFeedbackAction" in x) return this.A$SendFeedbackAction(x);
-			if("showEngagementPanelEndpoint" in x) return this.E$ShowEngagementPanelEndpoint(x);
-			this.do_codegen(cf,x);
-			debugger;
-		});
-	}
-	/** @arg {Extract<Signal$ClientSignal['actions'][number],{showEngagementPanelEndpoint:any}>} x */
-	E$ShowEngagementPanelEndpoint(x) {
-		const cf="ShowEngagementPanelEndpoint";
-		this.save_keys(`[E$${cf}]`,x);
-		const {clickTrackingParams,...z}=x;
-		let panel_id=this.w(this.w(z));
-		switch(panel_id) {
-			default: console.log(`-- [ShowEngagementPanelEndpoint] --\n\n\ncase "${panel_id}": break;`); debugger; break;
-			case "engagement-panel-searchable-transcript": break;
-		};
-	}
-	/** @arg {A$SendFeedbackAction} x */
-	A$SendFeedbackAction(x) {
-		const cf="SendFeedbackAction";
-		this.save_keys(`[A$${cf}]`,x);
-		const {clickTrackingParams,...z}=x;
-		let a=this.w(z);
-		const {bucket,...y}=a; this.g(y);
-		if(bucket!=="Kevlar") debugger;
-		if(this.eq_keys(this.get_keys_of(a),["bucket"])) return;
-		debugger;
-	}
-	/** @arg {Signal$GetAccountMenu} x */
-	Signal$GetAccountMenu(x) {
-		const cf="Signal$GetAccountMenu";
-		this.save_keys(`[E$${cf}]`,x);
-		const {signal,actions,...y}=x; this.g(y); // ! #destructure
-		if(signal!=="GET_ACCOUNT_MENU") debugger;
-		this.z(actions,this.A$OpenPopupAction);
-	}
-	/** @arg {E$FeedbackEndpoint} x */
-	E$FeedbackEndpoint(x) {
-		const cf="FeedbackEndpoint";
-		this.save_keys(`[E$${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,feedbackEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$Feedback(feedbackEndpoint);
-	}
-	/** @arg {E$Feedback} x */
-	E$Feedback(x) {
-		const cf="FeedbackEndpointData";
-		this.save_keys(`[${cf}]`,x);
-		const {feedbackToken,uiActions,actions,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(feedbackToken);
-		this.UiActions(uiActions);
-		this.tz(actions,this.ReplaceEnclosingAction);
-	}
-	/** @arg {E$NotificationOptOutEndpoint} x */
-	E$NotificationOptOutEndpoint(x) {
-		const cf="NotificationOptOutEndpoint";
-		this.save_keys(`[E$${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,notificationOptOutEndpoint: v,...y}=x; this.g(y); // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		const {optOutText,serializedOptOut,serializedRecordInteractionsRequest,...y1}=v; this.g(y1);
-		this.D$TextWithRuns(optOutText);
-		this.primitive_of_string(serializedOptOut);
-		this.primitive_of_string(serializedRecordInteractionsRequest);
-	}
-	/** @arg {E$ShareEntityServiceEndpoint} x */
-	E$ShareEntityServiceEndpoint(x) {
-		const cf="E$ShareEntityServiceEndpoint";
-		this.save_keys(`[E$${cf}]`,x);
-		let [q,ret_arr]=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),a => {
-			return a;
-		});
-		console.log(ret_arr);
-		debugger;
-		let {serializedShareEntity,...y}=q; this.g(y);
-		this.primitive_of_string(serializedShareEntity);
-	}
-	/** @arg {string} cf @template {EB$Endpoint} T @arg {T} x */
-	EB$Endpoint(cf,x) {
-		const {clickTrackingParams,commandMetadata,...y}=x; // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		return y;
-	}
-	/** @arg {E$AddToPlaylistServiceEndpoint} x */
-	E$AddToPlaylistServiceEndpoint(x) {
-		let q=this.w(this.EB$Endpoint("AddToPlaylistServiceEndpoint",x));
-		let {videoId}=q;
-		this.videoId(videoId);
-	}
-	/** @arg {E$GetReportFormEndpoint} x */
-	GetReportFormEndpoint(x) {
-		let {params}=this.w({x: x.getReportFormEndpoint});
-		this.t(params,a => this.params("GetReportForm","report.params",a));
-	}
-	/** @arg {E$SubscribeEndpoint} x */
-	E$SubscribeEndpoint(x) {
-		const cf="SubscribeEndpoint";
-		this.save_keys(`[E$${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,subscribeEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.params(cf,"subscribe.params",subscribeEndpoint.params);
-	}
-	/** @template T @arg {E$SignalServiceEndpoint<T>} x */
-	E$SignalServiceEndpoint(x) {
-		const cf="E$SignalServiceEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		return signalServiceEndpoint;
-	}
-	/** @arg {D$E$SignalService} x */
-	E$SignalService(x) {
-		const cf="SignalServiceEndpointData";
-		this.save_keys(`[${cf}]`,x);
-		switch(x.signal) {
-			case "CLIENT_SIGNAL": return this.E$Signal_ClientSignal(x);
-			case "GET_ACCOUNT_MENU": return this.Signal$GetAccountMenu(x);
-		}
-	}
-	/** @arg {E$PlaylistEdit} x */
-	E$PlaylistEditEndpoint(x) {
-		const cf="PlaylistEditEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,playlistEditEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$PlaylistEdit(playlistEditEndpoint);
-	}
-	/** @arg {D$PlaylistEdit} x */
-	E$PlaylistEdit(x) {
-		const cf="PlaylistEditEndpointData";
-		this.save_keys(`[${cf}]`,x);
-		const {playlistId,actions,params,...y}=x; this.g(y); // ! #destructure
-		this.playlistId(playlistId);
-		if(actions.length!==1) debugger;
-		this.PlaylistAction(actions[0]);
-		this.t(params,a => this.params("PlaylistEdit","playlist_edit.params",a));
-	}
-	/** @private @arg {E$UrlEndpoint} x */
-	E$UrlEndpoint(x) {
-		const cf="UrlEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,urlEndpoint,...y1}=x; this.g(y1);
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$Url(urlEndpoint);
-	}
-	/** @private @arg {E$Url} x */
-	E$Url(x) {
-		const cf="UrlEndpointData";
-		this.save_keys(`[${cf}]`,x);
-		const {url,target,nofollow,...y}=x; this.g(y); // ! #destructure
-		this.primitive_of_string(url);
-		if(target&&target!=="TARGET_NEW_WINDOW") debugger;
-		if(nofollow&&!nofollow) debugger;
-	}
-	/** @arg {E$GetTranscriptEndpoint} x */
-	E$GetTranscriptEndpoint(x) {
-		const cf="GetTranscriptEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$GetTranscript(getTranscriptEndpoint);
-	}
-	/** @arg {E$GetTranscript} x */
-	E$GetTranscript(x) {
-		const cf="GetTranscriptData";
-		this.save_keys(`[${cf}]`,x);
-		const {params,...y}=x; this.g(y); // ! #destructure
-		this.params("GetTranscript","get_transcript.params",params);
-	}
-	/** @arg {E$BrowseEndpoint} x */
-	E$BrowseEndpoint(x) {
-		const cf="BrowseEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,browseEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.t(commandMetadata,this.CommandMetadata);
-		this.E$Browse(browseEndpoint);
-	}
-	/** @arg {E$Browse} x */
-	E$Browse(x) {
-		const cf="Browse";
-		this.save_keys(`[${cf}]`,x);
-		const {browseId,params,canonicalBaseUrl,...y}=x; this.g(y); // ! #destructure
-		this.t(browseId,this.browseId);
-		this.t(params,a => this.params(cf,"browse.params",a));
-		this.t(canonicalBaseUrl,a => this.parser.parse_url(cf,a));
-	}
-	/** @arg {YTNavigateFinishDetail['endpoint']} x */
-	E$PageEndpoint(x) {
-		const cf="PageEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		if("browseEndpoint" in x) {
-			return this.E$BrowseEndpoint(x);
-		} else if("watchEndpoint" in x) {
-			return this.E$WatchEndpoint(x);
-		} else if("reelWatchEndpoint" in x) {
-			return this.E$ReelWatchEndpoint(x);
-		} else if("searchEndpoint" in x) {
-			return this.E$SearchEndpoint(x);
-		}
-		debugger;
-	}
-	/** @arg {E$ReelWatchEndpoint} x */
-	E$ReelWatchEndpoint(x) {
-		const cf="ReelWatchEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,reelWatchEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.t_cf(cf,clickTrackingParams,this.clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.D$ReelWatch(reelWatchEndpoint);
-	}
-	/** @arg {E$ReelWatch} x */
-	D$ReelWatch(x) {
-		const cf="D$ReelWatch";
-		this.save_keys(`[${cf}]`,x);
-		const {videoId,playerParams,thumbnail,overlay,params,sequenceProvider,sequenceParams,inputType,...y}=x; this.g(y); // ! #destructure
-		this.t(videoId,this.videoId);
-		this.playerParams("ReelWatch","reel.player_params",playerParams);
-		this.t(thumbnail,this.D$Thumbnail);
-		this.ReelPlayerOverlayRenderer(overlay);
-		this.params("ReelWatch","get_transcript.params",params);
-		this.t(sequenceProvider,a => this.save_enum("REEL_WATCH_SEQUENCE_PROVIDER",a));
-		this.t(sequenceParams,a => this.params("ReelWatch","reel.sequence_params",a));
-		this.t(inputType,a => this.save_enum("REEL_WATCH_INPUT_TYPE",a));
-	}
-	/** @arg {E$LikeEndpoint} x */
-	E$LikeEndpoint(x) {
-		const cf="LikeEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,likeEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$Like(likeEndpoint);
-	}
-	/** @arg {E$LikeDislike} x */
-	E$LikeDislike(x) {
-		this.save_keys("[E$LikeDislike]",x);
-		const {target: b,status: {},dislikeParams,...a}=x; this.g(a);
-		this.LikeApiData(b);
-		this.params("Next","next.queue_context_params",dislikeParams);
-		this.primitive_of_string(dislikeParams);
-	}
-	/** @arg {E$LikeIndifferent} x */
-	E$LikeIndifferent(x) {
-		this.save_keys("[E$LikeIndifferent]",x);
-		const {target: b,status: {},removeLikeParams,...a}=x; this.g(a);
-		this.LikeApiData(b);
-		this.t(removeLikeParams,a => this.params("LikeEndpoint","like.remove_like_params",a));
-	}
-	/** @arg {MusicLibraryStatusUpdateCommand} x */
-	LikeAction(x) {
-		this.save_keys("[A$LikeAction]",x);
-		debugger;
-	}
-	/** @arg {E$LikeLike} x */
-	E$LikeLike(x) {
-		this.save_keys("[E$LikeLike]",x);
-		const {target: b,status: {},actions,likeParams,...a}=x; this.g(a);
-		this.LikeApiData(b);
-		this.tz(actions,this.LikeAction);
-		this.t(likeParams,a => this.params("LikeEndpoint","like.likeParams",a));
-	}
-	/** @arg {E$Like} x */
-	E$Like(x) {
-		this.save_keys("[E$Like]",x);
-		switch(x.status) {
-			case "DISLIKE": return this.E$LikeDislike(x);
-			case "INDIFFERENT": return this.E$LikeIndifferent(x);
-			case "LIKE": return this.E$LikeLike(x);
-		}
-	}
-	/** @arg {E$RecordNotificationInteractionsEndpoint} x */
-	E$RecordNotificationInteractionsEndpoint(x) {
-		const cf="RecordNotificationInteractionsEndpoint";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,commandMetadata,recordNotificationInteractionsEndpoint,...y}=x; this.g(y); // ! #destructure
-		this.clickTrackingParams(cf,clickTrackingParams);
-		this.CommandMetadata(commandMetadata);
-		this.E$RecordNotificationInteractions(recordNotificationInteractionsEndpoint);
-	}
-	/** @arg {E$RecordNotificationInteractions} x */
-	E$RecordNotificationInteractions(x) {
-		const cf="RecordNotificationInteractions";
-		this.save_keys(`[${cf}]`,x);
-		const {serializedInteractionsRequest,actions,...y}=x; this.g(y); // ! #destructure
-		this.serializedInteractionsRequest(cf,serializedInteractionsRequest);
-		this.t(actions,a => this.z(a,this.HideEnclosingAction));
-	}
-	/** @arg {A$HideEnclosingAction} x */
-	HideEnclosingAction(x) {
-		const cf="HideEnclosingAction";
-		this.save_keys(`[${cf}]`,x);
-		const {clickTrackingParams,hideEnclosingAction: {notificationId,...z},...y}=x; this.g(y); this.g(z);// ! #destructure
-		this.primitive_of(notificationId,"string");
-	}
 	//#endregion {E$}
 	//#region general done
 	/** @arg {string} cf @public @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @returns {T[K]} */
@@ -7402,84 +7001,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="Button";
 		this.save_keys(`[${cf}Renderer]`,x);
 		this.y(x,this.D$Button);
-	}
-	/** @arg {R$MicroformatData} x */
-	R$MicroformatData(x) {
-		const cf="R$MicroformatDataRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.t(this.w(x),this.D$MicroformatData);
-	}
-	/** @arg {R$PdgBuyFlowHeader} x */
-	R$PdgBuyFlowHeader(x) {
-		const cf="PdgBuyFlowHeaderRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.D$PdgBuyFlowHeader(this.w(x));
-	}
-	/** @arg {R$Menu} x */
-	R$Menu(x) {
-		const cf="Menu";
-		this.save_keys(`[${cf}Renderer]`,x);
-		this.D$Menu(this.w(x));
-	}
-	/** @arg {R$ToggleMenuServiceItem} x */
-	R$ToggleMenuServiceItem(x) {
-		const cf="ToggleMenuServiceItem";
-		this.save_keys(`[${cf}Renderer]`,x);
-		this.D$ToggleMenuServiceItem(this.w(x));
-	}
-	/** @arg {R$CinematicContainer} x */
-	CinematicContainerRenderer(x) {
-		const cf="CinematicContainerRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.CinematicContainer(this.w(x));
-	}
-	/** @arg {DropdownRenderer} x */
-	DropdownRenderer(x) {
-		const cf="DropdownRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.DropdownData(this.w(x));
-	}
-	/** @arg {ItemSectionRenderer} x */
-	ItemSectionRenderer(x) {
-		const cf="ItemSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ItemSectionData(this.w(x));
-	}
-	/** @arg {AlertWithButtonRenderer} x */
-	AlertWithButtonRenderer(x) {
-		const cf="AlertWithButtonRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.AlertWithButton(this.w(x));
-	}
-	/** @arg {PdgBuyFlowRenderer} x */
-	PdgBuyFlowRenderer(x) {
-		const cf="PdgBuyFlowRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.PdgBuyFlow(this.w(x));
-	}
-	/** @arg {ConfirmDialogRenderer} x */
-	ConfirmDialogRenderer(x) {
-		const cf="MultiPageMenuRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.ConfirmDialogData(this.w(x));
-	}
-	/** @template T @arg {T$R$MultiPageMenu<T>} x */
-	MultiPageMenuRenderer(x) {
-		const cf="MultiPageMenuRenderer";
-		this.save_keys(`[${cf}]`,x);
-		return x.multiPageMenuRenderer;
-	}
-	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
-	MultiPageMenuNotificationSectionRenderer(x) {
-		const cf="MultiPageMenuNotificationSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.MultiPageMenuNotificationSection(this.w(x));
-	}
-	/** @arg {R$NotificationRenderer} x */
-	NotificationRenderer(x) {
-		const cf="NotificationRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.Notification(this.w(x));
 	}
 	/** @arg {T$R$MultiPageMenuSection<R$CompactLink>} x */
 	MultiPageMenuSectionRenderer(x) {
@@ -7957,7 +7478,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.PlayerAnnotationsExpandedData(this.w(x));
 	}
-	/** @arg {VoiceSearchDialogRenderer} x */
+	/** @arg {R$VoiceSearchDialog} x */
 	VoiceSearchDialogRenderer(x) {
 		const cf="VoiceSearchDialogRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -8053,7 +7574,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.CommentData(this.w(x));
 	}
-	/** @arg {UnifiedSharePanelRenderer} x */
+	/** @arg {R$UnifiedSharePanel} x */
 	UnifiedSharePanelRenderer(x) {
 		const cf="UnifiedSharePanelRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -8193,25 +7714,17 @@ class HandleTypes extends ServiceMethods {
 		this.D$ThumbnailOverlayTimeStatus(this.w(x));
 	}
 	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
-	R$ThumbnailOverlayLoadingPreview(x) {
-		const cf="R$ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayLoadingPreview(this.w(x));
-	}
+	R$ThumbnailOverlayLoadingPreview(x) {this.H$Renderer("ThumbnailOverlayLoadingPreview",x,this.D$ThumbnailOverlayLoadingPreview);}
 	/** @arg {R$ThumbnailOverlayToggleButton} x */
-	R$ThumbnailOverlayToggleButton(x) {
-		const cf="R$ThumbnailOverlayNowPlayingData";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayToggleButton(this.w(x));
-	}
+	R$ThumbnailOverlayToggleButton(x) {this.H$Renderer("ThumbnailOverlayToggleButton",x,this.D$ThumbnailOverlayToggleButton);}
+	/** @arg {R$NotificationAction} x */
+	R$NotificationAction(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
 	/** @arg {R$HotkeyDialogSection} x */
 	R$HotkeyDialogSection(x) {this.H$Renderer("HotkeyDialogSection",x,this.D$HotkeyDialogSection);}
 	/** @arg {R$HotkeyDialogSectionOption} x */
 	R$HotkeyDialogSectionOption(x) {this.H$Renderer("HotkeyDialogSectionOption",x,this.D$HotkeyDialogSectionOption);}
 	/** @arg {R$PlayerOverlayVideoDetails} x */
 	R$PlayerOverlayVideoDetails(x) {this.H$Renderer("PlayerOverlayVideoDetails",x,this.D$PlayerOverlayVideoDetails);}
-	/** @arg {A$NotificationAction} x */
-	A$NotificationAction(x) {this.H$Renderer("NotificationAction",x,this.A$NotificationAction);}
 	/** @arg {E$Search} x */
 	E$Search(x) {
 		const cf="Search";
@@ -8922,13 +8435,13 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return this.w(y);
 	}
-	/** @arg {AllPopups} x */
+	/** @arg {$Popups$} x */
 	AllPopups(x) {
 		const cf="AllPopups";
 		this.save_keys(`[${cf}]`,x);
 		if("confirmDialogRenderer" in x) return this.ConfirmDialogRenderer(x);
 		if("multiPageMenuRenderer" in x) return this.MultiPageMenuRenderer(x);
-		if("notificationActionRenderer" in x) return this.A$NotificationAction(x);
+		if("notificationActionRenderer" in x) return this.R$NotificationAction(x);
 		if("pdgBuyFlowRenderer" in x) return this.PdgBuyFlowRenderer(x);
 		if("unifiedSharePanelRenderer" in x) return this.UnifiedSharePanelRenderer(x);
 		if("voiceSearchDialogRenderer" in x) return this.VoiceSearchDialogRenderer(x);
@@ -8968,8 +8481,8 @@ class HandleTypes extends ServiceMethods {
 		const cf="GetSurveyCommand";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @arg {A$NotificationAction} x */
-	A$NotificationAction(x) {
+	/** @arg {D$NotificationAction} x */
+	D$NotificationAction(x) {
 		const cf="NotificationActionData";
 		this.save_keys(`[${cf}]`,x);
 		const {responseText,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
@@ -8977,7 +8490,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(actionButton,this.R$Button);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {ConfirmDialogData} x */
+	/** @arg {D$ConfirmDialog} x */
 	ConfirmDialogData(x) {
 		const cf="ConfirmDialogData";
 		this.save_keys(`[${cf}]`,x);
@@ -10415,7 +9928,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		switch(x.itemSectionRenderer.sectionIdentifier) {
-			case "comments-entry-point": return this.ItemSectionRendererTemplate_Section(x);
+			case "comments-entry-point": return this.T$R$ItemSection$1(x);
 		}
 	}
 	/** @arg {D$TwoColumnWatchNextResults['results']['results']['contents'][number]} x */
@@ -11401,7 +10914,7 @@ class HandleTypes extends ServiceMethods {
 			case "AUTONAV_FOR_DESKTOP": break;
 		}
 	}
-	/** @arg {VoiceSearchDialogData} x */
+	/** @arg {D$VoiceSearchDialog} x */
 	VoiceSearchDialog(x) {
 		const cf="VoiceSearchDialog";
 		this.save_keys(`[${cf}]`,x);
@@ -12701,7 +12214,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {onDismissalCompletionRenderer,trackingParams,...y}=x; this.g(y); // #destructure
 		this.trackingParams("ReelDismissalAction",trackingParams);
-		this.A$NotificationAction(onDismissalCompletionRenderer);
+		this.R$NotificationAction(onDismissalCompletionRenderer);
 	}
 	/** @private @arg {TranscriptSegmentListRenderer} x */
 	TranscriptSegmentListRenderer(x) {

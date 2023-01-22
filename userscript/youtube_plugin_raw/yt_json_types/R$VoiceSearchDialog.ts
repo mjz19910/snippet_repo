@@ -1,0 +1,1 @@
+type R$VoiceSearchDialog={voiceSearchDialogRenderer: D$VoiceSearchDialog;};

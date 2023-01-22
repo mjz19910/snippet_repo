@@ -1,0 +1,1 @@
+type R$VideoQualityPromo={videoQualityPromoRenderer: D$VideoQualityPromo;};

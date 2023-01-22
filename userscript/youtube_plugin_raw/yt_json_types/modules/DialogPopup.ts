@@ -1,4 +1,4 @@
 type DialogPopup={
-	popup: ConfirmDialogRenderer|AboutThisAdRendererPopup;
+	popup: R$ConfirmDialog|AboutThisAdRendererPopup;
 	popupType: "DIALOG";
 };

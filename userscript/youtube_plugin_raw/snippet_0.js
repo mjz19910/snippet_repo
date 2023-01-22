@@ -178,16 +178,6 @@ export class Snippet_0_tmp {
 	generate_renderer(x,r) {
 		throw new AggregateError(["this.#generate_renderer(x,r);",x,r]);
 	}
-	/** @private @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
-	get_keys_of(obj) {
-		if(!obj) {
-			debugger;
-		}
-		let rq=Object.keys(obj);
-		/** @type {any} */
-		let ra=rq;
-		return ra;
-	}
 	/** @public @template U @template {U} T @arg {U} e @arg {any} [x] @returns {T} */
 	as(e,x=e) {
 		return x;
@@ -220,18 +210,6 @@ export class Snippet_0_tmp {
 			const [i,a]=it;
 			if(a===void 0) {debugger; continue;}
 			y.call(this,a,i);
-		}
-	}
-	/** @public @template {{}} T @arg {T|undefined} x @arg {(this:this,v:T[MaybeKeysArray<T>[number]],k: MaybeKeysArray<T>[number])=>void} y */
-	w(x,y) {
-		if(x===void 0) return;
-		let keys=this.get_keys_of(x);
-		if(keys.length===0) {
-			debugger;
-			return;
-		}
-		for(let k of keys) {
-			y.call(this,x[k],k);
 		}
 	}
 	/** @protected @template {{}} T @arg {T$AR$Contents<T>} x @arg {(this:this,x:T)=>void} f */
@@ -409,4 +387,33 @@ export class Snippet_0_tmp {
 	}
 	//#region dispatch_in_progress
 	//#endregion
+	/** @template {{}} T @arg {T} obj @returns {MaybeKeysArray<T>} */
+	get_keys_of(obj) {
+		if(!obj) {
+			debugger;
+		}
+		let rq=Object.keys(obj);
+		/** @private @type {any} */
+		let ra=rq;
+		return ra;
+	}
+	/** @public @template {GetMaybeKeys<T>} SI @template {{}} T @arg {T} x @returns {T[SI]} */
+	w(x) {
+		let keys=this.get_keys_of(x);
+		let k=keys[0];
+		let r=x[k];
+		return r;
+	}
+	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {string} cf @arg {T} x @arg {(x:T[K])=>void} f */
+	H$Renderer(cf,x,f) {
+		this.save_keys(`[${cf}Renderer]`,x);
+		f.call(this,this.w(x));
+	}
+	/** @arg {D$NotificationAction} x */
+	D$NotificationAction(x) {x;}
 }
+class ND extends Snippet_0_tmp {
+	/** @arg {R$NotificationAction} x */
+	$R$New(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
+}
+new ND;

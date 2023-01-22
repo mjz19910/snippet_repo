@@ -5,5 +5,5 @@ type RendererContentItem=
 	|CommentThreadRenderer
 	|R$ContinuationItemRenderer
 	|R$CompactVideoRenderer
-	|R$CompactPlaylistRenderer
+	|R$CompactPlaylist
 	;

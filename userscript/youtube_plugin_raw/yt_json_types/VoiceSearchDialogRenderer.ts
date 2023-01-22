@@ -1,3 +1,0 @@
-type VoiceSearchDialogRenderer={
-	voiceSearchDialogRenderer: VoiceSearchDialogData;
-};

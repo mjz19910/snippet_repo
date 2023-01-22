@@ -1,1 +1,0 @@
-type ConfirmDialogRenderer={confirmDialogRenderer: ConfirmDialogData;};

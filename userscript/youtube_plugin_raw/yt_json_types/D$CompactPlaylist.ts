@@ -1,4 +1,4 @@
-type CompactPlaylistData={
+type D$CompactPlaylist={
 	playlistId: string;
 	thumbnail: D$Thumbnail;
 	title: D$SimpleText;

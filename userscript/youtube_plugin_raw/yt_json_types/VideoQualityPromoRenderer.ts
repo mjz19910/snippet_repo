@@ -1,1 +1,0 @@
-type R$VideoQualityPromo={videoQualityPromoRenderer: VideoQualityPromoData;};
