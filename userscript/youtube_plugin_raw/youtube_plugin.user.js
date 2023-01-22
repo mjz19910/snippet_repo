@@ -3186,7 +3186,7 @@ class YtObjectVisitor {
 			command.continuationItems=filtered;
 		}
 	}
-	/** @public @arg {ApiIterateState} state @arg {D_ItemSection} renderer */
+	/** @public @template {{}} T1 @template T2,T3  @arg {ApiIterateState} state @arg {TD_ItemSection<T1,T2,T3>} renderer */
 	itemSectionRenderer_with_state(state,renderer) {
 		let {t}=state;
 		t.iteration.default_iter(state,renderer);
@@ -3253,7 +3253,7 @@ class IterateApiResultBase extends BaseService {
 			return;
 		}
 		for(let key in data) {
-			/** @private @type {{[x: string]: {}}} */
+			/** @private @type {{[x: string]: any}} */
 			let wk=data;
 			let value=wk[key];
 			let rk=this.keys_map.get(key);
@@ -8227,8 +8227,21 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {R_ItemSection} x */
 	/** @private @arg {R_ItemSection} x */
 	R_ItemSection(x) {this.H_R_("ItemSection",x,this.D_ItemSection);}
-	/** @private @arg {D_ItemSection} x */
-	D_ItemSection(x) {x; debugger;}
+	/** @private @arg {TD_ItemSection<R_CompactVideo,"sid-wn-chips","watch-next-feed">} x */
+	D_ItemSection(x) {
+		x;
+		let [i,...a]=this.decode_TD_ItemSection(x); i;
+		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
+		this.z(i,x => {
+			if("compactVideoRenderer" in x) return;
+			x;
+			debugger;
+		});
+	}
+	/** @private @template T1,T2,T3 @arg {TD_ItemSection<T1,T2,T3>} x @returns {[T1[],T2,T3]} */
+	decode_TD_ItemSection(x) {
+		return [x.contents,x.sectionIdentifier,x.targetId];
+	}
 	/** @private @arg {D_TwoColumnWatchNextResults} x */
 	D_TwoColumnWatchNextResults(x) {
 		const cf="TwoColumnWatchNextResultsData";
