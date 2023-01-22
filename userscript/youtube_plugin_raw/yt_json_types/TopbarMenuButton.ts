@@ -11,7 +11,7 @@ type TopbarMenuButton={
 	style: "STYLE_DEFAULT";
 }|{
 	avatar: D$Thumbnail;
-	menuRequest: E$SignalServiceEndpoint;
+	menuRequest: E$SignalServiceEndpoint<Signal$GetAccountMenu>;
 	trackingParams: string;
 	accessibility: A$Accessibility;
 	tooltip: string;

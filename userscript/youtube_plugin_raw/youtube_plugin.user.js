@@ -8505,7 +8505,7 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @arg {Signal$GetAccountMenu} x */
-	E$Signal$GetAccountMenu(x) {
+	Signal$GetAccountMenu(x) {
 		const cf="Signal$GetAccountMenu";
 		this.save_keys(`[E$${cf}]`,x);
 		const {signal,actions,...y}=x; this.g(y); // ! #destructure
@@ -8577,7 +8577,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.params(cf,"subscribe.params",subscribeEndpoint.params);
 	}
-	/** @arg {E$SignalServiceEndpoint} x */
+	/** @template T @arg {E$SignalServiceEndpoint<T>} x */
 	E$SignalServiceEndpoint(x) {
 		const cf="E$SignalServiceEndpoint";
 		this.save_keys(`[${cf}]`,x);
@@ -8592,7 +8592,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		switch(x.signal) {
 			case "CLIENT_SIGNAL": return this.E$Signal_ClientSignal(x);
-			case "GET_ACCOUNT_MENU": return this.E$Signal$GetAccountMenu(x);
+			case "GET_ACCOUNT_MENU": return this.Signal$GetAccountMenu(x);
 		}
 	}
 	/** @arg {E$PlaylistEditEndpoint} x */
@@ -13293,7 +13293,8 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {Extract<TopbarMenuButton,{menuRequest:any}>['menuRequest']} x */
 	TopbarMenu_menuRequest(x) {
 		if("signalServiceEndpoint" in x) {
-			this.E$SignalServiceEndpoint(x);
+			let sm=this.E$SignalServiceEndpoint(x);
+			this.Signal$GetAccountMenu(sm);
 		} else {
 			debugger;
 		}
@@ -13308,7 +13309,6 @@ class HandleTypes extends ServiceMethods {
 			this.A$Accessibility(accessibility);
 			this.primitive_of_string(tooltip);
 			this.D$Thumbnail(avatar);
-			debugger;
 			this.TopbarMenu_menuRequest(menuRequest);
 		} else if("menuRenderer" in x) {
 			const {trackingParams,accessibility,tooltip,icon,menuRenderer,style,...y}=x; this.g(y); // ! #destructure
