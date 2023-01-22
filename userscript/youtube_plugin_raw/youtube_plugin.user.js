@@ -5137,6 +5137,12 @@ class ParserService extends BaseService {
 		x=decodeURIComponent(x);
 		if(this.cache_player_params.includes(x)) return;
 		this.cache_player_params.push(x);
+		switch(root) {
+			case "D_TemplateUpdate": {
+				let res_e=this.decode_b64_url_proto_obj(x);
+				debugger;
+			} return;
+		}
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
 		switch(root) {
@@ -5390,6 +5396,7 @@ class ParserService extends BaseService {
 		/** @type {P$LogItems} */
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "serializedTemplateConfig": u(idx); debugger; break;
 			case "AdServingDataEntry": {
 				const idx=2;
 				if(path_parts.length===1) switch(tv) {default: debugger; return;}
