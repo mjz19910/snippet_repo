@@ -1,5 +1,1 @@
-type E$PlaylistEdit={
-	playlistId: "WL";
-	actions: [PlaylistAction];
-	params?: string; 
-};
+type E$PlaylistEdit=EB$Endpoint&{playlistEditEndpoint: D$PlaylistEdit;};

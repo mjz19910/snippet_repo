@@ -1,3 +1,3 @@
-type UpdateChannelSwitcherPageAction={
+type A$UpdateChannelSwitcherPage={
 	updateChannelSwitcherPageAction: PageAction<ChannelSwitcherPageRenderer>;
 };

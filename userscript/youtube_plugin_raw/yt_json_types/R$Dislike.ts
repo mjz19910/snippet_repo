@@ -1,0 +1,1 @@
+type R$Dislike=D$ResponseContext&T$Actions$<T$A$OpenPopup<{}>>;

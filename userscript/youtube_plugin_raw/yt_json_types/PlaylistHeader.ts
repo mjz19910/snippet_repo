@@ -46,7 +46,7 @@ type PlaylistHeader={
 	ownerEndpoint: E$BrowseEndpoint;
 	editableDetails: EditableDetails;
 	trackingParams: string;
-	serviceEndpoints: T$Endpoint<E$PlaylistEditEndpoint,{}>[];
+	serviceEndpoints: T$Endpoint<E$PlaylistEdit,{}>[];
 	stats: D$TextWithRuns[];
 	briefStats: D$TextWithRuns[];
 	editorEndpoint: PlaylistEditorEndpoint;
@@ -54,7 +54,7 @@ type PlaylistHeader={
 	moreActionsMenu: R$Menu;
 	playButton: R$Button;
 	shufflePlayButton: R$Button;
-	onDescriptionTap: T$OpenPopup<{}>;
+	onDescriptionTap: T$A$OpenPopup<{}>;
 	cinematicContainer: R$CinematicContainer;
 	byline: PlaylistBylineRenderer[];
 	descriptionTapText: D$TextWithRuns;

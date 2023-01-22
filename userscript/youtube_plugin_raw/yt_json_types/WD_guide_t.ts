@@ -1,1 +1,1 @@
-type WD_guide_t={type: "guide";data: GuideResponse;};
+type WD_guide_t={type: "guide";data: R$Guide;};

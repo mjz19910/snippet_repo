@@ -1,4 +1,4 @@
-type RefreshPlaylistCommand={
+type C$RefreshPlaylist={
 	clickTrackingParams: string;
 	refreshPlaylistCommand: {};
 };

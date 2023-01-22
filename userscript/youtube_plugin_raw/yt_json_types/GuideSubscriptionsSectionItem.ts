@@ -1,5 +1,0 @@
-type GuideSubscriptionsSectionItem=
-	|GuideEntryRenderer
-	|GuideCollapsibleEntryRenderer
-	;
-;

@@ -1,6 +1,6 @@
 type ResponseActions=
-	T$OpenPopup<{}>|
-	UpdateNotificationsUnseenCountAction|
-	RemoveFromGuideSectionAction|
-	AddToGuideSectionAction|
+	T$A$OpenPopup<{}>|
+	A$UpdateNotificationsUnseenCount|
+	A$RemoveFromGuideSection|
+	A$AddToGuideSection|
 	never;

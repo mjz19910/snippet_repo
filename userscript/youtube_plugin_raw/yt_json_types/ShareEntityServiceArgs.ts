@@ -1,4 +1,4 @@
 type E$ShareEntityService={
 	serializedShareEntity: string;
-	commands: T$OpenPopup<{}>[];
+	commands: T$A$OpenPopup<{}>[];
 };

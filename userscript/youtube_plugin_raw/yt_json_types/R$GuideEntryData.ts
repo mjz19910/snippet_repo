@@ -1,0 +1,1 @@
+type R$GuideEntryData={guideEntryData: D$GuideEntryData;};

@@ -1,4 +1,4 @@
 type LikeLikeResponse={
 	responseContext: RC$ResponseContext;
-	actions?: (T$OpenPopup<{}>|AddToGuideSectionAction)[];
+	actions?: (T$A$OpenPopup<{}>|A$AddToGuideSection)[];
 };

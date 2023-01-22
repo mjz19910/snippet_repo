@@ -1,1 +1,1 @@
-type ServiceEndpointAction=A$SendFeedbackAction|AddToPlaylistCommand|T$OpenPopup<{}>|SignalAction|T$OpenPopup<{}>;
+type ServiceEndpointAction=A$SendFeedbackAction|AddToPlaylistCommand|T$A$OpenPopup<{}>|SignalAction|T$A$OpenPopup<{}>;

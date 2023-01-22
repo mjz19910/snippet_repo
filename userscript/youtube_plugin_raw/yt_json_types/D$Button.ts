@@ -1,7 +1,7 @@
 type D$Button={
 	accessibility?: A$LabelData;
 	accessibilityData?: A$Accessibility;
-	command?: E$ButtonCommand;
+	command?: G$Button$command;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
 	serviceEndpoint?: E$Button_serviceEndpoint;

@@ -1,1 +1,0 @@
-type GuideItemType=GuideSectionRenderer|GuideSubscriptionsSectionRenderer;

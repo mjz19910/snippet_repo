@@ -1,4 +1,3 @@
 type AddToPlaylist={
-	playlists: PlaylistAddToOptionRenderer[];
-	actions: AddToPlaylistCreateRenderer[];
-};
+	playlists: R$PlaylistAddToOption[];
+}&T$Actions$<R$AddToPlaylistCreate>;

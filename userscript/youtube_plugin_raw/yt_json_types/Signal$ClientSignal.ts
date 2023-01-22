@@ -1,0 +1,1 @@
+type Signal$ClientSignal=T$Signal<"CLIENT_SIGNAL">&T$Actions$<Signal$ClientSignal$Actions>;

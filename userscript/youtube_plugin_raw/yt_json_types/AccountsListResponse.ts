@@ -1,5 +1,4 @@
 type AccountsListResponse={
 	responseContext: RC$ResponseContext;
 	selectText: D$TextWithRuns;
-	actions: UpdateChannelSwitcherPageAction[];
-};
+}&T$Actions$<A$UpdateChannelSwitcherPage>;

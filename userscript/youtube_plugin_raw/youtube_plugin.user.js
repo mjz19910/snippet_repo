@@ -3048,7 +3048,7 @@ class YtHandlers extends BaseService {
 			};
 			case "guide": return {
 				type: target[0],
-				/** @type {GuideResponse} */
+				/** @type {R$Guide} */
 				data: as(x),
 			};
 			case "next": return {
@@ -3178,7 +3178,7 @@ class YtHandlers extends BaseService {
 			default: debugger; break;
 			case "dislike": return {
 				type: `${target[0]}.${target[1]}`,
-				/** @private @type {DislikeResponse} */
+				/** @private @type {R$Dislike} */
 				data: as(x),
 			};
 			case "like": return {
@@ -5462,6 +5462,7 @@ class ParserService extends BaseService {
 			console.group(ns);
 			f();
 			console.groupEnd();
+			debugger;
 		};
 		let new_ns=() => {
 			if(tv!==void 0) {
@@ -5487,7 +5488,6 @@ case "${path}": {
 	this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 } return;
 `);
-			debugger;
 		};
 		if(tv!==void 0) {
 			x.delete(ta);
@@ -5498,6 +5498,7 @@ case "${path}": {
 				switch(path) {
 					default: {
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
+						debugger;
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "transcript_target_id.param": {
@@ -6436,6 +6437,15 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); path_parts[2]===""; break;
+							case "f16": {
+								const idx=4;
+								if(path_parts.length===3) {
+									switch(tv) {default: debugger; return;}
+								}
+								switch(path_parts[3]) {
+									default: gd(idx); path_parts[3]===""; break;
+								}
+							} break;
 							case "f7": {
 								const idx=4;
 								if(path_parts.length===3) {
@@ -8634,7 +8644,7 @@ class HandleTypes extends ServiceMethods {
 			case "GET_ACCOUNT_MENU": return this.Signal$GetAccountMenu(x);
 		}
 	}
-	/** @arg {E$PlaylistEditEndpoint} x */
+	/** @arg {E$PlaylistEdit} x */
 	E$PlaylistEditEndpoint(x) {
 		const cf="PlaylistEditEndpoint";
 		this.save_keys(`[${cf}]`,x);
@@ -8643,7 +8653,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.E$PlaylistEdit(playlistEditEndpoint);
 	}
-	/** @arg {E$PlaylistEdit} x */
+	/** @arg {D$PlaylistEdit} x */
 	E$PlaylistEdit(x) {
 		const cf="PlaylistEditEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -9127,7 +9137,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.TwoColumnWatchNextResultsData(this.w(x));
 	}
-	/** @private @arg {UpdateChannelSwitcherPageAction} x */
+	/** @private @arg {A$UpdateChannelSwitcherPage} x */
 	UpdateChannelSwitcherPageAction(x) {
 		const cf="UpdateChannelSwitcherPageAction";
 		this.save_keys(`[${cf}]`,x);
@@ -9145,7 +9155,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ChannelSwitcherPage(this.w(x));
 	}
-	/** @private @arg {GuideSectionRenderer} x */
+	/** @private @arg {R$GuideSection} x */
 	GuideSectionRenderer(x) {
 		const cf="GuideSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -9170,25 +9180,25 @@ class HandleTypes extends ServiceMethods {
 		this.ClipCreationScrubber(this.w(x));
 	}
 	/** @private @arg {R$ClipAdState} x */
-	ClipAdStateRenderer(x) {
+	R$ClipAdState(x) {
 		const cf="ClipAdStateRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.ClipAdState(this.w(x));
 	}
 	/** @private @arg {R$AdSlot} x */
-	AdSlotRenderer(x) {
+	R$AdSlot(x) {
 		const cf="AdSlotRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.AdSlot(this.w(x));
 	}
 	/** @private @arg {R$Video} x */
-	VideoRenderer(x) {
+	R$Video(x) {
 		const cf="VideoRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.Video(this.w(x));
 	}
 	/** @private @arg {R$Radio} x */
-	RadioRenderer(x) {
+	R$Radio(x) {
 		const cf="RadioRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.Radio(this.w(x));
@@ -9200,13 +9210,13 @@ class HandleTypes extends ServiceMethods {
 		this.FeedNudge(this.w(x));
 	}
 	/** @private @arg {R$RichSection} x */
-	RichSectionRenderer(x) {
+	R$RichSection(x) {
 		const cf="RichSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.RichSection(this.w(x));
 	}
-	/** @private @arg {GuideCollapsibleSectionEntryRenderer} x */
-	GuideCollapsibleSectionEntryRenderer(x) {
+	/** @private @arg {R$GuideCollapsibleSectionEntry} x */
+	R$GuideCollapsibleSectionEntry(x) {
 		const cf="GuideCollapsibleSectionEntryRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.GuideCollapsibleSectionEntry(this.w(x));
@@ -9225,7 +9235,7 @@ class HandleTypes extends ServiceMethods {
 		this.CarouselLockup(this.w(x));
 	}
 	/** @private @arg {R$Factoid} x */
-	FactoidRenderer(x) {
+	R$Factoid(x) {
 		const cf="FactoidRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.Factoid(this.w(x));
@@ -9267,13 +9277,13 @@ class HandleTypes extends ServiceMethods {
 		this.T$Icon(this.w(x));
 	}
 	/** @private @arg {R$BrowserMediaSession} x */
-	BrowserMediaSessionRenderer(x) {
+	R$BrowserMediaSession(x) {
 		const cf="BrowserMediaSessionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.BrowserMediaSession(this.w(x));
 	}
 	/** @private @arg {R$AutoplaySwitchButtonRenderer} x */
-	AutoplaySwitchButtonRenderer(x) {
+	R$AutoplaySwitchButtonRenderer(x) {
 		const cf="AutoplaySwitchButtonRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.AutoplaySwitchButton(this.w(x));
@@ -9283,12 +9293,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="SortFilterSubMenuRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.SortFilterSubMenuData(this.w(x));
-	}
-	/** @arg {E$Search} x */
-	E$Search(x) {
-		const cf="Search";
-		this.save_keys(`[${cf}]`,x);
-		this.primitive_of_string(this.w(x));
 	}
 	/** @arg {ChannelMetadataRenderer} x */
 	ChannelMetadataRenderer(x) {
@@ -9458,13 +9462,13 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.StructuredDescriptionContentData(this.w(x));
 	}
-	/** @arg {GetMultiPageMenuAction} x */
+	/** @arg {A$GetMultiPageMenu} x */
 	GetMultiPageMenuAction(x) {
 		const cf="GetMultiPageMenuAction";
 		this.save_keys(`[${cf}]`,x);
 		this.GetMultiPageMenuActionData(this.w(x));
 	}
-	/** @arg {GuideSubscriptionsSectionRenderer} x */
+	/** @arg {R$GuideSubscriptionsSection} x */
 	GuideSubscriptionsSectionRenderer(x) {
 		const cf="GuideSubscriptionsSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -9476,13 +9480,14 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.TemplateUpdateData(this.w(x));
 	}
-	/** @arg {GuideEntryRenderer} x */
-	GuideEntryRenderer(x) {
+	/** @arg {R$GuideEntry} x */
+	R$GuideEntry(x) {
 		const cf="GuideEntryRenderer";
 		this.save_keys(`[${cf}]`,x);
-		this.GuideEntryRoot(this.w(x));
+		if(!x.guideEntryRenderer) debugger;
+		this.D$GuideEntry(this.w(x));
 	}
-	/** @arg {GuideCollapsibleEntryRenderer} x */
+	/** @arg {R$GuideCollapsibleEntry} x */
 	GuideCollapsibleEntryRenderer(x) {
 		const cf="GuideCollapsibleEntryRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -9500,11 +9505,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.VoiceSearchDialog(this.w(x));
 	}
-	/** @arg {D$GuideEntry} x */
-	D$GuideEntry(x) {
+	/** @arg {R$GuideEntryData} x */
+	R$GuideEntryData(x) {
 		const cf="GuideEntryData";
 		this.save_keys(`[${cf}]`,x);
-		this.GuideEntryDataContent(this.w(x));
+		this.D$GuideEntryData(this.w(x));
 	}
 	/** @arg {NotificationTopbarButtonRenderer} x */
 	NotificationTopbarButtonRenderer(x) {
@@ -9614,13 +9619,13 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.AddToPlaylist(this.w(x));
 	}
-	/** @arg {PlaylistAddToOptionRenderer} x */
+	/** @arg {R$PlaylistAddToOption} x */
 	PlaylistAddToOptionRenderer(x) {
 		const cf="PlaylistAddToOptionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.PlaylistAddToOption(this.w(x));
 	}
-	/** @arg {AddToPlaylistCreateRenderer} x */
+	/** @arg {R$AddToPlaylistCreate} x */
 	AddToPlaylistCreateRenderer(x) {
 		const cf="AddToPlaylistCreateRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -9703,6 +9708,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="HotkeyDialogRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.D$HotkeyDialog(this.w(x));
+	}
+	/** @arg {E$Search} x */
+	E$Search(x) {
+		const cf="Search";
+		this.save_keys(`[${cf}]`,x);
+		this.primitive_of_string(this.w(x));
 	}
 	/** @private @arg {WebSearchboxConfig} x */
 	WebSearchboxConfig(x) {
@@ -10650,42 +10661,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.FrameworkUpdates(frameworkUpdates);
 	}
-	/** @template T @arg {T$OpenPopup<T>} x */
+	/** @template T @arg {T$A$OpenPopup<T>} x */
 	A$OpenPopupAction(x) {
 		const cf="OpenPopupAction";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,...y}=x;
 		this.clickTrackingParams(cf,clickTrackingParams);
 		return this.w(y);
-	}
-	/** @arg {D$OpenPopupAction['popup']} x */
-	popup_generic(x) {
-		this.AllPopups(x);
-	}
-	/** @arg {D$OpenPopupAction['popupType']} x */
-	parse_popup_type(x) {
-		switch(x) {
-			default: debugger; break;
-			case "DIALOG": break;
-			case "DROPDOWN": break;
-			case "TOAST": break;
-			case "TOP_ALIGNED_DIALOG": break;
-		}
-	}
-	/** @arg {D$OpenPopupAction} x */
-	OpenPopupActionData(x) {
-		const cf="OpenPopupActionData";
-		this.save_keys(`[${cf}]`,x);
-		if("beReused" in x) {
-			const {popup,popupType,beReused,...y}=x; this.g(y); // ! #destructure
-			this.popup_generic(popup);
-			this.parse_popup_type(popupType);
-			if(beReused!==true) debugger;
-			return;
-		}
-		const {popup,popupType,...y}=x; this.g(y); // ! #destructure
-		this.AllPopups(popup);
-		this.parse_popup_type(popupType);
 	}
 	/** @arg {AllPopups} x */
 	AllPopups(x) {
@@ -11095,7 +11077,7 @@ class HandleTypes extends ServiceMethods {
 			return null;
 		});
 	}
-	/** @arg {DislikeResponse} x */
+	/** @arg {R$Dislike} x */
 	DislikeResponse(x) {
 		const cf="DislikeResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -11766,7 +11748,7 @@ class HandleTypes extends ServiceMethods {
 		this.R$Button(shareButton);
 		this.R$Menu(addToMenu);
 		this.R$PlayerOverlayVideoDetails(videoDetails);
-		this.t(autonavToggle,this.AutoplaySwitchButtonRenderer);
+		this.t(autonavToggle,this.R$AutoplaySwitchButtonRenderer);
 		this.t(decoratedPlayerBarRenderer,this.DecoratedPlayerBarRenderer);
 	}
 	/** @arg {A$BrowserMediaSession} x */
@@ -11775,7 +11757,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {actions,browserMediaSession,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,this.LikeButtonRenderer);
-		this.BrowserMediaSessionRenderer(browserMediaSession);
+		this.R$BrowserMediaSession(browserMediaSession);
 	}
 	/** @arg {D$LikeButton} x */
 	LikeButton(x) {
@@ -12340,7 +12322,7 @@ class HandleTypes extends ServiceMethods {
 		}));
 		if(unseenCount!==void 0) this.primitive_of(unseenCount,"number");
 	}
-	/** @private @arg {UpdateNotificationsUnseenCountAction} x */
+	/** @private @arg {A$UpdateNotificationsUnseenCount} x */
 	UpdateNotificationsUnseenCountAction(x) {
 		const cf="UpdateNotificationsUnseenCountAction";
 		this.save_keys(`[${cf}]`,x);
@@ -12450,7 +12432,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(challenge);
 		this.AttBgChallenge(bgChallenge);
 	}
-	/** @private @arg {GuideResponse} x */
+	/** @private @arg {R$Guide} x */
 	GuideResponse(x) {
 		const cf="GuideResponse";
 		this.save_keys(`[${cf}]`,x);
@@ -12458,7 +12440,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(items,this.GuideItemType);
 		this.trackingParams(cf,trackingParams);
 	}
-	/** @arg {GuideItemType} x */
+	/** @arg {G$GuideItem} x */
 	GuideItemType(x) {
 		const cf="GuideItemType";
 		this.save_keys(`[${cf}]`,x);
@@ -12469,7 +12451,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {GuideSectionData} x */
+	/** @private @arg {D$GuideSection} x */
 	GuideSectionData(x) {
 		const cf="GuideSectionData";
 		this.save_keys(`[${cf}]`,x);
@@ -12478,10 +12460,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.t(formattedTitle,this.TextT);
 	}
-	/** @private @arg {GuideSectionItemType} x */
+	/** @private @arg {G$GuideSectionItem} x */
 	GuideSectionItemType(x) {
-		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) return this.GuideCollapsibleSectionEntryRenderer(x);
+		if("guideEntryRenderer" in x) return this.R$GuideEntry(x);
+		if("guideCollapsibleSectionEntryRenderer" in x) return this.R$GuideCollapsibleSectionEntry(x);
 		debugger;
 	}
 	/** @private @arg {AutoplayContent} x */
@@ -12925,7 +12907,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("richItemRenderer" in x) return this.RichItemRenderer(x);
 		if("continuationItemRenderer" in x) return this.ContinuationItemRenderer(x);
-		if("richSectionRenderer" in x) return this.RichSectionRenderer(x);
+		if("richSectionRenderer" in x) return this.R$RichSection(x);
 		debugger;
 	}
 	/** @arg {A$LoggingDirectives} x */
@@ -12999,7 +12981,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		return this.w(x);
 	}
-	/** @arg {GuideSubscriptionsSectionData} x */
+	/** @arg {D$GuideSubscriptionsSection} x */
 	GuideSubscriptionsSectionData(x) {
 		const cf="GuideSubscriptionsSectionData";
 		this.save_keys(`[${cf}]`,x);
@@ -13016,9 +12998,9 @@ class HandleTypes extends ServiceMethods {
 			}
 		});
 	}
-	/** @arg {GuideSubscriptionsSectionItem} x */
+	/** @arg {G$GuideSubscriptionsSectionItem} x */
 	GuideSubscriptionsSectionItem(x) {
-		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
+		if("guideEntryRenderer" in x) return this.R$GuideEntry(x);
 		if("guideCollapsibleEntryRenderer" in x) return this.GuideCollapsibleEntryRenderer(x);
 		debugger;
 	}
@@ -13158,14 +13140,14 @@ class HandleTypes extends ServiceMethods {
 			case "HELP": break;
 		}
 	}
-	/** @arg {NonNullable<Extract<GuideEntryRoot,{serviceEndpoint:any}>['serviceEndpoint']>} x */
+	/** @arg {NonNullable<Extract<D$GuideEntry,{serviceEndpoint:any}>['serviceEndpoint']>} x */
 	GuideEntryRoot_ser(x) {
 		if("reelWatchEndpoint" in x) return this.E$ReelWatchEndpoint(x);
 		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
 		debugger;
 	}
-	/** @arg {GuideEntryRoot} x */
-	GuideEntryRoot(x) {
+	/** @arg {D$GuideEntry} x */
+	D$GuideEntry(x) {
 		const cf="GuideEntryRoot";
 		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) {
@@ -13209,10 +13191,10 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("GuideEntryRoot",trackingParams);
 		this.D$SimpleText(formattedTitle);
 		this.A$Accessibility(accessibility);
-		this.D$GuideEntry(entryData);
+		this.R$GuideEntryData(entryData);
 		this.GuideEntryPresentationStyle(presentationStyle);
 	}
-	/** @arg {Extract<GuideEntryRoot,{presentationStyle:any}>['presentationStyle']} x */
+	/** @arg {Extract<D$GuideEntry,{presentationStyle:any}>['presentationStyle']} x */
 	GuideEntryPresentationStyle(x) {
 		this.save_string("[GuideEntryPresentationStyle]",x);
 		switch(x) {
@@ -13312,8 +13294,8 @@ class HandleTypes extends ServiceMethods {
 		const {persistenceOption,...y}=x; this.g(y); // ! #destructure
 		if(persistenceOption!=="ENTITY_PERSISTENCE_OPTION_INMEMORY_AND_PERSIST") debugger;
 	}
-	/** @arg {GuideEntryDataContent} x */
-	GuideEntryDataContent(x) {
+	/** @arg {D$GuideEntryData} x */
+	D$GuideEntryData(x) {
 		const cf="GuideEntryDataContent";
 		this.save_keys(`[${cf}]`,x);
 		const {guideEntryId,...y}=x; this.g(y); // ! #destructure
@@ -13602,7 +13584,7 @@ class HandleTypes extends ServiceMethods {
 			case "LIVE_CONTROL_ROOM": break;
 		}
 	}
-	/** @arg {E$ButtonCommand} x */
+	/** @arg {G$Button$command} x */
 	ButtonCommand(x) {
 		const cf="ButtonCommand";
 		this.save_keys(`[${cf}]`,x);
@@ -13804,14 +13786,14 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(invalidValueErrorMessage);
 		if(required!==true) debugger;
 	}
-	/** @arg {GuideCollapsibleEntry} x */
+	/** @arg {D$GuideCollapsibleEntry} x */
 	GuideCollapsibleEntry(x) {
 		const cf="GuideCollapsibleEntry";
 		this.save_keys(`[${cf}]`,x);
 		const {expanderItem,expandableItems,collapserItem,...y}=x; this.g(y); // ! #destructure
-		this.GuideEntryRenderer(expanderItem);
-		this.z(expandableItems,this.GuideEntryRenderer);
-		this.GuideEntryRenderer(collapserItem);
+		this.R$GuideEntry(expanderItem);
+		this.z(expandableItems,this.R$GuideEntry);
+		this.R$GuideEntry(collapserItem);
 	}
 	/** @arg {AdSlotAndLayoutMetadataItem} x */
 	AdSlotAndLayoutMetadataItem(x) {
@@ -13863,7 +13845,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(channel);
 		this.D$SimpleText(views);
 		this.D$SimpleText(publishDate);
-		this.z(factoid,this.FactoidRenderer);
+		this.z(factoid,this.R$Factoid);
 		this.E$BrowseEndpoint(channelNavigationEndpoint);
 		this.D$Thumbnail(channelThumbnail);
 	}
@@ -14480,9 +14462,9 @@ class HandleTypes extends ServiceMethods {
 	RichItemContent(x) {
 		const cf="RichItemContent";
 		this.save_keys(`[${cf}]`,x);
-		if("adSlotRenderer" in x) return this.AdSlotRenderer(x);
-		if("videoRenderer" in x) return this.VideoRenderer(x);
-		if("radioRenderer" in x) return this.RadioRenderer(x);
+		if("adSlotRenderer" in x) return this.R$AdSlot(x);
+		if("videoRenderer" in x) return this.R$Video(x);
+		if("radioRenderer" in x) return this.R$Radio(x);
 		if("feedNudgeRenderer" in x) return this.FeedNudgeRenderer(x);
 		debugger;
 	}
@@ -14507,7 +14489,7 @@ class HandleTypes extends ServiceMethods {
 		this.D$SimpleText(displayName);
 		this.primitive_of_string(publicityLabel);
 		this.R$Button(cancelButton);
-		this.ClipAdStateRenderer(adStateOverlay);
+		this.R$ClipAdState(adStateOverlay);
 		this.primitive_of_string(externalVideoId);
 		this.primitive_of_string(publicityLabelIcon);
 	}
@@ -14764,15 +14746,15 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {Do$w<GuideCollapsibleSectionEntryRenderer>} x */
+	/** @private @arg {D$GuideCollapsibleSectionEntry} x */
 	GuideCollapsibleSectionEntry(x) {
 		const cf="GuideCollapsibleSectionEntry";
 		this.save_keys(`[${cf}]`,x);
 		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
-		this.GuideEntryRenderer(headerEntry);
+		this.R$GuideEntry(headerEntry);
 		this.T$Icon(expanderIcon);
 		this.T$Icon(collapserIcon);
-		this.z(sectionItems,this.g);
+		this.z(sectionItems,this.R$GuideEntry);
 		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
 		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
 	}

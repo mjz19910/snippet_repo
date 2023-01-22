@@ -1,4 +1,1 @@
-type A$BrowserMediaSession={
-	actions: R$LikeButton[];
-	browserMediaSession: R$BrowserMediaSession;
-};
+type A$BrowserMediaSession={browserMediaSession: R$BrowserMediaSession;}&T$Actions$<R$LikeButton>;

@@ -1,7 +1,7 @@
-type GuideCollapsibleSectionEntry={
-	headerEntry: GuideEntryRenderer;
+type D$GuideCollapsibleSectionEntry={
+	headerEntry: R$GuideEntry;
 	expanderIcon: T$Icon<"EXPAND">;
 	collapserIcon: T$Icon<"COLLAPSE">;
-	sectionItems: {}[];
+	sectionItems: R$GuideEntry[];
 	handlerDatas: ["GUIDE_ACTION_ADD_TO_PLAYLISTS","GUIDE_ACTION_REMOVE_FROM_PLAYLISTS"];
 };

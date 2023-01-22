@@ -1,6 +1,5 @@
-type GuideSubscriptionsSectionData={
+type D$GuideSubscriptionsSection=T$Items<G$GuideSubscriptionsSectionItem>&{
 	sort: "CHANNEL_ACTIVITY";
-	items: GuideSubscriptionsSectionItem[];
 	trackingParams: string;
 	formattedTitle: D$SimpleText;
 	handlerDatas: ["GUIDE_ACTION_ADD_TO_SUBSCRIPTIONS","GUIDE_ACTION_REMOVE_FROM_SUBSCRIPTIONS"];

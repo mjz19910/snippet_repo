@@ -1,3 +1,3 @@
-type AddToPlaylistCreateRenderer={
+type R$AddToPlaylistCreate={
 	addToPlaylistCreateRenderer: AddToPlaylistCreate;
 };

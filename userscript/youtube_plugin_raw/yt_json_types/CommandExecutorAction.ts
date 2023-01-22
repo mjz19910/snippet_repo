@@ -1,6 +1,6 @@
 type CommandExecutorAction=[
 	E$ChangeEngagementPanelVisibilityAction,
 	HideEngagementPanelScrimAction,
-	T$OpenPopup<{}>,
+	T$A$OpenPopup<{}>,
 	ScrollToEngagementPanelCommand,
 ][number];

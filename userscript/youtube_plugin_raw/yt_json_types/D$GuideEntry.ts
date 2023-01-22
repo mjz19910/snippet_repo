@@ -1,11 +1,11 @@
-type GuideEntryRoot={
+type D$GuideEntry={
 	navigationEndpoint: E$BrowseEndpoint;
 	thumbnail: D$Thumbnail;
 	badges: GuideEntryBadges;
 	trackingParams: string;
 	formattedTitle: D$SimpleText;
 	accessibility: A$Accessibility;
-	entryData: D$GuideEntry;
+	entryData: R$GuideEntryData;
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
 	navigationEndpoint?: E$UrlEndpoint|E$BrowseEndpoint;

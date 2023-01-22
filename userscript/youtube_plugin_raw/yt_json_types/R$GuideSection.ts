@@ -1,0 +1,1 @@
+type R$GuideSection={guideSectionRenderer: D$GuideSection;};
