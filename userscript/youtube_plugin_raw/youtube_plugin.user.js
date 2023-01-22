@@ -2333,16 +2333,20 @@ class KnownDataSaver extends ApiBase {
 		}
 		return -1;
 	}
-	/** @arg {`[${string}]`} ka @arg {string|string[]} x @arg {{new_data: [string, string | string[]][];data:[string, ["one", string[]] | ["many", string[][]]][];index:{[x:string]:number}}} store */
+	/** @arg {string} k @arg {StoreDescription<string>['data'][number][1]} x @arg {StoreDescription<string>} store */
+	add_to_index(k,x,store) {
+		/** @type {StoreDescription<string>['data'][number]} */
+		let p=[k,x];
+		let nk=store.data.push(p)-1;
+		store.index[k]=nk;
+		return p;
+	}
+	/** @arg {`[${string}]`} ka @arg {string|string[]} x @arg {StoreDescription<string>} store */
 	save_to_store(ka,x,store) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(ka);
 		let p=this.get_seen_string_item_store(k,store.index,store.data);
-		if(!p) {
-			p=[k,["one",[]]];
-			let nk=store.data.push(p)-1;
-			store.index[k]=nk;
-		}
+		if(!p) p=this.add_to_index(k,["one",[]],store);
 		let store_index=this.save_to_data_item(x,p);
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
