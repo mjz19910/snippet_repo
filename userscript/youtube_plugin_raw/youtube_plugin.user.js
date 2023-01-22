@@ -2864,11 +2864,10 @@ class BaseService extends BaseServicePrivate {
 		let r=x[k];
 		return r;
 	}
+	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
+	y(x,f) {f.call(this,this.w(x));}
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
-	t(x,f) {
-		if(!x) return;
-		return f.call(this,x);
-	}
+	t(x,f) {if(!x) return;return f.call(this,x);}
 	/** @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
 		if(!x) return;
@@ -2876,12 +2875,12 @@ class BaseService extends BaseServicePrivate {
 	}
 	/** @arg {string} cf @template {{}} T @arg {T|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
 	t_cf(cf,x,f) {
-		if(!x) return;
+		if(x===void 0) return;
 		f.call(this,cf,x);
 	}
 	/** @arg {string} cf @template {{}} T @arg {T[]|undefined} x @arg {(this:this,cf:string,x:T)=>void} f */
 	tz_cf(cf,x,f) {
-		if(!x) return;
+		if(x===void 0) return;
 		this.z_cf(cf,x,f);
 	}
 	/** @arg {string} cf @template {{}} U @arg {U[]} x @arg {(this:this,cf:string,x:U,i:number)=>void} f  */
@@ -2898,6 +2897,8 @@ class BaseService extends BaseServicePrivate {
 	tf(f) {
 		return x => this.t(x,f);
 	}
+	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
+	c1(f) {return x => f.call(this,x);}
 	/** @type {<T extends string[],U extends T[number]>(k:T,r:U[])=>Exclude<T[number],U>[]} */
 	filter_out_keys(keys,to_remove) {
 		to_remove=to_remove.slice();
@@ -8869,6 +8870,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="Button";
 		this.save_keys(`[${cf}Renderer]`,x);
 		this.D$Button(this.w(x));
+		this.y(x,this.D$Button);
 	}
 	/** @arg {R$Menu} x */
 	R$Menu(x) {
@@ -13203,23 +13205,10 @@ class HandleTypes extends ServiceMethods {
 	VoiceSearchDialog(x) {
 		const cf="VoiceSearchDialog";
 		this.save_keys(`[${cf}]`,x);
-		const {placeholderHeader,promptHeader,exampleQuery1,exampleQuery2,promptMicrophoneLabel,loadingHeader,connectionErrorHeader,connectionErrorMicrophoneLabel,permissionsHeader,permissionsSubtext,disabledHeader,disabledSubtext,microphoneButtonAriaLabel,exitButton,trackingParams,microphoneOffPromptHeader,...y}=x; this.g(y); // ! #destructure
-		this.D$TextWithRuns(placeholderHeader);
-		this.D$TextWithRuns(promptHeader);
-		this.D$TextWithRuns(exampleQuery1);
-		this.D$TextWithRuns(exampleQuery2);
-		this.D$TextWithRuns(promptMicrophoneLabel);
-		this.D$TextWithRuns(loadingHeader);
-		this.D$TextWithRuns(connectionErrorHeader);
-		this.D$TextWithRuns(connectionErrorMicrophoneLabel);
-		this.D$TextWithRuns(permissionsHeader);
-		this.D$TextWithRuns(permissionsSubtext);
-		this.D$TextWithRuns(disabledHeader);
-		this.D$TextWithRuns(disabledSubtext);
-		this.D$TextWithRuns(microphoneButtonAriaLabel);
+		const {exitButton,trackingParams,...y}=x;
 		this.R$Button(exitButton);
 		this.trackingParams(cf,trackingParams);
-		this.D$TextWithRuns(microphoneOffPromptHeader);
+		this.z(Object.values(y),this.c1(this.D$TextWithRuns));
 	}
 	/** @arg {EntityMutationItem} x */
 	EntityMutationItem(x) {
