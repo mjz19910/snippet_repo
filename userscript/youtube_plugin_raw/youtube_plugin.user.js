@@ -4616,7 +4616,8 @@ class CodegenService extends BaseService {
 		if(x.thumbnails&&x.thumbnails instanceof Array) return "TYPE::D$Thumbnail";
 		/** @type {D$SimpleText} */
 		if(x.simpleText) return "TYPE::D$SimpleText";
-		if(x.iconType&&typeof x.iconType==="string") return `TYPE::Icon<"${x.iconType}">`;
+		/** @type {T$Icon<"">} */
+		if(x.iconType&&typeof x.iconType==="string") return `TYPE::T$Icon<"${x.iconType}">`;
 		if(x.popupType) return this.decode_PopupTypeMap(x);
 		if(x.signal) return this.decode_Signal(x);
 		let keys=this.filter_keys(this.get_keys_of(x));
@@ -4954,7 +4955,8 @@ class CodegenService extends BaseService {
 			state.key_keep_arr.push(...Object.keys(b.webCommandMetadata));
 			return b;
 		}
-		if(b.accessibilityData) return "TYPE::Accessibility";
+		/** @type {A$Accessibility} */
+		if(b.accessibilityData) return "TYPE::A$Accessibility";
 		console.log("[no_json_replace_type_1] %o [%s] [%s]",b,keys.join(","),g(),"\n",r);
 		return null;
 	}
@@ -13166,6 +13168,9 @@ class HandleTypes extends ServiceMethods {
 	GuideEntryRoot(x) {
 		const cf="GuideEntryRoot";
 		this.save_keys(`[${cf}]`,x);
+		if("targetId" in x) {
+			return;
+		}
 		if("serviceEndpoint" in x) {
 			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,...y}=x;
 			this.T$Icon(icon);

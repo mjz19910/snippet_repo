@@ -33,4 +33,12 @@ type GuideEntryRoot={
 	formattedTitle: D$SimpleText;
 	accessibility: A$Accessibility;
 	serviceEndpoint: E$SignalServiceEndpoint;
+}|{
+	navigationEndpoint: E$BrowseEndpoint;
+	icon: T$Icon<"VIDEO_LIBRARY_WHITE">;
+	trackingParams: string;
+	formattedTitle: D$SimpleText;
+	accessibility: A$Accessibility;
+	targetId: "library-guide-item";
+	isPrimary: true;
 };
