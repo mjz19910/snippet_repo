@@ -6901,7 +6901,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x&&"apiUrl" in x) {
 			switch(x.rootVe) {
-				case 3854: return this.G_VE3854$WC(x);
+				case 3854: return this.G_VE3854_WC(x);
 				default: debugger; break;
 			}
 		}
@@ -6980,8 +6980,8 @@ class HandleTypes extends ServiceMethods {
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		if(rootVe!==3832) debugger;
 	}
-	/** @private @arg {G_VE3854$WC} x */
-	G_VE3854$WC(x) {
+	/** @private @arg {GM_VE3854_WC} x */
+	G_VE3854_WC(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		x: {
 			if(url==="/") break x;
@@ -7161,16 +7161,16 @@ class HandleTypes extends ServiceMethods {
 		},x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
-				case 3854: this.G_VE3854$WC(y); break;
-				case 23462: this.G_VE23462$WC(y); break;
+				case 3854: this.G_VE3854_WC(y); break;
+				case 23462: this.G_VE23462_WC(y); break;
 				default: debugger; break;
 			}
 			this.WebCommandMetadata(this.w(x));
 		});
 		x;
 	}
-	/** @private @arg {G_VE23462$WC} x */
-	G_VE23462$WC(x) {
+	/** @private @arg {GM_VE23462_WC} x */
+	G_VE23462_WC(x) {
 		const cf="VE23462.Metadata";
 		this.save_keys(`[${cf}]`,x);
 		const {rootVe,webPageType,...y}=x; this.g(y);

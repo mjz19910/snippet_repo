@@ -1,36 +1,36 @@
-type G_WC$Metadata$1=[
-	G_VE11487$WC,
-	G_VE23462$WC,
+type GM_WC_1=[
+	GM_VE11487_WC,
+	GM_VE23462_WC,
 	GM_VE3611_WC,
-	G_VE37414$WC,
+	GM_VE37414_WC,
 	GM_VE3832_Watch_WC,
-	G_VE3854$WC,
-	G_VE4724$WC,
-	G_VE5754$WC,
-	G_VE6827$WC,
+	GM_VE3854_WC,
+	GM_VE4724_WC,
+	GM_VE5754_WC,
+	GM_VE6827_WC,
 	GM_VE83769_WC,
-	G_VE96368$WC,
-	G_VE96368$WC$browse,
-	G_WC$Metadata$account$account_menu,
-	G_WC$Metadata$account$set_setting,
-	G_WC$Metadata$backstage$create_post,
-	G_WC$Metadata$browse,
-	G_WC$Metadata$browse$edit_playlist,
-	G_WC$Metadata$feedback,
-	G_WC$Metadata$flag$get_form,
-	G_WC$Metadata$get_transcript,
-	G_WC$Metadata$like$like,
-	G_WC$Metadata$like$removelike,
-	G_WC$Metadata$next,
-	G_WC$Metadata$notification$get_notification_menu,
-	G_WC$Metadata$notification$get_unseen_count,
-	G_WC$Metadata$notification$opt_out,
-	G_WC$Metadata$notification$record_interactions,
-	G_WC$Metadata$playlist$create,
-	G_WC$Metadata$playlist$get_add_to_playlist,
-	G_WC$Metadata$share$get_share_panel,
-	G_WC$Metadata$subscription$subscribe,
-	G_WC$Metadata$ypc$get_offers,
+	GM_VE96368_WC,
+	GM_VE96368_WC_browse,
+	GM_account_account_menu,
+	GM_account_set_setting,
+	GM_backstage_create_post,
+	GM_browse,
+	GM_browse_edit_playlist,
+	GM_feedback,
+	GM_flag_get_form,
+	GM_get_transcript,
+	GM_like_like,
+	GM_like_removelike,
+	GM_next,
+	GM_notification_get_notification_menu,
+	GM_notification_get_unseen_count,
+	GM_notification_opt_out,
+	GM_notification_record_interactions,
+	GM_playlist_create,
+	GM_playlist_get_add_to_playlist,
+	GM_share_get_share_panel,
+	GM_subscription_subscribe,
+	GM_ypc_get_offers,
 ][number];
 type GM_VE3611_WC={
 	rootVe: 3611;
@@ -41,37 +41,37 @@ type GM_VE3832_Watch_WC={
 	webPageType: "WEB_PAGE_TYPE_WATCH";
 	rootVe: 3832;
 };
-type G_VE5754$WC={
+type GM_VE5754_WC={
 	rootVe: 5754;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 };
-type G_VE23462$WC={
+type GM_VE23462_WC={
 	rootVe: 23462;
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
 };
-type G_VE4724$WC={
+type GM_VE4724_WC={
 	url: "/results?search_query=";
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
-type G_VE37414$WC={
+type GM_VE37414_WC={
 	url: "/shorts/";
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
-type G_VE96368$WC={
+type GM_VE96368_WC={
 	rootVe: 96368;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
-type G_VE11487$WC={
+type GM_VE11487_WC={
 	rootVe: 11487;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
-type G_VE6827$WC={
+type GM_VE6827_WC={
 	rootVe: 6827;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
-type G_VE3854$WC={
+type GM_VE3854_WC={
 	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 3854;
@@ -82,89 +82,89 @@ type GM_VE83769_WC={
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };
-type G_VE96368$WC$browse={
+type GM_VE96368_WC_browse={
 	url: "/feed/subscriptions";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 96368;
 	apiUrl: "/youtubei/v1/browse";
 };
-type G_WC$Metadata$ypc$get_offers={
+type GM_ypc_get_offers={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/ypc/get_offers";
 };
-type G_WC$Metadata$account$set_setting={
+type GM_account_set_setting={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/set_setting";
 };
-type G_WC$Metadata$playlist$get_add_to_playlist={
+type GM_playlist_get_add_to_playlist={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/playlist/get_add_to_playlist";
 };
-type G_WC$Metadata$browse$edit_playlist={
+type GM_browse_edit_playlist={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse/edit_playlist";
 };
-type G_WC$Metadata$share$get_share_panel={
+type GM_share_get_share_panel={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/share/get_share_panel";
 };
-type G_WC$Metadata$next={
+type GM_next={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/next";
 };
-type G_WC$Metadata$get_transcript={
+type GM_get_transcript={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/get_transcript";
 };
-type G_WC$Metadata$browse={
+type GM_browse={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/browse";
 };
-type G_WC$Metadata$account$account_menu={
+type GM_account_account_menu={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/account/account_menu";
 };
-type G_WC$Metadata$notification$get_unseen_count={
+type GM_notification_get_unseen_count={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_unseen_count";
 };
-type G_WC$Metadata$notification$get_notification_menu={
+type GM_notification_get_notification_menu={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/get_notification_menu";
 };
-type G_WC$Metadata$backstage$create_post={
+type GM_backstage_create_post={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/backstage/create_post";
 };
-type G_WC$Metadata$like$removelike={
+type GM_like_removelike={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/removelike";
 };
-type G_WC$Metadata$like$like={
+type GM_like_like={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/like/like";
 };
-type G_WC$Metadata$feedback={
+type GM_feedback={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/feedback";
 };
-type G_WC$Metadata$subscription$subscribe={
+type GM_subscription_subscribe={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/subscription/subscribe";
 };
-type G_WC$Metadata$notification$opt_out={
+type GM_notification_opt_out={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/opt_out";
 };
-type G_WC$Metadata$flag$get_form={
+type GM_flag_get_form={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/flag/get_form";
 };
-type G_WC$Metadata$playlist$create={
+type GM_playlist_create={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/playlist/create";
 };
-type G_WC$Metadata$notification$record_interactions={
+type GM_notification_record_interactions={
 	sendPost: true;
 	apiUrl: "/youtubei/v1/notification/record_interactions";
 };

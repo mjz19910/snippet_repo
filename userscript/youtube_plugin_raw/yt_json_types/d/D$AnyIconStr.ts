@@ -1,4 +1,4 @@
-type AnyIconStr=[
+type D$AnyIconStr=[
 	"DELETE",
 	"EXPAND_MORE",
 	"MIX",

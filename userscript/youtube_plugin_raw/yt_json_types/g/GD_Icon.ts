@@ -1,5 +1,5 @@
-type GD$Icon=NonNullable<[
-	T_Icon<AnyIconStr>,
+type GD_Icon=NonNullable<[
+	T_Icon<D$AnyIconStr>,
 	D_Button['icon'],
 	D_InfoRow['expandIcon'],
 	D_TopicLink['callToActionIcon'],

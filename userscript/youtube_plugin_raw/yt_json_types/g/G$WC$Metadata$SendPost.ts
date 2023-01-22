@@ -1,1 +1,1 @@
-type G_WC$Metadata$SendPost={sendPost: true;};
+type GM_SendPost={sendPost: true;};
