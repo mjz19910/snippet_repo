@@ -8315,9 +8315,61 @@ class HandleTypes extends ServiceMethods {
 		const {responseContext: {},feedbackResponses,...y}=x; this.g(y); // ! #destructure
 		this.z(feedbackResponses,this.FeedbackResponseProcessedStatus);
 	}
+	/** @arg {D$MultiPageMenu} x */
+	D$MultiPageMenu(x) {
+		const cf="D$MultiPageMenu";
+		this.save_keys(`[${cf}]`,x);
+		if(x.sections) {
+			let z=x.sections[0];
+			if("multiPageMenuNotificationSectionRenderer" in z) {
+				return this.MultiPageMenuNotificationSection(z.multiPageMenuNotificationSectionRenderer);
+			}
+		}
+	}
+	/** @private @arg {{trackingParams:string;}&T$Items<R$Notification|T$R$ContinuationItem<E$GetNotificationMenuEndpoint>>} x */
+	MultiPageMenuNotificationSection(x) {
+		const cf="MultiPageMenuNotificationSection";
+		this.save_keys(`[${cf}]`,x);
+		const {items,trackingParams,...y}=x; this.g(y); // ! #destructure
+		let xr=this.z(items,x => {
+			if("notificationRenderer" in x) return this.R$Notification(x);
+			if("continuationItemRenderer" in x) return this.T$ContinuationItemRenderer(x);
+			debugger;
+		});
+		this.z(xr[0],x => {
+			if("getNotificationMenuEndpoint" in x) return this.E$GetNotificationMenuEndpoint(x);
+			debugger;
+		});
+		debugger;
+		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
+	}
+	R$Notification(x) {x;}
+	E$GetNotificationMenuEndpoint(x) {x;}
+	/** @template T @arg {T$R$ContinuationItem<T>} x */
+	T$ContinuationItemRenderer(x) {
+		const cf="T$ContinuationItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		return this.w(this.T$ContinuationItemData(this.w(x)));
+	}
+	/** @arg {E$GetTranscript} x */
+	E$GetTranscriptEndpoint(x) {
+		const cf="GetTranscriptEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,getTranscriptEndpoint,...y}=x; this.g(y); // ! #destructure
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		this.DE$GetTranscript(getTranscriptEndpoint);
+	}
+	/** @arg {DE$GetTranscript} x */
+	DE$GetTranscript(x) {
+		const cf="GetTranscriptData";
+		this.save_keys(`[${cf}]`,x);
+		const {params,...y}=x; this.g(y); // ! #destructure
+		this.params("GetTranscript","get_transcript.params",params);
+	}
 	/** @private @arg {R$GetTranscript} x */
 	R$GetTranscript(x) {
-		const cf="GetTranscriptResponse";
+		const cf="R$GetTranscript";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},actions,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(actions,a => {

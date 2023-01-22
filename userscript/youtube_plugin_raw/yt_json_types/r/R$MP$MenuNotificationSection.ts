@@ -1,1 +1,1 @@
-type R$MP$MenuNotificationSection={multiPageMenuNotificationSectionRenderer: T$Items<R$Notification>;};
+type R$MP$MenuNotificationSection={multiPageMenuNotificationSectionRenderer: {trackingParams:string;}&T$Items<R$Notification>;};
