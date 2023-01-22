@@ -4376,6 +4376,10 @@ class CodegenService extends BaseService {
 			/** @private @type {{}} */
 			let o3=x2;
 			let c=this.get_name_from_keys(o3);
+			if(!c||typeof c==="number") {
+				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
+				continue;
+			}
 			if(c.endsWith("Renderer")) {
 				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
 				ret_arr.push(`this.R$${ic}(${k});`);
@@ -4383,10 +4387,6 @@ class CodegenService extends BaseService {
 			}
 			let skip=true;
 			if(skip) throw [x2,k];
-			if(!c||typeof c==="number") {
-				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-				continue;
-			}
 			if(k.endsWith("Renderer")) {
 				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
