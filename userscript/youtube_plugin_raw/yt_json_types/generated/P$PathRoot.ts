@@ -1,7 +1,7 @@
 type P$LogItems=[
 ];
 type P$PathRoot=[
-	$missing$param,
+	P$param$missing$,
 	P$known$param,
 	P$unknown$param,
 ][number];

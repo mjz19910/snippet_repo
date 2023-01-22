@@ -1,6 +1,3 @@
-type P$category$param=P$LogItems[number] extends `[${string}] [${infer U}]`?U:never;
-type $missing$param=Exclude<P$category$param,P$known$param>;
-type only_param$extract=Extract<P$category$param,`${string}.params.${string}`>;
 type P$known$param=[
 	"AdServingDataEntry.f4",
 	"AdServingDataEntry",

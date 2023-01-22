@@ -5208,16 +5208,18 @@ class ParserService extends BaseService {
 				res_case=`\n\t\tcase "${path_parts[idx]}": u(idx); debugger; break`;
 			}
 			console.log(`\n\n\t"[parse_value.L_gen_next_part] [${path}]",`);
-			console.log(`-- [${path_parts.join(".")},${idx}] --\n
-		// [${path_parts.join(".")}]
-		case "${path_parts[idx-1]}": {
-			const idx=${idx+1};
-			if(path_parts.length===${idx}) {${case_part}${value_part}
-			}
-			switch(path_parts[${idx}]) {
-				default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}
-			}
-		} break;`);
+			console.log(`
+			-- [${path_parts.join(".")},${idx}] --\n
+			// [${path_parts.join(".")}]
+			case "${path_parts[idx-1]}": {
+				const idx=${idx+1};
+				if(path_parts.length===${idx}) {
+					${case_part}${value_part}
+				}
+				switch(path_parts[${idx}]) {
+					default: u(idx); debugger; path_parts[${idx}]===""; break;${res_case}
+				}
+			} break;`.slice(1).split("\n").map(e=>e.slice(3)).join("\n"));
 		};
 		let new_path=() => {
 			console.log("[parse_value.new_path_gen]",path);
@@ -5267,9 +5269,9 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "AdServingDataEntry":
-					switch(ta) {case 4: break; default: new_ns(); debugger; return;}
-					/** @type {P$PathRoot} */
-					return this.parse_param_next(root,`${path}.f${ta}`,tv);
+						switch(ta) {case 4: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
 						switch(ta) {case 7: case 24: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
