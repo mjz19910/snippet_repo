@@ -8493,6 +8493,18 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.D$ThumbnailOverlayTimeStatus(this.w(x));
 	}
+	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
+	R$ThumbnailOverlayLoadingPreview(x) {
+		const cf="R$ThumbnailOverlayLoadingPreview";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayLoadingPreview(this.w(x));
+	}
+	/** @arg {R$ThumbnailOverlayToggleButton} x */
+	R$ThumbnailOverlayToggleButton(x) {
+		const cf="R$ThumbnailOverlayNowPlayingData";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayToggleButton(this.w(x));
+	}
 	/** @arg {G$ThumbnailOverlayItem} x */
 	G$ThumbnailOverlayItem(x) {
 		const cf="ThumbnailOverlayItem";
@@ -8506,19 +8518,11 @@ class HandleTypes extends ServiceMethods {
 		if("thumbnailOverlayResumePlaybackRenderer" in x) return this.R$ThumbnailOverlayResumePlaybackRenderer(x);
 		debugger;
 	}
-	/** @arg {R$ThumbnailOverlayLoadingPreview} x */
-	R$ThumbnailOverlayLoadingPreview(x) {
-		const cf="R$ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf}]`,x);
+	/** @arg {D$ThumbnailOverlayLoadingPreview} x */
+	D$ThumbnailOverlayLoadingPreview(x) {
 		const cf_="D$ThumbnailOverlayLoadingPreview";
-		this.save_keys(`[${cf_}]`,this.w(x));
-		this.D$TextWithRuns(this.w(this.w(x)));
-	}
-	/** @arg {R$ThumbnailOverlayToggleButton} x */
-	R$ThumbnailOverlayToggleButton(x) {
-		const cf="R$ThumbnailOverlayNowPlayingData";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ThumbnailOverlayToggleButton(this.w(x));
+		this.save_keys(`[${cf_}]`,x);
+		this.D$TextWithRuns(this.w(x));
 	}
 	/** @arg {R$WatchEndpointMusicConfig} x */
 	WatchEndpointMusicConfig(x) {
