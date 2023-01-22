@@ -7,7 +7,7 @@ type E$Watch={
 	params?: string;
 	startTimeSeconds?: number;
 	continuePlayback?: true;
-	loggingContext?: VssLoggingContext;
+	loggingContext?: R$VssLoggingContext;
 	watchEndpointSupportedOnesieConfig?: Html5PlaybackOnesieConfig;
 	watchEndpointSupportedPrefetchConfig?: PrefetchHintConfig;
 	watchEndpointMusicSupportedConfigs?: R$WatchEndpointMusicConfig;

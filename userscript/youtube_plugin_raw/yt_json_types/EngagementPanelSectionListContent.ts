@@ -4,6 +4,6 @@ type EngagementPanelSectionListContent=[
 	R$ContinuationItemRenderer,
 	R$MacroMarkersListRenderer,
 	R$ProductList,
-	SectionListRendererTemplate<"comment-item-section","engagement-panel-comments-section">,
+	T$R$SectionList<{},"comment-item-section","engagement-panel-comments-section">,
 	R$StructuredDescriptionContent,
 ][number];

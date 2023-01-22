@@ -1,3 +1,3 @@
-type T$SectionListDataTemplate<T,U>={
-	contents: T$SectionListItemTemplate<T,U>;
+type T$D$SectionList<C,T,U>={
+	contents: T$R$ItemSection<C,T,U>;
 };

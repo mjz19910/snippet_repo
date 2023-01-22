@@ -1,3 +1,3 @@
-type VssLoggingContextData={
+type D$VssLoggingContext={
 	serializedContextData: string;
 };

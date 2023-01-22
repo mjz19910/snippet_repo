@@ -1,1 +1,1 @@
-type RelatedChipCloudRenderer={relatedChipCloudRenderer: T$Content<ChipCloudRenderer>;};
+type RelatedChipCloudRenderer={relatedChipCloudRenderer: T$Content<R$ChipCloud>;};

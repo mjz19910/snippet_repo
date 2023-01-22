@@ -13,13 +13,13 @@ export function con_snippet_1() {
 	let x={};
 	/** @arg {{}} o */
 	function nx(o) {
-		let u = structuredClone(o);
+		let u=structuredClone(o);
 		/** @arg {{}} x */
 		function ru(x) {
-			Object.entries(x).forEach(([, v]) => {
-				if (typeof v === "object") {
+			Object.entries(x).forEach(([,v]) => {
+				if(typeof v==="object") {
 					ru(v);
-					Object.setPrototypeOf(v, null);
+					Object.setPrototypeOf(v,null);
 				}
 			});
 			return x;
@@ -69,6 +69,8 @@ class ParserService {
 	get_url_type(x) {x; throw 1;}
 	/** @public @arg {ParamsSection} root @arg {YtUrlFormat} x */
 	parse_url(root,x) {root; x;}
+	/** @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	on_endpoint_params(root,path,x) {if(x===void 0) {debugger; return;} root; x; path;}
 }
 class CodegenService {
 	/**
@@ -102,9 +104,13 @@ export class Snippet_0_tmp {
 		const {label,...y}=x; this.g(y);
 		if(label) this.primitive_of(label,"string");
 	}
-	/** @public @arg {string} x */
-	trackingParams(x) {
-		this.primitive_of(x,"string");
+	/** @public @arg {ParamsSection} root @arg {P$PathRoot} path @arg {string} x */
+	params(root,path,x) {
+		this.parser.on_endpoint_params(root,path,x);
+	}
+	/** @public @arg {string} cf @arg {string} x */
+	trackingParams(cf,x) {
+		this.params(cf,"tracking.trackingParams",x);
 	}
 	/** @private @template T @arg {NonNullable<T>} x @arg {TypeOfType<T>} y */
 	primitive_of(x,y) {
@@ -212,7 +218,7 @@ export class Snippet_0_tmp {
 			y.call(this,a,i);
 		}
 	}
-	/** @protected @template {{}} T @arg {T$AR$Contents<T>} x @arg {(this:this,x:T)=>void} f */
+	/** @protected @template {{}} T @arg {T$Contents<T[]>} x @arg {(this:this,x:T)=>void} f */
 	w1(x,f) {
 		const {contents: a,...y}=x; this.g(y);
 		this.z(a,f);
@@ -376,12 +382,12 @@ export class Snippet_0_tmp {
 				case 6827:
 				case 11487: break;
 				case 96368: break;
-				default: let rve=((/**@template {number} T @arg {{rootVe:T}} v @return {{rootVe:T}}*/(v)=>{
+				default: let rve=((/**@template {number} T @arg {{rootVe:T}} v @return {{rootVe:T}}*/(v) => {
 					/** @type {{rootVe:T}} */
 					let c=as(v);
 					return c;
 				}))(x).rootVe;
-				rve;
+					rve;
 			}
 		}
 	}
@@ -411,9 +417,45 @@ export class Snippet_0_tmp {
 	}
 	/** @arg {D$NotificationAction} x */
 	D$NotificationAction(x) {x;}
+	/** @protected @template {{}} T @arg {T$R$SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListRendererTemplate(x) {
+		const cf="SectionListRendererTemplate";
+		this.save_keys(`[${cf}]`,x);
+		this.SectionListDataTemplate(this.w(x));
+	}
+	/** @private @template {{}} T @arg {T$D$SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	SectionListDataTemplate(x) {
+		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
+		this.SectionListItemTemplate(this.w(x));
+	}
+	/** @private @template {{}} T @arg {T$R$ItemSection<T,"comment-item-section","engagement-panel-comments-section">} x */
+	SectionListItemTemplate(x) {
+		this.ItemSectionDataTemplate(x.itemSectionRenderer,([b,...a]) => {
+			this.z(b,a=>{a;debugger;});
+			let v=this.join_string(a,"-");
+			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
+		});
+	}
+	/** @template CT,T,U @arg {T$D$ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	ItemSectionDataTemplate(x,f) {
+		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
+		f.call(this,[contents,sectionIdentifier,targetId]);
+		this.trackingParams("ItemSectionData",trackingParams);
+		let k=this.get_keys_of(contents);
+		switch(k[0]) {
+			default: debugger; break;
+		}
+	}
 }
 class ND extends Snippet_0_tmp {
-	/** @arg {R$NotificationAction} x */
+	/** @private @arg {R$NotificationAction} x */
 	R$NewRenderer(x) {this.H$Renderer("NotificationAction",x,this.D$NotificationAction);}
+	/** @pub @arg {D$NotificationAction} x */
+	D$NewData(x) {x;}
+	/** @pub @arg {E$SignalServiceEndpoint<{}>} x */
+	E$NewEndpoint(x) {x;}
+	use() {
+		this.R$NewRenderer({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
+	}
 }
 new ND;

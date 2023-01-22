@@ -1,3 +1,3 @@
-type ChipCloudRenderer={
-	chipCloudRenderer: ChipCloudData;
+type R$ChipCloud={
+	chipCloudRenderer: D$ChipCloudData;
 };
