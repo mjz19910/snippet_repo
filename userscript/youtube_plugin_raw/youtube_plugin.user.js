@@ -5499,6 +5499,7 @@ class ParserService extends BaseService {
 		let tv=x.get(ta);
 		this.parse_value(root,path,x,mk,ta,tv,cb);
 	}
+	/** @type {P$LogItems} */
 	/** @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapType} x @arg {number[]} mk @arg {number} ta @arg {ParamMapValue[]|undefined} tv @arg {ParseCallbackFunction|null} cb */
 	parse_value(root,path,x,mk,ta,tv,cb) {
 		/** @arg {string} ns @arg {()=>void} f */
@@ -5506,7 +5507,6 @@ class ParserService extends BaseService {
 			console.group(ns);
 			f();
 			console.groupEnd();
-			debugger;
 		};
 		let new_ns=() => {
 			if(tv!==void 0) {
@@ -5523,8 +5523,9 @@ class ParserService extends BaseService {
 			/** @type {P$LogItems} */
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
-// []
-case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}/** @type {P$PathRoot} */return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);}
+case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
+/** @type {P$PathRoot} */
+return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 `);
 		};
 		if(tv!==void 0) {
@@ -5534,7 +5535,15 @@ case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; retu
 			if(cb===null) {
 				/** @type {P$LogItems} */
 				switch(path) {
-					default: {grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); debugger; this.parse_param_next(root,as(`${path}.f${ta}`),tv);} break;
+					default: {
+						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
+						debugger;
+						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
+					} break;
+					case "watch.player_params":
+						switch(ta) {case 12: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "transcript_target_id.param": case "tracking.trackingParams.f19":
 					case "tracking.trackingParams.f4": switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);

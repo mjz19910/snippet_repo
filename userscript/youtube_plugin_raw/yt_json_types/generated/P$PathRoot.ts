@@ -10,6 +10,7 @@ type P$LogItems=[
 	"[parse_value.gen_ns] [tracking.trackingParams.f10]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f19.f3]",
 	"[parse_value.L_gen_next_part] [tracking.trackingParams.f8]",
+	"[parse_value.gen_ns] [watch.player_params.f12]",
 ];
 type P$PathRoot=[
 	"tracking.trackingParams.f16",
