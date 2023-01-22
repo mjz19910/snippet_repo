@@ -6949,7 +6949,11 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {G$VE3854$WC$Metadata} x */
 	G$VE3854$WC$Metadata(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
-		x: {if(this.str_starts_with("/watch?",url)) break x; debugger;}
+		x: {
+			if(this.str_starts_with("/watch?",url)) break x;
+			if(url==="/") break x;
+			debugger;
+		}
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(rootVe!==3854) debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
