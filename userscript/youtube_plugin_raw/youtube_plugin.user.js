@@ -4402,9 +4402,18 @@ class CodegenService extends BaseService {
 		let io=as(x[0]);
 		let c=this.get_name_from_keys(io);
 		if(c) {
+			if(c.endsWith("Renderer")) {
+				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
+				ret_arr.push(`this.z(${k},this.R$${ic});`);
+				return;
+			}
+			if(c.endsWith("Endpoint")) {
+				let ic=this.uppercase_first(c);
+				ret_arr.push(`this.z(${k},this.E$${ic});`);
+				return;
+			}
 			let ic=this.uppercase_first(c);
-			console.log("array key",c);
-			ret_arr.push(`this.z(x.${k},this.${ic});`);
+			ret_arr.push(`this.z(${k},this.${ic});`);
 		}
 	}
 	/** @arg {string} x */
