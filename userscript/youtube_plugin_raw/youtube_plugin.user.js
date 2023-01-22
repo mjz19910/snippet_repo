@@ -5578,7 +5578,7 @@ return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
 					case "watch.params":
-						switch(ta) {case 7: break; default: new_ns(); debugger; return;}
+						switch(ta) {case 7: case 24: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.player_params":
@@ -13457,7 +13457,13 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$ChildVideo} x */
 	R$ChildVideo(x) {
-		const cf="ChildVideo";
+		const cf="R$ChildVideo";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ChildVideo(this.w(x));
+	}
+	/** @private @arg {D$ChildVideo} x */
+	D$ChildVideo(x) {
+		const cf="D$ChildVideo";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}

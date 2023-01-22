@@ -1,14 +1,4 @@
-type D$Radio=Radio$PlaylistId;
-type R$ChildVideo={
-	childVideoRenderer: {
-		title: D$SimpleText;
-		navigationEndpoint: E$WatchEndpoint;
-		lengthText: D$SimpleText;
-		videoId: string;
-	};
-};
-
-type Radio$PlaylistId={
+type D$Radio={
 	playlistId: `RD${string}`;
 	title: D$SimpleText;
 	thumbnail: D$Thumbnail;
