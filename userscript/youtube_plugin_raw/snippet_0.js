@@ -452,8 +452,8 @@ class ND extends Snippet_0_tmp {
 	R_New(x) {this.H$R_("NotificationAction",x,this.D__NotificationAction);}
 	/** @pub @arg {D__NotificationAction} x */
 	D__NewData(x) {x;}
-	/** @pub @arg {E$T$SignalService<{}>} x */
-	E$NewEndpoint(x) {x;}
+	/** @pub @arg {E_T$SignalService<{}>} x */
+	E_NewEndpoint(x) {x;}
 	use() {
 		this.R_New({notificationActionRenderer: {trackingParams: "",responseText: {runs: []}}});
 	}

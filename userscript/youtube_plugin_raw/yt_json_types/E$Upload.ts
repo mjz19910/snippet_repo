@@ -1,1 +1,1 @@
-type E$Upload={hack: true;};
+type E_Upload={hack: true;};

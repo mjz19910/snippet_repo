@@ -1,1 +1,1 @@
-type G_ContinuationEndpoint=E$Continuation|E$GetTranscript;
+type G_ContinuationEndpoint=E_Continuation|E_GetTranscript;

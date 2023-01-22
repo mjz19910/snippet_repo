@@ -2,12 +2,12 @@ type D__MacroMarkersListItem={
 	title: R_SimpleText;
 	timeDescription: R_SimpleText;
 	thumbnail: D__Thumbnail;
-	onTap: E$WatchEndpoint;
+	onTap: E_WatchEndpoint;
 	trackingParams: string;
 	shareButton: R_Button;
 	repeatButton: R_ToggleButton;
 	macroMarkerRepeatStateEntityKey: string;
-	endRepeatCommand: E$CommandExecutorCommand;
+	endRepeatCommand: E_CommandExecutorCommand;
 	playerStateEntityKey: string;
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";
 	lightColorPalette: LightColorPalette;
@@ -17,7 +17,7 @@ type D__MacroMarkersListItem={
 	title: R_SimpleText;
 	timeDescription: R_SimpleText;
 	thumbnail: D__Thumbnail;
-	onTap: E$WatchEndpoint;
+	onTap: E_WatchEndpoint;
 	trackingParams: string;
 	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";
 	carouselType: "MACRO_MARKERS_LIST_ITEM_RENDERER_CAROUSEL_TYPE_DEFAULT";

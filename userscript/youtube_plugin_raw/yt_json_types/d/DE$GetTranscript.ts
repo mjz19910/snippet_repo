@@ -1,3 +1,3 @@
-type DE$GetTranscript={
+type DE_GetTranscript={
 	params: string;
 };

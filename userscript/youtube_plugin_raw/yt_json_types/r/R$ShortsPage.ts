@@ -1,6 +1,6 @@
 type R_ShortsPage={
 	page: "shorts";
-	endpoint: E$ReelWatchEndpoint;
+	endpoint: E_ReelWatchEndpoint;
 	response: R_Reel;
 	playerResponse: R_Player;
 	reelWatchSequenceResponse?: R_ReelWatchSequence;
@@ -9,7 +9,7 @@ type R_ShortsPage={
 }|{
 	rootVe: 37414;
 	url: `/shorts/${string}`;
-	endpoint: E$ReelWatchEndpoint;
+	endpoint: E_ReelWatchEndpoint;
 	page: "shorts";
 	playerResponse: R_Player;
 	reelWatchSequenceResponse: R_ReelWatchSequence|undefined;

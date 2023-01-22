@@ -1,4 +1,4 @@
-type E$CreateBackstagePostEndpoint={
+type E_CreateBackstagePostEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: G_Metadata;
 	createBackstagePostEndpoint: {

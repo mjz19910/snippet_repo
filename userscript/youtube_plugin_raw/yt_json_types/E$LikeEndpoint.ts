@@ -1,1 +1,1 @@
-type E$LikeEndpoint={likeEndpoint: E$Like;}&EB$Endpoint;
+type E_LikeEndpoint={likeEndpoint: E_Like;}&EB$Endpoint;

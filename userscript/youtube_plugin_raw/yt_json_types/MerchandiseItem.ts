@@ -6,7 +6,7 @@ type D__MerchandiseItem={
 	vendorName: string;
 	trackingParams: string;
 	buttonText: string;
-	buttonCommand: E$UrlEndpoint;
+	buttonCommand: E_UrlEndpoint;
 	accessibilityTitle: string;
 	buttonAccessibilityText: string;
 	fromVendorText: string;

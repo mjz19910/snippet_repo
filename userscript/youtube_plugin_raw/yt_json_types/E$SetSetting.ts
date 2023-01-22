@@ -1,1 +1,1 @@
-type E$SetSettingEndpoint=E$SetSettingEndpointAutonavForDesktop<boolean>;
+type E_SetSettingEndpoint=E_SetSettingEndpointAutonavForDesktop<boolean>;

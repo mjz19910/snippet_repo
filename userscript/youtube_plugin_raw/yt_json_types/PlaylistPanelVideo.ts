@@ -5,7 +5,7 @@ type D__PlaylistPanelVideo={
 	lengthText: R_SimpleText;
 	indexText: R_SimpleText;
 	selected: true;
-	navigationEndpoint: E$WatchEndpoint;
+	navigationEndpoint: E_WatchEndpoint;
 	videoId: string;
 	shortBylineText: R_TextWithRuns;
 	trackingParams: string;

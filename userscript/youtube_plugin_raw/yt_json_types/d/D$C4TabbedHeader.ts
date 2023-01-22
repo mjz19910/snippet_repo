@@ -1,7 +1,7 @@
 type D__C4TabbedHeader={
 	channelId: `UC${string}`;
 	title: string;
-	navigationEndpoint: E$Browse;
+	navigationEndpoint: E_Browse;
 	avatar: D__Thumbnail;
 	banner: D__Thumbnail;
 	badges?: R_MetadataBadge[];

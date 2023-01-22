@@ -1,4 +1,4 @@
-type E$UndoFeedback={
+type E_UndoFeedback={
 	clickTrackingParams: string;
 	commandMetadata: {
 		webCommandMetadata: {};

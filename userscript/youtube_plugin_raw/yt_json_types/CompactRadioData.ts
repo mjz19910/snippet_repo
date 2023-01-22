@@ -2,9 +2,9 @@ type D__CompactRadio={
 	playlistId: `RD__{"GM"}${string}`;
 	thumbnail: D__Thumbnail&SampledThumbnailColor;
 	title: R_SimpleText;
-	navigationEndpoint: E$WatchEndpoint;
+	navigationEndpoint: E_WatchEndpoint;
 	videoCountText: R_TextWithRuns;
-	secondaryNavigationEndpoint: E$WatchEndpoint;
+	secondaryNavigationEndpoint: E_WatchEndpoint;
 	longBylineText: R_SimpleText;
 	trackingParams: string;
 	thumbnailText: R_TextWithRuns;

@@ -2,7 +2,7 @@ type D__VideoOwner={
 	thumbnail: D__Thumbnail;
 	title: R_TextWithRuns;
 	subscriptionButton: D__SubscriptionButton;
-	navigationEndpoint: E$Browse;
+	navigationEndpoint: E_Browse;
 	subscriberCountText: R_SimpleText;
 	trackingParams: string;
 	membershipButton: R_Button;
@@ -10,7 +10,7 @@ type D__VideoOwner={
 	thumbnail: D__Thumbnail;
 	title: R_TextWithRuns;
 	subscriptionButton: D__SubscriptionButton;
-	navigationEndpoint: E$Browse;
+	navigationEndpoint: E_Browse;
 	subscriberCountText: R_SimpleText;
 	trackingParams: string;
 	badges: R_MetadataBadge[];

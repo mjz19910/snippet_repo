@@ -11,7 +11,7 @@ type D__TopbarMenuButton={
 	style: "STYLE_DEFAULT";
 }|{
 	avatar: D__Thumbnail;
-	menuRequest: E$T$SignalService<Signal$GetAccountMenu>;
+	menuRequest: E_T$SignalService<Signal$GetAccountMenu>;
 	trackingParams: string;
 	accessibility: D__Accessibility;
 	tooltip: string;

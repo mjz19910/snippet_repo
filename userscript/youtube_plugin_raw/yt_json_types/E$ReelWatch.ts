@@ -1,4 +1,4 @@
-type E$ReelWatch={
+type E_ReelWatch={
 	videoId?: string;
 	playerParams: string;
 	thumbnail?: D__Thumbnail;

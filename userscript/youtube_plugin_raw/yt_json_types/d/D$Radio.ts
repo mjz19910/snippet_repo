@@ -3,7 +3,7 @@ type D__Radio={
 	title: R_SimpleText;
 	thumbnail: D__Thumbnail;
 	videoCountText: R_TextWithRuns;
-	navigationEndpoint: E$WatchEndpoint;
+	navigationEndpoint: E_WatchEndpoint;
 	trackingParams: string;
 	videos: R_ChildVideo[];
 	thumbnailText: R_TextWithRuns;

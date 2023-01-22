@@ -5,7 +5,7 @@ type D__EndScreenVideo={
 	shortBylineText: R_TextWithRuns;
 	lengthText?: R_SimpleText;
 	lengthInSeconds?: number;
-	navigationEndpoint: E$WatchEndpoint|E$ReelWatchEndpoint;
+	navigationEndpoint: E_WatchEndpoint|E_ReelWatchEndpoint;
 	trackingParams: string;
 	shortViewCountText: G_Text;
 	publishedTimeText: R_SimpleText;

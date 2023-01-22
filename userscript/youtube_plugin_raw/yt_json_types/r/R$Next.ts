@@ -2,7 +2,7 @@ type R_Next={
 	responseContext: RC$ResponseContext;
 	contents?: G_NextContents;
 	continuationContents?: PlaylistPanelContinuation;
-	currentVideoEndpoint?: E$WatchEndpoint;
+	currentVideoEndpoint?: E_WatchEndpoint;
 	trackingParams: string;
 	playerOverlays?: R_PlayerOverlay;
 	videoReporting?: RT$ReportFormModal;

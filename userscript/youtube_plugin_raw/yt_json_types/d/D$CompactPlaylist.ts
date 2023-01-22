@@ -4,7 +4,7 @@ type D__CompactPlaylist={
 	title: R_SimpleText;
 	shortBylineText: R_TextWithRuns;
 	videoCountText: R_TextWithRuns;
-	navigationEndpoint: E$WatchEndpoint;
+	navigationEndpoint: E_WatchEndpoint;
 	videoCountShortText: R_SimpleText;
 	trackingParams: string;
 	sidebarThumbnails: D__Thumbnail[];

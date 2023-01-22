@@ -1,1 +1,1 @@
-type E$Like=E$LikeIndifferent|E$LikeLike|E$LikeDislike;
+type E_Like=E_LikeIndifferent|E_LikeLike|E_LikeDislike;

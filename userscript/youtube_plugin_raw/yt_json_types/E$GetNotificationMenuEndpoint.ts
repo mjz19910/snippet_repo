@@ -1,4 +1,4 @@
-type E$GetNotificationMenuEndpoint={
+type E_GetNotificationMenuEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: {
 		webCommandMetadata: {

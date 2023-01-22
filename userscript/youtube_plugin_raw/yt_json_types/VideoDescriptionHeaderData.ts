@@ -5,6 +5,6 @@ type D__VideoDescriptionHeader={
 	publishDate: R_SimpleText;
 	factoid: R_Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
-	channelNavigationEndpoint: E$Browse;
+	channelNavigationEndpoint: E_Browse;
 	channelThumbnail: D__Thumbnail;
 };

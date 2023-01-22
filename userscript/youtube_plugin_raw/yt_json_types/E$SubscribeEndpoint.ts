@@ -1,4 +1,4 @@
-type E$SubscribeEndpoint={
+type E_SubscribeEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: {
 		webCommandMetadata: {

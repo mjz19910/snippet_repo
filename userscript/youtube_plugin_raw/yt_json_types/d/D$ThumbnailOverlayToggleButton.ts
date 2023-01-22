@@ -14,7 +14,7 @@ type D__ThumbnailOverlayToggleButton={
 	toggledIcon: T$Icon<"PLAYLIST_ADD_CHECK">;
 	untoggledTooltip: "Add to queue";
 	toggledTooltip: "Added";
-	untoggledServiceEndpoint: E$T$SignalService<Signal$ClientSignal>;
+	untoggledServiceEndpoint: E_T$SignalService<Signal$ClientSignal>;
 	untoggledAccessibility: D__Accessibility;
 	toggledAccessibility: D__Accessibility;
 	trackingParams: string;

@@ -3,6 +3,6 @@ type D__FusionSearchbox={
 	placeholderText: R_TextWithRuns;
 	config: R_WebSearchboxConfig;
 	trackingParams: string;
-	searchEndpoint: E$Search;
+	searchEndpoint: E_Search;
 	clearButton: R_Button;
 };

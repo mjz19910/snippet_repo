@@ -1,1 +1,1 @@
-type E$ShareEntityService=EB$Endpoint&{shareEntityServiceEndpoint: D__ShareEntityService;};
+type E_ShareEntityService=EB$Endpoint&{shareEntityServiceEndpoint: D__ShareEntityService;};

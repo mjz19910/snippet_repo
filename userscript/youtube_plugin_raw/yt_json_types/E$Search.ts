@@ -1,4 +1,4 @@
-type E$Search={
+type E_Search={
 	clickTrackingParams: string;
 	commandMetadata: VE4724_CommandMetadata;
 	searchEndpoint: D__Search;

@@ -1,5 +1,5 @@
 type AutoplaySetItem={
 	mode: "NORMAL";
-	autoplayVideo: E$WatchEndpoint;
-	nextButtonVideo?: E$WatchEndpoint;
+	autoplayVideo: E_WatchEndpoint;
+	nextButtonVideo?: E_WatchEndpoint;
 };

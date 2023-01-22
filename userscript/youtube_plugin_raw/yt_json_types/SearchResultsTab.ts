@@ -1,5 +1,5 @@
 type D__SearchResultsTab={
-	endpoint?: E$Search;
+	endpoint?: E_Search;
 	title: string;
 	selected?: boolean;
 	content: R_SectionList;

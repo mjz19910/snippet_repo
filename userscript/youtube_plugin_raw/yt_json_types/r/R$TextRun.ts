@@ -1,6 +1,6 @@
 type R_TextRun={
 	text: string;
-	navigationEndpoint?: E$UrlEndpoint|E$Browse|E$WatchEndpoint;
+	navigationEndpoint?: E_UrlEndpoint|E_Browse|E_WatchEndpoint;
 	loggingDirectives?: A_LoggingDirectives;
 	bold?: boolean;
 };

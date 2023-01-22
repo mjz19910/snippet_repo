@@ -1,1 +1,1 @@
-type E$YpcGetOffers={params: string;};
+type E_YpcGetOffers={params: string;};

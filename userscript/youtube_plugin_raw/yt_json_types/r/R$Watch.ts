@@ -1,7 +1,7 @@
 type R_Watch={
 	responseContext: RC$ResponseContext;
 	contents: R_TwoColumnWatchNextResults;
-	currentVideoEndpoint: E$WatchEndpoint;
+	currentVideoEndpoint: E_WatchEndpoint;
 	trackingParams: string;
 	playerOverlays: R_PlayerOverlay;
 	onResponseReceivedEndpoints: EI$ResponseReceived[];

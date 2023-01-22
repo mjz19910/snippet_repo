@@ -3,7 +3,7 @@ type FeaturedChannel={
 	endTimeMs: `${number}`;
 	watermark: D__Thumbnail;
 	trackingParams: string;
-	navigationEndpoint: E$Browse;
+	navigationEndpoint: E_Browse;
 	channelName: string;
 	subscribeButton: R_SubscribeButton;
 };
