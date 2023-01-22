@@ -7780,7 +7780,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(continuationEndpoint,this.ContinuationCommand);
 	}
 	/** @private @arg {E_ReelWatchEndpoint} x */
-	E_ReelWatchEndpoint(x) {this.H_R_("E_ReelWatchEndpoint",x,_a => {debugger;});}
+	E_ReelWatchEndpoint(x) {this.H_("E_ReelWatchEndpoint",x,_a => {debugger;});}
 	/** @private @arg {LiveChatContinuation} x */
 	LiveChatContinuation(x) {x; debugger;}
 	/** @private @arg {GetLiveChat} x */
