@@ -8097,16 +8097,15 @@ class HandleTypes extends ServiceMethods {
 	CommandTemplate(x,f) {
 		const cf="CommandTemplate";
 		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,command,...y}=x; this.g(y); // ! #destructure
-		f.call(this,command);
+		const {trackingParams,...y}=x;
+		f.call(this,this.w(y));
 		this.trackingParams("CommandTemplate",trackingParams);
 	}
 	/** @template {{}} T @arg {CommandsTemplate<T>} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
-		const {commands,...y}=x; this.g(y); // ! #destructure
-		this.z(commands,f);
+		this.z(this.w(x),f);
 	}
 	/** @template {{}} T @template {CommandsTemplate<T>} C @arg {C} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate$Omit(x,f) {
