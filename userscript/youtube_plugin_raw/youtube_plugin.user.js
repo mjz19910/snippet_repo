@@ -5629,7 +5629,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @public @arg {G$VE3832$WC$Metadata['url']} x */
+	/** @public @arg {G$VE3832$Watch$WC$Metadata['url']} x */
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
@@ -6799,7 +6799,7 @@ class HandleTypes extends ServiceMethods {
 		let ca=this.z(commands,f);
 		return [y,ca];
 	}
-	/** @private @arg {string} cf @arg {(this:this,x:V$M)=>void} f_v$m @template {{}} U @template {{}} V$M @template {T$Endpoint<U,V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} U @template {{}} V$M @template {T$Endpoint<U,V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T$Endpoint(cf,x,f,f_v$m) {
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
@@ -6865,6 +6865,12 @@ class HandleTypes extends ServiceMethods {
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
+		if("rootVe" in x && "apiUrl" in x) {
+			switch(x.rootVe) {
+				case 3854: return this.G$VE3854$WC$Metadata(x);
+				default: debugger; break;
+			}
+		}
 		if("apiUrl" in x) {
 			let cx=x.apiUrl;
 			switch(x.apiUrl) {
@@ -6916,8 +6922,7 @@ class HandleTypes extends ServiceMethods {
 					console.log(`\n\tG$VE${cx},`);
 					console.log(`\n\tcase ${cx}: return this.GeneratedWebCommandMetadata(x);`);
 				} break;
-				case 3832: return this.GeneratedWebCommandMetadata(x);
-				case 3854: return this.GeneratedWebCommandMetadata(x);
+				case 3832: return this.G$VE3832$Watch$WC$Metadata(x);
 				case 4724: return this.GeneratedWebCommandMetadata(x);
 				case 6827: return this.GeneratedWebCommandMetadata(x);
 				case 11487: return this.GeneratedWebCommandMetadata(x);
@@ -6933,6 +6938,21 @@ class HandleTypes extends ServiceMethods {
 			return;
 		}
 		debugger;
+	}
+	/** @private @arg {G$VE3832$Watch$WC$Metadata} x */
+	G$VE3832$Watch$WC$Metadata(x) {
+		const {url,webPageType,rootVe,...y}=x; this.g(y);
+		x: {if(this.str_starts_with("/watch?",url)) break x; debugger;}
+		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
+		if(rootVe!==3832) debugger;
+	}
+	/** @private @arg {G$VE3854$WC$Metadata} x */
+	G$VE3854$WC$Metadata(x) {
+		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
+		x: {if(this.str_starts_with("/watch?",url)) break x; debugger;}
+		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
+		if(rootVe!==3854) debugger;
+		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
 	/** @private @arg {G$WC$Metadata} x */
 	GeneratedWebCommandMetadata(x) {
@@ -7087,8 +7107,20 @@ class HandleTypes extends ServiceMethods {
 		const cf="Browse";
 		this.save_keys(`[E$${cf}]`,x);
 		this.T$Endpoint("E$Browse",x,a => {
-			this.w(a);
-		},this.g);
+			let u=this.w(a);
+			let {browseId,...y}=u; this.g(y);
+			switch(u.browseId) {
+				case "SPaccount_notifications": break;
+				case "": break;
+				default: debugger; break;
+			};
+		},cm => {
+			switch(cm.webCommandMetadata.rootVe) {
+				case 3854: this.G$VE3832$Watch$WC$Metadata(cm.webCommandMetadata); case 23462: break;
+				default: debugger; break;
+			}
+			this.WebCommandMetadata(this.w(cm));
+		});
 		x;
 	}
 	/** @public @arg {E$D$Browse} x */

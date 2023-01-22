@@ -1,5 +1,1 @@
-type E$D$Browse={
-	browseId?: BrowseIdType;
-	params?: string;
-	canonicalBaseUrl?: `/@${string}`;
-};
+type E$D$Browse={browseId: ``;};

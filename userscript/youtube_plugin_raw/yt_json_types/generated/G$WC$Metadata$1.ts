@@ -3,7 +3,7 @@ type G$WC$Metadata$1=[
 	G$VE23462$WC$Metadata,
 	G$VE3611$WC$Metadata,
 	G$VE37414$WC$Metadata,
-	G$VE3832$WC$Metadata,
+	G$VE3832$Watch$WC$Metadata,
 	G$VE3854$WC$Metadata,
 	G$VE4724$WC$Metadata,
 	G$VE5754$WC$Metadata,
@@ -36,10 +36,10 @@ type G$VE3611$WC$Metadata={
 	rootVe: 3611;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 };
-type G$VE3832$WC$Metadata={
-	rootVe: 3832;
-	webPageType: "WEB_PAGE_TYPE_WATCH";
+type G$VE3832$Watch$WC$Metadata={
 	url: `/watch?${string}`;
+	webPageType: "WEB_PAGE_TYPE_WATCH";
+	rootVe: 3832;
 };
 type G$VE5754$WC$Metadata={
 	rootVe: 5754;
@@ -72,8 +72,10 @@ type G$VE6827$WC$Metadata={
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
 type G$VE3854$WC$Metadata={
-	rootVe: 3854;
+	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
+	rootVe: 3854;
+	apiUrl: "/youtubei/v1/browse";
 };
 type G$VE83769$WC$Metadata={
 	url: "/upload";
