@@ -1,6 +1,6 @@
 type D_GenericSectionList={
 	continuations?: RD__NextContinuation[];
-	contents: $SectionListItem[];
+	contents: TR_SectionListItem<{},{},{}>[];
 	trackingParams: string;
 	subMenu?: {};
 	hideBottomSeparator?: boolean;

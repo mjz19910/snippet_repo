@@ -8240,9 +8240,12 @@ class HandleTypes extends ServiceMethods {
 	TD_ItemSection$2CommentItemSection(x) {x;}
 	/** @template T @arg {T$ResultsTemplate<T$AR_Contents<T>>} x */
 	D_TwoColumnWatchNextResults$results(x) {x;}
-	/** @arg {R_ItemSection} x */
-	/** @private @arg {R_ItemSection} x */
-	R_ItemSection(x) {this.H_("ItemSection",x,this.D_ItemSection);}
+	/** @private @template {R_CompactVideo} T @template {"sid-wn-chips"} U @template {"watch-next-feed"} V @arg {R_ItemSection<T,U,V>} x */
+	R_ItemSection(x) {
+		this.H_("ItemSection",x,a => {
+			this.D_ItemSection(a);
+		});
+	}
 	/** @private @arg {TD_ItemSection<R_CompactVideo,"sid-wn-chips","watch-next-feed">} x */
 	D_ItemSection(x) {
 		x;
@@ -8500,7 +8503,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {RD__NextContinuation} x */
 	RD__NextContinuation(x) {this.H_("RD__NextContinuation",x,() => 0);}
-	/** @private @arg {$SectionListItem} x */
+	/** @private @arg {TR_SectionListItem<{},{},{}>} x */
 	SectionListItem(x) {
 		const cf="SectionListItem";
 		this.save_keys(`[${cf}]`,x);
@@ -9516,7 +9519,14 @@ class HandleTypes extends ServiceMethods {
 		this.t(backgroundImageConfig,this.R_ThumbnailsList);
 		this.D_GradientColorConfig(gradientColorConfig);
 		if(presentationStyle&&presentationStyle!=="CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED") debugger;
-		this.g(config);
+		if(config.lightThemeBackgroundColor!==4278190080) debugger;
+		this.save_keys(`[${cf}.config]`,config);
+		for(let u of Object.entries(config)) {
+			if(u[0]==="animationConfig") continue;
+			if(typeof u[1]==="object") {debugger; continue;}
+			this.save_string(`[${cf}.config.${u[0]}]`,`${u[1]}`);
+		}
+		this.save_keys(`[${cf}.config.animationConfig]`,config.animationConfig);
 	}
 	/** @private @arg {D_GradientColorConfig} x */
 	D_GradientColorConfig(x) {

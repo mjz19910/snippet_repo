@@ -1,1 +1,1 @@
-type R_ItemSection={itemSectionRenderer: TD_ItemSection;};
+type R_ItemSection<A,B,C>={itemSectionRenderer: TD_ItemSection<A,B,C>;};
