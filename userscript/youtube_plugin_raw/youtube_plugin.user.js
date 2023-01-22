@@ -5280,7 +5280,7 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
-						switch(ta) {case 7: case 24: break; default: break;}
+						switch(ta) {case 7: case 8: case 24: break; default: break;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					case "watch.player_params":
@@ -5505,7 +5505,10 @@ class ParserService extends BaseService {
 											default: u(idx); debugger; path_parts[4]===""; break;
 										}
 										function calc_skip() {
-											if(path_parts[2]==="f4"&&path_parts[3]=="f1") return true;
+											if(path_parts[2]==="f4") {
+												if(path_parts[3]=="f1") return true;
+												if(path_parts[3]=="f2") return true;
+											}
 											return false;
 										}
 									} break;
