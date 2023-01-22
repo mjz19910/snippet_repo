@@ -10424,7 +10424,57 @@ class HandleTypes extends ServiceMethods {
 		if("thumbnailOverlayNowPlayingRenderer" in x) return this.ThumbnailOverlayNowPlayingRenderer(x);
 		if("thumbnailOverlayBottomPanelRenderer" in x) return this.ThumbnailOverlayBottomPanelRenderer(x);
 		if("thumbnailOverlayHoverTextRenderer" in x) return this.ThumbnailOverlayHoverTextRenderer(x);
+		if("thumbnailOverlayToggleButtonRenderer" in x) return this.R$ThumbnailOverlayToggleButton(x);
 		debugger;
+	}
+	/** @arg {R$ThumbnailOverlayToggleButton} x */
+	R$ThumbnailOverlayToggleButton(x) {
+		const cf="ThumbnailOverlayNowPlayingData";
+		this.save_keys(`[${cf}]`,x);
+		this.D$ThumbnailOverlayToggleButton(this.w(x));
+	}
+	/** @arg {D$ThumbnailOverlayToggleButton} x */
+	D$ThumbnailOverlayToggleButton(x) {
+		const cf="ThumbnailOverlayNowPlayingData";
+		this.save_keys(`[${cf}]`,x);
+		const {isToggled,...y}=x;
+		let [c_tog,c_un,c]=this.unwrap_toggled(y);
+		{let {accessibility,icon,tooltip,serviceEndpoint,...v1}=c_tog;this.g(v1);}
+		{let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un;this.g(v2);}
+		let {trackingParams,...y1}=c; this.g(y1);
+	}
+	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
+	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
+	/** @template {{}} U @arg {U} x @returns {[RemoveToggled<U>,RemoveUnToggled<U>,Omit<U,`toggled${string}`|`untoggled${string}`>]} */
+	unwrap_toggled(x) {
+		/** @type {RemoveToggled<U>} */
+		let tog=as({});
+		/** @type {RemoveUnToggled<U>} */
+		let untoggled=as({});
+		/** @type {Omit<U,`toggled${string}`|`untoggled${string}`>} */
+		let other=as({});
+		for(let cc of Object.entries(x)) {
+			let c1=cc[0];
+			if(this.str_starts_with("toggled",c1)) {
+				let u1x=split_string_once(c1,"toggled");
+				/** @type {any} */
+				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
+				/** @type {keyof RemoveToggled<U>} */
+				let u1=ac;
+				tog[u1]=cc[1];
+				continue;
+			}
+			if(this.str_starts_with("untoggled",c1)) {
+				let u1x=split_string_once(c1,"untoggled");
+				/** @type {any} */
+				let ac=u1x[1][0].toLowerCase()+u1x[1].slice(1);
+				/** @type {keyof RemoveUnToggled<U>} */
+				let u1=ac;
+				untoggled[u1]=cc[1];
+				continue;
+			}
+		}
+		return [tog,untoggled,other];
 	}
 	/** @arg {ThumbnailOverlayNowPlayingData} x */
 	ThumbnailOverlayNowPlayingData(x) {
