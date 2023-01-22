@@ -1,3 +1,3 @@
-type D$GhostGrid={
+type D__GhostGrid={
 	rows: number;
 };

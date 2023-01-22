@@ -1,1 +1,1 @@
-type YtMixPlaylistFormat=`RD${string}`;
+type YtMixPlaylistFormat=`RD__{string}`;

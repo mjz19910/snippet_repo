@@ -1,1 +1,1 @@
-type R$ThumbnailOverlayResumePlayback={thumbnailOverlayResumePlaybackRenderer: D$ThumbnailOverlayResumePlayback;};
+type R$ThumbnailOverlayResumePlayback={thumbnailOverlayResumePlaybackRenderer: D__ThumbnailOverlayResumePlayback;};

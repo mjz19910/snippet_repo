@@ -1,10 +1,10 @@
 
-type D$TranscriptTrackSelectionEntity={
+type D__TranscriptTrackSelectionEntity={
 	key: string;
 	selectedTrackIndex: 0;
 	serializedParams: string;
 };
-type TranscriptTrackSelectionEntity={transcriptTrackSelectionEntity: D$TranscriptTrackSelectionEntity;};
+type TranscriptTrackSelectionEntity={transcriptTrackSelectionEntity: D__TranscriptTrackSelectionEntity;};
 type EntityMutationPayload=
 |OfflineabilityEntity
 |SubscriptionStateEntity

@@ -1,5 +1,5 @@
-type D$LiveChatAuthorBadge={
+type D__LiveChatAuthorBadge={
 	icon: T$Icon<"MODERATOR">;
 	tooltip: string;
-	accessibility: D$Accessibility;
+	accessibility: D__Accessibility;
 };

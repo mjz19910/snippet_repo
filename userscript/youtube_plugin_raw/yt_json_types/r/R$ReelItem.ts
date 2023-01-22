@@ -1,1 +1,1 @@
-type R$ReelItem={reelItemRenderer: D$ReelItem;};
+type R$ReelItem={reelItemRenderer: D__ReelItem;};

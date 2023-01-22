@@ -1,6 +1,6 @@
-type AD$AccountItem={
+type AD__AccountItem={
 	accountName: R$TextWithRuns;
-	accountPhoto: D$Thumbnail;
+	accountPhoto: D__Thumbnail;
 	isSelected: boolean;
 	isDisabled: boolean;
 	hasChannel: boolean;

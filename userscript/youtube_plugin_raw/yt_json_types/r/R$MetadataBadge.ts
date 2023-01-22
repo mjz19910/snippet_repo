@@ -1,1 +1,1 @@
-type R$MetadataBadge={metadataBadgeRenderer: D$MetadataBadge;};
+type R$MetadataBadge={metadataBadgeRenderer: D__MetadataBadge;};

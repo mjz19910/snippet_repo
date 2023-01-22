@@ -1,4 +1,4 @@
-type D$LikeApi={
+type D__LikeApi={
 	videoId: string;
 }|{
 	playlistId: PlaylistId;

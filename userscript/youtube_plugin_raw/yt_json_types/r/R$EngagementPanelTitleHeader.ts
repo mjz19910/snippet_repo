@@ -1,1 +1,1 @@
-type R$EngagementPanelTitleHeader={engagementPanelTitleHeaderRenderer: D$EngagementPanelTitleHeader;};
+type R$EngagementPanelTitleHeader={engagementPanelTitleHeaderRenderer: D__EngagementPanelTitleHeader;};

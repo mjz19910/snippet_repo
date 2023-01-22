@@ -1,1 +1,1 @@
-type R$EndScreenPlaylist={endScreenPlaylistRenderer: D$EndScreenPlaylist;};
+type R$EndScreenPlaylist={endScreenPlaylistRenderer: D__EndScreenPlaylist;};

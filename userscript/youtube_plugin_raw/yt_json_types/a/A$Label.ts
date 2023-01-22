@@ -1,1 +1,1 @@
-type D$Label={label: string;};
+type D__Label={label: string;};

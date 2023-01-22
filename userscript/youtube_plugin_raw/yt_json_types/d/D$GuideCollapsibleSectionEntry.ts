@@ -1,4 +1,4 @@
-type D$GuideCollapsibleSectionEntry={
+type D__GuideCollapsibleSectionEntry={
 	headerEntry: R$GuideEntry;
 	expanderIcon: T$Icon<"EXPAND">;
 	collapserIcon: T$Icon<"COLLAPSE">;

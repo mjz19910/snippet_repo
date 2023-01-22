@@ -1,4 +1,4 @@
-type D$PlayabilityStatus={
+type D__PlayabilityStatus={
 	status: "OK";
 	playableInEmbed: boolean;
 	offlineability: R$Button;

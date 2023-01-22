@@ -1,4 +1,4 @@
-type D$ThumbnailOverlayToggleButton={
+type D__ThumbnailOverlayToggleButton={
 	isToggled: false;
 	untoggledIcon: T$Icon<"WATCH_LATER">;
 	toggledIcon: T$Icon<"CHECK">;
@@ -6,8 +6,8 @@ type D$ThumbnailOverlayToggleButton={
 	toggledTooltip: "Added";
 	untoggledServiceEndpoint: PlaylistEditEndpoint;
 	toggledServiceEndpoint: PlaylistEditEndpoint;
-	untoggledAccessibility: D$Accessibility;
-	toggledAccessibility: D$Accessibility;
+	untoggledAccessibility: D__Accessibility;
+	toggledAccessibility: D__Accessibility;
 	trackingParams: string;
 }|{
 	untoggledIcon: T$Icon<"ADD_TO_QUEUE_TAIL">;
@@ -15,7 +15,7 @@ type D$ThumbnailOverlayToggleButton={
 	untoggledTooltip: "Add to queue";
 	toggledTooltip: "Added";
 	untoggledServiceEndpoint: E$T$SignalService<Signal$ClientSignal>;
-	untoggledAccessibility: D$Accessibility;
-	toggledAccessibility: D$Accessibility;
+	untoggledAccessibility: D__Accessibility;
+	toggledAccessibility: D__Accessibility;
 	trackingParams: string;
 };;

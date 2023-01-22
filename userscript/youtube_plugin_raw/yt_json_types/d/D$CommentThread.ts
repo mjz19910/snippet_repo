@@ -1,4 +1,4 @@
-type D$CommentThread={
+type D__CommentThread={
 	comment: R$Comment;
 	trackingParams: string;
 	renderingPriority: "RENDERING_PRIORITY_UNKNOWN";

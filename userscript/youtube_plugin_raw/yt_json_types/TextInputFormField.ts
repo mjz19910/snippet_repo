@@ -1,4 +1,4 @@
-type D$TextInputFormField={
+type D__TextInputFormField={
 	label: R$TextWithRuns;
 	maxCharacterLimit: 150;
 	placeholderText: string;

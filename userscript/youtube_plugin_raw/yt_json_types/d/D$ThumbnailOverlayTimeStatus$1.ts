@@ -1,4 +1,4 @@
-type D$ThumbnailOverlayTimeStatus$1={
+type D__ThumbnailOverlayTimeStatus$1={
 	text: R$SimpleText;
 	style: "DEFAULT";
 };

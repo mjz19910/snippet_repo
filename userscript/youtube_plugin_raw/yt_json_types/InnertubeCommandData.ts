@@ -1,1 +1,1 @@
-type D$InnertubeCommand=E$YpcGetOfflineUpsellEndpoint;
+type D__InnertubeCommand=E$YpcGetOfflineUpsellEndpoint;

@@ -1,6 +1,6 @@
-type D$Notification={
-	thumbnail: D$Thumbnail;
-	videoThumbnail: D$Thumbnail;
+type D__Notification={
+	thumbnail: D__Thumbnail;
+	videoThumbnail: D__Thumbnail;
 	shortMessage: R$SimpleText;
 	sentTimeText: R$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;

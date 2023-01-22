@@ -1,1 +1,1 @@
-type UpdateDateTextAction={updateDateTextAction: D$UpdateDateTextAction;};
+type UpdateDateTextAction={updateDateTextAction: D__UpdateDateTextAction;};

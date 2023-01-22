@@ -1,4 +1,4 @@
 type R$SimpleText={
-	accessibility?: D$Accessibility;
+	accessibility?: D__Accessibility;
 	simpleText: string;
 };

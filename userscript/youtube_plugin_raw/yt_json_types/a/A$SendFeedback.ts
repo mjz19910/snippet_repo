@@ -1,4 +1,4 @@
 type A$SendFeedback={
 	clickTrackingParams: string;
-	sendFeedbackAction: AD$SendFeedback;
+	sendFeedbackAction: AD__SendFeedback;
 };

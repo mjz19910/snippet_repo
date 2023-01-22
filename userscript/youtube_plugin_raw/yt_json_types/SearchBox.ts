@@ -1,4 +1,4 @@
-type D$SearchBox={
+type D__SearchBox={
 	endpoint: {};
 	searchButton: R$Button;
 	clearButton: R$Button;

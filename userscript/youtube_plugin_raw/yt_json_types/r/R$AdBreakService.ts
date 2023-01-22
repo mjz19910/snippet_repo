@@ -1,1 +1,1 @@
-type R$AdBreakService={adBreakServiceRenderer: D$AdBreakService;};
+type R$AdBreakService={adBreakServiceRenderer: D__AdBreakService;};

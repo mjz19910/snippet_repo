@@ -1,1 +1,1 @@
-type R$ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D$ExpandableVideoDescriptionBody;};
+type R$ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D__ExpandableVideoDescriptionBody;};

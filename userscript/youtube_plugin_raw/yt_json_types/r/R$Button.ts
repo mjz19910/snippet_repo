@@ -1,1 +1,1 @@
-type R$Button={buttonRenderer: D$Button;};
+type R$Button={buttonRenderer: D__Button;};

@@ -1,1 +1,1 @@
-type R$HeatSeekerItem=MapTemplate<"HEATSEEKER",D$HeatSeekerItemData>;
+type R$HeatSeekerItem=MapTemplate<"HEATSEEKER",D__HeatSeekerItemData>;

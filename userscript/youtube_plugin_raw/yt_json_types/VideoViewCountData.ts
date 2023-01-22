@@ -1,4 +1,4 @@
-type D$VideoViewCount={
+type D__VideoViewCount={
 	viewCount: R$SimpleText;
 	isLive?: boolean;
 	extraShortViewCount?: R$SimpleText;

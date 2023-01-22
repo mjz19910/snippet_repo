@@ -1,1 +1,1 @@
-type R$BrowseFeedActions={browseFeedActionsRenderer: D$BrowseFeedActions;};
+type R$BrowseFeedActions={browseFeedActionsRenderer: D__BrowseFeedActions;};

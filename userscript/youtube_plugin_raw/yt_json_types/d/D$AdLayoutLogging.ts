@@ -1,1 +1,1 @@
-type D$AdLayoutLogging={serializedAdServingDataEntry: string;};
+type D__AdLayoutLogging={serializedAdServingDataEntry: string;};

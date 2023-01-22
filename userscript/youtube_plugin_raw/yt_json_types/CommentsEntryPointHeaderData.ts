@@ -1,4 +1,4 @@
-type D$CommentsEntryPointHeader={
+type D__CommentsEntryPointHeader={
 	headerText: R$TextWithRuns;
 	onTap: E$CommandExecutorCommand;
 	trackingParams: string;

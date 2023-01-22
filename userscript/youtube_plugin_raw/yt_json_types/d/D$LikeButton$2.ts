@@ -1,5 +1,5 @@
-type D$LikeButton$2={
-	target: D$LikeApi;
+type D__LikeButton$2={
+	target: D__LikeApi;
 	likeStatus: "INDIFFERENT";
 	likeCount: 44008;
 	likeCountText: R$SimpleText;

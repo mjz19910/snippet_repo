@@ -1,1 +1,1 @@
-type D$PlaylistEdit={playlistId: "WL";params?: string; }&T$Actions$<PlaylistAction>;
+type D__PlaylistEdit={playlistId: "WL";params?: string; }&T$Actions$<PlaylistAction>;

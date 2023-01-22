@@ -1,1 +1,1 @@
-type D$UpdateViewershipAction={viewCount: R$VideoViewCount;};
+type D__UpdateViewershipAction={viewCount: R$VideoViewCount;};

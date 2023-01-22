@@ -1,5 +1,5 @@
 type E$LikeIndifferent={
 	status: "INDIFFERENT";
-	target: D$LikeApi;
+	target: D__LikeApi;
 	removeLikeParams?: string;
 };

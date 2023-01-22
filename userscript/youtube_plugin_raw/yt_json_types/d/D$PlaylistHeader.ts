@@ -1,11 +1,11 @@
-type D$PlaylistHeader={
+type D__PlaylistHeader={
 	playlistId: string;
 	title: R$TextWithRuns;
 	numVideosText: R$TextWithRuns;
 	descriptionText: {};
 	ownerText: R$TextWithRuns;
 	viewCountText: R$TextWithRuns;
-	shareData: D$YtShare;
+	shareData: D__YtShare;
 	isEditable: boolean;
 	privacy: string;
 	ownerEndpoint: E$Browse;

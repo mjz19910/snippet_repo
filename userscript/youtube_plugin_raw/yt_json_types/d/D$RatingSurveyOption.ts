@@ -1,4 +1,4 @@
-type D$RatingSurveyOption={
+type D__RatingSurveyOption={
 	responseText: R$TextWithRuns;
 	defaultStateIcon: T$Icon<"STAR_BORDER">;
 	onStateIcon: T$Icon<"STAR">;

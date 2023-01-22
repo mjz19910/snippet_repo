@@ -1,4 +1,4 @@
-type D$ProfileColumnUserInfo={
+type D__ProfileColumnUserInfo={
 	title: R$SimpleText;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 };

@@ -1,4 +1,4 @@
-type D$InvalidationId={
+type D__InvalidationId={
 	objectSource: number;
 	objectId: string;
 	topic: `chat~${string}~${number}`;

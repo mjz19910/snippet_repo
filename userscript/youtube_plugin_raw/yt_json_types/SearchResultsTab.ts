@@ -1,4 +1,4 @@
-type D$SearchResultsTab={
+type D__SearchResultsTab={
 	endpoint?: E$Search;
 	title: string;
 	selected?: boolean;

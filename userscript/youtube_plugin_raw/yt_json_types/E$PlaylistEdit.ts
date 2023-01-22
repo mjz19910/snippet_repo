@@ -1,1 +1,1 @@
-type E$PlaylistEdit=EB$Endpoint&{playlistEditEndpoint: D$PlaylistEdit;};
+type E$PlaylistEdit=EB$Endpoint&{playlistEditEndpoint: D__PlaylistEdit;};

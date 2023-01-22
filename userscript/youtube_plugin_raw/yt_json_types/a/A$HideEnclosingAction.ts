@@ -1,4 +1,4 @@
 type A$HideEnclosingAction={
 	clickTrackingParams: string;
-	hideEnclosingAction: D$HideEnclosingAction;
+	hideEnclosingAction: D__HideEnclosingAction;
 };

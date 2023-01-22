@@ -1,4 +1,4 @@
-type D$ToggleMenuServiceItem={
+type D__ToggleMenuServiceItem={
 	defaultText: R$TextWithRuns;
 	defaultIcon: T$Icon<"LIBRARY_ADD">;
 	defaultServiceEndpoint: E$LikeEndpoint;

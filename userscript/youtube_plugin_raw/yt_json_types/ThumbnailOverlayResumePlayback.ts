@@ -1,4 +1,4 @@
-type D$ThumbnailOverlayResumePlayback={percentDurationWatched: Percent;};type Percent=[
+type D__ThumbnailOverlayResumePlayback={percentDurationWatched: Percent;};type Percent=[
 	10|100,
 ][number];
 type tz<T extends (any[]|undefined)>=NonNullable<T>[number];

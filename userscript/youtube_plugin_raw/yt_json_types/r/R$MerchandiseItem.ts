@@ -1,1 +1,1 @@
-type R$MerchandiseItem={merchandiseItemRenderer: D$MerchandiseItem;};
+type R$MerchandiseItem={merchandiseItemRenderer: D__MerchandiseItem;};

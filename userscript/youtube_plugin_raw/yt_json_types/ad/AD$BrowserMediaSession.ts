@@ -1,1 +1,1 @@
-type AD$BrowserMediaSession={};
+type AD__BrowserMediaSession={};

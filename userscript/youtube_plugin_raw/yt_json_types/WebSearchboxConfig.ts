@@ -1,4 +1,4 @@
-type D$WebSearchboxConfig={
+type D__WebSearchboxConfig={
 	requestLanguage: "en";
 	requestDomain: "ca";
 	hasOnscreenKeyboard: false;

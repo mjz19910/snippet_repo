@@ -1,1 +1,1 @@
-type R$RatingSurveyOption={ratingSurveyOptionRenderer: D$RatingSurveyOption;};
+type R$RatingSurveyOption={ratingSurveyOptionRenderer: D__RatingSurveyOption;};

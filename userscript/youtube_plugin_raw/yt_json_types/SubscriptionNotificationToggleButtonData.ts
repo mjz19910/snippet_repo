@@ -1,4 +1,4 @@
-type D$SubscriptionNotificationToggleButton={
+type D__SubscriptionNotificationToggleButton={
 	states: [
 		{
 			stateId: 2;

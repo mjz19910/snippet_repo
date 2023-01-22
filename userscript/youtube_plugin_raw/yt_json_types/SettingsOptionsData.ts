@@ -1,1 +1,1 @@
-type D$SettingsOptions={options: SettingsOptionItem[];title: R$TextWithRuns;};
+type D__SettingsOptions={options: SettingsOptionItem[];title: R$TextWithRuns;};

@@ -1,4 +1,4 @@
-type D$EndscreenElement={
+type D__EndscreenElement={
 	style: "VIDEO"|"CHANNEL";
 	image: {},
 	left: number,

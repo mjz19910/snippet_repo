@@ -1,7 +1,7 @@
-type D$MerchandiseItem={
+type D__MerchandiseItem={
 	title: string;
 	description: string;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	price: `CA$${string}`;
 	vendorName: string;
 	trackingParams: string;

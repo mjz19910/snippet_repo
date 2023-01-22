@@ -1,15 +1,15 @@
-type D$VideoOwner={
-	thumbnail: D$Thumbnail;
+type D__VideoOwner={
+	thumbnail: D__Thumbnail;
 	title: R$TextWithRuns;
-	subscriptionButton: D$SubscriptionButton;
+	subscriptionButton: D__SubscriptionButton;
 	navigationEndpoint: E$Browse;
 	subscriberCountText: R$SimpleText;
 	trackingParams: string;
 	membershipButton: R$Button;
 }|{
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	title: R$TextWithRuns;
-	subscriptionButton: D$SubscriptionButton;
+	subscriptionButton: D__SubscriptionButton;
 	navigationEndpoint: E$Browse;
 	subscriberCountText: R$SimpleText;
 	trackingParams: string;

@@ -1,1 +1,1 @@
-type R$PlayerOverlayAutoplay={playerOverlayAutoplayRenderer: D$PlayerOverlayAutoplay;};
+type R$PlayerOverlayAutoplay={playerOverlayAutoplayRenderer: D__PlayerOverlayAutoplay;};

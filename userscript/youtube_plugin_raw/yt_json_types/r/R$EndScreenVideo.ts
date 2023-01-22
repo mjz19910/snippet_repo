@@ -1,1 +1,1 @@
-type R$EndScreenVideo={endScreenVideoRenderer: D$EndScreenVideo;};
+type R$EndScreenVideo={endScreenVideoRenderer: D__EndScreenVideo;};

@@ -1,1 +1,1 @@
-type D$ReloadContinuation={reloadContinuationData: ReloadContinuationDataInner;};
+type D__ReloadContinuation={reloadContinuationData: ReloadContinuationDataInner;};

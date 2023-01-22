@@ -1,4 +1,4 @@
-type D$VideoDescriptionHeader={
+type D__VideoDescriptionHeader={
 	title: R$TextWithRuns;
 	channel: R$SimpleText;
 	views: R$SimpleText;
@@ -6,5 +6,5 @@ type D$VideoDescriptionHeader={
 	factoid: R$Factoid[];
 	// ChannelNavigationEndpointWebCommandMetadata
 	channelNavigationEndpoint: E$Browse;
-	channelThumbnail: D$Thumbnail;
+	channelThumbnail: D__Thumbnail;
 };

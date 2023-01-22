@@ -1,1 +1,1 @@
-type R$VideoOwner={videoOwnerRenderer: D$VideoOwner;};
+type R$VideoOwner={videoOwnerRenderer: D__VideoOwner;};

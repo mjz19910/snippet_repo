@@ -1,4 +1,4 @@
-type D$PlaylistVideoList={
+type D__PlaylistVideoList={
 	playlistId: "WL";
 	sortFilterMenu: R$SortFilterSubMenu;
 	targetId: "WL";

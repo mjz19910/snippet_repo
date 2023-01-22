@@ -1,8 +1,8 @@
-type D$Microformat={
+type D__Microformat={
 	urlCanonical: string;
 	title: string;
 	description: string;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	siteName: string;
 	appName: string;
 	androidPackage: string;

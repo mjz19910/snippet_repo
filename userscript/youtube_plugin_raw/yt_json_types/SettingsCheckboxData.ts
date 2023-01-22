@@ -1,4 +1,4 @@
-type D$SettingsCheckbox={
+type D__SettingsCheckbox={
 	title: R$TextWithRuns;
 	helpText?: R$TextWithRuns;
 	enabled: boolean;

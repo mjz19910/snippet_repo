@@ -1,1 +1,1 @@
-type R$MusicShelf={musicShelfRenderer: D$MusicShelf;};
+type R$MusicShelf={musicShelfRenderer: D__MusicShelf;};

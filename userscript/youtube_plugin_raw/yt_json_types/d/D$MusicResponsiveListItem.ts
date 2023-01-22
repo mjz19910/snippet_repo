@@ -1,1 +1,1 @@
-type D$MusicResponsiveListItem={};
+type D__MusicResponsiveListItem={};

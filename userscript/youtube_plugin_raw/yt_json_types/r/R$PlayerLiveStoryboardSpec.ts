@@ -1,1 +1,1 @@
-type R$PlayerLiveStoryboardSpec={playerLiveStoryboardSpecRenderer: D$PlayerLiveStoryboardSpec;};
+type R$PlayerLiveStoryboardSpec={playerLiveStoryboardSpecRenderer: D__PlayerLiveStoryboardSpec;};

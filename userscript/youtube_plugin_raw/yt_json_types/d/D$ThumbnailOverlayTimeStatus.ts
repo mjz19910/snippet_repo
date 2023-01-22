@@ -1,1 +1,1 @@
-type D$ThumbnailOverlayTimeStatus=D$ThumbnailOverlayTimeStatus$1|D$ThumbnailOverlayTimeStatus$2|D$ThumbnailOverlayTimeStatus$3;
+type D__ThumbnailOverlayTimeStatus=D__ThumbnailOverlayTimeStatus$1|D__ThumbnailOverlayTimeStatus$2|D__ThumbnailOverlayTimeStatus$3;

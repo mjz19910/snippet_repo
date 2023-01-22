@@ -1,1 +1,1 @@
-type R$NotificationText={notificationTextRenderer: D$NotificationText;};
+type R$NotificationText={notificationTextRenderer: D__NotificationText;};

@@ -1,1 +1,1 @@
-type R$LiveChatAuthorBadge={liveChatAuthorBadgeRenderer: D$LiveChatAuthorBadge;};
+type R$LiveChatAuthorBadge={liveChatAuthorBadgeRenderer: D__LiveChatAuthorBadge;};

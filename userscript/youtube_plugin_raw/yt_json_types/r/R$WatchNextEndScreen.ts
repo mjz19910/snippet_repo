@@ -1,1 +1,1 @@
-type R$WatchNextEndScreen={watchNextEndScreenRenderer: D$WatchNextEndScreen;};
+type R$WatchNextEndScreen={watchNextEndScreenRenderer: D__WatchNextEndScreen;};

@@ -1,4 +1,4 @@
-type D$Heatmap={
+type D__Heatmap={
 	maxHeightDp: 40;
 	minHeightDp: 4;
 	showHideAnimationDurationMillis: 200;

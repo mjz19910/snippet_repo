@@ -3,5 +3,5 @@ type E$UndoFeedback={
 	commandMetadata: {
 		webCommandMetadata: {};
 	};
-	undoFeedbackEndpoint: D$UndoFeedback;
+	undoFeedbackEndpoint: D__UndoFeedback;
 };

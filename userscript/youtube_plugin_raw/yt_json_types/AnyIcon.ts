@@ -1,10 +1,10 @@
 type AnyIcon=NonNullable<[
 	T$Icon<AnyIconStr>,
-	D$Button['icon'],
-	D$InfoRow['expandIcon'],
-	D$TopicLink['callToActionIcon'],
+	D__Button['icon'],
+	D__InfoRow['expandIcon'],
+	D__TopicLink['callToActionIcon'],
 	T$Icon<"LIBRARY_REMOVE">,
-	D$ThumbnailOverlayHoverText['icon'],
+	D__ThumbnailOverlayHoverText['icon'],
 ][number]>;
 type MenuServiceIcon=Extract<[
 	{icon: T$Icon<"FLAG">;},

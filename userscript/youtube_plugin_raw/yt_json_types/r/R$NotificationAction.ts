@@ -1,1 +1,1 @@
-type R$NotificationAction={notificationActionRenderer: D$NotificationAction;};
+type R$NotificationAction={notificationActionRenderer: D__NotificationAction;};

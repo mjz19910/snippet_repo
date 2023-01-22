@@ -1,4 +1,4 @@
-type D$VideoPrimaryInfo={
+type D__VideoPrimaryInfo={
 	title: R$TextWithRuns;
 	viewCount: R$VideoViewCount;
 	videoActions: R$Menu;

@@ -1,7 +1,7 @@
-type D$CommentSimplebox={
+type D__CommentSimplebox={
 	submitButton: R$Button;
 	cancelButton: R$Button;
-	authorThumbnail: D$Thumbnail;
+	authorThumbnail: D__Thumbnail;
 	placeholderText: R$TextWithRuns;
 	trackingParams: string;
 	avatarSize: "SIMPLEBOX_AVATAR_SIZE_TYPE_DEFAULT";

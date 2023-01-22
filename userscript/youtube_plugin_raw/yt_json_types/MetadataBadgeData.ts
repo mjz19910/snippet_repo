@@ -1,9 +1,9 @@
-type D$MetadataBadge={
+type D__MetadataBadge={
 	icon: T$Icon<"CHECK_CIRCLE_THICK">;
 	style: "BADGE_STYLE_TYPE_VERIFIED";
 	tooltip: string;
 	trackingParams: string;
-	accessibilityData: D$Label;
+	accessibilityData: D__Label;
 };
 type NextMakeNum_2<T>=T extends `${infer C extends number}`?`-${NextMakeNum_3<[],C>}` extends `${infer V extends number}`?V:never:never;
 type NextMakeNum_3<U extends any[],T>=[any,...U]['length'] extends T?[any,any,...U]['length']:NextMakeNum_3<[any,...U],T>;

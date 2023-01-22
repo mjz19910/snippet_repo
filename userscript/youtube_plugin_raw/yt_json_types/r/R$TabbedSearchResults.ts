@@ -1,1 +1,1 @@
-type R$TabbedSearchResults={tabbedSearchResultsRenderer: D$TabbedSearchResults;};
+type R$TabbedSearchResults={tabbedSearchResultsRenderer: D__TabbedSearchResults;};

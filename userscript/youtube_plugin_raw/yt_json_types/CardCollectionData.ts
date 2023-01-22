@@ -1,4 +1,4 @@
-type D$CardCollection={
+type D__CardCollection={
 	cards: R$Card[];
 	headerText: R$TextWithRuns;
 	icon: R$InfoCardIcon;

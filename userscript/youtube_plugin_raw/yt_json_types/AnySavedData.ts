@@ -1,1 +1,1 @@
-type D$AnySaved={[U in SavedDataUrlTypes]?: SavedDataItem;};
+type D__AnySaved={[U in SavedDataUrlTypes]?: SavedDataItem;};

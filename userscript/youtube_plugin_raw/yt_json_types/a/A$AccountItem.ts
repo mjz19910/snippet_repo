@@ -1,1 +1,1 @@
-type A$AccountItem={accountItem: AD$AccountItem;};
+type A$AccountItem={accountItem: AD__AccountItem;};

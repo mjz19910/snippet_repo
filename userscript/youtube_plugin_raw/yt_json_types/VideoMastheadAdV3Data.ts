@@ -1,1 +1,1 @@
-type D$VideoMastheadAdV3={};
+type D__VideoMastheadAdV3={};

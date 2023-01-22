@@ -1,4 +1,4 @@
-type D$LiveChatReplayContinuation={
+type D__LiveChatReplayContinuation={
 	timeUntilLastMessageMsec: number;
 	continuation: string;
 };

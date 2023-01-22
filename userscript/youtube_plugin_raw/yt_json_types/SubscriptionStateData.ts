@@ -1,4 +1,4 @@
-type D$SubscriptionState={
+type D__SubscriptionState={
 	key: string;
 	subscribed: true;
 };

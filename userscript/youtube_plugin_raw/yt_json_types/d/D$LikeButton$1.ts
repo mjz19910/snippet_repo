@@ -1,5 +1,5 @@
-type D$LikeButton$1={
-	target: D$LikeApi;
+type D__LikeButton$1={
+	target: D__LikeApi;
 	likeStatus: "INDIFFERENT";
 	trackingParams: string;
 	likesAllowed: boolean;

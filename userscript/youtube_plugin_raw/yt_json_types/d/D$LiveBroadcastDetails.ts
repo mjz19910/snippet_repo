@@ -1,4 +1,4 @@
-type D$LiveBroadcastDetails={
+type D__LiveBroadcastDetails={
 	isLiveNow: true;
 	startTimestamp: string;
 }|{

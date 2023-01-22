@@ -1,1 +1,1 @@
-type R$TwoColumnWatchNextResults={twoColumnWatchNextResults: D$TwoColumnWatchNextResults;};
+type R$TwoColumnWatchNextResults={twoColumnWatchNextResults: D__TwoColumnWatchNextResults;};

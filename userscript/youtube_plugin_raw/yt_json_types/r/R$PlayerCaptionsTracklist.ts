@@ -1,1 +1,1 @@
-type R$PlayerCaptionsTracklist={playerCaptionsTracklistRenderer: D$PlayerCaptionsTracklist;};
+type R$PlayerCaptionsTracklist={playerCaptionsTracklistRenderer: D__PlayerCaptionsTracklist;};

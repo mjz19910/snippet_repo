@@ -1,4 +1,4 @@
-type D$InfoRow={
+type D__InfoRow={
 	title: R$SimpleText;
 	defaultMetadata?: R$SimpleText;
 	expandedMetadata?: R$SimpleText;

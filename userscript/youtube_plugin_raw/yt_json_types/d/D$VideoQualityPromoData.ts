@@ -1,4 +1,4 @@
-type D$VideoQualityPromo={
+type D__VideoQualityPromo={
 	triggerCriteria: TriggerCriteria;
 	text: R$TextWithRuns;
 	endpoint: E$UrlEndpoint;

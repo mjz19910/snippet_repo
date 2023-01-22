@@ -92,13 +92,13 @@ export class Snippet_0_tmp {
 			debugger;
 		}
 	}
-	/** @arg {D$Accessibility} x */
+	/** @arg {D__Accessibility} x */
 	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
 		const {accessibilityData,...y}=x; this.g(y);
 		this.AccessibilityData(accessibilityData);
 	}
-	/** @arg {D$Label} x */
+	/** @arg {D__Label} x */
 	AccessibilityData(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);
@@ -415,15 +415,15 @@ export class Snippet_0_tmp {
 		this.save_keys(`[${cf}Renderer]`,x);
 		f.call(this,this.w(x));
 	}
-	/** @arg {D$NotificationAction} x */
-	D$NotificationAction(x) {x;}
+	/** @arg {D__NotificationAction} x */
+	D__NotificationAction(x) {x;}
 	/** @protected @template {{}} T @arg {T$R$SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListRendererTemplate(x) {
 		const cf="SectionListRendererTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.SectionListDataTemplate(this.w(x));
 	}
-	/** @private @template {{}} T @arg {T$D$SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
+	/** @private @template {{}} T @arg {T$D__SectionList<T,"comment-item-section", "engagement-panel-comments-section">} x */
 	SectionListDataTemplate(x) {
 		this.save_keys(`[SectionListDataTemplate<"comment-item-section","engagement-panel-comments-section">]`,x);
 		this.SectionListItemTemplate(this.w(x));
@@ -436,7 +436,7 @@ export class Snippet_0_tmp {
 			if(v!=="comment-item-section-engagement-panel-comments-section") debugger;
 		});
 	}
-	/** @template CT,T,U @arg {T$D$ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
+	/** @template CT,T,U @arg {T$D__ItemSection<CT,T,U>} x @arg {(this:this,x:[CT[],T,U])=>void} f */
 	ItemSectionDataTemplate(x,f) {
 		const {contents,sectionIdentifier,targetId,trackingParams,...y}=x; this.g(y); // ! #destructure
 		f.call(this,[contents,sectionIdentifier,targetId]);
@@ -449,9 +449,9 @@ export class Snippet_0_tmp {
 }
 class ND extends Snippet_0_tmp {
 	/** @private @arg {R$NotificationAction} x */
-	R$New(x) {this.H$R$("NotificationAction",x,this.D$NotificationAction);}
-	/** @pub @arg {D$NotificationAction} x */
-	D$NewData(x) {x;}
+	R$New(x) {this.H$R$("NotificationAction",x,this.D__NotificationAction);}
+	/** @pub @arg {D__NotificationAction} x */
+	D__NewData(x) {x;}
 	/** @pub @arg {E$T$SignalService<{}>} x */
 	E$NewEndpoint(x) {x;}
 	use() {

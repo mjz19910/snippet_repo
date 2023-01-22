@@ -1,3 +1,3 @@
-type D$ChannelHeaderLinks={
+type D__ChannelHeaderLinks={
 	primaryLinks: PrimaryLinkItem[];
 };

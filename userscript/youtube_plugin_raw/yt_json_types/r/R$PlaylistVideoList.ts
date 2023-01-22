@@ -1,1 +1,1 @@
-type R$PlaylistVideoList={playlistVideoListRenderer: D$PlaylistVideoList;};
+type R$PlaylistVideoList={playlistVideoListRenderer: D__PlaylistVideoList;};

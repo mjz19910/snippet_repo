@@ -1,1 +1,1 @@
-type D$TimedContinuation={timedContinuationData: TimedContinuationDataInner;};
+type D__TimedContinuation={timedContinuationData: TimedContinuationDataInner;};

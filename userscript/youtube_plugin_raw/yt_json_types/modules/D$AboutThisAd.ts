@@ -1,1 +1,1 @@
-type D$AboutThisAd={url: UrlWrappedValue;};
+type D__AboutThisAd={url: UrlWrappedValue;};

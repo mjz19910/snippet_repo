@@ -1,6 +1,6 @@
-type D$CinematicContainer={
+type D__CinematicContainer={
 	backgroundImageConfig?: R$ThumbnailsList;
-	gradientColorConfig: D$GradientColorConfig;
+	gradientColorConfig: D__GradientColorConfig;
 	presentationStyle?: "CINEMATIC_CONTAINER_PRESENTATION_STYLE_DYNAMIC_BLURRED";
 	config: {};
 };

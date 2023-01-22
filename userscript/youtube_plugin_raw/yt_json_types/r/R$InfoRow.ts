@@ -1,1 +1,1 @@
-type R$InfoRow={infoRowRenderer: D$InfoRow;};
+type R$InfoRow={infoRowRenderer: D__InfoRow;};

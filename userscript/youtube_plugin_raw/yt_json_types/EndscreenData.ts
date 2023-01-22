@@ -1,4 +1,4 @@
-type D$Endscreen={
+type D__Endscreen={
 	elements: R$EndscreenElement[];
 	startMs?: number;
 };

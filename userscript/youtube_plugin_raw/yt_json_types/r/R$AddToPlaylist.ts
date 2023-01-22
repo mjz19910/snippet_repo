@@ -1,1 +1,1 @@
-type R$AddToPlaylist={addToPlaylistRenderer: D$AddToPlaylist;};
+type R$AddToPlaylist={addToPlaylistRenderer: D__AddToPlaylist;};

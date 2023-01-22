@@ -1,4 +1,4 @@
-type D$VideoDetails={
+type D__VideoDetails={
 	videoId: string;
 	channelId: string;
 	author: string;

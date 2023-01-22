@@ -1,1 +1,1 @@
-type R$ThumbnailOverlayHoverText={thumbnailOverlayHoverTextRenderer: D$ThumbnailOverlayHoverText;};
+type R$ThumbnailOverlayHoverText={thumbnailOverlayHoverTextRenderer: D__ThumbnailOverlayHoverText;};

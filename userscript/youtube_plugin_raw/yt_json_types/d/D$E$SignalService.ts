@@ -1,1 +1,1 @@
-type D$E$SignalService=Signal$ClientSignal|Signal$GetAccountMenu;
+type D__E$SignalService=Signal$ClientSignal|Signal$GetAccountMenu;

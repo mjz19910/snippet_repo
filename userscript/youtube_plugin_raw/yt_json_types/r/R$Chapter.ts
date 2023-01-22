@@ -1,1 +1,1 @@
-type R$Chapter={chapterRenderer: D$Chapter;};
+type R$Chapter={chapterRenderer: D__Chapter;};

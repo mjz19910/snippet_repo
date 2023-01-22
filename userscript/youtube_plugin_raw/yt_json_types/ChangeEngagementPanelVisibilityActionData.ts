@@ -1,4 +1,4 @@
-type D$ChangeEngagementPanelVisibilityAction={
+type D__ChangeEngagementPanelVisibilityAction={
 	targetId: "engagement-panel-comments-section";
 	visibility: "ENGAGEMENT_PANEL_VISIBILITY_EXPANDED";
 }|{

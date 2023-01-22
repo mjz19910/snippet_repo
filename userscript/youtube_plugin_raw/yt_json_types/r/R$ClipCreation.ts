@@ -1,1 +1,1 @@
-type R$ClipCreation={clipCreationRenderer: D$ClipCreation;};
+type R$ClipCreation={clipCreationRenderer: D__ClipCreation;};

@@ -1,3 +1,3 @@
-type D$GuideEntryData={
-	guideEntryId: `RD${string}`|`UC${string}`;
+type D__GuideEntryData={
+	guideEntryId: `RD__{string}`|`UC${string}`;
 };

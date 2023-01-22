@@ -1,1 +1,1 @@
-type D$CommentActionButtons={};
+type D__CommentActionButtons={};

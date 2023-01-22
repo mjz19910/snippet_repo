@@ -1,7 +1,7 @@
-type D$MusicShelf=T$AR$Contents<R$MusicResponsiveListItem>&{
+type D__MusicShelf=T$AR$Contents<R$MusicResponsiveListItem>&{
 	title: R$TextWithRuns;
 	trackingParams: string;
-	continuations: D$ReloadContinuation[];
+	continuations: D__ReloadContinuation[];
 	shelfDivider: R$MusicShelfDivider;
 	autoReloadWhenEmpty: true;
 	bottomButton: R$Button;

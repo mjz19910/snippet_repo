@@ -1,1 +1,1 @@
-type R$VideoDescriptionMusicSection={videoDescriptionMusicSectionRenderer: D$VideoDescriptionMusicSection;};
+type R$VideoDescriptionMusicSection={videoDescriptionMusicSectionRenderer: D__VideoDescriptionMusicSection;};

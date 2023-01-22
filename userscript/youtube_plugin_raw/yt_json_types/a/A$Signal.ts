@@ -1,4 +1,4 @@
 type A$Signal={
 	clickTrackingParams: string;
-	signalAction: D$SignalAction;
+	signalAction: D__SignalAction;
 };

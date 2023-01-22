@@ -1,1 +1,1 @@
-type D$GenericContinuation={continuation: string;};
+type D__GenericContinuation={continuation: string;};

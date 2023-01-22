@@ -1,1 +1,1 @@
-type R$MenuNavigationItem={menuNavigationItemRenderer: D$MenuNavigationItem;};
+type R$MenuNavigationItem={menuNavigationItemRenderer: D__MenuNavigationItem;};

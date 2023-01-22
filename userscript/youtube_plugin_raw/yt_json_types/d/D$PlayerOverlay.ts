@@ -1,4 +1,4 @@
-type D$PlayerOverlay={
+type D__PlayerOverlay={
 	endScreen: R$WatchNextEndScreen;
 	shareButton: R$Button;
 	addToMenu: R$Menu;

@@ -1,1 +1,1 @@
-type UpdateViewershipAction={updateViewershipAction: D$UpdateViewershipAction;};
+type UpdateViewershipAction={updateViewershipAction: D__UpdateViewershipAction;};

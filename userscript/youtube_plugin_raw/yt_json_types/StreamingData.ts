@@ -1,5 +1,5 @@
-type D$StreamingData={
+type D__StreamingData={
 	expiresInSeconds: `${number}`;
-	adaptiveFormats: D$AdaptiveFormatItem[];
+	adaptiveFormats: D__AdaptiveFormatItem[];
 	formats: FormatItem[];
 };

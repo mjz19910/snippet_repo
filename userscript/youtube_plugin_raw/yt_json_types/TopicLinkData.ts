@@ -1,6 +1,6 @@
-type D$TopicLink={
+type D__TopicLink={
 	title: R$SimpleText;
-	thumbnailDetails: D$Thumbnail;
+	thumbnailDetails: D__Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata
 	endpoint: E$Browse;
 	callToActionIcon: T$Icon<"CHEVRON_RIGHT">;

@@ -1,1 +1,1 @@
-type D$Accessibility={accessibilityData: D$Label;};
+type D__Accessibility={accessibilityData: D__Label;};

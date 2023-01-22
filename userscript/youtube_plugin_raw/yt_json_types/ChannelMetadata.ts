@@ -1,11 +1,11 @@
-type D$ChannelMetadata={
+type D__ChannelMetadata={
 	title: "CppCon";
 	description: string;
 	rssUrl: string;
 	externalId: "UCMlGfpWw-RUdWX_JbLCukXg";
 	keywords: string;
 	ownerUrls: [`http://www.youtube.com/@${string}`];
-	avatar: D$Thumbnail;
+	avatar: D__Thumbnail;
 	channelUrl: string;
 	isFamilySafe: true;
 	availableCountryCodes: string[];

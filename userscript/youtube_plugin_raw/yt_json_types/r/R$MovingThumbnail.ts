@@ -1,1 +1,1 @@
-type R$MovingThumbnail={movingThumbnailRenderer: D$MovingThumbnail;};
+type R$MovingThumbnail={movingThumbnailRenderer: D__MovingThumbnail;};

@@ -1,4 +1,4 @@
-type D$ReelShelf={
+type D__ReelShelf={
 	title: R$TextWithRuns;
 	items: R$ReelItem[];
 	trackingParams: string;

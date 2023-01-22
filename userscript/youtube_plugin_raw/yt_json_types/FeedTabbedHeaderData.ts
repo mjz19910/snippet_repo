@@ -1,1 +1,1 @@
-type D$FeedTabbedHeader={title: R$TextWithRuns;};
+type D__FeedTabbedHeader={title: R$TextWithRuns;};

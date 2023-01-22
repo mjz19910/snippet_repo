@@ -1,1 +1,1 @@
-type R$AboutThisAd={aboutThisAdRenderer: D$AboutThisAd;};
+type R$AboutThisAd={aboutThisAdRenderer: D__AboutThisAd;};

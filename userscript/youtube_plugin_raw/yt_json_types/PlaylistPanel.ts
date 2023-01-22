@@ -1,11 +1,11 @@
-type D$PlaylistPanel={
+type D__PlaylistPanel={
 	title: "YouTube Mix";
 	contents: G$PlaylistPanel$contents[];
 	currentIndex?: number;
-	playlistId: `RD${string}`;
+	playlistId: `RD__{string}`;
 	ownerName?: R$TextWithRuns;
 	isInfinite: true;
-	continuations?: D$NextRadioContinuation[];
+	continuations?: D__NextRadioContinuation[];
 	shortBylineText: R$TextWithRuns;
 	longBylineText?: R$TextWithRuns;
 	trackingParams: string;

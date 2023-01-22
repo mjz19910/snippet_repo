@@ -1,4 +1,4 @@
-type D$SubscriptionButton={
+type D__SubscriptionButton={
 	type: "FREE";
 	subscribed?: boolean;
 };

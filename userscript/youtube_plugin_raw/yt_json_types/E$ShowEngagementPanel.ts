@@ -1,4 +1,4 @@
 type E$ShowEngagementPanel={
 	clickTrackingParams: string;
-	showEngagementPanelEndpoint: D$ShowEngagementPanel;
+	showEngagementPanelEndpoint: D__ShowEngagementPanel;
 };

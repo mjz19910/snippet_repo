@@ -1,1 +1,1 @@
-type D$Browse$Id<T>={browseId: T;};
+type D__Browse$Id<T>={browseId: T;};

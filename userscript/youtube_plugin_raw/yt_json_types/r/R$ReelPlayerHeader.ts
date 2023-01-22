@@ -1,1 +1,1 @@
-type R$ReelPlayerHeader={reelPlayerHeaderRenderer: D$ReelPlayerHeader;};
+type R$ReelPlayerHeader={reelPlayerHeaderRenderer: D__ReelPlayerHeader;};

@@ -1,1 +1,1 @@
-type R$SourcePivotHeader={sourcePivotHeaderRenderer: D$SourcePivotHeader;};
+type R$SourcePivotHeader={sourcePivotHeaderRenderer: D__SourcePivotHeader;};

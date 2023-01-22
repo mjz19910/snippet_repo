@@ -1,4 +1,4 @@
-type D$MenuServiceItem<T extends string,EndpointItems>={
+type D__MenuServiceItem<T extends string,EndpointItems>={
 	text: G$Text;
 	icon?: T$Icon<T>;
 	serviceEndpoint: G$MenuServiceEndpointItems<EndpointItems>;

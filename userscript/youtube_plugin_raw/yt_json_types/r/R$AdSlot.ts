@@ -1,1 +1,1 @@
-type R$AdSlot={adSlotRenderer: D$AdSlot;};
+type R$AdSlot={adSlotRenderer: D__AdSlot;};

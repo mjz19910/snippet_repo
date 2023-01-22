@@ -1,1 +1,1 @@
-type R$AdsEngagementPanelContent={adsEngagementPanelContentRenderer: D$AdsEngagementPanelContent;};
+type R$AdsEngagementPanelContent={adsEngagementPanelContentRenderer: D__AdsEngagementPanelContent;};

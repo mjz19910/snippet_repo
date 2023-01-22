@@ -1,4 +1,4 @@
-type D$DesktopWatchAds={
+type D__DesktopWatchAds={
 	gutParams: GutParams;
 	playerAdParams: PlayerAdParams;
 	showCompanion: true;

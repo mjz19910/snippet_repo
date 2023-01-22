@@ -1,1 +1,1 @@
-type D$ResetChannelUnreadCount={};
+type D__ResetChannelUnreadCount={};

@@ -1,3 +1,3 @@
-type D$WebPrefetch={
+type D__WebPrefetch={
 	navigationEndpoints: E$WatchEndpoint[];
 };

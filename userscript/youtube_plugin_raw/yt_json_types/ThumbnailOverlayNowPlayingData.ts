@@ -1,1 +1,1 @@
-type D$ThumbnailOverlayNowPlaying={text: R$TextWithRuns;};
+type D__ThumbnailOverlayNowPlaying={text: R$TextWithRuns;};

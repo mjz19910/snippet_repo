@@ -1,1 +1,1 @@
-type G$Response$=D$ReelItemWatch|R$Channel|R$Channel|R$Browse|R$Channel|R$Page;
+type G$Response$=D__ReelItemWatch|R$Channel|R$Channel|R$Browse|R$Channel|R$Page;

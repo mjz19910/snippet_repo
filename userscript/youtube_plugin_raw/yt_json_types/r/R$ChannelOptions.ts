@@ -1,1 +1,1 @@
-type R$ChannelOptions={channelOptionsRenderer: D$ChannelOptions;};
+type R$ChannelOptions={channelOptionsRenderer: D__ChannelOptions;};

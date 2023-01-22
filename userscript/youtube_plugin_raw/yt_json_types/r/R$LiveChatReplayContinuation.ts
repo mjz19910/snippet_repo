@@ -1,1 +1,1 @@
-type R$LiveChatReplayContinuation={liveChatReplayContinuationData: D$LiveChatReplayContinuation;};
+type R$LiveChatReplayContinuation={liveChatReplayContinuationData: D__LiveChatReplayContinuation;};

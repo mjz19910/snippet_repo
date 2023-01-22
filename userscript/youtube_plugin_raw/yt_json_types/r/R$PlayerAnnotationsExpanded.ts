@@ -1,1 +1,1 @@
-type R$PlayerAnnotationsExpanded={playerAnnotationsExpandedRenderer: D$PlayerAnnotationsExpanded;};
+type R$PlayerAnnotationsExpanded={playerAnnotationsExpandedRenderer: D__PlayerAnnotationsExpanded;};

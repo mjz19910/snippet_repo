@@ -1,1 +1,1 @@
-type R$AdHoverTextButton={adHoverTextButtonRenderer: D$AdHoverTextButton;};
+type R$AdHoverTextButton={adHoverTextButtonRenderer: D__AdHoverTextButton;};

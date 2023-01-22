@@ -4,7 +4,7 @@ type ModifiedSetItem={
 	previousButtonVideo?: WatchPlaylistEndpoint;
 };
 type E$WatchPlaylist={
-	playlistId: `RD${string}`;
+	playlistId: `RD__{string}`;
 	index: 13;
 	params: string;
 };

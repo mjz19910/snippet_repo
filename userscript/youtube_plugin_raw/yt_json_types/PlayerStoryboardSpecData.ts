@@ -1,3 +1,3 @@
-type D$PlayerStoryboardSpec={
+type D__PlayerStoryboardSpec={
 	spec: string;
 };

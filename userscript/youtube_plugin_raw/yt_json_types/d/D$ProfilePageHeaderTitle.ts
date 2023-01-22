@@ -1,1 +1,1 @@
-type D$ProfilePageHeaderTitle={title: T$Content<string>;};
+type D__ProfilePageHeaderTitle={title: T$Content<string>;};

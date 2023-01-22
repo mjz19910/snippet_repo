@@ -1,1 +1,1 @@
-type R$UnifiedSharePanel={unifiedSharePanelRenderer: D$UnifiedSharePanel;};
+type R$UnifiedSharePanel={unifiedSharePanelRenderer: D__UnifiedSharePanel;};

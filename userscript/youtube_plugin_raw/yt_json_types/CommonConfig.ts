@@ -1,1 +1,1 @@
-type CommonConfig={commonConfig: D$CommonConfig;};
+type CommonConfig={commonConfig: D__CommonConfig;};

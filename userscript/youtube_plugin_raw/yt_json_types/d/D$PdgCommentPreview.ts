@@ -1,6 +1,6 @@
-type D$PdgCommentPreview={
+type D__PdgCommentPreview={
 	title: R$TextWithRuns;
-	authorThumbnail: D$Thumbnail;
+	authorThumbnail: D__Thumbnail;
 	authorText: R$SimpleText;
 	commentOptionRenderers: R$PdgCommentOption[];
 	defaultCommentText: R$TextWithRuns;

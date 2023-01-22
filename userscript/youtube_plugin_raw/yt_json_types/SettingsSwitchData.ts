@@ -1,4 +1,4 @@
-type D$SettingsSwitch={
+type D__SettingsSwitch={
 	title: R$TextWithRuns;
 	subtitle: R$TextWithRuns;
 	enabled: boolean;
@@ -6,6 +6,6 @@ type D$SettingsSwitch={
 	disableServiceEndpoint: {};
 	id: "SETTINGS_OPTIONS_ID_TYPE_PUSH_NOTIFICATIONS_ENABLED";
 	text: R$TextWithRuns;
-	thumbnail?: D$Thumbnail;
+	thumbnail?: D__Thumbnail;
 	trackingParams: string;
 };

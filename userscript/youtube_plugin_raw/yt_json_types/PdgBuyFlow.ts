@@ -1,4 +1,4 @@
-type D$PdgBuyFlow={
+type D__PdgBuyFlow={
 	header: R$PdgBuyFlowHeader;
 	content: R$SuperVodBuyFlowContent[];
 	trackingParams: string;

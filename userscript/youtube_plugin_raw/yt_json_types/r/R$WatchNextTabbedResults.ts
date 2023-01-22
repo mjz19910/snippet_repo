@@ -1,1 +1,1 @@
-type R$WatchNextTabbedResults={watchNextTabbedResultsRenderer: D$WatchNextTabbedResults;};
+type R$WatchNextTabbedResults={watchNextTabbedResultsRenderer: D__WatchNextTabbedResults;};

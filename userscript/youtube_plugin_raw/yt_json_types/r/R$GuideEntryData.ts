@@ -1,1 +1,1 @@
-type R$GuideEntryData={guideEntryData: D$GuideEntryData;};
+type R$GuideEntryData={guideEntryData: D__GuideEntryData;};

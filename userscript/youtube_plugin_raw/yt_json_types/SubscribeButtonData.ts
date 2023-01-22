@@ -1,4 +1,4 @@
-type D$SubscribeButton={
+type D__SubscribeButton={
 	buttonText: R$TextWithRuns;
 	subscribed: false;
 	enabled: true;
@@ -10,8 +10,8 @@ type D$SubscribeButton={
 	trackingParams: string;
 	unsubscribeButtonText: R$TextWithRuns;
 	serviceEndpoints?: (E$SubscribeEndpoint|SubscribeButtonData$SignalServiceEndpoint)[];
-	subscribeAccessibility: D$Accessibility;
-	unsubscribeAccessibility: D$Accessibility;
+	subscribeAccessibility: D__Accessibility;
+	unsubscribeAccessibility: D__Accessibility;
 	notificationPreferenceButton?: R$SubscriptionNotificationToggleButton;
 	targetId: "watch-subscribe";
 	subscribedEntityKey: string;
@@ -29,8 +29,8 @@ type D$SubscribeButton={
 	trackingParams: string;
 	unsubscribeButtonText: R$TextWithRuns;
 	serviceEndpoints: E$SubscribeEndpoint[];
-	subscribeAccessibility: D$Accessibility;
-	unsubscribeAccessibility: D$Accessibility;
+	subscribeAccessibility: D__Accessibility;
+	unsubscribeAccessibility: D__Accessibility;
 };
 type SubscribeButtonData$SignalServiceEndpoint={
 	clickTrackingParams: string;

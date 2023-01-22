@@ -1,4 +1,4 @@
-type D$VoiceSearchDialog={
+type D__VoiceSearchDialog={
 	placeholderHeader: R$TextWithRuns;
 	promptHeader: R$TextWithRuns;
 	exampleQuery1: R$TextWithRuns;

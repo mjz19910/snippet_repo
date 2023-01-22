@@ -1,6 +1,6 @@
-type D$Comment={
+type D__Comment={
 	authorText: R$TextWithRuns;
-	authorThumbnail: D$Thumbnail;
+	authorThumbnail: D__Thumbnail;
 	authorEndpoint: {};
 	contentText: R$TextWithRuns;
 	publishedTimeText: R$TextWithRuns;
@@ -9,7 +9,7 @@ type D$Comment={
 	commentId: string;
 	actionButtons: R$CommentActionButtons;
 	authorIsChannelOwner: boolean;
-	currentUserReplyThumbnail: D$Thumbnail;
+	currentUserReplyThumbnail: D__Thumbnail;
 	voteStatus: "INDIFFERENT";
 	trackingParams: string;
 	voteCount: R$TextWithRuns;

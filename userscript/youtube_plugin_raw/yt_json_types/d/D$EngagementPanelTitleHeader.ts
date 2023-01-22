@@ -1,4 +1,4 @@
-type D$EngagementPanelTitleHeader={
+type D__EngagementPanelTitleHeader={
 	title: G$Text;
 	contextualInfo?: R$TextWithRuns;
 	informationButton?: R$Button;

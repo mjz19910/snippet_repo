@@ -1,1 +1,1 @@
-type R$AlertWithButton={alertWithButtonRenderer: D$AlertWithButton;};
+type R$AlertWithButton={alertWithButtonRenderer: D__AlertWithButton;};

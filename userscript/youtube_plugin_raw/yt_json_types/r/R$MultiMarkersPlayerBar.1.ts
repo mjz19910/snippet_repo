@@ -1,1 +1,1 @@
-type R$MultiMarkersPlayerBar={multiMarkersPlayerBarRenderer: D$MultiMarkersPlayerBar;};
+type R$MultiMarkersPlayerBar={multiMarkersPlayerBarRenderer: D__MultiMarkersPlayerBar;};

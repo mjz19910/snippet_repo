@@ -1,3 +1,3 @@
-type D$StreamSelectionConfig={
+type D__StreamSelectionConfig={
 	maxBitrate: `${number};`;
 };

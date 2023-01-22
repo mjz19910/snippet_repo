@@ -1,4 +1,4 @@
-type D$ItemSection=T$AR$Contents<ItemSectionItem>&{
+type D__ItemSection=T$AR$Contents<ItemSectionItem>&{
 	trackingParams: string;
 	sectionIdentifier: string;
 	targetId?: string;

@@ -1,1 +1,1 @@
-type R$ProfileColumnUserInfo={profileColumnUserInfoRenderer: D$ProfileColumnUserInfo;};
+type R$ProfileColumnUserInfo={profileColumnUserInfoRenderer: D__ProfileColumnUserInfo;};

@@ -1,4 +1,4 @@
-type D$RatingSurvey={
+type D__RatingSurvey={
 	ratings: R$RatingSurveyOption[];
 	trackingParams: string;
 	notSureButton: R$Button;

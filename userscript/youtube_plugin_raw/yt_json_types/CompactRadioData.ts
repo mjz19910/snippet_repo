@@ -1,6 +1,6 @@
-type D$CompactRadio={
-	playlistId: `RD${"GM"}${string}`;
-	thumbnail: D$Thumbnail&SampledThumbnailColor;
+type D__CompactRadio={
+	playlistId: `RD__{"GM"}${string}`;
+	thumbnail: D__Thumbnail&SampledThumbnailColor;
 	title: R$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
 	videoCountText: R$TextWithRuns;

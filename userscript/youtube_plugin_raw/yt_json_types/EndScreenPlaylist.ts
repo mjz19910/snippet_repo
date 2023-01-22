@@ -1,7 +1,7 @@
-type D$EndScreenPlaylist={
-	playlistId: `RD${string}`;
+type D__EndScreenPlaylist={
+	playlistId: `RD__{string}`;
 	title: R$SimpleText;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	videoCount?: `${number}`;
 	longBylineText: G$Text;
 	videoCountText: R$TextWithRuns;

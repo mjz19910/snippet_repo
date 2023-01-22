@@ -1,1 +1,1 @@
-type R$DecoratedPlayerBar={decoratedPlayerBarRenderer: D$DecoratedPlayerBar;};
+type R$DecoratedPlayerBar={decoratedPlayerBarRenderer: D__DecoratedPlayerBar;};

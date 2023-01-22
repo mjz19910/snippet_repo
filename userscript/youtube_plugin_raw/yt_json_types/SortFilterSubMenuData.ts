@@ -1,8 +1,8 @@
-type D$SortFilterSubMenu={
+type D__SortFilterSubMenu={
 	subMenuItems: ActionSetPlaylistVideoOrder[];
 	title?: string;
 	icon?: T$Icon<"SORT">;
-	accessibility?: D$Accessibility;
+	accessibility?: D__Accessibility;
 	tooltip?: string;
 	trackingParams: string;
 };

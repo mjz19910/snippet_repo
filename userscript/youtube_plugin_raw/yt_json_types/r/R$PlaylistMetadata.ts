@@ -1,1 +1,1 @@
-type R$PlaylistMetadata={playlistMetadataRenderer: D$PlaylistMetadata;};
+type R$PlaylistMetadata={playlistMetadataRenderer: D__PlaylistMetadata;};

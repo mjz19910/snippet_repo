@@ -1,7 +1,7 @@
-type D$ProductListItem={
+type D__ProductListItem={
 	title: R$SimpleText;
 	accessibilityTitle: string;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	price: `CA$${string}`;
 	onClickCommand: E$UrlEndpoint;
 	trackingParams: string;

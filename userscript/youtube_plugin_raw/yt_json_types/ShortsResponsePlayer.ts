@@ -1,10 +1,10 @@
 type ShortsResponsePlayer={
 	responseContext: {};
 	playabilityStatus: {};
-	streamingData: D$StreamingData;
-	playbackTracking: D$PlaybackTracking;
+	streamingData: D__StreamingData;
+	playbackTracking: D__PlaybackTracking;
 	captions: R$PlayerCaptionsTracklist;
-	videoDetails: D$VideoDetails;
+	videoDetails: D__VideoDetails;
 	playerConfig: {};
 	storyboards: R$PlayerStoryboardSpec;
 	microformat: R$PlayerMicroformat;

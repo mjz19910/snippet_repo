@@ -1,1 +1,1 @@
-type D$PlaylistSidebarSecondaryInfo={videoOwner: R$VideoOwner;};
+type D__PlaylistSidebarSecondaryInfo={videoOwner: R$VideoOwner;};

@@ -1,1 +1,1 @@
-type R$RichItem={richItemRenderer: D$RichItem;};
+type R$RichItem={richItemRenderer: D__RichItem;};

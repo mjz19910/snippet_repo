@@ -1,6 +1,6 @@
 type E$LikeLike={
 	status: "LIKE";
-	target: D$LikeApi;
+	target: D__LikeApi;
 	actions?: MusicLibraryStatusUpdateCommand[];
 	likeParams?: string;
 };

@@ -1,1 +1,1 @@
-type R$PlaylistPanelVideo={playlistPanelVideoRenderer: D$PlaylistPanelVideo;};
+type R$PlaylistPanelVideo={playlistPanelVideoRenderer: D__PlaylistPanelVideo;};

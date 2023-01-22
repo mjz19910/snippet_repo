@@ -1,1 +1,1 @@
-type R$AdActionInterstitial={adActionInterstitialRenderer: D$AdActionInterstitial;};
+type R$AdActionInterstitial={adActionInterstitialRenderer: D__AdActionInterstitial;};

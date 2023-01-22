@@ -1,1 +1,1 @@
-type R$CommentActionButtons={commentActionButtonsRenderer: D$CommentActionButtons;};
+type R$CommentActionButtons={commentActionButtonsRenderer: D__CommentActionButtons;};

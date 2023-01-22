@@ -1,1 +1,1 @@
-type R$MetadataRowContainer={metadataRowContainerRenderer: D$MetadataRowContainer;};
+type R$MetadataRowContainer={metadataRowContainerRenderer: D__MetadataRowContainer;};

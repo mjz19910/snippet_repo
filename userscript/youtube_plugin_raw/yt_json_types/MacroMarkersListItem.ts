@@ -1,7 +1,7 @@
-type D$MacroMarkersListItem={
+type D__MacroMarkersListItem={
 	title: R$SimpleText;
 	timeDescription: R$SimpleText;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	onTap: E$WatchEndpoint;
 	trackingParams: string;
 	shareButton: R$Button;
@@ -16,7 +16,7 @@ type D$MacroMarkersListItem={
 }|{
 	title: R$SimpleText;
 	timeDescription: R$SimpleText;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	onTap: E$WatchEndpoint;
 	trackingParams: string;
 	layout: "MACRO_MARKERS_LIST_ITEM_RENDERER_LAYOUT_VERTICAL";

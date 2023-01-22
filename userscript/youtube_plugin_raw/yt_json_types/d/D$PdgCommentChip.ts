@@ -1,4 +1,4 @@
-type D$PdgCommentChip={
+type D__PdgCommentChip={
 	chipText: R$SimpleText;
 	chipColorPalette: {
 		backgroundColor: 4280191205;

@@ -1,4 +1,4 @@
 type E$CommandExecutorCommand={
 	clickTrackingParams: string;
-	commandExecutorCommand: D$CommandExecutor;
+	commandExecutorCommand: D__CommandExecutor;
 };

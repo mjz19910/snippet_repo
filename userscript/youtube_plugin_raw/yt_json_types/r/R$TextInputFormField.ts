@@ -1,1 +1,1 @@
-type R$TextInputFormField={textInputFormFieldRenderer: D$TextInputFormField;};
+type R$TextInputFormField={textInputFormFieldRenderer: D__TextInputFormField;};

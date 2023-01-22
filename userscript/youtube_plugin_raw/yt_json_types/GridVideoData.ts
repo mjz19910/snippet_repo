@@ -1,11 +1,11 @@
-type D$GridVideo={
+type D__GridVideo={
 	badges: {}[];
-	channelThumbnail: D$Thumbnail;
+	channelThumbnail: D__Thumbnail;
 	menu: R$Menu;
 	navigationEndpoint: {};
 	shortBylineText: R$TextWithRuns;
 	shortViewCountText: R$TextWithRuns;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	thumbnailOverlay: G$ThumbnailOverlayItem[];
 	title: TextRunsAndAccessibility;
 	trackingParams: string;

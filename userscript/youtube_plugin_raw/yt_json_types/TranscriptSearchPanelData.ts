@@ -1,4 +1,4 @@
-type D$TranscriptSearchPanel={
+type D__TranscriptSearchPanel={
 	body: R$TranscriptSegmentList;
 	footer: R$TranscriptFooter;
 	trackingParams: string;

@@ -1,1 +1,1 @@
-type R$AccountLinkButton={accountLinkButtonRenderer: D$AccountLinkButton;};
+type R$AccountLinkButton={accountLinkButtonRenderer: D__AccountLinkButton;};

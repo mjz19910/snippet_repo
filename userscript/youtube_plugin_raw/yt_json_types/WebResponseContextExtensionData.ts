@@ -1,5 +1,5 @@
 type RC$WebResponseContextExtensionData={
 	hasDecorated?: boolean;
-	ytConfigData?: D$YtConfig;
-	webPrefetchData?: D$WebPrefetch;
+	ytConfigData?: D__YtConfig;
+	webPrefetchData?: D__WebPrefetch;
 };

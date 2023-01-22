@@ -1,1 +1,1 @@
-type D$NextRadioContinuation={nextRadioContinuationData: NextRadioContinuationDataInner;};
+type D__NextRadioContinuation={nextRadioContinuationData: NextRadioContinuationDataInner;};

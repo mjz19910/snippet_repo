@@ -1,1 +1,1 @@
-type R$LinearAdSequence={linearAdSequenceRenderer: D$LinearAdSequence;};
+type R$LinearAdSequence={linearAdSequenceRenderer: D__LinearAdSequence;};

@@ -1,1 +1,1 @@
-type R$ThumbnailOverlayTimeStatus={thumbnailOverlayTimeStatusRenderer: D$ThumbnailOverlayTimeStatus;};
+type R$ThumbnailOverlayTimeStatus={thumbnailOverlayTimeStatusRenderer: D__ThumbnailOverlayTimeStatus;};

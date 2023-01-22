@@ -1,1 +1,1 @@
-type R$ClipCreationTextInput={clipCreationTextInputRenderer: D$ClipCreationTextInput;};
+type R$ClipCreationTextInput={clipCreationTextInputRenderer: D__ClipCreationTextInput;};

@@ -1,1 +1,1 @@
-type D$InfoCardIcon={trackingParams: string;};
+type D__InfoCardIcon={trackingParams: string;};

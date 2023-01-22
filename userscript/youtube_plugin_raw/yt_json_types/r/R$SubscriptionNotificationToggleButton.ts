@@ -1,1 +1,1 @@
-type R$SubscriptionNotificationToggleButton={subscriptionNotificationToggleButtonRenderer: D$SubscriptionNotificationToggleButton;};
+type R$SubscriptionNotificationToggleButton={subscriptionNotificationToggleButtonRenderer: D__SubscriptionNotificationToggleButton;};

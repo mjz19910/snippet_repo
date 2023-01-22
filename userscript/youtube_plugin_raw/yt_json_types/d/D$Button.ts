@@ -1,6 +1,6 @@
-type D$Button={
-	accessibility?: D$Label;
-	accessibilityData?: D$Accessibility;
+type D__Button={
+	accessibility?: D__Label;
+	accessibilityData?: D__Accessibility;
 	command?: G$Button$command;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
@@ -12,5 +12,5 @@ type D$Button={
 	text?: G$Text;
 	trackingParams?: string;
 	hint?: R$Hint;
-	targetId?: D$Button$TargetId;
+	targetId?: D__Button$TargetId;
 };

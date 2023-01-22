@@ -1,9 +1,9 @@
-type D$TranscriptSegment={
+type D__TranscriptSegment={
 	startMs: `${number}`;
 	endMs: `${number}`;
 	snippet: R$TextWithRuns;
 	startTimeText: G$Text;
 	trackingParams: string;
-	accessibility: D$Accessibility;
+	accessibility: D__Accessibility;
 	targetId?: `${string}.${string}.${number}.${number}`;
 };

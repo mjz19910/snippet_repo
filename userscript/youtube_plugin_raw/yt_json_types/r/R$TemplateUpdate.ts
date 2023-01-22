@@ -1,1 +1,1 @@
-type R$TemplateUpdate={templateUpdate: D$TemplateUpdate;};
+type R$TemplateUpdate={templateUpdate: D__TemplateUpdate;};

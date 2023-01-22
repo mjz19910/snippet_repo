@@ -1,1 +1,1 @@
-type R$CommentsEntryPointHeader={commentsEntryPointHeaderRenderer: D$CommentsEntryPointHeader;};
+type R$CommentsEntryPointHeader={commentsEntryPointHeaderRenderer: D__CommentsEntryPointHeader;};

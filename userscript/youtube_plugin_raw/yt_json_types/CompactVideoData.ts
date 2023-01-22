@@ -1,6 +1,6 @@
-type D$CompactVideo={
+type D__CompactVideo={
 	videoId: string;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	title: {};
 	longBylineText: R$TextWithRuns;
 	publishedTimeText: R$TextWithRuns;
@@ -14,7 +14,7 @@ type D$CompactVideo={
 	shortViewCountText: R$TextWithRuns;
 	menu: {};
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
-	accessibility: D$Accessibility;
+	accessibility: D__Accessibility;
 	richThumbnail: {};
 	badges?: R$MetadataBadge[];
 };

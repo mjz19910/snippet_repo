@@ -1,1 +1,1 @@
-type LiveChatContinuation={liveChatContinuation: D$LiveChatContinuation;};
+type LiveChatContinuation={liveChatContinuation: D__LiveChatContinuation;};

@@ -1,1 +1,1 @@
-type D$ResponseContext={responseContext: RC$ResponseContext;};
+type D__ResponseContext={responseContext: RC$ResponseContext;};

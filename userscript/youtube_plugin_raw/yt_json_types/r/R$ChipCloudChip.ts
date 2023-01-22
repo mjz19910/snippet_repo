@@ -1,1 +1,1 @@
-type R$ChipCloudChip={chipCloudChipRenderer: D$ChipCloudChip;};
+type R$ChipCloudChip={chipCloudChipRenderer: D__ChipCloudChip;};

@@ -1,3 +1,3 @@
-type D$HideEnclosingAction={
+type D__HideEnclosingAction={
 	notificationId: `${number}`;
 };

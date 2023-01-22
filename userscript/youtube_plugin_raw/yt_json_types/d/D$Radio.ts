@@ -1,7 +1,7 @@
-type D$Radio={
-	playlistId: `RD${string}`;
+type D__Radio={
+	playlistId: `RD__{string}`;
 	title: R$SimpleText;
-	thumbnail: D$Thumbnail;
+	thumbnail: D__Thumbnail;
 	videoCountText: R$TextWithRuns;
 	navigationEndpoint: E$WatchEndpoint;
 	trackingParams: string;

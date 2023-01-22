@@ -1,4 +1,4 @@
-type D$PlayerCaptionsTracklist={
+type D__PlayerCaptionsTracklist={
 	captionTracks: CaptionTrackItem[];
 	audioTracks: AudioTrackItem[];
 	translationLanguages: TranslationLanguage[];

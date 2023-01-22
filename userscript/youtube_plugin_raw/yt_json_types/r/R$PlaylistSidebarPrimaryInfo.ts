@@ -1,1 +1,1 @@
-type R$PlaylistSidebarPrimaryInfo={playlistSidebarPrimaryInfoRenderer: D$PlaylistSidebarPrimaryInfo;};
+type R$PlaylistSidebarPrimaryInfo={playlistSidebarPrimaryInfoRenderer: D__PlaylistSidebarPrimaryInfo;};

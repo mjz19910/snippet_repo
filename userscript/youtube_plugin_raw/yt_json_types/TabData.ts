@@ -1,4 +1,4 @@
-type D$Tab={
+type D__Tab={
 	selected: true;
 	content: R$RichGrid;
 	tabIdentifier: "FEwhat_to_watch";
@@ -18,6 +18,6 @@ type D$Tab={
 	selected: true;
 	content: R$SectionList;
 	tabIdentifier: "FEsubscriptions";
-	accessibility: D$Accessibility;
+	accessibility: D__Accessibility;
 	trackingParams: string;
 };

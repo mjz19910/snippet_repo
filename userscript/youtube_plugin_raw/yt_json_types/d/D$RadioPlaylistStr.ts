@@ -1,1 +1,1 @@
-type D$RadioPlaylistStr<T extends string>=`RD${T}`;
+type D__RadioPlaylistStr<T extends string>=`RD__{T}`;

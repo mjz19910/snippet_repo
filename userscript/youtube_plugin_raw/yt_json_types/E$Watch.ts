@@ -1,7 +1,7 @@
 type E$Watch={
 	videoId: string;
 	nofollow?: boolean;
-	playlistId?: `PL${string}`|`RD${string}`;
+	playlistId?: `PL${string}`|`RD__{string}`;
 	index?: number;
 	playlistSetVideoId?: string;
 	params?: string;

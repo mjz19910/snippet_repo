@@ -1,4 +1,4 @@
-type D$ExpandableTab={
+type D__ExpandableTab={
 	endpoint: {};
 	title: string;
 	selected: boolean;
