@@ -9003,6 +9003,36 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.TwoColumnWatchNextResultsData(this.w(x));
 	}
+	/** @private @arg {UpdateChannelSwitcherPageAction} x */
+	UpdateChannelSwitcherPageAction(x) {
+		const cf="UpdateChannelSwitcherPageAction";
+		this.save_keys(`[${cf}]`,x);
+		this.PageAction(this.w(x));
+	}
+	/** @private @arg {PageAction<ChannelSwitcherPageRenderer>} x */
+	PageAction(x) {
+		const cf="PageAction";
+		this.save_keys(`[${cf}]`,x);
+		this.ChannelSwitcherPageRenderer(this.w(x));
+	}
+	/** @private @arg {ChannelSwitcherPageRenderer} x */
+	ChannelSwitcherPageRenderer(x) {
+		const cf="UpdateChannelSwitcherPageAction";
+		this.save_keys(`[${cf}]`,x);
+		this.ChannelSwitcherPage(this.w(x));
+	}
+	/** @private @arg {GuideSectionRenderer} x */
+	GuideSectionRenderer(x) {
+		const cf="GuideSectionRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.GuideSectionData(this.w(x));
+	}
+	/** @private @arg {LiveChatRenderer} x */
+	LiveChatRenderer(x) {
+		const cf="LiveChatRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.g(this.w(x));
+	}
 	/** @arg {D$CinematicContainer} x */
 	CinematicContainer(x) {
 		const cf="CinematicContainerData";
@@ -11680,24 +11710,6 @@ class HandleTypes extends ServiceMethods {
 		this.D$TextWithRuns(selectText);
 		this.z(actions,this.UpdateChannelSwitcherPageAction);
 	}
-	/** @private @arg {UpdateChannelSwitcherPageAction} x */
-	UpdateChannelSwitcherPageAction(x) {
-		const cf="UpdateChannelSwitcherPageAction";
-		this.save_keys(`[${cf}]`,x);
-		this.PageAction(this.w(x));
-	}
-	/** @private @arg {PageAction<ChannelSwitcherPageRenderer>} x */
-	PageAction(x) {
-		const cf="PageAction";
-		this.save_keys(`[${cf}]`,x);
-		this.ChannelSwitcherPageRenderer(this.w(x));
-	}
-	/** @private @arg {ChannelSwitcherPageRenderer} x */
-	ChannelSwitcherPageRenderer(x) {
-		const cf="UpdateChannelSwitcherPageAction";
-		this.save_keys(`[${cf}]`,x);
-		this.ChannelSwitcherPage(this.w(x));
-	}
 	/** @private @arg {ReelItemWatchResponse} x */
 	ReelItemWatchResponse(x) {
 		const cf="ReelItemWatchResponse";
@@ -11782,12 +11794,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {GuideSectionRenderer} x */
-	GuideSectionRenderer(x) {
-		const cf="GuideSectionRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.GuideSectionData(this.w(x));
-	}
 	/** @private @arg {GuideSectionData} x */
 	GuideSectionData(x) {
 		const cf="GuideSectionData";
@@ -11802,12 +11808,6 @@ class HandleTypes extends ServiceMethods {
 		if("guideEntryRenderer" in x) return this.GuideEntryRenderer(x);
 		if("guideCollapsibleSectionEntryRenderer" in x) return this.GuideCollapsibleSectionEntryRenderer(x);
 		debugger;
-	}
-	/** @private @arg {LiveChatRenderer} x */
-	LiveChatRenderer(x) {
-		const cf="LiveChatRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.g(this.w(x));
 	}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
@@ -11853,12 +11853,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="BrowserMediaSessionRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.BrowserMediaSession(this.w(x));
-	}
-	/** @private @arg {AD$BrowserMediaSession} x */
-	BrowserMediaSession(x) {
-		const cf="BrowserMediaSession";
-		this.save_keys(`[${cf}]`,x);
-		const {...y}=x; this.g(y);
 	}
 	/** @private @arg {R$AutoplaySwitchButtonRenderer} x */
 	AutoplaySwitchButtonRenderer(x) {
@@ -14624,6 +14618,12 @@ class HandleTypes extends ServiceMethods {
 	HotkeyDialogSectionRenderer(x) {
 		const cf="HotkeyDialogSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
+	}
+	/** @private @arg {AD$BrowserMediaSession} x */
+	BrowserMediaSession(x) {
+		const cf="BrowserMediaSession";
+		this.save_keys(`[${cf}]`,x);
+		debugger;
 	}
 	//#endregion
 	//#region TODO_minimal_member_fns
