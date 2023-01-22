@@ -5647,6 +5647,7 @@ class ParserService extends BaseService {
 	parse_any_param(root,path,x) {
 		this.parse_key_index++;
 		let key_index=this.parse_key_index;
+		console.log(key_index,x);
 		let mk=[...x.keys()];
 		/** @private @arg {number} ta */
 		let parse_key=(ta) => this.parse_key(root,path,x,mk,ta,null);
