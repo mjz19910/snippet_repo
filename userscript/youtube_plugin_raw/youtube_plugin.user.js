@@ -5643,6 +5643,7 @@ case "${path}": {
 						/** @type {P$PathRoot} */
 						this.parse_param_next(root,`${path}.f${ta}`,tv);
 					} return;
+					case "create_playlist.params":
 					case "browse.params": {
 						switch(ta) {
 							case 84: case 93: break;
@@ -5763,14 +5764,6 @@ case "${path}": {
 					case "watch.player_params.f40": {
 						switch(ta) {
 							case 1: break;
-							default: new_ns(); debugger; return;
-						}
-						/** @type {P$PathRoot} */
-						this.parse_param_next(root,`${path}.f${ta}`,tv);
-					} return;
-					case "create_playlist.params": {
-						switch(ta) {
-							case 84: break;
 							default: new_ns(); debugger; return;
 						}
 						/** @type {P$PathRoot} */
