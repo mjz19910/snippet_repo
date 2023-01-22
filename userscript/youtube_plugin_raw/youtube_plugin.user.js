@@ -4336,6 +4336,15 @@ class CodegenService extends BaseService {
 	#is_Thumbnail(x2) {
 		return "thumbnails" in x2&&x2.thumbnails instanceof Array&&"url" in x2.thumbnails[0]&&typeof x2.thumbnails[0].url==="string";
 	}
+	/** @arg {{}} x2 @arg {string} k */
+	generate_code_for_entry(x2,k) {
+		let kk=this.get_name_from_keys(x2);
+		if(kk&&kk.endsWith("Endpoint")) {
+			let u=this.uppercase_first(kk);
+			return `this.E$${u}(${k});`;
+		}
+		return null;
+	}
 	/** @arg {string[]} req_names @arg {{}} x @arg {string[]} keys @arg {string|number} t_name */
 	#generate_renderer_body(req_names,x,keys,t_name) {
 		/** @private @type {{[x:string]:{}}} */
@@ -4354,6 +4363,8 @@ class CodegenService extends BaseService {
 			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(${k},"number");`);}
 			if(typeof x2=="boolean") {ret_arr.push(`if(${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
+			let new_code=this.generate_code_for_entry(x2,k);
+			if(new_code) {ret_arr.push(new_code);continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
 			if("simpleText" in x2) {ret_arr.push(`this.SimpleText(${k});`); continue;};
 			/** @type {D$TextWithRuns} */
@@ -4362,17 +4373,18 @@ class CodegenService extends BaseService {
 			/** @type {D$Thumbnail} */
 			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D$Thumbnail(${k});`); continue;}
 			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
-			if("browseEndpoint" in x2) {ret_arr.push(`this.E$BrowseEndpoint(${k});`); continue;}
 			/** @private @type {{}} */
 			let o3=x2;
 			let c=this.get_name_from_keys(o3);
-			if(!c||typeof c==="number") {
-				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
-				continue;
-			}
 			if(c.endsWith("Renderer")) {
 				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
 				ret_arr.push(`this.R$${ic}(${k});`);
+				continue;
+			}
+			let skip=true;
+			if(skip) throw [x2,k];
+			if(!c||typeof c==="number") {
+				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
 			}
 			if(k.endsWith("Renderer")) {
