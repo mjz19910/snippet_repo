@@ -7410,6 +7410,31 @@ case "${path_parts[idx-1]}": {
 			default: debugger;
 		}
 	}
+	/** @arg {D$VE6827$PageUrl} x */
+	parse_ve_6827_url(x) {
+		const cf="VE6827_PageUrl";
+		/** @type {SplitOnce<D$VE6827$PageUrl,"/">[1]} */
+		let su=split_string_once(x,"/")[1];
+		let su1=split_string(su,"/");
+		if(su1.length===1) {
+			let [pt0]=su1;
+			this.save_string(`[${cf}]`,`${pt0}`);
+			switch(pt0) {
+				case "reporthistory": return;
+				default: debugger; return;
+			}
+		}
+		let [pt]=split_string_once(su1[1],"?");
+		this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
+		switch(pt) {
+			case "trending": break;
+			case "library": break;
+			case "history": break;
+			case "storefront": break;
+			case "guide_builder": break;
+			default: debugger; break;
+		}
+	}
 	/** @public @arg {YtTargetIdType} x */
 	parse_target_id(x) {
 		if(this.str_starts_with(x,"browse-feed")) {
@@ -8189,8 +8214,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {D$SimpleText} x @arg {(this:this,x:{accessibility?:A$Accessibility})=>void} f */
 	D$SimpleText(x,f=this.handle_accessibility) {
 		const cf="SimpleText";
-		if(!x) {debugger; return;}
-		if(!("simpleText" in x)) {debugger; return;}
 		this.save_keys(`[${cf}]`,x);
 		const {simpleText,...y}=x; f.call(this,y);
 		this.primitive_of_string(simpleText);
@@ -8327,34 +8350,9 @@ class HandleTypes extends ServiceMethods {
 		const cf="VE6827_WebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-		this.t(url,this.VE6827_PageUrl);
+		this.t(url,x=>this.parser.parse_ve_6827_url(x));
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
-	}
-	/** @arg {D$VE6827$PageUrl} x */
-	VE6827_PageUrl(x) {
-		const cf="VE6827_PageUrl";
-		/** @type {SplitOnce<D$VE6827$PageUrl,"/">[1]} */
-		let su=split_string_once(x,"/")[1];
-		let su1=split_string(su,"/");
-		if(su1.length===1) {
-			let [pt0]=su1;
-			this.save_string(`[${cf}]`,`${pt0}`);
-			switch(pt0) {
-				case "reporthistory": return;
-				default: debugger; return;
-			}
-		}
-		let [pt]=split_string_once(su1[1],"?");
-		this.save_string(`[${cf}]`,`${su1[0]}/${pt}`);
-		switch(pt) {
-			case "trending": break;
-			case "library": break;
-			case "history": break;
-			case "storefront": break;
-			case "guide_builder": break;
-			default: debugger; break;
-		}
 	}
 	//#endregion
 	//#region endpoint
