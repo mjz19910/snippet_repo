@@ -5465,7 +5465,25 @@ class ParserService extends BaseService {
 					} break;
 				}
 			} break;
-			case "entity_key": u(idx); debugger; break;
+			case "entity_key": {
+				const idx=2;
+				if(path_parts.length===1) {
+					switch(tv) {default: debugger; return;}
+				}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f2":
+					case "f4":
+					case "f5": {
+						const idx=3;
+						if(path_parts.length===2) {
+							if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+							switch(tv) {default: debugger; return;}
+						}
+						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+					} break;
+				}
+			} break;
 			case "tracking": {
 				const idx=2;
 				switch(path_parts[1]) {
