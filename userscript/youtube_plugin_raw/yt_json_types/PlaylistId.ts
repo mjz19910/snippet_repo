@@ -1,5 +1,5 @@
 type PlaylistId=[
-	`RD__{string}`,
+	`RD${string}`,
 	`RDMM${string}`,
 	`PL${string}`,
 	"WL",

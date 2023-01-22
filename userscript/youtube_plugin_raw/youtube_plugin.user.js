@@ -8136,7 +8136,25 @@ class HandleTypes extends ServiceMethods {
 		this.D_Watch(watchEndpoint);
 	}
 	/** @private @arg {D_Watch} x */
-	D_Watch(x) {x;}
+	D_Watch(x) {
+		const cf="D_Watch";
+		this.save_keys(`[${cf}]`,x);
+		const {videoId,playlistId,index,playlistSetVideoId,params,startTimeSeconds,continuePlayback,loggingContext,watchEndpointSupportedOnesieConfig,watchEndpointSupportedPrefetchConfig: a1,playerParams,watchEndpointMusicSupportedConfigs: a2,nofollow,playerExtraUrlParams,...y}=x; this.g(y);
+		this.videoId(videoId);
+		this.t(playlistId,this.playlistId);
+		if(index!==void 0) this.primitive_of(index,"number");
+		this.t(playlistSetVideoId,this.primitive_of_string);
+		if(params!==void 0) this.params("WatchEndpoint","watch.params",params);
+		if(startTimeSeconds!==void 0) this.primitive_of(startTimeSeconds,"number");
+		if(continuePlayback!==void 0&&!continuePlayback) debugger;
+		this.t(loggingContext,this.R_VssLoggingContext);
+		this.t(watchEndpointSupportedOnesieConfig,this.R_Html5PlaybackOnesieConfig);
+		this.t(a1,this.PrefetchHintConfig);
+		this.t(playerParams,a => this.playerParams("WatchEndpoint","watch.player_params",a));
+		this.t(a2,this.WatchEndpointMusicConfig);
+		if(nofollow!==void 0) this.primitive_of(nofollow,"boolean");
+		this.t(playerExtraUrlParams,([a,...b]) => {if(a.key!=="inline") debugger; if(b.length>0) debugger;});
+	}
 	/** @private @arg {M_VE3832} x */
 	CM$VE3832$Metadata(x) {x;}
 	/** @private @arg {Html5PlaybackOnesieConfig} x */
@@ -9379,12 +9397,12 @@ class HandleTypes extends ServiceMethods {
 		const cf="ModifiedSetItem";
 		this.save_keys(`[${cf}]`,x);
 		const {autoplayVideo,nextButtonVideo,previousButtonVideo,...y}=x; this.g(y); // ! #destructure
-		this.E_WatchPlaylist(autoplayVideo);
-		this.E_WatchPlaylist(nextButtonVideo);
-		this.t(previousButtonVideo,this.E_WatchPlaylist);
+		this.WatchPlaylistEndpoint(autoplayVideo);
+		this.WatchPlaylistEndpoint(nextButtonVideo);
+		this.t(previousButtonVideo,this.WatchPlaylistEndpoint);
 	}
 	/** @private @arg {WatchPlaylistEndpoint} x */
-	E_WatchPlaylist(x) {
+	WatchPlaylistEndpoint(x) {
 		const cf="WatchPlaylistEndpoint";
 		this.save_keys(`[${cf}]`,x);
 		const {clickTrackingParams,commandMetadata,watchPlaylistEndpoint,...y}=x; this.g(y); // ! #destructure
@@ -9392,7 +9410,7 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		this.E_WatchPlaylist(watchPlaylistEndpoint);
 	}
-	/** @private @arg {E_WatchPlaylist} x */
+	/** @private @arg {D_WatchPlaylist} x */
 	E_WatchPlaylist(x) {
 		const cf="WatchPlaylist";
 		this.save_keys(`[${cf}]`,x);

@@ -3,13 +3,13 @@ type ModifiedSetItem={
 	nextButtonVideo: WatchPlaylistEndpoint;
 	previousButtonVideo?: WatchPlaylistEndpoint;
 };
-type E_WatchPlaylist={
-	playlistId: `RD__{string}`;
+type D_WatchPlaylist={
+	playlistId: `RD${string}`;
 	index: 13;
 	params: string;
 };
 type WatchPlaylistEndpoint={
 	clickTrackingParams: string;
 	commandMetadata: G_Metadata;
-	watchPlaylistEndpoint: E_WatchPlaylist;
+	watchPlaylistEndpoint: D_WatchPlaylist;
 };
