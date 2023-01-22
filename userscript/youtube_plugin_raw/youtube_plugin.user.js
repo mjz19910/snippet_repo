@@ -9048,6 +9048,7 @@ class HandleTypes extends ServiceMethods {
 			if("subscribed" in x) return;
 			if("state" in x) return;
 			if("serializedParams" in x) return;
+			if("isHidden" in x) return;
 			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=x; this.g(y);
 			this.z([key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives],a => {
 				if(a===void 0) debugger;
