@@ -14543,7 +14543,11 @@ class HandleTypes extends ServiceMethods {
 	TranscriptSegmentListRenderer(x) {
 		const cf="TranscriptSegmentListRenderer";
 		this.save_keys(`[${cf}]`,x);
-		const {transcriptSegmentListRenderer: {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y},...z}=x; this.g(y); this.g(z);
+		this.TranscriptSegmentListData(this.w(x));
+	}
+	/** @private @arg {TranscriptSegmentListData} x */
+	TranscriptSegmentListData(x) {
+		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=x; this.g(y);
 		this.z(initialSegments,this.TranscriptSegmentRenderer);
 		this.z([noResultLabel,retryLabel],a => this.D$TextWithRuns(a));
 		this.primitive_of(touchCaptionsEnabled,"boolean");
@@ -14562,6 +14566,12 @@ class HandleTypes extends ServiceMethods {
 		this.t(cc,a => {
 			this.parser.on_endpoint_params(cf,"transcript_target_id.param",a[1]);
 		});
+	}
+	/** @private @arg {WebSearchboxConfig} x */
+	WebSearchboxConfig(x) {
+		const cf="WebSearchboxConfig";
+		this.save_keys(`[${cf}]`,x);
+		const {...y}=x; this.g(y);
 	}
 	/** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
 	targetId_arr([f,a]) {
@@ -14601,12 +14611,6 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {ChannelHeaderLinks} x */
 	ChannelHeaderLinks(x) {
 		const cf="ChannelHeaderLinks";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {WebSearchboxConfig} x */
-	WebSearchboxConfig(x) {
-		const cf="WebSearchboxConfig";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
