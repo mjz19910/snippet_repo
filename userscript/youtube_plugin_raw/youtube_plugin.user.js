@@ -5557,7 +5557,7 @@ case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; retu
 					case "ypc_get_offers.params.f1":
 					case "record_notification_interactions.f2.f14":
 					case "tracking.trackingParams.f19": switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "tracking.trackingParams": switch(ta) {case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 19: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "tracking.trackingParams": switch(ta) {case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 10: case 11: case 19: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "browse$param.f84": switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "create_playlist.params":
 					case "browse.params": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
@@ -5696,7 +5696,8 @@ case "${path_parts[idx-1]}": {
 							case "f1":
 							case "f2":
 							case "f3":
-							case "f9":
+							case "f9": 
+							case "f10":
 							case "f11":
 							case "f19":
 							case "f6":
