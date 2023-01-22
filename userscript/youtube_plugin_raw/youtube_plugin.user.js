@@ -7583,7 +7583,7 @@ class HandleTypes extends ServiceMethods {
 			case "notification.record_interactions": return this.R_Success(x.data);
 			case "player": return this.R_Player(x.data);
 			case "playlist.get_add_to_playlist": return this.R_GetAddToPlaylist(x.data);
-			case "reel.reel_item_watch": return this.R_ReelItemWatch(x.data);
+			case "reel.reel_item_watch": return this.D_ReelItemWatch(x.data);
 			case "reel.reel_watch_sequence": return this.R_ReelWatchSequence(x.data);
 			case "share.get_share_panel": return this.R_GetSharePanel(x.data);
 			case "subscription.subscribe": return this.R_Subscribe(x.data);
@@ -8162,7 +8162,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_CommonConfig} x */
 	R_CommonConfig(x) {this.H_("R_CommonConfig",x,this.D_CommonConfig);}
 	/** @private @arg {D_CommonConfig} x */
-	D_CommonConfig(x) {const cf="D_CommonConfig";this.H_(cf,x,x=>this.parser.parse_url(cf,x));}
+	D_CommonConfig(x) {const cf="D_CommonConfig"; this.H_(cf,x,x => this.parser.parse_url(cf,x));}
 	/** @private @arg {R_VssLoggingContext} x */
 	R_VssLoggingContext(x) {this.H_("R_VssLoggingContext",x,() => 0);}
 	/** @private @arg {NonNullable<R_TextRun['navigationEndpoint']>} x */
@@ -8250,7 +8250,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
 		this.z(i,x => {
 			/** @arg {string} v */
-			let sc=(v)=>{this.save_string("[ItemSection.T_ContentType]",v);}
+			let sc=(v) => {this.save_string("[ItemSection.T_ContentType]",v);};
 			if("compactVideoRenderer" in x) {sc("t1.cvr"); return;}
 			if("continuationItemRenderer" in x) {sc("t1.cir"); return;}
 			if("commentThreadRenderer" in x) {sc("t1.ctr"); return;}
@@ -8365,9 +8365,9 @@ class HandleTypes extends ServiceMethods {
 		});
 	}
 	/** @private @arg {A_GetMultiPageMenu} x */
-	A_GetMultiPageMenu(x) {this.H_("GetMultiPageMenu",x,this.D_GetMultiPageMenu);}
-	/** @private @arg {D_A_GetMultiPageMenu} x */
-	D_A_GetMultiPageMenu(x) {this.H_("D_A_GetMultiPageMenu",x,() => 0);}
+	A_GetMultiPageMenu(x) {this.H_("A_GetMultiPageMenu",x,this.D_GetMultiPageMenu);}
+	/** @private @arg {D_GetMultiPageMenu} x */
+	D_GetMultiPageMenu(x) {this.H_("D_GetMultiPageMenu",x,() => 0);}
 	/** @private @arg {R_AccountsList} x */
 	R_AccountsList(x) {
 		const cf="AccountsListResponse";
@@ -8379,7 +8379,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {A_UpdateChannelSwitcherPage} x */
 	A_UpdateChannelSwitcherPage(x) {this.H_("A_Notification",x,a => {a; debugger;});}
 	/** @private @arg {D_ReelItemWatch} x */
-	R_ReelItemWatch(x) {
+	D_ReelItemWatch(x) {
 		const cf="ReelItemWatchResponse";
 		this.save_keys(`[${cf}]`,x);
 		const {responseContext: {},overlay,status,trackingParams,replacementEndpoint,sequenceContinuation,desktopTopbar,engagementPanels,...y}=x; this.g(y); // ! #destructure
@@ -8394,7 +8394,7 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {R_ReelPlayerOverlay} x */
 	R_ReelPlayerOverlay(x) {this.H_("R_ReelPlayerOverlay",x,() => 0);}
 	/** @private @arg {G_EngagementPanelItem} x */
-	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,()=>0);}
+	G_EngagementPanelItem(x) {this.H_("G_EngagementPanelItem",x,() => 0);}
 	/** @private @arg {AccountSetSetting} x */
 	R_SetSetting(x) {
 		const cf="AccountSetSetting";
