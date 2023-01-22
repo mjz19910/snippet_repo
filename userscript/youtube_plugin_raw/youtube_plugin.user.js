@@ -14315,7 +14315,7 @@ class HandleTypes extends ServiceMethods {
 		let u=this.w(y);
 		this.z(u,this.R$HotkeyDialogSectionOption);
 	}
-	/** @arg {Exclude<D$HotkeyDialogSectionOption,{hotkey:{tag:""}}>} x */
+	/** @arg {D$HotkeyDialogSectionOption} x */
 	D$HotkeyDialogSectionOption(x) {
 		const cf="D$HotkeyDialogSectionOption";
 		this.save_keys(`[${cf}]`,x);
