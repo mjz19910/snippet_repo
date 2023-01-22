@@ -5465,7 +5465,10 @@ class ParserService extends BaseService {
 					if(this.is_bigint(tv)) return this.handle_bigint(path,tv);
 					switch(tv) {default: debugger; return;}
 				}
-				switch(path_parts[1]) {default: u(idx); debugger; path_parts[1]===""; break;}
+				switch(path_parts[1]) {
+					default: u(idx); debugger; path_parts[1]===""; break;
+					case "f3": u(idx); debugger; break;
+				}
 			} break;
 			case "AdServingDataEntry": {
 				const idx=2;
@@ -9735,7 +9738,26 @@ class HandleTypes extends ServiceMethods {
 	ResourceStatusInResponseCheck(x) {
 		const cf="ResourceStatusInResponseCheck";
 		this.save_keys(`[${cf}]`,x);
-		x; debugger;
+		this.D_ResourceStatusInResponseCheckData(this.w(x));
+	}
+	/** @private @arg {D_ResourceStatusInResponseCheckData} x */
+	D_ResourceStatusInResponseCheckData(x) {
+		const cf="D_ResourceStatusInResponseCheckData";
+		this.save_keys(`[${cf}]`,x);
+		const {serverBuildLabel,...y}=x;
+		this.z(this.w(y),this.D_ElementResourceStatus);
+	}
+	/** @private @arg {D_ElementResourceStatus} x */
+	D_ElementResourceStatus(x) {
+		const cf="D_ElementResourceStatus";
+		this.save_keys(`[${cf}]`,x);
+		const {identifier,status,...y}=x; this.g(y);
+		if(status!=="ELEMENTS_RESOURCE_STATUS_ATTACHED") debugger;
+		switch(x.identifier) {
+			case "bottom_sheet_list_option.eml|cd39732d53f1132c": break;
+			case "track_selection_sheet_option.eml|f3619d8bb085c9a9": break;
+			default: debugger; break;
+		}
 	}
 	/** @private @arg {R_MusicThumbnail} x */
 	R_MusicThumbnail(x) {
