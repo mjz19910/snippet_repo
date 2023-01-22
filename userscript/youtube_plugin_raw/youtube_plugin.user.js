@@ -5524,7 +5524,7 @@ class ParserService extends BaseService {
 			console.log("\n\t\"[parse_value.gen_ns] [%s]\",",`${path}.f${ta}`);
 			console.log(`
 // []
-case "${path}": {switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}/** @type {P$PathRoot} */return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);}
+case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}/** @type {P$PathRoot} */return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);}
 `);
 		};
 		if(tv!==void 0) {
@@ -5535,76 +5535,33 @@ case "${path}": {switch(ta) {case ${ta}: break; default: new_ns(); debugger; ret
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: {grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); debugger; this.parse_param_next(root,as(`${path}.f${ta}`),tv);} break;
-					case "transcript_target_id.param": {switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);}
-					case "ypc_get_offers.params.f5.f5": {switch(ta) {case 1: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);};
-					case "ypc_get_offers.params.f5": {switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "ypc_get_offers.params.f1": {switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "ypc_get_offers.params": {switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "tracking.trackingParams.f6": {switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "report.params.f28.f1.f1.f1.f1": {switch(ta) {case 4: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "report.params.f28.f1.f1":
-					case "report.params.f28.f1.f1.f1": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "report.params.f28.f1": switch(ta) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "report.params.f28": {switch(ta) {case 1: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "browse$param.f93": {switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "tracking.trackingParams.f19": {switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}this.parse_param_next(root,`${path}.f${ta}`,tv);} return;
-					case "tracking.trackingParams": {
-						switch(ta) {case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 19: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "tracking.trackingParams.f4": {
-						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "browse$param.f84": {
-						switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "create_playlist.params":
-					case "browse.params": {
-						switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
-					}
-					case "createBackstagePost.param": {
-						switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "entity_key": {
-						switch(ta) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "subscribe.params.f2": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "subscribe.params": {
-						switch(ta) {case 2: case 3: case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "report.params.f18.f1": {
-						switch(ta) {case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "report.params": {
-						switch(ta) {case 2: case 8: case 11: case 15: case 18: case 25: case 26: case 28: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
+					case "transcript_target_id.param":
+					case "tracking.trackingParams.f4": switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "tracking.trackingParams.f6": switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "browse$param.f93":
+					case "get_transcript.params":
 					case "report.params.f18":
+					case "report.params.f28.f1.f1.f1":
+					case "report.params.f28.f1.f1":
+					case "report.params.f28":
+					case "subscribe.params.f2":
 					case "watch.params.f27":
 					case "watch.player_params.f40":
-					case "get_transcript.params": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "reel.player_params": switch(ta) {case 30: case 71: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "record_notification_interactions.f2.f14.f1": {switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);}
-					case "watch.params": {
-						switch(ta) {case 2: case 3: case 7: case 12: case 13: case 24: case 27: case 33: case 56: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "watch.player_params": switch(ta) {case 8: case 9: case 40: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "watch.params.f33": {
-						switch(ta) {case 2: case 3: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "record_notification_interactions": {
-						switch(ta) {case 2: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "create_playlist.params.f84": {
-						switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "watch.player_params.f40.f1": {
-						switch(ta) {case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "record_notification_interactions.f2": {
-						switch(ta) {case 1: case 14: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
-					case "record_notification_interactions.f2.f14": {
-						switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					}
+					case "ypc_get_offers.params.f5.f5": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "report.params.f28.f1": switch(ta) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "createBackstagePost.param":
+					case "record_notification_interactions.f2.f14.f1":
+					case "ypc_get_offers.params.f1":
+					case "record_notification_interactions.f2.f14":
+					case "tracking.trackingParams.f19": switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "tracking.trackingParams": switch(ta) {case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 19: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "browse$param.f84": switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "create_playlist.params":
+					case "browse.params": switch(ta) {case 84: case 93: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`browse$param.f${ta}`,tv);
+					case "entity_key": switch(ta) {case 2: case 4: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 				}
 				return;
 			}
