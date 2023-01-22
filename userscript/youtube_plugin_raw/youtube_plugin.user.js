@@ -13465,7 +13465,11 @@ class HandleTypes extends ServiceMethods {
 	D$ChildVideo(x) {
 		const cf="D$ChildVideo";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		const {title,navigationEndpoint,lengthText,videoId,...y}=x; this.g(y);
+		this.D$SimpleText(title);
+		this.E$WatchEndpoint(navigationEndpoint);
+		this.D$SimpleText(lengthText);
+		this.primitive_of(videoId,"string");
 	}
 	/** @private @arg {Do$w<FeedNudgeRenderer>} x */
 	FeedNudge(x) {
