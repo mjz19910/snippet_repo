@@ -2753,6 +2753,16 @@ class BaseService extends BaseServicePrivate {
 	get TODO_true() {
 		return true;
 	}
+	/** @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
+	targetId_arr([f,a]) {
+		let [c,a1]=split_string_once(a,".");
+		let [d,a2]=split_string_once(a1,".");
+		return [f,c,d,a2];
+	}
+	parse_transcript_target_id(x) {
+		let b=this.parser.targetId_arr(split_string_once(x,"."));
+		this.parser.on_endpoint_params(cf,"transcript_target_id.param",b[1]);
+	}
 	/** @public @template {string} T @template {`${T}${"_"|"-"}${string}`} U @arg {T} ns @arg {U} s */
 	save_enum(ns,s) {
 		/** @private @type {"_"|"-"} */
@@ -8409,7 +8419,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="VE6827_WebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
 		const {url,webPageType,rootVe: {},apiUrl,...y}=x; this.g(y); // ! #destructure
-		this.t(url,x=>this.parser.parse_ve_6827_url(x));
+		this.t(url,x => this.parser.parse_ve_6827_url(x));
 		if(webPageType!=="WEB_PAGE_TYPE_BROWSE") debugger;
 		if(apiUrl!=="/youtubei/v1/browse") debugger;
 	}
@@ -14464,6 +14474,73 @@ class HandleTypes extends ServiceMethods {
 		const cf="minimal_handler_member";
 		this.save_keys(`[${cf}]`,x);
 	}
+	/** @private @arg {TranscriptSegmentListRenderer} x */
+	TranscriptSegmentListRenderer(x) {
+		const cf="TranscriptSegmentListRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.TranscriptSegmentListData(this.w(x));
+	}
+	/** @private @arg {D$Transcript} x */
+	D$Transcript(x) {
+		const cf="Transcript";
+		this.save_keys(`[${cf}]`,x);
+		const {trackingParams,content,...y}=x; this.g(y);
+		this.trackingParams(cf,trackingParams);
+		this.TranscriptSearchPanelRenderer(content);
+	}
+	/** @private @arg {TranscriptSearchPanelRenderer} x */
+	TranscriptSearchPanelRenderer(x) {
+		const cf="TranscriptSearchPanelRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptSearchPanelRenderer: {trackingParams,body,footer,targetId,...y},...z}=x; this.g(y); this.g(z);
+		this.trackingParams(cf,trackingParams);
+		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
+		this.TranscriptSegmentListRenderer(body);
+		this.TranscriptFooterRenderer(footer);
+	}
+	/** @private @arg {TranscriptFooterRenderer} x */
+	TranscriptFooterRenderer(x) {
+		const cf="TranscriptFooterRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptFooterRenderer: {languageMenu,...y},...z}=x; this.g(y); this.g(z);
+		this.SortFilterSubMenuRenderer(languageMenu);
+	}
+	/** @private @arg {TranscriptSegmentListData} x */
+	TranscriptSegmentListData(x) {
+		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=x; this.g(y);
+		this.z(initialSegments,this.TranscriptSegmentRenderer);
+		this.z([noResultLabel,retryLabel],a => this.D$TextWithRuns(a));
+		this.primitive_of(touchCaptionsEnabled,"boolean");
+	}
+	/** @private @arg {TranscriptSegmentRenderer} x */
+	TranscriptSegmentRenderer(x) {
+		const cf="TranscriptSegmentRenderer";
+		this.save_keys(`[${cf}]`,x);
+		const {transcriptSegmentRenderer: {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y},...z}=x; this.g(y); this.g(z);
+		this.z([startMs,endMs],a => this.primitive_of(a,"string"));
+		this.D$TextWithRuns(snippet);
+		this.TextT(startTimeText);
+		this.trackingParams(cf,trackingParams);
+		this.A$Accessibility(accessibility);
+		this.t(targetId,a => this.parser.parse_transcript_target_id(a));
+	}
+	/** @private @arg {WebSearchboxConfig} x */
+	WebSearchboxConfig(x) {
+		const cf="WebSearchboxConfig";
+		this.save_keys(`[${cf}]`,x);
+		const {requestLanguage,requestDomain,hasOnscreenKeyboard,focusSearchbox,...y}=x; this.g(y);
+	}
+	/** @arg {D$CinematicContainer} x */
+	CinematicContainer(x) {
+		const cf="CinematicContainerData";
+		this.save_keys(`[${cf}]`,x);
+		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=x; this.g(y); // ! #destructure
+		if(backgroundImageConfig) 1;
+		if(gradientColorConfig) 1;
+		if(presentationStyle) 1;
+		if(config) 1;
+		debugger;
+	}
 	/** @arg {PlaylistHeader} x */
 	PlaylistHeader(x) {
 		const cf="PlaylistHeader";
@@ -14472,6 +14549,12 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {MacroMarkersListItemRenderer} x */
 	MacroMarkersListItemRenderer(x) {
 		const cf="MacroMarkersListItemRenderer";
+		this.save_keys(`[${cf}]`,x);
+		this.MacroMarkersListItem(this.w(x));
+	}
+	/** @arg {MacroMarkersListItem} x */
+	MacroMarkersListItem(x) {
+		const cf="MacroMarkersListItem";
 		this.save_keys(`[${cf}]`,x);
 	}
 	/** @arg {ProductListItemRenderer} x */
@@ -14513,82 +14596,6 @@ class HandleTypes extends ServiceMethods {
 	AdLayoutLoggingData(x) {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);
-	}
-	/** @private @arg {D$Transcript} x */
-	D$Transcript(x) {
-		const cf="Transcript";
-		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,content,...y}=x; this.g(y);
-		this.trackingParams(cf,trackingParams);
-		this.TranscriptSearchPanelRenderer(content);
-	}
-	/** @private @arg {TranscriptSearchPanelRenderer} x */
-	TranscriptSearchPanelRenderer(x) {
-		const cf="TranscriptSearchPanelRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {transcriptSearchPanelRenderer: {trackingParams,body,footer,targetId,...y},...z}=x; this.g(y); this.g(z);
-		this.trackingParams(cf,trackingParams);
-		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
-		this.TranscriptSegmentListRenderer(body);
-		this.TranscriptFooterRenderer(footer);
-	}
-	/** @private @arg {TranscriptFooterRenderer} x */
-	TranscriptFooterRenderer(x) {
-		const cf="TranscriptFooterRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {transcriptFooterRenderer: {languageMenu,...y},...z}=x; this.g(y); this.g(z);
-		this.SortFilterSubMenuRenderer(languageMenu);
-	}
-	/** @private @arg {TranscriptSegmentListRenderer} x */
-	TranscriptSegmentListRenderer(x) {
-		const cf="TranscriptSegmentListRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TranscriptSegmentListData(this.w(x));
-	}
-	/** @private @arg {TranscriptSegmentListData} x */
-	TranscriptSegmentListData(x) {
-		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=x; this.g(y);
-		this.z(initialSegments,this.TranscriptSegmentRenderer);
-		this.z([noResultLabel,retryLabel],a => this.D$TextWithRuns(a));
-		this.primitive_of(touchCaptionsEnabled,"boolean");
-	}
-	/** @private @arg {TranscriptSegmentRenderer} x */
-	TranscriptSegmentRenderer(x) {
-		const cf="TranscriptSegmentRenderer";
-		this.save_keys(`[${cf}]`,x);
-		const {transcriptSegmentRenderer: {startMs,endMs,snippet,startTimeText,trackingParams,accessibility,targetId,...y},...z}=x; this.g(y); this.g(z);
-		this.z([startMs,endMs],a => this.primitive_of(a,"string"));
-		this.D$TextWithRuns(snippet);
-		this.TextT(startTimeText);
-		this.trackingParams(cf,trackingParams);
-		this.A$Accessibility(accessibility);
-		let cc=this.t(targetId,a => this.targetId_arr(split_string_once(a,".")));
-		this.t(cc,a => {
-			this.parser.on_endpoint_params(cf,"transcript_target_id.param",a[1]);
-		});
-	}
-	/** @private @arg {WebSearchboxConfig} x */
-	WebSearchboxConfig(x) {
-		const cf="WebSearchboxConfig";
-		this.save_keys(`[${cf}]`,x);
-		const {...y}=x; this.g(y);
-	}
-	/** @private @arg {[string, `${string}.${string}.${string}`]} x @returns {[string,string,string,string]} */
-	targetId_arr([f,a]) {
-		let [c,a1]=split_string_once(a,".");
-		let [d,a2]=split_string_once(a1,".");
-		return [f,c,d,a2];
-	}
-	/** @arg {D$CinematicContainer} x */
-	CinematicContainer(x) {
-		const cf="CinematicContainerData";
-		this.save_keys(`[${cf}]`,x);
-		const {backgroundImageConfig,gradientColorConfig,presentationStyle,config,...y}=x; this.g(y); // ! #destructure
-		if(backgroundImageConfig) 1;
-		if(gradientColorConfig) 1;
-		if(presentationStyle) 1;
-		if(config) 1;
-		debugger;
 	}
 	/** @private @arg {PivotButton} x */
 	PivotButton(x) {
