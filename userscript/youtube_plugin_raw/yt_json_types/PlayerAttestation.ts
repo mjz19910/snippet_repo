@@ -1,4 +1,4 @@
 type D$PlayerAttestation={
 	challenge: string;
-	botguardData: BotguardData;
+	botguardData: D$Botguard;
 };

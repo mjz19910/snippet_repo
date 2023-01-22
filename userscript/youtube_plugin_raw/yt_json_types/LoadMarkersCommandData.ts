@@ -1,3 +1,3 @@
-type LoadMarkersCommandData={
+type D$LoadMarkersCommand={
 	entityKeys: string[];
 };

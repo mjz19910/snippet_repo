@@ -1,4 +1,4 @@
-type FusionSearchboxData={
+type D$FusionSearchbox={
 	icon: T$Icon<"SEARCH">;
 	placeholderText: D$TextWithRuns;
 	config: R$SearchboxConfig;

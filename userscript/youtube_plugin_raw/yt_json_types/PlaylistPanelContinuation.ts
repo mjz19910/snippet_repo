@@ -1,1 +1,1 @@
-type PlaylistPanelContinuation={playlistPanelContinuation: PlaylistPanelContinuationData;};
+type PlaylistPanelContinuation={playlistPanelContinuation: D$PlaylistPanelContinuation;};

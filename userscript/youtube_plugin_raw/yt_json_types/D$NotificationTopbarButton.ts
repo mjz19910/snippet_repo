@@ -1,4 +1,4 @@
-type NotificationTopbarButtonData={
+type D$NotificationTopbarButton={
 	icon: T$Icon<"NOTIFICATIONS">;
 	menuRequest: E$T$SignalService<{}>;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";

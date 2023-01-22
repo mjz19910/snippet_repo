@@ -1,1 +1,1 @@
-type OfflineabilityEntity={offlineabilityEntity: OfflineabilityEntityData;};
+type OfflineabilityEntity={offlineabilityEntity: D$OfflineabilityEntity;};

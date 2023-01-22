@@ -1,4 +1,4 @@
-type AppendContinuationItemsActionData=
+type D$AppendContinuationItemsAction=
 	|WatchNextContinuationAction
 	|CommentsSectionContinuationAction
 	|CommentRepliesItem

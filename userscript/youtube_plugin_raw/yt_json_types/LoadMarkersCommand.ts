@@ -1,4 +1,4 @@
 type LoadMarkersCommand={
 	clickTrackingParams: string;
-	loadMarkersCommand: LoadMarkersCommandData;
+	loadMarkersCommand: D$LoadMarkersCommand;
 };

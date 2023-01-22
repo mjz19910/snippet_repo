@@ -1,4 +1,4 @@
-type CompactRadioData={
+type D$CompactRadio={
 	playlistId: `RD${"GM"}${string}`;
 	thumbnail: D$Thumbnail&SampledThumbnailColor;
 	title: D$SimpleText;

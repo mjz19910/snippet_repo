@@ -1,4 +1,4 @@
-type OfflineabilityEntityData={
+type D$OfflineabilityEntity={
 	key: string;
 	command: C$InnertubeCommand;
 	addToOfflineButtonState: AddToOfflineButtonStateEnum;

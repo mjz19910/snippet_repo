@@ -1,4 +1,4 @@
-type CommentSimpleboxData={
+type D$CommentSimplebox={
 	submitButton: R$Button;
 	cancelButton: R$Button;
 	authorThumbnail: D$Thumbnail;

@@ -1,1 +1,1 @@
-type A$UpdateSubscribeButton={updateSubscribeButtonAction: UpdateSubscribeButtonActionData;};
+type A$UpdateSubscribeButton={updateSubscribeButtonAction: D$UpdateSubscribeButtonAction;};

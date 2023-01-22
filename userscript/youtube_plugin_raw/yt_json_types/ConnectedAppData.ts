@@ -1,4 +1,4 @@
-type ConnectedAppData={
+type D$ConnectedApp={
 	icon: {};
 	title: {};
 	text: {};

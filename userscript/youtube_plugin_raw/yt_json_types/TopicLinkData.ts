@@ -1,4 +1,4 @@
-type TopicLinkData={
+type D$TopicLink={
 	title: D$SimpleText;
 	thumbnailDetails: D$Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata

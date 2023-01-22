@@ -1,4 +1,4 @@
-type LiveChatTextMessageData={
+type D$LiveChatTextMessage={
 	message: D$TextWithRuns;
 	authorName: D$TextWithRuns;
 	authorPhoto: D$Thumbnail;

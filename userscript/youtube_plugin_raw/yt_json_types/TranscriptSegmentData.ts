@@ -1,4 +1,4 @@
-type TranscriptSegmentData={
+type D$TranscriptSegment={
 	startMs: `${number}`;
 	endMs: `${number}`;
 	snippet: D$TextWithRuns;

@@ -1,4 +1,4 @@
-type GridVideoData={
+type D$GridVideo={
 	badges: {}[];
 	channelThumbnail: D$Thumbnail;
 	menu: R$Menu;

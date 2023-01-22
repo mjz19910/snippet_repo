@@ -1,5 +1,5 @@
 type E$LikeDislike={
 	status: "DISLIKE";
-	target: LikeApiData;
+	target: D$LikeApi;
 	dislikeParams: string;
 };

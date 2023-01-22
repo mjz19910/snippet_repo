@@ -1,4 +1,4 @@
-type CopyLinkData={
+type D$CopyLink={
 	copyButton: R$Button;
 	shortUrl: string;
 	trackingParams: string;

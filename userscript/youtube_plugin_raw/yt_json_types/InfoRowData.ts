@@ -1,4 +1,4 @@
-type InfoRowData={
+type D$InfoRow={
 	title: D$SimpleText;
 	defaultMetadata?: D$SimpleText;
 	expandedMetadata?: D$SimpleText;

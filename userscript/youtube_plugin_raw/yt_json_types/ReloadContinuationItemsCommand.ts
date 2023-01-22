@@ -1,4 +1,4 @@
 type ReloadContinuationItemsCommand={
 	clickTrackingParams: string;
-	reloadContinuationItemsCommand: ReloadContinuationItemsCommandData;
+	reloadContinuationItemsCommand: D$ReloadContinuationItemsCommand;
 };

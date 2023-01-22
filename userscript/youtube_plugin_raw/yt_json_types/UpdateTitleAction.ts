@@ -1,1 +1,1 @@
-type UpdateTitleAction={updateTitleAction: UpdateTitleActionData;};
+type UpdateTitleAction={updateTitleAction: D$UpdateTitleAction;};

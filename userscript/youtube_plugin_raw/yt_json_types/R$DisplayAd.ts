@@ -4,12 +4,12 @@ type R$DisplayAd={
 	image: R$ThumbnailsList;
 	bodyText: D$TextWithRuns;
 	secondaryText: D$TextWithRuns;
-	badge: MetadataBadgeData;
+	badge: D$MetadataBadge;
 	menu: R$Menu;
 	ctaButton: R$Button;
 	impressionEndpoints: {}[];
 	clickCommand: {};
 	mediaHoverOverlay: R$Button;
-	mediaBadge: MetadataBadgeData;
+	mediaBadge: D$MetadataBadge;
 	trackingParams: string;
 }

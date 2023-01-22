@@ -1,4 +1,4 @@
-type VideoDescriptionHeaderData={
+type D$VideoDescriptionHeader={
 	title: D$TextWithRuns;
 	channel: D$SimpleText;
 	views: D$SimpleText;

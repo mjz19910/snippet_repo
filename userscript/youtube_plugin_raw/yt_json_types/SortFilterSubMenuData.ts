@@ -1,4 +1,4 @@
-type SortFilterSubMenuData={
+type D$SortFilterSubMenu={
 	subMenuItems: ActionSetPlaylistVideoOrder[];
 	title?: string;
 	icon?: T$Icon<"SORT">;

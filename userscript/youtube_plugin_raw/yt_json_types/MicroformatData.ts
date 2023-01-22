@@ -1,4 +1,4 @@
-type MicroformatData={
+type D$Microformat={
 	urlCanonical: string;
 	title: string;
 	description: string;

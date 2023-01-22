@@ -1,4 +1,4 @@
 type SignalAction={
 	clickTrackingParams: string;
-	signalAction: SignalActionData;
+	signalAction: D$SignalAction;
 };

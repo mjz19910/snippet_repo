@@ -1,4 +1,4 @@
-type SettingsSwitchData={
+type D$SettingsSwitch={
 	title: D$TextWithRuns;
 	subtitle: D$TextWithRuns;
 	enabled: boolean;

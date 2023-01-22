@@ -35,7 +35,7 @@ let ytmusic_app=null;
 let created_blobs=new Map;
 /** @private @type {Set<string>} */
 let active_blob_set=new Set;
-/** @private @type {SavedData} */
+/** @private @type {D$Saved} */
 let saved_data=as({});
 const is_yt_debug_enabled=false;
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>x is X} */
@@ -3337,7 +3337,7 @@ class YtHandlers extends BaseService {
 	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @private @type {AnySavedData} */
+		/** @private @type {D$AnySaved} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
@@ -3469,7 +3469,7 @@ class HandleRendererContentItemArray extends BaseService {
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor {
-	/** @public @arg {ApiIterateState} state @arg {AppendContinuationItemsActionData} action */
+	/** @public @arg {ApiIterateState} state @arg {D$AppendContinuationItemsAction} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
@@ -3479,7 +3479,7 @@ class YtObjectVisitor {
 			action.continuationItems=filtered;
 		}
 	}
-	/** @public @arg {ApiIterateState} state @arg  {ReloadContinuationItemsCommandData} command */
+	/** @public @arg {ApiIterateState} state @arg  {D$ReloadContinuationItemsCommand} command */
 	reloadContinuationItemsCommand({t: state},command) {
 		if(!command.continuationItems) {
 			debugger;
@@ -7138,7 +7138,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(ytConfigData,this.YtConfigData);
 		this.t(webPrefetchData,this.WebPrefetchData);
 	}
-	/** @private @arg {YtConfigData} x */
+	/** @private @arg {D$YtConfig} x */
 	YtConfigData(x) {
 		const cf="YtConfigData";
 		this.save_keys(`[${cf}]`,x);
@@ -7162,7 +7162,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {WebPrefetchData} x */
+	/** @private @arg {D$WebPrefetch} x */
 	WebPrefetchData(x) {
 		const cf="WebPrefetchData";
 		this.save_keys(`[${cf}]`,x);
@@ -7223,7 +7223,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {{}} x */
 	R$SettingsSidebar(x) {this.emf("SettingsSidebarRenderer",x);}
-	/** @public @arg {DropdownData} x */
+	/** @public @arg {D$Dropdown} x */
 	DropdownData(x) {
 		const {entries,label,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(label);
@@ -7388,7 +7388,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of(x.token,"string");
 		this.save_enum("CONTINUATION_REQUEST_TYPE",x.request);
 	}
-	/** @private @arg {MusicThumbnailData} x */
+	/** @private @arg {D$MusicThumbnail} x */
 	MusicThumbnailData(x) {
 		const cf="MusicThumbnailData";
 		this.save_keys("[]",x);
@@ -7806,7 +7806,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ScrollToEngagementPanelData(scrollToEngagementPanelCommand);
 	}
-	/** @private @arg {ScrollToEngagementPanelData} x */
+	/** @private @arg {D$ScrollToEngagementPanel} x */
 	ScrollToEngagementPanelData(x) {
 		const cf="ScrollToEngagementPanelData";
 		this.save_keys(`[${cf}]`,x);
@@ -7841,7 +7841,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @private @arg {AppendContinuationItemsActionData} x */
+	/** @private @arg {D$AppendContinuationItemsAction} x */
 	AppendContinuationItemsActionData(x) {
 		const cf="AppendContinuationItemsActionData";
 		this.save_keys(`[${cf}]`,x);
@@ -7865,7 +7865,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ReloadContinuationItemsCommandData(reloadContinuationItemsCommand);
 	}
-	/** @private @arg {ReloadContinuationItemsCommandData} x */
+	/** @private @arg {D$ReloadContinuationItemsCommand} x */
 	ReloadContinuationItemsCommandData(x) {
 		const cf="ReloadContinuationItemsCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -7891,14 +7891,14 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		};
 	}
-	/** @private @arg {LoadMarkersCommandData} x */
+	/** @private @arg {D$LoadMarkersCommand} x */
 	LoadMarkersCommandData(x) {
 		const cf="LoadMarkersCommandData";
 		this.save_keys(`[${cf}]`,x);
 		const {entityKeys,...y}=x; this.g(y); // ! #destructure
 		this.z(entityKeys,this.primitive_of_string);
 	}
-	/** @private @arg {ChangeKeyedMarkersVisibilityCommandData} x */
+	/** @private @arg {D$ChangeKeyedMarkersVisibilityCommand} x */
 	ChangeKeyedMarkersVisibilityCommandData(x) {
 		const cf="ChangeKeyedMarkersVisibilityCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -8089,7 +8089,7 @@ class HandleTypes extends ServiceMethods {
 			case "MUSIC_VIDEO_TYPE_ATV": break;
 		};
 	}
-	/** @private @arg {PrefetchHintConfigData} x */
+	/** @private @arg {D$PrefetchHintConfig} x */
 	PrefetchHintConfigData(x) {
 		const cf="Html5PlaybackOnesieConfig";
 		this.save_keys(`[${cf}]`,x);
@@ -8644,7 +8644,7 @@ class HandleTypes extends ServiceMethods {
 		if(isVanityUrl!==void 0) this.primitive_of(isVanityUrl,"boolean");
 		this.t(parentTrackingParams,a => this.params("ResolveUrlCommandMetadata","tracking.parentTrackingParams",a));
 	}
-	/** @private @arg {AdsControlFlowOpportunityReceivedCommandData} x */
+	/** @private @arg {D$AdsControlFlowOpportunityReceivedCommand} x */
 	AdsControlFlowOpportunityReceivedCommandData(x) {
 		const cf="AdsControlFlowOpportunityReceivedCommandData";
 		this.save_keys(`[${cf}]`,x);
@@ -8988,7 +8988,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandExecutorData(commandExecutorCommand);
 	}
-	/** @private @arg {CommandExecutorData} x */
+	/** @private @arg {D$CommandExecutor} x */
 	CommandExecutorData(x) {
 		this.CommandsTemplate(x,this.CommandExecutorAction);
 	}
@@ -9030,7 +9030,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(overrideEntityKey);
 	}
-	/** @template {VideoOwnerData} T @arg {T} x */
+	/** @template {D$VideoOwner} T @arg {T} x */
 	VideoOwner$Omit(x) {
 		const cf="VideoOwnerData";
 		const {thumbnail,title,subscriptionButton,navigationEndpoint,subscriberCountText,trackingParams,...y}=x;
@@ -9042,7 +9042,7 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		return y;
 	}
-	/** @private @arg {VideoOwnerData} x */
+	/** @private @arg {D$VideoOwner} x */
 	VideoOwnerData(x) {
 		const cf="VideoOwnerData";
 		this.save_keys(`[${cf}]`,x);
@@ -9091,7 +9091,7 @@ class HandleTypes extends ServiceMethods {
 		if(slotType!=="SLOT_TYPE_IN_FEED") debugger;
 		if(slotPhysicalPosition!==1) debugger;
 	}
-	/** @private @arg {FusionSearchboxData} x */
+	/** @private @arg {D$FusionSearchbox} x */
 	FusionSearchboxData(x) {
 		const cf="FusionSearchboxData";
 		this.save_keys(`[${cf}]`,x);
@@ -9105,7 +9105,7 @@ class HandleTypes extends ServiceMethods {
 	}
 	/** @private @arg {R$SearchboxConfig} x */
 	R$SearchboxConfig(x) {this.H$R$("SearchboxConfig",x,a => {a; debugger;});}
-	/** @private @arg {ChangeEngagementPanelVisibilityActionData} x */
+	/** @private @arg {D$ChangeEngagementPanelVisibilityAction} x */
 	ChangeEngagementPanelVisibilityActionData(x) {
 		const cf="ChangeEngagementPanelVisibilityActionData";
 		this.save_keys(`[${cf}]`,x);
@@ -9124,7 +9124,7 @@ class HandleTypes extends ServiceMethods {
 			case "ENGAGEMENT_PANEL_VISIBILITY_HIDDEN": break;
 		}
 	}
-	/** @private @arg {UpdateEngagementPanelData} x */
+	/** @private @arg {D$UpdateEngagementPanel} x */
 	UpdateEngagementPanelData(x) {
 		const cf="UpdateEngagementPanelData";
 		this.save_keys(`[${cf}]`,x);
@@ -9185,7 +9185,7 @@ class HandleTypes extends ServiceMethods {
 		this.tz(onResponseReceivedEndpoints,(this.g));
 		this.R$SettingsSidebar(sidebar);
 	}
-	/** @private @arg {FeedFilterChipBarData} x */
+	/** @private @arg {D$FeedFilterChipBar} x */
 	FeedFilterChipBarData(x) {
 		const cf="FeedFilterChipBarData";
 		this.save_keys(`[${cf}]`,x);
@@ -9367,7 +9367,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="PlaylistHeader";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {AdLayoutLoggingData} x */
+	/** @private @arg {D$AdLayoutLogging} x */
 	AdLayoutLoggingData(x) {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);

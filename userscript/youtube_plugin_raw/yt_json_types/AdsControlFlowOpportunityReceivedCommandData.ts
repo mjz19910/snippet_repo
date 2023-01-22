@@ -1,4 +1,4 @@
-type AdsControlFlowOpportunityReceivedCommandData={
+type D$AdsControlFlowOpportunityReceivedCommand={
 	opportunityType: OpportunityTypeOrganicEnum;
 	adSlotAndLayoutMetadata?: AdSlotAndLayoutMetadataItem[];
 	isInitialLoad: boolean;

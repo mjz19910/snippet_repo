@@ -1,4 +1,4 @@
 type AddToPlaylistCommand={
-	addToPlaylistCommand: AddToPlaylistCommandData;
+	addToPlaylistCommand: D$AddToPlaylistCommand;
 	clickTrackingParams: string;
 }

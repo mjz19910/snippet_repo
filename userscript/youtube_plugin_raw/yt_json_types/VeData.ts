@@ -1,1 +1,1 @@
-type VeData={trackingParams: string;};
+type D$Ve={trackingParams: string;};

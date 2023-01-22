@@ -1,1 +1,1 @@
-type MiniplayerData={};
+type D$Miniplayer={};

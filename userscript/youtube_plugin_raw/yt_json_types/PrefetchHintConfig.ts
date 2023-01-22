@@ -1,1 +1,1 @@
-type PrefetchHintConfig={prefetchHintConfig: PrefetchHintConfigData;};
+type PrefetchHintConfig={prefetchHintConfig: D$PrefetchHintConfig;};

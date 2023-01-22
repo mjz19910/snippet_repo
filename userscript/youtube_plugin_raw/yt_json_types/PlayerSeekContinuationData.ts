@@ -1,1 +1,1 @@
-type PlayerSeekContinuationData=GenericContinuationData;
+type D$PlayerSeekContinuation=GenericContinuationData;

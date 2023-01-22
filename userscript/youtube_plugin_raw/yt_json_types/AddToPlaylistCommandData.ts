@@ -1,4 +1,4 @@
-type AddToPlaylistCommandData={
+type D$AddToPlaylistCommand={
 	listType: string;
 	onCreateListCommand: CreatePlaylistServiceEndpoint;
 	openListPanel: boolean;

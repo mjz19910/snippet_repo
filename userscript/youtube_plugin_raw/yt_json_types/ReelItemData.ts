@@ -1,4 +1,4 @@
-type ReelItemData={
+type D$ReelItem={
 	videoId: YtVideoId;
 	headline: D$TextWithRuns;
 	thumbnail: D$Thumbnail;

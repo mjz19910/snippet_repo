@@ -1,1 +1,1 @@
-type FeedTabbedHeaderData={title: D$TextWithRuns;};
+type D$FeedTabbedHeader={title: D$TextWithRuns;};

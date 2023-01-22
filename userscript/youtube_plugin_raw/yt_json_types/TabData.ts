@@ -1,4 +1,4 @@
-type TabData={
+type D$Tab={
 	selected: true;
 	content: R$RichGrid;
 	tabIdentifier: "FEwhat_to_watch";

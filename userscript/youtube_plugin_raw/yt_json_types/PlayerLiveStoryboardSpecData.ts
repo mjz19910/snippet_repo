@@ -1,1 +1,1 @@
-type PlayerLiveStoryboardSpecData={spec: string;};
+type D$PlayerLiveStoryboardSpec={spec: string;};

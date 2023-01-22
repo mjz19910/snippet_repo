@@ -1,4 +1,4 @@
 type ShowEngagementPanelScrimAction={
 	clickTrackingParams: string;
-	showEngagementPanelScrimAction: ShowEngagementPanelScrimActionData;
+	showEngagementPanelScrimAction: D$ShowEngagementPanelScrimAction;
 };

@@ -1,4 +1,4 @@
-type PageIntroductionData={
+type D$PageIntroduction={
 	bodyText: D$TextWithRuns;
 	headerIcon: T$Icon<"ACCOUNT_ADVANCED">|T$Icon<"ACCOUNT_SHARING">;
 	headerText: D$TextWithRuns;

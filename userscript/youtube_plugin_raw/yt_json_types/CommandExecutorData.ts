@@ -1,1 +1,1 @@
-type CommandExecutorData=T$Commands<CommandExecutorAction>;
+type D$CommandExecutor=T$Commands<CommandExecutorAction>;

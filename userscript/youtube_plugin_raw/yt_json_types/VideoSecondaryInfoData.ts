@@ -1,4 +1,4 @@
-type VideoSecondaryInfoData={
+type D$VideoSecondaryInfo={
 	owner: R$VideoOwner;
 	description?: D$TextWithRuns;
 	subscribeButton: R$SubscribeButton;

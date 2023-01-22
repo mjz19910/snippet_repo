@@ -1,4 +1,4 @@
-type VideoOwnerData={
+type D$VideoOwner={
 	thumbnail: D$Thumbnail;
 	title: D$TextWithRuns;
 	subscriptionButton: D$SubscriptionButton;

@@ -1,1 +1,1 @@
-type PlayerSeekContinuationDataRoot={playerSeekContinuationData: PlayerSeekContinuationData;};
+type PlayerSeekContinuationDataRoot={playerSeekContinuationData: D$PlayerSeekContinuation;};

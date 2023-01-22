@@ -1,4 +1,4 @@
-type ReplayChatItemActionData={
+type D$ReplayChatItemAction={
 	actions: AddChatItemAction[];
 	videoOffsetTimeMsec: `${number}`;
 };

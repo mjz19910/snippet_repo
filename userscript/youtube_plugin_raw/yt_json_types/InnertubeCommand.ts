@@ -1,1 +1,1 @@
-type C$InnertubeCommand={innertubeCommand: InnertubeCommandData;};
+type C$InnertubeCommand={innertubeCommand: D$InnertubeCommand;};

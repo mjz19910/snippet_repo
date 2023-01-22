@@ -1,1 +1,1 @@
-type ResolveUrlCommandMetadataData={};
+type D$ResolveUrlCommandMetadata={};

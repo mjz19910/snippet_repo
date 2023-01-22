@@ -1,4 +1,4 @@
 type ChangeKeyedMarkersVisibilityCommand={
 	clickTrackingParams: string;
-	changeKeyedMarkersVisibilityCommand: ChangeKeyedMarkersVisibilityCommandData;
+	changeKeyedMarkersVisibilityCommand: D$ChangeKeyedMarkersVisibilityCommand;
 };

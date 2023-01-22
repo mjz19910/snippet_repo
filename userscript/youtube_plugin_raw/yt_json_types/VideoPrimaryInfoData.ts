@@ -1,4 +1,4 @@
-type VideoPrimaryInfoData={
+type D$VideoPrimaryInfo={
 	title: D$TextWithRuns;
 	viewCount: R$VideoViewCount;
 	videoActions: R$Menu;

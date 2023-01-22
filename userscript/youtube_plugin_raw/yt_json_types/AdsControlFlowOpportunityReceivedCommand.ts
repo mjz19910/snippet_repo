@@ -1,4 +1,4 @@
 type AdsControlFlowOpportunityReceivedCommand={
 	clickTrackingParams: string;
-	adsControlFlowOpportunityReceivedCommand: AdsControlFlowOpportunityReceivedCommandData;
+	adsControlFlowOpportunityReceivedCommand: D$AdsControlFlowOpportunityReceivedCommand;
 };

@@ -1,4 +1,4 @@
 type GraftedVeItem={
 	csn: string;
-	veData: VeData;
+	veData: D$Ve;
 };

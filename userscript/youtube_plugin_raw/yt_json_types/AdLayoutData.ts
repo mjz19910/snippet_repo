@@ -1,1 +1,1 @@
-type AdLayoutData={serializedAdServingDataEntry: string;};
+type D$AdLayout={serializedAdServingDataEntry: string;};

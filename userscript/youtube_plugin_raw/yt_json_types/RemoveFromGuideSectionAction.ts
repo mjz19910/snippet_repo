@@ -1,4 +1,4 @@
 type A$RemoveFromGuideSection={
 	clickTrackingParams: string;
-	removeFromGuideSectionAction: RemoveFromGuideSectionActionData;
+	removeFromGuideSectionAction: D$RemoveFromGuideSectionAction;
 };

@@ -1,4 +1,4 @@
 type E$ChangeEngagementPanelVisibilityAction={
 	clickTrackingParams: string;
-	changeEngagementPanelVisibilityAction: ChangeEngagementPanelVisibilityActionData;
+	changeEngagementPanelVisibilityAction: D$ChangeEngagementPanelVisibilityAction;
 };

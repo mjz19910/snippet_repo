@@ -5,7 +5,7 @@ type D$PlaylistHeader={
 	descriptionText: {};
 	ownerText: D$TextWithRuns;
 	viewCountText: D$TextWithRuns;
-	shareData: YtShareData;
+	shareData: D$YtShare;
 	isEditable: boolean;
 	privacy: string;
 	ownerEndpoint: E$Browse;

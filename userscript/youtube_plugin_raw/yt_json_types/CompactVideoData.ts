@@ -1,4 +1,4 @@
-type CompactVideoData={
+type D$CompactVideo={
 	videoId: string;
 	thumbnail: D$Thumbnail;
 	title: {};

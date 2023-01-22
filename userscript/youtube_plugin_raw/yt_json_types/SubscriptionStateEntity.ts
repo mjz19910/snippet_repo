@@ -1,1 +1,1 @@
-type SubscriptionStateEntity={subscriptionStateEntity: SubscriptionStateData;};
+type SubscriptionStateEntity={subscriptionStateEntity: D$SubscriptionState;};

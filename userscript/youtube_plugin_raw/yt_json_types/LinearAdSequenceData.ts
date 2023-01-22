@@ -1,1 +1,1 @@
-type LinearAdSequenceData={linearAds: LinearAdsItem[];adLayoutMetadata: AdLayoutMetadata;};
+type D$LinearAdSequence={linearAds: LinearAdsItem[];adLayoutMetadata: AdLayoutMetadata;};

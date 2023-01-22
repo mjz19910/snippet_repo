@@ -1,4 +1,4 @@
-type PlaylistVideoListData={
+type D$PlaylistVideoList={
 	playlistId: "WL";
 	sortFilterMenu: SortFilterMenuType;
 	targetId: "WL";

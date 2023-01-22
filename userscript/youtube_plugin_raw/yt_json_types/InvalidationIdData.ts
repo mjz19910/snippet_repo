@@ -1,4 +1,4 @@
-type InvalidationIdData={
+type D$InvalidationId={
 	objectSource: number;
 	objectId: string;
 	topic: `chat~${string}~${number}`;

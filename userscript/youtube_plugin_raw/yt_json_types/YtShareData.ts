@@ -1,1 +1,1 @@
-type YtShareData={canShare: false;};
+type D$YtShare={canShare: false;};
