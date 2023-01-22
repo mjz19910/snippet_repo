@@ -1,1 +1,0 @@
-type T$MultiPageMenuSection<T>=T$Items<T>;
