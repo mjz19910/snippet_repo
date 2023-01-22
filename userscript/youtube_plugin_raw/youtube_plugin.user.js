@@ -8864,7 +8864,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.CommentsSectionItem);
+		this.z(continuationItems,this.G$CommentsSection);
 	}
 	/** @private @arg {T$A$Continuation<"browse-feedFEwhat_to_watch",R$BrowseFeed>} x */
 	A$BrowseFeed$(x) {
@@ -8872,7 +8872,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
-		this.z(continuationItems,this.BrowseFeedItem);
+		this.z(continuationItems,this.R$BrowseFeed);
 	}
 	/** @private @arg {T$A$Continuation<"watch-next-feed",G$WatchNext>} x */
 	A$WatchNext$(x) {
@@ -9387,13 +9387,13 @@ class HandleTypes extends ServiceMethods {
 		debugger;
 	}
 	/** @private @arg {G$CommentsSection} x */
-	CommentsSectionItem(x) {
+	G$CommentsSection(x) {
 		const cf="CommentsSectionItem";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
 	/** @private @arg {R$BrowseFeed} x */
-	BrowseFeedItem(x) {
+	R$BrowseFeed(x) {
 		const cf="BrowseFeedItem";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
