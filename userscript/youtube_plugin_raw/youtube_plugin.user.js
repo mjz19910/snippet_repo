@@ -4385,8 +4385,6 @@ class CodegenService extends BaseService {
 				ret_arr.push(`this.R$${ic}(${k});`);
 				continue;
 			}
-			let skip=true;
-			if(skip) throw [x2,k];
 			if(k.endsWith("Renderer")) {
 				this.#generate_body_default_item(k,ret_arr,req_names,t_name);
 				continue;
