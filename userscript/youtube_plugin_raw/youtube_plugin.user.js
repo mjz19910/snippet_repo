@@ -9760,8 +9760,7 @@ class HandleTypes extends ServiceMethods {
 	NotificationRenderer(x) {
 		const cf="NotificationRenderer";
 		this.save_keys(`[${cf}]`,x);
-		const {notificationRenderer,...y}=x; this.g(y); // ! #destructure
-		this.Notification(notificationRenderer);
+		this.Notification(this.w(x));
 	}
 	/** @arg {YtNotification} x */
 	Notification(x) {
