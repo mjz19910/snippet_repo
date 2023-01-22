@@ -4,7 +4,7 @@ type EI$ResponseReceived=
 	|ChangeKeyedMarkersVisibilityCommand
 	|LoadMarkersCommand
 	|ReloadContinuationItemsCommand
-	|E$SignalServiceEndpoint
+	|E$SignalServiceEndpoint<{}>
 	;
 type AppendContinuationItemsAction={
 	clickTrackingParams: string;

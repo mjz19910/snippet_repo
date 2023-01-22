@@ -10462,9 +10462,10 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.g(c);
 	}
-	/** @arg {PlaylistEditEndpoint|E$SignalServiceEndpoint<{}>} x */
+	/** @arg {PlaylistEditEndpoint|E$SignalServiceEndpoint<Signal$ClientSignal>} x */
 	ThumbnailOverlayToggleButton$serviceEndpoint(x) {
 		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
+		this.E$SignalServiceEndpoint(x);
 		debugger;
 	}
 	/** @arg {PlaylistEditEndpoint} x */
@@ -12919,7 +12920,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(onSubscribeEndpoints,this.E$SubscribeEndpoint);
 		this.z(onUnsubscribeEndpoints,this.E$SignalServiceEndpoint);
 	}
-	/** @arg {E$SignalServiceEndpoint} x */
+	/** @template T @arg {E$SignalServiceEndpoint<T>} x */
 	signalServiceEndpoint(x) {this.E$SignalServiceEndpoint(x);}
 	/** @arg {D$BrowseFeedActions} x */
 	BrowseFeedActions(x) {
