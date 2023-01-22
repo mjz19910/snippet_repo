@@ -10437,16 +10437,20 @@ class HandleTypes extends ServiceMethods {
 	D$ThumbnailOverlayToggleButton(x) {
 		const cf="ThumbnailOverlayNowPlayingData";
 		this.save_keys(`[${cf}]`,x);
-		const {isToggled,trackingParams,...y}=x;
+		const {trackingParams,...y}=x;
 		this.trackingParams(cf,trackingParams);
 		let [c_tog,c_un,c]=this.unwrap_toggled(y); this.g(c);
 		{
-			let {accessibility,icon,tooltip,serviceEndpoint,...v1}=c_tog; this.g(v1);
+			let {accessibility,icon,tooltip,...v1}=c_tog;
 			this.A$Accessibility(accessibility);
 			this.T$Icon(icon);
-			if(icon.iconType!=="CHECK") debugger;
+			switch(icon.iconType) {case "CHECK": break; default: debugger;}
 			if(tooltip!=="Added") debugger;
-			this.PlaylistEditEndpoint(serviceEndpoint);
+			if("serviceEndpoint" in v1) {
+				this.PlaylistEditEndpoint(this.w(v1));
+			} else {
+				this.g(v1);
+			}
 		}
 		{
 			let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un; this.g(v2);
@@ -10454,8 +10458,14 @@ class HandleTypes extends ServiceMethods {
 			this.T$Icon(icon);
 			if(icon.iconType!=="WATCH_LATER") debugger;
 			if(tooltip!=="Watch Later") debugger;
-			this.PlaylistEditEndpoint(serviceEndpoint);
+			this.ThumbnailOverlayToggleButton$serviceEndpoint(serviceEndpoint);
 		}
+		this.g(c);
+	}
+	/** @arg {PlaylistEditEndpoint|E$SignalServiceEndpoint<{}>} x */
+	ThumbnailOverlayToggleButton$serviceEndpoint(x) {
+		if("playlistEditEndpoint" in x) return this.PlaylistEditEndpoint(x);
+		debugger;
 	}
 	/** @arg {PlaylistEditEndpoint} x */
 	PlaylistEditEndpoint(x) {

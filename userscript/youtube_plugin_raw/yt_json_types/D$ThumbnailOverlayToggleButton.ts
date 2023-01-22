@@ -9,4 +9,13 @@ type D$ThumbnailOverlayToggleButton={
 	untoggledAccessibility: A$Accessibility;
 	toggledAccessibility: A$Accessibility;
 	trackingParams: string;
-};
+}|{
+	untoggledIcon: T$Icon<"ADD_TO_QUEUE_TAIL">;
+	toggledIcon: T$Icon<"PLAYLIST_ADD_CHECK">;
+	untoggledTooltip: "Add to queue";
+	toggledTooltip: "Added";
+	untoggledServiceEndpoint: E$SignalServiceEndpoint;
+	untoggledAccessibility: A$Accessibility;
+	toggledAccessibility: A$Accessibility;
+	trackingParams: string;
+};;
