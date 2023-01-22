@@ -5283,10 +5283,10 @@ class ParserService extends BaseService {
 			if(cb===null) {
 				/** @type {P$LogItems} */
 				switch(path) {
-					default: {
+					default:
 						grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path);
 						debugger;
-					} return;
+						return;
 					case "serializedTemplateConfig":
 						switch(ta) {case 2: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
