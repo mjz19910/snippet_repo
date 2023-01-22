@@ -9062,7 +9062,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("subscriptionStateEntity" in x) return this.EN$(x);
 		if("transcriptTrackSelectionEntity" in x) return this.EN$(x);
-		if("transcriptSearchBoxStateEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
+		if("transcriptSearchBoxStateEntity" in x) return this.EN$(x);
 		if("offlineabilityEntity" in x) return this.EN$(x);
 		if("playlistLoopStateEntity" in x) return this.EN$(x);
 		if("macroMarkersListEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};

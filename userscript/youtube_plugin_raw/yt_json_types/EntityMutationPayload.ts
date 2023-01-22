@@ -10,6 +10,7 @@ type EntityMutationPayload=
 |SubscriptionStateEntity
 |PlaylistLoopStateEntity
 |TranscriptTrackSelectionEntity
+|TranscriptSearchBoxStateEntity
 ;
 
 type TranscriptSearchBoxStateEntity={transcriptSearchBoxStateEntity: TranscriptSearchBoxState;};
