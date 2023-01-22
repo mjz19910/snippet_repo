@@ -1,0 +1,1 @@
+type D_Tracking={trackingParams: string;};

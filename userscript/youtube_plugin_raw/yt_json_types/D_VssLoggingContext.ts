@@ -1,0 +1,1 @@
+type D_VssLoggingContext={serializedContextData: string;};

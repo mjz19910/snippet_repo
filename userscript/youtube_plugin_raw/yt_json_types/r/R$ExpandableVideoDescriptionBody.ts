@@ -1,1 +1,1 @@
-type R_ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D__ExpandableVideoDescriptionBody;};
+type R_ExpandableVideoDescriptionBody={expandableVideoDescriptionBodyRenderer: D_ExpandableVideoDescriptionBody;};

@@ -5,7 +5,7 @@ type D__PlaylistHeader={
 	descriptionText: {};
 	ownerText: R_TextWithRuns;
 	viewCountText: R_TextWithRuns;
-	shareData: D__YtShare;
+	shareData: D_CanShare;
 	isEditable: boolean;
 	privacy: string;
 	ownerEndpoint: E$Browse;

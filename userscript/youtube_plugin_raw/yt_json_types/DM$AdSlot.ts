@@ -1,4 +1,4 @@
-type AdSlotMetadata={
+type DM$AdSlot={
 	slotId: `${number}:${number}:${number}:${number}`;
 	slotType: "SLOT_TYPE_IN_FEED";
 	slotPhysicalPosition: 1;

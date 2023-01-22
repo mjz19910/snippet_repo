@@ -1,4 +1,4 @@
-type $Popups$=
+type G$Popups$=
 	|R_ConfirmDialog
 	|T$R_MultiPageMenu<{}>
 	|R_NotificationAction

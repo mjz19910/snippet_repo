@@ -1,0 +1,1 @@
+type D_AnySaved={[U in D_SavedDataUrlTypes]?: GD_SavedDataItem;};

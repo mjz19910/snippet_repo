@@ -1,1 +1,0 @@
-type D__AnySaved={[U in SavedDataUrlTypes]?: SavedDataItem;};

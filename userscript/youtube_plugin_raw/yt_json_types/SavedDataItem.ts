@@ -1,1 +1,1 @@
-type SavedDataItem={};
+type GD_SavedDataItem={};

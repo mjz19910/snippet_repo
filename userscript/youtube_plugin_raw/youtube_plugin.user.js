@@ -35,7 +35,7 @@ let ytmusic_app=null;
 let created_blobs=new Map;
 /** @private @type {Set<string>} */
 let active_blob_set=new Set;
-/** @private @type {D__Saved} */
+/** @private @type {D_Saved} */
 let saved_data=as({});
 const is_yt_debug_enabled=false;
 /** @private @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(x: T|X, _constructor_type:U)=>x is X} */
@@ -2394,7 +2394,6 @@ class KnownDataSaver extends ApiBase {
 		console.log("store_str [%s] %o",k,x);
 		let idx=this.#data_store.seen_strings.indexOf(store_item);
 		if(idx<0) {debugger; return;}
-		this.show_strings_bitmap("save_string",idx,store);
 		return true;
 	}
 	/** @private @arg {string} ns @arg {number} idx @arg {StoreDescription<string>} store */
@@ -3032,10 +3031,10 @@ class YtHandlers extends BaseService {
 		ht.ResponseTypes(response,res);
 		this.iteration.default_iter({t: this,path: url_type},data);
 	}
-	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {SavedDataItem} data */
+	/** @private @arg {UrlTypes|`page_type_${YTNavigateFinishDetail["pageType"]}`} path @arg {GD_SavedDataItem} data */
 	handle_any_data(path,data) {
 		saved_data.any_data??={};
-		/** @private @type {D__AnySaved} */
+		/** @private @type {D_AnySaved} */
 		let merge_obj={[path]: data};
 		saved_data.any_data={...saved_data.any_data,...merge_obj};
 		this.iteration.default_iter({t: this,path},data);
@@ -7195,7 +7194,7 @@ class HandleTypes extends ServiceMethods {
 		this.primitive_of_string(encryptedTokenJarContents);
 		if(expirationSeconds!=="600") debugger;
 	}
-	/** @private @arg {RC$WebResponseContextExtensionData} x */
+	/** @private @arg {RC$WebResponseContextExtension} x */
 	WebResponseContextExtensionData(x) {
 		const cf="WebResponseContextExtensionData";
 		this.save_keys(`[${cf}]`,x);
@@ -7228,7 +7227,7 @@ class HandleTypes extends ServiceMethods {
 			default: debugger; break;
 		}
 	}
-	/** @private @arg {D__WebPrefetch} x */
+	/** @private @arg {D_WebPrefetch} x */
 	WebPrefetchData(x) {
 		const cf="WebPrefetchData";
 		this.save_keys(`[${cf}]`,x);
@@ -9189,7 +9188,7 @@ class HandleTypes extends ServiceMethods {
 		this.z(adLayoutMetadata,this.AdLayoutMetadataItem);
 		this.AdSlotMetadata(adSlotMetadata);
 	}
-	/** @private @arg {AdSlotMetadata} x */
+	/** @private @arg {DM$AdSlot} x */
 	AdSlotMetadata(x) {
 		const cf="AdSlotMetadata";
 		this.save_keys(`[${cf}]`,x);

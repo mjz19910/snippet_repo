@@ -1,1 +1,0 @@
-type D__Ve={trackingParams: string;};

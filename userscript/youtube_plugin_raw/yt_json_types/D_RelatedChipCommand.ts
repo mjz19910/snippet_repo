@@ -1,4 +1,4 @@
-type D__RelatedChipCommand={
+type D_RelatedChipCommand={
 	targetSectionIdentifier: "sid-wn-chips";
 	loadCached: true;
 };

@@ -1,4 +1,4 @@
 type RelatedChipCommand={
 	clickTrackingParams: string;
-	relatedChipCommand: D__RelatedChipCommand;
+	relatedChipCommand: D_RelatedChipCommand;
 };
