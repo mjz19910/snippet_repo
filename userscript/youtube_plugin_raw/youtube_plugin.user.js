@@ -5389,6 +5389,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 		const idx=1;
 		switch(path_parts[0]) {
 			default: u(idx); debugger; {switch(path_parts[0]) {case "": break;}} break;
+			case "AdServingDataEntry": u(idx); debugger; break;
 			// [watch.player_params]
 			case "watch": {
 				const idx=2;
@@ -8384,7 +8385,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.NextContinuationData);
+		this.tz(continuations,this.RD$NextContinuation);
 		this.trackingParams(cf,trackingParams);
 		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
@@ -8395,26 +8396,32 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {contents,continuations,trackingParams,subMenu,hideBottomSeparator,targetId,...y}=x; this.g(y); // ! #destructure
 		this.z(contents,this.SectionListItem);
-		this.tz(continuations,this.A$NextContinuationData);
+		this.tz(continuations,this.RD$NextContinuation);
 		this.trackingParams(cf,trackingParams);
 		this.t(subMenu,a => this.save_keys(`[${cf}.subMenu]`,a));
 		if(hideBottomSeparator!==void 0) this.save_boolean(`[${cf}.hideBottomSeparator]`,hideBottomSeparator);
 		this.t(targetId,a => this.targetId(cf,a));
 	}
-	/** @private @arg {A$NextContinuationData} x */
-	A$NextContinuationData(x) {x;}
+	/** @private @arg {RD$NextContinuation} x */
+	RD$NextContinuation(x) {x;}
 	/** @private @arg {$SectionListItem} x */
 	SectionListItem(x) {
 		const cf="SectionListItem";
 		this.save_keys(`[${cf}]`,x);
 		if("itemSectionRenderer" in x) {
-			return this.ItemSectionRenderer(x);
+			// return this.ItemSectionRenderer(x);
+			debugger;
+			return;
 		} else if("continuationItemRenderer" in x) {
 			this.ContinuationItemRenderer(x);
 		} else if("musicCarouselShelfRenderer" in x) {
-			this.MusicCarouselShelfRenderer(x);
+			// this.MusicCarouselShelfRenderer(x);
+			debugger;
+			return;
 		} else if("musicShelfRenderer" in x) {
-			this.MusicShelfRenderer(x);
+			// this.MusicShelfRenderer(x);
+			debugger;
+			return;
 		} else {
 			debugger;
 		}

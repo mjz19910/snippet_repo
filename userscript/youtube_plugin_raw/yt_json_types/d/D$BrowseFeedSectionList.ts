@@ -1,5 +1,5 @@
 type D$BrowseFeedSectionList={
-	continuations?: A$NextContinuationData[];
+	continuations?: RD$NextContinuation[];
 	contents: $SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};

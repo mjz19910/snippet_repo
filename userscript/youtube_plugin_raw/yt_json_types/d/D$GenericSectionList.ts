@@ -1,5 +1,5 @@
 type D$GenericSectionList={
-	continuations?: A$NextContinuationData[];
+	continuations?: RD$NextContinuation[];
 	contents: $SectionListItem[];
 	trackingParams: string;
 	subMenu?: {};
