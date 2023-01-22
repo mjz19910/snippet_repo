@@ -1,1 +1,0 @@
-type D__AdsEngagementPanelContent={hack: true;};

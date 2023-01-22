@@ -1,4 +1,4 @@
-type G$SectionItem=[
+type G_SectionItem=[
 	R_RichItem,
 	R_RichSection,
 	R_CommentsHeader,
