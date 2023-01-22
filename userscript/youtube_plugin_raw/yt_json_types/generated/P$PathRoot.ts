@@ -6,6 +6,9 @@ type P$LogItems=[
 	"[parse_value.gen_ns] [AdServingDataEntry.f10]",
 	"[parse_value.gen_ns] [AdServingDataEntry.f13]",
 	"[parse_value.gen_ns] [AdServingDataEntry.f14]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f4.f2]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f4.f3]",
+	"[parse_value.gen_ns] [AdServingDataEntry.f9.f1]",
 ];
 type P$PathRoot=[
 	P$param$missing$,

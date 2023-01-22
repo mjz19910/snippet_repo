@@ -5226,7 +5226,7 @@ class ParserService extends BaseService {
 			case "${path}":
 				switch(ta) {case ${ta}: break; default: new_ns(); debugger; return;}
 				/** @type {P$PathRoot} */
-				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e=>e.slice(1)).join("\n"));
+				return this.parse_param_next(root,\`\${path}.f\${ta}\`,tv);\n`.split("\n").map(e => e.slice(3)).join("\n"));
 		};
 		return {u,gen_next_part,new_path};
 	}
@@ -5264,6 +5264,14 @@ class ParserService extends BaseService {
 						debugger;
 						this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					} break;
+					case "AdServingDataEntry.f9":
+						switch(ta) {case 1: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "tracking.trackingParams.f4":
+						switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}
+						/** @type {P$PathRoot} */
+						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "AdServingDataEntry":
 						switch(ta) {case 4: case 5: case 6: case 7: case 9: case 10: case 13: case 14: break; default: new_ns(); debugger; return;}
 						/** @type {P$PathRoot} */
@@ -5390,7 +5398,14 @@ class ParserService extends BaseService {
 							if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 							switch(tv) {default: debugger; return;}
 						}
-						switch(path_parts[2]) {default: u(idx); debugger; path_parts[2]===""; break;}
+						switch(path_parts[2]) {
+							case "f1": {
+								const idx=4;
+								if(path_parts.length===3) return;
+								switch(path_parts[3]) {default: u(idx); debugger; path_parts[3]===""; break;}
+							} break;
+							default: u(idx); debugger; path_parts[2]===""; break;
+						}
 					} break;
 				}
 			} break;
