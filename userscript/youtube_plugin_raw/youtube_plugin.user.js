@@ -6117,6 +6117,7 @@ case "${path_parts[idx-1]}": {
 									case "f1": {
 										const idx=5;
 										if(path_parts.length===4) {
+											if(tv instanceof Map) return;
 											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
