@@ -1,3 +1,1 @@
-type R$RichListHeader={
-	richListHeaderRenderer: D$RichListHeader;
-};
+type R$RichListHeader={richListHeaderRenderer: D$RichListHeader;};

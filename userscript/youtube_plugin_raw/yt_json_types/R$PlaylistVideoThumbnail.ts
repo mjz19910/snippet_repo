@@ -1,6 +1,1 @@
-type R$PlaylistVideoThumbnail={
-	playlistVideoThumbnailRenderer: {
-		thumbnail: D$Thumbnail;
-		trackingParams: string;
-	};
-};
+type R$PlaylistVideoThumbnail={playlistVideoThumbnailRenderer: D$PlaylistVideoThumbnail;};

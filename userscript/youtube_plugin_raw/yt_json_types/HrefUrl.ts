@@ -1,3 +1,1 @@
-type HrefUrl={
-	hrefUrl: string;
-};
+type HrefUrl={hrefUrl: string;};

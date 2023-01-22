@@ -1,3 +1,1 @@
-export type ClickTrackingParams={
-	clickTrackingParams: string;
-};
+export type ClickTrackingParams={clickTrackingParams: string;};

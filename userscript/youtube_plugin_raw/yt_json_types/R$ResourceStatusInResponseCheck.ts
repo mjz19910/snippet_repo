@@ -1,3 +1,1 @@
-type R$ResourceStatusInResponseCheck={
-	resourceStatusInResponseCheck: D$ResourceStatusInResponseCheckData;
-};
+type R$ResourceStatusInResponseCheck={resourceStatusInResponseCheck: D$ResourceStatusInResponseCheckData;};

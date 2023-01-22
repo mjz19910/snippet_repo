@@ -3775,7 +3775,6 @@ let stats_calculator_info={
 	/** @type {[string, number][][]} */
 	compression_stats: [],
 };
-
 inject_api.range_matches=range_matches;
 let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @arg {[unknown, number][]} stats */
@@ -4170,7 +4169,6 @@ function flat_obj(obj) {
 }
 /** @type {{value:IDValueImpl_0[]}} */
 let g_obj_arr={value: []};
-
 /** @arg {number|string} val @arg {unknown} e */
 function find_matching_value(val,e) {
 	if(typeof val==="string") {
@@ -4406,7 +4404,6 @@ function compress_init() {
 let id_groups={value: []};
 /** @type {{value:number[]}} */
 let el_ids={value: []};
-
 /** @arg {CompressionStatsCalculator} stats */
 function compress_main(stats) {
 	compress_init();

@@ -1,3 +1,1 @@
-type VeData={
-	trackingParams: string;
-};
+type VeData={trackingParams: string;};

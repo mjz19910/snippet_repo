@@ -1,7 +1,1 @@
-type PlaylistSidebarSecondaryInfo={
-	videoOwner: R$VideoOwner;
-};
-
-type R$PlaylistSidebarSecondaryInfo={
-	playlistSidebarSecondaryInfoRenderer: PlaylistSidebarSecondaryInfo;
-};
+type R$PlaylistSidebarSecondaryInfo={playlistSidebarSecondaryInfoRenderer: D$PlaylistSidebarSecondaryInfo;};

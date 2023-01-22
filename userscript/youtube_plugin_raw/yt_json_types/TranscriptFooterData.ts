@@ -1,3 +1,1 @@
-type TranscriptFooterData={
-	languageMenu: R$SortFilterSubMenu;
-};
+type TranscriptFooterData={languageMenu: R$SortFilterSubMenu;};

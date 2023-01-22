@@ -1,3 +1,1 @@
-type R$SegmentedLikeDislikeButton={
-	segmentedLikeDislikeButtonRenderer: D$SegmentedLikeDislikeButton;
-};
+type R$SegmentedLikeDislikeButton={segmentedLikeDislikeButtonRenderer: D$SegmentedLikeDislikeButton;};

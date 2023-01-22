@@ -1,4 +1,4 @@
-type SuperVodBuyFlowContent={
+type D$SuperVodBuyFlowContent={
 	description: D$TextWithRuns;
 	buyButton: R$Button;
 	trackingParams: string;

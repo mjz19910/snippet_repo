@@ -1,3 +1,1 @@
-type R$AccountSectionList={
-	accountSectionListRenderer: AccountSectionListData;
-};
+type R$AccountSectionList={accountSectionListRenderer: D$AccountSectionList;};

@@ -1,3 +1,1 @@
-type R$ProfileColumn={
-	profileColumnRenderer: ProfileColumnData;
-};
+type R$ProfileColumn={profileColumnRenderer: D$ProfileColumn;};

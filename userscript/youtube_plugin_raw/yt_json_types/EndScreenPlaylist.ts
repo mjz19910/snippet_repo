@@ -1,4 +1,4 @@
-type EndScreenPlaylist={
+type D$EndScreenPlaylist={
 	playlistId: `RD${string}`;
 	title: D$SimpleText;
 	thumbnail: D$Thumbnail;

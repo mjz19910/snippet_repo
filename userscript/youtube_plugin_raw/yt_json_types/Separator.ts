@@ -1,3 +1,1 @@
-export type Separator={
-	hasSeparator: boolean;
-};
+export type Separator={hasSeparator: boolean;};

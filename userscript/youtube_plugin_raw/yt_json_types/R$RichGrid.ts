@@ -1,3 +1,1 @@
-type R$RichGrid={
-	richGridRenderer: RichGrid;
-};
+type R$RichGrid={richGridRenderer: D$RichGrid;};

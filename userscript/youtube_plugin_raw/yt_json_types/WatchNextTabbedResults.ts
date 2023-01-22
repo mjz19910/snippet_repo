@@ -1,3 +1,3 @@
-type WatchNextTabbedResults={
+type D$WatchNextTabbedResults={
 	tabs: R$Tab[];
 };

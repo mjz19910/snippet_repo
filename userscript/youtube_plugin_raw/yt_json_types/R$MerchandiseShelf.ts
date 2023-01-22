@@ -1,3 +1,1 @@
-type R$MerchandiseShelf={
-	merchandiseShelfRenderer: MerchandiseShelf;
-};
+type R$MerchandiseShelf={merchandiseShelfRenderer: D$MerchandiseShelf;};

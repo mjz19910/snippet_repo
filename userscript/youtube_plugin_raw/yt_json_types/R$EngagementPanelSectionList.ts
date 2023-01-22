@@ -1,3 +1,1 @@
-type R$EngagementPanelSectionList={
-	engagementPanelSectionListRenderer: EngagementPanelSectionList;
-};
+type R$EngagementPanelSectionList={engagementPanelSectionListRenderer: D$EngagementPanelSectionList;};

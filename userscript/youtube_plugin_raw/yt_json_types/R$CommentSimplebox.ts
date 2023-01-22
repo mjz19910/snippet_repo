@@ -1,3 +1,1 @@
-type R$CommentSimplebox={
-	commentSimpleboxRenderer: CommentSimpleboxData;
-};
+type R$CommentSimplebox={commentSimpleboxRenderer: D$CommentSimplebox;};

@@ -1,4 +1,4 @@
-type ChannelMetadata={
+type D$ChannelMetadata={
 	title: "CppCon";
 	description: string;
 	rssUrl: string;

@@ -1,3 +1,3 @@
-type MusicQueue=Partial<T$Content<PlaylistPanelRenderer>>&{
+type D$MusicQueue=Partial<T$Content<R$PlaylistPanel>>&{
 	hack: true;
 };

@@ -4,11 +4,7 @@ type TranscriptTrackSelectionEntityData={
 	selectedTrackIndex: 0;
 	serializedParams: string;
 };
-
-type TranscriptTrackSelectionEntity={
-	transcriptTrackSelectionEntity: TranscriptTrackSelectionEntityData;
-};
-
+type TranscriptTrackSelectionEntity={transcriptTrackSelectionEntity: TranscriptTrackSelectionEntityData;};
 type EntityMutationPayload=
 |OfflineabilityEntity
 |SubscriptionStateEntity

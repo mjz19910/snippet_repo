@@ -1,5 +1,1 @@
-type R$PlaylistByline={
-	playlistBylineRenderer: {
-		text: D$TextWithRuns;
-	};
-};
+type R$PlaylistByline={playlistBylineRenderer: D$PlaylistByline;};

@@ -1,4 +1,4 @@
-type MerchandiseItem={
+type D$MerchandiseItem={
 	title: string;
 	description: string;
 	thumbnail: D$Thumbnail;

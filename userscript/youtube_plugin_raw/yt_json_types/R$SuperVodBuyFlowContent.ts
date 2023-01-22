@@ -1,3 +1,1 @@
-type R$SuperVodBuyFlowContent={
-	superVodBuyFlowContentRenderer: SuperVodBuyFlowContent;
-};
+type R$SuperVodBuyFlowContent={superVodBuyFlowContentRenderer: D$SuperVodBuyFlowContent;};

@@ -1,3 +1,1 @@
-type R$ThumbnailOverlaySidePanel={
-	thumbnailOverlaySidePanelRenderer: ThumbnailOverlaySidePanel;
-};
+type R$ThumbnailOverlaySidePanel={thumbnailOverlaySidePanelRenderer: D$ThumbnailOverlaySidePanel;};

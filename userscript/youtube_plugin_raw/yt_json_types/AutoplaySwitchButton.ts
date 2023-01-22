@@ -1,4 +1,4 @@
-type AutoplaySwitchButton={
+type D$AutoplaySwitchButton={
 	onEnabledCommand: E$SetSettingEndpointAutonavForDesktop<true>;
 	onDisabledCommand: E$SetSettingEndpointAutonavForDesktop<false>;
 	enabledAccessibilityData: A$Accessibility;

@@ -1,3 +1,1 @@
-type PaidDigitalGoodsInner={
-	hack: true;
-};
+type PaidDigitalGoodsInner={hack: true;};

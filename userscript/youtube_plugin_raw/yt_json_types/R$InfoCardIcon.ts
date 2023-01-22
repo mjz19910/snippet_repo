@@ -1,1 +1,1 @@
-type R$InfoCardIcon={infoCardIconRenderer: InfoCardIconData;};
+type R$InfoCardIcon={infoCardIconRenderer: D$InfoCardIcon;};

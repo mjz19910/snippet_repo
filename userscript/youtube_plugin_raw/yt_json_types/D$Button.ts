@@ -4,7 +4,7 @@ type D$Button={
 	command?: G$Button$command;
 	icon?: ButtonIcon;
 	isDisabled?: boolean;
-	serviceEndpoint?: E$Button_serviceEndpoint;
+	serviceEndpoint?: E$Button_serviceEndpoint<{}>;
 	navigationEndpoint?: E$Button_navigationEndpoint;
 	tooltip?: string;
 	size?: ButtonSizeType;

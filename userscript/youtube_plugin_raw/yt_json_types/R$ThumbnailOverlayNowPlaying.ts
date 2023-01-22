@@ -1,1 +1,1 @@
-type R$ThumbnailOverlayNowPlaying={thumbnailOverlayNowPlayingRenderer: ThumbnailOverlayNowPlayingData;};
+type R$ThumbnailOverlayNowPlaying={thumbnailOverlayNowPlayingRenderer: D$ThumbnailOverlayNowPlaying;};

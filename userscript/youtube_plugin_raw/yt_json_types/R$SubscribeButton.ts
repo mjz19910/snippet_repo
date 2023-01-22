@@ -1,1 +1,1 @@
-type R$SubscribeButton={subscribeButtonRenderer: SubscribeButton;};
+type R$SubscribeButton={subscribeButtonRenderer: D$SubscribeButton;};

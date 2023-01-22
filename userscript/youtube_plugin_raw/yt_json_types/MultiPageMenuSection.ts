@@ -1,1 +1,1 @@
-type MultiPageMenuSection<T>=ItemsTemplate<T>;
+type T$MultiPageMenuSection<T>=T$Items<T>;

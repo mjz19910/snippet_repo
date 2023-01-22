@@ -1,1 +1,1 @@
-type R$VideoViewCount={videoViewCountRenderer: VideoViewCountData;};
+type R$VideoViewCount={videoViewCountRenderer: D$VideoViewCount;};

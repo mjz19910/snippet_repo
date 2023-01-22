@@ -1,3 +1,1 @@
-type R$Endscreen={
-	endscreenRenderer: EndscreenData;
-};
+type R$Endscreen={endscreenRenderer: D$Endscreen;};

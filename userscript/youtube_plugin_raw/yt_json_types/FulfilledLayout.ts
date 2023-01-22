@@ -1,3 +1,0 @@
-type FulfilledLayout={
-	inFeedAdLayoutRenderer: InFeedAdLayoutData;
-};

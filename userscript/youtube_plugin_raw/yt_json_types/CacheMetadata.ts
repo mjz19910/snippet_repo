@@ -1,3 +1,1 @@
-type CacheMetadata={
-	isCacheHit: true;
-};
+type CacheMetadata={isCacheHit: true;};

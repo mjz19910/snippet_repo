@@ -1,4 +1,4 @@
-type PlaylistPanel={
+type D$PlaylistPanel={
 	title: "YouTube Mix";
 	contents: PlaylistPanelItem[];
 	currentIndex?: number;

@@ -1,3 +1,1 @@
-type R$PlaylistAddToOption={
-	playlistAddToOptionRenderer: PlaylistAddToOption;
-};
+type R$PlaylistAddToOption={playlistAddToOptionRenderer: D$PlaylistAddToOption;};

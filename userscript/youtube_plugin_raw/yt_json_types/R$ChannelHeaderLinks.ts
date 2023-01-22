@@ -1,3 +1,1 @@
-type R$ChannelHeaderLinks={
-	channelHeaderLinksRenderer: ChannelHeaderLinks;
-};
+type R$ChannelHeaderLinks={channelHeaderLinksRenderer: D$ChannelHeaderLinks;};

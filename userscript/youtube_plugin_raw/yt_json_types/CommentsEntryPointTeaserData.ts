@@ -1,4 +1,4 @@
-type CommentsEntryPointTeaserData={
+type D$CommentsEntryPointTeaser={
 	teaserAvatar: D$Thumbnail&{
 		accessibility: A$Accessibility;
 	};

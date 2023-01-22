@@ -1,3 +1,3 @@
 type R$Tab={
-	tabRenderer: TabData;
+	tabRenderer: D$Tab;
 };

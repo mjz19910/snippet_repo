@@ -1,3 +1,1 @@
-type TimedContinuationData={
-	timedContinuationData: TimedContinuationDataInner;
-};
+type TimedContinuationData={timedContinuationData: TimedContinuationDataInner;};

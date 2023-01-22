@@ -1,1 +1,1 @@
-type T$R$MultiPageMenuSection<T>={multiPageMenuSectionRenderer: MultiPageMenuSection<T>;};
+type T$R$MultiPageMenuSection<T>={multiPageMenuSectionRenderer: T$MultiPageMenuSection<T>;};

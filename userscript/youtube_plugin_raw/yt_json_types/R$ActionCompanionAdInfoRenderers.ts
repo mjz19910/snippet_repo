@@ -1,1 +1,1 @@
-type ActionCompanionAdInfoRenderers=R$AdHoverTextButton;
+type RL$ActionCompanionAdInfo=R$AdHoverTextButton;

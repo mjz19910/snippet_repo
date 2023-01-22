@@ -1,3 +1,1 @@
-type R$ProfileColumnUserInfo={
-	profileColumnUserInfoRenderer: ProfileColumnUserInfoData;
-};
+type R$ProfileColumnUserInfo={profileColumnUserInfoRenderer: D$ProfileColumnUserInfo;};

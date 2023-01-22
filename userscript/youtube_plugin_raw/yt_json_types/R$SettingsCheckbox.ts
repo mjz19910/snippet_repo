@@ -1,3 +1,1 @@
-type R$SettingsCheckbox={
-	settingsCheckboxRenderer: SettingsCheckboxData;
-};
+type R$SettingsCheckbox={settingsCheckboxRenderer: D$SettingsCheckbox;};

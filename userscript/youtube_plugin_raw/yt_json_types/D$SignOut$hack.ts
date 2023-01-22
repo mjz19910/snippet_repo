@@ -1,3 +1,1 @@
-type D$SignOut$hack={
-	hack: true;
-};
+type D$SignOut$hack={hack: true;};

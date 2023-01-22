@@ -1,3 +1,1 @@
-type R$VideoMastheadAdV3={
-	videoMastheadAdV3Renderer: VideoMastheadAdV3;
-};
+type R$VideoMastheadAdV3={videoMastheadAdV3Renderer: D$VideoMastheadAdV3;};

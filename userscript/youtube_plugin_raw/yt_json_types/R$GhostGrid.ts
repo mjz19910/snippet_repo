@@ -1,1 +1,1 @@
-type R$GhostGrid={ghostGridRenderer: GhostGrid;};
+type R$GhostGrid={ghostGridRenderer: D$GhostGrid;};

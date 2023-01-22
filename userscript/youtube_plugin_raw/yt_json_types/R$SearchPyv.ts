@@ -1,1 +1,1 @@
-type R$SearchPyv={searchPyvRenderer: SearchPyvData;};
+type R$SearchPyv={searchPyvRenderer: D$SearchPyv;};

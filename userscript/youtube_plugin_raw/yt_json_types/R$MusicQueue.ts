@@ -1,1 +1,1 @@
-type R$MusicQueue={musicQueueRenderer: MusicQueue;};
+type R$MusicQueue={musicQueueRenderer: D$MusicQueue;};

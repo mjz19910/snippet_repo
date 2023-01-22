@@ -1,1 +1,1 @@
-type R$VideoSecondaryInfo={videoSecondaryInfoRenderer: VideoSecondaryInfoData;};
+type R$VideoSecondaryInfo={videoSecondaryInfoRenderer: D$VideoSecondaryInfo;};

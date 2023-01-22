@@ -1,3 +1,1 @@
-type R$EndscreenElement={
-	endscreenElementRenderer: EndscreenElementData;
-};
+type R$EndscreenElement={endscreenElementRenderer: D$EndscreenElement;};

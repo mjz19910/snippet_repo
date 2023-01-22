@@ -1,4 +1,4 @@
-type ReelPlayerHeader={
+type D$ReelPlayerHeader={
 	reelTitleText: D$TextWithRuns;
 	timestampText: D$SimpleText;
 	channelNavigationEndpoint: E$Browse;

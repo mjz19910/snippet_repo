@@ -1,4 +1,4 @@
-type SubFeedOption={
+type D$SubFeedOption={
 	name: D$TextWithRuns;
 	isSelected: boolean;
 	navigationEndpoint: {};

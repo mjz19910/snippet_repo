@@ -1,4 +1,4 @@
-type ProductListItem={
+type D$ProductListItem={
 	title: D$SimpleText;
 	accessibilityTitle: string;
 	thumbnail: D$Thumbnail;

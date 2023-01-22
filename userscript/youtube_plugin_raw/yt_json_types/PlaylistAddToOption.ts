@@ -1,4 +1,4 @@
-type PlaylistAddToOption={
+type D$PlaylistAddToOption={
 	playlistId: PlaylistId;
 	title: D$SimpleText;
 	privacy: "PRIVATE"|"UNLISTED"|"PUBLIC";

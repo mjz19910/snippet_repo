@@ -1,3 +1,1 @@
-type R$FusionSearchbox={
-	fusionSearchboxRenderer: FusionSearchboxData;
-};
+type R$FusionSearchbox={fusionSearchboxRenderer: D$FusionSearchbox;};

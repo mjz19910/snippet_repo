@@ -735,7 +735,7 @@ class R$HandleRichGrid$ {
 	constructor(x) {
 		this.rendererContentItemArray=new HandleRendererContentItemArray(x);
 	}
-	/** @public @arg {string} path @arg {RichGrid} renderer */
+	/** @public @arg {string} path @arg {D$RichGrid} renderer */
 	richGridRenderer$(path,renderer) {
 		if(this.enable_logging) console.log("run handler richGridRenderer");
 		if("masthead" in renderer) {
@@ -1883,7 +1883,6 @@ Object.__ia_excludeKeysS=function(/** @private @type {{ [s: string]: any; }|Arra
 	let res=res_any;
 	return res;
 };
-
 let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 /** @private @template T,U */
 class ServiceResolver {
@@ -3505,7 +3504,7 @@ class YtObjectVisitor {
 			return true;
 		});
 	}
-	/** @public @arg {ApiIterateState} state @arg {RichGrid} renderer */
+	/** @public @arg {ApiIterateState} state @arg {D$RichGrid} renderer */
 	richGridRenderer(state,renderer) {
 		state.t.handlers.rich_grid.richGridRenderer$(state.path,renderer);
 		state.path="richGridRenderer";
@@ -7256,7 +7255,7 @@ class HandleTypes extends ServiceMethods {
 	R$PlaylistSidebarSecondaryInfo(x) {
 		this.PlaylistSidebarSecondaryInfo(x.playlistSidebarSecondaryInfoRenderer);
 	}
-	/** @private @arg {PlaylistSidebarSecondaryInfo} x */
+	/** @private @arg {D$PlaylistSidebarSecondaryInfo} x */
 	PlaylistSidebarSecondaryInfo(x) {
 		this.R$VideoOwner(x.videoOwner);
 	}
@@ -7264,7 +7263,7 @@ class HandleTypes extends ServiceMethods {
 	R$VideoOwner(x) {
 		this.VideoOwnerData(x.videoOwnerRenderer);
 	}
-	/** @public @arg {AlertWithButton} x */
+	/** @public @arg {D$AlertWithButton} x */
 	AlertWithButton(x) {
 		const cf="AlertWithButton";
 		this.save_keys(`[${cf}]`,x);
@@ -9020,7 +9019,7 @@ class HandleTypes extends ServiceMethods {
 			case "engagement-panel-clip-create": break;
 		}
 	}
-	/** @private @arg {TopbarLogo} x */
+	/** @private @arg {D$TopbarLogo} x */
 	TopbarLogo(x) {
 		const cf="TopbarLogo";
 		this.save_keys(`[${cf}]`,x);
@@ -9279,7 +9278,7 @@ class HandleTypes extends ServiceMethods {
 			this.A$Accessibility(ka);
 		}
 	}
-	/** @template {SubscribeButton} T @arg {T} x */
+	/** @template {D$SubscribeButton} T @arg {T} x */
 	SubscribeButton$Omit(x) {
 		const cf="SubscribeButton";
 		this.save_keys(`[${cf}]`,x);

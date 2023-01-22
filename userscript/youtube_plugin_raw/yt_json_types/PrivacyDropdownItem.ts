@@ -1,4 +1,4 @@
-type PrivacyDropdownItem={
+type D$PrivacyDropdownItem={
 	label: D$SimpleText;
 	icon: T$Icon<"PRIVACY_PUBLIC">;
 	description: D$TextWithRuns;

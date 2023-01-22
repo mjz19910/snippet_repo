@@ -1,1 +1,1 @@
-type R$MicroformatData={microformatDataRenderer: MicroformatData;};
+type R$MicroformatData={microformatDataRenderer: D$Microformat;};

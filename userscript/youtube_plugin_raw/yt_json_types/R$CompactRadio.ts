@@ -1,3 +1,1 @@
-type R$CompactRadio={
-	compactRadioRenderer: CompactRadioData;
-};
+type R$CompactRadio={compactRadioRenderer: D$CompactRadio;};

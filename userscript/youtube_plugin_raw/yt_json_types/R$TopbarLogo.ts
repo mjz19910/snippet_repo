@@ -1,1 +1,1 @@
-type R$TopbarLogo={topbarLogoRenderer: TopbarLogo;};
+type R$TopbarLogo={topbarLogoRenderer: D$TopbarLogo;};

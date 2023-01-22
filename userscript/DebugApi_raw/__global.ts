@@ -13,7 +13,6 @@ declare global {
 		activate: (fn_val: DbgNewableFn,args: any[]) => any;
 		activate_args: any[];
 	};
-
 	type ActivateFunction={
 		type: "function-breakpoint";
 		name: string;
@@ -21,7 +20,6 @@ declare global {
 		activate: (fn_val: CallableFunction,thisArg: any,args: any[]) => any;
 		activate_args: [any,any[]];
 	};
-
 	type IDebugBreakpointArgs=ActivateClass|ActivateFunction;
 }
 
@@ -105,13 +103,11 @@ declare global {
 declare global {
 	type dbg_arg_error={type: "argument-error";};
 	type dbg_invalid_state={type: "invalid-state-error";};
-
 	type dbg_data={
 		type: "data";
 		result: [string,any];
 		return: any;
 	};
-
 	type dbg_unexpected={
 		type: "unexpected";
 		data: {
@@ -124,7 +120,6 @@ declare global {
 			return: any;
 		};
 	};
-
 	type dbg_data_array={
 		type: "data-arr";
 		data: {
@@ -132,31 +127,26 @@ declare global {
 			return: any;
 		};
 	};
-
 	type dbg_no_response={
 		type: "no-response";
 		return: any;
 	};
-
 	type dbg_var_result={
 		type: "var-result";
 		name: string;
 		result: any;
 		return: any;
 	};
-
 	type dbg_result=dbg_arg_error|dbg_data|dbg_unexpected|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
 }
 
 declare global {
 	type dbg_eval_hidden={type: "eval-hidden-var";};
 	type dbg_no_var={type: "no-var";};
-
 	type dbg_var={
 		type: "var";
 		data: any[];
 	};
-
 	interface dbg_get_ty {
 		get?: (__v: string) => dbg_eval_hidden|dbg_no_var|dbg_var;
 	}

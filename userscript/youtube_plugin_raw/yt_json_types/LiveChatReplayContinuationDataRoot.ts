@@ -1,3 +1,1 @@
-type LiveChatReplayContinuationDataRoot={
-	liveChatReplayContinuationData: LiveChatReplayContinuationData;
-};
+type LiveChatReplayContinuationDataRoot={liveChatReplayContinuationData: LiveChatReplayContinuationData;};

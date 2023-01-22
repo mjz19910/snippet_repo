@@ -1,3 +1,1 @@
-type R$PlaylistPanel={
-	playlistPanelRenderer: PlaylistPanel;
-};
+type R$PlaylistPanel={playlistPanelRenderer: D$PlaylistPanel;};

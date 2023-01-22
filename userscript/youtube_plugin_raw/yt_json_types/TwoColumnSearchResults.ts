@@ -1,1 +1,1 @@
-type TwoColumnSearchResults={primaryContents: R$SectionList;};
+type D$TwoColumnSearchResults={primaryContents: R$SectionList;};

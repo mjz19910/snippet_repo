@@ -1,3 +1,1 @@
-type R$SearchBox={
-	searchBoxRenderer: SearchBox;
-};
+type R$SearchBox={searchBoxRenderer: D$SearchBox;};

@@ -1,3 +1,1 @@
-type R$TranscriptSegmentList={
-	transcriptSegmentListRenderer: TranscriptSegmentListData;
-};
+type R$TranscriptSegmentList={transcriptSegmentListRenderer: D$TranscriptSegmentList;};

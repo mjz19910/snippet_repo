@@ -1,1 +1,1 @@
-type R$ReelPlayerOverlay={reelPlayerOverlayRenderer: ReelPlayerOverlayData;};
+type R$ReelPlayerOverlay={reelPlayerOverlayRenderer: D$ReelPlayerOverlay;};

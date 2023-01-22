@@ -1,3 +1,1 @@
-type EditableDetails={
-	canDelete: false;
-};
+type EditableDetails={canDelete: false;};

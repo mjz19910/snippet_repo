@@ -1,3 +1,1 @@
-type MusicLibraryStatusUpdateCommand={
-	musicLibraryStatusUpdateCommand: MusicLibraryStatusUpdate;
-};
+type MusicLibraryStatusUpdateCommand={musicLibraryStatusUpdateCommand: MusicLibraryStatusUpdate;};

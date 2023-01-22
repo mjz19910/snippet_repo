@@ -1,0 +1,1 @@
+type R$InFeedAdLayout={inFeedAdLayoutRenderer: D$InFeedAdLayout;};

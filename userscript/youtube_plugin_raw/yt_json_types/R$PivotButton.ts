@@ -1,3 +1,1 @@
-type R$PivotButton={
-	pivotButtonRenderer: PivotButton;
-};
+type R$PivotButton={pivotButtonRenderer: D$PivotButton;};

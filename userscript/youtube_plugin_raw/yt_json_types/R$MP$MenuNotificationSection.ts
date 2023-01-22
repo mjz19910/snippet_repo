@@ -1,1 +1,1 @@
-type R$MP$MenuNotificationSection={multiPageMenuNotificationSectionRenderer: ItemsTemplate<R$Notification>;};
+type R$MP$MenuNotificationSection={multiPageMenuNotificationSectionRenderer: T$Items<R$Notification>;};

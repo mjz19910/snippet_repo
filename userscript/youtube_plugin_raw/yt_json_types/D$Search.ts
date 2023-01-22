@@ -1,3 +1,1 @@
-type D$Search={
-	query: string;
-};
+type D$Search={query: string;};

@@ -1,3 +1,1 @@
-type FulfillmentContent={
-	fulfilledLayout: FulfilledLayout;
-};
+type FulfillmentContent={fulfilledLayout: R$InFeedAdLayout;};

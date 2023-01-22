@@ -1,3 +1,1 @@
-type YtShareData={
-	canShare: false;
-};
+type YtShareData={canShare: false;};

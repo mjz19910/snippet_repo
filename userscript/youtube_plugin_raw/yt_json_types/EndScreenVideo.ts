@@ -1,4 +1,4 @@
-type EndScreenVideo={
+type D$EndScreenVideo={
 	videoId: string;
 	thumbnail: D$Thumbnail;
 	title: D$SimpleText;

@@ -1,3 +1,1 @@
-type R$TranscriptSearchPanel={
-	transcriptSearchPanelRenderer: TranscriptSearchPanelData;
-};
+type R$TranscriptSearchPanel={transcriptSearchPanelRenderer: D$TranscriptSearchPanel;};

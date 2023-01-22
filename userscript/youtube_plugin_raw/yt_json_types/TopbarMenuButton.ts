@@ -1,4 +1,4 @@
-type TopbarMenuButton={
+type D$TopbarMenuButton={
 	icon: T$Icon<"VIDEO_CALL">;
 	menuRenderer: T$R$MultiPageMenu<{
 		sections: [T$R$MultiPageMenuSection<R$CompactLink>];

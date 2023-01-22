@@ -1,3 +1,1 @@
-type R$ChannelSwitcherPage={
-	channelSwitcherPageRenderer: ChannelSwitcherPage;
-};
+type R$ChannelSwitcherPage={channelSwitcherPageRenderer: D$ChannelSwitcherPage;};

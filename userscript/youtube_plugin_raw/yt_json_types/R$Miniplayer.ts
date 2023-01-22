@@ -1,1 +1,1 @@
-type R$Miniplayer={miniplayerRenderer: MiniplayerData;};
+type R$Miniplayer={miniplayerRenderer: D$Miniplayer;};

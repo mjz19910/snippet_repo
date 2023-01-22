@@ -1,3 +1,1 @@
-type AdsEngagementPanelContentData={
-	hack: true;
-};
+type D$AdsEngagementPanelContent={hack: true;};

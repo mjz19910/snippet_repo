@@ -1,1 +1,1 @@
-type AccountItemSection=T$AR$Contents<AccountItemSectionContent>;
+type D$AccountItemSection=T$AR$Contents<AccountItemSectionContent>;

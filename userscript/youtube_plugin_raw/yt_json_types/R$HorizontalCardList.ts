@@ -1,3 +1,1 @@
-type R$HorizontalCardList={
-	horizontalCardListRenderer: D$HorizontalCardList;
-};
+type R$HorizontalCardList={horizontalCardListRenderer: D$HorizontalCardList;};

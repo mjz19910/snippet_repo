@@ -1,3 +1,1 @@
-type AdPlacementConfig={
-	adPlacementConfig: AdPlacementConfigData;
-};
+type AdPlacementConfig={adPlacementConfig: AdPlacementConfigData;};

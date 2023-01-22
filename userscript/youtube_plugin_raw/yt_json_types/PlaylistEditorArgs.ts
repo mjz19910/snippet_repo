@@ -1,3 +1,1 @@
-type PlaylistEditorArgs={
-	playlistId: string;
-};
+type PlaylistEditorArgs={playlistId: string;};

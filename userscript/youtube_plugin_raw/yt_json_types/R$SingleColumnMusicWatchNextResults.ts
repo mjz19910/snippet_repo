@@ -1,3 +1,1 @@
-type R$SingleColumnMusicWatchNextResults={
-	singleColumnMusicWatchNextResultsRenderer: R$Tabbed;
-};
+type R$SingleColumnMusicWatchNextResults={singleColumnMusicWatchNextResultsRenderer: R$Tabbed;};

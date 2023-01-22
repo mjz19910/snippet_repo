@@ -1,3 +1,1 @@
-type PaidDigitalGoods={
-	paidDigitalGoods: PaidDigitalGoodsInner;
-};
+type PaidDigitalGoods={paidDigitalGoods: PaidDigitalGoodsInner;};

@@ -1,3 +1,1 @@
-type R$ClipCreation={
-	clipCreationRenderer: ClipCreationData;
-};
+type R$ClipCreation={clipCreationRenderer: D$ClipCreation;};

@@ -1,3 +1,1 @@
-type R$CopyLink={
-	copyLinkRenderer: CopyLinkData;
-};
+type R$CopyLink={copyLinkRenderer: D$CopyLink;};

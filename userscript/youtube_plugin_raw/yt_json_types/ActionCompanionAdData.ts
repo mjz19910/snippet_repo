@@ -1,4 +1,4 @@
-type ActionCompanionAdData={
+type D$ActionCompanionAd={
 	headline: TemplatedText;
 	description: TemplatedText;
 	actionButton: R$Button;
@@ -6,7 +6,7 @@ type ActionCompanionAdData={
 	bannerImage: R$ThumbnailsList;
 	navigationEndpoint: {};
 	trackingParams: string;
-	adInfoRenderer: ActionCompanionAdInfoRenderers;
+	adInfoRenderer: RL$ActionCompanionAdInfo;
 	adVideoId: string;
 	impressionPings: BaseUrl<`${"https"}://www.youtube.com/pagead/interaction/?${string}`>[];
 	adLayoutLoggingData: AdLayoutLoggingData;

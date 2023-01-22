@@ -1,3 +1,1 @@
-type R$NotificationTopbarButton={
-	notificationTopbarButtonRenderer: NotificationTopbarButtonData;
-};
+type R$NotificationTopbarButton={notificationTopbarButtonRenderer: D$NotificationTopbarButton;};

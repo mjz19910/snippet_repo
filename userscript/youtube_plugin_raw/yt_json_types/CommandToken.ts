@@ -1,3 +1,1 @@
-type CommandToken={
-	token: string;
-};
+type CommandToken={token: string;};

@@ -1,3 +1,1 @@
-type R$Transcript={
-	transcriptRenderer: D$Transcript;
-};
+type R$Transcript={transcriptRenderer: D$Transcript;};

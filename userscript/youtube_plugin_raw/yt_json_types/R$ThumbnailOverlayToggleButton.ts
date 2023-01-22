@@ -1,3 +1,1 @@
-type R$ThumbnailOverlayToggleButton={
-	thumbnailOverlayToggleButtonRenderer: D$ThumbnailOverlayToggleButton;
-};
+type R$ThumbnailOverlayToggleButton={thumbnailOverlayToggleButtonRenderer: D$ThumbnailOverlayToggleButton;};

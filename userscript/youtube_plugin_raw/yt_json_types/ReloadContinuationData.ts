@@ -1,3 +1,1 @@
-type ReloadContinuationData={
-	reloadContinuationData: ReloadContinuationDataInner;
-};
+type ReloadContinuationData={reloadContinuationData: ReloadContinuationDataInner;};

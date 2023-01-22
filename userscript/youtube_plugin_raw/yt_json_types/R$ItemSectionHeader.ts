@@ -1,3 +1,1 @@
-type R$ItemSectionHeader={
-	itemSectionHeaderRenderer: D$ItemSectionHeader;
-};
+type R$ItemSectionHeader={itemSectionHeaderRenderer: D$ItemSectionHeader;};

@@ -1,4 +1,4 @@
-type MacroMarkersListItem={
+type D$MacroMarkersListItem={
 	title: D$SimpleText;
 	timeDescription: D$SimpleText;
 	thumbnail: D$Thumbnail;

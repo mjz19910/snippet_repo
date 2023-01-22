@@ -1,3 +1,3 @@
 type R$Shelf={
-	shelfRenderer: ShelfData;
+	shelfRenderer: D$Shelf;
 };

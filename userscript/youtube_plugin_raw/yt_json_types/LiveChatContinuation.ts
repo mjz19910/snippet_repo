@@ -1,3 +1,1 @@
-type LiveChatContinuation={
-	liveChatContinuation: LiveChatContinuationData;
-};
+type LiveChatContinuation={liveChatContinuation: LiveChatContinuationData;};

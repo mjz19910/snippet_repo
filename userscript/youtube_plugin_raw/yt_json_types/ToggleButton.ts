@@ -1,4 +1,4 @@
-type ToggleButton={
+type D$ToggleButton={
 	style: StyleTypeObj;
 	isToggled: false;
 	isDisabled: false;

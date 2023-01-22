@@ -1,3 +1,3 @@
-type AccountSectionListData={
+type D$AccountSectionList={
 	contents: R$AccountItemSection[];
 };

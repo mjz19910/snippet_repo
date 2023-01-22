@@ -1,3 +1,1 @@
-export type SimpleTextFixmeValueNeeded={
-	simpleText: string;
-};
+export type SimpleTextFixmeValueNeeded={simpleText: string;};

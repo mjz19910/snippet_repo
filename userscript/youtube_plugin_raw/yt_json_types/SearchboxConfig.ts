@@ -1,3 +1,1 @@
-type R$SearchboxConfig={
-	webSearchboxConfig: WebSearchboxConfig;
-};
+type R$SearchboxConfig={webSearchboxConfig: WebSearchboxConfig;};

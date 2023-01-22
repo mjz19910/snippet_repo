@@ -1,4 +1,4 @@
-type CommentsHeaderData={
+type D$CommentsHeader={
 	countText: D$TextWithRuns;
 	createRenderer: R$CommentSimplebox;
 	sortMenu: R$SortFilterSubMenu;

@@ -1,3 +1,1 @@
-type YpcGetCartCommandMetadata={
-	webCommandMetadata: YpcGetCartWebCommandMetadata;
-};
+type YpcGetCartCommandMetadata={webCommandMetadata: YpcGetCartWebCommandMetadata;};

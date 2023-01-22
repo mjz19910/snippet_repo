@@ -1,3 +1,1 @@
-type R$CommentsHeader={
-	commentsHeaderRenderer: CommentsHeaderData;
-};
+type R$CommentsHeader={commentsHeaderRenderer: D$CommentsHeader;};

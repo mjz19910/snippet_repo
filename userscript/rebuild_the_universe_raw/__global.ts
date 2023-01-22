@@ -35,7 +35,6 @@ interface GoogleAdList {
 }
 
 export {};
-
 // #region begin declare_global_sec
 // rebuild_the_universe main
 declare global {

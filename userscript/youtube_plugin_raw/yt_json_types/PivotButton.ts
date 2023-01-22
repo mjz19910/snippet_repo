@@ -1,4 +1,4 @@
-type PivotButton={
+type D$PivotButton={
 	thumbnail: D$Thumbnail;
 	onClickCommand: E$Browse;
 	trackingParams: string;

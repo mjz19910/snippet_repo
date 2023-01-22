@@ -1,3 +1,1 @@
-type R$MacroMarkersListItem={
-	macroMarkersListItemRenderer: MacroMarkersListItem;
-};
+type R$MacroMarkersListItem={macroMarkersListItemRenderer: D$MacroMarkersListItem;};

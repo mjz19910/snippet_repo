@@ -1,3 +1,1 @@
-type FeedbackCommandMetadata={
-	webCommandMetadata: G$WC$Metadata;
-};
+type FeedbackCommandMetadata={webCommandMetadata: G$WC$Metadata;};

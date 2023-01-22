@@ -1,3 +1,1 @@
-type UrlEndpointRedirect={
-	urlEndpoint: UrlRedirect;
-};
+type UrlEndpointRedirect={urlEndpoint: UrlRedirect;};

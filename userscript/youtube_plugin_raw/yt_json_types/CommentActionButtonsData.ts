@@ -1,1 +1,1 @@
-type CommentActionButtonsData={};
+type D$CommentActionButtons={};

@@ -1,3 +1,1 @@
-type R$Hint={
-	hintRenderer: D$Hint;
-};
+type R$Hint={hintRenderer: D$Hint;};

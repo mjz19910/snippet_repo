@@ -1,3 +1,1 @@
-type GutParams={
-	tag: string;
-};
+type GutParams={tag: string;};

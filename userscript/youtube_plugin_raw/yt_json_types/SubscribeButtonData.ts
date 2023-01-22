@@ -1,4 +1,4 @@
-type SubscribeButton={
+type D$SubscribeButton={
 	buttonText: D$TextWithRuns;
 	subscribed: false;
 	enabled: true;

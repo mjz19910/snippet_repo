@@ -1,3 +1,1 @@
-type A$AccountItem={
-	accountItem: A$D$AccountItem;
-};
+type A$AccountItem={accountItem: A$D$AccountItem;};

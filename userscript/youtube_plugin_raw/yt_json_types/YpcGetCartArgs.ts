@@ -1,3 +1,1 @@
-type YpcGetCartArgs={
-	transactionParams: string;
-};
+type YpcGetCartArgs={transactionParams: string;};

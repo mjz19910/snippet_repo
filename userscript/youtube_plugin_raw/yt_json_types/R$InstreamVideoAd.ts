@@ -1,1 +1,1 @@
-type R$InstreamVideoAd={instreamVideoAdRenderer: InstreamVideoAdData;};
+type R$InstreamVideoAd={instreamVideoAdRenderer: D$InstreamVideoAd;};

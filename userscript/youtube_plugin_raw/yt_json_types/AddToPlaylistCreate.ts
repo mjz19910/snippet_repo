@@ -1,4 +1,4 @@
-type AddToPlaylistCreate={
+type D$AddToPlaylistCreate={
 	openCreateLink: R$CompactLink;
 	nameInput: R$TextInputFormField;
 	privacyInput: R$Dropdown;

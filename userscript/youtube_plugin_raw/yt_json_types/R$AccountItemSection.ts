@@ -1,1 +1,1 @@
-type R$AccountItemSection={accountItemSectionRenderer: AccountItemSection;};
+type R$AccountItemSection={accountItemSectionRenderer: D$AccountItemSection;};

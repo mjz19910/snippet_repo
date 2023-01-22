@@ -1,3 +1,1 @@
-type R$PlayerOverlayVideoDetails={
-	playerOverlayVideoDetailsRenderer: D$PlayerOverlayVideoDetails;
-};
+type R$PlayerOverlayVideoDetails={playerOverlayVideoDetailsRenderer: D$PlayerOverlayVideoDetails;};

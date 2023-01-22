@@ -1,4 +1,4 @@
-type EngagementPanelSectionList=
+type D$EngagementPanelSectionList=
 	|GenericEngagementPanelSectionItem
 	|SI$VE76278$EngagementPanelSectionItem
 	|SI$VE99999_EngagementPanelSectionItem

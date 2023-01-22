@@ -1,3 +1,1 @@
-type D$VssLoggingContext={
-	serializedContextData: string;
-};
+type D$VssLoggingContext={serializedContextData: string;};
