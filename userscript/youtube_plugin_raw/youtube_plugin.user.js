@@ -9720,7 +9720,7 @@ class HandleTypes extends ServiceMethods {
 		const {multiPageMenuNotificationSectionRenderer,...y}=x; this.g(y); // ! #destructure
 		this.MultiPageMenuNotificationSection(multiPageMenuNotificationSectionRenderer);
 	}
-	/** @arg {ItemsTemplate<R$NotificationRenderer|T$ContinuationItemRenderer<{}>>} x */
+	/** @arg {ItemsTemplate<R$NotificationRenderer|T$ContinuationItemRenderer<E$GetNotificationMenuEndpoint>>} x */
 	MultiPageMenuNotificationSection(x) {
 		const cf="MultiPageMenuNotificationSection";
 		this.save_keys(`[${cf}]`,x);
@@ -9730,13 +9730,32 @@ class HandleTypes extends ServiceMethods {
 			if("continuationItemRenderer" in x) return this.T$ContinuationItemRenderer(x);
 			debugger;
 		});
-		let vv=xr[0]; vv;
+		this.z(xr[0],x=>{
+			this.E$GetNotificationMenuEndpoint(x);
+			x.getNotificationMenuEndpoint;
+		});
 		debugger;
 		this.trackingParams("MultiPageMenuNotificationSection",trackingParams);
 	}
+	/** @arg {E$GetNotificationMenuEndpoint} x */
+	E$GetNotificationMenuEndpoint(x) {
+		const cf="E$GetNotificationMenuEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,...y}=x;
+		let tok=this.w(this.w(y));
+		this.params(cf,"GetNotificationMenu.ctoken",tok);
+	}
 	/** @template T @arg {T$ContinuationItemRenderer<T>} x */
 	T$ContinuationItemRenderer(x) {
-		return x.continuationItemRenderer.continuationEndpoint;
+		const {continuationItemRenderer,...y}=x; this.g(y);
+		let d=this.T$ContinuationItemData(continuationItemRenderer);
+		return d.continuationEndpoint;
+	}
+	/** @template T @arg {T$ContinuationItemData<T>} x */
+	T$ContinuationItemData(x) {
+		const {trigger,...y}=x;
+		if(trigger!=="CONTINUATION_TRIGGER_ON_ITEM_SHOWN") debugger;
+		return y;
 	}
 	/** @arg {R$NotificationRenderer} x */
 	NotificationRenderer(x) {

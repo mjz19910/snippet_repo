@@ -9,6 +9,7 @@ type P$LogItems=[
 type P$PathRoot=[
 	"transcript_target_id.param",
 	"watch.player_params.f40",
+	"GetNotificationMenu.ctoken",
 	$missing$param,
 	P$known$param,
 	P$unknown$param,
