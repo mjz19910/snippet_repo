@@ -4342,15 +4342,15 @@ class CodegenService extends BaseService {
 		let x1=x;
 		/** @private @type {string[]} */
 		let ret_arr=[];
+		ret_arr.push(`const cf="${t_name}";`);
+		ret_arr.push("this.save_string(`[${cf}]`,x)");
+		ret_arr.push(`const {${keys.join()},...y}=x; this.g(y);`);
 		for(let k of keys) {
 			if(k=="trackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
 			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
 			if(k=="responseContext") {ret_arr.push(`this.RC$ResponseContext(${k});`); continue;}
 			let x2=x1[k];
-			if(typeof x2==="string") {
-				this.generate_code_for_string(ret_arr,k,x2);
-				continue;
-			}
+			if(typeof x2==="string") {this.generate_code_for_string(ret_arr,k,x2);continue;}
 			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(${k},"number");`);}
 			if(typeof x2=="boolean") {ret_arr.push(`if(${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
@@ -4429,7 +4429,6 @@ class CodegenService extends BaseService {
 		let tmp_1=`
 		d1!/** @private @arg {${t_name}} x */
 		d1!${t_name}(x) {
-			d2!const {${keys.join()},...y}=x; this.g(y);
 			d2!${body}
 		d1!}
 		`;
@@ -4437,12 +4436,11 @@ class CodegenService extends BaseService {
 			let keys=Object.keys(x);
 			/** @type {string[]} */
 			let next_req=[];
-			this.#generate_renderer_body(next_req,x,keys,t_name);
+			let body_2=this.#generate_renderer_body(next_req,x,keys,t_name);
 			let tmp0=`
 			d1!/** @private @arg {${e}} x */
 			d1!${e}(x) {
-				d2!x;
-				d2!debugger;
+				${body_2}
 			d1!}
 			`;
 			return tmp0;
@@ -5014,21 +5012,24 @@ class CodegenService extends BaseService {
 		console.log(gen_obj);
 		return null;
 	}
+	/** @arg {string[]} res @arg {string} k @arg {string} x */
 	generate_code_for_string(res,k,x) {
 		if(k==="playlistId") {
 			if(x.startsWith("RD")) {
 				res.push(`this.str_starts_with("RD",${k},"string");`);
 			}
 		}
+		let x2=x;
+		let ret_arr=res;
 		if(x2.startsWith("https:")) {
 			ret_arr.push(`this.primitive_of(${k},"string");`);
-			continue;
+			return;
 		}
 		let u_count=[...new Set(x2.split("").sort())].join("").length;
 		if(x2.includes("%")) {
 			if(u_count>13) {
 				ret_arr.push(`this.primitive_of(${k},"string");`);
-				continue;
+				return;
 			}
 		}
 		console.log("[unique_chars_count]",k,[...new Set(x2.split("").sort())].join("").length);
