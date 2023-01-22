@@ -9666,6 +9666,16 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.HotkeyDialog(this.w(x));
 	}
+	/** @private @arg {WebSearchboxConfig} x */
+	WebSearchboxConfig(x) {
+		const cf="WebSearchboxConfig";
+		this.save_keys(`[${cf}]`,x);
+		const {requestLanguage,requestDomain,hasOnscreenKeyboard,focusSearchbox,...y}=x; this.g(y);
+		if(requestLanguage!=="en") debugger;
+		if(requestDomain!=="ca") debugger;
+		if(hasOnscreenKeyboard!==false) debugger;
+		if(focusSearchbox!==true) debugger;
+	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const cf="BrowseEditPlaylistResponse";
@@ -14524,12 +14534,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.A$Accessibility(accessibility);
 		this.t(targetId,a => this.parser.parse_transcript_target_id(cf,a));
-	}
-	/** @private @arg {WebSearchboxConfig} x */
-	WebSearchboxConfig(x) {
-		const cf="WebSearchboxConfig";
-		this.save_keys(`[${cf}]`,x);
-		const {requestLanguage,requestDomain,hasOnscreenKeyboard,focusSearchbox,...y}=x; this.g(y);
 	}
 	/** @arg {D$CinematicContainer} x */
 	CinematicContainer(x) {

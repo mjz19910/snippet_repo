@@ -1,6 +1,6 @@
 type WebSearchboxConfig={
 	requestLanguage: "en";
 	requestDomain: "ca";
-	hasOnscreenKeyboard: boolean;
+	hasOnscreenKeyboard: false;
 	focusSearchbox: true;
 };
