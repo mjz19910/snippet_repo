@@ -1,3 +1,3 @@
-type Icon<T extends string>={
+type T$Icon<T extends string>={
 	iconType: T;
 };

@@ -1,7 +1,7 @@
 type RatingSurveyOptionData={
 	responseText: D$TextWithRuns;
-	defaultStateIcon: Icon<"STAR_BORDER">;
-	onStateIcon: Icon<"STAR">;
+	defaultStateIcon: T$Icon<"STAR_BORDER">;
+	onStateIcon: T$Icon<"STAR">;
 	followUpCommand: FollowUpCommand;
 	responseEndpoint: {};
 	trackingParams: string;

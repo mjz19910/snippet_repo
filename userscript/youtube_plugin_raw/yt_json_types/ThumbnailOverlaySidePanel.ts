@@ -1,4 +1,4 @@
 type ThumbnailOverlaySidePanel={
 	text: D$SimpleText;
-	icon: Icon<"PLAY_ALL">;
+	icon: T$Icon<"PLAY_ALL">;
 };

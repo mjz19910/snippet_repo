@@ -1,6 +1,6 @@
 type D$MenuNavigationItem={
 	text: D$SimpleText;
-	icon: Icon<"INFO">;
+	icon: T$Icon<"INFO">;
 	navigationEndpoint: T$OpenPopup<{}>;
 	trackingParams: string;
 };

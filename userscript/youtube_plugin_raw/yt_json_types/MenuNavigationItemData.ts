@@ -1,5 +1,5 @@
 type MenuNavigationItemData={
 	text: D$TextWithRuns;
-	icon: Icon<never>;
+	icon: T$Icon<never>;
 	navigationEndpoint: {};
 }

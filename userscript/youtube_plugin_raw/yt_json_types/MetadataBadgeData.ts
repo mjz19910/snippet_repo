@@ -1,5 +1,5 @@
 type MetadataBadgeData={
-	icon: Icon<"PRIVACY_UNLISTED">;
+	icon: T$Icon<"PRIVACY_UNLISTED">;
 	style: "BADGE_STYLE_TYPE_SIMPLE";
 	label: "Unlisted";
 	tooltip?: string;

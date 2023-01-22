@@ -1,1 +1,1 @@
-type ThumbnailOverlayBottomPanelData={icon: Icon<"MIX">;};
+type ThumbnailOverlayBottomPanelData={icon: T$Icon<"MIX">;};

@@ -1,5 +1,5 @@
 type TopbarMenuButton={
-	icon: Icon<"VIDEO_CALL">;
+	icon: T$Icon<"VIDEO_CALL">;
 	menuRenderer: T$R$MultiPageMenu<{
 		sections: [T$R$MultiPageMenuSection<R$CompactLink>];
 		trackingParams: string;

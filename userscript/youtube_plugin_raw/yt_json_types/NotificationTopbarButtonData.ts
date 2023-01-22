@@ -1,5 +1,5 @@
 type NotificationTopbarButtonData={
-	icon: Icon<"NOTIFICATIONS">;
+	icon: T$Icon<"NOTIFICATIONS">;
 	menuRequest: E$SignalServiceEndpoint;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	trackingParams: string;

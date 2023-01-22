@@ -3,6 +3,6 @@ type TopicLinkData={
 	thumbnailDetails: D$Thumbnail;
 	// ChannelNavigationEndpointWebCommandMetadata
 	endpoint: E$BrowseEndpoint;
-	callToActionIcon: Icon<"CHEVRON_RIGHT">;
+	callToActionIcon: T$Icon<"CHEVRON_RIGHT">;
 	trackingParams: string;
 };

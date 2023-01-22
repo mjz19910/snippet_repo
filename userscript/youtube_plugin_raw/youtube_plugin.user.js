@@ -9262,7 +9262,7 @@ class HandleTypes extends ServiceMethods {
 	ThumbnailOverlayBottomPanelData(x) {
 		const cf="ThumbnailOverlayBottomPanelData";
 		this.save_keys(`[${cf}]`,x);
-		this.Icon(this.w(x));
+		this.T$Icon(this.w(x));
 	}
 	/** @private @arg {R$BrowserMediaSession} x */
 	BrowserMediaSessionRenderer(x) {
@@ -9916,7 +9916,7 @@ class HandleTypes extends ServiceMethods {
 		if(accessibility) return this.LabelData(accessibility);
 		this.t(accessibilityData,this.A$Accessibility);
 		this.t(command,this.ButtonCommand);
-		this.t(icon,this.Icon);
+		this.t(icon,this.T$Icon);
 		if(isDisabled!==void 0) this.primitive_of(isDisabled,"boolean");
 		this.t(serviceEndpoint,this.Button_serviceEndpoint);
 		this.t(navigationEndpoint,this.Button_navigationEndpoint);
@@ -10876,7 +10876,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="CompactLinkData";
 		this.save_keys(`[${cf}]`,x);
 		const {icon,title,navigationEndpoint,trackingParams,style,...y}=x; this.g(y); // ! #destructure
-		this.Icon(icon);
+		this.T$Icon(icon);
 		this.TextT(title);
 		this.t(navigationEndpoint,this.E$CompactLink$navigationEndpoint);
 		this.trackingParams(cf,trackingParams);
@@ -11210,7 +11210,7 @@ class HandleTypes extends ServiceMethods {
 		const {id,timestampUsec,icon,message,actionButton,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.primitive_of_string(id);
 		this.primitive_of_string(timestampUsec);
-		this.Icon(icon);
+		this.T$Icon(icon);
 		this.D$TextWithRuns(message);
 		this.R$Button(actionButton);
 		this.trackingParams(cf,trackingParams);
@@ -11935,7 +11935,7 @@ class HandleTypes extends ServiceMethods {
 				} break;
 			}
 		}
-		this.t(icon,this.Icon);
+		this.t(icon,this.T$Icon);
 		debugger;
 		this.trackingParams(cf,trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
@@ -11959,8 +11959,8 @@ class HandleTypes extends ServiceMethods {
 			} break;
 		}
 	}
-	/** @template {string} T @arg {Icon<T>} x */
-	Icon(x) {
+	/** @template {string} T @arg {T$Icon<T>} x */
+	T$Icon(x) {
 		const cf="Icon";
 		this.save_keys(`[${cf}]`,x);
 		const {iconType,...y}=x; this.g(y); // ! #destructure
@@ -12163,7 +12163,7 @@ class HandleTypes extends ServiceMethods {
 		}
 		if("icon" in y) {
 			const {icon,...y1}=y; this.g(y1);
-			this.Icon(icon);
+			this.T$Icon(icon);
 		} else this.g(y);
 	}
 	/** @private @arg {EndScreenPlaylist} x */
@@ -12613,7 +12613,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {text,icon,...y}=x; this.g(y); // ! #destructure
 		this.D$TextWithRuns(text);
-		this.Icon(icon);
+		this.T$Icon(icon);
 	}
 	/** @arg {CustomEmoji} x */
 	CustomEmoji(x) {
@@ -13168,7 +13168,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("serviceEndpoint" in x) {
 			const {icon,trackingParams,formattedTitle,accessibility,serviceEndpoint,...y}=x;
-			this.Icon(icon);
+			this.T$Icon(icon);
 			this.trackingParams("GuideEntryRoot",trackingParams);
 			this.D$SimpleText(formattedTitle);
 			this.A$Accessibility(accessibility);
@@ -13184,7 +13184,7 @@ class HandleTypes extends ServiceMethods {
 				if("urlEndpoint" in x) return this.E$UrlEndpoint(x);
 				debugger;
 			});
-			this.Icon(icon);
+			this.T$Icon(icon);
 			this.trackingParams("GuideEntryRoot",trackingParams);
 			this.D$SimpleText(formattedTitle);
 			this.A$Accessibility(accessibility);
@@ -13379,7 +13379,7 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams(cf,trackingParams);
 			this.A$Accessibility(accessibility);
 			this.primitive_of_string(tooltip);
-			this.Icon(icon);
+			this.T$Icon(icon);
 			{
 				let x=this.MultiPageMenuRenderer(menuRenderer);
 				this.TopbarMenuButton$MultiPageMenu(x);
@@ -13708,7 +13708,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="TopbarLogo";
 		this.save_keys(`[${cf}]`,x);
 		const {iconImage,tooltipText,endpoint,trackingParams,overrideEntityKey,...y}=x; this.g(y); // ! #destructure
-		this.Icon(iconImage);
+		this.T$Icon(iconImage);
 		this.D$TextWithRuns(tooltipText);
 		this.E$BrowseEndpoint(endpoint);
 		this.trackingParams(cf,trackingParams);
@@ -13771,7 +13771,7 @@ class HandleTypes extends ServiceMethods {
 			case "UNLISTED": break;
 		}
 		if(containsSelectedVideos!=="NONE") debugger;
-		this.Icon(privacyIcon);
+		this.T$Icon(privacyIcon);
 		this.E$PlaylistEditEndpoint(addToPlaylistServiceEndpoint);
 		this.E$PlaylistEditEndpoint(removeFromPlaylistServiceEndpoint);
 		this.trackingParams(cf,trackingParams);
@@ -13897,7 +13897,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="FusionSearchboxData";
 		this.save_keys(`[${cf}]`,x);
 		const {icon,placeholderText,config,trackingParams,searchEndpoint,clearButton,...y}=x; this.g(y); // ! #destructure
-		this.Icon(icon);
+		this.T$Icon(icon);
 		this.D$TextWithRuns(placeholderText);
 		this.SearchboxConfig(config);
 		this.trackingParams(cf,trackingParams);
@@ -13909,7 +13909,7 @@ class HandleTypes extends ServiceMethods {
 		const cf="NotificationTopbarButtonData";
 		this.save_keys(`[${cf}]`,x);
 		const {icon,menuRequest,style,trackingParams,accessibility,tooltip,updateUnseenCountEndpoint,notificationCount,handlerDatas,...y}=x; this.g(y); // ! #destructure
-		this.Icon(icon);
+		this.T$Icon(icon);
 		this.E$SignalServiceEndpoint(menuRequest);
 		if(style!=="NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT") debugger;
 		this.trackingParams(cf,trackingParams);
@@ -13970,7 +13970,7 @@ class HandleTypes extends ServiceMethods {
 		const {subMenuItems,title,icon,accessibility,tooltip,trackingParams,...y}=x; this.g(y); // ! #destructure
 		this.z(subMenuItems,this.ActionSetPlaylistVideoOrder);
 		this.t(title,this.primitive_of_string);
-		this.t(icon,this.Icon);
+		this.t(icon,this.T$Icon);
 		this.t(accessibility,this.A$Accessibility);
 		this.t(tooltip,this.primitive_of_string);
 		this.trackingParams(cf,trackingParams);
@@ -14763,7 +14763,9 @@ class HandleTypes extends ServiceMethods {
 	GuideCollapsibleSectionEntry(x) {
 		const cf="GuideCollapsibleSectionEntry";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
+		this.GuideEntryRenderer(headerEntry);
+		this.T$Icon(expanderIcon);
 	}
 	/** @private @arg {Do$w<MerchandiseItemRenderer>} x */
 	MerchandiseItem(x) {

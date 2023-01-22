@@ -9,26 +9,26 @@ type GuideEntryRoot={
 	presentationStyle: "GUIDE_ENTRY_PRESENTATION_STYLE_NEW_CONTENT"|"GUIDE_ENTRY_PRESENTATION_STYLE_NONE";
 }|{
 	navigationEndpoint?: E$UrlEndpoint|E$BrowseEndpoint;
-	icon: Icon<"EXPAND"|"ADD_CIRCLE">;
+	icon: T$Icon<"EXPAND"|"ADD_CIRCLE">;
 	trackingParams: string;
 	formattedTitle: D$SimpleText;
 	accessibility: A$Accessibility;
 }|{
 	navigationEndpoint: E$BrowseEndpoint;
-	icon: Icon<"WHAT_TO_WATCH">;
+	icon: T$Icon<"WHAT_TO_WATCH">;
 	trackingParams: string;
 	formattedTitle: D$SimpleText;
 	accessibility: A$Accessibility;
 	isPrimary: true;
 }|{
-	icon: Icon<"TAB_SHORTS">;
+	icon: T$Icon<"TAB_SHORTS">;
 	trackingParams: string;
 	formattedTitle: D$SimpleText;
 	accessibility: A$Accessibility;
 	serviceEndpoint: E$SignalServiceEndpoint|E$ReelWatchEndpoint;
 	isPrimary: true;
 }|{
-	icon: Icon<"HELP">;
+	icon: T$Icon<"HELP">;
 	trackingParams: string;
 	formattedTitle: D$SimpleText;
 	accessibility: A$Accessibility;

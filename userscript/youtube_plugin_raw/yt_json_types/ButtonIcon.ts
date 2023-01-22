@@ -1,4 +1,4 @@
-type ButtonIcon=Icon<[
+type ButtonIcon=T$Icon<[
 	"SETTINGS"|"DELETE",
 	"NOTIFICATIONS_ACTIVE"|"NOTIFICATIONS_NONE"|"NOTIFICATIONS_OFF"
 ][number]>;
