@@ -1,5 +1,5 @@
 type EngagementPanelSectionShowCommands=
-	|E_ChangeEngagementPanelVisibilityAction
+	|EA_ChangeEngagementPanelVisibility
 	|ShowEngagementPanelScrimAction
 	|C$ScrollToEngagementPanel
 	;

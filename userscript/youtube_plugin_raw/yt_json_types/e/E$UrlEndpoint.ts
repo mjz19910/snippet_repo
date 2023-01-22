@@ -1,5 +1,5 @@
 type E_UrlEndpoint={
 	clickTrackingParams?: string;
-	commandMetadata: M$VE83769$Metadata;
+	commandMetadata: M_VE83769;
 	urlEndpoint: E_Url;
 };

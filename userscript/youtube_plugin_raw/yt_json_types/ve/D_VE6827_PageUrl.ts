@@ -1,4 +1,4 @@
-type D__VE6827$PageUrl=
+type D_VE6827_PageUrl=
 	|`/reporthistory`
 	|`/feed/trending?${string}`
 	|`/feed/history`

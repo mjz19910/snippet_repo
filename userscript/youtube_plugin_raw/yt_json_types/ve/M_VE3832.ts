@@ -1,0 +1,1 @@
+type M_VE3832={webCommandMetadata: GM_VE3832_Watch_WC;};

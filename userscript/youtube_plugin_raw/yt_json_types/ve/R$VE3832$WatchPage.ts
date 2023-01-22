@@ -3,7 +3,7 @@ type R_VE3832$WatchPage={
 	url: WatchPageUrl;
 	endpoint: E_WatchEndpoint;
 	page: "watch";
-	preconnect?: [D__VE3832$PreconnectUrl];
+	preconnect?: [D_VE3832_PreconnectUrl];
 	playerResponse: R_Player;
 	response: R_Watch;
 };

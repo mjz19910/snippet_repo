@@ -5,5 +5,5 @@ type D__CompactLink={
 	title: G_Text;
 	navigationEndpoint?: E_CompactLink$navigationEndpoint;
 	trackingParams: string;
-	style?: CompactLinkStyle;
+	style?: D_CompactLinkStyle;
 };

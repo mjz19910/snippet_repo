@@ -1,1 +1,0 @@
-type CommonConfig={commonConfig: D__CommonConfig;};

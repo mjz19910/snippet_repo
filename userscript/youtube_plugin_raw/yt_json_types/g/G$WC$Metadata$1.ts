@@ -1,16 +1,16 @@
 type G_WC$Metadata$1=[
-	G_VE11487$WC$Metadata,
-	G_VE23462$WC$Metadata,
-	G_VE3611$WC$Metadata,
-	G_VE37414$WC$Metadata,
-	G_VE3832$Watch$WC$Metadata,
-	G_VE3854$WC$Metadata,
-	G_VE4724$WC$Metadata,
-	G_VE5754$WC$Metadata,
-	G_VE6827$WC$Metadata,
-	G_VE83769$WC$Metadata,
-	G_VE96368$WC$Metadata,
-	G_VE96368$WC$Metadata$browse,
+	G_VE11487$WC,
+	G_VE23462$WC,
+	GM_VE3611_WC,
+	G_VE37414$WC,
+	GM_VE3832_Watch_WC,
+	G_VE3854$WC,
+	G_VE4724$WC,
+	G_VE5754$WC,
+	G_VE6827$WC,
+	GM_VE83769_WC,
+	G_VE96368$WC,
+	G_VE96368$WC$browse,
 	G_WC$Metadata$account$account_menu,
 	G_WC$Metadata$account$set_setting,
 	G_WC$Metadata$backstage$create_post,
@@ -32,57 +32,57 @@ type G_WC$Metadata$1=[
 	G_WC$Metadata$subscription$subscribe,
 	G_WC$Metadata$ypc$get_offers,
 ][number];
-type G_VE3611$WC$Metadata={
+type GM_VE3611_WC={
 	rootVe: 3611;
 	webPageType: "WEB_PAGE_TYPE_CHANNEL";
 };
-type G_VE3832$Watch$WC$Metadata={
+type GM_VE3832_Watch_WC={
 	url: `/watch?${string}`;
 	webPageType: "WEB_PAGE_TYPE_WATCH";
 	rootVe: 3832;
 };
-type G_VE5754$WC$Metadata={
+type G_VE5754$WC={
 	rootVe: 5754;
 	webPageType: "WEB_PAGE_TYPE_PLAYLIST";
 };
-type G_VE23462$WC$Metadata={
+type G_VE23462$WC={
 	rootVe: 23462;
 	webPageType: "WEB_PAGE_TYPE_SETTINGS";
 };
-type G_VE4724$WC$Metadata={
+type G_VE4724$WC={
 	url: "/results?search_query=";
 	webPageType: "WEB_PAGE_TYPE_SEARCH";
 	rootVe: 4724;
 };
-type G_VE37414$WC$Metadata={
+type G_VE37414$WC={
 	url: "/shorts/";
 	webPageType: "WEB_PAGE_TYPE_SHORTS";
 	rootVe: 37414;
 };
-type G_VE96368$WC$Metadata={
+type G_VE96368$WC={
 	rootVe: 96368;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
-type G_VE11487$WC$Metadata={
+type G_VE11487$WC={
 	rootVe: 11487;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
-type G_VE6827$WC$Metadata={
+type G_VE6827$WC={
 	rootVe: 6827;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 };
-type G_VE3854$WC$Metadata={
+type G_VE3854$WC={
 	url: "/";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 3854;
 	apiUrl: "/youtubei/v1/browse";
 };
-type G_VE83769$WC$Metadata={
+type GM_VE83769_WC={
 	url: "/upload";
 	webPageType: "WEB_PAGE_TYPE_UNKNOWN";
 	rootVe: 83769;
 };
-type G_VE96368$WC$Metadata$browse={
+type G_VE96368$WC$browse={
 	url: "/feed/subscriptions";
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
 	rootVe: 96368;

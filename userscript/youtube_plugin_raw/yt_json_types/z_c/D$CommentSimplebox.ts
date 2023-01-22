@@ -1,4 +1,4 @@
-type D__CommentSimplebox={
+type D_CommentSimplebox={
 	submitButton: R_Button;
 	cancelButton: R_Button;
 	authorThumbnail: D__Thumbnail;

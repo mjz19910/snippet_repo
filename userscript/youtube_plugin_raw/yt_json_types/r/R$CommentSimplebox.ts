@@ -1,1 +1,1 @@
-type R_CommentSimplebox={commentSimpleboxRenderer: D__CommentSimplebox;};
+type R_CommentSimplebox={commentSimpleboxRenderer: D_CommentSimplebox;};

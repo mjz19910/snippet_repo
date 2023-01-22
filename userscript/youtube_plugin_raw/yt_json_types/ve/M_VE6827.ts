@@ -1,6 +1,6 @@
-type M$VE11487$Metadata={
-	url: "/premium";
+type M_VE6827_Metadata={
+	url?: D_VE6827_PageUrl;
 	webPageType: "WEB_PAGE_TYPE_BROWSE";
-	rootVe: 11487;
+	rootVe: 6827;
 	apiUrl: "/youtubei/v1/browse";
 };

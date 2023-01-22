@@ -5280,7 +5280,7 @@ class ParserService extends BaseService {
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "watch.params":
-						switch(ta) {case 7: case 24: break; default:break;}
+						switch(ta) {case 7: case 24: break; default: break;}
 						/** @type {P$PathRoot} */
 						return this.parse_param_next(root,as(`${path}.f${ta}`),tv);
 					case "watch.player_params":
@@ -5451,7 +5451,11 @@ class ParserService extends BaseService {
 									case "f3": {
 										const idx=5;
 										if(path_parts.length===4) return;
-										switch(path_parts[4]) {default: u(idx); debugger; path_parts[4]===""; break;}
+										switch(path_parts[4]) {
+											case "f2":
+											case "f3": break;
+											default: u(idx); debugger; path_parts[4]===""; break;
+										}
 									} break;
 								}
 							} break;
@@ -5659,7 +5663,7 @@ class ParserService extends BaseService {
 		console.log("[parse_url_external_1]",x);
 		debugger;
 	}
-	/** @public @arg {G_VE3832$Watch$WC$Metadata['url']} x */
+	/** @public @arg {GM_VE3832_Watch_WC['url']} x */
 	parse_url_VE3832(x) {
 		if(!this.str_starts_with("/watch?",x)) debugger;
 	}
@@ -5792,10 +5796,10 @@ class ParserService extends BaseService {
 			default: debugger;
 		}
 	}
-	/** @public @arg {D__VE6827$PageUrl} x */
+	/** @public @arg {D_VE6827_PageUrl} x */
 	parse_ve_6827_url(x) {
 		const cf="VE6827_PageUrl";
-		/** @type {SplitOnce<D__VE6827$PageUrl,"/">[1]} */
+		/** @type {SplitOnce<D_VE6827_PageUrl,"/">[1]} */
 		let su=split_string_once(x,"/")[1];
 		let su1=split_string(su,"/");
 		if(su1.length===1) {
@@ -6635,12 +6639,12 @@ class ServiceMethods extends ServiceData {
 			default: x===""; console.log("[new.case.%s]",cf,`\n\ncase ${JSON.stringify(x)}: return;`);
 		}
 	}
-	/** @public @arg {[D__VE3832$PreconnectUrl]} x */
+	/** @public @arg {[D_VE3832_PreconnectUrl]} x */
 	parse_preconnect_arr(x) {
 		if(x.length!==1) debugger;
 		this.parse_preconnect_url(x[0]);
 	}
-	/** @private @arg {D__VE3832$PreconnectUrl} x */
+	/** @private @arg {D_VE3832_PreconnectUrl} x */
 	parse_preconnect_url(x) {
 		let up=this.parse_with_url_parse(x);
 		if(up.pathname!=="/generate_204") debugger;
@@ -6829,7 +6833,7 @@ class HandleTypes extends ServiceMethods {
 		let ca=this.z(commands,f);
 		return [y,ca];
 	}
-	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} U @template {{}} V$M @template {T$Endpoint<U,V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
+	/** @private @arg {string} cf @arg {(this:this,x:NonNullable<T['commandMetadata']>)=>void} f_v$m @template {{}} U @template {{}} V$M @template {T_Endpoint<U,V$M>} T @arg {T} x @arg {(this:this,x:Omit<T,"clickTrackingParams"|"commandMetadata">)=>void} f */
 	T$Endpoint(cf,x,f,f_v$m) {
 		const {clickTrackingParams,commandMetadata,...y}=x;
 		this.clickTrackingParams(`${cf}.endpoint`,clickTrackingParams);
@@ -6897,7 +6901,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		if("rootVe" in x&&"apiUrl" in x) {
 			switch(x.rootVe) {
-				case 3854: return this.G_VE3854$WC$Metadata(x);
+				case 3854: return this.G_VE3854$WC(x);
 				default: debugger; break;
 			}
 		}
@@ -6969,15 +6973,15 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {G_VE3832$Watch$WC$Metadata} x */
+	/** @private @arg {GM_VE3832_Watch_WC} x */
 	G_VE3832$Watch$WC$Metadata(x) {
 		const {url,webPageType,rootVe,...y}=x; this.g(y);
 		x: {if(this.str_starts_with("/watch?",url)) break x; debugger;}
 		if(webPageType!=="WEB_PAGE_TYPE_WATCH") debugger;
 		if(rootVe!==3832) debugger;
 	}
-	/** @private @arg {G_VE3854$WC$Metadata} x */
-	G_VE3854$WC$Metadata(x) {
+	/** @private @arg {G_VE3854$WC} x */
+	G_VE3854$WC(x) {
 		const {url,webPageType,rootVe,apiUrl,...y}=x; this.g(y);
 		x: {
 			if(url==="/") break x;
@@ -7157,22 +7161,22 @@ class HandleTypes extends ServiceMethods {
 		},x => {
 			let y=this.w(x);
 			switch(y.rootVe) {
-				case 3854: this.G_VE3854$WC$Metadata(y); break;
-				case 23462: this.G_VE23462$WC$Metadata(y); break;
+				case 3854: this.G_VE3854$WC(y); break;
+				case 23462: this.G_VE23462$WC(y); break;
 				default: debugger; break;
 			}
 			this.WebCommandMetadata(this.w(x));
 		});
 		x;
 	}
-	/** @private @arg {G_VE23462$WC$Metadata} x */
-	G_VE23462$WC$Metadata(x) {
+	/** @private @arg {G_VE23462$WC} x */
+	G_VE23462$WC(x) {
 		const cf="VE23462.Metadata";
 		this.save_keys(`[${cf}]`,x);
 		const {rootVe,webPageType,...y}=x; this.g(y);
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 	}
-	/** @public @arg {D__Browse$Id<"">} x */
+	/** @public @arg {D_Browse_Id<"">} x */
 	E_D__Browse(x) {
 		const cf="D__Browse";
 		this.save_keys(`[${cf}]`,x);
@@ -8115,7 +8119,7 @@ class HandleTypes extends ServiceMethods {
 		this.t(commandMetadata,this.CM$VE3832$Metadata);
 		this.E_Watch(watchEndpoint);
 	}
-	/** @private @arg {CM$VE3832$Metadata} x */
+	/** @private @arg {M_VE3832} x */
 	CM$VE3832$Metadata(x) {x;}
 	/** @private @arg {E_Watch} x */
 	E_Watch(x) {
@@ -8881,7 +8885,7 @@ class HandleTypes extends ServiceMethods {
 		let inner=this.TypesTemplate(x);
 		if(inner!==4) debugger;
 	}
-	/** @private @arg {E_ChangeEngagementPanelVisibilityAction} x */
+	/** @private @arg {EA_ChangeEngagementPanelVisibility} x */
 	ChangeEngagementPanelVisibilityAction(x) {
 		const cf="ChangeEngagementPanelVisibilityAction";
 		this.save_keys(`[${cf}]`,x);

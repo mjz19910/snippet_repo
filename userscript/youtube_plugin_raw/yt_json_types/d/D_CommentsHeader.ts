@@ -1,4 +1,4 @@
-type D__CommentsHeader={
+type D_CommentsHeader={
 	countText: R_TextWithRuns;
 	createRenderer: R_CommentSimplebox;
 	sortMenu: R_SortFilterSubMenu;

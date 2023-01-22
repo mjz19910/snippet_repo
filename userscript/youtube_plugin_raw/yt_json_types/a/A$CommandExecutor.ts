@@ -1,5 +1,5 @@
 type CommandExecutorAction=[
-	E_ChangeEngagementPanelVisibilityAction,
+	EA_ChangeEngagementPanelVisibility,
 	HideEngagementPanelScrimAction,
 	T$A_OpenPopup<{}>,
 	C$ScrollToEngagementPanel,

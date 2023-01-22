@@ -1,0 +1,7 @@
+type D_CompactLinkStyle=[
+	`${"COMPACT_LINK_STYLE_TYPE"}_${[
+		"SETTINGS_SIDEBAR",
+		"ACCOUNT_SWITCHER_FOOTER"
+	][number]}`,
+	"COMPACT_LINK_STYLE_TYPE_CREATION_MENU",
+][number];

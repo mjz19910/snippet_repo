@@ -1,0 +1,1 @@
+type D_Browse_Id<T>={browseId: T;};

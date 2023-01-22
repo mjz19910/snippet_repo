@@ -1,0 +1,1 @@
+type R_CommonConfig={commonConfig: D_CommonConfig;};

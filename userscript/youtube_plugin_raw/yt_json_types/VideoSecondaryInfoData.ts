@@ -9,5 +9,5 @@ type D__VideoSecondaryInfo={
 	defaultExpanded: false;
 	descriptionCollapsedLines: number;
 	showMoreCommand?: E_CommandExecutorCommand;
-	showLessCommand?: E_ChangeEngagementPanelVisibilityAction;
+	showLessCommand?: EA_ChangeEngagementPanelVisibility;
 };

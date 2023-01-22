@@ -1,9 +1,9 @@
 type G_Button$command=
-	|E_ChangeEngagementPanelVisibilityAction
+	|EA_ChangeEngagementPanelVisibility
 	|E_Continuation
 	|T$A_OpenPopup<{}>
 	|E_T$SignalService<{}>
-	|E_CreateBackstagePostEndpoint
+	|E_CreateBackstagePost
 	|E_UrlEndpoint
 	|E_CommandExecutorCommand
 	;
