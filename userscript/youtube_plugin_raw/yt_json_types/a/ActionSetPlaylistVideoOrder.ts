@@ -8,6 +8,6 @@ type ActionSetPlaylistVideoOrder={
 		};
 	};
 	serviceEndpoint?: E$Continuation;
-	accessibility?: AD$Accessibility;
+	accessibility?: D$Accessibility;
 	trackingParams: string;
 };

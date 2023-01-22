@@ -92,13 +92,13 @@ export class Snippet_0_tmp {
 			debugger;
 		}
 	}
-	/** @arg {AD$Accessibility} x */
+	/** @arg {D$Accessibility} x */
 	Accessibility(x) {
 		this.save_keys("[Accessibility]",x);
 		const {accessibilityData,...y}=x; this.g(y);
 		this.AccessibilityData(accessibilityData);
 	}
-	/** @arg {A$Label} x */
+	/** @arg {D$Label} x */
 	AccessibilityData(x) {
 		this.save_keys("[AccessibilityData]",x);
 		const {label,...y}=x; this.g(y);

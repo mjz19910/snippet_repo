@@ -3,7 +3,7 @@ type D$MetadataBadge={
 	style: "BADGE_STYLE_TYPE_VERIFIED";
 	tooltip: string;
 	trackingParams: string;
-	accessibilityData: A$Label;
+	accessibilityData: D$Label;
 };
 type NextMakeNum_2<T>=T extends `${infer C extends number}`?`-${NextMakeNum_3<[],C>}` extends `${infer V extends number}`?V:never:never;
 type NextMakeNum_3<U extends any[],T>=[any,...U]['length'] extends T?[any,any,...U]['length']:NextMakeNum_3<[any,...U],T>;

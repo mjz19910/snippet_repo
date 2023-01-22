@@ -1,6 +1,6 @@
 type D$Video$Owner={
 	thumbnail: D$Thumbnail;
 	navigationEndpoint: E$Browse;
-	accessibility: AD$Accessibility;
+	accessibility: D$Accessibility;
 	title: string;
 };

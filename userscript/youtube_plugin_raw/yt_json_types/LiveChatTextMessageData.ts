@@ -7,6 +7,6 @@ type D$LiveChatTextMessage={
 	authorBadges?: R$LiveChatAuthorBadge[];
 	timestampUsec: `${number}`;
 	authorExternalChannelId: `UC${string}`;
-	contextMenuAccessibility: AD$Accessibility;
+	contextMenuAccessibility: D$Accessibility;
 	timestampText: R$TextWithRuns;
 };

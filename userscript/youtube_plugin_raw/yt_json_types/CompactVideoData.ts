@@ -14,7 +14,7 @@ type D$CompactVideo={
 	shortViewCountText: R$TextWithRuns;
 	menu: {};
 	thumbnailOverlays: G$ThumbnailOverlayItem[];
-	accessibility: AD$Accessibility;
+	accessibility: D$Accessibility;
 	richThumbnail: {};
 	badges?: R$MetadataBadge[];
 };

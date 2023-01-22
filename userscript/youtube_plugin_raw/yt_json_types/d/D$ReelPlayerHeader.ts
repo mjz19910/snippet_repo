@@ -5,5 +5,5 @@ type D$ReelPlayerHeader={
 	channelTitleText: R$TextWithRuns;
 	channelThumbnail: D$Thumbnail;
 	trackingParams: string;
-	accessibility: AD$Accessibility;
+	accessibility: D$Accessibility;
 };

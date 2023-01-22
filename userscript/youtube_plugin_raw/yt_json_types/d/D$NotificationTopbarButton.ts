@@ -3,7 +3,7 @@ type D$NotificationTopbarButton={
 	menuRequest: E$T$SignalService<{}>;
 	style: "NOTIFICATION_BUTTON_STYLE_TYPE_DEFAULT";
 	trackingParams: string;
-	accessibility: AD$Accessibility;
+	accessibility: D$Accessibility;
 	tooltip: string;
 	updateUnseenCountEndpoint: E$T$SignalService<{}>;
 	notificationCount: number;

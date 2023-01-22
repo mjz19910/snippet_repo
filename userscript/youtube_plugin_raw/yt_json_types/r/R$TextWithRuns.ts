@@ -1,4 +1,4 @@
 type R$TextWithRuns={
 	runs: R$TextRun[];
-	accessibility?: AD$Accessibility;
+	accessibility?: D$Accessibility;
 };

@@ -7,6 +7,6 @@ type D$ToggleButton={
 	toggledServiceEndpoint: E$CommandExecutorCommand;
 	trackingParams: string;
 	toggledStyle: StyleTypeObj;
-	accessibilityData: AD$Accessibility;
-	toggledAccessibilityData: AD$Accessibility;
+	accessibilityData: D$Accessibility;
+	toggledAccessibilityData: D$Accessibility;
 };

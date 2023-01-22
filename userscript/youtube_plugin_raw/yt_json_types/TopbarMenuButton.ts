@@ -6,13 +6,13 @@ type D$TopbarMenuButton={
 		style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 	}>;
 	trackingParams: string;
-	accessibility: AD$Accessibility;
+	accessibility: D$Accessibility;
 	tooltip: string;
 	style: "STYLE_DEFAULT";
 }|{
 	avatar: D$Thumbnail;
 	menuRequest: E$T$SignalService<Signal$GetAccountMenu>;
 	trackingParams: string;
-	accessibility: AD$Accessibility;
+	accessibility: D$Accessibility;
 	tooltip: string;
 };
