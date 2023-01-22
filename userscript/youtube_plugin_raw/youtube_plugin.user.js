@@ -5343,30 +5343,32 @@ class ParserService extends BaseService {
 		this.save_string("[report.params.path]",x.join("$"));
 	}
 	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tva */
-	parse_param_next(root,path,tva) {
-		if(tva.length>1) {
-			let off=1;
-			for(let val of tva) {
-				let g1=() => {
-					console.log(`
-					case ${JSON.stringify(path)}: /*tva*/{
-						this.parse_param_next(root,\`\${path}[\${off}]\`,[val]);
-					}; return;`);
-					console.log(`\n\n\t"[parse_value.gen_ns_g1] [${path}[${off}]]",`);
-				};
-				switch(path) {
-					default: g1(); debugger; return;
-					case "report.params.f28.f1[].f1.f1": /*tva*/{
-						this.parse_param_next(root,`${path}[]`,[val]);
-					}; return;
-					case "report.params.f28.f1": /*tva*/{
-						this.parse_param_next(root,`${path}[]`,[val]);
-					} break;
-				}
-				off++;
+	parse_param_next_arr(root,path,tva) {
+		let off=1;
+		for(let val of tva) {
+			let g1=() => {
+				console.log(`
+				case ${JSON.stringify(path)}: /*tva*/{
+					this.parse_param_next(root,\`\${path}[\${off}]\`,[val]);
+				}; return;`);
+				console.log(`\n\n\t"[parse_value.gen_ns_g1] [${path}[${off}]]",`);
+			};
+			switch(path) {
+				default: g1(); debugger; return;
+				case "report.params.f28.f1[].f1.f1": /*tva*/{
+					this.parse_param_next(root,`${path}[]`,[val]);
+				}; return;
+				case "report.params.f28.f1": /*tva*/{
+					this.parse_param_next(root,`${path}[]`,[val]);
+				} break;
 			}
-			return;
+			off++;
 		}
+
+	}
+	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tva */
+	parse_param_next(root,path,tva) {
+		if(tva.length>1) return this.parse_param_next_arr(root,path,tva);
 		let tv=tva[0];
 		let key_index=this.parse_key_index;
 		if(tv instanceof Map) this.parse_any_param(root,path,new Map(tv));
