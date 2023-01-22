@@ -4,7 +4,7 @@ type PlaylistEditEndpoint={
 		webCommandMetadata: G$WC$Metadata$browse$edit_playlist;
 	};
 	playlistEditEndpoint: {
-		playlistId: string;
+		playlistId: "WL";
 		actions: ActionRemoveVideoByVideoId[];
 	};
 };

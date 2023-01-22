@@ -10437,11 +10437,33 @@ class HandleTypes extends ServiceMethods {
 	D$ThumbnailOverlayToggleButton(x) {
 		const cf="ThumbnailOverlayNowPlayingData";
 		this.save_keys(`[${cf}]`,x);
-		const {isToggled,...y}=x;
-		let [c_tog,c_un,c]=this.unwrap_toggled(y);
-		{let {accessibility,icon,tooltip,serviceEndpoint,...v1}=c_tog;this.g(v1);}
-		{let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un;this.g(v2);}
-		let {trackingParams,...y1}=c; this.g(y1);
+		const {isToggled,trackingParams,...y}=x;
+		this.trackingParams(cf,trackingParams);
+		let [c_tog,c_un,c]=this.unwrap_toggled(y); this.g(c);
+		{
+			let {accessibility,icon,tooltip,serviceEndpoint,...v1}=c_tog; this.g(v1);
+			this.A$Accessibility(accessibility);
+			if(icon.iconType!=="CHECK") debugger;
+			if(tooltip!=="Added") debugger;
+			this.PlaylistEditEndpoint(serviceEndpoint);
+		}
+		{
+			let {accessibility,icon,tooltip,serviceEndpoint,...v2}=c_un; this.g(v2);
+			this.A$Accessibility(accessibility);
+			if(icon.iconType!=="WATCH_LATER") debugger;
+			if(tooltip!=="Watch Later") debugger;
+			this.PlaylistEditEndpoint(serviceEndpoint);
+		}
+	}
+	/** @arg {PlaylistEditEndpoint} x */
+	PlaylistEditEndpoint(x) {
+		const cf="PlaylistEditEndpoint";
+		this.save_keys(`[${cf}]`,x);
+		const {clickTrackingParams,commandMetadata,playlistEditEndpoint}=x;
+		this.clickTrackingParams(cf,clickTrackingParams);
+		this.CommandMetadata(commandMetadata);
+		if(commandMetadata.webCommandMetadata.apiUrl!=="/youtubei/v1/browse/edit_playlist") debugger;
+		this.E$PlaylistEdit(playlistEditEndpoint);
 	}
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `toggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveToggled */
 	/** @template T @typedef {{[U in keyof T as `${string&U extends `untoggled${infer U1}${infer I1}`?`${Lowercase<U1>}${I1}`:never}`]:T[U]}} RemoveUnToggled */
