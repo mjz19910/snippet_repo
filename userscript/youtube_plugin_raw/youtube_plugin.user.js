@@ -7150,7 +7150,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[E$${cf}]`,x);
 		this.T$Endpoint("E$Browse",x,a=>{
 			this.w(a);
-		},a=>{a;})
+		},this.g);
 		x;
 	}
 	/** @arg {D$Browse} x */
