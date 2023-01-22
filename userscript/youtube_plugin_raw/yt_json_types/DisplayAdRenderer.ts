@@ -6,10 +6,10 @@ type DisplayAdRenderer={
 	secondaryText: D$TextWithRuns;
 	badge: MetadataBadgeData;
 	menu: R$Menu;
-	ctaButton: R$ButtonRenderer;
+	ctaButton: R$Button;
 	impressionEndpoints: {}[];
 	clickCommand: {};
-	mediaHoverOverlay: R$ButtonRenderer;
+	mediaHoverOverlay: R$Button;
 	mediaBadge: MetadataBadgeData;
 	trackingParams: string;
 }

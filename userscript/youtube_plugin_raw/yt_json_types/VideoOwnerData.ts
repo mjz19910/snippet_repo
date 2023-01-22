@@ -5,7 +5,7 @@ type VideoOwnerData={
 	navigationEndpoint: E$BrowseEndpoint;
 	subscriberCountText: D$SimpleText;
 	trackingParams: string;
-	membershipButton: R$ButtonRenderer;
+	membershipButton: R$Button;
 }|{
 	thumbnail: D$Thumbnail;
 	title: D$TextWithRuns;
@@ -14,5 +14,5 @@ type VideoOwnerData={
 	subscriberCountText: D$SimpleText;
 	trackingParams: string;
 	badges: R$MetadataBadgeRenderer[];
-	membershipButton: R$ButtonRenderer;
+	membershipButton: R$Button;
 };

@@ -5,8 +5,8 @@ type DesktopTopbarData={
 	countryCode: CountryCode;
 	topbarButtons: TopbarButtonItem[];
 	hotkeyDialog: HotkeyDialogRenderer;
-	backButton: R$ButtonRenderer;
-	forwardButton: R$ButtonRenderer;
-	a11ySkipNavigationButton: R$ButtonRenderer;
-	voiceSearchButton: R$ButtonRenderer;
+	backButton: R$Button;
+	forwardButton: R$Button;
+	a11ySkipNavigationButton: R$Button;
+	voiceSearchButton: R$Button;
 };

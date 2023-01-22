@@ -11,7 +11,7 @@ type HorizontalCardList={
 		richListHeaderRenderer: {
 			title: D$SimpleText;
 			trackingParams: string;
-			navigationButton: R$ButtonRenderer;
+			navigationButton: R$Button;
 		};
 	};
 	style: {

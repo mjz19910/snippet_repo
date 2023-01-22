@@ -1,3 +1,1 @@
-type R$ProfilePageHeaderThumbnailViewModel={
-	profilePageHeaderThumbnailViewModel: {};
-};
+type R$ProfilePageHeaderThumbnailViewModel={profilePageHeaderThumbnailViewModel: {};};

@@ -1,3 +1,1 @@
-type R$ProfilePageHeaderTitleViewModel={
-	profilePageHeaderTitleViewModel: D$ProfilePageHeaderTitle;
-};
+type R$ProfilePageHeaderTitleViewModel={profilePageHeaderTitleViewModel: D$ProfilePageHeaderTitle;};

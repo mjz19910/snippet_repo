@@ -3,6 +3,6 @@ type LiveChatViewerEngagementMessage={
 	timestampUsec: `${number}`;
 	icon: Icon<"YOUTUBE_ROUND">;
 	message: D$TextWithRuns;
-	actionButton: R$ButtonRenderer;
+	actionButton: R$Button;
 	trackingParams: string;
 };

@@ -4,7 +4,7 @@ type MacroMarkersListItem={
 	thumbnail: D$Thumbnail;
 	onTap: E$WatchEndpoint;
 	trackingParams: string;
-	shareButton: R$ButtonRenderer;
+	shareButton: R$Button;
 	repeatButton: ToggleButtonRenderer;
 	macroMarkerRepeatStateEntityKey: string;
 	endRepeatCommand: E$CommandExecutorCommand;

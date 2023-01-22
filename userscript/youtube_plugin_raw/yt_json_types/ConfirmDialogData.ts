@@ -2,7 +2,7 @@ type ConfirmDialogData={
 	title?: D$SimpleText;
 	trackingParams: string;
 	dialogMessages: D$TextT[];
-	confirmButton: R$ButtonRenderer;
-	cancelButton: R$ButtonRenderer;
+	confirmButton: R$Button;
+	cancelButton: R$Button;
 	primaryIsCancel: boolean;
 };

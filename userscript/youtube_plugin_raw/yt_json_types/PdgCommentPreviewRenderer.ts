@@ -5,7 +5,7 @@ type PdgCommentPreviewRenderer={
 		authorText: D$SimpleText;
 		commentOptionRenderers: PdgCommentOptionRenderer[];
 		defaultCommentText: D$TextWithRuns;
-		editButton: R$ButtonRenderer;
+		editButton: R$Button;
 		superThanksSelectedTierEntity: SuperThanksSelectedTierEntity;
 	};
 };

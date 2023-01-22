@@ -1,6 +1,6 @@
 type HotkeyDialog={
 	title: D$TextWithRuns;
 	sections: HotkeyDialogSectionRenderer[];
-	dismissButton: R$ButtonRenderer;
+	dismissButton: R$Button;
 	trackingParams: string;
 };
