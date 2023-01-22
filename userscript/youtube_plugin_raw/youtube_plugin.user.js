@@ -2867,7 +2867,7 @@ class BaseService extends BaseServicePrivate {
 	/** @template {GetMaybeKeys<T>} K @template {{}} T @arg {T} x @arg {(x:T[K])=>void} f */
 	y(x,f) {f.call(this,this.w(x));}
 	/** @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
-	t(x,f) {if(!x) return;return f.call(this,x);}
+	t(x,f) {if(!x) return; return f.call(this,x);}
 	/** @template {{}} T @arg {T[]|undefined} x @arg {(this:this,x:T)=>void} f */
 	tz(x,f) {
 		if(!x) return;
@@ -2893,9 +2893,14 @@ class BaseService extends BaseServicePrivate {
 			f.call(this,cf,a,i);
 		}
 	}
-	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T|undefined)=>void} */
+	/** @arg {U|null} _rv @template U @template {{}} T @arg {T|undefined} x @arg {(this:this,x:T)=>U} f @returns {U|undefined} */
+	t_ex(_rv,f,x) {if(!x) return; return f.call(this,x);}
+	/** @template U @template {{}} T @arg {(this:this,x:T)=>U} f */
 	tf(f) {
-		return x => this.t(x,f);
+		/** @returns {U|null} */
+		function mu() {return null;}
+		/** @param {T|undefined} x @returns {U|undefined} */
+		return x => this.t_ex(mu(),f,x);
 	}
 	/** @template {{}} T @arg {(this:this,x:T)=>void} f @returns {(x:T)=>void} */
 	c1(f) {return x => f.call(this,x);}
@@ -13218,20 +13223,35 @@ class HandleTypes extends ServiceMethods {
 		this.params("EntityMutationItem","entity_key",entityKey);
 		if(type!=="ENTITY_MUTATION_TYPE_DELETE"&&type!=="ENTITY_MUTATION_TYPE_REPLACE") debugger;
 		this.tf(this.EntityMutationOptions)(options);
-		this.tf(this.EntityMutationPayload)(payload);
+		let payload_inner=this.tf(this.EntityMutationPayload)(payload);
+		if(payload_inner) {
+			let x=payload_inner;
+			if("subscribed" in x) return;
+			if("state" in x) return;
+			if("serializedParams" in x) return;
+			const {key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives,...y}=x; this.g(y);
+			this.z([key,command,addToOfflineButtonState,contentCheckOk,racyCheckOk,loggingDirectives],a=>{
+				if(a===void 0) debugger;
+			})
+		}
 	}
-	/** @arg {EntityMutationPayload} x */
+	/** @private @template V @arg {{[U in `${string}Entity`]:V}} x */
+	EN$(x) {return this.w(x);}
+	/** @private @arg {EntityMutationPayload} x @returns {EntityMutationPayload extends infer I?I extends {[U in `${string}Entity`]:infer V}?V|null:null:never} */
 	EntityMutationPayload(x) {
 		const cf="EntityMutationPayload";
 		this.save_keys(`[${cf}]`,x);
-		if("subscriptionStateEntity" in x) return;
-		if("transcriptTrackSelectionEntity" in x) return;
-		if("transcriptSearchBoxStateEntity" in x) return;
-		if("offlineabilityEntity" in x) return;
-		if("playlistLoopStateEntity" in x) return;
-		if("macroMarkersListEntity" in x) return;
-		if("superThanksSelectedTierEntity" in x) return;
+		if("subscriptionStateEntity" in x) return this.EN$(x);
+		if("transcriptTrackSelectionEntity" in x) return this.EN$(x);
+		if("transcriptSearchBoxStateEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
+		if("offlineabilityEntity" in x) return this.EN$(x);
+		if("playlistLoopStateEntity" in x) return this.EN$(x);
+		if("macroMarkersListEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
+		if("superThanksSelectedTierEntity" in x) {let ret=this.EN$(x); console.log(ret); debugger; return null;};
+		let ret=this.EN$(x);
+		console.log(ret);
 		debugger;
+		return null;
 	}
 	/** @arg {EntityMutationOptions} x */
 	EntityMutationOptions(x) {
