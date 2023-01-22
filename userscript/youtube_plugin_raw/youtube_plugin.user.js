@@ -5710,6 +5710,7 @@ case ${JSON.stringify(path)}: /*tva*/{
 					case "player_params": {
 						const idx=3;
 						if(path_parts.length===2) {
+							if(tv instanceof Map) return;
 							switch(tv) {default: debugger; return;}
 						}
 						switch(path_parts[2]) {
@@ -5722,10 +5723,11 @@ case ${JSON.stringify(path)}: /*tva*/{
 							case "f33": case "f40": case "f56": {
 								const idx=4;
 								if(path_parts.length===3) {
-									switch(tv) {
-										case 1: return;
-										default: debugger; return;
-									}
+									if(tv instanceof Map) return;
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+									if(typeof tv==="bigint") return this.save_string(`[${path}]`,`${tv}n`);
+									debugger;
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
