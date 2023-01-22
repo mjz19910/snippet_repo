@@ -7403,6 +7403,7 @@ class HandleTypes extends ServiceMethods {
 	D$Tab(x) {
 		const cf="Tab";
 		this.save_keys(`[${cf}]`,x);
+		{x;}
 	}
 	/** @private @arg {R$ExpandableTab} x */
 	R$ExpandableTab(x) {this.H$R$("R$ExpandableTab",x,this.D$ExpandableTab);}
@@ -7410,6 +7411,7 @@ class HandleTypes extends ServiceMethods {
 	D$ExpandableTab(x) {
 		const cf="ExpandableTab";
 		this.save_keys(`[${cf}]`,x);
+		{x;}
 	}
 	/** @private @arg {E$Continuation} x */
 	ContinuationCommand(x) {
