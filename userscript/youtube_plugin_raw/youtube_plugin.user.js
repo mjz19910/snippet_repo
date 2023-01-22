@@ -2301,14 +2301,17 @@ class KnownDataSaver extends ApiBase {
 		this.#data.strings_key_index_map[key]=index;
 		return this.#data.seen_strings[index];
 	}
-	/** @arg {{[x:string]: number;}} store_index @arg {string} key @arg {[string, ["one", string[]] | ["many", string[][]]][]} store */
-	get_seen_string_item_store(key,store_index,store) {
-		let index=store_index[key];
-		if(index) return store[index];
-		index=store.findIndex(e => e[0]===key);
-		if(index<0) return;
-		store_index[key]=index;
-		return store[index];
+	/** @arg {string} key @arg {StoreDescription<string>} store */
+	get_seen_string_item_store(key,store) {
+		const {index,data}=store;
+		let idx=index[key];
+		if(idx) return data[idx];
+		idx=data.findIndex(e => e[0]===key);
+		if(idx<0) {
+			return this.add_to_index(key,["one",[]],store);
+		}
+		index[key]=idx;
+		return data[idx];
 	}
 	/** @type {[string,string|string[]][]} */
 	#new_strings=[];
@@ -2345,8 +2348,7 @@ class KnownDataSaver extends ApiBase {
 	save_to_store(ka,x,store) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(ka);
-		let p=this.get_seen_string_item_store(k,store.index,store.data);
-		if(!p) p=this.add_to_index(k,["one",[]],store);
+		let p=this.get_seen_string_item_store(k,store);
 		let store_index=this.save_to_data_item(x,p);
 		if(store_index<0) return false;
 		store.new_data.push([k,x]);
