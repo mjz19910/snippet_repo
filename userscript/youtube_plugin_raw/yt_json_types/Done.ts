@@ -15,6 +15,6 @@ namespace Done {
 		searchPyvRenderer: SearchPyvData;
 		settingsOptionsRenderer: SettingsOptionsData;
 		shelfRenderer: ShelfData;
-		videoRenderer: VideoData;
+		videoRenderer: D$Video;
 	};
 }

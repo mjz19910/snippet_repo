@@ -4347,19 +4347,19 @@ class CodegenService extends BaseService {
 		/** @private @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
-			if(k=="trackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
-			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(x.${k});`); continue;}
+			if(k=="trackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
+			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
 			if(k=="responseContext") {debugger; continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
 				if(x2.startsWith("https:")) {
-					ret_arr.push(`this.primitive_of(x.${k},"string");`);
+					ret_arr.push(`this.primitive_of(${k},"string");`);
 					continue;
 				}
 				let u_count=[...new Set(x2.split("").sort())].join("").length;
 				if(x2.includes("%")) {
 					if(u_count>13) {
-						ret_arr.push(`this.primitive_of(x.${k},"string");`);
+						ret_arr.push(`this.primitive_of(${k},"string");`);
 						continue;
 					}
 				}
@@ -4367,15 +4367,15 @@ class CodegenService extends BaseService {
 				ret_arr.push(`if(x.${k}!=="${x2}") debugger;`);
 				continue;
 			}
-			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(x.${k},"number");`);}
+			if(typeof x2=="number") {ret_arr.push(`this.primitive_of(${k},"number");`);}
 			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
-			if(x2===null) {ret_arr.push(`if(x.${k}!==null) debugger;`); continue;}
-			if(this.#is_TextT(x2)) {ret_arr.push(`this.TextT(x.${k});`); continue;};
+			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
+			if(this.#is_TextT(x2)) {ret_arr.push(`this.TextT(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(x.${k});`); continue;}
-			if("iconType" in x2) {ret_arr.push(`this.Icon(x.${k});`); continue;}
-			if("browseEndpoint" in x2) {ret_arr.push(`this.BrowseEndpoint(x.${k});`); continue;}
+			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(${k});`); continue;}
+			if("iconType" in x2) {ret_arr.push(`this.Icon(${k});`); continue;}
+			if("browseEndpoint" in x2) {ret_arr.push(`this.BrowseEndpoint(${k});`); continue;}
 			/** @private @type {{}} */
 			let o3=x2;
 			let c=this.get_name_from_keys(o3);
@@ -4384,8 +4384,8 @@ class CodegenService extends BaseService {
 				continue;
 			}
 			if(c.endsWith("Renderer")) {
-				let ic=this.uppercase_first(c);
-				ret_arr.push(`this.${ic}(x.${k});`);
+				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
+				ret_arr.push(`this.${ic}(${k});`);
 				continue;
 			}
 			if(k.endsWith("Renderer")) {
@@ -4401,10 +4401,10 @@ class CodegenService extends BaseService {
 	/** @arg {string} k @arg {string[]} out @arg {string[]} env_names @arg {string|number} def_name */
 	#generate_body_default_item(k,out,env_names,def_name) {
 		let tn=`${k[0].toUpperCase()}${k.slice(1)}`;
-		let mn=tn.replace("Renderer","Data");
-		if(mn===def_name) mn+="Data";
+		let mn=tn;
+		if(mn===def_name) mn=`D$${tn}`;
 		env_names.push(mn);
-		out.push(`this.${mn}(x.${k});`);
+		out.push(`this.${mn}(${k});`);
 	}
 	/** @arg {string} k @arg {unknown[]} x @arg {string[]} out */
 	#generate_body_array_item(k,x,out) {
@@ -4442,10 +4442,15 @@ class CodegenService extends BaseService {
 		let tmp_1=`
 		d1!/** @private @arg {${t_name}} x */
 		d1!${t_name}(x) {
+			const {${keys.join()},...y}=x; this.g(y);
 			d2!${body}
 		d1!}
 		`;
 		let ex_names=req_names.map(e => {
+			let keys=Object.keys(x);
+			/** @type {string[]} */
+			let next_req=[];
+			this.#generate_renderer_body(next_req,x,keys,t_name);
 			let tmp0=`
 			d1!/** @private @arg {${e}} x */
 			d1!${e}(x) {
@@ -14744,11 +14749,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {Do$w<R$Video>} x */
+	/** @private @arg {D$Video} x */
 	Video(x) {
 		const cf="Video";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		const {videoId,thumbnail,title,descriptionSnippet,longBylineText,publishedTimeText,lengthText,viewCountText,navigationEndpoint,ownerBadges,ownerText,shortBylineText,trackingParams,showActionMenu,shortViewCountText,menu,channelThumbnailSupportedRenderers,thumbnailOverlays,richThumbnail,inlinePlaybackEndpoint,owner,...y}=x;
 	}
 	/** @private @arg {Do$w<R$Radio>} x */
 	Radio(x) {
