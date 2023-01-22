@@ -4366,7 +4366,7 @@ class CodegenService extends BaseService {
 			let new_code=this.generate_code_for_entry(x2,k);
 			if(new_code) {ret_arr.push(new_code);continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
-			if("simpleText" in x2) {ret_arr.push(`this.SimpleText(${k});`); continue;};
+			if("simpleText" in x2) {ret_arr.push(`this.D$SimpleText(${k});`); continue;};
 			/** @type {D$TextWithRuns} */
 			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D$TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
@@ -14799,8 +14799,36 @@ class HandleTypes extends ServiceMethods {
 	/** @private @arg {D$Video} x */
 	Video(x) {
 		const cf="Video";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
+		this.save_string(`[${cf}]`,x)
+		const {videoId,thumbnail,title,descriptionSnippet,longBylineText,publishedTimeText,lengthText,viewCountText,navigationEndpoint,ownerBadges,ownerText,shortBylineText,trackingParams,showActionMenu,shortViewCountText,menu,channelThumbnailSupportedRenderers,thumbnailOverlays,richThumbnail,inlinePlaybackEndpoint,owner,...y}=x; this.g(y);
+		this.primitive_of(videoId,"string");
+		this.D$Thumbnail(thumbnail);
+		this.D$TextWithRuns(title);
+		this.D$TextWithRuns(descriptionSnippet);
+		this.D$TextWithRuns(longBylineText);
+		this.D$SimpleText(publishedTimeText);
+		this.D$SimpleText(lengthText);
+		this.D$SimpleText(viewCountText);
+		this.E$WatchEndpoint(navigationEndpoint);
+		this.z(ownerBadges,this.R$MetadataBadge);
+		this.D$TextWithRuns(ownerText);
+		this.D$TextWithRuns(shortBylineText);
+		this.trackingParams(cf,trackingParams);
+		if(showActionMenu!==false) debugger;
+		this.D$SimpleText(shortViewCountText);
+		this.R$Menu(menu);
+		this.R$ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
+		this.z(thumbnailOverlays,this.R$ThumbnailOverlayTimeStatus);
+		this.R$MovingThumbnail(richThumbnail);
+		this.E$WatchEndpoint(inlinePlaybackEndpoint);
+		this.D$Video$Owner(owner);
+	}
+	R$MovingThumbnail(x) {
+		x;
+	}
+	/** @private @arg {D$Video['owner']} x */
+	D$Video$Owner(x) {
+		x;
 	}
 	/** @private @arg {D$Radio} x */
 	Radio(x) {

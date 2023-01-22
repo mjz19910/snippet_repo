@@ -1,0 +1,1 @@
+type R$RichThumbnail={movingThumbnailRenderer: D$MovingThumbnail;};

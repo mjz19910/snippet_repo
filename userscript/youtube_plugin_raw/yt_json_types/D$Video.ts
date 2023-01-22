@@ -16,22 +16,9 @@ type Video$VideoId={
 	showActionMenu: false;
 	shortViewCountText: D$SimpleText;
 	menu: R$Menu;
-	channelThumbnailSupportedRenderers: {
-		channelThumbnailWithLinkRenderer: {
-			thumbnail: D$Thumbnail;
-			navigationEndpoint: E$BrowseEndpoint;
-			accessibility: A$Accessibility;
-			title: string;
-		};
-	};
+	channelThumbnailSupportedRenderers: R$ChannelThumbnailWithLink;
 	thumbnailOverlays: R$ThumbnailOverlayTimeStatus[];
-	richThumbnail: {
-		movingThumbnailRenderer: {
-			movingThumbnailDetails: D$Thumbnail;
-			enableHoveredLogging: true;
-			enableOverlay: true;
-		};
-	};
+	richThumbnail: R$MovingThumbnail;
 	inlinePlaybackEndpoint: E$WatchEndpoint;
 	owner: {
 		thumbnail: D$Thumbnail;
