@@ -2292,12 +2292,18 @@ class KnownDataSaver extends ApiBase {
 			this.#store_data();
 		});
 	}
+	#get_string_store() {
+		const {strings_key_index_map: index,seen_strings: data}=this.#data;
+		return {index,data,new_data: this.#new_strings};
+	}
 	/** @arg {string} key */
 	#get_seen_string_item(key) {
 		let index=this.#data.strings_key_index_map[key];
 		if(index) return this.#data.seen_strings[index];
 		index=this.#data.seen_strings.findIndex(e => e[0]===key);
-		if(index<0) return;
+		if(index<0) {
+			return this.add_to_index(key,["one",[]],this.#get_string_store());
+		}
 		this.#data.strings_key_index_map[key]=index;
 		return this.#data.seen_strings[index];
 	}
