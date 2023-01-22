@@ -1,4 +1,5 @@
 type E$RecordNotificationInteractions={
-	serializedInteractionsRequest: string;
-	actions?: A$HideEnclosingAction[];
+	clickTrackingParams: string;
+	commandMetadata: G$Metadata;
+	recordNotificationInteractionsEndpoint: DE$RecordNotificationInteractions;
 };

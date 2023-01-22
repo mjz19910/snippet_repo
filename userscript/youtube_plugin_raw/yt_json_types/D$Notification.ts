@@ -5,7 +5,7 @@ type D$Notification={
 	sentTimeText: D$SimpleText;
 	navigationEndpoint: E$WatchEndpoint;
 	read: boolean;
-	recordClickEndpoint: E$RecordNotificationInteractionsEndpoint;
+	recordClickEndpoint: E$RecordNotificationInteractions;
 	contextualMenu: R$Menu;
 	trackingParams: string;
 	notificationId: `${number}`;

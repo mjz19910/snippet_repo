@@ -7107,16 +7107,6 @@ class HandleTypes extends ServiceMethods {
 		this.D$EntityBatchUpdate(entityBatchUpdate);
 		this.t(elementUpdate,this.ElementUpdate);
 	}
-	/** @private @arg {WebSearchboxConfig} x */
-	WebSearchboxConfig(x) {
-		const cf="WebSearchboxConfig";
-		this.save_keys(`[${cf}]`,x);
-		const {requestLanguage,requestDomain,hasOnscreenKeyboard,focusSearchbox,...y}=x; this.g(y);
-		if(requestLanguage!=="en") debugger;
-		if(requestDomain!=="ca") debugger;
-		if(hasOnscreenKeyboard!==false) debugger;
-		if(focusSearchbox!==true) debugger;
-	}
 	/** @arg {BrowseEditPlaylistResponse} x */
 	BrowseEditPlaylistResponse(x) {
 		const cf="BrowseEditPlaylistResponse";
@@ -7935,6 +7925,8 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.primitive_of_string(notificationId);
 	}
+	/** @arg {E$RecordNotificationInteractions} x */
+	E$RecordNotificationInteractionsEndpoint(x) {x;}
 	/** @arg {"RecordNotificationInteractions"} root @arg {string} x */
 	serializedInteractionsRequest(root,x) {
 		/** @type {ParamsSection} */
@@ -9142,37 +9134,6 @@ class HandleTypes extends ServiceMethods {
 		this.t(navigationEndpoint,f_run);
 		this.primitive_of_string(text);
 	}
-	/** @private @arg {D$ThumbnailOverlayTimeStatus} x */
-	D$ThumbnailOverlayTimeStatus(x) {
-		const cf="ThumbnailOverlayTimeStatus";
-		this.save_keys(`[${cf}]`,x);
-		const {text,style,...y}=x;
-		this.TextT(text);
-		switch(style) {
-			default: debugger; break;
-			case "DEFAULT": break;
-			case "LIVE": break;
-			case "SHORTS": break;
-		}
-		if("icon" in y) {
-			const {icon,...y1}=y; this.g(y1);
-			this.T$Icon(icon);
-		} else this.g(y);
-	}
-	/** @private @arg {EndScreenPlaylist} x */
-	EndScreenPlaylist(x) {
-		const cf="EndScreenPlaylist";
-		this.save_keys(`[${cf}]`,x);
-		const {playlistId,title,thumbnail,videoCount,longBylineText,videoCountText,navigationEndpoint,trackingParams,...y}=x; this.g(y); // ! #destructure
-		this.playlistId(playlistId);
-		this.D$SimpleText(title);
-		this.D$Thumbnail(thumbnail);
-		this.TextT(longBylineText);
-		this.t(videoCount,this.primitive_of_string);
-		this.D$TextWithRuns(videoCountText);
-		this.E$WatchEndpoint(navigationEndpoint);
-		this.trackingParams(cf,trackingParams);
-	}
 	/** @private @arg {NavigationEndpoint} x */
 	NavigationEndpoint(x) {
 		const cf="NavigationEndpointRoot";
@@ -9457,21 +9418,6 @@ class HandleTypes extends ServiceMethods {
 		}
 		debugger;
 	}
-	/** @private @arg {D$GuideSection} x */
-	GuideSectionData(x) {
-		const cf="GuideSectionData";
-		this.save_keys(`[${cf}]`,x);
-		const {items,trackingParams,formattedTitle,...y}=x; this.g(y); // ! #destructure
-		this.z(items,this.GuideSectionItemType);
-		this.trackingParams(cf,trackingParams);
-		this.t(formattedTitle,this.TextT);
-	}
-	/** @private @arg {G$GuideSectionItem} x */
-	GuideSectionItemType(x) {
-		if("guideEntryRenderer" in x) return this.R$GuideEntry(x);
-		if("guideCollapsibleSectionEntryRenderer" in x) return this.R$GuideCollapsibleSectionEntry(x);
-		debugger;
-	}
 	/** @private @arg {AutoplayContent} x */
 	AutoplayContent(x) {
 		const cf="AutoplayContent";
@@ -9504,18 +9450,6 @@ class HandleTypes extends ServiceMethods {
 		this.R$Menu(playlistButtons);
 		this.primitive_of(isCourse,"boolean");
 		this.D$SimpleText(nextVideoLabel);
-	}
-	/** @private @arg {AutoplaySwitchButton} x */
-	AutoplaySwitchButton(x) {
-		const cf="AutoplaySwitchButton";
-		this.save_keys(`[${cf}]`,x);
-		const {onEnabledCommand,onDisabledCommand,enabledAccessibilityData,disabledAccessibilityData,trackingParams,enabled,...y}=x; this.g(y); // ! #destructure
-		this.SetSettingEndpointAutonavForDesktop(onEnabledCommand);
-		this.SetSettingEndpointAutonavForDesktop(onDisabledCommand);
-		this.A$Accessibility(enabledAccessibilityData);
-		this.A$Accessibility(disabledAccessibilityData);
-		this.trackingParams(cf,trackingParams);
-		this.primitive_of(enabled,"boolean");
 	}
 	/** @arg {DecoratedPlayerBar} x */
 	DecoratedPlayerBar(x) {
@@ -11526,40 +11460,11 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams("ReelDismissalAction",trackingParams);
 		this.R$NotificationAction(onDismissalCompletionRenderer);
 	}
-	/** @private @arg {TranscriptSegmentListRenderer} x */
-	TranscriptSegmentListRenderer(x) {
-		const cf="TranscriptSegmentListRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TranscriptSegmentListData(this.w(x));
-	}
-	/** @private @arg {TranscriptSearchPanelRenderer} x */
-	TranscriptSearchPanelRenderer(x) {
-		const cf="TranscriptSearchPanelRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TranscriptSearchPanelData(this.w(x));
-	}
-	/** @private @arg {TranscriptFooterRenderer} x */
-	TranscriptFooterRenderer(x) {
-		const cf="TranscriptFooterRenderer";
-		this.save_keys(`[${cf}]`,x);
-		this.TranscriptFooterData(this.w(x));
-	}
 	/** @private @arg {TranscriptSegmentRenderer} x */
 	TranscriptSegmentRenderer(x) {
 		const cf="TranscriptSegmentRenderer";
 		this.save_keys(`[${cf}]`,x);
 		this.TranscriptSegmentData(this.w(x));
-	}
-	/** @private @arg {ChannelSwitcherPage} x */
-	ChannelSwitcherPage(x) {
-		const cf="ChannelSwitcherPage";
-		this.save_keys(`[${cf}]`,x);
-		const {contents: [z],header,targetId,...y}=x; this.g(y); // #destructure
-		if("buttonRenderer" in z) return this.R$Button(z);
-		this.ChannelSwitcherHeaderRenderer(header);
-		switch(targetId) {
-			default: debugger; break;
-		}
 	}
 	//#endregion
 	//#region has_save_keys
@@ -11567,38 +11472,6 @@ class HandleTypes extends ServiceMethods {
 	minimal_handler_member_1(x) {
 		const cf="minimal_handler_member";
 		this.save_keys(`[${cf}]`,x);
-	}
-	/** @private @arg {D$Transcript} x */
-	D$Transcript(x) {
-		const cf="Transcript";
-		this.save_keys(`[${cf}]`,x);
-		const {trackingParams,content,...y}=x; this.g(y);
-		this.trackingParams(cf,trackingParams);
-		this.TranscriptSearchPanelRenderer(content);
-	}
-	/** @private @arg {TranscriptSearchPanelData} x */
-	TranscriptSearchPanelData(x) {
-		const cf="TranscriptSearchPanelData";
-		const {trackingParams,body,footer,targetId,...y}=x; this.g(y);
-		this.trackingParams(cf,trackingParams);
-		if(targetId!=="engagement-panel-searchable-transcript-search-panel") debugger;
-		this.TranscriptSegmentListRenderer(body);
-		this.TranscriptFooterRenderer(footer);
-	}
-	/** @private @arg {TranscriptFooterData} x */
-	TranscriptFooterData(x) {
-		const cf="TranscriptFooterData";
-		this.save_keys(`[${cf}]`,x);
-		this.SortFilterSubMenuRenderer(this.w(x));
-	}
-	/** @private @arg {TranscriptSegmentListData} x */
-	TranscriptSegmentListData(x) {
-		const cf="TranscriptSegmentListData";
-		this.save_keys(`[${cf}]`,x);
-		const {initialSegments,noResultLabel,retryLabel,touchCaptionsEnabled,...y}=x; this.g(y);
-		this.z(initialSegments,this.TranscriptSegmentRenderer);
-		this.z([noResultLabel,retryLabel],a => this.D$TextWithRuns(a));
-		this.primitive_of(touchCaptionsEnabled,"boolean");
 	}
 	/** @private @arg {TranscriptSegmentData} x */
 	TranscriptSegmentData(x) {
@@ -11611,18 +11484,6 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		this.A$Accessibility(accessibility);
 		this.t(targetId,a => this.parser.parse_transcript_target_id(cf,a));
-	}
-	/** @private @arg {D$GuideCollapsibleSectionEntry} x */
-	GuideCollapsibleSectionEntry(x) {
-		const cf="GuideCollapsibleSectionEntry";
-		this.save_keys(`[${cf}]`,x);
-		const {headerEntry,expanderIcon,collapserIcon,sectionItems,handlerDatas,...y}=x; this.g(y);
-		this.R$GuideEntry(headerEntry);
-		this.T$Icon(expanderIcon);
-		this.T$Icon(collapserIcon);
-		this.z(sectionItems,this.R$GuideEntry);
-		if(handlerDatas[0]!=="GUIDE_ACTION_ADD_TO_PLAYLISTS") debugger;
-		if(handlerDatas[1]!=="GUIDE_ACTION_REMOVE_FROM_PLAYLISTS") debugger;
 	}
 	/** @arg {MacroMarkersListItemRenderer} x */
 	MacroMarkersListItemRenderer(x) {
@@ -11704,35 +11565,6 @@ class HandleTypes extends ServiceMethods {
 		const cf="AdLayoutLoggingData";
 		this.save_keys(`[${cf}]`,x);
 	}
-	/** @private @arg {PivotButton} x */
-	PivotButton(x) {
-		const cf="PivotButton";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {MetadataBadgeData} x */
-	MetadataBadgeData(x) {
-		const cf="MetadataBadgeData";
-		this.save_keys(`[${cf}]`,x);
-		const {icon,style,tooltip,trackingParams,accessibilityData,...y}=x; this.g(y);
-		this.T$Icon(icon);
-		switch(style) {case "BADGE_STYLE_TYPE_VERIFIED": break; default: debugger;}
-		this.primitive_of(tooltip,"string");
-		this.trackingParams(cf,trackingParams);
-		this.t(accessibilityData,this.A$LabelData);
-	}
-	/** @private @arg {LiveChatAuthorBadgeData} x */
-	LiveChatAuthorBadgeData(x) {
-		const cf="LiveChatAuthorBadgeData";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {ChannelHeaderLinks} x */
-	ChannelHeaderLinks(x) {
-		const cf="ChannelHeaderLinks";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
 	/** @private @arg {RelatedChipCommandData} x */
 	RelatedChipCommandData(x) {
 		const cf="RelatedChipCommandData";
@@ -11745,18 +11577,6 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {CarouselLockupRenderer[GetMaybeKeys<CarouselLockupRenderer>]} x */
-	CarouselLockup(x) {
-		const cf="CarouselLockup";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {D$Factoid} x */
-	Factoid(x) {
-		const cf="Factoid";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
 	/** @arg {ChannelSwitcherHeader} x */
 	ChannelSwitcherHeader(x) {
 		const cf="ChannelSwitcherHeader";
@@ -11766,133 +11586,6 @@ class HandleTypes extends ServiceMethods {
 	/** @arg {SuperVodBuyFlowContent} x */
 	D$SuperVodBuyFlowContent(x) {
 		const cf="SuperVodBuyFlowContent";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {AD$BrowserMediaSession} x */
-	BrowserMediaSession(x) {
-		const cf="BrowserMediaSession";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<CommentActionButtonsRenderer>} x */
-	CommentActionButtons(x) {
-		const cf="CommentActionButtons";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<ClipCreationTextInputRenderer>} x */
-	ClipCreationTextInput(x) {
-		const cf="ClipCreationTextInput";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<MerchandiseItemRenderer>} x */
-	MerchandiseItem(x) {
-		const cf="MerchandiseItem";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<R$ClipCreationScrubber>} x */
-	ClipCreationScrubber(x) {
-		const cf="ClipCreationScrubber";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<R$ClipAdState>} x */
-	ClipAdState(x) {
-		const cf="ClipAdState";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<R$AdSlot>} x */
-	AdSlot(x) {
-		const cf="AdSlot";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {D$Video} x */
-	Video(x) {
-		const cf="Video";
-		this.save_keys(`[${cf}]`,x);
-		const {videoId,thumbnail,title,descriptionSnippet,longBylineText,publishedTimeText,lengthText,viewCountText,navigationEndpoint,ownerBadges,ownerText,shortBylineText,trackingParams,showActionMenu,shortViewCountText,menu,channelThumbnailSupportedRenderers,thumbnailOverlays,richThumbnail,inlinePlaybackEndpoint,owner,...y}=x; this.g(y);
-		this.primitive_of(videoId,"string");
-		this.D$Thumbnail(thumbnail);
-		this.D$TextWithRuns(title);
-		this.D$TextWithRuns(descriptionSnippet);
-		this.D$TextWithRuns(longBylineText);
-		this.D$SimpleText(publishedTimeText);
-		this.D$SimpleText(lengthText);
-		this.D$SimpleText(viewCountText);
-		this.E$WatchEndpoint(navigationEndpoint);
-		this.z(ownerBadges,this.R$MetadataBadge);
-		this.D$TextWithRuns(ownerText);
-		this.D$TextWithRuns(shortBylineText);
-		this.trackingParams(cf,trackingParams);
-		if(showActionMenu!==false) debugger;
-		this.D$SimpleText(shortViewCountText);
-		this.R$Menu(menu);
-		this.R$ChannelThumbnailWithLink(channelThumbnailSupportedRenderers);
-		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
-		this.R$MovingThumbnail(richThumbnail);
-		this.E$WatchEndpoint(inlinePlaybackEndpoint);
-		this.D$Video$Owner(owner);
-	}
-	/** @private @arg {R$ChannelThumbnailWithLink} x */
-	R$ChannelThumbnailWithLink(x) {
-		x;
-	}
-	/** @private @arg {R$MovingThumbnail} x */
-	R$MovingThumbnail(x) {
-		x;
-	}
-	/** @private @arg {D$Video['owner']} x */
-	D$Video$Owner(x) {
-		x;
-	}
-	/** @private @arg {D$Radio} x */
-	Radio(x) {
-		const cf="Radio";
-		this.save_keys(`[${cf}]`,x);
-		const {playlistId,title,thumbnail,videoCountText,navigationEndpoint,trackingParams,videos,thumbnailText,longBylineText,menu,thumbnailOverlays,videoCountShortText,...y}=x; this.g(y);
-		if(!this.str_starts_with("RD",playlistId)) debugger;
-		this.TextT(title);
-		this.D$Thumbnail(thumbnail);
-		this.TextT(videoCountText);
-		this.NavigationEndpoint(navigationEndpoint);
-		this.trackingParams(cf,trackingParams);
-		this.z(videos,this.R$ChildVideo);
-		this.TextT(thumbnailText);
-		this.TextT(longBylineText);
-		this.R$Menu(menu);
-		this.z(thumbnailOverlays,this.G$ThumbnailOverlayItem);
-		this.TextT(videoCountShortText);
-	}
-	/** @private @arg {R$ChildVideo} x */
-	R$ChildVideo(x) {
-		const cf="R$ChildVideo";
-		this.save_keys(`[${cf}]`,x);
-		this.D$ChildVideo(this.w(x));
-	}
-	/** @private @arg {D$ChildVideo} x */
-	D$ChildVideo(x) {
-		const cf="D$ChildVideo";
-		this.save_keys(`[${cf}]`,x);
-		const {title,navigationEndpoint,lengthText,videoId,...y}=x; this.g(y);
-		this.D$SimpleText(title);
-		this.E$WatchEndpoint(navigationEndpoint);
-		this.D$SimpleText(lengthText);
-		this.primitive_of(videoId,"string");
-	}
-	/** @private @arg {Do$w<FeedNudgeRenderer>} x */
-	FeedNudge(x) {
-		const cf="FeedNudge";
-		this.save_keys(`[${cf}]`,x);
-		debugger;
-	}
-	/** @private @arg {Do$w<R$RichSection>} x */
-	RichSection(x) {
-		const cf="RichSection";
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
