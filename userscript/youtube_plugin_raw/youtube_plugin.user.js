@@ -4347,8 +4347,8 @@ class CodegenService extends BaseService {
 		/** @private @type {string[]} */
 		let ret_arr=[];
 		for(let k of keys) {
-			if(k=="trackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
-			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(${k});`); continue;}
+			if(k=="trackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
+			if(k=="clickTrackingParams") {ret_arr.push(`this.${k}(cf,${k});`); continue;}
 			if(k=="responseContext") {debugger; continue;}
 			let x2=x1[k];
 			if(typeof x2==="string") {
@@ -4371,11 +4371,14 @@ class CodegenService extends BaseService {
 			if(typeof x2=="boolean") {ret_arr.push(`if(x.${k}!==${x2}) debugger;`); continue;}
 			if(typeof x2!=="object") {debugger; continue;}
 			if(x2===null) {ret_arr.push(`if(${k}!==null) debugger;`); continue;}
-			if(this.#is_TextT(x2)) {ret_arr.push(`this.TextT(${k});`); continue;};
+			if("simpleText" in x2) {ret_arr.push(`this.SimpleText(${k});`); continue;};
+			/** @type {D$TextWithRuns} */
+			if("runs" in x2&&x2.runs instanceof Array) {ret_arr.push(`this.D$TextWithRuns(${k});`); continue;};
 			if(x2 instanceof Array) {this.#generate_body_array_item(k,x2,ret_arr); continue;}
-			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.Thumbnail(${k});`); continue;}
-			if("iconType" in x2) {ret_arr.push(`this.Icon(${k});`); continue;}
-			if("browseEndpoint" in x2) {ret_arr.push(`this.BrowseEndpoint(${k});`); continue;}
+			/** @type {D$Thumbnail} */
+			if(this.#is_Thumbnail(x2)) {ret_arr.push(`this.D$Thumbnail(${k});`); continue;}
+			if("iconType" in x2) {ret_arr.push(`this.T$Icon(${k});`); continue;}
+			if("browseEndpoint" in x2) {ret_arr.push(`this.E$BrowseEndpoint(${k});`); continue;}
 			/** @private @type {{}} */
 			let o3=x2;
 			let c=this.get_name_from_keys(o3);
@@ -4385,7 +4388,7 @@ class CodegenService extends BaseService {
 			}
 			if(c.endsWith("Renderer")) {
 				let ic=this.uppercase_first(split_string_once(c,"Renderer")[0]);
-				ret_arr.push(`this.${ic}(${k});`);
+				ret_arr.push(`this.R$${ic}(${k});`);
 				continue;
 			}
 			if(k.endsWith("Renderer")) {
@@ -10439,10 +10442,10 @@ class HandleTypes extends ServiceMethods {
 	D$Thumbnail(x) {
 		const cf="D$Thumbnail";
 		this.save_keys(`[${cf}]`,x);
-		const {thumbnails,accessibility,isOriginalAspectRatio,...y}=x; this.g(y); // ! #destructure
-		this.z(thumbnails,this.D$ThumbnailItem);
+		const {sampledThumbnailColor,accessibility,isOriginalAspectRatio,...y}=x;
 		if(isOriginalAspectRatio!==void 0&&isOriginalAspectRatio!==true) debugger;
 		this.t(accessibility,this.A$Accessibility);
+		this.z(this.w(y),this.D$ThumbnailItem);
 	}
 	/** @arg {D$ThumbnailItem} x */
 	D$ThumbnailItem(x) {
@@ -14755,11 +14758,23 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		const {videoId,thumbnail,title,descriptionSnippet,longBylineText,publishedTimeText,lengthText,viewCountText,navigationEndpoint,ownerBadges,ownerText,shortBylineText,trackingParams,showActionMenu,shortViewCountText,menu,channelThumbnailSupportedRenderers,thumbnailOverlays,richThumbnail,inlinePlaybackEndpoint,owner,...y}=x;
 	}
-	/** @private @arg {Do$w<R$Radio>} x */
+	/** @private @arg {D$Radio} x */
 	Radio(x) {
 		const cf="Radio";
 		this.save_keys(`[${cf}]`,x);
-		debugger;
+		const {playlistId,title,thumbnail,videoCountText,navigationEndpoint,trackingParams,videos,thumbnailText,longBylineText,menu,thumbnailOverlays,videoCountShortText,...y}=x; this.g(y);
+		if(x.playlistId!=="RDKaaqiCtR3qA") debugger;
+		this.TextT(title);
+		this.D$Thumbnail(thumbnail);
+		this.TextT(videoCountText);
+		this.NavigationEndpoint(navigationEndpoint);
+		this.trackingParams(cf,trackingParams);
+		this.z(x.videos,this.ChildVideoRenderer);
+		this.TextT(thumbnailText);
+		this.TextT(longBylineText);
+		this.Menu(menu);
+		this.z(x.thumbnailOverlays,this.ThumbnailOverlayBottomPanelRenderer);
+		this.TextT(videoCountShortText);
 	}
 	/** @private @arg {Do$w<FeedNudgeRenderer>} x */
 	FeedNudge(x) {
