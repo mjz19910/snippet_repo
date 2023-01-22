@@ -6819,13 +6819,13 @@ class HandleTypes extends ServiceMethods {
 		this.trackingParams(cf,trackingParams);
 		f.call(this,this.w(y));
 	}
-	/** @template {{}} T @arg {{commands: T[];}} x @arg {(this:this,x:T)=>void} f */
+	/** @template {{}} T @arg {Record<"commands",T[]>} x @arg {(this:this,x:T)=>void} f */
 	CommandsTemplate(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
 		this.z(this.w(x),f);
 	}
-	/** @template U @template {{}} T @template {{commands: T[];}} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
+	/** @template U @template {{}} T @template {Record<"commands",T[]>} C @arg {C} x @arg {(this:this,x:T)=>U} f @returns {[Omit<C, "commands">,[Extract<U, {}>[], Extract<U, void>[]]]}  */
 	CommandsTemplate$Omit(x,f) {
 		const cf="CommandsTemplate";
 		this.save_keys(`[${cf}]`,x);
@@ -8108,11 +8108,6 @@ class HandleTypes extends ServiceMethods {
 			let dx=decodeURIComponent(x);
 			let res_e=this.decode_b64_url_proto_obj(dx);
 			if(!res_e) break x;
-			for(let i=0;i<res_e.length;i++) {
-				if(res_e[i][0]==="child") {
-					console.log(res_e[i]);
-				}
-			}
 			let param_map=this.make_param_map(res_e);
 			this.parser.parse_endpoint_param(root,path,new Map(param_map));
 		}
