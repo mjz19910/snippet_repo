@@ -1,1 +1,1 @@
-type A_UpdateSubscribeButton={updateSubscribeButtonAction: D_SubscribeButton;};
+type A_UpdateSubscribeButton={updateSubscribeButtonAction: DAU_SubscribeButton;};

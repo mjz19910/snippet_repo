@@ -1,1 +1,1 @@
-type FeedEntry<T extends string>=`FE_{T}`;
+type FeedEntry<T extends string>=`FE${T}`;

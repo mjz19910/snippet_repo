@@ -22,7 +22,7 @@ type D_SubscribeButton={
 	subscribed: false;
 	enabled: true;
 	type: "FREE";
-	channelId: "UCC-UOdK8-mIjxBQm_ot1T-Q";
+	channelId: `UC${string}`;
 	showPreferences: false;
 	subscribedButtonText: R_TextWithRuns;
 	unsubscribedButtonText: R_TextWithRuns;
