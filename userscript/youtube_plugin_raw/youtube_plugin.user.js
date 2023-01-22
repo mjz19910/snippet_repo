@@ -13186,7 +13186,6 @@ class HandleTypes extends ServiceMethods {
 			this.A$Accessibility(accessibility);
 			this.GuideEntryRoot_ser(serviceEndpoint);
 			if("isPrimary" in y) return this.expect_true(this.w(y));
-			this.g(y);
 			return;
 		}
 		if("icon" in x) {
@@ -13200,13 +13199,7 @@ class HandleTypes extends ServiceMethods {
 			this.trackingParams("GuideEntryRoot",trackingParams);
 			this.D$SimpleText(formattedTitle);
 			this.A$Accessibility(accessibility);
-			if("isPrimary" in y) {
-				const {isPrimary,...y1}=y;
-				if(isPrimary!==true) debugger;
-				this.g(y1);
-				return;
-			}
-			this.g(y);
+			if("isPrimary" in y) return this.expect_true(this.w(y));
 			return;
 		}
 		const {navigationEndpoint,thumbnail,badges,trackingParams,formattedTitle,accessibility,entryData,presentationStyle,...y}=x; this.g(y); // ! #destructure
