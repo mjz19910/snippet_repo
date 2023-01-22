@@ -2244,18 +2244,20 @@ class KnownDataSaver extends ApiBase {
 			this.#loaded_from_storage=true;
 		}
 	}
+	#data=new class StoreData {
+		/** @type {number[]} */
+		seen_root_visual_elements=[];
+		/** @type {{[x:string]:number}} */
+		strings_key_index_map={};
+		/** @type {[string,["one",string[]]|["many",string[][]]][]} */
+		seen_strings=[];
+		/** @type {[string,["one",number[]]|["many",number[][]]][]} */
+		seen_numbers=[];
+		/** @type {[string,{t:boolean;f:boolean}][]} */
+		seen_booleans=[];
+	};
 	pull_data() {
-		return {
-			seen_root_visual_elements: this.#seen_root_visual_elements,
-			seen_strings: this.#seen_strings,
-			seen_numbers: this.#seen_numbers,
-			seen_booleans: this.#seen_booleans,
-		};
-	}
-	get_debug_data() {
-		return {
-			strings_key_index_map: this.#strings_key_index_map,
-		};
+		return this.#data;
 	}
 	/** @arg {string} seen_data */
 	#save_local_storage(seen_data) {
@@ -2271,30 +2273,16 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {Partial<ReturnType<KnownDataSaver["pull_data"]>>} x */
 	#push_data_to_parent(x) {
-		if(x.seen_root_visual_elements) {
-			this.#seen_root_visual_elements=x.seen_root_visual_elements;
-		}
-		if(x.seen_strings) {
-			this.#seen_strings=x.seen_strings;
-		}
-		if(x.seen_booleans) {
-			this.#seen_booleans=x.seen_booleans;
-		}
-		if(x.seen_numbers) {
-			this.#seen_numbers=x.seen_numbers;
-		}
+		let x1=this.pull_data();
+		const {seen_booleans,seen_numbers,seen_root_visual_elements,seen_strings}=x;
+		if(seen_booleans) x1.seen_booleans=seen_booleans;
+		if(seen_numbers) x1.seen_numbers=seen_numbers;
+		if(seen_root_visual_elements) x1.seen_root_visual_elements=seen_root_visual_elements;
+		if(seen_strings) x1.seen_strings=seen_strings;
 	}
 	/** @type {string|null} */
 	#seen_data_json_str=null;
 	#loaded_from_storage=false;
-	/** @type {number[]} */
-	#seen_root_visual_elements=[];
-	/** @type {[string,["one",string[]]|["many",string[][]]][]} */
-	#seen_strings=[];
-	/** @type {[string,["one",number[]]|["many",number[][]]][]} */
-	#seen_numbers=[];
-	/** @type {[string,{t:boolean;f:boolean}][]} */
-	#seen_booleans=[];
 	/** @type {number|null|Nullable<{}>} */
 	#idle_id=null;
 	#onDataChange() {
@@ -2304,16 +2292,14 @@ class KnownDataSaver extends ApiBase {
 			this.#store_data();
 		});
 	}
-	/** @type {{[x:string]:number}} */
-	#strings_key_index_map={};
 	/** @arg {string} key */
 	#get_seen_string_item(key) {
-		let index=this.#strings_key_index_map[key];
-		if(index) return this.#seen_strings[index];
-		index=this.#seen_strings.findIndex(e => e[0]===key);
+		let index=this.#data.strings_key_index_map[key];
+		if(index) return this.#data.seen_strings[index];
+		index=this.#data.seen_strings.findIndex(e => e[0]===key);
 		if(index<0) return;
-		this.#strings_key_index_map[key]=index;
-		return this.#seen_strings[index];
+		this.#data.strings_key_index_map[key]=index;
+		return this.#data.seen_strings[index];
 	}
 	/** @type {[string,string|string[]][]} */
 	#new_strings=[];
@@ -2327,8 +2313,8 @@ class KnownDataSaver extends ApiBase {
 		let p=this.#get_seen_string_item(k);
 		if(!p) {
 			p=[k,cur=["one",[]]];
-			let nk=this.#seen_strings.push(p)-1;
-			this.#strings_key_index_map[k]=nk;
+			let nk=this.#data.seen_strings.push(p)-1;
+			this.#data.strings_key_index_map[k]=nk;
 		} else {
 			cur=p[1];
 		}
@@ -2362,14 +2348,14 @@ class KnownDataSaver extends ApiBase {
 		this.#new_strings.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
-		let idx=this.#seen_strings.indexOf(p);
+		let idx=this.#data.seen_strings.indexOf(p);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(idx);
 		return true;
 	}
 	/** @arg {number} idx */
 	show_strings_bitmap(idx) {
-		let p=this.#seen_strings[idx];
+		let p=this.#data.seen_strings[idx];
 		if(!p) return;
 		let k=p[0];
 		let cur=p[1];
@@ -2537,11 +2523,11 @@ class KnownDataSaver extends ApiBase {
 		let was_known=true;
 		/** @private @type {["one", number[]]|["many",number[][]]} */
 		let cur;
-		let p=this.#seen_numbers.find(e => e[0]===k);
+		let p=this.#data.seen_numbers.find(e => e[0]===k);
 		if(!p) {
 			cur=["one",[]];
 			p=[k,cur];
-			this.#seen_numbers.push(p);
+			this.#data.seen_numbers.push(p);
 		} else {
 			cur=p[1];
 		}
@@ -2580,10 +2566,10 @@ class KnownDataSaver extends ApiBase {
 	#new_booleans=[];
 	/** @public @arg {string} key @arg {boolean} bool */
 	save_boolean(key,bool) {
-		let krc=this.#seen_booleans.find(e => e[0]===key);
+		let krc=this.#data.seen_booleans.find(e => e[0]===key);
 		if(!krc) {
 			krc=[key,{t: false,f: false}];
-			this.#seen_booleans.push(krc);
+			this.#data.seen_booleans.push(krc);
 		}
 		let [,kc]=krc;
 		if(bool) {
@@ -2604,13 +2590,10 @@ class KnownDataSaver extends ApiBase {
 	#new_root_visual_elements=[];
 	/** @public @arg {number} x */
 	save_root_visual_element(x) {
-		if(x===void 0) {
-			debugger;
-			return;
-		}
-		if(this.#seen_root_visual_elements.includes(x)) return;
+		if(x===void 0) {debugger;return;}
+		if(this.#data.seen_root_visual_elements.includes(x)) return;
 		console.log("store [root_visual_element]",x);
-		this.#seen_root_visual_elements.push(x);
+		this.#data.seen_root_visual_elements.push(x);
 		this.#new_root_visual_elements.push(x);
 		this.#onDataChange();
 	}
@@ -8550,7 +8533,7 @@ class HandleTypes extends ServiceMethods {
 	E$ShareEntityServiceEndpoint(x) {
 		const cf="E$ShareEntityServiceEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
-		let [q,ret_arr]=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),a=>{
+		let [q,ret_arr]=this.CommandsTemplate$Omit(this.w(this.EB$Endpoint(cf,x)),a => {
 			return a;
 		});
 		console.log(ret_arr);
@@ -13581,7 +13564,7 @@ class HandleTypes extends ServiceMethods {
 		if("createBackstagePostEndpoint" in x) {
 			this.EndpointTemplate(cf,x,a => {
 				this.params(cf,"createBackstagePost.param",this.w(this.w(a)));
-			},meta=>{
+			},meta => {
 				console.log(meta);
 				debugger;
 			});
