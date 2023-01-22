@@ -2317,20 +2317,30 @@ class KnownDataSaver extends ApiBase {
 	save_to_data_item(x,data_item) {
 		let target=data_item[1];
 		if(x instanceof Array) {
-			if(target[0]==="one") {
-				let inner=target[1].map(e => [e]);
-				target=["many",inner];
-				data_item[1]=target;
-			}
-			let found=target[1].find(e => this.eq_keys(e,x));
-			if(!found) return target[1].push(x);
+			return this.add_many_to_data_item(x,data_item);
 		} else {
-			if(target[0]==="one") {
-				if(!target[1].includes(x)) return target[1].push(x);
-			} else if(target[0]==="many") {
-				let res=target[1].find(([e,...r]) => !r.length&&e===x);
-				if(!res) return target[1].push([x]);
-			}
+			return this.add_one_to_data_arr(x,target);
+		}
+	}
+	/** @arg {string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} item */
+	add_many_to_data_item(x,item) {
+		let target=item[1];
+		if(target[0]==="one") {
+			let inner=target[1].map(e => [e]);
+			target=["many",inner];
+			item[1]=target;
+		}
+		let found=target[1].find(e => this.eq_keys(e,x));
+		if(!found) return target[1].push(x);
+		return -1;
+	}
+	/** @arg {string} x @arg {["one", string[]] | ["many", string[][]]} target */
+	add_one_to_data_arr(x,target) {
+		if(target[0]==="one") {
+			if(!target[1].includes(x)) return target[1].push(x);
+		} else if(target[0]==="many") {
+			let res=target[1].find(([e,...r]) => !r.length&&e===x);
+			if(!res) return target[1].push([x]);
 		}
 		return -1;
 	}
