@@ -2298,14 +2298,12 @@ class KnownDataSaver extends ApiBase {
 	}
 	/** @arg {string} key */
 	#get_seen_string_item(key) {
-		let index=this.#data.strings_key_index_map[key];
-		if(index) return this.#data.seen_strings[index];
-		index=this.#data.seen_strings.findIndex(e => e[0]===key);
-		if(index<0) {
-			return this.add_to_index(key,["one",[]],this.#get_string_store());
-		}
-		this.#data.strings_key_index_map[key]=index;
-		return this.#data.seen_strings[index];
+		let idx=this.#data.strings_key_index_map[key];
+		if(idx) return this.#data.seen_strings[idx];
+		idx=this.#data.seen_strings.findIndex(e => e[0]===key);
+		if(idx<0) return this.add_to_index(key,["one",[]],this.#get_string_store());
+		this.#data.strings_key_index_map[key]=idx;
+		return this.#data.seen_strings[idx];
 	}
 	/** @arg {string} key @arg {StoreDescription<string>} store */
 	get_seen_string_item_store(key,store) {
