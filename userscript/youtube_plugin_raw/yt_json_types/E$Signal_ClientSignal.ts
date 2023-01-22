@@ -1,4 +1,4 @@
-type E$Signal_ClientSignal={
+type Signal$ClientSignal={
 	signal: "CLIENT_SIGNAL";
 	actions: (SendFeedbackAction$ShowEngagementPanelEndpoint|A$SendFeedbackAction|SignalAction|A$OpenPopup)[];
 };

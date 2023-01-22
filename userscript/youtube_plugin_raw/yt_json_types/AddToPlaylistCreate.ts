@@ -1,5 +1,5 @@
 type AddToPlaylistCreate={
-	openCreateLink: R$CompactLinkRenderer;
+	openCreateLink: R$CompactLink;
 	nameInput: TextInputFormFieldRenderer;
 	privacyInput: DropdownRenderer;
 	createAction: R$Button;

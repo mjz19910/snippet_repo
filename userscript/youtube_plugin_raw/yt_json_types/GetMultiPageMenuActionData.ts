@@ -1,3 +1,3 @@
 type GetMultiPageMenuActionData={
-	menu: MultiPageMenuRenderer;
+	menu: T$R$MultiPageMenu<{}>;
 };

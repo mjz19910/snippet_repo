@@ -1,4 +1,8 @@
-type E$Signal$GetAccountMenu={
+type Signal$GetAccountMenu={
 	signal: "GET_ACCOUNT_MENU";
-	actions: A$OpenPopup[];
+	actions: T$OpenPopup<{
+		popup: T$R$MultiPageMenu<{}>;
+		popupType: "DROPDOWN";
+		beReused: true;
+	}>[];
 };

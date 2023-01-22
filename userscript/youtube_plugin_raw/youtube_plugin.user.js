@@ -4629,7 +4629,7 @@ class CodegenService extends BaseService {
 	}
 	/** @param {{[U in string]:unknown}} x */
 	decode_Signal(x) {
-		/** @type {E$Signal_ClientSignal} */
+		/** @type {Signal$ClientSignal} */
 		let u=as(x);
 		switch(u.signal) {
 			case "CLIENT_SIGNAL": if(u.actions instanceof Array) return "TYPE::E$Signal_ClientSignal"; break;
@@ -8467,7 +8467,7 @@ class HandleTypes extends ServiceMethods {
 		const {hack,...y}=x; this.g(y); // ! #destructure
 		if(hack!==true) debugger;
 	}
-	/** @arg {E$Signal_ClientSignal} x */
+	/** @arg {Signal$ClientSignal} x */
 	E$Signal_ClientSignal(x) {
 		const cf="SendFeedbackAction";
 		this.save_keys(`[E$${cf}]`,x);
@@ -8482,7 +8482,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		});
 	}
-	/** @arg {Extract<E$Signal_ClientSignal['actions'][number],{showEngagementPanelEndpoint:any}>} x */
+	/** @arg {Extract<Signal$ClientSignal['actions'][number],{showEngagementPanelEndpoint:any}>} x */
 	E$ShowEngagementPanelEndpoint(x) {
 		const cf="ShowEngagementPanelEndpoint";
 		this.save_keys(`[E$${cf}]`,x);
@@ -8504,7 +8504,7 @@ class HandleTypes extends ServiceMethods {
 		if(this.eq_keys(this.get_keys_of(a),["bucket"])) return;
 		debugger;
 	}
-	/** @arg {E$Signal$GetAccountMenu} x */
+	/** @arg {Signal$GetAccountMenu} x */
 	E$Signal$GetAccountMenu(x) {
 		const cf="Signal$GetAccountMenu";
 		this.save_keys(`[E$${cf}]`,x);
@@ -8557,23 +8557,6 @@ class HandleTypes extends ServiceMethods {
 		this.CommandMetadata(commandMetadata);
 		return y;
 	}
-	/** @arg {EG$MenuServiceEndpoints} x */
-	EG$MenuServiceEndpoints(x) {
-		const cf="MenuServiceEndpoints";
-		this.save_keys(`[${cf}]`,x);
-		if("playlistEditEndpoint" in x) return this.E$PlaylistEditEndpoint(x);
-		if("getReportFormEndpoint" in x) return this.GetReportFormEndpoint(x);
-		if("addToPlaylistServiceEndpoint" in x) return this.E$AddToPlaylistServiceEndpoint(x);
-		if("feedbackEndpoint" in x) return this.E$FeedbackEndpoint(x);
-		if("notificationOptOutEndpoint" in x) return this.E$NotificationOptOutEndpoint(x);
-		if("shareEntityServiceEndpoint" in x) return this.E$ShareEntityServiceEndpoint(x);
-		if("likeEndpoint" in x) return this.E$LikeEndpoint(x);
-		if("signalServiceEndpoint" in x) return this.E$SignalServiceEndpoint(x);
-		if("recordNotificationInteractionsEndpoint" in x) return this.E$RecordNotificationInteractionsEndpoint(x);
-		console.log("");
-		this.do_codegen("EG$MenuService",x);
-		debugger;
-	}
 	/** @arg {E$AddToPlaylistServiceEndpoint} x */
 	E$AddToPlaylistServiceEndpoint(x) {
 		let q=this.w(this.EB$Endpoint("AddToPlaylistServiceEndpoint",x));
@@ -8601,9 +8584,9 @@ class HandleTypes extends ServiceMethods {
 		const {clickTrackingParams,commandMetadata,signalServiceEndpoint,...y}=x; this.g(y); // ! #destructure
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.CommandMetadata(commandMetadata);
-		this.E$SignalService(signalServiceEndpoint);
+		return signalServiceEndpoint;
 	}
-	/** @arg {E$SignalService} x */
+	/** @arg {D$E$SignalService} x */
 	E$SignalService(x) {
 		const cf="SignalServiceEndpointData";
 		this.save_keys(`[${cf}]`,x);
@@ -8925,11 +8908,11 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.ConfirmDialogData(this.w(x));
 	}
-	/** @arg {MultiPageMenuRenderer} x */
+	/** @arg {T$R$MultiPageMenu<{}>} x */
 	MultiPageMenuRenderer(x) {
 		const cf="MultiPageMenuRenderer";
 		this.save_keys(`[${cf}]`,x);
-		this.MultiPageMenu(this.w(x));
+		debugger;
 	}
 	/** @arg {MultiPageMenuNotificationSectionRenderer} x */
 	MultiPageMenuNotificationSectionRenderer(x) {
@@ -8943,7 +8926,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.Notification(this.w(x));
 	}
-	/** @arg {MultiPageMenuSectionRenderer<R$CompactLinkRenderer>} x */
+	/** @arg {T$R$MultiPageMenuSection<R$CompactLink>} x */
 	MultiPageMenuSectionRenderer(x) {
 		const cf="MultiPageMenuSectionRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -8961,7 +8944,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		this.AccountSectionListData(this.w(x));
 	}
-	/** @arg {R$CompactLinkRenderer} x */
+	/** @arg {R$CompactLink} x */
 	CompactLinkRenderer(x) {
 		const cf="CompactLinkRenderer";
 		this.save_keys(`[${cf}]`,x);
@@ -10791,7 +10774,7 @@ class HandleTypes extends ServiceMethods {
 		/** @type {ParamsSection} */
 		this.parser.on_serialized_interactions_request_params(root,"record_notification_interactions",x);
 	}
-	/** @arg {MultiPageMenuSection<R$CompactLinkRenderer>} x */
+	/** @arg {MultiPageMenuSection<R$CompactLink>} x */
 	MultiPageMenuSection(x) {
 		const cf="MultiPageMenuSection";
 		this.save_keys(`[${cf}]`,x);
@@ -11845,7 +11828,7 @@ class HandleTypes extends ServiceMethods {
 			trackingParams,
 		});
 	}
-	/** @arg {D$MenuServiceItem<MenuServiceIconTypeStr>} x */
+	/** @arg {D$MenuServiceItem<MenuServiceIconTypeStr,{}>} x */
 	MenuServiceItem(x) {
 		const cf="MenuServiceItem";
 		this.save_keys(`[${cf}]`,x);
@@ -11871,7 +11854,7 @@ class HandleTypes extends ServiceMethods {
 			}
 		}
 		this.t(icon,this.Icon);
-		this.EG$MenuServiceEndpoints(serviceEndpoint);
+		debugger;
 		this.trackingParams(cf,trackingParams);
 		this.t(hasSeparator,a => {if(a!==true) debugger;});
 	}
@@ -13325,6 +13308,7 @@ class HandleTypes extends ServiceMethods {
 			this.A$Accessibility(accessibility);
 			this.primitive_of_string(tooltip);
 			this.D$Thumbnail(avatar);
+			debugger;
 			this.TopbarMenu_menuRequest(menuRequest);
 		} else if("menuRenderer" in x) {
 			const {trackingParams,accessibility,tooltip,icon,menuRenderer,style,...y}=x; this.g(y); // ! #destructure
@@ -13332,6 +13316,7 @@ class HandleTypes extends ServiceMethods {
 			this.A$Accessibility(accessibility);
 			this.primitive_of_string(tooltip);
 			this.Icon(icon);
+			debugger;
 			this.MultiPageMenuRenderer(menuRenderer);
 			switch(style) {
 				default: debugger; break;

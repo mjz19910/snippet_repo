@@ -39,5 +39,5 @@ type SubscribeButtonData$SignalServiceEndpoint={
 			sendPost: true;
 		}
 	};
-	signalServiceEndpoint: E$Signal_ClientSignal;
+	signalServiceEndpoint: Signal$ClientSignal;
 };

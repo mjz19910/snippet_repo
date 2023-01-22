@@ -1,10 +1,10 @@
 type MultiPageMenu={
 	header: SimpleMenuHeaderRenderer;
 	sections: AccountSectionListRenderer[];
-	footer: MultiPageMenuSectionRenderer<R$CompactLinkRenderer>;
+	footer: T$R$MultiPageMenuSection<R$CompactLink>;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_SWITCHER";
 }|{
-	sections: MultiPageMenuSectionRenderer<R$CompactLinkRenderer>[];
+	sections: T$R$MultiPageMenuSection<R$CompactLink>[];
 	trackingParams: string;
 	style: "MULTI_PAGE_MENU_STYLE_TYPE_CREATION";
 }|{
