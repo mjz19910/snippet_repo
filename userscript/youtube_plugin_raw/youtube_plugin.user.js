@@ -7135,7 +7135,7 @@ class HandleTypes extends ServiceMethods {
 		const {rootVe,webPageType,...y}=x; this.g(y);
 		if(webPageType!=="WEB_PAGE_TYPE_SETTINGS") debugger;
 	}
-	/** @public @arg {D$Browse$Id} x */
+	/** @public @arg {D$Browse$Id<"">} x */
 	E$D$Browse(x) {
 		const cf="D$Browse";
 		this.save_keys(`[${cf}]`,x);
