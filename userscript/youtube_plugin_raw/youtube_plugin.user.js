@@ -6852,6 +6852,7 @@ case "${path_parts[idx-1]}": {
 												const idx=6;
 												if(path_parts.length===5) {
 													if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
+													switch(tv) {default: debugger; return;}
 												}
 												switch(path_parts[5]) {
 													default: {
