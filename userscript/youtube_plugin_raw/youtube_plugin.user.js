@@ -9015,9 +9015,15 @@ class HandleTypes extends ServiceMethods {
 		if("resourceStatusInResponseCheck" in x) return this.ResourceStatusInResponseCheck(x);
 		debugger;
 	}
-	/** @arg {R_TemplateUpdate} x */
 	/** @private @arg {R_TemplateUpdate} x */
-	R_TemplateUpdate(x) {this.H_("TemplateUpdate",x,a => {a; debugger;});}
+	R_TemplateUpdate(x) {this.H_("TemplateUpdate",x,this.D_TemplateUpdate);}
+	/** @private @arg {D_TemplateUpdate} x */
+	D_TemplateUpdate(x) {
+		const cf="D_TemplateUpdate";
+		this.save_keys(`[${cf}]`,x);
+		const {identifier,dependencies,...y}=x;
+		this.params(cf,"serializedTemplateConfig",this.w(y));
+	}
 	/** @private @arg {D_EntityBatchUpdateData} x */
 	D_EntityBatchUpdate(x) {
 		const cf="EntityBatchUpdateData";
