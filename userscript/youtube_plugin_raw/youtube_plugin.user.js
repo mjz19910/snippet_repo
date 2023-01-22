@@ -8233,7 +8233,18 @@ class HandleTypes extends ServiceMethods {
 		let [i,...a]=this.decode_TD_ItemSection(x); i;
 		if(this.join_string(a,"-")!=="sid-wn-chips-watch-next-feed") debugger;
 		this.z(i,x => {
-			if("compactVideoRenderer" in x) return;
+			/** @arg {string} v */
+			let sc=(v)=>{this.save_string("[ItemSection.T_ContentType]",v);}
+			if("compactVideoRenderer" in x) {sc("t1.cvr"); return;}
+			if("continuationItemRenderer" in x) {sc("t1.cir"); return;}
+			if("commentThreadRenderer" in x) {sc("t1.ctr"); return;}
+			if("commentsHeaderRenderer" in x) {sc("t1.chr"); return;}
+			if("continuationItemRenderer" in x) {sc("t1.cir"); return;}
+			if("compactPlaylistRenderer" in x) {sc("t1.cpr"); return;}
+			if("feedFilterChipBarRenderer" in x) {sc("t1.ff_cbr"); return;}
+			if("commentRenderer" in x) {sc("t1.cr"); return;}
+			if("itemSectionRenderer" in x) {sc("t1.isr"); return;}
+			if("compactRadioRenderer" in x) {sc("t1.crr"); return;}
 			x;
 			debugger;
 		});
