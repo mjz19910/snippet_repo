@@ -6106,7 +6106,8 @@ case "${path_parts[idx-1]}": {
 								const idx=4;
 								if(path_parts.length===3) {
 									if(tv instanceof Map) return;
-									if(typeof tv==="string") return this.save_number(`[${path}]`,tv);
+									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
+									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
