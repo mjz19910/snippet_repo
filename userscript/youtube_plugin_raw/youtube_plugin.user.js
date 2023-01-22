@@ -6865,7 +6865,7 @@ class HandleTypes extends ServiceMethods {
 	WebCommandMetadata(x) {
 		const cf="GenericWebCommandMetadata";
 		this.save_keys(`[${cf}]`,x);
-		if("rootVe" in x && "apiUrl" in x) {
+		if("rootVe" in x&&"apiUrl" in x) {
 			switch(x.rootVe) {
 				case 3854: return this.G$VE3854$WC$Metadata(x);
 				default: debugger; break;
@@ -7116,7 +7116,8 @@ class HandleTypes extends ServiceMethods {
 			};
 		},cm => {
 			switch(cm.webCommandMetadata.rootVe) {
-				case 3854: this.G$VE3832$Watch$WC$Metadata(cm.webCommandMetadata); case 23462: break;
+				case 3854: this.G$VE3854$WC$Metadata(cm.webCommandMetadata); break;
+				case 23462: break;
 				default: debugger; break;
 			}
 			this.WebCommandMetadata(this.w(cm));
