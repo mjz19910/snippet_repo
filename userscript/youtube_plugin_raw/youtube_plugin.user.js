@@ -5497,11 +5497,16 @@ class ParserService extends BaseService {
 										const idx=5;
 										if(path_parts.length===4) {
 											if(tv instanceof Map) return;
+											if(calc_skip()) return;
 											if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
 											switch(tv) {default: debugger; return;}
 										}
 										switch(path_parts[4]) {
 											default: u(idx); debugger; path_parts[4]===""; break;
+										}
+										function calc_skip() {
+											if(path_parts[2]==="f4"&&path_parts[3]=="f1") return true;
+											return false;
 										}
 									} break;
 								}
