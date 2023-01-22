@@ -13169,6 +13169,13 @@ class HandleTypes extends ServiceMethods {
 		const cf="GuideEntryRoot";
 		this.save_keys(`[${cf}]`,x);
 		if("targetId" in x) {
+			const {navigationEndpoint,icon,trackingParams,formattedTitle,accessibility,targetId,...y}=x;
+			this.T$Icon(icon);
+			this.trackingParams("GuideEntryRoot",trackingParams);
+			this.D$SimpleText(formattedTitle);
+			this.A$Accessibility(accessibility);
+			if(targetId!=="library-guide-item") debugger;
+			if("isPrimary" in y) return this.expect_true(this.w(y));
 			return;
 		}
 		if("serviceEndpoint" in x) {
