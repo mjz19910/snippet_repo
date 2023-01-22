@@ -1,6 +1,6 @@
 type OfflineabilityEntityData={
 	key: string;
-	command?: InnertubeCommand;
+	command?: C$InnertubeCommand;
 	addToOfflineButtonState: AddToOfflineButtonStateEnum;
 	contentCheckOk?: false;
 	racyCheckOk?: false;

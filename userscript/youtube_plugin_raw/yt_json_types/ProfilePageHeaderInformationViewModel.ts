@@ -1,3 +1,0 @@
-type ProfilePageHeaderInformationViewModel={
-	profilePageHeaderInformationViewModel: ProfilePageHeaderInformation;
-};

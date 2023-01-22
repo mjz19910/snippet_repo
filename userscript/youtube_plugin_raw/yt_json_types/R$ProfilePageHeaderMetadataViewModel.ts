@@ -1,3 +1,3 @@
-type profilePageHeaderMetadataViewModel={
+type R$ProfilePageHeaderMetadataViewModel={
 	profilePageHeaderMetadataViewModel: {};
 };

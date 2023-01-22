@@ -1,3 +1,3 @@
-type profilePageHeaderButtonRowViewModel={
+type R$ProfilePageHeaderButtonRowViewModel={
 	profilePageHeaderButtonRowViewModel: {};
 };
