@@ -5147,10 +5147,18 @@ class ParserService extends BaseService {
 				reader.pos+=1;
 				let res_e=reader.try_read_any();
 				if(!res_e) return;
-				let [ru,...ex]=res_e;
-				console.log(ru,ex);
-				debugger;
-			} return;
+				let [_ru,...ex]=res_e;
+				let bi=ex[0];
+				if(bi[0]==="data64") {
+					let ui=bi[3];
+					let rem=ui%300n;
+					if(rem>0n) debugger;
+					let nu=Number(ui/300n)/1000;
+					console.log("[TemplateTime]",nu);
+				}
+				let param_map=this.make_param_map(res_e);
+				this.parse_endpoint_param(root,path,new Map(param_map));
+			}
 		}
 		let param_map=this.create_param_map(x);
 		if(param_map===null) {debugger; return;}
@@ -5389,7 +5397,15 @@ class ParserService extends BaseService {
 			}
 			off++;
 		}
-
+	}
+	/** @template {["bigint",number[],bigint]|["group",D$DecTypeNum[]]|["failed",D$DecTypeNum[]|null]} T @arg {T} x @returns {x is ["bigint",number[],bigint]} */
+	is_bigint(x) {
+		return x[0]==="bigint";
+	}
+	/** @arg {string} path @arg {["bigint",number[],bigint]} x */
+	handle_bigint(path,x) {
+		this.save_number(`[${path}]`,x[1]);
+		this.save_string(`[${path}]`,`${x[2]}n`);
 	}
 	/** @private @arg {ParamsSection} root @arg {P$PathRoot} path @arg {ParamMapValue[]} tva */
 	parse_param_next(root,path,tva) {
@@ -5460,10 +5476,7 @@ class ParserService extends BaseService {
 									if(tv instanceof Map) return;
 									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-									if(tv[0]==="bigint") {
-										this.save_number(`[${path}]`,tv[1]);
-										return this.save_string(`[${path}]`,`${tv[2]}n`);
-									}
+									if(this.is_bigint(tv)) return this.handle_bigint(path,tv);
 									debugger;
 								}
 								switch(path_parts[3]) {
@@ -5526,7 +5539,7 @@ class ParserService extends BaseService {
 									if(tv instanceof Map) return;
 									if(typeof tv==="string") return this.save_string(`[${path}]`,tv);
 									if(typeof tv==="number") return this.save_number(`[${path}]`,tv);
-									if(typeof tv==="bigint") return this.save_string(`[${path}]`,`${tv}n`);
+									if(this.is_bigint(tv)) return this.handle_bigint(path,tv);
 									switch(tv) {default: debugger; return;}
 								}
 								switch(path_parts[3]) {
