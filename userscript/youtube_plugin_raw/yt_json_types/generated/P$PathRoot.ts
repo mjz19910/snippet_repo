@@ -8,6 +8,7 @@ type P$LogItems=[
 	"[parse_value.gen_ns] [tracking.trackingParams.f16.f2]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f11]",
 	"[parse_value.gen_ns] [tracking.trackingParams.f10]",
+	"[parse_value.gen_ns] [tracking.trackingParams.f19.f3]",
 ];
 type P$PathRoot=[
 	"tracking.trackingParams.f16",

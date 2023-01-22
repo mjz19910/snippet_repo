@@ -5535,28 +5535,17 @@ case "${path}": switch(ta) {case ${ta}: break; default: new_ns(); debugger; retu
 				/** @type {P$LogItems} */
 				switch(path) {
 					default: {grouped("[parse_value."+split_string_once(path,".")[0]+"]",new_path); debugger; this.parse_param_next(root,as(`${path}.f${ta}`),tv);} break;
-					case "transcript_target_id.param":
+					case "transcript_target_id.param": case "tracking.trackingParams.f19":
 					case "tracking.trackingParams.f4": switch(ta) {case 1: case 2: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params.f5": switch(ta) {case 1: case 3: case 5: case 9: break; default: new_ns(); debugger; return;} return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "ypc_get_offers.params": switch(ta) {case 1: case 3: case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "tracking.trackingParams.f6": switch(ta) {case 12: break; case 13: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "report.params.f28.f1.f1.f1.f1": switch(ta) {case 4: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "browse$param.f93":
-					case "get_transcript.params":
-					case "report.params.f18":
-					case "report.params.f28.f1.f1.f1":
-					case "report.params.f28.f1.f1":
-					case "report.params.f28":
-					case "subscribe.params.f2":
-					case "watch.params.f27":
-					case "watch.player_params.f40":
+					case "browse$param.f93": case "get_transcript.params": case "report.params.f18": case "report.params.f28.f1.f1.f1": case "report.params.f28.f1.f1": case "report.params.f28": case "subscribe.params.f2": case "watch.params.f27": case "watch.player_params.f40":
 					case "ypc_get_offers.params.f5.f5": switch(ta) {case 1: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "report.params.f28.f1": switch(ta) {case 1: case 3: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
-					case "createBackstagePost.param":
-					case "record_notification_interactions.f2.f14.f1":
-					case "ypc_get_offers.params.f1":
-					case "record_notification_interactions.f2.f14":
-					case "tracking.trackingParams.f19": switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
+					case "createBackstagePost.param": case "record_notification_interactions.f2.f14.f1": case "ypc_get_offers.params.f1":
+					case "record_notification_interactions.f2.f14": switch(ta) {case 1: case 2: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "tracking.trackingParams": switch(ta) {case 1: case 2: case 3: case 4: case 6: case 7: case 9: case 10: case 11: case 19: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "browse$param.f84": switch(ta) {case 5: break; default: new_ns(); debugger; return;}return this.parse_param_next(root,`${path}.f${ta}`,tv);
 					case "create_playlist.params":
@@ -5692,16 +5681,7 @@ case "${path_parts[idx-1]}": {
 						}
 						switch(path_parts[2]) {
 							default: u(idx); debugger; path_parts[2]===""; break;
-							case "f16":
-							case "f1":
-							case "f2":
-							case "f3":
-							case "f9": 
-							case "f10":
-							case "f11":
-							case "f19":
-							case "f6":
-							case "f7":
+							case "f16": case "f1": case "f2": case "f3": case "f9": case "f10": case "f11": case "f19": case "f6": case "f7":
 							// [tracking.trackingParams.f4]
 							case "f4": {
 								const idx=4;
@@ -5713,10 +5693,7 @@ case "${path_parts[idx-1]}": {
 								}
 								switch(path_parts[3]) {
 									default: u(idx); debugger; path_parts[3]===""; break;
-									case "f2":
-									case "f3":
-									case "f12":
-									case "f13":
+									case "f2": case "f3": case "f12": case "f13":
 									// [tracking.trackingParams.f4.f1]
 									case "f1": {
 										const idx=5;
