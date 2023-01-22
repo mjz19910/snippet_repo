@@ -8,5 +8,5 @@ type EI$ResponseReceived=
 	;
 type AppendContinuationItemsAction={
 	clickTrackingParams: string;
-	appendContinuationItemsAction: A$AppendContinuationItems;
+	appendContinuationItemsAction: G$AppendContinuationItems;
 };

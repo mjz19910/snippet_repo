@@ -3141,7 +3141,7 @@ class HandleRendererContentItemArray extends BaseService {
 		console.log("rich shelf",rich_shelf);
 		return true;
 	}
-	/** @public @template {BrowseFeedItem[]|G$WatchNext[]|G$CommentsSection[]|SectionItem[]} T @arg {T} arr @returns {T} */
+	/** @public @template {R$BrowseFeed[]|G$WatchNext[]|G$CommentsSection[]|SectionItem[]} T @arg {T} arr @returns {T} */
 	replace_array(arr) {
 		return as(arr.filter((/** @private @type {typeof arr[number]} */content_item) => {
 			let keys=this.get_keys_of(content_item);
@@ -3167,7 +3167,7 @@ class HandleRendererContentItemArray extends BaseService {
 }
 /** @typedef {{t:YtHandlers;path:string}} ApiIterateState */
 class YtObjectVisitor {
-	/** @public @arg {ApiIterateState} state @arg {A$AppendContinuationItems} action */
+	/** @public @arg {ApiIterateState} state @arg {G$AppendContinuationItems} action */
 	appendContinuationItemsAction(state,action) {
 		if(!action.continuationItems) {
 			debugger;
@@ -7826,7 +7826,7 @@ class HandleTypes extends ServiceMethods {
 			debugger;
 		}
 	}
-	/** @private @arg {A$AppendContinuationItems} x */
+	/** @private @arg {G$AppendContinuationItems} x */
 	AppendContinuationItemsActionData(x) {
 		const cf="AppendContinuationItemsActionData";
 		this.save_keys(`[${cf}]`,x);
@@ -7836,9 +7836,9 @@ class HandleTypes extends ServiceMethods {
 		}
 		this.save_string("[ContinuationItem.targetId]",x.targetId);
 		switch(x.targetId) {
-			case "browse-feedFEwhat_to_watch": this.BrowseFeedAction(x); break;
-			case "comments-section": this.CommentsSectionContinuationAction(x); break;
-			case "watch-next-feed": this.WatchNextContinuationAction(x); break;
+			case "browse-feedFEwhat_to_watch": this.A$BrowseFeed$(x); break;
+			case "comments-section": this.A$CommentsSectionContinuation$(x); break;
+			case "watch-next-feed": this.A$WatchNext$(x); break;
 			default: debugger;
 		}
 	}
@@ -8681,7 +8681,7 @@ class HandleTypes extends ServiceMethods {
 		this.clickTrackingParams(cf,clickTrackingParams);
 		this.ChangeEngagementPanelVisibilityActionData(changeEngagementPanelVisibilityAction);
 	}
-	/** @private @arg {A$CommentRepliesItem} x */
+	/** @private @arg {T$A$Continuation<`comment-replies-item-${string}`,R$Comment>} x */
 	CommentRepliesItem(x) {
 		const cf="CommentRepliesItem";
 		this.save_keys(`[${cf}]`,x);
@@ -8859,24 +8859,24 @@ class HandleTypes extends ServiceMethods {
 		this.save_string("[Visibility.types]",types);
 	}
 	/** @private @arg {T$A$Continuation<"comments-section",G$CommentsSection>} x */
-	CommentsSectionContinuationAction(x) {
+	A$CommentsSectionContinuation$(x) {
 		const cf="CommentsSectionContinuationAction";
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.CommentsSectionItem);
 	}
-	/** @private @arg {A$BrowseFeedAction} x */
-	BrowseFeedAction(x) {
+	/** @private @arg {T$A$Continuation<"browse-feedFEwhat_to_watch",R$BrowseFeed>} x */
+	A$BrowseFeed$(x) {
 		const cf="BrowseFeedAction";
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
 		this.z(continuationItems,this.BrowseFeedItem);
 	}
-	/** @private @arg {A$WatchNextContinuation} x */
-	WatchNextContinuationAction(x) {
-		const cf="WatchNextContinuationAction";
+	/** @private @arg {T$A$Continuation<"watch-next-feed",G$WatchNext>} x */
+	A$WatchNext$(x) {
+		const cf="A$WatchNext$";
 		this.save_keys(`[${cf}]`,x);
 		const {targetId,continuationItems,...y}=x; this.g(y); // ! #destructure
 		this.targetId(cf,targetId);
@@ -9392,7 +9392,7 @@ class HandleTypes extends ServiceMethods {
 		this.save_keys(`[${cf}]`,x);
 		debugger;
 	}
-	/** @private @arg {BrowseFeedItem} x */
+	/** @private @arg {R$BrowseFeed} x */
 	BrowseFeedItem(x) {
 		const cf="BrowseFeedItem";
 		this.save_keys(`[${cf}]`,x);

@@ -1,1 +1,1 @@
-type BrowseFeedItem={};
+type R$BrowseFeed={};
