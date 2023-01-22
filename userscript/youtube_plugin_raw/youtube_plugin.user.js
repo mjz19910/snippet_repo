@@ -2301,54 +2301,76 @@ class KnownDataSaver extends ApiBase {
 		this.#data.strings_key_index_map[key]=index;
 		return this.#data.seen_strings[index];
 	}
+	/** @arg {{[x:string]: number;}} store_index @arg {string} key @arg {[string, ["one", string[]] | ["many", string[][]]][]} store */
+	get_seen_string_item_store(key,store_index,store) {
+		let index=store_index[key];
+		if(index) return store[index];
+		index=store.findIndex(e => e[0]===key);
+		if(index<0) return;
+		store_index[key]=index;
+		return store[index];
+	}
 	/** @type {[string,string|string[]][]} */
 	#new_strings=[];
+	/** @arg {string|string[]} x @arg {[string, ["one", string[]] | ["many", string[][]]]} data_item */
+	save_to_data_item(x,data_item) {
+		let target=data_item[1];
+		if(x instanceof Array) {
+			if(target[0]==="one") {
+				let inner=target[1].map(e => [e]);
+				target=["many",inner];
+				data_item[1]=target;
+			}
+			let found=target[1].find(e => this.eq_keys(e,x));
+			if(!found) {
+				target[1].push(x);
+				return false;
+			}
+		} else {
+			if(target[0]==="one") {
+				if(!target[1].includes(x)) {
+					target[1].push(x);
+					return false;
+				}
+			} else if(target[0]==="many") {
+				let res=target[1].find(([e,...r]) => !r.length&&e===x);
+				if(!res) {
+					target[1].push([x]);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	/** @arg {`[${string}]`} ka @arg {string|string[]} x @arg {{data:[string, ["one", string[]] | ["many", string[][]]][];index:{[x:string]:number}}} store */
+	save_to_store(ka,x,store) {
+		if(x===void 0) {debugger; return;}
+		let k=this.unwrap_brackets(ka);
+		let p=this.get_seen_string_item_store(k,store.index,store.data);
+		if(!p) {
+			p=[k,["one",[]]];
+			let nk=store.data.push(p)-1;
+			store.index[k]=nk;
+		}
+		let was_known=this.save_to_data_item(x,p);
+		was_known;
+	}
 	/** @arg {`[${string}]`} k_arg @arg {string|string[]} x */
 	save_string(k_arg,x) {
 		if(x===void 0) {debugger; return;}
 		let k=this.unwrap_brackets(k_arg);
-		let was_known=true;
-		/** @private @type {["one", string[]]|["many",string[][]]} */
-		let cur;
-		let p=this.#get_seen_string_item(k);
-		if(!p) {
-			p=[k,cur=["one",[]]];
-			let nk=this.#data.seen_strings.push(p)-1;
+		let store_item=this.#get_seen_string_item(k);
+		if(!store_item) {
+			store_item=[k,["one",[]]];
+			let nk=this.#data.seen_strings.push(store_item)-1;
 			this.#data.strings_key_index_map[k]=nk;
-		} else {
-			cur=p[1];
 		}
-		if(x instanceof Array) {
-			let target=p[1];
-			if(target[0]==="one") {
-				let inner=target[1].map(e => [e]);
-				target=["many",inner];
-				p[1]=target;
-			}
-			let found=target[1].find(e => this.eq_keys(e,x));
-			if(!found) {
-				was_known=false;
-				target[1].push(x);
-			}
-		} else {
-			if(cur[0]==="one") {
-				if(!cur[1].includes(x)) {
-					was_known=false;
-					cur[1].push(x);
-				}
-			} else if(cur[0]==="many") {
-				let res=cur[1].find(([e,...r]) => !r.length&&e===x);
-				if(!res) {
-					was_known=false;
-					cur[1].push([x]);
-				}
-			}
-		}
+		let was_known=this.save_to_data_item(x,store_item);
 		if(was_known) return false;
 		this.#new_strings.push([k,x]);
 		this.#onDataChange();
 		console.log("store_str [%s] %o",k,x);
-		let idx=this.#data.seen_strings.indexOf(p);
+		let idx=this.#data.seen_strings.indexOf(store_item);
 		if(idx<0) {debugger; return;}
 		this.show_strings_bitmap(idx);
 		return true;
