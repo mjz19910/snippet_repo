@@ -2759,7 +2759,8 @@ class BaseService extends BaseServicePrivate {
 		let [d,a2]=split_string_once(a1,".");
 		return [f,c,d,a2];
 	}
-	parse_transcript_target_id(x) {
+	/** @arg {string} cf @arg {`${string}.${string}.${number}.${number}`} x */
+	parse_transcript_target_id(cf,x) {
 		let b=this.parser.targetId_arr(split_string_once(x,"."));
 		this.parser.on_endpoint_params(cf,"transcript_target_id.param",b[1]);
 	}
@@ -14522,7 +14523,7 @@ class HandleTypes extends ServiceMethods {
 		this.TextT(startTimeText);
 		this.trackingParams(cf,trackingParams);
 		this.A$Accessibility(accessibility);
-		this.t(targetId,a => this.parser.parse_transcript_target_id(a));
+		this.t(targetId,a => this.parser.parse_transcript_target_id(cf,a));
 	}
 	/** @private @arg {WebSearchboxConfig} x */
 	WebSearchboxConfig(x) {
